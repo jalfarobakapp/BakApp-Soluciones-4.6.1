@@ -73,7 +73,16 @@ Public Module Clas_Demonio
 
         End If
 
-        Dim _Dir_Local As String = Application.StartupPath & "\Data\"
+        Dim _Dir_Local As String = Application.StartupPath '& "\Data\"
+
+        Dim infoDirectorio As New DirectoryInfo(_Dir_Local)
+        ' Obtener el directorio padre
+        Dim directorioPadre As DirectoryInfo = infoDirectorio.Parent
+
+        ' Si necesitas la ruta como string
+        Dim rutaDirectorioPadre As String = directorioPadre.FullName
+        _Dir_Local = rutaDirectorioPadre & "\Data\"
+
         Dim _Row_Nom_Equipo As DataRow
 
         Dim _Nombre_Equipo As String = My.Computer.Name

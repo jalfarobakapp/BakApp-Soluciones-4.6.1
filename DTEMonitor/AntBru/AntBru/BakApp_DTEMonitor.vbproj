@@ -227,10 +227,18 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Demonio\Clas_Demonio.vb" />
+    <Compile Include="DTE Monitor\Clases\Clas_Hefesto_Dte_Libro.vb" />
+    <Compile Include="DTE Monitor\Clases\Cl_AcuseReciboFactura.vb" />
     <Compile Include="DTE Monitor\Frm_Demonio_DTEMonitor.Designer.vb">
       <DependentUpon>Frm_Demonio_DTEMonitor.vb</DependentUpon>
     </Compile>
     <Compile Include="DTE Monitor\Frm_Demonio_DTEMonitor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DTE Monitor\Pruebas\Frm_Pruebas_DTE.Designer.vb">
+      <DependentUpon>Frm_Pruebas_DTE.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DTE Monitor\Pruebas\Frm_Pruebas_DTE.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -302,6 +310,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DTE Monitor\Frm_Demonio_DTEMonitor.resx">
       <DependentUpon>Frm_Demonio_DTEMonitor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DTE Monitor\Pruebas\Frm_Pruebas_DTE.resx">
+      <DependentUpon>Frm_Pruebas_DTE.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="My Project\Resources.resx">

@@ -8720,12 +8720,12 @@ Drop Table #Paso"
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
         If _BorrarSinProveedores Then
-            Consulta_sql = "Delete " & _Nombre_Tbl_Paso_Informe & " Where CodProveedor = '' And CodSucProveedor = ''"
+            Consulta_sql = "Delete " & _Nombre_Tbl_Paso_Informe & " Where CodProveedor = '' And CodSucProveedor = '' And NoComprarProvNoTiene = 0"
             _Sql.Ej_consulta_IDU(Consulta_sql)
         End If
 
         If Chk_CompMinXProveedores.Checked Then
-            Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set CantComprar = CantComprarMinXProv Where CantComprarMinXProv > 0"
+            Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set CantComprar = CantComprarMinXProv Where CantComprarMinXProv > 0 And NoComprarProvNoTiene = 0"
             _Sql.Ej_consulta_IDU(Consulta_sql)
         End If
 

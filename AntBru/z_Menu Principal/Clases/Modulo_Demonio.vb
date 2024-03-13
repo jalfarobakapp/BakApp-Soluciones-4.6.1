@@ -165,10 +165,12 @@ Module Modulo_Demonio
                 Return
             End If
 
-            If System.IO.File.Exists(Application.StartupPath & "\" & _Global_Nombre_BakApp_DTEMonitor & ".exe") Then
+            Dim _Directorio_DTEMonitor = Application.StartupPath & "\DTEMonitor\" & _Global_Nombre_BakApp_DTEMonitor & ".exe"
+
+            If System.IO.File.Exists(Application.StartupPath & "\DTEMonitor\" & _Global_Nombre_BakApp_DTEMonitor & ".exe") Then
 
                 Dim _Cadena_ConexionSQL_Server_Actual As String = Replace(Cadena_ConexionSQL_Server, " ", "@")
-                Dim _Ejecutar As String = Application.StartupPath & "\BakApp_DTEMonitor.exe" & Space(1) & _Cadena_ConexionSQL_Server_Actual
+                Dim _Ejecutar As String = _Directorio_DTEMonitor & Space(1) & _Cadena_ConexionSQL_Server_Actual
 
                 Try
                     Shell(_Ejecutar, AppWinStyle.NormalFocus, False)

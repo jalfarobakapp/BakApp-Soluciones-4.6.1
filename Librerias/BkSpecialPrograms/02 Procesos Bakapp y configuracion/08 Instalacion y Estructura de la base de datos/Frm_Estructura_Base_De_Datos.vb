@@ -131,6 +131,8 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_DTE_Firmar", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_DTE_ReccEnc", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_DTE_ReccDet", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_DTE_ListaEventosDoc", _Modificar, Lbl_Eventos)
+
 
             .Sb_Revisar_Tabla2(Me, "Zw_Empresas", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Entidades", _Modificar, Lbl_Eventos)

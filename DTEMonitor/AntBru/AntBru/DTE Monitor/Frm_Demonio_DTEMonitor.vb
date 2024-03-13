@@ -4,12 +4,15 @@ Imports System.Security.Cryptography.X509Certificates
 Imports System.Text
 Imports System.Xml
 Imports System.Xml.XPath
+Imports BakApp_DTEMonitor.Eventos_Dte
 Imports DevComponents.DotNetBar
 Imports HEFESTO.FIRMA.DOCUMENTO
 Imports HEFSIILIBDTES
-Imports HEFSIILIBDTES.CONSULTAS
 Imports Ionic.Zip
 Imports Newtonsoft.Json
+Imports HefConsultas = HEFSIILIBDTES.CONSULTAS.HefConsultas
+Imports HefRespuesta = HEFSIIREGCOMPRAVENTAS.LIB.HefRespuesta
+
 
 Public Class Frm_Demonio_DTEMonitor
 
@@ -33,6 +36,15 @@ Public Class Frm_Demonio_DTEMonitor
     Dim _Firmando As Boolean
 
     Private bgWorker As New BackgroundWorker
+
+    Dim _RutEmisor As String
+    Dim _RutEnvia As String
+    Dim _RutReceptor As String
+    Dim _FchResol As String
+    Dim _NroResol As String
+    Dim _Cn As String
+
+    Dim _RevisarReclamoDTE As Boolean
 
     Enum Enum_Accion
         EnviarBoletaSII
@@ -90,6 +102,8 @@ Public Class Frm_Demonio_DTEMonitor
         Timer_Minimizar.Interval = (1000 * 60) * 10
         _RevisarCertificado = True
 
+        Timer_RevisarReclamoDTE.Start()
+
         'Dim sb As New System.Text.StringBuilder
         'sb.AppendLine("ProductName:     " & fvi.ProductName)
         'sb.AppendLine("FileDescription: " & fvi.FileDescription)
@@ -106,6 +120,8 @@ Public Class Frm_Demonio_DTEMonitor
         Timer_Consultar_TrackId.Interval = 1000 * 30
         Timer_Enviar_Correos.Interval = 1000 * 30
 
+        _RevisarReclamoDTE = True
+
         Timer_Hora_Actual.Enabled = True
         Timer_Enviar_SII.Start()
 
@@ -114,7 +130,17 @@ Public Class Frm_Demonio_DTEMonitor
         Chk_MostrarBoletaBkHfDOS.Checked = False
         Chk_MostrarBoletaBkHfDOS.Visible = Chk_AmbienteCertificacion.Checked
 
-        Dim _Dir_Local As String = AppPath() & "\Data\"
+        Dim _Dir_Local As String = Application.StartupPath
+
+        Dim infoDirectorio As New DirectoryInfo(_Dir_Local)
+        ' Obtener el directorio padre
+        Dim directorioPadre As DirectoryInfo = infoDirectorio.Parent
+
+        ' Si necesitas la ruta como string
+        Dim rutaDirectorioPadre As String = directorioPadre.FullName
+        _Dir_Local = rutaDirectorioPadre & "\Data\"
+
+
 
         Dim _Ds As New DatosBakApp
         _Ds.Clear()
@@ -126,7 +152,28 @@ Public Class Frm_Demonio_DTEMonitor
         Lbl_Nombre_Equipo.Text = "Nombre equipo: " & _Nombre_Equipo.trim & ", Modalidad: " & Modalidad
         _Contador_Esperando = 1
 
-        Timer_Segundos.Start()
+
+        Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
+                       "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa'"
+        Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        If Not CBool(_Tbl_ConfEmpresa.Rows.Count) Then
+            Throw New System.Exception("Faltan los datos de configuración DTE para la empresa")
+        End If
+
+        For Each _Fila As DataRow In _Tbl_ConfEmpresa.Rows
+
+            Dim _Campo As String = _Fila.Item("Campo").ToString.Trim
+
+            If _Campo = "RutEmisor" Then _RutEmisor = _Fila.Item("Valor")
+            If _Campo = "RutEnvia" Then _RutEnvia = _Fila.Item("Valor")
+            If _Campo = "RutReceptor" Then _RutReceptor = _Fila.Item("Valor")
+            If _Campo = "FchResol" Then _FchResol = _Fila.Item("Valor")
+            If _Campo = "NroResol" Then _NroResol = _Fila.Item("Valor")
+            If _Campo = "Cn" Then _Cn = _Fila.Item("Valor")
+
+        Next
 
         bgWorker = New BackgroundWorker
         AddHandler bgWorker.DoWork, AddressOf MyWorker_DoWork
@@ -720,7 +767,7 @@ Public Class Frm_Demonio_DTEMonitor
                     Exit For
                 End If
 
-                Sb_AddToLog("Revisar Trackid", "Revisando Trackid" & _Trackid, Txt_Log)
+                Sb_AddToLog("Revisar Trackid", "Revisando Trackid: " & _Trackid, Txt_Log)
 
                 ' PARAMETROS 
 
@@ -746,6 +793,7 @@ Public Class Frm_Demonio_DTEMonitor
                         For Each _Row As DataRow In _TblTrackid.Rows
 
                             Dim _Intentos As Integer = _Row.Item("Intentos")
+
                             _Id_Trackid = _Row.Item("Id")
 
                             If _TblTrackid.Rows.Count = 0 Then ' _Id_Trackid = 0 Then
@@ -994,26 +1042,18 @@ Public Class Frm_Demonio_DTEMonitor
 
     Sub Sb_Revisar_Acuse_Recibo_Al_SIIDTE_Bk()
 
-
         Dim _FechaHoy As String = Format(FechaDelServidor, "yyyyMMdd")
         Dim _FechaPrimerDiaMes As String = Format(Primerdiadelmes(FechaDelServidor), "yyyyMMdd")
         Dim _8Dias As DateTime = DateAdd(DateInterval.Day, -9, FechaDelServidor)
         Dim _Fecha8Dias As String = Format(_8Dias, "yyyyMMdd")
 
-        Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Procesar = 1 " & vbCrLf &
-                       "Where Procesar = 0 And Idmaeedo Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Trackid) And " &
-                       "Convert(varchar,FechaSolicitud,112) = '" & _FechaHoy & "' And Tido <> 'BLV' And ErrorEnvioDTE = 0"
-        _Sql.Ej_consulta_IDU(Consulta_sql)
-
-        Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Procesar = 1 " & vbCrLf &
-                       "Where Procesar = 0 And Idmaeedo Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Trackid) And " &
-                       "FechaSolicitud >= '" & _FechaPrimerDiaMes & "' And Tido <> 'BLV' And ErrorEnvioDTE = 0"
-        _Sql.Ej_consulta_IDU(Consulta_sql)
-
-        Consulta_sql = "Select Top 20 Id_Dte,Idmaeedo,Tido,Nudo,Trackid,FechaSolicitud,Xml,Firma,CaratulaXml,Respuesta,AmbienteCertificacion,Procesar,Procesado" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_DTE_Documentos" & vbCrLf &
-                       "Where Procesado = 1 And AmbienteCertificacion = 0 And Tido <> 'BLV'" & vbCrLf &
-                       "Order By Tido,Nudo"
+        Consulta_sql = "Select DteDoc.Id_Dte,DteTk.Id As Id_Trackid,DteDoc.Idmaeedo,Tido,Nudo," &
+                       "DteTk.Trackid,FechaSolicitud,DteDoc.AmbienteCertificacion,DteDoc.Procesar,DteDoc.Procesado,DteTk.Estado,DteTk.Glosa" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_DTE_Documentos DteDoc" & vbCrLf &
+                       "Inner Join " & _Global_BaseBk & "Zw_DTE_Trackid DteTk On DteDoc.Id_Dte = DteTk.Id_Dte" & vbCrLf &
+                       "Where DteDoc.Procesado = 1 And DteDoc.AmbienteCertificacion = 0 And Tido In ('FCV','NCV') And (DteTk.Aceptado = 1 or DteTk.Reparo = 1)" & vbCrLf &
+                       "And DteTk.FechaEnvSII > '" & _Fecha8Dias & "' And DteTk.FechaEnvSII < '" & _FechaHoy & "'" & vbCrLf &
+                       "Order By DteDoc.Id_Dte Desc"
 
         Dim _Tbl_DTE_Documentos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
@@ -1023,7 +1063,7 @@ Public Class Frm_Demonio_DTEMonitor
 
         If CBool(_Tbl_DTE_Documentos.Rows.Count) Then
 
-            Sb_AddToLog("Enviar SII", "Revisando documentos pendientes de enviar al SII", Txt_Log)
+            Sb_AddToLog("Revisión DTE en SII", "Revisando historial de documentos en el SII", Txt_Log)
 
             Dim _Filtro_Id_Dte As String = Generar_Filtro_IN(_Tbl_DTE_Documentos, "", "Id_Dte", False, False, "")
 
@@ -1034,6 +1074,7 @@ Public Class Frm_Demonio_DTEMonitor
 
                 Dim _Idmaeedo = _Fila.Item("Idmaeedo")
                 Dim _Id_Dte = _Fila.Item("Id_Dte")
+                Dim _Id_Trackid = _Fila.Item("Id_Trackid")
                 Dim _Tido = _Fila.Item("Tido")
                 Dim _Nudo = _Fila.Item("Nudo")
 
@@ -1044,14 +1085,21 @@ Public Class Frm_Demonio_DTEMonitor
                     Exit For
                 End If
 
-                Sb_AddToLog("Enviar SII", "Revisando " & _Tido & "-" & _Nudo, Txt_Log)
+                Sb_AddToLog("Revisión DTE en SII", "Revisando " & _Tido & "-" & _Nudo, Txt_Log)
 
                 Dim _AmbienteCertificacion As Boolean = Chk_AmbienteCertificacion.Checked
-                Dim _Accion As Enum_Accion = Enum_Accion.EnviarBoletaSII
+                'Dim _Acuse As Respuesta = HefAcuseReciboFactura.ConsultarVersion(_Cn)
 
-                Dim _Enviar_DTE As HEFESTO.DTE.AUTENTICACION.ENT.Respuesta = Fx_Enviar_DTE_Al_SII(_Id_Dte, _AmbienteCertificacion)
+                Dim _TipoDte As String = Fx_Tipo_DTE_VS_TIDO(_Tido)
+                Dim _FolioDte As String = CInt(_Nudo)
 
-                If _Enviar_DTE.correcto Then
+                Dim _Cl_AcuseReciboFactura As New Cl_AcuseReciboFactura
+
+                Dim _Historial As New Eventos_Dte.Ls_HistorialDocumentoDte
+
+                _Historial = _Cl_AcuseReciboFactura.Fx_RevisarHistorialDocumento(_Cn, _RutEmisor, _TipoDte, _FolioDte, 1)
+
+                If _Historial.EsCorrecto Then
 
                     Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_DTE_Trackid Where Id_Dte = " & _Id_Dte & "Order By Id Desc"
                     Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
@@ -1066,17 +1114,17 @@ Public Class Frm_Demonio_DTEMonitor
 
                 Else
 
-                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Respuesta = Respuesta + '" & _Enviar_DTE.mensaje & "'" & vbCrLf &
-                                   "Where Id_Dte In " & _Filtro_Id_Dte
-                    _Sql.Ej_consulta_IDU(Consulta_sql, False)
+                    'Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Respuesta = Respuesta + '" & _Enviar_DTE.mensaje & "'" & vbCrLf &
+                    '               "Where Id_Dte In " & _Filtro_Id_Dte
+                    '_Sql.Ej_consulta_IDU(Consulta_sql, False)
 
-                    If _Enviar_DTE.mensaje.ToString.Contains("No fue posible encontrar la Caratula") Then
-                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Procesar = 0, Procesado = 1" & vbCrLf &
-                                       "Where Id_Dte In " & _Filtro_Id_Dte
-                        _Sql.Ej_consulta_IDU(Consulta_sql, False)
-                    End If
+                    'If _Enviar_DTE.mensaje.ToString.Contains("No fue posible encontrar la Caratula") Then
+                    '    Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Procesar = 0, Procesado = 1" & vbCrLf &
+                    '                   "Where Id_Dte In " & _Filtro_Id_Dte
+                    '    _Sql.Ej_consulta_IDU(Consulta_sql, False)
+                    'End If
 
-                    Sb_AddToLog("Enviar SII", _Enviar_DTE.mensaje, Txt_Log)
+                    'Sb_AddToLog("Enviar SII", _Enviar_DTE.mensaje, Txt_Log)
 
                 End If
 
@@ -1148,8 +1196,15 @@ Public Class Frm_Demonio_DTEMonitor
 
             Sb_Revisar_Trackid_DTEBk()
             Sb_Revisar_Trackid_SIIBoletas_Bk()
-            'Sb_Revisar_Trackid_EnviaDTESIIBk()
-            'Sb_Revisar_Trackid_SIIBoletas()
+
+            If _RevisarReclamoDTE Then
+
+                Sb_Revisar_Reclamos()
+                Timer_RevisarReclamoDTE.Interval = (1000 * 60) * 20
+                _RevisarReclamoDTE = False
+                Timer_RevisarReclamoDTE.Start()
+
+            End If
 
         Else
             Sb_AddToLog("Revisar Trackid", "Proceso pausado...", Txt_Log)
@@ -2010,6 +2065,238 @@ Public Class Frm_Demonio_DTEMonitor
         End Try
     End Function
 
+    Private Sub Btn_Pruebas_Click(sender As Object, e As EventArgs) Handles Btn_Pruebas.Click
+
+        Chk_ConsultarTrackid.Checked = False
+        Chk_EnviarCorreos.Checked = False
+        Chk_EnviarCorreos.Checked = False
+        Chk_EnviarDTE.Checked = False
+        Chk_FirmarDocumentos.Checked = False
+
+        Dim _FechaHoy As String = Format(FechaDelServidor, "yyyyMMdd")
+        Dim _8Dias As DateTime = DateAdd(DateInterval.Day, -10, FechaDelServidor)
+
+        Dim _Periodo1 = _8Dias.Year
+        Dim _Mes1 = _8Dias.Month
+        Dim _Periodo2 = FechaDelServidor.Year
+        Dim _Mes2 = FechaDelServidor.Month
+
+        'Dim _DTE_AnoMes As New List(Of DTE_AnoMes.DTE_AnoMes)
+
+        _Periodo1 = "2024"
+        _Mes1 = "1"
+
+        Sb_Revisar_Reclamo_DTE(_Periodo1, _Mes1)
+
+        _Mes2 = "2"
+
+        If _Mes1 <> _Mes2 Then
+            Sb_Revisar_Reclamo_DTE(_Periodo2, _Mes2)
+        End If
+
+        'Dim _Tbl_Registro_Compras_Pendientes As DataTable = Fx_TblFromJson(_Fichero2, "RegistroComprasPendientes")
+
+        'If _Clas_Hefesto_Dte_Libro.Fx_Importar_Archivo_SII_Compras_Desde_Json(_Tbl_Registro_Compras,
+        '                                                                      _Tbl_Registro_Compras_Pendientes,
+        '                                                                      _Periodo, _Mes) Then
+        '    Me.Close()
+        'End If
+
+        'Return
+
+        'Dim Fm As New Frm_Pruebas_DTE
+        'Fm.ShowDialog(Me)
+        'Fm.Dispose()
+
+    End Sub
+
+    Sub Sb_Revisar_Reclamos()
+
+        If Not Chk_RevisarReclamoDTE.Checked Then
+            Sb_AddToLog("Rev. Reclamos DTE", "Proceso pausado...", Txt_Log)
+            Return
+        End If
+
+        Dim _FechaHoy As String = Format(FechaDelServidor, "yyyyMMdd")
+        Dim _8Dias As DateTime = DateAdd(DateInterval.Day, -10, FechaDelServidor)
+
+        Dim _Periodo1 = _8Dias.Year
+        Dim _Mes1 = _8Dias.Month
+        Dim _Periodo2 = FechaDelServidor.Year
+        Dim _Mes2 = FechaDelServidor.Month
+
+        '_Periodo1 = "2024"
+        '_Mes1 = "1"
+
+        Sb_Revisar_Reclamo_DTE(_Periodo1, _Mes1)
+
+        '_Mes2 = "2"
+
+        If _Mes1 <> _Mes2 Then
+            Sb_Revisar_Reclamo_DTE(_Periodo2, _Mes2)
+        End If
+
+    End Sub
+
+    Sub Sb_Revisar_Reclamo_DTE(_Periodo As String, _Mes As String)
+
+        'Dim _Periodo As String = Now.Year
+        'Dim _Mes As String = 1
+
+        Dim _Clas_Hefesto_Dte_Libro As New Clas_Hefesto_Dte_Libro
+
+        Sb_AddToLog("Rev. Reclamos DTE", "Recuperando el registros de ventas desde el SII", Txt_Log)
+
+        Dim _RecuperarVentasRegistro As HefRespuesta
+        _RecuperarVentasRegistro = _Clas_Hefesto_Dte_Libro.Fx_RecuperarVentasRegistro(_Periodo, _Mes)
+
+        If _RecuperarVentasRegistro.EsCorrecto Then
+            'Sb_AddToLog("Rev. Reclamos DTE", "Es correcto: " & _RecuperarVentasRegistro.EsCorrecto, Txt_Log)
+            Sb_AddToLog("Rev. Reclamos DTE", "Mensaje    : " & _RecuperarVentasRegistro.Mensaje, Txt_Log)
+            'Sb_AddToLog("Rev. Reclamos DTE", "Detalle    :" & _RecuperarVentasRegistro.Directorio, Txt_Log)
+        End If
+
+        Sb_AddToLog("Rev. Reclamos DTE", "Rescatando datos desde archivos Json...", Txt_Log)
+
+        Dim _Fichero1 As String = File.ReadAllText(_RecuperarVentasRegistro.Directorio)
+        Dim _Tbl_Registro_Ventas As DataTable = Fx_TblFromJson(_Fichero1, "RegistrosVentas")
+
+        Dim filtro As String = "FechaReclamo <> ''"
+        Dim filasEncontradas As DataRow() = _Tbl_Registro_Ventas.Select(filtro)
+
+        ' Ahora puedes iterar sobre el arreglo de filas encontradas
+        For Each fila As DataRow In filasEncontradas
+
+            Dim _TipoDTE = fila.Item("TipoDTE")
+            Dim _Folio = fila.Item("Folio")
+            Dim _FechaReclamo = fila.Item("FechaReclamo")
+
+            Fx_Revisar_ListaEventosDoc(_TipoDTE, _Folio)
+
+        Next
+
+    End Sub
+
+    Function Fx_Revisar_ListaEventosDoc(_TipoDoc As Integer, _Folio As Integer)
+
+        Dim _Tido = Fx_Tipo_TIDO_VS_DTE(_TipoDoc)
+        Dim _Nudo = numero_(_Folio, 10)
+
+        Consulta_sql = "Select DteDoc.Id_Dte,DteTk.Id As Id_Trackid,DteDoc.Idmaeedo,Tido,Nudo," &
+                       "DteTk.Trackid,FechaSolicitud,DteDoc.AmbienteCertificacion,DteDoc.Procesar,DteDoc.Procesado,DteTk.Estado,DteTk.Glosa,DteTk.TieneReclamo" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_DTE_Documentos DteDoc" & vbCrLf &
+                       "Inner Join " & _Global_BaseBk & "Zw_DTE_Trackid DteTk On DteDoc.Id_Dte = DteTk.Id_Dte" & vbCrLf &
+                       "Where DteDoc.Tido = '" & _Tido & "' And DteDoc.Nudo = '" & _Nudo & "' -- And DteTk.TieneReclamo = 0" & vbCrLf &
+                       "--And DteTk.Id Not In (Select Id_Trackid From " & _Global_BaseBk & "Zw_DTE_ListaEventosDoc Where CodEvento In ('PAG','ACD','ERM'))" & vbCrLf &
+                       "Order By DteDoc.Id_Dte Desc"
+
+        Dim _Tbl_DTE_Documentos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        If Not CBool(_Tbl_DTE_Documentos.Rows.Count) Then
+            Return False
+        End If
+
+        If CBool(_Tbl_DTE_Documentos.Rows.Count) Then
+
+            'Sb_AddToLog("Revisión DTE en SII", "Revisando historial de documentos en el SII", Txt_Log)
+
+            For Each _Fila As DataRow In _Tbl_DTE_Documentos.Rows
+
+                Dim _Idmaeedo = _Fila.Item("Idmaeedo")
+                Dim _Id_Dte = _Fila.Item("Id_Dte")
+                Dim _Id_Trackid = _Fila.Item("Id_Trackid")
+                Dim _TieneReclamo As Boolean = _Fila.Item("TieneReclamo")
+
+                Dim _TipoDte As String = Fx_Tipo_DTE_VS_TIDO(_Tido)
+                Dim _FolioDte As String = CInt(_Nudo)
+
+                Dim _Cl_AcuseReciboFactura As New Cl_AcuseReciboFactura
+
+                Dim _Historial As New Eventos_Dte.Ls_HistorialDocumentoDte
+
+                _Historial = _Cl_AcuseReciboFactura.Fx_RevisarHistorialDocumento(_Cn, _RutEmisor, _TipoDte, _FolioDte, 1)
+
+                Sb_AddToLog("Revisión DTE en SII", "Revisando " & _Tido & "-" & _Nudo, Txt_Log)
+
+                If _Historial.EsCorrecto Then
+
+                    For Each _Hst As HistorialDocumentoDte In _Historial.Historial
+
+                        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_DTE_ListaEventosDoc",
+                                                            "Idmaeedo = " & _Idmaeedo & " And CodEvento = '" & _Hst.CodEvento & "'")
+
+                        If _Reg = 0 Then
+
+                            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_DTE_ListaEventosDoc " &
+                                       "(Id_Dte,Id_Trackid,Idmaeedo,Tido,Nudo,CodEvento,DescEvento,RutResponsable,DvResponsable,FechaEvento) Values " & vbCrLf &
+                                       "(" & _Id_Dte & "," & _Id_Trackid & "," & _Idmaeedo & ",'" & _Tido & "','" & _Nudo & "'" &
+                                       ",'" & _Hst.CodEvento & "'" &
+                                       ",'" & _Hst.DescEvento & "'" &
+                                       ",'" & _Hst.RutResponsable & "'" &
+                                       ",'" & _Hst.DvResponsable & "'" &
+                                       ",'" & Format(_Hst.FechaEvento, "yyyyMMdd HH:MM") & "')"
+                            _Sql.Ej_consulta_IDU(Consulta_sql, False)
+
+                            If Not _TieneReclamo Then
+
+                                If _Hst.CodEvento = "RCD" Then
+
+                                    _Historial.Mensaje = _Hst.DescEvento
+
+                                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set " &
+                                                   "TieneReclamo = 1" &
+                                                   ",FechaReclamo = '" & Format(_Hst.FechaEvento, "yyyyMMdd HH:MM") & "'" &
+                                                   ",MensajeRegEventosDoc = '" & _Hst.DescEvento & "'" & vbCrLf &
+                                                   "Where Id = " & _Id_Trackid
+                                    _Sql.Ej_consulta_IDU(Consulta_sql, False)
+
+                                End If
+
+                                Sb_AddToLog("Revisión DTE en SII", "CodEvento: " & _Hst.CodEvento & " - " & _Hst.DescEvento, Txt_Log)
+
+                            End If
+
+                        End If
+
+                    Next
+
+                    If Not _TieneReclamo Then
+
+                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set MensajeRegEventosDoc = '" & _Historial.Mensaje & "' Where Id = " & _Id_Trackid
+                        _Sql.Ej_consulta_IDU(Consulta_sql, False)
+
+                    End If
+
+                Else
+
+                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set MensajeRegEventosDoc = '" & _Historial.Mensaje & "' Where Id = " & _Id_Trackid
+                    _Sql.Ej_consulta_IDU(Consulta_sql, False)
+
+                    'Sb_AddToLog("Enviar SII", _Enviar_DTE.mensaje, Txt_Log)
+
+                End If
+
+                Sb_AddToLog("Revisión DTE en SII", "MensajeRegEventosDoc " & _Historial.Mensaje, Txt_Log)
+                Sb_AddToLog("Revisión DTE en SII", "..........", Txt_Log)
+
+            Next
+
+            'Sb_AddToLog("Enviar SII", "Fin proceso", Txt_Log)
+
+        End If
+
+        Return True
+
+    End Function
+
+    Private Sub Chk_ConsultarTrackid_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_ConsultarTrackid.CheckedChanged
+        Chk_RevisarReclamoDTE.Checked = Chk_ConsultarTrackid.Checked
+    End Sub
+
+    Private Sub Timer_RevisarReclamoDTE_Tick(sender As Object, e As EventArgs) Handles Timer_RevisarReclamoDTE.Tick
+        Timer_RevisarReclamoDTE.Stop()
+        _RevisarReclamoDTE = True
+    End Sub
 End Class
 
 

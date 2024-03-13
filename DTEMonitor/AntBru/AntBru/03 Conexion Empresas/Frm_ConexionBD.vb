@@ -45,6 +45,15 @@ Public Class Frm_ConexionBD
 
     Private Sub Frm_ConexionesBD_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
+        Directorio = Application.StartupPath
+        Dim infoDirectorio As New DirectoryInfo(Directorio)
+        ' Obtener el directorio padre
+        Dim directorioPadre As DirectoryInfo = infoDirectorio.Parent
+
+        ' Si necesitas la ruta como string
+        Dim rutaDirectorioPadre As String = directorioPadre.FullName
+        Directorio = rutaDirectorioPadre & "\Data\"
+
         DatosConex.ReadXml(Directorio & "Conexiones.xml")
         ActualizarGrilla()
         Grilla.Focus()

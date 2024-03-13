@@ -3060,193 +3060,193 @@ Public Class Class_Genera_DTE_RdBk
 
     End Function
 
-    Function Fx_AEC_EnviarCesion(_Id_Aec As Integer) As HefestoCesionV12.HefRespuesta 'As Integer
+    '    Function Fx_AEC_EnviarCesion(_Id_Aec As Integer) As HefestoCesionV12.HefRespuesta 'As Integer
 
-        Dim _Resp As New HefestoCesionV12.HefRespuesta
+    '        Dim _Resp As New HefestoCesionV12.HefRespuesta
 
-        Try
+    '        Try
 
-            _Errores.Clear()
+    '            _Errores.Clear()
 
-            Dim _FullpathAEC = _Path & "\Data\" & RutEmpresaActiva & "\DTE\Documentos\AEC"
-            Dim _PathSchemas = _Path & "\Schemas"
-            Dim _PathCedidas = _FullpathAEC + "\XmlCedidas"
+    '            Dim _FullpathAEC = _Path & "\Data\" & RutEmpresaActiva & "\DTE\Documentos\AEC"
+    '            Dim _PathSchemas = _Path & "\Schemas"
+    '            Dim _PathCedidas = _FullpathAEC + "\XmlCedidas"
 
-            If Not Directory.Exists(_FullpathAEC) Then
-                System.IO.Directory.CreateDirectory(_FullpathAEC)
-            End If
+    '            If Not Directory.Exists(_FullpathAEC) Then
+    '                System.IO.Directory.CreateDirectory(_FullpathAEC)
+    '            End If
 
-            If Not Directory.Exists(_PathCedidas) Then
-                System.IO.Directory.CreateDirectory(_PathCedidas)
-            End If
+    '            If Not Directory.Exists(_PathCedidas) Then
+    '                System.IO.Directory.CreateDirectory(_PathCedidas)
+    '            End If
 
-            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DTE_Aec Where Id_Aec = " & _Id_Aec
-            Dim _Row_DteAec As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+    '            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DTE_Aec Where Id_Aec = " & _Id_Aec
+    '            Dim _Row_DteAec As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-            Dim _Id_Dte = _Row_DteAec.Item("Id_Dte")
+    '            Dim _Id_Dte = _Row_DteAec.Item("Id_Dte")
 
-            If IsNothing(_Row_DteAec) Then
-                _Errores.Add("No se encontro el archivo en la tabla [Zw_DTE_Aec]")
-                Throw New System.Exception(_Errores(0))
-            End If
+    '            If IsNothing(_Row_DteAec) Then
+    '                _Errores.Add("No se encontro el archivo en la tabla [Zw_DTE_Aec]")
+    '                Throw New System.Exception(_Errores(0))
+    '            End If
 
-            Dim _Archivo_Xml As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Documentos", "Xml", "Id_Dte = " & _Id_Dte)
-            Dim _Tido As String = Maeedo.Rows(0).Item("TIDO")
-            Dim _Nudo As String = Maeedo.Rows(0).Item("NUDO")
-            Dim _Dir = _FullpathAEC
+    '            Dim _Archivo_Xml As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Documentos", "Xml", "Id_Dte = " & _Id_Dte)
+    '            Dim _Tido As String = Maeedo.Rows(0).Item("TIDO")
+    '            Dim _Nudo As String = Maeedo.Rows(0).Item("NUDO")
+    '            Dim _Dir = _FullpathAEC
 
-            If Not String.IsNullOrEmpty(_Archivo_Xml) Then
+    '            If Not String.IsNullOrEmpty(_Archivo_Xml) Then
 
-                If Not Directory.Exists(_Dir) Then
-                    System.IO.Directory.CreateDirectory(_Dir)
-                End If
+    '                If Not Directory.Exists(_Dir) Then
+    '                    System.IO.Directory.CreateDirectory(_Dir)
+    '                End If
 
-                Dim _Nombre_Archivo = _Tido & "-" & _Nudo & ".xml"
-                _Dir = _Dir & "\" & _Nombre_Archivo
+    '                Dim _Nombre_Archivo = _Tido & "-" & _Nudo & ".xml"
+    '                _Dir = _Dir & "\" & _Nombre_Archivo
 
-                Dim oSW As New System.IO.StreamWriter(_Dir)
+    '                Dim oSW As New System.IO.StreamWriter(_Dir)
 
-                oSW.WriteLine(_Archivo_Xml)
-                oSW.Close()
+    '                oSW.WriteLine(_Archivo_Xml)
+    '                oSW.Close()
 
-                Dim _Existe_File = System.IO.File.Exists(_Dir)
+    '                Dim _Existe_File = System.IO.File.Exists(_Dir)
 
-                If Not _Existe_File Then
-                    _Errores.Add("No se encontro el archivo " & _Dir)
-                    Throw New System.Exception(_Errores(0))
-                End If
+    '                If Not _Existe_File Then
+    '                    _Errores.Add("No se encontro el archivo " & _Dir)
+    '                    Throw New System.Exception(_Errores(0))
+    '                End If
 
-            End If
+    '            End If
 
 
-            Dim _cesion As New HefAec(_Dir)
+    '            Dim _cesion As New HefAec(_Dir)
 
-            If _AmbienteCertificacion Then
-                _cesion.Configuracion.Ambiente.Procesamiento = HefAmbienteProcesamiento.Certificacion
-            Else
-                _cesion.Configuracion.Ambiente.Procesamiento = HefAmbienteProcesamiento.Produccion
-            End If
+    '            If _AmbienteCertificacion Then
+    '                _cesion.Configuracion.Ambiente.Procesamiento = HefAmbienteProcesamiento.Certificacion
+    '            Else
+    '                _cesion.Configuracion.Ambiente.Procesamiento = HefAmbienteProcesamiento.Produccion
+    '            End If
 
-            _cesion.Configuracion.ArchivoSchema.FullPath = _PathSchemas & "\AEC_v10.xsd"
+    '            _cesion.Configuracion.ArchivoSchema.FullPath = _PathSchemas & "\AEC_v10.xsd"
 
-            Dim _Cn As String
-            Dim _RutEmisor As String
+    '            Dim _Cn As String
+    '            Dim _RutEmisor As String
 
-            Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
-                           "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
-                           "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa' And AmbienteCertificacion = " & _AmbienteCertificacion
-            Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+    '            Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
+    '                           "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
+    '                           "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa' And AmbienteCertificacion = " & _AmbienteCertificacion
+    '            Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
-            If Not CBool(_Tbl_ConfEmpresa.Rows.Count) Then
-                _Errores.Add("Faltan los datos de configuración DTE para la empresa")
-                Throw New System.Exception(_Errores(0))
-            End If
+    '            If Not CBool(_Tbl_ConfEmpresa.Rows.Count) Then
+    '                _Errores.Add("Faltan los datos de configuración DTE para la empresa")
+    '                Throw New System.Exception(_Errores(0))
+    '            End If
 
-            For Each _Fila As DataRow In _Tbl_ConfEmpresa.Rows
+    '            For Each _Fila As DataRow In _Tbl_ConfEmpresa.Rows
 
-                Dim _Campo As String = _Fila.Item("Campo").ToString.Trim
+    '                Dim _Campo As String = _Fila.Item("Campo").ToString.Trim
 
-                If _Campo = "RutEmisor" Then _RutEmisor = _Fila.Item("Valor")
-                If _Campo = "Cn" Then _Cn = _Fila.Item("Valor")
+    '                If _Campo = "RutEmisor" Then _RutEmisor = _Fila.Item("Valor")
+    '                If _Campo = "Cn" Then _Cn = _Fila.Item("Valor")
 
-            Next
+    '            Next
 
-            Dim _RutCedente As String = _Row_DteAec.Item("RutCedente")
-            Dim _RutCesionario As String = _Row_DteAec.Item("RutCesionario")
-            Dim _RazonSocialCesionario As String = _Row_DteAec.Item("RazonSocialCesionario")
-            Dim _DireccionCesionario As String = _Row_DteAec.Item("DireccionCesionario")
-            Dim _eMailCesionario As String = _Row_DteAec.Item("eMailCesionario")
-            Dim _NmbContacto As String = _Row_DteAec.Item("NmbContacto")
-            Dim _FonoContacto As String = _Row_DteAec.Item("FonoContacto")
-            Dim _MailContacto As String = _Row_DteAec.Item("MailContacto")
-            Dim _RutAutoriza As String = _Row_DteAec.Item("RutAutoriza")
-            Dim _NombreAutoriza As String = _Row_DteAec.Item("NombreAutoriza")
-            Dim _eMailCedente As String = _Row_DteAec.Item("eMailCedente")
+    '            Dim _RutCedente As String = _Row_DteAec.Item("RutCedente")
+    '            Dim _RutCesionario As String = _Row_DteAec.Item("RutCesionario")
+    '            Dim _RazonSocialCesionario As String = _Row_DteAec.Item("RazonSocialCesionario")
+    '            Dim _DireccionCesionario As String = _Row_DteAec.Item("DireccionCesionario")
+    '            Dim _eMailCesionario As String = _Row_DteAec.Item("eMailCesionario")
+    '            Dim _NmbContacto As String = _Row_DteAec.Item("NmbContacto")
+    '            Dim _FonoContacto As String = _Row_DteAec.Item("FonoContacto")
+    '            Dim _MailContacto As String = _Row_DteAec.Item("MailContacto")
+    '            Dim _RutAutoriza As String = _Row_DteAec.Item("RutAutoriza")
+    '            Dim _NombreAutoriza As String = _Row_DteAec.Item("NombreAutoriza")
+    '            Dim _eMailCedente As String = _Row_DteAec.Item("eMailCedente")
 
-            If _AmbienteCertificacion Then
-                _eMailCedente = _MailContacto
-            End If
+    '            If _AmbienteCertificacion Then
+    '                _eMailCedente = _MailContacto
+    '            End If
 
-            'Identifique el certificado a utilizar para firmar y enviar el AEC
-            _cesion.Configuracion.Certificado.Cn = _Cn
-            _cesion.Configuracion.Certificado.Rut = _RutEmisor
+    '            'Identifique el certificado a utilizar para firmar y enviar el AEC
+    '            _cesion.Configuracion.Certificado.Cn = _Cn
+    '            _cesion.Configuracion.Certificado.Rut = _RutEmisor
 
-#Region "CONSTRUIR EL DOCUMENTO AEC"
+    '#Region "CONSTRUIR EL DOCUMENTO AEC"
 
-            Dim _Fecha = FechaDelServidor.ToString("yyyy-MM-ddTHH:mm:ss")
+    '            Dim _Fecha = FechaDelServidor.ToString("yyyy-MM-ddTHH:mm:ss")
 
-            ' Complete la cesion ( Caratula )
-            _cesion.DocumentoAEC.Caratula.RutCedente = _RutCedente '"85904700-9"
-            _cesion.DocumentoAEC.Caratula.RutCesionario = _RutCesionario '"97036000-K"
-            _cesion.DocumentoAEC.Caratula.NmbContacto = _NmbContacto '"ROCIO AGUILAR"
-            _cesion.DocumentoAEC.Caratula.FonoContacto = _FonoContacto '"22 8213320"
-            _cesion.DocumentoAEC.Caratula.MailContacto = _MailContacto '"r.aguiar@alimentoscisternas.cl"
-            _cesion.DocumentoAEC.Caratula.TmstFirmaEnvio = _Fecha
+    '            ' Complete la cesion ( Caratula )
+    '            _cesion.DocumentoAEC.Caratula.RutCedente = _RutCedente '"85904700-9"
+    '            _cesion.DocumentoAEC.Caratula.RutCesionario = _RutCesionario '"97036000-K"
+    '            _cesion.DocumentoAEC.Caratula.NmbContacto = _NmbContacto '"ROCIO AGUILAR"
+    '            _cesion.DocumentoAEC.Caratula.FonoContacto = _FonoContacto '"22 8213320"
+    '            _cesion.DocumentoAEC.Caratula.MailContacto = _MailContacto '"r.aguiar@alimentoscisternas.cl"
+    '            _cesion.DocumentoAEC.Caratula.TmstFirmaEnvio = _Fecha
 
-            ' Cedente = Datos del dueño del documento, generalmente es Emisor, a veces no.
-            ' Agregar los datos del cedente del documento.
-            _cesion.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.Cedente.RUT = _RutCedente '"85904700-9"
-            _cesion.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.Cedente.RazonSocial = RazonEmpresa '_Maeen.Rows(0).Item("NOKOEN").ToString.Trim '
-            _cesion.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.Cedente.Direccion = DireccionEmpresa '_Maeen.Rows(0).Item("DIEN").ToString.Trim ''"3 PONIENTE PARCELA 79-A"
-            _cesion.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.Cedente.eMail = _eMailCedente
-            _cesion.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.Cedente.RUTAutorizado.RUT = _RutAutoriza '"8711086-9"
-            _cesion.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.Cedente.RUTAutorizado.Nombre = _NombreAutoriza '"CARLOS MARCELO CISTERNAS HOCES"
+    '            ' Cedente = Datos del dueño del documento, generalmente es Emisor, a veces no.
+    '            ' Agregar los datos del cedente del documento.
+    '            _cesion.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.Cedente.RUT = _RutCedente '"85904700-9"
+    '            _cesion.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.Cedente.RazonSocial = RazonEmpresa '_Maeen.Rows(0).Item("NOKOEN").ToString.Trim '
+    '            _cesion.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.Cedente.Direccion = DireccionEmpresa '_Maeen.Rows(0).Item("DIEN").ToString.Trim ''"3 PONIENTE PARCELA 79-A"
+    '            _cesion.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.Cedente.eMail = _eMailCedente
+    '            _cesion.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.Cedente.RUTAutorizado.RUT = _RutAutoriza '"8711086-9"
+    '            _cesion.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.Cedente.RUTAutorizado.Nombre = _NombreAutoriza '"CARLOS MARCELO CISTERNAS HOCES"
 
-            ' Agregar los datos del cesionario de documento
-            _cesion.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.Cesionario.RUT = _RutCesionario '"97036000-K"
-            _cesion.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.Cesionario.RazonSocial = _RazonSocialCesionario '"BANCO SANTANDER CHILE"
-            _cesion.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.Cesionario.Direccion = _DireccionCesionario '"BOMBERO OSSA 1068 PISO 5"
-            _cesion.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.Cesionario.eMail = _eMailCesionario '"confirmingvox@santander.cl"
+    '            ' Agregar los datos del cesionario de documento
+    '            _cesion.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.Cesionario.RUT = _RutCesionario '"97036000-K"
+    '            _cesion.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.Cesionario.RazonSocial = _RazonSocialCesionario '"BANCO SANTANDER CHILE"
+    '            _cesion.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.Cesionario.Direccion = _DireccionCesionario '"BOMBERO OSSA 1068 PISO 5"
+    '            _cesion.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.Cesionario.eMail = _eMailCesionario '"confirmingvox@santander.cl"
 
-            Dim _MontoCesion As Double = _Row_DteAec.Item("MontoCesion") '_Maeedo.Rows(0).Item("VABRDO")
-            Dim _FUltimoVencimiento As DateTime = _Row_DteAec.Item("FUltimoVencimiento") '_Maeedo.Rows(0).Item("FEULVEDO") ' FechaDelServidor.ToString("yyyy-MM-ddTHH:mm:ss")
+    '            Dim _MontoCesion As Double = _Row_DteAec.Item("MontoCesion") '_Maeedo.Rows(0).Item("VABRDO")
+    '            Dim _FUltimoVencimiento As DateTime = _Row_DteAec.Item("FUltimoVencimiento") '_Maeedo.Rows(0).Item("FEULVEDO") ' FechaDelServidor.ToString("yyyy-MM-ddTHH:mm:ss")
 
-            ' Datos adicionales de la cesion
-            _cesion.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.MontoCesion = _Maeedo.Rows(0).Item("VABRDO")
-            _cesion.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.UltimoVencimiento = _FUltimoVencimiento.ToString("yyyy-MM-dd")
-            _cesion.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.TmstCesion = _Fecha
+    '            ' Datos adicionales de la cesion
+    '            _cesion.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.MontoCesion = _Maeedo.Rows(0).Item("VABRDO")
+    '            _cesion.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.UltimoVencimiento = _FUltimoVencimiento.ToString("yyyy-MM-dd")
+    '            _cesion.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.TmstCesion = _Fecha
 
-            'Inicie la publicacion del documento
-            _Resp = _cesion.PublicarDocumento()
-            Dim _Id_Trackid As Integer
+    '            'Inicie la publicacion del documento
+    '            _Resp = _cesion.PublicarDocumento()
+    '            Dim _Id_Trackid As Integer
 
-            My.Computer.FileSystem.DeleteFile(_Dir, FileIO.UIOption.OnlyErrorDialogs, FileIO.RecycleOption.DeletePermanently)
+    '            My.Computer.FileSystem.DeleteFile(_Dir, FileIO.UIOption.OnlyErrorDialogs, FileIO.RecycleOption.DeletePermanently)
 
-            If _Resp.EsCorrecto Then
+    '            If _Resp.EsCorrecto Then
 
-                Dim _Xml As String = _Resp.Resultado.ToString()
-                Dim _Trackid As String = _Resp.Trackid
-                Dim _DeclaracionJurada As String = _cesion.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.Cedente.DeclaracionJurada
-                Dim _Respuestas As String = _Resp.Detalle
-                _Resp.Mensaje = _DeclaracionJurada
+    '                Dim _Xml As String = _Resp.Resultado.ToString()
+    '                Dim _Trackid As String = _Resp.Trackid
+    '                Dim _DeclaracionJurada As String = _cesion.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.Cedente.DeclaracionJurada
+    '                Dim _Respuestas As String = _Resp.Detalle
+    '                _Resp.Mensaje = _DeclaracionJurada
 
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Aec Set " &
-                               "Procesar = 0,Procesado = 1,[Xml] = '" & _Xml & "',DeclaracionJurada = '" & _DeclaracionJurada & "'" & vbCrLf &
-                               "Where Id_Aec = " & _Id_Aec
-                _Sql.Ej_consulta_IDU(Consulta_sql)
+    '                Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Aec Set " &
+    '                               "Procesar = 0,Procesado = 1,[Xml] = '" & _Xml & "',DeclaracionJurada = '" & _DeclaracionJurada & "'" & vbCrLf &
+    '                               "Where Id_Aec = " & _Id_Aec
+    '                _Sql.Ej_consulta_IDU(Consulta_sql)
 
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_DTE_Trackid (Idmaeedo,Trackid,Estado,Glosa,Respuesta,FechaEnvSII," &
-                               "AmbienteCertificacion,Procesar,Procesado,Intentos,Id_Aec) Values " &
-                               "(" & _Idmaeedo & ",'" & _Trackid & "','','" & _Respuestas & "','',Getdate()," & _AmbienteCertificacion & ",1,0,0," & _Id_Aec & ")"
-                _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Trackid, False)
-                'File.WriteAllText(_PathCedidas & _Resp.NombreArchivoAec, _Resp.Resultado.ToString(), Encoding.GetEncoding("ISO-8859-1"))
+    '                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_DTE_Trackid (Idmaeedo,Trackid,Estado,Glosa,Respuesta,FechaEnvSII," &
+    '                               "AmbienteCertificacion,Procesar,Procesado,Intentos,Id_Aec) Values " &
+    '                               "(" & _Idmaeedo & ",'" & _Trackid & "','','" & _Respuestas & "','',Getdate()," & _AmbienteCertificacion & ",1,0,0," & _Id_Aec & ")"
+    '                _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Trackid, False)
+    '                'File.WriteAllText(_PathCedidas & _Resp.NombreArchivoAec, _Resp.Resultado.ToString(), Encoding.GetEncoding("ISO-8859-1"))
 
-            Else
-                _Errores.Add(_Resp.Detalle)
-                Throw New System.Exception(_Errores(0))
-            End If
+    '            Else
+    '                _Errores.Add(_Resp.Detalle)
+    '                Throw New System.Exception(_Errores(0))
+    '            End If
 
-        Catch ex As Exception
-            _Resp.EsCorrecto = False
-            _Errores.Add(ex.Message)
-            _Resp.Detalle = _Errores(0)
-        End Try
+    '        Catch ex As Exception
+    '            _Resp.EsCorrecto = False
+    '            _Errores.Add(ex.Message)
+    '            _Resp.Detalle = _Errores(0)
+    '        End Try
 
-#End Region
+    '#End Region
 
-        Return _Resp '_Id_Trackid
+    '        Return _Resp '_Id_Trackid
 
-    End Function
+    '    End Function
 
     Function Fx_GlosaEstados(_Estado As String,
                              ByRef _Aceptado As Integer,

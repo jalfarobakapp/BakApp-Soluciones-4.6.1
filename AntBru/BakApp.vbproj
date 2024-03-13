@@ -1252,6 +1252,10 @@
       <Project>{b9f81bea-c82e-4cda-9d7c-cf0cf634a37b}</Project>
       <Name>Bk_Produccion</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.ACUSE.RECIBO.FACTURA\Hefesto.Acuse.Recibo.Factura.csproj">
+      <Project>{9529083e-df30-4122-a4fc-4ffb214f15b5}</Project>
+      <Name>Hefesto.Acuse.Recibo.Factura</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.CONSULTA.TRACKID\HEFESTO.CONSULTA.TRACKID.csproj">
       <Project>{7eaa3266-f348-45c7-adcb-b4b9efa1e19e}</Project>
       <Name>HEFESTO.CONSULTA.TRACKID</Name>

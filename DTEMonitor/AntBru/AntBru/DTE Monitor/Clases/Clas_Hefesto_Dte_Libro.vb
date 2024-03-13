@@ -1,4 +1,5 @@
-﻿Imports System.Globalization
+﻿Imports System.Collections
+Imports System.Globalization
 Imports System.IO
 Imports System.Text
 Imports DevComponents.DotNetBar
@@ -1277,3 +1278,12 @@ Public Class Clas_Hefesto_Dte_Libro
     End Function
 
 End Class
+
+Namespace DTE_AnoMes
+    Public Class DTE_AnoMes
+
+        Public Property Periodo As String
+        Public Property Mes As String
+
+    End Class
+End Namespace
