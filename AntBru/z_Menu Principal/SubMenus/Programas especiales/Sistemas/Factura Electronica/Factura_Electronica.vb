@@ -29,13 +29,16 @@ Public Class Factura_Electronica
     End Sub
 
     Private Sub Factura_Electronica_Load(sender As Object, e As EventArgs) Handles Me.Load
+
         If _Global_Row_Configuracion_Estacion.Item("FacElect_Usar_AmbienteCertificacion") Then
+
             Dim _BackColor_Tido As Color = Color.FromArgb(235, 81, 13)
             MStb_Barra.BackgroundStyle.BackColor = _BackColor_Tido
             Lbl_Etiqueta.Text = "Ambiente de Certificación y Prueba"
             Btn_Pruebas.Visible = True
+
         End If
-        'Btn_Pruebas.Visible = True
+
     End Sub
 
     Private Sub BtnSalir_Click(sender As Object, e As EventArgs) Handles BtnSalir.Click
@@ -94,9 +97,9 @@ Public Class Factura_Electronica
 
     Private Sub Btn_Pruebas_Click(sender As Object, e As EventArgs) Handles Btn_Pruebas.Click
 
-        Dim Fm As New Frm_FacturacionElectronica
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
+        'Dim Fm As New Frm_FacturacionElectronica
+        'Fm.ShowDialog(Me)
+        'Fm.Dispose()
 
     End Sub
 

@@ -2,12 +2,23 @@
 Imports System.Text
 Imports DevComponents.DotNetBar
 Imports HEFESTO.ENVIO.SETDTE.FORM
+Imports HEFESTO.Acuse.Recibo.Factura
 Imports Ionic.Zip
+Imports HEFESTO.Acuse.Recibo.Factura.Produccion
 
 Public Class Frm_FacturacionElectronica
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
+
+
+    Dim _RutEmisor As String '= _Row_ConfEmpresa.Item("RutEmisor")
+    Dim _RutEnvia As String '= _Row_ConfEmpresa.Item("RutEnvia")
+    Dim _RutReceptor As String '= _Row_ConfEmpresa.Item("RutReceptor")
+    Dim _FchResol As String '= Format(_Row_ConfEmpresa.Item("FchResol"), "yyyy-MM-dd")
+    Dim _NroResol As String '= _Row_ConfEmpresa.Item("NroResol")
+    Dim _TpoDTE As String
+    Dim _Cn As String '= _Row_ConfEmpresa.Item("Cn").ToString.Trim
 
     Public Sub New()
 
@@ -76,6 +87,30 @@ Public Class Frm_FacturacionElectronica
         End If
 
         Chk_AmbienteCertificacion.Checked = _Global_Row_Configuracion_Estacion.Item("FacElect_Usar_AmbienteCertificacion")
+
+
+
+        Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
+                       "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa' And AmbienteCertificacion = " & Convert.ToInt32(Chk_AmbienteCertificacion.Checked)
+        Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        If Not CBool(_Tbl_ConfEmpresa.Rows.Count) Then
+
+        End If
+
+        For Each _Fila As DataRow In _Tbl_ConfEmpresa.Rows
+
+            Dim _Campo As String = _Fila.Item("Campo").ToString.Trim
+
+            If _Campo = "RutEmisor" Then _RutEmisor = _Fila.Item("Valor")
+            If _Campo = "RutEnvia" Then _RutEnvia = _Fila.Item("Valor")
+            If _Campo = "RutReceptor" Then _RutReceptor = _Fila.Item("Valor")
+            If _Campo = "FchResol" Then _FchResol = _Fila.Item("Valor")
+            If _Campo = "NroResol" Then _NroResol = _Fila.Item("Valor")
+            If _Campo = "Cn" Then _Cn = _Fila.Item("Valor")
+
+        Next
 
     End Sub
 
@@ -361,4 +396,17 @@ Public Class Frm_FacturacionElectronica
 
     End Sub
 
+    Private Sub Btn_Acuse_ConsultarVersion_Click(sender As Object, e As EventArgs) Handles Btn_Acuse_ConsultarVersion.Click
+
+        Dim _Acuse As Respuesta = HefAcuseReciboFactura.ConsultarVersion(_Cn)
+
+        Dim _Respuesta As HEFESTO.DTE.AUTENTICACION.ENT.Respuesta =
+            HEFESTO.DTE.AUTENTICACION.LOGIN.Conectar(_Cn, HEFESTO.DTE.AUTENTICACION.SIIAmbiente.Produccion)
+
+        'If _Acuse.EsCorrecto Then
+        MessageBoxEx.Show(Me, _Acuse.Detalle & vbCrLf & _Acuse.Mensaje, "Ok",
+                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+        'End If
+
+    End Sub
 End Class

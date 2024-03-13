@@ -16,6 +16,8 @@ CREATE TABLE [dbo].[Zw_Stk_Tickets_Acciones](
 	[CreaNewTicket]		[bit] NOT NULL DEFAULT (0),
 	[AnulaTicket]		[bit] NOT NULL DEFAULT (0),
 	[CodFunGestiona]	[varchar](3) NOT NULL DEFAULT (''),
+    [Rechazado]			[bit] NOT NULL DEFAULT (0),
+    [Aceptado]			[bit] NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_Stk_Tickets_Acciones] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

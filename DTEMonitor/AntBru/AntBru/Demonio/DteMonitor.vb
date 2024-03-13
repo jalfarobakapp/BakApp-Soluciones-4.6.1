@@ -1,21 +1,21 @@
 ﻿Imports DevComponents.DotNetBar
-Imports BkSpecialPrograms
+'Imports BkSpecialPrograms
 Imports HEFESTO.FIRMA.DOCUMENTO
 
 Public Class DteMonitor
 
-    Dim _Fm_Demonio As Frm_Demonio_01
+    'Dim _Fm_Demonio As Frm_Demonio_01
     Dim _Fm_Demonio_DTEMonitor As Frm_Demonio_DTEMonitor
     Dim _Class_BaseBk As Class_Conectar_Base_BakApp
 
-    Public Property Pro_Fm_Demonio() As Frm_Demonio_01
-        Get
-            Return _Fm_Demonio
-        End Get
-        Set(ByVal value As Frm_Demonio_01)
-            _Fm_Demonio = value
-        End Set
-    End Property
+    'Public Property Pro_Fm_Demonio() As Frm_Demonio_01
+    '    Get
+    '        Return _Fm_Demonio
+    '    End Get
+    '    Set(ByVal value As Frm_Demonio_01)
+    '        _Fm_Demonio = value
+    '    End Set
+    'End Property
 
     Public Property Pro_Frm_Demonio_DTEMonitor() As Frm_Demonio_DTEMonitor
         Get
@@ -33,8 +33,7 @@ Public Class DteMonitor
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        _Version_BkSpecialPrograms = FileVersionInfo.GetVersionInfo _
-                                      (Application.StartupPath & "\BkSpecialPrograms.dll").FileVersion
+        _Version_BkSpecialPrograms = "" 'FileVersionInfo.GetVersionInfo(Application.StartupPath & "\BkSpecialPrograms.dll").FileVersion
 
 
     End Sub

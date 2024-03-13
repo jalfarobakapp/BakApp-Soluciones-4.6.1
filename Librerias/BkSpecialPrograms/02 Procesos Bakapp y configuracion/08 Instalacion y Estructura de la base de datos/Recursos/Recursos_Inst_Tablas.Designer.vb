@@ -1400,6 +1400,27 @@ Namespace My.Resources
         '''<summary>
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
+        '''CREATE TABLE [dbo].[Zw_DTE_ListaEventosDoc](
+        '''	[Id]				[int]           IDENTITY(1,1) NOT NULL,
+        '''	[Id_Dte]			[int]			NOT NULL DEFAULT (0),
+        '''	[Id_Trackid]		[int]			NOT NULL DEFAULT (0),
+        '''	[Idmaeedo]			[int]			NOT NULL DEFAULT (0),
+        '''	[Tido]				[char](3)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Nudo]				[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[CodEvento]			[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[DescEvento]		[varchar](200)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[RutResponsable]	[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[DvRespo [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_DTE_ListaEventosDoc() As String
+            Get
+                Return ResourceManager.GetString("Zw_DTE_ListaEventosDoc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
         '''CREATE TABLE [dbo].[Zw_DTE_NotifxCorreo](
         '''	[Id] [int] IDENTITY(1,1) NOT NULL,
         '''	[Id_Dte]		        [int]          NOT NULL DEFAULT (0),
@@ -2149,7 +2170,7 @@ Namespace My.Resources
         '''	[Id] ASC
         ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
         ''') ON [PRIMARY]
-        '''GO
+        '''
         '''
         '''
         '''
@@ -4215,6 +4236,27 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Zw_Stk_Tickets_Producto() As String
             Get
                 Return ResourceManager.GetString("Zw_Stk_Tickets_Producto", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_Stk_Tickets_Toma](
+        '''	[Id]				[int]			IDENTITY(1,1) NOT NULL,
+        '''	[Id_Ticket]			[int]			NOT NULL DEFAULT (0),
+        '''	[CodFuncionario]	[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[FechaToma]			[datetime]		NULL,
+        '''	[NombreEquipo]		[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        ''' CONSTRAINT [PK_Zw_Stk_Tickets_Toma] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[Id] ASC
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+        ''') ON [PRIMA [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Stk_Tickets_Toma() As String
+            Get
+                Return ResourceManager.GetString("Zw_Stk_Tickets_Toma", resourceCulture)
             End Get
         End Property
         

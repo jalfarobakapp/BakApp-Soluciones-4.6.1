@@ -23,4 +23,7 @@ CREATE TABLE [dbo].[Zw_DTE_Trackid](
     [EnviarMail]          	[bit]          NOT NULL DEFAULT (0),   
     [Intentos]            	[int]          NOT NULL DEFAULT (0),   
     [Id_Aec]            	[int]          NOT NULL DEFAULT (0),   
+    [TieneReclamo]          [bit]          NOT NULL DEFAULT (0),
+	[FechaReclamo]          [datetime]     NULL,
+	[MensajeRegEventosDoc]  [varchar](200) NOT NULL DEFAULT (''),
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]

@@ -1252,6 +1252,50 @@
       <Project>{b9f81bea-c82e-4cda-9d7c-cf0cf634a37b}</Project>
       <Name>Bk_Produccion</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.ACUSE.RECIBO.FACTURA\Hefesto.Acuse.Recibo.Factura.csproj">
+      <Project>{9529083e-df30-4122-a4fc-4ffb214f15b5}</Project>
+      <Name>Hefesto.Acuse.Recibo.Factura</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.CONSULTA.TRACKID\HEFESTO.CONSULTA.TRACKID.csproj">
+      <Project>{7eaa3266-f348-45c7-adcb-b4b9efa1e19e}</Project>
+      <Name>HEFESTO.CONSULTA.TRACKID</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.DTE.ENVIO.SETDTE\HEFESTO.DTE.AUTENTICACION.ENT\HEFESTO.DTE.AUTENTICACION.ENT.csproj">
+      <Project>{6d1e9c54-ba9f-4e37-bbd8-592cfb5ba8c6}</Project>
+      <Name>HEFESTO.DTE.AUTENTICACION.ENT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.DTE.ENVIO.SETDTE\HEFESTO.DTE.AUTENTICACION\HEFESTO.DTE.AUTENTICACION.csproj">
+      <Project>{d6edae47-ae7f-4a42-bc8c-5ee83d5a1e1e}</Project>
+      <Name>HEFESTO.DTE.AUTENTICACION</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.DTE.ENVIO.SETDTE\HEFESTO.ENVIO.SETDTE.CLIENTE\HEFESTO.ENVIO.SETDTE.CLIENTE.csproj">
+      <Project>{0e857171-0fa8-4d20-959d-e2b9555015aa}</Project>
+      <Name>HEFESTO.ENVIO.SETDTE.CLIENTE</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.DTE.ENVIO.SETDTE\HEFESTO.ENVIO.SETDTE.FORM\HEFESTO.ENVIO.SETDTE.FORM.csproj">
+      <Project>{e3e05ec7-7d5e-4d0d-807b-166250c5eebb}</Project>
+      <Name>HEFESTO.ENVIO.SETDTE.FORM</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.FIRMA.DOC.FORM\HEFESTO.FIRMA.DOC.FORM\HEFESTO.FIRMA.DOC.FORM.csproj">
+      <Project>{e30ead6e-db52-4d07-a5d3-37af75b1ec42}</Project>
+      <Name>HEFESTO.FIRMA.DOC.FORM</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.FIRMA.DOC.FORM\HEFESTO.FIRMA.DOCUMENTO\HEFESTO.FIRMA.DOCUMENTO.csproj">
+      <Project>{f9910cdc-2faa-4e71-8f62-cbd1a7ebac89}</Project>
+      <Name>HEFESTO.FIRMA.DOCUMENTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RunDteBK\Factura Electronica DTE Efesto\HefestoCesionV12\HefestoCesionV12.csproj">
+      <Project>{3f91f195-975a-4f79-854b-7026cadb8a67}</Project>
+      <Name>HefestoCesionV12</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RunDteBK\Factura Electronica DTE Efesto\HEFSIILIBDTES BOLETAS ELECTRÓNICAS 2022\HEFSIILIBDTES\HEFSIILIBDTES.csproj">
+      <Project>{ad94e747-4598-499c-8ea3-f6013acffcd5}</Project>
+      <Name>HEFSIILIBDTES</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RunDteBK\Factura Electronica DTE Efesto\HEFSIIREGCOMPRAVENTAS\HEFESTO.SII.V2020.BG.QUERY.LIB\HEFSIIREGCOMPRAVENTAS.LIB.csproj">
+      <Project>{965eb04b-532a-4d19-b2c2-a3f5495cde87}</Project>
+      <Name>HEFSIIREGCOMPRAVENTAS.LIB</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

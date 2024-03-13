@@ -465,12 +465,6 @@
     <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Frm_Dte_ConsumoFolios.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Frm_FacturacionElectronica.Designer.vb">
-      <DependentUpon>Frm_FacturacionElectronica.vb</DependentUpon>
-    </Compile>
-    <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Frm_FacturacionElectronica.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Frm_Folios_Caf.Designer.vb">
       <DependentUpon>Frm_Folios_Caf.vb</DependentUpon>
     </Compile>
@@ -720,6 +714,12 @@
       <DependentUpon>Frm_OfDinamLista.vb</DependentUpon>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Productos\21 Ofertas\Ofertas dinamicas\Frm_OfDinamLista.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\22 Media y promedio de venta\Frm_MediaYPromedioXProd_Estudio.Designer.vb">
+      <DependentUpon>Frm_MediaYPromedioXProd_Estudio.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\22 Media y promedio de venta\Frm_MediaYPromedioXProd_Estudio.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="02 Procesos Bakapp y configuracion\01 Actualizacion BakApp\Clas_Actualiza_BakApp_Sql.vb" />
@@ -1614,12 +1614,6 @@
     </Compile>
     <Compile Include="03 Sistemas\Demonio automatico\Procedimientos\Ds_Config_Picking.vb">
       <DependentUpon>Ds_Config_Picking.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="03 Sistemas\Demonio DTE Monitor\Frm_Demonio_DTEMonitor.Designer.vb">
-      <DependentUpon>Frm_Demonio_DTEMonitor.vb</DependentUpon>
-    </Compile>
-    <Compile Include="03 Sistemas\Demonio DTE Monitor\Frm_Demonio_DTEMonitor.vb">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Despachos\Clases\Clas_Despacho.vb" />
     <Compile Include="03 Sistemas\Despachos\Clases\Clas_Despacho_Fx.vb" />
@@ -4350,9 +4344,6 @@
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Frm_Dte_ConsumoFolios.resx">
       <DependentUpon>Frm_Dte_ConsumoFolios.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Frm_FacturacionElectronica.resx">
-      <DependentUpon>Frm_FacturacionElectronica.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Frm_Folios_Caf.aa.resx">
       <DependentUpon>Frm_Folios_Caf.vb</DependentUpon>
     </EmbeddedResource>
@@ -4478,6 +4469,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Productos\21 Ofertas\Ofertas dinamicas\Frm_OfDinamLista.resx">
       <DependentUpon>Frm_OfDinamLista.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Productos\22 Media y promedio de venta\Frm_MediaYPromedioXProd_Estudio.resx">
+      <DependentUpon>Frm_MediaYPromedioXProd_Estudio.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Frm_Usuarios_Random.resx">
       <DependentUpon>Frm_Usuarios_Random.vb</DependentUpon>
@@ -4918,9 +4912,6 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Recursos_NewDemonio.Designer.vb</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Demonio DTE Monitor\Frm_Demonio_DTEMonitor.resx">
-      <DependentUpon>Frm_Demonio_DTEMonitor.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Despachos\Configuracion\Frm_Despacho_Configuracion.resx">
       <DependentUpon>Frm_Despacho_Configuracion.vb</DependentUpon>
@@ -7738,6 +7729,7 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_DTE_Configuracion.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_DTE_Documentos.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_DTE_Firmar.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_DTE_ListaEventosDoc.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_DTE_NotifxCorreo.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_DTE_ReccDet.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_DTE_ReccEnc.sql" />
@@ -7853,6 +7845,7 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stk_Tickets_Asignado.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stk_Tickets_PorDefecto.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stk_Tickets_Producto.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stk_Tickets_Toma.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stk_Tipos.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stk_Tipos_Grupos.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_St_Conf_Info_Reportes.sql" />
@@ -8066,41 +8059,9 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.CONSULTA.TRACKID\HEFESTO.CONSULTA.TRACKID.csproj">
-      <Project>{7eaa3266-f348-45c7-adcb-b4b9efa1e19e}</Project>
-      <Name>HEFESTO.CONSULTA.TRACKID</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.DTE.ENVIO.SETDTE\HEFESTO.DTE.AUTENTICACION.ENT\HEFESTO.DTE.AUTENTICACION.ENT.csproj">
-      <Project>{6d1e9c54-ba9f-4e37-bbd8-592cfb5ba8c6}</Project>
-      <Name>HEFESTO.DTE.AUTENTICACION.ENT</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.DTE.ENVIO.SETDTE\HEFESTO.DTE.AUTENTICACION\HEFESTO.DTE.AUTENTICACION.csproj">
-      <Project>{d6edae47-ae7f-4a42-bc8c-5ee83d5a1e1e}</Project>
-      <Name>HEFESTO.DTE.AUTENTICACION</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.DTE.ENVIO.SETDTE\HEFESTO.ENVIO.SETDTE.CLIENTE\HEFESTO.ENVIO.SETDTE.CLIENTE.csproj">
-      <Project>{0e857171-0fa8-4d20-959d-e2b9555015aa}</Project>
-      <Name>HEFESTO.ENVIO.SETDTE.CLIENTE</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.DTE.ENVIO.SETDTE\HEFESTO.ENVIO.SETDTE.FORM\HEFESTO.ENVIO.SETDTE.FORM.csproj">
-      <Project>{e3e05ec7-7d5e-4d0d-807b-166250c5eebb}</Project>
-      <Name>HEFESTO.ENVIO.SETDTE.FORM</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.FIRMA.DOC.FORM\HEFESTO.FIRMA.DOC.FORM\HEFESTO.FIRMA.DOC.FORM.csproj">
-      <Project>{e30ead6e-db52-4d07-a5d3-37af75b1ec42}</Project>
-      <Name>HEFESTO.FIRMA.DOC.FORM</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.FIRMA.DOC.FORM\HEFESTO.FIRMA.DOCUMENTO\HEFESTO.FIRMA.DOCUMENTO.csproj">
-      <Project>{f9910cdc-2faa-4e71-8f62-cbd1a7ebac89}</Project>
-      <Name>HEFESTO.FIRMA.DOCUMENTO</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\RunDteBK\Factura Electronica DTE Efesto\HefestoCesionV12\HefestoCesionV12.csproj">
-      <Project>{3f91f195-975a-4f79-854b-7026cadb8a67}</Project>
-      <Name>HefestoCesionV12</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\RunDteBK\Factura Electronica DTE Efesto\HEFSIILIBDTES BOLETAS ELECTRÓNICAS 2022\HEFSIILIBDTES\HEFSIILIBDTES.csproj">
-      <Project>{ad94e747-4598-499c-8ea3-f6013acffcd5}</Project>
-      <Name>HEFSIILIBDTES</Name>
+    <ProjectReference Include="..\..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.ACUSE.RECIBO.FACTURA\Hefesto.Acuse.Recibo.Factura.csproj">
+      <Project>{9529083e-df30-4122-a4fc-4ffb214f15b5}</Project>
+      <Name>Hefesto.Acuse.Recibo.Factura</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\RunDteBK\Factura Electronica DTE Efesto\HEFSIIREGCOMPRAVENTAS\HEFESTO.SII.V2020.BG.QUERY.LIB\HEFSIIREGCOMPRAVENTAS.LIB.csproj">
       <Project>{965eb04b-532a-4d19-b2c2-a3f5495cde87}</Project>
@@ -8164,6 +8125,7 @@
   <ItemGroup>
     <Folder Include="01 Procesos  compartidos\Productos\01 Buscar productos\New ProdFind\" />
     <Folder Include="03 Sistemas\Comisiones\Recursos\" />
+    <Folder Include="03 Sistemas\Demonio DTE Monitor\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -7,30 +7,30 @@ Public Module Clas_Demonio
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_Sql As String
 
-    Function Fx_Equipo_Registrado(ByVal _NombreEquipo As String) As Boolean
+    'Function Fx_Equipo_Registrado(ByVal _NombreEquipo As String) As Boolean
 
-        Dim _Registro As New Frm_Licencia_Empresa
-        KeyReg = UCase(Trim(RutEmpresa) & "@" & _NombreEquipo)
-        KeyReg = Encripta_md5(KeyReg)
+    '    Dim _Registro As New Frm_Licencia_Empresa
+    '    KeyReg = UCase(Trim(RutEmpresa) & "@" & _NombreEquipo)
+    '    KeyReg = Encripta_md5(KeyReg)
 
 
-        Dim _RegKeyReg As Boolean = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_EstacionesBkp",
-                                                           "NombreEquipo = '" & _NombreEquipo & "'"))
+    '    Dim _RegKeyReg As Boolean = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_EstacionesBkp",
+    '                                                       "NombreEquipo = '" & _NombreEquipo & "'"))
 
-        If _RegKeyReg Then
-            Return True
-        Else
+    '    If _RegKeyReg Then
+    '        Return True
+    '    Else
 
-            MessageBoxEx.Show(DteMonitor, "Esta estación de trabajo no esta registrada, debe registrar", "Registro de estación",
-                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+    '        MessageBoxEx.Show(DteMonitor, "Esta estación de trabajo no esta registrada, debe registrar", "Registro de estación",
+    '                          MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
-            Dim FmReg As New Frm_RegistrarEquipo(Frm_RegistrarEquipo.Enum_Accion.Nuevo, 0, False)
-            FmReg.ShowDialog(DteMonitor)
-            FmReg.Dispose()
+    '        Dim FmReg As New Frm_RegistrarEquipo(Frm_RegistrarEquipo.Enum_Accion.Nuevo, 0, False)
+    '        FmReg.ShowDialog(DteMonitor)
+    '        FmReg.Dispose()
 
-        End If
+    '    End If
 
-    End Function
+    'End Function
 
     Sub Sb_Sistema_Demonio_DTE(_Formulario As Form)
 
@@ -73,7 +73,16 @@ Public Module Clas_Demonio
 
         End If
 
-        Dim _Dir_Local As String = Application.StartupPath & "\Data\"
+        Dim _Dir_Local As String = Application.StartupPath '& "\Data\"
+
+        Dim infoDirectorio As New DirectoryInfo(_Dir_Local)
+        ' Obtener el directorio padre
+        Dim directorioPadre As DirectoryInfo = infoDirectorio.Parent
+
+        ' Si necesitas la ruta como string
+        Dim rutaDirectorioPadre As String = directorioPadre.FullName
+        _Dir_Local = rutaDirectorioPadre & "\Data\"
+
         Dim _Row_Nom_Equipo As DataRow
 
         Dim _Nombre_Equipo As String = My.Computer.Name
@@ -91,7 +100,7 @@ Public Module Clas_Demonio
             End
         End If
 
-        Dim _Mi_IP = getIp()
+        Dim _Mi_IP '= getIp()
         _Nombre_Equipo = _Row_Nom_Equipo.Item("Nombre_Equipo") 'UCase(System.Net.Dns.GetHostName)
 
         Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_EstacionesBkp Where NombreEquipo = '" & _Nombre_Equipo & "'"

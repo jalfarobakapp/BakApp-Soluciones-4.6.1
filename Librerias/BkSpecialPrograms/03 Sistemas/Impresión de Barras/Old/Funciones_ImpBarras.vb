@@ -918,10 +918,10 @@
                           _Id_Tarja As Integer)
 
 
-        Consulta_sql = "Select Trj.*,Isnull(Anl.NombreTabla,'') As 'Analista_Str',Isnull(Plt.NombreTabla,'') As 'Planta_Str'" &
+        Consulta_sql = "Select Trj.*,Isnull(Tf.NOKOFU,'') As 'Analista_Str',Isnull(Plt.NombreTabla,'') As 'Planta_Str'" &
                        ",Isnull(Trn.NombreTabla,'') As 'Turno_Str',Substring(Lote,1,3) As Lote3,Substring(Lote,1,4) As Lote4,Substring(Lote,1,5) As Lote5" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja Trj" & vbCrLf &
-                       "Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Anl On Anl.Tabla = 'TARJA_ANALISTA' And Anl.CodigoTabla = Analista" & vbCrLf &
+                       "Left Join TABFU Tf On Tf.KOFU = Analista" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Plt On Plt.Tabla = 'TARJA_PLANTA' And Plt.CodigoTabla = Planta" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Trn On Trn.Tabla = 'TARJA_TURNO' And Trn.CodigoTabla = Turno" & vbCrLf &
                        "Where Id = " & _Id_Tarja

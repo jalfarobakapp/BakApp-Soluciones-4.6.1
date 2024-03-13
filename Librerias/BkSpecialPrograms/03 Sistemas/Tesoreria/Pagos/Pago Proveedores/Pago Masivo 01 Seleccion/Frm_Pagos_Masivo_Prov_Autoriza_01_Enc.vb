@@ -23,6 +23,7 @@ Public Class Frm_Pagos_Masivo_Prov_Autoriza_01_Enc
     End Sub
 
     Private Sub Frm_Pagos_Masivo_Encabezado_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
         Sb_Actualizar_Grilla()
 
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown

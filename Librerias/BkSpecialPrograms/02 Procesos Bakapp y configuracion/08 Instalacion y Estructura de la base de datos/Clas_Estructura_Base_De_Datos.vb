@@ -734,6 +734,8 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_DTE_ReccEnc
             Case "Zw_DTE_ReccDet"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_DTE_ReccDet
+            Case "Zw_DTE_ListaEventosDoc"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_DTE_ListaEventosDoc
 
             Case "Zw_Empresas"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Empresas
@@ -1034,6 +1036,8 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Stk_Tipos
             Case "Zw_Stk_Tipos_Grupos"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Stk_Tipos_Grupos
+            Case "Zw_Stk_Tickets_Toma"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Stk_Tickets_Toma
 
             Case "Zw_TablaDeCaracterizaciones"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_TablaDeCaracterizaciones

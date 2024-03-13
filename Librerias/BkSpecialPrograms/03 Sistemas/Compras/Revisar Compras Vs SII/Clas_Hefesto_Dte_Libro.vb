@@ -10,6 +10,7 @@ Public Class Clas_Hefesto_Dte_Libro
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
+
     Dim _Directorio_Hefesto As String = AppPath() & "\Data\Hefesto_Dte"
 
     Dim _Circular_Progres_Val As New CircularProgress
@@ -771,7 +772,7 @@ Public Class Clas_Hefesto_Dte_Libro
                 _Razon_Social = Replace(_Fila.Item("RazonSocial"), "'", "")
                 _Folio = _Fila.Item("Folio")
 
-                If _Folio = 1048013 Then
+                If _Folio = 1139 Then
                     Dim a = 0
                 End If
                 'If _Compras_Pendientes Then

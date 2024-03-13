@@ -390,6 +390,8 @@ Public Class Frm_InvMargenes_
             .Columns("Porc_Markup").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
+            .Refresh()
+
         End With
 
     End Sub
@@ -453,6 +455,8 @@ Public Class Frm_InvMargenes_
             .Columns("Porc_Markup").Visible = True
             .Columns("Porc_Markup").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
+
+            .Refresh()
 
         End With
 
@@ -523,6 +527,8 @@ Public Class Frm_InvMargenes_
             .Columns("Porc_Markup").Visible = True
             .Columns("Porc_Markup").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
+
+            .Refresh()
 
         End With
 
@@ -987,9 +993,9 @@ Public Class Frm_InvMargenes_
             Sb_Formato_Grilla_Asociaciones()
             Sb_Formato_Grilla_Vendedores()
             Sb_Formato_Grilla_Super_Familias()
-            Sb_Formato_Grilla_Empresa()
-            Sb_Formato_Grilla_Sucursal_Linea()
-            Sb_Formato_Grilla_Bodega()
+            'Sb_Formato_Grilla_Empresa()
+            'Sb_Formato_Grilla_Sucursal_Linea()
+            'Sb_Formato_Grilla_Bodega()
 
             Fm_Espera.Dispose()
 
@@ -1484,5 +1490,17 @@ Public Class Frm_InvMargenes_
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
+    End Sub
+
+    Private Sub Tab_Empresa_Click(sender As Object, e As EventArgs) Handles Tab_Empresa.Click
+        Sb_Formato_Grilla_Empresa()
+    End Sub
+
+    Private Sub Tab_Sucursal_Detalle_Click(sender As Object, e As EventArgs) Handles Tab_Sucursal_Detalle.Click
+        Sb_Formato_Grilla_Sucursal_Linea()
+    End Sub
+
+    Private Sub Tab_Bodega_Click(sender As Object, e As EventArgs) Handles Tab_Bodega.Click
+        Sb_Formato_Grilla_Bodega()
     End Sub
 End Class
