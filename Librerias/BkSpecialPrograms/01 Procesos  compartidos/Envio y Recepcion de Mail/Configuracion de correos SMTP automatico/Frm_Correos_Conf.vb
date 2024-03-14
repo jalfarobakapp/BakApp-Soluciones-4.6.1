@@ -381,6 +381,9 @@ Public Class Frm_Correos_Conf
                 Next
             End If
 
+            '_EnableSsl = True
+            '_Puerto = 465
+
             'Configuracion del servidor
             Dim Servidor As New System.Net.Mail.SmtpClient
             Servidor.EnableSsl = _EnableSsl

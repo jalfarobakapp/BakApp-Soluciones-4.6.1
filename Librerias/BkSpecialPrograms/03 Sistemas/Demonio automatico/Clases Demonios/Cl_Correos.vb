@@ -291,7 +291,7 @@ Public Class Cl_Correos
         Consulta_Sql = "Select Top " & CantMmail & " *,Isnull(NOKOFU,'Funcionario?????') As 'Nombre_Funcionario'" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo" & vbCrLf &
                        "Left Join TABFU On KOFU = CodFuncionario" & vbCrLf &
-                       "Where Enviar = 1 And Enviado = 0 And NombreEquipo In ('','" & _Nombre_Equipo & "') " & _Filtro_Fecha_Enviar & vbCrLf &
+                       "Where Enviar = 1 And Enviado = 0 And NombreEquipo In ('','" & _Nombre_Equipo & "')" & _Filtro_Fecha_Enviar & vbCrLf &
                        "Order By Intentos, Id"
 
         _Tbl_Correos = _Sql.Fx_Get_Tablas(Consulta_Sql)

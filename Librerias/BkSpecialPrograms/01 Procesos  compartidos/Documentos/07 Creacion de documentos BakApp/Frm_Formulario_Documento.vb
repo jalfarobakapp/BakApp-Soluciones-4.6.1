@@ -4379,8 +4379,17 @@ Public Class Frm_Formulario_Documento
         Dim _Sucursal = _Fila.Cells("Sucursal").Value
         Dim _Bodega = _Fila.Cells("Bodega").Value
 
+        Dim _Noaplica_Imp As String = String.Empty
+
+        If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta Then
+            _Noaplica_Imp = " And NOAPLICEN Not like '%ventas%'"
+            If _Tido = "BLV" Then
+                _Noaplica_Imp = " And NOAPLICEN Not like '%BSV,BLV%'"
+            End If
+        End If
+
         Consulta_sql = "Select Isnull(Sum(POIM),0) As Impuesto From TABIM" & Space(1) &
-                       "Where KOIM In (Select KOIM From TABIMPR Where KOPR = '" & _Codigo & "')"
+                       "Where KOIM In (Select KOIM From TABIMPR Where KOPR = '" & _Codigo & "'" & _Noaplica_Imp & ")"
         _RowImpuestos = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Dim _ExisteCosto As Boolean = CBool(_Sql.Fx_Cuenta_Registros("TABPRE", "KOLT = '" & _ListaCostos & "' And KOPR = '" & _Codigo & "'"))
@@ -6291,7 +6300,16 @@ Public Class Frm_Formulario_Documento
 
             If _PorIla > 0 Then
 
-                Consulta_sql = "Select KOIM,POIM From TABIM Where KOIM IN (Select KOIM From TABIMPR Where KOPR = '" & _Codigo & "')"
+                Dim _Noaplica_Imp As String = String.Empty
+
+                If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta Then
+                    _Noaplica_Imp = " And NOAPLICEN Not like '%ventas%'"
+                    If _Tido = "BLV" Then
+                        _Noaplica_Imp = " And NOAPLICEN Not like '%BSV,BLV%'"
+                    End If
+                End If
+
+                Consulta_sql = "Select KOIM,POIM From TABIM Where KOIM IN (Select KOIM From TABIMPR Where KOPR = '" & _Codigo & "'" & _Noaplica_Imp & ")"
                 Dim _TblIla As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
                 If CBool(_TblIla.Rows.Count) Then

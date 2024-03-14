@@ -2531,6 +2531,27 @@ Namespace My.Resources
         '''<summary>
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
+        '''CREATE TABLE [dbo].[Zw_Pdp_CPT_Tarja_Det](
+        '''	[Id]						[int] IDENTITY(1,1) NOT NULL,
+        '''	[Id_CPT]					[int] NOT NULL Default(0),
+        '''	[Nro_Tipo]					[varchar](10) NULL,
+        '''	[Idmaeddo]					[int] NOT NULL Default(0),
+        '''	[Nro_CPT]					[varchar](10) NOT NULL Default(&apos;&apos;),
+        '''	[Lote]						[varchar](20) NOT NULL Default(&apos;&apos;),
+        '''	[Tipo]						[varchar](10) NOT NULL Default(&apos;&apos;),
+        '''	[Nro]						[int] NOT NULL Default(0),
+        '''	[Codigo]					[varchar](13) NOT NULL Default(&apos;&apos;),
+        '''	[CodAlternativo]			[varchar](21) NOT NULL D [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Pdp_CPT_Tarja_Det() As String
+            Get
+                Return ResourceManager.GetString("Zw_Pdp_CPT_Tarja_Det", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
         '''
         '''CREATE TABLE [dbo].[Zw_Pdp_MaquinaVsProductos](
         '''	[IdMaquina]             [int] IDENTITY(1,1) NOT NULL,

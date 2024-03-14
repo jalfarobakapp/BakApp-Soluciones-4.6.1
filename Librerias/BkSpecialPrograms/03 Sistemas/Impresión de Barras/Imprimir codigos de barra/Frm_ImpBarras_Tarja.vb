@@ -203,6 +203,8 @@ Public Class Frm_ImpBarras_Tarja
 
     Sub Sb_Imprimir_Etiquetas()
 
+        Dim _Veces_Origen = _Veces
+
         Try
 
             _Puerto = CmbPuerto.SelectedValue
@@ -266,24 +268,86 @@ Public Class Frm_ImpBarras_Tarja
 
             If _Veces < 1 Then _Veces = 1
 
-            For w = 1 To _Veces
+            Dim _Id_CPT = _Row_Tarja.Item("Id")
+            Dim _Lote = _Row_Tarja.Item("Lote")
+            Dim _Nro_CPT = _Row_Tarja.Item("Nro_CPT")
+            Dim _Tbl_Tarja_Det As DataTable
 
-                Dim _Imp As New Class_Imprimir_Barras
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja_Det Where Id_CPT = " & _Id_CPT ' --Nro_CPT = '" & _Nro_CPT & "' And Lote = '" & _Lote & "'"
+            _Tbl_Tarja_Det = _Sql.Fx_Get_Tablas(Consulta_sql)
 
-                _Imp.Sb_Imprimir_Tarja(Cmbetiquetas.SelectedValue, _Puerto, ModEmpresa, _Row_Tarja.Item("Id"))
+            Dim _Veces2 As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones",
+                                   "Valor", "Tabla = 'TARJA_MULTIMPETIQU' And CodigoTabla = '" & Lbl_Tipo.Text & "'", True, False)
 
-                If Not String.IsNullOrEmpty(_Imp.Error) Then
-                    If MessageBoxEx.Show(Me, _Imp.Error, "Problema al imprimir", MessageBoxButtons.OKCancel, MessageBoxIcon.Stop) <> DialogResult.OK Then
+            If CBool(_Tbl_Tarja_Det.Rows.Count) Then
+
+                Dim _Nro = _Tbl_Tarja_Det.Rows(0).Item("Nro")
+                Dim _Pri_Nro = _Nro
+                Dim _Ult_Nro = _Tbl_Tarja_Det.Rows(_Tbl_Tarja_Det.Rows.Count - 1).Item("Nro")
+                Dim _Contar = 1
+
+                If _Veces = _CantPorLinea Then
+
+                    _Aceptar = InputBox_Bk(Me, "Ingrese el numero del PALLET a imprimir" & vbCrLf &
+                                           "El número de Pallet va del " & _Nro & " al " & _Ult_Nro,
+                                           "Imprimir Etiquetas", _Nro, False,, 2, True, _Tipo_Imagen.Barra,,
+                                           _Tipo_Caracter.Solo_Numeros_Enteros, False)
+
+                    If Not _Aceptar Then
                         Return
                     End If
+
+                    If _Nro < _Pri_Nro Or _Nro > _Ult_Nro Then
+                        MessageBoxEx.Show(Me, "No existe el Pallet número [" & _Nro & "] en esta Tarja",
+                                          "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        Return
+                    End If
+
                 End If
 
-            Next
+                For w = 1 To _Veces
+
+                    Dim _Imp As New Class_Imprimir_Barras
+
+                    _Imp.Sb_Imprimir_Tarja_Detalle_Pallet(Cmbetiquetas.SelectedValue, _Puerto, ModEmpresa, _Row_Tarja.Item("Id"), _Nro)
+
+                    If _Contar = _Veces2 Then
+                        _Nro += 1
+                        _Contar = 1
+                    Else
+                        _Contar += 1
+                    End If
+
+                    If Not String.IsNullOrEmpty(_Imp.Error) Then
+                        If MessageBoxEx.Show(Me, _Imp.Error, "Problema al imprimir", MessageBoxButtons.OKCancel, MessageBoxIcon.Stop) <> DialogResult.OK Then
+                            Return
+                        End If
+                    End If
+
+                Next
+
+            Else
+
+                For w = 1 To _Veces
+
+                    Dim _Imp As New Class_Imprimir_Barras
+
+                    _Imp.Sb_Imprimir_Tarja(Cmbetiquetas.SelectedValue, _Puerto, ModEmpresa, _Row_Tarja.Item("Id"))
+
+                    If Not String.IsNullOrEmpty(_Imp.Error) Then
+                        If MessageBoxEx.Show(Me, _Imp.Error, "Problema al imprimir", MessageBoxButtons.OKCancel, MessageBoxIcon.Stop) <> DialogResult.OK Then
+                            Return
+                        End If
+                    End If
+
+                Next
+
+            End If
 
         Catch ex As Exception
             MessageBoxEx.Show(Me, ex.Message, "Problema al imprimir", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         Finally
-
+            _Veces = _Veces_Origen
         End Try
 
     End Sub

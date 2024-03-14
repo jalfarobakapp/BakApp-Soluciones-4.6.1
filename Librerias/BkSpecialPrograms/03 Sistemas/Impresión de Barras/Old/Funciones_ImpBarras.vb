@@ -920,11 +920,98 @@
 
         Consulta_sql = "Select Trj.*,Isnull(Tf.NOKOFU,'') As 'Analista_Str',Isnull(Plt.NombreTabla,'') As 'Planta_Str'" &
                        ",Isnull(Trn.NombreTabla,'') As 'Turno_Str',Substring(Lote,1,3) As Lote3,Substring(Lote,1,4) As Lote4,Substring(Lote,1,5) As Lote5" & vbCrLf &
+                       ",'' As 'Nro_Tipo','' As 'Nro','' As 'Nro_Pallet','' As 'Max_Nro_Tipo'" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja Trj" & vbCrLf &
                        "Left Join TABFU Tf On Tf.KOFU = Analista" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Plt On Plt.Tabla = 'TARJA_PLANTA' And Plt.CodigoTabla = Planta" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Trn On Trn.Tabla = 'TARJA_TURNO' And Trn.CodigoTabla = Turno" & vbCrLf &
                        "Where Id = " & _Id_Tarja
+
+        Dim _Row_Tarja As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql) ' Fx_Datos_Ubicacion(_Empresa, _Sucursal, _Bodega, _Id_Mapa, _Codigo_Sector, _CodUbicacion)
+
+        Dim _Fecha_impresion As Date = Now
+        Dim _RowEtiqueta As DataRow = Fx_TraeEtiqueta(_NombreEtiqueta)
+
+        Dim _Texto = _RowEtiqueta.Item("FUNCION")
+
+        Dim _FechaStr As String = _Fecha_impresion.ToString("yyMMdd_HHmmss") ' Format(_Fecha_impresion, "yyMMdd:hhmmss")
+
+        Dim _TRJ_ETQ_Nro_CPT As String = "<TRJ>" & _Row_Tarja.Item("Nro_CPT") & "</TRJ><END>"
+        Dim _TRJ_ETQ_Nro_CPT_FFHH1 As String = "<TRJ>" & _Row_Tarja.Item("Nro_CPT") & "</TRJ>" & _FechaStr.ToString.Trim & "<END>"
+        Dim _TRJ_FechaElab2 As String = FormatDateTime(_Row_Tarja.Item("FechaElab"), DateFormat.ShortDate)
+
+        _Texto = Replace(_Texto, "<TRJ_ETQ_Nro_CPT>", _TRJ_ETQ_Nro_CPT.Trim)
+        _Texto = Replace(_Texto, "<TRJ_ETQ_Nro_CPT_FFHH1>", _TRJ_ETQ_Nro_CPT_FFHH1.Trim)
+        _Texto = Replace(_Texto, "<TRJ_FechaElab2>", _TRJ_FechaElab2.Trim)
+
+        Dim _Funciones As New List(Of String)
+        Sb_Llenar_Listado_Funciones(0, _Texto, _Funciones)
+
+        ' Encabezado
+        For Each _Funcion As String In _Funciones
+
+            For Each _Columna As DataColumn In _Row_Tarja.Table.Columns
+
+                If _Funcion.Contains(_Columna.ColumnName) Then
+
+                    '_Funcion = "TRJ_" & _Funcion
+
+                    Dim _Funcion_Buscar = "<" & _Funcion & ">"
+                    Dim _Valor_Funcion = Fx_Parametro_Vs_Variable(_Funcion_Buscar, _Row_Tarja, "TRJ_")
+
+                    If _Funcion_Buscar = "<barcode>" Then
+                        Dim _New_Valor_Funcion = Mid(_Valor_Funcion, 1, 22) & ">6" & Mid(_Valor_Funcion, 23, 1)
+                        _Valor_Funcion = _New_Valor_Funcion
+                        '60503035247121012939710
+                    End If
+                    _Texto = Replace(_Texto, _Funcion_Buscar, _Valor_Funcion)
+                    Exit For
+
+                End If
+
+            Next
+
+        Next
+
+        _Codigo_principal = _Row_Tarja.Item("Codigo")
+        _Codigo_Alternativo = _Row_Tarja.Item("CodAlternativo")
+
+        Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo_principal & "'"
+        Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        _Codigo_tecnico = _RowProducto.Item("KOPRTE")
+        _Codigo_rapido = _RowProducto.Item("KOPRRA")
+        _Descripcion = _RowProducto.Item("NOKOPR").ToString.Trim
+        _Descripcion_Corta = _RowProducto.Item("NOKOPRRA").ToString.Trim
+
+        _Ud1 = _RowProducto.Item("UD01PR").ToString.Trim
+        _Ud2 = _RowProducto.Item("UD02PR").ToString.Trim
+
+        _Descripcion = Replace(_Descripcion, Chr(34), "")
+        _Desc0125 = Mid(_Descripcion, 1, 25)
+        _Desc2650 = Mid(_Descripcion, 26, 50)
+
+        Sb_Imprimir_PRN(_Texto, _Puerto)
+
+    End Sub
+
+    Sub Sb_Imprimir_Tarja_Detalle_Pallet(_NombreEtiqueta As String,
+                                         _Puerto As String,
+                                         _Empresa As String,
+                                         _Id_Tarja As Integer,
+                                         _Nro As Integer)
+
+
+        Consulta_sql = "Select Trj.*,Isnull(Tf.NOKOFU,'') As 'Analista_Str',Isnull(Plt.NombreTabla,'') As 'Planta_Str'" &
+                       ",Isnull(Trn.NombreTabla,'') As 'Turno_Str'," & vbCrLf &
+                       "Substring(Trj.Lote,1,3) As Lote3,Substring(Trj.Lote,1,4) As Lote4,Substring(Trj.Lote,1,5) As Lote5," & vbCrLf &
+                       "Det.Nro_Tipo,Det.Nro,Det.Nro As 'Nro_Pallet',(Select MAX(Nro) From BAKAPP_CISTERNASR.dbo.Zw_Pdp_CPT_Tarja_Det Dt Where Dt.Lote = Trj.Lote) As 'Max_Nro_Tipo'" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja Trj" & vbCrLf &
+                       "Inner Join " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja_Det Det On Trj.Id = Det.Id_CPT And Nro = " & _Nro & vbCrLf &
+                       "Left Join TABFU Tf On Tf.KOFU = Analista" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Plt On Plt.Tabla = 'TARJA_PLANTA' And Plt.CodigoTabla = Planta" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Trn On Trn.Tabla = 'TARJA_TURNO' And Trn.CodigoTabla = Turno" & vbCrLf &
+                       "Where Trj.Id = " & _Id_Tarja
 
         Dim _Row_Tarja As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql) ' Fx_Datos_Ubicacion(_Empresa, _Sucursal, _Bodega, _Id_Mapa, _Codigo_Sector, _CodUbicacion)
 
@@ -1365,8 +1452,8 @@
             _PrecioListaUd1 = Fx_Funcion_Ecuacion_Random(Nothing, _CodEntidad, _Ecuacion, _Codigo, 1, _RowPrecios, 0, 0, 0)
             _PrecioListaUd2 = Fx_Funcion_Ecuacion_Random(Nothing, _CodEntidad, _Ecuacionu2, _Codigo, 2, _RowPrecios, 0, 0, 0)
 
-            If _PrecioListaUd1 = 0 Then _PrecioListaUd1 = _RowPrecios.Item("PP01UD")
-            If _PrecioListaUd2 = 0 Then _PrecioListaUd1 = _RowPrecios.Item("PP02UD")
+            If _PrecioListaUd1 = 0 Then _PrecioListaUd1 = NuloPorNro(_RowPrecios.Item("PP01UD"), 0)
+            If _PrecioListaUd2 = 0 Then _PrecioListaUd1 = NuloPorNro(_RowPrecios.Item("PP02UD"), 0)
 
         End If
 
