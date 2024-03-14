@@ -155,11 +155,11 @@ Public Class Frm_ImpBarras_ListaEtiquetas
 
                 OcultarEncabezadoGrilla(Grilla)
 
-                .Columns("Semilla").Width = 30
+                .Columns("Semilla").Width = 40
                 .Columns("Semilla").HeaderText = "ID"
                 .Columns("Semilla").Visible = True
 
-                .Columns("NombreEtiqueta").Width = 420 - 30
+                .Columns("NombreEtiqueta").Width = 420 - 40
                 .Columns("NombreEtiqueta").HeaderText = "Nombre etiqueta"
                 .Columns("NombreEtiqueta").Visible = True
 

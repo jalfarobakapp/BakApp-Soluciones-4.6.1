@@ -230,6 +230,7 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Pdp_MaquinaVsProductos", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Pdp_MesonVsProductos", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Pdp_CPT_Tarja", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Pdp_CPT_Tarja_Det", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Pdp_MesonVsProductos_Repro", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Pdp_OT_Prioridad", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Pdp_MesonVsAlertas", _Modificar, Lbl_Eventos)

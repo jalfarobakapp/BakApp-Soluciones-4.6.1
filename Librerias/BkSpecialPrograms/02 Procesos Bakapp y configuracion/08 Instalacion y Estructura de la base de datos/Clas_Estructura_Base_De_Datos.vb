@@ -840,6 +840,8 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Pdc_MesonVsOperario
             Case "Zw_Pdp_CPT_Tarja"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Pdp_CPT_Tarja
+            Case "Zw_Pdp_CPT_Tarja_Det"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Pdp_CPT_Tarja_Det
             Case "Zw_Pdp_MaquinaVsProductos"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Pdp_MaquinaVsProductos
             Case "Zw_Pdp_MesonVsProductos"

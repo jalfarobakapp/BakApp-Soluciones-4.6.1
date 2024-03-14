@@ -131,6 +131,14 @@
     <Reference Include="Google.Protobuf, Version=3.21.9.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Google.Protobuf.3.21.9\lib\net45\Google.Protobuf.dll</HintPath>
     </Reference>
+    <Reference Include="Hefesto.Acuse.Recibo.Factura, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.ACUSE.RECIBO.FACTURA\bin\Debug\Hefesto.Acuse.Recibo.Factura.dll</HintPath>
+    </Reference>
+    <Reference Include="HEFSIIREGCOMPRAVENTAS, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RunDteBK\Factura Electronica DTE Efesto\HEFSIIREGCOMPRAVENTAS\HEFESTO.SII.V2020.BG.QUERY.LIB\bin\Debug\HEFSIIREGCOMPRAVENTAS.dll</HintPath>
+    </Reference>
     <Reference Include="Interop.ZKFPEngXControl">
       <HintPath>..\..\..\OneDrive\Desarrollos BakApp\.Net Librerias especiales\Interop.ZKFPEngXControl.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -7782,6 +7790,7 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Pdc_MesonVsMaquina.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Pdc_MesonVsOperario.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Pdp_CPT_Tarja.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Pdp_CPT_Tarja_Det.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Pdp_MaquinaVsProductos.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Pdp_MesonVsAlertas.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Pdp_MesonVsAlertas_Lectura.sql" />
@@ -8057,16 +8066,6 @@
   </ItemGroup>
   <ItemGroup>
     <WebReferences Include="Web References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.ACUSE.RECIBO.FACTURA\Hefesto.Acuse.Recibo.Factura.csproj">
-      <Project>{9529083e-df30-4122-a4fc-4ffb214f15b5}</Project>
-      <Name>Hefesto.Acuse.Recibo.Factura</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\RunDteBK\Factura Electronica DTE Efesto\HEFSIIREGCOMPRAVENTAS\HEFESTO.SII.V2020.BG.QUERY.LIB\HEFSIIREGCOMPRAVENTAS.LIB.csproj">
-      <Project>{965eb04b-532a-4d19-b2c2-a3f5495cde87}</Project>
-      <Name>HEFSIIREGCOMPRAVENTAS.LIB</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">

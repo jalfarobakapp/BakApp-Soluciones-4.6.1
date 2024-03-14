@@ -400,6 +400,9 @@ Public Class Frm_GRI_FabXProducto
 
     Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
 
+        Sb_Grabar()
+
+        Return
         If String.IsNullOrEmpty(Txt_Numot.Text) Then
             MessageBoxEx.Show(Me, "Falta la OT", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
@@ -944,6 +947,240 @@ Public Class Frm_GRI_FabXProducto
             Txt_Numot.Text = _Numot
             Sb_BuscarOt(_Numot)
         End If
+
+    End Sub
+
+    Sub Sb_Grabar()
+
+        If String.IsNullOrEmpty(Txt_Numot.Text) Then
+            MessageBoxEx.Show(Me, "Falta la OT", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If IsNothing(_Row_Maepr) Then
+            MessageBoxEx.Show(Me, "Falta el producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _New_Idmaeedo As Integer
+        Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+        Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _Koen As String = _Row_Configp.Item("RUT").ToString.Trim
+        Dim _Observaciones As String
+
+        Consulta_sql = "Select Top 1 * From MAEEN Where KOEN = '" & _Koen & "'"
+        Dim _Row_Entidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _Cantidad As String = De_Num_a_Tx_01(Txt_Cantidad.Tag, False, 5)
+
+        Dim _Ud2 As String = _Row_Maepr.Item("UD02PR")
+        Dim _Cantidadv As Double = Txt_Cantidad.Tag
+        Dim _Rtu As Double = _Row_Maepr.Item("RLUD")
+        Dim _Resultado As Double = _Cantidadv / _Rtu
+
+        If _Cantidadv = 0 Then
+            MessageBoxEx.Show(Me, "Debe ingresar la cantidad", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Cantidad.Focus()
+            Return
+        End If
+
+        If (_Cantidadv + _Row_Potl.Item("REALIZADO")) > _Row_Potl.Item("FABRICAR") Then
+            MessageBoxEx.Show(Me, "Usted no puede recepcionar más que el SALDO indicado en la orden", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Cantidad.Focus()
+            Return
+        End If
+
+        If Not (_Resultado Mod 1 = 0) Then
+            MessageBoxEx.Show(Me, "La cantidad ingresada no es divisible por la unidad 2 " & _Ud2 & "-" & _Rtu, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Cantidad.Focus()
+            Return
+        End If
+
+        If String.IsNullOrEmpty(Txt_NroLote.Text) Then
+            MessageBoxEx.Show(Me, "Falta el numero de lote", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_NroLote.Focus()
+            Return
+        End If
+
+        If String.IsNullOrEmpty(Txt_Turno.Text) Then
+            MessageBoxEx.Show(Me, "Falta el turno", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Turno.Focus()
+            Return
+        End If
+
+        If String.IsNullOrEmpty(Txt_Planta.Text) Then
+            MessageBoxEx.Show(Me, "Falta la planta", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Planta.Focus()
+            Return
+        End If
+
+        If String.IsNullOrEmpty(Txt_Descripcion_Kopral.Text) Then
+            MessageBoxEx.Show(Me, "Falta el pallet", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Descripcion_Kopral.Focus()
+            Return
+        End If
+
+        If String.IsNullOrEmpty(Txt_Analista.Text) Then
+            MessageBoxEx.Show(Me, "Falta el analista", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Analista.Focus()
+            Return
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Confirma la grabación por " & _Cl_Tarja._Cl_Tarja_Ent.CantidadTipo & " (" & _Cl_Tarja._Cl_Tarja_Ent.Tipo & ") " & vbCrLf &
+                                "Equivalente a " & Txt_Cantidad.Text & " " & LabelX3.Text & "?",
+                             "Confirmar Grabación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Txt_Cantidad.Focus()
+            Return
+        End If
+
+        _Cl_Tarja._Cl_Tarja_Ent.Codigo = _Row_Maepr.Item("KOPR")
+        _Cl_Tarja._Cl_Tarja_Ent.FechaElab = Dtp_Fecha_Ingreso.Value
+        _Cl_Tarja._Cl_Tarja_Ent.Observaciones = Txt_Observaciones.Text
+        _Cl_Tarja._Cl_Tarja_Ent.Udm = Cmb_Formato.Text
+        '_Cl_Tarja._Cl_Tarja_Ent.Descripcion_Kopral = Txt_Descripcion_Kopral.Text
+
+        If Cmb_Formato.SelectedValue = 1 Then
+            _Cl_Tarja._Cl_Tarja_Ent.Formato = 1
+        Else
+            _Cl_Tarja._Cl_Tarja_Ent.Formato = _Row_Maepr.Item("RLUD")
+        End If
+
+        If _Cl_Tarja._Cl_Tarja_Ent.Tipo = "PALLET" Then
+
+            _Cl_Tarja._Cl_Tarja_Det.Clear()
+
+            For i = 1 To _Cl_Tarja._Cl_Tarja_Ent.CantidadTipo
+
+                Dim _Tj_Det As New Cl_Tarja_Ent.CPT_Tarja_Det
+
+                _Tj_Det.Idmaeddo = 0
+                _Tj_Det.Tipo = _Cl_Tarja._Cl_Tarja_Ent.Tipo
+                _Tj_Det.Nro = i
+                _Tj_Det.Lote = String.Empty
+                _Tj_Det.Nro_CPT = String.Empty
+                _Tj_Det.Codigo = _Cl_Tarja._Cl_Tarja_Ent.Codigo
+                _Tj_Det.CodAlternativo = _Cl_Tarja._Cl_Tarja_Ent.CodAlternativo
+                _Tj_Det.CodAlternativo_Pallet = _Cl_Tarja._Cl_Tarja_Ent.CodAlternativo_Pallet
+
+                _Cl_Tarja._Cl_Tarja_Det.Add(_Tj_Det)
+
+            Next
+
+        End If
+
+
+        _Cl_Tarja._Cl_Tarja_Ent.Idmaeddo = 0
+
+        Dim _Cl_Tarja_Ent As New Cl_Tarja_Ent.Mensaje_Tarja
+        _Cl_Tarja_Ent = _Cl_Tarja.Fx_Grabar_Tarja2()
+
+
+
+
+
+        Consulta_sql = "Select *," & _Cantidad & " As Cantidad,'" & ModSucursal & "' As Sucursal,'" & ModBodega & "' As Bodega" & vbCrLf &
+                       "From POTL Where IDPOTL = " & _Row_Potl.Item("IDPOTL")
+        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        Me.Enabled = False
+        Dim Fm_Espera As New Frm_Form_Esperar
+        Fm_Espera.Pro_Texto = "GRABANDO DATOS DE FABRICACION, POR FAVOR ESPERE"
+        Fm_Espera.BarraCircular.IsRunning = True
+        Fm_Espera.Show()
+
+        Dim _FechaEmision As DateTime
+
+        If Chk_FechaEmiFiot.Checked Then
+            _FechaEmision = Dtp_Fiot.Value
+        Else
+            _FechaEmision = Dtp_Fecha_Ingreso.Value
+        End If
+
+        Dim Fm As New Frm_Formulario_Documento("GRI", csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Recepcion_Interna,
+                                               False, False, False, False, False, False)
+
+        Fm.Pro_RowEntidad = _Row_Entidad
+        Fm.Sb_Crear_Documento_Interno_Con_Tabla3Potl(Me, _Tbl_Productos, _FechaEmision, "CODIGO", "Cantidad", "C_FABRIC", _Observaciones, False, False, 1)
+        _New_Idmaeedo = Fm.Fx_Grabar_Documento(False)
+        Fm.Dispose()
+
+        If Not CBool(_New_Idmaeedo) Then
+            Fm_Espera.Close()
+            Fm_Espera.Dispose()
+            Fm_Espera = Nothing
+            Me.Enabled = True
+            Me.Refresh()
+            Return
+        End If
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Lotes_Enc Where NroLote = '" & Txt_NroLote.Text & "'"
+        Dim _Row_Lote As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Consulta_sql = "Select top 1 IDMAEDDO,NUDO From MAEDDO Where IDMAEEDO = " & _New_Idmaeedo
+        Dim _Row_Maeddo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _Nudo As String = _Row_Maeddo.Item("NUDO")
+        Dim _Id_Lote As Integer = _Row_Lote.Item("Id_Lote")
+        Dim _NroLote As String = _Row_Lote.Item("NroLote")
+        Dim _NomTabla As String = "MAEDDO"
+        Dim _Idmaeddo As Integer = _Row_Maeddo.Item("IDMAEDDO")
+
+        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Lotes_Det (Id_Lote,NroLote,NomTabla,IdTabla) Values " &
+                       "(" & _Id_Lote & ",'" & _NroLote & "','" & _NomTabla & "'," & _Idmaeddo & ")"
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+
+        _Cl_Tarja._Cl_Tarja_Ent.Idmaeddo = _Idmaeddo
+        _Cl_Tarja._Cl_Tarja_Ent.Lote = _NroLote
+
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja Set " & vbCrLf &
+                       "Idmaeddo = " & _Idmaeddo &
+                       ",Lote = '" & _Cl_Tarja._Cl_Tarja_Ent.Lote & "'" & vbCrLf &
+                       "Where Id = " & _Cl_Tarja._Cl_Tarja_Ent.Id &
+                       vbCrLf &
+                       "Update " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja_Det Set " & vbCrLf &
+                       "Idmaeddo = " & _Idmaeddo &
+                       ",Lote = '" & _Cl_Tarja._Cl_Tarja_Ent.Lote & "'" & vbCrLf &
+                       "Where Id_CPT = " & _Cl_Tarja._Cl_Tarja_Ent.Id
+
+        _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+        Fm_Espera.Close()
+        Fm_Espera.Dispose()
+        Fm_Espera = Nothing
+
+        Sb_Actualizar_Parametros_SQL(True)
+
+        MessageBoxEx.Show(Me, "Datos de fabricación ingresados correctamente con el Nro de GRI: " & _Nudo & vbCrLf &
+                          "Tarja ingresada Nro: " & _Cl_Tarja._Cl_Tarja_Ent.Nro_CPT, "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Me.Enabled = True
+        Me.Refresh()
+
+        'Sb_Imprimir_Documento(Me, _New_Idmaeedo, False, Modalidad)
+
+        Dim Fmt As New Frm_ImpBarras_Tarja
+        Fmt.Txt_Nro_CPT.Text = _Cl_Tarja._Cl_Tarja_Ent.Nro_CPT
+        Fmt.ShowDialog(Me)
+
+        Dim _Numot = String.Empty
+
+        If _Cl_Tarja._Cl_Tarja_Ent.Tipo = "MAXI-SACO" Then
+            _Numot = Txt_Numot.Text
+        End If
+
+        Sb_Limpiar()
+
+        Txt_Numot.Text = _Numot
+
+        If Not String.IsNullOrEmpty(_Numot) Then
+            Txt_Numot.Focus()
+        End If
+
+        ' Falta agregar los siguientes campos
+        ' MAEEDO: NUVEDO = 0,ESFADO = '',DESPACHO = 0
+        ' MAEDDO: ARCHIRST = 'POTL' OPERACION,PPOPPR = 0, COSTOTRIB y COSTOIFRS = VANELI,TAMOPPPR = 0,TASADORIG = 0
+
 
     End Sub
 
