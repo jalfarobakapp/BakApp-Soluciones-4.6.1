@@ -2196,6 +2196,13 @@
     <Compile Include="03 Sistemas\Servicio Tecnico\Ingreso Varios\Frm_St_EncIngreso.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Clase\Cl_Stem.vb" />
+    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stem_Listado.Designer.vb">
+      <DependentUpon>Frm_Stem_Listado.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stem_Listado.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Sistema WMS\Gestión WMS\Clases\Cl_Documento_Wms.vb" />
     <Compile Include="03 Sistemas\Sistema WMS\Gestión WMS\Formularios\Frm_WMS_Documento.Designer.vb">
       <DependentUpon>Frm_WMS_Documento.vb</DependentUpon>
@@ -5272,6 +5279,9 @@
     <EmbeddedResource Include="03 Sistemas\Servicio Tecnico\Ingreso Varios\Frm_St_EncIngreso.resx">
       <DependentUpon>Frm_St_EncIngreso.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stem_Listado.resx">
+      <DependentUpon>Frm_Stem_Listado.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Frm_Formulario_Diseno_Mapa_Crear_Sector.resx">
       <DependentUpon>Frm_Formulario_Diseno_Mapa_Crear_Sector.vb</DependentUpon>
     </EmbeddedResource>
@@ -8125,6 +8135,7 @@
     <Folder Include="01 Procesos  compartidos\Productos\01 Buscar productos\New ProdFind\" />
     <Folder Include="03 Sistemas\Comisiones\Recursos\" />
     <Folder Include="03 Sistemas\Demonio DTE Monitor\" />
+    <Folder Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Configuracion\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

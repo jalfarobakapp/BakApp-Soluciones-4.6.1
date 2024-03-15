@@ -4381,10 +4381,12 @@ Public Class Frm_Formulario_Documento
 
         Dim _Noaplica_Imp As String = String.Empty
 
-        If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta Then
-            _Noaplica_Imp = " And NOAPLICEN Not like '%ventas%'"
-            If _Tido = "BLV" Then
-                _Noaplica_Imp = " And NOAPLICEN Not like '%BSV,BLV%'"
+        If _Sql.Fx_Exite_Campo("TABIMPR", "NOAPLICEN") Then
+            If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta Then
+                _Noaplica_Imp = " And NOAPLICEN Not like '%ventas%'"
+                If _Tido = "BLV" Then
+                    _Noaplica_Imp = " And NOAPLICEN Not like '%BSV,BLV%'"
+                End If
             End If
         End If
 
@@ -6302,10 +6304,12 @@ Public Class Frm_Formulario_Documento
 
                 Dim _Noaplica_Imp As String = String.Empty
 
-                If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta Then
-                    _Noaplica_Imp = " And NOAPLICEN Not like '%ventas%'"
-                    If _Tido = "BLV" Then
-                        _Noaplica_Imp = " And NOAPLICEN Not like '%BSV,BLV%'"
+                If _Sql.Fx_Exite_Campo("TABIMPR", "NOAPLICEN") Then
+                    If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta Then
+                        _Noaplica_Imp = " And NOAPLICEN Not like '%ventas%'"
+                        If _Tido = "BLV" Then
+                            _Noaplica_Imp = " And NOAPLICEN Not like '%BSV,BLV%'"
+                        End If
                     End If
                 End If
 

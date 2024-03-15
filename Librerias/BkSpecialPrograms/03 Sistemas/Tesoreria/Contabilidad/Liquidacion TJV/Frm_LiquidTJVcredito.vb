@@ -34,6 +34,7 @@ Public Class Frm_LiquidTJVcredito
 
         AddHandler Chk_MostrarSoloIncluidos.CheckedChanged, AddressOf Sb_Chk_MostrarSoloIncluidos_CheckedChanged
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+        AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_Areas_MouseDown
 
         Call Btn_Limpiar_Click(Nothing, Nothing)
 
@@ -210,7 +211,7 @@ Public Class Frm_LiquidTJVcredito
             .Columns("TIDP").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("CUDP").Width = 80
+            .Columns("CUDP").Width = 110
             .Columns("CUDP").HeaderText = "Nro.Cuenta"
             .Columns("CUDP").Visible = True
             .Columns("CUDP").ToolTipText = "Número de la cuenta"
@@ -238,7 +239,7 @@ Public Class Frm_LiquidTJVcredito
             .Columns("ENDP").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("NomCliente").Width = 190
+            .Columns("NomCliente").Width = 160
             .Columns("NomCliente").HeaderText = "Nombre cliente tarjeta"
             .Columns("NomCliente").Visible = True
             .Columns("NomCliente").DisplayIndex = _DisplayIndex
@@ -653,6 +654,102 @@ Public Class Frm_LiquidTJVcredito
         Next
 
         Txt_TotalValSelec.Text = FormatNumber(Txt_TotalValSelec.Tag, 0)
+
+    End Sub
+
+    Private Sub Sb_Grilla_Areas_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
+        If e.Button = Windows.Forms.MouseButtons.Right Then
+            With sender
+                Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
+                If Hitest.Type = DataGridViewHitTestType.Cell Then
+                    .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
+                    ShowContextMenu(Menu_Contextual_01)
+                End If
+            End With
+        End If
+    End Sub
+
+    Private Sub Btn_Mnu_EditarCuenta_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_EditarCuenta.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Espr0034") Then
+            Return
+        End If
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+
+        Dim _Idmaedpce As Integer = _Fila.Cells("IDMAEDPCE").Value
+        Dim _Cudp As String = _Fila.Cells("CUDP").Value.ToString.Trim
+        Dim _Cudp_Old As String = _Cudp
+        Dim _Aceptar As Boolean
+
+        _Aceptar = InputBox_Bk(Me, "Ingrese el nuevo número de cuenta" & vbCrLf & "Máximo 16 caracteres",
+                               "Cambiar número de cuenta",
+                               _Cudp,
+                               False,
+                               _Tipo_Mayus_Minus.Normal,
+                               16,
+                               True,
+                               _Tipo_Imagen.Cheque_Numero,, _Tipo_Caracter.Solo_Numeros_Enteros)
+
+        If Not _Aceptar Then
+            Return
+        End If
+
+        If _Cudp = _Cudp_Old Then
+            Return
+        End If
+
+        Consulta_sql = "Update MAEDPCE Set CUDP = '" & _Cudp & "' Where IDMAEDPCE = " & _Idmaedpce
+
+        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+
+            _Fila.Cells("CUDP").Value = _Cudp
+            MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Cambiar número de cuenta",
+                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        End If
+
+    End Sub
+
+    Private Sub Btn_Mnu_EditarNumero_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_EditarNumero.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Espr0034") Then
+            Return
+        End If
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+
+        Dim _Idmaedpce As Integer = _Fila.Cells("IDMAEDPCE").Value
+        Dim _Nucudp As String = _Fila.Cells("NUCUDP").Value.ToString.Trim
+        Dim _Nucudp_Old As String = _Nucudp
+        Dim _Aceptar As Boolean
+
+        _Aceptar = InputBox_Bk(Me, "Ingrese el nuevo número del documento de pago" & vbCrLf & "Máximo 8 caracteres",
+                               "Cambiar número de documento",
+                               _Nucudp,
+                               False,
+                               _Tipo_Mayus_Minus.Normal,
+                               8,
+                               True,
+                               _Tipo_Imagen.Cheque_Numero,, _Tipo_Caracter.Solo_Numeros_Enteros)
+
+        If Not _Aceptar Then
+            Return
+        End If
+
+        If _Nucudp = _Nucudp_Old Then
+            Return
+        End If
+
+        Consulta_sql = "Update MAEDPCE Set NUCUDP = '" & _Nucudp & "' Where IDMAEDPCE = " & _Idmaedpce
+
+        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+
+            _Fila.Cells("NUCUDP").Value = _Nucudp
+            MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Cambiar número de documento",
+                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        End If
 
     End Sub
 

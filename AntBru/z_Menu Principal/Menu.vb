@@ -890,4 +890,11 @@ Public Class Menu
 
     End Sub
 
+    Private Sub Btn_Stem_Click(sender As Object, e As EventArgs) Handles Btn_Stem.Click
+
+        Dim Fm As New Frm_Stem_Listado
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
 End Class

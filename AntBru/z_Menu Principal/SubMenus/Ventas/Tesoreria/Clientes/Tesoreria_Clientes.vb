@@ -59,6 +59,10 @@ Public Class Tesoreria_Clientes
 
     Private Sub Btn_Liquidacion_TJV_Credito_Click(sender As Object, e As EventArgs) Handles Btn_Liquidacion_TJV_Credito.Click
 
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Cont0001") Then
+            Return
+        End If
+
         If Fx_Revisar_Taza_Cambio(_Fm_Menu_Padre,, True) Then
 
             Dim Fm As New Frm_LiquidTJVcredito
