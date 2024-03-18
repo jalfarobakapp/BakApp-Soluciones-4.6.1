@@ -132,6 +132,127 @@ Public Class Cl_Stem
 
     End Function
 
+    Function Fx_Revisar_NVV(_Tido As String, _Nudo As String) As Mensaje_Stem
+
+        Dim _Id_Enc As Integer
+        Dim _Idmaeedo As Integer
+        Dim _Row_Enc As DataRow
+
+        Dim _Mensaje_Stem As New Stem_BD.Mensaje_Stem
+
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+        Dim Cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
+
+        Try
+
+            _Mensaje_Stem.EsCorrecto = False
+
+            Consulta_sql = "Select SEnc.*,ESDO From " & _Global_BaseBk & "Zw_Stem_Enc SEnc " & vbCrLf &
+                           "Inner Join MAEEDO On IDMAEEDO = Idmaeedo" & vbCrLf &
+                           "Where Tido = '" & _Tido & "' And Nudo = '" & _Nudo & "'"
+            _Row_Enc = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_Row_Enc) Then
+                Throw New System.Exception("No se encontro el documento " & _Tido & "-" & _Nudo & " en el Sistema")
+            End If
+
+            If _Row_Enc.Item("ESDO") = "N" Then
+                Throw New System.Exception("Documento NULO en el Sistema")
+            End If
+
+            If _Row_Enc.Item("Estado") <> "PREPA" Then
+                Throw New System.Exception("Acción disponible solo para documentos en estado (PREPA) Preparación.")
+            End If
+
+            _Id_Enc = _Row_Enc.Item("Id")
+            _Idmaeedo = _Row_Enc.Item("Idmaeedo")
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stem_Det Where Idmaeedo = " & _Idmaeedo
+            Dim _Tbl_Det As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+            If Not CBool(_Tbl_Det.Rows.Count) Then
+                Throw New System.Exception("No se encontro el detalle del documento en la tabla Zw_Stem_Det")
+            End If
+
+            myTrans = Cn2.BeginTransaction()
+
+            Dim _Ct_Pickados = 0
+            Dim _Ct_EnProceso = 0
+
+            For Each _Fila As DataRow In _Tbl_Det.Rows
+
+                Dim _Id_Det As Integer = _Fila.Item("Id")
+                Dim _Pickeado As Boolean = _Fila.Item("Pickeado")
+                Dim _EnProceso As Boolean = _Fila.Item("EnProceso")
+
+                If _Pickeado Then
+
+                    _Ct_Pickados += 1
+                    _EnProceso = False
+
+                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stem_Det Set " & vbCrLf &
+                                   "EnProceso = 0" & vbCrLf &
+                                   "Where Id = " & _Id_Det
+
+                    Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                    Comando.Transaction = myTrans
+                    Comando.ExecuteNonQuery()
+
+                End If
+
+                If _EnProceso Then
+                    _Ct_EnProceso += 1
+                End If
+
+            Next
+
+            If _Tbl_Det.Rows.Count = _Ct_Pickados Then
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stem_Enc Set " & vbCrLf &
+                               "Completado = 1,Estado = 'COMPL'" & vbCrLf &
+                               "Where Id = " & _Id_Enc
+
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+                _Mensaje_Stem.EsCorrecto = True
+                _Mensaje_Stem.Mensaje = "Documento completado"
+
+            Else
+
+                Throw New System.Exception("Faltan " & _Ct_EnProceso & " producto(s) por procesar." & vbCrLf &
+                                           "Producto procesados: " & _Ct_Pickados)
+
+            End If
+
+            _Mensaje_Stem.EsCorrecto = True
+
+            myTrans.Commit()
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+        Catch ex As Exception
+
+            _Mensaje_Stem.EsCorrecto = False
+            _Mensaje_Stem.Mensaje = ex.Message
+
+            If Not IsNothing(myTrans) Then
+                myTrans.Rollback()
+            End If
+
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+        End Try
+
+        Return _Mensaje_Stem
+
+    End Function
+
 End Class
 
 Namespace Stem_BD

@@ -83,7 +83,8 @@ Public Class Frm_Formulario_Stand_By
                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Casi_DocEnc" & vbCrLf &
                                "Where Id_DocEnc Not In (Select Id_Casi_DocEnc From " & _Global_BaseBk & "Zw_Remotas)" & Environment.NewLine &
                                "And Empresa = '" & ModEmpresa & "' And Stand_by = 1" & Environment.NewLine &
-                                _Condicion
+                                _Condicion & vbCrLf &
+                                "Order by FechaEmision"
 
             Case Tipo_Visualizacion.Mostrar_Numeros_Reservado_OCC
 
@@ -94,7 +95,8 @@ Public Class Frm_Formulario_Stand_By
                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Casi_DocEnc" & vbCrLf &
                                "Where Id_DocEnc Not In (Select Id_Casi_DocEnc From " & _Global_BaseBk & "Zw_Remotas)" & Environment.NewLine &
                                "And Empresa = '" & ModEmpresa & "' And Reserva_NroOCC = 1" & Environment.NewLine &
-                                _Condicion
+                                _Condicion & vbCrLf &
+                                "Order by FechaEmision"
 
         End Select
 
@@ -104,7 +106,7 @@ Public Class Frm_Formulario_Stand_By
 
             .DataSource = _TblDocumentos
 
-            OcultarEncabezadoGrilla(Grilla, True)
+            OcultarEncabezadoGrilla(Grilla, False)
 
             .Columns("TipoDoc").Visible = True
             .Columns("TipoDoc").HeaderText = "Tipo"
@@ -118,7 +120,7 @@ Public Class Frm_Formulario_Stand_By
 
             .Columns("CodEntidad").Visible = True
             .Columns("CodEntidad").HeaderText = "Entidad"
-            .Columns("CodEntidad").Width = 70
+            .Columns("CodEntidad").Width = 75
             .Columns("CodEntidad").DisplayIndex = 2
 
             .Columns("CodSucEntidad").Visible = True

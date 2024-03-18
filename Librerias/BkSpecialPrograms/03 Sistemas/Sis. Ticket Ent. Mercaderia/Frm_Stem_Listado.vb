@@ -65,7 +65,7 @@ Public Class Frm_Stem_Listado
                        "Case Estado " & vbCrLf &
                        "When 'PREPA' Then 'Preparación...'" & vbCrLf &
                        "When 'COMPL' Then 'Completada'" & vbCrLf &
-                       "When 'FACTU' Then 'Facturación'" & vbCrLf &
+                       "When 'FACTU' Then Case TipoPago When 'Contado' Then 'Facturada, pase por CAJA...' When 'Credito' Then 'Facturada, pase a DESPACHO EN BODEGA...' End" & vbCrLf &
                        "When 'CERRA' Then 'Cerrada'" & vbCrLf &
                        "When 'NULO' Then 'Nula'" & vbCrLf &
                        "End As 'Estado_Str'" & vbCrLf &
@@ -147,7 +147,7 @@ Public Class Frm_Stem_Listado
             .Columns("Estado_Str").Visible = True
             .Columns("Estado_Str").HeaderText = "Estado"
             '.Columns("NOKOEN").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("Estado_Str").Width = 200
+            .Columns("Estado_Str").Width = 300
             .Columns("Estado_Str").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -349,4 +349,31 @@ Public Class Frm_Stem_Listado
     Private Sub Btn_Actualizar_Click(sender As Object, e As EventArgs) Handles Btn_Actualizar.Click
         Sb_Actualizar_Grilla()
     End Sub
+
+    Private Sub Btn_RevisarTicket_Click(sender As Object, e As EventArgs) Handles Btn_RevisarTicket.Click
+
+        Dim _Nudo As String
+        Dim _Aceptar As Boolean = InputBox_Bk(Me, "Ingrese el numero de nota de venta a recisar",
+                                              "Revisar detalle NVV", _Nudo, False, _Tipo_Mayus_Minus.Normal, 10, True)
+
+        If Not _Aceptar Then
+            Return
+        End If
+
+        _Nudo = Fx_Rellena_ceros(_Nudo, 10)
+
+        Dim _Cl_Stem As New Cl_Stem
+        Dim _Mensaje_Stem As New Stem_BD.Mensaje_Stem
+        _Mensaje_Stem = _Cl_Stem.Fx_Revisar_NVV("NVV", _Nudo)
+
+        If _Mensaje_Stem.EsCorrecto Then
+            MessageBoxEx.Show(Me, _Mensaje_Stem.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Else
+            MessageBoxEx.Show(Me, _Mensaje_Stem.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End If
+
+        Sb_Actualizar_Grilla()
+
+    End Sub
+
 End Class
