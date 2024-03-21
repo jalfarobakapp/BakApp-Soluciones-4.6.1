@@ -2797,6 +2797,8 @@ Public Class Frm_Ver_Documento
                 Dim _Asunto = _Row_Correo.Item("Asunto")
                 Dim _CuerpoMensaje = _Row_Correo.Item("CuerpoMensaje")
 
+                _CuerpoMensaje = Replace(_CuerpoMensaje, "'", "''")
+
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo" & Space(1) &
                                 "(NombreEquipo,Nombre_Correo,CodFuncionario,Asunto,Para,Cc,Idmaeedo," &
                                 "Tido,Nudo,NombreFormato,Enviar,Intentos,Enviado,Adjuntar_Documento,Mensaje,Fecha,Para_Maeenmail) " & vbCrLf &

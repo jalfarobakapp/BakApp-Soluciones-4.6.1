@@ -1,9 +1,9 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class Frm_Stem_Listado
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class Frm_Stmp_Listado
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,21 +20,20 @@ Partial Class Frm_Stem_Listado
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Stem_Listado))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Stmp_Listado))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Super_TabS = New DevComponents.DotNetBar.SuperTabStrip()
-        Me.Tab_TodasActivas = New DevComponents.DotNetBar.SuperTabItem()
-        Me.Tab_ActivasRechazadas = New DevComponents.DotNetBar.SuperTabItem()
+        Me.Tab_Preparacion = New DevComponents.DotNetBar.SuperTabItem()
+        Me.Tab_Completadas = New DevComponents.DotNetBar.SuperTabItem()
+        Me.Tab_Facturadas = New DevComponents.DotNetBar.SuperTabItem()
         Me.Tab_Cerradas = New DevComponents.DotNetBar.SuperTabItem()
-        Me.Tab_CerradasAceptadas = New DevComponents.DotNetBar.SuperTabItem()
-        Me.Tab_CerradasRechazadas = New DevComponents.DotNetBar.SuperTabItem()
-        Me.Tab_Nulas = New DevComponents.DotNetBar.SuperTabItem()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
+        Me.Btn_CargarNVVFechaDespHoy = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Crear_Ticket = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_RevisarTicket = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
@@ -85,51 +84,39 @@ Partial Class Frm_Stem_Listado
         Me.Super_TabS.TabCloseButtonHot = Nothing
         Me.Super_TabS.TabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Super_TabS.TabIndex = 169
-        Me.Super_TabS.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Tab_TodasActivas, Me.Tab_ActivasRechazadas, Me.Tab_Cerradas, Me.Tab_CerradasAceptadas, Me.Tab_CerradasRechazadas, Me.Tab_Nulas})
+        Me.Super_TabS.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Tab_Preparacion, Me.Tab_Completadas, Me.Tab_Facturadas, Me.Tab_Cerradas})
         Me.Super_TabS.Text = "Nulas"
         '
-        'Tab_TodasActivas
+        'Tab_Preparacion
         '
-        Me.Tab_TodasActivas.GlobalItem = False
-        Me.Tab_TodasActivas.Name = "Tab_TodasActivas"
-        Me.Tab_TodasActivas.Text = "Todas las activas"
+        Me.Tab_Preparacion.GlobalItem = False
+        Me.Tab_Preparacion.Name = "Tab_Preparacion"
+        Me.Tab_Preparacion.Text = "En preparación"
         '
-        'Tab_ActivasRechazadas
+        'Tab_Completadas
         '
-        Me.Tab_ActivasRechazadas.GlobalItem = False
-        Me.Tab_ActivasRechazadas.Name = "Tab_ActivasRechazadas"
-        Me.Tab_ActivasRechazadas.Text = "Activas (rechazadas)"
+        Me.Tab_Completadas.GlobalItem = False
+        Me.Tab_Completadas.Name = "Tab_Completadas"
+        Me.Tab_Completadas.Text = "Completadas"
+        '
+        'Tab_Facturadas
+        '
+        Me.Tab_Facturadas.GlobalItem = False
+        Me.Tab_Facturadas.Name = "Tab_Facturadas"
+        Me.Tab_Facturadas.Text = "Facturadas"
         '
         'Tab_Cerradas
         '
         Me.Tab_Cerradas.GlobalItem = False
         Me.Tab_Cerradas.Name = "Tab_Cerradas"
-        Me.Tab_Cerradas.Text = "Cerradas"
-        '
-        'Tab_CerradasAceptadas
-        '
-        Me.Tab_CerradasAceptadas.GlobalItem = False
-        Me.Tab_CerradasAceptadas.Name = "Tab_CerradasAceptadas"
-        Me.Tab_CerradasAceptadas.Text = "Cerrdas (Aceptadas)"
-        '
-        'Tab_CerradasRechazadas
-        '
-        Me.Tab_CerradasRechazadas.GlobalItem = False
-        Me.Tab_CerradasRechazadas.Name = "Tab_CerradasRechazadas"
-        Me.Tab_CerradasRechazadas.Text = "Cerrdas (Rechazadas)"
-        '
-        'Tab_Nulas
-        '
-        Me.Tab_Nulas.GlobalItem = False
-        Me.Tab_Nulas.Name = "Tab_Nulas"
-        Me.Tab_Nulas.Text = "Nulas"
+        Me.Tab_Cerradas.Text = "Cerradas hoy"
         '
         'Bar2
         '
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Crear_Ticket, Me.Btn_RevisarTicket, Me.Btn_Actualizar})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_CargarNVVFechaDespHoy, Me.Btn_Crear_Ticket, Me.Btn_RevisarTicket, Me.Btn_Actualizar})
         Me.Bar2.Location = New System.Drawing.Point(0, 569)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(1210, 41)
@@ -138,6 +125,16 @@ Partial Class Frm_Stem_Listado
         Me.Bar2.TabIndex = 166
         Me.Bar2.TabStop = False
         Me.Bar2.Text = "Bar2"
+        '
+        'Btn_CargarNVVFechaDespHoy
+        '
+        Me.Btn_CargarNVVFechaDespHoy.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_CargarNVVFechaDespHoy.ForeColor = System.Drawing.Color.Black
+        Me.Btn_CargarNVVFechaDespHoy.Image = CType(resources.GetObject("Btn_CargarNVVFechaDespHoy.Image"), System.Drawing.Image)
+        Me.Btn_CargarNVVFechaDespHoy.ImageAlt = CType(resources.GetObject("Btn_CargarNVVFechaDespHoy.ImageAlt"), System.Drawing.Image)
+        Me.Btn_CargarNVVFechaDespHoy.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_CargarNVVFechaDespHoy.Name = "Btn_CargarNVVFechaDespHoy"
+        Me.Btn_CargarNVVFechaDespHoy.Tooltip = "Traer todos las NVV con fecha de despacho de hoy"
         '
         'Btn_Crear_Ticket
         '
@@ -215,7 +212,7 @@ Partial Class Frm_Stem_Listado
         Me.Menu_Contextual.AntiAlias = True
         Me.Menu_Contextual.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
-        Me.Menu_Contextual.Location = New System.Drawing.Point(33, 108)
+        Me.Menu_Contextual.Location = New System.Drawing.Point(28, 47)
         Me.Menu_Contextual.Name = "Menu_Contextual"
         Me.Menu_Contextual.Size = New System.Drawing.Size(412, 25)
         Me.Menu_Contextual.Stretch = True
@@ -337,7 +334,7 @@ Partial Class Frm_Stem_Listado
         Me.Imagenes_16x16_Dark.Images.SetKeyName(19, "comment-number-2.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(20, "comment-number-1.png")
         '
-        'Frm_Stem_Listado
+        'Frm_Stmp_Listado
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -351,7 +348,7 @@ Partial Class Frm_Stem_Listado
         Me.KeyPreview = True
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "Frm_Stem_Listado"
+        Me.Name = "Frm_Stmp_Listado"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "MetroForm"
@@ -365,12 +362,10 @@ Partial Class Frm_Stem_Listado
     End Sub
 
     Friend WithEvents Super_TabS As DevComponents.DotNetBar.SuperTabStrip
-    Friend WithEvents Tab_TodasActivas As DevComponents.DotNetBar.SuperTabItem
-    Friend WithEvents Tab_ActivasRechazadas As DevComponents.DotNetBar.SuperTabItem
+    Friend WithEvents Tab_Preparacion As DevComponents.DotNetBar.SuperTabItem
+    Friend WithEvents Tab_Completadas As DevComponents.DotNetBar.SuperTabItem
+    Friend WithEvents Tab_Facturadas As DevComponents.DotNetBar.SuperTabItem
     Friend WithEvents Tab_Cerradas As DevComponents.DotNetBar.SuperTabItem
-    Friend WithEvents Tab_CerradasAceptadas As DevComponents.DotNetBar.SuperTabItem
-    Friend WithEvents Tab_CerradasRechazadas As DevComponents.DotNetBar.SuperTabItem
-    Friend WithEvents Tab_Nulas As DevComponents.DotNetBar.SuperTabItem
     Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
     Public WithEvents Btn_Crear_Ticket As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_RevisarTicket As DevComponents.DotNetBar.ButtonItem
@@ -383,4 +378,5 @@ Partial Class Frm_Stem_Listado
     Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents Imagenes_16x16 As ImageList
     Friend WithEvents Imagenes_16x16_Dark As ImageList
+    Public WithEvents Btn_CargarNVVFechaDespHoy As DevComponents.DotNetBar.ButtonItem
 End Class

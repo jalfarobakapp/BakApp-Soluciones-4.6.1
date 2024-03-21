@@ -429,7 +429,7 @@ Public Class Frm_Crear_Entidad_Mt
             .Columns("MAILTO").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("NAMETO").HeaderText = "Nombre Dest."
+            .Columns("NAMETO").HeaderText = "Nombre Destinatario"
             .Columns("NAMETO").Width = 100
             .Columns("NAMETO").Visible = True
             .Columns("NAMETO").DisplayIndex = _DisplayIndex

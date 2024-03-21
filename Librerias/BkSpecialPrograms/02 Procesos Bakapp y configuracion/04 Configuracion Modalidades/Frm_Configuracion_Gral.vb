@@ -227,6 +227,9 @@ Public Class Frm_Configuracion_Gral
             Chk_BuscarProdConCodRapido.Checked = .Item("BuscarProdConCodRapido")
             Chk_BuscarProdConCodTecnico.Checked = .Item("BuscarProdConCodTecnico")
 
+            Chk_Pickear_NVVTodas.Checked = .Item("Pickear_NVVTodas")
+            Chk_Pickerar_ProdPesoVariable.Checked = .Item("Pickerar_ProdPesoVariable")
+
         End With
 
         Input_Dias_Para_Hacer_NCV.Enabled = Not _Modalidad_General
@@ -311,6 +314,9 @@ Public Class Frm_Configuracion_Gral
         Chk_BloqueaMarcas.Enabled = _Modalidad_General
         Chk_BloqueaRubros.Enabled = _Modalidad_General
         Chk_BloqueaZonaProductos.Enabled = _Modalidad_General
+
+        Chk_Pickear_NVVTodas.Enabled = _Modalidad_General
+        Chk_Pickerar_ProdPesoVariable.Enabled = _Modalidad_General
 
         AddHandler Txt_Dias_Venci_Coti.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
         AddHandler Txt_ValorMinimoNVV.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
@@ -506,6 +512,8 @@ Public Class Frm_Configuracion_Gral
                        ",ValidaMovFisConCodBarra = " & Convert.ToInt32(Chk_ValidaMovFisConCodBarra.Checked) & vbCrLf &
                        ",BuscarProdConCodRapido = " & Convert.ToInt32(Chk_BuscarProdConCodRapido.Checked) & vbCrLf &
                        ",BuscarProdConCodTecnico = " & Convert.ToInt32(Chk_BuscarProdConCodTecnico.Checked) & vbCrLf &
+                       ",Pickear_NVVTodas = " & Convert.ToInt32(Chk_Pickear_NVVTodas.Checked) & vbCrLf &
+                       ",Pickerar_ProdPesoVariable = " & Convert.ToInt32(Chk_Pickerar_ProdPesoVariable.Checked) & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
@@ -644,6 +652,15 @@ Public Class Frm_Configuracion_Gral
         If MessageBoxEx.Show(Me, "¿Confirma quitar el Token actual?", "Quitar Token",
                              MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
             Sb_Revisar_Fincred_Token(0)
+        End If
+
+    End Sub
+
+    Private Sub Chk_Pickear_NVVTodas_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Pickear_NVVTodas.CheckedChanged
+
+        Chk_Pickerar_ProdPesoVariable.Enabled = Chk_Pickear_NVVTodas.Checked
+        If Not Chk_Pickear_NVVTodas.Checked Then
+            Chk_Pickerar_ProdPesoVariable.Checked = False
         End If
 
     End Sub

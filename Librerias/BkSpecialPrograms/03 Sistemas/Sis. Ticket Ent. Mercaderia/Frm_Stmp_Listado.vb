@@ -1,8 +1,6 @@
-﻿Imports BkSpecialPrograms.Frm_Tickets_Lista
-Imports BkSpecialPrograms.Stem_BD
-Imports DevComponents.DotNetBar
+﻿Imports DevComponents.DotNetBar
 
-Public Class Frm_Stem_Listado
+Public Class Frm_Stmp_Listado
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
@@ -17,6 +15,10 @@ Public Class Frm_Stem_Listado
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
+        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Both, True, True, False)
+
+        Sb_Color_Botones_Barra(Bar2)
+
     End Sub
 
     Private Sub Frm_Stem_Listado_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -25,6 +27,14 @@ Public Class Frm_Stem_Listado
 
         Sb_InsertarBotonenGrilla(Grilla, "BtnImagen_Estado", "Est.", "Img_Estado", 0, _Tipo_Boton.Imagen)
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+
+        AddHandler Tab_Preparacion.Click, AddressOf Sb_Actualizar_Grilla
+        AddHandler Tab_Completadas.Click, AddressOf Sb_Actualizar_Grilla
+        AddHandler Tab_Facturadas.Click, AddressOf Sb_Actualizar_Grilla
+        AddHandler Tab_Cerradas.Click, AddressOf Sb_Actualizar_Grilla
+        'AddHandler Tab_Cerradas.Click, AddressOf Sb_Actualizar_Grilla
+
+        Super_TabS.SelectedTabIndex = 0
 
         Sb_Actualizar_Grilla()
 
@@ -45,34 +55,38 @@ Public Class Frm_Stem_Listado
 
         Dim _Tbas = Super_TabS.SelectedTab
 
-        'Select Case _Tbas.Name
-        '    Case "Tab_TodasActivas"
-        '        _Condicion += vbCrLf & "And Estado = 'ABIE' And Rechazado = 0"
-        '    Case "Tab_ActivasRechazadas"
-        '        _Condicion += vbCrLf & "And Estado = 'ABIE' And Rechazado = 1"
-        '    Case "Tab_Cerradas"
-        '        _Condicion += vbCrLf & "And Estado = 'CERR' And Rechazado = 0 And Aceptado = 0"
-        '    Case "Tab_CerradasAceptadas"
-        '        _Condicion += vbCrLf & "And Estado = 'CERR' And Aceptado = 1"
-        '    Case "Tab_CerradasRechazadas"
-        '        _Condicion += vbCrLf & "And Estado = 'CERR' And Rechazado = 1"
-        '    Case "Tab_Nulas"
-        '        _Condicion += vbCrLf & "And Estado = 'NULO'"
-        'End Select
-
+        Select Case _Tbas.Name
+            Case "Tab_Preparacion"
+                _Condicion += vbCrLf & "And Estado = 'PREPA'"
+            Case "Tab_Completadas"
+                _Condicion += vbCrLf & "And Estado = 'COMPL'"
+            Case "Tab_Facturadas"
+                _Condicion += vbCrLf & "And Estado = 'FACTU'"
+            Case "Tab_Cerradas"
+                _Condicion += vbCrLf & "And Estado = 'CERRA'"
+            Case "Tab_Nulas"
+                _Condicion += vbCrLf & "And Estado = 'NULO'"
+        End Select
 
         Consulta_sql = "Select Enc.*,Edo.FEEMDO,Edo.SUDO,En.NOKOEN," & vbCrLf &
                        "Case Estado " & vbCrLf &
                        "When 'PREPA' Then 'Preparación...'" & vbCrLf &
-                       "When 'COMPL' Then 'Completada'" & vbCrLf &
+                       "When 'COMPL' Then 'Completada.'" & vbCrLf &
+                       "When 'HABIL' Then 'Habilitada para ser facturada.'" & vbCrLf &
                        "When 'FACTU' Then Case TipoPago When 'Contado' Then 'Facturada, pase por CAJA...' When 'Credito' Then 'Facturada, pase a DESPACHO EN BODEGA...' End" & vbCrLf &
                        "When 'CERRA' Then 'Cerrada'" & vbCrLf &
                        "When 'NULO' Then 'Nula'" & vbCrLf &
                        "End As 'Estado_Str'" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Stem_Enc Enc" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Stmp_Enc Enc" & vbCrLf &
                        "Inner Join MAEEDO Edo On Edo.IDMAEEDO = Enc.Idmaeedo" & vbCrLf &
                        "Left Join MAEEN En On En.KOEN = Enc.Endo And En.SUEN = Enc.Suendo" & vbCrLf &
                        "Where 1 > 0" & vbCrLf & _Condicion
+
+        If _Tbas.Name = "Tab_Espera" Then
+
+            Consulta_sql = ""
+
+        End If
 
         _Tbl_Tickets_Stem = _Sql.Fx_Get_Tablas(Consulta_sql)
 
@@ -88,6 +102,12 @@ Public Class Frm_Stem_Listado
             .Columns("BtnImagen_Estado").HeaderText = "Est."
             .Columns("BtnImagen_Estado").Visible = True
             .Columns("BtnImagen_Estado").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Facturar").Visible = (_Tbas.Name = "Tab_Completadas")
+            .Columns("Facturar").HeaderText = "Facturar"
+            .Columns("Facturar").Width = 60
+            .Columns("Facturar").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Numero").Visible = True
@@ -269,7 +289,7 @@ Public Class Frm_Stem_Listado
         _Fm.Rdb_Fecha_Emision_Desde_Hasta.Checked = True
         _Fm.Chk_Mostrar_Vales_Transitorios.Checked = False
         _Fm.Chk_Mostrar_Vales_Transitorios.Enabled = False
-        _Fm.Pro_Sql_Filtro_Otro_Filtro = "And IDMAEEDO Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Stem_Enc)"
+        _Fm.Pro_Sql_Filtro_Otro_Filtro = "And IDMAEEDO Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Stmp_Enc)"
         _Fm.ShowDialog(Me)
         _Row_Documento = _Fm.Pro_Row_Documento_Seleccionado
         _Fm.Dispose()
@@ -283,7 +303,8 @@ Public Class Frm_Stem_Listado
             Return
         End If
 
-        Dim _Cl_Stem As New Cl_Stem
+        Dim _Row_Entidad As DataRow = Fx_Traer_Datos_Entidad(_Row_Documento.Item("ENDO"), _Row_Documento.Item("SUENDO"))
+        Dim _Cl_Stem As New Cl_Stmp
 
         With _Cl_Stem.Stem_Enc
 
@@ -298,6 +319,12 @@ Public Class Frm_Stem_Listado
             .FechaCreacion = _FechaServidor
             .Estado = "PREPA"
 
+            Try
+                .Secueven = _Row_Entidad.Item("SECUEVEN")
+            Catch ex As Exception
+                .Secueven = String.Empty
+            End Try
+
         End With
 
         Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Row_Documento.Item("IDMAEEDO")
@@ -305,18 +332,20 @@ Public Class Frm_Stem_Listado
 
         For Each _Fila As DataRow In _Tbl_Detalle.Rows
 
-            Dim _Stem_Det As New Stem_BD.Stem_Det
+            Dim _Stem_Det As New Stmp_BD.Stmp_Det
 
             With _Stem_Det
 
                 .Idmaeedo = _Fila.Item("IDMAEEDO")
                 .Idmaeddo = _Fila.Item("IDMAEDDO")
                 .Codigo = _Fila.Item("KOPRCT")
+                .Descripcion = _Fila.Item("NOKOPR")
                 .Nulido = _Fila.Item("NULIDO")
                 .Udtrpr = _Fila.Item("UDTRPR")
                 .Rludpr = _Fila.Item("RLUDPR")
                 .Caprco1_Ori = _Fila.Item("CAPRCO1")
                 .Caprco1_Real = 0
+                .Udpr = _Fila.Item("UD0" & .Udtrpr & "PR")
                 .Ud01pr = _Fila.Item("UD01PR")
                 .Caprco2_Ori = _Fila.Item("CAPRCO2")
                 .Caprco2_Real = 0
@@ -330,7 +359,7 @@ Public Class Frm_Stem_Listado
 
         Next
 
-        Dim _Mensaje_Stem As New Stem_BD.Mensaje_Stem
+        Dim _Mensaje_Stem As New LsValiciones.Mensajes
 
         _Mensaje_Stem = _Cl_Stem.Fx_Grabar_Nuevo_Tickets
 
@@ -362,8 +391,8 @@ Public Class Frm_Stem_Listado
 
         _Nudo = Fx_Rellena_ceros(_Nudo, 10)
 
-        Dim _Cl_Stem As New Cl_Stem
-        Dim _Mensaje_Stem As New Stem_BD.Mensaje_Stem
+        Dim _Cl_Stem As New Cl_Stmp
+        Dim _Mensaje_Stem As New LsValiciones.Mensajes
         _Mensaje_Stem = _Cl_Stem.Fx_Revisar_NVV("NVV", _Nudo)
 
         If _Mensaje_Stem.EsCorrecto Then
@@ -375,5 +404,181 @@ Public Class Frm_Stem_Listado
         Sb_Actualizar_Grilla()
 
     End Sub
+
+    Private Sub Grilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
+
+        Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+
+        Dim _Tbas = Super_TabS.SelectedTab
+
+        If _Tbas.Name = "Tab_Preparacion" Then
+
+            Dim _Id_Enc As Integer = _Fila.Cells("Id").Value
+
+            Dim Fm As New Frm_Stmp_IngPickeo(_Id_Enc, FUNCIONARIO)
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
+
+            Sb_Actualizar_Grilla()
+
+        End If
+
+        If _Tbas.Name = "Tab_Completadas" Then
+
+            _Fila.Cells("Facturar").Value = Not _Fila.Cells("Facturar").Value
+
+        End If
+
+    End Sub
+
+    Private Sub Btn_CargarNVVFechaDespHoy_Click(sender As Object, e As EventArgs) Handles Btn_CargarNVVFechaDespHoy.Click
+
+        Dim Fm As New Frm_Stmp_IncNVVPicking
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+        Sb_Actualizar_Grilla()
+
+    End Sub
+
+    Function Fx_Cargar_NVV_FechaDespachoHoy() As List(Of LsValiciones.Mensajes)
+
+        Dim _Lista As New List(Of LsValiciones.Mensajes)
+        Dim _FechaHoy As DateTime = FechaDelServidor()
+
+        Consulta_sql = "Select IDMAEEDO,TIDO,NUDO,FEER,Doc.*" & vbCrLf &
+                       "From MAEEDO Edo" & vbCrLf &
+                       "Inner Join " & _Global_BaseBk & "Zw_Docu_Ent Doc On Edo.IDMAEEDO = Doc.Idmaeedo" & vbCrLf &
+                       "Where TIDO = 'NVV' And FEER = '" & Format(_FechaHoy, "yyyyMMdd") & "' " &
+                       "--And Doc.Pickear = 1 --And Edo.IDMAEEDO Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Stmp_Enc)"
+
+        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        For Each _Fila As DataRow In _Tbl.Rows
+
+            Dim _Mensaje_Stem As New LsValiciones.Mensajes
+
+            _Mensaje_Stem = Fx_Crear_Ticket(_Fila.Item("IDMAEEDO"), False, "R")
+
+            _Lista.Add(_Mensaje_Stem)
+
+        Next
+
+        Return _Lista
+
+    End Function
+
+    Function Fx_Crear_Ticket(_Idmaeedo As Integer,
+                             _Facturar As Boolean,
+                             _TipoPago As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje_Stem As New LsValiciones.Mensajes
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Idmaeedo = " & _Idmaeedo
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If Not IsNothing(_Row) Then
+            _Mensaje_Stem.EsCorrecto = False
+            _Mensaje_Stem.Mensaje = "El documento ya esta ingresado en el sistema de Ticket Picking (Ticket Nro: " & _Row.Item("Numero") & ")"
+            _Mensaje_Stem.Detalle = "Documento: " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO")
+            Return _Mensaje_Stem
+        End If
+
+        Consulta_sql = "Select Edo.IDMAEEDO,Edo.TIDO,Edo.NUDO,Edo.ENDO,Edo.SUENDO,Edo.SUDO,Doc.Pickear,HabilitadaFac,FunAutorizaFac" & vbCrLf &
+                       "From MAEEDO Edo" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Docu_Ent Doc On Edo.IDMAEEDO = Doc.Idmaeedo" & vbCrLf &
+                       "Where IDMAEEDO = " & _Idmaeedo
+        Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_Row_Documento) Then
+            _Mensaje_Stem.EsCorrecto = False
+            _Mensaje_Stem.Mensaje = "No se encontro el registro en la tabla MAEEDO, Documento: " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO")
+            _Mensaje_Stem.Detalle = "IDMAEEDO " & _Idmaeedo
+            Return _Mensaje_Stem
+        End If
+
+        If Not _Row_Documento.Item("Pickear") Then
+            _Mensaje_Stem.EsCorrecto = False
+            _Mensaje_Stem.Mensaje = "Este documento no esta marcado para ser Pickeado en la tabla Zw_Docu_Ent"
+            _Mensaje_Stem.Detalle = "Documento: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
+            Return _Mensaje_Stem
+        End If
+
+
+        Dim _Row_Entidad As DataRow = Fx_Traer_Datos_Entidad(_Row_Documento.Item("ENDO"), _Row_Documento.Item("SUENDO"))
+        Dim _Cl_Stem As New Cl_Stmp
+
+        With _Cl_Stem.Stem_Enc
+
+            .Empresa = ModEmpresa
+            .Sucursal = ModSucursal
+            .Idmaeedo = _Row_Documento.Item("IDMAEEDO")
+            .Tido = _Row_Documento.Item("TIDO")
+            .Nudo = _Row_Documento.Item("NUDO")
+            .Endo = _Row_Documento.Item("ENDO")
+            .Suendo = _Row_Documento.Item("SUENDO")
+            .CodFuncionario_Crea = FUNCIONARIO
+            .FechaCreacion = _FechaServidor
+            .Estado = "PREPA"
+            .Facturar = _Facturar
+            .TipoPago = _TipoPago
+
+            Try
+                .Secueven = _Row_Entidad.Item("SECUEVEN")
+            Catch ex As Exception
+                .Secueven = String.Empty
+            End Try
+
+        End With
+
+        Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Row_Documento.Item("IDMAEEDO")
+        Dim _Tbl_Detalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        For Each _Fila As DataRow In _Tbl_Detalle.Rows
+
+            Dim _Stem_Det As New Stmp_BD.Stmp_Det
+
+            With _Stem_Det
+
+                .Idmaeedo = _Fila.Item("IDMAEEDO")
+                .Idmaeddo = _Fila.Item("IDMAEDDO")
+                .Codigo = _Fila.Item("KOPRCT")
+                .Descripcion = _Fila.Item("NOKOPR")
+                .Nulido = _Fila.Item("NULIDO")
+                .Udtrpr = _Fila.Item("UDTRPR")
+                .Rludpr = _Fila.Item("RLUDPR")
+                .Caprco1_Ori = _Fila.Item("CAPRCO1")
+                .Caprco1_Real = 0
+                .Udpr = _Fila.Item("UD0" & .Udtrpr & "PR")
+                .Ud01pr = _Fila.Item("UD01PR")
+                .Caprco2_Ori = _Fila.Item("CAPRCO2")
+                .Caprco2_Real = 0
+                .Ud02pr = _Fila.Item("UD02PR")
+                .Pickeado = False
+                .EnProceso = True
+
+            End With
+
+            _Cl_Stem.Stem_Det.Add(_Stem_Det)
+
+        Next
+
+        _Mensaje_Stem = _Cl_Stem.Fx_Grabar_Nuevo_Tickets
+
+        Return _Mensaje_Stem
+
+        'If Not _Mensaje_Stem.EsCorrecto Then
+        '    MessageBoxEx.Show(Me, _Mensaje_Stem.Mensaje, "Problema", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        '    Return
+        'End If
+
+        'MessageBoxEx.Show(Me, "Ticket Nro. " & _Cl_Stem.Stem_Enc.Numero & " creado correctamente." & vbCrLf &
+        '                  "El documento ya esta en proceso", "Crear Ticket", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+
+    End Function
+
+
 
 End Class

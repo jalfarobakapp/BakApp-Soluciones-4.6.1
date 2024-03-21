@@ -80,7 +80,8 @@
                         Cast(0 As Bit) As Facturado,Cast(0 As Int) As IDMAEEDO_FCV,Cast('' As Varchar(10)) As NUDO_FCV,FEEMDO AS Fecha_Emision,Edo.FEER AS Fecha_Despacho," &
                        "Cast(0 As Float) As VABRDO_FCV,Cast(0 As Float) As VAABDO_FCV,Cast(0 As Bit) As FCV_PAGADA,Cast(0 As Bit) As FCV_IMPRESA,
                         Cast(0 As Int) As IDMAEDPCE,Cast(0 As Float) As VADP,Cast(0 As Float) As VAASDP,Cast(0 As Float) As SALDO," &
-                       "Cast(0 As Bit) As CRV, Cast(0 as Float) SALDO_CRV,Isnull(OBDO,'') As OBDO,Isnull(DocE.HabilitadaFac,1) As HabilitadaFac
+                       "Cast(0 As Bit) As CRV, Cast(0 as Float) SALDO_CRV,Isnull(OBDO,'') As OBDO,
+                       Isnull(DocE.HabilitadaFac,1) As HabilitadaFac,Isnull(DocE.Pickear,1) As Pickear
                         Into #Paso
                         From MAEEDO Edo
                         Left Join MAEEDOOB Obs On Obs.IDMAEEDO = Edo.IDMAEEDO

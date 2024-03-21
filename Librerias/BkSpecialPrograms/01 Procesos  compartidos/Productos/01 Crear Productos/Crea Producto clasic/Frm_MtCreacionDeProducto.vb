@@ -1830,7 +1830,7 @@ Sigue_Loop_01:
 
         Cmb_Bloqueapr.SelectedValue = NuloPorNro(_RowProducto.Item("BLOQUEAPR"), "")
         Input_Poivpr.Value = _RowProducto.Item("POIVPR")
-        Input_Podeivpr.Value = _RowProducto.Item("PODEIVPR")
+        Input_Podeivpr.Value = NuloPorNro(_RowProducto.Item("PODEIVPR"), 0)
         Cmb_Rgpr.SelectedValue = NuloPorNro(_RowProducto.Item("RGPR"), "N")
         Cmb_Codlista.SelectedValue = _RowProducto.Item("LISCOSTO")
 

@@ -2196,11 +2196,23 @@
     <Compile Include="03 Sistemas\Servicio Tecnico\Ingreso Varios\Frm_St_EncIngreso.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Clase\Cl_Stem.vb" />
-    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stem_Listado.Designer.vb">
-      <DependentUpon>Frm_Stem_Listado.vb</DependentUpon>
+    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Clase\Cl_Stmp.vb" />
+    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_IncNVVPicking.Designer.vb">
+      <DependentUpon>Frm_Stmp_IncNVVPicking.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stem_Listado.vb">
+    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_IncNVVPicking.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_IngPickeo.Designer.vb">
+      <DependentUpon>Frm_Stmp_IngPickeo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_IngPickeo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_Listado.Designer.vb">
+      <DependentUpon>Frm_Stmp_Listado.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_Listado.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Sistema WMS\Gestión WMS\Clases\Cl_Documento_Wms.vb" />
@@ -4251,6 +4263,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Cl_RevVersion.vb" />
+    <Compile Include="999 Funciones, Clases y Datos\Formularios\Frm_Validaciones.Designer.vb">
+      <DependentUpon>Frm_Validaciones.vb</DependentUpon>
+    </Compile>
+    <Compile Include="999 Funciones, Clases y Datos\Formularios\Frm_Validaciones.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="999 Funciones, Clases y Datos\Funciones BakApp\Entidad\Recursos\Recursos_Entidad.Designer.vb">
       <DependentUpon>Recursos_Entidad.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -5279,8 +5297,14 @@
     <EmbeddedResource Include="03 Sistemas\Servicio Tecnico\Ingreso Varios\Frm_St_EncIngreso.resx">
       <DependentUpon>Frm_St_EncIngreso.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stem_Listado.resx">
-      <DependentUpon>Frm_Stem_Listado.vb</DependentUpon>
+    <EmbeddedResource Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_IncNVVPicking.resx">
+      <DependentUpon>Frm_Stmp_IncNVVPicking.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_IngPickeo.resx">
+      <DependentUpon>Frm_Stmp_IngPickeo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_Listado.resx">
+      <DependentUpon>Frm_Stmp_Listado.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Frm_Formulario_Diseno_Mapa_Crear_Sector.resx">
       <DependentUpon>Frm_Formulario_Diseno_Mapa_Crear_Sector.vb</DependentUpon>
@@ -6235,6 +6259,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="999 Funciones, Clases y Datos\Formularios\Frm_Seleccionar_Impresoras.resx">
       <DependentUpon>Frm_Seleccionar_Impresoras.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="999 Funciones, Clases y Datos\Formularios\Frm_Validaciones.resx">
+      <DependentUpon>Frm_Validaciones.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="999 Funciones, Clases y Datos\Funciones BakApp\Entidad\Recursos\Recursos_Entidad.resx">
       <Generator>ResXFileCodeGenerator</Generator>

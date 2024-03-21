@@ -147,7 +147,7 @@ Public Class Frm_Retirador_Mercaderia
             _CodCiudad = _Row_Tabreti.Item("CIRETI")
             _CodComuna = _Row_Tabreti.Item("CMRETI")
             Chk_Retcli.Checked = _Row_Tabreti.Item("RETCLI")
-            Txt_Koenresp.Text = _Row_Tabreti.Item("KOENRESP")
+            Txt_Koenresp.Text = NuloPorNro(_Row_Tabreti.Item("KOENRESP"), "")
             Txt_Koenresp.Tag = _Row_Tabreti.Item("SUENRESP")
             Txt_Licencondu.Text = NuloPorNro(_Row_Tabreti.Item("LICENCONDU"), "")
             Input_Cant_Minima.Value = _Row_Tabreti.Item("Cant_Minima")
@@ -207,12 +207,12 @@ Public Class Frm_Retirador_Mercaderia
         Rut = Split(Txt_Rureti.Text, "-")
         Dim Rt = numero_(Rut(0), 8)
 
-        If Not VerificaDigito(Txt_Rureti.Text) Then
-            MessageBoxEx.Show(Me, "Rut invalido", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Txt_Rureti.SelectAll()
-            Txt_Rureti.Focus()
-            Return
-        End If
+        'If Not VerificaDigito(Txt_Rureti.Text) Then
+        '    MessageBoxEx.Show(Me, "Rut invalido", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        '    Txt_Rureti.SelectAll()
+        '    Txt_Rureti.Focus()
+        '    Return
+        'End If
 
         If _Accion = Enum_Reti.Nuevo Then
 

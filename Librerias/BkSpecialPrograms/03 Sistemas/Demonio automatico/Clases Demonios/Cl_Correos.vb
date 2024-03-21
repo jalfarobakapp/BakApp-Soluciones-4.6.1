@@ -195,7 +195,7 @@ Public Class Cl_Correos
             Dim _Imprimir_Picking = _Fila.Item("Imprimir_Picking")
 
             _Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_Filtros_X_Estacion" & vbCrLf &
-                            "Where NombreEquipo = '" & _Nombre_Equipo & "' And Nombre_Correo <> '' And (Correo_Para <> '' Or Para_Maeenmail = 1) And TipoDoc = '" & _Tido & "' And Codigo = 'JPT'"
+                            "Where NombreEquipo = '" & _Nombre_Equipo & "' And Nombre_Correo <> '' And (Correo_Para <> '' Or Para_Maeenmail = 1) And TipoDoc = '" & _Tido & "' --And Codigo = 'JPT'"
             Dim _TblFiltroFunc As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
 
             If CBool(_TblFiltroFunc.Rows.Count) Then
