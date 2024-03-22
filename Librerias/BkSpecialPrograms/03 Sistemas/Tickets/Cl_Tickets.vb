@@ -57,6 +57,7 @@ Public Class Cl_Tickets
                 .Id_Padre = _Row_Ticket.Item("Id_Padre")
                 .Rechazado = _Row_Ticket.Item("Rechazado")
                 .Aceptado = _Row_Ticket.Item("Rechazado")
+                .Id_Raiz = _Row_Ticket.Item("Id_Raiz")
 
             End With
 
@@ -80,6 +81,7 @@ Public Class Cl_Tickets
                     .Cantidad = _Row_Ticket_Producto.Item("Cantidad")
                     .Diferencia = _Row_Ticket_Producto.Item("Diferencia")
                     .FechaRev = _Row_Ticket_Producto.Item("FechaRev")
+                    .Ubicacion = _Row_Ticket_Producto.Item("Ubicacion")
 
                 End With
 
@@ -160,8 +162,6 @@ Public Class Cl_Tickets
 
     Function Fx_Grabar_Nuevo_Tickets() As String
 
-        'Return "."
-
         Tickets.Numero = Fx_NvoNro_OT()
         Tickets.Estado = "ABIE"
 
@@ -216,6 +216,18 @@ Public Class Cl_Tickets
             End While
             dfd1.Close()
 
+            If Tickets.Id_Raiz = 0 Then
+
+                Tickets.Id_Raiz = Tickets.Id
+
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones (Id_Ticket,Accion,Descripcion,Fecha,CodFuncionario,En_Construccion,CodFunGestiona) Values " &
+                               "(" & Tickets.Id & ",'CREA','SE CREA NUEVO TICKET Nro " & Tickets.Numero & " Asunto: " & Tickets.Asunto & "',Getdate(),'" & Tickets.CodFuncionario_Crea & "',0,'" & Tickets.CodFuncionario_Crea & "')"
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+            End If
+
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets Set " & vbCrLf &
                            "Id_Area = " & Tickets.Id_Area &
                            ",Id_Tipo = " & Tickets.Id_Tipo &
@@ -227,6 +239,7 @@ Public Class Cl_Tickets
                            ",AsignadoGrupo = " & Convert.ToInt32(Tickets.AsignadoGrupo) &
                            ",Id_Grupo = " & Tickets.Id_Grupo &
                            ",Id_Padre = '" & Tickets.Id_Padre & "'" &
+                           ",Id_Raiz = '" & Tickets.Id_Raiz & "'" &
                            "Where Id = " & Tickets.Id
             Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
             Comando.Transaction = myTrans
@@ -255,14 +268,15 @@ Public Class Cl_Tickets
                 If Not String.IsNullOrEmpty(.Codigo) Then
 
                     Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Producto (Id_Ticket,Empresa,Sucursal,Bodega," &
-                                   "Codigo,Descripcion,Rtu,UdMedida,Ud1,Ud2,StfiEnBodega,Cantidad,Diferencia,FechaRev) Values " &
+                                   "Codigo,Descripcion,Rtu,UdMedida,Ud1,Ud2,StfiEnBodega,Cantidad,Diferencia,FechaRev,Ubicacion) Values " &
                                    "(" & Tickets.Id & ",'" & .Empresa & "','" & .Sucursal & "','" & .Bodega &
                                    "','" & .Codigo & "','" & .Descripcion & "'," & De_Num_a_Tx_01(.Rtu, False, 5) &
                                    "," & .UdMedida & ",'" & .Ud1 & "','" & .Ud2 &
                                    "'," & De_Num_a_Tx_01(.StfiEnBodega, False, 5) &
                                    "," & De_Num_a_Tx_01(.Cantidad, False, 5) &
                                    "," & De_Num_a_Tx_01(.Diferencia, False, 5) &
-                                   ",'" & Format(.FechaRev, "yyyyMMdd HH:mm") & "')"
+                                   ",'" & Format(.FechaRev, "yyyyMMdd HH:mm") &
+                                   "','" & .Ubicacion & "')"
 
                     Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                     Comando.Transaction = myTrans
@@ -773,6 +787,7 @@ Namespace Tickets_Db
         Public Property Aceptado As Boolean
         Public Property New_Id_TicketAc As Integer
         Public Property Tickets_Producto As Tickets_Producto
+        Public Property Id_Raiz As Integer
 
     End Class
 
@@ -823,6 +838,7 @@ Namespace Tickets_Db
         Public Property Cantidad As Double
         Public Property Diferencia As Double
         Public Property FechaRev As DateTime
+        Public Property Ubicacion As String
 
     End Class
 

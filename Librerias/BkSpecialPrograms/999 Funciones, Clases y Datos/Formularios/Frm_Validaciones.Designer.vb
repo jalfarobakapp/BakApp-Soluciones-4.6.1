@@ -117,7 +117,7 @@ Partial Class Frm_Validaciones
         Me.Name = "Frm_Validaciones"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "MetroForm"
+        Me.Text = " "
         Me.ResumeLayout(False)
 
     End Sub

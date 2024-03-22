@@ -50,9 +50,15 @@ Public Class Frm_Tickets_IngProducto
             Txt_Cantidad.Text = .Cantidad
             Txt_StfiEnBodega.Text = .StfiEnBodega
             Txt_Diferencia.Text = .Diferencia
+            Txt_Ubicacion.Text = .Ubicacion
 
             Dtp_FechaRev.Value = .FechaRev
             Dtp_HoraRev.Value = .FechaRev
+
+            If .FechaRev = #1/1/0001 12:00:00 AM# Then
+                Dtp_FechaRev.Value = FechaDelServidor()
+                Dtp_HoraRev.Value = Dtp_FechaRev.Value
+            End If
 
         End With
 
@@ -77,7 +83,7 @@ Public Class Frm_Tickets_IngProducto
         Txt_Producto.ButtonCustom.Visible = IsNothing(_Row_Producto)
         Txt_Producto.ButtonCustom2.Visible = Not IsNothing(_Row_Producto)
 
-        Me.ActiveControl = Txt_StfiEnBodega
+        Me.ActiveControl = Txt_Ubicacion
 
     End Sub
 
@@ -108,6 +114,12 @@ Public Class Frm_Tickets_IngProducto
             Return
         End If
 
+        If String.IsNullOrEmpty(Txt_Ubicacion.Text.Trim) Then
+            MessageBoxEx.Show(Me, "Falta la Ubicación", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Ubicacion.Focus()
+            Return
+        End If
+
         With Tickets_Producto
 
             .Cantidad = Txt_Cantidad.Text
@@ -115,12 +127,14 @@ Public Class Frm_Tickets_IngProducto
             .Diferencia = Txt_StfiEnBodega.Text - Txt_Cantidad.Text
             .UdMedida = Cmb_UdMedida.SelectedValue
             .FechaRev = _FechaRev
+            .Ubicacion = Txt_Ubicacion.Text
 
             If _Row_Tipo.Item("Inc_Cantidades") Then
                 _CantidadesStr = "BODEGA : " & Txt_Bodega.Text & vbCrLf &
                                  "UNIDAD :" & Cmb_UdMedida.Text & vbCrLf &
-                                 "CANTIDAD EN BODEGA SEGUN SISTEMA  " & .StfiEnBodega & vbCrLf &
-                                 "CANTIDAD INVENTARIADA  " & .Cantidad & vbCrLf &
+                                 "UBICACION :" & .Ubicacion & vbCrLf &
+                                 "CANTIDAD INVENTARIADA : " & .Cantidad & vbCrLf &
+                                 "CANTIDAD EN BODEGA SEGUN SISTEMA : " & .StfiEnBodega & vbCrLf &
                                  "DIFERENCIA : " & .Diferencia & vbCrLf
             End If
 

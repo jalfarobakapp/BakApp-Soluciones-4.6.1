@@ -20,11 +20,6 @@ Public Class Frm_Tickets_Mant
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        'Consulta_sql = "Select *,NOKOFU From " & _Global_BaseBk & "Zw_Stk_Tickets" & vbCrLf &
-        '               "Left Join TABFU On KOFU = CodFuncionario_Crea" & vbCrLf &
-        '               "Where Id = " & _Id_Ticket
-        '_Row_Ticket = _Sql.Fx_Get_DataRow(Consulta_sql)
-
         _Cl_Tickets.Tickets.CodFuncionario_Crea = FUNCIONARIO
         _Cl_Tickets.Sb_Llenar_Ticket(0)
 
@@ -51,6 +46,8 @@ Public Class Frm_Tickets_Mant
             _Cl_Tickets_Padre.Sb_Llenar_Ticket(Id_Padre)
 
             _Cl_Tickets.Tickets.Prioridad = _Cl_Tickets_Padre.Tickets.Prioridad
+            _Cl_Tickets.Tickets.Id_Raiz = _Cl_Tickets_Padre.Tickets.Id_Raiz
+
 
             Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Cl_Tickets_Padre.Tickets.Tickets_Producto.Codigo & "'"
             Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -75,6 +72,7 @@ Public Class Frm_Tickets_Mant
                     .StfiEnBodega = _Cl_Tickets_Padre.Tickets.Tickets_Producto.StfiEnBodega
                     .Cantidad = _Cl_Tickets_Padre.Tickets.Tickets_Producto.Cantidad
                     .Diferencia = _Cl_Tickets_Padre.Tickets.Tickets_Producto.Diferencia
+                    .Ubicacion = _Cl_Tickets_Padre.Tickets.Tickets_Producto.Ubicacion
 
                 End With
 
@@ -689,6 +687,7 @@ Public Class Frm_Tickets_Mant
         Fm.Tickets_Producto.Ud1 = _Cl_Tickets.Tickets.Tickets_Producto.Ud1
         Fm.Tickets_Producto.Ud2 = _Cl_Tickets.Tickets.Tickets_Producto.Ud2
         Fm.Tickets_Producto.FechaRev = _Cl_Tickets.Tickets.Tickets_Producto.FechaRev
+        Fm.Tickets_Producto.Ubicacion = _Cl_Tickets.Tickets.Tickets_Producto.Ubicacion
 
         Fm.ShowDialog(Me)
 

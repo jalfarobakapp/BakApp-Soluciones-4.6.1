@@ -146,7 +146,9 @@ Public Class Frm_Tickets_Seguimiento
     Sub Sb_Actualizar_Grilla()
 
         Consulta_sql = "Select Acc.*," & vbCrLf &
-                       "Case Accion When 'MENS' Then 'Mensaje' " &
+                       "Case Accion " &
+                       "When 'CREA' Then 'Crea Ticket' " &
+                       "When 'MENS' Then 'Mensaje' " &
                        "When 'RESP' Then 'Respuesta' " &
                        "When 'NULO' Then 'Anula' " &
                        "When 'SOLC' Then 'Sol. Cierre' " &
@@ -181,6 +183,12 @@ Public Class Frm_Tickets_Seguimiento
             .Columns("StrAccion").HeaderText = "Acción"
             .Columns("StrAccion").Width = 70
             .Columns("StrAccion").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("CodFunGestiona").Visible = True
+            .Columns("CodFunGestiona").HeaderText = "CF"
+            .Columns("CodFunGestiona").Width = 30
+            .Columns("CodFunGestiona").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("NombreFunAge").Visible = True
