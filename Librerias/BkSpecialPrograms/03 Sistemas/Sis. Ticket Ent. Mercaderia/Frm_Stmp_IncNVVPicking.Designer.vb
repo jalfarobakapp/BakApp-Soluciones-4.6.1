@@ -23,15 +23,16 @@ Partial Class Frm_Stmp_IncNVVPicking
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Stmp_IncNVVPicking))
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Dtp_FechaParaFacturacion = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Txt_Ocdo = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX8 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_BuscaXObservaciones = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
-        Me.Btn_Buscar = New DevComponents.DotNetBar.ButtonX()
-        Me.ComboBoxEx1 = New DevComponents.DotNetBar.Controls.ComboBoxEx()
+        Me.Cmb_TipoVenta = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
         Me.Dtp_BuscaXFechaDespacho = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
@@ -50,6 +51,7 @@ Partial Class Frm_Stmp_IncNVVPicking
         Me.Chk_PickearTodo = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_EnviarPickear = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_ActualizarLista = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Cancelar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
@@ -134,10 +136,11 @@ Partial Class Frm_Stmp_IncNVVPicking
         '
         Me.GroupPanel4.BackColor = System.Drawing.Color.White
         Me.GroupPanel4.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel4.Controls.Add(Me.Txt_Ocdo)
+        Me.GroupPanel4.Controls.Add(Me.LabelX8)
         Me.GroupPanel4.Controls.Add(Me.Txt_BuscaXObservaciones)
         Me.GroupPanel4.Controls.Add(Me.LabelX7)
-        Me.GroupPanel4.Controls.Add(Me.Btn_Buscar)
-        Me.GroupPanel4.Controls.Add(Me.ComboBoxEx1)
+        Me.GroupPanel4.Controls.Add(Me.Cmb_TipoVenta)
         Me.GroupPanel4.Controls.Add(Me.LabelX6)
         Me.GroupPanel4.Controls.Add(Me.Dtp_BuscaXFechaDespacho)
         Me.GroupPanel4.Controls.Add(Me.LabelX4)
@@ -182,6 +185,39 @@ Partial Class Frm_Stmp_IncNVVPicking
         Me.GroupPanel4.TabIndex = 135
         Me.GroupPanel4.Text = "Filtrar notas de venta"
         '
+        'Txt_Ocdo
+        '
+        Me.Txt_Ocdo.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Ocdo.Border.Class = "TextBoxBorder"
+        Me.Txt_Ocdo.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Ocdo.ButtonCustom.Image = CType(resources.GetObject("Txt_Ocdo.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Ocdo.ButtonCustom.Visible = True
+        Me.Txt_Ocdo.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Ocdo.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Ocdo.Location = New System.Drawing.Point(816, 30)
+        Me.Txt_Ocdo.MaxLength = 20
+        Me.Txt_Ocdo.Name = "Txt_Ocdo"
+        Me.Txt_Ocdo.PreventEnterBeep = True
+        Me.Txt_Ocdo.Size = New System.Drawing.Size(120, 22)
+        Me.Txt_Ocdo.TabIndex = 22
+        '
+        'LabelX8
+        '
+        Me.LabelX8.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX8.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX8.ForeColor = System.Drawing.Color.Black
+        Me.LabelX8.Location = New System.Drawing.Point(816, 10)
+        Me.LabelX8.Name = "LabelX8"
+        Me.LabelX8.Size = New System.Drawing.Size(89, 23)
+        Me.LabelX8.TabIndex = 21
+        Me.LabelX8.Text = "Orden de compra"
+        '
         'Txt_BuscaXObservaciones
         '
         Me.Txt_BuscaXObservaciones.BackColor = System.Drawing.Color.White
@@ -214,32 +250,20 @@ Partial Class Frm_Stmp_IncNVVPicking
         Me.LabelX7.TabIndex = 20
         Me.LabelX7.Text = "Observaciones"
         '
-        'Btn_Buscar
+        'Cmb_TipoVenta
         '
-        Me.Btn_Buscar.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Buscar.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Buscar.Location = New System.Drawing.Point(1104, 29)
-        Me.Btn_Buscar.Name = "Btn_Buscar"
-        Me.Btn_Buscar.Size = New System.Drawing.Size(47, 23)
-        Me.Btn_Buscar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Buscar.TabIndex = 12
-        Me.Btn_Buscar.Text = "Filtrar..."
-        Me.Btn_Buscar.Tooltip = "Aplicar filtro"
-        '
-        'ComboBoxEx1
-        '
-        Me.ComboBoxEx1.DisplayMember = "Text"
-        Me.ComboBoxEx1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.ComboBoxEx1.ForeColor = System.Drawing.Color.Black
-        Me.ComboBoxEx1.FormattingEnabled = True
-        Me.ComboBoxEx1.ItemHeight = 16
-        Me.ComboBoxEx1.Location = New System.Drawing.Point(1030, 29)
-        Me.ComboBoxEx1.Name = "ComboBoxEx1"
-        Me.ComboBoxEx1.Size = New System.Drawing.Size(68, 22)
-        Me.ComboBoxEx1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.ComboBoxEx1.TabIndex = 17
-        Me.ComboBoxEx1.Text = "Todas..."
-        Me.ComboBoxEx1.Visible = False
+        Me.Cmb_TipoVenta.DisplayMember = "Text"
+        Me.Cmb_TipoVenta.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.Cmb_TipoVenta.ForeColor = System.Drawing.Color.Black
+        Me.Cmb_TipoVenta.FormattingEnabled = True
+        Me.Cmb_TipoVenta.ItemHeight = 16
+        Me.Cmb_TipoVenta.Location = New System.Drawing.Point(1156, 29)
+        Me.Cmb_TipoVenta.Name = "Cmb_TipoVenta"
+        Me.Cmb_TipoVenta.Size = New System.Drawing.Size(68, 22)
+        Me.Cmb_TipoVenta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Cmb_TipoVenta.TabIndex = 17
+        Me.Cmb_TipoVenta.Text = "Todas..."
+        Me.Cmb_TipoVenta.Visible = False
         '
         'LabelX6
         '
@@ -249,7 +273,7 @@ Partial Class Frm_Stmp_IncNVVPicking
         '
         Me.LabelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX6.ForeColor = System.Drawing.Color.Black
-        Me.LabelX6.Location = New System.Drawing.Point(1030, 10)
+        Me.LabelX6.Location = New System.Drawing.Point(1156, 10)
         Me.LabelX6.Name = "LabelX6"
         Me.LabelX6.Size = New System.Drawing.Size(68, 23)
         Me.LabelX6.TabIndex = 18
@@ -269,7 +293,7 @@ Partial Class Frm_Stmp_IncNVVPicking
         Me.Dtp_BuscaXFechaDespacho.ButtonDropDown.Visible = True
         Me.Dtp_BuscaXFechaDespacho.ForeColor = System.Drawing.Color.Black
         Me.Dtp_BuscaXFechaDespacho.IsPopupCalendarOpen = False
-        Me.Dtp_BuscaXFechaDespacho.Location = New System.Drawing.Point(923, 30)
+        Me.Dtp_BuscaXFechaDespacho.Location = New System.Drawing.Point(1049, 30)
         '
         '
         '
@@ -317,7 +341,7 @@ Partial Class Frm_Stmp_IncNVVPicking
         '
         Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(923, 10)
+        Me.LabelX4.Location = New System.Drawing.Point(1049, 10)
         Me.LabelX4.Name = "LabelX4"
         Me.LabelX4.Size = New System.Drawing.Size(93, 23)
         Me.LabelX4.TabIndex = 15
@@ -336,7 +360,7 @@ Partial Class Frm_Stmp_IncNVVPicking
         Me.Dtp_BuscaXFechaEmision.ButtonDropDown.Visible = True
         Me.Dtp_BuscaXFechaEmision.ForeColor = System.Drawing.Color.Black
         Me.Dtp_BuscaXFechaEmision.IsPopupCalendarOpen = False
-        Me.Dtp_BuscaXFechaEmision.Location = New System.Drawing.Point(816, 30)
+        Me.Dtp_BuscaXFechaEmision.Location = New System.Drawing.Point(942, 30)
         '
         '
         '
@@ -384,7 +408,7 @@ Partial Class Frm_Stmp_IncNVVPicking
         '
         Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX3.ForeColor = System.Drawing.Color.Black
-        Me.LabelX3.Location = New System.Drawing.Point(816, 10)
+        Me.LabelX3.Location = New System.Drawing.Point(942, 10)
         Me.LabelX3.Name = "LabelX3"
         Me.LabelX3.Size = New System.Drawing.Size(93, 23)
         Me.LabelX3.TabIndex = 13
@@ -580,7 +604,7 @@ Partial Class Frm_Stmp_IncNVVPicking
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_EnviarPickear, Me.Btn_Cancelar})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_EnviarPickear, Me.Btn_ActualizarLista, Me.Btn_Cancelar})
         Me.Bar1.Location = New System.Drawing.Point(0, 594)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(1293, 41)
@@ -598,6 +622,16 @@ Partial Class Frm_Stmp_IncNVVPicking
         Me.Btn_EnviarPickear.ImageAlt = CType(resources.GetObject("Btn_EnviarPickear.ImageAlt"), System.Drawing.Image)
         Me.Btn_EnviarPickear.Name = "Btn_EnviarPickear"
         Me.Btn_EnviarPickear.Tooltip = "Enviar a pickear documentos marcados"
+        '
+        'Btn_ActualizarLista
+        '
+        Me.Btn_ActualizarLista.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_ActualizarLista.ForeColor = System.Drawing.Color.Black
+        Me.Btn_ActualizarLista.Image = CType(resources.GetObject("Btn_ActualizarLista.Image"), System.Drawing.Image)
+        Me.Btn_ActualizarLista.ImageAlt = CType(resources.GetObject("Btn_ActualizarLista.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ActualizarLista.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_ActualizarLista.Name = "Btn_ActualizarLista"
+        Me.Btn_ActualizarLista.Tooltip = "Actualizar (F5)"
         '
         'Btn_Cancelar
         '
@@ -747,36 +781,36 @@ Partial Class Frm_Stmp_IncNVVPicking
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle8
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
         Me.Grilla.RowHeadersVisible = False
         Me.Grilla.Size = New System.Drawing.Size(1266, 359)
         Me.Grilla.TabIndex = 3
@@ -866,10 +900,7 @@ Partial Class Frm_Stmp_IncNVVPicking
 
     Friend WithEvents Dtp_FechaParaFacturacion As DevComponents.Editors.DateTimeAdv.DateTimeInput
     Friend WithEvents GroupPanel4 As DevComponents.DotNetBar.Controls.GroupPanel
-    Friend WithEvents Txt_BuscaXObservaciones As DevComponents.DotNetBar.Controls.TextBoxX
-    Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
-    Friend WithEvents Btn_Buscar As DevComponents.DotNetBar.ButtonX
-    Friend WithEvents ComboBoxEx1 As DevComponents.DotNetBar.Controls.ComboBoxEx
+    Friend WithEvents Cmb_TipoVenta As DevComponents.DotNetBar.Controls.ComboBoxEx
     Friend WithEvents LabelX6 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Dtp_BuscaXFechaDespacho As DevComponents.Editors.DateTimeAdv.DateTimeInput
     Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
@@ -905,4 +936,9 @@ Partial Class Frm_Stmp_IncNVVPicking
     Friend WithEvents MetroStatusBar1 As DevComponents.DotNetBar.Metro.MetroStatusBar
     Friend WithEvents Lbl_Status As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Chk_FacturarTodo As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Btn_ActualizarLista As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Txt_Ocdo As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX8 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_BuscaXObservaciones As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
 End Class

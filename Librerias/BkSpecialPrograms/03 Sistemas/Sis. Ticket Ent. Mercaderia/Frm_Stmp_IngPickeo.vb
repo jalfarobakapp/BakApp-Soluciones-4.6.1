@@ -95,6 +95,7 @@ Public Class Frm_Stmp_IngPickeo
 
             .Columns("Caprco1_Ori").Width = 60
             .Columns("Caprco1_Ori").HeaderText = "Cant.Ori"
+            .Columns("Caprco1_Ori").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Caprco1_Ori").DefaultCellStyle.Format = "###,##0.##"
             .Columns("Caprco1_Ori").Visible = True
             .Columns("Caprco1_Ori").DisplayIndex = _DisplayIndex

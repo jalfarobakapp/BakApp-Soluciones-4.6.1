@@ -162,6 +162,8 @@ Public Class Clase_Crear_Documento
     Dim _Proyecto As String
     Dim _Bodesti As String
 
+    Dim _RtuVariable As Boolean
+
 #End Region
 
 #Region "VARIABLES PIE DEL DOCUMENTO,OBSERVACIONES"
@@ -212,6 +214,8 @@ Public Class Clase_Crear_Documento
 
         Dim _Reserva_NroOCC As Boolean = _Row_Encabezado.Item("Reserva_NroOCC")
         Dim _Reserva_Idmaeedo As Integer = _Row_Encabezado.Item("Reserva_Idmaeedo")
+
+        Dim _Items_RtuVariable As Integer
 
         Dim cn2 As New SqlConnection
         Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
@@ -599,6 +603,12 @@ Public Class Clase_Crear_Documento
 
                         _Idrst = Val(NuloPorNro(.Item("Idmaeddo_Dori"), ""))
                         _Tigeli = "I"
+
+                        _RtuVariable = .Item("RtuVariable")
+
+                        If _RtuVariable Then
+                            _Items_RtuVariable += 1
+                        End If
 
                         Dim _MgltprD As Double
 
@@ -1178,6 +1188,18 @@ Public Class Clase_Crear_Documento
                             _Idmaeddo = dfd1("Identity")
                         End While
                         dfd1.Close()
+
+
+                        If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Docu_Det") Then
+
+                            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Det (Idmaeddo,Idmaeedo,Tido,Nudo,Codigo,Descripcion,RtuVariable) Values " &
+                                           "(" & _Idmaeddo & "," & _Idmaeedo & ",'" & _Tido & "','" & _Nudo & "','" & _Koprct & "','" & _Nokopr & "'," & Convert.ToInt32(_RtuVariable) & ")"
+                            Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                            Comando.Transaction = myTrans
+                            Comando.ExecuteNonQuery()
+
+                        End If
+
 
                         If _Tidopa = "OTL" Then
 
@@ -1837,11 +1859,24 @@ Public Class Clase_Crear_Documento
                 Dim _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
                 Dim _TipoEstacion = _Global_Row_EstacionBk.Item("TipoEstacion")
                 Dim _Modalidad As String = _Row_Encabezado.Item("Modalidad")
+                Dim _Pickear As Integer
+
+                If _Tido = "NVV" Then
+
+                    _Pickear = Convert.ToInt32(_Global_Row_Configuracion_General.Item("Pickear_NVVTodas"))
+
+                    If CBool(_Pickear) AndAlso
+                        Convert.ToInt32(_Global_Row_Configuracion_General.Item("Pickear_ProdPesoVariable")) AndAlso
+                        Not CBool(_Items_RtuVariable) Then
+                        _Pickear = 0
+                    End If
+
+                End If
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Ent (Idmaeedo,NombreEquipo,TipoEstacion,Empresa,Modalidad,Tido,Nudo,FechaHoraGrab," &
-                               "HabilitadaFac,FunAutorizaFac) Values " &
+                               "HabilitadaFac,FunAutorizaFac,Pickear) Values " &
                                "(" & _Idmaeedo & ",'" & _NombreEquipo & "','" & _TipoEstacion & "','" & _Empresa & "','" & _Modalidad & "'" &
-                               ",'" & _Tido & "','" & _Nudo & "',Getdate(),0,'')"
+                               ",'" & _Tido & "','" & _Nudo & "',Getdate(),0,''," & _Pickear & ")"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                 Comando.Transaction = myTrans

@@ -2139,16 +2139,13 @@ Namespace My.Resources
         '''
         '''
         '''CREATE TABLE [dbo].[Zw_Log_Gestiones](
-        '''	[Id] [int] IDENTITY(1,1) NOT NULL,
-        '''	[NombreEquipo] [varchar](50) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Funcionario] [char](3) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Modalidad] [char](5) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Archirst] [varchar](20) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Idrst] [int] NOT NULL DEFAULT (0),
-        '''	[Fecha_Hora] [datetime] NOT NULL DEFAULT (GetDate()),
-        '''	[CodAccion] [varchar](20) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Accion] [varchar](1000) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[CodPermiso] [varchar [resto de la cadena truncado]&quot;;.
+        '''	[Id]                    [int] IDENTITY(1,1) NOT NULL,
+        '''	[NombreEquipo]          [varchar](50)       NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Funcionario]           [char](3)           NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Modalidad]             [char](5)           NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Archirst]              [varchar](20)       NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Idrst]                 [int]               NOT NULL DEFAULT (0),
+        '''	[Fecha_Hora]            [datetime]          NOT NULL  [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Log_Gestiones() As String
             Get
@@ -2160,21 +2157,15 @@ Namespace My.Resources
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
         '''CREATE TABLE [dbo].[Zw_Lotes_Det](
-        '''	[Id] [int] IDENTITY(1,1) NOT NULL,
-        '''	[Id_Lote] [int] NOT NULL,
-        '''	[NroLote] [varchar](20) NOT NULL,
-        '''	[NomTabla] [varchar](20) NOT NULL,
-        '''	[IdTabla] [int] NOT NULL,
+        '''	[Id]            [int] IDENTITY(1,1) NOT NULL,
+        '''	[Id_Lote]       [int]               NOT NULL Default(0),
+        '''	[NroLote]       [varchar](20)       NOT NULL Default(&apos;&apos;),
+        '''	[NomTabla]      [varchar](20)       NOT NULL Default(&apos;&apos;),
+        '''	[IdTabla]       [int]               NOT NULL Default(0),
         ''' CONSTRAINT [PK_Zw_Lotes_Det] PRIMARY KEY CLUSTERED 
         '''(
         '''	[Id] ASC
-        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-        ''') ON [PRIMARY]
-        '''
-        '''
-        '''
-        '''
-        '''.
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PA [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Lotes_Det() As String
             Get
@@ -2532,16 +2523,15 @@ Namespace My.Resources
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
         '''CREATE TABLE [dbo].[Zw_Pdp_CPT_Tarja_Det](
-        '''	[Id]						[int] IDENTITY(1,1) NOT NULL,
-        '''	[Id_CPT]					[int] NOT NULL Default(0),
-        '''	[Nro_Tipo]					[varchar](10) NULL,
-        '''	[Idmaeddo]					[int] NOT NULL Default(0),
-        '''	[Nro_CPT]					[varchar](10) NOT NULL Default(&apos;&apos;),
-        '''	[Lote]						[varchar](20) NOT NULL Default(&apos;&apos;),
-        '''	[Tipo]						[varchar](10) NOT NULL Default(&apos;&apos;),
-        '''	[Nro]						[int] NOT NULL Default(0),
-        '''	[Codigo]					[varchar](13) NOT NULL Default(&apos;&apos;),
-        '''	[CodAlternativo]			[varchar](21) NOT NULL D [resto de la cadena truncado]&quot;;.
+        '''	[Id]						[int]           IDENTITY(1,1) NOT NULL,
+        '''	[Id_CPT]					[int]           NOT NULL Default(0),
+        '''	[Nro_Tipo]					[varchar](10)   NULL,
+        '''	[Idmaeddo]					[int]           NOT NULL Default(0),
+        '''	[Nro_CPT]					[varchar](10)   NOT NULL Default(&apos;&apos;),
+        '''	[Lote]						[varchar](20)   NOT NULL Default(&apos;&apos;),
+        '''	[Tipo]						[varchar](10)   NOT NULL Default(&apos;&apos;),
+        '''	[Nro]						[int]           NOT NULL Default(0),
+        '''	[Codigo]					[varchar](13)   NOT NULL Default( [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Pdp_CPT_Tarja_Det() As String
             Get
@@ -4324,6 +4314,48 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Zw_Stk_Tipos_Grupos() As String
             Get
                 Return ResourceManager.GetString("Zw_Stk_Tipos_Grupos", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_Stmp_Det](
+        '''	[Id]						[int] IDENTITY(1,1) NOT NULL,
+        '''	[Id_Enc]					[int]			NOT NULL DEFAULT (0),
+        '''	[Idmaeedo]					[int]			NOT NULL DEFAULT (0),
+        '''	[Idmaeddo]					[int]			NOT NULL DEFAULT (0),
+        '''	[Codigo]					[varchar](13)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Descripcion]				[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Nulido]					[varchar](5)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Udtrpr]					[int]			NOT NULL DEFAULT (0),
+        '''	[Rludpr]					[float]			NOT NULL DEFAULT (0),
+        '''	[Rlud_Variable]				[bit]			N [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Stmp_Det() As String
+            Get
+                Return ResourceManager.GetString("Zw_Stmp_Det", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_Stmp_Enc](
+        '''	[Id]					[int] IDENTITY(1,1) NOT NULL,
+        '''	[Empresa]				[char](2)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Sucursal]				[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Numero]				[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[CodFuncionario_Crea]	[char](3)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Idmaeedo]				[int]			NOT NULL DEFAULT (0),
+        '''	[Tido]					[char](3)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Nudo]					[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Endo]					[varchar](10)	NULL,
+        '''	[Suendo]				[varchar](20)	NOT NUL [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Stmp_Enc() As String
+            Get
+                Return ResourceManager.GetString("Zw_Stmp_Enc", resourceCulture)
             End Get
         End Property
         

@@ -9,6 +9,7 @@ Public Class Frm_Stmp_IncNVVPicking
     'Dim _Dv As New DataView
 
     Dim _Tbl_Documentos As DataTable
+    Dim _RowEntidadBuscar As DataRow
 
     Public Sub New()
 
@@ -37,11 +38,13 @@ Public Class Frm_Stmp_IncNVVPicking
         Dim _Arr_Tipo_Entidad(,) As String = {{"", "Todas"},
                                              {"Contado", "Contado"},
                                              {"Credito", "Crédito"}}
-        Sb_Llenar_Combos(_Arr_Tipo_Entidad, ComboBoxEx1)
-        ComboBoxEx1.SelectedValue = ""
+        Sb_Llenar_Combos(_Arr_Tipo_Entidad, Cmb_TipoVenta)
+        Cmb_TipoVenta.SelectedValue = ""
 
         Dtp_BuscaXFechaEmision.Value = #1/1/0001 12:00:00 AM#
         Dtp_BuscaXFechaDespacho.Value = #1/1/0001 12:00:00 AM#
+
+        'Dtp_BuscaXFechaEmision.Value = FechaDelServidor()
 
         Sb_Actualizar_Grilla()
 
@@ -53,11 +56,50 @@ Public Class Frm_Stmp_IncNVVPicking
 
         Me.ActiveControl = Txt_BuscaXNudoNVV
 
+        AddHandler Txt_BuscaXNudoNVV.KeyDown, AddressOf Txt_KeyDown
+        AddHandler Txt_BuscaXEntidad.KeyDown, AddressOf Txt_KeyDown
+        AddHandler Txt_Observaciones.KeyDown, AddressOf Txt_KeyDown
+        AddHandler Txt_Ocdo.KeyDown, AddressOf Txt_KeyDown
+
+        Chk_FacturarTodo.Enabled = _Global_Row_Configuracion_General.Item("Pickear_FacturarAutoCompletas")
+
     End Sub
 
     Public Sub Sb_Actualizar_Grilla()
 
-        Dtp_BuscaXFechaDespacho.Value = FechaDelServidor()
+        Dim _FiltroNumero = String.Empty
+        Dim _FiltroFechaDespacho = String.Empty
+        Dim _FiltroFechaEmision = String.Empty
+        Dim _FiltroEntidad = String.Empty
+        Dim _FiltroObservaciones = String.Empty
+        Dim _FiltroOrdenDeCompra = String.Empty
+
+        If Dtp_BuscaXFechaEmision.Value <> #1/1/0001 12:00:00 AM# Then
+            _FiltroFechaEmision = "And  Edo.FEEMDO = '" & Format(Dtp_BuscaXFechaEmision.Value, "yyyyMMdd") & "'" & vbCrLf
+        End If
+
+        If Dtp_BuscaXFechaDespacho.Value <> #1/1/0001 12:00:00 AM# Then
+            _FiltroFechaDespacho = "And  Edo.FEER = '" & Format(Dtp_BuscaXFechaDespacho.Value, "yyyyMMdd") & "'" & vbCrLf
+        End If
+
+        If Not IsNothing(_RowEntidadBuscar) Then
+            _FiltroEntidad = "And Edo.ENDO = '" & _RowEntidadBuscar.Item("KOEN") & "' And Edo.SUENDO = '" & _RowEntidadBuscar.Item("SUEN") & "'" & vbCrLf
+        End If
+
+        If Not String.IsNullOrEmpty(Txt_BuscaXNudoNVV.Text) Then
+            _FiltroNumero = "And Edo.NUDO Like '%" & Txt_BuscaXNudoNVV.Text & "%'" & vbCrLf
+        End If
+
+        If Not String.IsNullOrEmpty(Txt_Observaciones.Text) Then
+            _FiltroObservaciones = "And Obs.OBDO Like '%" & Txt_Observaciones.Text & "%'" & vbCrLf
+        End If
+
+        If Not String.IsNullOrEmpty(Txt_Ocdo.Text) Then
+            _FiltroOrdenDeCompra = "And Obs.OCDO Like '%" & Txt_Ocdo.Text & "%'" & vbCrLf
+        End If
+
+        ' DEBO ENLAZAR LA TABLA Zw_Docu_Det a esta consulta para poner la RtuVariale por productos para las CARNES...
+        'jsdhkjs
 
         Consulta_sql = "Select Cast(0 As Bit) As Pickear,Cast(0 As Bit) As Facturar,Edo.IDMAEEDO,TIDO,Edo.NUDO," & vbCrLf &
                        "Cast(ENDO As Varchar(10)) As ENDO,Cast(SUENDO As Varchar(10)) As SUENDO," & vbCrLf &
@@ -79,7 +121,12 @@ Public Class Frm_Stmp_IncNVVPicking
                         "Left Join " & _Global_BaseBk & "Zw_Docu_Ent DocE On DocE.Idmaeedo = Edo.IDMAEEDO" & vbCrLf &
                         "Where 1 > 0" & vbCrLf &
                         "And Edo.IDMAEEDO Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Stmp_Enc Where Estado <> 'NULO')" & vbCrLf &
-                        "And Edo.FEER = '" & Format(Dtp_BuscaXFechaDespacho.Value, "yyyyMMdd") & "'" & vbCrLf &
+                        _FiltroFechaEmision &
+                        _FiltroFechaDespacho &
+                        _FiltroEntidad &
+                        _FiltroNumero &
+                        _FiltroObservaciones &
+                        _FiltroOrdenDeCompra &
                         "And DocE.Pickear = 1" & vbCrLf &
                         "Order By HORAGRAB" & vbCrLf &
                         "Update #Paso Set IDMAEDPCE = Isnull((Select Top 1 IDMAEDPCE From MAEDPCE Where IDRSD = IDMAEEDO),0)" & vbCrLf &
@@ -91,10 +138,6 @@ Public Class Frm_Stmp_IncNVVPicking
                         "Drop Table #Paso"
 
         _Tbl_Documentos = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-        '_Ds = _Sql.Fx_Get_DataSet(Consulta_sql)
-
-        '_Dv.Table = _Ds.Tables("Table")
 
         With Grilla
 
@@ -129,9 +172,10 @@ Public Class Frm_Stmp_IncNVVPicking
             .Columns("NUDO").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Facturar").HeaderText = "Facturar"
-            .Columns("Facturar").Width = 60
-            .Columns("Facturar").Visible = True
+            .Columns("Facturar").HeaderText = "Facturar al completar"
+            .Columns("Facturar").ToolTipText = "Facturar automáticamente una vez completado el picking"
+            .Columns("Facturar").Width = 70
+            .Columns("Facturar").Visible = _Global_Row_Configuracion_General.Item("Pickear_FacturarAutoCompletas")
             .Columns("Facturar").ReadOnly = False
             .Columns("Facturar").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
@@ -139,7 +183,7 @@ Public Class Frm_Stmp_IncNVVPicking
             .Columns("HabilitadaFac").HeaderText = "Habilitada Facturar"
             .Columns("HabilitadaFac").ToolTipText = "Habilitada ser facturada"
             .Columns("HabilitadaFac").Width = 70
-            .Columns("HabilitadaFac").Visible = True
+            .Columns("HabilitadaFac").Visible = _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar")
             .Columns("HabilitadaFac").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -236,22 +280,17 @@ Public Class Frm_Stmp_IncNVVPicking
     Private Sub Grilla_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellEndEdit
 
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
 
-        If _Fila.Cells("Facturar").Value Then
+        If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") AndAlso
+            (_Cabeza = "Facturar" Or _Cabeza = "Pickear") AndAlso
+            _Fila.Cells(_Cabeza).Value AndAlso
+            Not _Fila.Cells("HabilitadaFac").Value Then
 
-            Dim _Msg = String.Empty
-
-            If Not _Fila.Cells("HabilitadaFac").Value Then
-                _Msg = "Esta nota de venta no ha sido habilitada para ser facturada"
-            End If
-
-            If Not String.IsNullOrEmpty(_Msg) Then
-
-                _Fila.Cells("Facturar").Value = False
-                MessageBoxEx.Show(Me, _Msg, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Return
-
-            End If
+            _Fila.Cells(_Cabeza).Value = False
+            MessageBoxEx.Show(Me, "Esta nota de venta no ha sido habilitada para ser facturada", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
 
         End If
 
@@ -259,67 +298,106 @@ Public Class Frm_Stmp_IncNVVPicking
 
     Private Sub Chk_PickearTodo_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_PickearTodo.CheckedChanged
 
-        For Each _Fila As DataRow In _Tbl_Documentos.Rows
-            _Fila.Item("Pickear") = Chk_PickearTodo.Checked
-        Next
+        If Not Chk_PickearTodo.Checked Then
 
-        Return
+            For Each _Fila As DataRow In _Tbl_Documentos.Rows
+                _Fila.Item("Pickear") = Chk_PickearTodo.Checked
+            Next
+
+            Return
+
+        End If
 
         Dim _Marcar As Boolean
         Dim _SinHabilitar = 0
 
         For Each _Fila As DataGridViewRow In Grilla.Rows
 
-            If Not _Fila.Cells("Facturado").Value Then
+            If Not _Fila.Cells("Pickear").Value Then
 
                 _Marcar = True
+
                 If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+
                     If Not _Fila.Cells("HabilitadaFac").Value Then
-                        _Fila.Cells("Chk").Value = False
+
                         _Marcar = False
                         _SinHabilitar += 1
+
                     End If
+
                 End If
 
-                'If _Marcar Then
-                '    _Fila.Cells("Chk").Value = Not Chk_Marcar_todo.Checked
-                '    If _Fila.Cells("Chk").Value Then
-                '        Lbl_Total_Facturar.Tag += _Fila.Cells("VABRDO").Value
-                '    End If
-                'End If
+                _Fila.Cells("Pickear").Value = _Marcar
+
             End If
+
         Next
 
         If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
-            If Not Chk_PickearTodo.Checked Then
-                If CBool(_SinHabilitar) Then
-                    MessageBoxEx.Show(Me, "Existente " & _SinHabilitar & " documento(s) sin habilitar para ser facturado(s)", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                End If
+
+            If Chk_PickearTodo.Checked AndAlso CBool(_SinHabilitar) Then
+
+                MessageBoxEx.Show(Me, "Existente " & _SinHabilitar & " documento(s) sin habilitar para ser facturado(s)",
+                                   "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                'Chk_PickearTodo.Checked = False
+
             End If
+
         End If
 
     End Sub
 
     Private Sub Chk_FacturarTodo_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_FacturarTodo.CheckedChanged
 
-        For Each _Fila As DataRow In _Tbl_Documentos.Rows
+        If Not Chk_FacturarTodo.Checked Then
 
-            If Chk_FacturarTodo.Checked Then
+            For Each _Fila As DataRow In _Tbl_Documentos.Rows
+                _Fila.Item("Facturar") = Chk_FacturarTodo.Checked
+            Next
 
-                If Not _Fila.Item("HabilitadaFac") Then
+            Return
 
-                    MessageBoxEx.Show(Me, "Existen notas de venta que no ha sido habilitadas para ser facturadas",
-                                      "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                    Chk_FacturarTodo.Checked = False
-                    Return
+        End If
+
+        Dim _Marcar As Boolean
+        Dim _SinHabilitar = 0
+
+        For Each _Fila As DataGridViewRow In Grilla.Rows
+
+            If Not _Fila.Cells("Facturar").Value Then
+
+                _Marcar = True
+
+                If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+
+                    If Not _Fila.Cells("HabilitadaFac").Value Then
+
+                        _Marcar = False
+                        _SinHabilitar += 1
+
+                    End If
+
+                    _Fila.Cells("Facturar").Value = _Marcar
 
                 End If
 
             End If
 
-            _Fila.Item("Facturar") = Chk_FacturarTodo.Checked
-
         Next
+
+        If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+
+            If Not Chk_FacturarTodo.Checked Then
+
+                If CBool(_SinHabilitar) Then
+                    MessageBoxEx.Show(Me, "Existente " & _SinHabilitar & " documento(s) sin habilitar para ser facturado(s)",
+                                      "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                End If
+
+            End If
+
+        End If
 
     End Sub
 
@@ -504,4 +582,65 @@ Public Class Frm_Stmp_IncNVVPicking
 
     End Function
 
+    Private Sub Btn_ActualizarLista_Click(sender As Object, e As EventArgs) Handles Btn_ActualizarLista.Click
+        Sb_Actualizar_Grilla()
+    End Sub
+
+    Private Sub Txt_BuscaXEntidad_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_BuscaXEntidad.ButtonCustomClick
+
+        Dim _CodEntidad = Txt_BuscaXEntidad.Text.Trim
+
+        If String.IsNullOrEmpty(Txt_BuscaXEntidad.Text) Then
+            _RowEntidadBuscar = Nothing
+        End If
+
+        Dim Fm As New Frm_BuscarEntidad_Mt(False)
+        Fm.Rdb_Clientes.Checked = True
+        Fm.Txtdescripcion.Text = _CodEntidad
+        Fm.ShowDialog(Me)
+        _RowEntidadBuscar = Fm.Pro_RowEntidad
+
+        Fm.Dispose()
+
+        If Not IsNothing(_RowEntidadBuscar) Then
+            Txt_BuscaXEntidad.Text = _RowEntidadBuscar.Item("KOEN").ToString.Trim & "-" & _RowEntidadBuscar.Item("NOKOEN").ToString.Trim
+            Sb_Actualizar_Grilla()
+        End If
+
+    End Sub
+
+    Private Sub Txt_BuscaXEntidad_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_BuscaXEntidad.ButtonCustom2Click
+        _RowEntidadBuscar = Nothing
+        Txt_BuscaXEntidad.Text = String.Empty
+        Sb_Actualizar_Grilla()
+    End Sub
+
+    Private Sub Txt_BuscaXNudoNVV_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_BuscaXNudoNVV.ButtonCustom2Click
+        Txt_BuscaXNudoNVV.Text = String.Empty
+        Sb_Actualizar_Grilla()
+    End Sub
+
+    Private Sub Txt_KeyDown(sender As Object, e As KeyEventArgs)
+        If e.KeyValue = Keys.Enter Then
+            Sb_Actualizar_Grilla()
+        End If
+    End Sub
+
+    Private Sub Txt_BuscaXObservaciones_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_BuscaXObservaciones.ButtonCustom2Click
+        Txt_BuscaXObservaciones.Text = String.Empty
+        Sb_Actualizar_Grilla()
+    End Sub
+
+    Private Sub Txt_Ocdo_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Ocdo.ButtonCustom2Click
+        Txt_Ocdo.Text = String.Empty
+        Sb_Actualizar_Grilla()
+    End Sub
+
+    Private Sub Dtp_BuscaXFechaEmision_ButtonClearClick(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles Dtp_BuscaXFechaEmision.ButtonClearClick
+        Sb_Actualizar_Grilla()
+    End Sub
+
+    Private Sub Dtp_BuscaXFechaDespacho_ButtonClearClick(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles Dtp_BuscaXFechaDespacho.ButtonClearClick
+        Sb_Actualizar_Grilla()
+    End Sub
 End Class

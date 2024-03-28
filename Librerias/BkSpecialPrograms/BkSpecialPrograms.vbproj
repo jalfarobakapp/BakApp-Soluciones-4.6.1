@@ -7894,6 +7894,8 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stk_Tickets_Toma.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stk_Tipos.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stk_Tipos_Grupos.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stmp_Det.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stmp_Enc.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_St_Conf_Info_Reportes.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_St_Conf_Tecnicos_Taller.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_St_OT_Accesorios.sql" />

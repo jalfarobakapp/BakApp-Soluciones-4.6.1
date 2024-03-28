@@ -806,7 +806,7 @@ Public Class Frm_BuscarDocumento_Mt
             If Not IsNothing(_Row_Correo) Then
 
                 Dim _Asunto = _Row_Correo.Item("Asunto")
-                Dim _CuerpoMensaje = _Row_Correo.Item("CuerpoMensaje")
+                Dim _CuerpoMensaje = Replace(_Row_Correo.Item("CuerpoMensaje"), "'", "''")
 
                 Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo" & Space(1) &
                                "(NombreEquipo,Nombre_Correo,CodFuncionario,Asunto,Para,Cc,Idmaeedo," &

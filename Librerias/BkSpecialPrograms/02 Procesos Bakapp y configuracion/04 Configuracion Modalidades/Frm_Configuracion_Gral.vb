@@ -228,7 +228,8 @@ Public Class Frm_Configuracion_Gral
             Chk_BuscarProdConCodTecnico.Checked = .Item("BuscarProdConCodTecnico")
 
             Chk_Pickear_NVVTodas.Checked = .Item("Pickear_NVVTodas")
-            Chk_Pickerar_ProdPesoVariable.Checked = .Item("Pickerar_ProdPesoVariable")
+            Chk_Pickear_ProdPesoVariable.Checked = .Item("Pickear_ProdPesoVariable")
+            Chk_Pickear_FacturarAutoCompletas.Checked = .Item("Pickear_FacturarAutoCompletas")
 
         End With
 
@@ -316,7 +317,8 @@ Public Class Frm_Configuracion_Gral
         Chk_BloqueaZonaProductos.Enabled = _Modalidad_General
 
         Chk_Pickear_NVVTodas.Enabled = _Modalidad_General
-        Chk_Pickerar_ProdPesoVariable.Enabled = _Modalidad_General
+        Chk_Pickear_ProdPesoVariable.Enabled = _Modalidad_General
+        Chk_Pickear_FacturarAutoCompletas.Enabled = _Modalidad_General
 
         AddHandler Txt_Dias_Venci_Coti.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
         AddHandler Txt_ValorMinimoNVV.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
@@ -513,7 +515,8 @@ Public Class Frm_Configuracion_Gral
                        ",BuscarProdConCodRapido = " & Convert.ToInt32(Chk_BuscarProdConCodRapido.Checked) & vbCrLf &
                        ",BuscarProdConCodTecnico = " & Convert.ToInt32(Chk_BuscarProdConCodTecnico.Checked) & vbCrLf &
                        ",Pickear_NVVTodas = " & Convert.ToInt32(Chk_Pickear_NVVTodas.Checked) & vbCrLf &
-                       ",Pickerar_ProdPesoVariable = " & Convert.ToInt32(Chk_Pickerar_ProdPesoVariable.Checked) & vbCrLf &
+                       ",Pickear_ProdPesoVariable = " & Convert.ToInt32(Chk_Pickear_ProdPesoVariable.Checked) & vbCrLf &
+                       ",Pickear_FacturarAutoCompletas = " & Convert.ToInt32(Chk_Pickear_FacturarAutoCompletas.Checked) & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
@@ -658,9 +661,9 @@ Public Class Frm_Configuracion_Gral
 
     Private Sub Chk_Pickear_NVVTodas_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Pickear_NVVTodas.CheckedChanged
 
-        Chk_Pickerar_ProdPesoVariable.Enabled = Chk_Pickear_NVVTodas.Checked
+        Chk_Pickear_ProdPesoVariable.Enabled = Chk_Pickear_NVVTodas.Checked
         If Not Chk_Pickear_NVVTodas.Checked Then
-            Chk_Pickerar_ProdPesoVariable.Checked = False
+            Chk_Pickear_ProdPesoVariable.Checked = False
         End If
 
     End Sub

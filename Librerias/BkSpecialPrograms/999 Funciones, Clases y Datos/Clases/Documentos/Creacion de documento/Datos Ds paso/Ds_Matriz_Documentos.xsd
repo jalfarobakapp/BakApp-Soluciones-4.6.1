@@ -18,7 +18,7 @@
               <xs:element name="Observaciones" msprop:Generator_ColumnPropNameInTable="ObservacionesColumn" msprop:Generator_ColumnPropNameInRow="Observaciones" msprop:Generator_UserColumnName="Observaciones" msprop:Generator_ColumnVarNameInTable="columnObservaciones" type="xs:string" default="" />
               <xs:element name="Forma_pago" msprop:Generator_ColumnPropNameInTable="Forma_pagoColumn" msprop:Generator_ColumnPropNameInRow="Forma_pago" msprop:Generator_UserColumnName="Forma_pago" msprop:Generator_ColumnVarNameInTable="columnForma_pago" type="xs:string" default="" />
               <xs:element name="Orden_compra" msprop:Generator_ColumnPropNameInTable="Orden_compraColumn" msprop:Generator_ColumnPropNameInRow="Orden_compra" msprop:Generator_UserColumnName="Orden_compra" msprop:Generator_ColumnVarNameInTable="columnOrden_compra" type="xs:string" default="" />
-              <xs:element name="Motivo" msprop:Generator_ColumnPropNameInRow="Motivo" msprop:Generator_ColumnPropNameInTable="MotivoColumn" msprop:Generator_ColumnVarNameInTable="columnMotivo" msprop:Generator_UserColumnName="Motivo" type="xs:string" minOccurs="0" />
+              <xs:element name="Motivo" msprop:Generator_ColumnPropNameInTable="MotivoColumn" msprop:Generator_ColumnPropNameInRow="Motivo" msprop:Generator_UserColumnName="Motivo" msprop:Generator_ColumnVarNameInTable="columnMotivo" type="xs:string" minOccurs="0" />
               <xs:element name="Obs1" msprop:Generator_ColumnPropNameInTable="Obs1Column" msprop:Generator_ColumnPropNameInRow="Obs1" msprop:Generator_UserColumnName="Obs1" msprop:Generator_ColumnVarNameInTable="columnObs1" type="xs:string" default="" />
               <xs:element name="Obs2" msprop:Generator_ColumnPropNameInTable="Obs2Column" msprop:Generator_ColumnPropNameInRow="Obs2" msprop:Generator_UserColumnName="Obs2" msprop:Generator_ColumnVarNameInTable="columnObs2" type="xs:string" default="" />
               <xs:element name="Obs3" msprop:Generator_ColumnPropNameInTable="Obs3Column" msprop:Generator_ColumnPropNameInRow="Obs3" msprop:Generator_UserColumnName="Obs3" msprop:Generator_ColumnVarNameInTable="columnObs3" type="xs:string" default="" />
@@ -301,6 +301,8 @@
               <xs:element name="CostoLista" msprop:Generator_ColumnPropNameInTable="CostoListaColumn" msprop:Generator_ColumnPropNameInRow="CostoLista" msprop:Generator_UserColumnName="CostoLista" msprop:Generator_ColumnVarNameInTable="columnCostoLista" type="xs:double" minOccurs="0" />
               <xs:element name="Id_OtSvr" msprop:Generator_ColumnPropNameInTable="Id_OtSvrColumn" msprop:Generator_ColumnPropNameInRow="Id_OtSvr" msprop:Generator_UserColumnName="Id_OtSvr" msprop:Generator_ColumnVarNameInTable="columnId_OtSvr" type="xs:int" default="0" minOccurs="0" />
               <xs:element name="Semilla_Svr" msprop:Generator_ColumnPropNameInTable="Semilla_SvrColumn" msprop:Generator_ColumnPropNameInRow="Semilla_Svr" msprop:Generator_UserColumnName="Semilla_Svr" msprop:Generator_ColumnVarNameInTable="columnSemilla_Svr" type="xs:int" default="0" minOccurs="0" />
+              <xs:element name="Nmarca" msprop:Generator_UserColumnName="Nmarca" msprop:Generator_ColumnPropNameInTable="NmarcaColumn" msprop:Generator_ColumnPropNameInRow="Nmarca" msprop:Generator_ColumnVarNameInTable="columnNmarca" type="xs:string" minOccurs="0" />
+              <xs:element name="RtuVariable" msprop:Generator_ColumnPropNameInRow="RtuVariable" msprop:Generator_ColumnPropNameInTable="RtuVariableColumn" msprop:Generator_ColumnVarNameInTable="columnRtuVariable" msprop:Generator_UserColumnName="RtuVariable" type="xs:boolean" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -359,7 +361,7 @@
               <xs:element name="UnTrans" msprop:Generator_ColumnPropNameInTable="UnTransColumn" msprop:Generator_ColumnPropNameInRow="UnTrans" msprop:Generator_UserColumnName="UnTrans" msprop:Generator_ColumnVarNameInTable="columnUnTrans" type="xs:int" minOccurs="0" />
               <xs:element name="Ud01PR" msprop:Generator_ColumnPropNameInTable="Ud01PRColumn" msprop:Generator_ColumnPropNameInRow="Ud01PR" msprop:Generator_UserColumnName="Ud01PR" msprop:Generator_ColumnVarNameInTable="columnUd01PR" type="xs:string" minOccurs="0" />
               <xs:element name="Ud02PR" msprop:Generator_ColumnPropNameInTable="Ud02PRColumn" msprop:Generator_ColumnPropNameInRow="Ud02PR" msprop:Generator_UserColumnName="Ud02PR" msprop:Generator_ColumnVarNameInTable="columnUd02PR" type="xs:string" minOccurs="0" />
-              <xs:element name="Rtu" msprop:Generator_UserColumnName="Rtu" msprop:Generator_ColumnPropNameInTable="RtuColumn" msprop:Generator_ColumnPropNameInRow="Rtu" msprop:Generator_ColumnVarNameInTable="columnRtu" type="xs:double" minOccurs="0" />
+              <xs:element name="Rtu" msprop:Generator_ColumnPropNameInTable="RtuColumn" msprop:Generator_ColumnPropNameInRow="Rtu" msprop:Generator_UserColumnName="Rtu" msprop:Generator_ColumnVarNameInTable="columnRtu" type="xs:double" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

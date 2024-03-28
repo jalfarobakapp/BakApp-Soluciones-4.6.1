@@ -27,7 +27,7 @@ SELECT TOP 100
        Isnull(Tc1.NOKOCARAC,'') AS 'FAMILIA',
 	   Cast(Case When Mp.ATPR = 'OCU' Then 1 Else 0 End As Bit) as 'Oculto',
        Mp.KOPRTE As 'Codigo_Tecnico',
-       Cast('' As Varchar(Max)) As Ficha
+       Cast('' As Varchar(Max)) As 'Ficha'
 
 Into #Paso_Maepr      
     From MAEPR Mp
@@ -47,7 +47,7 @@ WHERE 1 > 0
 
 DECLARE @Kopr AS varchar(13)
 DECLARE @Ficha AS varchar(max)
-DECLARE ProdInfo CURSOR FOR SELECT Codigo,FICHA FROM #Paso_Maepr Inner Join MAEFICHD On KOPR = Codigo Where FICHA <> '' Order By KOPR,SEMILLA
+DECLARE ProdInfo CURSOR FOR SELECT Codigo,Ps.Ficha FROM #Paso_Maepr Ps Inner Join MAEFICHD On KOPR = Codigo Where MAEFICHD.FICHA <> '' Order By KOPR,SEMILLA
 OPEN ProdInfo
 FETCH NEXT FROM ProdInfo INTO @Kopr,@Ficha
 WHILE @@fetch_status = 0

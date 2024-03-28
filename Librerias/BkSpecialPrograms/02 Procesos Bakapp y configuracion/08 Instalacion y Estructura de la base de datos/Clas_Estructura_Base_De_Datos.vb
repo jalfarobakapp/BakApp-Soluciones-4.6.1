@@ -1041,6 +1041,11 @@ Public Class Clas_Estructura_Base_De_Datos
             Case "Zw_Stk_Tickets_Toma"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Stk_Tickets_Toma
 
+            Case "Zw_Stmp_Enc"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Stmp_Enc
+            Case "Zw_Stmp_Det"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Stmp_Det
+
             Case "Zw_TablaDeCaracterizaciones"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_TablaDeCaracterizaciones
             Case "Zw_Tablas_Equivalentes_Rd_Bk"

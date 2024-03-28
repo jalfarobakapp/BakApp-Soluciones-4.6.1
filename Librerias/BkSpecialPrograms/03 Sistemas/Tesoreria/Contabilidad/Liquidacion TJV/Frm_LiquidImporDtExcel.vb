@@ -154,18 +154,18 @@ Public Class Frm_LiquidImporDtExcel
                     If _Fila.Item("VADP") = _MontoParaAbono Then
 
                         Dim _Str_Nucudp As String = _Fila.Item("NUCUDP").ToString.Trim
-                        Dim _Int_Nucudp As Integer = Convert.ToInt32(_Fila.Item("NUCUDP").ToString.Trim)
-                        Dim _Str_Cudp As String = Convert.ToInt32(_Fila.Item("CUDP").ToString.Trim)
-                        Dim _Int_Cudp As Integer = _Fila.Item("CUDP").ToString.Trim
+                        Dim _Int_Nucudp As Integer = Convert.ToInt64(_Fila.Item("NUCUDP").ToString.Trim)
+                        Dim _Str_Cudp As String = Convert.ToInt64(_Fila.Item("CUDP").ToString.Trim)
+                        Dim _Int_Cudp = _Fila.Item("CUDP").ToString.Trim
 
                         If IsNumeric(_CodAutoVenta) Then
-                            If _Int_Nucudp = Convert.ToInt32(_CodAutoVenta) Then
+                            If _Int_Nucudp = Convert.ToInt64(_CodAutoVenta) Then
                                 _Fila.Item("Incluir") = True
                                 _TieneError = False
                                 _Error = String.Empty
                                 TotalValSelec += _MontoParaAbono
                                 Exit For
-                            ElseIf _Int_Cudp = Convert.ToInt32(_CodAutoVenta) Then
+                            ElseIf _Int_Cudp = Convert.ToInt64(_CodAutoVenta) Then
                                 _Fila.Item("Incluir") = True
                                 _TieneError = False
                                 _Error = String.Empty

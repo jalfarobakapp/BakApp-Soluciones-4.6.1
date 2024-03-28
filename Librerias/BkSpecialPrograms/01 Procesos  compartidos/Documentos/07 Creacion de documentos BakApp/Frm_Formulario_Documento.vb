@@ -1849,6 +1849,8 @@ Public Class Frm_Formulario_Documento
 
             .Item("Id_OtSvr") = 0
             .Item("Semilla_Svr") = 0
+            .Item("Nmarca") = String.Empty
+            .Item("RtuVariable") = False
 
             _TblDetalle.Rows.Add(NewFila)
 
@@ -4622,7 +4624,6 @@ Public Class Frm_Formulario_Documento
 
         End If
 
-
         If _UnTrans = 1 Then
             _UdTrans = _Ud1Linea
             If Not IsNothing(_RowCostos) Then _EcuacionCosto = NuloPorNro(_RowCostos.Item("ECUACION").ToString.Trim, "")
@@ -4850,6 +4851,7 @@ Public Class Frm_Formulario_Documento
 
             .Cells("Nuevo_Producto").Value = 0
             .Cells("Pesoubic").Value = _Pesoubic
+            .Cells("Nmarca").Value = _Nmarca
 
             Dim _PermisoDscto As Boolean = False
 
@@ -5572,12 +5574,21 @@ Public Class Frm_Formulario_Documento
                     _Cantidad = 0
                 End If
 
-                If _Rtu = 1 Then
-                    _CantUd1 = _Cantidad
-                    _CantUd2 = _Cantidad * _Rtu
+                If _Fila.Cells("RtuVariable").Value Then
+
+                    _CantUd1 = _Fila.Cells("CantUd1").Value
+                    _CantUd2 = _Fila.Cells("CantUd2").Value
+
                 Else
-                    _CantUd1 = _Cantidad
-                    _CantUd2 = _Cantidad / _Rtu
+
+                    If _Rtu = 1 Then
+                        _CantUd1 = _Cantidad
+                        _CantUd2 = _Cantidad * _Rtu
+                    Else
+                        _CantUd1 = _Cantidad
+                        _CantUd2 = _Cantidad / _Rtu
+                    End If
+
                 End If
 
             ElseIf _UnTrans = 2 Then
@@ -7656,14 +7667,24 @@ Public Class Frm_Formulario_Documento
                                 Else
 
                                     Dim _Aceptado As Boolean
+                                    Dim _RtuVariable As Boolean = _Fila.Cells("RtuVariable").Value
 
-                                    Dim Fm As New Frm_Cantidades_Ud_Disintas(_Fila) '(_Codigo, _Rtu, _UnTrans)
+                                    Dim Fm As New Frm_Cantidades_Ud_Disintas(_Fila)
                                     Fm.Cantidad_Ud1 = _CantUd1
                                     Fm.Cantidad_Ud2 = _CantUd2
                                     Fm.LblUnidad1.Text = _Ud01PR
                                     Fm.LblUnidad2.Text = _Ud02PR
                                     Fm.TopMost = True
+                                    Fm.RtuVariable = _RtuVariable
                                     Fm.ShowDialog(Me)
+
+                                    _RtuVariable = Fm.RtuVariable
+
+                                    _Fila.Cells("RtuVariable").Value = _RtuVariable
+
+                                    If _RtuVariable Then
+                                        _Fila.Cells("Rtu").Value = Math.Round(Fm.Cantidad_Ud1 / Fm.Cantidad_Ud2, 5)
+                                    End If
 
                                     Dim _No_Permite_Superar_Cantidad_Original As Boolean
                                     Dim _Tidopa As String = _Fila.Cells("Tidopa").Value

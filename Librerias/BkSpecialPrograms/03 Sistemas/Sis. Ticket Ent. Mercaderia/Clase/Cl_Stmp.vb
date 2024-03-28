@@ -92,7 +92,7 @@ Public Class Cl_Stmp
                 .Udtrpr = _Fila.Item("Udtrpr")
                 .Udpr = _Fila.Item("Udtrpr")
                 .Rludpr = _Fila.Item("Rludpr")
-                .Rlud_Variable = _Fila.Item("Rlud_Variable")
+                .RtuVariable = _Fila.Item("RtuVariable")
                 .Rlud_Real = _Fila.Item("Rlud_Real")
                 .Cantidad = _Fila.Item("Cantidad")
                 .Caprco1_Ori = _Fila.Item("Caprco1_Ori")
@@ -172,10 +172,10 @@ Public Class Cl_Stmp
 
                     If Not String.IsNullOrEmpty(.Codigo) Then
 
-                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stmp_Det (Id_Enc,Idmaeedo,Idmaeddo,Codigo,Descripcion,Nulido,Udtrpr,Rludpr" &
+                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stmp_Det (Id_Enc,Idmaeedo,Idmaeddo,Codigo,Descripcion,Nulido,Udtrpr,RtuVariable,Rludpr" &
                                        ",Caprco1_Ori,Caprco1_Real,Udpr,Ud01pr,Caprco2_Ori,Caprco2_Real,Ud02pr,Pickeado,EnProceso) Values " &
                                        "(" & .Id_Enc & "," & .Idmaeedo & "," & .Idmaeddo & ",'" & .Codigo & "','" & .Descripcion & "'" &
-                                       ",'" & .Nulido & "'," & .Udtrpr & "," & De_Num_a_Tx_01(.Rludpr, False, 5) &
+                                       ",'" & .Nulido & "'," & .Udtrpr & "," & De_Num_a_Tx_01(.RtuVariable, False, 5) & "," & De_Num_a_Tx_01(.Rludpr, False, 5) &
                                        "," & De_Num_a_Tx_01(.Caprco1_Ori, False, 5) &
                                        "," & De_Num_a_Tx_01(.Caprco1_Real, False, 5) &
                                        ",'" & .Udpr & "'" &
@@ -505,7 +505,7 @@ Namespace Stmp_BD
         Public Property Nulido As String
         Public Property Udtrpr As Integer
         Public Property Rludpr As Double
-        Public Property Rlud_Variable As Double
+        Public Property RtuVariable As Double
         Public Property Rlud_Real As Double
         Public Property Udpr As String
         Public Property Cantidad As Double

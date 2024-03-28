@@ -65,6 +65,14 @@ Public Class Tesoreria_Clientes
 
         If Fx_Revisar_Taza_Cambio(_Fm_Menu_Padre,, True) Then
 
+            Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+            Dim _Percontact As String = _Sql.Fx_Trae_Dato("TABFU", "PERCONTACT", "KOFU = '" & FUNCIONARIO & "'")
+
+            If MessageBoxEx.Show(Me, "¿Confirma el periodo " & _Percontact & "?", "Confirmación",
+                                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                Return
+            End If
+
             Dim Fm As New Frm_LiquidTJVcredito
             Fm.ShowDialog(Me)
             Fm.Dispose()
