@@ -1,6 +1,14 @@
 ﻿Imports BkSpecialPrograms.Frm_SolCredito_Ingreso
 
 Public Class Frm_Validaciones
+
+    Public Property Columan1 As LsValiciones.Columnas
+    Public Property Columan2 As LsValiciones.Columnas
+    Public Property Columan3 As LsValiciones.Columnas
+    Public Property Columan4 As LsValiciones.Columnas
+    Public Property UsarImagenesExternas As Boolean
+    Public Property ListaDeImagenesExternas As ImageList
+
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -14,6 +22,7 @@ Public Class Frm_Validaciones
 
     Private Sub Frm_Validaciones_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        Lv_ListaDeMensajes.FullRowSelect = True
         Lv_ListaDeMensajes.View = View.Details
 
         If Global_Thema = Enum_Themas.Oscuro Then
@@ -22,9 +31,36 @@ Public Class Frm_Validaciones
             Lv_ListaDeMensajes.SmallImageList = Imagenes_16x16
         End If
 
+        If UsarImagenesExternas Then
+            Lv_ListaDeMensajes.SmallImageList = ListaDeImagenesExternas
+        End If
+
         ' Cree las columnas de la grilla
-        Lv_ListaDeMensajes.Columns.Add("Est.", 300, HorizontalAlignment.Left).Text = "Detalle"
-        Lv_ListaDeMensajes.Columns.Add("Mensaje", 380, HorizontalAlignment.Left).Text = "Mensaje"
+
+        If Not IsNothing(Columan1) Then
+            Lv_ListaDeMensajes.Columns.Add(Columan1.Nombre, Columan1.Ancho, HorizontalAlignment.Left).Text = Columan1.Descripcion
+        Else
+            Lv_ListaDeMensajes.Columns.Add("Mensaje.", 300, HorizontalAlignment.Left).Text = "Mensaje"
+        End If
+
+        If Not IsNothing(Columan2) Then
+            Lv_ListaDeMensajes.Columns.Add(Columan2.Nombre, Columan2.Ancho, HorizontalAlignment.Left).Text = Columan2.Descripcion
+        Else
+            Lv_ListaDeMensajes.Columns.Add("Detalle", 380, HorizontalAlignment.Left).Text = "Detalle"
+        End If
+
+        If Not IsNothing(Columan3) Then
+            Lv_ListaDeMensajes.Columns.Add(Columan3.Nombre, Columan3.Ancho, HorizontalAlignment.Left).Text = Columan3.Descripcion
+        Else
+            Lv_ListaDeMensajes.Columns.Add("Resultado", 300, HorizontalAlignment.Left).Text = "Resultado"
+        End If
+
+        If Not IsNothing(Columan4) Then
+            Lv_ListaDeMensajes.Columns.Add(Columan4.Nombre, Columan4.Ancho, HorizontalAlignment.Left).Text = Columan4.Descripcion
+        Else
+            Lv_ListaDeMensajes.Columns.Add("Fecha", 100, HorizontalAlignment.Left).Text = "Fecha"
+        End If
+
 
         ' Cargue el formulario con respuestas
 
@@ -32,7 +68,7 @@ Public Class Frm_Validaciones
 
             For Each resp As LsValiciones.Mensajes In ListaMensajes
 
-                Dim item As New ListViewItem(resp.Detalle)
+                Dim item As New ListViewItem(resp.Mensaje)
 
                 If resp.EsCorrecto Then
                     item.ImageIndex = 0
@@ -40,16 +76,21 @@ Public Class Frm_Validaciones
                     item.ImageIndex = 1
                 End If
 
-                item.SubItems.Add(resp.Mensaje)
+                If UsarImagenesExternas Then
+                    item.ImageKey = resp.NombreImagen
+                End If
+
+                item.SubItems.Add(resp.Detalle)
+                item.SubItems.Add(resp.Resultado)
+                item.SubItems.Add(resp.Fecha)
+
                 Lv_ListaDeMensajes.Items.Add(item)
 
-
-                'Dim lvi As ListViewItem = lvFics.Items.Add(_Fila.Item("Tido") & "-" & _Fila.Item("Nudo"), _Imagen)
-                'lvi.SubItems.Add(_Fila.Item("Nombre_Entidad"))
-                'lvi.SubItems.Add(_Estado)
-
-
-                item.Tag = resp.Mensaje & vbCrLf & resp.Detalle
+                If String.IsNullOrEmpty(resp.Tag) Then
+                    item.Tag = resp.Mensaje & vbCrLf & resp.Detalle
+                Else
+                    item.Tag = resp.Tag
+                End If
 
             Next
 
@@ -57,13 +98,26 @@ Public Class Frm_Validaciones
 
         Lv_ListaDeMensajes.Refresh()
 
+        If Lv_ListaDeMensajes.Items.Count > 0 Then
+            Lv_ListaDeMensajes.Items(0).Selected = True
+            Lv_ListaDeMensajes.Items(0).EnsureVisible()
+        End If
+
+        If Lv_ListaDeMensajes.SelectedIndices.Count > 0 Then
+            Txt_Mensaje.Text = Lv_ListaDeMensajes.Items(0).Tag.ToString()
+        End If
+
     End Sub
 
     Private Sub Lv_ListaDeMensajes_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Lv_ListaDeMensajes.SelectedIndexChanged
 
-        If Lv_ListaDeMensajes.SelectedIndices.Count > 0 Then
-            Txt_Mensaje.Text = Lv_ListaDeMensajes.Items(Lv_ListaDeMensajes.FocusedItem.Index).Tag.ToString()
-        End If
+        Try
+            If Lv_ListaDeMensajes.SelectedIndices.Count > 0 Then
+                Txt_Mensaje.Text = Lv_ListaDeMensajes.Items(Lv_ListaDeMensajes.FocusedItem.Index).Tag.ToString()
+            End If
+        Catch ex As Exception
+
+        End Try
 
     End Sub
 
@@ -76,20 +130,60 @@ Public Class Frm_Validaciones
             Me.Close()
         End If
     End Sub
+
+    Private Sub Btn_Excel_Click(sender As Object, e As EventArgs) Handles Btn_Excel.Click
+
+        ' Crear un nuevo DataTable
+        Dim _Tbl As New DataTable()
+
+        ' Agregar columnas al DataTable basadas en las columnas del ListView
+        For Each column As ColumnHeader In Lv_ListaDeMensajes.Columns
+            _Tbl.Columns.Add(column.Text)
+        Next
+
+        ' Iterar a través de los elementos del ListView y agregarlos al DataTable
+        For Each item As ListViewItem In Lv_ListaDeMensajes.Items
+            ' Crear una nueva fila
+            Dim row As DataRow = _Tbl.NewRow()
+
+            ' Agregar los datos de cada subitem en la fila
+            For i As Integer = 0 To item.SubItems.Count - 1
+                row(i) = item.SubItems(i).Text
+            Next
+
+            ' Agregar la fila completa al DataTable
+            _Tbl.Rows.Add(row)
+        Next
+
+        ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Lista")
+
+    End Sub
 End Class
-
-
 
 Namespace LsValiciones
 
     Public Class Mensajes
 
         Public Property EsCorrecto As Boolean
+        Public Property Id As String
+        Public Property Fecha As DateTime
         Public Property Mensaje As String
         Public Property Detalle As String
         Public Property Resultado As String
+        Public Property Tag As String
+        Public Property UsarImagen As Boolean
+        Public Property NombreImagen As String
 
     End Class
+
+    Public Class Columnas
+
+        Public Property Nombre As String
+        Public Property Descripcion As String
+        Public Property Ancho As Integer
+
+    End Class
+
 
 End Namespace
 

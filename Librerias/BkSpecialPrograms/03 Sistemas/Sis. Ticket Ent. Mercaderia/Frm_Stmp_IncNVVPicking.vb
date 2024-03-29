@@ -99,7 +99,7 @@ Public Class Frm_Stmp_IncNVVPicking
         End If
 
         ' DEBO ENLAZAR LA TABLA Zw_Docu_Det a esta consulta para poner la RtuVariale por productos para las CARNES...
-        'jsdhkjs
+
 
         Consulta_sql = "Select Cast(0 As Bit) As Pickear,Cast(0 As Bit) As Facturar,Edo.IDMAEEDO,TIDO,Edo.NUDO," & vbCrLf &
                        "Cast(ENDO As Varchar(10)) As ENDO,Cast(SUENDO As Varchar(10)) As SUENDO," & vbCrLf &
@@ -544,7 +544,9 @@ Public Class Frm_Stmp_IncNVVPicking
 
         End With
 
-        Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Row_Documento.Item("IDMAEEDO")
+        Consulta_sql = "Select Ddo.*,Isnull(RtuVariable,0) As RtuVariable From MAEDDO Ddo" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Docu_Det ZDet On Ddo.IDMAEDDO = ZDet.Idmaeddo" & vbCrLf &
+                       "Where IDMAEEDO = " & _Row_Documento.Item("IDMAEEDO")
         Dim _Tbl_Detalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         For Each _Fila As DataRow In _Tbl_Detalle.Rows
@@ -569,6 +571,7 @@ Public Class Frm_Stmp_IncNVVPicking
                 .Ud02pr = _Fila.Item("UD02PR")
                 .Pickeado = False
                 .EnProceso = True
+                .RtuVariable = _Fila.Item("RtuVariable")
 
             End With
 

@@ -256,7 +256,6 @@ Public Class Frm_Tickets_Seguimiento
                     _Icono = _Imagenes_List.Images.Item("people-vendor-error.png")
                     _Fila.Cells("Accion").Style.ForeColor = Rojo
                 End If
-
             End If
 
             _Fila.Cells("Btn_ImagenUser").Value = _Icono
@@ -715,4 +714,143 @@ Public Class Frm_Tickets_Seguimiento
 
     End Sub
 
+    Private Sub Btn_Mnu_TkHistoria_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_TkHistoria.Click
+
+        Dim _Lista As List(Of LsValiciones.Mensajes) = Fx_Cargar_Traza(_Ticket.Tickets.Id_Raiz)
+
+        'Dim ListaQr As LsValiciones.Mensajes = _Lista.FirstOrDefault(Function(p) p.EsCorrecto = False)
+
+        'If Not IsNothing(ListaQr) Then
+
+        '    MessageBoxEx.Show(Me, "Hay documentos con problemas", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+        'End If
+
+        Dim _Columan1 As New LsValiciones.Columnas
+        Dim _Columan2 As New LsValiciones.Columnas
+        Dim _Columan3 As New LsValiciones.Columnas
+        Dim _Columan4 As New LsValiciones.Columnas
+
+        _Columan1.Nombre = "Ticket"
+        _Columan1.Descripcion = "Detalle"
+        _Columan1.Ancho = 200
+
+        _Columan2.Nombre = "Accion"
+        _Columan2.Descripcion = "Acción"
+        _Columan2.Ancho = 140
+
+        _Columan3.Nombre = "Descripcion"
+        _Columan3.Descripcion = "Descripción"
+        _Columan3.Ancho = 400
+
+        _Columan4.Nombre = "Fecha"
+        _Columan4.Descripcion = "Fecha/Hora"
+        _Columan4.Ancho = 150
+
+        Dim _Imagenes_List As ImageList
+
+        Dim Fmv As New Frm_Validaciones
+        Fmv.Columan1 = _Columan1
+        Fmv.Columan2 = _Columan2
+        Fmv.Columan3 = _Columan3
+        Fmv.Columan4 = _Columan4
+        Fmv.ListaMensajes = _Lista
+        Fmv.UsarImagenesExternas = True
+
+        If Global_Thema = Enum_Themas.Oscuro Then
+            _Imagenes_List = Imagenes_16x16_Dark
+        Else
+            _Imagenes_List = Imagenes_16x16
+        End If
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tickets Where Id = " & _Ticket.Tickets.Id_Raiz
+        Dim _RowTicketRaiz As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Fmv.ListaDeImagenesExternas = _Imagenes_List
+        Fmv.Text = "TRAZA DE TICKET ORIGEN " & _RowTicketRaiz.Item("Numero").ToString.Trim & ", Asunto: " & _RowTicketRaiz.Item("Asunto").ToString.Trim
+        Fmv.ShowDialog(Me)
+        Fmv.Dispose()
+
+    End Sub
+
+    Function Fx_Cargar_Traza(_Id_Raiz As Integer) As List(Of LsValiciones.Mensajes)
+
+        Dim _Lista As New List(Of LsValiciones.Mensajes)
+        Dim _FechaHoy As DateTime = FechaDelServidor()
+
+        Consulta_sql = "Select Tk.Id As 'Id_Ticket',Tk.Id_Padre,Tk.Id_Raiz,Acc.Id As 'Id_Accion'," & vbCrLf &
+                       "(Select Numero From " & _Global_BaseBk & "Zw_Stk_Tickets Where Id = Tk.Id_Raiz) As 'Ticket_Origen'," & vbCrLf &
+                       "Tk.Numero,Tk.Asunto,Acc.CodFunGestiona,Cf.NOKOFU As 'NombreFunGestiona',Acc.Accion,Acc.Fecha," & vbCrLf &
+                       "Case Acc.CodFunGestiona When Acc.CodFuncionario Then 'FunCrea' When Acc.CodAgente Then 'FunAge' End As 'FunAccion'," & vbCrLf &
+                       "Case Accion " & vbCrLf &
+                       "When 'CREA' Then 'Crea Ticket' " & vbCrLf &
+                       "When 'MENS' Then 'Mensaje' " & vbCrLf &
+                       "When 'RESP' Then 'Respuesta' " & vbCrLf &
+                       "When 'NULO' Then 'Anula' " & vbCrLf &
+                       "When 'SOLC' Then 'Sol. Cierre' " & vbCrLf &
+                       "When 'CERR' Then 'Cierra ticket' " & vbCrLf &
+                       "When 'CECR' Then 'Cierra y crea nuevo ticket' " & vbCrLf &
+                       "When 'RECH' Then 'Rechazado' Else '???' End As 'StrAccion'," & vbCrLf &
+                       "Acc.Descripcion," & vbCrLf &
+                       "Case Accion When 'CECR' Then Tk.Numero Else '' End As 'Ticket Cierra'," & vbCrLf &
+                       "Case Accion " & vbCrLf &
+                       "When 'CREA' Then Tk.Numero " & vbCrLf &
+                       "When 'CECR' Then (Select Top 1 Numero From " & _Global_BaseBk & "Zw_Stk_Tickets Where Id_Padre = Tk.Id) " & vbCrLf &
+                       "Else '' End As 'Ticket Crea'" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Acc" & vbCrLf &
+                       "Left Join TABFU Cf On Cf.KOFU = CodFunGestiona" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Stk_Tickets Tk On Tk.Id = Acc.Id_Ticket" & vbCrLf &
+                       "Where" & vbCrLf &
+                       "Id_Ticket In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tickets Where Id_Raiz = " & _Id_Raiz & ")" & vbCrLf &
+                       "Order By Id_Ticket,Fecha"
+
+        Dim _Tbl_Documentos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        Dim _UltNumero = String.Empty
+
+        For Each _Fila As DataRow In _Tbl_Documentos.Rows
+
+            Dim _Mensaje_Stem As New LsValiciones.Mensajes
+
+            Dim _NombreImagen As String
+
+            _Mensaje_Stem.EsCorrecto = True
+
+            If _Fila.Item("FunAccion") = "FunCrea" Then _NombreImagen = "people-customer-man.png"
+            If _Fila.Item("FunAccion") = "FunAge" Then _NombreImagen = "people-vendor.png"
+
+            If String.IsNullOrEmpty(_UltNumero) Or _UltNumero <> _Fila.Item("Numero") Then
+                _Mensaje_Stem.Mensaje = "Ticket Nro: " & _Fila.Item("Numero")
+                _NombreImagen = "ticket-new.png"
+            Else
+                _Mensaje_Stem.Mensaje = _Fila.Item("NombreFunGestiona").ToString.Trim
+            End If
+
+            'If _Fila.Item("Accion") = "CREA" Then _NombreImagen = "people-customer-man.png"
+            'If _Fila.Item("Accion") = "MENS" Then _NombreImagen = "people-customer-man.png"
+            'If _Fila.Item("Accion") = "RESP" Then _NombreImagen = "people-vendor.png"
+            'If _Fila.Item("Accion") = "CECR" Then _NombreImagen = "people-vendor.png"
+            'If _Fila.Item("Accion") = "RECH" Then _NombreImagen = "people-vendor-error.png"
+
+            _Mensaje_Stem.UsarImagen = True
+            _Mensaje_Stem.NombreImagen = _NombreImagen
+
+            _UltNumero = _Fila.Item("Numero")
+
+            _Mensaje_Stem.Detalle = _Fila.Item("StrAccion")
+            _Mensaje_Stem.Resultado = _Fila.Item("Descripcion")
+            _Mensaje_Stem.Fecha = _Fila.Item("Fecha")
+            _Mensaje_Stem.Tag = "Ticket Nro: " & _Fila.Item("Numero").ToString.Trim & vbCrLf &
+                                    "Func: " & _Fila.Item("NombreFunGestiona").ToString.Trim & ", Accion:" & _Fila.Item("StrAccion").ToString.Trim & vbCrLf &
+                                    "Descripción:" & _Fila.Item("Descripcion").ToString.Trim
+
+            _Lista.Add(_Mensaje_Stem)
+
+        Next
+
+        Return _Lista
+
+    End Function
+
 End Class
+

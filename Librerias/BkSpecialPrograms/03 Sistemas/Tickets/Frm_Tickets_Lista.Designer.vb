@@ -56,9 +56,9 @@ Partial Class Frm_Tickets_Lista
         Me.Super_TabS = New DevComponents.DotNetBar.SuperTabStrip()
         Me.Tab_TodasActivas = New DevComponents.DotNetBar.SuperTabItem()
         Me.Tab_ActivasRechazadas = New DevComponents.DotNetBar.SuperTabItem()
+        Me.Tab_Cerradas = New DevComponents.DotNetBar.SuperTabItem()
         Me.Tab_CerradasAceptadas = New DevComponents.DotNetBar.SuperTabItem()
         Me.Tab_CerradasRechazadas = New DevComponents.DotNetBar.SuperTabItem()
-        Me.Tab_Cerradas = New DevComponents.DotNetBar.SuperTabItem()
         Me.Tab_Nulas = New DevComponents.DotNetBar.SuperTabItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
@@ -253,6 +253,16 @@ Partial Class Frm_Tickets_Lista
         Me.Imagenes_16x16.Images.SetKeyName(18, "comment-number-9.png")
         Me.Imagenes_16x16.Images.SetKeyName(19, "comment-number-9-plus.png")
         Me.Imagenes_16x16.Images.SetKeyName(20, "menu-more.png")
+        Me.Imagenes_16x16.Images.SetKeyName(21, "ticket-number-9-plus.png")
+        Me.Imagenes_16x16.Images.SetKeyName(22, "ticket-number-9.png")
+        Me.Imagenes_16x16.Images.SetKeyName(23, "ticket-number-8.png")
+        Me.Imagenes_16x16.Images.SetKeyName(24, "ticket-number-7.png")
+        Me.Imagenes_16x16.Images.SetKeyName(25, "ticket-number-6.png")
+        Me.Imagenes_16x16.Images.SetKeyName(26, "ticket-number-5.png")
+        Me.Imagenes_16x16.Images.SetKeyName(27, "ticket-number-4.png")
+        Me.Imagenes_16x16.Images.SetKeyName(28, "ticket-number-3.png")
+        Me.Imagenes_16x16.Images.SetKeyName(29, "ticket-number-2.png")
+        Me.Imagenes_16x16.Images.SetKeyName(30, "ticket-number-1.png")
         '
         'Chk_TickesAsigMi
         '
@@ -320,6 +330,16 @@ Partial Class Frm_Tickets_Lista
         Me.Imagenes_16x16_Dark.Images.SetKeyName(18, "comment-number-3.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(19, "comment-number-2.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(20, "comment-number-1.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(21, "ticket-number-9-plus.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(22, "ticket-number-9.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(23, "ticket-number-8.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(24, "ticket-number-7.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(25, "ticket-number-6.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(26, "ticket-number-5.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(27, "ticket-number-4.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(28, "ticket-number-3.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(29, "ticket-number-2.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(30, "ticket-number-1.png")
         '
         'Lbl_OpcProducto
         '
@@ -449,8 +469,8 @@ Partial Class Frm_Tickets_Lista
         Me.Super_TabS.Name = "Super_TabS"
         Me.Super_TabS.ReorderTabsEnabled = True
         Me.Super_TabS.SelectedTabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
-        Me.Super_TabS.SelectedTabIndex = 0
-        Me.Super_TabS.Size = New System.Drawing.Size(1182, 27)
+        Me.Super_TabS.SelectedTabIndex = 3
+        Me.Super_TabS.Size = New System.Drawing.Size(1182, 30)
         Me.Super_TabS.TabCloseButtonHot = Nothing
         Me.Super_TabS.TabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Super_TabS.TabIndex = 164
@@ -469,23 +489,24 @@ Partial Class Frm_Tickets_Lista
         Me.Tab_ActivasRechazadas.Name = "Tab_ActivasRechazadas"
         Me.Tab_ActivasRechazadas.Text = "Activas (rechazadas)"
         '
-        'Tab_CerradasAceptadas
-        '
-        Me.Tab_CerradasAceptadas.GlobalItem = False
-        Me.Tab_CerradasAceptadas.Name = "Tab_CerradasAceptadas"
-        Me.Tab_CerradasAceptadas.Text = "Cerrdas (Aceptadas)"
-        '
-        'Tab_CerradasRechazadas
-        '
-        Me.Tab_CerradasRechazadas.GlobalItem = False
-        Me.Tab_CerradasRechazadas.Name = "Tab_CerradasRechazadas"
-        Me.Tab_CerradasRechazadas.Text = "Cerrdas (Rechazadas)"
-        '
         'Tab_Cerradas
         '
         Me.Tab_Cerradas.GlobalItem = False
         Me.Tab_Cerradas.Name = "Tab_Cerradas"
         Me.Tab_Cerradas.Text = "Cerradas"
+        '
+        'Tab_CerradasAceptadas
+        '
+        Me.Tab_CerradasAceptadas.GlobalItem = False
+        Me.Tab_CerradasAceptadas.Image = CType(resources.GetObject("Tab_CerradasAceptadas.Image"), System.Drawing.Image)
+        Me.Tab_CerradasAceptadas.Name = "Tab_CerradasAceptadas"
+        Me.Tab_CerradasAceptadas.Text = "Cerradas (Aceptadas)"
+        '
+        'Tab_CerradasRechazadas
+        '
+        Me.Tab_CerradasRechazadas.GlobalItem = False
+        Me.Tab_CerradasRechazadas.Name = "Tab_CerradasRechazadas"
+        Me.Tab_CerradasRechazadas.Text = "Cerradas (Rechazadas)"
         '
         'Tab_Nulas
         '

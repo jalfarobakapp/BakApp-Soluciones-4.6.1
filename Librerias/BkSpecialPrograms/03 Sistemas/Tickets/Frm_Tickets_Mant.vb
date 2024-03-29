@@ -218,6 +218,7 @@ Public Class Frm_Tickets_Mant
                                      "Crear nuevo Ticket", "Grabar", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
 
                     _Cl_Tickets.Tickets.Id = 0
+                    _Cl_Tickets.Tickets.Id_Raiz = 0
                     _Cl_Tickets.Tickets.New_Id_TicketAc = _Cl_Tickets.Fx_Grabar_Nueva_Accion(_Cl_Tickets.Tickets.CodFuncionario_Crea, True, False)
 
                     With _Cl_Tickets.Tickets.Tickets_Producto

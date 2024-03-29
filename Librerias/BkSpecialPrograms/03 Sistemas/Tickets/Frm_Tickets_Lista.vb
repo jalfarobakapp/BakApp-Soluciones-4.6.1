@@ -1,4 +1,6 @@
 ﻿Imports DevComponents.DotNetBar
+Imports Google.Protobuf.WellKnownTypes
+Imports PdfSharp.Pdf.Content.Objects
 
 Public Class Frm_Tickets_Lista
 
@@ -68,9 +70,72 @@ Public Class Frm_Tickets_Lista
 
     End Sub
 
+    Function ImagenLista(_Num As Integer) As Image
+
+        Dim _Imagen As Image
+        Dim _Imagenes_List As ImageList
+
+        If Global_Thema = Enum_Themas.Oscuro Then
+            _Imagenes_List = Imagenes_16x16_Dark
+        Else
+            _Imagenes_List = Imagenes_16x16
+        End If
+
+        Dim _Nombre_Image = "ticket-number-" & _Num & ".png"
+        If _Num > 9 Then
+            _Nombre_Image = "ticket-number-9-plus.png"
+        End If
+        _Imagen = _Imagenes_List.Images.Item(_Nombre_Image)
+
+        Return _Imagen
+
+    End Function
+
+    Sub Sb_ActualizarImagenesTabListados()
+
+        Dim _Condicion2 As String
+        Dim _CondicionFun As String
+
+        Select Case _Tipo_Tickets
+            Case Enum_Tickets.MisTicket
+                _CondicionFun = "CodFuncionario_Crea = '" & _Funcionario & "'"
+            Case Enum_Tickets.TicketAsignadoGrupo
+                _CondicionFun = "And Id_Grupo = " & _Id_Grupo
+                _CondicionFun += vbCrLf & "And Estado <> 'NULO'"
+            Case Enum_Tickets.TicketAsignadosAgente
+                _CondicionFun = "(Id In (Select Id_Ticket From " & _Global_BaseBk & "Zw_Stk_Tickets_Asignado " &
+                             "Where CodAgente = '" & FUNCIONARIO & "') " & _Condicion2 & ")"
+                _CondicionFun += vbCrLf & "And Estado <> 'NULO'"
+        End Select
+
+        Consulta_sql = "Select (Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets Where " & _CondicionFun & " And Estado = 'ABIE' And Rechazado = 0) As TodasActivas,
+	   (Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets Where " & _CondicionFun & " And Estado = 'ABIE' And Rechazado = 1) As ActivasRechazadas,	
+	   (Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets Where " & _CondicionFun & " And Estado = 'CERR' And Rechazado = 0 And Aceptado = 0) As Cerradas,
+	   (Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets Where " & _CondicionFun & " And Estado = 'CERR' And Rechazado = 0 And Aceptado = 1) As CerradasAceptadas,
+	   (Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets Where " & _CondicionFun & " And Estado = 'CERR' And Rechazado = 1 And Aceptado = 0) As CerradasRechazadas,
+	   (Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets Where " & _CondicionFun & " And Estado = 'NULO') As Nulas"
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _TodasActivas As Integer = _Row.Item("TodasActivas")
+        Dim _ActivasRechazadas As Integer = _Row.Item("ActivasRechazadas")
+        Dim _Cerradas As Integer = _Row.Item("Cerradas")
+        Dim _CerradasAceptadas As Integer = _Row.Item("CerradasAceptadas")
+        Dim _CerradasRechazadas As Integer = _Row.Item("CerradasRechazadas")
+        Dim _Nulas As Integer = _Row.Item("Nulas")
+
+        Tab_TodasActivas.Image = ImagenLista(_TodasActivas)
+        Tab_ActivasRechazadas.Image = ImagenLista(_ActivasRechazadas)
+        Tab_Cerradas.Image = ImagenLista(_Cerradas)
+        Tab_CerradasAceptadas.Image = ImagenLista(_CerradasAceptadas)
+        Tab_CerradasRechazadas.Image = ImagenLista(_CerradasRechazadas)
+        Tab_Nulas.Image = ImagenLista(_Nulas)
+
+    End Sub
+
     Sub Sb_Actualizar_Grilla()
 
-        'Dim _Texto_Busqueda As String = Txt_Buscador.Text.Trim
+        Sb_ActualizarImagenesTabListados()
+
         Dim _Condicion As String = String.Empty
         Dim _Condicion2 As String = String.Empty
 

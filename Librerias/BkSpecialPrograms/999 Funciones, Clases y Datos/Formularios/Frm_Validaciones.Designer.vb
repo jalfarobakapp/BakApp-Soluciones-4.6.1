@@ -29,6 +29,7 @@ Partial Class Frm_Validaciones
         Me.Txt_Mensaje = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
         Me.Imagenes_16x16_Dark = New System.Windows.Forms.ImageList(Me.components)
+        Me.Btn_Excel = New DevComponents.DotNetBar.ButtonX()
         Me.SuspendLayout()
         '
         'Lv_ListaDeMensajes
@@ -45,10 +46,10 @@ Partial Class Frm_Validaciones
         Me.Lv_ListaDeMensajes.HideSelection = False
         Me.Lv_ListaDeMensajes.Location = New System.Drawing.Point(12, 12)
         Me.Lv_ListaDeMensajes.Name = "Lv_ListaDeMensajes"
-        Me.Lv_ListaDeMensajes.Size = New System.Drawing.Size(629, 327)
+        Me.Lv_ListaDeMensajes.Size = New System.Drawing.Size(858, 370)
         Me.Lv_ListaDeMensajes.TabIndex = 0
         Me.Lv_ListaDeMensajes.UseCompatibleStateImageBehavior = False
-        Me.Lv_ListaDeMensajes.View = System.Windows.Forms.View.SmallIcon
+        Me.Lv_ListaDeMensajes.View = System.Windows.Forms.View.Details
         '
         'BtnCancelar
         '
@@ -56,7 +57,7 @@ Partial Class Frm_Validaciones
         Me.BtnCancelar.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.BtnCancelar.Image = CType(resources.GetObject("BtnCancelar.Image"), System.Drawing.Image)
         Me.BtnCancelar.ImageAlt = CType(resources.GetObject("BtnCancelar.ImageAlt"), System.Drawing.Image)
-        Me.BtnCancelar.Location = New System.Drawing.Point(12, 448)
+        Me.BtnCancelar.Location = New System.Drawing.Point(788, 523)
         Me.BtnCancelar.Name = "BtnCancelar"
         Me.BtnCancelar.Size = New System.Drawing.Size(82, 38)
         Me.BtnCancelar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -73,12 +74,13 @@ Partial Class Frm_Validaciones
         Me.Txt_Mensaje.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Mensaje.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Mensaje.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Mensaje.Location = New System.Drawing.Point(12, 345)
+        Me.Txt_Mensaje.Location = New System.Drawing.Point(12, 388)
         Me.Txt_Mensaje.Multiline = True
         Me.Txt_Mensaje.Name = "Txt_Mensaje"
         Me.Txt_Mensaje.PreventEnterBeep = True
         Me.Txt_Mensaje.ReadOnly = True
-        Me.Txt_Mensaje.Size = New System.Drawing.Size(629, 97)
+        Me.Txt_Mensaje.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.Txt_Mensaje.Size = New System.Drawing.Size(858, 129)
         Me.Txt_Mensaje.TabIndex = 13
         '
         'Imagenes_16x16
@@ -99,11 +101,25 @@ Partial Class Frm_Validaciones
         Me.Imagenes_16x16_Dark.Images.SetKeyName(2, "button-cancel.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(3, "symbol-forbidden.png")
         '
+        'Btn_Excel
+        '
+        Me.Btn_Excel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Excel.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Excel.Image = CType(resources.GetObject("Btn_Excel.Image"), System.Drawing.Image)
+        Me.Btn_Excel.ImageAlt = CType(resources.GetObject("Btn_Excel.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Excel.Location = New System.Drawing.Point(12, 523)
+        Me.Btn_Excel.Name = "Btn_Excel"
+        Me.Btn_Excel.Size = New System.Drawing.Size(122, 38)
+        Me.Btn_Excel.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Excel.TabIndex = 14
+        Me.Btn_Excel.Text = "Exportar Excel"
+        '
         'Frm_Validaciones
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(653, 498)
+        Me.ClientSize = New System.Drawing.Size(882, 573)
+        Me.Controls.Add(Me.Btn_Excel)
         Me.Controls.Add(Me.Txt_Mensaje)
         Me.Controls.Add(Me.BtnCancelar)
         Me.Controls.Add(Me.Lv_ListaDeMensajes)
@@ -127,4 +143,5 @@ Partial Class Frm_Validaciones
     Friend WithEvents Txt_Mensaje As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Imagenes_16x16 As ImageList
     Friend WithEvents Imagenes_16x16_Dark As ImageList
+    Public WithEvents Btn_Excel As DevComponents.DotNetBar.ButtonX
 End Class

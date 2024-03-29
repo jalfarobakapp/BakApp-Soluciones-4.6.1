@@ -505,7 +505,7 @@ Namespace Stmp_BD
         Public Property Nulido As String
         Public Property Udtrpr As Integer
         Public Property Rludpr As Double
-        Public Property RtuVariable As Double
+        Public Property RtuVariable As Boolean
         Public Property Rlud_Real As Double
         Public Property Udpr As String
         Public Property Cantidad As Double
