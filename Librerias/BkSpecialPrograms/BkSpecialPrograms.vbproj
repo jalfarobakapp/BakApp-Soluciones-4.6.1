@@ -2203,10 +2203,16 @@
     <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_IncNVVPicking.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_IngPickeo.Designer.vb">
+    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Pickeo\Frm_Stmp_IngCantVar.Designer.vb">
+      <DependentUpon>Frm_Stmp_IngCantVar.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Pickeo\Frm_Stmp_IngCantVar.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Pickeo\Frm_Stmp_IngPickeo.Designer.vb">
       <DependentUpon>Frm_Stmp_IngPickeo.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_IngPickeo.vb">
+    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Pickeo\Frm_Stmp_IngPickeo.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_Listado.Designer.vb">
@@ -5300,7 +5306,10 @@
     <EmbeddedResource Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_IncNVVPicking.resx">
       <DependentUpon>Frm_Stmp_IncNVVPicking.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_IngPickeo.resx">
+    <EmbeddedResource Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Pickeo\Frm_Stmp_IngCantVar.resx">
+      <DependentUpon>Frm_Stmp_IngCantVar.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Pickeo\Frm_Stmp_IngPickeo.resx">
       <DependentUpon>Frm_Stmp_IngPickeo.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_Listado.resx">
@@ -7767,6 +7776,7 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Despachos_Transportistas.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Despacho_Simple.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Docu_Archivos.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Docu_Det.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Docu_Ent.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Docu_ObligPg.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_DTE_Aec.sql" />
@@ -8163,7 +8173,6 @@
   <ItemGroup>
     <Folder Include="01 Procesos  compartidos\Productos\01 Buscar productos\New ProdFind\" />
     <Folder Include="03 Sistemas\Comisiones\Recursos\" />
-    <Folder Include="03 Sistemas\Demonio DTE Monitor\" />
     <Folder Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Configuracion\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

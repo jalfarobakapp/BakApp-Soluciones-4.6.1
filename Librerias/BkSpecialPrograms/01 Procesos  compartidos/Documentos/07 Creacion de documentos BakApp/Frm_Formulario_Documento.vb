@@ -10672,12 +10672,12 @@ Public Class Frm_Formulario_Documento
 
             Dim _Tasadorig As Double = _Fila.Item("Tasadorig")
             Dim _FunValida_Compra As String = _Fila.Item("FunValida_Compra")
+            Dim _Nmarca As String = _Fila.Item("Nmarca")
+            Dim _RtuVariable As Boolean = _Fila.Item("RtuVariable")
 
             _Row.Cells("Id_DocDet").Value = _Id_DocDet
             _Row.Cells("CodLista").Value = _CodLista
             _Row.Cells("Nuevo_Producto").Value = False
-
-
 
             Dim _RowProducto As DataRow
 
@@ -10723,7 +10723,6 @@ Public Class Frm_Formulario_Documento
             _Row.Cells("FechaEmision").Value = _FechaEmision_Linea
             _Row.Cells("FechaRecepcion").Value = _FechaRecepcion_Linea
 
-
             _Row.Cells("Id_Oferta").Value = _Id_Oferta
             _Row.Cells("Oferta").Value = _Oferta
             _Row.Cells("Es_Padre_Oferta").Value = _Es_Padre_Oferta
@@ -10738,7 +10737,14 @@ Public Class Frm_Formulario_Documento
             End If
 
             _Row.Cells("FunValida_Compra").Value = _FunValida_Compra
+            _Row.Cells("Nmarca").Value = _Nmarca
+            _Row.Cells("RtuVariable").Value = _RtuVariable
 
+            If _RtuVariable Then
+                _Row.Cells("CantUd1").Value = _Fila.Item("CantUd1")
+                _Row.Cells("CantUd2").Value = _Fila.Item("CantUd2")
+                _Row.Cells("Rtu").Value = _Fila.Item("Rtu")
+            End If
 
             Dim _Stock_desde_WMS As Boolean = _Row.Cells("Stock_desde_WMS").Value
 
@@ -11051,7 +11057,7 @@ Public Class Frm_Formulario_Documento
 
                 If IsNothing(_Row_Tomado) Then
 
-                    Consulta_sql = "INSERT INTO " & _Global_BaseBk & "Zw_Casi_DocTom (Id_DocEnc,CodFuncionario,Fecha_Hora,NombreEquipo,NroRemota) Values 
+                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Casi_DocTom (Id_DocEnc,CodFuncionario,Fecha_Hora,NombreEquipo,NroRemota) Values 
                                 (" & _Id_DocEnc & ",'" & FUNCIONARIO & "',Getdate(),'" & _NombreEquipo & "','" & _NroRemota & "')
                                  Update " & _Global_BaseBk & "Zw_Notificaciones Set Mostrar = 0,Autorizado = 1,Rechazado = 1             
                                  Where NroRemota = '" & _NroRemota & "'"
@@ -11122,7 +11128,41 @@ Public Class Frm_Formulario_Documento
         _RowEntidad = Nothing
         _RowEntidad_Despacho = Nothing
 
-        _RowEntidad = Fx_Traer_Datos_Entidad(_CodEntidad, _CodSucEntidad)
+        If _Documento_Interno Then
+
+            Dim _Rten = Split(RutEmpresa, "-")
+
+            Consulta_sql = "Select Top 1 * From MAEEN Where KOEN = '" & RutEmpresa & "' And TIPOSUC = 'P'"
+            _RowEntidad = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_RowEntidad) Then
+                Consulta_sql = "Select Top 1 * From MAEEN Where KOEN LIKE '" & _Rten(0) & "%' AND RTEN = '" & _Rten(0) & "' And TIPOSUC = 'P'"
+                _RowEntidad = _Sql.Fx_Get_DataRow(Consulta_sql)
+            End If
+
+            If IsNothing(_RowEntidad) Then
+                Consulta_sql = "Select Top 1 * From MAEEN Where KOEN LIKE '" & _Rten(0) & "%' And TIPOSUC = 'P'"
+                _RowEntidad = _Sql.Fx_Get_DataRow(Consulta_sql)
+            End If
+
+            If _Tipo_Documento = csGlobales.Enum_Tipo_Documento.Guia_Traslado_Interno Or
+                   _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Nota_Venta_Interna Or
+                   _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Recepcion_Interna Then
+                _RowEntidad.Item("KOEN") = RutEmpresa
+                _RowEntidad.Item("SUEN") = String.Empty
+            End If
+
+            If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Despacho_Interna Then
+                _RowEntidad.Item("KOEN") = RutEmpresa
+                _RowEntidad.Item("SUEN") = ModSucursal
+            End If
+
+        Else
+
+            _RowEntidad = Fx_Traer_Datos_Entidad(_CodEntidad, _CodSucEntidad)
+
+        End If
+
         Lbl_Nombre_Entidad.Text = " " & _RowEntidad.Item("NOKOEN").ToString.Trim
 
         If Not String.IsNullOrEmpty(Trim(_RowEntidad.Item("KOFUEN"))) Then
@@ -17540,6 +17580,21 @@ Public Class Frm_Formulario_Documento
                     Catch ex As Exception
                         _Stock_desde_WMS = False
                     End Try
+
+                    Dim _DesdePickeo As Boolean
+
+                    Try
+                        _DesdePickeo = _Fila.Item("DesdePickeo")
+                        _New_Fila.Cells("RtuVariable").Value = _Fila.Item("RtuVariable")
+                    Catch ex As Exception
+
+                    End Try
+
+                    If _DesdePickeo Then 'And _New_Fila.Cells("RtuVariable").Value Then
+                        _New_Fila.Cells("Cantidad").Value = _Cantidad
+                        _New_Fila.Cells("CantUd1").Value = _Fila.Item("CantUd1_Pickea")
+                        _New_Fila.Cells("CantUd2").Value = _Fila.Item("CantUd2_Pickea")
+                    End If
 
                     If _Stock_desde_WMS Then
 

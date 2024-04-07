@@ -87,7 +87,7 @@
                         Left Join MAEEDOOB Obs On Obs.IDMAEEDO = Edo.IDMAEEDO
                         Left Join MAEEN On KOEN = ENDO And SUENDO = SUEN
                         Left Join TABFU On KOFU = KOFUEN" & vbCrLf &
-                        "Left Join " & _Global_BaseBk & "Zw_Docu_Ent DocE On DocE.Idmaeedo = Edo.IDMAEEDO" & vbCrLf &
+                        "Left Join " & _Global_BaseBk & "Zw_Docu_Ent DocE On DocE.Idmaeedo = Edo.IDMAEEDO And DocE.Tido = Edo.TIDO And DocE.Nudo = Edo.NUDO" & vbCrLf &
                         _Condicion & vbCrLf &
                        "Order By HORAGRAB
                         Update #Paso Set IDMAEDPCE = Isnull((Select Top 1 IDMAEDPCE From MAEDPCE Where IDRSD = IDMAEEDO),0)

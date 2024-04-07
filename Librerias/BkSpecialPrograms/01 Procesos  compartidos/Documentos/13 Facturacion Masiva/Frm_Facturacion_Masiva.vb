@@ -560,7 +560,7 @@ Public Class Frm_Facturacion_Masiva
                             End If
 
                             Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Origen & "
-                                            Select *,CAse When UDTRPR = 1 Then CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 End As 'Cantidad',
+                                            Select *,Case When UDTRPR = 1 Then CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 End As 'Cantidad',
                                             CAPRCO1-CAPREX1 As 'CantUd1_Dori',CAPRCO2-CAPREX2 As 'CantUd2_Dori',
                                             Case WHEN UDTRPR = 1 Then " & _CampoPrecio & " Else " & _CampoPrecio & "*RLUDPR End AS 'Precio',
                                             0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta
@@ -979,7 +979,7 @@ Public Class Frm_Facturacion_Masiva
 
                 Dim _Msg = String.Empty
 
-                If _Fila.Cells("HabilitadaFac").Value Then
+                If Not _Fila.Cells("HabilitadaFac").Value Then
                     _Msg = "Esta nota de venta no esta habilitada para ser facturada." & vbCrLf &
                            "El sistema esta configurado solo para que se facturen documentos habilitados"
                 End If

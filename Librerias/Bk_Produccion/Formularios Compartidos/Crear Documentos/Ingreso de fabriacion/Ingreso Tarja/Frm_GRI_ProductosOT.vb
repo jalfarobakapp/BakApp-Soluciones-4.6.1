@@ -11,6 +11,7 @@ Public Class Frm_GRI_ProductosOT
     Public Property MarcarFilasSinSaldo As Boolean
     Public Property CreaNuevaOTExtra As Boolean
     Public Property Numot_Extra As String
+    Public Property ModoSeleccion As Boolean
 
     Public Sub New()
 
@@ -30,6 +31,8 @@ Public Class Frm_GRI_ProductosOT
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
         Sb_Actualizar_Grilla()
+
+        Btn_CrearOTExtra.Visible = Not ModoSeleccion
 
     End Sub
 

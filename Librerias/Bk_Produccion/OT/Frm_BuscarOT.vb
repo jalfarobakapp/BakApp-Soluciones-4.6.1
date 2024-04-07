@@ -8,6 +8,7 @@ Public Class Frm_BuscarOT
     Public Property Seleccionada As Boolean
     Public Property Idpote As Integer
     Public Property Numot As String
+    Public Property FiltroExternoSql As String
 
     Public Sub New()
 
@@ -34,6 +35,8 @@ Public Class Frm_BuscarOT
 
         Me.ActiveControl = Txt_Descripcion
 
+        Call BtnIrAlFin_Click(Nothing, Nothing)
+
     End Sub
 
     Sub Sb_ActualizarGrilla()
@@ -51,7 +54,7 @@ Public Class Frm_BuscarOT
 
         Consulta_sql = "Select *,Case ESTADO When 'V' Then 'Vigente' When 'C' Then 'Cerrada' End As ESTADO_OT From POTE" & vbCrLf &
                        "Where POTE.ESODD = ' ' And EMPRESA = '" & ModEmpresa & "' And NUMOT+REFERENCIA LIKE '%" & _Filtro & "%'" & vbCrLf &
-                       _Condicion &
+                       _Condicion & FiltroExternoSql &
                        "ORDER BY NUMOT"
 
         Dim _DisplayIndex = 0

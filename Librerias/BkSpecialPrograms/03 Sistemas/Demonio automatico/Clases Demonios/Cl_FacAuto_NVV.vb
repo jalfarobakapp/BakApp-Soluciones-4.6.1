@@ -51,12 +51,14 @@
                        "Where TIDO = 'NVV' And Ent.FacAuto = 1 " & _Filtro_Fecha & " And ESDO = ''" & vbCrLf &
                        "And IDMAEEDO Not In (Select Idmaeedo_NVV From " & _Global_BaseBk & "Zw_Demonio_FacAuto " &
                        "Where Fecha_Facturar = '" & Format(_Fecha_Revision, "yyyyMMdd") & "')"
+
         If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
             Log_Registro += _Sql.Pro_Error & vbCrLf
         End If
 
         Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set Facturar = 1,ErrorGrabar = 0,Informacion = ''" & vbCrLf &
                        "Where Fecha_Facturar = '" & Format(_Fecha_Revision, "yyyyMMdd") & "' And Informacion like 'No existe taza de cambio para la fecha%'"
+
         If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
             Log_Registro += _Sql.Pro_Error & vbCrLf
         End If
@@ -73,7 +75,7 @@
         If CBool(_Tbl_Doc_Facturar.Rows.Count) Then
 
             Dim _Filtro As String = Generar_Filtro_IN(_Tbl_Doc_Facturar, "", "Id", True, False, "")
-            Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set Facturar= 0, Facturando = 1 Where Id In " & _Filtro
+            Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set Facturar = 0, Facturando = 1 Where Id In " & _Filtro
             If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
                 Log_Registro += _Sql.Pro_Error & vbCrLf
             End If

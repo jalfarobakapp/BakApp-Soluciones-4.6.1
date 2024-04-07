@@ -223,6 +223,13 @@ Public Class Frm_Cantidades_Ud_Disintas
             If Chk_RtuVariable.Checked Then
 
                 _Cantidad_Ud1 = _C1
+
+                Try
+                    TxtRTU.Text = _Cantidad_Ud1 / _Cantidad_Ud2
+                Catch ex As Exception
+                    TxtRTU.Text = 0
+                End Try
+
                 TxtCantUD2.Focus()
 
             Else
@@ -265,6 +272,12 @@ Public Class Frm_Cantidades_Ud_Disintas
 
                 _Cantidad_Ud2 = _C2
 
+                Try
+                    TxtRTU.Text = _Cantidad_Ud1 / _Cantidad_Ud2
+                Catch ex As Exception
+                    TxtRTU.Text = 0
+                End Try
+
             Else
 
                 e.Handled = True
@@ -287,17 +300,6 @@ Public Class Frm_Cantidades_Ud_Disintas
 
     End Sub
 
-    Sub Sb_Ver_Alerta_Stock()
-
-        If Fr_Alerta_Stock.Visible Then
-            Fr_Alerta_Stock.Close()
-        End If
-
-        Fr_Alerta_Stock = New AlertCustom(_Codigo, _UnTrans)
-        ShowLoadAlert(Fr_Alerta_Stock, Me)
-
-    End Sub
-
     Private Sub TxtCantUD1_Enter(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TxtCantUD1.Enter
         _UnTrans = 1
         TxtCantUD1.Text = Math.Round(_Cantidad_Ud1, 5)
@@ -310,6 +312,17 @@ Public Class Frm_Cantidades_Ud_Disintas
 
     Private Sub Btn_Ver_Stock_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Ver_Stock.Click
         Sb_Ver_Alerta_Stock()
+    End Sub
+
+    Sub Sb_Ver_Alerta_Stock()
+
+        If Fr_Alerta_Stock.Visible Then
+            Fr_Alerta_Stock.Close()
+        End If
+
+        Fr_Alerta_Stock = New AlertCustom(_Codigo, _UnTrans)
+        ShowLoadAlert(Fr_Alerta_Stock, Me)
+
     End Sub
 
 End Class

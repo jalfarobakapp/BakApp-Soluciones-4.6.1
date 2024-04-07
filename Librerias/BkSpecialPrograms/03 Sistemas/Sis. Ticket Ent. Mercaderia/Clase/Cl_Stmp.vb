@@ -105,6 +105,8 @@ Public Class Cl_Stmp
                 .CodFuncionario_Pickea = _Fila.Item("CodFuncionario_Pickea")
                 .EnProceso = _Fila.Item("EnProceso")
 
+                .UdMedida = _Fila.Item("Ud0" & .Udtrpr & "pr")
+
             End With
 
             Stem_Det.Add(_Stem_Det)
@@ -481,6 +483,9 @@ Namespace Stmp_BD
         Public Property Facturar As Boolean
         Public Property FechaParaFacturar As DateTime
         Public Property TipoGen As String
+        Public Property IdmaeedoGen As Integer
+        Public Property TidoGen As String
+        Public Property NudoGen As String
 
     End Class
 
@@ -494,7 +499,7 @@ Namespace Stmp_BD
     ''' <summary>
     ''' Detalle de documento Stmp (Sistema de ticket de mercaderia por Picking)
     ''' </summary>
-    Public Class Stmp_Det
+    Partial Public Class Stmp_Det
 
         Public Property Id As Integer
         Public Property Id_Enc As Integer
@@ -518,6 +523,12 @@ Namespace Stmp_BD
         Public Property Pickeado As Boolean
         Public Property CodFuncionario_Pickea As String
         Public Property EnProceso As Boolean
+
+    End Class
+
+    Partial Public Class Stmp_Det
+
+        Public Property UdMedida As String
 
     End Class
 

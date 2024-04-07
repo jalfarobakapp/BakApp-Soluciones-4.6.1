@@ -123,4 +123,12 @@ Public Class Frm_GRI_Ingreso
         End If
     End Sub
 
+    Private Sub Btn_FabMezcla_Click(sender As Object, e As EventArgs) Handles Btn_FabMezcla.Click
+
+        Dim Fm As New Frm_ListaMezclas
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
 End Class

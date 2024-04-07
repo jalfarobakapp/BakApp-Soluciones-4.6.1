@@ -167,8 +167,8 @@ Namespace LsValiciones
         Public Property EsCorrecto As Boolean
         Public Property Id As String
         Public Property Fecha As DateTime
-        Public Property Mensaje As String
         Public Property Detalle As String
+        Public Property Mensaje As String
         Public Property Resultado As String
         Public Property Tag As String
         Public Property UsarImagen As Boolean

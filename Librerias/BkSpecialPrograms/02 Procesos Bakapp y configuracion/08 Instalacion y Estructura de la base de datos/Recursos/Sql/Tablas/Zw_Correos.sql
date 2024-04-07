@@ -5,7 +5,7 @@ CREATE TABLE [dbo].[Zw_Correos](
 	[Id]				[int] IDENTITY(1,1) NOT NULL,
 	[Nombre_Correo]		[varchar](100)  NOT NULL DEFAULT (''),
 	[Remitente]			[varchar](200)  NOT NULL DEFAULT (''),
-	[Contrasena]		[varchar](15)   NOT NULL DEFAULT (''),
+	[Contrasena]		[varchar](30)   NOT NULL DEFAULT (''),
 	[Host]				[varchar](100)  NOT NULL DEFAULT (''),
 	[Puerto]			[int]           NOT NULL DEFAULT (0),
 	[Asunto]			[varchar](300)  NOT NULL DEFAULT (''),

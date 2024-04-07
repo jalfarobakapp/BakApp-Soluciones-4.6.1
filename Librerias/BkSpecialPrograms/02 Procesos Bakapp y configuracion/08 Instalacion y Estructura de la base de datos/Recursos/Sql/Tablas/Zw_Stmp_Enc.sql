@@ -21,7 +21,9 @@ CREATE TABLE [dbo].[Zw_Stmp_Enc](
 	[Facturar]				[bit]			NOT NULL DEFAULT (0),
 	[DocEmitir]				[varchar](3)	NOT NULL DEFAULT (''),
 	[FechaParaFacturar]		[datetime]		NULL,
+	[IdmaeedoGen]			[int]       	NOT NULL DEFAULT (''),
 	[TidoGen]				[varchar](3)	NOT NULL DEFAULT (''),
+	[NudoGen]				[varchar](10)	NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_Stmp_Enc] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

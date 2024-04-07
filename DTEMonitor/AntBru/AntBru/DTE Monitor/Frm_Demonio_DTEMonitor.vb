@@ -1,5 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
+Imports System.Linq
 Imports System.Security.Cryptography.X509Certificates
 Imports System.Text
 Imports System.Xml
@@ -10,6 +11,7 @@ Imports HEFESTO.FIRMA.DOCUMENTO
 Imports HEFSIILIBDTES
 Imports Ionic.Zip
 Imports Newtonsoft.Json
+Imports Newtonsoft.Json.Linq
 Imports HefConsultas = HEFSIILIBDTES.CONSULTAS.HefConsultas
 Imports HefRespuesta = HEFSIIREGCOMPRAVENTAS.LIB.HefRespuesta
 
@@ -275,10 +277,12 @@ Public Class Frm_Demonio_DTEMonitor
 
     'End Sub
 
+
     Sub Sb_Enviar_Documentos_Al_SIIDTE_Bk()
 
         Dim _FechaHoy As String = Format(FechaDelServidor, "yyyyMMdd")
-        Dim _FechaPrimerDiaMes As String = Format(Primerdiadelmes(FechaDelServidor), "yyyyMMdd")
+        Dim _FechaMesAnterios As DateTime = DateAdd(DateInterval.Month, -1, FechaDelServidor)
+        Dim _FechaPrimerDiaMes As String = Format(Primerdiadelmes(_FechaMesAnterios), "yyyyMMdd")
 
         Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Procesar = 1 " & vbCrLf &
                        "Where Procesar = 0 And Idmaeedo Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Trackid) And " &
@@ -286,7 +290,7 @@ Public Class Frm_Demonio_DTEMonitor
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
         Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Procesar = 1 " & vbCrLf &
-                       "Where Procesar = 0 And Idmaeedo Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Trackid) And " &
+                       "Where Procesar = 0 And Idmaeedo Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Trackid Where FechaEnvSII > '" & _FechaPrimerDiaMes & "') And " &
                        "FechaSolicitud >= '" & _FechaPrimerDiaMes & "' And Tido <> 'BLV' And ErrorEnvioDTE = 0"
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
@@ -320,6 +324,7 @@ Public Class Frm_Demonio_DTEMonitor
                 Dim _Id_Dte = _Fila.Item("Id_Dte")
                 Dim _Tido = _Fila.Item("Tido")
                 Dim _Nudo = _Fila.Item("Nudo")
+                Dim _FechaSolicitud As DateTime = _Fila.Item("FechaSolicitud")
 
                 If Fx_Esta_Firmando(_Filtro_Id_Dte, _Id_Dte) Then
                     Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set Procesar = 1" & vbCrLf &
@@ -328,7 +333,8 @@ Public Class Frm_Demonio_DTEMonitor
                     Exit For
                 End If
 
-                Sb_AddToLog("Enviar SII", "Revisando " & _Tido & "-" & _Nudo, Txt_Log)
+                Dim _FechaSolicitud_Str As String = _FechaSolicitud.ToShortDateString & " - " & _FechaSolicitud.ToShortTimeString
+                Sb_AddToLog("Enviar SII", "Revisando " & _Tido & "-" & _Nudo & ", Fecha solicitud: " & _FechaSolicitud_Str, Txt_Log)
 
                 Dim _AmbienteCertificacion As Boolean = Chk_AmbienteCertificacion.Checked
                 Dim _Accion As Enum_Accion = Enum_Accion.EnviarBoletaSII
@@ -363,7 +369,6 @@ Public Class Frm_Demonio_DTEMonitor
                     Sb_AddToLog("Enviar SII", _Enviar_DTE.mensaje, Txt_Log)
 
                 End If
-
 
             Next
 
@@ -501,7 +506,8 @@ Public Class Frm_Demonio_DTEMonitor
     Sub Sb_Enviar_Documentos_Al_SIIBoletas_Bk()
 
         Dim _FechaHoy As String = Format(FechaDelServidor, "yyyyMMdd")
-        Dim _FechaPrimerDiaMes As String = Format(Primerdiadelmes(FechaDelServidor), "yyyyMMdd")
+        Dim _FechaMesAnterios As DateTime = DateAdd(DateInterval.Month, -1, FechaDelServidor)
+        Dim _FechaPrimerDiaMes As String = Format(Primerdiadelmes(_FechaMesAnterios), "yyyyMMdd")
 
         Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Procesar = 1 " & vbCrLf &
                        "Where Procesar = 0 And Idmaeedo Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Trackid) And " &
@@ -509,7 +515,7 @@ Public Class Frm_Demonio_DTEMonitor
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
         Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Procesar = 1 " & vbCrLf &
-                       "Where Procesar = 0 And Idmaeedo Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Trackid) And " &
+                       "Where Procesar = 0 And Idmaeedo Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Trackid Where FechaEnvSII > '" & _FechaPrimerDiaMes & "') And " &
                        "FechaSolicitud >= '" & _FechaPrimerDiaMes & "' And Tido = 'BLV' And ErrorEnvioDTE = 0"
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
@@ -543,6 +549,7 @@ Public Class Frm_Demonio_DTEMonitor
                 Dim _Id_Dte = _Fila.Item("Id_Dte")
                 Dim _Tido = _Fila.Item("Tido")
                 Dim _Nudo = _Fila.Item("Nudo")
+                Dim _FechaSolicitud As DateTime = _Fila.Item("FechaSolicitud")
 
                 If Fx_Esta_Firmando(_Filtro_Id_Dte, _Id_Dte) Then
                     Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set Procesar = 1" & vbCrLf &
@@ -551,7 +558,9 @@ Public Class Frm_Demonio_DTEMonitor
                     Exit For
                 End If
 
-                Sb_AddToLog("Enviar SII", "Revisando " & _Tido & "-" & _Nudo, Txt_Log)
+                Dim _FechaSolicitud_Str As String = _FechaSolicitud.ToShortDateString & " - " & _FechaSolicitud.ToShortTimeString
+
+                Sb_AddToLog("Enviar SII", "Revisando " & _Tido & "-" & _Nudo & ", Fecha solicitud: " & _FechaSolicitud_Str, Txt_Log)
 
                 Dim _AmbienteCertificacion As Boolean = Chk_AmbienteCertificacion.Checked
 
@@ -1638,15 +1647,20 @@ Public Class Frm_Demonio_DTEMonitor
                     Else
 
                         Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Respuesta = '" & _Trackid & "' Where Id_Dte = " & _Id_Dte
-                        _Sql.Ej_consulta_IDU(Consulta_sql)
+                        _Sql.Ej_consulta_IDU(Consulta_sql, False)
 
                     End If
 
                 Else
 
                     Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Respuesta = '" & _Respuesta.mensaje & " - " & _Respuesta.detalle.Trim & "' Where Id_Dte = " & _Id_Dte
-                    _Sql.Ej_consulta_IDU(Consulta_sql)
+                    _Sql.Ej_consulta_IDU(Consulta_sql, False)
 
+                End If
+
+                If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                    MensajeError += _Sql.Pro_Error & vbCrLf
+                    Throw New System.Exception(MensajeError)
                 End If
 
             End If
@@ -2158,22 +2172,41 @@ Public Class Frm_Demonio_DTEMonitor
 
         Sb_AddToLog("Rev. Reclamos DTE", "Rescatando datos desde archivos Json...", Txt_Log)
 
-        Dim _Fichero1 As String = File.ReadAllText(_RecuperarVentasRegistro.Directorio)
-        Dim _Tbl_Registro_Ventas As DataTable = Fx_TblFromJson(_Fichero1, "RegistrosVentas")
+        Try
 
-        Dim filtro As String = "FechaReclamo <> ''"
-        Dim filasEncontradas As DataRow() = _Tbl_Registro_Ventas.Select(filtro)
+            Dim _Fichero1 As String = File.ReadAllText(_RecuperarVentasRegistro.Directorio)
 
-        ' Ahora puedes iterar sobre el arreglo de filas encontradas
-        For Each fila As DataRow In filasEncontradas
 
-            Dim _TipoDTE = fila.Item("TipoDTE")
-            Dim _Folio = fila.Item("Folio")
-            Dim _FechaReclamo = fila.Item("FechaReclamo")
+            ' Suponiendo que tienes un objeto JSON en una cadena llamada jsonString
+            Dim jsonString As String = "{""RegistrosVentas"": []}"
 
-            Fx_Revisar_ListaEventosDoc(_TipoDTE, _Folio)
+            ' Convertir la cadena JSON en un objeto utilizable en VB.NET
+            Dim jsonObject As JObject = JObject.Parse(_Fichero1)
 
-        Next
+            ' Verificar si la matriz RegistrosVentas está vacía
+            If jsonObject("RegistrosVentas").Count = 0 Then
+                Throw New System.Exception("El arreglo RegistrosVentas está vacío para el periodo: " & _Periodo & " Mes: " & MonthName(_Mes))
+            End If
+
+            Dim _Tbl_Registro_Ventas As DataTable = Fx_TblFromJson(_Fichero1, "RegistrosVentas")
+
+            Dim filtro As String = "FechaReclamo <> ''"
+            Dim filasEncontradas As DataRow() = _Tbl_Registro_Ventas.Select(filtro)
+
+            ' Ahora puedes iterar sobre el arreglo de filas encontradas
+            For Each fila As DataRow In filasEncontradas
+
+                Dim _TipoDTE = fila.Item("TipoDTE")
+                Dim _Folio = fila.Item("Folio")
+                Dim _FechaReclamo = fila.Item("FechaReclamo")
+
+                Fx_Revisar_ListaEventosDoc(_TipoDTE, _Folio)
+
+            Next
+
+        Catch ex As Exception
+            Sb_AddToLog("Rev. Reclamos DTE", ex.Message, Txt_Log)
+        End Try
 
     End Sub
 

@@ -716,14 +716,20 @@ Public Class Frm_Tickets_Seguimiento
 
     Private Sub Btn_Mnu_TkHistoria_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_TkHistoria.Click
 
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tickets Where Id = " & _Ticket.Tickets.Id_Raiz
+        Dim _RowTicketRaiz As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_RowTicketRaiz) Then
+            MessageBoxEx.Show(Me, "No se encontró Ticket Raíz", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
         Dim _Lista As List(Of LsValiciones.Mensajes) = Fx_Cargar_Traza(_Ticket.Tickets.Id_Raiz)
 
         'Dim ListaQr As LsValiciones.Mensajes = _Lista.FirstOrDefault(Function(p) p.EsCorrecto = False)
 
         'If Not IsNothing(ListaQr) Then
-
         '    MessageBoxEx.Show(Me, "Hay documentos con problemas", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-
         'End If
 
         Dim _Columan1 As New LsValiciones.Columnas
@@ -762,9 +768,6 @@ Public Class Frm_Tickets_Seguimiento
         Else
             _Imagenes_List = Imagenes_16x16
         End If
-
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tickets Where Id = " & _Ticket.Tickets.Id_Raiz
-        Dim _RowTicketRaiz As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Fmv.ListaDeImagenesExternas = _Imagenes_List
         Fmv.Text = "TRAZA DE TICKET ORIGEN " & _RowTicketRaiz.Item("Numero").ToString.Trim & ", Asunto: " & _RowTicketRaiz.Item("Asunto").ToString.Trim

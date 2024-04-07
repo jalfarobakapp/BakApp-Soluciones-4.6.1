@@ -380,12 +380,16 @@ Public Class Frm_LiquidTJVcredito
     End Sub
 
     Sub Sb_Filtrar()
-        If IsNothing(_Dv) Then Return
-        If Chk_MostrarSoloIncluidos.Checked Then
-            _Dv.RowFilter = String.Format("CUDP+NUCUDP+NUDP+ENDP+VADP+FEEMDP+FEVEDP Like '%{0}%' And Incluir = 1", Txt_Filtrar.Text.Trim)
-        Else
-            _Dv.RowFilter = String.Format("CUDP+NUCUDP+NUDP+ENDP+VADP+FEEMDP+FEVEDP Like '%{0}%'", Txt_Filtrar.Text.Trim)
-        End If
+        Try
+            If IsNothing(_Dv) Then Return
+            If Chk_MostrarSoloIncluidos.Checked Then
+                _Dv.RowFilter = String.Format("CUDP+NUCUDP+NUDP+ENDP+VADP+FEEMDP+FEVEDP Like '%{0}%' And Incluir = 1", Txt_Filtrar.Text.Trim)
+            Else
+                _Dv.RowFilter = String.Format("CUDP+NUCUDP+NUDP+ENDP+VADP+FEEMDP+FEVEDP Like '%{0}%'", Txt_Filtrar.Text.Trim)
+            End If
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, "Cuek!", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End Try
     End Sub
 
     Private Sub Grilla_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellEndEdit
@@ -753,4 +757,41 @@ Public Class Frm_LiquidTJVcredito
 
     End Sub
 
+    Private Sub Btn_Copiar_Click(sender As Object, e As EventArgs) Handles Btn_Copiar.Click
+
+        With Grilla
+
+            Dim _Cabeza = .Columns(.CurrentCell.ColumnIndex).Name
+            Dim _Texto_Cabeza = .Columns(.CurrentCell.ColumnIndex).HeaderText
+
+            If _Cabeza = "Incluir" Then
+                _Cabeza = "IDMAEDPCE"
+                _Texto_Cabeza = _Cabeza
+            End If
+
+            Dim Copiar = .Rows(.CurrentRow.Index).Cells(_Cabeza).Value
+            Clipboard.SetText(Copiar)
+
+            ToastNotification.Show(Me, _Texto_Cabeza & " esta en el portapapeles", Btn_Copiar.Image,
+                                   2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
+
+        End With
+
+    End Sub
+
+    Private Sub Btn_ExportarExcel_Click(sender As Object, e As EventArgs) Handles Btn_ExportarExcel.Click
+        ExportarTabla_JetExcel_Tabla(_Dv.Table, Me, "Liquidacion")
+    End Sub
+
+    Private Sub Btn_Ver_Documento_Click(sender As Object, e As EventArgs) Handles Btn_Ver_Documento.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+
+        Dim _Idmaedpce As Integer = _Fila.Cells("IDMAEDPCE").Value
+
+        Dim Fm As New Frm_Pagos_Documentos_Pagados(_Idmaedpce)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
 End Class

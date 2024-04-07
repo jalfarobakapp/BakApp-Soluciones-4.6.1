@@ -11,10 +11,11 @@ Public Class Frm_Stmp_IngPickeo
     Dim _Row_Entidad As DataRow
 
     Public Property Cl_Stmp As Cl_Stmp
+    Public Property ConfirmaDespacho As Boolean
 
     ' Crear un BindingSource y enlazarlo al DataGridView
     Dim _Source As BindingSource
-
+    Dim _ContieneRtuVariable As Boolean
 
     Public Sub New(_Id_Enc As Integer, _CodFuncionario_Pickea As String)
 
@@ -85,12 +86,12 @@ Public Class Frm_Stmp_IngPickeo
             .Columns("Descripcion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Udpr").Width = 30
-            .Columns("Udpr").HeaderText = "UM"
-            .Columns("Udpr").ReadOnly = True
-            .Columns("Udpr").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("Udpr").Visible = True
-            .Columns("Udpr").DisplayIndex = _DisplayIndex
+            .Columns("UdMedida").Width = 30
+            .Columns("UdMedida").HeaderText = "UM"
+            .Columns("UdMedida").ReadOnly = True
+            .Columns("UdMedida").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("UdMedida").Visible = True
+            .Columns("UdMedida").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Caprco1_Ori").Width = 60
@@ -108,22 +109,6 @@ Public Class Frm_Stmp_IngPickeo
             .Columns("Cantidad").Visible = True
             .Columns("Cantidad").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
-
-            '.Columns("Cantidad").Width = 60
-            '.Columns("Cantidad").HeaderText = "Cant. ori."
-            '.Columns("Cantidad").ReadOnly = True
-            '.Columns("Cantidad").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("Cantidad").Visible = True
-            '.Columns("Cantidad").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
-
-            '.Columns("Cantidad_Despachada").Width = 100
-            '.Columns("Cantidad_Despachada").HeaderText = "Cant. Despachar"
-            '.Columns("Cantidad_Despachada").ReadOnly = True
-            '.Columns("Cantidad_Despachada").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("Cantidad_Despachada").Visible = True
-            '.Columns("Cantidad_Despachada").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
 
             .Refresh()
 
@@ -148,16 +133,59 @@ Public Class Frm_Stmp_IngPickeo
 
         Dim _Index As Integer = _Fila.Index
 
+        Dim _Caprco1_Real As Double = _Fila.Cells("Caprco1_Real").Value
+        Dim _Caprco2_Real As Double = _Fila.Cells("Caprco2_Real").Value
+        Dim _Caprco1_Ori As Double = _Fila.Cells("Caprco1_Ori").Value
+        Dim _Caprco2_Ori As Double = _Fila.Cells("Caprco2_Ori").Value
+        Dim _Ud01pr As String = _Fila.Cells("Ud01pr").Value
+        Dim _Ud02pr As String = _Fila.Cells("Ud02pr").Value
+
+        Dim _RtuVariable As Boolean = _Fila.Cells("RtuVariable").Value
+
         Select Case e.KeyValue
 
             Case Keys.Enter
 
                 If _Cabeza = "Cantidad" Then
 
-                    SendKeys.Send("{F2}")
-                    e.Handled = True
-                    Grilla_Detalle.Columns(_Cabeza).ReadOnly = False
-                    Grilla_Detalle.BeginEdit(True)
+                    If Not _RtuVariable Then
+
+                        SendKeys.Send("{F2}")
+                        e.Handled = True
+                        Grilla_Detalle.Columns(_Cabeza).ReadOnly = False
+                        Grilla_Detalle.BeginEdit(True)
+
+                    Else
+
+                        Dim Fm As New Frm_Stmp_IngCantVar(_Caprco1_Ori, _Caprco2_Ori)
+                        Fm.Cantidad_Ud1 = _Caprco1_Real
+                        Fm.Cantidad_Ud2 = _Caprco2_Real
+                        Fm.LblUnidad1.Text = _Ud01pr
+                        Fm.LblUnidad2.Text = _Ud02pr
+                        Fm.ShowDialog(Me)
+
+                        If Fm.Aceptar Then
+
+                            _Fila.Cells("Cantidad").Value = Fm.Cantidad_Ud1
+                            _Fila.Cells("Caprco1_Real").Value = Fm.Cantidad_Ud1
+                            _Fila.Cells("Caprco2_Real").Value = Fm.Cantidad_Ud2
+
+                            _Fila.Cells("CodFuncionario_Pickea").Value = _CodFuncionario_Pickea
+
+                            If _Fila.Cells("Caprco2_Real").Value = 0 Then
+                                _Fila.Cells("Rlud_Real").Value = 0
+                            Else
+                                _Fila.Cells("Rlud_Real").Value = Math.Round(_Fila.Cells("Caprco1_Real").Value / _Fila.Cells("Caprco2_Real").Value, 5)
+                            End If
+
+                            _Fila.Cells("Pickeado").Value = True
+                            _Fila.Cells("EnProceso").Value = False
+
+                        End If
+
+                        Fm.Dispose()
+
+                    End If
 
                 End If
 
@@ -250,12 +278,15 @@ Public Class Frm_Stmp_IngPickeo
         Dim _Mensaje As New LsValiciones.Mensajes
         _Mensaje = _Cl_Stmp.Fx_Confirmar_Picking
 
-        If _Mensaje.EsCorrecto Then
-            MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Confirmar Picking", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Me.Close()
-        Else
+        If Not _Mensaje.EsCorrecto Then
             MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Confirmar Picking", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
         End If
+
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Confirmar Picking", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Me.Close()
+
+        ConfirmaDespacho = True
 
     End Sub
 

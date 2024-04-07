@@ -1258,6 +1258,28 @@ Namespace My.Resources
         '''<summary>
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
+        '''CREATE TABLE [dbo].[Zw_Docu_Det](
+        '''	[Idmaeddo]			[int]			NOT NULL,
+        '''	[Idmaeedo]			[int]			NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Tido]				[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Nudo]				[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Codigo]			[varchar](13)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Descripcion]		[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[RtuVariable]		[bit]			NOT NULL DEFAULT (0),
+        ''' CONSTRAINT [PK_Zw_Docu_Det] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[Idmaeddo] ASC
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_ [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Docu_Det() As String
+            Get
+                Return ResourceManager.GetString("Zw_Docu_Det", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
         '''CREATE TABLE [dbo].[Zw_Docu_Ent](
         '''	[Idmaeedo]			[int]			NOT NULL DEFAULT (0),
         '''	[NombreEquipo]		[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
@@ -4330,7 +4352,7 @@ Namespace My.Resources
         '''	[Nulido]					[varchar](5)	NOT NULL DEFAULT (&apos;&apos;),
         '''	[Udtrpr]					[int]			NOT NULL DEFAULT (0),
         '''	[Rludpr]					[float]			NOT NULL DEFAULT (0),
-        '''	[Rlud_Variable]				[bit]			N [resto de la cadena truncado]&quot;;.
+        '''	[RtuVariable]				[bit]			NOT [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Stmp_Det() As String
             Get

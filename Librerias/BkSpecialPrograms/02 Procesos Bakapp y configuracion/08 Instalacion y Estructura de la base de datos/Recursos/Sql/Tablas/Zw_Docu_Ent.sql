@@ -12,6 +12,7 @@ CREATE TABLE [dbo].[Zw_Docu_Ent](
 	[HabilitadaFac]		[bit]			NOT NULL DEFAULT (0),
 	[FunAutorizaFac]	[varchar](3)	NOT NULL DEFAULT (''),
     [FechaHoraAutoriza]	[datetime]		NULL,
+    [Pickear]   		[bit]			NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_Docu_Ent] PRIMARY KEY CLUSTERED 
 (
 	[Idmaeedo] ASC

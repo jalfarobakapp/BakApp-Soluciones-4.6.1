@@ -100,8 +100,9 @@ Public Class Frm_Stmp_IncNVVPicking
 
         ' DEBO ENLAZAR LA TABLA Zw_Docu_Det a esta consulta para poner la RtuVariale por productos para las CARNES...
 
+        Dim _Pickear_FacturarAutoCompletas As Integer = Convert.ToInt32(_Global_Row_Configuracion_General.Item("Pickear_FacturarAutoCompletas"))
 
-        Consulta_sql = "Select Cast(0 As Bit) As Pickear,Cast(0 As Bit) As Facturar,Edo.IDMAEEDO,TIDO,Edo.NUDO," & vbCrLf &
+        Consulta_sql = "Select Cast(0 As Bit) As Pickear,Cast(" & _Pickear_FacturarAutoCompletas & " As Bit) As Facturar,Edo.IDMAEEDO,TIDO,Edo.NUDO," & vbCrLf &
                        "Cast(ENDO As Varchar(10)) As ENDO,Cast(SUENDO As Varchar(10)) As SUENDO," & vbCrLf &
                        "Cast('' As Varchar(15)) As Rut,NOKOEN,SUDO,FEEMDO,FEER,FE01VEDO,FEULVEDO," & vbCrLf &
                        "Case When FEEMDO < FE01VEDO Then 'Credito' Else 'Contado' End As TipoVenta," & vbCrLf &
@@ -455,12 +456,14 @@ Public Class Frm_Stmp_IncNVVPicking
             Dim _Mensaje_Stem As New LsValiciones.Mensajes
 
             Dim _Idmaeedo As Integer = _Fila.Item("Idmaeedo")
+            Dim _Tido As String = _Fila.Item("Tido")
+            Dim _Nudo As String = _Fila.Item("Nudo")
             Dim _Pickear As Boolean = _Fila.Item("Pickear")
             Dim _Facturar As Boolean = _Fila.Item("Facturar")
 
             If _Pickear Then
 
-                _Mensaje_Stem = Fx_Crear_Ticket(_Idmaeedo, _Facturar, Dtp_FechaParaFacturacion.Value, "R")
+                _Mensaje_Stem = Fx_Crear_Ticket(_Idmaeedo, _Tido, _Nudo, _Facturar, Dtp_FechaParaFacturacion.Value, "R")
 
                 _Lista.Add(_Mensaje_Stem)
 
@@ -473,6 +476,8 @@ Public Class Frm_Stmp_IncNVVPicking
     End Function
 
     Function Fx_Crear_Ticket(_Idmaeedo As Integer,
+                             _Tido As String,
+                             _Nudo As String,
                              _Facturar As Boolean,
                              _FechaParaFacturar As DateTime,
                              _TipoPago As String) As LsValiciones.Mensajes
@@ -481,7 +486,7 @@ Public Class Frm_Stmp_IncNVVPicking
 
         Dim _Mensaje_Stem As New LsValiciones.Mensajes
 
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Idmaeedo = " & _Idmaeedo
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Idmaeedo = " & _Idmaeedo & " And Tido = '" & _Tido & "' And Nudo = '" & _Nudo & "'"
         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If Not IsNothing(_Row) Then
@@ -493,7 +498,7 @@ Public Class Frm_Stmp_IncNVVPicking
 
         Consulta_sql = "Select Edo.IDMAEEDO,Edo.TIDO,Edo.NUDO,Edo.ENDO,Edo.SUENDO,Edo.SUDO,Doc.Pickear,HabilitadaFac,FunAutorizaFac" & vbCrLf &
                        "From MAEEDO Edo" & vbCrLf &
-                       "Left Join " & _Global_BaseBk & "Zw_Docu_Ent Doc On Edo.IDMAEEDO = Doc.Idmaeedo" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Docu_Ent Doc On Edo.IDMAEEDO = Doc.Idmaeedo And Edo.TIDO = Doc.Tido And Edo.NUDO = Doc.Nudo" & vbCrLf &
                        "Where IDMAEEDO = " & _Idmaeedo
         Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 

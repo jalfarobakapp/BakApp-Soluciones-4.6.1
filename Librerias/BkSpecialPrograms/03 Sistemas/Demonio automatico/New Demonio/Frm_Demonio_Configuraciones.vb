@@ -303,7 +303,6 @@ Public Class Frm_Demonio_Configuraciones
 
     End Sub
 
-
     Private Sub Btn_ConfProgramacion_Click(sender As Object, e As EventArgs) Handles Btn_ConfProgramacion.Click
 
         Dim _Grb_Programacion As New Grb_Programacion
@@ -400,7 +399,7 @@ Public Class Frm_Demonio_Configuraciones
                 _MinIntervalo = 5 : _MaxIntevalo = 59 : _TIMinutos = True : _TIValorDefecto = ""
             Case "FacAuto", "NVVAuto"
                 _Diariamente = True : _Semanalmente = True : _SucedeUnaVez = False : _SucedeCada = True
-                _MinIntervalo = 1 : _MaxIntevalo = 59 : _TIMinutos = True : _TIValorDefecto = ""
+                _MinIntervalo = 1 : _MaxIntevalo = 59 : _TIMinutos = True : _TISegundos = True : _TIValorDefecto = ""
             Case "AsistenteCompras"
                 _Diariamente = True : _Semanalmente = False : _SucedeUnaVez = True : _SucedeCada = False : _TIValorDefecto = ""
             Case "AsistenteCompras", "EnvDocSinRecep"

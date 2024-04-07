@@ -16,6 +16,7 @@ Public Class Frm_Tickets_Lista
         MisTicket
         TicketAsignadosAgente
         TicketAsignadoGrupo
+        TodosLosTickets
     End Enum
 
     Public Sub New(_Funcionario As String, _Tipo As Enum_Tickets, _Id_Grupo As Integer)
@@ -106,6 +107,8 @@ Public Class Frm_Tickets_Lista
                 _CondicionFun = "(Id In (Select Id_Ticket From " & _Global_BaseBk & "Zw_Stk_Tickets_Asignado " &
                              "Where CodAgente = '" & FUNCIONARIO & "') " & _Condicion2 & ")"
                 _CondicionFun += vbCrLf & "And Estado <> 'NULO'"
+            Case Enum_Tickets.TodosLosTickets
+                _CondicionFun += "1>0"
         End Select
 
         Consulta_sql = "Select (Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets Where " & _CondicionFun & " And Estado = 'ABIE' And Rechazado = 0) As TodasActivas,
@@ -161,7 +164,10 @@ Public Class Frm_Tickets_Lista
                 _Condicion = "And (Tks.Id In (Select Id_Ticket From " & _Global_BaseBk & "Zw_Stk_Tickets_Asignado " &
                              "Where CodAgente = '" & FUNCIONARIO & "') " & _Condicion2 & ")"
                 _Condicion += vbCrLf & "And Estado <> 'NULO'"
+            Case Enum_Tickets.TodosLosTickets
+                _Condicion = String.Empty
         End Select
+
 
         Dim _Tbas = Super_TabS.SelectedTab
 
@@ -179,7 +185,6 @@ Public Class Frm_Tickets_Lista
             Case "Tab_Nulas"
                 _Condicion += vbCrLf & "And Estado = 'NULO'"
         End Select
-
 
         Consulta_sql = "Select Tks.*,TkPrd.Empresa,TkPrd.Sucursal,TkPrd.Bodega,TkPrd.Codigo,TkPrd.Descripcion As DescripcionPr," & vbCrLf &
                        "Case UdMedida When 1 Then Ud1 Else Ud2 End As 'Udm',StfiEnBodega,Cantidad,Diferencia" & vbCrLf &

@@ -54,4 +54,13 @@ Public Class Stk_Ticktes
         NewPanel = New Login(_Fm_Menu_Padre)
         _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Right)
     End Sub
+
+    Private Sub Btn_VerTodosTickets_Click(sender As Object, e As EventArgs) Handles Btn_VerTodosTickets.Click
+
+        Dim Fm As New Frm_Tickets_Lista(FUNCIONARIO, Frm_Tickets_Lista.Enum_Tickets.TodosLosTickets, 0)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
 End Class

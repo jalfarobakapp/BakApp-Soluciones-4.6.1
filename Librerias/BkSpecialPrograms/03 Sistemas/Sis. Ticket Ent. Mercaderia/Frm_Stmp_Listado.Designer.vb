@@ -37,6 +37,7 @@ Partial Class Frm_Stmp_Listado
         Me.Btn_Crear_Ticket = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_RevisarTicket = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_FacturarMasivamente = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
@@ -45,6 +46,7 @@ Partial Class Frm_Stmp_Listado
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
         Me.Imagenes_16x16_Dark = New System.Windows.Forms.ImageList(Me.components)
+        Me.Chk_TickesAsigMi = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.Super_TabS, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
@@ -116,7 +118,7 @@ Partial Class Frm_Stmp_Listado
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_CargarNVVFechaDespHoy, Me.Btn_Crear_Ticket, Me.Btn_RevisarTicket, Me.Btn_Actualizar})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_CargarNVVFechaDespHoy, Me.Btn_Crear_Ticket, Me.Btn_RevisarTicket, Me.Btn_Actualizar, Me.Btn_FacturarMasivamente})
         Me.Bar2.Location = New System.Drawing.Point(0, 569)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(1210, 41)
@@ -166,6 +168,16 @@ Partial Class Frm_Stmp_Listado
         Me.Btn_Actualizar.Name = "Btn_Actualizar"
         Me.Btn_Actualizar.Tooltip = "Refrescar datos"
         '
+        'Btn_FacturarMasivamente
+        '
+        Me.Btn_FacturarMasivamente.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_FacturarMasivamente.ForeColor = System.Drawing.Color.Black
+        Me.Btn_FacturarMasivamente.Image = CType(resources.GetObject("Btn_FacturarMasivamente.Image"), System.Drawing.Image)
+        Me.Btn_FacturarMasivamente.ImageAlt = CType(resources.GetObject("Btn_FacturarMasivamente.ImageAlt"), System.Drawing.Image)
+        Me.Btn_FacturarMasivamente.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_FacturarMasivamente.Name = "Btn_FacturarMasivamente"
+        Me.Btn_FacturarMasivamente.Tooltip = "Facturar completadas"
+        '
         'GroupPanel1
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
@@ -175,7 +187,7 @@ Partial Class Frm_Stmp_Listado
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 45)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(1182, 506)
+        Me.GroupPanel1.Size = New System.Drawing.Size(1182, 489)
         '
         '
         '
@@ -212,7 +224,7 @@ Partial Class Frm_Stmp_Listado
         Me.Menu_Contextual.AntiAlias = True
         Me.Menu_Contextual.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
-        Me.Menu_Contextual.Location = New System.Drawing.Point(28, 47)
+        Me.Menu_Contextual.Location = New System.Drawing.Point(26, 27)
         Me.Menu_Contextual.Name = "Menu_Contextual"
         Me.Menu_Contextual.Size = New System.Drawing.Size(412, 25)
         Me.Menu_Contextual.Stretch = True
@@ -278,7 +290,7 @@ Partial Class Frm_Stmp_Listado
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.Grilla.Size = New System.Drawing.Size(1176, 483)
+        Me.Grilla.Size = New System.Drawing.Size(1176, 466)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 27
         '
@@ -334,11 +346,33 @@ Partial Class Frm_Stmp_Listado
         Me.Imagenes_16x16_Dark.Images.SetKeyName(19, "comment-number-2.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(20, "comment-number-1.png")
         '
+        'Chk_TickesAsigMi
+        '
+        Me.Chk_TickesAsigMi.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_TickesAsigMi.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_TickesAsigMi.CheckBoxImageChecked = CType(resources.GetObject("Chk_TickesAsigMi.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_TickesAsigMi.Checked = True
+        Me.Chk_TickesAsigMi.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Chk_TickesAsigMi.CheckValue = "Y"
+        Me.Chk_TickesAsigMi.Enabled = False
+        Me.Chk_TickesAsigMi.FocusCuesEnabled = False
+        Me.Chk_TickesAsigMi.ForeColor = System.Drawing.Color.Black
+        Me.Chk_TickesAsigMi.Location = New System.Drawing.Point(12, 540)
+        Me.Chk_TickesAsigMi.Name = "Chk_TickesAsigMi"
+        Me.Chk_TickesAsigMi.Size = New System.Drawing.Size(169, 17)
+        Me.Chk_TickesAsigMi.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_TickesAsigMi.TabIndex = 170
+        Me.Chk_TickesAsigMi.Text = "Ver solo ticket asignados a mi"
+        '
         'Frm_Stmp_Listado
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1210, 610)
+        Me.Controls.Add(Me.Chk_TickesAsigMi)
         Me.Controls.Add(Me.Super_TabS)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.GroupPanel1)
@@ -379,4 +413,6 @@ Partial Class Frm_Stmp_Listado
     Friend WithEvents Imagenes_16x16 As ImageList
     Friend WithEvents Imagenes_16x16_Dark As ImageList
     Public WithEvents Btn_CargarNVVFechaDespHoy As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_FacturarMasivamente As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Chk_TickesAsigMi As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

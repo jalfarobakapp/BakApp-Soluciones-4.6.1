@@ -2895,6 +2895,9 @@ Public Class Clase_Crear_Documento
         Dim _IdFincred As Integer
         Dim _MontoFincred As String
 
+        Dim _Nmarca As String
+        Dim _RtuVariable As Integer
+
         Dim myTrans As SqlClient.SqlTransaction
         Dim Comando As SqlClient.SqlCommand
 
@@ -3196,6 +3199,9 @@ Public Class Clase_Crear_Documento
                         _Cantidad_Oferta = De_Num_a_Tx_01(.Item("Cantidad_Oferta"), False, 5)
                         _Porcdesc_Oferta = De_Num_a_Tx_01(.Item("Porcdesc_Oferta"), False, 5)
 
+                        _Nmarca = .Item("Nmarca")
+                        _RtuVariable = Convert.ToUInt32(.Item("RtuVariable"))
+
                         If Not String.IsNullOrEmpty(Trim(_Tict)) Then
 
                             Dim _Uno = 1
@@ -3272,7 +3278,7 @@ Public Class Clase_Crear_Documento
                                        "CodPermiso,Nuevo_Producto,Solicitado_bodega,Moneda,Tipo_Moneda,Tipo_Cambio,Crear_CPr,Id_CPr," &
                                        "Centro_Costo,Proyecto,Tasadorig," &
                                        "Id_Oferta,Es_Padre_Oferta,Oferta,Padre_Oferta,Aplica_Oferta,Hijo_Oferta," &
-                                       "Cantidad_Oferta,Porcdesc_Oferta,IdDet_Ori) Values" & vbCrLf &
+                                       "Cantidad_Oferta,Porcdesc_Oferta,IdDet_Ori,Nmarca,RtuVariable) Values" & vbCrLf &
                                        "(" & _Id_DocEnc & ",'" & _Empresa & "','" & _Sucursal_Linea & "','" & _Bodega_Linea & "'," & _UnTrans & "," & _Lincondest &
                                        ",'" & _NroLinea & "','" & _Codigo & "','" & _CodigoProv & "','" & _UdTrans &
                                        "'," & _Cantidad & ",'" & _TipoValor & "'," & _Precio & "," & _DescuentoPorc &
@@ -3297,7 +3303,7 @@ Public Class Clase_Crear_Documento
                                        "'," & _Tipo_Cambio & "," & _Crear_CPr & "," & _Id_CPr & ",'" & _Centro_Costo_Linea &
                                        "','" & _Proyecto & "'," & _Tasadorig_Det &
                                        "," & _Id_Oferta & "," & _Es_Padre_Oferta & ",'" & _Oferta & "'," & _Padre_Oferta & "," & _Aplica_Oferta & "," & _Hijo_Oferta &
-                                       "," & _Cantidad_Oferta & "," & _Porcdesc_Oferta & "," & Id_Linea & ")"
+                                       "," & _Cantidad_Oferta & "," & _Porcdesc_Oferta & "," & Id_Linea & ",'" & _Nmarca & "'," & _RtuVariable & ")"
 
                         Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                         Comando.Transaction = myTrans
