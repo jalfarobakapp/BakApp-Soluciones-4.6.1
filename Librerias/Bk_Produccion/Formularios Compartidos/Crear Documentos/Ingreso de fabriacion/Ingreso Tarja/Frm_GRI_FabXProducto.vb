@@ -1035,6 +1035,18 @@ Public Class Frm_GRI_FabXProducto
         End If
 
         _Cl_Tarja._Cl_Tarja_Ent.Codigo = _Row_Maepr.Item("KOPR")
+
+
+        ' Obtener la fecha actual
+        Dim fechaActual As Date = Dtp_Fecha_Ingreso.Value.Date
+        ' Obtener la hora actual
+        Dim horaActual As TimeSpan = DateTime.Now.TimeOfDay
+
+        ' Combinar la fecha y la hora en una variable DateTime
+        Dim _FechaElab As DateTime = fechaActual + horaActual
+        Dtp_Fecha_Ingreso.Value = _FechaElab
+
+
         _Cl_Tarja._Cl_Tarja_Ent.FechaElab = Dtp_Fecha_Ingreso.Value
         _Cl_Tarja._Cl_Tarja_Ent.Observaciones = Txt_Observaciones.Text
         _Cl_Tarja._Cl_Tarja_Ent.Udm = Cmb_Formato.Text
@@ -1074,9 +1086,6 @@ Public Class Frm_GRI_FabXProducto
 
         Dim _Cl_Tarja_Ent As New Cl_Tarja_Ent.Mensaje_Tarja
         _Cl_Tarja_Ent = _Cl_Tarja.Fx_Grabar_Tarja2()
-
-
-
 
 
         Consulta_sql = "Select *," & _Cantidad & " As Cantidad,'" & ModSucursal & "' As Sucursal,'" & ModBodega & "' As Bodega" & vbCrLf &

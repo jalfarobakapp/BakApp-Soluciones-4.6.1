@@ -92,7 +92,7 @@ Partial Class Frm_GRI_Ingreso
         Me.Btn_Ingresar_GRI.ImageAlt = CType(resources.GetObject("Btn_Ingresar_GRI.ImageAlt"), System.Drawing.Image)
         Me.Btn_Ingresar_GRI.Location = New System.Drawing.Point(64, 40)
         Me.Btn_Ingresar_GRI.Name = "Btn_Ingresar_GRI"
-        Me.Btn_Ingresar_GRI.Size = New System.Drawing.Size(411, 102)
+        Me.Btn_Ingresar_GRI.Size = New System.Drawing.Size(411, 138)
         Me.Btn_Ingresar_GRI.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_Ingresar_GRI.TabIndex = 32
         Me.Btn_Ingresar_GRI.Text = "<b>INGRESAR PRODUCTOS</b><br/> " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "<b>FABRICADOS A BODEGA</b>"
@@ -101,15 +101,17 @@ Partial Class Frm_GRI_Ingreso
         '
         Me.Btn_FabMezcla.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_FabMezcla.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_FabMezcla.Enabled = False
         Me.Btn_FabMezcla.Font = New System.Drawing.Font("Segoe UI", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_FabMezcla.Image = CType(resources.GetObject("Btn_FabMezcla.Image"), System.Drawing.Image)
         Me.Btn_FabMezcla.ImageAlt = CType(resources.GetObject("Btn_FabMezcla.ImageAlt"), System.Drawing.Image)
-        Me.Btn_FabMezcla.Location = New System.Drawing.Point(64, 163)
+        Me.Btn_FabMezcla.Location = New System.Drawing.Point(64, 184)
         Me.Btn_FabMezcla.Name = "Btn_FabMezcla"
-        Me.Btn_FabMezcla.Size = New System.Drawing.Size(411, 102)
+        Me.Btn_FabMezcla.Size = New System.Drawing.Size(411, 81)
         Me.Btn_FabMezcla.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_FabMezcla.TabIndex = 35
         Me.Btn_FabMezcla.Text = "<b>FABRICAR MEZCLAS</b>"
+        Me.Btn_FabMezcla.Visible = False
         '
         'Frm_GRI_Ingreso
         '

@@ -82,7 +82,8 @@ Public Class Frm_Stmp_Listado
                        "From " & _Global_BaseBk & "Zw_Stmp_Enc Enc" & vbCrLf &
                        "Inner Join MAEEDO Edo On Edo.IDMAEEDO = Enc.Idmaeedo" & vbCrLf &
                        "Left Join MAEEN En On En.KOEN = Enc.Endo And En.SUEN = Enc.Suendo" & vbCrLf &
-                       "Where 1 > 0" & vbCrLf & _Condicion
+                       "Where 1 > 0" & vbCrLf & _Condicion & vbCrLf &
+                       "And Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'"
 
         If _Tbas.Name = "Tab_Espera" Then
 

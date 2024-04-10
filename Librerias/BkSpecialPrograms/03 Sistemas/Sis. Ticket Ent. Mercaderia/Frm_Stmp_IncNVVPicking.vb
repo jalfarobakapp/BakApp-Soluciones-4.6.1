@@ -102,9 +102,9 @@ Public Class Frm_Stmp_IncNVVPicking
 
         Dim _Pickear_FacturarAutoCompletas As Integer = Convert.ToInt32(_Global_Row_Configuracion_General.Item("Pickear_FacturarAutoCompletas"))
 
-        Consulta_sql = "Select Cast(0 As Bit) As Pickear,Cast(" & _Pickear_FacturarAutoCompletas & " As Bit) As Facturar,Edo.IDMAEEDO,TIDO,Edo.NUDO," & vbCrLf &
+        Consulta_sql = "Select Cast(0 As Bit) As Pickear,Cast(" & _Pickear_FacturarAutoCompletas & " As Bit) As Facturar,Edo.IDMAEEDO,Edo.EMPRESA,Edo.SUDO,TIDO,Edo.NUDO," & vbCrLf &
                        "Cast(ENDO As Varchar(10)) As ENDO,Cast(SUENDO As Varchar(10)) As SUENDO," & vbCrLf &
-                       "Cast('' As Varchar(15)) As Rut,NOKOEN,SUDO,FEEMDO,FEER,FE01VEDO,FEULVEDO," & vbCrLf &
+                       "Cast('' As Varchar(15)) As Rut,NOKOEN,FEEMDO,FEER,FE01VEDO,FEULVEDO," & vbCrLf &
                        "Case When FEEMDO < FE01VEDO Then 'Credito' Else 'Contado' End As TipoVenta," & vbCrLf &
                        "CONVERT(NVARCHAR, CONVERT(datetime, (Edo.HORAGRAB*1.0/3600)/24), 108) AS HORA,VANEDO," & vbCrLf &
                        "VAIVDO,VAIMDO,VABRDO,VAABDO,KOFUDO,NOKOFU," & vbCrLf &
@@ -121,7 +121,7 @@ Public Class Frm_Stmp_IncNVVPicking
                         "Left Join TABFU On KOFU = KOFUEN" & vbCrLf &
                         "Left Join " & _Global_BaseBk & "Zw_Docu_Ent DocE On DocE.Idmaeedo = Edo.IDMAEEDO" & vbCrLf &
                         "Where 1 > 0" & vbCrLf &
-                        "And Edo.IDMAEEDO Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Stmp_Enc Where Estado <> 'NULO')" & vbCrLf &
+                        "And Edo.IDMAEEDO Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Stmp_Enc Where Estado <> 'NULO' And Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "')" & vbCrLf &
                         _FiltroFechaEmision &
                         _FiltroFechaDespacho &
                         _FiltroEntidad &
@@ -299,53 +299,60 @@ Public Class Frm_Stmp_IncNVVPicking
 
     Private Sub Chk_PickearTodo_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_PickearTodo.CheckedChanged
 
-        If Not Chk_PickearTodo.Checked Then
+        Try
 
-            For Each _Fila As DataRow In _Tbl_Documentos.Rows
-                _Fila.Item("Pickear") = Chk_PickearTodo.Checked
-            Next
+            If Not Chk_PickearTodo.Checked Then
 
-            Return
+                For Each _Fila As DataRow In _Tbl_Documentos.Rows
+                    _Fila.Item("Pickear") = Chk_PickearTodo.Checked
+                Next
 
-        End If
+                Return
 
-        Dim _Marcar As Boolean
-        Dim _SinHabilitar = 0
+            End If
 
-        For Each _Fila As DataGridViewRow In Grilla.Rows
+            Dim _Marcar As Boolean
+            Dim _SinHabilitar = 0
 
-            If Not _Fila.Cells("Pickear").Value Then
+            For Each _Fila As DataGridViewRow In Grilla.Rows
 
-                _Marcar = True
+                If Not _Fila.Cells("Pickear").Value Then
 
-                If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+                    _Marcar = True
 
-                    If Not _Fila.Cells("HabilitadaFac").Value Then
+                    If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
 
-                        _Marcar = False
-                        _SinHabilitar += 1
+                        If Not _Fila.Cells("HabilitadaFac").Value Then
+
+                            _Marcar = False
+                            _SinHabilitar += 1
+
+                        End If
 
                     End If
 
+                    _Fila.Cells("Pickear").Value = _Marcar
+
                 End If
 
-                _Fila.Cells("Pickear").Value = _Marcar
+            Next
 
-            End If
+            If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
 
-        Next
+                If Chk_PickearTodo.Checked AndAlso CBool(_SinHabilitar) Then
 
-        If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
-
-            If Chk_PickearTodo.Checked AndAlso CBool(_SinHabilitar) Then
-
-                MessageBoxEx.Show(Me, "Existente " & _SinHabilitar & " documento(s) sin habilitar para ser facturado(s)",
+                    MessageBoxEx.Show(Me, "Existente " & _SinHabilitar & " documento(s) sin habilitar para ser facturado(s)",
                                    "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                'Chk_PickearTodo.Checked = False
+                    Chk_PickearTodo.Checked = False
+
+                End If
 
             End If
 
-        End If
+        Catch ex As Exception
+        Finally
+            Me.Refresh()
+        End Try
 
     End Sub
 
@@ -442,8 +449,6 @@ Public Class Frm_Stmp_IncNVVPicking
 
         Sb_Actualizar_Grilla()
 
-
-
     End Sub
 
     Function Fx_Cargar_NVV_FechaDespachoHoy() As List(Of LsValiciones.Mensajes)
@@ -533,7 +538,7 @@ Public Class Frm_Stmp_IncNVVPicking
             .FechaCreacion = _FechaServidor
             .Estado = "PREPA"
             .Facturar = _Facturar
-            .FechaParaFacturar = _FechaParaFacturar
+            .Fecha_Facturar = _FechaParaFacturar
             .TipoPago = _TipoPago
 
             Try

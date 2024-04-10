@@ -540,6 +540,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\14 Exportar documentos\Cl_ExpotarDoc.vb" />
+    <Compile Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_Puntos.Designer.vb">
+      <DependentUpon>Frm_Crear_Entidad_Mt_Puntos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_Puntos.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_ProdCanMinXProv.Designer.vb">
       <DependentUpon>Frm_Crear_Entidad_Mt_ProdCanMinXProv.vb</DependentUpon>
     </Compile>
@@ -552,6 +558,7 @@
     <Compile Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_ProdExcluidosCompra.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Procedimientos\Cl_Entidad.vb" />
     <Compile Include="01 Procesos  compartidos\Envio y Recepcion de Mail\Configuracion de recepcion de correos POP3\Frm_RecepXML_Cmp_ConfGral.Designer.vb">
       <DependentUpon>Frm_RecepXML_Cmp_ConfGral.vb</DependentUpon>
     </Compile>
@@ -4423,6 +4430,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_ProdExcluidosCompra.resx">
       <DependentUpon>Frm_Crear_Entidad_Mt_ProdExcluidosCompra.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_Puntos.resx">
+      <DependentUpon>Frm_Crear_Entidad_Mt_Puntos.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Envio y Recepcion de Mail\Configuracion de recepcion de correos POP3\Frm_RecepXML_Cmp_ConfGral.resx">
       <DependentUpon>Frm_RecepXML_Cmp_ConfGral.vb</DependentUpon>

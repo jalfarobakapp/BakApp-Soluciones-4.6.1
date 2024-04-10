@@ -2130,8 +2130,8 @@ Public Class Frm_Ver_Documento
 
         Dim Fm As New Frm_Crear_Entidad_Mt
         Fm.Fx_Llenar_Entidad(_TblEncabezado.Rows(0).Item("ENDO"), _TblEncabezado.Rows(0).Item("SUENDO"))
-        Fm.Pro_Crear_Entidad = False
-        Fm.Pro_Editar_Entidad = True
+        Fm.CrearEntidad = False
+        Fm.EditarEntidad = True
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
@@ -3873,11 +3873,11 @@ Public Class Frm_Ver_Documento
 
             Dim Fm As New Frm_Crear_Entidad_Mt
             Fm.Fx_Llenar_Entidad(_Koen, _Suen)
-            Fm.Pro_Crear_Entidad = False
-            Fm.Pro_Editar_Entidad = True
+            Fm.CrearEntidad = False
+            Fm.EditarEntidad = True
             Fm.ShowDialog(Me)
 
-            If Fm.Pro_Grabar Then
+            If Fm.Grabar Then
                 Beep()
                 ToastNotification.Show(Me, "DATOS ACTUALIZADOS CORRECTAMENTE", My.Resources.ok_button,
                                        1 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)

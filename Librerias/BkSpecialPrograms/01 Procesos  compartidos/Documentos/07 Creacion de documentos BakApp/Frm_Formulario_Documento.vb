@@ -18984,11 +18984,11 @@ Public Class Frm_Formulario_Documento
 
             Dim Fm As New Frm_Crear_Entidad_Mt
             Fm.Fx_Llenar_Entidad(_Koen, _Suen)
-            Fm.Pro_Crear_Entidad = False
-            Fm.Pro_Editar_Entidad = True
+            Fm.CrearEntidad = False
+            Fm.EditarEntidad = True
             Fm.ShowDialog(Me)
 
-            If Fm.Pro_Grabar Then
+            If Fm.Grabar Then
 
                 Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, False, False, False, True)
 

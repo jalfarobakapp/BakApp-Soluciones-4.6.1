@@ -20,7 +20,7 @@ CREATE TABLE [dbo].[Zw_Stmp_Enc](
 	[TipoPago]				[varchar](10)	NOT NULL DEFAULT (''),
 	[Facturar]				[bit]			NOT NULL DEFAULT (0),
 	[DocEmitir]				[varchar](3)	NOT NULL DEFAULT (''),
-	[FechaParaFacturar]		[datetime]		NULL,
+	[Fecha_Facturar]		[datetime]		NULL,
 	[IdmaeedoGen]			[int]       	NOT NULL DEFAULT (''),
 	[TidoGen]				[varchar](3)	NOT NULL DEFAULT (''),
 	[NudoGen]				[varchar](10)	NOT NULL DEFAULT (''),

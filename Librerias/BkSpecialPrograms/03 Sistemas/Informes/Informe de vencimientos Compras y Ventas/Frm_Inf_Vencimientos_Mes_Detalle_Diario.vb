@@ -1240,8 +1240,8 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
 
         Dim Fm As New Frm_Crear_Entidad_Mt
         Fm.Fx_Llenar_Entidad(_Endo, _SuEndo)
-        Fm.Pro_Crear_Entidad = False
-        Fm.Pro_Editar_Entidad = True
+        Fm.CrearEntidad = False
+        Fm.EditarEntidad = True
         Fm.ShowDialog(Me)
         Fm.Dispose()
 

@@ -144,10 +144,10 @@ Public Class Cl_Stmp
                 .Numero = Fx_NvoNro_Stmp()
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stmp_Enc (Empresa,Sucursal,Numero,CodFuncionario_Crea,Idmaeedo,Tido," &
-                               "Nudo,Endo,Suendo,FechaCreacion,Estado,Secueven,Facturar,FechaParaFacturar) Values " &
+                               "Nudo,Endo,Suendo,FechaCreacion,Estado,Secueven,Facturar,Fecha_Facturar) Values " &
                        "('" & .Empresa & "','" & .Sucursal & "','" & .Numero & "','" & .CodFuncionario_Crea & "'," & .Idmaeedo &
                        ",'" & .Tido & "','" & .Nudo & "','" & .Endo & "','" & .Suendo & "','" & Format(.FechaCreacion, "yyyyMMdd hh:mm") & "'" &
-                       ",'" & .Estado & "','" & .Secueven & "'," & Convert.ToInt32(.Facturar) & ",'" & Format(.FechaParaFacturar, "yyyyMMdd") & "')"
+                       ",'" & .Estado & "','" & .Secueven & "'," & Convert.ToInt32(.Facturar) & ",'" & Format(.Fecha_Facturar, "yyyyMMdd") & "')"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                 Comando.Transaction = myTrans
@@ -481,7 +481,7 @@ Namespace Stmp_BD
         Public Property Secueven As String
         Public Property TipoPago As String
         Public Property Facturar As Boolean
-        Public Property FechaParaFacturar As DateTime
+        Public Property Fecha_Facturar As DateTime
         Public Property TipoGen As String
         Public Property IdmaeedoGen As Integer
         Public Property TidoGen As String
