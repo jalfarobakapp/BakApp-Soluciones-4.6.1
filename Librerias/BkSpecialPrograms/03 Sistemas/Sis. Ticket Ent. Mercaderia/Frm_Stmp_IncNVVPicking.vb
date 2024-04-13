@@ -456,6 +456,8 @@ Public Class Frm_Stmp_IncNVVPicking
         Dim _Lista As New List(Of LsValiciones.Mensajes)
         Dim _FechaHoy As DateTime = FechaDelServidor()
 
+        Dim _Cl_Stmp As New Cl_Stmp
+
         For Each _Fila As DataRow In _Tbl_Documentos.Rows
 
             Dim _Mensaje_Stem As New LsValiciones.Mensajes
@@ -468,7 +470,7 @@ Public Class Frm_Stmp_IncNVVPicking
 
             If _Pickear Then
 
-                _Mensaje_Stem = Fx_Crear_Ticket(_Idmaeedo, _Tido, _Nudo, _Facturar, Dtp_FechaParaFacturacion.Value, "R")
+                _Mensaje_Stem = _Cl_Stmp.Fx_Crear_Ticket(_Idmaeedo, _Tido, _Nudo, _Facturar, Dtp_FechaParaFacturacion.Value, "R")
 
                 _Lista.Add(_Mensaje_Stem)
 
@@ -477,121 +479,6 @@ Public Class Frm_Stmp_IncNVVPicking
         Next
 
         Return _Lista
-
-    End Function
-
-    Function Fx_Crear_Ticket(_Idmaeedo As Integer,
-                             _Tido As String,
-                             _Nudo As String,
-                             _Facturar As Boolean,
-                             _FechaParaFacturar As DateTime,
-                             _TipoPago As String) As LsValiciones.Mensajes
-
-        Dim _FechaServidor As DateTime = FechaDelServidor()
-
-        Dim _Mensaje_Stem As New LsValiciones.Mensajes
-
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Idmaeedo = " & _Idmaeedo & " And Tido = '" & _Tido & "' And Nudo = '" & _Nudo & "'"
-        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-        If Not IsNothing(_Row) Then
-            _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Mensaje = "El documento ya esta ingresado en el sistema de Ticket Picking (Ticket Nro: " & _Row.Item("Numero") & ")"
-            _Mensaje_Stem.Detalle = "Documento: " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO")
-            Return _Mensaje_Stem
-        End If
-
-        Consulta_sql = "Select Edo.IDMAEEDO,Edo.TIDO,Edo.NUDO,Edo.ENDO,Edo.SUENDO,Edo.SUDO,Doc.Pickear,HabilitadaFac,FunAutorizaFac" & vbCrLf &
-                       "From MAEEDO Edo" & vbCrLf &
-                       "Left Join " & _Global_BaseBk & "Zw_Docu_Ent Doc On Edo.IDMAEEDO = Doc.Idmaeedo And Edo.TIDO = Doc.Tido And Edo.NUDO = Doc.Nudo" & vbCrLf &
-                       "Where IDMAEEDO = " & _Idmaeedo
-        Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-        If IsNothing(_Row_Documento) Then
-            _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Mensaje = "No se encontro el registro en la tabla MAEEDO, Documento: " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO")
-            _Mensaje_Stem.Detalle = "IDMAEEDO " & _Idmaeedo
-            Return _Mensaje_Stem
-        End If
-
-        If Not _Row_Documento.Item("Pickear") Then
-            _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Mensaje = "Este documento no esta marcado para ser Pickeado en la tabla Zw_Docu_Ent"
-            _Mensaje_Stem.Detalle = "Documento: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
-            Return _Mensaje_Stem
-        End If
-
-
-        Dim _Row_Entidad As DataRow = Fx_Traer_Datos_Entidad(_Row_Documento.Item("ENDO"), _Row_Documento.Item("SUENDO"))
-        Dim _Cl_Stem As New Cl_Stmp
-
-        With _Cl_Stem.Stem_Enc
-
-            .Empresa = ModEmpresa
-            .Sucursal = ModSucursal
-            .Idmaeedo = _Row_Documento.Item("IDMAEEDO")
-            .Tido = _Row_Documento.Item("TIDO")
-            .Nudo = _Row_Documento.Item("NUDO")
-            .Endo = _Row_Documento.Item("ENDO")
-            .Suendo = _Row_Documento.Item("SUENDO")
-            .CodFuncionario_Crea = FUNCIONARIO
-            .FechaCreacion = _FechaServidor
-            .Estado = "PREPA"
-            .Facturar = _Facturar
-            .Fecha_Facturar = _FechaParaFacturar
-            .TipoPago = _TipoPago
-
-            Try
-                .Secueven = _Row_Entidad.Item("SECUEVEN")
-            Catch ex As Exception
-                .Secueven = String.Empty
-
-                If _Facturar Then
-                    .Secueven = "NFG"
-                End If
-
-            End Try
-
-        End With
-
-        Consulta_sql = "Select Ddo.*,Isnull(RtuVariable,0) As RtuVariable From MAEDDO Ddo" & vbCrLf &
-                       "Left Join " & _Global_BaseBk & "Zw_Docu_Det ZDet On Ddo.IDMAEDDO = ZDet.Idmaeddo" & vbCrLf &
-                       "Where IDMAEEDO = " & _Row_Documento.Item("IDMAEEDO")
-        Dim _Tbl_Detalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-        For Each _Fila As DataRow In _Tbl_Detalle.Rows
-
-            Dim _Stem_Det As New Stmp_BD.Stmp_Det
-
-            With _Stem_Det
-
-                .Idmaeedo = _Fila.Item("IDMAEEDO")
-                .Idmaeddo = _Fila.Item("IDMAEDDO")
-                .Codigo = _Fila.Item("KOPRCT")
-                .Descripcion = _Fila.Item("NOKOPR")
-                .Nulido = _Fila.Item("NULIDO")
-                .Udtrpr = _Fila.Item("UDTRPR")
-                .Rludpr = _Fila.Item("RLUDPR")
-                .Caprco1_Ori = _Fila.Item("CAPRCO1")
-                .Caprco1_Real = 0
-                .Udpr = _Fila.Item("UD0" & .Udtrpr & "PR")
-                .Ud01pr = _Fila.Item("UD01PR")
-                .Caprco2_Ori = _Fila.Item("CAPRCO2")
-                .Caprco2_Real = 0
-                .Ud02pr = _Fila.Item("UD02PR")
-                .Pickeado = False
-                .EnProceso = True
-                .RtuVariable = _Fila.Item("RtuVariable")
-
-            End With
-
-            _Cl_Stem.Stem_Det.Add(_Stem_Det)
-
-        Next
-
-        _Mensaje_Stem = _Cl_Stem.Fx_Grabar_Nuevo_Tickets
-
-        Return _Mensaje_Stem
 
     End Function
 

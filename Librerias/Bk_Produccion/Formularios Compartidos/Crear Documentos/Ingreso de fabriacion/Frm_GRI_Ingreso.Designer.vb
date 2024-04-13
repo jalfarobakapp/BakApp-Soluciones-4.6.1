@@ -111,7 +111,6 @@ Partial Class Frm_GRI_Ingreso
         Me.Btn_FabMezcla.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_FabMezcla.TabIndex = 35
         Me.Btn_FabMezcla.Text = "<b>FABRICAR MEZCLAS</b>"
-        Me.Btn_FabMezcla.Visible = False
         '
         'Frm_GRI_Ingreso
         '
@@ -124,6 +123,7 @@ Partial Class Frm_GRI_Ingreso
         Me.Controls.Add(Me.Btn_Ingresar_GRI)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True

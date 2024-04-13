@@ -1137,7 +1137,7 @@ Public Class Frm_Crear_Entidad_Mt
 
         If EditarEntidad Then
 
-            _Rut = Cl_Maeen.Rten.Trim & "-" & RutDigito(Cl_Maeen.Rten.Trim) '_RowEntidad.Item("RTEN").ToString.Trim & "-" & RutDigito(_RowEntidad.Item("RTEN").ToString.Trim)
+            _Rut = Cl_Maeen.RTEN.Trim & "-" & RutDigito(Cl_Maeen.RTEN.Trim) '_RowEntidad.Item("RTEN").ToString.Trim & "-" & RutDigito(_RowEntidad.Item("RTEN").ToString.Trim)
 
             If _Rut = Txt_Rten.Text Then
                 Return
@@ -1291,26 +1291,26 @@ Public Class Frm_Crear_Entidad_Mt
 
                 Txt_Koen.Text = _Koen
                 Txt_Suen.Text = _Suen
-                TipoSuc = .Tiposuc ' _RowEntidad.Item("TIPOSUC")
+                TipoSuc = .TIPOSUC ' _RowEntidad.Item("TIPOSUC")
 
                 Try
-                    Txt_Rten.Text = .Rten.ToString.Trim & "-" & RutDigito(.Rten).ToString.Trim ' Trim(_RowEntidad.Item("RTEN")) & "-" & Trim(RutDigito(_RowEntidad.Item("RTEN")))
+                    Txt_Rten.Text = .RTEN.ToString.Trim & "-" & RutDigito(.RTEN).ToString.Trim ' Trim(_RowEntidad.Item("RTEN")) & "-" & Trim(RutDigito(_RowEntidad.Item("RTEN")))
                 Catch ex As Exception
-                    Txt_Rten.Text = .Rten.ToString.Trim 'Trim(_RowEntidad.Item("RTEN")) '& "-" & Trim(RutDigito(_RowEntidad.Item("RTEN")))
+                    Txt_Rten.Text = .RTEN.ToString.Trim 'Trim(_RowEntidad.Item("RTEN")) '& "-" & Trim(RutDigito(_RowEntidad.Item("RTEN")))
                 End Try
 
-                Cmb_Tiposuc.SelectedValue = .Tien
-                Txt_Nokoen.Text = .Nokoen.Trim
-                Txt_Dien.Text = .Dien.Trim
-                Txt_Sien.Text = .Sien.Trim
-                Txt_Gien.Text = .Gien.Trim
-                Txt_Cpostal.Text = .Cpostal.Trim
-                Txt_Foen.Text = .Foen.Trim
-                Txt_Faen.Text = .Faen.Trim
-                Txt_Email.Text = .Email.Trim
+                Cmb_Tiposuc.SelectedValue = .TIEN
+                Txt_Nokoen.Text = .NOKOEN.Trim
+                Txt_Dien.Text = .DIEN.Trim
+                Txt_Sien.Text = .SIEN.Trim
+                Txt_Gien.Text = .GIEN.Trim
+                Txt_Cpostal.Text = .CPOSTAL.Trim
+                Txt_Foen.Text = .FOEN.Trim
+                Txt_Faen.Text = .FAEN.Trim
+                Txt_Email.Text = .EMAIL.Trim
 
                 Try
-                    Txt_Emailcomer.Text = .Emailcomer.Trim
+                    Txt_Emailcomer.Text = .EMAILCOMER.Trim
                 Catch ex As Exception
                     Txt_Emailcomer.Text = String.Empty
                     Txt_Emailcomer.Enabled = False
@@ -1321,7 +1321,7 @@ Public Class Frm_Crear_Entidad_Mt
                         From TABCM Cm 
                         Inner Join TABCI Ci On Ci.KOPA = Cm.KOPA And Ci.KOCI = Cm.KOCI
                         Inner Join TABPA Pa On Pa.KOPA = Cm.KOPA
-                        Where Pa.KOPA = '" & .Paen & "' And Ci.KOCI = '" & .Cien & "' And Cm.KOCM = '" & .Cmen & "'"
+                        Where Pa.KOPA = '" & .PAEN & "' And Ci.KOCI = '" & .CIEN & "' And Cm.KOCM = '" & .CMEN & "'"
 
                 Dim _Row_Localidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -1339,30 +1339,30 @@ Public Class Frm_Crear_Entidad_Mt
 
                 Btn_Buscar_Comuna.Text = "Cambiar comuna..."
 
-                Cmb_Zoen.SelectedValue = .Zoen.Trim ' Trim(_RowEntidad.Item("ZOEN"))
-                Txt_Nokoenamp.Text = .Nokoenamp.Trim ' Trim(_RowEntidad.Item("NOKOENAMP"))
-                Cmb_Kofuen.SelectedValue = .Kofuen.Trim ' Trim(_RowEntidad.Item("KOFUEN"))
-                Cmb_Cobrador.SelectedValue = .Cobrador.Trim ' Trim(_RowEntidad.Item("COBRADOR"))
+                Cmb_Zoen.SelectedValue = .ZOEN.Trim ' Trim(_RowEntidad.Item("ZOEN"))
+                Txt_Nokoenamp.Text = .NOKOENAMP.Trim ' Trim(_RowEntidad.Item("NOKOENAMP"))
+                Cmb_Kofuen.SelectedValue = .KOFUEN.Trim ' Trim(_RowEntidad.Item("KOFUEN"))
+                Cmb_Cobrador.SelectedValue = .COBRADOR.Trim ' Trim(_RowEntidad.Item("COBRADOR"))
 
-                Dim _Lcen As String = .Lcen.Replace("TABPP", "") 'Replace(Trim(_RowEntidad.Item("LCEN")), "TABPP", "")
-                Dim _Lven As String = .Lven.Replace("TABPP", "") 'Replace(Trim(_RowEntidad.Item("LVEN")), "TABPP", "")
+                Dim _Lcen As String = .LCEN.Replace("TABPP", "") 'Replace(Trim(_RowEntidad.Item("LCEN")), "TABPP", "")
+                Dim _Lven As String = .LVEN.Replace("TABPP", "") 'Replace(Trim(_RowEntidad.Item("LVEN")), "TABPP", "")
 
                 Cmb_Lcen.SelectedValue = Trim(_Lcen)
                 Cmb_Lven.SelectedValue = Trim(_Lven)
 
 
-                Cmb_Ruen.SelectedValue = .Ruen.Trim ' Trim(_RowEntidad.Item("RUEN"))
-                Cmb_Tien.SelectedValue = .Tipoen.Trim ' Trim(_RowEntidad.Item("TIPOEN"))
-                Cmb_Actien.SelectedValue = .Actien.Trim ' Trim(_RowEntidad.Item("ACTIEN"))
-                Cmb_Tamaen.SelectedValue = .Tamaen.Trim ' Trim(_RowEntidad.Item("TAMAEN"))
-                Cmb_Transpoen.SelectedValue = .Transpoen.Trim ' Trim(_RowEntidad.Item("TRANSPOEN"))
-                TxtxObservacionesDoc.Text = .Oben.Trim ' Trim(_RowEntidad.Item("OBEN"))
+                Cmb_Ruen.SelectedValue = .RUEN.Trim ' Trim(_RowEntidad.Item("RUEN"))
+                Cmb_Tien.SelectedValue = .TIPOEN.Trim ' Trim(_RowEntidad.Item("TIPOEN"))
+                Cmb_Actien.SelectedValue = .ACTIEN.Trim ' Trim(_RowEntidad.Item("ACTIEN"))
+                Cmb_Tamaen.SelectedValue = .TAMAEN.Trim ' Trim(_RowEntidad.Item("TAMAEN"))
+                Cmb_Transpoen.SelectedValue = .TRANSPOEN.Trim ' Trim(_RowEntidad.Item("TRANSPOEN"))
+                TxtxObservacionesDoc.Text = .OBEN.Trim ' Trim(_RowEntidad.Item("OBEN"))
 
-                Txt_Crto.Tag = .Crto ' _RowEntidad.Item("CRTO")
-                Txt_Crsd.Tag = .Crsd ' _RowEntidad.Item("CRSD")
-                Txt_Crch.Tag = .Crch ' _RowEntidad.Item("CRCH")
-                Txt_Crlt.Tag = .Crlt ' _RowEntidad.Item("CRLT")
-                Txt_Crpa.Tag = .Crpa ' _RowEntidad.Item("CRPA")
+                Txt_Crto.Tag = .CRTO ' _RowEntidad.Item("CRTO")
+                Txt_Crsd.Tag = .CRSD ' _RowEntidad.Item("CRSD")
+                Txt_Crch.Tag = .CRCH ' _RowEntidad.Item("CRCH")
+                Txt_Crlt.Tag = .CRLT ' _RowEntidad.Item("CRLT")
+                Txt_Crpa.Tag = .CRPA ' _RowEntidad.Item("CRPA")
 
                 Txt_Crto.Text = FormatNumber(Txt_Crto.Tag, 0)
                 Txt_Crsd.Text = FormatNumber(Txt_Crsd.Tag, 0)
@@ -1370,39 +1370,39 @@ Public Class Frm_Crear_Entidad_Mt
                 Txt_Crlt.Text = FormatNumber(Txt_Crlt.Tag, 0)
                 Txt_Crpa.Text = FormatNumber(Txt_Crpa.Tag, 0)
 
-                Txt_Nuvecre.Tag = .Nuvecr '_RowEntidad.Item("NUVECR")
-                Txt_Dipreve.Tag = .Diprve ' _RowEntidad.Item("DIPRVE")
-                Txt_Diasvenci.Tag = .Diasvenci ' NuloPorNro(_RowEntidad.Item("DIASVENCI"), 0) 'NuloPorNro(_RowEntidad.Item("DIASVENCI"), 0)
-                Txt_Dimoper.Tag = .Dimoper ' _RowEntidad.Item("DIMOPER")
+                Txt_Nuvecre.Tag = .NUVECR '_RowEntidad.Item("NUVECR")
+                Txt_Dipreve.Tag = .DIPRVE ' _RowEntidad.Item("DIPRVE")
+                Txt_Diasvenci.Tag = .DIASVENCI ' NuloPorNro(_RowEntidad.Item("DIASVENCI"), 0) 'NuloPorNro(_RowEntidad.Item("DIASVENCI"), 0)
+                Txt_Dimoper.Tag = .DIMOPER ' _RowEntidad.Item("DIMOPER")
 
                 Txt_Nuvecre.Text = FormatNumber(Txt_Nuvecre.Tag, 0)
                 Txt_Dipreve.Text = FormatNumber(Txt_Dipreve.Tag, 0)
                 Txt_Diasvenci.Text = FormatNumber(Txt_Diasvenci.Tag, 0)
                 Txt_Dimoper.Text = FormatNumber(Txt_Dimoper.Tag, 0)
 
-                Dtp_Fecreen.Value = NuloPorNro(.Fecreen, Now.Date) 'NuloPorNro(_RowEntidad.Item("FECREEN"), Now.Date)
-                Dtp_Fevecren.Value = NuloPorNro(.Fevecren, Nothing) 'NuloPorNro(_RowEntidad.Item("FEVECREN"), Nothing)
+                Dtp_Fecreen.Value = NuloPorNro(.FECREEN, Now.Date) 'NuloPorNro(_RowEntidad.Item("FECREEN"), Now.Date)
+                Dtp_Fevecren.Value = NuloPorNro(.FEVECREN, Nothing) 'NuloPorNro(_RowEntidad.Item("FEVECREN"), Nothing)
 
-                Txt_Cpen.Text = .Cpen.Trim 'Trim(_RowEntidad.Item("CPEN"))
+                Txt_Cpen.Text = .CPEN.Trim 'Trim(_RowEntidad.Item("CPEN"))
 
-                Chk_Bloqueado.Checked = .Bloqueado ' _RowEntidad.Item("BLOQUEADO")
-                Chk_Bloqencom.Checked = .Bloqencom ' _RowEntidad.Item("BLOQENCOM")
-                CmbxMoneda.SelectedValue = .Moctaen ' _RowEntidad.Item("MOCTAEN")
+                Chk_Bloqueado.Checked = .BLOQUEADO ' _RowEntidad.Item("BLOQUEADO")
+                Chk_Bloqencom.Checked = .BLOQENCOM ' _RowEntidad.Item("BLOQENCOM")
+                CmbxMoneda.SelectedValue = .MOCTAEN ' _RowEntidad.Item("MOCTAEN")
 
-                Chk_Recepelect.Checked = .Recepelect ' _RowEntidad.Item("RECEPELECT")
-                Chk_Ferefauto.Checked = .Ferefauto ' _RowEntidad.Item("FEREFAUTO")
-                Chk_Notraedeud.Checked = .Notraedeud ' _RowEntidad.Item("NOTRAEDEUD")
-                Chk_Prefen.Checked = .Prefen ' _RowEntidad.Item("PREFEN")
-                Chk_Occobli.Checked = .Occobli ' _RowEntidad.Item("OCCOBLI")
+                Chk_Recepelect.Checked = .RECEPELECT ' _RowEntidad.Item("RECEPELECT")
+                Chk_Ferefauto.Checked = .FEREFAUTO ' _RowEntidad.Item("FEREFAUTO")
+                Chk_Notraedeud.Checked = .NOTRAEDEUD ' _RowEntidad.Item("NOTRAEDEUD")
+                Chk_Prefen.Checked = .PREFEN ' _RowEntidad.Item("PREFEN")
+                Chk_Occobli.Checked = .OCCOBLI ' _RowEntidad.Item("OCCOBLI")
 
-                Chk_Nvvpidepie.Checked = .Nvvpidepie ' _RowEntidad.Item("NVVPIDEPIE")
+                Chk_Nvvpidepie.Checked = .NVVPIDEPIE ' _RowEntidad.Item("NVVPIDEPIE")
 
-                Txt_Popicr.Tag = .Popicr ' _RowEntidad.Item("POPICR")
+                Txt_Popicr.Tag = .POPICR ' _RowEntidad.Item("POPICR")
                 Txt_Popicr.Text = FormatNumber(Txt_Popicr.Tag, 0)
 
                 '-- DIACOBRA CON EXISTE EN LA TABLA MAEEN
 
-                Dim _DiaCobra As String = .Diacobra ' 'NuloPorNro(_RowEntidad.Item("DIACOBRA"), "")
+                Dim _DiaCobra As String = .DIACOBRA ' 'NuloPorNro(_RowEntidad.Item("DIACOBRA"), "")
 
                 If Mid(_DiaCobra, 1, 1) = "X" Then Chk_Lunes.Checked = True
                 If Mid(_DiaCobra, 2, 1) = "X" Then Chk_Martes.Checked = True
@@ -1412,32 +1412,32 @@ Public Class Frm_Crear_Entidad_Mt
                 If Mid(_DiaCobra, 6, 1) = "X" Then Chk_Sabado.Checked = True
                 If Mid(_DiaCobra, 7, 1) = "X" Then Chk_Domingo.Checked = True
 
-                Txt_Cuentabco.Text = .Cuentabco.Trim ' _RowEntidad.Item("CUENTABCO").ToString.Trim             '--CUENTABCO =  Nro Cta Cte  (20)
-                Txt_Koendpen.Text = .Koendpen.Trim ' _RowEntidad.Item("KOENDPEN").ToString.Trim           '--KOENDPEN  =  Código del banco (13)
-                Txt_Suendpen.Text = .Suendpen.Trim ' _RowEntidad.Item("SUENDPEN").ToString.Trim         '--SUENDPEN  =  Plaza o sucursal bancaria (3)
-                Txt_Actecobco.Text = .Actecobco.Trim ' _RowEntidad.Item("ACTECOBCO").ToString.Trim  '--ACTECOBCO =  Código de actividad economica   (10)
+                Txt_Cuentabco.Text = .CUENTABCO.Trim ' _RowEntidad.Item("CUENTABCO").ToString.Trim             '--CUENTABCO =  Nro Cta Cte  (20)
+                Txt_Koendpen.Text = .KOENDPEN.Trim ' _RowEntidad.Item("KOENDPEN").ToString.Trim           '--KOENDPEN  =  Código del banco (13)
+                Txt_Suendpen.Text = .SUENDPEN.Trim ' _RowEntidad.Item("SUENDPEN").ToString.Trim         '--SUENDPEN  =  Plaza o sucursal bancaria (3)
+                Txt_Actecobco.Text = .ACTECOBCO.Trim ' _RowEntidad.Item("ACTECOBCO").ToString.Trim  '--ACTECOBCO =  Código de actividad economica   (10)
 
-                Txt_Nacionen.Text = .Nacionen.Trim ' _RowEntidad.Item("NACIONEN").ToString.Trim
-                Txt_Profecen.Text = .Profecen.Trim ' _RowEntidad.Item("PROFECEN").ToString.Trim
-                Txt_Dirparen.Text = .Dirparen.Trim ' _RowEntidad.Item("DIRPAREN").ToString.Trim
-                Dtp_Fecnacen.Value = NuloPorNro(Cl_Maeen.Fecnacen, #01-01-0001#) ' NuloPorNro(_RowEntidad.Item("FECNACEN"), Nothing)
-                Cmb_Estciven.SelectedValue = .Estciven ' _RowEntidad.Item("ESTCIVEN")
-                Cmb_Sexoen.SelectedValue = .Sexoen ' _RowEntidad.Item("SEXOEN")
-                Cmb_Relacien.SelectedValue = .Relacien ' _RowEntidad.Item("RELACIEN")
-                Txt_Conyugen.Text = .Conyugen ' _RowEntidad.Item("CONYUGEN").ToString.Trim
-                Txt_Rutconen.Text = .Rutconen.Trim ' _RowEntidad.Item("RUTCONEN").ToString.Trim
-                Rutsocen.Text = .Rutsocen.Trim ' _RowEntidad.Item("RUTSOCEN").ToString.Trim
-                Txt_Anexen1.Text = .Anexen1.Trim ' _RowEntidad.Item("ANEXEN1").ToString.Trim
-                Txt_Anexen2.Text = .Anexen2.Trim ' _RowEntidad.Item("ANEXEN2").ToString.Trim
-                Txt_Anexen3.Text = .Anexen3.Trim ' _RowEntidad.Item("ANEXEN3").ToString.Trim
+                Txt_Nacionen.Text = .NACIONEN.Trim ' _RowEntidad.Item("NACIONEN").ToString.Trim
+                Txt_Profecen.Text = .PROFECEN.Trim ' _RowEntidad.Item("PROFECEN").ToString.Trim
+                Txt_Dirparen.Text = .DIRPAREN.Trim ' _RowEntidad.Item("DIRPAREN").ToString.Trim
+                Dtp_Fecnacen.Value = NuloPorNro(Cl_Maeen.FECNACEN, #01-01-0001#) ' NuloPorNro(_RowEntidad.Item("FECNACEN"), Nothing)
+                Cmb_Estciven.SelectedValue = .ESTCIVEN ' _RowEntidad.Item("ESTCIVEN")
+                Cmb_Sexoen.SelectedValue = .SEXOEN ' _RowEntidad.Item("SEXOEN")
+                Cmb_Relacien.SelectedValue = .RELACIEN ' _RowEntidad.Item("RELACIEN")
+                Txt_Conyugen.Text = .CONYUGEN ' _RowEntidad.Item("CONYUGEN").ToString.Trim
+                Txt_Rutconen.Text = .RUTCONEN.Trim ' _RowEntidad.Item("RUTCONEN").ToString.Trim
+                Rutsocen.Text = .RUTSOCEN.Trim ' _RowEntidad.Item("RUTSOCEN").ToString.Trim
+                Txt_Anexen1.Text = .ANEXEN1.Trim ' _RowEntidad.Item("ANEXEN1").ToString.Trim
+                Txt_Anexen2.Text = .ANEXEN2.Trim ' _RowEntidad.Item("ANEXEN2").ToString.Trim
+                Txt_Anexen3.Text = .ANEXEN3.Trim ' _RowEntidad.Item("ANEXEN3").ToString.Trim
 
-                Input_Rutalun.Value = .Rutalun ' NuloPorNro(_RowEntidad.Item("RUTALUN"), 0)
-                Input_Rutamar.Value = .Rutamar ' NuloPorNro(_RowEntidad.Item("RUTAMAR"), 0)
-                Input_Rutamie.Value = .Rutamie ' NuloPorNro(_RowEntidad.Item("RUTAMIE"), 0)
-                Input_Rutajue.Value = .Rutajue ' NuloPorNro(_RowEntidad.Item("RUTAJUE"), 0)
-                Input_Rutavie.Value = .Rutavie ' NuloPorNro(_RowEntidad.Item("RUTAVIE"), 0)
-                Input_Rutasab.Value = .Rutasab ' NuloPorNro(_RowEntidad.Item("RUTASAB"), 0)
-                Input_Rutadom.Value = .Rutadom ' NuloPorNro(_RowEntidad.Item("RUTADOM"), 0)
+                Input_Rutalun.Value = .RUTALUN ' NuloPorNro(_RowEntidad.Item("RUTALUN"), 0)
+                Input_Rutamar.Value = .RUTAMAR ' NuloPorNro(_RowEntidad.Item("RUTAMAR"), 0)
+                Input_Rutamie.Value = .RUTAMIE ' NuloPorNro(_RowEntidad.Item("RUTAMIE"), 0)
+                Input_Rutajue.Value = .RUTAJUE ' NuloPorNro(_RowEntidad.Item("RUTAJUE"), 0)
+                Input_Rutavie.Value = .RUTAVIE ' NuloPorNro(_RowEntidad.Item("RUTAVIE"), 0)
+                Input_Rutasab.Value = .RUTASAB ' NuloPorNro(_RowEntidad.Item("RUTASAB"), 0)
+                Input_Rutadom.Value = .RUTADOM ' NuloPorNro(_RowEntidad.Item("RUTADOM"), 0)
 
             End With
 
@@ -1795,7 +1795,7 @@ Public Class Frm_Crear_Entidad_Mt
 
     Private Sub Btn_Anotaciones_a_la_entidad_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Anotaciones_a_la_entidad.Click
 
-        Dim _Idmaeen As Integer = Cl_Maeen.Idmaeen ' _RowEntidad.Item("IDMAEEN")
+        Dim _Idmaeen As Integer = Cl_Maeen.IDMAEEN ' _RowEntidad.Item("IDMAEEN")
 
         Dim Fm As New Frm_Anotaciones_Ver_Anotaciones(_Idmaeen, Frm_Anotaciones_Ver_Anotaciones.Tipo_Tabla.MAEEN)
         Fm.ShowDialog(Me)

@@ -2,7 +2,6 @@
 Imports System.Threading
 Imports BkSpecialPrograms.Bk_Comporamiento_UdMedidas
 Imports DevComponents.DotNetBar
-Imports MySql.Data.Authentication
 
 Public Class Frm_Formulario_Documento
 
@@ -5574,7 +5573,7 @@ Public Class Frm_Formulario_Documento
                     _Cantidad = 0
                 End If
 
-                If _Fila.Cells("RtuVariable").Value Then
+                If NuloPorNro(_Fila.Cells("RtuVariable").Value, False) Then
 
                     _CantUd1 = _Fila.Cells("CantUd1").Value
                     _CantUd2 = _Fila.Cells("CantUd2").Value
@@ -15434,6 +15433,7 @@ Public Class Frm_Formulario_Documento
                                                                               _Tbl_Mevento_Edo,
                                                                               _RowEntidad) Then
                     Return 0
+
                 End If
 
             End If
@@ -16027,6 +16027,15 @@ Public Class Frm_Formulario_Documento
 
             End If
 
+
+            'PUNTOS VENTA
+
+            Dim _Cl_Puntos As New Cl_Puntos()
+            Dim _MsjPtos As LsValiciones.Mensajes
+
+            _Cl_Puntos.Sb_Llenar_Zw_PtsVta_Configuracion(ModEmpresa)
+            _MsjPtos = _Cl_Puntos.Fx_Grabar_Registro_Puntos(_New_Idmaeedo)
+
             'GENERA GRI DESDE PRODUCCION EXTERNA
 
             Dim _SqlQuery = String.Empty
@@ -16055,8 +16064,8 @@ Public Class Frm_Formulario_Documento
                 Dim _Lote As String = _Codigos.Lote
 
                 _SqlQuery += "Insert Into " & _Global_BaseBk & "Zw_Prod_CodQRLogDoc (CodigoQR,Kopral,Tido,Nudo,Idmaeedo,Kopr,CodLeido,TidoOri,NudoOri,Nro_Tarja,Lote) Values " &
-                               "('" & _CodigoQR & "','" & _Kopral & "','" & _Tido & "','" & _Nudo & "'," & _Idmaeedo &
-                               ",'" & _Kopr & "','" & _CodLeido & "','" & _TidoOri & "','" & _NudoOri & "','" & _Nro_Tarja & "','" & _Lote & "')" & vbCrLf
+                             "('" & _CodigoQR & "','" & _Kopral & "','" & _Tido & "','" & _Nudo & "'," & _Idmaeedo &
+                             ",'" & _Kopr & "','" & _CodLeido & "','" & _TidoOri & "','" & _NudoOri & "','" & _Nro_Tarja & "','" & _Lote & "')" & vbCrLf
 
             Next
 
@@ -17587,13 +17596,17 @@ Public Class Frm_Formulario_Documento
                         _DesdePickeo = _Fila.Item("DesdePickeo")
                         _New_Fila.Cells("RtuVariable").Value = _Fila.Item("RtuVariable")
                     Catch ex As Exception
-
+                        _New_Fila.Cells("RtuVariable").Value = False
                     End Try
 
-                    If _DesdePickeo Then 'And _New_Fila.Cells("RtuVariable").Value Then
-                        _New_Fila.Cells("Cantidad").Value = _Cantidad
-                        _New_Fila.Cells("CantUd1").Value = _Fila.Item("CantUd1_Pickea")
-                        _New_Fila.Cells("CantUd2").Value = _Fila.Item("CantUd2_Pickea")
+                    If Not _Prct Then
+
+                        If _DesdePickeo Then
+                            _New_Fila.Cells("Cantidad").Value = _Cantidad
+                            _New_Fila.Cells("CantUd1").Value = _Fila.Item("CantUd1_Pickea")
+                            _New_Fila.Cells("CantUd2").Value = _Fila.Item("CantUd2_Pickea")
+                        End If
+
                     End If
 
                     If _Stock_desde_WMS Then
@@ -20712,7 +20725,7 @@ Public Class Frm_Formulario_Documento
 
             For Each _FlPre As DataRow In _TblDetalle.Rows
 
-                Dim _Precio As Double = Math.Round(_FlPre.Item("Precio"), 0)
+                Dim _Precio As Double = Math.Round(NuloPorNro(_FlPre.Item("Precio"), 0), 0)
                 Dim _Campo As String
                 Dim _Precio_Lista As Double
 
@@ -20722,7 +20735,7 @@ Public Class Frm_Formulario_Documento
                     _Campo = "PrecioBrutoUdLista"
                 End If
 
-                _Precio_Lista = Math.Round(_FlPre.Item(_Campo), 0)
+                _Precio_Lista = Math.Round(NuloPorNro(_FlPre.Item(_Campo), 0), 0)
 
                 If _Precio <> _Precio_Lista Then
                     _NecesitaPermisoFlPRe = True

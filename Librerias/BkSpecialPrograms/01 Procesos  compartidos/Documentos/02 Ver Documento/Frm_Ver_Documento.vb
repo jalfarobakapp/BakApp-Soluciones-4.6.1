@@ -3272,6 +3272,8 @@ Public Class Frm_Ver_Documento
             _Filtro_Idmaeddo_Dori = "(-1)"
         End If
 
+        _Filtro_Idmaeddo_Dori = _Filtro_Idmaeddo_Dori.ToString.Replace("%%", "0")
+
         Consulta_sql = "Select Id_Despacho From " & _Global_BaseBk & "Zw_Despachos_Doc_Det 
                         Where Idmaeedo In (Select IDMAEEDO From MAEDDO Where IDMAEDDO In " & _Filtro_Idmaeddo_Dori & ") Or Idmaeedo = " & _Idmaeedo
         Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)

@@ -1,5 +1,5 @@
-﻿Imports BkSpecialPrograms
-Imports DevComponents.DotNetBar
+﻿Imports System.Data.SqlClient
+Imports BkSpecialPrograms
 
 Public Class Cl_Mezcla
 
@@ -7,6 +7,7 @@ Public Class Cl_Mezcla
     Dim Consulta_sql As String
 
     Public Property MzEnc As New Modelos_Mezcla.MzEnc
+    Public Property MzDet As New Modelos_Mezcla.MzDet
     Public Property MzDet_ls As New List(Of Modelos_Mezcla.MzDet)
     Public Property MzDetProd_ls As New List(Of Modelos_Mezcla.MzDetProd)
 
@@ -68,6 +69,95 @@ Public Class Cl_Mezcla
 
         Dim _Mensaje_Mezcla As New LsValiciones.Mensajes
 
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+        Dim Cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        Try
+
+            Consulta_sql = String.Empty
+
+            SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
+
+            myTrans = Cn2.BeginTransaction()
+
+            With MzEnc
+
+                .Nro_MZC = Fx_NvoNro_OFMezcla()
+
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Pdp_CPT_MzEnc (Empresa,Nro_MZC,Idpote_Otm,Idpotl_Otm,Numot_Otm,Fiot_Otm,Codigo_Otm," &
+                               "Descripcion_Otm,FechaCreacion,Referencia,CodFuncionario,Estado,Codnomen,Descriptor,Cantnomen,Udad,CantFabricar)" & vbCrLf &
+                               "Values ('" & .Empresa & "','" & .Nro_MZC & "'," & .Idpote_Otm & "," & .Idpotl_Otm & ",'" & .Numot_Otm &
+                               "','" & Format(.Fiot_Otm, "yyyyMMdd") & "','" & .Codigo_Otm & "','" & .Descripcion_Otm &
+                               "',Getdate(),'" & .Referencia & "','" & .CodFuncionario & "','" & .Estado & "','" & .Codnomen &
+                               "','" & .Descriptor & "'," & De_Num_a_Tx_01(.Cantnomen, False, 5) & ",'" & .Udad & "'," & De_Num_a_Tx_01(.CantFabricar, False, 5) & ")"
+
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+                Comando = New System.Data.SqlClient.SqlCommand("SELECT @@IDENTITY AS 'Identity'", Cn2)
+                Comando.Transaction = myTrans
+                Dim dfd1 As System.Data.SqlClient.SqlDataReader = Comando.ExecuteReader()
+                While dfd1.Read()
+                    .Id = dfd1("Identity")
+                End While
+                dfd1.Close()
+
+                For Each _Fila As Modelos_Mezcla.MzDet In MzDet_ls
+
+                    With _Fila
+
+                        .Id_Enc = MzEnc.Id
+
+                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Pdp_CPT_MzDet (Id_Enc,Empresa,SucursalDef,BodegaDef,FechaCreacion," &
+                                       "Idpote_Otm,Idpotl_Otm,CodFuncionario,Codigo,Descripcion,Codnomen,Descriptor,Cantnomen,Udad,CantFabricar,CantFabricada) Values " &
+                                       "(" & .Id_Enc & ",'" & .Empresa & "','" & .SucursalDef & "','" & .BodegaDef &
+                                       "','" & .FechaCreacion & "'," & .Idpote_Otm & "," & .Idpotl_Otm &
+                                       ",'" & .CodFuncionario & "','" & .Codigo & "','" & .Descripcion &
+                                       "','" & .Codnomen & "','" & .Descriptor & "'," & De_Num_a_Tx_01(.Cantnomen, False, 5) &
+                                       ",'" & .Udad & "'," & De_Num_a_Tx_01(.CantFabricar, False, 5) & "," & De_Num_a_Tx_01(.CantFabricada, False, 5) & ")"
+
+                        Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                        Comando.Transaction = myTrans
+                        Comando.ExecuteNonQuery()
+
+                    End With
+
+                Next
+
+                myTrans.Commit()
+                SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+                _Mensaje_Mezcla.EsCorrecto = True
+                _Mensaje_Mezcla.Id = .Id
+                _Mensaje_Mezcla.Detalle = "Se crea una nueva Orden de fabricación de mezcla Nro: " & .Nro_MZC
+
+                'Throw New System.Exception(_Sql.Pro_Error)
+
+
+            End With
+
+        Catch ex As Exception
+
+            _Mensaje_Mezcla.Mensaje = ex.Message
+            _Mensaje_Mezcla.Resultado = Consulta_sql
+            myTrans.Rollback()
+
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+        End Try
+
+        Return _Mensaje_Mezcla
+
+    End Function
+
+    Function Fx_Agregar_Nueva_Fabricacion_Mezcla() As LsValiciones.Mensajes
+
+        Dim _Mensaje_Mezcla As New LsValiciones.Mensajes
+
         Try
 
             With MzEnc
@@ -88,6 +178,10 @@ Public Class Cl_Mezcla
                 Else
                     Throw New System.Exception(_Sql.Pro_Error)
                 End If
+
+            End With
+
+            With MzDet_ls
 
             End With
 

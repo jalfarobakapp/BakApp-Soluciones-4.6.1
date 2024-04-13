@@ -152,7 +152,9 @@ Public Class Frm_Adjuntar_Archivos
         Try
 
             Dim oFD As New OpenFileDialog
+
             With oFD
+
                 .Title = "Seleccionar archivo"
                 .Multiselect = True
 

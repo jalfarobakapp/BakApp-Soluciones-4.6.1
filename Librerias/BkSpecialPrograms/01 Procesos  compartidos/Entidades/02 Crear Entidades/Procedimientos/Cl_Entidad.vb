@@ -21,119 +21,119 @@ Public Class Cl_Entidades
 
         With _Maeen
 
-            .Idmaeen = _Row.Item("IDMAEEN")
-            .Koen = _Row.Item("KOEN")
-            .Tien = _Row.Item("TIEN")
-            .Rten = _Row.Item("RTEN")
-            .Suen = _Row.Item("SUEN")
-            .Suen = _Row.Item("SUEN")
-            .Tiposuc = _Row.Item("TIPOSUC")
-            .Nokoen = _Row.Item("NOKOEN")
-            .Sien = _Row.Item("SIEN")
-            .Gien = _Row.Item("GIEN")
-            .Paen = _Row.Item("PAEN")
-            .Cien = _Row.Item("CIEN")
-            .Cmen = _Row.Item("CMEN")
-            .Dien = _Row.Item("DIEN")
-            .Zoen = _Row.Item("ZOEN")
-            .Foen = _Row.Item("FOEN")
-            .Faen = _Row.Item("FAEN")
-            .Cnen = _Row.Item("CNEN")
-            .Kofuen = _Row.Item("KOFUEN")
-            .Lcen = _Row.Item("LCEN")
-            .Lven = _Row.Item("LVEN")
-            .Crsd = _Row.Item("CRSD")
-            .Crch = _Row.Item("CRCH")
-            .Crlt = _Row.Item("CRLT")
-            .Crpa = _Row.Item("CRPA")
-            .Crto = _Row.Item("CRTO")
-            .Cren = _Row.Item("CREN")
-            .Fevecren = _Row.Item("FEVECREN")
-            .Feultr = _Row.Item("FEULTR")
-            .Nuvecr = _Row.Item("NUVECR")
-            .Dccr = _Row.Item("DCCR")
-            .Incr = _Row.Item("INCR")
-            .Popicr = _Row.Item("POPICR")
-            .Koplcr = _Row.Item("KOPLCR")
-            .Contab = _Row.Item("CONTAB")
-            .Subauxi = _Row.Item("SUBAUXI")
-            .Contabvta = _Row.Item("CONTABVTA")
-            .Subauxivta = _Row.Item("SUBAUXIVTA")
-            .Codcc = _Row.Item("CODCC")
-            .Nutransmi = _Row.Item("NUTRANSMI")
-            .Ruen = _Row.Item("RUEN")
-            .Cpen = _Row.Item("CPEN")
-            .Oben = _Row.Item("OBEN")
-            .Diprve = _Row.Item("DIPRVE")
-            .Email = _Row.Item("EMAIL")
-            .Cnen2 = _Row.Item("CNEN2")
-            .Cobrador = _Row.Item("COBRADOR")
-            .Proteacum = _Row.Item("PROTEACUM")
-            .Protevige = _Row.Item("PROTEVIGE")
-            .Cpostal = _Row.Item("CPOSTAL")
-            .Habilita = _Row.Item("HABILITA")
-            .Codconve = _Row.Item("CODCONVE")
-            .Notraedeud = _Row.Item("NOTRAEDEUD")
-            .Nokoenamp = _Row.Item("NOKOENAMP")
-            .Bloqueado = _Row.Item("BLOQUEADO")
-            .Dimoper = _Row.Item("DIMOPER")
-            .Prefen = _Row.Item("PREFEN")
-            .Bloqencom = _Row.Item("BLOQENCOM")
-            .Tipoen = _Row.Item("TIPOEN")
-            .Actien = _Row.Item("ACTIEN")
-            .Tamaen = _Row.Item("TAMAEN")
-            .Porprefen = _Row.Item("PORPREFEN")
-            .Claveen = _Row.Item("CLAVEEN")
-            .Nvvpidepie = _Row.Item("NVVPIDEPIE")
-            .Recepelect = _Row.Item("RECEPELECT")
-            .Acteco = _Row.Item("ACTECO")
-            .Diasvenci = NuloPorNro(_Row.Item("DIASVENCI"), 0)
-            .Cattrib = _Row.Item("CATTRIB")
-            .Agretiva = _Row.Item("AGRETIVA")
-            .Agretiibb = _Row.Item("AGRETIIBB")
-            .Agretgan = _Row.Item("AGRETGAN")
-            .Agperiva = _Row.Item("AGPERIVA")
-            .Agperiibb = _Row.Item("AGPERIIBB")
-            .Transpoen = _Row.Item("TRANSPOEN")
-            .Fecreen = _Row.Item("FECREEN")
-            .Firma = _Row.Item("FIRMA")
-            .Moctaen = _Row.Item("MOCTAEN")
+            .IDMAEEN = _Row.Item("IDMAEEN")
+            .KOEN = _Row.Item("KOEN")
+            .TIEN = _Row.Item("TIEN")
+            .RTEN = _Row.Item("RTEN")
+            .SUEN = _Row.Item("SUEN")
+            .SUEN = _Row.Item("SUEN")
+            .TIPOSUC = _Row.Item("TIPOSUC")
+            .NOKOEN = _Row.Item("NOKOEN")
+            .SIEN = _Row.Item("SIEN")
+            .GIEN = _Row.Item("GIEN")
+            .PAEN = _Row.Item("PAEN")
+            .CIEN = _Row.Item("CIEN")
+            .CMEN = _Row.Item("CMEN")
+            .DIEN = _Row.Item("DIEN")
+            .ZOEN = _Row.Item("ZOEN")
+            .FOEN = _Row.Item("FOEN")
+            .FAEN = _Row.Item("FAEN")
+            .CNEN = _Row.Item("CNEN")
+            .KOFUEN = _Row.Item("KOFUEN")
+            .LCEN = _Row.Item("LCEN")
+            .LVEN = _Row.Item("LVEN")
+            .CRSD = _Row.Item("CRSD")
+            .CRCH = _Row.Item("CRCH")
+            .CRLT = _Row.Item("CRLT")
+            .CRPA = _Row.Item("CRPA")
+            .CRTO = _Row.Item("CRTO")
+            .CREN = _Row.Item("CREN")
+            .FEVECREN = _Row.Item("FEVECREN")
+            .FEULTR = _Row.Item("FEULTR")
+            .NUVECR = _Row.Item("NUVECR")
+            .DCCR = _Row.Item("DCCR")
+            .INCR = _Row.Item("INCR")
+            .POPICR = _Row.Item("POPICR")
+            .KOPLCR = _Row.Item("KOPLCR")
+            .CONTAB = _Row.Item("CONTAB")
+            .SUBAUXI = _Row.Item("SUBAUXI")
+            .CONTABVTA = _Row.Item("CONTABVTA")
+            .SUBAUXIVTA = _Row.Item("SUBAUXIVTA")
+            .CODCC = _Row.Item("CODCC")
+            .NUTRANSMI = _Row.Item("NUTRANSMI")
+            .RUEN = _Row.Item("RUEN")
+            .CPEN = _Row.Item("CPEN")
+            .OBEN = _Row.Item("OBEN")
+            .DIPRVE = _Row.Item("DIPRVE")
+            .EMAIL = _Row.Item("EMAIL")
+            .CNEN2 = _Row.Item("CNEN2")
+            .COBRADOR = _Row.Item("COBRADOR")
+            .PROTEACUM = _Row.Item("PROTEACUM")
+            .PROTEVIGE = _Row.Item("PROTEVIGE")
+            .CPOSTAL = _Row.Item("CPOSTAL")
+            .HABILITA = _Row.Item("HABILITA")
+            .CODCONVE = _Row.Item("CODCONVE")
+            .NOTRAEDEUD = _Row.Item("NOTRAEDEUD")
+            .NOKOENAMP = _Row.Item("NOKOENAMP")
+            .BLOQUEADO = _Row.Item("BLOQUEADO")
+            .DIMOPER = _Row.Item("DIMOPER")
+            .PREFEN = _Row.Item("PREFEN")
+            .BLOQENCOM = _Row.Item("BLOQENCOM")
+            .TIPOEN = _Row.Item("TIPOEN")
+            .ACTIEN = _Row.Item("ACTIEN")
+            .TAMAEN = _Row.Item("TAMAEN")
+            .PORPREFEN = _Row.Item("PORPREFEN")
+            .CLAVEEN = _Row.Item("CLAVEEN")
+            .NVVPIDEPIE = _Row.Item("NVVPIDEPIE")
+            .RECEPELECT = _Row.Item("RECEPELECT")
+            .ACTECO = _Row.Item("ACTECO")
+            .DIASVENCI = NuloPorNro(_Row.Item("DIASVENCI"), 0)
+            .CATTRIB = _Row.Item("CATTRIB")
+            .AGRETIVA = _Row.Item("AGRETIVA")
+            .AGRETIIBB = _Row.Item("AGRETIIBB")
+            .AGRETGAN = _Row.Item("AGRETGAN")
+            .AGPERIVA = _Row.Item("AGPERIVA")
+            .AGPERIIBB = _Row.Item("AGPERIIBB")
+            .TRANSPOEN = _Row.Item("TRANSPOEN")
+            .FECREEN = _Row.Item("FECREEN")
+            .FIRMA = _Row.Item("FIRMA")
+            .MOCTAEN = _Row.Item("MOCTAEN")
             .Ctasdelaen = _Row.Item("CTASDELAEN")
-            .Nacionen = _Row.Item("NACIONEN")
-            .Dirparen = _Row.Item("DIRPAREN")
-            .Fecnacen = NuloPorNro(_Row.Item("FECNACEN"), Nothing)
-            .Estciven = _Row.Item("ESTCIVEN")
-            .Profecen = _Row.Item("PROFECEN")
-            .Conyugen = _Row.Item("CONYUGEN")
-            .Rutconen = _Row.Item("RUTCONEN")
-            .Rutsocen = _Row.Item("RUTSOCEN")
-            .Sexoen = _Row.Item("SEXOEN")
-            .Relacien = _Row.Item("RELACIEN")
-            .Anexen1 = _Row.Item("ANEXEN1")
-            .Anexen2 = _Row.Item("ANEXEN2")
-            .Anexen3 = _Row.Item("ANEXEN3")
-            .Anexen4 = _Row.Item("ANEXEN4")
-            .Occobli = _Row.Item("OCCOBLI")
-            .Valivenpag = _Row.Item("VALIVENPAG")
-            .Emailcomer = _Row.Item("EMAILCOMER")
-            .Tipocontr = _Row.Item("TIPOCONTR")
-            .Ferefauto = _Row.Item("FEREFAUTO")
-            .Diacobra = NuloPorNro(_Row.Item("DIACOBRA"), "")
-            .Cuentabco = _Row.Item("CUENTABCO")
-            .Koendpen = _Row.Item("KOENDPEN")
-            .Suendpen = _Row.Item("SUENDPEN")
-            .Rutalun = NuloPorNro(_Row.Item("RUTALUN"), 0)
-            .Rutamar = NuloPorNro(_Row.Item("RUTAMAR"), 0)
-            .Rutamie = NuloPorNro(_Row.Item("RUTAMIE"), 0)
-            .Rutajue = NuloPorNro(_Row.Item("RUTAJUE"), 0)
-            .Rutavie = NuloPorNro(_Row.Item("RUTAVIE"), 0)
-            .Rutasab = NuloPorNro(_Row.Item("RUTASAB"), 0)
-            .Rutadom = NuloPorNro(_Row.Item("RUTADOM"), 0)
-            .Catlegret = _Row.Item("CATLEGRET")
-            .Imptoret = _Row.Item("IMPTORET")
-            .Entiliga = _Row.Item("ENTILIGA")
-            .Porceliga = _Row.Item("PORCELIGA")
-            .Actecobco = _Row.Item("ACTECOBCO")
+            .NACIONEN = _Row.Item("NACIONEN")
+            .DIRPAREN = _Row.Item("DIRPAREN")
+            .FECNACEN = NuloPorNro(_Row.Item("FECNACEN"), Nothing)
+            .ESTCIVEN = _Row.Item("ESTCIVEN")
+            .PROFECEN = _Row.Item("PROFECEN")
+            .CONYUGEN = _Row.Item("CONYUGEN")
+            .RUTCONEN = _Row.Item("RUTCONEN")
+            .RUTSOCEN = _Row.Item("RUTSOCEN")
+            .SEXOEN = _Row.Item("SEXOEN")
+            .RELACIEN = _Row.Item("RELACIEN")
+            .ANEXEN1 = _Row.Item("ANEXEN1")
+            .ANEXEN2 = _Row.Item("ANEXEN2")
+            .ANEXEN3 = _Row.Item("ANEXEN3")
+            .ANEXEN4 = _Row.Item("ANEXEN4")
+            .OCCOBLI = _Row.Item("OCCOBLI")
+            .VALIVENPAG = _Row.Item("VALIVENPAG")
+            .EMAILCOMER = _Row.Item("EMAILCOMER")
+            .TIPOCONTR = _Row.Item("TIPOCONTR")
+            .FEREFAUTO = _Row.Item("FEREFAUTO")
+            .DIACOBRA = NuloPorNro(_Row.Item("DIACOBRA"), "")
+            .CUENTABCO = _Row.Item("CUENTABCO")
+            .KOENDPEN = _Row.Item("KOENDPEN")
+            .SUENDPEN = _Row.Item("SUENDPEN")
+            .RUTALUN = NuloPorNro(_Row.Item("RUTALUN"), 0)
+            .RUTAMAR = NuloPorNro(_Row.Item("RUTAMAR"), 0)
+            .RUTAMIE = NuloPorNro(_Row.Item("RUTAMIE"), 0)
+            .RUTAJUE = NuloPorNro(_Row.Item("RUTAJUE"), 0)
+            .RUTAVIE = NuloPorNro(_Row.Item("RUTAVIE"), 0)
+            .RUTASAB = NuloPorNro(_Row.Item("RUTASAB"), 0)
+            .RUTADOM = NuloPorNro(_Row.Item("RUTADOM"), 0)
+            .CATLEGRET = _Row.Item("CATLEGRET")
+            .IMPTORET = _Row.Item("IMPTORET")
+            .ENTILIGA = _Row.Item("ENTILIGA")
+            .PORCELIGA = _Row.Item("PORCELIGA")
+            .ACTECOBCO = _Row.Item("ACTECOBCO")
 
         End With
 
@@ -187,118 +187,118 @@ Namespace Tablas_Entidades
 
     Public Class Maeen
 
-        Public Property Idmaeen As Integer
-        Public Property Koen As String
-        Public Property Tien As String
-        Public Property Rten As String
-        Public Property Suen As String
-        Public Property Tiposuc As String
-        Public Property Nokoen As String
-        Public Property Sien As String
-        Public Property Gien As String
-        Public Property Paen As String
-        Public Property Cien As String
-        Public Property Cmen As String
-        Public Property Dien As String
-        Public Property Zoen As String
-        Public Property Foen As String
-        Public Property Faen As String
-        Public Property Cnen As String
-        Public Property Kofuen As String
-        Public Property Lcen As String
-        Public Property Lven As String
-        Public Property Crsd As Double
-        Public Property Crch As Double
-        Public Property Crlt As Double
-        Public Property Crpa As Double
-        Public Property Crto As Double
-        Public Property Cren As String
-        Public Property Fevecren As DateTime?
-        Public Property Feultr As DateTime?
-        Public Property Nuvecr As Double
-        Public Property Dccr As Double
-        Public Property Incr As Double
-        Public Property Popicr As Double
-        Public Property Koplcr As String
-        Public Property Contab As String
-        Public Property Subauxi As String
-        Public Property Contabvta As String
-        Public Property Subauxivta As String
-        Public Property Codcc As String
-        Public Property Nutransmi As String
-        Public Property Ruen As String
-        Public Property Cpen As String
-        Public Property Oben As String
-        Public Property Diprve As Double
-        Public Property Email As String
-        Public Property Cnen2 As String
-        Public Property Cobrador As String
-        Public Property Proteacum As Double
-        Public Property Protevige As Double
-        Public Property Cpostal As String
-        Public Property Habilita As Boolean
-        Public Property Codconve As String
-        Public Property Notraedeud As Boolean
-        Public Property Nokoenamp As String
-        Public Property Bloqueado As Boolean
-        Public Property Dimoper As Double
-        Public Property Prefen As Boolean
-        Public Property Bloqencom As Boolean
-        Public Property Tipoen As String
-        Public Property Actien As String
-        Public Property Tamaen As String
-        Public Property Porprefen As Double
-        Public Property Claveen As String
-        Public Property Nvvpidepie As Boolean
-        Public Property Recepelect As Boolean
-        Public Property Acteco As String
-        Public Property Diasvenci As Integer
-        Public Property Cattrib As String
-        Public Property Agretiva As Boolean
-        Public Property Agretiibb As Boolean
-        Public Property Agretgan As Boolean
-        Public Property Agperiva As Boolean
-        Public Property Agperiibb As Boolean
-        Public Property Transpoen As String
-        Public Property Fecreen As DateTime?
-        Public Property Firma As String
-        Public Property Moctaen As String
-        Public Property Ctasdelaen As String
-        Public Property Nacionen As String
-        Public Property Dirparen As String
-        Public Property Fecnacen As DateTime?
-        Public Property Estciven As String
-        Public Property Profecen As String
-        Public Property Conyugen As String
-        Public Property Rutconen As String
-        Public Property Rutsocen As String
-        Public Property Sexoen As String
-        Public Property Relacien As String
-        Public Property Anexen1 As String
-        Public Property Anexen2 As String
-        Public Property Anexen3 As String
-        Public Property Anexen4 As String
-        Public Property Occobli As Boolean
-        Public Property Valivenpag As Boolean
-        Public Property Emailcomer As String
-        Public Property Tipocontr As String
-        Public Property Ferefauto As Boolean
-        Public Property Diacobra As String
-        Public Property Cuentabco As String
-        Public Property Koendpen As String
-        Public Property Suendpen As String
-        Public Property Rutalun As Integer
-        Public Property Rutamar As Integer
-        Public Property Rutamie As Integer
-        Public Property Rutajue As Integer
-        Public Property Rutavie As Integer
-        Public Property Rutasab As Integer
-        Public Property Rutadom As Integer
-        Public Property Catlegret As String
-        Public Property Imptoret As Double
-        Public Property Entiliga As String
-        Public Property Porceliga As Double
-        Public Property Actecobco As String
+        Public Property IDMAEEN As Integer
+        Public Property KOEN As String
+        Public Property TIEN As String
+        Public Property RTEN As String
+        Public Property SUEN As String
+        Public Property TIPOSUC As String
+        Public Property NOKOEN As String
+        Public Property SIEN As String
+        Public Property GIEN As String
+        Public Property PAEN As String
+        Public Property CIEN As String
+        Public Property CMEN As String
+        Public Property DIEN As String
+        Public Property ZOEN As String
+        Public Property FOEN As String
+        Public Property FAEN As String
+        Public Property CNEN As String
+        Public Property KOFUEN As String
+        Public Property LCEN As String
+        Public Property LVEN As String
+        Public Property CRSD As Double
+        Public Property CRCH As Double
+        Public Property CRLT As Double
+        Public Property CRPA As Double
+        Public Property CRTO As Double
+        Public Property CREN As String
+        Public Property FEVECREN As DateTime?
+        Public Property FEULTR As DateTime?
+        Public Property NUVECR As Double
+        Public Property DCCR As Double
+        Public Property INCR As Double
+        Public Property POPICR As Double
+        Public Property KOPLCR As String
+        Public Property CONTAB As String
+        Public Property SUBAUXI As String
+        Public Property CONTABVTA As String
+        Public Property SUBAUXIVTA As String
+        Public Property CODCC As String
+        Public Property NUTRANSMI As String
+        Public Property RUEN As String
+        Public Property CPEN As String
+        Public Property OBEN As String
+        Public Property DIPRVE As Double
+        Public Property EMAIL As String
+        Public Property CNEN2 As String
+        Public Property COBRADOR As String
+        Public Property PROTEACUM As Double
+        Public Property PROTEVIGE As Double
+        Public Property CPOSTAL As String
+        Public Property HABILITA As Boolean
+        Public Property CODCONVE As String
+        Public Property NOTRAEDEUD As Boolean
+        Public Property NOKOENAMP As String
+        Public Property BLOQUEADO As Boolean
+        Public Property DIMOPER As Double
+        Public Property PREFEN As Boolean
+        Public Property BLOQENCOM As Boolean
+        Public Property TIPOEN As String
+        Public Property ACTIEN As String
+        Public Property TAMAEN As String
+        Public Property PORPREFEN As Double
+        Public Property CLAVEEN As String
+        Public Property NVVPIDEPIE As Boolean
+        Public Property RECEPELECT As Boolean
+        Public Property ACTECO As String
+        Public Property DIASVENCI As Integer
+        Public Property CATTRIB As String
+        Public Property AGRETIVA As Boolean
+        Public Property AGRETIIBB As Boolean
+        Public Property AGRETGAN As Boolean
+        Public Property AGPERIVA As Boolean
+        Public Property AGPERIIBB As Boolean
+        Public Property TRANSPOEN As String
+        Public Property FECREEN As DateTime?
+        Public Property FIRMA As String
+        Public Property MOCTAEN As String
+        Public Property CTASDELAEN As String
+        Public Property NACIONEN As String
+        Public Property DIRPAREN As String
+        Public Property FECNACEN As DateTime?
+        Public Property ESTCIVEN As String
+        Public Property PROFECEN As String
+        Public Property CONYUGEN As String
+        Public Property RUTCONEN As String
+        Public Property RUTSOCEN As String
+        Public Property SEXOEN As String
+        Public Property RELACIEN As String
+        Public Property ANEXEN1 As String
+        Public Property ANEXEN2 As String
+        Public Property ANEXEN3 As String
+        Public Property ANEXEN4 As String
+        Public Property OCCOBLI As Boolean
+        Public Property VALIVENPAG As Boolean
+        Public Property EMAILCOMER As String
+        Public Property TIPOCONTR As String
+        Public Property FEREFAUTO As Boolean
+        Public Property DIACOBRA As String
+        Public Property CUENTABCO As String
+        Public Property KOENDPEN As String
+        Public Property SUENDPEN As String
+        Public Property RUTALUN As Integer
+        Public Property RUTAMAR As Integer
+        Public Property RUTAMIE As Integer
+        Public Property RUTAJUE As Integer
+        Public Property RUTAVIE As Integer
+        Public Property RUTASAB As Integer
+        Public Property RUTADOM As Integer
+        Public Property CATLEGRET As String
+        Public Property IMPTORET As Double
+        Public Property ENTILIGA As String
+        Public Property PORCELIGA As Double
+        Public Property ACTECOBCO As String
 
     End Class
 

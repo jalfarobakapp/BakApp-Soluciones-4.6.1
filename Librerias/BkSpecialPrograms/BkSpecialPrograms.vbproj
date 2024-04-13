@@ -750,6 +750,7 @@
     <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Frm_Usuarios_Random_Ficha.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Clase\Cl_ConfiModalGral.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Formularios\Fincred\Frm_Fincred.Designer.vb">
       <DependentUpon>Frm_Fincred.vb</DependentUpon>
     </Compile>
@@ -766,6 +767,21 @@
       <DependentUpon>Frm_Configuracion_Gral.vb</DependentUpon>
     </Compile>
     <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Frm_Configuracion_Gral.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Demonio_FacAuto.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stk_Areas.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stk_Tickets.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stk_Tickets_Acciones.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stk_Tickets_Archivos.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stk_Tickets_Producto.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stk_Tipos.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stmp_Det.vb" />
+    <Compile Include="03 Sistemas\Puntos Venta\Cl_Puntos.vb" />
+    <Compile Include="03 Sistemas\Puntos Venta\Frm_ConfPuntosVta.Designer.vb">
+      <DependentUpon>Frm_ConfPuntosVta.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Puntos Venta\Frm_ConfPuntosVta.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Frm_ConfTidoXModal.Designer.vb">
@@ -4296,6 +4312,9 @@
       <DependentUpon>Recursos_Funciones.resx</DependentUpon>
     </Compile>
     <Compile Include="999 Funciones, Clases y Datos\Variables\Mod_Variables_Globales.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_PtsVta_Configuracion.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_PtsVta_Doc.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stmp_Enc.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -4537,6 +4556,9 @@
     <EmbeddedResource Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Frm_Configuracion_Gral.resx">
       <DependentUpon>Frm_Configuracion_Gral.vb</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Puntos Venta\Frm_ConfPuntosVta.resx">
+      <DependentUpon>Frm_ConfPuntosVta.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Frm_ConfTidoXModal.resx">
       <DependentUpon>Frm_ConfTidoXModal.vb</DependentUpon>

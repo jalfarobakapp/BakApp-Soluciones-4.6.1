@@ -1,4 +1,6 @@
 ﻿Imports DevComponents.DotNetBar
+Imports Hefesto.Acuse.Recibo
+Imports MySql.Data.Authentication
 Imports Org.BouncyCastle.Math.EC
 
 Public Class Frm_Stmp_Listado
@@ -306,10 +308,70 @@ Public Class Frm_Stmp_Listado
             Return
         End If
 
+
+        Dim _Facturar As Boolean = _Global_Row_Configuracion_General.Item("Pickear_FacturarAutoCompletas")
+        Dim _Mensaje_Stem As New LsValiciones.Mensajes
+
+        '_Mensaje_Stem = Fx_Crear_Ticket(_Row_Documento.Item("IDMAEEDO"), _Global_Row_Configuracion_General.Item("Pickear_FacturarAutoCompletas"), "R")
+
+        Dim _Cl_Stmp As New Cl_Stmp
+        _Mensaje_Stem = _Cl_Stmp.Fx_Crear_Ticket(_Row_Documento.Item("IDMAEEDO"),
+                                 _Row_Documento.Item("TIDO"),
+                                 _Row_Documento.Item("NUDO"),
+                                 _Facturar,
+                                 FechaDelServidor,
+                                 "R")
+
+        Dim _Icon As MessageBoxIcon
+
+        If _Mensaje_Stem.EsCorrecto Then
+            _Icon = MessageBoxIcon.Information
+        Else
+            _Icon = MessageBoxIcon.Stop
+        End If
+
+        MessageBoxEx.Show(Me, _Mensaje_Stem.Mensaje, _Mensaje_Stem.Detalle, MessageBoxButtons.OK, _Icon)
+
+        Return
+
+
+
+
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Docu_Ent",
+                                                       "Empresa = '" & _Row_Documento.Item("EMPRESA") & "'" &
+                                                       " And Idmaeedo = " & _Row_Documento.Item("IDMAEEDO") &
+                                                       " And Tido = '" & _Row_Documento.Item("TIDO") & "'" &
+                                                       " And Nudo = '" & _Row_Documento.Item("NUDO") & "'")
+
+        If _Reg = 0 Then
+
+            Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+            Dim _TipoEstacion As String = _Global_Row_EstacionBk.Item("TipoEstacion")
+
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Ent (Idmaeedo,NombreEquipo,TipoEstacion,Empresa,Modalidad,Tido,Nudo," &
+                           "FechaHoraGrab,HabilitadaFac,FunAutorizaFac,Pickear)" & vbCrLf &
+                           "Select IDMAEEDO,'" & _NombreEquipo & "','" & _TipoEstacion & "',EMPRESA,'?',TIDO,NUDO,LAHORA,0,'',1" & vbCrLf &
+                           "From MAEEDO Where IDMAEEDO = " & _Row_Documento.Item("IDMAEEDO") & vbCrLf &
+                           "Insert Into " & _Global_BaseBk & "Zw_Docu_Det (Idmaeddo,Idmaeedo,Tido,Nudo,Codigo,Descripcion,RtuVariable)" & vbCrLf &
+                           "Select IDMAEDDO,IDMAEEDO,TIDO,NUDO,KOPRCT,NOKOPR,0" & vbCrLf &
+                           "From MAEDDO Where IDMAEEDO = " & _Row_Documento.Item("IDMAEEDO")
+            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+        End If
+
         Dim _Row_Entidad As DataRow = Fx_Traer_Datos_Entidad(_Row_Documento.Item("ENDO"), _Row_Documento.Item("SUENDO"))
         Dim _Cl_Stem As New Cl_Stmp
 
-        With _Cl_Stem.Stem_Enc
+        Dim _Secueven As String
+
+        Try
+            _Secueven = _Row_Entidad.Item("SECUEVEN")
+        Catch ex As Exception
+            _Secueven = "NFG"
+        End Try
+
+        With _Cl_Stem.Zw_Stmp_Enc
 
             .Empresa = ModEmpresa
             .Sucursal = ModSucursal
@@ -321,6 +383,8 @@ Public Class Frm_Stmp_Listado
             .CodFuncionario_Crea = FUNCIONARIO
             .FechaCreacion = _FechaServidor
             .Estado = "PREPA"
+            .Secueven =
+            .Facturar = _Global_Row_Configuracion_General.Item("Pickear_FacturarAutoCompletas")
 
             Try
                 .Secueven = _Row_Entidad.Item("SECUEVEN")
@@ -330,14 +394,19 @@ Public Class Frm_Stmp_Listado
 
         End With
 
-        Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Row_Documento.Item("IDMAEEDO")
+        Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Row_Documento.Item("IDMAEEDO") & " And PRCT = 0"
         Dim _Tbl_Detalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        If Not CBool(_Tbl_Detalle.Rows.Count) Then
+            MessageBoxEx.Show(Me, "No se encontro detalle en el documento, asegurece que tenga productos asociados", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
         For Each _Fila As DataRow In _Tbl_Detalle.Rows
 
-            Dim _Stem_Det As New Stmp_BD.Stmp_Det
+            Dim _Zw_Stmp_Det As New Zw_Stmp_Det
 
-            With _Stem_Det
+            With _Zw_Stmp_Det
 
                 .Idmaeedo = _Fila.Item("IDMAEEDO")
                 .Idmaeddo = _Fila.Item("IDMAEDDO")
@@ -358,11 +427,9 @@ Public Class Frm_Stmp_Listado
 
             End With
 
-            _Cl_Stem.Stem_Det.Add(_Stem_Det)
+            _Cl_Stem.Zw_Stmp_Det.Add(_Zw_Stmp_Det)
 
         Next
-
-        Dim _Mensaje_Stem As New LsValiciones.Mensajes
 
         _Mensaje_Stem = _Cl_Stem.Fx_Grabar_Nuevo_Tickets
 
@@ -371,7 +438,7 @@ Public Class Frm_Stmp_Listado
             Return
         End If
 
-        MessageBoxEx.Show(Me, "Ticket Nro. " & _Cl_Stem.Stem_Enc.Numero & " creado correctamente." & vbCrLf &
+        MessageBoxEx.Show(Me, "Ticket Nro. " & _Cl_Stem.Zw_Stmp_Enc.Numero & " creado correctamente." & vbCrLf &
                           "El documento ya esta en proceso", "Crear Ticket", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         Sb_Actualizar_Grilla()
@@ -507,6 +574,28 @@ Public Class Frm_Stmp_Listado
             Return _Mensaje_Stem
         End If
 
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Docu_Ent",
+                                                       "Empresa = '" & _Row_Documento.Item("EMPRESA") & "'" &
+                                                       " And Idmaeedo = " & _Row_Documento.Item("IDMAEEDO") &
+                                                       " And Tido = '" & _Row_Documento.Item("TIDO") & "'" &
+                                                       " And Nudo = '" & _Row_Documento.Item("NUDO") & "'")
+
+        If _Reg = 0 Then
+
+            Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+            Dim _TipoEstacion As String = _Global_Row_EstacionBk.Item("TipoEstacion")
+
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Ent (Idmaeedo,NombreEquipo,TipoEstacion,Empresa,Modalidad,Tido,Nudo," &
+                           "FechaHoraGrab,HabilitadaFac,FunAutorizaFac,Pickear)" & vbCrLf &
+                           "Select IDMAEEDO,'" & _NombreEquipo & "','" & _TipoEstacion & "',EMPRESA,'?',TIDO,NUDO,LAHORA,0,'',1" & vbCrLf &
+                           "From MAEEDO Where IDMAEEDO = " & _Row_Documento.Item("IDMAEEDO") & vbCrLf &
+                           "Insert Into " & _Global_BaseBk & "Zw_Docu_Det (Idmaeddo,Idmaeedo,Tido,Nudo,Codigo,Descripcion,RtuVariable)" & vbCrLf &
+                           "Select IDMAEDDO,IDMAEEDO,TIDO,NUDO,KOPRCT,NOKOPR,0" & vbCrLf &
+                           "From MAEDDO Where IDMAEEDO = " & _Row_Documento.Item("IDMAEEDO")
+            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+        End If
+
         If Not _Row_Documento.Item("Pickear") Then
             _Mensaje_Stem.EsCorrecto = False
             _Mensaje_Stem.Mensaje = "Este documento no esta marcado para ser Pickeado en la tabla Zw_Docu_Ent"
@@ -518,7 +607,7 @@ Public Class Frm_Stmp_Listado
         Dim _Row_Entidad As DataRow = Fx_Traer_Datos_Entidad(_Row_Documento.Item("ENDO"), _Row_Documento.Item("SUENDO"))
         Dim _Cl_Stem As New Cl_Stmp
 
-        With _Cl_Stem.Stem_Enc
+        With _Cl_Stem.Zw_Stmp_Enc
 
             .Empresa = ModEmpresa
             .Sucursal = ModSucursal
@@ -546,7 +635,7 @@ Public Class Frm_Stmp_Listado
 
         For Each _Fila As DataRow In _Tbl_Detalle.Rows
 
-            Dim _Stem_Det As New Stmp_BD.Stmp_Det
+            Dim _Stem_Det As New Zw_Stmp_Det
 
             With _Stem_Det
 
@@ -569,7 +658,7 @@ Public Class Frm_Stmp_Listado
 
             End With
 
-            _Cl_Stem.Stem_Det.Add(_Stem_Det)
+            _Cl_Stem.Zw_Stmp_Det.Add(_Stem_Det)
 
         Next
 

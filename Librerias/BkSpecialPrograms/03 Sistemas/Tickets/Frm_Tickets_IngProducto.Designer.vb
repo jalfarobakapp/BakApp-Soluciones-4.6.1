@@ -281,6 +281,7 @@ Partial Class Frm_Tickets_IngProducto
         Me.Dtp_FechaRev.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Dtp_FechaRev.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
         Me.Dtp_FechaRev.ButtonDropDown.Visible = True
+        Me.Dtp_FechaRev.Enabled = False
         Me.Dtp_FechaRev.ForeColor = System.Drawing.Color.Black
         Me.Dtp_FechaRev.IsPopupCalendarOpen = False
         Me.Dtp_FechaRev.Location = New System.Drawing.Point(106, 180)
@@ -335,7 +336,7 @@ Partial Class Frm_Tickets_IngProducto
         Me.Txt_Diferencia.ButtonCustom2.Image = CType(resources.GetObject("Txt_Diferencia.ButtonCustom2.Image"), System.Drawing.Image)
         Me.Txt_Diferencia.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Diferencia.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Diferencia.Location = New System.Drawing.Point(347, 155)
+        Me.Txt_Diferencia.Location = New System.Drawing.Point(293, 152)
         Me.Txt_Diferencia.Name = "Txt_Diferencia"
         Me.Txt_Diferencia.PreventEnterBeep = True
         Me.Txt_Diferencia.ReadOnly = True
@@ -352,9 +353,9 @@ Partial Class Frm_Tickets_IngProducto
         '
         Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX1.ForeColor = System.Drawing.Color.Black
-        Me.LabelX1.Location = New System.Drawing.Point(252, 153)
+        Me.LabelX1.Location = New System.Drawing.Point(231, 152)
         Me.LabelX1.Name = "LabelX1"
-        Me.LabelX1.Size = New System.Drawing.Size(89, 23)
+        Me.LabelX1.Size = New System.Drawing.Size(56, 23)
         Me.LabelX1.TabIndex = 179
         Me.LabelX1.Text = "Diferencia"
         Me.LabelX1.Visible = False
@@ -383,6 +384,7 @@ Partial Class Frm_Tickets_IngProducto
         Me.Dtp_HoraRev.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Dtp_HoraRev.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
         Me.Dtp_HoraRev.ButtonDropDown.Visible = True
+        Me.Dtp_HoraRev.Enabled = False
         Me.Dtp_HoraRev.ForeColor = System.Drawing.Color.Black
         Me.Dtp_HoraRev.Format = DevComponents.Editors.eDateTimePickerFormat.ShortTime
         Me.Dtp_HoraRev.IsPopupCalendarOpen = False
@@ -435,8 +437,8 @@ Partial Class Frm_Tickets_IngProducto
         '
         Me.Txt_Ubicacion.Border.Class = "TextBoxBorder"
         Me.Txt_Ubicacion.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Ubicacion.ButtonCustom.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_Ubicacion.ButtonCustom2.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Ubicacion.ButtonCustom.Image = CType(resources.GetObject("Txt_Ubicacion.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Ubicacion.ButtonCustom2.Image = CType(resources.GetObject("Txt_Ubicacion.ButtonCustom2.Image"), System.Drawing.Image)
         Me.Txt_Ubicacion.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Ubicacion.ForeColor = System.Drawing.Color.Black
         Me.Txt_Ubicacion.Location = New System.Drawing.Point(107, 69)

@@ -30,7 +30,7 @@ Public Class Frm_Stmp_IngPickeo
         _Cl_Stmp.Fx_Llenar_Encabezado(_Id_Enc)
         _Cl_Stmp.Fx_Llenar_Detalle(_Id_Enc)
 
-        _Row_Entidad = Fx_Traer_Datos_Entidad(Cl_Stmp.Stem_Enc.Endo, Cl_Stmp.Stem_Enc.Suendo)
+        _Row_Entidad = Fx_Traer_Datos_Entidad(Cl_Stmp.Zw_Stmp_Enc.Endo, Cl_Stmp.Zw_Stmp_Enc.Suendo)
 
         Sb_Formato_Generico_Grilla(Grilla_Detalle, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Both, True, False, False)
 
@@ -40,8 +40,8 @@ Public Class Frm_Stmp_IngPickeo
 
     Private Sub Frm_Stmp_IngPickeo_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        Txt_Numero.Text = Cl_Stmp.Stem_Enc.Numero.ToString.Trim
-        Txt_TidoNudo.Text = Cl_Stmp.Stem_Enc.Tido.ToString.Trim & " - " & Cl_Stmp.Stem_Enc.Nudo.ToString.Trim
+        Txt_Numero.Text = Cl_Stmp.Zw_Stmp_Enc.Numero.ToString.Trim
+        Txt_TidoNudo.Text = Cl_Stmp.Zw_Stmp_Enc.Tido.ToString.Trim & " - " & Cl_Stmp.Zw_Stmp_Enc.Nudo.ToString.Trim
         Txt_Entidad.Text = _Row_Entidad.Item("NOKOEN").ToString.Trim
 
         AddHandler Grilla_Detalle.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
@@ -52,7 +52,7 @@ Public Class Frm_Stmp_IngPickeo
     Sub Sb_Actualizar_Grilla()
 
         '' Crear un BindingList a partir de la lista
-        Dim bindingList As New BindingList(Of Stmp_BD.Stmp_Det)(_Cl_Stmp.Stem_Det)
+        Dim bindingList As New BindingList(Of Zw_Stmp_Det)(_Cl_Stmp.Zw_Stmp_Det)
 
         ' Crear un BindingSource y enlazarlo al DataGridView
         _Source = New BindingSource(bindingList, Nothing)
@@ -118,7 +118,7 @@ Public Class Frm_Stmp_IngPickeo
 
     Private Sub Btn_Marcar_Todo_Click(sender As Object, e As EventArgs)
 
-        For Each _Fila As Stmp_BD.Stmp_Det In _Cl_Stmp.Stem_Det
+        For Each _Fila As Zw_Stmp_Det In _Cl_Stmp.Zw_Stmp_Det
 
             Dim _Codigo = _Fila.Codigo
 
@@ -197,7 +197,7 @@ Public Class Frm_Stmp_IngPickeo
 
         End Select
 
-        Dim _ss = _Cl_Stmp.Stem_Det
+        Dim _ss = _Cl_Stmp.Zw_Stmp_Det
 
     End Sub
 
@@ -263,7 +263,7 @@ Public Class Frm_Stmp_IngPickeo
 
     Private Sub Btn_Confirmar_Click(sender As Object, e As EventArgs) Handles Btn_Confirmar.Click
 
-        For Each _Fila As Stmp_BD.Stmp_Det In _Cl_Stmp.Stem_Det
+        For Each _Fila As Zw_Stmp_Det In _Cl_Stmp.Zw_Stmp_Det
 
             If Not _Fila.Pickeado Then
                 MessageBoxEx.Show(Me, "Existen registros que aun no han sido confirmados", "Validación",
@@ -273,7 +273,7 @@ Public Class Frm_Stmp_IngPickeo
 
         Next
 
-        _Cl_Stmp.Stem_Enc.Estado = "COMPL"
+        _Cl_Stmp.Zw_Stmp_Enc.Estado = "COMPL"
 
         Dim _Mensaje As New LsValiciones.Mensajes
         _Mensaje = _Cl_Stmp.Fx_Confirmar_Picking

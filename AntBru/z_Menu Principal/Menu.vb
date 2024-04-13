@@ -845,7 +845,7 @@ Public Class Menu
     End Sub
 
     Private Sub Btn_CrearNVVDesdeOCC_Click(sender As Object, e As EventArgs) Handles Btn_CrearNVVDesdeOCC.Click
-
+        Return
         Dim _Id_Enc As Integer = 5
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_NVVAuto Where Id_Enc = " & _Id_Enc

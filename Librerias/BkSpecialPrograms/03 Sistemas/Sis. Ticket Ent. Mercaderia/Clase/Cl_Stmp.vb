@@ -8,8 +8,8 @@ Public Class Cl_Stmp
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-    Public Property Stem_Enc As New Stmp_BD.Stmp_Enc
-    Public Property Stem_Det As New List(Of Stmp_BD.Stmp_Det)
+    Public Property Zw_Stmp_Enc As New Zw_Stmp_Enc
+    Public Property Zw_Stmp_Det As New List(Of Zw_Stmp_Det)
 
     Public Sub New()
 
@@ -31,7 +31,7 @@ Public Class Cl_Stmp
 
         End If
 
-        With Stem_Enc
+        With Zw_Stmp_Enc
 
             .Id = _Row_Enc.Item("Id")
             .Empresa = _Row_Enc.Item("Empresa")
@@ -78,7 +78,7 @@ Public Class Cl_Stmp
 
         For Each _Fila As DataRow In _Tbl_Det.Rows
 
-            Dim _Stem_Det As New Stmp_BD.Stmp_Det
+            Dim _Stem_Det As New Zw_Stmp_Det
 
             With _Stem_Det
 
@@ -109,7 +109,7 @@ Public Class Cl_Stmp
 
             End With
 
-            Stem_Det.Add(_Stem_Det)
+            Zw_Stmp_Det.Add(_Stem_Det)
 
         Next
 
@@ -139,7 +139,7 @@ Public Class Cl_Stmp
 
             myTrans = Cn2.BeginTransaction()
 
-            With _Stem_Enc
+            With _Zw_Stmp_Enc
 
                 .Numero = Fx_NvoNro_Stmp()
 
@@ -166,11 +166,11 @@ Public Class Cl_Stmp
 
             End With
 
-            For Each _Fila As Stmp_BD.Stmp_Det In _Stem_Det
+            For Each _Fila As Zw_Stmp_Det In Zw_Stmp_Det
 
                 With _Fila
 
-                    .Id_Enc = _Stem_Enc.Id
+                    .Id_Enc = _Zw_Stmp_Enc.Id
 
                     If Not String.IsNullOrEmpty(.Codigo) Then
 
@@ -201,14 +201,15 @@ Public Class Cl_Stmp
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
             _Mensaje_Stem.EsCorrecto = True
-            _Mensaje_Stem.Detalle = "Se crea Ticket Nro " & _Stem_Enc.Numero & " - (" & _Stem_Enc.Tido & "-" & _Stem_Enc.Nudo & ")"
-            _Mensaje_Stem.Mensaje = "Documento grabado correctamente"
+            _Mensaje_Stem.Detalle = "Documento grabado correctamente"
+            _Mensaje_Stem.Mensaje = "Se crea Ticket Nro " & _Zw_Stmp_Enc.Numero & " - (" & _Zw_Stmp_Enc.Tido & "-" & _Zw_Stmp_Enc.Nudo & ")"
 
         Catch ex As Exception
 
             _Mensaje_Stem.EsCorrecto = False
+            _Mensaje_Stem.Detalle = "Error al grabar"
             _Mensaje_Stem.Mensaje = ex.Message
-            _Stem_Enc.Id = 0
+            _Zw_Stmp_Enc.Id = 0
 
             myTrans.Rollback()
 
@@ -379,7 +380,7 @@ Public Class Cl_Stmp
 
             myTrans = Cn2.BeginTransaction()
 
-            With _Stem_Enc
+            With _Zw_Stmp_Enc
 
                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set " & vbCrLf &
                                "Estado = '" & .Estado & "', FechaPickeado = Getdate()" & vbCrLf &
@@ -391,7 +392,7 @@ Public Class Cl_Stmp
 
             End With
 
-            For Each _Fila As Stmp_BD.Stmp_Det In _Stem_Det
+            For Each _Fila As Zw_Stmp_Det In Zw_Stmp_Det
 
                 With _Fila
 
@@ -422,13 +423,149 @@ Public Class Cl_Stmp
 
             _Mensaje_Stem.EsCorrecto = False
             _Mensaje_Stem.Mensaje = ex.Message
-            _Stem_Enc.Id = 0
+            _Zw_Stmp_Enc.Id = 0
 
             myTrans.Rollback()
 
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
         End Try
+
+        Return _Mensaje_Stem
+
+    End Function
+
+    Function Fx_Crear_Ticket(_Idmaeedo As Integer,
+                             _Tido As String,
+                             _Nudo As String,
+                             _Facturar As Boolean,
+                             _FechaParaFacturar As DateTime,
+                             _TipoPago As String) As LsValiciones.Mensajes
+
+        Dim _FechaServidor As DateTime = FechaDelServidor()
+
+        Dim _Mensaje_Stem As New LsValiciones.Mensajes
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Idmaeedo = " & _Idmaeedo & " And Tido = '" & _Tido & "' And Nudo = '" & _Nudo & "'"
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If Not IsNothing(_Row) Then
+            _Mensaje_Stem.EsCorrecto = False
+            _Mensaje_Stem.Mensaje = "El documento ya esta ingresado en el sistema de Ticket Picking (Ticket Nro: " & _Row.Item("Numero") & ")"
+            _Mensaje_Stem.Detalle = "Documento: " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO")
+            Return _Mensaje_Stem
+        End If
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Docu_Ent",
+                                                       "Empresa = '" & _Row.Item("Empresa") & "'" &
+                                                       " And Idmaeedo = " & _Row.Item("Idmaeedo") &
+                                                       " And Tido = '" & _Row.Item("Tido") & "'" &
+                                                       " And Nudo = '" & _Row.Item("Nudo") & "'")
+
+        If _Reg = 0 Then
+
+            Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+            Dim _TipoEstacion As String = _Global_Row_EstacionBk.Item("TipoEstacion")
+
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Ent (Idmaeedo,NombreEquipo,TipoEstacion,Empresa,Modalidad,Tido,Nudo," &
+                           "FechaHoraGrab,HabilitadaFac,FunAutorizaFac,Pickear)" & vbCrLf &
+                           "Select IDMAEEDO,'" & _NombreEquipo & "','" & _TipoEstacion & "',EMPRESA,'?',TIDO,NUDO,LAHORA,0,'',1" & vbCrLf &
+                           "From MAEEDO Where IDMAEEDO = " & _Row.Item("IDMAEEDO") & vbCrLf &
+                           "Insert Into " & _Global_BaseBk & "Zw_Docu_Det (Idmaeddo,Idmaeedo,Tido,Nudo,Codigo,Descripcion,RtuVariable)" & vbCrLf &
+                           "Select IDMAEDDO,IDMAEEDO,TIDO,NUDO,KOPRCT,NOKOPR,0" & vbCrLf &
+                           "From MAEDDO Where IDMAEEDO = " & _Row.Item("IDMAEEDO")
+            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+        End If
+
+        Consulta_sql = "Select Edo.IDMAEEDO,Edo.EMPRESA,Edo.TIDO,Edo.NUDO,Edo.ENDO,Edo.SUENDO,Edo.SUDO,Doc.Pickear,HabilitadaFac,FunAutorizaFac" & vbCrLf &
+                       "From MAEEDO Edo" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Docu_Ent Doc On Edo.IDMAEEDO = Doc.Idmaeedo And Edo.TIDO = Doc.Tido And Edo.NUDO = Doc.Nudo" & vbCrLf &
+                       "Where IDMAEEDO = " & _Idmaeedo
+        Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_Row_Documento) Then
+            _Mensaje_Stem.EsCorrecto = False
+            _Mensaje_Stem.Mensaje = "No se encontro el registro en la tabla MAEEDO, Documento: " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO")
+            _Mensaje_Stem.Detalle = "IDMAEEDO " & _Idmaeedo
+            Return _Mensaje_Stem
+        End If
+
+        If Not _Row_Documento.Item("Pickear") Then
+            _Mensaje_Stem.EsCorrecto = False
+            _Mensaje_Stem.Mensaje = "Este documento no esta marcado para ser Pickeado en la tabla Zw_Docu_Ent"
+            _Mensaje_Stem.Detalle = "Documento: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
+            Return _Mensaje_Stem
+        End If
+
+        Dim _Row_Entidad As DataRow = Fx_Traer_Datos_Entidad(_Row_Documento.Item("ENDO"), _Row_Documento.Item("SUENDO"))
+        Dim _Cl_Stem As New Cl_Stmp
+
+        With _Cl_Stem.Zw_Stmp_Enc
+
+            .Empresa = ModEmpresa
+            .Sucursal = ModSucursal
+            .Idmaeedo = _Row_Documento.Item("IDMAEEDO")
+            .Tido = _Row_Documento.Item("TIDO")
+            .Nudo = _Row_Documento.Item("NUDO")
+            .Endo = _Row_Documento.Item("ENDO")
+            .Suendo = _Row_Documento.Item("SUENDO")
+            .CodFuncionario_Crea = FUNCIONARIO
+            .FechaCreacion = _FechaServidor
+            .Estado = "PREPA"
+            .Facturar = _Facturar
+            .Fecha_Facturar = _FechaParaFacturar
+            .TipoPago = _TipoPago
+
+            Try
+                .Secueven = _Row_Entidad.Item("SECUEVEN")
+            Catch ex As Exception
+                .Secueven = String.Empty
+
+                If _Facturar Then
+                    .Secueven = "NFG"
+                End If
+
+            End Try
+
+        End With
+
+        Consulta_sql = "Select Ddo.*,Isnull(RtuVariable,0) As RtuVariable From MAEDDO Ddo" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Docu_Det ZDet On Ddo.IDMAEDDO = ZDet.Idmaeddo" & vbCrLf &
+                       "Where IDMAEEDO = " & _Row_Documento.Item("IDMAEEDO")
+        Dim _Tbl_Detalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        For Each _Fila As DataRow In _Tbl_Detalle.Rows
+
+            Dim _Zw_Stmp_Det As New Zw_Stmp_Det
+
+            With _Zw_Stmp_Det
+
+                .Idmaeedo = _Fila.Item("IDMAEEDO")
+                .Idmaeddo = _Fila.Item("IDMAEDDO")
+                .Codigo = _Fila.Item("KOPRCT")
+                .Descripcion = _Fila.Item("NOKOPR")
+                .Nulido = _Fila.Item("NULIDO")
+                .Udtrpr = _Fila.Item("UDTRPR")
+                .Rludpr = _Fila.Item("RLUDPR")
+                .Caprco1_Ori = _Fila.Item("CAPRCO1")
+                .Caprco1_Real = 0
+                .Udpr = _Fila.Item("UD0" & .Udtrpr & "PR")
+                .Ud01pr = _Fila.Item("UD01PR")
+                .Caprco2_Ori = _Fila.Item("CAPRCO2")
+                .Caprco2_Real = 0
+                .Ud02pr = _Fila.Item("UD02PR")
+                .Pickeado = False
+                .EnProceso = True
+                .RtuVariable = _Fila.Item("RtuVariable")
+
+            End With
+
+            _Cl_Stem.Zw_Stmp_Det.Add(_Zw_Stmp_Det)
+
+        Next
+
+        _Mensaje_Stem = _Cl_Stem.Fx_Grabar_Nuevo_Tickets
 
         Return _Mensaje_Stem
 
@@ -457,86 +594,5 @@ Namespace Stmp_BD
         <Description("Reclamo por Falta Total de Mercaderías")>
         RFT_ReclamoFaltaTotalMercaderias = 5
     End Enum
-
-    ''' <summary>
-    ''' Encabezado de documento Stmp (Sistema de ticket de mercaderia por Picking)
-    ''' </summary>
-    Public Class Stmp_Enc
-
-        Public Property Id As Integer
-        Public Property Empresa As String
-        Public Property Sucursal As String
-        Public Property Numero As String
-        Public Property CodFuncionario_Crea As String
-        Public Property Idmaeedo As Integer
-        Public Property Tido As String
-        Public Property Nudo As String
-        Public Property Endo As String
-        Public Property Suendo As String
-        Public Property FechaCreacion As DateTime
-        Public Property Estado As String
-        Public Property FechaPickeado As DateTime
-        Public Property FechaCierre As DateTime
-        Public Property Accion As String
-        Public Property Secueven As String
-        Public Property TipoPago As String
-        Public Property Facturar As Boolean
-        Public Property Fecha_Facturar As DateTime
-        Public Property TipoGen As String
-        Public Property IdmaeedoGen As Integer
-        Public Property TidoGen As String
-        Public Property NudoGen As String
-
-    End Class
-
-    'Partial Public Class Stmp_Enc
-
-    '    Public Property HabilitadaFac As Boolean
-    '    Public Property FunAutorizaFac As Boolean
-
-    'End Class
-
-    ''' <summary>
-    ''' Detalle de documento Stmp (Sistema de ticket de mercaderia por Picking)
-    ''' </summary>
-    Partial Public Class Stmp_Det
-
-        Public Property Id As Integer
-        Public Property Id_Enc As Integer
-        Public Property Idmaeedo As Integer
-        Public Property Idmaeddo As Integer
-        Public Property Codigo As String
-        Public Property Descripcion As String
-        Public Property Nulido As String
-        Public Property Udtrpr As Integer
-        Public Property Rludpr As Double
-        Public Property RtuVariable As Boolean
-        Public Property Rlud_Real As Double
-        Public Property Udpr As String
-        Public Property Cantidad As Double
-        Public Property Caprco1_Ori As Double
-        Public Property Caprco1_Real As Double
-        Public Property Ud01pr As String
-        Public Property Caprco2_Ori As Double
-        Public Property Caprco2_Real As Double
-        Public Property Ud02pr As String
-        Public Property Pickeado As Boolean
-        Public Property CodFuncionario_Pickea As String
-        Public Property EnProceso As Boolean
-
-    End Class
-
-    Partial Public Class Stmp_Det
-
-        Public Property UdMedida As String
-
-    End Class
-
-    'Public Class Mensaje_Stmp
-
-    '    Public Property EsCorrecto As Boolean
-    '    Public Property Mensaje As String
-
-    'End Class
 
 End Namespace

@@ -752,6 +752,15 @@ Public Class Frm_Demonio_Configuraciones
                                       Rdb_FacAuto_Todas.Name, Class_SQLite.Enum_Type._Boolean,
                                       Rdb_FacAuto_Todas.Checked, _Actualizar, "FacAuto",, False)
 
+        _Sql.Sb_Parametro_Informe_Sql(Rdb_FacAuto_CualquierNVV, "Demonio",
+                                      Rdb_FacAuto_CualquierNVV.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Rdb_FacAuto_CualquierNVV.Checked, _Actualizar, "FacAuto",, False)
+        _Sql.Sb_Parametro_Informe_Sql(Rdb_FacAuto_SoloDeSucModalidad, "Demonio",
+                                      Rdb_FacAuto_SoloDeSucModalidad.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Rdb_FacAuto_SoloDeSucModalidad.Checked, _Actualizar, "FacAuto",, False)
+
+
+
         'Solicitud de productos a bodega
         _Sql.Sb_Parametro_Informe_Sql(Chk_SolProdBod, "Demonio",
                                       Chk_SolProdBod.Name, Class_SQLite.Enum_Type._Boolean,

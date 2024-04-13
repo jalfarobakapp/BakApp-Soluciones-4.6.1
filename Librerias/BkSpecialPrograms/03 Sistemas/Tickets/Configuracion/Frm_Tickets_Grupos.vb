@@ -387,15 +387,15 @@ Public Class Frm_Tickets_Grupos
             Return
         End If
 
-        Dim _Mensaje_Ticket As New Tickets_Db.Mensaje_Ticket
+        Dim _Mensaje As New LsValiciones.Mensajes
 
         Dim _Cl_Tickets As New Cl_Tickets
-        _Mensaje_Ticket = _Cl_Tickets.Fx_Eliminar_Grupo(_Id)
+        _Mensaje = _Cl_Tickets.Fx_Eliminar_Grupo(_Id)
 
-        If _Mensaje_Ticket.EsCorrecto Then
+        If _Mensaje.EsCorrecto Then
             Grilla_Grupos.Rows.Remove(_Fila)
         Else
-            MessageBoxEx.Show(Me, _Mensaje_Ticket.Mensaje, "Error al eliminar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Error al eliminar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End If
 
     End Sub

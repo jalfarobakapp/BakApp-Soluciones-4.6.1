@@ -3689,7 +3689,9 @@ Public Class Clase_Crear_Documento
                 If _Sql.Ej_consulta_IDU(Consulta_sql) Then
                     Return _New_Idmaeedo
                 End If
+
             Else
+
                 _Class_E.Fx_EliminarAnular_Doc(_Formulario,
                                                _New_Idmaeedo,
                                                _Cod_Func_Eliminado,

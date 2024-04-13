@@ -16,6 +16,7 @@ Public Class Frm_Configuracion_Gral
     Dim _Modalidad_General As Boolean
 
     Dim _Union = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "UNION" & vbCrLf
+
     Public Sub New(_Row_Modalidad As DataRow, _Modalidad_General As Boolean)
 
         ' Esta llamada es exigida por el diseñador.
@@ -45,6 +46,8 @@ Public Class Frm_Configuracion_Gral
     End Sub
 
     Private Sub Frm_Configuracion_Gral_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        Btn_ConfPuntosVta.Visible = _Modalidad_General
 
         Cmb_CriterioFechaGDVconFechaDistintaDocOrigen.SelectedValue = "1"
         SuperTabControl1.SelectedTabIndex = 0
@@ -659,12 +662,20 @@ Public Class Frm_Configuracion_Gral
 
     End Sub
 
-    Private Sub Chk_Pickear_NVVTodas_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Pickear_NVVTodas.CheckedChanged
+    Private Sub Chk_Pickear_NVVTodas_CheckedChanged(sender As Object, e As EventArgs)
 
         Chk_Pickear_ProdPesoVariable.Enabled = Chk_Pickear_NVVTodas.Checked
         If Not Chk_Pickear_NVVTodas.Checked Then
             Chk_Pickear_ProdPesoVariable.Checked = False
         End If
+
+    End Sub
+
+    Private Sub Btn_ConfPuntosVta_Click(sender As Object, e As EventArgs) Handles Btn_ConfPuntosVta.Click
+
+        Dim Fm As New Frm_ConfPuntosVta
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 

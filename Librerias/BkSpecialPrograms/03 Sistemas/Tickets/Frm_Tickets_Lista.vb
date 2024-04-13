@@ -199,7 +199,7 @@ Public Class Frm_Tickets_Lista
                        "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones AcMs Where AcMs.Id_Ticket = Tks.Id And AcMs.Accion = 'MENS' And AcMs.Visto = 0) As Mesn_Pdte_Ver," & vbCrLf &
                        "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones AcRs Where AcRs.Id_Ticket = Tks.Id And AcRs.Accion = 'RESP' And AcRs.Visto = 0) As Resp_Pdte_Ver" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Stk_Tickets Tks" & vbCrLf &
-                       "Left Join " & _Global_BaseBk & "Zw_Stk_Tickets_Producto TkPrd On Tks.Id = TkPrd.Id_Ticket" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Stk_Tickets_Producto TkPrd On Tks.Id_Raiz = TkPrd.Id_Raiz" & vbCrLf &
                        "Where 1 > 0" & vbCrLf & _Condicion
 
         _Tbl_Tickets = _Sql.Fx_Get_Tablas(Consulta_sql)
@@ -230,6 +230,12 @@ Public Class Frm_Tickets_Lista
             .Columns("Numero").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
+            .Columns("SubNro").Visible = True
+            .Columns("SubNro").HeaderText = "Sub"
+            .Columns("SubNro").Width = 30
+            .Columns("SubNro").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
             .Columns("Asunto").Visible = True
             .Columns("Asunto").HeaderText = "Asunto"
             .Columns("Asunto").Width = 230
@@ -240,7 +246,7 @@ Public Class Frm_Tickets_Lista
             .Columns("NomEstado").HeaderText = "Estado"
             .Columns("NomEstado").ToolTipText = "Estado del Ticket"
             '.Columns("NomEstado").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("NomEstado").Width = 120
+            .Columns("NomEstado").Width = 110
             .Columns("NomEstado").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -248,7 +254,7 @@ Public Class Frm_Tickets_Lista
             .Columns("NomPrioridad").HeaderText = "Prioridad"
             '.Columns("NomPrioridad").ToolTipText = "Estado del Ticket"
             .Columns("NomPrioridad").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("NomPrioridad").Width = 80
+            .Columns("NomPrioridad").Width = 70
             .Columns("NomPrioridad").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 

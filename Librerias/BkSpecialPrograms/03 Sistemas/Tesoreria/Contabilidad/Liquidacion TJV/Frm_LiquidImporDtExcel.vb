@@ -175,6 +175,7 @@ Public Class Frm_LiquidImporDtExcel
                     Dim primeraFila As DataRow = _FilasEncontradas(0)
 
                     primeraFila.Item("Incluir") = True
+                    TotalValSelec += _MontoParaAbono
                     _Encontrado = True
 
                 Else

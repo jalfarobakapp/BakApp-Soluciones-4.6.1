@@ -17,6 +17,8 @@
     Public Property FA_1Semana As Boolean
     Public Property FA_1Mes As Boolean
     Public Property FA_1Todas As Boolean
+    Public Property CualquierNVV As Boolean
+    Public Property SoloDeSucModalidad As Boolean
     Public Property Nombre_Equipo As String
     Public Property Log_Registro As String
     Public Property Procesando As Boolean
@@ -67,25 +69,19 @@
 
     Sub Sb_Traer_NVV_De_Picking_A_Facturar()
 
-        'Dim _Filtro_Fecha As String = String.Empty
+        Dim _Empresa As String = _Sql.Fx_Trae_Dato("CONFIEST", "EMPRESA", "MODALIDAD = '" & Modalidad_Fac & "'")
+        Dim _Esucursal As String = _Sql.Fx_Trae_Dato("CONFIEST", "ESUCURSAL", "MODALIDAD = '" & Modalidad_Fac & "'")
 
-        'If Not FA_1Todas Then
+        Dim _CondicionSuc = String.Empty
 
-        '    Dim _Dias As Integer
+        If SoloDeSucModalidad Then
+            _CondicionSuc = "And Empresa = '" & _Empresa & "' And Sucursal = '" & _Esucursal & "'"
+        End If
 
-        '    If FA_1Dia Then _Dias = 1
-        '    If FA_1Semana Then _Dias = 7
-        '    If FA_1Mes Then _Dias = 30
-
-        '    Dim _Fecha_Desde As Date = DateAdd(DateInterval.Day, -_Dias, _Fecha_Revision)
-
-        '    _Filtro_Fecha = Space(1) & "And FEEMDO >= '" & Format(_Fecha_Desde, "yyyyMMdd") & "'" & Space(1)
-
-        'End If
-
-
-        Consulta_Sql = "Select TOP 20 Idmaeedo,Id,DocEmitir,Fecha_Facturar Into #Paso From " & _Global_BaseBk & "Zw_Stmp_Enc" & vbCrLf &
-                       "Where Facturar = 1 And Estado = 'COMPL'" & vbCrLf &
+        Consulta_Sql = "Select TOP 20 Idmaeedo,Id,DocEmitir,Fecha_Facturar" & vbCrLf &
+                       "Into #Paso" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Stmp_Enc" & vbCrLf &
+                       "Where Facturar = 1 And Estado = 'COMPL' " & _CondicionSuc & vbCrLf &
                        vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Facturar = 0" & vbCrLf &
                        "Where Idmaeedo In (Select Idmaeedo From #Paso)" & vbCrLf &
@@ -141,16 +137,16 @@
 
                 System.Windows.Forms.Application.DoEvents()
 
-                Dim _EstadoFacturacion As EstadoFacturacion = Fx_Crear_Documento_Desde_Otro_Automaticamente(_Formulario,
-                                                                                                            "FCV",
-                                                                                                            _Idmaeedo,
-                                                                                                            _Fecha_Emision,
-                                                                                                            _Modalidad_Fac,
-                                                                                                            False)
+                Dim _Mensaje As LsValiciones.Mensajes = Fx_Crear_Documento_Desde_Otro_Automaticamente(_Formulario,
+                                                                                                      "FCV",
+                                                                                                      _Idmaeedo,
+                                                                                                      _Fecha_Emision,
+                                                                                                      _Modalidad_Fac,
+                                                                                                      False)
 
-                If _EstadoFacturacion.Facturada Then
+                If _Mensaje.EsCorrecto Then
 
-                    _Idmaeedo_Fcv = _EstadoFacturacion.Idmaeedo_FCV
+                    _Idmaeedo_Fcv = _Mensaje.Id
 
                     Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Fcv
                     Dim _Row_Factura As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
@@ -165,7 +161,7 @@
                                    ",Idmaeedo_FCV = " & _Row_Factura.Item("IDMAEEDO") &
                                    ",Nudo_Fcv = '" & _Row_Factura.Item("NUDO") & "'" &
                                    ",Fecha_Facturado = '" & Format(_Fecha_Emision, "yyyyMMdd") & "'" &
-                                   ",Informacion = '" & _EstadoFacturacion.MensajeError & "'" & vbCrLf &
+                                   ",Informacion = '" & _Mensaje.Mensaje & "'" & vbCrLf &
                                    "Where Id = " & _Id
                     If _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
                         Log_Registro += "NVV: " & _Nudo_Nvv & " facturada correctamente. FCV-" & _Row_Factura.Item("NUDO") & vbCrLf
@@ -175,14 +171,14 @@
 
                 Else
 
-                    Log_Registro += _EstadoFacturacion.MensajeError & vbCrLf
+                    Log_Registro += _Mensaje.Mensaje & vbCrLf
 
                     Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set " &
                                    " NombreEquipo = '" & _Nombre_Equipo & "'" &
                                    ",Facturando = 0" &
                                    ",Facturado = 0" &
                                    ",ErrorGrabar = 1" &
-                                   ",Informacion = '" & _EstadoFacturacion.MensajeError & "'" & vbCrLf &
+                                   ",Informacion = '" & _Mensaje.Mensaje & "'" & vbCrLf &
                                    "Where Id = " & _Id
                     If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
                         Log_Registro += _Sql.Pro_Error
@@ -300,10 +296,10 @@
                                                            _Idmaeedo_Origen As Integer,
                                                            _Fecha_Emision As DateTime,
                                                            _Modalidad As String,
-                                                           _Mostrar_Mensaje As Boolean) As EstadoFacturacion
+                                                           _Mostrar_Mensaje As Boolean) As LsValiciones.Mensajes
 
         Dim _New_Idmaeedo As Integer
-        Dim _EstadoFacturacion As New EstadoFacturacion
+        Dim _Mensaje As New LsValiciones.Mensajes
         Dim _Modalidad_Old = Modalidad
 
         Try
@@ -380,21 +376,21 @@
             End If
 
             If CBool(_New_Idmaeedo) Then
-                _EstadoFacturacion.Facturada = True
-                _EstadoFacturacion.MensajeError = "Facturada Ok."
-                _EstadoFacturacion.Idmaeedo_FCV = _New_Idmaeedo
+                _Mensaje.EsCorrecto = True
+                _Mensaje.Detalle = "Facturada Ok."
+                _Mensaje.Id = _New_Idmaeedo
             Else
                 Throw New System.Exception("No fue posible generar la factura")
             End If
 
         Catch ex As Exception
-            _EstadoFacturacion.ErrorEnProceso = True
-            _EstadoFacturacion.MensajeError = ex.Message
+            _Mensaje.Detalle = "Error al grabar"
+            _Mensaje.Mensaje = ex.Message
         Finally
             Modalidad = _Modalidad_Old
         End Try
 
-        Return _EstadoFacturacion
+        Return _Mensaje
 
     End Function
 
@@ -570,16 +566,18 @@
 
                                 Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
                                                vbCrLf &
-                                               "Select Ddo.*,Det.Cantidad As 'Cantidad'," & vbCrLf &
-                                               "Det.Caprco1_Real As 'CantUd1_Pickea',Det.Caprco2_Real As 'CantUd2_Pickea'," & vbCrLf &
+                                               "Select Ddo.*," & vbCrLf &
+                                               "Case PRCT When 0 Then Det.Cantidad Else Case When UDTRPR = 1 Then CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 End End As 'Cantidad'," & vbCrLf &
+                                               "Case PRCT When 0 Then Det.Caprco1_Real Else CAPRCO1-CAPREX1 End As 'CantUd1_Pickea'," & vbCrLf &
+                                               "Case PRCT When 0 Then Det.Caprco2_Real Else CAPRCO1-CAPREX1 End As 'CantUd2_Pickea'," & vbCrLf &
                                                "Cast(1 As Bit) As DesdePickeo," & vbCrLf &
                                                "CAPRCO1-CAPREX1 As 'CantUd1_Dori',CAPRCO2-CAPREX2 As 'CantUd2_Dori'," & vbCrLf &
                                                "Case WHEN UDTRPR = 1 Then PPPRNE Else PPPRNE*RLUDPR End AS 'Precio'," & vbCrLf &
                                                "0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta," & vbCrLf &
-                                               "Det.RtuVariable" & vbCrLf &
+                                               "Isnull(Det.RtuVariable,0) As 'RtuVariable'" & vbCrLf &
                                                "From MAEDDO Ddo With ( NOLOCK )" & vbCrLf &
-                                               "Inner Join " & _Global_BaseBk & "Zw_Stmp_Det Det On Ddo.IDMAEDDO = Det.Idmaeddo" & vbCrLf &
-                                               "Where IDMAEEDO = " & _Idmaeedo_Origen & " AND ( ESLIDO<>'C' OR ESFALI='I' ) AND TICT = ''" & vbCrLf &
+                                               "Left Join " & _Global_BaseBk & "Zw_Stmp_Det Det On Ddo.IDMAEDDO = Det.Idmaeddo" & vbCrLf &
+                                               "Where IDMAEEDO = " & _Idmaeedo_Origen & " AND ( ESLIDO<>'C' OR ESFALI='I' ) --AND TICT = ''" & vbCrLf &
                                                "Order by IDMAEEDO,IDMAEDDO " & vbCrLf &
                                                vbCrLf &
                                                "Select * From MAEIMLI Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
@@ -688,11 +686,11 @@
 
 End Class
 
-Public Class EstadoFacturacion
+'Public Class EstadoFacturacion
 
-    Public Property Facturada As Boolean
-    Public Property Idmaeedo_FCV As Integer
-    Public Property MensajeError As String
-    Public Property ErrorEnProceso As Boolean
+'    Public Property Facturada As Boolean
+'    Public Property Idmaeedo_FCV As Integer
+'    Public Property MensajeError As String
+'    Public Property ErrorEnProceso As Boolean
 
-End Class
+'End Class

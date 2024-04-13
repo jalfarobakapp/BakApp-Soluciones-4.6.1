@@ -695,7 +695,7 @@ Public Class Frm_GRI_FabXProducto
         End If
 
         If _Row_Lote.Item("Codigo").ToString.Trim <> Txt_Codigo.Text.Trim Then
-            MessageBoxEx.Show(Me, "El número de lote no pertence al producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show(Me, "El número de lote " & _NroLote & " no pertence al producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
 

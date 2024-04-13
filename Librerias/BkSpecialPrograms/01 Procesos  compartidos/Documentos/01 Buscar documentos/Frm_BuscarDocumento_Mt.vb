@@ -1834,4 +1834,19 @@ Public Class Frm_BuscarDocumento_Mt
     Private Sub Btn_GrabarHabilitarFacturar_Click(sender As Object, e As EventArgs) Handles Btn_GrabarHabilitarFacturar.Click
         Sb_GrabarHabilitarNVVparaFacturar()
     End Sub
+
+    Private Sub Btn_Copiar_Click(sender As Object, e As EventArgs) Handles Btn_Copiar.Click
+        With Grilla
+
+            Dim _Cabeza = .Columns(.CurrentCell.ColumnIndex).Name
+            Dim _Texto_Cabeza = .Columns(.CurrentCell.ColumnIndex).HeaderText
+
+            Dim Copiar = .Rows(.CurrentRow.Index).Cells(_Cabeza).Value
+            Clipboard.SetText(Copiar)
+
+            ToastNotification.Show(Me, _Texto_Cabeza & " esta en el portapapeles", Btn_Copiar.Image,
+                                   2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
+
+        End With
+    End Sub
 End Class
