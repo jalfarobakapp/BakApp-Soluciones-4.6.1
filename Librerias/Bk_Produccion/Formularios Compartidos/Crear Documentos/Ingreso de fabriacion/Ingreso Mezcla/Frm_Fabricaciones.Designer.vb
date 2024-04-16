@@ -1,5 +1,5 @@
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class Frm_ListaMezclas
+Partial Class Frm_Fabricaciones
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
     'Form overrides dispose to clean up the component list.
@@ -22,12 +22,12 @@ Partial Class Frm_ListaMezclas
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_ListaMezclas))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Fabricaciones))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
-        Me.Btn_NuevaMezcla = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_IngresarNuevaFabricacion = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
@@ -46,25 +46,24 @@ Partial Class Frm_ListaMezclas
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_NuevaMezcla, Me.Btn_Actualizar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 421)
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_IngresarNuevaFabricacion, Me.Btn_Actualizar})
+        Me.Bar1.Location = New System.Drawing.Point(0, 488)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(998, 41)
+        Me.Bar1.Size = New System.Drawing.Size(898, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Bar1.TabIndex = 101
+        Me.Bar1.TabIndex = 105
         Me.Bar1.TabStop = False
         Me.Bar1.Text = "Bar1"
         '
-        'Btn_NuevaMezcla
+        'Btn_IngresarNuevaFabricacion
         '
-        Me.Btn_NuevaMezcla.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_NuevaMezcla.ForeColor = System.Drawing.Color.Black
-        Me.Btn_NuevaMezcla.Image = CType(resources.GetObject("Btn_NuevaMezcla.Image"), System.Drawing.Image)
-        Me.Btn_NuevaMezcla.ImageAlt = CType(resources.GetObject("Btn_NuevaMezcla.ImageAlt"), System.Drawing.Image)
-        Me.Btn_NuevaMezcla.Name = "Btn_NuevaMezcla"
-        Me.Btn_NuevaMezcla.Tooltip = "Crear nueva mezcla"
-        Me.Btn_NuevaMezcla.Visible = False
+        Me.Btn_IngresarNuevaFabricacion.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_IngresarNuevaFabricacion.ForeColor = System.Drawing.Color.Black
+        Me.Btn_IngresarNuevaFabricacion.Image = CType(resources.GetObject("Btn_IngresarNuevaFabricacion.Image"), System.Drawing.Image)
+        Me.Btn_IngresarNuevaFabricacion.ImageAlt = CType(resources.GetObject("Btn_IngresarNuevaFabricacion.ImageAlt"), System.Drawing.Image)
+        Me.Btn_IngresarNuevaFabricacion.Name = "Btn_IngresarNuevaFabricacion"
+        Me.Btn_IngresarNuevaFabricacion.Tooltip = "Agregar fabricación"
         '
         'Btn_Actualizar
         '
@@ -83,9 +82,9 @@ Partial Class Frm_ListaMezclas
         Me.GroupPanel4.Controls.Add(Me.Menu_Contextual)
         Me.GroupPanel4.Controls.Add(Me.Grilla)
         Me.GroupPanel4.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel4.Location = New System.Drawing.Point(12, 12)
+        Me.GroupPanel4.Location = New System.Drawing.Point(12, 3)
         Me.GroupPanel4.Name = "GroupPanel4"
-        Me.GroupPanel4.Size = New System.Drawing.Size(974, 403)
+        Me.GroupPanel4.Size = New System.Drawing.Size(874, 479)
         '
         '
         '
@@ -114,7 +113,7 @@ Partial Class Frm_ListaMezclas
         '
         '
         Me.GroupPanel4.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.GroupPanel4.TabIndex = 100
+        Me.GroupPanel4.TabIndex = 104
         Me.GroupPanel4.Text = "Seleccione ocn doble clic"
         '
         'Menu_Contextual
@@ -122,7 +121,7 @@ Partial Class Frm_ListaMezclas
         Me.Menu_Contextual.AntiAlias = True
         Me.Menu_Contextual.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
-        Me.Menu_Contextual.Location = New System.Drawing.Point(183, 54)
+        Me.Menu_Contextual.Location = New System.Drawing.Point(239, 125)
         Me.Menu_Contextual.Name = "Menu_Contextual"
         Me.Menu_Contextual.Size = New System.Drawing.Size(329, 25)
         Me.Menu_Contextual.Stretch = True
@@ -189,14 +188,14 @@ Partial Class Frm_ListaMezclas
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.Grilla.Size = New System.Drawing.Size(968, 380)
+        Me.Grilla.Size = New System.Drawing.Size(868, 456)
         Me.Grilla.TabIndex = 1
         '
-        'Frm_ListaMezclas
+        'Frm_Fabricaciones
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(998, 462)
+        Me.ClientSize = New System.Drawing.Size(898, 529)
         Me.Controls.Add(Me.Bar1)
         Me.Controls.Add(Me.GroupPanel4)
         Me.DoubleBuffered = True
@@ -205,8 +204,7 @@ Partial Class Frm_ListaMezclas
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "Frm_ListaMezclas"
-        Me.ShowInTaskbar = False
+        Me.Name = "Frm_Fabricaciones"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "MetroForm"
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -218,12 +216,12 @@ Partial Class Frm_ListaMezclas
     End Sub
 
     Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
-    Public WithEvents Btn_NuevaMezcla As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_IngresarNuevaFabricacion As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_Actualizar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents GroupPanel4 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Menu_Contextual As DevComponents.DotNetBar.ContextMenuBar
     Friend WithEvents Menu_Contextual_01 As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Fabricar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_CrearOTExtra As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX
-    Public WithEvents Btn_Actualizar As DevComponents.DotNetBar.ButtonItem
 End Class

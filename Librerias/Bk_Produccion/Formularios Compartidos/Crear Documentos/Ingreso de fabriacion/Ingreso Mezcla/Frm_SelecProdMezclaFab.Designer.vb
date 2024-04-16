@@ -27,7 +27,6 @@ Partial Class Frm_SelecProdMezclaFab
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
-        Me.Btn_NuevaMezcla = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
@@ -46,25 +45,15 @@ Partial Class Frm_SelecProdMezclaFab
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_NuevaMezcla, Me.Btn_Actualizar})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Actualizar})
         Me.Bar1.Location = New System.Drawing.Point(0, 347)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(650, 41)
+        Me.Bar1.Size = New System.Drawing.Size(792, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 103
         Me.Bar1.TabStop = False
         Me.Bar1.Text = "Bar1"
-        '
-        'Btn_NuevaMezcla
-        '
-        Me.Btn_NuevaMezcla.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_NuevaMezcla.ForeColor = System.Drawing.Color.Black
-        Me.Btn_NuevaMezcla.Image = CType(resources.GetObject("Btn_NuevaMezcla.Image"), System.Drawing.Image)
-        Me.Btn_NuevaMezcla.ImageAlt = CType(resources.GetObject("Btn_NuevaMezcla.ImageAlt"), System.Drawing.Image)
-        Me.Btn_NuevaMezcla.Name = "Btn_NuevaMezcla"
-        Me.Btn_NuevaMezcla.Tooltip = "Crear nueva mezcla"
-        Me.Btn_NuevaMezcla.Visible = False
         '
         'Btn_Actualizar
         '
@@ -85,7 +74,7 @@ Partial Class Frm_SelecProdMezclaFab
         Me.GroupPanel4.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel4.Location = New System.Drawing.Point(12, 6)
         Me.GroupPanel4.Name = "GroupPanel4"
-        Me.GroupPanel4.Size = New System.Drawing.Size(627, 327)
+        Me.GroupPanel4.Size = New System.Drawing.Size(768, 327)
         '
         '
         '
@@ -115,7 +104,7 @@ Partial Class Frm_SelecProdMezclaFab
         '
         Me.GroupPanel4.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel4.TabIndex = 102
-        Me.GroupPanel4.Text = "Seleccione ocn doble clic"
+        Me.GroupPanel4.Text = "Seleccione con doble clic para ver fabricaciones"
         '
         'Menu_Contextual
         '
@@ -189,14 +178,14 @@ Partial Class Frm_SelecProdMezclaFab
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.Grilla.Size = New System.Drawing.Size(621, 304)
+        Me.Grilla.Size = New System.Drawing.Size(762, 304)
         Me.Grilla.TabIndex = 1
         '
         'Frm_SelecProdMezclaFab
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(650, 388)
+        Me.ClientSize = New System.Drawing.Size(792, 388)
         Me.Controls.Add(Me.Bar1)
         Me.Controls.Add(Me.GroupPanel4)
         Me.DoubleBuffered = True
@@ -216,7 +205,6 @@ Partial Class Frm_SelecProdMezclaFab
     End Sub
 
     Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
-    Public WithEvents Btn_NuevaMezcla As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_Actualizar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents GroupPanel4 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Menu_Contextual As DevComponents.DotNetBar.ContextMenuBar

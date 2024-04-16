@@ -263,6 +263,12 @@
       <DependentUpon>Dfa_Cr.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Mezcla\Frm_Fabricaciones.Designer.vb">
+      <DependentUpon>Frm_Fabricaciones.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Mezcla\Frm_Fabricaciones.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Mezcla\Frm_ListaMezclas.Designer.vb">
       <DependentUpon>Frm_ListaMezclas.vb</DependentUpon>
     </Compile>
@@ -502,6 +508,9 @@
     <EmbeddedResource Include="Formularios Compartidos\Crear Documentos\DFA\Reporte\Dfa_Cr.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>Dfa_Cr.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Mezcla\Frm_Fabricaciones.resx">
+      <DependentUpon>Frm_Fabricaciones.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Mezcla\Frm_ListaMezclas.resx">
       <DependentUpon>Frm_ListaMezclas.vb</DependentUpon>

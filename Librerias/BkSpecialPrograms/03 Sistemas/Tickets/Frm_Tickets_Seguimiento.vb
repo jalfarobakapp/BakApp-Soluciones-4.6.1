@@ -147,6 +147,8 @@ Public Class Frm_Tickets_Seguimiento
 
     End Sub
 
+
+
     Sub Sb_Actualizar_Grilla()
 
         Consulta_sql = "Select Acc.*," & vbCrLf &

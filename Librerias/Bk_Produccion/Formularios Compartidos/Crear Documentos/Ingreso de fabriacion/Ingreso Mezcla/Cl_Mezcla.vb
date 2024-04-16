@@ -6,16 +6,15 @@ Public Class Cl_Mezcla
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-    Public Property MzEnc As New Modelos_Mezcla.MzEnc
-    Public Property MzDet As New Modelos_Mezcla.MzDet
-    Public Property MzDet_ls As New List(Of Modelos_Mezcla.MzDet)
-    Public Property MzDetProd_ls As New List(Of Modelos_Mezcla.MzDetProd)
+    Public Property Zw_Pdp_CPT_MzEnc As New Zw_Pdp_CPT_MzEnc
+    Public Property Zw_Pdp_CPT_MzDet As New Zw_Pdp_CPT_MzDet
+    Public Property Ls_Zw_Pdp_CPT_MzDet As New List(Of Zw_Pdp_CPT_MzDet)
 
     Public Sub New()
 
     End Sub
 
-    Function Fx_Llenar_MzEnc(_Id_Enc As Integer) As LsValiciones.Mensajes
+    Function Fx_Llenar_Zw_Pdp_CPT_MzEnc(_Id_Enc As Integer) As LsValiciones.Mensajes
 
         Dim _Mensaje_Mezcla As New LsValiciones.Mensajes
 
@@ -28,7 +27,7 @@ Public Class Cl_Mezcla
                 Throw New System.Exception("No se encontro el registro en la tabla Zw_Pdp_CPT_MzEnc con el Id: " & _Id_Enc)
             End If
 
-            With MzEnc
+            With Zw_Pdp_CPT_MzEnc
 
                 .Id = _Row_MzEnc.Item("Id")
                 .Empresa = _Row_MzEnc.Item("Empresa")
@@ -43,14 +42,54 @@ Public Class Cl_Mezcla
                 .Referencia = _Row_MzEnc.Item("Referencia")
                 .CodFuncionario = _Row_MzEnc.Item("CodFuncionario")
                 .Estado = _Row_MzEnc.Item("Estado")
-                .Codnomen = _Row_MzEnc.Item("Codnomen")
-                .Descriptor = _Row_MzEnc.Item("Descriptor")
-                .Cantnomen = _Row_MzEnc.Item("Cantnomen")
-                .Udad = _Row_MzEnc.Item("Udad")
-                .CantFabricar = _Row_MzEnc.Item("CantFabricar")
-                .CantFabricada = _Row_MzEnc.Item("CantFabricada")
                 .Idpote = _Row_MzEnc.Item("Idpote")
                 .FechaCreacionOT = NuloPorNro(_Row_MzEnc.Item("FechaCreacionOT"), Now.Date)
+
+                _Mensaje_Mezcla.EsCorrecto = True
+                _Mensaje_Mezcla.Id = .Id
+
+            End With
+
+        Catch ex As Exception
+            _Mensaje_Mezcla.Mensaje = ex.Message
+        End Try
+
+        Return _Mensaje_Mezcla
+
+    End Function
+
+    Function Fx_Llenar_Zw_Pdp_CPT_MzDet(_Id_Det As Integer) As LsValiciones.Mensajes
+
+        Dim _Mensaje_Mezcla As New LsValiciones.Mensajes
+
+        Try
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Pdp_CPT_MzDet Where Id = " & _Id_Det
+            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_Row) Then
+                Throw New System.Exception("No se encontro el registro en la tabla Zw_Pdp_CPT_MzDet con el Id: " & _Id_Det)
+            End If
+
+            With Zw_Pdp_CPT_MzDet
+
+                .Id = _Row.Item("Id")
+                .Id_Enc = _Row.Item("Id_Enc")
+                .Empresa = _Row.Item("Empresa")
+                .SucursalDef = _Row.Item("SucursalDef")
+                .BodegaDef = _Row.Item("BodegaDef")
+                .FechaCreacion = NuloPorNro(_Row.Item("FechaCreacion"), Now.Date)
+                .Idpote_Otm = _Row.Item("Idpote_Otm")
+                .Idpotl_Otm = _Row.Item("Idpotl_Otm")
+                .CodFuncionario = _Row.Item("CodFuncionario")
+                .Codigo = _Row.Item("Codigo")
+                .Descripcion = _Row.Item("Descripcion")
+                .Codnomen = _Row.Item("Codnomen")
+                .Descriptor = _Row.Item("Descriptor")
+                .Cantnomen = _Row.Item("Cantnomen")
+                .Udad = _Row.Item("Udad")
+                .CantFabricar = _Row.Item("CantFabricar")
+                .CantFabricada = _Row.Item("CantFabricada")
 
                 _Mensaje_Mezcla.EsCorrecto = True
                 _Mensaje_Mezcla.Id = .Id
@@ -83,16 +122,15 @@ Public Class Cl_Mezcla
 
             myTrans = Cn2.BeginTransaction()
 
-            With MzEnc
+            With Zw_Pdp_CPT_MzEnc
 
                 .Nro_MZC = Fx_NvoNro_OFMezcla()
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Pdp_CPT_MzEnc (Empresa,Nro_MZC,Idpote_Otm,Idpotl_Otm,Numot_Otm,Fiot_Otm,Codigo_Otm," &
-                               "Descripcion_Otm,FechaCreacion,Referencia,CodFuncionario,Estado,Codnomen,Descriptor,Cantnomen,Udad,CantFabricar)" & vbCrLf &
+                               "Descripcion_Otm,CantFabricar,FechaCreacion,Referencia,CodFuncionario,Estado)" & vbCrLf &
                                "Values ('" & .Empresa & "','" & .Nro_MZC & "'," & .Idpote_Otm & "," & .Idpotl_Otm & ",'" & .Numot_Otm &
                                "','" & Format(.Fiot_Otm, "yyyyMMdd") & "','" & .Codigo_Otm & "','" & .Descripcion_Otm &
-                               "',Getdate(),'" & .Referencia & "','" & .CodFuncionario & "','" & .Estado & "','" & .Codnomen &
-                               "','" & .Descriptor & "'," & De_Num_a_Tx_01(.Cantnomen, False, 5) & ",'" & .Udad & "'," & De_Num_a_Tx_01(.CantFabricar, False, 5) & ")"
+                               "'," & De_Num_a_Tx_01(.CantFabricar, False, 5) & ",Getdate(),'" & .Referencia & "','" & .CodFuncionario & "','" & .Estado & "')"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                 Comando.Transaction = myTrans
@@ -106,11 +144,11 @@ Public Class Cl_Mezcla
                 End While
                 dfd1.Close()
 
-                For Each _Fila As Modelos_Mezcla.MzDet In MzDet_ls
+                For Each _Fila As Zw_Pdp_CPT_MzDet In Ls_Zw_Pdp_CPT_MzDet
 
                     With _Fila
 
-                        .Id_Enc = MzEnc.Id
+                        .Id_Enc = Zw_Pdp_CPT_MzEnc.Id
 
                         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Pdp_CPT_MzDet (Id_Enc,Empresa,SucursalDef,BodegaDef,FechaCreacion," &
                                        "Idpote_Otm,Idpotl_Otm,CodFuncionario,Codigo,Descripcion,Codnomen,Descriptor,Cantnomen,Udad,CantFabricar,CantFabricada) Values " &
@@ -133,7 +171,8 @@ Public Class Cl_Mezcla
 
                 _Mensaje_Mezcla.EsCorrecto = True
                 _Mensaje_Mezcla.Id = .Id
-                _Mensaje_Mezcla.Detalle = "Se crea una nueva Orden de fabricación de mezcla Nro: " & .Nro_MZC
+                _Mensaje_Mezcla.Detalle = "Fabricar Mezcla"
+                _Mensaje_Mezcla.Mensaje = "Se crea una nueva Orden de fabricación de mezcla Nro: " & .Nro_MZC
 
                 'Throw New System.Exception(_Sql.Pro_Error)
 
@@ -154,39 +193,71 @@ Public Class Cl_Mezcla
 
     End Function
 
-    Function Fx_Agregar_Nueva_Fabricacion_Mezcla() As LsValiciones.Mensajes
+    Function Fx_Ingresar_Fabricaciones(_Zw_Pdp_CPT_MzDetIngFab As Zw_Pdp_CPT_MzDetIngFab) As LsValiciones.Mensajes
 
         Dim _Mensaje_Mezcla As New LsValiciones.Mensajes
 
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+        Dim Cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
         Try
 
-            With MzEnc
+            Consulta_sql = String.Empty
 
-                .Nro_MZC = Fx_NvoNro_OFMezcla()
+            SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
 
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Pdp_CPT_MzEnc (Empresa,Nro_MZC,Idpote_Otm,Idpotl_Otm,Numot_Otm,Fiot_Otm,Codigo_Otm," &
-                               "Descripcion_Otm,FechaCreacion,Referencia,CodFuncionario,Estado,Codnomen,Descriptor,Cantnomen,Udad,CantFabricar)" & vbCrLf &
-                               "Values ('" & .Empresa & "','" & .Nro_MZC & "'," & .Idpote_Otm & "," & .Idpotl_Otm & ",'" & .Numot_Otm &
-                               "','" & Format(.Fiot_Otm, "yyyyMMdd") & "','" & .Codigo_Otm & "','" & .Descripcion_Otm &
-                               "',Getdate(),'" & .Referencia & "','" & .CodFuncionario & "','" & .Estado & "','" & .Codnomen &
-                               "','" & .Descriptor & "'," & De_Num_a_Tx_01(.Cantnomen, False, 5) & ",'" & .Udad & "'," & De_Num_a_Tx_01(.CantFabricar, False, 5) & ")"
+            myTrans = Cn2.BeginTransaction()
 
-                If _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, .Id, False) Then
-                    _Mensaje_Mezcla.EsCorrecto = True
-                    _Mensaje_Mezcla.Id = .Id
-                    _Mensaje_Mezcla.Detalle = "Se crea una nueva Orden de fabricación de mecla Nro: " & .Nro_MZC
-                Else
-                    Throw New System.Exception(_Sql.Pro_Error)
-                End If
+            With _Zw_Pdp_CPT_MzDetIngFab
+
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Pdp_CPT_MzDetIngFab (Id_Enc,Id_Det,Codigo,Descripcion,CantFabricada,CodFuncionario,FechaFabricacion) Values " &
+                               "(" & .Id_Enc & "," & .Id_Det & ",'" & .Codigo & "','" & .Descripcion &
+                               "'," & De_Num_a_Tx_01(.CantFabricada, False, 5) & ",'" & .CodFuncionario & "',Getdate())"
+
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+                Dim _CantFabricada As Double
+
+                Comando = New System.Data.SqlClient.SqlCommand("Select SUM(CantFabricada) As CantFabricada From " & _Global_BaseBk & "Zw_Pdp_CPT_MzDetIngFab Where Id_Det = " & .Id_Det, Cn2)
+                Comando.Transaction = myTrans
+                Dim dfd1 As System.Data.SqlClient.SqlDataReader = Comando.ExecuteReader()
+                While dfd1.Read()
+                    _CantFabricada = dfd1("CantFabricada")
+                End While
+                dfd1.Close()
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Pdp_CPT_MzDet Set CantFabricada = " & De_Num_a_Tx_01(_CantFabricada, False, 5) & vbCrLf &
+                               "Where Id = " & .Id_Det
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
 
             End With
 
-            With MzDet_ls
+            myTrans.Commit()
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
-            End With
+            _Mensaje_Mezcla.EsCorrecto = True
+            _Mensaje_Mezcla.Id = 0
+            _Mensaje_Mezcla.Detalle = "Fabricar Mezcla"
+            _Mensaje_Mezcla.Mensaje = "Se crea una nuevas fabricaciones"
+
+            'Throw New System.Exception(_Sql.Pro_Error)
+
 
         Catch ex As Exception
+
             _Mensaje_Mezcla.Mensaje = ex.Message
+            _Mensaje_Mezcla.Resultado = Consulta_sql
+            If IsNothing(myTrans) Then myTrans.Rollback()
+
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
         End Try
 
         Return _Mensaje_Mezcla
@@ -215,82 +286,3 @@ Public Class Cl_Mezcla
 
 End Class
 
-Namespace Modelos_Mezcla
-
-    ''' <summary>
-    ''' Encabezado de la mezcla
-    ''' </summary>
-    Public Class MzEnc
-
-        Public Property Id As Integer
-        Public Property Empresa As String
-        Public Property Nro_MZC As String
-        Public Property Idpote_Otm As Integer
-        Public Property Idpotl_Otm As Integer
-        Public Property Numot_Otm As String
-        Public Property Fiot_Otm As DateTime
-        Public Property Codigo_Otm As String
-        Public Property Descripcion_Otm As String
-        Public Property FechaCreacion As DateTime
-        Public Property Referencia As String
-        Public Property CodFuncionario As String
-        Public Property FechaCreacionOT As DateTime
-        Public Property Idpote As Integer
-        Public Property Estado As String
-        Public Property Codnomen As String
-        Public Property Descriptor As String
-        Public Property Cantnomen As Double
-        Public Property Udad As String
-        Public Property CantFabricar As Double
-        Public Property CantFabricada As Double
-
-    End Class
-
-    ''' <summary>
-    ''' Detalle de la mezcla
-    ''' </summary>
-    Public Class MzDet
-
-        Public Property Id As Integer
-        Public Property Id_Enc As Integer
-        Public Property Empresa As String
-        Public Property SucursalDef As String
-        Public Property BodegaDef As String
-        Public Property FechaCreacion As DateTime
-        Public Property Idpote_Otm As Integer
-        Public Property Idpotl_Otm As Integer
-        Public Property CodFuncionario As String
-        Public Property Codigo As String
-        Public Property Descripcion As String
-        Public Property Codnomen As String
-        Public Property Descriptor As String
-        Public Property Cantnomen As Double
-        Public Property Udad As String
-        Public Property CantFabricar As Double
-        Public Property CantFabricada As Double
-
-    End Class
-
-    ''' <summary>
-    ''' Detalle de los productos de la nomenclatura del producto a fabricar
-    ''' </summary>
-    Public Class MzDetProd
-
-        Public Property Id As Integer
-        Public Property Id_Enc As Integer
-        Public Property Id_Det As Integer
-        Public Property Nomenclatura As String
-        Public Property Codigo As String
-        Public Property Descripcion As String
-        Public Property Udad As String
-        Public Property CantFabricar As Double
-        Public Property CantFabricada As Double
-        Public Property Tipo As String
-        Public Property Calidad As String
-        Public Property SumaCant As Boolean
-
-    End Class
-
-
-
-End Namespace
