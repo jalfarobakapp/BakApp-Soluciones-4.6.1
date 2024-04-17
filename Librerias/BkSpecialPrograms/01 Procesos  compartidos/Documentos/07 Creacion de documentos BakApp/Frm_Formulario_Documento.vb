@@ -1850,6 +1850,7 @@ Public Class Frm_Formulario_Documento
             .Item("Semilla_Svr") = 0
             .Item("Nmarca") = String.Empty
             .Item("RtuVariable") = False
+            .Item("Espuntosvta") = False
 
             _TblDetalle.Rows.Add(NewFila)
 
@@ -6546,6 +6547,7 @@ Public Class Frm_Formulario_Documento
             Dim _Aplica_Oferta As Boolean = _Fila.Cells("Aplica_Oferta").Value
 
             Dim _ValVtaDescMax As Boolean = _Fila.Cells("ValVtaDescMax").Value
+            Dim _Espuntosvta As Boolean = _Fila.Cells("Espuntosvta").Value
 
             If _Tict <> "D" Then
 
@@ -6559,28 +6561,32 @@ Public Class Frm_Formulario_Documento
 
             ElseIf _Tict = "D" Then
 
-                If _Aplica_Oferta Then
+                If Not _Espuntosvta Then
 
-                    _TotalNetoSDscto += Math.Round(NuloPorNro(_Fila.Cells("ValNetoLinea").Value, 0), 2)
+                    If _Aplica_Oferta Then
 
-                Else
+                        _TotalNetoSDscto += Math.Round(NuloPorNro(_Fila.Cells("ValNetoLinea").Value, 0), 2)
 
-                    Consulta_sql = "Select * From TABCT" & vbCrLf &
+                    Else
+
+                        Consulta_sql = "Select * From TABCT" & vbCrLf &
                                    "Inner Join " & _Global_BaseBk & "Zw_Conceptos On KOCT = Koct" & vbCrLf &
                                    "Where KOCT = '" & _Codigo & "'"
-                    Dim _RowConcepto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                        Dim _RowConcepto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-                    If Not (_RowConcepto Is Nothing) Then
-                        _Afecta_Precio_Real = _RowConcepto.Item("RECAPRRE")
+                        If Not (_RowConcepto Is Nothing) Then
+                            _Afecta_Precio_Real = _RowConcepto.Item("RECAPRRE")
+                        End If
+
+                        _NroConceptos += 1
+
+                        If _RowConcepto.Item("NoAfectaDsctoGlobal") Then
+                            _NroConceptos_NoAfectaDsctoGlobal += 1
+                        End If
+
+                        _TotalDsctoGlobal += Math.Round(NuloPorNro(_Fila.Cells("ValNetoLinea").Value, 0) * -1, 2)
+
                     End If
-
-                    _NroConceptos += 1
-
-                    If _RowConcepto.Item("NoAfectaDsctoGlobal") Then
-                        _NroConceptos_NoAfectaDsctoGlobal += 1
-                    End If
-
-                    _TotalDsctoGlobal += Math.Round(NuloPorNro(_Fila.Cells("ValNetoLinea").Value, 0) * -1, 2)
 
                 End If
 
@@ -13743,7 +13749,7 @@ Public Class Frm_Formulario_Documento
                 Return
             End If
 
-
+            Sb_AgregarDsctoXPuntos()
 
             If String.IsNullOrEmpty(_TblEncabezado.Rows(0).Item("NroDocumento").ToString.Trim) Then
                 MessageBoxEx.Show(Me, "Debe indicar un número de documento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -13976,9 +13982,14 @@ Public Class Frm_Formulario_Documento
                         End If
 
                         If Not _Documento_Reciclado Then
+
                             If Not Fx_Cambiar_Tipo_Documentos_Post_Venta() Then
+
+                                Sb_EliminarFilaPuntos()
                                 Return
+
                             End If
+
                         End If
 
                     End If
@@ -14237,7 +14248,10 @@ Public Class Frm_Formulario_Documento
                             End If
                         End If
 
+                        Sb_EliminarFilaPuntos
+
                         Return
+
                     End If
 
 
@@ -14708,6 +14722,23 @@ Public Class Frm_Formulario_Documento
         Finally
             Me.Enabled = True
         End Try
+
+    End Sub
+
+    Private Sub Sb_EliminarFilaPuntos()
+        'Throw New NotImplementedException()
+        Dim _FilaElimina As DataGridViewRow
+
+        For Each _Fila As DataGridViewRow In Grilla_Detalle.Rows
+            If _Fila.Cells("Espuntosvta").Value Then
+                _FilaElimina = _Fila
+                Exit For
+            End If
+        Next
+
+        If Not IsNothing(_FilaElimina) Then
+            Sb_Eliminar_Fila(_FilaElimina, True)
+        End If
 
     End Sub
 
@@ -16032,9 +16063,19 @@ Public Class Frm_Formulario_Documento
 
             Dim _Cl_Puntos As New Cl_Puntos()
             Dim _MsjPtos As LsValiciones.Mensajes
+            Dim _PtsUsados As Double
 
-            _Cl_Puntos.Sb_Llenar_Zw_PtsVta_Configuracion(ModEmpresa)
-            _MsjPtos = _Cl_Puntos.Fx_Grabar_Registro_Puntos(_New_Idmaeedo)
+            _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa)
+
+            If Not IsNothing(_Cl_Puntos.Zw_PtsVta_Configuracion) Then
+                For Each _Fila As DataRow In _TblDetalle.Rows
+                    If _Cl_Puntos.Zw_PtsVta_Configuracion.Concepto = _Fila.Item("Codigo") Then
+                        _PtsUsados = _Fila.Item("DescuentoValor")
+                    End If
+                Next
+            End If
+
+            _MsjPtos = _Cl_Puntos.Fx_Grabar_Registro_Puntos(_New_Idmaeedo, _PtsUsados)
 
             'GENERA GRI DESDE PRODUCCION EXTERNA
 
@@ -17478,6 +17519,18 @@ Public Class Frm_Formulario_Documento
 
                         Sb_Traer_Producto_Grilla(_New_Fila, _RowProducto, True, _UnTrans, False)
 
+                        Dim _Nmarca As String = _RowProducto.Item("NMARCA")
+
+                        If _Nmarca = "¡" Or _New_Fila.Cells("Rtu").Value <> _Fila.Item("RLUDPR") Then
+
+                            _New_Fila.Cells("Rtu").Value = _Fila.Item("RLUDPR")
+                            _New_Fila.Cells("RtuVariable").Value = True
+
+                            _New_Fila.Cells("CantUd1").Value = _CantUd1_Dori
+                            _New_Fila.Cells("CantUd2").Value = _CantUd2_Dori
+
+                        End If
+
                     End If
 
                     If Not String.IsNullOrEmpty(_Tidopa.Trim) Then
@@ -17591,13 +17644,15 @@ Public Class Frm_Formulario_Documento
                     End Try
 
                     Dim _DesdePickeo As Boolean
+                    Dim _RtuVariable As Boolean = NuloPorNro(_New_Fila.Cells("RtuVariable").Value, False)
 
                     Try
                         _DesdePickeo = _Fila.Item("DesdePickeo")
-                        _New_Fila.Cells("RtuVariable").Value = _Fila.Item("RtuVariable")
                     Catch ex As Exception
-                        _New_Fila.Cells("RtuVariable").Value = False
+                        _DesdePickeo = False
                     End Try
+
+                    _New_Fila.Cells("RtuVariable").Value = _RtuVariable
 
                     If Not _Prct Then
 
@@ -25944,6 +25999,108 @@ Public Class Frm_Formulario_Documento
 
     End Function
 
+    Sub Sb_AgregarDsctoXPuntos()
+
+        If Not _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_PtsVta_Doc") Then
+            Return
+        End If
+
+        Dim _CodEntidad As String = _TblEncabezado.Rows(0).Item("CodEntidad")
+        Dim _CodSucEntidad As String = _TblEncabezado.Rows(0).Item("CodSucEntidad")
+
+        Dim _PtsGanados As Double = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_PtsVta_Doc", "SUM(PtsGanados)",
+                                    "CodEntidad = '" & _CodEntidad & "' And CodSucEntidad = '" & _CodSucEntidad & "' And Nudonodefi = 0", True)
+        Dim _PtsUsados As Double = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_PtsVta_Doc", "SUM(PtsUsados)",
+                                    "CodEntidad = '" & _CodEntidad & "' And CodSucEntidad = '" & _CodSucEntidad & "'", True)
+
+        Dim _Puntos As Double = _PtsGanados - _PtsUsados
+
+        If _Puntos <= 0 Then
+            Return
+        End If
+
+        If MessageBoxEx.Show(Me, "Tiene " & _Puntos & " puntos acumulados." & vbCrLf & vbCrLf &
+                     "¿Desea utilizarlos en esta compra?", "SISTEMA DE PUNTOS", vbYesNo, vbQuestion) <> DialogResult.Yes Then
+            Return
+        End If
+
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        _Mensaje = Fx_AgregarDescuentoXPuntos(_Puntos)
+
+        If Not _Mensaje.EsCorrecto Then
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End If
+
+    End Sub
+
+    Function Fx_AgregarDescuentoXPuntos(_Puntos As Double) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            If Not _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_PtsVta_Configuracion") Then
+                _Mensaje.Detalle = "Validación"
+                Throw New ArgumentException("No existe tabla Zw_PtsVta_Configuracion en base de datos de Bakapp")
+            End If
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_PtsVta_Configuracion Where Empresa = '" & ModEmpresa & "'"
+            Dim _Row_ConfPuntos As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+            If Not String.IsNullOrWhiteSpace(_Sql.Pro_Error) Then
+                _Mensaje.Detalle = "Error Sql"
+                _Mensaje.Resultado = Consulta_sql
+                Throw New ArgumentException(_Sql.Pro_Error)
+            End If
+
+            If IsNothing(_Row_ConfPuntos) Then
+                _Mensaje.Detalle = "Validación"
+                Throw New ArgumentException("No existe configuración en tabla Zw_PtsVta_Configuracion")
+            End If
+
+            Dim _Koct As String = _Row_ConfPuntos.Item("Concepto")
+
+            Consulta_sql = "Select * From TABCT Where KOCT = '" & _Koct & "'"
+            Dim _RowConcepto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_Row_ConfPuntos) Then
+                _Mensaje.Detalle = "Validación"
+                Throw New ArgumentException("No existe el concepto " & _Koct)
+            End If
+
+            Dim _DescuentoValor As Double = (_Puntos / _Row_ConfPuntos.Item("RCadaPuntos")) * _Row_ConfPuntos.Item("REquivPesos")
+
+            For Each _Fila As DataRow In _TblDetalle.Rows
+
+                If _Fila.Item("Codigo") = _Koct Then
+                    _Mensaje.Detalle = "Validación"
+                    Throw New ArgumentException("Los puntos ya estan siendo utilizados en este documento")
+                End If
+
+            Next
+
+            Sb_Nueva_Linea(_TblEncabezado.Rows(0).Item("ListaPrecios"))
+
+            Dim _New_Fila As DataGridViewRow = Grilla_Detalle.Rows(Grilla_Detalle.RowCount - 1)
+
+            Sb_Agregar_Concepto(_New_Fila, _RowConcepto)
+
+            _New_Fila.Cells("DescuentoValor").Value = _DescuentoValor
+            _New_Fila.Cells("Espuntosvta").Value = True
+
+            Sb_Procesar_Datos_De_Grilla(_New_Fila, "DescuentoValor", False, False, True)
+
+            _Mensaje.EsCorrecto = True
+            'Throw New ArgumentException("Error")
+
+        Catch ex As Exception
+            _Mensaje.Mensaje = ex.Message
+        End Try
+
+        Return _Mensaje
+
+    End Function
 
 End Class
 

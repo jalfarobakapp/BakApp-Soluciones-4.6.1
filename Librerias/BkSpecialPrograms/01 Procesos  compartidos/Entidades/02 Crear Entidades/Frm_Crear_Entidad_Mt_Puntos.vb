@@ -33,4 +33,5 @@ Public Class Frm_Crear_Entidad_Mt_Puntos
         Me.Close()
 
     End Sub
+
 End Class

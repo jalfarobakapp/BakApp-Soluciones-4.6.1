@@ -92,6 +92,7 @@
 
         If _Grabar Then
             Sb_Actualizar_Grilla_Monedas()
+            BuscarDatoEnGrilla(_Komo.Trim, "Komo", Grilla_Monedas)
         End If
 
     End Sub

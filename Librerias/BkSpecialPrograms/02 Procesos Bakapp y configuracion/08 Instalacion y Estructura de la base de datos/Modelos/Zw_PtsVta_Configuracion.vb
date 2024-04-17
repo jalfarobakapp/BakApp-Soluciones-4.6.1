@@ -8,6 +8,6 @@
     Public Property REquivPesos As Double
     Public Property MinPtosCanjear As Double
     Public Property ValMinPedCajear As Double
-
+    Public Property Concepto As String
 End Class
 

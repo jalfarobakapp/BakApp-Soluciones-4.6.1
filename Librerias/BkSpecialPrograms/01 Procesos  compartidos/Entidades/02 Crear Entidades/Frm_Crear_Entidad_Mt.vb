@@ -2304,7 +2304,7 @@ Public Class Frm_Crear_Entidad_Mt
             Dim Fm As New Frm_Crear_Entidad_Mt_Puntos
             Fm.Txt_EmailPuntos.Text = .EmailPuntos.Trim
             Fm.Chk_JuntaPuntos.Checked = .JuntaPuntos
-            Fm.Dtp_FechaInscripPuntos.Value = NuloPorNro(.FechaInscripPuntos, #01-01-0001#)
+            Fm.Dtp_FechaInscripPuntos.Value = NuloPorNro(.FechaInscripPuntos, Now.Date)
             Fm.ShowDialog(Me)
 
             If Fm.Aceptar Then

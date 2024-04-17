@@ -105,15 +105,15 @@ Public Module Mod_Variables_Globales
     Public RutEmpresa As String
     Public DireccionEmpresa As String
 
-
     Public BaseDatos_SQL As String = ""
     Public Usuario_SQL As String = ""
     Public Clave_SQL As String = ""
 
-
     Public BaseDeConexion As Integer
 
     Public _Global_Sesion As Boolean
+
+    Public _Global_NombreConexion As String
 
     'Dim _Rojo As Color
     'Dim _Azul As Color

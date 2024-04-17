@@ -18,7 +18,7 @@ Public Class Frm_ConfPuntosVta
     Private Sub Frm_ConfPuntosVta_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         _Cl_Puntos = New Cl_Puntos()
-        _Cl_Puntos.Sb_Llenar_Zw_PtsVta_Configuracion(ModEmpresa)
+        _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa)
 
         With _Cl_Puntos.Zw_PtsVta_Configuracion
 

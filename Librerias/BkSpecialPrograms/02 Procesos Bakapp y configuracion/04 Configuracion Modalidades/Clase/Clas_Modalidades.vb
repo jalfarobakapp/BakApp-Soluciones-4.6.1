@@ -112,7 +112,7 @@ Public Class Clas_Modalidades
             _Global_Frm_Menu.Text = "Sistema BakApp. Empresa :" & ModEmpresa & " " & RazonEmpresa & " (" & _New_RutEmpresa & ")" &
                           ", Funcionario Activo: " & FUNCIONARIO & "-" & Nombre_funcionario_activo.Trim &
                           ", Modalidad: " & _Modalidad & ", BakApp Versión: " & _Global_Version_BakApp & "..." & Space(4) &
-                          "(Base BakApp: " & _Global_BaseBk & "). Estación: " & _Global_Row_EstacionBk.Item("NombreEquipo")
+                          "(Conexión: " & _Global_NombreConexion.Trim & ",Base BakApp: " & _Global_BaseBk & "). Estación: " & _Global_Row_EstacionBk.Item("NombreEquipo")
 
         End If
 

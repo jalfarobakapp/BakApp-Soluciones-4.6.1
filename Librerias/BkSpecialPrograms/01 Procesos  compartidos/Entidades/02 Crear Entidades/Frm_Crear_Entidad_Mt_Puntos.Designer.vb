@@ -122,6 +122,7 @@ Partial Class Frm_Crear_Entidad_Mt_Puntos
         Me.Dtp_FechaInscripPuntos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Dtp_FechaInscripPuntos.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
         Me.Dtp_FechaInscripPuntos.ButtonDropDown.Visible = True
+        Me.Dtp_FechaInscripPuntos.Enabled = False
         Me.Dtp_FechaInscripPuntos.ForeColor = System.Drawing.Color.Black
         Me.Dtp_FechaInscripPuntos.IsPopupCalendarOpen = False
         Me.Dtp_FechaInscripPuntos.Location = New System.Drawing.Point(393, 45)
@@ -199,7 +200,7 @@ Partial Class Frm_Crear_Entidad_Mt_Puntos
         Me.Name = "Frm_Crear_Entidad_Mt_Puntos"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "MetroForm"
+        Me.Text = "PUNTOS FIDELIZACION DE CLIENTES"
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Dtp_FechaInscripPuntos, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)

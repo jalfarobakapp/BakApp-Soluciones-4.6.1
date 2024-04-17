@@ -1,4 +1,5 @@
-﻿Public Class Cl_Puntos
+﻿
+Public Class Cl_Puntos
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
@@ -9,12 +10,12 @@
 
     End Sub
 
-    Sub Sb_Llenar_Zw_PtsVta_Configuracion(_Empresa As String)
+    Function Fx_Llenar_Zw_PtsVta_Configuracion(_Empresa As String) As Zw_PtsVta_Configuracion
 
         Dim _Zw_PtsVta_Configuracion As New Zw_PtsVta_Configuracion
 
         If Not _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_PtsVta_Configuracion") Then
-            Return
+            Return Nothing
         End If
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_PtsVta_Configuracion Where Empresa = '" & _Empresa & "'"
@@ -40,10 +41,13 @@
             .REquivPesos = _Row.Item("REquivPesos")
             .MinPtosCanjear = _Row.Item("MinPtosCanjear")
             .ValMinPedCajear = _Row.Item("ValMinPedCajear")
+            .Concepto = _Row.Item("Concepto")
 
         End With
 
-    End Sub
+        Return _Zw_PtsVta_Configuracion
+
+    End Function
 
     Function Fx_Grabar_Configuracion() As LsValiciones.Mensajes
 
@@ -66,7 +70,7 @@
                 End If
 
                 _Mensaje.EsCorrecto = True
-                _Mensaje.Detalle = "Gración OK."
+                _Mensaje.Detalle = "Grabación OK."
                 _Mensaje.Mensaje = "Datos actualizados correctamente"
 
             End With
@@ -80,7 +84,7 @@
 
     End Function
 
-    Function Fx_Grabar_Registro_Puntos(_Idmaeedo As Integer) As LsValiciones.Mensajes
+    Function Fx_Grabar_Registro_Puntos(_Idmaeedo As Integer, _PtsUsados As Double) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
         Dim _Row As DataRow
@@ -94,14 +98,14 @@
 
             With Zw_PtsVta_Configuracion
 
-                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_PtsVta_Doc Where Idmaeedo = " & _Idmaeedo
-                _Row = _Sql.Fx_Get_DataRow(Consulta_sql)
+                'Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_PtsVta_Doc Where Idmaeedo = " & _Idmaeedo
+                '_Row = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-                If Not IsNothing(_Row) Then
-                    _Mensaje.Detalle = "Validación"
-                    Throw New System.Exception("Ya existen puntos asignado a este documento" & vbCrLf &
-                                               "Documento: " & _Row.Item("Tido") & "-" & _Row.Item("Nudo"))
-                End If
+                'If Not IsNothing(_Row) Then
+                '    _Mensaje.Detalle = "Validación"
+                '    Throw New System.Exception("Ya existen puntos asignado a este documento" & vbCrLf &
+                '                               "Documento: " & _Row.Item("Tido") & "-" & _Row.Item("Nudo"))
+                'End If
 
                 Consulta_sql = "Select IDMAEEDO,ENDO,SUENDO,TIDO,NUDO,FEEMDO,VABRDO,VAABDO,NUDONODEFI From MAEEDO Where IDMAEEDO = " & _Idmaeedo
                 _Row = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -133,10 +137,10 @@
                     _PuntosGanados = _PuntosGanados * -1
                 End If
 
-                If _Row.Item("NUDONODEFI") Then
-                    _Mensaje.Detalle = "Validación"
-                    Throw New System.Exception("El documento aun es un vale transitorio")
-                End If
+                'If _Row.Item("NUDONODEFI") Then
+                '    _Mensaje.Detalle = "Validación"
+                '    Throw New System.Exception("El documento aun es un vale transitorio")
+                'End If
 
                 Dim _Zw_PtsVta_Doc As New Zw_PtsVta_Doc
 
@@ -145,21 +149,44 @@
                     .Idmaeedo = _Row.Item("IDMAEEDO")
                     .Tido = _Row.Item("TIDO")
                     .Nudo = _Row.Item("NUDO")
+                    .CodEntidad = _Row.Item("ENDO")
+                    .CodSucEntidad = _Row.Item("SUENDO")
+                    .Nudonodefi = _Row.Item("NUDONODEFI")
                     .Feemdo = _Row.Item("FEEMDO")
                     .Vabrdo = _Row.Item("VABRDO")
                     .PtsGanados = Math.Round(_PuntosGanados)
+                    .PtsUsados = _PtsUsados
 
-                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_PtsVta_Doc (Idmaeedo,Tido,Nudo,Feemdo,Vabrdo,PtsGanados) Values " &
-                                   "(" & .Idmaeedo & ",'" & .Tido & "','" & .Nudo & "','" & Format(.Feemdo, "yyyyMMdd") &
-                                   "'," & De_Num_a_Tx_01(.Vabrdo, False, 5) & "," & De_Num_a_Tx_01(.PtsGanados, False, 5) & ")"
+                    Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_PtsVta_Doc Where Idmaeedo = " & _Idmaeedo
+                    _Row = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-                    If Not _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, .Id, False) Then
-                        Throw New System.Exception(_Sql.Pro_Error)
+                    If Not IsNothing(_Row) Then
+                        .Id = _Row.Item("Id")
+                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_PtsVta_Doc Set Nudonodefi = " & Convert.ToInt32(.Nudonodefi) & ",Nudo = '" & .Nudo & "' Where Idmaeedo = " & _Idmaeedo
+                        If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+                            Throw New System.Exception(_Sql.Pro_Error)
+                        End If
+                    Else
+                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_PtsVta_Doc (Idmaeedo,Tido,Nudo,CodEntidad,CodSucEntidad,Nudonodefi," &
+                                       "Feemdo,Vabrdo,PtsGanados,PtsUsados) Values " &
+                                       "(" & .Idmaeedo &
+                                       ",'" & .Tido &
+                                       "','" & .Nudo &
+                                       "','" & .CodEntidad &
+                                       "','" & .CodSucEntidad &
+                                       "'," & Convert.ToInt32(.Nudonodefi) &
+                                       ",'" & Format(.Feemdo, "yyyyMMdd") &
+                                       "'," & De_Num_a_Tx_01(.Vabrdo, False, 5) &
+                                       "," & De_Num_a_Tx_01(.PtsGanados, False, 5) &
+                                       "," & De_Num_a_Tx_01(.PtsUsados, False, 5) & ")"
+                        If Not _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, .Id, False) Then
+                            Throw New System.Exception(_Sql.Pro_Error)
+                        End If
                     End If
 
                     _Mensaje.Id = .Id
                     _Mensaje.EsCorrecto = True
-                    _Mensaje.Detalle = "Gración OK."
+                    _Mensaje.Detalle = "Grabación OK."
                     _Mensaje.Mensaje = "El cliente acaba de sumar " & .PtsGanados & " puntos."
 
                 End With
@@ -167,6 +194,41 @@
             End With
 
         Catch ex As Exception
+            _Mensaje.Mensaje = ex.Message
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
+    Function Fx_Confirmar_Puntos(_Idmaeedo As Integer) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+        Dim _Row As DataRow
+
+        Try
+
+            If Not _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_PtsVta_Doc") Then
+                _Mensaje.Detalle = "Validación"
+                Throw New System.Exception("No existe tabla " & _Global_BaseBk & "Zw_PtsVta_Doc")
+            End If
+
+            Consulta_sql = "Select IDMAEEDO,ENDO,SUENDO,TIDO,NUDO,FEEMDO,VABRDO,VAABDO,NUDONODEFI From MAEEDO Where IDMAEEDO = " & _Idmaeedo
+            _Row = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_PtsVta_Doc Set Nudonodefi = 1 Where IDMAEEDO = " & _Idmaeedo
+
+            If Not _Sql.Ej_consulta_IDU(Consulta_sql) Then
+                _Mensaje.Detalle = "Validación"
+                Throw New System.Exception(_Sql.Pro_Error)
+            End If
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Detalle = "Gración OK."
+            _Mensaje.Mensaje = "Datos actualizados correctamente"
+
+        Catch ex As Exception
+            _Mensaje.Detalle = "Problema al grabar"
             _Mensaje.Mensaje = ex.Message
         End Try
 

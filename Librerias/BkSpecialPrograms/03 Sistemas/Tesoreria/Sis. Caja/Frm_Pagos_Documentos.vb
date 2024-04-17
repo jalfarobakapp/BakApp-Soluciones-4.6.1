@@ -1314,8 +1314,8 @@ Public Class Frm_Pagos_Documentos
             Dim _Cl_Puntos As New Cl_Puntos()
             Dim _MsjPtos As LsValiciones.Mensajes
 
-            _Cl_Puntos.Sb_Llenar_Zw_PtsVta_Configuracion(ModEmpresa)
-            _MsjPtos = _Cl_Puntos.Fx_Grabar_Registro_Puntos(_Idmaeedo)
+            _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa)
+            _MsjPtos = _Cl_Puntos.Fx_Grabar_Registro_Puntos(_Idmaeedo, 0)
 
             If _MsjPtos.EsCorrecto Then
                 MessageBoxEx.Show(Me, _MsjPtos.Mensaje, _MsjPtos.Detalle, MessageBoxButtons.OK, MessageBoxIcon.Information)
