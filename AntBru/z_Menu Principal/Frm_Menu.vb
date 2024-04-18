@@ -460,8 +460,8 @@ Public Class Frm_Menu
 
             RutEmpresaActiva = _Tbl.Rows(0).Item("Rut")
 
-            Dim Rt = _Tbl.Rows(0).Item("NombreConexion")
-            Cadena_ConexionSQL_Server = Fx_CadenaConexionSQL(Rt, DatosConex)
+            _Global_NombreConexion = _Tbl.Rows(0).Item("NombreConexion")
+            Cadena_ConexionSQL_Server = Fx_CadenaConexionSQL(_Global_NombreConexion, DatosConex)
 
             _Tbl.Rows(0).Item("Conectado") = True
 

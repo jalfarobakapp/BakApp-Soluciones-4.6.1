@@ -55,7 +55,7 @@ Public Class Frm_SelecProdMezclaFab
             .Columns("Codigo").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Descripcion").Width = 350
+            .Columns("Descripcion").Width = 340
             .Columns("Descripcion").HeaderText = "Descripción"
             .Columns("Descripcion").Visible = True
             .Columns("Descripcion").DisplayIndex = _DisplayIndex
@@ -118,8 +118,11 @@ Public Class Frm_SelecProdMezclaFab
 
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
         Dim _Id_Det As Integer = _Fila.Cells("Id").Value
+        Dim _Codnomen As String = _Fila.Cells("Codnomen").Value
+        Dim _Descriptor As String = _Fila.Cells("Descriptor").Value
 
         Dim Fm As New Frm_Fabricaciones(_Id_Det)
+        Fm.Text = _Codnomen & " - " & _Descriptor
         Fm.ShowDialog(Me)
         Fm.Dispose()
 

@@ -334,8 +334,7 @@ Public Class Frm_ListaMezclas
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
 
         Dim _Id_Enc As Integer = _Fila.Cells("Id").Value
-        'Dim _Codnomen As String = _Fila.Cells("Codnomen").Value
-        'Dim _Cantfabricar As Double = _Fila.Cells("Cantfabricar").Value
+        Dim _Referencia As String = _Fila.Cells("Referencia").Value
 
         Dim _RowNomenclatura As DataRow
 
@@ -347,6 +346,7 @@ Public Class Frm_ListaMezclas
         End If
 
         Dim Fm As New Frm_SelecProdMezclaFab(_Id_Enc)
+        Fm.Text = _Referencia
         Fm.Cl_Mezcla = _Cl_Mezcla
         Fm.ShowDialog(Me)
         _RowNomenclatura = Fm.RowNomenclatura

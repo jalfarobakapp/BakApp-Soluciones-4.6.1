@@ -26,6 +26,8 @@ Partial Class Frm_ConfPuntosVta
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Txt_Concepto = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX11 = New DevComponents.DotNetBar.LabelX()
         Me.Input_ValMinPedCajear = New DevComponents.Editors.IntegerInput()
         Me.LabelX10 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX9 = New DevComponents.DotNetBar.LabelX()
@@ -42,6 +44,7 @@ Partial Class Frm_ConfPuntosVta
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Input_GCadaPesos = New DevComponents.Editors.IntegerInput()
+        Me.Chk_Activo = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Input_ValMinPedCajear, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -58,9 +61,9 @@ Partial Class Frm_ConfPuntosVta
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 179)
+        Me.Bar1.Location = New System.Drawing.Point(0, 233)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(543, 41)
+        Me.Bar1.Size = New System.Drawing.Size(533, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 98
@@ -81,6 +84,8 @@ Partial Class Frm_ConfPuntosVta
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.Controls.Add(Me.Txt_Concepto)
+        Me.GroupPanel1.Controls.Add(Me.LabelX11)
         Me.GroupPanel1.Controls.Add(Me.Input_ValMinPedCajear)
         Me.GroupPanel1.Controls.Add(Me.LabelX10)
         Me.GroupPanel1.Controls.Add(Me.LabelX9)
@@ -100,7 +105,7 @@ Partial Class Frm_ConfPuntosVta
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 12)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(520, 154)
+        Me.GroupPanel1.Size = New System.Drawing.Size(512, 184)
         '
         '
         '
@@ -131,6 +136,39 @@ Partial Class Frm_ConfPuntosVta
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 99
         Me.GroupPanel1.Text = "Detalle"
+        '
+        'Txt_Concepto
+        '
+        Me.Txt_Concepto.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Concepto.Border.Class = "TextBoxBorder"
+        Me.Txt_Concepto.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Concepto.ButtonCustom.Image = CType(resources.GetObject("Txt_Concepto.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Concepto.ButtonCustom.Visible = True
+        Me.Txt_Concepto.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Concepto.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Concepto.Location = New System.Drawing.Point(68, 130)
+        Me.Txt_Concepto.Name = "Txt_Concepto"
+        Me.Txt_Concepto.PreventEnterBeep = True
+        Me.Txt_Concepto.ReadOnly = True
+        Me.Txt_Concepto.Size = New System.Drawing.Size(429, 22)
+        Me.Txt_Concepto.TabIndex = 73
+        '
+        'LabelX11
+        '
+        Me.LabelX11.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX11.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX11.ForeColor = System.Drawing.Color.Black
+        Me.LabelX11.Location = New System.Drawing.Point(3, 129)
+        Me.LabelX11.Name = "LabelX11"
+        Me.LabelX11.Size = New System.Drawing.Size(59, 23)
+        Me.LabelX11.TabIndex = 72
+        Me.LabelX11.Text = "Concepto"
         '
         'Input_ValMinPedCajear
         '
@@ -191,6 +229,7 @@ Partial Class Frm_ConfPuntosVta
         Me.LabelX8.Size = New System.Drawing.Size(40, 23)
         Me.LabelX8.TabIndex = 69
         Me.LabelX8.Text = "puntos"
+        Me.LabelX8.TextAlignment = System.Drawing.StringAlignment.Center
         '
         'LabelX7
         '
@@ -385,11 +424,30 @@ Partial Class Frm_ConfPuntosVta
         Me.Input_GCadaPesos.TabIndex = 0
         Me.Input_GCadaPesos.Value = 100
         '
+        'Chk_Activo
+        '
+        Me.Chk_Activo.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Activo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Activo.CheckBoxImageChecked = CType(resources.GetObject("Chk_Activo.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Activo.FocusCuesEnabled = False
+        Me.Chk_Activo.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Activo.Location = New System.Drawing.Point(12, 202)
+        Me.Chk_Activo.Name = "Chk_Activo"
+        Me.Chk_Activo.Size = New System.Drawing.Size(194, 15)
+        Me.Chk_Activo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Activo.TabIndex = 100
+        Me.Chk_Activo.TabStop = False
+        Me.Chk_Activo.Text = "Sistema de fidelización activo"
+        '
         'Frm_ConfPuntosVta
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(543, 220)
+        Me.ClientSize = New System.Drawing.Size(533, 274)
+        Me.Controls.Add(Me.Chk_Activo)
         Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.Bar1)
         Me.DoubleBuffered = True
@@ -432,4 +490,7 @@ Partial Class Frm_ConfPuntosVta
     Friend WithEvents Input_ValMinPedCajear As DevComponents.Editors.IntegerInput
     Friend WithEvents LabelX10 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX9 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_Concepto As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX11 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Chk_Activo As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

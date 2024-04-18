@@ -8,6 +8,7 @@ Public Class Cl_Mezcla
 
     Public Property Zw_Pdp_CPT_MzEnc As New Zw_Pdp_CPT_MzEnc
     Public Property Zw_Pdp_CPT_MzDet As New Zw_Pdp_CPT_MzDet
+    Public Property Zw_Pdp_CPT_MzDetIngFab As New Zw_Pdp_CPT_MzDetIngFab
     Public Property Ls_Zw_Pdp_CPT_MzDet As New List(Of Zw_Pdp_CPT_MzDet)
 
     Public Sub New()
@@ -90,6 +91,45 @@ Public Class Cl_Mezcla
                 .Udad = _Row.Item("Udad")
                 .CantFabricar = _Row.Item("CantFabricar")
                 .CantFabricada = _Row.Item("CantFabricada")
+
+                _Mensaje_Mezcla.EsCorrecto = True
+                _Mensaje_Mezcla.Id = .Id
+
+            End With
+
+        Catch ex As Exception
+            _Mensaje_Mezcla.Mensaje = ex.Message
+        End Try
+
+        Return _Mensaje_Mezcla
+
+    End Function
+
+    Function Fx_Llenar_Zw_Pdp_CPT_MzDetIngFab(_Id_DetIngFab) As LsValiciones.Mensajes
+
+        Dim _Mensaje_Mezcla As New LsValiciones.Mensajes
+
+        Try
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Pdp_CPT_MzDetIngFab Where Id = " & _Id_DetIngFab
+            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_Row) Then
+                Throw New System.Exception("No se encontro el registro en la tabla Zw_Pdp_CPT_MzDetIngFab con el Id: " & _Id_DetIngFab)
+            End If
+
+            With Zw_Pdp_CPT_MzDetIngFab
+
+                .Id = _Row.Item("Id")
+                .Id_Det = _Row.Item("Id_Det")
+                .Id_Enc = _Row.Item("Id_Enc")
+                .Codigo = _Row.Item("Codigo")
+                .Descripcion = _Row.Item("Descripcion")
+                .Udad = _Row.Item("Udad")
+                .CantIngresada = _Row.Item("CantIngresada")
+                .CantFabricada = _Row.Item("CantFabricada")
+                .CodFuncionario = _Row.Item("CodFuncionario")
+                .FechaFabricacion = _Row.Item("FechaFabricacion")
 
                 _Mensaje_Mezcla.EsCorrecto = True
                 _Mensaje_Mezcla.Id = .Id
@@ -213,9 +253,12 @@ Public Class Cl_Mezcla
 
             With _Zw_Pdp_CPT_MzDetIngFab
 
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Pdp_CPT_MzDetIngFab (Id_Enc,Id_Det,Codigo,Descripcion,CantFabricada,CodFuncionario,FechaFabricacion) Values " &
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Pdp_CPT_MzDetIngFab (Id_Enc,Id_Det,Codigo,Descripcion," &
+                               "Udad,CantIngresada,CantFabricada,CodFuncionario,FechaFabricacion) Values " &
                                "(" & .Id_Enc & "," & .Id_Det & ",'" & .Codigo & "','" & .Descripcion &
-                               "'," & De_Num_a_Tx_01(.CantFabricada, False, 5) & ",'" & .CodFuncionario & "',Getdate())"
+                               "','" & .Udad & "'," & De_Num_a_Tx_01(.CantIngresada, False, 5) &
+                               "," & De_Num_a_Tx_01(.CantFabricada, False, 5) &
+                               ",'" & .CodFuncionario & "',Getdate())"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                 Comando.Transaction = myTrans
@@ -223,7 +266,10 @@ Public Class Cl_Mezcla
 
                 Dim _CantFabricada As Double
 
-                Comando = New System.Data.SqlClient.SqlCommand("Select SUM(CantFabricada) As CantFabricada From " & _Global_BaseBk & "Zw_Pdp_CPT_MzDetIngFab Where Id_Det = " & .Id_Det, Cn2)
+                Consulta_sql = "Select SUM(CantFabricada) As CantFabricada" & vbCrLf &
+                               "From " & _Global_BaseBk & "Zw_Pdp_CPT_MzDetIngFab Where Id_Det = " & .Id_Det
+
+                Comando = New System.Data.SqlClient.SqlCommand(Consulta_sql, Cn2)
                 Comando.Transaction = myTrans
                 Dim dfd1 As System.Data.SqlClient.SqlDataReader = Comando.ExecuteReader()
                 While dfd1.Read()
@@ -245,7 +291,156 @@ Public Class Cl_Mezcla
             _Mensaje_Mezcla.EsCorrecto = True
             _Mensaje_Mezcla.Id = 0
             _Mensaje_Mezcla.Detalle = "Fabricar Mezcla"
-            _Mensaje_Mezcla.Mensaje = "Se crea una nuevas fabricaciones"
+            _Mensaje_Mezcla.Mensaje = "Mezcla ingresada correctamente"
+
+            'Throw New System.Exception(_Sql.Pro_Error)
+
+
+        Catch ex As Exception
+
+            _Mensaje_Mezcla.Mensaje = ex.Message
+            _Mensaje_Mezcla.Resultado = Consulta_sql
+            If IsNothing(myTrans) Then myTrans.Rollback()
+
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+        End Try
+
+        Return _Mensaje_Mezcla
+
+    End Function
+
+    Function Fx_Editar_Fabricaciones(_Zw_Pdp_CPT_MzDetIngFab As Zw_Pdp_CPT_MzDetIngFab) As LsValiciones.Mensajes
+
+        Dim _Mensaje_Mezcla As New LsValiciones.Mensajes
+
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+        Dim Cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        Try
+
+            Consulta_sql = String.Empty
+
+            SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
+
+            myTrans = Cn2.BeginTransaction()
+
+            With _Zw_Pdp_CPT_MzDetIngFab
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Pdp_CPT_MzDetIngFab Set " & vbCrLf &
+                               "CantIngresada = " & De_Num_a_Tx_01(.CantIngresada, False, 5) &
+                               ",CantFabricada = " & De_Num_a_Tx_01(.CantFabricada, False, 5) & vbCrLf &
+                               ",CodFuncionario = '" & .CodFuncionario & "'" & vbCrLf &
+                               "Where Id = " & .Id
+
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+                Dim _CantFabricada As Double
+
+                Consulta_sql = "Select SUM(CantFabricada) As CantFabricada" & vbCrLf &
+                               "From " & _Global_BaseBk & "Zw_Pdp_CPT_MzDetIngFab Where Id_Det = " & .Id_Det
+
+                Comando = New System.Data.SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Dim dfd1 As System.Data.SqlClient.SqlDataReader = Comando.ExecuteReader()
+                While dfd1.Read()
+                    _CantFabricada = dfd1("CantFabricada")
+                End While
+                dfd1.Close()
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Pdp_CPT_MzDet Set CantFabricada = " & De_Num_a_Tx_01(_CantFabricada, False, 5) & vbCrLf &
+                               "Where Id = " & .Id_Det
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+            End With
+
+            myTrans.Commit()
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+            _Mensaje_Mezcla.EsCorrecto = True
+            _Mensaje_Mezcla.Id = 0
+            _Mensaje_Mezcla.Detalle = "Editar Mezcla"
+            _Mensaje_Mezcla.Mensaje = "Mezcla actualizada correctamente"
+
+            'Throw New System.Exception(_Sql.Pro_Error)
+
+
+        Catch ex As Exception
+
+            _Mensaje_Mezcla.Mensaje = ex.Message
+            _Mensaje_Mezcla.Resultado = Consulta_sql
+            If IsNothing(myTrans) Then myTrans.Rollback()
+
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+        End Try
+
+        Return _Mensaje_Mezcla
+
+    End Function
+
+    Function Fx_Eliminar_Fabricaciones(_Zw_Pdp_CPT_MzDetIngFab As Zw_Pdp_CPT_MzDetIngFab) As LsValiciones.Mensajes
+
+        Dim _Mensaje_Mezcla As New LsValiciones.Mensajes
+
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+        Dim Cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        Try
+
+            Consulta_sql = String.Empty
+
+            SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
+
+            myTrans = Cn2.BeginTransaction()
+
+            With _Zw_Pdp_CPT_MzDetIngFab
+
+                Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Pdp_CPT_MzDetIngFab" & vbCrLf &
+                               "Where Id = " & .Id
+
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+                Dim _CantFabricada As Double
+
+                Consulta_sql = "Select SUM(CantFabricada) As CantFabricada" & vbCrLf &
+                               "From " & _Global_BaseBk & "Zw_Pdp_CPT_MzDetIngFab Where Id_Det = " & .Id_Det
+
+                Comando = New System.Data.SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Dim dfd1 As System.Data.SqlClient.SqlDataReader = Comando.ExecuteReader()
+                While dfd1.Read()
+                    _CantFabricada = dfd1("CantFabricada")
+                End While
+                dfd1.Close()
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Pdp_CPT_MzDet Set CantFabricada = " & De_Num_a_Tx_01(_CantFabricada, False, 5) & vbCrLf &
+                               "Where Id = " & .Id_Det
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+            End With
+
+            myTrans.Commit()
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+            _Mensaje_Mezcla.EsCorrecto = True
+            _Mensaje_Mezcla.Id = 0
+            _Mensaje_Mezcla.Detalle = "Eliminar Mezcla"
+            _Mensaje_Mezcla.Mensaje = "Mezcla eliminada correctamente"
 
             'Throw New System.Exception(_Sql.Pro_Error)
 

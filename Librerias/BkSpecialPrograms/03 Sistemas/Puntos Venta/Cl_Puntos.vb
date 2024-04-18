@@ -15,7 +15,7 @@ Public Class Cl_Puntos
         Dim _Zw_PtsVta_Configuracion As New Zw_PtsVta_Configuracion
 
         If Not _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_PtsVta_Configuracion") Then
-            Return Nothing
+            Return _Zw_PtsVta_Configuracion
         End If
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_PtsVta_Configuracion Where Empresa = '" & _Empresa & "'"
@@ -42,6 +42,7 @@ Public Class Cl_Puntos
             .MinPtosCanjear = _Row.Item("MinPtosCanjear")
             .ValMinPedCajear = _Row.Item("ValMinPedCajear")
             .Concepto = _Row.Item("Concepto")
+            .Activo = _Row.Item("Activo")
 
         End With
 
@@ -64,6 +65,8 @@ Public Class Cl_Puntos
                                ",REquivPesos = " & .REquivPesos & vbCrLf &
                                ",MinPtosCanjear = " & .MinPtosCanjear & vbCrLf &
                                ",ValMinPedCajear = " & .ValMinPedCajear & vbCrLf &
+                               ",Concepto = '" & .Concepto & "'" & vbCrLf &
+                               ",Activo = " & Convert.ToInt32(.Activo) & vbCrLf &
                                "Where Empresa = '" & .Empresa & "'"
                 If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
                     Throw New System.Exception(_Sql.Pro_Error)
@@ -98,14 +101,15 @@ Public Class Cl_Puntos
 
             With Zw_PtsVta_Configuracion
 
-                'Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_PtsVta_Doc Where Idmaeedo = " & _Idmaeedo
-                '_Row = _Sql.Fx_Get_DataRow(Consulta_sql)
+                If IsNothing(Zw_PtsVta_Configuracion) Then
+                    _Mensaje.Detalle = "Validación"
+                    Throw New System.Exception("No se econtro el registro en la tabla Zw_PtsVta_Configuracion")
+                End If
 
-                'If Not IsNothing(_Row) Then
-                '    _Mensaje.Detalle = "Validación"
-                '    Throw New System.Exception("Ya existen puntos asignado a este documento" & vbCrLf &
-                '                               "Documento: " & _Row.Item("Tido") & "-" & _Row.Item("Nudo"))
-                'End If
+                If Not Zw_PtsVta_Configuracion.Activo Then
+                    _Mensaje.Detalle = "Validación"
+                    Throw New System.Exception("Sistema de fidelización de clientes inactivo")
+                End If
 
                 Consulta_sql = "Select IDMAEEDO,ENDO,SUENDO,TIDO,NUDO,FEEMDO,VABRDO,VAABDO,NUDONODEFI From MAEEDO Where IDMAEEDO = " & _Idmaeedo
                 _Row = _Sql.Fx_Get_DataRow(Consulta_sql)

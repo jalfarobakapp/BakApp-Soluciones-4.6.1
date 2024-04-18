@@ -2299,7 +2299,24 @@ Public Class Frm_Crear_Entidad_Mt
 
     Private Sub Btn_Puntos_Click(sender As Object, e As EventArgs) Handles Btn_Puntos.Click
 
+        Dim _Cl_Puntos As New Cl_Puntos()
+        _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa)
+
+        If Not _Cl_Puntos.Zw_PtsVta_Configuracion.Activo Then
+            MessageBoxEx.Show(Me, "Sistema de fidelización de clientes inactivo", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
         With Cl_Entidades
+
+            If .JuntaPuntos Then
+
+                Dim Fmptos As New Frm_InformePtosClientes(Txt_Koen.Text, Txt_Suen.Text)
+                Fmptos.ShowDialog(Me)
+                Fmptos.Dispose()
+                Return
+
+            End If
 
             Dim Fm As New Frm_Crear_Entidad_Mt_Puntos
             Fm.Txt_EmailPuntos.Text = .EmailPuntos.Trim

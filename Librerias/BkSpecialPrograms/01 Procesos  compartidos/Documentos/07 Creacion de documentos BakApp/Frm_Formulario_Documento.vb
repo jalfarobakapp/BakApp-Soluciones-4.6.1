@@ -7449,6 +7449,15 @@ Public Class Frm_Formulario_Documento
                         End If
                     End If
 
+                    For Each _Fl As DataRow In _TblDetalle.Rows
+                        If _Fl.Item("Espuntosvta") Then
+                            MessageBoxEx.Show(Me, "Documento contiene concepto de puntos de fidelización" & vbCrLf &
+                                                                      "Para poder editar debe quitar el concepto", "Validación", MessageBoxButtons.OK,
+                                                                  MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, Me.TopMost)
+                            Return
+                        End If
+                    Next
+
                     _Fila_Clonada = Fx_Clonar_Fila_Grilla(_Fila)
 
                     If _Bloquear_Edicion_Detalle Then
@@ -9028,6 +9037,17 @@ Public Class Frm_Formulario_Documento
 
                         End If
 
+                        Dim _Cl_Puntos As New Cl_Puntos
+                        _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa)
+
+                        If Not IsNothing(_Cl_Puntos.Zw_PtsVta_Configuracion) AndAlso _Cl_Puntos.Zw_PtsVta_Configuracion.Concepto.Trim = _Codigo.Trim Then
+                            MessageBoxEx.Show(Me, "CONCEPTO EXCLUSIVO PARA USO DE PUNTOS EN SISTEMA DE FIDELIZACION DE CLIENTES", "Validación",
+                                              MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
+                            _Fila.Cells("Codigo").Value = String.Empty
+                            Exit Sub
+                        End If
+
+
                         Dim _Bloqueado As Boolean = _RowConcepto.Item("BLOQUEADO")
 
                         If _Bloqueado Then
@@ -10000,6 +10020,15 @@ Public Class Frm_Formulario_Documento
                                                 Return
                                             End If
 
+                                            For Each _Fl As DataRow In _TblDetalle.Rows
+                                                If _Fl.Item("Espuntosvta") Then
+                                                    MessageBoxEx.Show(Me, "Documento contiene concepto de puntos de fidelización" & vbCrLf &
+                                                                      "Para poder editar debe quitar el concepto", "Validación", MessageBoxButtons.OK,
+                                                                  MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, Me.TopMost)
+                                                    Return
+                                                End If
+                                            Next
+
                                             Dim _Permitir As Boolean = True
 
                                             If Not _Post_Venta Then
@@ -10679,10 +10708,13 @@ Public Class Frm_Formulario_Documento
             Dim _FunValida_Compra As String = _Fila.Item("FunValida_Compra")
             Dim _Nmarca As String = _Fila.Item("Nmarca")
             Dim _RtuVariable As Boolean = _Fila.Item("RtuVariable")
+            Dim _Espuntosvta As Boolean = _Fila.Item("Espuntosvta")
 
             _Row.Cells("Id_DocDet").Value = _Id_DocDet
             _Row.Cells("CodLista").Value = _CodLista
             _Row.Cells("Nuevo_Producto").Value = False
+
+            _Row.Cells("Espuntosvta").Value = _Espuntosvta
 
             Dim _RowProducto As DataRow
 
@@ -12690,7 +12722,6 @@ Public Class Frm_Formulario_Documento
                     If Not _Post_Venta Then
 
                         Dim _Buscar_Documentos_Relacionados As Boolean
-
 
                         If Not IsNothing(_RowEntidad) Then
 
@@ -14726,6 +14757,11 @@ Public Class Frm_Formulario_Documento
     End Sub
 
     Private Sub Sb_EliminarFilaPuntos()
+
+        If Not _Post_Venta Then
+            Return
+        End If
+
         'Throw New NotImplementedException()
         Dim _FilaElimina As DataGridViewRow
 
@@ -17502,6 +17538,13 @@ Public Class Frm_Formulario_Documento
 
                         Sb_Agregar_Concepto(_New_Fila, _RowConcepto)
 
+                        Dim _Cl_Puntos As New Cl_Puntos
+                        _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa)
+
+                        If Not IsNothing(_Cl_Puntos.Zw_PtsVta_Configuracion) AndAlso _Cl_Puntos.Zw_PtsVta_Configuracion.Concepto = _Codigo Then
+                            _New_Fila.Cells("Espuntosvta").Value = True
+                        End If
+
                         If _RowConcepto.Item("ModFechVto") Then
 
                             If Not _ModFechVto Then
@@ -17510,7 +17553,6 @@ Public Class Frm_Formulario_Documento
                             End If
 
                         End If
-
 
                     Else
 
@@ -22427,6 +22469,8 @@ Public Class Frm_Formulario_Documento
 
         End If
 
+        Sb_EliminarFilaPuntos()
+
         Sb_Marcar_Grilla()
         Sb_Botones_Activos(False)
 
@@ -26001,7 +26045,18 @@ Public Class Frm_Formulario_Documento
 
     Sub Sb_AgregarDsctoXPuntos()
 
-        If Not _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_PtsVta_Doc") Then
+        If _Revision_Remota Or Not _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_PtsVta_Doc") Then
+            Return
+        End If
+
+        Dim _Cl_Puntos As New Cl_Puntos
+        _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa)
+
+        If IsNothing(_Cl_Puntos.Zw_PtsVta_Configuracion) Then
+            Return
+        End If
+
+        If Not _Cl_Puntos.Zw_PtsVta_Configuracion.Activo Then
             Return
         End If
 
@@ -26018,6 +26073,12 @@ Public Class Frm_Formulario_Documento
         If _Puntos <= 0 Then
             Return
         End If
+
+        For Each _Fila As DataGridViewRow In Grilla_Detalle.Rows
+            If _Fila.Cells("Espuntosvta").Value Then
+                Return
+            End If
+        Next
 
         If MessageBoxEx.Show(Me, "Tiene " & _Puntos & " puntos acumulados." & vbCrLf & vbCrLf &
                      "¿Desea utilizarlos en esta compra?", "SISTEMA DE PUNTOS", vbYesNo, vbQuestion) <> DialogResult.Yes Then

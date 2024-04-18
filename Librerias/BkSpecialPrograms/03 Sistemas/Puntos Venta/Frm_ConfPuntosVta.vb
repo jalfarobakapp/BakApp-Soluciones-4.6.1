@@ -2,8 +2,12 @@
 
 Public Class Frm_ConfPuntosVta
 
-    'Dim _Zw_PtsVta_Configuracion As New Zw_PtsVta_Configuracion
-    Dim _Cl_Puntos As Cl_Puntos
+    Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+    Dim Consulta_sql As String
+
+    Private _Cl_Puntos As Cl_Puntos
+    Private _Row_Concepto As DataRow
+
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -28,6 +32,13 @@ Public Class Frm_ConfPuntosVta
             Input_REquivPesos.Value = .REquivPesos
             Input_MinPtosCanjear.Value = .MinPtosCanjear
             Input_ValMinPedCajear.Value = .ValMinPedCajear
+            Txt_Concepto.Tag = .Concepto
+            Chk_Activo.Checked = .Activo
+
+            Consulta_sql = "Select * From TABCT Where KOCT = '" & .Concepto & "'"
+            _Row_Concepto = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Txt_Concepto.Text = .Concepto.ToString.Trim & " - " & _Row_Concepto.Item("NOKOCT").ToString.Trim
 
         End With
 
@@ -45,6 +56,8 @@ Public Class Frm_ConfPuntosVta
             .REquivPesos = Input_REquivPesos.Value
             .MinPtosCanjear = Input_MinPtosCanjear.Value
             .ValMinPedCajear = Input_ValMinPedCajear.Value
+            .Concepto = Txt_Concepto.Tag
+            .Activo = Chk_Activo.Checked
 
         End With
 
@@ -59,6 +72,27 @@ Public Class Frm_ConfPuntosVta
                           "No sera necesario grabar en el siguiente formulario.", _Mensaje.Detalle,
                           MessageBoxButtons.OK, MessageBoxIcon.Information)
         Me.Close()
+
+    End Sub
+
+    Private Sub Txt_Concepto_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Concepto.ButtonCustomClick
+
+        Dim _Sql_Filtro_Condicion_Extra = "And TICT = 'D'"
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Conceptos, _Sql_Filtro_Condicion_Extra, False, False, True) Then
+
+            Dim _Concepto As String = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
+
+            Consulta_sql = "Select * From TABCT Where KOCT = '" & _Concepto & "'"
+            _Row_Concepto = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Txt_Concepto.Tag = _Concepto
+            Txt_Concepto.Text = _Concepto.ToString.Trim & " - " & _Row_Concepto.Item("NOKOCT").ToString.Trim
+
+        End If
 
     End Sub
 

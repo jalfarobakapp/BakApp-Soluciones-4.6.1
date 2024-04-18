@@ -4,6 +4,8 @@
     Public Property Id_Det As Integer
     Public Property Codigo As String
     Public Property Descripcion As String
+    Public Property Udad As String
+    Public Property CantIngresada As Double
     Public Property CantFabricada As Double
     Public Property CodFuncionario As String
     Public Property FechaFabricacion As DateTime?

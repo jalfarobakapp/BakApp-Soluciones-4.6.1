@@ -1189,33 +1189,30 @@ Public Class Frm_BuscarDocumento_Mt
                     Next
                 End If
 
-                Dim _FunAutorizaFac = FUNCIONARIO
+                If HabilitarNVVParaFacturar Then
 
-                _Fila.Cells("FunAutoriza").Value = String.Empty
+                    Dim _FunAutorizaFac = FUNCIONARIO
 
-                If Not _Autorizado Then
-
-                    Dim _Rows_Usuario_Autoriza As DataRow
-
-                    _Autorizado = Fx_Tiene_Permiso(Me, "Doc00082",,,,,,,,, _Rows_Usuario_Autoriza)
+                    _Fila.Cells("FunAutoriza").Value = String.Empty
 
                     If Not _Autorizado Then
-                        _Fila.Cells("Chk").Value = False
-                        Return
+
+                        Dim _Rows_Usuario_Autoriza As DataRow
+
+                        _Autorizado = Fx_Tiene_Permiso(Me, "Doc00082",,,,,,,,, _Rows_Usuario_Autoriza)
+
+                        If Not _Autorizado Then
+                            _Fila.Cells("Chk").Value = False
+                            Return
+                        End If
+
+                        _FunAutorizaFac = _Rows_Usuario_Autoriza.Item("KOFU")
+
                     End If
 
-                    _FunAutorizaFac = _Rows_Usuario_Autoriza.Item("KOFU")
+                    _Fila.Cells("FunAutoriza").Value = _FunAutorizaFac
 
                 End If
-
-                _Fila.Cells("FunAutoriza").Value = _FunAutorizaFac
-
-                'If Not Fx_RevisarFincred(_Idmaeedo, True) Then
-                '    If MessageBoxEx.Show(Me, "¿Desea habilitar de todas formas la nota de venta?", "Rechazado por FINCRED",
-                '                         MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
-                '        _Fila.Cells("Chk").Value = False
-                '    End If
-                'End If
 
             End If
 

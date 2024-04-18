@@ -17,6 +17,7 @@ Public Class Frm_GRI_Ingreso
     End Sub
 
     Private Sub Frm_GRI_Ingreso_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Btn_FabMezcla.Visible = True
         Btn_FabMezcla.Enabled = True
     End Sub
 

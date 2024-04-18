@@ -9,5 +9,6 @@
     Public Property MinPtosCanjear As Double
     Public Property ValMinPedCajear As Double
     Public Property Concepto As String
+    Public Property Activo As Boolean
 End Class
 

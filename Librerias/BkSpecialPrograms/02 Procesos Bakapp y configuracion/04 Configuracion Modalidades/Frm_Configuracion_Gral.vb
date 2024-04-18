@@ -673,6 +673,9 @@ Public Class Frm_Configuracion_Gral
 
     Private Sub Btn_ConfPuntosVta_Click(sender As Object, e As EventArgs) Handles Btn_ConfPuntosVta.Click
 
+        Dim _Cl_Puntos As New Cl_Puntos()
+        _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa)
+
         Dim Fm As New Frm_ConfPuntosVta
         Fm.ShowDialog(Me)
         Fm.Dispose()

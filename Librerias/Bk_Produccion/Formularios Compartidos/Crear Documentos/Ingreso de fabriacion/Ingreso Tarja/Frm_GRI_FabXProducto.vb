@@ -384,6 +384,8 @@ Public Class Frm_GRI_FabXProducto
         Txt_Analista.Text = String.Empty
 
         _Cl_Tarja._Cl_Tarja_Ent.Analista = FUNCIONARIO
+        _Cl_Tarja._Cl_Tarja_Det.Clear()
+
         Txt_Analista.Text = Nombre_funcionario_activo.ToString.Trim
 
         Txt_Descripcion_Kopral.Text = String.Empty
@@ -695,7 +697,13 @@ Public Class Frm_GRI_FabXProducto
         End If
 
         If _Row_Lote.Item("Codigo").ToString.Trim <> Txt_Codigo.Text.Trim Then
-            MessageBoxEx.Show(Me, "El número de lote " & _NroLote & " no pertence al producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+            'MessageBoxEx.Show(Me, "El número de lote " & _NroLote & " no pertence al producto " & Txt_Codigo.Text.Trim & vbCrLf & vbCrLf &
+            '                  "El lote " & _NroLote & " es del producto " & _Row_Lote.Item("Codigo").ToString.Trim, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+            MessageBoxEx.Show(Me, "El número de lote " & _NroLote & " pertence al producto " & _Row_Lote.Item("Codigo").ToString.Trim & vbCrLf & vbCrLf &
+                              "No puede grabar el mismo numero de lote para otro producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
             Return
         End If
 
