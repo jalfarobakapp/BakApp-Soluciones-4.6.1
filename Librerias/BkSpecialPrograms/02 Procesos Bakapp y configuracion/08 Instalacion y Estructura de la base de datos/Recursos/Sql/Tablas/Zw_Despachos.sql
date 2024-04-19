@@ -42,7 +42,7 @@ CREATE TABLE [dbo].[Zw_Despachos](
 	[Sucursal_Retiro]			[char](3)	    Not Null Default (''),	
     [CodPais]					[char](3)	    Not Null Default (''),
 	[CodCiudad]					[char](3)	    Not Null Default (''),
-	[CodComuna]					[char](3)	    Not Null Default (''),
+	[CodComuna]					[char](6)	    Not Null Default (''),
     [Nombre_Contacto]			[varchar](50)	Not Null Default (''),
     [EntregaPaletizada]	        [bit]           Not Null DEFAULT(0),
  CONSTRAINT [PK_Zw_Despachos] PRIMARY KEY CLUSTERED 

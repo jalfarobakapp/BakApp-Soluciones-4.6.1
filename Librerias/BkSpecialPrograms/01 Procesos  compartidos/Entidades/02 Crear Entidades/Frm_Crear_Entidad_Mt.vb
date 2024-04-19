@@ -976,6 +976,7 @@ Public Class Frm_Crear_Entidad_Mt
 
                     End If
 
+                    '.FechaInscripPuntos = NuloPorNro(.FechaInscripPuntos, #01-01-0001#)
 
                     Consulta_sql = "Update " & _Global_BaseBk & "Zw_Entidades Set " & vbCrLf &
                                    "Libera_NVV = " & Convert.ToInt32(.Libera_NVV) & vbCrLf &
@@ -984,19 +985,23 @@ Public Class Frm_Crear_Entidad_Mt
                                    ",EmailCompras = '" & .EmailCompras & "'" & vbCrLf &
                                    ",MontoMinCompra = " & .MontoMinCompra & vbCrLf &
                                    ",NoResMtoMinComAsCompraAuto = " & Convert.ToInt32(.NoResMtoMinComAsCompraAuto) & vbCrLf &
-                                   ",JuntaPuntos = " & Convert.ToInt32(.JuntaPuntos) & vbCrLf &
-                                   ",EmailPuntos = '" & .EmailPuntos.Trim & "'" & vbCrLf &
-                                   ",FechaInscripPuntos = '" & Format(.FechaInscripPuntos, "yyyyMMdd") & "'" & vbCrLf &
                                    "Where CodEntidad = '" & .CodEntidad & "' And CodSucEntidad = '" & .CodSucEntidad & "'"
 
                     Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                     Comando.Transaction = myTrans
                     Comando.ExecuteNonQuery()
 
+                    If .JuntaPuntos Then
+
+                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Entidades Set " & vbCrLf &
+                                       "JuntaPuntos = " & Convert.ToInt32(.JuntaPuntos) & vbCrLf &
+                                       ",EmailPuntos = '" & .EmailPuntos.Trim & "'" & vbCrLf &
+                                       ",FechaInscripPuntos = '" & Format(.FechaInscripPuntos, "yyyyMMdd") & "'" & vbCrLf &
+                                       "Where CodEntidad = '" & .CodEntidad & "' And CodSucEntidad = '" & .CodSucEntidad & "'"
+
+                    End If
+
                 End With
-
-
-
 
             End If
 
@@ -1381,7 +1386,7 @@ Public Class Frm_Crear_Entidad_Mt
                 Txt_Dimoper.Text = FormatNumber(Txt_Dimoper.Tag, 0)
 
                 Dtp_Fecreen.Value = NuloPorNro(.FECREEN, Now.Date) 'NuloPorNro(_RowEntidad.Item("FECREEN"), Now.Date)
-                Dtp_Fevecren.Value = NuloPorNro(.FEVECREN, Nothing) 'NuloPorNro(_RowEntidad.Item("FEVECREN"), Nothing)
+                Dtp_Fevecren.Value = NuloPorNro(.FEVECREN, #01-01-0001#) 'NuloPorNro(_RowEntidad.Item("FEVECREN"), Nothing)
 
                 Txt_Cpen.Text = .CPEN.Trim 'Trim(_RowEntidad.Item("CPEN"))
 

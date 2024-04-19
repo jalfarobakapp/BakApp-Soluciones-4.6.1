@@ -86,7 +86,7 @@ Partial Class Frm_GRI_ProductosOT
         Me.Menu_Contextual.AntiAlias = True
         Me.Menu_Contextual.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
-        Me.Menu_Contextual.Location = New System.Drawing.Point(239, 125)
+        Me.Menu_Contextual.Location = New System.Drawing.Point(182, 45)
         Me.Menu_Contextual.Name = "Menu_Contextual"
         Me.Menu_Contextual.Size = New System.Drawing.Size(329, 25)
         Me.Menu_Contextual.Stretch = True
@@ -189,7 +189,6 @@ Partial Class Frm_GRI_ProductosOT
         Me.Controls.Add(Me.GroupPanel4)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True

@@ -80,7 +80,8 @@ Public Class Frm_Stmp_Listado
                        "When 'FACTU' Then Case TipoPago When 'Contado' Then 'Facturada, pase por CAJA...' When 'Credito' Then 'Facturada, pase a DESPACHO EN BODEGA...' End" & vbCrLf &
                        "When 'CERRA' Then 'Cerrada'" & vbCrLf &
                        "When 'NULO' Then 'Nula'" & vbCrLf &
-                       "End As 'Estado_Str'" & vbCrLf &
+                       "End As 'Estado_Str'," & vbCrLf &
+                       "FechaCreacion As 'HoraCreacion'" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Stmp_Enc Enc" & vbCrLf &
                        "Inner Join MAEEDO Edo On Edo.IDMAEEDO = Enc.Idmaeedo" & vbCrLf &
                        "Left Join MAEEN En On En.KOEN = Enc.Endo And En.SUEN = Enc.Suendo" & vbCrLf &
@@ -136,14 +137,14 @@ Public Class Frm_Stmp_Listado
             .Columns("SUDO").Visible = True
             .Columns("SUDO").HeaderText = "Suc."
             .Columns("SUDO").ToolTipText = "Sucursal del documento"
-            .Columns("SUDO").Width = 80
+            .Columns("SUDO").Width = 60
             .Columns("SUDO").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Endo").Visible = True
             .Columns("Endo").HeaderText = "Entidad"
             '.Columns("Endo").ToolTipText = "Estado del Ticket"
-            .Columns("Endo").Width = 120
+            .Columns("Endo").Width = 70
             .Columns("Endo").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -161,12 +162,27 @@ Public Class Frm_Stmp_Listado
             .Columns("NOKOEN").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("FechaCreacion").Visible = True
+            .Columns("FechaCreacion").Visible = (_Tbas.Name = "Tab_Completadas")
             .Columns("FechaCreacion").HeaderText = "F.Creación"
-            '.Columns("FechaCreacion").ToolTipText = "de tope de la oferta"
             .Columns("FechaCreacion").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("FechaCreacion").Width = 100
+            .Columns("FechaCreacion").DefaultCellStyle.Format = "dd/MM/yyyy"
+            .Columns("FechaCreacion").Width = 70
             .Columns("FechaCreacion").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("HoraCreacion").Visible = (_Tbas.Name = "Tab_Completadas")
+            .Columns("HoraCreacion").HeaderText = "H.Crea"
+            .Columns("HoraCreacion").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("HoraCreacion").DefaultCellStyle.Format = "HH:mm"
+            .Columns("HoraCreacion").Width = 50
+            .Columns("HoraCreacion").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("DocEmitir").Visible = True
+            .Columns("DocEmitir").HeaderText = "Doc.Emitir"
+            '.Columns("NOKOEN").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("DocEmitir").Width = 70
+            .Columns("DocEmitir").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Estado_Str").Visible = True
@@ -312,15 +328,14 @@ Public Class Frm_Stmp_Listado
         Dim _Facturar As Boolean = _Global_Row_Configuracion_General.Item("Pickear_FacturarAutoCompletas")
         Dim _Mensaje_Stem As New LsValiciones.Mensajes
 
-        '_Mensaje_Stem = Fx_Crear_Ticket(_Row_Documento.Item("IDMAEEDO"), _Global_Row_Configuracion_General.Item("Pickear_FacturarAutoCompletas"), "R")
-
         Dim _Cl_Stmp As New Cl_Stmp
         _Mensaje_Stem = _Cl_Stmp.Fx_Crear_Ticket(_Row_Documento.Item("IDMAEEDO"),
                                  _Row_Documento.Item("TIDO"),
                                  _Row_Documento.Item("NUDO"),
                                  _Facturar,
                                  FechaDelServidor,
-                                 "R")
+                                 "R",
+                                 True)
 
         Dim _Icon As MessageBoxIcon
 
@@ -338,108 +353,108 @@ Public Class Frm_Stmp_Listado
 
 
 
-        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Docu_Ent",
-                                                       "Empresa = '" & _Row_Documento.Item("EMPRESA") & "'" &
-                                                       " And Idmaeedo = " & _Row_Documento.Item("IDMAEEDO") &
-                                                       " And Tido = '" & _Row_Documento.Item("TIDO") & "'" &
-                                                       " And Nudo = '" & _Row_Documento.Item("NUDO") & "'")
+        'Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Docu_Ent",
+        '                                               "Empresa = '" & _Row_Documento.Item("EMPRESA") & "'" &
+        '                                               " And Idmaeedo = " & _Row_Documento.Item("IDMAEEDO") &
+        '                                               " And Tido = '" & _Row_Documento.Item("TIDO") & "'" &
+        '                                               " And Nudo = '" & _Row_Documento.Item("NUDO") & "'")
 
-        If _Reg = 0 Then
+        'If _Reg = 0 Then
 
-            Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
-            Dim _TipoEstacion As String = _Global_Row_EstacionBk.Item("TipoEstacion")
+        '    Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+        '    Dim _TipoEstacion As String = _Global_Row_EstacionBk.Item("TipoEstacion")
 
-            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Ent (Idmaeedo,NombreEquipo,TipoEstacion,Empresa,Modalidad,Tido,Nudo," &
-                           "FechaHoraGrab,HabilitadaFac,FunAutorizaFac,Pickear)" & vbCrLf &
-                           "Select IDMAEEDO,'" & _NombreEquipo & "','" & _TipoEstacion & "',EMPRESA,'?',TIDO,NUDO,LAHORA,0,'',1" & vbCrLf &
-                           "From MAEEDO Where IDMAEEDO = " & _Row_Documento.Item("IDMAEEDO") & vbCrLf &
-                           "Insert Into " & _Global_BaseBk & "Zw_Docu_Det (Idmaeddo,Idmaeedo,Tido,Nudo,Codigo,Descripcion,RtuVariable)" & vbCrLf &
-                           "Select IDMAEDDO,IDMAEEDO,TIDO,NUDO,KOPRCT,NOKOPR,0" & vbCrLf &
-                           "From MAEDDO Where IDMAEEDO = " & _Row_Documento.Item("IDMAEEDO")
-            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+        '    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Ent (Idmaeedo,NombreEquipo,TipoEstacion,Empresa,Modalidad,Tido,Nudo," &
+        '                   "FechaHoraGrab,HabilitadaFac,FunAutorizaFac,Pickear)" & vbCrLf &
+        '                   "Select IDMAEEDO,'" & _NombreEquipo & "','" & _TipoEstacion & "',EMPRESA,'?',TIDO,NUDO,LAHORA,0,'',1" & vbCrLf &
+        '                   "From MAEEDO Where IDMAEEDO = " & _Row_Documento.Item("IDMAEEDO") & vbCrLf &
+        '                   "Insert Into " & _Global_BaseBk & "Zw_Docu_Det (Idmaeddo,Idmaeedo,Tido,Nudo,Codigo,Descripcion,RtuVariable)" & vbCrLf &
+        '                   "Select IDMAEDDO,IDMAEEDO,TIDO,NUDO,KOPRCT,NOKOPR,0" & vbCrLf &
+        '                   "From MAEDDO Where IDMAEEDO = " & _Row_Documento.Item("IDMAEEDO")
+        '    _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
-        End If
+        'End If
 
-        Dim _Row_Entidad As DataRow = Fx_Traer_Datos_Entidad(_Row_Documento.Item("ENDO"), _Row_Documento.Item("SUENDO"))
-        Dim _Cl_Stem As New Cl_Stmp
+        'Dim _Row_Entidad As DataRow = Fx_Traer_Datos_Entidad(_Row_Documento.Item("ENDO"), _Row_Documento.Item("SUENDO"))
+        'Dim _Cl_Stem As New Cl_Stmp
 
-        Dim _Secueven As String
+        'Dim _Secueven As String
 
-        Try
-            _Secueven = _Row_Entidad.Item("SECUEVEN")
-        Catch ex As Exception
-            _Secueven = "NFG"
-        End Try
+        'Try
+        '    _Secueven = _Row_Entidad.Item("SECUEVEN")
+        'Catch ex As Exception
+        '    _Secueven = "NFG"
+        'End Try
 
-        With _Cl_Stem.Zw_Stmp_Enc
+        'With _Cl_Stem.Zw_Stmp_Enc
 
-            .Empresa = ModEmpresa
-            .Sucursal = ModSucursal
-            .Idmaeedo = _Row_Documento.Item("IDMAEEDO")
-            .Tido = _Row_Documento.Item("TIDO")
-            .Nudo = _Row_Documento.Item("NUDO")
-            .Endo = _Row_Documento.Item("ENDO")
-            .Suendo = _Row_Documento.Item("SUENDO")
-            .CodFuncionario_Crea = FUNCIONARIO
-            .FechaCreacion = _FechaServidor
-            .Estado = "PREPA"
-            .Secueven =
-            .Facturar = _Global_Row_Configuracion_General.Item("Pickear_FacturarAutoCompletas")
+        '    .Empresa = ModEmpresa
+        '    .Sucursal = ModSucursal
+        '    .Idmaeedo = _Row_Documento.Item("IDMAEEDO")
+        '    .Tido = _Row_Documento.Item("TIDO")
+        '    .Nudo = _Row_Documento.Item("NUDO")
+        '    .Endo = _Row_Documento.Item("ENDO")
+        '    .Suendo = _Row_Documento.Item("SUENDO")
+        '    .CodFuncionario_Crea = FUNCIONARIO
+        '    .FechaCreacion = _FechaServidor
+        '    .Estado = "PREPA"
+        '    .Secueven =
+        '    .Facturar = _Global_Row_Configuracion_General.Item("Pickear_FacturarAutoCompletas")
 
-            Try
-                .Secueven = _Row_Entidad.Item("SECUEVEN")
-            Catch ex As Exception
-                .Secueven = String.Empty
-            End Try
+        '    Try
+        '        .Secueven = _Row_Entidad.Item("SECUEVEN")
+        '    Catch ex As Exception
+        '        .Secueven = String.Empty
+        '    End Try
 
-        End With
+        'End With
 
-        Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Row_Documento.Item("IDMAEEDO") & " And PRCT = 0"
-        Dim _Tbl_Detalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        'Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Row_Documento.Item("IDMAEEDO") & " And PRCT = 0"
+        'Dim _Tbl_Detalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
-        If Not CBool(_Tbl_Detalle.Rows.Count) Then
-            MessageBoxEx.Show(Me, "No se encontro detalle en el documento, asegurece que tenga productos asociados", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Return
-        End If
+        'If Not CBool(_Tbl_Detalle.Rows.Count) Then
+        '    MessageBoxEx.Show(Me, "No se encontro detalle en el documento, asegurece que tenga productos asociados", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        '    Return
+        'End If
 
-        For Each _Fila As DataRow In _Tbl_Detalle.Rows
+        'For Each _Fila As DataRow In _Tbl_Detalle.Rows
 
-            Dim _Zw_Stmp_Det As New Zw_Stmp_Det
+        '    Dim _Zw_Stmp_Det As New Zw_Stmp_Det
 
-            With _Zw_Stmp_Det
+        '    With _Zw_Stmp_Det
 
-                .Idmaeedo = _Fila.Item("IDMAEEDO")
-                .Idmaeddo = _Fila.Item("IDMAEDDO")
-                .Codigo = _Fila.Item("KOPRCT")
-                .Descripcion = _Fila.Item("NOKOPR")
-                .Nulido = _Fila.Item("NULIDO")
-                .Udtrpr = _Fila.Item("UDTRPR")
-                .Rludpr = _Fila.Item("RLUDPR")
-                .Caprco1_Ori = _Fila.Item("CAPRCO1")
-                .Caprco1_Real = 0
-                .Udpr = _Fila.Item("UD0" & .Udtrpr & "PR")
-                .Ud01pr = _Fila.Item("UD01PR")
-                .Caprco2_Ori = _Fila.Item("CAPRCO2")
-                .Caprco2_Real = 0
-                .Ud02pr = _Fila.Item("UD02PR")
-                .Pickeado = False
-                .EnProceso = True
+        '        .Idmaeedo = _Fila.Item("IDMAEEDO")
+        '        .Idmaeddo = _Fila.Item("IDMAEDDO")
+        '        .Codigo = _Fila.Item("KOPRCT")
+        '        .Descripcion = _Fila.Item("NOKOPR")
+        '        .Nulido = _Fila.Item("NULIDO")
+        '        .Udtrpr = _Fila.Item("UDTRPR")
+        '        .Rludpr = _Fila.Item("RLUDPR")
+        '        .Caprco1_Ori = _Fila.Item("CAPRCO1")
+        '        .Caprco1_Real = 0
+        '        .Udpr = _Fila.Item("UD0" & .Udtrpr & "PR")
+        '        .Ud01pr = _Fila.Item("UD01PR")
+        '        .Caprco2_Ori = _Fila.Item("CAPRCO2")
+        '        .Caprco2_Real = 0
+        '        .Ud02pr = _Fila.Item("UD02PR")
+        '        .Pickeado = False
+        '        .EnProceso = True
 
-            End With
+        '    End With
 
-            _Cl_Stem.Zw_Stmp_Det.Add(_Zw_Stmp_Det)
+        '    _Cl_Stem.Zw_Stmp_Det.Add(_Zw_Stmp_Det)
 
-        Next
+        'Next
 
-        _Mensaje_Stem = _Cl_Stem.Fx_Grabar_Nuevo_Tickets
+        '_Mensaje_Stem = _Cl_Stem.Fx_Grabar_Nuevo_Tickets
 
-        If Not _Mensaje_Stem.EsCorrecto Then
-            MessageBoxEx.Show(Me, _Mensaje_Stem.Mensaje, "Problema", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Return
-        End If
+        'If Not _Mensaje_Stem.EsCorrecto Then
+        '    MessageBoxEx.Show(Me, _Mensaje_Stem.Mensaje, "Problema", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        '    Return
+        'End If
 
-        MessageBoxEx.Show(Me, "Ticket Nro. " & _Cl_Stem.Zw_Stmp_Enc.Numero & " creado correctamente." & vbCrLf &
-                          "El documento ya esta en proceso", "Crear Ticket", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        'MessageBoxEx.Show(Me, "Ticket Nro. " & _Cl_Stem.Zw_Stmp_Enc.Numero & " creado correctamente." & vbCrLf &
+        '                  "El documento ya esta en proceso", "Crear Ticket", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         Sb_Actualizar_Grilla()
 

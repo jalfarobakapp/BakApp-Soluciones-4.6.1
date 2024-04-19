@@ -5,6 +5,7 @@ Public Class Frm_Usuarios_Random
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
+    Private _Tbl_Usuarios As DataTable
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -51,11 +52,11 @@ Public Class Frm_Usuarios_Random
                        "Drop Table #Paso" & vbCrLf &
                        "Drop Table #Paso1"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Usuarios = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         With Grilla
 
-            .DataSource = _Tbl
+            .DataSource = _Tbl_Usuarios
 
             OcultarEncabezadoGrilla(Grilla, True)
 
@@ -190,4 +191,7 @@ Public Class Frm_Usuarios_Random
 
     End Sub
 
+    Private Sub Btn_Exportar_Excel_Click(sender As Object, e As EventArgs) Handles Btn_Exportar_Excel.Click
+        ExportarTabla_JetExcel_Tabla(_Tbl_Usuarios, Me, "Usuarios")
+    End Sub
 End Class

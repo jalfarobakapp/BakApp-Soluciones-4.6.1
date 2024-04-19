@@ -1,8 +1,8 @@
 USE [#Base#]
 
 CREATE TABLE [dbo].[Zw_Docu_Det](
-	[Idmaeddo]			[int]			NOT NULL,
-	[Idmaeedo]			[int]			NOT NULL DEFAULT (''),
+	[Idmaeddo]			[int]			NOT NULL DEFAULT (0),
+	[Idmaeedo]			[int]			NOT NULL DEFAULT (0),
 	[Tido]				[varchar](3)	NOT NULL DEFAULT (''),
 	[Nudo]				[varchar](10)	NOT NULL DEFAULT (''),
 	[Codigo]			[varchar](13)	NOT NULL DEFAULT (''),

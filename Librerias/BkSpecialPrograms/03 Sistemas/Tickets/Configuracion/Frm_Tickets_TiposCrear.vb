@@ -59,6 +59,7 @@ Public Class Frm_Tickets_TiposCrear
             Chk_PreguntaCreaNewTicket.Checked = .PreguntaCreaNewTicket
             Chk_CerrarAgenteSinPerm.Checked = .CerrarAgenteSinPerm
             Txt_RespuestaXDefecto.Text = .RespuestaXDefecto
+            Txt_RespuestaXDefectoCerrar.Text = .RespuestaXDefectoCerrar
 
         End With
 
@@ -168,6 +169,7 @@ Public Class Frm_Tickets_TiposCrear
             .PreguntaCreaNewTicket = Chk_PreguntaCreaNewTicket.Checked
             .CerrarAgenteSinPerm = Chk_CerrarAgenteSinPerm.Checked
             .RespuestaXDefecto = Txt_RespuestaXDefecto.Text
+            .RespuestaXDefectoCerrar = Txt_RespuestaXDefectoCerrar.Text
 
             Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tipos", "Tipo = '" & .Tipo & "' And Id <> " & .Id)
 

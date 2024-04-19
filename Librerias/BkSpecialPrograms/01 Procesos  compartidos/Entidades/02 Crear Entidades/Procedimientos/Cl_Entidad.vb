@@ -48,7 +48,7 @@ Public Class Cl_Entidades
             .CRPA = _Row.Item("CRPA")
             .CRTO = _Row.Item("CRTO")
             .CREN = _Row.Item("CREN")
-            .FEVECREN = _Row.Item("FEVECREN")
+            .FEVECREN = NuloPorNro(_Row.Item("FEVECREN"), Nothing)
             .FEULTR = _Row.Item("FEULTR")
             .NUVECR = _Row.Item("NUVECR")
             .DCCR = _Row.Item("DCCR")

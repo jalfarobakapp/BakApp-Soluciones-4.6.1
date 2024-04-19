@@ -8,7 +8,6 @@ Public Class Frm_Tickets_Seguimiento
     Dim Consulta_sql As String
 
     Dim _Id_Ticket As Integer
-    'Dim _Row_Ticket As DataRow
     Dim _Tbl_Acciones As DataTable
     Dim _Funcionario As String
 
@@ -147,32 +146,12 @@ Public Class Frm_Tickets_Seguimiento
 
     End Sub
 
-
-
     Sub Sb_Actualizar_Grilla()
-
-        Consulta_sql = "Select Acc.*," & vbCrLf &
-                       "Case Accion " &
-                       "When 'CREA' Then 'Crea Ticket' " &
-                       "When 'MENS' Then 'Mensaje' " &
-                       "When 'RESP' Then 'Respuesta' " &
-                       "When 'NULO' Then 'Anula' " &
-                       "When 'SOLC' Then 'Sol. Cierre' " &
-                       "When 'CERR' Then 'Cierra ticket' " &
-                       "When 'CECR' Then 'Cierra y crea nuevo ticket' " &
-                       "When 'RECH' Then 'Rechazado' " &
-                       "Else '???' End As 'StrAccion'," & vbCrLf &
-                       "Cf.NOKOFU As 'NombreFunAge'," & vbCrLf &
-                       "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Archivos Where Id_TicketAc = Acc.Id) As 'Num_Attach'" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Acc" & vbCrLf &
-                       "Left Join TABFU Cf On Cf.KOFU = CodFunGestiona" & vbCrLf &
-                       "Where Id_Ticket In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tickets Where Id_Raiz = " & _Cl_Tickets.Zw_Stk_Tickets.Id_Raiz & ")" & vbCrLf &
-                       "Order By Fecha"
 
         Consulta_sql = "Select Tk.Id As 'Id_Ticket',Tk.Id_Padre,Tk.Id_Raiz,Acc.Id As 'Id_Accion'," & vbCrLf &
                        "(Select Numero From " & _Global_BaseBk & "Zw_Stk_Tickets Where Id = Tk.Id_Raiz) As 'Ticket_Origen'," & vbCrLf &
                        "Tk.Numero,Tk.Asunto,Acc.CodFunGestiona,Cf.NOKOFU As 'NombreFunGestiona',Acc.Accion,Acc.Fecha,Acc.CodFuncionario," & vbCrLf &
-                       "Case Acc.CodFunGestiona When Acc.CodFuncionario Then 'FunCrea' When Acc.CodAgente Then 'FunAge' End As 'FunAccion'," & vbCrLf &
+                       "Case Acc.CodFunGestiona When Acc.CodFuncionario Then 'FunCrea' When Acc.CodAgente Then 'FunAge' End As 'FunAccion',Acc.Aceptado,Acc.Rechazado," & vbCrLf &
                        "Case Accion " & vbCrLf &
                        "When 'CREA' Then 'Crea Ticket' " & vbCrLf &
                        "When 'MENS' Then 'Mensaje' " & vbCrLf &
@@ -180,19 +159,17 @@ Public Class Frm_Tickets_Seguimiento
                        "When 'NULO' Then 'Anula' " & vbCrLf &
                        "When 'SOLC' Then 'Sol. Cierre' " & vbCrLf &
                        "When 'CERR' Then 'Cierra ticket' " & vbCrLf &
-                       "When 'CECR' Then 'Cierra y crea nuevo ticket' " & vbCrLf &
+                       "When 'CECR' Then 'Acepta y crea nuevo ticket' " & vbCrLf &
                        "When 'RECH' Then 'Rechazado' Else '???' End As 'StrAccion'," & vbCrLf &
                        "Cf.NOKOFU As 'NombreFunAge'," & vbCrLf &
                        "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Archivos Where Id_TicketAc = Acc.Id) As 'Num_Attach'," & vbCrLf &
                        "Acc.Descripcion," & vbCrLf &
-                       "Case Accion When 'CECR' Then Tk.Numero Else '' End As 'Ticket Cierra'," & vbCrLf &
-                       "Case Accion " & vbCrLf &
-                       "When 'CREA' Then Tk.Numero " & vbCrLf &
-                       "When 'CECR' Then (Select Top 1 Numero From " & _Global_BaseBk & "Zw_Stk_Tickets Where Id_Padre = Tk.Id) " & vbCrLf &
-                       "Else '' End As 'Ticket Crea'" & vbCrLf &
+                       "Case CreaNewTicket When 1 Then Tk.SubNro Else '' End As 'Ticket Crea'," & vbCrLf &
+                       "ISNULL(Tkc.SubNro,'') As 'Ticket Cierra'" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Acc" & vbCrLf &
                        "Left Join TABFU Cf On Cf.KOFU = CodFunGestiona" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Stk_Tickets Tk On Tk.Id = Acc.Id_Ticket" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Stk_Tickets Tkc On Tkc.Id = Acc.Id_Ticket_Cierra " & vbCrLf &
                        "Where" & vbCrLf &
                        "Id_Ticket In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tickets Where Id_Raiz = " & _Cl_Tickets.Zw_Stk_Tickets.Id_Raiz & ")" & vbCrLf &
                        "Order By Id_Ticket,Fecha"
@@ -253,13 +230,18 @@ Public Class Frm_Tickets_Seguimiento
 
         End With
 
+        Dim _CodFunInicia As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Stk_Tickets", "CodFuncionario_Crea", "Id = " & _Cl_Tickets.Zw_Stk_Tickets.Id_Raiz)
+
         For Each _Fila As DataGridViewRow In Grilla.Rows
 
             Dim _Icono As Image
             Dim _Nombre_Image As String
             Dim _Accion As String = _Fila.Cells("Accion").Value
+            Dim _Aceptado As Boolean = _Fila.Cells("Aceptado").Value
+            Dim _Rechazado As Boolean = _Fila.Cells("Rechazado").Value
             Dim _Num_Attach As Integer = _Fila.Cells("Num_Attach").Value
             Dim _CodFuncionario As String = _Fila.Cells("CodFuncionario").Value.ToString.Trim
+            Dim _CodFunGestiona As String = _Fila.Cells("CodFunGestiona").Value.ToString.Trim
 
             Dim _Imagenes_List As ImageList
 
@@ -282,15 +264,23 @@ Public Class Frm_Tickets_Seguimiento
 
             _Fila.Cells("Btn_ImagenAttach").Value = _Icono
 
-            If Not String.IsNullOrEmpty(_CodFuncionario) Then
+            If _CodFunGestiona = _CodFunInicia Then
                 _Icono = _Imagenes_List.Images.Item("people-customer-man.png")
             Else
                 _Icono = _Imagenes_List.Images.Item("people-vendor.png")
-                If _Accion = "RECH" Then
-                    _Icono = _Imagenes_List.Images.Item("people-vendor-error.png")
-                    _Fila.Cells("Accion").Style.ForeColor = Rojo
-                End If
+                If _Aceptado Then _Icono = _Imagenes_List.Images.Item("people-vendor-ok.png")
+                If _Rechazado Then _Icono = _Imagenes_List.Images.Item("people-vendor-error.png")
             End If
+
+            'If Not String.IsNullOrEmpty(_CodFuncionario) Then
+            '    _Icono = _Imagenes_List.Images.Item("people-customer-man.png")
+            'Else
+            '    _Icono = _Imagenes_List.Images.Item("people-vendor.png")
+            '    If _Accion = "RECH" Then
+            '        _Icono = _Imagenes_List.Images.Item("people-vendor-error.png")
+            '        _Fila.Cells("Accion").Style.ForeColor = Rojo
+            '    End If
+            'End If
 
             _Fila.Cells("Btn_ImagenUser").Value = _Icono
 
@@ -309,7 +299,12 @@ Public Class Frm_Tickets_Seguimiento
     Private Sub Grilla_Acciones_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellEnter
 
         Try
+
             Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+            Dim _NombreFunGestiona As String = _Fila.Cells("NombreFunGestiona").Value
+            Dim _StrAccion As String = _Fila.Cells("StrAccion").Value
+            Dim _Asunto As String = _Fila.Cells("Asunto").Value
+            Txt_Descripcion.Text = _NombreFunGestiona & " " & _StrAccion.ToUpper & vbCrLf & "Asunto: " & _Asunto & vbCrLf & "Detalle: " & _Fila.Cells("Descripcion").Value
             Txt_Descripcion.Text = _Fila.Cells("Descripcion").Value
         Catch ex As Exception
             Txt_Descripcion.Text = String.Empty
@@ -335,7 +330,7 @@ Public Class Frm_Tickets_Seguimiento
         Dim _Grabar As Boolean
         Dim _Descripcion As String
 
-        Dim _Cl_Tickets As New Cl_Tickets
+        Dim _Cl_Tickets2 As New Cl_Tickets
         '_Cl_Tickets.Sb_Llenar_Ticket(_Id_Ticket)
 
         Dim _Zw_Stk_Tickets_Acciones As New Zw_Stk_Tickets_Acciones
@@ -363,7 +358,7 @@ Public Class Frm_Tickets_Seguimiento
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
-        _Mensaje = _Cl_Tickets.Fx_Grabar_Nueva_Accion2(_Zw_Stk_Tickets_Acciones)
+        _Mensaje = _Cl_Tickets2.Fx_Grabar_Nueva_Accion2(_Zw_Stk_Tickets_Acciones)
 
         If Not _Mensaje.EsCorrecto Then
             MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Error al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -398,15 +393,14 @@ Public Class Frm_Tickets_Seguimiento
         Consulta_sql = String.Empty
 
         If _RechazarTicket Then
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets Set Rechazado = 1 Where Id = " & _Id_Ticket & vbCrLf
-        Else
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets Set Rechazado = 0 Where Id = " & _Id_Ticket & vbCrLf
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets Set Rechazado = " & Convert.ToInt32(_RechazarTicket) & vbCrLf &
+                           "Where Id_Raiz = " & _Cl_Tickets.Zw_Stk_Tickets.Id_Raiz & vbCrLf
         End If
 
         Consulta_sql += "Update " & _Global_BaseBk & "Zw_Stk_Tickets Set UltAccion = '" & _Zw_Stk_Tickets_Acciones.Accion & "' Where Id = " & _Id_Ticket & vbCrLf &
                         "Update " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Set Visto = 1 Where Id_Ticket = " & _Id_Ticket & vbCrLf &
                         "Update " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Set " &
-                        "Fecha = Getdate(),Descripcion = '" & _Descripcion & "',En_Construccion = 0,Visto = 0" & vbCrLf &
+                        "Fecha = Getdate(),Descripcion = '" & _Descripcion & "',En_Construccion = 0,Visto = 0,Rechazado = " & Convert.ToInt32(_RechazarTicket) & vbCrLf &
                         "Where Id = " & _Zw_Stk_Tickets_Acciones.Id
         _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
@@ -539,6 +533,7 @@ Public Class Frm_Tickets_Seguimiento
 
         Dim Fm As New Frm_Tickets_Mant(0)
         Fm.Id_Padre = _Id_Ticket
+        Fm.Aceptado = True
         Fm.ShowDialog(Me)
         _Grabar = Fm.Grabar
         If _Grabar Then

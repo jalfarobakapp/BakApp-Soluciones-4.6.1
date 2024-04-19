@@ -16,6 +16,7 @@
     Public Property CodFunGestiona As String
     Public Property Rechazado As Boolean
     Public Property Aceptado As Boolean
-
+    Public Property Id_Raiz As Integer
+    Public Property Id_Ticket_Cierra As Integer
 
 End Class

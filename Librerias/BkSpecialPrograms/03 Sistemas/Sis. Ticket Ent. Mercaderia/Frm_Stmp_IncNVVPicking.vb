@@ -470,8 +470,7 @@ Public Class Frm_Stmp_IncNVVPicking
 
             If _Pickear Then
 
-                _Mensaje_Stem = _Cl_Stmp.Fx_Crear_Ticket(_Idmaeedo, _Tido, _Nudo, _Facturar, Dtp_FechaParaFacturacion.Value, "R")
-
+                _Mensaje_Stem = _Cl_Stmp.Fx_Crear_Ticket(_Idmaeedo, _Tido, _Nudo, _Facturar, Dtp_FechaParaFacturacion.Value, "R", False)
                 _Lista.Add(_Mensaje_Stem)
 
             End If

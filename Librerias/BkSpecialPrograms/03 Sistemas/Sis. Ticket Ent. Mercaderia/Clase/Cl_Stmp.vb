@@ -144,10 +144,10 @@ Public Class Cl_Stmp
                 .Numero = Fx_NvoNro_Stmp()
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stmp_Enc (Empresa,Sucursal,Numero,CodFuncionario_Crea,Idmaeedo,Tido," &
-                               "Nudo,Endo,Suendo,FechaCreacion,Estado,Secueven,Facturar,Fecha_Facturar) Values " &
+                               "Nudo,Endo,Suendo,FechaCreacion,Estado,Secueven,Facturar,DocEmitir,Fecha_Facturar) Values " &
                        "('" & .Empresa & "','" & .Sucursal & "','" & .Numero & "','" & .CodFuncionario_Crea & "'," & .Idmaeedo &
                        ",'" & .Tido & "','" & .Nudo & "','" & .Endo & "','" & .Suendo & "','" & Format(.FechaCreacion, "yyyyMMdd hh:mm") & "'" &
-                       ",'" & .Estado & "','" & .Secueven & "'," & Convert.ToInt32(.Facturar) & ",'" & Format(.Fecha_Facturar, "yyyyMMdd") & "')"
+                       ",'" & .Estado & "','" & .Secueven & "'," & Convert.ToInt32(.Facturar) & ",'" & .DocEmitir & "','" & Format(.Fecha_Facturar, "yyyyMMdd") & "')"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                 Comando.Transaction = myTrans
@@ -440,7 +440,8 @@ Public Class Cl_Stmp
                              _Nudo As String,
                              _Facturar As Boolean,
                              _FechaParaFacturar As DateTime,
-                             _TipoPago As String) As LsValiciones.Mensajes
+                             _TipoPago As String,
+                             _Picker As Boolean) As LsValiciones.Mensajes
 
         Dim _FechaServidor As DateTime = FechaDelServidor()
 
@@ -457,10 +458,10 @@ Public Class Cl_Stmp
         End If
 
         Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Docu_Ent",
-                                                       "Empresa = '" & _Row.Item("Empresa") & "'" &
-                                                       " And Idmaeedo = " & _Row.Item("Idmaeedo") &
-                                                       " And Tido = '" & _Row.Item("Tido") & "'" &
-                                                       " And Nudo = '" & _Row.Item("Nudo") & "'")
+                                                       "Empresa = '" & ModEmpresa & "'" &
+                                                       " And Idmaeedo = " & _Idmaeedo &
+                                                       " And Tido = '" & _Tido & "'" &
+                                                       " And Nudo = '" & _Nudo & "'")
 
         If _Reg = 0 Then
 
@@ -476,6 +477,11 @@ Public Class Cl_Stmp
                            "From MAEDDO Where IDMAEEDO = " & _Row.Item("IDMAEEDO")
             _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
+        End If
+
+        If _Picker Then
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Ent Set Pickear = 1 Where Idmaeedo = " & _Idmaeedo & " And Tido = '" & _Tido & "' And Nudo = '" & _Nudo & "'"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
         End If
 
         Consulta_sql = "Select Edo.IDMAEEDO,Edo.EMPRESA,Edo.TIDO,Edo.NUDO,Edo.ENDO,Edo.SUENDO,Edo.SUDO,Doc.Pickear,HabilitadaFac,FunAutorizaFac" & vbCrLf &
@@ -527,6 +533,10 @@ Public Class Cl_Stmp
                 End If
 
             End Try
+
+            If .Secueven.Contains("NG") Then .DocEmitir = "GDV"
+            If .Secueven.Contains("NB") Then .DocEmitir = "BLV"
+            If .Secueven.Contains("NF") Then .DocEmitir = "FCV"
 
         End With
 

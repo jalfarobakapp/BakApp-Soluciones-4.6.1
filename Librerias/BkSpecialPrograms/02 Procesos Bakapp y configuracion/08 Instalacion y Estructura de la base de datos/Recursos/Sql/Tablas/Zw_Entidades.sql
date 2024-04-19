@@ -18,6 +18,9 @@ CREATE TABLE [dbo].[Zw_Entidades](
     [EmailCompras]      		    [varchar](50)   NOT NULL DEFAULT(''),
     [MontoMinCompra]   	            [float]         NOT NULL DEFAULT(0), 
     [NoResMtoMinComAsCompraAuto]    [bit]           NOT NULL DEFAULT(0),    
+    [JuntaPuntos]                   [bit]           NOT NULL DEFAULT(0),    
+    [EmailPuntos]                   [varchar](50)   NOT NULL DEFAULT(0),    
+    [FechaInscripPuntos]            [datetime]      NULL,    
  CONSTRAINT [PK_Zw_Entidades] PRIMARY KEY CLUSTERED 
 (
 	[CodEntidad] ASC,

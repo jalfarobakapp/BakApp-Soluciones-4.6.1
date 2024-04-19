@@ -1624,6 +1624,40 @@ Public Class Frm_Ver_Documento
                 .Columns(_Campo).DisplayIndex = _Displayindex
                 _Displayindex += 1
 
+                _Campo = "UD01PR"
+                .Columns(_Campo).HeaderText = "Ud1"
+                .Columns(_Campo).Visible = True
+                .Columns(_Campo).Width = 30
+                .Columns(_Campo).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns(_Campo).DisplayIndex = _Displayindex
+                _Displayindex += 1
+
+                _Campo = "CAPRCO1"
+                .Columns(_Campo).HeaderText = "Cant.Ud1"
+                .Columns(_Campo).Visible = True
+                .Columns(_Campo).Width = 60
+                .Columns(_Campo).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns(_Campo).DefaultCellStyle.Format = "###,##0.##"
+                .Columns(_Campo).DisplayIndex = _Displayindex
+                _Displayindex += 1
+
+                _Campo = "UD02PR"
+                .Columns(_Campo).HeaderText = "Ud2"
+                .Columns(_Campo).Visible = True
+                .Columns(_Campo).Width = 30
+                .Columns(_Campo).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns(_Campo).DisplayIndex = _Displayindex
+                _Displayindex += 1
+
+                _Campo = "CAPRCO2"
+                .Columns(_Campo).HeaderText = "Cant.Ud2"
+                .Columns(_Campo).Visible = True
+                .Columns(_Campo).Width = 60
+                .Columns(_Campo).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns(_Campo).DefaultCellStyle.Format = "###,##0.##"
+                .Columns(_Campo).DisplayIndex = _Displayindex
+                _Displayindex += 1
+
             End If
 
 

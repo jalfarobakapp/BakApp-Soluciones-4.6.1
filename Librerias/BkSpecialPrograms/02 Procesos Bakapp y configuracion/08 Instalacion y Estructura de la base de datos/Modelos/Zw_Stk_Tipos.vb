@@ -20,6 +20,7 @@
     Public Property PreguntaCreaNewTicket As Boolean
     Public Property CerrarAgenteSinPerm As Boolean
     Public Property RespuestaXDefecto As String
+    Public Property RespuestaXDefectoCerrar As String
 End Class
 
 Partial Public Class Zw_Stk_Tipos
