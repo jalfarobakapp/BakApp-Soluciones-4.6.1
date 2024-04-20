@@ -2435,6 +2435,12 @@
     <Compile Include="03 Sistemas\Tickets\Frm_Tickets_Seguimiento.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_Treeview.Designer.vb">
+      <DependentUpon>Frm_Tickets_Treeview.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_Treeview.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Vales despacho\Recursos Vale\Rsc_Vales.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -5944,6 +5950,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_Seguimiento.resx">
       <DependentUpon>Frm_Tickets_Seguimiento.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_Treeview.resx">
+      <DependentUpon>Frm_Tickets_Treeview.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="999 Funciones, Clases y Datos\Formularios\Adjuntar Archivos\Frm_Adjuntar_Arch_Rtf.resx">
       <DependentUpon>Frm_Adjuntar_Arch_Rtf.vb</DependentUpon>
