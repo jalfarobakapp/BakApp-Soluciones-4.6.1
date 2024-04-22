@@ -1,5 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
+Imports Limilabs.Client.SMTP
 
 Public Class Cl_Correos
 
@@ -707,17 +708,35 @@ Public Class Cl_Correos
                             _Cc = Replace(_Cc, _Para & ";", "")
                             _Cc = Replace(_Cc, _Para, "")
 
-                            _Correo_Enviado = EnviarCorreo.Fx_Enviar_Mail2(_Host,
-                                                                          _Remitente,
-                                                                          _Contrasena,
-                                                                          _Para,
-                                                                          _Cc,
-                                                                          _Asunto,
-                                                                          _CuerpoMensaje,
-                                                                          _Archivos_Adjuntos,
-                                                                          _Puerto,
-                                                                          _SSL,
-                                                                          False)
+                            '_Correo_Enviado = EnviarCorreo.Fx_Enviar_Mail2(_Host,
+                            '                                              _Remitente,
+                            '                                              _Contrasena,
+                            '                                              _Para,
+                            '                                              _Cc,
+                            '                                              _Asunto,
+                            '                                              _CuerpoMensaje,
+                            '                                              _Archivos_Adjuntos,
+                            '                                              _Puerto,
+                            '                                              _SSL,
+                            '                                              False)
+
+                            Dim result As ISendMessageResult = EnviarCorreo.Fx_Enviar_Mail3IMail(_Host,
+                                                                _Remitente,
+                                                                _Contrasena,
+                                                                _Para,
+                                                                _Cc,
+                                                                _Asunto,
+                                                                _CuerpoMensaje,
+                                                                _Archivos_Adjuntos,
+                                                                _Puerto,
+                                                                _SSL)
+
+                            If result.Status = 0 Then
+                                _Correo_Enviado = True
+                            Else
+                                _Correo_Enviado = False
+                            End If
+
 
                             _Error = EnviarCorreo.Pro_Error
                             EnviarCorreo.Dispose()

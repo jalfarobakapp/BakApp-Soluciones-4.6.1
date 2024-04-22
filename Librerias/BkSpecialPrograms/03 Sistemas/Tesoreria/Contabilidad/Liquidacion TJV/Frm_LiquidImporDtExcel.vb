@@ -194,17 +194,31 @@ Public Class Frm_LiquidImporDtExcel
 
                         _Diferencia = _MontoParaAbono - primeraFila.Item("VADP")
 
-                        If _Str_Nucudp = _CodAutoVenta Then
-                            _Error = "Se encuentra el Numero Doc: [" & _CodAutoVenta_Ori & "], pero el monto no coincide $ " & FormatNumber(_MontoParaAbono, 0) & ", Diferencia: " & _Diferencia
-                        End If
+                        If Chk_Dif1Peso.Checked AndAlso (_Diferencia = 1 Or _Diferencia = -1) Then
 
-                        If _Str_Cudp = _CodAutoVenta Then
-                            _Error = "Se encuentra la cuenta: [" & _CodAutoVenta_Ori & "], pero el monto no coincide $ " & FormatNumber(_MontoParaAbono, 0) & ", Diferencia: " & _Diferencia
-                        End If
+                            ' Por ejemplo, acceder al primer registro encontrado
+                            'Dim primeraFila As DataRow = _FilasEncontradas(0)
 
-                        _Encontrado = True
+                            primeraFila.Item("Incluir") = True
+                            TotalValSelec += _FilasDiferencias(0).Item("VADP") '_MontoParaAbono
+                            _Encontrado = True
+
+                        Else
+
+                            If _Str_Nucudp = _CodAutoVenta Then
+                                _Error = "Se encuentra el Numero Doc: [" & _CodAutoVenta_Ori & "], pero el monto no coincide $ " & FormatNumber(_MontoParaAbono, 0) & ", Diferencia: " & _Diferencia
+                            End If
+
+                            If _Str_Cudp = _CodAutoVenta Then
+                                _Error = "Se encuentra la cuenta: [" & _CodAutoVenta_Ori & "], pero el monto no coincide $ " & FormatNumber(_MontoParaAbono, 0) & ", Diferencia: " & _Diferencia
+                            End If
+
+                            _Encontrado = True
+
+                        End If
 
                     End If
+
 
                 End If
 

@@ -31,7 +31,7 @@ Public Module ExportarJetExcel
                                             Optional _Nombre_Archivo As String = "Datos",
                                             Optional _CodPermiso As String = "")
 
-        If (_Tabla Is Nothing) Or Not CBool(_Tabla.ROWS.COUNT) Then
+        If (_Tabla Is Nothing) OrElse Not CBool(_Tabla.ROWS.COUNT) Then
             MessageBoxEx.Show(_Formulario,
                               "No existen datos que mostrar", "Exportar a Excel", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         Else
