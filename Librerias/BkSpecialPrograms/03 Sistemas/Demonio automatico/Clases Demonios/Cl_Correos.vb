@@ -1080,7 +1080,12 @@ Public Class Cl_Correos
             Dim _Koen = _Row_Maeedo.Item("ENDO")
             Dim _Suen = _Row_Maeedo.Item("SUENDO")
 
-            Consulta_Sql = "Select Distinct Rtrim(Ltrim(MAILTO)) As MAILTO,Rtrim(Ltrim(MAILCC)) As MAILCC From MAEENMAIL Where KOEN = '" & _Koen & "' And KOMAIL = '001'"
+            'If _IdMaeedo = 2995828 Then
+            '    Dim _aca = 0
+            'End If
+
+            Consulta_Sql = "Select Distinct Rtrim(Ltrim(MAILTO)) As MAILTO,Rtrim(Ltrim(MAILCC)) As MAILCC,Rtrim(Ltrim(MAILCC2)) As MAILCC2,Rtrim(Ltrim(MAILBCC)) As MAILBCC" & vbCrLf &
+                           "From MAEENMAIL Where KOEN = '" & _Koen & "' And KOMAIL = '001'"
 
             Dim _Tbl_Maeenmail As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
 
@@ -1091,7 +1096,17 @@ Public Class Cl_Correos
                 For Each _Fila_Mail As DataRow In _Tbl_Maeenmail.Rows
 
                     Dim _Para As String = Trim(_Fila_Mail.Item("MAILTO"))
-                    Dim _Cc As String = Trim(_Fila_Mail.Item("MAILCC"))
+                    Dim _Cc As String = String.Empty
+
+                    If Not String.IsNullOrWhiteSpace(_Fila_Mail.Item("MAILCC").ToString.Trim) Then
+                        _Cc = _Fila_Mail.Item("MAILCC").ToString.Trim
+                        If Not String.IsNullOrWhiteSpace(_Fila_Mail.Item("MAILCC2").ToString.Trim) Then
+                            _Cc += ";" & _Fila_Mail.Item("MAILCC2").ToString.Trim
+                            If Not String.IsNullOrWhiteSpace(_Fila_Mail.Item("MAILBCC").ToString.Trim) Then
+                                _Cc += ";" & _Fila_Mail.Item("MAILBCC").ToString.Trim
+                            End If
+                        End If
+                    End If
 
                     _Para = _Para.Trim()
                     _Cc = _Cc.Trim()

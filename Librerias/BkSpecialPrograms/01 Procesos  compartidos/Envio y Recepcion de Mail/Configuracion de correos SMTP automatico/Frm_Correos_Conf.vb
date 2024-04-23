@@ -1065,7 +1065,38 @@ Public Class Frm_Correos_Conf
 
         Dim builder As New MailBuilder()
         builder.From.Add(New MailBox(_Usuario))
-        builder.[To].Add(New MailBox(_Para))
+
+
+        _Para = _Para.Trim()
+
+        If IsNothing(_CC) Then _CC = String.Empty
+        _CC = _CC.Trim()
+
+        _CC = Replace(_CC, ",", ";")
+
+        'Declaro la variable para enviar el correo
+        Dim _Correo As New MailMessage()
+        _Correo.From = New System.Net.Mail.MailAddress(_Usuario)
+        _Correo.Subject = _Asunto
+
+        For Each _To As String In _Para.Split(New Char() {";"c})
+            If Fx_Validar_Email(_To) Then
+                builder.[To].Add(New MailBox(_To))
+            End If
+        Next
+
+        If Not String.IsNullOrEmpty(_CC) Then
+            For Each _Cc_ As String In _CC.Split(New Char() {";"c})
+                If Fx_Validar_Email(_CC) Then
+                    builder.Cc.Add(New MailBox(_Cc_))
+                End If
+            Next
+        End If
+
+
+        'builder.[To].Add(New MailBox(_Para))
+        'builder.Cc.Add(New MailBox(_CC))
+
         builder.Subject = _Asunto
         builder.Html = _Cuerpo '"<img src=""cid:lemon@id"" align=""left"" /> This is simple <strong>HTML email</strong> with an image and attachment"
 
