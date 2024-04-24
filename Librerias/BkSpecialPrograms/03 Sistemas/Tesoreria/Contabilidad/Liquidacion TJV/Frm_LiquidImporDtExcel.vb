@@ -101,6 +101,7 @@ Public Class Frm_LiquidImporDtExcel
 
         Dim _Problemas As Integer
         Dim _Diferencias As Integer
+        Dim _Diferencias1peso As Integer
         Dim _SinProbremas As Integer
 
         Sb_Habilitar_Deshabilitar_Comandos(False, True)
@@ -148,6 +149,7 @@ Public Class Frm_LiquidImporDtExcel
 
             Dim _TieneError As Boolean
             Dim _TieneDiferencia As Boolean
+            Dim _TieneDiferencia1peso As Boolean
 
             If String.IsNullOrEmpty(_Error) Then
 
@@ -194,31 +196,28 @@ Public Class Frm_LiquidImporDtExcel
 
                         _Diferencia = _MontoParaAbono - primeraFila.Item("VADP")
 
+                        If _Str_Nucudp = _CodAutoVenta Then
+                            _Error = "Se encuentra el Numero Doc: [" & _CodAutoVenta_Ori & "], pero el monto no coincide $ " & FormatNumber(_MontoParaAbono, 0) & ", Diferencia: " & _Diferencia
+                        End If
+
+                        If _Str_Cudp = _CodAutoVenta Then
+                            _Error = "Se encuentra la cuenta: [" & _CodAutoVenta_Ori & "], pero el monto no coincide $ " & FormatNumber(_MontoParaAbono, 0) & ", Diferencia: " & _Diferencia
+                        End If
+
+                        _Encontrado = True
+
                         If Chk_Dif1Peso.Checked AndAlso (_Diferencia = 1 Or _Diferencia = -1) Then
 
                             ' Por ejemplo, acceder al primer registro encontrado
                             'Dim primeraFila As DataRow = _FilasEncontradas(0)
-
+                            _TieneDiferencia1peso = True
+                            _TieneDiferencia = False
                             primeraFila.Item("Incluir") = True
                             TotalValSelec += _FilasDiferencias(0).Item("VADP") '_MontoParaAbono
-                            _Encontrado = True
-
-                        Else
-
-                            If _Str_Nucudp = _CodAutoVenta Then
-                                _Error = "Se encuentra el Numero Doc: [" & _CodAutoVenta_Ori & "], pero el monto no coincide $ " & FormatNumber(_MontoParaAbono, 0) & ", Diferencia: " & _Diferencia
-                            End If
-
-                            If _Str_Cudp = _CodAutoVenta Then
-                                _Error = "Se encuentra la cuenta: [" & _CodAutoVenta_Ori & "], pero el monto no coincide $ " & FormatNumber(_MontoParaAbono, 0) & ", Diferencia: " & _Diferencia
-                            End If
-
-                            _Encontrado = True
 
                         End If
 
                     End If
-
 
                 End If
 
@@ -333,6 +332,7 @@ Public Class Frm_LiquidImporDtExcel
 
                 If _TieneError Then _Problemas += 1
                 If _TieneDiferencia Then _Diferencias += 1
+                If _TieneDiferencia1peso Then _Diferencias1peso += 1
 
                 Sb_AddToLog("Fila Nro :" & i, "Problema: " & _Error, _Txt_Log, False)
 
@@ -352,8 +352,16 @@ Public Class Frm_LiquidImporDtExcel
             Circular_Progres_Val.Value += 1
             Circular_Progres_Val.ProgressText = Circular_Progres_Val.Value
 
-            Lbl_Procesando.Text = "Leyendo fila " & i & " de " & _Filas & ". Estado Ok: " & _SinProbremas &
+            If Chk_Dif1Peso.Checked Then
+                Lbl_Procesando.Text = "Leyendo fila " & i & " de " & _Filas & ". Estado Ok: " & _SinProbremas &
+                                  ", Problemas: " & _Problemas & ", Diferencias: " & _Diferencias & ", Diferencias 1 peso: " & _Diferencias1peso
+
+            Else
+                Lbl_Procesando.Text = "Leyendo fila " & i & " de " & _Filas & ". Estado Ok: " & _SinProbremas &
                                   ", Problemas: " & _Problemas & ", Diferencias: " & _Diferencias
+
+            End If
+
 
             System.Windows.Forms.Application.DoEvents()
 
@@ -373,11 +381,16 @@ Public Class Frm_LiquidImporDtExcel
                 Dim _Leyend As String
                 Dim _Palabra As String = Trim(UCase(Letras(_Problemas)))
 
-
-                _Leyend = "Existen líneas con problemas en el archivo de lectura." & vbCrLf & vbCrLf &
+                If Chk_Dif1Peso.Checked Then
+                    _Leyend = "Existen líneas con problemas en el archivo de lectura." & vbCrLf & vbCrLf &
+                          "No encontradas:" & _Problemas & vbCrLf &
+                          "Diferencias: " & _Diferencias & vbCrLf &
+                          "Diferencias 1 peso: " & _Diferencias1peso
+                Else
+                    _Leyend = "Existen líneas con problemas en el archivo de lectura." & vbCrLf & vbCrLf &
                           "No encontradas:" & _Problemas & vbCrLf &
                           "Diferencias: " & _Diferencias
-
+                End If
 
                 Sb_AddToLog("Resumen", Lbl_Procesando.Text, _Txt_Log, False)
 

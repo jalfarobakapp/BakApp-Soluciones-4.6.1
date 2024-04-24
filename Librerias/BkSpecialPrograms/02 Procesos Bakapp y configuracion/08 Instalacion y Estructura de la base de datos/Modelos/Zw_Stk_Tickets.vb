@@ -1,9 +1,11 @@
 ﻿Partial Public Class Zw_Stk_Tickets
 
     Public Property Id As Integer
+    Public Property Id_Raiz As Integer
     Public Property Empresa As String
     Public Property Sucursal As String
     Public Property Numero As String
+    Public Property SubNro As String
     Public Property Id_Area As Integer
     Public Property Id_Tipo As Integer
     Public Property Prioridad As String
@@ -23,8 +25,6 @@
     Public Property Id_Padre As Integer
     Public Property Rechazado As Boolean
     Public Property Aceptado As Boolean
-    Public Property Id_Raiz As Integer
-    Public Property SubNro As String
 
 End Class
 

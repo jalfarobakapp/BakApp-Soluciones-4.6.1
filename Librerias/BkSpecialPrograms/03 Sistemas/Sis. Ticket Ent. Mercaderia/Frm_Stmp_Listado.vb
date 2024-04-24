@@ -347,11 +347,6 @@ Public Class Frm_Stmp_Listado
 
         MessageBoxEx.Show(Me, _Mensaje_Stem.Mensaje, _Mensaje_Stem.Detalle, MessageBoxButtons.OK, _Icon)
 
-        Return
-
-
-
-
 
         'Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Docu_Ent",
         '                                               "Empresa = '" & _Row_Documento.Item("EMPRESA") & "'" &
@@ -928,4 +923,22 @@ Public Class Frm_Stmp_Listado
 
     End Function
 
+    Private Sub ButtonItem1_Click(sender As Object, e As EventArgs) Handles ButtonItem1.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Id_Enc As Integer = _Fila.Cells("Id").Value
+        Dim _Idmaeedoo As Integer = _Fila.Cells("Idmaeedo").Value
+        Dim _Nudo As String = _Fila.Cells("Nudo").Value
+
+        Dim _Cl_Stmp As New Cl_Stmp
+        _Cl_Stmp.Fx_Llenar_Encabezado(_Id_Enc)
+        _Cl_Stmp.Fx_Llenar_Detalle(_Id_Enc)
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        _Mensaje = _Cl_Stmp.Fx_Revisar_WMSVillar(_Idmaeedoo, _Nudo)
+
+        Sb_Actualizar_Grilla()
+
+    End Sub
 End Class

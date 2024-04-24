@@ -127,8 +127,8 @@ Partial Class Stk_Ticktes
         Me.Btn_MisTicket.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
         Me.Btn_MisTicket.Name = "Btn_MisTicket"
         Me.Btn_MisTicket.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_MisTicket.Text = "<font size=""+4""><b>MIS TICKETS</b></font><br/><font size=""-1"">Tickets que yo envi" &
-    "ó</font>"
+        Me.Btn_MisTicket.Text = "<font size=""+4""><b>TICKETS</b></font><br/><font size=""-1"">Bandeja de entrada y sa" &
+    "lida de Tickets</font>"
         Me.Btn_MisTicket.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Yellow
         Me.Btn_MisTicket.TileSize = New System.Drawing.Size(200, 100)
         '
@@ -163,6 +163,7 @@ Partial Class Stk_Ticktes
         Me.Btn_TicketAsignados.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
         Me.Btn_TicketAsignados.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_TicketAsignados.TitleText = "BakApp"
+        Me.Btn_TicketAsignados.Visible = False
         '
         'Btn_Configuracion
         '
@@ -217,6 +218,7 @@ Partial Class Stk_Ticktes
         Me.Btn_VerTodosTickets.TileStyle.PaddingTop = 4
         Me.Btn_VerTodosTickets.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_VerTodosTickets.TitleText = "BakApp"
+        Me.Btn_VerTodosTickets.Visible = False
         '
         'Stk_Ticktes
         '

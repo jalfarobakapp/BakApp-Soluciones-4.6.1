@@ -67,11 +67,11 @@ Public Class Frm_Tickets_Seguimiento
 
             If Mis_Ticket Then
                 Btn_MensajeRespuesta.Text = "Nuevo mensaje"
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Set Visto = 1 Where Id_Ticket = " & _Id_Ticket & " And Accion = 'RESP'"
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Set Visto = 1 Where Id_Ticket = " & _Id_Ticket & " And Accion In ('RESP')"
                 Btn_Mnu_SolicitarCierre.Enabled = False
             Else
                 Btn_MensajeRespuesta.Text = "Responder"
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Set Visto = 1 Where Id_Ticket = " & _Id_Ticket & " And Accion = 'MENS'"
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Set Visto = 1 Where Id_Ticket = " & _Id_Ticket & " And Accion In ('MENS','CREA')"
                 Btn_Anular.Enabled = False
             End If
 

@@ -47,6 +47,7 @@ Partial Class Frm_Stmp_Listado
         Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
         Me.Imagenes_16x16_Dark = New System.Windows.Forms.ImageList(Me.components)
         Me.Chk_TickesAsigMi = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.ButtonItem1 = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Super_TabS, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
@@ -118,10 +119,10 @@ Partial Class Frm_Stmp_Listado
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_CargarNVVFechaDespHoy, Me.Btn_Crear_Ticket, Me.Btn_RevisarTicket, Me.Btn_Actualizar, Me.Btn_FacturarMasivamente})
-        Me.Bar2.Location = New System.Drawing.Point(0, 569)
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_CargarNVVFechaDespHoy, Me.Btn_Crear_Ticket, Me.Btn_RevisarTicket, Me.Btn_Actualizar, Me.Btn_FacturarMasivamente, Me.ButtonItem1})
+        Me.Bar2.Location = New System.Drawing.Point(0, 553)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(1210, 41)
+        Me.Bar2.Size = New System.Drawing.Size(1210, 57)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 166
@@ -367,6 +368,17 @@ Partial Class Frm_Stmp_Listado
         Me.Chk_TickesAsigMi.TabIndex = 170
         Me.Chk_TickesAsigMi.Text = "Ver solo ticket asignados a mi"
         '
+        'ButtonItem1
+        '
+        Me.ButtonItem1.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.ButtonItem1.ForeColor = System.Drawing.Color.Black
+        Me.ButtonItem1.Image = CType(resources.GetObject("ButtonItem1.Image"), System.Drawing.Image)
+        Me.ButtonItem1.ImageAlt = CType(resources.GetObject("ButtonItem1.ImageAlt"), System.Drawing.Image)
+        Me.ButtonItem1.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.ButtonItem1.Name = "ButtonItem1"
+        Me.ButtonItem1.Text = "Revisar WMS"
+        Me.ButtonItem1.Tooltip = "Refrescar datos"
+        '
         'Frm_Stmp_Listado
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -415,4 +427,5 @@ Partial Class Frm_Stmp_Listado
     Public WithEvents Btn_CargarNVVFechaDespHoy As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_FacturarMasivamente As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Chk_TickesAsigMi As DevComponents.DotNetBar.Controls.CheckBoxX
+    Public WithEvents ButtonItem1 As DevComponents.DotNetBar.ButtonItem
 End Class

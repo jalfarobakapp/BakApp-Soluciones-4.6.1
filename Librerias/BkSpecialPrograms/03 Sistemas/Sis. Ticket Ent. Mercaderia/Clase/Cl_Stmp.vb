@@ -1,5 +1,6 @@
 ﻿Imports BkSpecialPrograms.Stmp_BD
 Imports BkSpecialPrograms.Tickets_Db
+Imports DevComponents.DotNetBar
 Imports System.ComponentModel
 Imports System.Data.SqlClient
 
@@ -471,10 +472,10 @@ Public Class Cl_Stmp
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Ent (Idmaeedo,NombreEquipo,TipoEstacion,Empresa,Modalidad,Tido,Nudo," &
                            "FechaHoraGrab,HabilitadaFac,FunAutorizaFac,Pickear)" & vbCrLf &
                            "Select IDMAEEDO,'" & _NombreEquipo & "','" & _TipoEstacion & "',EMPRESA,'?',TIDO,NUDO,LAHORA,0,'',1" & vbCrLf &
-                           "From MAEEDO Where IDMAEEDO = " & _Row.Item("IDMAEEDO") & vbCrLf &
+                           "From MAEEDO Where IDMAEEDO = " & _Idmaeedo & vbCrLf &
                            "Insert Into " & _Global_BaseBk & "Zw_Docu_Det (Idmaeddo,Idmaeedo,Tido,Nudo,Codigo,Descripcion,RtuVariable)" & vbCrLf &
                            "Select IDMAEDDO,IDMAEEDO,TIDO,NUDO,KOPRCT,NOKOPR,0" & vbCrLf &
-                           "From MAEDDO Where IDMAEEDO = " & _Row.Item("IDMAEEDO")
+                           "From MAEDDO Where IDMAEEDO = " & _Idmaeedo
             _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
         End If
@@ -578,6 +579,84 @@ Public Class Cl_Stmp
         _Mensaje_Stem = _Cl_Stem.Fx_Grabar_Nuevo_Tickets
 
         Return _Mensaje_Stem
+
+    End Function
+
+    Function Fx_Revisar_WMSVillar(_Idmaeedo As Integer, _Nudo As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            Dim _CadenaConexionWms As String = "data source = wmstest.villar.cl; initial catalog = viaware; user id = sa_wms; password = sa_wms"
+            Dim _Sql_WMS As New Class_SQL(_CadenaConexionWms)
+
+            Consulta_sql = My.Resources.Recursos_WmsVillar.SQLQuery_Revisar_Nota_de_venta_activa_en_WMS_Villar
+            Consulta_sql = Replace(Consulta_sql, "#Nudo#", _Nudo)
+
+            Dim _Ds As DataSet = _Sql_WMS.Fx_Get_DataSet(Consulta_sql)
+
+            _Ds.Tables(0).TableName = "ticket_verde"
+            _Ds.Tables(1).TableName = "Detalle"
+            _Ds.Tables(2).TableName = "Cabecera"
+            _Ds.Tables(3).TableName = "Lineas"
+            _Ds.Tables(4).TableName = "Comandos"
+
+            Dim _ticket_verde As DataTable = _Ds.Tables("ticket_verde")
+            Dim _Detalle As DataTable = _Ds.Tables("Detalle")
+            Dim _Cabecera As DataTable = _Ds.Tables("Cabecera")
+            Dim _Lineas As DataTable = _Ds.Tables("Lineas")
+            Dim _Comandos As DataTable = _Ds.Tables("Comandos")
+
+            Zw_Stmp_Enc.Estado = "COMPL"
+
+            If _ticket_verde.Rows(0).Item("ticket_verde") = "Y" Then
+
+                For Each _Fila As DataRow In _Detalle.Rows
+
+                    Dim _tag As String = _Fila.Item("tag")
+                    Dim _sku As String = _Fila.Item("sku")
+                    Dim _qty As Double = _Fila.Item("qty")
+
+                    For Each _Det As Zw_Stmp_Det In Zw_Stmp_Det
+
+                        If _Det.Codigo.Trim = _sku.Trim Then
+
+                            With _Det
+                                .Caprco1_Real = _qty
+                                .Caprco2_Real = _qty
+                                .Pickeado = True
+                                .EnProceso = False
+                                .CodFuncionario_Pickea = "wms"
+                            End With
+
+                            Exit For
+
+                        End If
+
+                    Next
+
+                    'Consulta_sql += "Update " & _Global_BaseBk & "Zw_Stmp_Det Set " & vbCrLf &
+                    '               "Pickeado = 1" &
+                    '               ",EnProceso = 0" &
+                    '               ",Caprco1_Real = " & De_Num_a_Tx_01(_qty, False, 5) &
+                    '               ",Caprco2_Real = " & De_Num_a_Tx_01(_qty, False, 5) &
+                    '               "CodFuncionario_Pickea = 'wms'" &
+                    '               "Where Idmaeedo = " & _Idmaeedo & " And Codigo = '" & _sku & "'" & vbCrLf
+
+                Next
+
+                _Mensaje = Fx_Confirmar_Picking()
+
+            End If
+
+        Catch ex As Exception
+
+        End Try
+
+        '_Sql.Ej_consulta_IDU(Consulta_sql)
+
+        Return _Mensaje
 
     End Function
 

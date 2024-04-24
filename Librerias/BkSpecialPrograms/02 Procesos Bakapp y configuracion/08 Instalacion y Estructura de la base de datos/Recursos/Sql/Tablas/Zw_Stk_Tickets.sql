@@ -2,9 +2,11 @@ USE [#Base#]
 
 CREATE TABLE [dbo].[Zw_Stk_Tickets](
 	[Id]					[int] IDENTITY(1,1) NOT NULL,
+    [Id_Raiz]   			[int] NOT NULL DEFAULT (0),
 	[Empresa]				[char](2) NOT NULL DEFAULT (''),
 	[Sucursal]				[varchar](2) NOT NULL DEFAULT (''),
 	[Numero]				[varchar](10) NOT NULL DEFAULT (''),
+	[SubNro]				[varchar](3) NOT NULL DEFAULT (''),
 	[Id_Area]				[int] NOT NULL DEFAULT (0),
 	[Id_Tipo]				[int] NOT NULL DEFAULT (0),
 	[Prioridad]				[varchar](2) NOT NULL DEFAULT (''),
@@ -23,8 +25,7 @@ CREATE TABLE [dbo].[Zw_Stk_Tickets](
 	[FechaCierre]			[datetime] NULL,
 	[Id_Padre]				[int] NOT NULL DEFAULT (0),
     [Rechazado]				[bit] NOT NULL DEFAULT (0),
-    [Aceptado]				[bit] NOT NULL DEFAULT (0),
-    [Id_Raiz]   			[int] NOT NULL DEFAULT (0),
+    [Aceptado]				[bit] NOT NULL DEFAULT (0),    
  CONSTRAINT [PK_Zw_Stk_Tickets] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
