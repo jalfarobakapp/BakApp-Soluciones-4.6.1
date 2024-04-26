@@ -135,7 +135,7 @@ Public Class Frm_ListaMezclas
         Dim _Numot As String
 
         Dim Fm As New Frm_BuscarOT
-        Fm.FiltroExternoSql = vbCrLf & "And IDPOTE Not In (Select Idpote_Otm From " & _Global_BaseBk & "Zw_Pdp_CPT_MzEnc Where Estado <> 'NULA')"
+        Fm.FiltroExternoSql = vbCrLf & "--And IDPOTE Not In (Select Idpote_Otl From " & _Global_BaseBk & "Zw_Pdp_CPT_MzEnc Where Estado <> 'NULA')"
         Fm.ShowDialog(Me)
         _Seleccionada = Fm.Seleccionada
         _Numot = Fm.Numot

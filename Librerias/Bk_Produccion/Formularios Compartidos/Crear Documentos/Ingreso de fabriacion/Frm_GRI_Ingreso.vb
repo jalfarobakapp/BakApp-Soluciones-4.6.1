@@ -17,7 +17,7 @@ Public Class Frm_GRI_Ingreso
     End Sub
 
     Private Sub Frm_GRI_Ingreso_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Btn_FabMezcla.Visible = True
+        Btn_FabMezcla.Visible = False
         Btn_FabMezcla.Enabled = True
     End Sub
 
@@ -125,6 +125,10 @@ Public Class Frm_GRI_Ingreso
     End Sub
 
     Private Sub Btn_FabMezcla_Click(sender As Object, e As EventArgs) Handles Btn_FabMezcla.Click
+
+        If Not Fx_Revisar_Taza_Cambio(Me) Then
+            Return
+        End If
 
         Dim Fm As New Frm_ListaMezclas
         Fm.ShowDialog(Me)

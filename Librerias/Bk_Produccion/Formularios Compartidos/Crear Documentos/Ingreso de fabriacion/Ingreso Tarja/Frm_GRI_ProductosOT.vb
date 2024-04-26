@@ -174,6 +174,13 @@ Public Class Frm_GRI_ProductosOT
         Dim _Idpote As Integer = _Fila.Cells("IDPOTE").Value
         Dim _Idpotl As Integer = _Fila.Cells("IDPOTL").Value
         Dim _Realizado As Integer = _Fila.Cells("REALIZADO").Value
+        Dim _Cargo As String = _Fila.Cells("CARGO").Value.ToString.Trim
+
+        If _Cargo = "H" Then
+            MessageBoxEx.Show(Me, "No se puede crear una OT a partir de un registro tipo ""Hijo""" & vbCrLf &
+                              "Solo es posible crear OT de un regitro ""Madre"".", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
         If _Realizado = 0 Then
             MessageBoxEx.Show(Me, "Solo se puede crear una OT Extra a productos que tengan el campo REALIZADO mayor a cero",

@@ -1660,7 +1660,6 @@ Public Module Funciones_Especiales_BakApp
             Return True
         End If
 
-
     End Function
 
     Function Fx_Permitir_Vender_Validar_Formato_Modalidad(_Formulario As Form, Tido As String) As Boolean

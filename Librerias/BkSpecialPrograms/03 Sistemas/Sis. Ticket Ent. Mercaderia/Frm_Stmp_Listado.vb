@@ -40,6 +40,10 @@ Public Class Frm_Stmp_Listado
 
         Sb_Actualizar_Grilla()
 
+        AddHandler Chk_Monitorear.CheckedChanged, AddressOf Chk_Monitorear_CheckedChanged
+
+        Timer_Monitoreo.Interval = 1000 * 5
+
     End Sub
 
 
@@ -64,6 +68,8 @@ Public Class Frm_Stmp_Listado
                 _Condicion += vbCrLf & "And Estado = 'COMPL'"
             Case "Tab_Facturadas"
                 _Condicion += vbCrLf & "And Estado = 'FACTU'"
+            Case "Tab_Entregadas"
+                _Condicion += vbCrLf & "And Estado = 'ENTRE'"
             Case "Tab_Cerradas"
                 _Condicion += vbCrLf & "And Estado = 'CERRA'"
             Case "Tab_Nulas"
@@ -296,6 +302,8 @@ Public Class Frm_Stmp_Listado
 
     Private Sub Btn_Crear_Ticket_Click(sender As Object, e As EventArgs) Handles Btn_Crear_Ticket.Click
 
+        Timer_Monitoreo.Stop()
+
         Dim _Row_Documento As DataRow
 
         Dim _Fm As New Frm_BusquedaDocumento_Filtro(False)
@@ -324,6 +332,59 @@ Public Class Frm_Stmp_Listado
             Return
         End If
 
+        Dim _Facturar As Boolean = _Global_Row_Configuracion_General.Item("Pickear_FacturarAutoCompletas")
+        Dim _Mensaje_Stem As New LsValiciones.Mensajes
+
+        Dim _Cl_Stmp As New Cl_Stmp
+        _Mensaje_Stem = _Cl_Stmp.Fx_Crear_Ticket(_Row_Documento.Item("IDMAEEDO"),
+                                 _Row_Documento.Item("TIDO"),
+                                 _Row_Documento.Item("NUDO"),
+                                 _Facturar,
+                                 FechaDelServidor,
+                                 "R",
+                                 True)
+
+        Dim _Icon As MessageBoxIcon
+
+        If _Mensaje_Stem.EsCorrecto Then
+            _Icon = MessageBoxIcon.Information
+        Else
+            _Icon = MessageBoxIcon.Stop
+        End If
+
+        Sb_Actualizar_Grilla()
+
+        If Chk_Monitorear.Checked Then
+            Timer_Monitoreo.Start()
+        End If
+
+    End Sub
+
+    Private Sub Btn_Actualizar_Click(sender As Object, e As EventArgs) Handles Btn_Actualizar.Click
+        Sb_Actualizar_Grilla()
+    End Sub
+
+    Private Sub Btn_RevisarTicket_Click(sender As Object, e As EventArgs) Handles Btn_RevisarTicket.Click
+
+        Timer_Monitoreo.Stop()
+
+        Dim _Nudo As String
+        Dim _Aceptar As Boolean = InputBox_Bk(Me, "Ingrese el numero de nota de venta a revisar",
+                                              "Revisar detalle NVV", _Nudo, False, _Tipo_Mayus_Minus.Normal, 10, True)
+
+        If Not _Aceptar Then
+            Return
+        End If
+
+        _Nudo = Fx_Rellena_ceros(_Nudo, 10)
+
+        Consulta_sql = "Select IDMAEEDO,TIDO,NUDO From MAEEDO Where TIDO = 'NVV' And NUDO = '" & _Nudo & "'"
+        Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If MessageBoxEx.Show(Me, "¿Confirma el documento " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO") & "?",
+                             "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
 
         Dim _Facturar As Boolean = _Global_Row_Configuracion_General.Item("Pickear_FacturarAutoCompletas")
         Dim _Mensaje_Stem As New LsValiciones.Mensajes
@@ -347,141 +408,11 @@ Public Class Frm_Stmp_Listado
 
         MessageBoxEx.Show(Me, _Mensaje_Stem.Mensaje, _Mensaje_Stem.Detalle, MessageBoxButtons.OK, _Icon)
 
-
-        'Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Docu_Ent",
-        '                                               "Empresa = '" & _Row_Documento.Item("EMPRESA") & "'" &
-        '                                               " And Idmaeedo = " & _Row_Documento.Item("IDMAEEDO") &
-        '                                               " And Tido = '" & _Row_Documento.Item("TIDO") & "'" &
-        '                                               " And Nudo = '" & _Row_Documento.Item("NUDO") & "'")
-
-        'If _Reg = 0 Then
-
-        '    Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
-        '    Dim _TipoEstacion As String = _Global_Row_EstacionBk.Item("TipoEstacion")
-
-        '    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Ent (Idmaeedo,NombreEquipo,TipoEstacion,Empresa,Modalidad,Tido,Nudo," &
-        '                   "FechaHoraGrab,HabilitadaFac,FunAutorizaFac,Pickear)" & vbCrLf &
-        '                   "Select IDMAEEDO,'" & _NombreEquipo & "','" & _TipoEstacion & "',EMPRESA,'?',TIDO,NUDO,LAHORA,0,'',1" & vbCrLf &
-        '                   "From MAEEDO Where IDMAEEDO = " & _Row_Documento.Item("IDMAEEDO") & vbCrLf &
-        '                   "Insert Into " & _Global_BaseBk & "Zw_Docu_Det (Idmaeddo,Idmaeedo,Tido,Nudo,Codigo,Descripcion,RtuVariable)" & vbCrLf &
-        '                   "Select IDMAEDDO,IDMAEEDO,TIDO,NUDO,KOPRCT,NOKOPR,0" & vbCrLf &
-        '                   "From MAEDDO Where IDMAEEDO = " & _Row_Documento.Item("IDMAEEDO")
-        '    _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
-
-        'End If
-
-        'Dim _Row_Entidad As DataRow = Fx_Traer_Datos_Entidad(_Row_Documento.Item("ENDO"), _Row_Documento.Item("SUENDO"))
-        'Dim _Cl_Stem As New Cl_Stmp
-
-        'Dim _Secueven As String
-
-        'Try
-        '    _Secueven = _Row_Entidad.Item("SECUEVEN")
-        'Catch ex As Exception
-        '    _Secueven = "NFG"
-        'End Try
-
-        'With _Cl_Stem.Zw_Stmp_Enc
-
-        '    .Empresa = ModEmpresa
-        '    .Sucursal = ModSucursal
-        '    .Idmaeedo = _Row_Documento.Item("IDMAEEDO")
-        '    .Tido = _Row_Documento.Item("TIDO")
-        '    .Nudo = _Row_Documento.Item("NUDO")
-        '    .Endo = _Row_Documento.Item("ENDO")
-        '    .Suendo = _Row_Documento.Item("SUENDO")
-        '    .CodFuncionario_Crea = FUNCIONARIO
-        '    .FechaCreacion = _FechaServidor
-        '    .Estado = "PREPA"
-        '    .Secueven =
-        '    .Facturar = _Global_Row_Configuracion_General.Item("Pickear_FacturarAutoCompletas")
-
-        '    Try
-        '        .Secueven = _Row_Entidad.Item("SECUEVEN")
-        '    Catch ex As Exception
-        '        .Secueven = String.Empty
-        '    End Try
-
-        'End With
-
-        'Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Row_Documento.Item("IDMAEEDO") & " And PRCT = 0"
-        'Dim _Tbl_Detalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-        'If Not CBool(_Tbl_Detalle.Rows.Count) Then
-        '    MessageBoxEx.Show(Me, "No se encontro detalle en el documento, asegurece que tenga productos asociados", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        '    Return
-        'End If
-
-        'For Each _Fila As DataRow In _Tbl_Detalle.Rows
-
-        '    Dim _Zw_Stmp_Det As New Zw_Stmp_Det
-
-        '    With _Zw_Stmp_Det
-
-        '        .Idmaeedo = _Fila.Item("IDMAEEDO")
-        '        .Idmaeddo = _Fila.Item("IDMAEDDO")
-        '        .Codigo = _Fila.Item("KOPRCT")
-        '        .Descripcion = _Fila.Item("NOKOPR")
-        '        .Nulido = _Fila.Item("NULIDO")
-        '        .Udtrpr = _Fila.Item("UDTRPR")
-        '        .Rludpr = _Fila.Item("RLUDPR")
-        '        .Caprco1_Ori = _Fila.Item("CAPRCO1")
-        '        .Caprco1_Real = 0
-        '        .Udpr = _Fila.Item("UD0" & .Udtrpr & "PR")
-        '        .Ud01pr = _Fila.Item("UD01PR")
-        '        .Caprco2_Ori = _Fila.Item("CAPRCO2")
-        '        .Caprco2_Real = 0
-        '        .Ud02pr = _Fila.Item("UD02PR")
-        '        .Pickeado = False
-        '        .EnProceso = True
-
-        '    End With
-
-        '    _Cl_Stem.Zw_Stmp_Det.Add(_Zw_Stmp_Det)
-
-        'Next
-
-        '_Mensaje_Stem = _Cl_Stem.Fx_Grabar_Nuevo_Tickets
-
-        'If Not _Mensaje_Stem.EsCorrecto Then
-        '    MessageBoxEx.Show(Me, _Mensaje_Stem.Mensaje, "Problema", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        '    Return
-        'End If
-
-        'MessageBoxEx.Show(Me, "Ticket Nro. " & _Cl_Stem.Zw_Stmp_Enc.Numero & " creado correctamente." & vbCrLf &
-        '                  "El documento ya esta en proceso", "Crear Ticket", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
         Sb_Actualizar_Grilla()
 
-    End Sub
-
-    Private Sub Btn_Actualizar_Click(sender As Object, e As EventArgs) Handles Btn_Actualizar.Click
-        Sb_Actualizar_Grilla()
-    End Sub
-
-    Private Sub Btn_RevisarTicket_Click(sender As Object, e As EventArgs) Handles Btn_RevisarTicket.Click
-
-        Dim _Nudo As String
-        Dim _Aceptar As Boolean = InputBox_Bk(Me, "Ingrese el numero de nota de venta a revisar",
-                                              "Revisar detalle NVV", _Nudo, False, _Tipo_Mayus_Minus.Normal, 10, True)
-
-        If Not _Aceptar Then
-            Return
+        If Chk_Monitorear.Checked Then
+            Timer_Monitoreo.Start()
         End If
-
-        _Nudo = Fx_Rellena_ceros(_Nudo, 10)
-
-        Dim _Cl_Stem As New Cl_Stmp
-        Dim _Mensaje_Stem As New LsValiciones.Mensajes
-        _Mensaje_Stem = _Cl_Stem.Fx_Revisar_NVV("NVV", _Nudo)
-
-        If _Mensaje_Stem.EsCorrecto Then
-            MessageBoxEx.Show(Me, _Mensaje_Stem.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        Else
-            MessageBoxEx.Show(Me, _Mensaje_Stem.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        End If
-
-        Sb_Actualizar_Grilla()
 
     End Sub
 
@@ -934,11 +865,35 @@ Public Class Frm_Stmp_Listado
         _Cl_Stmp.Fx_Llenar_Encabezado(_Id_Enc)
         _Cl_Stmp.Fx_Llenar_Detalle(_Id_Enc)
 
-        Dim _Mensaje As New LsValiciones.Mensajes
+        _Cl_Stmp.Zw_Stmp_Enc.Fecha_Facturar = FechaDelServidor()
 
-        _Mensaje = _Cl_Stmp.Fx_Revisar_WMSVillar(_Idmaeedoo, _Nudo)
+        Dim _Mensaje As New LsValiciones.Mensajes
+        Dim Cadena_ConexionSQL_Server_Wms = "data source = wmstest.villar.cl; initial catalog = viaware; user id = sa_wms; password = sa_wms"
+        _Mensaje = _Cl_Stmp.Fx_Revisar_WMSVillar(_Idmaeedoo, _Nudo, Cadena_ConexionSQL_Server_Wms)
 
         Sb_Actualizar_Grilla()
+        'Modificado
 
+
+    End Sub
+
+    Private Sub Timer_Monitoreo_Tick(sender As Object, e As EventArgs) Handles Timer_Monitoreo.Tick
+
+        Timer_Monitoreo.Stop()
+        Sb_Actualizar_Grilla()
+        Timer_Monitoreo.Start()
+
+    End Sub
+
+    Private Sub Chk_Monitorear_CheckedChanged(sender As Object, e As EventArgs)
+        If Chk_Monitorear.Checked Then
+            MessageBoxEx.Show(Me, "Monitoreo activo", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Timer_Monitoreo.Start()
+        Else
+            MessageBoxEx.Show(Me, "Monitoreo desactivado", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Timer_Monitoreo.Stop()
+        End If
+
+        CircularPgrs.IsRunning = Chk_Monitorear.Checked
     End Sub
 End Class

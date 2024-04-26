@@ -108,10 +108,11 @@ Public Class Frm_GRI_FabXProducto
         Dim _CreaNuevaOTExtra As Boolean
         Dim _Numot_Extra As String
 
-        Consulta_sql = "Select POTL.*,(FABRICAR-REALIZADO) As SALDO,Case RLUD When 1 Then 0 Else (FABRICAR-REALIZADO)/RLUD End As SALDO2,RLUD" & vbCrLf &
+        Consulta_sql = "Select POTL.*,POTE.CARGO,(FABRICAR-REALIZADO) As SALDO,Case RLUD When 1 Then 0 Else (FABRICAR-REALIZADO)/RLUD End As SALDO2,RLUD" & vbCrLf &
                        "From POTL" & vbCrLf &
                        "Inner Join MAEPR On KOPR = CODIGO" & vbCrLf &
-                       "Where NUMOT='" & _Numot & "' And EMPRESA = '" & ModEmpresa & "' And LILG <> 'IM' " &
+                       "Inner Join POTE On POTE.IDPOTE = POTL.IDPOTE" & vbCrLf &
+                       "Where POTL.NUMOT='" & _Numot & "' And POTL.EMPRESA = '" & ModEmpresa & "' And LILG <> 'IM' " &
                        "And Exists (Select TABBOPR.* From TABBOPR " &
                        "Where TABBOPR.KOPR = POTL.CODIGO And TABBOPR.KOSU = '" & ModSucursal & "' AND TABBOPR.KOBO = '" & ModBodega & "')"
 

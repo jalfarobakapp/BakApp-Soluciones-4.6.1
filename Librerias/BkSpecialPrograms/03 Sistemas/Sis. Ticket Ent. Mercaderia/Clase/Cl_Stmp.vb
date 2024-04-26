@@ -384,7 +384,11 @@ Public Class Cl_Stmp
             With _Zw_Stmp_Enc
 
                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set " & vbCrLf &
-                               "Estado = '" & .Estado & "', FechaPickeado = Getdate()" & vbCrLf &
+                               "Estado = '" & .Estado & "'" &
+                               ",Fecha_Facturar = '" & Format(.Fecha_Facturar, "yyyyMMdd") & "'" &
+                               ",DocEmitir = '" & .DocEmitir & "'" &
+                               ",TipoPago = '" & .TipoPago & "'" &
+                               ",FechaPickeado = Getdate()" & vbCrLf &
                                "Where Id = " & .Id
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
@@ -418,6 +422,7 @@ Public Class Cl_Stmp
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
             _Mensaje_Stem.EsCorrecto = True
+            _Mensaje_Stem.Detalle = "Documento grabado correctamente"
             _Mensaje_Stem.Mensaje = "Documento grabado correctamente"
 
         Catch ex As Exception
@@ -485,7 +490,7 @@ Public Class Cl_Stmp
             _Sql.Ej_consulta_IDU(Consulta_sql)
         End If
 
-        Consulta_sql = "Select Edo.IDMAEEDO,Edo.EMPRESA,Edo.TIDO,Edo.NUDO,Edo.ENDO,Edo.SUENDO,Edo.SUDO,Doc.Pickear,HabilitadaFac,FunAutorizaFac" & vbCrLf &
+        Consulta_sql = "Select Edo.IDMAEEDO,Edo.EMPRESA,Edo.TIDO,Edo.NUDO,Edo.ENDO,Edo.SUENDO,Edo.SUDO,Doc.Pickear,HabilitadaFac,FunAutorizaFac,Estaenwms" & vbCrLf &
                        "From MAEEDO Edo" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Docu_Ent Doc On Edo.IDMAEEDO = Doc.Idmaeedo And Edo.TIDO = Doc.Tido And Edo.NUDO = Doc.Nudo" & vbCrLf &
                        "Where IDMAEEDO = " & _Idmaeedo
@@ -501,6 +506,14 @@ Public Class Cl_Stmp
         If Not _Row_Documento.Item("Pickear") Then
             _Mensaje_Stem.EsCorrecto = False
             _Mensaje_Stem.Mensaje = "Este documento no esta marcado para ser Pickeado en la tabla Zw_Docu_Ent"
+            _Mensaje_Stem.Detalle = "Documento: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
+            Return _Mensaje_Stem
+        End If
+
+        If Not _Row_Documento.Item("Estaenwms") Then
+            _Mensaje_Stem.EsCorrecto = False
+            _Mensaje_Stem.Mensaje = "Este documento no esta ingresado en el WMS" & vbCrLf &
+                                    "Vuelva a intentarlo en 10 segundos y si no se encuentra informe de esta situación al personal de logística"
             _Mensaje_Stem.Detalle = "Documento: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
             Return _Mensaje_Stem
         End If
@@ -582,13 +595,12 @@ Public Class Cl_Stmp
 
     End Function
 
-    Function Fx_Revisar_WMSVillar(_Idmaeedo As Integer, _Nudo As String) As LsValiciones.Mensajes
+    Function Fx_Revisar_WMSVillar(_Idmaeedo As Integer, _Nudo As String, _CadenaConexionWms As String) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
         Try
 
-            Dim _CadenaConexionWms As String = "data source = wmstest.villar.cl; initial catalog = viaware; user id = sa_wms; password = sa_wms"
             Dim _Sql_WMS As New Class_SQL(_CadenaConexionWms)
 
             Consulta_sql = My.Resources.Recursos_WmsVillar.SQLQuery_Revisar_Nota_de_venta_activa_en_WMS_Villar
@@ -608,7 +620,41 @@ Public Class Cl_Stmp
             Dim _Lineas As DataTable = _Ds.Tables("Lineas")
             Dim _Comandos As DataTable = _Ds.Tables("Comandos")
 
-            Zw_Stmp_Enc.Estado = "COMPL"
+            If _ticket_verde.Rows(0).Item("ticket_verde") = "N" Then
+                _Mensaje.EsCorrecto = False
+                _Mensaje.Detalle = "El pedido aun no esta listo"
+                Return _Mensaje
+            End If
+
+
+            Dim _ob_type As String = _Cabecera.Rows(0).Item("ob_type")
+            Dim _CanalEntrada As String = Mid(_ob_type, 1, 1)
+            Dim _TipoPago As String = Mid(_ob_type, 2, 1)
+            Dim _Entrega As String = Mid(_ob_type, 3, 1)
+            Dim _DocEmitir As String = Mid(_ob_type, 4, 1)
+
+
+            With Zw_Stmp_Enc
+
+                Select Case _DocEmitir
+                    Case "B"
+                        .DocEmitir = "BLV"
+                    Case "G"
+                        .DocEmitir = "GDV"
+                    Case "F"
+                        .DocEmitir = "FCV"
+                End Select
+
+                Select Case _TipoPago
+                    Case "C"
+                        .TipoPago = "Contado"
+                    Case "R"
+                        .TipoPago = "Credito"
+                End Select
+
+                .Estado = "COMPL"
+
+            End With
 
             If _ticket_verde.Rows(0).Item("ticket_verde") = "Y" Then
 
@@ -623,6 +669,7 @@ Public Class Cl_Stmp
                         If _Det.Codigo.Trim = _sku.Trim Then
 
                             With _Det
+                                .Cantidad = _qty
                                 .Caprco1_Real = _qty
                                 .Caprco2_Real = _qty
                                 .Pickeado = True
@@ -636,14 +683,6 @@ Public Class Cl_Stmp
 
                     Next
 
-                    'Consulta_sql += "Update " & _Global_BaseBk & "Zw_Stmp_Det Set " & vbCrLf &
-                    '               "Pickeado = 1" &
-                    '               ",EnProceso = 0" &
-                    '               ",Caprco1_Real = " & De_Num_a_Tx_01(_qty, False, 5) &
-                    '               ",Caprco2_Real = " & De_Num_a_Tx_01(_qty, False, 5) &
-                    '               "CodFuncionario_Pickea = 'wms'" &
-                    '               "Where Idmaeedo = " & _Idmaeedo & " And Codigo = '" & _sku & "'" & vbCrLf
-
                 Next
 
                 _Mensaje = Fx_Confirmar_Picking()
@@ -653,8 +692,6 @@ Public Class Cl_Stmp
         Catch ex As Exception
 
         End Try
-
-        '_Sql.Ej_consulta_IDU(Consulta_sql)
 
         Return _Mensaje
 
