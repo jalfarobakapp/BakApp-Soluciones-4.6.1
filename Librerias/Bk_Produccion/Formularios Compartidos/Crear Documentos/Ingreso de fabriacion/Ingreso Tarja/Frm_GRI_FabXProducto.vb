@@ -79,6 +79,7 @@ Public Class Frm_GRI_FabXProducto
             If IsNothing(_Row_Pote) Then
                 MessageBoxEx.Show(Me, "No existe la OT Nro: " & _Numot, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 _Numot = String.Empty
+                Txt_Numot.Text = _Numot
                 Return
             End If
 
@@ -86,10 +87,20 @@ Public Class Frm_GRI_FabXProducto
                 MessageBoxEx.Show(Me, "la OT Nro: " & _Numot & " Se encuentra cerrada" & vbCrLf &
                                   "No se permite el movimiento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 _Numot = String.Empty
+                Txt_Numot.Text = _Numot
                 Return
             End If
 
-            'Txt_Numot.ReadOnly = True
+            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Pdp_CPT_MzEnc", "Idpote = " & _Row_Pote.Item("IDPOTE"))
+
+            If CBool(_Reg) Then
+                MessageBoxEx.Show(Me, "Esta OT no puede ser procesada por este modulo ya que es una OT de producción de Mezcla",
+                              "Validación OT " & _Numot, MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                _Numot = String.Empty
+                Txt_Numot.Text = _Numot
+                Return
+            End If
+
             Txt_Numot.ButtonCustom.Visible = True
             Lbl_ReferenciaOT.Text = "REFERENCIA: " & _Row_Pote.Item("REFERENCIA")
 
@@ -946,6 +957,7 @@ Public Class Frm_GRI_FabXProducto
         Dim _Numot As String
 
         Dim Fm As New Frm_BuscarOT
+        ''Fm.FiltroExternoSql = "And IDPOTE Not In (Select Idpote From " & _Global_BaseBk & "Zw_Pdp_CPT_MzEnc Where Estado = 'FABRI')"
         Fm.ShowDialog(Me)
         _Seleccionada = Fm.Seleccionada
         _Numot = Fm.Numot

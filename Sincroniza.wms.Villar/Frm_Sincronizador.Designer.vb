@@ -57,7 +57,7 @@ Partial Class Frm_Sincronizador
         Me.Txt_Log.Name = "Txt_Log"
         Me.Txt_Log.PreventEnterBeep = True
         Me.Txt_Log.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.Txt_Log.Size = New System.Drawing.Size(681, 310)
+        Me.Txt_Log.Size = New System.Drawing.Size(681, 323)
         Me.Txt_Log.TabIndex = 75
         '
         'Lbl_Nombre_Equipo
@@ -98,7 +98,7 @@ Partial Class Frm_Sincronizador
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Limpiar, Me.Btn_Pruebas})
-        Me.Bar1.Location = New System.Drawing.Point(0, 386)
+        Me.Bar1.Location = New System.Drawing.Point(0, 399)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(705, 41)
         Me.Bar1.Stretch = True
@@ -141,7 +141,7 @@ Partial Class Frm_Sincronizador
         Me.Metro_Bar_Color.ForeColor = System.Drawing.Color.Black
         Me.Metro_Bar_Color.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Estatus})
         Me.Metro_Bar_Color.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 427)
+        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 440)
         Me.Metro_Bar_Color.Name = "Metro_Bar_Color"
         Me.Metro_Bar_Color.Size = New System.Drawing.Size(705, 22)
         Me.Metro_Bar_Color.TabIndex = 78
@@ -159,6 +159,7 @@ Partial Class Frm_Sincronizador
         '
         'Dtp_FechaRevision
         '
+        Me.Dtp_FechaRevision.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         '
         '
         '
@@ -167,7 +168,7 @@ Partial Class Frm_Sincronizador
         Me.Dtp_FechaRevision.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
         Me.Dtp_FechaRevision.ButtonDropDown.Visible = True
         Me.Dtp_FechaRevision.IsPopupCalendarOpen = False
-        Me.Dtp_FechaRevision.Location = New System.Drawing.Point(113, 358)
+        Me.Dtp_FechaRevision.Location = New System.Drawing.Point(113, 371)
         '
         '
         '
@@ -209,11 +210,12 @@ Partial Class Frm_Sincronizador
         '
         'LabelX1
         '
+        Me.LabelX1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         '
         '
         '
         Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX1.Location = New System.Drawing.Point(12, 357)
+        Me.LabelX1.Location = New System.Drawing.Point(12, 370)
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.Size = New System.Drawing.Size(95, 23)
         Me.LabelX1.TabIndex = 80
@@ -223,7 +225,7 @@ Partial Class Frm_Sincronizador
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(705, 449)
+        Me.ClientSize = New System.Drawing.Size(705, 462)
         Me.Controls.Add(Me.LabelX1)
         Me.Controls.Add(Me.Dtp_FechaRevision)
         Me.Controls.Add(Me.Bar1)
@@ -233,6 +235,7 @@ Partial Class Frm_Sincronizador
         Me.Controls.Add(Me.Lbl_Nombre_Equipo)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
         Me.Name = "Frm_Sincronizador"

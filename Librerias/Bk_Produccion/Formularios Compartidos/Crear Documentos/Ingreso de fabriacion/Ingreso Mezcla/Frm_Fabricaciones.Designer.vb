@@ -23,9 +23,9 @@ Partial Class Frm_Fabricaciones
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Fabricaciones))
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_IngresarNuevaFabricacion = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
@@ -39,12 +39,16 @@ Partial Class Frm_Fabricaciones
         Me.Lbl_Fabricar = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Lbl_Fabricado = New DevComponents.DotNetBar.LabelX()
+        Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
+        Me.Dtp_Fecha_Ingreso = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel4.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel7.SuspendLayout()
         Me.GroupPanel1.SuspendLayout()
+        CType(Me.Dtp_Fecha_Ingreso, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Bar1
@@ -52,7 +56,7 @@ Partial Class Frm_Fabricaciones
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_IngresarNuevaFabricacion, Me.Btn_Actualizar})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_IngresarNuevaFabricacion, Me.Btn_Grabar, Me.Btn_Actualizar})
         Me.Bar1.Location = New System.Drawing.Point(0, 488)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(748, 41)
@@ -80,6 +84,7 @@ Partial Class Frm_Fabricaciones
         Me.Btn_Actualizar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.Btn_Actualizar.Name = "Btn_Actualizar"
         Me.Btn_Actualizar.Tooltip = "Refrescar datos"
+        Me.Btn_Actualizar.Visible = False
         '
         'GroupPanel4
         '
@@ -162,37 +167,37 @@ Partial Class Frm_Fabricaciones
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle13.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle13.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle13.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle13
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle14.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle14.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle14.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle14.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle14
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.MultiSelect = False
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle15.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle15.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle15.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle15
         Me.Grilla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.Grilla.Size = New System.Drawing.Size(721, 387)
         Me.Grilla.TabIndex = 1
@@ -313,15 +318,95 @@ Partial Class Frm_Fabricaciones
         Me.Lbl_Fabricado.Text = "0"
         Me.Lbl_Fabricado.TextAlignment = System.Drawing.StringAlignment.Far
         '
+        'Btn_Grabar
+        '
+        Me.Btn_Grabar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Grabar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Grabar.Image = CType(resources.GetObject("Btn_Grabar.Image"), System.Drawing.Image)
+        Me.Btn_Grabar.Name = "Btn_Grabar"
+        Me.Btn_Grabar.Tooltip = "Grabar OT y GRI"
+        '
+        'LabelX4
+        '
+        Me.LabelX4.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX4.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX4.ForeColor = System.Drawing.Color.Black
+        Me.LabelX4.Location = New System.Drawing.Point(12, 419)
+        Me.LabelX4.Name = "LabelX4"
+        Me.LabelX4.Size = New System.Drawing.Size(208, 23)
+        Me.LabelX4.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.LabelX4.TabIndex = 169
+        Me.LabelX4.Text = "FECHA INGRESO FABRICACION"
+        '
+        'Dtp_Fecha_Ingreso
+        '
+        Me.Dtp_Fecha_Ingreso.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Dtp_Fecha_Ingreso.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Dtp_Fecha_Ingreso.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Fecha_Ingreso.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
+        Me.Dtp_Fecha_Ingreso.ButtonDropDown.Visible = True
+        Me.Dtp_Fecha_Ingreso.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Dtp_Fecha_Ingreso.ForeColor = System.Drawing.Color.Black
+        Me.Dtp_Fecha_Ingreso.IsPopupCalendarOpen = False
+        Me.Dtp_Fecha_Ingreso.Location = New System.Drawing.Point(217, 419)
+        '
+        '
+        '
+        Me.Dtp_Fecha_Ingreso.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_Fecha_Ingreso.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Fecha_Ingreso.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
+        Me.Dtp_Fecha_Ingreso.MonthCalendar.ClearButtonVisible = True
+        '
+        '
+        '
+        Me.Dtp_Fecha_Ingreso.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
+        Me.Dtp_Fecha_Ingreso.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_Fecha_Ingreso.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
+        Me.Dtp_Fecha_Ingreso.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Dtp_Fecha_Ingreso.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
+        Me.Dtp_Fecha_Ingreso.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
+        Me.Dtp_Fecha_Ingreso.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Fecha_Ingreso.MonthCalendar.DisplayMonth = New Date(2018, 1, 1, 0, 0, 0, 0)
+        Me.Dtp_Fecha_Ingreso.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
+        Me.Dtp_Fecha_Ingreso.MonthCalendar.MarkedDates = New Date(-1) {}
+        Me.Dtp_Fecha_Ingreso.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_Fecha_Ingreso.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Dtp_Fecha_Ingreso.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_Fecha_Ingreso.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Dtp_Fecha_Ingreso.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Fecha_Ingreso.MonthCalendar.TodayButtonVisible = True
+        Me.Dtp_Fecha_Ingreso.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
+        Me.Dtp_Fecha_Ingreso.Name = "Dtp_Fecha_Ingreso"
+        Me.Dtp_Fecha_Ingreso.Size = New System.Drawing.Size(96, 25)
+        Me.Dtp_Fecha_Ingreso.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Dtp_Fecha_Ingreso.TabIndex = 168
+        Me.Dtp_Fecha_Ingreso.TabStop = False
+        Me.Dtp_Fecha_Ingreso.Value = New Date(2018, 1, 30, 12, 16, 22, 0)
+        '
         'Frm_Fabricaciones
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(748, 529)
+        Me.Controls.Add(Me.Dtp_Fecha_Ingreso)
         Me.Controls.Add(Me.GroupPanel7)
         Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.Bar1)
         Me.Controls.Add(Me.GroupPanel4)
+        Me.Controls.Add(Me.LabelX4)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -338,6 +423,7 @@ Partial Class Frm_Fabricaciones
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel7.ResumeLayout(False)
         Me.GroupPanel1.ResumeLayout(False)
+        CType(Me.Dtp_Fecha_Ingreso, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -355,4 +441,7 @@ Partial Class Frm_Fabricaciones
     Friend WithEvents Menu_Contextual_01 As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Editar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Eliminar As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Dtp_Fecha_Ingreso As DevComponents.Editors.DateTimeAdv.DateTimeInput
 End Class

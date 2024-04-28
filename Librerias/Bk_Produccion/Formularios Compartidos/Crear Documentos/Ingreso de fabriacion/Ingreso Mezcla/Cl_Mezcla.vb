@@ -91,6 +91,9 @@ Public Class Cl_Mezcla
                 .Udad = _Row.Item("Udad")
                 .CantFabricar = _Row.Item("CantFabricar")
                 .CantFabricada = _Row.Item("CantFabricada")
+                .Idpote_New = _Row.Item("Idpote_New")
+                .Idpotl_New = _Row.Item("Idpotl_New")
+                .Idmaeddo = _Row.Item("Idmaeddo")
 
                 _Mensaje_Mezcla.EsCorrecto = True
                 _Mensaje_Mezcla.Id = .Id

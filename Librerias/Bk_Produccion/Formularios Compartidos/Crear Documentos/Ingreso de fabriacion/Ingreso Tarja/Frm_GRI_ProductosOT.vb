@@ -227,8 +227,6 @@ Public Class Frm_GRI_ProductosOT
             Return
         End If
 
-        '--(@NumOtRef char(10), @USUARIO char(3), @ENVIA_FECHA DATE, @KILOS INT,@IDPOTL INT    
-
         Dim _Fecha As DateTime = _Sql.Fx_Trae_Dato("POTE", "FIOT", "IDPOTE = " & _Idpote) 'FechaDelServidor()
 
 

@@ -21,6 +21,9 @@ Public Class Frm_ListaMezclas
 
     Private Sub Frm_ListaMezclas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        AddHandler Tab_Preparacion.Click, AddressOf Sb_Actualizar_Grilla
+        AddHandler Tab_Fabricadas.Click, AddressOf Sb_Actualizar_Grilla
+
         Sb_Actualizar_Grilla()
 
         Btn_NuevaMezcla.Visible = True
@@ -29,10 +32,21 @@ Public Class Frm_ListaMezclas
 
     Sub Sb_Actualizar_Grilla()
 
-        'Empresa, Idpote_Otm, Idpotl_Otm, Numot_Otm, Fiot_Otm, Codigo_Otm, Descripcion_Otm, FechaCreacion, Referencia, CodFuncionario, FechaCreacionOT, Idpote, Estado
+        Dim _Condicion As String
+        Dim _Tbas = Super_TabS.SelectedTab
+
+        Select Case _Tbas.Name
+            Case "Tab_Preparacion"
+                _Condicion = "And Estado = 'PROCE'"
+            Case "Tab_Fabricadas"
+                _Condicion = "And Estado = 'FABRI'"
+        End Select
+
+        Dim _Filtro As String = CADENA_A_BUSCAR(RTrim$(Txt_Filtrar.Text), "Nro_MZC+Numot_Otm+Codigo_Otm+Descripcion_Otm Like '%")
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Pdp_CPT_MzEnc" & vbCrLf &
-                       "Where Estado = 'PROCE'"
+                       "Where 1>0" & vbCrLf & _Condicion & vbCrLf &
+                       "And Nro_MZC+Numot_Otm+Codigo_Otm+Descripcion_Otm Like '%" & _Filtro & "%'"
         _Tbl_Mezclas = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         With Grilla
@@ -70,7 +84,7 @@ Public Class Frm_ListaMezclas
             .Columns("Numot_Otm").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Fiot_Otm").Width = 70
+            .Columns("Fiot_Otm").Width = 80
             .Columns("Fiot_Otm").HeaderText = "F.Emis(OT.M)"
             .Columns("Fiot_Otm").DefaultCellStyle.Format = "dd/MM/yyyy"
             .Columns("Fiot_Otm").Visible = True
@@ -94,7 +108,7 @@ Public Class Frm_ListaMezclas
 
             .Columns("Referencia").Visible = True
             .Columns("Referencia").HeaderText = "Saldo SC"
-            .Columns("Referencia").Width = 170
+            .Columns("Referencia").Width = 230
             .Columns("Referencia").Visible = True
             .Columns("Referencia").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
@@ -142,6 +156,16 @@ Public Class Frm_ListaMezclas
         _Idpote_Otm = Fm.Idpote
         Fm.Dispose()
 
+        If Not CBool(_Idpote_Otm) Then
+            Return
+        End If
+
+        Sb_Traer_Producto_De_OT(_Idpote_Otm, _Numot)
+
+    End Sub
+
+    Sub Sb_Traer_Producto_De_OT(_Idpote_Otm As Integer, _Numot As String)
+
         Consulta_sql = "Select *,(FABRICAR-REALIZADO) As SALDO,0 As SALDO2 From POTL" & vbCrLf &
                        "Where IDPOTE = " & _Idpote_Otm & " And LILG <> 'IM'"
 
@@ -153,6 +177,22 @@ Public Class Frm_ListaMezclas
         Fm_Potl.ShowDialog(Me)
         Dim _Row_Potl As DataRow = Fm_Potl.FilaSeleccionada
         Fm_Potl.Dispose()
+
+        If IsNothing(_Row_Potl) Then
+            Return
+        End If
+
+        Consulta_sql = "Select Enc.* From " & _Global_BaseBk & "Zw_Pdp_CPT_MzDet Det" & vbCrLf &
+                       "Inner Join " & _Global_BaseBk & "Zw_Pdp_CPT_MzEnc Enc On Enc.Id = Det.Id_Enc" & vbCrLf &
+                       "Where Det.Idpotl_Otm = " & _Row_Potl.Item("IDPOTL")
+        Dim _Row_MzDet As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If Not IsNothing(_Row_MzDet) Then
+            MessageBoxEx.Show(Me, "Este registro ya esta ingresado en la orden de fabricación " & _Row_MzDet.Item("Nro_MZC"),
+                              "Validación registro ya ingresado", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Sb_Traer_Producto_De_OT(_Idpote_Otm, _Numot)
+            Return
+        End If
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -166,142 +206,10 @@ Public Class Frm_ListaMezclas
             _Icon = MessageBoxIcon.Error
         End If
 
-        MessageBoxEx.Show(Me, _Mensaje.Detalle, _Mensaje.Detalle, MessageBoxButtons.OK, _Icon)
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Icon)
 
         Sb_Actualizar_Grilla()
 
-        Return
-
-
-        Consulta_sql = "Select * From ZNUEVA_PRODUCCIOND Where NUMOT = '" & _Numot & "'"
-        Dim _Row_ZNUEVA_PRODUCCIOND As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-        If IsNothing(_Row_ZNUEVA_PRODUCCIOND) Then
-            MessageBoxEx.Show(Me, "No se encontro registro en ZNUEVA_PRODUCCIOND", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Return
-        End If
-
-        Dim _Codigo As String = _Row_ZNUEVA_PRODUCCIOND.Item("CODIGO")
-        Dim _Formula As String = _Row_ZNUEVA_PRODUCCIOND.Item("FORMULA")
-        Dim _Codigomz As String = _Row_ZNUEVA_PRODUCCIOND.Item("CODIGOMZ")
-        Dim _Formulamz As String = _Row_ZNUEVA_PRODUCCIOND.Item("FORMULAMZ")
-
-        If _Seleccionada Then
-
-            Dim _Row_Pote As DataRow
-
-            Consulta_sql = "Select * From POTL Where IDPOTE = " & _Idpote_Otm & " And CODIGO = '" & _Codigo & "'"
-            Dim _Tbl_Potl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-            If _Tbl_Potl.Rows.Count = 0 Then
-                MessageBoxEx.Show(Me, "No se encontro registro en POTL", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Return
-            End If
-
-            If _Tbl_Potl.Rows.Count > 1 Then
-                MessageBoxEx.Show(Me, "Hay mas de un registro con este producto en POTL", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                '_Row_Potl = Fx_RowPotl(_Idpote_Otm)
-                Return
-            End If
-
-            _Row_Potl = _Tbl_Potl.Rows(0)
-
-            Dim _RowNomenclatura As DataRow
-
-            Consulta_sql = "Select * From PNPE Where CODIGO = '" & _Formula & "'"
-            _RowNomenclatura = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-            If IsNothing(_RowNomenclatura) Then
-                MessageBoxEx.Show(Me, "Debe seleccionar una nomeclatura para poder crear la Orden de fabricación", "Validación",
-                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Return
-            End If
-
-            Consulta_sql = "Select * From POTE Where IDPOTE = " & _Idpote_Otm
-            _Row_Pote = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-            Dim _Cl_Mezcla As New Cl_Mezcla
-            Dim _Mensaje2 As New LsValiciones.Mensajes
-
-            With _Cl_Mezcla.Zw_Pdp_CPT_MzEnc
-
-                .Empresa = ModEmpresa
-                .Idpote_Otm = _Row_Potl.Item("IDPOTE")
-                .Idpotl_Otm = _Row_Potl.Item("IDPOTL")
-                .Numot_Otm = _Row_Pote.Item("NUMOT")
-                .Referencia = "CREACION DE MEZCLA PARA PRODUCTO: " & _Row_Potl.Item("GLOSA").ToString.Trim '_Row_Pote.Item("REFERENCIA").ToString.Trim
-                .Codigo_Otm = _Row_Potl.Item("CODIGO").ToString.Trim
-                .Descripcion_Otm = _Row_Potl.Item("GLOSA").ToString.Trim
-                .Fiot_Otm = _Row_Pote.Item("FIOT")
-                .Estado = "PROCE"
-
-            End With
-
-            Dim _Factor As Double = 100 ' .CantFabricar / .Cantnomen
-            Dim _Fab As String = De_Num_a_Tx_01(_Factor,, 5)
-
-            Consulta_sql = "Select PNPD.*,PNPE.CODIGO As 'CODNOMEN',PNPE.DESCRIPTOR," & _Fab & "*PNPD.CANTIDAD As 'Fabricar',MAEPR.NOKOPR,MAEPR.UD01PR,MAEPR.UD02PR,MAEPR.TIPR,MAEPR.DIVISIBLE,MAEPR.LOMIFA," &
-                           "MAEPR.LOMAFA,MAEPR.MUDEFA,MAEPR.KOPRDIM,MAEPR.NODIM1,MAEPR.NODIM2,PCOMODI.COMODIN AS XXCOMODIN" & vbCrLf &
-                           "From PNPD" & vbCrLf &
-                           "Left Join MAEPR On PNPD.ELEMENTO = MAEPR.KOPR" & vbCrLf &
-                           "Left Join PCOMODI On PNPD.ELEMENTO = PCOMODI.KOCOMO" & vbCrLf &
-                           "Left Join PNPE On PNPE.CODIGO = '" & _Formulamz & "'" & vbCrLf &
-                           "Where PNPD.CODIGO = '" & _Formula & "' And PNPD.ELEMENTO = '" & _Codigomz & "' --In (Select CODIGO From PRELA) "
-
-            Dim _TblMzDet As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-            Dim _Id = 0
-
-            For Each _Fila As DataRow In _TblMzDet.Rows
-
-                Dim _MzDet As New Zw_Pdp_CPT_MzDet
-
-                With _MzDet
-
-                    .Id = _Id
-                    .Empresa = ModEmpresa
-                    .SucursalDef = ModSucursal
-                    .BodegaDef = ModBodega
-                    .FechaCreacion = FechaDelServidor()
-                    .Idpote_Otm = _Cl_Mezcla.Zw_Pdp_CPT_MzEnc.Idpote_Otm
-                    .Idpotl_Otm = _Cl_Mezcla.Zw_Pdp_CPT_MzEnc.Idpotl_Otm
-                    .CodFuncionario = FUNCIONARIO
-                    .Codigo = _Fila.Item("ELEMENTO")
-                    .Descripcion = _Fila.Item("NOKOPR").ToString.Trim
-                    .Codnomen = _Fila.Item("CODNOMEN")
-                    .Descriptor = _Fila.Item("DESCRIPTOR").ToString.Trim
-                    .Cantnomen = _Fila.Item("CANTIDAD")
-                    .Udad = _Fila.Item("UDAD")
-                    .CantFabricar = _Fila.Item("Fabricar")
-                    .CantFabricada = 0
-
-                    _Cl_Mezcla.Ls_Zw_Pdp_CPT_MzDet.Add(_MzDet)
-
-                End With
-
-                _Id += 1
-
-            Next
-
-            Dim _Aceptar As Boolean = InputBox_Bk(Me, "Ingrese alguna Referencia para esta orden de fabricación", "Orden de fabricación",
-                                                      _Cl_Mezcla.Zw_Pdp_CPT_MzEnc.Referencia, False, _Tipo_Mayus_Minus.Mayusculas, 50, True, _Tipo_Imagen.Storage)
-
-            If Not _Aceptar Then
-                Return
-            End If
-
-            _Mensaje2 = _Cl_Mezcla.Fx_Crear_Nueva_Mezcla()
-
-            If Not _Mensaje2.EsCorrecto Then
-                MessageBoxEx.Show(Me, _Mensaje2.Mensaje, "Problema al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Return
-            End If
-
-            MessageBoxEx.Show(Me, _Mensaje2.Detalle, "Crear Orden de fabricación", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-            Sb_Actualizar_Grilla()
-
-        End If
 
     End Sub
 
@@ -399,6 +307,11 @@ Public Class Frm_ListaMezclas
             Consulta_sql = "Select * From ZNUEVA_PRODUCCIOND Where IDPOTL = " & _Idpotl
             Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
+            If Not CBool(_Tbl.Rows.Count) Then
+                _Mensaje.Detalle = "Validación"
+                Throw New System.Exception("No se encontro registro en la tabla ZNUEVA_PRODUCCIOND")
+            End If
+
             For Each _Fl_potl As DataRow In _Tbl.Rows
 
                 Dim _Codigomz As String = _Fl_potl.Item("CODIGOMZ")
@@ -452,4 +365,14 @@ Public Class Frm_ListaMezclas
 
     End Function
 
+    Private Sub Txt_Filtrar_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Filtrar.KeyDown
+        If e.KeyValue = Keys.Enter Then
+            Sb_Actualizar_Grilla()
+        End If
+    End Sub
+
+    Private Sub Txt_Filtrar_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Filtrar.ButtonCustomClick
+        Txt_Filtrar.Text = String.Empty
+        Sb_Actualizar_Grilla()
+    End Sub
 End Class

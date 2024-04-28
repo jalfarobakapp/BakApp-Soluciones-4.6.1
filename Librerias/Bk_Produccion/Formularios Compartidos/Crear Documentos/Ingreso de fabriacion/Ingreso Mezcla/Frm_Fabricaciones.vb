@@ -8,7 +8,9 @@ Public Class Frm_Fabricaciones
 
     Dim _Cl_Mezcla As New Cl_Mezcla
     Dim _Tbl_Fabricaciones As DataTable
+
     Private _Id_Det As Integer
+    Public Property OTCreada As Boolean
 
     Public Sub New(Id_Det As Integer)
 
@@ -19,7 +21,7 @@ Public Class Frm_Fabricaciones
 
         _Id_Det = Id_Det
 
-        _Cl_Mezcla.Fx_Llenar_Zw_Pdp_CPT_MzDet(_Id_Det)
+        '_Cl_Mezcla.Fx_Llenar_Zw_Pdp_CPT_MzDet(_Id_Det)
 
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
 
@@ -31,10 +33,21 @@ Public Class Frm_Fabricaciones
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
 
         Sb_Actualizar_Grilla()
+        Dtp_Fecha_Ingreso.Value = FechaDelServidor()
+
+        Btn_Grabar.Enabled = Not (CBool(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpotl_New))
+        Btn_IngresarNuevaFabricacion.Enabled = Not (CBool(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpotl_New))
+        Dtp_Fecha_Ingreso.Enabled = Not (CBool(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpotl_New))
+
+        If Not (CBool(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpotl_New)) Then
+            Dtp_Fecha_Ingreso.Value = _Cl_Mezcla.Zw_Pdp_CPT_MzDet.FechaCreacion
+        End If
 
     End Sub
 
     Sub Sb_Actualizar_Grilla()
+
+        _Cl_Mezcla.Fx_Llenar_Zw_Pdp_CPT_MzDet(_Id_Det)
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Pdp_CPT_MzDetIngFab" & vbCrLf &
                        "Where Id_Det = " & _Id_Det
@@ -265,4 +278,175 @@ Public Class Frm_Fabricaciones
             Call Btn_Eliminar_Click(Nothing, Nothing)
         End If
     End Sub
+
+    Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
+
+        If _Cl_Mezcla.Zw_Pdp_CPT_MzDet.CantFabricada = 0 Then
+            MessageBoxEx.Show(Me, "No existen datos de fabricación", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Fecha As DateTime = Dtp_Fecha_Ingreso.Value
+
+        If MessageBoxEx.Show(Me, "¿Confirma la creación de OT?" & vbCrLf & vbCrLf &
+                                 "Fecha: " & Dtp_Fecha_Ingreso.Value.ToShortDateString & vbCrLf &
+                                 "Cantidad fabricada:" & FormatNumber(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.CantFabricada, 0),
+                                 "Validación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
+
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        _Mensaje = Fx_Crear_OT()
+
+        If Not _Mensaje.EsCorrecto Then
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        _Mensaje = Fx_GrabarGRI(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpotl_New)
+
+        If Not _Mensaje.EsCorrecto Then
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        Me.Close()
+
+    End Sub
+
+    Function Fx_Crear_OT() As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+
+            Dim _Id_Enc As Integer = _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Id_Enc
+
+            _Cl_Mezcla.Fx_Llenar_Zw_Pdp_CPT_MzEnc(_Id_Enc)
+
+            Dim _Idpote_Otm As Integer = _Cl_Mezcla.Zw_Pdp_CPT_MzEnc.Idpote_Otm
+            Dim _Fecha As DateTime = Dtp_Fecha_Ingreso.Value
+
+            Consulta_sql = "EXEC Genero_OT_MEZCLAS  " & _Id_Enc & ",'" & FUNCIONARIO & "','" & Format(_Fecha, "dd/MM/yyyy") & "'"
+            Dim _Row_Respuesta As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+            _Cl_Mezcla.Fx_Llenar_Zw_Pdp_CPT_MzEnc(_Id_Enc)
+            _Cl_Mezcla.Fx_Llenar_Zw_Pdp_CPT_MzDet(_Id_Det)
+
+            If Not CBool(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpotl_New) Then
+                _Mensaje.Detalle = "Error en procedimiento almacenado"
+                Throw New System.Exception("Consulta: " & Consulta_sql)
+            End If
+
+            OTCreada = True
+
+            Consulta_sql = "Select * From POTE Where IDPOTE = " & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpote_New
+            Dim _Row_NewOT As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Consulta_sql = "Select top 1 IDMAEDDO,NUDO From MAEDDO Where IDMAEEDO = " & _Mensaje.Id
+            Dim _Row_Maeddo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Id = _Row_NewOT.Item("IDPOTE")
+            _Mensaje.Detalle = "Creación de OT"
+            _Mensaje.Mensaje = "Se creo la OT " & _Row_NewOT.Item("NUMOT")
+
+            'CreaNuevaOTExtra = True
+            'Dim Numot_Extra = _Row_Respuesta.Item("RESULTADO")
+
+            'Dim _Mensaje1 = "Se creo la OT " & _Row_NewOT.Item("NUMOT")
+            'Dim _Mensaje2 As String
+            '_Mensaje2 = "Nueva OT por Saldo de fabricación" & vbCrLf & vbCrLf &
+            '            _Mensaje.Mensaje
+
+            'Dim iconoAlerta As Icon = SystemIcons.Warning
+            'Dim _ImagenFoot As Image = iconoAlerta.ToBitmap()
+
+            '' Cambiar el tamaño del icono a 64x64 píxeles (puedes ajustar el tamaño según tus necesidades)
+            'Dim nuevoTamaño As New Size(16, 16)
+            'Dim iconoRedimensionado As Image = _ImagenFoot.GetThumbnailImage(nuevoTamaño.Width, nuevoTamaño.Height, Nothing, IntPtr.Zero)
+
+            '_ImagenFoot = iconoRedimensionado
+
+            'Dim _Info As New TaskDialogInfo("Alerta",
+            '           eTaskDialogIcon.Information2,
+            '          _Mensaje1, _Mensaje2,
+            '          eTaskDialogButton.Ok, eTaskDialogBackgroundColor.Red, Nothing, Nothing,
+            '          Nothing, "Se cerrara este formulario y se gestionara la nueva OT", _ImagenFoot, True)
+
+            'Dim _Resultado As eTaskDialogResult = TaskDialog.Show(_Info)
+
+        Catch ex As Exception
+            _Mensaje.Mensaje = ex.Message
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
+    Function Fx_GrabarGRI(_Idpotl As Integer) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            Dim _New_Idmaeedo As Integer
+            Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+            Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Dim _Koen As String = _Row_Configp.Item("RUT").ToString.Trim
+            Dim _Observaciones As String
+
+            Consulta_sql = "Select Top 1 * From MAEEN Where KOEN = '" & _Koen & "'"
+            Dim _Row_Entidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Dim _FechaEmision As DateTime
+
+            _Observaciones = "Datos de fabricación ingresados directamente desde Bakapp en sistema de ingreso de mezclas"
+            _FechaEmision = Dtp_Fecha_Ingreso.Value
+
+            Consulta_sql = "Select *," & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.CantFabricada & " As Cantidad,'" & ModSucursal & "' As Sucursal,'" & ModBodega & "' As Bodega" & vbCrLf &
+                           "From POTL Where IDPOTL = " & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpotl_New
+            Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+            Dim Fm As New Frm_Formulario_Documento("GRI", csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Recepcion_Interna,
+                                                   False, False, False, False, False, False)
+
+            Fm.Pro_RowEntidad = _Row_Entidad
+            Fm.Sb_Crear_Documento_Interno_Con_Tabla3Potl(Me, _Tbl_Productos, _FechaEmision, "CODIGO", "Cantidad", "C_FABRIC", _Observaciones, False, False, 1)
+            _New_Idmaeedo = Fm.Fx_Grabar_Documento(False)
+            Fm.Dispose()
+
+            Consulta_sql = "Select top 1 IDMAEDDO,NUDO From MAEDDO Where IDMAEEDO = " & _New_Idmaeedo
+            Dim _Row_Maeddo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Pdp_CPT_MzDet Set Idmaeddo = " & _Row_Maeddo.Item("IDMAEDDO") & vbCrLf &
+                           "Where Id = " & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Id
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Pdp_CPT_MzEnc Set Estado = 'PROCE' Where Id = " & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Id_Enc
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Id = _Row_Maeddo.Item("IDMAEDDO")
+            _Mensaje.Detalle = "GRI Creada correctamente"
+            _Mensaje.Mensaje = "Se crea GRI Nro " & _Row_Maeddo.Item("NUDO") & vbCrLf &
+                               "Producto: " & _Row_Maeddo.Item("KOPRCT") & " - " & _Row_Maeddo.Item("NOKOPR") & vbCrLf &
+                               "Cantidad: " & FormatNumber(_Row_Maeddo.Item("CAPRCO1"), 0)
+
+        Catch ex As Exception
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Resultado = Consulta_sql
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
 End Class

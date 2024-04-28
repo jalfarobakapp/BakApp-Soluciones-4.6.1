@@ -18826,7 +18826,7 @@ Public Class Frm_Formulario_Documento
             Dim _Bodega As String = Fila.Item("Bodega")
             Dim _Codigo As String = Fila.Item(_Campo_Codigo)
             Dim _Idpotl As Integer = Fila.Item("IDPOTL")
-            Dim _Tidopa As String = "OTL" 'Fila.Item("Tidopa")
+            Dim _Tidopa As String = "OTL"
             Dim _Nudopa As String = Fila.Item("NUMOT")
 
             Dim _Descripcion As String = Fila.Item("GLOSA")

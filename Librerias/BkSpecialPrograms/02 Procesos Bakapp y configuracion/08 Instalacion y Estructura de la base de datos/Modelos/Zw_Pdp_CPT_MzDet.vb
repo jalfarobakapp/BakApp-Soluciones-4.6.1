@@ -16,4 +16,11 @@
     Public Property Udad As String
     Public Property CantFabricar As Double
     Public Property CantFabricada As Double
+    Public Property Idpote_New As Integer
+    Public Property Idpotl_New As Integer
+    ''' <summary>
+    ''' Idmaeddo de GRI
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property Idmaeddo As Integer
 End Class
