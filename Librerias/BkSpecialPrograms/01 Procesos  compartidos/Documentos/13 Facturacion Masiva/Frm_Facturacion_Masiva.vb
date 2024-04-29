@@ -53,7 +53,7 @@ Public Class Frm_Facturacion_Masiva
         Dtp_BuscaXFechaEmision.Value = #1/1/0001 12:00:00 AM#
         Dtp_BuscaXFechaVencimiento.Value = #1/1/0001 12:00:00 AM#
 
-        Sb_Llenar_Grilla()
+        Sb_Actualizar_Grilla()
 
         Circular_Progres_Run.IsRunning = True
 
@@ -90,7 +90,7 @@ Public Class Frm_Facturacion_Masiva
 
     End Sub
 
-    Public Sub Sb_Llenar_Grilla()
+    Public Sub Sb_Actualizar_Grilla()
 
         _Dv.Table = _Cl_Facturacion.Ds_Doc_Facturar.Tables("Table")
 
@@ -560,7 +560,7 @@ Public Class Frm_Facturacion_Masiva
                             End If
 
                             Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Origen & "
-                                            Select *,CAse When UDTRPR = 1 Then CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 End As 'Cantidad',
+                                            Select *,Case When UDTRPR = 1 Then CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 End As 'Cantidad',
                                             CAPRCO1-CAPREX1 As 'CantUd1_Dori',CAPRCO2-CAPREX2 As 'CantUd2_Dori',
                                             Case WHEN UDTRPR = 1 Then " & _CampoPrecio & " Else " & _CampoPrecio & "*RLUDPR End AS 'Precio',
                                             0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta
@@ -975,11 +975,27 @@ Public Class Frm_Facturacion_Masiva
 
         If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
 
-            If _Fila.Cells("Chk").Value And Not _Fila.Cells("HabilitadaFac").Value Then
-                _Fila.Cells("Chk").Value = False
-                MessageBoxEx.Show(Me, "Esta nota de venta no esta habilitada para ser facturada." & vbCrLf &
-                                  "El sistema esta configurado solo para que se facturen documentos habilitados", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Return
+            If _Fila.Cells("Chk").Value Then
+
+                Dim _Msg = String.Empty
+
+                If Not _Fila.Cells("HabilitadaFac").Value Then
+                    _Msg = "Esta nota de venta no esta habilitada para ser facturada." & vbCrLf &
+                           "El sistema esta configurado solo para que se facturen documentos habilitados"
+                End If
+
+                If _Fila.Cells("Pickear").Value Then
+                    _Msg = "Esta nota de venta esta marcada para ser gestionada con Pickeo antes de ser facturada."
+                End If
+
+                If Not String.IsNullOrEmpty(_Msg) Then
+
+                    _Fila.Cells("Chk").Value = False
+                    MessageBoxEx.Show(Me, _Msg, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Return
+
+                End If
+
             End If
 
         End If

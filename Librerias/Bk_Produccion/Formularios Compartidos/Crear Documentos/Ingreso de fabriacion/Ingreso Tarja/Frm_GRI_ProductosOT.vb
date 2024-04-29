@@ -11,6 +11,7 @@ Public Class Frm_GRI_ProductosOT
     Public Property MarcarFilasSinSaldo As Boolean
     Public Property CreaNuevaOTExtra As Boolean
     Public Property Numot_Extra As String
+    Public Property ModoSeleccion As Boolean
 
     Public Sub New()
 
@@ -30,6 +31,8 @@ Public Class Frm_GRI_ProductosOT
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
         Sb_Actualizar_Grilla()
+
+        Btn_CrearOTExtra.Visible = Not ModoSeleccion
 
     End Sub
 
@@ -171,6 +174,13 @@ Public Class Frm_GRI_ProductosOT
         Dim _Idpote As Integer = _Fila.Cells("IDPOTE").Value
         Dim _Idpotl As Integer = _Fila.Cells("IDPOTL").Value
         Dim _Realizado As Integer = _Fila.Cells("REALIZADO").Value
+        Dim _Cargo As String = _Fila.Cells("CARGO").Value.ToString.Trim
+
+        If _Cargo = "H" Then
+            MessageBoxEx.Show(Me, "No se puede crear una OT a partir de un registro tipo ""Hijo""" & vbCrLf &
+                              "Solo es posible crear OT de un regitro ""Madre"".", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
         If _Realizado = 0 Then
             MessageBoxEx.Show(Me, "Solo se puede crear una OT Extra a productos que tengan el campo REALIZADO mayor a cero",
@@ -216,8 +226,6 @@ Public Class Frm_GRI_ProductosOT
                              "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
             Return
         End If
-
-        '--(@NumOtRef char(10), @USUARIO char(3), @ENVIA_FECHA DATE, @KILOS INT,@IDPOTL INT    
 
         Dim _Fecha As DateTime = _Sql.Fx_Trae_Dato("POTE", "FIOT", "IDPOTE = " & _Idpote) 'FechaDelServidor()
 

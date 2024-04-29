@@ -227,6 +227,7 @@ Public Class Class_Permiso_BakApp
         ADMINISTRADOR
         COMISIONES
         OFERTAS
+        CONTABILIDAD
     End Enum
 
     Sub Sb_Actualizar_Base_De_Permisos(_Formulario As Form, ByRef _Objeto As Object)
@@ -479,6 +480,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Bkp00061", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Bkp00062", _Objeto, _Formulario)
 
+        _SqlQuery += Fx_Insertar_Permiso("Cont0001", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Doc00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00002", _Objeto, _Formulario)
@@ -603,6 +605,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Espr0031", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Espr0032", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Espr0033", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Espr0034", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Ofer0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ofer0002", _Objeto, _Formulario)
@@ -2652,6 +2655,10 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "ELIMINAR MONEDAS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.ESPECIALES, 6)
                 _NombreFamiliaPermiso = _Fml.ESPECIALES.ToString
+            Case "Espr0034"
+                _DescripcionPermiso = "EDITAR DATOS DEL DOCUMENTO DE PAGO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.ESPECIALES, 6)
+                _NombreFamiliaPermiso = _Fml.ESPECIALES.ToString
 
         End Select
 
@@ -3170,6 +3177,20 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "INGRESAR PAGO A DOCUMENTOS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PAGO_CLIENTES, 6)
                 _NombreFamiliaPermiso = _Fml.PAGO_CLIENTES.ToString
+
+        End Select
+
+#End Region
+
+#Region "CONTABILIDAD"
+
+        Select Case _CodPermiso
+
+            Case "Cont0001"
+                _DescripcionPermiso = "INGRESAR A LIQUIDACION DE TARJETAS DE CREDITO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.CONTABILIDAD, 6)
+                _NombreFamiliaPermiso = _Fml.CONTABILIDAD.ToString
+
         End Select
 
 #End Region

@@ -1,0 +1,724 @@
+﻿Imports BkSpecialPrograms.Stmp_BD
+Imports BkSpecialPrograms.Tickets_Db
+Imports DevComponents.DotNetBar
+Imports System.ComponentModel
+Imports System.Data.SqlClient
+
+Public Class Cl_Stmp
+
+    Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+    Dim Consulta_sql As String
+
+    Public Property Zw_Stmp_Enc As New Zw_Stmp_Enc
+    Public Property Zw_Stmp_Det As New List(Of Zw_Stmp_Det)
+
+    Public Sub New()
+
+    End Sub
+
+    Function Fx_Llenar_Encabezado(_Id_Enc As Integer) As LsValiciones.Mensajes
+
+        Dim _Mensaje_Stem As New LsValiciones.Mensajes
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Id = " & _Id_Enc
+        Dim _Row_Enc As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_Row_Enc) Then
+
+            _Mensaje_Stem.EsCorrecto = False
+            _Mensaje_Stem.Mensaje = "No se encontro el registro en la tabla Zw_Stmp_Enc con el Id " & _Id_Enc
+
+            Return _Mensaje_Stem
+
+        End If
+
+        With Zw_Stmp_Enc
+
+            .Id = _Row_Enc.Item("Id")
+            .Empresa = _Row_Enc.Item("Empresa")
+            .Sucursal = _Row_Enc.Item("Sucursal")
+            .Numero = _Row_Enc.Item("Numero")
+            .CodFuncionario_Crea = _Row_Enc.Item("CodFuncionario_Crea")
+            .Idmaeedo = _Row_Enc.Item("Idmaeedo")
+            .Tido = _Row_Enc.Item("Tido")
+            .Nudo = _Row_Enc.Item("Nudo")
+            .Endo = _Row_Enc.Item("Endo")
+            .Suendo = _Row_Enc.Item("Suendo")
+            .FechaCreacion = _Row_Enc.Item("FechaCreacion")
+            .Estado = _Row_Enc.Item("Estado")
+            .FechaPickeado = NuloPorNro(_Row_Enc.Item("FechaCierre"), Nothing)
+            .FechaCierre = NuloPorNro(_Row_Enc.Item("FechaCierre"), Nothing)
+            .Accion = _Row_Enc.Item("Accion")
+            .Secueven = _Row_Enc.Item("Secueven")
+            .TipoPago = _Row_Enc.Item("TipoPago")
+
+        End With
+
+        _Mensaje_Stem.EsCorrecto = True
+        _Mensaje_Stem.Mensaje = "Registro encontrado."
+
+        Return _Mensaje_Stem
+
+    End Function
+
+    Function Fx_Llenar_Detalle(_Id_Enc As Integer) As LsValiciones.Mensajes
+
+        Dim _Mensaje_Stem As New LsValiciones.Mensajes
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Det Where Id_Enc = " & _Id_Enc
+        Dim _Tbl_Det As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        If Not CBool(_Tbl_Det.Rows.Count) Then
+
+            _Mensaje_Stem.EsCorrecto = False
+            _Mensaje_Stem.Mensaje = "No se encontraron registros en la tabla Zw_Stmp_Det con el Id_Enc " & _Id_Enc
+
+            Return _Mensaje_Stem
+
+        End If
+
+        For Each _Fila As DataRow In _Tbl_Det.Rows
+
+            Dim _Stem_Det As New Zw_Stmp_Det
+
+            With _Stem_Det
+
+                .Id = _Fila.Item("Id")
+                .Id_Enc = _Fila.Item("Id_Enc")
+                .Idmaeedo = _Fila.Item("Idmaeedo")
+                .Idmaeddo = _Fila.Item("Idmaeddo")
+                .Codigo = _Fila.Item("Codigo")
+                .Descripcion = _Fila.Item("Descripcion")
+                .Nulido = _Fila.Item("Nulido")
+                .Udtrpr = _Fila.Item("Udtrpr")
+                .Udpr = _Fila.Item("Udtrpr")
+                .Rludpr = _Fila.Item("Rludpr")
+                .RtuVariable = _Fila.Item("RtuVariable")
+                .Rlud_Real = _Fila.Item("Rlud_Real")
+                .Cantidad = _Fila.Item("Cantidad")
+                .Caprco1_Ori = _Fila.Item("Caprco1_Ori")
+                .Caprco1_Real = _Fila.Item("Caprco1_Real")
+                .Ud01pr = _Fila.Item("Ud01pr")
+                .Caprco2_Ori = _Fila.Item("Caprco2_Ori")
+                .Caprco2_Real = _Fila.Item("Caprco2_Real")
+                .Ud02pr = _Fila.Item("Ud02pr")
+                .Pickeado = _Fila.Item("Pickeado")
+                .CodFuncionario_Pickea = _Fila.Item("CodFuncionario_Pickea")
+                .EnProceso = _Fila.Item("EnProceso")
+
+                .UdMedida = _Fila.Item("Ud0" & .Udtrpr & "pr")
+
+            End With
+
+            Zw_Stmp_Det.Add(_Stem_Det)
+
+        Next
+
+
+        _Mensaje_Stem.EsCorrecto = True
+        _Mensaje_Stem.Mensaje = "Registros cargados correctamente"
+
+        Return _Mensaje_Stem
+
+    End Function
+
+    Function Fx_Grabar_Nuevo_Tickets() As LsValiciones.Mensajes
+
+        Dim _Mensaje_Stem As New LsValiciones.Mensajes
+
+        Consulta_sql = String.Empty
+
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+        Dim Cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
+
+        Try
+
+            myTrans = Cn2.BeginTransaction()
+
+            With _Zw_Stmp_Enc
+
+                .Numero = Fx_NvoNro_Stmp()
+
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stmp_Enc (Empresa,Sucursal,Numero,CodFuncionario_Crea,Idmaeedo,Tido," &
+                               "Nudo,Endo,Suendo,FechaCreacion,Estado,Secueven,Facturar,DocEmitir,Fecha_Facturar) Values " &
+                       "('" & .Empresa & "','" & .Sucursal & "','" & .Numero & "','" & .CodFuncionario_Crea & "'," & .Idmaeedo &
+                       ",'" & .Tido & "','" & .Nudo & "','" & .Endo & "','" & .Suendo & "','" & Format(.FechaCreacion, "yyyyMMdd hh:mm") & "'" &
+                       ",'" & .Estado & "','" & .Secueven & "'," & Convert.ToInt32(.Facturar) & ",'" & .DocEmitir & "','" & Format(.Fecha_Facturar, "yyyyMMdd") & "')"
+
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+                'Imports System.Data
+                'Imports System.Data.SqlClient
+
+                Comando = New System.Data.SqlClient.SqlCommand("SELECT @@IDENTITY AS 'Identity'", Cn2)
+                Comando.Transaction = myTrans
+                Dim dfd1 As System.Data.SqlClient.SqlDataReader = Comando.ExecuteReader()
+                While dfd1.Read()
+                    .Id = dfd1("Identity")
+                End While
+                dfd1.Close()
+
+            End With
+
+            For Each _Fila As Zw_Stmp_Det In Zw_Stmp_Det
+
+                With _Fila
+
+                    .Id_Enc = _Zw_Stmp_Enc.Id
+
+                    If Not String.IsNullOrEmpty(.Codigo) Then
+
+                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stmp_Det (Id_Enc,Idmaeedo,Idmaeddo,Codigo,Descripcion,Nulido,Udtrpr,RtuVariable,Rludpr" &
+                                       ",Caprco1_Ori,Caprco1_Real,Udpr,Ud01pr,Caprco2_Ori,Caprco2_Real,Ud02pr,Pickeado,EnProceso) Values " &
+                                       "(" & .Id_Enc & "," & .Idmaeedo & "," & .Idmaeddo & ",'" & .Codigo & "','" & .Descripcion & "'" &
+                                       ",'" & .Nulido & "'," & .Udtrpr & "," & De_Num_a_Tx_01(.RtuVariable, False, 5) & "," & De_Num_a_Tx_01(.Rludpr, False, 5) &
+                                       "," & De_Num_a_Tx_01(.Caprco1_Ori, False, 5) &
+                                       "," & De_Num_a_Tx_01(.Caprco1_Real, False, 5) &
+                                       ",'" & .Udpr & "'" &
+                                       ",'" & .Ud01pr & "'" &
+                                       "," & De_Num_a_Tx_01(.Caprco2_Ori, False, 5) &
+                                       "," & De_Num_a_Tx_01(.Caprco2_Real, False, 5) &
+                                       ",'" & .Ud02pr & "'" &
+                                       ",0," & Convert.ToInt32(.EnProceso) & ")"
+
+                        Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                        Comando.Transaction = myTrans
+                        Comando.ExecuteNonQuery()
+
+                    End If
+
+                End With
+
+            Next
+
+            myTrans.Commit()
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+            _Mensaje_Stem.EsCorrecto = True
+            _Mensaje_Stem.Detalle = "Documento grabado correctamente"
+            _Mensaje_Stem.Mensaje = "Se crea Ticket Nro " & _Zw_Stmp_Enc.Numero & " - (" & _Zw_Stmp_Enc.Tido & "-" & _Zw_Stmp_Enc.Nudo & ")"
+
+        Catch ex As Exception
+
+            _Mensaje_Stem.EsCorrecto = False
+            _Mensaje_Stem.Detalle = "Error al grabar"
+            _Mensaje_Stem.Mensaje = ex.Message
+            _Zw_Stmp_Enc.Id = 0
+
+            myTrans.Rollback()
+
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+        End Try
+
+        Return _Mensaje_Stem
+
+    End Function
+
+    Function Fx_NvoNro_Stmp() As String
+
+        Dim _NvoNro_Stem As String
+
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        Dim _TblPaso = _Sql.Fx_Get_Tablas("Select Max(Numero) As Numero From " & _Global_BaseBk & "Zw_Stmp_Enc")
+
+        Dim _Ult_Nro_OT As String = NuloPorNro(_TblPaso.Rows(0).Item("Numero"), "")
+
+        If String.IsNullOrEmpty(Trim(_Ult_Nro_OT)) Then
+            _Ult_Nro_OT = "#T00000000"
+        End If
+
+        _NvoNro_Stem = Fx_Proximo_NroDocumento(_Ult_Nro_OT, 10)
+
+        Return _NvoNro_Stem
+
+    End Function
+
+    Function Fx_Revisar_NVV(_Tido As String, _Nudo As String) As LsValiciones.Mensajes
+
+        Dim _Id_Enc As Integer
+        Dim _Idmaeedo As Integer
+        Dim _Row_Enc As DataRow
+
+        Dim _Mensaje_Stem As New LsValiciones.Mensajes
+
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+        Dim Cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
+
+        Try
+
+            _Mensaje_Stem.EsCorrecto = False
+
+            Consulta_sql = "Select SEnc.*,ESDO From " & _Global_BaseBk & "Zw_Stmp_Enc SEnc " & vbCrLf &
+                           "Inner Join MAEEDO On IDMAEEDO = Idmaeedo" & vbCrLf &
+                           "Where Tido = '" & _Tido & "' And Nudo = '" & _Nudo & "'"
+            _Row_Enc = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_Row_Enc) Then
+                Throw New System.Exception("No se encontro el documento " & _Tido & "-" & _Nudo & " en el Sistema")
+            End If
+
+            If _Row_Enc.Item("ESDO") = "N" Then
+                Throw New System.Exception("Documento NULO en el Sistema")
+            End If
+
+            If _Row_Enc.Item("Estado") <> "PREPA" Then
+                Throw New System.Exception("Acción disponible solo para documentos en estado (PREPA) Preparación.")
+            End If
+
+            _Id_Enc = _Row_Enc.Item("Id")
+            _Idmaeedo = _Row_Enc.Item("Idmaeedo")
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Det Where Idmaeedo = " & _Idmaeedo
+            Dim _Tbl_Det As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+            If Not CBool(_Tbl_Det.Rows.Count) Then
+                Throw New System.Exception("No se encontro el detalle del documento en la tabla Zw_Stmp_Det")
+            End If
+
+            myTrans = Cn2.BeginTransaction()
+
+            Dim _Ct_Pickados = 0
+            Dim _Ct_EnProceso = 0
+
+            For Each _Fila As DataRow In _Tbl_Det.Rows
+
+                Dim _Id_Det As Integer = _Fila.Item("Id")
+                Dim _Pickeado As Boolean = _Fila.Item("Pickeado")
+                Dim _EnProceso As Boolean = _Fila.Item("EnProceso")
+
+                If _Pickeado Then
+
+                    _Ct_Pickados += 1
+                    _EnProceso = False
+
+                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Det Set " & vbCrLf &
+                                   "EnProceso = 0" & vbCrLf &
+                                   "Where Id = " & _Id_Det
+
+                    Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                    Comando.Transaction = myTrans
+                    Comando.ExecuteNonQuery()
+
+                End If
+
+                If _EnProceso Then
+                    _Ct_EnProceso += 1
+                End If
+
+            Next
+
+            If _Tbl_Det.Rows.Count = _Ct_Pickados Then
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set " & vbCrLf &
+                               "Completado = 1,Estado = 'COMPL'" & vbCrLf &
+                               "Where Id = " & _Id_Enc
+
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+                _Mensaje_Stem.EsCorrecto = True
+                _Mensaje_Stem.Mensaje = "Documento completado"
+
+            Else
+
+                Throw New System.Exception("Faltan " & _Ct_EnProceso & " producto(s) por procesar." & vbCrLf &
+                                           "Producto procesados: " & _Ct_Pickados)
+
+            End If
+
+            _Mensaje_Stem.EsCorrecto = True
+
+            myTrans.Commit()
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+        Catch ex As Exception
+
+            _Mensaje_Stem.EsCorrecto = False
+            _Mensaje_Stem.Mensaje = ex.Message
+
+            If Not IsNothing(myTrans) Then
+                myTrans.Rollback()
+            End If
+
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+        End Try
+
+        Return _Mensaje_Stem
+
+    End Function
+
+    Function Fx_Confirmar_Picking() As LsValiciones.Mensajes
+
+        Dim _Mensaje_Stem As New LsValiciones.Mensajes
+
+        Consulta_sql = String.Empty
+
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+        Dim Cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
+
+        Try
+
+            myTrans = Cn2.BeginTransaction()
+
+            With _Zw_Stmp_Enc
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set " & vbCrLf &
+                               "Estado = '" & .Estado & "'" &
+                               ",Fecha_Facturar = '" & Format(.Fecha_Facturar, "yyyyMMdd") & "'" &
+                               ",DocEmitir = '" & .DocEmitir & "'" &
+                               ",TipoPago = '" & .TipoPago & "'" &
+                               ",FechaPickeado = Getdate()" & vbCrLf &
+                               "Where Id = " & .Id
+
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+            End With
+
+            For Each _Fila As Zw_Stmp_Det In Zw_Stmp_Det
+
+                With _Fila
+
+                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Det Set " & vbCrLf &
+                                   "Cantidad = " & De_Num_a_Tx_01(.Cantidad, False, 5) & vbCrLf &
+                                   ",Caprco1_Real = " & De_Num_a_Tx_01(.Caprco1_Real, False, 5) & vbCrLf &
+                                   ",Caprco2_Real = " & De_Num_a_Tx_01(.Caprco2_Real, False, 5) & vbCrLf &
+                                   ",Pickeado = " & Convert.ToInt32(.Pickeado) & vbCrLf &
+                                   ",EnProceso = " & Convert.ToInt32(.EnProceso) & vbCrLf &
+                                   ",CodFuncionario_Pickea = '" & .CodFuncionario_Pickea & "'" & vbCrLf &
+                                   "Where Id = " & .Id
+
+                    Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                    Comando.Transaction = myTrans
+                    Comando.ExecuteNonQuery()
+
+                End With
+
+            Next
+
+            myTrans.Commit()
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+            _Mensaje_Stem.EsCorrecto = True
+            _Mensaje_Stem.Detalle = "Documento grabado correctamente"
+            _Mensaje_Stem.Mensaje = "Documento grabado correctamente"
+
+        Catch ex As Exception
+
+            _Mensaje_Stem.EsCorrecto = False
+            _Mensaje_Stem.Mensaje = ex.Message
+            _Zw_Stmp_Enc.Id = 0
+
+            myTrans.Rollback()
+
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+        End Try
+
+        Return _Mensaje_Stem
+
+    End Function
+
+    Function Fx_Crear_Ticket(_Idmaeedo As Integer,
+                             _Tido As String,
+                             _Nudo As String,
+                             _Facturar As Boolean,
+                             _FechaParaFacturar As DateTime,
+                             _TipoPago As String,
+                             _Picker As Boolean) As LsValiciones.Mensajes
+
+        Dim _FechaServidor As DateTime = FechaDelServidor()
+
+        Dim _Mensaje_Stem As New LsValiciones.Mensajes
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Idmaeedo = " & _Idmaeedo & " And Tido = '" & _Tido & "' And Nudo = '" & _Nudo & "'"
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If Not IsNothing(_Row) Then
+            _Mensaje_Stem.EsCorrecto = False
+            _Mensaje_Stem.Mensaje = "El documento ya esta ingresado en el sistema de Ticket Picking (Ticket Nro: " & _Row.Item("Numero") & ")"
+            _Mensaje_Stem.Detalle = "Documento: " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO")
+            Return _Mensaje_Stem
+        End If
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Docu_Ent",
+                                                       "Empresa = '" & ModEmpresa & "'" &
+                                                       " And Idmaeedo = " & _Idmaeedo &
+                                                       " And Tido = '" & _Tido & "'" &
+                                                       " And Nudo = '" & _Nudo & "'")
+
+        If _Reg = 0 Then
+
+            Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+            Dim _TipoEstacion As String = _Global_Row_EstacionBk.Item("TipoEstacion")
+
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Ent (Idmaeedo,NombreEquipo,TipoEstacion,Empresa,Modalidad,Tido,Nudo," &
+                           "FechaHoraGrab,HabilitadaFac,FunAutorizaFac,Pickear)" & vbCrLf &
+                           "Select IDMAEEDO,'" & _NombreEquipo & "','" & _TipoEstacion & "',EMPRESA,'?',TIDO,NUDO,LAHORA,0,'',1" & vbCrLf &
+                           "From MAEEDO Where IDMAEEDO = " & _Idmaeedo & vbCrLf &
+                           "Insert Into " & _Global_BaseBk & "Zw_Docu_Det (Idmaeddo,Idmaeedo,Tido,Nudo,Codigo,Descripcion,RtuVariable)" & vbCrLf &
+                           "Select IDMAEDDO,IDMAEEDO,TIDO,NUDO,KOPRCT,NOKOPR,0" & vbCrLf &
+                           "From MAEDDO Where IDMAEEDO = " & _Idmaeedo
+            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+        End If
+
+        If _Picker Then
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Ent Set Pickear = 1 Where Idmaeedo = " & _Idmaeedo & " And Tido = '" & _Tido & "' And Nudo = '" & _Nudo & "'"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+        End If
+
+        Consulta_sql = "Select Edo.IDMAEEDO,Edo.EMPRESA,Edo.TIDO,Edo.NUDO,Edo.ENDO,Edo.SUENDO,Edo.SUDO,Doc.Pickear,HabilitadaFac,FunAutorizaFac,Estaenwms" & vbCrLf &
+                       "From MAEEDO Edo" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Docu_Ent Doc On Edo.IDMAEEDO = Doc.Idmaeedo And Edo.TIDO = Doc.Tido And Edo.NUDO = Doc.Nudo" & vbCrLf &
+                       "Where IDMAEEDO = " & _Idmaeedo
+        Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_Row_Documento) Then
+            _Mensaje_Stem.EsCorrecto = False
+            _Mensaje_Stem.Mensaje = "No se encontro el registro en la tabla MAEEDO, Documento: " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO")
+            _Mensaje_Stem.Detalle = "IDMAEEDO " & _Idmaeedo
+            Return _Mensaje_Stem
+        End If
+
+        If Not _Row_Documento.Item("Pickear") Then
+            _Mensaje_Stem.EsCorrecto = False
+            _Mensaje_Stem.Mensaje = "Este documento no esta marcado para ser Pickeado en la tabla Zw_Docu_Ent"
+            _Mensaje_Stem.Detalle = "Documento: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
+            Return _Mensaje_Stem
+        End If
+
+        If Not _Row_Documento.Item("Estaenwms") Then
+            _Mensaje_Stem.EsCorrecto = False
+            _Mensaje_Stem.Mensaje = "Este documento no esta ingresado en el WMS" & vbCrLf &
+                                    "Vuelva a intentarlo en 10 segundos y si no se encuentra informe de esta situación al personal de logística"
+            _Mensaje_Stem.Detalle = "Documento: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
+            Return _Mensaje_Stem
+        End If
+
+        Dim _Row_Entidad As DataRow = Fx_Traer_Datos_Entidad(_Row_Documento.Item("ENDO"), _Row_Documento.Item("SUENDO"))
+        Dim _Cl_Stem As New Cl_Stmp
+
+        With _Cl_Stem.Zw_Stmp_Enc
+
+            .Empresa = ModEmpresa
+            .Sucursal = ModSucursal
+            .Idmaeedo = _Row_Documento.Item("IDMAEEDO")
+            .Tido = _Row_Documento.Item("TIDO")
+            .Nudo = _Row_Documento.Item("NUDO")
+            .Endo = _Row_Documento.Item("ENDO")
+            .Suendo = _Row_Documento.Item("SUENDO")
+            .CodFuncionario_Crea = FUNCIONARIO
+            .FechaCreacion = _FechaServidor
+            .Estado = "PREPA"
+            .Facturar = _Facturar
+            .Fecha_Facturar = _FechaParaFacturar
+            .TipoPago = _TipoPago
+
+            Try
+                .Secueven = _Row_Entidad.Item("SECUEVEN")
+            Catch ex As Exception
+                .Secueven = String.Empty
+
+                If _Facturar Then
+                    .Secueven = "NFG"
+                End If
+
+            End Try
+
+            If .Secueven.Contains("NG") Then .DocEmitir = "GDV"
+            If .Secueven.Contains("NB") Then .DocEmitir = "BLV"
+            If .Secueven.Contains("NF") Then .DocEmitir = "FCV"
+
+        End With
+
+        Consulta_sql = "Select Ddo.*,Isnull(RtuVariable,0) As RtuVariable From MAEDDO Ddo" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Docu_Det ZDet On Ddo.IDMAEDDO = ZDet.Idmaeddo" & vbCrLf &
+                       "Where IDMAEEDO = " & _Row_Documento.Item("IDMAEEDO")
+        Dim _Tbl_Detalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        For Each _Fila As DataRow In _Tbl_Detalle.Rows
+
+            Dim _Zw_Stmp_Det As New Zw_Stmp_Det
+
+            With _Zw_Stmp_Det
+
+                .Idmaeedo = _Fila.Item("IDMAEEDO")
+                .Idmaeddo = _Fila.Item("IDMAEDDO")
+                .Codigo = _Fila.Item("KOPRCT")
+                .Descripcion = _Fila.Item("NOKOPR")
+                .Nulido = _Fila.Item("NULIDO")
+                .Udtrpr = _Fila.Item("UDTRPR")
+                .Rludpr = _Fila.Item("RLUDPR")
+                .Caprco1_Ori = _Fila.Item("CAPRCO1")
+                .Caprco1_Real = 0
+                .Udpr = _Fila.Item("UD0" & .Udtrpr & "PR")
+                .Ud01pr = _Fila.Item("UD01PR")
+                .Caprco2_Ori = _Fila.Item("CAPRCO2")
+                .Caprco2_Real = 0
+                .Ud02pr = _Fila.Item("UD02PR")
+                .Pickeado = False
+                .EnProceso = True
+                .RtuVariable = _Fila.Item("RtuVariable")
+
+            End With
+
+            _Cl_Stem.Zw_Stmp_Det.Add(_Zw_Stmp_Det)
+
+        Next
+
+        _Mensaje_Stem = _Cl_Stem.Fx_Grabar_Nuevo_Tickets
+
+        Return _Mensaje_Stem
+
+    End Function
+
+    Function Fx_Revisar_WMSVillar(_Idmaeedo As Integer, _Nudo As String, _CadenaConexionWms As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            Dim _Sql_WMS As New Class_SQL(_CadenaConexionWms)
+
+            Consulta_sql = My.Resources.Recursos_WmsVillar.SQLQuery_Revisar_Nota_de_venta_activa_en_WMS_Villar
+            Consulta_sql = Replace(Consulta_sql, "#Nudo#", _Nudo)
+
+            Dim _Ds As DataSet = _Sql_WMS.Fx_Get_DataSet(Consulta_sql)
+
+            _Ds.Tables(0).TableName = "ticket_verde"
+            _Ds.Tables(1).TableName = "Detalle"
+            _Ds.Tables(2).TableName = "Cabecera"
+            _Ds.Tables(3).TableName = "Lineas"
+            _Ds.Tables(4).TableName = "Comandos"
+
+            Dim _ticket_verde As DataTable = _Ds.Tables("ticket_verde")
+            Dim _Detalle As DataTable = _Ds.Tables("Detalle")
+            Dim _Cabecera As DataTable = _Ds.Tables("Cabecera")
+            Dim _Lineas As DataTable = _Ds.Tables("Lineas")
+            Dim _Comandos As DataTable = _Ds.Tables("Comandos")
+
+            If _ticket_verde.Rows(0).Item("ticket_verde") = "N" Then
+                _Mensaje.EsCorrecto = False
+                _Mensaje.Detalle = "El pedido aun no esta listo"
+                Return _Mensaje
+            End If
+
+
+            Dim _ob_type As String = _Cabecera.Rows(0).Item("ob_type")
+            Dim _CanalEntrada As String = Mid(_ob_type, 1, 1)
+            Dim _TipoPago As String = Mid(_ob_type, 2, 1)
+            Dim _Entrega As String = Mid(_ob_type, 3, 1)
+            Dim _DocEmitir As String = Mid(_ob_type, 4, 1)
+
+
+            With Zw_Stmp_Enc
+
+                Select Case _DocEmitir
+                    Case "B"
+                        .DocEmitir = "BLV"
+                    Case "G"
+                        .DocEmitir = "GDV"
+                    Case "F"
+                        .DocEmitir = "FCV"
+                End Select
+
+                Select Case _TipoPago
+                    Case "C"
+                        .TipoPago = "Contado"
+                    Case "R"
+                        .TipoPago = "Credito"
+                End Select
+
+                .Estado = "COMPL"
+
+            End With
+
+            If _ticket_verde.Rows(0).Item("ticket_verde") = "Y" Then
+
+                For Each _Fila As DataRow In _Detalle.Rows
+
+                    Dim _tag As String = _Fila.Item("tag")
+                    Dim _sku As String = _Fila.Item("sku")
+                    Dim _qty As Double = _Fila.Item("qty")
+
+                    For Each _Det As Zw_Stmp_Det In Zw_Stmp_Det
+
+                        If _Det.Codigo.Trim = _sku.Trim Then
+
+                            With _Det
+                                .Cantidad = _qty
+                                .Caprco1_Real = _qty
+                                .Caprco2_Real = _qty
+                                .Pickeado = True
+                                .EnProceso = False
+                                .CodFuncionario_Pickea = "wms"
+                            End With
+
+                            Exit For
+
+                        End If
+
+                    Next
+
+                Next
+
+                _Mensaje = Fx_Confirmar_Picking()
+
+            End If
+
+        Catch ex As Exception
+
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
+End Class
+
+Namespace Stmp_BD
+
+    Public Enum EnumAcciones
+        <Description("Defaul sin valor")>
+        Defaul = 0
+
+        <Description("Acepta Contenido del Documento")>
+        ACD_AceptaContenidoDocumento = 1
+
+        <Description("Reclamo al Contenido del Documento")>
+        RCD_ReclamoContenidoDocumento = 2
+
+        <Description("Otorga Recibo de Mercaderías o Servicios")>
+        ERM_OtorgaReciboMercaderiasServicios = 3
+
+        <Description("Reclamo por Falta Parcial de Mercaderías")>
+        RFP_ReclamoFaltaParcialMercaderias = 4
+
+        <Description("Reclamo por Falta Total de Mercaderías")>
+        RFT_ReclamoFaltaTotalMercaderias = 5
+    End Enum
+
+End Namespace

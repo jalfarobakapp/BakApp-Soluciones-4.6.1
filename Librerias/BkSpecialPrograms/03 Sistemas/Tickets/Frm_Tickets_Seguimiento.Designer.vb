@@ -31,6 +31,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_Productos = New DevComponents.DotNetBar.ButtonItem()
         Me.Lbl_OpcProducto = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_TicketProducto = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Estadisticas_Producto = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Consolidar_Stock_X_Producto = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
@@ -44,6 +45,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Btn_Anular = New DevComponents.DotNetBar.ButtonItem()
         Me.Menu_Contextual_Ticker_Traza = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem2 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_Mnu_TkHistoria = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_TkAntecesor = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_TkSucesor = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
@@ -139,7 +141,7 @@ Partial Class Frm_Tickets_Seguimiento
         '
         Me.Menu_Contextual_Productos.AutoExpandOnClick = True
         Me.Menu_Contextual_Productos.Name = "Menu_Contextual_Productos"
-        Me.Menu_Contextual_Productos.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_OpcProducto, Me.Btn_Estadisticas_Producto, Me.Btn_Consolidar_Stock_X_Producto, Me.Btn_Copiar})
+        Me.Menu_Contextual_Productos.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_OpcProducto, Me.Btn_TicketProducto, Me.Btn_Estadisticas_Producto, Me.Btn_Consolidar_Stock_X_Producto, Me.Btn_Copiar})
         Me.Menu_Contextual_Productos.Text = "Opciones productos"
         '
         'Lbl_OpcProducto
@@ -154,6 +156,13 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Lbl_OpcProducto.PaddingTop = 1
         Me.Lbl_OpcProducto.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
         Me.Lbl_OpcProducto.Text = "Opciones del producto"
+        '
+        'Btn_TicketProducto
+        '
+        Me.Btn_TicketProducto.Image = CType(resources.GetObject("Btn_TicketProducto.Image"), System.Drawing.Image)
+        Me.Btn_TicketProducto.ImageAlt = CType(resources.GetObject("Btn_TicketProducto.ImageAlt"), System.Drawing.Image)
+        Me.Btn_TicketProducto.Name = "Btn_TicketProducto"
+        Me.Btn_TicketProducto.Text = "Ver información del ticket del producto"
         '
         'Btn_Estadisticas_Producto
         '
@@ -220,8 +229,9 @@ Partial Class Frm_Tickets_Seguimiento
         'Btn_Mnu_CerrarTicketCrearNuevo
         '
         Me.Btn_Mnu_CerrarTicketCrearNuevo.Image = CType(resources.GetObject("Btn_Mnu_CerrarTicketCrearNuevo.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_CerrarTicketCrearNuevo.ImageAlt = CType(resources.GetObject("Btn_Mnu_CerrarTicketCrearNuevo.ImageAlt"), System.Drawing.Image)
         Me.Btn_Mnu_CerrarTicketCrearNuevo.Name = "Btn_Mnu_CerrarTicketCrearNuevo"
-        Me.Btn_Mnu_CerrarTicketCrearNuevo.Text = "Cerrar/Aceptar Ticket y crear nuevo Ticket a partir de este para seguir el hilo."
+        Me.Btn_Mnu_CerrarTicketCrearNuevo.Text = "Aceptar Ticket y crear nuevo Ticket a partir de este para seguir el hilo."
         '
         'Btn_Mnu_SolicitarCierre
         '
@@ -241,7 +251,7 @@ Partial Class Frm_Tickets_Seguimiento
         '
         Me.Menu_Contextual_Ticker_Traza.AutoExpandOnClick = True
         Me.Menu_Contextual_Ticker_Traza.Name = "Menu_Contextual_Ticker_Traza"
-        Me.Menu_Contextual_Ticker_Traza.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem2, Me.Btn_Mnu_TkAntecesor, Me.Btn_Mnu_TkSucesor})
+        Me.Menu_Contextual_Ticker_Traza.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem2, Me.Btn_Mnu_TkHistoria, Me.Btn_Mnu_TkAntecesor, Me.Btn_Mnu_TkSucesor})
         Me.Menu_Contextual_Ticker_Traza.Text = "Opciones traza ticket"
         '
         'LabelItem2
@@ -256,6 +266,14 @@ Partial Class Frm_Tickets_Seguimiento
         Me.LabelItem2.PaddingTop = 1
         Me.LabelItem2.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
         Me.LabelItem2.Text = "Trazabilidad del Ticket"
+        '
+        'Btn_Mnu_TkHistoria
+        '
+        Me.Btn_Mnu_TkHistoria.Image = CType(resources.GetObject("Btn_Mnu_TkHistoria.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_TkHistoria.ImageAlt = CType(resources.GetObject("Btn_Mnu_TkHistoria.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_TkHistoria.Name = "Btn_Mnu_TkHistoria"
+        Me.Btn_Mnu_TkHistoria.Text = "Ver toda la historia del Ticket"
+        Me.Btn_Mnu_TkHistoria.Tooltip = "Muestra un detalle de la historia del Ticket desde el inicio al fin"
         '
         'Btn_Mnu_TkAntecesor
         '
@@ -731,6 +749,16 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Imagenes_16x16.Images.SetKeyName(33, "people-vendor.png")
         Me.Imagenes_16x16.Images.SetKeyName(34, "people-customer-man.png")
         Me.Imagenes_16x16.Images.SetKeyName(35, "people-vendor-error.png")
+        Me.Imagenes_16x16.Images.SetKeyName(36, "ticket-new.png")
+        Me.Imagenes_16x16.Images.SetKeyName(37, "ticket-cancel.png")
+        Me.Imagenes_16x16.Images.SetKeyName(38, "ticket-link.png")
+        Me.Imagenes_16x16.Images.SetKeyName(39, "ticket-refresh.png")
+        Me.Imagenes_16x16.Images.SetKeyName(40, "ticket-padlock.png")
+        Me.Imagenes_16x16.Images.SetKeyName(41, "ticket-select.png")
+        Me.Imagenes_16x16.Images.SetKeyName(42, "ticket-ok.png")
+        Me.Imagenes_16x16.Images.SetKeyName(43, "ticket.png")
+        Me.Imagenes_16x16.Images.SetKeyName(44, "ticket-add.png")
+        Me.Imagenes_16x16.Images.SetKeyName(45, "people-vendor-ok.png")
         '
         'Imagenes_16x16_Dark
         '
@@ -772,6 +800,15 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Imagenes_16x16_Dark.Images.SetKeyName(33, "people-employee.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(34, "people-customer-man.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(35, "user.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(36, "ticket-new.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(37, "ticket-cancel.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(38, "ticket-link.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(39, "ticket-refresh.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(40, "ticket-padlock.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(41, "ticket-select.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(42, "ticket-ok.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(43, "ticket-add.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(44, "people-vendor-ok.png")
         '
         'Btn_MensajeRespuesta
         '
@@ -856,4 +893,6 @@ Partial Class Frm_Tickets_Seguimiento
     Friend WithEvents LabelItem2 As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Btn_Mnu_TkAntecesor As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mnu_TkSucesor As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Mnu_TkHistoria As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_TicketProducto As DevComponents.DotNetBar.ButtonItem
 End Class

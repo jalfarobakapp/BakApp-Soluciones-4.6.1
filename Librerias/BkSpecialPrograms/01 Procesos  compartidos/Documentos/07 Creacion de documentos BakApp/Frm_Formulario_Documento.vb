@@ -2,7 +2,6 @@
 Imports System.Threading
 Imports BkSpecialPrograms.Bk_Comporamiento_UdMedidas
 Imports DevComponents.DotNetBar
-Imports MySql.Data.Authentication
 
 Public Class Frm_Formulario_Documento
 
@@ -1849,6 +1848,9 @@ Public Class Frm_Formulario_Documento
 
             .Item("Id_OtSvr") = 0
             .Item("Semilla_Svr") = 0
+            .Item("Nmarca") = String.Empty
+            .Item("RtuVariable") = False
+            .Item("Espuntosvta") = False
 
             _TblDetalle.Rows.Add(NewFila)
 
@@ -4381,10 +4383,12 @@ Public Class Frm_Formulario_Documento
 
         Dim _Noaplica_Imp As String = String.Empty
 
-        If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta Then
-            _Noaplica_Imp = " And NOAPLICEN Not like '%ventas%'"
-            If _Tido = "BLV" Then
-                _Noaplica_Imp = " And NOAPLICEN Not like '%BSV,BLV%'"
+        If _Sql.Fx_Exite_Campo("TABIMPR", "NOAPLICEN") Then
+            If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta Then
+                _Noaplica_Imp = " And NOAPLICEN Not like '%ventas%'"
+                If _Tido = "BLV" Then
+                    _Noaplica_Imp = " And NOAPLICEN Not like '%BSV,BLV%'"
+                End If
             End If
         End If
 
@@ -4620,7 +4624,6 @@ Public Class Frm_Formulario_Documento
 
         End If
 
-
         If _UnTrans = 1 Then
             _UdTrans = _Ud1Linea
             If Not IsNothing(_RowCostos) Then _EcuacionCosto = NuloPorNro(_RowCostos.Item("ECUACION").ToString.Trim, "")
@@ -4848,6 +4851,7 @@ Public Class Frm_Formulario_Documento
 
             .Cells("Nuevo_Producto").Value = 0
             .Cells("Pesoubic").Value = _Pesoubic
+            .Cells("Nmarca").Value = _Nmarca
 
             Dim _PermisoDscto As Boolean = False
 
@@ -5570,12 +5574,21 @@ Public Class Frm_Formulario_Documento
                     _Cantidad = 0
                 End If
 
-                If _Rtu = 1 Then
-                    _CantUd1 = _Cantidad
-                    _CantUd2 = _Cantidad * _Rtu
+                If NuloPorNro(_Fila.Cells("RtuVariable").Value, False) Then
+
+                    _CantUd1 = _Fila.Cells("CantUd1").Value
+                    _CantUd2 = _Fila.Cells("CantUd2").Value
+
                 Else
-                    _CantUd1 = _Cantidad
-                    _CantUd2 = _Cantidad / _Rtu
+
+                    If _Rtu = 1 Then
+                        _CantUd1 = _Cantidad
+                        _CantUd2 = _Cantidad * _Rtu
+                    Else
+                        _CantUd1 = _Cantidad
+                        _CantUd2 = _Cantidad / _Rtu
+                    End If
+
                 End If
 
             ElseIf _UnTrans = 2 Then
@@ -6302,10 +6315,12 @@ Public Class Frm_Formulario_Documento
 
                 Dim _Noaplica_Imp As String = String.Empty
 
-                If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta Then
-                    _Noaplica_Imp = " And NOAPLICEN Not like '%ventas%'"
-                    If _Tido = "BLV" Then
-                        _Noaplica_Imp = " And NOAPLICEN Not like '%BSV,BLV%'"
+                If _Sql.Fx_Exite_Campo("TABIMPR", "NOAPLICEN") Then
+                    If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta Then
+                        _Noaplica_Imp = " And NOAPLICEN Not like '%ventas%'"
+                        If _Tido = "BLV" Then
+                            _Noaplica_Imp = " And NOAPLICEN Not like '%BSV,BLV%'"
+                        End If
                     End If
                 End If
 
@@ -6532,6 +6547,7 @@ Public Class Frm_Formulario_Documento
             Dim _Aplica_Oferta As Boolean = _Fila.Cells("Aplica_Oferta").Value
 
             Dim _ValVtaDescMax As Boolean = _Fila.Cells("ValVtaDescMax").Value
+            Dim _Espuntosvta As Boolean = _Fila.Cells("Espuntosvta").Value
 
             If _Tict <> "D" Then
 
@@ -6545,28 +6561,32 @@ Public Class Frm_Formulario_Documento
 
             ElseIf _Tict = "D" Then
 
-                If _Aplica_Oferta Then
+                If Not _Espuntosvta Then
 
-                    _TotalNetoSDscto += Math.Round(NuloPorNro(_Fila.Cells("ValNetoLinea").Value, 0), 2)
+                    If _Aplica_Oferta Then
 
-                Else
+                        _TotalNetoSDscto += Math.Round(NuloPorNro(_Fila.Cells("ValNetoLinea").Value, 0), 2)
 
-                    Consulta_sql = "Select * From TABCT" & vbCrLf &
+                    Else
+
+                        Consulta_sql = "Select * From TABCT" & vbCrLf &
                                    "Inner Join " & _Global_BaseBk & "Zw_Conceptos On KOCT = Koct" & vbCrLf &
                                    "Where KOCT = '" & _Codigo & "'"
-                    Dim _RowConcepto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                        Dim _RowConcepto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-                    If Not (_RowConcepto Is Nothing) Then
-                        _Afecta_Precio_Real = _RowConcepto.Item("RECAPRRE")
+                        If Not (_RowConcepto Is Nothing) Then
+                            _Afecta_Precio_Real = _RowConcepto.Item("RECAPRRE")
+                        End If
+
+                        _NroConceptos += 1
+
+                        If _RowConcepto.Item("NoAfectaDsctoGlobal") Then
+                            _NroConceptos_NoAfectaDsctoGlobal += 1
+                        End If
+
+                        _TotalDsctoGlobal += Math.Round(NuloPorNro(_Fila.Cells("ValNetoLinea").Value, 0) * -1, 2)
+
                     End If
-
-                    _NroConceptos += 1
-
-                    If _RowConcepto.Item("NoAfectaDsctoGlobal") Then
-                        _NroConceptos_NoAfectaDsctoGlobal += 1
-                    End If
-
-                    _TotalDsctoGlobal += Math.Round(NuloPorNro(_Fila.Cells("ValNetoLinea").Value, 0) * -1, 2)
 
                 End If
 
@@ -7429,6 +7449,15 @@ Public Class Frm_Formulario_Documento
                         End If
                     End If
 
+                    For Each _Fl As DataRow In _TblDetalle.Rows
+                        If _Fl.Item("Espuntosvta") Then
+                            MessageBoxEx.Show(Me, "Documento contiene concepto de puntos de fidelización" & vbCrLf &
+                                                                      "Para poder editar debe quitar el concepto", "Validación", MessageBoxButtons.OK,
+                                                                  MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, Me.TopMost)
+                            Return
+                        End If
+                    Next
+
                     _Fila_Clonada = Fx_Clonar_Fila_Grilla(_Fila)
 
                     If _Bloquear_Edicion_Detalle Then
@@ -7652,14 +7681,24 @@ Public Class Frm_Formulario_Documento
                                 Else
 
                                     Dim _Aceptado As Boolean
+                                    Dim _RtuVariable As Boolean = _Fila.Cells("RtuVariable").Value
 
-                                    Dim Fm As New Frm_Cantidades_Ud_Disintas(_Fila) '(_Codigo, _Rtu, _UnTrans)
+                                    Dim Fm As New Frm_Cantidades_Ud_Disintas(_Fila)
                                     Fm.Cantidad_Ud1 = _CantUd1
                                     Fm.Cantidad_Ud2 = _CantUd2
                                     Fm.LblUnidad1.Text = _Ud01PR
                                     Fm.LblUnidad2.Text = _Ud02PR
                                     Fm.TopMost = True
+                                    Fm.RtuVariable = _RtuVariable
                                     Fm.ShowDialog(Me)
+
+                                    _RtuVariable = Fm.RtuVariable
+
+                                    _Fila.Cells("RtuVariable").Value = _RtuVariable
+
+                                    If _RtuVariable Then
+                                        _Fila.Cells("Rtu").Value = Math.Round(Fm.Cantidad_Ud1 / Fm.Cantidad_Ud2, 5)
+                                    End If
 
                                     Dim _No_Permite_Superar_Cantidad_Original As Boolean
                                     Dim _Tidopa As String = _Fila.Cells("Tidopa").Value
@@ -8998,6 +9037,17 @@ Public Class Frm_Formulario_Documento
 
                         End If
 
+                        Dim _Cl_Puntos As New Cl_Puntos
+                        _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa)
+
+                        If Not IsNothing(_Cl_Puntos.Zw_PtsVta_Configuracion) AndAlso _Cl_Puntos.Zw_PtsVta_Configuracion.Concepto.Trim = _Codigo.Trim Then
+                            MessageBoxEx.Show(Me, "CONCEPTO EXCLUSIVO PARA USO DE PUNTOS EN SISTEMA DE FIDELIZACION DE CLIENTES", "Validación",
+                                              MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
+                            _Fila.Cells("Codigo").Value = String.Empty
+                            Exit Sub
+                        End If
+
+
                         Dim _Bloqueado As Boolean = _RowConcepto.Item("BLOQUEADO")
 
                         If _Bloqueado Then
@@ -9970,6 +10020,15 @@ Public Class Frm_Formulario_Documento
                                                 Return
                                             End If
 
+                                            For Each _Fl As DataRow In _TblDetalle.Rows
+                                                If _Fl.Item("Espuntosvta") Then
+                                                    MessageBoxEx.Show(Me, "Documento contiene concepto de puntos de fidelización" & vbCrLf &
+                                                                      "Para poder editar debe quitar el concepto", "Validación", MessageBoxButtons.OK,
+                                                                  MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, Me.TopMost)
+                                                    Return
+                                                End If
+                                            Next
+
                                             Dim _Permitir As Boolean = True
 
                                             If Not _Post_Venta Then
@@ -10647,12 +10706,15 @@ Public Class Frm_Formulario_Documento
 
             Dim _Tasadorig As Double = _Fila.Item("Tasadorig")
             Dim _FunValida_Compra As String = _Fila.Item("FunValida_Compra")
+            Dim _Nmarca As String = _Fila.Item("Nmarca")
+            Dim _RtuVariable As Boolean = _Fila.Item("RtuVariable")
+            Dim _Espuntosvta As Boolean = _Fila.Item("Espuntosvta")
 
             _Row.Cells("Id_DocDet").Value = _Id_DocDet
             _Row.Cells("CodLista").Value = _CodLista
             _Row.Cells("Nuevo_Producto").Value = False
 
-
+            _Row.Cells("Espuntosvta").Value = _Espuntosvta
 
             Dim _RowProducto As DataRow
 
@@ -10698,7 +10760,6 @@ Public Class Frm_Formulario_Documento
             _Row.Cells("FechaEmision").Value = _FechaEmision_Linea
             _Row.Cells("FechaRecepcion").Value = _FechaRecepcion_Linea
 
-
             _Row.Cells("Id_Oferta").Value = _Id_Oferta
             _Row.Cells("Oferta").Value = _Oferta
             _Row.Cells("Es_Padre_Oferta").Value = _Es_Padre_Oferta
@@ -10713,7 +10774,14 @@ Public Class Frm_Formulario_Documento
             End If
 
             _Row.Cells("FunValida_Compra").Value = _FunValida_Compra
+            _Row.Cells("Nmarca").Value = _Nmarca
+            _Row.Cells("RtuVariable").Value = _RtuVariable
 
+            If _RtuVariable Then
+                _Row.Cells("CantUd1").Value = _Fila.Item("CantUd1")
+                _Row.Cells("CantUd2").Value = _Fila.Item("CantUd2")
+                _Row.Cells("Rtu").Value = _Fila.Item("Rtu")
+            End If
 
             Dim _Stock_desde_WMS As Boolean = _Row.Cells("Stock_desde_WMS").Value
 
@@ -11026,7 +11094,7 @@ Public Class Frm_Formulario_Documento
 
                 If IsNothing(_Row_Tomado) Then
 
-                    Consulta_sql = "INSERT INTO " & _Global_BaseBk & "Zw_Casi_DocTom (Id_DocEnc,CodFuncionario,Fecha_Hora,NombreEquipo,NroRemota) Values 
+                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Casi_DocTom (Id_DocEnc,CodFuncionario,Fecha_Hora,NombreEquipo,NroRemota) Values 
                                 (" & _Id_DocEnc & ",'" & FUNCIONARIO & "',Getdate(),'" & _NombreEquipo & "','" & _NroRemota & "')
                                  Update " & _Global_BaseBk & "Zw_Notificaciones Set Mostrar = 0,Autorizado = 1,Rechazado = 1             
                                  Where NroRemota = '" & _NroRemota & "'"
@@ -11097,7 +11165,41 @@ Public Class Frm_Formulario_Documento
         _RowEntidad = Nothing
         _RowEntidad_Despacho = Nothing
 
-        _RowEntidad = Fx_Traer_Datos_Entidad(_CodEntidad, _CodSucEntidad)
+        If _Documento_Interno Then
+
+            Dim _Rten = Split(RutEmpresa, "-")
+
+            Consulta_sql = "Select Top 1 * From MAEEN Where KOEN = '" & RutEmpresa & "' And TIPOSUC = 'P'"
+            _RowEntidad = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_RowEntidad) Then
+                Consulta_sql = "Select Top 1 * From MAEEN Where KOEN LIKE '" & _Rten(0) & "%' AND RTEN = '" & _Rten(0) & "' And TIPOSUC = 'P'"
+                _RowEntidad = _Sql.Fx_Get_DataRow(Consulta_sql)
+            End If
+
+            If IsNothing(_RowEntidad) Then
+                Consulta_sql = "Select Top 1 * From MAEEN Where KOEN LIKE '" & _Rten(0) & "%' And TIPOSUC = 'P'"
+                _RowEntidad = _Sql.Fx_Get_DataRow(Consulta_sql)
+            End If
+
+            If _Tipo_Documento = csGlobales.Enum_Tipo_Documento.Guia_Traslado_Interno Or
+                   _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Nota_Venta_Interna Or
+                   _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Recepcion_Interna Then
+                _RowEntidad.Item("KOEN") = RutEmpresa
+                _RowEntidad.Item("SUEN") = String.Empty
+            End If
+
+            If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Despacho_Interna Then
+                _RowEntidad.Item("KOEN") = RutEmpresa
+                _RowEntidad.Item("SUEN") = ModSucursal
+            End If
+
+        Else
+
+            _RowEntidad = Fx_Traer_Datos_Entidad(_CodEntidad, _CodSucEntidad)
+
+        End If
+
         Lbl_Nombre_Entidad.Text = " " & _RowEntidad.Item("NOKOEN").ToString.Trim
 
         If Not String.IsNullOrEmpty(Trim(_RowEntidad.Item("KOFUEN"))) Then
@@ -12621,7 +12723,6 @@ Public Class Frm_Formulario_Documento
 
                         Dim _Buscar_Documentos_Relacionados As Boolean
 
-
                         If Not IsNothing(_RowEntidad) Then
 
                             Dim _Koen As String = _RowEntidad.Item("KOEN").ToString.Trim
@@ -13679,7 +13780,7 @@ Public Class Frm_Formulario_Documento
                 Return
             End If
 
-
+            Sb_AgregarDsctoXPuntos()
 
             If String.IsNullOrEmpty(_TblEncabezado.Rows(0).Item("NroDocumento").ToString.Trim) Then
                 MessageBoxEx.Show(Me, "Debe indicar un número de documento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -13912,9 +14013,14 @@ Public Class Frm_Formulario_Documento
                         End If
 
                         If Not _Documento_Reciclado Then
+
                             If Not Fx_Cambiar_Tipo_Documentos_Post_Venta() Then
+
+                                Sb_EliminarFilaPuntos()
                                 Return
+
                             End If
+
                         End If
 
                     End If
@@ -14173,7 +14279,10 @@ Public Class Frm_Formulario_Documento
                             End If
                         End If
 
+                        Sb_EliminarFilaPuntos
+
                         Return
+
                     End If
 
 
@@ -14644,6 +14753,28 @@ Public Class Frm_Formulario_Documento
         Finally
             Me.Enabled = True
         End Try
+
+    End Sub
+
+    Private Sub Sb_EliminarFilaPuntos()
+
+        If Not _Post_Venta Then
+            Return
+        End If
+
+        'Throw New NotImplementedException()
+        Dim _FilaElimina As DataGridViewRow
+
+        For Each _Fila As DataGridViewRow In Grilla_Detalle.Rows
+            If _Fila.Cells("Espuntosvta").Value Then
+                _FilaElimina = _Fila
+                Exit For
+            End If
+        Next
+
+        If Not IsNothing(_FilaElimina) Then
+            Sb_Eliminar_Fila(_FilaElimina, True)
+        End If
 
     End Sub
 
@@ -15369,6 +15500,7 @@ Public Class Frm_Formulario_Documento
                                                                               _Tbl_Mevento_Edo,
                                                                               _RowEntidad) Then
                     Return 0
+
                 End If
 
             End If
@@ -15962,6 +16094,25 @@ Public Class Frm_Formulario_Documento
 
             End If
 
+
+            'PUNTOS VENTA
+
+            Dim _Cl_Puntos As New Cl_Puntos()
+            Dim _MsjPtos As LsValiciones.Mensajes
+            Dim _PtsUsados As Double
+
+            _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa)
+
+            If Not IsNothing(_Cl_Puntos.Zw_PtsVta_Configuracion) Then
+                For Each _Fila As DataRow In _TblDetalle.Rows
+                    If _Cl_Puntos.Zw_PtsVta_Configuracion.Concepto = _Fila.Item("Codigo") Then
+                        _PtsUsados = _Fila.Item("DescuentoValor")
+                    End If
+                Next
+            End If
+
+            _MsjPtos = _Cl_Puntos.Fx_Grabar_Registro_Puntos(_New_Idmaeedo, _PtsUsados)
+
             'GENERA GRI DESDE PRODUCCION EXTERNA
 
             Dim _SqlQuery = String.Empty
@@ -15990,8 +16141,8 @@ Public Class Frm_Formulario_Documento
                 Dim _Lote As String = _Codigos.Lote
 
                 _SqlQuery += "Insert Into " & _Global_BaseBk & "Zw_Prod_CodQRLogDoc (CodigoQR,Kopral,Tido,Nudo,Idmaeedo,Kopr,CodLeido,TidoOri,NudoOri,Nro_Tarja,Lote) Values " &
-                               "('" & _CodigoQR & "','" & _Kopral & "','" & _Tido & "','" & _Nudo & "'," & _Idmaeedo &
-                               ",'" & _Kopr & "','" & _CodLeido & "','" & _TidoOri & "','" & _NudoOri & "','" & _Nro_Tarja & "','" & _Lote & "')" & vbCrLf
+                             "('" & _CodigoQR & "','" & _Kopral & "','" & _Tido & "','" & _Nudo & "'," & _Idmaeedo &
+                             ",'" & _Kopr & "','" & _CodLeido & "','" & _TidoOri & "','" & _NudoOri & "','" & _Nro_Tarja & "','" & _Lote & "')" & vbCrLf
 
             Next
 
@@ -17387,6 +17538,13 @@ Public Class Frm_Formulario_Documento
 
                         Sb_Agregar_Concepto(_New_Fila, _RowConcepto)
 
+                        Dim _Cl_Puntos As New Cl_Puntos
+                        _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa)
+
+                        If Not IsNothing(_Cl_Puntos.Zw_PtsVta_Configuracion) AndAlso _Cl_Puntos.Zw_PtsVta_Configuracion.Concepto = _Codigo Then
+                            _New_Fila.Cells("Espuntosvta").Value = True
+                        End If
+
                         If _RowConcepto.Item("ModFechVto") Then
 
                             If Not _ModFechVto Then
@@ -17396,13 +17554,24 @@ Public Class Frm_Formulario_Documento
 
                         End If
 
-
                     Else
 
                         Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
                         Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                         Sb_Traer_Producto_Grilla(_New_Fila, _RowProducto, True, _UnTrans, False)
+
+                        Dim _Nmarca As String = _RowProducto.Item("NMARCA")
+
+                        If _Nmarca = "¡" Or _New_Fila.Cells("Rtu").Value <> _Fila.Item("RLUDPR") Then
+
+                            _New_Fila.Cells("Rtu").Value = _Fila.Item("RLUDPR")
+                            _New_Fila.Cells("RtuVariable").Value = True
+
+                            _New_Fila.Cells("CantUd1").Value = _CantUd1_Dori
+                            _New_Fila.Cells("CantUd2").Value = _CantUd2_Dori
+
+                        End If
 
                     End If
 
@@ -17515,6 +17684,27 @@ Public Class Frm_Formulario_Documento
                     Catch ex As Exception
                         _Stock_desde_WMS = False
                     End Try
+
+                    Dim _DesdePickeo As Boolean
+                    Dim _RtuVariable As Boolean = NuloPorNro(_New_Fila.Cells("RtuVariable").Value, False)
+
+                    Try
+                        _DesdePickeo = _Fila.Item("DesdePickeo")
+                    Catch ex As Exception
+                        _DesdePickeo = False
+                    End Try
+
+                    _New_Fila.Cells("RtuVariable").Value = _RtuVariable
+
+                    If Not _Prct Then
+
+                        If _DesdePickeo Then
+                            _New_Fila.Cells("Cantidad").Value = _Cantidad
+                            _New_Fila.Cells("CantUd1").Value = _Fila.Item("CantUd1_Pickea")
+                            _New_Fila.Cells("CantUd2").Value = _Fila.Item("CantUd2_Pickea")
+                        End If
+
+                    End If
 
                     If _Stock_desde_WMS Then
 
@@ -18636,7 +18826,7 @@ Public Class Frm_Formulario_Documento
             Dim _Bodega As String = Fila.Item("Bodega")
             Dim _Codigo As String = Fila.Item(_Campo_Codigo)
             Dim _Idpotl As Integer = Fila.Item("IDPOTL")
-            Dim _Tidopa As String = "OTL" 'Fila.Item("Tidopa")
+            Dim _Tidopa As String = "OTL"
             Dim _Nudopa As String = Fila.Item("NUMOT")
 
             Dim _Descripcion As String = Fila.Item("GLOSA")
@@ -18904,11 +19094,11 @@ Public Class Frm_Formulario_Documento
 
             Dim Fm As New Frm_Crear_Entidad_Mt
             Fm.Fx_Llenar_Entidad(_Koen, _Suen)
-            Fm.Pro_Crear_Entidad = False
-            Fm.Pro_Editar_Entidad = True
+            Fm.CrearEntidad = False
+            Fm.EditarEntidad = True
             Fm.ShowDialog(Me)
 
-            If Fm.Pro_Grabar Then
+            If Fm.Grabar Then
 
                 Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, False, False, False, True)
 
@@ -20632,7 +20822,7 @@ Public Class Frm_Formulario_Documento
 
             For Each _FlPre As DataRow In _TblDetalle.Rows
 
-                Dim _Precio As Double = Math.Round(_FlPre.Item("Precio"), 0)
+                Dim _Precio As Double = Math.Round(NuloPorNro(_FlPre.Item("Precio"), 0), 0)
                 Dim _Campo As String
                 Dim _Precio_Lista As Double
 
@@ -20642,7 +20832,7 @@ Public Class Frm_Formulario_Documento
                     _Campo = "PrecioBrutoUdLista"
                 End If
 
-                _Precio_Lista = Math.Round(_FlPre.Item(_Campo), 0)
+                _Precio_Lista = Math.Round(NuloPorNro(_FlPre.Item(_Campo), 0), 0)
 
                 If _Precio <> _Precio_Lista Then
                     _NecesitaPermisoFlPRe = True
@@ -22278,6 +22468,8 @@ Public Class Frm_Formulario_Documento
             Next
 
         End If
+
+        Sb_EliminarFilaPuntos()
 
         Sb_Marcar_Grilla()
         Sb_Botones_Activos(False)
@@ -25851,6 +26043,125 @@ Public Class Frm_Formulario_Documento
 
     End Function
 
+    Sub Sb_AgregarDsctoXPuntos()
+
+        If _Revision_Remota Or Not _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_PtsVta_Doc") Then
+            Return
+        End If
+
+        Dim _Cl_Puntos As New Cl_Puntos
+        _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa)
+
+        If IsNothing(_Cl_Puntos.Zw_PtsVta_Configuracion) Then
+            Return
+        End If
+
+        If Not _Cl_Puntos.Zw_PtsVta_Configuracion.Activo Then
+            Return
+        End If
+
+        Dim _CodEntidad As String = _TblEncabezado.Rows(0).Item("CodEntidad")
+        Dim _CodSucEntidad As String = _TblEncabezado.Rows(0).Item("CodSucEntidad")
+
+        Dim _PtsGanados As Double = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_PtsVta_Doc", "SUM(PtsGanados)",
+                                    "CodEntidad = '" & _CodEntidad & "' And CodSucEntidad = '" & _CodSucEntidad & "' And Nudonodefi = 0", True)
+        Dim _PtsUsados As Double = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_PtsVta_Doc", "SUM(PtsUsados)",
+                                    "CodEntidad = '" & _CodEntidad & "' And CodSucEntidad = '" & _CodSucEntidad & "'", True)
+
+        Dim _Puntos As Double = _PtsGanados - _PtsUsados
+
+        If _Puntos <= 0 Then
+            Return
+        End If
+
+        For Each _Fila As DataGridViewRow In Grilla_Detalle.Rows
+            If _Fila.Cells("Espuntosvta").Value Then
+                Return
+            End If
+        Next
+
+        If MessageBoxEx.Show(Me, "Tiene " & _Puntos & " puntos acumulados." & vbCrLf & vbCrLf &
+                     "¿Desea utilizarlos en esta compra?", "SISTEMA DE PUNTOS", vbYesNo, vbQuestion) <> DialogResult.Yes Then
+            Return
+        End If
+
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        _Mensaje = Fx_AgregarDescuentoXPuntos(_Puntos)
+
+        If Not _Mensaje.EsCorrecto Then
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End If
+
+    End Sub
+
+    Function Fx_AgregarDescuentoXPuntos(_Puntos As Double) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            If Not _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_PtsVta_Configuracion") Then
+                _Mensaje.Detalle = "Validación"
+                Throw New ArgumentException("No existe tabla Zw_PtsVta_Configuracion en base de datos de Bakapp")
+            End If
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_PtsVta_Configuracion Where Empresa = '" & ModEmpresa & "'"
+            Dim _Row_ConfPuntos As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+            If Not String.IsNullOrWhiteSpace(_Sql.Pro_Error) Then
+                _Mensaje.Detalle = "Error Sql"
+                _Mensaje.Resultado = Consulta_sql
+                Throw New ArgumentException(_Sql.Pro_Error)
+            End If
+
+            If IsNothing(_Row_ConfPuntos) Then
+                _Mensaje.Detalle = "Validación"
+                Throw New ArgumentException("No existe configuración en tabla Zw_PtsVta_Configuracion")
+            End If
+
+            Dim _Koct As String = _Row_ConfPuntos.Item("Concepto")
+
+            Consulta_sql = "Select * From TABCT Where KOCT = '" & _Koct & "'"
+            Dim _RowConcepto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_Row_ConfPuntos) Then
+                _Mensaje.Detalle = "Validación"
+                Throw New ArgumentException("No existe el concepto " & _Koct)
+            End If
+
+            Dim _DescuentoValor As Double = (_Puntos / _Row_ConfPuntos.Item("RCadaPuntos")) * _Row_ConfPuntos.Item("REquivPesos")
+
+            For Each _Fila As DataRow In _TblDetalle.Rows
+
+                If _Fila.Item("Codigo") = _Koct Then
+                    _Mensaje.Detalle = "Validación"
+                    Throw New ArgumentException("Los puntos ya estan siendo utilizados en este documento")
+                End If
+
+            Next
+
+            Sb_Nueva_Linea(_TblEncabezado.Rows(0).Item("ListaPrecios"))
+
+            Dim _New_Fila As DataGridViewRow = Grilla_Detalle.Rows(Grilla_Detalle.RowCount - 1)
+
+            Sb_Agregar_Concepto(_New_Fila, _RowConcepto)
+
+            _New_Fila.Cells("DescuentoValor").Value = _DescuentoValor
+            _New_Fila.Cells("Espuntosvta").Value = True
+
+            Sb_Procesar_Datos_De_Grilla(_New_Fila, "DescuentoValor", False, False, True)
+
+            _Mensaje.EsCorrecto = True
+            'Throw New ArgumentException("Error")
+
+        Catch ex As Exception
+            _Mensaje.Mensaje = ex.Message
+        End Try
+
+        Return _Mensaje
+
+    End Function
 
 End Class
 

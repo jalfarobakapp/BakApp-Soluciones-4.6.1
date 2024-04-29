@@ -1020,6 +1020,8 @@
 
         Dim _Texto = _RowEtiqueta.Item("FUNCION")
 
+        '_Texto = _Texto.ToString.Replace("<Lote5>", "<Lote>")
+
         Dim _FechaStr As String = _Fecha_impresion.ToString("yyMMdd_HHmmss") ' Format(_Fecha_impresion, "yyMMdd:hhmmss")
 
         Dim _TRJ_ETQ_Nro_CPT As String = "<TRJ>" & _Row_Tarja.Item("Nro_CPT") & "</TRJ><END>"

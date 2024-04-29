@@ -299,7 +299,7 @@ Public Class Class_Indicadores_Economicos_Json
         Dim Respuesta As System.Net.HttpWebResponse
         Try
             Peticion = System.Net.WebRequest.Create(_Url)
-            Peticion.Timeout = 5000
+            Peticion.Timeout = 10000
             Respuesta = Peticion.GetResponse()
             Return True
         Catch ex As System.Net.WebException

@@ -53,7 +53,6 @@ Public Class Cl_Tarja
 
     End Function
 
-
     Function Fx_Grabar_Tarja2() As Cl_Tarja_Ent.Mensaje_Tarja
 
         Dim _Mensaje_Tarja As New Cl_Tarja_Ent.Mensaje_Tarja

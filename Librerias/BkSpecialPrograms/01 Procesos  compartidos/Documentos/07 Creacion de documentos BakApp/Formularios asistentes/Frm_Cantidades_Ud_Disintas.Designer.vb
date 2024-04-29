@@ -33,6 +33,7 @@ Partial Class Frm_Cantidades_Ud_Disintas
         Me.Btn_Ver_Stock = New DevComponents.DotNetBar.ButtonX()
         Me.TxtCantUD1 = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.TxtCantUD2 = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Chk_RtuVariable = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.SuspendLayout()
         '
         'LblUnidad2
@@ -163,12 +164,30 @@ Partial Class Frm_Cantidades_Ud_Disintas
         Me.TxtCantUD2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.TxtCantUD2.WatermarkText = "0"
         '
+        'Chk_RtuVariable
+        '
+        Me.Chk_RtuVariable.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_RtuVariable.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_RtuVariable.CheckBoxImageChecked = CType(resources.GetObject("Chk_RtuVariable.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_RtuVariable.FocusCuesEnabled = False
+        Me.Chk_RtuVariable.ForeColor = System.Drawing.Color.Black
+        Me.Chk_RtuVariable.Location = New System.Drawing.Point(12, 113)
+        Me.Chk_RtuVariable.Name = "Chk_RtuVariable"
+        Me.Chk_RtuVariable.Size = New System.Drawing.Size(247, 25)
+        Me.Chk_RtuVariable.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_RtuVariable.TabIndex = 119
+        Me.Chk_RtuVariable.Text = "Desactivar razón de transformación"
+        '
         'Frm_Cantidades_Ud_Disintas
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(263, 113)
+        Me.ClientSize = New System.Drawing.Size(263, 142)
         Me.ControlBox = False
+        Me.Controls.Add(Me.Chk_RtuVariable)
         Me.Controls.Add(Me.TxtCantUD2)
         Me.Controls.Add(Me.TxtCantUD1)
         Me.Controls.Add(Me.Btn_Ver_Stock)
@@ -203,4 +222,5 @@ Partial Class Frm_Cantidades_Ud_Disintas
     Friend WithEvents Btn_Ver_Stock As DevComponents.DotNetBar.ButtonX
     Friend WithEvents TxtCantUD1 As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents TxtCantUD2 As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Chk_RtuVariable As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

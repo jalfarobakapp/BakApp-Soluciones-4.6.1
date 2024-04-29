@@ -119,8 +119,26 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Demonio_ConfAcpAuto", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Demonio_ConfProgramacion", _Modificar, Lbl_Eventos)
 
+            'SIS. DE DESPACHOS
+            .Sb_Revisar_Tabla2(Me, "Zw_Despachos", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Despachos_Doc", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Despachos_Doc_Det", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Despachos_Estados", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Despachos_Email_Aviso", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Despachos_Email_Envios", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Despachos_Tom", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Despachos_Direcc_Cli", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Despachos_Configuracion", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Despachos_Transportistas", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Despachos_MiniCompXProd", _Modificar, Lbl_Eventos)
+
+            .Sb_Revisar_Tabla2(Me, "Zw_Despacho_Simple", _Modificar, Lbl_Eventos)
+
             .Sb_Revisar_Tabla2(Me, "Zw_Docu_Archivos", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Docu_ObligPg", _Modificar, Lbl_Eventos)
+
+            .Sb_Revisar_Tabla2(Me, "Zw_Docu_Ent", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Docu_Det", _Modificar, Lbl_Eventos)
 
             .Sb_Revisar_Tabla2(Me, "Zw_DTE_Aec", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_DTE_Caf", _Modificar, Lbl_Eventos)
@@ -245,23 +263,6 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Reclamo_Preguntas", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Reclamo_Resolucion", _Modificar, Lbl_Eventos)
 
-            'SIS. DE DESPACHOS
-            .Sb_Revisar_Tabla2(Me, "Zw_Despachos", _Modificar, Lbl_Eventos)
-            .Sb_Revisar_Tabla2(Me, "Zw_Despachos_Doc", _Modificar, Lbl_Eventos)
-            .Sb_Revisar_Tabla2(Me, "Zw_Despachos_Doc_Det", _Modificar, Lbl_Eventos)
-            .Sb_Revisar_Tabla2(Me, "Zw_Despachos_Estados", _Modificar, Lbl_Eventos)
-            .Sb_Revisar_Tabla2(Me, "Zw_Despachos_Email_Aviso", _Modificar, Lbl_Eventos)
-            .Sb_Revisar_Tabla2(Me, "Zw_Despachos_Email_Envios", _Modificar, Lbl_Eventos)
-            .Sb_Revisar_Tabla2(Me, "Zw_Despachos_Tom", _Modificar, Lbl_Eventos)
-            .Sb_Revisar_Tabla2(Me, "Zw_Despachos_Direcc_Cli", _Modificar, Lbl_Eventos)
-            .Sb_Revisar_Tabla2(Me, "Zw_Despachos_Configuracion", _Modificar, Lbl_Eventos)
-            .Sb_Revisar_Tabla2(Me, "Zw_Despachos_Transportistas", _Modificar, Lbl_Eventos)
-            .Sb_Revisar_Tabla2(Me, "Zw_Despachos_MiniCompXProd", _Modificar, Lbl_Eventos)
-
-            .Sb_Revisar_Tabla2(Me, "Zw_Despacho_Simple", _Modificar, Lbl_Eventos)
-
-            .Sb_Revisar_Tabla2(Me, "Zw_Docu_Ent", _Modificar, Lbl_Eventos)
-
             .Sb_Revisar_Tabla2(Me, "Zw_Referencias_Dte", _Modificar, Lbl_Eventos)
 
             ' PERMISOS REMOTOS
@@ -316,6 +317,9 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Stk_Tipos", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Stk_Tipos_Grupos", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Stk_Tickets_Toma", _Modificar, Lbl_Eventos)
+
+            .Sb_Revisar_Tabla2(Me, "Zw_Stmp_Enc", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Stmp_Det", _Modificar, Lbl_Eventos)
 
             .Sb_Revisar_Tabla2(Me, "Zw_TablaDeCaracterizaciones", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Tablas_Equivalentes_Rd_Bk", _Modificar, Lbl_Eventos)

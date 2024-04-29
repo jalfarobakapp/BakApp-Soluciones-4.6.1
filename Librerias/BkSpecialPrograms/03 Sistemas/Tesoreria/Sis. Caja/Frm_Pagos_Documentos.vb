@@ -1309,6 +1309,18 @@ Public Class Frm_Pagos_Documentos
 
             End If
 
+            ' PUNTOS VENTA *----------------------------------------------------------
+
+            Dim _Cl_Puntos As New Cl_Puntos()
+            Dim _MsjPtos As LsValiciones.Mensajes
+
+            _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa)
+            _MsjPtos = _Cl_Puntos.Fx_Grabar_Registro_Puntos(_Idmaeedo, 0)
+
+            If _MsjPtos.EsCorrecto Then
+                MessageBoxEx.Show(Me, _MsjPtos.Mensaje, _MsjPtos.Detalle, MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+
             ' ACTIVACION DE ORDENES DE DESPACHO *---------------------------------------------------------
 
             Consulta_sql = "Select IDRST From MAEDDO Where IDMAEEDO = " & _Idmaeedo
@@ -2371,7 +2383,6 @@ Public Class Frm_Pagos_Documentos
         End Select
 
     End Sub
-
 
     Sub Sb_Ingresar_Linea_de_pago()
 

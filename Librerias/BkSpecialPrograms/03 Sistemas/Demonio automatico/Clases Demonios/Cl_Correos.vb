@@ -1,5 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
+Imports Limilabs.Client.SMTP
 
 Public Class Cl_Correos
 
@@ -195,7 +196,7 @@ Public Class Cl_Correos
             Dim _Imprimir_Picking = _Fila.Item("Imprimir_Picking")
 
             _Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_Filtros_X_Estacion" & vbCrLf &
-                            "Where NombreEquipo = '" & _Nombre_Equipo & "' And Nombre_Correo <> '' And (Correo_Para <> '' Or Para_Maeenmail = 1) And TipoDoc = '" & _Tido & "' And Codigo = 'JPT'"
+                            "Where NombreEquipo = '" & _Nombre_Equipo & "' And Nombre_Correo <> '' And (Correo_Para <> '' Or Para_Maeenmail = 1) And TipoDoc = '" & _Tido & "' --And Codigo = 'JPT'"
             Dim _TblFiltroFunc As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
 
             If CBool(_TblFiltroFunc.Rows.Count) Then
@@ -707,17 +708,35 @@ Public Class Cl_Correos
                             _Cc = Replace(_Cc, _Para & ";", "")
                             _Cc = Replace(_Cc, _Para, "")
 
-                            _Correo_Enviado = EnviarCorreo.Fx_Enviar_Mail2(_Host,
-                                                                          _Remitente,
-                                                                          _Contrasena,
-                                                                          _Para,
-                                                                          _Cc,
-                                                                          _Asunto,
-                                                                          _CuerpoMensaje,
-                                                                          _Archivos_Adjuntos,
-                                                                          _Puerto,
-                                                                          _SSL,
-                                                                          False)
+                            '_Correo_Enviado = EnviarCorreo.Fx_Enviar_Mail2(_Host,
+                            '                                              _Remitente,
+                            '                                              _Contrasena,
+                            '                                              _Para,
+                            '                                              _Cc,
+                            '                                              _Asunto,
+                            '                                              _CuerpoMensaje,
+                            '                                              _Archivos_Adjuntos,
+                            '                                              _Puerto,
+                            '                                              _SSL,
+                            '                                              False)
+
+                            Dim result As ISendMessageResult = EnviarCorreo.Fx_Enviar_Mail3IMail(_Host,
+                                                                _Remitente,
+                                                                _Contrasena,
+                                                                _Para,
+                                                                _Cc,
+                                                                _Asunto,
+                                                                _CuerpoMensaje,
+                                                                _Archivos_Adjuntos,
+                                                                _Puerto,
+                                                                _SSL)
+
+                            If result.Status = 0 Then
+                                _Correo_Enviado = True
+                            Else
+                                _Correo_Enviado = False
+                            End If
+
 
                             _Error = EnviarCorreo.Pro_Error
                             EnviarCorreo.Dispose()
@@ -1061,7 +1080,12 @@ Public Class Cl_Correos
             Dim _Koen = _Row_Maeedo.Item("ENDO")
             Dim _Suen = _Row_Maeedo.Item("SUENDO")
 
-            Consulta_Sql = "Select Distinct Rtrim(Ltrim(MAILTO)) As MAILTO,Rtrim(Ltrim(MAILCC)) As MAILCC From MAEENMAIL Where KOEN = '" & _Koen & "' And KOMAIL = '001'"
+            'If _IdMaeedo = 2995828 Then
+            '    Dim _aca = 0
+            'End If
+
+            Consulta_Sql = "Select Distinct Rtrim(Ltrim(MAILTO)) As MAILTO,Rtrim(Ltrim(MAILCC)) As MAILCC,Rtrim(Ltrim(MAILCC2)) As MAILCC2,Rtrim(Ltrim(MAILBCC)) As MAILBCC" & vbCrLf &
+                           "From MAEENMAIL Where KOEN = '" & _Koen & "' And KOMAIL = '001'"
 
             Dim _Tbl_Maeenmail As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
 
@@ -1072,7 +1096,17 @@ Public Class Cl_Correos
                 For Each _Fila_Mail As DataRow In _Tbl_Maeenmail.Rows
 
                     Dim _Para As String = Trim(_Fila_Mail.Item("MAILTO"))
-                    Dim _Cc As String = Trim(_Fila_Mail.Item("MAILCC"))
+                    Dim _Cc As String = String.Empty
+
+                    If Not String.IsNullOrWhiteSpace(_Fila_Mail.Item("MAILCC").ToString.Trim) Then
+                        _Cc = _Fila_Mail.Item("MAILCC").ToString.Trim
+                        If Not String.IsNullOrWhiteSpace(_Fila_Mail.Item("MAILCC2").ToString.Trim) Then
+                            _Cc += ";" & _Fila_Mail.Item("MAILCC2").ToString.Trim
+                            If Not String.IsNullOrWhiteSpace(_Fila_Mail.Item("MAILBCC").ToString.Trim) Then
+                                _Cc += ";" & _Fila_Mail.Item("MAILBCC").ToString.Trim
+                            End If
+                        End If
+                    End If
 
                     _Para = _Para.Trim()
                     _Cc = _Cc.Trim()

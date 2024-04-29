@@ -845,7 +845,7 @@ Public Class Menu
     End Sub
 
     Private Sub Btn_CrearNVVDesdeOCC_Click(sender As Object, e As EventArgs) Handles Btn_CrearNVVDesdeOCC.Click
-
+        Return
         Dim _Id_Enc As Integer = 5
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_NVVAuto Where Id_Enc = " & _Id_Enc
@@ -890,4 +890,11 @@ Public Class Menu
 
     End Sub
 
+    Private Sub Btn_Stem_Click(sender As Object, e As EventArgs) Handles Btn_Stem.Click
+
+        Dim Fm As New Frm_Stmp_Listado
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
 End Class

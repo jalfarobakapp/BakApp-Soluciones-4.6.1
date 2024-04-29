@@ -16,6 +16,7 @@ Public Class Frm_Configuracion_Gral
     Dim _Modalidad_General As Boolean
 
     Dim _Union = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "UNION" & vbCrLf
+
     Public Sub New(_Row_Modalidad As DataRow, _Modalidad_General As Boolean)
 
         ' Esta llamada es exigida por el diseñador.
@@ -45,6 +46,8 @@ Public Class Frm_Configuracion_Gral
     End Sub
 
     Private Sub Frm_Configuracion_Gral_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        Btn_ConfPuntosVta.Visible = _Modalidad_General
 
         Cmb_CriterioFechaGDVconFechaDistintaDocOrigen.SelectedValue = "1"
         SuperTabControl1.SelectedTabIndex = 0
@@ -227,6 +230,10 @@ Public Class Frm_Configuracion_Gral
             Chk_BuscarProdConCodRapido.Checked = .Item("BuscarProdConCodRapido")
             Chk_BuscarProdConCodTecnico.Checked = .Item("BuscarProdConCodTecnico")
 
+            Chk_Pickear_NVVTodas.Checked = .Item("Pickear_NVVTodas")
+            Chk_Pickear_ProdPesoVariable.Checked = .Item("Pickear_ProdPesoVariable")
+            Chk_Pickear_FacturarAutoCompletas.Checked = .Item("Pickear_FacturarAutoCompletas")
+
         End With
 
         Input_Dias_Para_Hacer_NCV.Enabled = Not _Modalidad_General
@@ -311,6 +318,10 @@ Public Class Frm_Configuracion_Gral
         Chk_BloqueaMarcas.Enabled = _Modalidad_General
         Chk_BloqueaRubros.Enabled = _Modalidad_General
         Chk_BloqueaZonaProductos.Enabled = _Modalidad_General
+
+        Chk_Pickear_NVVTodas.Enabled = _Modalidad_General
+        Chk_Pickear_ProdPesoVariable.Enabled = _Modalidad_General
+        Chk_Pickear_FacturarAutoCompletas.Enabled = _Modalidad_General
 
         AddHandler Txt_Dias_Venci_Coti.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
         AddHandler Txt_ValorMinimoNVV.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
@@ -506,6 +517,9 @@ Public Class Frm_Configuracion_Gral
                        ",ValidaMovFisConCodBarra = " & Convert.ToInt32(Chk_ValidaMovFisConCodBarra.Checked) & vbCrLf &
                        ",BuscarProdConCodRapido = " & Convert.ToInt32(Chk_BuscarProdConCodRapido.Checked) & vbCrLf &
                        ",BuscarProdConCodTecnico = " & Convert.ToInt32(Chk_BuscarProdConCodTecnico.Checked) & vbCrLf &
+                       ",Pickear_NVVTodas = " & Convert.ToInt32(Chk_Pickear_NVVTodas.Checked) & vbCrLf &
+                       ",Pickear_ProdPesoVariable = " & Convert.ToInt32(Chk_Pickear_ProdPesoVariable.Checked) & vbCrLf &
+                       ",Pickear_FacturarAutoCompletas = " & Convert.ToInt32(Chk_Pickear_FacturarAutoCompletas.Checked) & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
@@ -645,6 +659,26 @@ Public Class Frm_Configuracion_Gral
                              MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
             Sb_Revisar_Fincred_Token(0)
         End If
+
+    End Sub
+
+    Private Sub Chk_Pickear_NVVTodas_CheckedChanged(sender As Object, e As EventArgs)
+
+        Chk_Pickear_ProdPesoVariable.Enabled = Chk_Pickear_NVVTodas.Checked
+        If Not Chk_Pickear_NVVTodas.Checked Then
+            Chk_Pickear_ProdPesoVariable.Checked = False
+        End If
+
+    End Sub
+
+    Private Sub Btn_ConfPuntosVta_Click(sender As Object, e As EventArgs) Handles Btn_ConfPuntosVta.Click
+
+        Dim _Cl_Puntos As New Cl_Puntos()
+        _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa)
+
+        Dim Fm As New Frm_ConfPuntosVta
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 

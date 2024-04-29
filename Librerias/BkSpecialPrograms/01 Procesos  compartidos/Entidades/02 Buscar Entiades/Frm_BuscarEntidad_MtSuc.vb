@@ -92,8 +92,8 @@ Public Class Frm_BuscarEntidad_MtSuc
 
                 Dim Fm As New Frm_Crear_Entidad_Mt
                 Fm.Fx_Llenar_Entidad(_CodEntidad_Suc, _SucEntidad_Suc)
-                Fm.Pro_Crear_Entidad = False
-                Fm.Pro_Editar_Entidad = True
+                Fm.CrearEntidad = False
+                Fm.EditarEntidad = True
                 Fm.BtnEliminarUser.Visible = False
                 Fm.ShowDialog(Me)
 
@@ -110,14 +110,14 @@ Public Class Frm_BuscarEntidad_MtSuc
         If Fx_Tiene_Permiso(Me, "CfEnt001") Then
 
             Dim Fm As New Frm_Crear_Entidad_Mt
-            Fm.Pro_Crear_Entidad = True
-            Fm.TxtxCodEntidad.Text = _CodEntidad
-            Fm.TxtxCodEntidad.Enabled = False
-            Fm.Pro_Editar_Entidad = False
+            Fm.CrearEntidad = True
+            Fm.Txt_Koen.Text = _CodEntidad
+            Fm.Txt_Koen.Enabled = False
+            Fm.EditarEntidad = False
             Fm.Sb_Crear_Sucursal()
             Fm.ShowDialog(Me)
 
-            If Fm.Pro_CreaNuevaEntidad Then
+            If Fm.CreaNuevaEntidad Then
                 Sb_Actualizar_Grilla()
             End If
 

@@ -100,6 +100,8 @@ Public Class Frm_LiquidImporDtExcel
         Dim _Filtro_Productos As String = Generar_Filtro_IN_Arreglo(_Arreglo_Cd, False)
 
         Dim _Problemas As Integer
+        Dim _Diferencias As Integer
+        Dim _Diferencias1peso As Integer
         Dim _SinProbremas As Integer
 
         Sb_Habilitar_Deshabilitar_Comandos(False, True)
@@ -145,68 +147,172 @@ Public Class Frm_LiquidImporDtExcel
                 _Error = "La columna Monto esta vacía"
             End If
 
+            Dim _TieneError As Boolean
+            Dim _TieneDiferencia As Boolean
+            Dim _TieneDiferencia1peso As Boolean
+
             If String.IsNullOrEmpty(_Error) Then
 
-                Dim _TieneError = True
+                _TieneError = False
+                _TieneDiferencia = False
 
-                For Each _Fila As DataRow In _Tbl_Liquidacion.Rows
+                Dim _MontoIgual As Boolean
+                Dim _MontoDiferencias As Boolean
+                Dim _Msg = String.Empty
+                Dim _Encontrado = False
+                Dim _Diferencia As Double
 
-                    If _Fila.Item("VADP") = _MontoParaAbono Then
+                'If _CodAutoVenta = "2000007231796976" Then
+                '    Dim _aca = 0
+                'End If
 
-                        Dim _Str_Nucudp As String = _Fila.Item("NUCUDP").ToString.Trim
-                        Dim _Int_Nucudp As Integer = Convert.ToInt32(_Fila.Item("NUCUDP").ToString.Trim)
-                        Dim _Str_Cudp As String = Convert.ToInt32(_Fila.Item("CUDP").ToString.Trim)
-                        Dim _Int_Cudp As Integer = _Fila.Item("CUDP").ToString.Trim
+                Dim _Filtro As String = "(NUCUDP = '" & _CodAutoVenta & "' And VADP = " & _MontoParaAbono & ") Or (CUDP = '" & _CodAutoVenta & "' And VADP = " & _MontoParaAbono & ")"
+                Dim _FilasEncontradas As DataRow() = _Tbl_Liquidacion.Select(_Filtro)
 
-                        If IsNumeric(_CodAutoVenta) Then
-                            If _Int_Nucudp = Convert.ToInt32(_CodAutoVenta) Then
-                                _Fila.Item("Incluir") = True
-                                _TieneError = False
-                                _Error = String.Empty
-                                TotalValSelec += _MontoParaAbono
-                                Exit For
-                            ElseIf _Int_Cudp = Convert.ToInt32(_CodAutoVenta) Then
-                                _Fila.Item("Incluir") = True
-                                _TieneError = False
-                                _Error = String.Empty
-                                TotalValSelec += _MontoParaAbono
-                                Exit For
-                            End If
-                        Else
-                            If _Str_Nucudp = _CodAutoVenta Then
-                                _Fila.Item("Incluir") = True
-                                _TieneError = False
-                                _Error = String.Empty
-                                TotalValSelec += _MontoParaAbono
-                                Exit For
-                            ElseIf _Str_Cudp = _CodAutoVenta Then
-                                _Fila.Item("Incluir") = True
-                                _TieneError = False
-                                _Error = String.Empty
-                                TotalValSelec += _MontoParaAbono
-                                Exit For
-                            End If
+                ' Verificar si se encontraron filas y trabajar con ellas
+
+                If _FilasEncontradas.Length > 0 Then
+
+                    ' Por ejemplo, acceder al primer registro encontrado
+                    Dim primeraFila As DataRow = _FilasEncontradas(0)
+
+                    primeraFila.Item("Incluir") = True
+                    TotalValSelec += _MontoParaAbono
+                    _Encontrado = True
+
+                Else
+
+                    _Filtro = "(NUCUDP = '" & _CodAutoVenta & "' And VADP <> " & _MontoParaAbono & ") Or (CUDP = '" & _CodAutoVenta & "' And VADP <> " & _MontoParaAbono & ")"
+                    Dim _FilasDiferencias As DataRow() = _Tbl_Liquidacion.Select(_Filtro)
+
+                    If _FilasDiferencias.Length > 0 Then
+                        ' Por ejemplo, acceder al primer registro encontrado
+                        Dim primeraFila As DataRow = _FilasDiferencias(0)
+
+                        _TieneDiferencia = True
+
+                        Dim _Str_Nucudp = primeraFila.Item("NUCUDP").ToString.Trim
+                        Dim _Str_Cudp = primeraFila.Item("CUDP").ToString.Trim
+
+                        _Diferencia = _MontoParaAbono - primeraFila.Item("VADP")
+
+                        If _Str_Nucudp = _CodAutoVenta Then
+                            _Error = "Se encuentra el Numero Doc: [" & _CodAutoVenta_Ori & "], pero el monto no coincide $ " & FormatNumber(_MontoParaAbono, 0) & ", Diferencia: " & _Diferencia
                         End If
-                        'If _Str_Nucudp = _CodAutoVenta Or _Int_Nucudp = Convert.ToInt32(_CodAutoVenta) Then
-                        '    _Fila.Item("Incluir") = True
-                        '    _TieneError = False
-                        '    _Error = String.Empty
-                        '    TotalValSelec += _MontoParaAbono
-                        '    Exit For
-                        'ElseIf _Str_Cudp = _CodAutoVenta Or _Int_Cudp = Convert.ToInt32(_CodAutoVenta) Then
-                        '    _Fila.Item("Incluir") = True
-                        '    _TieneError = False
-                        '    _Error = String.Empty
-                        '    TotalValSelec += _MontoParaAbono
-                        '    Exit For
-                        'End If
+
+                        If _Str_Cudp = _CodAutoVenta Then
+                            _Error = "Se encuentra la cuenta: [" & _CodAutoVenta_Ori & "], pero el monto no coincide $ " & FormatNumber(_MontoParaAbono, 0) & ", Diferencia: " & _Diferencia
+                        End If
+
+                        _Encontrado = True
+
+                        If Chk_Dif1Peso.Checked AndAlso (_Diferencia = 1 Or _Diferencia = -1) Then
+
+                            ' Por ejemplo, acceder al primer registro encontrado
+                            'Dim primeraFila As DataRow = _FilasEncontradas(0)
+                            _TieneDiferencia1peso = True
+                            _TieneDiferencia = False
+                            primeraFila.Item("Incluir") = True
+                            TotalValSelec += _FilasDiferencias(0).Item("VADP") '_MontoParaAbono
+
+                        End If
 
                     End If
 
-                Next
+                End If
+
+                If Not _Encontrado Then
+
+                    Consulta_sql = "Select IDMAEDPCE From MAEDPCE Where TIDP = 'TJV' And (CUDP = '" & _CodAutoVenta & "' Or NUCUDP = '" & _CodAutoVenta & "' )"
+
+                    Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                    If Not IsNothing(_Row) Then
+
+                        _Error = ", El pago se encontro en la MAEDPCE, pero no ha sido contabilizado."
+
+                    End If
+
+                End If
+
+#Region "Procedimiento antiguo"
+
+
+                'If False Then
+
+                '    For Each _Fila As DataRow In _Tbl_Liquidacion.Rows
+
+                '        Dim _Str_Nucudp As String
+                '        Dim _Str_Cudp As String
+
+                '        'Dim _Int_Nucudp As Integer
+                '        'Dim _Int_Cudp As Integer
+
+                '        Dim _Vadp As Double = _Fila.Item("VADP")
+
+                '        _MontoIgual = (_Vadp = _MontoParaAbono)
+                '        _MontoDiferencias = (_Vadp <> _MontoParaAbono)
+
+                '        _Str_Nucudp = _Fila.Item("NUCUDP").ToString.Trim
+                '        _Str_Cudp = _Fila.Item("CUDP").ToString.Trim
+
+                '        If _Str_Nucudp = "2000007292785640" Or _Str_Cudp = "2000007292785640" Then
+                '            Dim _aca = 0
+                '        End If
+
+                '        _Diferencia = _Fila.Item("VADP") - _MontoParaAbono
+
+                '        If _Str_Nucudp = _CodAutoVenta Then
+
+                '            _Encontrado = True
+
+                '            If _MontoIgual Then
+                '                _Fila.Item("Incluir") = True
+                '                TotalValSelec += _MontoParaAbono
+                '                Exit For
+                '            End If
+
+                '            If _MontoDiferencias Then
+                '                _TieneDiferencia = True
+                '                _Error = "Se encuentra el Numero Doc: [" & _CodAutoVenta_Ori & "], pero el monto no coincide $ " & FormatNumber(_MontoParaAbono, 0) & ", Diferencia: " & _Diferencia
+                '                '_Diferencias += 1
+                '                Exit For
+                '            End If
+
+                '        End If
+
+                '        If _Str_Cudp = _CodAutoVenta Then
+
+                '            _Encontrado = True
+
+                '            If _MontoIgual Then
+                '                _Fila.Item("Incluir") = True
+                '                _Error = String.Empty
+                '                TotalValSelec += _MontoParaAbono
+                '                Exit For
+                '            End If
+
+                '            If _MontoDiferencias Then
+                '                _TieneDiferencia = True
+                '                '_Diferencias += 1
+                '                _Error = "Se encuentra la cuenta: [" & _CodAutoVenta_Ori & "], pero el monto no coincide $ " & FormatNumber(_MontoParaAbono, 0) & ", Diferencia: " & _Diferencia
+                '                Exit For
+                '            End If
+
+                '        End If
+
+                '    Next
+
+                'End If
+
+#End Region
+
+                If Not _Encontrado Then
+                    _TieneError = True
+                End If
 
                 If _TieneError Then
-                    _Error = "No se encuentra El código: [" & _CodAutoVenta_Ori & "] por el monto $ " & FormatNumber(_MontoParaAbono, 0)
+                    _Error = "No se encuentra El código: [" & _CodAutoVenta_Ori & "] por el monto $ " & FormatNumber(_MontoParaAbono, 0) & _Error
                 End If
 
             End If
@@ -220,11 +326,15 @@ Public Class Frm_LiquidImporDtExcel
 
                 Ls_Liquid_Transbank.Add(_Liquid_Transbank)
 
+                _SinProbremas += 1
+
             Else
 
-                Sb_AddToLog("Fila Nro :" & i, "Problema: " & _Error,
-                 _Txt_Log, False)
-                _Problemas += 1
+                If _TieneError Then _Problemas += 1
+                If _TieneDiferencia Then _Diferencias += 1
+                If _TieneDiferencia1peso Then _Diferencias1peso += 1
+
+                Sb_AddToLog("Fila Nro :" & i, "Problema: " & _Error, _Txt_Log, False)
 
             End If
 
@@ -234,7 +344,6 @@ Public Class Frm_LiquidImporDtExcel
             End If
 
             If _Cancelar Then
-
                 Exit For
             End If
 
@@ -243,10 +352,20 @@ Public Class Frm_LiquidImporDtExcel
             Circular_Progres_Val.Value += 1
             Circular_Progres_Val.ProgressText = Circular_Progres_Val.Value
 
-            Lbl_Procesando.Text = "Leyendo fila " & i & " de " & _Filas & ". Estado Ok: " & _SinProbremas &
-                                  ", Problemas: " & _Problemas
+            If Chk_Dif1Peso.Checked Then
+                Lbl_Procesando.Text = "Leyendo fila " & i & " de " & _Filas & ". Estado Ok: " & _SinProbremas &
+                                  ", Problemas: " & _Problemas & ", Diferencias: " & _Diferencias & ", Diferencias 1 peso: " & _Diferencias1peso
+
+            Else
+                Lbl_Procesando.Text = "Leyendo fila " & i & " de " & _Filas & ". Estado Ok: " & _SinProbremas &
+                                  ", Problemas: " & _Problemas & ", Diferencias: " & _Diferencias
+
+            End If
+
 
             System.Windows.Forms.Application.DoEvents()
+
+            _Error = String.Empty
 
         Next
 
@@ -257,16 +376,23 @@ Public Class Frm_LiquidImporDtExcel
                 Return
             End If
 
-            If CBool(_Problemas) Then
+            If CBool(_Problemas) Or CBool(_Diferencias) Then
 
                 Dim _Leyend As String
                 Dim _Palabra As String = Trim(UCase(Letras(_Problemas)))
 
-                If _Problemas = 1 Then
-                    _Leyend = "Existe " & _Problemas & " línea con problema en el archivo de lectura"
+                If Chk_Dif1Peso.Checked Then
+                    _Leyend = "Existen líneas con problemas en el archivo de lectura." & vbCrLf & vbCrLf &
+                          "No encontradas:" & _Problemas & vbCrLf &
+                          "Diferencias: " & _Diferencias & vbCrLf &
+                          "Diferencias 1 peso: " & _Diferencias1peso
                 Else
-                    _Leyend = "Existen " & _Problemas & " líneas con problemas en el archivo de lectura"
+                    _Leyend = "Existen líneas con problemas en el archivo de lectura." & vbCrLf & vbCrLf &
+                          "No encontradas:" & _Problemas & vbCrLf &
+                          "Diferencias: " & _Diferencias
                 End If
+
+                Sb_AddToLog("Resumen", Lbl_Procesando.Text, _Txt_Log, False)
 
                 MessageBoxEx.Show(Me, _Leyend & vbCrLf &
                                   "a continuación se mostrar una lista con los errores",

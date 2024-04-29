@@ -713,8 +713,12 @@ Public Class Clas_Estructura_Base_De_Datos
             Case "Zw_Docu_ObligPg"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Docu_ObligPg
 
-            'Case "Zw_DTE_Receptores"
-            '    Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_DTE_Receptores
+
+            Case "Zw_Docu_Ent"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Docu_Ent
+            Case "Zw_Docu_Det"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Docu_Det
+
 
             Case "Zw_DTE_Aec"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_DTE_Aec
@@ -1040,6 +1044,11 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Stk_Tipos_Grupos
             Case "Zw_Stk_Tickets_Toma"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Stk_Tickets_Toma
+
+            Case "Zw_Stmp_Enc"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Stmp_Enc
+            Case "Zw_Stmp_Det"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Stmp_Det
 
             Case "Zw_TablaDeCaracterizaciones"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_TablaDeCaracterizaciones

@@ -35,6 +35,7 @@ Partial Class Frm_LiquidImporDtExcel
         Me.Btn_Archivo_Ayuda_Excel = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Cancelar = New DevComponents.DotNetBar.ButtonItem()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.Chk_Dif1Peso = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Grupo_01.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -43,6 +44,7 @@ Partial Class Frm_LiquidImporDtExcel
         '
         Me.Grupo_01.BackColor = System.Drawing.Color.White
         Me.Grupo_01.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.Grupo_01.Controls.Add(Me.Chk_Dif1Peso)
         Me.Grupo_01.Controls.Add(Me.Chk_Primera_Fila_Es_encabezado)
         Me.Grupo_01.Controls.Add(Me.Lbl_Procesando)
         Me.Grupo_01.Controls.Add(Me.Txt_Nombre_Archivo)
@@ -91,6 +93,7 @@ Partial Class Frm_LiquidImporDtExcel
         '
         '
         Me.Chk_Primera_Fila_Es_encabezado.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Primera_Fila_Es_encabezado.CheckBoxImageChecked = CType(resources.GetObject("Chk_Primera_Fila_Es_encabezado.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Primera_Fila_Es_encabezado.Checked = True
         Me.Chk_Primera_Fila_Es_encabezado.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Chk_Primera_Fila_Es_encabezado.CheckValue = "Y"
@@ -98,7 +101,7 @@ Partial Class Frm_LiquidImporDtExcel
         Me.Chk_Primera_Fila_Es_encabezado.ForeColor = System.Drawing.Color.Black
         Me.Chk_Primera_Fila_Es_encabezado.Location = New System.Drawing.Point(5, 89)
         Me.Chk_Primera_Fila_Es_encabezado.Name = "Chk_Primera_Fila_Es_encabezado"
-        Me.Chk_Primera_Fila_Es_encabezado.Size = New System.Drawing.Size(286, 23)
+        Me.Chk_Primera_Fila_Es_encabezado.Size = New System.Drawing.Size(175, 23)
         Me.Chk_Primera_Fila_Es_encabezado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Primera_Fila_Es_encabezado.TabIndex = 81
         Me.Chk_Primera_Fila_Es_encabezado.Text = "La primera fila es el encabezado"
@@ -228,6 +231,26 @@ Partial Class Frm_LiquidImporDtExcel
         '
         Me.OpenFileDialog1.FileName = "OpenFileDialog1"
         '
+        'Chk_Dif1Peso
+        '
+        Me.Chk_Dif1Peso.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Dif1Peso.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Dif1Peso.CheckBoxImageChecked = CType(resources.GetObject("Chk_Dif1Peso.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Dif1Peso.Checked = True
+        Me.Chk_Dif1Peso.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Chk_Dif1Peso.CheckValue = "Y"
+        Me.Chk_Dif1Peso.FocusCuesEnabled = False
+        Me.Chk_Dif1Peso.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Dif1Peso.Location = New System.Drawing.Point(196, 89)
+        Me.Chk_Dif1Peso.Name = "Chk_Dif1Peso"
+        Me.Chk_Dif1Peso.Size = New System.Drawing.Size(242, 23)
+        Me.Chk_Dif1Peso.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Dif1Peso.TabIndex = 82
+        Me.Chk_Dif1Peso.Text = "Diferencias de 1 peso dejar pago del sistema"
+        '
         'Frm_LiquidImporDtExcel
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -264,4 +287,5 @@ Partial Class Frm_LiquidImporDtExcel
     Public WithEvents Btn_Archivo_Ayuda_Excel As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_Cancelar As DevComponents.DotNetBar.ButtonItem
     Public WithEvents OpenFileDialog1 As OpenFileDialog
+    Public WithEvents Chk_Dif1Peso As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

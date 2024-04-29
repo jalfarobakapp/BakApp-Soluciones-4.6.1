@@ -43,6 +43,8 @@ Partial Class Frm_Tickets_IngProducto
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_HoraRev = New DevComponents.DotNetBar.LabelX()
         Me.Dtp_HoraRev = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
+        Me.Txt_Ubicacion = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dtp_FechaRev, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dtp_HoraRev, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -54,7 +56,7 @@ Partial Class Frm_Tickets_IngProducto
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Archivos_Adjuntos, Me.Btn_Eliminar})
-        Me.Bar2.Location = New System.Drawing.Point(0, 222)
+        Me.Bar2.Location = New System.Drawing.Point(0, 244)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(536, 41)
         Me.Bar2.Stretch = True
@@ -104,11 +106,11 @@ Partial Class Frm_Tickets_IngProducto
         Me.Txt_Cantidad.ButtonCustom2.Image = CType(resources.GetObject("Txt_Cantidad.ButtonCustom2.Image"), System.Drawing.Image)
         Me.Txt_Cantidad.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Cantidad.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Cantidad.Location = New System.Drawing.Point(107, 126)
+        Me.Txt_Cantidad.Location = New System.Drawing.Point(106, 152)
         Me.Txt_Cantidad.Name = "Txt_Cantidad"
         Me.Txt_Cantidad.PreventEnterBeep = True
         Me.Txt_Cantidad.Size = New System.Drawing.Size(86, 22)
-        Me.Txt_Cantidad.TabIndex = 174
+        Me.Txt_Cantidad.TabIndex = 5
         Me.Txt_Cantidad.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Lbl_Cantidad
@@ -119,7 +121,7 @@ Partial Class Frm_Tickets_IngProducto
         '
         Me.Lbl_Cantidad.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Lbl_Cantidad.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Cantidad.Location = New System.Drawing.Point(12, 126)
+        Me.Lbl_Cantidad.Location = New System.Drawing.Point(11, 152)
         Me.Lbl_Cantidad.Name = "Lbl_Cantidad"
         Me.Lbl_Cantidad.Size = New System.Drawing.Size(89, 23)
         Me.Lbl_Cantidad.TabIndex = 173
@@ -137,11 +139,11 @@ Partial Class Frm_Tickets_IngProducto
         Me.Txt_StfiEnBodega.ButtonCustom2.Image = CType(resources.GetObject("Txt_StfiEnBodega.ButtonCustom2.Image"), System.Drawing.Image)
         Me.Txt_StfiEnBodega.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_StfiEnBodega.ForeColor = System.Drawing.Color.Black
-        Me.Txt_StfiEnBodega.Location = New System.Drawing.Point(107, 98)
+        Me.Txt_StfiEnBodega.Location = New System.Drawing.Point(106, 124)
         Me.Txt_StfiEnBodega.Name = "Txt_StfiEnBodega"
         Me.Txt_StfiEnBodega.PreventEnterBeep = True
         Me.Txt_StfiEnBodega.Size = New System.Drawing.Size(86, 22)
-        Me.Txt_StfiEnBodega.TabIndex = 172
+        Me.Txt_StfiEnBodega.TabIndex = 4
         Me.Txt_StfiEnBodega.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Lbl_StfiEnBodega
@@ -152,7 +154,7 @@ Partial Class Frm_Tickets_IngProducto
         '
         Me.Lbl_StfiEnBodega.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Lbl_StfiEnBodega.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_StfiEnBodega.Location = New System.Drawing.Point(12, 98)
+        Me.Lbl_StfiEnBodega.Location = New System.Drawing.Point(11, 124)
         Me.Lbl_StfiEnBodega.Name = "Lbl_StfiEnBodega"
         Me.Lbl_StfiEnBodega.Size = New System.Drawing.Size(89, 23)
         Me.Lbl_StfiEnBodega.TabIndex = 171
@@ -176,7 +178,7 @@ Partial Class Frm_Tickets_IngProducto
         Me.Txt_Bodega.PreventEnterBeep = True
         Me.Txt_Bodega.ReadOnly = True
         Me.Txt_Bodega.Size = New System.Drawing.Size(419, 22)
-        Me.Txt_Bodega.TabIndex = 170
+        Me.Txt_Bodega.TabIndex = 1
         '
         'LabelX7
         '
@@ -212,7 +214,7 @@ Partial Class Frm_Tickets_IngProducto
         Me.Txt_Producto.PreventEnterBeep = True
         Me.Txt_Producto.ReadOnly = True
         Me.Txt_Producto.Size = New System.Drawing.Size(419, 22)
-        Me.Txt_Producto.TabIndex = 166
+        Me.Txt_Producto.TabIndex = 0
         '
         'Lbl_Producto
         '
@@ -235,11 +237,11 @@ Partial Class Frm_Tickets_IngProducto
         Me.Cmb_UdMedida.ForeColor = System.Drawing.Color.Black
         Me.Cmb_UdMedida.FormattingEnabled = True
         Me.Cmb_UdMedida.ItemHeight = 16
-        Me.Cmb_UdMedida.Location = New System.Drawing.Point(107, 70)
+        Me.Cmb_UdMedida.Location = New System.Drawing.Point(106, 96)
         Me.Cmb_UdMedida.Name = "Cmb_UdMedida"
         Me.Cmb_UdMedida.Size = New System.Drawing.Size(52, 22)
         Me.Cmb_UdMedida.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Cmb_UdMedida.TabIndex = 178
+        Me.Cmb_UdMedida.TabIndex = 3
         '
         'Lbl_UdMedida
         '
@@ -249,7 +251,7 @@ Partial Class Frm_Tickets_IngProducto
         '
         Me.Lbl_UdMedida.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Lbl_UdMedida.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_UdMedida.Location = New System.Drawing.Point(13, 69)
+        Me.Lbl_UdMedida.Location = New System.Drawing.Point(12, 95)
         Me.Lbl_UdMedida.Name = "Lbl_UdMedida"
         Me.Lbl_UdMedida.Size = New System.Drawing.Size(40, 23)
         Me.Lbl_UdMedida.TabIndex = 177
@@ -263,7 +265,7 @@ Partial Class Frm_Tickets_IngProducto
         '
         Me.Lbl_FechaRev.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Lbl_FechaRev.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_FechaRev.Location = New System.Drawing.Point(12, 154)
+        Me.Lbl_FechaRev.Location = New System.Drawing.Point(11, 180)
         Me.Lbl_FechaRev.Name = "Lbl_FechaRev"
         Me.Lbl_FechaRev.Size = New System.Drawing.Size(89, 23)
         Me.Lbl_FechaRev.TabIndex = 176
@@ -279,9 +281,10 @@ Partial Class Frm_Tickets_IngProducto
         Me.Dtp_FechaRev.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Dtp_FechaRev.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
         Me.Dtp_FechaRev.ButtonDropDown.Visible = True
+        Me.Dtp_FechaRev.Enabled = False
         Me.Dtp_FechaRev.ForeColor = System.Drawing.Color.Black
         Me.Dtp_FechaRev.IsPopupCalendarOpen = False
-        Me.Dtp_FechaRev.Location = New System.Drawing.Point(107, 154)
+        Me.Dtp_FechaRev.Location = New System.Drawing.Point(106, 180)
         '
         '
         '
@@ -318,7 +321,7 @@ Partial Class Frm_Tickets_IngProducto
         Me.Dtp_FechaRev.Name = "Dtp_FechaRev"
         Me.Dtp_FechaRev.Size = New System.Drawing.Size(86, 22)
         Me.Dtp_FechaRev.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Dtp_FechaRev.TabIndex = 175
+        Me.Dtp_FechaRev.TabIndex = 6
         Me.Dtp_FechaRev.Value = New Date(2024, 1, 2, 0, 0, 0, 0)
         '
         'Txt_Diferencia
@@ -333,7 +336,7 @@ Partial Class Frm_Tickets_IngProducto
         Me.Txt_Diferencia.ButtonCustom2.Image = CType(resources.GetObject("Txt_Diferencia.ButtonCustom2.Image"), System.Drawing.Image)
         Me.Txt_Diferencia.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Diferencia.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Diferencia.Location = New System.Drawing.Point(330, 126)
+        Me.Txt_Diferencia.Location = New System.Drawing.Point(293, 152)
         Me.Txt_Diferencia.Name = "Txt_Diferencia"
         Me.Txt_Diferencia.PreventEnterBeep = True
         Me.Txt_Diferencia.ReadOnly = True
@@ -350,9 +353,9 @@ Partial Class Frm_Tickets_IngProducto
         '
         Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX1.ForeColor = System.Drawing.Color.Black
-        Me.LabelX1.Location = New System.Drawing.Point(235, 126)
+        Me.LabelX1.Location = New System.Drawing.Point(231, 152)
         Me.LabelX1.Name = "LabelX1"
-        Me.LabelX1.Size = New System.Drawing.Size(89, 23)
+        Me.LabelX1.Size = New System.Drawing.Size(56, 23)
         Me.LabelX1.TabIndex = 179
         Me.LabelX1.Text = "Diferencia"
         Me.LabelX1.Visible = False
@@ -365,7 +368,7 @@ Partial Class Frm_Tickets_IngProducto
         '
         Me.Lbl_HoraRev.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Lbl_HoraRev.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_HoraRev.Location = New System.Drawing.Point(12, 183)
+        Me.Lbl_HoraRev.Location = New System.Drawing.Point(11, 209)
         Me.Lbl_HoraRev.Name = "Lbl_HoraRev"
         Me.Lbl_HoraRev.Size = New System.Drawing.Size(89, 23)
         Me.Lbl_HoraRev.TabIndex = 182
@@ -381,10 +384,11 @@ Partial Class Frm_Tickets_IngProducto
         Me.Dtp_HoraRev.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Dtp_HoraRev.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
         Me.Dtp_HoraRev.ButtonDropDown.Visible = True
+        Me.Dtp_HoraRev.Enabled = False
         Me.Dtp_HoraRev.ForeColor = System.Drawing.Color.Black
         Me.Dtp_HoraRev.Format = DevComponents.Editors.eDateTimePickerFormat.ShortTime
         Me.Dtp_HoraRev.IsPopupCalendarOpen = False
-        Me.Dtp_HoraRev.Location = New System.Drawing.Point(139, 183)
+        Me.Dtp_HoraRev.Location = New System.Drawing.Point(138, 209)
         '
         '
         '
@@ -422,14 +426,49 @@ Partial Class Frm_Tickets_IngProducto
         Me.Dtp_HoraRev.Name = "Dtp_HoraRev"
         Me.Dtp_HoraRev.Size = New System.Drawing.Size(54, 22)
         Me.Dtp_HoraRev.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Dtp_HoraRev.TabIndex = 181
+        Me.Dtp_HoraRev.TabIndex = 7
         Me.Dtp_HoraRev.Value = New Date(2024, 1, 2, 0, 0, 0, 0)
+        '
+        'Txt_Ubicacion
+        '
+        Me.Txt_Ubicacion.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Ubicacion.Border.Class = "TextBoxBorder"
+        Me.Txt_Ubicacion.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Ubicacion.ButtonCustom.Image = CType(resources.GetObject("Txt_Ubicacion.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Ubicacion.ButtonCustom2.Image = CType(resources.GetObject("Txt_Ubicacion.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Ubicacion.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Ubicacion.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Ubicacion.Location = New System.Drawing.Point(107, 69)
+        Me.Txt_Ubicacion.MaxLength = 30
+        Me.Txt_Ubicacion.Name = "Txt_Ubicacion"
+        Me.Txt_Ubicacion.PreventEnterBeep = True
+        Me.Txt_Ubicacion.Size = New System.Drawing.Size(272, 22)
+        Me.Txt_Ubicacion.TabIndex = 2
+        '
+        'LabelX2
+        '
+        Me.LabelX2.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX2.ForeColor = System.Drawing.Color.Black
+        Me.LabelX2.Location = New System.Drawing.Point(12, 66)
+        Me.LabelX2.Name = "LabelX2"
+        Me.LabelX2.Size = New System.Drawing.Size(59, 23)
+        Me.LabelX2.TabIndex = 183
+        Me.LabelX2.Text = "Ubicación"
         '
         'Frm_Tickets_IngProducto
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(536, 263)
+        Me.ClientSize = New System.Drawing.Size(536, 285)
+        Me.Controls.Add(Me.Txt_Ubicacion)
+        Me.Controls.Add(Me.LabelX2)
         Me.Controls.Add(Me.Lbl_HoraRev)
         Me.Controls.Add(Me.Dtp_HoraRev)
         Me.Controls.Add(Me.Txt_Diferencia)
@@ -484,4 +523,6 @@ Partial Class Frm_Tickets_IngProducto
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Lbl_HoraRev As DevComponents.DotNetBar.LabelX
     Friend WithEvents Dtp_HoraRev As DevComponents.Editors.DateTimeAdv.DateTimeInput
+    Friend WithEvents Txt_Ubicacion As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
 End Class

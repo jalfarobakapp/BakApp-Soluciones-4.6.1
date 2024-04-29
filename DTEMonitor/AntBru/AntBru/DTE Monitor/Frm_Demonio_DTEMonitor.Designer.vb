@@ -60,6 +60,7 @@ Partial Class Frm_Demonio_DTEMonitor
         '
         Me.CircularPgrs.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.CircularPgrs.Enabled = False
+        Me.CircularPgrs.FocusCuesEnabled = False
         Me.CircularPgrs.Location = New System.Drawing.Point(714, 15)
         Me.CircularPgrs.Name = "CircularPgrs"
         Me.CircularPgrs.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Dot
@@ -365,6 +366,7 @@ Partial Class Frm_Demonio_DTEMonitor
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
         Me.MaximizeBox = False

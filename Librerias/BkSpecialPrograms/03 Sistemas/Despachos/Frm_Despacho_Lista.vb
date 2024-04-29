@@ -437,6 +437,14 @@ Public Class Frm_Despacho_Lista
                 _Filtro_Ejecutivo = "Delete #Paso_Desp Where CodFuncionario_Crea <> '" & Cmb_Ejecutivo.SelectedValue.ToString.Trim & "' "
             End If
 
+            Dim _Mostrar_Ingresados = True
+            Dim _Estados = "('CIN','CON','PRE','DPR','DPO')"
+
+            If _Mostrar_Ingresados Then
+                _Estados = "('CIN','CON','PRE','DPR','DPO','ING')"
+            End If
+
+
             Consulta_sql = "Select Doc2.CodFuncionario As CodFuncionario_Crea,Tf2.NOKOFU As Nombre_Crea,Desp.*," &
                             "Case When Est_Desp.Fecha_Fijacion Is Null Then DATEDIFF(D,Desp.Fecha_Emision,Getdate()) Else DATEDIFF(D,Est_Desp.Fecha_Fijacion,Getdate()) End As Dias,
                         Tdesp.NombreTabla As Nom_Tipo_Despacho," &
@@ -455,7 +463,7 @@ Public Class Frm_Despacho_Lista
 						Left Join TABFU Tf2 On Tf2.KOFU = Doc2.CodFuncionario    
                         Where 1 > 0 
                         And Desp.Confirmado In (1) 
-                        And (Desp.Estado In ('CIN','CON','PRE','DPR','DPO') " & _Filtro_Sucursal & ")
+                        And (Desp.Estado In " & _Estados & " " & _Filtro_Sucursal & ")
 						      Or Desp.Id_Despacho In (Select Id_Despacho From " & _Global_BaseBk & "Zw_Despachos 
 						      Where Estado = 'CIE' And Nro_Sub <> '000' And Fecha_Cierre Between Convert(Datetime, '" & _Fecha_Desde & " 00:00:00',102) " &
                                   "And Convert(Datetime, '" & _Fecha_Hasta & " 23:59:59',102)" & _Filtro_Sucursal & ")

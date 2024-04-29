@@ -263,11 +263,29 @@
       <DependentUpon>Dfa_Cr.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Cl_Tarja.vb" />
-    <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Frm_GRI_FabXProducto.Designer.vb">
+    <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Mezcla\Frm_Fabricaciones.Designer.vb">
+      <DependentUpon>Frm_Fabricaciones.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Mezcla\Frm_Fabricaciones.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Mezcla\Frm_ListaMezclas.Designer.vb">
+      <DependentUpon>Frm_ListaMezclas.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Mezcla\Frm_ListaMezclas.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Mezcla\Frm_SelecProdMezclaFab.Designer.vb">
+      <DependentUpon>Frm_SelecProdMezclaFab.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Mezcla\Frm_SelecProdMezclaFab.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Tarja\Cl_Tarja.vb" />
+    <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Tarja\Frm_GRI_FabXProducto.Designer.vb">
       <DependentUpon>Frm_GRI_FabXProducto.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Frm_GRI_FabXProducto.vb">
+    <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Tarja\Frm_GRI_FabXProducto.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Frm_GRI_Ingreso.Designer.vb">
@@ -276,10 +294,10 @@
     <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Frm_GRI_Ingreso.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Frm_GRI_ProductosOT.Designer.vb">
+    <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Tarja\Frm_GRI_ProductosOT.Designer.vb">
       <DependentUpon>Frm_GRI_ProductosOT.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Frm_GRI_ProductosOT.vb">
+    <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Tarja\Frm_GRI_ProductosOT.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Lote\Frm_Lote_Ing.Designer.vb">
@@ -288,6 +306,7 @@
     <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Lote\Frm_Lote_Ing.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Mezcla\Cl_Mezcla.vb" />
     <Compile Include="Formularios Compartidos\Frm_Buscar_Pistoleando.Designer.vb">
       <DependentUpon>Frm_Buscar_Pistoleando.vb</DependentUpon>
     </Compile>
@@ -323,6 +342,12 @@
       <DependentUpon>Frm_Nomenclaturas.vb</DependentUpon>
     </Compile>
     <Compile Include="Formularios Compartidos\Nomenclaturas\Frm_Nomenclaturas.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Nomenclaturas\Frm_Select_Nomenclatura.Designer.vb">
+      <DependentUpon>Frm_Select_Nomenclatura.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Nomenclaturas\Frm_Select_Nomenclatura.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios Compartidos\Nomenclaturas\Mantencion de nomenclatura\Frm_Mant_Nomenclatura.designer.vb">
@@ -484,13 +509,22 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>Dfa_Cr.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Frm_GRI_FabXProducto.resx">
+    <EmbeddedResource Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Mezcla\Frm_Fabricaciones.resx">
+      <DependentUpon>Frm_Fabricaciones.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Mezcla\Frm_ListaMezclas.resx">
+      <DependentUpon>Frm_ListaMezclas.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Mezcla\Frm_SelecProdMezclaFab.resx">
+      <DependentUpon>Frm_SelecProdMezclaFab.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Tarja\Frm_GRI_FabXProducto.resx">
       <DependentUpon>Frm_GRI_FabXProducto.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Frm_GRI_Ingreso.resx">
       <DependentUpon>Frm_GRI_Ingreso.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Frm_GRI_ProductosOT.resx">
+    <EmbeddedResource Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Tarja\Frm_GRI_ProductosOT.resx">
       <DependentUpon>Frm_GRI_ProductosOT.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Lote\Frm_Lote_Ing.resx">
@@ -513,6 +547,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios Compartidos\Nomenclaturas\Frm_Nomenclaturas.resx">
       <DependentUpon>Frm_Nomenclaturas.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Nomenclaturas\Frm_Select_Nomenclatura.resx">
+      <DependentUpon>Frm_Select_Nomenclatura.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios Compartidos\Nomenclaturas\Mantencion de nomenclatura\Frm_Mant_Nomenclatura.resx">
       <DependentUpon>Frm_Mant_Nomenclatura.vb</DependentUpon>

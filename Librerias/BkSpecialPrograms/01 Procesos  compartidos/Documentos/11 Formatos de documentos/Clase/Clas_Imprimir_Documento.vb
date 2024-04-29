@@ -4355,9 +4355,9 @@ Public Class Clas_Imprimir_Documento
 
                 _Udtrpr = Fila.Item("UDTRPR")
 
-                Dim _StockFisico As Double = Fila.Item("StockUd" & _Udtrpr)
-                Dim _StockDevengado As Double = Fila.Item("StockdvUd" & _Udtrpr)
-                Dim _StockComprometido As Double = Fila.Item("StockncUd" & _Udtrpr)
+                Dim _StockFisico As Double = NuloPorNro(Fila.Item("StockUd" & _Udtrpr), 0)
+                Dim _StockDevengado As Double = NuloPorNro(Fila.Item("StockdvUd" & _Udtrpr), 0)
+                Dim _StockComprometido As Double = NuloPorNro(Fila.Item("StockncUd" & _Udtrpr), 0)
 
                 Dim _StockTeorico As Double = _StockFisico
 

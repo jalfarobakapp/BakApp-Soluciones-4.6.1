@@ -119,12 +119,12 @@ Public Class Frm_BuscarEntidad_Mt
 
         If Fx_Tiene_Permiso(Me, "CfEnt002") Then
             Dim Fm As New Frm_Crear_Entidad_Mt
-            Fm.Pro_Crear_Entidad = True
-            Fm.Pro_Editar_Entidad = False
+            Fm.CrearEntidad = True
+            Fm.EditarEntidad = False
             Fm.ShowDialog(Me)
 
-            If Fm.Pro_CreaNuevaEntidad Then
-                Sb_Actualizar_Grilla(Fm.TxtxCodEntidad.Text, True)
+            If Fm.CreaNuevaEntidad Then
+                Sb_Actualizar_Grilla(Fm.Txt_Koen.Text, True)
                 ToastNotification.Show(Me, "ENTIDAD CREADA CORRECTAMENTE", My.Resources.ok_button,
                                           3 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
             End If
@@ -152,14 +152,14 @@ Public Class Frm_BuscarEntidad_Mt
 
                     Dim Fm As New Frm_Crear_Entidad_Mt
                     Fm.Fx_Llenar_Entidad(_CodEntidad, _SucEntidad)
-                    Fm.Pro_Crear_Entidad = False
-                    Fm.Pro_Editar_Entidad = True
+                    Fm.CrearEntidad = False
+                    Fm.EditarEntidad = True
                     Fm.ShowDialog(Me)
 
-                    If Fm.Pro_Elimnar Then
+                    If Fm.Elimnar Then
                         Grilla_Entidades.Rows.RemoveAt(Grilla_Entidades.CurrentRow.Index)
-                    ElseIf Fm.Pro_Editar_Entidad Then
-                        If Fm.Pro_Grabar Then
+                    ElseIf Fm.EditarEntidad Then
+                        If Fm.Grabar Then
                             ToastNotification.Show(Me, "DATOS ACTUALIZADOS CORRECTAMENTE", My.Resources.ok_button,
                                           3 * 1000, eToastGlowColor.Blue, eToastPosition.MiddleCenter)
                         End If

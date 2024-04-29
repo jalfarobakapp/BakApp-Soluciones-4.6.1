@@ -707,7 +707,7 @@ Buscar:
 
         If HabilitarNVVParaFacturar Then
 
-            Dim _SqlQr = "Update #Paso Set Chk = (Select HabilitadaFac From " & _Global_BaseBk & "Zw_Docu_Ent Z1 Where Z1.Idmaeedo = #Paso.IDMAEEDO)" & vbCrLf &
+            Dim _SqlQr = "Update #Paso Set Chk = (Select HabilitadaFac From " & _Global_BaseBk & "Zw_Docu_Ent Z1 Where Z1.Idmaeedo = #Paso.IDMAEEDO And Z1.Tido = #Paso.TIDO And Z1.Nudo = #Paso.NUDO)" & vbCrLf &
                          "Delete #Paso Where Chk = 1"
 
             Consulta_sql = Replace(Consulta_sql, "--#OtrasOpciones#", _SqlQr)

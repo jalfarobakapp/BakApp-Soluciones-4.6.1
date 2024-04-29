@@ -79,6 +79,7 @@ Public Class Frm_GRI_FabXProducto
             If IsNothing(_Row_Pote) Then
                 MessageBoxEx.Show(Me, "No existe la OT Nro: " & _Numot, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 _Numot = String.Empty
+                Txt_Numot.Text = _Numot
                 Return
             End If
 
@@ -86,10 +87,20 @@ Public Class Frm_GRI_FabXProducto
                 MessageBoxEx.Show(Me, "la OT Nro: " & _Numot & " Se encuentra cerrada" & vbCrLf &
                                   "No se permite el movimiento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 _Numot = String.Empty
+                Txt_Numot.Text = _Numot
                 Return
             End If
 
-            'Txt_Numot.ReadOnly = True
+            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Pdp_CPT_MzEnc", "Idpote = " & _Row_Pote.Item("IDPOTE"))
+
+            If CBool(_Reg) Then
+                MessageBoxEx.Show(Me, "Esta OT no puede ser procesada por este modulo ya que es una OT de producción de Mezcla",
+                              "Validación OT " & _Numot, MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                _Numot = String.Empty
+                Txt_Numot.Text = _Numot
+                Return
+            End If
+
             Txt_Numot.ButtonCustom.Visible = True
             Lbl_ReferenciaOT.Text = "REFERENCIA: " & _Row_Pote.Item("REFERENCIA")
 
@@ -108,10 +119,11 @@ Public Class Frm_GRI_FabXProducto
         Dim _CreaNuevaOTExtra As Boolean
         Dim _Numot_Extra As String
 
-        Consulta_sql = "Select POTL.*,(FABRICAR-REALIZADO) As SALDO,Case RLUD When 1 Then 0 Else (FABRICAR-REALIZADO)/RLUD End As SALDO2,RLUD" & vbCrLf &
+        Consulta_sql = "Select POTL.*,POTE.CARGO,(FABRICAR-REALIZADO) As SALDO,Case RLUD When 1 Then 0 Else (FABRICAR-REALIZADO)/RLUD End As SALDO2,RLUD" & vbCrLf &
                        "From POTL" & vbCrLf &
                        "Inner Join MAEPR On KOPR = CODIGO" & vbCrLf &
-                       "Where NUMOT='" & _Numot & "' And EMPRESA = '" & ModEmpresa & "' And LILG <> 'IM' " &
+                       "Inner Join POTE On POTE.IDPOTE = POTL.IDPOTE" & vbCrLf &
+                       "Where POTL.NUMOT='" & _Numot & "' And POTL.EMPRESA = '" & ModEmpresa & "' And LILG <> 'IM' " &
                        "And Exists (Select TABBOPR.* From TABBOPR " &
                        "Where TABBOPR.KOPR = POTL.CODIGO And TABBOPR.KOSU = '" & ModSucursal & "' AND TABBOPR.KOBO = '" & ModBodega & "')"
 
@@ -384,6 +396,8 @@ Public Class Frm_GRI_FabXProducto
         Txt_Analista.Text = String.Empty
 
         _Cl_Tarja._Cl_Tarja_Ent.Analista = FUNCIONARIO
+        _Cl_Tarja._Cl_Tarja_Det.Clear()
+
         Txt_Analista.Text = Nombre_funcionario_activo.ToString.Trim
 
         Txt_Descripcion_Kopral.Text = String.Empty
@@ -695,7 +709,13 @@ Public Class Frm_GRI_FabXProducto
         End If
 
         If _Row_Lote.Item("Codigo").ToString.Trim <> Txt_Codigo.Text.Trim Then
-            MessageBoxEx.Show(Me, "El número de lote no pertence al producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+            'MessageBoxEx.Show(Me, "El número de lote " & _NroLote & " no pertence al producto " & Txt_Codigo.Text.Trim & vbCrLf & vbCrLf &
+            '                  "El lote " & _NroLote & " es del producto " & _Row_Lote.Item("Codigo").ToString.Trim, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+            MessageBoxEx.Show(Me, "El número de lote " & _NroLote & " pertence al producto " & _Row_Lote.Item("Codigo").ToString.Trim & vbCrLf & vbCrLf &
+                              "No puede grabar el mismo numero de lote para otro producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
             Return
         End If
 
@@ -937,6 +957,7 @@ Public Class Frm_GRI_FabXProducto
         Dim _Numot As String
 
         Dim Fm As New Frm_BuscarOT
+        ''Fm.FiltroExternoSql = "And IDPOTE Not In (Select Idpote From " & _Global_BaseBk & "Zw_Pdp_CPT_MzEnc Where Estado = 'FABRI')"
         Fm.ShowDialog(Me)
         _Seleccionada = Fm.Seleccionada
         _Numot = Fm.Numot
@@ -1035,6 +1056,18 @@ Public Class Frm_GRI_FabXProducto
         End If
 
         _Cl_Tarja._Cl_Tarja_Ent.Codigo = _Row_Maepr.Item("KOPR")
+
+
+        ' Obtener la fecha actual
+        Dim fechaActual As Date = Dtp_Fecha_Ingreso.Value.Date
+        ' Obtener la hora actual
+        Dim horaActual As TimeSpan = DateTime.Now.TimeOfDay
+
+        ' Combinar la fecha y la hora en una variable DateTime
+        Dim _FechaElab As DateTime = fechaActual + horaActual
+        Dtp_Fecha_Ingreso.Value = _FechaElab
+
+
         _Cl_Tarja._Cl_Tarja_Ent.FechaElab = Dtp_Fecha_Ingreso.Value
         _Cl_Tarja._Cl_Tarja_Ent.Observaciones = Txt_Observaciones.Text
         _Cl_Tarja._Cl_Tarja_Ent.Udm = Cmb_Formato.Text
@@ -1074,9 +1107,6 @@ Public Class Frm_GRI_FabXProducto
 
         Dim _Cl_Tarja_Ent As New Cl_Tarja_Ent.Mensaje_Tarja
         _Cl_Tarja_Ent = _Cl_Tarja.Fx_Grabar_Tarja2()
-
-
-
 
 
         Consulta_sql = "Select *," & _Cantidad & " As Cantidad,'" & ModSucursal & "' As Sucursal,'" & ModBodega & "' As Bodega" & vbCrLf &

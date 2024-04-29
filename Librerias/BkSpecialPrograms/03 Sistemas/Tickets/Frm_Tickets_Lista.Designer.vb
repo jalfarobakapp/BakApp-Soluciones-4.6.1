@@ -24,9 +24,9 @@ Partial Class Frm_Tickets_Lista
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Tickets_Lista))
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Crear_Ticket = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_RevisarTicket = New DevComponents.DotNetBar.ButtonItem()
@@ -53,18 +53,12 @@ Partial Class Frm_Tickets_Lista
         Me.LabelItem2 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Mnu_EnviarMensajeRespuesta = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_RechazarTicket = New DevComponents.DotNetBar.ButtonItem()
-        Me.Super_TabS = New DevComponents.DotNetBar.SuperTabStrip()
-        Me.Tab_TodasActivas = New DevComponents.DotNetBar.SuperTabItem()
-        Me.Tab_ActivasRechazadas = New DevComponents.DotNetBar.SuperTabItem()
-        Me.Tab_CerradasAceptadas = New DevComponents.DotNetBar.SuperTabItem()
-        Me.Tab_CerradasRechazadas = New DevComponents.DotNetBar.SuperTabItem()
-        Me.Tab_Cerradas = New DevComponents.DotNetBar.SuperTabItem()
-        Me.Tab_Nulas = New DevComponents.DotNetBar.SuperTabItem()
+        Me.Tree_Bandeja = New System.Windows.Forms.TreeView()
+        Me.Imagenes_24x24 = New System.Windows.Forms.ImageList(Me.components)
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Super_TabS, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Bar2
@@ -73,9 +67,9 @@ Partial Class Frm_Tickets_Lista
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Crear_Ticket, Me.Btn_RevisarTicket, Me.Btn_Actualizar})
-        Me.Bar2.Location = New System.Drawing.Point(0, 613)
+        Me.Bar2.Location = New System.Drawing.Point(0, 640)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(1206, 41)
+        Me.Bar2.Size = New System.Drawing.Size(1264, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 161
@@ -114,14 +108,17 @@ Partial Class Frm_Tickets_Lista
         '
         'GroupPanel1
         '
+        Me.GroupPanel1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel1.Controls.Add(Me.Menu_Contextual)
         Me.GroupPanel1.Controls.Add(Me.Grilla)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel1.Location = New System.Drawing.Point(12, 99)
+        Me.GroupPanel1.Location = New System.Drawing.Point(213, 12)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(1182, 485)
+        Me.GroupPanel1.Size = New System.Drawing.Size(1039, 598)
         '
         '
         '
@@ -193,38 +190,38 @@ Partial Class Frm_Tickets_Lista
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
         Me.Grilla.ReadOnly = True
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
-        Me.Grilla.Size = New System.Drawing.Size(1176, 462)
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        Me.Grilla.Size = New System.Drawing.Size(1033, 575)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 27
         '
@@ -253,9 +250,28 @@ Partial Class Frm_Tickets_Lista
         Me.Imagenes_16x16.Images.SetKeyName(18, "comment-number-9.png")
         Me.Imagenes_16x16.Images.SetKeyName(19, "comment-number-9-plus.png")
         Me.Imagenes_16x16.Images.SetKeyName(20, "menu-more.png")
+        Me.Imagenes_16x16.Images.SetKeyName(21, "ticket-number-9-plus.png")
+        Me.Imagenes_16x16.Images.SetKeyName(22, "ticket-number-9.png")
+        Me.Imagenes_16x16.Images.SetKeyName(23, "ticket-number-8.png")
+        Me.Imagenes_16x16.Images.SetKeyName(24, "ticket-number-7.png")
+        Me.Imagenes_16x16.Images.SetKeyName(25, "ticket-number-6.png")
+        Me.Imagenes_16x16.Images.SetKeyName(26, "ticket-number-5.png")
+        Me.Imagenes_16x16.Images.SetKeyName(27, "ticket-number-4.png")
+        Me.Imagenes_16x16.Images.SetKeyName(28, "ticket-number-3.png")
+        Me.Imagenes_16x16.Images.SetKeyName(29, "ticket-number-2.png")
+        Me.Imagenes_16x16.Images.SetKeyName(30, "ticket-number-1.png")
+        Me.Imagenes_16x16.Images.SetKeyName(31, "directions-arrows-3.png")
+        Me.Imagenes_16x16.Images.SetKeyName(32, "send-cc.png")
+        Me.Imagenes_16x16.Images.SetKeyName(33, "send-bcc.png")
+        Me.Imagenes_16x16.Images.SetKeyName(34, "tag-red.png")
+        Me.Imagenes_16x16.Images.SetKeyName(35, "tag-green.png")
+        Me.Imagenes_16x16.Images.SetKeyName(36, "tag-gray.png")
+        Me.Imagenes_16x16.Images.SetKeyName(37, "tag-blue.png")
+        Me.Imagenes_16x16.Images.SetKeyName(38, "comment.png")
         '
         'Chk_TickesAsigMi
         '
+        Me.Chk_TickesAsigMi.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Chk_TickesAsigMi.BackColor = System.Drawing.Color.Transparent
         '
         '
@@ -268,7 +284,7 @@ Partial Class Frm_Tickets_Lista
         Me.Chk_TickesAsigMi.Enabled = False
         Me.Chk_TickesAsigMi.FocusCuesEnabled = False
         Me.Chk_TickesAsigMi.ForeColor = System.Drawing.Color.Black
-        Me.Chk_TickesAsigMi.Location = New System.Drawing.Point(12, 590)
+        Me.Chk_TickesAsigMi.Location = New System.Drawing.Point(12, 617)
         Me.Chk_TickesAsigMi.Name = "Chk_TickesAsigMi"
         Me.Chk_TickesAsigMi.Size = New System.Drawing.Size(169, 17)
         Me.Chk_TickesAsigMi.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -277,6 +293,7 @@ Partial Class Frm_Tickets_Lista
         '
         'Chk_TickesMiGrupo
         '
+        Me.Chk_TickesMiGrupo.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Chk_TickesMiGrupo.BackColor = System.Drawing.Color.Transparent
         '
         '
@@ -286,9 +303,10 @@ Partial Class Frm_Tickets_Lista
         Me.Chk_TickesMiGrupo.Checked = True
         Me.Chk_TickesMiGrupo.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Chk_TickesMiGrupo.CheckValue = "Y"
+        Me.Chk_TickesMiGrupo.Enabled = False
         Me.Chk_TickesMiGrupo.FocusCuesEnabled = False
         Me.Chk_TickesMiGrupo.ForeColor = System.Drawing.Color.Black
-        Me.Chk_TickesMiGrupo.Location = New System.Drawing.Point(187, 590)
+        Me.Chk_TickesMiGrupo.Location = New System.Drawing.Point(187, 617)
         Me.Chk_TickesMiGrupo.Name = "Chk_TickesMiGrupo"
         Me.Chk_TickesMiGrupo.Size = New System.Drawing.Size(251, 17)
         Me.Chk_TickesMiGrupo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -320,6 +338,24 @@ Partial Class Frm_Tickets_Lista
         Me.Imagenes_16x16_Dark.Images.SetKeyName(18, "comment-number-3.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(19, "comment-number-2.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(20, "comment-number-1.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(21, "ticket-number-9-plus.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(22, "ticket-number-9.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(23, "ticket-number-8.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(24, "ticket-number-7.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(25, "ticket-number-6.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(26, "ticket-number-5.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(27, "ticket-number-4.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(28, "ticket-number-3.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(29, "ticket-number-2.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(30, "ticket-number-1.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(31, "directions-arrows-3.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(32, "send-cc.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(33, "send-bcc.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(34, "tag-red.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(35, "tag-green.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(36, "tag-gray.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(37, "tag-blue.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(38, "comment.png")
         '
         'Lbl_OpcProducto
         '
@@ -422,93 +458,66 @@ Partial Class Frm_Tickets_Lista
         Me.Btn_Mnu_RechazarTicket.Name = "Btn_Mnu_RechazarTicket"
         Me.Btn_Mnu_RechazarTicket.Text = "Rechazar Ticket"
         '
-        'Super_TabS
+        'Tree_Bandeja
         '
-        Me.Super_TabS.AutoSelectAttachedControl = False
-        Me.Super_TabS.BackColor = System.Drawing.Color.White
+        Me.Tree_Bandeja.AllowDrop = True
+        Me.Tree_Bandeja.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Tree_Bandeja.BackColor = System.Drawing.Color.White
+        Me.Tree_Bandeja.CheckBoxes = True
+        Me.Tree_Bandeja.ForeColor = System.Drawing.Color.Black
+        Me.Tree_Bandeja.ImageIndex = 0
+        Me.Tree_Bandeja.ImageList = Me.Imagenes_24x24
+        Me.Tree_Bandeja.Location = New System.Drawing.Point(12, 22)
+        Me.Tree_Bandeja.Name = "Tree_Bandeja"
+        Me.Tree_Bandeja.SelectedImageIndex = 0
+        Me.Tree_Bandeja.Size = New System.Drawing.Size(195, 588)
+        Me.Tree_Bandeja.TabIndex = 165
         '
+        'Imagenes_24x24
         '
-        '
-        Me.Super_TabS.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Super_TabS.ContainerControlProcessDialogKey = True
-        '
-        '
-        '
-        '
-        '
-        '
-        Me.Super_TabS.ControlBox.CloseBox.Name = ""
-        '
-        '
-        '
-        Me.Super_TabS.ControlBox.MenuBox.Name = ""
-        Me.Super_TabS.ControlBox.Name = ""
-        Me.Super_TabS.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Super_TabS.ControlBox.MenuBox, Me.Super_TabS.ControlBox.CloseBox})
-        Me.Super_TabS.ForeColor = System.Drawing.Color.Black
-        Me.Super_TabS.Location = New System.Drawing.Point(12, 66)
-        Me.Super_TabS.Name = "Super_TabS"
-        Me.Super_TabS.ReorderTabsEnabled = True
-        Me.Super_TabS.SelectedTabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
-        Me.Super_TabS.SelectedTabIndex = 0
-        Me.Super_TabS.Size = New System.Drawing.Size(1182, 27)
-        Me.Super_TabS.TabCloseButtonHot = Nothing
-        Me.Super_TabS.TabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Super_TabS.TabIndex = 164
-        Me.Super_TabS.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Tab_TodasActivas, Me.Tab_ActivasRechazadas, Me.Tab_Cerradas, Me.Tab_CerradasAceptadas, Me.Tab_CerradasRechazadas, Me.Tab_Nulas})
-        Me.Super_TabS.Text = "Nulas"
-        '
-        'Tab_TodasActivas
-        '
-        Me.Tab_TodasActivas.GlobalItem = False
-        Me.Tab_TodasActivas.Name = "Tab_TodasActivas"
-        Me.Tab_TodasActivas.Text = "Todas las activas"
-        '
-        'Tab_ActivasRechazadas
-        '
-        Me.Tab_ActivasRechazadas.GlobalItem = False
-        Me.Tab_ActivasRechazadas.Name = "Tab_ActivasRechazadas"
-        Me.Tab_ActivasRechazadas.Text = "Activas (rechazadas)"
-        '
-        'Tab_CerradasAceptadas
-        '
-        Me.Tab_CerradasAceptadas.GlobalItem = False
-        Me.Tab_CerradasAceptadas.Name = "Tab_CerradasAceptadas"
-        Me.Tab_CerradasAceptadas.Text = "Cerrdas (Aceptadas)"
-        '
-        'Tab_CerradasRechazadas
-        '
-        Me.Tab_CerradasRechazadas.GlobalItem = False
-        Me.Tab_CerradasRechazadas.Name = "Tab_CerradasRechazadas"
-        Me.Tab_CerradasRechazadas.Text = "Cerrdas (Rechazadas)"
-        '
-        'Tab_Cerradas
-        '
-        Me.Tab_Cerradas.GlobalItem = False
-        Me.Tab_Cerradas.Name = "Tab_Cerradas"
-        Me.Tab_Cerradas.Text = "Cerradas"
-        '
-        'Tab_Nulas
-        '
-        Me.Tab_Nulas.GlobalItem = False
-        Me.Tab_Nulas.Name = "Tab_Nulas"
-        Me.Tab_Nulas.Text = "Nulas"
+        Me.Imagenes_24x24.ImageStream = CType(resources.GetObject("Imagenes_24x24.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.Imagenes_24x24.TransparentColor = System.Drawing.Color.Transparent
+        Me.Imagenes_24x24.Images.SetKeyName(0, "folder.png")
+        Me.Imagenes_24x24.Images.SetKeyName(1, "folder-open.png")
+        Me.Imagenes_24x24.Images.SetKeyName(2, "folder-ok.png")
+        Me.Imagenes_24x24.Images.SetKeyName(3, "folder-open-ok.png")
+        Me.Imagenes_24x24.Images.SetKeyName(4, "folder-cancel-2.png")
+        Me.Imagenes_24x24.Images.SetKeyName(5, "folder-open-cancel-2.png")
+        Me.Imagenes_24x24.Images.SetKeyName(6, "folder-cancel.png")
+        Me.Imagenes_24x24.Images.SetKeyName(7, "folder-open-cancel.png")
+        Me.Imagenes_24x24.Images.SetKeyName(8, "folder-time.png")
+        Me.Imagenes_24x24.Images.SetKeyName(9, "folder-open-time.png")
+        Me.Imagenes_24x24.Images.SetKeyName(10, "folder-open-padlock.png")
+        Me.Imagenes_24x24.Images.SetKeyName(11, "folder-padlock.png")
+        Me.Imagenes_24x24.Images.SetKeyName(12, "ticket-vendor.png")
+        Me.Imagenes_24x24.Images.SetKeyName(13, "ticket-customer.png")
+        Me.Imagenes_24x24.Images.SetKeyName(14, "ticket-arrow-up.png")
+        Me.Imagenes_24x24.Images.SetKeyName(15, "ticket-arrow-right.png")
+        Me.Imagenes_24x24.Images.SetKeyName(16, "ticket-arrow-left.png")
+        Me.Imagenes_24x24.Images.SetKeyName(17, "ticket-arrow-down.png")
+        Me.Imagenes_24x24.Images.SetKeyName(18, "ticket-ok.png")
+        Me.Imagenes_24x24.Images.SetKeyName(19, "ticket-cancel-2.png")
+        Me.Imagenes_24x24.Images.SetKeyName(20, "ticket-cancel.png")
+        Me.Imagenes_24x24.Images.SetKeyName(21, "ticket-time.png")
         '
         'Frm_Tickets_Lista
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1206, 654)
-        Me.Controls.Add(Me.Super_TabS)
+        Me.ClientSize = New System.Drawing.Size(1264, 681)
+        Me.Controls.Add(Me.Tree_Bandeja)
         Me.Controls.Add(Me.Chk_TickesMiGrupo)
         Me.Controls.Add(Me.Chk_TickesAsigMi)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.GroupPanel1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
+        Me.MaximumSize = New System.Drawing.Size(1280, 720)
         Me.MinimizeBox = False
+        Me.MinimumSize = New System.Drawing.Size(800, 600)
         Me.Name = "Frm_Tickets_Lista"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
@@ -517,7 +526,6 @@ Partial Class Frm_Tickets_Lista
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Super_TabS, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -547,11 +555,6 @@ Partial Class Frm_Tickets_Lista
     Friend WithEvents LabelItem2 As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Btn_Mnu_EnviarMensajeRespuesta As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mnu_RechazarTicket As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Super_TabS As DevComponents.DotNetBar.SuperTabStrip
-    Friend WithEvents Tab_TodasActivas As DevComponents.DotNetBar.SuperTabItem
-    Friend WithEvents Tab_ActivasRechazadas As DevComponents.DotNetBar.SuperTabItem
-    Friend WithEvents Tab_CerradasAceptadas As DevComponents.DotNetBar.SuperTabItem
-    Friend WithEvents Tab_CerradasRechazadas As DevComponents.DotNetBar.SuperTabItem
-    Friend WithEvents Tab_Cerradas As DevComponents.DotNetBar.SuperTabItem
-    Friend WithEvents Tab_Nulas As DevComponents.DotNetBar.SuperTabItem
+    Friend WithEvents Tree_Bandeja As TreeView
+    Friend WithEvents Imagenes_24x24 As ImageList
 End Class

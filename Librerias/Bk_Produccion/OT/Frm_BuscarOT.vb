@@ -1,4 +1,5 @@
 ﻿Imports BkSpecialPrograms
+Imports DevComponents.DotNetBar
 
 Public Class Frm_BuscarOT
 
@@ -8,6 +9,7 @@ Public Class Frm_BuscarOT
     Public Property Seleccionada As Boolean
     Public Property Idpote As Integer
     Public Property Numot As String
+    Public Property FiltroExternoSql As String
 
     Public Sub New()
 
@@ -34,6 +36,8 @@ Public Class Frm_BuscarOT
 
         Me.ActiveControl = Txt_Descripcion
 
+        Call BtnIrAlFin_Click(Nothing, Nothing)
+
     End Sub
 
     Sub Sb_ActualizarGrilla()
@@ -51,7 +55,7 @@ Public Class Frm_BuscarOT
 
         Consulta_sql = "Select *,Case ESTADO When 'V' Then 'Vigente' When 'C' Then 'Cerrada' End As ESTADO_OT From POTE" & vbCrLf &
                        "Where POTE.ESODD = ' ' And EMPRESA = '" & ModEmpresa & "' And NUMOT+REFERENCIA LIKE '%" & _Filtro & "%'" & vbCrLf &
-                       _Condicion &
+                       _Condicion & FiltroExternoSql &
                        "ORDER BY NUMOT"
 
         Dim _DisplayIndex = 0
@@ -132,6 +136,14 @@ Public Class Frm_BuscarOT
 
         Idpote = _Fila.Cells("IDPOTE").Value
         Numot = _Fila.Cells("NUMOT").Value
+
+        'Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Pdp_CPT_MzEnc", "Idpote = " & Idpote)
+
+        'If CBool(_Reg) Then
+        '    MessageBoxEx.Show(Me, "Esta OT no puede ser procesada por este modulo ya que es una OT de producción de Mezcla",
+        '                      "Validación OT " & Numot, MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        '    Return
+        'End If
 
         Seleccionada = True
 

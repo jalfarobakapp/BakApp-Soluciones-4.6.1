@@ -390,10 +390,16 @@ Public Class Frm_Demonio_New
                     Dim _FA_1Todas As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Rdb_FacAuto_Todas' And NombreEquipo = '" & _NombreEquipo & "'", True)
                     Dim _Modalidad_Fac As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Txt_FacAuto_Modalidad' And NombreEquipo = '" & _NombreEquipo & "'", True)
 
+                    Dim _CualquierNVV As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Rdb_FacAuto_CualquierNVV' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    Dim _SoloDeSucModalidad As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Rdb_FacAuto_SoloDeSucModalidad' And NombreEquipo = '" & _NombreEquipo & "'", True)
+
                     Boolean.TryParse(_FA_1Dia, _Cl_FacturacionAuto.FA_1Dia)
                     Boolean.TryParse(_FA_1Semana, _Cl_FacturacionAuto.FA_1Semana)
                     Boolean.TryParse(_FA_1Mes, _Cl_FacturacionAuto.FA_1Mes)
                     Boolean.TryParse(_FA_1Todas, _Cl_FacturacionAuto.FA_1Todas)
+
+                    Boolean.TryParse(_CualquierNVV, _Cl_FacturacionAuto.CualquierNVV)
+                    Boolean.TryParse(_SoloDeSucModalidad, _Cl_FacturacionAuto.SoloDeSucModalidad)
 
                     _Cl_FacturacionAuto.Modalidad_Fac = _Modalidad_Fac
 
@@ -1146,8 +1152,12 @@ Public Class Frm_Demonio_New
                 _Cl_FacturacionAuto.Fecha_Revision = DtpFecharevision.Value
                 _Cl_FacturacionAuto.Nombre_Equipo = _NombreEquipo
                 _Cl_FacturacionAuto.Log_Registro = String.Empty
+
                 _Cl_FacturacionAuto.Sb_Traer_NVV_A_Facturar()
-                _Cl_FacturacionAuto.Sb_Facturar_Automaticamente_NVV(Me, Nothing)
+                _Cl_FacturacionAuto.Sb_Traer_NVV_De_Picking_A_Facturar()
+
+                '_Cl_FacturacionAuto.Sb_Facturar_Automaticamente_NVV(Me, Nothing)
+                _Cl_FacturacionAuto.Sb_Facturar_Automaticamente_NVV2(Me, Nothing)
 
                 Dim registro As String = "Tarea ejecutada (Facturación automática) a las: " & DateTime.Now.ToString()
 

@@ -193,7 +193,7 @@ Public Class Frm_Tickets_Areas
         Dim Fm As New Frm_Tickets_TiposCrear(_Id_Area, 0)
         Fm.ShowDialog(Me)
         _Grabar = Fm.Grabar
-        _Row_Tipo = Fm._Row_Tipo
+        _Row_Tipo = Fm.Row_Tipo
         Fm.Dispose()
 
         If _Grabar Then
@@ -298,12 +298,12 @@ Public Class Frm_Tickets_Areas
         Dim _Id_Tipo As Integer = _Fila.Cells("Id").Value
         Dim _Tipo As String = _Fila.Cells("Tipo").Value
 
-        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets", "Estado = 'ABIE' And Id_Tipo = " & _Id_Tipo)
+        'Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets", "Estado = 'ABIE' And Id_Tipo = " & _Id_Tipo)
 
-        If CBool(_Reg) Then
-            MessageBoxEx.Show(Me, "Existen Tickets asignados a este tipo de requerimiento, solo se puede editar la asignación.",
-                               "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-        End If
+        'If CBool(_Reg) Then
+        '    MessageBoxEx.Show(Me, "Existen Tickets asignados a este tipo de requerimiento, solo se puede editar la asignación.",
+        '                       "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        'End If
 
 
         Dim _Grabar As Boolean
@@ -312,7 +312,7 @@ Public Class Frm_Tickets_Areas
         Dim Fm As New Frm_Tickets_TiposCrear(_Id_Area, _Id_Tipo)
         Fm.ShowDialog(Me)
         _Grabar = Fm.Grabar
-        _Row_Tipo = Fm._Row_Tipo
+        _Row_Tipo = Fm.Row_Tipo
         Fm.Dispose()
 
         If _Grabar Then

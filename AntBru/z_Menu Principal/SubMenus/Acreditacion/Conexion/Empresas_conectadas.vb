@@ -139,6 +139,8 @@ Public Class Empresas_conectadas
 
             If Fx_Conectar_Empresa(Frm_Menu, True) Then
 
+                _Global_NombreConexion = NombreConexionActiva
+
                 Dim _Row_Estacion = Fx_Row_Sesion_Star(Frm_Menu)
 
                 If Not IsNothing(_Row_Estacion) Then

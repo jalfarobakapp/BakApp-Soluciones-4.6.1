@@ -267,9 +267,18 @@ Public Class Clas_Despacho
 
         Dim _Condicion = String.Empty
 
-        'If Not _Row_Conf_Despacho.Item("Mostrar_Despacho_Agencia") Then
-        '    _Condicion = " And CodigoTabla <> 'AG'"
-        'End If
+        'Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones (Tabla,DescripcionTabla,CodigoTabla,NombreTabla) Values " &
+        '               "('SIS_DESPACHO_TIPO_ENVIO','Tipo de envio','AG','AGENCIA')"
+        '_Sql.Ej_consulta_IDU(Consulta_sql, False)
+
+        'Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones (Tabla,DescripcionTabla,CodigoTabla,NombreTabla) Values " &
+        '               "Values ('SIS_DESPACHO_TIPO_ENVIO','Tipo de envio','DD','DOMICILIO')"
+        '_Sql.Ej_consulta_IDU(Consulta_sql, False)
+
+        'Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones (Tabla,DescripcionTabla,CodigoTabla,NombreTabla) Values " &
+        '               "Values ('SIS_DESPACHO_TIPO_ENVIO','Tipo de envio','RT','RETIRA CLIENTE')"
+        '_Sql.Ej_consulta_IDU(Consulta_sql, False)
+
 
         Dim _Tbl As DataTable
 
@@ -1844,6 +1853,8 @@ Public Class Clas_Despacho
 
         Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Despachos_Doc",
                                             "Id_Despacho = " & Id_Despacho & " And (Tido = 'NVV' Or Nudonodefi = 1)")
+
+        '_Reg = 0
 
         If _Reg = 0 Then
             Return True

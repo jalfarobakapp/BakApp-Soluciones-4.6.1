@@ -540,6 +540,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\14 Exportar documentos\Cl_ExpotarDoc.vb" />
+    <Compile Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_Puntos.Designer.vb">
+      <DependentUpon>Frm_Crear_Entidad_Mt_Puntos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_Puntos.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_ProdCanMinXProv.Designer.vb">
       <DependentUpon>Frm_Crear_Entidad_Mt_ProdCanMinXProv.vb</DependentUpon>
     </Compile>
@@ -552,6 +558,7 @@
     <Compile Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_ProdExcluidosCompra.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Procedimientos\Cl_Entidad.vb" />
     <Compile Include="01 Procesos  compartidos\Envio y Recepcion de Mail\Configuracion de recepcion de correos POP3\Frm_RecepXML_Cmp_ConfGral.Designer.vb">
       <DependentUpon>Frm_RecepXML_Cmp_ConfGral.vb</DependentUpon>
     </Compile>
@@ -743,6 +750,7 @@
     <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Frm_Usuarios_Random_Ficha.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Clase\Cl_ConfiModalGral.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Formularios\Fincred\Frm_Fincred.Designer.vb">
       <DependentUpon>Frm_Fincred.vb</DependentUpon>
     </Compile>
@@ -759,6 +767,24 @@
       <DependentUpon>Frm_Configuracion_Gral.vb</DependentUpon>
     </Compile>
     <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Frm_Configuracion_Gral.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Demonio_FacAuto.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Pdp_CPT_MzDet.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Pdp_CPT_MzDetIngFab.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Pdp_CPT_MzEnc.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stk_Areas.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stk_Tickets.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stk_Tickets_Acciones.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stk_Tickets_Archivos.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stk_Tickets_Producto.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stk_Tipos.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stmp_Det.vb" />
+    <Compile Include="03 Sistemas\Puntos Venta\Cl_Puntos.vb" />
+    <Compile Include="03 Sistemas\Puntos Venta\Frm_ConfPuntosVta.Designer.vb">
+      <DependentUpon>Frm_ConfPuntosVta.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Puntos Venta\Frm_ConfPuntosVta.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Frm_ConfTidoXModal.Designer.vb">
@@ -2122,6 +2148,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Recursos_Produccion.resx</DependentUpon>
     </Compile>
+    <Compile Include="03 Sistemas\Puntos Venta\Frm_InformePtosClientes.Designer.vb">
+      <DependentUpon>Frm_InformePtosClientes.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Puntos Venta\Frm_InformePtosClientes.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Puntos Venta\Frm_UsarPuntos.Designer.vb">
+      <DependentUpon>Frm_UsarPuntos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Puntos Venta\Frm_UsarPuntos.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Servicio Tecnico\Clases\Cl_Imprimir_PDFSt.vb" />
     <Compile Include="03 Sistemas\Servicio Tecnico\Configuracion\Frm_St_Mant_ProdServTecnico.Designer.vb">
       <DependentUpon>Frm_St_Mant_ProdServTecnico.vb</DependentUpon>
@@ -2194,6 +2232,36 @@
       <DependentUpon>Frm_St_EncIngreso.vb</DependentUpon>
     </Compile>
     <Compile Include="03 Sistemas\Servicio Tecnico\Ingreso Varios\Frm_St_EncIngreso.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Clase\Cl_Stmp.vb" />
+    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Clase\Recursos\Recursos_WmsVillar.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Recursos_WmsVillar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_IncNVVPicking.Designer.vb">
+      <DependentUpon>Frm_Stmp_IncNVVPicking.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_IncNVVPicking.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Pickeo\Frm_Stmp_IngCantVar.Designer.vb">
+      <DependentUpon>Frm_Stmp_IngCantVar.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Pickeo\Frm_Stmp_IngCantVar.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Pickeo\Frm_Stmp_IngPickeo.Designer.vb">
+      <DependentUpon>Frm_Stmp_IngPickeo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Pickeo\Frm_Stmp_IngPickeo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_Listado.Designer.vb">
+      <DependentUpon>Frm_Stmp_Listado.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_Listado.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Sistema WMS\Gestión WMS\Clases\Cl_Documento_Wms.vb" />
@@ -2370,6 +2438,12 @@
       <DependentUpon>Frm_Tickets_Seguimiento.vb</DependentUpon>
     </Compile>
     <Compile Include="03 Sistemas\Tickets\Frm_Tickets_Seguimiento.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_Treeview.Designer.vb">
+      <DependentUpon>Frm_Tickets_Treeview.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_Treeview.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Vales despacho\Recursos Vale\Rsc_Vales.Designer.vb">
@@ -4244,6 +4318,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Cl_RevVersion.vb" />
+    <Compile Include="999 Funciones, Clases y Datos\Formularios\Frm_Validaciones.Designer.vb">
+      <DependentUpon>Frm_Validaciones.vb</DependentUpon>
+    </Compile>
+    <Compile Include="999 Funciones, Clases y Datos\Formularios\Frm_Validaciones.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="999 Funciones, Clases y Datos\Funciones BakApp\Entidad\Recursos\Recursos_Entidad.Designer.vb">
       <DependentUpon>Recursos_Entidad.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -4258,6 +4338,9 @@
       <DependentUpon>Recursos_Funciones.resx</DependentUpon>
     </Compile>
     <Compile Include="999 Funciones, Clases y Datos\Variables\Mod_Variables_Globales.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_PtsVta_Configuracion.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_PtsVta_Doc.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stmp_Enc.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -4393,6 +4476,9 @@
     <EmbeddedResource Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_ProdExcluidosCompra.resx">
       <DependentUpon>Frm_Crear_Entidad_Mt_ProdExcluidosCompra.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_Puntos.resx">
+      <DependentUpon>Frm_Crear_Entidad_Mt_Puntos.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Envio y Recepcion de Mail\Configuracion de recepcion de correos POP3\Frm_RecepXML_Cmp_ConfGral.resx">
       <DependentUpon>Frm_RecepXML_Cmp_ConfGral.vb</DependentUpon>
     </EmbeddedResource>
@@ -4496,6 +4582,9 @@
     <EmbeddedResource Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Frm_Configuracion_Gral.resx">
       <DependentUpon>Frm_Configuracion_Gral.vb</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Puntos Venta\Frm_ConfPuntosVta.resx">
+      <DependentUpon>Frm_ConfPuntosVta.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Frm_ConfTidoXModal.resx">
       <DependentUpon>Frm_ConfTidoXModal.vb</DependentUpon>
@@ -5236,6 +5325,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Recursos_Produccion.Designer.vb</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Puntos Venta\Frm_InformePtosClientes.resx">
+      <DependentUpon>Frm_InformePtosClientes.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Servicio Tecnico\Configuracion\Frm_St_Mant_ProdServTecnico.resx">
       <DependentUpon>Frm_St_Mant_ProdServTecnico.vb</DependentUpon>
     </EmbeddedResource>
@@ -5271,6 +5363,23 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Servicio Tecnico\Ingreso Varios\Frm_St_EncIngreso.resx">
       <DependentUpon>Frm_St_EncIngreso.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Clase\Recursos\Recursos_WmsVillar.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Recursos_WmsVillar.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_IncNVVPicking.resx">
+      <DependentUpon>Frm_Stmp_IncNVVPicking.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Pickeo\Frm_Stmp_IngCantVar.resx">
+      <DependentUpon>Frm_Stmp_IngCantVar.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Pickeo\Frm_Stmp_IngPickeo.resx">
+      <DependentUpon>Frm_Stmp_IngPickeo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_Listado.resx">
+      <DependentUpon>Frm_Stmp_Listado.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Frm_Formulario_Diseno_Mapa_Crear_Sector.resx">
       <DependentUpon>Frm_Formulario_Diseno_Mapa_Crear_Sector.vb</DependentUpon>
@@ -5852,6 +5961,9 @@
     <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_Seguimiento.resx">
       <DependentUpon>Frm_Tickets_Seguimiento.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_Treeview.resx">
+      <DependentUpon>Frm_Tickets_Treeview.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="999 Funciones, Clases y Datos\Formularios\Adjuntar Archivos\Frm_Adjuntar_Arch_Rtf.resx">
       <DependentUpon>Frm_Adjuntar_Arch_Rtf.vb</DependentUpon>
     </EmbeddedResource>
@@ -6225,6 +6337,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="999 Funciones, Clases y Datos\Formularios\Frm_Seleccionar_Impresoras.resx">
       <DependentUpon>Frm_Seleccionar_Impresoras.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="999 Funciones, Clases y Datos\Formularios\Frm_Validaciones.resx">
+      <DependentUpon>Frm_Validaciones.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="999 Funciones, Clases y Datos\Funciones BakApp\Entidad\Recursos\Recursos_Entidad.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -7730,6 +7845,7 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Despachos_Transportistas.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Despacho_Simple.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Docu_Archivos.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Docu_Det.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Docu_Ent.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Docu_ObligPg.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_DTE_Aec.sql" />
@@ -7857,6 +7973,8 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stk_Tickets_Toma.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stk_Tipos.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stk_Tipos_Grupos.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stmp_Det.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stmp_Enc.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_St_Conf_Info_Reportes.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_St_Conf_Tecnicos_Taller.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_St_OT_Accesorios.sql" />
@@ -7944,6 +8062,7 @@
     <None Include="03 Sistemas\Tesoreria\Pagos\Recursos\Sql\SQLQuery_Revisar_Data_Eliminar_Pago.sql" />
     <None Include="03 Sistemas\Produccion\Recursos\Sql\SQLQuery Informe de OT avance Vs SubOt por Operaciones.sql" />
     <None Include="03 Sistemas\Servicio Tecnico\Recursos\Consultas SQL\SqlQuery_Lista_OT2.sql" />
+    <Content Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Clase\Recursos\Sql\SQLQuery Revisar Nota de venta activa en WMS Villar.sql" />
     <Content Include="03 Sistemas\Tesoreria\Contabilidad\Recursos\Sql\Nomina de tarjetas de credito a liquidacion.sql" />
     <Content Include="999 Funciones, Clases y Datos\Clases\Documentos\Creacion de documento\Consultas SQL\Crear Htm document.htm" />
     <Content Include="999 Funciones, Clases y Datos\Clases\Documentos\Creacion de documento\Consultas SQL\Crear Htm document_Sp.htm" />
@@ -8124,7 +8243,7 @@
   <ItemGroup>
     <Folder Include="01 Procesos  compartidos\Productos\01 Buscar productos\New ProdFind\" />
     <Folder Include="03 Sistemas\Comisiones\Recursos\" />
-    <Folder Include="03 Sistemas\Demonio DTE Monitor\" />
+    <Folder Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Configuracion\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -116,6 +116,9 @@ CREATE TABLE [dbo].[Zw_Configuracion](
 [BuscarProdConCodRapido]                                [bit]           NOT NULL DEFAULT (0), 
 [BuscarProdConCodTecnico]                               [bit]           NOT NULL DEFAULT (0), 
 [ServTecnico_Simple]                                    [bit]           NOT NULL DEFAULT (0), 
+[Pickear_NVVTodas]                                      [bit]           NOT NULL DEFAULT (0), 
+[Pickear_ProdPesoVariable]                             [bit]           NOT NULL DEFAULT (0), 
+[Pickear_FacturarAutoCompletas]                         [bit]           NOT NULL DEFAULT (0), 
 CONSTRAINT [PK_Zw_Configuracion] PRIMARY KEY CLUSTERED 
 (
 	[Modalidad] ASC

@@ -397,6 +397,7 @@ Error_Numero:
         If (Tabla Is Nothing) Then Return "()"
 
         Dim i = 0
+
         For Each Rd As DataRow In Tabla.Rows
 
             Dim Estado As DataRowState = Rd.RowState

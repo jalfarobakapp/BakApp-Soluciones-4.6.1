@@ -21,6 +21,8 @@ Public Class Frm_MonedasFicha
         Consulta_sql = "Select * From TABMO Where KOMO = '" & _Komo & "'"
         _Row_Moneda = _Sql.Fx_Get_DataRow(Consulta_sql)
 
+        Sb_Color_Botones_Barra(Bar2)
+
     End Sub
 
     Private Sub Frm_MonedasFicha_Load(sender As Object, e As EventArgs) Handles MyBase.Load

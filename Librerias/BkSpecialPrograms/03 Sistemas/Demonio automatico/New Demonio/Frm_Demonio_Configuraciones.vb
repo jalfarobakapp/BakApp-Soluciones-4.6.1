@@ -303,7 +303,6 @@ Public Class Frm_Demonio_Configuraciones
 
     End Sub
 
-
     Private Sub Btn_ConfProgramacion_Click(sender As Object, e As EventArgs) Handles Btn_ConfProgramacion.Click
 
         Dim _Grb_Programacion As New Grb_Programacion
@@ -400,7 +399,7 @@ Public Class Frm_Demonio_Configuraciones
                 _MinIntervalo = 5 : _MaxIntevalo = 59 : _TIMinutos = True : _TIValorDefecto = ""
             Case "FacAuto", "NVVAuto"
                 _Diariamente = True : _Semanalmente = True : _SucedeUnaVez = False : _SucedeCada = True
-                _MinIntervalo = 1 : _MaxIntevalo = 59 : _TIMinutos = True : _TIValorDefecto = ""
+                _MinIntervalo = 1 : _MaxIntevalo = 59 : _TIMinutos = True : _TISegundos = True : _TIValorDefecto = ""
             Case "AsistenteCompras"
                 _Diariamente = True : _Semanalmente = False : _SucedeUnaVez = True : _SucedeCada = False : _TIValorDefecto = ""
             Case "AsistenteCompras", "EnvDocSinRecep"
@@ -752,6 +751,15 @@ Public Class Frm_Demonio_Configuraciones
         _Sql.Sb_Parametro_Informe_Sql(Rdb_FacAuto_Todas, "Demonio",
                                       Rdb_FacAuto_Todas.Name, Class_SQLite.Enum_Type._Boolean,
                                       Rdb_FacAuto_Todas.Checked, _Actualizar, "FacAuto",, False)
+
+        _Sql.Sb_Parametro_Informe_Sql(Rdb_FacAuto_CualquierNVV, "Demonio",
+                                      Rdb_FacAuto_CualquierNVV.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Rdb_FacAuto_CualquierNVV.Checked, _Actualizar, "FacAuto",, False)
+        _Sql.Sb_Parametro_Informe_Sql(Rdb_FacAuto_SoloDeSucModalidad, "Demonio",
+                                      Rdb_FacAuto_SoloDeSucModalidad.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Rdb_FacAuto_SoloDeSucModalidad.Checked, _Actualizar, "FacAuto",, False)
+
+
 
         'Solicitud de productos a bodega
         _Sql.Sb_Parametro_Informe_Sql(Chk_SolProdBod, "Demonio",

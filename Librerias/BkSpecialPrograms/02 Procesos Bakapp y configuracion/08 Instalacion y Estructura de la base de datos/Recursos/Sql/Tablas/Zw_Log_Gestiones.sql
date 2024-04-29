@@ -2,21 +2,21 @@ USE [#Base#]
 
 
 CREATE TABLE [dbo].[Zw_Log_Gestiones](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[NombreEquipo] [varchar](50) NOT NULL DEFAULT (''),
-	[Funcionario] [char](3) NOT NULL DEFAULT (''),
-	[Modalidad] [char](5) NOT NULL DEFAULT (''),
-	[Archirst] [varchar](20) NOT NULL DEFAULT (''),
-	[Idrst] [int] NOT NULL DEFAULT (0),
-	[Fecha_Hora] [datetime] NOT NULL DEFAULT (GetDate()),
-	[CodAccion] [varchar](20) NOT NULL DEFAULT (''),
-	[Accion] [varchar](1000) NOT NULL DEFAULT (''),
-	[CodPermiso] [varchar](20) NOT NULL DEFAULT (''),
-	[Kopr] [varchar](13) NOT NULL DEFAULT (''),
-	[Koen] [varchar](13) NOT NULL DEFAULT (''),
-	[Suen] [varchar](10) NOT NULL DEFAULT (''),
-	[Solicitud_Permiso] [bit] NOT NULL DEFAULT (0),
-	[Funcionario_Autoriza] [char](3) NOT NULL DEFAULT (''),
+	[Id]                    [int] IDENTITY(1,1) NOT NULL,
+	[NombreEquipo]          [varchar](50)       NOT NULL DEFAULT (''),
+	[Funcionario]           [char](3)           NOT NULL DEFAULT (''),
+	[Modalidad]             [char](5)           NOT NULL DEFAULT (''),
+	[Archirst]              [varchar](20)       NOT NULL DEFAULT (''),
+	[Idrst]                 [int]               NOT NULL DEFAULT (0),
+	[Fecha_Hora]            [datetime]          NOT NULL DEFAULT (GetDate()),
+	[CodAccion]             [varchar](20)       NOT NULL DEFAULT (''),
+	[Accion]                [varchar](1000)     NOT NULL DEFAULT (''),
+	[CodPermiso]            [varchar](20)       NOT NULL DEFAULT (''),
+	[Kopr]                  [varchar](13)       NOT NULL DEFAULT (''),
+	[Koen]                  [varchar](13)       NOT NULL DEFAULT (''),
+	[Suen]                  [varchar](10)       NOT NULL DEFAULT (''),
+	[Solicitud_Permiso]     [bit]               NOT NULL DEFAULT (0),
+	[Funcionario_Autoriza]  [char](3)           NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_Log_Gestiones] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

@@ -1,6 +1,4 @@
-﻿Imports BkSpecialPrograms.Tickets_Db
-Imports DevComponents.DotNetBar
-Imports DevComponents.DotNetBar.SuperGrid
+﻿Imports DevComponents.DotNetBar
 
 Public Class Frm_Tickets_TiposCrear
 
@@ -10,8 +8,8 @@ Public Class Frm_Tickets_TiposCrear
     Public Grabar As Boolean
     Dim Cl_Tickets As New Cl_Tickets
 
-    Public Property _Row_Tipo As DataRow
-    Public Property Cl_Tipo As New Tickets_Db.Tickets_Tipo
+    Public Property Row_Tipo As DataRow
+    Public Property _Zw_Stk_Tipos As New Zw_Stk_Tipos
 
     Public Sub New(_Id_Area As Integer, _Id_Tipo As Integer)
 
@@ -20,18 +18,19 @@ Public Class Frm_Tickets_TiposCrear
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        Cl_Tipo = Cl_Tickets.Fx_Llenar_Tipo(_Id_Area, _Id_Tipo)
+        _Zw_Stk_Tipos = Cl_Tickets.Fx_Llenar_Tipo(_Id_Tipo)
+        _Zw_Stk_Tipos.Id_Area = _Id_Area
 
     End Sub
 
     Private Sub Frm_Tickets_TiposCrear_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Areas Where Id = " & Cl_Tipo.Id_Area
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Areas Where Id = " & _Zw_Stk_Tipos.Id_Area
         Dim _Row_Area As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Lbl_Area.Text = "AREA: " & _Row_Area.Item("AREA")
 
-        With Cl_Tipo
+        With _Zw_Stk_Tipos
 
             Txt_Tipo.Tag = .Id
             Txt_Tipo.Text = .Tipo
@@ -60,6 +59,7 @@ Public Class Frm_Tickets_TiposCrear
             Chk_PreguntaCreaNewTicket.Checked = .PreguntaCreaNewTicket
             Chk_CerrarAgenteSinPerm.Checked = .CerrarAgenteSinPerm
             Txt_RespuestaXDefecto.Text = .RespuestaXDefecto
+            Txt_RespuestaXDefectoCerrar.Text = .RespuestaXDefectoCerrar
 
         End With
 
@@ -70,7 +70,7 @@ Public Class Frm_Tickets_TiposCrear
 
         AddHandler Chk_Asignado.CheckedChanged, AddressOf Chk_Asignado_CheckedChanged
 
-        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets", "Estado = 'ABIE' And Id_Tipo = " & Cl_Tipo.Id)
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets", "Estado = 'ABIE' And Id_Tipo = " & _Zw_Stk_Tipos.Id)
 
         If CBool(_Reg) Then
             Txt_Tipo.Enabled = False
@@ -98,7 +98,7 @@ Public Class Frm_Tickets_TiposCrear
 
     Private Sub Btn_Crear_Tipo_Click(sender As Object, e As EventArgs) Handles Btn_Crear_Tipo.Click
 
-        Dim _Editar As Boolean = CBool(Cl_Tipo.Id)
+        Dim _Editar As Boolean = CBool(_Zw_Stk_Tipos.Id)
 
         'If _Editar Then
 
@@ -150,7 +150,7 @@ Public Class Frm_Tickets_TiposCrear
 
         End If
 
-        With Cl_Tipo
+        With _Zw_Stk_Tipos
 
             .Tipo = Txt_Tipo.Text.Trim
             .Asignado = Chk_Asignado.Checked
@@ -169,6 +169,7 @@ Public Class Frm_Tickets_TiposCrear
             .PreguntaCreaNewTicket = Chk_PreguntaCreaNewTicket.Checked
             .CerrarAgenteSinPerm = Chk_CerrarAgenteSinPerm.Checked
             .RespuestaXDefecto = Txt_RespuestaXDefecto.Text
+            .RespuestaXDefectoCerrar = Txt_RespuestaXDefectoCerrar.Text
 
             Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tipos", "Tipo = '" & .Tipo & "' And Id <> " & .Id)
 
@@ -181,25 +182,20 @@ Public Class Frm_Tickets_TiposCrear
 
         End With
 
-        Dim _Mensaje_Ticket As Mensaje_Ticket = Cl_Tickets.Fx_Grabar_Tipo(Cl_Tipo)
+        Dim _Mensaje As LsValiciones.Mensajes = Cl_Tickets.Fx_Grabar_Tipo(_Zw_Stk_Tipos)
 
-        If _Mensaje_Ticket.EsCorrecto Then
-
-            Grabar = True
-
-            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tipos Where Id = " & _Mensaje_Ticket.New_Id
-            _Row_Tipo = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-            MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-        Else
-
-            MessageBoxEx.Show(Me, _Mensaje_Ticket.Mensaje, "Error al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        If Not _Mensaje.EsCorrecto Then
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Error al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
-
         End If
 
         Grabar = True
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tipos Where Id = " & _Mensaje.Id
+        Row_Tipo = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
         Me.Close()
 
     End Sub
@@ -364,7 +360,7 @@ Public Class Frm_Tickets_TiposCrear
 
         If _Filtrar.Fx_Filtrar(Nothing,
                                Clas_Filtros_Random.Enum_Tabla_Fl._Otra,
-                               "And Id In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tipos Where Id_Area = " & Txt_Area_Cie.Tag & " And Id <> " & Cl_Tipo.Id & ")",
+                               "And Id In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tipos Where Id_Area = " & Txt_Area_Cie.Tag & " And Id <> " & _Zw_Stk_Tipos.Id & ")",
                                False, False, True, False,, False) Then
 
             Txt_Tipo_Cie.Tag = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")

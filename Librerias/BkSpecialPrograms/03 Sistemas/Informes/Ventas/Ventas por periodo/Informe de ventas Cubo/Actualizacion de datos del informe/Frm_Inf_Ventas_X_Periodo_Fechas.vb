@@ -256,7 +256,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
                                "Where FEEMLI = '" & Format(_Fecha_Desde, "yyyyMMdd") & "')" & vbCrLf &
                                "And FEEMLI = '" & Format(_Fecha_Hasta, "yyyyMMdd") & "'" & vbCrLf &
                                "And TIDO IN ('BLV','BLX','BSV','ESC','FCV','FDB','FDV','FDX','FDZ','FEE','FEV','FVL','FVT','FVX',
-	  			               'FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV','RIN')"
+	  			               'FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV')"
             _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
             Consulta_Sql = "Delete " & _Nombre_Tabla_Paso & "
@@ -278,7 +278,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
 
             Consulta_Sql = "Select Distinct FEEMLI From MAEDDO Where IDMAEDDO Not In (Select IDMAEDDO From " & _Nombre_Tabla_Paso & ")
                             And FEEMLI between '" & Format(_Fecha_Desde, "yyyyMMdd") & "' And '" & Format(_Fecha_Hasta, "yyyyMMdd") & "' 
-                            And TIDO IN ('BLV','BLX','BSV','ESC','FCV','FDB','FDV','FDX','FDZ','FEE','FEV','FVL','FVT','FVX','FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV','RIN')
+                            And TIDO IN ('BLV','BLX','BSV','ESC','FCV','FDB','FDV','FDX','FDZ','FEE','FEV','FVL','FVT','FVX','FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV')
 						    Order by FEEMLI"
 
             Dim _TblFechas As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
@@ -315,7 +315,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
                                 Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO
                                 Where Ddo.FEEMLI = '" & Format(_Fecha, "yyyyMMdd") & "'
                                 And Ddo.TIDO IN ('BLV','BLX','BSV','ESC','FCV','FDB','FDV','FDX','FDZ','FEE',
-                                'FEV','FVL','FVT','FVX','FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV','RIN') 
+                                'FEV','FVL','FVT','FVX','FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV') 
                                 And Ddo.IDMAEDDO Not IN (Select IDMAEDDO From " & _Nombre_Tabla_Paso & " Where FEEMLI = '" & Format(_Fecha, "yyyyMMdd") & "')
                                 --And Edo.NUDONODEFI = 0"
 
@@ -325,7 +325,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
                     '                Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO
                     '                Where Edo.FEEMDO = '" & Format(_Fecha, "yyyyMMdd") & "'
                     '                And Edo.TIDO IN ('BLV','BLX','BSV','ESC','FCV','FDB','FDV','FDX','FDZ','FEE',
-                    '                'FEV','FVL','FVT','FVX','FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV','RIN') 
+                    '                'FEV','FVL','FVT','FVX','FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV') 
                     '                And Ddo.IDMAEEDO Not IN (Select IDMAEEDO From " & _Nombre_Tabla_Paso & " Where FEEMDO = '" & Format(_Fecha, "yyyyMMdd") & "')"
 
                     Dim _Tbl_Idmaeedo As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
@@ -488,7 +488,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
                            "Where FEEMLI = '" & Format(_Fecha_Desde, "yyyyMMdd") & "')" & vbCrLf &
                            "And FEEMLI = '" & Format(_Fecha_Hasta, "yyyyMMdd") & "'" & vbCrLf &
                            "And TIDO IN ('BLV','BLX','BSV','ESC','FCV','FDB','FDV','FDX','FDZ','FEE','FEV','FVL','FVT','FVX',
-	  			           'FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV','RIN')"
+	  			           'FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV')"
             _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
 
@@ -496,7 +496,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
                            Where FEEMLI between '" & Format(_Fecha_Desde, "yyyyMMdd") & "' And
                            '" & Format(_Fecha_Hasta, "yyyyMMdd") & "'
                            And TIDO IN ('BLV','BLX','BSV','ESC','FCV','FDB','FDV','FDX','FDZ','FEE','FEV','FVL','FVT','FVX',
-	  			           'FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV','RIN')
+	  			           'FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV')
                            And IDMAEEDO Not In (Select IDMAEEDO From " & _Nombre_Tabla_Paso & ")
                            Order by FEEMLI"
 
@@ -529,7 +529,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
                                 Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO
                                 Where Ddo.FEEMLI = '" & Format(_Fecha, "yyyyMMdd") & "'
                                 And Ddo.TIDO IN ('BLV','BLX','BSV','ESC','FCV','FDB','FDV','FDX','FDZ','FEE',
-                                'FEV','FVL','FVT','FVX','FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV','RIN') 
+                                'FEV','FVL','FVT','FVX','FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV') 
                                 And Ddo.IDMAEEDO Not IN (Select IDMAEEDO From " & _Nombre_Tabla_Paso & " Where FEEMLI = '" & Format(_Fecha, "yyyyMMdd") & "')
                                 --And Edo.NUDONODEFI = 0"
 

@@ -28,6 +28,9 @@ Partial Class Frm_GRI_Ingreso
         Me.Btn_ImprimirEtiquetas = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnConfiguracion = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Ingresar_GRI = New DevComponents.DotNetBar.ButtonX()
+        Me.Btn_FabMezcla = New DevComponents.DotNetBar.ButtonX()
+        Me.Metro_Bar_Color = New DevComponents.DotNetBar.Metro.MetroStatusBar()
+        Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -42,7 +45,7 @@ Partial Class Frm_GRI_Ingreso
         Me.ReflectionImage1.ForeColor = System.Drawing.Color.Black
         Me.ReflectionImage1.Image = CType(resources.GetObject("ReflectionImage1.Image"), System.Drawing.Image)
         Me.ReflectionImage1.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.ReflectionImage1.Location = New System.Drawing.Point(28, 227)
+        Me.ReflectionImage1.Location = New System.Drawing.Point(16, 271)
         Me.ReflectionImage1.Name = "ReflectionImage1"
         Me.ReflectionImage1.Size = New System.Drawing.Size(519, 101)
         Me.ReflectionImage1.TabIndex = 34
@@ -53,7 +56,7 @@ Partial Class Frm_GRI_Ingreso
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_ImprimirEtiquetas, Me.BtnConfiguracion})
-        Me.Bar1.Location = New System.Drawing.Point(0, 345)
+        Me.Bar1.Location = New System.Drawing.Point(0, 392)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(547, 41)
         Me.Bar1.Stretch = True
@@ -91,18 +94,62 @@ Partial Class Frm_GRI_Ingreso
         Me.Btn_Ingresar_GRI.ImageAlt = CType(resources.GetObject("Btn_Ingresar_GRI.ImageAlt"), System.Drawing.Image)
         Me.Btn_Ingresar_GRI.Location = New System.Drawing.Point(64, 40)
         Me.Btn_Ingresar_GRI.Name = "Btn_Ingresar_GRI"
-        Me.Btn_Ingresar_GRI.Size = New System.Drawing.Size(411, 139)
+        Me.Btn_Ingresar_GRI.Size = New System.Drawing.Size(411, 138)
         Me.Btn_Ingresar_GRI.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_Ingresar_GRI.TabIndex = 32
         Me.Btn_Ingresar_GRI.Text = "<b>INGRESAR PRODUCTOS</b><br/> " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "<b>FABRICADOS A BODEGA</b>"
+        '
+        'Btn_FabMezcla
+        '
+        Me.Btn_FabMezcla.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_FabMezcla.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_FabMezcla.Enabled = False
+        Me.Btn_FabMezcla.Font = New System.Drawing.Font("Segoe UI", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Btn_FabMezcla.Image = CType(resources.GetObject("Btn_FabMezcla.Image"), System.Drawing.Image)
+        Me.Btn_FabMezcla.ImageAlt = CType(resources.GetObject("Btn_FabMezcla.ImageAlt"), System.Drawing.Image)
+        Me.Btn_FabMezcla.Location = New System.Drawing.Point(64, 184)
+        Me.Btn_FabMezcla.Name = "Btn_FabMezcla"
+        Me.Btn_FabMezcla.Size = New System.Drawing.Size(411, 81)
+        Me.Btn_FabMezcla.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_FabMezcla.TabIndex = 35
+        Me.Btn_FabMezcla.Text = "<b>FABRICAR MEZCLAS</b>"
+        Me.Btn_FabMezcla.Visible = False
+        '
+        'Metro_Bar_Color
+        '
+        Me.Metro_Bar_Color.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Metro_Bar_Color.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Metro_Bar_Color.ContainerControlProcessDialogKey = True
+        Me.Metro_Bar_Color.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Metro_Bar_Color.DragDropSupport = True
+        Me.Metro_Bar_Color.Font = New System.Drawing.Font("Segoe UI", 10.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Metro_Bar_Color.ForeColor = System.Drawing.Color.Black
+        Me.Metro_Bar_Color.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Estatus})
+        Me.Metro_Bar_Color.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
+        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 433)
+        Me.Metro_Bar_Color.Name = "Metro_Bar_Color"
+        Me.Metro_Bar_Color.Size = New System.Drawing.Size(547, 22)
+        Me.Metro_Bar_Color.TabIndex = 72
+        Me.Metro_Bar_Color.Text = "MetroStatusBar1"
+        '
+        'Lbl_Estatus
+        '
+        Me.Lbl_Estatus.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Lbl_Estatus.Name = "Lbl_Estatus"
+        Me.Lbl_Estatus.Text = "LabelItem2"
         '
         'Frm_GRI_Ingreso
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(547, 386)
-        Me.Controls.Add(Me.ReflectionImage1)
+        Me.ClientSize = New System.Drawing.Size(547, 455)
         Me.Controls.Add(Me.Bar1)
+        Me.Controls.Add(Me.Metro_Bar_Color)
+        Me.Controls.Add(Me.Btn_FabMezcla)
+        Me.Controls.Add(Me.ReflectionImage1)
         Me.Controls.Add(Me.Btn_Ingresar_GRI)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -124,4 +171,7 @@ Partial Class Frm_GRI_Ingreso
     Friend WithEvents Btn_Ingresar_GRI As DevComponents.DotNetBar.ButtonX
     Public WithEvents Btn_ImprimirEtiquetas As DevComponents.DotNetBar.ButtonItem
     Public WithEvents BtnConfiguracion As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_FabMezcla As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents Metro_Bar_Color As DevComponents.DotNetBar.Metro.MetroStatusBar
+    Friend WithEvents Lbl_Estatus As DevComponents.DotNetBar.LabelItem
 End Class

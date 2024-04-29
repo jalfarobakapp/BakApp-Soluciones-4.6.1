@@ -1624,6 +1624,40 @@ Public Class Frm_Ver_Documento
                 .Columns(_Campo).DisplayIndex = _Displayindex
                 _Displayindex += 1
 
+                _Campo = "UD01PR"
+                .Columns(_Campo).HeaderText = "Ud1"
+                .Columns(_Campo).Visible = True
+                .Columns(_Campo).Width = 30
+                .Columns(_Campo).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns(_Campo).DisplayIndex = _Displayindex
+                _Displayindex += 1
+
+                _Campo = "CAPRCO1"
+                .Columns(_Campo).HeaderText = "Cant.Ud1"
+                .Columns(_Campo).Visible = True
+                .Columns(_Campo).Width = 60
+                .Columns(_Campo).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns(_Campo).DefaultCellStyle.Format = "###,##0.##"
+                .Columns(_Campo).DisplayIndex = _Displayindex
+                _Displayindex += 1
+
+                _Campo = "UD02PR"
+                .Columns(_Campo).HeaderText = "Ud2"
+                .Columns(_Campo).Visible = True
+                .Columns(_Campo).Width = 30
+                .Columns(_Campo).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns(_Campo).DisplayIndex = _Displayindex
+                _Displayindex += 1
+
+                _Campo = "CAPRCO2"
+                .Columns(_Campo).HeaderText = "Cant.Ud2"
+                .Columns(_Campo).Visible = True
+                .Columns(_Campo).Width = 60
+                .Columns(_Campo).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns(_Campo).DefaultCellStyle.Format = "###,##0.##"
+                .Columns(_Campo).DisplayIndex = _Displayindex
+                _Displayindex += 1
+
             End If
 
 
@@ -2130,8 +2164,8 @@ Public Class Frm_Ver_Documento
 
         Dim Fm As New Frm_Crear_Entidad_Mt
         Fm.Fx_Llenar_Entidad(_TblEncabezado.Rows(0).Item("ENDO"), _TblEncabezado.Rows(0).Item("SUENDO"))
-        Fm.Pro_Crear_Entidad = False
-        Fm.Pro_Editar_Entidad = True
+        Fm.CrearEntidad = False
+        Fm.EditarEntidad = True
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
@@ -2797,6 +2831,8 @@ Public Class Frm_Ver_Documento
                 Dim _Asunto = _Row_Correo.Item("Asunto")
                 Dim _CuerpoMensaje = _Row_Correo.Item("CuerpoMensaje")
 
+                _CuerpoMensaje = Replace(_CuerpoMensaje, "'", "''")
+
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo" & Space(1) &
                                 "(NombreEquipo,Nombre_Correo,CodFuncionario,Asunto,Para,Cc,Idmaeedo," &
                                 "Tido,Nudo,NombreFormato,Enviar,Intentos,Enviado,Adjuntar_Documento,Mensaje,Fecha,Para_Maeenmail) " & vbCrLf &
@@ -3269,6 +3305,8 @@ Public Class Frm_Ver_Documento
         If _Filtro_Idmaeddo_Dori = "()" Then
             _Filtro_Idmaeddo_Dori = "(-1)"
         End If
+
+        _Filtro_Idmaeddo_Dori = _Filtro_Idmaeddo_Dori.ToString.Replace("%%", "0")
 
         Consulta_sql = "Select Id_Despacho From " & _Global_BaseBk & "Zw_Despachos_Doc_Det 
                         Where Idmaeedo In (Select IDMAEEDO From MAEDDO Where IDMAEDDO In " & _Filtro_Idmaeddo_Dori & ") Or Idmaeedo = " & _Idmaeedo
@@ -3871,11 +3909,11 @@ Public Class Frm_Ver_Documento
 
             Dim Fm As New Frm_Crear_Entidad_Mt
             Fm.Fx_Llenar_Entidad(_Koen, _Suen)
-            Fm.Pro_Crear_Entidad = False
-            Fm.Pro_Editar_Entidad = True
+            Fm.CrearEntidad = False
+            Fm.EditarEntidad = True
             Fm.ShowDialog(Me)
 
-            If Fm.Pro_Grabar Then
+            If Fm.Grabar Then
                 Beep()
                 ToastNotification.Show(Me, "DATOS ACTUALIZADOS CORRECTAMENTE", My.Resources.ok_button,
                                        1 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)

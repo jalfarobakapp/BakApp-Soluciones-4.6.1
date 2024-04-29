@@ -5,6 +5,8 @@ Public Class Frm_GRI_Ingreso
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
+    Dim _VersionBakappExe As String
+
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -17,6 +19,22 @@ Public Class Frm_GRI_Ingreso
     End Sub
 
     Private Sub Frm_GRI_Ingreso_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        Btn_FabMezcla.Visible = True
+        Btn_FabMezcla.Enabled = True
+
+        Dim _elPath = AppPath() & "\BakApp_Soluciones.exe"
+
+        Try
+            Dim fvi As System.Diagnostics.FileVersionInfo =
+        System.Diagnostics.FileVersionInfo.GetVersionInfo(_elPath)
+
+            _VersionBakappExe = "Versión BakApp: " & fvi.FileVersion & ", "
+        Catch ex As Exception
+            _VersionBakappExe = String.Empty
+        End Try
+
+        Lbl_Estatus.Text = _VersionBakappExe
 
     End Sub
 
@@ -121,6 +139,39 @@ Public Class Frm_GRI_Ingreso
         If Not Fx_Tiene_Permiso(Me, "7Brr0007") Then
             e.Cancel = True
         End If
+    End Sub
+
+    Private Sub Btn_FabMezcla_Click(sender As Object, e As EventArgs) Handles Btn_FabMezcla.Click
+
+        If Not Fx_Revisar_Taza_Cambio(Me) Then
+            Return
+        End If
+
+        Dim _Old_Funcionario = FUNCIONARIO
+        Dim _Aceptar As Boolean
+
+        Dim Fml As New Frm_Login
+        Fml.ValidarPermiso = True
+        Fml.Permiso = "Doc00086"
+        Fml.ShowDialog()
+        _Aceptar = Fml.Aceptar
+        Fml.Dispose()
+
+        If Not _Aceptar Then
+            Return
+        End If
+
+        Dim Frm_Modalidad As New Frm_Modalidades(False)
+        Frm_Modalidad.ShowDialog()
+        Frm_Modalidad.Dispose()
+
+        Dim Fm As New Frm_ListaMezclas
+        Fm.Text = "INGRESO DE DATOS DE FABRICACION DE MEZCLAS, Usuario activo: (" & FUNCIONARIO & ") " & Nombre_funcionario_activo.ToString.Trim
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+        FUNCIONARIO = _Old_Funcionario
+
     End Sub
 
 End Class
