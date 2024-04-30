@@ -29,12 +29,13 @@ Partial Class Frm_Sincronizador
         Me.CircularPgrs = New DevComponents.DotNetBar.Controls.CircularProgress()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Limpiar = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Pruebas = New DevComponents.DotNetBar.ButtonItem()
         Me.Metro_Bar_Color = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
         Me.Timer_Ejecutar = New System.Windows.Forms.Timer(Me.components)
         Me.Dtp_FechaRevision = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_AmbienteDePruebas = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Btn_Conexion = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dtp_FechaRevision, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -97,7 +98,7 @@ Partial Class Frm_Sincronizador
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Limpiar, Me.Btn_Pruebas})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Limpiar, Me.Btn_Conexion})
         Me.Bar1.Location = New System.Drawing.Point(0, 399)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(705, 41)
@@ -115,17 +116,6 @@ Partial Class Frm_Sincronizador
         Me.Btn_Limpiar.ImageAlt = CType(resources.GetObject("Btn_Limpiar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Limpiar.Name = "Btn_Limpiar"
         Me.Btn_Limpiar.Tooltip = "Limpiar log..."
-        '
-        'Btn_Pruebas
-        '
-        Me.Btn_Pruebas.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Pruebas.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Pruebas.Image = CType(resources.GetObject("Btn_Pruebas.Image"), System.Drawing.Image)
-        Me.Btn_Pruebas.ImageAlt = CType(resources.GetObject("Btn_Pruebas.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Pruebas.Name = "Btn_Pruebas"
-        Me.Btn_Pruebas.Text = "PRUEBAS"
-        Me.Btn_Pruebas.Tooltip = "Limpiar log..."
-        Me.Btn_Pruebas.Visible = False
         '
         'Metro_Bar_Color
         '
@@ -221,11 +211,40 @@ Partial Class Frm_Sincronizador
         Me.LabelX1.TabIndex = 80
         Me.LabelX1.Text = "Fecha de revisión"
         '
+        'Chk_AmbienteDePruebas
+        '
+        Me.Chk_AmbienteDePruebas.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_AmbienteDePruebas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_AmbienteDePruebas.CheckBoxImageChecked = CType(resources.GetObject("Chk_AmbienteDePruebas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_AmbienteDePruebas.FocusCuesEnabled = False
+        Me.Chk_AmbienteDePruebas.ForeColor = System.Drawing.Color.Black
+        Me.Chk_AmbienteDePruebas.Location = New System.Drawing.Point(566, 371)
+        Me.Chk_AmbienteDePruebas.Name = "Chk_AmbienteDePruebas"
+        Me.Chk_AmbienteDePruebas.Size = New System.Drawing.Size(127, 23)
+        Me.Chk_AmbienteDePruebas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_AmbienteDePruebas.TabIndex = 171
+        Me.Chk_AmbienteDePruebas.Text = "Ambiente de pruebas"
+        Me.Chk_AmbienteDePruebas.Visible = False
+        '
+        'Btn_Conexion
+        '
+        Me.Btn_Conexion.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Conexion.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Conexion.Image = CType(resources.GetObject("Btn_Conexion.Image"), System.Drawing.Image)
+        Me.Btn_Conexion.ImageAlt = CType(resources.GetObject("Btn_Conexion.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Conexion.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
+        Me.Btn_Conexion.Name = "Btn_Conexion"
+        Me.Btn_Conexion.Tooltip = "Configurar conexión"
+        '
         'Frm_Sincronizador
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(705, 462)
+        Me.Controls.Add(Me.Chk_AmbienteDePruebas)
         Me.Controls.Add(Me.LabelX1)
         Me.Controls.Add(Me.Dtp_FechaRevision)
         Me.Controls.Add(Me.Bar1)
@@ -235,7 +254,6 @@ Partial Class Frm_Sincronizador
         Me.Controls.Add(Me.Lbl_Nombre_Equipo)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
         Me.Name = "Frm_Sincronizador"
@@ -252,10 +270,11 @@ Partial Class Frm_Sincronizador
     Friend WithEvents CircularPgrs As DevComponents.DotNetBar.Controls.CircularProgress
     Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
     Friend WithEvents Btn_Limpiar As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_Pruebas As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Metro_Bar_Color As DevComponents.DotNetBar.Metro.MetroStatusBar
     Friend WithEvents Lbl_Estatus As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Timer_Ejecutar As Timer
     Friend WithEvents Dtp_FechaRevision As DevComponents.Editors.DateTimeAdv.DateTimeInput
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
+    Public WithEvents Chk_AmbienteDePruebas As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Btn_Conexion As DevComponents.DotNetBar.ButtonItem
 End Class

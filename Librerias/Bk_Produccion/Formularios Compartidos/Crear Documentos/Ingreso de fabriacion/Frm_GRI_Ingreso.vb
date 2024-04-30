@@ -161,9 +161,55 @@ Public Class Frm_GRI_Ingreso
             Return
         End If
 
-        Dim Frm_Modalidad As New Frm_Modalidades(False)
-        Frm_Modalidad.ShowDialog()
-        Frm_Modalidad.Dispose()
+        Consulta_sql = "Select * From TABFU Where KOFU = '" & FUNCIONARIO & "'"
+        Dim _Row_Usuario As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If Not String.IsNullOrWhiteSpace(_Row_Usuario.Item("MODALIDAD")) Then
+
+            Modalidad = _Row_Usuario.Item("MODALIDAD")
+
+            Consulta_sql = "Select top 1 Cest.*,Cfgp.RAZON  
+                                From CONFIEST Cest Inner Join CONFIGP Cfgp On Cest.EMPRESA = Cfgp.EMPRESA  
+                                Where MODALIDAD = '" & Modalidad & "'"
+            _Global_Row_Modalidad = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            ModEmpresa = _Global_Row_Modalidad.Item("EMPRESA")
+            ModSucursal = _Global_Row_Modalidad.Item("ESUCURSAL")
+            ModBodega = _Global_Row_Modalidad.Item("EBODEGA")
+            ModCaja = _Global_Row_Modalidad.Item("ECAJA")
+            ModListaPrecioVenta = Mid(_Global_Row_Modalidad.Item("ELISTAVEN"), 6, 3)
+            ModListaPrecioCosto = Mid(_Global_Row_Modalidad.Item("ELISTACOM"), 6, 3)
+
+            If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Empresas") Then
+
+                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Empresas Where Empresa = '" & ModEmpresa & "'"
+                _Global_Row_Empresa = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                If IsNothing(_Global_Row_Empresa) Then
+
+                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Empresas (Empresa,Rut,Razon,Ncorto,Direccion,Pais,Ciudad,Giro)" & vbCrLf &
+                                           "Select EMPRESA,RUT,RAZON,NCORTO,DIRECCION,PAIS,CIUDAD,GIRO From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+                    _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                    Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Empresas Where Empresa = '" & ModEmpresa & "'"
+                    _Global_Row_Empresa = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                End If
+
+                RazonEmpresa = _Global_Row_Empresa.Item("Razon").ToString.Trim
+                DireccionEmpresa = _Global_Row_Empresa.Item("Direccion").ToString.Trim
+                RutEmpresaActiva = _Global_Row_Empresa.Item("Rut").ToString.Trim
+                RutEmpresa = RutEmpresaActiva
+
+            End If
+
+        Else
+
+            Dim Frm_Modalidad As New Frm_Modalidades(False)
+            Frm_Modalidad.ShowDialog()
+            Frm_Modalidad.Dispose()
+
+        End If
 
         Dim Fm As New Frm_ListaMezclas
         Fm.Text = "INGRESO DE DATOS DE FABRICACION DE MEZCLAS, Usuario activo: (" & FUNCIONARIO & ") " & Nombre_funcionario_activo.ToString.Trim

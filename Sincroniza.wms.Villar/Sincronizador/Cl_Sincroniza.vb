@@ -10,13 +10,33 @@ Public Class Cl_Sincroniza
 
     Public Sub New()
 
-        Cadena_ConexionSQL_Server_Wms = "data source = wmstest.villar.cl; initial catalog = viaware; user id = sa_wms; password = sa_wms"
-        _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
-        _SqlWms = New Class_SQL(Cadena_ConexionSQL_Server_Wms)
-
     End Sub
 
+    'Sub Sb_Cargar_ConexionesSQL(_AmbienteDePruebas As Boolean)
+
+    '    If _AmbienteDePruebas Then
+
+    '        'Conexión Base de pruebas
+    '        Cadena_ConexionSQL_Server = "data source = VILLAR_PRUEBAS_EXT; initial catalog = RANDOM; user id = RANDOM; password = RANDOM"
+    '        Cadena_ConexionSQL_Server_Wms = "data source = wmstest.villar.cl; initial catalog = viaware; user id = sa_wms; password = sa_wms"
+
+    '    Else
+
+    '        'Conexión base real
+    '        Cadena_ConexionSQL_Server_Wms = "data source = servercore2.villar.cl; initial catalog = viaware; user id = sa_wms; password = sa_wms"
+    '        Cadena_ConexionSQL_Server = "data source = VILLAR_AZURE; initial catalog = RANDOM; user id = RANDOM; password = RANDOM"
+
+    '    End If
+
+    '    _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
+    '    _SqlWms = New Class_SQL(Cadena_ConexionSQL_Server_Wms)
+
+    'End Sub
+
     Sub Sb_Ejecutar_Revision(Txt_Log As Object, _FechaRevision As DateTime)
+
+        _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
+        _SqlWms = New Class_SQL(Cadena_ConexionSQL_Server_Wms)
 
         Consulta_sql = "Select IDMAEEDO From [@WMS_GATEWAY_TRANSFERENCIA]" & vbCrLf &
                        "Where (CONVERT(varchar, FECHA_DOWNLOAD, 112)) = '" & Format(_FechaRevision, "yyyyMMdd") & "'" & vbCrLf &

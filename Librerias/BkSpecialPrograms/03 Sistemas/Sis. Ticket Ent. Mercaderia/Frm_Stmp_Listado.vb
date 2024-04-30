@@ -1,4 +1,5 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports System.Threading
+Imports DevComponents.DotNetBar
 Imports Hefesto.Acuse.Recibo
 Imports MySql.Data.Authentication
 Imports Org.BouncyCastle.Math.EC
@@ -92,7 +93,8 @@ Public Class Frm_Stmp_Listado
                        "Inner Join MAEEDO Edo On Edo.IDMAEEDO = Enc.Idmaeedo" & vbCrLf &
                        "Left Join MAEEN En On En.KOEN = Enc.Endo And En.SUEN = Enc.Suendo" & vbCrLf &
                        "Where 1 > 0" & vbCrLf & _Condicion & vbCrLf &
-                       "And Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'"
+                       "And Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'" & vbCrLf &
+                       "Order by Id"
 
         If _Tbas.Name = "Tab_Espera" Then
 
@@ -310,7 +312,7 @@ Public Class Frm_Stmp_Listado
         _Fm.Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado,
                                  "NVV",
                                  "Where TIDO = 'NVV'")
-        _Fm.Rdb_Estado_Todos.Enabled = False
+        _Fm.Rdb_Estado_Todos.Enabled = True
         _Fm.Rdb_Estado_Vigente.Checked = True
         _Fm.Rdb_Estado_Cerradas.Enabled = False
         '_Fm.HabilitarNVVParaFacturar = True
@@ -327,36 +329,89 @@ Public Class Frm_Stmp_Listado
             Return
         End If
 
+        If _Row_Documento.Item("SUDO") <> ModSucursal Then
+            Dim _Sucursal As String = _Sql.Fx_Trae_Dato("TABSU", "NOKOSU",
+                                                        "EMPRESA = '" & ModEmpresa & "' And KOSU = '" & _Row_Documento.Item("SUDO") & "'")
+
+            MessageBoxEx.Show(Me, "Documento corresponde a la sucursal " & _Row_Documento.Item("SUDO") & " - " & _Sucursal, "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+            Return
+        End If
+
         If MessageBoxEx.Show(Me, "¿Confirma el documento " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO") & "?",
                              "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
             Return
         End If
 
-        Dim _Facturar As Boolean = _Global_Row_Configuracion_General.Item("Pickear_FacturarAutoCompletas")
-        Dim _Mensaje_Stem As New LsValiciones.Mensajes
+        Me.Cursor = Cursors.WaitCursor
 
-        Dim _Cl_Stmp As New Cl_Stmp
-        _Mensaje_Stem = _Cl_Stmp.Fx_Crear_Ticket(_Row_Documento.Item("IDMAEEDO"),
-                                 _Row_Documento.Item("TIDO"),
-                                 _Row_Documento.Item("NUDO"),
-                                 _Facturar,
-                                 FechaDelServidor,
-                                 "R",
-                                 True)
+        Sb_Crear_Ticket(_Row_Documento.Item("IDMAEEDO"), _Row_Documento.Item("TIDO"), _Row_Documento.Item("NUDO"), 1)
 
-        Dim _Icon As MessageBoxIcon
-
-        If _Mensaje_Stem.EsCorrecto Then
-            _Icon = MessageBoxIcon.Information
-        Else
-            _Icon = MessageBoxIcon.Stop
-        End If
+        Me.Cursor = Cursors.Default
 
         Sb_Actualizar_Grilla()
 
         If Chk_Monitorear.Checked Then
             Timer_Monitoreo.Start()
         End If
+
+    End Sub
+
+    Sub Sb_Crear_Ticket(_Idmaeedo As Integer, _Tido As String, _Nudo As String, _Intentos As Integer)
+
+        Try
+
+            Me.Enabled = False
+
+            Dim _Facturar As Boolean = _Global_Row_Configuracion_General.Item("Pickear_FacturarAutoCompletas")
+            Dim _Mensaje_Stem As New LsValiciones.Mensajes
+
+            Dim _Cl_Stmp As New Cl_Stmp
+            _Mensaje_Stem = _Cl_Stmp.Fx_Crear_Ticket(_Idmaeedo,
+                                     _Tido,
+                                     _Nudo,
+                                     _Facturar,
+                                     FechaDelServidor,
+                                     "R",
+                                     True)
+
+            Dim _Icon As MessageBoxIcon
+
+            If _Mensaje_Stem.EsCorrecto Then
+
+                _Icon = MessageBoxIcon.Information
+                MessageBoxEx.Show(Me, _Mensaje_Stem.Mensaje, _Mensaje_Stem.Detalle, MessageBoxButtons.OK, _Icon)
+
+            Else
+
+                _Icon = MessageBoxIcon.Stop
+
+                If _Mensaje_Stem.Mensaje.Contains("El documento ya esta ingresado") Then
+                    MessageBoxEx.Show(Me, _Mensaje_Stem.Mensaje, _Mensaje_Stem.Detalle, MessageBoxButtons.OK, _Icon)
+                    Return
+                End If
+
+                _Intentos += 1
+                If _Intentos = 3 Then
+                    MessageBoxEx.Show(Me, _Mensaje_Stem.Mensaje, _Mensaje_Stem.Detalle, MessageBoxButtons.OK, _Icon)
+                    Return
+                End If
+
+                Dim Fm_Espera As New Frm_Form_Esperar
+                Fm_Espera.BarraCircular.IsRunning = True
+                Fm_Espera.Show()
+                Thread.Sleep(3000) ' Pausa de 3 segundos 
+                Fm_Espera.Dispose()
+
+                Sb_Crear_Ticket(_Idmaeedo, _Tido, _Nudo, _Intentos)
+
+            End If
+
+        Catch ex As Exception
+        Finally
+            Me.Enabled = True
+        End Try
 
     End Sub
 
@@ -370,43 +425,35 @@ Public Class Frm_Stmp_Listado
 
         Dim _Nudo As String
         Dim _Aceptar As Boolean = InputBox_Bk(Me, "Ingrese el numero de nota de venta a revisar",
-                                              "Revisar detalle NVV", _Nudo, False, _Tipo_Mayus_Minus.Normal, 10, True)
+                                              "Revisar detalle NVV", _Nudo, False, _Tipo_Mayus_Minus.Normal, 15, True)
 
         If Not _Aceptar Then
             Return
         End If
+
+        _Nudo = _Nudo.Replace("NVV", "")
+        _Nudo = _Nudo.Replace("-", "")
 
         _Nudo = Fx_Rellena_ceros(_Nudo, 10)
 
         Consulta_sql = "Select IDMAEEDO,TIDO,NUDO From MAEEDO Where TIDO = 'NVV' And NUDO = '" & _Nudo & "'"
         Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
+        If IsNothing(_Row_Documento) Then
+            MessageBoxEx.Show(Me, "No existe documento NVV - """ & _Nudo & "", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
         If MessageBoxEx.Show(Me, "¿Confirma el documento " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO") & "?",
                              "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
             Return
         End If
 
-        Dim _Facturar As Boolean = _Global_Row_Configuracion_General.Item("Pickear_FacturarAutoCompletas")
-        Dim _Mensaje_Stem As New LsValiciones.Mensajes
+        Me.Cursor = Cursors.WaitCursor
 
-        Dim _Cl_Stmp As New Cl_Stmp
-        _Mensaje_Stem = _Cl_Stmp.Fx_Crear_Ticket(_Row_Documento.Item("IDMAEEDO"),
-                                 _Row_Documento.Item("TIDO"),
-                                 _Row_Documento.Item("NUDO"),
-                                 _Facturar,
-                                 FechaDelServidor,
-                                 "R",
-                                 True)
+        Sb_Crear_Ticket(_Row_Documento.Item("IDMAEEDO"), _Row_Documento.Item("TIDO"), _Row_Documento.Item("NUDO"), 1)
 
-        Dim _Icon As MessageBoxIcon
-
-        If _Mensaje_Stem.EsCorrecto Then
-            _Icon = MessageBoxIcon.Information
-        Else
-            _Icon = MessageBoxIcon.Stop
-        End If
-
-        MessageBoxEx.Show(Me, _Mensaje_Stem.Mensaje, _Mensaje_Stem.Detalle, MessageBoxButtons.OK, _Icon)
+        Me.Cursor = Cursors.Default
 
         Sb_Actualizar_Grilla()
 
