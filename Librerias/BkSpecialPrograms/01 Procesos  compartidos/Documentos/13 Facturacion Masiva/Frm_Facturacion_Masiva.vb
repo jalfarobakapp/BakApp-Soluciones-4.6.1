@@ -1112,4 +1112,12 @@ Public Class Frm_Facturacion_Masiva
         Txt_BuscaXObservaciones.Text = String.Empty
         Call Btn_Buscar_Click(Nothing, Nothing)
     End Sub
+
+    Private Sub Btn_Ver_documento_Click(sender As Object, e As EventArgs) Handles Btn_Ver_documento.Click
+
+    End Sub
+
+    Private Sub Btn_Ver_Anotaciones_Documento_Click(sender As Object, e As EventArgs) Handles Btn_Ver_Anotaciones_Documento.Click
+
+    End Sub
 End Class

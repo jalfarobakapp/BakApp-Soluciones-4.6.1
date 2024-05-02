@@ -41,11 +41,12 @@ Partial Class Modulo_Programas_Especiales
         Me.Btn_Habilitar_Nvv_Para_Facturar = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Patentes_rvm = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_SisComisiones = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_Tickets = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_Stem = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.BtnSalir = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnCambiarDeUsuario = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
-        Me.Btn_Tickets = New DevComponents.DotNetBar.Metro.MetroTileItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -77,7 +78,7 @@ Partial Class Modulo_Programas_Especiales
         Me.MnuEspecialOtros.FixedSize = New System.Drawing.Size(1000, 550)
         Me.MnuEspecialOtros.MultiLine = True
         Me.MnuEspecialOtros.Name = "MnuEspecialOtros"
-        Me.MnuEspecialOtros.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Demonio, Me.BtnSQL2Excel, Me.BtnDTE2PDF, Me.BtnCorreos_SMTP, Me.Btn_CRV_Control_Ruta_Vehiculos, Me.Btn_Etiquetas_De_Barra, Me.BtnCrearFormatos, Me.Btn_DTE_Respuestas_XML, Me.Btn_Precios_PrestaShop, Me.Btn_Huella, Me.Btn_Pocket_PC, Me.Btn_Archivador, Me.Btn_Cierre_Reactivacion_Documentos, Me.Btn_Habilitar_Nvv_Para_Facturar, Me.Btn_Patentes_rvm, Me.Btn_SisComisiones, Me.Btn_Tickets})
+        Me.MnuEspecialOtros.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Demonio, Me.BtnSQL2Excel, Me.BtnDTE2PDF, Me.BtnCorreos_SMTP, Me.Btn_CRV_Control_Ruta_Vehiculos, Me.Btn_Etiquetas_De_Barra, Me.BtnCrearFormatos, Me.Btn_DTE_Respuestas_XML, Me.Btn_Precios_PrestaShop, Me.Btn_Huella, Me.Btn_Pocket_PC, Me.Btn_Archivador, Me.Btn_Cierre_Reactivacion_Documentos, Me.Btn_Habilitar_Nvv_Para_Facturar, Me.Btn_Patentes_rvm, Me.Btn_SisComisiones, Me.Btn_Tickets, Me.Btn_Stem})
         '
         '
         '
@@ -516,6 +517,60 @@ Partial Class Modulo_Programas_Especiales
         Me.Btn_SisComisiones.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_SisComisiones.TitleText = "BakApp"
         '
+        'Btn_Tickets
+        '
+        Me.Btn_Tickets.Image = CType(resources.GetObject("Btn_Tickets.Image"), System.Drawing.Image)
+        Me.Btn_Tickets.ImageIndent = New System.Drawing.Point(8, -10)
+        Me.Btn_Tickets.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_Tickets.Name = "Btn_Tickets"
+        Me.Btn_Tickets.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_Tickets.Text = "<font size=""+4""><b>TICKTES</b></font><br/><font size=""-1"">Mantención de sistema d" &
+    "e tickets</font>"
+        Me.Btn_Tickets.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Green
+        Me.Btn_Tickets.TileSize = New System.Drawing.Size(200, 100)
+        '
+        '
+        '
+        Me.Btn_Tickets.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(93, Byte), Integer))
+        Me.Btn_Tickets.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(93, Byte), Integer))
+        Me.Btn_Tickets.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_Tickets.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(93, Byte), Integer))
+        Me.Btn_Tickets.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(93, Byte), Integer))
+        Me.Btn_Tickets.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_Tickets.TileStyle.PaddingBottom = 4
+        Me.Btn_Tickets.TileStyle.PaddingLeft = 4
+        Me.Btn_Tickets.TileStyle.PaddingRight = 4
+        Me.Btn_Tickets.TileStyle.PaddingTop = 4
+        Me.Btn_Tickets.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_Tickets.TitleText = "BakApp"
+        '
+        'Btn_Stem
+        '
+        Me.Btn_Stem.Image = CType(resources.GetObject("Btn_Stem.Image"), System.Drawing.Image)
+        Me.Btn_Stem.ImageIndent = New System.Drawing.Point(8, -10)
+        Me.Btn_Stem.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_Stem.Name = "Btn_Stem"
+        Me.Btn_Stem.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_Stem.Text = "<font size=""+4""><b>STEM Tickets entrega mercadería</b></font><br/><font size=""-1""" &
+    ">Ticketes<br/>Control de entrega de mercadería</font>"
+        Me.Btn_Stem.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
+        Me.Btn_Stem.TileSize = New System.Drawing.Size(200, 100)
+        '
+        '
+        '
+        Me.Btn_Stem.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(76, Byte), Integer))
+        Me.Btn_Stem.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(76, Byte), Integer))
+        Me.Btn_Stem.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_Stem.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(76, Byte), Integer))
+        Me.Btn_Stem.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(76, Byte), Integer))
+        Me.Btn_Stem.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_Stem.TileStyle.PaddingBottom = 4
+        Me.Btn_Stem.TileStyle.PaddingLeft = 4
+        Me.Btn_Stem.TileStyle.PaddingRight = 4
+        Me.Btn_Stem.TileStyle.PaddingTop = 4
+        Me.Btn_Stem.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_Stem.TitleText = "BakApp"
+        '
         'Bar2
         '
         Me.Bar2.AntiAlias = True
@@ -562,33 +617,6 @@ Partial Class Modulo_Programas_Especiales
         Me.LabelX1.TabIndex = 40
         Me.LabelX1.Text = "<font color=""#349FCE""><b>PROGRAMAS ESPECIALES</b></font>"
         '
-        'Btn_Tickets
-        '
-        Me.Btn_Tickets.Image = CType(resources.GetObject("Btn_Tickets.Image"), System.Drawing.Image)
-        Me.Btn_Tickets.ImageIndent = New System.Drawing.Point(8, -10)
-        Me.Btn_Tickets.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
-        Me.Btn_Tickets.Name = "Btn_Tickets"
-        Me.Btn_Tickets.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_Tickets.Text = "<font size=""+4""><b>TICKTES</b></font><br/><font size=""-1"">Mantención de sistema d" &
-    "e tickets</font>"
-        Me.Btn_Tickets.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Green
-        Me.Btn_Tickets.TileSize = New System.Drawing.Size(200, 100)
-        '
-        '
-        '
-        Me.Btn_Tickets.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(93, Byte), Integer))
-        Me.Btn_Tickets.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(93, Byte), Integer))
-        Me.Btn_Tickets.TileStyle.BackColorGradientAngle = 45
-        Me.Btn_Tickets.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(93, Byte), Integer))
-        Me.Btn_Tickets.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(93, Byte), Integer))
-        Me.Btn_Tickets.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.Btn_Tickets.TileStyle.PaddingBottom = 4
-        Me.Btn_Tickets.TileStyle.PaddingLeft = 4
-        Me.Btn_Tickets.TileStyle.PaddingRight = 4
-        Me.Btn_Tickets.TileStyle.PaddingTop = 4
-        Me.Btn_Tickets.TileStyle.TextColor = System.Drawing.Color.White
-        Me.Btn_Tickets.TitleText = "BakApp"
-        '
         'Modulo_Programas_Especiales
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -625,4 +653,5 @@ Partial Class Modulo_Programas_Especiales
     Private WithEvents Btn_Patentes_rvm As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_SisComisiones As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Tickets As DevComponents.DotNetBar.Metro.MetroTileItem
+    Private WithEvents Btn_Stem As DevComponents.DotNetBar.Metro.MetroTileItem
 End Class

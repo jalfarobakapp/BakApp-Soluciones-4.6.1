@@ -53,12 +53,16 @@ Public Class Frm_Cantidades_Ud_Disintas
 
         TxtRTU.Text = _Rtu
 
-        If _Fila.Cells("Nmarca").Value = "¡" Then
+        If RtuVariable Then
 
-            Chk_RtuVariable.Checked = RtuVariable
+            If _Fila.Cells("Nmarca").Value = "¡" Then
 
-            If Not RtuVariable AndAlso Not CBool(Cantidad_Ud1) AndAlso Not CBool(Cantidad_Ud2) Then
-                Chk_RtuVariable.Checked = True
+                Chk_RtuVariable.Checked = RtuVariable
+
+                If Not RtuVariable AndAlso Not CBool(Cantidad_Ud1) AndAlso Not CBool(Cantidad_Ud2) Then
+                    Chk_RtuVariable.Checked = True
+                End If
+
             End If
 
         End If

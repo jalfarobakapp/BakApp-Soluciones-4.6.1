@@ -65,6 +65,7 @@ Public Class Frm_Sincronizador
 
         Sb_AddToLog("Conexión", "¡Conexión exitosa a la base de datos " & _Cl_Conexion.Ls_Conexiones(1).Basededatos.ToString.Trim & "!", Txt_Log)
 
+
         CircularPgrs.IsRunning = True
         Timer_Ejecutar.Interval = 1000 * 5
         Timer_Ejecutar.Start()

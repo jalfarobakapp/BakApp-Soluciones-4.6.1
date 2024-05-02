@@ -42,6 +42,10 @@ Partial Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
         Me.Btn_Facturacion_Masiva = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grilla_Detalle = New DevComponents.DotNetBar.Controls.DataGridViewX()
+        Me.Menu_Contextual_FacMasiva = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_Mnu_Facturacion_Masiva = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_EnviarDocumentosStem = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla_Documentos, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -95,7 +99,7 @@ Partial Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
         '
         Me.ContextMenuBar1.AntiAlias = True
         Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual})
+        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual, Me.Menu_Contextual_FacMasiva})
         Me.ContextMenuBar1.Location = New System.Drawing.Point(265, 158)
         Me.ContextMenuBar1.Name = "ContextMenuBar1"
         Me.ContextMenuBar1.Size = New System.Drawing.Size(356, 25)
@@ -217,7 +221,7 @@ Partial Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
         Me.Btn_Facturacion_Masiva.Image = CType(resources.GetObject("Btn_Facturacion_Masiva.Image"), System.Drawing.Image)
         Me.Btn_Facturacion_Masiva.ImageAlt = CType(resources.GetObject("Btn_Facturacion_Masiva.ImageAlt"), System.Drawing.Image)
         Me.Btn_Facturacion_Masiva.Name = "Btn_Facturacion_Masiva"
-        Me.Btn_Facturacion_Masiva.Tooltip = "Macturar masivamente"
+        Me.Btn_Facturacion_Masiva.Tooltip = "Facturar masivamente"
         '
         'GroupPanel1
         '
@@ -299,6 +303,40 @@ Partial Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
         Me.Grilla_Detalle.Size = New System.Drawing.Size(764, 119)
         Me.Grilla_Detalle.TabIndex = 3
         '
+        'Menu_Contextual_FacMasiva
+        '
+        Me.Menu_Contextual_FacMasiva.AutoExpandOnClick = True
+        Me.Menu_Contextual_FacMasiva.Name = "Menu_Contextual_FacMasiva"
+        Me.Menu_Contextual_FacMasiva.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_Mnu_Facturacion_Masiva, Me.Btn_Mnu_EnviarDocumentosStem})
+        Me.Menu_Contextual_FacMasiva.Text = "Opciones"
+        '
+        'LabelItem1
+        '
+        Me.LabelItem1.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem1.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem1.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem1.Name = "LabelItem1"
+        Me.LabelItem1.PaddingBottom = 1
+        Me.LabelItem1.PaddingLeft = 10
+        Me.LabelItem1.PaddingTop = 1
+        Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem1.Text = "Opciones"
+        '
+        'Btn_Mnu_Facturacion_Masiva
+        '
+        Me.Btn_Mnu_Facturacion_Masiva.Image = CType(resources.GetObject("Btn_Mnu_Facturacion_Masiva.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Facturacion_Masiva.ImageAlt = CType(resources.GetObject("Btn_Mnu_Facturacion_Masiva.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_Facturacion_Masiva.Name = "Btn_Mnu_Facturacion_Masiva"
+        Me.Btn_Mnu_Facturacion_Masiva.Text = "Facturar masivamente"
+        '
+        'Btn_Mnu_EnviarDocumentosStem
+        '
+        Me.Btn_Mnu_EnviarDocumentosStem.Image = CType(resources.GetObject("Btn_Mnu_EnviarDocumentosStem.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_EnviarDocumentosStem.ImageAlt = CType(resources.GetObject("Btn_Mnu_EnviarDocumentosStem.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_EnviarDocumentosStem.Name = "Btn_Mnu_EnviarDocumentosStem"
+        Me.Btn_Mnu_EnviarDocumentosStem.Text = "Enviar documentos a preparación de entrega en bodega"
+        '
         'Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -340,4 +378,8 @@ Partial Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
     Friend WithEvents Grilla_Documentos As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents Grilla_Detalle As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents Btn_Facturacion_Masiva As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Menu_Contextual_FacMasiva As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelItem1 As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Btn_Mnu_Facturacion_Masiva As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Mnu_EnviarDocumentosStem As DevComponents.DotNetBar.ButtonItem
 End Class

@@ -25,17 +25,16 @@ Partial Class Frm_Sincronizador
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Sincronizador))
         Me.Txt_Log = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Lbl_Nombre_Equipo = New DevComponents.DotNetBar.LabelX()
         Me.CircularPgrs = New DevComponents.DotNetBar.Controls.CircularProgress()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Limpiar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Conexion = New DevComponents.DotNetBar.ButtonItem()
         Me.Metro_Bar_Color = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
         Me.Timer_Ejecutar = New System.Windows.Forms.Timer(Me.components)
         Me.Dtp_FechaRevision = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Chk_AmbienteDePruebas = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Btn_Conexion = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dtp_FechaRevision, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -53,27 +52,13 @@ Partial Class Frm_Sincronizador
         Me.Txt_Log.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Log.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Log.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Log.Location = New System.Drawing.Point(12, 41)
+        Me.Txt_Log.Location = New System.Drawing.Point(12, 12)
         Me.Txt_Log.Multiline = True
         Me.Txt_Log.Name = "Txt_Log"
         Me.Txt_Log.PreventEnterBeep = True
         Me.Txt_Log.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.Txt_Log.Size = New System.Drawing.Size(681, 323)
+        Me.Txt_Log.Size = New System.Drawing.Size(681, 352)
         Me.Txt_Log.TabIndex = 75
-        '
-        'Lbl_Nombre_Equipo
-        '
-        Me.Lbl_Nombre_Equipo.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Lbl_Nombre_Equipo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Lbl_Nombre_Equipo.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Nombre_Equipo.Location = New System.Drawing.Point(12, 12)
-        Me.Lbl_Nombre_Equipo.Name = "Lbl_Nombre_Equipo"
-        Me.Lbl_Nombre_Equipo.Size = New System.Drawing.Size(603, 23)
-        Me.Lbl_Nombre_Equipo.TabIndex = 74
-        Me.Lbl_Nombre_Equipo.Text = "Nombre Equipo..."
         '
         'CircularPgrs
         '
@@ -85,11 +70,11 @@ Partial Class Frm_Sincronizador
         Me.CircularPgrs.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.CircularPgrs.Enabled = False
         Me.CircularPgrs.FocusCuesEnabled = False
-        Me.CircularPgrs.Location = New System.Drawing.Point(658, 15)
+        Me.CircularPgrs.Location = New System.Drawing.Point(206, 370)
         Me.CircularPgrs.Name = "CircularPgrs"
         Me.CircularPgrs.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Dot
         Me.CircularPgrs.ProgressColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.CircularPgrs.Size = New System.Drawing.Size(35, 20)
+        Me.CircularPgrs.Size = New System.Drawing.Size(32, 23)
         Me.CircularPgrs.Style = DevComponents.DotNetBar.eDotNetBarStyle.OfficeXP
         Me.CircularPgrs.TabIndex = 76
         '
@@ -116,6 +101,16 @@ Partial Class Frm_Sincronizador
         Me.Btn_Limpiar.ImageAlt = CType(resources.GetObject("Btn_Limpiar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Limpiar.Name = "Btn_Limpiar"
         Me.Btn_Limpiar.Tooltip = "Limpiar log..."
+        '
+        'Btn_Conexion
+        '
+        Me.Btn_Conexion.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Conexion.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Conexion.Image = CType(resources.GetObject("Btn_Conexion.Image"), System.Drawing.Image)
+        Me.Btn_Conexion.ImageAlt = CType(resources.GetObject("Btn_Conexion.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Conexion.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
+        Me.Btn_Conexion.Name = "Btn_Conexion"
+        Me.Btn_Conexion.Tooltip = "Configurar conexión"
         '
         'Metro_Bar_Color
         '
@@ -229,16 +224,6 @@ Partial Class Frm_Sincronizador
         Me.Chk_AmbienteDePruebas.Text = "Ambiente de pruebas"
         Me.Chk_AmbienteDePruebas.Visible = False
         '
-        'Btn_Conexion
-        '
-        Me.Btn_Conexion.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Conexion.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Conexion.Image = CType(resources.GetObject("Btn_Conexion.Image"), System.Drawing.Image)
-        Me.Btn_Conexion.ImageAlt = CType(resources.GetObject("Btn_Conexion.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Conexion.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
-        Me.Btn_Conexion.Name = "Btn_Conexion"
-        Me.Btn_Conexion.Tooltip = "Configurar conexión"
-        '
         'Frm_Sincronizador
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -251,14 +236,15 @@ Partial Class Frm_Sincronizador
         Me.Controls.Add(Me.Metro_Bar_Color)
         Me.Controls.Add(Me.CircularPgrs)
         Me.Controls.Add(Me.Txt_Log)
-        Me.Controls.Add(Me.Lbl_Nombre_Equipo)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.Name = "Frm_Sincronizador"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "MetroForm"
+        Me.Text = "SINCRONIZADOR RANDOM/BAKAPP 2 WMS"
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Dtp_FechaRevision, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -266,7 +252,6 @@ Partial Class Frm_Sincronizador
     End Sub
 
     Friend WithEvents Txt_Log As DevComponents.DotNetBar.Controls.TextBoxX
-    Friend WithEvents Lbl_Nombre_Equipo As DevComponents.DotNetBar.LabelX
     Friend WithEvents CircularPgrs As DevComponents.DotNetBar.Controls.CircularProgress
     Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
     Friend WithEvents Btn_Limpiar As DevComponents.DotNetBar.ButtonItem

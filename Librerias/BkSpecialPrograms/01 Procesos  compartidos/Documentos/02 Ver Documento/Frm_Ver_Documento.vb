@@ -1241,10 +1241,11 @@ Public Class Frm_Ver_Documento
 
     Sub Sb_Formato_Grilla_EncPie_RD()
 
-        Dim _Tido = _TblEncabezado.Rows(0).Item("TIDO")
+        Dim _Tido = _TblEncabezado.Rows(0).Item("TIDO").ToString.Trim
+        Dim _SubTido = _TblEncabezado.Rows(0).Item("SUBTIDO").ToString.Trim
 
         Dim _Color_Documento = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones",
-                                                 "NombreTabla", "Tabla = 'DOCUMENTOS_COLOR' And CodigoTabla = '" & _Tido & "'", True, False, 0)
+                                                 "NombreTabla", "Tabla = 'DOCUMENTOS_COLOR' And CodigoTabla = '" & _Tido & _SubTido & "'", True, False, 0)
 
         Dim _BackColor_Tido As Color
 
@@ -1285,7 +1286,7 @@ Public Class Frm_Ver_Documento
             .Columns("TIDO").Width = 35
             .Columns("TIDO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
             .Columns("TIDO").Visible = True
-            .Columns("TIDO").Frozen = True
+            '.Columns("TIDO").Frozen = True
             .Columns("TIDO").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -1293,7 +1294,7 @@ Public Class Frm_Ver_Documento
             .Columns("NUDO").Width = 80
             .Columns("NUDO").DisplayIndex = _DisplayIndex
             .Columns("NUDO").Visible = True
-            .Columns("NUDO").Frozen = True
+            '.Columns("NUDO").Frozen = True
             _DisplayIndex += 1
 
             .Columns("ENDO").HeaderText = "Entidad"
@@ -1457,6 +1458,13 @@ Public Class Frm_Ver_Documento
             .Columns("KOCRYPT").DisplayIndex = _DisplayIndex
             .Columns("KOCRYPT").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
             .Columns("KOCRYPT").Visible = True
+            _DisplayIndex += 1
+
+            .Columns("SUBTIDO").HeaderText = "S.T."
+            .Columns("SUBTIDO").Width = 35
+            .Columns("SUBTIDO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("SUBTIDO").Visible = True
+            .Columns("SUBTIDO").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
         End With

@@ -23,9 +23,9 @@ Partial Class Frm_Facturacion_Masiva
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Facturacion_Masiva))
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Chk_Marcar_todo = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Facturar = New DevComponents.DotNetBar.ButtonItem()
@@ -59,21 +59,21 @@ Partial Class Frm_Facturacion_Masiva
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Observaciones = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Txt_BuscaXObservaciones = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
+        Me.Btn_Buscar = New DevComponents.DotNetBar.ButtonX()
         Me.ComboBoxEx1 = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
         Me.Dtp_BuscaXFechaVencimiento = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
         Me.Dtp_BuscaXFechaEmision = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
-        Me.Btn_Buscar = New DevComponents.DotNetBar.ButtonX()
         Me.Txt_BuscaXEntidad = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_BuscaXNudoNVV = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Lbl_Total_Facturar = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_BuscaXObservaciones = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -305,36 +305,36 @@ Partial Class Frm_Facturacion_Masiva
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.Grilla.RowHeadersVisible = False
         Me.Grilla.Size = New System.Drawing.Size(1157, 359)
         Me.Grilla.TabIndex = 3
@@ -626,6 +626,50 @@ Partial Class Frm_Facturacion_Masiva
         Me.GroupPanel4.TabIndex = 109
         Me.GroupPanel4.Text = "Filtrar notas de venta"
         '
+        'Txt_BuscaXObservaciones
+        '
+        Me.Txt_BuscaXObservaciones.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_BuscaXObservaciones.Border.Class = "TextBoxBorder"
+        Me.Txt_BuscaXObservaciones.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_BuscaXObservaciones.ButtonCustom.Image = CType(resources.GetObject("Txt_BuscaXObservaciones.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_BuscaXObservaciones.ButtonCustom.Visible = True
+        Me.Txt_BuscaXObservaciones.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_BuscaXObservaciones.ForeColor = System.Drawing.Color.Black
+        Me.Txt_BuscaXObservaciones.Location = New System.Drawing.Point(497, 30)
+        Me.Txt_BuscaXObservaciones.Name = "Txt_BuscaXObservaciones"
+        Me.Txt_BuscaXObservaciones.PreventEnterBeep = True
+        Me.Txt_BuscaXObservaciones.Size = New System.Drawing.Size(313, 22)
+        Me.Txt_BuscaXObservaciones.TabIndex = 19
+        '
+        'LabelX7
+        '
+        Me.LabelX7.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX7.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX7.ForeColor = System.Drawing.Color.Black
+        Me.LabelX7.Location = New System.Drawing.Point(497, 10)
+        Me.LabelX7.Name = "LabelX7"
+        Me.LabelX7.Size = New System.Drawing.Size(141, 23)
+        Me.LabelX7.TabIndex = 20
+        Me.LabelX7.Text = "Observaciones"
+        '
+        'Btn_Buscar
+        '
+        Me.Btn_Buscar.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Buscar.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Buscar.Location = New System.Drawing.Point(1104, 29)
+        Me.Btn_Buscar.Name = "Btn_Buscar"
+        Me.Btn_Buscar.Size = New System.Drawing.Size(47, 23)
+        Me.Btn_Buscar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Buscar.TabIndex = 12
+        Me.Btn_Buscar.Text = "Filtrar..."
+        Me.Btn_Buscar.Tooltip = "Aplicar filtro"
+        '
         'ComboBoxEx1
         '
         Me.ComboBoxEx1.DisplayMember = "Text"
@@ -788,18 +832,6 @@ Partial Class Frm_Facturacion_Masiva
         Me.LabelX3.TabIndex = 13
         Me.LabelX3.Text = "Fecha Emisión"
         '
-        'Btn_Buscar
-        '
-        Me.Btn_Buscar.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Buscar.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Buscar.Location = New System.Drawing.Point(1104, 29)
-        Me.Btn_Buscar.Name = "Btn_Buscar"
-        Me.Btn_Buscar.Size = New System.Drawing.Size(47, 23)
-        Me.Btn_Buscar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Buscar.TabIndex = 12
-        Me.Btn_Buscar.Text = "Filtrar..."
-        Me.Btn_Buscar.Tooltip = "Aplicar filtro"
-        '
         'Txt_BuscaXEntidad
         '
         Me.Txt_BuscaXEntidad.BackColor = System.Drawing.Color.White
@@ -923,38 +955,6 @@ Partial Class Frm_Facturacion_Masiva
         Me.Lbl_Total_Facturar.TabIndex = 34
         Me.Lbl_Total_Facturar.Text = "0"
         Me.Lbl_Total_Facturar.TextAlignment = System.Drawing.StringAlignment.Far
-        '
-        'Txt_BuscaXObservaciones
-        '
-        Me.Txt_BuscaXObservaciones.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_BuscaXObservaciones.Border.Class = "TextBoxBorder"
-        Me.Txt_BuscaXObservaciones.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_BuscaXObservaciones.ButtonCustom.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_BuscaXObservaciones.ButtonCustom.Visible = True
-        Me.Txt_BuscaXObservaciones.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_BuscaXObservaciones.ForeColor = System.Drawing.Color.Black
-        Me.Txt_BuscaXObservaciones.Location = New System.Drawing.Point(497, 30)
-        Me.Txt_BuscaXObservaciones.Name = "Txt_BuscaXObservaciones"
-        Me.Txt_BuscaXObservaciones.PreventEnterBeep = True
-        Me.Txt_BuscaXObservaciones.Size = New System.Drawing.Size(313, 22)
-        Me.Txt_BuscaXObservaciones.TabIndex = 19
-        '
-        'LabelX7
-        '
-        Me.LabelX7.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX7.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX7.ForeColor = System.Drawing.Color.Black
-        Me.LabelX7.Location = New System.Drawing.Point(497, 10)
-        Me.LabelX7.Name = "LabelX7"
-        Me.LabelX7.Size = New System.Drawing.Size(141, 23)
-        Me.LabelX7.TabIndex = 20
-        Me.LabelX7.Text = "Observaciones"
         '
         'Frm_Facturacion_Masiva
         '

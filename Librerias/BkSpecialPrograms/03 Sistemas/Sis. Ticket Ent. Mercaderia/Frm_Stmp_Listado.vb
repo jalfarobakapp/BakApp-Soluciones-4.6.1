@@ -943,4 +943,6 @@ Public Class Frm_Stmp_Listado
 
         CircularPgrs.IsRunning = Chk_Monitorear.Checked
     End Sub
+
+
 End Class

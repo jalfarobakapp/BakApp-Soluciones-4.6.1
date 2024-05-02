@@ -28,6 +28,7 @@ Partial Class Modulo_Compras
         Me.Btn_Asistente_Compras = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Documentos_Compra = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Recomendacion_Compra = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_Modo_NVI = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.BtnSalir = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnCambiarDeUsuario = New DevComponents.DotNetBar.ButtonItem()
@@ -71,7 +72,7 @@ Partial Class Modulo_Compras
         Me.MnuEspecialOtros.FixedSize = New System.Drawing.Size(630, 210)
         Me.MnuEspecialOtros.MultiLine = True
         Me.MnuEspecialOtros.Name = "MnuEspecialOtros"
-        Me.MnuEspecialOtros.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Asistente_Compras, Me.Btn_Documentos_Compra, Me.Btn_Recomendacion_Compra})
+        Me.MnuEspecialOtros.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Asistente_Compras, Me.Btn_Documentos_Compra, Me.Btn_Recomendacion_Compra, Me.Btn_Modo_NVI})
         '
         '
         '
@@ -152,13 +153,33 @@ Partial Class Modulo_Compras
         Me.Btn_Recomendacion_Compra.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_Recomendacion_Compra.TitleText = "Bakapp"
         '
+        'Btn_Modo_NVI
+        '
+        Me.Btn_Modo_NVI.Image = CType(resources.GetObject("Btn_Modo_NVI.Image"), System.Drawing.Image)
+        Me.Btn_Modo_NVI.ImageIndent = New System.Drawing.Point(9, -10)
+        Me.Btn_Modo_NVI.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_Modo_NVI.Name = "Btn_Modo_NVI"
+        Me.Btn_Modo_NVI.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_Modo_NVI.Text = "<font size=""+4""><b>COMERCIO EXTERIOR</b></font><br/>Documentos de importaciones"
+        Me.Btn_Modo_NVI.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Green
+        Me.Btn_Modo_NVI.TileSize = New System.Drawing.Size(200, 100)
+        '
+        '
+        '
+        Me.Btn_Modo_NVI.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(148, Byte), Integer))
+        Me.Btn_Modo_NVI.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(148, Byte), Integer))
+        Me.Btn_Modo_NVI.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(148, Byte), Integer))
+        Me.Btn_Modo_NVI.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(148, Byte), Integer))
+        Me.Btn_Modo_NVI.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_Modo_NVI.TileStyle.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        '
         'Bar2
         '
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnSalir, Me.BtnCambiarDeUsuario, Me.Btn_Prb_Automatizaciones, Me.Btn_Asociar_Prod_Funcionarios})
-        Me.Bar2.Location = New System.Drawing.Point(0, 198)
+        Me.Bar2.Location = New System.Drawing.Point(0, 292)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(632, 41)
         Me.Bar2.Stretch = True
@@ -276,7 +297,7 @@ Partial Class Modulo_Compras
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.MetroTilePanel1)
         Me.Name = "Modulo_Compras"
-        Me.Size = New System.Drawing.Size(632, 239)
+        Me.Size = New System.Drawing.Size(632, 333)
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -298,4 +319,5 @@ Partial Class Modulo_Compras
     Friend WithEvents LabelItem2 As DevComponents.DotNetBar.LabelItem
     Friend WithEvents LabelItem1 As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Btn_EjecutarTodas As DevComponents.DotNetBar.ButtonItem
+    Private WithEvents Btn_Modo_NVI As DevComponents.DotNetBar.Metro.MetroTileItem
 End Class
