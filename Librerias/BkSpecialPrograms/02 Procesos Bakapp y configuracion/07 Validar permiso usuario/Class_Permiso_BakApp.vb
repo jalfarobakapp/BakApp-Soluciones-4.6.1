@@ -228,6 +228,7 @@ Public Class Class_Permiso_BakApp
         COMISIONES
         OFERTAS
         CONTABILIDAD
+        STEM
     End Enum
 
     Sub Sb_Actualizar_Base_De_Permisos(_Formulario As Form, ByRef _Objeto As Object)
@@ -1025,6 +1026,9 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("ODp00017", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("ODp00018", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("ODp00019", _Objeto, _Formulario)
+
+        _SqlQuery += Fx_Insertar_Permiso("Com00001", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Stem0001", _Objeto, _Formulario)
 
         _SqlQuery += vbCrLf
 
@@ -4587,6 +4591,20 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "INGRESAR AL SISTEMA DE COMISIONES"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.COMISIONES, 6)
                 _NombreFamiliaPermiso = _Fml.COMISIONES.ToString
+
+        End Select
+
+#End Region
+
+#Region "STEM SISTEMA DE TICKET DE ENTREGA DE MERCADERIA"
+
+        Select Case _CodPermiso
+
+            Case "Stem0001"
+
+                _DescripcionPermiso = "INGRESAR AL SISTEMA DE TICKET DE ENTREGA DE MERCADERIA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.STEM, 6)
+                _NombreFamiliaPermiso = _Fml.STEM.ToString
 
         End Select
 

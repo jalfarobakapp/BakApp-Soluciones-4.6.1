@@ -85,7 +85,7 @@ Partial Class Modulo_Ventas
         Me.MetroTilePanel1.ForeColor = System.Drawing.Color.Black
         Me.MetroTilePanel1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ConsultaPreciosContenedor})
         Me.MetroTilePanel1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.MetroTilePanel1.Location = New System.Drawing.Point(3, 58)
+        Me.MetroTilePanel1.Location = New System.Drawing.Point(0, 58)
         Me.MetroTilePanel1.Name = "MetroTilePanel1"
         Me.MetroTilePanel1.Size = New System.Drawing.Size(703, 411)
         Me.MetroTilePanel1.TabIndex = 39

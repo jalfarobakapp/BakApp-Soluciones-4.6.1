@@ -125,7 +125,8 @@ CREATE TABLE [dbo].[Zw_Casi_DocDet](
 	[Semilla_Svr]           [int]                   NOT NULL DEFAULT (0),
 	[Nmarca]                [varchar](1)            NOT NULL DEFAULT (''),
 	[RtuVariable]           [bit]                   NOT NULL DEFAULT (0),
-	[Espuntosvta]           [bit]                   NOT NULL DEFAULT (0),    
+	[Espuntosvta]           [bit]                   NOT NULL DEFAULT (0),  
+	[ModFechVto]            [bit]                   NOT NULL DEFAULT (0),      
 ) ON [PRIMARY]
 
 

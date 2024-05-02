@@ -348,6 +348,10 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
     End Sub
 
     Private Sub Btn_Facturacion_Masiva_Click(sender As Object, e As EventArgs) Handles Btn_Facturacion_Masiva.Click
+        ShowContextMenu(Menu_Contextual_FacMasiva)
+    End Sub
+
+    Sub Sb_FacturacionMasiva()
 
         Dim _Lista_Idmaeedo As New List(Of String)
 
@@ -397,17 +401,17 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
 
     End Sub
 
-    'Function Fx_Se_Puede_Facturar(_Idmaeedo As Integer) As Boolean
+    Private Sub Btn_Mnu_Facturacion_Masiva_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_Facturacion_Masiva.Click
+        Sb_FacturacionMasiva()
+    End Sub
 
-    '    Consulta_sql = "SELECT *
-    '                    FROM MAEDDO  WITH ( NOLOCK ) 
-    '                    WHERE IDMAEEDO =  " & _Idmaeedo & " AND ( ESLIDO<>'C' OR ESFALI='I' ) AND TICT = ''"
+    Private Sub Btn_Mnu_EnviarDocumentosStem_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_EnviarDocumentosStem.Click
 
-    '    Dim _Tbl_Saldo_Facturar As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim Fm As New Frm_Stmp_IncNVVPicking
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
-    '    Return CBool(_Tbl_Saldo_Facturar.Rows.Count)
-
-    'End Function
+    End Sub
 
     Private Sub Grilla_Detalle_RowEnter()
 

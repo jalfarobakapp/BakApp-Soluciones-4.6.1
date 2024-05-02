@@ -349,8 +349,8 @@ Public Class Frm_Fabricaciones
             Consulta_sql = "Select * From POTE Where IDPOTE = " & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpote_New
             Dim _Row_NewOT As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-            Consulta_sql = "Select top 1 IDMAEDDO,NUDO From MAEDDO Where IDMAEEDO = " & _Mensaje.Id
-            Dim _Row_Maeddo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+            'Consulta_sql = "Select top 1 IDMAEDDO,NUDO From MAEDDO Where IDMAEEDO = " & _Mensaje.Id
+            'Dim _Row_Maeddo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             _Mensaje.EsCorrecto = True
             _Mensaje.Id = _Row_NewOT.Item("IDPOTE")
@@ -411,7 +411,9 @@ Public Class Frm_Fabricaciones
             _Observaciones = "Datos de fabricación ingresados directamente desde Bakapp en sistema de ingreso de mezclas"
             _FechaEmision = Dtp_Fecha_Ingreso.Value
 
-            Consulta_sql = "Select *," & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.CantFabricada & " As Cantidad,'" & ModSucursal & "' As Sucursal,'" & ModBodega & "' As Bodega" & vbCrLf &
+            Dim _Cantidad As String = De_Num_a_Tx_01(Math.Round(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.CantFabricada, 0), False, 5)
+
+            Consulta_sql = "Select *," & _Cantidad & " As Cantidad,'" & ModSucursal & "' As Sucursal,'" & ModBodega & "' As Bodega" & vbCrLf &
                            "From POTL Where IDPOTL = " & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpotl_New
             Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
@@ -423,14 +425,14 @@ Public Class Frm_Fabricaciones
             _New_Idmaeedo = Fm.Fx_Grabar_Documento(False)
             Fm.Dispose()
 
-            Consulta_sql = "Select top 1 IDMAEDDO,NUDO From MAEDDO Where IDMAEEDO = " & _New_Idmaeedo
+            Consulta_sql = "Select top 1 IDMAEDDO,NUDO,KOPRCT,NOKOPR,CAPRCO1 From MAEDDO Where IDMAEEDO = " & _New_Idmaeedo
             Dim _Row_Maeddo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_Pdp_CPT_MzDet Set Idmaeddo = " & _Row_Maeddo.Item("IDMAEDDO") & vbCrLf &
                            "Where Id = " & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Id
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Pdp_CPT_MzEnc Set Estado = 'PROCE' Where Id = " & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Id_Enc
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Pdp_CPT_MzEnc Set Estado = 'FABRI' Where Id = " & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Id_Enc
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
             _Mensaje.EsCorrecto = True

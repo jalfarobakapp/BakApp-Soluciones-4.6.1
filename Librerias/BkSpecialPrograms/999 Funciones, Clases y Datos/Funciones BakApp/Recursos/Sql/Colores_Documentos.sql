@@ -21,6 +21,9 @@ Insert Into Zw_TablaDeCaracterizaciones(Tabla,DescripcionTabla,CodigoTabla,Nombr
 -- ORDEN DE COMPRA
 Insert Into Zw_TablaDeCaracterizaciones(Tabla,DescripcionTabla,CodigoTabla,NombreTabla) Values ('DOCUMENTOS_COLOR','ROJA','OCC','220; 0; 0')
 
+-- ORDEN DE COMPRA PROVEEDOR EXTRANJERO
+Insert Into Zw_TablaDeCaracterizaciones(Tabla,DescripcionTabla,CodigoTabla,NombreTabla) Values ('DOCUMENTOS_COLOR','MORADO','OCCIMP','118; 85; 148')
+
 -- FACTURA DE COMPRA
 Insert Into Zw_TablaDeCaracterizaciones(Tabla,DescripcionTabla,CodigoTabla,NombreTabla) Values ('DOCUMENTOS_COLOR','AZUL','FCC','43; 87; 154')
 

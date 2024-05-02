@@ -150,4 +150,11 @@ Public Class Modulo_Compras
 
     End Sub
 
+    Private Sub Btn_Modo_NVI_Click(sender As Object, e As EventArgs) Handles Btn_Modo_NVI.Click
+
+        Dim NewPanel As SolCompras_DocumentosImportaciones = Nothing
+        NewPanel = New SolCompras_DocumentosImportaciones(_Fm_Menu_Padre)
+        _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
+
+    End Sub
 End Class

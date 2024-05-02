@@ -626,13 +626,17 @@ Public Class Cl_Stmp
                 Return _Mensaje
             End If
 
+            Dim _Fecha As String = Format(FechaDelServidor, "yyyyMMdd")
 
             Dim _ob_type As String = _Cabecera.Rows(0).Item("ob_type")
+            Dim _shipment As String = _Cabecera.Rows(0).Item("shipment")
+            Dim _wave As String = _Cabecera.Rows(0).Item("wave")
+            Dim _whse_id As String = _Cabecera.Rows(0).Item("whse_id")
+
             Dim _CanalEntrada As String = Mid(_ob_type, 1, 1)
             Dim _TipoPago As String = Mid(_ob_type, 2, 1)
             Dim _Entrega As String = Mid(_ob_type, 3, 1)
             Dim _DocEmitir As String = Mid(_ob_type, 4, 1)
-
 
             With Zw_Stmp_Enc
 
@@ -656,11 +660,16 @@ Public Class Cl_Stmp
 
             End With
 
+            Dim _QuerySql = String.Empty
+
             If _ticket_verde.Rows(0).Item("ticket_verde") = "Y" Then
 
                 For Each _Fila As DataRow In _Detalle.Rows
 
+                    Dim _CONT As String = _Fila.Item("CONT")
                     Dim _tag As String = _Fila.Item("tag")
+                    Dim _loc As String = _Fila.Item("loc")
+
                     Dim _sku As String = _Fila.Item("sku")
                     Dim _qty As Double = _Fila.Item("qty")
 
@@ -669,12 +678,21 @@ Public Class Cl_Stmp
                         If _Det.Codigo.Trim = _sku.Trim Then
 
                             With _Det
+
                                 .Cantidad = _qty
                                 .Caprco1_Real = _qty
                                 .Caprco2_Real = _qty
                                 .Pickeado = True
                                 .EnProceso = False
                                 .CodFuncionario_Pickea = "wms"
+
+                                _QuerySql += "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
+                                             "('MAEDDO'," & .Idmaeddo & ",'wms','" & _Fecha & "','wms','CONT','" & _CONT & "')" & vbCrLf &
+                                             "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
+                                             "('MAEDDO'," & .Idmaeddo & ",'wms','" & _Fecha & "','wms','tag','" & _tag & "')" & vbCrLf &
+                                             "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
+                                             "('MAEDDO'," & .Idmaeddo & ",'wms','" & _Fecha & "','wms','loc','" & _loc & "')" & vbCrLf
+
                             End With
 
                             Exit For
@@ -686,6 +704,21 @@ Public Class Cl_Stmp
                 Next
 
                 _Mensaje = Fx_Confirmar_Picking()
+                'ob_type, shipment, wave, ,whse_id
+                If _Mensaje.EsCorrecto Then
+
+                    _QuerySql += "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
+                                 "('MAEEDO'," & _Idmaeedo & ",'wms','" & _Fecha & "','wms','ob_type','" & _ob_type & "')" & vbCrLf &
+                                 "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
+                                 "('MAEEDO'," & _Idmaeedo & ",'wms','" & _Fecha & "','wms','shipment','" & _shipment & "')" & vbCrLf &
+                                 "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
+                                 "('MAEEDO'," & _Idmaeedo & ",'wms','" & _Fecha & "','wms','wave','" & _wave & "')" & vbCrLf &
+                                 "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
+                                 "('MAEEDO'," & _Idmaeedo & ",'wms','" & _Fecha & "','wms','whse_id','" & _whse_id & "')"
+
+                    _Sql.Ej_consulta_IDU(_QuerySql, False)
+
+                End If
 
             End If
 

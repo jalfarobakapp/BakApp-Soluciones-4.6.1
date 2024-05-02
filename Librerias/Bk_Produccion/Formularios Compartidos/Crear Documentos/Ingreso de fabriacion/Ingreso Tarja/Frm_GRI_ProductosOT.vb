@@ -20,7 +20,7 @@ Public Class Frm_GRI_ProductosOT
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
+        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 
         Sb_Color_Botones_Barra(Bar1)
 
@@ -110,8 +110,15 @@ Public Class Frm_GRI_ProductosOT
             For Each row As DataGridViewRow In Grilla.Rows
 
                 Dim _Saldo As Double = row.Cells("SALDO").Value
+                Dim _Marcar As Boolean
 
-                If _Saldo = 0 Then
+                Try
+                    _Marcar = row.Cells("Marcar").Value
+                Catch ex As Exception
+                    _Marcar = False
+                End Try
+
+                If _Saldo = 0 Or _Marcar Then
                     row.DefaultCellStyle.ForeColor = Color.Gray
                 End If
 

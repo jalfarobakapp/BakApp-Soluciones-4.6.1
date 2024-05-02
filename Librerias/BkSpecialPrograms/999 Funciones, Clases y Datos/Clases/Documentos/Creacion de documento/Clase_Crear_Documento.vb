@@ -2619,7 +2619,6 @@ Public Class Clase_Crear_Documento
                 '_HH = 23 : _MM = 59 : _SS = 59
             Else
                 _Marca = String.Empty
-                _Subtido = String.Empty
             End If
 
             _HoraGrab = Hora_Grab_fx(_EsAjuste) 'Math.Round((_HH * 3600) + (_MM * 60) + _SS, 0)
@@ -2898,6 +2897,7 @@ Public Class Clase_Crear_Documento
         Dim _Nmarca As String
         Dim _RtuVariable As Integer
         Dim _Espuntosvta As Integer
+        Dim _ModFechVto As Integer
 
         Dim myTrans As SqlClient.SqlTransaction
         Dim Comando As SqlClient.SqlCommand
@@ -3203,6 +3203,7 @@ Public Class Clase_Crear_Documento
                         _Nmarca = .Item("Nmarca")
                         _RtuVariable = Convert.ToUInt32(.Item("RtuVariable"))
                         _Espuntosvta = Convert.ToUInt32(.Item("Espuntosvta"))
+                        _ModFechVto = Convert.ToUInt32(.Item("ModFechVto"))
 
                         If Not String.IsNullOrEmpty(Trim(_Tict)) Then
 
@@ -3280,7 +3281,7 @@ Public Class Clase_Crear_Documento
                                        "CodPermiso,Nuevo_Producto,Solicitado_bodega,Moneda,Tipo_Moneda,Tipo_Cambio,Crear_CPr,Id_CPr," &
                                        "Centro_Costo,Proyecto,Tasadorig," &
                                        "Id_Oferta,Es_Padre_Oferta,Oferta,Padre_Oferta,Aplica_Oferta,Hijo_Oferta," &
-                                       "Cantidad_Oferta,Porcdesc_Oferta,IdDet_Ori,Nmarca,RtuVariable,Espuntosvta) Values" & vbCrLf &
+                                       "Cantidad_Oferta,Porcdesc_Oferta,IdDet_Ori,Nmarca,RtuVariable,Espuntosvta,ModFechVto) Values" & vbCrLf &
                                        "(" & _Id_DocEnc & ",'" & _Empresa & "','" & _Sucursal_Linea & "','" & _Bodega_Linea & "'," & _UnTrans & "," & _Lincondest &
                                        ",'" & _NroLinea & "','" & _Codigo & "','" & _CodigoProv & "','" & _UdTrans &
                                        "'," & _Cantidad & ",'" & _TipoValor & "'," & _Precio & "," & _DescuentoPorc &
@@ -3306,7 +3307,7 @@ Public Class Clase_Crear_Documento
                                        "','" & _Proyecto & "'," & _Tasadorig_Det &
                                        "," & _Id_Oferta & "," & _Es_Padre_Oferta & ",'" & _Oferta & "'," & _Padre_Oferta & "," & _Aplica_Oferta & "," & _Hijo_Oferta &
                                        "," & _Cantidad_Oferta & "," & _Porcdesc_Oferta & "," & Id_Linea &
-                                       ",'" & _Nmarca & "'," & _RtuVariable & "," & _Espuntosvta & ")"
+                                       ",'" & _Nmarca & "'," & _RtuVariable & "," & _Espuntosvta & "," & _ModFechVto & ")"
 
                         Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                         Comando.Transaction = myTrans
@@ -3423,7 +3424,6 @@ Public Class Clase_Crear_Documento
                 '_HH = 23 : _MM = 59 : _SS = 59
             Else
                 _Marca = String.Empty
-                _SubTido = String.Empty
             End If
 
             _HoraGrab = Hora_Grab_fx(_EsAjuste)
@@ -3432,18 +3432,6 @@ Public Class Clase_Crear_Documento
             If _Tido = "OCC" Then _Espgdo = "S"
 
             ' HAY QUE PONER EL CAMPO TIPO DE MONEDA  "TIMODO"
-            'Consulta_sql = "UPDATE " & _Global_BaseBk & "Zw_DocEnc SET Sucursal = '" & _Sucursal_Doc & "',TIGEDO='I',SUDO='" & _Sudo &
-            '               "',FechaEmision='" & _FechaEmision & "',CodFuncionario='" & _CodFuncionario & "',ESPGDO='" & _Espgdo & "',CAPRCO=" & _Caprco &
-            '               ",CAPRAD=" & _Caprad & ",MEARDO = '" & _Meardo & "',MODO = '" & _Modo &
-            '               "',TIMODO = '" & _Timodo & "',TAMODO = " & _Tamodo & ",VAIVDO = " & _Vaivdo & ",VAIMDO = " & _Vaimdo & vbCrLf &
-            '               ",VANEDO = " & _Vanedo & ",VABRDO = " & _Vabrdo & ",FE01VEDO = '" & _Fe01vedo &
-            '               "',FEULVEDO = '" & _Feulvedo & "',NUVEDO = " & _Nuvedo & ",FEER = '" & _Feer &
-            '               "',KOTU = '1',LCLV = NULL,LAHORA = GETDATE(), DESPACHO = 1,HORAGRAB = " & _HoraGrab &
-            '               ",FECHATRIB = NULL,NUMOPERVEN = 0,FLIQUIFCV = '" & _Feemdo & "',SUBTIDO = '" & _Subtido &
-            '               "',MARCA = '" & _Marca & "',ESDO = '',NUDONODEFI = " & CInt(_Es_ValeTransitorio) &
-            '               ",TIDOELEC = " & CInt(_Es_Documento_Electronico) & ",LUVTDO = '" & _Luvtdo & "'" & vbCrLf &
-            '               "WHERE IDMAEEDO=" & _Idmaeedo
-            'Empresa,TipoDoc,NroDocumento,CodEntidad,CodSucEntidad
 
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_Casi_DocEnc SET" & Environment.NewLine &
                            "Modalidad = '" & _Modalidad & "'" & Environment.NewLine &

@@ -166,19 +166,38 @@ Public Class Frm_ListaMezclas
 
     Sub Sb_Traer_Producto_De_OT(_Idpote_Otm As Integer, _Numot As String)
 
-        Consulta_sql = "Select *,(FABRICAR-REALIZADO) As SALDO,0 As SALDO2 From POTL" & vbCrLf &
+        Consulta_sql = "Select *,(FABRICAR-REALIZADO) As SALDO,0 As SALDO2,Cast((Case When Det.Id Is null Then 0 Else 1 End) As bit) As Marcar" & vbCrLf &
+                       "From POTL" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Pdp_CPT_MzDet Det On POTL.IDPOTL = Det.Idpotl_Otm" & vbCrLf &
                        "Where IDPOTE = " & _Idpote_Otm & " And LILG <> 'IM'"
 
         Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
+        Dim _Marcados As Integer
+
+        For Each _Fila As DataRow In _Tbl_Productos.Rows
+            If _Fila.Item("Marcar") Then
+                _Marcados += 1
+            End If
+        Next
+
+        If _Marcados >= _Tbl_Productos.Rows.Count Then
+            MessageBoxEx.Show(Me, "OT " & _Numot & " completamente ingresada" & vbCrLf & "Todos los productos de esta OT ya ingresado en las ordenes de fabricación",
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Btn_NuevaMezcla_Click(Nothing, Nothing)
+            Return
+        End If
+
         Dim Fm_Potl As New Frm_GRI_ProductosOT
         Fm_Potl.Tbl_Productos = _Tbl_Productos
         Fm_Potl.ModoSeleccion = True
+        Fm_Potl.MarcarFilasSinSaldo = True
         Fm_Potl.ShowDialog(Me)
         Dim _Row_Potl As DataRow = Fm_Potl.FilaSeleccionada
         Fm_Potl.Dispose()
 
         If IsNothing(_Row_Potl) Then
+            Btn_NuevaMezcla_Click(Nothing, Nothing)
             Return
         End If
 

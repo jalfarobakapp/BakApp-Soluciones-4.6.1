@@ -516,7 +516,6 @@ Public Class Frm_Formulario_Documento
             Sb_Limpiar(Modalidad, True)
         End If
 
-
         Chk_Ver_Dscto_Maximo.Checked = Fx_Tiene_Permiso(Me, "Doc00048",, False)
 
         AddHandler Chk_Ver_Dscto_Maximo.CheckedChanging, AddressOf Chk_Ver_Dscto_Maximo_CheckedChanging
@@ -537,6 +536,10 @@ Public Class Frm_Formulario_Documento
         If Global_Thema = Enum_Themas.Oscuro Then
             _Color_Totales = Color.White
             _Color_LblTotales = Color.White
+        End If
+
+        If Not String.IsNullOrWhiteSpace(_SubTido) Then
+            _TblEncabezado.Rows(0).Item("SubTido") = _SubTido
         End If
 
         Sb_Color_Botones_Barra(Barra)
@@ -577,6 +580,27 @@ Public Class Frm_Formulario_Documento
 
 
         Btn_Desde_COV_OCC.Visible = False
+
+
+        If Not _Post_Venta Then
+
+            Me.Text = _Sql.Fx_Trae_Dato("TABTIDO", "NOTIDO", "TIDO = '" & _Tido & "'").ToString.Trim
+            Lbl_Tido.Text = Me.Text
+
+            If _Es_Ajuste Then
+                Me.Text += Space(1) & "(AJUSTE)"
+                Lbl_Tido.Text += Space(1) & "(AJUSTE)"
+                Lbl_Tido.ForeColor = Color.Yellow
+            End If
+
+            If _SubTido = "IMP" Then Me.Text += " PROVEEDOR EXTRANJERO"
+
+        Else
+
+            Lbl_Tido.Text = "Post-Venta"
+
+        End If
+
 
         If _Post_Venta Then
 
@@ -1170,6 +1194,8 @@ Public Class Frm_Formulario_Documento
                 Lbl_Tido.Text += Space(1) & "(AJUSTE)"
                 Lbl_Tido.ForeColor = Color.Yellow
             End If
+
+            If _SubTido = "IMP" Then Me.Text += " PROVEEDOR EXTRANJERO"
 
         Else
 
@@ -1851,6 +1877,7 @@ Public Class Frm_Formulario_Documento
             .Item("Nmarca") = String.Empty
             .Item("RtuVariable") = False
             .Item("Espuntosvta") = False
+            .Item("ModFechVto") = False
 
             _TblDetalle.Rows.Add(NewFila)
 
@@ -3236,11 +3263,11 @@ Public Class Frm_Formulario_Documento
             _Dias_1er_Vencimiento = _RowEntidad.Item("DIPRVE")
             _Dias_Vencimiento = NuloPorNro(_RowEntidad.Item("DIASVENCI"), 0)
 
-            Dim _Rut As String
-            Dim _Rt() As String = Split(_RowEntidad.Item("RTEN"), "-", 2)
+            'Dim _Rut As String
+            'Dim _Rt() As String = Split(_RowEntidad.Item("RTEN"), "-", 2)
 
-            _Rut = _Rt(0).Trim
-            _Rut = Replace(FormatNumber(_Rut, 0) & "-" & RutDigito(_Rut), ",", ".")
+            '_Rut = _Rt(0).Trim
+            '_Rut = Replace(FormatNumber(_Rut, 0) & "-" & RutDigito(_Rut), ",", ".")
 
             _TblEncabezado.Rows(0).Item("CodEntidad") = _RowEntidad.Item("KOEN")
             _TblEncabezado.Rows(0).Item("CodSucEntidad") = _RowEntidad.Item("SUEN")
@@ -4460,6 +4487,11 @@ Public Class Frm_Formulario_Documento
             _PorIla = 0
         End Try
 
+        If _SubTido = "IMP" Then
+            _PorIva = 0
+            _PorIla = 0
+        End If
+
         Dim _PrecioLinea As Double = NuloPorNro(_RowPrecios.Item("PP0" & _UnTrans & "UD"), 0)
 
         Dim _PrecioListaUd1 As Double
@@ -4908,7 +4940,7 @@ Public Class Frm_Formulario_Documento
         If Not _Desde_Otro_Documento And Not IsNothing(_RowProductoObs) Then
             If Not String.IsNullOrEmpty(_RowProductoObs.Item("MENSAJE01")) Then
 
-                Dim _Msg As String = Fx_AjustarTexto(_RowProductoObs.Item("MENSAJE01"), 50).ToString.Trim
+                Dim _Msg As String = Fx_AjustarTexto(_RowProductoObs.Item("MENSAJE01"), 100).ToString.Trim
 
                 MessageBoxEx.Show(Me, _Msg, "Mensaje asociado al producto",
                                   MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -7683,6 +7715,10 @@ Public Class Frm_Formulario_Documento
                                     Dim _Aceptado As Boolean
                                     Dim _RtuVariable As Boolean = _Fila.Cells("RtuVariable").Value
 
+                                    If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Compra Then
+                                        _RtuVariable = False
+                                    End If
+
                                     Dim Fm As New Frm_Cantidades_Ud_Disintas(_Fila)
                                     Fm.Cantidad_Ud1 = _CantUd1
                                     Fm.Cantidad_Ud2 = _CantUd2
@@ -8924,6 +8960,12 @@ Public Class Frm_Formulario_Documento
 
         Dim _Index As Integer = _Fila.Index
 
+        If _Fila.Cells("ModFechVto").Value Then
+            Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, False, True, False)
+            MessageBoxEx.Show(Me, "Los vencimientos originales se volvieron a reestablecer", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+        End If
+
+
         Grilla_Detalle.Rows.RemoveAt(_Index)
 
         Dim _CodLista = _TblEncabezado.Rows(0).Item("ListaPrecios")
@@ -8936,6 +8978,7 @@ Public Class Frm_Formulario_Documento
         If Grilla_Detalle.RowCount = 0 Then
 
             For Each _Fl As DataRow In _TblPermisos.Rows
+
                 If _Fl.Item("Solicitar_Permiso_Al_Final") Then
 
                     _Fl.Item("CodPermiso") = String.Empty
@@ -8950,22 +8993,28 @@ Public Class Frm_Formulario_Documento
                     _Fl.Item("Solicitar_Permiso_Al_Final") = False
 
                 End If
+
             Next
 
             Sb_Nueva_Linea(_CodLista)
             _TblDocumentos_Dori = Nothing
+
         End If
 
         If _Sumar_Totales Then
+
             If Not Fx_Validar_Descuentos_Globales(False, False) Then
                 Fx_Validar_Descuentos_Individuales(False, False)
             End If
+
             Sb_Sumar_Totales()
+
         End If
 
         If Grilla_Detalle.Rows.Count - 1 <= _Index Then _Index = Grilla_Detalle.Rows.Count - 1
 
         Grilla_Detalle.CurrentCell = Grilla_Detalle.Rows(_Index).Cells("Cantidad")
+
         Me.Refresh()
         Grilla_Detalle.RefreshEdit()
 
@@ -9110,6 +9159,8 @@ Public Class Frm_Formulario_Documento
                                     If Not IsNothing(_RowConcepto) Then
 
                                         If _RowConcepto.Item("ModFechVto") Then
+
+                                            _Fila.Cells("ModFechVto").Value = True
 
                                             Dim _ModFechVto_Dias1erVenci = _RowConcepto.Item("ModFechVto_Dias1erVenci")
                                             Dim _FechaEmision As Date = _TblEncabezado.Rows(0).Item("FechaEmision")
@@ -10709,12 +10760,14 @@ Public Class Frm_Formulario_Documento
             Dim _Nmarca As String = _Fila.Item("Nmarca")
             Dim _RtuVariable As Boolean = _Fila.Item("RtuVariable")
             Dim _Espuntosvta As Boolean = _Fila.Item("Espuntosvta")
+            Dim _ModFechVto As Boolean = _Fila.Item("ModFechVto")
 
             _Row.Cells("Id_DocDet").Value = _Id_DocDet
             _Row.Cells("CodLista").Value = _CodLista
             _Row.Cells("Nuevo_Producto").Value = False
 
             _Row.Cells("Espuntosvta").Value = _Espuntosvta
+            _Row.Cells("ModFechVto").Value = _ModFechVto
 
             Dim _RowProducto As DataRow
 
@@ -14727,10 +14780,19 @@ Public Class Frm_Formulario_Documento
 
                             Dim _Tido = _Row_NeDocEnc.Item("TIDO")
                             Dim _Nudo = _Row_NeDocEnc.Item("NUDO")
+                            Dim _SubTido = _Row_NeDocEnc.Item("SUBTIDO")
 
                             If Not _Post_Venta Or _Grabar_Y_Pagar_Vale Then
 
-                                MessageBoxEx.Show(Me, _Tido & " - " & _Nudo & vbCrLf & vbCrLf &
+                                Dim _TidoNudoSubTido As String
+
+                                If String.IsNullOrWhiteSpace(_SubTido) Then
+                                    _TidoNudoSubTido = _Tido & " - " & _Nudo
+                                Else
+                                    _TidoNudoSubTido = _Tido & " - " & _Nudo & " (" & _SubTido & ")"
+                                End If
+
+                                MessageBoxEx.Show(Me, _TidoNudoSubTido & vbCrLf & vbCrLf &
                                 "Grabada correctamente", "Grabar documento", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
                             End If
@@ -17550,6 +17612,7 @@ Public Class Frm_Formulario_Documento
                             If Not _ModFechVto Then
                                 _ModFechVto = True
                                 _ModFechVto_Dias1erVenci = _RowConcepto.Item("ModFechVto_Dias1erVenci")
+                                _New_Fila.Cells("ModFechVto").Value = True
                             End If
 
                         End If

@@ -894,6 +894,7 @@ Public Module Funciones_Especiales_BakApp
         If Not (_Row_Entidad Is Nothing) Then
 
             Dim _Rut As String = _Row_Entidad.Item("RTEN").ToString.Trim
+            Dim _RutSP As String = String.Empty
             Dim _Rten = _Rut
             Dim _Dv As String
 
@@ -904,12 +905,15 @@ Public Module Funciones_Especiales_BakApp
             Try
                 _Dv = RutDigito(_Rut)
                 _Rut = FormatNumber(_Rut, 0) & "-" & _Dv
+                _RutSP = _Rten & "-" & _Dv
             Catch ex As Exception
                 _Rut = _Rut
+                _RutSP = _Rut
             End Try
 
             _Row_Entidad.Item("Rut") = _Rut
-            _Row_Entidad.Item("RutSP") = _Rten & "-" & _Dv
+            _Row_Entidad.Item("RutSP") = _RutSP
+
         End If
 
         Return _Row_Entidad
@@ -935,9 +939,33 @@ Public Module Funciones_Especiales_BakApp
         For Each _Row_entidad As DataRow In _Tbl_Entidad.Rows
 
             If Not (_Row_entidad Is Nothing) Then
-                Dim _Rut As String = _Row_entidad.Item("RTEN")
-                _Rut = FormatNumber(_Rut, 0) & "-" & RutDigito(_Rut)
+
+                'Dim _Rut As String = _Row_entidad.Item("RTEN")
+
+                '_Rut = FormatNumber(_Rut, 0) & "-" & RutDigito(_Rut)
+                '_Row_entidad.Item("Rut") = _Rut
+
+                Dim _Rut As String = _Row_entidad.Item("RTEN").ToString.Trim
+                Dim _RutSP As String = String.Empty
+                Dim _Rten = _Rut
+                Dim _Dv As String
+
+                If _Rut.Contains("-") Then
+                    Dim _Rt = Split(_Rut, "-")
+                    _Rut = _Rt(0)
+                End If
+                Try
+                    _Dv = RutDigito(_Rut)
+                    _Rut = FormatNumber(_Rut, 0) & "-" & _Dv
+                    _RutSP = _Rten & "-" & _Dv
+                Catch ex As Exception
+                    _Rut = _Rut
+                    _RutSP = _Rut
+                End Try
+
                 _Row_entidad.Item("Rut") = _Rut
+                _Row_entidad.Item("RutSP") = _RutSP
+
             End If
 
         Next

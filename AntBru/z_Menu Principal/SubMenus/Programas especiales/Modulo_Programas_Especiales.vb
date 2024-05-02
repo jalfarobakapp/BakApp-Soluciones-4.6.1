@@ -343,18 +343,31 @@ Public Class Modulo_Programas_Especiales
     End Sub
 
     Private Sub Btn_SisComisiones_Click(sender As Object, e As EventArgs) Handles Btn_SisComisiones.Click
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Com00001") Then
-            Dim NewPanel As Comisiones = Nothing
-            NewPanel = New Comisiones(_Fm_Menu_Padre)
-            _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
-        End If
+
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Com00001") Then Return
+
+        Dim NewPanel As Comisiones = Nothing
+        NewPanel = New Comisiones(_Fm_Menu_Padre)
+        _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
+
     End Sub
 
     Private Sub Btn_Tickets_Click(sender As Object, e As EventArgs) Handles Btn_Tickets.Click
-        'MessageBoxEx.Show(Me, "En construcción", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        'Return
+
         Dim NewPanel As Stk_Ticktes = Nothing
         NewPanel = New Stk_Ticktes(_Fm_Menu_Padre)
         _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
+
     End Sub
+
+    Private Sub Btn_Stem_Click(sender As Object, e As EventArgs) Handles Btn_Stem.Click
+
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Stem0001") Then Return
+
+        Dim Fm As New Frm_Stmp_Listado
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
 End Class

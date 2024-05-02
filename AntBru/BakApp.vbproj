@@ -200,6 +200,12 @@
     <Compile Include="z_Menu Principal\SubMenus\Compras\SolCompras_Documentos.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Compras\SolCompras_DocumentosImportaciones.Designer.vb">
+      <DependentUpon>SolCompras_DocumentosImportaciones.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Compras\SolCompras_DocumentosImportaciones.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="z_Menu Principal\SubMenus\Despachos\Sistema_Despachos.designer.vb">
       <DependentUpon>Sistema_Despachos.vb</DependentUpon>
     </Compile>
@@ -434,6 +440,12 @@
     <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Modulo_Programas_Especiales.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Sistema Entrega de Mercaderia\Stem_EntregaMercaderia.Designer.vb">
+      <DependentUpon>Stem_EntregaMercaderia.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Sistema Entrega de Mercaderia\Stem_EntregaMercaderia.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Tickets\Stk_Configuracion.Designer.vb">
       <DependentUpon>Stk_Configuracion.vb</DependentUpon>
     </Compile>
@@ -587,6 +599,9 @@
     <EmbeddedResource Include="z_Menu Principal\SubMenus\Compras\SolCompras_Documentos.resx">
       <DependentUpon>SolCompras_Documentos.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Compras\SolCompras_DocumentosImportaciones.resx">
+      <DependentUpon>SolCompras_DocumentosImportaciones.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="z_Menu Principal\SubMenus\Despachos\Sistema_Despachos.resx">
       <DependentUpon>Sistema_Despachos.vb</DependentUpon>
     </EmbeddedResource>
@@ -700,6 +715,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="z_Menu Principal\SubMenus\Programas especiales\Modulo_Programas_Especiales.resx">
       <DependentUpon>Modulo_Programas_Especiales.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Sistema Entrega de Mercaderia\Stem_EntregaMercaderia.resx">
+      <DependentUpon>Stem_EntregaMercaderia.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Tickets\Stk_Configuracion.resx">
       <DependentUpon>Stk_Configuracion.vb</DependentUpon>
