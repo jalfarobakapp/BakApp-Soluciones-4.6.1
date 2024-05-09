@@ -1093,33 +1093,53 @@ Public Class Cl_Correos
 
             If Convert.ToBoolean(_Tbl_Maeenmail.Rows.Count) Then
 
+                Dim _Para As String = String.Empty
+                Dim _Cc As String = String.Empty
+
                 For Each _Fila_Mail As DataRow In _Tbl_Maeenmail.Rows
 
-                    Dim _Para As String = Trim(_Fila_Mail.Item("MAILTO"))
-                    Dim _Cc As String = String.Empty
+                    'If Not _Para.Contains(_Fila_Mail.Item("MAILTO").ToString.Trim) Then
+                    '    If String.IsNullOrEmpty(_Para) Then
+                    '        _Para = _Fila_Mail.Item("MAILTO").ToString.Trim
+                    '    Else
+                    '        _Para += ";" & Trim(_Fila_Mail.Item("MAILTO"))
+                    '    End If
+                    'End If
+                    _Para += _Fila_Mail.Item("MAILTO").ToString.Trim & ";"
 
                     If Not String.IsNullOrWhiteSpace(_Fila_Mail.Item("MAILCC").ToString.Trim) Then
-                        _Cc = _Fila_Mail.Item("MAILCC").ToString.Trim
+
+                        'If String.IsNullOrEmpty(_Cc) Then
+                        '    _Cc = _Fila_Mail.Item("MAILCC").ToString.Trim
+                        'Else
+                        '    _Cc += ";" & _Fila_Mail.Item("MAILCC").ToString.Trim
+                        'End If
+
+                        _Cc += _Fila_Mail.Item("MAILCC").ToString.Trim & ";"
+
                         If Not String.IsNullOrWhiteSpace(_Fila_Mail.Item("MAILCC2").ToString.Trim) Then
-                            _Cc += ";" & _Fila_Mail.Item("MAILCC2").ToString.Trim
+                            '_Cc += ";" & _Fila_Mail.Item("MAILCC2").ToString.Trim
+                            _Cc += _Fila_Mail.Item("MAILCC2").ToString.Trim & ";"
                             If Not String.IsNullOrWhiteSpace(_Fila_Mail.Item("MAILBCC").ToString.Trim) Then
-                                _Cc += ";" & _Fila_Mail.Item("MAILBCC").ToString.Trim
+                                '_Cc += ";" & _Fila_Mail.Item("MAILBCC").ToString.Trim
+                                _Cc += _Fila_Mail.Item("MAILBCC").ToString.Trim & ";"
                             End If
                         End If
+
                     End If
 
-                    _Para = _Para.Trim()
-                    _Cc = _Cc.Trim()
-
-                    _SqlQuery += "Insert Into " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo (NombreEquipo,Nombre_Correo,CodFuncionario,Asunto," &
-                                 "Para,Cc,Idmaeedo,Tido,Nudo,NombreFormato,Enviar,Intentos,Enviado,Adjuntar_Documento,Mensaje,Fecha,Informacion,Para_Maeenmail)" &
-                                 vbCrLf &
-                                 "Select '" & _Nombre_Equipo & "',Nombre_Correo,CodFuncionario,Asunto,'" & _Para & "','" & _Cc & "',Idmaeedo,Tido,Nudo,NombreFormato,Enviar," &
-                                 "Intentos,Enviado,Adjuntar_Documento,Mensaje,Fecha,Informacion,Para_Maeenmail" & vbCrLf &
-                                 "From " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo" & vbCrLf &
-                                 "Where Id = " & _Id & vbCrLf & vbCrLf
-
                 Next
+
+                _Para = Fx_QuitarDuplicadosCorreo(_Para.Trim())
+                _Cc = Fx_QuitarDuplicadosCorreo(_Cc.Trim())
+
+                _SqlQuery += "Insert Into " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo (NombreEquipo,Nombre_Correo,CodFuncionario,Asunto," &
+                             "Para,Cc,Idmaeedo,Tido,Nudo,NombreFormato,Enviar,Intentos,Enviado,Adjuntar_Documento,Mensaje,Fecha,Informacion,Para_Maeenmail)" &
+                             vbCrLf &
+                             "Select '" & _Nombre_Equipo & "',Nombre_Correo,CodFuncionario,Asunto,'" & _Para & "','" & _Cc & "',Idmaeedo,Tido,Nudo,NombreFormato,Enviar," &
+                             "Intentos,Enviado,Adjuntar_Documento,Mensaje,Fecha,Informacion,Para_Maeenmail" & vbCrLf &
+                             "From " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo" & vbCrLf &
+                             "Where Id = " & _Id & vbCrLf & vbCrLf
 
             Else
 
@@ -1146,6 +1166,23 @@ Public Class Cl_Correos
 #End Region
 
     End Sub
+
+    Function Fx_QuitarDuplicadosCorreo(_CadenaDeCorreos As String) As String
+
+        ' Dividir la cadena en correos electrónicos individuales
+        Dim _Correos As String() = _CadenaDeCorreos.Split(";"c)
+
+        ' Eliminar duplicados
+        Dim correosUnicos As List(Of String) = _Correos.Distinct().ToList()
+
+        ' Unir los correos electrónicos únicos nuevamente en una cadena
+        Dim _Resultado As String = String.Join(";", correosUnicos)
+
+        _Resultado = _Resultado.Substring(0, _Resultado.Length - 1)
+
+        Return _Resultado
+
+    End Function
 
     Sub Sb_Llenar_Variables_Etiquetas_Ordenes_De_Despacho(ByRef _Texto As String, _Id_Despacho As Integer)
 

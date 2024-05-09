@@ -606,7 +606,7 @@ Public Class Clase_Crear_Documento
 
                         _RtuVariable = .Item("RtuVariable")
 
-                        If _RtuVariable Then
+                        If _RtuVariable Or .Item("Nmarca") = "¡" Then
                             _Items_RtuVariable += 1
                         End If
 

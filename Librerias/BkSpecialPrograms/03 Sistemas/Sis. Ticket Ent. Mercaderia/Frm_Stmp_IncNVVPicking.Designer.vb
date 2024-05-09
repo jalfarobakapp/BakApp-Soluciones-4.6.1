@@ -564,6 +564,7 @@ Partial Class Frm_Stmp_IncNVVPicking
         Me.Chk_Pagar_Documentos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Pagar_Documentos.TabIndex = 130
         Me.Chk_Pagar_Documentos.Text = "Pagar documentos con pago asociado a la nota de venta en Cta. Cte. del cliente"
+        Me.Chk_Pagar_Documentos.Visible = False
         '
         'Chk_Pagar_Saldos_CRV
         '

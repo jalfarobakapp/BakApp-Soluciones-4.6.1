@@ -526,7 +526,7 @@ Public Class Frm_BusquedaDocumento_Filtro
 
             'Dim _Todas_Sucursales As Boolean
 
-            If Not String.IsNullOrEmpty(_CodEntidad.Trim) Then
+            If Not IsNothing(_CodEntidad) OrElse Not String.IsNullOrEmpty(_CodEntidad.Trim) Then
 
                 If Chk_Todas_Sucursales.Checked Then
                     _Sql_Filtro_Entidades = "Edo.ENDO = '" & _CodEntidad & "'"

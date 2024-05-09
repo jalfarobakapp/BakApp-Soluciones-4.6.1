@@ -86,7 +86,7 @@ Public Class Cl_Entidades
             .CLAVEEN = _Row.Item("CLAVEEN")
             .NVVPIDEPIE = _Row.Item("NVVPIDEPIE")
             .RECEPELECT = _Row.Item("RECEPELECT")
-            .ACTECO = _Row.Item("ACTECO")
+            .ACTECO = NuloPorNro(_Row.Item("ACTECO"), "")
             .DIASVENCI = NuloPorNro(_Row.Item("DIASVENCI"), 0)
             .CATTRIB = _Row.Item("CATTRIB")
             .AGRETIVA = _Row.Item("AGRETIVA")

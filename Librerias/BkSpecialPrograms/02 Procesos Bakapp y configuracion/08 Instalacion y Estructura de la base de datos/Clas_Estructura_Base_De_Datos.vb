@@ -916,6 +916,11 @@ Public Class Clas_Estructura_Base_De_Datos
             Case "Zw_Prod_ImpAdicional"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Prod_ImpAdicional
 
+            Case "Zw_PtsVta_Configuracion"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_PtsVta_Configuracion
+            Case "Zw_PtsVta_Doc"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_PtsVta_Doc
+
             Case "Zw_Reclamo"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Reclamo
             Case "Zw_Reclamo_Archivos"

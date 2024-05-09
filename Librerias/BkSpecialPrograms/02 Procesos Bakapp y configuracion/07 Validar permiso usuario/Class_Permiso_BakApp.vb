@@ -1028,7 +1028,11 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("ODp00019", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Com00001", _Objeto, _Formulario)
+
         _SqlQuery += Fx_Insertar_Permiso("Stem0001", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Stem0002", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Stem0003", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Stem0004", _Objeto, _Formulario)
 
         _SqlQuery += vbCrLf
 
@@ -4603,6 +4607,24 @@ Public Class Class_Permiso_BakApp
             Case "Stem0001"
 
                 _DescripcionPermiso = "INGRESAR AL SISTEMA DE TICKET DE ENTREGA DE MERCADERIA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.STEM, 6)
+                _NombreFamiliaPermiso = _Fml.STEM.ToString
+
+            Case "Stem0002"
+
+                _DescripcionPermiso = "AGREGAR ENTREGA DE FORMA MANUAL"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.STEM, 6)
+                _NombreFamiliaPermiso = _Fml.STEM.ToString
+
+            Case "Stem0003"
+
+                _DescripcionPermiso = "DAR DOCUMENTOS DE ALTA, MARCAR COMO ENTREGADOS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.STEM, 6)
+                _NombreFamiliaPermiso = _Fml.STEM.ToString
+
+            Case "Stem0004"
+
+                _DescripcionPermiso = "MARCAR DOCUMENTO FACTURAR AL COMPLETAR"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.STEM, 6)
                 _NombreFamiliaPermiso = _Fml.STEM.ToString
 

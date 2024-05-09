@@ -26,6 +26,9 @@ Public Class Frm_Stmp_IngCantVar
         TxtCantUD1.Text = Cantidad_Ud1
         TxtCantUD2.Text = Cantidad_Ud2
 
+        Lbl_CantVenUd1.Text = "Cantidad vendida: " & FormatNumber(_CantUd1_Ori, 0)
+        Lbl_CantVenUd2.Text = "Cantidad vendida: " & FormatNumber(_CantUd2_Ori, 0)
+
         Me.ActiveControl = TxtCantUD1
 
     End Sub

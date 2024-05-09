@@ -7714,9 +7714,10 @@ Public Class Frm_Formulario_Documento
 
                                     Dim _Aceptado As Boolean
                                     Dim _RtuVariable As Boolean = _Fila.Cells("RtuVariable").Value
+                                    Dim _RevisarRtuVariable As Boolean = True
 
                                     If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Compra Then
-                                        _RtuVariable = False
+                                        _RevisarRtuVariable = False
                                     End If
 
                                     Dim Fm As New Frm_Cantidades_Ud_Disintas(_Fila)
@@ -7726,6 +7727,7 @@ Public Class Frm_Formulario_Documento
                                     Fm.LblUnidad2.Text = _Ud02PR
                                     Fm.TopMost = True
                                     Fm.RtuVariable = _RtuVariable
+                                    Fm.RevisarRtuVariable = _RevisarRtuVariable
                                     Fm.ShowDialog(Me)
 
                                     _RtuVariable = Fm.RtuVariable
@@ -13110,7 +13112,6 @@ Public Class Frm_Formulario_Documento
 
                                             End If
 
-
                                             Sb_Crear_Documento_Desde_Otros_Documentos(Me, _Ds_Maeedo_Origen, False, True, _FechaEmision, False, False,, _Bodega_Recepcion)
 
                                             If _TblDetalle.Rows.Count = 1 Then
@@ -13833,8 +13834,6 @@ Public Class Frm_Formulario_Documento
                 Return
             End If
 
-            Sb_AgregarDsctoXPuntos()
-
             If String.IsNullOrEmpty(_TblEncabezado.Rows(0).Item("NroDocumento").ToString.Trim) Then
                 MessageBoxEx.Show(Me, "Debe indicar un número de documento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return
@@ -14079,6 +14078,8 @@ Public Class Frm_Formulario_Documento
                     End If
 
                 End If
+
+                Sb_AgregarDsctoXPuntos()
 
                 Sb_Actualizar_Permisos_Necesarios_Del_Documento_New()
 
@@ -16159,21 +16160,25 @@ Public Class Frm_Formulario_Documento
 
             'PUNTOS VENTA
 
-            Dim _Cl_Puntos As New Cl_Puntos()
-            Dim _MsjPtos As LsValiciones.Mensajes
-            Dim _PtsUsados As Double
+            If _Tido = "FCV" Or _Tido = "BLV" Or _Tido = "NCV" Then
 
-            _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa)
+                Dim _Cl_Puntos As New Cl_Puntos()
+                Dim _MsjPtos As LsValiciones.Mensajes
+                Dim _PtsUsados As Double
 
-            If Not IsNothing(_Cl_Puntos.Zw_PtsVta_Configuracion) Then
-                For Each _Fila As DataRow In _TblDetalle.Rows
-                    If _Cl_Puntos.Zw_PtsVta_Configuracion.Concepto = _Fila.Item("Codigo") Then
-                        _PtsUsados = _Fila.Item("DescuentoValor")
-                    End If
-                Next
+                _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa)
+
+                If Not IsNothing(_Cl_Puntos.Zw_PtsVta_Configuracion) Then
+                    For Each _Fila As DataRow In _TblDetalle.Rows
+                        If _Cl_Puntos.Zw_PtsVta_Configuracion.Concepto = _Fila.Item("Codigo") Then
+                            _PtsUsados = _Fila.Item("DescuentoValor")
+                        End If
+                    Next
+                End If
+
+                _MsjPtos = _Cl_Puntos.Fx_Grabar_Registro_Puntos(_New_Idmaeedo, _PtsUsados)
+
             End If
-
-            _MsjPtos = _Cl_Puntos.Fx_Grabar_Registro_Puntos(_New_Idmaeedo, _PtsUsados)
 
             'GENERA GRI DESDE PRODUCCION EXTERNA
 
@@ -16187,7 +16192,7 @@ Public Class Frm_Formulario_Documento
                 Dim _Kopral As String = _Codigos.CodigoAlternativo
 
                 _SqlQuery += "Insert Into " & _Global_BaseBk & "Zw_Prod_CodQRLogDoc (CodigoQR,Kopral,Tido,Nudo,Idmaeedo,Kopr,CodLeido) Values " &
-                               "('" & _CodigoQR & "','" & _Kopral & "','" & _Tido & "','" & _Nudo & "'," & _Idmaeedo & ",'" & _Kopr & "','" & _CodLeido & "')" & vbCrLf
+                           "('" & _CodigoQR & "','" & _Kopral & "','" & _Tido & "','" & _Nudo & "'," & _Idmaeedo & ",'" & _Kopr & "','" & _CodLeido & "')" & vbCrLf
 
             Next
 
@@ -16203,8 +16208,8 @@ Public Class Frm_Formulario_Documento
                 Dim _Lote As String = _Codigos.Lote
 
                 _SqlQuery += "Insert Into " & _Global_BaseBk & "Zw_Prod_CodQRLogDoc (CodigoQR,Kopral,Tido,Nudo,Idmaeedo,Kopr,CodLeido,TidoOri,NudoOri,Nro_Tarja,Lote) Values " &
-                             "('" & _CodigoQR & "','" & _Kopral & "','" & _Tido & "','" & _Nudo & "'," & _Idmaeedo &
-                             ",'" & _Kopr & "','" & _CodLeido & "','" & _TidoOri & "','" & _NudoOri & "','" & _Nro_Tarja & "','" & _Lote & "')" & vbCrLf
+                         "('" & _CodigoQR & "','" & _Kopral & "','" & _Tido & "','" & _Nudo & "'," & _Idmaeedo &
+                         ",'" & _Kopr & "','" & _CodLeido & "','" & _TidoOri & "','" & _NudoOri & "','" & _Nro_Tarja & "','" & _Lote & "')" & vbCrLf
 
             Next
 
@@ -16220,20 +16225,20 @@ Public Class Frm_Formulario_Documento
                 Dim _Carpeta_Generados_Txt As String
 
                 _Carpeta_Archivos_Txt = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Estaciones_Ruta_PDF",
-                                                 "Ruta_PDF",
-                                                 "Empresa = '" & ModEmpresa & "' " &
-                                                 "And NombreEquipo = '" & _NombreEquipo & "' " &
-                                                 "And Modalidad = '" & Modalidad & "' And Tipo_Ruta = 'GRI_Ing'")
+                                             "Ruta_PDF",
+                                             "Empresa = '" & ModEmpresa & "' " &
+                                             "And NombreEquipo = '" & _NombreEquipo & "' " &
+                                             "And Modalidad = '" & Modalidad & "' And Tipo_Ruta = 'GRI_Ing'")
 
                 _Carpeta_Generados_Txt = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Estaciones_Ruta_PDF",
-                                                  "Ruta_PDF",
-                                                  "Empresa = '" & ModEmpresa & "' " &
-                                                  "And NombreEquipo = '" & _NombreEquipo & "' " &
-                                                  "And Modalidad = '" & Modalidad & "' And Tipo_Ruta = 'GRI_Gen'")
+                                              "Ruta_PDF",
+                                              "Empresa = '" & ModEmpresa & "' " &
+                                              "And NombreEquipo = '" & _NombreEquipo & "' " &
+                                              "And Modalidad = '" & Modalidad & "' And Tipo_Ruta = 'GRI_Gen'")
 
                 If File.Exists(_Carpeta_Archivos_Txt & "\" & _Nombre_Archivo & ".txt") And Directory.Exists(_Carpeta_Generados_Txt) Then
                     File.Copy(_Carpeta_Archivos_Txt & "\" & _Nombre_Archivo & ".txt",
-                                      _Carpeta_Generados_Txt & "\" & _Nombre_Archivo & ".txt")
+                                  _Carpeta_Generados_Txt & "\" & _Nombre_Archivo & ".txt")
                     File.Delete(_Carpeta_Archivos_Txt & "\" & _Nombre_Archivo & ".txt")
                 End If
 
@@ -26112,6 +26117,10 @@ Public Class Frm_Formulario_Documento
             Return
         End If
 
+        If _Tido <> "FCV" And _Tido <> "BLV" And _Tido <> "NVV" Then
+            Return
+        End If
+
         Dim _Cl_Puntos As New Cl_Puntos
         _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa)
 
@@ -26131,7 +26140,7 @@ Public Class Frm_Formulario_Documento
         Dim _PtsUsados As Double = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_PtsVta_Doc", "SUM(PtsUsados)",
                                     "CodEntidad = '" & _CodEntidad & "' And CodSucEntidad = '" & _CodSucEntidad & "'", True)
 
-        Dim _Puntos As Double = _PtsGanados - _PtsUsados
+        Dim _Puntos As Double = Math.Round(_PtsGanados - _PtsUsados)
 
         If _Puntos <= 0 Then
             Return

@@ -14,7 +14,7 @@ Public Class Frm_Sincronizador
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
 
-        Cadena_ConexionSQL_Server = "data source = VILLAR_PRUEBAS_EXT; initial catalog = RANDOM; user id = RANDOM; password = RANDOM"
+        'Cadena_ConexionSQL_Server = "data source = VILLAR_PRUEBAS_EXT; initial catalog = RANDOM; user id = RANDOM; password = RANDOM"
 
     End Sub
 
@@ -26,49 +26,54 @@ Public Class Frm_Sincronizador
 
     Sub Sb_Ejecutar_diablito()
 
-        Dtp_FechaRevision.Value = FechaDelServidor()
+        Try
 
-        _Global_BaseBk = "BAKAPP_VH.dbo."
+            _Global_BaseBk = "BAKAPP_VH.dbo."
 
-        Dim _Mensaje As New LsValiciones.Mensajes
+            Dim _Mensaje As New LsValiciones.Mensajes
 
-        Txt_Log.Text = String.Empty
+            Txt_Log.Text = String.Empty
 
-        Sb_AddToLog("Conexión", "Revisando el archivo de conexión a las bases de datos...", Txt_Log)
+            Sb_AddToLog("Conexión", "Revisando el archivo de conexión a las bases de datos...", Txt_Log)
 
-        _Mensaje = _Cl_Conexion.Fx_LeerArchivoConexionJson(True)
+            _Mensaje = _Cl_Conexion.Fx_LeerArchivoConexionJson(True)
 
-        If Not _Mensaje.EsCorrecto Or _Mensaje.Id = 0 Then
+            If Not _Mensaje.EsCorrecto Or _Mensaje.Id = 0 Then
 
-            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Sb_AddToLog("Conexión", "¡Error en la conexión", Txt_Log)
-            Sb_AddToLog("Conexión", _Mensaje.Detalle, Txt_Log)
-            Sb_AddToLog("Conexión", _Mensaje.Mensaje, Txt_Log)
+                MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Sb_AddToLog("Conexión", "¡Error en la conexión", Txt_Log)
+                Sb_AddToLog("Conexión", _Mensaje.Detalle, Txt_Log)
+                Sb_AddToLog("Conexión", _Mensaje.Mensaje, Txt_Log)
 
-            Return
+                Return
 
-        End If
+            End If
 
-        Cadena_ConexionSQL_Server = _Cl_Conexion.Fx_CadenaConexion(_Cl_Conexion.Ls_Conexiones(0).Host,
-                                   _Cl_Conexion.Ls_Conexiones(0).Puerto,
-                                   _Cl_Conexion.Ls_Conexiones(0).Basededatos,
-                                   _Cl_Conexion.Ls_Conexiones(0).Usuario,
-                                   _Cl_Conexion.Ls_Conexiones(0).Password)
+            Cadena_ConexionSQL_Server = _Cl_Conexion.Fx_CadenaConexion(_Cl_Conexion.Ls_Conexiones(0).Host,
+                                       _Cl_Conexion.Ls_Conexiones(0).Puerto,
+                                       _Cl_Conexion.Ls_Conexiones(0).Basededatos,
+                                       _Cl_Conexion.Ls_Conexiones(0).Usuario,
+                                       _Cl_Conexion.Ls_Conexiones(0).Password)
 
-        Sb_AddToLog("Conexión", "¡Conexión exitosa a la base de datos " & _Cl_Conexion.Ls_Conexiones(0).Basededatos.ToString.Trim & "!", Txt_Log)
+            Sb_AddToLog("Conexión", "¡Conexión exitosa a la base de datos " & _Cl_Conexion.Ls_Conexiones(0).Basededatos.ToString.Trim & "!", Txt_Log)
 
-        _Cl_Sincroniza.Cadena_ConexionSQL_Server_Wms = _Cl_Conexion.Fx_CadenaConexion(_Cl_Conexion.Ls_Conexiones(1).Host,
-                                                                                      _Cl_Conexion.Ls_Conexiones(1).Puerto,
-                                                                                      _Cl_Conexion.Ls_Conexiones(1).Basededatos,
-                                                                                      _Cl_Conexion.Ls_Conexiones(1).Usuario,
-                                                                                      _Cl_Conexion.Ls_Conexiones(1).Password)
+            _Cl_Sincroniza.Cadena_ConexionSQL_Server_Wms = _Cl_Conexion.Fx_CadenaConexion(_Cl_Conexion.Ls_Conexiones(1).Host,
+                                                                                          _Cl_Conexion.Ls_Conexiones(1).Puerto,
+                                                                                          _Cl_Conexion.Ls_Conexiones(1).Basededatos,
+                                                                                          _Cl_Conexion.Ls_Conexiones(1).Usuario,
+                                                                                          _Cl_Conexion.Ls_Conexiones(1).Password)
 
-        Sb_AddToLog("Conexión", "¡Conexión exitosa a la base de datos " & _Cl_Conexion.Ls_Conexiones(1).Basededatos.ToString.Trim & "!", Txt_Log)
+            Sb_AddToLog("Conexión", "¡Conexión exitosa a la base de datos " & _Cl_Conexion.Ls_Conexiones(1).Basededatos.ToString.Trim & "!", Txt_Log)
 
+            Dtp_FechaRevision.Value = FechaDelServidor()
 
-        CircularPgrs.IsRunning = True
-        Timer_Ejecutar.Interval = 1000 * 5
-        Timer_Ejecutar.Start()
+            CircularPgrs.IsRunning = True
+            Timer_Ejecutar.Interval = 1000 * 5
+            Timer_Ejecutar.Start()
+
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End Try
 
     End Sub
 
@@ -78,7 +83,9 @@ Public Class Frm_Sincronizador
 
         _FechaRevision = Dtp_FechaRevision.Value
 
+        _Cl_Sincroniza.Sb_Ejecutar_Revision_IncorporarNVVAutomaticamenteAStem(Txt_Log, _FechaRevision)
         _Cl_Sincroniza.Sb_Ejecutar_Revision(Txt_Log, _FechaRevision)
+        _Cl_Sincroniza.Sb_MarcarFacturadasPorFuera(Txt_Log, _FechaRevision)
 
         CircularPgrs.IsRunning = True
         Timer_Ejecutar.Start()

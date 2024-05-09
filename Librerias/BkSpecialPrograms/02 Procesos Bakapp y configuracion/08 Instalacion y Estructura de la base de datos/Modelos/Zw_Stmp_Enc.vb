@@ -26,5 +26,6 @@ Public Class Zw_Stmp_Enc
     Public Property IdmaeedoGen As Integer
     Public Property TidoGen As String
     Public Property NudoGen As String
+    Public Property CodFuncionario_Entrega As String
 
 End Class

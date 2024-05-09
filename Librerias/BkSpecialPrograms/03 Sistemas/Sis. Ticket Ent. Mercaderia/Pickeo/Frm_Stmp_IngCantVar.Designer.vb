@@ -30,43 +30,44 @@ Partial Class Frm_Stmp_IngCantVar
         Me.LblUnidad1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.Lbl_CantVenUd1 = New System.Windows.Forms.Label()
+        Me.Lbl_CantVenUd2 = New System.Windows.Forms.Label()
+        Me.Highlighter1 = New DevComponents.DotNetBar.Validator.Highlighter()
         Me.SuspendLayout()
         '
         'TxtCantUD2
         '
-        Me.TxtCantUD2.BackColor = System.Drawing.Color.White
         '
         '
         '
         Me.TxtCantUD2.Border.Class = "TextBoxBorder"
         Me.TxtCantUD2.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.TxtCantUD2.DisabledBackColor = System.Drawing.Color.White
-        Me.TxtCantUD2.FocusHighlightEnabled = True
         Me.TxtCantUD2.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.TxtCantUD2, True)
         Me.TxtCantUD2.Location = New System.Drawing.Point(122, 35)
         Me.TxtCantUD2.Name = "TxtCantUD2"
         Me.TxtCantUD2.PreventEnterBeep = True
         Me.TxtCantUD2.Size = New System.Drawing.Size(100, 22)
-        Me.TxtCantUD2.TabIndex = 129
+        Me.TxtCantUD2.TabIndex = 1
         Me.TxtCantUD2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.TxtCantUD2.WatermarkText = "0"
         '
         'TxtCantUD1
         '
-        Me.TxtCantUD1.BackColor = System.Drawing.Color.White
         '
         '
         '
         Me.TxtCantUD1.Border.Class = "TextBoxBorder"
         Me.TxtCantUD1.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.TxtCantUD1.DisabledBackColor = System.Drawing.Color.White
-        Me.TxtCantUD1.FocusHighlightEnabled = True
         Me.TxtCantUD1.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.TxtCantUD1, True)
         Me.TxtCantUD1.Location = New System.Drawing.Point(122, 7)
         Me.TxtCantUD1.Name = "TxtCantUD1"
         Me.TxtCantUD1.PreventEnterBeep = True
         Me.TxtCantUD1.Size = New System.Drawing.Size(100, 22)
-        Me.TxtCantUD1.TabIndex = 128
+        Me.TxtCantUD1.TabIndex = 0
         Me.TxtCantUD1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.TxtCantUD1.WatermarkText = "0"
         '
@@ -125,11 +126,41 @@ Partial Class Frm_Stmp_IngCantVar
         Me.Label1.TabIndex = 120
         Me.Label1.Text = "Unidad Primaria"
         '
+        'Lbl_CantVenUd1
+        '
+        Me.Lbl_CantVenUd1.AutoSize = True
+        Me.Lbl_CantVenUd1.BackColor = System.Drawing.Color.White
+        Me.Lbl_CantVenUd1.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_CantVenUd1.Location = New System.Drawing.Point(265, 9)
+        Me.Lbl_CantVenUd1.Name = "Lbl_CantVenUd1"
+        Me.Lbl_CantVenUd1.Size = New System.Drawing.Size(128, 13)
+        Me.Lbl_CantVenUd1.TabIndex = 130
+        Me.Lbl_CantVenUd1.Text = "Cantidad vendida: 1500"
+        '
+        'Lbl_CantVenUd2
+        '
+        Me.Lbl_CantVenUd2.AutoSize = True
+        Me.Lbl_CantVenUd2.BackColor = System.Drawing.Color.White
+        Me.Lbl_CantVenUd2.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_CantVenUd2.Location = New System.Drawing.Point(265, 37)
+        Me.Lbl_CantVenUd2.Name = "Lbl_CantVenUd2"
+        Me.Lbl_CantVenUd2.Size = New System.Drawing.Size(110, 13)
+        Me.Lbl_CantVenUd2.TabIndex = 131
+        Me.Lbl_CantVenUd2.Text = "Cantidad vendida: 6"
+        '
+        'Highlighter1
+        '
+        Me.Highlighter1.ContainerControl = Me
+        Me.Highlighter1.FocusHighlightColor = DevComponents.DotNetBar.Validator.eHighlightColor.Red
+        Me.Highlighter1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
+        '
         'Frm_Stmp_IngCantVar
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(261, 107)
+        Me.ClientSize = New System.Drawing.Size(426, 107)
+        Me.Controls.Add(Me.Lbl_CantVenUd2)
+        Me.Controls.Add(Me.Lbl_CantVenUd1)
         Me.Controls.Add(Me.TxtCantUD2)
         Me.Controls.Add(Me.TxtCantUD1)
         Me.Controls.Add(Me.BtnAceptar)
@@ -159,4 +190,7 @@ Partial Class Frm_Stmp_IngCantVar
     Public WithEvents LblUnidad1 As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
+    Friend WithEvents Lbl_CantVenUd1 As Label
+    Friend WithEvents Lbl_CantVenUd2 As Label
+    Friend WithEvents Highlighter1 As DevComponents.DotNetBar.Validator.Highlighter
 End Class

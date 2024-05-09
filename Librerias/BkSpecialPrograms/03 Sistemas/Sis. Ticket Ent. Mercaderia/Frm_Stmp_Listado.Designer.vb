@@ -24,9 +24,9 @@ Partial Class Frm_Stmp_Listado
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Stmp_Listado))
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Super_TabS = New DevComponents.DotNetBar.SuperTabStrip()
         Me.Tab_Preparacion = New DevComponents.DotNetBar.SuperTabItem()
         Me.Tab_Completadas = New DevComponents.DotNetBar.SuperTabItem()
@@ -34,27 +34,26 @@ Partial Class Frm_Stmp_Listado
         Me.Tab_Entregadas = New DevComponents.DotNetBar.SuperTabItem()
         Me.Tab_Cerradas = New DevComponents.DotNetBar.SuperTabItem()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
-        Me.Btn_CargarNVVFechaDespHoy = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_RevisarTicket = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Crear_Ticket = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_AgregarTicket = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_FacturarMasivamente = New DevComponents.DotNetBar.ButtonItem()
-        Me.ButtonItem1 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_EntregarMercaderia = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_SalaEsperaFacturar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
-        Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_EditarFuncionario = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_QuitarVendedor = New DevComponents.DotNetBar.ButtonItem()
+        Me.Menu_Contextual_01_Opciones_Documento = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_VerDocumento = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Imprimir = New DevComponents.DotNetBar.ButtonItem()
+        Me.ButtonItem2 = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem2 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_AgregarConNumero = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_AgregarBuscando = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
         Me.Imagenes_16x16_Dark = New System.Windows.Forms.ImageList(Me.components)
         Me.Chk_Monitorear = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Timer_Monitoreo = New System.Windows.Forms.Timer(Me.components)
         Me.CircularPgrs = New DevComponents.DotNetBar.Controls.CircularProgress()
-        Me.Menu_Contextual_01_Opciones_Documento = New DevComponents.DotNetBar.ButtonItem()
-        Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
-        Me.ButtonItem3 = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Ver_Anotaciones_Documento = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Super_TabS, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
@@ -132,7 +131,7 @@ Partial Class Frm_Stmp_Listado
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_CargarNVVFechaDespHoy, Me.Btn_RevisarTicket, Me.Btn_Crear_Ticket, Me.Btn_Actualizar, Me.Btn_FacturarMasivamente, Me.ButtonItem1})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_AgregarTicket, Me.Btn_EntregarMercaderia, Me.Btn_SalaEsperaFacturar, Me.Btn_Actualizar})
         Me.Bar2.Location = New System.Drawing.Point(0, 569)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(1204, 41)
@@ -142,36 +141,15 @@ Partial Class Frm_Stmp_Listado
         Me.Bar2.TabStop = False
         Me.Bar2.Text = "Bar2"
         '
-        'Btn_CargarNVVFechaDespHoy
+        'Btn_AgregarTicket
         '
-        Me.Btn_CargarNVVFechaDespHoy.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_CargarNVVFechaDespHoy.ForeColor = System.Drawing.Color.Black
-        Me.Btn_CargarNVVFechaDespHoy.Image = CType(resources.GetObject("Btn_CargarNVVFechaDespHoy.Image"), System.Drawing.Image)
-        Me.Btn_CargarNVVFechaDespHoy.ImageAlt = CType(resources.GetObject("Btn_CargarNVVFechaDespHoy.ImageAlt"), System.Drawing.Image)
-        Me.Btn_CargarNVVFechaDespHoy.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_CargarNVVFechaDespHoy.Name = "Btn_CargarNVVFechaDespHoy"
-        Me.Btn_CargarNVVFechaDespHoy.Tooltip = "Traer todos las NVV con fecha de despacho de hoy"
-        Me.Btn_CargarNVVFechaDespHoy.Visible = False
-        '
-        'Btn_RevisarTicket
-        '
-        Me.Btn_RevisarTicket.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_RevisarTicket.ForeColor = System.Drawing.Color.Black
-        Me.Btn_RevisarTicket.Image = CType(resources.GetObject("Btn_RevisarTicket.Image"), System.Drawing.Image)
-        Me.Btn_RevisarTicket.ImageAlt = CType(resources.GetObject("Btn_RevisarTicket.ImageAlt"), System.Drawing.Image)
-        Me.Btn_RevisarTicket.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_RevisarTicket.Name = "Btn_RevisarTicket"
-        Me.Btn_RevisarTicket.Tooltip = "Agregar Ticket buscando por numero de nota de venta"
-        '
-        'Btn_Crear_Ticket
-        '
-        Me.Btn_Crear_Ticket.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Crear_Ticket.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Crear_Ticket.Image = CType(resources.GetObject("Btn_Crear_Ticket.Image"), System.Drawing.Image)
-        Me.Btn_Crear_Ticket.ImageAlt = CType(resources.GetObject("Btn_Crear_Ticket.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Crear_Ticket.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_Crear_Ticket.Name = "Btn_Crear_Ticket"
-        Me.Btn_Crear_Ticket.Tooltip = "Crear nuevo Ticket buscando nota de venta"
+        Me.Btn_AgregarTicket.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_AgregarTicket.ForeColor = System.Drawing.Color.Black
+        Me.Btn_AgregarTicket.Image = CType(resources.GetObject("Btn_AgregarTicket.Image"), System.Drawing.Image)
+        Me.Btn_AgregarTicket.ImageAlt = CType(resources.GetObject("Btn_AgregarTicket.ImageAlt"), System.Drawing.Image)
+        Me.Btn_AgregarTicket.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_AgregarTicket.Name = "Btn_AgregarTicket"
+        Me.Btn_AgregarTicket.Tooltip = "Agregar Ticket buscando por numero de nota de venta"
         '
         'Btn_Actualizar
         '
@@ -183,27 +161,24 @@ Partial Class Frm_Stmp_Listado
         Me.Btn_Actualizar.Name = "Btn_Actualizar"
         Me.Btn_Actualizar.Tooltip = "Refrescar datos"
         '
-        'Btn_FacturarMasivamente
+        'Btn_EntregarMercaderia
         '
-        Me.Btn_FacturarMasivamente.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_FacturarMasivamente.ForeColor = System.Drawing.Color.Black
-        Me.Btn_FacturarMasivamente.Image = CType(resources.GetObject("Btn_FacturarMasivamente.Image"), System.Drawing.Image)
-        Me.Btn_FacturarMasivamente.ImageAlt = CType(resources.GetObject("Btn_FacturarMasivamente.ImageAlt"), System.Drawing.Image)
-        Me.Btn_FacturarMasivamente.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_FacturarMasivamente.Name = "Btn_FacturarMasivamente"
-        Me.Btn_FacturarMasivamente.Tooltip = "Facturar completadas"
-        Me.Btn_FacturarMasivamente.Visible = False
+        Me.Btn_EntregarMercaderia.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_EntregarMercaderia.ForeColor = System.Drawing.Color.Black
+        Me.Btn_EntregarMercaderia.Image = CType(resources.GetObject("Btn_EntregarMercaderia.Image"), System.Drawing.Image)
+        Me.Btn_EntregarMercaderia.ImageAlt = CType(resources.GetObject("Btn_EntregarMercaderia.ImageAlt"), System.Drawing.Image)
+        Me.Btn_EntregarMercaderia.Name = "Btn_EntregarMercaderia"
+        Me.Btn_EntregarMercaderia.Text = "Entregar mercaderia"
+        Me.Btn_EntregarMercaderia.Tooltip = "Entregar mercaderia"
         '
-        'ButtonItem1
+        'Btn_SalaEsperaFacturar
         '
-        Me.ButtonItem1.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.ButtonItem1.ForeColor = System.Drawing.Color.Black
-        Me.ButtonItem1.Image = CType(resources.GetObject("ButtonItem1.Image"), System.Drawing.Image)
-        Me.ButtonItem1.ImageAlt = CType(resources.GetObject("ButtonItem1.ImageAlt"), System.Drawing.Image)
-        Me.ButtonItem1.Name = "ButtonItem1"
-        Me.ButtonItem1.Text = "Revisar WMS"
-        Me.ButtonItem1.Tooltip = "Refrescar datos"
-        Me.ButtonItem1.Visible = False
+        Me.Btn_SalaEsperaFacturar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_SalaEsperaFacturar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_SalaEsperaFacturar.Image = CType(resources.GetObject("Btn_SalaEsperaFacturar.Image"), System.Drawing.Image)
+        Me.Btn_SalaEsperaFacturar.ImageAlt = CType(resources.GetObject("Btn_SalaEsperaFacturar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_SalaEsperaFacturar.Name = "Btn_SalaEsperaFacturar"
+        Me.Btn_SalaEsperaFacturar.Text = "Facturar al completar"
         '
         'GroupPanel1
         '
@@ -250,7 +225,7 @@ Partial Class Frm_Stmp_Listado
         '
         Me.Menu_Contextual.AntiAlias = True
         Me.Menu_Contextual.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01, Me.Menu_Contextual_01_Opciones_Documento})
+        Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01_Opciones_Documento, Me.ButtonItem2})
         Me.Menu_Contextual.Location = New System.Drawing.Point(26, 27)
         Me.Menu_Contextual.Name = "Menu_Contextual"
         Me.Menu_Contextual.Size = New System.Drawing.Size(412, 25)
@@ -260,63 +235,110 @@ Partial Class Frm_Stmp_Listado
         Me.Menu_Contextual.TabStop = False
         Me.Menu_Contextual.Text = "ContextMenuBar1"
         '
-        'Menu_Contextual_01
+        'Menu_Contextual_01_Opciones_Documento
         '
-        Me.Menu_Contextual_01.AutoExpandOnClick = True
-        Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
-        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_EditarFuncionario, Me.Btn_QuitarVendedor})
-        Me.Menu_Contextual_01.Text = "Opciones"
+        Me.Menu_Contextual_01_Opciones_Documento.AutoExpandOnClick = True
+        Me.Menu_Contextual_01_Opciones_Documento.Name = "Menu_Contextual_01_Opciones_Documento"
+        Me.Menu_Contextual_01_Opciones_Documento.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_VerDocumento, Me.Btn_Imprimir})
+        Me.Menu_Contextual_01_Opciones_Documento.Text = "Opciones documento"
         '
-        'Btn_EditarFuncionario
+        'LabelItem1
         '
-        Me.Btn_EditarFuncionario.Image = CType(resources.GetObject("Btn_EditarFuncionario.Image"), System.Drawing.Image)
-        Me.Btn_EditarFuncionario.ImageAlt = CType(resources.GetObject("Btn_EditarFuncionario.ImageAlt"), System.Drawing.Image)
-        Me.Btn_EditarFuncionario.Name = "Btn_EditarFuncionario"
-        Me.Btn_EditarFuncionario.Text = "Editar funcionario"
+        Me.LabelItem1.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem1.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem1.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem1.Name = "LabelItem1"
+        Me.LabelItem1.PaddingBottom = 1
+        Me.LabelItem1.PaddingLeft = 10
+        Me.LabelItem1.PaddingTop = 1
+        Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem1.Text = "Opciones"
         '
-        'Btn_QuitarVendedor
+        'Btn_VerDocumento
         '
-        Me.Btn_QuitarVendedor.Image = CType(resources.GetObject("Btn_QuitarVendedor.Image"), System.Drawing.Image)
-        Me.Btn_QuitarVendedor.ImageAlt = CType(resources.GetObject("Btn_QuitarVendedor.ImageAlt"), System.Drawing.Image)
-        Me.Btn_QuitarVendedor.Name = "Btn_QuitarVendedor"
-        Me.Btn_QuitarVendedor.Text = "Quitar vendedor"
+        Me.Btn_VerDocumento.Image = CType(resources.GetObject("Btn_VerDocumento.Image"), System.Drawing.Image)
+        Me.Btn_VerDocumento.ImageAlt = CType(resources.GetObject("Btn_VerDocumento.ImageAlt"), System.Drawing.Image)
+        Me.Btn_VerDocumento.Name = "Btn_VerDocumento"
+        Me.Btn_VerDocumento.Text = "Ver documento"
+        '
+        'Btn_Imprimir
+        '
+        Me.Btn_Imprimir.Image = CType(resources.GetObject("Btn_Imprimir.Image"), System.Drawing.Image)
+        Me.Btn_Imprimir.ImageAlt = CType(resources.GetObject("Btn_Imprimir.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Imprimir.Name = "Btn_Imprimir"
+        Me.Btn_Imprimir.Text = "Imprimir"
+        '
+        'ButtonItem2
+        '
+        Me.ButtonItem2.AutoExpandOnClick = True
+        Me.ButtonItem2.Name = "ButtonItem2"
+        Me.ButtonItem2.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem2, Me.Btn_AgregarConNumero, Me.Btn_AgregarBuscando})
+        Me.ButtonItem2.Text = "Opciones documento"
+        '
+        'LabelItem2
+        '
+        Me.LabelItem2.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem2.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem2.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem2.Name = "LabelItem2"
+        Me.LabelItem2.PaddingBottom = 1
+        Me.LabelItem2.PaddingLeft = 10
+        Me.LabelItem2.PaddingTop = 1
+        Me.LabelItem2.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem2.Text = "Opciones"
+        '
+        'Btn_AgregarConNumero
+        '
+        Me.Btn_AgregarConNumero.Image = CType(resources.GetObject("Btn_AgregarConNumero.Image"), System.Drawing.Image)
+        Me.Btn_AgregarConNumero.ImageAlt = CType(resources.GetObject("Btn_AgregarConNumero.ImageAlt"), System.Drawing.Image)
+        Me.Btn_AgregarConNumero.Name = "Btn_AgregarConNumero"
+        Me.Btn_AgregarConNumero.Text = "Agregar Ticket buscando por numero de nota de venta"
+        '
+        'Btn_AgregarBuscando
+        '
+        Me.Btn_AgregarBuscando.Image = CType(resources.GetObject("Btn_AgregarBuscando.Image"), System.Drawing.Image)
+        Me.Btn_AgregarBuscando.ImageAlt = CType(resources.GetObject("Btn_AgregarBuscando.ImageAlt"), System.Drawing.Image)
+        Me.Btn_AgregarBuscando.Name = "Btn_AgregarBuscando"
+        Me.Btn_AgregarBuscando.Text = "Crear nuevo Ticket buscando nota de venta"
         '
         'Grilla
         '
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle13.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle13.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle13.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle13
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle14.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle14.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle14.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle14.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle14
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
         Me.Grilla.ReadOnly = True
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle15.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle15.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle15.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle15
         Me.Grilla.Size = New System.Drawing.Size(1176, 466)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 27
@@ -411,39 +433,6 @@ Partial Class Frm_Stmp_Listado
         Me.CircularPgrs.Style = DevComponents.DotNetBar.eDotNetBarStyle.OfficeXP
         Me.CircularPgrs.TabIndex = 171
         '
-        'Menu_Contextual_01_Opciones_Documento
-        '
-        Me.Menu_Contextual_01_Opciones_Documento.AutoExpandOnClick = True
-        Me.Menu_Contextual_01_Opciones_Documento.Name = "Menu_Contextual_01_Opciones_Documento"
-        Me.Menu_Contextual_01_Opciones_Documento.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.ButtonItem3, Me.Btn_Ver_Anotaciones_Documento})
-        Me.Menu_Contextual_01_Opciones_Documento.Text = "Opciones documento"
-        '
-        'LabelItem1
-        '
-        Me.LabelItem1.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
-        Me.LabelItem1.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
-        Me.LabelItem1.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
-        Me.LabelItem1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.LabelItem1.Name = "LabelItem1"
-        Me.LabelItem1.PaddingBottom = 1
-        Me.LabelItem1.PaddingLeft = 10
-        Me.LabelItem1.PaddingTop = 1
-        Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.LabelItem1.Text = "Opciones"
-        '
-        'ButtonItem3
-        '
-        Me.ButtonItem3.Image = CType(resources.GetObject("ButtonItem3.Image"), System.Drawing.Image)
-        Me.ButtonItem3.ImageAlt = CType(resources.GetObject("ButtonItem3.ImageAlt"), System.Drawing.Image)
-        Me.ButtonItem3.Name = "ButtonItem3"
-        Me.ButtonItem3.Text = "Ver documento"
-        '
-        'Btn_Ver_Anotaciones_Documento
-        '
-        Me.Btn_Ver_Anotaciones_Documento.Image = CType(resources.GetObject("Btn_Ver_Anotaciones_Documento.Image"), System.Drawing.Image)
-        Me.Btn_Ver_Anotaciones_Documento.Name = "Btn_Ver_Anotaciones_Documento"
-        Me.Btn_Ver_Anotaciones_Documento.Text = "Ver anotaciones del documento"
-        '
         'Frm_Stmp_Listado
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -464,7 +453,7 @@ Partial Class Frm_Stmp_Listado
         Me.Name = "Frm_Stmp_Listado"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "MetroForm"
+        Me.Text = "SISTEMA DE ENTREGA DE MERCADERIA POR TICKET"
         CType(Me.Super_TabS, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel1.ResumeLayout(False)
@@ -480,26 +469,25 @@ Partial Class Frm_Stmp_Listado
     Friend WithEvents Tab_Facturadas As DevComponents.DotNetBar.SuperTabItem
     Friend WithEvents Tab_Cerradas As DevComponents.DotNetBar.SuperTabItem
     Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
-    Public WithEvents Btn_Crear_Ticket As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Btn_RevisarTicket As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_Actualizar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Menu_Contextual As DevComponents.DotNetBar.ContextMenuBar
-    Friend WithEvents Menu_Contextual_01 As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_EditarFuncionario As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_QuitarVendedor As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents Imagenes_16x16 As ImageList
     Friend WithEvents Imagenes_16x16_Dark As ImageList
-    Public WithEvents Btn_CargarNVVFechaDespHoy As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Btn_FacturarMasivamente As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Chk_Monitorear As DevComponents.DotNetBar.Controls.CheckBoxX
-    Public WithEvents ButtonItem1 As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Tab_Entregadas As DevComponents.DotNetBar.SuperTabItem
     Friend WithEvents Timer_Monitoreo As Timer
     Friend WithEvents CircularPgrs As DevComponents.DotNetBar.Controls.CircularProgress
     Friend WithEvents Menu_Contextual_01_Opciones_Documento As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LabelItem1 As DevComponents.DotNetBar.LabelItem
-    Friend WithEvents ButtonItem3 As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_Ver_Anotaciones_Documento As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_VerDocumento As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Imprimir As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_EntregarMercaderia As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_SalaEsperaFacturar As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_AgregarTicket As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents ButtonItem2 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelItem2 As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Btn_AgregarConNumero As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_AgregarBuscando As DevComponents.DotNetBar.ButtonItem
 End Class

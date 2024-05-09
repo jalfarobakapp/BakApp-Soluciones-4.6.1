@@ -577,6 +577,12 @@
   <data name="Zw_Prod_Usuario_Validador" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_prod_usuario_validador.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="Zw_PtsVta_Configuracion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Sql\Tablas\Zw_PtsVta_Configuracion.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_PtsVta_Doc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Sql\Tablas\Zw_PtsVta_Doc.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="Zw_Reclamo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\tablas\zw_reclamo.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>

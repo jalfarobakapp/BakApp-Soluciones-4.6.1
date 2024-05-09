@@ -1,8 +1,6 @@
 ﻿Imports System.Threading
 Imports DevComponents.DotNetBar
-Imports Hefesto.Acuse.Recibo
 Imports MySql.Data.Authentication
-Imports Org.BouncyCastle.Math.EC
 
 Public Class Frm_Stmp_Listado
 
@@ -30,11 +28,13 @@ Public Class Frm_Stmp_Listado
         _FechaServidor = FechaDelServidor()
 
         Sb_InsertarBotonenGrilla(Grilla, "BtnImagen_Estado", "Est.", "Img_Estado", 0, _Tipo_Boton.Imagen)
-        AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
+        AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+        AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
         AddHandler Tab_Preparacion.Click, AddressOf Sb_Actualizar_Grilla
         AddHandler Tab_Completadas.Click, AddressOf Sb_Actualizar_Grilla
         AddHandler Tab_Facturadas.Click, AddressOf Sb_Actualizar_Grilla
+        AddHandler Tab_Entregadas.Click, AddressOf Sb_Actualizar_Grilla
         AddHandler Tab_Cerradas.Click, AddressOf Sb_Actualizar_Grilla
 
         Super_TabS.SelectedTabIndex = 0
@@ -77,8 +77,6 @@ Public Class Frm_Stmp_Listado
                 _Condicion += vbCrLf & "And Estado = 'NULO'"
         End Select
 
-        Btn_FacturarMasivamente.Enabled = (_Tbas.Name = "Tab_Completadas")
-
         Consulta_sql = "Select Enc.*,Edo.FEEMDO,Edo.SUDO,En.NOKOEN," & vbCrLf &
                        "Case Estado " & vbCrLf &
                        "When 'PREPA' Then 'Preparación...'" & vbCrLf &
@@ -118,7 +116,7 @@ Public Class Frm_Stmp_Listado
             .Columns("BtnImagen_Estado").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Facturar").Visible = (_Tbas.Name = "Tab_Completadas")
+            .Columns("Facturar").Visible = True '(_Tbas.Name = "Tab_Completadas")
             .Columns("Facturar").HeaderText = "Facturar"
             .Columns("Facturar").Width = 60
             .Columns("Facturar").DisplayIndex = _DisplayIndex
@@ -302,62 +300,6 @@ Public Class Frm_Stmp_Listado
 
     End Sub
 
-    Private Sub Btn_Crear_Ticket_Click(sender As Object, e As EventArgs) Handles Btn_Crear_Ticket.Click
-
-        Timer_Monitoreo.Stop()
-
-        Dim _Row_Documento As DataRow
-
-        Dim _Fm As New Frm_BusquedaDocumento_Filtro(False)
-        _Fm.Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado,
-                                 "NVV",
-                                 "Where TIDO = 'NVV'")
-        _Fm.Rdb_Estado_Todos.Enabled = True
-        _Fm.Rdb_Estado_Vigente.Checked = True
-        _Fm.Rdb_Estado_Cerradas.Enabled = False
-        '_Fm.HabilitarNVVParaFacturar = True
-        '_Fm.Rdb_Funcionarios_Uno.Checked = True
-        _Fm.Rdb_Fecha_Emision_Desde_Hasta.Checked = True
-        _Fm.Chk_Mostrar_Vales_Transitorios.Checked = False
-        _Fm.Chk_Mostrar_Vales_Transitorios.Enabled = False
-        _Fm.Pro_Sql_Filtro_Otro_Filtro = "And IDMAEEDO Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Stmp_Enc)"
-        _Fm.ShowDialog(Me)
-        _Row_Documento = _Fm.Pro_Row_Documento_Seleccionado
-        _Fm.Dispose()
-
-        If IsNothing(_Row_Documento) Then
-            Return
-        End If
-
-        If _Row_Documento.Item("SUDO") <> ModSucursal Then
-            Dim _Sucursal As String = _Sql.Fx_Trae_Dato("TABSU", "NOKOSU",
-                                                        "EMPRESA = '" & ModEmpresa & "' And KOSU = '" & _Row_Documento.Item("SUDO") & "'")
-
-            MessageBoxEx.Show(Me, "Documento corresponde a la sucursal " & _Row_Documento.Item("SUDO") & " - " & _Sucursal, "Validación",
-                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
-
-            Return
-        End If
-
-        If MessageBoxEx.Show(Me, "¿Confirma el documento " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO") & "?",
-                             "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
-            Return
-        End If
-
-        Me.Cursor = Cursors.WaitCursor
-
-        Sb_Crear_Ticket(_Row_Documento.Item("IDMAEEDO"), _Row_Documento.Item("TIDO"), _Row_Documento.Item("NUDO"), 1)
-
-        Me.Cursor = Cursors.Default
-
-        Sb_Actualizar_Grilla()
-
-        If Chk_Monitorear.Checked Then
-            Timer_Monitoreo.Start()
-        End If
-
-    End Sub
-
     Sub Sb_Crear_Ticket(_Idmaeedo As Integer, _Tido As String, _Nudo As String, _Intentos As Integer)
 
         Try
@@ -374,7 +316,10 @@ Public Class Frm_Stmp_Listado
                                      _Facturar,
                                      FechaDelServidor,
                                      "R",
-                                     True)
+                                     True,
+                                     ModEmpresa,
+                                     ModSucursal,
+                                     FUNCIONARIO)
 
             Dim _Icon As MessageBoxIcon
 
@@ -419,50 +364,6 @@ Public Class Frm_Stmp_Listado
         Sb_Actualizar_Grilla()
     End Sub
 
-    Private Sub Btn_RevisarTicket_Click(sender As Object, e As EventArgs) Handles Btn_RevisarTicket.Click
-
-        Timer_Monitoreo.Stop()
-
-        Dim _Nudo As String
-        Dim _Aceptar As Boolean = InputBox_Bk(Me, "Ingrese el numero de nota de venta a revisar",
-                                              "Revisar detalle NVV", _Nudo, False, _Tipo_Mayus_Minus.Normal, 15, True)
-
-        If Not _Aceptar Then
-            Return
-        End If
-
-        _Nudo = _Nudo.Replace("NVV", "")
-        _Nudo = _Nudo.Replace("-", "")
-
-        _Nudo = Fx_Rellena_ceros(_Nudo, 10)
-
-        Consulta_sql = "Select IDMAEEDO,TIDO,NUDO From MAEEDO Where TIDO = 'NVV' And NUDO = '" & _Nudo & "'"
-        Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-        If IsNothing(_Row_Documento) Then
-            MessageBoxEx.Show(Me, "No existe documento NVV - """ & _Nudo & "", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Return
-        End If
-
-        If MessageBoxEx.Show(Me, "¿Confirma el documento " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO") & "?",
-                             "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
-            Return
-        End If
-
-        Me.Cursor = Cursors.WaitCursor
-
-        Sb_Crear_Ticket(_Row_Documento.Item("IDMAEEDO"), _Row_Documento.Item("TIDO"), _Row_Documento.Item("NUDO"), 1)
-
-        Me.Cursor = Cursors.Default
-
-        Sb_Actualizar_Grilla()
-
-        If Chk_Monitorear.Checked Then
-            Timer_Monitoreo.Start()
-        End If
-
-    End Sub
-
     Private Sub Grilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
 
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
@@ -494,17 +395,87 @@ Public Class Frm_Stmp_Listado
 
         End If
 
-    End Sub
+        If _Tbas.Name = "Tab_Entregadas" Then
 
-    Private Sub Btn_CargarNVVFechaDespHoy_Click(sender As Object, e As EventArgs) Handles Btn_CargarNVVFechaDespHoy.Click
 
-        Dim Fm As New Frm_Stmp_IncNVVPicking
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
-
-        Sb_Actualizar_Grilla()
+        End If
 
     End Sub
+
+    Function Fx_Entregar() As LsValiciones.Mensajes
+
+        Timer_Monitoreo.Stop()
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+            Dim _Numero As String
+
+            Dim _Aceptar As Boolean = InputBox_Bk(Me, "Ingrese el numero de documento a cerrar" & vbCrLf & "El formato debe ser Ejemplo: FCV2365",
+                                                  "Entregar mercadería", _Numero, False, _Tipo_Mayus_Minus.Normal, 15, True)
+
+            If Not _Aceptar Then
+                _Mensaje.Detalle = "Acción cancelada"
+                Throw New System.Exception("An exception has occurred.")
+            End If
+
+            Dim _Tido As String = Mid(_Numero, 1, 3)
+            Dim _Nudo As String = Mid(_Numero, 4, 10)
+
+            _Nudo = Fx_Rellena_ceros(_Nudo, 10)
+
+            Consulta_sql = "Select IDMAEEDO,TIDO,NUDO From MAEEDO Where TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'"
+            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+            If IsNothing(_Row) Then
+                _Mensaje.Detalle = "Validación"
+                Throw New System.Exception(_Sql.Pro_Error)
+            End If
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Idmaeedo = " & _Row.Item("IDMAEEDO")
+            Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_Row_Documento) Then
+                MessageBoxEx.Show(Me, "No existe documento " & _Tido & " - """ & _Nudo & "", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                _Mensaje.Detalle = "Validación"
+                Throw New System.Exception("No existe documento " & _Tido & " - """ & _Nudo & " En el sistema de Ticket de entrega")
+            End If
+
+            If MessageBoxEx.Show(Me, "¿Confirma el documento " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO") & "?",
+                                 "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                _Mensaje.Detalle = "Acción cancelada"
+                Throw New System.Exception("An exception has occurred.")
+            End If
+
+            Dim _Id_Enc As Integer = _Row_Documento.Item("Id")
+
+            Dim _Cl_Stmp As New Cl_Stmp
+            _Cl_Stmp.Fx_Llenar_Encabezado(_Id_Enc)
+
+            _Cl_Stmp.Zw_Stmp_Enc.CodFuncionario_Entrega = FUNCIONARIO
+
+            _Mensaje = _Cl_Stmp.Fx_Entregar_Mercaderia
+
+
+
+            'Me.Cursor = Cursors.WaitCursor
+
+            'Sb_Crear_Ticket(_Row_Documento.Item("IDMAEEDO"), _Row_Documento.Item("TIDO"), _Row_Documento.Item("NUDO"), 1)
+
+            'Me.Cursor = Cursors.Default
+
+
+        Catch ex As Exception
+        Finally
+            If Chk_Monitorear.Checked Then
+                Timer_Monitoreo.Start()
+            End If
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
 
     Function Fx_Cargar_NVV_FechaDespachoHoy() As List(Of LsValiciones.Mensajes)
 
@@ -532,7 +503,6 @@ Public Class Frm_Stmp_Listado
         Return _Lista
 
     End Function
-
     Function Fx_Crear_Ticket(_Idmaeedo As Integer,
                              _Facturar As Boolean,
                              _TipoPago As String) As LsValiciones.Mensajes
@@ -654,91 +624,7 @@ Public Class Frm_Stmp_Listado
 
         Return _Mensaje_Stem
 
-        'If Not _Mensaje_Stem.EsCorrecto Then
-        '    MessageBoxEx.Show(Me, _Mensaje_Stem.Mensaje, "Problema", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        '    Return
-        'End If
-
-        'MessageBoxEx.Show(Me, "Ticket Nro. " & _Cl_Stem.Stem_Enc.Numero & " creado correctamente." & vbCrLf &
-        '                  "El documento ya esta en proceso", "Crear Ticket", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-
     End Function
-
-    Private Sub Btn_FacturarMasivamente_Click(sender As Object, e As EventArgs) Handles Btn_FacturarMasivamente.Click
-
-        Dim _Contador = 0
-
-        For Each _Fila As DataRow In _Tbl_Tickets_Stem.Rows
-
-            Dim _Estado = _Fila.RowState
-
-            If _Estado <> DataRowState.Deleted Then
-
-                If _Fila.Item("Facturar") Then
-                    _Contador += 1
-                End If
-
-            End If
-
-        Next
-
-        If _Contador = 0 Then
-            MessageBoxEx.Show(Me, "No hay registros seleccionados", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Return
-        End If
-
-        Dim _Lista As New List(Of LsValiciones.Mensajes)
-
-        For Each _Fila As DataRow In _Tbl_Tickets_Stem.Rows
-
-            If _Fila.Item("Facturar") Then
-
-                Dim _Id As Integer = _Fila.Item("Id")
-                Dim _Idmaeedo As Integer = _Fila.Item("Idmaeedo")
-                Dim _TidoDocEmitir As String = _Fila.Item("DocEmitir")
-
-                Dim _FechaServidor As DateTime = FechaDelServidor()
-
-                Dim _Mensaje As LsValiciones.Mensajes = Fx_Crear_Documento_Desde_Otro_Automaticamente(Me, _TidoDocEmitir, _Idmaeedo, _FechaServidor, "FACEL")
-
-                If _Mensaje.EsCorrecto Then
-
-                    Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Mensaje.Id
-                    Dim _Row_Maeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set " &
-                                   "Estado = 'FACTU',TidoGen = '" & _Row_Maeedo.Item("TIDO") &
-                                   "',NudoGen = '" & _Row_Maeedo.Item("NUDO") &
-                                   "',IdmaeedoGen = " & _Row_Maeedo.Item("IDMAEEDO") & vbCrLf &
-                                   "Where Id = " & _Id
-                    _Sql.Ej_consulta_IDU(Consulta_sql)
-
-                End If
-
-                _Lista.Add(_Mensaje)
-
-            End If
-
-        Next
-
-        Dim ListaQr As LsValiciones.Mensajes = _Lista.FirstOrDefault(Function(p) p.EsCorrecto = False)
-
-        If Not IsNothing(ListaQr) Then
-
-            MessageBoxEx.Show(Me, "Hay documentos con problemas", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-
-        End If
-
-        Dim Fmv As New Frm_Validaciones
-        Fmv.ListaMensajes = _Lista
-        Fmv.ShowDialog(Me)
-        Fmv.Dispose()
-
-        Sb_Actualizar_Grilla()
-
-    End Sub
-
 
     Function Fx_Crear_Documento_Desde_Otro_Automaticamente(_Formulario As Form,
                                                            _TidoDocEmitir As String,
@@ -901,29 +787,6 @@ Public Class Frm_Stmp_Listado
 
     End Function
 
-    Private Sub ButtonItem1_Click(sender As Object, e As EventArgs) Handles ButtonItem1.Click
-
-        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
-        Dim _Id_Enc As Integer = _Fila.Cells("Id").Value
-        Dim _Idmaeedoo As Integer = _Fila.Cells("Idmaeedo").Value
-        Dim _Nudo As String = _Fila.Cells("Nudo").Value
-
-        Dim _Cl_Stmp As New Cl_Stmp
-        _Cl_Stmp.Fx_Llenar_Encabezado(_Id_Enc)
-        _Cl_Stmp.Fx_Llenar_Detalle(_Id_Enc)
-
-        _Cl_Stmp.Zw_Stmp_Enc.Fecha_Facturar = FechaDelServidor()
-
-        Dim _Mensaje As New LsValiciones.Mensajes
-        Dim Cadena_ConexionSQL_Server_Wms = "data source = wmstest.villar.cl; initial catalog = viaware; user id = sa_wms; password = sa_wms"
-        _Mensaje = _Cl_Stmp.Fx_Revisar_WMSVillar(_Idmaeedoo, _Nudo, Cadena_ConexionSQL_Server_Wms)
-
-        Sb_Actualizar_Grilla()
-        'Modificado
-
-
-    End Sub
-
     Private Sub Timer_Monitoreo_Tick(sender As Object, e As EventArgs) Handles Timer_Monitoreo.Tick
 
         Timer_Monitoreo.Stop()
@@ -933,6 +796,7 @@ Public Class Frm_Stmp_Listado
     End Sub
 
     Private Sub Chk_Monitorear_CheckedChanged(sender As Object, e As EventArgs)
+
         If Chk_Monitorear.Checked Then
             MessageBoxEx.Show(Me, "Monitoreo activo", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Timer_Monitoreo.Start()
@@ -942,7 +806,304 @@ Public Class Frm_Stmp_Listado
         End If
 
         CircularPgrs.IsRunning = Chk_Monitorear.Checked
+
     End Sub
 
+    Private Sub Btn_VerDocumento_Click(sender As Object, e As EventArgs) Handles Btn_VerDocumento.Click
 
+        Timer_Monitoreo.Stop()
+
+        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+        Dim _Idmaeedo = _Fila.Cells("IDMAEEDO").Value
+
+        Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+        If Chk_Monitorear.Checked Then Timer_Monitoreo.Start()
+
+    End Sub
+
+    Private Sub Btn_Imprimir_Click(sender As Object, e As EventArgs) Handles Btn_Imprimir.Click
+
+        Timer_Monitoreo.Stop()
+
+        If Not Fx_Tiene_Permiso(Me, "Doc00012") Then Return
+
+        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+
+        Dim _IdMaeedo As Integer = _Fila.Cells("IDMAEEDO").Value
+        Dim _Tido = _Fila.Cells("TIDO").Value
+        Dim _Subtido = String.Empty
+
+        If _Tido = "GDD" Or _Tido = "GDP" Then
+            _Subtido = _Fila.Cells("SUBTIDO").Value
+        End If
+
+        Consulta_sql = "Select top 1 * From MAEEDO Where IDMAEEDO = " & _IdMaeedo
+        Dim _RowEncabezado As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _NombreFormato As String
+
+        Dim Fm As New Frm_Seleccionar_Formato(_Tido)
+        If CBool(Fm.Tbl_Formatos.Rows.Count) Then
+            Fm.ShowDialog(Me)
+
+            If Fm.Formato_Seleccionado Then
+                _Subtido = Fm.Row_Formato_Seleccionado.Item("Subtido")
+                _NombreFormato = Fm.Row_Formato_Seleccionado.Item("NombreFormato")
+                If _NombreFormato = "" Then
+                    _NombreFormato = String.Empty
+                End If
+
+                Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _IdMaeedo,
+                                                         False, True, "", False, 0, False, _Subtido)
+
+                If Not String.IsNullOrEmpty(Trim(_Imprime)) Then
+                    MessageBox.Show(Me, _Imprime, "Problemas al Imprimir",
+                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                End If
+
+            End If
+
+        Else
+            MessageBoxEx.Show(Me, "No existen formatos adicionales para este documento", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End If
+
+        Fm.Dispose()
+
+        If Chk_Monitorear.Checked Then Timer_Monitoreo.Start()
+
+    End Sub
+
+    Private Sub Sb_Grilla_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+
+        If e.Button = Windows.Forms.MouseButtons.Right Then
+
+            With sender
+
+                Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
+
+                If Hitest.Type = DataGridViewHitTestType.Cell Then
+
+                    .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
+
+                    Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+                    Dim _Idmaeedo = _Fila.Cells("IDMAEEDO").Value
+
+                    LabelItem1.Text = "Opciones (Id: " & _Idmaeedo & ")"
+
+                    ShowContextMenu(Menu_Contextual_01_Opciones_Documento)
+
+                End If
+
+            End With
+
+        End If
+
+    End Sub
+
+    Private Sub Btn_SalaEsperaFacturar_Click(sender As Object, e As EventArgs) Handles Btn_SalaEsperaFacturar.Click
+
+        Try
+            If Not Fx_Tiene_Permiso(Me, "Stem0004") Then Return
+
+            Timer_Monitoreo.Stop()
+
+            Dim _Nudo As String
+            Dim _Aceptar As Boolean = InputBox_Bk(Me, "Ingrese el numero de nota de venta que se facturara al completar el pedido",
+                                                  "Revisar detalle NVV", _Nudo, False, _Tipo_Mayus_Minus.Normal, 15, True)
+
+            If Not _Aceptar Then
+                Return
+            End If
+
+            _Nudo = _Nudo.Replace("NVV", "")
+            _Nudo = _Nudo.Replace("-", "")
+
+            _Nudo = Fx_Rellena_ceros(_Nudo, 10)
+
+            Consulta_sql = "Select IDMAEEDO,TIDO,NUDO From MAEEDO Where TIDO = 'NVV' And NUDO = '" & _Nudo & "'"
+            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_Row) Then
+                MessageBoxEx.Show(Me, "No existe documento NVV - """ & _Nudo & "", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+            Dim _Idmaeedo As Integer = _Row.Item("IDMAEEDO")
+            Dim _Tido As String = _Row.Item("TIDO")
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc " & vbCrLf &
+                           "Where Idmaeedo = " & _Idmaeedo & " And Tido = '" & _Tido & "' And Nudo = '" & _Nudo & "'"
+            _Row = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_Row) Then
+                MessageBoxEx.Show(Me, "No se encontro este docuemnto en el sistema de entrega." & vbCrLf &
+                                  "Documento NVV - " & _Nudo, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+            If _Row.Item("Estado") = "FACTU" Then
+                MessageBoxEx.Show(Me, "Este documento ya se encuentra facturado" & vbCrLf &
+                                  _Row.Item("TidoGen") & "-" & _Row.Item("NudoGen"), "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+            If _Row.Item("Facturar") Then
+                MessageBoxEx.Show(Me, "Este documento ya se encuentra en proceso de facturación", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+            If MessageBoxEx.Show(Me, "¿Confirma el documento " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO") & "?",
+                                 "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                Return
+            End If
+
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Facturar = 1 Where Id = " & _Row.Item("Id")
+            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+                MessageBoxEx.Show(Me, "Documento marcado", "Marcar documento", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+
+            Sb_Actualizar_Grilla()
+
+        Catch ex As Exception
+        Finally
+            If Chk_Monitorear.Checked Then
+                Timer_Monitoreo.Start()
+            End If
+        End Try
+
+    End Sub
+
+    Private Sub Btn_EntregarMercaderia_Click(sender As Object, e As EventArgs) Handles Btn_EntregarMercaderia.Click
+
+        MessageBoxEx.Show(Me, "En Construcción", "Entregar mercadería", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+
+        Return
+        If Not Fx_Tiene_Permiso(Me, "Stem0003") Then Return
+
+    End Sub
+
+    Private Sub Btn_AgregarTicket_Click(sender As Object, e As EventArgs) Handles Btn_AgregarTicket.Click
+
+        ShowContextMenu(ButtonItem2)
+
+    End Sub
+
+    Private Sub Btn_AgregarConNumero_Click(sender As Object, e As EventArgs) Handles Btn_AgregarConNumero.Click
+
+        Try
+
+            Timer_Monitoreo.Stop()
+
+            If Not Fx_Tiene_Permiso(Me, "Stem0002") Then Return
+
+            Dim _Nudo As String
+            Dim _Aceptar As Boolean = InputBox_Bk(Me, "Ingrese el numero de nota de venta a revisar",
+                                                  "Revisar detalle NVV", _Nudo, False, _Tipo_Mayus_Minus.Normal, 15, True)
+
+            If Not _Aceptar Then
+                Return
+            End If
+
+            _Nudo = _Nudo.Replace("NVV", "")
+            _Nudo = _Nudo.Replace("-", "")
+
+            _Nudo = Fx_Rellena_ceros(_Nudo, 10)
+
+            Consulta_sql = "Select IDMAEEDO,TIDO,NUDO From MAEEDO Where TIDO = 'NVV' And NUDO = '" & _Nudo & "'"
+            Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_Row_Documento) Then
+                MessageBoxEx.Show(Me, "No existe documento NVV - """ & _Nudo & "", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+            If MessageBoxEx.Show(Me, "¿Confirma el documento " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO") & "?",
+                                 "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                Return
+            End If
+
+            Me.Cursor = Cursors.WaitCursor
+
+            Sb_Crear_Ticket(_Row_Documento.Item("IDMAEEDO"), _Row_Documento.Item("TIDO"), _Row_Documento.Item("NUDO"), 1)
+
+            Me.Cursor = Cursors.Default
+
+            Sb_Actualizar_Grilla()
+
+        Catch ex As Exception
+
+        Finally
+            If Chk_Monitorear.Checked Then
+                Timer_Monitoreo.Start()
+            End If
+        End Try
+
+    End Sub
+
+    Private Sub Btn_AgregarBuscando_Click(sender As Object, e As EventArgs) Handles Btn_AgregarBuscando.Click
+
+        Try
+
+            If Not Fx_Tiene_Permiso(Me, "Stem0002") Then Return
+
+            Timer_Monitoreo.Stop()
+
+            Dim _Row_Documento As DataRow
+
+            Dim _Fm As New Frm_BusquedaDocumento_Filtro(False)
+            _Fm.Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado,
+                                     "NVV",
+                                     "Where TIDO = 'NVV'")
+            _Fm.Rdb_Estado_Todos.Enabled = True
+            _Fm.Rdb_Estado_Vigente.Checked = True
+            _Fm.Rdb_Estado_Cerradas.Enabled = False
+            '_Fm.HabilitarNVVParaFacturar = True
+            '_Fm.Rdb_Funcionarios_Uno.Checked = True
+            _Fm.Rdb_Fecha_Emision_Desde_Hasta.Checked = True
+            _Fm.Chk_Mostrar_Vales_Transitorios.Checked = False
+            _Fm.Chk_Mostrar_Vales_Transitorios.Enabled = False
+            _Fm.Pro_Sql_Filtro_Otro_Filtro = "And IDMAEEDO Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Stmp_Enc)"
+            _Fm.ShowDialog(Me)
+            _Row_Documento = _Fm.Pro_Row_Documento_Seleccionado
+            _Fm.Dispose()
+
+            If IsNothing(_Row_Documento) Then
+                Return
+            End If
+
+            If _Row_Documento.Item("SUDO") <> ModSucursal Then
+                Dim _Sucursal As String = _Sql.Fx_Trae_Dato("TABSU", "NOKOSU",
+                                                            "EMPRESA = '" & ModEmpresa & "' And KOSU = '" & _Row_Documento.Item("SUDO") & "'")
+
+                MessageBoxEx.Show(Me, "Documento corresponde a la sucursal " & _Row_Documento.Item("SUDO") & " - " & _Sucursal, "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                Return
+            End If
+
+            If MessageBoxEx.Show(Me, "¿Confirma el documento " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO") & "?",
+                                 "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                Return
+            End If
+
+            Me.Cursor = Cursors.WaitCursor
+
+            Sb_Crear_Ticket(_Row_Documento.Item("IDMAEEDO"), _Row_Documento.Item("TIDO"), _Row_Documento.Item("NUDO"), 1)
+
+            Me.Cursor = Cursors.Default
+
+            Sb_Actualizar_Grilla()
+
+        Catch ex As Exception
+        Finally
+            If Chk_Monitorear.Checked Then
+                Timer_Monitoreo.Start()
+            End If
+        End Try
+
+    End Sub
 End Class

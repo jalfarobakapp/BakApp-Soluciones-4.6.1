@@ -56,8 +56,7 @@ Partial Class Frm_Crear_Entidad_Mt_Puntos
         Me.Btn_Aceptar.Image = CType(resources.GetObject("Btn_Aceptar.Image"), System.Drawing.Image)
         Me.Btn_Aceptar.ImageAlt = CType(resources.GetObject("Btn_Aceptar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Aceptar.Name = "Btn_Aceptar"
-        Me.Btn_Aceptar.Text = "Aceptar"
-        Me.Btn_Aceptar.Tooltip = "Aceptar"
+        Me.Btn_Aceptar.Tooltip = "Grabar"
         '
         'Txt_EmailPuntos
         '

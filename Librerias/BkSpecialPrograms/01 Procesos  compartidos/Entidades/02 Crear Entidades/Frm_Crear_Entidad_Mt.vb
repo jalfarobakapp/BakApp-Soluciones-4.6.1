@@ -235,6 +235,7 @@ Public Class Frm_Crear_Entidad_Mt
             Cmb_Cobrador.Enabled = True
             BtnModCobrador.Enabled = False
             Btn_Direcciones_Despachos.Enabled = False
+            Btn_Puntos.Enabled = False
 
             If String.IsNullOrEmpty(Trim(Txt_Koen.Text)) Then
                 Me.ActiveControl = Txt_Koen
@@ -990,16 +991,6 @@ Public Class Frm_Crear_Entidad_Mt
                     Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                     Comando.Transaction = myTrans
                     Comando.ExecuteNonQuery()
-
-                    If .JuntaPuntos Then
-
-                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Entidades Set " & vbCrLf &
-                                       "JuntaPuntos = " & Convert.ToInt32(.JuntaPuntos) & vbCrLf &
-                                       ",EmailPuntos = '" & .EmailPuntos.Trim & "'" & vbCrLf &
-                                       ",FechaInscripPuntos = '" & Format(.FechaInscripPuntos, "yyyyMMdd") & "'" & vbCrLf &
-                                       "Where CodEntidad = '" & .CodEntidad & "' And CodSucEntidad = '" & .CodSucEntidad & "'"
-
-                    End If
 
                 End With
 
@@ -2312,7 +2303,13 @@ Public Class Frm_Crear_Entidad_Mt
             Return
         End If
 
+        ShowContextMenu(Menu_Contextual_04_Puntos)
+        Return
+
         With Cl_Entidades
+
+            'Dim _JuntaPuntos As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "JuntaPuntos",
+            '                                                "CodEntidad = '" & .CodEntidad & "' And CodSucEntidad = '" & .CodSucEntidad & "'")
 
             If .JuntaPuntos Then
 
@@ -2323,7 +2320,37 @@ Public Class Frm_Crear_Entidad_Mt
 
             End If
 
-            Dim Fm As New Frm_Crear_Entidad_Mt_Puntos
+            Dim Fm As New Frm_Crear_Entidad_Mt_Puntos(Txt_Koen.Text, Txt_Suen.Text)
+            Fm.Txt_EmailPuntos.Text = .EmailPuntos.Trim
+            Fm.Chk_JuntaPuntos.Checked = .JuntaPuntos
+            Fm.Dtp_FechaInscripPuntos.Value = NuloPorNro(.FechaInscripPuntos, Now.Date)
+            Fm.ShowDialog(Me)
+
+            If Fm.Aceptar Then
+                .JuntaPuntos = Fm.Chk_JuntaPuntos.Checked
+                .EmailPuntos = Fm.Txt_EmailPuntos.Text.Trim
+                .FechaInscripPuntos = Fm.Dtp_FechaInscripPuntos.Value
+            End If
+
+            Fm.Dispose()
+
+        End With
+
+    End Sub
+
+    Private Sub Btn_VerPuntosCliente_Click(sender As Object, e As EventArgs) Handles Btn_VerPuntosCliente.Click
+
+        Dim Fmptos As New Frm_InformePtosClientes(Txt_Koen.Text, Txt_Suen.Text)
+        Fmptos.ShowDialog(Me)
+        Fmptos.Dispose()
+
+    End Sub
+
+    Private Sub Btn_EditarConfPuntosCliente_Click(sender As Object, e As EventArgs) Handles Btn_EditarConfPuntosCliente.Click
+
+        With Cl_Entidades
+
+            Dim Fm As New Frm_Crear_Entidad_Mt_Puntos(Txt_Koen.Text, Txt_Suen.Text)
             Fm.Txt_EmailPuntos.Text = .EmailPuntos.Trim
             Fm.Chk_JuntaPuntos.Checked = .JuntaPuntos
             Fm.Dtp_FechaInscripPuntos.Value = NuloPorNro(.FechaInscripPuntos, Now.Date)

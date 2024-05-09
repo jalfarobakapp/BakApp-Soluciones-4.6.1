@@ -300,7 +300,7 @@ Partial Class Frm_Stmp_IngPickeo
         Me.Name = "Frm_Stmp_IngPickeo"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "MetroForm"
+        Me.Text = "INGRESAR PICKEO"
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel4.ResumeLayout(False)
         CType(Me.Grilla_Detalle, System.ComponentModel.ISupportInitialize).EndInit()

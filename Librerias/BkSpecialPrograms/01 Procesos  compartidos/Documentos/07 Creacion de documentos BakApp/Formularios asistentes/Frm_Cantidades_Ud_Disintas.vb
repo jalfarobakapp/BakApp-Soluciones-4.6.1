@@ -18,6 +18,7 @@ Public Class Frm_Cantidades_Ud_Disintas
     Dim _Fila As DataGridViewRow
     Dim _RowProducto As DataRow
 
+    Public Property RevisarRtuVariable As Boolean
     Public Property RtuVariable As Boolean
     Public Property Cantidad_Ud1 As Double
     Public Property Cantidad_Ud2 As Double
@@ -53,7 +54,7 @@ Public Class Frm_Cantidades_Ud_Disintas
 
         TxtRTU.Text = _Rtu
 
-        If RtuVariable Then
+        If RevisarRtuVariable Then
 
             If _Fila.Cells("Nmarca").Value = "¡" Then
 

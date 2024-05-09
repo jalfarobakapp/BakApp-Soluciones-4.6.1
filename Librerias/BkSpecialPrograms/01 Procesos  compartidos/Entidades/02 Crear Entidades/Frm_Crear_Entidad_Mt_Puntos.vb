@@ -2,14 +2,23 @@
 
 Public Class Frm_Crear_Entidad_Mt_Puntos
 
+    Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+    Dim Consulta_sql As String
+
     Public Property Aceptar As Boolean
 
-    Public Sub New()
+    Private _CodEntidad As String
+    Private _CodSucEntidad As String
+
+    Public Sub New(_CodEntidad As String, _CodSucEntidad As String)
 
         ' Esta llamada es exigida por el diseñador.
         InitializeComponent()
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+
+        Me._CodEntidad = _CodEntidad
+        Me._CodSucEntidad = _CodSucEntidad
 
         Sb_Color_Botones_Barra(Bar1)
 
@@ -28,6 +37,17 @@ Public Class Frm_Crear_Entidad_Mt_Puntos
             Txt_EmailPuntos.Focus()
             Return
         End If
+
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Entidades Set " & vbCrLf &
+                       "JuntaPuntos = " & Convert.ToInt32(Chk_JuntaPuntos.Checked) & vbCrLf &
+                       ",EmailPuntos = '" & Txt_EmailPuntos.Text.Trim & "'" & vbCrLf &
+                       ",FechaInscripPuntos = '" & Format(Dtp_FechaInscripPuntos.Value, "yyyyMMdd") & "'" & vbCrLf &
+                       "Where CodEntidad = '" & _CodEntidad & "' And CodSucEntidad = '" & _CodSucEntidad & "'"
+        If Not _Sql.Ej_consulta_IDU(Consulta_sql) Then
+            Return
+        End If
+
+        MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         Aceptar = True
         Me.Close()
