@@ -161,6 +161,8 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp
 
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 9), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
 
     Private Sub Frm_Informe_Prox_Recep_02_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load

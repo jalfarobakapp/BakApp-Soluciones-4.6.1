@@ -38,7 +38,9 @@ Public Class Frm_ConfPuntosVta
             Consulta_sql = "Select * From TABCT Where KOCT = '" & .Concepto & "'"
             _Row_Concepto = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-            Txt_Concepto.Text = .Concepto.ToString.Trim & " - " & _Row_Concepto.Item("NOKOCT").ToString.Trim
+            If Not IsNothing(_Row_Concepto) Then
+                Txt_Concepto.Text = .Concepto.ToString.Trim & " - " & _Row_Concepto.Item("NOKOCT").ToString.Trim
+            End If
 
         End With
 

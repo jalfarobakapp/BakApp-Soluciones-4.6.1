@@ -51,6 +51,7 @@ Public Class Cl_Stmp
             .Accion = _Row_Enc.Item("Accion")
             .Secueven = _Row_Enc.Item("Secueven")
             .TipoPago = _Row_Enc.Item("TipoPago")
+            .CodFuncionario_Entrega = _Row_Enc.Item("CodFuncionario_Entrega")
 
         End With
 
@@ -447,7 +448,10 @@ Public Class Cl_Stmp
                              _Facturar As Boolean,
                              _FechaParaFacturar As DateTime,
                              _TipoPago As String,
-                             _Picker As Boolean) As LsValiciones.Mensajes
+                             _Picker As Boolean,
+                             _Empresa As String,
+                             _Sucursal As String,
+                             _CodFuncionario_Crea As String) As LsValiciones.Mensajes
 
         Dim _FechaServidor As DateTime = FechaDelServidor()
 
@@ -464,7 +468,7 @@ Public Class Cl_Stmp
         End If
 
         Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Docu_Ent",
-                                                       "Empresa = '" & ModEmpresa & "'" &
+                                                       "Empresa = '" & _Empresa & "'" &
                                                        " And Idmaeedo = " & _Idmaeedo &
                                                        " And Tido = '" & _Tido & "'" &
                                                        " And Nudo = '" & _Nudo & "'")
@@ -523,14 +527,14 @@ Public Class Cl_Stmp
 
         With _Cl_Stem.Zw_Stmp_Enc
 
-            .Empresa = ModEmpresa
-            .Sucursal = ModSucursal
+            .Empresa = _Empresa
+            .Sucursal = _Sucursal
             .Idmaeedo = _Row_Documento.Item("IDMAEEDO")
             .Tido = _Row_Documento.Item("TIDO")
             .Nudo = _Row_Documento.Item("NUDO")
             .Endo = _Row_Documento.Item("ENDO")
             .Suendo = _Row_Documento.Item("SUENDO")
-            .CodFuncionario_Crea = FUNCIONARIO
+            .CodFuncionario_Crea = _CodFuncionario_Crea
             .FechaCreacion = _FechaServidor
             .Estado = "PREPA"
             .Facturar = _Facturar
@@ -727,6 +731,61 @@ Public Class Cl_Stmp
         End Try
 
         Return _Mensaje
+
+    End Function
+
+    Function Fx_Entregar_Mercaderia() As LsValiciones.Mensajes
+
+        Dim _Mensaje_Stem As New LsValiciones.Mensajes
+
+        Consulta_sql = String.Empty
+
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+        Dim Cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
+
+        Try
+
+            myTrans = Cn2.BeginTransaction()
+
+            With _Zw_Stmp_Enc
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set " & vbCrLf &
+                               "Estado = '" & .Estado & "'" &
+                               ",FechaCierre = Getdate()" &
+                               ",CodFuncionario_Entrega = '" & .DocEmitir & "'" & vbCrLf &
+                               "Where Id = " & .Id
+
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+            End With
+
+            myTrans.Commit()
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+            _Mensaje_Stem.EsCorrecto = True
+            _Mensaje_Stem.Detalle = "Documento entrega correctamente"
+            _Mensaje_Stem.Mensaje = "Documento cerrado y entrega correctamente"
+
+        Catch ex As Exception
+
+            _Mensaje_Stem.EsCorrecto = False
+            _Mensaje_Stem.Mensaje = ex.Message
+            _Zw_Stmp_Enc.Id = 0
+
+            If Not IsNothing(myTrans) Then myTrans.Rollback()
+
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+        End Try
+
+        Return _Mensaje_Stem
 
     End Function
 

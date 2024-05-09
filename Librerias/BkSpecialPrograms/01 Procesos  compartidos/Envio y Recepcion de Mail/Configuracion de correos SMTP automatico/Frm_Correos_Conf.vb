@@ -1087,7 +1087,7 @@ Public Class Frm_Correos_Conf
 
         If Not String.IsNullOrEmpty(_CC) Then
             For Each _Cc_ As String In _CC.Split(New Char() {";"c})
-                If Fx_Validar_Email(_CC) Then
+                If Fx_Validar_Email(_Cc_) Then
                     builder.Cc.Add(New MailBox(_Cc_))
                 End If
             Next

@@ -32,7 +32,7 @@ Public Class Frm_Anotaciones_Ver_Anotaciones
         End Set
     End Property
 
-    Public Sub New(ByVal Idrve As Integer, ByVal Tabla As Tipo_Tabla)
+    Public Sub New(Idrve As Integer, Tabla As Tipo_Tabla)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -55,13 +55,15 @@ Public Class Frm_Anotaciones_Ver_Anotaciones
 
         _Tbl_Mevento = _Sql.Fx_Get_Tablas(Consulta_sql)
 
-        If Global_Thema = Enum_Themas.Oscuro Then
-            Btn_Agregar_Anotacion.ForeColor = Color.White
-        End If
+        'If Global_Thema = Enum_Themas.Oscuro Then
+        '    Btn_Agregar_Anotacion.ForeColor = Color.White
+        'End If
+
+        Sb_Color_Botones_Barra(Bar1)
 
     End Sub
 
-    Private Sub Frm_Anotaciones_Ver_Anotaciones_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Anotaciones_Ver_Anotaciones_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         _Fevento = FechaDelServidor() 'Format(FechaDelServidor, "yyyyMMdd")
 
@@ -129,7 +131,7 @@ Public Class Frm_Anotaciones_Ver_Anotaciones
 
     End Sub
 
-    Private Sub Frm_Anotaciones_Ver_Anotaciones_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_Anotaciones_Ver_Anotaciones_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
@@ -437,7 +439,7 @@ Public Class Frm_Anotaciones_Ver_Anotaciones
 
     End Sub
 
-    Private Sub Btn_Editar_Anotacion_Evento_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Editar_Anotacion_Evento.Click
+    Private Sub Btn_Editar_Anotacion_Evento_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Editar_Anotacion_Evento.Click
 
         If Fx_Tiene_Permiso(Me, "Doc00005") Then
 
@@ -478,7 +480,7 @@ Public Class Frm_Anotaciones_Ver_Anotaciones
 
     End Sub
 
-    Private Sub Btn_Eliminar_tabla_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Eliminar_tabla.Click
+    Private Sub Btn_Eliminar_tabla_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Eliminar_tabla.Click
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Idevento As Integer = _Fila.Cells("IDEVENTO").Value
@@ -567,7 +569,7 @@ Public Class Frm_Anotaciones_Ver_Anotaciones
 
     End Sub
 
-    Private Sub Sb_Grilla_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Sb_Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
 
         If e.Button = Windows.Forms.MouseButtons.Right Then
 
@@ -585,7 +587,7 @@ Public Class Frm_Anotaciones_Ver_Anotaciones
 
     End Sub
 
-    Private Sub Grilla_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
+    Private Sub Grilla_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
         Sb_Revisar_Menu_Contextual()
     End Sub
 
@@ -621,14 +623,14 @@ Public Class Frm_Anotaciones_Ver_Anotaciones
 
     End Sub
 
-    Private Sub Btn_Exportar_a_Excel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Exportar_a_Excel.Click
+    Private Sub Btn_Exportar_a_Excel_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Exportar_a_Excel.Click
 
-        Consulta_sql = "SELECT IDEVENTO,ARCHIRVE,IDRVE,KOFU," & _
-                       "Isnull((Select top 1 NOKOFU From TABFU Tf Where Tf.KOFU = Mv.KOFU),'') As 'Funcionario'," & _
-                       "FEVENTO,HORAGRAB,Convert(nvarchar, convert(datetime, (HORAGRAB*1.0/3600)/24), 108) As Hora,FECHAREF," & _
-                       "KOTABLA,KOCARAC,NOKOCARAC,ARCHIRSE,IDRSE,LINK,KOFUDEST" & vbCrLf & _
-                       "FROM MEVENTO Mv" & vbCrLf & _
-                       "WHERE ARCHIRVE='" & _Archive & "' AND IDRVE= " & _Idrve & vbCrLf & _
+        Consulta_sql = "SELECT IDEVENTO,ARCHIRVE,IDRVE,KOFU," &
+                       "Isnull((Select top 1 NOKOFU From TABFU Tf Where Tf.KOFU = Mv.KOFU),'') As 'Funcionario'," &
+                       "FEVENTO,HORAGRAB,Convert(nvarchar, convert(datetime, (HORAGRAB*1.0/3600)/24), 108) As Hora,FECHAREF," &
+                       "KOTABLA,KOCARAC,NOKOCARAC,ARCHIRSE,IDRSE,LINK,KOFUDEST" & vbCrLf &
+                       "FROM MEVENTO Mv" & vbCrLf &
+                       "WHERE ARCHIRVE='" & _Archive & "' AND IDRVE= " & _Idrve & vbCrLf &
                        "ORDER BY FEVENTO,HORAGRAB"
 
         Dim _TblAsociaciones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
@@ -637,7 +639,7 @@ Public Class Frm_Anotaciones_Ver_Anotaciones
 
     End Sub
 
-    Private Sub Btn_Agregar_Anotacion_Link_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Btn_Agregar_Anotacion_Link_Click(sender As System.Object, e As System.EventArgs)
 
         Dim _Nombre_Archivo As String
         Dim _UbicArchivo As String
@@ -708,7 +710,7 @@ Public Class Frm_Anotaciones_Ver_Anotaciones
 
     End Sub
 
-    Private Sub Btn_Ver_Link_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Ver_Link.Click
+    Private Sub Btn_Ver_Link_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ver_Link.Click
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Link As String = Trim(_Fila.Cells("LINK").Value)
@@ -724,7 +726,7 @@ Public Class Frm_Anotaciones_Ver_Anotaciones
 
     End Sub
 
-    Private Sub Btn_Ir_Ubicacion_Link_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Ir_Ubicacion_Link.Click
+    Private Sub Btn_Ir_Ubicacion_Link_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ir_Ubicacion_Link.Click
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Link As String = Trim(_Fila.Cells("LINK").Value)
@@ -745,7 +747,7 @@ Public Class Frm_Anotaciones_Ver_Anotaciones
     End Sub
 
 
-    Private Sub Btn_Ligar_traza_externa_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Btn_Ligar_traza_externa_Click(sender As System.Object, e As System.EventArgs)
 
         If Fx_Tiene_Permiso(Me, "Doc00008") Then
 
@@ -822,7 +824,7 @@ Public Class Frm_Anotaciones_Ver_Anotaciones
 
     End Sub
 
-    Private Sub Btn_Ver_Documento_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Ver_Documento.Click
+    Private Sub Btn_Ver_Documento_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ver_Documento.Click
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Link As String = Trim(_Fila.Cells("LINK").Value)
@@ -836,7 +838,7 @@ Public Class Frm_Anotaciones_Ver_Anotaciones
 
     End Sub
 
-    Function Fx_Se_Puede_Editar_La_Linea(ByVal _Fila As DataGridViewRow) As Boolean
+    Function Fx_Se_Puede_Editar_La_Linea(_Fila As DataGridViewRow) As Boolean
 
         Dim _Kofu As String = _Fila.Cells("KOFU").Value
 

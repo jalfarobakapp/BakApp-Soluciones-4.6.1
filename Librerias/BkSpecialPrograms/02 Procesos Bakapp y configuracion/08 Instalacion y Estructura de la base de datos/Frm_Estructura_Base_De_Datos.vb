@@ -241,6 +241,10 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Prod_CodQRLogDoc", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Prod_ImpAdicional", _Modificar, Lbl_Eventos)
 
+            'SISTEMA DE PUNTOS POR VENTAS
+            .Sb_Revisar_Tabla2(Me, "Zw_PtsVta_Configuracion", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_PtsVta_Doc", _Modificar, Lbl_Eventos)
+
             'PRODUCCION
             .Sb_Revisar_Tabla2(Me, "Zw_Pdc_Mesones", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Pdc_MesonVsMaquina", _Modificar, Lbl_Eventos)

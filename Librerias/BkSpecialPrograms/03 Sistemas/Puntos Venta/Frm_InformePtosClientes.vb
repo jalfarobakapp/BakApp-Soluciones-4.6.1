@@ -45,7 +45,7 @@
                        "Group by CodEntidad,CodSucEntidad,Nudonodefi" & vbCrLf &
                        "Select CodEntidad,CodSucEntidad,NOKOEN,PtsGanados As 'PuntosGanados',PtsUsados As 'PuntosUtilizados',PtsGanados-PtsUsados As PuntosAFavor" & vbCrLf &
                        "From #Paso" & vbCrLf &
-                       "Inner Join SIERRALTA_PRB.dbo.MAEEN On KOEN = CodEntidad And SUEN = CodSucEntidad" & vbCrLf &
+                       "Inner Join MAEEN On KOEN = CodEntidad And SUEN = CodSucEntidad" & vbCrLf &
                        "Select *,Case When Nudonodefi = 1 Then 0 Else PtsGanados end As 'Ptos_Acumulados',PtsUsados As 'Ptos_Utilizados'" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_PtsVta_Doc" & vbCrLf &
                        "Where CodEntidad = '" & _Koen & "' And CodSucEntidad = '" & _Suen & "'" & vbCrLf &
@@ -112,6 +112,10 @@
             .Refresh()
 
         End With
+
+        If Not CBool(_Ds.Tables(0).Rows.Count) Then
+            Return
+        End If
 
         Dim _Row_Ptos As DataRow = _Ds.Tables(0).Rows(0)
 

@@ -176,7 +176,7 @@
     </Reference>
     <Reference Include="Mail, Version=3.0.20106.1313, Culture=neutral, PublicKeyToken=6dc438ab78a525b3, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\Nube OneDrive\OneDrive\Desarrollos BakApp\.Net Librerias especiales\Licencia Mail DLL\Mail\Redistributables\net20\Mail.dll</HintPath>
+      <HintPath>D:\Nube OneDrive\OneDrive\Desarrollos BakApp\.Net Librerias especiales\Mail\Redistributables\Net45\Mail.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Bcl.AsyncInterfaces.7.0.0\lib\netstandard2.0\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
@@ -7941,6 +7941,8 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Prod_Stock_Enc_History.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Prod_Ubicacion.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Prod_Usuario_Validador.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_PtsVta_Configuracion.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_PtsVta_Doc.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Reclamo.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Reclamo_Archivos.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Reclamo_Email_Aviso.sql" />

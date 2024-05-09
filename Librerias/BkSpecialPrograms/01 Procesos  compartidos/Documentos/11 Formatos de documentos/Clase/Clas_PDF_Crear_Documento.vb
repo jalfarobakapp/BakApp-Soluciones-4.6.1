@@ -331,8 +331,8 @@ Public Class Clas_PDF_Crear_Documento
             Dim _Texto
             Dim _RutaImagen As String
 
-            Dim _Fte_Usar
-            Dim _Style As FontStyle = FontStyle.Underline
+            Dim _Fte_Usar As XFont
+            Dim _Style As XFontStyle = XFontStyle.Underline
             Dim _Imagen As XImage
 
             Dim _Funcion_Bk As Boolean
@@ -378,17 +378,17 @@ Public Class Clas_PDF_Crear_Documento
 
                 Select Case _Estilo
                     Case 0
-                        _Style = FontStyle.Regular
+                        _Style = XFontStyle.Regular
                     Case 1
-                        _Style = FontStyle.Bold
+                        _Style = XFontStyle.Bold
                     Case 2
-                        _Style = FontStyle.Italic
+                        _Style = XFontStyle.Italic
                     Case 4
-                        _Style = FontStyle.Underline
+                        _Style = XFontStyle.Underline
                     Case 8
-                        _Style = FontStyle.Strikeout
+                        _Style = XFontStyle.Strikeout
                     Case Else
-                        _Style = FontStyle.Regular
+                        _Style = XFontStyle.Regular
                 End Select
 
                 _Fte_Usar = New XFont(_Fuente, _Tamano, _Style)
