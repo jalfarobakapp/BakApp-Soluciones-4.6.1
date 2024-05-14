@@ -1,4 +1,5 @@
-﻿Imports BkSpecialPrograms.Stmp_BD
+﻿Imports BkSpecialPrograms.LsValiciones
+Imports BkSpecialPrograms.Stmp_BD
 Imports BkSpecialPrograms.Tickets_Db
 Imports DevComponents.DotNetBar
 Imports System.ComponentModel
@@ -624,7 +625,7 @@ Public Class Cl_Stmp
             Dim _Lineas As DataTable = _Ds.Tables("Lineas")
             Dim _Comandos As DataTable = _Ds.Tables("Comandos")
 
-            If _ticket_verde.Rows(0).Item("ticket_verde") = "N" Then
+            If _ticket_verde.Rows(0).Item("ticket_verde") <> "Y" Then
                 _Mensaje.EsCorrecto = False
                 _Mensaje.Detalle = "El pedido aun no esta listo"
                 Return _Mensaje
@@ -672,7 +673,7 @@ Public Class Cl_Stmp
 
                     Dim _CONT As String = _Fila.Item("CONT")
                     Dim _tag As String = _Fila.Item("tag")
-                    Dim _loc As String = _Fila.Item("loc")
+                    Dim _loc As String = NuloPorNro(_Fila.Item("loc"), "...")
 
                     Dim _sku As String = _Fila.Item("sku")
                     Dim _qty As Double = _Fila.Item("qty")
@@ -757,7 +758,7 @@ Public Class Cl_Stmp
                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set " & vbCrLf &
                                "Estado = '" & .Estado & "'" &
                                ",FechaCierre = Getdate()" &
-                               ",CodFuncionario_Entrega = '" & .DocEmitir & "'" & vbCrLf &
+                               ",CodFuncionario_Entrega = '" & .CodFuncionario_Entrega & "'" & vbCrLf &
                                "Where Id = " & .Id
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
@@ -772,11 +773,13 @@ Public Class Cl_Stmp
             _Mensaje_Stem.EsCorrecto = True
             _Mensaje_Stem.Detalle = "Documento entrega correctamente"
             _Mensaje_Stem.Mensaje = "Documento cerrado y entrega correctamente"
+            _Mensaje_Stem.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
 
             _Mensaje_Stem.EsCorrecto = False
             _Mensaje_Stem.Mensaje = ex.Message
+            _Mensaje_Stem.Icono = MessageBoxIcon.Stop
             _Zw_Stmp_Enc.Id = 0
 
             If Not IsNothing(myTrans) Then myTrans.Rollback()

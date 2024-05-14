@@ -281,6 +281,12 @@
     <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Mezcla\Frm_SelecProdMezclaFab.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Mezcla\Frm_VerReceta.Designer.vb">
+      <DependentUpon>Frm_VerReceta.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Mezcla\Frm_VerReceta.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Tarja\Cl_Tarja.vb" />
     <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Tarja\Frm_GRI_FabXProducto.Designer.vb">
       <DependentUpon>Frm_GRI_FabXProducto.vb</DependentUpon>
@@ -517,6 +523,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Mezcla\Frm_SelecProdMezclaFab.resx">
       <DependentUpon>Frm_SelecProdMezclaFab.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Mezcla\Frm_VerReceta.resx">
+      <DependentUpon>Frm_VerReceta.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Tarja\Frm_GRI_FabXProducto.resx">
       <DependentUpon>Frm_GRI_FabXProducto.vb</DependentUpon>

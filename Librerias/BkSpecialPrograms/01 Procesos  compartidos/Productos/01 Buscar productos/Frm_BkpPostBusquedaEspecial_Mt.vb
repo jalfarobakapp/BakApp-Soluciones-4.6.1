@@ -1566,39 +1566,41 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     Sub Sb_Seleccionar_Producto_doble_clic_Alternativos()
 
-        If Fx_Tiene_Permiso(Me, "Prod020") Then
-
-            _Tbl_Producto_Seleccionado = Nothing
-
-            Dim CodigoPr_Sel = Trim(Grilla.Rows(Grilla.CurrentRow.Index).Cells("Codigo").Value)
-
-            Consulta_sql = "Select * From MAEPR Where KOPR = '" & CodigoPr_Sel & "'"
-            _Tbl_Producto_Seleccionado = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-            Dim _Codigo As String = _Tbl_Producto_Seleccionado.Rows(0).Item("KOPR")
-
-            If Not String.IsNullOrEmpty(Trim(_Codigo)) Then
-                Dim Fm_A As New Frm_CodAlternativo_Ver
-                Fm_A.TxtCodigo.Text = _Codigo
-                Fm_A.Txtdescripcion.Text = _Tbl_Producto_Seleccionado.Rows(0).Item("NOKOPR")
-                Fm_A.TxtRTU.Text = _Tbl_Producto_Seleccionado.Rows(0).Item("RLUD")
-                Fm_A.ShowDialog(Me)
-
-                If _Trabajar_Alternativos Then
-                    TxtCodigo.SelectAll()
-                    TxtCodigo.Focus()
-                Else
-                    Txtdescripcion.Text = CodigoPr_Sel
-                    Txtdescripcion.SelectAll()
-                    Txtdescripcion.Focus()
-                End If
-
-                BuscarDatoEnGrilla(Trim(_Codigo), "Codigo", Grilla)
-
-                Fm_A.Dispose()
-
-            End If
+        If Not Fx_Tiene_Permiso(Me, "Prod020") Then
+            Return
         End If
+
+        _Tbl_Producto_Seleccionado = Nothing
+
+        Dim CodigoPr_Sel = Trim(Grilla.Rows(Grilla.CurrentRow.Index).Cells("Codigo").Value)
+
+        Consulta_sql = "Select * From MAEPR Where KOPR = '" & CodigoPr_Sel & "'"
+        _Tbl_Producto_Seleccionado = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        Dim _Codigo As String = _Tbl_Producto_Seleccionado.Rows(0).Item("KOPR")
+
+        If Not String.IsNullOrEmpty(Trim(_Codigo)) Then
+            Dim Fm_A As New Frm_CodAlternativo_Ver
+            Fm_A.TxtCodigo.Text = _Codigo
+            Fm_A.Txtdescripcion.Text = _Tbl_Producto_Seleccionado.Rows(0).Item("NOKOPR")
+            Fm_A.TxtRTU.Text = _Tbl_Producto_Seleccionado.Rows(0).Item("RLUD")
+            Fm_A.ShowDialog(Me)
+
+            If _Trabajar_Alternativos Then
+                TxtCodigo.SelectAll()
+                TxtCodigo.Focus()
+            Else
+                Txtdescripcion.Text = CodigoPr_Sel
+                Txtdescripcion.SelectAll()
+                Txtdescripcion.Focus()
+            End If
+
+            BuscarDatoEnGrilla(Trim(_Codigo), "Codigo", Grilla)
+
+            Fm_A.Dispose()
+
+        End If
+
     End Sub
 
     Sub Sb_Seleccionar_Producto_doble_clic_Ubicaciones()

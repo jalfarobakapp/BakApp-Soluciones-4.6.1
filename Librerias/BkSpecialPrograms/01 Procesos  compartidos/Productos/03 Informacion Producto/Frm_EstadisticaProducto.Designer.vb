@@ -947,7 +947,7 @@ Partial Class Frm_EstadisticaProducto
         Me.Chk_Stock_Minimo.CheckValue = "Y"
         Me.Chk_Stock_Minimo.FocusCuesEnabled = False
         Me.Chk_Stock_Minimo.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Stock_Minimo.Location = New System.Drawing.Point(157, 3)
+        Me.Chk_Stock_Minimo.Location = New System.Drawing.Point(156, 3)
         Me.Chk_Stock_Minimo.Name = "Chk_Stock_Minimo"
         Me.Chk_Stock_Minimo.Size = New System.Drawing.Size(143, 19)
         Me.Chk_Stock_Minimo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -962,7 +962,7 @@ Partial Class Frm_EstadisticaProducto
         Me.Chk_Stock_Salidas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Stock_Salidas.FocusCuesEnabled = False
         Me.Chk_Stock_Salidas.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Stock_Salidas.Location = New System.Drawing.Point(157, 28)
+        Me.Chk_Stock_Salidas.Location = New System.Drawing.Point(156, 28)
         Me.Chk_Stock_Salidas.Name = "Chk_Stock_Salidas"
         Me.Chk_Stock_Salidas.Size = New System.Drawing.Size(103, 19)
         Me.Chk_Stock_Salidas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -977,7 +977,7 @@ Partial Class Frm_EstadisticaProducto
         Me.Chk_Stock_Ingresos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Stock_Ingresos.FocusCuesEnabled = False
         Me.Chk_Stock_Ingresos.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Stock_Ingresos.Location = New System.Drawing.Point(87, 28)
+        Me.Chk_Stock_Ingresos.Location = New System.Drawing.Point(86, 28)
         Me.Chk_Stock_Ingresos.Name = "Chk_Stock_Ingresos"
         Me.Chk_Stock_Ingresos.Size = New System.Drawing.Size(64, 19)
         Me.Chk_Stock_Ingresos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1021,7 +1021,7 @@ Partial Class Frm_EstadisticaProducto
         Me.Input_Stock_Minimo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Stock_Minimo.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Stock_Minimo.ForeColor = System.Drawing.Color.Black
-        Me.Input_Stock_Minimo.Location = New System.Drawing.Point(87, 3)
+        Me.Input_Stock_Minimo.Location = New System.Drawing.Point(86, 3)
         Me.Input_Stock_Minimo.MinValue = 1
         Me.Input_Stock_Minimo.Name = "Input_Stock_Minimo"
         Me.Input_Stock_Minimo.ShowUpDown = True
@@ -1168,7 +1168,7 @@ Partial Class Frm_EstadisticaProducto
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.83024!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 68.16976!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 63.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 639.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 642.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.LabelX15, 0, 3)
         Me.TableLayoutPanel1.Controls.Add(Me.LblZona, 0, 3)
         Me.TableLayoutPanel1.Controls.Add(Me.LabelX8, 0, 0)
@@ -1204,7 +1204,7 @@ Partial Class Frm_EstadisticaProducto
         Me.LabelX15.ForeColor = System.Drawing.Color.Black
         Me.LabelX15.Location = New System.Drawing.Point(5, 74)
         Me.LabelX15.Name = "LabelX15"
-        Me.LabelX15.Size = New System.Drawing.Size(35, 15)
+        Me.LabelX15.Size = New System.Drawing.Size(34, 15)
         Me.LabelX15.TabIndex = 46
         Me.LabelX15.Text = "Zona"
         '
@@ -1216,9 +1216,9 @@ Partial Class Frm_EstadisticaProducto
         '
         Me.LblZona.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LblZona.ForeColor = System.Drawing.Color.Black
-        Me.LblZona.Location = New System.Drawing.Point(48, 74)
+        Me.LblZona.Location = New System.Drawing.Point(47, 74)
         Me.LblZona.Name = "LblZona"
-        Me.LblZona.Size = New System.Drawing.Size(83, 15)
+        Me.LblZona.Size = New System.Drawing.Size(81, 15)
         Me.LblZona.TabIndex = 45
         Me.LblZona.Text = "Zona"
         '
@@ -1232,7 +1232,7 @@ Partial Class Frm_EstadisticaProducto
         Me.LabelX8.ForeColor = System.Drawing.Color.Black
         Me.LabelX8.Location = New System.Drawing.Point(5, 5)
         Me.LabelX8.Name = "LabelX8"
-        Me.LabelX8.Size = New System.Drawing.Size(35, 15)
+        Me.LabelX8.Size = New System.Drawing.Size(34, 15)
         Me.LabelX8.TabIndex = 33
         Me.LabelX8.Text = "Super Familia"
         '
@@ -1246,7 +1246,7 @@ Partial Class Frm_EstadisticaProducto
         Me.LabelX9.ForeColor = System.Drawing.Color.Black
         Me.LabelX9.Location = New System.Drawing.Point(5, 28)
         Me.LabelX9.Name = "LabelX9"
-        Me.LabelX9.Size = New System.Drawing.Size(35, 15)
+        Me.LabelX9.Size = New System.Drawing.Size(34, 15)
         Me.LabelX9.TabIndex = 35
         Me.LabelX9.Text = "Familia"
         '
@@ -1258,9 +1258,9 @@ Partial Class Frm_EstadisticaProducto
         '
         Me.LblFamilia.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LblFamilia.ForeColor = System.Drawing.Color.Black
-        Me.LblFamilia.Location = New System.Drawing.Point(48, 28)
+        Me.LblFamilia.Location = New System.Drawing.Point(47, 28)
         Me.LblFamilia.Name = "LblFamilia"
-        Me.LblFamilia.Size = New System.Drawing.Size(83, 15)
+        Me.LblFamilia.Size = New System.Drawing.Size(81, 15)
         Me.LblFamilia.TabIndex = 36
         Me.LblFamilia.Text = "LblFamilia"
         '
@@ -1272,9 +1272,9 @@ Partial Class Frm_EstadisticaProducto
         '
         Me.LblSuperFamilia.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LblSuperFamilia.ForeColor = System.Drawing.Color.Black
-        Me.LblSuperFamilia.Location = New System.Drawing.Point(48, 5)
+        Me.LblSuperFamilia.Location = New System.Drawing.Point(47, 5)
         Me.LblSuperFamilia.Name = "LblSuperFamilia"
-        Me.LblSuperFamilia.Size = New System.Drawing.Size(83, 15)
+        Me.LblSuperFamilia.Size = New System.Drawing.Size(81, 15)
         Me.LblSuperFamilia.TabIndex = 34
         Me.LblSuperFamilia.Text = "LblSuperFamilia"
         '
@@ -1286,7 +1286,7 @@ Partial Class Frm_EstadisticaProducto
         '
         Me.LblMarca.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LblMarca.ForeColor = System.Drawing.Color.Black
-        Me.LblMarca.Location = New System.Drawing.Point(204, 28)
+        Me.LblMarca.Location = New System.Drawing.Point(201, 28)
         Me.LblMarca.Name = "LblMarca"
         Me.LblMarca.Size = New System.Drawing.Size(484, 15)
         Me.LblMarca.TabIndex = 40
@@ -1300,7 +1300,7 @@ Partial Class Frm_EstadisticaProducto
         '
         Me.LabelX10.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX10.ForeColor = System.Drawing.Color.Black
-        Me.LabelX10.Location = New System.Drawing.Point(139, 28)
+        Me.LabelX10.Location = New System.Drawing.Point(136, 28)
         Me.LabelX10.Name = "LabelX10"
         Me.LabelX10.Size = New System.Drawing.Size(57, 15)
         Me.LabelX10.TabIndex = 38
@@ -1314,7 +1314,7 @@ Partial Class Frm_EstadisticaProducto
         '
         Me.LabelX11.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX11.ForeColor = System.Drawing.Color.Black
-        Me.LabelX11.Location = New System.Drawing.Point(139, 51)
+        Me.LabelX11.Location = New System.Drawing.Point(136, 51)
         Me.LabelX11.Name = "LabelX11"
         Me.LabelX11.Size = New System.Drawing.Size(57, 15)
         Me.LabelX11.TabIndex = 42
@@ -1328,7 +1328,7 @@ Partial Class Frm_EstadisticaProducto
         '
         Me.LblClasLibre.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LblClasLibre.ForeColor = System.Drawing.Color.Black
-        Me.LblClasLibre.Location = New System.Drawing.Point(204, 5)
+        Me.LblClasLibre.Location = New System.Drawing.Point(201, 5)
         Me.LblClasLibre.Name = "LblClasLibre"
         Me.LblClasLibre.Size = New System.Drawing.Size(464, 15)
         Me.LblClasLibre.TabIndex = 41
@@ -1342,7 +1342,7 @@ Partial Class Frm_EstadisticaProducto
         '
         Me.LblRubro.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LblRubro.ForeColor = System.Drawing.Color.Black
-        Me.LblRubro.Location = New System.Drawing.Point(204, 51)
+        Me.LblRubro.Location = New System.Drawing.Point(201, 51)
         Me.LblRubro.Name = "LblRubro"
         Me.LblRubro.Size = New System.Drawing.Size(484, 15)
         Me.LblRubro.TabIndex = 39
@@ -1356,7 +1356,7 @@ Partial Class Frm_EstadisticaProducto
         '
         Me.LabelX12.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX12.ForeColor = System.Drawing.Color.Black
-        Me.LabelX12.Location = New System.Drawing.Point(139, 5)
+        Me.LabelX12.Location = New System.Drawing.Point(136, 5)
         Me.LabelX12.Name = "LabelX12"
         Me.LabelX12.Size = New System.Drawing.Size(57, 15)
         Me.LabelX12.TabIndex = 43
@@ -1370,9 +1370,9 @@ Partial Class Frm_EstadisticaProducto
         '
         Me.LblSubFamilia.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LblSubFamilia.ForeColor = System.Drawing.Color.Black
-        Me.LblSubFamilia.Location = New System.Drawing.Point(48, 51)
+        Me.LblSubFamilia.Location = New System.Drawing.Point(47, 51)
         Me.LblSubFamilia.Name = "LblSubFamilia"
-        Me.LblSubFamilia.Size = New System.Drawing.Size(83, 15)
+        Me.LblSubFamilia.Size = New System.Drawing.Size(81, 15)
         Me.LblSubFamilia.TabIndex = 44
         Me.LblSubFamilia.Text = "LblSubFamilia"
         '
@@ -1386,7 +1386,7 @@ Partial Class Frm_EstadisticaProducto
         Me.LabelX13.ForeColor = System.Drawing.Color.Black
         Me.LabelX13.Location = New System.Drawing.Point(5, 51)
         Me.LabelX13.Name = "LabelX13"
-        Me.LabelX13.Size = New System.Drawing.Size(35, 15)
+        Me.LabelX13.Size = New System.Drawing.Size(34, 15)
         Me.LabelX13.TabIndex = 37
         Me.LabelX13.Text = "Sub Familia"
         '
@@ -2492,7 +2492,7 @@ Partial Class Frm_EstadisticaProducto
         Me.TableLayoutPanel4.ColumnCount = 3
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 54.28571!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45.71429!))
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 169.0!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 170.0!))
         Me.TableLayoutPanel4.Controls.Add(Me.LabelX16, 0, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.Chk_Stock_Minimo, 2, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.Chk_Stock_Salidas, 2, 1)

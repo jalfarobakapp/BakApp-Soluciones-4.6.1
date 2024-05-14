@@ -11,6 +11,7 @@ Public Class Frm_Fabricaciones
 
     Private _Id_Det As Integer
     Public Property OTCreada As Boolean
+    Public Property MaxCantidadFabricar As Integer
 
     Public Sub New(Id_Det As Integer)
 
@@ -132,6 +133,17 @@ Public Class Frm_Fabricaciones
             Return
         End If
 
+        If CBool(MaxCantidadFabricar) Then
+
+            If _CantFabricada > MaxCantidadFabricar Then
+                MessageBoxEx.Show(Me, "La cantidad a fabricar no puede ser mayor que " & FormatNumber(MaxCantidadFabricar, 0), "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Call Btn_IngresarNuevaFabricacion_Click(Nothing, Nothing)
+                Return
+            End If
+
+        End If
+
         Consulta_sql = "Select SUM(CANTIDAD) As Factor" & vbCrLf &
                        "From PNPD" & vbCrLf &
                        "Inner Join MAEPR On KOPR = ELEMENTO" & vbCrLf &
@@ -182,6 +194,11 @@ Public Class Frm_Fabricaciones
 
     Private Sub Grilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
 
+        If CBool(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpotl_New) Then
+            MessageBoxEx.Show(Me, "La OT la fue creada", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
         Dim _Id As Integer = _Fila.Cells("Id").Value
 
@@ -206,6 +223,17 @@ Public Class Frm_Fabricaciones
 
             If Not _Aceptar Then
                 Return
+            End If
+
+            If CBool(MaxCantidadFabricar) Then
+
+                If .CantIngresada > MaxCantidadFabricar Then
+                    MessageBoxEx.Show(Me, "La cantidad a fabricar no puede ser mayor que " & FormatNumber(MaxCantidadFabricar, 0), "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Call Grilla_CellDoubleClick(Nothing, Nothing)
+                    Return
+                End If
+
             End If
 
             .CantFabricada = .CantIngresada + _Factor
@@ -247,15 +275,7 @@ Public Class Frm_Fabricaciones
 
         Dim _Mensaje As LsValiciones.Mensajes = _Cl_Mezcla.Fx_Eliminar_Fabricaciones(_Cl_Mezcla.Zw_Pdp_CPT_MzDetIngFab)
 
-        Dim _Icon As MessageBoxIcon
-
-        If _Mensaje.EsCorrecto Then
-            _Icon = MessageBoxIcon.Information
-        Else
-            _Icon = MessageBoxIcon.Error
-        End If
-
-        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Icon)
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         Sb_Actualizar_Grilla()
 
@@ -299,12 +319,11 @@ Public Class Frm_Fabricaciones
 
         _Mensaje = Fx_Crear_OT()
 
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+
         If Not _Mensaje.EsCorrecto Then
-            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
-
-        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         _Mensaje = Fx_GrabarGRI(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpotl_New)
 
@@ -356,33 +375,10 @@ Public Class Frm_Fabricaciones
             _Mensaje.Id = _Row_NewOT.Item("IDPOTE")
             _Mensaje.Detalle = "Creación de OT"
             _Mensaje.Mensaje = "Se creo la OT " & _Row_NewOT.Item("NUMOT")
-
-            'CreaNuevaOTExtra = True
-            'Dim Numot_Extra = _Row_Respuesta.Item("RESULTADO")
-
-            'Dim _Mensaje1 = "Se creo la OT " & _Row_NewOT.Item("NUMOT")
-            'Dim _Mensaje2 As String
-            '_Mensaje2 = "Nueva OT por Saldo de fabricación" & vbCrLf & vbCrLf &
-            '            _Mensaje.Mensaje
-
-            'Dim iconoAlerta As Icon = SystemIcons.Warning
-            'Dim _ImagenFoot As Image = iconoAlerta.ToBitmap()
-
-            '' Cambiar el tamaño del icono a 64x64 píxeles (puedes ajustar el tamaño según tus necesidades)
-            'Dim nuevoTamaño As New Size(16, 16)
-            'Dim iconoRedimensionado As Image = _ImagenFoot.GetThumbnailImage(nuevoTamaño.Width, nuevoTamaño.Height, Nothing, IntPtr.Zero)
-
-            '_ImagenFoot = iconoRedimensionado
-
-            'Dim _Info As New TaskDialogInfo("Alerta",
-            '           eTaskDialogIcon.Information2,
-            '          _Mensaje1, _Mensaje2,
-            '          eTaskDialogButton.Ok, eTaskDialogBackgroundColor.Red, Nothing, Nothing,
-            '          Nothing, "Se cerrara este formulario y se gestionara la nueva OT", _ImagenFoot, True)
-
-            'Dim _Resultado As eTaskDialogResult = TaskDialog.Show(_Info)
+            _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
+            _Mensaje.Icono = MessageBoxIcon.Stop
             _Mensaje.Mensaje = ex.Message
         End Try
 
@@ -438,9 +434,10 @@ Public Class Frm_Fabricaciones
             _Mensaje.EsCorrecto = True
             _Mensaje.Id = _Row_Maeddo.Item("IDMAEDDO")
             _Mensaje.Detalle = "GRI Creada correctamente"
-            _Mensaje.Mensaje = "Se crea GRI Nro " & _Row_Maeddo.Item("NUDO") & vbCrLf &
-                               "Producto: " & _Row_Maeddo.Item("KOPRCT") & " - " & _Row_Maeddo.Item("NOKOPR") & vbCrLf &
-                               "Cantidad: " & FormatNumber(_Row_Maeddo.Item("CAPRCO1"), 0)
+            _Mensaje.Mensaje = "Grabación Exitosa"
+            '"Se crea GRI Nro " & _Row_Maeddo.Item("NUDO") & vbCrLf &
+            '               "Producto: " & _Row_Maeddo.Item("KOPRCT") & " - " & _Row_Maeddo.Item("NOKOPR") & vbCrLf &
+            '               "Cantidad: " & FormatNumber(_Row_Maeddo.Item("CAPRCO1"), 0)
 
         Catch ex As Exception
             _Mensaje.Mensaje = ex.Message

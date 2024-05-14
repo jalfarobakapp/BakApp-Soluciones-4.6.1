@@ -412,6 +412,8 @@ Public Class Frm_Formulario_Documento
         End Set
     End Property
 
+    Public Property SolicitarTipoVenta As Boolean
+
 #End Region
 
     Public Sub New(Tido As String,
@@ -1521,6 +1523,9 @@ Public Class Frm_Formulario_Documento
             .Item("MinNetoDesp") = 0
 
             .Item("Es_ValeTransitorio") = (_Post_Venta And (_Tido = "BLV" Or _Tido = "FCV"))
+
+            .Item("TblTipoVenta") = String.Empty
+            .Item("CodTipoVenta") = String.Empty
 
             _TblEncabezado.Rows.Add(NewFila)
 
@@ -4147,7 +4152,29 @@ Public Class Frm_Formulario_Documento
         Dim _Indice_Agrupa As Integer
         Dim _Existe_En_Lista As Boolean
 
-        For Each _Fl As DataGridViewRow In Grilla_Detalle.Rows
+        If SolicitarTipoVenta Then
+
+            Dim _Clalibpr = _RowProducto.Item("CLALIBPR").ToString.Trim
+            Dim _CodTipoVenta = _TblEncabezado.Rows(0).Item("CodTipoVenta").ToString.Trim
+
+            If _TblEncabezado.Rows(0).Item("TblTipoVenta").ToString.Trim = "CLALIBPR" AndAlso
+                _CodTipoVenta <> _Clalibpr Then
+
+                Dim _NombreTipo1 As String = _Sql.Fx_Trae_Dato("TABCARAC", "NOKOCARAC", "KOTABLA = 'CLALIBPR' And KOCARAC = '" & _Clalibpr & "'")
+                Dim _NombreTipo2 As String = _Sql.Fx_Trae_Dato("TABCARAC", "NOKOCARAC", "KOTABLA = 'CLALIBPR' And KOCARAC = '" & _CodTipoVenta & "'")
+
+                MessageBoxEx.Show(Me, "Este producto es de tipo: " & _NombreTipo1 & vbCrLf &
+                                  "El tipo de producto a vender debe ser: " & _NombreTipo2,
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                _Fila.Cells("Codigo").Value = String.Empty
+                Return
+
+            End If
+
+        End If
+
+            For Each _Fl As DataGridViewRow In Grilla_Detalle.Rows
 
             Dim _Codigo2 = _Fl.Cells("Codigo").Value
             Dim _Sucursal2 = _Fl.Cells("Sucursal").Value
@@ -5021,8 +5048,8 @@ Public Class Frm_Formulario_Documento
                 _PrecioNetoUdLinea = _PrecioNetoUd
                 _PrecioBrutoUdLinea = _PrecioBruto
 
-                If _Rtu < 1 Then
-                    _PrecioNetoUdLista = _PrecioLinea / _Rtu
+                If _Rtu <1 Then
+                    _PrecioNetoUdLista= _PrecioLinea / _Rtu
                     _PrecioBrutoUdLista = _PrecioBruto / _Rtu
                 Else
                     _PrecioNetoUdLista = _PrecioNeto
@@ -7541,6 +7568,18 @@ Public Class Frm_Formulario_Documento
                             End If
 
                             If _Nuevo_Producto Then
+
+                                If SolicitarTipoVenta AndAlso
+                                    String.IsNullOrWhiteSpace(_TblEncabezado.Rows(0).Item("TblTipoVenta")) AndAlso
+                                        String.IsNullOrWhiteSpace(_TblEncabezado.Rows(0).Item("CodTipoVenta")) Then
+
+                                    Dim _Mensaje As LsValiciones.Mensajes = Fx_SolicitarTipoVenta()
+
+                                    MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+
+                                    If Not _Mensaje.EsCorrecto Then Return
+
+                                End If
 
                                 Dim _Validar_Lineas_X_Pagina As Boolean = Fx_Validar_Lineas_Por_Documento_VS_Formato(1)
 
@@ -26229,6 +26268,47 @@ Public Class Frm_Formulario_Documento
 
         Catch ex As Exception
             _Mensaje.Mensaje = ex.Message
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
+
+    Function Fx_SolicitarTipoVenta() As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            Dim _Sql_Filtro_Condicion_Extra = "And KOTABLA = 'CLALIBPR'"
+
+            Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+            If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Tabla_Tabcarac, _Sql_Filtro_Condicion_Extra, False, False, True) Then
+
+                Dim _Codigo = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
+                Dim _Descripcion = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion")
+
+                _TblEncabezado.Rows(0).Item("TblTipoVenta") = "CLALIBPR"
+                _TblEncabezado.Rows(0).Item("CodTipoVenta") = _Codigo
+
+                _Mensaje.EsCorrecto = True
+                _Mensaje.Detalle = "Selección"
+                _Mensaje.Mensaje = "Clasificación seleccionada: " & _Descripcion
+                _Mensaje.Icono = MessageBoxIcon.Information
+
+            Else
+
+                Throw New System.Exception("Debe seleccionar un tipo de venta")
+
+            End If
+
+        Catch ex As Exception
+            _Mensaje.Detalle = "Error en proceso de selección"
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
 
         Return _Mensaje
