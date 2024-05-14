@@ -450,7 +450,7 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Context_Menu_Solicitud_Compra.AntiAlias = True
         Me.Context_Menu_Solicitud_Compra.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Context_Menu_Solicitud_Compra.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
-        Me.Context_Menu_Solicitud_Compra.Location = New System.Drawing.Point(538, 217)
+        Me.Context_Menu_Solicitud_Compra.Location = New System.Drawing.Point(194, 158)
         Me.Context_Menu_Solicitud_Compra.Name = "Context_Menu_Solicitud_Compra"
         Me.Context_Menu_Solicitud_Compra.Size = New System.Drawing.Size(119, 25)
         Me.Context_Menu_Solicitud_Compra.Stretch = True

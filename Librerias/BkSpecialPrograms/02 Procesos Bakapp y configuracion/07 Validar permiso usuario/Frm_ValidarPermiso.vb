@@ -52,7 +52,7 @@ Public Class Frm_ValidarPermiso
         Get
             Return _Permiso_Aceptado
         End Get
-        Set(ByVal _Accion As Boolean)
+        Set(_Accion As Boolean)
             'labelName.Text = Value
         End Set
     End Property
@@ -85,10 +85,10 @@ Public Class Frm_ValidarPermiso
         End Set
     End Property
 
-    Public Sub New(ByVal Tipo_de_Accion As Tipo_Accion,
-                   ByVal CodPermiso As String,
-                   ByVal Mostrar_Mensaje_Autorizado As Boolean,
-                   ByVal Validar_Con_Huella As Boolean)
+    Public Sub New(Tipo_de_Accion As Tipo_Accion,
+                   CodPermiso As String,
+                   Mostrar_Mensaje_Autorizado As Boolean,
+                   Validar_Con_Huella As Boolean)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -109,7 +109,7 @@ Public Class Frm_ValidarPermiso
         Btn_Validar_Con_Huella.Enabled = _Validar_Con_Huella
     End Sub
 
-    Private Sub BtnAceptar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnAceptar.Click
+    Private Sub BtnAceptar_Click(sender As System.Object, e As System.EventArgs) Handles BtnAceptar.Click
         Sb_Validar_Usuario(Txtclave.Text, False)
     End Sub
 
@@ -211,21 +211,21 @@ Public Class Frm_ValidarPermiso
 
     End Sub
 
-    Private Sub Txtclave_KeyPress(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles Txtclave.KeyPress
+    Private Sub Txtclave_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs) Handles Txtclave.KeyPress
         If e.KeyChar = ChrW(Keys.Enter) Then
             e.Handled = True
             Sb_Validar_Usuario(Txtclave.Text, False)
         End If
     End Sub
 
-    Private Sub Frm_ValidarPermiso_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_ValidarPermiso_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
 
-    Function Fx_Activar_Deactivar_Teclado(ByVal _Teclado As Boolean)
+    Function Fx_Activar_Deactivar_Teclado(_Teclado As Boolean)
         Dim _x = Me.Location.X
         Dim _Y = Me.Location.Y
 
@@ -249,7 +249,7 @@ Public Class Frm_ValidarPermiso
 
     End Function
 
-    Private Sub Btn_Teclado_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Teclado.Click
+    Private Sub Btn_Teclado_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Teclado.Click
         If _Teclado Then
             Fx_Activar_Deactivar_Teclado(False)
             _Teclado = False

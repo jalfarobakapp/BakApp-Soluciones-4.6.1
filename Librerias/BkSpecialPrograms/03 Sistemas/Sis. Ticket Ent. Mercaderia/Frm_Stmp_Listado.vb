@@ -1,6 +1,5 @@
 ﻿Imports System.Threading
 Imports DevComponents.DotNetBar
-Imports MySql.Data.Authentication
 
 Public Class Frm_Stmp_Listado
 
@@ -36,6 +35,9 @@ Public Class Frm_Stmp_Listado
         AddHandler Tab_Facturadas.Click, AddressOf Sb_Actualizar_Grilla
         AddHandler Tab_Entregadas.Click, AddressOf Sb_Actualizar_Grilla
         AddHandler Tab_Cerradas.Click, AddressOf Sb_Actualizar_Grilla
+        AddHandler Tab_Pendientes.Click, AddressOf Sb_Actualizar_Grilla
+
+        AddHandler Grilla.ColumnHeaderMouseClick, AddressOf Grilla_ColumnHeaderMouseClick
 
         Super_TabS.SelectedTabIndex = 0
 
@@ -50,27 +52,43 @@ Public Class Frm_Stmp_Listado
 
     Sub Sb_Actualizar_Grilla()
 
-        'Dim _Texto_Busqueda As String = Txt_Buscador.Text.Trim
         Dim _Condicion As String = String.Empty
         Dim _Condicion2 As String = String.Empty
 
-        'Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(_Texto_Busqueda), "CODIGO+DESCRIPTOR Like '%")
-
-        'If Not String.IsNullOrWhiteSpace(Txt_BuscaXProducto.Text) Then
-        '_Condicion = "And CODIGO In (Select CODIGO From MAEDRES Where ELEMENTO = '" & Txt_BuscaXProducto.Text & "')"
-        'End If
+        Dim _DocEmitir As Boolean
+        Dim _TidoGen As Boolean
+        Dim _NudoGen As Boolean
+        Dim _FechaPickeado As Boolean
+        Dim _HoraPickeado As Boolean
+        Dim _MostrarImagenes As Boolean
 
         Dim _Tbas = Super_TabS.SelectedTab
 
         Select Case _Tbas.Name
+            Case "Tab_Pendientes"
+                _Condicion += vbCrLf & "And Estado In ('PREPA','COMPL')"
+                _DocEmitir = True
+                _FechaPickeado = True
+                _HoraPickeado = True
+                _MostrarImagenes = True
             Case "Tab_Preparacion"
                 _Condicion += vbCrLf & "And Estado = 'PREPA'"
+                _DocEmitir = True
+                _MostrarImagenes = True
             Case "Tab_Completadas"
                 _Condicion += vbCrLf & "And Estado = 'COMPL'"
+                _DocEmitir = True
+                _FechaPickeado = True
+                _HoraPickeado = True
+                _MostrarImagenes = True
             Case "Tab_Facturadas"
                 _Condicion += vbCrLf & "And Estado = 'FACTU'"
+                _TidoGen = True
+                _NudoGen = True
             Case "Tab_Entregadas"
                 _Condicion += vbCrLf & "And Estado = 'ENTRE'"
+                _TidoGen = True
+                _NudoGen = True
             Case "Tab_Cerradas"
                 _Condicion += vbCrLf & "And Estado = 'CERRA'"
             Case "Tab_Nulas"
@@ -83,13 +101,16 @@ Public Class Frm_Stmp_Listado
                        "When 'COMPL' Then 'Completada.'" & vbCrLf &
                        "When 'HABIL' Then 'Habilitada para ser facturada.'" & vbCrLf &
                        "When 'FACTU' Then Case TipoPago When 'Contado' Then 'Facturada, pase por CAJA...' When 'Credito' Then 'Facturada, pase a DESPACHO EN BODEGA...' End" & vbCrLf &
+                       "When 'ENTRE' Then 'Entregado por: '+CodFuncionario_Entrega+' - '+FEnt.NOKOFU" & vbCrLf &
                        "When 'CERRA' Then 'Cerrada'" & vbCrLf &
                        "When 'NULO' Then 'Nula'" & vbCrLf &
                        "End As 'Estado_Str'," & vbCrLf &
-                       "FechaCreacion As 'HoraCreacion'" & vbCrLf &
+                       "FechaCreacion As 'HoraCreacion'," & vbCrLf &
+                       "FechaPickeado As 'HoraPickeado'" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Stmp_Enc Enc" & vbCrLf &
                        "Inner Join MAEEDO Edo On Edo.IDMAEEDO = Enc.Idmaeedo" & vbCrLf &
                        "Left Join MAEEN En On En.KOEN = Enc.Endo And En.SUEN = Enc.Suendo" & vbCrLf &
+                       "Left Join TABFU FEnt On FEnt.KOFU = CodFuncionario_Entrega" & vbCrLf &
                        "Where 1 > 0" & vbCrLf & _Condicion & vbCrLf &
                        "And Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'" & vbCrLf &
                        "Order by Id"
@@ -106,13 +127,13 @@ Public Class Frm_Stmp_Listado
 
             .DataSource = _Tbl_Tickets_Stem
 
-            OcultarEncabezadoGrilla(Grilla, True)
+            OcultarEncabezadoGrilla(Grilla)
 
             Dim _DisplayIndex = 0
 
             .Columns("BtnImagen_Estado").Width = 50
             .Columns("BtnImagen_Estado").HeaderText = "Est."
-            .Columns("BtnImagen_Estado").Visible = True
+            .Columns("BtnImagen_Estado").Visible = _MostrarImagenes
             .Columns("BtnImagen_Estado").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -143,7 +164,7 @@ Public Class Frm_Stmp_Listado
             .Columns("SUDO").Visible = True
             .Columns("SUDO").HeaderText = "Suc."
             .Columns("SUDO").ToolTipText = "Sucursal del documento"
-            .Columns("SUDO").Width = 60
+            .Columns("SUDO").Width = 30
             .Columns("SUDO").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -168,7 +189,7 @@ Public Class Frm_Stmp_Listado
             .Columns("NOKOEN").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("FechaCreacion").Visible = (_Tbas.Name = "Tab_Completadas")
+            .Columns("FechaCreacion").Visible = True '(_Tbas.Name = "Tab_Completadas")
             .Columns("FechaCreacion").HeaderText = "F.Creación"
             .Columns("FechaCreacion").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
             .Columns("FechaCreacion").DefaultCellStyle.Format = "dd/MM/yyyy"
@@ -184,7 +205,7 @@ Public Class Frm_Stmp_Listado
             .Columns("HoraCreacion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("DocEmitir").Visible = True
+            .Columns("DocEmitir").Visible = _DocEmitir
             .Columns("DocEmitir").HeaderText = "Doc.Emitir"
             '.Columns("NOKOEN").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
             .Columns("DocEmitir").Width = 70
@@ -194,109 +215,61 @@ Public Class Frm_Stmp_Listado
             .Columns("Estado_Str").Visible = True
             .Columns("Estado_Str").HeaderText = "Estado"
             '.Columns("NOKOEN").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("Estado_Str").Width = 300
+            .Columns("Estado_Str").Width = 210
             .Columns("Estado_Str").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            If _Tbas.Name.Contains("Cerradas") Then
+            .Columns("FechaPickeado").Visible = _FechaPickeado
+            .Columns("FechaPickeado").HeaderText = "F.Pickeo"
+            .Columns("FechaPickeado").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("FechaPickeado").DefaultCellStyle.Format = "dd/MM/yyyy"
+            .Columns("FechaPickeado").Width = 70
+            .Columns("FechaPickeado").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-                .Columns("FechaCierre").Visible = True
-                .Columns("FechaCierre").HeaderText = "Fecha cierre"
-                '.Columns("FechaCreacion").ToolTipText = "de tope de la oferta"
-                .Columns("FechaCierre").DefaultCellStyle.Format = "dd/MM/yyyy"
-                .Columns("FechaCierre").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                .Columns("FechaCierre").Width = 70
-                .Columns("FechaCierre").DisplayIndex = _DisplayIndex
-                _DisplayIndex += 1
+            .Columns("HoraPickeado").Visible = _HoraPickeado
+            .Columns("HoraPickeado").HeaderText = "H.Pickeo"
+            .Columns("HoraPickeado").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("HoraPickeado").DefaultCellStyle.Format = "HH:mm"
+            .Columns("HoraPickeado").Width = 60
+            .Columns("HoraPickeado").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            End If
+            'If _Tbas.Name.Contains("Tab_Entregadas") Then
 
+            '    .Columns("FechaCierre").Visible = True
+            '    .Columns("FechaCierre").HeaderText = "Fecha cierre"
+            '    '.Columns("FechaCreacion").ToolTipText = "de tope de la oferta"
+            '    .Columns("FechaCierre").DefaultCellStyle.Format = "dd/MM/yyyy"
+            '    .Columns("FechaCierre").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            '    .Columns("FechaCierre").Width = 70
+            '    .Columns("FechaCierre").DisplayIndex = _DisplayIndex
+            '    _DisplayIndex += 1
+
+            'End If
+
+            .Columns("TidoGen").Visible = _TidoGen
+            .Columns("TidoGen").HeaderText = "TD"
+            .Columns("TidoGen").ToolTipText = "Tipo de documento generado"
+            .Columns("TidoGen").Width = 30
+            .Columns("TidoGen").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("NudoGen").Visible = _NudoGen
+            .Columns("NudoGen").HeaderText = "Número"
+            .Columns("TidoGen").ToolTipText = "Número de documento generado"
+            .Columns("NudoGen").Width = 80
+            .Columns("NudoGen").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
         End With
 
-        Return
+        If Not _MostrarImagenes Then
+            Return
+        End If
 
-        For Each _Fila As DataGridViewRow In Grilla.Rows
 
-            Dim _Mesn_Pdte_Ver = _Fila.Cells("Mesn_Pdte_Ver").Value
-            Dim _Resp_Pdte_Ver = _Fila.Cells("Resp_Pdte_Ver").Value
-            Dim _Estado As String = _Fila.Cells("Estado").Value
-            Dim _Aceptado As Boolean = _Fila.Cells("Aceptado").Value
-            Dim _Rechazado As Boolean = _Fila.Cells("Rechazado").Value
-            Dim _Prioridad As String = _Fila.Cells("Prioridad").Value
-
-            Dim _Icono As Image
-            Dim _Nombre_Image As String
-            Dim _Num
-
-            'If _Tipo_Tickets = Enum_Tickets.MisTicket Then
-            '    _Num = _Resp_Pdte_Ver
-            'Else
-            '    _Num = _Mesn_Pdte_Ver
-            'End If
-
-            Dim _Imagenes_List As ImageList
-
-            If Global_Thema = Enum_Themas.Oscuro Then
-                _Imagenes_List = Imagenes_16x16_Dark
-            Else
-                _Imagenes_List = Imagenes_16x16
-            End If
-
-            If _Estado = "NULO" Then
-                _Icono = _Imagenes_List.Images.Item("cancel.png")
-            Else
-
-                If CBool(_Num) Then
-                    _Nombre_Image = "comment-number-" & _Num & ".png"
-                    If _Mesn_Pdte_Ver > 9 Then
-                        _Nombre_Image = "comment-number-9-plus.png"
-                    End If
-                    _Icono = _Imagenes_List.Images.Item(_Nombre_Image)
-
-                    If Global_Thema = Enum_Themas.Oscuro Then
-                        _Fila.DefaultCellStyle.ForeColor = Amarillo
-                    Else
-                        _Fila.DefaultCellStyle.BackColor = Color.LightYellow
-                    End If
-
-                Else
-                    _Icono = _Imagenes_List.Images.Item("menu-more.png")
-                End If
-
-            End If
-
-            _Fila.Cells("BtnImagen_Estado").Value = _Icono
-
-            If _Aceptado Then _Fila.Cells("NomEstado").Style.ForeColor = Verde
-            If _Rechazado Then _Fila.Cells("NomEstado").Style.ForeColor = Rojo
-
-            _Fila.Cells("NomPrioridad").Style.ForeColor = Color.White
-
-            If _Prioridad = "AL" Then
-                _Fila.Cells("NomPrioridad").Style.BackColor = Color.Orange
-            End If
-
-            If _Prioridad = "BJ" Then
-                _Fila.Cells("NomPrioridad").Style.ForeColor = Color.Black
-                _Fila.Cells("NomPrioridad").Style.BackColor = Amarillo
-            End If
-
-            If _Prioridad = "NR" Then
-                _Fila.Cells("NomPrioridad").Style.BackColor = Verde
-            End If
-
-            If _Prioridad = "UR" Then
-                _Fila.Cells("NomPrioridad").Style.BackColor = Rojo
-            End If
-
-        Next
-
-        Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
-
-        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_Tickets_Toma" & vbCrLf &
-                       "Where CodFuncionario = '" & FUNCIONARIO & "' And NombreEquipo = '" & _NombreEquipo & "'"
-        _Sql.Ej_consulta_IDU(Consulta_sql)
+        Sb_MarcarPendientes()
 
     End Sub
 
@@ -391,7 +364,7 @@ Public Class Frm_Stmp_Listado
 
         If _Tbas.Name = "Tab_Completadas" Then
 
-            _Fila.Cells("Facturar").Value = Not _Fila.Cells("Facturar").Value
+            '_Fila.Cells("Facturar").Value = Not _Fila.Cells("Facturar").Value
 
         End If
 
@@ -402,21 +375,28 @@ Public Class Frm_Stmp_Listado
 
     End Sub
 
-    Function Fx_Entregar() As LsValiciones.Mensajes
+    Function Fx_Entregar(_CodFuncionario_Entrega As String) As LsValiciones.Mensajes
 
         Timer_Monitoreo.Stop()
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
         Try
+
             Dim _Numero As String
 
             Dim _Aceptar As Boolean = InputBox_Bk(Me, "Ingrese el numero de documento a cerrar" & vbCrLf & "El formato debe ser Ejemplo: FCV2365",
-                                                  "Entregar mercadería", _Numero, False, _Tipo_Mayus_Minus.Normal, 15, True)
+                                                  "Entregar mercadería", _Numero, False, _Tipo_Mayus_Minus.Normal, 15, True, _Tipo_Imagen.Barra,,,,,,, False)
 
             If Not _Aceptar Then
                 _Mensaje.Detalle = "Acción cancelada"
+                _Mensaje.Cancelado = True
                 Throw New System.Exception("An exception has occurred.")
+            End If
+
+            If Not _Numero.Contains("FCV") And Not _Numero.Contains("GDV") And Not _Numero.Contains("BLV") Then
+                _Mensaje.Detalle = "Validación"
+                Throw New System.Exception("Debe indicar si el documento es BLV, FCV o GDV")
             End If
 
             Dim _Tido As String = Mid(_Numero, 1, 3)
@@ -428,23 +408,29 @@ Public Class Frm_Stmp_Listado
             Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 
             If IsNothing(_Row) Then
+
                 _Mensaje.Detalle = "Validación"
-                Throw New System.Exception(_Sql.Pro_Error)
+
+                If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                    Throw New System.Exception(_Sql.Pro_Error)
+                Else
+                    Throw New System.Exception("No existe documento " & _Tido & " - " & _Nudo & " En el sistema de Ticket de entrega")
+                End If
+
             End If
 
-            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Idmaeedo = " & _Row.Item("IDMAEEDO")
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where IdmaeedoGen = " & _Row.Item("IDMAEEDO")
             Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If IsNothing(_Row_Documento) Then
-                MessageBoxEx.Show(Me, "No existe documento " & _Tido & " - """ & _Nudo & "", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 _Mensaje.Detalle = "Validación"
-                Throw New System.Exception("No existe documento " & _Tido & " - """ & _Nudo & " En el sistema de Ticket de entrega")
+                Throw New System.Exception("No existe documento " & _Tido & " - " & _Nudo & " En el sistema de Ticket de entrega")
             End If
 
-            If MessageBoxEx.Show(Me, "¿Confirma el documento " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO") & "?",
+            If MessageBoxEx.Show(Me, "¿Confirma el documento " & _Tido & "-" & _Nudo & "?",
                                  "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
-                _Mensaje.Detalle = "Acción cancelada"
-                Throw New System.Exception("An exception has occurred.")
+                _Mensaje.Detalle = "Validación"
+                Throw New System.Exception("Acción cancelada por el usuario")
             End If
 
             Dim _Id_Enc As Integer = _Row_Documento.Item("Id")
@@ -452,25 +438,24 @@ Public Class Frm_Stmp_Listado
             Dim _Cl_Stmp As New Cl_Stmp
             _Cl_Stmp.Fx_Llenar_Encabezado(_Id_Enc)
 
-            _Cl_Stmp.Zw_Stmp_Enc.CodFuncionario_Entrega = FUNCIONARIO
+            _Cl_Stmp.Zw_Stmp_Enc.Estado = "ENTRE"
+            _Cl_Stmp.Zw_Stmp_Enc.CodFuncionario_Entrega = _CodFuncionario_Entrega
 
             _Mensaje = _Cl_Stmp.Fx_Entregar_Mercaderia
 
-
-
-            'Me.Cursor = Cursors.WaitCursor
-
-            'Sb_Crear_Ticket(_Row_Documento.Item("IDMAEEDO"), _Row_Documento.Item("TIDO"), _Row_Documento.Item("NUDO"), 1)
-
-            'Me.Cursor = Cursors.Default
-
-
         Catch ex As Exception
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
         Finally
             If Chk_Monitorear.Checked Then
                 Timer_Monitoreo.Start()
             End If
         End Try
+
+        If Not _Mensaje.EsCorrecto And Not _Mensaje.Cancelado Then
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            _Mensaje = Fx_Entregar(_CodFuncionario_Entrega)
+        End If
 
         Return _Mensaje
 
@@ -929,6 +914,7 @@ Public Class Frm_Stmp_Listado
 
             If IsNothing(_Row) Then
                 MessageBoxEx.Show(Me, "No existe documento NVV - """ & _Nudo & "", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Call Btn_SalaEsperaFacturar_Click(Nothing, Nothing)
                 Return
             End If
 
@@ -942,22 +928,26 @@ Public Class Frm_Stmp_Listado
             If IsNothing(_Row) Then
                 MessageBoxEx.Show(Me, "No se encontro este docuemnto en el sistema de entrega." & vbCrLf &
                                   "Documento NVV - " & _Nudo, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Call Btn_SalaEsperaFacturar_Click(Nothing, Nothing)
                 Return
             End If
 
             If _Row.Item("Estado") = "FACTU" Then
                 MessageBoxEx.Show(Me, "Este documento ya se encuentra facturado" & vbCrLf &
                                   _Row.Item("TidoGen") & "-" & _Row.Item("NudoGen"), "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Call Btn_SalaEsperaFacturar_Click(Nothing, Nothing)
                 Return
             End If
 
             If _Row.Item("Facturar") Then
                 MessageBoxEx.Show(Me, "Este documento ya se encuentra en proceso de facturación", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Call Btn_SalaEsperaFacturar_Click(Nothing, Nothing)
                 Return
             End If
 
             If MessageBoxEx.Show(Me, "¿Confirma el documento " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO") & "?",
                                  "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                Call Btn_SalaEsperaFacturar_Click(Nothing, Nothing)
                 Return
             End If
 
@@ -979,16 +969,39 @@ Public Class Frm_Stmp_Listado
 
     Private Sub Btn_EntregarMercaderia_Click(sender As Object, e As EventArgs) Handles Btn_EntregarMercaderia.Click
 
-        MessageBoxEx.Show(Me, "En Construcción", "Entregar mercadería", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        'MessageBoxEx.Show(Me, "En Construcción", "Entregar mercadería", MessageBoxButtons.OK, MessageBoxIcon.Warning)
 
-        Return
-        If Not Fx_Tiene_Permiso(Me, "Stem0003") Then Return
+        'Return
+        'If Not Fx_Tiene_Permiso(Me, "Stem0003") Then Return
+
+        Dim _Validar As Boolean
+        Dim _RowUsuario As DataRow
+
+        Dim Fm As New Frm_ValidarPermiso(Frm_ValidarPermiso.Tipo_Accion.Validar_Permiso, "Stem0003", True, False)
+        Fm.Pro_Cerrar_Automaticamente = True
+        Fm.ShowDialog(Me)
+        _Validar = Fm.Pro_Permiso_Aceptado
+        _RowUsuario = Fm.Pro_RowUsuario
+        Fm.Dispose()
+
+        If Not _Validar Then
+            Return
+        End If
+
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        _Mensaje = Fx_Entregar(_RowUsuario.Item("KOFU"))
+
+        If _Mensaje.EsCorrecto Then
+            Sb_Actualizar_Grilla()
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        End If
 
     End Sub
 
     Private Sub Btn_AgregarTicket_Click(sender As Object, e As EventArgs) Handles Btn_AgregarTicket.Click
 
-        ShowContextMenu(ButtonItem2)
+        ShowContextMenu(Menu_Contextual_01_Opciones_AgregarTicket)
 
     End Sub
 
@@ -1106,4 +1119,104 @@ Public Class Frm_Stmp_Listado
         End Try
 
     End Sub
+
+    Private Sub Btn_Copiar_Click(sender As Object, e As EventArgs) Handles Btn_Copiar.Click
+        With Grilla
+
+            Try
+
+                Dim _Cabeza = .Columns(.CurrentCell.ColumnIndex).Name
+                Dim _Texto_Cabeza = .Columns(.CurrentCell.ColumnIndex).HeaderText
+
+                Dim Copiar = .Rows(.CurrentRow.Index).Cells(_Cabeza).Value
+                Clipboard.SetText(Copiar)
+
+                ToastNotification.Show(Me, _Texto_Cabeza & " esta en el portapapeles", Btn_Copiar.Image,
+                                       2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
+            Catch ex As Exception
+                MessageBoxEx.Show(Me, ex.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            End Try
+        End With
+    End Sub
+
+    Private Sub BtnIrAptincipio_Click(sender As Object, e As EventArgs) Handles BtnIrAptincipio.Click
+        If CBool(Grilla.RowCount) Then
+            Grilla.FirstDisplayedScrollingRowIndex = 0
+            Grilla.CurrentCell = Grilla.Rows(0).Cells("Numero")
+        End If
+    End Sub
+
+    Private Sub BtnIrAlFin_Click(sender As Object, e As EventArgs) Handles BtnIrAlFin.Click
+        If CBool(Grilla.RowCount) Then
+            Grilla.FirstDisplayedScrollingRowIndex = Grilla.RowCount - 1
+            Grilla.CurrentCell = Grilla.Rows(Grilla.RowCount - 1).Cells("Numero")
+        End If
+    End Sub
+
+    Private Sub Grilla_ColumnHeaderMouseClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs)
+
+        Dim Grilla = CType(sender, DataGridView)
+
+        Sb_MarcarPendientes()
+
+    End Sub
+
+    Sub Sb_MarcarPendientes()
+
+        Dim _MostrarImagenes As Boolean
+
+        Dim _Tbas = Super_TabS.SelectedTab
+
+        Select Case _Tbas.Name
+            Case "Tab_Pendientes", "Tab_Preparacion", "Tab_Completadas"
+                _MostrarImagenes = True
+            Case Else
+                _MostrarImagenes = False
+        End Select
+
+        If Not _MostrarImagenes Then
+            Return
+        End If
+
+        For Each _Fila As DataGridViewRow In Grilla.Rows
+
+            Dim _Estado As String = _Fila.Cells("Estado").Value
+
+            Dim _Icono As Image
+
+            Dim _Imagenes_List As ImageList
+            If Global_Thema = Enum_Themas.Oscuro Then
+                _Imagenes_List = Imagenes_16x16_Dark
+            Else
+                _Imagenes_List = Imagenes_16x16
+            End If
+
+            _Icono = Nothing '_Imagenes_List.Images.Item("cancel.png")
+
+            If _Estado = "COMPL" Then
+                _Icono = _Imagenes_List.Images.Item("ok.png")
+            End If
+
+            If _Estado = "NULO" Then
+                _Icono = _Imagenes_List.Images.Item("cancel.png")
+                'Else
+
+                '    _Icono = _Imagenes_List.Images.Item(_Nombre_Image)
+
+                '    If Global_Thema = Enum_Themas.Oscuro Then
+                '        _Fila.DefaultCellStyle.ForeColor = Amarillo
+                '    Else
+                '        _Fila.DefaultCellStyle.BackColor = Color.LightYellow
+                '    End If
+
+                '    _Icono = _Imagenes_List.Images.Item("menu-more.png")
+
+            End If
+
+            _Fila.Cells("BtnImagen_Estado").Value = _Icono
+
+        Next
+
+    End Sub
+
 End Class

@@ -418,7 +418,7 @@ Public Class Cl_Mezcla
 
                 Dim _CantFabricada As Double
 
-                Consulta_sql = "Select SUM(CantFabricada) As CantFabricada" & vbCrLf &
+                Consulta_sql = "Select Isnull(SUM(CantFabricada),0) As CantFabricada" & vbCrLf &
                                "From " & _Global_BaseBk & "Zw_Pdp_CPT_MzDetIngFab Where Id_Det = " & .Id_Det
 
                 Comando = New System.Data.SqlClient.SqlCommand(Consulta_sql, Cn2)
@@ -444,6 +444,7 @@ Public Class Cl_Mezcla
             _Mensaje_Mezcla.Id = 0
             _Mensaje_Mezcla.Detalle = "Eliminar Mezcla"
             _Mensaje_Mezcla.Mensaje = "Mezcla eliminada correctamente"
+            _Mensaje_Mezcla.Icono = MessageBoxIcon.Information
 
             'Throw New System.Exception(_Sql.Pro_Error)
 
@@ -452,6 +453,7 @@ Public Class Cl_Mezcla
 
             _Mensaje_Mezcla.Mensaje = ex.Message
             _Mensaje_Mezcla.Resultado = Consulta_sql
+            _Mensaje_Mezcla.Icono = MessageBoxIcon.Stop
             If IsNothing(myTrans) Then myTrans.Rollback()
 
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)

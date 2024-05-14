@@ -32,7 +32,7 @@ Public Class Cl_Sincroniza
             End If
         End If
 
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Estado = 'PREPA'"
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Estado = 'PREPA' --And Numero = '#T00000569'"
         Dim _Tbl As DataTable = _SqlRandom.Fx_Get_Tablas(Consulta_sql)
 
         For Each _Fila As DataRow In _Tbl.Rows
@@ -58,7 +58,7 @@ Public Class Cl_Sincroniza
                 _Mensaje.Detalle += ", Nota de venta #" & _Nudo
                 Sb_AddToLog("Sincronizando notas", _Mensaje.Detalle, Txt_Log)
 
-                _Mensaje = Fx_EnviarAImprimnirListaDeVerificacion(_Idmaeedoo, "NVV", _Nudo)
+                _Mensaje = Fx_EnviarAImprimnirListaDeVerificacion(_Idmaeedoo, "NVV", _Nudo, True)
 
                 Sb_AddToLog(_Mensaje.Detalle, _Mensaje.Detalle, Txt_Log)
 
@@ -150,7 +150,7 @@ Public Class Cl_Sincroniza
 
         'Deja los documentos en Facturadas cuando ya estan listos y el diablito no alcanza a tomarlos.
         Consulta_sql = "Select Distinct Edo.IDMAEEDO,Edo.TIDO,Edo.NUDO,Edo.ENDO,Edo.SUENDO,Edo.FEEMDO," &
-                       "DdoFcv.TIDO As 'TD',DdoFcv.NUDO As 'NUDO_Fcv'--,DdoFcv.FEEMLI as 'F.Cierre'" & vbCrLf &
+                       "DdoFcv.IDMAEEDO As 'IDMAEEDO_Fcv',DdoFcv.TIDO As 'TD',DdoFcv.NUDO As 'NUDO_Fcv'--,DdoFcv.FEEMLI as 'F.Cierre'" & vbCrLf &
                        "Into #PasoFacturadas" & vbCrLf &
                        "From MAEDDO Ddo" & vbCrLf &
                        "Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO" & vbCrLf &
@@ -159,7 +159,7 @@ Public Class Cl_Sincroniza
                        "Where Estado In ('PREPA','COMPL') And CONVERT(varchar, FechaCreacion, 112) = '" & Format(_FechaRevision, "yyyyMMdd") & "')" & vbCrLf &
                        "Order By Edo.TIDO,Edo.NUDO" & vbCrLf &
                         vbCrLf &
-                       "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Estado = 'FACTU',Facturar = 1,TidoGen = Ps.TD,NudoGen = Ps.NUDO_Fcv" & vbCrLf &
+                       "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Estado = 'FACTU',Facturar = 1,IdmaeedoGen = Ps.IDMAEEDO_Fcv,TidoGen = Ps.TD,NudoGen = Ps.NUDO_Fcv" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Stmp_Enc Enc" & vbCrLf &
                        "Inner Join #PasoFacturadas Ps On Enc.Idmaeedo = Ps.IDMAEEDO" & vbCrLf &
                        "Drop Table #PasoFacturadas"
@@ -170,7 +170,8 @@ Public Class Cl_Sincroniza
 
     Function Fx_EnviarAImprimnirListaDeVerificacion(_Idmaeedo As Integer,
                                                     _Tido As String,
-                                                    _Nudo As String) As LsValiciones.Mensajes
+                                                    _Nudo As String,
+                                                    _Impreso As Boolean) As LsValiciones.Mensajes
 
         _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
         Dim _Mensaje As New LsValiciones.Mensajes
@@ -179,8 +180,8 @@ Public Class Cl_Sincroniza
         Dim _Impresora As String = "Despacho1_B1"
         Dim _NombreFormato As String = "Lista verificacion WMS"
 
-        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion (NombreEquipo, Idmaeedo, Tido, Nudo, Funcionario, Fecha, NombreFormato,Impresora)" & vbCrLf &
-                       "Values ('" & _NombreEquipo & "'," & _Idmaeedo & ",'" & _Tido & "','" & _Nudo & "','wms',GETDATE(),'" & _NombreFormato & "','" & _Impresora & "')"
+        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion (NombreEquipo,Idmaeedo,Tido,Nudo,Funcionario,Fecha,NombreFormato,Impresora,Impreso)" & vbCrLf &
+                       "Values ('" & _NombreEquipo & "'," & _Idmaeedo & ",'" & _Tido & "','" & _Nudo & "','wms',GETDATE(),'" & _NombreFormato & "','" & _Impresora & "'," & Convert.ToInt32(_Impreso) & ")"
 
         If _SqlRandom.Ej_consulta_IDU(Consulta_sql, False) Then
             _Mensaje.EsCorrecto = True

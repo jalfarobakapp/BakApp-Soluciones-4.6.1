@@ -6,6 +6,7 @@ Public Class Frm_Sincronizador
     Dim _FechaRevision As DateTime
     Dim _Cl_Conexion As New Cl_Conexion
     Dim _Cl_Sincroniza As New Cl_Sincroniza
+    Dim _Version As String
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -19,6 +20,15 @@ Public Class Frm_Sincronizador
     End Sub
 
     Private Sub Frm_Sincronizador_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        ' el nombre del ejecutable y la extensión:
+        _Version = System.IO.Path.GetFileName(Application.ExecutablePath)
+
+        _Version = FileVersionInfo.GetVersionInfo _
+                                   (Application.StartupPath & "\" & _Version).FileVersion
+
+        Lbl_Estatus.Text = "Versión: " & _Version
+
         Txt_Log.ReadOnly = True
         CircularPgrs.IsRunning = False
         Sb_Ejecutar_diablito()

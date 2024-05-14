@@ -12,6 +12,7 @@ Public Class Frm_SelecProdMezclaFab
     Public Property RowNomenclatura As DataRow
 
     Private _Id_Enc As Integer
+    Private _MaxCantFabricar As Integer
 
     Public Sub New(Id_Enc As Integer)
 
@@ -27,6 +28,18 @@ Public Class Frm_SelecProdMezclaFab
     End Sub
 
     Private Sub Frm_SelecMezcla_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Where Tabla  = 'TARJA_MAXMEZCLAS' And CodigoTabla = 'MAXMEZCLAS'"
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_Row) Then
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones (Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Valor) Value " &
+                           "('TARJA_MAXMEZCLAS','Cant. Maxima a fabricar por mezcla','MAXMEZCLAS','MAXMEZCLAS',1200)" & vbCrLf &
+                           "Select * From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Where Tabla  = 'TARJA_MAXMEZCLAS' And CodigoTabla = 'MAXMEZCLAS'"
+            _Row = _Sql.Fx_Get_DataRow(Consulta_sql)
+        End If
+
+        _MaxCantFabricar = _Row.Item("Valor")
 
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
@@ -98,20 +111,6 @@ Public Class Frm_SelecProdMezclaFab
 
         End With
 
-        'If MarcarFilasSinSaldo Then
-
-        '    For Each row As DataGridViewRow In Grilla.Rows
-
-        '        Dim _Saldo As Double = row.Cells("SALDO").Value
-
-        '        If _Saldo = 0 Then
-        '            row.DefaultCellStyle.ForeColor = Color.Gray
-        '        End If
-
-        '    Next
-
-        'End If
-
     End Sub
 
     Private Sub Grilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
@@ -123,38 +122,11 @@ Public Class Frm_SelecProdMezclaFab
 
         Dim Fm As New Frm_Fabricaciones(_Id_Det)
         Fm.Text = _Codnomen & " - " & _Descriptor
+        Fm.MaxCantidadFabricar = _MaxCantFabricar
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
         Sb_Actualizar_Grilla()
-
-        'Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Pdp_CPT_MzDet Where Id_Enc = 0 And Codigo = '" & _Codigo & "'"
-        'Dim _RowMzDet As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-        'If Not IsNothing(_RowMzDet) Then
-
-        '    Dim _Codnomen As String = _RowMzDet.Item("Codnomen")
-
-        '    Consulta_sql = "Select * From PNPE Where CODIGO = '" & _Codnomen & "'"
-        '    RowNomenclatura = _RowNomenclatura
-        '    Me.Close()
-        '    Return
-
-        'End If
-
-        'Dim FmNom As New Frm_Select_Nomenclatura(_Codigo)
-        'FmNom.ShowDialog(Me)
-        '_RowNomenclatura = FmNom.RowNomenclatura
-        'FmNom.Dispose()
-
-        'If IsNothing(_RowNomenclatura) Then
-        '    MessageBoxEx.Show(Me, "Debe seleccionar una nomeclatura para poder crear la Orden de fabricación", "Validación",
-        '                          MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        '    Return
-        'End If
-
-        'RowNomenclatura = _RowNomenclatura
-        'Me.Close()
 
     End Sub
 

@@ -30,6 +30,8 @@ Public Class Frm_PreciosLC_Mt01
     Dim _Grabar As Boolean
     Dim _Cerrar_Al_Grabar As Boolean
 
+    Private _RowProducto As DataRow
+
     Public Property Grabar As Boolean
         Get
             Return _Grabar
@@ -245,6 +247,8 @@ Public Class Frm_PreciosLC_Mt01
 
         Mcosto = 0
         Mcosto_Old = 0
+
+        _RowProducto = Nothing
 
         Txtcodigo.Focus()
 
@@ -571,57 +575,7 @@ Public Class Frm_PreciosLC_Mt01
             Return
         End If
 
-        Dim Flete As Double
-        Flete = De_Txt_a_Num_01(TxtFlete1.Text, 3)
-
-        Consulta_sql = "Update " & TablaDePasoLista_LC & " Set VarFlete = " & De_Num_a_Tx_01(Flete, False, 5) & vbCrLf &
-                       ",VarValorDigit = " & De_Num_a_Tx_01(PrecioDigitado, False, 5) & vbCrLf &
-                       ",VarNetoDigit = 0"
-        _Sql.Ej_consulta_IDU(Consulta_sql)
-
-        '' REEMPLAZAR ESTA FUNCION EN LA NUEVA VERSION
-        Consulta_sql = "Declare @Fxx Varchar(8000)" & vbCrLf &
-                       "Set @Fxx = (Select Formula From " & _Global_BaseBk & "Zw_ListaLC_Fx" & vbCrLf &
-                       "where CodFormula = 'Lista_LC')" & vbCrLf &
-                       "Set @Fxx = REPLACE(@Fxx,'#TblPaso#','" & TablaDePasoLista_LC & "')" & vbCrLf &
-                       "Set @Fxx = REPLACE(@Fxx,'#TablaPaso#','" & TablaDePasoLista_LC & "')" & vbCrLf &
-                       "Set @Fxx = REPLACE(@Fxx,'Zw_ListaLC_Listas','" & _Global_BaseBk & "Zw_ListaLC_Listas')" & vbCrLf &
-                       "Exec (@Fxx)"
-
-        'Consulta_sql = "Declare @Fxx Varchar(8000)" & vbCrLf &
-        '               "Set @Fxx = (Select Formula From Zw_ListaLC_Fx" & vbCrLf &
-        '               "where CodFormula = 'Lista_LC')" & vbCrLf &
-        '               "Set @Fxx = REPLACE(@Fxx,'#TblPaso#','" & TablaDePasoLista_LC & "')" & vbCrLf &
-        '               "Set @Fxx = REPLACE(@Fxx,'#TablaPaso#','" & TablaDePasoLista_LC & "')" & vbCrLf &
-        '               "Exec (@Fxx)"
-
-        _Sql.Ej_consulta_IDU(Consulta_sql)
-
-        '"Set @Fxx = REPLACE(@Fxx,'Zw_ListaLC_TblPasoListas','" & TablaDePasoLista_LC & "')" & vbCrLf & _
-
-        Dim Codigo = Txtcodigo.Text
-
-        '' REEMPLAZAR ESTA FUNCION EN LA NUEVA VERSION
-        Consulta_sql = "Declare @Fxx Varchar(8000)" & vbCrLf &
-                          "Set @Fxx = (Select Formula From " & _Global_BaseBk & "Zw_ListaLC_Fx" & vbCrLf &
-                          "where CodFormula = 'Lista_LCRa')" & vbCrLf &
-                          "Set @Fxx = REPLACE(@Fxx,'#Codigo#','" & Codigo & "')" & vbCrLf &
-                          "Set @Fxx = REPLACE(@Fxx,'#TablaPaso#','" & TablaDePasoLista_LC & "')" & vbCrLf &
-                          "Set @Fxx = REPLACE(@Fxx,'Zw_ListaLC_Listas','" & _Global_BaseBk & "Zw_ListaLC_Listas')" & vbCrLf &
-                          "Exec (@Fxx)"
-
-        'Consulta_sql = "Declare @Fxx Varchar(8000)" & vbCrLf &
-        '                  "Set @Fxx = (Select Formula From Zw_ListaLC_Fx" & vbCrLf &
-        '                  "where CodFormula = 'Lista_LCRa')" & vbCrLf &
-        '                  "Set @Fxx = REPLACE(@Fxx,'#Codigo#','" & Codigo & "')" & vbCrLf &
-        '                  "Set @Fxx = REPLACE(@Fxx,'#TablaPaso#','" & TablaDePasoLista_LC & "')" & vbCrLf &
-        '                  "Exec (@Fxx)"
-
-        _Sql.Ej_consulta_IDU(Consulta_sql)
-
-        Consulta_sql = "Select * From " & TablaDePasoLista_LC & " ORDER BY Lista"
-        GrillaPrecios.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
-        FormatoGrilla(GrillaPrecios)
+        ShowContextMenu(Menu_Contextual_Simular)
 
     End Sub
 
@@ -655,29 +609,14 @@ Public Class Frm_PreciosLC_Mt01
     End Sub
 
     Private Sub BtnFormulas_Click(sender As System.Object, e As System.EventArgs) Handles BtnFormulas.Click
-        'Dim Nro As String = "Pre0003"
-        'If Fx_Tiene_Permiso(Me,Nro) Then
-        '    Dim Campo, Tabla, Condicion As String
 
-        '    Campo = "Formula"
-        '    Tabla = "Zw_ListaLC_Fx"
-        '    Condicion = "CodFormula = 'Lista_LC'"
+        If Txtcodigo.ButtonCustom.Visible Then
+            MessageBoxEx.Show(Me, "Debe seleccionar un producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
+        ShowContextMenu(Menu_Contextual_Formulas)
 
-        '    Dim Frm_PreciosLCEditorFormulas As New Frm_PreciosLCEditorFormulas
-        '    Dim Texto As String
-
-        '    Texto = "Función para Configurar Formula de actualización para las listas"
-        '    Frm_PreciosLCEditorFormulas.Id = _Sql.Fx_Trae_Dato(tb, cn1, "Id", "Zw_ListaLC_Fx", "CodFormula = 'Lista_LC'")
-        '    Frm_PreciosLCEditorFormulas.Texto = Texto
-        '    Frm_PreciosLCEditorFormulas.Tabla = Tabla
-        '    Frm_PreciosLCEditorFormulas.Campo = Campo
-        '    Frm_PreciosLCEditorFormulas.Condicion = Condicion
-        '    Frm_PreciosLCEditorFormulas.ShowDialog(Me)
-
-        'Else
-        '    MensajeSinPermiso(Nro)
-        'End If
     End Sub
 
     Private Sub Txtcodigo_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs)
@@ -852,36 +791,6 @@ Public Class Frm_PreciosLC_Mt01
         CalcularPropuestos(De_Txt_a_Num_01(TxtMargenDigitado.Text, 3), Impuestos)
     End Sub
 
-    Private Sub ButtonItem1_Click(sender As Object, e As EventArgs) Handles ButtonItem1.Click
-
-        If Fx_Tiene_Permiso(Me, "Pre0004") Then
-
-            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_ListaLC_Fx Where CodFormula = 'Lista_LCRa'"
-            'Consulta_sql = "Select * From Zw_ListaLC_Fx Where CodFormula = 'Lista_LCRa'"
-            Dim _Row_LitsaLC_Fx As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-            Dim _Formula As String = _Row_LitsaLC_Fx.Item("Formula")
-
-            Dim Fm As New Frm_PreciosLCEditorFormulas(_Formula)
-
-            Fm.Texto = "Función para Configurar Formula de actualización de Rangos para las listas"
-            Fm.ShowDialog(Me)
-
-            If Fm.Grabar Then
-                _Formula = Replace(LTrim(RTrim(Fm.Formula)), "'", "''")
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_ListaLC_Fx Set Formula = '" & _Formula & "'" & vbCrLf &
-                               "Where CodFormula = 'Lista_LCRa'"
-                'Consulta_sql = "Update " & _Global_BaseBk & "Zw_ListaLC_Fx Set Formula = '" & _Formula & "'" & vbCrLf &
-                '               "Where CodFormula = 'Lista_LCRa'"
-                _Sql.Ej_consulta_IDU(Consulta_sql)
-            End If
-
-            Fm.Dispose()
-
-        End If
-
-    End Sub
-
     Private Sub GrillaPrecios_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles GrillaPrecios.CellEndEdit
 
         Dim _Fila As DataGridViewRow = GrillaPrecios.Rows(GrillaPrecios.CurrentRow.Index)
@@ -963,7 +872,7 @@ Public Class Frm_PreciosLC_Mt01
             Dim _Codigo As String = Txtcodigo.Text
 
             Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
-            Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+            _RowProducto = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If Not IsNothing(_RowProducto) Then
                 If Not String.IsNullOrEmpty(_RowProducto.Item("ATPR").ToString.Trim) Then
@@ -993,6 +902,7 @@ Public Class Frm_PreciosLC_Mt01
                 Codigo_abuscar = Fm.Pro_RowProducto.Item("KOPR")
 
                 If Not String.IsNullOrEmpty(Trim(Codigo_abuscar)) Then
+                    _RowProducto = Fm.Pro_RowProducto
                     Txtcodigo.Text = Codigo_abuscar
                     Sb_Cargar_Producto(Codigo_abuscar)
                 End If
@@ -1042,6 +952,242 @@ Public Class Frm_PreciosLC_Mt01
         Sb_Limpiar()
     End Sub
 
+    Private Sub Btn_Mnu_FxActValListaPrecios_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_FxActValListaPrecios.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Pre0003") Then
+            Return
+        End If
+
+        '' REEMPLAZAR ESTA FUNCION EN LA NUEVA VERSION
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_ListaLC_Fx Where CodFormula = 'Lista_LC'"
+        'Consulta_sql = "Select * From Zw_ListaLC_Fx Where CodFormula = 'Lista_LC'"
+        Dim _Row_LitsaLC_Fx As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _Formula As String = _Row_LitsaLC_Fx.Item("Formula")
+
+        Dim Fm As New Frm_PreciosLCEditorFormulas(_Formula)
+
+        Fm.Texto = "Función para Configurar Formula de actualización para las listas"
+        Fm.ShowDialog(Me)
+
+        If Fm.Grabar Then
+            _Formula = Replace(LTrim(RTrim(Fm.Formula)), "'", "''")
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_ListaLC_Fx Set Formula = '" & _Formula & "'" & vbCrLf &
+                           "Where CodFormula = 'Lista_LC'"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+        End If
+
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_Mnu_FxActEcuaListaPrecios_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_FxActEcuaListaPrecios.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Pre0004") Then
+            Return
+        End If
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_ListaLC_Fx Where CodFormula = 'Lista_LCRa'"
+        'Consulta_sql = "Select * From Zw_ListaLC_Fx Where CodFormula = 'Lista_LCRa'"
+        Dim _Row_LitsaLC_Fx As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _Formula As String = _Row_LitsaLC_Fx.Item("Formula")
+
+        Dim Fm As New Frm_PreciosLCEditorFormulas(_Formula)
+
+        Fm.Texto = "Función para Configurar Formula de actualización de Rangos para las listas"
+        Fm.ShowDialog(Me)
+
+        If Fm.Grabar Then
+            _Formula = Replace(LTrim(RTrim(Fm.Formula)), "'", "''")
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_ListaLC_Fx Set Formula = '" & _Formula & "'" & vbCrLf &
+                           "Where CodFormula = 'Lista_LCRa'"
+            'Consulta_sql = "Update " & _Global_BaseBk & "Zw_ListaLC_Fx Set Formula = '" & _Formula & "'" & vbCrLf &
+            '               "Where CodFormula = 'Lista_LCRa'"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+        End If
+
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_Mnu_FxActEcuaMultiploListaPrecios_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_FxActEcuaMultiploListaPrecios.Click
+
+        Dim _Fila As DataGridViewRow = GrillaPrecios.CurrentRow
+        Dim _Id As Integer = _Fila.Cells("Id").Value
+        Dim _Lista As String = _Fila.Cells("Lista").Value
+
+        Dim _RowTabcodalSeleccionado As DataRow
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros("TABCODAL", "KOPR = '" & _RowProducto.Item("KOPR") & "' And MULTIPLO > 1")
+
+        If Not CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "No existen códigos alternativos con múltiplo para este producto", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim Fm_A As New Frm_CodAlternativo_Ver
+        Fm_A.ModoSeleccion = True
+        Fm_A.TxtCodigo.Text = _RowProducto.Item("KOPR")
+        Fm_A.Txtdescripcion.Text = _RowProducto.Item("NOKOPR")
+        Fm_A.TxtRTU.Text = _RowProducto.Item("RLUD")
+        Fm_A.ShowDialog(Me)
+        _RowTabcodalSeleccionado = Fm_A.RowTabcodalSeleccionado
+        Fm_A.Dispose()
+
+        If IsNothing(_RowTabcodalSeleccionado) Then
+            MessageBoxEx.Show(Me, "No se elecciono ningún código alternativo", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        If _RowTabcodalSeleccionado.Item("MULTIPLO") < 2 Then
+            MessageBoxEx.Show(Me, "El código alternativo debe ser con un MULTIPLO mayor a 1", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Call Btn_Mnu_FxActEcuaMultiploListaPrecios_Click(Nothing, Nothing)
+            Return
+        End If
+
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        _Mensaje = Fx_GenerarFXPorMultiplo(_RowTabcodalSeleccionado.Item("MULTIPLO"), 7, "pb1", "pp01ud", "pb3", 9999, _Id)
+
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+
+        If Not _Mensaje.EsCorrecto Then
+            Return
+        End If
+
+        _Mensaje.Detalle += " en Lista " & _Lista
+
+        _Fila.Cells("EcuacionUd1").Value = _Mensaje.Resultado
+        _Fila.Cells("EcuacionUd2").Value = String.Empty
+
+        Call GrillaPrecios_CellEnter(Nothing, Nothing)
+
+    End Sub
+
+    Function Fx_GenerarFXPorMultiplo(_Multiplo As Integer,
+                                     _CantFormulas As Integer,
+                                     _Kolt As String,
+                                     _CampoLista As String,
+                                     _UltKolt As String,
+                                     _UltCantidad As Integer,
+                                     _Id As Integer) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            '[0,5,caprco1,0][6,6,caprco1,<pb1>pp01ud][7,11,caprco1,0][12,12,caprco1,<pb1>pp01ud][13,17,caprco1,0][18,18,caprco1,<pb1>pp01ud][19,23,caprco1,0][24,9999,caprco1,<pb3>pp01ud]#3                                                                   
+
+            Dim _Formula As String = String.Empty
+            Dim _MultiploMas As Integer = _Multiplo
+            Dim _MultiploMenosIni As Integer = 0
+            Dim _MultiploMenosFin As Integer = _Multiplo - 1
+            Dim _Par As Boolean
+
+            For i = 0 To _CantFormulas
+
+                If _Par Then
+                    If i = _CantFormulas Then
+                        _Formula += "[" & _MultiploMas & "," & _UltCantidad & ",caprco1,<" & _UltKolt & ">" & _CampoLista & "]#3"
+                    Else
+                        _Formula += "[" & _MultiploMas & "," & _MultiploMas & ",caprco1,<" & _Kolt & ">" & _CampoLista & "]"
+                    End If
+
+                    _MultiploMenosIni = _MultiploMas + 1
+                    _MultiploMas += _Multiplo
+                    _MultiploMenosFin = _MultiploMas - 1
+                    _Par = False
+                Else
+                    _Formula += "[" & _MultiploMenosIni & "," & _MultiploMenosFin & ",caprco1,0]"
+                    _Par = True
+                End If
+
+            Next
+
+            Consulta_sql = "Update " & TablaDePasoLista_LC & " Set EcuacionUd1 = '" & _Formula & "',EcuacionUd2 = ''" & vbCrLf &
+                           "Where Id = " & _Id
+
+            If Not _Sql.Ej_consulta_IDU(Consulta_sql) Then
+                _Mensaje.Detalle = "Error al grabar"
+                Throw New System.Exception(_Sql.Pro_Error)
+            End If
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Detalle = "Formula creada correctamente"
+            _Mensaje.Mensaje = "La Formula ha sido incorporada en la ecuación de la lista, para confirmar debe grabar." & vbCrLf &
+                               "Formula: " & _Formula
+            _Mensaje.Resultado = _Formula
+            _Mensaje.Icono = MessageBoxIcon.Information
+
+        Catch ex As Exception
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
+    Private Sub Btn_Mnu_Simular_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_Simular.Click
+
+        Dim Flete As Double
+        Flete = De_Txt_a_Num_01(TxtFlete1.Text, 3)
+
+        Consulta_sql = "Update " & TablaDePasoLista_LC & " Set VarFlete = " & De_Num_a_Tx_01(Flete, False, 5) & vbCrLf &
+                       ",VarValorDigit = " & De_Num_a_Tx_01(PrecioDigitado, False, 5) & vbCrLf &
+                       ",VarNetoDigit = 0"
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        '' REEMPLAZAR ESTA FUNCION EN LA NUEVA VERSION
+        Consulta_sql = "Declare @Fxx Varchar(8000)" & vbCrLf &
+                       "Set @Fxx = (Select Formula From " & _Global_BaseBk & "Zw_ListaLC_Fx" & vbCrLf &
+                       "where CodFormula = 'Lista_LC')" & vbCrLf &
+                       "Set @Fxx = REPLACE(@Fxx,'#TblPaso#','" & TablaDePasoLista_LC & "')" & vbCrLf &
+                       "Set @Fxx = REPLACE(@Fxx,'#TablaPaso#','" & TablaDePasoLista_LC & "')" & vbCrLf &
+                       "Set @Fxx = REPLACE(@Fxx,'Zw_ListaLC_Listas','" & _Global_BaseBk & "Zw_ListaLC_Listas')" & vbCrLf &
+                       "Exec (@Fxx)"
+
+        'Consulta_sql = "Declare @Fxx Varchar(8000)" & vbCrLf &
+        '               "Set @Fxx = (Select Formula From Zw_ListaLC_Fx" & vbCrLf &
+        '               "where CodFormula = 'Lista_LC')" & vbCrLf &
+        '               "Set @Fxx = REPLACE(@Fxx,'#TblPaso#','" & TablaDePasoLista_LC & "')" & vbCrLf &
+        '               "Set @Fxx = REPLACE(@Fxx,'#TablaPaso#','" & TablaDePasoLista_LC & "')" & vbCrLf &
+        '               "Exec (@Fxx)"
+
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        '"Set @Fxx = REPLACE(@Fxx,'Zw_ListaLC_TblPasoListas','" & TablaDePasoLista_LC & "')" & vbCrLf & _
+
+        Dim Codigo = Txtcodigo.Text
+
+        '' REEMPLAZAR ESTA FUNCION EN LA NUEVA VERSION
+        Consulta_sql = "Declare @Fxx Varchar(8000)" & vbCrLf &
+                          "Set @Fxx = (Select Formula From " & _Global_BaseBk & "Zw_ListaLC_Fx" & vbCrLf &
+                          "where CodFormula = 'Lista_LCRa')" & vbCrLf &
+                          "Set @Fxx = REPLACE(@Fxx,'#Codigo#','" & Codigo & "')" & vbCrLf &
+                          "Set @Fxx = REPLACE(@Fxx,'#TablaPaso#','" & TablaDePasoLista_LC & "')" & vbCrLf &
+                          "Set @Fxx = REPLACE(@Fxx,'Zw_ListaLC_Listas','" & _Global_BaseBk & "Zw_ListaLC_Listas')" & vbCrLf &
+                          "Exec (@Fxx)"
+
+        'Consulta_sql = "Declare @Fxx Varchar(8000)" & vbCrLf &
+        '                  "Set @Fxx = (Select Formula From Zw_ListaLC_Fx" & vbCrLf &
+        '                  "where CodFormula = 'Lista_LCRa')" & vbCrLf &
+        '                  "Set @Fxx = REPLACE(@Fxx,'#Codigo#','" & Codigo & "')" & vbCrLf &
+        '                  "Set @Fxx = REPLACE(@Fxx,'#TablaPaso#','" & TablaDePasoLista_LC & "')" & vbCrLf &
+        '                  "Exec (@Fxx)"
+
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        Consulta_sql = "Select * From " & TablaDePasoLista_LC & " ORDER BY Lista"
+        GrillaPrecios.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        FormatoGrilla(GrillaPrecios)
+
+    End Sub
+
     Private Sub Txtcodigo_KeyDown(sender As Object, e As KeyEventArgs) Handles Txtcodigo.KeyDown
         If Txtcodigo.ButtonCustom.Visible Then
             If e.KeyValue = Keys.Enter Then
@@ -1089,35 +1235,6 @@ Public Class Frm_PreciosLC_Mt01
 
     End Sub
 
-    Private Sub BtnFormulasListas_Click(sender As Object, e As EventArgs) Handles BtnFormulasListas.Click
 
-        If Fx_Tiene_Permiso(Me, "Pre0003") Then
-
-            '' REEMPLAZAR ESTA FUNCION EN LA NUEVA VERSION
-            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_ListaLC_Fx Where CodFormula = 'Lista_LC'"
-            'Consulta_sql = "Select * From Zw_ListaLC_Fx Where CodFormula = 'Lista_LC'"
-            Dim _Row_LitsaLC_Fx As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-            Dim _Formula As String = _Row_LitsaLC_Fx.Item("Formula")
-
-            Dim Fm As New Frm_PreciosLCEditorFormulas(_Formula)
-
-            Fm.Texto = "Función para Configurar Formula de actualización para las listas"
-            Fm.ShowDialog(Me)
-
-            If Fm.Grabar Then
-                _Formula = Replace(LTrim(RTrim(Fm.Formula)), "'", "''")
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_ListaLC_Fx Set Formula = '" & _Formula & "'" & vbCrLf &
-                               "Where CodFormula = 'Lista_LC'"
-                'Consulta_sql = "Update " & _Global_BaseBk & "Zw_ListaLC_Fx Set Formula = '" & _Formula & "'" & vbCrLf &
-                '               "Where CodFormula = 'Lista_LC'"
-                _Sql.Ej_consulta_IDU(Consulta_sql)
-            End If
-
-            Fm.Dispose()
-
-        End If
-
-    End Sub
 
 End Class

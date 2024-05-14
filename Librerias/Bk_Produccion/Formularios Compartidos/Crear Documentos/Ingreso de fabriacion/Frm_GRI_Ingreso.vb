@@ -44,7 +44,6 @@ Public Class Frm_GRI_Ingreso
             Return
         End If
 
-
         Dim _Old_Funcionario = FUNCIONARIO
         Dim _Aceptar As Boolean
 

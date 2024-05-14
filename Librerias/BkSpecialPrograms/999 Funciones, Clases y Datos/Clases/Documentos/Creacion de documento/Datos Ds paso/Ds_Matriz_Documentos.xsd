@@ -169,6 +169,8 @@
               <xs:element name="IdFincred" msprop:Generator_ColumnPropNameInTable="IdFincredColumn" msprop:Generator_ColumnPropNameInRow="IdFincred" msprop:Generator_UserColumnName="IdFincred" msprop:Generator_ColumnVarNameInTable="columnIdFincred" type="xs:int" default="0" minOccurs="0" />
               <xs:element name="MontoFincred" msprop:Generator_ColumnPropNameInTable="MontoFincredColumn" msprop:Generator_ColumnPropNameInRow="MontoFincred" msprop:Generator_UserColumnName="MontoFincred" msprop:Generator_ColumnVarNameInTable="columnMontoFincred" type="xs:double" default="0" minOccurs="0" />
               <xs:element name="RevFincredEnt" msprop:Generator_ColumnPropNameInTable="RevFincredEntColumn" msprop:Generator_ColumnPropNameInRow="RevFincredEnt" msprop:Generator_UserColumnName="RevFincredEnt" msprop:Generator_ColumnVarNameInTable="columnRevFincredEnt" type="xs:boolean" default="false" minOccurs="0" />
+              <xs:element name="TblTipoVenta" msprop:Generator_ColumnPropNameInRow="TblTipoVenta" msprop:Generator_ColumnPropNameInTable="TblTipoVentaColumn" msprop:Generator_ColumnVarNameInTable="columnTblTipoVenta" msprop:Generator_UserColumnName="TblTipoVenta" type="xs:string" minOccurs="0" />
+              <xs:element name="CodTipoVenta" msprop:Generator_ColumnPropNameInRow="CodTipoVenta" msprop:Generator_ColumnPropNameInTable="CodTipoVentaColumn" msprop:Generator_ColumnVarNameInTable="columnCodTipoVenta" msprop:Generator_UserColumnName="CodTipoVenta" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -303,8 +305,8 @@
               <xs:element name="Semilla_Svr" msprop:Generator_ColumnPropNameInTable="Semilla_SvrColumn" msprop:Generator_ColumnPropNameInRow="Semilla_Svr" msprop:Generator_UserColumnName="Semilla_Svr" msprop:Generator_ColumnVarNameInTable="columnSemilla_Svr" type="xs:int" default="0" minOccurs="0" />
               <xs:element name="Nmarca" msprop:Generator_ColumnPropNameInTable="NmarcaColumn" msprop:Generator_ColumnPropNameInRow="Nmarca" msprop:Generator_UserColumnName="Nmarca" msprop:Generator_ColumnVarNameInTable="columnNmarca" type="xs:string" minOccurs="0" />
               <xs:element name="RtuVariable" msprop:Generator_ColumnPropNameInTable="RtuVariableColumn" msprop:Generator_ColumnPropNameInRow="RtuVariable" msprop:Generator_UserColumnName="RtuVariable" msprop:Generator_ColumnVarNameInTable="columnRtuVariable" type="xs:boolean" minOccurs="0" />
-              <xs:element name="Espuntosvta" msprop:Generator_UserColumnName="Espuntosvta" msprop:Generator_ColumnPropNameInTable="EspuntosvtaColumn" msprop:Generator_ColumnPropNameInRow="Espuntosvta" msprop:Generator_ColumnVarNameInTable="columnEspuntosvta" type="xs:boolean" minOccurs="0" />
-              <xs:element name="ModFechVto" msprop:Generator_ColumnPropNameInRow="ModFechVto" msprop:Generator_ColumnPropNameInTable="ModFechVtoColumn" msprop:Generator_ColumnVarNameInTable="columnModFechVto" msprop:Generator_UserColumnName="ModFechVto" type="xs:boolean" minOccurs="0" />
+              <xs:element name="Espuntosvta" msprop:Generator_ColumnPropNameInTable="EspuntosvtaColumn" msprop:Generator_ColumnPropNameInRow="Espuntosvta" msprop:Generator_UserColumnName="Espuntosvta" msprop:Generator_ColumnVarNameInTable="columnEspuntosvta" type="xs:boolean" minOccurs="0" />
+              <xs:element name="ModFechVto" msprop:Generator_UserColumnName="ModFechVto" msprop:Generator_ColumnPropNameInTable="ModFechVtoColumn" msprop:Generator_ColumnPropNameInRow="ModFechVto" msprop:Generator_ColumnVarNameInTable="columnModFechVto" type="xs:boolean" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
