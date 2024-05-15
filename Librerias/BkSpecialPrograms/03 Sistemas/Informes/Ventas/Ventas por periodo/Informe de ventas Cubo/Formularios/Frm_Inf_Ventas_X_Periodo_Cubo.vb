@@ -560,14 +560,17 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         _Filtro_Vendedores_Asignados_Todas = True
 
         If Fx_Tiene_Permiso(Me, "Inf00025", , False) Then
+
             _Filtro_Vendedores_Asignados_Todas = True
+
         Else
 
             _Filtro_Vendedores_Asignados_Todas = False
 
             Consulta_sql = "Select Cast(1 As Bit) As Chk,KOFU As Codigo, NOKOFU as Descripcion" & vbCrLf &
-                               "From TABFU Where KOFU = '" & FUNCIONARIO & "'"
+                           "From TABFU Where KOFU = '" & FUNCIONARIO & "'"
             _Tbl_Filtro_Vendedores_Asignados = _Sql.Fx_Get_Tablas(Consulta_sql)
+
         End If
 
         InitializeComponent()
@@ -1126,6 +1129,8 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
 
             If _Tbl_Informe.Rows.Count = 0 Then
+                Sb_Actualizar_Graficos()
+                Sb_Imagenes_Filtros()
                 Throw New Exception("No existe información de ventas entre estas fechas")
             End If
 
@@ -1182,9 +1187,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             End With
 
             Sb_Actualizar_Graficos()
-
             Sb_Marcar_Grafico_Barras(_Tbl_Informe.Rows(0).Item("CODIGO"))
-
             Sb_Imagenes_Filtros()
 
             Btn_Atras.Enabled = _ARBOL_BAKAPP

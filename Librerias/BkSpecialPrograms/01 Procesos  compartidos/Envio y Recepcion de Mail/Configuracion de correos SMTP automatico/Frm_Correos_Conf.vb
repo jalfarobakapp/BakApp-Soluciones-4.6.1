@@ -546,18 +546,31 @@ Public Class Frm_Correos_Conf
         _Cuerpo = Replace(_Cuerpo, "&gt;", ">")
         _Cuerpo = Replace(_Cuerpo, "&quot;", """")
 
-        Dim result As ISendMessageResult = Fx_Enviar_Mail3IMail(_Host_SMT,
-                                                                _Usuario,
-                                                                _Contrasena,
-                                                                _Para,
-                                                                _CC,
-                                                                _Asunto,
-                                                                _Cuerpo,
-                                                                _StrAttach,
-                                                                _Puerto,
-                                                                _EnableSsl)
+        'Dim result As ISendMessageResult = Fx_Enviar_Mail3IMail(_Host_SMT,
+        '                                                        _Usuario,
+        '                                                        _Contrasena,
+        '                                                        _Para,
+        '                                                        _CC,
+        '                                                        _Asunto,
+        '                                                        _Cuerpo,
+        '                                                        _StrAttach,
+        '                                                        _Puerto,
+        '                                                        _EnableSsl)
 
-        If result.Status = 0 Then 'Fx_Enviar_Mail3IMail(_Host_SMT, _Usuario, _Contrasena, _Para, _CC, _Asunto, _Cuerpo, _StrAttach, _Puerto, _EnableSsl, True) Then
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        _Mensaje = Fx_Enviar_Mail3IMail(_Host_SMT,
+                                        _Usuario,
+                                        _Contrasena,
+                                        _Para,
+                                        _CC,
+                                        _Asunto,
+                                        _Cuerpo,
+                                        _StrAttach,
+                                        _Puerto,
+                                        _EnableSsl)
+
+        If _Mensaje.EsCorrecto = 0 Then 'Fx_Enviar_Mail3IMail(_Host_SMT, _Usuario, _Contrasena, _Para, _CC, _Asunto, _Cuerpo, _StrAttach, _Puerto, _EnableSsl, True) Then
             Return True
         Else
             Return False
@@ -1060,141 +1073,158 @@ Public Class Frm_Correos_Conf
                                   _Cuerpo As String,
                                   _StrAttach() As String,
                                   _Puerto As Integer,
-                                  _EnableSsl As Boolean) As ISendMessageResult
+                                  _EnableSsl As Boolean) As LsValiciones.Mensajes 'ISendMessageResult
 
-
-        Dim builder As New MailBuilder()
-        builder.From.Add(New MailBox(_Usuario))
-
-
-        _Para = _Para.Trim()
-
-        If IsNothing(_CC) Then _CC = String.Empty
-        _CC = _CC.Trim()
-
-        _CC = Replace(_CC, ",", ";")
-
-        'Declaro la variable para enviar el correo
-        Dim _Correo As New MailMessage()
-        _Correo.From = New System.Net.Mail.MailAddress(_Usuario)
-        _Correo.Subject = _Asunto
-
-        For Each _To As String In _Para.Split(New Char() {";"c})
-            If Fx_Validar_Email(_To) Then
-                builder.[To].Add(New MailBox(_To))
-            End If
-        Next
-
-        If Not String.IsNullOrEmpty(_CC) Then
-            For Each _Cc_ As String In _CC.Split(New Char() {";"c})
-                If Fx_Validar_Email(_Cc_) Then
-                    builder.Cc.Add(New MailBox(_Cc_))
-                End If
-            Next
-        End If
-
-
-        'builder.[To].Add(New MailBox(_Para))
-        'builder.Cc.Add(New MailBox(_CC))
-
-        builder.Subject = _Asunto
-        builder.Html = _Cuerpo '"<img src=""cid:lemon@id"" align=""left"" /> This is simple <strong>HTML email</strong> with an image and attachment"
-
-        'Dim visual As MimeData = builder.AddVisual("Lemon.jpg")
-        'visual.ContentId = "lemon@id"
-
-        'DEFINE DE DONDE SE OBTIENEN LAS IMAGENES
-
-        Dim _Imagenes As New List(Of String)
-        Dim _IdImagenes As New List(Of String)
-
-        Dim _Dir_Imagenes = "Data\" & RutEmpresa & "\Tmp\Correo\Imagenes\"
-        Dim _ContImg = 0
-        Dim _UlImg = 0
-        ' Incorporacion de imagenes Random
-        For i = 0 To 32
-
-            If _Cuerpo.Contains("cid:IMG" & i) Then
-                If System.IO.File.Exists(_Dir_Imagenes & "IMG" & i & ".jpg") Then
-                    Dim visual As MimeData = builder.AddVisual(_Dir_Imagenes & "IMG" & i & ".jpg")
-                    visual.ContentId = "IMG" & i
-                    _UlImg = i
-                End If
-                If System.IO.File.Exists(_Dir_Imagenes & "IMG" & i & ".jpeg") Then
-                    Dim visual As MimeData = builder.AddVisual(_Dir_Imagenes & "IMG" & i & ".jpeg")
-                    visual.ContentId = "IMG" & i
-                    _UlImg = i
-                End If
-            End If
-
-        Next
-
-
-        'Dim attachment As MimeData = builder.AddAttachment("Attachment.txt")
-        'attachment.SetFileName("Attachment.txt", guessContentType:=True)
-
-        Dim xi
+        Dim _Mensaje As New LsValiciones.Mensajes
 
         Try
-            ' simplemente para saber si se produce error
-            xi = _StrAttach.Length
-        Catch
-            ' Si se produce un error, asignamos el valor cero, que más abajo indicará si el array contien datos o no
-            xi = 0
-        End Try
 
-        Dim _Archivos_Adjuntos As Net.Mail.Attachment
-        Dim _AttAdj As New List(Of Net.Mail.Attachment)
-
-        If xi > 0 Then
-            For Each strFile In _StrAttach
-                If Not IsNothing(strFile) Then
-                    '_Correo.Attachments.Add(New System.Net.Mail.Attachment(Trim(strFile)))
-                    _Archivos_Adjuntos = New Net.Mail.Attachment(strFile.Trim)
-                    If IsNothing(_Archivos_Adjuntos) Then
-                        xi = 0
-                    Else
-                        Dim attachment As MimeData = builder.AddAttachment(strFile.Trim)
-                        Dim nombreArchivo As String = Path.GetFileName(strFile.Trim)
-                        attachment.SetFileName(nombreArchivo, guessContentType:=True)
-                        _AttAdj.Add(_Archivos_Adjuntos)
-                    End If
-                End If
-            Next
-        End If
-
-        Dim email As IMail = builder.Create()
-
-
-        Using smtp As New Smtp                          ' Now connect to SMTP server and send it
-            smtp.Connect(_Host_SMT)                       ' Use overloads or ConnectSSL if you need to specify different port or SSL.
-            'Smtp.DefaultPort = _Puerto
-            'smtp.po
-            smtp.SSLConfiguration.EnabledSslProtocols = _EnableSsl ' True
-            smtp.UseBestLogin(_Usuario, _Contrasena)         ' You can also use: Login, LoginPLAIN, LoginCRAM, LoginDIGEST, LoginOAUTH methods,
-            ' or use UseBestLogin method if you want Mail.dll to choose for you.
-            'Smtp.DefaultPort = 456
-            Dim result As ISendMessageResult = smtp.SendMessage((email))
-
-            'Console.ReadKey()
-            smtp.Close()
-
-            If xi > 0 Then
-
-                For Each _Arch As Net.Mail.Attachment In _AttAdj
-                    _Arch.Dispose()
-                Next
-
-                '_Archivos_Adjuntos.Dispose()
-                email.Attachments.DefaultIfEmpty ' .Attachments.Clear()
+            If String.IsNullOrEmpty(_Asunto.Trim) Then
+                Throw New System.Exception("El Asunto no puede estar vacio")
             End If
 
-            Return result
+            Dim builder As New MailBuilder()
+            builder.From.Add(New MailBox(_Usuario))
 
-        End Using
+            _Para = _Para.Trim()
 
-        ' For sure you'll need to send complex emails,
-        ' take a look at our templates support in SmtpTemplates sample.
+            If IsNothing(_CC) Then _CC = String.Empty
+            _CC = _CC.Trim()
+
+            _CC = Replace(_CC, ",", ";")
+
+            'Declaro la variable para enviar el correo
+            Dim _Correo As New MailMessage()
+            _Correo.From = New System.Net.Mail.MailAddress(_Usuario)
+            _Correo.Subject = _Asunto
+
+            For Each _To As String In _Para.Split(New Char() {";"c})
+                If Fx_Validar_Email(_To) Then
+                    builder.[To].Add(New MailBox(_To))
+                End If
+            Next
+
+            If Not String.IsNullOrEmpty(_CC) Then
+                For Each _Cc_ As String In _CC.Split(New Char() {";"c})
+                    If Fx_Validar_Email(_Cc_) Then
+                        builder.Cc.Add(New MailBox(_Cc_))
+                    End If
+                Next
+            End If
+
+
+            'builder.[To].Add(New MailBox(_Para))
+            'builder.Cc.Add(New MailBox(_CC))
+
+            builder.Subject = _Asunto
+            builder.Html = _Cuerpo '"<img src=""cid:lemon@id"" align=""left"" /> This is simple <strong>HTML email</strong> with an image and attachment"
+
+            'Dim visual As MimeData = builder.AddVisual("Lemon.jpg")
+            'visual.ContentId = "lemon@id"
+
+            'DEFINE DE DONDE SE OBTIENEN LAS IMAGENES
+
+            Dim _Imagenes As New List(Of String)
+            Dim _IdImagenes As New List(Of String)
+
+            Dim _Dir_Imagenes = "Data\" & RutEmpresa & "\Tmp\Correo\Imagenes\"
+            Dim _ContImg = 0
+            Dim _UlImg = 0
+            ' Incorporacion de imagenes Random
+            For i = 0 To 32
+
+                If _Cuerpo.Contains("cid:IMG" & i) Then
+                    If System.IO.File.Exists(_Dir_Imagenes & "IMG" & i & ".jpg") Then
+                        Dim visual As MimeData = builder.AddVisual(_Dir_Imagenes & "IMG" & i & ".jpg")
+                        visual.ContentId = "IMG" & i
+                        _UlImg = i
+                    End If
+                    If System.IO.File.Exists(_Dir_Imagenes & "IMG" & i & ".jpeg") Then
+                        Dim visual As MimeData = builder.AddVisual(_Dir_Imagenes & "IMG" & i & ".jpeg")
+                        visual.ContentId = "IMG" & i
+                        _UlImg = i
+                    End If
+                End If
+
+            Next
+
+
+            'Dim attachment As MimeData = builder.AddAttachment("Attachment.txt")
+            'attachment.SetFileName("Attachment.txt", guessContentType:=True)
+
+            Dim xi
+
+            Try
+                ' simplemente para saber si se produce error
+                xi = _StrAttach.Length
+            Catch
+                ' Si se produce un error, asignamos el valor cero, que más abajo indicará si el array contien datos o no
+                xi = 0
+            End Try
+
+            Dim _Archivos_Adjuntos As Net.Mail.Attachment
+            Dim _AttAdj As New List(Of Net.Mail.Attachment)
+
+            If xi > 0 Then
+                For Each strFile In _StrAttach
+                    If Not IsNothing(strFile) Then
+                        '_Correo.Attachments.Add(New System.Net.Mail.Attachment(Trim(strFile)))
+                        _Archivos_Adjuntos = New Net.Mail.Attachment(strFile.Trim)
+                        If IsNothing(_Archivos_Adjuntos) Then
+                            xi = 0
+                        Else
+                            Dim attachment As MimeData = builder.AddAttachment(strFile.Trim)
+                            Dim nombreArchivo As String = Path.GetFileName(strFile.Trim)
+                            attachment.SetFileName(nombreArchivo, guessContentType:=True)
+                            _AttAdj.Add(_Archivos_Adjuntos)
+                        End If
+                    End If
+                Next
+            End If
+
+            Dim email As IMail = builder.Create()
+
+
+            Using smtp As New Smtp                          ' Now connect to SMTP server and send it
+                smtp.Connect(_Host_SMT)                       ' Use overloads or ConnectSSL if you need to specify different port or SSL.
+                'Smtp.DefaultPort = _Puerto
+                'smtp.po
+                smtp.SSLConfiguration.EnabledSslProtocols = _EnableSsl ' True
+                smtp.UseBestLogin(_Usuario, _Contrasena)         ' You can also use: Login, LoginPLAIN, LoginCRAM, LoginDIGEST, LoginOAUTH methods,
+                ' or use UseBestLogin method if you want Mail.dll to choose for you.
+                'Smtp.DefaultPort = 456
+                Dim result As ISendMessageResult = smtp.SendMessage((email))
+
+                'Console.ReadKey()
+                smtp.Close()
+
+                If xi > 0 Then
+
+                    For Each _Arch As Net.Mail.Attachment In _AttAdj
+                        _Arch.Dispose()
+                    Next
+
+                    '_Archivos_Adjuntos.Dispose()
+                    email.Attachments.DefaultIfEmpty ' .Attachments.Clear()
+
+                End If
+
+                'Return result
+
+                If result.Status = SendMessageStatus.Success Then
+                    _Mensaje.EsCorrecto = True
+                End If
+
+            End Using
+
+            ' For sure you'll need to send complex emails,
+            ' take a look at our templates support in SmtpTemplates sample.
+
+        Catch ex As Exception
+            _Mensaje.Mensaje = ex.Message
+        End Try
+
+        Return _Mensaje
 
     End Function
 

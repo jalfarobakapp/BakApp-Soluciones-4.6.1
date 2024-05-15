@@ -35,6 +35,8 @@ Partial Class Frm_Sincronizador
         Me.Dtp_FechaRevision = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Chk_AmbienteDePruebas = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Switch_Sincronizacion = New DevComponents.DotNetBar.Controls.SwitchButton()
+        Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dtp_FechaRevision, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -70,7 +72,7 @@ Partial Class Frm_Sincronizador
         Me.CircularPgrs.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.CircularPgrs.Enabled = False
         Me.CircularPgrs.FocusCuesEnabled = False
-        Me.CircularPgrs.Location = New System.Drawing.Point(206, 370)
+        Me.CircularPgrs.Location = New System.Drawing.Point(391, 371)
         Me.CircularPgrs.Name = "CircularPgrs"
         Me.CircularPgrs.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Dot
         Me.CircularPgrs.ProgressColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
@@ -224,11 +226,41 @@ Partial Class Frm_Sincronizador
         Me.Chk_AmbienteDePruebas.Text = "Ambiente de pruebas"
         Me.Chk_AmbienteDePruebas.Visible = False
         '
+        'Switch_Sincronizacion
+        '
+        '
+        '
+        '
+        Me.Switch_Sincronizacion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Switch_Sincronizacion.Location = New System.Drawing.Point(296, 371)
+        Me.Switch_Sincronizacion.Name = "Switch_Sincronizacion"
+        Me.Switch_Sincronizacion.OffText = "Pausada"
+        Me.Switch_Sincronizacion.OnText = "Activa"
+        Me.Switch_Sincronizacion.Size = New System.Drawing.Size(89, 22)
+        Me.Switch_Sincronizacion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Switch_Sincronizacion.TabIndex = 172
+        Me.Switch_Sincronizacion.Value = True
+        Me.Switch_Sincronizacion.ValueObject = "Y"
+        '
+        'LabelX2
+        '
+        Me.LabelX2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        '
+        '
+        '
+        Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX2.Location = New System.Drawing.Point(220, 370)
+        Me.LabelX2.Name = "LabelX2"
+        Me.LabelX2.Size = New System.Drawing.Size(83, 23)
+        Me.LabelX2.TabIndex = 173
+        Me.LabelX2.Text = "Sincronización"
+        '
         'Frm_Sincronizador
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(705, 462)
+        Me.Controls.Add(Me.Switch_Sincronizacion)
         Me.Controls.Add(Me.Chk_AmbienteDePruebas)
         Me.Controls.Add(Me.LabelX1)
         Me.Controls.Add(Me.Dtp_FechaRevision)
@@ -236,6 +268,7 @@ Partial Class Frm_Sincronizador
         Me.Controls.Add(Me.Metro_Bar_Color)
         Me.Controls.Add(Me.CircularPgrs)
         Me.Controls.Add(Me.Txt_Log)
+        Me.Controls.Add(Me.LabelX2)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.Black
@@ -262,4 +295,6 @@ Partial Class Frm_Sincronizador
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
     Public WithEvents Chk_AmbienteDePruebas As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Btn_Conexion As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Switch_Sincronizacion As DevComponents.DotNetBar.Controls.SwitchButton
+    Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
 End Class

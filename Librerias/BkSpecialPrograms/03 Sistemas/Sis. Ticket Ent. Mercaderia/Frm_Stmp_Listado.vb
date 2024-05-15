@@ -66,17 +66,17 @@ Public Class Frm_Stmp_Listado
 
         Select Case _Tbas.Name
             Case "Tab_Pendientes"
-                _Condicion += vbCrLf & "And Estado In ('PREPA','COMPL')"
+                _Condicion += vbCrLf & "And Estado In ('PREPA','COMPL') And Planificada = 1"
                 _DocEmitir = True
                 _FechaPickeado = True
                 _HoraPickeado = True
                 _MostrarImagenes = True
             Case "Tab_Preparacion"
-                _Condicion += vbCrLf & "And Estado = 'PREPA'"
+                _Condicion += vbCrLf & "And Estado = 'PREPA' And Planificada = 1"
                 _DocEmitir = True
                 _MostrarImagenes = True
             Case "Tab_Completadas"
-                _Condicion += vbCrLf & "And Estado = 'COMPL'"
+                _Condicion += vbCrLf & "And Estado = 'COMPL' And Planificada = 1"
                 _DocEmitir = True
                 _FechaPickeado = True
                 _HoraPickeado = True
@@ -86,7 +86,7 @@ Public Class Frm_Stmp_Listado
                 _TidoGen = True
                 _NudoGen = True
             Case "Tab_Entregadas"
-                _Condicion += vbCrLf & "And Estado = 'ENTRE'"
+                _Condicion += vbCrLf & "And Estado In ('ENTRE','CERRA') And CONVERT(varchar, FechaEntrega, 112) = '" & Format(Now.Date, "yyyyMMdd") & "'"
                 _TidoGen = True
                 _NudoGen = True
             Case "Tab_Cerradas"

@@ -12,7 +12,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("Systema de Integración")> 
 <Assembly: AssemblyCompany("BakApp Soluciones de integración informática")> 
 <Assembly: AssemblyProduct("Sistema BakApp")>
-<Assembly: AssemblyCopyright("Copyright ©  2018 - 2023")>
+<Assembly: AssemblyCopyright("Copyright ©  2018 - 2024")>
 <Assembly: AssemblyTrademark("Bakapp")>
 
 <Assembly: ComVisible(False)>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' mediante el asterisco ('*'), como se muestra a continuación:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("3.4.5.21")>
-<Assembly: AssemblyFileVersion("3.4.5.21")>
+<Assembly: AssemblyVersion("3.4.5.23")>
+<Assembly: AssemblyFileVersion("3.4.5.23")>

@@ -38,10 +38,18 @@ Public Class Frm_Crear_Entidad_Mt_Puntos
             Return
         End If
 
+        Dim _CodFuncionario_Enrola As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "CodFuncionario_Enrola",
+                                                                 "CodEntidad = '" & _CodEntidad & "' And CodSucEntidad = '" & _CodSucEntidad & "'")
+
+        If String.IsNullOrWhiteSpace(_CodFuncionario_Enrola) Then
+            _CodFuncionario_Enrola = ",FechaInscripPuntos = '" & Format(Dtp_FechaInscripPuntos.Value, "yyyyMMdd") & "'" & vbCrLf &
+                                     ",CodFuncionario_Enrola = '" & FUNCIONARIO & "'" & vbCrLf
+        End If
+
         Consulta_sql = "Update " & _Global_BaseBk & "Zw_Entidades Set " & vbCrLf &
                        "JuntaPuntos = " & Convert.ToInt32(Chk_JuntaPuntos.Checked) & vbCrLf &
                        ",EmailPuntos = '" & Txt_EmailPuntos.Text.Trim & "'" & vbCrLf &
-                       ",FechaInscripPuntos = '" & Format(Dtp_FechaInscripPuntos.Value, "yyyyMMdd") & "'" & vbCrLf &
+                       _CodFuncionario_Enrola &
                        "Where CodEntidad = '" & _CodEntidad & "' And CodSucEntidad = '" & _CodSucEntidad & "'"
         If Not _Sql.Ej_consulta_IDU(Consulta_sql) Then
             Return
