@@ -29,7 +29,7 @@ and i.whse_id = 'ALAMEDA'
 and ob_oid = @nv
 
 Cabecera:
-select ord_date, ob_oid, ob_type, shipment, wave, bill_name,whse_id
+select ord_date, ob_oid, ob_type, shipment, wave, bill_name,whse_id,ob_ord_stt
 from om_f
 where ob_oid = @nv
 and om_f.whse_id = 'ALAMEDA'

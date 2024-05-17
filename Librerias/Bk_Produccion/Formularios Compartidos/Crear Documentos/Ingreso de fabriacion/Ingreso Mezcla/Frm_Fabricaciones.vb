@@ -1,4 +1,5 @@
-﻿Imports BkSpecialPrograms
+﻿Imports System.Reflection.Emit
+Imports BkSpecialPrograms
 Imports DevComponents.DotNetBar
 
 Public Class Frm_Fabricaciones
@@ -116,6 +117,20 @@ Public Class Frm_Fabricaciones
 
         Lbl_Fabricado.Text = FormatNumber(_Row.Item("CantFabricada"), 0)
         Lbl_Fabricar.Text = FormatNumber(_Row.Item("CantFabricar"), 0)
+
+        If _Row.Item("CantFabricada") > _Row.Item("CantFabricar") Then
+
+            Dim nombreFuente = Lbl_Fabricar.Name
+            Dim tamanoFuente = Lbl_Fabricar.Size
+            Dim estiloFuente As FontStyle = Lbl_Fabricar.Style
+
+            Lbl_Fabricado.Font = New Font(nombreFuente, 12, FontStyle.Bold)
+            Lbl_Fabricado.ForeColor = Rojo
+
+        Else
+            Lbl_Fabricado.Font = Lbl_Fabricar.Font
+            Lbl_Fabricado.ForeColor = Lbl_Fabricado.ForeColor
+        End If
 
     End Sub
 

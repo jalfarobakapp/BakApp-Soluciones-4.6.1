@@ -17,6 +17,12 @@ Public Class Cl_Sincroniza
         _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
         _SqlWms = New Class_SQL(Cadena_ConexionSQL_Server_Wms)
 
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set FechaCierre = Getdate(),CodFuncionario_Cierra = 'wms',Estado = 'CERRA'" & vbCrLf &
+                       "From [@WMS_GATEWAY_TRANSFERENCIA]" & vbCrLf &
+                       "Inner Join " & _Global_BaseBk & "Zw_Stmp_Enc On Idmaeedo = IDMAEEDO" & vbCrLf &
+                       "And Estado In ('FACTU','ENTRE') And UPLOAD In (2,4) "
+        _SqlRandom.Ej_consulta_IDU(Consulta_sql, False)
+
         Consulta_sql = "Select IDMAEEDO From [@WMS_GATEWAY_TRANSFERENCIA]" & vbCrLf &
                        "Where 1>0 --(CONVERT(varchar, FECHA_DOWNLOAD, 112)) = '" & Format(_FechaRevision, "yyyyMMdd") & "'" & vbCrLf &
                        "And IDMAEEDO In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Docu_Ent Where Pickear = 1 And Estaenwms = 0)"
@@ -71,7 +77,7 @@ Public Class Cl_Sincroniza
 
         Next
 
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Estado = 'PREPA' And Planificada = 1 -- And Numero = '#T00000569'"
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Estado In ('PREPA') -- And Planificada = 1"
         _Tbl = _SqlRandom.Fx_Get_Tablas(Consulta_sql)
 
         For Each _Fila As DataRow In _Tbl.Rows
@@ -115,11 +121,49 @@ Public Class Cl_Sincroniza
 
         Next
 
-        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set FechaCierre = Getdate(),CodFuncionario_Cierra = 'wms',Estado = 'CERRA'" & vbCrLf &
-                       "From [@WMS_GATEWAY_TRANSFERENCIA]" & vbCrLf &
-                       "Inner Join " & _Global_BaseBk & "Zw_Stmp_Enc On Idmaeedo = IDMAEEDO" & vbCrLf &
-                       "And Estado In ('FACTU','ENTRE') And UPLOAD In (2,4) "
-        _SqlRandom.Ej_consulta_IDU(Consulta_sql, False)
+        'Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Estado In ('COMPL')"
+        '_Tbl = _SqlRandom.Fx_Get_Tablas(Consulta_sql)
+
+        'For Each _Fila As DataRow In _Tbl.Rows
+
+        '    Dim _Id_Enc As Integer = _Fila.Item("Id")
+        '    Dim _Idmaeedoo As Integer = _Fila.Item("Idmaeedo")
+        '    Dim _Nudo As String = _Fila.Item("Nudo")
+
+        '    'Sb_AddToLog("Sincronizando notas", "Revisando NVV" & _Nudo, Txt_Log)
+
+        '    Dim _Cl_Stmp As New Cl_Stmp
+        '    _Cl_Stmp.Fx_Llenar_Encabezado(_Id_Enc)
+        '    _Cl_Stmp.Fx_Llenar_Detalle(_Id_Enc)
+
+        '    _Cl_Stmp.Zw_Stmp_Enc.Fecha_Facturar = FechaDelServidor()
+
+        '    Dim _Mensaje As New LsValiciones.Mensajes
+
+        '    _Mensaje = _Cl_Stmp.Fx_Revisar_WMSVillar(_Idmaeedoo, _Nudo, Cadena_ConexionSQL_Server_Wms)
+
+        '    If _Mensaje.EsCorrecto Then
+
+        '        _Mensaje.Detalle += ", Nota de venta #" & _Nudo
+        '        Sb_AddToLog("Sincronizando notas", _Mensaje.Detalle, Txt_Log)
+
+        '        Dim _Tipo_wms As String '= _SqlRandom.Fx_Trae_Dato("MEVENTO", "NOKOCARAC", "ARCHIRVE = 'MAEEDO' And IDRVE = " & _Idmaeedoo & " And KOCARAC = 'ob_type'",, False)
+
+        '        _Tipo_wms = _SqlRandom.Fx_Trae_Dato("[@WMS_GATEWAY_TRANSFERENCIA]", "TIPO_WMS", "IDMAEEDO = " & _Idmaeedoo,, False)
+
+        '        If _Tipo_wms.Contains("A") Then
+
+        '            _Mensaje = Fx_EnviarAImprimnirListaDeVerificacion(_Idmaeedoo, "NVV", _Nudo, True)
+
+        '            Sb_AddToLog(_Mensaje.Detalle, _Mensaje.Detalle, Txt_Log)
+
+        '        End If
+
+        '    End If
+
+        '    Application.DoEvents()
+
+        'Next
 
     End Sub
 

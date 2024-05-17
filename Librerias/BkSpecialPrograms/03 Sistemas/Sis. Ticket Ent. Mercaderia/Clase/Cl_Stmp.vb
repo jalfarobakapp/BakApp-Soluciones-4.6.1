@@ -600,7 +600,9 @@ Public Class Cl_Stmp
 
     End Function
 
-    Function Fx_Revisar_WMSVillar(_Idmaeedo As Integer, _Nudo As String, _CadenaConexionWms As String) As LsValiciones.Mensajes
+    Function Fx_Revisar_WMSVillar(_Idmaeedo As Integer,
+                                  _Nudo As String,
+                                  _CadenaConexionWms As String) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -637,6 +639,13 @@ Public Class Cl_Stmp
             Dim _shipment As String = _Cabecera.Rows(0).Item("shipment")
             Dim _wave As String = _Cabecera.Rows(0).Item("wave")
             Dim _whse_id As String = _Cabecera.Rows(0).Item("whse_id")
+            Dim _ob_ord_stt As String = _Cabecera.Rows(0).Item("ob_ord_stt")
+
+            If _ob_ord_stt <> "RDY" Then
+                _Mensaje.EsCorrecto = False
+                _Mensaje.Detalle = "El pedido aun no esta listo"
+                Return _Mensaje
+            End If
 
             Dim _CanalEntrada As String = Mid(_ob_type, 1, 1)
             Dim _TipoPago As String = Mid(_ob_type, 2, 1)

@@ -234,6 +234,8 @@ Public Class Frm_Configuracion_Gral
             Chk_Pickear_ProdPesoVariable.Checked = .Item("Pickear_ProdPesoVariable")
             Chk_Pickear_FacturarAutoCompletas.Checked = .Item("Pickear_FacturarAutoCompletas")
 
+            Chk_SoloprodEnDoc_CLALIBPR.Checked = .Item("SoloprodEnDoc_CLALIBPR")
+
         End With
 
         Input_Dias_Para_Hacer_NCV.Enabled = Not _Modalidad_General
@@ -322,6 +324,8 @@ Public Class Frm_Configuracion_Gral
         Chk_Pickear_NVVTodas.Enabled = _Modalidad_General
         Chk_Pickear_ProdPesoVariable.Enabled = _Modalidad_General
         Chk_Pickear_FacturarAutoCompletas.Enabled = _Modalidad_General
+
+        Chk_SoloprodEnDoc_CLALIBPR.Enabled = Not _Modalidad_General
 
         AddHandler Txt_Dias_Venci_Coti.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
         AddHandler Txt_ValorMinimoNVV.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
@@ -520,6 +524,7 @@ Public Class Frm_Configuracion_Gral
                        ",Pickear_NVVTodas = " & Convert.ToInt32(Chk_Pickear_NVVTodas.Checked) & vbCrLf &
                        ",Pickear_ProdPesoVariable = " & Convert.ToInt32(Chk_Pickear_ProdPesoVariable.Checked) & vbCrLf &
                        ",Pickear_FacturarAutoCompletas = " & Convert.ToInt32(Chk_Pickear_FacturarAutoCompletas.Checked) & vbCrLf &
+                       ",SoloprodEnDoc_CLALIBPR = " & Convert.ToInt32(Chk_SoloprodEnDoc_CLALIBPR.Checked) & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
