@@ -1051,7 +1051,9 @@ Public Class Frm_PreciosLC_Mt01
 
         Dim _Mensaje As LsValiciones.Mensajes
 
-        _Mensaje = Fx_GenerarFXPorMultiplo(_RowTabcodalSeleccionado.Item("MULTIPLO"), 7, "pb1", "pp01ud", "pb3", 9999, _Id)
+        Dim _CantFormulas = ((_RowProducto.Item("RLUD") / _RowTabcodalSeleccionado.Item("MULTIPLO")) * 2) - 1
+
+        _Mensaje = Fx_GenerarFXPorMultiplo(_RowTabcodalSeleccionado.Item("MULTIPLO"), _CantFormulas, "pb1", "pp01ud", "pb3", 9999, _Id)
 
         MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
@@ -1111,9 +1113,16 @@ Public Class Frm_PreciosLC_Mt01
             Consulta_sql = "Update " & TablaDePasoLista_LC & " Set EcuacionUd1 = '" & _Formula & "',EcuacionUd2 = ''" & vbCrLf &
                            "Where Id = " & _Id
 
-            If Not _Sql.Ej_consulta_IDU(Consulta_sql) Then
+            Dim _Error = String.Empty
+
+            If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
                 _Mensaje.Detalle = "Error al grabar"
-                Throw New System.Exception(_Sql.Pro_Error)
+                _Error = _Sql.Pro_Error
+                If _Sql.Pro_Error.Contains("Los datos de cadena o binarios se truncarían.") Then
+                    _Error += vbCrLf & "El largo de la Ecuación no puede sobrepasar los 242 caracteres"
+                End If
+                _Error += vbCrLf & _Formula
+                Throw New System.Exception(_Error)
             End If
 
             _Mensaje.EsCorrecto = True

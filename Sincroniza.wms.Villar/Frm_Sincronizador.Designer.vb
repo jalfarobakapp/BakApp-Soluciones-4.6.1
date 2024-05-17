@@ -37,6 +37,7 @@ Partial Class Frm_Sincronizador
         Me.Chk_AmbienteDePruebas = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Switch_Sincronizacion = New DevComponents.DotNetBar.Controls.SwitchButton()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
+        Me.Timer_Limpiar = New System.Windows.Forms.Timer(Me.components)
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dtp_FechaRevision, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -255,6 +256,10 @@ Partial Class Frm_Sincronizador
         Me.LabelX2.TabIndex = 173
         Me.LabelX2.Text = "Sincronización"
         '
+        'Timer_Limpiar
+        '
+        Me.Timer_Limpiar.Interval = 2000
+        '
         'Frm_Sincronizador
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -297,4 +302,5 @@ Partial Class Frm_Sincronizador
     Friend WithEvents Btn_Conexion As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Switch_Sincronizacion As DevComponents.DotNetBar.Controls.SwitchButton
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Timer_Limpiar As Timer
 End Class

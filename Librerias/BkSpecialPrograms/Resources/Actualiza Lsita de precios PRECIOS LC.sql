@@ -17,8 +17,8 @@ CREATE TABLE [dbo].[Zw_ListaLC_TblPasoListas] (
  [Codigo]        char(13)     DEFAULT '',  -- Tipo de documento
  [PrecioUd1]     float        DEFAULT '0', -- Numero del documento
  [PrecioUd2]     float        DEFAULT '0', -- Entidad del documento
- [EcuacionUd1]   varchar(200) DEFAULT '',  -- Formula de la Unidad 1
- [EcuacionUd2]   Varchar(200) DEFAULT '',  -- Formula de la Unidad 2
+ [EcuacionUd1]   varchar(242) DEFAULT '',  -- Formula de la Unidad 1
+ [EcuacionUd2]   Varchar(242) DEFAULT '',  -- Formula de la Unidad 2
  [Rtu]           float        DEFAULT '0',  -- Sucursal de la entidad del documento
  [MargenPorc]    float        DEFAULT '0',  -- Sucursal documento 
  [VarMcosto]     float        DEFAULT '0',  -- Fecha Emision documento

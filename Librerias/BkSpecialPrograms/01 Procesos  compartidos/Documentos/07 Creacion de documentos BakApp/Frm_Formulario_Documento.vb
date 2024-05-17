@@ -1747,6 +1747,10 @@ Public Class Frm_Formulario_Documento
 
         End If
 
+        If Not _Documento_Interno Then
+            Grilla_Encabezado.Columns("CodEntidad").ReadOnly = False
+        End If
+
         Me.Refresh()
 
     End Sub
@@ -3588,6 +3592,10 @@ Public Class Frm_Formulario_Documento
             Dim _Recepelect As Boolean = _RowEntidad.Item("RECEPELECT")
             _TblEncabezado.Rows(0).Item("Es_Electronico") = _Recepelect
 
+        End If
+
+        If Not _Post_Venta Then
+            Grilla_Encabezado.Columns("CodEntidad").ReadOnly = True
         End If
 
         Me.ActiveControl = Grilla_Detalle
@@ -7384,10 +7392,7 @@ Public Class Frm_Formulario_Documento
 
                     End If
 
-
                     If Not Fx_Entidad_Tiene_Deudas_CtaCte(_Formulario, _RowEntidad, False, False, _Bloqueada) Then
-
-                        'If _Bloqueada Then Return Nothing
 
                         MessageBoxEx.Show(Me, "La entidad presenta morosidad" & Environment.NewLine &
                                           "Está situación será evaluada nuevamente al grabar el documento",
@@ -7402,12 +7407,14 @@ Public Class Frm_Formulario_Documento
 
         End If
 
-        If _TblEncabezado.Rows(0).Item("Es_Electronico") And _Tido <> "BLV" Then
-            If String.IsNullOrEmpty(_RowEntidad.Item("GIEN").ToString.Trim) Then
-                MessageBoxEx.Show(Me, "EL GIRO DE LA ENTIDAD NO PUEDE ESTAR VACIO" & vbCrLf & vbCrLf &
-                                  "DEBE CORREGIR ESTOS DATOS ANTES DE EMITIR UN" & vbCrLf &
-                                  "DOCUMENTO TRIBUTARIO ELECTRONICO", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                _RowEntidad = Nothing
+        If Not IsNothing(_RowEntidad) Then
+            If _TblEncabezado.Rows(0).Item("Es_Electronico") And _Tido <> "BLV" Then
+                If String.IsNullOrEmpty(_RowEntidad.Item("GIEN").ToString.Trim) Then
+                    MessageBoxEx.Show(Me, "EL GIRO DE LA ENTIDAD NO PUEDE ESTAR VACIO" & vbCrLf & vbCrLf &
+                                      "DEBE CORREGIR ESTOS DATOS ANTES DE EMITIR UN" & vbCrLf &
+                                      "DOCUMENTO TRIBUTARIO ELECTRONICO", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    _RowEntidad = Nothing
+                End If
             End If
         End If
 

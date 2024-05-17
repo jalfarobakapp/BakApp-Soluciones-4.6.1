@@ -533,7 +533,13 @@ Public Class Frm_Correos_Conf_SMTP
 
             Using smtp As New Smtp
                 'Now connect to SMTP server and send it
-                smtp.Connect(_Host_SMT)                       ' Use overloads or ConnectSSL if you need to specify different port or SSL.
+                If _EnableSsl Then
+                    smtp.Connect(_Host_SMT)                       ' Use overloads or ConnectSSL if you need to specify different port or SSL.
+                Else
+                    smtp.Connect(_Host_SMT, _Puerto, _EnableSsl)                       ' Use overloads or ConnectSSL if you need to specify different port or SSL.
+                End If
+
+                'smtp.IsEncrypted = True
                 'Smtp.DefaultPort = _Puerto
                 smtp.SSLConfiguration.EnabledSslProtocols = _EnableSsl ' True
                 smtp.UseBestLogin(_Usuario, _Contrasena)         ' You can also use: Login, LoginPLAIN, LoginCRAM, LoginDIGEST, LoginOAUTH methods,

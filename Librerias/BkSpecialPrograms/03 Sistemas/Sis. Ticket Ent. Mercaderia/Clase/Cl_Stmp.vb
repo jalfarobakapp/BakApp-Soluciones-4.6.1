@@ -537,7 +537,7 @@ Public Class Cl_Stmp
             .Suendo = _Row_Documento.Item("SUENDO")
             .CodFuncionario_Crea = _CodFuncionario_Crea
             .FechaCreacion = _FechaServidor
-            .Estado = "PREPA"
+            .Estado = "INGRE" ' Ex PREPA
             .Facturar = _Facturar
             .Fecha_Facturar = _FechaParaFacturar
             .TipoPago = _TipoPago
@@ -639,7 +639,7 @@ Public Class Cl_Stmp
             Dim _shipment As String = _Cabecera.Rows(0).Item("shipment")
             Dim _wave As String = _Cabecera.Rows(0).Item("wave")
             Dim _whse_id As String = _Cabecera.Rows(0).Item("whse_id")
-            Dim _ob_ord_stt As String = _Cabecera.Rows(0).Item("ob_ord_stt")
+            Dim _ob_ord_stt As String = _Cabecera.Rows(0).Item("ob_ord_stt").ToString.Trim
 
             If _ob_ord_stt <> "RDY" Then
                 _Mensaje.EsCorrecto = False
