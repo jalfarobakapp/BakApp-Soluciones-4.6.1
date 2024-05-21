@@ -17,8 +17,14 @@ Public Class Cl_Sincroniza
         _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
         _SqlWms = New Class_SQL(Cadena_ConexionSQL_Server_Wms)
 
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set FechaCierre = Getdate(),CodFuncionario_Cierra = 'wms',Estado = 'CERRA'" & vbCrLf &
+                       "From [@WMS_GATEWAY_TRANSFERENCIA]" & vbCrLf &
+                       "Inner Join " & _Global_BaseBk & "Zw_Stmp_Enc On Idmaeedo = IDMAEEDO" & vbCrLf &
+                       "And Estado Not In ('CERRA') And UPLOAD In (2,4) "
+        _SqlRandom.Ej_consulta_IDU(Consulta_sql, False)
+
         Consulta_sql = "Select IDMAEEDO From [@WMS_GATEWAY_TRANSFERENCIA]" & vbCrLf &
-                       "Where (CONVERT(varchar, FECHA_DOWNLOAD, 112)) = '" & Format(_FechaRevision, "yyyyMMdd") & "'" & vbCrLf &
+                       "Where 1>0 --(CONVERT(varchar, FECHA_DOWNLOAD, 112)) = '" & Format(_FechaRevision, "yyyyMMdd") & "'" & vbCrLf &
                        "And IDMAEEDO In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Docu_Ent Where Pickear = 1 And Estaenwms = 0)"
         Dim _Tbl_wms As DataTable = _SqlRandom.Fx_Get_Tablas(Consulta_sql)
         Dim _Filtro As String = Generar_Filtro_IN(_Tbl_wms, "", "IDMAEEDO", True, False, "")
@@ -32,7 +38,7 @@ Public Class Cl_Sincroniza
             End If
         End If
 
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Estado = 'PREPA' --And Numero = '#T00000569'"
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Estado In ('INGRE','PREPA','COMPL') And Planificada = 0"
         Dim _Tbl As DataTable = _SqlRandom.Fx_Get_Tablas(Consulta_sql)
 
         For Each _Fila As DataRow In _Tbl.Rows
@@ -41,26 +47,109 @@ Public Class Cl_Sincroniza
             Dim _Idmaeedoo As Integer = _Fila.Item("Idmaeedo")
             Dim _Nudo As String = _Fila.Item("Nudo")
 
-            'Sb_AddToLog("Sincronizando notas", "Revisando NVV" & _Nudo, Txt_Log)
+            Consulta_sql = "Select Top 1 * From history_master Where (oid = '" & _Nudo & "') AND (trans_act_mod = 'CANCEL') AND (trans_obj = 'OBORD')"
+            Dim _RowEliminada As DataRow = _SqlWms.Fx_Get_DataRow(Consulta_sql)
 
-            Dim _Cl_Stmp As New Cl_Stmp
-            _Cl_Stmp.Fx_Llenar_Encabezado(_Id_Enc)
-            _Cl_Stmp.Fx_Llenar_Detalle(_Id_Enc)
+            If Not IsNothing(_RowEliminada) Then
 
-            _Cl_Stmp.Zw_Stmp_Enc.Fecha_Facturar = FechaDelServidor()
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Estado = 'CANCE' Where Id = " & _Id_Enc
+                _SqlRandom.Ej_consulta_IDU(Consulta_sql)
 
-            Dim _Mensaje As New LsValiciones.Mensajes
+                Sb_AddToLog("Sincronizando notas", "NVV" & _Nudo & " - Documento CANCELADO en WMS", Txt_Log)
 
-            _Mensaje = _Cl_Stmp.Fx_Revisar_WMSVillar(_Idmaeedoo, _Nudo, Cadena_ConexionSQL_Server_Wms)
+            Else
 
-            If _Mensaje.EsCorrecto Then
+                Consulta_sql = "Select TOP 1 trans_act_mod,dt_start from viaware.dbo.history_master where oid='" & _Nudo & "' and trans_act='STAT' Order by dt_start Desc"
+                Dim _RowPlanificada As DataRow = _SqlWms.Fx_Get_DataRow(Consulta_sql)
 
-                _Mensaje.Detalle += ", Nota de venta #" & _Nudo
-                Sb_AddToLog("Sincronizando notas", _Mensaje.Detalle, Txt_Log)
+                If Not IsNothing(_RowPlanificada) Then
 
-                _Mensaje = Fx_EnviarAImprimnirListaDeVerificacion(_Idmaeedoo, "NVV", _Nudo, True)
+                    Dim _trans_act_mod As String = _RowPlanificada.Item("trans_act_mod").ToString.Trim '='RDY'
 
-                Sb_AddToLog(_Mensaje.Detalle, _Mensaje.Detalle, Txt_Log)
+                    If _trans_act_mod = "RDY" Or _trans_act_mod = "RELEASE" Then
+
+                        Dim _FechaPlanificacion As String = Format(_RowPlanificada.Item("dt_start"), "yyyyMMdd HH:mm")
+
+                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Planificada = 1, FechaPlanificacion = '" & _FechaPlanificacion & "'" & vbCrLf &
+                                       "Where Id = " & _Id_Enc
+                        _SqlRandom.Ej_consulta_IDU(Consulta_sql)
+
+                        Sb_AddToLog("Sincronizando notas", "Planificada NVV" & _Nudo, Txt_Log)
+
+                    End If
+
+                End If
+
+            End If
+
+        Next
+
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Estado = 'PREPA' Where Estado = 'INGRE' And Planificada = 1"
+        _SqlRandom.Ej_consulta_IDU(Consulta_sql)
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Estado In ('PREPA') And Planificada = 1"
+        _Tbl = _SqlRandom.Fx_Get_Tablas(Consulta_sql)
+
+        For Each _Fila As DataRow In _Tbl.Rows
+
+            Dim _Id_Enc As Integer = _Fila.Item("Id")
+            Dim _Idmaeedoo As Integer = _Fila.Item("Idmaeedo")
+            Dim _Nudo As String = _Fila.Item("Nudo")
+            Dim _Planificada = True
+
+            Consulta_sql = "Select TOP 1 trans_act_mod,dt_start from viaware.dbo.history_master where oid='" & _Nudo & "' and trans_act='STAT' Order by trans_seq_num Desc"
+            Dim _RowPlanificada As DataRow = _SqlWms.Fx_Get_DataRow(Consulta_sql)
+
+            Dim _trans_act_mod As String
+
+            If IsNothing(_RowPlanificada) Then
+                _trans_act_mod = "XXX"
+            Else
+                _trans_act_mod = _RowPlanificada.Item("trans_act_mod").ToString.Trim '='RDY'
+            End If
+
+            If _trans_act_mod <> "RDY" AndAlso _trans_act_mod <> "RELEASE" Then
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Planificada = 0, FechaPlanificacion = Null" & vbCrLf &
+                               "Where Id = " & _Id_Enc
+                _SqlRandom.Ej_consulta_IDU(Consulta_sql)
+                _Planificada = False
+                Sb_AddToLog("Sincronizando notas", "NVV" & _Nudo & " - Deshabilitada", Txt_Log)
+
+            End If
+
+            If _Planificada Then
+
+                'Sb_AddToLog("Sincronizando notas", "Revisando NVV" & _Nudo, Txt_Log)
+
+                Dim _Cl_Stmp As New Cl_Stmp
+                _Cl_Stmp.Fx_Llenar_Encabezado(_Id_Enc)
+                _Cl_Stmp.Fx_Llenar_Detalle(_Id_Enc)
+
+                _Cl_Stmp.Zw_Stmp_Enc.Fecha_Facturar = FechaDelServidor()
+
+                Dim _Mensaje As New LsValiciones.Mensajes
+
+                _Mensaje = _Cl_Stmp.Fx_Revisar_WMSVillar(_Idmaeedoo, "NVV", _Nudo, Cadena_ConexionSQL_Server_Wms)
+
+                If _Mensaje.EsCorrecto Then
+
+                    _Mensaje.Detalle += ", Nota de venta #" & _Nudo
+                    Sb_AddToLog("Sincronizando notas", _Mensaje.Detalle, Txt_Log)
+
+                    Dim _Tipo_wms As String
+
+                    _Tipo_wms = _SqlRandom.Fx_Trae_Dato("[@WMS_GATEWAY_TRANSFERENCIA]", "TIPO_WMS", "IDMAEEDO = " & _Idmaeedoo,, False)
+
+                    If _Tipo_wms.Contains("A") Then
+
+                        _Mensaje = Fx_EnviarAImprimnirListaDeVerificacion(_Idmaeedoo, "NVV", _Nudo, True)
+
+                        Sb_AddToLog(_Mensaje.Detalle, _Mensaje.Detalle, Txt_Log)
+
+                    End If
+
+                End If
 
             End If
 
@@ -178,7 +267,7 @@ Public Class Cl_Sincroniza
 
         Dim _NombreEquipo As String = "VILLARSERVERCOR"
         Dim _Impresora As String = "Despacho1_B1"
-        Dim _NombreFormato As String = "Lista verificacion WMS"
+        Dim _NombreFormato As String = "Lista verificacion WMS con Picking" '"Lista verificacion WMS"
 
         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion (NombreEquipo,Idmaeedo,Tido,Nudo,Funcionario,Fecha,NombreFormato,Impresora,Impreso)" & vbCrLf &
                        "Values ('" & _NombreEquipo & "'," & _Idmaeedo & ",'" & _Tido & "','" & _Nudo & "','wms',GETDATE(),'" & _NombreFormato & "','" & _Impresora & "'," & Convert.ToInt32(_Impreso) & ")"
@@ -196,5 +285,42 @@ Public Class Cl_Sincroniza
 
     End Function
 
+    Sub Sb_RevisarCompletadasCanceladas(Txt_Log As Object)
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Estado In ('COMPL')"
+        Dim _Tbl As DataTable = _SqlRandom.Fx_Get_Tablas(Consulta_sql)
+
+        For Each _Fila As DataRow In _Tbl.Rows
+
+            Dim _Id_Enc As Integer = _Fila.Item("Id")
+            Dim _Idmaeedoo As Integer = _Fila.Item("Idmaeedo")
+            Dim _Nudo As String = _Fila.Item("Nudo")
+
+            'Sb_AddToLog("Sincronizando notas", "Revisando NVV" & _Nudo, Txt_Log)
+
+            Consulta_sql = "Select TOP 1 trans_act_mod,dt_start from viaware.dbo.history_master where oid='" & _Nudo & "' and trans_act='STAT' Order by trans_seq_num Desc"
+            Dim _RowPlanificada As DataRow = _SqlWms.Fx_Get_DataRow(Consulta_sql)
+
+            Dim _trans_act_mod As String
+
+            If IsNothing(_RowPlanificada) Then
+                _trans_act_mod = "XXX"
+            Else
+                _trans_act_mod = _RowPlanificada.Item("trans_act_mod").ToString.Trim '='RDY'
+            End If
+
+            If _trans_act_mod = "CANCEL" Then
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Estado ='CANCE'" & vbCrLf &
+                               "Where Id = " & _Id_Enc
+                _SqlRandom.Ej_consulta_IDU(Consulta_sql)
+
+                Sb_AddToLog("Sincronizando notas", "NVV" & _Nudo & " - Cancelada", Txt_Log)
+
+            End If
+
+        Next
+
+    End Sub
 
 End Class

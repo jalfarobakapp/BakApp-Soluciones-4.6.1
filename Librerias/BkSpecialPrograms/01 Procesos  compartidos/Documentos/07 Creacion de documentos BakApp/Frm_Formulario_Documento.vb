@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Threading
+Imports System.Web.Services
 Imports BkSpecialPrograms.Bk_Comporamiento_UdMedidas
 Imports DevComponents.DotNetBar
 
@@ -412,7 +413,7 @@ Public Class Frm_Formulario_Documento
         End Set
     End Property
 
-    Public Property SolicitarTipoVenta As Boolean
+    Public Property SoloprodEnDoc_CLALIBPR As Boolean
 
 #End Region
 
@@ -568,8 +569,6 @@ Public Class Frm_Formulario_Documento
         LblTotalIva.ForeColor = _Color_LblTotales
         LblTotalImpuestos.ForeColor = _Color_LblTotales
         LblTotalBruto.ForeColor = _Color_LblTotales
-
-
 
         caract_combo(Cmb_Lista_Costo)
         Consulta_sql = "Select KOLT AS Padre,KOLT+' - '+MOLT+' '+NOKOLT AS Hijo From TABPP Where TILT = 'C' Order by Hijo"
@@ -780,6 +779,13 @@ Public Class Frm_Formulario_Documento
         End If
 
         Sb_Revisar_Si_Hay_Archivos_Adjuntos()
+
+        If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Configuracion", "SoloprodEnDoc_CLALIBPR") Then
+            SoloprodEnDoc_CLALIBPR = _Global_Row_Configuracion_Estacion.Item("SoloprodEnDoc_CLALIBPR")
+        End If
+
+        Lbl_TipoVenta.Visible = SoloprodEnDoc_CLALIBPR
+        Btn_CambiarTipoVenta.Visible = SoloprodEnDoc_CLALIBPR
 
         Me.Refresh()
 
@@ -1528,8 +1534,9 @@ Public Class Frm_Formulario_Documento
             .Item("CodTipoVenta") = String.Empty
 
             _TblEncabezado.Rows.Add(NewFila)
-
         End With
+
+        Lbl_TipoVenta.Text = "..."
 
         ' LINEAS OFERTA
 
@@ -1738,6 +1745,10 @@ Public Class Frm_Formulario_Documento
 
             End If
 
+        End If
+
+        If Not _Documento_Interno Then
+            Grilla_Encabezado.Columns("CodEntidad").ReadOnly = False
         End If
 
         Me.Refresh()
@@ -3583,6 +3594,10 @@ Public Class Frm_Formulario_Documento
 
         End If
 
+        If Not _Post_Venta Then
+            Grilla_Encabezado.Columns("CodEntidad").ReadOnly = True
+        End If
+
         Me.ActiveControl = Grilla_Detalle
         Grilla_Detalle.CurrentCell = Grilla_Detalle.Rows(0).Cells("Codigo")
 
@@ -4152,29 +4167,24 @@ Public Class Frm_Formulario_Documento
         Dim _Indice_Agrupa As Integer
         Dim _Existe_En_Lista As Boolean
 
-        If SolicitarTipoVenta Then
+        If SoloprodEnDoc_CLALIBPR Then
 
             Dim _Clalibpr = _RowProducto.Item("CLALIBPR").ToString.Trim
-            Dim _CodTipoVenta = _TblEncabezado.Rows(0).Item("CodTipoVenta").ToString.Trim
 
-            If _TblEncabezado.Rows(0).Item("TblTipoVenta").ToString.Trim = "CLALIBPR" AndAlso
-                _CodTipoVenta <> _Clalibpr Then
+            Dim _Mensaje As LsValiciones.Mensajes
 
-                Dim _NombreTipo1 As String = _Sql.Fx_Trae_Dato("TABCARAC", "NOKOCARAC", "KOTABLA = 'CLALIBPR' And KOCARAC = '" & _Clalibpr & "'")
-                Dim _NombreTipo2 As String = _Sql.Fx_Trae_Dato("TABCARAC", "NOKOCARAC", "KOTABLA = 'CLALIBPR' And KOCARAC = '" & _CodTipoVenta & "'")
+            _Mensaje = Fx_RevisarTipoVenta(_Clalibpr)
 
-                MessageBoxEx.Show(Me, "Este producto es de tipo: " & _NombreTipo1 & vbCrLf &
-                                  "El tipo de producto a vender debe ser: " & _NombreTipo2,
-                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-
+            If Not _Mensaje.EsCorrecto Then
+                MessageBoxEx.Show(Me, _Codigo.ToString.Trim & " - " & _Descripcion.ToString.Trim & vbCrLf & vbCrLf &
+                                  _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
                 _Fila.Cells("Codigo").Value = String.Empty
                 Return
-
             End If
 
         End If
 
-            For Each _Fl As DataGridViewRow In Grilla_Detalle.Rows
+        For Each _Fl As DataGridViewRow In Grilla_Detalle.Rows
 
             Dim _Codigo2 = _Fl.Cells("Codigo").Value
             Dim _Sucursal2 = _Fl.Cells("Sucursal").Value
@@ -5047,9 +5057,8 @@ Public Class Frm_Formulario_Documento
                 _PrecioBrutoUd = _PrecioBruto
                 _PrecioNetoUdLinea = _PrecioNetoUd
                 _PrecioBrutoUdLinea = _PrecioBruto
-
-                If _Rtu <1 Then
-                    _PrecioNetoUdLista= _PrecioLinea / _Rtu
+                If _Rtu < 1 Then
+                    _PrecioNetoUdLista = _PrecioLinea / _Rtu
                     _PrecioBrutoUdLista = _PrecioBruto / _Rtu
                 Else
                     _PrecioNetoUdLista = _PrecioNeto
@@ -7383,10 +7392,7 @@ Public Class Frm_Formulario_Documento
 
                     End If
 
-
                     If Not Fx_Entidad_Tiene_Deudas_CtaCte(_Formulario, _RowEntidad, False, False, _Bloqueada) Then
-
-                        'If _Bloqueada Then Return Nothing
 
                         MessageBoxEx.Show(Me, "La entidad presenta morosidad" & Environment.NewLine &
                                           "Está situación será evaluada nuevamente al grabar el documento",
@@ -7401,12 +7407,14 @@ Public Class Frm_Formulario_Documento
 
         End If
 
-        If _TblEncabezado.Rows(0).Item("Es_Electronico") And _Tido <> "BLV" Then
-            If String.IsNullOrEmpty(_RowEntidad.Item("GIEN").ToString.Trim) Then
-                MessageBoxEx.Show(Me, "EL GIRO DE LA ENTIDAD NO PUEDE ESTAR VACIO" & vbCrLf & vbCrLf &
-                                  "DEBE CORREGIR ESTOS DATOS ANTES DE EMITIR UN" & vbCrLf &
-                                  "DOCUMENTO TRIBUTARIO ELECTRONICO", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                _RowEntidad = Nothing
+        If Not IsNothing(_RowEntidad) Then
+            If _TblEncabezado.Rows(0).Item("Es_Electronico") And _Tido <> "BLV" Then
+                If String.IsNullOrEmpty(_RowEntidad.Item("GIEN").ToString.Trim) Then
+                    MessageBoxEx.Show(Me, "EL GIRO DE LA ENTIDAD NO PUEDE ESTAR VACIO" & vbCrLf & vbCrLf &
+                                      "DEBE CORREGIR ESTOS DATOS ANTES DE EMITIR UN" & vbCrLf &
+                                      "DOCUMENTO TRIBUTARIO ELECTRONICO", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    _RowEntidad = Nothing
+                End If
             End If
         End If
 
@@ -7569,9 +7577,12 @@ Public Class Frm_Formulario_Documento
 
                             If _Nuevo_Producto Then
 
-                                If SolicitarTipoVenta AndAlso
+                                If SoloprodEnDoc_CLALIBPR AndAlso
                                     String.IsNullOrWhiteSpace(_TblEncabezado.Rows(0).Item("TblTipoVenta")) AndAlso
                                         String.IsNullOrWhiteSpace(_TblEncabezado.Rows(0).Item("CodTipoVenta")) Then
+
+                                    MessageBoxEx.Show(Me, "Los productos a vender solo deben ser de un tipo especifico de venta" & vbCrLf &
+                                                      "a continuación deberá seleccionar el tipo.", "Tipo de venta", MessageBoxButtons.OK, MessageBoxIcon.Warning)
 
                                     Dim _Mensaje As LsValiciones.Mensajes = Fx_SolicitarTipoVenta()
 
@@ -26274,7 +26285,6 @@ Public Class Frm_Formulario_Documento
 
     End Function
 
-
     Function Fx_SolicitarTipoVenta() As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
@@ -26284,6 +26294,7 @@ Public Class Frm_Formulario_Documento
             Dim _Sql_Filtro_Condicion_Extra = "And KOTABLA = 'CLALIBPR'"
 
             Dim _Filtrar As New Clas_Filtros_Random(Me)
+            _Filtrar.Pro_Nombre_Encabezado_Informe = "SELECCIONE EL TIPO DE VENTA"
 
             If _Filtrar.Fx_Filtrar(Nothing,
                                Clas_Filtros_Random.Enum_Tabla_Fl._Tabla_Tabcarac, _Sql_Filtro_Condicion_Extra, False, False, True) Then
@@ -26298,6 +26309,7 @@ Public Class Frm_Formulario_Documento
                 _Mensaje.Detalle = "Selección"
                 _Mensaje.Mensaje = "Clasificación seleccionada: " & _Descripcion
                 _Mensaje.Icono = MessageBoxIcon.Information
+                Lbl_TipoVenta.Text = "Tipo de venta: " & _Descripcion
 
             Else
 
@@ -26307,6 +26319,67 @@ Public Class Frm_Formulario_Documento
 
         Catch ex As Exception
             _Mensaje.Detalle = "Error en proceso de selección"
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
+    Private Sub Btn_CambiarTipoVenta_Click(sender As Object, e As EventArgs) Handles Btn_CambiarTipoVenta.Click
+
+        If Not CBool(_TblDetalle.Rows(0).Item("Nuevo_Producto")) Then
+            MessageBoxEx.Show(Me, "Ya existen registros en el detalle" & vbCrLf &
+                              "Debe quitar los productos del detalle para poder hacer esta gestión",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Mensaje As LsValiciones.Mensajes = Fx_SolicitarTipoVenta()
+
+        If Not _Mensaje.EsCorrecto Then
+            Return
+        End If
+
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+
+    End Sub
+
+    Function Fx_RevisarTipoVenta(_Clalibpr As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            Dim _CodTipoVenta = _TblEncabezado.Rows(0).Item("CodTipoVenta").ToString.Trim
+            Dim _NombreTipo2 As String = _Sql.Fx_Trae_Dato("TABCARAC", "NOKOCARAC", "KOTABLA = 'CLALIBPR' And KOCARAC = '" & _CodTipoVenta & "'")
+
+            If String.IsNullOrEmpty(_Clalibpr.Trim) Then
+                _Mensaje.Detalle = "Validación"
+                Throw New System.Exception("Este producto no tiene Clasificación libre" & vbCrLf &
+                                           "El tipo de producto a vender debe ser: " & _NombreTipo2)
+            End If
+
+            If _TblEncabezado.Rows(0).Item("TblTipoVenta").ToString.Trim = "CLALIBPR" AndAlso _CodTipoVenta <> _Clalibpr Then
+
+                Dim _NombreTipo1 As String = _Sql.Fx_Trae_Dato("TABCARAC", "NOKOCARAC", "KOTABLA = 'CLALIBPR' And KOCARAC = '" & _Clalibpr & "'")
+
+                'MessageBoxEx.Show(Me, "Este producto es de tipo: " & _NombreTipo1 & vbCrLf &
+                '                  "El tipo de producto a vender debe ser: " & _NombreTipo2,
+                '                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                _Mensaje.Detalle = "Validación"
+                Throw New System.Exception("Este producto es de tipo: " & _NombreTipo1 & vbCrLf &
+                                   "El tipo de producto a vender debe ser: " & _NombreTipo2)
+
+
+            End If
+
+            _Mensaje.EsCorrecto = True
+
+        Catch ex As Exception
+            If String.IsNullOrEmpty(_Mensaje.Detalle) Then _Mensaje.Detalle = "Problema!"
             _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         End Try

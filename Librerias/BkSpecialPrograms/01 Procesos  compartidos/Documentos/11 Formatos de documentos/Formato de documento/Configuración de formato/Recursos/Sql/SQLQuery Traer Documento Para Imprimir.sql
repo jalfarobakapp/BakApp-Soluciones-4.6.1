@@ -228,7 +228,7 @@ Select Distinct
        ISNULL(Mpo.MENSAJE01,'') As 'MENSAJE01',
 	   ISNULL(Mpo.MENSAJE02,'') As 'MENSAJE02',
 	   ISNULL(Mpo.MENSAJE03,'') As 'MENSAJE03'
-
+       
 Into #Paso_Detalle	   
 	   
 From dbo.MAEDDO Edd 
@@ -238,7 +238,7 @@ From dbo.MAEDDO Edd
 				 LEFT JOIN dbo.TABMR Mrc ON Mrc.KOMR = Mp.MRPR
                     LEFT JOIN dbo.MAEFICHA Mfch On Mfch.KOPR = Edd.KOPRCT
                         LEFT JOIN dbo.MAEPROBS Mpo On Mpo.KOPR = Edd.KOPRCT
-
+                        
 Where IDMAEEDO = @Idmaeedo 
 #Condicion_Extra_Maeddo#
 
@@ -341,12 +341,12 @@ Group By EMPRESA,TIDO,NUDO,ENDO,SUENDO,ENDOFI,LILG,SULIDO,BOSULIDO,KOFULIDO,NULI
 		 PPPRNE,PPPRBR,PPPRNELT,PPPRBRLT,Round(PODTGLLI,0),Bk_Un_Trans
 
 -- Documentos relacionados con recargos
-
 Select Distinct Edo.IDMAEEDO,Edo.TIDO,Edo.NUDO,Edo.FEEMDO
 From MAEDCR Rec
 Inner Join MAEDDO Ddo On Ddo.IDMAEDDO = Rec.IDDDODCR
 Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO
 Where Rec.IDMAEEDO = @Idmaeedo
+
 
 Drop Table #Paso_Encabezado
 Drop Table #Paso_Detalle

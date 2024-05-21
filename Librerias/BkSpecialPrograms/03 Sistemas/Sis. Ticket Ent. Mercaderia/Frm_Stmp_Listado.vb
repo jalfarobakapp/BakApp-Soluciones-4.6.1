@@ -61,32 +61,36 @@ Public Class Frm_Stmp_Listado
         Dim _FechaPickeado As Boolean
         Dim _HoraPickeado As Boolean
         Dim _MostrarImagenes As Boolean
+        Dim _FechaPlanificacion As Boolean
 
         Dim _Tbas = Super_TabS.SelectedTab
 
         Select Case _Tbas.Name
             Case "Tab_Pendientes"
-                _Condicion += vbCrLf & "And Estado In ('PREPA','COMPL')"
+                _Condicion += vbCrLf & "And Estado In ('PREPA','COMPL') And Planificada = 1"
                 _DocEmitir = True
                 _FechaPickeado = True
                 _HoraPickeado = True
                 _MostrarImagenes = True
+                '_FechaPlanificacion = True
             Case "Tab_Preparacion"
-                _Condicion += vbCrLf & "And Estado = 'PREPA'"
+                _Condicion += vbCrLf & "And Estado = 'PREPA' And Planificada = 1"
                 _DocEmitir = True
                 _MostrarImagenes = True
+                _FechaPlanificacion = True
             Case "Tab_Completadas"
-                _Condicion += vbCrLf & "And Estado = 'COMPL'"
+                _Condicion += vbCrLf & "And Estado = 'COMPL' And Planificada = 1"
                 _DocEmitir = True
                 _FechaPickeado = True
                 _HoraPickeado = True
                 _MostrarImagenes = True
+                '_FechaPlanificacion = True
             Case "Tab_Facturadas"
                 _Condicion += vbCrLf & "And Estado = 'FACTU'"
                 _TidoGen = True
                 _NudoGen = True
             Case "Tab_Entregadas"
-                _Condicion += vbCrLf & "And Estado = 'ENTRE'"
+                _Condicion += vbCrLf & "And Estado In ('ENTRE','CERRA') And CONVERT(varchar, FechaEntrega, 112) = '" & Format(Now.Date, "yyyyMMdd") & "'"
                 _TidoGen = True
                 _NudoGen = True
             Case "Tab_Cerradas"
@@ -106,14 +110,15 @@ Public Class Frm_Stmp_Listado
                        "When 'NULO' Then 'Nula'" & vbCrLf &
                        "End As 'Estado_Str'," & vbCrLf &
                        "FechaCreacion As 'HoraCreacion'," & vbCrLf &
-                       "FechaPickeado As 'HoraPickeado'" & vbCrLf &
+                       "FechaPickeado As 'HoraPickeado'," & vbCrLf &
+                       "FechaPlanificacion As 'HoraPlanificacion'" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Stmp_Enc Enc" & vbCrLf &
                        "Inner Join MAEEDO Edo On Edo.IDMAEEDO = Enc.Idmaeedo" & vbCrLf &
                        "Left Join MAEEN En On En.KOEN = Enc.Endo And En.SUEN = Enc.Suendo" & vbCrLf &
                        "Left Join TABFU FEnt On FEnt.KOFU = CodFuncionario_Entrega" & vbCrLf &
                        "Where 1 > 0" & vbCrLf & _Condicion & vbCrLf &
                        "And Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'" & vbCrLf &
-                       "Order by Id"
+                       "Order by Tido,Nudo"
 
         If _Tbas.Name = "Tab_Espera" Then
 
@@ -217,6 +222,22 @@ Public Class Frm_Stmp_Listado
             '.Columns("NOKOEN").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
             .Columns("Estado_Str").Width = 210
             .Columns("Estado_Str").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("FechaPlanificacion").Visible = _FechaPlanificacion
+            .Columns("FechaPlanificacion").HeaderText = "F.Planif."
+            .Columns("FechaPlanificacion").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("FechaPlanificacion").DefaultCellStyle.Format = "dd/MM/yyyy"
+            .Columns("FechaPlanificacion").Width = 70
+            .Columns("FechaPlanificacion").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("HoraPlanificacion").Visible = _FechaPlanificacion
+            .Columns("HoraPlanificacion").HeaderText = "H.Planif."
+            .Columns("HoraPlanificacion").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("HoraPlanificacion").DefaultCellStyle.Format = "HH:mm"
+            .Columns("HoraPlanificacion").Width = 50
+            .Columns("HoraPlanificacion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("FechaPickeado").Visible = _FechaPickeado

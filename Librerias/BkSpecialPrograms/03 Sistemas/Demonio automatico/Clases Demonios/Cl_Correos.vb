@@ -295,6 +295,12 @@ Public Class Cl_Correos
                        "Where Enviar = 1 And Enviado = 0 And NombreEquipo In ('','" & _Nombre_Equipo & "')" & _Filtro_Fecha_Enviar & vbCrLf &
                        "Order By Intentos, Id"
 
+        'Consulta_Sql = "Select Top " & CantMmail & " *,Isnull(NOKOFU,'Funcionario?????') As 'Nombre_Funcionario'" & vbCrLf &
+        '               "From " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo" & vbCrLf &
+        '               "Left Join TABFU On KOFU = CodFuncionario" & vbCrLf &
+        '               "Where Enviar = 1 And Enviado = 0 And NombreEquipo = '" & _Nombre_Equipo & "'" & _Filtro_Fecha_Enviar & vbCrLf &
+        '               "Order By Intentos, Id"
+
         _Tbl_Correos = _Sql.Fx_Get_Tablas(Consulta_Sql)
 
         'Dim fic As String = AppPath(True) & "Log_Bk.txt"
@@ -719,8 +725,8 @@ Public Class Cl_Correos
                             '                                              _Puerto,
                             '                                              _SSL,
                             '                                              False)
-
-                            Dim result As ISendMessageResult = EnviarCorreo.Fx_Enviar_Mail3IMail(_Host,
+                            Dim _Mensaje As New LsValiciones.Mensajes
+                            _Mensaje = EnviarCorreo.Fx_Enviar_Mail3IMail(_Host,
                                                                 _Remitente,
                                                                 _Contrasena,
                                                                 _Para,
@@ -731,14 +737,14 @@ Public Class Cl_Correos
                                                                 _Puerto,
                                                                 _SSL)
 
-                            If result.Status = 0 Then
-                                _Correo_Enviado = True
-                            Else
-                                _Correo_Enviado = False
-                            End If
+                            'If _Mensaje.EsCorrecto = 0 Then
+                            _Correo_Enviado = _Mensaje.EsCorrecto
+                            'Else
+                            '_Correo_Enviado = False
+                            'End If
 
 
-                            _Error = EnviarCorreo.Pro_Error
+                            _Error = _Mensaje.Mensaje 'EnviarCorreo.Pro_Error
                             EnviarCorreo.Dispose()
                             EnviarCorreo = Nothing
 

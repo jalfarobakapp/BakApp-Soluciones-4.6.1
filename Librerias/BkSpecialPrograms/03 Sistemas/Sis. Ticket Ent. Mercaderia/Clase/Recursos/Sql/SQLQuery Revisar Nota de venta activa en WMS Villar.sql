@@ -3,11 +3,11 @@ declare @nv nvarchar(10)
 set @nv='#Nudo#'
 
 declare @pick_cmp int, @comandos int, @truck int
-set @pick_cmp=(select count( distinct(pick_cmp)) AS pick_cmp from shipunit_f where ob_oid=@nv)
+set @pick_cmp=(select count( distinct(pick_cmp)) AS pick_cmp from shipunit_f where ob_oid=@nv and pick_cmp = 'Y')
 set @comandos =(select count(cm_rid) from cm_f where ob_oid=@nv)
-set @truck =(select  count(od_rid)
+set @truck =(select count(od_rid)
 from od_f t0 inner join iv_f t1 on t0.sku=t1.sku 
-where t1.ob_oid=@nv  and t1.inv_stt='TRUCK')
+where t1.ob_oid=@nv and t1.inv_stt='TRUCK')
 declare @ticket_verde nvarchar(1)
 if @pick_cmp=1 and @comandos=0 and @truck=0
 begin 
@@ -29,7 +29,7 @@ and i.whse_id = 'ALAMEDA'
 and ob_oid = @nv
 
 Cabecera:
-select ord_date, ob_oid, ob_type, shipment, wave, bill_name,whse_id
+select ord_date, ob_oid, ob_type, shipment, wave, bill_name,whse_id,ob_ord_stt
 from om_f
 where ob_oid = @nv
 and om_f.whse_id = 'ALAMEDA'
@@ -47,3 +47,4 @@ from cm_f
 where ob_oid = @nv
 and cm_f.whse_id = 'ALAMEDA'
 GROUP by ob_oid, ob_type, ob_lno, cont, sku 
+

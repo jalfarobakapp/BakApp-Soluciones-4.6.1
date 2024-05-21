@@ -29,6 +29,7 @@ Public Class Frm_Stmp_IngPickeo
 
         _Cl_Stmp.Fx_Llenar_Encabezado(_Id_Enc)
         _Cl_Stmp.Fx_Llenar_Detalle(_Id_Enc)
+        _Cl_Stmp.Fx_Llenar_Detalle_Pickeo(_Id_Enc)
 
         _Row_Entidad = Fx_Traer_Datos_Entidad(Cl_Stmp.Zw_Stmp_Enc.Endo, Cl_Stmp.Zw_Stmp_Enc.Suendo)
 

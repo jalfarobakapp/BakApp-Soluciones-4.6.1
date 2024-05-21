@@ -42,6 +42,9 @@ Public Class Frm_GRI_FabXProducto
 
         LotePlantaTurno = True
 
+        Chk_FechaEmiFiot.Checked = Not Fx_Tiene_Permiso(Me, "Pdc00009",, False)
+        Dtp_Fiot.Enabled = Not Chk_FechaEmiFiot.Checked
+
     End Sub
 
     Private Sub Txt_Numot_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Numot.KeyDown
@@ -1211,6 +1214,17 @@ Public Class Frm_GRI_FabXProducto
         ' MAEEDO: NUVEDO = 0,ESFADO = '',DESPACHO = 0
         ' MAEDDO: ARCHIRST = 'POTL' OPERACION,PPOPPR = 0, COSTOTRIB y COSTOIFRS = VANELI,TAMOPPPR = 0,TASADORIG = 0
 
+    End Sub
+
+    Private Sub Chk_FechaEmiFiot_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_FechaEmiFiot.CheckedChanged
+
+        If Not Chk_FechaEmiFiot.Checked Then
+            If Not Fx_Tiene_Permiso(Me, "Pdc00009") Then
+                Chk_FechaEmiFiot.Checked = True
+            End If
+        End If
+
+        Dtp_Fiot.Enabled = Not Chk_FechaEmiFiot.Checked
 
     End Sub
 

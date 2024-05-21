@@ -47,6 +47,9 @@ Partial Class Frm_GRI_FabXProducto
         Me.Txt_NroLote = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Chk_FechaEmiFiot = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.LabelX18 = New DevComponents.DotNetBar.LabelX()
+        Me.Dtp_Fiot = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.Btn_BuscarOT = New DevComponents.DotNetBar.ButtonX()
         Me.Lbl_ReferenciaOT = New DevComponents.DotNetBar.LabelX()
         Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
@@ -68,17 +71,14 @@ Partial Class Frm_GRI_FabXProducto
         Me.Txt_Turno = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_Analista = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX17 = New DevComponents.DotNetBar.LabelX()
-        Me.LabelX18 = New DevComponents.DotNetBar.LabelX()
-        Me.Dtp_Fiot = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
-        Me.Chk_FechaEmiFiot = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Grupo_Producto.SuspendLayout()
         Me.Panel_SC.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.GroupPanel1.SuspendLayout()
+        CType(Me.Dtp_Fiot, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dtp_Fecha_Ingreso, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel2.SuspendLayout()
-        CType(Me.Dtp_Fiot, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Grupo_Producto
@@ -561,6 +561,97 @@ Partial Class Frm_GRI_FabXProducto
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 94
         '
+        'Chk_FechaEmiFiot
+        '
+        Me.Chk_FechaEmiFiot.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_FechaEmiFiot.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_FechaEmiFiot.CheckBoxImageChecked = CType(resources.GetObject("Chk_FechaEmiFiot.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_FechaEmiFiot.Checked = True
+        Me.Chk_FechaEmiFiot.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Chk_FechaEmiFiot.CheckValue = "Y"
+        Me.Chk_FechaEmiFiot.FocusCuesEnabled = False
+        Me.Chk_FechaEmiFiot.ForeColor = System.Drawing.Color.Black
+        Me.Chk_FechaEmiFiot.Location = New System.Drawing.Point(397, 36)
+        Me.Chk_FechaEmiFiot.Name = "Chk_FechaEmiFiot"
+        Me.Chk_FechaEmiFiot.Size = New System.Drawing.Size(179, 14)
+        Me.Chk_FechaEmiFiot.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_FechaEmiFiot.TabIndex = 100
+        Me.Chk_FechaEmiFiot.TabStop = False
+        Me.Chk_FechaEmiFiot.Text = "Fecha de emisión fecha de la OT"
+        '
+        'LabelX18
+        '
+        Me.LabelX18.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX18.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX18.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX18.ForeColor = System.Drawing.Color.Black
+        Me.LabelX18.Location = New System.Drawing.Point(397, 7)
+        Me.LabelX18.Name = "LabelX18"
+        Me.LabelX18.Size = New System.Drawing.Size(67, 23)
+        Me.LabelX18.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.LabelX18.TabIndex = 99
+        Me.LabelX18.Text = "FECHA OT"
+        '
+        'Dtp_Fiot
+        '
+        Me.Dtp_Fiot.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Dtp_Fiot.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Dtp_Fiot.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Fiot.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
+        Me.Dtp_Fiot.ButtonDropDown.Visible = True
+        Me.Dtp_Fiot.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Dtp_Fiot.ForeColor = System.Drawing.Color.Black
+        Me.Dtp_Fiot.IsPopupCalendarOpen = False
+        Me.Dtp_Fiot.Location = New System.Drawing.Point(469, 7)
+        '
+        '
+        '
+        Me.Dtp_Fiot.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_Fiot.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Fiot.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
+        Me.Dtp_Fiot.MonthCalendar.ClearButtonVisible = True
+        '
+        '
+        '
+        Me.Dtp_Fiot.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
+        Me.Dtp_Fiot.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_Fiot.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
+        Me.Dtp_Fiot.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Dtp_Fiot.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
+        Me.Dtp_Fiot.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
+        Me.Dtp_Fiot.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Fiot.MonthCalendar.DisplayMonth = New Date(2018, 1, 1, 0, 0, 0, 0)
+        Me.Dtp_Fiot.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
+        Me.Dtp_Fiot.MonthCalendar.MarkedDates = New Date(-1) {}
+        Me.Dtp_Fiot.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_Fiot.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Dtp_Fiot.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_Fiot.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Dtp_Fiot.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Fiot.MonthCalendar.TodayButtonVisible = True
+        Me.Dtp_Fiot.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
+        Me.Dtp_Fiot.Name = "Dtp_Fiot"
+        Me.Dtp_Fiot.Size = New System.Drawing.Size(99, 25)
+        Me.Dtp_Fiot.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Dtp_Fiot.TabIndex = 98
+        Me.Dtp_Fiot.TabStop = False
+        Me.Dtp_Fiot.Value = New Date(2018, 1, 30, 12, 16, 22, 0)
+        '
         'Btn_BuscarOT
         '
         Me.Btn_BuscarOT.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
@@ -979,99 +1070,6 @@ Partial Class Frm_GRI_FabXProducto
         Me.LabelX17.TabIndex = 101
         Me.LabelX17.Text = "ANALISTA"
         '
-        'LabelX18
-        '
-        Me.LabelX18.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX18.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX18.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX18.ForeColor = System.Drawing.Color.Black
-        Me.LabelX18.Location = New System.Drawing.Point(397, 7)
-        Me.LabelX18.Name = "LabelX18"
-        Me.LabelX18.Size = New System.Drawing.Size(67, 23)
-        Me.LabelX18.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
-        Me.LabelX18.TabIndex = 99
-        Me.LabelX18.Text = "FECHA OT"
-        '
-        'Dtp_Fiot
-        '
-        Me.Dtp_Fiot.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Dtp_Fiot.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Dtp_Fiot.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_Fiot.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
-        Me.Dtp_Fiot.ButtonDropDown.Visible = True
-        Me.Dtp_Fiot.Enabled = False
-        Me.Dtp_Fiot.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Dtp_Fiot.ForeColor = System.Drawing.Color.Black
-        Me.Dtp_Fiot.IsPopupCalendarOpen = False
-        Me.Dtp_Fiot.Location = New System.Drawing.Point(469, 7)
-        '
-        '
-        '
-        Me.Dtp_Fiot.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
-        '
-        '
-        '
-        Me.Dtp_Fiot.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_Fiot.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
-        Me.Dtp_Fiot.MonthCalendar.ClearButtonVisible = True
-        '
-        '
-        '
-        Me.Dtp_Fiot.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
-        Me.Dtp_Fiot.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
-        Me.Dtp_Fiot.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
-        Me.Dtp_Fiot.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.Dtp_Fiot.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
-        Me.Dtp_Fiot.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
-        Me.Dtp_Fiot.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_Fiot.MonthCalendar.DisplayMonth = New Date(2018, 1, 1, 0, 0, 0, 0)
-        Me.Dtp_Fiot.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
-        Me.Dtp_Fiot.MonthCalendar.MarkedDates = New Date(-1) {}
-        Me.Dtp_Fiot.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
-        '
-        '
-        '
-        Me.Dtp_Fiot.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.Dtp_Fiot.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
-        Me.Dtp_Fiot.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.Dtp_Fiot.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_Fiot.MonthCalendar.TodayButtonVisible = True
-        Me.Dtp_Fiot.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
-        Me.Dtp_Fiot.Name = "Dtp_Fiot"
-        Me.Dtp_Fiot.Size = New System.Drawing.Size(99, 25)
-        Me.Dtp_Fiot.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Dtp_Fiot.TabIndex = 98
-        Me.Dtp_Fiot.TabStop = False
-        Me.Dtp_Fiot.Value = New Date(2018, 1, 30, 12, 16, 22, 0)
-        '
-        'Chk_FechaEmiFiot
-        '
-        Me.Chk_FechaEmiFiot.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_FechaEmiFiot.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_FechaEmiFiot.CheckBoxImageChecked = CType(resources.GetObject("Chk_FechaEmiFiot.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_FechaEmiFiot.Checked = True
-        Me.Chk_FechaEmiFiot.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.Chk_FechaEmiFiot.CheckValue = "Y"
-        Me.Chk_FechaEmiFiot.Enabled = False
-        Me.Chk_FechaEmiFiot.FocusCuesEnabled = False
-        Me.Chk_FechaEmiFiot.ForeColor = System.Drawing.Color.Black
-        Me.Chk_FechaEmiFiot.Location = New System.Drawing.Point(397, 36)
-        Me.Chk_FechaEmiFiot.Name = "Chk_FechaEmiFiot"
-        Me.Chk_FechaEmiFiot.Size = New System.Drawing.Size(179, 14)
-        Me.Chk_FechaEmiFiot.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_FechaEmiFiot.TabIndex = 100
-        Me.Chk_FechaEmiFiot.TabStop = False
-        Me.Chk_FechaEmiFiot.Text = "Fecha de emisión fecha de la OT"
-        '
         'Frm_GRI_FabXProducto
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1095,10 +1093,10 @@ Partial Class Frm_GRI_FabXProducto
         Me.Panel_SC.ResumeLayout(False)
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.GroupPanel1.ResumeLayout(False)
+        CType(Me.Dtp_Fiot, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Dtp_Fecha_Ingreso, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel2.ResumeLayout(False)
-        CType(Me.Dtp_Fiot, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

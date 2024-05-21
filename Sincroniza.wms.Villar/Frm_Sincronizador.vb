@@ -31,7 +31,11 @@ Public Class Frm_Sincronizador
 
         Txt_Log.ReadOnly = True
         CircularPgrs.IsRunning = False
+
+        Timer_Limpiar.Interval = (1000 * 60) * 5
+
         Sb_Ejecutar_diablito()
+
     End Sub
 
     Sub Sb_Ejecutar_diablito()
@@ -80,6 +84,7 @@ Public Class Frm_Sincronizador
             CircularPgrs.IsRunning = True
             Timer_Ejecutar.Interval = 1000 * 5
             Timer_Ejecutar.Start()
+            Timer_Limpiar.Start()
 
         Catch ex As Exception
             MessageBoxEx.Show(Me, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -97,6 +102,7 @@ Public Class Frm_Sincronizador
         _Cl_Sincroniza.Sb_Ejecutar_Revision(Txt_Log, _FechaRevision)
         _Cl_Sincroniza.Sb_MarcarFacturadasPorFuera(Txt_Log, _FechaRevision)
 
+        Switch_Sincronizacion.Value = True
         CircularPgrs.IsRunning = True
         Timer_Ejecutar.Start()
 
@@ -117,4 +123,22 @@ Public Class Frm_Sincronizador
     Private Sub Btn_Limpiar_Click(sender As Object, e As EventArgs) Handles Btn_Limpiar.Click
         Txt_Log.Text = String.Empty
     End Sub
+
+    Private Sub Switch_Sincronizacion_ValueChanged(sender As Object, e As EventArgs) Handles Switch_Sincronizacion.ValueChanged
+        If Switch_Sincronizacion.Value Then
+            CircularPgrs.IsRunning = False
+            Timer_Ejecutar.Stop()
+        Else
+            CircularPgrs.IsRunning = True
+            Timer_Ejecutar.Start()
+        End If
+    End Sub
+
+    Private Sub Timer_Limpiar_Tick(sender As Object, e As EventArgs) Handles Timer_Limpiar.Tick
+        Timer_Limpiar.Stop()
+        Sb_AddToLog("Conexión", "Revisando completadas para ver si hay alguna cancelada en WMS...", Txt_Log)
+        _Cl_Sincroniza.Sb_RevisarCompletadasCanceladas(Txt_Log)
+        Timer_Limpiar.Start()
+    End Sub
+
 End Class

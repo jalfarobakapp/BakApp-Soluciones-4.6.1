@@ -20,7 +20,8 @@ CREATE TABLE [dbo].[Zw_Entidades](
     [NoResMtoMinComAsCompraAuto]    [bit]           NOT NULL DEFAULT(0),    
     [JuntaPuntos]                   [bit]           NOT NULL DEFAULT(0),    
     [EmailPuntos]                   [varchar](50)   NOT NULL DEFAULT(0),    
-    [FechaInscripPuntos]            [datetime]      NULL,    
+    [FechaInscripPuntos]            [datetime]      NULL,
+    [CodFuncionario_Enrola]         [char](3)       NOT NULL DEFAULT(''),
  CONSTRAINT [PK_Zw_Entidades] PRIMARY KEY CLUSTERED 
 (
 	[CodEntidad] ASC,

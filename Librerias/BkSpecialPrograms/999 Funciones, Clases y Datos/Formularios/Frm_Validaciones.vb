@@ -167,12 +167,12 @@ Namespace LsValiciones
         Public Property EsCorrecto As Boolean
         Public Property Id As String
         Public Property Fecha As DateTime
-        Public Property Detalle As String
-        Public Property Mensaje As String
+        Public Property Detalle As String = String.Empty
+        Public Property Mensaje As String = String.Empty
         Public Property Resultado As String = String.Empty
         Public Property Tag As String
         Public Property UsarImagen As Boolean
-        Public Property NombreImagen As String
+        Public Property NombreImagen As String = String.Empty
         Public Property Icono As Object
         Public Property Cancelado As Boolean
 

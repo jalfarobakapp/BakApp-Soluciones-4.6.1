@@ -4403,17 +4403,38 @@ Namespace My.Resources
         '''<summary>
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
+        '''CREATE TABLE [dbo].[Zw_Stmp_DetPick](
+        '''	[Id]			[int] IDENTITY(1,1) NOT NULL,
+        '''	[Id_Enc]		[int] NOT NULL DEFAULT (0),
+        '''	[Idmaeedo]		[int] NOT NULL DEFAULT (0),
+        '''	[Idmaeddo]		[int] NOT NULL DEFAULT (0),
+        '''	[Tido]			[varchar](3) NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Nudo]			[varchar](10) NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Sku]			[varchar](13) NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Sku_desc]		[varchar](50) NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Tag]			[varchar](20) NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Udtrpr]		[int] NOT NULL DEFAULT (0),
+        '''	[Qty]			[floa [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Stmp_DetPick() As String
+            Get
+                Return ResourceManager.GetString("Zw_Stmp_DetPick", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
         '''CREATE TABLE [dbo].[Zw_Stmp_Enc](
-        '''	[Id]					[int] IDENTITY(1,1) NOT NULL,
-        '''	[Empresa]				[char](2)		NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Sucursal]				[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Numero]				[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[CodFuncionario_Crea]	[char](3)		NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Idmaeedo]				[int]			NOT NULL DEFAULT (0),
-        '''	[Tido]					[char](3)		NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Nudo]					[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Endo]					[varchar](10)	NULL,
-        '''	[Suendo]				[varchar](20)	NOT NUL [resto de la cadena truncado]&quot;;.
+        '''	[Id]					    [int] IDENTITY(1,1) NOT NULL,
+        '''	[Empresa]				    [char](2)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Sucursal]				    [varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Numero]				    [varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[CodFuncionario_Crea]	    [char](3)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Idmaeedo]				    [int]			NOT NULL DEFAULT (0),
+        '''	[Tido]					    [char](3)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Nudo]					    [varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Endo]					    [varchar](10)	NULL, [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Stmp_Enc() As String
             Get

@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Net
 Imports System.Net.Mail
 Imports DevComponents.DotNetBar
 
@@ -81,29 +82,29 @@ Public Class Frm_Correos_Conf_SMTP
         Dim _Cuerpo = "Mensaje de correo electrónico enviado para comprobar la configuración de su cuenta. "
         Dim _Para = String.Empty
 
-        'Dim _Aceptar As Boolean
+        Dim _Mensaje As New LsValiciones.Mensajes
 
-        '_Aceptar = InputBox_Bk(Me, "Ingrese correo de respuesta", "Prueba de envio de correo (SMTP)", _Para,
-        '           False, _Tipo_Mayus_Minus.Normal, 0, True, _Tipo_Imagen.Texto, False)
-
-        'If _Aceptar Then
-
-        If Fx_Test_envio_correo(Me, Txt_Host_SMTP.Text,
+        _Mensaje = Fx_Test_envio_correo_Mail2(Me, Txt_Host_SMTP.Text,
                                  Txt_Remitente.Text, Txt_Contrasena.Text, "", "", _Asunto, _Cuerpo,
-                                 Nothing, Txt_Puerto.Text, Chk_SSL.Checked) Then
+                                 Nothing, Txt_Puerto.Text, Chk_SSL.Checked)
 
-            csNotificaciones.Notificacion.mostrarVentana("Prueba correo",
-                                                             "Correo enviado sin problemas, revise su bandeja de entrada" & vbCrLf & vbCrLf &
-                                                             "Remitente : " & Txt_Remitente.Text & vbCrLf &
-                                                             "Para: " & _Para,
-                                                             csNotificaciones.Notificacion.Imagen.Internet, 5, True, Me)
+        _Mensaje = Fx_Test_envio_correo_Mail3(Me, Txt_Host_SMTP.Text,
+                                 Txt_Remitente.Text, Txt_Contrasena.Text, "", "", _Asunto, _Cuerpo,
+                                 Nothing, Txt_Puerto.Text, Chk_SSL.Checked)
+
+        If Not _Mensaje.EsCorrecto Then
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            Return
         End If
 
-        'End If
-
+        csNotificaciones.Notificacion.mostrarVentana("Prueba correo",
+                                                 "Correo enviado sin problemas, revise su bandeja de entrada" & vbCrLf & vbCrLf &
+                                                 "Remitente : " & Txt_Remitente.Text & vbCrLf &
+                                                 "Para: " & _Para,
+                                                 csNotificaciones.Notificacion.Imagen.Internet, 3)
     End Sub
 
-    Private Function Fx_Test_envio_correo(Fm As Form,
+    Private Function Fx_Test_envio_correo_Mail2(Fm As Form,
                                           _Host_SMT As String,
                                           _Usuario As String,
                                           _Contrasena As String,
@@ -113,7 +114,9 @@ Public Class Frm_Correos_Conf_SMTP
                                           _Cuerpo As String,
                                           _StrAttach() As String,
                                           Optional _Puerto As String = "25",
-                                          Optional _EnableSsl As Boolean = True)
+                                          Optional _EnableSsl As Boolean = True) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
 
         _Asunto = "Mesaje de prueba BakApp"
         If String.IsNullOrEmpty(Trim(_Cuerpo)) Then _Cuerpo = "Mensaje de correo electrónico enviado para comprobar la configuración de su cuenta. "
@@ -124,26 +127,46 @@ Public Class Frm_Correos_Conf_SMTP
                             False, _Tipo_Mayus_Minus.Normal, 0, True, _Tipo_Imagen.Texto, False)
 
             If Not _Aceptar Then
-                Return False
+                Return _Mensaje
             End If
         End If
 
-        Dim result As ISendMessageResult = Fx_Enviar_Mail3IMail(_Host_SMT,
-                                                                _Usuario,
-                                                                _Contrasena,
-                                                                _Para,
-                                                                _CC,
-                                                                _Asunto,
-                                                                _Cuerpo,
-                                                                _StrAttach,
-                                                                _Puerto,
-                                                                _EnableSsl)
+        _Mensaje.EsCorrecto = Fx_Enviar_Mail2(_Host_SMT, _Usuario, _Contrasena, _Para, _CC, _Asunto, _Cuerpo, _StrAttach, _Puerto, _EnableSsl, True)
 
-        If result.Status = 0 Then 'Fx_Enviar_Mail3IMail(_Host_SMT, _Usuario, _Contrasena, _Para, _CC, _Asunto, _Cuerpo, _StrAttach, _Puerto, _EnableSsl, True) Then
-            Return True
-        Else
-            Return False
+        Return _Mensaje
+
+    End Function
+
+    Private Function Fx_Test_envio_correo_Mail3(Fm As Form,
+                                          _Host_SMT As String,
+                                          _Usuario As String,
+                                          _Contrasena As String,
+                                          _Para As String,
+                                          _CC As String,
+                                          _Asunto As String,
+                                          _Cuerpo As String,
+                                          _StrAttach() As String,
+                                          Optional _Puerto As String = "25",
+                                          Optional _EnableSsl As Boolean = True) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        _Asunto = "Mesaje de prueba BakApp"
+        If String.IsNullOrEmpty(Trim(_Cuerpo)) Then _Cuerpo = "Mensaje de correo electrónico enviado para comprobar la configuración de su cuenta. "
+        Dim _Aceptar As Boolean
+
+        If String.IsNullOrEmpty(_Para) Then
+            _Aceptar = InputBox_Bk(Fm, "Ingrese correo de respuesta", "Prueba de envio de correo (SMTP)", _Para,
+                            False, _Tipo_Mayus_Minus.Normal, 0, True, _Tipo_Imagen.Texto, False)
+
+            If Not _Aceptar Then
+                Return _Mensaje
+            End If
         End If
+
+        _Mensaje = Fx_Enviar_Mail3IMail(_Host_SMT, _Usuario, _Contrasena, _Para, _CC, _Asunto, _Cuerpo, _StrAttach, _Puerto, _EnableSsl)
+
+        Return _Mensaje
 
     End Function
 
@@ -392,13 +415,16 @@ Public Class Frm_Correos_Conf_SMTP
             '_Puerto = 465
 
             'Configuracion del servidor
-            Dim Servidor As New System.Net.Mail.SmtpClient
-            Servidor.EnableSsl = _EnableSsl
-            Servidor.Host = _Host_SMT
-            Servidor.Port = _Puerto
-            'Servidor.UseDefaultCredentials = True
-
+            Dim Servidor As New System.Net.Mail.SmtpClient(_Host_SMT)
             Servidor.Credentials = New System.Net.NetworkCredential(_Usuario, _Contrasena)
+            Servidor.EnableSsl = _EnableSsl
+            Servidor.Port = _Puerto
+            'Servidor.Host = _Host_SMT
+
+
+            'Servidor.UseDefaultCredentials = True
+            'ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
+
 
             Servidor.Send(_Correo)
 
@@ -435,127 +461,150 @@ Public Class Frm_Correos_Conf_SMTP
                                   _Cuerpo As String,
                                   _StrAttach() As String,
                                   _Puerto As Integer,
-                                  _EnableSsl As Boolean) As ISendMessageResult
+                                  _EnableSsl As Boolean) As LsValiciones.Mensajes
 
-
-        Dim builder As New MailBuilder()
-        builder.From.Add(New MailBox(_Usuario))
-        builder.[To].Add(New MailBox(_Para))
-        builder.Subject = _Asunto
-        builder.Html = _Cuerpo '"<img src=""cid:lemon@id"" align=""left"" /> This is simple <strong>HTML email</strong> with an image and attachment"
-
-        'Dim visual As MimeData = builder.AddVisual("Lemon.jpg")
-        'visual.ContentId = "lemon@id"
-
-        'DEFINE DE DONDE SE OBTIENEN LAS IMAGENES
-
-        Dim _Imagenes As New List(Of String)
-        Dim _IdImagenes As New List(Of String)
-
-        Dim _Dir_Imagenes = "Data\" & RutEmpresa & "\Tmp\Correo\Imagenes\"
-        Dim _ContImg = 0
-        Dim _UlImg = 0
-        ' Incorporacion de imagenes Random
-        For i = 0 To 32
-
-            If _Cuerpo.Contains("cid:IMG" & i) Then
-                If System.IO.File.Exists(_Dir_Imagenes & "IMG" & i & ".jpg") Then
-                    Dim visual As MimeData = builder.AddVisual(_Dir_Imagenes & "IMG" & i & ".jpg")
-                    visual.ContentId = "IMG" & i
-                    _UlImg = i
-                End If
-                If System.IO.File.Exists(_Dir_Imagenes & "IMG" & i & ".jpeg") Then
-                    Dim visual As MimeData = builder.AddVisual(_Dir_Imagenes & "IMG" & i & ".jpeg")
-                    visual.ContentId = "IMG" & i
-                    _UlImg = i
-                End If
-            End If
-
-        Next
-
-
-        'Dim attachment As MimeData = builder.AddAttachment("Attachment.txt")
-        'attachment.SetFileName("Attachment.txt", guessContentType:=True)
-
-        Dim xi
+        Dim _Mensaje As New LsValiciones.Mensajes
 
         Try
-            ' simplemente para saber si se produce error
-            xi = _StrAttach.Length
-        Catch
-            ' Si se produce un error, asignamos el valor cero, que más abajo indicará si el array contien datos o no
-            xi = 0
-        End Try
 
-        Dim _Archivos_Adjuntos As Net.Mail.Attachment
-        Dim _AttAdj As New List(Of Net.Mail.Attachment)
-        Dim _Adjunto As String = String.Empty
+            If String.IsNullOrEmpty(_Asunto.Trim) Then
+                Throw New System.Exception("El Asunto no puede estar vacio")
+            End If
 
-        If xi > 0 Then
-            For Each strFile In _StrAttach
-                If Not IsNothing(strFile) Then
-                    '_Correo.Attachments.Add(New System.Net.Mail.Attachment(Trim(strFile)))
-                    _Archivos_Adjuntos = New Net.Mail.Attachment(strFile.Trim)
-                    If IsNothing(_Archivos_Adjuntos) Then
-                        xi = 0
-                    Else
-                        Dim attachment As MimeData = builder.AddAttachment(strFile.Trim)
-                        attachment.SetFileName("Attachment.txt", guessContentType:=True)
-                        _Adjunto = strFile.Trim
-                        Exit For
+            Dim builder As New MailBuilder()
+            builder.From.Add(New MailBox(_Usuario))
+            builder.[To].Add(New MailBox(_Para))
+            builder.Subject = _Asunto
+            builder.Html = _Cuerpo '"<img src=""cid:lemon@id"" align=""left"" /> This is simple <strong>HTML email</strong> with an image and attachment"
+
+            'Dim visual As MimeData = builder.AddVisual("Lemon.jpg")
+            'visual.ContentId = "lemon@id"
+
+            'DEFINE DE DONDE SE OBTIENEN LAS IMAGENES
+
+            Dim _Imagenes As New List(Of String)
+            Dim _IdImagenes As New List(Of String)
+
+            Dim _Dir_Imagenes = "Data\" & RutEmpresa & "\Tmp\Correo\Imagenes\"
+            Dim _ContImg = 0
+            Dim _UlImg = 0
+            ' Incorporacion de imagenes Random
+            For i = 0 To 32
+
+                If _Cuerpo.Contains("cid:IMG" & i) Then
+                    If System.IO.File.Exists(_Dir_Imagenes & "IMG" & i & ".jpg") Then
+                        Dim visual As MimeData = builder.AddVisual(_Dir_Imagenes & "IMG" & i & ".jpg")
+                        visual.ContentId = "IMG" & i
+                        _UlImg = i
+                    End If
+                    If System.IO.File.Exists(_Dir_Imagenes & "IMG" & i & ".jpeg") Then
+                        Dim visual As MimeData = builder.AddVisual(_Dir_Imagenes & "IMG" & i & ".jpeg")
+                        visual.ContentId = "IMG" & i
+                        _UlImg = i
                     End If
                 End If
+
             Next
-        End If
-
-        Dim email As IMail = builder.Create()
-
-        'Dim email As IMail
-
-        'If Not String.IsNullOrEmpty(_Adjunto) Then
-        '    email = Mail _
-        '    .Html(_Cuerpo) _
-        '    .Subject("Asunto") _
-        '    .AddAttachment("Attachment.txt").SetFileName("Invoice.txt") _
-        '    .From(New MailBox(_User)) _
-        '    .To(New MailBox(_Para, _Para)) _
-        '    .Create()
-        'Else
-        '    email = Mail _
-        '    .Html(_Cuerpo) _
-        '    .Subject(_Asunto) _
-        '    .From(New MailBox(_User)) _
-        '    .To(New MailBox(_Para, _Para)) _
-        '    .Create()
-        'End If
-
-        'email.Save("SampleEmail.eml")                   ' You can save the email for preview.
 
 
-        Using smtp As New Smtp                          ' Now connect to SMTP server and send it
-            smtp.Connect(_Host_SMT)                       ' Use overloads or ConnectSSL if you need to specify different port or SSL.
-            'Smtp.DefaultPort = _Puerto
-            smtp.SSLConfiguration.EnabledSslProtocols = _EnableSsl ' True
-            smtp.UseBestLogin(_Usuario, _Contrasena)         ' You can also use: Login, LoginPLAIN, LoginCRAM, LoginDIGEST, LoginOAUTH methods,
-            ' or use UseBestLogin method if you want Mail.dll to choose for you.
-            'Smtp.DefaultPort = 456
-            Dim result As ISendMessageResult = smtp.SendMessage((email))
-            Console.WriteLine(result.Status.ToString)
-            Console.WriteLine(result.AllResponses.ToString)
-            Console.WriteLine(result.FromRejected.ToString)
-            Console.WriteLine(result.GeneralErrors.ToString)
-            Console.WriteLine(result.RejectedRecipients.ToString)
-            Console.WriteLine(result.RejectedRecipientsErrors.ToString)
+            'Dim attachment As MimeData = builder.AddAttachment("Attachment.txt")
+            'attachment.SetFileName("Attachment.txt", guessContentType:=True)
 
-            'Console.ReadKey()
-            smtp.Close()
+            Dim xi
 
-            Return result
+            Try
+                ' simplemente para saber si se produce error
+                xi = _StrAttach.Length
+            Catch
+                ' Si se produce un error, asignamos el valor cero, que más abajo indicará si el array contien datos o no
+                xi = 0
+            End Try
 
-        End Using
+            Dim _Archivos_Adjuntos As Net.Mail.Attachment
+            Dim _AttAdj As New List(Of Net.Mail.Attachment)
+            Dim _Adjunto As String = String.Empty
 
-        ' For sure you'll need to send complex emails,
-        ' take a look at our templates support in SmtpTemplates sample.
+            If xi > 0 Then
+                For Each strFile In _StrAttach
+                    If Not IsNothing(strFile) Then
+                        '_Correo.Attachments.Add(New System.Net.Mail.Attachment(Trim(strFile)))
+                        _Archivos_Adjuntos = New Net.Mail.Attachment(strFile.Trim)
+                        If IsNothing(_Archivos_Adjuntos) Then
+                            xi = 0
+                        Else
+                            Dim attachment As MimeData = builder.AddAttachment(strFile.Trim)
+                            attachment.SetFileName("Attachment.txt", guessContentType:=True)
+                            _Adjunto = strFile.Trim
+                            Exit For
+                        End If
+                    End If
+                Next
+            End If
+
+            Dim email As IMail = builder.Create()
+
+            'Dim email As IMail
+
+            'If Not String.IsNullOrEmpty(_Adjunto) Then
+            '    email = Mail _
+            '    .Html(_Cuerpo) _
+            '    .Subject("Asunto") _
+            '    .AddAttachment("Attachment.txt").SetFileName("Invoice.txt") _
+            '    .From(New MailBox(_User)) _
+            '    .To(New MailBox(_Para, _Para)) _
+            '    .Create()
+            'Else
+            '    email = Mail _
+            '    .Html(_Cuerpo) _
+            '    .Subject(_Asunto) _
+            '    .From(New MailBox(_User)) _
+            '    .To(New MailBox(_Para, _Para)) _
+            '    .Create()
+            'End If
+
+            'email.Save("SampleEmail.eml")                   ' You can save the email for preview.
+
+
+            Using smtp As New Smtp
+                'Now connect to SMTP server and send it
+                If _EnableSsl Then
+                    smtp.Connect(_Host_SMT)                       ' Use overloads or ConnectSSL if you need to specify different port or SSL.
+                Else
+                    smtp.Connect(_Host_SMT, _Puerto, _EnableSsl)                       ' Use overloads or ConnectSSL if you need to specify different port or SSL.
+                End If
+
+                'smtp.IsEncrypted = True
+                'Smtp.DefaultPort = _Puerto
+                smtp.SSLConfiguration.EnabledSslProtocols = _EnableSsl ' True
+                smtp.UseBestLogin(_Usuario, _Contrasena)         ' You can also use: Login, LoginPLAIN, LoginCRAM, LoginDIGEST, LoginOAUTH methods,
+                ' or use UseBestLogin method if you want Mail.dll to choose for you.
+                'Smtp.DefaultPort = 456
+                Dim result As ISendMessageResult = smtp.SendMessage((email))
+                Console.WriteLine(result.Status.ToString)
+                Console.WriteLine(result.AllResponses.ToString)
+                Console.WriteLine(result.FromRejected.ToString)
+                Console.WriteLine(result.GeneralErrors.ToString)
+                Console.WriteLine(result.RejectedRecipients.ToString)
+                Console.WriteLine(result.RejectedRecipientsErrors.ToString)
+
+                'Console.ReadKey()
+                smtp.Close()
+
+                If result.Status = SendMessageStatus.Success Then
+                    _Mensaje.EsCorrecto = True
+                End If
+
+                Return result
+
+            End Using
+
+        Catch ex As Exception
+            _Mensaje.Detalle = "Problema al enviar el correo"
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
+        End Try
+
+        Return _Mensaje
 
     End Function
 

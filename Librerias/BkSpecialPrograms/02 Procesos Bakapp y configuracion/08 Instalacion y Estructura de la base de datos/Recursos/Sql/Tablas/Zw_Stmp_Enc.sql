@@ -25,6 +25,10 @@ CREATE TABLE [dbo].[Zw_Stmp_Enc](
 	[TidoGen]				    [varchar](3)	NOT NULL DEFAULT (''),
 	[NudoGen]				    [varchar](10)	NOT NULL DEFAULT (''),
     [CodFuncionario_Entrega]	[char](3)		NOT NULL DEFAULT (''),
+    [Planificada]               [bit]			NOT NULL DEFAULT (0),
+    [FechaPlanificacion]        [datetime]		NULL,
+    [FechaEntrega]              [datetime]		NULL,
+    [CodFuncionario_Cierra]	    [char](3)		NOT NULL DEFAULT (''),    
  CONSTRAINT [PK_Zw_Stmp_Enc] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

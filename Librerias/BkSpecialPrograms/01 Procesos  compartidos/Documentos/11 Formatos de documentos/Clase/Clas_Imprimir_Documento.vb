@@ -272,29 +272,50 @@ Public Class Clas_Imprimir_Documento
         _Tbl_Detalle_Agrupado = _Ds.Tables(3)
         _Tbl_Doc_Asociados_Recargos = _Ds.Tables(4)
 
-        For Each _Fl As DataRow In _Tbl_Detalle.Rows
+        If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Format_01", "IncluyePickWms") Then
 
-            Dim _Ficha As String = String.Empty
-            Consulta_sql = "Select * From MAEFICHD Where KOPR = '" & _Fl.Item("KOPR") & "'"
+            Dim _IncluyePickWms As Boolean = _TblEncForm.Rows(0).Item("IncluyePickWms")
 
-            Dim _Tbl_Maefichd As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            If _IncluyePickWms Then
 
-            For Each _Fichas As DataRow In _Tbl_Maefichd.Rows
-                _Ficha += _Fichas.Item("FICHA")
+                Consulta_sql = "Select Idmaeedo As 'IDMAEEDO','' As 'MOPPPR',Idmaeddo As 'IDMAEDDO',0 As 'PRCT'," &
+                               "Tido,Nudo,Sku,Sku_desc,Tag,Udtrpr,Qty,Loc,Cont," & vbCrLf &
+                               "RIGHT('00000' + CAST(ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS VARCHAR( 5)), 5) AS NULIDO" & vbCrLf &
+                               "From " & _Global_BaseBk & "Zw_Stmp_DetPick Where Idmaeedo = " & _IdDoc
+
+                _Tbl_Detalle = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+            End If
+
+        Else
+
+            For Each _Fl As DataRow In _Tbl_Detalle.Rows
+
+                Dim _Ficha As String = String.Empty
+                Consulta_sql = "Select * From MAEFICHD Where KOPR = '" & _Fl.Item("KOPR") & "'"
+
+                Dim _Tbl_Maefichd As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+                For Each _Fichas As DataRow In _Tbl_Maefichd.Rows
+                    _Ficha += _Fichas.Item("FICHA")
+                Next
+
+                _Ficha = NuloPorNro(_Ficha, "")
+                _Ficha = Replace(_Ficha, Chr(13), " ")
+                _Ficha = Replace(_Ficha, vbLf, " ")
+                _Ficha = Replace(_Ficha, vbCrLf, " ")
+
+                Try
+                    _Fl.Item("MAEFICHD") = _Ficha.Trim
+                Catch ex As Exception
+                    _Fl.Item("MAEFICHD") = String.Empty
+                End Try
+
             Next
 
-            _Ficha = NuloPorNro(_Ficha, "")
-            _Ficha = Replace(_Ficha, Chr(13), " ")
-            _Ficha = Replace(_Ficha, vbLf, " ")
-            _Ficha = Replace(_Ficha, vbCrLf, " ")
+        End If
 
-            Try
-                _Fl.Item("MAEFICHD") = _Ficha.Trim
-            Catch ex As Exception
-                _Fl.Item("MAEFICHD") = String.Empty
-            End Try
 
-        Next
 
         _Row_Encabezado = Fx_New_Inserta_Funciones_Bk_En_Encabezado(_Row_Encabezado)
 
@@ -3159,7 +3180,6 @@ Public Class Clas_Imprimir_Documento
             ' FIN REFERENCIA
 
 #End Region
-
 
 #Region "ORDENES DE SERVICIO, OPERACIONES Y OT"
 
