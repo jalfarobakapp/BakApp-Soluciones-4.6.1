@@ -6,7 +6,7 @@ Public Class Frm_Formato_Creador_Funciones
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-    Dim _Id As Integer ' Para revision
+    Dim _Idmaeedo As Integer ' Para revision
     Dim _Tbl_Documentos As DataTable
     Dim _Tbl_Comandos_SQL As DataTable
     Dim _Row_Maeedo As DataRow                  ' Facturas, etc...
@@ -21,6 +21,7 @@ Public Class Frm_Formato_Creador_Funciones
     Dim _Grabar As Boolean
     Dim _Cerrar_Al_Grabar As Boolean
     Dim _Sol_Prod_Bodega As Boolean
+    Dim _Tbl_Maeddo_Picking As DataTable
 
     Public Property Pro_Cerra_Al_Grabar() As Boolean
         Get
@@ -100,7 +101,7 @@ Public Class Frm_Formato_Creador_Funciones
         Chk_Cheque.Checked = Es_Cheque
 
         Sb_Cargar_Combos()
-        _Id = Id
+        _Idmaeedo = Id
 
         Sb_Color_Botones_Barra(Bar1)
 
@@ -137,7 +138,7 @@ Public Class Frm_Formato_Creador_Funciones
             If Chk_Cheque.Checked Then
 
                 Consulta_sql = My.Resources.Recursos_Formato_Documento.SQLQuery_Traer_Cheque_Letra_Para_Imprimir
-                Consulta_sql = Replace(Consulta_sql, "#Idmaedpce#", _Id)
+                Consulta_sql = Replace(Consulta_sql, "#Idmaedpce#", _Idmaeedo)
 
                 _Ds = _Sql.Fx_Get_DataSet(Consulta_sql)
 
@@ -148,7 +149,7 @@ Public Class Frm_Formato_Creador_Funciones
             Else
 
                 Consulta_sql = My.Resources.Recursos_Formato_Documento.SQLQuery_Traer_Documento_Para_Imprimir
-                Consulta_sql = Replace(Consulta_sql, "#Idmaeedo#", _Id)
+                Consulta_sql = Replace(Consulta_sql, "#Idmaeedo#", _Idmaeedo)
                 Consulta_sql = Replace(Consulta_sql, "#Condicion_Extra_Maeddo#", "")
                 Consulta_sql = Replace(Consulta_sql, "#Orden_Detalle#", "Order By IDMAEDDO")
 
@@ -158,13 +159,48 @@ Public Class Frm_Formato_Creador_Funciones
                 _Tbl_Maeddo = _Ds.Tables(1)
                 _Row_Maeedo = Fx_New_Inserta_Funciones_Bk_En_Encabezado(_Row_Maeedo)
 
+
+                If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Format_01", "IncluyePickWms") Then
+
+                    Consulta_sql = "-- Picking WMS
+Declare @Idmaeedo Int  = " & _Idmaeedo & "
+Select Distinct Edd.IDMAEEDO,Edd.IDMAEDDO,Mp.KOPR,Edd.PRCT,MOPPPR,Mp.NOKOPR As 'NOKOPR_Mp',Edd.NOKOPR AS 'NOKOPR_Edd',
+RIGHT('00000' + CAST(ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS VARCHAR( 5)), 5) AS NULIDO,
+ISNULL(Pick.Tag,'') As 'Wms_Tag',ISNULL(Sum(Pick.Qty),0) As 'Wms_Qty',ISNULL(Pick.Loc,'') As 'Wms_Loc',ISNULL(Pick.Cont,'') As 'Wms_Cont'
+   
+From dbo.MAEDDO Edd 
+	LEFT JOIN dbo.MAEPR Mp ON Edd.KOPRCT = Mp.KOPR
+		LEFT JOIN dbo.TABBOPR Tbp ON Edd.EMPRESA = Tbp.EMPRESA And Edd.SULIDO = Tbp.KOSU And Tbp.KOBO = Edd.BOSULIDO And Tbp.KOPR = Edd.KOPRCT
+			LEFT JOIN dbo.MAEST Mst ON Edd.EMPRESA = Mst.EMPRESA And Edd.SULIDO = Mst.KOSU And Mst.KOBO = Edd.BOSULIDO And Mst.KOPR = Edd.KOPRCT
+				 LEFT JOIN dbo.TABMR Mrc ON Mrc.KOMR = Mp.MRPR
+                    LEFT JOIN dbo.MAEFICHA Mfch On Mfch.KOPR = Edd.KOPRCT
+                        LEFT JOIN dbo.MAEPROBS Mpo On Mpo.KOPR = Edd.KOPRCT
+                        Inner Join " & _Global_BaseBk & "Zw_Stmp_DetPick Pick On Pick.Idmaeedo = Edd.IDMAEEDO And Pick.Sku = Edd.KOPRCT
+
+Where IDMAEEDO = @Idmaeedo 
+Group By Edd.IDMAEEDO,Edd.IDMAEDDO,Mp.KOPR,Edd.PRCT,Mp.NOKOPR,MOPPPR,Edd.NOKOPR,Pick.Tag,Pick.Loc,Pick.Cont
+Order By IDMAEDDO
+
+Drop Table #Paso_Encabezado
+Drop Table #Paso_Detalle"
+
+                    Consulta_sql = "Select Idmaeedo As 'IDMAEEDO','' As 'MOPPPR',Idmaeddo As 'IDMAEDDO',0 As 'PRCT'," &
+                                   "Tido,Nudo,Sku,Sku_desc,Tag,Udtrpr,Qty,Loc,Cont," & vbCrLf &
+                                   "RIGHT('00000' + CAST(ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS VARCHAR( 5)), 5) AS NULIDO" & vbCrLf &
+                                   "From " & _Global_BaseBk & "Zw_Stmp_DetPick Where Idmaeedo = " & _Idmaeedo
+
+                    _Tbl_Maeddo_Picking = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+                End If
+
+
                 Dim _Tido As String = _Row_Maeedo.Item("TIDO")
 
                 If _Tido.Contains("GRP") Or _Tido.Contains("GDP") Then
 
                     Consulta_sql = "Declare @Id_Ot_Padre Int 
 
-                            Set @Id_Ot_Padre = (Select Top 1 Id_Ot_Padre From " & _Global_BaseBk & "Zw_St_OT_Encabezado Where Idmaeedo_" & _Tido & "_PRE = " & _Id & ")
+                            Set @Id_Ot_Padre = (Select Top 1 Id_Ot_Padre From " & _Global_BaseBk & "Zw_St_OT_Encabezado Where Idmaeedo_" & _Tido & "_PRE = " & _Idmaeedo & ")
 
                             Select ZEnc.Id_Ot, ZEnc.Nro_Ot,Empresa,ZEnc.Sucursal,ZEnc.Bodega,ZEnc.CodEntidad,ZEnc.SucEntidad,ZEnc.Rten,ZEnc.Rut, 
                             NOKOEN As Cliente,ZEnc.Fecha_Ingreso,ZEnc.Fecha_Compromiso,ZEnc.Fecha_Entrega,ZEnc.Fecha_Cierre,ZEnc.CodEstado, 
@@ -393,9 +429,9 @@ Public Class Frm_Formato_Creador_Funciones
 
                     Dim _Error As String
 
-                    _Id = _Row.Item("IDMAEDDO")
+                    _Idmaeedo = _Row.Item("IDMAEDDO")
 
-                    _Row = Fx_Funcion_SQL_Personalizada_Detalle(Txt_SqlQuery.Text, _Id, _Error)
+                    _Row = Fx_Funcion_SQL_Personalizada_Detalle(Txt_SqlQuery.Text, _Idmaeedo, _Error)
 
                     If String.IsNullOrEmpty(_Error) Then
                         _Campo = "CAMPO"
@@ -412,6 +448,23 @@ Public Class Frm_Formato_Creador_Funciones
                                                       _Row,
                                                       Txt_Formato.Text,
                                                       _Moneda_Str)
+
+                If _Dato = "Error_" Then
+
+                    If Not IsNothing(_Tbl_Maeddo_Picking) AndAlso _Tbl_Maeddo_Picking.Rows.Count > 0 Then
+
+                        _Row = _Tbl_Maeddo_Picking.Rows(0)
+
+                        _Dato = Fx_New_Trae_Valor_Detalle_Row(_Campo,
+                                          Cmb_Tipo_Dato.SelectedValue,
+                                          Chk_Es_Descuento.Checked,
+                                          _Row,
+                                          Txt_Formato.Text,
+                                          _Moneda_Str)
+
+                    End If
+
+                End If
 
             Else
 
@@ -438,7 +491,7 @@ Public Class Frm_Formato_Creador_Funciones
 
                     Dim _Error As String
 
-                    _Row = Fx_Funcion_SQL_Personalizada_Enc_Pie(Txt_SqlQuery.Text, _Id, _Error)
+                    _Row = Fx_Funcion_SQL_Personalizada_Enc_Pie(Txt_SqlQuery.Text, _Idmaeedo, _Error)
 
                     If String.IsNullOrEmpty(_Error) Then
                         _Campo = "CAMPO"
@@ -536,7 +589,17 @@ Public Class Frm_Formato_Creador_Funciones
                 Else
                     'FACTURAS, ETC
                     If Cmb_Seccion.SelectedValue = "D" Then
-                        _Valor = _Tbl_Maeddo.Rows(0).Item(_Campo)
+
+                        Try
+                            _Valor = _Tbl_Maeddo.Rows(0).Item(_Campo)
+                        Catch ex As Exception
+                            _Valor = "Null"
+                        End Try
+
+                        If _Valor = "Null" Then
+                            _Valor = _Tbl_Maeddo_Picking.Rows(0).Item(_Campo)
+                        End If
+
                     Else
 
                         Dim _Tido As String = _Row_Maeedo.Item("TIDO")
@@ -994,11 +1057,11 @@ Public Class Frm_Formato_Creador_Funciones
     Private Sub Btn_Ver_Documento_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Ver_Documento.Click
 
         If Chk_Cheque.Checked Then
-            Dim Fm_C As New Frm_Pagos_Documentos_Pagados(_Id)
+            Dim Fm_C As New Frm_Pagos_Documentos_Pagados(_Idmaeedo)
             Fm_C.ShowDialog(Me)
             Fm_C.Dispose()
         Else
-            Dim Fm_D As New Frm_Ver_Documento(_Id, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
+            Dim Fm_D As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
             Fm_D.ShowDialog(Me)
             Fm_D.Dispose()
         End If

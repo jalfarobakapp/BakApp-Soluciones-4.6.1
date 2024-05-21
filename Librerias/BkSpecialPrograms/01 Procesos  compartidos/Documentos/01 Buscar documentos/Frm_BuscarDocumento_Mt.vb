@@ -1649,19 +1649,23 @@ Public Class Frm_BuscarDocumento_Mt
                                   "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Else
 
+            If _Fincred_Respuesta.MensajeError.Contains("(500) Error interno del servidor") Then
+                _Fincred_Respuesta.MensajeError += vbCrLf & "Chequee los datos del teléfono del cliente, no puede tener caracteres extraños"
+            End If
+
             MessageBoxEx.Show(Me, "Código de autorización: RECHAZADO" & vbCrLf &
                               "Respuesta FINCRED: " & _Fincred_Respuesta.MensajeError & vbCrLf & vbCrLf &
                               "El documento debera seguir el conducto regular, se quitaran los plazos de vencimineto.",
                               "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
-            Consulta_Sql = "Update MAEEDO Set FE01VEDO = FEEMDO,FEULVEDO = FEEMDO,NUVEDO = 1 Where IDMAEEDO = " & _Idmaeedo
-            _Sql.Ej_consulta_IDU(Consulta_Sql)
+                Consulta_Sql = "Update MAEEDO Set FE01VEDO = FEEMDO,FEULVEDO = FEEMDO,NUVEDO = 1 Where IDMAEEDO = " & _Idmaeedo
+                _Sql.Ej_consulta_IDU(Consulta_Sql)
 
-            Return False
+                Return False
 
-        End If
+            End If
 
-        Return True
+            Return True
 
     End Function
 

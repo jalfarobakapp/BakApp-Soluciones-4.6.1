@@ -94,6 +94,7 @@ Partial Class Frm_ImpresionDoc_Configuracion
         Me.Rdb_TD_Prod_Desc_Reca = New DevComponents.DotNetBar.CheckBoxItem()
         Me.Rdb_PD_Prod_Desc = New DevComponents.DotNetBar.CheckBoxItem()
         Me.Rdb_PR_Prod_Reca = New DevComponents.DotNetBar.CheckBoxItem()
+        Me.Rdb_SP2_Prod = New DevComponents.DotNetBar.CheckBoxItem()
         Me.ComboItem1 = New DevComponents.Editors.ComboItem()
         Me.ComboItem2 = New DevComponents.Editors.ComboItem()
         Me.ComboItem3 = New DevComponents.Editors.ComboItem()
@@ -115,7 +116,7 @@ Partial Class Frm_ImpresionDoc_Configuracion
         Me.ComboItem19 = New DevComponents.Editors.ComboItem()
         Me.ComboItem20 = New DevComponents.Editors.ComboItem()
         Me.ComboItem21 = New DevComponents.Editors.ComboItem()
-        Me.Rdb_SP2_Prod = New DevComponents.DotNetBar.CheckBoxItem()
+        Me.Chk_IncluyePickWms = New DevComponents.DotNetBar.CheckBoxItem()
         Me.RibbonControl1.SuspendLayout()
         Me.RibbonPanel1.SuspendLayout()
         Me.RibbonBar4.SuspendLayout()
@@ -141,7 +142,7 @@ Partial Class Frm_ImpresionDoc_Configuracion
         Me.RibbonControl1.KeyTipsFont = New System.Drawing.Font("Tahoma", 7.0!)
         Me.RibbonControl1.Location = New System.Drawing.Point(5, 1)
         Me.RibbonControl1.Name = "RibbonControl1"
-        Me.RibbonControl1.Size = New System.Drawing.Size(1232, 148)
+        Me.RibbonControl1.Size = New System.Drawing.Size(1311, 159)
         Me.RibbonControl1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.RibbonControl1.SystemText.MaximizeRibbonText = "&Maximize the Ribbon"
         Me.RibbonControl1.SystemText.MinimizeRibbonText = "Mi&nimize the Ribbon"
@@ -177,7 +178,7 @@ Partial Class Frm_ImpresionDoc_Configuracion
         Me.RibbonPanel1.Location = New System.Drawing.Point(0, 53)
         Me.RibbonPanel1.Name = "RibbonPanel1"
         Me.RibbonPanel1.Padding = New System.Windows.Forms.Padding(3, 0, 3, 2)
-        Me.RibbonPanel1.Size = New System.Drawing.Size(1232, 95)
+        Me.RibbonPanel1.Size = New System.Drawing.Size(1311, 106)
         '
         '
         '
@@ -208,9 +209,9 @@ Partial Class Frm_ImpresionDoc_Configuracion
         Me.RibbonBar5.DragDropSupport = True
         Me.RibbonBar5.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ItemContainer4})
         Me.RibbonBar5.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.RibbonBar5.Location = New System.Drawing.Point(1139, 0)
+        Me.RibbonBar5.Location = New System.Drawing.Point(1152, 0)
         Me.RibbonBar5.Name = "RibbonBar5"
-        Me.RibbonBar5.Size = New System.Drawing.Size(62, 93)
+        Me.RibbonBar5.Size = New System.Drawing.Size(62, 104)
         Me.RibbonBar5.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.RibbonBar5.TabIndex = 10
         Me.RibbonBar5.Text = "Hoja"
@@ -265,9 +266,9 @@ Partial Class Frm_ImpresionDoc_Configuracion
         Me.RibbonBar4.DragDropSupport = True
         Me.RibbonBar4.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ItemContainer3})
         Me.RibbonBar4.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.RibbonBar4.Location = New System.Drawing.Point(1071, 0)
+        Me.RibbonBar4.Location = New System.Drawing.Point(1084, 0)
         Me.RibbonBar4.Name = "RibbonBar4"
-        Me.RibbonBar4.Size = New System.Drawing.Size(68, 93)
+        Me.RibbonBar4.Size = New System.Drawing.Size(68, 104)
         Me.RibbonBar4.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.RibbonBar4.TabIndex = 9
         Me.RibbonBar4.Text = "N° Copias"
@@ -339,9 +340,9 @@ Partial Class Frm_ImpresionDoc_Configuracion
         Me.RibbonBar3.DragDropSupport = True
         Me.RibbonBar3.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ItemContainer1})
         Me.RibbonBar3.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.RibbonBar3.Location = New System.Drawing.Point(1022, 0)
+        Me.RibbonBar3.Location = New System.Drawing.Point(1035, 0)
         Me.RibbonBar3.Name = "RibbonBar3"
-        Me.RibbonBar3.Size = New System.Drawing.Size(49, 93)
+        Me.RibbonBar3.Size = New System.Drawing.Size(49, 104)
         Me.RibbonBar3.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.RibbonBar3.TabIndex = 8
         Me.RibbonBar3.Text = "Posicion"
@@ -395,9 +396,9 @@ Partial Class Frm_ImpresionDoc_Configuracion
         Me.RibbonBar8.DragDropSupport = True
         Me.RibbonBar8.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ItemContainer9})
         Me.RibbonBar8.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.RibbonBar8.Location = New System.Drawing.Point(842, 0)
+        Me.RibbonBar8.Location = New System.Drawing.Point(855, 0)
         Me.RibbonBar8.Name = "RibbonBar8"
-        Me.RibbonBar8.Size = New System.Drawing.Size(180, 93)
+        Me.RibbonBar8.Size = New System.Drawing.Size(180, 104)
         Me.RibbonBar8.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.RibbonBar8.TabIndex = 7
         Me.RibbonBar8.Text = "Ubicación Objeto"
@@ -458,9 +459,9 @@ Partial Class Frm_ImpresionDoc_Configuracion
         Me.RibbonBar7.DragDropSupport = True
         Me.RibbonBar7.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ItemContainer8})
         Me.RibbonBar7.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.RibbonBar7.Location = New System.Drawing.Point(662, 0)
+        Me.RibbonBar7.Location = New System.Drawing.Point(675, 0)
         Me.RibbonBar7.Name = "RibbonBar7"
-        Me.RibbonBar7.Size = New System.Drawing.Size(180, 93)
+        Me.RibbonBar7.Size = New System.Drawing.Size(180, 104)
         Me.RibbonBar7.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.RibbonBar7.TabIndex = 6
         Me.RibbonBar7.Text = "Tamaño objeto"
@@ -519,7 +520,7 @@ Partial Class Frm_ImpresionDoc_Configuracion
         Me.RibbonBar6.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         Me.RibbonBar6.Location = New System.Drawing.Point(218, 0)
         Me.RibbonBar6.Name = "RibbonBar6"
-        Me.RibbonBar6.Size = New System.Drawing.Size(444, 93)
+        Me.RibbonBar6.Size = New System.Drawing.Size(457, 104)
         Me.RibbonBar6.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.RibbonBar6.TabIndex = 5
         Me.RibbonBar6.Text = "Margen de detalle"
@@ -616,7 +617,7 @@ Partial Class Frm_ImpresionDoc_Configuracion
         Me.ItemContainer6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.ItemContainer6.LayoutOrientation = DevComponents.DotNetBar.eOrientation.Vertical
         Me.ItemContainer6.Name = "ItemContainer6"
-        Me.ItemContainer6.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Chk_Largo_Variable, Me.Chk_Es_Picking, Me.Chk_Agrupar_CodDescripcion})
+        Me.ItemContainer6.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Chk_Largo_Variable, Me.Chk_Es_Picking, Me.Chk_Agrupar_CodDescripcion, Me.Chk_IncluyePickWms})
         '
         '
         '
@@ -658,7 +659,7 @@ Partial Class Frm_ImpresionDoc_Configuracion
         Me.RibbonBar2.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         Me.RibbonBar2.Location = New System.Drawing.Point(73, 0)
         Me.RibbonBar2.Name = "RibbonBar2"
-        Me.RibbonBar2.Size = New System.Drawing.Size(145, 93)
+        Me.RibbonBar2.Size = New System.Drawing.Size(145, 104)
         Me.RibbonBar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.RibbonBar2.TabIndex = 1
         Me.RibbonBar2.Text = "Acciones"
@@ -716,7 +717,7 @@ Partial Class Frm_ImpresionDoc_Configuracion
         Me.RibbonBar1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         Me.RibbonBar1.Location = New System.Drawing.Point(3, 0)
         Me.RibbonBar1.Name = "RibbonBar1"
-        Me.RibbonBar1.Size = New System.Drawing.Size(70, 93)
+        Me.RibbonBar1.Size = New System.Drawing.Size(70, 104)
         Me.RibbonBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.RibbonBar1.TabIndex = 0
         '
@@ -833,13 +834,13 @@ Partial Class Frm_ImpresionDoc_Configuracion
         Me.tabStrip1.Dock = System.Windows.Forms.DockStyle.Top
         Me.tabStrip1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tabStrip1.ForeColor = System.Drawing.Color.Black
-        Me.tabStrip1.Location = New System.Drawing.Point(5, 149)
+        Me.tabStrip1.Location = New System.Drawing.Point(5, 160)
         Me.tabStrip1.MdiForm = Me
         Me.tabStrip1.MdiTabbedDocuments = True
         Me.tabStrip1.Name = "tabStrip1"
         Me.tabStrip1.SelectedTab = Nothing
         Me.tabStrip1.SelectedTabFont = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tabStrip1.Size = New System.Drawing.Size(1232, 26)
+        Me.tabStrip1.Size = New System.Drawing.Size(1311, 26)
         Me.tabStrip1.Style = DevComponents.DotNetBar.eTabStripStyle.Metro
         Me.tabStrip1.TabAlignment = DevComponents.DotNetBar.eTabStripAlignment.Top
         Me.tabStrip1.TabIndex = 11
@@ -980,6 +981,13 @@ Partial Class Frm_ImpresionDoc_Configuracion
         Me.Rdb_PR_Prod_Reca.Tag = "PR"
         Me.Rdb_PR_Prod_Reca.Text = "PR. Productos y Conceptos de Recargo"
         '
+        'Rdb_SP2_Prod
+        '
+        Me.Rdb_SP2_Prod.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_SP2_Prod.Name = "Rdb_SP2_Prod"
+        Me.Rdb_SP2_Prod.Tag = "SP2"
+        Me.Rdb_SP2_Prod.Text = "SP2. Solo Productos - No incluye Servicios"
+        '
         'ComboItem1
         '
         Me.ComboItem1.Text = "0.5"
@@ -1064,17 +1072,16 @@ Partial Class Frm_ImpresionDoc_Configuracion
         '
         Me.ComboItem21.Text = "20"
         '
-        'Rdb_SP2_Prod
+        'Chk_IncluyePickWms
         '
-        Me.Rdb_SP2_Prod.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_SP2_Prod.Name = "Rdb_SP2_Prod"
-        Me.Rdb_SP2_Prod.Tag = "SP2"
-        Me.Rdb_SP2_Prod.Text = "SP2. Solo Productos - No incluye Servicios"
+        Me.Chk_IncluyePickWms.Name = "Chk_IncluyePickWms"
+        Me.Chk_IncluyePickWms.Text = "Incluye Picking WMS"
+        Me.Chk_IncluyePickWms.Tooltip = "Incluye el detalle de los picking del WMS"
         '
         'Frm_ImpresionDoc_Configuracion
         '
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(1242, 468)
+        Me.ClientSize = New System.Drawing.Size(1321, 466)
         Me.Controls.Add(Me.ContextMenuBar1)
         Me.Controls.Add(Me.tabStrip1)
         Me.Controls.Add(Me.RibbonControl1)
@@ -1189,4 +1196,5 @@ Partial Class Frm_ImpresionDoc_Configuracion
     Public WithEvents Chk_Es_Picking As DevComponents.DotNetBar.CheckBoxItem
     Public WithEvents Chk_Agrupar_CodDescripcion As DevComponents.DotNetBar.CheckBoxItem
     Friend WithEvents Rdb_SP2_Prod As DevComponents.DotNetBar.CheckBoxItem
+    Public WithEvents Chk_IncluyePickWms As DevComponents.DotNetBar.CheckBoxItem
 End Class

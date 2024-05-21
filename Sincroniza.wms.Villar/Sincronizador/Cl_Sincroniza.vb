@@ -130,14 +130,14 @@ Public Class Cl_Sincroniza
 
                 Dim _Mensaje As New LsValiciones.Mensajes
 
-                _Mensaje = _Cl_Stmp.Fx_Revisar_WMSVillar(_Idmaeedoo, _Nudo, Cadena_ConexionSQL_Server_Wms)
+                _Mensaje = _Cl_Stmp.Fx_Revisar_WMSVillar(_Idmaeedoo, "NVV", _Nudo, Cadena_ConexionSQL_Server_Wms)
 
                 If _Mensaje.EsCorrecto Then
 
                     _Mensaje.Detalle += ", Nota de venta #" & _Nudo
                     Sb_AddToLog("Sincronizando notas", _Mensaje.Detalle, Txt_Log)
 
-                    Dim _Tipo_wms As String '= _SqlRandom.Fx_Trae_Dato("MEVENTO", "NOKOCARAC", "ARCHIRVE = 'MAEEDO' And IDRVE = " & _Idmaeedoo & " And KOCARAC = 'ob_type'",, False)
+                    Dim _Tipo_wms As String
 
                     _Tipo_wms = _SqlRandom.Fx_Trae_Dato("[@WMS_GATEWAY_TRANSFERENCIA]", "TIPO_WMS", "IDMAEEDO = " & _Idmaeedoo,, False)
 
@@ -267,7 +267,7 @@ Public Class Cl_Sincroniza
 
         Dim _NombreEquipo As String = "VILLARSERVERCOR"
         Dim _Impresora As String = "Despacho1_B1"
-        Dim _NombreFormato As String = "Lista verificacion WMS"
+        Dim _NombreFormato As String = "Lista verificacion WMS con Picking" '"Lista verificacion WMS"
 
         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion (NombreEquipo,Idmaeedo,Tido,Nudo,Funcionario,Fecha,NombreFormato,Impresora,Impreso)" & vbCrLf &
                        "Values ('" & _NombreEquipo & "'," & _Idmaeedo & ",'" & _Tido & "','" & _Nudo & "','wms',GETDATE(),'" & _NombreFormato & "','" & _Impresora & "'," & Convert.ToInt32(_Impreso) & ")"

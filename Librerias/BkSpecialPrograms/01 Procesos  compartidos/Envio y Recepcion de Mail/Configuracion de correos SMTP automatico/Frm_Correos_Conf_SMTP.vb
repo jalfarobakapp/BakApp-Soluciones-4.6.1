@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Net
 Imports System.Net.Mail
 Imports DevComponents.DotNetBar
 
@@ -83,7 +84,11 @@ Public Class Frm_Correos_Conf_SMTP
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
-        _Mensaje = Fx_Test_envio_correo(Me, Txt_Host_SMTP.Text,
+        _Mensaje = Fx_Test_envio_correo_Mail2(Me, Txt_Host_SMTP.Text,
+                                 Txt_Remitente.Text, Txt_Contrasena.Text, "", "", _Asunto, _Cuerpo,
+                                 Nothing, Txt_Puerto.Text, Chk_SSL.Checked)
+
+        _Mensaje = Fx_Test_envio_correo_Mail3(Me, Txt_Host_SMTP.Text,
                                  Txt_Remitente.Text, Txt_Contrasena.Text, "", "", _Asunto, _Cuerpo,
                                  Nothing, Txt_Puerto.Text, Chk_SSL.Checked)
 
@@ -96,11 +101,43 @@ Public Class Frm_Correos_Conf_SMTP
                                                  "Correo enviado sin problemas, revise su bandeja de entrada" & vbCrLf & vbCrLf &
                                                  "Remitente : " & Txt_Remitente.Text & vbCrLf &
                                                  "Para: " & _Para,
-                                                 csNotificaciones.Notificacion.Imagen.Internet, 5, True, Me)
-
+                                                 csNotificaciones.Notificacion.Imagen.Internet, 3)
     End Sub
 
-    Private Function Fx_Test_envio_correo(Fm As Form,
+    Private Function Fx_Test_envio_correo_Mail2(Fm As Form,
+                                          _Host_SMT As String,
+                                          _Usuario As String,
+                                          _Contrasena As String,
+                                          _Para As String,
+                                          _CC As String,
+                                          _Asunto As String,
+                                          _Cuerpo As String,
+                                          _StrAttach() As String,
+                                          Optional _Puerto As String = "25",
+                                          Optional _EnableSsl As Boolean = True) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        _Asunto = "Mesaje de prueba BakApp"
+        If String.IsNullOrEmpty(Trim(_Cuerpo)) Then _Cuerpo = "Mensaje de correo electrónico enviado para comprobar la configuración de su cuenta. "
+        Dim _Aceptar As Boolean
+
+        If String.IsNullOrEmpty(_Para) Then
+            _Aceptar = InputBox_Bk(Fm, "Ingrese correo de respuesta", "Prueba de envio de correo (SMTP)", _Para,
+                            False, _Tipo_Mayus_Minus.Normal, 0, True, _Tipo_Imagen.Texto, False)
+
+            If Not _Aceptar Then
+                Return _Mensaje
+            End If
+        End If
+
+        _Mensaje.EsCorrecto = Fx_Enviar_Mail2(_Host_SMT, _Usuario, _Contrasena, _Para, _CC, _Asunto, _Cuerpo, _StrAttach, _Puerto, _EnableSsl, True)
+
+        Return _Mensaje
+
+    End Function
+
+    Private Function Fx_Test_envio_correo_Mail3(Fm As Form,
                                           _Host_SMT As String,
                                           _Usuario As String,
                                           _Contrasena As String,
@@ -130,12 +167,6 @@ Public Class Frm_Correos_Conf_SMTP
         _Mensaje = Fx_Enviar_Mail3IMail(_Host_SMT, _Usuario, _Contrasena, _Para, _CC, _Asunto, _Cuerpo, _StrAttach, _Puerto, _EnableSsl)
 
         Return _Mensaje
-
-        'If result.Status = 0 Then
-        '    Return True
-        'Else
-        '    Return False
-        'End If
 
     End Function
 
@@ -384,13 +415,16 @@ Public Class Frm_Correos_Conf_SMTP
             '_Puerto = 465
 
             'Configuracion del servidor
-            Dim Servidor As New System.Net.Mail.SmtpClient
-            Servidor.EnableSsl = _EnableSsl
-            Servidor.Host = _Host_SMT
-            Servidor.Port = _Puerto
-            'Servidor.UseDefaultCredentials = True
-
+            Dim Servidor As New System.Net.Mail.SmtpClient(_Host_SMT)
             Servidor.Credentials = New System.Net.NetworkCredential(_Usuario, _Contrasena)
+            Servidor.EnableSsl = _EnableSsl
+            Servidor.Port = _Puerto
+            'Servidor.Host = _Host_SMT
+
+
+            'Servidor.UseDefaultCredentials = True
+            'ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
+
 
             Servidor.Send(_Correo)
 

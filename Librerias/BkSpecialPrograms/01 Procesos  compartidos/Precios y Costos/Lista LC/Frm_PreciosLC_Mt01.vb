@@ -1053,6 +1053,10 @@ Public Class Frm_PreciosLC_Mt01
 
         Dim _CantFormulas = ((_RowProducto.Item("RLUD") / _RowTabcodalSeleccionado.Item("MULTIPLO")) * 2) - 1
 
+        If _CantFormulas > 9 Then
+            _CantFormulas = 9
+        End If
+
         _Mensaje = Fx_GenerarFXPorMultiplo(_RowTabcodalSeleccionado.Item("MULTIPLO"), _CantFormulas, "pb1", "pp01ud", "pb3", 9999, _Id)
 
         MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)

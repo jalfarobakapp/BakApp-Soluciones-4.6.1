@@ -218,7 +218,7 @@ Module Mod_Imprimir
 
     End Function
 
-    Function Fx_New_Inserta_Funciones_Bk_En_Encabezado(ByVal _Row_Maeedo As DataRow) As DataRow
+    Function Fx_New_Inserta_Funciones_Bk_En_Encabezado(_Row_Maeedo As DataRow) As DataRow
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
@@ -299,7 +299,7 @@ Module Mod_Imprimir
         Dim _Kosu = _Global_Row_Configuracion_Estacion.Item("ESUCURSAL")
         Dim _Kocj = _Global_Row_Configuracion_Estacion.Item("ECAJA")
 
-        _Valor = _Sql.Fx_Trae_Dato("TABCJ", "NOKOCJ", _
+        _Valor = _Sql.Fx_Trae_Dato("TABCJ", "NOKOCJ",
                                    "EMPRESA = '" & _Empresa & "' And KOSU = '" & _Kosu & "' And KOCJ = '" & _Kocj & "'")
 
         _Row_Maeedo.Item("Bk_Caja_Mod_Nombre") = Trim(_Valor)
@@ -312,7 +312,7 @@ Module Mod_Imprimir
         _Empresa = _Global_Row_Configuracion_Estacion.Item("EMPRESA")
         _Kosu = _Global_Row_Configuracion_Estacion.Item("ESUCURSAL")
 
-        _Valor = _Sql.Fx_Trae_Dato("TABSU", "NOKOSU", _
+        _Valor = _Sql.Fx_Trae_Dato("TABSU", "NOKOSU",
                                    "EMPRESA = '" & _Empresa & "' And KOSU = '" & _Kosu & "'")
         _Row_Maeedo.Item("Bk_Sucursal_Mod_Nombre") = Trim(_Valor)
 
@@ -320,7 +320,7 @@ Module Mod_Imprimir
 
     End Function
 
-    Function Fx_New_Inserta_Funciones_Bk_En_Encabezado_Cheque(ByVal _Row_Encabezado As DataRow) As DataRow
+    Function Fx_New_Inserta_Funciones_Bk_En_Encabezado_Cheque(_Row_Encabezado As DataRow) As DataRow
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
@@ -387,12 +387,12 @@ Module Mod_Imprimir
 
     End Function
 
-    Function Fx_New_Trae_Valor_Detalle_Row(ByVal _Campo As String,
-                                      ByVal _Tipo_de_dato As String,
-                                      ByVal _Es_Descuento As Boolean,
-                                      ByVal _RowDetalle As DataRow,
-                                      Optional ByVal _Formato As String = "",
-                                      Optional _Moneda_Str As String = "$")
+    Function Fx_New_Trae_Valor_Detalle_Row(_Campo As String,
+                                           _Tipo_de_dato As String,
+                                           _Es_Descuento As Boolean,
+                                           _RowDetalle As DataRow,
+                                           Optional _Formato As String = "",
+                                           Optional _Moneda_Str As String = "$")
 
         Dim _Valor As String
         Dim _Prct As Boolean
@@ -480,7 +480,7 @@ Module Mod_Imprimir
                                               _Tipo_de_dato As String,
                                               _Es_Descuento As Boolean,
                                               _RowEncabezado As DataRow,
-                                              Optional ByVal _Formato As String = "",
+                                              Optional _Formato As String = "",
                                               Optional _Moneda_Str As String = "$")
 
         Dim _Valor As String = String.Empty
@@ -564,9 +564,9 @@ Module Mod_Imprimir
 
     End Function
 
-    Function Fx_Formato_Numerico_Old(ByVal _Valor As String,
-                                 ByVal _Formato As String,
-                                 ByVal _Es_Descuento As Boolean) As String
+    Function Fx_Formato_Numerico_Old(_Valor As String,
+                                 _Formato As String,
+                                 _Es_Descuento As Boolean) As String
 
         Dim _Cant_Caracteres As Integer = Len(_Formato)
         Dim _Moneda As Boolean

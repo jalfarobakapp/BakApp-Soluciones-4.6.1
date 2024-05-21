@@ -985,6 +985,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Pdc00006", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Pdc00007", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Pdc00008", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Pdc00009", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Rcl00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Rcl00002", _Objeto, _Formulario)
@@ -4351,6 +4352,10 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.PRODUCCION.ToString
             Case "Pdc00008"
                 _DescripcionPermiso = "CAMBIAR HORA DE INICIO DE INGRESO A FABRICACION EN MAQUINA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCCION, 6)
+                _NombreFamiliaPermiso = _Fml.PRODUCCION.ToString
+            Case "Pdc00009"
+                _DescripcionPermiso = "CAMBIAR FECHA DE INGRESO DE FABRICACION EN TARJA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCCION, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCCION.ToString
         End Select

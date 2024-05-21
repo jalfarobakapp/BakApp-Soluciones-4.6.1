@@ -802,6 +802,8 @@ Public Class Frm_Formato_Diseno_Encabezado
             Dim _Largo_Variable As Boolean = FilaEnc.Item("Largo_Variable")
             Dim _Es_Picking As Boolean = FilaEnc.Item("Es_Picking")
             Dim _Agrupar_CodDescripcion As Boolean = FilaEnc.Item("Agrupar_CodDescripcion")
+            Dim _IncluyePickWms As Boolean = FilaEnc.Item("IncluyePickWms")
+
             Dim _Copias As Integer = FilaEnc.Item("Copias")
 
             Dim _Detalle_Doc_Incluye As String = FilaEnc.Item("Detalle_Doc_Incluye")
@@ -862,12 +864,11 @@ Public Class Frm_Formato_Diseno_Encabezado
             _FormPadre.Chk_Largo_Variable.Checked = _Largo_Variable
             _FormPadre.Chk_Es_Picking.Checked = _Es_Picking
             _FormPadre.Chk_Agrupar_CodDescripcion.Checked = _Agrupar_CodDescripcion
-
+            CType(_FormPadre, Frm_ImpresionDoc_Configuracion).Chk_IncluyePickWms.Checked = _IncluyePickWms
 
             _FormPadre.Input_Max_Lienas.Enabled = _Largo_Variable
             _FormPadre.Input_Max_Lienas.value = _NroLineaXPag
             _FormPadre.Input_Copias.value = _Copias
-
 
             AddHandler CType(_FormPadre.Sld_detalle_Inicio, SliderItem).ValueChanged, AddressOf Control_Inicio_Detalle
             AddHandler CType(_FormPadre.Sld_detalle_Fin, SliderItem).ValueChanged, AddressOf Control_Fin_Detalle
@@ -1109,6 +1110,7 @@ Public Class Frm_Formato_Diseno_Encabezado
         Dim _Largo_Variable As Integer = CInt(CType(_FormPadre, Frm_ImpresionDoc_Configuracion).Chk_Largo_Variable.Checked) * -1
         Dim _Es_Picking As Integer = CInt(CType(_FormPadre, Frm_ImpresionDoc_Configuracion).Chk_Es_Picking.Checked) * -1
         Dim _Agrupar_CodDescripcion As Integer = CInt(CType(_FormPadre, Frm_ImpresionDoc_Configuracion).Chk_Agrupar_CodDescripcion.Checked) * -1
+        Dim _IncluyePickWms As Integer = Convert.ToInt32(CType(_FormPadre, Frm_ImpresionDoc_Configuracion).Chk_IncluyePickWms.Checked)
 
         _NroLineaXPag = _FormPadre.Input_Max_Lienas.value
         _Copias = _FormPadre.Input_Copias.value
@@ -1139,6 +1141,7 @@ Public Class Frm_Formato_Diseno_Encabezado
                        ",Es_Picking = " & _Es_Picking & vbCrLf &
                        ",Agrupar_CodDescripcion = " & _Agrupar_CodDescripcion & vbCrLf &
                        ",Detalle_Doc_Incluye = '" & _Detalle_Doc_Incluye & "'" & vbCrLf &
+                       ",IncluyePickWms = '" & _IncluyePickWms & "'" & vbCrLf &
                        "Where TipoDoc = '" & _TipoDoc & "' And NombreFormato = '" & _NombreFormato & "' And Subtido = '" & _Subtido & "'" & vbCrLf & vbCrLf &
                        "Delete " & _Global_BaseBk & "Zw_Format_02" & vbCrLf &
                        "Where TipoDoc = '" & _TipoDoc & "' And NombreFormato = '" & _NombreFormato & "' And Subtido = '" & _Subtido & "'" & vbCrLf & vbCrLf &
