@@ -47,7 +47,7 @@ Public Class Cl_Sincroniza
             Dim _Idmaeedoo As Integer = _Fila.Item("Idmaeedo")
             Dim _Nudo As String = _Fila.Item("Nudo")
 
-            Consulta_sql = "Select Top 1 * From history_master Where (oid = '" & _Nudo & "') AND (trans_act_mod = 'CANCEL') AND (trans_obj = 'OBORD')"
+            Consulta_sql = "Select Top 1 * From history_master Where (oid = '" & _Nudo & "') AND (trans_obj = 'OBORD') Order by trans_seq_num Desc "
             Dim _RowEliminada As DataRow = _SqlWms.Fx_Get_DataRow(Consulta_sql)
 
             If Not IsNothing(_RowEliminada) Then
