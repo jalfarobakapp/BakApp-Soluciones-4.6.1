@@ -973,6 +973,12 @@ Buscar:
         Txt_Placapat.Text = String.Empty
     End Sub
 
+    Private Sub Txt_Ocdo_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Ocdo.KeyDown
+        If e.KeyValue = Keys.Enter Then
+            Sb_Buscar_documentos()
+        End If
+    End Sub
+
     Private Sub Frm_BusquedaDocumento_Filtro_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()

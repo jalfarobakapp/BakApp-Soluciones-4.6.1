@@ -35,7 +35,6 @@ Public Class Frm_MtCreacionDeProducto
 
     Public Property GrabarEnOtraBase As Boolean
 
-
     Public ReadOnly Property Pro_Grabar() As Boolean
         Get
             Return _Grabar
@@ -411,28 +410,6 @@ Public Class Frm_MtCreacionDeProducto
         Lbl_Nokoprmap.Visible = _Existe
         Txt_Nokopramp.Visible = Lbl_Nokoprmap.Visible
 
-        '_Existe = _Sql.Fx_Exite_Campo("MAEPR", "CAMBIOSUJ")
-
-        'Chk_Cambiosuj.Visible = True
-
-        'Chk_Cambiosuj.Visible = _Existe
-        'LabelX28.Visible = Chk_Cambiosuj.Visible
-
-        '_Existe = _Sql.Fx_Exite_Campo("MAEPROBS", "LARGO")
-
-        'Lbl_Largo.Visible = _Existe
-        'Txt_Largo.Visible = Lbl_Largo.Visible
-
-        '_Existe = _Sql.Fx_Exite_Campo("MAEPROBS", "ALTO")
-
-        'Lbl_Alto.Visible = _Existe
-        'Txt_Alto.Visible = Lbl_Alto.Visible
-
-        '_Existe = _Sql.Fx_Exite_Campo("MAEPROBS", "ANCHO")
-
-        'Lbl_Ancho.Visible = _Existe
-        'Txt_Ancho.Visible = Lbl_Ancho.Visible
-
         Cmb_Nmarca_Comportamiento.Enabled = (Txt_Ud01pr.Text <> Txt_Ud02pr.Text)
         Cmb_Nmarca_Tratamiento.Enabled = (Txt_Ud01pr.Text <> Txt_Ud02pr.Text)
 
@@ -693,6 +670,15 @@ Public Class Frm_MtCreacionDeProducto
         _RowProducto.Item("CAMBIOSUJ") = Chk_Cambiosuj.Checked
 
         With _Cl_Producto
+
+            With .Zw_Producto
+
+                .Codigo = Txt_Kopr.Text
+                .Descripcion = Txt_Nokopr.Text.Trim
+                .ExluyeTipoVenta = Chk_ExluyeTipoVenta.Checked
+
+            End With
+
 
             .Pro_Maeprobs.Rows(0).Item("MENSAJE01") = Txt_Mensaje01.Text
             .Pro_Maeprobs.Rows(0).Item("MENSAJE02") = Txt_Mensaje02.Text
@@ -1819,7 +1805,7 @@ Sigue_Loop_01:
         Txt_Koprra.Text = _RowProducto.Item("KOPRRA")
 
         Txt_Nokopr.Text = NuloPorNro(_RowProducto.Item("NOKOPR"), "")
-        Txt_Nokoprra.Text = NuloPorNro(_RowProducto.Item("NOKOPRRA"), "") 'Mid(_RowProducto.Item("NOKOPR"), 1, 20)
+        Txt_Nokoprra.Text = NuloPorNro(_RowProducto.Item("NOKOPRRA"), "")
 
         Cmb_Tipr.SelectedValue = _RowProducto.Item("TIPR")
         Txt_Ud01pr.Text = NuloPorNro(_RowProducto.Item("UD01PR"), "UN")
@@ -1965,7 +1951,6 @@ Sigue_Loop_01:
         Sb_Actualizar_Grilla(GrillaBodegas)
         Sb_Actualizar_Grilla(GrillaListaDePrecios)
 
-
         With GrillaImpuestos
 
             Dim _DisplayIndex = 0
@@ -2031,6 +2016,10 @@ Sigue_Loop_01:
             _DisplayIndex += 1
 
         End With
+
+        _Cl_Producto.Fx_Llenar_Zw_Producto(_RowProducto.Item("KOPR"))
+
+        Chk_ExluyeTipoVenta.Checked = _Cl_Producto.Zw_Producto.ExluyeTipoVenta
 
     End Sub
 

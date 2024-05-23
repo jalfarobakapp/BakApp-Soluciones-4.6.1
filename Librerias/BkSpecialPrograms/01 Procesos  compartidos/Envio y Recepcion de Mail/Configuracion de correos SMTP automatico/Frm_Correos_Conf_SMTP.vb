@@ -84,9 +84,9 @@ Public Class Frm_Correos_Conf_SMTP
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
-        _Mensaje = Fx_Test_envio_correo_Mail2(Me, Txt_Host_SMTP.Text,
-                                 Txt_Remitente.Text, Txt_Contrasena.Text, "", "", _Asunto, _Cuerpo,
-                                 Nothing, Txt_Puerto.Text, Chk_SSL.Checked)
+        '_Mensaje = Fx_Test_envio_correo_Mail2(Me, Txt_Host_SMTP.Text,
+        '                         Txt_Remitente.Text, Txt_Contrasena.Text, "", "", _Asunto, _Cuerpo,
+        '                         Nothing, Txt_Puerto.Text, Chk_SSL.Checked)
 
         _Mensaje = Fx_Test_envio_correo_Mail3(Me, Txt_Host_SMTP.Text,
                                  Txt_Remitente.Text, Txt_Contrasena.Text, "", "", _Asunto, _Cuerpo,

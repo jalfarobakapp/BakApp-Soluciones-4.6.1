@@ -240,6 +240,7 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Prod_CodQR", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Prod_CodQRLogDoc", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Prod_ImpAdicional", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Productos", _Modificar, Lbl_Eventos)
 
             'SISTEMA DE PUNTOS POR VENTAS
             .Sb_Revisar_Tabla2(Me, "Zw_PtsVta_Configuracion", _Modificar, Lbl_Eventos)

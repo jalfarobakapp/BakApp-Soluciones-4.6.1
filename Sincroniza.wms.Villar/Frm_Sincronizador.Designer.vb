@@ -38,6 +38,8 @@ Partial Class Frm_Sincronizador
         Me.Switch_Sincronizacion = New DevComponents.DotNetBar.Controls.SwitchButton()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Timer_Limpiar = New System.Windows.Forms.Timer(Me.components)
+        Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
+        Me.Cmb_Cantidad_Dias_Ultima_Venta = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dtp_FechaRevision, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -60,7 +62,7 @@ Partial Class Frm_Sincronizador
         Me.Txt_Log.Name = "Txt_Log"
         Me.Txt_Log.PreventEnterBeep = True
         Me.Txt_Log.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.Txt_Log.Size = New System.Drawing.Size(681, 352)
+        Me.Txt_Log.Size = New System.Drawing.Size(681, 350)
         Me.Txt_Log.TabIndex = 75
         '
         'CircularPgrs
@@ -87,7 +89,7 @@ Partial Class Frm_Sincronizador
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Limpiar, Me.Btn_Conexion})
-        Me.Bar1.Location = New System.Drawing.Point(0, 399)
+        Me.Bar1.Location = New System.Drawing.Point(0, 421)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(705, 41)
         Me.Bar1.Stretch = True
@@ -129,7 +131,7 @@ Partial Class Frm_Sincronizador
         Me.Metro_Bar_Color.ForeColor = System.Drawing.Color.Black
         Me.Metro_Bar_Color.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Estatus})
         Me.Metro_Bar_Color.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 440)
+        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 462)
         Me.Metro_Bar_Color.Name = "Metro_Bar_Color"
         Me.Metro_Bar_Color.Size = New System.Drawing.Size(705, 22)
         Me.Metro_Bar_Color.TabIndex = 78
@@ -156,7 +158,7 @@ Partial Class Frm_Sincronizador
         Me.Dtp_FechaRevision.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
         Me.Dtp_FechaRevision.ButtonDropDown.Visible = True
         Me.Dtp_FechaRevision.IsPopupCalendarOpen = False
-        Me.Dtp_FechaRevision.Location = New System.Drawing.Point(113, 371)
+        Me.Dtp_FechaRevision.Location = New System.Drawing.Point(113, 372)
         '
         '
         '
@@ -203,7 +205,7 @@ Partial Class Frm_Sincronizador
         '
         '
         Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX1.Location = New System.Drawing.Point(12, 370)
+        Me.LabelX1.Location = New System.Drawing.Point(12, 371)
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.Size = New System.Drawing.Size(95, 23)
         Me.LabelX1.TabIndex = 80
@@ -250,7 +252,7 @@ Partial Class Frm_Sincronizador
         '
         '
         Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX2.Location = New System.Drawing.Point(220, 370)
+        Me.LabelX2.Location = New System.Drawing.Point(220, 372)
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(83, 23)
         Me.LabelX2.TabIndex = 173
@@ -260,11 +262,39 @@ Partial Class Frm_Sincronizador
         '
         Me.Timer_Limpiar.Interval = 2000
         '
+        'LabelX3
+        '
+        Me.LabelX3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        '
+        '
+        '
+        Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX3.Location = New System.Drawing.Point(12, 392)
+        Me.LabelX3.Name = "LabelX3"
+        Me.LabelX3.Size = New System.Drawing.Size(95, 23)
+        Me.LabelX3.TabIndex = 174
+        Me.LabelX3.Text = "Fecha de revisión"
+        '
+        'Cmb_Cantidad_Dias_Ultima_Venta
+        '
+        Me.Cmb_Cantidad_Dias_Ultima_Venta.DisplayMember = "Text"
+        Me.Cmb_Cantidad_Dias_Ultima_Venta.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.Cmb_Cantidad_Dias_Ultima_Venta.ForeColor = System.Drawing.Color.Black
+        Me.Cmb_Cantidad_Dias_Ultima_Venta.FormattingEnabled = True
+        Me.Cmb_Cantidad_Dias_Ultima_Venta.ItemHeight = 16
+        Me.Cmb_Cantidad_Dias_Ultima_Venta.Location = New System.Drawing.Point(113, 400)
+        Me.Cmb_Cantidad_Dias_Ultima_Venta.Name = "Cmb_Cantidad_Dias_Ultima_Venta"
+        Me.Cmb_Cantidad_Dias_Ultima_Venta.Size = New System.Drawing.Size(137, 22)
+        Me.Cmb_Cantidad_Dias_Ultima_Venta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Cmb_Cantidad_Dias_Ultima_Venta.TabIndex = 175
+        '
         'Frm_Sincronizador
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(705, 462)
+        Me.ClientSize = New System.Drawing.Size(705, 484)
+        Me.Controls.Add(Me.Cmb_Cantidad_Dias_Ultima_Venta)
+        Me.Controls.Add(Me.LabelX3)
         Me.Controls.Add(Me.Switch_Sincronizacion)
         Me.Controls.Add(Me.Chk_AmbienteDePruebas)
         Me.Controls.Add(Me.LabelX1)
@@ -303,4 +333,6 @@ Partial Class Frm_Sincronizador
     Friend WithEvents Switch_Sincronizacion As DevComponents.DotNetBar.Controls.SwitchButton
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Timer_Limpiar As Timer
+    Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Cmb_Cantidad_Dias_Ultima_Venta As DevComponents.DotNetBar.Controls.ComboBoxEx
 End Class

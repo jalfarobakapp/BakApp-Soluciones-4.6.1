@@ -59,6 +59,7 @@ Partial Class Frm_ImpresionDoc_Configuracion
         Me.Chk_Largo_Variable = New DevComponents.DotNetBar.CheckBoxItem()
         Me.Chk_Es_Picking = New DevComponents.DotNetBar.CheckBoxItem()
         Me.Chk_Agrupar_CodDescripcion = New DevComponents.DotNetBar.CheckBoxItem()
+        Me.Chk_IncluyePickWms = New DevComponents.DotNetBar.CheckBoxItem()
         Me.RibbonBar2 = New DevComponents.DotNetBar.RibbonBar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Copiar_Formato = New DevComponents.DotNetBar.ButtonItem()
@@ -116,7 +117,6 @@ Partial Class Frm_ImpresionDoc_Configuracion
         Me.ComboItem19 = New DevComponents.Editors.ComboItem()
         Me.ComboItem20 = New DevComponents.Editors.ComboItem()
         Me.ComboItem21 = New DevComponents.Editors.ComboItem()
-        Me.Chk_IncluyePickWms = New DevComponents.DotNetBar.CheckBoxItem()
         Me.RibbonControl1.SuspendLayout()
         Me.RibbonPanel1.SuspendLayout()
         Me.RibbonBar4.SuspendLayout()
@@ -289,7 +289,7 @@ Partial Class Frm_ImpresionDoc_Configuracion
         Me.Input_Copias.BackgroundStyle.Class = "DateTimeInputBackground"
         Me.Input_Copias.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Copias.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
-        Me.Input_Copias.Location = New System.Drawing.Point(4, 17)
+        Me.Input_Copias.Location = New System.Drawing.Point(4, 18)
         Me.Input_Copias.MaxValue = 10
         Me.Input_Copias.MinValue = 1
         Me.Input_Copias.Name = "Input_Copias"
@@ -640,6 +640,12 @@ Partial Class Frm_ImpresionDoc_Configuracion
         Me.Chk_Agrupar_CodDescripcion.Name = "Chk_Agrupar_CodDescripcion"
         Me.Chk_Agrupar_CodDescripcion.Text = "Agrupar productos"
         Me.Chk_Agrupar_CodDescripcion.Tooltip = "Agrupar productos por código, descripción y precios"
+        '
+        'Chk_IncluyePickWms
+        '
+        Me.Chk_IncluyePickWms.Name = "Chk_IncluyePickWms"
+        Me.Chk_IncluyePickWms.Text = "Incluye Picking WMS"
+        Me.Chk_IncluyePickWms.Tooltip = "Incluye el detalle de los picking del WMS"
         '
         'RibbonBar2
         '
@@ -1072,16 +1078,10 @@ Partial Class Frm_ImpresionDoc_Configuracion
         '
         Me.ComboItem21.Text = "20"
         '
-        'Chk_IncluyePickWms
-        '
-        Me.Chk_IncluyePickWms.Name = "Chk_IncluyePickWms"
-        Me.Chk_IncluyePickWms.Text = "Incluye Picking WMS"
-        Me.Chk_IncluyePickWms.Tooltip = "Incluye el detalle de los picking del WMS"
-        '
         'Frm_ImpresionDoc_Configuracion
         '
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(1321, 466)
+        Me.ClientSize = New System.Drawing.Size(1321, 464)
         Me.Controls.Add(Me.ContextMenuBar1)
         Me.Controls.Add(Me.tabStrip1)
         Me.Controls.Add(Me.RibbonControl1)

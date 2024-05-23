@@ -4176,15 +4176,23 @@ Public Class Frm_Formulario_Documento
             _Mensaje = Fx_RevisarTipoVenta(_Clalibpr)
 
             If Not _Mensaje.EsCorrecto Then
-                MessageBoxEx.Show(Me, _Codigo.ToString.Trim & " - " & _Descripcion.ToString.Trim & vbCrLf & vbCrLf &
+
+                Dim _ExluyeTipoVenta As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Productos", "ExluyeTipoVenta", "Codigo = '" & _Codigo & "'",, False,, True)
+
+                If Not _ExluyeTipoVenta Then
+
+                    MessageBoxEx.Show(Me, _Codigo.ToString.Trim & " - " & _Descripcion.ToString.Trim & vbCrLf & vbCrLf &
                                   _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
-                _Fila.Cells("Codigo").Value = String.Empty
-                Return
+                    _Fila.Cells("Codigo").Value = String.Empty
+                    Return
+
+                End If
+
             End If
 
-        End If
+            End If
 
-        For Each _Fl As DataGridViewRow In Grilla_Detalle.Rows
+            For Each _Fl As DataGridViewRow In Grilla_Detalle.Rows
 
             Dim _Codigo2 = _Fl.Cells("Codigo").Value
             Dim _Sucursal2 = _Fl.Cells("Sucursal").Value
