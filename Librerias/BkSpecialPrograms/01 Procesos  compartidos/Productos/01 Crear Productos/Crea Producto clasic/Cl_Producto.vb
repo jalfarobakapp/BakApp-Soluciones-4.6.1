@@ -1,7 +1,4 @@
-﻿
-Imports BkSpecialPrograms.Bk_Comporamiento_UdMedidas
-
-Public Class Cl_Producto
+﻿Public Class Cl_Producto
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
@@ -23,6 +20,8 @@ Public Class Cl_Producto
     Dim _Tbl_Impuestos As DataTable
 
     Public Property Ficha As String
+
+    Public Property Zw_Producto As New Zw_Productos
 
 #Region "VARIABLES"
 
@@ -681,6 +680,10 @@ Drop Table #Paso_Tabim"
 
         _RowProducto = _Tbl_Maepr.Rows(0)
 
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        _Mensaje = Fx_Llenar_Zw_Producto(_Codigo)
+
     End Sub
 
     Function Fx_Crear_Nuevo_Producto()
@@ -706,7 +709,6 @@ Drop Table #Paso_Tabim"
                          "INSERT INTO MAEFICHD (KOPR,FICHA) Values ('" & _kopr & "','" & _Ficha & "')" & vbCrLf
 
             'INGRESO DE PRODUCTOS POR EMPRESA
-
 
             For Each _Fila As DataRow In _Tbl_Empresas.Rows
 
@@ -811,6 +813,13 @@ Drop Table #Paso_Tabim"
 
             _SqlQuery += "INSERT INTO MAEPROBS (KOPR,EMPRESA,MENSAJE01,MENSAJE02,MENSAJE03) VALUES ('" & _kopr &
                          "','','" & _Mensaje01 & "','" & _Mensaje02 & "','" & _Mensaje03 & "')" & vbCrLf & vbCrLf
+
+            With Zw_Producto
+
+                _SqlQuery += "Insert Into " & _Global_BaseBk & "Zw_Productos (Codigo,Descripcion,ExluyeTipoVenta) Values " &
+                             "('" & .Codigo & "','" & .Descripcion & "','" & Convert.ToInt32(.ExluyeTipoVenta) & "')"
+
+            End With
 
             _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery)
 
@@ -1030,9 +1039,15 @@ Drop Table #Paso_Tabim"
                 _SqlQuery += "Update MAEPR Set NOKOPRAMP = '" & _RowProducto.Item("NOKOPRAMP").ToString.Trim & "' Where KOPR = '" & _kopr & "'" & vbCrLf
             End If
 
-            'Dim _Fecrpr As Date = _Sql.Fx_Trae_Dato("MAEPR", "FECRPR", "KOPR = '" & _kopr & "'")
-            'Dim _FecrprStr = Format(_Fecrpr, "yyyyMMdd")
-            '_SqlQuery += "Update MAEPR Set FECRPR = '" & _FecrprStr & "' Where KOPR = '" & _kopr & "'" & vbCrLf
+
+            With Zw_Producto
+
+                _SqlQuery += vbCrLf & "Update " & _Global_BaseBk & "Zw_Productos Set " & vbCrLf &
+                             "Descripcion = '" & .Descripcion & "'" &
+                             ",ExluyeTipoVenta = " & Convert.ToInt32(.ExluyeTipoVenta) & vbCrLf &
+                             "Where Codigo = '" & .Codigo & "'"
+
+            End With
 
             _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery)
 
@@ -1188,7 +1203,6 @@ Drop Table #Paso_Tabim"
         Return _SqlQuery
 
     End Function
-
 
     Sub Sb_Cargar_Variables(ByRef _SqlQuery As String)
 
@@ -1435,6 +1449,51 @@ Drop Table #Paso_Tabim"
 
     End Sub
 
+    Function Fx_Llenar_Zw_Producto(_Codigo As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje_Stem As New LsValiciones.Mensajes
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Productos Where Codigo = '" & _Codigo & "'"
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_Row) Then
+
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Productos (Codigo,Descripcion)" & vbCrLf &
+                           "Select KOPR,NOKOPR From MAEPR Where KOPR = '" & _Codigo & "'"
+            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+
+                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Productos Where Codigo = '" & _Codigo & "'"
+                _Row = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            End If
+
+        End If
+
+        If IsNothing(_Row) Then
+
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Productos () Select KOPR,NOKOPR From MAEPR Where KOPR = '" & _Codigo & "'"
+
+            _Mensaje_Stem.EsCorrecto = False
+            _Mensaje_Stem.Mensaje = "No se encontro el registro en la tabla Zw_Productos con el Código " & _Codigo
+
+            Return _Mensaje_Stem
+
+        End If
+
+        With Zw_Producto
+
+            .Codigo = _Row.Item("Codigo")
+            .Descripcion = _Row.Item("Descripcion")
+            .ExluyeTipoVenta = _Row.Item("ExluyeTipoVenta")
+
+        End With
+
+        _Mensaje_Stem.EsCorrecto = True
+        _Mensaje_Stem.Mensaje = "Registro encontrado."
+
+        Return _Mensaje_Stem
+
+    End Function
 
 End Class
 

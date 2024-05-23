@@ -16,7 +16,7 @@ Public Class Frm_Stmp_Listado
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Both, True, True, False)
+        Sb_Formato_Generico_Grilla(Grilla, 22, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Both, True, True, False)
 
         Sb_Color_Botones_Barra(Bar2)
 
@@ -67,7 +67,8 @@ Public Class Frm_Stmp_Listado
 
         Select Case _Tbas.Name
             Case "Tab_Pendientes"
-                _Condicion += vbCrLf & "And Estado In ('PREPA','COMPL') And Planificada = 1"
+                ''_Condicion += vbCrLf & "And (Estado In ('PREPA','COMPL') And Planificada = 1) Or (Estado = 'CANCE' And CONVERT(varchar, FechaEntrega, 112) = '" & Format(Now.Date, "yyyyMMdd") & "')"
+                _Condicion += vbCrLf & "And (Estado In ('PREPA','COMPL') And Planificada = 1)"
                 _DocEmitir = True
                 _FechaPickeado = True
                 _HoraPickeado = True
@@ -94,7 +95,7 @@ Public Class Frm_Stmp_Listado
                 _TidoGen = True
                 _NudoGen = True
             Case "Tab_Cerradas"
-                _Condicion += vbCrLf & "And Estado = 'CERRA'"
+                _Condicion += vbCrLf & "And Estado = 'CERRA' And CONVERT(varchar, FechaCierre, 112) = '" & Format(Now.Date, "yyyyMMdd") & "'"
             Case "Tab_Nulas"
                 _Condicion += vbCrLf & "And Estado = 'NULO'"
         End Select
@@ -136,21 +137,22 @@ Public Class Frm_Stmp_Listado
 
             Dim _DisplayIndex = 0
 
-            .Columns("BtnImagen_Estado").Width = 50
+            .Columns("BtnImagen_Estado").Width = 30
             .Columns("BtnImagen_Estado").HeaderText = "Est."
             .Columns("BtnImagen_Estado").Visible = _MostrarImagenes
             .Columns("BtnImagen_Estado").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Facturar").Visible = True '(_Tbas.Name = "Tab_Completadas")
-            .Columns("Facturar").HeaderText = "Facturar"
-            .Columns("Facturar").Width = 60
+            .Columns("Facturar").HeaderText = "Fac."
+            .Columns("Facturar").ToolTipText = "Facturar al completar"
+            .Columns("Facturar").Width = 30
             .Columns("Facturar").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Numero").Visible = True
             .Columns("Numero").HeaderText = "#Ticket"
-            .Columns("Numero").Width = 80
+            .Columns("Numero").Width = 70
             .Columns("Numero").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -162,7 +164,7 @@ Public Class Frm_Stmp_Listado
 
             .Columns("Nudo").Visible = True
             .Columns("Nudo").HeaderText = "Número"
-            .Columns("Nudo").Width = 80
+            .Columns("Nudo").Width = 70
             .Columns("Nudo").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -211,9 +213,10 @@ Public Class Frm_Stmp_Listado
             _DisplayIndex += 1
 
             .Columns("DocEmitir").Visible = _DocEmitir
-            .Columns("DocEmitir").HeaderText = "Doc.Emitir"
+            .Columns("DocEmitir").HeaderText = "D.E."
+            .Columns("DocEmitir").ToolTipText = "Documento a emitir posteriormente (sugerido)"
             '.Columns("NOKOEN").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("DocEmitir").Width = 70
+            .Columns("DocEmitir").Width = 30
             .Columns("DocEmitir").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -285,10 +288,12 @@ Public Class Frm_Stmp_Listado
 
         End With
 
+        Lbl_Estatus.Text = "Registros: " & _Tbl_Tickets_Stem.Rows.Count
+        Me.Refresh()
+
         If Not _MostrarImagenes Then
             Return
         End If
-
 
         Sb_MarcarPendientes()
 
@@ -1212,26 +1217,18 @@ Public Class Frm_Stmp_Listado
                 _Imagenes_List = Imagenes_16x16
             End If
 
-            _Icono = Nothing '_Imagenes_List.Images.Item("cancel.png")
+            _Icono = Nothing
 
             If _Estado = "COMPL" Then
                 _Icono = _Imagenes_List.Images.Item("ok.png")
             End If
 
-            If _Estado = "NULO" Then
+            If _Estado = "NULO" Or _Estado = "CANCE" Then
                 _Icono = _Imagenes_List.Images.Item("cancel.png")
-                'Else
+            End If
 
-                '    _Icono = _Imagenes_List.Images.Item(_Nombre_Image)
-
-                '    If Global_Thema = Enum_Themas.Oscuro Then
-                '        _Fila.DefaultCellStyle.ForeColor = Amarillo
-                '    Else
-                '        _Fila.DefaultCellStyle.BackColor = Color.LightYellow
-                '    End If
-
-                '    _Icono = _Imagenes_List.Images.Item("menu-more.png")
-
+            If _Estado = "PREPA" Or _Estado = "PREPA" Then
+                _Icono = _Imagenes_List.Images.Item("symbol-delete.png")
             End If
 
             _Fila.Cells("BtnImagen_Estado").Value = _Icono

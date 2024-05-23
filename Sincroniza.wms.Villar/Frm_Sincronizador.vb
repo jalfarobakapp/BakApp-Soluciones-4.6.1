@@ -34,6 +34,13 @@ Public Class Frm_Sincronizador
 
         Timer_Limpiar.Interval = (1000 * 60) * 5
 
+        Dim _Arr_Filtro(,) As String = {{"1", "Hoy"},
+                                        {"3", "3 días:"},
+                                        {"7", "7 días"},
+                                        {"31", "1 Mes"}}
+        Sb_Llenar_Combos(_Arr_Filtro, Cmb_Cantidad_Dias_Ultima_Venta)
+        Cmb_Cantidad_Dias_Ultima_Venta.SelectedValue = "7"
+
         Sb_Ejecutar_diablito()
 
     End Sub
@@ -98,9 +105,14 @@ Public Class Frm_Sincronizador
 
         _FechaRevision = Dtp_FechaRevision.Value
 
-        _Cl_Sincroniza.Sb_Ejecutar_Revision_IncorporarNVVAutomaticamenteAStem(Txt_Log, _FechaRevision)
+        Dim _Dias As Integer = Cmb_Cantidad_Dias_Ultima_Venta.SelectedValue * -1
+        Dim _FechaHasta As Date = _FechaRevision
+        Dim _FechaDesde As Date = DateAdd(DateInterval.Day, _Dias, _FechaRevision)
+
+        _Cl_Sincroniza.Sb_Ejecutar_Revision_IncorporarNVVAutomaticamenteAStem(Txt_Log, _FechaDesde, _FechaHasta)
         _Cl_Sincroniza.Sb_Ejecutar_Revision(Txt_Log, _FechaRevision)
         _Cl_Sincroniza.Sb_MarcarFacturadasPorFuera(Txt_Log, _FechaRevision)
+        _Cl_Sincroniza.Sb_RevisarCanceladasLiberadas(Txt_Log, _FechaRevision)
 
         Switch_Sincronizacion.Value = True
         CircularPgrs.IsRunning = True
