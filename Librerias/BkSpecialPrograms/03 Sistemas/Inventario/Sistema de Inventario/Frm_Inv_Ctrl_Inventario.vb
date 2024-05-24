@@ -25,7 +25,7 @@
         Me._Id_Inventario = _Id_Inventario
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Inv_Inventario Inv" & vbCrLf &
-                       "Where Id_Inventario = " & _Id_Inventario
+                       "Where Id = " & _Id_Inventario
         _Row_Inventario = _Sql.Fx_Get_DataRow(Consulta_sql)
 
     End Sub

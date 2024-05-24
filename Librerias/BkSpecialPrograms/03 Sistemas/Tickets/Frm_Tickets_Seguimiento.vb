@@ -1,6 +1,4 @@
-﻿Imports BkSpecialPrograms.Frm_Tickets_Lista
-Imports BkSpecialPrograms.Frm_Ver_Documento
-Imports DevComponents.DotNetBar
+﻿Imports DevComponents.DotNetBar
 
 Public Class Frm_Tickets_Seguimiento
 
@@ -20,7 +18,7 @@ Public Class Frm_Tickets_Seguimiento
     Public Property CorrerALaDerecha As Boolean
     Public Property TicketSucesor As Boolean
     Public Property TicketAntecesor As Boolean
-
+    Public Property GestionRealizada As Boolean
     Public Property vTop As Integer
     Public Property vLeft As Integer
 
@@ -47,6 +45,10 @@ Public Class Frm_Tickets_Seguimiento
         Sb_Formato_Generico_Grilla(Grilla, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
 
         Sb_Color_Botones_Barra(Bar2)
+
+        If _Cl_Tickets.Zw_Stk_Tickets.CodFuncionario_Crea = FUNCIONARIO Then
+            Mis_Ticket = True
+        End If
 
     End Sub
 
@@ -424,6 +426,123 @@ Public Class Frm_Tickets_Seguimiento
 
     End Sub
 
+    Function Fx_Agregar_Mensaje_Respuesta(_RechazarTicket As Boolean) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            Dim _Grabar As Boolean
+            Dim _Descripcion As String
+
+            Dim _Cl_Tickets2 As New Cl_Tickets
+            '_Cl_Tickets.Sb_Llenar_Ticket(_Id_Ticket)
+
+            Dim _Zw_Stk_Tickets_Acciones As New Zw_Stk_Tickets_Acciones
+
+            With _Zw_Stk_Tickets_Acciones
+
+                .Id_Ticket = _Id_Ticket
+
+                If Mis_Ticket Then
+                    .CodFuncionario = FUNCIONARIO
+                    .Accion = "MENS"
+                Else
+                    .CodAgente = FUNCIONARIO
+                    .Accion = "RESP"
+                End If
+
+                If _RechazarTicket Then
+                    .Accion = "RECH"
+                End If
+
+                .CodFunGestiona = FUNCIONARIO
+                .Descripcion = ""
+
+            End With
+
+            Dim _Mensaje_Tk As New LsValiciones.Mensajes
+
+            _Mensaje_Tk = _Cl_Tickets2.Fx_Grabar_Nueva_Accion2(_Zw_Stk_Tickets_Acciones)
+
+            If Not _Mensaje_Tk.EsCorrecto Then
+                _Mensaje.Detalle = "Error al grabar"
+                Throw New System.Exception(_Mensaje.Mensaje)
+            End If
+
+            _Zw_Stk_Tickets_Acciones.Id = _Mensaje_Tk.Id
+
+            Dim Fm As New Frm_Tickets_Respuesta(_Zw_Stk_Tickets_Acciones.Id)
+
+            If Mis_Ticket Then
+                Fm.Text = "NUEVO MENSAJE"
+            Else
+                Fm.Text = "RESPONDER"
+            End If
+
+            Fm.ShowDialog(Me)
+            _Grabar = Fm.Grabar
+            _Descripcion = Fm.Txt_Descripcion.Text.Trim
+            Fm.Dispose()
+
+            If Not _Grabar Then
+
+                Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Where Id = " & _Zw_Stk_Tickets_Acciones.Id & vbCrLf &
+                               "Delete " & _Global_BaseBk & "Zw_Stk_Tickets_Archivos Where Id_TicketAc = " & _Zw_Stk_Tickets_Acciones.Id
+                _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                _Mensaje.Detalle = "Acción"
+                Throw New System.Exception("No se realiza ninguna acción")
+
+            End If
+
+            Consulta_sql = String.Empty
+
+            If _RechazarTicket Then
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets Set Rechazado = " & Convert.ToInt32(_RechazarTicket) & vbCrLf &
+                               "Where Id_Raiz = " & _Cl_Tickets.Zw_Stk_Tickets.Id_Raiz & vbCrLf
+            End If
+
+            Consulta_sql += "Update " & _Global_BaseBk & "Zw_Stk_Tickets Set UltAccion = '" & _Zw_Stk_Tickets_Acciones.Accion & "' Where Id = " & _Id_Ticket & vbCrLf &
+                            "Update " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Set Visto = 1 Where Id_Ticket = " & _Id_Ticket & vbCrLf &
+                            "Update " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Set " &
+                            "Fecha = Getdate(),Descripcion = '" & _Descripcion & "',En_Construccion = 0,Visto = 0,Rechazado = " & Convert.ToInt32(_RechazarTicket) & vbCrLf &
+                            "Where Id = " & _Zw_Stk_Tickets_Acciones.Id
+            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+            If _RechazarTicket Then
+
+                'MessageBoxEx.Show(Me, "Ticket Rechazado, se ha enviado la confirmación al remitente",
+                '                  "Rechazar Ticket", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                _Mensaje.EsCorrecto = True
+                _Mensaje.Detalle = "Rechazar Ticket"
+                _Mensaje.Mensaje = "Ticket Rechazado, se ha enviado la confirmación al remitente"
+
+            Else
+
+                _Mensaje.Detalle = "Información"
+                _Mensaje.Mensaje = "Mensaje enviado correctamente"
+                _Mensaje.MostrarMensaje = False
+
+                If MessageBoxEx.Show(Me, "Mensaje enviado correctamente" & vbCrLf & vbCrLf & "¿Desea cerrar el formulario?",
+                                     "Información",
+                                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+                    _Mensaje.EsCorrecto = True
+                Else
+                    Sb_Actualizar_Grilla()
+                End If
+
+            End If
+
+        Catch ex As Exception
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
     Private Sub Grilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
 
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
@@ -672,7 +791,23 @@ Public Class Frm_Tickets_Seguimiento
     End Sub
 
     Private Sub Btn_Mnu_EnviarMensajeRespuesta_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_EnviarMensajeRespuesta.Click
-        Sb_Agregar_Mensaje_Respuesta(False)
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        _Mensaje = Fx_Agregar_Mensaje_Respuesta(False)
+
+        GestionRealizada = _Mensaje.EsCorrecto
+
+        If _Mensaje.MostrarMensaje Then
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        End If
+
+        If GestionRealizada And Not _Mensaje.MostrarMensaje Then
+            Me.Close()
+        Else
+            Sb_Actualizar_Grilla()
+        End If
+
     End Sub
 
     Private Sub Frm_Tickets_Seguimiento_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed

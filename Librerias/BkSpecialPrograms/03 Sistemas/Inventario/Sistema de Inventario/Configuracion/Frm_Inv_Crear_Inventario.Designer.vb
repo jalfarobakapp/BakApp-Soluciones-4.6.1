@@ -23,15 +23,15 @@ Partial Class Frm_Inv_Crear_Inventario
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Inv_Crear_Inventario))
-        Me.Btn_Cambiar_Nombre_Ajuste = New DevComponents.DotNetBar.ButtonX()
         Me.Btn_Cambiar_Fecha_Ajuste = New DevComponents.DotNetBar.ButtonX()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
-        Me.LblSucursal = New DevComponents.DotNetBar.LabelX()
+        Me.Lbl_Sucursal = New DevComponents.DotNetBar.LabelX()
         Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
-        Me.LblEmpresa = New DevComponents.DotNetBar.LabelX()
+        Me.Lbl_Empresa = New DevComponents.DotNetBar.LabelX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Cerrar = New DevComponents.DotNetBar.ButtonItem()
         Me.Txt_Nombre = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Dtp_FechaInicio = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
@@ -47,24 +47,12 @@ Partial Class Frm_Inv_Crear_Inventario
         CType(Me.Dtp_FechaCierre, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'Btn_Cambiar_Nombre_Ajuste
-        '
-        Me.Btn_Cambiar_Nombre_Ajuste.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Cambiar_Nombre_Ajuste.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Cambiar_Nombre_Ajuste.Image = CType(resources.GetObject("Btn_Cambiar_Nombre_Ajuste.Image"), System.Drawing.Image)
-        Me.Btn_Cambiar_Nombre_Ajuste.Location = New System.Drawing.Point(544, 88)
-        Me.Btn_Cambiar_Nombre_Ajuste.Name = "Btn_Cambiar_Nombre_Ajuste"
-        Me.Btn_Cambiar_Nombre_Ajuste.Size = New System.Drawing.Size(33, 22)
-        Me.Btn_Cambiar_Nombre_Ajuste.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Cambiar_Nombre_Ajuste.TabIndex = 38
-        Me.Btn_Cambiar_Nombre_Ajuste.Tooltip = "Editar nombre de ajuste"
-        '
         'Btn_Cambiar_Fecha_Ajuste
         '
         Me.Btn_Cambiar_Fecha_Ajuste.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Cambiar_Fecha_Ajuste.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Cambiar_Fecha_Ajuste.Image = CType(resources.GetObject("Btn_Cambiar_Fecha_Ajuste.Image"), System.Drawing.Image)
-        Me.Btn_Cambiar_Fecha_Ajuste.Location = New System.Drawing.Point(330, 59)
+        Me.Btn_Cambiar_Fecha_Ajuste.Location = New System.Drawing.Point(310, 59)
         Me.Btn_Cambiar_Fecha_Ajuste.Name = "Btn_Cambiar_Fecha_Ajuste"
         Me.Btn_Cambiar_Fecha_Ajuste.Size = New System.Drawing.Size(29, 23)
         Me.Btn_Cambiar_Fecha_Ajuste.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -74,13 +62,13 @@ Partial Class Frm_Inv_Crear_Inventario
         'TableLayoutPanel1
         '
         Me.TableLayoutPanel1.BackColor = System.Drawing.Color.Transparent
-        Me.TableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Outset
+        Me.TableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.[Single]
         Me.TableLayoutPanel1.ColumnCount = 2
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.Controls.Add(Me.LblSucursal, 1, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.Lbl_Sucursal, 1, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.LabelX4, 0, 1)
-        Me.TableLayoutPanel1.Controls.Add(Me.LblEmpresa, 1, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Lbl_Empresa, 1, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.LabelX2, 0, 0)
         Me.TableLayoutPanel1.ForeColor = System.Drawing.Color.Black
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(12, 3)
@@ -91,19 +79,19 @@ Partial Class Frm_Inv_Crear_Inventario
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(565, 46)
         Me.TableLayoutPanel1.TabIndex = 36
         '
-        'LblSucursal
+        'Lbl_Sucursal
         '
-        Me.LblSucursal.AutoSize = True
+        Me.Lbl_Sucursal.AutoSize = True
         '
         '
         '
-        Me.LblSucursal.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LblSucursal.ForeColor = System.Drawing.Color.Black
-        Me.LblSucursal.Location = New System.Drawing.Point(88, 27)
-        Me.LblSucursal.Name = "LblSucursal"
-        Me.LblSucursal.Size = New System.Drawing.Size(41, 17)
-        Me.LblSucursal.TabIndex = 3
-        Me.LblSucursal.Text = "LabelX5"
+        Me.Lbl_Sucursal.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_Sucursal.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_Sucursal.Location = New System.Drawing.Point(86, 28)
+        Me.Lbl_Sucursal.Name = "Lbl_Sucursal"
+        Me.Lbl_Sucursal.Size = New System.Drawing.Size(41, 17)
+        Me.Lbl_Sucursal.TabIndex = 3
+        Me.Lbl_Sucursal.Text = "LabelX5"
         '
         'LabelX4
         '
@@ -112,25 +100,25 @@ Partial Class Frm_Inv_Crear_Inventario
         '
         Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(5, 27)
+        Me.LabelX4.Location = New System.Drawing.Point(4, 28)
         Me.LabelX4.Name = "LabelX4"
         Me.LabelX4.Size = New System.Drawing.Size(75, 14)
         Me.LabelX4.TabIndex = 2
         Me.LabelX4.Text = "Sucursal"
         '
-        'LblEmpresa
+        'Lbl_Empresa
         '
-        Me.LblEmpresa.AutoSize = True
+        Me.Lbl_Empresa.AutoSize = True
         '
         '
         '
-        Me.LblEmpresa.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LblEmpresa.ForeColor = System.Drawing.Color.Black
-        Me.LblEmpresa.Location = New System.Drawing.Point(88, 5)
-        Me.LblEmpresa.Name = "LblEmpresa"
-        Me.LblEmpresa.Size = New System.Drawing.Size(41, 17)
-        Me.LblEmpresa.TabIndex = 1
-        Me.LblEmpresa.Text = "LabelX3"
+        Me.Lbl_Empresa.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_Empresa.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_Empresa.Location = New System.Drawing.Point(86, 4)
+        Me.Lbl_Empresa.Name = "Lbl_Empresa"
+        Me.Lbl_Empresa.Size = New System.Drawing.Size(41, 17)
+        Me.Lbl_Empresa.TabIndex = 1
+        Me.Lbl_Empresa.Text = "LabelX3"
         '
         'LabelX2
         '
@@ -139,9 +127,9 @@ Partial Class Frm_Inv_Crear_Inventario
         '
         Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX2.ForeColor = System.Drawing.Color.Black
-        Me.LabelX2.Location = New System.Drawing.Point(5, 5)
+        Me.LabelX2.Location = New System.Drawing.Point(4, 4)
         Me.LabelX2.Name = "LabelX2"
-        Me.LabelX2.Size = New System.Drawing.Size(75, 11)
+        Me.LabelX2.Size = New System.Drawing.Size(75, 17)
         Me.LabelX2.TabIndex = 0
         Me.LabelX2.Text = "Empresa"
         '
@@ -150,7 +138,7 @@ Partial Class Frm_Inv_Crear_Inventario
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Cerrar})
         Me.Bar1.Location = New System.Drawing.Point(0, 206)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(590, 41)
@@ -165,8 +153,18 @@ Partial Class Frm_Inv_Crear_Inventario
         Me.Btn_Grabar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Grabar.ForeColor = System.Drawing.Color.Black
         Me.Btn_Grabar.Image = CType(resources.GetObject("Btn_Grabar.Image"), System.Drawing.Image)
+        Me.Btn_Grabar.ImageAlt = CType(resources.GetObject("Btn_Grabar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Grabar.Name = "Btn_Grabar"
         Me.Btn_Grabar.Tooltip = "Grabar"
+        '
+        'Btn_Cerrar
+        '
+        Me.Btn_Cerrar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Cerrar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Cerrar.Image = CType(resources.GetObject("Btn_Cerrar.Image"), System.Drawing.Image)
+        Me.Btn_Cerrar.ImageAlt = CType(resources.GetObject("Btn_Cerrar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Cerrar.Name = "Btn_Cerrar"
+        Me.Btn_Cerrar.Tooltip = "Cerrar inventario"
         '
         'Txt_Nombre
         '
@@ -176,13 +174,16 @@ Partial Class Frm_Inv_Crear_Inventario
         '
         Me.Txt_Nombre.Border.Class = "TextBoxBorder"
         Me.Txt_Nombre.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Nombre.ButtonCustom.Image = CType(resources.GetObject("Txt_Nombre.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Nombre.ButtonCustom.Visible = True
         Me.Txt_Nombre.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Nombre.Enabled = False
         Me.Txt_Nombre.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Nombre.Location = New System.Drawing.Point(124, 88)
+        Me.Txt_Nombre.Location = New System.Drawing.Point(133, 88)
         Me.Txt_Nombre.Name = "Txt_Nombre"
         Me.Txt_Nombre.PreventEnterBeep = True
-        Me.Txt_Nombre.Size = New System.Drawing.Size(414, 22)
+        Me.Txt_Nombre.ReadOnly = True
+        Me.Txt_Nombre.Size = New System.Drawing.Size(444, 22)
         Me.Txt_Nombre.TabIndex = 34
         '
         'LabelX1
@@ -213,7 +214,7 @@ Partial Class Frm_Inv_Crear_Inventario
         Me.Dtp_FechaInicio.ForeColor = System.Drawing.Color.Black
         Me.Dtp_FechaInicio.Format = DevComponents.Editors.eDateTimePickerFormat.[Long]
         Me.Dtp_FechaInicio.IsPopupCalendarOpen = False
-        Me.Dtp_FechaInicio.Location = New System.Drawing.Point(124, 59)
+        Me.Dtp_FechaInicio.Location = New System.Drawing.Point(133, 60)
         '
         '
         '
@@ -248,7 +249,7 @@ Partial Class Frm_Inv_Crear_Inventario
         Me.Dtp_FechaInicio.MonthCalendar.TodayButtonVisible = True
         Me.Dtp_FechaInicio.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
         Me.Dtp_FechaInicio.Name = "Dtp_FechaInicio"
-        Me.Dtp_FechaInicio.Size = New System.Drawing.Size(200, 22)
+        Me.Dtp_FechaInicio.Size = New System.Drawing.Size(171, 22)
         Me.Dtp_FechaInicio.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Dtp_FechaInicio.TabIndex = 32
         Me.Dtp_FechaInicio.Value = New Date(2014, 10, 2, 11, 14, 2, 0)
@@ -272,7 +273,7 @@ Partial Class Frm_Inv_Crear_Inventario
         '
         Me.Sw_Activo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Sw_Activo.ForeColor = System.Drawing.Color.Black
-        Me.Sw_Activo.Location = New System.Drawing.Point(124, 145)
+        Me.Sw_Activo.Location = New System.Drawing.Point(133, 145)
         Me.Sw_Activo.Name = "Sw_Activo"
         Me.Sw_Activo.OffText = "Cerrado"
         Me.Sw_Activo.OnText = "Activo"
@@ -310,7 +311,7 @@ Partial Class Frm_Inv_Crear_Inventario
         Me.Dtp_FechaCierre.ForeColor = System.Drawing.Color.Black
         Me.Dtp_FechaCierre.Format = DevComponents.Editors.eDateTimePickerFormat.[Long]
         Me.Dtp_FechaCierre.IsPopupCalendarOpen = False
-        Me.Dtp_FechaCierre.Location = New System.Drawing.Point(124, 173)
+        Me.Dtp_FechaCierre.Location = New System.Drawing.Point(133, 173)
         '
         '
         '
@@ -345,7 +346,7 @@ Partial Class Frm_Inv_Crear_Inventario
         Me.Dtp_FechaCierre.MonthCalendar.TodayButtonVisible = True
         Me.Dtp_FechaCierre.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
         Me.Dtp_FechaCierre.Name = "Dtp_FechaCierre"
-        Me.Dtp_FechaCierre.Size = New System.Drawing.Size(200, 22)
+        Me.Dtp_FechaCierre.Size = New System.Drawing.Size(180, 22)
         Me.Dtp_FechaCierre.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Dtp_FechaCierre.TabIndex = 42
         Me.Dtp_FechaCierre.Value = New Date(2014, 10, 2, 11, 14, 2, 0)
@@ -384,7 +385,6 @@ Partial Class Frm_Inv_Crear_Inventario
         Me.Controls.Add(Me.Lbl_FechaCierre)
         Me.Controls.Add(Me.Lbl_Estado)
         Me.Controls.Add(Me.Sw_Activo)
-        Me.Controls.Add(Me.Btn_Cambiar_Nombre_Ajuste)
         Me.Controls.Add(Me.Btn_Cambiar_Fecha_Ajuste)
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.Controls.Add(Me.Bar1)
@@ -395,6 +395,7 @@ Partial Class Frm_Inv_Crear_Inventario
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
         Me.MaximizeBox = False
         Me.MinimizeBox = False
@@ -411,13 +412,11 @@ Partial Class Frm_Inv_Crear_Inventario
         Me.PerformLayout()
 
     End Sub
-
-    Friend WithEvents Btn_Cambiar_Nombre_Ajuste As DevComponents.DotNetBar.ButtonX
     Friend WithEvents Btn_Cambiar_Fecha_Ajuste As DevComponents.DotNetBar.ButtonX
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
-    Public WithEvents LblSucursal As DevComponents.DotNetBar.LabelX
+    Public WithEvents Lbl_Sucursal As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
-    Public WithEvents LblEmpresa As DevComponents.DotNetBar.LabelX
+    Public WithEvents Lbl_Empresa As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
     Friend WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
@@ -430,4 +429,5 @@ Partial Class Frm_Inv_Crear_Inventario
     Public WithEvents Dtp_FechaCierre As DevComponents.Editors.DateTimeAdv.DateTimeInput
     Friend WithEvents Lbl_FechaCierre As DevComponents.DotNetBar.LabelX
     Friend WithEvents Line1 As DevComponents.DotNetBar.Controls.Line
+    Friend WithEvents Btn_Cerrar As DevComponents.DotNetBar.ButtonItem
 End Class

@@ -1,4 +1,4 @@
-'Imports Lib_Bakapp_VarClassFunc
+ï»¿'Imports Lib_Bakapp_VarClassFunc
 Imports DevComponents.DotNetBar
 
 
@@ -7,8 +7,8 @@ Public Class Frm_01_CrearInventario
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-    Public _Empresa_Inv, _
-           _Sucursal_Inv, _
+    Public _Empresa_Inv,
+           _Sucursal_Inv,
            _Bodega_Inv As String
 
     Public _IdInventario As String
@@ -34,16 +34,16 @@ Public Class Frm_01_CrearInventario
 
         Dim _Fecha_Inv = Format(DtFechaInv.Value, "yyyyMMdd")
 
-        Consulta_sql = "UPDATE Zw_TmpInv_History Set NombreInventario = '" & TxtNombreInventario.Text & "'" & vbCrLf & _
-                       ",FuncionarioCargo = '" & CmbFuncionarios.SelectedValue.ToString & "'" & vbCrLf & _
-                       ",NombreFuncionario = '" & Trim(CmbFuncionarios.Text) & "'" & vbCrLf & _
+        Consulta_sql = "UPDATE Zw_TmpInv_History Set NombreInventario = '" & TxtNombreInventario.Text & "'" & vbCrLf &
+                       ",FuncionarioCargo = '" & CmbFuncionarios.SelectedValue.ToString & "'" & vbCrLf &
+                       ",NombreFuncionario = '" & Trim(CmbFuncionarios.Text) & "'" & vbCrLf &
                        "Where IdInventario = " & _IdInventario
         'Fecha_Inventario = '" & _Fecha_Inv & _
         '"' And Empresa = '" & _Empresa_Inv & _
         '"' And Sucursal = '" & _Sucursal_Inv & _
         '"' And Bodega = '" & _Bodega_Inv & "'"
 
-        If  _Sql.Ej_consulta_IDU(Consulta_Sql) = True Then
+        If _Sql.Ej_consulta_IDU(Consulta_Sql) = True Then
             MessageBoxEx.Show("Datos actualizados correctamente", "Editar", MessageBoxButtons.OK, MessageBoxIcon.Information)
             _Actualizar_Lista = True
         End If
@@ -62,27 +62,27 @@ Public Class Frm_01_CrearInventario
         Fecha_Inv = Format(DtFechaInv.Value, "yyyyMMdd")
 
         If String.IsNullOrEmpty(Trim(TxtNombreInventario.Text)) Then
-            MessageBoxEx.Show("Falta nombre de inventario", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show("Falta nombre de inventario", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             TxtNombreInventario.Focus()
             Return
         End If
 
-        Dim Reg As Integer =_Sql.Fx_Cuenta_Registros("Zw_TmpInv_History", "Fecha_Inventario = '" & Fecha_Inv & _
-                                              "' And Empresa = '" & _Empresa_Inv & _
-                                              "' And Sucursal = '" & _Sucursal_Inv & "'" & vbCrLf & _
+        Dim Reg As Integer = _Sql.Fx_Cuenta_Registros("Zw_TmpInv_History", "Fecha_Inventario = '" & Fecha_Inv &
+                                              "' And Empresa = '" & _Empresa_Inv &
+                                              "' And Sucursal = '" & _Sucursal_Inv & "'" & vbCrLf &
                                               "And Bodega = '" & _Bodega_Inv & "'")
 
         If CBool(Reg) Then
-            MessageBoxEx.Show("Ya existe un inventario con esta fecha para esta bodega" & vbCrLf & _
-                              "No puede crear dos inventario iguales", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show("Ya existe un inventario con esta fecha para esta bodega" & vbCrLf &
+                              "No puede crear dos inventario iguales", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
 
         CodFun = CmbFuncionarios.SelectedValue.ToString
         NombreFun = CmbFuncionarios.Text
 
-        Dim dlg As System.Windows.Forms.DialogResult = _
-        MessageBoxEx.Show(Me, "¿Desea dejar este inventario como activo?", "Activar Inventario", MessageBoxButtons.YesNo)
+        Dim dlg As System.Windows.Forms.DialogResult =
+        MessageBoxEx.Show(Me, "Â¿Desea dejar este inventario como activo?", "Activar Inventario", MessageBoxButtons.YesNo)
 
         Dim Activo As Integer = 0
 
@@ -94,16 +94,16 @@ Public Class Frm_01_CrearInventario
         End If
 
 
-        Consulta_sql = Consulta_sql & vbCrLf & _
-                       "INSERT INTO Zw_TmpInv_History (Ano,Mes,Dia,Fecha_Inventario,Empresa,Sucursal,Bodega," & _
-                       "Nombre_Empresa, Nombre_Sucursal, Nombre_Bodega,NombreInventario,FuncionarioCargo,NombreFuncionario,Estado) Values" & vbCrLf & _
-                       "('" & Ano & "','" & Mes & "','" & Dia & "','" & Fecha_Inv & _
-                       "','" & _Empresa_Inv & "','" & _Sucursal_Inv & "','" & _Bodega_Inv & _
-                       "','" & LblEmpresa.Text & "','" & LblSucursal.Text & "','" & LblBodega.Text & _
-                       "','" & TxtNombreInventario.Text & _
+        Consulta_sql = Consulta_sql & vbCrLf &
+                       "INSERT INTO Zw_TmpInv_History (Ano,Mes,Dia,Fecha_Inventario,Empresa,Sucursal,Bodega," &
+                       "Nombre_Empresa, Nombre_Sucursal, Nombre_Bodega,NombreInventario,FuncionarioCargo,NombreFuncionario,Estado) Values" & vbCrLf &
+                       "('" & Ano & "','" & Mes & "','" & Dia & "','" & Fecha_Inv &
+                       "','" & _Empresa_Inv & "','" & _Sucursal_Inv & "','" & _Bodega_Inv &
+                       "','" & LblEmpresa.Text & "','" & LblSucursal.Text & "','" & LblBodega.Text &
+                       "','" & TxtNombreInventario.Text &
                        "','" & CodFun & "','" & Trim(NombreFun) & "'," & Activo & ")"
 
-        If  _Sql.Ej_consulta_IDU(Consulta_Sql) = True Then
+        If _Sql.Ej_consulta_IDU(Consulta_Sql) = True Then
             MessageBoxEx.Show("Inventario creado correctamente", "Crear inventario", MessageBoxButtons.OK, MessageBoxIcon.Information)
             _Actualizar_Lista = True
             Me.Close()
@@ -112,10 +112,10 @@ Public Class Frm_01_CrearInventario
 
     Public Sub New()
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
         caract_combo(CmbFuncionarios)
         Consulta_sql = "SELECT KOFU AS Padre,NOKOFU AS Hijo FROM TABFU" 'ZW_TmpInvFuncionariosLideres"
         CmbFuncionarios.DataSource = _SQL.Fx_Get_Tablas(Consulta_sql)
@@ -135,13 +135,13 @@ Public Class Frm_01_CrearInventario
             Accion = "Inventario Abierto correctamente"
         End If
 
-        Consulta_sql = "Update Zw_TmpInv_History Set Estado = 0" & vbCrLf & _
-                       "UPDATE Zw_TmpInv_History Set Estado = " & _Es & vbCrLf & _
+        Consulta_sql = "Update Zw_TmpInv_History Set Estado = 0" & vbCrLf &
+                       "UPDATE Zw_TmpInv_History Set Estado = " & _Es & vbCrLf &
                        "Where IdInventario = " & _IdInventario
 
-        If  _Sql.Ej_consulta_IDU(Consulta_Sql) = True Then
-            MessageBoxEx.Show(Accion, _
-                              "Editar", _
+        If _Sql.Ej_consulta_IDU(Consulta_Sql) = True Then
+            MessageBoxEx.Show(Accion,
+                              "Editar",
                               MessageBoxButtons.OK, MessageBoxIcon.Information)
             _Actualizar_Lista = True
             Me.Close()
@@ -201,7 +201,7 @@ Public Class Frm_01_CrearInventario
             Dia = numero_(DtFechaInv.Value.Day.ToString, 2)
             Fecha_Inv = Format(DtFechaInv.Value, "yyyyMMdd")
 
-      
+
 
             Consulta_sql = My.Resources._Procedimientos_Inv.Inv_Invetario_Creae_Foto_Stock
             Consulta_sql = Replace(Consulta_sql, "#Ano#", Ano)
@@ -213,7 +213,7 @@ Public Class Frm_01_CrearInventario
             Consulta_sql = Replace(Consulta_sql, "#Bodega#", Bodega) '#IdInventario#
             Consulta_sql = Replace(Consulta_sql, "#IdInventario#", _IdInventario)
 
-            If  _Sql.Ej_consulta_IDU(Consulta_Sql) = True Then
+            If _Sql.Ej_consulta_IDU(Consulta_Sql) = True Then
                 MsgBox("Foto del stock de la bodega creado correctamente", MsgBoxStyle.Information, "Tomar Foto")
             End If
 
@@ -229,11 +229,11 @@ Public Class Frm_01_CrearInventario
         Try
 
             Dim DatosFotos As Long
-            DatosFotos =_Sql.Fx_Cuenta_Registros("ZW_TmpInvFotoInventario", _
+            DatosFotos = _Sql.Fx_Cuenta_Registros("ZW_TmpInvFotoInventario",
                                           "IdInventario = " & _IdInventario)
 
             If DatosFotos = 0 Then
-                MessageBoxEx.Show("No existe ninguna foto que eliminar en la base de datos para esta bodega", _
+                MessageBoxEx.Show("No existe ninguna foto que eliminar en la base de datos para esta bodega",
                                   "Eliminar foto stock", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
                 Return
@@ -247,14 +247,14 @@ Public Class Frm_01_CrearInventario
             Fm_Pass.Dispose()
 
             If _Autorizado Then
-                Dim dlg As System.Windows.Forms.DialogResult = _
-                MessageBoxEx.Show(Me, "¿Esta seguro de querer eliminar la foto tomada del stock de la bodega?" & vbCrLf & _
-                          "Nota:El proceso no podrá ser interrumpido y no es posible revertirlo", _
+                Dim dlg As System.Windows.Forms.DialogResult =
+                MessageBoxEx.Show(Me, "Â¿Esta seguro de querer eliminar la foto tomada del stock de la bodega?" & vbCrLf &
+                          "Nota:El proceso no podrÃ¡ ser interrumpido y no es posible revertirlo",
                           "Cerrar Sistema", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
                 If dlg = System.Windows.Forms.DialogResult.Yes Then
                     Consulta_sql = "DELETE ZW_TmpInvFotoInventario WHERE IdInventario = " & _IdInventario
-                     _Sql.Ej_consulta_IDU(Consulta_Sql)
+                    _Sql.Ej_consulta_IDU(Consulta_Sql)
 
                     MessageBoxEx.Show("Datos eliminados correctamente", "Eliminar foto", MessageBoxButtons.OK, MessageBoxIcon.Information)
 

@@ -168,15 +168,29 @@ Public Class Frm_Tickets_Mant
             .AsignadoGrupo = Rdb_AsignadoGrupo.Checked
             .AsignadoAgente = Rdb_AsignadoAgente.Checked
 
-            _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets",
-                                        "Id <> " & _Cl_Tickets_Padre.Zw_Stk_Tickets.Id & " And Id_Tipo = " & .Id_Tipo & " And Id In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tickets_Producto " &
-                                        "Where Empresa = '" & _TkProducto.Empresa & "' And Sucursal = '" & _TkProducto.Sucursal & "' And Bodega = '" & _TkProducto.Bodega & "' And Codigo = '" & _TkProducto.Codigo & "') And Estado = 'ABIE'")
+            Consulta_sql = "Select Top 1 Prod.Codigo,Prod.Descripcion,Prod.Numero,Tks.CodFuncionario_Crea,NOKOFU" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_Stk_Tickets_Producto Prod" & vbCrLf &
+                           "Inner Join " & _Global_BaseBk & "Zw_Stk_Tickets Tks On Tks.Id_Raiz = Prod.Id_Raiz" & vbCrLf &
+                           "Inner Join TABFU On KOFU = Tks.CodFuncionario_Crea" & vbCrLf &
+                           "Where Tks.Id <> " & _Cl_Tickets_Padre.Zw_Stk_Tickets.Id & " And Id_Tipo = " & .Id_Tipo & " And Prod.Empresa = '" & _TkProducto.Empresa & "' And Prod.Sucursal = '" & _TkProducto.Sucursal & "' And Prod.Bodega = '" & _TkProducto.Bodega & "' And Codigo = '" & _TkProducto.Codigo & "' And Estado = 'ABIE'"
+            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-            If CBool(_Reg) Then
-                MessageBoxEx.Show(Me, "No puede volver a enviar un ticket por " & Txt_AreaTipo.Text.Trim & vbCrLf &
-                                  "Por el producto: " & _TkProducto.Codigo.Trim & vbCrLf & vbCrLf &
-                                  "Ya hay un ticket abierto por esta misma solución",
-                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            '_Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets",
+            '                            "Id <> " & _Cl_Tickets_Padre.Zw_Stk_Tickets.Id & " And Id_Tipo = " & .Id_Tipo & " And Id In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tickets_Producto " &
+            '                            "Where Empresa = '" & _TkProducto.Empresa & "' And Sucursal = '" & _TkProducto.Sucursal & "' And Bodega = '" & _TkProducto.Bodega & "' And Codigo = '" & _TkProducto.Codigo & "') And Estado = 'ABIE'")
+
+            If Not IsNothing(_Row) Then
+
+                MessageBoxEx.Show(Me, "Ticket " & _Row.Item("Numero") & vbCrLf &
+                                      "De: " & _Row.Item("CodFuncionario_Crea") & "-" & _Row.Item("NOKOFU").ToString.Trim() & vbCrLf &
+                                      "Producto: " & _TkProducto.Codigo.Trim & " - " & _Row.Item("Descripcion") & vbCrLf &
+                                      "Asunto: " & Txt_AreaTipo.Text.Trim,
+                                      "Ya hay un ticket abierto por esta misma solución", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                'MessageBoxEx.Show(Me, "No puede volver a enviar un ticket por " & Txt_AreaTipo.Text.Trim & vbCrLf &
+                '                  "Por el producto: " & _TkProducto.Codigo.Trim & vbCrLf & vbCrLf &
+                '                  "Ya hay un ticket abierto por esta misma solución",
+                '                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return
             End If
 
@@ -388,18 +402,25 @@ Public Class Frm_Tickets_Mant
 
             With _Cl_Tickets.Zw_Stk_Tickets_Producto
 
-                Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets",
-                        "Id <> " & _Cl_Tickets_Padre.Zw_Stk_Tickets.Id & " And Id_Tipo = " & _Id_Tipo & " And Id In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tickets_Producto " &
-                        "Where Empresa = '" & .Empresa & "' And Sucursal = '" & .Sucursal & "' And Bodega = '" & .Bodega & "' And Codigo = '" & .Codigo & "') And Estado = 'ABIE'")
+                Consulta_sql = "Select Top 1 Prod.Codigo,Prod.Descripcion,Prod.Numero,Tks.CodFuncionario_Crea,NOKOFU" & vbCrLf &
+                               "From " & _Global_BaseBk & "Zw_Stk_Tickets_Producto Prod" & vbCrLf &
+                               "Inner Join " & _Global_BaseBk & "Zw_Stk_Tickets Tks On Tks.Id_Raiz = Prod.Id_Raiz" & vbCrLf &
+                               "Inner Join TABFU On KOFU = Tks.CodFuncionario_Crea" & vbCrLf &
+                               "Where Tks.Id <> " & _Cl_Tickets_Padre.Zw_Stk_Tickets.Id & " And Id_Tipo = " & _Id_Tipo &
+                               " And Prod.Empresa = '" & .Empresa & "' And Prod.Sucursal = '" & .Sucursal & "' And Prod.Bodega = '" & .Bodega & "' And Codigo = '" & .Codigo & "' And Estado = 'ABIE'"
+                Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-                If CBool(_Reg) Then
+                'Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets",
+                '        "Id <> " & _Cl_Tickets_Padre.Zw_Stk_Tickets.Id & " And Id_Tipo = " & _Id_Tipo & " And Id In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tickets_Producto " &
+                '        "Where Empresa = '" & .Empresa & "' And Sucursal = '" & .Sucursal & "' And Bodega = '" & .Bodega & "' And Codigo = '" & .Codigo & "') And Estado = 'ABIE'")
 
-                    MessageBoxEx.Show(Me, "No puede volver a enviar un ticket por " & Txt_AreaTipo.Text.Trim & vbCrLf &
-                                  "Por el producto: " & .Codigo.Trim & vbCrLf & vbCrLf &
-                                  "Ya hay un ticket abierto por esta misma solución",
-                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                If Not IsNothing(_Row) Then
 
-                    'Sb_Limpiar_Tipo()
+                    MessageBoxEx.Show(Me, "Ticket " & _Row.Item("Numero") & vbCrLf &
+                                      "De: " & _Row.Item("CodFuncionario_Crea") & "-" & _Row.Item("NOKOFU").ToString.Trim() & vbCrLf &
+                                      "Producto: " & .Codigo.Trim & " - " & _Row.Item("Descripcion") & vbCrLf &
+                                      "Asunto: " & Txt_AreaTipo.Text.Trim,
+                                      "Ya hay un ticket abierto por esta misma solución", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
                     With _Cl_Tickets.Zw_Stk_Tickets_Producto
 

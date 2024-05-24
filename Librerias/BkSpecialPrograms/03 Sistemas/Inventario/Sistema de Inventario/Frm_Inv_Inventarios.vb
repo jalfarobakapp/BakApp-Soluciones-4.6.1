@@ -12,6 +12,8 @@ Public Class Frm_Inv_Inventarios
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
+        Sb_Formato_Generico_Grilla(Grilla_Inventarios, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Both, True, True, False)
+
     End Sub
 
     Private Sub Frm_Inventarios_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -22,7 +24,7 @@ Public Class Frm_Inv_Inventarios
 
     Sub Sb_Actualizar_Grilla()
 
-        Consulta_sql = "Select Id_Inventario, Empresa, Sucursal, FechaInicio, Nombre_Inventario, Activo, FechaCierre" & vbCrLf &
+        Consulta_sql = "Select Id,Empresa,Sucursal,FechaInicio,Nombre_Inventario,Activo,FechaCierre" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Inv_Inventario Where Empresa = '" & ModEmpresa & "'"
         Dim _Tbl_Inventarios As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
@@ -89,11 +91,13 @@ Public Class Frm_Inv_Inventarios
 
         Dim _Fila As DataGridViewRow = Grilla_Inventarios.Rows(Grilla_Inventarios.CurrentRow.Index)
 
-        Dim _Id_Inventario = _Fila.Cells("Id_Inventario").Value
+        Dim _Id = _Fila.Cells("Id").Value
 
-        Dim Fm As New Frm_Inv_Ctrl_Inventario(_Id_Inventario)
+        Dim Fm As New Frm_Inv_Ctrl_Inventario(_Id)
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
     End Sub
+
+
 End Class
