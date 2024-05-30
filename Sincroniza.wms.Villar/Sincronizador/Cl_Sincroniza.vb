@@ -6,6 +6,7 @@ Public Class Cl_Sincroniza
     Dim Consulta_sql As String
 
     Public Property Cadena_ConexionSQL_Server_Wms
+    Public Property ConfiguracionLocal As Configuracion
 
     Public Sub New()
 
@@ -101,6 +102,7 @@ Public Class Cl_Sincroniza
             Dim _Id_Enc As Integer = _Fila.Item("Id")
             Dim _Idmaeedoo As Integer = _Fila.Item("Idmaeedo")
             Dim _Nudo As String = _Fila.Item("Nudo")
+            Dim _Facturar As Boolean = _Fila.Item("Facturar")
             Dim _Planificada = True
 
             Consulta_sql = "Select TOP 1 trans_act_mod,dt_start from viaware.dbo.history_master where oid='" & _Nudo & "' and trans_act='STAT' Order by trans_seq_num Desc"
@@ -147,11 +149,43 @@ Public Class Cl_Sincroniza
 
                     _Tipo_wms = _SqlRandom.Fx_Trae_Dato("[@WMS_GATEWAY_TRANSFERENCIA]", "TIPO_WMS", "IDMAEEDO = " & _Idmaeedoo,, False)
 
-                    If _Tipo_wms.Contains("A") Then
+                    If _Facturar Then
 
-                        _Mensaje = Fx_EnviarAImprimnirListaDeVerificacion(_Idmaeedoo, "NVV", _Nudo, True)
+                        'Imprimir Retiros inmediatos
+                        If _Tipo_wms.Contains("A") Then
 
-                        Sb_AddToLog(_Mensaje.Detalle, _Mensaje.Detalle, Txt_Log)
+                            If ConfiguracionLocal.Ls_ImpFormatos.Item(0).Imprimir Then
+
+                                With ConfiguracionLocal.Ls_ImpFormatos.Item(0)
+
+                                    _Mensaje = Fx_EnviarAImprimnirListaDeVerificacion(_Idmaeedoo, "NVV", _Nudo, True,
+                                                                                  ConfiguracionLocal.NombreEquipoImprime, .Impresora, .NombreFormato)
+
+                                End With
+
+                                Sb_AddToLog(_Mensaje.Detalle, _Mensaje.Detalle, Txt_Log)
+
+                            End If
+
+                        End If
+
+                        'Imprimir Despachos
+                        If _Tipo_wms.Contains("O") Then
+
+                            If ConfiguracionLocal.Ls_ImpFormatos.Item(1).Imprimir Then
+
+                                With ConfiguracionLocal.Ls_ImpFormatos.Item(1)
+
+                                    _Mensaje = Fx_EnviarAImprimnirListaDeVerificacion(_Idmaeedoo, "NVV", _Nudo, True,
+                                                                                  ConfiguracionLocal.NombreEquipoImprime, .Impresora, .NombreFormato)
+
+                                End With
+
+                                Sb_AddToLog(_Mensaje.Detalle, _Mensaje.Detalle, Txt_Log)
+
+                            End If
+
+                        End If
 
                     End If
 
@@ -278,14 +312,17 @@ Public Class Cl_Sincroniza
     Function Fx_EnviarAImprimnirListaDeVerificacion(_Idmaeedo As Integer,
                                                     _Tido As String,
                                                     _Nudo As String,
-                                                    _Impreso As Boolean) As LsValiciones.Mensajes
+                                                    _Impreso As Boolean,
+                                                    _NombreEquipo As String,
+                                                    _Impresora As String,
+                                                    _NombreFormato As String) As LsValiciones.Mensajes
 
         _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
         Dim _Mensaje As New LsValiciones.Mensajes
 
-        Dim _NombreEquipo As String = "VILLARSERVERCOR"
-        Dim _Impresora As String = "Despacho1_B1"
-        Dim _NombreFormato As String = "Lista verificacion WMS con Picking" '"Lista verificacion WMS"
+        'Dim _NombreEquipo As String = "VILLARSERVERCOR"
+        'Dim _Impresora As String = "Despacho1_B1"
+        'Dim _NombreFormato As String = "Lista verificacion WMS con Picking" '"Lista verificacion WMS"
 
         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion (NombreEquipo,Idmaeedo,Tido,Nudo,Funcionario,Fecha,NombreFormato,Impresora,Impreso)" & vbCrLf &
                        "Values ('" & _NombreEquipo & "'," & _Idmaeedo & ",'" & _Tido & "','" & _Nudo & "','wms',GETDATE(),'" & _NombreFormato & "','" & _Impresora & "'," & Convert.ToInt32(_Impreso) & ")"

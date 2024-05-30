@@ -500,6 +500,12 @@
     <Compile Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Inv. general\Inv_General.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Inv. general\Inv_General_Activo.Designer.vb">
+      <DependentUpon>Inv_General_Activo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Inv. general\Inv_General_Activo.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Inv. general\Inv_General_Conf.Designer.vb">
       <DependentUpon>Inv_General_Conf.vb</DependentUpon>
     </Compile>
@@ -745,6 +751,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Inv. general\Inv_General.resx">
       <DependentUpon>Inv_General.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Inv. general\Inv_General_Activo.resx">
+      <DependentUpon>Inv_General_Activo.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Inv. general\Inv_General_Conf.resx">
       <DependentUpon>Inv_General_Conf.vb</DependentUpon>

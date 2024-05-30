@@ -9,6 +9,7 @@ Public Class Frm_Stmp_Listado
     Dim _Tbl_Tickets_Stem As DataTable
     Dim _FechaServidor As DateTime
 
+    Dim _Dv As New DataView
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.

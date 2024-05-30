@@ -80,14 +80,16 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Conexion\Cl_Conexion.vb" />
-    <Compile Include="Conexion\Conexion.vb" />
-    <Compile Include="Conexion\Frm_Conexiones.Designer.vb">
+    <Compile Include="Conexion\Constructor\Cl_ConfiguracionLocal.vb" />
+    <Compile Include="Conexion\Modelos\Conexion.vb" />
+    <Compile Include="Conexion\Modelos\Configuracion.vb" />
+    <Compile Include="Conexion\Vistas\Frm_Conexiones.Designer.vb">
       <DependentUpon>Frm_Conexiones.vb</DependentUpon>
     </Compile>
-    <Compile Include="Conexion\Frm_Conexiones.vb">
+    <Compile Include="Conexion\Vistas\Frm_Conexiones.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Conexion\Modelos\ImpFormatos.vb" />
     <Compile Include="Frm_Sincronizador.Designer.vb">
       <DependentUpon>Frm_Sincronizador.vb</DependentUpon>
     </Compile>
@@ -113,7 +115,7 @@
     <Compile Include="Sincronizador\Cl_Sincroniza.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Conexion\Frm_Conexiones.resx">
+    <EmbeddedResource Include="Conexion\Vistas\Frm_Conexiones.resx">
       <DependentUpon>Frm_Conexiones.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_Sincronizador.resx">

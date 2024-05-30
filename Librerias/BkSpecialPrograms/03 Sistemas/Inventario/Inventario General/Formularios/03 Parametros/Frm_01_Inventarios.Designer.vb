@@ -22,21 +22,21 @@ Partial Class Frm_01_Inventarios
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_01_Inventarios))
-        Me.Bar1 = New DevComponents.DotNetBar.Bar
-        Me.BtnLimpiarCodigo = New DevComponents.DotNetBar.ButtonItem
-        Me.BtnCrearNuevoInventario = New DevComponents.DotNetBar.ButtonItem
-        Me.BtnxSalir = New DevComponents.DotNetBar.ButtonItem
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.Grilla = New System.Windows.Forms.DataGridView
+        Me.Bar1 = New DevComponents.DotNetBar.Bar()
+        Me.BtnLimpiarCodigo = New DevComponents.DotNetBar.ButtonItem()
+        Me.BtnCrearNuevoInventario = New DevComponents.DotNetBar.ButtonItem()
+        Me.BtnxSalir = New DevComponents.DotNetBar.ButtonItem()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Grilla = New System.Windows.Forms.DataGridView()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.CrearNuevoInventarioToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.EditarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator
-        Me.EliminarFilaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.DtpFechaFl = New System.Windows.Forms.DateTimePicker
-        Me.ChkFiltroFecha = New System.Windows.Forms.CheckBox
+        Me.CrearNuevoInventarioToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.EditarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.EliminarFilaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DtpFechaFl = New System.Windows.Forms.DateTimePicker()
+        Me.ChkFiltroFecha = New System.Windows.Forms.CheckBox()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -83,7 +83,7 @@ Partial Class Frm_01_Inventarios
         '
         'GroupBox1
         '
-        Me.GroupBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.GroupBox1.BackColor = System.Drawing.Color.White
         Me.GroupBox1.Controls.Add(Me.Grilla)
         Me.GroupBox1.ForeColor = System.Drawing.Color.Black
         Me.GroupBox1.Location = New System.Drawing.Point(0, 49)
@@ -139,7 +139,7 @@ Partial Class Frm_01_Inventarios
         '
         'DtpFechaFl
         '
-        Me.DtpFechaFl.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DtpFechaFl.BackColor = System.Drawing.Color.White
         Me.DtpFechaFl.ForeColor = System.Drawing.Color.Black
         Me.DtpFechaFl.Location = New System.Drawing.Point(3, 12)
         Me.DtpFechaFl.Name = "DtpFechaFl"
@@ -149,7 +149,7 @@ Partial Class Frm_01_Inventarios
         'ChkFiltroFecha
         '
         Me.ChkFiltroFecha.AutoSize = True
-        Me.ChkFiltroFecha.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.ChkFiltroFecha.BackColor = System.Drawing.Color.White
         Me.ChkFiltroFecha.ForeColor = System.Drawing.Color.Black
         Me.ChkFiltroFecha.Location = New System.Drawing.Point(264, 18)
         Me.ChkFiltroFecha.Name = "ChkFiltroFecha"

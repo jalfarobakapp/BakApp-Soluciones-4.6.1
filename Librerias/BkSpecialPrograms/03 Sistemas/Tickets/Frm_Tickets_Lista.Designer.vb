@@ -30,12 +30,16 @@ Partial Class Frm_Tickets_Lista
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Crear_Ticket = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_RevisarTicket = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Exportar_Excel = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_EditarFuncionario = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_QuitarVendedor = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem3 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_VerTicket = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_TicketProducto = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem4 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_Mnu_Copiar = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
         Me.Chk_TickesAsigMi = New DevComponents.DotNetBar.Controls.CheckBoxX()
@@ -55,6 +59,10 @@ Partial Class Frm_Tickets_Lista
         Me.Btn_Mnu_RechazarTicket = New DevComponents.DotNetBar.ButtonItem()
         Me.Tree_Bandeja = New System.Windows.Forms.TreeView()
         Me.Imagenes_24x24 = New System.Windows.Forms.ImageList(Me.components)
+        Me.Txt_Filtrar = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
+        Me.Metro_Bar_Color = New DevComponents.DotNetBar.Metro.MetroStatusBar()
+        Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -66,8 +74,8 @@ Partial Class Frm_Tickets_Lista
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Crear_Ticket, Me.Btn_RevisarTicket, Me.Btn_Actualizar})
-        Me.Bar2.Location = New System.Drawing.Point(0, 640)
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Crear_Ticket, Me.Btn_RevisarTicket, Me.Btn_Exportar_Excel, Me.Btn_Actualizar})
+        Me.Bar2.Location = New System.Drawing.Point(0, 544)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(1264, 41)
         Me.Bar2.Stretch = True
@@ -94,7 +102,16 @@ Partial Class Frm_Tickets_Lista
         Me.Btn_RevisarTicket.ImageAlt = CType(resources.GetObject("Btn_RevisarTicket.ImageAlt"), System.Drawing.Image)
         Me.Btn_RevisarTicket.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.Btn_RevisarTicket.Name = "Btn_RevisarTicket"
-        Me.Btn_RevisarTicket.Tooltip = "Revisar Ticket"
+        Me.Btn_RevisarTicket.Tooltip = "Ver Ticket"
+        '
+        'Btn_Exportar_Excel
+        '
+        Me.Btn_Exportar_Excel.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Exportar_Excel.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Exportar_Excel.Image = CType(resources.GetObject("Btn_Exportar_Excel.Image"), System.Drawing.Image)
+        Me.Btn_Exportar_Excel.ImageAlt = CType(resources.GetObject("Btn_Exportar_Excel.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Exportar_Excel.Name = "Btn_Exportar_Excel"
+        Me.Btn_Exportar_Excel.Tooltip = "Exportar a Excel"
         '
         'Btn_Actualizar
         '
@@ -116,9 +133,9 @@ Partial Class Frm_Tickets_Lista
         Me.GroupPanel1.Controls.Add(Me.Menu_Contextual)
         Me.GroupPanel1.Controls.Add(Me.Grilla)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel1.Location = New System.Drawing.Point(213, 12)
+        Me.GroupPanel1.Location = New System.Drawing.Point(213, 50)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(1039, 598)
+        Me.GroupPanel1.Size = New System.Drawing.Size(1039, 465)
         '
         '
         '
@@ -168,22 +185,56 @@ Partial Class Frm_Tickets_Lista
         '
         Me.Menu_Contextual_01.AutoExpandOnClick = True
         Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
-        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_EditarFuncionario, Me.Btn_QuitarVendedor})
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem3, Me.Btn_VerTicket, Me.Btn_TicketProducto, Me.LabelItem4, Me.Btn_Mnu_Copiar})
         Me.Menu_Contextual_01.Text = "Opciones"
         '
-        'Btn_EditarFuncionario
+        'LabelItem3
         '
-        Me.Btn_EditarFuncionario.Image = CType(resources.GetObject("Btn_EditarFuncionario.Image"), System.Drawing.Image)
-        Me.Btn_EditarFuncionario.ImageAlt = CType(resources.GetObject("Btn_EditarFuncionario.ImageAlt"), System.Drawing.Image)
-        Me.Btn_EditarFuncionario.Name = "Btn_EditarFuncionario"
-        Me.Btn_EditarFuncionario.Text = "Editar funcionario"
+        Me.LabelItem3.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem3.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem3.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem3.Name = "LabelItem3"
+        Me.LabelItem3.PaddingBottom = 1
+        Me.LabelItem3.PaddingLeft = 10
+        Me.LabelItem3.PaddingTop = 1
+        Me.LabelItem3.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem3.Text = "Opciones del producto"
         '
-        'Btn_QuitarVendedor
+        'Btn_VerTicket
         '
-        Me.Btn_QuitarVendedor.Image = CType(resources.GetObject("Btn_QuitarVendedor.Image"), System.Drawing.Image)
-        Me.Btn_QuitarVendedor.ImageAlt = CType(resources.GetObject("Btn_QuitarVendedor.ImageAlt"), System.Drawing.Image)
-        Me.Btn_QuitarVendedor.Name = "Btn_QuitarVendedor"
-        Me.Btn_QuitarVendedor.Text = "Quitar vendedor"
+        Me.Btn_VerTicket.Image = CType(resources.GetObject("Btn_VerTicket.Image"), System.Drawing.Image)
+        Me.Btn_VerTicket.ImageAlt = CType(resources.GetObject("Btn_VerTicket.ImageAlt"), System.Drawing.Image)
+        Me.Btn_VerTicket.Name = "Btn_VerTicket"
+        Me.Btn_VerTicket.Text = "Ver Ticket"
+        '
+        'Btn_TicketProducto
+        '
+        Me.Btn_TicketProducto.Image = CType(resources.GetObject("Btn_TicketProducto.Image"), System.Drawing.Image)
+        Me.Btn_TicketProducto.ImageAlt = CType(resources.GetObject("Btn_TicketProducto.ImageAlt"), System.Drawing.Image)
+        Me.Btn_TicketProducto.Name = "Btn_TicketProducto"
+        Me.Btn_TicketProducto.Text = "Ver información del ticket del producto"
+        '
+        'LabelItem4
+        '
+        Me.LabelItem4.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem4.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem4.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem4.ImageTextSpacing = 1
+        Me.LabelItem4.Name = "LabelItem4"
+        Me.LabelItem4.PaddingBottom = 1
+        Me.LabelItem4.PaddingLeft = 10
+        Me.LabelItem4.PaddingTop = 1
+        Me.LabelItem4.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem4.Text = "-------------------------------------------"
+        '
+        'Btn_Mnu_Copiar
+        '
+        Me.Btn_Mnu_Copiar.Image = CType(resources.GetObject("Btn_Mnu_Copiar.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Copiar.ImageAlt = CType(resources.GetObject("Btn_Mnu_Copiar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_Copiar.Name = "Btn_Mnu_Copiar"
+        Me.Btn_Mnu_Copiar.Text = "Copiar (portapapeles)"
         '
         'Grilla
         '
@@ -221,7 +272,7 @@ Partial Class Frm_Tickets_Lista
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.Grilla.Size = New System.Drawing.Size(1033, 575)
+        Me.Grilla.Size = New System.Drawing.Size(1033, 442)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 27
         '
@@ -284,7 +335,7 @@ Partial Class Frm_Tickets_Lista
         Me.Chk_TickesAsigMi.Enabled = False
         Me.Chk_TickesAsigMi.FocusCuesEnabled = False
         Me.Chk_TickesAsigMi.ForeColor = System.Drawing.Color.Black
-        Me.Chk_TickesAsigMi.Location = New System.Drawing.Point(12, 617)
+        Me.Chk_TickesAsigMi.Location = New System.Drawing.Point(12, 521)
         Me.Chk_TickesAsigMi.Name = "Chk_TickesAsigMi"
         Me.Chk_TickesAsigMi.Size = New System.Drawing.Size(169, 17)
         Me.Chk_TickesAsigMi.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -306,7 +357,7 @@ Partial Class Frm_Tickets_Lista
         Me.Chk_TickesMiGrupo.Enabled = False
         Me.Chk_TickesMiGrupo.FocusCuesEnabled = False
         Me.Chk_TickesMiGrupo.ForeColor = System.Drawing.Color.Black
-        Me.Chk_TickesMiGrupo.Location = New System.Drawing.Point(187, 617)
+        Me.Chk_TickesMiGrupo.Location = New System.Drawing.Point(187, 521)
         Me.Chk_TickesMiGrupo.Name = "Chk_TickesMiGrupo"
         Me.Chk_TickesMiGrupo.Size = New System.Drawing.Size(251, 17)
         Me.Chk_TickesMiGrupo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -471,7 +522,7 @@ Partial Class Frm_Tickets_Lista
         Me.Tree_Bandeja.Location = New System.Drawing.Point(12, 22)
         Me.Tree_Bandeja.Name = "Tree_Bandeja"
         Me.Tree_Bandeja.SelectedImageIndex = 0
-        Me.Tree_Bandeja.Size = New System.Drawing.Size(195, 588)
+        Me.Tree_Bandeja.Size = New System.Drawing.Size(195, 493)
         Me.Tree_Bandeja.TabIndex = 165
         '
         'Imagenes_24x24
@@ -501,16 +552,80 @@ Partial Class Frm_Tickets_Lista
         Me.Imagenes_24x24.Images.SetKeyName(20, "ticket-cancel.png")
         Me.Imagenes_24x24.Images.SetKeyName(21, "ticket-time.png")
         '
+        'Txt_Filtrar
+        '
+        Me.Txt_Filtrar.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Filtrar.Border.Class = "TextBoxBorder"
+        Me.Txt_Filtrar.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Filtrar.ButtonCustom2.Image = CType(resources.GetObject("Txt_Filtrar.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Filtrar.ButtonCustom2.Visible = True
+        Me.Txt_Filtrar.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Filtrar.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Filtrar.Location = New System.Drawing.Point(276, 22)
+        Me.Txt_Filtrar.Name = "Txt_Filtrar"
+        Me.Txt_Filtrar.PreventEnterBeep = True
+        Me.Txt_Filtrar.Size = New System.Drawing.Size(976, 22)
+        Me.Txt_Filtrar.TabIndex = 9
+        '
+        'LabelX1
+        '
+        Me.LabelX1.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX1.ForeColor = System.Drawing.Color.Black
+        Me.LabelX1.Image = CType(resources.GetObject("LabelX1.Image"), System.Drawing.Image)
+        Me.LabelX1.ImagePosition = DevComponents.DotNetBar.eImagePosition.Right
+        Me.LabelX1.ImageTextSpacing = 3
+        Me.LabelX1.Location = New System.Drawing.Point(213, 22)
+        Me.LabelX1.Name = "LabelX1"
+        Me.LabelX1.Size = New System.Drawing.Size(57, 23)
+        Me.LabelX1.TabIndex = 166
+        Me.LabelX1.Text = "Buscar"
+        '
+        'Metro_Bar_Color
+        '
+        Me.Metro_Bar_Color.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Metro_Bar_Color.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Metro_Bar_Color.ContainerControlProcessDialogKey = True
+        Me.Metro_Bar_Color.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Metro_Bar_Color.DragDropSupport = True
+        Me.Metro_Bar_Color.Font = New System.Drawing.Font("Segoe UI", 10.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Metro_Bar_Color.ForeColor = System.Drawing.Color.Black
+        Me.Metro_Bar_Color.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Estatus})
+        Me.Metro_Bar_Color.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
+        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 585)
+        Me.Metro_Bar_Color.Name = "Metro_Bar_Color"
+        Me.Metro_Bar_Color.Size = New System.Drawing.Size(1264, 22)
+        Me.Metro_Bar_Color.TabIndex = 173
+        Me.Metro_Bar_Color.Text = "MetroStatusBar1"
+        '
+        'Lbl_Estatus
+        '
+        Me.Lbl_Estatus.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Lbl_Estatus.Name = "Lbl_Estatus"
+        Me.Lbl_Estatus.Text = "LabelItem2"
+        '
         'Frm_Tickets_Lista
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1264, 681)
+        Me.ClientSize = New System.Drawing.Size(1264, 607)
+        Me.Controls.Add(Me.LabelX1)
+        Me.Controls.Add(Me.Txt_Filtrar)
         Me.Controls.Add(Me.Tree_Bandeja)
         Me.Controls.Add(Me.Chk_TickesMiGrupo)
         Me.Controls.Add(Me.Chk_TickesAsigMi)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.GroupPanel1)
+        Me.Controls.Add(Me.Metro_Bar_Color)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -533,9 +648,6 @@ Partial Class Frm_Tickets_Lista
     Public WithEvents Btn_Crear_Ticket As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Menu_Contextual As DevComponents.DotNetBar.ContextMenuBar
-    Friend WithEvents Menu_Contextual_01 As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_EditarFuncionario As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_QuitarVendedor As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX
     Public WithEvents Btn_RevisarTicket As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Imagenes_16x16 As ImageList
@@ -557,4 +669,15 @@ Partial Class Frm_Tickets_Lista
     Friend WithEvents Btn_Mnu_RechazarTicket As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Tree_Bandeja As TreeView
     Friend WithEvents Imagenes_24x24 As ImageList
+    Friend WithEvents Txt_Filtrar As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Btn_Exportar_Excel As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Menu_Contextual_01 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelItem3 As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Btn_VerTicket As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_TicketProducto As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Mnu_Copiar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelItem4 As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Metro_Bar_Color As DevComponents.DotNetBar.Metro.MetroStatusBar
+    Friend WithEvents Lbl_Estatus As DevComponents.DotNetBar.LabelItem
 End Class

@@ -7339,6 +7339,12 @@ Public Class Frm_Formulario_Documento
         Dim _RowEntidad As DataRow
         Dim _TblEntidad As DataTable
 
+        Dim _PreguntaClientePuntos As Boolean
+        Dim _Cl_Puntos As New Cl_Puntos()
+        _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa)
+
+        _PreguntaClientePuntos = _Cl_Puntos.Zw_PtsVta_Configuracion.Activo
+
         If _Buscar_Entidad Then
 
             Dim Fm As New Frm_BuscarEntidad_Mt(False)
@@ -7346,6 +7352,7 @@ Public Class Frm_Formulario_Documento
                 Fm.Rdb_Clientes.Checked = True
             End If
             Fm.Txtdescripcion.Text = _CodEntidad
+            Fm.PreguntaClientePuntos = _PreguntaClientePuntos
             Fm.ShowDialog(_Formulario)
             _RowEntidad = Fm.Pro_RowEntidad
 
@@ -19222,6 +19229,7 @@ Public Class Frm_Formulario_Documento
             Fm.Fx_Llenar_Entidad(_Koen, _Suen)
             Fm.CrearEntidad = False
             Fm.EditarEntidad = True
+            Fm.BtnEliminarUser.Enabled = False
             Fm.ShowDialog(Me)
 
             If Fm.Grabar Then

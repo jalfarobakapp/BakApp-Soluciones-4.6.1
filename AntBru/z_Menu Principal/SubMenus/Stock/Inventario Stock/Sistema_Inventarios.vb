@@ -62,7 +62,6 @@ Public Class Sistema_Inventarios
     End Sub
 
     Private Sub BtnPreciosCostos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Inventario_General.Click
-        'MessageBoxEx.Show(_Fm_Menu_Padre, "En construcción", "Bakapp", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Dim NewPanel As Inv_General = Nothing
         NewPanel = New Inv_General(_Fm_Menu_Padre)
         Frm_Menu.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)

@@ -34,6 +34,7 @@ Public Class Frm_Crear_Entidad_Mt
     Public Property EditarEntidad() As Boolean
     Public Property Grabar() As Boolean
     Public Property Elimnar() As Boolean
+    Public Property ClientePuntos As Boolean
 
     Public Sub New()
 
@@ -213,7 +214,6 @@ Public Class Frm_Crear_Entidad_Mt
         Chk_RevFincred.Visible = _Global_Row_Configuracion_General.Item("Fincred_Usar")
         Btn_Modificar_RevCredFincred.Visible = _Global_Row_Configuracion_General.Item("Fincred_Usar")
 
-        'CheckBox1.Visible = _Global_Row_Configuracion_General.Item("Fincred_Usar")
 
     End Sub
 
@@ -248,13 +248,19 @@ Public Class Frm_Crear_Entidad_Mt
 
             Grilla_Cuentas.DataSource = Nothing
 
+            If ClientePuntos Then
+                Txt_Dien.Text = "PUNTOS"
+                Txt_Gien.Text = "PARTICULAR"
+                Cmb_Tiposuc.SelectedValue = "C"
+            End If
+
         ElseIf EditarEntidad Then
 
             Dtp_Fecreen.Enabled = False
             Txt_Koen.Enabled = False
             Txt_Suen.Enabled = False
             BtnContactosEntidad.Enabled = True
-            BtnEliminarUser.Enabled = True
+            'BtnEliminarUser.Enabled = True
 
             Me.ActiveControl = Txt_Dien
             Txt_Dien.Focus()
@@ -580,7 +586,7 @@ Public Class Frm_Crear_Entidad_Mt
 
         If Not String.IsNullOrEmpty(Txt_Email.Text) Then
             If Not Fx_Validar_Email(Txt_Email.Text) Then
-                MessageBoxEx.Show(Me, "el correo de Email [" & Txt_Email.Text & "] no es una cuenta de correos valida", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                MessageBoxEx.Show(Me, "El correo de principal, receptor electrónico: [" & Txt_Email.Text & "] no es una cuenta de correos valida", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 TabControl1.SelectedTabIndex = 0
                 Txt_Email.Focus()
                 Return
@@ -589,11 +595,38 @@ Public Class Frm_Crear_Entidad_Mt
 
         If Not String.IsNullOrEmpty(Txt_Emailcomer.Text) Then
             If Not Fx_Validar_Email(Txt_Emailcomer.Text) Then
-                MessageBoxEx.Show(Me, "el correo de Email2 [" & Txt_Emailcomer.Text & "] no es una cuenta de correos valida", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                MessageBoxEx.Show(Me, "El correo secundario, comercial: [" & Txt_Emailcomer.Text & "] no es una cuenta de correos valida", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 TabControl1.SelectedTabIndex = 0
                 Txt_Emailcomer.Focus()
                 Return
             End If
+        End If
+
+        If ClientePuntos Then
+
+            If String.IsNullOrEmpty(Txt_Emailcomer.Text) Then
+                MessageBoxEx.Show("Falta el correo secundario, comercial", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                TabControl1.SelectedTabIndex = 0
+                Txt_Emailcomer.Focus()
+                Return
+            End If
+
+            Try
+                Grilla_Maeenmail.Rows.RemoveAt(Grilla_Maeenmail.RowCount - 1)
+            Catch ex As Exception
+
+            End Try
+
+            Dim _NewFila As DataRow = Fx_Nueva_Linea_Notificacion(_Tbl_Maeenmail,
+                                                                  Txt_Koen.Text, "", "001", "", Txt_Emailcomer.Text, "", "", "", "", "", "", "", Date.Now)
+
+            With Cl_Entidades
+                .JuntaPuntos = True
+                .EmailPuntos = Txt_Emailcomer.Text
+                .FechaInscripPuntos = Date.Now
+                .CodFuncionario_Enrola = FUNCIONARIO
+            End With
+
         End If
 
         If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Entidades", "EmailCompras") Then
@@ -956,6 +989,8 @@ Public Class Frm_Crear_Entidad_Mt
 
                 With Cl_Entidades
 
+                    .CodEntidad = _Koen
+                    .CodSucEntidad = _Suen
                     .EmailCompras = Txt_EmailCompras.Text
                     .Libera_NVV = Chk_Libera_NVV.Checked
                     .FacAuto = Chk_FacAuto.Checked
@@ -991,6 +1026,20 @@ Public Class Frm_Crear_Entidad_Mt
                     Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                     Comando.Transaction = myTrans
                     Comando.ExecuteNonQuery()
+
+                    If ClientePuntos Then
+
+                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Entidades Set " & vbCrLf &
+                                       "JuntaPuntos = " & Convert.ToInt32(.JuntaPuntos) & vbCrLf &
+                                       ",EmailPuntos = '" & .EmailPuntos.Trim & "'" & vbCrLf &
+                                       ",CodFuncionario_Enrola = '" & .CodFuncionario_Enrola & "'" & vbCrLf &
+                                       "Where CodEntidad = '" & .CodEntidad & "' And CodSucEntidad = '" & .CodSucEntidad & "'"
+
+                        Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                        Comando.Transaction = myTrans
+                        Comando.ExecuteNonQuery()
+
+                    End If
 
                 End With
 
@@ -2304,37 +2353,6 @@ Public Class Frm_Crear_Entidad_Mt
         End If
 
         ShowContextMenu(Menu_Contextual_04_Puntos)
-        Return
-
-        With Cl_Entidades
-
-            'Dim _JuntaPuntos As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "JuntaPuntos",
-            '                                                "CodEntidad = '" & .CodEntidad & "' And CodSucEntidad = '" & .CodSucEntidad & "'")
-
-            If .JuntaPuntos Then
-
-                Dim Fmptos As New Frm_InformePtosClientes(Txt_Koen.Text, Txt_Suen.Text)
-                Fmptos.ShowDialog(Me)
-                Fmptos.Dispose()
-                Return
-
-            End If
-
-            Dim Fm As New Frm_Crear_Entidad_Mt_Puntos(Txt_Koen.Text, Txt_Suen.Text)
-            Fm.Txt_EmailPuntos.Text = .EmailPuntos.Trim
-            Fm.Chk_JuntaPuntos.Checked = .JuntaPuntos
-            Fm.Dtp_FechaInscripPuntos.Value = NuloPorNro(.FechaInscripPuntos, Now.Date)
-            Fm.ShowDialog(Me)
-
-            If Fm.Aceptar Then
-                .JuntaPuntos = Fm.Chk_JuntaPuntos.Checked
-                .EmailPuntos = Fm.Txt_EmailPuntos.Text.Trim
-                .FechaInscripPuntos = Fm.Dtp_FechaInscripPuntos.Value
-            End If
-
-            Fm.Dispose()
-
-        End With
 
     End Sub
 
@@ -2366,6 +2384,12 @@ Public Class Frm_Crear_Entidad_Mt
 
         End With
 
+    End Sub
+
+    Private Sub Txt_Comuna_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Comuna.KeyDown
+        If e.KeyValue = Keys.Enter Then
+            Call Btn_Buscar_Comuna_Click(Nothing, Nothing)
+        End If
     End Sub
 
     Private Sub Sb_Grilla_Maennmail_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)

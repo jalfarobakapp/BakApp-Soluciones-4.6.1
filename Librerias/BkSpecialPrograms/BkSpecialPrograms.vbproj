@@ -540,6 +540,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\14 Exportar documentos\Cl_ExpotarDoc.vb" />
+    <Compile Include="01 Procesos  compartidos\Documentos\15 Pesos Variables\Cl_PesoVariable.vb" />
     <Compile Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_Puntos.Designer.vb">
       <DependentUpon>Frm_Crear_Entidad_Mt_Puntos.vb</DependentUpon>
     </Compile>
@@ -769,6 +770,7 @@
     <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Frm_Configuracion_Gral.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Inventario.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Demonio_FacAuto.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Pdp_CPT_MzDet.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Pdp_CPT_MzDetIngFab.vb" />
@@ -782,6 +784,7 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stk_Tipos.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stmp_Det.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stmp_DetPick.vb" />
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Cl_Inventario.vb" />
     <Compile Include="03 Sistemas\Puntos Venta\Cl_Puntos.vb" />
     <Compile Include="03 Sistemas\Puntos Venta\Frm_ConfPuntosVta.Designer.vb">
       <DependentUpon>Frm_ConfPuntosVta.vb</DependentUpon>
@@ -1894,9 +1897,7 @@
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Frm_Inv_Inventarios.Designer.vb">
       <DependentUpon>Frm_Inv_Inventarios.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Frm_Inv_Inventarios.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Frm_Inv_Inventarios.vb" />
     <Compile Include="03 Sistemas\Lector de huellas\Frm_Huellas_Menu.Designer.vb">
       <DependentUpon>Frm_Huellas_Menu.vb</DependentUpon>
     </Compile>

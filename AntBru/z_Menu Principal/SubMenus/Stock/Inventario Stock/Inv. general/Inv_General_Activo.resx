@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -121,7 +121,7 @@
   <data name="BtnSalir.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
-        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA35AAAN+QF0ifYSAAAAB3RJ
+        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA34AAAN+AGmzhT2AAAAB3RJ
         TUUH4goMEQs0SJpTCQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAHkSURBVFhH
         7Za/LwRBFMeXCKKgUYiohcQfQanRnbOzhPhxhEQ0ChobEomQ2Nk7hRA/KolETSgkohCdgmBmc52EP4BQ
         3Hp79zbW3u7e7t0ZBZ/kJTNz8973m7m5eyP9E5VNI9aAQ/FQQ5nQOZnGqVgsccpJRjeUGVwSh87lcUsc
@@ -162,10 +162,10 @@
         zSoVrXcXvEX5I5Y/5fm46n/BfxtEfwPl+2dQTv8yFwAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="Btn_Ingresar_Inventario_Activo.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Btn_VerInventarioActivo.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
-        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA35AAAN+QF0ifYSAAAAB3RJ
+        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA34AAAN+AGmzhT2AAAAB3RJ
         TUUH4goYFRIxe4JmigAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAHrSURBVFhH
         7Za7SgNREIaDt8aorXgjtYW3ytbGIhFbKxtbExJInRS+gQraKfgKCoqCb6Ag+gAWUbASjCDiJf5fmJW4
         7I2YrIX54IOzs3tmJuyZsIkOHaBWq6XkuizEJLVSTvGkvJBxQ80kDQyzkIcyLqhFzTEauJWTsltuyXZD
@@ -181,7 +181,7 @@
   <data name="Btn_Mant_Inventarios.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
-        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA35AAAN+QF0ifYSAAAAB3RJ
+        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA34AAAN+AGmzhT2AAAAB3RJ
         TUUH4goMEQUuK3uH/QAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAGxSURBVFhH
         7ZbPK0RRFMfHmFhMMijUWCALG9lMmUGysKAkCo2fJT9LiRBGyUIaO0slxU7ZWNrJztKf4D95Pt/XuTMT
         by3lnvq8e973nXPuee/M1I158xYEwbXRCIcwD8vQD2cwbr5iNmEKRmFXmtWQ5uqIVdOV77QeUG355Xwu
@@ -191,6 +191,22 @@
         rTL8HVCDHVA0bQ9OK56r+TRcQgFUqxNmIQmvsGTxkQ0sgAocWVDYAGtvhVYN+mHqDbfhCXTi1WYH0AV6
         6wvQGE5AOXlQzo3VKTWgv5DQsbwWdHROW1DW1hnQWPQZJ2AOEi4GNOsVGDBtDDQujSNnmuavY33G7kvH
         em//2WKxL6DUi39AR1JNAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="MetroTileItem1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
+        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA33AAAN9wHQALrsAAAAB3RJ
+        TUUH4goYFRIxe4JmigAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAHrSURBVFhH
+        7Za7SgNREIaDt8aorXgjtYW3ytbGIhFbKxtbExJInRS+gQraKfgKCoqCb6Ag+gAWUbASjCDiJf5fmJW4
+        7I2YrIX54IOzs3tmJuyZsIkOHaBWq6XkuizEJLVSTvGkvJBxQ80kDQyzkIcyLqhFzTEauJWTsltuyXZD
+        DWpNyQoNwKNcsFeSk+8EWww5c1ZjUT4RdBqAV7lqD2RklWCLIFfGcq/JN4LQ2IBD2R6ckZV65HeQY8Zy
+        btQjDXg1AHuyV47KSwJNwl5y9MkDAm78GoAzOSj7ZTMTwh72DslzAl4ENQDXclx2yU0CEeFZ9kzIGwJ+
+        hDUAd3LW3mFWBk0I97L27Jy8JxhElAaAU5y2xH4T0njS03YdStQGYJ/koLV7Qr5POmi9X49GIEoDn7Jk
+        iYvSGdMRySnHEYuVZdHWJcneQMIaeJErkr/OXQKGM6accmRNzIFn2cNecvgS1MCDnJcD8piAi1PJmCJr
+        N+xhLznI5YlfA4wO3wiM4BUBH7gXdp8c5PIcR68GTiS/KtIYRYAc5CInuX/gbmBH9shl+UygRZCLnOSm
+        xjdOAx+yYKc3b9ethpx5q8FnWb0GF/xhLElO7bZsN9SgFjWrNDAt+Tw6knFBLWpO08DffpTaO/m7z/IO
+        /5xE4gtauBieYvhTTQAAAABJRU5ErkJggg==
 </value>
   </data>
 </root>

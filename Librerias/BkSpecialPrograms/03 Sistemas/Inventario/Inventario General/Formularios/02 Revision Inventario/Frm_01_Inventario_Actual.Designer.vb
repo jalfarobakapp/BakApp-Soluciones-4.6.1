@@ -22,38 +22,37 @@ Partial Class Frm_01_Inventario_Actual
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_01_Inventario_Actual))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Me.Bar2 = New DevComponents.DotNetBar.Bar
-        Me.BtnActualizar = New DevComponents.DotNetBar.ButtonItem
-        Me.BtnExcel = New DevComponents.DotNetBar.ButtonItem
-        Me.BtnBuscarProducto = New DevComponents.DotNetBar.ButtonItem
-        Me.BtnCerrar = New DevComponents.DotNetBar.ButtonItem
-        Me.BtnCerrarSinDiferencias = New DevComponents.DotNetBar.ButtonItem
-        Me.BtnCerrarInventariados = New DevComponents.DotNetBar.ButtonItem
-        Me.BtnCerrarTodosInvCero = New DevComponents.DotNetBar.ButtonItem
-        Me.BtnLevantados = New DevComponents.DotNetBar.ButtonItem
-        Me.ButtonItem1 = New DevComponents.DotNetBar.ButtonItem
-        Me.BtnExporAjuTodos = New DevComponents.DotNetBar.ButtonItem
-        Me.BtnExporAjuCerrados = New DevComponents.DotNetBar.ButtonItem
-        Me.BtnSalir = New DevComponents.DotNetBar.ButtonItem
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox
-        Me.Grilla = New System.Windows.Forms.DataGridView
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Me.Bar2 = New DevComponents.DotNetBar.Bar()
+        Me.BtnActualizar = New DevComponents.DotNetBar.ButtonItem()
+        Me.BtnExcel = New DevComponents.DotNetBar.ButtonItem()
+        Me.BtnBuscarProducto = New DevComponents.DotNetBar.ButtonItem()
+        Me.BtnCerrar = New DevComponents.DotNetBar.ButtonItem()
+        Me.BtnCerrarSinDiferencias = New DevComponents.DotNetBar.ButtonItem()
+        Me.BtnCerrarInventariados = New DevComponents.DotNetBar.ButtonItem()
+        Me.BtnCerrarTodosInvCero = New DevComponents.DotNetBar.ButtonItem()
+        Me.BtnLevantados = New DevComponents.DotNetBar.ButtonItem()
+        Me.ButtonItem1 = New DevComponents.DotNetBar.ButtonItem()
+        Me.BtnExporAjuTodos = New DevComponents.DotNetBar.ButtonItem()
+        Me.BtnExporAjuCerrados = New DevComponents.DotNetBar.ButtonItem()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.Grilla = New System.Windows.Forms.DataGridView()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.DetalleDelCToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.UltimodMovimientosCompraYVentasToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.GroupBox7 = New System.Windows.Forms.GroupBox
-        Me.LblTotal_Diferencia = New DevComponents.DotNetBar.LabelX
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.LblTotal_Inventario = New DevComponents.DotNetBar.LabelX
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox
-        Me.LblTotal_FotoStock = New DevComponents.DotNetBar.LabelX
-        Me.Bar1 = New DevComponents.DotNetBar.Bar
-        Me.BtnFiltroSectores = New DevComponents.DotNetBar.ButtonItem
-        Me.ChkTodosLosSectores = New DevComponents.DotNetBar.CheckBoxItem
-        Me.ChkMostrarSoloInv = New DevComponents.DotNetBar.CheckBoxItem
-        Me.ButtonItem2 = New DevComponents.DotNetBar.ButtonItem
+        Me.DetalleDelCToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.UltimodMovimientosCompraYVentasToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.GroupBox7 = New System.Windows.Forms.GroupBox()
+        Me.LblTotal_Diferencia = New DevComponents.DotNetBar.LabelX()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.LblTotal_Inventario = New DevComponents.DotNetBar.LabelX()
+        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.LblTotal_FotoStock = New DevComponents.DotNetBar.LabelX()
+        Me.Bar1 = New DevComponents.DotNetBar.Bar()
+        Me.BtnFiltroSectores = New DevComponents.DotNetBar.ButtonItem()
+        Me.ChkTodosLosSectores = New DevComponents.DotNetBar.CheckBoxItem()
+        Me.ChkMostrarSoloInv = New DevComponents.DotNetBar.CheckBoxItem()
+        Me.ButtonItem2 = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox2.SuspendLayout()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -69,8 +68,8 @@ Partial Class Frm_01_Inventario_Actual
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnActualizar, Me.BtnExcel, Me.BtnBuscarProducto, Me.BtnCerrar, Me.ButtonItem1, Me.BtnSalir})
-        Me.Bar2.Location = New System.Drawing.Point(0, 472)
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnActualizar, Me.BtnExcel, Me.BtnBuscarProducto, Me.BtnCerrar, Me.ButtonItem1})
+        Me.Bar2.Location = New System.Drawing.Point(0, 540)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(1001, 41)
         Me.Bar2.Stretch = True
@@ -150,15 +149,6 @@ Partial Class Frm_01_Inventario_Actual
         Me.BtnExporAjuCerrados.Name = "BtnExporAjuCerrados"
         Me.BtnExporAjuCerrados.Text = "Exportar solo cerrados"
         '
-        'BtnSalir
-        '
-        Me.BtnSalir.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.BtnSalir.ForeColor = System.Drawing.Color.Black
-        Me.BtnSalir.Image = CType(resources.GetObject("BtnSalir.Image"), System.Drawing.Image)
-        Me.BtnSalir.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.BtnSalir.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
-        Me.BtnSalir.Name = "BtnSalir"
-        '
         'GroupBox2
         '
         Me.GroupBox2.BackColor = System.Drawing.Color.White
@@ -166,7 +156,7 @@ Partial Class Frm_01_Inventario_Actual
         Me.GroupBox2.ForeColor = System.Drawing.Color.Black
         Me.GroupBox2.Location = New System.Drawing.Point(12, 47)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(977, 341)
+        Me.GroupBox2.Size = New System.Drawing.Size(977, 422)
         Me.GroupBox2.TabIndex = 31
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Detalle de inventario"
@@ -186,7 +176,7 @@ Partial Class Frm_01_Inventario_Actual
         Me.Grilla.Name = "Grilla"
         Me.Grilla.ReadOnly = True
         Me.Grilla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.Grilla.Size = New System.Drawing.Size(971, 320)
+        Me.Grilla.Size = New System.Drawing.Size(971, 401)
         Me.Grilla.TabIndex = 0
         '
         'ContextMenuStrip1
@@ -213,7 +203,7 @@ Partial Class Frm_01_Inventario_Actual
         Me.GroupBox7.Controls.Add(Me.LblTotal_Diferencia)
         Me.GroupBox7.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
         Me.GroupBox7.ForeColor = System.Drawing.Color.Black
-        Me.GroupBox7.Location = New System.Drawing.Point(829, 394)
+        Me.GroupBox7.Location = New System.Drawing.Point(825, 475)
         Me.GroupBox7.Name = "GroupBox7"
         Me.GroupBox7.Size = New System.Drawing.Size(160, 59)
         Me.GroupBox7.TabIndex = 42
@@ -242,7 +232,7 @@ Partial Class Frm_01_Inventario_Actual
         Me.GroupBox1.Controls.Add(Me.LblTotal_Inventario)
         Me.GroupBox1.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
         Me.GroupBox1.ForeColor = System.Drawing.Color.Black
-        Me.GroupBox1.Location = New System.Drawing.Point(654, 394)
+        Me.GroupBox1.Location = New System.Drawing.Point(650, 475)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(160, 59)
         Me.GroupBox1.TabIndex = 43
@@ -271,7 +261,7 @@ Partial Class Frm_01_Inventario_Actual
         Me.GroupBox3.Controls.Add(Me.LblTotal_FotoStock)
         Me.GroupBox3.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
         Me.GroupBox3.ForeColor = System.Drawing.Color.Black
-        Me.GroupBox3.Location = New System.Drawing.Point(480, 394)
+        Me.GroupBox3.Location = New System.Drawing.Point(476, 475)
         Me.GroupBox3.Name = "GroupBox3"
         Me.GroupBox3.Size = New System.Drawing.Size(159, 59)
         Me.GroupBox3.TabIndex = 44
@@ -287,7 +277,7 @@ Partial Class Frm_01_Inventario_Actual
         Me.LblTotal_FotoStock.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LblTotal_FotoStock.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblTotal_FotoStock.ForeColor = System.Drawing.Color.Black
-        Me.LblTotal_FotoStock.Location = New System.Drawing.Point(6, 26)
+        Me.LblTotal_FotoStock.Location = New System.Drawing.Point(6, 30)
         Me.LblTotal_FotoStock.Name = "LblTotal_FotoStock"
         Me.LblTotal_FotoStock.Size = New System.Drawing.Size(147, 23)
         Me.LblTotal_FotoStock.TabIndex = 34
@@ -340,8 +330,7 @@ Partial Class Frm_01_Inventario_Actual
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1001, 513)
-        Me.ControlBox = False
+        Me.ClientSize = New System.Drawing.Size(1001, 581)
         Me.Controls.Add(Me.Bar1)
         Me.Controls.Add(Me.GroupBox3)
         Me.Controls.Add(Me.GroupBox2)
@@ -352,6 +341,8 @@ Partial Class Frm_01_Inventario_Actual
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "Frm_01_Inventario_Actual"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
@@ -369,7 +360,6 @@ Partial Class Frm_01_Inventario_Actual
     End Sub
     Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
     Friend WithEvents BtnActualizar As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents BtnSalir As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
     Friend WithEvents Grilla As System.Windows.Forms.DataGridView
     Friend WithEvents ContextMenuStrip1 As System.Windows.Forms.ContextMenuStrip

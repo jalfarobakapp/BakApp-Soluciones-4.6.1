@@ -52,9 +52,6 @@ Partial Class Frm_RegistrarEquipo
         Me.Txt_KeyReg = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Line1 = New DevComponents.DotNetBar.Controls.Line()
         Me.STab = New DevComponents.DotNetBar.SuperTabControl()
-        Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Tab_EstTrabajo = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grupo_ConfCaja = New DevComponents.DotNetBar.Controls.GroupPanel()
@@ -68,6 +65,9 @@ Partial Class Frm_RegistrarEquipo
         Me.Txt_Modalidad_Caja = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.Tab_Empresas = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Tab_EstTrabajo = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel4 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.GroupPanel5 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Btn_Ver_Usuarios_Diablito = New DevComponents.DotNetBar.ButtonX()
@@ -84,11 +84,11 @@ Partial Class Frm_RegistrarEquipo
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.STab, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.STab.SuspendLayout()
-        Me.SuperTabControlPanel1.SuspendLayout()
-        Me.GroupPanel2.SuspendLayout()
         Me.SuperTabControlPanel2.SuspendLayout()
         Me.GroupPanel4.SuspendLayout()
         Me.Grupo_ConfCaja.SuspendLayout()
+        Me.SuperTabControlPanel1.SuspendLayout()
+        Me.GroupPanel2.SuspendLayout()
         Me.SuperTabControlPanel4.SuspendLayout()
         Me.GroupPanel5.SuspendLayout()
         Me.Grupo_Funcionarios.SuspendLayout()
@@ -461,9 +461,9 @@ Partial Class Frm_RegistrarEquipo
         Me.STab.ControlBox.MenuBox.Name = ""
         Me.STab.ControlBox.Name = ""
         Me.STab.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.STab.ControlBox.MenuBox, Me.STab.ControlBox.CloseBox})
-        Me.STab.Controls.Add(Me.SuperTabControlPanel2)
-        Me.STab.Controls.Add(Me.SuperTabControlPanel1)
         Me.STab.Controls.Add(Me.SuperTabControlPanel4)
+        Me.STab.Controls.Add(Me.SuperTabControlPanel1)
+        Me.STab.Controls.Add(Me.SuperTabControlPanel2)
         Me.STab.Controls.Add(Me.SuperTabControlPanel3)
         Me.STab.ForeColor = System.Drawing.Color.Black
         Me.STab.Location = New System.Drawing.Point(5, 12)
@@ -477,82 +477,13 @@ Partial Class Frm_RegistrarEquipo
         Me.STab.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Tab_EstTrabajo, Me.Tab_Empresas, Me.Tab_Configuraciones, Me.Tab_Impresoras})
         Me.STab.Text = "SuperTabControl1"
         '
-        'SuperTabControlPanel1
-        '
-        Me.SuperTabControlPanel1.Controls.Add(Me.GroupPanel2)
-        Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 27)
-        Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
-        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(553, 249)
-        Me.SuperTabControlPanel1.TabIndex = 1
-        Me.SuperTabControlPanel1.TabItem = Me.Tab_EstTrabajo
-        '
-        'GroupPanel2
-        '
-        Me.GroupPanel2.BackColor = System.Drawing.Color.White
-        Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.GroupPanel2.Controls.Add(Me.Label1)
-        Me.GroupPanel2.Controls.Add(Me.Txt_Alias)
-        Me.GroupPanel2.Controls.Add(Me.ReflectionImage2)
-        Me.GroupPanel2.Controls.Add(Me.Label9)
-        Me.GroupPanel2.Controls.Add(Me.LblNombreEquipo)
-        Me.GroupPanel2.Controls.Add(Me.Label2)
-        Me.GroupPanel2.Controls.Add(Me.TextBoxX1)
-        Me.GroupPanel2.Controls.Add(Me.Label4)
-        Me.GroupPanel2.Controls.Add(Me.Label5)
-        Me.GroupPanel2.Controls.Add(Me.Cmb_TipoEstacion)
-        Me.GroupPanel2.Controls.Add(Me.Label3)
-        Me.GroupPanel2.Controls.Add(Me.TextBoxX2)
-        Me.GroupPanel2.Controls.Add(Me.Txt_KeyReg)
-        Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GroupPanel2.Location = New System.Drawing.Point(0, 0)
-        Me.GroupPanel2.Name = "GroupPanel2"
-        Me.GroupPanel2.Size = New System.Drawing.Size(553, 249)
-        '
-        '
-        '
-        Me.GroupPanel2.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.GroupPanel2.Style.BackColorGradientAngle = 90
-        Me.GroupPanel2.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.GroupPanel2.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel2.Style.BorderBottomWidth = 1
-        Me.GroupPanel2.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
-        Me.GroupPanel2.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel2.Style.BorderLeftWidth = 1
-        Me.GroupPanel2.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel2.Style.BorderRightWidth = 1
-        Me.GroupPanel2.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel2.Style.BorderTopWidth = 1
-        Me.GroupPanel2.Style.CornerDiameter = 4
-        Me.GroupPanel2.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.GroupPanel2.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
-        Me.GroupPanel2.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
-        Me.GroupPanel2.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
-        '
-        '
-        '
-        Me.GroupPanel2.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.GroupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.GroupPanel2.TabIndex = 0
-        '
-        'Tab_EstTrabajo
-        '
-        Me.Tab_EstTrabajo.AttachedControl = Me.SuperTabControlPanel1
-        Me.Tab_EstTrabajo.GlobalItem = False
-        Me.Tab_EstTrabajo.Name = "Tab_EstTrabajo"
-        Me.Tab_EstTrabajo.Text = "Estación de trabajo"
-        '
         'SuperTabControlPanel2
         '
         Me.SuperTabControlPanel2.Controls.Add(Me.GroupPanel4)
         Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 27)
+        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 0)
         Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
-        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(553, 249)
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(553, 276)
         Me.SuperTabControlPanel2.TabIndex = 0
         Me.SuperTabControlPanel2.TabItem = Me.Tab_Empresas
         '
@@ -572,7 +503,7 @@ Partial Class Frm_RegistrarEquipo
         Me.GroupPanel4.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupPanel4.Location = New System.Drawing.Point(0, 0)
         Me.GroupPanel4.Name = "GroupPanel4"
-        Me.GroupPanel4.Size = New System.Drawing.Size(553, 249)
+        Me.GroupPanel4.Size = New System.Drawing.Size(553, 276)
         '
         '
         '
@@ -786,13 +717,82 @@ Partial Class Frm_RegistrarEquipo
         Me.Tab_Empresas.Name = "Tab_Empresas"
         Me.Tab_Empresas.Text = "Empresa/datos por defecto"
         '
+        'SuperTabControlPanel1
+        '
+        Me.SuperTabControlPanel1.Controls.Add(Me.GroupPanel2)
+        Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 27)
+        Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
+        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(553, 249)
+        Me.SuperTabControlPanel1.TabIndex = 1
+        Me.SuperTabControlPanel1.TabItem = Me.Tab_EstTrabajo
+        '
+        'GroupPanel2
+        '
+        Me.GroupPanel2.BackColor = System.Drawing.Color.White
+        Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel2.Controls.Add(Me.Label1)
+        Me.GroupPanel2.Controls.Add(Me.Txt_Alias)
+        Me.GroupPanel2.Controls.Add(Me.ReflectionImage2)
+        Me.GroupPanel2.Controls.Add(Me.Label9)
+        Me.GroupPanel2.Controls.Add(Me.LblNombreEquipo)
+        Me.GroupPanel2.Controls.Add(Me.Label2)
+        Me.GroupPanel2.Controls.Add(Me.TextBoxX1)
+        Me.GroupPanel2.Controls.Add(Me.Label4)
+        Me.GroupPanel2.Controls.Add(Me.Label5)
+        Me.GroupPanel2.Controls.Add(Me.Cmb_TipoEstacion)
+        Me.GroupPanel2.Controls.Add(Me.Label3)
+        Me.GroupPanel2.Controls.Add(Me.TextBoxX2)
+        Me.GroupPanel2.Controls.Add(Me.Txt_KeyReg)
+        Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GroupPanel2.Location = New System.Drawing.Point(0, 0)
+        Me.GroupPanel2.Name = "GroupPanel2"
+        Me.GroupPanel2.Size = New System.Drawing.Size(553, 249)
+        '
+        '
+        '
+        Me.GroupPanel2.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel2.Style.BackColorGradientAngle = 90
+        Me.GroupPanel2.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel2.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderBottomWidth = 1
+        Me.GroupPanel2.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel2.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderLeftWidth = 1
+        Me.GroupPanel2.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderRightWidth = 1
+        Me.GroupPanel2.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderTopWidth = 1
+        Me.GroupPanel2.Style.CornerDiameter = 4
+        Me.GroupPanel2.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel2.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel2.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel2.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel2.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel2.TabIndex = 0
+        '
+        'Tab_EstTrabajo
+        '
+        Me.Tab_EstTrabajo.AttachedControl = Me.SuperTabControlPanel1
+        Me.Tab_EstTrabajo.GlobalItem = False
+        Me.Tab_EstTrabajo.Name = "Tab_EstTrabajo"
+        Me.Tab_EstTrabajo.Text = "Estación de trabajo"
+        '
         'SuperTabControlPanel4
         '
         Me.SuperTabControlPanel4.Controls.Add(Me.GroupPanel5)
         Me.SuperTabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel4.Name = "SuperTabControlPanel4"
-        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(553, 276)
+        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(553, 249)
         Me.SuperTabControlPanel4.TabIndex = 0
         Me.SuperTabControlPanel4.TabItem = Me.Tab_Impresoras
         '
@@ -808,7 +808,7 @@ Partial Class Frm_RegistrarEquipo
         Me.GroupPanel5.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupPanel5.Location = New System.Drawing.Point(0, 0)
         Me.GroupPanel5.Name = "GroupPanel5"
-        Me.GroupPanel5.Size = New System.Drawing.Size(553, 276)
+        Me.GroupPanel5.Size = New System.Drawing.Size(553, 249)
         '
         '
         '
@@ -1046,14 +1046,14 @@ Partial Class Frm_RegistrarEquipo
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.STab, System.ComponentModel.ISupportInitialize).EndInit()
         Me.STab.ResumeLayout(False)
-        Me.SuperTabControlPanel1.ResumeLayout(False)
-        Me.GroupPanel2.ResumeLayout(False)
-        Me.GroupPanel2.PerformLayout()
         Me.SuperTabControlPanel2.ResumeLayout(False)
         Me.GroupPanel4.ResumeLayout(False)
         Me.GroupPanel4.PerformLayout()
         Me.Grupo_ConfCaja.ResumeLayout(False)
         Me.Grupo_ConfCaja.PerformLayout()
+        Me.SuperTabControlPanel1.ResumeLayout(False)
+        Me.GroupPanel2.ResumeLayout(False)
+        Me.GroupPanel2.PerformLayout()
         Me.SuperTabControlPanel4.ResumeLayout(False)
         Me.GroupPanel5.ResumeLayout(False)
         Me.Grupo_Funcionarios.ResumeLayout(False)

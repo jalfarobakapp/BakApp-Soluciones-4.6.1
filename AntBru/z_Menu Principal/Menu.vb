@@ -897,4 +897,17 @@ Public Class Menu
         Fm.Dispose()
 
     End Sub
+
+    Private Sub Btn_RevPesoVariable_Click(sender As Object, e As EventArgs) Handles Btn_RevPesoVariable.Click
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+        Dim Cl As New Cl_PesoVariable
+
+        _Mensaje = Cl.Fx_Cacular(100, 6, 3)
+
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+
+
+    End Sub
+
 End Class

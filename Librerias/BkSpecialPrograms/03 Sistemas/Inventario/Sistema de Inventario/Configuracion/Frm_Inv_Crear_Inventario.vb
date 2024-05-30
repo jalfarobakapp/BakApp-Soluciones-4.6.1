@@ -4,86 +4,47 @@ Public Class Frm_Inv_Crear_Inventario
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-    Dim _Grabar As Boolean
-    Dim _Id_Inventario As Integer
-    Dim _Empresa As String
-    Dim _Sucursal As String
-
-    Dim _Row_Inventario As DataRow
-
-    Public Property Empresa As String
-        Get
-            Return _Empresa
-        End Get
-        Set(value As String)
-            _Empresa = value
-        End Set
-    End Property
-
-    Public Property Sucursal As String
-        Get
-            Return _Sucursal
-        End Get
-        Set(value As String)
-            _Sucursal = value
-        End Set
-    End Property
-
+    Private _Cl_Inventario As New Cl_Inventario
     Public Property Id_Inventario As Integer
-        Get
-            Return _Id_Inventario
-        End Get
-        Set(value As Integer)
-            _Id_Inventario = value
-        End Set
-    End Property
-
     Public Property Grabar As Boolean
-        Get
-            Return _Grabar
-        End Get
-        Set(value As Boolean)
-            _Grabar = value
-        End Set
-    End Property
 
-    Public Sub New(_Empresa As String, _Sucursal As String, _Id_Inventario As Integer)
+    Public Sub New(_Empresa As String, _Sucursal As String, _Id As Integer)
 
         ' Esta llamada es exigida por el diseñador.
         InitializeComponent()
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        Me.Id_Inventario = _Id_Inventario
-        Me.Empresa = _Empresa
-        Me.Sucursal = _Sucursal
-
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Inv_Inventario Inv" & vbCrLf &
-                       "Where Id_Inventario = " & _Id_Inventario
-        _Row_Inventario = _Sql.Fx_Get_DataRow(Consulta_sql)
+        _Cl_Inventario.Zw_Inv_Inventario.Empresa = _Empresa
+        _Cl_Inventario.Zw_Inv_Inventario.Sucursal = _Sucursal
+        _Cl_Inventario.Fx_Llenar_Zw_Inv_Inventario(_Id)
 
     End Sub
 
     Private Sub Frm_Crear_Inventario_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        LblEmpresa.Text = RazonEmpresa
-        LblSucursal.Text = _Sql.Fx_Trae_Dato("TABSU", "NOKOSU", "EMPRESA = '" & _Empresa & "' And KOSU = '" & _Sucursal & "'")
+        With _Cl_Inventario.Zw_Inv_Inventario
 
-        If Not IsNothing(_Row_Inventario) Then
-            Txt_Nombre.Text = _Row_Inventario.Item("Nombre")
-            Dtp_FechaInicio.Value = _Row_Inventario.Item("FechaInicio")
-            Sw_Activo.Value = _Row_Inventario.Item("Activo")
-            Dtp_FechaCierre.Value = _Row_Inventario.Item("FechaCierre")
-        Else
-            Lbl_Estado.Enabled = False
-            Sw_Activo.Enabled = False
-            Lbl_FechaCierre.Enabled = False
-            Dtp_FechaCierre.Enabled = False
-            Txt_Nombre.ReadOnly = False
-            Txt_Nombre.Enabled = True
-            Dtp_FechaInicio.Enabled = True
-            Me.ActiveControl = Txt_Nombre
-        End If
+            If CBool(.Id) Then
+                Txt_Nombre.Text = .Nombre_Inventario
+                Dtp_FechaInicio.Value = .FechaInicio
+                Sw_Activo.Value = .Activo
+                Dtp_FechaCierre.Value = .FechaCierre
+            Else
+                Lbl_Estado.Enabled = False
+                Sw_Activo.Enabled = False
+                Lbl_FechaCierre.Enabled = False
+                Dtp_FechaCierre.Enabled = False
+                Txt_Nombre.ReadOnly = False
+                Txt_Nombre.Enabled = True
+                Dtp_FechaInicio.Enabled = True
+                Me.ActiveControl = Txt_Nombre
+            End If
+
+            Lbl_Empresa.Text = RazonEmpresa
+            Lbl_Sucursal.Text = _Sql.Fx_Trae_Dato("TABSU", "NOKOSU", "EMPRESA = '" & .Empresa & "' And KOSU = '" & .Sucursal & "'")
+
+        End With
 
     End Sub
 
@@ -92,28 +53,29 @@ Public Class Frm_Inv_Crear_Inventario
         Dim _FechaInicio As String = Format(Dtp_FechaInicio.Value, "yyyyMMdd")
         Dim _FechaCierre As String = Format(Dtp_FechaCierre.Value, "yyyyMMdd")
 
-        If Sw_Activo.Value Then
-            _FechaCierre = "Null"
-        Else
-            _FechaCierre = "'" & _FechaCierre & "'"
-        End If
+        With _Cl_Inventario
 
-        If Not CBool(_Id_Inventario) Then
-            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Inv_Inventario (Empresa,Sucursal,Nombre_Inventario,FechaInicio) Values ('" & _Empresa & "','" & _Sucursal & "','" & Txt_Nombre.Text.Trim & "','" & _FechaInicio & "')"
-            _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Inventario)
-        End If
+            .Zw_Inv_Inventario.Nombre_Inventario = Txt_Nombre.Text
+            .Zw_Inv_Inventario.FechaInicio = Dtp_FechaInicio.Value
+            .Zw_Inv_Inventario.Activo = Sw_Activo.Value
+            '.FechaCierre = Dtp_FechaCierre.Value
 
-        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Inv_Inventario Set" & vbCrLf &
-                        "FechaInicio = '" & _FechaInicio &
-                        "',Nombre_Inventario = '" & Txt_Nombre.Text &
-                        "',Activo = " & Convert.ToInt32(Sw_Activo.Value) &
-                        ",FechaCierre = " & _FechaCierre & vbCrLf &
-                        "Where Id_Inventario = " & _Id_Inventario
-        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-            MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        End If
+            Dim _Mensaje As LsValiciones.Mensajes
 
-        _Grabar = True
+            _Mensaje = .Fx_Crear_Inventario
+
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+
+            If Not _Mensaje.EsCorrecto Then
+                Return
+            End If
+
+            Id_Inventario = _Mensaje.Id
+            _Grabar = True
+
+        End With
+
+
         Me.Close()
 
     End Sub

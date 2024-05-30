@@ -8,7 +8,7 @@ Public Class Inv_General
 
     Dim _Fm_Menu_Padre As Metro.MetroAppForm
 
-    Public Sub New(ByVal Fm_Menu_Padre As Metro.MetroAppForm)
+    Public Sub New(Fm_Menu_Padre As Metro.MetroAppForm)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -19,11 +19,11 @@ Public Class Inv_General
     End Sub
 
 
-    Private Sub BtnSalir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnSalir.Click
+    Private Sub BtnSalir_Click(sender As System.Object, e As System.EventArgs) Handles BtnSalir.Click
         Frm_Menu.CloseModalPanel(Me, DevComponents.DotNetBar.Controls.eSlideSide.Left)
     End Sub
 
-    Private Sub BtnConfiguracion_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnConfiguracion.Click
+    Private Sub BtnConfiguracion_Click(sender As System.Object, e As System.EventArgs) Handles BtnConfiguracion.Click
         Dim NewPanel As Inv_General_Conf = Nothing
         NewPanel = New Inv_General_Conf
         Frm_Menu.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
@@ -35,5 +35,11 @@ Public Class Inv_General
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
+    End Sub
+
+    Private Sub Btn_Ingresar_Inventario_Activo_Click(sender As Object, e As EventArgs) Handles Btn_Ingresar_Inventario_Activo.Click
+        Dim NewPanel As Inv_General_Activo = Nothing
+        NewPanel = New Inv_General_Activo(_Fm_Menu_Padre)
+        Frm_Menu.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
     End Sub
 End Class

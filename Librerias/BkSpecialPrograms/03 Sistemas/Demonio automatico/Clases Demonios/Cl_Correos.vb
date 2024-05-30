@@ -708,7 +708,7 @@ Public Class Cl_Correos
                             End If
 
                             '_Para = "jalfaro@bakapp.cl"
-                            '_Cc = "jalfaro@bakapp.cl;jorgealfarogzlz@gmail.com"
+                            '_Cc = "alejandro.munoz@huifquenco.cl;fordenes@huifquenco.cl" '"jalfaro@bakapp.cl;jorgealfarogzlz@gmail.com"
 
                             _Cc = Replace(_Cc, ";" & _Para, "")
                             _Cc = Replace(_Cc, _Para & ";", "")
@@ -1184,7 +1184,9 @@ Public Class Cl_Correos
         ' Unir los correos electrónicos únicos nuevamente en una cadena
         Dim _Resultado As String = String.Join(";", correosUnicos)
 
-        _Resultado = _Resultado.Substring(0, _Resultado.Length - 1)
+        If Not String.IsNullOrWhiteSpace(_Resultado) Then
+            _Resultado = _Resultado.Substring(0, _Resultado.Length - 1)
+        End If
 
         Return _Resultado
 
