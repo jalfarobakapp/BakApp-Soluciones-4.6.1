@@ -1,15 +1,6 @@
-Imports System
-Imports System.Collections.Generic
-Imports System.ComponentModel
-Imports System.Data
-Imports System.Drawing
-Imports System.Text
-Imports System.Windows.Forms
-Imports System.IO
-Imports System.Reflection
-Imports System.Threading
-Imports System.Data.OleDb
-Imports System.Collections
+ï»¿Imports System.Threading
+Imports AxZKFPEngXControl
+
 
 Public Class Frm_Lector_Huellas_ZK4500
 
@@ -20,10 +11,10 @@ Public Class Frm_Lector_Huellas_ZK4500
 
     Public Sub New()
 
-        ' Esta llamada es exigida por el diseñador.
+        ' Esta llamada es exigida por el diseÃ±ador.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
 
     End Sub
 
@@ -79,7 +70,7 @@ Public Class Frm_Lector_Huellas_ZK4500
             If axZKFPEngX1.IsRegister Then axZKFPEngX1.CancelEnroll()
             axZKFPEngX1.EnrollCount = 1
 
-            MessageBox.Show("Extracto fallido o no utilizando la versión estándar de ZKFinger SDK", "error!")
+            MessageBox.Show("Extracto fallido o no utilizando la versiÃ³n estÃ¡ndar de ZKFinger SDK", "error!")
         End If
 
     End Sub
@@ -124,10 +115,10 @@ Public Class Frm_Lector_Huellas_ZK4500
             txtb2.Text = axZKFPEngX1.SensorIndex.ToString()
             txtb5.Text = axZKFPEngX1.SensorSN
             statusBar1.Panels(0).Text = "Sensor conectado!"
-            MessageBox.Show("¡Éxito inicial!", "Información")
+            MessageBox.Show("Â¡Ã‰xito inicial!", "InformaciÃ³n")
         Else
             axZKFPEngX1.EndEngine()
-            MessageBox.Show("¡Falló inicial!", "Error")
+            MessageBox.Show("Â¡FallÃ³ inicial!", "Error")
         End If
 
         FMatchType = 2
@@ -146,7 +137,7 @@ Public Class Frm_Lector_Huellas_ZK4500
             End If
 
             If axZKFPEngX1.VerFingerFromStr(sVerTemplate, sTemp, False, RegChanged) Then
-                statusBar1.Panels(0).Text = "Verificar el éxito"
+                statusBar1.Panels(0).Text = "Verificar el Ã©xito"
 
                 'Envia color verde al Sensor
                 axZKFPEngX1.ControlSensor(11, 1)
@@ -156,7 +147,7 @@ Public Class Frm_Lector_Huellas_ZK4500
 
                 'Envia Beep al Sensor
                 axZKFPEngX1.ControlSensor(13, 1)
-                Thread.Sleep(100) 'Duración del Beep
+                Thread.Sleep(100) 'DuraciÃ³n del Beep
                 'Fin del Beep
                 axZKFPEngX1.ControlSensor(13, 0)
             Else
@@ -176,7 +167,7 @@ Public Class Frm_Lector_Huellas_ZK4500
             If ID = -1 Then
                 statusBar1.Panels(0).Text = "Identificar fallido"
             Else
-                statusBar1.Panels(0).Text = String.Format("Identifique la ID exitosa = {0} Puntuación = {1} Número procesado = {2}", ID, score, processedNum)
+                statusBar1.Panels(0).Text = String.Format("Identifique la ID exitosa = {0} PuntuaciÃ³n = {1} NÃºmero procesado = {2}", ID, score, processedNum)
             End If
         End If
     End Sub
@@ -193,7 +184,7 @@ Public Class Frm_Lector_Huellas_ZK4500
                 If sRegTemplate10.Length > 0 Then
                     axZKFPEngX1.AddRegTemplateStrToFPCacheDBEx(fpcHandle, FPID, sRegTemplate, sRegTemplate10)
                 Else
-                    MessageBox.Show("Falló el registro 10.0, la longitud de la plantilla es cero", "error!")
+                    MessageBox.Show("FallÃ³ el registro 10.0, la longitud de la plantilla es cero", "error!")
                 End If
 
                 Dim pTemplate As Object
@@ -207,7 +198,7 @@ Public Class Frm_Lector_Huellas_ZK4500
 
                 axZKFPEngX1.SaveTemplate("fingerprint.tpl", pTemplate)
                 FPID += 1
-                MessageBox.Show("Registrarse con éxito", "Information!")
+                MessageBox.Show("Registrarse con Ã©xito", "Information!")
             Else
                 MessageBox.Show("Error de registro, la longitud de la plantilla es cero", "error!")
             End If
@@ -222,7 +213,7 @@ Public Class Frm_Lector_Huellas_ZK4500
 
     Private Sub AxZKFPEngX1_OnFeatureInfo(ByVal sender As Object, ByVal e As AxZKFPEngXControl.IZKFPEngXEvents_OnFeatureInfoEvent) Handles axZKFPEngX1.OnFeatureInfo
         Dim sTemp As String = ""
-        If axZKFPEngX1.IsRegister Then sTemp = "Estado de registro: todavía presione el dedo " & axZKFPEngX1.EnrollIndex.ToString() & " times!"
+        If axZKFPEngX1.IsRegister Then sTemp = "Estado de registro: todavÃ­a presione el dedo " & axZKFPEngX1.EnrollIndex.ToString() & " times!"
         sTemp = sTemp & " Calidad de huella digital"
         Dim lastq As Integer = axZKFPEngX1.LastQuality
 
@@ -248,7 +239,7 @@ Public Class Frm_Lector_Huellas_ZK4500
         Fm.Dispose()
 
         If _Huella_Correcta Then
-            MessageBox.Show(Me, "La huella es correcta", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            MessageBox.Show(Me, "La huella es correcta", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
 
     End Sub
