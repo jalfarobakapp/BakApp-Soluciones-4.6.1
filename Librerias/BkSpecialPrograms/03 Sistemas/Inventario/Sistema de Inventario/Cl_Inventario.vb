@@ -95,8 +95,6 @@ Public Class Cl_Inventario
 
             End If
 
-
-
             .Id = _Row_Enc.Item("Id")
             .Empresa = _Row_Enc.Item("Empresa")
             .Sucursal = _Row_Enc.Item("Sucursal")

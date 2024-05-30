@@ -63,6 +63,8 @@ Public Class Frm_BuscarEntidad_Mt
         End Set
     End Property
 
+    Public Property PreguntaClientePuntos As Boolean
+
     Public Sub New(ByVal _Preguntar_Despues_de_seleccionar As Boolean)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -117,20 +119,33 @@ Public Class Frm_BuscarEntidad_Mt
 
     Private Sub BtnCrearUser_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnCrearUser.Click
 
-        If Fx_Tiene_Permiso(Me, "CfEnt002") Then
-            Dim Fm As New Frm_Crear_Entidad_Mt
-            Fm.CrearEntidad = True
-            Fm.EditarEntidad = False
-            Fm.ShowDialog(Me)
+        If Not Fx_Tiene_Permiso(Me, "CfEnt002") Then
+            Return
+        End If
 
-            If Fm.CreaNuevaEntidad Then
-                Sb_Actualizar_Grilla(Fm.Txt_Koen.Text, True)
-                ToastNotification.Show(Me, "ENTIDAD CREADA CORRECTAMENTE", My.Resources.ok_button,
-                                          3 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
+        Dim _ClientePuntos As Boolean
+
+        If PreguntaClientePuntos Then
+
+            If MessageBoxEx.Show(Me, "¿Crea cliente para puntos?", "Creación de entidad", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+                _ClientePuntos = True
             End If
 
-            Fm.Dispose()
         End If
+
+        Dim Fm As New Frm_Crear_Entidad_Mt
+        Fm.CrearEntidad = True
+        Fm.EditarEntidad = False
+        Fm.ClientePuntos = _ClientePuntos
+        Fm.ShowDialog(Me)
+
+        If Fm.CreaNuevaEntidad Then
+            Sb_Actualizar_Grilla(Fm.Txt_Koen.Text, True)
+            ToastNotification.Show(Me, "ENTIDAD CREADA CORRECTAMENTE", My.Resources.ok_button,
+                                      3 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
+        End If
+
+        Fm.Dispose()
 
     End Sub
 

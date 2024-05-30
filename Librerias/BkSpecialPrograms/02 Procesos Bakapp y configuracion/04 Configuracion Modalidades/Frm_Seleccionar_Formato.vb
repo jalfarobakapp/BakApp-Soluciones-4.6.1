@@ -35,7 +35,7 @@ Public Class Frm_Seleccionar_Formato
         End Set
     End Property
 
-    Public Sub New(ByVal Tido As String)
+    Public Sub New(Tido As String)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -58,7 +58,7 @@ Public Class Frm_Seleccionar_Formato
 
     End Sub
 
-    Private Sub Frm_Seleccionar_Formato_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Seleccionar_Formato_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         Me.Text = "Seleccione formato de documento"
 
@@ -102,17 +102,17 @@ Public Class Frm_Seleccionar_Formato
 
     End Sub
 
-    Private Sub Grilla_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
+    Private Sub Grilla_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
         Sb_Seleccionar_Formato()
     End Sub
 
-    Private Sub Frm_Seleccionar_Formato_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_Seleccionar_Formato_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
-    Private Sub BtnAceptar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnAceptar.Click
+    Private Sub BtnAceptar_Click(sender As System.Object, e As System.EventArgs) Handles BtnAceptar.Click
         Sb_Seleccionar_Formato()
     End Sub
 
@@ -133,7 +133,7 @@ Public Class Frm_Seleccionar_Formato
 
     End Sub
 
-    Private Sub Grilla_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Grilla.KeyDown
+    Private Sub Grilla_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles Grilla.KeyDown
         If e.KeyValue = Keys.Enter Then
             SendKeys.Send("{F2}")
             'SendKeys.Send("{LEFT}")

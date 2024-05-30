@@ -517,6 +517,7 @@ Public Class Frm_Tickets_Seguimiento
                 _Mensaje.EsCorrecto = True
                 _Mensaje.Detalle = "Rechazar Ticket"
                 _Mensaje.Mensaje = "Ticket Rechazado, se ha enviado la confirmación al remitente"
+                _Mensaje.Icono = MessageBoxIcon.Information
 
             Else
 
@@ -664,6 +665,8 @@ Public Class Frm_Tickets_Seguimiento
             Sb_Cerrar_Ticket(True, False, True, False, _Id_Hijo)
         End If
 
+        GestionRealizada = True
+
     End Sub
 
     Private Sub Btn_Anular_Click(sender As Object, e As EventArgs) Handles Btn_Anular.Click
@@ -742,6 +745,8 @@ Public Class Frm_Tickets_Seguimiento
         End If
 
         MessageBoxEx.Show(Me, _Mensaje_Ticket.Mensaje, _Caption, MessageBoxButtons.OK, MessageBoxIcon.Information)
+        GestionRealizada = True
+
         Me.Close()
 
     End Sub
@@ -787,7 +792,24 @@ Public Class Frm_Tickets_Seguimiento
     End Sub
 
     Private Sub Btn_Mnu_RechazarTicket_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_RechazarTicket.Click
-        Sb_Agregar_Mensaje_Respuesta(True)
+        'Sb_Agregar_Mensaje_Respuesta(True)
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        _Mensaje = Fx_Agregar_Mensaje_Respuesta(True)
+
+        GestionRealizada = _Mensaje.EsCorrecto
+
+        If _Mensaje.MostrarMensaje Then
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        End If
+
+        If GestionRealizada And Not _Mensaje.MostrarMensaje Then
+            Me.Close()
+        Else
+            Sb_Actualizar_Grilla()
+        End If
+
     End Sub
 
     Private Sub Btn_Mnu_EnviarMensajeRespuesta_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_EnviarMensajeRespuesta.Click

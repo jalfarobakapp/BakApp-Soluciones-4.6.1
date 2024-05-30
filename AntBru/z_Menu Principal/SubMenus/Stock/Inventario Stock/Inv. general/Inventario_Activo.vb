@@ -32,13 +32,13 @@ Public Class Inventario_Activo
 
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, Nro) Then
 
-            Dim Fm As New Frm_01_Inventario_Actual
+            Dim Fm As New Frm_01_Inventario_Actual(0)
 
-            Fm._Fecha_Inv_Activo = _Fecha_Inv_Activo
-            Fm._Empresa_Inv_Activo = _Empresa_Inv_Activo
-            Fm._Sucursal_Inv_Activo = _Sucursal_Inv_Activo
-            Fm._Bodega_Inv_Activo = _Bodega_Inv_Activo
-            Fm._IdInventario_Activo = IdInventario_Activo
+            'Fm._Fecha_Inv_Activo = _Fecha_Inv_Activo
+            'Fm._Empresa_Inv_Activo = _Empresa_Inv_Activo
+            'Fm._Sucursal_Inv_Activo = _Sucursal_Inv_Activo
+            'Fm._Bodega_Inv_Activo = _Bodega_Inv_Activo
+            'Fm._IdInventario = IdInventario_Activo
 
             Fm.ShowDialog(Me)
 

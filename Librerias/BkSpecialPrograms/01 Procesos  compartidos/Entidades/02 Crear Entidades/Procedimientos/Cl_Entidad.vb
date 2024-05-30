@@ -324,6 +324,7 @@ Namespace Tablas_Entidades
         Public Property JuntaPuntos As Boolean
         Public Property EmailPuntos As String
         Public Property FechaInscripPuntos As DateTime?
+        Public Property CodFuncionario_Enrola As String
 
     End Class
 

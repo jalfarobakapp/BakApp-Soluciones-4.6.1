@@ -540,6 +540,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\14 Exportar documentos\Cl_ExpotarDoc.vb" />
+    <Compile Include="01 Procesos  compartidos\Documentos\15 Pesos Variables\Cl_PesoVariable.vb" />
     <Compile Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_Puntos.Designer.vb">
       <DependentUpon>Frm_Crear_Entidad_Mt_Puntos.vb</DependentUpon>
     </Compile>
@@ -1896,9 +1897,7 @@
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Frm_Inv_Inventarios.Designer.vb">
       <DependentUpon>Frm_Inv_Inventarios.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Frm_Inv_Inventarios.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Frm_Inv_Inventarios.vb" />
     <Compile Include="03 Sistemas\Lector de huellas\Frm_Huellas_Menu.Designer.vb">
       <DependentUpon>Frm_Huellas_Menu.vb</DependentUpon>
     </Compile>

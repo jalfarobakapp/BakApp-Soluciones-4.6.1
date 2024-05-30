@@ -144,7 +144,7 @@ Public Class Frm_Tickets_IngProducto
 
             .Cantidad = Txt_Cantidad.Text
             .StfiEnBodega = Txt_StfiEnBodega.Text
-            .Diferencia = Txt_StfiEnBodega.Text - Txt_Cantidad.Text
+            .Diferencia = Txt_Cantidad.Text - Txt_StfiEnBodega.Text
             .UdMedida = Cmb_UdMedida.SelectedValue
             .FechaRev = _FechaRev
             .Ubicacion = Txt_Ubicacion.Text

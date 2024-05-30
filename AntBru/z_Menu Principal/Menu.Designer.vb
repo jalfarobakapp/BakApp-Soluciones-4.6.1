@@ -70,6 +70,7 @@ Partial Class Menu
         Me.Btn_IngresarGRIProduccion = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_CrearNVVDesdeOCC = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_PruebasFacturaElectronica = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Stem = New DevComponents.DotNetBar.ButtonItem()
         Me.Tiempo_Actualizar_BakApp = New System.Windows.Forms.Timer(Me.components)
         Me.Menu_BakApp = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_Menu_Extra = New DevComponents.DotNetBar.ButtonItem()
@@ -91,7 +92,7 @@ Partial Class Menu
         Me.Metro_Bar_Color = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
         Me.StyleManager1 = New DevComponents.DotNetBar.StyleManager(Me.components)
-        Me.Btn_Stem = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_RevPesoVariable = New DevComponents.DotNetBar.ButtonItem()
         MetroTileFrame1 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame2 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame3 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
@@ -800,7 +801,7 @@ Partial Class Menu
         Me.ButtonX1.Name = "ButtonX1"
         Me.ButtonX1.Size = New System.Drawing.Size(134, 32)
         Me.ButtonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.ButtonX1.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Monisiones, Me.ButtonItem5, Me.Btn_IngresarGRIProduccion, Me.Btn_CrearNVVDesdeOCC, Me.Btn_PruebasFacturaElectronica, Me.Btn_Stem})
+        Me.ButtonX1.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Monisiones, Me.ButtonItem5, Me.Btn_IngresarGRIProduccion, Me.Btn_CrearNVVDesdeOCC, Me.Btn_PruebasFacturaElectronica, Me.Btn_Stem, Me.Btn_RevPesoVariable})
         Me.ButtonX1.TabIndex = 15
         Me.ButtonX1.Text = "Boton de pruebas"
         Me.ButtonX1.Visible = False
@@ -859,6 +860,12 @@ Partial Class Menu
         Me.Btn_PruebasFacturaElectronica.GlobalItem = False
         Me.Btn_PruebasFacturaElectronica.Name = "Btn_PruebasFacturaElectronica"
         Me.Btn_PruebasFacturaElectronica.Text = "Pruebas Factura Electronica"
+        '
+        'Btn_Stem
+        '
+        Me.Btn_Stem.GlobalItem = False
+        Me.Btn_Stem.Name = "Btn_Stem"
+        Me.Btn_Stem.Text = "Sistema de ticket entrega de mercaderia STEM"
         '
         'Tiempo_Actualizar_BakApp
         '
@@ -1085,11 +1092,11 @@ Partial Class Menu
         Me.StyleManager1.ManagerStyle = DevComponents.DotNetBar.eStyle.Metro
         Me.StyleManager1.MetroColorParameters = New DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(System.Drawing.Color.White, System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(154, Byte), Integer)))
         '
-        'Btn_Stem
+        'Btn_RevPesoVariable
         '
-        Me.Btn_Stem.GlobalItem = False
-        Me.Btn_Stem.Name = "Btn_Stem"
-        Me.Btn_Stem.Text = "Sistema de ticket entrega de mercaderia STEM"
+        Me.Btn_RevPesoVariable.GlobalItem = False
+        Me.Btn_RevPesoVariable.Name = "Btn_RevPesoVariable"
+        Me.Btn_RevPesoVariable.Text = "Revisar la diferencia en peso variable"
         '
         'Menu
         '
@@ -1177,4 +1184,5 @@ Partial Class Menu
     Friend WithEvents Btn_CrearNVVDesdeOCC As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_PruebasFacturaElectronica As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Stem As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_RevPesoVariable As DevComponents.DotNetBar.ButtonItem
 End Class

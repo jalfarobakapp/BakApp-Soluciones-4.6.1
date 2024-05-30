@@ -36,4 +36,10 @@ Public Class Inv_General
         Fm.Dispose()
 
     End Sub
+
+    Private Sub Btn_Ingresar_Inventario_Activo_Click(sender As Object, e As EventArgs) Handles Btn_Ingresar_Inventario_Activo.Click
+        Dim NewPanel As Inv_General_Activo = Nothing
+        NewPanel = New Inv_General_Activo(_Fm_Menu_Padre)
+        Frm_Menu.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
+    End Sub
 End Class

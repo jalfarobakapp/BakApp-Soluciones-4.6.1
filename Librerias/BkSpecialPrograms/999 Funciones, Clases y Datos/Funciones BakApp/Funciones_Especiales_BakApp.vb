@@ -5996,5 +5996,17 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Sub
 
+    Public Function Fx_CalcularRTUVariable(_Kilosdisponibles As Double, _Cajasdisponibles As Double, _Cajamasalta As Double) As Double
+
+        Dim _Rtu As Double
+        Dim _Promedio As Double = _Kilosdisponibles / _Cajasdisponibles
+
+        _Rtu = (_Promedio + _Cajamasalta) / 2
+        _Rtu = Math.Ceiling(_Rtu)
+
+        Return _Rtu
+
+    End Function
+
 End Module
 

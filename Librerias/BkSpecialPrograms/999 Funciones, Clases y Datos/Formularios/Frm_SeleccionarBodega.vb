@@ -141,17 +141,11 @@ Public Class Frm_SeleccionarBodega
         If (_Sucursal Is Nothing) Then _Sucursal = String.Empty
         If (_Bodega Is Nothing) Then _Bodega = String.Empty
 
-        'If Not (_Sucursal Is Nothing) Then
         Sb_Cargar_Sucursales(_Empresa, _Sucursal)
-        'End If
-
-        'If Not (_Bodega Is Nothing) Then
         Sb_Cargar_Bodegas(_Empresa, _Sucursal, _Bodega)
-        'End If
 
         AddHandler Cmbempresa.SelectedIndexChanged, AddressOf Cmbempresa_SelectedIndexChanged
         AddHandler Cmbsucursal.SelectedIndexChanged, AddressOf Cmbsucursal_SelectedIndexChanged
-        ' AddHandler Cmbbodega.SelectedIndexChanged, AddressOf Cmbbodega_SelectedIndexChanged
 
         Select Case _Accion
 
@@ -254,7 +248,6 @@ Public Class Frm_SeleccionarBodega
             MessageBoxEx.Show(Me, "Debe seleccionar una " & _Accion.ToString, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End If
 
-
     End Sub
 
     Private Sub Frm_SeleccionarBodega_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
@@ -262,10 +255,5 @@ Public Class Frm_SeleccionarBodega
             Me.Close()
         End If
     End Sub
-
-
-
-
-
 
 End Class

@@ -33,7 +33,7 @@ Public Class Frm_Tickets_Lista
         Me._Tipo_Tickets = _Tipo
         Me._Id_Grupo = _Id_Grupo
 
-        Sb_Formato_Generico_Grilla(Grilla, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Both, True, True, False)
+        Sb_Formato_Generico_Grilla(Grilla, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Both, True, False, False)
 
         Sb_Color_Botones_Barra(Bar2)
 
@@ -1345,7 +1345,7 @@ Public Class Frm_Tickets_Lista
             Dim Copiar = .Rows(.CurrentRow.Index).Cells(_Cabeza).Value
             Clipboard.SetText(Copiar)
 
-            MessageBoxEx.Show(Me, _Texto_Cabeza & " esta en el portapapeles", "Copiar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            'MessageBoxEx.Show(Me, _Texto_Cabeza & " esta en el portapapeles", "Copiar", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         End With
 
