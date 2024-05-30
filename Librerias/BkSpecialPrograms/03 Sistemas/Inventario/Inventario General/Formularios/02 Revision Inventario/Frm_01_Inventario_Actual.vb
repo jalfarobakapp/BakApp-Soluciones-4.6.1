@@ -7,7 +7,6 @@ Public Class Frm_01_Inventario_Actual
 
 
     Public IdBodega As String
-    'Dim Ds_Inventario As New DsInventario_Gral
 
     Private _IdInventario As Integer
     Private _Row_InventarioActivo As DataRow

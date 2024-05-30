@@ -784,6 +784,14 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stk_Tipos.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stmp_Det.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stmp_DetPick.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_TmpInv_History.vb" />
+    <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\03 Parametros\Cl_NewInventario.vb" />
+    <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\03 Parametros\Frm_Inv_Inventarios.Designer.vb">
+      <DependentUpon>Frm_Inv_Inventarios.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\03 Parametros\Frm_Inv_Inventarios.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Cl_Inventario.vb" />
     <Compile Include="03 Sistemas\Puntos Venta\Cl_Puntos.vb" />
     <Compile Include="03 Sistemas\Puntos Venta\Frm_ConfPuntosVta.Designer.vb">
@@ -1894,10 +1902,6 @@
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Frm_Inv_Ctrl_Inventario.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Frm_Inv_Inventarios.Designer.vb">
-      <DependentUpon>Frm_Inv_Inventarios.vb</DependentUpon>
-    </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Frm_Inv_Inventarios.vb" />
     <Compile Include="03 Sistemas\Lector de huellas\Frm_Huellas_Menu.Designer.vb">
       <DependentUpon>Frm_Huellas_Menu.vb</DependentUpon>
     </Compile>
@@ -4586,6 +4590,9 @@
       <DependentUpon>Frm_Configuracion_Gral.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Inventario\Inventario General\Formularios\03 Parametros\Frm_Inv_Inventarios.resx">
+      <DependentUpon>Frm_Inv_Inventarios.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Puntos Venta\Frm_ConfPuntosVta.resx">
       <DependentUpon>Frm_ConfPuntosVta.vb</DependentUpon>
     </EmbeddedResource>
@@ -5133,9 +5140,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Frm_Inv_Ctrl_Inventario.resx">
       <DependentUpon>Frm_Inv_Ctrl_Inventario.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Frm_Inv_Inventarios.resx">
-      <DependentUpon>Frm_Inv_Inventarios.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Lector de huellas\Frm_Huellas_Menu.resx">
       <DependentUpon>Frm_Huellas_Menu.vb</DependentUpon>
