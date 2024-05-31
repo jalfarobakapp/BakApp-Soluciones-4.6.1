@@ -2529,33 +2529,46 @@ Public Class Clas_Imprimir_Documento
                                 Dim _Caracteres = _Formato_Texto.Length
 
                                 Dim _i = 0
-                                Dim _Contador_Carac
+                                'Dim _Contador_Carac
 
                                 _Texto = Replace(_Texto, vbCrLf, " ")
+                                _Texto = Replace(_Texto, vbTab, " ")
+                                _Texto = _Texto.ToString.Trim
+                                _Texto = Replace(_Texto, "  ", " ")
 
                                 If IsNothing(_Texto) Then
                                     _Texto = String.Empty
                                 End If
 
+                                Dim _SubCarac = _Formato_Texto.Split(vbCrLf)
+                                Dim _TextoAjustado As String = Fx_AjustarTexto(_Texto, _SubCarac(0).Length)
+
+                                Dim _AltoL = (_Alto / _Formatext.Length) + 2
+
+                                _Formatext = Split(_TextoAjustado, vbCrLf)
+
                                 Dim _Fy = _Fila_Y
 
                                 For Each _Texto1 As String In _Formatext
 
-                                    Dim _Desde = _i + 1
-                                    Dim _Hasta = _Texto1.Length
+                                    'Dim _Desde = _i + 1
+                                    'Dim _Hasta = _Texto1.Length
 
-                                    Dim _Txt = Mid(_Texto, _Desde, _Hasta)
-                                    _i += _Texto1.Length
+                                    'Dim _Txt = Mid(_TextoAjustado, _Desde, _Hasta)
+                                    '_i += _Texto1.Length
 
-                                    If _Texto.Length > _Contador_Carac Then
+                                    'If _Texto.Length > _Contador_Carac Then
 
-                                        e.Graphics.DrawString(_Txt.Trim, _Fte_Usar, _DrawBrush, _Columna_X, _Fy)
-                                        _Fy += (_Alto / _Formatext.Length) + 2
-                                        _Txt = String.Empty
+                                    '    e.Graphics.DrawString(_Txt.Trim, _Fte_Usar, _DrawBrush, _Columna_X, _Fy)
+                                    '    _Fy += (_Alto / _Formatext.Length) + 2
+                                    '    _Txt = String.Empty
 
-                                    End If
+                                    'End If
 
-                                    _Contador_Carac += _Texto1.Length
+                                    '_Contador_Carac += _Texto1.Length
+
+                                    e.Graphics.DrawString(_Texto1.Trim, _Fte_Usar, _DrawBrush, _Columna_X, _Fy)
+                                    _Fy += _AltoL '(_Alto / _Formatext.Length) ' + 2
 
                                 Next
 
