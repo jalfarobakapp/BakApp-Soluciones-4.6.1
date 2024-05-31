@@ -916,8 +916,16 @@ Public Class Frm_Pagos_Documentos
 
         Dim _Fila As DataGridViewRow = Grilla_Maeedo.Rows(Grilla_Maeedo.CurrentRow.Index)
 
-        Dim _Tido As String = _Fila.Cells("TIDO").Value
-        Dim _Nudo As String = _Fila.Cells("NUDO").Value
+        Dim _Tido As String
+        Dim _Nudo As String
+
+        Try
+            _Tido = _Fila.Cells("TIDO").Value
+            _Nudo = _Fila.Cells("NUDO").Value
+        Catch ex As Exception
+            _Tido = String.Empty
+            _Nudo = String.Empty
+        End Try
 
         If String.IsNullOrEmpty(_Tido) Then
 

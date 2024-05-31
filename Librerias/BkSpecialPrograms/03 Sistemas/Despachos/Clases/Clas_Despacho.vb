@@ -689,10 +689,10 @@ Public Class Clas_Despacho
 
         Dim _CodFuncionario As String = Row_Despacho.Item("CodFuncionario")
 
-        Dim _Fecha_Emision As Date = Row_Despacho.Item("Fecha_Emision")
-        Dim _Fecha_Compromiso As Date = Row_Despacho.Item("Fecha_Compromiso")
+        Dim _Fecha_Emision As DateTime? = Row_Despacho.Item("Fecha_Emision")
+        Dim _Fecha_Compromiso As DateTime? = Row_Despacho.Item("Fecha_Compromiso")
 
-        Dim _Fecha_Cierre As Date
+        Dim _Fecha_Cierre As DateTime?
 
         Dim _Tipo_Despacho As String = Row_Despacho.Item("Tipo_Despacho")
         Dim _Tipo_Venta As String = Row_Despacho.Item("Tipo_Venta")
@@ -750,8 +750,9 @@ Public Class Clas_Despacho
                             "Tipo_Envio,Pais,Ciudad,Comuna,Direccion,Telefono,Email,Transportista,Tipo_Entrega," &
                             "Transpor_Por_Pagar,Entregar_Con_Doc_Pagados,Nro_Encomienda," &
                             "Entregado_Por,Observaciones,Id_Despacho_Padre,Sucursal_Retiro,CodPais,CodCiudad,CodComuna,Nombre_Contacto,EntregaPaletizada) Values 
-                            ('" & _Nro_Despacho & "','" & _Nro_Sub & "'," & Convert.ToInt32(_Confirmado) & ",'" & _Empresa & "','" & _Sucursal & "','" & _Bodega & "','" & _CodFuncionario & "','" & _Fecha_Emision & "'," &
-                            "'" & _Fecha_Compromiso & "','" & _Fecha_Cierre & "'," & "'" & _Tipo_Despacho & "','" & _Tipo_Venta & "'," &
+                            ('" & _Nro_Despacho & "','" & _Nro_Sub & "'," & Convert.ToInt32(_Confirmado) & ",'" & _Empresa & "','" & _Sucursal & "','" & _Bodega &
+                            "','" & _CodFuncionario & "','" & Format(_Fecha_Emision, "yyyyMMdd HH:mm") & "'," &
+                            "'" & Format(_Fecha_Compromiso, "yyyyMMdd") & "','" & Format(_Fecha_Cierre, "yyyyMMdd HH:mm") & "'," & "'" & _Tipo_Despacho & "','" & _Tipo_Venta & "'," &
                             "'" & _Estado & "','" & _Referencia & "','" & _CodEntidad & "','" & _CodSucEntidad & "','" & _Rut & "','" & _Nombre_Entidad & "'," &
                             "'" & _Tipo_Envio & "','" & _Pais & "','" & _Ciudad & "','" & _Comuna & "','" & _Direccion & "','" & _Telefono & "','" & _Email & "','" & _Transportista & "'," &
                             "'" & _Tipo_Entrega & "'," & Convert.ToInt32(_Transpor_Por_Pagar) & "," & Convert.ToInt32(_Entregar_Con_Doc_Pagados) & "," &
@@ -829,7 +830,7 @@ Public Class Clas_Despacho
         Dim _Confirmado As Boolean = Row_Despacho.Item("Confirmado")
 
         Dim _CodFuncionario As String = FUNCIONARIO
-        Dim _Fecha_Compromiso As Date = Row_Despacho.Item("Fecha_Compromiso")
+        Dim _Fecha_Compromiso As DateTime = Row_Despacho.Item("Fecha_Compromiso")
 
         Dim _Tipo_Despacho As String = Row_Despacho.Item("Tipo_Despacho")
         Dim _Tipo_Venta As String = Row_Despacho.Item("Tipo_Venta")
@@ -879,7 +880,7 @@ Public Class Clas_Despacho
                             Sucursal = '" & _Sucursal & "',
                             Bodega = '" & _Bodega & "',
                             CodFuncionario = '" & _CodFuncionario & "',
-                            Fecha_Compromiso = '" & _Fecha_Compromiso & "',
+                            Fecha_Compromiso = '" & Format(_Fecha_Compromiso, "yyyyMMdd") & "',
                             Tipo_Despacho = '" & _Tipo_Despacho & "',
                             Tipo_Venta = '" & _Tipo_Venta & "',
                             Estado = '" & _Estado & "',

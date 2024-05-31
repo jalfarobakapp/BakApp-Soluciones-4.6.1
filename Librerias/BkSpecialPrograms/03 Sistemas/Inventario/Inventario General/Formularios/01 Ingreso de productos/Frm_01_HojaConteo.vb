@@ -1,4 +1,4 @@
-'Imports Lib_Bakapp_VarClassFunc
+ï»¿'Imports Lib_Bakapp_VarClassFunc
 Imports DevComponents.DotNetBar
 'Imports BkSpecialPrograms
 Imports System.Windows.Forms
@@ -20,9 +20,9 @@ Public Class Frm_01_HojaConteo
     Public _IdInventario_Activo As Integer
     Public _Fecha_Inventario_Gral As Date
     Public _Fecha_Inv_Activo As Date
-    Public _Empresa_Inv_Activo, _
-           _Sucursal_Inv_Activo, _
-           _Bodega_Inv_Activo, _
+    Public _Empresa_Inv_Activo,
+           _Sucursal_Inv_Activo,
+           _Bodega_Inv_Activo,
            _Ano, _Mes, _Dia As String
 
     Dim _Cancelar_LevMasivo As Boolean
@@ -30,11 +30,11 @@ Public Class Frm_01_HojaConteo
 
     Public Sub New()
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
-       Sb_Formato_Generico_Grilla(Grilla_Inv, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
+        Sb_Formato_Generico_Grilla(Grilla_Inv, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
     End Sub
 
 #Region "PROCESOS"
@@ -59,19 +59,13 @@ Public Class Frm_01_HojaConteo
             _CodSectorInt = Frm_.Sector
             Codigo_Sector = Frm_.NombreUbicacion
 
-
-
         End If
 
         If String.IsNullOrEmpty(Trim(NuloPorNro(_CodSectorInt, ""))) Then
             Me.Close()
-            MessageBoxEx.Show("No se selecciono ningún Sector", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show("No se selecciono ningÃºn Sector", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
-
-
-
-
 
         With Grilla_Enc
             .DataSource = Nothing
@@ -102,6 +96,7 @@ Public Class Frm_01_HojaConteo
         Ds_Inventario.Tables("Hoja_Conteo_Encabezado").Rows.Add(NewFila)
 
         If _IncorporarHoja Then
+
             Nueva_Linea()
 
             'NewFila = Ds_Inventario.Tables("Hoja_Conteo_Detalle").NewRow
@@ -158,10 +153,7 @@ Public Class Frm_01_HojaConteo
             .Columns("Contador_2").Frozen = True
             .Columns("Contador_2").DisplayIndex = 4
 
-
         End With
-
-
 
         With Grilla_Inv
 
@@ -176,14 +168,14 @@ Public Class Frm_01_HojaConteo
             .Columns("Item_Hoja").ReadOnly = True
 
             .Columns("Codproducto").Width = 110
-            .Columns("Codproducto").HeaderText = "Código"
+            .Columns("Codproducto").HeaderText = "CÃ³digo"
             .Columns("Codproducto").Visible = True
             .Columns("Codproducto").Frozen = True
             .Columns("Codproducto").DisplayIndex = 1
             .Columns("Codproducto").ReadOnly = True
 
             .Columns("DescripcionProducto").Width = 330
-            .Columns("DescripcionProducto").HeaderText = "Descripción"
+            .Columns("DescripcionProducto").HeaderText = "DescripciÃ³n"
             .Columns("DescripcionProducto").Visible = True
             .Columns("DescripcionProducto").Frozen = True
             .Columns("DescripcionProducto").DisplayIndex = 2
@@ -195,7 +187,6 @@ Public Class Frm_01_HojaConteo
             .Columns("CodUbicacion").Visible = True
             .Columns("CodUbicacion").Frozen = True
             .Columns("CodUbicacion").DisplayIndex = 3
-            '.Columns("CodUbicacion").ReadOnly = True
 
             .Columns("Columna").Width = 75
             .Columns("Columna").HeaderText = "Columna"
@@ -245,11 +236,8 @@ Public Class Frm_01_HojaConteo
         End With
 
     End Sub
+
 #End Region
-
-
-
-
 
     Private Sub Frm_HojaConteo_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyDown
         Try
@@ -307,9 +295,9 @@ Public Class Frm_01_HojaConteo
                 If Cabeza = "Codproducto" Then
 
                     If Not String.IsNullOrEmpty(Trim(Codigo)) Then
-                        Dim dlg As System.Windows.Forms.DialogResult = _
-                        MessageBoxEx.Show(Me, "ESTA ACCION MODIFICARA EL PRODUCTO DE LA LINEA?" & vbCrLf & _
-                                          "¿ESTA SEGURO DE QUERER SEGUIR CON LA ACCION?", _
+                        Dim dlg As System.Windows.Forms.DialogResult =
+                        MessageBoxEx.Show(Me, "ESTA ACCION MODIFICARA EL PRODUCTO DE LA LINEA?" & vbCrLf &
+                                          "Â¿ESTA SEGURO DE QUERER SEGUIR CON LA ACCION?",
                                           "MODIFICAR PRODUCTO", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning)
 
                         If dlg = System.Windows.Forms.DialogResult.Cancel Then
@@ -352,7 +340,7 @@ Public Class Frm_01_HojaConteo
             Fm.CodProveedor_productos = String.Empty
             Fm.MostrarOcultos = True
             Fm.BtnBusAlternativas.Visible = True
-            Fm.BtnBusAlternativas.Text = "Buscar código alternativo"
+            Fm.BtnBusAlternativas.Text = "Buscar cÃ³digo alternativo"
             Fm.ShowDialog(Me)
             _Codigo = Fm.CodigoPr_Sel
 
@@ -393,8 +381,8 @@ Public Class Frm_01_HojaConteo
 
                 If _Codigo = "ZDESCONOCIDO" Then
                     _Descripcion = Tbl_Maepr.Rows(0).Item("NOKOPR")
-                    _Descripcion = InputBox("Ingrese la descripción de este producto" & vbCrLf & _
-                                            "Producto desconocido", "Cambiar descripción")
+                    _Descripcion = InputBox("Ingrese la descripciÃ³n de este producto" & vbCrLf &
+                                            "Producto desconocido", "Cambiar descripciÃ³n")
                 Else
                     _Descripcion = Tbl_Maepr.Rows(0).Item("NOKOPR")
                 End If
@@ -424,8 +412,8 @@ Public Class Frm_01_HojaConteo
 
     Private Sub BtnLimpiar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnLimpiar.Click
 
-        Dim dlg As System.Windows.Forms.DialogResult = _
-                      MessageBoxEx.Show(Me, "ESTA SEGURO DE QUERER LIMPIAR TODO EL DOCUMENTO, ESTO BORRARA TODAS LAS LINEAS?", _
+        Dim dlg As System.Windows.Forms.DialogResult =
+                      MessageBoxEx.Show(Me, "ESTA SEGURO DE QUERER LIMPIAR TODO EL DOCUMENTO, ESTO BORRARA TODAS LAS LINEAS?",
                                         "MODIFICAR PRODUCTO", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning)
 
         If dlg = System.Windows.Forms.DialogResult.OK Then
@@ -447,7 +435,7 @@ Public Class Frm_01_HojaConteo
         _Contador_2 = NuloPorNro(Grilla_Enc.Rows(0).Cells("Contador_2").Value, "")
 
         If String.IsNullOrEmpty(_Contador_1) Then
-            MessageBoxEx.Show("Falta Contador 1", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show("Falta Contador 1", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Grilla_Enc.CurrentCell = Grilla_Enc.Rows(0).Cells("Contador_1")
             Grilla_Enc.Focus()
             Grilla_Enc.BeginEdit(True)
@@ -455,7 +443,7 @@ Public Class Frm_01_HojaConteo
         End If
 
         If String.IsNullOrEmpty(_Contador_2) Then
-            MessageBoxEx.Show("Falta Contador 2", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show("Falta Contador 2", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Grilla_Enc.CurrentCell = Grilla_Enc.Rows(0).Cells("Contador_2")
             Grilla_Enc.Focus()
             Grilla_Enc.BeginEdit(True)
@@ -476,10 +464,10 @@ Public Class Frm_01_HojaConteo
 
             myTrans = cn2.BeginTransaction()
 
-            Nro_Hoja = _
+            Nro_Hoja =
            _Sql.Fx_Cuenta_Registros("ZW_TmpInvHojas_Inventario", "IdInventario = '" & _IdInventario_Activo & "'") + 1
 
-            Consulta_sql = "INSERT INTO ZW_TmpInvHojas_Inventario (IdInventario,Nro_Hoja, TipoConteo) VALUES" & vbCrLf & _
+            Consulta_sql = "INSERT INTO ZW_TmpInvHojas_Inventario (IdInventario,Nro_Hoja, TipoConteo) VALUES" & vbCrLf &
                            "(" & _IdInventario_Activo & ",'" & Nro_Hoja & "','M')"
 
             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
@@ -499,10 +487,10 @@ Public Class Frm_01_HojaConteo
 
             For Each Fila_ As DataGridViewRow In Grilla_Inv.Rows
                 With Fila_
-                    Dim _Ano, _Mes, _Dia, _IdBodega, _CodEmpresa, _CodSucursal, _CodBodega, _
-                        _CodUbicacion, _UbicacionBodega, _Codproducto, _Codrapido, _Codtecnico, _
-                        _DescripcionProducto, _CodBarras, _FechaInventario, _Unidad_Medida, _CantidadInventariada, _
-                        _VecesInventariado, _Observaciones, _Responsable, _
+                    Dim _Ano, _Mes, _Dia, _IdBodega, _CodEmpresa, _CodSucursal, _CodBodega,
+                        _CodUbicacion, _UbicacionBodega, _Codproducto, _Codrapido, _Codtecnico,
+                        _DescripcionProducto, _CodBarras, _FechaInventario, _Unidad_Medida, _CantidadInventariada,
+                        _VecesInventariado, _Observaciones, _Responsable,
                         _Fila, _Columna, _Item_Hoja, _TipoConteo As String
 
 
@@ -535,21 +523,21 @@ Public Class Frm_01_HojaConteo
                         _Columna = NuloPorNro(.Cells("Columna").Value, "")
 
 
-                        Consulta_sql = "INSERT INTO ZW_TmpInvProductosInventariados (IdInventario,Fecha_Inventario_Gral,Ano,Mes,Dia,IdBodega,CodEmpresa,CodSucursal,CodBodega," & _
-                                       "SemillaUbicacion,CodSectorInt,UbicacionBodega,TipoConteo,Nro_Hoja,Item_Hoja,Codproducto,Codrapido,Codtecnico,DescripcionProducto," & _
-                                       "CodBarras,FechaInventario,Unidad_Medida,CantidadInventariada,VecesInventariado," & _
-                                       "Observaciones,Responsable,Contador_1,Contador_2,CodigoLeidoArchTxt," & _
-                                       "CodUbicacion,Fila,Columna) VALUES " & vbCrLf & _
-                                       "(" & _IdInventario_Activo & ",'" & Format(_Fecha_Inventario_Gral, "yyyyMMdd") & _
-                                       "','" & _Ano & "','" & _Mes & "','" & _Dia & "'," & _IdBodega & _
-                                       ",'" & _CodEmpresa & "','" & _CodSucursal & "','" & _CodBodega & _
-                                       "','" & _CodUbicacion & "','" & _CodSectorInt & "','" & _UbicacionBodega & _
-                                       "','" & _TipoConteo & "','" & _Nro_Hoja & _
-                                       "','" & _Item_Hoja & "','" & _Codproducto & _
-                                       "','" & _Codrapido & "','" & _Codtecnico & "','" & _DescripcionProducto & _
-                                       "','" & _CodBarras & "',getdate(),'" & _Unidad_Medida & "'," & _CantidadInventariada & _
-                                       ",1,'" & _Observaciones & _
-                                       "','" & _Responsable & "','" & _Contador_1 & "','" & _Contador_2 & _
+                        Consulta_sql = "INSERT INTO ZW_TmpInvProductosInventariados (IdInventario,Fecha_Inventario_Gral,Ano,Mes,Dia,IdBodega,CodEmpresa,CodSucursal,CodBodega," &
+                                       "SemillaUbicacion,CodSectorInt,UbicacionBodega,TipoConteo,Nro_Hoja,Item_Hoja,Codproducto,Codrapido,Codtecnico,DescripcionProducto," &
+                                       "CodBarras,FechaInventario,Unidad_Medida,CantidadInventariada,VecesInventariado," &
+                                       "Observaciones,Responsable,Contador_1,Contador_2,CodigoLeidoArchTxt," &
+                                       "CodUbicacion,Fila,Columna) VALUES " & vbCrLf &
+                                       "(" & _IdInventario_Activo & ",'" & Format(_Fecha_Inventario_Gral, "yyyyMMdd") &
+                                       "','" & _Ano & "','" & _Mes & "','" & _Dia & "'," & _IdBodega &
+                                       ",'" & _CodEmpresa & "','" & _CodSucursal & "','" & _CodBodega &
+                                       "','" & _CodUbicacion & "','" & _CodSectorInt & "','" & _UbicacionBodega &
+                                       "','" & _TipoConteo & "','" & _Nro_Hoja &
+                                       "','" & _Item_Hoja & "','" & _Codproducto &
+                                       "','" & _Codrapido & "','" & _Codtecnico & "','" & _DescripcionProducto &
+                                       "','" & _CodBarras & "',getdate(),'" & _Unidad_Medida & "'," & _CantidadInventariada &
+                                       ",1,'" & _Observaciones &
+                                       "','" & _Responsable & "','" & _Contador_1 & "','" & _Contador_2 &
                                        "','','" & _CodUbicacion & "','" & _Fila & "','" & _Columna & "')"
 
                         Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
@@ -567,7 +555,7 @@ Public Class Frm_01_HojaConteo
                 myTrans.Commit()
                 SQL_ServerClass.Sb_Cerrar_Conexion(cn2)
             Else
-                MessageBoxEx.Show("No existen datos que guardar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                MessageBoxEx.Show("No existen datos que guardar", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 myTrans.Rollback()
                 Return
             End If
@@ -575,19 +563,19 @@ Public Class Frm_01_HojaConteo
             MessageBoxEx.Show("NUMERO DE HOJA: " & _Nro_Hoja, "INVENTARIO INGRESADO AL SISTEMA", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
 
-            Dim dlg As System.Windows.Forms.DialogResult = _
-                     MessageBoxEx.Show(Me, "¿DESEA SEGUIR INGRESANDO MAS HOJAS CON EL MISMO DIGITADOR :" & vbCrLf & _
-                                       Trim(Nombre_funcionario_activo) & "?" & vbCrLf & vbCrLf & _
-                                       "RECUERDE EL ULTIMO NUMERO DE HOJA ES : " & _Nro_Hoja, _
+            Dim dlg As System.Windows.Forms.DialogResult =
+                     MessageBoxEx.Show(Me, "Â¿DESEA SEGUIR INGRESANDO MAS HOJAS CON EL MISMO DIGITADOR :" & vbCrLf &
+                                       Trim(Nombre_funcionario_activo) & "?" & vbCrLf & vbCrLf &
+                                       "RECUERDE EL ULTIMO NUMERO DE HOJA ES : " & _Nro_Hoja,
                                        "INVENTARIO", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
 
             Nueva_Hoja(True)
 
             If dlg = System.Windows.Forms.DialogResult.Yes Then
-                dlg = _
-                     MessageBoxEx.Show(Me, "¿Desea mantener los contadores?" & vbCrLf & _
-                                       "Contador 1: " & _Contador_1 & vbCrLf & _
-                                       "Contador 2: " & _Contador_2, _
+                dlg =
+                     MessageBoxEx.Show(Me, "Â¿Desea mantener los contadores?" & vbCrLf &
+                                       "Contador 1: " & _Contador_1 & vbCrLf &
+                                       "Contador 2: " & _Contador_2,
                                        "INVENTARIO", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
 
                 If dlg = System.Windows.Forms.DialogResult.Yes Then
@@ -600,11 +588,11 @@ Public Class Frm_01_HojaConteo
 
         Catch ex As Exception
 
-            MessageBoxEx.Show(ex.Message, "Error", _
+            MessageBoxEx.Show(ex.Message, "Error",
                               Windows.Forms.MessageBoxButtons.OK, Windows.Forms.MessageBoxIcon.Stop)
             myTrans.Rollback()
 
-            MessageBoxEx.Show("Transaccion desecha", "Problema", _
+            MessageBoxEx.Show("Transaccion desecha", "Problema",
                               Windows.Forms.MessageBoxButtons.OK, Windows.Forms.MessageBoxIcon.Stop)
             SQL_ServerClass.Sb_Cerrar_Conexion(cn2)
 
@@ -629,20 +617,20 @@ Public Class Frm_01_HojaConteo
                         _CodUbic = 0
                     End Try
 
-                    Consulta_sql = "SELECT CodSector, IdUbicacion, Columna, Fila, Alto, Largo, Ancho, Peso_Max, Desc_Ubicacion" & vbCrLf & _
-                           "FROM Zw_Tbl_SecXBod_Ubicaciones" & vbCrLf & _
+                    Consulta_sql = "SELECT CodSector, IdUbicacion, Columna, Fila, Alto, Largo, Ancho, Peso_Max, Desc_Ubicacion" & vbCrLf &
+                           "FROM Zw_Tbl_SecXBod_Ubicaciones" & vbCrLf &
                            "Where CodSector = '" & _CodSectorInt & "' And IdUbicacion = " & _CodUbic
                     Dim _Tbl As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
 
                     If CBool(_Tbl.Rows.Count) Then
-                        Grilla_Inv.Rows(Grilla_Inv.CurrentRow.Index).Cells("Columna").Value = _
+                        Grilla_Inv.Rows(Grilla_Inv.CurrentRow.Index).Cells("Columna").Value =
                         _Tbl.Rows(0).Item("Columna")
-                        Grilla_Inv.Rows(Grilla_Inv.CurrentRow.Index).Cells("Fila").Value = _
+                        Grilla_Inv.Rows(Grilla_Inv.CurrentRow.Index).Cells("Fila").Value =
                         _Tbl.Rows(0).Item("Fila")
-                        Grilla_Inv.CurrentCell = _
+                        Grilla_Inv.CurrentCell =
                         Grilla_Inv.Rows(Grilla_Inv.CurrentRow.Index).Cells("CantidadInventariada")
                     Else
-                        MessageBoxEx.Show("¡No existe ubicación o no pertenece a este sector!", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        MessageBoxEx.Show("Â¡No existe ubicaciÃ³n o no pertenece a este sector!", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
                         Grilla_Inv.Rows(Grilla_Inv.CurrentRow.Index).Cells("Columna").Value = String.Empty
                         Grilla_Inv.Rows(Grilla_Inv.CurrentRow.Index).Cells("Fila").Value = String.Empty
@@ -701,7 +689,7 @@ Public Class Frm_01_HojaConteo
 
     Private Sub Frm_HojaConteo_FormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
         If Grilla_Inv.RowCount > 0 Then
-            Dim dlg As System.Windows.Forms.DialogResult = MessageBoxEx.Show(Me, "¿Desea salir sin grabar, se perderan los cambios?", "Cerrar formulario", MessageBoxButtons.YesNo)
+            Dim dlg As System.Windows.Forms.DialogResult = MessageBoxEx.Show(Me, "Â¿Desea salir sin grabar, se perderan los cambios?", "Cerrar formulario", MessageBoxButtons.YesNo)
 
             If dlg = System.Windows.Forms.DialogResult.No Then
                 e.Cancel = True
@@ -716,21 +704,21 @@ Public Class Frm_01_HojaConteo
             'Fm.ShowDialog(Me)
 
             'f Not Fm._Aceptado Then
-            'MessageBoxEx.Show("No se selecciono ningún tipo de código para el levantamiento", _
-            '                      "Tipo de código", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            'MessageBoxEx.Show("No se selecciono ningÃºn tipo de cÃ³digo para el levantamiento", _
+            '                      "Tipo de cÃ³digo", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             ' Return
             'End If
 
             Dim _CantProd As Integer
 
 
-            _CantProd = Ds_Inventario.Tables("Hoja_Conteo_Detalle").Compute("Count(Codproducto)", _
+            _CantProd = Ds_Inventario.Tables("Hoja_Conteo_Detalle").Compute("Count(Codproducto)",
                                                                             "Nuevo_Producto = 0")
 
             If CBool(_CantProd) Then
-                Dim dlg As System.Windows.Forms.DialogResult = _
-                MessageBoxEx.Show(Me, "Existen productos en la lista, se quitaran si continua" & vbCrLf & _
-                                  "¿Desea continuar con esta acción?", "Cerrar formulario", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+                Dim dlg As System.Windows.Forms.DialogResult =
+                MessageBoxEx.Show(Me, "Existen productos en la lista, se quitaran si continua" & vbCrLf &
+                                  "Â¿Desea continuar con esta acciÃ³n?", "Cerrar formulario", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
 
                 If dlg = System.Windows.Forms.DialogResult.No Then
                     Return
@@ -788,8 +776,8 @@ Public Class Frm_01_HojaConteo
                 'Zzz_TblPasoFO()
                 System.Windows.Forms.Application.DoEvents()
 
-                Dim _CodUbic As String = Trim(Arreglo(i, 0))  ' Código Ubicación
-                Dim _CodigoPr As String = Trim(Arreglo(i, 1)) ' Código producto
+                Dim _CodUbic As String = Trim(Arreglo(i, 0))  ' CÃ³digo UbicaciÃ³n
+                Dim _CodigoPr As String = Trim(Arreglo(i, 1)) ' CÃ³digo producto
                 Dim _Cantidad As Double = De_Txt_a_Num_01(Trim(Arreglo(i, 2)), 5) ' Cantidad inventariada
 
                 'If Fm.RdbCodPrincipal.Checked Then
@@ -832,7 +820,7 @@ Public Class Frm_01_HojaConteo
 
                         Dim dlg As System.Windows.Forms.DialogResult =
                                         MessageBoxEx.Show(Me,
-                                        "¿Esta seguro de cancelar esta acción?",
+                                        "Â¿Esta seguro de cancelar esta acciÃ³n?",
                                         "Cancelar", MessageBoxButtons.YesNo)
 
                         If dlg = System.Windows.Forms.DialogResult.Yes Then
@@ -916,7 +904,7 @@ Public Class Frm_01_HojaConteo
             CirculoProgreso.Value = 0
 
             If _Levantado Then
-                MessageBoxEx.Show(Filas & " Productos Incorporados correctamente", _
+                MessageBoxEx.Show(Filas & " Productos Incorporados correctamente",
                                   "Levantar productos", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
             End If
@@ -972,7 +960,7 @@ Public Class Frm_01_HojaConteo
                         BtnMnuBuscarProducto.Text = "Cambiar producto..."
                     End If
                 Else
-                ContextMenuStrip1.Enabled = False
+                    ContextMenuStrip1.Enabled = False
                 End If
             End With
         End If
@@ -982,9 +970,9 @@ Public Class Frm_01_HojaConteo
         Dim _Codigo = NuloPorNro(Grilla_Inv.Rows(Grilla_Inv.CurrentRow.Index).Cells("Codproducto").Value, "")
 
         If Not String.IsNullOrEmpty(Trim(_Codigo)) Then
-            Dim dlg As System.Windows.Forms.DialogResult = _
-            MessageBoxEx.Show(Me, "ESTA ACCION MODIFICARA EL PRODUCTO DE LA LINEA?" & vbCrLf & _
-                              "¿ESTA SEGURO DE QUERER SEGUIR CON LA ACCION?", _
+            Dim dlg As System.Windows.Forms.DialogResult =
+            MessageBoxEx.Show(Me, "ESTA ACCION MODIFICARA EL PRODUCTO DE LA LINEA?" & vbCrLf &
+                              "Â¿ESTA SEGURO DE QUERER SEGUIR CON LA ACCION?",
                               "MODIFICAR PRODUCTO", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning)
 
             If dlg = System.Windows.Forms.DialogResult.Cancel Then
@@ -992,7 +980,7 @@ Public Class Frm_01_HojaConteo
             End If
         End If
 
-         Buscar_Producto() 
+        Buscar_Producto()
 
     End Sub
 
@@ -1033,8 +1021,8 @@ Public Class Frm_01_HojaConteo
 
             If _Codigo = "@@DESCONOCIDO" Then
                 _Descripcion = "PRODUCTO DESCONOCIDO"
-                _Descripcion = InputBox("Ingrese la descripción de este producto", _
-                                        "Cambiar descripción", "PRODUCTO DESCONOCIDO")
+                _Descripcion = InputBox("Ingrese la descripciÃ³n de este producto",
+                                        "Cambiar descripciÃ³n", "PRODUCTO DESCONOCIDO")
             End If
 
             .Rows(_Indice_Grilla).Cells("DescripcionProducto").Value = UCase(_Descripcion)
@@ -1056,11 +1044,11 @@ Public Class Frm_01_HojaConteo
         Dim _Descripcion = Grilla_Inv.Rows(_Indice_Grilla).Cells("DescripcionProducto").Value
 
         If _Codigo = "@@DESCONOCIDO" Then
-            _Descripcion = InputBox("Ingrese la descripción de este producto", _
-                                    "Cambiar descripción", _Descripcion)
+            _Descripcion = InputBox("Ingrese la descripciÃ³n de este producto",
+                                    "Cambiar descripciÃ³n", _Descripcion)
             Grilla_Inv.Rows(_Indice_Grilla).Cells("DescripcionProducto").Value = UCase(_Descripcion)
         Else
-            MessageBoxEx.Show("¡Esta opción es solo para productos desconocidos!", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show("Â¡Esta opciÃ³n es solo para productos desconocidos!", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End If
 
 

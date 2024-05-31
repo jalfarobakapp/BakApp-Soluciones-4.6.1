@@ -23,55 +23,65 @@ Partial Class Frm_02_Detalle_Producto_Actual
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_02_Detalle_Producto_Actual))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Me.Bar2 = New DevComponents.DotNetBar.Bar
-        Me.BtnEstadisticas = New DevComponents.DotNetBar.ButtonItem
-        Me.BtnAgregarConteo = New DevComponents.DotNetBar.ButtonItem
-        Me.BtnGrabarAnalisis_Reconteo = New DevComponents.DotNetBar.ButtonItem
-        Me.BtnSalir = New DevComponents.DotNetBar.ButtonItem
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.GrillaHistoriaProducto = New System.Windows.Forms.DataGridView
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox
-        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel
-        Me.LblContador1 = New DevComponents.DotNetBar.LabelX
-        Me.LabelX5 = New DevComponents.DotNetBar.LabelX
-        Me.LblActualizadoPor = New DevComponents.DotNetBar.LabelX
-        Me.LabelX3 = New DevComponents.DotNetBar.LabelX
-        Me.LblDigitador = New DevComponents.DotNetBar.LabelX
-        Me.LabelX1 = New DevComponents.DotNetBar.LabelX
-        Me.LabelX9 = New DevComponents.DotNetBar.LabelX
-        Me.LblContador2 = New DevComponents.DotNetBar.LabelX
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox
-        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel
-        Me.LblObsActualizacion = New DevComponents.DotNetBar.LabelX
-        Me.LblObservaciones = New DevComponents.DotNetBar.LabelX
-        Me.LabelX13 = New DevComponents.DotNetBar.LabelX
-        Me.LabelX8 = New DevComponents.DotNetBar.LabelX
-        Me.GroupBox4 = New System.Windows.Forms.GroupBox
-        Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel
-        Me.LabelX2 = New DevComponents.DotNetBar.LabelX
-        Me.LblTotalFotoStock = New DevComponents.DotNetBar.LabelX
-        Me.LabelX4 = New DevComponents.DotNetBar.LabelX
-        Me.LblTotalInventariado = New DevComponents.DotNetBar.LabelX
-        Me.LblTotalDiferencia = New DevComponents.DotNetBar.LabelX
-        Me.LabelX10 = New DevComponents.DotNetBar.LabelX
-        Me.GroupBox5 = New System.Windows.Forms.GroupBox
-        Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel
-        Me.LabelX7 = New DevComponents.DotNetBar.LabelX
-        Me.LabelX11 = New DevComponents.DotNetBar.LabelX
-        Me.ChkRecontado = New System.Windows.Forms.CheckBox
-        Me.ChkCerrado = New System.Windows.Forms.CheckBox
-        Me.ChkLevantado = New System.Windows.Forms.CheckBox
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Me.Bar2 = New DevComponents.DotNetBar.Bar()
+        Me.BtnEstadisticas = New DevComponents.DotNetBar.ButtonItem()
+        Me.BtnAgregarConteo = New DevComponents.DotNetBar.ButtonItem()
+        Me.BtnGrabarAnalisis_Reconteo = New DevComponents.DotNetBar.ButtonItem()
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.LblContador1 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
+        Me.LblActualizadoPor = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
+        Me.LblDigitador = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX9 = New DevComponents.DotNetBar.LabelX()
+        Me.LblContador2 = New DevComponents.DotNetBar.LabelX()
+        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
+        Me.LblObsActualizacion = New DevComponents.DotNetBar.LabelX()
+        Me.LblObservaciones = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX13 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX8 = New DevComponents.DotNetBar.LabelX()
+        Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
+        Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
+        Me.LblTotalFotoStock = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
+        Me.LblTotalInventariado = New DevComponents.DotNetBar.LabelX()
+        Me.LblTotalDiferencia = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX10 = New DevComponents.DotNetBar.LabelX()
+        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
+        Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX11 = New DevComponents.DotNetBar.LabelX()
+        Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
+        Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_EditarInventario = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_EliminarInventario = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_ActivarInventario = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem3 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
+        Me.GrillaHistoriaProducto = New DevComponents.DotNetBar.Controls.DataGridViewX()
+        Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.ChkRecontado = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.ChkCerrado = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.ChkLevantado = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox1.SuspendLayout()
-        CType(Me.GrillaHistoriaProducto, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox2.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
-        Me.GroupBox3.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
-        Me.GroupBox4.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
         Me.TableLayoutPanel4.SuspendLayout()
+        Me.GroupPanel1.SuspendLayout()
+        CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GrillaHistoriaProducto, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupPanel2.SuspendLayout()
+        Me.GroupPanel3.SuspendLayout()
+        Me.GroupPanel4.SuspendLayout()
         Me.SuspendLayout()
         '
         'Bar2
@@ -79,10 +89,10 @@ Partial Class Frm_02_Detalle_Producto_Actual
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnEstadisticas, Me.BtnAgregarConteo, Me.BtnGrabarAnalisis_Reconteo, Me.BtnSalir})
-        Me.Bar2.Location = New System.Drawing.Point(0, 470)
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnAgregarConteo, Me.BtnGrabarAnalisis_Reconteo, Me.BtnEstadisticas})
+        Me.Bar2.Location = New System.Drawing.Point(0, 484)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(718, 41)
+        Me.Bar2.Size = New System.Drawing.Size(716, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 33
@@ -113,59 +123,10 @@ Partial Class Frm_02_Detalle_Producto_Actual
         Me.BtnGrabarAnalisis_Reconteo.Name = "BtnGrabarAnalisis_Reconteo"
         Me.BtnGrabarAnalisis_Reconteo.Text = "Grabar analisis, reconteo"
         '
-        'BtnSalir
-        '
-        Me.BtnSalir.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.BtnSalir.ForeColor = System.Drawing.Color.Black
-        Me.BtnSalir.Image = CType(resources.GetObject("BtnSalir.Image"), System.Drawing.Image)
-        Me.BtnSalir.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.BtnSalir.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
-        Me.BtnSalir.Name = "BtnSalir"
-        '
-        'GroupBox1
-        '
-        Me.GroupBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.GroupBox1.Controls.Add(Me.GrillaHistoriaProducto)
-        Me.GroupBox1.ForeColor = System.Drawing.Color.Black
-        Me.GroupBox1.Location = New System.Drawing.Point(12, 43)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(695, 149)
-        Me.GroupBox1.TabIndex = 45
-        Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "Ubicaciones en las que se ha encontrado"
-        '
-        'GrillaHistoriaProducto
-        '
-        Me.GrillaHistoriaProducto.AllowUserToAddRows = False
-        Me.GrillaHistoriaProducto.AllowUserToDeleteRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GrillaHistoriaProducto.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
-        Me.GrillaHistoriaProducto.BackgroundColor = System.Drawing.Color.White
-        Me.GrillaHistoriaProducto.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.GrillaHistoriaProducto.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GrillaHistoriaProducto.Location = New System.Drawing.Point(3, 18)
-        Me.GrillaHistoriaProducto.Name = "GrillaHistoriaProducto"
-        Me.GrillaHistoriaProducto.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.GrillaHistoriaProducto.Size = New System.Drawing.Size(689, 128)
-        Me.GrillaHistoriaProducto.TabIndex = 1
-        '
-        'GroupBox2
-        '
-        Me.GroupBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.GroupBox2.Controls.Add(Me.TableLayoutPanel1)
-        Me.GroupBox2.ForeColor = System.Drawing.Color.Black
-        Me.GroupBox2.Location = New System.Drawing.Point(11, 198)
-        Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(695, 89)
-        Me.GroupBox2.TabIndex = 47
-        Me.GroupBox2.TabStop = False
-        Me.GroupBox2.Text = "Contadores"
-        '
         'TableLayoutPanel1
         '
         Me.TableLayoutPanel1.BackColor = System.Drawing.Color.Transparent
-        Me.TableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.OutsetDouble
+        Me.TableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.[Single]
         Me.TableLayoutPanel1.ColumnCount = 4
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.44118!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 29.26471!))
@@ -180,7 +141,7 @@ Partial Class Frm_02_Detalle_Producto_Actual
         Me.TableLayoutPanel1.Controls.Add(Me.LabelX9, 2, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.LblContador2, 3, 1)
         Me.TableLayoutPanel1.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(6, 21)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(3, 10)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 2
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
@@ -195,7 +156,7 @@ Partial Class Frm_02_Detalle_Producto_Actual
         '
         Me.LblContador1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LblContador1.ForeColor = System.Drawing.Color.Black
-        Me.LblContador1.Location = New System.Drawing.Point(145, 34)
+        Me.LblContador1.Location = New System.Drawing.Point(144, 33)
         Me.LblContador1.Name = "LblContador1"
         Me.LblContador1.Size = New System.Drawing.Size(190, 19)
         Me.LblContador1.TabIndex = 5
@@ -208,7 +169,7 @@ Partial Class Frm_02_Detalle_Producto_Actual
         '
         Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX5.ForeColor = System.Drawing.Color.Black
-        Me.LabelX5.Location = New System.Drawing.Point(6, 34)
+        Me.LabelX5.Location = New System.Drawing.Point(4, 33)
         Me.LabelX5.Name = "LabelX5"
         Me.LabelX5.Size = New System.Drawing.Size(75, 19)
         Me.LabelX5.TabIndex = 4
@@ -221,7 +182,7 @@ Partial Class Frm_02_Detalle_Producto_Actual
         '
         Me.LblActualizadoPor.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LblActualizadoPor.ForeColor = System.Drawing.Color.Black
-        Me.LblActualizadoPor.Location = New System.Drawing.Point(463, 6)
+        Me.LblActualizadoPor.Location = New System.Drawing.Point(463, 4)
         Me.LblActualizadoPor.Name = "LblActualizadoPor"
         Me.LblActualizadoPor.Size = New System.Drawing.Size(209, 18)
         Me.LblActualizadoPor.TabIndex = 3
@@ -234,7 +195,7 @@ Partial Class Frm_02_Detalle_Producto_Actual
         '
         Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX3.ForeColor = System.Drawing.Color.Black
-        Me.LabelX3.Location = New System.Drawing.Point(344, 6)
+        Me.LabelX3.Location = New System.Drawing.Point(344, 4)
         Me.LabelX3.Name = "LabelX3"
         Me.LabelX3.Size = New System.Drawing.Size(110, 18)
         Me.LabelX3.TabIndex = 2
@@ -247,7 +208,7 @@ Partial Class Frm_02_Detalle_Producto_Actual
         '
         Me.LblDigitador.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LblDigitador.ForeColor = System.Drawing.Color.Black
-        Me.LblDigitador.Location = New System.Drawing.Point(145, 6)
+        Me.LblDigitador.Location = New System.Drawing.Point(144, 4)
         Me.LblDigitador.Name = "LblDigitador"
         Me.LblDigitador.Size = New System.Drawing.Size(190, 18)
         Me.LblDigitador.TabIndex = 1
@@ -260,7 +221,7 @@ Partial Class Frm_02_Detalle_Producto_Actual
         '
         Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX1.ForeColor = System.Drawing.Color.Black
-        Me.LabelX1.Location = New System.Drawing.Point(6, 6)
+        Me.LabelX1.Location = New System.Drawing.Point(4, 4)
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.Size = New System.Drawing.Size(113, 19)
         Me.LabelX1.TabIndex = 0
@@ -273,7 +234,7 @@ Partial Class Frm_02_Detalle_Producto_Actual
         '
         Me.LabelX9.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX9.ForeColor = System.Drawing.Color.Black
-        Me.LabelX9.Location = New System.Drawing.Point(344, 34)
+        Me.LabelX9.Location = New System.Drawing.Point(344, 33)
         Me.LabelX9.Name = "LabelX9"
         Me.LabelX9.Size = New System.Drawing.Size(75, 19)
         Me.LabelX9.TabIndex = 8
@@ -286,28 +247,16 @@ Partial Class Frm_02_Detalle_Producto_Actual
         '
         Me.LblContador2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LblContador2.ForeColor = System.Drawing.Color.Black
-        Me.LblContador2.Location = New System.Drawing.Point(463, 34)
+        Me.LblContador2.Location = New System.Drawing.Point(463, 33)
         Me.LblContador2.Name = "LblContador2"
         Me.LblContador2.Size = New System.Drawing.Size(209, 19)
         Me.LblContador2.TabIndex = 9
         Me.LblContador2.Text = "LabelX10"
         '
-        'GroupBox3
-        '
-        Me.GroupBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.GroupBox3.Controls.Add(Me.TableLayoutPanel2)
-        Me.GroupBox3.ForeColor = System.Drawing.Color.Black
-        Me.GroupBox3.Location = New System.Drawing.Point(11, 293)
-        Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(695, 95)
-        Me.GroupBox3.TabIndex = 48
-        Me.GroupBox3.TabStop = False
-        Me.GroupBox3.Text = "Observaciones"
-        '
         'TableLayoutPanel2
         '
         Me.TableLayoutPanel2.BackColor = System.Drawing.Color.Transparent
-        Me.TableLayoutPanel2.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.OutsetDouble
+        Me.TableLayoutPanel2.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.[Single]
         Me.TableLayoutPanel2.ColumnCount = 2
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.14706!))
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 79.85294!))
@@ -316,7 +265,7 @@ Partial Class Frm_02_Detalle_Producto_Actual
         Me.TableLayoutPanel2.Controls.Add(Me.LabelX13, 0, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.LabelX8, 0, 1)
         Me.TableLayoutPanel2.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel2.Location = New System.Drawing.Point(6, 21)
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(3, 10)
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
         Me.TableLayoutPanel2.RowCount = 2
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
@@ -331,7 +280,7 @@ Partial Class Frm_02_Detalle_Producto_Actual
         '
         Me.LblObsActualizacion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LblObsActualizacion.ForeColor = System.Drawing.Color.Black
-        Me.LblObsActualizacion.Location = New System.Drawing.Point(144, 36)
+        Me.LblObsActualizacion.Location = New System.Drawing.Point(142, 35)
         Me.LblObsActualizacion.Name = "LblObsActualizacion"
         Me.LblObsActualizacion.Size = New System.Drawing.Size(394, 22)
         Me.LblObsActualizacion.TabIndex = 5
@@ -344,7 +293,7 @@ Partial Class Frm_02_Detalle_Producto_Actual
         '
         Me.LblObservaciones.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LblObservaciones.ForeColor = System.Drawing.Color.Black
-        Me.LblObservaciones.Location = New System.Drawing.Point(144, 6)
+        Me.LblObservaciones.Location = New System.Drawing.Point(142, 4)
         Me.LblObservaciones.Name = "LblObservaciones"
         Me.LblObservaciones.Size = New System.Drawing.Size(394, 21)
         Me.LblObservaciones.TabIndex = 1
@@ -357,7 +306,7 @@ Partial Class Frm_02_Detalle_Producto_Actual
         '
         Me.LabelX13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX13.ForeColor = System.Drawing.Color.Black
-        Me.LabelX13.Location = New System.Drawing.Point(6, 6)
+        Me.LabelX13.Location = New System.Drawing.Point(4, 4)
         Me.LabelX13.Name = "LabelX13"
         Me.LabelX13.Size = New System.Drawing.Size(113, 21)
         Me.LabelX13.TabIndex = 0
@@ -370,28 +319,16 @@ Partial Class Frm_02_Detalle_Producto_Actual
         '
         Me.LabelX8.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX8.ForeColor = System.Drawing.Color.Black
-        Me.LabelX8.Location = New System.Drawing.Point(6, 36)
+        Me.LabelX8.Location = New System.Drawing.Point(4, 35)
         Me.LabelX8.Name = "LabelX8"
         Me.LabelX8.Size = New System.Drawing.Size(129, 22)
         Me.LabelX8.TabIndex = 4
         Me.LabelX8.Text = "Obs. Actualización [Rec.]"
         '
-        'GroupBox4
-        '
-        Me.GroupBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.GroupBox4.Controls.Add(Me.TableLayoutPanel3)
-        Me.GroupBox4.ForeColor = System.Drawing.Color.Black
-        Me.GroupBox4.Location = New System.Drawing.Point(11, 394)
-        Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(695, 70)
-        Me.GroupBox4.TabIndex = 49
-        Me.GroupBox4.TabStop = False
-        Me.GroupBox4.Text = "Inventario"
-        '
         'TableLayoutPanel3
         '
         Me.TableLayoutPanel3.BackColor = System.Drawing.Color.Transparent
-        Me.TableLayoutPanel3.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.OutsetDouble
+        Me.TableLayoutPanel3.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.[Single]
         Me.TableLayoutPanel3.ColumnCount = 6
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667!))
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667!))
@@ -406,11 +343,11 @@ Partial Class Frm_02_Detalle_Producto_Actual
         Me.TableLayoutPanel3.Controls.Add(Me.LblTotalDiferencia, 5, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.LabelX10, 4, 0)
         Me.TableLayoutPanel3.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel3.Location = New System.Drawing.Point(6, 21)
+        Me.TableLayoutPanel3.Location = New System.Drawing.Point(3, 8)
         Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
         Me.TableLayoutPanel3.RowCount = 1
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel3.Size = New System.Drawing.Size(683, 39)
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(683, 32)
         Me.TableLayoutPanel3.TabIndex = 0
         '
         'LabelX2
@@ -421,9 +358,9 @@ Partial Class Frm_02_Detalle_Producto_Actual
         Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelX2.ForeColor = System.Drawing.Color.Black
-        Me.LabelX2.Location = New System.Drawing.Point(6, 6)
+        Me.LabelX2.Location = New System.Drawing.Point(4, 4)
         Me.LabelX2.Name = "LabelX2"
-        Me.LabelX2.Size = New System.Drawing.Size(78, 27)
+        Me.LabelX2.Size = New System.Drawing.Size(78, 24)
         Me.LabelX2.TabIndex = 5
         Me.LabelX2.Text = "Stock Foto"
         Me.LabelX2.TextAlignment = System.Drawing.StringAlignment.Center
@@ -436,9 +373,9 @@ Partial Class Frm_02_Detalle_Producto_Actual
         Me.LblTotalFotoStock.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LblTotalFotoStock.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblTotalFotoStock.ForeColor = System.Drawing.Color.Black
-        Me.LblTotalFotoStock.Location = New System.Drawing.Point(119, 6)
+        Me.LblTotalFotoStock.Location = New System.Drawing.Point(117, 4)
         Me.LblTotalFotoStock.Name = "LblTotalFotoStock"
-        Me.LblTotalFotoStock.Size = New System.Drawing.Size(78, 27)
+        Me.LblTotalFotoStock.Size = New System.Drawing.Size(78, 24)
         Me.LblTotalFotoStock.TabIndex = 1
         Me.LblTotalFotoStock.Text = "LabelX2"
         Me.LblTotalFotoStock.TextAlignment = System.Drawing.StringAlignment.Center
@@ -451,9 +388,9 @@ Partial Class Frm_02_Detalle_Producto_Actual
         Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(232, 6)
+        Me.LabelX4.Location = New System.Drawing.Point(230, 4)
         Me.LabelX4.Name = "LabelX4"
-        Me.LabelX4.Size = New System.Drawing.Size(78, 27)
+        Me.LabelX4.Size = New System.Drawing.Size(78, 24)
         Me.LabelX4.TabIndex = 6
         Me.LabelX4.Text = "Inventariado"
         Me.LabelX4.TextAlignment = System.Drawing.StringAlignment.Center
@@ -466,9 +403,9 @@ Partial Class Frm_02_Detalle_Producto_Actual
         Me.LblTotalInventariado.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LblTotalInventariado.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblTotalInventariado.ForeColor = System.Drawing.Color.Black
-        Me.LblTotalInventariado.Location = New System.Drawing.Point(345, 6)
+        Me.LblTotalInventariado.Location = New System.Drawing.Point(343, 4)
         Me.LblTotalInventariado.Name = "LblTotalInventariado"
-        Me.LblTotalInventariado.Size = New System.Drawing.Size(78, 27)
+        Me.LblTotalInventariado.Size = New System.Drawing.Size(78, 24)
         Me.LblTotalInventariado.TabIndex = 7
         Me.LblTotalInventariado.Text = "LabelX2"
         Me.LblTotalInventariado.TextAlignment = System.Drawing.StringAlignment.Center
@@ -481,9 +418,9 @@ Partial Class Frm_02_Detalle_Producto_Actual
         Me.LblTotalDiferencia.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LblTotalDiferencia.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblTotalDiferencia.ForeColor = System.Drawing.Color.Black
-        Me.LblTotalDiferencia.Location = New System.Drawing.Point(571, 6)
+        Me.LblTotalDiferencia.Location = New System.Drawing.Point(569, 4)
         Me.LblTotalDiferencia.Name = "LblTotalDiferencia"
-        Me.LblTotalDiferencia.Size = New System.Drawing.Size(81, 27)
+        Me.LblTotalDiferencia.Size = New System.Drawing.Size(81, 24)
         Me.LblTotalDiferencia.TabIndex = 8
         Me.LblTotalDiferencia.Text = "LabelX2"
         Me.LblTotalDiferencia.TextAlignment = System.Drawing.StringAlignment.Center
@@ -496,9 +433,9 @@ Partial Class Frm_02_Detalle_Producto_Actual
         Me.LabelX10.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelX10.ForeColor = System.Drawing.Color.Black
-        Me.LabelX10.Location = New System.Drawing.Point(458, 6)
+        Me.LabelX10.Location = New System.Drawing.Point(456, 4)
         Me.LabelX10.Name = "LabelX10"
-        Me.LabelX10.Size = New System.Drawing.Size(78, 27)
+        Me.LabelX10.Size = New System.Drawing.Size(78, 24)
         Me.LabelX10.TabIndex = 9
         Me.LabelX10.Text = "Diferencia"
         Me.LabelX10.TextAlignment = System.Drawing.StringAlignment.Center
@@ -561,85 +498,378 @@ Partial Class Frm_02_Detalle_Producto_Actual
         Me.LabelX11.Text = "LabelX2"
         Me.LabelX11.TextAlignment = System.Drawing.StringAlignment.Center
         '
+        'GroupPanel1
+        '
+        Me.GroupPanel1.BackColor = System.Drawing.Color.White
+        Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.Controls.Add(Me.Menu_Contextual)
+        Me.GroupPanel1.Controls.Add(Me.GrillaHistoriaProducto)
+        Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel1.Location = New System.Drawing.Point(11, 43)
+        Me.GroupPanel1.Name = "GroupPanel1"
+        Me.GroupPanel1.Size = New System.Drawing.Size(695, 150)
+        '
+        '
+        '
+        Me.GroupPanel1.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel1.Style.BackColorGradientAngle = 90
+        Me.GroupPanel1.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel1.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderBottomWidth = 1
+        Me.GroupPanel1.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel1.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderLeftWidth = 1
+        Me.GroupPanel1.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderRightWidth = 1
+        Me.GroupPanel1.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderTopWidth = 1
+        Me.GroupPanel1.Style.CornerDiameter = 4
+        Me.GroupPanel1.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel1.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel1.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel1.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel1.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel1.TabIndex = 53
+        Me.GroupPanel1.Text = "Ubicaciones en las que se ha encontrado el producto"
+        '
+        'Menu_Contextual
+        '
+        Me.Menu_Contextual.AntiAlias = True
+        Me.Menu_Contextual.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
+        Me.Menu_Contextual.Location = New System.Drawing.Point(45, 53)
+        Me.Menu_Contextual.Name = "Menu_Contextual"
+        Me.Menu_Contextual.Size = New System.Drawing.Size(412, 25)
+        Me.Menu_Contextual.Stretch = True
+        Me.Menu_Contextual.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Menu_Contextual.TabIndex = 49
+        Me.Menu_Contextual.TabStop = False
+        Me.Menu_Contextual.Text = "ContextMenuBar1"
+        '
+        'Menu_Contextual_01
+        '
+        Me.Menu_Contextual_01.AutoExpandOnClick = True
+        Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_EditarInventario, Me.Btn_EliminarInventario, Me.Btn_ActivarInventario, Me.LabelItem3, Me.Btn_Copiar})
+        Me.Menu_Contextual_01.Text = "Opciones documento"
+        '
+        'LabelItem1
+        '
+        Me.LabelItem1.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem1.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem1.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem1.Name = "LabelItem1"
+        Me.LabelItem1.PaddingBottom = 1
+        Me.LabelItem1.PaddingLeft = 10
+        Me.LabelItem1.PaddingTop = 1
+        Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem1.Text = "Opciones"
+        '
+        'Btn_EditarInventario
+        '
+        Me.Btn_EditarInventario.Image = CType(resources.GetObject("Btn_EditarInventario.Image"), System.Drawing.Image)
+        Me.Btn_EditarInventario.ImageAlt = CType(resources.GetObject("Btn_EditarInventario.ImageAlt"), System.Drawing.Image)
+        Me.Btn_EditarInventario.Name = "Btn_EditarInventario"
+        Me.Btn_EditarInventario.Text = "Editar"
+        '
+        'Btn_EliminarInventario
+        '
+        Me.Btn_EliminarInventario.Image = CType(resources.GetObject("Btn_EliminarInventario.Image"), System.Drawing.Image)
+        Me.Btn_EliminarInventario.ImageAlt = CType(resources.GetObject("Btn_EliminarInventario.ImageAlt"), System.Drawing.Image)
+        Me.Btn_EliminarInventario.Name = "Btn_EliminarInventario"
+        Me.Btn_EliminarInventario.Text = "Eliminar"
+        '
+        'Btn_ActivarInventario
+        '
+        Me.Btn_ActivarInventario.Image = CType(resources.GetObject("Btn_ActivarInventario.Image"), System.Drawing.Image)
+        Me.Btn_ActivarInventario.ImageAlt = CType(resources.GetObject("Btn_ActivarInventario.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ActivarInventario.Name = "Btn_ActivarInventario"
+        Me.Btn_ActivarInventario.Text = "Dejar como inventario activo"
+        '
+        'LabelItem3
+        '
+        Me.LabelItem3.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem3.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem3.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem3.Name = "LabelItem3"
+        Me.LabelItem3.PaddingBottom = 1
+        Me.LabelItem3.PaddingLeft = 10
+        Me.LabelItem3.PaddingTop = 1
+        Me.LabelItem3.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem3.Text = "-----------------------------------------"
+        '
+        'Btn_Copiar
+        '
+        Me.Btn_Copiar.Image = CType(resources.GetObject("Btn_Copiar.Image"), System.Drawing.Image)
+        Me.Btn_Copiar.ImageAlt = CType(resources.GetObject("Btn_Copiar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Copiar.Name = "Btn_Copiar"
+        Me.Btn_Copiar.Text = "Copiar (portapapeles)"
+        '
+        'GrillaHistoriaProducto
+        '
+        Me.GrillaHistoriaProducto.AllowUserToAddRows = False
+        Me.GrillaHistoriaProducto.BackgroundColor = System.Drawing.Color.White
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.GrillaHistoriaProducto.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        Me.GrillaHistoriaProducto.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.GrillaHistoriaProducto.DefaultCellStyle = DataGridViewCellStyle2
+        Me.GrillaHistoriaProducto.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GrillaHistoriaProducto.EnableHeadersVisualStyles = False
+        Me.GrillaHistoriaProducto.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
+        Me.GrillaHistoriaProducto.Location = New System.Drawing.Point(0, 0)
+        Me.GrillaHistoriaProducto.Name = "GrillaHistoriaProducto"
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.GrillaHistoriaProducto.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        Me.GrillaHistoriaProducto.Size = New System.Drawing.Size(689, 127)
+        Me.GrillaHistoriaProducto.StandardTab = True
+        Me.GrillaHistoriaProducto.TabIndex = 30
+        '
+        'GroupPanel2
+        '
+        Me.GroupPanel2.BackColor = System.Drawing.Color.White
+        Me.GroupPanel2.CanvasColor = System.Drawing.SystemColors.Control
+        Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel2.Controls.Add(Me.TableLayoutPanel1)
+        Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel2.Location = New System.Drawing.Point(11, 199)
+        Me.GroupPanel2.Name = "GroupPanel2"
+        Me.GroupPanel2.Size = New System.Drawing.Size(695, 100)
+        '
+        '
+        '
+        Me.GroupPanel2.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel2.Style.BackColorGradientAngle = 90
+        Me.GroupPanel2.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel2.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderBottomWidth = 1
+        Me.GroupPanel2.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel2.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderLeftWidth = 1
+        Me.GroupPanel2.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderRightWidth = 1
+        Me.GroupPanel2.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderTopWidth = 1
+        Me.GroupPanel2.Style.CornerDiameter = 4
+        Me.GroupPanel2.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel2.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel2.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel2.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel2.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel2.TabIndex = 54
+        Me.GroupPanel2.Text = "Contadores"
+        '
+        'GroupPanel3
+        '
+        Me.GroupPanel3.BackColor = System.Drawing.Color.White
+        Me.GroupPanel3.CanvasColor = System.Drawing.SystemColors.Control
+        Me.GroupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel3.Controls.Add(Me.TableLayoutPanel2)
+        Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel3.Location = New System.Drawing.Point(11, 305)
+        Me.GroupPanel3.Name = "GroupPanel3"
+        Me.GroupPanel3.Size = New System.Drawing.Size(695, 100)
+        '
+        '
+        '
+        Me.GroupPanel3.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel3.Style.BackColorGradientAngle = 90
+        Me.GroupPanel3.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel3.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel3.Style.BorderBottomWidth = 1
+        Me.GroupPanel3.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel3.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel3.Style.BorderLeftWidth = 1
+        Me.GroupPanel3.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel3.Style.BorderRightWidth = 1
+        Me.GroupPanel3.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel3.Style.BorderTopWidth = 1
+        Me.GroupPanel3.Style.CornerDiameter = 4
+        Me.GroupPanel3.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel3.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel3.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel3.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel3.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel3.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel3.TabIndex = 55
+        Me.GroupPanel3.Text = "Observaciones"
+        '
+        'GroupPanel4
+        '
+        Me.GroupPanel4.BackColor = System.Drawing.Color.White
+        Me.GroupPanel4.CanvasColor = System.Drawing.SystemColors.Control
+        Me.GroupPanel4.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel4.Controls.Add(Me.TableLayoutPanel3)
+        Me.GroupPanel4.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel4.Location = New System.Drawing.Point(11, 411)
+        Me.GroupPanel4.Name = "GroupPanel4"
+        Me.GroupPanel4.Size = New System.Drawing.Size(695, 67)
+        '
+        '
+        '
+        Me.GroupPanel4.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel4.Style.BackColorGradientAngle = 90
+        Me.GroupPanel4.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel4.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel4.Style.BorderBottomWidth = 1
+        Me.GroupPanel4.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel4.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel4.Style.BorderLeftWidth = 1
+        Me.GroupPanel4.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel4.Style.BorderRightWidth = 1
+        Me.GroupPanel4.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel4.Style.BorderTopWidth = 1
+        Me.GroupPanel4.Style.CornerDiameter = 4
+        Me.GroupPanel4.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel4.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel4.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel4.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel4.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel4.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel4.TabIndex = 56
+        Me.GroupPanel4.Text = "Inventario"
+        '
         'ChkRecontado
         '
-        Me.ChkRecontado.AutoSize = True
-        Me.ChkRecontado.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.ChkRecontado.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.ChkRecontado.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.ChkRecontado.CheckBoxImageChecked = CType(resources.GetObject("ChkRecontado.CheckBoxImageChecked"), System.Drawing.Image)
         Me.ChkRecontado.Enabled = False
+        Me.ChkRecontado.FocusCuesEnabled = False
         Me.ChkRecontado.ForeColor = System.Drawing.Color.Black
         Me.ChkRecontado.Location = New System.Drawing.Point(12, 20)
         Me.ChkRecontado.Name = "ChkRecontado"
-        Me.ChkRecontado.Size = New System.Drawing.Size(82, 17)
-        Me.ChkRecontado.TabIndex = 50
+        Me.ChkRecontado.Size = New System.Drawing.Size(73, 17)
+        Me.ChkRecontado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.ChkRecontado.TabIndex = 57
+        Me.ChkRecontado.TabStop = False
         Me.ChkRecontado.Text = "Recontado"
-        Me.ChkRecontado.UseVisualStyleBackColor = False
         '
         'ChkCerrado
         '
-        Me.ChkCerrado.AutoSize = True
-        Me.ChkCerrado.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.ChkCerrado.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.ChkCerrado.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.ChkCerrado.CheckBoxImageChecked = CType(resources.GetObject("ChkCerrado.CheckBoxImageChecked"), System.Drawing.Image)
         Me.ChkCerrado.Enabled = False
+        Me.ChkCerrado.FocusCuesEnabled = False
         Me.ChkCerrado.ForeColor = System.Drawing.Color.Black
-        Me.ChkCerrado.Location = New System.Drawing.Point(100, 20)
+        Me.ChkCerrado.Location = New System.Drawing.Point(91, 20)
         Me.ChkCerrado.Name = "ChkCerrado"
-        Me.ChkCerrado.Size = New System.Drawing.Size(67, 17)
-        Me.ChkCerrado.TabIndex = 51
+        Me.ChkCerrado.Size = New System.Drawing.Size(73, 17)
+        Me.ChkCerrado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.ChkCerrado.TabIndex = 58
+        Me.ChkCerrado.TabStop = False
         Me.ChkCerrado.Text = "Cerrado"
-        Me.ChkCerrado.UseVisualStyleBackColor = False
         '
         'ChkLevantado
         '
-        Me.ChkLevantado.AutoSize = True
-        Me.ChkLevantado.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.ChkLevantado.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.ChkLevantado.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.ChkLevantado.CheckBoxImageChecked = CType(resources.GetObject("ChkLevantado.CheckBoxImageChecked"), System.Drawing.Image)
         Me.ChkLevantado.Enabled = False
+        Me.ChkLevantado.FocusCuesEnabled = False
         Me.ChkLevantado.ForeColor = System.Drawing.Color.Black
-        Me.ChkLevantado.Location = New System.Drawing.Point(173, 20)
+        Me.ChkLevantado.Location = New System.Drawing.Point(161, 20)
         Me.ChkLevantado.Name = "ChkLevantado"
-        Me.ChkLevantado.Size = New System.Drawing.Size(79, 17)
-        Me.ChkLevantado.TabIndex = 52
+        Me.ChkLevantado.Size = New System.Drawing.Size(73, 17)
+        Me.ChkLevantado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.ChkLevantado.TabIndex = 59
+        Me.ChkLevantado.TabStop = False
         Me.ChkLevantado.Text = "Levantado"
-        Me.ChkLevantado.UseVisualStyleBackColor = False
         '
         'Frm_02_Detalle_Producto_Actual
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(718, 511)
-        Me.ControlBox = False
+        Me.ClientSize = New System.Drawing.Size(716, 525)
         Me.Controls.Add(Me.ChkLevantado)
         Me.Controls.Add(Me.ChkCerrado)
         Me.Controls.Add(Me.ChkRecontado)
-        Me.Controls.Add(Me.GroupBox4)
-        Me.Controls.Add(Me.GroupBox3)
-        Me.Controls.Add(Me.GroupBox2)
-        Me.Controls.Add(Me.GroupBox1)
+        Me.Controls.Add(Me.GroupPanel4)
+        Me.Controls.Add(Me.GroupPanel3)
+        Me.Controls.Add(Me.GroupPanel2)
+        Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.Bar2)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "Frm_02_Detalle_Producto_Actual"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Detalle del inventario del producto activo"
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupBox1.ResumeLayout(False)
-        CType(Me.GrillaHistoriaProducto, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupBox2.ResumeLayout(False)
         Me.TableLayoutPanel1.ResumeLayout(False)
-        Me.GroupBox3.ResumeLayout(False)
         Me.TableLayoutPanel2.ResumeLayout(False)
-        Me.GroupBox4.ResumeLayout(False)
         Me.TableLayoutPanel3.ResumeLayout(False)
         Me.TableLayoutPanel4.ResumeLayout(False)
+        Me.GroupPanel1.ResumeLayout(False)
+        CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GrillaHistoriaProducto, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupPanel2.ResumeLayout(False)
+        Me.GroupPanel3.ResumeLayout(False)
+        Me.GroupPanel4.ResumeLayout(False)
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
     Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
-    Friend WithEvents BtnSalir As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
-    Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
     Friend WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
     Friend WithEvents LblContador2 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX9 As DevComponents.DotNetBar.LabelX
@@ -649,14 +879,11 @@ Partial Class Frm_02_Detalle_Producto_Actual
     Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LblDigitador As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
-    Friend WithEvents GroupBox3 As System.Windows.Forms.GroupBox
     Friend WithEvents TableLayoutPanel2 As System.Windows.Forms.TableLayoutPanel
     Friend WithEvents LblObsActualizacion As DevComponents.DotNetBar.LabelX
     Friend WithEvents LblObservaciones As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX13 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX8 As DevComponents.DotNetBar.LabelX
-    Public WithEvents GrillaHistoriaProducto As System.Windows.Forms.DataGridView
-    Friend WithEvents GroupBox4 As System.Windows.Forms.GroupBox
     Friend WithEvents TableLayoutPanel3 As System.Windows.Forms.TableLayoutPanel
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
@@ -671,7 +898,20 @@ Partial Class Frm_02_Detalle_Producto_Actual
     Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
     Public WithEvents LabelX11 As DevComponents.DotNetBar.LabelX
     Friend WithEvents BtnAgregarConteo As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents ChkRecontado As System.Windows.Forms.CheckBox
-    Public WithEvents ChkCerrado As System.Windows.Forms.CheckBox
-    Public WithEvents ChkLevantado As System.Windows.Forms.CheckBox
+    Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
+    Friend WithEvents Menu_Contextual As DevComponents.DotNetBar.ContextMenuBar
+    Friend WithEvents Menu_Contextual_01 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelItem1 As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Btn_EditarInventario As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_EliminarInventario As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_ActivarInventario As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelItem3 As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Btn_Copiar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents GrillaHistoriaProducto As DevComponents.DotNetBar.Controls.DataGridViewX
+    Friend WithEvents GroupPanel2 As DevComponents.DotNetBar.Controls.GroupPanel
+    Friend WithEvents GroupPanel3 As DevComponents.DotNetBar.Controls.GroupPanel
+    Friend WithEvents GroupPanel4 As DevComponents.DotNetBar.Controls.GroupPanel
+    Friend WithEvents ChkRecontado As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents ChkCerrado As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents ChkLevantado As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

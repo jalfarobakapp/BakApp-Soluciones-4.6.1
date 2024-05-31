@@ -95,6 +95,8 @@ Public Class Frm_Desp_01_Ingreso
         End Set
     End Property
 
+    Public Property ConfirmarLecturaDespacho As Boolean
+
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -1362,6 +1364,26 @@ Public Class Frm_Desp_01_Ingreso
                 _Sql.Fx_Ejecutar_Consulta(Consulta_Sql)
 
             End If
+
+
+            If ConfirmarLecturaDespacho Then
+
+                'Sb_Confirmar_Lectura("El código ya fue leído en otro(s) documento(s) GRI",
+                '         "No puede leer mas de una vez el mismo código en otro documento" & vbCrLf & vbCrLf &
+                '         "Documento(s): " & _Msg, eTaskDialogIcon.Stop, Nothing)
+
+                Dim _Msg1 = "CONFIRMA: " & Cmb_Tipo_Envio.Text
+                Dim _Msg2 = vbCrLf &
+                            "Dirección: " & _Direccion & vbCrLf &
+                            "Transportista: " & Txt_Transportista.Text.Trim & vbCrLf &
+                            "Referencia: " & Txt_Referencia.Text & vbCrLf
+
+                If Not Fx_Confirmar_Lectura(_Msg1, _Msg2, eTaskDialogIcon.Exclamation) Then
+                    Return
+                End If
+
+            End If
+
 
             Dim _Confirmado As Boolean = Not _Cl_Despacho.Desde_Documento
             Dim _Nro_Despacho As String = _Cl_Despacho.Fx_Nuevo_Nro_Despacho(_Confirmado)

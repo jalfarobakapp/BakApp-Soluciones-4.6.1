@@ -1,4 +1,4 @@
-'Imports Lib_Bakapp_VarClassFunc
+ï»¿'Imports Lib_Bakapp_VarClassFunc
 Imports DevComponents.DotNetBar
 'Imports BkSpecialPrograms
 
@@ -17,40 +17,40 @@ Public Class Frm_03_Sectores_Inv
     Public _Empresa, _Sucursal, _Bodega As String
     Public _ValidaEstado As Boolean
 
-    Private Sub Frm_Sectores_Inv_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Sectores_Inv_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         Actualizar_Grilla("")
         Me.ActiveControl = Txtdescripcion
 
     End Sub
 
-    Sub Actualizar_Grilla(ByVal Ubicacion As String)
+    Sub Actualizar_Grilla(Ubicacion As String)
 
         Dim Datos_a_buscar As String
         Dim Descripcion As String = Trim(Txtdescripcion.Text)
 
-        Datos_a_buscar = CADENA_A_BUSCAR(Descripcion, _
+        Datos_a_buscar = CADENA_A_BUSCAR(Descripcion,
                                          "CodSectorInt+CodigoUbicacion+UbicacionBodega" & " LIKE '%")
 
         Dim Des1 = CADENA_A_BUSCAR(RTrim$(Descripcion), "CodSector+Lugar_+Sector_ LIKE '%")
         Dim Condi = "And  CodSector+Lugar_+Sector_ like '%" & Des1 & "%'"
 
-        Consulta_sql = "SELECT Case When (SELECT COUNT(*) FROM ZW_TmpInvSectores_Cerrados Zc" & vbCrLf & _
-                       "WHERE IdInventario = " & _IdInventario & " And Zc.CodSector = Zw_Tbl_SecXBod_.CodSector) > 0 then 'Cerrado'" & vbCrLf & _
-                       "Else 'Abierto' end as Estado," & vbCrLf & _
-                       "Isnull((Select top 1 CodFuncionario From ZW_TmpInvSectorVsFuncionarios" & vbCrLf & _
-                       "Where IdInventario = " & _IdInventario & _
-                       " And CodSector = Zw_Tbl_SecXBod_.CodSector),'') as CodFun," & vbCrLf & _
-                       "Isnull((Select top 1 NombreFuncionario From ZW_TmpInvSectorVsFuncionarios" & vbCrLf & _
-                       "Where IdInventario = " & _IdInventario & _
-                       " And CodSector = Zw_Tbl_SecXBod_.CodSector),'No tiene usuario asignado') as NomFun," & vbCrLf & _
-                       "Ltrim(Rtrim(Lugar_))+', '+Ltrim(Rtrim(Sector_)) as Descripcion,* FROM Zw_Tbl_SecXBod_" & vbCrLf & _
-                       "Where Empresa = '" & _Empresa & _
-                       "' And Sucursal = '" & _Sucursal & _
-                       "' And Bodega = '" & _Bodega & "'" & vbCrLf & _
-                       Condi & vbCrLf & _
+        Consulta_sql = "SELECT Case When (SELECT COUNT(*) FROM ZW_TmpInvSectores_Cerrados Zc" & vbCrLf &
+                       "WHERE IdInventario = " & _IdInventario & " And Zc.CodSector = Zw_Tbl_SecXBod_.CodSector) > 0 then 'Cerrado'" & vbCrLf &
+                       "Else 'Abierto' end as Estado," & vbCrLf &
+                       "Isnull((Select top 1 CodFuncionario From ZW_TmpInvSectorVsFuncionarios" & vbCrLf &
+                       "Where IdInventario = " & _IdInventario &
+                       " And CodSector = Zw_Tbl_SecXBod_.CodSector),'') as CodFun," & vbCrLf &
+                       "Isnull((Select top 1 NombreFuncionario From ZW_TmpInvSectorVsFuncionarios" & vbCrLf &
+                       "Where IdInventario = " & _IdInventario &
+                       " And CodSector = Zw_Tbl_SecXBod_.CodSector),'No tiene usuario asignado') as NomFun," & vbCrLf &
+                       "Ltrim(Rtrim(Lugar_))+', '+Ltrim(Rtrim(Sector_)) as Descripcion,* FROM Zw_Tbl_SecXBod_" & vbCrLf &
+                       "Where Empresa = '" & _Empresa &
+                       "' And Sucursal = '" & _Sucursal &
+                       "' And Bodega = '" & _Bodega & "'" & vbCrLf &
+                       Condi & vbCrLf &
                        "Order by Descripcion"
 
-        Grilla_Inv.DataSource = _SQL.Fx_Get_Tablas(Consulta_sql)
+        Grilla_Inv.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
 
 
         With Grilla_Inv
@@ -59,7 +59,7 @@ Public Class Frm_03_Sectores_Inv
             '.Columns("Semilla").Visible = False
 
             .Columns("CodSector").Width = 100
-            .Columns("CodSector").HeaderText = "Cód. Sector"
+            .Columns("CodSector").HeaderText = "CÃ³d. Sector"
             .Columns("CodSector").Visible = True
             .Columns("CodSector").Frozen = True
             .Columns("CodSector").DisplayIndex = 0
@@ -91,22 +91,22 @@ Public Class Frm_03_Sectores_Inv
 
     End Sub
 
-    Private Sub Txtdescripcion_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Txtdescripcion.TextChanged
+    Private Sub Txtdescripcion_TextChanged(sender As System.Object, e As System.EventArgs) Handles Txtdescripcion.TextChanged
         Actualizar_Grilla(Trim(Txtdescripcion.Text))
     End Sub
 
 
     Public Sub New()
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
-       Sb_Formato_Generico_Grilla(Grilla_Inv, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, True, False)
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
+        Sb_Formato_Generico_Grilla(Grilla_Inv, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, True, False)
 
     End Sub
 
-    Private Sub Grilla_Inv_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla_Inv.CellDoubleClick
+    Private Sub Grilla_Inv_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla_Inv.CellDoubleClick
         If _IngresarHoja Then
             SemillaUbicacion_Inv = Nothing
 
@@ -116,8 +116,8 @@ Public Class Frm_03_Sectores_Inv
 
             If _ValidaEstado Then
                 If _Estado = "Cerrado" Then
-                    MessageBoxEx.Show("¡SECTOR CERRADO!" & vbCrLf & _
-                                      "No se pueden ingresar hojas de conteo a un sector cerrado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    MessageBoxEx.Show("Â¡SECTOR CERRADO!" & vbCrLf &
+                                      "No se pueden ingresar hojas de conteo a un sector cerrado", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     Return
                 End If
             End If
@@ -126,7 +126,7 @@ Public Class Frm_03_Sectores_Inv
         End If
     End Sub
 
-    Private Sub BtnBuscarProductos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnBuscarProductos.Click
+    Private Sub BtnBuscarProductos_Click(sender As System.Object, e As System.EventArgs) Handles BtnBuscarProductos.Click
         Dim Fm As New Frm_BuscarXProducto_Mt
         Fm.CodProveedor_productos = String.Empty
         Fm.Tipo_Busqueda_Productos = Fm.Buscar_En.Maestro_de_Productos
@@ -134,21 +134,22 @@ Public Class Frm_03_Sectores_Inv
         Fm.CodProveedor_productos = String.Empty
         Fm.MostrarOcultos = True
         Fm.BtnBusAlternativas.Visible = True
-        Fm.BtnBusAlternativas.Text = "Buscar código alternativo"
+        Fm.BtnBusAlternativas.Text = "Buscar cÃ³digo alternativo"
         Fm.ShowDialog(Me)
         Codigo_abuscar = String.Empty
     End Sub
 
-    Private Sub VerProductosContadosEnEsteSectorToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles VerProductosContadosEnEsteSectorToolStripMenuItem.Click
+    Private Sub VerProductosContadosEnEsteSectorToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles VerProductosContadosEnEsteSectorToolStripMenuItem.Click
+
         Dim _CodFun As String = Grilla_Inv.Rows(Grilla_Inv.CurrentRow.Index).Cells("CodFun").Value
         Dim _Usuario = NuloPorNro(Grilla_Inv.Rows(Grilla_Inv.CurrentRow.Index).Cells("NomFun").Value, "")
         Dim _Lugar = NuloPorNro(Grilla_Inv.Rows(Grilla_Inv.CurrentRow.Index).Cells("Lugar_").Value, "")
         Dim _Sector = NuloPorNro(Grilla_Inv.Rows(Grilla_Inv.CurrentRow.Index).Cells("Sector_").Value, "")
 
-
         If String.IsNullOrEmpty(_CodFun) Then
-            MessageBoxEx.Show("No existe usuario asignado al sector" & vbCrLf & _
-                              "Debe asignar un usuario para poder realizar esta acción", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show("No existe usuario asignado al sector" & vbCrLf &
+                              "Debe asignar un usuario para poder realizar esta acciÃ³n", "ValidaciÃ³n",
+                                                                                         MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
 
@@ -165,11 +166,12 @@ Public Class Frm_03_Sectores_Inv
         If CBool(Fm.Act_Grilla()) Then
             Fm.ShowDialog(Me)
         Else
-            MessageBoxEx.Show("No existen datos que mostrar", "Productos inventariados por sector", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show("No existen datos que mostrar", "Productos inventariados por sector",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End If
     End Sub
 
-    Private Sub Grilla_Inv_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Grilla_Inv.MouseDown
+    Private Sub Grilla_Inv_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles Grilla_Inv.MouseDown
         If e.Button = Windows.Forms.MouseButtons.Right Then
             With sender
                 Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
@@ -196,7 +198,7 @@ Public Class Frm_03_Sectores_Inv
         End If
     End Sub
 
-    Private Sub AbrirCerrarSectorToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AbrirCerrarSectorToolStripMenuItem.Click
+    Private Sub AbrirCerrarSectorToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles AbrirCerrarSectorToolStripMenuItem.Click
 
         Dim _Estado = NuloPorNro(Grilla_Inv.Rows(Grilla_Inv.CurrentRow.Index).Cells("Estado").Value, "")
         Dim _CodSector = NuloPorNro(Grilla_Inv.Rows(Grilla_Inv.CurrentRow.Index).Cells("CodSector").Value, "")
@@ -211,27 +213,27 @@ Public Class Frm_03_Sectores_Inv
         If _Autorizado Then
 
             If _Estado = "Abierto" Then
-                Consulta_sql = "Insert Into ZW_TmpInvSectores_Cerrados (IdInventario,CodSector) " & _
+                Consulta_sql = "Insert Into ZW_TmpInvSectores_Cerrados (IdInventario,CodSector) " &
                                "Values (" & _IdInventario & ",'" & _CodSector & "')"
                 _Estado = "Cerrado"
 
             Else
-                Consulta_sql = "Delete ZW_TmpInvSectores_Cerrados Where IdInventario = " & _IdInventario & _
+                Consulta_sql = "Delete ZW_TmpInvSectores_Cerrados Where IdInventario = " & _IdInventario &
                                                " And CodSector = '" & _CodSector & "'"
                 _Estado = "Abierto"
 
             End If
 
-            If  _Sql.Ej_consulta_IDU(Consulta_Sql) Then
+            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
                 Grilla_Inv.Rows(Grilla_Inv.CurrentRow.Index).Cells("Estado").Value = _Estado
                 MessageBoxEx.Show("Sector " & _Estado & " correctamente", "Cambiar estado", MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
 
         End If
-        
+
     End Sub
 
-    Private Sub AsignarUsuarioAlSectorToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AsignarUsuarioAlSectorToolStripMenuItem.Click
+    Private Sub AsignarUsuarioAlSectorToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles AsignarUsuarioAlSectorToolStripMenuItem.Click
 
         'Dim _CodSector = NuloPorNro(Grilla_Inv.Rows(Grilla_Inv.CurrentRow.Index).Cells("CodSector").Value, "")
         'Dim _Lugar = NuloPorNro(Grilla_Inv.Rows(Grilla_Inv.CurrentRow.Index).Cells("Lugar_").Value, "")
@@ -252,7 +254,7 @@ Public Class Frm_03_Sectores_Inv
         '                                          "' And CodFuncionario = '" & _CdFun & "'")
 
         'If CBool(Reg) Then
-        'MessageBoxEx.Show("Este usuario ya esta asignado como responzable a este sector", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        'MessageBoxEx.Show("Este usuario ya esta asignado como responzable a este sector", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         'Return
         'Else
 
@@ -284,7 +286,7 @@ Public Class Frm_03_Sectores_Inv
 
     End Sub
 
-    Private Sub Grilla_Inv_CellEnter(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla_Inv.CellEnter
+    Private Sub Grilla_Inv_CellEnter(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla_Inv.CellEnter
 
         Dim _Usuario = NuloPorNro(Grilla_Inv.Rows(Grilla_Inv.CurrentRow.Index).Cells("NomFun").Value, "")
 
