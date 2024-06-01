@@ -71,8 +71,8 @@ Public Class Cl_Arbol_Asociaciones
 
                 If .Codigo_Nodo = 0 Then
 
-                    Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_TblArbol_Asociaciones (Identificacdor_NodoPadre,Descripcion,Codigo_Madre) Values " &
-                               "(" & .Identificacdor_NodoPadre & ",'" & .Descripcion & "','" & .Codigo_Madre & "')"
+                    Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_TblArbol_Asociaciones (Identificacdor_NodoPadre,Descripcion,Codigo_Madre,Nodo_Raiz) Values " &
+                               "(" & .Identificacdor_NodoPadre & ",'" & .Descripcion & "','" & .Codigo_Madre & "'," & .Nodo_Raiz & ")"
 
                     Comando = New SqlClient.SqlCommand(Consulta_Sql, Cn2)
                     Comando.Transaction = myTrans
