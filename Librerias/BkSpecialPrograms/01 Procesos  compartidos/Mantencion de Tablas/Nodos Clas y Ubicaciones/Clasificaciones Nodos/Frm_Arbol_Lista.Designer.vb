@@ -28,8 +28,8 @@ Partial Class Frm_Arbol_Lista
         Me.Tree_Bandeja = New System.Windows.Forms.TreeView()
         Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
+        Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Exportar_Excel = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem3 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_VerTicket = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_TicketProducto = New DevComponents.DotNetBar.ButtonItem()
@@ -44,16 +44,13 @@ Partial Class Frm_Arbol_Lista
         Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
         Me.Lbl_TotalProductos = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_VerProductos = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_CrearClasificacion = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_CambiarNombreCarpeta = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_EliminarClasificacion = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem2 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
-        Me.Menu_Contextual_02 = New DevComponents.DotNetBar.ButtonItem()
-        Me.LabelItem5 = New DevComponents.DotNetBar.LabelItem()
-        Me.Btn_CrearClasificacion = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_EliminarClasificacion = New DevComponents.DotNetBar.ButtonItem()
-        Me.LabelItem6 = New DevComponents.DotNetBar.LabelItem()
-        Me.Btn_Copiar2 = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_CambiarNombreCarpeta2 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -101,13 +98,17 @@ Partial Class Frm_Arbol_Lista
         Me.Imagenes_16x16.Images.SetKeyName(2, "folder-ok.png")
         Me.Imagenes_16x16.Images.SetKeyName(3, "folder-open-ok.png")
         Me.Imagenes_16x16.Images.SetKeyName(4, "house-1.png")
+        Me.Imagenes_16x16.Images.SetKeyName(5, "option-check-box-selected.png")
+        Me.Imagenes_16x16.Images.SetKeyName(6, "option-check-box-unselected.png")
+        Me.Imagenes_16x16.Images.SetKeyName(7, "folder-list.png")
+        Me.Imagenes_16x16.Images.SetKeyName(8, "folder-open-list.png")
         '
         'Bar2
         '
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Exportar_Excel, Me.Btn_Actualizar})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Actualizar, Me.Btn_Exportar_Excel})
         Me.Bar2.Location = New System.Drawing.Point(0, 515)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(704, 41)
@@ -117,6 +118,16 @@ Partial Class Frm_Arbol_Lista
         Me.Bar2.TabStop = False
         Me.Bar2.Text = "Bar2"
         '
+        'Btn_Grabar
+        '
+        Me.Btn_Grabar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Grabar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Grabar.Image = CType(resources.GetObject("Btn_Grabar.Image"), System.Drawing.Image)
+        Me.Btn_Grabar.ImageAlt = CType(resources.GetObject("Btn_Grabar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Grabar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_Grabar.Name = "Btn_Grabar"
+        Me.Btn_Grabar.Tooltip = "Refrescar datos"
+        '
         'Btn_Exportar_Excel
         '
         Me.Btn_Exportar_Excel.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
@@ -125,16 +136,7 @@ Partial Class Frm_Arbol_Lista
         Me.Btn_Exportar_Excel.ImageAlt = CType(resources.GetObject("Btn_Exportar_Excel.ImageAlt"), System.Drawing.Image)
         Me.Btn_Exportar_Excel.Name = "Btn_Exportar_Excel"
         Me.Btn_Exportar_Excel.Tooltip = "Exportar a Excel"
-        '
-        'Btn_Actualizar
-        '
-        Me.Btn_Actualizar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Actualizar.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Actualizar.Image = CType(resources.GetObject("Btn_Actualizar.Image"), System.Drawing.Image)
-        Me.Btn_Actualizar.ImageAlt = CType(resources.GetObject("Btn_Actualizar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Actualizar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_Actualizar.Name = "Btn_Actualizar"
-        Me.Btn_Actualizar.Tooltip = "Refrescar datos"
+        Me.Btn_Exportar_Excel.Visible = False
         '
         'LabelItem3
         '
@@ -267,12 +269,14 @@ Partial Class Frm_Arbol_Lista
         Me.Imagenes_16x16_Dark.Images.SetKeyName(2, "folder-ok.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(3, "folder-open-ok.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(4, "house-1.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(5, "option-check-box-selected.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(6, "option-check-box-unselected.png")
         '
         'Menu_Contextual
         '
         Me.Menu_Contextual.AntiAlias = True
         Me.Menu_Contextual.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01, Me.Menu_Contextual_02})
+        Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
         Me.Menu_Contextual.Location = New System.Drawing.Point(114, 115)
         Me.Menu_Contextual.Name = "Menu_Contextual"
         Me.Menu_Contextual.Size = New System.Drawing.Size(412, 25)
@@ -286,7 +290,7 @@ Partial Class Frm_Arbol_Lista
         '
         Me.Menu_Contextual_01.AutoExpandOnClick = True
         Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
-        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_TotalProductos, Me.Btn_VerProductos, Me.Btn_CambiarNombreCarpeta, Me.LabelItem2, Me.Btn_Copiar})
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_TotalProductos, Me.Btn_VerProductos, Me.LabelItem1, Me.Btn_CrearClasificacion, Me.Btn_CambiarNombreCarpeta, Me.Btn_EliminarClasificacion, Me.LabelItem2, Me.Btn_Copiar})
         Me.Menu_Contextual_01.Text = "Opciones"
         '
         'Lbl_TotalProductos
@@ -309,12 +313,42 @@ Partial Class Frm_Arbol_Lista
         Me.Btn_VerProductos.Name = "Btn_VerProductos"
         Me.Btn_VerProductos.Text = "Ver productos asociados"
         '
+        'LabelItem1
+        '
+        Me.LabelItem1.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem1.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem1.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem1.Name = "LabelItem1"
+        Me.LabelItem1.PaddingBottom = 1
+        Me.LabelItem1.PaddingLeft = 10
+        Me.LabelItem1.PaddingTop = 1
+        Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem1.Text = "-------------------------------------------"
+        '
+        'Btn_CrearClasificacion
+        '
+        Me.Btn_CrearClasificacion.Image = CType(resources.GetObject("Btn_CrearClasificacion.Image"), System.Drawing.Image)
+        Me.Btn_CrearClasificacion.ImageAlt = CType(resources.GetObject("Btn_CrearClasificacion.ImageAlt"), System.Drawing.Image)
+        Me.Btn_CrearClasificacion.Name = "Btn_CrearClasificacion"
+        Me.Btn_CrearClasificacion.Text = "Crear"
+        Me.Btn_CrearClasificacion.Tooltip = "Crear nueva clasificación"
+        '
         'Btn_CambiarNombreCarpeta
         '
         Me.Btn_CambiarNombreCarpeta.Image = CType(resources.GetObject("Btn_CambiarNombreCarpeta.Image"), System.Drawing.Image)
         Me.Btn_CambiarNombreCarpeta.ImageAlt = CType(resources.GetObject("Btn_CambiarNombreCarpeta.ImageAlt"), System.Drawing.Image)
         Me.Btn_CambiarNombreCarpeta.Name = "Btn_CambiarNombreCarpeta"
-        Me.Btn_CambiarNombreCarpeta.Text = "Cambiar nombre de la asociación"
+        Me.Btn_CambiarNombreCarpeta.Text = "Editar"
+        Me.Btn_CambiarNombreCarpeta.Tooltip = "Editar descripción de la clasificación"
+        '
+        'Btn_EliminarClasificacion
+        '
+        Me.Btn_EliminarClasificacion.Image = CType(resources.GetObject("Btn_EliminarClasificacion.Image"), System.Drawing.Image)
+        Me.Btn_EliminarClasificacion.ImageAlt = CType(resources.GetObject("Btn_EliminarClasificacion.ImageAlt"), System.Drawing.Image)
+        Me.Btn_EliminarClasificacion.Name = "Btn_EliminarClasificacion"
+        Me.Btn_EliminarClasificacion.Text = "Eliminar"
+        Me.Btn_EliminarClasificacion.Tooltip = "Eliminar clasificación"
         '
         'LabelItem2
         '
@@ -337,67 +371,15 @@ Partial Class Frm_Arbol_Lista
         Me.Btn_Copiar.Name = "Btn_Copiar"
         Me.Btn_Copiar.Text = "Copiar (portapapeles)"
         '
-        'Menu_Contextual_02
+        'Btn_Actualizar
         '
-        Me.Menu_Contextual_02.AutoExpandOnClick = True
-        Me.Menu_Contextual_02.Name = "Menu_Contextual_02"
-        Me.Menu_Contextual_02.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem5, Me.Btn_CrearClasificacion, Me.Btn_CambiarNombreCarpeta2, Me.Btn_EliminarClasificacion, Me.LabelItem6, Me.Btn_Copiar2})
-        Me.Menu_Contextual_02.Text = "Opciones"
-        '
-        'LabelItem5
-        '
-        Me.LabelItem5.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
-        Me.LabelItem5.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
-        Me.LabelItem5.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
-        Me.LabelItem5.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.LabelItem5.Name = "LabelItem5"
-        Me.LabelItem5.PaddingBottom = 1
-        Me.LabelItem5.PaddingLeft = 10
-        Me.LabelItem5.PaddingTop = 1
-        Me.LabelItem5.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.LabelItem5.Text = "Opciones del producto"
-        '
-        'Btn_CrearClasificacion
-        '
-        Me.Btn_CrearClasificacion.Image = CType(resources.GetObject("Btn_CrearClasificacion.Image"), System.Drawing.Image)
-        Me.Btn_CrearClasificacion.ImageAlt = CType(resources.GetObject("Btn_CrearClasificacion.ImageAlt"), System.Drawing.Image)
-        Me.Btn_CrearClasificacion.Name = "Btn_CrearClasificacion"
-        Me.Btn_CrearClasificacion.Text = "Crear nueva clasificación"
-        '
-        'Btn_EliminarClasificacion
-        '
-        Me.Btn_EliminarClasificacion.Image = CType(resources.GetObject("Btn_EliminarClasificacion.Image"), System.Drawing.Image)
-        Me.Btn_EliminarClasificacion.ImageAlt = CType(resources.GetObject("Btn_EliminarClasificacion.ImageAlt"), System.Drawing.Image)
-        Me.Btn_EliminarClasificacion.Name = "Btn_EliminarClasificacion"
-        Me.Btn_EliminarClasificacion.Text = "Eliminar clasificación"
-        '
-        'LabelItem6
-        '
-        Me.LabelItem6.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
-        Me.LabelItem6.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
-        Me.LabelItem6.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
-        Me.LabelItem6.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.LabelItem6.ImageTextSpacing = 1
-        Me.LabelItem6.Name = "LabelItem6"
-        Me.LabelItem6.PaddingBottom = 1
-        Me.LabelItem6.PaddingLeft = 10
-        Me.LabelItem6.PaddingTop = 1
-        Me.LabelItem6.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.LabelItem6.Text = "-------------------------------------------"
-        '
-        'Btn_Copiar2
-        '
-        Me.Btn_Copiar2.Image = CType(resources.GetObject("Btn_Copiar2.Image"), System.Drawing.Image)
-        Me.Btn_Copiar2.ImageAlt = CType(resources.GetObject("Btn_Copiar2.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Copiar2.Name = "Btn_Copiar2"
-        Me.Btn_Copiar2.Text = "Copiar (portapapeles)"
-        '
-        'Btn_CambiarNombreCarpeta2
-        '
-        Me.Btn_CambiarNombreCarpeta2.Image = CType(resources.GetObject("Btn_CambiarNombreCarpeta2.Image"), System.Drawing.Image)
-        Me.Btn_CambiarNombreCarpeta2.ImageAlt = CType(resources.GetObject("Btn_CambiarNombreCarpeta2.ImageAlt"), System.Drawing.Image)
-        Me.Btn_CambiarNombreCarpeta2.Name = "Btn_CambiarNombreCarpeta2"
-        Me.Btn_CambiarNombreCarpeta2.Text = "Editar descripción de la clasificación"
+        Me.Btn_Actualizar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Actualizar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Actualizar.Image = CType(resources.GetObject("Btn_Actualizar.Image"), System.Drawing.Image)
+        Me.Btn_Actualizar.ImageAlt = CType(resources.GetObject("Btn_Actualizar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Actualizar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_Actualizar.Name = "Btn_Actualizar"
+        Me.Btn_Actualizar.Tooltip = "Refrescar datos"
         '
         'Frm_Arbol_Lista
         '
@@ -412,6 +394,7 @@ Partial Class Frm_Arbol_Lista
         Me.Controls.Add(Me.Metro_Bar_Color)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Frm_Arbol_Lista"
@@ -427,7 +410,7 @@ Partial Class Frm_Arbol_Lista
     Friend WithEvents Tree_Bandeja As TreeView
     Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
     Friend WithEvents Btn_Exportar_Excel As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Btn_Actualizar As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LabelItem3 As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Btn_VerTicket As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_TicketProducto As DevComponents.DotNetBar.ButtonItem
@@ -446,11 +429,8 @@ Partial Class Frm_Arbol_Lista
     Friend WithEvents Btn_CambiarNombreCarpeta As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LabelItem2 As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Btn_Copiar As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Menu_Contextual_02 As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents LabelItem5 As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Btn_CrearClasificacion As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_EliminarClasificacion As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents LabelItem6 As DevComponents.DotNetBar.LabelItem
-    Friend WithEvents Btn_Copiar2 As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_CambiarNombreCarpeta2 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelItem1 As DevComponents.DotNetBar.LabelItem
+    Public WithEvents Btn_Actualizar As DevComponents.DotNetBar.ButtonItem
 End Class

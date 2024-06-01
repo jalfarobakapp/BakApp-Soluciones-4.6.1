@@ -560,21 +560,19 @@ Public Class Frm_MtCreaProd_01_IngBusqEspecial
     End Sub
 
     Private Sub Btn_Asociaciones_Unicas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Asociaciones_Unicas.Click
+
         If Fx_Tiene_Permiso(Me, "Tbl00002") Then
 
             Clipboard.SetText(TxtCodigo.Text)
-            'Dim Fm As New Frm_Arbol_Asociacion_02(False, 0, False, Frm_Arbol_Asociacion_02.Enum_Clasificacion.Unica, 0)
-            'Fm.Pro_Identificador_NodoPadre = 0
-            'Fm.Pro_Codigo_Heredado = TxtCodigo.Text
-            'Fm.ShowDialog(Me)
-            'Fm.Dispose()
-            'Sb_Actualizar_Grilla()
-
-            Dim Fm As New Frm_Arbol_Lista(True)
+            Dim Fm As New Frm_Arbol_Asociacion_02(False, 0, False, Frm_Arbol_Asociacion_02.Enum_Clasificacion.Unica, 0)
+            Fm.Pro_Identificador_NodoPadre = 0
+            Fm.Pro_Codigo_Heredado = TxtCodigo.Text
             Fm.ShowDialog(Me)
             Fm.Dispose()
+            Sb_Actualizar_Grilla()
 
         End If
+
     End Sub
 
     Sub Sb_VerProductos_X_Class(ByVal _Fila As DataRow,

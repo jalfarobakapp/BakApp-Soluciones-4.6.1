@@ -30,7 +30,7 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
         Get
             Return _Codigo_Heredado
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             _Codigo_Heredado = value
         End Set
     End Property
@@ -43,18 +43,18 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
         Get
             Return _Lista_Nodos
         End Get
-        Set(ByVal value As List(Of Integer))
+        Set(value As List(Of Integer))
             _Lista_Nodos = value
         End Set
     End Property
 
-    Public Sub New(ByVal Identificador_NodoPadre As Integer,
-                   ByVal Codigo_Nodo As Integer,
-                   ByVal Descripcion_Nodo As String,
-                   ByVal Descripcion_Busqueda As String,
-                   ByVal Carpeta_Seleccionable As Boolean,
-                   ByVal Clas_Unica_X_Producto As Boolean,
-                   ByVal Mostrar_Productos_Sin_Asociacion_En_Nodo As Boolean)
+    Public Sub New(Identificador_NodoPadre As Integer,
+                   Codigo_Nodo As Integer,
+                   Descripcion_Nodo As String,
+                   Descripcion_Busqueda As String,
+                   Carpeta_Seleccionable As Boolean,
+                   Clas_Unica_X_Producto As Boolean,
+                   Mostrar_Productos_Sin_Asociacion_En_Nodo As Boolean)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -68,31 +68,31 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
         _Carpeta_Seleccionable = Carpeta_Seleccionable
         _Mostrar_Productos_Sin_Asociacion_En_Nodo = Mostrar_Productos_Sin_Asociacion_En_Nodo
 
-        Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
+        Consulta_Sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
                        "Where Codigo_Nodo = " & _Codigo_Nodo
 
-        _Row_Nodo = _Sql.Fx_Get_DataRow(Consulta_sql)
+        _Row_Nodo = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
         _Codigo_Heredado = String.Empty
 
-        Dim _Arr_Filtro(,) As String = {{"C", "Contiene:"},
-                                        {"E", "Empieza por:"},
-                                        {"T", "Termina en:"}}
-        Sb_Llenar_Combos(_Arr_Filtro, Cmb_Filtro_Codigo)
-        Cmb_Filtro_Codigo.SelectedValue = "C"
-
-        'If Global_Thema = Enum_Themas.Oscuro Then
-
-        '    Btn_AgregarProductos.ForeColor = Color.White
-        '    Btn_Quitar_Productos.ForeColor = Color.White
-
-        'End If
+        'Dim _Arr_Filtro(,) As String = {{"C", "Contiene:"},
+        '                                {"E", "Empieza por:"},
+        '                                {"T", "Termina en:"}}
+        'Sb_Llenar_Combos(_Arr_Filtro, Cmb_Filtro_Codigo)
+        'Cmb_Filtro_Codigo.SelectedValue = "C"
 
         Sb_Color_Botones_Barra(Bar2)
 
     End Sub
 
-    Private Sub Frm_Arbol_Asociacion_04_Productos_x_class_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Arbol_Asociacion_04_Productos_x_class_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
+
+        Consulta_Sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _Codigo_Nodo
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+        Txt_Codigo_Madre.Text = _Row.Item("Codigo_Madre")
+        Txt_Codigo_Nodo.Text = _Row.Item("Codigo_Nodo")
+        Txt_Descripcion.Text = _Row.Item("Descripcion")
 
         Barra_Progreso_.Visible = False
 
@@ -121,7 +121,7 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
 
         If _Mostrar_Productos_Sin_Asociacion_En_Nodo Then
 
-            Consulta_sql = "SELECT KOPR As Codigo,NOKOPR As Descripcion,Cast(0 as Bit) As En_Otra_Carpeta_Padre," &
+            Consulta_Sql = "SELECT KOPR As Codigo,NOKOPR As Descripcion,Cast(0 as Bit) As En_Otra_Carpeta_Padre," &
                            "Cast(0 As bit) as Nuevo,Cast(0 As bit) As Codigo_Huacho" & vbCrLf &
                            "FROM MAEPR WHERE KOPR Not In (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion" & Space(1) &
                            "Where Codigo_Nodo In" & vbCrLf &
@@ -132,7 +132,7 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
 
             If _Carpeta_Seleccionable Then
 
-                Consulta_sql = "SELECT  Codigo,Isnull((Select Top 1 NOKOPR From MAEPR Where KOPR = Codigo),'') as Descripcion," & vbCrLf &
+                Consulta_Sql = "SELECT Codigo,Isnull((Select Top 1 NOKOPR From MAEPR Where KOPR = Codigo),'') as Descripcion," & vbCrLf &
                                "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Prod_Asociacion Z2 Where Z2.Codigo = Z1.Codigo And Z2.Codigo_Nodo In " & vbCrLf &
                                "(Select Codigo_Nodo From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & Space(1) &
                                "Where Es_Seleccionable = 1 And Codigo_Nodo <> " & _Codigo_Nodo & ")) As En_Otra_Carpeta_Padre,Cast(0 As bit) as Nuevo,Cast(0 As bit) As Codigo_Huacho" & vbCrLf &
@@ -146,7 +146,7 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
 
             Else
 
-                Consulta_sql = "SELECT  Codigo,Isnull((Select Top 1 NOKOPR From MAEPR Where KOPR = Codigo),'') as Descripcion," & vbCrLf &
+                Consulta_Sql = "SELECT  Codigo,Isnull((Select Top 1 NOKOPR From MAEPR Where KOPR = Codigo),'') as Descripcion," & vbCrLf &
                                "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Prod_Asociacion Z2 Where Z2.Codigo = Z1.Codigo And Z2.Codigo_Nodo In " & vbCrLf &
                                "(Select Codigo_Nodo From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & Space(1) &
                                "Where Identificacdor_NodoPadre = " & _Identificador_NodoPadre & Space(1) &
@@ -171,7 +171,7 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
 
         End If
 
-        Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
+        Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_Sql)
 
         _Tbl_Productos_En_Carpeta = _Ds.Tables("Table")
         _Dv.Table = _Tbl_Productos_En_Carpeta
@@ -207,15 +207,15 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
 
         End With
 
-        For Each _Fila As DataGridViewRow In Grilla.Rows
-            Sb_Marcar_Fila(_Fila)
-        Next
+        'For Each _Fila As DataGridViewRow In Grilla.Rows
+        '    Sb_Marcar_Fila(_Fila)
+        'Next
 
-        Lbl_Total_Productos.Text = "Total de productos: " & FormatNumber(Grilla.Rows.Count, 0)
+        Lbl_Estatus.Text = "Total de productos: " & FormatNumber(Grilla.Rows.Count, 0)
 
     End Sub
 
-    Sub Sb_Marcar_Fila(ByVal _Fila As DataGridViewRow)
+    Sub Sb_Marcar_Fila(_Fila As DataGridViewRow)
 
         Dim _En_Otra_Carpeta_Padre As Boolean = CBool(_Fila.Cells("En_Otra_Carpeta_Padre").Value)
         Dim _Nuevo As Boolean = _Fila.Cells("Nuevo").Value
@@ -251,13 +251,13 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
         Me.Close()
     End Sub
 
-    Private Sub Frm_Arbol_Asociacion_04_Productos_x_class_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_Arbol_Asociacion_04_Productos_x_class_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Sb_Salir()
         End If
     End Sub
 
-    Private Sub Btn_AgregarProductos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_AgregarProductos.Click
+    Private Sub Btn_AgregarProductos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_AgregarProductos.Click
         If Fx_Tiene_Permiso(Me, "Tbl00035") Then
             Sb_Agregar_Productos()
         End If
@@ -354,7 +354,7 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
 
     End Sub
 
-    Function Fx_Raiz_Clasificacion_FullPath(ByVal _Codigo_Nodo As String)
+    Function Fx_Raiz_Clasificacion_FullPath(_Codigo_Nodo As String)
 
         Dim _Full As String = String.Empty
         Dim _CodPadre As String
@@ -378,50 +378,50 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
 
     End Function
 
-    Private Sub Btn_Exportar_Excel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Exportar_Excel.Click
+    Private Sub Btn_Exportar_Excel_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Exportar_Excel.Click
         Dim _Tbl As DataTable = _Dv.ToTable
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Prod_" & _Descripcion_Nodo)
     End Sub
 
 
-    Private Sub Txt_Descripcion_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Txt_Descripcion.TextChanged
+    'Private Sub Txt_Descripcion_TextChanged(sender As System.Object, e As System.EventArgs) Handles Txt_Descripcion.TextChanged
 
-        Dim _Lista_Descripcion = Split(Trim(Txt_Descripcion.Text), " ", 3)
+    'Dim _Lista_Descripcion = Split(Trim(Txt_Descripcion.Text), " ", 3)
 
-        Dim _A As String = String.Empty
-        Dim _B As String = String.Empty
-        Dim _C As String = String.Empty
+    'Dim _A As String = String.Empty
+    'Dim _B As String = String.Empty
+    'Dim _C As String = String.Empty
 
-        Select Case _Lista_Descripcion.Length
-            Case 1
-                _A = _Lista_Descripcion(0)
-                _Dv.RowFilter = String.Format("Descripcion Like '%{0}%'", _A)
-            Case 2
-                _A = _Lista_Descripcion(0) : _B = _Lista_Descripcion(1)
-                _Dv.RowFilter = String.Format("Descripcion Like '%{0}%' And Descripcion Like '%{1}%'", _A, _B)
-            Case 3
-                _A = _Lista_Descripcion(0) : _B = _Lista_Descripcion(1) : _C = _Lista_Descripcion(2)
-                _Dv.RowFilter = String.Format("Descripcion Like '%{0}%' And Descripcion Like '%{1}%' And Descripcion Like '%{2}%'", _A, _B, _C)
-        End Select
+    'Select Case _Lista_Descripcion.Length
+    '    Case 1
+    '        _A = _Lista_Descripcion(0)
+    '        _Dv.RowFilter = String.Format("Descripcion Like '%{0}%'", _A)
+    '    Case 2
+    '        _A = _Lista_Descripcion(0) : _B = _Lista_Descripcion(1)
+    '        _Dv.RowFilter = String.Format("Descripcion Like '%{0}%' And Descripcion Like '%{1}%'", _A, _B)
+    '    Case 3
+    '        _A = _Lista_Descripcion(0) : _B = _Lista_Descripcion(1) : _C = _Lista_Descripcion(2)
+    '        _Dv.RowFilter = String.Format("Descripcion Like '%{0}%' And Descripcion Like '%{1}%' And Descripcion Like '%{2}%'", _A, _B, _C)
+    'End Select
 
-        For Each _Fila As DataGridViewRow In Grilla.Rows
+    'For Each _Fila As DataGridViewRow In Grilla.Rows
 
-            Dim _En_Otra_Carpeta_Padre As Boolean = CBool(_Fila.Cells("En_Otra_Carpeta_Padre").Value)
-            Dim _Nuevo As Boolean = _Fila.Cells("Nuevo").Value
-            Dim _Codigo_Huacho As Boolean = _Fila.Cells("Codigo_Huacho").Value
+    '    Dim _En_Otra_Carpeta_Padre As Boolean = CBool(_Fila.Cells("En_Otra_Carpeta_Padre").Value)
+    '    Dim _Nuevo As Boolean = _Fila.Cells("Nuevo").Value
+    '    Dim _Codigo_Huacho As Boolean = _Fila.Cells("Codigo_Huacho").Value
 
-            If _Nuevo Then
-                _Fila.DefaultCellStyle.BackColor = Color.LightGray
-            Else
-                If _En_Otra_Carpeta_Padre Then _Fila.DefaultCellStyle.BackColor = Color.PaleGoldenrod
-                If _Codigo_Huacho Then _Fila.DefaultCellStyle.ForeColor = Rojo '_Fila.DefaultCellStyle.BackColor = Color.Tomato
-            End If
+    '    If _Nuevo Then
+    '        _Fila.DefaultCellStyle.BackColor = Color.LightGray
+    '    Else
+    '        If _En_Otra_Carpeta_Padre Then _Fila.DefaultCellStyle.BackColor = Color.PaleGoldenrod
+    '        If _Codigo_Huacho Then _Fila.DefaultCellStyle.ForeColor = Rojo '_Fila.DefaultCellStyle.BackColor = Color.Tomato
+    '    End If
 
-        Next
+    'Next
 
-    End Sub
+    'End Sub
 
-    Private Sub Mnu_Btn_Ver_Asociaciones_Del_Producto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Mnu_Btn_Ver_Asociaciones_Del_Producto.Click
+    Private Sub Mnu_Btn_Ver_Asociaciones_Del_Producto_Click(sender As System.Object, e As System.EventArgs) Handles Mnu_Btn_Ver_Asociaciones_Del_Producto.Click
 
         Dim _Codigo As String = Grilla.Rows(Grilla.CurrentRow.Index).Cells("Codigo").Value
 
@@ -433,14 +433,14 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
 
     End Sub
 
-    Private Sub Btn_Estadisticas_Producto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Estadisticas_Producto.Click
+    Private Sub Btn_Estadisticas_Producto_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Estadisticas_Producto.Click
         Dim Fm As New Frm_BkpPostBusquedaEspecial_Mt
         Dim _Codigo As String = Grilla.Rows(Grilla.CurrentRow.Index).Cells("Codigo").Value
         Fm.Sb_Ver_Informacion_Adicional_producto(Me, _Codigo)
         Fm.Dispose()
     End Sub
 
-    Private Sub Sb_Grilla_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Sb_Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
         If e.Button = Windows.Forms.MouseButtons.Right Then
             With sender
                 Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
@@ -452,7 +452,7 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
         End If
     End Sub
 
-    Private Sub Btn_Reparara_Arbol_Del_Producto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Reparara_Arbol_Del_Producto.Click
+    Private Sub Btn_Reparara_Arbol_Del_Producto_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Reparara_Arbol_Del_Producto.Click
 
         If Fx_Tiene_Permiso(Me, "Tbl00035") Then
 
@@ -542,13 +542,13 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
 
     End Sub
 
-    Private Sub Btn_Quitar_Productos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Quitar_Productos.Click
+    Private Sub Btn_Quitar_Productos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Quitar_Productos.Click
         If Fx_Tiene_Permiso(Me, "Tbl00035") Then
             ShowContextMenu(Menu_Contextual_02)
         End If
     End Sub
 
-    Private Sub Btn_Reparar_Arbol_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Reparar_Arbol.Click
+    Private Sub Btn_Reparar_Arbol_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Reparar_Arbol.Click
 
         If Fx_Tiene_Permiso(Me, "Tbl00035") Then
             Bar2.Enabled = False
@@ -604,9 +604,10 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
         Quitar_Todos
         Quitar_Seleccionados
         Quitar_Huachos
+        Quitar_SoloUno
     End Enum
 
-    Sub Sb_Quitar_Productos(ByVal _Accion As Enum_Quitar)
+    Sub Sb_Quitar_Productos(_Accion As Enum_Quitar)
 
         Dim Consulta_sql As String
 
@@ -632,6 +633,17 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
                 Dim _Filtro_Productos As String
 
                 Select Case _Accion
+                    Case Enum_Quitar.Quitar_SoloUno
+
+                        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+
+                        Dim _Codigo = _Fila.Cells("Codigo").Value
+                        Dim _Index = _Fila.Index
+
+                        _Index_Eliminados.Add(_Index)
+                        _Contador = 1
+                        _Filtro_Productos = "('" & _Codigo & "')"
+
                     Case Enum_Quitar.Quitar_Seleccionados
 
                         For Each _Fila As DataGridViewRow In Grilla.SelectedRows
@@ -685,7 +697,7 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
                     For Each _Codigo_Nodo_H In _Lista_Nodos
                         If CBool(_Codigo_Nodo_H) Then
                             Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo_Nodo = '" & _Codigo_Nodo_H & "' AND Para_filtro = 1" & vbCrLf &
-                                            "And Codigo In " & _Filtro_Productos
+                                           "And Codigo In " & _Filtro_Productos
                             _Sql.Ej_consulta_IDU(Consulta_sql)
                         End If
                     Next
@@ -703,7 +715,7 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
                                                     Btn_Quitar_Productos.Image,
                                                    2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
 
-                        Lbl_Total_Productos.Text = "Total de productos: " & FormatNumber(Grilla.Rows.Count, 0)
+                        Lbl_Estatus.Text = "Total de productos: " & FormatNumber(Grilla.Rows.Count, 0)
                     End If
 
                 End If
@@ -723,27 +735,29 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
 
     End Sub
 
-    Private Sub Btn_Quitar_Marcados_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Quitar_Marcados.Click
+    Private Sub Btn_Quitar_Marcados_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Quitar_Marcados.Click
         Sb_Quitar_Productos(Enum_Quitar.Quitar_Seleccionados)
     End Sub
 
-    Private Sub Quitar_Todo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Quitar_Todo.Click
+    Private Sub Quitar_Todo_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Quitar_Todo.Click
         Sb_Quitar_Productos(Enum_Quitar.Quitar_Todos)
     End Sub
 
-    Private Sub Btn_Quitar_Huachos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Quitar_Huachos.Click
+    Private Sub Btn_Quitar_Huachos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Quitar_Huachos.Click
         Sb_Quitar_Productos(Enum_Quitar.Quitar_Huachos)
     End Sub
 
-    Private Sub Txt_Codigo_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Txt_Codigo.TextChanged
-        Dim _Fl As String
-        Select Case Cmb_Filtro_Codigo.SelectedValue
-            Case "C" : _Fl = "%{0}%" : Case "E" : _Fl = "{0}%" : Case "T" : _Fl = "%{0}"
-        End Select
-        _Dv.RowFilter = String.Format("Codigo Like '" & _Fl & "'", Txt_Codigo.Text)
+    Private Sub Txt_Filtrar_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Filtrar.KeyDown
+        If e.KeyValue = Keys.Enter Then
+            _Dv.RowFilter = String.Format("Codigo+Descripcion Like '{0}'", Txt_Descripcion.Text)
+        End If
     End Sub
 
-    Private Sub Btn_Ver_documento_origen_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Ver_documento_origen.Click
+    Private Sub Btn_QuitarProducto_Click(sender As Object, e As EventArgs) Handles Btn_QuitarProducto.Click
+        Sb_Quitar_Productos(Enum_Quitar.Quitar_SoloUno)
+    End Sub
+
+    Private Sub Btn_Ver_documento_origen_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ver_documento_origen.Click
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
