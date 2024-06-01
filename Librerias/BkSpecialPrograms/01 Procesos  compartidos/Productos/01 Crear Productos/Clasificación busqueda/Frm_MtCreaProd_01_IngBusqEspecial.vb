@@ -563,12 +563,17 @@ Public Class Frm_MtCreaProd_01_IngBusqEspecial
         If Fx_Tiene_Permiso(Me, "Tbl00002") Then
 
             Clipboard.SetText(TxtCodigo.Text)
-            Dim Fm As New Frm_Arbol_Asociacion_02(False, 0, False, Frm_Arbol_Asociacion_02.Enum_Clasificacion.Unica, 0)
-            Fm.Pro_Identificador_NodoPadre = 0
-            Fm.Pro_Codigo_Heredado = TxtCodigo.Text
+            'Dim Fm As New Frm_Arbol_Asociacion_02(False, 0, False, Frm_Arbol_Asociacion_02.Enum_Clasificacion.Unica, 0)
+            'Fm.Pro_Identificador_NodoPadre = 0
+            'Fm.Pro_Codigo_Heredado = TxtCodigo.Text
+            'Fm.ShowDialog(Me)
+            'Fm.Dispose()
+            'Sb_Actualizar_Grilla()
+
+            Dim Fm As New Frm_Arbol_Lista(True)
             Fm.ShowDialog(Me)
             Fm.Dispose()
-            Sb_Actualizar_Grilla()
+
         End If
     End Sub
 

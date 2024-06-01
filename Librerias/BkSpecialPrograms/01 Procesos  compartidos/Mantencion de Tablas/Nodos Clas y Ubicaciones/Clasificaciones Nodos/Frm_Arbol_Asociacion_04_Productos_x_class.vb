@@ -309,17 +309,24 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
 
                         If CBool(_Codigo_Nodo_H) Then
 
-                            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo_Nodo = '" & _Codigo_Nodo_H & "' AND Para_filtro = 1" & vbCrLf &
-                                           "And Codigo In " & _Filtro_Productos & vbCrLf &
-                                           "Insert Into " & _Global_BaseBk & "Zw_Prod_Asociacion (Codigo,Codigo_Nodo,DescripcionBusqueda,Para_filtro,Nodo_origen,Clas_unica, Producto)" & vbCrLf &
-                                           "Select KOPR,'" & _Codigo_Nodo_H & "','" & _Descripcion & "',1,0,0,0" & vbCrLf &
-                                           "From MAEPR" & vbCrLf &
-                                           "Where KOPR In " & _Filtro_Productos & vbCrLf
-                            _Sql.Ej_consulta_IDU(Consulta_sql)
+                            Consulta_sql += "Delete " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
+                                            "Where Codigo_Nodo = '" & _Codigo_Nodo_H & "' AND Para_filtro = 1" & vbCrLf &
+                                            "And Codigo In " & _Filtro_Productos & vbCrLf &
+                                            "Insert Into " & _Global_BaseBk & "Zw_Prod_Asociacion (Codigo,Codigo_Nodo,DescripcionBusqueda,Para_filtro,Nodo_origen,Clas_unica, Producto)" & vbCrLf &
+                                            "Select KOPR,'" & _Codigo_Nodo_H & "','" & _Descripcion & "',1,0,0,0" & vbCrLf &
+                                            "From MAEPR" & vbCrLf &
+                                            "Where KOPR In " & _Filtro_Productos & vbCrLf
 
                         End If
 
                     Next
+
+                    If Not String.IsNullOrEmpty(Consulta_sql) Then
+                        If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+                            MessageBoxEx.Show(Me, _Sql.Pro_Error, "Problema al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                            Return
+                        End If
+                    End If
 
                 End If
 

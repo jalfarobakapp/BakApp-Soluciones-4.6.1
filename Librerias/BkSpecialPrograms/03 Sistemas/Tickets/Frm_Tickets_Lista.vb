@@ -1006,7 +1006,6 @@ Public Class Frm_Tickets_Lista
 
         ' Crear los nodos de la Asignados
         _BandejaEntrada = Fx_CrearNodo("ASIGNADOS", "ASIGNADOS", 12, 12)
-
         _Rec_Pendientes = Fx_CrearNodo("Pendientes", "Pendientes", 0, 1)
         _Rec_Aceptados = Fx_CrearNodo("Aceptados", "Aceptados", 0, 1)
         _Rec_Rechazados = Fx_CrearNodo("Rechazados", "Rechazados", 0, 1)
@@ -1053,24 +1052,6 @@ Public Class Frm_Tickets_Lista
         End If
 
         Tree_Bandeja.Update()
-
-        'For Each nodoRaiz As TreeNode In _BandejaEntrada.Nodes
-        '    Sb_Actualizar_Totales_Nodos(_BandejaEntrada, nodoRaiz)
-        'Next
-
-        'For Each nodoRaiz As TreeNode In _Enviados.Nodes
-        '    Sb_Actualizar_Totales_Nodos(_Enviados, nodoRaiz)
-        'Next
-
-        'Sb_Actualizar_Totales_Nodos(_BandejaEntrada, _Rec_Aceptados)
-        'Sb_Actualizar_Totales_Nodos(_BandejaEntrada, _Rec_Cerradas)
-        'Sb_Actualizar_Totales_Nodos(_BandejaEntrada, _Rec_Pendientes)
-        'Sb_Actualizar_Totales_Nodos(_BandejaEntrada, _Rec_Rechazados)
-
-        'Sb_Actualizar_Totales_Nodos(_Enviados, _Env_Aceptados)
-        'Sb_Actualizar_Totales_Nodos(_Enviados, _Env_Cerradas)
-        'Sb_Actualizar_Totales_Nodos(_Enviados, _Env_Pendientes)
-        'Sb_Actualizar_Totales_Nodos(_Enviados, _Env_Rechazados)
 
     End Sub
 

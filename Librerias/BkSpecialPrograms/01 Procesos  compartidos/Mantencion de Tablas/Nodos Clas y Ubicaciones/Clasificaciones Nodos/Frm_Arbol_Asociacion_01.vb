@@ -36,7 +36,7 @@ Public Class Frm_Arbol_Asociacion_01
         Get
             Return _Codigo
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             _Codigo = value
             Consulta_sql = "Select Top 1 * From MAEPR Where KOPR = '" & _Codigo & "'"
             _RowProducto = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -51,7 +51,7 @@ Public Class Frm_Arbol_Asociacion_01
         Get
             Return TreeView1.CheckBoxes
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             TreeView1.CheckBoxes = value
         End Set
     End Property
@@ -75,7 +75,7 @@ Public Class Frm_Arbol_Asociacion_01
     End Sub
 
 
-    Private Sub Frm_Arbol_Asociacion_01_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Arbol_Asociacion_01_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         If Not (_RowProducto Is Nothing) Then
             _Mostrar_Arbol_Del_Producto = True
@@ -166,8 +166,8 @@ Public Class Frm_Arbol_Asociacion_01
 
     End Sub
 
-    Private Sub CrearNodosDelPadre(ByVal indicePadre As Integer,
-                                       ByVal nodePadre As TreeNode)
+    Private Sub CrearNodosDelPadre(indicePadre As Integer,
+                                       nodePadre As TreeNode)
 
         Dim dataViewHijos As DataView
 
@@ -246,8 +246,8 @@ Public Class Frm_Arbol_Asociacion_01
     End Sub
 
 
-    Private Sub Recorrer_Nodos(ByVal indicePadre As Integer,
-                               ByVal nodePadre As TreeNode)
+    Private Sub Recorrer_Nodos(indicePadre As Integer,
+                               nodePadre As TreeNode)
 
         Dim dataViewHijos As DataView
 
@@ -279,11 +279,11 @@ Public Class Frm_Arbol_Asociacion_01
 
     End Sub
 
-    Private Sub TreeView1_AfterSelect(ByVal sender As System.Object, ByVal e As System.Windows.Forms.TreeViewEventArgs) Handles TreeView1.AfterSelect
+    Private Sub TreeView1_AfterSelect(sender As System.Object, e As System.Windows.Forms.TreeViewEventArgs) Handles TreeView1.AfterSelect
         TxtFullPath.Text = e.Node.FullPath
     End Sub
 
-    Private Sub RecorrerNodos(ByVal treeNode As TreeNode)
+    Private Sub RecorrerNodos(treeNode As TreeNode)
         Try
             'Si el nodo que recibimos tiene hijos se recorrerá
             'para luego verificar si esta o no checado
@@ -310,7 +310,7 @@ Public Class Frm_Arbol_Asociacion_01
         End Try
     End Sub
 
-    Private Sub AgregarAsociaciónToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AgregarAsociaciónToolStripMenuItem.Click
+    Private Sub AgregarAsociaciónToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles AgregarAsociaciónToolStripMenuItem.Click
         ' pregunto si hay un nodo seleccionado
         If Fx_Tiene_Permiso(Me, "Tbl00007") Then
             If IsNothing(TreeView1.SelectedNode) = False Then
@@ -374,7 +374,7 @@ Public Class Frm_Arbol_Asociacion_01
     End Sub
 
 
-    Sub Sb_Grabar_Asociaciones(ByVal treeNode As TreeNode)
+    Sub Sb_Grabar_Asociaciones(treeNode As TreeNode)
 
         For Each tn As TreeNode In treeNode.Nodes
 
@@ -424,7 +424,7 @@ Public Class Frm_Arbol_Asociacion_01
     End Sub
 
 
-    Private Sub TreeView1_NodeMouseClick(ByVal sender As Object, ByVal e As System.Windows.Forms.TreeNodeMouseClickEventArgs) Handles TreeView1.NodeMouseClick
+    Private Sub TreeView1_NodeMouseClick(sender As Object, e As System.Windows.Forms.TreeNodeMouseClickEventArgs) Handles TreeView1.NodeMouseClick
 
         Dim Tn = e.Node
 
@@ -452,7 +452,7 @@ Public Class Frm_Arbol_Asociacion_01
 
     End Sub
 
-    Private Sub EliminarAsociaciónsoloSiHaSidoCreadaDesdeEsteAsistenteToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles EliminarAsociaciónsoloSiHaSidoCreadaDesdeEsteAsistenteToolStripMenuItem.Click
+    Private Sub EliminarAsociaciónsoloSiHaSidoCreadaDesdeEsteAsistenteToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles EliminarAsociaciónsoloSiHaSidoCreadaDesdeEsteAsistenteToolStripMenuItem.Click
         ' pregunto si hay un nodo seleccionado
         If IsNothing(TreeView1.SelectedNode) = False Then
 
@@ -477,12 +477,12 @@ Public Class Frm_Arbol_Asociacion_01
         End If
     End Sub
 
-    Private Sub BtnExpandirTodo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnExpandirTodo.Click
+    Private Sub BtnExpandirTodo_Click(sender As System.Object, e As System.EventArgs) Handles BtnExpandirTodo.Click
         ' expando todos los nodos del control TreeView
         TreeView1.ExpandAll()
     End Sub
 
-    Private Sub BtnMantencion_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnMantencion.Click
+    Private Sub BtnMantencion_Click(sender As System.Object, e As System.EventArgs) Handles BtnMantencion.Click
         Dim Fm As New Frm_Arbol_Asociacion_02(False, 0, False, Frm_Arbol_Asociacion_02.Enum_Clasificacion.Dinamica, 0)
         Fm.Pro_Identificador_NodoPadre = 0
         Fm.ShowDialog(Me)
@@ -493,10 +493,10 @@ Public Class Frm_Arbol_Asociacion_01
 
     End Sub
 
-    Private Sub BuildCSV(ByVal nodes As TreeNodeCollection,
+    Private Sub BuildCSV(nodes As TreeNodeCollection,
                          ByRef csvData As String,
-                         ByVal depth As Integer,
-                         Optional ByVal _Cadena As String = "")
+                         depth As Integer,
+                         Optional _Cadena As String = "")
         For Each node As TreeNode In nodes
 
             Dim _FullP As String = node.FullPath
@@ -509,7 +509,7 @@ Public Class Frm_Arbol_Asociacion_01
     End Sub
 
 
-    Private Function BuildMyNodes(ByVal treeNodes As TreeNodeCollection) As List(Of MyNode)
+    Private Function BuildMyNodes(treeNodes As TreeNodeCollection) As List(Of MyNode)
 
         Dim myNodes As New List(Of MyNode)
 
@@ -526,7 +526,7 @@ Public Class Frm_Arbol_Asociacion_01
 
     End Function
 
-    Private Sub BtnExportarCsv_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnExportarCsv.Click
+    Private Sub BtnExportarCsv_Click(sender As System.Object, e As System.EventArgs) Handles BtnExportarCsv.Click
 
         If Fx_Tiene_Permiso(Me, "Tbl00011") Then
 
@@ -556,14 +556,14 @@ Public Class Frm_Arbol_Asociacion_01
         End If
     End Sub
 
-    Private Sub Frm_Arbol_Asociacion_01_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_Arbol_Asociacion_01_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
 
-    Private Function WriteTreeView(ByVal parent As String, ByVal tnc As TreeNodeCollection) As String
+    Private Function WriteTreeView(parent As String, tnc As TreeNodeCollection) As String
 
         'TextChangeNode = True
 
@@ -596,12 +596,12 @@ Public Class Frm_Arbol_Asociacion_01
 
 
 
-    Private Sub BtnContraerTodo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnContraerTodo.Click
+    Private Sub BtnContraerTodo_Click(sender As System.Object, e As System.EventArgs) Handles BtnContraerTodo.Click
         ' contraer todos los nodos del control TreeView
         TreeView1.CollapseAll()
     End Sub
 
-    Private Sub BtnImprimirArbol_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnImprimirArbol.Click
+    Private Sub BtnImprimirArbol_Click(sender As System.Object, e As System.EventArgs) Handles BtnImprimirArbol.Click
         If Fx_Tiene_Permiso(Me, "Tbl00021") Then
             'Dim _WW = WriteTreeView("", TreeView1.Nodes)
             Dim _Path = AppPath() & "\Data\" & RutEmpresa & "\Clasificaciones_prod"
@@ -619,7 +619,7 @@ Public Class Frm_Arbol_Asociacion_01
         End If
     End Sub
 
-    Private Sub BuildTreeString(ByVal rootNode As TreeNode, ByRef buffer As System.Text.StringBuilder)
+    Private Sub BuildTreeString(rootNode As TreeNode, ByRef buffer As System.Text.StringBuilder)
 
         Dim _Linea As String = rootNode.Text
         Dim _Nivel As Integer = rootNode.Level
@@ -649,7 +649,7 @@ Public Class Frm_Arbol_Asociacion_01
 
 
 
-    Private Sub Btn_MoverCarpetas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_MoverCarpetas.Click
+    Private Sub Btn_MoverCarpetas_Click(sender As System.Object, e As System.EventArgs) Handles Btn_MoverCarpetas.Click
         If TreeView1.AllowDrop Then
             TreeView1.AllowDrop = False
         Else
@@ -663,7 +663,7 @@ Public Class Frm_Arbol_Asociacion_01
 
 
 
-    Private Sub Sb_TreeView_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Sb_TreeView_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
         ' pregunto si el botón que estoy pulsando es el izquierdo para poder arrastrar el nodo
         If e.Button.Left = MouseButtons.Left Then
             ' señalo que se está haciendo un Drag and Drop dentro del TreeView
@@ -691,7 +691,7 @@ Public Class Frm_Arbol_Asociacion_01
         End If
     End Sub
 
-    Private Sub Sb_TreeView_DragDrop(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DragEventArgs)
+    Private Sub Sb_TreeView_DragDrop(sender As System.Object, e As System.Windows.Forms.DragEventArgs)
         If DragDropTreeView = True Then
             ' determino si los datos almacenados en la instancia están asociados al formato especificado del TreeView
             If e.Data.GetDataPresent("System.Windows.Forms.TreeNode", False) Then
@@ -716,7 +716,7 @@ Public Class Frm_Arbol_Asociacion_01
         End If
     End Sub
 
-    Private Sub Sb_TreeView_DragOver(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DragEventArgs)
+    Private Sub Sb_TreeView_DragOver(sender As System.Object, e As System.Windows.Forms.DragEventArgs)
         ' Verifica si dentro del TreeView se está arrastrando
         If DragDropTreeView Then
             ' deshabilita la actualización en pantalla del control TreeView 
@@ -752,7 +752,7 @@ Public Class Frm_Arbol_Asociacion_01
         End If
     End Sub
 
-    Private Sub Sb_TreeView1_MouseUp(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Sb_TreeView1_MouseUp(sender As Object, e As System.Windows.Forms.MouseEventArgs)
         ' señalo que no está haciendo un Drag and Drop dentro del TreeView
         DragDropTreeView = False
     End Sub
@@ -760,7 +760,7 @@ Public Class Frm_Arbol_Asociacion_01
 
 #End Region
 
-    Private Sub Btn_RearmarArbol_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_RearmarArbol.Click
+    Private Sub Btn_RearmarArbol_Click(sender As System.Object, e As System.EventArgs) Handles Btn_RearmarArbol.Click
 
         Dim Fm As New Frm_Arbol_Asociaciones_05_Marcar_filtros_masivamente
         Fm.Btn_ImportarListado.Visible = False
@@ -770,7 +770,7 @@ Public Class Frm_Arbol_Asociacion_01
 
 
 
-    Private Sub TreeView1_MouseDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles TreeView1.MouseDoubleClick
+    Private Sub TreeView1_MouseDoubleClick(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles TreeView1.MouseDoubleClick
         ' obtengo el arbol del control TreeView1
         Dim _Tree As TreeView = CType(sender, TreeView)
         Dim _Nodo As TreeNode = _Tree.SelectedNode
@@ -782,7 +782,7 @@ Public Class Frm_Arbol_Asociacion_01
 
     End Sub
 
-    Private Sub TreeView1_AfterExpand(ByVal sender As System.Object, ByVal e As System.Windows.Forms.TreeViewEventArgs) Handles TreeView1.AfterExpand
+    Private Sub TreeView1_AfterExpand(sender As System.Object, e As System.Windows.Forms.TreeViewEventArgs) Handles TreeView1.AfterExpand
 
 
         ' obtengo el arbol del control TreeView1
@@ -808,7 +808,7 @@ Public Class Frm_Arbol_Asociacion_01
 
     End Sub
 
-    Private Sub TreeView1_AfterCollapse(ByVal sender As System.Object, ByVal e As System.Windows.Forms.TreeViewEventArgs) Handles TreeView1.AfterCollapse
+    Private Sub TreeView1_AfterCollapse(sender As System.Object, e As System.Windows.Forms.TreeViewEventArgs) Handles TreeView1.AfterCollapse
 
         ' obtengo el arbol del control TreeView1
         Dim _Tree As TreeView = CType(sender, TreeView)

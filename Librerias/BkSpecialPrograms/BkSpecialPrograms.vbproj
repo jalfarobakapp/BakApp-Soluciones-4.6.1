@@ -627,6 +627,12 @@
     <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Monedas\Frm_MonedasLista.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Nodos Clas y Ubicaciones\Clasificaciones Nodos\Frm_Arbol_Lista.Designer.vb">
+      <DependentUpon>Frm_Arbol_Lista.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Nodos Clas y Ubicaciones\Clasificaciones Nodos\Frm_Arbol_Lista.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="01 Procesos  compartidos\Precios y Costos\01 Mantención Listas Random\Clas_Imprimir_ListaPrecios.vb" />
     <Compile Include="01 Procesos  compartidos\Precios y Costos\01 Mantención Listas Random\Precios Futuros\Frm_PrecioFuturoRd.Designer.vb">
       <DependentUpon>Frm_PrecioFuturoRd.vb</DependentUpon>
@@ -2482,12 +2488,6 @@
       <DependentUpon>Frm_Tickets_Seguimiento.vb</DependentUpon>
     </Compile>
     <Compile Include="03 Sistemas\Tickets\Frm_Tickets_Seguimiento.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_Treeview.Designer.vb">
-      <DependentUpon>Frm_Tickets_Treeview.vb</DependentUpon>
-    </Compile>
-    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_Treeview.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Vales despacho\Recursos Vale\Rsc_Vales.Designer.vb">
@@ -4539,6 +4539,9 @@
     <EmbeddedResource Include="01 Procesos  compartidos\Mantencion de Tablas\Monedas\Frm_MonedasLista.resx">
       <DependentUpon>Frm_MonedasLista.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Mantencion de Tablas\Nodos Clas y Ubicaciones\Clasificaciones Nodos\Frm_Arbol_Lista.resx">
+      <DependentUpon>Frm_Arbol_Lista.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Precios y Costos\01 Mantención Listas Random\Precios Futuros\Frm_PrecioFuturoRd.resx">
       <DependentUpon>Frm_PrecioFuturoRd.vb</DependentUpon>
     </EmbeddedResource>
@@ -6004,9 +6007,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_Seguimiento.resx">
       <DependentUpon>Frm_Tickets_Seguimiento.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_Treeview.resx">
-      <DependentUpon>Frm_Tickets_Treeview.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="999 Funciones, Clases y Datos\Formularios\Adjuntar Archivos\Frm_Adjuntar_Arch_Rtf.resx">
       <DependentUpon>Frm_Adjuntar_Arch_Rtf.vb</DependentUpon>

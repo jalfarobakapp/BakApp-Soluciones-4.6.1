@@ -1,15 +1,10 @@
 ﻿Imports DevComponents.DotNetBar
-Imports System.Windows.Forms
-Imports System.Drawing
-Imports System.Data.SqlClient
-'Imports Lib_Bakapp_VarClassFunc
 
 Public Class Frm_Arbol_Asociacion_02
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-    'Dim Datos_Arbol As New DS_Nodos
     Dim _Identificador_NodoPadre
     Dim _Row_Padre As DataRow
 
@@ -22,8 +17,6 @@ Public Class Frm_Arbol_Asociacion_02
     Dim _Codigo_Heredado As String
 
     Dim _Clas_Unica_X_Producto As Boolean
-
-    'Dim _Empresa, _Sucursal, _Bodega As String
 
     Dim _Correr_a_la_derecha As Boolean
     Dim _Top, _Left As Integer
@@ -46,7 +39,7 @@ Public Class Frm_Arbol_Asociacion_02
         Get
             Return Me.Top
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             _Top = value
         End Set
     End Property
@@ -54,7 +47,7 @@ Public Class Frm_Arbol_Asociacion_02
         Get
             Return Me.Left
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             _Left = value
         End Set
     End Property
@@ -62,7 +55,7 @@ Public Class Frm_Arbol_Asociacion_02
         Get
             Return _Identificador_NodoPadre
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             _Identificador_NodoPadre = value
             _Lista_Nodos.Add(value)
         End Set
@@ -71,7 +64,7 @@ Public Class Frm_Arbol_Asociacion_02
         Get
             Return _Grabar
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Grabar = value
         End Set
     End Property
@@ -79,7 +72,7 @@ Public Class Frm_Arbol_Asociacion_02
         Get
             Return _FullPath
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             _FullPath = value
         End Set
     End Property
@@ -87,7 +80,7 @@ Public Class Frm_Arbol_Asociacion_02
         Get
             Return _Descripcion_Busqueda
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             _Descripcion_Busqueda = value
         End Set
     End Property
@@ -95,7 +88,7 @@ Public Class Frm_Arbol_Asociacion_02
         Get
             Return _Clas_Unica_X_Producto
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Clas_Unica_X_Producto = value
         End Set
     End Property
@@ -103,7 +96,7 @@ Public Class Frm_Arbol_Asociacion_02
         Get
             Return _Codigo_Heredado
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             _Codigo_Heredado = value
         End Set
     End Property
@@ -111,7 +104,7 @@ Public Class Frm_Arbol_Asociacion_02
         Get
             Return _Row_Padre
         End Get
-        Set(ByVal value As DataRow)
+        Set(value As DataRow)
             _Row_Padre = value
         End Set
     End Property
@@ -119,15 +112,15 @@ Public Class Frm_Arbol_Asociacion_02
         Get
             Return _Lista_Nodos
         End Get
-        Set(ByVal value As List(Of Integer))
+        Set(value As List(Of Integer))
             _Lista_Nodos = value
         End Set
     End Property
 
-    Public Sub New(ByVal Correr_a_la_derecha As Boolean,
-                   ByVal Nodo_Raiz As Integer,
-                   ByVal Modo_Editar As Boolean, ByVal Clasificacion As Enum_Clasificacion,
-                   ByVal NroTblPaso As Integer)
+    Public Sub New(Correr_a_la_derecha As Boolean,
+                   Nodo_Raiz As Integer,
+                   Modo_Editar As Boolean, Clasificacion As Enum_Clasificacion,
+                   NroTblPaso As Integer)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -203,11 +196,11 @@ Public Class Frm_Arbol_Asociacion_02
 
     End Sub
 
-    Private Sub Frm_Arbol_Asociacion_02_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
+    Private Sub Frm_Arbol_Asociacion_02_FormClosed(sender As Object, e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
         _Sql.Sb_Eliminar_Tabla_De_Paso(_Tbl_Tabla_De_Paso)
     End Sub
 
-    Private Sub Frm_Arbol_Asociacion_02_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Arbol_Asociacion_02_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
                        "Where Codigo_Nodo = " & _Identificador_NodoPadre
@@ -285,7 +278,7 @@ Public Class Frm_Arbol_Asociacion_02
 
     End Sub
 
-    Sub Sb_Actualizar_Grilla(ByVal _Modo_Edicion As Boolean)
+    Sub Sb_Actualizar_Grilla(_Modo_Edicion As Boolean)
 
         Try
 
@@ -407,7 +400,7 @@ Public Class Frm_Arbol_Asociacion_02
 
     End Sub
 
-    Sub Sb_Marcar_Fila(ByVal _Fila As DataGridViewRow)
+    Sub Sb_Marcar_Fila(_Fila As DataGridViewRow)
 
         Dim _Es_Seleccionable As Boolean = _Fila.Cells("Es_Seleccionable").Value
         Dim _Prod_Ass As Boolean = CBool(_Fila.Cells("Prod_Ass").Value)
@@ -444,7 +437,7 @@ Public Class Frm_Arbol_Asociacion_02
 
     End Sub
 
-    Private Sub BtnSalir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnSalir.Click
+    Private Sub BtnSalir_Click(sender As System.Object, e As System.EventArgs) Handles BtnSalir.Click
         If Switch_Modo_Edicion.Value Then
             Sb_Salir()
         Else
@@ -483,8 +476,8 @@ Public Class Frm_Arbol_Asociacion_02
     End Sub
 
 
-    Public Sub Sb_Insertar_nueva_linea(ByVal _Clas_Unica_X_Producto As Boolean,
-                                       Optional ByVal _Descripcion As String = "")
+    Public Sub Sb_Insertar_nueva_linea(_Clas_Unica_X_Producto As Boolean,
+                                       Optional _Descripcion As String = "")
 
 
         Dim _Es_Seleccionable As Boolean
@@ -523,7 +516,7 @@ Public Class Frm_Arbol_Asociacion_02
 
     End Sub
 
-    Private Sub Frm_Arbol_Asociacion_02_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_Arbol_Asociacion_02_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
 
         Try
             Dim tecla = e.KeyCode
@@ -545,7 +538,7 @@ Public Class Frm_Arbol_Asociacion_02
 
     End Sub
 
-    Sub Sub_Agregar_Nueva_Carpeta(ByVal _Fila As Integer)
+    Sub Sub_Agregar_Nueva_Carpeta(_Fila As Integer)
 
         If Switch_Modo_Edicion.Value Then
 
@@ -584,7 +577,6 @@ Public Class Frm_Arbol_Asociacion_02
                     If _Identificador_NodoPadre = 0 Then
 
                         If Fx_Insertar_Clas_Unica() Then
-
                             .CurrentCell = .Rows(_Fila + 1).Cells("Descripcion") '.Rows(.CurrentRow.Index).Cells("Codigo")
                         End If
 
@@ -687,7 +679,7 @@ Public Class Frm_Arbol_Asociacion_02
 
     End Sub
 
-    Private Sub BtnGrabar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Grabar.Click
+    Private Sub BtnGrabar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Grabar.Click
 
         Dim _Registros_Nuevos As Integer
         Dim _Registros_Editados As Integer
@@ -982,7 +974,7 @@ Public Class Frm_Arbol_Asociacion_02
 
     End Sub
 
-    Function Fx_Tiene_Productos(ByVal _NodoPadre As String) As Boolean
+    Function Fx_Tiene_Productos(_NodoPadre As String) As Boolean
 
         Consulta_sql = "Select Codigo_Nodo from " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Identificacdor_NodoPadre = " & _NodoPadre
         Dim _Tbl_Tree As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql) ' _SQL.Fx_Get_Tablas(Consulta_sql)
@@ -1008,7 +1000,7 @@ Public Class Frm_Arbol_Asociacion_02
     End Function
 
 
-    Private Sub Grilla_CellEndEdit(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellEndEdit
+    Private Sub Grilla_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellEndEdit
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
@@ -1046,7 +1038,7 @@ Public Class Frm_Arbol_Asociacion_02
 
     End Sub
 
-    Private Sub Grilla_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
+    Private Sub Grilla_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
@@ -1106,7 +1098,7 @@ Public Class Frm_Arbol_Asociacion_02
 
     End Sub
 
-    Function Fx_Rev_Class_Grabada(ByVal _Nuevo_Item As Boolean)
+    Function Fx_Rev_Class_Grabada(_Nuevo_Item As Boolean)
         Dim _Class = True
 
         If _Nuevo_Item Then
@@ -1125,9 +1117,9 @@ Public Class Frm_Arbol_Asociacion_02
 
     End Function
 
-    Sub Sb_VerProductos_X_Class_X_Fila(ByVal _Codigo_Nodo As String,
-                                       ByVal _Descripcion As String,
-                                       Optional ByVal _Mostrar_Productos_Sin_Asociacion_En_Nodo As Boolean = False)
+    Sub Sb_VerProductos_X_Class_X_Fila(_Codigo_Nodo As String,
+                                       _Descripcion As String,
+                                       Optional _Mostrar_Productos_Sin_Asociacion_En_Nodo As Boolean = False)
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
@@ -1161,7 +1153,7 @@ Public Class Frm_Arbol_Asociacion_02
 
     End Sub
 
-    Sub Sb_VerProductos_X_Class_X_Cartepa_Padre(ByVal _Mostrar_Productos_Sin_Asociacion_En_Nodo As Boolean)
+    Sub Sb_VerProductos_X_Class_X_Cartepa_Padre(_Mostrar_Productos_Sin_Asociacion_En_Nodo As Boolean)
 
         Dim _Codigo_Nodo As String = _Row_Padre.Item("Codigo_Nodo")
         Dim _Descripcion As String = _Row_Padre.Item("Descripcion")
@@ -1192,7 +1184,7 @@ Public Class Frm_Arbol_Asociacion_02
 
     End Sub
 
-    Private Sub EsPadreToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub EsPadreToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs)
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Codigo_Nodo = _Fila.Cells("Codigo_Nodo").Value
@@ -1240,7 +1232,7 @@ Public Class Frm_Arbol_Asociacion_02
 
     End Sub
 
-    Private Sub BtnImportarAsociaciones_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Importar_Asociaciones_Desde_Excel.Click
+    Private Sub BtnImportarAsociaciones_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Importar_Asociaciones_Desde_Excel.Click
 
         Try
 
@@ -1360,7 +1352,7 @@ Public Class Frm_Arbol_Asociacion_02
 
     End Sub
 
-    Private Sub EsSeleccionableToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub EsSeleccionableToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs)
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Codigo_Nodo = _Fila.Cells("Codigo_Nodo").Value
@@ -1393,7 +1385,7 @@ Public Class Frm_Arbol_Asociacion_02
     End Sub
 
 
-    Private Sub BtnEliminarTodo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnEliminarTodo.Click
+    Private Sub BtnEliminarTodo_Click(sender As System.Object, e As System.EventArgs) Handles BtnEliminarTodo.Click
         With Grilla
             If Fx_Tiene_Permiso(Me, "Tbl00006") Then
                 If MessageBoxEx.Show(Me, "¿Esta seguro de eliminar todas las clasificaciones de selección?",
@@ -1415,7 +1407,7 @@ Public Class Frm_Arbol_Asociacion_02
 
 
 
-    Private Sub Btn_ClasificarMasivamente_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_ClasificarMasivamente.Click
+    Private Sub Btn_ClasificarMasivamente_Click(sender As System.Object, e As System.EventArgs) Handles Btn_ClasificarMasivamente.Click
         If Fx_Tiene_Permiso(Me, "Tbl00022") Then
             Dim Fm As New Frm_Arbol_Asociaciones_05_Marcar_filtros_masivamente
             Fm.BtnGenerar.Visible = False
@@ -1423,7 +1415,7 @@ Public Class Frm_Arbol_Asociacion_02
         End If
     End Sub
 
-    Private Sub Btn_BuscarClasificacion_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_BuscarClasificacion.Click
+    Private Sub Btn_BuscarClasificacion_Click(sender As System.Object, e As System.EventArgs) Handles Btn_BuscarClasificacion.Click
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         'Dim _Codigo_Nodo = _Fila.Cells("Codigo_Nodo").Value
@@ -1479,18 +1471,18 @@ Public Class Frm_Arbol_Asociacion_02
 
     End Sub
 
-    Private Sub Txt_DescripcionBusqueda_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Txt_DescripcionBusqueda.TextChanged
+    Private Sub Txt_DescripcionBusqueda_TextChanged(sender As System.Object, e As System.EventArgs) Handles Txt_DescripcionBusqueda.TextChanged
         'BuscarDatoEnGrilla(Txt_DescripcionBusqueda.Text, "Descripcion", Grilla)
     End Sub
 
-    Private Sub Txt_DescripcionBusqueda_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Txt_DescripcionBusqueda.KeyDown
+    Private Sub Txt_DescripcionBusqueda_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles Txt_DescripcionBusqueda.KeyDown
         If e.KeyValue = Keys.Enter Then
             Sb_Actualizar_Grilla(Switch_Modo_Edicion.Value)
         End If
     End Sub
 
 
-    Private Sub Sb_Grilla_CellMouseUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellMouseEventArgs)
+    Private Sub Sb_Grilla_CellMouseUp(sender As System.Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs)
 
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
         If _Cabeza = "Seleccion" Then
@@ -1502,15 +1494,15 @@ Public Class Frm_Arbol_Asociacion_02
     End Sub
 
 
-    Private Sub Mnu_Btn_Ver_Sub_Carpetas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Mnu_Btn_Ver_Sub_Carpetas.Click
+    Private Sub Mnu_Btn_Ver_Sub_Carpetas_Click(sender As System.Object, e As System.EventArgs) Handles Mnu_Btn_Ver_Sub_Carpetas.Click
         Sb_Agregar_SubClasificaciones()
     End Sub
 
-    Private Sub Mnu_Btn_Eliminar_Clasificacion_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Mnu_Btn_Eliminar_Clasificacion.Click
+    Private Sub Mnu_Btn_Eliminar_Clasificacion_Click(sender As System.Object, e As System.EventArgs) Handles Mnu_Btn_Eliminar_Clasificacion.Click
         Sb_Eliminar_Clasificacion()
     End Sub
 
-    Private Sub Mnu_Btn_Ver_Productos_Asociados_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Mnu_Btn_Ver_Productos_Asociados.Click
+    Private Sub Mnu_Btn_Ver_Productos_Asociados_Click(sender As System.Object, e As System.EventArgs) Handles Mnu_Btn_Ver_Productos_Asociados.Click
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Nuevo_Item As Boolean = _Fila.Cells("Nuevo_Item").Value
@@ -1524,7 +1516,7 @@ Public Class Frm_Arbol_Asociacion_02
 
     End Sub
 
-    Private Sub Sb_Grilla_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Sb_Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
         If e.Button = Windows.Forms.MouseButtons.Right Then
             With sender
                 Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
@@ -1596,7 +1588,7 @@ Public Class Frm_Arbol_Asociacion_02
         End If
     End Sub
 
-    Private Sub Mnu_Btn_Ver_Productos_Sin_Asociacion_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Mnu_Btn_Ver_Productos_Sin_Asociacion.Click
+    Private Sub Mnu_Btn_Ver_Productos_Sin_Asociacion_Click(sender As System.Object, e As System.EventArgs) Handles Mnu_Btn_Ver_Productos_Sin_Asociacion.Click
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Codigo_Nodo As Integer = _Fila.Cells("Codigo_Nodo").Value
         Dim _Descripcion As String = _Fila.Cells("Descripcion").Value
@@ -1605,7 +1597,7 @@ Public Class Frm_Arbol_Asociacion_02
     End Sub
 
 
-    Private Sub Sb_Switch_Modo_Edicion_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Sb_Switch_Modo_Edicion_ValueChanged(sender As System.Object, e As System.EventArgs)
 
         If Switch_Modo_Edicion.Value Then
             If Fx_Tiene_Permiso(Me, "Tbl00030") Then
@@ -1678,7 +1670,7 @@ Public Class Frm_Arbol_Asociacion_02
 
     End Sub
 
-    Private Sub Grilla_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Grilla.KeyDown
+    Private Sub Grilla_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles Grilla.KeyDown
         If e.KeyValue = Keys.Enter Then
             If Switch_Modo_Edicion.Value Then
                 Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
@@ -1692,12 +1684,12 @@ Public Class Frm_Arbol_Asociacion_02
         End If
     End Sub
 
-    Private Sub Btn_Agregar_Nueva_Carpeta_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Agregar_Nueva_Carpeta.Click
+    Private Sub Btn_Agregar_Nueva_Carpeta_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Agregar_Nueva_Carpeta.Click
         Dim _Fila = Grilla.Rows.Count - 1
         Sub_Agregar_Nueva_Carpeta(_Fila)
     End Sub
 
-    Private Sub Sb_Rdb_CheckedChanged(ByVal sender As System.Object, ByVal e As DevComponents.DotNetBar.CheckBoxChangeEventArgs)
+    Private Sub Sb_Rdb_CheckedChanged(sender As System.Object, e As DevComponents.DotNetBar.CheckBoxChangeEventArgs)
         If CType(sender, Object).Checked Then
             Sb_Cambiar_Tipo_De_Carpeta()
         End If
@@ -1767,7 +1759,7 @@ Public Class Frm_Arbol_Asociacion_02
 
     End Sub
 
-    Private Sub Grilla_DragDrop(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles Grilla.DragDrop
+    Private Sub Grilla_DragDrop(sender As System.Object, e As System.Windows.Forms.DragEventArgs) Handles Grilla.DragDrop
 
         ' The mouse locations are relative to the screen, so they must be 
         ' converted to client coordinates.
@@ -1789,7 +1781,7 @@ Public Class Frm_Arbol_Asociacion_02
 
     End Sub
 
-    Private Sub Grilla_MouseMove(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Grilla.MouseMove
+    Private Sub Grilla_MouseMove(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles Grilla.MouseMove
         Return
         If e.Button = Windows.Forms.MouseButtons.Left Then
             If _Fila_Seleccionada_DrapDorg <> -1 Then
@@ -1803,7 +1795,7 @@ Public Class Frm_Arbol_Asociacion_02
         End If
     End Sub
 
-    Private Sub Grilla_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Grilla.MouseDown
+    Private Sub Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles Grilla.MouseDown
         'Get the Index of Row which is being Dragged
         'We would use this Index on Drop to identify which Row was dragged and get the values from that row
         If Switch_Modo_Edicion.Value Then
@@ -1825,7 +1817,7 @@ Public Class Frm_Arbol_Asociacion_02
         End If
     End Sub
 
-    Private Sub Grilla_DragOver(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles Grilla.DragOver
+    Private Sub Grilla_DragOver(sender As System.Object, e As System.Windows.Forms.DragEventArgs) Handles Grilla.DragOver
         'Just to Show a mouse icon to denote drop is allowed here
 
         Dim clientPoint As Point = Grilla.PointToClient(New Point(e.X, e.Y))
@@ -1843,7 +1835,7 @@ Public Class Frm_Arbol_Asociacion_02
         '_Fila.DefaultCellStyle.BackColor = Color.Aqua
     End Sub
 
-    Private Sub Grilla_DragLeave(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Grilla.DragLeave
+    Private Sub Grilla_DragLeave(sender As System.Object, e As System.EventArgs) Handles Grilla.DragLeave
         Dim dropEffect As DragDropEffects
         dropEffect = DragDropEffects.None
 
@@ -1857,7 +1849,7 @@ Public Class Frm_Arbol_Asociacion_02
         'e.Effect = DragDropEffects.None
     End Sub
 
-    Private Sub Grilla_DragEnter(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles Grilla.DragEnter
+    Private Sub Grilla_DragEnter(sender As System.Object, e As System.Windows.Forms.DragEventArgs) Handles Grilla.DragEnter
 
         Dim clientPoint As Point = Grilla.PointToClient(New Point(e.X, e.Y))
         Dim filaLugarnuevo = Grilla.HitTest(clientPoint.X, clientPoint.Y).RowIndex
@@ -1887,7 +1879,7 @@ Public Class Frm_Arbol_Asociacion_02
 
     End Sub
 
-    Private Sub Grilla_CellMouseEnter(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellMouseEnter
+    Private Sub Grilla_CellMouseEnter(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellMouseEnter
         Return
         If Switch_Modo_Edicion.Value Then
             If e.RowIndex >= 0 Then
@@ -1898,7 +1890,7 @@ Public Class Frm_Arbol_Asociacion_02
         End If
     End Sub
 
-    Private Sub Grilla_CellMouseLeave(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellMouseLeave
+    Private Sub Grilla_CellMouseLeave(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellMouseLeave
         Return
         If Switch_Modo_Edicion.Value Then
             If e.RowIndex >= 0 Then
@@ -1907,7 +1899,7 @@ Public Class Frm_Arbol_Asociacion_02
         End If
     End Sub
 
-    Private Sub Btn_Ver_Arbol_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Ver_Arbol.Click
+    Private Sub Btn_Ver_Arbol_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ver_Arbol.Click
 
         Dim Fm As New Frm_Arbol_Asociacion_01
         Fm.Pro_CheckBoxes_Nodos = False
@@ -1920,15 +1912,15 @@ Public Class Frm_Arbol_Asociacion_02
 
     End Sub
 
-    Private Sub Btn_Exportar_Excel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Exportar_Excel.Click
+    Private Sub Btn_Exportar_Excel_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Exportar_Excel.Click
         ExportarTabla_JetExcel_Tabla(_Tbl_Carpetas, Me, "Nodos")
     End Sub
 
 
     'Pinta el contenido que abarca varias columnas y el rectángulo de enfoque.
 
-    Sub Sb_Grilla_RowPostPaint(ByVal sender As Object,
-        ByVal e As DataGridViewRowPostPaintEventArgs) ' _
+    Sub Sb_Grilla_RowPostPaint(sender As Object,
+        e As DataGridViewRowPostPaintEventArgs) ' _
 
 
         'Calcula los límites de la fila.
@@ -1991,35 +1983,35 @@ Public Class Frm_Arbol_Asociacion_02
 
     End Sub 'dataGridView1_RowPostPaint
 
-    Private Sub Grilla_CellEnter(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellEnter
+    Private Sub Grilla_CellEnter(sender As Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellEnter
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         'Sb_Marcar_Fila(_Fila)
 
     End Sub
 
-    Private Sub Mnu_Btn_Carpeta_Actual_Ver_Productos_Asociados_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Mnu_Btn_Carpeta_Actual_Ver_Productos_Asociados.Click
+    Private Sub Mnu_Btn_Carpeta_Actual_Ver_Productos_Asociados_Click(sender As System.Object, e As System.EventArgs) Handles Mnu_Btn_Carpeta_Actual_Ver_Productos_Asociados.Click
         Dim _Codigo_Nodo As Integer = _Row_Padre.Item("Codigo_Nodo") ' _Fila.Cells("Codigo_Nodo").Value
         Dim _Descripcion As String = _Row_Padre.Item("Descripcion") ' _Fila.Cells("Descripcion").Value
         Sb_VerProductos_X_Class_X_Fila(_Codigo_Nodo, _Descripcion, False)
     End Sub
 
-    Private Sub Mnu_Btn_Carpeta_Actual_Ver_Productos_Sin_Asociacion_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Mnu_Btn_Carpeta_Actual_Ver_Productos_Sin_Asociacion.Click
+    Private Sub Mnu_Btn_Carpeta_Actual_Ver_Productos_Sin_Asociacion_Click(sender As System.Object, e As System.EventArgs) Handles Mnu_Btn_Carpeta_Actual_Ver_Productos_Sin_Asociacion.Click
         Dim _Codigo_Nodo As Integer = _Row_Padre.Item("Codigo_Nodo") '_Fila.Cells("Codigo_Nodo").Value
         Dim _Descripcion As String = _Row_Padre.Item("Descripcion") '_Fila.Cells("Descripcion").Value
         Sb_VerProductos_X_Class_X_Fila(_Codigo_Nodo, _Descripcion, True)
     End Sub
 
-    Private Sub Btn_Carpeta_Padrel_Ver_Productos_Asociados_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Carpeta_Padrel_Ver_Productos_Asociados.Click
+    Private Sub Btn_Carpeta_Padrel_Ver_Productos_Asociados_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Carpeta_Padrel_Ver_Productos_Asociados.Click
         Sb_VerProductos_X_Class_X_Cartepa_Padre(False)
     End Sub
 
-    Private Sub Btn_Carpeta_Padre_Ver_Productos_Sin_Asociacion_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Carpeta_Padre_Ver_Productos_Sin_Asociacion.Click
+    Private Sub Btn_Carpeta_Padre_Ver_Productos_Sin_Asociacion_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Carpeta_Padre_Ver_Productos_Sin_Asociacion.Click
         Sb_VerProductos_X_Class_X_Cartepa_Padre(True)
     End Sub
 
-    Public Sub Sb_Insertar_Registro_O_Actualizar(ByVal _Clas_Unica_X_Producto As Boolean,
-                                       Optional ByVal _Descripcion As String = "")
+    Public Sub Sb_Insertar_Registro_O_Actualizar(_Clas_Unica_X_Producto As Boolean,
+                                       Optional _Descripcion As String = "")
 
 
         Dim _Es_Seleccionable As Boolean
