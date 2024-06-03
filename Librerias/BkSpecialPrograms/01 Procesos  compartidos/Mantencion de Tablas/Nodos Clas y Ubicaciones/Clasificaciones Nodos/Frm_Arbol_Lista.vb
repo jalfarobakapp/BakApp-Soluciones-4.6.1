@@ -7,6 +7,7 @@ Public Class Frm_Arbol_Lista
 
     Private _Clas_Unica_X_Producto As Boolean
 
+    Private ListaBusquedaNodos As List(Of TreeNode)
     Public Sub New(_Clas_Unica_X_Producto As Boolean)
 
         ' Esta llamada es exigida por el diseñador.
@@ -34,6 +35,8 @@ Public Class Frm_Arbol_Lista
 
         Sb_Cargar_Arbol()
 
+        ListaBusquedaNodos = New List(Of TreeNode)
+
     End Sub
 
     Sub Sb_Cargar_Arbol()
@@ -53,6 +56,10 @@ Public Class Frm_Arbol_Lista
         For Each nodo As TreeNode In Tree_Bandeja.Nodes
             nodo.Expand()
         Next
+
+        Lbl_Estatus.Text = _NodoRaiz.FullPath
+
+        Me.Refresh()
 
     End Sub
 
@@ -136,6 +143,8 @@ Public Class Frm_Arbol_Lista
     Private Sub Tree_Bandeja_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles Tree_Bandeja.AfterSelect
 
         Dim _Nodo As TreeNode = e.Node
+        Lbl_Estatus.Text = _Nodo.FullPath
+        Me.Refresh()
 
     End Sub
 
@@ -190,7 +199,16 @@ Public Class Frm_Arbol_Lista
     Function BuscarNodoPorEtiqueta(nodoPadre As TreeNode, etiquetaBuscada As String) As TreeNode
 
         If nodoPadre.Tag IsNot Nothing AndAlso nodoPadre.Text.ToUpper.Contains(etiquetaBuscada.ToUpper) Then
-            Return nodoPadre
+            Dim _NodoYaBuscado As Boolean
+            For Each _nd As TreeNode In ListaBusquedaNodos
+                If _nd.Index = nodoPadre.Index Then
+                    _NodoYaBuscado = True
+                    Exit For
+                End If
+            Next
+            If Not _NodoYaBuscado Then
+                Return nodoPadre
+            End If
         End If
 
         For Each nodoHijo As TreeNode In nodoPadre.Nodes
@@ -207,16 +225,7 @@ Public Class Frm_Arbol_Lista
     Private Sub Txt_Filtrar_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Filtrar.KeyDown
 
         If e.KeyValue = Keys.Enter Then
-            ' Uso de la función
-            Dim etiquetaBuscada As String = Txt_Filtrar.Text
-            Dim nodoEncontrado As TreeNode = BuscarNodoPorEtiqueta(Tree_Bandeja.Nodes(0), etiquetaBuscada)
-            If nodoEncontrado IsNot Nothing Then
-                ' Haz algo con el nodo encontrado
-                Tree_Bandeja.Focus()
-                nodoEncontrado.EnsureVisible()
-                Tree_Bandeja.SelectedNode = nodoEncontrado
-                nodoEncontrado.Expand()
-            End If
+            Sb_BuscarNodo()
         End If
 
     End Sub
@@ -251,15 +260,19 @@ Public Class Frm_Arbol_Lista
 
         If e.Button = MouseButtons.Right Then
 
-            If _Nodo.Name = 0 Then
-                Return
-            End If
-
             Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_Asociacion", "Codigo_Nodo = " & _Nodo.Name)
 
             Lbl_TotalProductos.Text = "Id: " & _Nodo.Name & ",Total productos asociados: " & FormatNumber(_Reg, 0)
 
-            'LabelItem1.Visible = _Nodo.Checked
+            Lbl_TotalProductos.Visible = CBool(_Nodo.Name)
+            Btn_VerProductos.Visible = CBool(_Nodo.Name)
+            LabelItem1.Visible = CBool(_Nodo.Name)
+            LabelItem2.Visible = CBool(_Nodo.Name)
+            Btn_CambiarNombreCarpeta.Visible = CBool(_Nodo.Name)
+            Btn_CambiarNombreCarpeta.Visible = CBool(_Nodo.Name)
+            Btn_EliminarClasificacion.Visible = CBool(_Nodo.Name)
+            Btn_Copiar.Visible = CBool(_Nodo.Name)
+
             Btn_VerProductos.Enabled = _Nodo.Checked
             Btn_TicketProducto.Enabled = _Nodo.Checked
             Btn_CrearClasificacion.Enabled = Not _Nodo.Checked
@@ -352,7 +365,11 @@ Public Class Frm_Arbol_Lista
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _Codigo_Nodo
         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        Dim _Nodo_Raiz As Integer = _Row.Item("Nodo_Raiz")
+        Dim _Nodo_Raiz As Integer
+
+        If Not IsNothing(_Row) Then
+            _Nodo_Raiz = _Row.Item("Nodo_Raiz")
+        End If
 
         If _Nodo_Raiz = 0 Then
             _Nodo_Raiz = _Codigo_Nodo
@@ -492,7 +509,7 @@ Public Class Frm_Arbol_Lista
         Return nodosConCheck
     End Function
 
-    Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
+    Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs)
 
         ' Uso:
         Dim nodosMarcados As List(Of TreeNode) = Fx_ObtenerNodosConCheck(Tree_Bandeja.Nodes(0)) ' Pasa el nodo raíz adecuado
@@ -506,5 +523,62 @@ Public Class Frm_Arbol_Lista
 
     Private Sub Btn_Actualizar_Click(sender As Object, e As EventArgs) Handles Btn_Actualizar.Click
         Sb_Cargar_Arbol()
+    End Sub
+
+    Private Sub Txt_Filtrar_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Filtrar.ButtonCustomClick
+        Sb_BuscarNodo()
+    End Sub
+
+    Private Sub Txt_Filtrar_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Filtrar.ButtonCustom2Click
+        Txt_Filtrar.Text = String.Empty
+        ListaBusquedaNodos.Clear()
+    End Sub
+
+    Sub Sb_BuscarNodo()
+
+        ' Uso de la función
+        Dim etiquetaBuscada As String = Txt_Filtrar.Text
+
+        If String.IsNullOrWhiteSpace(etiquetaBuscada.Trim) Then
+            Beep()
+            Return
+        End If
+
+        Dim nodoEncontrado As TreeNode = BuscarNodoPorEtiqueta(Tree_Bandeja.Nodes(0), etiquetaBuscada)
+
+        If nodoEncontrado IsNot Nothing Then
+
+            ListaBusquedaNodos.Add(nodoEncontrado)
+
+            ' Haz algo con el nodo encontrado
+            Tree_Bandeja.Focus()
+            nodoEncontrado.EnsureVisible()
+            Tree_Bandeja.SelectedNode = nodoEncontrado
+            nodoEncontrado.Expand()
+            Txt_Filtrar.ButtonCustom.Visible = True
+            Me.Refresh()
+
+        Else
+
+            If CBool(ListaBusquedaNodos.Count) Then
+                MessageBoxEx.Show(Me, "No se han encontrado más resultados en los documentos especificados.", "Buscar",
+                                  MessageBoxButtons.OK, Nothing)
+            Else
+                MessageBoxEx.Show(Me, "No se encuentra el siguiente texto especificado: " & Txt_Filtrar.Text, "Buscar",
+                                  MessageBoxButtons.OK, Nothing)
+            End If
+
+            ListaBusquedaNodos.Clear()
+
+        End If
+
+    End Sub
+
+    Private Sub Txt_Filtrar_TextChanged(sender As Object, e As EventArgs) Handles Txt_Filtrar.TextChanged
+        If String.IsNullOrEmpty(Txt_Filtrar.Text) Then
+            'Txt_Filtrar.ButtonCustom.Visible = False
+            ListaBusquedaNodos.Clear()
+            Me.Refresh()
+        End If
     End Sub
 End Class

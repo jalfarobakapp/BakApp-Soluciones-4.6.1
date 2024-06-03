@@ -51,6 +51,8 @@ Partial Class Frm_Despacho_Configuracion
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar_Configuracion = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Txt_Tipo_Venta = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Chk_ConfirmarLecturaDespacho = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Mostrar_Agencia = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Mostrar_RetiraTransportista = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
@@ -61,7 +63,6 @@ Partial Class Frm_Despacho_Configuracion
         Me.Btn_Buscar_Transportista_x_Defecto = New DevComponents.DotNetBar.ButtonX()
         Me.Txt_Transportista = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Btn_Buscar_Tipo_Venta_x_Defecto = New DevComponents.DotNetBar.ButtonX()
-        Me.Txt_Tipo_Venta = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Chk_Pedir_Sucursal_Retiro = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Tabs = New DevComponents.DotNetBar.SuperTabControl()
         Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
@@ -333,7 +334,7 @@ Partial Class Frm_Despacho_Configuracion
         Me.Grupo_Tipo.Controls.Add(Me.Btn_Mant_Transportistas)
         Me.Grupo_Tipo.Controls.Add(Me.Btn_Mant_Tipo_Venta)
         Me.Grupo_Tipo.DisabledBackColor = System.Drawing.Color.Empty
-        Me.Grupo_Tipo.Location = New System.Drawing.Point(14, 231)
+        Me.Grupo_Tipo.Location = New System.Drawing.Point(14, 244)
         Me.Grupo_Tipo.Name = "Grupo_Tipo"
         Me.Grupo_Tipo.Size = New System.Drawing.Size(460, 94)
         '
@@ -412,7 +413,7 @@ Partial Class Frm_Despacho_Configuracion
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar_Configuracion})
-        Me.Bar2.Location = New System.Drawing.Point(0, 444)
+        Me.Bar2.Location = New System.Drawing.Point(0, 457)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(528, 41)
         Me.Bar2.Stretch = True
@@ -426,6 +427,7 @@ Partial Class Frm_Despacho_Configuracion
         Me.Btn_Grabar_Configuracion.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Grabar_Configuracion.ForeColor = System.Drawing.Color.Black
         Me.Btn_Grabar_Configuracion.Image = CType(resources.GetObject("Btn_Grabar_Configuracion.Image"), System.Drawing.Image)
+        Me.Btn_Grabar_Configuracion.ImageAlt = CType(resources.GetObject("Btn_Grabar_Configuracion.ImageAlt"), System.Drawing.Image)
         Me.Btn_Grabar_Configuracion.Name = "Btn_Grabar_Configuracion"
         Me.Btn_Grabar_Configuracion.Tooltip = "Configuración Impresora/salidas de impresión letrero"
         '
@@ -433,6 +435,8 @@ Partial Class Frm_Despacho_Configuracion
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.Controls.Add(Me.Txt_Tipo_Venta)
+        Me.GroupPanel1.Controls.Add(Me.Chk_ConfirmarLecturaDespacho)
         Me.GroupPanel1.Controls.Add(Me.Chk_Mostrar_Agencia)
         Me.GroupPanel1.Controls.Add(Me.Chk_Mostrar_RetiraTransportista)
         Me.GroupPanel1.Controls.Add(Me.LabelX6)
@@ -443,12 +447,11 @@ Partial Class Frm_Despacho_Configuracion
         Me.GroupPanel1.Controls.Add(Me.Btn_Buscar_Transportista_x_Defecto)
         Me.GroupPanel1.Controls.Add(Me.Txt_Transportista)
         Me.GroupPanel1.Controls.Add(Me.Btn_Buscar_Tipo_Venta_x_Defecto)
-        Me.GroupPanel1.Controls.Add(Me.Txt_Tipo_Venta)
         Me.GroupPanel1.Controls.Add(Me.Chk_Pedir_Sucursal_Retiro)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(14, 14)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(460, 198)
+        Me.GroupPanel1.Size = New System.Drawing.Size(460, 224)
         '
         '
         '
@@ -480,6 +483,40 @@ Partial Class Frm_Despacho_Configuracion
         Me.GroupPanel1.TabIndex = 130
         Me.GroupPanel1.Text = "Configuración despacho por empresa"
         '
+        'Txt_Tipo_Venta
+        '
+        Me.Txt_Tipo_Venta.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Tipo_Venta.Border.Class = "TextBoxBorder"
+        Me.Txt_Tipo_Venta.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Tipo_Venta.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Tipo_Venta.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Tipo_Venta.Location = New System.Drawing.Point(160, 46)
+        Me.Txt_Tipo_Venta.MaxLength = 20
+        Me.Txt_Tipo_Venta.Name = "Txt_Tipo_Venta"
+        Me.Txt_Tipo_Venta.PreventEnterBeep = True
+        Me.Txt_Tipo_Venta.ReadOnly = True
+        Me.Txt_Tipo_Venta.Size = New System.Drawing.Size(257, 22)
+        Me.Txt_Tipo_Venta.TabIndex = 135
+        '
+        'Chk_ConfirmarLecturaDespacho
+        '
+        Me.Chk_ConfirmarLecturaDespacho.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_ConfirmarLecturaDespacho.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_ConfirmarLecturaDespacho.CheckBoxImageChecked = CType(resources.GetObject("Chk_ConfirmarLecturaDespacho.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_ConfirmarLecturaDespacho.ForeColor = System.Drawing.Color.Black
+        Me.Chk_ConfirmarLecturaDespacho.Location = New System.Drawing.Point(3, 174)
+        Me.Chk_ConfirmarLecturaDespacho.Name = "Chk_ConfirmarLecturaDespacho"
+        Me.Chk_ConfirmarLecturaDespacho.Size = New System.Drawing.Size(414, 15)
+        Me.Chk_ConfirmarLecturaDespacho.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_ConfirmarLecturaDespacho.TabIndex = 147
+        Me.Chk_ConfirmarLecturaDespacho.Text = "Confirmar lectura del despacho al grabar"
+        '
         'Chk_Mostrar_Agencia
         '
         Me.Chk_Mostrar_Agencia.BackColor = System.Drawing.Color.Transparent
@@ -487,10 +524,11 @@ Partial Class Frm_Despacho_Configuracion
         '
         '
         Me.Chk_Mostrar_Agencia.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Mostrar_Agencia.CheckBoxImageChecked = CType(resources.GetObject("Chk_Mostrar_Agencia.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Mostrar_Agencia.ForeColor = System.Drawing.Color.Black
         Me.Chk_Mostrar_Agencia.Location = New System.Drawing.Point(3, 149)
         Me.Chk_Mostrar_Agencia.Name = "Chk_Mostrar_Agencia"
-        Me.Chk_Mostrar_Agencia.Size = New System.Drawing.Size(414, 23)
+        Me.Chk_Mostrar_Agencia.Size = New System.Drawing.Size(414, 19)
         Me.Chk_Mostrar_Agencia.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Mostrar_Agencia.TabIndex = 146
         Me.Chk_Mostrar_Agencia.Text = "Mostrar agencia"
@@ -502,10 +540,11 @@ Partial Class Frm_Despacho_Configuracion
         '
         '
         Me.Chk_Mostrar_RetiraTransportista.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Mostrar_RetiraTransportista.CheckBoxImageChecked = CType(resources.GetObject("Chk_Mostrar_RetiraTransportista.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Mostrar_RetiraTransportista.ForeColor = System.Drawing.Color.Black
         Me.Chk_Mostrar_RetiraTransportista.Location = New System.Drawing.Point(3, 128)
         Me.Chk_Mostrar_RetiraTransportista.Name = "Chk_Mostrar_RetiraTransportista"
-        Me.Chk_Mostrar_RetiraTransportista.Size = New System.Drawing.Size(414, 23)
+        Me.Chk_Mostrar_RetiraTransportista.Size = New System.Drawing.Size(414, 19)
         Me.Chk_Mostrar_RetiraTransportista.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Mostrar_RetiraTransportista.TabIndex = 145
         Me.Chk_Mostrar_RetiraTransportista.Text = "Mostrar retira transportista"
@@ -552,10 +591,11 @@ Partial Class Frm_Despacho_Configuracion
         '
         '
         Me.Chk_Transpor_Por_Pagar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Transpor_Por_Pagar.CheckBoxImageChecked = CType(resources.GetObject("Chk_Transpor_Por_Pagar.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Transpor_Por_Pagar.ForeColor = System.Drawing.Color.Black
         Me.Chk_Transpor_Por_Pagar.Location = New System.Drawing.Point(3, 21)
         Me.Chk_Transpor_Por_Pagar.Name = "Chk_Transpor_Por_Pagar"
-        Me.Chk_Transpor_Por_Pagar.Size = New System.Drawing.Size(414, 23)
+        Me.Chk_Transpor_Por_Pagar.Size = New System.Drawing.Size(414, 28)
         Me.Chk_Transpor_Por_Pagar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Transpor_Por_Pagar.TabIndex = 142
         Me.Chk_Transpor_Por_Pagar.Text = "Transporte por pagar"
@@ -637,24 +677,6 @@ Partial Class Frm_Despacho_Configuracion
         Me.Btn_Buscar_Tipo_Venta_x_Defecto.TabStop = False
         Me.Btn_Buscar_Tipo_Venta_x_Defecto.Tooltip = "Buscar Cliente"
         '
-        'Txt_Tipo_Venta
-        '
-        Me.Txt_Tipo_Venta.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_Tipo_Venta.Border.Class = "TextBoxBorder"
-        Me.Txt_Tipo_Venta.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Tipo_Venta.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_Tipo_Venta.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Tipo_Venta.Location = New System.Drawing.Point(160, 46)
-        Me.Txt_Tipo_Venta.MaxLength = 20
-        Me.Txt_Tipo_Venta.Name = "Txt_Tipo_Venta"
-        Me.Txt_Tipo_Venta.PreventEnterBeep = True
-        Me.Txt_Tipo_Venta.ReadOnly = True
-        Me.Txt_Tipo_Venta.Size = New System.Drawing.Size(257, 22)
-        Me.Txt_Tipo_Venta.TabIndex = 135
-        '
         'Chk_Pedir_Sucursal_Retiro
         '
         Me.Chk_Pedir_Sucursal_Retiro.BackColor = System.Drawing.Color.Transparent
@@ -662,10 +684,11 @@ Partial Class Frm_Despacho_Configuracion
         '
         '
         Me.Chk_Pedir_Sucursal_Retiro.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Pedir_Sucursal_Retiro.CheckBoxImageChecked = CType(resources.GetObject("Chk_Pedir_Sucursal_Retiro.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Pedir_Sucursal_Retiro.ForeColor = System.Drawing.Color.Black
         Me.Chk_Pedir_Sucursal_Retiro.Location = New System.Drawing.Point(3, 1)
         Me.Chk_Pedir_Sucursal_Retiro.Name = "Chk_Pedir_Sucursal_Retiro"
-        Me.Chk_Pedir_Sucursal_Retiro.Size = New System.Drawing.Size(414, 23)
+        Me.Chk_Pedir_Sucursal_Retiro.Size = New System.Drawing.Size(414, 28)
         Me.Chk_Pedir_Sucursal_Retiro.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Pedir_Sucursal_Retiro.TabIndex = 0
         Me.Chk_Pedir_Sucursal_Retiro.Text = "Pedir sucursal de retiro"
@@ -694,7 +717,7 @@ Partial Class Frm_Despacho_Configuracion
         Me.Tabs.ReorderTabsEnabled = True
         Me.Tabs.SelectedTabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
         Me.Tabs.SelectedTabIndex = 0
-        Me.Tabs.Size = New System.Drawing.Size(506, 426)
+        Me.Tabs.Size = New System.Drawing.Size(506, 434)
         Me.Tabs.TabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Tabs.TabIndex = 131
         Me.Tabs.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem1, Me.SuperTabItem2})
@@ -709,7 +732,7 @@ Partial Class Frm_Despacho_Configuracion
         Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
-        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(506, 399)
+        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(506, 407)
         Me.SuperTabControlPanel1.TabIndex = 1
         Me.SuperTabControlPanel1.TabItem = Me.SuperTabItem1
         '
@@ -717,7 +740,7 @@ Partial Class Frm_Despacho_Configuracion
         '
         Me.Btn_Conf_Chilexpress.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Conf_Chilexpress.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Conf_Chilexpress.Location = New System.Drawing.Point(14, 360)
+        Me.Btn_Conf_Chilexpress.Location = New System.Drawing.Point(14, 373)
         Me.Btn_Conf_Chilexpress.Name = "Btn_Conf_Chilexpress"
         Me.Btn_Conf_Chilexpress.Size = New System.Drawing.Size(157, 23)
         Me.Btn_Conf_Chilexpress.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -729,7 +752,7 @@ Partial Class Frm_Despacho_Configuracion
         '
         Me.Btn_Conf_Imp_Letrero.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Conf_Imp_Letrero.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Conf_Imp_Letrero.Location = New System.Drawing.Point(14, 331)
+        Me.Btn_Conf_Imp_Letrero.Location = New System.Drawing.Point(14, 344)
         Me.Btn_Conf_Imp_Letrero.Name = "Btn_Conf_Imp_Letrero"
         Me.Btn_Conf_Imp_Letrero.Size = New System.Drawing.Size(157, 23)
         Me.Btn_Conf_Imp_Letrero.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -751,7 +774,7 @@ Partial Class Frm_Despacho_Configuracion
         Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
-        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(506, 399)
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(506, 407)
         Me.SuperTabControlPanel2.TabIndex = 0
         Me.SuperTabControlPanel2.TabItem = Me.SuperTabItem2
         '
@@ -778,7 +801,7 @@ Partial Class Frm_Despacho_Configuracion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(528, 485)
+        Me.ClientSize = New System.Drawing.Size(528, 498)
         Me.Controls.Add(Me.Tabs)
         Me.Controls.Add(Me.Bar2)
         Me.DoubleBuffered = True
@@ -853,4 +876,5 @@ Partial Class Frm_Despacho_Configuracion
     Friend WithEvents Btn_Conf_Chilexpress As DevComponents.DotNetBar.ButtonX
     Friend WithEvents Chk_Mostrar_RetiraTransportista As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_Mostrar_Agencia As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_ConfirmarLecturaDespacho As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

@@ -23430,6 +23430,10 @@ Public Class Frm_Formulario_Documento
 
             Try
 
+                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Despachos_Configuracion" & vbCrLf &
+                               "Where Empresa = '" & ModEmpresa & "'"
+                Dim _RowConfDesp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
                 Dim Fm As New Frm_Desp_01_Ingreso
                 Fm.Ds_Matriz_Documentos = _Ds_Matriz_Documentos
                 Fm.Total_Venta_Neto = _Total_Venta_Neto
@@ -23437,7 +23441,7 @@ Public Class Frm_Formulario_Documento
                 Fm.Kilos_Minimo = _MinKgDesp
                 Fm.Netos_Minimo = _MinNetoDesp
                 Fm.Cl_Despacho = _Cl_Despacho
-                'Fm.ConfirmarLecturaDespacho = True
+                Fm.ConfirmarLecturaDespacho = _RowConfDesp.Item("ConfirmarLecturaDespacho")
                 Fm.ShowDialog(Me)
                 _Grabar = Fm.Grabar
                 Fm.Dispose()

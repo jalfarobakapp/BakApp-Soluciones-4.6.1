@@ -179,7 +179,6 @@ Public Class Frm_Filtro_Especial_Informes
             _Requiere_Seleccion = value
         End Set
     End Property
-
     Public Property Ver_Codigo As Boolean
         Get
             Return _Ver_Codigo
@@ -188,7 +187,6 @@ Public Class Frm_Filtro_Especial_Informes
             _Ver_Codigo = value
         End Set
     End Property
-
     Public Property Activar_Crear_Editar_Eliminar As Boolean
         Get
             Return _Activar_Crear_Editar_Eliminar

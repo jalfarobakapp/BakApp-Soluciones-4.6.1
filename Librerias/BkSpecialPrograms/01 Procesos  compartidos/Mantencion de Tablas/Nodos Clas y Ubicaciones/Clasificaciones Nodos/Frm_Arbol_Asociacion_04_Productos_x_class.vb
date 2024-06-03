@@ -83,6 +83,8 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
 
         Sb_Color_Botones_Barra(Bar2)
 
+        Txt_Filtrar.ReadOnly = False
+
     End Sub
 
     Private Sub Frm_Arbol_Asociacion_04_Productos_x_class_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
@@ -115,6 +117,13 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
         Btn_Quitar_Marcados.Visible = _Row_Nodo.Item("Es_Seleccionable")
         Btn_Quitar_Todo.Visible = _Row_Nodo.Item("Es_Seleccionable")
 
+        If _Carpeta_Seleccionable Then
+            AddHandler Grilla.MouseUp, AddressOf Sb_Grilla_MouseUp
+            AddHandler Chk_Seleccionar_Todos.CheckedChanged, AddressOf Sb_Chk_Seleccionar_Todos_CheckedChanged
+        End If
+
+        Me.ActiveControl = Txt_Filtrar
+
     End Sub
 
     Sub Sb_Llenar_Tablas()
@@ -132,7 +141,7 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
 
             If _Carpeta_Seleccionable Then
 
-                Consulta_Sql = "SELECT Codigo,Isnull((Select Top 1 NOKOPR From MAEPR Where KOPR = Codigo),'') as Descripcion," & vbCrLf &
+                Consulta_Sql = "SELECT Cast(0 As Bit) As Chk,Codigo,Isnull((Select Top 1 NOKOPR From MAEPR Where KOPR = Codigo),'') as Descripcion," & vbCrLf &
                                "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Prod_Asociacion Z2 Where Z2.Codigo = Z1.Codigo And Z2.Codigo_Nodo In " & vbCrLf &
                                "(Select Codigo_Nodo From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & Space(1) &
                                "Where Es_Seleccionable = 1 And Codigo_Nodo <> " & _Codigo_Nodo & ")) As En_Otra_Carpeta_Padre,Cast(0 As bit) as Nuevo,Cast(0 As bit) As Codigo_Huacho" & vbCrLf &
@@ -181,7 +190,6 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
         If Not _Carpeta_Seleccionable And Not _Mostrar_Productos_Sin_Asociacion_En_Nodo Then
 
             Btn_Quitar_Productos.Visible = CBool(_Ds.Tables(2).Rows.Count)
-            Btn_Quitar_Huachos.Visible = CBool(_Ds.Tables(2).Rows.Count)
 
         End If
 
@@ -196,6 +204,11 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
             .DataSource = _Dv
 
             OcultarEncabezadoGrilla(Grilla)
+
+            .Columns("Chk").Width = 30
+            .Columns("Chk").HeaderText = "Sel."
+            .Columns("Chk").Visible = _Carpeta_Seleccionable
+            .Columns("Chk").ReadOnly = False
 
             .Columns("Codigo").Width = 110
             .Columns("Codigo").HeaderText = "Código"
@@ -330,11 +343,6 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
 
                 End If
 
-                Beep()
-                ToastNotification.Show(Me, "DATOS GUARDADOS CORRECTAMENTE",
-                                            My.Resources.ok_button,
-                                           2 * 1000, eToastGlowColor.Blue, eToastPosition.MiddleCenter)
-
                 Consulta_sql = "SELECT  Codigo,Isnull((Select Top 1 NOKOPR From MAEPR Where KOPR = Codigo),'') as Descripcion" & vbCrLf &
                                "FROM " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
                                "Where Codigo_Nodo = " & _Codigo_Nodo & " and Para_filtro = 1" & vbCrLf &
@@ -347,6 +355,8 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
                 Bar2.Enabled = True
 
                 Sb_Actualizar_Grilla()
+
+                MessageBoxEx.Show(Me, "Productos asociados correctamente", "Agregar productos", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
             End If
 
@@ -544,7 +554,8 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
 
     Private Sub Btn_Quitar_Productos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Quitar_Productos.Click
         If Fx_Tiene_Permiso(Me, "Tbl00035") Then
-            ShowContextMenu(Menu_Contextual_02)
+            Sb_Quitar_Productos(Enum_Quitar.Quitar_Seleccionados)
+            'ShowContextMenu(Menu_Contextual_02)
         End If
     End Sub
 
@@ -611,6 +622,132 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
 
         Dim Consulta_sql As String
 
+        Dim Clas_Nodos As New Clas_Arbol_Asociaciones(Me)
+        Dim _Lista_Nodos As List(Of Integer)
+        Dim _Index_Eliminados As New List(Of Integer)
+        Dim _Contador As Integer
+
+        _Lista_Nodos = Clas_Nodos.Fx_Lista_Codigos_Raiz_Clasificacion(_Codigo_Nodo)
+
+        Try
+
+            Bar2.Enabled = False
+
+            For Each _Fila As DataGridViewRow In Grilla.Rows 'Grilla.SelectedRows
+
+                If _Fila.Cells("Chk").Value Then
+
+                    Dim _Codigo = _Fila.Cells("Codigo").Value
+                    Dim _Index = _Fila.Index
+
+                    _Index_Eliminados.Add(_Index)
+                    _Contador += 1
+
+                End If
+
+            Next
+
+            If _Accion <> Enum_Quitar.Quitar_SoloUno AndAlso Not CBool(_Contador) Then
+                Beep()
+                ToastNotification.Show(Me, "NO HAY REGISTROS MARCADOS",
+                                        My.Resources.cross,
+                                       2 * 1000, eToastGlowColor.Blue, eToastPosition.MiddleCenter)
+                Return
+            End If
+
+            Consulta_sql = String.Empty
+
+            Dim _Filtro_Productos As String
+
+            Select Case _Accion
+
+                Case Enum_Quitar.Quitar_SoloUno
+
+                    Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+
+                    Dim _Codigo = _Fila.Cells("Codigo").Value
+                    Dim _Index = _Fila.Index
+
+                    _Index_Eliminados.Add(_Index)
+                    _Contador = 1
+                    _Filtro_Productos = "('" & _Codigo & "')"
+
+                Case Enum_Quitar.Quitar_Seleccionados
+
+                    'For Each _Fila As DataGridViewRow In Grilla.Rows 'Grilla.SelectedRows
+
+                    '    If _Fila.Cells("Chk").Value Then
+
+                    '        Dim _Codigo = _Fila.Cells("Codigo").Value
+                    '        Dim _Index = _Fila.Index
+
+                    '        _Index_Eliminados.Add(_Index)
+
+                    '        _Contador += 1
+
+                    '    End If
+
+                    'Next
+
+                    _Filtro_Productos = Generar_Filtro_IN(_Tbl_Productos_En_Carpeta, "Chk", "Codigo", False, True, "'", True)
+
+                Case Enum_Quitar.Quitar_Todos
+
+                    _Filtro_Productos = Generar_Filtro_IN(_Tbl_Productos_En_Carpeta, "", "Codigo", False, False, "'")
+                    _Contador = _Tbl_Productos_En_Carpeta.Rows.Count
+
+            End Select
+
+            Dim _Msg As String
+
+            If _Accion = Enum_Quitar.Quitar_SoloUno Then
+                _Msg = "¿Está seguro de quitar este registro?"
+            Else
+                _Msg = "¿Está seguro de quitar los registros seleccionados?" & vbCrLf &
+                       "Registros seleccionados (" & _Contador & ")"
+            End If
+
+            If MessageBoxEx.Show(Me, _Msg, "Quitar registros",
+                                MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> Windows.Forms.DialogResult.Yes Then
+                Return
+            End If
+
+            For Each _Codigo_Nodo_H In _Lista_Nodos
+
+                If CBool(_Codigo_Nodo_H) Then
+                    Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo_Nodo = '" & _Codigo_Nodo_H & "' And Para_filtro = 1" & vbCrLf &
+                                   "And Codigo In " & _Filtro_Productos
+                    _Sql.Ej_consulta_IDU(Consulta_sql)
+                End If
+
+            Next
+
+            _Index_Eliminados.Sort(Function(x, y) y.CompareTo(x))
+
+            For Each _Ix In _Index_Eliminados
+                Grilla.Rows.RemoveAt(_Ix)
+            Next
+
+            Beep()
+            ToastNotification.Show(Me, "REGISTROS QUITADOS " & FormatNumber(_Contador, 0),
+                                        Btn_Quitar_Productos.Image,
+                                       2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
+
+            Lbl_Estatus.Text = "Total de productos: " & FormatNumber(Grilla.Rows.Count, 0)
+
+
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, "Problema al quitar registros", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        Finally
+            Bar2.Enabled = True
+        End Try
+
+    End Sub
+
+    Sub Sb_Quitar_Productos_Old(_Accion As Enum_Quitar)
+
+        Dim Consulta_sql As String
+
         Try
 
             Bar2.Enabled = False
@@ -633,6 +770,7 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
                 Dim _Filtro_Productos As String
 
                 Select Case _Accion
+
                     Case Enum_Quitar.Quitar_SoloUno
 
                         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
@@ -646,17 +784,22 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
 
                     Case Enum_Quitar.Quitar_Seleccionados
 
-                        For Each _Fila As DataGridViewRow In Grilla.SelectedRows
+                        For Each _Fila As DataGridViewRow In Grilla.Rows 'Grilla.SelectedRows
 
-                            Dim _Codigo = _Fila.Cells("Codigo").Value
-                            Dim _Index = _Fila.Index
+                            If _Fila.Cells("Chk").Value Then
 
-                            _Index_Eliminados.Add(_Index)
+                                Dim _Codigo = _Fila.Cells("Codigo").Value
+                                Dim _Index = _Fila.Index
 
-                            _Arreglo(_Contador) = _Codigo
-                            _Contador += 1
+                                _Index_Eliminados.Add(_Index)
+
+                                _Arreglo(_Contador) = _Codigo
+                                _Contador += 1
+
+                            End If
 
                         Next
+
 
                         _Filtro_Productos = Generar_Filtro_IN_Arreglo(_Arreglo, False)
 
@@ -743,13 +886,9 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
         Sb_Quitar_Productos(Enum_Quitar.Quitar_Todos)
     End Sub
 
-    Private Sub Btn_Quitar_Huachos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Quitar_Huachos.Click
-        Sb_Quitar_Productos(Enum_Quitar.Quitar_Huachos)
-    End Sub
-
     Private Sub Txt_Filtrar_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Filtrar.KeyDown
         If e.KeyValue = Keys.Enter Then
-            _Dv.RowFilter = String.Format("Codigo+Descripcion Like '{0}'", Txt_Descripcion.Text)
+            _Dv.RowFilter = String.Format("Codigo+Descripcion Like '%" & Txt_Filtrar.Text & "%'")
         End If
     End Sub
 
@@ -764,6 +903,86 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
 
         Dim Copiar = Trim(_Fila.Cells(_Cabeza).Value)
         Clipboard.SetText(Copiar)
+
+    End Sub
+
+    Private Sub Grilla_KeyUp(sender As Object, e As KeyEventArgs) Handles Grilla.KeyUp
+
+        RemoveHandler Chk_Seleccionar_Todos.CheckedChanged, AddressOf Sb_Chk_Seleccionar_Todos_CheckedChanged
+        Chk_Seleccionar_Todos.Checked = False
+
+        Dim _Key = e.KeyData
+
+        If _Key = Keys.ControlKey Then
+
+            If Grilla.SelectedRows.Count > 1 Then
+                For Each _Fila As DataGridViewRow In Grilla.SelectedRows
+                    Dim _Chk As Boolean = _Fila.Cells("Chk").Value
+                    If _Chk Then
+                        _Fila.Cells("Chk").Value = False
+                    Else
+                        _Fila.Cells("Chk").Value = True
+                    End If
+                Next
+            End If
+
+        End If
+
+        Grilla.EndEdit()
+        AddHandler Chk_Seleccionar_Todos.CheckedChanged, AddressOf Sb_Chk_Seleccionar_Todos_CheckedChanged
+
+    End Sub
+
+    Private Sub Sb_Chk_Seleccionar_Todos_CheckedChanged(sender As System.Object, e As System.EventArgs)
+        Dim chk As Boolean = Chk_Seleccionar_Todos.Checked
+        ChequearTodo(Grilla, chk, "")
+    End Sub
+
+    Private Function ChequearTodo(Grilla As DataGridView,
+                         Chk As Boolean,
+                         TipoFiltro As String)
+
+
+        For Each _Fila As DataGridViewRow In Grilla.Rows
+            _Fila.Cells("Chk").Value = Chk
+        Next
+
+        Grilla.CurrentCell = Grilla.Rows(0).Cells("Codigo")
+
+    End Function
+
+    Private Sub Txt_Filtrar_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Filtrar.ButtonCustom2Click
+        Txt_Filtrar.Text = String.Empty
+        _Dv.RowFilter = String.Format("Codigo+Descripcion Like '%" & Txt_Filtrar.Text & "%'")
+    End Sub
+
+    Private Sub Sb_Grilla_MouseUp(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
+
+        Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
+
+        RemoveHandler Chk_Seleccionar_Todos.CheckedChanged, AddressOf Sb_Chk_Seleccionar_Todos_CheckedChanged
+
+        Chk_Seleccionar_Todos.Checked = False
+
+        Dim keysMod As Keys = Control.ModifierKeys
+
+        If keysMod <> Keys.Control Then
+
+            If Grilla.SelectedRows.Count > 1 Then
+                For Each _Fila As DataGridViewRow In Grilla.SelectedRows
+                    _Fila.Cells("Chk").Value = Not _Fila.Cells("Chk").Value
+                Next
+            End If
+
+            If Grilla.SelectedRows.Count = 1 And _Cabeza = "Chk" Then
+                Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+                _Fila.Cells("Chk").Value = Not _Fila.Cells("Chk").Value
+            End If
+
+        End If
+
+        Grilla.EndEdit()
+        AddHandler Chk_Seleccionar_Todos.CheckedChanged, AddressOf Sb_Chk_Seleccionar_Todos_CheckedChanged
 
     End Sub
 

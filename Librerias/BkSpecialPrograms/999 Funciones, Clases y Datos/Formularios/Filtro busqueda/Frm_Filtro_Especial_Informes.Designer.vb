@@ -125,6 +125,7 @@ Partial Class Frm_Filtro_Especial_Informes
         Me.Txt_Descripcion.FocusHighlightEnabled = True
         Me.Txt_Descripcion.ForeColor = System.Drawing.Color.Black
         Me.Txt_Descripcion.Location = New System.Drawing.Point(78, 40)
+        Me.Txt_Descripcion.MaxLength = 6500
         Me.Txt_Descripcion.Name = "Txt_Descripcion"
         Me.Txt_Descripcion.PreventEnterBeep = True
         Me.Txt_Descripcion.Size = New System.Drawing.Size(508, 22)
@@ -420,6 +421,7 @@ Partial Class Frm_Filtro_Especial_Informes
         Me.Controls.Add(Me.Bar1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True

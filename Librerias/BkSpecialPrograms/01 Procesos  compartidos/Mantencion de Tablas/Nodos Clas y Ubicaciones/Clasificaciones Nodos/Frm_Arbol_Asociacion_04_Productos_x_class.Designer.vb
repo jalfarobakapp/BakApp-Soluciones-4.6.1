@@ -23,15 +23,14 @@ Partial Class Frm_Arbol_Asociacion_04_Productos_x_class
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Arbol_Asociacion_04_Productos_x_class))
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle28 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle29 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle30 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Exportar_Excel = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_AgregarProductos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Quitar_Productos = New DevComponents.DotNetBar.ButtonItem()
         Me.Barra_Progreso_ = New DevComponents.DotNetBar.Controls.ProgressBarX()
-        Me.Txt_Filtrar = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
@@ -39,12 +38,12 @@ Partial Class Frm_Arbol_Asociacion_04_Productos_x_class
         Me.Mnu_Btn_Ver_Asociaciones_Del_Producto = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Estadisticas_Producto = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Reparara_Arbol_Del_Producto = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_QuitarProducto = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Ver_documento_origen = New DevComponents.DotNetBar.ButtonItem()
         Me.Menu_Contextual_02 = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem2 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Quitar_Marcados = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Quitar_Todo = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Quitar_Huachos = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.LabelItem3 = New DevComponents.DotNetBar.LabelItem()
         Me.ButtonItem3 = New DevComponents.DotNetBar.ButtonItem()
@@ -61,7 +60,9 @@ Partial Class Frm_Arbol_Asociacion_04_Productos_x_class
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_Codigo_Madre = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Btn_QuitarProducto = New DevComponents.DotNetBar.ButtonItem()
+        Me.Chk_Seleccionar_Todos = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Txt_Filtrar = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelItem4 = New DevComponents.DotNetBar.LabelItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -74,7 +75,7 @@ Partial Class Frm_Arbol_Asociacion_04_Productos_x_class
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Exportar_Excel, Me.Btn_AgregarProductos, Me.Btn_Quitar_Productos})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_AgregarProductos, Me.Btn_Quitar_Productos, Me.Btn_Exportar_Excel})
         Me.Bar2.Location = New System.Drawing.Point(0, 569)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(632, 41)
@@ -102,6 +103,7 @@ Partial Class Frm_Arbol_Asociacion_04_Productos_x_class
         Me.Btn_AgregarProductos.ImageAlt = CType(resources.GetObject("Btn_AgregarProductos.ImageAlt"), System.Drawing.Image)
         Me.Btn_AgregarProductos.Name = "Btn_AgregarProductos"
         Me.Btn_AgregarProductos.Text = "Agregar productos"
+        Me.Btn_AgregarProductos.Tooltip = "Traer productos a la clasificación"
         '
         'Btn_Quitar_Productos
         '
@@ -110,7 +112,7 @@ Partial Class Frm_Arbol_Asociacion_04_Productos_x_class
         Me.Btn_Quitar_Productos.Image = CType(resources.GetObject("Btn_Quitar_Productos.Image"), System.Drawing.Image)
         Me.Btn_Quitar_Productos.ImageAlt = CType(resources.GetObject("Btn_Quitar_Productos.ImageAlt"), System.Drawing.Image)
         Me.Btn_Quitar_Productos.Name = "Btn_Quitar_Productos"
-        Me.Btn_Quitar_Productos.Text = "Quitar productos (marcados)"
+        Me.Btn_Quitar_Productos.Text = "Quitar productos seleccionados"
         '
         'Barra_Progreso_
         '
@@ -127,22 +129,6 @@ Partial Class Frm_Arbol_Asociacion_04_Productos_x_class
         Me.Barra_Progreso_.Text = "Barra estado..."
         Me.Barra_Progreso_.TextVisible = True
         '
-        'Txt_Filtrar
-        '
-        Me.Txt_Filtrar.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_Descripcion.Border.Class = "TextBoxBorder"
-        Me.Txt_Descripcion.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Filtrar.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_Filtrar.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Filtrar.Location = New System.Drawing.Point(72, 118)
-        Me.Txt_Filtrar.Name = "Txt_Filtrar"
-        Me.Txt_Filtrar.PreventEnterBeep = True
-        Me.Txt_Filtrar.Size = New System.Drawing.Size(548, 22)
-        Me.Txt_Filtrar.TabIndex = 2
-        '
         'GroupPanel2
         '
         Me.GroupPanel2.BackColor = System.Drawing.Color.White
@@ -152,7 +138,7 @@ Partial Class Frm_Arbol_Asociacion_04_Productos_x_class
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel2.Location = New System.Drawing.Point(9, 147)
         Me.GroupPanel2.Name = "GroupPanel2"
-        Me.GroupPanel2.Size = New System.Drawing.Size(611, 416)
+        Me.GroupPanel2.Size = New System.Drawing.Size(611, 387)
         '
         '
         '
@@ -189,7 +175,7 @@ Partial Class Frm_Arbol_Asociacion_04_Productos_x_class
         Me.ContextMenuBar1.AntiAlias = True
         Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01, Me.Menu_Contextual_02})
-        Me.ContextMenuBar1.Location = New System.Drawing.Point(112, 124)
+        Me.ContextMenuBar1.Location = New System.Drawing.Point(28, 37)
         Me.ContextMenuBar1.Name = "ContextMenuBar1"
         Me.ContextMenuBar1.Size = New System.Drawing.Size(334, 25)
         Me.ContextMenuBar1.Stretch = True
@@ -202,7 +188,7 @@ Partial Class Frm_Arbol_Asociacion_04_Productos_x_class
         '
         Me.Menu_Contextual_01.AutoExpandOnClick = True
         Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
-        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Mnu_Btn_Ver_Asociaciones_Del_Producto, Me.Btn_Estadisticas_Producto, Me.Btn_Reparara_Arbol_Del_Producto, Me.Btn_QuitarProducto, Me.Btn_Ver_documento_origen})
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Mnu_Btn_Ver_Asociaciones_Del_Producto, Me.Btn_Estadisticas_Producto, Me.Btn_Reparara_Arbol_Del_Producto, Me.Btn_QuitarProducto, Me.LabelItem4, Me.Btn_Ver_documento_origen})
         Me.Menu_Contextual_01.Text = "Opciones"
         '
         'LabelItem1
@@ -238,6 +224,14 @@ Partial Class Frm_Arbol_Asociacion_04_Productos_x_class
         Me.Btn_Reparara_Arbol_Del_Producto.ImageAlt = CType(resources.GetObject("Btn_Reparara_Arbol_Del_Producto.ImageAlt"), System.Drawing.Image)
         Me.Btn_Reparara_Arbol_Del_Producto.Name = "Btn_Reparara_Arbol_Del_Producto"
         Me.Btn_Reparara_Arbol_Del_Producto.Text = "Reparar Arbol Del Producto"
+        Me.Btn_Reparara_Arbol_Del_Producto.Visible = False
+        '
+        'Btn_QuitarProducto
+        '
+        Me.Btn_QuitarProducto.Image = CType(resources.GetObject("Btn_QuitarProducto.Image"), System.Drawing.Image)
+        Me.Btn_QuitarProducto.ImageAlt = CType(resources.GetObject("Btn_QuitarProducto.ImageAlt"), System.Drawing.Image)
+        Me.Btn_QuitarProducto.Name = "Btn_QuitarProducto"
+        Me.Btn_QuitarProducto.Text = "Quitar este producto"
         '
         'Btn_Ver_documento_origen
         '
@@ -250,7 +244,7 @@ Partial Class Frm_Arbol_Asociacion_04_Productos_x_class
         '
         Me.Menu_Contextual_02.AutoExpandOnClick = True
         Me.Menu_Contextual_02.Name = "Menu_Contextual_02"
-        Me.Menu_Contextual_02.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem2, Me.Btn_Quitar_Marcados, Me.Btn_Quitar_Todo, Me.Btn_Quitar_Huachos})
+        Me.Menu_Contextual_02.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem2, Me.Btn_Quitar_Marcados, Me.Btn_Quitar_Todo})
         Me.Menu_Contextual_02.Text = "Opciones quitar productos"
         '
         'LabelItem2
@@ -280,53 +274,44 @@ Partial Class Frm_Arbol_Asociacion_04_Productos_x_class
         Me.Btn_Quitar_Todo.Name = "Btn_Quitar_Todo"
         Me.Btn_Quitar_Todo.Text = "Quitar todos los productos"
         '
-        'Btn_Quitar_Huachos
-        '
-        Me.Btn_Quitar_Huachos.Image = CType(resources.GetObject("Btn_Quitar_Huachos.Image"), System.Drawing.Image)
-        Me.Btn_Quitar_Huachos.ImageAlt = CType(resources.GetObject("Btn_Quitar_Huachos.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Quitar_Huachos.Name = "Btn_Quitar_Huachos"
-        Me.Btn_Quitar_Huachos.Text = "Quita los productos que no tienen asignación hacia algún hijo de esta carpeta pad" &
-    "re"
-        Me.Btn_Quitar_Huachos.Visible = False
-        '
         'Grilla
         '
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle28.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle28.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle28.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle28.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle28.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle28.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle28
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle29.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle29.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle29.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle29.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle29.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle29.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle29
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
         Me.Grilla.ReadOnly = True
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle30.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle30.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle30.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle30.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle30.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle30.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle30
         Me.Grilla.RowHeadersVisible = False
         Me.Grilla.RowTemplate.Height = 25
-        Me.Grilla.Size = New System.Drawing.Size(605, 393)
+        Me.Grilla.Size = New System.Drawing.Size(605, 364)
         Me.Grilla.TabIndex = 54
         '
         'LabelItem3
@@ -554,20 +539,64 @@ Partial Class Frm_Arbol_Asociacion_04_Productos_x_class
         Me.GroupPanel1.TabIndex = 181
         Me.GroupPanel1.Text = "Clasificación"
         '
-        'Btn_QuitarProducto
+        'Chk_Seleccionar_Todos
         '
-        Me.Btn_QuitarProducto.Image = CType(resources.GetObject("Btn_QuitarProducto.Image"), System.Drawing.Image)
-        Me.Btn_QuitarProducto.ImageAlt = CType(resources.GetObject("Btn_QuitarProducto.ImageAlt"), System.Drawing.Image)
-        Me.Btn_QuitarProducto.Name = "Btn_QuitarProducto"
-        Me.Btn_QuitarProducto.Text = "Quitar este producto"
+        Me.Chk_Seleccionar_Todos.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_Seleccionar_Todos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Seleccionar_Todos.CheckBoxImageChecked = CType(resources.GetObject("Chk_Seleccionar_Todos.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Seleccionar_Todos.FocusCuesEnabled = False
+        Me.Chk_Seleccionar_Todos.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Seleccionar_Todos.Location = New System.Drawing.Point(9, 540)
+        Me.Chk_Seleccionar_Todos.Name = "Chk_Seleccionar_Todos"
+        Me.Chk_Seleccionar_Todos.Size = New System.Drawing.Size(170, 23)
+        Me.Chk_Seleccionar_Todos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Seleccionar_Todos.TabIndex = 182
+        Me.Chk_Seleccionar_Todos.Text = "Seleccionar todos los registros"
+        '
+        'Txt_Filtrar
+        '
+        Me.Txt_Filtrar.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Filtrar.Border.Class = "TextBoxBorder"
+        Me.Txt_Filtrar.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Filtrar.ButtonCustom2.Image = CType(resources.GetObject("Txt_Filtrar.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Filtrar.ButtonCustom2.Visible = True
+        Me.Txt_Filtrar.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.Txt_Filtrar.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Filtrar.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Filtrar.Location = New System.Drawing.Point(72, 118)
+        Me.Txt_Filtrar.Name = "Txt_Filtrar"
+        Me.Txt_Filtrar.PreventEnterBeep = True
+        Me.Txt_Filtrar.Size = New System.Drawing.Size(548, 22)
+        Me.Txt_Filtrar.TabIndex = 183
+        '
+        'LabelItem4
+        '
+        Me.LabelItem4.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem4.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem4.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem4.ImageTextSpacing = 1
+        Me.LabelItem4.Name = "LabelItem4"
+        Me.LabelItem4.PaddingBottom = 1
+        Me.LabelItem4.PaddingLeft = 10
+        Me.LabelItem4.PaddingTop = 1
+        Me.LabelItem4.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem4.Text = "-------------------------------------------"
         '
         'Frm_Arbol_Asociacion_04_Productos_x_class
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(632, 632)
-        Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.Txt_Filtrar)
+        Me.Controls.Add(Me.Chk_Seleccionar_Todos)
+        Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.LabelX1)
         Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.Barra_Progreso_)
@@ -595,7 +624,6 @@ Partial Class Frm_Arbol_Asociacion_04_Productos_x_class
     Public WithEvents Btn_AgregarProductos As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Barra_Progreso_ As DevComponents.DotNetBar.Controls.ProgressBarX
     Public WithEvents Btn_Exportar_Excel As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Txt_Filtrar As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents GroupPanel2 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents ContextMenuBar1 As DevComponents.DotNetBar.ContextMenuBar
     Friend WithEvents Menu_Contextual_01 As DevComponents.DotNetBar.ButtonItem
@@ -612,7 +640,6 @@ Partial Class Frm_Arbol_Asociacion_04_Productos_x_class
     Friend WithEvents ButtonItem3 As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents ButtonItem5 As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents ButtonItem6 As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_Quitar_Huachos As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Ver_documento_origen As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents Btn_Reparar_Arbol As DevComponents.DotNetBar.ButtonItem
@@ -627,4 +654,7 @@ Partial Class Frm_Arbol_Asociacion_04_Productos_x_class
     Friend WithEvents Lbl_Codigo_Madre As DevComponents.DotNetBar.LabelX
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Btn_QuitarProducto As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Chk_Seleccionar_Todos As DevComponents.DotNetBar.Controls.CheckBoxX
+    Public WithEvents Txt_Filtrar As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelItem4 As DevComponents.DotNetBar.LabelItem
 End Class

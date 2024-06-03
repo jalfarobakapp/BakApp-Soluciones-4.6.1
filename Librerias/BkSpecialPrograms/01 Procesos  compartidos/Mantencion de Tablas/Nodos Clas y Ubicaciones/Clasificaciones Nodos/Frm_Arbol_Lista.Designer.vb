@@ -1,9 +1,9 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Frm_Arbol_Lista
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class Frm_Arbol_Lista
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Arbol_Lista))
@@ -28,7 +28,7 @@ Partial Class Frm_Arbol_Lista
         Me.Tree_Bandeja = New System.Windows.Forms.TreeView()
         Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
-        Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Exportar_Excel = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem3 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_VerTicket = New DevComponents.DotNetBar.ButtonItem()
@@ -50,7 +50,6 @@ Partial Class Frm_Arbol_Lista
         Me.Btn_EliminarClasificacion = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem2 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -108,7 +107,7 @@ Partial Class Frm_Arbol_Lista
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Actualizar, Me.Btn_Exportar_Excel})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Actualizar, Me.Btn_Exportar_Excel})
         Me.Bar2.Location = New System.Drawing.Point(0, 515)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(704, 41)
@@ -118,15 +117,15 @@ Partial Class Frm_Arbol_Lista
         Me.Bar2.TabStop = False
         Me.Bar2.Text = "Bar2"
         '
-        'Btn_Grabar
+        'Btn_Actualizar
         '
-        Me.Btn_Grabar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Grabar.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Grabar.Image = CType(resources.GetObject("Btn_Grabar.Image"), System.Drawing.Image)
-        Me.Btn_Grabar.ImageAlt = CType(resources.GetObject("Btn_Grabar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Grabar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_Grabar.Name = "Btn_Grabar"
-        Me.Btn_Grabar.Tooltip = "Refrescar datos"
+        Me.Btn_Actualizar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Actualizar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Actualizar.Image = CType(resources.GetObject("Btn_Actualizar.Image"), System.Drawing.Image)
+        Me.Btn_Actualizar.ImageAlt = CType(resources.GetObject("Btn_Actualizar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Actualizar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_Actualizar.Name = "Btn_Actualizar"
+        Me.Btn_Actualizar.Tooltip = "Refrescar datos"
         '
         'Btn_Exportar_Excel
         '
@@ -250,6 +249,9 @@ Partial Class Frm_Arbol_Lista
         '
         Me.Txt_Filtrar.Border.Class = "TextBoxBorder"
         Me.Txt_Filtrar.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Filtrar.ButtonCustom.Image = CType(resources.GetObject("Txt_Filtrar.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Filtrar.ButtonCustom.Text = "Buscar siguiente"
+        Me.Txt_Filtrar.ButtonCustom.Visible = True
         Me.Txt_Filtrar.ButtonCustom2.Image = CType(resources.GetObject("Txt_Filtrar.ButtonCustom2.Image"), System.Drawing.Image)
         Me.Txt_Filtrar.ButtonCustom2.Visible = True
         Me.Txt_Filtrar.DisabledBackColor = System.Drawing.Color.White
@@ -371,16 +373,6 @@ Partial Class Frm_Arbol_Lista
         Me.Btn_Copiar.Name = "Btn_Copiar"
         Me.Btn_Copiar.Text = "Copiar (portapapeles)"
         '
-        'Btn_Actualizar
-        '
-        Me.Btn_Actualizar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Actualizar.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Actualizar.Image = CType(resources.GetObject("Btn_Actualizar.Image"), System.Drawing.Image)
-        Me.Btn_Actualizar.ImageAlt = CType(resources.GetObject("Btn_Actualizar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Actualizar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_Actualizar.Name = "Btn_Actualizar"
-        Me.Btn_Actualizar.Tooltip = "Refrescar datos"
-        '
         'Frm_Arbol_Lista
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -410,7 +402,6 @@ Partial Class Frm_Arbol_Lista
     Friend WithEvents Tree_Bandeja As TreeView
     Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
     Friend WithEvents Btn_Exportar_Excel As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LabelItem3 As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Btn_VerTicket As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_TicketProducto As DevComponents.DotNetBar.ButtonItem
