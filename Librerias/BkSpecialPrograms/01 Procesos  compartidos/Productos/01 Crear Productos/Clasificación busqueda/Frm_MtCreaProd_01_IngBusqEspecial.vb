@@ -146,16 +146,19 @@ Public Class Frm_MtCreaProd_01_IngBusqEspecial
 
     Private Sub BtnAsociaciones_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnAsociaciones.Click
 
+        Me.Cursor = Cursors.WaitCursor
+        Me.Enabled = False
 
         Clipboard.SetText(TxtCodigo.Text)
         Dim Fm As New Frm_Arbol_Lista(False)
         Fm.Codigo_Heredado = TxtCodigo.Text
         Fm.ModoCheckButton = True
+        'Fm.MostrarClasProducto = True
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
+        Me.Cursor = Cursors.Default
         Sb_Actualizar_Grilla()
-
 
         'Dim _Aceptar As Boolean
 
@@ -325,23 +328,25 @@ Public Class Frm_MtCreaProd_01_IngBusqEspecial
 
     Private Sub Btn_VerArbol_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_VerArbol.Click
 
-        Consulta_sql = "Select Codigo_Nodo,Identificacdor_NodoPadre,Descripcion" & vbCrLf &
-                            "FROM " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
-                            "Where Codigo_Nodo in (Select Codigo_Nodo From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
-                            "Where Codigo = '" & TxtCodigo.Text & "' And Nodo_origen <> 0)"
-
-
         Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_Asociacion",
                                                     "Codigo = '" & TxtCodigo.Text & "' And Para_filtro = 1"))
 
         If _Reg Then
 
-            Dim Fm As New Frm_Arbol_Asociacion_01
-            Fm.Pro_CheckBoxes_Nodos = False
-            Fm.Pro_Codigo_Producto = Trim(TxtCodigo.Text)
-            Fm.Chk_Ver_Clas_Unicas.Checked = True
+            'Dim Fm As New Frm_Arbol_Asociacion_01
+            'Fm.Pro_CheckBoxes_Nodos = False
+            'Fm.Pro_Codigo_Producto = Trim(TxtCodigo.Text)
+            'Fm.Chk_Ver_Clas_Unicas.Checked = True
+            'Fm.ShowDialog(Me)
+
+            Dim Fm As New Frm_Arbol_Lista(False)
+            Fm.Codigo_Heredado = TxtCodigo.Text
+            Fm.ModoCheckButton = True
+            Fm.MostrarClasProducto = True
             Fm.ShowDialog(Me)
-            Sb_Actualizar_Grilla()
+            Fm.Dispose()
+
+            'Sb_Actualizar_Grilla()
 
         Else
             Beep()
@@ -539,13 +544,15 @@ Public Class Frm_MtCreaProd_01_IngBusqEspecial
             Fm.ShowDialog(Me)
             Fm.Dispose()
             Me.Cursor = Cursors.Default
+
+            Sb_Actualizar_Grilla()
+
             'Clipboard.SetText(TxtCodigo.Text)
             'Dim Fm As New Frm_Arbol_Asociacion_02(False, 0, False, Frm_Arbol_Asociacion_02.Enum_Clasificacion.Unica, 0)
             'Fm.Pro_Identificador_NodoPadre = 0
             'Fm.Pro_Codigo_Heredado = TxtCodigo.Text
             'Fm.ShowDialog(Me)
             'Fm.Dispose()
-            Sb_Actualizar_Grilla()
 
         End If
 

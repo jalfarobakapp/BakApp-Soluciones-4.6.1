@@ -86,10 +86,10 @@ Partial Class Frm_Arbol_Lista
         Me.Tree_Bandeja.ForeColor = System.Drawing.Color.Black
         Me.Tree_Bandeja.ImageIndex = 0
         Me.Tree_Bandeja.ImageList = Me.Imagenes_16x16
-        Me.Tree_Bandeja.Location = New System.Drawing.Point(606, 272)
+        Me.Tree_Bandeja.Location = New System.Drawing.Point(734, 268)
         Me.Tree_Bandeja.Name = "Tree_Bandeja"
         Me.Tree_Bandeja.SelectedImageIndex = 0
-        Me.Tree_Bandeja.Size = New System.Drawing.Size(549, 101)
+        Me.Tree_Bandeja.Size = New System.Drawing.Size(549, 79)
         Me.Tree_Bandeja.TabIndex = 179
         '
         'Imagenes_16x16
@@ -112,9 +112,9 @@ Partial Class Frm_Arbol_Lista
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Actualizar, Me.Btn_Exportar_Excel})
-        Me.Bar2.Location = New System.Drawing.Point(0, 515)
+        Me.Bar2.Location = New System.Drawing.Point(0, 493)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(570, 41)
+        Me.Bar2.Size = New System.Drawing.Size(705, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 176
@@ -203,9 +203,9 @@ Partial Class Frm_Arbol_Lista
         Me.Metro_Bar_Color.ForeColor = System.Drawing.Color.Black
         Me.Metro_Bar_Color.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Estatus})
         Me.Metro_Bar_Color.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 556)
+        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 534)
         Me.Metro_Bar_Color.Name = "Metro_Bar_Color"
-        Me.Metro_Bar_Color.Size = New System.Drawing.Size(570, 22)
+        Me.Metro_Bar_Color.Size = New System.Drawing.Size(705, 22)
         Me.Metro_Bar_Color.TabIndex = 181
         Me.Metro_Bar_Color.Text = "MetroStatusBar1"
         '
@@ -261,7 +261,7 @@ Partial Class Frm_Arbol_Lista
         Me.Txt_Filtrar.Location = New System.Drawing.Point(75, 12)
         Me.Txt_Filtrar.Name = "Txt_Filtrar"
         Me.Txt_Filtrar.PreventEnterBeep = True
-        Me.Txt_Filtrar.Size = New System.Drawing.Size(486, 22)
+        Me.Txt_Filtrar.Size = New System.Drawing.Size(620, 22)
         Me.Txt_Filtrar.TabIndex = 174
         '
         'Imagenes_16x16_Dark
@@ -381,6 +381,8 @@ Partial Class Frm_Arbol_Lista
         '
         Me.Tree_Bandeja_Adv.AccessibleRole = System.Windows.Forms.AccessibleRole.Outline
         Me.Tree_Bandeja_Adv.AllowDrop = True
+        Me.Tree_Bandeja_Adv.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Tree_Bandeja_Adv.BackColor = System.Drawing.SystemColors.Window
         '
         '
@@ -395,7 +397,7 @@ Partial Class Frm_Arbol_Lista
         Me.Tree_Bandeja_Adv.NodesConnector = Me.nodeConnector2
         Me.Tree_Bandeja_Adv.NodeStyle = Me.elementStyle7
         Me.Tree_Bandeja_Adv.PathSeparator = ";"
-        Me.Tree_Bandeja_Adv.Size = New System.Drawing.Size(549, 455)
+        Me.Tree_Bandeja_Adv.Size = New System.Drawing.Size(683, 433)
         Me.Tree_Bandeja_Adv.Styles.Add(Me.elementStyle7)
         Me.Tree_Bandeja_Adv.TabIndex = 183
         Me.Tree_Bandeja_Adv.Text = "advTree6"
@@ -424,7 +426,7 @@ Partial Class Frm_Arbol_Lista
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(570, 578)
+        Me.ClientSize = New System.Drawing.Size(705, 556)
         Me.Controls.Add(Me.Menu_Contextual)
         Me.Controls.Add(Me.LabelX1)
         Me.Controls.Add(Me.Tree_Bandeja_Adv)
@@ -436,7 +438,9 @@ Partial Class Frm_Arbol_Lista
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
+        Me.MaximumSize = New System.Drawing.Size(721, 685)
         Me.MinimizeBox = False
+        Me.MinimumSize = New System.Drawing.Size(721, 595)
         Me.Name = "Frm_Arbol_Lista"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "MetroForm"

@@ -81,8 +81,6 @@ Public Class Frm_Arbol_Asociacion_01
             _Mostrar_Arbol_Del_Producto = True
         End If
 
-        'TreeView1.CheckBoxes = _CheckBoxes_Nodos
-
         Sb_Load()
 
         AddHandler TreeView1.DragDrop, AddressOf Sb_TreeView_DragDrop
@@ -90,15 +88,13 @@ Public Class Frm_Arbol_Asociacion_01
         AddHandler TreeView1.MouseDown, AddressOf Sb_TreeView_MouseDown
         AddHandler TreeView1.MouseUp, AddressOf Sb_TreeView1_MouseUp
 
-        'Me.MaximumSize.Width = 609
-
         AddHandler Chk_Ver_Clas_Unicas.CheckedChanged, AddressOf Sb_Load
 
     End Sub
 
     Sub Sb_Load()
 
-        TreeView1.Nodes.Clear() ' = Nothing
+        TreeView1.Nodes.Clear()
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo = '" & _Codigo & "'" & vbCrLf &
                        "And Para_filtro = 0"
@@ -115,24 +111,24 @@ Public Class Frm_Arbol_Asociacion_01
 
             If Chk_Ver_Clas_Unicas.Checked Then
                 Consulta_sql = "Select Codigo_Nodo,Identificacdor_NodoPadre,Descripcion" & vbCrLf &
-                            "FROM " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
-                            "Where Codigo_Nodo in (Select Codigo_Nodo From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
-                            "Where Codigo = '" & _Codigo & "' And Producto = 0 And Codigo_Nodo In (Select Codigo_Nodo From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones))" & vbCrLf &
-                            "Order By Identificacdor_NodoPadre, Descripcion"
+                               "From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
+                               "Where Codigo_Nodo in (Select Codigo_Nodo From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
+                               "Where Codigo = '" & _Codigo & "' And Producto = 0 And Codigo_Nodo In (Select Codigo_Nodo From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones))" & vbCrLf &
+                               "Order By Identificacdor_NodoPadre, Descripcion"
             Else
                 Consulta_sql = "Select Codigo_Nodo,Identificacdor_NodoPadre,Descripcion" & vbCrLf &
-                            "FROM " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
-                            "Where Codigo_Nodo in (Select Codigo_Nodo From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
-                            "Where Codigo = '" & _Codigo & "' And Producto = 0 And Codigo_Nodo In (Select Codigo_Nodo From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones))" & vbCrLf &
-                            "And Clas_Unica_X_Producto = 0" & vbCrLf &
-                            "Order By Identificacdor_NodoPadre, Descripcion"
+                               "From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
+                               "Where Codigo_Nodo in (Select Codigo_Nodo From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
+                               "Where Codigo = '" & _Codigo & "' And Producto = 0 And Codigo_Nodo In (Select Codigo_Nodo From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones))" & vbCrLf &
+                               "And Clas_Unica_X_Producto = 0" & vbCrLf &
+                               "Order By Identificacdor_NodoPadre, Descripcion"
             End If
 
             Me.MaximizeBox = False
         Else
             Me.Text = "ARBOL DE ASOCIACIONES DE PRODUCTOS"
             Consulta_sql = "Select Codigo_Nodo,Identificacdor_NodoPadre,Descripcion" & vbCrLf &
-                           "FROM " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
                            "Where (Clas_Unica_X_Producto = 0) or (Clas_Unica_X_Producto = 1 And Es_Seleccionable = 0)"
 
         End If
@@ -167,7 +163,7 @@ Public Class Frm_Arbol_Asociacion_01
     End Sub
 
     Private Sub CrearNodosDelPadre(indicePadre As Integer,
-                                       nodePadre As TreeNode)
+                                   nodePadre As TreeNode)
 
         Dim dataViewHijos As DataView
 
@@ -199,16 +195,12 @@ Public Class Frm_Arbol_Asociacion_01
                 TreeView1.Nodes.Add(_Full, nuevoNodo, 3)
 
             Else
-                _Full = nodePadre.FullPath & "\" & nuevoNodo 'nuevoNodo.FullPath
-                ' se añade el nuevo nodo al nodo padre.
-                'Dim _Es_Ubicacion = _Sql.Fx_Trae_Dato(, "Es_Seleccionable", _
-                '                                         "Zw_TblArbol_Asociaciones", _
-                '                                         "Descripcion = '" & nuevoNodo & "' And Es_Ubicacion = 1 And Es_Padre = 0 And Es_Seleccionable = 1", True)
+                _Full = nodePadre.FullPath & "\" & nuevoNodo
 
                 Dim _Es_Ubicacion As Boolean = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_TblArbol_Asociaciones",
                                                  "Descripcion = '" & nuevoNodo &
                                                  "' And Es_Ubicacion = 1 And" & vbCrLf &
-                                                 "Codigo_Nodo Not in (Select Identificacdor_NodoPadre from " & _Global_BaseBk & "Zw_TblArbol_Asociaciones)"))
+                                                 "Codigo_Nodo Not in (Select Identificacdor_NodoPadre From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones)"))
                 Dim _Imagen = 3
 
                 If _Es_Ubicacion Then
@@ -235,12 +227,9 @@ Public Class Frm_Arbol_Asociacion_01
             ' Llamada recurrente al mismo método para agregar los Hijos del Nodo recién agregado.
 
             Dim tvn() As TreeNode = TreeView1.Nodes.Find(_Full, True)
-            'If tvn IsNot Nothing AndAlso tvn.Length > 0 Then
-            'TreeView1.SelectedNode = tvn(0)
-            'End If
 
-            'CrearNodosDelPadre(_NroNodo, nuevoNodo)
             CrearNodosDelPadre(_NroNodo, tvn(0))
+
         Next dataRowCurrent
 
     End Sub

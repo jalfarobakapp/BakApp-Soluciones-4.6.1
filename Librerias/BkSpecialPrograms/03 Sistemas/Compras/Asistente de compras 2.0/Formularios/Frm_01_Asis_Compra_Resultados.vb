@@ -7685,7 +7685,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
                         Select Top 20 '" & FUNCIONARIO & "' As KOFULIDO,Tb.Codigo As KOPRCT,Tb.Descripcion As NOKOPR,
                         '' As Descripcion,'' As CodAlternativo,'" & _Lista & "' As KOLTPR,UD01PR As UD1,UD02PR As UD2,
-                        Isnull(Mpm.PM,1) As CostoUd1,Isnull(Mpm.PM,1) * Mp.RLUD As CostoUd2,0 As Precio, Mp.RLUD As Rtu,Pedir As Cantidad,
+                        Isnull(Mpm.PM,1) As CostoUd1,Isnull(Mpm.PM,1) * Mp.RLUD As CostoUd2,0 As Precio, Mp.RLUD As Rtu,Mp.RLUD As 'RLUDPR',Pedir As Cantidad,
                         0 As Desc1,0 As Desc2,0 As Desc3,0 As Desc4,0 As Desc5,0 As DescSuma,0 As PRCT,'' As TICT,TIPR,0 As PODTGLLI," & Ud & " as UDTRPR,
                         0 As POTENCIA,'' As KOFUAULIDO,'' As KOOPLIDO,
                         0 As IDMAEEDO,0 As IDMAEDDO,'" & _Emp_Pedir & "' As EMPRESA,'" & _Suc_Pedir & "' As SULIDO,'" & _Bod_Pedir & "' As BOSULIDO,'' As ENDO,'' As SUENDO,GetDate() As FEEMLI,

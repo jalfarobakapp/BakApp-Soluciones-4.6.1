@@ -26,6 +26,8 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
 
     Dim _Lista_Nodos As New List(Of Integer)
 
+    Public Property ModoSoloLectura As Boolean
+
     Public Property Pro_Codigo_Heredado() As String
         Get
             Return _Codigo_Heredado
@@ -75,12 +77,6 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
 
         _Codigo_Heredado = String.Empty
 
-        'Dim _Arr_Filtro(,) As String = {{"C", "Contiene:"},
-        '                                {"E", "Empieza por:"},
-        '                                {"T", "Termina en:"}}
-        'Sb_Llenar_Combos(_Arr_Filtro, Cmb_Filtro_Codigo)
-        'Cmb_Filtro_Codigo.SelectedValue = "C"
-
         Sb_Color_Botones_Barra(Bar2)
 
         Txt_Filtrar.ReadOnly = False
@@ -108,14 +104,16 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
 
-        Btn_AgregarProductos.Visible = _Row_Nodo.Item("Es_Seleccionable")
+        Btn_AgregarProductos.Visible = Not ModoSoloLectura
 
         If Not _Mostrar_Productos_Sin_Asociacion_En_Nodo Then
             Btn_Reparar_Arbol.Visible = True
         End If
 
-        Btn_Quitar_Marcados.Visible = _Row_Nodo.Item("Es_Seleccionable")
-        Btn_Quitar_Todo.Visible = _Row_Nodo.Item("Es_Seleccionable")
+        Btn_QuitarProducto.Visible = Not ModoSoloLectura
+        Btn_Quitar_Marcados.Visible = Not ModoSoloLectura
+        Btn_Quitar_Todo.Visible = Not ModoSoloLectura
+        Btn_Quitar_Productos.Visible = Not ModoSoloLectura
 
         If _Carpeta_Seleccionable Then
             AddHandler Grilla.MouseUp, AddressOf Sb_Grilla_MouseUp

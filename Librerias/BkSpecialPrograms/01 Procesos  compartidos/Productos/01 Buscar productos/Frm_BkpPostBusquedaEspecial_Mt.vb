@@ -2292,14 +2292,31 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         Dim _Row_Producto As DataRow = Fx_Row_Producto(_Formulario, _Codigo)
 
         If (_Row_Producto Is Nothing) Then
-            Exit Sub
+            Return
         End If
 
-        Dim Fm As New Frm_Arbol_Asociacion_01
-        Fm.Pro_CheckBoxes_Nodos = False
-        Fm.Pro_Codigo_Producto = _Codigo
-        Fm.ShowDialog(_Formulario)
+        Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_Asociacion",
+                                            "Codigo = '" & _Codigo & "' And Para_filtro = 1"))
+
+        If Not _Reg Then
+            Beep()
+            ToastNotification.Show(Me, "NO EXISTE INFORMACION", My.Resources.cross,
+                                 2 * 1000, eToastGlowColor.Red, eToastPosition.MiddleCenter)
+            Return
+        End If
+
+        Dim Fm As New Frm_Arbol_Lista(False)
+        Fm.Codigo_Heredado = _Codigo
+        Fm.ModoCheckButton = True
+        Fm.MostrarClasProducto = True
+        Fm.ShowDialog(Me)
         Fm.Dispose()
+
+        'Dim Fm2 As New Frm_Arbol_Asociacion_01
+        'Fm2.Pro_CheckBoxes_Nodos = False
+        'Fm2.Pro_Codigo_Producto = _Codigo
+        'Fm2.ShowDialog(_Formulario)
+        'Fm2.Dispose()
 
     End Sub
 

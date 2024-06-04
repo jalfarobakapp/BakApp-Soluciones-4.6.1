@@ -24,6 +24,8 @@ Public Class Frm_Arbol_Asociacion_06_CrearEditar
         Me._Nodo_Raiz = _Nodo_Raiz
         Me._Clas_Unica_X_Producto = _Clas_Unica_X_Producto
 
+        Sb_Color_Botones_Barra(Bar2)
+
     End Sub
 
     Private Sub Frm_Arbol_Asociacion_06_CrearEditar_Load(sender As Object, e As EventArgs) Handles MyBase.Load
