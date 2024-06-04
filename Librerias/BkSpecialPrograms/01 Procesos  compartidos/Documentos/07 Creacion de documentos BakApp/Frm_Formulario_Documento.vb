@@ -14426,7 +14426,7 @@ Public Class Frm_Formulario_Documento
                                     Dim _Msg1 = "Existen documentos de venta con la misma fecha de despacho y a demas incluyen alguno de los productos a vender"
                                     Dim _Msg2 = "¿DESEA SEGUIR CON LA GRABACION?" & vbCrLf & vbCrLf
 
-                                    If Not Fx_Confirmar_Lectura(_Msg1, _Msg2) Then
+                                    If Not Fx_Confirmar_Lectura(_Msg1, _Msg2, eTaskDialogIcon.Stop) Then
                                         Return
                                     End If
                                 End If
@@ -23430,6 +23430,10 @@ Public Class Frm_Formulario_Documento
 
             Try
 
+                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Despachos_Configuracion" & vbCrLf &
+                               "Where Empresa = '" & ModEmpresa & "'"
+                Dim _RowConfDesp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
                 Dim Fm As New Frm_Desp_01_Ingreso
                 Fm.Ds_Matriz_Documentos = _Ds_Matriz_Documentos
                 Fm.Total_Venta_Neto = _Total_Venta_Neto
@@ -23437,6 +23441,7 @@ Public Class Frm_Formulario_Documento
                 Fm.Kilos_Minimo = _MinKgDesp
                 Fm.Netos_Minimo = _MinNetoDesp
                 Fm.Cl_Despacho = _Cl_Despacho
+                Fm.ConfirmarLecturaDespacho = _RowConfDesp.Item("ConfirmarLecturaDespacho")
                 Fm.ShowDialog(Me)
                 _Grabar = Fm.Grabar
                 Fm.Dispose()

@@ -25,6 +25,8 @@ Public Class Frm_01_CrearInventario
 
         Me._IdInventario = _IdInventario
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
 
     Private Sub Frm_01_CrearInventario_Load(sender As Object, e As EventArgs) Handles MyBase.Load

@@ -471,9 +471,9 @@ Partial Class Frm_Mt_InvParc_02_Seleccion
         '
         Me.SuperTabControlPanel2.Controls.Add(Me.Grilla_Levantados)
         Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
-        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(1013, 457)
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(1013, 430)
         Me.SuperTabControlPanel2.TabIndex = 0
         Me.SuperTabControlPanel2.TabItem = Me.SuperTabItem2
         '
@@ -512,7 +512,7 @@ Partial Class Frm_Mt_InvParc_02_Seleccion
         DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla_Levantados.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
-        Me.Grilla_Levantados.Size = New System.Drawing.Size(1013, 457)
+        Me.Grilla_Levantados.Size = New System.Drawing.Size(1013, 430)
         Me.Grilla_Levantados.StandardTab = True
         Me.Grilla_Levantados.TabIndex = 54
         '

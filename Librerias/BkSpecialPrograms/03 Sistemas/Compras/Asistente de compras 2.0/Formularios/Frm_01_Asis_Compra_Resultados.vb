@@ -8992,7 +8992,7 @@ Drop Table #Paso"
 
             Consulta_sql = "Select 0 As IDMAEEDO,Getdate() As FEEMDO,Getdate() As FEER,'N' As MEARDO
 
-                            Select Distinct " & _Top & " '" & FUNCIONARIO & "' As KOFULIDO,Tb.Codigo As KOPRCT,Tb.Descripcion As NOKOPR,
+                            Select Distinct " & _Top & " '" & FUNCIONARIO & "' As KOFULIDO,Tb.Codigo As KOPRCT,Rtu As 'RLUDPR',,Tb.Descripcion As NOKOPR,
                             Tb.Descripcion as Descripcion,Tb.CodAlternativo,'" & _Lista & "' As KOLTPR,UD1,UD2,
                             0 As CostoUd1,0 As CostoUd2,0 As Precio, Tb.Rtu,CantComprar As Cantidad,
                             0 As Desc1,0 As Desc2,0 As Desc3,0 As Desc4,0 As Desc5,0 As DescSuma,0 As PRCT,'' As TICT,TIPR,0 As PODTGLLI," & Ud & " as UDTRPR,
@@ -9017,14 +9017,9 @@ Drop Table #Paso"
 
         ElseIf Rd_Costo_Ultimo_Documento_Seleccionado.Checked Then
 
-            '[Costo_Compra_RealUd1]     [float]       DEFAULT (0),
-            '[Costo_Compra_RealUd2]     [float]       DEFAULT (0),
-            '[Costo_Compra]             [float]       DEFAULT (0),
-            '[Dscto_Compra]             [float]       DEFAULT (0),
-
             Consulta_sql = "Select 0 As IDMAEEDO,Getdate() As FEEMDO,Getdate() As FEER" &
                             vbCrLf &
-                           "Select Distinct " & _Top & " '" & FUNCIONARIO & "' As KOFULIDO,Codigo As KOPRCT,
+                           "Select Distinct " & _Top & " '" & FUNCIONARIO & "' As KOFULIDO,Codigo As KOPRCT,Rtu As 'RLUDPR',
                             Descripcion,Descripcion As NOKOPR,CodAlternativo,'" & ModListaPrecioCosto & "' As KOLTPR,UD1,UD2,
                             Costo_Ult_Compra as CostoUd1,Costo_Ult_Compra as CostoUd2,
                             Costo_Ult_Compra As Precio,Rtu,CantComprar As Cantidad,Dscto_Ult_Compra as Desc1,

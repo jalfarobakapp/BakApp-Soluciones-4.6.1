@@ -26,8 +26,12 @@ Public Class Arbol_Clasificaciones
 
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Tbl00002") Then
 
-            Dim Fm As New Frm_Arbol_Asociacion_02(False, 0, False, Frm_Arbol_Asociacion_02.Enum_Clasificacion.Dinamica, 0)
-            Fm.Pro_Identificador_NodoPadre = 0
+            'Dim Fm As New Frm_Arbol_Asociacion_02(False, 0, False, Frm_Arbol_Asociacion_02.Enum_Clasificacion.Dinamica, 0)
+            'Fm.Pro_Identificador_NodoPadre = 0
+            'Fm.ShowDialog(Me)
+            'Fm.Dispose()
+
+            Dim Fm As New Frm_Arbol_Lista(False)
             Fm.ShowDialog(Me)
             Fm.Dispose()
 
@@ -39,8 +43,12 @@ Public Class Arbol_Clasificaciones
 
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Tbl00002") Then
 
-            Dim Fm As New Frm_Arbol_Asociacion_02(False, 0, False, Frm_Arbol_Asociacion_02.Enum_Clasificacion.Unica, 0)
-            Fm.Pro_Identificador_NodoPadre = 0
+            'Dim Fm As New Frm_Arbol_Asociacion_02(False, 0, False, Frm_Arbol_Asociacion_02.Enum_Clasificacion.Unica, 0)
+            'Fm.Pro_Identificador_NodoPadre = 0
+            'Fm.ShowDialog(Me)
+            'Fm.Dispose()
+
+            Dim Fm As New Frm_Arbol_Lista(True)
             Fm.ShowDialog(Me)
             Fm.Dispose()
 

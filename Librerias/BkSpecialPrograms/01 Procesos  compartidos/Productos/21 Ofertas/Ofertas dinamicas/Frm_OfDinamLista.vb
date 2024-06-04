@@ -316,7 +316,7 @@ Public Class Frm_OfDinamLista
                                 "El máximo sugerido es de " & CInt(Lbl_NroMaxProdXOfertaDinamica.Tag) & " productos."
                     Dim _Msg2 = "¿DESEA SEGUIR CON LA GRABACION A PESAR DE LA ADVERTENCIA?" & vbCrLf & vbCrLf
 
-                    If Not Fx_Confirmar_Lectura(_Msg1, _Msg2) Then
+                    If Not Fx_Confirmar_Lectura(_Msg1, _Msg2, eTaskDialogIcon.Stop) Then
                         Return
                     End If
 

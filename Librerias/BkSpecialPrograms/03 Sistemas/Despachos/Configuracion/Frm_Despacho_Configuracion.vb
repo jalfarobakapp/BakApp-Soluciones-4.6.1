@@ -55,6 +55,8 @@ Public Class Frm_Despacho_Configuracion
             Chk_Mostrar_RetiraTransportista.Checked = _Row_Conf_Despacho.Item("Mostrar_RetiraTransportista")
             Chk_Mostrar_Agencia.Checked = _Row_Conf_Despacho.Item("Mostrar_Agencia")
 
+            Chk_ConfirmarLecturaDespacho.Checked = _Row_Conf_Despacho.Item("ConfirmarLecturaDespacho")
+
         End If
 
         Txt_Valor_Min_Despacho.Text = FormatNumber(Txt_Valor_Min_Despacho.Tag, 0)
@@ -385,7 +387,7 @@ Public Class Frm_Despacho_Configuracion
 
         Consulta_Sql = "Delete " & _Global_BaseBk & "Zw_Despachos_Configuracion Where Empresa = '" & ModEmpresa & "'" & vbCrLf &
                        "Insert Into " & _Global_BaseBk & "Zw_Despachos_Configuracion (Empresa,Pedir_Sucursal_Retiro,Tipo_Venta_X_Defecto," &
-                       "Transportista_X_Defecto,Transpor_Por_Pagar,Valor_Min_Despacho,Mostrar_RetiraTransportista,Mostrar_Agencia) Values " &
+                       "Transportista_X_Defecto,Transpor_Por_Pagar,Valor_Min_Despacho,Mostrar_RetiraTransportista,Mostrar_Agencia,ConfirmarLecturaDespacho) Values " &
                        "('" & ModEmpresa & "'" &
                        "," & Convert.ToInt32(Chk_Pedir_Sucursal_Retiro.Checked) &
                        ",'" & Txt_Tipo_Venta.Tag & "'" &
@@ -393,7 +395,8 @@ Public Class Frm_Despacho_Configuracion
                        "'," & Convert.ToInt32(Chk_Transpor_Por_Pagar.Checked) &
                        "," & De_Txt_a_Num_01(Txt_Valor_Min_Despacho.Tag, 5) &
                        "," & Convert.ToInt32(Chk_Mostrar_RetiraTransportista.Checked) &
-                       "," & Convert.ToInt32(Chk_Mostrar_Agencia.Checked) & ")"
+                       "," & Convert.ToInt32(Chk_Mostrar_Agencia.Checked) &
+                       "," & Convert.ToInt32(Chk_ConfirmarLecturaDespacho.Checked) & ")"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql) Then
 

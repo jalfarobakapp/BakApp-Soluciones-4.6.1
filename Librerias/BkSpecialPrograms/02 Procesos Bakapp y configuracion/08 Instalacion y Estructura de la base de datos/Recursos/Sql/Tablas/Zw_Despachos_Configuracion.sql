@@ -12,6 +12,7 @@ CREATE TABLE [dbo].[Zw_Despachos_Configuracion](
     [Peso_Min_Despacho]             [float]         NOT NULL DEFAULT(0),
     [Mostrar_RetiraTransportista]   [bit]           NOT NULL DEFAULT(0),
     [Mostrar_Agencia]               [bit]           NOT NULL DEFAULT(0),
+    [ConfirmarLecturaDespacho]      [bit]           NOT NULL DEFAULT(0),
  CONSTRAINT [PK_Zw_Despachos_Configuracion] PRIMARY KEY CLUSTERED 
 (
 	[Empresa] ASC

@@ -1,3 +1,5 @@
+﻿Imports AxZKFPEngXControl
+
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Frm_Huella_Identificar
     Inherits DevComponents.DotNetBar.Metro.MetroForm

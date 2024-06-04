@@ -22,25 +22,25 @@ Partial Class Frm_03_Sectores_Inv
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Me.components = New System.ComponentModel.Container()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_03_Sectores_Inv))
-        Me.GrupoDetalle = New System.Windows.Forms.GroupBox
-        Me.Grilla_Inv = New DevComponents.DotNetBar.Controls.DataGridViewX
+        Me.GrupoDetalle = New System.Windows.Forms.GroupBox()
+        Me.Grilla_Inv = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.VerProductosContadosEnEsteSectorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.AbrirCerrarSectorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.AsignarUsuarioAlSectorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.TextBox1 = New System.Windows.Forms.TextBox
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.Txtdescripcion = New System.Windows.Forms.TextBox
-        Me.Bar2 = New DevComponents.DotNetBar.Bar
-        Me.BtnBuscarProductos = New DevComponents.DotNetBar.ButtonItem
-        Me.LblUsuarioCargo = New System.Windows.Forms.Label
+        Me.VerProductosContadosEnEsteSectorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AbrirCerrarSectorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AsignarUsuarioAlSectorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Txtdescripcion = New System.Windows.Forms.TextBox()
+        Me.Bar2 = New DevComponents.DotNetBar.Bar()
+        Me.BtnBuscarProductos = New DevComponents.DotNetBar.ButtonItem()
+        Me.LblUsuarioCargo = New System.Windows.Forms.Label()
         Me.GrupoDetalle.SuspendLayout()
         CType(Me.Grilla_Inv, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
@@ -65,38 +65,38 @@ Partial Class Frm_03_Sectores_Inv
         Me.Grilla_Inv.AllowUserToAddRows = False
         Me.Grilla_Inv.AllowUserToDeleteRows = False
         Me.Grilla_Inv.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Inv.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Inv.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.Grilla_Inv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.Grilla_Inv.ContextMenuStrip = Me.ContextMenuStrip1
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Blue
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Inv.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.Blue
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_Inv.DefaultCellStyle = DataGridViewCellStyle5
         Me.Grilla_Inv.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla_Inv.EnableHeadersVisualStyles = False
         Me.Grilla_Inv.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla_Inv.Location = New System.Drawing.Point(3, 18)
         Me.Grilla_Inv.Name = "Grilla_Inv"
         Me.Grilla_Inv.ReadOnly = True
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Inv.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Inv.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.Grilla_Inv.Size = New System.Drawing.Size(620, 239)
         Me.Grilla_Inv.StandardTab = True
         Me.Grilla_Inv.TabIndex = 27
@@ -105,24 +105,24 @@ Partial Class Frm_03_Sectores_Inv
         '
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.VerProductosContadosEnEsteSectorToolStripMenuItem, Me.AbrirCerrarSectorToolStripMenuItem, Me.AsignarUsuarioAlSectorToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(276, 70)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(275, 70)
         '
         'VerProductosContadosEnEsteSectorToolStripMenuItem
         '
         Me.VerProductosContadosEnEsteSectorToolStripMenuItem.Name = "VerProductosContadosEnEsteSectorToolStripMenuItem"
-        Me.VerProductosContadosEnEsteSectorToolStripMenuItem.Size = New System.Drawing.Size(275, 22)
+        Me.VerProductosContadosEnEsteSectorToolStripMenuItem.Size = New System.Drawing.Size(274, 22)
         Me.VerProductosContadosEnEsteSectorToolStripMenuItem.Text = "Ver productos contados en este sector"
         '
         'AbrirCerrarSectorToolStripMenuItem
         '
         Me.AbrirCerrarSectorToolStripMenuItem.Name = "AbrirCerrarSectorToolStripMenuItem"
-        Me.AbrirCerrarSectorToolStripMenuItem.Size = New System.Drawing.Size(275, 22)
+        Me.AbrirCerrarSectorToolStripMenuItem.Size = New System.Drawing.Size(274, 22)
         Me.AbrirCerrarSectorToolStripMenuItem.Text = "Abrir/Cerrar Sector"
         '
         'AsignarUsuarioAlSectorToolStripMenuItem
         '
         Me.AsignarUsuarioAlSectorToolStripMenuItem.Name = "AsignarUsuarioAlSectorToolStripMenuItem"
-        Me.AsignarUsuarioAlSectorToolStripMenuItem.Size = New System.Drawing.Size(275, 22)
+        Me.AsignarUsuarioAlSectorToolStripMenuItem.Size = New System.Drawing.Size(274, 22)
         Me.AsignarUsuarioAlSectorToolStripMenuItem.Text = "Asignar usuario al sector"
         '
         'GroupBox2
@@ -167,7 +167,7 @@ Partial Class Frm_03_Sectores_Inv
         Me.Label4.ForeColor = System.Drawing.Color.Black
         Me.Label4.Location = New System.Drawing.Point(7, 30)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(210, 13)
+        Me.Label4.Size = New System.Drawing.Size(209, 13)
         Me.Label4.TabIndex = 15
         Me.Label4.Text = "Buscar ubicación, código, descripción..."
         '
@@ -188,7 +188,7 @@ Partial Class Frm_03_Sectores_Inv
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnBuscarProductos})
         Me.Bar2.Location = New System.Drawing.Point(0, 395)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(638, 41)
+        Me.Bar2.Size = New System.Drawing.Size(641, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 45
@@ -219,7 +219,7 @@ Partial Class Frm_03_Sectores_Inv
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(638, 436)
+        Me.ClientSize = New System.Drawing.Size(641, 436)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.LblUsuarioCargo)
         Me.Controls.Add(Me.GroupBox2)

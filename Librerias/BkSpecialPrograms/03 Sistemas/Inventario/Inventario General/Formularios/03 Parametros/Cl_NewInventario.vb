@@ -30,14 +30,19 @@ Public Class Cl_NewInventario
 
             End If
 
-            .IdInventario = _Row_Enc.Item("Id")
+            .IdInventario = _Row_Enc.Item("IdInventario")
             .Empresa = _Row_Enc.Item("Empresa")
+            .Nombre_Empresa = _Row_Enc.Item("Nombre_Empresa")
             .Sucursal = _Row_Enc.Item("Sucursal")
-            .Bodega = _Row_Enc.Item("Sucursal")
+            .Nombre_Sucursal = _Row_Enc.Item("Nombre_Sucursal")
+            .Bodega = _Row_Enc.Item("Bodega")
+            .Nombre_Bodega = _Row_Enc.Item("Nombre_Bodega")
+            .FuncionarioCargo = _Row_Enc.Item("FuncionarioCargo")
+            .NombreFuncionario = _Row_Enc.Item("NombreFuncionario")
             .NombreInventario = _Row_Enc.Item("NombreInventario")
             .Estado = _Row_Enc.Item("Estado")
             .Fecha_Inventario = _Row_Enc.Item("Fecha_Inventario")
-            .FechaCierre = _Row_Enc.Item("FechaCierre")
+            .FechaCierre = NuloPorNro(_Row_Enc.Item("FechaCierre"), Nothing)
 
         End With
 
@@ -195,10 +200,6 @@ Public Class Cl_NewInventario
                                            "la anterior.")
             End If
 
-
-            MessageBoxEx.Show("No es posible tomar una foto del stock de la bodega, ya que existen datos de una foto anterior." & vbCrLf &
-                              "Para poder obtener una nueva foto debe eliminar el congelado anterior", "Foto Stock", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-
             With Zw_TmpInv_History
 
                 Consulta_sql = My.Resources._Procedimientos_Inv.Inv_Invetario_Creae_Foto_Stock
@@ -210,6 +211,7 @@ Public Class Cl_NewInventario
                 Consulta_sql = Replace(Consulta_sql, "#Sucursal#", .Sucursal)
                 Consulta_sql = Replace(Consulta_sql, "#Bodega#", .Bodega)
                 Consulta_sql = Replace(Consulta_sql, "#IdInventario#", _IdInventario)
+                Consulta_sql = Replace(Consulta_sql, "ZW_TmpInvFotoInventario", _Global_BaseBk & "ZW_TmpInvFotoInventario")
 
             End With
 
@@ -242,7 +244,7 @@ Public Class Cl_NewInventario
 
             Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "ZW_TmpInvFotoInventario", "IdInventario = " & _IdInventario)
 
-            If CBool(_Reg) Then
+            If Not CBool(_Reg) Then
                 Throw New System.Exception("No se encontró ninguna Foto Stock en la base de datos para este inventario que pueda ser eliminada.")
             End If
 
@@ -253,32 +255,34 @@ Public Class Cl_NewInventario
             _Autorizado = Fm_Pass.Pro_Autorizado
             Fm_Pass.Dispose()
 
-            If _Autorizado Then
-
-                If MessageBoxEx.Show(_Formulario, "¿Esta seguro de querer eliminar la foto tomada del stock de la bodega?" & vbCrLf &
-                                    "Nota:El proceso no podrá ser interrumpido y no es posible revertirlo",
-                                    "Cerrar Sistema", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
-                    _Mensaje.Cancelado = True
-                    Throw New System.Exception("Acción cancelada por el usuario, no se elimina la Foto Stock")
-                End If
-
-                Consulta_sql = "Delete " & _Global_BaseBk & "ZW_TmpInvFotoInventario Where IdInventario = " & _IdInventario
-
-                If Not _Sql.Ej_consulta_IDU(Consulta_sql) Then
-                    _Mensaje.Detalle = "Error al tomar foto stock"
-                    Throw New System.Exception(_Sql.Pro_Error)
-                End If
-
-                _Mensaje.EsCorrecto = True
-                _Mensaje.Mensaje = "Datos eliminados correctamente"
-                _Mensaje.Icono = MessageBoxIcon.Information
-
+            If Not _Autorizado Then
+                Throw New System.Exception("Clave de administrador invalida.")
             End If
+
+            If MessageBoxEx.Show(_Formulario, "¿Esta seguro de querer eliminar la foto tomada del stock de la bodega?" & vbCrLf &
+                    "Nota:El proceso no podrá ser interrumpido y no es posible revertirlo",
+                    "Cerrar Sistema", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) <> DialogResult.Yes Then
+                _Mensaje.Cancelado = True
+                Throw New System.Exception("Acción cancelada por el usuario, no se elimina la Foto Stock")
+            End If
+
+            Consulta_sql = "Delete " & _Global_BaseBk & "ZW_TmpInvFotoInventario Where IdInventario = " & _IdInventario
+
+            If Not _Sql.Ej_consulta_IDU(Consulta_sql) Then
+                _Mensaje.Detalle = "Error al tomar foto stock"
+                Throw New System.Exception(_Sql.Pro_Error)
+            End If
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Datos eliminados correctamente"
+            _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
             _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
+
+        Return _Mensaje
 
     End Function
 

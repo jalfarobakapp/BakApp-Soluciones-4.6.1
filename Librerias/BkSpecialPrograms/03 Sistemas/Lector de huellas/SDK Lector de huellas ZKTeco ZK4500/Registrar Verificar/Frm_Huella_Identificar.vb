@@ -1,15 +1,5 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.ComponentModel
-Imports System.Data
-Imports System.Drawing
-Imports System.Text
-Imports System.Windows.Forms
-Imports System.IO
-Imports System.Reflection
-Imports System.Threading
-Imports System.Data.OleDb
-Imports System.Collections
+﻿Imports System.Threading
+Imports AxZKFPEngXControl
 Imports DevComponents.DotNetBar
 
 Public Class Frm_Huella_Identificar

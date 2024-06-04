@@ -1,26 +1,52 @@
 ﻿Imports DevComponents.DotNetBar
-'Imports Lib_Bakapp_VarClassFunc
-'Imports BkSpecialPrograms
-
-Imports System
-Imports System.Data
 Imports System.Data.SqlClient
-Imports System.Windows.Forms
 
 Public Class Frm_02_Detalle_Producto_Actual
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-
-    Public _Codigo, _Descripcion As String
-    Public _FStock_Ud1, _Cantidad_Inv, _Dif_Inv_Cantidad As Double
-    Public _Recontado As Boolean
-
-    Public _IdInventario, _Empresa, _Sucursal, _Bodega As String
+    Private _Codigo As String
+    Private _IdInventario As Integer
+    Public _Empresa, _Sucursal, _Bodega As String
     Public _FechaInv As Date
+    Public _FStock_Ud1, _Cantidad_Inv, _Dif_Inv_Cantidad As Double
 
+    Public Property Recontado As Boolean
 
+    Public Sub New(_IdInventario As Integer, _Codigo As String)
+
+        ' Llamada necesaria para el Diseñador de Windows Forms.
+        InitializeComponent()
+
+        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        Sb_Formato_Generico_Grilla(GrillaHistoriaProducto, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
+
+        Me._IdInventario = _IdInventario
+        Me._Codigo = _Codigo
+
+        Sb_Color_Botones_Barra(Bar2)
+
+    End Sub
+    Private Sub Frm_Detalle_Producto_Actual_Load(sender As Object, e As System.EventArgs) Handles Me.Load
+
+        LblTotalFotoStock.Text = FormatNumber(_FStock_Ud1)
+        LblTotalInventariado.Text = FormatNumber(_Cantidad_Inv)
+        LblTotalDiferencia.Text = FormatNumber(_Dif_Inv_Cantidad)
+
+        If _Dif_Inv_Cantidad < 0 Then
+            LblTotalDiferencia.ForeColor = Rojo
+        Else
+            LblTotalDiferencia.ForeColor = Verde
+        End If
+
+        If String.IsNullOrEmpty(Trim(LblActualizadoPor.Text)) Then
+            LabelX3.Visible = False
+        End If
+
+        Sb_Ver_Detalle_Del_Producto()
+
+    End Sub
     Private Sub CargaGrillaProductosDesconocidos()
 
         Try
@@ -45,66 +71,37 @@ Public Class Frm_02_Detalle_Producto_Actual
 
     End Sub
 
+    Private Sub GrillaHistoriaProducto_CellEnter(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GrillaHistoriaProducto.CellEnter
 
-    Private Sub BtnSalir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnSalir.Click
-        _Recontado = False
-        Me.Close()
-    End Sub
+        Try
 
+            With GrillaHistoriaProducto
 
+                Dim _Digitador As String = NuloPorNro(.Rows(.CurrentRow.Index).Cells("Digitador").Value, "")
+                Dim _Contador_1 As String = .Rows(.CurrentRow.Index).Cells("Contador_1").Value
+                Dim _Contador_2 As String = .Rows(.CurrentRow.Index).Cells("Contador_2").Value
+                Dim _Actualizado_por As String = .Rows(.CurrentRow.Index).Cells("Actualizado_por").Value
+                Dim _Observaciones As String = .Rows(.CurrentRow.Index).Cells("Observaciones").Value
+                Dim _Obs_Actualizacion As String = .Rows(.CurrentRow.Index).Cells("Obs_Actualizacion").Value
 
-    Public Sub New()
+                LblDigitador.Text = _Digitador
+                LblContador1.Text = _Contador_1
+                LblContador2.Text = _Contador_2
+                LblActualizadoPor.Text = _Actualizado_por
+                LblObsActualizacion.Text = _Obs_Actualizacion
+                LblObservaciones.Text = _Observaciones
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
-        InitializeComponent()
+            End With
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
-        Sb_Formato_Generico_Grilla(GrillaHistoriaProducto, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
+        Catch ex As Exception
 
-    End Sub
-
-    Private Sub GrillaHistoriaProducto_CellEnter(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GrillaHistoriaProducto.CellEnter
-        With GrillaHistoriaProducto
-
-            Dim _Digitador As String = .Rows(.CurrentRow.Index).Cells("Digitador").Value
-            Dim _Contador_1 As String = .Rows(.CurrentRow.Index).Cells("Contador_1").Value
-            Dim _Contador_2 As String = .Rows(.CurrentRow.Index).Cells("Contador_2").Value
-            Dim _Actualizado_por As String = .Rows(.CurrentRow.Index).Cells("Actualizado_por").Value
-            Dim _Observaciones As String = .Rows(.CurrentRow.Index).Cells("Observaciones").Value
-            Dim _Obs_Actualizacion As String = .Rows(.CurrentRow.Index).Cells("Obs_Actualizacion").Value
-
-            LblDigitador.Text = _Digitador
-            LblContador1.Text = _Contador_1
-            LblContador2.Text = _Contador_2
-            LblActualizadoPor.Text = _Actualizado_por
-            LblObsActualizacion.Text = _Obs_Actualizacion
-            LblObservaciones.Text = _Observaciones
-
-        End With
-    End Sub
-
-    Private Sub Frm_Detalle_Producto_Actual_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-
-        LblTotalFotoStock.Text = FormatNumber(_FStock_Ud1)
-        LblTotalInventariado.Text = FormatNumber(_Cantidad_Inv)
-        LblTotalDiferencia.Text = FormatNumber(_Dif_Inv_Cantidad)
-
-
-        If _Dif_Inv_Cantidad < 0 Then
-            LblTotalDiferencia.ForeColor = Color.Red
-        Else
-            LblTotalDiferencia.ForeColor = Color.Green
-        End If
-
-        If String.IsNullOrEmpty(Trim(LblActualizadoPor.Text)) Then
-            LabelX3.Visible = False
-        End If
-
-        Ver_Detalle_Del_Producto()
+        End Try
 
     End Sub
 
-    Private Sub BtnEstadisticas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnEstadisticas.Click
+
+
+    Private Sub BtnEstadisticas_Click(sender As System.Object, e As System.EventArgs) Handles BtnEstadisticas.Click
 
         Dim Fm As New Frm_EstadisticaProducto(_Codigo)
         Fm.ShowDialog(Me)
@@ -112,7 +109,7 @@ Public Class Frm_02_Detalle_Producto_Actual
 
     End Sub
 
-    Private Sub BtnRecontarModificar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnGrabarAnalisis_Reconteo.Click
+    Private Sub BtnRecontarModificar_Click(sender As System.Object, e As System.EventArgs) Handles BtnGrabarAnalisis_Reconteo.Click
 
         Dim _Autorizado As Boolean
 
@@ -129,18 +126,19 @@ Public Class Frm_02_Detalle_Producto_Actual
             Dim Cn2 As New SqlConnection
             Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
 
-            SQL_ServerClass.Sb_Abrir_Conexion(cn2)
+            SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
 
             Try
 
 
-                myTrans = cn2.BeginTransaction()
+                myTrans = Cn2.BeginTransaction()
 
 
                 With GrillaHistoriaProducto
 
                     Dim i = 0
                     Dim _Suma_Cantidad As Double = 0
+
                     For Each row As DataGridViewRow In .Rows
 
                         Dim _Cantidad As Double = row.Cells("Cantidad").Value
@@ -157,8 +155,6 @@ Public Class Frm_02_Detalle_Producto_Actual
                                                         "COLUMNA: " & _Columna, "Reconteo",
                                                         "Producto recontado ..."))
 
-
-
                         Consulta_sql = "Update ZW_TmpInvProductosInventariados Set Recontado = 1" & vbCrLf &
                                        ",Cantidad_Recontada = " & _Cant_Recont & vbCrLf &
                                        ",Obs_Actualizacion = '" & Trim(Observacion_Producto) & "'" & vbCrLf &
@@ -166,7 +162,7 @@ Public Class Frm_02_Detalle_Producto_Actual
 
                         _Suma_Cantidad += _Cant_Recont
 
-                        Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                        Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                         Comando.Transaction = myTrans
                         Comando.ExecuteNonQuery()
 
@@ -180,9 +176,6 @@ Public Class Frm_02_Detalle_Producto_Actual
                         L_ = False
                     End If
 
-                    'Recontado = 1," & vbCrLf & _
-                    '              "Cerrado = 1," & vbCrLf & _
-                    '             "Levantado = 0," & vbCrLf & _
                     Consulta_sql = "Update ZW_TmpInvFotoInventario Set" & vbCrLf &
                                    "Levantado = " & CInt(L_) & "," & vbCrLf &
                                    "Cant_Inventariada = " & _Suma_Cantidad & "," & vbCrLf &
@@ -192,17 +185,14 @@ Public Class Frm_02_Detalle_Producto_Actual
                                    "Where IdInventario = " & _IdInventario & vbCrLf &
                                    "And CodigoPR = '" & _Codigo & "'"
 
-
                     'Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                     'Comando.Transaction = myTrans
                     'Comando.ExecuteNonQuery()
 
-
-
                 End With
 
                 myTrans.Commit()
-                SQL_ServerClass.Sb_Cerrar_Conexion(cn2)
+                SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
                 MessageBoxEx.Show("Producto actualizado correctamente",
                                    "Recontar producto", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -210,7 +200,7 @@ Public Class Frm_02_Detalle_Producto_Actual
                 MessageBoxEx.Show("El producto esta CERRADO y RECONTADO" & vbCrLf &
                                   "Perdio la condición de estar LEVANTADO", "Marcar producto", MessageBoxButtons.OK, MessageBoxIcon.Warning)
 
-                _Recontado = True
+                Recontado = True
                 ChkCerrado.Checked = True
                 ChkRecontado.Checked = True
                 ChkLevantado.Checked = False
@@ -226,9 +216,8 @@ Public Class Frm_02_Detalle_Producto_Actual
 
                 MessageBoxEx.Show("Transaccion desecha", "Problema",
                                   Windows.Forms.MessageBoxButtons.OK, Windows.Forms.MessageBoxIcon.Stop)
-                SQL_ServerClass.Sb_Cerrar_Conexion(cn2)
+                SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
-                _Recontado = False
             End Try
 
         End If
@@ -236,34 +225,38 @@ Public Class Frm_02_Detalle_Producto_Actual
 
     End Sub
 
-    Sub Ver_Detalle_Del_Producto()
+    Sub Sb_Ver_Detalle_Del_Producto()
 
+        'Consulta_sql = "SELECT Semilla,Recontado,UbicacionBodega,Isnull(Nro_Hoja,'') as Nro_Hoja," & vbCrLf &
+        '               "Isnull(Item_Hoja,'') as Item_Hoja,Columna,Fila," & vbCrLf &
+        '               "FechaInventario AS Fecha," & vbCrLf &
+        '               "CONVERT(Char(8), FechaInventario, 108) AS Hora," & vbCrLf &
+        '               "CantidadInventariada as 'Cantidad'," & vbCrLf &
+        '               "Cantidad_Recontada as 'Cant_Recont'," & vbCrLf &
+        '               "Responsable,(Select top 1 NOKOFU From TABFU Where KOFU = Responsable) as Digitador," & vbCrLf &
+        '               "Contador_1,Contador_2, Observaciones," & vbCrLf &
+        '               "Actualizado_por,Obs_Actualizacion" & vbCrLf &
+        '               "FROM dbo.ZW_TmpInvProductosInventariados" & vbCrLf &
+        '               "Where CodEmpresa = '" & _Empresa & "' And" & vbCrLf &
+        '               "CodSucursal = '" & _Sucursal & "' And" & vbCrLf &
+        '               "CodBodega = '" & _Bodega & "' And" & vbCrLf &
+        '               "Fecha_Inventario_Gral = '" & Format(_FechaInv, "yyyyMMdd") & "' And " & vbCrLf &
+        '               "Codproducto = '" & _Codigo & "'"
 
-        Consulta_sql = "SELECT Semilla,Recontado,UbicacionBodega,Isnull(Nro_Hoja,'') as Nro_Hoja," & vbCrLf &
+        Consulta_sql = "Select Semilla,Recontado,UbicacionBodega,Isnull(Nro_Hoja,'') as Nro_Hoja," & vbCrLf &
                        "Isnull(Item_Hoja,'') as Item_Hoja,Columna,Fila," & vbCrLf &
-                       "FechaInventario AS Fecha," & vbCrLf &
-                       "CONVERT(Char(8), FechaInventario, 108) AS Hora," & vbCrLf &
+                       "FechaInventario," & vbCrLf &
+                       "FechaInventario AS Hora," & vbCrLf &
                        "CantidadInventariada as 'Cantidad'," & vbCrLf &
                        "Cantidad_Recontada as 'Cant_Recont'," & vbCrLf &
-                       "Responsable,(Select top 1 NOKOFU From TABFU Where KOFU = Responsable) as Digitador," & vbCrLf &
+                       "Responsable,ISNULL(NOKOFU,'') as Digitador," & vbCrLf &
                        "Contador_1,Contador_2, Observaciones," & vbCrLf &
                        "Actualizado_por,Obs_Actualizacion" & vbCrLf &
-                       "FROM dbo.ZW_TmpInvProductosInventariados" & vbCrLf &
-                       "Where CodEmpresa = '" & _Empresa & "' And" & vbCrLf &
-                       "CodSucursal = '" & _Sucursal & "' And" & vbCrLf &
-                       "CodBodega = '" & _Bodega & "' And" & vbCrLf &
-                       "Fecha_Inventario_Gral = '" & Format(_FechaInv, "yyyyMMdd") & "' And " & vbCrLf &
-                       "Codproducto = '" & _Codigo & "'"
+                       "From " & _Global_BaseBk & "ZW_TmpInvProductosInventariados" & vbCrLf &
+                       "Left Join TABFU On KOFU = Responsable" & vbCrLf &
+                       "Where IdInventario = " & _IdInventario & " And Codproducto = '" & _Codigo & "'"
 
-        '"CONVERT(Char(8),FechaInventario, 105) AS Fecha," & vbCrLf & _
-        '"CONVERT(Char(8), FechaInventario, 108) AS Hora," & vbCrLf & _
-
-        '"WHERE (IdBodega = " & IdBodega & ") " & vbCrLf & _
-        '"AND (Codproducto = '" & _Codigo & "')"
-
-
-        Dim _Tbl As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
-
+        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         With GrillaHistoriaProducto
 
@@ -304,15 +297,16 @@ Public Class Frm_02_Detalle_Producto_Actual
             .Columns("Item_Hoja").Visible = True
             .Columns("Item_Hoja").ReadOnly = True
 
-            .Columns("Fecha").HeaderText = "Fecha"
-            .Columns("Fecha").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("Fecha").DefaultCellStyle.Format = "dd/MM/yyyy"
-            .Columns("Fecha").Width = 70
-            .Columns("Fecha").Visible = True
-            .Columns("Fecha").ReadOnly = True
+            .Columns("FechaInventario").HeaderText = "Fecha"
+            .Columns("FechaInventario").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("FechaInventario").DefaultCellStyle.Format = "dd/MM/yyyy"
+            .Columns("FechaInventario").Width = 70
+            .Columns("FechaInventario").Visible = True
+            .Columns("FechaInventario").ReadOnly = True
 
             .Columns("Hora").HeaderText = "Hora"
             .Columns("Hora").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("Hora").DefaultCellStyle.Format = "HH:mm"
             .Columns("Hora").Width = 55
             .Columns("Hora").Visible = True
             .Columns("Hora").ReadOnly = True
@@ -329,9 +323,6 @@ Public Class Frm_02_Detalle_Producto_Actual
             .Columns("Cant_Recont").HeaderText = "Cant. Recontada"
             .Columns("Cant_Recont").Width = 100
             .Columns("Cant_Recont").Visible = True
-
-
-
 
             If .RowCount = 0 Then
                 MessageBoxEx.Show("No existen datos que mostrar",
@@ -350,9 +341,9 @@ Public Class Frm_02_Detalle_Producto_Actual
     End Sub
 
 
-    Private Sub BtnAgregarConteo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnAgregarConteo.Click
-        Dim Nro As String = "In0014"
-        'If Fx_Tiene_Permiso(Me, Nro) Then
+    Private Sub BtnAgregarConteo_Click(sender As System.Object, e As System.EventArgs) Handles BtnAgregarConteo.Click
+
+        'If Not Fx_Tiene_Permiso(Me, "In0014") Then Return
 
         Dim Fm As New Frm_Login
         Fm.Text = "INGRESE CLAVE DE DIGITADOR DEL DOCUMENTO"
@@ -361,17 +352,19 @@ Public Class Frm_02_Detalle_Producto_Actual
         If Not Fm.CancelarLogin Then
 
             Dim Fm_Inv As New Frm_01_HojaConteo
-            With Fm_Inv
-                .Digitador = FUNCIONARIO
-                .Nombre_Digitador = Nombre_funcionario_activo
-                ._Empresa_Inv_Activo = _Empresa
-                ._Sucursal_Inv_Activo = _Sucursal
-                ._Bodega_Inv_Activo = _Bodega
 
-                .ShowDialog(Me)
-            End With
+            Fm_Inv.Digitador = FUNCIONARIO
+            Fm_Inv.Nombre_Digitador = Nombre_funcionario_activo
+            Fm_Inv._Empresa_Inv_Activo = _Empresa
+            Fm_Inv._Sucursal_Inv_Activo = _Sucursal
+            Fm_Inv._Bodega_Inv_Activo = _Bodega
+            Fm_Inv.ShowDialog(Me)
+            Fm_Inv.Dispose()
+
         Else
             MessageBox.Show("Sin acceso!!", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End If
+
     End Sub
+
 End Class

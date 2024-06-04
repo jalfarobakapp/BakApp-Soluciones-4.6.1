@@ -5866,17 +5866,17 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Sub
 
-    Function Fx_Confirmar_Lectura(_Mensaje1 As String, _Mensaje2 As String) As Boolean
+    Function Fx_Confirmar_Lectura(_Mensaje1 As String, _Mensaje2 As String, _eTaskDialogIcon As eTaskDialogIcon) As Boolean
 
         Dim Chk_Confirmar_Lectura As New Command
         Chk_Confirmar_Lectura.Checked = False
         Chk_Confirmar_Lectura.Name = "Chk_Confirmar_Lectura"
-        Chk_Confirmar_Lectura.Text = "CONFIRMAR LECTURA DE LA ALERTA"
+        Chk_Confirmar_Lectura.Text = "CONFIRMAR TIPO DE ENVIO Y LECTURA DE LA ALERTA"
 
         Dim _Opciones As Command = Chk_Confirmar_Lectura
 
         Dim _Info As New TaskDialogInfo("Alerta",
-                  eTaskDialogIcon.ShieldStop,
+                  _eTaskDialogIcon,
                   _Mensaje1, _Mensaje2,
                   eTaskDialogButton.Yes + eTaskDialogButton.No, eTaskDialogBackgroundColor.Red, Nothing, Nothing,
                   _Opciones, Nothing, Nothing)
@@ -5888,7 +5888,7 @@ Public Module Crear_Documentos_Desde_Otro
             If Chk_Confirmar_Lectura.Checked Then
                 Return True
             Else
-                Return Fx_Confirmar_Lectura(_Mensaje1, _Mensaje2)
+                Return Fx_Confirmar_Lectura(_Mensaje1, _Mensaje2, _eTaskDialogIcon)
             End If
 
         Else

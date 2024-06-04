@@ -7,7 +7,6 @@ Public Class Frm_01_Inventario_Actual
 
 
     Public IdBodega As String
-    'Dim Ds_Inventario As New DsInventario_Gral
 
     Private _IdInventario As Integer
     Private _Row_InventarioActivo As DataRow
@@ -29,8 +28,13 @@ Public Class Frm_01_Inventario_Actual
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
         Sb_Formato_Generico_Grilla(Grilla, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
 
+        Me._IdInventario = _IdInventario
+
         Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_TmpInv_History Where IdInventario = " & _IdInventario
         _Row_InventarioActivo = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Sb_Color_Botones_Barra(Bar1)
+        Sb_Color_Botones_Barra(Bar2)
 
     End Sub
 
@@ -55,14 +59,14 @@ Public Class Frm_01_Inventario_Actual
         Try
 
             'Dim Pie As String
-            Dim Tbl_Paso As String = "_Tbl" & FUNCIONARIO
-            Dim Tbl_Paso_2 As String = "ZW_TmpInvPs01" & FUNCIONARIO
+            'Dim Tbl_Paso As String = "_Tbl" & FUNCIONARIO
+            'Dim Tbl_Paso_2 As String = "ZW_TmpInvPs01" & FUNCIONARIO
 
-            'Consulta_sql = "DROP TABLE " & Tbl_Paso_2
-            '_Sql.Ej_consulta_IDU(Consulta_sql, False)
+            ''Consulta_sql = "DROP TABLE " & Tbl_Paso_2
+            ''_Sql.Ej_consulta_IDU(Consulta_sql, False)
 
-            'Consulta_sql = "Drop Table " & Tbl_Paso
-            '_Sql.Ej_consulta_IDU(Consulta_sql, False)
+            ''Consulta_sql = "Drop Table " & Tbl_Paso
+            ''_Sql.Ej_consulta_IDU(Consulta_sql, False)
 
             Consulta_sql = My.Resources._Procedimientos_Inv.Inv_Sumar_Cantidades
 
@@ -78,31 +82,63 @@ Public Class Frm_01_Inventario_Actual
             'Consulta_sql = Replace(Consulta_sql, "#Bodega#", _Bodega)
             'Consulta_sql = Replace(Consulta_sql, "#FechaInv#", Format(_Fecha_Inventario, "yyyyMMdd"))
 
-            Consulta_sql = "Select Codproducto,SUM(Case" & vbCrLf &
-                           "When Recontado = 0 then ISNULL(CantidadInventariada, 0)" & vbCrLf &
-                           "When Recontado = 1 then ISNULL(Cantidad_Recontada, 0)" & vbCrLf &
-                           "End) AS TotalInv" & vbCrLf &
-                           "From " & _Global_BaseBk & "ZW_TmpInvProductosInventariados" & vbCrLf &
-                           "Where IdInventario = " & _IdInventario
+            'Consulta_sql = "Select Codproducto,SUM(Case" & vbCrLf &
+            '               "When Recontado = 0 then ISNULL(CantidadInventariada, 0)" & vbCrLf &
+            '               "When Recontado = 1 then ISNULL(Cantidad_Recontada, 0)" & vbCrLf &
+            '               "End) AS TotalInv" & vbCrLf &
+            '               "From " & _Global_BaseBk & "ZW_TmpInvProductosInventariados" & vbCrLf &
+            '               "Where IdInventario = " & _IdInventario
 
-            _Sql.Ej_consulta_IDU(Consulta_sql)
+            '_Sql.Ej_consulta_IDU(Consulta_sql)
 
 
             Consulta_sql = My.Resources._Procedimientos_Inv.Inv_Invetario_Todos
 
-            'Consulta_sql = Replace(Consulta_sql, "@Top", "")
-            Consulta_sql = Replace(Consulta_sql, "@Funcionario", FUNCIONARIO)
-            'Consulta_sql = Replace(Consulta_sql, "@Codigo", Codigo_abuscar)
-            'Consulta_sql = Replace(Consulta_sql, "@IdBodega", IdBodega)
-            'Consulta_sql = Replace(Consulta_sql, "@Ano", Inventario_AnoActivo)
-            'Consulta_sql = Replace(Consulta_sql, "@Mes", Inventario_MesActivo)
-            'Consulta_sql = Replace(Consulta_sql, "@Dia", inventario_DiaActivo)
+            ''Consulta_sql = Replace(Consulta_sql, "@Top", "")
+            'Consulta_sql = Replace(Consulta_sql, "@Funcionario", FUNCIONARIO)
+            ''Consulta_sql = Replace(Consulta_sql, "@Codigo", Codigo_abuscar)
+            ''Consulta_sql = Replace(Consulta_sql, "@IdBodega", IdBodega)
+            ''Consulta_sql = Replace(Consulta_sql, "@Ano", Inventario_AnoActivo)
+            ''Consulta_sql = Replace(Consulta_sql, "@Mes", Inventario_MesActivo)
+            ''Consulta_sql = Replace(Consulta_sql, "@Dia", inventario_DiaActivo)
 
-            Consulta_sql = Replace(Consulta_sql, "#IdInventario#", _IdInventario)
+            'Consulta_sql = Replace(Consulta_sql, "#IdInventario#", _IdInventario)
 
-            'Consulta_sql = Replace(Consulta_sql, "#FechaInv#", Format(_Fecha_Inv_Activo, "yyyyMMdd"))
-            Consulta_sql = Replace(Consulta_sql, "#TablaPaso_2#", Tbl_Paso_2)
-            Consulta_sql = Replace(Consulta_sql, "#TablaPaso#", Tbl_Paso)
+            ''Consulta_sql = Replace(Consulta_sql, "#FechaInv#", Format(_Fecha_Inv_Activo, "yyyyMMdd"))
+            'Consulta_sql = Replace(Consulta_sql, "#TablaPaso_2#", Tbl_Paso_2)
+            'Consulta_sql = Replace(Consulta_sql, "#TablaPaso#", Tbl_Paso)
+
+
+            Consulta_sql = "Declare @IdInventario Int = " & _IdInventario & "
+         
+UPDATE F
+SET F.Cant_Inventariada = P.CantidadTotal
+FROM " & _Global_BaseBk & "ZW_TmpInvFotoInventario AS F
+INNER JOIN (
+    SELECT Codproducto, SUM(CantidadInventariada) AS CantidadTotal
+    FROM ZW_TmpInvProductosInventariados
+    GROUP BY Codproducto
+) AS P
+ON F.CodigoPR = P.Codproducto                                
+                            
+Update " & _Global_BaseBk & "ZW_TmpInvFotoInventario Set 
+                       Dif_Inv_Cantidad = Cant_Inventariada - StFisicoUd1,
+                       Total_Costo_Foto = Case When StFisicoUd1 < 0 Then 0 Else StFisicoUd1 * PPP End,
+                       Total_Costo_Inv = Cant_Inventariada * PPP
+Where 
+      Tipr in ('FIN','FPN','FPS','FUN','FUS') And IdInventario = @IdInventario                               
+                        
+Update " & _Global_BaseBk & "ZW_TmpInvFotoInventario Set Dif_Inv_Costo = Total_Costo_Inv - Total_Costo_Foto                      
+Where 
+      Tipr in ('FIN','FPN','FPS','FUN','FUS') And IdInventario = @IdInventario                               
+            
+Update " & _Global_BaseBk & "ZW_TmpInvFotoInventario Set Diferencia = Case 
+                                      When Dif_Inv_Cantidad < 0 Then 'Negativa'
+                                      When Dif_Inv_Cantidad > 0 Then 'Positiva'
+                                      When Dif_Inv_Cantidad = 0 Then ''
+                                 End  
+Where 
+      Tipr in ('FIN','FPN','FPS','FUN','FUS') And IdInventario = @IdInventario"
 
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
@@ -260,7 +296,7 @@ Public Class Frm_01_Inventario_Actual
 
     End Sub
 
-    Private Sub Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles Grilla.MouseDown
+    Private Sub Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
 
         If e.Button = Windows.Forms.MouseButtons.Right Then
             With sender
@@ -347,48 +383,44 @@ Public Class Frm_01_Inventario_Actual
 
     Sub Ver_Detalle_Del_Producto()
 
-        With Grilla
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
 
-            Dim Codigo As String = Trim(.Rows(.CurrentRow.Index).Cells("CodigoPR").Value)
-            Dim Descripcion As String = Trim(.Rows(.CurrentRow.Index).Cells("DescripcionPR").Value)
+        Dim _CodigoPR As String = _Fila.Cells("CodigoPR").Value
+        Dim _DescripcionPR As String = _Fila.Cells("DescripcionPR").Value.ToString.Trim
+        Dim _StFisicoUd1 As Double = _Fila.Cells("StFisicoUd1").Value
+        Dim _Cant_Inventariada As Double = _Fila.Cells("Cant_Inventariada").Value
+        Dim _Dif_Inv_Cantidad As Double = _Fila.Cells("Dif_Inv_Cantidad").Value
+        Dim _Cerrado As Boolean = _Fila.Cells("Cerrado").Value
+        Dim _Recontado As Boolean = _Fila.Cells("Recontado").Value
+        Dim _Levantado As Boolean = _Fila.Cells("Levantado").Value
 
-            Dim FStock_Ud1 As Double = .Rows(.CurrentRow.Index).Cells("StFisicoUd1").Value
-            Dim Cantidad_Inv As Double = .Rows(.CurrentRow.Index).Cells("Cant_Inventariada").Value
-            Dim Dif_Inv_Cantidad As Double = .Rows(.CurrentRow.Index).Cells("Dif_Inv_Cantidad").Value
+        Dim Fm As New Frm_02_Detalle_Producto_Actual(_IdInventario, _CodigoPR)
 
-            Dim _Cerrado As Boolean = .Rows(.CurrentRow.Index).Cells("Cerrado").Value
-            Dim _Recontado As Boolean = .Rows(.CurrentRow.Index).Cells("Recontado").Value
-            Dim _Levantado As Boolean = .Rows(.CurrentRow.Index).Cells("Levantado").Value
+        'Fm._IdInventario = _IdInventario
+        'Fm._Codigo = Codigo
+        'Fm._Descripcion = Descripcion
+        Fm._FStock_Ud1 = _StFisicoUd1
+        Fm._Cantidad_Inv = _Cant_Inventariada
+        Fm._Dif_Inv_Cantidad = _Dif_Inv_Cantidad
+        Fm.Text = "Producto: " & _CodigoPR & " - " & _DescripcionPR
+        Fm.ChkCerrado.Checked = _Cerrado
+        Fm.ChkLevantado.Checked = _Levantado
+        Fm.ChkRecontado.Checked = _Recontado
 
-            Dim Fm As New Frm_02_Detalle_Producto_Actual
+        Fm._FechaInv = _Fecha_Inventario
+        Fm._Empresa = _Empresa
+        Fm._Sucursal = _Sucursal
+        Fm._Bodega = _Bodega
 
-            Fm._IdInventario = _IdInventario
-            Fm._Codigo = Codigo
-            Fm._Descripcion = Descripcion
-            Fm._FStock_Ud1 = FStock_Ud1
-            Fm._Cantidad_Inv = Cantidad_Inv
-            Fm._Dif_Inv_Cantidad = Dif_Inv_Cantidad
-            Fm.Text = "Producto: " & Codigo & " - " & Descripcion
-            Fm.ChkCerrado.Checked = _Cerrado
-            Fm.ChkLevantado.Checked = _Levantado
-            Fm.ChkRecontado.Checked = _Recontado
+        Fm.ShowDialog(Me)
 
-            Fm._FechaInv = _Fecha_Inventario
-            Fm._Empresa = _Empresa
-            Fm._Sucursal = _Sucursal
-            Fm._Bodega = _Bodega
+        If Fm.Recontado Then
+            _Fila.Cells("Cerrado").Value = Fm.ChkCerrado.Checked
+            _Fila.Cells("Recontado").Value = Fm.ChkRecontado.Checked
+            _Fila.Cells("Levantado").Value = Fm.ChkLevantado.Checked
+        End If
 
-            Fm.ShowDialog(Me)
-
-            If Fm._Recontado Then
-                .Rows(.CurrentRow.Index).Cells("Cerrado").Value = Fm.ChkCerrado.Checked
-                .Rows(.CurrentRow.Index).Cells("Recontado").Value = Fm.ChkRecontado.Checked
-                .Rows(.CurrentRow.Index).Cells("Levantado").Value = Fm.ChkLevantado.Checked
-            End If
-
-        End With
-
-
+        Fm.Dispose()
 
     End Sub
 
@@ -537,4 +569,6 @@ Public Class Frm_01_Inventario_Actual
     Private Sub BtnCerrarTodosInvCero_Click(sender As System.Object, e As System.EventArgs) Handles BtnCerrarTodosInvCero.Click
         MessageBoxEx.Show(Me, "En Construcción")
     End Sub
+
+
 End Class
