@@ -205,10 +205,12 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
 
             OcultarEncabezadoGrilla(Grilla)
 
-            .Columns("Chk").Width = 30
-            .Columns("Chk").HeaderText = "Sel."
-            .Columns("Chk").Visible = _Carpeta_Seleccionable
-            .Columns("Chk").ReadOnly = False
+            If _Carpeta_Seleccionable Then
+                .Columns("Chk").Width = 30
+                .Columns("Chk").HeaderText = "Sel."
+                .Columns("Chk").Visible = _Carpeta_Seleccionable
+                .Columns("Chk").ReadOnly = False
+            End If
 
             .Columns("Codigo").Width = 110
             .Columns("Codigo").HeaderText = "Código"

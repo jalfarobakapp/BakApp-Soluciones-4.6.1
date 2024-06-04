@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Frm_Arbol_Lista
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -50,8 +50,13 @@ Partial Class Frm_Arbol_Lista
         Me.Btn_EliminarClasificacion = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem2 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Tree_Bandeja_Adv = New DevComponents.AdvTree.AdvTree()
+        Me.nodeConnector2 = New DevComponents.AdvTree.NodeConnector()
+        Me.elementStyle7 = New DevComponents.DotNetBar.ElementStyle()
+        Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Tree_Bandeja_Adv, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'LabelX1
@@ -74,18 +79,17 @@ Partial Class Frm_Arbol_Lista
         'Tree_Bandeja
         '
         Me.Tree_Bandeja.AllowDrop = True
-        Me.Tree_Bandeja.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Tree_Bandeja.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Tree_Bandeja.BackColor = System.Drawing.Color.White
         Me.Tree_Bandeja.CheckBoxes = True
         Me.Tree_Bandeja.ForeColor = System.Drawing.Color.Black
         Me.Tree_Bandeja.ImageIndex = 0
         Me.Tree_Bandeja.ImageList = Me.Imagenes_16x16
-        Me.Tree_Bandeja.Location = New System.Drawing.Point(12, 53)
+        Me.Tree_Bandeja.Location = New System.Drawing.Point(606, 272)
         Me.Tree_Bandeja.Name = "Tree_Bandeja"
         Me.Tree_Bandeja.SelectedImageIndex = 0
-        Me.Tree_Bandeja.Size = New System.Drawing.Size(682, 453)
+        Me.Tree_Bandeja.Size = New System.Drawing.Size(549, 101)
         Me.Tree_Bandeja.TabIndex = 179
         '
         'Imagenes_16x16
@@ -107,10 +111,10 @@ Partial Class Frm_Arbol_Lista
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Actualizar, Me.Btn_Exportar_Excel})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Actualizar, Me.Btn_Exportar_Excel})
         Me.Bar2.Location = New System.Drawing.Point(0, 515)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(704, 41)
+        Me.Bar2.Size = New System.Drawing.Size(570, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 176
@@ -162,7 +166,7 @@ Partial Class Frm_Arbol_Lista
         Me.Btn_TicketProducto.Image = CType(resources.GetObject("Btn_TicketProducto.Image"), System.Drawing.Image)
         Me.Btn_TicketProducto.ImageAlt = CType(resources.GetObject("Btn_TicketProducto.ImageAlt"), System.Drawing.Image)
         Me.Btn_TicketProducto.Name = "Btn_TicketProducto"
-        Me.Btn_TicketProducto.Text = "Ver información del ticket del producto"
+        Me.Btn_TicketProducto.Text = "Ver informaciÃ³n del ticket del producto"
         '
         'LabelItem4
         '
@@ -201,7 +205,7 @@ Partial Class Frm_Arbol_Lista
         Me.Metro_Bar_Color.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 556)
         Me.Metro_Bar_Color.Name = "Metro_Bar_Color"
-        Me.Metro_Bar_Color.Size = New System.Drawing.Size(704, 22)
+        Me.Metro_Bar_Color.Size = New System.Drawing.Size(570, 22)
         Me.Metro_Bar_Color.TabIndex = 181
         Me.Metro_Bar_Color.Text = "MetroStatusBar1"
         '
@@ -241,8 +245,6 @@ Partial Class Frm_Arbol_Lista
         '
         'Txt_Filtrar
         '
-        Me.Txt_Filtrar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Txt_Filtrar.BackColor = System.Drawing.Color.White
         '
         '
@@ -256,10 +258,10 @@ Partial Class Frm_Arbol_Lista
         Me.Txt_Filtrar.ButtonCustom2.Visible = True
         Me.Txt_Filtrar.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Filtrar.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Filtrar.Location = New System.Drawing.Point(75, 15)
+        Me.Txt_Filtrar.Location = New System.Drawing.Point(75, 12)
         Me.Txt_Filtrar.Name = "Txt_Filtrar"
         Me.Txt_Filtrar.PreventEnterBeep = True
-        Me.Txt_Filtrar.Size = New System.Drawing.Size(619, 22)
+        Me.Txt_Filtrar.Size = New System.Drawing.Size(486, 22)
         Me.Txt_Filtrar.TabIndex = 174
         '
         'Imagenes_16x16_Dark
@@ -273,13 +275,15 @@ Partial Class Frm_Arbol_Lista
         Me.Imagenes_16x16_Dark.Images.SetKeyName(4, "house-1.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(5, "option-check-box-selected.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(6, "option-check-box-unselected.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(7, "folder-list.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(8, "folder-open-list.png")
         '
         'Menu_Contextual
         '
         Me.Menu_Contextual.AntiAlias = True
         Me.Menu_Contextual.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
-        Me.Menu_Contextual.Location = New System.Drawing.Point(114, 115)
+        Me.Menu_Contextual.Location = New System.Drawing.Point(15, 40)
         Me.Menu_Contextual.Name = "Menu_Contextual"
         Me.Menu_Contextual.Size = New System.Drawing.Size(412, 25)
         Me.Menu_Contextual.Stretch = True
@@ -334,7 +338,7 @@ Partial Class Frm_Arbol_Lista
         Me.Btn_CrearClasificacion.ImageAlt = CType(resources.GetObject("Btn_CrearClasificacion.ImageAlt"), System.Drawing.Image)
         Me.Btn_CrearClasificacion.Name = "Btn_CrearClasificacion"
         Me.Btn_CrearClasificacion.Text = "Crear"
-        Me.Btn_CrearClasificacion.Tooltip = "Crear nueva clasificación"
+        Me.Btn_CrearClasificacion.Tooltip = "Crear nueva clasificaciÃ³n"
         '
         'Btn_CambiarNombreCarpeta
         '
@@ -342,7 +346,7 @@ Partial Class Frm_Arbol_Lista
         Me.Btn_CambiarNombreCarpeta.ImageAlt = CType(resources.GetObject("Btn_CambiarNombreCarpeta.ImageAlt"), System.Drawing.Image)
         Me.Btn_CambiarNombreCarpeta.Name = "Btn_CambiarNombreCarpeta"
         Me.Btn_CambiarNombreCarpeta.Text = "Editar"
-        Me.Btn_CambiarNombreCarpeta.Tooltip = "Editar descripción de la clasificación"
+        Me.Btn_CambiarNombreCarpeta.Tooltip = "Editar descripciÃ³n de la clasificaciÃ³n"
         '
         'Btn_EliminarClasificacion
         '
@@ -350,7 +354,7 @@ Partial Class Frm_Arbol_Lista
         Me.Btn_EliminarClasificacion.ImageAlt = CType(resources.GetObject("Btn_EliminarClasificacion.ImageAlt"), System.Drawing.Image)
         Me.Btn_EliminarClasificacion.Name = "Btn_EliminarClasificacion"
         Me.Btn_EliminarClasificacion.Text = "Eliminar"
-        Me.Btn_EliminarClasificacion.Tooltip = "Eliminar clasificación"
+        Me.Btn_EliminarClasificacion.Tooltip = "Eliminar clasificaciÃ³n"
         '
         'LabelItem2
         '
@@ -373,13 +377,57 @@ Partial Class Frm_Arbol_Lista
         Me.Btn_Copiar.Name = "Btn_Copiar"
         Me.Btn_Copiar.Text = "Copiar (portapapeles)"
         '
+        'Tree_Bandeja_Adv
+        '
+        Me.Tree_Bandeja_Adv.AccessibleRole = System.Windows.Forms.AccessibleRole.Outline
+        Me.Tree_Bandeja_Adv.AllowDrop = True
+        Me.Tree_Bandeja_Adv.BackColor = System.Drawing.SystemColors.Window
+        '
+        '
+        '
+        Me.Tree_Bandeja_Adv.BackgroundStyle.Class = "TreeBorderKey"
+        Me.Tree_Bandeja_Adv.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Tree_Bandeja_Adv.CellEdit = True
+        Me.Tree_Bandeja_Adv.ExpandButtonType = DevComponents.AdvTree.eExpandButtonType.Triangle
+        Me.Tree_Bandeja_Adv.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
+        Me.Tree_Bandeja_Adv.Location = New System.Drawing.Point(12, 54)
+        Me.Tree_Bandeja_Adv.Name = "Tree_Bandeja_Adv"
+        Me.Tree_Bandeja_Adv.NodesConnector = Me.nodeConnector2
+        Me.Tree_Bandeja_Adv.NodeStyle = Me.elementStyle7
+        Me.Tree_Bandeja_Adv.PathSeparator = ";"
+        Me.Tree_Bandeja_Adv.Size = New System.Drawing.Size(549, 455)
+        Me.Tree_Bandeja_Adv.Styles.Add(Me.elementStyle7)
+        Me.Tree_Bandeja_Adv.TabIndex = 183
+        Me.Tree_Bandeja_Adv.Text = "advTree6"
+        '
+        'nodeConnector2
+        '
+        Me.nodeConnector2.LineColor = System.Drawing.SystemColors.ControlText
+        '
+        'elementStyle7
+        '
+        Me.elementStyle7.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.elementStyle7.Name = "elementStyle7"
+        Me.elementStyle7.TextColor = System.Drawing.SystemColors.ControlText
+        '
+        'Btn_Grabar
+        '
+        Me.Btn_Grabar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Grabar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Grabar.Image = CType(resources.GetObject("Btn_Grabar.Image"), System.Drawing.Image)
+        Me.Btn_Grabar.ImageAlt = CType(resources.GetObject("Btn_Grabar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Grabar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_Grabar.Name = "Btn_Grabar"
+        Me.Btn_Grabar.Tooltip = "Refrescar datos"
+        '
         'Frm_Arbol_Lista
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(704, 578)
+        Me.ClientSize = New System.Drawing.Size(570, 578)
         Me.Controls.Add(Me.Menu_Contextual)
         Me.Controls.Add(Me.LabelX1)
+        Me.Controls.Add(Me.Tree_Bandeja_Adv)
         Me.Controls.Add(Me.Txt_Filtrar)
         Me.Controls.Add(Me.Tree_Bandeja)
         Me.Controls.Add(Me.Bar2)
@@ -394,6 +442,7 @@ Partial Class Frm_Arbol_Lista
         Me.Text = "MetroForm"
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Tree_Bandeja_Adv, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -424,4 +473,8 @@ Partial Class Frm_Arbol_Lista
     Friend WithEvents Btn_EliminarClasificacion As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LabelItem1 As DevComponents.DotNetBar.LabelItem
     Public WithEvents Btn_Actualizar As DevComponents.DotNetBar.ButtonItem
+    Private WithEvents Tree_Bandeja_Adv As DevComponents.AdvTree.AdvTree
+    Private WithEvents nodeConnector2 As DevComponents.AdvTree.NodeConnector
+    Private WithEvents elementStyle7 As DevComponents.DotNetBar.ElementStyle
+    Public WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
 End Class
