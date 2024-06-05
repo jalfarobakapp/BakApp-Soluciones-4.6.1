@@ -404,6 +404,8 @@ Partial Class Frm_Arbol_Lista
         Me.Tree_Bandeja_Adv.BackgroundStyle.Class = "TreeBorderKey"
         Me.Tree_Bandeja_Adv.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Tree_Bandeja_Adv.CellEdit = True
+        Me.Tree_Bandeja_Adv.DragDropEnabled = False
+        Me.Tree_Bandeja_Adv.DragDropNodeCopyEnabled = False
         Me.Tree_Bandeja_Adv.ExpandButtonType = DevComponents.AdvTree.eExpandButtonType.Triangle
         Me.Tree_Bandeja_Adv.ForeColor = System.Drawing.Color.Black
         Me.Tree_Bandeja_Adv.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
@@ -419,13 +421,13 @@ Partial Class Frm_Arbol_Lista
         '
         'nodeConnector2
         '
-        Me.nodeConnector2.LineColor = System.Drawing.SystemColors.ControlText
+        Me.nodeConnector2.LineColor = System.Drawing.Color.FromArgb(CType(CType(135, Byte), Integer), CType(CType(135, Byte), Integer), CType(CType(135, Byte), Integer))
         '
         'elementStyle7
         '
         Me.elementStyle7.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.elementStyle7.Name = "elementStyle7"
-        Me.elementStyle7.TextColor = System.Drawing.SystemColors.ControlText
+        Me.elementStyle7.TextColor = System.Drawing.Color.Black
         '
         'Frm_Arbol_Lista
         '

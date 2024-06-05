@@ -515,7 +515,7 @@ Public Class Frm_Arbol_Lista
         Dim _Codigo_Nodo As String = _Nodo.Name
         Dim _Descripcion As String = _Nodo.Text
         Dim _Identificador_NodoPadre As Integer = _Nodo.Parent.Name
-        Dim _Es_Seleccionable = _Nodo.Checked
+        Dim _Es_Seleccionable = _Nodo.Tag
         Dim _FullPath As String = _Nodo.FullPath
 
         Dim Fm As New Frm_Arbol_Asociacion_04_Productos_x_class(_Identificador_NodoPadre,
