@@ -28,6 +28,7 @@ Public Class Frm_Arbol_Asociacion_06_CrearEditar
         Me._Identificacdor_NodoPadre = _Identificacdor_NodoPadre
         Me._Nodo_Raiz = _Nodo_Raiz
         Me._Clas_Unica_X_Producto = _Clas_Unica_X_Producto
+        Me._Fullpath = _Fullpath
 
         Sb_Color_Botones_Barra(Bar2)
 

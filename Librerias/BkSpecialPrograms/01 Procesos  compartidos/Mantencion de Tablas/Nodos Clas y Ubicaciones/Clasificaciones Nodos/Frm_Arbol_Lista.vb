@@ -752,7 +752,7 @@ Public Class Frm_Arbol_Lista
         Dim _Nodo As AdvTree.Node = Tree_Bandeja_Adv.SelectedNode
         Dim _Codigo_Nodo As Integer = _Nodo.Name
         Dim _Descripcion As String = _Nodo.Text
-        Dim _Fullpath As String = _Nodo.FullPath
+        Dim _Fullpath As String = Replace(_Nodo.FullPath, ";", "\")
         Dim _Grabar As Boolean
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _Codigo_Nodo
@@ -1095,7 +1095,7 @@ Public Class Frm_Arbol_Lista
     Private Sub Adv_Tree_Bandeja_AfterNodeSelect(sender As Object, e As AdvTree.AdvTreeNodeEventArgs) Handles Tree_Bandeja_Adv.AfterNodeSelect
         Try
             Dim _Nodo As AdvTree.Node = e.Node
-            Lbl_Estatus.Text = _Nodo.FullPath
+            Lbl_Estatus.Text = Replace(_Nodo.FullPath, ";", "\")
         Catch ex As Exception
             Lbl_Estatus.Text = "...\\"
         End Try
