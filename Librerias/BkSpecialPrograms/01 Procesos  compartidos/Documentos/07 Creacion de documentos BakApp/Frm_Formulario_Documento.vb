@@ -1,6 +1,5 @@
 ﻿Imports System.IO
 Imports System.Threading
-Imports System.Web.Services
 Imports BkSpecialPrograms.Bk_Comporamiento_UdMedidas
 Imports DevComponents.DotNetBar
 
@@ -4167,11 +4166,11 @@ Public Class Frm_Formulario_Documento
         Dim _Indice_Agrupa As Integer
         Dim _Existe_En_Lista As Boolean
 
+        Dim _Mensaje As LsValiciones.Mensajes
+
         If SoloprodEnDoc_CLALIBPR Then
 
             Dim _Clalibpr = _RowProducto.Item("CLALIBPR").ToString.Trim
-
-            Dim _Mensaje As LsValiciones.Mensajes
 
             _Mensaje = Fx_RevisarTipoVenta(_Clalibpr)
 
@@ -4189,10 +4188,9 @@ Public Class Frm_Formulario_Documento
                 End If
 
             End If
+        End If
 
-            End If
-
-            For Each _Fl As DataGridViewRow In Grilla_Detalle.Rows
+        For Each _Fl As DataGridViewRow In Grilla_Detalle.Rows
 
             Dim _Codigo2 = _Fl.Cells("Codigo").Value
             Dim _Sucursal2 = _Fl.Cells("Sucursal").Value
@@ -4212,58 +4210,76 @@ Public Class Frm_Formulario_Documento
 
         Next
 
-        If Not _No_Volver_A_Preguntar_Agrupa_Producto Then
+        If _Existe_En_Lista Then
 
-            If _Existe_En_Lista Then
+            _Mensaje = Fx_ProductoEnLista(_Codigo, _Descripcion)
 
-                Dim Chk_Agrupar As New Command
-                Chk_Agrupar.Checked = True
-                Chk_Agrupar.Name = "Chk_Agrupar"
-                Chk_Agrupar.Text = "Agrupar en el registro existente"
+            If Not _Mensaje.EsCorrecto Then
+                _Fila.Cells("Codigo").Value = String.Empty
+                Return
+            End If
 
-                Dim Chk_INSERTar As New Command
-                Chk_INSERTar.Checked = False
-                Chk_INSERTar.Name = "Chk_INSERTar"
-                Chk_INSERTar.Text = "Insertar el producto en un registro nuevo"
-
-                Dim Chk_No_Volver_A_Preguntar As New Command
-                Chk_No_Volver_A_Preguntar.Checked = False
-                Chk_No_Volver_A_Preguntar.Name = "Chk_INSERTar"
-                Chk_No_Volver_A_Preguntar.Text = "No volver a preguntar"
-
-                Dim _Opciones() As Command = {Chk_Agrupar, Chk_INSERTar}
-
-                Dim _Info As New TaskDialogInfo("Producto: " & _Codigo.trim & ", " & _Descripcion.trim,
-                    eTaskDialogIcon.Information2,
-                    "El producto ya esta en la lista",
-                    "Indique su opción",
-                    eTaskDialogButton.Ok, eTaskDialogBackgroundColor.Red, _Opciones, Nothing, Chk_No_Volver_A_Preguntar, Nothing, Nothing)
-
-                Dim _Resultado As eTaskDialogResult = TaskDialog.Show(_Info)
-
-                _No_Volver_A_Preguntar_Agrupa_Producto = Chk_No_Volver_A_Preguntar.Checked
-
-                If _Resultado = eTaskDialogResult.Ok Then
-
-                    If Chk_Agrupar.Checked Then
-
-                        _Fila.Cells("Codigo").Value = String.Empty
-                        Grilla_Detalle.CurrentCell = Grilla_Detalle.Rows(_Indice_Agrupa).Cells("Cantidad")
-                        Grilla_Detalle.Focus()
-                        Return
-
-                    End If
-
-                Else
-
-                    _Fila.Cells("Codigo").Value = String.Empty
-                    Return
-
-                End If
-
+            If _Mensaje.Mensaje = "Agrupar" Then
+                _Fila.Cells("Codigo").Value = String.Empty
+                Grilla_Detalle.CurrentCell = Grilla_Detalle.Rows(_Indice_Agrupa).Cells("Cantidad")
+                Grilla_Detalle.Focus()
+                Return
             End If
 
         End If
+
+        'If Not _No_Volver_A_Preguntar_Agrupa_Producto Then
+
+        '    If _Existe_En_Lista Then
+
+        '        Dim Chk_Agrupar As New Command
+        '        Chk_Agrupar.Checked = True
+        '        Chk_Agrupar.Name = "Chk_Agrupar"
+        '        Chk_Agrupar.Text = "Agrupar en el registro existente"
+
+        '        Dim Chk_INSERTar As New Command
+        '        Chk_INSERTar.Checked = False
+        '        Chk_INSERTar.Name = "Chk_INSERTar"
+        '        Chk_INSERTar.Text = "Insertar el producto en un registro nuevo"
+
+        '        Dim Chk_No_Volver_A_Preguntar As New Command
+        '        Chk_No_Volver_A_Preguntar.Checked = False
+        '        Chk_No_Volver_A_Preguntar.Name = "Chk_INSERTar"
+        '        Chk_No_Volver_A_Preguntar.Text = "No volver a preguntar"
+
+        '        Dim _Opciones() As Command = {Chk_Agrupar, Chk_INSERTar}
+
+        '        Dim _Info As New TaskDialogInfo("Producto: " & _Codigo.trim & ", " & _Descripcion.trim,
+        '            eTaskDialogIcon.Information2,
+        '            "El producto ya esta en la lista",
+        '            "Indique su opción",
+        '            eTaskDialogButton.Ok, eTaskDialogBackgroundColor.Red, _Opciones, Nothing, Chk_No_Volver_A_Preguntar, Nothing, Nothing)
+
+        '        Dim _Resultado As eTaskDialogResult = TaskDialog.Show(_Info)
+
+        '        _No_Volver_A_Preguntar_Agrupa_Producto = Chk_No_Volver_A_Preguntar.Checked
+
+        '        If _Resultado = eTaskDialogResult.Ok Then
+
+        '            If Chk_Agrupar.Checked Then
+
+        '                _Fila.Cells("Codigo").Value = String.Empty
+        '                Grilla_Detalle.CurrentCell = Grilla_Detalle.Rows(_Indice_Agrupa).Cells("Cantidad")
+        '                Grilla_Detalle.Focus()
+        '                Return
+
+        '            End If
+
+        '        Else
+
+        '            _Fila.Cells("Codigo").Value = String.Empty
+        '            Return
+
+        '        End If
+
+        '    End If
+
+        'End If
 
         Consulta_sql = "Select Top 1 PP01UD,PP02UD,DTMA01UD As DSCTOMAX,ECUACION," &
                        "(Select top 1 MELT From TABPP Where KOLT = '" & _CodLista & "') as MELT From TABPRE" & Space(1) &
@@ -4420,6 +4436,91 @@ Public Class Frm_Formulario_Documento
         End If
 
     End Sub
+
+    Function Fx_ProductoEnLista(_Codigo As String, _Descripcion As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            If _No_Volver_A_Preguntar_Agrupa_Producto Then
+                _Mensaje.EsCorrecto = True
+                _Mensaje.Mensaje = "Nuevo"
+                Return _Mensaje
+            End If
+
+            Dim Chk_Agrupar As New Command
+            Chk_Agrupar.Checked = True
+            Chk_Agrupar.Name = "Chk_Agrupar"
+            Chk_Agrupar.Text = "Agrupar en el registro existente"
+
+            Dim Chk_INSERTar As New Command
+            Chk_INSERTar.Checked = False
+            Chk_INSERTar.Name = "Chk_INSERTar"
+            Chk_INSERTar.Text = "Insertar el producto en un registro nuevo"
+
+            Dim Chk_No_Volver_A_Preguntar As New Command
+            Chk_No_Volver_A_Preguntar.Checked = False
+            Chk_No_Volver_A_Preguntar.Name = "Chk_INSERTar"
+            Chk_No_Volver_A_Preguntar.Text = "No volver a preguntar"
+
+            If Not Fx_Tiene_Permiso(Me, "Doc00091",, False) Then
+                Chk_No_Volver_A_Preguntar = Nothing
+            End If
+
+            Dim _Opciones() As Command = {Chk_Agrupar, Chk_INSERTar}
+
+            Dim _Info As New TaskDialogInfo("Producto: " & _Codigo.Trim & ", " & _Descripcion.Trim,
+                    eTaskDialogIcon.Information2,
+                    "El producto ya esta en la lista",
+                    "Indique su opción",
+                    eTaskDialogButton.Ok, eTaskDialogBackgroundColor.Red, _Opciones, Nothing, Chk_No_Volver_A_Preguntar, Nothing, Nothing)
+
+            Dim _Resultado As eTaskDialogResult = TaskDialog.Show(_Info)
+
+            If Not IsNothing(Chk_No_Volver_A_Preguntar) Then
+                _No_Volver_A_Preguntar_Agrupa_Producto = Chk_No_Volver_A_Preguntar.Checked
+            End If
+
+            If _Resultado = eTaskDialogResult.Ok Then
+
+                If Chk_Agrupar.Checked Then
+
+                    _Mensaje.EsCorrecto = True
+                    _Mensaje.Mensaje = "Agrupar"
+
+                    '_Fila.Cells("Codigo").Value = String.Empty
+                    'Grilla_Detalle.CurrentCell = Grilla_Detalle.Rows(_Indice_Agrupa).Cells("Cantidad")
+                    'Grilla_Detalle.Focus()
+
+                End If
+
+                If Chk_INSERTar.Checked Then
+
+                    If Not Fx_Tiene_Permiso(Me, "Doc00092") Then
+                        _Mensaje = Fx_ProductoEnLista(_Codigo, _Descripcion)
+                        If Not _Mensaje.EsCorrecto Then
+                            Return _Mensaje
+                        End If
+                    Else
+                        _Mensaje.EsCorrecto = True
+                        _Mensaje.Mensaje = "Nuevo"
+                    End If
+
+                End If
+
+            End If
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Detalle = "Problema!!"
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
+        End Try
+
+        Return _Mensaje
+
+    End Function
 
     Sub Sb_Traer_Producto_Grilla(_Fila As DataGridViewRow,
                                  _RowProducto As DataRow,

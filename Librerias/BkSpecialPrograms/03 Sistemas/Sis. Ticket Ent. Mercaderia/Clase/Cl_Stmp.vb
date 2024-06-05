@@ -259,7 +259,7 @@ Public Class Cl_Stmp
             _Mensaje_Stem.Mensaje = ex.Message
             _Zw_Stmp_Enc.Id = 0
 
-            myTrans.Rollback()
+            If Not IsNothing(myTrans) Then myTrans.Rollback()
 
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 

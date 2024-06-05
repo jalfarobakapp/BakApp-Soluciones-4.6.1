@@ -30,7 +30,6 @@ Partial Class Frm_MtCreaProd_01_IngBusqEspecial
         Me.BtnAsociaciones = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Asociaciones_Unicas = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Copiar_Arbol_Hijos = New DevComponents.DotNetBar.ButtonItem()
-        Me.BtnAsociaciones_arbol = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Agregar_Clas_Especial = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_VerArbol = New DevComponents.DotNetBar.ButtonItem()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -60,7 +59,7 @@ Partial Class Frm_MtCreaProd_01_IngBusqEspecial
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnAsociaciones, Me.Btn_Asociaciones_Unicas, Me.Btn_Copiar_Arbol_Hijos, Me.BtnAsociaciones_arbol, Me.Btn_Agregar_Clas_Especial, Me.Btn_VerArbol})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnAsociaciones, Me.Btn_Asociaciones_Unicas, Me.Btn_Copiar_Arbol_Hijos, Me.Btn_Agregar_Clas_Especial, Me.Btn_VerArbol})
         Me.Bar1.Location = New System.Drawing.Point(0, 369)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(676, 41)
@@ -78,7 +77,7 @@ Partial Class Frm_MtCreaProd_01_IngBusqEspecial
         Me.BtnAsociaciones.Image = CType(resources.GetObject("BtnAsociaciones.Image"), System.Drawing.Image)
         Me.BtnAsociaciones.ImageAlt = CType(resources.GetObject("BtnAsociaciones.ImageAlt"), System.Drawing.Image)
         Me.BtnAsociaciones.Name = "BtnAsociaciones"
-        Me.BtnAsociaciones.Tooltip = "Clasificar buscando"
+        Me.BtnAsociaciones.Tooltip = "Asociar clasificaciones dinámicas"
         '
         'Btn_Asociaciones_Unicas
         '
@@ -88,7 +87,7 @@ Partial Class Frm_MtCreaProd_01_IngBusqEspecial
         Me.Btn_Asociaciones_Unicas.Image = CType(resources.GetObject("Btn_Asociaciones_Unicas.Image"), System.Drawing.Image)
         Me.Btn_Asociaciones_Unicas.ImageAlt = CType(resources.GetObject("Btn_Asociaciones_Unicas.ImageAlt"), System.Drawing.Image)
         Me.Btn_Asociaciones_Unicas.Name = "Btn_Asociaciones_Unicas"
-        Me.Btn_Asociaciones_Unicas.Tooltip = "Asociar a carpetas unicas"
+        Me.Btn_Asociaciones_Unicas.Tooltip = "Asociar clasificaciones únicas"
         '
         'Btn_Copiar_Arbol_Hijos
         '
@@ -97,18 +96,7 @@ Partial Class Frm_MtCreaProd_01_IngBusqEspecial
         Me.Btn_Copiar_Arbol_Hijos.Image = CType(resources.GetObject("Btn_Copiar_Arbol_Hijos.Image"), System.Drawing.Image)
         Me.Btn_Copiar_Arbol_Hijos.ImageAlt = CType(resources.GetObject("Btn_Copiar_Arbol_Hijos.ImageAlt"), System.Drawing.Image)
         Me.Btn_Copiar_Arbol_Hijos.Name = "Btn_Copiar_Arbol_Hijos"
-        Me.Btn_Copiar_Arbol_Hijos.Tooltip = "Clasificar otros productos igual que este"
-        '
-        'BtnAsociaciones_arbol
-        '
-        Me.BtnAsociaciones_arbol.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.BtnAsociaciones_arbol.FontBold = True
-        Me.BtnAsociaciones_arbol.ForeColor = System.Drawing.Color.Navy
-        Me.BtnAsociaciones_arbol.Image = CType(resources.GetObject("BtnAsociaciones_arbol.Image"), System.Drawing.Image)
-        Me.BtnAsociaciones_arbol.ImageAlt = CType(resources.GetObject("BtnAsociaciones_arbol.ImageAlt"), System.Drawing.Image)
-        Me.BtnAsociaciones_arbol.Name = "BtnAsociaciones_arbol"
-        Me.BtnAsociaciones_arbol.Tooltip = "Reparar arbol del producto"
-        Me.BtnAsociaciones_arbol.Visible = False
+        Me.Btn_Copiar_Arbol_Hijos.Tooltip = "Clasificar otros productos igual que este (solo clasificaciones dinámicas)"
         '
         'Btn_Agregar_Clas_Especial
         '
@@ -176,6 +164,7 @@ Partial Class Frm_MtCreaProd_01_IngBusqEspecial
         Me.TxtDescripcion.Location = New System.Drawing.Point(76, 43)
         Me.TxtDescripcion.Name = "TxtDescripcion"
         Me.TxtDescripcion.PreventEnterBeep = True
+        Me.TxtDescripcion.ReadOnly = True
         Me.TxtDescripcion.Size = New System.Drawing.Size(551, 22)
         Me.TxtDescripcion.TabIndex = 14
         '
@@ -198,6 +187,7 @@ Partial Class Frm_MtCreaProd_01_IngBusqEspecial
         Me.Highlighter1.SetHighlightOnFocus(Me.TxtCodigoGenericoMadre, True)
         Me.TxtCodigoGenericoMadre.Location = New System.Drawing.Point(502, 15)
         Me.TxtCodigoGenericoMadre.Name = "TxtCodigoGenericoMadre"
+        Me.TxtCodigoGenericoMadre.ReadOnly = True
         Me.TxtCodigoGenericoMadre.Size = New System.Drawing.Size(125, 22)
         Me.TxtCodigoGenericoMadre.TabIndex = 13
         Me.TxtCodigoGenericoMadre.Visible = False
@@ -259,9 +249,9 @@ Partial Class Frm_MtCreaProd_01_IngBusqEspecial
         Me.GroupPanel2.Controls.Add(Me.ContextMenuBar1)
         Me.GroupPanel2.Controls.Add(Me.Grilla_Clasificaciones)
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel2.Location = New System.Drawing.Point(12, 117)
+        Me.GroupPanel2.Location = New System.Drawing.Point(12, 106)
         Me.GroupPanel2.Name = "GroupPanel2"
-        Me.GroupPanel2.Size = New System.Drawing.Size(650, 246)
+        Me.GroupPanel2.Size = New System.Drawing.Size(650, 257)
         '
         '
         '
@@ -379,7 +369,7 @@ Partial Class Frm_MtCreaProd_01_IngBusqEspecial
         Me.Grilla_Clasificaciones.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.Grilla_Clasificaciones.RowHeadersVisible = False
         Me.Grilla_Clasificaciones.RowTemplate.Height = 25
-        Me.Grilla_Clasificaciones.Size = New System.Drawing.Size(644, 223)
+        Me.Grilla_Clasificaciones.Size = New System.Drawing.Size(644, 234)
         Me.Grilla_Clasificaciones.TabIndex = 55
         '
         'Frm_MtCreaProd_01_IngBusqEspecial
@@ -419,7 +409,6 @@ Partial Class Frm_MtCreaProd_01_IngBusqEspecial
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Public WithEvents TxtCodigoGenericoMadre As System.Windows.Forms.TextBox
     Friend WithEvents TxtDescripcion As DevComponents.DotNetBar.Controls.TextBoxX
-    Friend WithEvents BtnAsociaciones_arbol As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_VerArbol As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Copiar_Arbol_Hijos As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents GroupPanel2 As DevComponents.DotNetBar.Controls.GroupPanel

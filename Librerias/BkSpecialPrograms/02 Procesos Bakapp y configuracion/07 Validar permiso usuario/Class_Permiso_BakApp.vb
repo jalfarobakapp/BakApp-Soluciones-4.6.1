@@ -23,15 +23,15 @@ Public Class Class_Permiso_BakApp
 
     End Sub
 
-    Function Fx_Tiene_Permiso(ByVal _Codpermiso As String,
-                              Optional ByVal _Func As String = "",
-                              Optional ByVal _Mostrar_Permiso As Boolean = False,
-                              Optional ByVal _Mostrar_Boton_BtnIngresarClave As Boolean = True,
-                              Optional ByVal _Descripcion_Permiso As String = "",
-                              Optional ByVal _CodEntidad As String = "",
-                              Optional ByVal _CodSucEntidad As String = "",
-                              Optional ByVal _Mostrar_Boton_BtnPermisoRemoto As Boolean = True,
-                              Optional ByVal _Mostrar_Boton_BtnOtorgarPermisoPermanente As Boolean = True) As Boolean
+    Function Fx_Tiene_Permiso(_Codpermiso As String,
+                              Optional _Func As String = "",
+                              Optional _Mostrar_Permiso As Boolean = False,
+                              Optional _Mostrar_Boton_BtnIngresarClave As Boolean = True,
+                              Optional _Descripcion_Permiso As String = "",
+                              Optional _CodEntidad As String = "",
+                              Optional _CodSucEntidad As String = "",
+                              Optional _Mostrar_Boton_BtnPermisoRemoto As Boolean = True,
+                              Optional _Mostrar_Boton_BtnOtorgarPermisoPermanente As Boolean = True) As Boolean
 
         Dim _Permiso As Boolean = False
 
@@ -101,15 +101,15 @@ Public Class Class_Permiso_BakApp
 
     End Function
 
-    Function Fx_Tiene_Permiso_Random(ByVal _Codpermiso As String,
-                                     Optional ByVal _Func As String = "",
-                                     Optional ByVal _Mostrar_Permiso As Boolean = False,
-                                     Optional ByVal _Mostrar_Boton_BtnIngresarClave As Boolean = True,
-                                     Optional ByVal _Descripcion_Permiso As String = "",
-                                     Optional ByVal _CodEntidad As String = "",
-                                     Optional ByVal _CodSucEntidad As String = "",
-                                     Optional ByVal _Mostrar_Boton_BtnPermisoRemoto As Boolean = True,
-                                     Optional ByVal _Mostrar_Boton_BtnOtorgarPermisoPermanente As Boolean = True) As Boolean
+    Function Fx_Tiene_Permiso_Random(_Codpermiso As String,
+                                     Optional _Func As String = "",
+                                     Optional _Mostrar_Permiso As Boolean = False,
+                                     Optional _Mostrar_Boton_BtnIngresarClave As Boolean = True,
+                                     Optional _Descripcion_Permiso As String = "",
+                                     Optional _CodEntidad As String = "",
+                                     Optional _CodSucEntidad As String = "",
+                                     Optional _Mostrar_Boton_BtnPermisoRemoto As Boolean = True,
+                                     Optional _Mostrar_Boton_BtnOtorgarPermisoPermanente As Boolean = True) As Boolean
 
         Dim Permiso As Boolean = False
         If String.IsNullOrEmpty(_Func) Then _Func = FUNCIONARIO
@@ -2533,6 +2533,16 @@ Public Class Class_Permiso_BakApp
 
             Case "Doc00090"
                 _DescripcionPermiso = "PERMITIR CAMBIAR LA FECHA DE EMISION EN DOCUMENTOS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+
+            Case "Doc00091"
+                _DescripcionPermiso = "PERMITIR DESMARCAR EL CHECK ""NO VOLVER A PREGUNTAR"". EN INGRESO DE PRODUCTO DUPLICADO EN DOCUMENTO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+
+            Case "Doc00092"
+                _DescripcionPermiso = "PERMITIR INGRESAR PRODUCTOS DUPLICADOS EN DOCUMENTOS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
 

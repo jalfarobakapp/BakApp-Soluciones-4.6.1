@@ -58,8 +58,8 @@ Public Class Frm_Arbol_Lista
 
         If MostrarClasProducto Then
 
-            Dim _NodoRaiz_ClasUnicas As AdvTree.Node = Fx_CrearNodo_Advt(0, "CLASIFICACIONES UNICAS", False, False, 4, 4, eCheckBoxStyle.CheckBox)
-            Dim _NodoRaiz_ClasDinamicas As AdvTree.Node = Fx_CrearNodo_Advt(0, "CLASIFICACIONES DINAMICAS", False, False, 4, 4, eCheckBoxStyle.CheckBox)
+            Dim _NodoRaiz_ClasDinamicas As AdvTree.Node = Fx_CrearNodo_Advt(0, "CLASIFICACIONES DINAMICAS", False, False, 9, 9, eCheckBoxStyle.CheckBox)
+            Dim _NodoRaiz_ClasUnicas As AdvTree.Node = Fx_CrearNodo_Advt(0, "CLASIFICACIONES UNICAS", False, False, 10, 10, eCheckBoxStyle.CheckBox)
 
             Sb_Cargar_Arbol_Advt_ClProd(_NodoRaiz_ClasDinamicas, False)
             Sb_Cargar_Arbol_Advt_ClProd(_NodoRaiz_ClasUnicas, True)
@@ -99,8 +99,7 @@ Public Class Frm_Arbol_Lista
             nodo.Expand()
         Next
 
-
-        Lbl_Estatus.Text = _NodoRaiz.FullPath
+        Lbl_Estatus.Text = Replace(_NodoRaiz.FullPath, ";", "\")
 
         Me.Refresh()
 
@@ -116,8 +115,18 @@ Public Class Frm_Arbol_Lista
         Dim fuenteNegrita As New Font(Tree_Bandeja_Adv.Font.Name, Tree_Bandeja_Adv.Font.Size, FontStyle.Bold)
 
         Dim _NodoRaiz_Advt As AdvTree.Node
+        Dim _Descripcion As String
+        Dim _Icono As Integer
 
-        _NodoRaiz_Advt = Fx_CrearNodo_Advt(0, "CLASIFICACIONES UNICAS", False, False, 4, 4, eCheckBoxStyle.CheckBox)
+        If _Clas_Unica_X_Producto Then
+            _Descripcion = "CLASIFICACIONES UNICAS"
+            _Icono = 10
+        Else
+            _Descripcion = "CLASIFICACIONES DINAMICAS"
+            _Icono = 9
+        End If
+
+        _NodoRaiz_Advt = Fx_CrearNodo_Advt(0, _Descripcion, False, False, _Icono, _Icono, eCheckBoxStyle.CheckBox)
 
         Sb_Cargar_Nodos_Advt(_NodoRaiz_Advt, _Clas_Unica_X_Producto)
 
@@ -134,7 +143,7 @@ Public Class Frm_Arbol_Lista
 
         End If
 
-        Lbl_Estatus.Text = _NodoRaiz_Advt.FullPath
+        Lbl_Estatus.Text = Replace(_NodoRaiz_Advt.FullPath, ";", "\")
 
         Me.Cursor = Cursors.Default
         Me.Enabled = True
@@ -170,7 +179,7 @@ Public Class Frm_Arbol_Lista
 
         'End If
 
-        Lbl_Estatus.Text = _NodoRaiz_Advt.FullPath
+        Lbl_Estatus.Text = Replace(_NodoRaiz_Advt.FullPath, ";", "\")
 
         Me.Cursor = Cursors.Default
         Me.Enabled = True
@@ -495,6 +504,7 @@ Public Class Frm_Arbol_Lista
     Private Sub Tree_Bandeja_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles Tree_Bandeja.AfterSelect
 
         Dim _Nodo As TreeNode = e.Node
+        Lbl_Estatus.Text = Replace(_Nodo.FullPath, ";", "\")
         Lbl_Estatus.Text = _Nodo.FullPath
         Me.Refresh()
 
@@ -518,7 +528,7 @@ Public Class Frm_Arbol_Lista
         If ModoCheckButton Or ModoRadioButton Then
             Fm.ModoSoloLectura = True
         Else
-            Fm.ModoSoloLectura = _Es_Seleccionable
+            Fm.ModoSoloLectura = Not _Es_Seleccionable
         End If
 
         Fm.Pro_Codigo_Heredado = Codigo_Heredado
@@ -661,10 +671,11 @@ Public Class Frm_Arbol_Lista
         Dim _Nodo As AdvTree.Node = Tree_Bandeja_Adv.SelectedNode
         Dim _Codigo_Nodo As Integer = _Nodo.Name
         Dim _Descripcion As String = _Nodo.Text
+        Dim _Fullpath As String = _Nodo.FullPath
 
         Dim _Grabar As Boolean
 
-        Dim Fm As New Frm_Arbol_Asociacion_06_CrearEditar(_Codigo_Nodo, _Nodo.Parent.Name, 0, _Clas_Unica_X_Producto)
+        Dim Fm As New Frm_Arbol_Asociacion_06_CrearEditar(_Codigo_Nodo, _Nodo.Parent.Name, 0, _Clas_Unica_X_Producto, _Fullpath)
         Fm.ShowDialog(Me)
         _Grabar = Fm.Grabar
         Fm.Dispose()
@@ -741,6 +752,7 @@ Public Class Frm_Arbol_Lista
         Dim _Nodo As AdvTree.Node = Tree_Bandeja_Adv.SelectedNode
         Dim _Codigo_Nodo As Integer = _Nodo.Name
         Dim _Descripcion As String = _Nodo.Text
+        Dim _Fullpath As String = _Nodo.FullPath
         Dim _Grabar As Boolean
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _Codigo_Nodo
@@ -758,7 +770,7 @@ Public Class Frm_Arbol_Lista
 
         Dim _Cl_Arbol_Asociaciones As Cl_Arbol_Asociaciones
 
-        Dim Fm As New Frm_Arbol_Asociacion_06_CrearEditar(0, _Codigo_Nodo, _Nodo_Raiz, _Clas_Unica_X_Producto)
+        Dim Fm As New Frm_Arbol_Asociacion_06_CrearEditar(0, _Codigo_Nodo, _Nodo_Raiz, _Clas_Unica_X_Producto, _Fullpath)
         Fm.ShowDialog(Me)
         _Grabar = Fm.Grabar
         _Cl_Arbol_Asociaciones = Fm.Cl_Arbol_Asociaciones

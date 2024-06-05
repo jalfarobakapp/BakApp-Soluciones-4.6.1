@@ -32,9 +32,6 @@ Public Class Frm_MtCreaProd_01_IngBusqEspecial
             TxtDescripcion.ReadOnly = True
         End If
 
-        BtnAsociaciones_arbol.Visible = False
-
-        'AddHandler Grilla_Clasificaciones.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Grilla_Clasificaciones.MouseDown, AddressOf Sb_Grilla_MouseDown
 
     End Sub
@@ -286,44 +283,6 @@ Public Class Frm_MtCreaProd_01_IngBusqEspecial
 
         End If
 
-    End Sub
-
-
-
-    Private Sub BtnAsociaciones_arbol_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnAsociaciones_arbol.Click
-
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
-                       "Where Codigo = '" & TxtCodigo.Text & "' And Producto = 0" & vbCrLf &
-                       "And Codigo_Nodo In" & Space(1) &
-                       "(Select Codigo_Nodo From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Es_Seleccionable = 1)"
-
-        Dim _TblNodos_Hijos_Asociados As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-        If _TblNodos_Hijos_Asociados.Rows.Count Then
-
-            Dim _Clas_Nodo As New Clas_Arbol_Asociaciones(Me)
-
-            'Consulta_sql = "Select Top 1 KOPR as Codigo From MAEPR Where KOPR = '" & TxtCodigo.Text & "'"
-            'Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-            Dim _Sql_Crear_Arbol = String.Empty
-
-            For Each _Fila As DataRow In _TblNodos_Hijos_Asociados.Rows
-
-                Dim _Codigo_Nodo = _Fila.Item("Codigo_Nodo")
-
-                _Sql_Crear_Arbol += "Delete BAKAPP_SG.dbo.Zw_Prod_Asociacion" & vbCrLf &
-                                    "Where Codigo = '" & TxtCodigo.Text & "'" & vbCrLf &
-                                    "And Codigo_Nodo In (Select Codigo_Nodo From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & Space(1) &
-                                    "Where Es_Seleccionable = 0) And Clas_unica = 0" & vbCrLf & vbCrLf
-
-                _Sql_Crear_Arbol += _Clas_Nodo.Fx_Crear_Arbol_de_productos(_Codigo_Nodo, _Codigo_Nodo) & vbCrLf
-
-            Next
-
-            Sb_Actualizar_Grilla()
-
-        End If
     End Sub
 
     Private Sub Btn_VerArbol_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_VerArbol.Click

@@ -28,6 +28,7 @@ Partial Class Frm_Arbol_Lista
         Me.Tree_Bandeja = New System.Windows.Forms.TreeView()
         Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
+        Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Exportar_Excel = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem3 = New DevComponents.DotNetBar.LabelItem()
@@ -53,7 +54,6 @@ Partial Class Frm_Arbol_Lista
         Me.Tree_Bandeja_Adv = New DevComponents.AdvTree.AdvTree()
         Me.nodeConnector2 = New DevComponents.AdvTree.NodeConnector()
         Me.elementStyle7 = New DevComponents.DotNetBar.ElementStyle()
-        Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Tree_Bandeja_Adv, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -105,6 +105,8 @@ Partial Class Frm_Arbol_Lista
         Me.Imagenes_16x16.Images.SetKeyName(6, "option-check-box-unselected.png")
         Me.Imagenes_16x16.Images.SetKeyName(7, "folder-list.png")
         Me.Imagenes_16x16.Images.SetKeyName(8, "folder-open-list.png")
+        Me.Imagenes_16x16.Images.SetKeyName(9, "house-1-ok.png")
+        Me.Imagenes_16x16.Images.SetKeyName(10, "house-1-media-record.png")
         '
         'Bar2
         '
@@ -120,6 +122,16 @@ Partial Class Frm_Arbol_Lista
         Me.Bar2.TabIndex = 176
         Me.Bar2.TabStop = False
         Me.Bar2.Text = "Bar2"
+        '
+        'Btn_Grabar
+        '
+        Me.Btn_Grabar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Grabar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Grabar.Image = CType(resources.GetObject("Btn_Grabar.Image"), System.Drawing.Image)
+        Me.Btn_Grabar.ImageAlt = CType(resources.GetObject("Btn_Grabar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Grabar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_Grabar.Name = "Btn_Grabar"
+        Me.Btn_Grabar.Tooltip = "Refrescar datos"
         '
         'Btn_Actualizar
         '
@@ -277,6 +289,8 @@ Partial Class Frm_Arbol_Lista
         Me.Imagenes_16x16_Dark.Images.SetKeyName(6, "option-check-box-unselected.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(7, "folder-list.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(8, "folder-open-list.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(9, "house-1-ok.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(10, "house-1-media-record.png")
         '
         'Menu_Contextual
         '
@@ -383,7 +397,7 @@ Partial Class Frm_Arbol_Lista
         Me.Tree_Bandeja_Adv.AllowDrop = True
         Me.Tree_Bandeja_Adv.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Tree_Bandeja_Adv.BackColor = System.Drawing.SystemColors.Window
+        Me.Tree_Bandeja_Adv.BackColor = System.Drawing.Color.White
         '
         '
         '
@@ -391,6 +405,7 @@ Partial Class Frm_Arbol_Lista
         Me.Tree_Bandeja_Adv.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Tree_Bandeja_Adv.CellEdit = True
         Me.Tree_Bandeja_Adv.ExpandButtonType = DevComponents.AdvTree.eExpandButtonType.Triangle
+        Me.Tree_Bandeja_Adv.ForeColor = System.Drawing.Color.Black
         Me.Tree_Bandeja_Adv.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         Me.Tree_Bandeja_Adv.Location = New System.Drawing.Point(12, 54)
         Me.Tree_Bandeja_Adv.Name = "Tree_Bandeja_Adv"
@@ -412,16 +427,6 @@ Partial Class Frm_Arbol_Lista
         Me.elementStyle7.Name = "elementStyle7"
         Me.elementStyle7.TextColor = System.Drawing.SystemColors.ControlText
         '
-        'Btn_Grabar
-        '
-        Me.Btn_Grabar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Grabar.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Grabar.Image = CType(resources.GetObject("Btn_Grabar.Image"), System.Drawing.Image)
-        Me.Btn_Grabar.ImageAlt = CType(resources.GetObject("Btn_Grabar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Grabar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_Grabar.Name = "Btn_Grabar"
-        Me.Btn_Grabar.Tooltip = "Refrescar datos"
-        '
         'Frm_Arbol_Lista
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -442,6 +447,7 @@ Partial Class Frm_Arbol_Lista
         Me.MinimizeBox = False
         Me.MinimumSize = New System.Drawing.Size(721, 595)
         Me.Name = "Frm_Arbol_Lista"
+        Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "MetroForm"
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()

@@ -35,8 +35,11 @@ Partial Class Frm_Arbol_Asociacion_06_CrearEditar
         Me.Lbl_Codigo_Madre = New DevComponents.DotNetBar.LabelX()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
+        Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Txt_Fullpath = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.GroupPanel3.SuspendLayout()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupPanel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupPanel3
@@ -240,7 +243,7 @@ Partial Class Frm_Arbol_Asociacion_06_CrearEditar
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar})
-        Me.Bar2.Location = New System.Drawing.Point(0, 217)
+        Me.Bar2.Location = New System.Drawing.Point(0, 289)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(668, 41)
         Me.Bar2.Stretch = True
@@ -259,11 +262,71 @@ Partial Class Frm_Arbol_Asociacion_06_CrearEditar
         Me.Btn_Grabar.Name = "Btn_Grabar"
         Me.Btn_Grabar.Tooltip = "Refrescar datos"
         '
+        'GroupPanel1
+        '
+        Me.GroupPanel1.BackColor = System.Drawing.Color.White
+        Me.GroupPanel1.CanvasColor = System.Drawing.SystemColors.Control
+        Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.Controls.Add(Me.Txt_Fullpath)
+        Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel1.Location = New System.Drawing.Point(12, 214)
+        Me.GroupPanel1.Name = "GroupPanel1"
+        Me.GroupPanel1.Size = New System.Drawing.Size(644, 73)
+        '
+        '
+        '
+        Me.GroupPanel1.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel1.Style.BackColorGradientAngle = 90
+        Me.GroupPanel1.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel1.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderBottomWidth = 1
+        Me.GroupPanel1.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel1.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderLeftWidth = 1
+        Me.GroupPanel1.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderRightWidth = 1
+        Me.GroupPanel1.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderTopWidth = 1
+        Me.GroupPanel1.Style.CornerDiameter = 4
+        Me.GroupPanel1.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel1.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel1.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel1.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel1.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel1.TabIndex = 178
+        Me.GroupPanel1.Text = "Fullpath carpetas madre"
+        '
+        'Txt_Fullpath
+        '
+        Me.Txt_Fullpath.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Fullpath.Border.Class = "TextBoxBorder"
+        Me.Txt_Fullpath.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Fullpath.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.Txt_Fullpath.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Fullpath.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Fullpath.Location = New System.Drawing.Point(3, 7)
+        Me.Txt_Fullpath.Multiline = True
+        Me.Txt_Fullpath.Name = "Txt_Fullpath"
+        Me.Txt_Fullpath.PreventEnterBeep = True
+        Me.Txt_Fullpath.Size = New System.Drawing.Size(632, 40)
+        Me.Txt_Fullpath.TabIndex = 3
+        '
         'Frm_Arbol_Asociacion_06_CrearEditar
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(668, 258)
+        Me.ClientSize = New System.Drawing.Size(668, 330)
+        Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.GroupPanel3)
         Me.DoubleBuffered = True
@@ -272,10 +335,12 @@ Partial Class Frm_Arbol_Asociacion_06_CrearEditar
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Frm_Arbol_Asociacion_06_CrearEditar"
+        Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "EDICION Y CREACION DE CLASIFICACION"
         Me.GroupPanel3.ResumeLayout(False)
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupPanel1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -292,4 +357,6 @@ Partial Class Frm_Arbol_Asociacion_06_CrearEditar
     Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
     Public WithEvents Rdb_Es_Seleccionable As DevComponents.DotNetBar.Controls.CheckBoxX
     Public WithEvents Rdb_Es_Padre As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
+    Public WithEvents Txt_Fullpath As DevComponents.DotNetBar.Controls.TextBoxX
 End Class
