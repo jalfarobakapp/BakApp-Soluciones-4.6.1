@@ -30,10 +30,7 @@ Public Class Frm_Tickets_Areas
         Sb_Actualizar_Grilla()
 
         If Not ModoSeleccion Then
-
             AddHandler Grilla_Areas.MouseDown, AddressOf Sb_Grilla_Areas_MouseDown
-            AddHandler Grilla_Tipos.MouseDown, AddressOf Sb_Grilla_Tipos_MouseDown
-
         End If
 
         AddHandler Grilla_Areas.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
@@ -169,18 +166,6 @@ Public Class Frm_Tickets_Areas
         End If
     End Sub
 
-    Private Sub Sb_Grilla_Tipos_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
-        If e.Button = Windows.Forms.MouseButtons.Right Then
-            With sender
-                Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
-                If Hitest.Type = DataGridViewHitTestType.Cell Then
-                    .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
-                    ShowContextMenu(Menu_Contextual_02)
-                End If
-            End With
-        End If
-    End Sub
-
     Private Sub Btn_Mnu_AsociarTipos_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_AsociarTipos.Click
 
         Dim _FilaArea As DataGridViewRow = Grilla_Areas.CurrentRow
@@ -199,12 +184,6 @@ Public Class Frm_Tickets_Areas
         If _Grabar Then
             Sb_Actualizar_Grilla_Tipos(_Id_Area)
         End If
-
-        'Dim Fm As New Frm_Tickets_Tipos(_Id_Area)
-        'Fm.ShowDialog(Me)
-        'Fm.Dispose()
-
-        'Call Grilla_Areas_CellEnter(Nothing, Nothing)
 
     End Sub
 
@@ -265,32 +244,7 @@ Public Class Frm_Tickets_Areas
 
     End Sub
 
-    Private Sub Btn_Mnu_QuitarTipo_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_QuitarTipo.Click
-
-        Dim _Fila As DataGridViewRow = Grilla_Tipos.CurrentRow
-        Dim _Id As Integer = _Fila.Cells("Id").Value
-
-        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets", "Id_Tipo = " & _Id)
-
-        If CBool(_Reg) Then
-            MessageBoxEx.Show(Me, "No se puede eliminar este tipo de ticket, ya que tiene ticket asociados",
-                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Return
-        End If
-
-        If MessageBoxEx.Show(Me, "¿Confirma eliminar este Tipo de requerimiento?", "Quitar tipo de requerimiento",
-                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
-            Return
-        End If
-
-        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_Tipos Where Id = " & _Id
-        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-            Grilla_Tipos.Rows.Remove(_Fila)
-        End If
-
-    End Sub
-
-    Private Sub Btn_Mnu_EditarTipo_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_EditarTipo.Click
+    Private Sub Grilla_Tipos_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Tipos.CellDoubleClick
 
         Dim _Fila As DataGridViewRow = Grilla_Tipos.CurrentRow
 
@@ -298,13 +252,12 @@ Public Class Frm_Tickets_Areas
         Dim _Id_Tipo As Integer = _Fila.Cells("Id").Value
         Dim _Tipo As String = _Fila.Cells("Tipo").Value
 
-        'Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets", "Estado = 'ABIE' And Id_Tipo = " & _Id_Tipo)
+        Id_Tipo_Seleccionado = _Fila.Cells("Id").Value
 
-        'If CBool(_Reg) Then
-        '    MessageBoxEx.Show(Me, "Existen Tickets asignados a este tipo de requerimiento, solo se puede editar la asignación.",
-        '                       "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-        'End If
-
+        If ModoSeleccion Then
+            Me.Close()
+            Return
+        End If
 
         Dim _Grabar As Boolean
         Dim _Row_Tipo As DataRow
@@ -318,19 +271,6 @@ Public Class Frm_Tickets_Areas
         If _Grabar Then
             Sb_Actualizar_Grilla_Tipos(_Id_Area)
         End If
-
-    End Sub
-
-    Private Sub Grilla_Tipos_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Tipos.CellDoubleClick
-
-        If ModoSeleccion Then
-            Dim _Fila As DataGridViewRow = Grilla_Tipos.CurrentRow
-            Id_Tipo_Seleccionado = _Fila.Cells("Id").Value
-            Me.Close()
-            Return
-        End If
-
-        ShowContextMenu(Menu_Contextual_02)
 
     End Sub
 

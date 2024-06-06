@@ -64,9 +64,10 @@ Public Class Frm_Tickets_Lista
 
         Sb_Actualizar_Grilla_Treeview(Nothing)
         Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(0))
-        If _EsAgente Then
-            Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(1))
-        End If
+        Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(1))
+        'If _EsAgente Then
+        '    Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(1))
+        'End If
 
     End Sub
 
@@ -494,9 +495,10 @@ Public Class Frm_Tickets_Lista
 
         If False Then
             Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(0))
-            If _EsAgente Then
-                Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(1))
-            End If
+            Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(1))
+            'If _EsAgente Then
+            '    Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(1))
+            'End If
         End If
 
         Dim _Condicion As String = String.Empty
@@ -959,9 +961,11 @@ Public Class Frm_Tickets_Lista
         If nodoSeleccionado IsNot Nothing Then
 
             Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(0))
-            If _EsAgente Then
-                Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(1))
-            End If
+            Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(1))
+
+            'If _EsAgente Then
+            '    Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(1))
+            'End If
 
             Sb_Actualizar_Grilla_Treeview(nodoSeleccionado)
 
@@ -1041,15 +1045,15 @@ Public Class Frm_Tickets_Lista
 
         Tree_Bandeja.ExpandAll()
 
-        If Not (_EsAgente) Then
+        'If Not (_EsAgente) Then
 
-            ' Obtén el nodo que deseas eliminar (por ejemplo, el primer nodo hijo del nodo raíz):
-            Dim nodoAEliminar As TreeNode = Tree_Bandeja.Nodes(0)
+        '    ' Obtén el nodo que deseas eliminar (por ejemplo, el primer nodo hijo del nodo raíz):
+        '    Dim nodoAEliminar As TreeNode = Tree_Bandeja.Nodes(0)
 
-            ' Elimina el nodo:
-            Tree_Bandeja.Nodes(0).Nodes.Remove(nodoAEliminar)
+        '    ' Elimina el nodo:
+        '    Tree_Bandeja.Nodes(0).Nodes.Remove(nodoAEliminar)
 
-        End If
+        'End If
 
         Tree_Bandeja.Update()
 

@@ -32,6 +32,7 @@ Partial Class Frm_Tickets_Areas
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_CrearArea = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_ExportarExcel = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Cerrar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grilla_Tipos = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
@@ -43,11 +44,7 @@ Partial Class Frm_Tickets_Areas
         Me.Btn_Mnu_AsociarTipos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_EditarArea = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_EliminarArea = New DevComponents.DotNetBar.ButtonItem()
-        Me.Menu_Contextual_02 = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Mnu_EditarTipo = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Mnu_QuitarTipo = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla_Areas = New DevComponents.DotNetBar.Controls.DataGridViewX()
-        Me.Btn_Cerrar = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.Grilla_Tipos, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -90,6 +87,17 @@ Partial Class Frm_Tickets_Areas
         Me.Btn_ExportarExcel.Name = "Btn_ExportarExcel"
         Me.Btn_ExportarExcel.Tooltip = "Exportar a Excel"
         Me.Btn_ExportarExcel.Visible = False
+        '
+        'Btn_Cerrar
+        '
+        Me.Btn_Cerrar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Cerrar.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Btn_Cerrar.Image = CType(resources.GetObject("Btn_Cerrar.Image"), System.Drawing.Image)
+        Me.Btn_Cerrar.ImageAlt = CType(resources.GetObject("Btn_Cerrar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Cerrar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_Cerrar.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
+        Me.Btn_Cerrar.Name = "Btn_Cerrar"
+        Me.Btn_Cerrar.Tooltip = "Cerrar formulario"
         '
         'GroupPanel2
         '
@@ -291,7 +299,7 @@ Partial Class Frm_Tickets_Areas
         '
         Me.ContextMenuBar1.AntiAlias = True
         Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01, Me.Menu_Contextual_02})
+        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
         Me.ContextMenuBar1.Location = New System.Drawing.Point(77, 33)
         Me.ContextMenuBar1.Name = "ContextMenuBar1"
         Me.ContextMenuBar1.Size = New System.Drawing.Size(330, 25)
@@ -328,27 +336,6 @@ Partial Class Frm_Tickets_Areas
         Me.Btn_Mnu_EliminarArea.ImageAlt = CType(resources.GetObject("Btn_Mnu_EliminarArea.ImageAlt"), System.Drawing.Image)
         Me.Btn_Mnu_EliminarArea.Name = "Btn_Mnu_EliminarArea"
         Me.Btn_Mnu_EliminarArea.Text = "Eliminar area"
-        '
-        'Menu_Contextual_02
-        '
-        Me.Menu_Contextual_02.AutoExpandOnClick = True
-        Me.Menu_Contextual_02.Name = "Menu_Contextual_02"
-        Me.Menu_Contextual_02.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_EditarTipo, Me.Btn_Mnu_QuitarTipo})
-        Me.Menu_Contextual_02.Text = "Opciones"
-        '
-        'Btn_Mnu_EditarTipo
-        '
-        Me.Btn_Mnu_EditarTipo.Image = CType(resources.GetObject("Btn_Mnu_EditarTipo.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_EditarTipo.ImageAlt = CType(resources.GetObject("Btn_Mnu_EditarTipo.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_EditarTipo.Name = "Btn_Mnu_EditarTipo"
-        Me.Btn_Mnu_EditarTipo.Text = "Editar tipo de requerimiento"
-        '
-        'Btn_Mnu_QuitarTipo
-        '
-        Me.Btn_Mnu_QuitarTipo.Image = CType(resources.GetObject("Btn_Mnu_QuitarTipo.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_QuitarTipo.ImageAlt = CType(resources.GetObject("Btn_Mnu_QuitarTipo.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_QuitarTipo.Name = "Btn_Mnu_QuitarTipo"
-        Me.Btn_Mnu_QuitarTipo.Text = "Eliminar tipo de requerimiento del area"
         '
         'Grilla_Areas
         '
@@ -390,17 +377,6 @@ Partial Class Frm_Tickets_Areas
         Me.Grilla_Areas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.Grilla_Areas.Size = New System.Drawing.Size(666, 310)
         Me.Grilla_Areas.TabIndex = 1
-        '
-        'Btn_Cerrar
-        '
-        Me.Btn_Cerrar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Cerrar.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Btn_Cerrar.Image = CType(resources.GetObject("Btn_Cerrar.Image"), System.Drawing.Image)
-        Me.Btn_Cerrar.ImageAlt = CType(resources.GetObject("Btn_Cerrar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Cerrar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_Cerrar.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
-        Me.Btn_Cerrar.Name = "Btn_Cerrar"
-        Me.Btn_Cerrar.Tooltip = "Cerrar formulario"
         '
         'Frm_Tickets_Areas
         '
@@ -444,10 +420,7 @@ Partial Class Frm_Tickets_Areas
     Friend WithEvents Menu_Contextual_01 As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mnu_EditarArea As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mnu_AsociarTipos As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Menu_Contextual_02 As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_Mnu_QuitarTipo As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Grilla_Areas As DevComponents.DotNetBar.Controls.DataGridViewX
-    Friend WithEvents Btn_Mnu_EditarTipo As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mnu_EliminarArea As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Cerrar As DevComponents.DotNetBar.ButtonItem
 End Class

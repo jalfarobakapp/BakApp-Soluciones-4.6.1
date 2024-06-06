@@ -6,6 +6,7 @@ Public Class Frm_Tickets_TiposCrear
     Dim Consulta_sql As String
 
     Public Grabar As Boolean
+
     Dim Cl_Tickets As New Cl_Tickets
 
     Public Property Row_Tipo As DataRow
@@ -20,6 +21,8 @@ Public Class Frm_Tickets_TiposCrear
 
         _Zw_Stk_Tipos = Cl_Tickets.Fx_Llenar_Tipo(_Id_Tipo)
         _Zw_Stk_Tipos.Id_Area = _Id_Area
+
+        Sb_Color_Botones_Barra(Bar2)
 
     End Sub
 
@@ -61,6 +64,9 @@ Public Class Frm_Tickets_TiposCrear
             Txt_RespuestaXDefecto.Text = .RespuestaXDefecto
             Txt_RespuestaXDefectoCerrar.Text = .RespuestaXDefectoCerrar
 
+            Rdb_EsTicketUnico.Checked = .EsTicketUnico
+            Rdb_NoEsTicketUnico.Checked = Not .EsTicketUnico
+
         End With
 
         Txt_Agente.Enabled = Rdb_AsignadoAgente.Checked
@@ -84,6 +90,11 @@ Public Class Frm_Tickets_TiposCrear
         Chk_Inc_Fecha.Enabled = Chk_ExigeProducto.Checked
         Chk_Inc_Hora.Enabled = Chk_ExigeProducto.Checked
         Chk_BodModalXDefecto.Enabled = Chk_ExigeProducto.Checked
+
+        'Lbl_Area_Cie.Enabled = Rdb_NoEsTicketUnico.Checked
+        'Lbl_Tipo_Cie.Enabled = Rdb_NoEsTicketUnico.Checked
+        'Txt_Area_Cie.Enabled = Rdb_NoEsTicketUnico.Checked
+        'Txt_Tipo_Cie.Enabled = Rdb_NoEsTicketUnico.Checked
 
     End Sub
 
@@ -150,6 +161,25 @@ Public Class Frm_Tickets_TiposCrear
 
         End If
 
+        If Not Rdb_EsTicketUnico.Checked AndAlso Not Rdb_NoEsTicketUnico.Checked Then
+            MessageBoxEx.Show(Me, "Debe marcar si el Ticket es único o no",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If Rdb_NoEsTicketUnico.Checked AndAlso (String.IsNullOrEmpty(Txt_Area_Cie.Text) Or String.IsNullOrEmpty(Txt_Tipo_Cie.Text)) Then
+            MessageBoxEx.Show(Me, "Debe seleccionar un Area (Cierre Tickets) y Tipo (Cierre Tickets)",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If Rdb_EsTicketUnico.Checked Then
+            Txt_Area_Cie.Tag = 0
+            Txt_Area_Cie.Text = String.Empty
+            Txt_Tipo_Cie.Tag = 0
+            Txt_Tipo_Cie.Text = String.Empty
+        End If
+
         With _Zw_Stk_Tipos
 
             .Tipo = Txt_Tipo.Text.Trim
@@ -170,6 +200,8 @@ Public Class Frm_Tickets_TiposCrear
             .CerrarAgenteSinPerm = Chk_CerrarAgenteSinPerm.Checked
             .RespuestaXDefecto = Txt_RespuestaXDefecto.Text
             .RespuestaXDefectoCerrar = Txt_RespuestaXDefectoCerrar.Text
+
+            .EsTicketUnico = Rdb_EsTicketUnico.Checked
 
             Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tipos", "Tipo = '" & .Tipo & "' And Id <> " & .Id)
 
@@ -341,7 +373,6 @@ Public Class Frm_Tickets_TiposCrear
 
         End If
 
-
     End Sub
 
     Private Sub Txt_Tipo_Cie_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Tipo_Cie.ButtonCustomClick
@@ -392,4 +423,44 @@ Public Class Frm_Tickets_TiposCrear
 
     End Sub
 
+    Private Sub Rdb_NoEsTicketUnico_CheckedChanged(sender As Object, e As EventArgs) Handles Rdb_NoEsTicketUnico.CheckedChanged
+        Lbl_Area_Cie.Enabled = Rdb_NoEsTicketUnico.Checked
+        Lbl_Tipo_Cie.Enabled = Rdb_NoEsTicketUnico.Checked
+        Txt_Area_Cie.Enabled = Rdb_NoEsTicketUnico.Checked
+        Txt_Tipo_Cie.Enabled = Rdb_NoEsTicketUnico.Checked
+    End Sub
+
+    Private Sub Rdb_EsTicketUnico_CheckedChanged(sender As Object, e As EventArgs) Handles Rdb_EsTicketUnico.CheckedChanged
+        Lbl_Area_Cie.Enabled = Rdb_NoEsTicketUnico.Checked
+        Lbl_Tipo_Cie.Enabled = Rdb_NoEsTicketUnico.Checked
+        Txt_Area_Cie.Enabled = Rdb_NoEsTicketUnico.Checked
+        Txt_Tipo_Cie.Enabled = Rdb_NoEsTicketUnico.Checked
+    End Sub
+
+    Private Sub Btn_Eliminar_Click(sender As Object, e As EventArgs) Handles Btn_Eliminar.Click
+
+        With _Zw_Stk_Tipos
+
+            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets", "Id_Tipo = " & .Id)
+
+            If CBool(_Reg) Then
+                MessageBoxEx.Show(Me, "No se puede eliminar este tipo de ticket, ya que tiene ticket asociados",
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+            If MessageBoxEx.Show(Me, "¿Confirma eliminar este Tipo de requerimiento?", "Quitar tipo de requerimiento",
+                                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                Return
+            End If
+
+            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_Tipos Where Id = " & .Id
+            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+                Grabar = True
+                Me.Close()
+            End If
+
+        End With
+
+    End Sub
 End Class

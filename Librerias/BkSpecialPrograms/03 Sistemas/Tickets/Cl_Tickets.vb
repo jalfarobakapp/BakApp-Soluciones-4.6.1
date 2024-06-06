@@ -164,6 +164,7 @@ Public Class Cl_Tickets
                 .CerrarAgenteSinPerm = _Row_Tipo.Item("CerrarAgenteSinPerm")
                 .RespuestaXDefecto = _Row_Tipo.Item("RespuestaXDefecto")
                 .RespuestaXDefectoCerrar = _Row_Tipo.Item("RespuestaXDefectoCerrar")
+                .EsTicketUnico = _Row_Tipo.Item("EsTicketUnico")
 
             End If
 
@@ -832,6 +833,7 @@ Public Class Cl_Tickets
                                 ",CerrarAgenteSinPerm = " & Convert.ToInt32(.CerrarAgenteSinPerm) & vbCrLf &
                                 ",RespuestaXDefecto = '" & .RespuestaXDefecto & "'" & vbCrLf &
                                 ",RespuestaXDefectoCerrar = '" & .RespuestaXDefectoCerrar & "'" & vbCrLf &
+                                ",EsTicketUnico = '" & Convert.ToInt32(.EsTicketUnico) & "'" & vbCrLf &
                                 "Where Id = " & .Id
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)

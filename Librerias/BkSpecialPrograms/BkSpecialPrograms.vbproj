@@ -2469,10 +2469,22 @@
     <Compile Include="03 Sistemas\Tickets\Frm_Tickets_BuscarAsunto.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_BuscarTipo.Designer.vb">
+      <DependentUpon>Frm_Tickets_BuscarTipo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_BuscarTipo.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Tickets\Frm_Tickets_IngProducto.Designer.vb">
       <DependentUpon>Frm_Tickets_IngProducto.vb</DependentUpon>
     </Compile>
     <Compile Include="03 Sistemas\Tickets\Frm_Tickets_IngProducto.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_Lista_Tree.Designer.vb">
+      <DependentUpon>Frm_Tickets_Lista_Tree.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_Lista_Tree.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Tickets\Frm_Tickets_Mant.Designer.vb">
@@ -6005,11 +6017,17 @@
     <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_BuscarAsunto.resx">
       <DependentUpon>Frm_Tickets_BuscarAsunto.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_BuscarTipo.resx">
+      <DependentUpon>Frm_Tickets_BuscarTipo.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_IngProducto.resx">
       <DependentUpon>Frm_Tickets_IngProducto.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_Lista.resx">
       <DependentUpon>Frm_Tickets_Lista.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_Lista_Tree.resx">
+      <DependentUpon>Frm_Tickets_Lista_Tree.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_Mant.resx">
       <DependentUpon>Frm_Tickets_Mant.vb</DependentUpon>
