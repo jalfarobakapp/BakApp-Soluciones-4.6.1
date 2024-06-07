@@ -493,14 +493,12 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.White, ScrollBars.Vertical, True, True, _Seleccionar_Multiple)
-        'Sb_Formato_Generico_Grilla(GrillaBusquedaOtros, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
 
         _Seleccionado = False
 
         Sb_Actualizar_Tbl_Bodegas()
 
         Sb_Color_Botones_Barra(Bar1)
-        'Sb_Color_Botones_Barra(Bar2)
         Sb_Color_Botones_Barra(Bar_Menu_Producto)
 
         If Global_Thema = Enum_Themas.Oscuro Then
@@ -565,23 +563,11 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         ChkMostrarOcultos.Checked = False
 
         If _Trabajar_Alternativos Then
-
             AddHandler Grilla.CellDoubleClick, AddressOf Sb_Seleccionar_Producto_doble_clic_Alternativos
-            'AddHandler Btn_Seleccionar.Click, AddressOf Sb_Seleccionar_Producto_doble_clic_Alternativos
-
-            'Me.ActiveControl = TxtCodigo
         ElseIf _Trabajar_Ubicaciones Then
-
             AddHandler Grilla.CellDoubleClick, AddressOf Sb_Seleccionar_Producto_doble_clic_Ubicaciones
-            'AddHandler Btn_Seleccionar.Click, AddressOf Sb_Seleccionar_Producto_doble_clic_Ubicaciones
-
-            'Me.ActiveControl = Txtdescripcion
         Else
-
             AddHandler Grilla.CellDoubleClick, AddressOf Sb_Seleccionar_Producto_doble_clic
-            'AddHandler Btn_Seleccionar.Click, AddressOf Sb_Seleccionar_Producto_doble_clic
-
-            'Me.ActiveControl = Txtdescripcion
         End If
 
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
@@ -589,7 +575,6 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         If CBool(Grilla.Rows.Count) Then
             Grilla.CurrentCell = Grilla.Rows(0).Cells("Codigo")
         End If
-
 
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
 
@@ -602,7 +587,6 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
             Case Enum_Top20.Top_Compras, Enum_Top20.Top_Ventas
 
-                'Tab_Top20.Visible = True
                 Btn_Top20.Visible = True
 
                 Dim _Filtro_Tido As String
@@ -641,12 +625,9 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
                 _Tbl_Top20 = _Sql.Fx_Get_Tablas(Consulta_sql)
 
-                'Sb_Formato_Grilla()
-
             Case Else
 
                 Btn_Top20.Visible = False
-                'Tab_Top20.Visible = False
 
         End Select
 
@@ -874,13 +855,6 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
             Next
 
-            'If _Mostrar_Info Then
-            'If _Mostrar_Precios Then
-            ''Sb_Ejecutar_Ecuacion_Dinamica(NewFila)
-            '_Cl_ActFxDinXProductos.Sb_Iniciar(_Tbl_Productos_Grilla, _ListaBusq)
-            'End If
-            'End If
-
             _Tbl_Productos_Grilla.Rows.Add(NewFila)
 
         End With
@@ -1041,10 +1015,6 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
                     If _PrimerCarac = "%" Then _Sep1 = "%"
                     If _UltimoCarac = "%" Then _Sep2 = "%"
-
-                    'If _PrimerCarac = "%" AndAlso _UltimoCarac = "%" Then
-                    '    _Sep1 = "%" : _Sep2 = "%"
-                    'End If
 
                 End If
 
@@ -1241,7 +1211,6 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                         Dim _Ancho = 60
 
                         If _Mostrar_Stock_Disponible Then
-                            '_Campo_Bod = "STDiponible_Ud1_" & _Emp & _Suc & _Bod
                             _Descr_Cam = "St." & _Bod
                             .Columns(_Campo_Bod).ToolTipText = "Stock disponible bodega " & _Bod
                         End If
@@ -1632,10 +1601,10 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
         If e.KeyValue = Keys.Down Then
             Grilla.Focus()
-            Me.ActiveControl = Grilla ' Txtdescripcion
+            Me.ActiveControl = Grilla
         End If
 
-        If e.KeyValue = Keys.Return Then 'Or e.KeyValue = Keys.Space Then
+        If e.KeyValue = Keys.Return Then
 
             If _Text_Ultima_Busqueda <> Txtdescripcion.Text Then
                 _Top = _Top_Filas
@@ -1998,7 +1967,8 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                                "DELETE " & _Global_BaseBk & "Zw_Prod_Dimensiones WHERE Codigo ='" & _Codigo_a_eliminar & "'" & vbCrLf &
                                "UPDATE " & _Global_BaseBk & "Zw_ListaPreCosto Set Codigo = '', Descripcion = ''" & Space(1) &
                                "WHERE  Codigo = '" & _Codigo_a_eliminar & "' AND Proveedor <> ''" & vbCrLf &
-                               "DELETE " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo = '" & _Codigo_a_eliminar & "' And Producto = 1"
+                               "DELETE " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo = '" & _Codigo_a_eliminar & "' And Producto = 1" & vbCrLf &
+                               "DELETE " & _Global_BaseBk & "Zw_Productos Where Codigo = '" & _Codigo_a_eliminar & "'"
 
                 Return _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
@@ -2061,7 +2031,8 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                        "DELETE " & _Global_BaseBk_Externa & "Zw_Prod_Dimensiones WHERE Codigo ='" & _Codigo_a_eliminar & "'" & vbCrLf &
                        "UPDATE " & _Global_BaseBk_Externa & "Zw_ListaPreCosto Set Codigo = '', Descripcion = ''" & Space(1) &
                        "WHERE  Codigo = '" & _Codigo_a_eliminar & "' AND Proveedor <> ''" & vbCrLf &
-                       "DELETE " & _Global_BaseBk_Externa & "Zw_Prod_Asociacion Where Codigo = '" & _Codigo_a_eliminar & "' And Producto = 1"
+                       "DELETE " & _Global_BaseBk_Externa & "Zw_Prod_Asociacion Where Codigo = '" & _Codigo_a_eliminar & "' And Producto = 1" & vbCrLf &
+                       "DELETE " & _Global_BaseBk_Externa & "Zw_Productos Where Codigo = '" & _Codigo_a_eliminar & "'"
 
         _Cl_EliminaProd.SqlQueruDelete = Consulta_sql
 

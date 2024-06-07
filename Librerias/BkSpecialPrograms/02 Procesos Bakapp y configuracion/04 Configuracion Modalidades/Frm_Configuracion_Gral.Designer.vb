@@ -51,11 +51,10 @@ Partial Class Frm_Configuracion_Gral
         Me.Cmb_TipoValor_Bruto_Neto = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.SuperTabControl1 = New DevComponents.DotNetBar.SuperTabControl()
-        Me.SuperTabControlPanel6 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.Input_Dias_Para_Hacer_NCV = New DevComponents.Editors.IntegerInput()
-        Me.Lbl_Dias_Para_Hacer_NCV = New DevComponents.DotNetBar.LabelX()
-        Me.SpTab_Ventas = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel4 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Chk_SoloprodEnDoc_CLALIBPR = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_SoloprodEnDoc_Todos = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_CriterioFechaGDVconFechaDistintaDocOrigenObligatorio = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Btn_Buscar_Cliente = New DevComponents.DotNetBar.ButtonX()
@@ -65,6 +64,10 @@ Partial Class Frm_Configuracion_Gral
         Me.Cmb_CriterioFechaGDVconFechaDistintaDocOrigen = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.Txt_ValorMinimoNVV = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.SpTab_Ventas2 = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel6 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.Input_Dias_Para_Hacer_NCV = New DevComponents.Editors.IntegerInput()
+        Me.Lbl_Dias_Para_Hacer_NCV = New DevComponents.DotNetBar.LabelX()
+        Me.SpTab_Ventas = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
         Me.Chk_Revisar_Tasa_de_Cambio = New DevComponents.DotNetBar.Controls.CheckBoxX()
@@ -166,18 +169,16 @@ Partial Class Frm_Configuracion_Gral
         Me.Btn_DocConceptosVsPagos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_ConfPuntosVta = New DevComponents.DotNetBar.ButtonItem()
         Me.CheckBoxX2 = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Chk_SoloprodEnDoc_CLALIBPR = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_SoloprodEnDoc_Todos = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.TableLayoutPanel3.SuspendLayout()
         CType(Me.Input_Monto_Max_CRV_FacMasiva, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel4.SuspendLayout()
         CType(Me.Input_Dias_Max_Fecha_Despacho, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControl1.SuspendLayout()
+        Me.SuperTabControlPanel4.SuspendLayout()
+        Me.GroupPanel2.SuspendLayout()
         Me.SuperTabControlPanel6.SuspendLayout()
         CType(Me.Input_Dias_Para_Hacer_NCV, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SuperTabControlPanel4.SuspendLayout()
         Me.SuperTabControlPanel1.SuspendLayout()
         Me.TableLayoutPanel5.SuspendLayout()
         Me.SuperTabControlPanel9.SuspendLayout()
@@ -192,7 +193,6 @@ Partial Class Frm_Configuracion_Gral
         Me.GroupPanel1.SuspendLayout()
         Me.SuperTabControlPanel3.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupPanel2.SuspendLayout()
         Me.SuspendLayout()
         '
         'TableLayoutPanel3
@@ -700,10 +700,10 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControl1.ControlBox.MenuBox.Name = ""
         Me.SuperTabControl1.ControlBox.Name = ""
         Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel9)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel4)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel6)
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel9)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel5)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel7)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel8)
@@ -721,55 +721,6 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControl1.TabIndex = 97
         Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SpTab_General, Me.SpTab_Compras, Me.SpTab_Ventas, Me.SpTab_Ventas2, Me.SpTab_Productos, Me.SuperTabItem1, Me.SpTab_DatosEmpresa, Me.SpTab_FincredPays, Me.SpTab_Logistica})
         Me.SuperTabControl1.Text = "SuperTabControl1"
-        '
-        'SuperTabControlPanel6
-        '
-        Me.SuperTabControlPanel6.Controls.Add(Me.Input_Dias_Para_Hacer_NCV)
-        Me.SuperTabControlPanel6.Controls.Add(Me.TableLayoutPanel3)
-        Me.SuperTabControlPanel6.Controls.Add(Me.Lbl_Dias_Para_Hacer_NCV)
-        Me.SuperTabControlPanel6.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel6.Location = New System.Drawing.Point(125, 0)
-        Me.SuperTabControlPanel6.Name = "SuperTabControlPanel6"
-        Me.SuperTabControlPanel6.Size = New System.Drawing.Size(667, 539)
-        Me.SuperTabControlPanel6.TabIndex = 0
-        Me.SuperTabControlPanel6.TabItem = Me.SpTab_Ventas
-        '
-        'Input_Dias_Para_Hacer_NCV
-        '
-        Me.Input_Dias_Para_Hacer_NCV.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Input_Dias_Para_Hacer_NCV.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Input_Dias_Para_Hacer_NCV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Input_Dias_Para_Hacer_NCV.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
-        Me.Input_Dias_Para_Hacer_NCV.ForeColor = System.Drawing.Color.Black
-        Me.Input_Dias_Para_Hacer_NCV.Location = New System.Drawing.Point(250, 380)
-        Me.Input_Dias_Para_Hacer_NCV.Name = "Input_Dias_Para_Hacer_NCV"
-        Me.Input_Dias_Para_Hacer_NCV.ShowUpDown = True
-        Me.Input_Dias_Para_Hacer_NCV.Size = New System.Drawing.Size(58, 22)
-        Me.Input_Dias_Para_Hacer_NCV.TabIndex = 91
-        '
-        'Lbl_Dias_Para_Hacer_NCV
-        '
-        Me.Lbl_Dias_Para_Hacer_NCV.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Lbl_Dias_Para_Hacer_NCV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Lbl_Dias_Para_Hacer_NCV.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Dias_Para_Hacer_NCV.Location = New System.Drawing.Point(6, 380)
-        Me.Lbl_Dias_Para_Hacer_NCV.Name = "Lbl_Dias_Para_Hacer_NCV"
-        Me.Lbl_Dias_Para_Hacer_NCV.Size = New System.Drawing.Size(248, 23)
-        Me.Lbl_Dias_Para_Hacer_NCV.TabIndex = 92
-        Me.Lbl_Dias_Para_Hacer_NCV.Text = "Máximo de días de una FCV para hacer una NCV"
-        '
-        'SpTab_Ventas
-        '
-        Me.SpTab_Ventas.AttachedControl = Me.SuperTabControlPanel6
-        Me.SpTab_Ventas.GlobalItem = False
-        Me.SpTab_Ventas.Name = "SpTab_Ventas"
-        Me.SpTab_Ventas.Text = "Ventas 1"
         '
         'SuperTabControlPanel4
         '
@@ -789,6 +740,88 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControlPanel4.Size = New System.Drawing.Size(667, 539)
         Me.SuperTabControlPanel4.TabIndex = 0
         Me.SuperTabControlPanel4.TabItem = Me.SpTab_Ventas2
+        '
+        'GroupPanel2
+        '
+        Me.GroupPanel2.BackColor = System.Drawing.Color.White
+        Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel2.Controls.Add(Me.Chk_SoloprodEnDoc_CLALIBPR)
+        Me.GroupPanel2.Controls.Add(Me.Chk_SoloprodEnDoc_Todos)
+        Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel2.Location = New System.Drawing.Point(6, 233)
+        Me.GroupPanel2.Name = "GroupPanel2"
+        Me.GroupPanel2.Size = New System.Drawing.Size(651, 67)
+        '
+        '
+        '
+        Me.GroupPanel2.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel2.Style.BackColorGradientAngle = 90
+        Me.GroupPanel2.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel2.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderBottomWidth = 1
+        Me.GroupPanel2.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel2.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderLeftWidth = 1
+        Me.GroupPanel2.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderRightWidth = 1
+        Me.GroupPanel2.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderTopWidth = 1
+        Me.GroupPanel2.Style.CornerDiameter = 4
+        Me.GroupPanel2.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel2.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel2.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel2.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel2.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel2.TabIndex = 128
+        Me.GroupPanel2.Text = "Tipos de productos a vender"
+        '
+        'Chk_SoloprodEnDoc_CLALIBPR
+        '
+        Me.Chk_SoloprodEnDoc_CLALIBPR.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_SoloprodEnDoc_CLALIBPR.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_SoloprodEnDoc_CLALIBPR.CheckBoxImageChecked = CType(resources.GetObject("Chk_SoloprodEnDoc_CLALIBPR.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SoloprodEnDoc_CLALIBPR.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_SoloprodEnDoc_CLALIBPR.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_SoloprodEnDoc_CLALIBPR.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Chk_SoloprodEnDoc_CLALIBPR.FocusCuesEnabled = False
+        Me.Chk_SoloprodEnDoc_CLALIBPR.ForeColor = System.Drawing.Color.Black
+        Me.Chk_SoloprodEnDoc_CLALIBPR.Location = New System.Drawing.Point(0, 26)
+        Me.Chk_SoloprodEnDoc_CLALIBPR.Name = "Chk_SoloprodEnDoc_CLALIBPR"
+        Me.Chk_SoloprodEnDoc_CLALIBPR.Size = New System.Drawing.Size(248, 21)
+        Me.Chk_SoloprodEnDoc_CLALIBPR.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_SoloprodEnDoc_CLALIBPR.TabIndex = 127
+        Me.Chk_SoloprodEnDoc_CLALIBPR.Text = "Solo productos con Clasificación libre"
+        '
+        'Chk_SoloprodEnDoc_Todos
+        '
+        Me.Chk_SoloprodEnDoc_Todos.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_SoloprodEnDoc_Todos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_SoloprodEnDoc_Todos.CheckBoxImageChecked = CType(resources.GetObject("Chk_SoloprodEnDoc_Todos.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SoloprodEnDoc_Todos.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_SoloprodEnDoc_Todos.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_SoloprodEnDoc_Todos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Chk_SoloprodEnDoc_Todos.Checked = True
+        Me.Chk_SoloprodEnDoc_Todos.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Chk_SoloprodEnDoc_Todos.CheckValue = "Y"
+        Me.Chk_SoloprodEnDoc_Todos.FocusCuesEnabled = False
+        Me.Chk_SoloprodEnDoc_Todos.ForeColor = System.Drawing.Color.Black
+        Me.Chk_SoloprodEnDoc_Todos.Location = New System.Drawing.Point(0, 3)
+        Me.Chk_SoloprodEnDoc_Todos.Name = "Chk_SoloprodEnDoc_Todos"
+        Me.Chk_SoloprodEnDoc_Todos.Size = New System.Drawing.Size(248, 21)
+        Me.Chk_SoloprodEnDoc_Todos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_SoloprodEnDoc_Todos.TabIndex = 126
+        Me.Chk_SoloprodEnDoc_Todos.Text = "Todos"
         '
         'Chk_CriterioFechaGDVconFechaDistintaDocOrigenObligatorio
         '
@@ -919,6 +952,55 @@ Partial Class Frm_Configuracion_Gral
         Me.SpTab_Ventas2.GlobalItem = False
         Me.SpTab_Ventas2.Name = "SpTab_Ventas2"
         Me.SpTab_Ventas2.Text = "Ventas 2"
+        '
+        'SuperTabControlPanel6
+        '
+        Me.SuperTabControlPanel6.Controls.Add(Me.Input_Dias_Para_Hacer_NCV)
+        Me.SuperTabControlPanel6.Controls.Add(Me.TableLayoutPanel3)
+        Me.SuperTabControlPanel6.Controls.Add(Me.Lbl_Dias_Para_Hacer_NCV)
+        Me.SuperTabControlPanel6.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel6.Location = New System.Drawing.Point(125, 0)
+        Me.SuperTabControlPanel6.Name = "SuperTabControlPanel6"
+        Me.SuperTabControlPanel6.Size = New System.Drawing.Size(667, 539)
+        Me.SuperTabControlPanel6.TabIndex = 0
+        Me.SuperTabControlPanel6.TabItem = Me.SpTab_Ventas
+        '
+        'Input_Dias_Para_Hacer_NCV
+        '
+        Me.Input_Dias_Para_Hacer_NCV.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Input_Dias_Para_Hacer_NCV.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_Dias_Para_Hacer_NCV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_Dias_Para_Hacer_NCV.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_Dias_Para_Hacer_NCV.ForeColor = System.Drawing.Color.Black
+        Me.Input_Dias_Para_Hacer_NCV.Location = New System.Drawing.Point(250, 380)
+        Me.Input_Dias_Para_Hacer_NCV.Name = "Input_Dias_Para_Hacer_NCV"
+        Me.Input_Dias_Para_Hacer_NCV.ShowUpDown = True
+        Me.Input_Dias_Para_Hacer_NCV.Size = New System.Drawing.Size(58, 22)
+        Me.Input_Dias_Para_Hacer_NCV.TabIndex = 91
+        '
+        'Lbl_Dias_Para_Hacer_NCV
+        '
+        Me.Lbl_Dias_Para_Hacer_NCV.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Lbl_Dias_Para_Hacer_NCV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_Dias_Para_Hacer_NCV.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_Dias_Para_Hacer_NCV.Location = New System.Drawing.Point(6, 380)
+        Me.Lbl_Dias_Para_Hacer_NCV.Name = "Lbl_Dias_Para_Hacer_NCV"
+        Me.Lbl_Dias_Para_Hacer_NCV.Size = New System.Drawing.Size(248, 23)
+        Me.Lbl_Dias_Para_Hacer_NCV.TabIndex = 92
+        Me.Lbl_Dias_Para_Hacer_NCV.Text = "Máximo de días de una FCV para hacer una NCV"
+        '
+        'SpTab_Ventas
+        '
+        Me.SpTab_Ventas.AttachedControl = Me.SuperTabControlPanel6
+        Me.SpTab_Ventas.GlobalItem = False
+        Me.SpTab_Ventas.Name = "SpTab_Ventas"
+        Me.SpTab_Ventas.Text = "Ventas 1"
         '
         'SuperTabControlPanel1
         '
@@ -2550,89 +2632,6 @@ Partial Class Frm_Configuracion_Gral
         Me.CheckBoxX2.TabIndex = 117
         Me.CheckBoxX2.Text = "Ambiente de pruebas y certificación"
         '
-        'GroupPanel2
-        '
-        Me.GroupPanel2.BackColor = System.Drawing.Color.White
-        Me.GroupPanel2.CanvasColor = System.Drawing.SystemColors.Control
-        Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.GroupPanel2.Controls.Add(Me.Chk_SoloprodEnDoc_CLALIBPR)
-        Me.GroupPanel2.Controls.Add(Me.Chk_SoloprodEnDoc_Todos)
-        Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel2.Location = New System.Drawing.Point(6, 233)
-        Me.GroupPanel2.Name = "GroupPanel2"
-        Me.GroupPanel2.Size = New System.Drawing.Size(651, 67)
-        '
-        '
-        '
-        Me.GroupPanel2.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.GroupPanel2.Style.BackColorGradientAngle = 90
-        Me.GroupPanel2.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.GroupPanel2.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel2.Style.BorderBottomWidth = 1
-        Me.GroupPanel2.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
-        Me.GroupPanel2.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel2.Style.BorderLeftWidth = 1
-        Me.GroupPanel2.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel2.Style.BorderRightWidth = 1
-        Me.GroupPanel2.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel2.Style.BorderTopWidth = 1
-        Me.GroupPanel2.Style.CornerDiameter = 4
-        Me.GroupPanel2.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.GroupPanel2.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
-        Me.GroupPanel2.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
-        Me.GroupPanel2.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
-        '
-        '
-        '
-        Me.GroupPanel2.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.GroupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.GroupPanel2.TabIndex = 128
-        Me.GroupPanel2.Text = "Tipos de productos a vender"
-        '
-        'Chk_SoloprodEnDoc_CLALIBPR
-        '
-        Me.Chk_SoloprodEnDoc_CLALIBPR.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_SoloprodEnDoc_CLALIBPR.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_SoloprodEnDoc_CLALIBPR.CheckBoxImageChecked = CType(resources.GetObject("Chk_SoloprodEnDoc_CLALIBPR.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_SoloprodEnDoc_CLALIBPR.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_SoloprodEnDoc_CLALIBPR.CheckBoxImageIndeterminate"), System.Drawing.Image)
-        Me.Chk_SoloprodEnDoc_CLALIBPR.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Chk_SoloprodEnDoc_CLALIBPR.FocusCuesEnabled = False
-        Me.Chk_SoloprodEnDoc_CLALIBPR.ForeColor = System.Drawing.Color.Black
-        Me.Chk_SoloprodEnDoc_CLALIBPR.Location = New System.Drawing.Point(0, 26)
-        Me.Chk_SoloprodEnDoc_CLALIBPR.Name = "Chk_SoloprodEnDoc_CLALIBPR"
-        Me.Chk_SoloprodEnDoc_CLALIBPR.Size = New System.Drawing.Size(248, 21)
-        Me.Chk_SoloprodEnDoc_CLALIBPR.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_SoloprodEnDoc_CLALIBPR.TabIndex = 127
-        Me.Chk_SoloprodEnDoc_CLALIBPR.Text = "Solo productos con Clasificación libre"
-        '
-        'Chk_SoloprodEnDoc_Todos
-        '
-        Me.Chk_SoloprodEnDoc_Todos.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_SoloprodEnDoc_Todos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_SoloprodEnDoc_Todos.CheckBoxImageChecked = CType(resources.GetObject("Chk_SoloprodEnDoc_Todos.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_SoloprodEnDoc_Todos.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_SoloprodEnDoc_Todos.CheckBoxImageIndeterminate"), System.Drawing.Image)
-        Me.Chk_SoloprodEnDoc_Todos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Chk_SoloprodEnDoc_Todos.Checked = True
-        Me.Chk_SoloprodEnDoc_Todos.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.Chk_SoloprodEnDoc_Todos.CheckValue = "Y"
-        Me.Chk_SoloprodEnDoc_Todos.FocusCuesEnabled = False
-        Me.Chk_SoloprodEnDoc_Todos.ForeColor = System.Drawing.Color.Black
-        Me.Chk_SoloprodEnDoc_Todos.Location = New System.Drawing.Point(0, 3)
-        Me.Chk_SoloprodEnDoc_Todos.Name = "Chk_SoloprodEnDoc_Todos"
-        Me.Chk_SoloprodEnDoc_Todos.Size = New System.Drawing.Size(248, 21)
-        Me.Chk_SoloprodEnDoc_Todos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_SoloprodEnDoc_Todos.TabIndex = 126
-        Me.Chk_SoloprodEnDoc_Todos.Text = "Todos"
-        '
         'Frm_Configuracion_Gral
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -2655,9 +2654,10 @@ Partial Class Frm_Configuracion_Gral
         CType(Me.Input_Dias_Max_Fecha_Despacho, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControl1.ResumeLayout(False)
+        Me.SuperTabControlPanel4.ResumeLayout(False)
+        Me.GroupPanel2.ResumeLayout(False)
         Me.SuperTabControlPanel6.ResumeLayout(False)
         CType(Me.Input_Dias_Para_Hacer_NCV, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SuperTabControlPanel4.ResumeLayout(False)
         Me.SuperTabControlPanel1.ResumeLayout(False)
         Me.TableLayoutPanel5.ResumeLayout(False)
         Me.SuperTabControlPanel9.ResumeLayout(False)
@@ -2672,7 +2672,6 @@ Partial Class Frm_Configuracion_Gral
         Me.GroupPanel1.ResumeLayout(False)
         Me.SuperTabControlPanel3.ResumeLayout(False)
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupPanel2.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub

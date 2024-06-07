@@ -15,6 +15,15 @@ Public Class Frm_Conexiones
 
     Private Sub Frm_Conexiones_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        AddHandler Txt_CodFunFCVAutoContado.ButtonCustomClick, AddressOf Txt_CodFuncionario_ButtonCustomClick
+        AddHandler Txt_CodFunFCVAutoContado.ButtonCustom2Click, AddressOf Txt_CodFuncionario_ButtonCustom2Click
+
+        AddHandler Txt_CodFunFCVAutoCredito.ButtonCustomClick, AddressOf Txt_CodFuncionario_ButtonCustomClick
+        AddHandler Txt_CodFunFCVAutoCredito.ButtonCustom2Click, AddressOf Txt_CodFuncionario_ButtonCustom2Click
+
+        AddHandler Txt_CodFunGDVAutoContado.ButtonCustomClick, AddressOf Txt_CodFuncionario_ButtonCustomClick
+        AddHandler Txt_CodFunGDVAutoContado.ButtonCustom2Click, AddressOf Txt_CodFuncionario_ButtonCustom2Click
+
         Dim _Mensaje As New LsValiciones.Mensajes
         _Mensaje = _Cl_ConfiguracionLocal.Fx_LeerArchivoConexionJson(False)
 
@@ -66,6 +75,25 @@ Public Class Frm_Conexiones
                 Chk_ImprimirDespachos.Checked = .Imprimir
                 Txt_Impresora_Despachos.Text = .Impresora
                 Txt_NombreFormato_Despachos.Text = .NombreFormato
+            End With
+
+        End With
+
+        With _Cl_ConfiguracionLocal.Configuracion.Ls_FunFcvGdvAuto
+
+            With .Item(0)
+                Txt_CodFunFCVAutoContado.Tag = .CodFuncionario
+                Txt_CodFunFCVAutoContado.Text = .NomFuncionario
+            End With
+
+            With .Item(1)
+                Txt_CodFunFCVAutoCredito.Tag = .CodFuncionario
+                Txt_CodFunFCVAutoCredito.Text = .NomFuncionario
+            End With
+
+            With .Item(2)
+                Txt_CodFunGDVAutoContado.Tag = .CodFuncionario
+                Txt_CodFunGDVAutoContado.Text = .NomFuncionario
             End With
 
         End With
@@ -257,8 +285,45 @@ Public Class Frm_Conexiones
 
         End With
 
-        _Cl_ConfiguracionLocal.Configuracion.DiasRevNVV = Input_DiasRevNVV.Value
-        _Cl_ConfiguracionLocal.Configuracion.NombreEquipoImprime = Txt_NombreEquipoImprime.Text
+        If IsNothing(_Cl_ConfiguracionLocal.Configuracion.Ls_FunFcvGdvAuto) Then
+            _Cl_ConfiguracionLocal.Configuracion.Ls_FunFcvGdvAuto = New List(Of FunFcvGdvAuto)
+        End If
+        _Cl_ConfiguracionLocal.Configuracion.Ls_FunFcvGdvAuto.Clear()
+
+        Dim _Fun As FunFcvGdvAuto
+
+        _Fun = New FunFcvGdvAuto
+
+        With _Fun
+            .Tido = "FCV"
+            .Tipo = "Contado"
+            .CodFuncionario = Txt_CodFunFCVAutoContado.Tag
+            .NomFuncionario = Txt_CodFunFCVAutoContado.Text
+        End With
+
+        _Cl_ConfiguracionLocal.Configuracion.Ls_FunFcvGdvAuto.Add(_Fun)
+
+        _Fun = New FunFcvGdvAuto
+
+        With _Fun
+            .Tido = "FCV"
+            .Tipo = "Credito"
+            .CodFuncionario = Txt_CodFunFCVAutoCredito.Tag
+            .NomFuncionario = Txt_CodFunFCVAutoCredito.Text
+        End With
+
+        _Cl_ConfiguracionLocal.Configuracion.Ls_FunFcvGdvAuto.Add(_Fun)
+
+        _Fun = New FunFcvGdvAuto
+
+        With _Fun
+            .Tido = "GDV"
+            .Tipo = ""
+            .CodFuncionario = Txt_CodFunGDVAutoContado.Tag
+            .NomFuncionario = Txt_CodFunGDVAutoContado.Text
+        End With
+
+        _Cl_ConfiguracionLocal.Configuracion.Ls_FunFcvGdvAuto.Add(_Fun)
 
         Return True
 
@@ -419,4 +484,36 @@ Public Class Frm_Conexiones
         Txt_NombreFormato_Despachos.Tag = String.Empty
         Txt_NombreFormato_Despachos.Text = String.Empty
     End Sub
+
+    Private Sub Txt_CodFuncionario_ButtonCustomClick(sender As Object, e As EventArgs)
+        If String.IsNullOrWhiteSpace(Cadena_ConexionSQL_Server) Then
+            MessageBoxEx.Show(Me, "Faltan los datos de conexión a la base de datos de Random", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Pro_Nombre_Encabezado_Informe = "SELECCIONE UN FUNCIONARIO"
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random,
+                               "",
+                               Nothing, False, True) Then
+
+            Dim _Row As DataRow = _Filtrar.Pro_Tbl_Filtro.Rows(0)
+
+            Dim _Codigo = _Row.Item("Codigo").ToString.Trim
+            Dim _Descripcion = _Row.Item("Descripcion").ToString.Trim
+
+            CType(sender, Controls.TextBoxX).Tag = _Codigo
+            CType(sender, Controls.TextBoxX).Text = _Codigo & "-" & _Descripcion
+
+        End If
+    End Sub
+
+    Private Sub Txt_CodFuncionario_ButtonCustom2Click(sender As Object, e As EventArgs)
+        CType(sender, Controls.TextBoxX).Tag = String.Empty
+        CType(sender, Controls.TextBoxX).Text = String.Empty
+    End Sub
+
 End Class

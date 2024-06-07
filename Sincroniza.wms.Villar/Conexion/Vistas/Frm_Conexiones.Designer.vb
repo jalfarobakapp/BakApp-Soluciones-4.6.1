@@ -63,11 +63,21 @@ Partial Class Frm_Conexiones
         Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
         Me.Input_DiasRevNVV = New DevComponents.Editors.IntegerInput()
+        Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Txt_CodFunFCVAutoContado = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_CodFunFCVAutoCredito = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Txt_CodFunGDVAutoContado = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX8 = New DevComponents.DotNetBar.LabelX()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Grupo_Imprimir.SuspendLayout()
         CType(Me.Input_DiasRevNVV, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupPanel1.SuspendLayout()
+        Me.GroupPanel2.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupBox1
@@ -342,7 +352,7 @@ Partial Class Frm_Conexiones
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 445)
+        Me.Bar1.Location = New System.Drawing.Point(0, 543)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(733, 41)
         Me.Bar1.Stretch = True
@@ -610,7 +620,7 @@ Partial Class Frm_Conexiones
         '
         Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(12, 420)
+        Me.LabelX4.Location = New System.Drawing.Point(12, 518)
         Me.LabelX4.Name = "LabelX4"
         Me.LabelX4.Size = New System.Drawing.Size(168, 19)
         Me.LabelX4.TabIndex = 100
@@ -626,7 +636,7 @@ Partial Class Frm_Conexiones
         Me.Input_DiasRevNVV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_DiasRevNVV.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_DiasRevNVV.ForeColor = System.Drawing.Color.Black
-        Me.Input_DiasRevNVV.Location = New System.Drawing.Point(186, 420)
+        Me.Input_DiasRevNVV.Location = New System.Drawing.Point(186, 518)
         Me.Input_DiasRevNVV.MaxValue = 30
         Me.Input_DiasRevNVV.Name = "Input_DiasRevNVV"
         Me.Input_DiasRevNVV.ShowUpDown = True
@@ -634,11 +644,201 @@ Partial Class Frm_Conexiones
         Me.Input_DiasRevNVV.TabIndex = 101
         Me.Input_DiasRevNVV.Value = 1
         '
+        'GroupPanel1
+        '
+        Me.GroupPanel1.BackColor = System.Drawing.Color.White
+        Me.GroupPanel1.CanvasColor = System.Drawing.SystemColors.Control
+        Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.Controls.Add(Me.Txt_CodFunFCVAutoContado)
+        Me.GroupPanel1.Controls.Add(Me.Txt_CodFunFCVAutoCredito)
+        Me.GroupPanel1.Controls.Add(Me.LabelX6)
+        Me.GroupPanel1.Controls.Add(Me.LabelX7)
+        Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel1.Location = New System.Drawing.Point(12, 409)
+        Me.GroupPanel1.Name = "GroupPanel1"
+        Me.GroupPanel1.Size = New System.Drawing.Size(310, 92)
+        '
+        '
+        '
+        Me.GroupPanel1.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel1.Style.BackColorGradientAngle = 90
+        Me.GroupPanel1.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel1.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderBottomWidth = 1
+        Me.GroupPanel1.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel1.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderLeftWidth = 1
+        Me.GroupPanel1.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderRightWidth = 1
+        Me.GroupPanel1.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderTopWidth = 1
+        Me.GroupPanel1.Style.CornerDiameter = 4
+        Me.GroupPanel1.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel1.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel1.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel1.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel1.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel1.TabIndex = 102
+        Me.GroupPanel1.Text = "Funcionarios que Facturan automáticamente"
+        '
+        'Txt_CodFunFCVAutoContado
+        '
+        Me.Txt_CodFunFCVAutoContado.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_CodFunFCVAutoContado.Border.Class = "TextBoxBorder"
+        Me.Txt_CodFunFCVAutoContado.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CodFunFCVAutoContado.ButtonCustom.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_CodFunFCVAutoContado.ButtonCustom.Visible = True
+        Me.Txt_CodFunFCVAutoContado.ButtonCustom2.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_CodFunFCVAutoContado.ButtonCustom2.Visible = True
+        Me.Txt_CodFunFCVAutoContado.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CodFunFCVAutoContado.ForeColor = System.Drawing.Color.Black
+        Me.Txt_CodFunFCVAutoContado.Location = New System.Drawing.Point(61, 14)
+        Me.Txt_CodFunFCVAutoContado.Name = "Txt_CodFunFCVAutoContado"
+        Me.Txt_CodFunFCVAutoContado.PreventEnterBeep = True
+        Me.Txt_CodFunFCVAutoContado.Size = New System.Drawing.Size(234, 22)
+        Me.Txt_CodFunFCVAutoContado.TabIndex = 101
+        '
+        'LabelX6
+        '
+        Me.LabelX6.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX6.ForeColor = System.Drawing.Color.Black
+        Me.LabelX6.Location = New System.Drawing.Point(6, 17)
+        Me.LabelX6.Name = "LabelX6"
+        Me.LabelX6.Size = New System.Drawing.Size(49, 19)
+        Me.LabelX6.TabIndex = 102
+        Me.LabelX6.Text = "Contado"
+        '
+        'LabelX7
+        '
+        Me.LabelX7.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX7.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX7.ForeColor = System.Drawing.Color.Black
+        Me.LabelX7.Location = New System.Drawing.Point(7, 45)
+        Me.LabelX7.Name = "LabelX7"
+        Me.LabelX7.Size = New System.Drawing.Size(43, 19)
+        Me.LabelX7.TabIndex = 104
+        Me.LabelX7.Text = "Crédito"
+        '
+        'Txt_CodFunFCVAutoCredito
+        '
+        Me.Txt_CodFunFCVAutoCredito.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_CodFunFCVAutoCredito.Border.Class = "TextBoxBorder"
+        Me.Txt_CodFunFCVAutoCredito.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CodFunFCVAutoCredito.ButtonCustom.Image = CType(resources.GetObject("TextBoxX2.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_CodFunFCVAutoCredito.ButtonCustom.Visible = True
+        Me.Txt_CodFunFCVAutoCredito.ButtonCustom2.Image = CType(resources.GetObject("TextBoxX2.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_CodFunFCVAutoCredito.ButtonCustom2.Visible = True
+        Me.Txt_CodFunFCVAutoCredito.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CodFunFCVAutoCredito.ForeColor = System.Drawing.Color.Black
+        Me.Txt_CodFunFCVAutoCredito.Location = New System.Drawing.Point(61, 42)
+        Me.Txt_CodFunFCVAutoCredito.Name = "Txt_CodFunFCVAutoCredito"
+        Me.Txt_CodFunFCVAutoCredito.PreventEnterBeep = True
+        Me.Txt_CodFunFCVAutoCredito.Size = New System.Drawing.Size(234, 22)
+        Me.Txt_CodFunFCVAutoCredito.TabIndex = 103
+        '
+        'GroupPanel2
+        '
+        Me.GroupPanel2.BackColor = System.Drawing.Color.White
+        Me.GroupPanel2.CanvasColor = System.Drawing.SystemColors.Control
+        Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel2.Controls.Add(Me.Txt_CodFunGDVAutoContado)
+        Me.GroupPanel2.Controls.Add(Me.LabelX8)
+        Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel2.Location = New System.Drawing.Point(328, 409)
+        Me.GroupPanel2.Name = "GroupPanel2"
+        Me.GroupPanel2.Size = New System.Drawing.Size(310, 92)
+        '
+        '
+        '
+        Me.GroupPanel2.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel2.Style.BackColorGradientAngle = 90
+        Me.GroupPanel2.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel2.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderBottomWidth = 1
+        Me.GroupPanel2.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel2.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderLeftWidth = 1
+        Me.GroupPanel2.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderRightWidth = 1
+        Me.GroupPanel2.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderTopWidth = 1
+        Me.GroupPanel2.Style.CornerDiameter = 4
+        Me.GroupPanel2.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel2.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel2.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel2.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel2.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel2.TabIndex = 103
+        Me.GroupPanel2.Text = "Funcionario que hace Guía automáticamente"
+        '
+        'Txt_CodFunGDVAutoContado
+        '
+        Me.Txt_CodFunGDVAutoContado.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_CodFunGDVAutoContado.Border.Class = "TextBoxBorder"
+        Me.Txt_CodFunGDVAutoContado.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CodFunGDVAutoContado.ButtonCustom.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom.Image1"), System.Drawing.Image)
+        Me.Txt_CodFunGDVAutoContado.ButtonCustom.Visible = True
+        Me.Txt_CodFunGDVAutoContado.ButtonCustom2.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom2.Image1"), System.Drawing.Image)
+        Me.Txt_CodFunGDVAutoContado.ButtonCustom2.Visible = True
+        Me.Txt_CodFunGDVAutoContado.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CodFunGDVAutoContado.ForeColor = System.Drawing.Color.Black
+        Me.Txt_CodFunGDVAutoContado.Location = New System.Drawing.Point(61, 14)
+        Me.Txt_CodFunGDVAutoContado.Name = "Txt_CodFunGDVAutoContado"
+        Me.Txt_CodFunGDVAutoContado.PreventEnterBeep = True
+        Me.Txt_CodFunGDVAutoContado.Size = New System.Drawing.Size(234, 22)
+        Me.Txt_CodFunGDVAutoContado.TabIndex = 101
+        '
+        'LabelX8
+        '
+        Me.LabelX8.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX8.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX8.ForeColor = System.Drawing.Color.Black
+        Me.LabelX8.Location = New System.Drawing.Point(20, 17)
+        Me.LabelX8.Name = "LabelX8"
+        Me.LabelX8.Size = New System.Drawing.Size(35, 19)
+        Me.LabelX8.TabIndex = 102
+        Me.LabelX8.Text = "Guía"
+        '
         'Frm_Conexiones
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(733, 486)
+        Me.ClientSize = New System.Drawing.Size(733, 584)
+        Me.Controls.Add(Me.GroupPanel2)
+        Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.Input_DiasRevNVV)
         Me.Controls.Add(Me.LabelX4)
         Me.Controls.Add(Me.Grupo_Imprimir)
@@ -647,6 +847,7 @@ Partial Class Frm_Conexiones
         Me.Controls.Add(Me.GroupBox1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
@@ -662,6 +863,8 @@ Partial Class Frm_Conexiones
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Grupo_Imprimir.ResumeLayout(False)
         CType(Me.Input_DiasRevNVV, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupPanel1.ResumeLayout(False)
+        Me.GroupPanel2.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -706,4 +909,12 @@ Partial Class Frm_Conexiones
     Friend WithEvents Input_DiasRevNVV As DevComponents.Editors.IntegerInput
     Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Txt_NombreEquipoImprime As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
+    Friend WithEvents LabelX6 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_CodFunFCVAutoContado As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Txt_CodFunFCVAutoCredito As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents GroupPanel2 As DevComponents.DotNetBar.Controls.GroupPanel
+    Friend WithEvents Txt_CodFunGDVAutoContado As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX8 As DevComponents.DotNetBar.LabelX
 End Class

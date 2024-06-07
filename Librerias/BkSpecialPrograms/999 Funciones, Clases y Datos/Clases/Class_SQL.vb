@@ -938,6 +938,9 @@ Public Class Class_SQL
 
         Dim _ConsultaSql As String
 
+        _Tabla = _Tabla.Replace("[", "")
+        _Tabla = _Tabla.Replace("]", "")
+
         If _Tabla.Contains(_Global_BaseBk) Then
 
             _Tabla = Replace(_Tabla, _Global_BaseBk, "")

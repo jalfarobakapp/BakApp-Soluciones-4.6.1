@@ -281,10 +281,13 @@ Public Class Frm_Cashdro_Ingreso_Documento
                         Dim _Nro_Documento As String = Traer_Numero_Documento(_Tido, , Modalidad)
                         Dim _Tidoelec As Integer = CInt(Fx_Es_Electronico(_Tido)) * -1
 
-                        If Not Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nro_Documento, False) Then
+                        Dim _Mensaje As New LsValiciones.Mensajes
+
+                        _Mensaje = Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nro_Documento, False)
+
+                        If Not _Mensaje.EsCorrecto Then
                             Return
                         End If
-
 
                         Dim _Tipo_De_Pago As String = "EFV"
 

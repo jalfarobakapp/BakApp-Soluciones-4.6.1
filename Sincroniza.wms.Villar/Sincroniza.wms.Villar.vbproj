@@ -83,6 +83,7 @@
     <Compile Include="Conexion\Constructor\Cl_ConfiguracionLocal.vb" />
     <Compile Include="Conexion\Modelos\Conexion.vb" />
     <Compile Include="Conexion\Modelos\Configuracion.vb" />
+    <Compile Include="Conexion\Modelos\FunFcvGdvAuto.vb" />
     <Compile Include="Conexion\Vistas\Frm_Conexiones.Designer.vb">
       <DependentUpon>Frm_Conexiones.vb</DependentUpon>
     </Compile>

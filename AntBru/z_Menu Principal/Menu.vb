@@ -11,7 +11,6 @@ Public Class Menu
     Dim _Fm_Menu_Padre As Metro.MetroAppForm
     Dim _Menu_Extra As Boolean
 
-
     Public Sub New(Fm_Menu_Padre As Metro.MetroAppForm, Menu_Extra As Boolean)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.

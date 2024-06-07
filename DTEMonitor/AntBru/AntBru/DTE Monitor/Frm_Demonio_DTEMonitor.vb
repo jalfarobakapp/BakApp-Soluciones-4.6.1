@@ -104,6 +104,8 @@ Public Class Frm_Demonio_DTEMonitor
         Timer_Minimizar.Interval = (1000 * 60) * 10
         _RevisarCertificado = True
 
+        'Timer_RevisarReclamoDTE.Interval = (1000 * 60) * 30
+
         Timer_RevisarReclamoDTE.Start()
 
         'Dim sb As New System.Text.StringBuilder
@@ -1209,7 +1211,7 @@ Public Class Frm_Demonio_DTEMonitor
             If _RevisarReclamoDTE Then
 
                 Sb_Revisar_Reclamos()
-                Timer_RevisarReclamoDTE.Interval = (1000 * 60) * 20
+                Timer_RevisarReclamoDTE.Interval = (1000 * 60) * 30
                 _RevisarReclamoDTE = False
                 Timer_RevisarReclamoDTE.Start()
 

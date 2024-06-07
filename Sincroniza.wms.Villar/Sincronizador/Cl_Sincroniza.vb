@@ -101,6 +101,7 @@ Public Class Cl_Sincroniza
 
             Dim _Id_Enc As Integer = _Fila.Item("Id")
             Dim _Idmaeedoo As Integer = _Fila.Item("Idmaeedo")
+            Dim _TidoGen As String = _Fila.Item("TidoGen")
             Dim _Nudo As String = _Fila.Item("Nudo")
             Dim _Facturar As Boolean = _Fila.Item("Facturar")
             Dim _Planificada = True
@@ -150,6 +151,26 @@ Public Class Cl_Sincroniza
                     _Tipo_wms = _SqlRandom.Fx_Trae_Dato("[@WMS_GATEWAY_TRANSFERENCIA]", "TIPO_WMS", "IDMAEEDO = " & _Idmaeedoo,, False)
 
                     If _Facturar Then
+
+                        ' 0 = Contado, 1 = Credito, 2 = Guia
+                        Dim _CodFuncionario_Factura As String
+
+                        If _TidoGen = "FCV" Then
+                            If _Cl_Stmp.Zw_Stmp_Enc.TipoPago = "Contado" Then
+                                _CodFuncionario_Factura = ConfiguracionLocal.Ls_FunFcvGdvAuto.Item(0).CodFuncionario
+                            End If
+
+                            If _Cl_Stmp.Zw_Stmp_Enc.TipoPago = "Credito" Then
+                                _CodFuncionario_Factura = ConfiguracionLocal.Ls_FunFcvGdvAuto.Item(1).CodFuncionario
+                            End If
+                        End If
+
+                        If _TidoGen = "GDV" Then
+                            _CodFuncionario_Factura = ConfiguracionLocal.Ls_FunFcvGdvAuto.Item(2).CodFuncionario
+                        End If
+
+                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set CodFuncionario_Factura = '" & _CodFuncionario_Factura & "' Where Id = " & _Id_Enc
+                        _SqlRandom.Ej_consulta_IDU(Consulta_sql)
 
                         'Imprimir Retiros inmediatos
                         If _Tipo_wms.Contains("A") Then

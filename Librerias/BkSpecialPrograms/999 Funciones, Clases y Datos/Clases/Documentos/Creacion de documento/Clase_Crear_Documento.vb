@@ -307,7 +307,11 @@ Public Class Clase_Crear_Documento
 
                         If Not _Es_ValeTransitorio Then
 
-                            If Not Fx_Revisar_Expiracion_Folio_SII(Nothing, _Tido, Numero_de_documento, False) Then
+                            Dim _Mensaje As New LsValiciones.Mensajes
+
+                            _Mensaje = Fx_Revisar_Expiracion_Folio_SII(Nothing, _Tido, Numero_de_documento, False)
+
+                            If Not _Mensaje.EsCorrecto Then 'Not Fx_Revisar_Expiracion_Folio_SII(_Formulario, _Tido, _Nudo, True) Then
                                 Throw New System.Exception("El folio del documento electrónico (" & Numero_de_documento & ") ya expiró en el SII." & vbCrLf &
                                                        "Informe al administrador del sistema")
                             End If

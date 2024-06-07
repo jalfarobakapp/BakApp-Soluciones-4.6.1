@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Threading
 Imports DevComponents.DotNetBar
+Imports Org.BouncyCastle.Math.EC
 
 Public Class Frm_Pagos_Documentos
 
@@ -1222,7 +1223,7 @@ Public Class Frm_Pagos_Documentos
         Dim _Iddt As Integer
 
         Dim _Tido = _Tbl_Maeedo.Rows(0).Item("TIDO")
-        Dim _Nro_Documento As String = Traer_Numero_Documento(_Tido, , Modalidad) ' _Class_DTE.Pro_Nro_Documento
+        Dim _Nudo As String = Traer_Numero_Documento(_Tido, , Modalidad) ' _Class_DTE.Pro_Nro_Documento
 
         Dim _Tidoelec As Integer = CInt(Fx_Es_Electronico(_Tido)) * -1
 
@@ -1230,8 +1231,13 @@ Public Class Frm_Pagos_Documentos
 
         If CBool(_Tidoelec) And CBool(_Nudonodefi) Then
 
-            If Not Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nro_Documento, True) Then
+            Dim _Mensaje As New LsValiciones.Mensajes
 
+            _Mensaje = Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nudo, False)
+
+            If Not _Mensaje.EsCorrecto Then ' Not Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nudo, True) Then
+
+                MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
                 MessageBoxEx.Show(Me, "El documento no fue grabado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Sb_Nuevo_Documento()
                 Return
@@ -1240,14 +1246,14 @@ Public Class Frm_Pagos_Documentos
 
         End If
 
-        Dim _Reg = _Sql.Fx_Cuenta_Registros("MAEEDO", "TIDO = '" & _Tido & "' And NUDO = '" & _Nro_Documento & "' And IDMAEEDO <> " & _Idmaeedo)
+        Dim _Reg = _Sql.Fx_Cuenta_Registros("MAEEDO", "TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "' And IDMAEEDO <> " & _Idmaeedo)
 
         If CBool(_Reg) Then
-            _Nro_Documento = Traer_Numero_Documento(_Tido, , Modalidad)
+            _Nudo = Traer_Numero_Documento(_Tido, , Modalidad)
         End If
 
-        Consulta_sql = "Update MAEEDO Set NUDO='" & _Nro_Documento & "',NUDONODEFI=0,TIDOELEC=" & _Tidoelec & " Where IDMAEEDO=" & _Idmaeedo & vbCrLf &
-                       "Update MAEDDO Set NUDO='" & _Nro_Documento & "' Where IDMAEEDO=" & _Idmaeedo
+        Consulta_sql = "Update MAEEDO Set NUDO='" & _Nudo & "',NUDONODEFI=0,TIDOELEC=" & _Tidoelec & " Where IDMAEEDO=" & _Idmaeedo & vbCrLf &
+                       "Update MAEDDO Set NUDO='" & _Nudo & "' Where IDMAEEDO=" & _Idmaeedo
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
 
@@ -1268,7 +1274,7 @@ Public Class Frm_Pagos_Documentos
                 Consulta_sql = "Update MAEEDO Set NUDO='" & _Nudo_Old & "',NUDONODEFI=1,TIDOELEC=" & _Tidoelec & " Where IDMAEEDO=" & _Idmaeedo & vbCrLf &
                                "Update MAEDDO Set NUDO='" & _Nudo_Old & "' Where IDMAEEDO=" & _Idmaeedo
                 _Sql.Ej_consulta_IDU(Consulta_sql)
-                _Nro_Documento = String.Empty
+                _Nudo = String.Empty
 
                 MessageBoxEx.Show(Me, ex.Message, "Error al crear DTE", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
@@ -1280,7 +1286,7 @@ Public Class Frm_Pagos_Documentos
 
         ' *****  ERROR EN CAJA CUANDO IMPRIME Y NO ENCUENTRA EL FORMATO POR LA MODALIDAD DE BAKAPP
 
-        If Not String.IsNullOrEmpty(_Nro_Documento) Then
+        If Not String.IsNullOrEmpty(_Nudo) Then
 
             ' *********************************************************************
             Dim _Error_PDF As String
@@ -1426,7 +1432,7 @@ Public Class Frm_Pagos_Documentos
             End If
 
 
-            MessageBoxEx.Show(Me, _Tido & " - " & _Nro_Documento & vbCrLf & vbCrLf &
+            MessageBoxEx.Show(Me, _Tido & " - " & _Nudo & vbCrLf & vbCrLf &
                               "Grabada correctamente", "Grabar documento", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
             Sb_Nuevo_Documento()
@@ -2415,9 +2421,16 @@ Public Class Frm_Pagos_Documentos
 
             If CBool(_Tidoelec) And CBool(_Nudonodefi) Then
 
-                If Not Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nro_Documento, True) Then
+                Dim _Mensaje As New LsValiciones.Mensajes
+
+                _Mensaje = Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nro_Documento, False)
+
+                If Not _Mensaje.EsCorrecto Then
+
+                    MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
                     Sb_Nuevo_Documento()
                     Return
+
                 End If
 
             End If

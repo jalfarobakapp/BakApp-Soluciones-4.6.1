@@ -149,6 +149,8 @@ Public Class Frm_Formulario_Documento
     Dim _DecimalesGl As Integer
     Dim _Patente_rvm As String
 
+    Public Property MensajeRevFolio As LsValiciones.Mensajes
+
 #Region "PROPIEDADES"
 
     Public ReadOnly Property Pro_Idmaeedo() As Integer
@@ -762,12 +764,16 @@ Public Class Frm_Formulario_Documento
 
         If _Es_Electronico Then
 
-            If Not Fx_Revisar_Expiracion_Folio_SII(Nothing, _Tido, _NroDocumento, True) Then
+            MensajeRevFolio = Fx_Revisar_Expiracion_Folio_SII(Nothing, _Tido, _NroDocumento, Not _Facturacion_Automatica)
+
+            If Not MensajeRevFolio.EsCorrecto And Not _Facturacion_Automatica Then ' Not Fx_Revisar_Expiracion_Folio_SII(Nothing, _Tido, _NroDocumento, True) Then
 
                 If Not String.IsNullOrEmpty(_NroDocumento) Then
 
-                    MessageBoxEx.Show(Me, "El folio del documento electrónico (" & _NroDocumento & ") ya expiró en el SII." & vbCrLf &
-                                                   "Informe al administrador del sistema", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    MessageBoxEx.Show(Me, MensajeRevFolio.Mensaje, MensajeRevFolio.Detalle, MessageBoxButtons.OK, MensajeRevFolio.Icono)
+
+                    'MessageBoxEx.Show(Me, "El folio del documento electrónico (" & _NroDocumento & ") ya expiró en el SII." & vbCrLf &
+                    '                  "Informe al administrador del sistema", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
                 End If
 
@@ -780,7 +786,9 @@ Public Class Frm_Formulario_Documento
         Sb_Revisar_Si_Hay_Archivos_Adjuntos()
 
         If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Configuracion", "SoloprodEnDoc_CLALIBPR") Then
-            SoloprodEnDoc_CLALIBPR = _Global_Row_Configuracion_Estacion.Item("SoloprodEnDoc_CLALIBPR")
+            If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta Then
+                SoloprodEnDoc_CLALIBPR = _Global_Row_Configuracion_Estacion.Item("SoloprodEnDoc_CLALIBPR")
+            End If
         End If
 
         Lbl_TipoVenta.Visible = SoloprodEnDoc_CLALIBPR
@@ -1706,11 +1714,14 @@ Public Class Frm_Formulario_Documento
 
             End If
 
-            If Not Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _NewNeroDocumento, True) Then
+            MensajeRevFolio = Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _NewNeroDocumento, False)
+
+            If Not MensajeRevFolio.EsCorrecto Then 'Not Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _NewNeroDocumento, True) Then
 
                 _NewNeroDocumento = String.Empty
 
                 If Me.Visible Then
+                    MessageBoxEx.Show(Me, MensajeRevFolio.Mensaje, MensajeRevFolio.Detalle, MessageBoxButtons.OK, MensajeRevFolio.Icono)
                     Me.Close()
                 End If
 
@@ -15923,12 +15934,15 @@ Public Class Frm_Formulario_Documento
 
             If _Tido = "FCV" Or _Tido = "BLV" Then
 
-                If Not Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nudo, True) Then
+                Dim _Mensaje As New LsValiciones.Mensajes
+
+                _Mensaje = Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nudo, False)
+
+                If Not _Mensaje.EsCorrecto Then 'Not Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nudo, True) Then
 
                     If Not String.IsNullOrEmpty(_Nudo) Then
 
-                        'MessageBoxEx.Show(Me, "El folio del documento electrónico (" & _Nudo & ") ya expiró en el SII." & vbCrLf &
-                        '                           "Informe al administrador del sistema", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
                         Modalidad = _Modalidad_Origen
 

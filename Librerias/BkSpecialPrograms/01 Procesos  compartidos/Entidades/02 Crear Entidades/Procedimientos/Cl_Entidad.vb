@@ -88,7 +88,7 @@ Public Class Cl_Entidades
             .RECEPELECT = _Row.Item("RECEPELECT")
             .ACTECO = NuloPorNro(_Row.Item("ACTECO"), "")
             .DIASVENCI = NuloPorNro(_Row.Item("DIASVENCI"), 0)
-            .CATTRIB = _Row.Item("CATTRIB")
+            .CATTRIB = NuloPorNro(_Row.Item("CATTRIB"), "")
             .AGRETIVA = _Row.Item("AGRETIVA")
             .AGRETIIBB = _Row.Item("AGRETIIBB")
             .AGRETGAN = _Row.Item("AGRETGAN")
@@ -129,11 +129,11 @@ Public Class Cl_Entidades
             .RUTAVIE = NuloPorNro(_Row.Item("RUTAVIE"), 0)
             .RUTASAB = NuloPorNro(_Row.Item("RUTASAB"), 0)
             .RUTADOM = NuloPorNro(_Row.Item("RUTADOM"), 0)
-            .CATLEGRET = _Row.Item("CATLEGRET")
-            .IMPTORET = _Row.Item("IMPTORET")
-            .ENTILIGA = _Row.Item("ENTILIGA")
-            .PORCELIGA = _Row.Item("PORCELIGA")
-            .ACTECOBCO = _Row.Item("ACTECOBCO")
+            .CATLEGRET = NuloPorNro(_Row.Item("CATLEGRET"), "")
+            .IMPTORET = NuloPorNro(_Row.Item("IMPTORET"), 0)
+            .ENTILIGA = NuloPorNro(_Row.Item("ENTILIGA"), "")
+            .PORCELIGA = NuloPorNro(_Row.Item("PORCELIGA"), 0)
+            .ACTECOBCO = NuloPorNro(_Row.Item("ACTECOBCO"), "")
 
         End With
 

@@ -470,9 +470,16 @@ Public Class Class_Genera_DTE_RdBk
         Dim _Nudo As String = _Maeedo.Rows.Item(0).Item("NUDO")
 
         If Not _Reenviar Then
-            If Not Fx_Revisar_Expiracion_Folio_SII(_Formulario, _Tido, _Nudo, True) Then
+
+            Dim _Mensaje As New LsValiciones.Mensajes
+
+            _Mensaje = Fx_Revisar_Expiracion_Folio_SII(_Formulario, _Tido, _Nudo, False)
+
+            If Not _Mensaje.EsCorrecto Then 'Not Fx_Revisar_Expiracion_Folio_SII(_Formulario, _Tido, _Nudo, True) Then
+                MessageBoxEx.Show(_Formulario, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
                 Return 0
             End If
+
         End If
 
         Dim _Xml As String
@@ -481,14 +488,6 @@ Public Class Class_Genera_DTE_RdBk
         If String.IsNullOrEmpty(_Xml) Then
             Return 0
         End If
-
-        'If Validar_Schema(_uriDteResultado, _UriSchemaDte) Then
-
-        'End If
-
-        'If Fx_Validar_Schema(_uriDteResultado, _UriSchemaEnvioDte) Then
-
-        'End If
 
         Dim _Iddt As Integer
         Dim _Endo = _Maeedo.Rows(0).Item("ENDO")

@@ -35,6 +35,8 @@ Public Class Frm_Sincronizador
 
         Sb_Ejecutar_diablito()
 
+        AddHandler Switch_Sincronizacion.ValueChanged, AddressOf Switch_Sincronizacion_ValueChanged
+
     End Sub
 
     Sub Sb_Ejecutar_diablito()
@@ -99,6 +101,10 @@ Public Class Frm_Sincronizador
 
         Timer_Ejecutar.Stop()
 
+        If IsNothing(Cadena_ConexionSQL_Server) Then
+            Return
+        End If
+
         If Not Switch_Sincronizacion.Value Then
             CircularPgrs.IsRunning = False
             Me.Refresh()
@@ -153,7 +159,7 @@ Public Class Frm_Sincronizador
         Txt_Log.Text = String.Empty
     End Sub
 
-    Private Sub Switch_Sincronizacion_ValueChanged(sender As Object, e As EventArgs) Handles Switch_Sincronizacion.ValueChanged
+    Private Sub Switch_Sincronizacion_ValueChanged(sender As Object, e As EventArgs)
 
         CircularPgrs.IsRunning = Switch_Sincronizacion.Value
 

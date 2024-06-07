@@ -170,7 +170,7 @@ Namespace LsValiciones
         Public Property Detalle As String = String.Empty
         Public Property Mensaje As String = String.Empty
         Public Property Resultado As String = String.Empty
-        Public Property Tag As String
+        Public Property Tag As Object
         Public Property UsarImagen As Boolean
         Public Property NombreImagen As String = String.Empty
         Public Property Icono As Object
