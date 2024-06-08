@@ -293,7 +293,7 @@
                                    ",Informacion = '" & _Mensaje.Mensaje & "'" & vbCrLf &
                                    "Where Id = " & _Id
                     If _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
-                        Log_Registro += "NVV: " & _Nudo_Nvv & " facturada correctamente. FCV-" & _Row_Factura.Item("NUDO") & vbCrLf
+                        Log_Registro += "NVV: " & _Nudo_Nvv & " facturada correctamente. " & _Row_Factura.Item("TIDO") & "-" & _Row_Factura.Item("NUDO") & vbCrLf
                     Else
                         Log_Registro += _Sql.Pro_Error
                     End If
@@ -546,7 +546,7 @@
 
         Try
 
-            If _TidoDocEmitir <> "GDV" And _TidoDocEmitir <> "FCV" Then
+            If _TidoDocEmitir <> "GDV" And _TidoDocEmitir <> "FCV" And _TidoDocEmitir <> "BLV" Then
                 _Mensaje.Mensaje = "Error"
                 Throw New System.Exception("El Tido Destino esta vacío o no corresponde: (" & _TidoDocEmitir & "), solo puede ser: FCV y GDV")
             End If

@@ -17,6 +17,8 @@ Public Class Frm_ImpBarras_Tarja
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
 
     Private Sub Frm_ImpBarras_Tarja_Load(sender As Object, e As EventArgs) Handles MyBase.Load

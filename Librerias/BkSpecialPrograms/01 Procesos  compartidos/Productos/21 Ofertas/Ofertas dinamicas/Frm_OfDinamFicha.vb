@@ -30,6 +30,8 @@ Public Class Frm_OfDinamFicha
 
         Sb_Grabar_Parametros_SQL(False)
 
+        Sb_Color_Botones_Barra(Bar2)
+
     End Sub
 
     Private Sub Frm_OfDinamFicha_Load(sender As Object, e As EventArgs) Handles MyBase.Load

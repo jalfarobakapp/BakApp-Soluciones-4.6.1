@@ -8,54 +8,54 @@ Public Class Cl_Tarja
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-    Public Property _Cl_Tarja_Ent As New Cl_Tarja_Ent.CPT_Tarja
-    Public Property _Cl_Tarja_Det As New List(Of Cl_Tarja_Ent.CPT_Tarja_Det)
+    Public Property Zw_Pdp_CPT_Tarja As New Zw_Pdp_CPT_Tarja
+    Public Property Zw_Pdp_CPT_Tarja_Det_Ls As New List(Of Zw_Pdp_CPT_Tarja_Det)
 
     Public Sub New()
 
-        _Cl_Tarja_Ent.Empresa = ModEmpresa
+        Zw_Pdp_CPT_Tarja.Empresa = ModEmpresa
 
     End Sub
 
-    Function Fx_Grabar_Tarja() As Cl_Tarja_Ent.Mensaje_Tarja
+    'Function Fx_Grabar_Tarja() As Cl_Tarja_Ent.Mensaje_Tarja
 
-        Dim _Mensaje_Tarja As New Cl_Tarja_Ent.Mensaje_Tarja
+    '    Dim _Mensaje_Tarja As New Cl_Tarja_Ent.Mensaje_Tarja
 
-        Try
+    '    Try
 
-            With _Cl_Tarja_Ent
+    '        With _Cl_Tarja_Ent
 
-                .Nro_CPT = Fx_NvoNro_CPT()
+    '            .Nro_CPT = Fx_NvoNro_CPT()
 
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja (Empresa,Idmaeddo,Nro_CPT,Codigo,CodAlternativo,CodAlternativo_Pallet,Turno,Planta," &
-                               "Udm,Formato,Lote,FechaElab,SacosXPallet,Analista,Observaciones,Tipo,CantidadTipo,CantidadFab,Descripcion_Kopral)" & vbCrLf &
-                               "Values ('" & .Empresa & "'," & .Idmaeddo & ",'" & .Nro_CPT & "','" & .Codigo & "','" & .CodAlternativo & "','" & .CodAlternativo_Pallet & "','" & .Turno &
-                               "','" & .Planta & "','" & .Udm & "','" & .Formato & "','" & .Lote & "','" & .FechaElab &
-                               "'," & .SacosXPallet & ",'" & .Analista & "','" & .Observaciones.Replace("'", "''") &
-                               "','" & .Tipo &
-                               "'," & De_Num_a_Tx_01(.CantidadTipo, False, 5) &
-                               "," & De_Num_a_Tx_01(.CantidadFab, False, 5) &
-                               ",'" & .Descripcion_Kopral & "')"
+    '            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja (Empresa,Idmaeddo,Nro_CPT,Codigo,CodAlternativo,CodAlternativo_Pallet,Turno,Planta," &
+    '                           "Udm,Formato,Lote,FechaElab,SacosXPallet,Analista,Observaciones,Tipo,CantidadTipo,CantidadFab,Descripcion_Kopral)" & vbCrLf &
+    '                           "Values ('" & .Empresa & "'," & .Idmaeddo & ",'" & .Nro_CPT & "','" & .Codigo & "','" & .CodAlternativo & "','" & .CodAlternativo_Pallet & "','" & .Turno &
+    '                           "','" & .Planta & "','" & .Udm & "','" & .Formato & "','" & .Lote & "','" & .FechaElab &
+    '                           "'," & .SacosXPallet & ",'" & .Analista & "','" & .Observaciones.Replace("'", "''") &
+    '                           "','" & .Tipo &
+    '                           "'," & De_Num_a_Tx_01(.CantidadTipo, False, 5) &
+    '                           "," & De_Num_a_Tx_01(.CantidadFab, False, 5) &
+    '                           ",'" & .Descripcion_Kopral & "')"
 
-            End With
+    '        End With
 
-            If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
-                _Mensaje_Tarja.EsCorrecto = True
-            Else
-                Throw New System.Exception(_Sql.Pro_Error)
-            End If
+    '        If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+    '            _Mensaje_Tarja.EsCorrecto = True
+    '        Else
+    '            Throw New System.Exception(_Sql.Pro_Error)
+    '        End If
 
-        Catch ex As Exception
-            _Mensaje_Tarja.Mensaje = ex.Message
-        End Try
+    '    Catch ex As Exception
+    '        _Mensaje_Tarja.Mensaje = ex.Message
+    '    End Try
 
-        Return _Mensaje_Tarja
+    '    Return _Mensaje_Tarja
 
-    End Function
+    'End Function
 
-    Function Fx_Grabar_Tarja2() As Cl_Tarja_Ent.Mensaje_Tarja
+    Function Fx_Grabar_Tarja2() As LsValiciones.Mensajes ' Cl_Tarja_Ent.Mensaje_Tarja
 
-        Dim _Mensaje_Tarja As New Cl_Tarja_Ent.Mensaje_Tarja
+        Dim _Mensaje As New LsValiciones.Mensajes
 
         Dim cn2 As New SqlConnection
         Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
@@ -69,19 +69,19 @@ Public Class Cl_Tarja
 
         Try
 
-            With _Cl_Tarja_Ent
+            With Zw_Pdp_CPT_Tarja
 
                 .Nro_CPT = Fx_NvoNro_CPT()
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja (Empresa,Idmaeddo,Nro_CPT,Codigo,CodAlternativo,CodAlternativo_Pallet,Turno,Planta," &
-                               "Udm,Formato,Lote,FechaElab,SacosXPallet,Analista,Observaciones,Tipo,CantidadTipo,CantidadFab,Descripcion_Kopral)" & vbCrLf &
+                               "Udm,Formato,Lote,FechaElab,SacosXPallet,Analista,Observaciones,Tipo,CantidadTipo,CantidadFab,Descripcion_Kopral, Tolva)" & vbCrLf &
                                "Values ('" & .Empresa & "'," & .Idmaeddo & ",'" & .Nro_CPT & "','" & .Codigo & "','" & .CodAlternativo & "','" & .CodAlternativo_Pallet & "','" & .Turno &
                                "','" & .Planta & "','" & .Udm & "','" & .Formato & "','" & .Lote & "','" & .FechaElab &
                                "'," & .SacosXPallet & ",'" & .Analista & "','" & .Observaciones.Replace("'", "''") &
                                "','" & .Tipo &
                                "'," & De_Num_a_Tx_01(.CantidadTipo, False, 5) &
                                "," & De_Num_a_Tx_01(.CantidadFab, False, 5) &
-                               ",'" & .Descripcion_Kopral & "')"
+                               ",'" & .Descripcion_Kopral & "','" & .Tolva & "')"
 
             End With
 
@@ -93,14 +93,14 @@ Public Class Cl_Tarja
             Comando.Transaction = myTrans
             Dim dfd1 As SqlDataReader = Comando.ExecuteReader()
             While dfd1.Read()
-                _Cl_Tarja_Ent.Id = dfd1("Identity")
+                Zw_Pdp_CPT_Tarja.Id = dfd1("Identity")
             End While
             dfd1.Close()
 
             Dim _Nro As Integer
 
             Consulta_sql = "Select Isnull(MAX(Nro),0)+1 As Nro From " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja_Det" & vbCrLf &
-                           "Where Lote = '" & _Cl_Tarja_Ent.Lote & "' And Codigo = '" & _Cl_Tarja_Ent.Codigo & "'"
+                           "Where Lote = '" & Zw_Pdp_CPT_Tarja.Lote & "' And Codigo = '" & Zw_Pdp_CPT_Tarja.Codigo & "'"
 
             Comando = New SqlCommand(Consulta_sql, cn2)
             Comando.Transaction = myTrans
@@ -110,12 +110,12 @@ Public Class Cl_Tarja
             End While
             dfd1.Close()
 
-            For Each _Fila As CPT_Tarja_Det In _Cl_Tarja_Det
+            For Each _Fila As Zw_Pdp_CPT_Tarja_Det In Zw_Pdp_CPT_Tarja_Det_Ls
 
                 With _Fila
 
-                    .Id_CPT = _Cl_Tarja_Ent.Id
-                    .Nro_CPT = _Cl_Tarja_Ent.Nro_CPT
+                    .Id_CPT = Zw_Pdp_CPT_Tarja.Id
+                    .Nro_CPT = Zw_Pdp_CPT_Tarja.Nro_CPT
                     .Nro = _Nro
                     .Nro_Tipo = Fx_NvoNro_Tipo(Comando, cn2, myTrans, .Tipo, "PLT")
 
@@ -137,12 +137,19 @@ Public Class Cl_Tarja
             myTrans.Commit()
             SQL_ServerClass.Sb_Cerrar_Conexion(cn2)
 
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Id = Zw_Pdp_CPT_Tarja.Id
+            _Mensaje.Detalle = "Grabar Tarja"
+            _Mensaje.Mensaje = "Tarja guardada correctamente"
+            _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
-            _Mensaje_Tarja.Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Detalle = "Grabar Tarja"
+            _Mensaje.Icono = MessageBoxIcon.Information
         End Try
 
-        Return _Mensaje_Tarja
+        Return _Mensaje
 
     End Function
 
@@ -198,51 +205,45 @@ End Class
 
 Namespace Cl_Tarja_Ent
 
-    Public Class CPT_Tarja
-        Public Property Id As Integer
-        Public Property Empresa As String
-        Public Property Idmaeddo As Integer
-        Public Property Nro_CPT As String
-        Public Property Lote As String
-        Public Property Codigo As String
-        Public Property CodAlternativo As String
-        Public Property CodAlternativo_Pallet As String
-        Public Property Turno As String
-        Public Property Planta As String
-        Public Property Udm As String
-        Public Property Formato As Integer
-        Public Property FechaElab As DateTime
-        Public Property SacosXPallet As Integer
-        Public Property Analista As String
-        Public Property Observaciones As String
-        Public Property Tipo As String
-        Public Property CantidadTipo As Double
-        Public Property CantidadFab As Double
-        Public Property Descripcion_Kopral As String
-    End Class
+    'Public Class CPT_Tarja
+    '    Public Property Id As Integer
+    '    Public Property Empresa As String
+    '    Public Property Idmaeddo As Integer
+    '    Public Property Nro_CPT As String
+    '    Public Property Lote As String
+    '    Public Property Codigo As String
+    '    Public Property CodAlternativo As String
+    '    Public Property CodAlternativo_Pallet As String
+    '    Public Property Turno As String
+    '    Public Property Planta As String
+    '    Public Property Udm As String
+    '    Public Property Formato As Integer
+    '    Public Property FechaElab As DateTime
+    '    Public Property SacosXPallet As Integer
+    '    Public Property Analista As String
+    '    Public Property Observaciones As String
+    '    Public Property Tipo As String
+    '    Public Property CantidadTipo As Double
+    '    Public Property CantidadFab As Double
+    '    Public Property Descripcion_Kopral As String
+    '    Public Property Tolva As String
+    'End Class
 
-    Public Class Mensaje_Tarja
+    'Public Class CPT_Tarja_Det
 
-        Public Property EsCorrecto As Boolean
-        Public Property Mensaje As String
+    '    Public Property Id As Integer
+    '    Public Property Id_CPT As Integer
+    '    Public Property Nro_Tipo As String
+    '    Public Property Idmaeddo As Integer
+    '    Public Property Nro_CPT As String
+    '    Public Property Lote As String
+    '    Public Property Tipo As String
+    '    Public Property Nro As Integer
+    '    Public Property Codigo As String
+    '    Public Property CodAlternativo As String
+    '    Public Property CodAlternativo_Pallet As String
 
-    End Class
-
-    Public Class CPT_Tarja_Det
-
-        Public Property Id As Integer
-        Public Property Id_CPT As Integer
-        Public Property Nro_Tipo As String
-        Public Property Idmaeddo As Integer
-        Public Property Nro_CPT As String
-        Public Property Lote As String
-        Public Property Tipo As String
-        Public Property Nro As Integer
-        Public Property Codigo As String
-        Public Property CodAlternativo As String
-        Public Property CodAlternativo_Pallet As String
-
-    End Class
+    'End Class
 
 End Namespace
 

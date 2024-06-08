@@ -1010,7 +1010,7 @@ Public Class Frm_BuscarDocumento_Mt
                         Btn_Facturar.Visible = (_Estado = "Vigente")
                     End If
 
-                    LabelItem1.Text = "Opciones (Id: " & _Idmaeedo & ")"
+                    Lbl_Mnu_Idmaeedo.Text = "Opciones (Id: " & _Idmaeedo & ")"
 
                     ShowContextMenu(Menu_Contextual_01)
 
@@ -1658,14 +1658,14 @@ Public Class Frm_BuscarDocumento_Mt
                               "El documento debera seguir el conducto regular, se quitaran los plazos de vencimineto.",
                               "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
-                Consulta_Sql = "Update MAEEDO Set FE01VEDO = FEEMDO,FEULVEDO = FEEMDO,NUVEDO = 1 Where IDMAEEDO = " & _Idmaeedo
-                _Sql.Ej_consulta_IDU(Consulta_Sql)
+            Consulta_Sql = "Update MAEEDO Set FE01VEDO = FEEMDO,FEULVEDO = FEEMDO,NUVEDO = 1 Where IDMAEEDO = " & _Idmaeedo
+            _Sql.Ej_consulta_IDU(Consulta_Sql)
 
-                Return False
+            Return False
 
-            End If
+        End If
 
-            Return True
+        Return True
 
     End Function
 
@@ -1850,4 +1850,15 @@ Public Class Frm_BuscarDocumento_Mt
 
         End With
     End Sub
+
+    Private Sub Lbl_Mnu_Idmaeedo_Click(sender As Object, e As EventArgs) Handles Lbl_Mnu_Idmaeedo.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Idmaeedo As Integer = _Fila.Cells("IDMAEEDO").Value
+        Clipboard.SetText(_Idmaeedo)
+
+        ToastNotification.Show(Me, "IDMAEEDO del documento esta en el portapapeles", Btn_Copiar.Image,
+                                   2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
+    End Sub
+
 End Class
