@@ -466,7 +466,7 @@ Public Class Frm_OfDinamLista
         Fm.Pro_CodEntidad = String.Empty
         Fm.Pro_CodSucEntidad = String.Empty
         Fm.Pro_Tipo_Lista = "P"
-        'Fm.Pro_Lista_Busqueda = ModListaPrecioVenta
+
         Fm.Pro_Sucursal_Busqueda = ModSucursal
         Fm.Pro_Bodega_Busqueda = ModBodega
         Fm.Txtdescripcion.Text = _Codigo
@@ -486,8 +486,6 @@ Public Class Frm_OfDinamLista
         Else
             Return Nothing
         End If
-
-        'End If
 
     End Function
 

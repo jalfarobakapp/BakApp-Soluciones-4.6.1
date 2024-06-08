@@ -63,6 +63,8 @@ Partial Class Frm_OfDinamFicha
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
         Me.Highlighter1 = New DevComponents.DotNetBar.Validator.Highlighter()
+        Me.Cmb_Kogen = New DevComponents.DotNetBar.Controls.ComboBoxEx()
+        Me.Lbl_Kogen = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Input_Cantmin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dtp_Fioferta, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -77,6 +79,7 @@ Partial Class Frm_OfDinamFicha
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.Controls.Add(Me.Cmb_Kogen)
         Me.GroupPanel1.Controls.Add(Me.Input_Cantmin)
         Me.GroupPanel1.Controls.Add(Me.LabelX6)
         Me.GroupPanel1.Controls.Add(Me.LabelX5)
@@ -90,6 +93,7 @@ Partial Class Frm_OfDinamFicha
         Me.GroupPanel1.Controls.Add(Me.LabelX2)
         Me.GroupPanel1.Controls.Add(Me.LabelX1)
         Me.GroupPanel1.Controls.Add(Me.LabelX3)
+        Me.GroupPanel1.Controls.Add(Me.Lbl_Kogen)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 12)
         Me.GroupPanel1.Name = "GroupPanel1"
@@ -360,7 +364,7 @@ Partial Class Frm_OfDinamFicha
         Me.Txt_Codigo.MaxLength = 13
         Me.Txt_Codigo.Name = "Txt_Codigo"
         Me.Txt_Codigo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.Txt_Codigo.Size = New System.Drawing.Size(161, 22)
+        Me.Txt_Codigo.Size = New System.Drawing.Size(144, 22)
         Me.Txt_Codigo.TabIndex = 0
         '
         'Txt_Descriptor
@@ -377,11 +381,11 @@ Partial Class Frm_OfDinamFicha
         Me.Txt_Descriptor.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.Txt_Descriptor.ForeColor = System.Drawing.Color.Black
         Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Descriptor, True)
-        Me.Txt_Descriptor.Location = New System.Drawing.Point(170, 23)
+        Me.Txt_Descriptor.Location = New System.Drawing.Point(153, 23)
         Me.Txt_Descriptor.MaxLength = 50
         Me.Txt_Descriptor.Name = "Txt_Descriptor"
         Me.Txt_Descriptor.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.Txt_Descriptor.Size = New System.Drawing.Size(666, 22)
+        Me.Txt_Descriptor.Size = New System.Drawing.Size(467, 22)
         Me.Txt_Descriptor.TabIndex = 1
         '
         'LabelX2
@@ -409,7 +413,7 @@ Partial Class Frm_OfDinamFicha
         Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX1.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelX1.ForeColor = System.Drawing.Color.Black
-        Me.LabelX1.Location = New System.Drawing.Point(170, 3)
+        Me.LabelX1.Location = New System.Drawing.Point(153, 3)
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.Size = New System.Drawing.Size(352, 23)
         Me.LabelX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
@@ -922,6 +926,7 @@ Partial Class Frm_OfDinamFicha
         Me.Btn_Grabar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Grabar.ForeColor = System.Drawing.Color.Black
         Me.Btn_Grabar.Image = CType(resources.GetObject("Btn_Grabar.Image"), System.Drawing.Image)
+        Me.Btn_Grabar.ImageAlt = CType(resources.GetObject("Btn_Grabar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Grabar.Name = "Btn_Grabar"
         Me.Btn_Grabar.Tooltip = "Grabar"
         '
@@ -939,6 +944,35 @@ Partial Class Frm_OfDinamFicha
         Me.Highlighter1.ContainerControl = Me
         Me.Highlighter1.FocusHighlightColor = DevComponents.DotNetBar.Validator.eHighlightColor.Red
         Me.Highlighter1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
+        '
+        'Cmb_Kogen
+        '
+        Me.Cmb_Kogen.DisplayMember = "Text"
+        Me.Cmb_Kogen.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.Cmb_Kogen.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        Me.Cmb_Kogen.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Cmb_Kogen, True)
+        Me.Cmb_Kogen.ItemHeight = 16
+        Me.Cmb_Kogen.Location = New System.Drawing.Point(626, 23)
+        Me.Cmb_Kogen.Name = "Cmb_Kogen"
+        Me.Cmb_Kogen.Size = New System.Drawing.Size(210, 22)
+        Me.Cmb_Kogen.TabIndex = 77
+        '
+        'Lbl_Kogen
+        '
+        Me.Lbl_Kogen.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Lbl_Kogen.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_Kogen.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Lbl_Kogen.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_Kogen.Location = New System.Drawing.Point(626, 3)
+        Me.Lbl_Kogen.Name = "Lbl_Kogen"
+        Me.Lbl_Kogen.Size = New System.Drawing.Size(148, 23)
+        Me.Lbl_Kogen.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.Lbl_Kogen.TabIndex = 78
+        Me.Lbl_Kogen.Text = "Tipo de oferta"
         '
         'Frm_OfDinamFicha
         '
@@ -1012,4 +1046,6 @@ Partial Class Frm_OfDinamFicha
     Friend WithEvents Input_Cantmin As DevComponents.Editors.IntegerInput
     Friend WithEvents Btn_Eliminar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Highlighter1 As DevComponents.DotNetBar.Validator.Highlighter
+    Public WithEvents Cmb_Kogen As DevComponents.DotNetBar.Controls.ComboBoxEx
+    Friend WithEvents Lbl_Kogen As DevComponents.DotNetBar.LabelX
 End Class

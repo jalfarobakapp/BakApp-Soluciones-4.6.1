@@ -269,6 +269,9 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
 
             If Not Chk_Incluir_Ent_Excluidas.Checked Then
 
+                ' ACA HAY QUE MEJORAR EL PROCESO, YA QUE SI EL PROVEEDOR AL CUAL SE LE COMPRO ESTABA EXCLUIDO
+                ' SE BORRA Y NO SE PIDEN LOS ARTICULOS, CREO QUE HAY QUE PONER UN FILTRO PARA ESTO UN POCO MAS ARRIBA.
+
                 Consulta_sql = "Delete " & _Tabla_Paso & vbCrLf &
                                "Where Es_Agrupador = 0" & vbCrLf &
                                "And Ltrim(Rtrim(Endo_Utl_Compra))+Ltrim(Rtrim(Suendo_Utl_Compra)) In " &
