@@ -1,5 +1,4 @@
-﻿Imports System.Windows.Forms.VisualStyles.VisualStyleElement
-Imports BkSpecialPrograms
+﻿Imports BkSpecialPrograms
 Imports DevComponents.DotNetBar
 
 Public Class Frm_GRI_FabXProducto
@@ -16,7 +15,8 @@ Public Class Frm_GRI_FabXProducto
 
     Dim _Cl_Tarja As New Cl_Tarja
 
-    Dim LotePlantaTurno As Boolean
+    Dim _LotePlantaTurno As Boolean
+    Dim _RowBodegaGRI As DataRow
 
     Public Sub New()
 
@@ -40,7 +40,7 @@ Public Class Frm_GRI_FabXProducto
         ActiveControl = Txt_Numot
         Sb_Limpiar()
 
-        LotePlantaTurno = True
+        _LotePlantaTurno = True
 
         Chk_FechaEmiFiot.Checked = Not Fx_Tiene_Permiso(Me, "Pdc00009",, False)
         Dtp_Fiot.Enabled = Not Chk_FechaEmiFiot.Checked
@@ -165,6 +165,8 @@ Public Class Frm_GRI_FabXProducto
             End If
             Return
         End If
+
+        Sb_TraerBodegaGRI()
 
         Grupo_Producto.Text = "DETALLE DE DATOS DE FABRICACION SUBOT: " & _Row_Potl.Item("NREG").ToString.Trim
         Txt_Cantidad.Text = String.Empty
@@ -387,7 +389,7 @@ Public Class Frm_GRI_FabXProducto
         GroupPanel2.Enabled = False
         Txt_NroLote.Text = String.Empty
 
-        If Not LotePlantaTurno Then
+        If Not _LotePlantaTurno Then
             Txt_Turno.Text = String.Empty
             _Cl_Tarja.Zw_Pdp_CPT_Tarja.Turno = String.Empty
             Txt_Planta.Text = String.Empty
@@ -446,7 +448,7 @@ Public Class Frm_GRI_FabXProducto
 
     Private Sub Txt_NroLote_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_NroLote.ButtonCustomClick
 
-        If LotePlantaTurno Then
+        If _LotePlantaTurno Then
 
             If String.IsNullOrEmpty(Txt_Turno.Text) Then Call Txt_Turno_ButtonCustomClick(Nothing, Nothing)
             If String.IsNullOrEmpty(Txt_Turno.Text) Then
@@ -479,7 +481,7 @@ Public Class Frm_GRI_FabXProducto
             Return
         End If
 
-        If LotePlantaTurno Then
+        If _LotePlantaTurno Then
             _NroLote = _Cl_Tarja.Zw_Pdp_CPT_Tarja.Planta & "" & _Cl_Tarja.Zw_Pdp_CPT_Tarja.Turno & _NroLote
         End If
 
@@ -541,7 +543,7 @@ Public Class Frm_GRI_FabXProducto
 
         MessageBoxEx.Show(Me, "Lote aceptado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-        If LotePlantaTurno Then
+        If _LotePlantaTurno Then
             Sb_Actualizar_Parametros_SQL(True)
         End If
 
@@ -562,7 +564,7 @@ Public Class Frm_GRI_FabXProducto
             Cmb_Formato.SelectedValue = _Row_Tabcodal.Item("UNIMULTI")
         End If
 
-        If Not LotePlantaTurno Then
+        If Not _LotePlantaTurno Then
             Txt_Turno.Text = String.Empty
             _Cl_Tarja.Zw_Pdp_CPT_Tarja.Turno = String.Empty
             Txt_Planta.Text = String.Empty
@@ -881,6 +883,8 @@ Public Class Frm_GRI_FabXProducto
         End If
 
         _Cl_Tarja.Zw_Pdp_CPT_Tarja.Codigo = _Row_Maepr.Item("KOPR")
+        _Cl_Tarja.Zw_Pdp_CPT_Tarja.Idpote = _Row_Potl.Item("IDPOTE")
+        _Cl_Tarja.Zw_Pdp_CPT_Tarja.Idpotl = _Row_Potl.Item("IDPOTL")
 
         ' Obtener la fecha actual
         Dim fechaActual As Date = Dtp_Fecha_Ingreso.Value.Date
@@ -924,6 +928,14 @@ Public Class Frm_GRI_FabXProducto
 
         End If
 
+        Dim _EmpresaGRI As String = _RowBodegaGRI.Item("EMPRESA")
+        Dim _SucursalGRI As String = _RowBodegaGRI.Item("KOSU")
+        Dim _BodegaGRI As String = _RowBodegaGRI.Item("KOBO")
+
+        Consulta_sql = "Select *," & _Cantidad & " As Cantidad,'" & _SucursalGRI & "' As Sucursal,'" & _BodegaGRI & "' As Bodega" & vbCrLf &
+                       "From POTL Where IDPOTL = " & _Row_Potl.Item("IDPOTL")
+        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
         _Cl_Tarja.Zw_Pdp_CPT_Tarja.Idmaeddo = 0
 
         Dim _Mensaje As New LsValiciones.Mensajes
@@ -934,9 +946,6 @@ Public Class Frm_GRI_FabXProducto
             Return
         End If
 
-        Consulta_sql = "Select *," & _Cantidad & " As Cantidad,'" & ModSucursal & "' As Sucursal,'" & ModBodega & "' As Bodega" & vbCrLf &
-                       "From POTL Where IDPOTL = " & _Row_Potl.Item("IDPOTL")
-        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
         Me.Enabled = False
         Dim Fm_Espera As New Frm_Form_Esperar
@@ -1070,5 +1079,54 @@ Public Class Frm_GRI_FabXProducto
         End If
 
     End Sub
+
+    Private Sub Rdb_BodegaDesdeOT_CheckedChanged(sender As Object, e As EventArgs) Handles Rdb_BodegaDesdeOT.CheckedChanged
+        If Rdb_BodegaDesdeOT.Checked Then
+            Sb_TraerBodegaGRI()
+        End If
+    End Sub
+    Private Sub Rdb_BodegaDesdeModalidad_CheckedChanged(sender As Object, e As EventArgs) Handles Rdb_BodegaDesdeModalidad.CheckedChanged
+        If Rdb_BodegaDesdeModalidad.Checked Then
+            Sb_TraerBodegaGRI()
+        End If
+    End Sub
+    Sub Sb_TraerBodegaGRI()
+
+        Dim _Empresa As String = ModEmpresa
+        Dim _Sucursal As String = ModSucursal
+        Dim _Bodega As String = ModBodega
+
+        If Rdb_BodegaDesdeOT.Checked Then
+
+            If IsNothing(_Row_Potl) Then
+                Lbl_BodegaGRI.Text = "BODEGA DE LA GRI: ..."
+                Return
+            Else
+                _Empresa = _Row_Potl.Item("EMPRESA")
+                _Sucursal = _Row_Potl.Item("SULIOTL")
+                _Bodega = _Row_Potl.Item("BOLIOTL")
+                _Cl_Tarja.Zw_Pdp_CPT_Tarja.BodegaDesde = "POTL"
+            End If
+
+        End If
+
+        If Rdb_BodegaDesdeModalidad.Checked Then
+            _Cl_Tarja.Zw_Pdp_CPT_Tarja.BodegaDesde = "MODALIDAD"
+        End If
+
+        Consulta_sql = "Select EMPRESA,KOSU,KOBO,NOKOBO" & vbCrLf &
+                       "From TABBO" & vbCrLf &
+                       "Where EMPRESA = '" & _Empresa & "' And KOSU = '" & _Sucursal & "' And KOBO = '" & _Bodega & "'"
+            _RowBodegaGRI = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_RowBodegaGRI) Then
+                Lbl_BodegaGRI.Text = "NO SE ENCONTRO Bodega: " & _Bodega & " en Empresa: " & _Empresa & ", Sucursal: " & _Sucursal
+                _RowBodegaGRI = Nothing
+            End If
+
+            Lbl_BodegaGRI.Text = "BODEGA DE LA GRI: " & _RowBodegaGRI.Item("KOBO") & " - " & _RowBodegaGRI.Item("NOKOBO").ToString.Trim
+
+    End Sub
+
 
 End Class

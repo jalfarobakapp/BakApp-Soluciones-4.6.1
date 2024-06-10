@@ -74,14 +74,14 @@ Public Class Cl_Tarja
                 .Nro_CPT = Fx_NvoNro_CPT()
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja (Empresa,Idmaeddo,Nro_CPT,Codigo,CodAlternativo,CodAlternativo_Pallet,Turno,Planta," &
-                               "Udm,Formato,Lote,FechaElab,SacosXPallet,Analista,Observaciones,Tipo,CantidadTipo,CantidadFab,Descripcion_Kopral, Tolva)" & vbCrLf &
+                               "Udm,Formato,Lote,FechaElab,SacosXPallet,Analista,Observaciones,Tipo,CantidadTipo,CantidadFab,Descripcion_Kopral,Idpote,Idpotl,Tolva,BodegaDesde)" & vbCrLf &
                                "Values ('" & .Empresa & "'," & .Idmaeddo & ",'" & .Nro_CPT & "','" & .Codigo & "','" & .CodAlternativo & "','" & .CodAlternativo_Pallet & "','" & .Turno &
                                "','" & .Planta & "','" & .Udm & "','" & .Formato & "','" & .Lote & "','" & .FechaElab &
                                "'," & .SacosXPallet & ",'" & .Analista & "','" & .Observaciones.Replace("'", "''") &
                                "','" & .Tipo &
                                "'," & De_Num_a_Tx_01(.CantidadTipo, False, 5) &
                                "," & De_Num_a_Tx_01(.CantidadFab, False, 5) &
-                               ",'" & .Descripcion_Kopral & "','" & .Tolva & "')"
+                               ",'" & .Descripcion_Kopral & "'," & .Idpote & "," & .Idpotl & ",'" & .Tolva & "','" & .BodegaDesde & "')"
 
             End With
 
@@ -146,7 +146,7 @@ Public Class Cl_Tarja
         Catch ex As Exception
             _Mensaje.Mensaje = ex.Message
             _Mensaje.Detalle = "Grabar Tarja"
-            _Mensaje.Icono = MessageBoxIcon.Information
+            _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
 
         Return _Mensaje

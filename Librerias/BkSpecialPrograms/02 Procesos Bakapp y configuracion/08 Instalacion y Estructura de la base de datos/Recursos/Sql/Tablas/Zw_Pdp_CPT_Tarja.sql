@@ -22,6 +22,9 @@ CREATE TABLE [dbo].[Zw_Pdp_CPT_Tarja](
     [CantidadFab]		    [float]			NOT NULL Default(0),
     [Descripcion_Kopral]    [varchar](200)	NOT NULL Default(''),
     [Tolva]                 [varchar](2)	NOT NULL Default(''),
+    [Idpote]                [int]			NOT NULL Default(0),
+    [Idpotl]                [int]			NOT NULL Default(0),
+    [BodegaDesde]           [varchar](10)	NOT NULL Default(''),
  CONSTRAINT [PK_Zw_Pdp_CPT_Tarja] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

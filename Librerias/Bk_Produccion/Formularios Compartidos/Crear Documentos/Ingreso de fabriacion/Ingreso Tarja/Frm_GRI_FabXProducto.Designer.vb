@@ -24,6 +24,10 @@ Partial Class Frm_GRI_FabXProducto
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_GRI_FabXProducto))
         Me.Grupo_Producto = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Lbl_BodegaGRI = New DevComponents.DotNetBar.LabelX()
+        Me.Rdb_BodegaDesdeModalidad = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_BodegaDesdeOT = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Line2 = New DevComponents.DotNetBar.Controls.Line()
         Me.Panel_SC = New System.Windows.Forms.TableLayoutPanel()
         Me.LabelX16 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX13 = New DevComponents.DotNetBar.LabelX()
@@ -65,18 +69,14 @@ Partial Class Frm_GRI_FabXProducto
         Me.Lbl_Tipo = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Descripcion_Kopral = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Txt_Tolva = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX19 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Observaciones = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX14 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Planta = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_Turno = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_Analista = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX17 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_Tolva = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX19 = New DevComponents.DotNetBar.LabelX()
-        Me.Line2 = New DevComponents.DotNetBar.Controls.Line()
-        Me.Rdb_BodegaDesdeOT = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.CheckBoxX1 = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.LabelX20 = New DevComponents.DotNetBar.LabelX()
         Me.Grupo_Producto.SuspendLayout()
         Me.Panel_SC.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -91,8 +91,8 @@ Partial Class Frm_GRI_FabXProducto
         '
         Me.Grupo_Producto.BackColor = System.Drawing.Color.White
         Me.Grupo_Producto.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.Grupo_Producto.Controls.Add(Me.LabelX20)
-        Me.Grupo_Producto.Controls.Add(Me.CheckBoxX1)
+        Me.Grupo_Producto.Controls.Add(Me.Lbl_BodegaGRI)
+        Me.Grupo_Producto.Controls.Add(Me.Rdb_BodegaDesdeModalidad)
         Me.Grupo_Producto.Controls.Add(Me.Rdb_BodegaDesdeOT)
         Me.Grupo_Producto.Controls.Add(Me.Line2)
         Me.Grupo_Producto.Controls.Add(Me.Panel_SC)
@@ -140,6 +140,73 @@ Partial Class Frm_GRI_FabXProducto
         Me.Grupo_Producto.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Grupo_Producto.TabIndex = 96
         Me.Grupo_Producto.Text = "DETALLE DE DATOS DE FABRICACION"
+        '
+        'Lbl_BodegaGRI
+        '
+        Me.Lbl_BodegaGRI.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Lbl_BodegaGRI.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_BodegaGRI.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Lbl_BodegaGRI.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_BodegaGRI.Location = New System.Drawing.Point(280, 159)
+        Me.Lbl_BodegaGRI.Name = "Lbl_BodegaGRI"
+        Me.Lbl_BodegaGRI.Size = New System.Drawing.Size(513, 26)
+        Me.Lbl_BodegaGRI.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.Lbl_BodegaGRI.TabIndex = 103
+        Me.Lbl_BodegaGRI.Text = "BODEGA DE LA GRI: XXX - BODEGA"
+        '
+        'Rdb_BodegaDesdeModalidad
+        '
+        Me.Rdb_BodegaDesdeModalidad.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_BodegaDesdeModalidad.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_BodegaDesdeModalidad.CheckBoxImageChecked = CType(resources.GetObject("Rdb_BodegaDesdeModalidad.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_BodegaDesdeModalidad.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_BodegaDesdeModalidad.FocusCuesEnabled = False
+        Me.Rdb_BodegaDesdeModalidad.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_BodegaDesdeModalidad.Location = New System.Drawing.Point(119, 160)
+        Me.Rdb_BodegaDesdeModalidad.Name = "Rdb_BodegaDesdeModalidad"
+        Me.Rdb_BodegaDesdeModalidad.Size = New System.Drawing.Size(153, 26)
+        Me.Rdb_BodegaDesdeModalidad.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_BodegaDesdeModalidad.TabIndex = 102
+        Me.Rdb_BodegaDesdeModalidad.TabStop = False
+        Me.Rdb_BodegaDesdeModalidad.Text = "Bodega desde Modalidad"
+        '
+        'Rdb_BodegaDesdeOT
+        '
+        Me.Rdb_BodegaDesdeOT.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_BodegaDesdeOT.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_BodegaDesdeOT.CheckBoxImageChecked = CType(resources.GetObject("Rdb_BodegaDesdeOT.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_BodegaDesdeOT.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_BodegaDesdeOT.Checked = True
+        Me.Rdb_BodegaDesdeOT.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Rdb_BodegaDesdeOT.CheckValue = "Y"
+        Me.Rdb_BodegaDesdeOT.FocusCuesEnabled = False
+        Me.Rdb_BodegaDesdeOT.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_BodegaDesdeOT.Location = New System.Drawing.Point(6, 160)
+        Me.Rdb_BodegaDesdeOT.Name = "Rdb_BodegaDesdeOT"
+        Me.Rdb_BodegaDesdeOT.Size = New System.Drawing.Size(107, 26)
+        Me.Rdb_BodegaDesdeOT.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_BodegaDesdeOT.TabIndex = 101
+        Me.Rdb_BodegaDesdeOT.TabStop = False
+        Me.Rdb_BodegaDesdeOT.Text = "Bodega desde OT"
+        '
+        'Line2
+        '
+        Me.Line2.BackColor = System.Drawing.Color.Transparent
+        Me.Line2.ForeColor = System.Drawing.Color.Black
+        Me.Line2.Location = New System.Drawing.Point(6, 140)
+        Me.Line2.Name = "Line2"
+        Me.Line2.Size = New System.Drawing.Size(266, 23)
+        Me.Line2.TabIndex = 84
+        Me.Line2.Text = "Line2"
         '
         'Panel_SC
         '
@@ -965,6 +1032,44 @@ Partial Class Frm_GRI_FabXProducto
         Me.GroupPanel2.TabIndex = 101
         Me.GroupPanel2.Text = "DATOS DE LA TARJA"
         '
+        'Txt_Tolva
+        '
+        Me.Txt_Tolva.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Tolva.Border.Class = "TextBoxBorder"
+        Me.Txt_Tolva.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Tolva.ButtonCustom.Image = CType(resources.GetObject("Txt_Tolva.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Tolva.ButtonCustom.Visible = True
+        Me.Txt_Tolva.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Tolva.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Txt_Tolva.Font = New System.Drawing.Font("Courier New", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Txt_Tolva.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Tolva.Location = New System.Drawing.Point(583, 38)
+        Me.Txt_Tolva.MaxLength = 13
+        Me.Txt_Tolva.Name = "Txt_Tolva"
+        Me.Txt_Tolva.ReadOnly = True
+        Me.Txt_Tolva.Size = New System.Drawing.Size(165, 26)
+        Me.Txt_Tolva.TabIndex = 109
+        Me.Txt_Tolva.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'LabelX19
+        '
+        Me.LabelX19.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX19.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX19.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX19.ForeColor = System.Drawing.Color.Black
+        Me.LabelX19.Location = New System.Drawing.Point(533, 38)
+        Me.LabelX19.Name = "LabelX19"
+        Me.LabelX19.Size = New System.Drawing.Size(71, 23)
+        Me.LabelX19.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.LabelX19.TabIndex = 108
+        Me.LabelX19.Text = "TOLVA"
+        '
         'Txt_Observaciones
         '
         Me.Txt_Observaciones.BackColor = System.Drawing.Color.White
@@ -1083,111 +1188,6 @@ Partial Class Frm_GRI_FabXProducto
         Me.LabelX17.TabIndex = 101
         Me.LabelX17.Text = "ANALISTA"
         '
-        'Txt_Tolva
-        '
-        Me.Txt_Tolva.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_Tolva.Border.Class = "TextBoxBorder"
-        Me.Txt_Tolva.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Tolva.ButtonCustom.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_Tolva.ButtonCustom.Visible = True
-        Me.Txt_Tolva.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_Tolva.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_Tolva.Font = New System.Drawing.Font("Courier New", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Txt_Tolva.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Tolva.Location = New System.Drawing.Point(583, 38)
-        Me.Txt_Tolva.MaxLength = 13
-        Me.Txt_Tolva.Name = "Txt_Tolva"
-        Me.Txt_Tolva.ReadOnly = True
-        Me.Txt_Tolva.Size = New System.Drawing.Size(165, 26)
-        Me.Txt_Tolva.TabIndex = 109
-        Me.Txt_Tolva.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'LabelX19
-        '
-        Me.LabelX19.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX19.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX19.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX19.ForeColor = System.Drawing.Color.Black
-        Me.LabelX19.Location = New System.Drawing.Point(533, 38)
-        Me.LabelX19.Name = "LabelX19"
-        Me.LabelX19.Size = New System.Drawing.Size(71, 23)
-        Me.LabelX19.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
-        Me.LabelX19.TabIndex = 108
-        Me.LabelX19.Text = "TOLVA"
-        '
-        'Line2
-        '
-        Me.Line2.BackColor = System.Drawing.Color.Transparent
-        Me.Line2.ForeColor = System.Drawing.Color.Black
-        Me.Line2.Location = New System.Drawing.Point(6, 140)
-        Me.Line2.Name = "Line2"
-        Me.Line2.Size = New System.Drawing.Size(266, 23)
-        Me.Line2.TabIndex = 84
-        Me.Line2.Text = "Line2"
-        '
-        'Rdb_BodegaDesdeOT
-        '
-        Me.Rdb_BodegaDesdeOT.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.CheckBoxX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_BodegaDesdeOT.CheckBoxImageChecked = CType(resources.GetObject("Rdb_BodegaDesdeOT.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Rdb_BodegaDesdeOT.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_BodegaDesdeOT.Checked = True
-        Me.Rdb_BodegaDesdeOT.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.Rdb_BodegaDesdeOT.CheckValue = "Y"
-        Me.Rdb_BodegaDesdeOT.FocusCuesEnabled = False
-        Me.Rdb_BodegaDesdeOT.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_BodegaDesdeOT.Location = New System.Drawing.Point(6, 160)
-        Me.Rdb_BodegaDesdeOT.Name = "Rdb_BodegaDesdeOT"
-        Me.Rdb_BodegaDesdeOT.Size = New System.Drawing.Size(107, 26)
-        Me.Rdb_BodegaDesdeOT.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_BodegaDesdeOT.TabIndex = 101
-        Me.Rdb_BodegaDesdeOT.TabStop = False
-        Me.Rdb_BodegaDesdeOT.Text = "Bodega desde OT"
-        '
-        'CheckBoxX1
-        '
-        Me.CheckBoxX1.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.CheckBoxX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.CheckBoxX1.CheckBoxImageChecked = CType(resources.GetObject("CheckBoxX1.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.CheckBoxX1.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.CheckBoxX1.FocusCuesEnabled = False
-        Me.CheckBoxX1.ForeColor = System.Drawing.Color.Black
-        Me.CheckBoxX1.Location = New System.Drawing.Point(119, 160)
-        Me.CheckBoxX1.Name = "CheckBoxX1"
-        Me.CheckBoxX1.Size = New System.Drawing.Size(153, 26)
-        Me.CheckBoxX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.CheckBoxX1.TabIndex = 102
-        Me.CheckBoxX1.TabStop = False
-        Me.CheckBoxX1.Text = "Bodega desde Modalidad"
-        '
-        'LabelX20
-        '
-        Me.LabelX20.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX20.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX20.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX20.ForeColor = System.Drawing.Color.Black
-        Me.LabelX20.Location = New System.Drawing.Point(280, 159)
-        Me.LabelX20.Name = "LabelX20"
-        Me.LabelX20.Size = New System.Drawing.Size(270, 26)
-        Me.LabelX20.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
-        Me.LabelX20.TabIndex = 103
-        Me.LabelX20.Text = "BODEGA DE LA GRI: XXX - BODEGA"
-        '
         'Frm_GRI_FabXProducto
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1199,7 +1199,6 @@ Partial Class Frm_GRI_FabXProducto
         Me.Controls.Add(Me.GroupPanel1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
@@ -1271,7 +1270,7 @@ Partial Class Frm_GRI_FabXProducto
     Public WithEvents Txt_Tolva As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX19 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Line2 As DevComponents.DotNetBar.Controls.Line
-    Friend WithEvents LabelX20 As DevComponents.DotNetBar.LabelX
-    Friend WithEvents CheckBoxX1 As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Lbl_BodegaGRI As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Rdb_BodegaDesdeModalidad As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Rdb_BodegaDesdeOT As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

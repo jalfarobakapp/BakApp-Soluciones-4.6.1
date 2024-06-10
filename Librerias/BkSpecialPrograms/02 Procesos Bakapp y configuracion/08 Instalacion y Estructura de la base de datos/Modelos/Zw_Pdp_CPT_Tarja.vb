@@ -20,7 +20,7 @@
     Public Property CantidadFab As Double
     Public Property Descripcion_Kopral As String
     Public Property Tolva As String
-    Public Property Idpotl As Integer
     Public Property Idpote As Integer
+    Public Property Idpotl As Integer
     Public Property BodegaDesde As String
 End Class
