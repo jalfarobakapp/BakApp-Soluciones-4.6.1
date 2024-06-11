@@ -87,7 +87,7 @@
                        "Where Idmaeedo In (Select Idmaeedo From #Paso)" & vbCrLf &
                        vbCrLf &
                        "Insert Into " & _Global_BaseBk & "Zw_Demonio_FacAuto (Idmaeedo_NVV,Nudo_NVV,Modalidad_Fac,Fecha_Facturar,Facturar,DesdePickeo,Id_Pickeo,DocEmitir,CerrarDespFact,CodFuncionario_Factura)" & vbCrLf &
-                       "Select Edo.IDMAEEDO As 'Idmaeedo_NVV',Edo.NUDO As 'Nudo_NVV','FACEL' As 'Modalidad_Fac',Fecha_Facturar As Fecha_Facturar,1 As 'Facturar'," & vbCrLf &
+                       "Select Edo.IDMAEEDO As 'Idmaeedo_NVV',Edo.NUDO As 'Nudo_NVV','" & Modalidad_Fac & "' As 'Modalidad_Fac',Fecha_Facturar As Fecha_Facturar,1 As 'Facturar'," & vbCrLf &
                        "1 As 'DesdePickeo',#Paso.Id As 'Id_Pickeo',#Paso.DocEmitir As 'DocEmitir',1 As 'CerrarDespFact',CodFuncionario_Factura" & vbCrLf &
                        "From MAEEDO Edo" & vbCrLf &
                        "Inner Join #Paso On #Paso.Idmaeedo = Edo.IDMAEEDO" & vbCrLf &
@@ -548,7 +548,7 @@
 
             If _TidoDocEmitir <> "GDV" And _TidoDocEmitir <> "FCV" And _TidoDocEmitir <> "BLV" Then
                 _Mensaje.Mensaje = "Error"
-                Throw New System.Exception("El Tido Destino esta vacío o no corresponde: (" & _TidoDocEmitir & "), solo puede ser: FCV y GDV")
+                Throw New System.Exception("El Tido Destino esta vacío o no corresponde: (" & _TidoDocEmitir & "), solo puede ser: BLV, FCV y GDV")
             End If
 
             Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)

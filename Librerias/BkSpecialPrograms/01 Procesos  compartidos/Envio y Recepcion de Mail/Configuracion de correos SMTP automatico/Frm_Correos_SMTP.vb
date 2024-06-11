@@ -80,31 +80,51 @@ Public Class Frm_Correos_SMTP
                        _Filtro_Extra &
                        "Order by Nombre_Correo"
 
+        Dim _Tbl_Correos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
         With Grilla
 
-            .DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            .DataSource = _Tbl_Correos
 
             OcultarEncabezadoGrilla(Grilla, True)
 
+            Dim _DisplayIndex = 0
+
+            .Columns("Id").Visible = True
+            .Columns("Id").HeaderText = "Id"
+            .Columns("Id").Width = 30
+            .Columns("Id").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
             .Columns("Nombre_Correo").Visible = True
             .Columns("Nombre_Correo").HeaderText = "Nombre correo"
-            .Columns("Nombre_Correo").Width = 310
+            .Columns("Nombre_Correo").Width = 290
+            .Columns("Nombre_Correo").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Remitente").Visible = True
             .Columns("Remitente").HeaderText = "Correo remitente"
-            .Columns("Remitente").Width = 200
+            .Columns("Remitente").Width = 190
+            .Columns("Remitente").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Host").Visible = True
             .Columns("Host").HeaderText = "Host (SMTP)"
             .Columns("Host").Width = 100
+            .Columns("Host").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Puerto").Visible = True
             .Columns("Puerto").HeaderText = "Puerto"
             .Columns("Puerto").Width = 45
+            .Columns("Puerto").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Tipo").Visible = True
             .Columns("Tipo").HeaderText = "Tipo envío"
             .Columns("Tipo").Width = 80
+            .Columns("Tipo").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
         End With
 

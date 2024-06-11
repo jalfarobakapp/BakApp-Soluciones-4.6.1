@@ -167,4 +167,5 @@ Public Class Frm_Imprimir_Cierres_Transbank
 
     End Sub
 
+
 End Class

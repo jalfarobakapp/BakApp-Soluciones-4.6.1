@@ -602,7 +602,6 @@ Public Class Cl_Correos
 
                     If _Row_Correo IsNot Nothing Then
 
-
                         Dim _Remitente = Trim(_Row_Correo.Item("Remitente"))
                         Dim _Host = _Row_Correo.Item("Host")
                         Dim _Puerto = _Row_Correo.Item("Puerto")
@@ -1401,60 +1400,98 @@ Public Class Cl_Correos
                 _Texto = Replace(_Texto, "<RutEmpresaCP>", _RutEmpresaCP)
                 _Texto = Replace(_Texto, "<RutEmpresaActivaCP>", _RutEmpresaActivaCP)
 
-
                 _Texto = Replace(_Texto, "&lt;", "<")
                 _Texto = Replace(_Texto, "&gt;", ">")
 
                 Consulta_Sql = Replace(My.Resources.Recursos_Ver_Documento.Traer_Documento_Random, "#Idmaeedo#", _Idmaeedo)
                 Dim _Datos_Documento = _Sql.Fx_Get_DataSet(Consulta_Sql)
+                Dim _Tbl_Encabezado As DataTable = _Datos_Documento.Tables(0)
 
-                Dim _Row_Encabezado = _Datos_Documento.Tables(0).Rows(0)
+                Dim _Row_Encabezado = _Tbl_Encabezado.Rows(0)
 
                 Dim _Funciones As New List(Of String)
                 Dim _FuncionesNoEncontradas As New List(Of String)
 
+                Dim _Endo As String = _Row_Encabezado.Item("ENDO")
+                Dim _Suendo As String = _Row_Encabezado.Item("SUENDO")
+
+                Consulta_Sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Entidades Where CodEntidad = '" & _Endo & "' And CodSucEntidad = '" & _Suendo & "'"
+                Dim _Row_EntidadBk As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+                Dim _JuntaPuntos As Boolean = _Row_EntidadBk.Item("JuntaPuntos")
+
+                Consulta_Sql = "Select CodEntidad,CodSucEntidad,Case when Nudonodefi = 0 then SUM(PtsGanados) Else 0 End As 'PtsGanados'," &
+                               "Sum(PtsUsados) As 'PtsUsados'" & vbCrLf &
+                               "Into #Paso" & vbCrLf &
+                               "From " & _Global_BaseBk & "Zw_PtsVta_Doc" & vbCrLf &
+                               "Where CodEntidad = '" & _Endo & "' And CodSucEntidad = '" & _Suendo & "'" & vbCrLf &
+                               "Group by CodEntidad,CodSucEntidad,Nudonodefi" & vbCrLf &
+                                vbCrLf &
+                               "Select CodEntidad,CodSucEntidad,NOKOEN,PtsGanados As 'PuntosGanados',PtsUsados As 'PuntosUtilizados'," &
+                               "PtsGanados-PtsUsados As PuntosAFavor" & vbCrLf &
+                               "From #Paso" & vbCrLf &
+                               "Inner Join MAEEN On KOEN = CodEntidad And SUEN = CodSucEntidad" & vbCrLf &
+                               "Drop table #Paso"
+                Dim _RowPuntos As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+                Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_PtsVta_Doc Where Idmaeedo = " & _Idmaeedo
+                Dim _RowPuntosGanados As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+                Dim _PtsGanados As Double
+                Dim _PuntosAFavor As Double
+
+                If Not IsNothing(_RowPuntos) Then
+                    _PuntosAFavor = _RowPuntos.Item("PuntosAFavor")
+                End If
+
+                If Not IsNothing(_RowPuntosGanados) Then
+                    _PtsGanados = _RowPuntosGanados.Item("PtsGanados")
+                End If
+
+                _Tbl_Encabezado.Columns.Add("PuntosAFavor", GetType(Double))
+                _Tbl_Encabezado.Columns.Add("PtsGanados", GetType(Double))
+
+                _Row_Encabezado.Item("PuntosAFavor") = _PuntosAFavor
+                _Row_Encabezado.Item("PtsGanados") = _PtsGanados
+
                 Sb_Llenar_Listado_Funciones(0, _Texto, _Funciones)
 
-                For Each _Funcion As String In _Funciones
+                    For Each _Funcion As String In _Funciones
 
-                    Dim _Row As DataRow
+                        Dim _Row As DataRow
 
-                    _Row = _Row_Encabezado
-                    If Not IsNothing(_Row) Then
-                        If Not Fx_Encontrar_Funcion(_Row, _Funcion, _Texto, True) Then
-                            Fx_Encontrar_Funcion(_Row, _Funcion, _Texto, False)
+                        _Row = _Row_Encabezado
+                        If Not IsNothing(_Row) Then
+                            If Not Fx_Encontrar_Funcion(_Row, _Funcion, _Texto, True) Then
+                                Fx_Encontrar_Funcion(_Row, _Funcion, _Texto, False)
+                            End If
                         End If
-                    End If
 
-                    Dim _Endo = _Row_Encabezado.Item("ENDO")
-                    Dim _Suendo = _Row_Encabezado.Item("SUENDO")
+                        Dim _Row_Entidad As DataRow = Fx_Traer_Datos_Entidad(_Endo, _Suendo)
 
-                    Dim _Row_Entidad As DataRow = Fx_Traer_Datos_Entidad(_Endo, _Suendo)
-
-                    _Row = _Row_Entidad
-                    If Not IsNothing(_Row) Then
-                        If Not Fx_Encontrar_Funcion(_Row, _Funcion, _Texto, True) Then
-                            Fx_Encontrar_Funcion(_Row, _Funcion, _Texto, False)
+                        _Row = _Row_Entidad
+                        If Not IsNothing(_Row) Then
+                            If Not Fx_Encontrar_Funcion(_Row, _Funcion, _Texto, True) Then
+                                Fx_Encontrar_Funcion(_Row, _Funcion, _Texto, False)
+                            End If
                         End If
-                    End If
 
-                    Consulta_Sql = "Select * From MAEEDOOB Where IDMAEEDO = " & _Idmaeedo
-                    Dim _Row_Observaciones As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+                        Consulta_Sql = "Select * From MAEEDOOB Where IDMAEEDO = " & _Idmaeedo
+                        Dim _Row_Observaciones As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
-                    _Row = _Row_Observaciones
-                    If Not IsNothing(_Row) Then
-                        If Not Fx_Encontrar_Funcion(_Row, _Funcion, _Texto, True) Then
-                            Fx_Encontrar_Funcion(_Row, _Funcion, _Texto, False)
+                        _Row = _Row_Observaciones
+                        If Not IsNothing(_Row) Then
+                            If Not Fx_Encontrar_Funcion(_Row, _Funcion, _Texto, True) Then
+                                Fx_Encontrar_Funcion(_Row, _Funcion, _Texto, False)
+                            End If
                         End If
-                    End If
 
-                Next
+                    Next
 
-            End If
+                End If
         Catch ex As Exception
 
         End Try
-
 
     End Sub
 
@@ -1638,13 +1675,13 @@ Public Class Cl_Correos
                         If _Formato.ToUpper.Contains("N") Then
                             Select Case _Formato
                                 Case "N1"
-                                    _Valor_Devuelto = FormatCurrency(_Valor, 1)
+                                    _Valor_Devuelto = FormatNumber(_Valor, 1)
                                 Case "N2"
-                                    _Valor_Devuelto = FormatCurrency(_Valor, 2)
+                                    _Valor_Devuelto = FormatNumber(_Valor, 2)
                                 Case "N3"
-                                    _Valor_Devuelto = FormatCurrency(_Valor, 3)
+                                    _Valor_Devuelto = FormatNumber(_Valor, 3)
                                 Case Else
-                                    _Valor_Devuelto = FormatCurrency(_Valor, 0)
+                                    _Valor_Devuelto = FormatNumber(_Valor, 0)
                             End Select
                         End If
                     End If
