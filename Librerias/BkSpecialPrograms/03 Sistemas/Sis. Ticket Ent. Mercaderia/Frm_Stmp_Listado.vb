@@ -996,28 +996,23 @@ Public Class Frm_Stmp_Listado
 
     Private Sub Btn_EntregarMercaderia_Click(sender As Object, e As EventArgs) Handles Btn_EntregarMercaderia.Click
 
-        'MessageBoxEx.Show(Me, "En Construcción", "Entregar mercadería", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        'Dim _Validar As Boolean
+        'Dim _RowUsuario As DataRow
 
-        'Return
-        'If Not Fx_Tiene_Permiso(Me, "Stem0003") Then Return
+        'Dim Fm As New Frm_ValidarPermiso(Frm_ValidarPermiso.Tipo_Accion.Validar_Permiso, "Stem0003", True, False)
+        'Fm.Pro_Cerrar_Automaticamente = True
+        'Fm.ShowDialog(Me)
+        '_Validar = Fm.Pro_Permiso_Aceptado
+        '_RowUsuario = Fm.Pro_RowUsuario
+        'Fm.Dispose()
 
-        Dim _Validar As Boolean
-        Dim _RowUsuario As DataRow
-
-        Dim Fm As New Frm_ValidarPermiso(Frm_ValidarPermiso.Tipo_Accion.Validar_Permiso, "Stem0003", True, False)
-        Fm.Pro_Cerrar_Automaticamente = True
-        Fm.ShowDialog(Me)
-        _Validar = Fm.Pro_Permiso_Aceptado
-        _RowUsuario = Fm.Pro_RowUsuario
-        Fm.Dispose()
-
-        If Not _Validar Then
-            Return
-        End If
+        'If Not _Validar Then
+        '    Return
+        'End If
 
         Dim _Mensaje As LsValiciones.Mensajes
 
-        _Mensaje = Fx_Entregar(_RowUsuario.Item("KOFU"))
+        _Mensaje = Fx_Entregar(FUNCIONARIO)
 
         If _Mensaje.EsCorrecto Then
             Sb_Actualizar_Grilla()

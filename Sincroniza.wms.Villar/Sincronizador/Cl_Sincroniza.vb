@@ -102,6 +102,7 @@ Public Class Cl_Sincroniza
             Dim _Id_Enc As Integer = _Fila.Item("Id")
             Dim _Idmaeedoo As Integer = _Fila.Item("Idmaeedo")
             Dim _TidoGen As String = _Fila.Item("TidoGen")
+            Dim _DocEmitir As String = _Fila.Item("DocEmitir")
             Dim _Nudo As String = _Fila.Item("Nudo")
             Dim _Facturar As Boolean = _Fila.Item("Facturar")
             Dim _Planificada = True
@@ -155,7 +156,7 @@ Public Class Cl_Sincroniza
                         ' 0 = Contado, 1 = Credito, 2 = Guia
                         Dim _CodFuncionario_Factura As String
 
-                        If _TidoGen = "FCV" Then
+                        If _DocEmitir = "BLV" Or _DocEmitir = "FCV" Then
                             If _Cl_Stmp.Zw_Stmp_Enc.TipoPago = "Contado" Then
                                 _CodFuncionario_Factura = ConfiguracionLocal.Ls_FunFcvGdvAuto.Item(0).CodFuncionario
                             End If
@@ -165,7 +166,7 @@ Public Class Cl_Sincroniza
                             End If
                         End If
 
-                        If _TidoGen = "GDV" Then
+                        If _DocEmitir = "GDV" Then
                             _CodFuncionario_Factura = ConfiguracionLocal.Ls_FunFcvGdvAuto.Item(2).CodFuncionario
                         End If
 

@@ -431,7 +431,7 @@ Public Class Cl_Stmp
             With _Zw_Stmp_Enc
 
                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set " & vbCrLf &
-                               "Estado = '" & .Estado & "'" &
+                               "Estado = '" & .Estado & "',Accion = '" & .Accion & "'" &
                                ",Fecha_Facturar = '" & Format(.Fecha_Facturar, "yyyyMMdd") & "'" &
                                ",DocEmitir = '" & .DocEmitir & "'" &
                                ",TipoPago = '" & .TipoPago & "'" &
@@ -733,6 +733,7 @@ Public Class Cl_Stmp
                 End Select
 
                 .Estado = "COMPL"
+                .Accion = _ob_type
 
             End With
 
