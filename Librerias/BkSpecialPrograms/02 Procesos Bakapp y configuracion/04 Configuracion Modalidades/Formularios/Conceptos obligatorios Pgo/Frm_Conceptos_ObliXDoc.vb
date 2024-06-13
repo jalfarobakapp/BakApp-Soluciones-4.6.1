@@ -18,6 +18,7 @@ Public Class Frm_Conceptos_ObliXDoc
         Sb_Formato_Generico_Grilla(Grilla, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 
         Me._Modalidad = _Modalidad
+        Sb_Color_Botones_Barra(Bar1)
 
     End Sub
 

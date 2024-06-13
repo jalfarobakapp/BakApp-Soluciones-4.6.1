@@ -115,7 +115,7 @@ Public Class Cl_Sincroniza
             If IsNothing(_RowPlanificada) Then
                 _trans_act_mod = "XXX"
             Else
-                _trans_act_mod = _RowPlanificada.Item("trans_act_mod").ToString.Trim '='RDY'
+                _trans_act_mod = _RowPlanificada.Item("trans_act_mod").ToString.Trim
             End If
 
             If _trans_act_mod <> "RDY" AndAlso _trans_act_mod <> "RELEASE" Then

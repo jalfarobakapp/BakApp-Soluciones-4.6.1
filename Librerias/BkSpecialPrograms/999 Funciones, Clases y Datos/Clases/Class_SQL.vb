@@ -551,6 +551,32 @@ Public Class Class_SQL
 
     End Function
 
+    Function Fx_Cuenta_Registros2(_Tabla As String, _Condicion As String) As Double
+
+        If Not String.IsNullOrEmpty(_Condicion) Then
+            _Condicion = vbCrLf & "And " & _Condicion
+        End If
+
+        Dim _Sql As String = "Select Count(*) As Cuenta From " & _Tabla & " Where 1 > 0 " & _Condicion
+
+        Dim _RowTabpre As DataRow = Fx_Get_DataRow(_Sql, False)
+
+        If Not String.IsNullOrWhiteSpace(_Error) Then
+            Throw New System.Exception(_Error)
+        End If
+
+        Dim _Cuenta As Double
+
+        If (_RowTabpre Is Nothing) Then
+            _Cuenta = 0
+        Else
+            _Cuenta = _RowTabpre.Item("Cuenta")
+        End If
+
+        Return _Cuenta
+
+    End Function
+
     Function Fx_SqlDataReader(Consulta_sql As String) As SqlDataReader
 
         Sb_Abrir_Conexion(_Cn)

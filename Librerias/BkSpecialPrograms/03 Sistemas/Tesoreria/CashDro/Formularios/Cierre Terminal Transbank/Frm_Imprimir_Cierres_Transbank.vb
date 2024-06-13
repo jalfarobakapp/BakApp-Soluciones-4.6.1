@@ -1,8 +1,4 @@
-﻿'Imports Lib_Bakapp_VarClassFunc
-Imports DevComponents.DotNetBar
-Imports DevComponents.DotNetBar.Schedule
-Imports DevComponents.Schedule.Model
-Imports DevComponents.DotNetBar.Rendering
+﻿Imports DevComponents.DotNetBar
 
 Public Class Frm_Imprimir_Cierres_Transbank
 

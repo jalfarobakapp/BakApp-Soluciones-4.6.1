@@ -2616,8 +2616,14 @@ Public Class Frm_EstadisticaProducto
     End Sub
 
     Private Sub Mnu_Btn_Ver_Clasificaciones_Arbol_Click(sender As Object, e As EventArgs) Handles Mnu_Btn_Ver_Clasificaciones_Arbol.Click
-        Dim Fm As New Frm_Arbol_Asociacion_01
-        Fm.Pro_Codigo_Producto = _Codigo
+        'Dim Fm As New Frm_Arbol_Asociacion_01
+        'Fm.Pro_Codigo_Producto = _Codigo
+        'Fm.ShowDialog(Me)
+        'Fm.Dispose()
+        Dim Fm As New Frm_Arbol_Lista(False)
+        Fm.Codigo_Heredado = _Codigo
+        Fm.ModoCheckButton = True
+        Fm.MostrarClasProducto = True
         Fm.ShowDialog(Me)
         Fm.Dispose()
     End Sub

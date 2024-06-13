@@ -1904,6 +1904,7 @@ Public Class Frm_Formulario_Documento
             .Item("RtuVariable") = False
             .Item("Espuntosvta") = False
             .Item("ModFechVto") = False
+            .Item("Condicionado") = False
 
             _TblDetalle.Rows.Add(NewFila)
 
@@ -9316,7 +9317,25 @@ Public Class Frm_Formulario_Documento
                                     InputBox_Bk(Me, "Descripción", "Concepto", _RowConcepto.Item("NOKOCT"), False,, 50)
                                 End If
 
+                                Dim _Mensaje As New LsValiciones.Mensajes
+
+                                _Mensaje = _Cl_Documento.Fx_RevisarDescuentoPremium(_Codigo, _TblDetalle)
+
+                                If _Mensaje.EsCorrecto And Not _Mensaje.Cancelado Then
+                                    MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                                Else
+                                    If Not _Mensaje.Cancelado Then
+                                        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                                        _Fila.Cells("Codigo").Value = String.Empty
+                                        Exit Sub
+                                    End If
+                                End If
+
                                 Sb_Agregar_Concepto(_Fila, _RowConcepto)
+
+                                If _Mensaje.Tag Then
+                                    _Fila.Cells("Condicionado").Value = True
+                                End If
 
                                 Dim _Koen = _TblEncabezado.Rows(0).Item("CodEntidad")
 
@@ -9368,7 +9387,7 @@ Public Class Frm_Formulario_Documento
 
                     Else ' PRODUCTO
 
-                        _Codigo = Trim(_Codigo)
+                        _Codigo = _Codigo.Trim
 
                         Dim _CodEntidad = _TblEncabezado.Rows(0).Item("CodEntidad")
                         Dim _Es_Concepto As Boolean
@@ -10235,6 +10254,14 @@ Public Class Frm_Formulario_Documento
 
                                         If _Validar_Lineas_X_Pagina Then
 
+                                            For Each _FL As DataRow In _TblDetalle.Rows
+                                                If _FL.Item("Condicionado") Then
+                                                    MessageBoxEx.Show(Me, "El documento cuenta con un descuento premium." & vbCrLf &
+                                                                      "No es posible añadir más líneas.", "Validación",
+                                                                      MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxButtons.OK, Me.TopMost)
+                                                    Return
+                                                End If
+                                            Next
 
                                             If _Bloquear_Edicion_Detalle Then
                                                 MessageBoxEx.Show(Me, "Documento bloquedo para su edición", "Validación",
@@ -10940,6 +10967,7 @@ Public Class Frm_Formulario_Documento
             Dim _RtuVariable As Boolean = _Fila.Item("RtuVariable")
             Dim _Espuntosvta As Boolean = _Fila.Item("Espuntosvta")
             Dim _ModFechVto As Boolean = _Fila.Item("ModFechVto")
+            Dim _Condicionado As Boolean = _Fila.Item("Condicionado")
 
             _Row.Cells("Id_DocDet").Value = _Id_DocDet
             _Row.Cells("CodLista").Value = _CodLista
@@ -10947,6 +10975,7 @@ Public Class Frm_Formulario_Documento
 
             _Row.Cells("Espuntosvta").Value = _Espuntosvta
             _Row.Cells("ModFechVto").Value = _ModFechVto
+            _Row.Cells("Condicionado").Value = _Condicionado
 
             Dim _RowProducto As DataRow
 
