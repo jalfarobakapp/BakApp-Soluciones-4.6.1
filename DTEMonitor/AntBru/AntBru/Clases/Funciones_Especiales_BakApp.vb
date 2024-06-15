@@ -850,7 +850,28 @@ Public Module Funciones_Especiales_BakApp
 
         Consulta_sql = "select getdate() As Fecha"
         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-        FechaDelServidor = _Row.Item("Fecha")
+
+        If IsNothing(_Row) Then
+            Return Nothing
+        End If
+
+        Return _Row.Item("Fecha")
+
+    End Function
+
+    Function FechaDelServidor(_MostrarError As Boolean) As Date
+
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        Consulta_sql = "select getdate() As Fecha"
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, _MostrarError)
+
+        If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+            Return Nothing
+            'Throw New System.Exception(_Sql.Pro_Error)
+        End If
+
+        Return _Row.Item("Fecha")
 
     End Function
 

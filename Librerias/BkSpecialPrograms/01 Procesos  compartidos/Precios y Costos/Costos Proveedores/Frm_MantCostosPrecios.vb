@@ -1630,18 +1630,18 @@ Public Class Frm_MantCostosPrecios
 #End Region
 
     Private Sub BtnExportarExcel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnExportarExcel.Click
+        ShowContextMenu(Menu_Contextual_Exportar_Excel)
+        'Dim _NomArch As String
 
-        Dim _NomArch As String
+        'Dim _RazonProveedor = _RowProveedor.Item("NOKOEN")
+        'Consulta_sql = "Select * From " & _Nombre_Tbl_Paso_Costos & vbCrLf &
+        '           "Where Codigo <> ''"
+        '_NomArch = "Lista de costos " & _RazonProveedor
 
-        Dim _RazonProveedor = _RowProveedor.Item("NOKOEN")
-        Consulta_sql = "Select * From " & _Nombre_Tbl_Paso_Costos & vbCrLf &
-                   "Where Codigo <> ''"
-        _NomArch = "Lista de costos " & _RazonProveedor
+        'Dim Tbl_Excel As DataTable
+        'Tbl_Excel = _Sql.Fx_Get_Tablas(Consulta_sql)
 
-        Dim Tbl_Excel As DataTable
-        Tbl_Excel = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-        ExportarTabla_JetExcel_Tabla(Tbl_Excel, Me, _NomArch.Trim)
+        'ExportarTabla_JetExcel_Tabla(Tbl_Excel, Me, _NomArch.Trim)
 
     End Sub
 
@@ -2053,14 +2053,33 @@ Public Class Frm_MantCostosPrecios
     Private Sub Chk_Ver_Solo_Repetidos_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Ver_Solo_Repetidos.CheckedChanged
 
         Dim _e As New KeyEventArgs(Keys.Enter)
-
         Call Txt_Buscar_KeyDown(Nothing, _e)
-    End Sub
-
-    Private Sub Chk_NoUsar_Bloqueados_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_NoUsar_Bloqueados.CheckedChanged
-
-
 
     End Sub
+
+    Private Sub Btn_Mnu_ExportarExcelVistaActual_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_ExportarExcelVistaActual.Click
+
+        Dim _RazonProveedor = _RowProveedor.Item("NOKOEN")
+        Dim _NomArch As String = "Lista de costos " & _RazonProveedor
+
+        Dim Tbl_Excel As DataTable
+        Tbl_Excel = _Dv.Table
+
+        ExportarTabla_JetExcel_Tabla(Tbl_Excel, Me, _NomArch.Trim)
+    End Sub
+
+    Private Sub Btn_Mnu_ExportarExcelTodo_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_ExportarExcelTodo.Click
+
+        Dim _RazonProveedor = _RowProveedor.Item("NOKOEN")
+        Consulta_sql = "Select * From " & _Nombre_Tbl_Paso_Costos & vbCrLf &
+                   "Where Codigo <> ''"
+        Dim _NomArch As String = "Lista de costos " & _RazonProveedor
+
+        Dim Tbl_Excel As DataTable
+        Tbl_Excel = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        ExportarTabla_JetExcel_Tabla(Tbl_Excel, Me, _NomArch.Trim)
+    End Sub
+
 
 End Class

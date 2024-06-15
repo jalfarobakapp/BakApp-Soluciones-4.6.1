@@ -7,14 +7,14 @@ CREATE TABLE [dbo].[Zw_Conceptos](
 	[NoPermitirMismoConceptoEnDoc]	[bit]           NOT NULL DEFAULT (0),
 	[NoAfectaDsctoGlobal]	        [bit]           NOT NULL DEFAULT (0),
 	[NoPermitirModificarValor]	    [bit]           NOT NULL DEFAULT (0),
-    [Condicionado]                  [bit]           NOT NULL,
-	[ClasUnicaBakapp_Condi]         [bit]           NOT NULL,
-    [Campo_Condi]                   [varchar](30)   NOT NULL,
-	[Cod_Condi]                     [varchar](30)   NOT NULL,
-	[PorcCUd1D_Condi]               [float]         NOT NULL,
-	[PorcCUd1H_Condi]               [float]         NOT NULL,
-	[TotalOtros_Condi]              [bit]           NOT NULL,
-	[TotalDocumento_Condi]          [bit]           NOT NULL,
+    [Condicionado]                  [bit]           NOT NULL DEFAULT (0),
+	[ClasUnicaBakapp_Condi]         [bit]           NOT NULL DEFAULT (0),
+    [Campo_Condi]                   [varchar](30)   NOT NULL DEFAULT (''),
+	[Cod_Condi]                     [varchar](30)   NOT NULL DEFAULT (''),
+	[PorcCUd1D_Condi]               [float]         NOT NULL DEFAULT (0),
+	[PorcCUd1H_Condi]               [float]         NOT NULL DEFAULT (0),
+	[TotalOtros_Condi]              [bit]           NOT NULL DEFAULT (0),
+	[TotalDocumento_Condi]          [bit]           NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_Conceptos] PRIMARY KEY CLUSTERED 
 (
 	[Koct] ASC

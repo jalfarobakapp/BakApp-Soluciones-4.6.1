@@ -675,11 +675,19 @@ Public Class Cl_Documento
             Dim _Porcentaje As Double
 
             If _Zw_Conceptos.TotalOtros_Condi Then
-                _Porcentaje = Math.Round(_sumaCanUd1Premium / _sumaCanUd1Normal, 3)
+                If CBool(_sumaCanUd1Normal) Then
+                    _Porcentaje = Math.Round(_sumaCanUd1Premium / _sumaCanUd1Normal, 3)
+                Else
+                    _Porcentaje = 1
+                End If
             End If
 
             If _Zw_Conceptos.TotalDocumento_Condi Then
-                _Porcentaje = Math.Round(_sumaCanUd1Premium / _sumaCanUd1Total, 3)
+                If CBool(_sumaCanUd1Total) Then
+                    _Porcentaje = Math.Round(_sumaCanUd1Premium / _sumaCanUd1Total, 3)
+                Else
+                    _Porcentaje = 1
+                End If
             End If
 
             _Porcentaje = _Porcentaje * 100

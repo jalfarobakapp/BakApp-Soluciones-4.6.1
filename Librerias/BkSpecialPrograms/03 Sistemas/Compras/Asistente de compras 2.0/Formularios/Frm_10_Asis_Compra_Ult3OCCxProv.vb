@@ -37,6 +37,8 @@ Public Class Frm_10_Asis_Compra_Ult3OCCxProv
 
         Me._RowProveedor = _RowProveedor
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
 
     Private Sub Frm_10_Asis_Compra_Ult3OCCxProv_Load(sender As Object, e As EventArgs) Handles MyBase.Load

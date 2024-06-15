@@ -189,194 +189,123 @@ Public Class Frm_Demonio_DTEMonitor
         Me.Text = "Acciones automáticas, Hora actual: " & Date.Now.ToLongTimeString & ". Versión BakApp DTEMonitor: " & _VersionDTEMonitor
     End Sub
 
-    'Sub Sb_Enviar_Documentos_Al_SIIEnviaDTESIIBk()
-
-    '    Dim _FechaHoy As String = Format(FechaDelServidor, "yyyyMMdd")
-
-    '    Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Procesar = 1 " & vbCrLf &
-    '                   "Where Procesar = 0 And Idmaeedo Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Trackid) And " &
-    '                   "Convert(varchar,FechaSolicitud,112) = '" & _FechaHoy & "' And Tido <> 'BLV' And ErrorEnvioDTE = 0"
-    '    _Sql.Ej_consulta_IDU(Consulta_sql)
-
-    '    Consulta_sql = "Select Top 20 Id_Dte,Idmaeedo,Tido,Nudo,Trackid,FechaSolicitud,Xml,Firma,CaratulaXml,Respuesta,AmbienteCertificacion,Procesar,Procesado" & vbCrLf &
-    '                   "From " & _Global_BaseBk & "Zw_DTE_Documentos" & vbCrLf &
-    '                   "Where Procesar = 1 And Procesado = 0 And AmbienteCertificacion = " & _AmbienteCertificacion & " And Tido <> 'BLV'" & vbCrLf &
-    '                   "Order By Tido,Nudo"
-
-    '    Dim _Tbl_DTE_Documentos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-    '    If Not CBool(_Tbl_DTE_Documentos.Rows.Count) Then
-    '        Return
-    '    End If
-
-    '    If CBool(_Tbl_DTE_Documentos.Rows.Count) Then
-
-    '        Sb_AddToLog("Enviar SII", "Revisando documentos pendientes de enviar al SII", Txt_Log)
-
-    '        Dim _Filtro_Id_Dte As String = Generar_Filtro_IN(_Tbl_DTE_Documentos, "", "Id_Dte", False, False, "")
-
-    '        Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Procesar = 0 Where Id_Dte In " & _Filtro_Id_Dte
-    '        _Sql.Ej_consulta_IDU(Consulta_sql, False)
-
-    '        For Each _Fila As DataRow In _Tbl_DTE_Documentos.Rows
-
-    '            Dim _Idmaeedo = _Fila.Item("Idmaeedo")
-    '            Dim _Id_Dte = _Fila.Item("Id_Dte")
-    '            Dim _Tido = _Fila.Item("Tido")
-    '            Dim _Nudo = _Fila.Item("Nudo")
-
-    '            If Fx_Esta_Firmando(_Filtro_Id_Dte, _Id_Dte) Then
-    '                Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set Procesar = 1" & vbCrLf &
-    '                               "Where Id In " & _Filtro_Id_Dte
-    '                _Sql.Ej_consulta_IDU(Consulta_sql, False)
-    '                Exit For
-    '            End If
-
-    '            Sb_AddToLog("Enviar SII", "Revisando " & _Tido & "-" & _Nudo, Txt_Log)
-
-    '            Dim _AmbienteCertificacion As Boolean = Chk_AmbienteCertificacion.Checked
-    '            Dim _Accion As Enum_Accion = Enum_Accion.EnviarBoletaSII
-
-    '            Dim _Cadena_ConexionSQL_Server_Actual As String = Replace(Cadena_ConexionSQL_Server, " ", "@")
-    '            Dim _Ejecutar As String = Application.StartupPath & "\EnvioDTE\EnviaDTESIIBk.exe" &
-    '                                                                                    Space(1) & ModEmpresa &
-    '                                                                                    Space(1) & _AmbienteCertificacion &
-    '                                                                                    Space(1) & _Id_Dte &
-    '                                                                                    Space(1) & "0" &
-    '                                                                                    Space(1) & _Accion
-
-    '            Dim _MostrarShell As AppWinStyle
-
-    '            If Chk_MostrarBoletaBkHfDOS.Checked Then
-    '                _MostrarShell = AppWinStyle.NormalFocus
-    '            Else
-    '                _MostrarShell = AppWinStyle.Hide
-    '            End If
-
-    '            Try
-    '                Shell(_Ejecutar, _MostrarShell, True)
-
-    '                Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_DTE_Trackid Where Id_Dte = " & _Id_Dte & "Order By Id Desc"
-    '                Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
-
-    '                If Not IsNothing(_Row) Then
-    '                    Dim _Trackid As String = _Row.Item("Trackid")
-    '                    Sb_AddToLog("Enviar SII", _Tido & "-" & _Nudo & ", Enviado Trackid: " & _Trackid, Txt_Log)
-    '                Else
-    '                    Dim _Error = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Documentos", "Respuesta", "Id_Dte = " & _Id_Dte)
-    '                    Sb_AddToLog("Enviar SII", _Tido & "-" & _Nudo & ", Error: " & _Error, Txt_Log)
-    '                End If
-
-    '            Catch ex As Exception
-    '                Sb_AddToLog("Enviar SII", ex.Message, Txt_Log)
-    '            End Try
-
-    '        Next
-
-    '        Sb_AddToLog("Enviar SII", "Fin proceso", Txt_Log)
-
-    '    End If
-
-    'End Sub
-
-
     Sub Sb_Enviar_Documentos_Al_SIIDTE_Bk()
 
-        Dim _FechaHoy As String = Format(FechaDelServidor, "yyyyMMdd")
-        Dim _FechaMesAnterios As DateTime = DateAdd(DateInterval.Month, -1, FechaDelServidor)
-        Dim _FechaPrimerDiaMes As String = Format(Primerdiadelmes(_FechaMesAnterios), "yyyyMMdd")
+        Try
 
-        Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Procesar = 1 " & vbCrLf &
-                       "Where Procesar = 0 And Idmaeedo Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Trackid) And " &
-                       "Convert(varchar,FechaSolicitud,112) = '" & _FechaHoy & "' And Tido <> 'BLV' And ErrorEnvioDTE = 0"
-        _Sql.Ej_consulta_IDU(Consulta_sql)
+            Dim _FechaDelServidor As Date = FechaDelServidor(False)
 
-        Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Procesar = 1 " & vbCrLf &
-                       "Where Procesar = 0 And Idmaeedo Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Trackid Where FechaEnvSII > '" & _FechaPrimerDiaMes & "') And " &
-                       "FechaSolicitud >= '" & _FechaPrimerDiaMes & "' And Tido <> 'BLV' And ErrorEnvioDTE = 0"
-        _Sql.Ej_consulta_IDU(Consulta_sql)
+            Dim _FechaHoy As String = Format(_FechaDelServidor, "yyyyMMdd")
+            Dim _FechaMesAnterios As DateTime = DateAdd(DateInterval.Month, -1, _FechaDelServidor)
+            Dim _FechaPrimerDiaMes As String = Format(Primerdiadelmes(_FechaMesAnterios), "yyyyMMdd")
 
-        Consulta_sql = "Select Top 20 Id_Dte,Idmaeedo,Tido,Nudo,Trackid,FechaSolicitud,Xml,Firma,CaratulaXml,Respuesta,AmbienteCertificacion,Procesar,Procesado" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_DTE_Documentos" & vbCrLf &
-                       "Where Procesar = 1 And Procesado = 0 And AmbienteCertificacion = " & _AmbienteCertificacion & " And Tido <> 'BLV'" & vbCrLf &
-                       "Order By Tido,Nudo"
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Procesar = 1 " & vbCrLf &
+                           "Where Procesar = 0 And Idmaeedo Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Trackid) And " &
+                           "Convert(varchar,FechaSolicitud,112) = '" & _FechaHoy & "' And Tido <> 'BLV' And ErrorEnvioDTE = 0"
+            If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+                Throw New System.Exception(_Sql.Pro_Error)
+            End If
 
-        'Consulta_sql = "Select Top 20 Id_Dte,Idmaeedo,Tido,Nudo,Trackid,FechaSolicitud,Xml,Firma,CaratulaXml,Respuesta,AmbienteCertificacion,Procesar,Procesado" & vbCrLf &
-        '               "From " & _Global_BaseBk & "Zw_DTE_Documentos" & vbCrLf &
-        '               "Where Id_Dte = 13224"
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Procesar = 1 " & vbCrLf &
+                           "Where Procesar = 0 And Idmaeedo Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Trackid Where FechaEnvSII > '" & _FechaPrimerDiaMes & "') And " &
+                           "FechaSolicitud >= '" & _FechaPrimerDiaMes & "' And Tido <> 'BLV' And ErrorEnvioDTE = 0"
+            If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+                Throw New System.Exception(_Sql.Pro_Error)
+            End If
 
-        Dim _Tbl_DTE_Documentos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Consulta_sql = "Select Top 20 Id_Dte,Idmaeedo,Tido,Nudo,Trackid,FechaSolicitud,Xml,Firma,CaratulaXml,Respuesta,AmbienteCertificacion,Procesar,Procesado" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_DTE_Documentos" & vbCrLf &
+                           "Where Procesar = 1 And Procesado = 0 And AmbienteCertificacion = " & _AmbienteCertificacion & " And Tido <> 'BLV'" & vbCrLf &
+                           "Order By Tido,Nudo"
 
-        If Not CBool(_Tbl_DTE_Documentos.Rows.Count) Then
-            Return
-        End If
+            Dim _Tbl_DTE_Documentos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql, False)
 
-        If CBool(_Tbl_DTE_Documentos.Rows.Count) Then
+            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                Throw New System.Exception(_Sql.Pro_Error)
+            End If
 
-            Sb_AddToLog("Enviar SII", "Revisando documentos pendientes de enviar al SII", Txt_Log)
+            If Not CBool(_Tbl_DTE_Documentos.Rows.Count) Then
+                Return
+            End If
 
-            Dim _Filtro_Id_Dte As String = Generar_Filtro_IN(_Tbl_DTE_Documentos, "", "Id_Dte", False, False, "")
+            If CBool(_Tbl_DTE_Documentos.Rows.Count) Then
 
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Procesar = 0 Where Id_Dte In " & _Filtro_Id_Dte
-            _Sql.Ej_consulta_IDU(Consulta_sql, False)
+                Sb_AddToLog("Enviar SII", "Revisando documentos pendientes de enviar al SII", Txt_Log)
 
-            For Each _Fila As DataRow In _Tbl_DTE_Documentos.Rows
+                Dim _Filtro_Id_Dte As String = Generar_Filtro_IN(_Tbl_DTE_Documentos, "", "Id_Dte", False, False, "")
 
-                Dim _Idmaeedo = _Fila.Item("Idmaeedo")
-                Dim _Id_Dte = _Fila.Item("Id_Dte")
-                Dim _Tido = _Fila.Item("Tido")
-                Dim _Nudo = _Fila.Item("Nudo")
-                Dim _FechaSolicitud As DateTime = _Fila.Item("FechaSolicitud")
-
-                If Fx_Esta_Firmando(_Filtro_Id_Dte, _Id_Dte) Then
-                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set Procesar = 1" & vbCrLf &
-                                   "Where Id In " & _Filtro_Id_Dte
-                    _Sql.Ej_consulta_IDU(Consulta_sql, False)
-                    Exit For
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Procesar = 0 Where Id_Dte In " & _Filtro_Id_Dte
+                If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+                    Throw New System.Exception(_Sql.Pro_Error)
                 End If
 
-                Dim _FechaSolicitud_Str As String = _FechaSolicitud.ToShortDateString & " - " & _FechaSolicitud.ToShortTimeString
-                Sb_AddToLog("Enviar SII", "Revisando " & _Tido & "-" & _Nudo & ", Fecha solicitud: " & _FechaSolicitud_Str, Txt_Log)
+                For Each _Fila As DataRow In _Tbl_DTE_Documentos.Rows
 
-                Dim _AmbienteCertificacion As Boolean = Chk_AmbienteCertificacion.Checked
-                Dim _Accion As Enum_Accion = Enum_Accion.EnviarBoletaSII
+                    Dim _Idmaeedo = _Fila.Item("Idmaeedo")
+                    Dim _Id_Dte = _Fila.Item("Id_Dte")
+                    Dim _Tido = _Fila.Item("Tido")
+                    Dim _Nudo = _Fila.Item("Nudo")
+                    Dim _FechaSolicitud As DateTime = _Fila.Item("FechaSolicitud")
 
-                Dim _Enviar_DTE As HEFESTO.DTE.AUTENTICACION.ENT.Respuesta = Fx_Enviar_DTE_Al_SII(_Id_Dte, _AmbienteCertificacion)
+                    If Fx_Esta_Firmando(_Filtro_Id_Dte, _Id_Dte) Then
+                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set Procesar = 1" & vbCrLf &
+                                       "Where Id In " & _Filtro_Id_Dte
+                        If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+                            Throw New System.Exception(_Sql.Pro_Error)
+                        End If
+                        Exit For
+                    End If
 
-                If _Enviar_DTE.correcto Then
+                    Dim _FechaSolicitud_Str As String = _FechaSolicitud.ToShortDateString & " - " & _FechaSolicitud.ToShortTimeString
+                    Sb_AddToLog("Enviar SII", "Revisando " & _Tido & "-" & _Nudo & ", Fecha solicitud: " & _FechaSolicitud_Str, Txt_Log)
 
-                    Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_DTE_Trackid Where Id_Dte = " & _Id_Dte & "Order By Id Desc"
-                    Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+                    Dim _AmbienteCertificacion As Boolean = Chk_AmbienteCertificacion.Checked
+                    Dim _Accion As Enum_Accion = Enum_Accion.EnviarBoletaSII
 
-                    If Not IsNothing(_Row) Then
-                        Dim _Trackid As String = _Row.Item("Trackid")
-                        Sb_AddToLog("Enviar SII", _Tido & "-" & _Nudo & ", Enviado Trackid: " & _Trackid, Txt_Log)
+                    Dim _Enviar_DTE As HEFESTO.DTE.AUTENTICACION.ENT.Respuesta = Fx_Enviar_DTE_Al_SII(_Id_Dte, _AmbienteCertificacion)
+
+                    If _Enviar_DTE.correcto Then
+
+                        Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_DTE_Trackid Where Id_Dte = " & _Id_Dte & "Order By Id Desc"
+                        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+                        If Not IsNothing(_Row) Then
+                            Dim _Trackid As String = _Row.Item("Trackid")
+                            Sb_AddToLog("Enviar SII", _Tido & "-" & _Nudo & ", Enviado Trackid: " & _Trackid, Txt_Log)
+                        Else
+                            Dim _Error = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Documentos", "Respuesta", "Id_Dte = " & _Id_Dte)
+                            Sb_AddToLog("Enviar SII", _Tido & "-" & _Nudo & ", Error: " & _Error, Txt_Log)
+                        End If
+
                     Else
-                        Dim _Error = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Documentos", "Respuesta", "Id_Dte = " & _Id_Dte)
-                        Sb_AddToLog("Enviar SII", _Tido & "-" & _Nudo & ", Error: " & _Error, Txt_Log)
-                    End If
 
-                Else
-
-                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Respuesta = Respuesta + '" & _Enviar_DTE.mensaje & "'" & vbCrLf &
-                                   "Where Id_Dte In " & _Filtro_Id_Dte
-                    _Sql.Ej_consulta_IDU(Consulta_sql, False)
-
-                    If _Enviar_DTE.mensaje.ToString.Contains("No fue posible encontrar la Caratula") Then
-                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Procesar = 0, Procesado = 1" & vbCrLf &
+                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Respuesta = Respuesta + '" & _Enviar_DTE.mensaje & "'" & vbCrLf &
                                        "Where Id_Dte In " & _Filtro_Id_Dte
-                        _Sql.Ej_consulta_IDU(Consulta_sql, False)
+                        If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+                            Throw New System.Exception(_Sql.Pro_Error)
+                        End If
+
+                        If _Enviar_DTE.mensaje.ToString.Contains("No fue posible encontrar la Caratula") Then
+                            Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Procesar = 0, Procesado = 1" & vbCrLf &
+                                           "Where Id_Dte In " & _Filtro_Id_Dte
+                            If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+                                Throw New System.Exception(_Sql.Pro_Error)
+                            End If
+                        End If
+
+                        Sb_AddToLog("Enviar SII", _Enviar_DTE.mensaje, Txt_Log)
+
                     End If
 
-                    Sb_AddToLog("Enviar SII", _Enviar_DTE.mensaje, Txt_Log)
+                Next
 
-                End If
+                Sb_AddToLog("Enviar SII", "Fin proceso", Txt_Log)
 
-            Next
+            End If
 
-            Sb_AddToLog("Enviar SII", "Fin proceso", Txt_Log)
-
-        End If
+        Catch ex As Exception
+            Sb_AddToLog("Enviar SII", ex.Message, Txt_Log)
+        End Try
 
     End Sub
 
@@ -507,546 +436,637 @@ Public Class Frm_Demonio_DTEMonitor
 
     Sub Sb_Enviar_Documentos_Al_SIIBoletas_Bk()
 
-        Dim _FechaHoy As String = Format(FechaDelServidor, "yyyyMMdd")
-        Dim _FechaMesAnterios As DateTime = DateAdd(DateInterval.Month, -1, FechaDelServidor)
-        Dim _FechaPrimerDiaMes As String = Format(Primerdiadelmes(_FechaMesAnterios), "yyyyMMdd")
+        Try
 
-        Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Procesar = 1 " & vbCrLf &
-                       "Where Procesar = 0 And Idmaeedo Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Trackid) And " &
-                       "CONVERT(varchar,FechaSolicitud,112) = '" & _FechaHoy & "' And Tido = 'BLV' And ErrorEnvioDTE = 0"
-        _Sql.Ej_consulta_IDU(Consulta_sql)
+            Dim _FechaDelServidor As Date = FechaDelServidor(False)
 
-        Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Procesar = 1 " & vbCrLf &
-                       "Where Procesar = 0 And Idmaeedo Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Trackid Where FechaEnvSII > '" & _FechaPrimerDiaMes & "') And " &
-                       "FechaSolicitud >= '" & _FechaPrimerDiaMes & "' And Tido = 'BLV' And ErrorEnvioDTE = 0"
-        _Sql.Ej_consulta_IDU(Consulta_sql)
+            Dim _FechaMesAnterios As DateTime = DateAdd(DateInterval.Month, -1, _FechaDelServidor)
+            Dim _FechaPrimerDiaMes As String = Format(Primerdiadelmes(_FechaMesAnterios), "yyyyMMdd")
 
-        Consulta_sql = "Select Top 20 Id_Dte,Idmaeedo,Tido,Nudo,Trackid,FechaSolicitud,Xml,Firma,CaratulaXml,Respuesta,AmbienteCertificacion,Procesar,Procesado" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_DTE_Documentos" & vbCrLf &
-                       "Where Procesar = 1 And Procesado = 0 And AmbienteCertificacion = " & _AmbienteCertificacion & " And Tido = 'BLV'" & vbCrLf &
-                       "Order By Tido,Nudo"
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Procesar = 1 " & vbCrLf &
+                           "Where Procesar = 0 And Idmaeedo Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Trackid) And " &
+                           "CONVERT(varchar,FechaSolicitud,112) = '" & _FechaDelServidor & "' And Tido = 'BLV' And ErrorEnvioDTE = 0"
+            If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+                Throw New System.Exception(_Sql.Pro_Error)
+            End If
 
-        'Consulta_sql = "Select Top 20 Id_Dte,Idmaeedo,Tido,Nudo,Trackid,FechaSolicitud,Xml,Firma,CaratulaXml,Respuesta,AmbienteCertificacion,Procesar,Procesado" & vbCrLf &
-        '               "From " & _Global_BaseBk & "Zw_DTE_Documentos" & vbCrLf &
-        '               "Where Id_Dte = 13224"
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Procesar = 1 " & vbCrLf &
+                           "Where Procesar = 0 And Idmaeedo Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Trackid Where FechaEnvSII > '" & _FechaPrimerDiaMes & "') And " &
+                           "FechaSolicitud >= '" & _FechaPrimerDiaMes & "' And Tido = 'BLV' And ErrorEnvioDTE = 0"
+            If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+                Throw New System.Exception(_Sql.Pro_Error)
+            End If
 
-        Dim _Tbl_DTE_Documentos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Consulta_sql = "Select Top 20 Id_Dte,Idmaeedo,Tido,Nudo,Trackid,FechaSolicitud,Xml,Firma,CaratulaXml,Respuesta,AmbienteCertificacion,Procesar,Procesado" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_DTE_Documentos" & vbCrLf &
+                           "Where Procesar = 1 And Procesado = 0 And AmbienteCertificacion = " & _AmbienteCertificacion & " And Tido = 'BLV'" & vbCrLf &
+                           "Order By Tido,Nudo"
 
-        If Not CBool(_Tbl_DTE_Documentos.Rows.Count) Then
-            Return
-        End If
+            Dim _Tbl_DTE_Documentos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
-        If CBool(_Tbl_DTE_Documentos.Rows.Count) Then
+            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                Throw New System.Exception(_Sql.Pro_Error)
+            End If
 
-            Sb_AddToLog("Enviar SII", "Revisando documentos pendientes de enviar al SII", Txt_Log)
+            If Not CBool(_Tbl_DTE_Documentos.Rows.Count) Then
+                Return
+            End If
 
-            Dim _Filtro_Id_Dte As String = Generar_Filtro_IN(_Tbl_DTE_Documentos, "", "Id_Dte", False, False, "")
+            If CBool(_Tbl_DTE_Documentos.Rows.Count) Then
 
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Procesar = 0 Where Id_Dte In " & _Filtro_Id_Dte
-            _Sql.Ej_consulta_IDU(Consulta_sql, False)
+                Sb_AddToLog("Enviar SII", "Revisando documentos pendientes de enviar al SII", Txt_Log)
 
-            For Each _Fila As DataRow In _Tbl_DTE_Documentos.Rows
+                Dim _Filtro_Id_Dte As String = Generar_Filtro_IN(_Tbl_DTE_Documentos, "", "Id_Dte", False, False, "")
 
-                Dim _Idmaeedo = _Fila.Item("Idmaeedo")
-                Dim _Id_Dte = _Fila.Item("Id_Dte")
-                Dim _Tido = _Fila.Item("Tido")
-                Dim _Nudo = _Fila.Item("Nudo")
-                Dim _FechaSolicitud As DateTime = _Fila.Item("FechaSolicitud")
-
-                If Fx_Esta_Firmando(_Filtro_Id_Dte, _Id_Dte) Then
-                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set Procesar = 1" & vbCrLf &
-                                       "Where Id In " & _Filtro_Id_Dte
-                    _Sql.Ej_consulta_IDU(Consulta_sql, False)
-                    Exit For
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Procesar = 0 Where Id_Dte In " & _Filtro_Id_Dte
+                If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+                    Throw New System.Exception(_Sql.Pro_Error)
                 End If
 
-                Dim _FechaSolicitud_Str As String = _FechaSolicitud.ToShortDateString & " - " & _FechaSolicitud.ToShortTimeString
+                For Each _Fila As DataRow In _Tbl_DTE_Documentos.Rows
 
-                Sb_AddToLog("Enviar SII", "Revisando " & _Tido & "-" & _Nudo & ", Fecha solicitud: " & _FechaSolicitud_Str, Txt_Log)
+                    Dim _Idmaeedo = _Fila.Item("Idmaeedo")
+                    Dim _Id_Dte = _Fila.Item("Id_Dte")
+                    Dim _Tido = _Fila.Item("Tido")
+                    Dim _Nudo = _Fila.Item("Nudo")
+                    Dim _FechaSolicitud As DateTime = _Fila.Item("FechaSolicitud")
 
-                Dim _AmbienteCertificacion As Boolean = Chk_AmbienteCertificacion.Checked
-
-                Dim _HefRespuesta As New HEFSIILIBDTES.HefRespuesta
-
-                _HefRespuesta = Fx_Enviar_Boleta_SII(_Id_Dte, _AmbienteCertificacion, RutEmpresaActiva)
-
-                Try
-
-                    If Not _HefRespuesta.EsCorrecto Then
-                        Throw New System.Exception(_HefRespuesta.Detalle)
+                    If Fx_Esta_Firmando(_Filtro_Id_Dte, _Id_Dte) Then
+                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set Procesar = 1" & vbCrLf &
+                                           "Where Id In " & _Filtro_Id_Dte
+                        If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+                            Throw New System.Exception(_Sql.Pro_Error)
+                        End If
+                        Exit For
                     End If
 
-                    Consulta_sql = "Select Top 1 Isnull(Tid.Trackid,'') As Trackid,Doc.Respuesta" & vbCrLf &
-                                   "From " & _Global_BaseBk & "Zw_DTE_Trackid Tid " & vbCrLf &
-                                   "Inner Join " & _Global_BaseBk & "Zw_DTE_Documentos Doc On Tid.Id_Dte = Doc.Id_Dte" & vbCrLf &
-                                   "Where Doc.Id_Dte = " & _Id_Dte & "Order By Id Desc"
-                    Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+                    Dim _FechaSolicitud_Str As String = _FechaSolicitud.ToShortDateString & " - " & _FechaSolicitud.ToShortTimeString
 
-                    Dim _Trackid As String = _Row.Item("Trackid")
-                    Dim _Respuesta As String = _Row.Item("Respuesta")
+                    Sb_AddToLog("Enviar SII", "Revisando " & _Tido & "-" & _Nudo & ", Fecha solicitud: " & _FechaSolicitud_Str, Txt_Log)
 
-                    If String.IsNullOrEmpty(_Trackid) Then
-                        Sb_AddToLog("Enviar SII", _Tido & "-" & _Nudo & ", Error documento no enviado al SII: " & _Trackid, Txt_Log)
-                    Else
-                        Sb_AddToLog("Enviar SII", _Tido & "-" & _Nudo & ", Enviado Trackid: " & _Trackid, Txt_Log)
-                    End If
+                    Dim _AmbienteCertificacion As Boolean = Chk_AmbienteCertificacion.Checked
 
-                Catch ex As Exception
-                    Sb_AddToLog("Enviar SII", ex.Message, Txt_Log)
-                End Try
+                    Dim _HefRespuesta As New HEFSIILIBDTES.HefRespuesta
 
-            Next
+                    _HefRespuesta = Fx_Enviar_Boleta_SII(_Id_Dte, _AmbienteCertificacion, RutEmpresaActiva)
 
-            Sb_AddToLog("Enviar SII", "Fin proceso", Txt_Log)
+                    Try
 
-        End If
+                        If Not _HefRespuesta.EsCorrecto Then
+                            Throw New System.Exception(_HefRespuesta.Detalle)
+                        End If
+
+                        Consulta_sql = "Select Top 1 Isnull(Tid.Trackid,'') As Trackid,Doc.Respuesta" & vbCrLf &
+                                       "From " & _Global_BaseBk & "Zw_DTE_Trackid Tid " & vbCrLf &
+                                       "Inner Join " & _Global_BaseBk & "Zw_DTE_Documentos Doc On Tid.Id_Dte = Doc.Id_Dte" & vbCrLf &
+                                       "Where Doc.Id_Dte = " & _Id_Dte & "Order By Id Desc"
+                        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+                        If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                            Throw New System.Exception(_Sql.Pro_Error)
+                        End If
+
+                        Dim _Trackid As String = _Row.Item("Trackid")
+                        Dim _Respuesta As String = _Row.Item("Respuesta")
+
+                        If String.IsNullOrEmpty(_Trackid) Then
+                            Sb_AddToLog("Enviar SII", _Tido & "-" & _Nudo & ", Error documento no enviado al SII: " & _Trackid, Txt_Log)
+                        Else
+                            Sb_AddToLog("Enviar SII", _Tido & "-" & _Nudo & ", Enviado Trackid: " & _Trackid, Txt_Log)
+                        End If
+
+                    Catch ex As Exception
+                        Sb_AddToLog("Enviar SII", ex.Message, Txt_Log)
+                    End Try
+
+                Next
+
+                Sb_AddToLog("Enviar SII", "Fin proceso", Txt_Log)
+
+            End If
+
+        Catch ex As Exception
+            Sb_AddToLog("Enviar SII", ex.Message, Txt_Log)
+        End Try
 
     End Sub
 
     Sub Sb_Revisar_Trackid_DTEBk()
 
-        Consulta_sql = "Select Top 20 Tid.*,Doc.Tido From " & _Global_BaseBk & "Zw_DTE_Trackid Tid" & vbCrLf &
-                       "Inner Join " & _Global_BaseBk & "Zw_DTE_Documentos Doc On Tid.Id_Dte = Doc.Id_Dte" & vbCrLf &
-                       "Where Doc.Tido <> 'BLV' And Tid.AmbienteCertificacion = " & _AmbienteCertificacion & vbCrLf &
-                       "And ((Tid.Procesar = 0 And (Tid.Estado = '-11' Or Tid.Estado = 'SOK' Or Tid.Estado = '107' Or Tid.Estado = '') And Tid.Intentos <=10) Or (Tid.Procesar = 1 And Tid.Procesado = 0))" & vbCrLf &
-                       "And Tid.Idmaeedo Not In  (Select Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Trackid Tid2 Where Tid.Idmaeedo = Tid2.Idmaeedo And ((Informado = 1 And Reparo = 1 And Estado <> '107') or (Aceptado = 1)))" & vbCrLf &
-                       "Order By Tido,Nudo"
+        Try
 
-        Dim _Tbl_DTE_Trackid As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Consulta_sql = "Select Top 20 Tid.*,Doc.Tido From " & _Global_BaseBk & "Zw_DTE_Trackid Tid" & vbCrLf &
+                   "Inner Join " & _Global_BaseBk & "Zw_DTE_Documentos Doc On Tid.Id_Dte = Doc.Id_Dte" & vbCrLf &
+                   "Where Doc.Tido <> 'BLV' And Tid.AmbienteCertificacion = " & _AmbienteCertificacion & vbCrLf &
+                   "And ((Tid.Procesar = 0 And (Tid.Estado = '-11' Or Tid.Estado = 'SOK' Or Tid.Estado = '107' Or Tid.Estado = '') And Tid.Intentos <=10) Or (Tid.Procesar = 1 And Tid.Procesado = 0))" & vbCrLf &
+                   "And Tid.Idmaeedo Not In  (Select Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Trackid Tid2 Where Tid.Idmaeedo = Tid2.Idmaeedo And ((Informado = 1 And Reparo = 1 And Estado <> '107') or (Aceptado = 1)))" & vbCrLf &
+                   "Order By Tido,Nudo"
 
-        If Not CBool(_Tbl_DTE_Trackid.Rows.Count) Then
-            Return
-        End If
+            Dim _Tbl_DTE_Trackid As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql, False)
 
-        If CBool(_Tbl_DTE_Trackid.Rows.Count) Then
+            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                Throw New System.Exception(_Sql.Pro_Error)
+            End If
 
-            Dim _Filtro_Id_Trackid As String = Generar_Filtro_IN(_Tbl_DTE_Trackid, "", "Id_Dte", False, False, "")
+            If Not CBool(_Tbl_DTE_Trackid.Rows.Count) Then
+                Return
+            End If
 
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set Procesar = 0 Where Id In " & _Filtro_Id_Trackid
-            _Sql.Ej_consulta_IDU(Consulta_sql, False)
+            If CBool(_Tbl_DTE_Trackid.Rows.Count) Then
 
-            For Each _Fila As DataRow In _Tbl_DTE_Trackid.Rows
+                Dim _Filtro_Id_Trackid As String = Generar_Filtro_IN(_Tbl_DTE_Trackid, "", "Id_Dte", False, False, "")
 
-                Dim _Id_Trackid = _Fila.Item("Id")
-                Dim _Id_Dte = _Fila.Item("Id_Dte")
-                Dim _Trackid = _Fila.Item("Trackid")
-                Dim _Idmaeedo = _Fila.Item("Idmaeedo")
-                Dim _Respuesta = _Fila.Item("Respuesta")
-                Dim _Estado = String.Empty
-                Dim _Glosa = String.Empty
-                Dim _Tido = _Fila.Item("Tido")
-
-                If Fx_Esta_Firmando(_Filtro_Id_Trackid, _Id_Trackid) Then
-                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set Procesar = 1" & vbCrLf &
-                                   "Where Id In " & _Filtro_Id_Trackid
-                    _Sql.Ej_consulta_IDU(Consulta_sql, False)
-                    Exit For
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set Procesar = 0 Where Id In " & _Filtro_Id_Trackid
+                If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+                    Throw New System.Exception(_Sql.Pro_Error)
                 End If
 
-                Sb_AddToLog("Revisar Trackid", "Revisando Trackid" & _Trackid, Txt_Log)
+                For Each _Fila As DataRow In _Tbl_DTE_Trackid.Rows
 
-                ' PARAMETROS 
+                    Dim _Id_Trackid = _Fila.Item("Id")
+                    Dim _Id_Dte = _Fila.Item("Id_Dte")
+                    Dim _Trackid = _Fila.Item("Trackid")
+                    Dim _Idmaeedo = _Fila.Item("Idmaeedo")
+                    Dim _Respuesta = _Fila.Item("Respuesta")
+                    Dim _Estado = String.Empty
+                    Dim _Glosa = String.Empty
+                    Dim _Tido = _Fila.Item("Tido")
 
-                '1 _Empresa = Environment.GetCommandLineArgs(2)
-                '2 _AmbienteCertificacion = Environment.GetCommandLineArgs(3)
-                '3 _Id_Dte = Environment.GetCommandLineArgs(4)
-                '4 _Trackid = Environment.GetCommandLineArgs(5)
-                '5 _Accion = Environment.GetCommandLineArgs(6)
+                    If Fx_Esta_Firmando(_Filtro_Id_Trackid, _Id_Trackid) Then
+                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set Procesar = 1" & vbCrLf &
+                                       "Where Id In " & _Filtro_Id_Trackid
+                        If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+                            Throw New System.Exception(_Sql.Pro_Error)
+                        End If
+                        Exit For
+                    End If
 
-                Dim _Intentos As Integer = _Fila.Item("Intentos")
-                Dim _Procesado = 1
-                Dim _Procesar = 0
+                    Sb_AddToLog("Revisar Trackid", "Revisando Trackid" & _Trackid, Txt_Log)
 
-                Dim _Aceptado As Integer
-                Dim _Informado As Integer
-                Dim _Rechazado As Integer
-                Dim _Reparo As Integer
-                Dim _EnviarMail = 0
-                Dim _VolverProcesar As Boolean
+                    ' PARAMETROS 
 
-                _Intentos += 1
+                    '1 _Empresa = Environment.GetCommandLineArgs(2)
+                    '2 _AmbienteCertificacion = Environment.GetCommandLineArgs(3)
+                    '3 _Id_Dte = Environment.GetCommandLineArgs(4)
+                    '4 _Trackid = Environment.GetCommandLineArgs(5)
+                    '5 _Accion = Environment.GetCommandLineArgs(6)
 
-                Dim _Resultado As Object
+                    Dim _Intentos As Integer = _Fila.Item("Intentos")
+                    Dim _Procesado = 1
+                    Dim _Procesar = 0
 
-                If Fx_Consultar_Trackid_DTE(_Trackid, _Resultado) Then
+                    Dim _Aceptado As Integer
+                    Dim _Informado As Integer
+                    Dim _Rechazado As Integer
+                    Dim _Reparo As Integer
+                    Dim _EnviarMail = 0
+                    Dim _VolverProcesar As Boolean
 
-                    Try
+                    _Intentos += 1
 
-                        _Respuesta = CType(_Resultado, HEFESTO.CONSULTA.TRACKID.entRespuestaDTE).Glosa
+                    Dim _Resultado As Object
 
-                        Sb_Revisar_Respuesta_Trackid(_Respuesta, _Estado, _Glosa,
-                                                     _Aceptado, _Informado, _Rechazado, _Reparo,
-                                                     _VolverProcesar)
+                    If Fx_Consultar_Trackid_DTE(_Trackid, _Resultado) Then
 
-                        If _VolverProcesar And _Intentos <= 3 Then
+                        Try
+
+                            _Respuesta = CType(_Resultado, HEFESTO.CONSULTA.TRACKID.entRespuestaDTE).Glosa
+
+                            Sb_Revisar_Respuesta_Trackid(_Respuesta, _Estado, _Glosa,
+                                                         _Aceptado, _Informado, _Rechazado, _Reparo,
+                                                         _VolverProcesar)
+
+                            If _VolverProcesar And _Intentos <= 3 Then
+                                _Procesado = 0
+                                _Procesar = 1
+                            End If
+
+                            If _Estado = "EPR" And _Tido <> "GTI" Then
+                                _EnviarMail = 1
+                            End If
+
+                        Catch ex As Exception
+                            _Intentos -= 1
+                        End Try
+
+                    Else
+
+                        If _Intentos <= 3 Then
                             _Procesado = 0
                             _Procesar = 1
                         End If
 
-                        If _Estado = "EPR" And _Tido <> "GTI" Then
-                            _EnviarMail = 1
-                        End If
+                        _Respuesta = CType(_Resultado, HEFESTO.CONSULTA.TRACKID.Respuesta).Mensaje
 
-                    Catch ex As Exception
-                        _Intentos -= 1
-                    End Try
-
-                Else
-
-                    If _Intentos <= 3 Then
-                        _Procesado = 0
-                        _Procesar = 1
                     End If
 
-                    _Respuesta = CType(_Resultado, HEFESTO.CONSULTA.TRACKID.Respuesta).Mensaje
+                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set " & vbCrLf &
+                                   "Procesado = " & _Procesado & "," &
+                                   "Procesar = " & _Procesar & "," &
+                                   "Informado = " & _Informado & "," &
+                                   "Aceptado = " & _Aceptado & "," &
+                                   "Rechazado = " & _Rechazado & "," &
+                                   "Reparo = " & _Reparo & "," &
+                                   "EnviarMail = " & _EnviarMail & "," &
+                                   "Estado = '" & _Estado & "'," &
+                                   "Glosa = '" & _Glosa & "'," &
+                                   "Respuesta = '" & _Respuesta & "'," & vbCrLf &
+                                   "Intentos = " & _Intentos & vbCrLf &
+                                   "Where Id = " & _Id_Trackid
+                    If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+                        Throw New System.Exception(_Sql.Pro_Error)
+                    End If
 
-                End If
+                    Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DTE_Trackid Where Id = " & _Id_Trackid
+                    Dim _RowTrackid As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set " & vbCrLf &
-                               "Procesado = " & _Procesado & "," &
-                               "Procesar = " & _Procesar & "," &
-                               "Informado = " & _Informado & "," &
-                               "Aceptado = " & _Aceptado & "," &
-                               "Rechazado = " & _Rechazado & "," &
-                               "Reparo = " & _Reparo & "," &
-                               "EnviarMail = " & _EnviarMail & "," &
-                               "Estado = '" & _Estado & "'," &
-                               "Glosa = '" & _Glosa & "'," &
-                               "Respuesta = '" & _Respuesta & "'," & vbCrLf &
-                               "Intentos = " & _Intentos & vbCrLf &
-                               "Where Id = " & _Id_Trackid
-                _Sql.Ej_consulta_IDU(Consulta_sql, False)
+                    If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                        Throw New System.Exception(_Sql.Pro_Error)
+                    End If
 
-                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DTE_Trackid Where Id = " & _Id_Trackid
-                Dim _RowTrackid As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                    _Estado = _RowTrackid.Item("Estado")
+                    _Glosa = _RowTrackid.Item("Glosa")
+                    _Respuesta = _RowTrackid.Item("Respuesta")
 
-                _Estado = _RowTrackid.Item("Estado")
-                _Glosa = _RowTrackid.Item("Glosa")
-                _Respuesta = _RowTrackid.Item("Respuesta")
+                    Sb_AddToLog("Revisar Trackid", "Respuesta SII: " & _Respuesta, Txt_Log)
+                    Sb_AddToLog("Revisar Trackid", "Respuesta Estado: " & _Estado & ", Glosa: " & _Glosa, Txt_Log)
 
-                Sb_AddToLog("Revisar Trackid", "Respuesta SII: " & _Respuesta, Txt_Log)
-                Sb_AddToLog("Revisar Trackid", "Respuesta Estado: " & _Estado & ", Glosa: " & _Glosa, Txt_Log)
+                Next
 
-            Next
+                Sb_AddToLog("Revisar Trackid", "Fin revisión", Txt_Log)
 
-            Sb_AddToLog("Revisar Trackid", "Fin revisión", Txt_Log)
+            End If
 
-        End If
+        Catch ex As Exception
+            Sb_AddToLog("Enviar SII", ex.Message, Txt_Log)
+        End Try
 
     End Sub
 
     Sub Sb_Revisar_Trackid_SIIBoletas_Bk()
 
-        Consulta_sql = "Select Top 20 Tid.*,Doc.Tido From " & _Global_BaseBk & "Zw_DTE_Trackid Tid" & vbCrLf &
-                       "Inner Join " & _Global_BaseBk & "Zw_DTE_Documentos Doc On Tid.Id_Dte = Doc.Id_Dte" & vbCrLf &
-                       "Where Doc.Tido = 'BLV' And Tid.AmbienteCertificacion = " & _AmbienteCertificacion &
-                       " And ((Tid.Procesar = 0 And (Tid.Estado = '-11' Or Tid.Estado = 'SOK' Or Tid.Estado = 'REC' Or Tid.Estado = '')) Or (Tid.Procesar = 1 And Tid.Procesado = 0))" & vbCrLf &
-                       "Order By Tido,Nudo"
+        Try
 
-        'Consulta_sql = "Select Top 20 Tid.*,Doc.Tido From " & _Global_BaseBk & "Zw_DTE_Trackid Tid" & vbCrLf &
-        '               "Inner Join " & _Global_BaseBk & "Zw_DTE_Documentos Doc On Tid.Id_Dte = Doc.Id_Dte" & vbCrLf &
-        '               "Where Doc.Tido = 'BLV' And Tid.AmbienteCertificacion = " & _AmbienteCertificacion &
-        '               " And Tid.Id = 16146"
+            Consulta_sql = "Select Top 20 Tid.*,Doc.Tido From " & _Global_BaseBk & "Zw_DTE_Trackid Tid" & vbCrLf &
+                           "Inner Join " & _Global_BaseBk & "Zw_DTE_Documentos Doc On Tid.Id_Dte = Doc.Id_Dte" & vbCrLf &
+                           "Where Doc.Tido = 'BLV' And Tid.AmbienteCertificacion = " & _AmbienteCertificacion &
+                           " And ((Tid.Procesar = 0 And (Tid.Estado = '-11' Or Tid.Estado = 'SOK' Or Tid.Estado = 'REC' Or Tid.Estado = '')) Or (Tid.Procesar = 1 And Tid.Procesado = 0))" & vbCrLf &
+                           "Order By Tido,Nudo"
 
-        Dim _Tbl_DTE_Trackid As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            'Consulta_sql = "Select Top 20 Tid.*,Doc.Tido From " & _Global_BaseBk & "Zw_DTE_Trackid Tid" & vbCrLf &
+            '               "Inner Join " & _Global_BaseBk & "Zw_DTE_Documentos Doc On Tid.Id_Dte = Doc.Id_Dte" & vbCrLf &
+            '               "Where Doc.Tido = 'BLV' And Tid.AmbienteCertificacion = " & _AmbienteCertificacion &
+            '               " And Tid.Id = 16146"
 
-        If Not CBool(_Tbl_DTE_Trackid.Rows.Count) Then
-            Return
-        End If
+            Dim _Tbl_DTE_Trackid As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql, False)
 
-        If CBool(_Tbl_DTE_Trackid.Rows.Count) Then
+            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                Throw New System.Exception(_Sql.Pro_Error)
+            End If
 
-            Dim _Filtro_Id_Trackid As String = Generar_Filtro_IN(_Tbl_DTE_Trackid, "", "Id_Dte", False, False, "")
+            If Not CBool(_Tbl_DTE_Trackid.Rows.Count) Then
+                Return
+            End If
 
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set Procesar = 0 Where Id In " & _Filtro_Id_Trackid
-            _Sql.Ej_consulta_IDU(Consulta_sql, False)
+            If CBool(_Tbl_DTE_Trackid.Rows.Count) Then
 
-            For Each _Fila As DataRow In _Tbl_DTE_Trackid.Rows
+                Dim _Filtro_Id_Trackid As String = Generar_Filtro_IN(_Tbl_DTE_Trackid, "", "Id_Dte", False, False, "")
 
-                Dim _Id_Trackid = _Fila.Item("Id")
-                Dim _Id_Dte = _Fila.Item("Id_Dte")
-                Dim _Trackid = _Fila.Item("Trackid")
-                Dim _Idmaeedo = _Fila.Item("Idmaeedo")
-                Dim _Respuesta = _Fila.Item("Respuesta")
-                Dim _Estado = String.Empty
-                Dim _Glosa = String.Empty
-
-                If Fx_Esta_Firmando(_Filtro_Id_Trackid, _Id_Trackid) Then
-                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set Procesar = 1" & vbCrLf &
-                                   "Where Id In " & _Filtro_Id_Trackid
-                    _Sql.Ej_consulta_IDU(Consulta_sql, False)
-                    Exit For
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set Procesar = 0 Where Id In " & _Filtro_Id_Trackid
+                If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+                    Throw New System.Exception(_Sql.Pro_Error)
                 End If
 
-                Sb_AddToLog("Revisar Trackid", "Revisando Trackid: " & _Trackid, Txt_Log)
+                For Each _Fila As DataRow In _Tbl_DTE_Trackid.Rows
 
-                ' PARAMETROS 
+                    Dim _Id_Trackid = _Fila.Item("Id")
+                    Dim _Id_Dte = _Fila.Item("Id_Dte")
+                    Dim _Trackid = _Fila.Item("Trackid")
+                    Dim _Idmaeedo = _Fila.Item("Idmaeedo")
+                    Dim _Respuesta = _Fila.Item("Respuesta")
+                    Dim _Estado = String.Empty
+                    Dim _Glosa = String.Empty
 
-                '1 _Empresa = Environment.GetCommandLineArgs(2)
-                '2 _AmbienteCertificacion = Environment.GetCommandLineArgs(3)
-                '3 _Id_Dte = Environment.GetCommandLineArgs(4)
-                '4 _Trackid = Environment.GetCommandLineArgs(5)
-                '5 _Accion = Environment.GetCommandLineArgs(6)
+                    If Fx_Esta_Firmando(_Filtro_Id_Trackid, _Id_Trackid) Then
+                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set Procesar = 1" & vbCrLf &
+                                       "Where Id In " & _Filtro_Id_Trackid
+                        If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+                            Throw New System.Exception(_Sql.Pro_Error)
+                        End If
+                        Exit For
+                    End If
 
-                Dim _HefRespuesta As New HEFSIILIBDTES.HefRespuesta
+                    Sb_AddToLog("Revisar Trackid", "Revisando Trackid: " & _Trackid, Txt_Log)
 
-                _HefRespuesta = Fx_Consultar_Trackid_BLV(_Trackid, _AmbienteCertificacion)
+                    ' PARAMETROS 
 
-                If Not IsNothing(_HefRespuesta) Then
+                    '1 _Empresa = Environment.GetCommandLineArgs(2)
+                    '2 _AmbienteCertificacion = Environment.GetCommandLineArgs(3)
+                    '3 _Id_Dte = Environment.GetCommandLineArgs(4)
+                    '4 _Trackid = Environment.GetCommandLineArgs(5)
+                    '5 _Accion = Environment.GetCommandLineArgs(6)
 
-                    If _HefRespuesta.EsCorrecto Then
+                    Dim _HefRespuesta As New HEFSIILIBDTES.HefRespuesta
 
-                        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DTE_Trackid Where Trackid = '" & _Trackid & "'"
-                        Dim _TblTrackid As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    _HefRespuesta = Fx_Consultar_Trackid_BLV(_Trackid, _AmbienteCertificacion)
 
-                        'Dim _RowTrackid As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                    If Not IsNothing(_HefRespuesta) Then
 
-                        For Each _Row As DataRow In _TblTrackid.Rows
+                        If _HefRespuesta.EsCorrecto Then
 
-                            Dim _Intentos As Integer = _Row.Item("Intentos")
+                            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DTE_Trackid Where Trackid = '" & _Trackid & "'"
+                            Dim _TblTrackid As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
-                            _Id_Trackid = _Row.Item("Id")
+                            'Dim _RowTrackid As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-                            If _TblTrackid.Rows.Count = 0 Then ' _Id_Trackid = 0 Then
-                                _HefRespuesta.EsCorrecto = False
-                                _HefRespuesta.Mensaje = "NO se encontro Id Trackid con Trackid: " & _Trackid
-                                _Id_Trackid = 0
-                            End If
+                            For Each _Row As DataRow In _TblTrackid.Rows
 
-                            If CBool(_Id_Trackid) Then
+                                Dim _Intentos As Integer = _Row.Item("Intentos")
 
-                                _Estado = String.Empty
-                                _Glosa = String.Empty
+                                _Id_Trackid = _Row.Item("Id")
 
-                                Dim _Aceptado As Integer
-                                Dim _Informado As Integer
-                                Dim _Rechazado As Integer
-                                Dim _Reparo As Integer
-                                Dim _Procesado As Integer = 1
-                                Dim _Procesar As Integer = 0
-                                _Respuesta = _HefRespuesta.XmlDocumento
-                                Dim _VolverProcesar As Boolean
-
-                                _Intentos += 1
-
-                                If Not _HefRespuesta.EsCorrecto Then
-                                    _Respuesta = _HefRespuesta.Detalle
-                                    _VolverProcesar = True
+                                If _TblTrackid.Rows.Count = 0 Then ' _Id_Trackid = 0 Then
+                                    _HefRespuesta.EsCorrecto = False
+                                    _HefRespuesta.Mensaje = "NO se encontro Id Trackid con Trackid: " & _Trackid
+                                    _Id_Trackid = 0
                                 End If
 
-                                Dim _RespuestSII As RespBolSII = Fx_ObtenerDatosRespuestaSII(_Respuesta)
+                                If CBool(_Id_Trackid) Then
 
-                                If IsNothing(_RespuestSII) Then
-                                    _VolverProcesar = True
-                                End If
+                                    _Estado = String.Empty
+                                    _Glosa = String.Empty
 
-                                If Not IsNothing(_RespuestSII) Then
+                                    Dim _Aceptado As Integer
+                                    Dim _Informado As Integer
+                                    Dim _Rechazado As Integer
+                                    Dim _Reparo As Integer
+                                    Dim _Procesado As Integer = 1
+                                    Dim _Procesar As Integer = 0
+                                    _Respuesta = _HefRespuesta.XmlDocumento
+                                    Dim _VolverProcesar As Boolean
 
-                                    _Estado = _RespuestSII.estado
+                                    _Intentos += 1
 
-                                    Try
-                                        _Aceptado = _RespuestSII.estadistica(0).aceptados
-                                        _Informado = _RespuestSII.estadistica(0).informados
-                                        _Rechazado = _RespuestSII.estadistica(0).rechazados
-                                        _Reparo = _RespuestSII.estadistica(0).reparos
-                                    Catch ex As Exception
-                                        _Aceptado = False
-                                        _Informado = False
-                                        _Rechazado = False
-                                        _Reparo = False
-                                    End Try
-
-                                    If CBool(_Rechazado) Or CBool(_Reparo) Then
-                                        _Estado = _RespuestSII.detalle_rep_rech(0).estado
-                                        _Glosa = _RespuestSII.detalle_rep_rech(0).descripcion
-                                    Else
-                                        _Glosa = Fx_GlosaEstados(_Estado, _Aceptado, _Rechazado, _VolverProcesar)
+                                    If Not _HefRespuesta.EsCorrecto Then
+                                        _Respuesta = _HefRespuesta.Detalle
+                                        _VolverProcesar = True
                                     End If
 
-                                    If _Estado = "EPR" And CBool(_Rechazado) Then
-                                        _Glosa += " (Revise el SII, puede que el documento este aceptado con otro Trackid)"
+                                    Dim _RespuestSII As RespBolSII = Fx_ObtenerDatosRespuestaSII(_Respuesta)
+
+                                    If IsNothing(_RespuestSII) Then
+                                        _VolverProcesar = True
+                                    End If
+
+                                    If Not IsNothing(_RespuestSII) Then
+
+                                        _Estado = _RespuestSII.estado
+
+                                        Try
+                                            _Aceptado = _RespuestSII.estadistica(0).aceptados
+                                            _Informado = _RespuestSII.estadistica(0).informados
+                                            _Rechazado = _RespuestSII.estadistica(0).rechazados
+                                            _Reparo = _RespuestSII.estadistica(0).reparos
+                                        Catch ex As Exception
+                                            _Aceptado = False
+                                            _Informado = False
+                                            _Rechazado = False
+                                            _Reparo = False
+                                        End Try
+
+                                        If CBool(_Rechazado) Or CBool(_Reparo) Then
+                                            _Estado = _RespuestSII.detalle_rep_rech(0).estado
+                                            _Glosa = _RespuestSII.detalle_rep_rech(0).descripcion
+                                        Else
+                                            _Glosa = Fx_GlosaEstados(_Estado, _Aceptado, _Rechazado, _VolverProcesar)
+                                        End If
+
+                                        If _Estado = "EPR" And CBool(_Rechazado) Then
+                                            _Glosa += " (Revise el SII, puede que el documento este aceptado con otro Trackid)"
+                                        End If
+
+                                    End If
+
+                                    If _VolverProcesar And _Intentos <= 3 Then
+                                        _Procesado = 0
+                                        _Procesar = 1
+                                    End If
+
+                                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set " & vbCrLf &
+                                                   "Procesado = " & _Procesado & "," &
+                                                   "Procesar = " & _Procesar & "," &
+                                                   "Informado = " & _Informado & "," &
+                                                   "Aceptado = " & _Aceptado & "," &
+                                                   "Rechazado = " & _Rechazado & "," &
+                                                   "Reparo = " & _Reparo & "," &
+                                                   "EnviarMail = 0," &
+                                                   "Estado = '" & _Estado & "'," &
+                                                   "Glosa = '" & _Glosa & "'," &
+                                                   "Respuesta = '" & _Respuesta & "'," & vbCrLf &
+                                                   "Intentos = " & _Intentos & vbCrLf &
+                                                   "Where Id = " & _Id_Trackid
+                                    If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+                                        Throw New System.Exception(_Sql.Pro_Error)
                                     End If
 
                                 End If
 
-                                If _VolverProcesar And _Intentos <= 3 Then
-                                    _Procesado = 0
-                                    _Procesar = 1
+                                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DTE_Trackid Where Id = " & _Id_Trackid
+                                Dim _RowTrackid As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+                                If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                                    Throw New System.Exception(_Sql.Pro_Error)
                                 End If
 
-                                Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set " & vbCrLf &
-                                               "Procesado = " & _Procesado & "," &
-                                               "Procesar = " & _Procesar & "," &
-                                               "Informado = " & _Informado & "," &
-                                               "Aceptado = " & _Aceptado & "," &
-                                               "Rechazado = " & _Rechazado & "," &
-                                               "Reparo = " & _Reparo & "," &
-                                               "EnviarMail = 0," &
-                                               "Estado = '" & _Estado & "'," &
-                                               "Glosa = '" & _Glosa & "'," &
-                                               "Respuesta = '" & _Respuesta & "'," & vbCrLf &
-                                               "Intentos = " & _Intentos & vbCrLf &
-                                               "Where Id = " & _Id_Trackid
-                                _Sql.Ej_consulta_IDU(Consulta_sql, False)
+                                _Estado = _RowTrackid.Item("Estado")
+                                _Glosa = _RowTrackid.Item("Glosa")
+                                _Respuesta = _RowTrackid.Item("Respuesta")
+
+                                Sb_AddToLog("Revisar Trackid", "Respuesta SII: " & _Respuesta, Txt_Log)
+                                Sb_AddToLog("Revisar Trackid", "Respuesta Estado: " & _Estado & ", Glosa: " & _Glosa, Txt_Log)
+
+                            Next
+
+                        Else
+
+                            If _HefRespuesta.XmlDocumento = "No existe recurso" Then
+
+                                Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Procesar = 1 Where Id_Dte = " & _Id_Dte
+                                If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+                                    Throw New System.Exception(_Sql.Pro_Error)
+                                End If
 
                             End If
-
-                            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DTE_Trackid Where Id = " & _Id_Trackid
-                            Dim _RowTrackid As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-                            _Estado = _RowTrackid.Item("Estado")
-                            _Glosa = _RowTrackid.Item("Glosa")
-                            _Respuesta = _RowTrackid.Item("Respuesta")
-
-                            Sb_AddToLog("Revisar Trackid", "Respuesta SII: " & _Respuesta, Txt_Log)
-                            Sb_AddToLog("Revisar Trackid", "Respuesta Estado: " & _Estado & ", Glosa: " & _Glosa, Txt_Log)
-
-                        Next
-
-                    Else
-
-                        If _HefRespuesta.XmlDocumento = "No existe recurso" Then
-
-                            Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Procesar = 1 Where Id_Dte = " & _Id_Dte
-                            _Sql.Ej_consulta_IDU(Consulta_sql, False)
 
                         End If
 
                     End If
 
-                End If
+                Next
 
-            Next
+                Sb_AddToLog("Revisar Trackid", "Fin revisión", Txt_Log)
 
-            Sb_AddToLog("Revisar Trackid", "Fin revisión", Txt_Log)
+            End If
 
-        End If
+        Catch ex As Exception
+            Sb_AddToLog("Enviar SII", ex.Message, Txt_Log)
+        End Try
 
     End Sub
 
     Sub Sb_Enviar_Correos()
 
-        Consulta_sql = "Select Id,Id_Dte,Idmaeedo,Trackid,Informado,Aceptado,Rechazado,Reparo,Estado,Glosa,Respuesta,FechaEnvSII," &
-                       "AmbienteCertificacion,MailToDiablito, ErrorMailToDiablito" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_DTE_Trackid" & vbCrLf &
-                       "Where Procesar = 0 " &
-                       "And Procesado = 1 " &
-                       "And EnviarMail = 1 " &
-                       "And AmbienteCertificacion = " & _AmbienteCertificacion
+        Try
 
-        Dim _Tbl_DTE_Trackid As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Consulta_sql = "Select Id,Id_Dte,Idmaeedo,Trackid,Informado,Aceptado,Rechazado,Reparo,Estado,Glosa,Respuesta,FechaEnvSII," &
+                   "AmbienteCertificacion,MailToDiablito, ErrorMailToDiablito" & vbCrLf &
+                   "From " & _Global_BaseBk & "Zw_DTE_Trackid" & vbCrLf &
+                   "Where Procesar = 0 " &
+                   "And Procesado = 1 " &
+                   "And EnviarMail = 1 " &
+                   "And AmbienteCertificacion = " & _AmbienteCertificacion
 
-        If Not CBool(_Tbl_DTE_Trackid.Rows.Count) Then
-            Return
-        End If
+            Dim _Tbl_DTE_Trackid As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql, False)
 
-        'Dim _ListaDteTrackId As New List(Of String)
+            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                Throw New System.Exception(_Sql.Pro_Error)
+            End If
 
-        If CBool(_Tbl_DTE_Trackid.Rows.Count) Then
+            If Not CBool(_Tbl_DTE_Trackid.Rows.Count) Then
+                Return
+            End If
 
-            Dim _Filtro_Id_Trackid As String = Generar_Filtro_IN(_Tbl_DTE_Trackid, "", "Id", False, False, "")
+            'Dim _ListaDteTrackId As New List(Of String)
 
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set MailToDiablito = 1,ErrorMailToDiablito = 0,EnviarMail = 0,MailEnviado = 0" & vbCrLf &
-                           "Where Id In " & _Filtro_Id_Trackid
-            _Sql.Ej_consulta_IDU(Consulta_sql, False)
+            If CBool(_Tbl_DTE_Trackid.Rows.Count) Then
 
-            Sb_AddToLog("Enviar Correo", "Preparando envio de correos", Txt_Log)
+                Dim _Filtro_Id_Trackid As String = Generar_Filtro_IN(_Tbl_DTE_Trackid, "", "Id", False, False, "")
 
-            For Each _Fila As DataRow In _Tbl_DTE_Trackid.Rows
-
-                Dim _Id_Dte = _Fila.Item("Id_Dte")
-                Dim _Id_Trackid = _Fila.Item("Id")
-                Dim _Trackid = _Fila.Item("Trackid")
-                Dim _Idmaeedo = _Fila.Item("Idmaeedo")
-
-                If Fx_Esta_Firmando(_Filtro_Id_Trackid, _Id_Trackid) Then
-                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set MailToDiablito = 0,EnviarMail = 1" & vbCrLf &
-                           "Where Id In " & _Filtro_Id_Trackid
-                    _Sql.Ej_consulta_IDU(Consulta_sql, False)
-                    Exit For
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set MailToDiablito = 1,ErrorMailToDiablito = 0,EnviarMail = 0,MailEnviado = 0" & vbCrLf &
+                               "Where Id In " & _Filtro_Id_Trackid
+                If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+                    Throw New System.Exception(_Sql.Pro_Error)
                 End If
 
-                Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
-                _Class_DTE.AmbienteCertificacion = Convert.ToInt32(Chk_AmbienteCertificacion.Checked)
+                Sb_AddToLog("Enviar Correo", "Preparando envio de correos", Txt_Log)
 
-                If IsNothing(_Class_DTE.Maeedo) Then
-                    Sb_AddToLog("Enviar Correo", "Problemas al enviar correo, no se reconoce el IDMAEEDO: " & _Idmaeedo, Txt_Log)
-                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set ErrorMailToDiablito = 1" & vbCrLf &
-                                   "Where Id = " & _Id_Trackid
-                    _Sql.Ej_consulta_IDU(Consulta_sql, False)
-                End If
+                For Each _Fila As DataRow In _Tbl_DTE_Trackid.Rows
 
-                If Not IsNothing(_Class_DTE.Maeedo) Then
+                    Dim _Id_Dte = _Fila.Item("Id_Dte")
+                    Dim _Id_Trackid = _Fila.Item("Id")
+                    Dim _Trackid = _Fila.Item("Trackid")
+                    Dim _Idmaeedo = _Fila.Item("Idmaeedo")
 
-                    Dim _Koen = _Class_DTE.Maeedo.Rows(0).Item("ENDO").ToString.Trim
-                    Dim _Suen = _Class_DTE.Maeedo.Rows(0).Item("SUENDO").ToString.Trim
-                    Dim _Para = _Class_DTE.Maeen.Rows(0).Item("EMAIL").ToString.Trim
-
-                    If CBool(_AmbienteCertificacion) Then
-                        _Para = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
-                                                  "Empresa = '" & ModEmpresa & "' And Campo = 'MailContactoSIIPruebas' And AmbienteCertificacion = " & _AmbienteCertificacion)
+                    If Fx_Esta_Firmando(_Filtro_Id_Trackid, _Id_Trackid) Then
+                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set MailToDiablito = 0,EnviarMail = 1" & vbCrLf &
+                               "Where Id In " & _Filtro_Id_Trackid
+                        If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+                            Throw New System.Exception(_Sql.Pro_Error)
+                        End If
+                        Exit For
                     End If
 
-                    Dim _EnvioCorreo As String = _Class_DTE.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Idmaeedo, _Para, "", _Id_Trackid)
+                    Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
+                    _Class_DTE.AmbienteCertificacion = Convert.ToInt32(Chk_AmbienteCertificacion.Checked)
 
-                    If String.IsNullOrEmpty(_EnvioCorreo) Then
-                        Sb_AddToLog("Enviar Correo", "Se deja en la bandeja de salida correo para: " & _Para, Txt_Log)
-                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set MailToDiablito = 1" & vbCrLf &
-                                       "Where Id = " & _Id_Trackid
-                        _Sql.Ej_consulta_IDU(Consulta_sql, False)
-                    Else
-                        Sb_AddToLog("Enviar Correo", "Problemas al enviar correo, problema: " & _EnvioCorreo, Txt_Log)
+                    If IsNothing(_Class_DTE.Maeedo) Then
+                        Sb_AddToLog("Enviar Correo", "Problemas al enviar correo, no se reconoce el IDMAEEDO: " & _Idmaeedo, Txt_Log)
                         Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set ErrorMailToDiablito = 1" & vbCrLf &
-                                        "Where Id = " & _Id_Trackid
-                        _Sql.Ej_consulta_IDU(Consulta_sql, False)
-                        Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "Zw_DTE_Trackid", _Id_Trackid, "Email_DTE_Error", _EnvioCorreo, "", "", _Koen, _Suen, False, "")
+                                       "Where Id = " & _Id_Trackid
+                        If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+                            Throw New System.Exception(_Sql.Pro_Error)
+                        End If
                     End If
 
-                End If
+                    If Not IsNothing(_Class_DTE.Maeedo) Then
 
-            Next
+                        Dim _Koen = _Class_DTE.Maeedo.Rows(0).Item("ENDO").ToString.Trim
+                        Dim _Suen = _Class_DTE.Maeedo.Rows(0).Item("SUENDO").ToString.Trim
+                        Dim _Para = _Class_DTE.Maeen.Rows(0).Item("EMAIL").ToString.Trim
 
-            Sb_AddToLog("Enviar Correo", "Fin envio de correos", Txt_Log)
+                        If CBool(_AmbienteCertificacion) Then
+                            _Para = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
+                                                      "Empresa = '" & ModEmpresa & "' And Campo = 'MailContactoSIIPruebas' And AmbienteCertificacion = " & _AmbienteCertificacion)
+                        End If
 
-        End If
+                        Dim _EnvioCorreo As String = _Class_DTE.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Idmaeedo, _Para, "", _Id_Trackid)
+
+                        If String.IsNullOrEmpty(_EnvioCorreo) Then
+                            Sb_AddToLog("Enviar Correo", "Se deja en la bandeja de salida correo para: " & _Para, Txt_Log)
+                            Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set MailToDiablito = 1" & vbCrLf &
+                                           "Where Id = " & _Id_Trackid
+                            If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+                                Throw New System.Exception(_Sql.Pro_Error)
+                            End If
+                        Else
+                            Sb_AddToLog("Enviar Correo", "Problemas al enviar correo, problema: " & _EnvioCorreo, Txt_Log)
+                            Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set ErrorMailToDiablito = 1" & vbCrLf &
+                                            "Where Id = " & _Id_Trackid
+                            If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+                                Throw New System.Exception(_Sql.Pro_Error)
+                            End If
+                            Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "Zw_DTE_Trackid", _Id_Trackid, "Email_DTE_Error", _EnvioCorreo, "", "", _Koen, _Suen, False, "")
+                        End If
+
+                    End If
+
+                Next
+
+                Sb_AddToLog("Enviar Correo", "Fin envio de correos", Txt_Log)
+
+            End If
+
+        Catch ex As Exception
+            Sb_AddToLog("Enviar SII", ex.Message, Txt_Log)
+        End Try
 
     End Sub
 
     Sub Sb_Enviar_Cesion()
 
-        Consulta_sql = "Select Top 5 Id_Aec,Id_Dte,Idmaeedo,Tido,Nudo" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_DTE_Aec" & vbCrLf &
-                       "Where Procesar = 1 And AmbienteCertificacion = " & _AmbienteCertificacion
-        Dim _Tbl_DTE_Aec As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Try
 
-        If Not CBool(_Tbl_DTE_Aec.Rows.Count) Then
-            Return
-        End If
+            Consulta_sql = "Select Top 5 Id_Aec,Id_Dte,Idmaeedo,Tido,Nudo" & vbCrLf &
+                   "From " & _Global_BaseBk & "Zw_DTE_Aec" & vbCrLf &
+                   "Where Procesar = 1 And AmbienteCertificacion = " & _AmbienteCertificacion
+            Dim _Tbl_DTE_Aec As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql, False)
 
-        For Each _Fila As DataRow In _Tbl_DTE_Aec.Rows
-
-            Dim _Id_Aec = _Fila.Item("Id_Aec")
-            Dim _Idmaeedo = _Fila.Item("Idmaeedo")
-            Dim _Tido = _Fila.Item("Tido")
-            Dim _Nudo = _Fila.Item("Nudo")
-
-            Sb_AddToLog("Revisar Trackid", "Enviando a Cesion " & _Tido & "-" & _Nudo, Txt_Log)
-
-            Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
-
-            Dim _Fx_AEC_EnviarCesion As HefestoCesionV12.HefRespuesta
-            _Fx_AEC_EnviarCesion = _Class_DTE.Fx_AEC_EnviarCesion(_Id_Aec)
-
-            If _Fx_AEC_EnviarCesion.EsCorrecto Then
-                Sb_AddToLog("Enviar SII", _Tido & "-" & _Nudo & ", Enviado Trackid: " & _Fx_AEC_EnviarCesion.Trackid, Txt_Log)
-                Sb_AddToLog("Enviar SII", _Tido & "-" & _Nudo & ", Respuesta: " & _Fx_AEC_EnviarCesion.Resultado, Txt_Log)
-                Sb_AddToLog("Enviar SII", _Tido & "-" & _Nudo & ", Declaración jurada: ", Txt_Log)
-                Sb_AddToLog("Enviar SII", _Fx_AEC_EnviarCesion.Detalle, Txt_Log)
-            Else
-                Sb_AddToLog("Enviar SII", _Tido & "-" & _Nudo & ", Error al enviar cesion: " & _Fx_AEC_EnviarCesion.Detalle, Txt_Log)
+            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                Throw New System.Exception(_Sql.Pro_Error)
             End If
 
-        Next
+            If Not CBool(_Tbl_DTE_Aec.Rows.Count) Then
+                Return
+            End If
+
+            For Each _Fila As DataRow In _Tbl_DTE_Aec.Rows
+
+                Dim _Id_Aec = _Fila.Item("Id_Aec")
+                Dim _Idmaeedo = _Fila.Item("Idmaeedo")
+                Dim _Tido = _Fila.Item("Tido")
+                Dim _Nudo = _Fila.Item("Nudo")
+
+                Sb_AddToLog("Revisar Trackid", "Enviando a Cesion " & _Tido & "-" & _Nudo, Txt_Log)
+
+                Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
+
+                Dim _Fx_AEC_EnviarCesion As HefestoCesionV12.HefRespuesta
+                _Fx_AEC_EnviarCesion = _Class_DTE.Fx_AEC_EnviarCesion(_Id_Aec)
+
+                If _Fx_AEC_EnviarCesion.EsCorrecto Then
+                    Sb_AddToLog("Enviar SII", _Tido & "-" & _Nudo & ", Enviado Trackid: " & _Fx_AEC_EnviarCesion.Trackid, Txt_Log)
+                    Sb_AddToLog("Enviar SII", _Tido & "-" & _Nudo & ", Respuesta: " & _Fx_AEC_EnviarCesion.Resultado, Txt_Log)
+                    Sb_AddToLog("Enviar SII", _Tido & "-" & _Nudo & ", Declaración jurada: ", Txt_Log)
+                    Sb_AddToLog("Enviar SII", _Fx_AEC_EnviarCesion.Detalle, Txt_Log)
+                Else
+                    Sb_AddToLog("Enviar SII", _Tido & "-" & _Nudo & ", Error al enviar cesion: " & _Fx_AEC_EnviarCesion.Detalle, Txt_Log)
+                End If
+
+            Next
+
+        Catch ex As Exception
+            Sb_AddToLog("Enviar SII", ex.Message, Txt_Log)
+        End Try
 
     End Sub
 
@@ -1413,7 +1433,7 @@ Public Class Frm_Demonio_DTEMonitor
 
         Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_DTE_Firmar" & vbCrLf &
                        "Where Firmar = 1 And AmbienteCertificacion = " & _AmbienteCertificacion
-        Dim _RowFirmar As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+        Dim _RowFirmar As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 
         If Not IsNothing(_RowFirmar) Then
 
@@ -1423,7 +1443,7 @@ Public Class Frm_Demonio_DTEMonitor
             Dim _Nudo As String = _RowFirmar.Item("Nudo")
 
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Firmar Set Firmar = 0 Where Id = " & _Id
-            _Sql.Ej_consulta_IDU(Consulta_sql)
+            _Sql.Ej_consulta_IDU(Consulta_sql, False)
 
             Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
             _Class_DTE.AmbienteCertificacion = Convert.ToInt32(Chk_AmbienteCertificacion.Checked)
@@ -1433,7 +1453,7 @@ Public Class Frm_Demonio_DTEMonitor
 
             If CBool(_Id_Dte) Then
                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Firmar Set Id_Dte = " & _Id_Dte & " Where Id = " & _Id
-                _Sql.Ej_consulta_IDU(Consulta_sql)
+                _Sql.Ej_consulta_IDU(Consulta_sql, False)
             Else
                 If CBool(_Class_DTE.Pro_Errores.Count) Then
                     Dim Log_Error As String
@@ -1442,7 +1462,7 @@ Public Class Frm_Demonio_DTEMonitor
                     Next
                     Log_Error = Replace(Log_Error, "'", "''")
                     Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Firmar Set Log_Error = '" & Log_Error & "' Where Id = " & _Id
-                    _Sql.Ej_consulta_IDU(Consulta_sql)
+                    _Sql.Ej_consulta_IDU(Consulta_sql, False)
                 End If
             End If
 
@@ -2133,12 +2153,17 @@ Public Class Frm_Demonio_DTEMonitor
             Return
         End If
 
-        Dim _FechaHoy As String = Format(FechaDelServidor, "yyyyMMdd")
-        Dim _8Dias As DateTime = DateAdd(DateInterval.Day, -10, FechaDelServidor)
+        Dim _FechaDelServidor As Date = FechaDelServidor(False)
+
+        If _FechaDelServidor = #1/1/0001 12:00:00 AM# Then
+            Return
+        End If
+
+        Dim _8Dias As DateTime = DateAdd(DateInterval.Day, -10, _FechaDelServidor)
 
         Dim _Periodo1 = _8Dias.Year
         Dim _Mes1 = _8Dias.Month
-        Dim _Periodo2 = FechaDelServidor.Year
+        Dim _Periodo2 = _FechaDelServidor.Year
         Dim _Mes2 = FechaDelServidor.Month
 
         '_Periodo1 = "2024"

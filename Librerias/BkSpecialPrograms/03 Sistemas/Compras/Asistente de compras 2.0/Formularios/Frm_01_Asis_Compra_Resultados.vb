@@ -1958,43 +1958,46 @@ Public Class Frm_01_Asis_Compra_Resultados
         End If
 
         Dim _Orden_Codigo As String
+        Dim _CpoCodOrden As String
 
         If Fm_Hijo.Grilla.SortOrder = Windows.Forms.SortOrder.Ascending Then
             _Orden_Codigo = Grilla.SortedColumn.Name
+            _CpoCodOrden = "," & Grilla.SortedColumn.Name & " As 'CodOrden'"
         ElseIf Grilla.SortOrder = Windows.Forms.SortOrder.Descending Then
             _Orden_Codigo = Grilla.SortedColumn.Name & " Desc"
+            _CpoCodOrden = "," & Grilla.SortedColumn.Name & " As 'CodOrden'"
         Else
             _Orden_Codigo = "Codigo"
+            _CpoCodOrden = String.Empty
         End If
 
         If Rd_Costo_Lista_Proveedor.Checked Then
 
             Dim _Lista As String = Cmb_Lista_Costos.SelectedItem.Value
 
-            Consulta_sql = "Select 0 As IDMAEEDO,Getdate() As FEEMDO,Getdate() As FEER,'N' As MEARDO
-
-                            Select Distinct " & _Top & " '" & FUNCIONARIO & "' As KOFULIDO,Tb.Codigo As KOPRCT,Tb.Descripcion As NOKOPR,
-                            Tb.Descripcion as Descripcion,Tb.CodAlternativo,'" & _Lista & "' As KOLTPR,RLUD As RLUDPR,UD1,UD2,
-                            0 As CostoUd1,0 As CostoUd2,0 As Precio, Tb.Rtu,CantComprar As Cantidad,
-                            0 As Desc1,0 As Desc2,0 As Desc3,0 As Desc4,0 As Desc5,0 As DescSuma,0 As PRCT,'' As TICT,TIPR,0 As PODTGLLI," & Ud & " as UDTRPR,
-                            Isnull(Trc.RECARGO,0) As POTENCIA,'' As KOFUAULIDO,'' As KOOPLIDO,
-                            0 As IDMAEEDO,0 As IDMAEDDO,'" & ModEmpresa & "' As EMPRESA,'" & ModSucursal & "' As SULIDO,'" & ModBodega & "' As BOSULIDO,'' As ENDO,'' As SUENDO,GetDate() As FEEMLI,
-                            '' As TIDO,'' As NUDO,'' As NULIDO,0 As CantUd1_Dori,0 As CantUd2_Dori,'' As OBSERVA,
-                            0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,
-							0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta
-
-                            From  " & _Nombre_Tbl_Paso_Informe & " Tb
-
-                            Inner Join TABCODAL Tcl On Tcl.KOEN = Tb.CodProveedor And Tb.Codigo = Tcl.KOPR And Tcl.KOPRAL = Tb.CodAlternativo
-                                Left Join TABRECPR Trc On Trc.KOEN = Tb.CodProveedor and Trc.KOPR = Tb.Codigo
-                                    Inner Join MAEPR Mp On Mp.KOPR = Tb.Codigo
-                                        Where Tb.CantComprar > 0 And Tb.CodSucProveedor = '" & _Suen & "'
-                                            And Tb.CodProveedor = '" & _Koen & "' And Tb.OccGenerada = 0 And Comprar = 1
-                            " & _Condicion & vbCrLf &
-                            "Order by " & _Orden_Codigo & "
-                             Select * From MAEIMLI Where 1<0  
-                                 Select * From MAEDTLI Where 1 < 0 
-                                 Select 'Documento generado desde Asistente de compras BakApp' as OBDO"
+            Consulta_sql = "Select 0 As IDMAEEDO,Getdate() As FEEMDO,Getdate() As FEER,'N' As MEARDO" & vbCrLf &
+                           "Select Distinct " & _Top & " '" & FUNCIONARIO & "' As KOFULIDO,Tb.Codigo As KOPRCT,Tb.Descripcion As NOKOPR," & vbCrLf &
+                           "Tb.Descripcion as Descripcion,Tb.CodAlternativo,'" & _Lista & "' As KOLTPR,RLUD As RLUDPR,UD1,UD2," & vbCrLf &
+                           "0 As CostoUd1,0 As CostoUd2,0 As Precio, Tb.Rtu,CantComprar As Cantidad," & vbCrLf &
+                           "0 As Desc1,0 As Desc2,0 As Desc3,0 As Desc4,0 As Desc5,0 As DescSuma,0 As PRCT,'' As TICT,TIPR,0 As PODTGLLI," & Ud & " as UDTRPR," & vbCrLf &
+                           "Isnull(Trc.RECARGO,0) As POTENCIA,'' As KOFUAULIDO,'' As KOOPLIDO," & vbCrLf &
+                           "0 As IDMAEEDO,0 As IDMAEDDO,'" & ModEmpresa & "' As EMPRESA,'" & ModSucursal & "' As SULIDO,'" & ModBodega & "' As BOSULIDO,'' As ENDO,'' As SUENDO,GetDate() As FEEMLI," & vbCrLf &
+                           "'' As TIDO,'' As NUDO,'' As NULIDO,0 As CantUd1_Dori,0 As CantUd2_Dori,'' As OBSERVA," & vbCrLf &
+                           "0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta," & vbCrLf &
+                           "0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta" & _CpoCodOrden & vbCrLf &
+                           "From  " & _Nombre_Tbl_Paso_Informe & " Tb" & vbCrLf &
+                           vbCrLf &
+                           "Inner Join TABCODAL Tcl On Tcl.KOEN = Tb.CodProveedor And Tb.Codigo = Tcl.KOPR And Tcl.KOPRAL = Tb.CodAlternativo" & vbCrLf &
+                           "Left Join TABRECPR Trc On Trc.KOEN = Tb.CodProveedor and Trc.KOPR = Tb.Codigo" & vbCrLf &
+                           "Inner Join MAEPR Mp On Mp.KOPR = Tb.Codigo" & vbCrLf &
+                           "Where Tb.CantComprar > 0 And Tb.CodSucProveedor = '" & _Suen & "'" & vbCrLf &
+                           "And Tb.CodProveedor = '" & _Koen & "' And Tb.OccGenerada = 0 And Comprar = 1" & vbCrLf &
+                           _Condicion & vbCrLf &
+                           "Order by " & _Orden_Codigo & "" & vbCrLf &
+                           vbCrLf &
+                           "Select * From MAEIMLI Where 1<0" & vbCrLf &
+                           "Select * From MAEDTLI Where 1 < 0" & vbCrLf &
+                           "Select 'Documento generado desde Asistente de compras BakApp' as OBDO"
 
         ElseIf Rd_Costo_Ultimo_Documento_Seleccionado.Checked Then
 
@@ -2019,7 +2022,7 @@ Public Class Frm_01_Asis_Compra_Resultados
                             '' As ENDO,'' As SUENDO,
                             GetDate() As FEEMLI,'' As TIDO,'' As NUDO,'' As NULIDO,0 As CantUd1_Dori,0 As CantUd2_Dori,'' As OBSERVA,
                             0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,
-							0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta
+							0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta" & _CpoCodOrden & "
                             From " & _Nombre_Tbl_Paso_Informe & "
                             Inner Join MAEPR Mp On Mp.KOPR = Codigo
                             Where

@@ -114,6 +114,10 @@
         Consulta_Sql = "Select Top 20 * From " & _Global_BaseBk & "Zw_Demonio_FacAuto Where Facturar = 1"
         Dim _Tbl_Doc_Facturar As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql, False)
 
+        If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+            Log_Registro += _Sql.Pro_Error & vbCrLf
+        End If
+
         If CBool(_Tbl_Doc_Facturar.Rows.Count) Then
 
             Dim _Filtro As String = Generar_Filtro_IN(_Tbl_Doc_Facturar, "", "Id", True, False, "")
@@ -149,7 +153,11 @@
                     _Idmaeedo_Fcv = _Mensaje.Id
 
                     Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Fcv
-                    Dim _Row_Factura As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+                    Dim _Row_Factura As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
+
+                    If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                        Log_Registro += _Sql.Pro_Error & vbCrLf
+                    End If
 
                     Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito
                     _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Modalidad, _Idmaeedo_Fcv)
