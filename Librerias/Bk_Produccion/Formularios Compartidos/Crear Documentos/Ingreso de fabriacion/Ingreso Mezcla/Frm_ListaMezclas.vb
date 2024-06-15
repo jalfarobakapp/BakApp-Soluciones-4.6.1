@@ -324,6 +324,15 @@ Public Class Frm_ListaMezclas
             End With
 
             Consulta_sql = "Select * From ZNUEVA_PRODUCCIOND Where IDPOTL = " & _Idpotl
+
+            Consulta_sql = "Select Distinct Znpt.*,NOKOPR,CODNOMEN,DESCRIPTOR,PNPE.CANTIDAD,PNPE.UDAD " & vbCrLf &
+                           "From ZNUEVA_PRODUCCIOND Znpd" & vbCrLf &
+                           "Inner Join ZNUEVA_PRODUCCIONT Znpt On Znpd.NUMERO = Znpt.NUMERO" & vbCrLf &
+                           "Left Join MAEPR On KOPR = Znpt.CODIGO" & vbCrLf &
+                           "Inner Join POTD On POTD.IDPOTL = Znpd.IDPOTL And NIVEL = 1 and Znpt.CODIGO = POTD.CODIGO And POTD.CODNOMEN is not null" & vbCrLf &
+                           "Inner Join PNPE On PNPE.CODIGO = POTD.CODNOMEN" & vbCrLf &
+                           "Where Znpd.IDPOTL = " & _Idpotl
+
             Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
             If Not CBool(_Tbl.Rows.Count) Then
@@ -333,16 +342,16 @@ Public Class Frm_ListaMezclas
 
             For Each _Fl_potl As DataRow In _Tbl.Rows
 
-                Dim _Codigomz As String = _Fl_potl.Item("CODIGOMZ")
-                Dim _Formulamz As String = _Fl_potl.Item("FORMULAMZ")
+                Dim _Codigomz As String = _Fl_potl.Item("CODIGO") '_Fl_potl.Item("CODIGOMZ")
+                Dim _Formulamz As String = _Fl_potl.Item("CODNOMEN") '_Fl_potl.Item("FORMULAMZ")
 
-                Consulta_sql = "Select KOPR,NOKOPR From MAEPR Where KOPR = '" & _Codigomz & "'"
-                Dim _Row_Maepr As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                'Consulta_sql = "Select KOPR,NOKOPR From MAEPR Where KOPR = '" & _Codigomz & "'"
+                'Dim _Row_Maepr As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-                Consulta_sql = "Select * From PNPE Where CODIGO = '" & _Formulamz & "'"
-                Dim _Row_Pnpe As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                'Consulta_sql = "Select * From PNPE Where CODIGO = '" & _Formulamz & "'"
+                'Dim _Row_Pnpe As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-                Dim _Factor As Double = _Row_Potl.Item("FABRICAR") / _Row_Pnpe.Item("CANTIDAD")
+                Dim _Factor As Double = _Row_Potl.Item("FABRICAR") / _Fl_potl.Item("CANTIDAD") ' _Row_Pnpe.Item("CANTIDAD")
                 Dim _Fab As String = De_Num_a_Tx_01(_Factor,, 5)
 
                 Dim _Zw_Pdp_CPT_MzDet As New Zw_Pdp_CPT_MzDet
@@ -356,13 +365,13 @@ Public Class Frm_ListaMezclas
                     .Idpote_Otm = _Cl_Mezcla.Zw_Pdp_CPT_MzEnc.Idpote_Otm
                     .Idpotl_Otm = _Cl_Mezcla.Zw_Pdp_CPT_MzEnc.Idpotl_Otm
                     .CodFuncionario = FUNCIONARIO
-                    .Codigo = _Row_Maepr.Item("KOPR")
-                    .Descripcion = _Row_Maepr.Item("NOKOPR").ToString.Trim
-                    .Codnomen = _Row_Pnpe.Item("CODIGO")
-                    .Descriptor = _Row_Pnpe.Item("DESCRIPTOR").ToString.Trim
-                    .Cantnomen = _Row_Pnpe.Item("CANTIDAD")
-                    .Udad = _Row_Pnpe.Item("UDAD")
-                    .CantFabricar = _Row_Potl.Item("FABRICAR")
+                    .Codigo = _Fl_potl.Item("CODIGO") '_Row_Maepr.Item("KOPR")
+                    .Descripcion = _Fl_potl.Item("NOKOPR").ToString.Trim '_Row_Maepr.Item("NOKOPR").ToString.Trim
+                    .Codnomen = _Fl_potl.Item("CODNOMEN") '_Row_Pnpe.Item("CODIGO")
+                    .Descriptor = _Fl_potl.Item("DESCRIPTOR").ToString.Trim ''_Row_Pnpe.Item("DESCRIPTOR").ToString.Trim
+                    .Cantnomen = _Fl_potl.Item("CANTIDAD") ''_Row_Pnpe.Item("CANTIDAD")
+                    .Udad = _Fl_potl.Item("UDAD") '_Row_Pnpe.Item("UDAD")
+                    .CantFabricar = _Fl_potl.Item("CANTIDADF") '_Row_Potl.Item("FABRICAR")
                     .CantFabricada = 0
 
                     _Cl_Mezcla.Ls_Zw_Pdp_CPT_MzDet.Add(_Zw_Pdp_CPT_MzDet)
