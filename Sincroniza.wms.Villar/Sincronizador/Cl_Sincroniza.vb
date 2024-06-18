@@ -144,6 +144,8 @@ Public Class Cl_Sincroniza
 
                 If _Mensaje.EsCorrecto Then
 
+                    _DocEmitir = _Cl_Stmp.Zw_Stmp_Enc.DocEmitir
+
                     _Mensaje.Detalle += ", Nota de venta #" & _Nudo
                     Sb_AddToLog("Sincronizando notas", _Mensaje.Detalle, Txt_Log)
 

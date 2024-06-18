@@ -402,7 +402,7 @@ Public Class Frm_Stmp_Listado
 
     End Sub
 
-    Function Fx_Entregar(_CodFuncionario_Entrega As String) As LsValiciones.Mensajes
+    Function Fx_Entregar(_CodFuncionario_Entrega As String, _Numero As String) As LsValiciones.Mensajes
 
         Timer_Monitoreo.Stop()
 
@@ -410,10 +410,16 @@ Public Class Frm_Stmp_Listado
 
         Try
 
-            Dim _Numero As String
+            Dim _Aceptar As Boolean
 
-            Dim _Aceptar As Boolean = InputBox_Bk(Me, "Ingrese el numero de documento a cerrar" & vbCrLf & "El formato debe ser Ejemplo: FCV2365",
+            If Not String.IsNullOrEmpty(_Numero) Then
+                _Aceptar = True
+            End If
+
+            If Not _Aceptar Then
+                _Aceptar = InputBox_Bk(Me, "Ingrese el numero de documento a cerrar" & vbCrLf & "El formato debe ser Ejemplo: FCV2365",
                                                   "Entregar mercadería", _Numero, False, _Tipo_Mayus_Minus.Normal, 15, True, _Tipo_Imagen.Barra,,,,,,, False)
+            End If
 
             If Not _Aceptar Then
                 _Mensaje.Detalle = "Acción cancelada"
@@ -421,9 +427,9 @@ Public Class Frm_Stmp_Listado
                 Throw New System.Exception("An exception has occurred.")
             End If
 
-            If Not _Numero.Contains("FCV") And Not _Numero.Contains("GDV") And Not _Numero.Contains("BLV") Then
+            If Not _Numero.Contains("FCV") And Not _Numero.Contains("GDV") And Not _Numero.Contains("GDP") And Not _Numero.Contains("BLV") Then
                 _Mensaje.Detalle = "Validación"
-                Throw New System.Exception("Debe indicar si el documento es BLV, FCV o GDV")
+                Throw New System.Exception("Debe indicar si el documento es BLV, FCV o (GDV/GDP)")
             End If
 
             Dim _Tido As String = Mid(_Numero, 1, 3)
@@ -457,6 +463,7 @@ Public Class Frm_Stmp_Listado
             If MessageBoxEx.Show(Me, "¿Confirma el documento " & _Tido & "-" & _Nudo & "?",
                                  "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
                 _Mensaje.Detalle = "Validación"
+                _Mensaje.Cancelado = True
                 Throw New System.Exception("Acción cancelada por el usuario")
             End If
 
@@ -481,7 +488,7 @@ Public Class Frm_Stmp_Listado
 
         If Not _Mensaje.EsCorrecto And Not _Mensaje.Cancelado Then
             MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
-            _Mensaje = Fx_Entregar(_CodFuncionario_Entrega)
+            _Mensaje = Fx_Entregar(_CodFuncionario_Entrega, "")
         End If
 
         Return _Mensaje
@@ -906,6 +913,8 @@ Public Class Frm_Stmp_Listado
 
                     LabelItem1.Text = "Opciones (Id: " & _Idmaeedo & ")"
 
+                    Btn_Mnu_EntregarMercaderia.Visible = (Super_TabS.SelectedTab.Name = "Tab_Facturadas")
+
                     ShowContextMenu(Menu_Contextual_01_Opciones_Documento)
 
                 End If
@@ -996,23 +1005,9 @@ Public Class Frm_Stmp_Listado
 
     Private Sub Btn_EntregarMercaderia_Click(sender As Object, e As EventArgs) Handles Btn_EntregarMercaderia.Click
 
-        'Dim _Validar As Boolean
-        'Dim _RowUsuario As DataRow
-
-        'Dim Fm As New Frm_ValidarPermiso(Frm_ValidarPermiso.Tipo_Accion.Validar_Permiso, "Stem0003", True, False)
-        'Fm.Pro_Cerrar_Automaticamente = True
-        'Fm.ShowDialog(Me)
-        '_Validar = Fm.Pro_Permiso_Aceptado
-        '_RowUsuario = Fm.Pro_RowUsuario
-        'Fm.Dispose()
-
-        'If Not _Validar Then
-        '    Return
-        'End If
-
         Dim _Mensaje As LsValiciones.Mensajes
 
-        _Mensaje = Fx_Entregar(FUNCIONARIO)
+        _Mensaje = Fx_Entregar(FUNCIONARIO, "")
 
         If _Mensaje.EsCorrecto Then
             Sb_Actualizar_Grilla()
@@ -1233,4 +1228,36 @@ Public Class Frm_Stmp_Listado
 
     End Sub
 
+    Private Sub Btn_Mnu_EntregarMercaderia_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_EntregarMercaderia.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+
+        Dim _IdMaeedo As Integer = _Fila.Cells("IDMAEEDO").Value
+        Dim _TidoGen = _Fila.Cells("TidoGen").Value
+        Dim _NudoGen = _Fila.Cells("NudoGen").Value
+
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        _Mensaje = Fx_Entregar(FUNCIONARIO, _TidoGen & _NudoGen)
+
+        If _Mensaje.EsCorrecto Then
+            Sb_Actualizar_Grilla()
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        End If
+
+    End Sub
+
+    Private Sub LabelItem1_Click(sender As Object, e As EventArgs) Handles LabelItem1.Click
+        With Grilla
+            Try
+                Dim Copiar = .Rows(.CurrentRow.Index).Cells("Id").Value
+                Clipboard.SetText(Copiar)
+
+                ToastNotification.Show(Me, "El ID esta en el portapapeles", Btn_Copiar.Image,
+                                       2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
+            Catch ex As Exception
+                MessageBoxEx.Show(Me, ex.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            End Try
+        End With
+    End Sub
 End Class
