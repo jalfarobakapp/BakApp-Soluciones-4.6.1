@@ -37,11 +37,13 @@ Public Class Frm_Fabricaciones
         Sb_Actualizar_Grilla()
         Dtp_Fecha_Ingreso.Value = FechaDelServidor()
 
-        Btn_Grabar.Enabled = Not (CBool(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpotl_New))
-        Btn_IngresarNuevaFabricacion.Enabled = Not (CBool(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpotl_New))
-        Dtp_Fecha_Ingreso.Enabled = Not (CBool(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpotl_New))
+        Dim _Fabricada As Boolean = CBool(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idmaeddo)
 
-        If Not (CBool(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpotl_New)) Then
+        Btn_Grabar.Enabled = Not _Fabricada
+        Btn_IngresarNuevaFabricacion.Enabled = Not _Fabricada
+        Dtp_Fecha_Ingreso.Enabled = Not _Fabricada
+
+        If Not _Fabricada Then
             Dtp_Fecha_Ingreso.Value = _Cl_Mezcla.Zw_Pdp_CPT_MzDet.FechaCreacion
         End If
 
@@ -332,12 +334,17 @@ Public Class Frm_Fabricaciones
 
         Dim _Mensaje As LsValiciones.Mensajes
 
-        _Mensaje = Fx_Crear_OT()
+        ' Si no tiene Idpote se crea la OT
+        If _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpote_New = 0 Then
 
-        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            _Mensaje = Fx_Crear_OT()
 
-        If Not _Mensaje.EsCorrecto Then
-            Return
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+
+            If Not _Mensaje.EsCorrecto Then
+                Return
+            End If
+
         End If
 
         _Mensaje = Fx_GrabarGRI(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpotl_New)
@@ -391,6 +398,7 @@ Public Class Frm_Fabricaciones
             _Mensaje.Detalle = "Creación de OT"
             _Mensaje.Mensaje = "Se creo la OT " & _Row_NewOT.Item("NUMOT")
             _Mensaje.Icono = MessageBoxIcon.Information
+            _Mensaje.Tag = _Row_NewOT
 
         Catch ex As Exception
             _Mensaje.Icono = MessageBoxIcon.Stop
@@ -443,8 +451,15 @@ Public Class Frm_Fabricaciones
                            "Where Id = " & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Id
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Pdp_CPT_MzEnc Set Estado = 'FABRI' Where Id = " & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Id_Enc
-            _Sql.Ej_consulta_IDU(Consulta_sql)
+            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros2(_Global_BaseBk & "Zw_Pdp_CPT_MzDet",
+                                                            "Id_Enc = " & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Id_Enc & " And Idmaeddo = 0")
+
+            If _Reg = 0 Then
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Pdp_CPT_MzEnc Set Estado = 'FABRI' Where Id = " & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Id_Enc
+                _Sql.Ej_consulta_IDU(Consulta_sql)
+
+            End If
 
             _Mensaje.EsCorrecto = True
             _Mensaje.Id = _Row_Maeddo.Item("IDMAEDDO")

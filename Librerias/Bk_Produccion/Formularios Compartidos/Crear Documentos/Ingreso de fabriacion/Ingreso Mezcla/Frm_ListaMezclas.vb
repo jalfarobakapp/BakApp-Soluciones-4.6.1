@@ -262,6 +262,8 @@ Public Class Frm_ListaMezclas
 
         Dim _Id_Enc As Integer = _Fila.Cells("Id").Value
         Dim _Referencia As String = _Fila.Cells("Referencia").Value
+        Dim _Nro_MZC As String = _Fila.Cells("Nro_MZC").Value
+        Dim _Numot_Otm As String = _Fila.Cells("Numot_Otm").Value
 
         Dim _RowNomenclatura As DataRow
 
@@ -273,15 +275,17 @@ Public Class Frm_ListaMezclas
         End If
 
         Dim Fm As New Frm_SelecProdMezclaFab(_Id_Enc)
-        Fm.Text = _Referencia
+        Fm.Text = "Nro: " & _Nro_MZC & " OTM: " & _Numot_Otm & ", " & _Referencia.Trim
         Fm.Cl_Mezcla = _Cl_Mezcla
         Fm.ShowDialog(Me)
         _RowNomenclatura = Fm.RowNomenclatura
         Fm.Dispose()
 
-        If IsNothing(_RowNomenclatura) Then
-            Return
-        End If
+        'If IsNothing(_RowNomenclatura) Then
+        '    Return
+        'End If
+
+        Sb_Actualizar_Grilla()
 
     End Sub
 

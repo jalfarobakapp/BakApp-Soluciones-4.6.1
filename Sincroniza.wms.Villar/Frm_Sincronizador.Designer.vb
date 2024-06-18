@@ -39,6 +39,7 @@ Partial Class Frm_Sincronizador
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Timer_Limpiar = New System.Windows.Forms.Timer(Me.components)
         Me.Lbl_DiasRevNVV = New DevComponents.DotNetBar.LabelX()
+        Me.Timer_AjustarFecha = New System.Windows.Forms.Timer(Me.components)
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dtp_FechaRevision, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -276,6 +277,10 @@ Partial Class Frm_Sincronizador
         Me.Lbl_DiasRevNVV.Tag = "1"
         Me.Lbl_DiasRevNVV.Text = "Días para revisar NVV hacia atras"
         '
+        'Timer_AjustarFecha
+        '
+        Me.Timer_AjustarFecha.Interval = 2000
+        '
         'Frm_Sincronizador
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -293,6 +298,7 @@ Partial Class Frm_Sincronizador
         Me.Controls.Add(Me.LabelX2)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
@@ -320,4 +326,5 @@ Partial Class Frm_Sincronizador
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Timer_Limpiar As Timer
     Friend WithEvents Lbl_DiasRevNVV As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Timer_AjustarFecha As Timer
 End Class

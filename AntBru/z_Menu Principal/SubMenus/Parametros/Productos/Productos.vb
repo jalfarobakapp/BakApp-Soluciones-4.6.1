@@ -62,9 +62,9 @@ Public Class Productos
 
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, Nro) Then
 
-            Dim Frm_UnificacionProducto As New Frm_UnificacionProducto
-            Frm_UnificacionProducto.ShowInTaskbar = False
-            Frm_UnificacionProducto.ShowDialog(Me)
+            Dim Fm As New Frm_UnificacionProducto
+            Fm.ShowInTaskbar = False
+            Fm.ShowDialog(Me)
 
         End If
 

@@ -32,6 +32,7 @@ Public Class Frm_Sincronizador
         CircularPgrs.IsRunning = False
 
         Timer_Limpiar.Interval = (1000 * 60) * 5
+        Timer_AjustarFecha.Interval = (1000 * 60) * 30
 
         Sb_Ejecutar_diablito()
 
@@ -89,6 +90,7 @@ Public Class Frm_Sincronizador
             Timer_Ejecutar.Interval = 1000 * 5
             Timer_Ejecutar.Start()
             Timer_Limpiar.Start()
+            Timer_AjustarFecha.Start()
             Sb_AddToLog("Sincronizar", "Sincronización en ejecución.", Txt_Log)
 
         Catch ex As Exception
@@ -135,6 +137,7 @@ Public Class Frm_Sincronizador
         _Cl_Sincroniza.Sb_Ejecutar_Revision(Txt_Log, _FechaRevision)
         _Cl_Sincroniza.Sb_MarcarFacturadasPorFuera(Txt_Log, _FechaRevision)
         _Cl_Sincroniza.Sb_RevisarCanceladasLiberadas(Txt_Log, _FechaRevision)
+        _Cl_Sincroniza.Sb_RevisarRezagadasSinFuncionarioQueFactura(Txt_Log)
 
         Switch_Sincronizacion.Value = True
         CircularPgrs.IsRunning = True
@@ -179,4 +182,7 @@ Public Class Frm_Sincronizador
         Timer_Limpiar.Start()
     End Sub
 
+    Private Sub Timer_AjustarFecha_Tick(sender As Object, e As EventArgs) Handles Timer_AjustarFecha.Tick
+        Dtp_FechaRevision.Value = Now.Date
+    End Sub
 End Class

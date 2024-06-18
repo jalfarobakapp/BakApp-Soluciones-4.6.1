@@ -450,6 +450,8 @@ Public Class Frm_UnificacionProducto
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
         LimpiarTxt()
         Sb_Formato_Generico_Grilla(GrillaProductosCambiar, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
 
     Private Sub BtnCreaProducClassic_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnCreaProducClassic.Click

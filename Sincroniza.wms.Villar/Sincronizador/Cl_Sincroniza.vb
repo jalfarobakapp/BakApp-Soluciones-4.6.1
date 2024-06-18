@@ -402,7 +402,6 @@ Public Class Cl_Sincroniza
 
     End Sub
 
-
     Sub Sb_RevisarCanceladasLiberadas(Txt_Log As Object, _FechaRevision As DateTime)
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Estado = 'CANCE' And CONVERT(varchar, FechaCreacion, 112) = '" & Format(_FechaRevision, "yyyyMMdd") & "'"
@@ -437,6 +436,42 @@ Public Class Cl_Sincroniza
             End If
 
             'End If
+
+        Next
+
+    End Sub
+
+    Sub Sb_RevisarRezagadasSinFuncionarioQueFactura(Txt_Log As Object)
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Facturar = 1 And Estado = 'COMPL' And EnvFacAutoBk = 0 And CodFuncionario_Factura = ''"
+        Dim _Tbl As DataTable = _SqlRandom.Fx_Get_Tablas(Consulta_sql)
+
+        For Each _Fila As DataRow In _Tbl.Rows
+
+            Dim _Id As Integer = _Fila.Item("Id")
+            Dim _DocEmitir As String = _Fila.Item("DocEmitir")
+            Dim _TipoPago As String = _Fila.Item("TipoPago")
+            Dim _Nudo As String = _Fila.Item("Nudo")
+            Dim _CodFuncionario_Factura As String
+
+            If _DocEmitir = "BLV" Or _DocEmitir = "FCV" Then
+                If _TipoPago = "Contado" Then
+                    _CodFuncionario_Factura = ConfiguracionLocal.Ls_FunFcvGdvAuto.Item(0).CodFuncionario
+                End If
+
+                If _TipoPago = "Credito" Then
+                    _CodFuncionario_Factura = ConfiguracionLocal.Ls_FunFcvGdvAuto.Item(1).CodFuncionario
+                End If
+            End If
+
+            If _DocEmitir = "GDV" Then
+                _CodFuncionario_Factura = ConfiguracionLocal.Ls_FunFcvGdvAuto.Item(2).CodFuncionario
+            End If
+
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set CodFuncionario_Factura = '" & _CodFuncionario_Factura & "' Where Id = " & _Id
+            _SqlRandom.Ej_consulta_IDU(Consulta_sql)
+
+            Sb_AddToLog("Sincronizando notas", "NVV " & _Nudo & " - Se marca funcionario que factura = '" & _CodFuncionario_Factura & "'", Txt_Log)
 
         Next
 
