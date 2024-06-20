@@ -542,7 +542,7 @@ Public Class Frm_Pagos_Documentos
             .Columns("FEEMDP").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
             .Columns("FEEMDP").DefaultCellStyle.Format = "dd/MM/yyyy"
 
-            .Columns("FEVEDP").HeaderText = "F.venci."
+            .Columns("FEVEDP").HeaderText = "F.vencimiento"
             .Columns("FEVEDP").Width = 80
             .Columns("FEVEDP").Visible = True
             .Columns("FEVEDP").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
@@ -1725,10 +1725,9 @@ Public Class Frm_Pagos_Documentos
                 '                             "¿Desea utilizar la Cta. Cte. del cliente?", "",
                 '                             MessageBoxButtons.YesNo,
                 '                             MessageBoxIcon.Error) = Windows.Forms.DialogResult.Yes Then
-
                 '    _Permiso_Pagar = Fx_Revisar_Credito_Cliente(_RowEntidad)
-
                 'End If
+
                 If Not Fx_Permitir_Grabar_Sin_Pagar(_RowEntidad) Then
                     Return
                 End If
@@ -2205,17 +2204,26 @@ Public Class Frm_Pagos_Documentos
         Dim _EnCurso_Pagare As Double
         Dim _Encurso_Total As Double = _TotalBruto
 
+        Dim _Utilizar_NVV_En_Credito_X_Cliente As Boolean = _Global_Row_Configuracion_General.Item("Utilizar_NVV_En_Credito_X_Cliente")
+
+        'Dim Fm_D As New Frm_InfoEnt_Deudas_Doc_Comerciales(_RowEntidad, _Encurso_Total, 0, 0, 0, True)
+        'Fm_D.Pro_Fun_Auto_Cupo_Exe = _Fun_Auto_Cupo_Exe
+        '_Autorizar_Venta_Con_Cupo_Exedido = Fm_D.Pro_Autorizar_Venta_Con_Cupo_Exedido
+        '_Crsd_Disponible = Fm_D.Pro_Crsd_Disponible
+        '_Crto_Disponible = Fm_D.Pro_Crto_Disponible
+        'Fm_D.Dispose()
+
         Dim Fm_D As New Frm_InfoEnt_Deudas_Doc_Comerciales(_RowEntidad,
                                                            _Encurso_Total,
                                                            _EnCurso_Cheque,
                                                            _EnCurso_Letra,
-                                                           _EnCurso_Pagare)
+                                                           _EnCurso_Pagare,
+                                                           _Utilizar_NVV_En_Credito_X_Cliente)
 
-        Dim _Credito_Cheque,
-            _Credito_Cta_Cte As Double
+        Dim _Credito_Cheque As Double = Fm_D.Pro_Crch_Disponible
+        Dim _Credito_Cta_Cte As Double = Fm_D.Pro_Crsd_Disponible
 
-        _Credito_Cheque = Fm_D.Pro_Crch_Disponible
-        _Credito_Cta_Cte = Fm_D.Pro_Crsd_Disponible
+        Dim _Crto_Disponible As Double = Fm_D.Pro_Crto_Disponible
 
         If _Credito_Cheque < 0 Then
 
@@ -2277,9 +2285,9 @@ Public Class Frm_Pagos_Documentos
 
 
             If MessageBoxEx.Show(Me, "Supera el límite de crédito Sin Documentar" & vbCrLf &
-                                        "Sobregiro: " & FormatCurrency(_Credito_Cta_Cte, 0) & vbCrLf & vbCrLf &
-                                        "¿Desea solicitar permiso para realizar esta acción?",
-                                        "¡Advertencia!", MessageBoxButtons.YesNo, MessageBoxIcon.Stop) = Windows.Forms.DialogResult.Yes Then
+                                     "Sobregiro: " & FormatCurrency(_Credito_Cta_Cte, 0) & vbCrLf & vbCrLf &
+                                     "¿Desea solicitar permiso para realizar esta acción?",
+                                     "¡Advertencia!", MessageBoxButtons.YesNo, MessageBoxIcon.Stop) = Windows.Forms.DialogResult.Yes Then
 
                 _Solicitar_Permiso = True
                 _CodPermiso_Necesita = "Ope00003"
@@ -2289,6 +2297,44 @@ Public Class Frm_Pagos_Documentos
             Return False
 
         End If
+
+        If _Crto_Disponible < 0 Then
+
+            _Crto_Disponible = (_Crto_Disponible * -1) - _Pago_Actual
+
+            If Fx_Tiene_Permiso(Me, "Bkp00033",, False) Then
+
+                If MessageBoxEx.Show(Me, "Supera el límite de crédito Disponible" & vbCrLf &
+                            "Sobregiro: " & FormatCurrency(_Crto_Disponible, 0) & vbCrLf & vbCrLf &
+                            "¿Desea continuar con la venta?",
+                            "¡Advertencia!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = Windows.Forms.DialogResult.Yes Then
+
+                    _Tiene_Permiso = True
+                    Return True
+
+                End If
+
+                _Solicitar_Permiso = False
+                Return False
+
+            End If
+
+
+            If MessageBoxEx.Show(Me, "Supera el límite de crédito Disponible" & vbCrLf &
+                                     "Sobregiro: " & FormatCurrency(_Crto_Disponible, 0) & vbCrLf & vbCrLf &
+                                     "¿Desea solicitar permiso para realizar esta acción?",
+                                     "¡Advertencia!", MessageBoxButtons.YesNo, MessageBoxIcon.Stop) = Windows.Forms.DialogResult.Yes Then
+
+                _Solicitar_Permiso = True
+                _CodPermiso_Necesita = "Bkp00033"
+
+            End If
+
+            Return False
+
+        End If
+
+
 
         If _NOTRAEDEUD Then
 

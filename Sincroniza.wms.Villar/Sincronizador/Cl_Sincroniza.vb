@@ -1,4 +1,5 @@
 ﻿Imports BkSpecialPrograms
+Imports BkSpecialPrograms.LsValiciones
 Public Class Cl_Sincroniza
 
     Dim _SqlRandom As New Class_SQL(Cadena_ConexionSQL_Server)
@@ -181,24 +182,6 @@ Public Class Cl_Sincroniza
                             If ConfiguracionLocal.Ls_ImpFormatos.Item(0).Imprimir Then
 
                                 With ConfiguracionLocal.Ls_ImpFormatos.Item(0)
-
-                                    _Mensaje = Fx_EnviarAImprimnirListaDeVerificacion(_Idmaeedoo, "NVV", _Nudo, True,
-                                                                                  ConfiguracionLocal.NombreEquipoImprime, .Impresora, .NombreFormato)
-
-                                End With
-
-                                Sb_AddToLog(_Mensaje.Detalle, _Mensaje.Detalle, Txt_Log)
-
-                            End If
-
-                        End If
-
-                        'Imprimir Despachos
-                        If _Tipo_wms.Contains("O") Then
-
-                            If ConfiguracionLocal.Ls_ImpFormatos.Item(1).Imprimir Then
-
-                                With ConfiguracionLocal.Ls_ImpFormatos.Item(1)
 
                                     _Mensaje = Fx_EnviarAImprimnirListaDeVerificacion(_Idmaeedoo, "NVV", _Nudo, True,
                                                                                   ConfiguracionLocal.NombreEquipoImprime, .Impresora, .NombreFormato)
@@ -449,10 +432,12 @@ Public Class Cl_Sincroniza
         For Each _Fila As DataRow In _Tbl.Rows
 
             Dim _Id As Integer = _Fila.Item("Id")
+            Dim _Idmaeedoo As Integer = _Fila.Item("Idmaeedo")
             Dim _DocEmitir As String = _Fila.Item("DocEmitir")
             Dim _TipoPago As String = _Fila.Item("TipoPago")
             Dim _Nudo As String = _Fila.Item("Nudo")
-            Dim _CodFuncionario_Factura As String
+            Dim _Accion As String = _Fila.Item("Accion")
+            Dim _CodFuncionario_Factura = String.Empty
 
             If _DocEmitir = "BLV" Or _DocEmitir = "FCV" Then
                 If _TipoPago = "Contado" Then
@@ -472,6 +457,26 @@ Public Class Cl_Sincroniza
             _SqlRandom.Ej_consulta_IDU(Consulta_sql)
 
             Sb_AddToLog("Sincronizando notas", "NVV " & _Nudo & " - Se marca funcionario que factura = '" & _CodFuncionario_Factura & "'", Txt_Log)
+
+            'Imprimir Despachos
+            If _Accion.Contains("O") Then
+
+                If ConfiguracionLocal.Ls_ImpFormatos.Item(1).Imprimir Then
+
+                    With ConfiguracionLocal.Ls_ImpFormatos.Item(1)
+
+                        Dim _Mensaje As New LsValiciones.Mensajes
+
+                        _Mensaje = Fx_EnviarAImprimnirListaDeVerificacion(_Idmaeedoo, "NVV", _Nudo, True,
+                                                                      ConfiguracionLocal.NombreEquipoImprime, .Impresora, .NombreFormato)
+                        Sb_AddToLog(_Mensaje.Detalle, _Mensaje.Detalle, Txt_Log)
+
+                    End With
+
+                End If
+
+            End If
+
 
         Next
 

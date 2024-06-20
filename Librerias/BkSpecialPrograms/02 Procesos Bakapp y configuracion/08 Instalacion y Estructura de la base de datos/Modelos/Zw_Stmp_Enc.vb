@@ -35,5 +35,6 @@ Public Class Zw_Stmp_Enc
     Public Property CodFuncionario_Factura As String
     Public Property ProblemaFac As Boolean
     Public Property Log_Error As String
+    Public Property CodFuncionario_MarcaFacturar As String
 
 End Class

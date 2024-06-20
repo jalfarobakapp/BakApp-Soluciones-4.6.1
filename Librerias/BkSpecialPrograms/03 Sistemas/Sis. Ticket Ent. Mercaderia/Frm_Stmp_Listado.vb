@@ -53,6 +53,8 @@ Public Class Frm_Stmp_Listado
 
     Sub Sb_Actualizar_Grilla()
 
+        Txt_Filtrar.Text = String.Empty
+
         Dim _Condicion As String = String.Empty
         Dim _Condicion2 As String = String.Empty
 
@@ -97,6 +99,8 @@ Public Class Frm_Stmp_Listado
                 _NudoGen = True
             Case "Tab_Cerradas"
                 _Condicion += vbCrLf & "And Estado = 'CERRA' And CONVERT(varchar, FechaCierre, 112) = '" & Format(Now.Date, "yyyyMMdd") & "'"
+                _TidoGen = True
+                _NudoGen = True
             Case "Tab_Nulas"
                 _Condicion += vbCrLf & "And Estado = 'NULO'"
         End Select
@@ -112,15 +116,42 @@ Public Class Frm_Stmp_Listado
                        "When 'NULO' Then 'Nula'" & vbCrLf &
                        "End As 'Estado_Str'," & vbCrLf &
                        "FechaCreacion As 'HoraCreacion'," & vbCrLf &
+                       "    -- Primero, verificamos si la duración total es menos de un minuto
+    CASE 
+        WHEN DATEDIFF(MINUTE, FechaCreacion, GETDATE()) = 0 THEN 'Menos de un minuto'
+        ELSE
+            -- Si no, construimos la cadena de duración condicionalmente
+            CASE 
+                WHEN DATEDIFF(DAY, FechaCreacion, GETDATE()) = 0 THEN ''
+                WHEN DATEDIFF(DAY, FechaCreacion, GETDATE()) = 1 THEN CAST(DATEDIFF(DAY, FechaCreacion, GETDATE()) AS VARCHAR) + ' día, '
+                ELSE CAST(DATEDIFF(DAY, FechaCreacion, GETDATE()) AS VARCHAR) + ' días, '
+            END +
+            CASE 
+                WHEN DATEDIFF(HOUR, FechaCreacion, GETDATE()) % 24 = 0 THEN ''
+                ELSE CAST(DATEDIFF(HOUR, FechaCreacion, GETDATE()) % 24 AS VARCHAR) + ' horas, '
+            END +
+            CASE 
+                WHEN DATEDIFF(MINUTE, FechaCreacion, GETDATE()) % 60 = 0 THEN ''
+                ELSE CAST(DATEDIFF(MINUTE, FechaCreacion, GETDATE()) % 60 AS VARCHAR) + ' minutos'
+            END
+    END AS Duracion," & vbCrLf &
+                       "CAST(0 As Int) As 'ItemxDoc'," & vbCrLf &
+                       "CAST(0 As Int) As 'CantUd1xDoc'," & vbCrLf &
                        "FechaPickeado As 'HoraPickeado'," & vbCrLf &
                        "FechaPlanificacion As 'HoraPlanificacion'" & vbCrLf &
+                       "Into #Paso" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Stmp_Enc Enc" & vbCrLf &
                        "Inner Join MAEEDO Edo On Edo.IDMAEEDO = Enc.Idmaeedo" & vbCrLf &
                        "Left Join MAEEN En On En.KOEN = Enc.Endo And En.SUEN = Enc.Suendo" & vbCrLf &
                        "Left Join TABFU FEnt On FEnt.KOFU = CodFuncionario_Entrega" & vbCrLf &
                        "Where 1 > 0" & vbCrLf & _Condicion & vbCrLf &
                        "And Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'" & vbCrLf &
-                       "Order by Tido,Nudo"
+                       "Update #Paso Set Estado_Str = Estado_Str+' hace: '+Duracion" & vbCrLf &
+                       "Where Estado In ('PREPA','INGRE','COMPL')" & vbCrLf &
+                       "Update #Paso Set ItemxDoc = (Select Count(*) From MAEDDO Ddo Where Ddo.IDMAEEDO = #Paso.Idmaeedo And PRCT = 0)" & vbCrLf &
+                       "Update #Paso Set CantUd1xDoc = (Select SUM(CAPRCO1) From MAEDDO Ddo Where Ddo.IDMAEEDO = #Paso.Idmaeedo And PRCT = 0)" & vbCrLf &
+                       "Select * From #Paso Order by Tido,Nudo" & vbCrLf &
+                       "Drop table #Paso"
 
         If _Tbas.Name = "Tab_Espera" Then
 
@@ -128,11 +159,14 @@ Public Class Frm_Stmp_Listado
 
         End If
 
-        _Tbl_Tickets_Stem = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _New_Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
+        _Dv = New DataView
+        _Dv.Table = _New_Ds.Tables("Table")
+        _Tbl_Tickets_Stem = _Dv.Table
 
         With Grilla
 
-            .DataSource = _Tbl_Tickets_Stem
+            .DataSource = _Dv
 
             OcultarEncabezadoGrilla(Grilla)
 
@@ -213,6 +247,13 @@ Public Class Frm_Stmp_Listado
             .Columns("HoraCreacion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
+            '.Columns("Duracion").Visible = _DocEmitir
+            '.Columns("Duracion").HeaderText = "Duración"
+            '.Columns("Duracion").ToolTipText = "Tiempo que ha transcurrido desde que se creo la entrega hasta ahora."
+            '.Columns("Duracion").Width = 80
+            '.Columns("Duracion").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
+
             .Columns("DocEmitir").Visible = _DocEmitir
             .Columns("DocEmitir").HeaderText = "D.E."
             .Columns("DocEmitir").ToolTipText = "Documento a emitir posteriormente (sugerido)"
@@ -226,6 +267,22 @@ Public Class Frm_Stmp_Listado
             '.Columns("NOKOEN").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
             .Columns("Estado_Str").Width = 210
             .Columns("Estado_Str").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("ItemxDoc").Visible = _DocEmitir
+            .Columns("ItemxDoc").HeaderText = "Items"
+            .Columns("ItemxDoc").ToolTipText = "Total de Items en el documento"
+            .Columns("ItemxDoc").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("ItemxDoc").Width = 40
+            .Columns("ItemxDoc").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("CantUd1xDoc").Visible = _DocEmitir
+            .Columns("CantUd1xDoc").HeaderText = "Cant."
+            .Columns("CantUd1xDoc").ToolTipText = "Total de las cantidades de la Unidad 1"
+            .Columns("CantUd1xDoc").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("CantUd1xDoc").Width = 40
+            .Columns("CantUd1xDoc").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("FechaPlanificacion").Visible = _FechaPlanificacion
@@ -987,7 +1044,8 @@ Public Class Frm_Stmp_Listado
                 Return
             End If
 
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Facturar = 1 Where Id = " & _Row.Item("Id")
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Facturar = 1,CodFuncionario_MarcaFacturar = '" & FUNCIONARIO & "'" & vbCrLf &
+                           "Where Id = " & _Row.Item("Id")
             If _Sql.Ej_consulta_IDU(Consulta_sql) Then
                 MessageBoxEx.Show(Me, "Documento marcado", "Marcar documento", MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
@@ -1259,5 +1317,40 @@ Public Class Frm_Stmp_Listado
                 MessageBoxEx.Show(Me, ex.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             End Try
         End With
+    End Sub
+
+    Private Sub Txt_Filtrar_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Filtrar.KeyDown
+        If e.KeyValue = Keys.Enter Then
+            Sb_Filtrar()
+        End If
+    End Sub
+
+    Sub Sb_Filtrar()
+        Try
+            If IsNothing(_Dv) Then Return
+
+            'If Txt_Filtrar.Text.Contains("#") Then
+            '    Txt_Filtrar.Text = Replace(Txt_Filtrar.Text, "#", "")
+            '    Txt_Filtrar.Text = "#Tk" & numero_(Txt_Filtrar.Text, 7)
+            'End If
+
+            _Dv.RowFilter = String.Format("Numero+Nudo+Endo+NOKOEN Like '%{0}%'", Txt_Filtrar.Text.Trim)
+            Sb_MarcarPendientes()
+
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, "Cuek!", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End Try
+    End Sub
+
+    Private Sub Txt_Filtrar_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Filtrar.ButtonCustom2Click
+        If String.IsNullOrWhiteSpace(Txt_Filtrar.Text) Then
+            Return
+        End If
+        Txt_Filtrar.Text = String.Empty
+        Sb_Filtrar()
+    End Sub
+
+    Private Sub LabelX1_Click(sender As Object, e As EventArgs) Handles LabelX1.Click
+        Sb_Filtrar()
     End Sub
 End Class

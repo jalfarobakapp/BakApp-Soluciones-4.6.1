@@ -183,6 +183,8 @@ Public Class Frm_Sincronizador
     End Sub
 
     Private Sub Timer_AjustarFecha_Tick(sender As Object, e As EventArgs) Handles Timer_AjustarFecha.Tick
+        Txt_Log.Text = String.Empty
         Dtp_FechaRevision.Value = Now.Date
+        Sb_AddToLog("Sincronizar", "Se actualiza la fecha: " & Dtp_FechaRevision.Value, Txt_Log)
     End Sub
 End Class

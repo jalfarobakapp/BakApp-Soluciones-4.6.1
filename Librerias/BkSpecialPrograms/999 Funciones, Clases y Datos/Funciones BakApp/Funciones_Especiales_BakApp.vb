@@ -1,7 +1,6 @@
 ﻿Imports System.IO
 Imports System.Security.Cryptography
 Imports BkSpecialPrograms.Bk_Migrar_Producto
-Imports BkSpecialPrograms.LsValiciones
 Imports DevComponents.DotNetBar
 Imports Newtonsoft.Json
 Public Module Funciones_Especiales_BakApp
@@ -5765,8 +5764,23 @@ Public Module Crear_Documentos_Desde_Otro
         Dim _NroRemota As String
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
+        Dim _DescripcionPermiso = _Sql.Fx_Trae_Dato(_Global_BaseBk & "ZW_Permisos", "DescripcionPermiso", "CodPermiso = '" & _CodPermiso & "'")
+        Dim _CodFuncionario_Autoriza = _Row_Usuario_Autoriza.Item("KOFU")
+        Dim _NomFuncionario_Autoriza = _Row_Usuario_Autoriza.Item("NOKOFU").ToString.Trim
+
         For Each _Fl As DataRow In _TblPermisos.Rows
             If _Fl.Item("CodPermiso") = _CodPermiso Then
+
+                If _CodPermiso = "Bkp00033" Then
+                    _Fl.Item("DescripcionPermiso") = _DescripcionPermiso
+                    _Fl.Item("CodFuncionario_Autoriza") = _CodFuncionario_Autoriza
+                    _Fl.Item("NomFuncionario_Autoriza") = _NomFuncionario_Autoriza
+                    _Fl.Item("Permiso_Presencial") = _Permiso_Presencial
+                    _Fl.Item("Solicitado_Por_Cadena") = False
+                    _Fl.Item("Necesita_Permiso") = True
+                    _Fl.Item("Autorizado") = True
+                End If
+
                 Return True
             End If
         Next
@@ -5774,10 +5788,6 @@ Public Module Crear_Documentos_Desde_Otro
         If Not IsNothing(_Rows_Info_Remota) Then
             _NroRemota = _Rows_Info_Remota.Item("NroRemota")
         End If
-
-        Dim _DescripcionPermiso = _Sql.Fx_Trae_Dato(_Global_BaseBk & "ZW_Permisos", "DescripcionPermiso", "CodPermiso = '" & _CodPermiso & "'")
-        Dim _CodFuncionario_Autoriza = _Row_Usuario_Autoriza.Item("KOFU")
-        Dim _NomFuncionario_Autoriza = _Row_Usuario_Autoriza.Item("NOKOFU").ToString.Trim
 
         Dim NewFila = _TblPermisos.NewRow
         With NewFila

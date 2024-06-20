@@ -47,6 +47,7 @@ Partial Class Frm_Stmp_Listado
         Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_VerDocumento = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Imprimir = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_EntregarMercaderia = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem3 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
         Me.Menu_Contextual_01_Opciones_AgregarTicket = New DevComponents.DotNetBar.ButtonItem()
@@ -61,7 +62,8 @@ Partial Class Frm_Stmp_Listado
         Me.CircularPgrs = New DevComponents.DotNetBar.Controls.CircularProgress()
         Me.Metro_Bar_Color = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
-        Me.Btn_Mnu_EntregarMercaderia = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_Filtrar = New DevComponents.DotNetBar.Controls.TextBoxX()
         CType(Me.Super_TabS, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
@@ -97,7 +99,7 @@ Partial Class Frm_Stmp_Listado
         Me.Super_TabS.ReorderTabsEnabled = True
         Me.Super_TabS.SelectedTabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
         Me.Super_TabS.SelectedTabIndex = 0
-        Me.Super_TabS.Size = New System.Drawing.Size(1141, 27)
+        Me.Super_TabS.Size = New System.Drawing.Size(551, 27)
         Me.Super_TabS.TabCloseButtonHot = Nothing
         Me.Super_TabS.TabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Super_TabS.TabIndex = 169
@@ -302,6 +304,13 @@ Partial Class Frm_Stmp_Listado
         Me.Btn_Imprimir.ImageAlt = CType(resources.GetObject("Btn_Imprimir.ImageAlt"), System.Drawing.Image)
         Me.Btn_Imprimir.Name = "Btn_Imprimir"
         Me.Btn_Imprimir.Text = "Imprimir"
+        '
+        'Btn_Mnu_EntregarMercaderia
+        '
+        Me.Btn_Mnu_EntregarMercaderia.Image = CType(resources.GetObject("Btn_Mnu_EntregarMercaderia.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_EntregarMercaderia.ImageAlt = CType(resources.GetObject("Btn_Mnu_EntregarMercaderia.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_EntregarMercaderia.Name = "Btn_Mnu_EntregarMercaderia"
+        Me.Btn_Mnu_EntregarMercaderia.Text = "Entregar mercadería (cerrar documento)"
         '
         'LabelItem3
         '
@@ -515,18 +524,48 @@ Partial Class Frm_Stmp_Listado
         Me.Lbl_Estatus.Name = "Lbl_Estatus"
         Me.Lbl_Estatus.Text = "LabelItem2"
         '
-        'Btn_Mnu_EntregarMercaderia
+        'LabelX1
         '
-        Me.Btn_Mnu_EntregarMercaderia.Image = CType(resources.GetObject("Btn_Mnu_EntregarMercaderia.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_EntregarMercaderia.ImageAlt = CType(resources.GetObject("Btn_Mnu_EntregarMercaderia.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_EntregarMercaderia.Name = "Btn_Mnu_EntregarMercaderia"
-        Me.Btn_Mnu_EntregarMercaderia.Text = "Entregar mercadería (cerrar documento)"
+        Me.LabelX1.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX1.ForeColor = System.Drawing.Color.Black
+        Me.LabelX1.Image = CType(resources.GetObject("LabelX1.Image"), System.Drawing.Image)
+        Me.LabelX1.ImagePosition = DevComponents.DotNetBar.eImagePosition.Right
+        Me.LabelX1.ImageTextSpacing = 3
+        Me.LabelX1.Location = New System.Drawing.Point(576, 17)
+        Me.LabelX1.Name = "LabelX1"
+        Me.LabelX1.Size = New System.Drawing.Size(57, 23)
+        Me.LabelX1.TabIndex = 174
+        Me.LabelX1.Text = "Buscar"
+        '
+        'Txt_Filtrar
+        '
+        Me.Txt_Filtrar.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Filtrar.Border.Class = "TextBoxBorder"
+        Me.Txt_Filtrar.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Filtrar.ButtonCustom2.Image = CType(resources.GetObject("Txt_Filtrar.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Filtrar.ButtonCustom2.Visible = True
+        Me.Txt_Filtrar.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Filtrar.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Filtrar.Location = New System.Drawing.Point(639, 17)
+        Me.Txt_Filtrar.Name = "Txt_Filtrar"
+        Me.Txt_Filtrar.PreventEnterBeep = True
+        Me.Txt_Filtrar.Size = New System.Drawing.Size(508, 22)
+        Me.Txt_Filtrar.TabIndex = 173
         '
         'Frm_Stmp_Listado
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1204, 630)
+        Me.Controls.Add(Me.LabelX1)
+        Me.Controls.Add(Me.Txt_Filtrar)
         Me.Controls.Add(Me.CircularPgrs)
         Me.Controls.Add(Me.Chk_Monitorear)
         Me.Controls.Add(Me.Super_TabS)
@@ -588,4 +627,6 @@ Partial Class Frm_Stmp_Listado
     Friend WithEvents Metro_Bar_Color As DevComponents.DotNetBar.Metro.MetroStatusBar
     Friend WithEvents Lbl_Estatus As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Btn_Mnu_EntregarMercaderia As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_Filtrar As DevComponents.DotNetBar.Controls.TextBoxX
 End Class
