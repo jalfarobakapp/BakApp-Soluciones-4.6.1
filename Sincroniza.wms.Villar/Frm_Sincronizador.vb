@@ -135,7 +135,7 @@ Public Class Frm_Sincronizador
 
         _Cl_Sincroniza.Sb_Ejecutar_Revision_IncorporarNVVAutomaticamenteAStem(Txt_Log, _FechaDesde, _FechaHasta)
         _Cl_Sincroniza.Sb_Ejecutar_Revision(Txt_Log, _FechaRevision)
-        _Cl_Sincroniza.Sb_MarcarFacturadasPorFuera(Txt_Log, _FechaRevision)
+        _Cl_Sincroniza.Sb_MarcarFacturadasPorFuera(Txt_Log)
         _Cl_Sincroniza.Sb_RevisarCanceladasLiberadas(Txt_Log, _FechaRevision)
         _Cl_Sincroniza.Sb_RevisarRezagadasSinFuncionarioQueFactura(Txt_Log)
 

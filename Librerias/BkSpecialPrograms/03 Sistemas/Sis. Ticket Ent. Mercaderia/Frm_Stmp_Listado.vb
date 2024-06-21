@@ -53,7 +53,7 @@ Public Class Frm_Stmp_Listado
 
     Sub Sb_Actualizar_Grilla()
 
-        Txt_Filtrar.Text = String.Empty
+        'Txt_Filtrar.Text = String.Empty
 
         Dim _Condicion As String = String.Empty
         Dim _Condicion2 As String = String.Empty
@@ -128,29 +128,58 @@ Public Class Frm_Stmp_Listado
             END +
             CASE 
                 WHEN DATEDIFF(HOUR, FechaCreacion, GETDATE()) % 24 = 0 THEN ''
-                ELSE CAST(DATEDIFF(HOUR, FechaCreacion, GETDATE()) % 24 AS VARCHAR) + ' horas, '
+                WHEN DATEDIFF(HOUR, FechaCreacion, GETDATE()) % 24 = 1 THEN CAST(DATEDIFF(HOUR, FechaCreacion, GETDATE()) % 24 AS VARCHAR) + ' hr, '
+                ELSE CAST(DATEDIFF(HOUR, FechaCreacion, GETDATE()) % 24 AS VARCHAR) + ' hrs, '
             END +
             CASE 
                 WHEN DATEDIFF(MINUTE, FechaCreacion, GETDATE()) % 60 = 0 THEN ''
-                ELSE CAST(DATEDIFF(MINUTE, FechaCreacion, GETDATE()) % 60 AS VARCHAR) + ' minutos'
+                ELSE CAST(DATEDIFF(MINUTE, FechaCreacion, GETDATE()) % 60 AS VARCHAR) + ' min.'
             END
     END AS Duracion," & vbCrLf &
                        "CAST(0 As Int) As 'ItemxDoc'," & vbCrLf &
                        "CAST(0 As Int) As 'CantUd1xDoc'," & vbCrLf &
                        "FechaPickeado As 'HoraPickeado'," & vbCrLf &
-                       "FechaPlanificacion As 'HoraPlanificacion'" & vbCrLf &
+                       "FechaPlanificacion As 'HoraPlanificacion'," & vbCrLf &
+                       "EdoF.LAHORA As 'FechaFactu'," & vbCrLf &
+                       "Convert(datetime, (EdoF.HORAGRAB*1.0/3600)/24) As 'HoraFactu'" & vbCrLf &
                        "Into #Paso" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Stmp_Enc Enc" & vbCrLf &
                        "Inner Join MAEEDO Edo On Edo.IDMAEEDO = Enc.Idmaeedo" & vbCrLf &
                        "Left Join MAEEN En On En.KOEN = Enc.Endo And En.SUEN = Enc.Suendo" & vbCrLf &
                        "Left Join TABFU FEnt On FEnt.KOFU = CodFuncionario_Entrega" & vbCrLf &
+                       "Left Join MAEEDO EdoF on EdoF.IDMAEEDO = Enc.IdmaeedoGen" & vbCrLf &
                        "Where 1 > 0" & vbCrLf & _Condicion & vbCrLf &
                        "And Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'" & vbCrLf &
                        "Update #Paso Set Estado_Str = Estado_Str+' hace: '+Duracion" & vbCrLf &
                        "Where Estado In ('PREPA','INGRE','COMPL')" & vbCrLf &
                        "Update #Paso Set ItemxDoc = (Select Count(*) From MAEDDO Ddo Where Ddo.IDMAEEDO = #Paso.Idmaeedo And PRCT = 0)" & vbCrLf &
                        "Update #Paso Set CantUd1xDoc = (Select SUM(CAPRCO1) From MAEDDO Ddo Where Ddo.IDMAEEDO = #Paso.Idmaeedo And PRCT = 0)" & vbCrLf &
-                       "Select * From #Paso Order by Tido,Nudo" & vbCrLf &
+                       "UPDATE #Paso SET FechaFactu = DATEADD(HOUR, DATEPART(HOUR, HoraFactu)," &
+                            "DATEADD(MINUTE, DATEPART(MINUTE, HoraFactu)," &
+                            "DATEADD(SECOND, DATEPART(SECOND, HoraFactu)," &
+                            "DATEADD(MILLISECOND,DATEPART(MILLISECOND, HoraFactu)," &
+                            "CAST(FechaFactu AS DATETIME)))))" & vbCrLf &
+                       "Select *, 
+                           CASE 
+        WHEN DATEDIFF(MINUTE, FechaFactu, GETDATE()) = 0 THEN 'Menos de un minuto'
+        ELSE
+            -- Si no, construimos la cadena de duración condicionalmente
+            CASE 
+                WHEN DATEDIFF(DAY, FechaFactu, GETDATE()) = 0 THEN ''
+                WHEN DATEDIFF(DAY, FechaFactu, GETDATE()) = 1 THEN CAST(DATEDIFF(DAY, FechaFactu, GETDATE()) AS VARCHAR) + ' día, '
+                ELSE CAST(DATEDIFF(DAY, FechaFactu, GETDATE()) AS VARCHAR) + ' días, '
+            END +
+            CASE 
+                WHEN DATEDIFF(HOUR, FechaFactu, GETDATE()) % 24 = 0 THEN ''
+                WHEN DATEDIFF(HOUR, FechaFactu, GETDATE()) % 24 = 1 THEN CAST(DATEDIFF(HOUR, FechaFactu, GETDATE()) % 24 AS VARCHAR) + ' hr, '
+                ELSE CAST(DATEDIFF(HOUR, FechaFactu, GETDATE()) % 24 AS VARCHAR) + ' hrs, '
+            END +
+            CASE 
+                WHEN DATEDIFF(MINUTE, FechaFactu, GETDATE()) % 60 = 0 THEN ''
+                ELSE CAST(DATEDIFF(MINUTE, FechaFactu, GETDATE()) % 60 AS VARCHAR) + ' min.'
+            END
+    END AS DuracionFac 
+                       From #Paso Order by Tido,Nudo" & vbCrLf &
                        "Drop table #Paso"
 
         If _Tbas.Name = "Tab_Espera" Then
@@ -344,10 +373,28 @@ Public Class Frm_Stmp_Listado
             .Columns("NudoGen").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
+            .Columns("FechaFactu").Visible = _TidoGen
+            .Columns("FechaFactu").HeaderText = "F.Factu."
+            .Columns("FechaFactu").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("FechaFactu").DefaultCellStyle.Format = "dd/MM/yyyy"
+            .Columns("FechaFactu").Width = 70
+            .Columns("FechaFactu").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("HoraFactu").Visible = _TidoGen
+            .Columns("HoraFactu").HeaderText = "H.Factu."
+            .Columns("HoraFactu").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("HoraFactu").DefaultCellStyle.Format = "HH:mm"
+            .Columns("HoraFactu").Width = 50
+            .Columns("HoraFactu").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
         End With
 
         Lbl_Estatus.Text = "Registros: " & _Tbl_Tickets_Stem.Rows.Count
         Me.Refresh()
+
+        Sb_Filtrar()
 
         If Not _MostrarImagenes Then
             Return
@@ -427,6 +474,7 @@ Public Class Frm_Stmp_Listado
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
 
         Dim _Idmaeedo As Integer = _Fila.Cells("Idmaeedo").Value
+        Dim _IdmaeedoGen As Integer = _Fila.Cells("IdmaeedoGen").Value
 
         Dim _Tbas = Super_TabS.SelectedTab
 
@@ -446,16 +494,21 @@ Public Class Frm_Stmp_Listado
 
         End If
 
-        If _Tbas.Name = "Tab_Completadas" Then
-
-            '_Fila.Cells("Facturar").Value = Not _Fila.Cells("Facturar").Value
-
+        If _Cabeza = "Nudo" And CBool(_Idmaeedo) Then
+            Me.Cursor = Cursors.WaitCursor
+            Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
         End If
 
-        If _Tbas.Name = "Tab_Entregadas" Then
-
-
+        If _Cabeza = "NudoGen" And CBool(_IdmaeedoGen) Then
+            Me.Cursor = Cursors.WaitCursor
+            Dim Fm As New Frm_Ver_Documento(_IdmaeedoGen, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
         End If
+
+        Me.Cursor = Cursors.Default
 
     End Sub
 

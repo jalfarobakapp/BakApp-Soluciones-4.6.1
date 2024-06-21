@@ -23,7 +23,7 @@ Detalle:
 select (case when (select loc from cn_f where cn_f.cont = i.cont) like 'CONS%' then 'PREDESPACHO'
 	else 'PENDIENTE'
 	end) as Status,
-i.CONT, i.tag, i.sku, p.sku_desc, i.qty, (select loc from cn_f where cn_f.cont = i.cont) as loc from iv_f i, pm_f p
+i.CONT, i.tag, i.sku, p.sku_desc, i.qty,Cast(i.qty As Float) As Saldo_qty, (select loc from cn_f where cn_f.cont = i.cont) as loc from iv_f i, pm_f p
 where i.sku = p.sku and i.owner = p.owner and i.pkg = p.pkg
 and i.whse_id = 'ALAMEDA'
 and ob_oid = @nv

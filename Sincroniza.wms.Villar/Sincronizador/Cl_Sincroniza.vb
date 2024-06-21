@@ -292,7 +292,7 @@ Public Class Cl_Sincroniza
 
     End Sub
 
-    Sub Sb_MarcarFacturadasPorFuera(Txt_Log As Object, _FechaRevision As DateTime)
+    Sub Sb_MarcarFacturadasPorFuera(Txt_Log As Object)
 
         _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
 
@@ -304,7 +304,7 @@ Public Class Cl_Sincroniza
                        "Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO" & vbCrLf &
                        "Inner Join MAEDDO DdoFcv on Ddo.IDMAEDDO = DdoFcv.IDRST And DdoFcv.ARCHIRST = 'MAEDDO'" & vbCrLf &
                        "Where Edo.IDMAEEDO In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Stmp_Enc " &
-                       "Where Estado In ('PREPA','COMPL') And CONVERT(varchar, FechaCreacion, 112) = '" & Format(_FechaRevision, "yyyyMMdd") & "')" & vbCrLf &
+                       "Where Estado In ('PREPA','COMPL'))" & vbCrLf &
                        "Order By Edo.TIDO,Edo.NUDO" & vbCrLf &
                         vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Estado = 'FACTU',Facturar = 1,IdmaeedoGen = Ps.IDMAEEDO_Fcv,TidoGen = Ps.TD,NudoGen = Ps.NUDO_Fcv" & vbCrLf &
