@@ -28,9 +28,9 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Me.Btn_Sectores = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Operadores = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Parejas = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_Plan = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Lbl_Nombre_Inventario = New DevComponents.DotNetBar.LabelX()
         Me.Line1 = New DevComponents.DotNetBar.Controls.Line()
-        Me.Btn_Plan = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.SuspendLayout()
         '
         'MetroTilePanel1
@@ -150,31 +150,6 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Me.Btn_Parejas.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_Parejas.TitleText = "BakApp"
         '
-        'Lbl_Nombre_Inventario
-        '
-        Me.Lbl_Nombre_Inventario.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Lbl_Nombre_Inventario.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Lbl_Nombre_Inventario.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Lbl_Nombre_Inventario.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Nombre_Inventario.Location = New System.Drawing.Point(32, 12)
-        Me.Lbl_Nombre_Inventario.Name = "Lbl_Nombre_Inventario"
-        Me.Lbl_Nombre_Inventario.Size = New System.Drawing.Size(525, 23)
-        Me.Lbl_Nombre_Inventario.TabIndex = 38
-        Me.Lbl_Nombre_Inventario.Text = "INVENTARIO: NOMBRE DEL INVENTARIO ACTIVO"
-        '
-        'Line1
-        '
-        Me.Line1.BackColor = System.Drawing.Color.White
-        Me.Line1.ForeColor = System.Drawing.Color.Black
-        Me.Line1.Location = New System.Drawing.Point(32, 34)
-        Me.Line1.Name = "Line1"
-        Me.Line1.Size = New System.Drawing.Size(740, 23)
-        Me.Line1.TabIndex = 39
-        Me.Line1.Text = "Line1"
-        '
         'Btn_Plan
         '
         Me.Btn_Plan.Image = CType(resources.GetObject("Btn_Plan.Image"), System.Drawing.Image)
@@ -201,6 +176,31 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Me.Btn_Plan.TileStyle.PaddingTop = 4
         Me.Btn_Plan.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_Plan.TitleText = "BakApp"
+        '
+        'Lbl_Nombre_Inventario
+        '
+        Me.Lbl_Nombre_Inventario.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Lbl_Nombre_Inventario.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_Nombre_Inventario.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Lbl_Nombre_Inventario.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_Nombre_Inventario.Location = New System.Drawing.Point(32, 12)
+        Me.Lbl_Nombre_Inventario.Name = "Lbl_Nombre_Inventario"
+        Me.Lbl_Nombre_Inventario.Size = New System.Drawing.Size(525, 23)
+        Me.Lbl_Nombre_Inventario.TabIndex = 38
+        Me.Lbl_Nombre_Inventario.Text = "INVENTARIO: NOMBRE DEL INVENTARIO ACTIVO"
+        '
+        'Line1
+        '
+        Me.Line1.BackColor = System.Drawing.Color.White
+        Me.Line1.ForeColor = System.Drawing.Color.Black
+        Me.Line1.Location = New System.Drawing.Point(32, 34)
+        Me.Line1.Name = "Line1"
+        Me.Line1.Size = New System.Drawing.Size(740, 23)
+        Me.Line1.TabIndex = 39
+        Me.Line1.Text = "Line1"
         '
         'Frm_Inv_Ctrl_Inventario
         '

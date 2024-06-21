@@ -1,12 +1,12 @@
 ﻿Imports System.Data.SqlClient
 Imports DevComponents.DotNetBar
 
-Public Class Cl_NewInventario
+Public Class Cl_Inventario
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-    Public Property Zw_TmpInv_History As New Zw_TmpInv_History
+    Public Property Zw_Inv_Inventario As New Zw_Inv_Inventario
 
     Public Sub New()
 
@@ -16,21 +16,21 @@ Public Class Cl_NewInventario
 
         Dim _Mensaje_Stem As New LsValiciones.Mensajes
 
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_TmpInv_History Where IdInventario = " & _Id
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Inv_Inventario Where Id = " & _Id
         Dim _Row_Enc As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        With Zw_TmpInv_History
+        With Zw_Inv_Inventario
 
             If IsNothing(_Row_Enc) Then
 
                 _Mensaje_Stem.EsCorrecto = False
-                _Mensaje_Stem.Mensaje = "No se encontro el registro en la tabla Zw_TmpInv_History con el Id " & _Id
+                _Mensaje_Stem.Mensaje = "No se encontro el registro en la tabla Zw_Inv_Inventario con el Id " & _Id
 
                 Return _Mensaje_Stem
 
             End If
 
-            .IdInventario = _Row_Enc.Item("IdInventario")
+            .Id = _Row_Enc.Item("Id")
             .Empresa = _Row_Enc.Item("Empresa")
             .Nombre_Empresa = _Row_Enc.Item("Nombre_Empresa")
             .Sucursal = _Row_Enc.Item("Sucursal")
@@ -71,9 +71,9 @@ Public Class Cl_NewInventario
 
             myTrans = Cn2.BeginTransaction()
 
-            With Zw_TmpInv_History
+            With Zw_Inv_Inventario
 
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_TmpInv_History " &
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Inv_Inventario " &
                                "(Ano,Mes,Dia,Fecha_Inventario,Empresa,Sucursal,Bodega,Nombre_Empresa,Nombre_Sucursal," &
                                "Nombre_Bodega,NombreInventario,FuncionarioCargo,NombreFuncionario,Estado) Values " &
                                "('" & .Ano & "','" & .Mes & "','" & .Dia & "','" & Format(.Fecha_Inventario, "yyyyMMdd") & "'" &
@@ -90,7 +90,7 @@ Public Class Cl_NewInventario
                 Comando.Transaction = myTrans
                 Dim dfd1 As System.Data.SqlClient.SqlDataReader = Comando.ExecuteReader()
                 While dfd1.Read()
-                    .IdInventario = dfd1("Identity")
+                    .Id = dfd1("Identity")
                 End While
                 dfd1.Close()
 
@@ -100,9 +100,9 @@ Public Class Cl_NewInventario
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Id = Zw_TmpInv_History.IdInventario
+            _Mensaje.Id = Zw_Inv_Inventario.Id
             _Mensaje.Detalle = "Documento grabado correctamente"
-            _Mensaje.Mensaje = "Se crea Inventario " & Zw_TmpInv_History.NombreInventario
+            _Mensaje.Mensaje = "Se crea Inventario " & Zw_Inv_Inventario.NombreInventario
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
@@ -111,7 +111,7 @@ Public Class Cl_NewInventario
             _Mensaje.Detalle = "Error al grabar"
             _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
-            Zw_TmpInv_History.IdInventario = 0
+            Zw_Inv_Inventario.Id = 0
 
             If Not IsNothing(myTrans) Then
                 myTrans.Rollback()
@@ -143,13 +143,13 @@ Public Class Cl_NewInventario
 
             myTrans = Cn2.BeginTransaction()
 
-            With Zw_TmpInv_History
+            With Zw_Inv_Inventario
 
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_TmpInv_History Set " & vbCrLf &
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Inv_Inventario Set " & vbCrLf &
                                "NombreInventario = '" & .NombreInventario & "'" & vbCrLf &
                                ",FuncionarioCargo = '" & .FuncionarioCargo & "'" & vbCrLf &
                                ",NombreFuncionario = '" & .NombreFuncionario & "'" & vbCrLf &
-                               "Where IdInventario = " & .IdInventario
+                               "Where IdInventario = " & .Id
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                 Comando.Transaction = myTrans
@@ -171,7 +171,7 @@ Public Class Cl_NewInventario
             _Mensaje.Detalle = "Error al grabar"
             _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
-            Zw_TmpInv_History.IdInventario = 0
+            Zw_Inv_Inventario.Id = 0
 
             If Not IsNothing(myTrans) Then
                 myTrans.Rollback()
@@ -191,7 +191,7 @@ Public Class Cl_NewInventario
 
         Try
 
-            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "ZW_TmpInvFotoInventario", "IdInventario = " & _IdInventario)
+            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_FotoInventario", "IdInventario = " & _IdInventario)
 
             If CBool(_Reg) Then
                 _Mensaje.Detalle = "Validación"
@@ -200,7 +200,7 @@ Public Class Cl_NewInventario
                                            "la anterior.")
             End If
 
-            With Zw_TmpInv_History
+            With Zw_Inv_Inventario
 
                 Consulta_sql = My.Resources._Procedimientos_Inv.Inv_Invetario_Creae_Foto_Stock
                 Consulta_sql = Replace(Consulta_sql, "#Ano#", .Ano)
@@ -211,7 +211,7 @@ Public Class Cl_NewInventario
                 Consulta_sql = Replace(Consulta_sql, "#Sucursal#", .Sucursal)
                 Consulta_sql = Replace(Consulta_sql, "#Bodega#", .Bodega)
                 Consulta_sql = Replace(Consulta_sql, "#IdInventario#", _IdInventario)
-                Consulta_sql = Replace(Consulta_sql, "ZW_TmpInvFotoInventario", _Global_BaseBk & "ZW_TmpInvFotoInventario")
+                Consulta_sql = Replace(Consulta_sql, "Zw_Inv_FotoInventario", _Global_BaseBk & "Zw_Inv_FotoInventario")
 
             End With
 
@@ -242,7 +242,7 @@ Public Class Cl_NewInventario
 
             _Mensaje.Detalle = "Eliminar Foto Stock"
 
-            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "ZW_TmpInvFotoInventario", "IdInventario = " & _IdInventario)
+            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_FotoInventario", "IdInventario = " & _IdInventario)
 
             If Not CBool(_Reg) Then
                 Throw New System.Exception("No se encontró ninguna Foto Stock en la base de datos para este inventario que pueda ser eliminada.")
@@ -266,7 +266,7 @@ Public Class Cl_NewInventario
                 Throw New System.Exception("Acción cancelada por el usuario, no se elimina la Foto Stock")
             End If
 
-            Consulta_sql = "Delete " & _Global_BaseBk & "ZW_TmpInvFotoInventario Where IdInventario = " & _IdInventario
+            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Inv_FotoInventario Where IdInventario = " & _IdInventario
 
             If Not _Sql.Ej_consulta_IDU(Consulta_sql) Then
                 _Mensaje.Detalle = "Error al tomar foto stock"

@@ -103,12 +103,12 @@ Public Class Frm_Inv_Inventarios
             Return
         End If
 
-        Dim Cl_Inventario As New Cl_NewInventario
+        Dim Cl_Inventario As New Cl_Inventario
         Cl_Inventario.Fx_Llenar_Zw_Inv_Inventario(0)
 
-        With Cl_Inventario.Zw_TmpInv_History
+        With Cl_Inventario.Zw_Inv_Inventario
 
-            .IdInventario = 0
+            .Id = 0
             .Empresa = _Row_Bodega.Item("EMPRESA")
             .Nombre_Empresa = _Row_Bodega.Item("RAZON").ToString.Trim
             .Sucursal = _Row_Bodega.Item("KOSU")

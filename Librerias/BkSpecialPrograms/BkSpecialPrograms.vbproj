@@ -135,6 +135,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Dll especiales\EASendMail.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus, Version=7.2.0.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EPPlus.7.2.0\lib\net462\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus.Interfaces, Version=6.1.1.0, Culture=neutral, PublicKeyToken=a694d7f3b0907a61, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EPPlus.Interfaces.6.1.1\lib\net462\EPPlus.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus.System.Drawing, Version=6.1.1.0, Culture=neutral, PublicKeyToken=2308d35469c9bac0, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EPPlus.System.Drawing.6.1.1\lib\net462\EPPlus.System.Drawing.dll</HintPath>
+    </Reference>
     <Reference Include="Excel, Version=3.1.0.0, Culture=neutral, PublicKeyToken=7b835b529fb706c3, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Dll especiales\Excel.dll</HintPath>
@@ -202,6 +211,9 @@
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.IO.RecyclableMemoryStream.3.0.0\lib\netstandard2.0\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\VisualBasic.PowerPacks.Vs.1.0.0\lib\Microsoft.VisualBasic.PowerPacks.Vs.dll</HintPath>
     </Reference>
@@ -234,6 +246,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Dll especiales\PdfSharp.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="SautinSoft.HtmlToRtf, Version=7.4.4.30, Culture=neutral, PublicKeyToken=bce916f184012969, processorArchitecture=MSIL">
       <HintPath>..\..\packages\sautinsoft.htmltortf.7.4.4.30\lib\net40\SautinSoft.HtmlToRtf.dll</HintPath>
     </Reference>
@@ -247,7 +260,11 @@
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.ConfigurationManager, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Configuration.ConfigurationManager.8.0.0\lib\net462\System.Configuration.ConfigurationManager.dll</HintPath>
@@ -821,7 +838,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Conceptos.vb" />
-    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Inventario.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Demonio_FacAuto.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Pdp_CPT_MzDet.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Pdp_CPT_MzDetIngFab.vb" />
@@ -839,15 +855,22 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stmp_Det.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stmp_DetPick.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_TblArbol_Asociaciones.vb" />
-    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_TmpInv_History.vb" />
-    <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\03 Parametros\Cl_NewInventario.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Inventario.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Ubicaciones.vb" />
+    <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\03 Parametros\Cl_Inventario.vb" />
     <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\03 Parametros\Frm_Inv_Inventarios.Designer.vb">
       <DependentUpon>Frm_Inv_Inventarios.vb</DependentUpon>
     </Compile>
     <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\03 Parametros\Frm_Inv_Inventarios.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Cl_Inventario.vb" />
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Ubicaciones\Cl_InvUbicacion.vb" />
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Ubicaciones\Frm_Inv_UbicacionesImporExcel.Designer.vb">
+      <DependentUpon>Frm_Inv_UbicacionesImporExcel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Ubicaciones\Frm_Inv_UbicacionesImporExcel.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Puntos Venta\Cl_Puntos.vb" />
     <Compile Include="03 Sistemas\Puntos Venta\Frm_ConfPuntosVta.Designer.vb">
       <DependentUpon>Frm_ConfPuntosVta.vb</DependentUpon>
@@ -1897,12 +1920,6 @@
     <Compile Include="03 Sistemas\Inventario\Inventario parcializado\Formularios\Frm_Crear_Guias_De_Ajuste_De_Stock.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Frm_Inv_Crear_Inventario.Designer.vb">
-      <DependentUpon>Frm_Inv_Crear_Inventario.vb</DependentUpon>
-    </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Frm_Inv_Crear_Inventario.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Operadores\Frm_Operadores.Designer.vb">
       <DependentUpon>Frm_Operadores.vb</DependentUpon>
     </Compile>
@@ -1939,16 +1956,10 @@
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Plan\Frm_Plan.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Zw_Inv_Sector.Designer.vb">
-      <DependentUpon>Zw_Inv_Sector.vb</DependentUpon>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Ubicaciones\Frm_Inv_Ubicaciones.Designer.vb">
+      <DependentUpon>Frm_Inv_Ubicaciones.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Zw_Inv_Sector.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Zw_Inv_Sector_vs_Ubicaciones.Designer.vb">
-      <DependentUpon>Zw_Inv_Sector_vs_Ubicaciones.vb</DependentUpon>
-    </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Zw_Inv_Sector_vs_Ubicaciones.vb">
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Ubicaciones\Frm_Inv_Ubicaciones.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Frm_Inv_Ctrl_Inventario.Designer.vb">
@@ -4660,6 +4671,9 @@
     <EmbeddedResource Include="03 Sistemas\Inventario\Inventario General\Formularios\03 Parametros\Frm_Inv_Inventarios.resx">
       <DependentUpon>Frm_Inv_Inventarios.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Ubicaciones\Frm_Inv_UbicacionesImporExcel.resx">
+      <DependentUpon>Frm_Inv_UbicacionesImporExcel.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Puntos Venta\Frm_ConfPuntosVta.resx">
       <DependentUpon>Frm_ConfPuntosVta.vb</DependentUpon>
     </EmbeddedResource>
@@ -5178,9 +5192,6 @@
     <EmbeddedResource Include="03 Sistemas\Inventario\Inventario parcializado\Formularios\Frm_Crear_Guias_De_Ajuste_De_Stock.resx">
       <DependentUpon>Frm_Crear_Guias_De_Ajuste_De_Stock.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Frm_Inv_Crear_Inventario.resx">
-      <DependentUpon>Frm_Inv_Crear_Inventario.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Operadores\Frm_Operadores.resx">
       <DependentUpon>Frm_Operadores.vb</DependentUpon>
     </EmbeddedResource>
@@ -5199,11 +5210,8 @@
     <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Plan\Frm_Plan.resx">
       <DependentUpon>Frm_Plan.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Zw_Inv_Sector.resx">
-      <DependentUpon>Zw_Inv_Sector.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Zw_Inv_Sector_vs_Ubicaciones.resx">
-      <DependentUpon>Zw_Inv_Sector_vs_Ubicaciones.vb</DependentUpon>
+    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Ubicaciones\Frm_Inv_Ubicaciones.resx">
+      <DependentUpon>Frm_Inv_Ubicaciones.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Frm_Inv_Ctrl_Inventario.resx">
       <DependentUpon>Frm_Inv_Ctrl_Inventario.vb</DependentUpon>

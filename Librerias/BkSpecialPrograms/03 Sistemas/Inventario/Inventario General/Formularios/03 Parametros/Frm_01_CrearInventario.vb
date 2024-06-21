@@ -11,7 +11,7 @@ Public Class Frm_01_CrearInventario
     Private _IdInventario As Integer
 
     Public Property Grabar As Boolean
-    Public Property Cl_Inventario As New Cl_NewInventario
+    Public Property Cl_Inventario As New Cl_Inventario
 
     Public Sub New(_IdInventario As Integer)
 
@@ -35,7 +35,7 @@ Public Class Frm_01_CrearInventario
             Cl_Inventario.Fx_Llenar_Zw_Inv_Inventario(_IdInventario)
         End If
 
-        With Cl_Inventario.Zw_TmpInv_History
+        With Cl_Inventario.Zw_Inv_Inventario
 
             Lbl_Empresa.Text = .Nombre_Empresa
             Lbl_Sucursal.Text = .Nombre_Sucursal
@@ -55,7 +55,7 @@ Public Class Frm_01_CrearInventario
     End Sub
     Private Sub BtnGrabar_Click(sender As System.Object, e As System.EventArgs) Handles BtnGrabar.Click
 
-        With Cl_Inventario.Zw_TmpInv_History
+        With Cl_Inventario.Zw_Inv_Inventario
 
             .Ano = numero_(Dtp_Fecha_Inventario.Value.Year.ToString, 4)
             .Mes = numero_(Dtp_Fecha_Inventario.Value.Month.ToString, 2)
@@ -120,7 +120,7 @@ Public Class Frm_01_CrearInventario
             Return
         End If
 
-        With Cl_Inventario.Zw_TmpInv_History
+        With Cl_Inventario.Zw_Inv_Inventario
 
             Dim Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_TmpInv_History",
                                                           "Fecha_Inventario = '" & Format(Dtp_Fecha_Inventario.Value, "yyyyMMdd") &

@@ -7,7 +7,7 @@ Declare @IdInventario Int = #IdInventario#,
         @Bodega Char(3) = '#Bodega#'
 
 
-INSERT INTO ZW_TmpInvFotoInventario 
+INSERT INTO Zw_Inv_FotoInventario 
 (IdInventario,Ano,Mes,Dia,IdBodega,Empresa,Sucursal,Bodega,Tipr,CodigoPR,CodigoRaPR,CodigoTePR,DescripcionPR,
  StFisicoUd1,PPP,PUltCompra,FechaFoto,HoraFoto,SuperFamilia,Familia,SubFamilia,Marca,Rubro,ClasLibre,Zona)
 SELECT @IdInventario,@Ano,@Mes,@Dia,0,@Empresa,@Sucursal,@Bodega,MAEPR.TIPR,MAEPR.KOPR, MAEPR.KOPRRA, MAEPR.KOPRTE, 
@@ -35,7 +35,7 @@ MAEPR.CLALIBPR,
 MAEPR.ZONAPR
 
 
-INSERT INTO ZW_TmpInvFotoInventario (IdInventario,Ano,Mes,Dia,IdBodega,Empresa,Sucursal,Bodega,Tipr,CodigoPR,
+INSERT INTO Zw_Inv_FotoInventario (IdInventario,Ano,Mes,Dia,IdBodega,Empresa,Sucursal,Bodega,Tipr,CodigoPR,
 CodigoRaPR,CodigoTePR,DescripcionPR,StFisicoUd1,PPP,PUltCompra,FechaFoto,HoraFoto,
 SuperFamilia,Familia,SubFamilia,Marca,Rubro,ClasLibre,Zona)
 SELECT @IdInventario,@Ano,@Mes,@Dia,0,@Empresa,@Sucursal,@Bodega,MAEPR.TIPR, MAEPR.KOPR, MAEPR.KOPRRA,MAEPR.KOPRTE, 
@@ -50,11 +50,11 @@ ISNULL(MAEPR.CLALIBPR,''),
 ISNULL(MAEPR.ZONAPR,'')
 FROM         MAEPREM LEFT OUTER JOIN
 MAEPR ON MAEPREM.KOPR = MAEPR.KOPR
-WHERE     (MAEPR.KOPR NOT IN (SELECT CodigoPR FROM ZW_TmpInvFotoInventario WHERE IdInventario = @IdInventario)) 
+WHERE     (MAEPR.KOPR NOT IN (SELECT CodigoPR FROM Zw_Inv_FotoInventario WHERE IdInventario = @IdInventario)) 
 order by MAEPR.KOPR 
 
 
-Update ZW_TmpInvFotoInventario Set 
+Update Zw_Inv_FotoInventario Set 
                        Nom_Rubro = Isnull((Select top 1 NOKORU From TABRU Where KORU = Rubro),''),
                        Nom_Marca = Isnull((Select Top 1 NOKOMR From TABMR Where KOMR = Marca),''),
                        Nom_Zona = Isnull((Select Top 1 NOKOZO From TABZO Where KOZO = Zona),''),

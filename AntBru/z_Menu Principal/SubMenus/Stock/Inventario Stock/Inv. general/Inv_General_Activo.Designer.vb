@@ -32,6 +32,8 @@ Partial Class Inv_General_Activo
         Me.Btn_VerInventarioActivo = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Mant_Inventarios = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.MetroTileItem1 = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.MStb_Barra = New DevComponents.DotNetBar.Metro.MetroStatusBar()
+        Me.Lbl_InventarioActivo = New DevComponents.DotNetBar.LabelItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -55,7 +57,7 @@ Partial Class Inv_General_Activo
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnSalir, Me.BtnConfiguracion})
-        Me.Bar2.Location = New System.Drawing.Point(0, 187)
+        Me.Bar2.Location = New System.Drawing.Point(0, 169)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(636, 41)
         Me.Bar2.Stretch = True
@@ -98,7 +100,7 @@ Partial Class Inv_General_Activo
         Me.MetroTilePanel1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         Me.MetroTilePanel1.Location = New System.Drawing.Point(3, 44)
         Me.MetroTilePanel1.Name = "MetroTilePanel1"
-        Me.MetroTilePanel1.Size = New System.Drawing.Size(688, 262)
+        Me.MetroTilePanel1.Size = New System.Drawing.Size(688, 144)
         Me.MetroTilePanel1.TabIndex = 39
         Me.MetroTilePanel1.Text = "MetroTilePanel1"
         '
@@ -200,6 +202,29 @@ Partial Class Inv_General_Activo
         Me.MetroTileItem1.TileStyle.TextColor = System.Drawing.Color.White
         Me.MetroTileItem1.TitleText = "BakApp"
         '
+        'MStb_Barra
+        '
+        '
+        '
+        '
+        Me.MStb_Barra.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.MStb_Barra.ContainerControlProcessDialogKey = True
+        Me.MStb_Barra.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.MStb_Barra.DragDropSupport = True
+        Me.MStb_Barra.Font = New System.Drawing.Font("Segoe UI", 10.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.MStb_Barra.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_InventarioActivo})
+        Me.MStb_Barra.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
+        Me.MStb_Barra.Location = New System.Drawing.Point(0, 210)
+        Me.MStb_Barra.Name = "MStb_Barra"
+        Me.MStb_Barra.Size = New System.Drawing.Size(636, 22)
+        Me.MStb_Barra.TabIndex = 66
+        Me.MStb_Barra.Text = "MetroStatusBar1"
+        '
+        'Lbl_InventarioActivo
+        '
+        Me.Lbl_InventarioActivo.Name = "Lbl_InventarioActivo"
+        Me.Lbl_InventarioActivo.Text = "Ambiente de producción"
+        '
         'Inv_General_Activo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -207,8 +232,9 @@ Partial Class Inv_General_Activo
         Me.Controls.Add(Me.LabelX1)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.MetroTilePanel1)
+        Me.Controls.Add(Me.MStb_Barra)
         Me.Name = "Inv_General_Activo"
-        Me.Size = New System.Drawing.Size(636, 228)
+        Me.Size = New System.Drawing.Size(636, 232)
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -223,4 +249,6 @@ Partial Class Inv_General_Activo
     Private WithEvents Btn_VerInventarioActivo As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Mant_Inventarios As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents MetroTileItem1 As DevComponents.DotNetBar.Metro.MetroTileItem
+    Friend WithEvents MStb_Barra As DevComponents.DotNetBar.Metro.MetroStatusBar
+    Friend WithEvents Lbl_InventarioActivo As DevComponents.DotNetBar.LabelItem
 End Class
