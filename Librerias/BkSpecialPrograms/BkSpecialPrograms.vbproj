@@ -8152,6 +8152,7 @@
     <None Include="03 Sistemas\Tesoreria\Pagos\Recursos\Sql\SQLQuery_Revisar_Data_Eliminar_Pago.sql" />
     <None Include="03 Sistemas\Produccion\Recursos\Sql\SQLQuery Informe de OT avance Vs SubOt por Operaciones.sql" />
     <None Include="03 Sistemas\Servicio Tecnico\Recursos\Consultas SQL\SqlQuery_Lista_OT2.sql" />
+    <Content Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Clase\Recursos\Sql\SQLQuery Listado Stmp.sql" />
     <Content Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Clase\Recursos\Sql\SQLQuery Revisar Nota de venta activa en WMS Villar.sql" />
     <Content Include="03 Sistemas\Tesoreria\Contabilidad\Recursos\Sql\Nomina de tarjetas de credito a liquidacion.sql" />
     <Content Include="999 Funciones, Clases y Datos\Clases\Documentos\Creacion de documento\Consultas SQL\Crear Htm document.htm" />

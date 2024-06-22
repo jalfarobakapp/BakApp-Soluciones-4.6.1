@@ -65,22 +65,39 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Busca una cadena traducida similar a Declare @Empresa as Char(2) = &apos;01&apos;
+        '''Declare @Sucursal as Char(3) = &apos;01&apos;
+        '''
+        '''Select Enc.*,Edo.FEEMDO,Edo.SUDO,En.NOKOEN,
+        '''Case Estado 
+        '''When &apos;PREPA&apos; Then &apos;Preparación...&apos;
+        '''When &apos;COMPL&apos; Then &apos;Completada.&apos;
+        '''When &apos;HABIL&apos; Then &apos;Habilitada para ser facturada.&apos;
+        '''When &apos;FACTU&apos; Then Case TidoGen When &apos;FCV&apos; Then &apos;Facturada&apos; When &apos;BLV&apos; Then &apos;Boleteada&apos; When &apos;GDV&apos; Then &apos;Guía generada&apos; When &apos;GDP&apos; Then &apos;Guía generada&apos; Else &apos;???&apos; End
+        '''When &apos;ENTRE&apos; Then &apos;Entregado por: &apos;+CodFuncionario_Entrega+&apos; - &apos;+FEnt.NOKOFU
+        '''When &apos;CERRA&apos; [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property SQLQuery_Listado_Stmp() As String
+            Get
+                Return ResourceManager.GetString("SQLQuery_Listado_Stmp", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Busca una cadena traducida similar a 
         '''declare @nv nvarchar(10)
         '''set @nv=&apos;#Nudo#&apos;
         '''
         '''declare @pick_cmp int, @comandos int, @truck int
-        '''set @pick_cmp=(select count( distinct(pick_cmp)) AS pick_cmp from shipunit_f where ob_oid=@nv)
+        '''set @pick_cmp=(select count( distinct(pick_cmp)) AS pick_cmp from shipunit_f where ob_oid=@nv and pick_cmp = &apos;Y&apos;)
         '''set @comandos =(select count(cm_rid) from cm_f where ob_oid=@nv)
-        '''set @truck =(select  count(od_rid)
+        '''set @truck =(select count(od_rid)
         '''from od_f t0 inner join iv_f t1 on t0.sku=t1.sku 
-        '''where t1.ob_oid=@nv  and t1.inv_stt=&apos;TRUCK&apos;)
+        '''where t1.ob_oid=@nv and t1.inv_stt=&apos;TRUCK&apos;)
         '''declare @ticket_verde nvarchar(1)
         '''if @pick_cmp=1 and @comandos=0 and @truck=0
         '''begin 
-        ''' set @ticket_verde=&apos;Y&apos;
-        '''end
-        '''el [resto de la cadena truncado]&quot;;.
+        ''' set @ticket_v [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property SQLQuery_Revisar_Nota_de_venta_activa_en_WMS_Villar() As String
             Get
