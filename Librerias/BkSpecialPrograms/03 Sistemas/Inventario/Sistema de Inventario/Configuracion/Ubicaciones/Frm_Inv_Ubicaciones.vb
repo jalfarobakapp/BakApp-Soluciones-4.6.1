@@ -1,6 +1,4 @@
-﻿Imports System.Security.Cryptography
-Imports System.Windows.Forms.VisualStyles.VisualStyleElement
-Imports DevComponents.DotNetBar
+﻿Imports DevComponents.DotNetBar
 
 Public Class Frm_Inv_Ubicaciones
 
@@ -9,7 +7,8 @@ Public Class Frm_Inv_Ubicaciones
 
     Dim _IdInventario As Integer
     Dim _Cl_Inventario As New Cl_Inventario
-
+    Dim _Tbl_Ubicaciones As New DataTable
+    Dim _Dv As New DataView
     Public Sub New(_Id_Inventario As Integer)
 
         ' Esta llamada es exigida por el diseñador.
@@ -32,16 +31,8 @@ Public Class Frm_Inv_Ubicaciones
         Dim _Sucursal = _Cl_Inventario.Zw_Inv_Inventario.Sucursal
         Dim _Bodega = _Sql.Fx_Trae_Dato("TABBO", "KOBO", "EMPRESA = '" & _Empresa & "' And KOSU = '" & _Sucursal & "'")
 
-        Cmb_Bodegas.DataSource = Nothing
-        caract_combo(Cmb_Bodegas)
-        Consulta_sql = "Select KOBO AS Padre,KOBO+'-'+NOKOBO AS Hijo FROM TABBO " &
-                       "Where EMPRESA = '" & _Empresa & "' AND KOSU = '" & _Sucursal & "'"
-        Cmb_Bodegas.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
-        Cmb_Bodegas.SelectedValue = _Bodega
-
         Sb_Actualizar_Grilla()
 
-        AddHandler Cmb_Bodegas.SelectedIndexChanged, AddressOf Cmb_Bodegas_SelectedIndexChanged
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
 
@@ -52,11 +43,15 @@ Public Class Frm_Inv_Ubicaciones
         Consulta_sql = "Select *,Case Abierto When 1 Then 'Abierto' Else 'Cerrado' End As 'Estado'" & vbCrLf &
                        "From " & _Global_BaseBk & " Zw_Inv_Ubicaciones" & vbCrLf &
                        "Where IdInventario = " & _IdInventario
-        Dim _Tbl_Inventarios As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+
+        Dim _New_Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
+        _Dv = New DataView
+        _Dv.Table = _New_Ds.Tables("Table")
+        _Tbl_Ubicaciones = _Dv.Table
 
         With Grilla
 
-            .DataSource = _Tbl_Inventarios
+            .DataSource = _Dv
 
             OcultarEncabezadoGrilla(Grilla, True)
 
@@ -117,11 +112,6 @@ Public Class Frm_Inv_Ubicaciones
 
     End Sub
 
-    Private Sub Cmb_Bodegas_SelectedIndexChanged(sender As Object, e As EventArgs)
-        Sb_Actualizar_Grilla()
-    End Sub
-
-
     Private Sub Sb_Grilla_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
         If e.Button = Windows.Forms.MouseButtons.Right Then
             With sender
@@ -132,8 +122,8 @@ Public Class Frm_Inv_Ubicaciones
                     Dim _Fila As DataGridViewRow = Grilla.CurrentRow
                     Dim _Abierto As Boolean = _Fila.Cells("Abierto").Value
 
-                    Btn_AbrirUbicacion.Visible = _Abierto
-                    Btn_CerrarUbicacion.Visible = Not _Abierto
+                    Btn_AbrirUbicacion.Visible = Not _Abierto
+                    Btn_CerrarUbicacion.Visible = _Abierto
 
                     ShowContextMenu(Menu_Contextual_Zonas)
 
@@ -170,7 +160,7 @@ Public Class Frm_Inv_Ubicaciones
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
-        _Mensaje = _Cl_InvUbicacion.Fx_Crear_Ubicacion
+        _Mensaje = _Cl_InvUbicacion.Fx_Crear_Ubicacion(_Cl_InvUbicacion.Zw_Inv_Ubicaciones)
 
         If Not _Mensaje.EsCorrecto Then
             MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
@@ -266,9 +256,48 @@ Public Class Frm_Inv_Ubicaciones
     End Sub
 
     Private Sub Btn_Importar_Desde_Excel_Click(sender As Object, e As EventArgs) Handles Btn_Importar_Desde_Excel.Click
+
+        Dim _UbicacionesInsertadas As Boolean
+
         Dim Fm As New Frm_Inv_UbicacionesImporExcel(_IdInventario)
         Fm.ShowDialog(Me)
+        _UbicacionesInsertadas = Fm.UbicacionesInsertadas
         Fm.Dispose()
+
+        If _UbicacionesInsertadas Then
+            Sb_Actualizar_Grilla()
+        End If
+
+    End Sub
+
+    Sub Sb_Filtrar()
+        Try
+            If IsNothing(_Dv) Then Return
+
+            _Dv.RowFilter = String.Format("CodUbicacion+Ubicacion Like '%{0}%'", Txt_Filtrar.Text.Trim)
+
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, "Cuek!", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End Try
+    End Sub
+
+    Private Sub Txt_Filtrar_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Filtrar.KeyDown
+        If e.KeyValue = Keys.Enter Then
+            Sb_Filtrar()
+        End If
+    End Sub
+
+    Private Sub Txt_Filtrar_TextChanged(sender As Object, e As EventArgs) Handles Txt_Filtrar.TextChanged
+        If Txt_Filtrar.Text.Trim = String.Empty Then
+            Sb_Filtrar()
+        End If
+    End Sub
+
+    Private Sub Btn_ExportarExcel_Click(sender As Object, e As EventArgs) Handles Btn_ExportarExcel.Click
+        ExportarTabla_JetExcel_Tabla(_Tbl_Ubicaciones, Me, "Ubicaciones inventario")
+    End Sub
+
+    Private Sub Btn_Actualizar_Click(sender As Object, e As EventArgs) Handles Btn_Actualizar.Click
         Sb_Actualizar_Grilla()
     End Sub
 End Class

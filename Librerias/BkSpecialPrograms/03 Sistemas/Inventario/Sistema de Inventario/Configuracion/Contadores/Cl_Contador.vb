@@ -1,19 +1,18 @@
 ﻿Imports System.Data.SqlClient
+Imports DevComponents.DotNetBar
 
-
-Public Class Cl_InvUbicacion
+Public Class Cl_Contador
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-    Public Property Zw_Inv_Ubicaciones As New Zw_Inv_Ubicaciones
-    Public Property Ls_Zw_Inv_Ubicaciones As New List(Of Zw_Inv_Ubicaciones)
+    Public Property Zw_Inv_Contador As New Zw_Inv_Contador
 
     Public Sub New()
 
     End Sub
 
-    Function Fx_Llenar_Zw_Inv_Ubicaciones(_Id As Integer) As LsValiciones.Mensajes
+    Function Fx_Llenar_Zw_Inv_Contadores(_Id As Integer) As LsValiciones.Mensajes
 
         Dim _Mensaje_Stem As New LsValiciones.Mensajes
 
@@ -21,24 +20,22 @@ Public Class Cl_InvUbicacion
         _Mensaje_Stem.Detalle = "Cargar Ubicación de Inventario"
         _Mensaje_Stem.Mensaje = String.Empty
 
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Inv_Ubicaciones Where Id = " & _Id
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Inv_Contador Where Id = " & _Id
         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If IsNothing(_Row) Then
-            _Mensaje_Stem.Mensaje = "No se encontro el registro en la tabla Zw_TmpInv_Ubicaciones con el Id " & _Id
+            _Mensaje_Stem.Mensaje = "No se encontro el registro en la tabla Zw_Inv_Contadores con el Id " & _Id
             Return _Mensaje_Stem
         End If
 
-        With Zw_Inv_Ubicaciones
+        With Zw_Inv_Contador
 
             .Id = _Row.Item("Id")
-            .IdInventario = _Row.Item("IdInventario")
-            .Empresa = _Row.Item("Empresa")
-            .Sucursal = _Row.Item("Sucursal")
-            .Bodega = _Row.Item("Bodega")
-            .CodUbicacion = _Row.Item("CodUbicacion")
-            .Ubicacion = _Row.Item("Ubicacion")
-            .Abierto = _Row.Item("Abierto")
+            .Rut = _Row.Item("Rut")
+            .Nombre = _Row.Item("Nombre")
+            .Email = _Row.Item("Email")
+            .Telefono = _Row.Item("Telefono")
+            .Activo = _Row.Item("Activo")
 
         End With
 
@@ -47,20 +44,19 @@ Public Class Cl_InvUbicacion
 
     End Function
 
-    Function Fx_Crear_Ubicacion(Zw_Inv_Ubicaciones As Zw_Inv_Ubicaciones) As LsValiciones.Mensajes
+    Function Fx_Crear_Contador(Zw_Inv_Contador As Zw_Inv_Contador) As LsValiciones.Mensajes
 
         Dim _Mensaje_Stem As New LsValiciones.Mensajes
 
-        _Mensaje_Stem.Detalle = "Crear Ubicación de Inventario"
+        _Mensaje_Stem.Detalle = "Crear Contador de Inventario"
         _Mensaje_Stem.EsCorrecto = False
         _Mensaje_Stem.Mensaje = String.Empty
         _Mensaje_Stem.Icono = MessageBoxIcon.Stop
 
-        Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_Ubicaciones",
-                                            "Ubicacion = '" & Zw_Inv_Ubicaciones.Ubicacion & "' And IdInventario = " & Zw_Inv_Ubicaciones.IdInventario)
+        Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_Contador",
+                                            "Rut = '" & Zw_Inv_Contador.Rut & "'")
         If CBool(_Reg) Then
-            ' Modificación aquí: en lugar de lanzar una excepción, se establece el mensaje de error.
-            _Mensaje_Stem.Mensaje = "El código de la Ubicación ya existe en este inventario"
+            _Mensaje_Stem.Mensaje = "El contador ya existe con el Rut " & Zw_Inv_Contador.Rut
             Return _Mensaje_Stem
         End If
 
@@ -78,24 +74,14 @@ Public Class Cl_InvUbicacion
 
             myTrans = Cn2.BeginTransaction()
 
-            With Zw_Inv_Ubicaciones
+            With Zw_Inv_Contador
 
-                .CodUbicacion = Fx_NvoCodUbicacion()
-
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Inv_Ubicaciones (IdInventario,Empresa,Sucursal,Bodega,CodUbicacion,Ubicacion,Abierto) Values " &
-                               "(" & .IdInventario & ",'" & .Empresa & "','" & .Sucursal & "','" & .Bodega & "','" & .CodUbicacion & "','" & .Ubicacion & "'," & Convert.ToInt32(.Abierto) & ")"
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Inv_Contador (Rut,Nombre,Email,Telefono,Activo) Values " &
+                               "('" & .Rut & "','" & .Nombre & "','" & .Email & "','" & .Telefono & "'," & Convert.ToInt32(.Activo) & ")"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                 Comando.Transaction = myTrans
                 Comando.ExecuteNonQuery()
-                Comando = New System.Data.SqlClient.SqlCommand("SELECT @@IDENTITY AS 'Identity'", Cn2)
-                Comando.Transaction = myTrans
-
-                Dim dfd1 As System.Data.SqlClient.SqlDataReader = Comando.ExecuteReader()
-                While dfd1.Read()
-                    .Id = dfd1("Identity")
-                End While
-                dfd1.Close()
 
             End With
 
@@ -103,7 +89,7 @@ Public Class Cl_InvUbicacion
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
             _Mensaje_Stem.EsCorrecto = True
-            _Mensaje_Stem.Mensaje = "Ubicación creada correctamente"
+            _Mensaje_Stem.Mensaje = "Contador creado correctamente"
             _Mensaje_Stem.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
@@ -119,7 +105,7 @@ Public Class Cl_InvUbicacion
 
     End Function
 
-    Function Fx_Editar_Ubicacion() As LsValiciones.Mensajes
+    Function Fx_Actualizar_Contador(Zw_Inv_Contador As Zw_Inv_Contador) As LsValiciones.Mensajes
 
         Dim _Mensaje_Stem As New LsValiciones.Mensajes
 
@@ -128,14 +114,15 @@ Public Class Cl_InvUbicacion
         _Mensaje_Stem.Mensaje = String.Empty
         _Mensaje_Stem.Icono = MessageBoxIcon.Stop
 
-        Consulta_sql = String.Empty
+        Dim _Ref As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_Contador",
+                                                       "Id <> " & Zw_Inv_Contador.Id & " And Rut = '" & Zw_Inv_Contador.Rut & "'")
 
-        Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_Ubicaciones",
-                                            "Id <> " & Zw_Inv_Ubicaciones.Id & " And Ubicacion = '" & Zw_Inv_Ubicaciones.Ubicacion & "' And IdInventario = " & Zw_Inv_Ubicaciones.IdInventario)
-        If CBool(_Reg) Then
-            _Mensaje_Stem.Mensaje = "El código de la Ubicación """ & Zw_Inv_Ubicaciones.Ubicacion & """ ya existe en este inventario"
+        If CBool(_Ref) Then
+            _Mensaje_Stem.Mensaje = "Ya existe un operador con el mismo Rut"
             Return _Mensaje_Stem
         End If
+
+        Consulta_sql = String.Empty
 
         Dim myTrans As SqlClient.SqlTransaction
         Dim Comando As SqlClient.SqlCommand
@@ -149,11 +136,10 @@ Public Class Cl_InvUbicacion
 
             myTrans = Cn2.BeginTransaction()
 
-            With Zw_Inv_Ubicaciones
+            With Zw_Inv_Contador
 
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Inv_Ubicaciones set " &
-                               "Ubicacion = '" & .Ubicacion & "'," &
-                               "Abierto = " & Convert.ToInt32(.Abierto) & vbCrLf &
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Inv_Contador Set " &
+                               "Nombre = '" & .Nombre & "',Email = '" & .Email & "',Telefono = '" & .Telefono & "',Activo = " & Convert.ToInt32(.Activo) & vbCrLf &
                                "Where Id = " & .Id
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
@@ -166,7 +152,7 @@ Public Class Cl_InvUbicacion
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
             _Mensaje_Stem.EsCorrecto = True
-            _Mensaje_Stem.Mensaje = "Ubicación editada correctamente"
+            _Mensaje_Stem.Mensaje = "Contador editado correctamente"
             _Mensaje_Stem.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
@@ -182,7 +168,7 @@ Public Class Cl_InvUbicacion
 
     End Function
 
-    Function Fx_Eliminar_Ubicacion() As LsValiciones.Mensajes
+    Function Fx_Eliminar_Contador(Zw_Inv_Contador As Zw_Inv_Contador) As LsValiciones.Mensajes
 
         Dim _Mensaje_Stem As New LsValiciones.Mensajes
 
@@ -193,10 +179,11 @@ Public Class Cl_InvUbicacion
 
         Consulta_sql = String.Empty
 
-        Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_ProductosInventariados",
-                                            "IdInventario = " & Zw_Inv_Ubicaciones.IdInventario & " And IdUbicacion = " & Zw_Inv_Ubicaciones.Id)
-        If CBool(_Reg) Then
-            _Mensaje_Stem.Mensaje = "No se puede eliminar la ubicación, tiene registros inventariados"
+        Dim _reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_Hoja_Detalle",
+                                            "IdContador1 = " & Zw_Inv_Contador.Id & " Or IdContador2 = " & Zw_Inv_Contador.Id)
+
+        If CBool(_reg) Then
+            _Mensaje_Stem.Mensaje = "No se puede eliminar el contador, tiene registros inventariados"
             Return _Mensaje_Stem
         End If
 
@@ -212,9 +199,9 @@ Public Class Cl_InvUbicacion
 
             myTrans = Cn2.BeginTransaction()
 
-            With Zw_Inv_Ubicaciones
+            With Zw_Inv_Contador
 
-                Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Inv_Ubicaciones Where Id = " & .Id
+                Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Inv_Contador Where Id = " & .Id
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                 Comando.Transaction = myTrans
@@ -226,7 +213,7 @@ Public Class Cl_InvUbicacion
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
             _Mensaje_Stem.EsCorrecto = True
-            _Mensaje_Stem.Mensaje = "Ubicación eliminada correctamente"
+            _Mensaje_Stem.Mensaje = "Contador eliminado correctamente"
             _Mensaje_Stem.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
@@ -241,27 +228,6 @@ Public Class Cl_InvUbicacion
         Return _Mensaje_Stem
 
     End Function
-
-    Function Fx_NvoCodUbicacion() As String
-
-        Dim _NvoCodUbicacion As String
-
-        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
-
-        Dim _TblPaso = _Sql.Fx_Get_Tablas("Select Max(CodUbicacion) As CodUbicacion From " & _Global_BaseBk & "Zw_Inv_Ubicaciones")
-
-        Dim _Ult_Nro_OT As String = NuloPorNro(_TblPaso.Rows(0).Item("CodUbicacion"), "")
-
-        If String.IsNullOrEmpty(Trim(_Ult_Nro_OT)) Then
-            _Ult_Nro_OT = "0000000000"
-        End If
-
-        _NvoCodUbicacion = Fx_Proximo_NroDocumento(_Ult_Nro_OT, 10)
-
-        Return _NvoCodUbicacion
-
-    End Function
-
 
 
 End Class

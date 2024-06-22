@@ -1,4 +1,4 @@
-Imports DevComponents.DotNetBar
+ÔªøImports DevComponents.DotNetBar
 'Imports Lib_Bakapp_VarClassFunc
 
 Imports System.Drawing
@@ -9,11 +9,11 @@ Public Class Frm_04_Productos_por_sector
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-    Public _IdInventario, _
-           _CodSector, _
-           _Nombre_Lugar, _
-           _Codigo_Sector, _
-           _CampoCodigo, _
+    Public _IdInventario,
+           _CodSector,
+           _Nombre_Lugar,
+           _Codigo_Sector,
+           _CampoCodigo,
            _FuncionarioCargo As String
 
     Dim _Ult_Semilla As Integer
@@ -24,10 +24,10 @@ Public Class Frm_04_Productos_por_sector
 
     Public Function Act_Grilla() As Long
 
-        Consulta_sql = "SELECT Semilla,Nro_Hoja,Item_Hoja,Codproducto, Codrapido, Codtecnico,CodBarras, DescripcionProducto, Unidad_Medida," & vbCrLf & _
-                       "CantidadInventariada,Columna, Fila FROM dbo.ZW_TmpInvProductosInventariados" & vbCrLf & _
-                       "Where   (IdInventario = " & _IdInventario & _
-                       ") AND (CodSectorInt = '" & _CodSector & "') " & vbCrLf & _
+        Consulta_sql = "SELECT Semilla,Nro_Hoja,Item_Hoja,Codproducto, Codrapido, Codtecnico,CodBarras, DescripcionProducto, Unidad_Medida," & vbCrLf &
+                       "CantidadInventariada,Columna, Fila FROM dbo.ZW_TmpInvProductosInventariados" & vbCrLf &
+                       "Where   (IdInventario = " & _IdInventario &
+                       ") AND (CodSectorInt = '" & _CodSector & "') " & vbCrLf &
                        "ORDER BY Semilla"
 
         _Tbl = _SQL.Fx_Get_Tablas(Consulta_sql)
@@ -50,15 +50,15 @@ Public Class Frm_04_Productos_por_sector
                 .Columns("Item_Hoja").Width = 40
                 .Columns("Item_Hoja").Visible = True
 
-                .Columns("Codproducto").HeaderText = "CÛdigo"
+                .Columns("Codproducto").HeaderText = "C√≥digo"
                 .Columns("Codproducto").Width = 100
                 .Columns("Codproducto").Visible = True
 
-                .Columns("Codtecnico").HeaderText = "CÛd. tÈcnico"
+                .Columns("Codtecnico").HeaderText = "C√≥d. t√©cnico"
                 .Columns("Codtecnico").Width = 110
                 .Columns("Codtecnico").Visible = True
 
-                .Columns("DescripcionProducto").HeaderText = "DescripciÛn"
+                .Columns("DescripcionProducto").HeaderText = "Descripci√≥n"
                 .Columns("DescripcionProducto").Width = 280
                 .Columns("DescripcionProducto").Visible = True
 
@@ -97,6 +97,10 @@ Public Class Frm_04_Productos_por_sector
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Inventario Sector " & _CodSector)
     End Sub
 
+    Private Sub Frm_04_Productos_por_sector_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
+
     Private Sub BtnImprimir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnImprimir.Click
 
         Dim Fm_Imp As New Frm_Seleccionar_Impresoras("")
@@ -109,8 +113,8 @@ Public Class Frm_04_Productos_por_sector
             'Fm.ShowDialog(Me)
 
             'If Not Fm._Aceptado Then
-            'MessageBoxEx.Show("No se selecciono ning˙n tipo de cÛdigo para el levantamiento", _
-            '                      "Tipo de cÛdigo", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            'MessageBoxEx.Show("No se selecciono ning√∫n tipo de c√≥digo para el levantamiento", _
+            '                      "Tipo de c√≥digo", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             'Return
             'End If
             'Codproducto, Codrapido, Codtecnico,CodBarras
@@ -144,7 +148,7 @@ Public Class Frm_04_Productos_por_sector
             'Dim pkCustomSize1 As New Printing.PaperSize("Custom Paper Size", 612, 792) ' CARTA
             'printDoc.PrinterSettings.DefaultPageSettings.PaperSize = pkCustomSize1
             ' printDoc.DefaultPageSettings.Landscape = True
-            ' asignamos el mÈtodo de evento para cada p·gina a imprimir
+            ' asignamos el m√©todo de evento para cada p√°gina a imprimir
             AddHandler printDoc.PrintPage, AddressOf print_PrintPage
 
             'Indicamos la impresora
@@ -160,12 +164,12 @@ Public Class Frm_04_Productos_por_sector
         End Try
     End Function
 
-    Private Sub print_PrintPage(ByVal sender As Object, _
+    Private Sub print_PrintPage(ByVal sender As Object,
                                 ByVal e As PrintPageEventArgs)
 
 
-        ' Este evento se producir· cada vez que se imprima una nueva p·gina
-        ' imprimir HOLA MUNDO en Arial tamaÒo 24 y negrita
+        ' Este evento se producir√° cada vez que se imprima una nueva p√°gina
+        ' imprimir HOLA MUNDO en Arial tama√±o 24 y negrita
 
 
         Try
@@ -212,7 +216,7 @@ Public Class Frm_04_Productos_por_sector
             Dim FteCourier_New_N_14 As New Font("Courier New", 13, FontStyle.Bold) ' Crea la fuente
 
 
-            ' la posiciÛn superior
+            ' la posici√≥n superior
             Dim yPos As Single = prFont.GetHeight(e.Graphics) - 10
 
 
@@ -246,7 +250,7 @@ Public Class Frm_04_Productos_por_sector
             yPos += 40
 
 
-            ' Calculamos el n˙mero de lÌneas que caben en cada p·gina. 
+            ' Calculamos el n√∫mero de l√≠neas que caben en cada p√°gina. 
             Dim _LineasPorPagina = 50 'e.MarginBounds.Height / FteArial_R_8.GetHeight(e.Graphics)
 
             'Dim _Total = FormatNumber(Total, 0)
@@ -260,7 +264,7 @@ Public Class Frm_04_Productos_por_sector
             xPos += 50
             e.Graphics.DrawString("Item", FteArial_N_8, Brushes.Black, xPos, yPos)
             xPos += 50
-            e.Graphics.DrawString("CÛdigo", FteArial_N_8, Brushes.Black, xPos, yPos)
+            e.Graphics.DrawString("C√≥digo", FteArial_N_8, Brushes.Black, xPos, yPos)
             xPos += 100
             e.Graphics.DrawString("Descripcion", FteArial_N_8, Brushes.Black, xPos, yPos)
             xPos += 320
@@ -326,18 +330,18 @@ Public Class Frm_04_Productos_por_sector
             'Next
 
 
-            ' Una vez fuera del bucle comprobamos si nos quedan m·s filas
-            ' por imprimir, si quedan saldr·n en la siguente p·gina
+            ' Una vez fuera del bucle comprobamos si nos quedan m√°s filas
+            ' por imprimir, si quedan saldr√°n en la siguente p√°gina
             If i < _Tbl.Rows.Count Then
                 e.HasMorePages = True
             Else
                 ' si llegamos al final, se establece HasMorePages a
-                ' false para que se acabe la impresiÛn
+                ' false para que se acabe la impresi√≥n
                 e.HasMorePages = False
                 ' Es necesario poner el contador a 0 porque, por ejemplo si se hace
-                ' una impresiÛn desde PrintPreviewDialog, se vuelve disparar este
-                ' evento como si fuese la primera vez, y si i est· con el valor de la
-                ' ˙ltima fila del grid no se imprime nada
+                ' una impresi√≥n desde PrintPreviewDialog, se vuelve disparar este
+                ' evento como si fuese la primera vez, y si i est√° con el valor de la
+                ' √∫ltima fila del grid no se imprime nada
                 i = 0
             End If
             'Next
@@ -357,11 +361,11 @@ Public Class Frm_04_Productos_por_sector
 
     Public Sub New()
 
-        ' Llamada necesaria para el DiseÒador de Windows Forms.
+        ' Llamada necesaria para el Dise√±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicializaciÛn despuÈs de la llamada a InitializeComponent().
-       Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 7), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
+        ' Agregue cualquier inicializaci√≥n despu√©s de la llamada a InitializeComponent().
+        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 7), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
 
     End Sub
 End Class

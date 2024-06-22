@@ -29,15 +29,16 @@ Partial Class Frm_Inv_Inventarios
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_VerInventario = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_EditarInventario = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_EliminarInventario = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_ActivarInventario = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem3 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla_Inventarios = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Crear_Inventario = New DevComponents.DotNetBar.ButtonItem()
+        Me.Chk_Activos = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla_Inventarios, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -90,7 +91,7 @@ Partial Class Frm_Inv_Inventarios
         Me.Menu_Contextual.AntiAlias = True
         Me.Menu_Contextual.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
-        Me.Menu_Contextual.Location = New System.Drawing.Point(45, 53)
+        Me.Menu_Contextual.Location = New System.Drawing.Point(44, 94)
         Me.Menu_Contextual.Name = "Menu_Contextual"
         Me.Menu_Contextual.Size = New System.Drawing.Size(412, 25)
         Me.Menu_Contextual.Stretch = True
@@ -103,8 +104,15 @@ Partial Class Frm_Inv_Inventarios
         '
         Me.Menu_Contextual_01.AutoExpandOnClick = True
         Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
-        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_EditarInventario, Me.Btn_EliminarInventario, Me.Btn_ActivarInventario, Me.LabelItem3, Me.Btn_Copiar})
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_VerInventario, Me.LabelItem1, Me.Btn_EditarInventario, Me.Btn_EliminarInventario, Me.LabelItem3, Me.Btn_Copiar})
         Me.Menu_Contextual_01.Text = "Opciones documento"
+        '
+        'Btn_VerInventario
+        '
+        Me.Btn_VerInventario.Image = CType(resources.GetObject("Btn_VerInventario.Image"), System.Drawing.Image)
+        Me.Btn_VerInventario.ImageAlt = CType(resources.GetObject("Btn_VerInventario.ImageAlt"), System.Drawing.Image)
+        Me.Btn_VerInventario.Name = "Btn_VerInventario"
+        Me.Btn_VerInventario.Text = "Ingresar al inventario"
         '
         'LabelItem1
         '
@@ -132,13 +140,6 @@ Partial Class Frm_Inv_Inventarios
         Me.Btn_EliminarInventario.ImageAlt = CType(resources.GetObject("Btn_EliminarInventario.ImageAlt"), System.Drawing.Image)
         Me.Btn_EliminarInventario.Name = "Btn_EliminarInventario"
         Me.Btn_EliminarInventario.Text = "Eliminar"
-        '
-        'Btn_ActivarInventario
-        '
-        Me.Btn_ActivarInventario.Image = CType(resources.GetObject("Btn_ActivarInventario.Image"), System.Drawing.Image)
-        Me.Btn_ActivarInventario.ImageAlt = CType(resources.GetObject("Btn_ActivarInventario.ImageAlt"), System.Drawing.Image)
-        Me.Btn_ActivarInventario.Name = "Btn_ActivarInventario"
-        Me.Btn_ActivarInventario.Text = "Dejar como inventario activo"
         '
         'LabelItem3
         '
@@ -204,7 +205,7 @@ Partial Class Frm_Inv_Inventarios
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Crear_Inventario})
-        Me.Bar1.Location = New System.Drawing.Point(0, 520)
+        Me.Bar1.Location = New System.Drawing.Point(0, 551)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(589, 41)
         Me.Bar1.Stretch = True
@@ -222,16 +223,31 @@ Partial Class Frm_Inv_Inventarios
         Me.Btn_Crear_Inventario.Name = "Btn_Crear_Inventario"
         Me.Btn_Crear_Inventario.Tooltip = "Crear Inventario"
         '
+        'Chk_Activos
+        '
+        Me.Chk_Activos.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_Activos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Activos.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Activos.Location = New System.Drawing.Point(12, 522)
+        Me.Chk_Activos.Name = "Chk_Activos"
+        Me.Chk_Activos.Size = New System.Drawing.Size(248, 23)
+        Me.Chk_Activos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Activos.TabIndex = 32
+        Me.Chk_Activos.Text = "Mostrar solo inventarios activos"
+        '
         'Frm_Inv_Inventarios
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(589, 561)
+        Me.ClientSize = New System.Drawing.Size(589, 592)
+        Me.Controls.Add(Me.Chk_Activos)
         Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.Bar1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
@@ -260,5 +276,6 @@ Partial Class Frm_Inv_Inventarios
     Friend WithEvents Btn_EliminarInventario As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LabelItem3 As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Btn_Copiar As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_ActivarInventario As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_VerInventario As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Chk_Activos As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

@@ -1497,7 +1497,6 @@ Error_Numero:
         Catch ex As Exception
             Return False
         End Try
-
     End Function
 
     Public Function SumarDatodeGrilla(

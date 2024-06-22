@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_Inv_Ctrl_Inventario
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -25,12 +25,21 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Inv_Ctrl_Inventario))
         Me.MetroTilePanel1 = New DevComponents.DotNetBar.Metro.MetroTilePanel()
         Me.ConsultaPreciosContenedor = New DevComponents.DotNetBar.ItemContainer()
+        Me.Btn_VerInventario = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Sectores = New DevComponents.DotNetBar.Metro.MetroTileItem()
-        Me.Btn_Operadores = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_Contadores = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Parejas = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Plan = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Lbl_Nombre_Inventario = New DevComponents.DotNetBar.LabelX()
         Me.Line1 = New DevComponents.DotNetBar.Controls.Line()
+        Me.Bar1 = New DevComponents.DotNetBar.Bar()
+        Me.Btn_FotoStock = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_TomarFotoStock = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_EliminarFotoStock = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Salir = New DevComponents.DotNetBar.ButtonItem()
+        Me.Metro_Bar_Color = New DevComponents.DotNetBar.Metro.MetroStatusBar()
+        Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
+        CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'MetroTilePanel1
@@ -48,7 +57,7 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Me.MetroTilePanel1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         Me.MetroTilePanel1.Location = New System.Drawing.Point(12, 63)
         Me.MetroTilePanel1.Name = "MetroTilePanel1"
-        Me.MetroTilePanel1.Size = New System.Drawing.Size(738, 339)
+        Me.MetroTilePanel1.Size = New System.Drawing.Size(738, 336)
         Me.MetroTilePanel1.TabIndex = 37
         Me.MetroTilePanel1.Text = "MetroTilePanel1"
         '
@@ -61,13 +70,40 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Me.ConsultaPreciosContenedor.FixedSize = New System.Drawing.Size(700, 300)
         Me.ConsultaPreciosContenedor.MultiLine = True
         Me.ConsultaPreciosContenedor.Name = "ConsultaPreciosContenedor"
-        Me.ConsultaPreciosContenedor.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Sectores, Me.Btn_Operadores, Me.Btn_Parejas, Me.Btn_Plan})
+        Me.ConsultaPreciosContenedor.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_VerInventario, Me.Btn_Sectores, Me.Btn_Contadores, Me.Btn_Parejas, Me.Btn_Plan})
         '
         '
         '
         Me.ConsultaPreciosContenedor.TitleStyle.Class = "MetroTileGroupTitle"
         Me.ConsultaPreciosContenedor.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.ConsultaPreciosContenedor.TitleStyle.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        '
+        'Btn_VerInventario
+        '
+        Me.Btn_VerInventario.Image = CType(resources.GetObject("Btn_VerInventario.Image"), System.Drawing.Image)
+        Me.Btn_VerInventario.ImageIndent = New System.Drawing.Point(8, -10)
+        Me.Btn_VerInventario.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_VerInventario.Name = "Btn_VerInventario"
+        Me.Btn_VerInventario.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_VerInventario.Text = "<font size=""+4""><b>INVENTARIO</b></font><br/><font size=""-1"">Ver estadi de avance" &
+    " del inventario.</font>"
+        Me.Btn_VerInventario.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
+        Me.Btn_VerInventario.TileSize = New System.Drawing.Size(200, 100)
+        '
+        '
+        '
+        Me.Btn_VerInventario.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(155, Byte), Integer))
+        Me.Btn_VerInventario.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(155, Byte), Integer))
+        Me.Btn_VerInventario.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_VerInventario.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(155, Byte), Integer))
+        Me.Btn_VerInventario.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(155, Byte), Integer))
+        Me.Btn_VerInventario.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_VerInventario.TileStyle.PaddingBottom = 4
+        Me.Btn_VerInventario.TileStyle.PaddingLeft = 4
+        Me.Btn_VerInventario.TileStyle.PaddingRight = 4
+        Me.Btn_VerInventario.TileStyle.PaddingTop = 4
+        Me.Btn_VerInventario.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_VerInventario.TitleText = "BakApp"
         '
         'Btn_Sectores
         '
@@ -76,8 +112,8 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Me.Btn_Sectores.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
         Me.Btn_Sectores.Name = "Btn_Sectores"
         Me.Btn_Sectores.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_Sectores.Text = "<font size=""+4""><b>SECTORES</b></font><br/><font size=""-1"">Mantenci�n de zonas</f" &
-    "ont>"
+        Me.Btn_Sectores.Text = "<font size=""+4""><b>UBICACIONES/SECTORES</b></font><font size=""-1"">Mantención de u" &
+    "bicaciones y/o sectores</font>"
         Me.Btn_Sectores.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
         Me.Btn_Sectores.TileSize = New System.Drawing.Size(200, 100)
         '
@@ -96,32 +132,32 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Me.Btn_Sectores.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_Sectores.TitleText = "BakApp"
         '
-        'Btn_Operadores
+        'Btn_Contadores
         '
-        Me.Btn_Operadores.Image = CType(resources.GetObject("Btn_Operadores.Image"), System.Drawing.Image)
-        Me.Btn_Operadores.ImageIndent = New System.Drawing.Point(8, -10)
-        Me.Btn_Operadores.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
-        Me.Btn_Operadores.Name = "Btn_Operadores"
-        Me.Btn_Operadores.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_Operadores.Text = "<font size=""+4""><b>OPERADORES</b></font><br/><font size=""-1"">Crear, editar, elimi" &
+        Me.Btn_Contadores.Image = CType(resources.GetObject("Btn_Contadores.Image"), System.Drawing.Image)
+        Me.Btn_Contadores.ImageIndent = New System.Drawing.Point(8, -10)
+        Me.Btn_Contadores.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_Contadores.Name = "Btn_Contadores"
+        Me.Btn_Contadores.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_Contadores.Text = "<font size=""+4""><b>OPERADORES</b></font><br/><font size=""-1"">Crear, editar, elimi" &
     "nar</font>"
-        Me.Btn_Operadores.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
-        Me.Btn_Operadores.TileSize = New System.Drawing.Size(200, 100)
+        Me.Btn_Contadores.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
+        Me.Btn_Contadores.TileSize = New System.Drawing.Size(200, 100)
         '
         '
         '
-        Me.Btn_Operadores.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(155, Byte), Integer))
-        Me.Btn_Operadores.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(155, Byte), Integer))
-        Me.Btn_Operadores.TileStyle.BackColorGradientAngle = 45
-        Me.Btn_Operadores.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(155, Byte), Integer))
-        Me.Btn_Operadores.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(155, Byte), Integer))
-        Me.Btn_Operadores.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.Btn_Operadores.TileStyle.PaddingBottom = 4
-        Me.Btn_Operadores.TileStyle.PaddingLeft = 4
-        Me.Btn_Operadores.TileStyle.PaddingRight = 4
-        Me.Btn_Operadores.TileStyle.PaddingTop = 4
-        Me.Btn_Operadores.TileStyle.TextColor = System.Drawing.Color.White
-        Me.Btn_Operadores.TitleText = "BakApp"
+        Me.Btn_Contadores.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(155, Byte), Integer))
+        Me.Btn_Contadores.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(155, Byte), Integer))
+        Me.Btn_Contadores.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_Contadores.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(155, Byte), Integer))
+        Me.Btn_Contadores.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(155, Byte), Integer))
+        Me.Btn_Contadores.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_Contadores.TileStyle.PaddingBottom = 4
+        Me.Btn_Contadores.TileStyle.PaddingLeft = 4
+        Me.Btn_Contadores.TileStyle.PaddingRight = 4
+        Me.Btn_Contadores.TileStyle.PaddingTop = 4
+        Me.Btn_Contadores.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_Contadores.TitleText = "BakApp"
         '
         'Btn_Parejas
         '
@@ -149,6 +185,7 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Me.Btn_Parejas.TileStyle.PaddingTop = 4
         Me.Btn_Parejas.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_Parejas.TitleText = "BakApp"
+        Me.Btn_Parejas.Visible = False
         '
         'Btn_Plan
         '
@@ -176,6 +213,7 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Me.Btn_Plan.TileStyle.PaddingTop = 4
         Me.Btn_Plan.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_Plan.TitleText = "BakApp"
+        Me.Btn_Plan.Visible = False
         '
         'Lbl_Nombre_Inventario
         '
@@ -188,7 +226,7 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Me.Lbl_Nombre_Inventario.ForeColor = System.Drawing.Color.Black
         Me.Lbl_Nombre_Inventario.Location = New System.Drawing.Point(32, 12)
         Me.Lbl_Nombre_Inventario.Name = "Lbl_Nombre_Inventario"
-        Me.Lbl_Nombre_Inventario.Size = New System.Drawing.Size(525, 23)
+        Me.Lbl_Nombre_Inventario.Size = New System.Drawing.Size(662, 23)
         Me.Lbl_Nombre_Inventario.TabIndex = 38
         Me.Lbl_Nombre_Inventario.Text = "INVENTARIO: NOMBRE DEL INVENTARIO ACTIVO"
         '
@@ -202,13 +240,91 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Me.Line1.TabIndex = 39
         Me.Line1.Text = "Line1"
         '
+        'Bar1
+        '
+        Me.Bar1.AntiAlias = True
+        Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_FotoStock, Me.Btn_Salir})
+        Me.Bar1.Location = New System.Drawing.Point(0, 302)
+        Me.Bar1.Name = "Bar1"
+        Me.Bar1.Size = New System.Drawing.Size(706, 41)
+        Me.Bar1.Stretch = True
+        Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Bar1.TabIndex = 40
+        Me.Bar1.TabStop = False
+        Me.Bar1.Text = "Bar1"
+        '
+        'Btn_FotoStock
+        '
+        Me.Btn_FotoStock.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_FotoStock.ForeColor = System.Drawing.Color.Black
+        Me.Btn_FotoStock.Image = CType(resources.GetObject("Btn_FotoStock.Image"), System.Drawing.Image)
+        Me.Btn_FotoStock.ImageAlt = CType(resources.GetObject("Btn_FotoStock.ImageAlt"), System.Drawing.Image)
+        Me.Btn_FotoStock.Name = "Btn_FotoStock"
+        Me.Btn_FotoStock.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_TomarFotoStock, Me.Btn_EliminarFotoStock})
+        Me.Btn_FotoStock.Text = "Foto Stock"
+        Me.Btn_FotoStock.Tooltip = "Limpiar todo"
+        '
+        'Btn_TomarFotoStock
+        '
+        Me.Btn_TomarFotoStock.Image = CType(resources.GetObject("Btn_TomarFotoStock.Image"), System.Drawing.Image)
+        Me.Btn_TomarFotoStock.ImageAlt = CType(resources.GetObject("Btn_TomarFotoStock.ImageAlt"), System.Drawing.Image)
+        Me.Btn_TomarFotoStock.Name = "Btn_TomarFotoStock"
+        Me.Btn_TomarFotoStock.Text = "Tomar Foto Stock"
+        '
+        'Btn_EliminarFotoStock
+        '
+        Me.Btn_EliminarFotoStock.Image = CType(resources.GetObject("Btn_EliminarFotoStock.Image"), System.Drawing.Image)
+        Me.Btn_EliminarFotoStock.ImageAlt = CType(resources.GetObject("Btn_EliminarFotoStock.ImageAlt"), System.Drawing.Image)
+        Me.Btn_EliminarFotoStock.Name = "Btn_EliminarFotoStock"
+        Me.Btn_EliminarFotoStock.Text = "Eliminar Foto Stock"
+        '
+        'Btn_Salir
+        '
+        Me.Btn_Salir.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Salir.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Salir.Image = CType(resources.GetObject("Btn_Salir.Image"), System.Drawing.Image)
+        Me.Btn_Salir.ImageAlt = CType(resources.GetObject("Btn_Salir.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Salir.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
+        Me.Btn_Salir.Name = "Btn_Salir"
+        Me.Btn_Salir.Tooltip = "Salir"
+        '
+        'Metro_Bar_Color
+        '
+        Me.Metro_Bar_Color.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Metro_Bar_Color.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Metro_Bar_Color.ContainerControlProcessDialogKey = True
+        Me.Metro_Bar_Color.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Metro_Bar_Color.DragDropSupport = True
+        Me.Metro_Bar_Color.Font = New System.Drawing.Font("Segoe UI", 10.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Metro_Bar_Color.ForeColor = System.Drawing.Color.Black
+        Me.Metro_Bar_Color.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Estatus})
+        Me.Metro_Bar_Color.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
+        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 343)
+        Me.Metro_Bar_Color.Name = "Metro_Bar_Color"
+        Me.Metro_Bar_Color.Size = New System.Drawing.Size(706, 22)
+        Me.Metro_Bar_Color.TabIndex = 56
+        Me.Metro_Bar_Color.Text = "MetroStatusBar1"
+        '
+        'Lbl_Estatus
+        '
+        Me.Lbl_Estatus.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Lbl_Estatus.Name = "Lbl_Estatus"
+        Me.Lbl_Estatus.Text = "LabelItem2"
+        '
         'Frm_Inv_Ctrl_Inventario
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(784, 561)
+        Me.ClientSize = New System.Drawing.Size(706, 365)
+        Me.Controls.Add(Me.Bar1)
         Me.Controls.Add(Me.Line1)
         Me.Controls.Add(Me.Lbl_Nombre_Inventario)
+        Me.Controls.Add(Me.Metro_Bar_Color)
         Me.Controls.Add(Me.MetroTilePanel1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -220,6 +336,7 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "MANTENCION DE INVENTARIO ACTIVO"
+        CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -227,9 +344,17 @@ Partial Class Frm_Inv_Ctrl_Inventario
     Friend WithEvents MetroTilePanel1 As DevComponents.DotNetBar.Metro.MetroTilePanel
     Friend WithEvents ConsultaPreciosContenedor As DevComponents.DotNetBar.ItemContainer
     Private WithEvents Btn_Sectores As DevComponents.DotNetBar.Metro.MetroTileItem
-    Private WithEvents Btn_Operadores As DevComponents.DotNetBar.Metro.MetroTileItem
+    Private WithEvents Btn_Contadores As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Parejas As DevComponents.DotNetBar.Metro.MetroTileItem
     Friend WithEvents Lbl_Nombre_Inventario As DevComponents.DotNetBar.LabelX
     Friend WithEvents Line1 As DevComponents.DotNetBar.Controls.Line
     Private WithEvents Btn_Plan As DevComponents.DotNetBar.Metro.MetroTileItem
+    Private WithEvents Btn_VerInventario As DevComponents.DotNetBar.Metro.MetroTileItem
+    Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
+    Friend WithEvents Btn_Salir As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Metro_Bar_Color As DevComponents.DotNetBar.Metro.MetroStatusBar
+    Public WithEvents Lbl_Estatus As DevComponents.DotNetBar.LabelItem
+    Public WithEvents Btn_FotoStock As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_TomarFotoStock As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_EliminarFotoStock As DevComponents.DotNetBar.ButtonItem
 End Class

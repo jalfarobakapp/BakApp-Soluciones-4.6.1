@@ -1407,4 +1407,10 @@ Public Class Frm_Stmp_Listado
     Private Sub LabelX1_Click(sender As Object, e As EventArgs) Handles LabelX1.Click
         Sb_Filtrar()
     End Sub
+
+    Private Sub Txt_Filtrar_TextChanged(sender As Object, e As EventArgs) Handles Txt_Filtrar.TextChanged
+        If Txt_Filtrar.Text = String.Empty Then
+            Sb_Filtrar()
+        End If
+    End Sub
 End Class

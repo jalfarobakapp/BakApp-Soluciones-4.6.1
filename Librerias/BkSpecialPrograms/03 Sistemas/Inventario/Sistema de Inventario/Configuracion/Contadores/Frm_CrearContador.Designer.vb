@@ -1,5 +1,5 @@
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class Frm_Operadores_Crear
+Partial Class Frm_CrearContador
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
     'Form overrides dispose to clean up the component list.
@@ -22,22 +22,17 @@ Partial Class Frm_Operadores_Crear
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Operadores_Crear))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_CrearContador))
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
-        Me.Sw_Habilitado = New DevComponents.DotNetBar.Controls.SwitchButton()
+        Me.Chk_Activo = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Txt_Email = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Telefono = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_Direccion = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Nombre = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Rut = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_Codigo = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
@@ -49,24 +44,19 @@ Partial Class Frm_Operadores_Crear
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.GroupPanel1.Controls.Add(Me.LabelX7)
-        Me.GroupPanel1.Controls.Add(Me.Sw_Habilitado)
+        Me.GroupPanel1.Controls.Add(Me.Chk_Activo)
         Me.GroupPanel1.Controls.Add(Me.Txt_Email)
         Me.GroupPanel1.Controls.Add(Me.LabelX6)
         Me.GroupPanel1.Controls.Add(Me.Txt_Telefono)
         Me.GroupPanel1.Controls.Add(Me.LabelX5)
-        Me.GroupPanel1.Controls.Add(Me.Txt_Direccion)
-        Me.GroupPanel1.Controls.Add(Me.LabelX4)
         Me.GroupPanel1.Controls.Add(Me.Txt_Nombre)
         Me.GroupPanel1.Controls.Add(Me.LabelX3)
         Me.GroupPanel1.Controls.Add(Me.Txt_Rut)
         Me.GroupPanel1.Controls.Add(Me.LabelX2)
-        Me.GroupPanel1.Controls.Add(Me.Txt_Codigo)
-        Me.GroupPanel1.Controls.Add(Me.LabelX1)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 12)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(544, 265)
+        Me.GroupPanel1.Size = New System.Drawing.Size(544, 177)
         '
         '
         '
@@ -98,35 +88,24 @@ Partial Class Frm_Operadores_Crear
         Me.GroupPanel1.TabIndex = 0
         Me.GroupPanel1.Text = "Datos del operador"
         '
-        'LabelX7
+        'Chk_Activo
         '
-        Me.LabelX7.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX7.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX7.ForeColor = System.Drawing.Color.Black
-        Me.LabelX7.Location = New System.Drawing.Point(3, 202)
-        Me.LabelX7.Name = "LabelX7"
-        Me.LabelX7.Size = New System.Drawing.Size(75, 23)
-        Me.LabelX7.TabIndex = 13
-        Me.LabelX7.Text = "Estado"
-        '
-        'Sw_Habilitado
-        '
-        Me.Sw_Habilitado.BackColor = System.Drawing.Color.White
+        Me.Chk_Activo.BackColor = System.Drawing.Color.Transparent
         '
         '
         '
-        Me.Sw_Habilitado.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Sw_Habilitado.ForeColor = System.Drawing.Color.Black
-        Me.Sw_Habilitado.Location = New System.Drawing.Point(84, 202)
-        Me.Sw_Habilitado.Name = "Sw_Habilitado"
-        Me.Sw_Habilitado.OffText = "Deshabilitado"
-        Me.Sw_Habilitado.OnText = "Habilitado"
-        Me.Sw_Habilitado.Size = New System.Drawing.Size(108, 22)
-        Me.Sw_Habilitado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Sw_Habilitado.TabIndex = 12
+        Me.Chk_Activo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Activo.CheckBoxImageChecked = CType(resources.GetObject("Chk_Activo.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Activo.Enabled = False
+        Me.Chk_Activo.FocusCuesEnabled = False
+        Me.Chk_Activo.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Activo.Location = New System.Drawing.Point(3, 125)
+        Me.Chk_Activo.Name = "Chk_Activo"
+        Me.Chk_Activo.Size = New System.Drawing.Size(115, 17)
+        Me.Chk_Activo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Activo.TabIndex = 31
+        Me.Chk_Activo.TabStop = False
+        Me.Chk_Activo.Text = "Inventario Activo"
         '
         'Txt_Email
         '
@@ -138,7 +117,7 @@ Partial Class Frm_Operadores_Crear
         Me.Txt_Email.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Email.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Email.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Email.Location = New System.Drawing.Point(84, 163)
+        Me.Txt_Email.Location = New System.Drawing.Point(84, 97)
         Me.Txt_Email.MaxLength = 100
         Me.Txt_Email.Name = "Txt_Email"
         Me.Txt_Email.PreventEnterBeep = True
@@ -153,7 +132,7 @@ Partial Class Frm_Operadores_Crear
         '
         Me.LabelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX6.ForeColor = System.Drawing.Color.Black
-        Me.LabelX6.Location = New System.Drawing.Point(3, 163)
+        Me.LabelX6.Location = New System.Drawing.Point(3, 94)
         Me.LabelX6.Name = "LabelX6"
         Me.LabelX6.Size = New System.Drawing.Size(75, 23)
         Me.LabelX6.TabIndex = 10
@@ -169,7 +148,7 @@ Partial Class Frm_Operadores_Crear
         Me.Txt_Telefono.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Telefono.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Telefono.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Telefono.Location = New System.Drawing.Point(84, 135)
+        Me.Txt_Telefono.Location = New System.Drawing.Point(84, 69)
         Me.Txt_Telefono.MaxLength = 20
         Me.Txt_Telefono.Name = "Txt_Telefono"
         Me.Txt_Telefono.PreventEnterBeep = True
@@ -184,42 +163,11 @@ Partial Class Frm_Operadores_Crear
         '
         Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX5.ForeColor = System.Drawing.Color.Black
-        Me.LabelX5.Location = New System.Drawing.Point(3, 135)
+        Me.LabelX5.Location = New System.Drawing.Point(3, 66)
         Me.LabelX5.Name = "LabelX5"
         Me.LabelX5.Size = New System.Drawing.Size(75, 23)
         Me.LabelX5.TabIndex = 8
         Me.LabelX5.Text = "Teléfono"
-        '
-        'Txt_Direccion
-        '
-        Me.Txt_Direccion.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_Direccion.Border.Class = "TextBoxBorder"
-        Me.Txt_Direccion.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Direccion.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_Direccion.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Direccion.Location = New System.Drawing.Point(84, 107)
-        Me.Txt_Direccion.MaxLength = 100
-        Me.Txt_Direccion.Name = "Txt_Direccion"
-        Me.Txt_Direccion.PreventEnterBeep = True
-        Me.Txt_Direccion.Size = New System.Drawing.Size(440, 22)
-        Me.Txt_Direccion.TabIndex = 7
-        '
-        'LabelX4
-        '
-        Me.LabelX4.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(3, 107)
-        Me.LabelX4.Name = "LabelX4"
-        Me.LabelX4.Size = New System.Drawing.Size(75, 23)
-        Me.LabelX4.TabIndex = 6
-        Me.LabelX4.Text = "Dirección"
         '
         'Txt_Nombre
         '
@@ -231,7 +179,7 @@ Partial Class Frm_Operadores_Crear
         Me.Txt_Nombre.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Nombre.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Nombre.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Nombre.Location = New System.Drawing.Point(84, 79)
+        Me.Txt_Nombre.Location = New System.Drawing.Point(84, 41)
         Me.Txt_Nombre.MaxLength = 50
         Me.Txt_Nombre.Name = "Txt_Nombre"
         Me.Txt_Nombre.PreventEnterBeep = True
@@ -246,7 +194,7 @@ Partial Class Frm_Operadores_Crear
         '
         Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX3.ForeColor = System.Drawing.Color.Black
-        Me.LabelX3.Location = New System.Drawing.Point(3, 79)
+        Me.LabelX3.Location = New System.Drawing.Point(3, 41)
         Me.LabelX3.Name = "LabelX3"
         Me.LabelX3.Size = New System.Drawing.Size(75, 23)
         Me.LabelX3.TabIndex = 4
@@ -262,7 +210,7 @@ Partial Class Frm_Operadores_Crear
         Me.Txt_Rut.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Rut.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Rut.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Rut.Location = New System.Drawing.Point(84, 51)
+        Me.Txt_Rut.Location = New System.Drawing.Point(84, 13)
         Me.Txt_Rut.MaxLength = 10
         Me.Txt_Rut.Name = "Txt_Rut"
         Me.Txt_Rut.PreventEnterBeep = True
@@ -277,44 +225,11 @@ Partial Class Frm_Operadores_Crear
         '
         Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX2.ForeColor = System.Drawing.Color.Black
-        Me.LabelX2.Location = New System.Drawing.Point(3, 51)
+        Me.LabelX2.Location = New System.Drawing.Point(3, 13)
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(75, 23)
         Me.LabelX2.TabIndex = 2
         Me.LabelX2.Text = "Rut"
-        '
-        'Txt_Codigo
-        '
-        Me.Txt_Codigo.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_Codigo.Border.Class = "TextBoxBorder"
-        Me.Txt_Codigo.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Codigo.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_Codigo.Enabled = False
-        Me.Txt_Codigo.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Codigo.Location = New System.Drawing.Point(84, 22)
-        Me.Txt_Codigo.MaxLength = 8
-        Me.Txt_Codigo.Name = "Txt_Codigo"
-        Me.Txt_Codigo.PreventEnterBeep = True
-        Me.Txt_Codigo.Size = New System.Drawing.Size(100, 22)
-        Me.Txt_Codigo.TabIndex = 1
-        Me.Txt_Codigo.WatermarkText = "En Construcción..."
-        '
-        'LabelX1
-        '
-        Me.LabelX1.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX1.ForeColor = System.Drawing.Color.Black
-        Me.LabelX1.Location = New System.Drawing.Point(3, 22)
-        Me.LabelX1.Name = "LabelX1"
-        Me.LabelX1.Size = New System.Drawing.Size(75, 23)
-        Me.LabelX1.TabIndex = 0
-        Me.LabelX1.Text = "Código Interno"
         '
         'Bar1
         '
@@ -322,7 +237,7 @@ Partial Class Frm_Operadores_Crear
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Eliminar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 288)
+        Me.Bar1.Location = New System.Drawing.Point(0, 200)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(563, 41)
         Me.Bar1.Stretch = True
@@ -349,19 +264,20 @@ Partial Class Frm_Operadores_Crear
         Me.Btn_Eliminar.Name = "Btn_Eliminar"
         Me.Btn_Eliminar.Tooltip = "Eliminar"
         '
-        'Frm_Operadores_Crear
+        'Frm_CrearContador
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(563, 329)
+        Me.ClientSize = New System.Drawing.Size(563, 241)
         Me.Controls.Add(Me.Bar1)
         Me.Controls.Add(Me.GroupPanel1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "Frm_Operadores_Crear"
+        Me.Name = "Frm_CrearContador"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "FICHA DEL OPERADOR"
@@ -376,17 +292,12 @@ Partial Class Frm_Operadores_Crear
     Friend WithEvents LabelX6 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Txt_Telefono As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
-    Friend WithEvents Txt_Direccion As DevComponents.DotNetBar.Controls.TextBoxX
-    Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Txt_Nombre As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Txt_Rut As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
-    Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
-    Friend WithEvents Sw_Habilitado As DevComponents.DotNetBar.Controls.SwitchButton
     Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
     Friend WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Eliminar As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Txt_Codigo As DevComponents.DotNetBar.Controls.TextBoxX
-    Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Chk_Activo As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

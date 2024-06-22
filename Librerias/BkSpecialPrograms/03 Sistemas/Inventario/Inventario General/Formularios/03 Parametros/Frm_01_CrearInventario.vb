@@ -44,7 +44,7 @@ Public Class Frm_01_CrearInventario
             Txt_FuncCargo.Tag = .FuncionarioCargo
             Txt_FuncCargo.Text = .NombreFuncionario
             Dtp_Fecha_Inventario.Value = .Fecha_Inventario
-            Chk_Estado.Checked = .Estado
+            Chk_Estado.Checked = .Activo
 
         End With
 
@@ -64,7 +64,7 @@ Public Class Frm_01_CrearInventario
             .FuncionarioCargo = Txt_FuncCargo.Tag
             .NombreFuncionario = Txt_FuncCargo.Text
             .Fecha_Inventario = Dtp_Fecha_Inventario.Value
-            .Estado = Chk_Estado.Checked
+            .Activo = Chk_Estado.Checked
 
         End With
 
@@ -230,16 +230,6 @@ Public Class Frm_01_CrearInventario
             Return
         End If
 
-        'Dim DatosFotos As Long
-        'DatosFotos = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "ZW_TmpInvFotoInventario", "IdInventario = " & _IdInventario)
-
-        'If DatosFotos > 0 Then
-        '    MessageBoxEx.Show("No es posible tomar una foto del stock de la bodega, ya que existen datos de una foto anterior." & vbCrLf &
-        '                      "Para poder obtener una nueva foto debe eliminar el congelado anterior", "Foto Stock", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-
-        '    Return
-        'End If
-
         Dim _Mensaje As LsValiciones.Mensajes
         _Mensaje = Cl_Inventario.Fx_CrearFoto(_IdInventario)
 
@@ -249,7 +239,7 @@ Public Class Frm_01_CrearInventario
             Me.Close()
         End If
 
-        'CrearFoto()
+
 
     End Sub
 

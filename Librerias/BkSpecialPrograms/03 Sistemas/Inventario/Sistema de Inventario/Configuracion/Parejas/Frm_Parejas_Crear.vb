@@ -174,10 +174,10 @@ Public Class Frm_Parejas_Crear
                 Dim _Id_Operador As Integer
                 Dim _Grabar As Boolean
 
-                Dim Fm As New Frm_Operadores_Crear(_Id_Inventario, _Id_Operador)
-                Fm.ShowDialog(Me)
-                _Grabar = Fm.Grabar
-                Fm.Dispose()
+                'Dim Fm As New Frm_CrearContador(_Id_Inventario, _Id_Operador)
+                'Fm.ShowDialog(Me)
+                '_Grabar = Fm.Grabar
+                'Fm.Dispose()
 
                 If Not _Grabar Then
                     Return
@@ -230,9 +230,9 @@ Public Class Frm_Parejas_Crear
     End Sub
 
     Private Sub Btn_Crear_Operador_Click(sender As Object, e As EventArgs) Handles Btn_Crear_Operador.Click
-        Dim Fm As New Frm_Operadores(_Id_Inventario)
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
+        'Dim Fm As New Frm_Contadores(_Id_Inventario)
+        'Fm.ShowDialog(Me)
+        'Fm.Dispose()
     End Sub
 
     Private Sub Btn_Ubicaciones_Plan_Click(sender As Object, e As EventArgs) Handles Btn_Ubicaciones_Plan.Click

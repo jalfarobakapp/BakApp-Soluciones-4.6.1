@@ -27,9 +27,18 @@ Public Class Frm_Inv_Inventarios
 
     Sub Sb_Actualizar_Grilla()
 
+        Dim _Condicion As String
+
+        If Chk_Activos.Checked Then
+            _Condicion = "Activo = 1"
+        Else
+            _Condicion = "1 = 1"
+        End If
+
         Consulta_sql = "Select *," &
-                       "Case When Estado = 1 Then 'Abierto' Else 'Cerrado' End as Estado_" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_TmpInv_History"
+                       "Case When Activo = 1 Then 'Abierto' Else 'Cerrado' End as Estado_Str" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Inv_Inventario" & vbCrLf &
+                       "Where " & _Condicion
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
@@ -41,10 +50,10 @@ Public Class Frm_Inv_Inventarios
 
             OcultarEncabezadoGrilla(Grilla_Inventarios, True)
 
-            .Columns("IdInventario").Width = 40
-            .Columns("IdInventario").HeaderText = "ID"
-            .Columns("IdInventario").Visible = True
-            .Columns("IdInventario").DisplayIndex = _DisplayIndex
+            .Columns("Id").Width = 40
+            .Columns("Id").HeaderText = "ID"
+            .Columns("Id").Visible = True
+            .Columns("Id").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Fecha_Inventario").Width = 70
@@ -77,10 +86,10 @@ Public Class Frm_Inv_Inventarios
             .Columns("NombreInventario").DisplayIndex = _DisplayIndex
 
             _DisplayIndex += 1
-            .Columns("Estado").Width = 40
-            .Columns("Estado").HeaderText = "Activo"
-            .Columns("Estado").Visible = True
-            .Columns("Estado").DisplayIndex = _DisplayIndex
+            .Columns("Activo").Width = 40
+            .Columns("Activo").HeaderText = "Activo"
+            .Columns("Activo").Visible = True
+            .Columns("Activo").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
         End With
@@ -131,15 +140,7 @@ Public Class Frm_Inv_Inventarios
     End Sub
 
     Private Sub Grilla_Inventarios_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Inventarios.CellDoubleClick
-
-        Dim _Fila As DataGridViewRow = Grilla_Inventarios.Rows(Grilla_Inventarios.CurrentRow.Index)
-
-        Dim _IdInventario = _Fila.Cells("IdInventario").Value
-
-        Dim Fm As New Frm_01_CrearInventario(_IdInventario)
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
-
+        Call Btn_VerInventario_Click(Nothing, Nothing)
     End Sub
 
     Private Sub Sb_Grilla_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
@@ -164,34 +165,23 @@ Public Class Frm_Inv_Inventarios
 
     End Sub
 
-    Private Sub Btn_ActivarInventario_Click(sender As Object, e As EventArgs) Handles Btn_ActivarInventario.Click
-
-        Dim _Fila As DataGridViewRow = Grilla_Inventarios.CurrentRow
-        Dim _IdInventario As Integer = _Fila.Cells("IdInventario").Value
-
-        Consulta_sql = "Update " & _Global_BaseBk & "Zw_TmpInv_History Set Estado = 0" & vbCrLf &
-                       "Update " & _Global_BaseBk & "Zw_TmpInv_History Set Estado = 1" & vbCrLf &
-                       "Where IdInventario = " & _IdInventario
-
-        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-            MessageBoxEx.Show(Me, "Inventario activo", "Activar inventario", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Sb_Actualizar_Grilla()
-            BuscarDatoEnGrilla(_IdInventario, "IdInventario", Grilla_Inventarios)
-        End If
-
-    End Sub
-
     Private Sub Btn_EditarInventario_Click(sender As Object, e As EventArgs) Handles Btn_EditarInventario.Click
-        Call Grilla_Inventarios_CellDoubleClick(Nothing, Nothing)
+        Dim _Fila As DataGridViewRow = Grilla_Inventarios.Rows(Grilla_Inventarios.CurrentRow.Index)
+
+        Dim _Id = _Fila.Cells("Id").Value
+
+        Dim Fm As New Frm_01_CrearInventario(_Id)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
     End Sub
 
     Private Sub Btn_EliminarInventario_Click(sender As Object, e As EventArgs) Handles Btn_EliminarInventario.Click
 
-        Dim _Fila As DataGridViewRow = Grilla_Inventarios.Rows(Grilla_Inventarios.CurrentRow.Index)
+        Dim _Fila As DataGridViewRow = Grilla_Inventarios.CurrentRow
 
-        Dim _IdInventario = _Fila.Cells("IdInventario").Value
+        Dim _Id = _Fila.Cells("Id").Value
 
-        Dim Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "ZW_TmpInvFotoInventario", "IdInventario = " & _IdInventario)
+        Dim Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_FotoInventario", "IdInventario = " & _Id)
 
         If CBool(Reg) Then
             MessageBoxEx.Show(Me, "Actualmente hay operaciones registradas para este inventario. " & vbCrLf &
@@ -204,10 +194,22 @@ Public Class Frm_Inv_Inventarios
             Return
         End If
 
-        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_TmpInv_History Where IdInventario = " & _IdInventario
+        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Inv_Inventario Where Id = " & _Id
         If _Sql.Ej_consulta_IDU(Consulta_sql) Then
             Grilla_Inventarios.Rows.RemoveAt(Grilla_Inventarios.CurrentRow.Index)
         End If
+
+    End Sub
+
+    Private Sub Btn_VerInventario_Click(sender As Object, e As EventArgs) Handles Btn_VerInventario.Click
+
+        Dim _Fila As DataGridViewRow = Grilla_Inventarios.CurrentRow
+
+        Dim _Id = _Fila.Cells("Id").Value
+
+        Dim Fm As New Frm_Inv_Ctrl_Inventario(_Id)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 End Class

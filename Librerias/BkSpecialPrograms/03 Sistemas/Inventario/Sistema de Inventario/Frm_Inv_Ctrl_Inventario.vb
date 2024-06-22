@@ -1,4 +1,6 @@
-﻿Public Class Frm_Inv_Ctrl_Inventario
+﻿Imports DevComponents.DotNetBar
+
+Public Class Frm_Inv_Ctrl_Inventario
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
@@ -25,22 +27,6 @@
     End Sub
 
 
-    Private Sub Btn_Operadores_Click(sender As Object, e As EventArgs) Handles Btn_Operadores.Click
-
-        Dim Fm As New Frm_Operadores(_Id)
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
-
-    End Sub
-
-    Private Sub Btn_Parejas_Click(sender As Object, e As EventArgs) Handles Btn_Parejas.Click
-
-        Dim Fm As New Frm_Parejas(_Id)
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
-
-    End Sub
-
     Private Sub Btn_Sectores_Click(sender As Object, e As EventArgs) Handles Btn_Sectores.Click
 
         Dim Fm As New Frm_Inv_Ubicaciones(_Id)
@@ -57,5 +43,56 @@
 
     End Sub
 
+    Private Sub Btn_Salir_Click(sender As Object, e As EventArgs) Handles Btn_Salir.Click
+        Me.Close()
+    End Sub
+
+    Private Sub Btn_TomarFotoStock_Click(sender As Object, e As EventArgs) Handles Btn_TomarFotoStock.Click
+
+        If Not Fx_Tiene_Permiso(Me, "In0006") Then
+            Return
+        End If
+
+        Dim _Mensaje As LsValiciones.Mensajes
+        _Mensaje = Cl_Inventario.Fx_CrearFoto(_Id)
+
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+
+        If _Mensaje.EsCorrecto Then
+            Me.Close()
+        End If
+
+    End Sub
+
+    Private Sub Btn_EliminarFotoStock_Click(sender As Object, e As EventArgs) Handles Btn_EliminarFotoStock.Click
+        If Not Fx_Tiene_Permiso(Me, "In0010") Then
+            Return
+        End If
+
+        Dim _Mensaje As LsValiciones.Mensajes
+        _Mensaje = Cl_Inventario.Fx_EliminarFoto(Me, _Id)
+
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+    End Sub
+
+    Private Sub Btn_VerInventario_Click(sender As Object, e As EventArgs) Handles Btn_VerInventario.Click
+
+        If Not Fx_Tiene_Permiso(Me, "In0011") Then
+            Return
+        End If
+
+        Dim Fm As New Frm_01_Inventario_Actual(_Id)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_Contadores_Click(sender As Object, e As EventArgs) Handles Btn_Contadores.Click
+
+        Dim Fm As New Frm_Contadores
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
 
 End Class

@@ -839,6 +839,7 @@
     </Compile>
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Conceptos.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Demonio_FacAuto.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Contador.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Pdp_CPT_MzDet.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Pdp_CPT_MzDetIngFab.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Pdp_CPT_MzEnc.vb" />
@@ -864,6 +865,7 @@
     <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\03 Parametros\Frm_Inv_Inventarios.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Contadores\Cl_Contador.vb" />
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Ubicaciones\Cl_InvUbicacion.vb" />
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Ubicaciones\Frm_Inv_UbicacionesImporExcel.Designer.vb">
       <DependentUpon>Frm_Inv_UbicacionesImporExcel.vb</DependentUpon>
@@ -1920,16 +1922,16 @@
     <Compile Include="03 Sistemas\Inventario\Inventario parcializado\Formularios\Frm_Crear_Guias_De_Ajuste_De_Stock.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Operadores\Frm_Operadores.Designer.vb">
-      <DependentUpon>Frm_Operadores.vb</DependentUpon>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Contadores\Frm_Contadores.Designer.vb">
+      <DependentUpon>Frm_Contadores.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Operadores\Frm_Operadores.vb">
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Contadores\Frm_Contadores.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Operadores\Frm_Operadores_Crear.Designer.vb">
-      <DependentUpon>Frm_Operadores_Crear.vb</DependentUpon>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Contadores\Frm_CrearContador.Designer.vb">
+      <DependentUpon>Frm_CrearContador.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Operadores\Frm_Operadores_Crear.vb">
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Contadores\Frm_CrearContador.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Parejas\Frm_Parejas.Designer.vb">
@@ -5192,11 +5194,11 @@
     <EmbeddedResource Include="03 Sistemas\Inventario\Inventario parcializado\Formularios\Frm_Crear_Guias_De_Ajuste_De_Stock.resx">
       <DependentUpon>Frm_Crear_Guias_De_Ajuste_De_Stock.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Operadores\Frm_Operadores.resx">
-      <DependentUpon>Frm_Operadores.vb</DependentUpon>
+    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Contadores\Frm_Contadores.resx">
+      <DependentUpon>Frm_Contadores.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Operadores\Frm_Operadores_Crear.resx">
-      <DependentUpon>Frm_Operadores_Crear.vb</DependentUpon>
+    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Contadores\Frm_CrearContador.resx">
+      <DependentUpon>Frm_CrearContador.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Parejas\Frm_Parejas.resx">
       <DependentUpon>Frm_Parejas.vb</DependentUpon>

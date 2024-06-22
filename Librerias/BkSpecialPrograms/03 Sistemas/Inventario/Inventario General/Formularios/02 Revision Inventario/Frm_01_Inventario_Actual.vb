@@ -5,11 +5,7 @@ Public Class Frm_01_Inventario_Actual
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-
     Public IdBodega As String
-
-    Private _IdInventario As Integer
-    Private _Row_InventarioActivo As DataRow
 
     Private _Fecha_Inventario As Date
     Private _Empresa As String
@@ -20,7 +16,10 @@ Public Class Frm_01_Inventario_Actual
 
     Dim _CODIGO_BUSQUEDA As String
 
-    Public Sub New(_IdInventario As Integer)
+    Dim _Id As Integer
+    Dim _Cl_inventario As New Cl_Inventario
+
+    Public Sub New(_Id As Integer)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -28,10 +27,8 @@ Public Class Frm_01_Inventario_Actual
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
         Sb_Formato_Generico_Grilla(Grilla, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
 
-        Me._IdInventario = _IdInventario
-
-        Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_TmpInv_History Where IdInventario = " & _IdInventario
-        _Row_InventarioActivo = _Sql.Fx_Get_DataRow(Consulta_sql)
+        Me._Id = _Id
+        _Cl_inventario.Fx_Llenar_Zw_Inv_Inventario(_Id)
 
         Sb_Color_Botones_Barra(Bar1)
         Sb_Color_Botones_Barra(Bar2)
@@ -40,16 +37,20 @@ Public Class Frm_01_Inventario_Actual
 
     Private Sub Frm_Inventario_Actual_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
-        _Fecha_Inventario = _Row_InventarioActivo.Item("Fecha_Inventario")
-        _Empresa = _Row_InventarioActivo.Item("Empresa")
-        _Sucursal = _Row_InventarioActivo.Item("Sucursal")
-        _Bodega = _Row_InventarioActivo.Item("Bodega")
+        With _Cl_inventario.Zw_Inv_Inventario
 
-        ActualizarGrillaFoto("")
+            _Fecha_Inventario = _Cl_inventario.Zw_Inv_Inventario.Fecha_Inventario
+            _Empresa = .Empresa
+            _Sucursal = .Sucursal
+            _Bodega = _Bodega
+
+        End With
+
+        Sb_ActualizarGrilla("")
 
     End Sub
 
-    Private Sub ActualizarGrillaFoto(_Codigo_busqueda As String)
+    Private Sub Sb_ActualizarGrilla(_Codigo_busqueda As String)
 
         Grilla.DataSource = Nothing
         'Ds_Inventario.Clear()
@@ -87,7 +88,7 @@ Public Class Frm_01_Inventario_Actual
             '               "When Recontado = 1 then ISNULL(Cantidad_Recontada, 0)" & vbCrLf &
             '               "End) AS TotalInv" & vbCrLf &
             '               "From " & _Global_BaseBk & "ZW_TmpInvProductosInventariados" & vbCrLf &
-            '               "Where IdInventario = " & _IdInventario
+            '               "Where IdInventario = " & _Id
 
             '_Sql.Ej_consulta_IDU(Consulta_sql)
 
@@ -102,18 +103,18 @@ Public Class Frm_01_Inventario_Actual
             ''Consulta_sql = Replace(Consulta_sql, "@Mes", Inventario_MesActivo)
             ''Consulta_sql = Replace(Consulta_sql, "@Dia", inventario_DiaActivo)
 
-            'Consulta_sql = Replace(Consulta_sql, "#IdInventario#", _IdInventario)
+            'Consulta_sql = Replace(Consulta_sql, "#IdInventario#", _Id)
 
             ''Consulta_sql = Replace(Consulta_sql, "#FechaInv#", Format(_Fecha_Inv_Activo, "yyyyMMdd"))
             'Consulta_sql = Replace(Consulta_sql, "#TablaPaso_2#", Tbl_Paso_2)
             'Consulta_sql = Replace(Consulta_sql, "#TablaPaso#", Tbl_Paso)
 
 
-            Consulta_sql = "Declare @IdInventario Int = " & _IdInventario & "
+            Consulta_sql = "Declare @IdInventario Int = " & _Id & "
          
 UPDATE F
 SET F.Cant_Inventariada = P.CantidadTotal
-FROM " & _Global_BaseBk & "ZW_TmpInvFotoInventario AS F
+FROM " & _Global_BaseBk & "Zw_Inv_Inventario AS F
 INNER JOIN (
     SELECT Codproducto, SUM(CantidadInventariada) AS CantidadTotal
     FROM ZW_TmpInvProductosInventariados
@@ -121,18 +122,18 @@ INNER JOIN (
 ) AS P
 ON F.CodigoPR = P.Codproducto                                
                             
-Update " & _Global_BaseBk & "ZW_TmpInvFotoInventario Set 
+Update " & _Global_BaseBk & "Zw_Inv_Inventario Set 
                        Dif_Inv_Cantidad = Cant_Inventariada - StFisicoUd1,
                        Total_Costo_Foto = Case When StFisicoUd1 < 0 Then 0 Else StFisicoUd1 * PPP End,
                        Total_Costo_Inv = Cant_Inventariada * PPP
 Where 
       Tipr in ('FIN','FPN','FPS','FUN','FUS') And IdInventario = @IdInventario                               
                         
-Update " & _Global_BaseBk & "ZW_TmpInvFotoInventario Set Dif_Inv_Costo = Total_Costo_Inv - Total_Costo_Foto                      
+Update " & _Global_BaseBk & "Zw_Inv_Inventario Set Dif_Inv_Costo = Total_Costo_Inv - Total_Costo_Foto                      
 Where 
       Tipr in ('FIN','FPN','FPS','FUN','FUS') And IdInventario = @IdInventario                               
             
-Update " & _Global_BaseBk & "ZW_TmpInvFotoInventario Set Diferencia = Case 
+Update " & _Global_BaseBk & "Zw_Inv_Inventario Set Diferencia = Case 
                                       When Dif_Inv_Cantidad < 0 Then 'Negativa'
                                       When Dif_Inv_Cantidad > 0 Then 'Positiva'
                                       When Dif_Inv_Cantidad = 0 Then ''
@@ -149,7 +150,7 @@ Where
                 If Not String.IsNullOrEmpty(Trim(_CodSectorSel)) Then
                     Filtro_Sector = "And CodigoPR in (Select distinct Codproducto" & vbCrLf &
                                     "From " & _Global_BaseBk & "ZW_TmpInvProductosInventariados" & vbCrLf &
-                                    "Where IdInventario = " & _IdInventario &
+                                    "Where IdInventario = " & _Id &
                                     " And CodSectorInt = '" & _CodSectorSel & "')"
                 End If
             End If
@@ -164,15 +165,15 @@ Where
 
 
             If ChkMostrarSoloInv.Checked Then
-                Consulta_sql = "Select * From " & _Global_BaseBk & "ZW_TmpInvFotoInventario" & vbCrLf &
-                               "Where IdInventario = " & _IdInventario & vbCrLf &
+                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Inv_Inventario" & vbCrLf &
+                               "Where IdInventario = " & _Id & vbCrLf &
                                Filtro_Sector & vbCrLf &
                                Filtro_Codigo & vbCrLf &
                                "And Cant_Inventariada > 0" & vbCrLf &
                                "Order By CodigoPR"
             Else
-                Consulta_sql = "Select top 200 * From " & _Global_BaseBk & "ZW_TmpInvFotoInventario" & vbCrLf &
-                          "Where IdInventario = " & _IdInventario & vbCrLf &
+                Consulta_sql = "Select top 200 * From " & _Global_BaseBk & "Zw_Inv_Inventario" & vbCrLf &
+                          "Where IdInventario = " & _Id & vbCrLf &
                           Filtro_Sector & vbCrLf &
                           Filtro_Codigo & vbCrLf &
                           "Order By CodigoPR"
@@ -254,10 +255,10 @@ Where
 
             End With
 
-            Dim _Total_Inventario As Double = Fx_Suma_cantidades("Total_Costo_Inv", _Global_BaseBk & "ZW_TmpInvFotoInventario",
-                                                                 "IdInventario = " & _IdInventario, 5)
-            Dim _Total_Foto As Double = Fx_Suma_cantidades("Total_Costo_Foto", _Global_BaseBk & "ZW_TmpInvFotoInventario",
-                                                           "IdInventario = " & _IdInventario, 5)
+            Dim _Total_Inventario As Double = Fx_Suma_cantidades("Total_Costo_Inv", _Global_BaseBk & "Zw_Inv_Inventario",
+                                                                 "IdInventario = " & _Id, 5)
+            Dim _Total_Foto As Double = Fx_Suma_cantidades("Total_Costo_Foto", _Global_BaseBk & "Zw_Inv_Inventario",
+                                                           "IdInventario = " & _Id, 5)
             Dim _Total_Diferencia As Double = _Total_Inventario - _Total_Foto
 
             LblTotal_FotoStock.Text = FormatCurrency(_Total_Foto, 0)
@@ -284,7 +285,7 @@ Where
 
     Private Sub BtnActualizar_Click(sender As System.Object, e As System.EventArgs) Handles BtnActualizar.Click
         _CODIGO_BUSQUEDA = String.Empty
-        ActualizarGrillaFoto(_CODIGO_BUSQUEDA)
+        Sb_ActualizarGrilla(_CODIGO_BUSQUEDA)
     End Sub
 
     Private Sub UltimodMovimientosCompraYVentasToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles UltimodMovimientosCompraYVentasToolStripMenuItem.Click
@@ -319,8 +320,8 @@ Where
 
     Private Sub BtnExcel_Click(sender As System.Object, e As System.EventArgs) Handles BtnExcel.Click
 
-        Consulta_sql = "Select * From " & _Global_BaseBk & "ZW_TmpInvFotoInventario" & vbCrLf &
-                        "Where IdInventario = " & _IdInventario
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Inv_Inventario" & vbCrLf &
+                        "Where IdInventario = " & _Id
 
         ExportarTabla_JetExcel(Consulta_sql, Me, "Inventario")
 
@@ -339,7 +340,7 @@ Where
         If String.IsNullOrEmpty(Trim(_Codigo_abuscar)) Then Return
 
         _CODIGO_BUSQUEDA = Trim(_Codigo_abuscar)
-        ActualizarGrillaFoto(_CODIGO_BUSQUEDA)
+        Sb_ActualizarGrilla(_CODIGO_BUSQUEDA)
 
         If BuscarDatoEnGrilla(Trim(Codigo), "CodigoPR", Grilla) Then
 
@@ -357,7 +358,7 @@ Where
         Exit Sub
 
         Dim ContarPrEnFoto As Long
-        ContarPrEnFoto = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "ZW_TmpInvFotoInventario", "CodigoPR = '" & Codigo & "'")
+        ContarPrEnFoto = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_Inventario", "CodigoPR = '" & Codigo & "'")
 
         If ContarPrEnFoto > 0 Then
 
@@ -394,9 +395,9 @@ Where
         Dim _Recontado As Boolean = _Fila.Cells("Recontado").Value
         Dim _Levantado As Boolean = _Fila.Cells("Levantado").Value
 
-        Dim Fm As New Frm_02_Detalle_Producto_Actual(_IdInventario, _CodigoPR)
+        Dim Fm As New Frm_02_Detalle_Producto_Actual(_Id, _CodigoPR)
 
-        'Fm._IdInventario = _IdInventario
+        'Fm._Id = _Id
         'Fm._Codigo = Codigo
         'Fm._Descripcion = Descripcion
         Fm._FStock_Ud1 = _StFisicoUd1
@@ -428,15 +429,15 @@ Where
 
     Private Sub BtnCerrarSinDiferencias_Click(sender As System.Object, e As System.EventArgs) Handles BtnCerrarSinDiferencias.Click
 
-        Dim _Condicion As String = "IdInventario = " & _IdInventario & vbCrLf &
+        Dim _Condicion As String = "IdInventario = " & _Id & vbCrLf &
                                    "And Diferencia = ''" & vbCrLf &
                                    "And Recontado = 0" & vbCrLf &
                                    "And Levantado = 0"
 
-        Dim Reg As Integer = _Sql.Fx_Cuenta_Registros("ZW_TmpInvFotoInventario", _Condicion)
+        Dim Reg As Integer = _Sql.Fx_Cuenta_Registros("Zw_Inv_Inventario", _Condicion)
 
         If Reg > 0 Then
-            Consulta_sql = "Update ZW_TmpInvFotoInventario Set Cerrado = 1 " & vbCrLf &
+            Consulta_sql = "Update Zw_Inv_Inventario Set Cerrado = 1 " & vbCrLf &
                            "Where " & vbCrLf & _Condicion
 
             If _Sql.Ej_consulta_IDU(Consulta_sql) Then
@@ -444,7 +445,7 @@ Where
                                   MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
             _CODIGO_BUSQUEDA = String.Empty
-            ActualizarGrillaFoto(_CODIGO_BUSQUEDA)
+            Sb_ActualizarGrilla(_CODIGO_BUSQUEDA)
         Else
             MessageBoxEx.Show("No existen productos que marcar", "Cerrar",
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -456,21 +457,21 @@ Where
     Private Sub BtnLevantados_Click(sender As System.Object, e As System.EventArgs) Handles BtnLevantados.Click
 
 
-        Dim _Condicion As String = "IdInventario = " & _IdInventario & vbCrLf &
+        Dim _Condicion As String = "IdInventario = " & _Id & vbCrLf &
                                    "And Cerrado = 1" & vbCrLf &
                                    "And Levantado = 0"
 
-        Dim Reg As Integer = _Sql.Fx_Cuenta_Registros("ZW_TmpInvFotoInventario", _Condicion)
+        Dim Reg As Integer = _Sql.Fx_Cuenta_Registros("Zw_Inv_Inventario", _Condicion)
 
         If Reg > 0 Then
-            Consulta_sql = "Update ZW_TmpInvFotoInventario Set Levantado = 1 " & vbCrLf &
+            Consulta_sql = "Update Zw_Inv_Inventario Set Levantado = 1 " & vbCrLf &
                            "Where " & vbCrLf & _Condicion
 
             If _Sql.Ej_consulta_IDU(Consulta_sql) Then
                 MessageBoxEx.Show("Productos Levantados " & Reg, "Marcar Levantados",
                                   MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
-            ActualizarGrillaFoto(_CODIGO_BUSQUEDA)
+            Sb_ActualizarGrilla(_CODIGO_BUSQUEDA)
         Else
             MessageBoxEx.Show("No existen productos que marcar", "Marcar Levantados",
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -480,14 +481,14 @@ Where
 
     Private Sub BtnMarcarLevantadosInventariados_Click(sender As System.Object, e As System.EventArgs) Handles BtnCerrarInventariados.Click
 
-        Dim _Condicion As String = "IdInventario = " & _IdInventario & vbCrLf &
+        Dim _Condicion As String = "IdInventario = " & _Id & vbCrLf &
                                    "And Cant_Inventariada > 0" & vbCrLf &
                                    "And Cerrado = 0"
 
-        Dim Reg As Integer = _Sql.Fx_Cuenta_Registros("ZW_TmpInvFotoInventario", _Condicion)
+        Dim Reg As Integer = _Sql.Fx_Cuenta_Registros("Zw_Inv_Inventario", _Condicion)
 
         If Reg > 0 Then
-            Consulta_sql = "Update ZW_TmpInvFotoInventario Set Cerrado = 1 " & vbCrLf &
+            Consulta_sql = "Update Zw_Inv_Inventario Set Cerrado = 1 " & vbCrLf &
                            "Where " & vbCrLf & _Condicion
 
             If _Sql.Ej_consulta_IDU(Consulta_sql) Then
@@ -495,7 +496,7 @@ Where
                                   MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
             _CODIGO_BUSQUEDA = String.Empty
-            ActualizarGrillaFoto(_CODIGO_BUSQUEDA)
+            Sb_ActualizarGrilla(_CODIGO_BUSQUEDA)
         Else
             MessageBoxEx.Show("No existen productos que marcar", "Marcar Levantados",
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -507,8 +508,8 @@ Where
 
     Private Sub ButtonItem2_Click(sender As System.Object, e As System.EventArgs) Handles BtnExporAjuTodos.Click
         Consulta_sql = "select CodigoPR as 'Codigo',Cant_Inventariada as 'Cantidad',PPP as 'Costo'" & vbCrLf &
-                      "From ZW_TmpInvFotoInventario" & vbCrLf &
-                      "Where IdInventario = " & _IdInventario
+                      "From Zw_Inv_Inventario" & vbCrLf &
+                      "Where IdInventario = " & _Id
 
         Dim NombreFile As String = "Inventario TODOS " & FormatDateTime(_Fecha_Inventario, DateFormat.LongDate)
 
@@ -518,8 +519,8 @@ Where
 
     Private Sub ButtonItem3_Click(sender As System.Object, e As System.EventArgs) Handles BtnExporAjuCerrados.Click
         Consulta_sql = "select CodigoPR as 'Codigo',Cant_Inventariada as 'Cantidad',PPP as 'Costo'" & vbCrLf &
-                       "From ZW_TmpInvFotoInventario" & vbCrLf &
-                       "Where IdInventario = " & _IdInventario & vbCrLf &
+                       "From Zw_Inv_Inventario" & vbCrLf &
+                       "Where IdInventario = " & _Id & vbCrLf &
                        "And Cerrado = 1 and Cant_Inventariada > 0"
 
         Dim NombreFile As String = "Inventario SOLO CERRADOS " & FormatDateTime(_Fecha_Inventario, DateFormat.LongDate)
@@ -534,7 +535,7 @@ Where
         Fm._Empresa = _Empresa
         Fm._Sucursal = _Sucursal
         Fm._Bodega = _Bodega
-        Fm._IdInventario = _IdInventario
+        Fm._IdInventario = _Id
         Fm.Grilla_Inv.ContextMenuStrip = Nothing
         Fm._ValidaEstado = False
 
@@ -543,7 +544,7 @@ Where
 
         If Not String.IsNullOrEmpty(Trim(_CodSectorSel)) Then
             _CODIGO_BUSQUEDA = String.Empty
-            ActualizarGrillaFoto(_CODIGO_BUSQUEDA)
+            Sb_ActualizarGrilla(_CODIGO_BUSQUEDA)
         Else
             MessageBoxEx.Show("No se selecciono ningun sector", "Filtrar por sector", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End If
@@ -562,7 +563,7 @@ Where
 
     Private Sub ButtonItem2_Click_1(sender As System.Object, e As System.EventArgs) Handles ButtonItem2.Click
         Dim Fm As New Frm_05_Filtrar_FMRCZ
-        Fm._IdInventario = _IdInventario
+        Fm._IdInventario = _Id
         Fm.ShowDialog(Me)
     End Sub
 

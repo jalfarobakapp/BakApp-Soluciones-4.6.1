@@ -25,7 +25,7 @@
     End Sub
 
     Sub Sb_Actualizar_Grilla()
-
+        Return
         Consulta_sql = "Select Prj.*,Isnull(Op1.Nombre,'') As NombreOp1,Isnull(Op2.Nombre,'') As NombreOp2," & vbCrLf &
                        "(Select Count(*) From " & _Global_BaseBk & "Zw_Inv_Plan Where Id_Inventario = Prj.Id_Inventario And Id_Pareja = Prj.Id_Pareja And TipoPareja = 'TOMA') As Toma," & vbCrLf &
                         "(Select Count(*) From " & _Global_BaseBk & "Zw_Inv_Plan Where Id_Inventario = Prj.Id_Inventario And Id_Pareja = Prj.Id_Pareja And TipoPareja = 'LEVANTE') As Levante" & vbCrLf &

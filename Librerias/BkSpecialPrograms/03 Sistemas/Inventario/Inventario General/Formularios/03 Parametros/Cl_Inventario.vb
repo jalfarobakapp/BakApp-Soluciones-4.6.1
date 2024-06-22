@@ -40,7 +40,7 @@ Public Class Cl_Inventario
             .FuncionarioCargo = _Row_Enc.Item("FuncionarioCargo")
             .NombreFuncionario = _Row_Enc.Item("NombreFuncionario")
             .NombreInventario = _Row_Enc.Item("NombreInventario")
-            .Estado = _Row_Enc.Item("Estado")
+            .Activo = _Row_Enc.Item("Activo")
             .Fecha_Inventario = _Row_Enc.Item("Fecha_Inventario")
             .FechaCierre = NuloPorNro(_Row_Enc.Item("FechaCierre"), Nothing)
 
@@ -80,7 +80,7 @@ Public Class Cl_Inventario
                                ",'" & .Empresa & "','" & .Sucursal & "','" & .Bodega & "'" &
                                ",'" & .Nombre_Empresa & "','" & .Nombre_Sucursal & "','" & .Nombre_Bodega & "'" &
                                ",'" & .NombreInventario & "','" & .FuncionarioCargo & "','" & .NombreFuncionario & "'" &
-                               "," & Convert.ToInt32(.Estado) & ")"
+                               "," & Convert.ToInt32(.Activo) & ")"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                 Comando.Transaction = myTrans

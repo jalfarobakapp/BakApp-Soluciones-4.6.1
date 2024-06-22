@@ -10,6 +10,8 @@ Public Class Frm_Inv_UbicacionesImporExcel
     Private _Cancelar As Boolean
     Private _Cl_inventario As Cl_Inventario
 
+    Public UbicacionesInsertadas As Boolean
+
     Public Sub New(_IdInventario As Integer)
 
         ' Esta llamada es exigida por el diseñador.
@@ -84,13 +86,13 @@ Public Class Frm_Inv_UbicacionesImporExcel
 
         Dim _Problemas As Integer
         Dim _Diferencias As Integer
-        Dim _Diferencias1peso As Integer
         Dim _SinProbremas As Integer
 
         Sb_Habilitar_Deshabilitar_Comandos(False, True)
         Circular_Progres_Val.Maximum = _Filas
 
         Dim _Contador As Integer = 0
+        Dim _ListaUbicaciones As New List(Of String)
 
         For i = _Desde To _Filas
 
@@ -108,36 +110,29 @@ Public Class Frm_Inv_UbicacionesImporExcel
 
             Try
 
-                _Ubicacion = _Arreglo(i, 0).ToString.Trim
+                _Ubicacion = If(_Arreglo(i, 0) Is Nothing, "", _Arreglo(i, 0).ToString().Trim())
 
                 If String.IsNullOrWhiteSpace(_Ubicacion) Then
-                    Throw New System.Exception("La columna Monto esta vacía")
-                    '_Problemas += 1
-                    '_Msg_Error.Mensaje = "La columna Monto esta vacía, Fila (" & i & ")"
-                    '_Msg_Error.Detalle = "Fila (" & i & ") - " & _Ubicacion
-                    '_Msg_Error.EsCorrecto = False
-                    '_Msg_Error.Icono = MessageBoxIcon.Error
-                    'Ls_Errores.Add(_Msg_Error)
-                    'Continue For
+                    Throw New System.Exception("La columna ubicación esta vacía")
                 End If
 
                 Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_Ubicaciones",
                                             "Ubicacion = '" & _Ubicacion & "' And IdInventario = " & _Cl_inventario.Zw_Inv_Inventario.Id)
 
                 If CBool(_Reg) Then
-                    Throw New System.Exception("La Ubicación """ & _Ubicacion & """ ya existe en este inventario")
-                    '_Problemas += 1
-                    '_Msg_Error.Mensaje = "La Ubicación """ & _Ubicacion & """ ya existe en este inventario"
-                    '_Msg_Error.Detalle = "Fila (" & i & ") - " & _Ubicacion
-                    '_Msg_Error.EsCorrecto = False
-                    '_Msg_Error.Icono = MessageBoxIcon.Error
-                    'Ls_Errores.Add(_Msg_Error)
-                    'Continue For
+                    Throw New System.Exception("La ubicación """ & _Ubicacion & """ ya existe en este inventario")
                 End If
 
                 If _Ubicacion.Length > 30 Then
-                    Throw New System.Exception("La Ubicación """ & _Ubicacion & """ excede los 30 caracteres")
+                    Throw New System.Exception("La ubicación """ & _Ubicacion & """ excede los 30 caracteres")
                 End If
+
+                ' Verificando si el valor existe en la lista
+                If _ListaUbicaciones.Contains(_Ubicacion) And Not String.IsNullOrEmpty(_Ubicacion) Then
+                    Throw New System.Exception("La ubicación """ & _Ubicacion & """ aparece varias veces en la lista.")
+                End If
+
+                _ListaUbicaciones.Add(_Ubicacion)
 
                 If _Cancelar Then
                     Exit For
@@ -204,13 +199,15 @@ Public Class Frm_Inv_UbicacionesImporExcel
                 Fmv.ShowDialog(Me)
                 Fmv.Dispose()
 
-                If CBool(Ls_Zw_Inv_Ubicaciones.Count) Then
-                    If MessageBoxEx.Show(Me, "¿Desea incorporar de todas maneras las ubicaciones que estan bien??", "Gestión",
-                                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
-                        _Limpiar_Lista = True
-                        Return
-                    End If
-                End If
+                Ls_Zw_Inv_Ubicaciones.Clear()
+
+                'If CBool(Ls_Zw_Inv_Ubicaciones.Count) Then
+                '    If MessageBoxEx.Show(Me, "¿Desea incorporar de todas maneras las ubicaciones que estan bien??", "Gestión",
+                '                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                '        _Limpiar_Lista = True
+                '        Return
+                '    End If
+                'End If
 
                 'CrearArchivoTxt(AppPath() & "\Data\" & RutEmpresa & "\Temp\", "Error_LevLista.txt", _Txt_Log.Text, False)
                 'Process.Start("notepad.exe", AppPath() & "\Data\" & RutEmpresa & "\Temp\Error_LevLista.txt")
@@ -218,8 +215,7 @@ Public Class Frm_Inv_UbicacionesImporExcel
             End If
 
             If CBool(Ls_Zw_Inv_Ubicaciones.Count) Then
-                MessageBoxEx.Show(Me, "Las ubicaciones se pueden importar correctamente",
-                                  "Importar datos", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Sb_GrabarUbicaciones()
                 Me.Close()
             Else
                 _Limpiar_Lista = True
@@ -237,6 +233,48 @@ Public Class Frm_Inv_UbicacionesImporExcel
             End If
 
         End Try
+
+    End Sub
+
+    Sub Sb_GrabarUbicaciones()
+
+        Dim _Cl_InvUbicacion As New Cl_InvUbicacion
+        Dim _Ls_Mensajes As New List(Of LsValiciones.Mensajes)
+        Dim _CuentaInsertadas As Integer
+
+        For Each _Ubicacion In Ls_Zw_Inv_Ubicaciones
+
+            _Cl_InvUbicacion.Zw_Inv_Ubicaciones = _Ubicacion
+
+            Dim _Mensaje As New LsValiciones.Mensajes
+
+            _Mensaje = _Cl_InvUbicacion.Fx_Crear_Ubicacion(_Ubicacion)
+
+            If _Mensaje.EsCorrecto Then
+                _CuentaInsertadas += 1
+            Else
+                _Ls_Mensajes.Add(_Mensaje)
+            End If
+
+        Next
+
+        If CBool(_Ls_Mensajes.Count) Then
+
+            MessageBoxEx.Show(Me, "Hubo algunos problemas al insertar algunas ubicaciones",
+                  "Importar datos", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Dim Fmv As New Frm_Validaciones
+            Fmv.ListaMensajes = _Ls_Mensajes
+            Fmv.ShowDialog(Me)
+            Fmv.Dispose()
+
+        End If
+
+        UbicacionesInsertadas = True
+
+        MessageBoxEx.Show(Me, "Se insertaron correctamente " & _CuentaInsertadas & " ubicaciones",
+                  "Importar datos", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
 
     End Sub
 

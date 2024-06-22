@@ -13,7 +13,7 @@
     Public Property NombreInventario As String
     Public Property FuncionarioCargo As String
     Public Property NombreFuncionario As String
-    Public Property Estado As Boolean
+    Public Property Activo As Boolean
     Public Property FechaCierre As DateTime?
 
 End Class

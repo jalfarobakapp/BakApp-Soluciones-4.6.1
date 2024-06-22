@@ -1,4 +1,5 @@
-﻿Imports BkSpecialPrograms
+﻿Imports System.Security.Cryptography
+Imports BkSpecialPrograms
 Imports DevComponents.DotNetBar
 
 Public Class Inv_General_Activo
@@ -53,5 +54,14 @@ Public Class Inv_General_Activo
 
     End Sub
 
+    Private Sub Btn_Mant_Inventarios_Click(sender As Object, e As EventArgs) Handles Btn_Mant_Inventarios.Click
+
+        Dim _Id As Integer = _Row_InventarioActivo.Item("Id")
+
+        Dim Fm As New Frm_Inv_Ubicaciones(_Id)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
 
 End Class

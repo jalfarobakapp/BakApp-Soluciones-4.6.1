@@ -22,16 +22,16 @@ Partial Class Frm_04_Productos_por_sector
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_04_Productos_por_sector))
-        Me.GroupBox5 = New System.Windows.Forms.GroupBox
-        Me.Grilla = New System.Windows.Forms.DataGridView
-        Me.Bar2 = New DevComponents.DotNetBar.Bar
-        Me.BtnActualizar = New DevComponents.DotNetBar.ButtonItem
-        Me.BtnExcel = New DevComponents.DotNetBar.ButtonItem
-        Me.BtnImprimir = New DevComponents.DotNetBar.ButtonItem
-        Me.BtnBuscarProducto = New DevComponents.DotNetBar.ButtonItem
-        Me.BtnSalir = New DevComponents.DotNetBar.ButtonItem
+        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.Grilla = New System.Windows.Forms.DataGridView()
+        Me.Bar2 = New DevComponents.DotNetBar.Bar()
+        Me.BtnActualizar = New DevComponents.DotNetBar.ButtonItem()
+        Me.BtnExcel = New DevComponents.DotNetBar.ButtonItem()
+        Me.BtnImprimir = New DevComponents.DotNetBar.ButtonItem()
+        Me.BtnBuscarProducto = New DevComponents.DotNetBar.ButtonItem()
+        Me.BtnSalir = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupBox5.SuspendLayout()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
