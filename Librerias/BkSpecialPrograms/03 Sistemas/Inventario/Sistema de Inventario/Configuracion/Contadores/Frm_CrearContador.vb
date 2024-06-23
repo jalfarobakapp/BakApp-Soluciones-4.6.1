@@ -10,7 +10,7 @@ Public Class Frm_CrearContador
     Public Grabar As Boolean
     Public Eliminado As Boolean
 
-    Dim Cl_Contador As New Cl_Contador
+    Public Property Cl_Contador As New Cl_Contador
 
     Public Sub New(_IdContador As Integer)
 
@@ -19,7 +19,7 @@ Public Class Frm_CrearContador
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        Cl_Contador.Fx_Llenar_Zw_Inv_Contadores(_IdContador)
+        Cl_Contador.Fx_Llenar_Zw_Inv_Contador(_IdContador)
         Me._IdContador = _IdContador
 
     End Sub

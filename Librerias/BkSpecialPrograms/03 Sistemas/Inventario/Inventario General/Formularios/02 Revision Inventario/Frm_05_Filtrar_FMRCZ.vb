@@ -26,7 +26,7 @@ Public Class Frm_05_Filtrar_FMRCZ
         caract_combo(CmbxSuperFamilia)
         Consulta_sql = "SELECT '' AS Padre,'Todas' AS Hijo " & vbCrLf & "Union" & vbCrLf & _
                        "SELECT KOFM AS Padre,NOKOFM AS Hijo FROM TABFM ORDER BY Padre" ' WHERE SEMILLA = " & Actividad
-        CmbxSuperFamilia.DataSource = _SQL.Fx_Get_Tablas(Consulta_sql)
+        CmbxSuperFamilia.DataSource = _SQL.Fx_Get_DataTable(Consulta_sql)
         _SuperFamilia = String.Empty
         CmbxSuperFamilia.SelectedValue = _SuperFamilia
         _Familia = String.Empty
@@ -50,7 +50,7 @@ Public Class Frm_05_Filtrar_FMRCZ
             caract_combo(CmbxFamilia)
             Consulta_sql = "SELECT '' AS Padre,'Todas' AS Hijo " & vbCrLf & "Union" & vbCrLf & _
                            "SELECT KOPF AS Padre,' '+RTRIM(LTRIM(KOPF))+' -'+NOKOPF AS Hijo FROM TABPF WHERE KOFM = '" & _SuperFamilia & "'"
-            CmbxFamilia.DataSource = _SQL.Fx_Get_Tablas(Consulta_sql)
+            CmbxFamilia.DataSource = _SQL.Fx_Get_DataTable(Consulta_sql)
 
             CmbxFamilia.SelectedValue = _Familia
 
@@ -73,7 +73,7 @@ Public Class Frm_05_Filtrar_FMRCZ
             caract_combo(CmbxSubFamilia)
             Consulta_sql = "SELECT '' AS Padre,'Todas' AS Hijo " & vbCrLf & "Union" & vbCrLf & _
                            "SELECT KOHF AS Padre, NOKOHF AS Hijo FROM TABHF WHERE KOFM = '" & _SuperFamilia & "' AND KOPF = '" & _Familia & "'"
-            CmbxSubFamilia.DataSource = _SQL.Fx_Get_Tablas(Consulta_sql)
+            CmbxSubFamilia.DataSource = _SQL.Fx_Get_DataTable(Consulta_sql)
             CmbxSubFamilia.SelectedValue = _SubFamilia
 
         End Try
@@ -88,7 +88,7 @@ Public Class Frm_05_Filtrar_FMRCZ
                        "SubFamilia LIKE '%" & _SubFamilia & "%'"
         _SqlExcel = Consulta_sql
 
-        _TblInf = _SQL.Fx_Get_Tablas(Consulta_sql)
+        _TblInf = _SQL.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

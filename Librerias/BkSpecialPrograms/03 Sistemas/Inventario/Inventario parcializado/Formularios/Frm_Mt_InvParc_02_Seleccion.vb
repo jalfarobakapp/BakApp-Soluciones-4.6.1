@@ -247,7 +247,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
                        "Order by CodigoPr,Semilla Desc" & vbCrLf &
                        "Drop Table #Paso_Inv"
 
-        _Tbl_Productos_Contados = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Productos_Contados = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Levantados
 
@@ -658,7 +658,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
         End If
 
         Consulta_sql = "Select ISNULL(SUM(STFI1),0) AS STFI1,ISNULL(SUM(STFI2),0) AS STFI2 FROM MAEST " & _Condicion_Maest
-        Dim _TblStock As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblStock As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _StockUd1 As Double
         Dim _StockUd2 As Double
@@ -1062,7 +1062,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
             Consulta_sql = "Select * From MAEST" & vbCrLf &
                            "Where EMPRESA = '" & ModEmpresa & "' And KOPR = '" & _Fila.Item("CodigoPr") & "' And STFI1 > 0"
-            Dim _TblBodegas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblBodegas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _Flb As DataRow In _TblBodegas.Rows
 
@@ -1441,7 +1441,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
         Consulta_sql = "Select top 1 * From MAEPR Where KOPR = '" & _Codigo & "'"
 
-        Dim _TblProducto As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblProducto As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblProducto.Rows.Count) Then
             Return _TblProducto.Rows(0)
@@ -1521,7 +1521,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
                            "And DejaStockCero = 0" & _
                            "Order by Semilla DESC"
 
-            Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If CBool(_Tbl_Productos.Rows.Count) Then
 
@@ -1861,7 +1861,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
             Consulta_sql = "Select Cast(1 as Bit) As Chk,KOPR As Codigo,NOKOPR As Descripcion" & vbCrLf & _
                                           "From MAEPR Where KOPR In " & _Fl
 
-            Dim _TblProductos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblProductos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim Fm As New Frm_ImpBarras_PorProducto
             Fm.Pro_Chk_Imprimir_Todas_Las_Ubicaciones = True
@@ -1898,7 +1898,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
         Dim _Descripcion = _Fila.Cells("Descripcion").Value
 
         Consulta_sql = "Select Cast(1 as Bit) As Chk,'" & _Codigo & "' As Codigo,'" & _Descripcion & "' As Descripcion"
-        Dim _TblProductos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblProductos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim Fm As New Frm_ImpBarras_PorProducto
         Fm.Pro_Chk_Imprimir_Todas_Las_Ubicaciones = True
@@ -1975,7 +1975,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
         Consulta_sql = Replace(Consulta_sql, "--Filtro_Condicion_Extra", _Filtro_Condicion_Extra)
 
 
-        Dim _TblKardex As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql) '_SQL.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblKardex As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql) '_SQL.Fx_Get_Tablas(Consulta_sql)
 
         Return _TblKardex.Rows(0)
 

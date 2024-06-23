@@ -70,7 +70,7 @@ Public Class Frm_ExporProd
             Try
                 Consulta_Sql = "Select Cast(1 As Bit) As Chk,EMPRESA+KOSU+KOBO As Codigo, NOKOBO as Descripcion" & vbCrLf &
                                "From TABBO Where EMPRESA+KOSU+KOBO In " & _Row_DbExt_Conexion.Item("GrbProd_Bodegas")
-                Tbl_Bodegas = _Sql2.Fx_Get_Tablas(Consulta_Sql, False)
+                Tbl_Bodegas = _Sql2.Fx_Get_DataTable(Consulta_Sql, False)
                 Lbl_Bodegas.Text = "Bodegas seleccionadas: " & Tbl_Bodegas.Rows.Count
             Catch ex As Exception
                 Tbl_Bodegas = Nothing
@@ -80,7 +80,7 @@ Public Class Frm_ExporProd
             Try
                 Consulta_Sql = "Select Cast(1 As Bit) As Chk,KOLT As Codigo,NOKOLT As Descripcion" & vbCrLf &
                            "From TABPP Where KOLT In " & _Row_DbExt_Conexion.Item("GrbProd_Listas")
-                Tbl_Listas = _Sql2.Fx_Get_Tablas(Consulta_Sql, False)
+                Tbl_Listas = _Sql2.Fx_Get_DataTable(Consulta_Sql, False)
                 Lbl_Listas.Text = "Listas seleccionadas: " & Tbl_Listas.Rows.Count
             Catch ex As Exception
                 Tbl_Listas = Nothing
@@ -279,8 +279,8 @@ Public Class Frm_ExporProd
 
         Consulta_Sql = "SELECT KOPR, NOKOPR FROM MAEPR"
 
-        Dim _Tbl_MAEPRLocal As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
-        Dim _Tbl_MAEPRExterno As DataTable = _Sql2.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_MAEPRLocal As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
+        Dim _Tbl_MAEPRExterno As DataTable = _Sql2.Fx_Get_DataTable(Consulta_Sql)
 
         Dim idsNotInB = _Tbl_MAEPRLocal.AsEnumerable().Select(Function(r) r.Field(Of String)("KOPR")).Except(_Tbl_MAEPRExterno.AsEnumerable().[Select](Function(r) r.Field(Of String)("KOPR")))
         Dim _TblLocal As DataTable
@@ -310,8 +310,8 @@ Public Class Frm_ExporProd
 
         Consulta_Sql = "SELECT KOPR, NOKOPR FROM MAEPR"
 
-        Dim _Tbl_MAEPRLocal As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
-        Dim _Tbl_MAEPRExterno As DataTable = _Sql2.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_MAEPRLocal As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
+        Dim _Tbl_MAEPRExterno As DataTable = _Sql2.Fx_Get_DataTable(Consulta_Sql)
 
         Dim idsNotInB = _Tbl_MAEPRExterno.AsEnumerable().Select(Function(r) r.Field(Of String)("KOPR")).Except(_Tbl_MAEPRLocal.AsEnumerable().[Select](Function(r) r.Field(Of String)("KOPR")))
 

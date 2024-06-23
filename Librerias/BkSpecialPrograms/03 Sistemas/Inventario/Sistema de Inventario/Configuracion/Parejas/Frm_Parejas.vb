@@ -33,7 +33,7 @@
                         "Left Join " & _Global_BaseBk & "Zw_Inv_Operadores Op1 On Prj.Id_Operador1 = Op1.Id_Operador" & vbCrLf &
                         "Left Join " & _Global_BaseBk & "Zw_Inv_Operadores Op2 On Prj.Id_Operador2 = Op2.Id_Operador" & vbCrLf &
                         "Where Prj.Id_Inventario = " & _Id_Inventario
-        Dim _Tbl_Parejas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Parejas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Parejas
 

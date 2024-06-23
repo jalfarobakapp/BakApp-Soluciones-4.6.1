@@ -40,7 +40,7 @@ Public Class Frm_ImpBarras_Tarja
         caract_combo(Cmbetiquetas)
         Consulta_sql = "SELECT NombreEtiqueta AS Padre,NombreEtiqueta+', Cantidad de etiquetas por fila '+RTRIM(LTRIM(STR(CantPorLinea))) AS Hijo" & vbCrLf &
                        "FROM " & _Global_BaseBk & "Zw_Tbl_DisenoBarras order by NombreEtiqueta"
-        Cmbetiquetas.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmbetiquetas.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmbetiquetas.SelectedValue = _Etiqueta
 
         AddHandler Cmbetiquetas.SelectedIndexChanged, AddressOf Sb_Cmbetiquetas_SelectedIndexChanged
@@ -276,7 +276,7 @@ Public Class Frm_ImpBarras_Tarja
             Dim _Tbl_Tarja_Det As DataTable
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja_Det Where Id_CPT = " & _Id_CPT ' --Nro_CPT = '" & _Nro_CPT & "' And Lote = '" & _Lote & "'"
-            _Tbl_Tarja_Det = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Tarja_Det = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Veces2 As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones",
                                    "Valor", "Tabla = 'TARJA_MULTIMPETIQU' And CodigoTabla = '" & Lbl_Tipo.Text & "'", True, False)

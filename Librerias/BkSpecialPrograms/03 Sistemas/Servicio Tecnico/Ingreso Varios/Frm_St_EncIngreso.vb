@@ -615,7 +615,7 @@ Public Class Frm_St_EncIngreso
                        "Left Join " & _Global_BaseBk & "Zw_St_OT_Notas Nts On Ots.Id_Ot = Nts.Id_Ot" & vbCrLf &
                        "Where Id_Ot_Padre = " & _Id_Ot_Padre
 
-        Dim _Tbl_Ots As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Ots As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Fila As DataRow In _Tbl_Ots.Rows 'Cl_OrdenServicio.DsDocumento.Tables(0).Rows
 
@@ -645,7 +645,7 @@ Public Class Frm_St_EncIngreso
 
         Dim _Observaciones As String = "Documento generado desde Sis. Servicio técnico Bakapp" & vbCrLf & "Nro OT: " & _Nro_OT
 
-        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(_SqlQuery)
+        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(_SqlQuery)
 
         Dim Fm As New Frm_Formulario_Documento("GRP", csGlobales.Enum_Tipo_Documento.Guia_Recepcion_Prestamos_GRP_PRE,
                                                False, True, False, False, False)
@@ -656,7 +656,7 @@ Public Class Frm_St_EncIngreso
         Fm.Dispose()
 
         Consulta_sql = "Select IDMAEEDO,IDMAEDDO,OBSERVA,TIDO,NUDO From MAEDDO Where IDMAEEDO = " & _Idmaeedo
-        Dim _Tbl_DetalleGrc As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_DetalleGrc As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Consulta_sql = String.Empty
 

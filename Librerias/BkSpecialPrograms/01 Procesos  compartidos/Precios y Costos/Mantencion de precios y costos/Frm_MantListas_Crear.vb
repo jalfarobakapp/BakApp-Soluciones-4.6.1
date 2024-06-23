@@ -43,7 +43,7 @@ Public Class Frm_MantListas_Crear
 
         caract_combo(Cmb_Moneda)
         Consulta_sql = "SELECT KOMO AS Padre,NOKOMO AS Hijo FROM TABMO ORDER BY Hijo" ' WHERE SEMILLA = " & Actividad
-        Cmb_Moneda.DataSource = _SQL.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Moneda.DataSource = _SQL.Fx_Get_DataTable(Consulta_sql)
         Cmb_Moneda.SelectedValue = "$"
 
         If _Accion = Accion.Editar Then

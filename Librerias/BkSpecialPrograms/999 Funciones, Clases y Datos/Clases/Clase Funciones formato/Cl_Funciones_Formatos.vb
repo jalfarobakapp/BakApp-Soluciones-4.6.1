@@ -33,7 +33,7 @@ Public Class Cl_Funciones_Formatos
                     Consulta_sql = My.Resources.Rs_fx_SQL.SQLQuery_Documento_Enc & vbCrLf &
                                    "Where IDMAEEDO = " & _IdMaeedo
 
-                    _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
                     _Valor = Fx_Formatos_Datos_Documento(_Funcion, _Tbl)
 
                 Case "Entidad"
@@ -44,7 +44,7 @@ Public Class Cl_Funciones_Formatos
                     Consulta_sql = My.Resources.Rs_fx_SQL.SQLQuery_Datos_Entidad & vbCrLf & _
                                    "Where KOEN = '" & _CodEntidad & "' And SUEN = '" & _SucEntidad & "'"
 
-                    _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
                     _Valor = Fx_Formatos_Datos_Entidad(_Funcion, _Tbl)
 
                 Case "Entidad Fisica"
@@ -54,7 +54,7 @@ Public Class Cl_Funciones_Formatos
                     Consulta_sql = My.Resources.Rs_fx_SQL.SQLQuery_Datos_Entidad & vbCrLf &
                                    "Where KOEN = '" & _CodEntidad & "'"
 
-                    _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
                     _Valor = Fx_Formatos_Datos_Entidad(_Funcion, _Tbl)
 
                 Case "Entidad Contacto"
@@ -62,7 +62,7 @@ Public Class Cl_Funciones_Formatos
                     Dim _CodEntidad = _Sql.Fx_Trae_Dato("MAEEDO", "ENDOFI", "IDMAEEDO = " & _IdMaeedo)
 
                     Consulta_sql = "Select top 1 * From MAEENCON Where KOEN = '" & _CodEntidad & "'"
-                    _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     Fx_Formatos_Contacto_Entidad(_Funcion, _Tbl)
 

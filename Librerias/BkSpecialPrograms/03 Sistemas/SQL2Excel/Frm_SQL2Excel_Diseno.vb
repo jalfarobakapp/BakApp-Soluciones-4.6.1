@@ -112,10 +112,10 @@ Public Class Frm_SQL2Excel_Diseno
         Dim _BdBakApp = Replace(_Global_BaseBk, ".dbo.", "")
 
         Consulta_sql = "SELECT DISTINCT TABLE_NAME FROM " & _BdBakApp & ".INFORMATION_SCHEMA.COLUMNS"
-        _Tbl_Tablas_Random = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Tablas_Random = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Consulta_sql = "SELECT DISTINCT TABLE_NAME FROM INFORMATION_SCHEMA.COLUMNS"
-        _Tbl_Tablas_Random = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Tablas_Random = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _Consulta_SQL = UCase(_Consulta_SQL)
 
@@ -156,7 +156,7 @@ Public Class Frm_SQL2Excel_Diseno
             MessageBoxEx.Show(Me, _Sql.Pro_Error, "ERROR EN LA CONSULTA", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return Nothing
         Else
-            Fx_Ejecutar_Comsulta_SQL = _Sql.Fx_Get_Tablas(Txt_Query_SQL.Text)
+            Fx_Ejecutar_Comsulta_SQL = _Sql.Fx_Get_DataTable(Txt_Query_SQL.Text)
         End If
 
     End Function
@@ -202,7 +202,7 @@ Public Class Frm_SQL2Excel_Diseno
                        "FROM " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & Space(1) &
                        "WHERE Tabla = 'SQL_COMMAND'" & vbCrLf &
                        "Order by DescripcionTabla"
-        _Tbl_Sql_Command = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Sql_Command = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

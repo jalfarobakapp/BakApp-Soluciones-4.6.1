@@ -51,7 +51,7 @@ Public Class Frm_Formulario_Oferta
         Consulta_Sql = "Select MAEDRES.*,MAEDRES.PORCDESC/100 As Porcentaje,NOKOPR From MAEDRES" & vbCrLf &
                        "Inner Join MAEPR On KOPR = ELEMENTO " & vbCrLf &
                        "Where CODIGO = '" & _Codigo & "'"
-        _Tbl_Maedres = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_Maedres = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Lbl_Codigo.Text = _Row_Maeeres.Item("CODIGO")
         Lbl_Descriptor.Text = _Row_Maeeres.Item("DESCRIPTOR")

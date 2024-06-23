@@ -58,7 +58,7 @@
                         Select * From #Paso
                         Drop Table #Paso"
 
-        _Tbl_Doc_Facturar = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Doc_Facturar = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _Error = _Sql.Pro_Error
 

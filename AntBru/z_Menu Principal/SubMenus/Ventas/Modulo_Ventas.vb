@@ -114,7 +114,7 @@ Public Class Modulo_Ventas
 
                     Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad" & vbCrLf &
                                    "Where Modalidad = '" & Modalidad & "' And TipoDoc In ('BLV','FCV')"
-                    _TblFormato_Mod = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    _TblFormato_Mod = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     Dim _Msg = String.Empty
 

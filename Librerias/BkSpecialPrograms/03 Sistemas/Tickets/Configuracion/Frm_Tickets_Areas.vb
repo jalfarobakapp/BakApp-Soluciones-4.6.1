@@ -52,7 +52,7 @@ Public Class Frm_Tickets_Areas
         Consulta_sql = "Select Distinct Ar.* From " & _Global_BaseBk & "Zw_Stk_Areas Ar" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Stk_Tipos Tp On Tp.Id_Area = Ar.Id" & vbCrLf &
                        "Where Area Like '%" & _CadArea & "%' Or Tipo Like '%" & _CadTipo & "%'"
-        _Tbl_Areas = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Areas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Areas
 
@@ -204,7 +204,7 @@ Public Class Frm_Tickets_Areas
                        "Left Join TABFU Tf On Tf.KOFU = Tp.CodAgente" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Stk_Grupos Gr On Tp.Id_Grupo = Gr.Id" & vbCrLf &
                        "Where Tp.Id_Area = " & _Id_Area
-        _Tbl_Tipos = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Tipos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Tipos
 

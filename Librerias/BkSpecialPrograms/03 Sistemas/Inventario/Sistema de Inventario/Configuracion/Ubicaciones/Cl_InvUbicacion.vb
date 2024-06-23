@@ -248,7 +248,7 @@ Public Class Cl_InvUbicacion
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-        Dim _TblPaso = _Sql.Fx_Get_Tablas("Select Max(CodUbicacion) As CodUbicacion From " & _Global_BaseBk & "Zw_Inv_Ubicaciones")
+        Dim _TblPaso = _Sql.Fx_Get_DataTable("Select Max(CodUbicacion) As CodUbicacion From " & _Global_BaseBk & "Zw_Inv_Ubicaciones")
 
         Dim _Ult_Nro_OT As String = NuloPorNro(_TblPaso.Rows(0).Item("CodUbicacion"), "")
 

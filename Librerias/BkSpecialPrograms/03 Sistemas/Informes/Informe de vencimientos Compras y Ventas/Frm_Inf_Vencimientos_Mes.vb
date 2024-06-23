@@ -247,11 +247,11 @@ Public Class Frm_Inf_Vencimientos_Mes
 
         End If
 
-        _Tbl_Informe = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Informe = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Consulta_sql = "SELECT DISTINCT FEVE FROM MAEVEN WHERE IDMAEVEN IN " & vbCrLf &
                        "(Select Idmaeven From " & _Global_BaseBk & "Zw_Pago_Prov_Autoriza_02_Det)"
-        _Tbl_Marca_Calendario = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Marca_Calendario = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         Me.Text = "Informe de vencimientos de " & _Informe.ToString & ", Fecha desde: " & _Fecha_Inicio & " Hasta " & _Fecha_Fin

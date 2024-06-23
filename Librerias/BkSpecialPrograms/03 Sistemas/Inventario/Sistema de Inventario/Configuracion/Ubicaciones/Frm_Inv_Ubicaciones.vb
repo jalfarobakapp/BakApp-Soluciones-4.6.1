@@ -21,7 +21,7 @@ Public Class Frm_Inv_Ubicaciones
         _Cl_Inventario = New Cl_Inventario
         _Cl_Inventario.Fx_Llenar_Zw_Inv_Inventario(_Id_Inventario)
 
-        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.White, ScrollBars.Vertical, True, False, False)
+        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.White, ScrollBars.Vertical, True, True, False)
 
     End Sub
 
@@ -288,8 +288,8 @@ Public Class Frm_Inv_Ubicaciones
     End Sub
 
     Private Sub Txt_Filtrar_TextChanged(sender As Object, e As EventArgs) Handles Txt_Filtrar.TextChanged
-        If Txt_Filtrar.Text.Trim = String.Empty Then
-            Sb_Filtrar()
+        If Txt_Filtrar.Text.Trim.Length > 0 Then
+            _Dv.RowFilter = String.Empty
         End If
     End Sub
 
@@ -299,5 +299,10 @@ Public Class Frm_Inv_Ubicaciones
 
     Private Sub Btn_Actualizar_Click(sender As Object, e As EventArgs) Handles Btn_Actualizar.Click
         Sb_Actualizar_Grilla()
+    End Sub
+
+    Private Sub Txt_Filtrar_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Filtrar.ButtonCustom2Click
+        Txt_Filtrar.Text = String.Empty
+        _Dv.RowFilter = String.Empty
     End Sub
 End Class

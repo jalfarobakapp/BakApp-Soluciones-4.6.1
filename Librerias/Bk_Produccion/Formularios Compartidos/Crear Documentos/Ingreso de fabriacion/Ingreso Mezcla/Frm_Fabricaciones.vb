@@ -55,7 +55,7 @@ Public Class Frm_Fabricaciones
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Pdp_CPT_MzDetIngFab" & vbCrLf &
                        "Where Id_Det = " & _Id_Det
-        _Tbl_Fabricaciones = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Fabricaciones = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 
@@ -434,7 +434,7 @@ Public Class Frm_Fabricaciones
 
             Consulta_sql = "Select *," & _Cantidad & " As Cantidad,'" & ModSucursal & "' As Sucursal,'" & ModBodega & "' As Bodega" & vbCrLf &
                            "From POTL Where IDPOTL = " & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpotl_New
-            Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim Fm As New Frm_Formulario_Documento("GRI", csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Recepcion_Interna,
                                                    False, False, False, False, False, False)

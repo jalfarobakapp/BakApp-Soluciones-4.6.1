@@ -85,7 +85,7 @@ Public Class Frm_Impor_Prod_Masivamente
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
         Consulta_sql = "Select KOPR As Codigo,NOKOPR As Descripcion,Cast(0 As Float) As Cantidad,Cast(1 As Int) As UdTrans,Cast(0 As Float) As Precio,Cast('' As Varchar(3)) As Bodega From MAEPR Where 1<0"
-        _Tbl_Productos_Levantar = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Productos_Levantar = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Sb_Color_Botones_Barra(Bar1)
 

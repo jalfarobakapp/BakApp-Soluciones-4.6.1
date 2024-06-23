@@ -263,7 +263,7 @@ Public Class Frm_Pagos_Documentos
                        "CAST('' AS VARCHAR(50)) AS NOKOEN,'' AS ESPGDO,'' AS ESDO,TIDOELEC" & vbCrLf &
                        "FROM MAEEDO"
 
-        _Tbl_Maeedo = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Maeedo = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With _Tbl_Maeedo
 
@@ -524,7 +524,7 @@ Public Class Frm_Pagos_Documentos
                        "FROM MAEDPCE WITH ( NOLOCK ) " & vbCrLf &
                        "WHERE 1 = 0"
 
-        _Tbl_Maedpce = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Maedpce = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Maedpce
 
@@ -965,7 +965,7 @@ Public Class Frm_Pagos_Documentos
                        "WHERE EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' AND NUDO = '" & _Nudo & "'" & vbCrLf &
                        "AND TIDO IN ('BLV','BSV','FCV','FDV','NCV')"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not (_Tbl Is Nothing) Then
 
@@ -1338,12 +1338,12 @@ Public Class Frm_Pagos_Documentos
             ' ACTIVACION DE ORDENES DE DESPACHO *---------------------------------------------------------
 
             Consulta_sql = "Select IDRST From MAEDDO Where IDMAEEDO = " & _Idmaeedo
-            Dim _TblDetalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblDetalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
             Dim _Filtro_Idmaeddo_Dori = Generar_Filtro_IN(_TblDetalle, "", "IDRST", True, False, "")
 
             Consulta_sql = "Select Distinct Id_Despacho From " & _Global_BaseBk & "Zw_Despachos_Doc_Det 
                             Where Idmaeedo In (Select IDMAEEDO From MAEDDO Where IDMAEDDO In " & _Filtro_Idmaeddo_Dori & ") Or Idmaeedo = " & _Idmaeedo
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _Fl As DataRow In _Tbl.Rows
 
@@ -1826,7 +1826,7 @@ Public Class Frm_Pagos_Documentos
                        "From MAEDPCE With ( Nolock ) " & vbCrLf &
                        "Where 1 = 0"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _Tbl.Rows.Add(Fx_Nueva_Linea_De_Pago(_Tbl))
 
@@ -1960,7 +1960,7 @@ Public Class Frm_Pagos_Documentos
         Consulta_sql = Replace(Consulta_sql, "#ValesTransitorios#", "")
         Consulta_sql = Replace(Consulta_sql, "#Observaciones#", "")
 
-        Dim _Tbl_Paso As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Paso As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl_Paso.Rows.Count) Then
 
@@ -2909,7 +2909,7 @@ Public Class Frm_Pagos_Documentos
                 Dim _Otra_Condicion = String.Empty
 
                 Consulta_sql = "Select Distinct IDMAEEDO From MAEDDO Where IDMAEDDO In (Select IDRST From MAEDDO Where IDMAEEDO = " & _Idmaeedo & ")"
-                Dim _TblDetalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblDetalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 Dim _Filtros_Idmaeedo = Generar_Filtro_IN(_TblDetalle, "", "IDMAEEDO", False, False, "")
 
@@ -2978,7 +2978,7 @@ Public Class Frm_Pagos_Documentos
             If CBool(_Idmaeedo) Then
 
                 Consulta_sql = "Select Distinct IDMAEEDO From MAEDDO Where IDMAEDDO In (Select IDRST From MAEDDO Where IDMAEEDO = " & _Idmaeedo & ") Or IDMAEEDO = " & _Idmaeedo
-                _TblDetalle = _Sql.Fx_Get_Tablas(Consulta_sql)
+                _TblDetalle = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 _Archivos = Fx_Revisar_Si_Hay_Archivos_Adjuntos(_NombreEquipo, _TblDetalle, "IDMAEEDO")
 
@@ -3051,7 +3051,7 @@ Public Class Frm_Pagos_Documentos
         Consulta_sql = "Select *,Cast(0 As Bit) As Paga_Tidp_Obl,Cast(0 As Bit) As Tiene_Concepto_Obl 
                         From " & _Global_BaseBk & "Zw_Docu_ObligPg Where Modalidad = '" & Modalidad & "' And Tido = '" & _Tido & "'"
 
-        Dim _Tbl_Docu_ObligPg As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Docu_ObligPg As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _TblDetalle As DataTable = _Ds_Matriz_Documentos.Tables("Detalle_Doc")
 
@@ -3175,7 +3175,7 @@ Public Class Frm_Pagos_Documentos
         Consulta_sql = "Select *,Cast(0 As Bit) As Paga_Tidp_Obl,Cast(0 As Bit) As Tiene_Concepto_Obl 
                         From " & _Global_BaseBk & "Zw_Docu_ObligPg Where Modalidad = '" & Modalidad & "' And Tido = '" & _Tido & "'"
 
-        Dim _Tbl_Docu_ObligPg As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Docu_ObligPg As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
         Dim _TblDetalle As DataTable = _Ds_Matriz_Documentos.Tables("Detalle_Doc")
 
         If CBool(_Tbl_Docu_ObligPg.Rows.Count) Then

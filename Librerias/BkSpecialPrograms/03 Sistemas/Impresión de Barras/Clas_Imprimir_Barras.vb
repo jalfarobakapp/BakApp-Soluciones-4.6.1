@@ -135,7 +135,7 @@ Public Class Clas_Imprimir_Barras
                                    "Where EMPRESA = '" & _Empresa & _
                                    "' And KOSU = '" & _Sucursal & "' And KOBO = '" & _Bodega & "' And KOPR = '" & _Codigo & "'"
 
-                    Dim _TblBodega_producto As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+                    Dim _TblBodega_producto As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
 
                     Dim _Ubicacion = String.Empty
 

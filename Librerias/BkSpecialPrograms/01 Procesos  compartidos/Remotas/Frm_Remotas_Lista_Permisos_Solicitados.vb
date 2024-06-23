@@ -138,7 +138,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
                             Select * From #Paso
                             Drop Table #Paso"
 
-            _TblRemotas = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _TblRemotas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Else
 
@@ -155,7 +155,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
                            "Where Empresa = '" & ModEmpresa & "' And CodFuncionario_Autoriza = '' And Eliminada = 0 
                            Order by Fecha,Hora"
 
-            _TblRemotas = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _TblRemotas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         End If
 
@@ -371,7 +371,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 
         Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Remotas" & vbCrLf &
                        "Where NroRemota = '" & _NroRemota & "'"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
         Dim _Eliminada As Boolean
 
         If CBool(_Tbl.Rows.Count) Then
@@ -565,7 +565,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
                                                 "' And Codigo In (Select Codigo From " & _Global_BaseBk & "Zw_Casi_DocDet " &
                                                 "Where Id_DocEnc = " & _Id_DocEnc & " And FunValida_Compra = '')"
 
-                                Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                                Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                                 If CBool(_Tbl.Rows.Count) Then
 
@@ -757,7 +757,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
                 _Sql = New Class_SQL(Cadena_ConexionSQL_Server)
 
                 Consulta_sql = "Select top 1 * From TABFU Where PWFU = '" & _Pwfu & "'"
-                Dim _TblFun As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblFun As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 If CBool(_TblFun.Rows.Count) Then
 

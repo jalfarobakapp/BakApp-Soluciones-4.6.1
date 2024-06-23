@@ -321,7 +321,7 @@ Public Class Frm_UnificacionProducto
             e.Handled = True
 
             Consulta_Sql = "Select * From MAEPR Where KOPR = '" & TxtCodigoDestino.Text & "'"
-            Dim Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+            Dim Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
             If Tbl.Rows.Count > 0 Then
                 BuscarProductos(TxtCodigoDestino.Text, TxtCodigoDestino, TxtDescripcionDestino,
@@ -377,7 +377,7 @@ Public Class Frm_UnificacionProducto
 
 
             Consulta_sql = "SELECT KOPR,NOKOPR,RLUD,UD01PR,UD02PR FROM MAEPR WHERE KOPR = '" & _Codigo & "'"
-            Dim TblPr = _Sql.Fx_Get_Tablas(Consulta_Sql)
+            Dim TblPr = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
             Dim CodigoOld = _Codigo
             Dim DescripcionOld = TblPr.Rows(0).Item("NOKOPR")
@@ -575,7 +575,7 @@ Public Class Frm_UnificacionProducto
 
                     Consulta_sql = "SELECT KOPR,NOKOPR,RLUD,UD01PR,UD02PR" & vbCrLf &
                                    "FROM MAEPR WHERE KOPR = '" & _CodigoOld & "'"
-                    Dim TblPr = _Sql.Fx_Get_Tablas(Consulta_Sql)
+                    Dim TblPr = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
                     'Dim CodigoOld = _Codigo
                     Dim _DescripcionOld = TblPr.Rows(0).Item("NOKOPR")

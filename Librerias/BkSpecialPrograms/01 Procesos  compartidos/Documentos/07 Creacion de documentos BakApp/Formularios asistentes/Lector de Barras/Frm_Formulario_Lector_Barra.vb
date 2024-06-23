@@ -429,7 +429,7 @@ Public Class Frm_Formulario_Lector_Barra
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_CodQRLogDoc" & vbCrLf &
                            "--Inner Join MAEDDO On IDMAEEDO = Idmaeedo" & vbCrLf &
                            "Where CodLeido = '" & _CodLeido & "' And Tido = 'GRI'"
-            Dim _TblQrDoc As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblQrDoc As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If _TblQrDoc.Rows.Count Then
 

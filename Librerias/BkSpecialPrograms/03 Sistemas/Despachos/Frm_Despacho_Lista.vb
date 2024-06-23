@@ -37,7 +37,7 @@ Public Class Frm_Despacho_Lista
         Consulta_sql = "Select 'Todas' As Padre,'Todas...' As 'Hijo' Union Select EMPRESA+KOSU As Padre,NOKOSU As Hijo From TABSU"
         Consulta_sql = "Select EMPRESA+KOSU As Padre,NOKOSU As Hijo From TABSU"
         caract_combo(Cmb_Sucursal)
-        Cmb_Sucursal.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Sucursal.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If _Ver = Enum_Ver.Ingresadas Then
             Cmb_Sucursal.SelectedValue = "Todas"
@@ -49,7 +49,7 @@ Public Class Frm_Despacho_Lista
                        "Union" & vbCrLf &
                        "Select Distinct CodFuncionario As Padre,NOKOFU As Hijo From " & _Global_BaseBk & "Zw_Despachos Left Join TABFU On KOFU = CodFuncionario Order By Padre"
         caract_combo(Cmb_Ejecutivo)
-        Cmb_Ejecutivo.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Ejecutivo.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Ejecutivo.SelectedValue = ""
 
         If _Ver = Enum_Ver.Ingresadas Then
@@ -64,7 +64,7 @@ Public Class Frm_Despacho_Lista
                         Where KORETI In (Select CodTransportista From " & _Global_BaseBk & "Zw_Despachos_Transportistas Where Mostrar = 1)
                         Order By Padre"
         caract_combo(Cmb_Transportista)
-        Cmb_Transportista.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Transportista.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Transportista.SelectedValue = ""
 
         Sb_Color_Botones_Barra(Bar2)

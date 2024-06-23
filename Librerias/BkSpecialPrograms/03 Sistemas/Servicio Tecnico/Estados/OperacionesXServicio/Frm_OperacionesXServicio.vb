@@ -53,7 +53,7 @@ Public Class Frm_OperacionesXServicio
                        "From " & _Global_BaseBk & "Zw_St_OT_OpeXServ Serv" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_St_OT_Operaciones Oper On Serv.Operacion = Oper.Operacion" & vbCrLf &
                        "Where CodReceta = '" & _CodReceta & "'"
-        _Tbl_Operaciones = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Operaciones = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         'Consulta_sql = "SELECT CAST(0 As Bit) As Chk, ReOpe.Id, ReOpe.Id_Rec,ReOpe.CodReceta,ReOpe.Operacion,Oper.Descripcion,Orden,Oper.Valor" & vbCrLf &
         '               "From " & _Global_BaseBk & "Zw_St_OT_Recetas_Ope ReOpe" & vbCrLf &

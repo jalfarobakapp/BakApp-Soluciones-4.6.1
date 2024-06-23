@@ -164,7 +164,7 @@ Public Class Cntrl_Configuracion_General
             Dim _Fl = Generar_Filtro_IN_Arreglo(_Tidos, False)
 
             Consulta_sql = "Select TIDO As Codigo,NOTIDO As Descripcion From TABTIDO Where TIDO In " & _Fl
-            _Tbl_Filtro_Documentos_Excluidos = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Filtro_Documentos_Excluidos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         End If
 
@@ -180,7 +180,7 @@ Public Class Cntrl_Configuracion_General
                        "FROM " & _Global_BaseBk & "Zw_Turnos" & vbCrLf & _
                        "ORDER BY Padre"
 
-        Cmb_SOC_CodTurno.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql) '_SQL.Fx_Get_Tablas(Consulta_sql)
+        Cmb_SOC_CodTurno.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql) '_SQL.Fx_Get_Tablas(Consulta_sql)
 
         Dim _Arr_Busca_Pr(,) As String = {{"0", "MAESTRA PRODUCTOS"}, {"1", "PRODUCTOS DEL PROVEEDOR"}}
         Sb_Llenar_Combos(_Arr_Busca_Pr, Cmb_SOC_Buscar_Producto)
@@ -210,7 +210,7 @@ Public Class Cntrl_Configuracion_General
                        "FROM " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
                        "WHERE Nodo_Raiz = 0" & vbCrLf &
                        "ORDER BY Padre"
-        Cmb_Nodo_Raiz_Asociados.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Nodo_Raiz_Asociados.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Nodo_Raiz_Asociados.SelectedValue = "0"
 
     End Sub

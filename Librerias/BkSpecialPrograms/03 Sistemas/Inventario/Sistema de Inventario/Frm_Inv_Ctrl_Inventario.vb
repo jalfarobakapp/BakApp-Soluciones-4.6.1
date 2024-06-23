@@ -35,11 +35,15 @@ Public Class Frm_Inv_Ctrl_Inventario
 
     End Sub
 
-    Private Sub Btn_Plan_Click(sender As Object, e As EventArgs) Handles Btn_Plan.Click
+    Private Sub Btn_Plan_Click(sender As Object, e As EventArgs) Handles Btn_CrearHoja.Click
 
-        Dim Fm As New Frm_Plan(_Id)
+        Dim Fm As New Frm_IngresarHoja(_Id, 0)
         Fm.ShowDialog(Me)
         Fm.Dispose()
+
+        'Dim Fm As New Frm_Plan(_Id)
+        'Fm.ShowDialog(Me)
+        'Fm.Dispose()
 
     End Sub
 

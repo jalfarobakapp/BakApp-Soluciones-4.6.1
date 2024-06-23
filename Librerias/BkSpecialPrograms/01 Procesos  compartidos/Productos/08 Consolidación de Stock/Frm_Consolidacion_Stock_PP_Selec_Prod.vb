@@ -47,7 +47,7 @@ Public Class Frm_Consolidacion_Stock_PP_Selec_Prod
         If Rdb_Productos_Todos.Checked Then
 
             Consulta_sql = "SELECT KOPR AS 'Codigo', NOKOPR AS 'Descripcion' FROM MAEPR WHERE ATPR = '' AND TIPR = 'FPN'"
-            _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Productos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ElseIf Rdb_Productos_Con_Movimientos.Checked Then
 
@@ -56,7 +56,7 @@ Public Class Frm_Consolidacion_Stock_PP_Selec_Prod
                            "KOPR IN (SELECT Distinct KOPRCT FROM MAEDDO" & Space(1) &
                            "WHERE FEEMLI BETWEEN '" & Format(Dtp_Fecha_Movimientos_Desde.Value, "yyyyMMdd") & "'" & Space(1) &
                            "AND '" & Format(Dtp_Fecha_Movimientos_Hasta.Value, "yyyyMMdd") & "')"
-            _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Productos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         End If
 

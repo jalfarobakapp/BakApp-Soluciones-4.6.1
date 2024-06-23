@@ -181,7 +181,7 @@ Public Class Frm_InvParc_06_ProcesarDatos
 
             Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _IdMaeedo_GRI
 
-            Dim _TblDetalle_GRI As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblDetalle_GRI As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
             For Each _Fila As DataRow In _TblDetalle_GRI.Rows
@@ -190,7 +190,7 @@ Public Class Frm_InvParc_06_ProcesarDatos
                 Dim _Pm As Double = _Fila.Item("PPPRNERE1")
 
                 Consulta_sql = "Select top 1 * From MAEPR Where KOPR = '" & _Codigo & "'"
-                Dim _TblProducto As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblProducto As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 Dim _Rtu As Double = _TblProducto.Rows(0).Item("RLUD")
                 Dim _ListaCosto As String = Mid(_TblProducto.Rows(0).Item("LISCOSTO"), 6, 3)
@@ -281,7 +281,7 @@ Public Class Frm_InvParc_06_ProcesarDatos
                                "Order by Semilla"
                 Dim SQLGrilla = Consulta_sql
 
-                Tabla = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Tabla = _Sql.Fx_Get_DataTable(Consulta_sql)
                 tb = Tabla
                 'ProgressBar1.Style = ProgressBarStyle.Continuous
                 Progreso_Cont.Maximum = Tabla.Rows.Count
@@ -632,7 +632,7 @@ Public Class Frm_InvParc_06_ProcesarDatos
             Dim _Codigo As String = Fila.Item("CodigoPr")
 
             Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
-            Dim _RowProducto As DataRow = _Sql.Fx_Get_Tablas(Consulta_sql).Rows(0)
+            Dim _RowProducto As DataRow = _Sql.Fx_Get_DataTable(Consulta_sql).Rows(0)
 
             Dim _Rtu As String = _RowProducto.Item("RLUD")
 
@@ -790,7 +790,7 @@ Public Class Frm_InvParc_06_ProcesarDatos
                     NrNumeroDoco = _Sql.Fx_Trae_Dato("MAEEDO", "COALESCE(MAX(NUDO),'0000000000')", "TIDO = '" & _TipoDoc & "'")
 
                     Consulta_sql = "select dbo.ProxNumero('" & NrNumeroDoco & "') as Nro"
-                    Dim TblPaso = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim TblPaso = _Sql.Fx_Get_DataTable(Consulta_sql)
                     Dim Fila As DataRow = TblPaso.Rows(0)
 
                     NrNumeroDoco = Fila.Item("Nro").ToString
@@ -1067,7 +1067,7 @@ Public Class Frm_InvParc_06_ProcesarDatos
         Consulta_sql = Replace(Consulta_sql, "#@Codigo#", _Codigo)
         Consulta_sql = Replace(Consulta_sql, "#Fecha#", Format(_Fecha, "yyyyMMdd"))
 
-        Dim Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _Sql.Sb_Eliminar_Tabla_De_Paso("Zw_TblStockConsolid")
 

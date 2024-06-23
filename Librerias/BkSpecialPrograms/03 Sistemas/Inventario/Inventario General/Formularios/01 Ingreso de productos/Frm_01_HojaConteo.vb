@@ -355,7 +355,7 @@ Public Class Frm_01_HojaConteo
             Dim _Indice_Grilla As Integer = Grilla_Inv.CurrentRow.Index
 
             Consulta_sql = "Select Top 1 * From MAEPR Where KOPR = '" & Codigo_abuscar & "'"
-            Dim Tbl_Maepr As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+            Dim Tbl_Maepr As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
             Dim _Descripcion As String
 
             Dim _Item_Hoja As String = numero_(Grilla_Inv.RowCount, 2)
@@ -620,7 +620,7 @@ Public Class Frm_01_HojaConteo
                     Consulta_sql = "SELECT CodSector, IdUbicacion, Columna, Fila, Alto, Largo, Ancho, Peso_Max, Desc_Ubicacion" & vbCrLf &
                            "FROM Zw_Tbl_SecXBod_Ubicaciones" & vbCrLf &
                            "Where CodSector = '" & _CodSectorInt & "' And IdUbicacion = " & _CodUbic
-                    Dim _Tbl As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+                    Dim _Tbl As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
 
                     If CBool(_Tbl.Rows.Count) Then
                         Grilla_Inv.Rows(Grilla_Inv.CurrentRow.Index).Cells("Columna").Value =
@@ -671,7 +671,7 @@ Public Class Frm_01_HojaConteo
 
         Consulta_sql = "SELECT * FROM ZW_TmpInvProductosInventariados Where Nro_Hoja = 11"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Grilla_Inv.DataSource = _Tbl
 
@@ -801,7 +801,7 @@ Public Class Frm_01_HojaConteo
                     _Columna,
                     _Fila As String
 
-                Dim _TblInfProd As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblInfProd As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 If CBool(_TblInfProd.Rows.Count) Then
 
@@ -847,7 +847,7 @@ Public Class Frm_01_HojaConteo
                 Consulta_sql = "SELECT Columna, Fila FROM Zw_Tbl_SecXBod_Ubicaciones" & vbCrLf &
                                "Where CodSector = '" & _CodSectorInt & "' And IdUbicacion = " & _CodUbic
 
-                Dim _TblUbic As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblUbic As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 If CBool(_TblUbic.Rows.Count) Then
                     _Columna = _TblUbic.Rows(0).Item("Columna")

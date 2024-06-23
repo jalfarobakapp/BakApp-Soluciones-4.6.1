@@ -291,7 +291,7 @@ Public Class Frm_AsisCompra_Proyeccion_Detalle
                        "TIDO = '" & _Tido & "' And ESLIDO = ''" & vbCrLf & _
                        "Order By NUDO "
 
-        _Tbl_Filtro_Detalle = _Sql.Fx_Get_Tablas(Consulta_sql) 'Fx_Crea_Tabla_Con_Filtro(_Tbl_Detalle, "TIDO+Codigo = '" & _CodTido & "'", "IDMAEEDO")
+        _Tbl_Filtro_Detalle = _Sql.Fx_Get_DataTable(Consulta_sql) 'Fx_Crea_Tabla_Con_Filtro(_Tbl_Detalle, "TIDO+Codigo = '" & _CodTido & "'", "IDMAEEDO")
 
         Grilla_OCC_Pendientes.DataSource = _Tbl_Filtro_Detalle
 

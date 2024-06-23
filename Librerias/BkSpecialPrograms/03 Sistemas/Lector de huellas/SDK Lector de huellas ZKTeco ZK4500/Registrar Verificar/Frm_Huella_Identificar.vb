@@ -119,7 +119,7 @@ Public Class Frm_Huella_Identificar
 
         If _Accion = Enum_Accion.Buscar_Huella Then
             Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Usuarios_Huellas"
-            _Tbl_Usuarior_Huellas = _Sql.Fx_Get_Tablas(Consulta_Sql)
+            _Tbl_Usuarior_Huellas = _Sql.Fx_Get_DataTable(Consulta_Sql)
         End If
 
         _Form_Padre = Form_Padre
@@ -323,7 +323,7 @@ Public Class Frm_Huella_Identificar
     Public Function Fx_Existe_Huella_Row(_Huella_Revisar As String) As DataRow
 
         Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Usuarios_Huellas Where Zk4500 = 1"
-        _Tbl_Usuarior_Huellas = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_Usuarior_Huellas = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         For Each _Fila As DataRow In _Tbl_Usuarior_Huellas.Rows
 

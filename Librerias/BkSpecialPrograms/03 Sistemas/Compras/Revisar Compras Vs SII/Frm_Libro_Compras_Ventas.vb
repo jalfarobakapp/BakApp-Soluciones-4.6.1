@@ -229,14 +229,14 @@ Public Class Frm_Libro_Compras_Ventas
             Consulta_sql = Replace(Consulta_sql, "#Libro#", _Libro)
             Consulta_sql = Replace(Consulta_sql, "#Filtro#", _Filtro & _Filtro_Random)
 
-            _Inf_05_Solo_Random = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Inf_05_Solo_Random = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Consulta_sql = My.Resources.Recursos_Libros_Compra_Venta.SqlQuery_Libro_Compras
             Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
             Consulta_sql = Replace(Consulta_sql, "#Libro#", _Libro)
             Consulta_sql = Replace(Consulta_sql, "#Filtro#", _Filtro_Random)
 
-            _Inf_06_Libro_Compras = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Inf_06_Libro_Compras = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Tab.SelectedTabIndex = _TabIndex
 
@@ -1764,7 +1764,7 @@ Public Class Frm_Libro_Compras_Ventas
                         "Where TPDF = 'No'" & vbCrLf &
                         "Order by Rut_Proveedor" & vbCrLf &
                         "Drop Table #Paso"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "PRoveedores Sin PDF")
 

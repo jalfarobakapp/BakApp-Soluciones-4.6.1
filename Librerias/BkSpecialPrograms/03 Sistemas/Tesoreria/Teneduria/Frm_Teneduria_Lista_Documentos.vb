@@ -253,7 +253,7 @@ Public Class Frm_Teneduria_Lista_Documentos
 
         Consulta_sql = My.Resources.Recursos_Teneduria_Pagos.SQLQuery_Excel_Conciliacion_01
         Consulta_sql = Replace(Consulta_sql, "#Filtro_Idmaedpce#", _Filtro_Idmaedpce)
-        _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Conciliacion")
 

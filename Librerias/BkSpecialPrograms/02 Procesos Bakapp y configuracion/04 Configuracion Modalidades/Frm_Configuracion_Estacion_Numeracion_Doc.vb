@@ -216,7 +216,7 @@ Public Class Frm_Configuracion_Estacion_Numeracion_Doc
         Consulta_sql = "Select TIDO,NOTIDO From TABTIDO Where TIGEDO = 'I' Or TIDO In ('GRC','GRD')"
 
         Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
-        Dim _Tbl_Tido As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Tido As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Consulta_sql = String.Empty
 
@@ -411,7 +411,7 @@ Public Class Frm_Configuracion_Estacion_Numeracion_Doc
         Consulta_sql = "Select TIDO,NOTIDO From TABTIDO Where TIGEDO = 'I' Or TIDO In ('GRC','GRD')"
 
         Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
-        Dim _Tbl_Tido As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Tido As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Consulta_sql = String.Empty
 

@@ -169,7 +169,7 @@ Public Class Frm_DatosConexion
         Try
 
             Consulta_sql = "SELECT RUT,RAZON,NCORTO FROM CONFIGP"
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
                 Return False

@@ -39,7 +39,7 @@ Public Class Clas_Modalidades
                        "Where Empresa = '" & ModEmpresa & "' And Modalidad In " &
                        "(Select MODALIDAD From CONFIEST Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD Not In " &
                        "(Select Modalidad From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad Where Empresa = '" & ModEmpresa & "'))"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _SqlQuery = String.Empty
 

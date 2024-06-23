@@ -34,7 +34,7 @@ Public Class Frm_Ranking_Resultado
         Lbl_Estatus.Text = String.Empty
 
         Consulta_sql = My.Resources.Consultas.Ranking_productos_Resultado
-        _TblResultado = _SQL.Fx_Get_Tablas(Consulta_sql)
+        _TblResultado = _SQL.Fx_Get_DataTable(Consulta_sql)
 
 
 

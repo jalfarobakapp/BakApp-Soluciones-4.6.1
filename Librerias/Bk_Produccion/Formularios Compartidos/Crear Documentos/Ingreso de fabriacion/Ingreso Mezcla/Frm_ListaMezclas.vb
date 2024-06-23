@@ -47,7 +47,7 @@ Public Class Frm_ListaMezclas
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Pdp_CPT_MzEnc" & vbCrLf &
                        "Where 1>0" & vbCrLf & _Condicion & vbCrLf &
                        "And Nro_MZC+Numot_Otm+Codigo_Otm+Descripcion_Otm Like '%" & _Filtro & "%'"
-        _Tbl_Mezclas = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Mezclas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 
@@ -171,7 +171,7 @@ Public Class Frm_ListaMezclas
                        "Left Join " & _Global_BaseBk & "Zw_Pdp_CPT_MzDet Det On POTL.IDPOTL = Det.Idpotl_Otm" & vbCrLf &
                        "Where IDPOTE = " & _Idpote_Otm & " And LILG <> 'IM'"
 
-        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Marcados As Integer
 
@@ -239,7 +239,7 @@ Public Class Frm_ListaMezclas
         Consulta_sql = "Select *,(FABRICAR-REALIZADO) As SALDO,0 As SALDO2 From POTL" & vbCrLf &
                        "Where IDPOTE = " & _Idpote_Otm & " And LILG <> 'IM'"
 
-        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim Fm_Potl As New Frm_GRI_ProductosOT
         Fm_Potl.Tbl_Productos = _Tbl_Productos
@@ -337,7 +337,7 @@ Public Class Frm_ListaMezclas
                            "Inner Join PNPE On PNPE.CODIGO = POTD.CODNOMEN" & vbCrLf &
                            "Where Znpd.IDPOTL = " & _Idpotl
 
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If Not CBool(_Tbl.Rows.Count) Then
                 _Mensaje.Detalle = "Validación"

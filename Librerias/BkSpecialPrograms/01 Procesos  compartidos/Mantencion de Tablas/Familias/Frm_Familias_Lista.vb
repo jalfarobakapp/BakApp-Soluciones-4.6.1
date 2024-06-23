@@ -159,7 +159,7 @@ Public Class Frm_Familias_Lista
         End Select
 
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         With Grilla
 
@@ -228,7 +228,7 @@ Public Class Frm_Familias_Lista
                        Left Join TABHF Sbfm On Sbfm.KOFM = Fmla.KOFM And Fmla.KOPF = Sbfm.KOPF
                        Order By Spfm.KOFM,Fmla.NOKOPF,NOKOHF"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Pais_Cuidas_Comunas")
 
@@ -596,7 +596,7 @@ Public Class Frm_Familias_Lista
     Sub Sb_Sincronizar_Bases_Externas()
 
         Dim _Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where SincroTblFamilias = 1"
-        Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+        Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
         If _Tbl_Conexiones.Rows.Count Then
 
@@ -624,7 +624,7 @@ Public Class Frm_Familias_Lista
             Dim _Cl_ConexionExterna As New Cl_ConexionExterna
             Dim _Conexion As New ConexionExternas
 
-            Dim _Tabla1 As DataTable = _Sql.Fx_Get_Tablas(_SqlQuerySel)
+            Dim _Tabla1 As DataTable = _Sql.Fx_Get_DataTable(_SqlQuerySel)
 
             For Each _FilaCx As DataRow In _Tbl_Conexiones.Rows
 
@@ -677,7 +677,7 @@ Public Class Frm_Familias_Lista
     Sub Sb_Sincronizar_Bases_Externas_Todo()
 
         Dim _Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where SincroFamilias = 1"
-        Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+        Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
         If _Tbl_Conexiones.Rows.Count Then
 
@@ -698,7 +698,7 @@ Public Class Frm_Familias_Lista
                     _SqlQueryIns = String.Empty
 
                     _SqlQuerySel = "Select * From TABFM"
-                    Dim _Tabfm As DataTable = _Sql.Fx_Get_Tablas(_SqlQuerySel)
+                    Dim _Tabfm As DataTable = _Sql.Fx_Get_DataTable(_SqlQuerySel)
 
                     For Each _Fila As DataRow In _Tabfm.Rows
 
@@ -712,7 +712,7 @@ Public Class Frm_Familias_Lista
                     _SqlQueryIns += vbCrLf
 
                     _SqlQuerySel = "Select * From TABPF"
-                    Dim _Tabpf As DataTable = _Sql.Fx_Get_Tablas(_SqlQuerySel)
+                    Dim _Tabpf As DataTable = _Sql.Fx_Get_DataTable(_SqlQuerySel)
 
                     For Each _Fila As DataRow In _Tabpf.Rows
 
@@ -727,7 +727,7 @@ Public Class Frm_Familias_Lista
                     _SqlQueryIns += vbCrLf
 
                     _SqlQuerySel = "Select * From TABHF"
-                    Dim _Tabhf As DataTable = _Sql.Fx_Get_Tablas(_SqlQuerySel)
+                    Dim _Tabhf As DataTable = _Sql.Fx_Get_DataTable(_SqlQuerySel)
 
                     For Each _Fila As DataRow In _Tabhf.Rows
 

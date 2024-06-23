@@ -399,7 +399,7 @@ Public Class Frm_Importar_Desde_Excel
 
                 Consulta_sql += vbCrLf & "Select * From " & _Nombre_Tbl_Paso_Precios
 
-                _Tbl_Precios = _Sql.Fx_Get_Tablas(Consulta_sql)
+                _Tbl_Precios = _Sql.Fx_Get_DataTable(Consulta_sql)
                 _Tbl_Productos_Seleccionados = Nothing
                 _Traer_Productos = True
 
@@ -583,7 +583,7 @@ Public Class Frm_Importar_Desde_Excel
 
             Consulta_sql = "Select KOPR As Codigo From MAEPR" & vbCrLf &
                            "Where KOPR IN " & _Filtro_Productos
-            _Tbl_Productos_Seleccionados = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Productos_Seleccionados = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             _Hay_Problemas = CBool(_Problemas)
 

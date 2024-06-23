@@ -676,7 +676,7 @@ Public Class Frm_Meson_Asignar_Productos
                     WHERE IDPOTL = " & _Idpotl & "
                     ORDER BY ORDEN"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         OcultarEncabezadoGrilla(Grilla_Potpr, True)
 
@@ -1543,7 +1543,7 @@ Public Class Frm_Meson_Asignar_Productos
                         LEFT OUTER JOIN MAEEN ON EDO.ENDO = KOEN AND EDO.SUENDO = SUEN
                         WHERE POTL.NUMOT='" & _Numot & "' AND POTL.EMPRESA = '" & ModEmpresa & "'" & vbCrLf
 
-        Dim _TblDocRela As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblDocRela As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If _TblDocRela.Rows.Count = 1 Then
 
@@ -2135,7 +2135,7 @@ Public Class Frm_Meson_Asignar_Productos
                 Consulta_sql = "Select * From POTL
                             Where IDPOTE = " & _Idpote & " And IDPOTL In (Select Idpotl From " & _Global_BaseBk & "Zw_Pdp_MesonVsProductos Where Idpote = " & _Idpote & " And Estado In ('PD','PT'))"
 
-                Dim _Tbl_Potl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Potl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 If CBool(_Tbl_Potl.Rows.Count) Or _Incompleto Then
 
@@ -2178,7 +2178,7 @@ Public Class Frm_Meson_Asignar_Productos
                         Left Join PMAEOB On CODIGOOB = Lei.Codigoob_Lee
                         Where Aler.Idpote = " & _Idpote
 
-        Dim _Tbl_Alertas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Alertas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ExportarTabla_JetExcel_Tabla(_Tbl_Alertas, Me, "Alertas_Ot_" & _Numot)
 
@@ -2305,7 +2305,7 @@ Public Class Frm_Meson_Asignar_Productos
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Pdp_MesonVsEnvioRecibe" & vbCrLf &
                        "Where IdMaquina In (Select IdMaquina From " & _Global_BaseBk & "Zw_Pdp_MaquinaVsProductos Where Idpotpr = " & _Idpotpr & ") "
-        Dim _Tbl_MesonVsEnvioRecibe As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_MesonVsEnvioRecibe As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Clas_Imp As New Clas_Impirmir_Operaciones_OT_Barras()
 

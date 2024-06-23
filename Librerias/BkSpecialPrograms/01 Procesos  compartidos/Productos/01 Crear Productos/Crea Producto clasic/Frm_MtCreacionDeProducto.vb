@@ -56,26 +56,26 @@ Public Class Frm_MtCreacionDeProducto
 
         caract_combo(Cmb_Mrpr)
         Consulta_sql = Union & "SELECT KOMR AS Padre,NOKOMR AS Hijo FROM TABMR ORDER BY Hijo" ' WHERE SEMILLA = " & Actividad
-        Cmb_Mrpr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Mrpr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Marca = ""
         Cmb_Mrpr.SelectedValue = Marca
 
         caract_combo(Cmb_Rupr)
         Consulta_sql = Union & "SELECT KORU AS Padre,NOKORU AS Hijo FROM TABRU ORDER BY Hijo" ' WHERE SEMILLA = " & Actividad
-        Cmb_Rupr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Rupr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Rubro = ""
         Cmb_Rupr.SelectedValue = Rubro
 
         caract_combo(Cmb_Clalibpr)
         Consulta_sql = Union & "SELECT KOCARAC AS Padre,LTRIM(RTRIM(KOCARAC))+'-'+LTRIM(RTRIM(NOKOCARAC)) AS Hijo FROM TABCARAC WHERE KOTABLA = 'CLALIBPR' ORDER BY Hijo"
-        Cmb_Clalibpr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Clalibpr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         ClasifLibre = ""
         Cmb_Clalibpr.SelectedValue = ClasifLibre
 
         caract_combo(CmbSuperFamilia)
         Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                        "SELECT KOFM AS Padre,NOKOFM AS Hijo FROM TABFM ORDER BY Hijo" ' WHERE SEMILLA = " & Actividad
-        CmbSuperFamilia.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        CmbSuperFamilia.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         SuperFamilia = ""
         CmbSuperFamilia.SelectedValue = SuperFamilia
         Familia = ""
@@ -113,14 +113,14 @@ Public Class Frm_MtCreacionDeProducto
 
         caract_combo(Cmb_Codlista)
         Consulta_sql = Union & "SELECT 'TABPP'+KOLT AS Padre,KOLT+'-'+NOKOLT AS Hijo FROM TABPP"
-        Cmb_Codlista.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Codlista.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         ListaCostoPro = "TABPP" & ModListaPrecioCosto
         Cmb_Codlista.SelectedValue = ListaCostoPro
 
 
         caract_combo(Cmb_Kofupr)
         Consulta_sql = Union & "SELECT KOFU AS Padre,NOKOFU AS Hijo FROM TABFU"
-        Cmb_Kofupr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Kofupr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         JefePro = ""
         Cmb_Kofupr.SelectedValue = JefePro
 
@@ -132,7 +132,7 @@ Public Class Frm_MtCreacionDeProducto
 
         caract_combo(Cmb_Zonapr)
         Consulta_sql = Union & "SELECT KOCARAC AS Padre,LTRIM(RTRIM(KOCARAC))+'-'+LTRIM(RTRIM(NOKOCARAC)) AS Hijo FROM TABCARAC WHERE KOTABLA = 'ZONAPRODUC' ORDER BY Hijo"
-        Cmb_Zonapr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Zonapr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         ZonaPro = ""
         Cmb_Zonapr.SelectedValue = ZonaPro
 
@@ -728,7 +728,7 @@ Public Class Frm_MtCreacionDeProducto
                     Dim _Codigo As String = Txt_Kopr.Text
 
                     Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where GrbProd_Nuevos = 1"
-                    Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     For Each _FilaCx As DataRow In _Tbl_Conexiones.Rows
 
@@ -917,7 +917,7 @@ Public Class Frm_MtCreacionDeProducto
                                            "From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & Space(1) &
                                            "Where Clas_Unica_X_Producto = 0 And Es_Seleccionable = 1)" & vbCrLf &
                                            "And Codigo = '" & Txt_Kopr.Text & "'"
-                            _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+                            _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                             _PuedeGrabarSinAsociaciones = CBool(_Tbl.Rows.Count)
 
@@ -933,7 +933,7 @@ Public Class Frm_MtCreacionDeProducto
                             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
                                            "Where Clas_Unica_X_Producto = 1 And Nodo_Raiz = 0 And Codigo_Nodo Not In" & Space(1) &
                                            "(Select Codigo_Nodo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo = '" & Txt_Kopr.Text & "')"
-                            _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+                            _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                             If CBool(_Tbl.Rows.Count) Then
 
@@ -1017,7 +1017,7 @@ Sigue_Loop_01:
                         Dim _Codigo As String = Txt_Kopr.Text
 
                         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where GrbProd_Nuevos = 1"
-                        Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                        Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                         For Each _FilaCx As DataRow In _Tbl_Conexiones.Rows
 
@@ -1367,7 +1367,7 @@ Sigue_Loop_01:
                                        "From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & Space(1) &
                                        "Where Clas_Unica_X_Producto = 0 And Es_Seleccionable = 1)" & vbCrLf &
                                        "And Codigo = '" & Txt_Kopr.Text & "'"
-                        _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+                        _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                         _PuedeGrabarSinAsociaciones = CBool(_Tbl.Rows.Count)
 
@@ -1386,7 +1386,7 @@ Sigue_Loop_01:
                         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
                                        "Where Clas_Unica_X_Producto = 1 And Nodo_Raiz = 0 And Codigo_Nodo Not In" & Space(1) &
                                        "(Select Codigo_Nodo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo = '" & Txt_Kopr.Text & "')"
-                        _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+                        _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                         If CBool(_Tbl.Rows.Count) Then
 
@@ -1553,7 +1553,7 @@ Sigue_Loop_01:
             caract_combo(CmbFamilia)
             Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                            "SELECT KOPF AS Padre,NOKOPF AS Hijo FROM TABPF WHERE KOFM = '" & SuperFamilia & "'"
-            CmbFamilia.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            CmbFamilia.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             CmbFamilia.SelectedValue = Familia
 
@@ -1575,7 +1575,7 @@ Sigue_Loop_01:
             caract_combo(CmbSubFamilia)
             Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                            "SELECT KOHF AS Padre, NOKOHF AS Hijo FROM TABHF WHERE KOFM = '" & SuperFamilia & "' AND KOPF = '" & Familia & "'"
-            CmbSubFamilia.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            CmbSubFamilia.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
             CmbSubFamilia.SelectedValue = SubFamilia
 
         End Try
@@ -1603,7 +1603,7 @@ Sigue_Loop_01:
             caract_combo(CmbSuperFamilia)
             Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                            "SELECT KOFM AS Padre,NOKOFM AS Hijo FROM TABFM ORDER BY Hijo"
-            CmbSuperFamilia.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            CmbSuperFamilia.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
             CmbSuperFamilia.SelectedValue = Spfm
             CmbFamilia.SelectedValue = Fmfm
             CmbSubFamilia.SelectedValue = Subf
@@ -2145,7 +2145,7 @@ Sigue_Loop_01:
             Fm.Dispose()
 
             Consulta_sql = Union & "SELECT KOMR AS Padre,NOKOMR AS Hijo FROM TABMR ORDER BY Hijo" ' WHERE SEMILLA = " & Actividad
-            Cmb_Mrpr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Cmb_Mrpr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
             Cmb_Mrpr.SelectedValue = _Marca
         End If
     End Sub
@@ -2162,7 +2162,7 @@ Sigue_Loop_01:
 
             caract_combo(Cmb_Rupr)
             Consulta_sql = Union & "SELECT KORU AS Padre,NOKORU AS Hijo FROM TABRU ORDER BY Hijo" ' WHERE SEMILLA = " & Actividad
-            Cmb_Rupr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Cmb_Rupr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
             Cmb_Rupr.SelectedValue = _Rubro
         End If
     End Sub
@@ -2183,7 +2183,7 @@ Sigue_Loop_01:
 
             caract_combo(Cmb_Clalibpr)
             Consulta_sql = Union & "SELECT KOCARAC AS Padre,LTRIM(RTRIM(KOCARAC))+'-'+LTRIM(RTRIM(NOKOCARAC)) AS Hijo FROM TABCARAC WHERE KOTABLA = 'CLALIBPR' ORDER BY Hijo"
-            Cmb_Clalibpr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Cmb_Clalibpr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
             Cmb_Clalibpr.SelectedValue = _ClasifLibre
 
         End If
@@ -2204,7 +2204,7 @@ Sigue_Loop_01:
 
             caract_combo(Cmb_Zonapr)
             Consulta_sql = Union & "SELECT KOCARAC AS Padre,LTRIM(RTRIM(KOCARAC))+'-'+LTRIM(RTRIM(NOKOCARAC)) AS Hijo FROM TABCARAC WHERE KOTABLA = 'ZONAPRODUC' ORDER BY Hijo"
-            Cmb_Zonapr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Cmb_Zonapr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
             Cmb_Zonapr.SelectedValue = ZonaPro
 
         End If
@@ -2344,7 +2344,7 @@ Sigue_Loop_01:
         If _Global_Row_Configuracion_General.Item("PermitirMigrarProductosBaseExterna") Then
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where GrbProd_Nuevos = 1"
-            Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _FilaCx As DataRow In _Tbl_Conexiones.Rows
 
@@ -2388,7 +2388,7 @@ Sigue_Loop_01:
         If _Global_Row_Configuracion_General.Item("PermitirMigrarProductosBaseExterna") Then
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where GrbProd_Nuevos = 1"
-            Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _FilaCx As DataRow In _Tbl_Conexiones.Rows
 

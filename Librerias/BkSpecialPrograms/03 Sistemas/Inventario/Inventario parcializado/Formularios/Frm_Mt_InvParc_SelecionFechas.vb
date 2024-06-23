@@ -285,7 +285,7 @@ Public Class Frm_Mt_InvParc_SelecionFechas
                        "' And Bodega = '" & _Bodega & "'" & vbCrLf & _
                        "Order by Fecha Desc"
 
-        Dim _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Inventarios")
     End Sub
@@ -311,7 +311,7 @@ Public Class Frm_Mt_InvParc_SelecionFechas
                        "Order by CodigoPr,Semilla Desc" & vbCrLf & _
                        "Drop Table #Paso_Inv"
 
-        Dim _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Inventario_Detalle")
 
@@ -330,7 +330,7 @@ Public Class Frm_Mt_InvParc_SelecionFechas
                        "Select * From #Paso1" & vbCrLf & _
                        "Drop Table #Paso1"
 
-        Dim _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Prod_Sin_Inventariar")
 
@@ -360,7 +360,7 @@ Public Class Frm_Mt_InvParc_SelecionFechas
                        "Order by CodigoPr,Semilla Desc" & vbCrLf & _
                        "Drop Table #Paso_Inv"
 
-        Dim _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Inv_Detalle_" & Format(_Fecha, "yyyyMMdd"))
     End Sub

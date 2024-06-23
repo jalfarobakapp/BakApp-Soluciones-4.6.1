@@ -23,7 +23,7 @@ Public Class Frm_Chilexpress_Conf
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
         Consulta_sql = "Select '' As Padre,'' As Hijo Union Select NombreEtiqueta As Padre,NombreEtiqueta As Hijo From " & _Global_BaseBk & "Zw_Tbl_DisenoBarras"
-        Dim _TblEtiquetas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblEtiquetas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         caract_combo(Cmb_NombreEtiqueta)
         Cmb_NombreEtiqueta.DataSource = Nothing

@@ -115,7 +115,7 @@ Public Class Frm_St_Estado_07_Entrega_Facturacion
         Consulta_sql = "SELECT CodigoTabla AS Padre,NombreTabla AS Hijo" & vbCrLf &
                        "FROM " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
                        "Where Tabla = 'ES_ENTREGA_ST' ORDER BY Padre" ' WHERE SEMILLA = " & Actividad
-        Cmb_Estado_Entrega.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Estado_Entrega.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Estado_Entrega.SelectedValue = _Estado
 
     End Sub

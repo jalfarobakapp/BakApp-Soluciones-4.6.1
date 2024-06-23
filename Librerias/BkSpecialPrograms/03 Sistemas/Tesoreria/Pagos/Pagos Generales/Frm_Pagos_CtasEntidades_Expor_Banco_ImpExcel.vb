@@ -47,7 +47,7 @@ Public Class Frm_Pagos_CtasEntidades_Expor_Banco_ImpExcel
                        "FROM MAEDPCE WITH ( NOLOCK ) " & vbCrLf &
                        "WHERE 1 = 0"
 
-        _Tbl_Resultado = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Resultado = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Global_Thema = Enum_Themas.Oscuro Then
             Btn_Buscar_Archivo.ForeColor = Color.White
@@ -367,7 +367,7 @@ Public Class Frm_Pagos_CtasEntidades_Expor_Banco_ImpExcel
         Consulta_sql = "Select '3 caracteres' As TIDP,'Max 13 Caracteres' As ENDP,'Max 13 Caracteres' As EMDP,'Max 3 Caracteres' As SUEMDP," &
                        "'Max 16 Caracteres' As CUDP,'Max 8 Caracteres' As NUCUDP,'Valor númerico' As VADP,Getdate() As FEEMDP,Getdate() As FEVEDP," &
                        "'Max 80 Caracteres' As REFANTI"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Levantamiento_Pagos")
 

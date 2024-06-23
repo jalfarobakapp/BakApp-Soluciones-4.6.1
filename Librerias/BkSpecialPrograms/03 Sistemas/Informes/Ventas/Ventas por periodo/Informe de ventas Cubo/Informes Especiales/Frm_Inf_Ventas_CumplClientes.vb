@@ -61,7 +61,7 @@ Select KOFU,NOKOFU,Clientes,Clientes_Atendidos,ROUND(Porc_Atencion,2) As Porc_At
 
 Drop Table #PasoCl"
 
-        _Tbl_Informe = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_Informe = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         With Grilla
 

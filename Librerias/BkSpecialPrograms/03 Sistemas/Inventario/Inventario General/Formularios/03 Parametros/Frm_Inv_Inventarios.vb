@@ -40,7 +40,7 @@ Public Class Frm_Inv_Inventarios
                        "From " & _Global_BaseBk & "Zw_Inv_Inventario" & vbCrLf &
                        "Where " & _Condicion
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _DisplayIndex = 0
 

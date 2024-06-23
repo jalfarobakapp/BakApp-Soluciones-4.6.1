@@ -44,7 +44,7 @@ Public Class Frm_FincredTokens
     Sub Sb_Actualizar_Grilla()
 
         Consulta_sql = "Select Id,Token,Usuario,Clave,NombreSucursal,AmbientePruebas From " & _Global_BaseBk & "Zw_Fincred_Config"
-        _Tbl_Tokens = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Tokens = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _DisplayIndex = 0
 

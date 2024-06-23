@@ -17,7 +17,7 @@ Module Inv_parcial
                            "order by FechaInv,Orden"
 
 
-            Dim tb = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim tb = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If tb.Rows.Count > 0 Then
                 'iniciamos el form y el reporte
@@ -79,7 +79,7 @@ Module Inv_parcial
                        Ocultar & vbCrLf & _
                        "Order by Stock Desc OPTION ( FAST 20 )"
 
-        Dim tb = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim tb = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If tb.Rows.Count > 0 Then
             MostrarInforme(tb)
@@ -115,7 +115,7 @@ Module Inv_parcial
                        Ocultar & vbCrLf & _
                        "Order by dbo.MAEPR.KOPR OPTION ( FAST 20 )"
 
-        Dim tb = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim tb = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If tb.Rows.Count > 0 Then
             MostrarInforme(tb)
@@ -187,7 +187,7 @@ Module Inv_parcial
                        Ocultar & vbCrLf & _
                        "Order by dbo.MAEPR.KOPR OPTION ( FAST 20 )"
 
-        Dim tb = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim tb = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If tb.Rows.Count > 0 Then
             MostrarInforme(tb)

@@ -61,7 +61,7 @@ Public Class Frm_CRV_Lista
                        "FROM " & _Global_BaseBk & "Zw_CRV_Viajes Zc" & vbCrLf & _
                        "Where 1 > 0" & vbCrLf & _Condicion
 
-        Return _Sql.Fx_Get_Tablas(Consulta_sql)
+        Return _Sql.Fx_Get_DataTable(Consulta_sql)
 
     End Function
 
@@ -233,7 +233,7 @@ Public Class Frm_CRV_Lista
 
             Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_CRV_Viajes Where Nro_CRV = '" & _Nro_CRV & "'"
 
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If CBool(_Tbl.Rows.Count) Then
 

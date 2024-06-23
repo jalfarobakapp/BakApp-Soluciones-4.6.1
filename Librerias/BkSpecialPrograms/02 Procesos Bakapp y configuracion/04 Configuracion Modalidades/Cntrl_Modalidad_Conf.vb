@@ -25,7 +25,7 @@ Public Class Cntrl_Modalidad_Conf
 
         With Grilla
 
-            .DataSource = _SQL.Fx_Get_Tablas(Consulta_sql)
+            .DataSource = _SQL.Fx_Get_DataTable(Consulta_sql)
 
             OcultarEncabezadoGrilla(Grilla, True)
 
@@ -88,7 +88,7 @@ Public Class Cntrl_Modalidad_Conf
         Dim _Clas_Mod As New Clas_Modalidades
         Dim _RowModalidad As DataRow = _Clas_Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, _Modalidad)
 
-        Dim _Fila As DataRow = _SQL.Fx_Get_Tablas(Consulta_sql).Rows(0)
+        Dim _Fila As DataRow = _SQL.Fx_Get_DataTable(Consulta_sql).Rows(0)
 
         If Not IsNothing(_Fila) Then
 

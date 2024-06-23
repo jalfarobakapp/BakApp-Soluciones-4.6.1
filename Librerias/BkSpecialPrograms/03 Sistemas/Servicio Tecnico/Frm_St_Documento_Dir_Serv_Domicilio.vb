@@ -73,7 +73,7 @@ Public Class Frm_St_Documento_Dir_Serv_Domicilio
         caract_combo(Cmb_Pais)
         Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf & _
                        "SELECT KOPA AS Padre,NOKOPA AS Hijo FROM TABPA ORDER BY Padre" ' WHERE SEMILLA = " & Actividad
-        Cmb_Pais.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Pais.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Pais.SelectedValue = _Pais
         
     End Sub
@@ -83,7 +83,7 @@ Public Class Frm_St_Documento_Dir_Serv_Domicilio
         caract_combo(Cmb_Ciudad)
         Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf & _
                        "SELECT KOCI AS Padre,' '+RTRIM(LTRIM(KOCI))+' -'+NOKOCI AS Hijo FROM TABCI WHERE KOPA = '" & _Pais & "'"
-        Cmb_Ciudad.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Ciudad.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Ciudad.SelectedValue = _Ciudad
 
     End Sub
@@ -93,7 +93,7 @@ Public Class Frm_St_Documento_Dir_Serv_Domicilio
         caract_combo(Cmb_Comuna)
         Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf & _
                        "SELECT KOCM AS Padre, NOKOCM AS Hijo FROM TABCM WHERE KOPA = '" & _Pais & "' AND KOCI = '" & _Ciudad & "'"
-        Cmb_Comuna.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Comuna.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Comuna.SelectedValue = _Comuna
 
     End Sub

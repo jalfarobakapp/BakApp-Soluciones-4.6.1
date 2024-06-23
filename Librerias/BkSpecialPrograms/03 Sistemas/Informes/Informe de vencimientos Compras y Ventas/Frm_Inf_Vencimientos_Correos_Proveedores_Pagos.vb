@@ -288,7 +288,7 @@ Public Class Frm_Inf_Vencimientos_Correos_Proveedores_Pagos
 
 
                     Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Correos Where Id = " & _Id_Correo
-                    Dim _TblCorreo As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+                    Dim _TblCorreo As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
                     Consulta_Sql = "Select Top 1 * From MAEDPCE Where IDMAEDPCE = " & _Idmaedpce
                     Dim _Row_Maedpce As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
@@ -530,7 +530,7 @@ Public Class Frm_Inf_Vencimientos_Correos_Proveedores_Pagos
                                 "Select * From #Paso Order By Nudo_P " & vbCrLf &
                                 "Drop Table #Paso"
 
-                _TblNcc = _Sql.Fx_Get_Tablas(Consulta_Sql)
+                _TblNcc = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
                 If Not (_TblNcc Is Nothing) Then
 
@@ -665,7 +665,7 @@ Public Class Frm_Inf_Vencimientos_Correos_Proveedores_Pagos
                                    "FROM MAEDPCD AS CD  WITH ( NOLOCK )  " & vbCrLf &
                                    "LEFT JOIN MAEDPCE AS PROPIO ON CD.IDMAEDPCE=PROPIO.IDMAEDPCE  " & vbCrLf &
                                    "WHERE CD.ARCHIRST='MAEEDO  '  AND CD.IDRST=" & _Idmaeedo & " ORDER BY CD.FEASDP "
-                    Dim _Tbl_Pagos As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+                    Dim _Tbl_Pagos As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
                     For Each _Fl_Pg As DataRow In _Tbl_Pagos.Rows
 

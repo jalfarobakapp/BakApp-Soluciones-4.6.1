@@ -78,19 +78,19 @@ Public Class Clas_Imprimir_ListaPrecios
                         Left Join TABPP Lp On Lp.KOLT = Tbl.KOLT
                         Where [Select] = 1
                         Order By Tbl.FMPR,Tbl.PFPR,Tbl.HFPR,Tbl.KOPR"
-        _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Productos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Consulta_sql = "Select Distinct Cast(0 As Bit) As Impreso,FMPR From " & _Tabla_Paso & " Tbl Where [Select] = 1"
-        _Tbl_SuperFamilia = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_SuperFamilia = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Consulta_sql = "Select Distinct Cast(0 As Bit) As Impreso,FMPR,PFPR,Pf.NOKOPF" & vbCrLf &
                        "From " & _Tabla_Paso & " Tbl" & vbCrLf &
                        "Left Join TABPF Pf On Pf.KOFM = FMPR And Pf.KOPF = PFPR " & vbCrLf &
                        "Where [Select] = 1"
-        _Tbl_Familias = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Familias = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Consulta_sql = "Select Distinct Cast(0 As Bit) As Impreso,FMPR,PFPR,HFPR From " & _Tabla_Paso & " Tbl Where [Select] = 1"
-        _Tbl_SubFamilias = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_SubFamilias = _Sql.Fx_Get_DataTable(Consulta_sql)
 
     End Sub
 

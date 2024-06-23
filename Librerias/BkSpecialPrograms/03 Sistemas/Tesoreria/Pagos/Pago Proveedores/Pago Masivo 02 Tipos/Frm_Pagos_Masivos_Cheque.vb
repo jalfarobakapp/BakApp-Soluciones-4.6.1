@@ -73,7 +73,7 @@ Public Class Frm_Pagos_Masivos_Cheque
         Consulta_sql = Union & "SELECT KOENDP AS Padre,KOENDP+NOKOENDP+CTACTE AS Hijo FROM TABENDP" & vbCrLf & _
                       "WHERE CTACTE <> ''" & vbCrLf & _
                       "ORDER BY Hijo"
-        Cmb_Emdp.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Emdp.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Emdp.SelectedValue = ""
 
         Dtp_Fecha_Emision.Value = FechaDelServidor()

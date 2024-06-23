@@ -119,7 +119,7 @@ Public Class Frm_Meson_Operario_Cambio_Mesones
                         _Condicion_Adicional & vbCrLf &
                         "ORDER BY Orden_Meson"
 
-        Dim _Tbl_Productos_En_Meson As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Productos_En_Meson As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 
@@ -275,7 +275,7 @@ Public Class Frm_Meson_Operario_Cambio_Mesones
                     If Not String.IsNullOrEmpty(_Operacion_Equivalente) Then
 
                         Consulta_sql = "Select * From POTPR Where IDPOTL = " & _Idpotl & "-- And ORDEN > " & _Orden_Potpr
-                        Dim _Tbl_Potpr As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                        Dim _Tbl_Potpr As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                         For Each _Fila_Potpr As DataRow In _Tbl_Potpr.Rows
 

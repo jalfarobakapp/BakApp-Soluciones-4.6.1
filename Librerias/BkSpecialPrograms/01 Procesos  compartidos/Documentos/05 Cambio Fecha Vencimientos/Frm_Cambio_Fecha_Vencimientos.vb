@@ -72,7 +72,7 @@ Public Class Frm_Cambio_Fecha_Vencimientos
             Consulta_sql = "SELECT TOP 1 * FROM MAEEN" & vbCrLf &
                            "WHERE KOEN = '" & _TblEncDocumento.Rows(0).Item("ENDO") &
                            "' And SUEN = '" & _TblEncDocumento.Rows(0).Item("SUENDO") & "'"
-            Dim _TblMaeen As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblMaeen As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Txt_Cuotas.Text = _TblMaeen.Rows(0).Item("NUVECR")
             Txt_Dias_Entre_Vencimientos.Text = _TblMaeen.Rows(0).Item("DIPRVE")

@@ -569,7 +569,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
             Consulta_sql = "Select Cast(1 As Bit) As Chk,KOFU As Codigo, NOKOFU as Descripcion" & vbCrLf &
                            "From TABFU Where KOFU = '" & FUNCIONARIO & "'"
-            _Tbl_Filtro_Vendedores_Asignados = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Filtro_Vendedores_Asignados = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         End If
 
@@ -1962,7 +1962,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Consulta_sql = Replace(Consulta_sql, "#Filtro_Fechas#", "")
         Consulta_sql = Replace(Consulta_sql, "#Sql_Puntos_Cero#", _Sql_Puntos_Cero)
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim rows() As DataRow = _Tbl.Select("Total=MAX(Total)")
         Dim _Max
@@ -2179,7 +2179,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
                         "Select * From #Paso1" & vbCrLf &
                         "Drop Table #Paso1"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(_Sql_Grafico)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(_Sql_Grafico)
 
         Dim rows() As DataRow = _Tbl.Select("Total=MAX(Total)")
         Dim _Max
@@ -2358,7 +2358,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         _Sql_Grafico = Replace(_Sql_Grafico, "#Filtro_Fechas#", "")
         _Sql_Grafico = Replace(_Sql_Grafico, "#Sql_Puntos_Cero#", _Sql_Puntos_Cero)
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(_Sql_Grafico)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(_Sql_Grafico)
 
         Dim rows() As DataRow = _Tbl.Select("Total=MAX(Total)")
         Dim _Max
@@ -2467,7 +2467,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
                         "Select * From #Paso1" & vbCrLf &
                         "Drop Table #Paso1"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(_Sql_Grafico)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(_Sql_Grafico)
 
         Dim rows() As DataRow = _Tbl.Select("Total=MAX(Total)")
         Dim _Max
@@ -2556,7 +2556,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Consulta_sql = Replace(Consulta_sql, "#Filtro_Fechas#", "")
         Consulta_sql = Replace(Consulta_sql, "#Sql_Puntos_Cero#", _Sql_Puntos_Cero)
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim rows() As DataRow = _Tbl.Select("Total=MAX(Total)")
         Dim _Max
@@ -4852,7 +4852,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         End If
 
         Consulta_sql = "Select KOFU From TABFU Where KOFU In " & _Filtro
-        Dim _Tbl_FiltroVendedores As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_FiltroVendedores As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim Fm As New Frm_Inf_Ventas_CumplClientes(Dtp_Fecha_Desde.Value, Dtp_Fecha_Hasta.Value, _Tbl_FiltroVendedores)
         Fm.ShowDialog(Me)
@@ -4923,7 +4923,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Consulta_sql = Replace(Consulta_sql, "#Filtro_Fechas#", "")
         Consulta_sql = Replace(Consulta_sql, "#Sql_Puntos_Cero#", _Sql_Puntos_Cero)
 
-        Dim _Tbl_Grafico_Tendencia As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Grafico_Tendencia As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         'Dim _Tbl As DataTable = _Tbl_Grafico_Tendencia
 

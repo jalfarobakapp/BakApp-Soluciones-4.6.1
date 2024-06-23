@@ -44,7 +44,7 @@ Public Class Frm_Seleccionar_Formato
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Format_01" & Space(1) &
                        "Where TipoDoc = '" & Tido & "'-- And NombreFormato <> 'X Defecto'"
-        _Tbl_Formatos = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Formatos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
 

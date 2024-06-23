@@ -19,10 +19,10 @@ Public Class Clas_Estructura_Base_De_Datos
                                Cast('' As Text) As Accion,
                                Cast('' As Bit) As Reparado
                                Where 1<0"
-        _Tbl_Informe = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_Informe = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Consulta_Sql = "Select Cast('' As Varchar(100)) As Tabla,Cast('' As Text) As Estructura,Cast(0 As bit) as Con_Problema Where 1<0"
-        _Tbl_Tablas = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_Tablas = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
     End Sub
 
@@ -66,7 +66,7 @@ Public Class Clas_Estructura_Base_De_Datos
         Consulta_Sql = "USE [" & _Base & "]" & vbCrLf &
                        "Select TABLE_NAME From INFORMATION_SCHEMA.TABLES Where TABLE_NAME = '" & _Tabla & "'"
 
-        Dim _TblTablasSis As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _TblTablasSis As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Dim _R1 As DataRow
 
@@ -122,7 +122,7 @@ Public Class Clas_Estructura_Base_De_Datos
                             Where TABLE_NAME = '" & _Nombre_Tabla_Paso & "'
                             ORDER BY TABLE_NAME,ORDINAL_POSITION"
 
-                Dim _Tbl_Campos_Originales As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+                Dim _Tbl_Campos_Originales As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
 
                 For Each _Fila_Campo As DataRow In _Tbl_Campos_Originales.Rows
@@ -269,7 +269,7 @@ Public Class Clas_Estructura_Base_De_Datos
                                 Where TABLE_NAME = '" & _Nombre_Tabla_Paso & "')
                             ORDER BY TABLE_NAME,ORDINAL_POSITION"
 
-            Dim _Tbl_Campos_sobrantes As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+            Dim _Tbl_Campos_sobrantes As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
             For Each _Fl As DataRow In _Tbl_Campos_sobrantes.Rows
                 Dim _Campo = _Fl.Item("Campo")
@@ -320,7 +320,7 @@ Public Class Clas_Estructura_Base_De_Datos
         Consulta_Sql = "USE [" & _Base & "]" & vbCrLf &
                        "Select TABLE_NAME From INFORMATION_SCHEMA.TABLES Where TABLE_NAME = '" & _Tabla & "'"
 
-        Dim _TblTablasSis As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _TblTablasSis As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Dim _R1 As DataRow
 
@@ -376,7 +376,7 @@ Public Class Clas_Estructura_Base_De_Datos
                             Where TABLE_NAME = '" & _Nombre_Tabla_Paso & "'
                             ORDER BY TABLE_NAME,ORDINAL_POSITION"
 
-                Dim _Tbl_Tabla_Original As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+                Dim _Tbl_Tabla_Original As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
                 Consulta_Sql = "USE [" & _Base & "]" & vbCrLf & "
                                     SELECT TABLE_NAME AS TABLA,
@@ -392,7 +392,7 @@ Public Class Clas_Estructura_Base_De_Datos
                                     TABLE_NAME = '" & _Tabla & "'
                                     ORDER BY TABLE_NAME,ORDINAL_POSITION"
 
-                Dim _Tbl_Tabla_A_Revisar As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+                Dim _Tbl_Tabla_A_Revisar As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
 
                 For Each _Fila_Campo As DataRow In _Tbl_Tabla_Original.Rows
@@ -533,7 +533,7 @@ Public Class Clas_Estructura_Base_De_Datos
                                 Where TABLE_NAME = '" & _Nombre_Tabla_Paso & "')
                             ORDER BY TABLE_NAME,ORDINAL_POSITION"
 
-            Dim _Tbl_Campos_sobrantes As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+            Dim _Tbl_Campos_sobrantes As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
             For Each _Fl As DataRow In _Tbl_Campos_sobrantes.Rows
                 Dim _Campo = _Fl.Item("Campo")

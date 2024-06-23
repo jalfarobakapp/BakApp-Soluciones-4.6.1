@@ -53,7 +53,7 @@ Public Class Frm_PrecioLCFuturoListaXProd
                        "Where Codigo = '" & _Codigo & "' And Eliminada = 0" & vbCrLf &
                        _Conficion_Adicional & vbCrLf &
                        "Order By FechaProgramada"
-        _Tbl_ListaLC_Programadas = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_ListaLC_Programadas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 
@@ -116,7 +116,7 @@ Public Class Frm_PrecioLCFuturoListaXProd
 
         Consulta_sql = "Select Cast(0 As bit) As Chk,* From " & _Global_BaseBk & "Zw_ListaLC_Programadas_Detalles" & vbCrLf &
                        "Where Id_Enc = " & _Id_Enc & " And Eliminada = 0"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim Fm As New Frm_PrecioLCFuturoGrabar(_Codigo, _Tbl, 0)
         Fm.Id_Enc = _Id_Enc
@@ -158,7 +158,7 @@ Public Class Frm_PrecioLCFuturoListaXProd
     Private Sub Btn_ImprimirCodBarras_Click(sender As Object, e As EventArgs) Handles Btn_ImprimirCodBarras.Click
 
         Consulta_sql = "Select Cast(1 As Bit) As Chk,'" & _RowProducto.Item("KOPR") & "' As Codigo,'" & _RowProducto.Item("KOPR") & "' As Descripcion"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim Fm As New Frm_ImpBarras_PorProducto
         Fm.Pro_Tbl_Filtro_Productos = _Tbl

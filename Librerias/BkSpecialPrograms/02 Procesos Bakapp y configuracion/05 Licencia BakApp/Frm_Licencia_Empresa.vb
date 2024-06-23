@@ -49,7 +49,7 @@ Public Class Frm_Licencia_Empresa
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Licencia"
 
-        Dim _TblEmpresa As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblEmpresa As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         TxtRut.Text = _TblEmpresa.Rows(0).Item("Rut")
         TxtRazonSocial.Text = _TblEmpresa.Rows(0).Item("Razon")

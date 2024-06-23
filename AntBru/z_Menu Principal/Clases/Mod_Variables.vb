@@ -543,7 +543,7 @@ Public Module Mod_Variables
             If _KeyReg = _Key_Base Then
 
                 Consulta_Sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Licencia Where Rut = '" & RutEmpresa & "'"
-                Dim _TblLicencia As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+                Dim _TblLicencia As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
                 If CBool(_TblLicencia.Rows.Count) Then
                     With _TblLicencia.Rows(0)

@@ -683,7 +683,7 @@ Public Class Frm_Demonio_01_Conf_Local
             Consulta_sql = "Select Distinct Cast(1 As Bit) As Chk,MODALIDAD As Codigo, MODALIDAD As Descripcion" & vbCrLf &
                            "From CONFIEST" & vbCrLf &
                            "Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD In " & _Txt.Text
-            _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         End If
 

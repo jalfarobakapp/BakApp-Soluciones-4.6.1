@@ -100,7 +100,7 @@ Public Class Frm_Remotas_Analisi_Dscto_X_Documento_Rd
 
         caract_combo(Cmb_Lista_Costo)
         Consulta_Sql = "SELECT KOLT AS Padre,KOLT+' - '+MOLT+' '+NOKOLT AS Hijo FROM TABPP WHERE TILT = 'C'  ORDER BY Hijo" ' WHERE SEMILLA = " & Actividad
-        Dim _TblListas As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _TblListas As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
         Cmb_Lista_Costo.DataSource = _TblListas
         Cmb_Lista_Costo.SelectedValue = _TblListas.Rows(0).Item("Padre")
 

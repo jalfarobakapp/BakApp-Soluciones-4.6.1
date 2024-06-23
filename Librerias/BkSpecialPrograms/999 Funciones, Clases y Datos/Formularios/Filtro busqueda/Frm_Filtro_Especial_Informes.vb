@@ -378,7 +378,7 @@ Public Class Frm_Filtro_Especial_Informes
         Consulta_Sql = "Select * From " & _Tabla & vbCrLf &
                        "Where " & _Campo & " = ''"
 
-        Dim _Tbl_p2 As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_p2 As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         If _Tbl_p2.Rows.Count > 0 Or Not _Incorporar_Campo_Vacias Then
             _Union_Campo_Vacias = String.Empty
@@ -489,7 +489,7 @@ Public Class Frm_Filtro_Especial_Informes
         Consulta_Sql = "Select * from " & _Tabla & vbCrLf &
                        "Where " & _Campo & " = ''" & vbCrLf & _Condicion_Extra
 
-        Dim _Tbl_p2 As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_p2 As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         If _Tbl_p2.Rows.Count > 0 Then
             _Union_Campo_Vacias = String.Empty
@@ -502,7 +502,7 @@ Public Class Frm_Filtro_Especial_Informes
                            "Select CAST( 1 AS bit) AS Chk," & _Campo & " as Codigo," & _Descripcion & " as Descripcion " & vbCrLf &
                            "From " & _Tabla & vbCrLf &
                            "Where 1 > 0" & vbCrLf & _Condicion_Extra
-            _TblFiltro = _Sql.Fx_Get_Tablas(Consulta_Sql)
+            _TblFiltro = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Else
 
@@ -527,7 +527,7 @@ Public Class Frm_Filtro_Especial_Informes
                 Consulta_Sql = _Union_Campo_Vacias &
                                "Select CAST( 1 AS bit) AS Chk," & _Campo & " as Codigo," & _Descripcion & " as Descripcion From " & _Tabla & vbCrLf &
                                "Where " & _Campo & " IN " & _Filtrpo_SQl & vbCrLf & _Condicion_Extra
-                _TblFiltro = _Sql.Fx_Get_Tablas(Consulta_Sql)
+                _TblFiltro = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
                 If _Cuenta_Checkeados = _Dv.Table.Rows.Count Then 'Grilla.Rows.Count Then
                     RemoveHandler Chk_Seleccionar_Todos.CheckedChanged, AddressOf Sb_Chk_Seleccionar_Todos_CheckedChanged

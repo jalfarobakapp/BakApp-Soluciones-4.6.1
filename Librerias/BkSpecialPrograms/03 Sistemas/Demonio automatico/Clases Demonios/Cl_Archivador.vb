@@ -239,7 +239,7 @@ Public Class Cl_Archivador
 
         Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_Archivador 
                         Where Fecha = '" & _Fecha & "' " & _Archivado
-        Dim _Tbl_Archivos As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_Archivos As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Dim _Leyenda As String = _Tbl_Archivos.Rows.Count
         Dim _Contador = 0

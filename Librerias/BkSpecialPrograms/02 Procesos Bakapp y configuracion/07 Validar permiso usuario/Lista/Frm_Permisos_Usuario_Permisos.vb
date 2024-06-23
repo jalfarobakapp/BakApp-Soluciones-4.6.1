@@ -66,7 +66,7 @@ Public Class Frm_Permisos_Usuario_Permisos
 
                         Drop Table #Paso"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _DisplayIndex = 0
 
@@ -367,7 +367,7 @@ Public Class Frm_Permisos_Usuario_Permisos
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "ZW_PermisosVsUsuarios" & Space(1) &
                        "Where CodUsuario = '" & _CodUsuario & "' And CodPermiso = '" & _CodPermiso & "'"
-        Dim _TblPermiso As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblPermiso As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         Dim _Permiso As Boolean
@@ -379,7 +379,7 @@ Public Class Frm_Permisos_Usuario_Permisos
             Dim _Tbl_Funcionarios_Seleccionados As DataTable
 
             Consulta_sql = "Select CodUsuario From " & _Global_BaseBk & "ZW_PermisosVsUsuarios Where CodPermiso = '" & _CodPermiso & "'"
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
             Dim _Filtro_Usuarios_NOT_In As String
 
             If CBool(_Tbl.Rows.Count) Then
@@ -509,7 +509,7 @@ Public Class Frm_Permisos_Usuario_Permisos
         Dim _Permisos_Clonados As Boolean
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "ZW_PermisosVsUsuarios Where CodUsuario = '" & _CodUsuario_Origen & "'"
-        Dim _TblPermisos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblPermisos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         If CBool(_TblPermisos.Rows.Count) Then
@@ -544,7 +544,7 @@ Public Class Frm_Permisos_Usuario_Permisos
 
         Consulta_sql = "Select CodUsuario As Codigo From " & _Global_BaseBk & "ZW_PermisosVsUsuarios" & Space(1) &
                        "Where CodPermiso = '" & _CodPermiso & "'"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         Dim _Nota = "Permiso: " & _CodPermiso & " -> " & _DescripcionPermiso
@@ -573,7 +573,7 @@ Public Class Frm_Permisos_Usuario_Permisos
                         Where CodUsuario = '" & _CodUsuario & "'
                         Order by NombreFamiliaPermiso,Permiso"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Permisos Usuario " & _CodUsuario)
 

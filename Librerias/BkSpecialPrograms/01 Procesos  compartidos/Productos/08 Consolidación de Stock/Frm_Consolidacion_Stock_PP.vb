@@ -39,7 +39,7 @@ Public Class Frm_Consolidacion_Stock_PP
         _Filtro_In_Productos = Filtro_In_Productos
 
         Consulta_sql = "Select * From MAEPR Where KOPR In " & Filtro_In_Productos
-        _TblProductos = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblProductos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         Sb_Color_Botones_Barra(Bar2)
@@ -90,7 +90,7 @@ Public Class Frm_Consolidacion_Stock_PP
                            "WHERE KOPR = '" & _Codigo & "'" & vbCrLf &
                            "AND EMPRESA+KOSU+KOBO IN (SELECT DISTINCT EMPRESA+SULIDO+BOSULIDO" & Space(1) &
                            "FROM MAEDDO WHERE KOPRCT = '" & _Codigo & "')"
-            Dim _TblBodegasPP As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblBodegasPP As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             LblEstado.Text = "Producto: " & _Codigo & " - " & _Descripcion
 
@@ -236,7 +236,7 @@ Public Class Frm_Consolidacion_Stock_PP
             _SQLquery = Replace(_SQLquery, "#Fecha#", Format(_Fecha, "yyyyMMdd"))
             _SQLquery = Replace(_SQLquery, "Zw_TblStockConsolid", "#Zw_TblStockConsolid")
 
-            Dim Tbl As DataTable = _Sql.Fx_Get_Tablas(_SQLquery)
+            Dim Tbl As DataTable = _Sql.Fx_Get_DataTable(_SQLquery)
 
 
             If Tbl.Rows.Count > 0 Then
@@ -306,7 +306,7 @@ Public Class Frm_Consolidacion_Stock_PP
                        "Where Id_DocEnc In (Select Id_Casi_DocEnc From " & _Global_BaseBk & "Zw_Remotas" & vbCrLf &
                        "Where NroRemota In (Select NroRemota From " & _Global_BaseBk & "Zw_Remotas_En_Cadena_02_Det Where NroRemota <> '') And CodFuncionario_Autoriza = '')"
 
-        Dim _Tbl_DocEnc As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_DocEnc As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
         Dim _Tbl_DocDet As DataTable
 
         If CBool(_Tbl_DocEnc.Rows.Count) Then
@@ -322,7 +322,7 @@ Public Class Frm_Consolidacion_Stock_PP
                 Consulta_sql = "Select '" & ModEmpresa & "' As Empresa,Sucursal,Bodega,Codigo,Descripcion,Ud01PR,CantUd1,Ud02PR,CantUd2" & vbCrLf &
                                "From " & _Global_BaseBk & "Zw_Casi_DocDet" & vbCrLf &
                                "Where Id_DocEnc = " & _Id_DocEnc
-                _Tbl_DocDet = _Sql.Fx_Get_Tablas(Consulta_sql)
+                _Tbl_DocDet = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 _SqlQuery = String.Empty
 

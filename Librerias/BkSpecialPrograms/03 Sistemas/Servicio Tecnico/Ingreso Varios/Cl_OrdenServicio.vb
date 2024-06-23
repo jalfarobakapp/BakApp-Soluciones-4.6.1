@@ -497,7 +497,7 @@ Public Class Cl_OrdenServicio
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-        Dim _TblPaso = _Sql.Fx_Get_Tablas("Select Max(Nro_Ot) As Ult_Nro_OT From " & _Global_BaseBk & "Zw_St_OT_Encabezado") ' cn1, "MAX(Nro_SOC)", _Global_BaseBk & "ZW_SOC_Encabezado", "Stand_By = " & Stby)
+        Dim _TblPaso = _Sql.Fx_Get_DataTable("Select Max(Nro_Ot) As Ult_Nro_OT From " & _Global_BaseBk & "Zw_St_OT_Encabezado") ' cn1, "MAX(Nro_SOC)", _Global_BaseBk & "ZW_SOC_Encabezado", "Stand_By = " & Stby)
 
         If CBool(_TblPaso.Rows.Count) Then
 

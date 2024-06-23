@@ -124,7 +124,7 @@ Public Class Frm_Demonio_04_Conf_Impr_X_Funcionarios
                            "Where IdPadre = " & _IdPadre & " And TipoDoc = '" & _TipoDoc & "' And Codigo <> '' " & _Condicion_Extra & " 
                             Order By Codigo"
 
-            _TblFuncionarios = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _TblFuncionarios = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             With Grilla
 
@@ -681,7 +681,7 @@ Public Class Frm_Demonio_04_Conf_Impr_X_Funcionarios
             Consulta_sql = "Select Cast(1 As Bit) As Chk,KOFU As Codigo,NOKOFU As Descripcion 
                             From TABFU
                             Where KOFU In " & _Correo_Para
-            _Tbl_Destinatarios = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Destinatarios = _Sql.Fx_Get_DataTable(Consulta_sql)
         End If
 
 

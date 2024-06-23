@@ -52,7 +52,7 @@ Public Class Frm_Demonio_New
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
         Consulta_sql = "Select Cast(1 As Bit) As Chk,Cast('' As Varchar(20)) As Nombre,Cast('' As Varchar(100)) As Programacion,Cast('' As Varchar(100)) As Resumen Where 1<0"
-        _Tbl_Diablito = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Diablito = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
 
@@ -1379,7 +1379,7 @@ Public Class Frm_Demonio_New
                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_ConfAcpAuto" & vbCrLf &
                                "Where NombreEquipo = '" & _NombreEquipo & "'" & vbCrLf &
                                "Order By NVI Desc,OCC_Star Desc"
-                Dim _Tbl_ConfAcpAuto As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_ConfAcpAuto As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 For Each _Fila As DataRow In _Tbl_ConfAcpAuto.Rows
 

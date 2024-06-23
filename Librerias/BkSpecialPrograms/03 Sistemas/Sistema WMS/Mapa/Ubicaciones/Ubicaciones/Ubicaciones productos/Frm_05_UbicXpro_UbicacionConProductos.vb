@@ -101,7 +101,7 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
                         And Bodega = '" & _Bodega & "' --And Id_Mapa = " & _Id_Mapa & "
                         And Codigo_Sector = '" & _Codigo_Sector & "' And Codigo_Ubic = '" & _Codigo_Ubic & "'"
 
-        _Tbl_UbicXpro = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_UbicXpro = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 
@@ -445,7 +445,7 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
             Dim _Filtro_Productos As String = Generar_Filtro_IN(_Tbl_UbicXpro, "", "KOPR", False, False, "'")
 
             Consulta_sql = "Select Cast(1 as Bit) As Chk,KOPR As Codigo,NOKOPR As Descripcion From MAEPR Where KOPR In " & _Filtro_Productos
-            Dim _TblProductos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblProductos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim Fm As New Frm_ImpBarras_PorProducto
             Fm.Codigo_Ubic = _Codigo_Ubic

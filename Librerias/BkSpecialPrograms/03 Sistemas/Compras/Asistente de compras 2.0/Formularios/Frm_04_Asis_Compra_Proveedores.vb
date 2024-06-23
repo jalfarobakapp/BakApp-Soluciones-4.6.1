@@ -179,7 +179,7 @@ Public Class Frm_04_Asis_Compra_Proveedores
 
         With GrillaProveedores
 
-            .DataSource = _Sql.Fx_Get_Tablas(Consulta_Sql)
+            .DataSource = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
             .Columns("KOEN").Width = 100
             .Columns("KOEN").HeaderText = "Código"
@@ -245,7 +245,7 @@ Public Class Frm_04_Asis_Compra_Proveedores
 
         Consulta_sql = "Select Top 1 * From MAEEN Where KOEN = '" & _Koen & "'"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         If _Tbl.Rows.Count = 1 Then
 

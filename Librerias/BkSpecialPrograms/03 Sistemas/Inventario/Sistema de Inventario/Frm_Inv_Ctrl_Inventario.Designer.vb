@@ -29,7 +29,7 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Me.Btn_Sectores = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Contadores = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Parejas = New DevComponents.DotNetBar.Metro.MetroTileItem()
-        Me.Btn_Plan = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_CrearHoja = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Lbl_Nombre_Inventario = New DevComponents.DotNetBar.LabelX()
         Me.Line1 = New DevComponents.DotNetBar.Controls.Line()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
@@ -70,7 +70,7 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Me.ConsultaPreciosContenedor.FixedSize = New System.Drawing.Size(700, 300)
         Me.ConsultaPreciosContenedor.MultiLine = True
         Me.ConsultaPreciosContenedor.Name = "ConsultaPreciosContenedor"
-        Me.ConsultaPreciosContenedor.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_VerInventario, Me.Btn_Sectores, Me.Btn_Contadores, Me.Btn_Parejas, Me.Btn_Plan})
+        Me.ConsultaPreciosContenedor.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_VerInventario, Me.Btn_Sectores, Me.Btn_Contadores, Me.Btn_Parejas, Me.Btn_CrearHoja})
         '
         '
         '
@@ -139,7 +139,7 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Me.Btn_Contadores.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
         Me.Btn_Contadores.Name = "Btn_Contadores"
         Me.Btn_Contadores.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_Contadores.Text = "<font size=""+4""><b>OPERADORES</b></font><br/><font size=""-1"">Crear, editar, elimi" &
+        Me.Btn_Contadores.Text = "<font size=""+4""><b>CONTADORES</b></font><br/><font size=""-1"">Crear, editar, elimi" &
     "nar</font>"
         Me.Btn_Contadores.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
         Me.Btn_Contadores.TileSize = New System.Drawing.Size(200, 100)
@@ -187,33 +187,32 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Me.Btn_Parejas.TitleText = "BakApp"
         Me.Btn_Parejas.Visible = False
         '
-        'Btn_Plan
+        'Btn_CrearHoja
         '
-        Me.Btn_Plan.Image = CType(resources.GetObject("Btn_Plan.Image"), System.Drawing.Image)
-        Me.Btn_Plan.ImageIndent = New System.Drawing.Point(8, -10)
-        Me.Btn_Plan.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
-        Me.Btn_Plan.Name = "Btn_Plan"
-        Me.Btn_Plan.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_Plan.Text = "<font size=""+4""><b>PLAN DE TRABAJO</b></font><br/><font size=""-1"">Detalle del pla" &
-    "n de trabajo</font>"
-        Me.Btn_Plan.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
-        Me.Btn_Plan.TileSize = New System.Drawing.Size(200, 100)
+        Me.Btn_CrearHoja.Image = CType(resources.GetObject("Btn_CrearHoja.Image"), System.Drawing.Image)
+        Me.Btn_CrearHoja.ImageIndent = New System.Drawing.Point(8, -10)
+        Me.Btn_CrearHoja.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_CrearHoja.Name = "Btn_CrearHoja"
+        Me.Btn_CrearHoja.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_CrearHoja.Text = "<font size=""+4""><b>CREAR HOJA</b></font><br/><font size=""-1"">Detalle del plan de " &
+    "trabajo</font>"
+        Me.Btn_CrearHoja.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
+        Me.Btn_CrearHoja.TileSize = New System.Drawing.Size(200, 100)
         '
         '
         '
-        Me.Btn_Plan.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(101, Byte), Integer), CType(CType(195, Byte), Integer), CType(CType(139, Byte), Integer))
-        Me.Btn_Plan.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(101, Byte), Integer), CType(CType(195, Byte), Integer), CType(CType(139, Byte), Integer))
-        Me.Btn_Plan.TileStyle.BackColorGradientAngle = 45
-        Me.Btn_Plan.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(101, Byte), Integer), CType(CType(195, Byte), Integer), CType(CType(139, Byte), Integer))
-        Me.Btn_Plan.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(101, Byte), Integer), CType(CType(195, Byte), Integer), CType(CType(139, Byte), Integer))
-        Me.Btn_Plan.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.Btn_Plan.TileStyle.PaddingBottom = 4
-        Me.Btn_Plan.TileStyle.PaddingLeft = 4
-        Me.Btn_Plan.TileStyle.PaddingRight = 4
-        Me.Btn_Plan.TileStyle.PaddingTop = 4
-        Me.Btn_Plan.TileStyle.TextColor = System.Drawing.Color.White
-        Me.Btn_Plan.TitleText = "BakApp"
-        Me.Btn_Plan.Visible = False
+        Me.Btn_CrearHoja.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(101, Byte), Integer), CType(CType(195, Byte), Integer), CType(CType(139, Byte), Integer))
+        Me.Btn_CrearHoja.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(101, Byte), Integer), CType(CType(195, Byte), Integer), CType(CType(139, Byte), Integer))
+        Me.Btn_CrearHoja.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_CrearHoja.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(101, Byte), Integer), CType(CType(195, Byte), Integer), CType(CType(139, Byte), Integer))
+        Me.Btn_CrearHoja.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(101, Byte), Integer), CType(CType(195, Byte), Integer), CType(CType(139, Byte), Integer))
+        Me.Btn_CrearHoja.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_CrearHoja.TileStyle.PaddingBottom = 4
+        Me.Btn_CrearHoja.TileStyle.PaddingLeft = 4
+        Me.Btn_CrearHoja.TileStyle.PaddingRight = 4
+        Me.Btn_CrearHoja.TileStyle.PaddingTop = 4
+        Me.Btn_CrearHoja.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_CrearHoja.TitleText = "BakApp"
         '
         'Lbl_Nombre_Inventario
         '
@@ -329,6 +328,7 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
         Me.MaximizeBox = False
         Me.MinimizeBox = False
@@ -348,7 +348,7 @@ Partial Class Frm_Inv_Ctrl_Inventario
     Private WithEvents Btn_Parejas As DevComponents.DotNetBar.Metro.MetroTileItem
     Friend WithEvents Lbl_Nombre_Inventario As DevComponents.DotNetBar.LabelX
     Friend WithEvents Line1 As DevComponents.DotNetBar.Controls.Line
-    Private WithEvents Btn_Plan As DevComponents.DotNetBar.Metro.MetroTileItem
+    Private WithEvents Btn_CrearHoja As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_VerInventario As DevComponents.DotNetBar.Metro.MetroTileItem
     Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
     Friend WithEvents Btn_Salir As DevComponents.DotNetBar.ButtonItem

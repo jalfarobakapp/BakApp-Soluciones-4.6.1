@@ -20,7 +20,7 @@ Public Class Frm_St_Notas_Reportes
 
         Consulta_sql = "Select top 1 * From " & _Global_BaseBk & "Zw_St_Conf_Info_Reportes"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl.Rows.Count) Then
             Txt_Condiciones.Text = _Tbl.Rows(0).Item("Condiciones")

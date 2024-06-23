@@ -179,7 +179,7 @@ Public Class Frm_SolCredito_Listado
                        "Nom_Clas_Crediticia,Motivo_Anula,Fun_Corregir" & vbCrLf & _
                        "From " & _Global_BaseBk & "Zw_Negocios_01_Enc Z01" & vbCrLf & _
                        _Filtro
-        _Tbl_Informe = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Informe = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         With Grilla_Inf
@@ -498,7 +498,7 @@ Public Class Frm_SolCredito_Listado
 
         Dim _Estado As String
 
-        Dim _TblFilaSeleccionada As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblFilaSeleccionada As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblFilaSeleccionada.Rows.Count) Then
 
@@ -693,7 +693,7 @@ Public Class Frm_SolCredito_Listado
 
         End With
 
-        Dim _TblAprobacion As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblAprobacion As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
 
         If CBool(_TblAprobacion.Rows.Count) Then
 
@@ -949,7 +949,7 @@ Public Class Frm_SolCredito_Listado
                 Consulta_sql = My.Resources.Rs_NegocioCr.SqlQuery_Informe_Negocios & vbCrLf & vbCrLf &
                               "Where Enc.Nro_Negocio In " & _Filtro
 
-                Dim _TblExcel As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblExcel As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 ExportarTabla_JetExcel_Tabla(_TblExcel, Me, "Negocios")
             Else

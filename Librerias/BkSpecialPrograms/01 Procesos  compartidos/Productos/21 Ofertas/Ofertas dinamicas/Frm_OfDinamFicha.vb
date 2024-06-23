@@ -45,12 +45,12 @@ Public Class Frm_OfDinamFicha
 
         caract_combo(Cmb_Concepto)
         Consulta_sql = "SELECT KOCT AS Padre,LTRIM(RTRIM(KOCT))+'-'+LTRIM(RTRIM(NOKOCT)) AS Hijo FROM TABCT WHERE TICT = 'D' ORDER BY Hijo"
-        Cmb_Concepto.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Concepto.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Concepto.SelectedValue = ""
 
         caract_combo(Cmb_Kogen)
         Consulta_sql = "SELECT KOCARAC AS Padre,LTRIM(RTRIM(NOKOCARAC)) AS Hijo FROM TABCARAC WHERE KOTABLA = 'TIPOOFERTA' ORDER BY Hijo"
-        _Tbl_TipoOferta = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_TipoOferta = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Kogen.DataSource = _Tbl_TipoOferta
         Cmb_Kogen.SelectedValue = ""
 
@@ -105,7 +105,7 @@ Public Class Frm_OfDinamFicha
             If _Filtro_Listas <> "()" Then
 
                 Consulta_sql = "Select Cast(1 As Bit) As Chk,KOLT As Codigo,NOKOLT As Descripcion From TABPP Where KOLT In " & _Filtro_Listas
-                _Tbl_Listas = _Sql.Fx_Get_Tablas(Consulta_sql)
+                _Tbl_Listas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             End If
 
@@ -224,7 +224,7 @@ Public Class Frm_OfDinamFicha
                            "And CODIGO <> '" & Txt_Codigo.Text.Trim & "' And ('" & _Fi & "' Between FIOFERTA And FTOFERTA Or '" & _Ft & "' Between FIOFERTA And FTOFERTA)" & vbCrLf &
                            "Drop Table #Ps1"
 
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If CBool(_Tbl.Rows.Count) Then
                 MessageBoxEx.Show(Me, "PRODUCTOS YA ACTIVOS EN OTRA OFERTA." & vbCrLf & "NO SE PUEDE ACTIVAR ESTE DESCUENTO." & vbCrLf & vbCrLf &

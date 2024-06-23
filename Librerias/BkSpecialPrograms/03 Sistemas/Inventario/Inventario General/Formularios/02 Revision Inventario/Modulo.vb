@@ -170,7 +170,7 @@ Module Modulo
 
 
             Dim Tabla As New DataTable
-            Tabla = _SQL.Fx_Get_Tablas(Consulta_sql)
+            Tabla = _SQL.Fx_Get_DataTable(Consulta_sql)
 
             If Tabla.Rows.Count > 0 Then
                 Dim Fila As DataRow

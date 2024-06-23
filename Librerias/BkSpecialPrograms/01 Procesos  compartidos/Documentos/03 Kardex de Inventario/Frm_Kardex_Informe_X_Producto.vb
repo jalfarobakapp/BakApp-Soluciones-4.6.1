@@ -441,7 +441,7 @@ Public Class Frm_Kardex_Informe_X_Producto
                     Consulta_sql = "Select * From MAEST" & vbCrLf &
                                    "Where EMPRESA = '" & _Empresa & "' And KOSU = '" & _Sucursal &
                                    "'  And KOBO = '" & _Bodega & "' And KOPR = '" & _Codigo & "'"
-                    Dim _TblMaest As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+                    Dim _TblMaest As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
 
                     'MST.STFI#Ud#,        -- STOCK FISICO
                     'MST.STDV#Ud#,        -- STOCK DEVENGADO

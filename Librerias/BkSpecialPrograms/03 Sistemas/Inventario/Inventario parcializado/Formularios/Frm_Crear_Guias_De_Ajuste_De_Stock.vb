@@ -504,7 +504,7 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
         Consulta_sql = Replace(Consulta_sql, "#@Codigo#", _Codigo)
         Consulta_sql = Replace(Consulta_sql, "#Fecha#", Format(_Fecha, "yyyyMMdd"))
 
-        Dim Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _Sql.Sb_Eliminar_Tabla_De_Paso("Zw_TblStockConsolid")
 

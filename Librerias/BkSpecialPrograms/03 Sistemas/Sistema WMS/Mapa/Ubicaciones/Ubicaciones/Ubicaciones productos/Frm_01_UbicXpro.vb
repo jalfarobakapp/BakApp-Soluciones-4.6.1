@@ -51,7 +51,7 @@ Public Class Frm_01_UbicXpro
             Consulta_sql = "Select top 1 * From TABBO" & vbCrLf &
                            "Where EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "' and KOBO = '" & ModBodega & "'"
 
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             _RowBodega = _Tbl.Rows(0)
 
@@ -115,7 +115,7 @@ Public Class Frm_01_UbicXpro
 
         With Grilla
 
-            .DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            .DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             OcultarEncabezadoGrilla(Grilla, True)
 
@@ -319,14 +319,14 @@ Public Class Frm_01_UbicXpro
         Dim _CodPadre As String
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _Codigo_Nodo
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _CodPadre = _Tbl.Rows(0).Item("Identificacdor_NodoPadre")
 
         Do While (_CodPadre <> 0)
 
             Consulta_sql = "Select * From " & _Global_BaseBk & " Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _CodPadre
-            _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             _CodPadre = _Tbl.Rows(0).Item("Identificacdor_NodoPadre")
             _Full = "\" & _Tbl.Rows(0).Item("Descripcion") & _Full
@@ -356,7 +356,7 @@ Public Class Frm_01_UbicXpro
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega" & vbCrLf &
                            "Where Codigo_Ubic = '" & _Codigo_Ubic & "' And Es_SubSector = 0"
-            Dim _TblUbicaciones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblUbicaciones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If CBool(_TblUbicaciones.Rows.Count) Then
 
@@ -579,7 +579,7 @@ Public Class Frm_01_UbicXpro
         Dim _Codigo_Ubic = _Fila.Cells("Codigo_Ubic").Value
 
         Consulta_sql = "Select Cast(1 as Bit) As Chk,'" & _Codigo & "' As Codigo,'" & _Descripcion & "' As Descripcion"
-        Dim _TblProductos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblProductos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim Fm As New Frm_ImpBarras_PorProducto
         Fm.Codigo_Ubic = _Codigo_Ubic

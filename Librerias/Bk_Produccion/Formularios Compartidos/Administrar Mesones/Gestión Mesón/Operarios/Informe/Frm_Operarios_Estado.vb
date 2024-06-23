@@ -47,7 +47,7 @@ Public Class Frm_Operarios_Estado
         'Sb_Actualizar_Grillas_Operarios_En_Meson()
 
         Consulta_sql = "Select CODIGOOB As Padre,NOMBREOB As Hijo From PMAEOB Where CODIGOOB In (Select Codigoob From " & _Global_BaseBk & "Zw_Pdc_MesonVsOperario)"
-        _Tbl_Operarios = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Operarios = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Convert.ToBoolean(_Tbl_Operarios.Rows.Count) Then
 

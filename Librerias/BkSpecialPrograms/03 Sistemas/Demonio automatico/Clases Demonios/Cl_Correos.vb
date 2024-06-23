@@ -180,7 +180,7 @@ Public Class Cl_Correos
         _Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_Cof_Estacion" & vbCrLf &
                         "Where NombreEquipo = '" & _Nombre_Equipo & "' And Traer_Doc_Auto_Correo = 1"
 
-        Dim _Tbl_Zw_Demonio_Cof_Estacion As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+        Dim _Tbl_Zw_Demonio_Cof_Estacion As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
         Dim _SqlQuery_Correo = String.Empty
 
@@ -197,7 +197,7 @@ Public Class Cl_Correos
 
             _Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_Filtros_X_Estacion" & vbCrLf &
                             "Where NombreEquipo = '" & _Nombre_Equipo & "' And Nombre_Correo <> '' And (Correo_Para <> '' Or Para_Maeenmail = 1) And TipoDoc = '" & _Tido & "' --And Codigo = 'JPT'"
-            Dim _TblFiltroFunc As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+            Dim _TblFiltroFunc As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
             If CBool(_TblFiltroFunc.Rows.Count) Then
 
@@ -234,7 +234,7 @@ Public Class Cl_Correos
                             If Not String.IsNullOrEmpty(_Correo_Para) Then
 
                                 Consulta_Sql = "Select KOFU,NOKOFU,Rtrim(Ltrim(EMAIL)) As EMAIL From TABFU Where KOFU In " & _Correo_Para
-                                _Tbl_Destinatarios = _Sql.Fx_Get_Tablas(Consulta_Sql)
+                                _Tbl_Destinatarios = _Sql.Fx_Get_DataTable(Consulta_Sql)
                                 _Para = Generar_Filtro_IN_Email(_Tbl_Destinatarios, "EMAIL")
 
                             End If
@@ -301,7 +301,7 @@ Public Class Cl_Correos
         '               "Where Enviar = 1 And Enviado = 0 And NombreEquipo = '" & _Nombre_Equipo & "'" & _Filtro_Fecha_Enviar & vbCrLf &
         '               "Order By Intentos, Id"
 
-        _Tbl_Correos = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_Correos = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         'Dim fic As String = AppPath(True) & "Log_Bk.txt"
 
@@ -538,7 +538,7 @@ Public Class Cl_Correos
                         Consulta_Sql = "Select Id,Id_Padre,Idmaeedo,Tido,Nudo,NombreFormato
                                         From " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo_Adjuntos
                                         Where Id_Padre = " & _Id
-                        Dim _Tbl_Adjuntos As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+                        Dim _Tbl_Adjuntos As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
                         For Each _FDoc As DataRow In _Tbl_Adjuntos.Rows
 
@@ -885,7 +885,7 @@ Public Class Cl_Correos
                         Inner Join " & _Global_BaseBk & "Zw_Despachos_Email_Aviso Eaviso On Desp.Tipo_Envio = Eaviso.Tipo_Envio And Desp.Tipo_Venta = Eaviso.Tipo_Venta And Desp.Estado = Eaviso.Estado
                         Where Mail_Enviado = 0 And Desp.Estado <> 'CIE'"
 
-        Dim _Tbl_Despachos As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_Despachos As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
 
         For Each _Row_Despacho As DataRow In _Tbl_Despachos.Rows
@@ -965,7 +965,7 @@ Public Class Cl_Correos
                         Inner Join " & _Global_BaseBk & "Zw_Despachos_Email_Aviso Eaviso On Desp.Tipo_Envio = Eaviso.Tipo_Envio And Desp.Tipo_Venta = Eaviso.Tipo_Venta And Desp.Estado = Eaviso.Estado
                         Where Mail_Enviado = 0 And Desp.Estado = 'CIE'"
 
-        _Tbl_Despachos = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_Despachos = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         _SqlQuery_Correo = String.Empty
 
@@ -1069,7 +1069,7 @@ Public Class Cl_Correos
                         vbCrLf &
                        "Select * From " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo" & vbCrLf &
                        "Where Enviar = 1 And Enviado = 0 And NombreEquipo In ('','" & _Nombre_Equipo & "') And Para = '' And Para_Maeenmail = 1"
-        Dim _Tbl_Correos As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_Correos As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Dim _SqlQuery = String.Empty
 
@@ -1092,7 +1092,7 @@ Public Class Cl_Correos
             Consulta_Sql = "Select Distinct Rtrim(Ltrim(MAILTO)) As MAILTO,Rtrim(Ltrim(MAILCC)) As MAILCC,Rtrim(Ltrim(MAILCC2)) As MAILCC2,Rtrim(Ltrim(MAILBCC)) As MAILBCC" & vbCrLf &
                            "From MAEENMAIL Where KOEN = '" & _Koen & "' And KOMAIL = '001'"
 
-            Dim _Tbl_Maeenmail As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+            Dim _Tbl_Maeenmail As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
             System.Windows.Forms.Application.DoEvents()
 
@@ -1279,7 +1279,7 @@ Public Class Cl_Correos
                         From " & _Global_BaseBk & "Zw_Despachos
                         Where (Id_Despacho_Padre = " & _Id_Despacho_Padre & " Or Id_Despacho = " & _Id_Despacho_Padre & ")" &
                         " And Nro_Encomienda = '" & _Nro_Encomienda & "'"
-        Dim _Tbl_Despachos As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_Despachos As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         For Each _Despacho As DataRow In _Tbl_Despachos.Rows
 

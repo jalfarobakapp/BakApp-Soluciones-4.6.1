@@ -42,7 +42,7 @@ Public Class Frm_PrecioLCFuturo2
                        "Where LcEnt.Activo = 1 And LcDet.Eliminada = 0 And Lista = '" & CmbLista.SelectedValue & "'" & vbCrLf &
                        "And LcEnt.FechaProgramada > '" & _FechaServidor & "'" & vbCrLf &
                        "Order By LcEnt.FechaProgramada,Id_Enc,LcDet.Codigo"
-        _Tbl_PreciosFuturo = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_PreciosFuturo = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 
@@ -168,7 +168,7 @@ Public Class Frm_PrecioLCFuturo2
         End With
 
         Consulta_sql = "Select NombreEtiqueta As Padre,NombreEtiqueta As Hijo from " & _Global_BaseBk & "Zw_Tbl_DisenoBarras"
-        Dim _TblEtiquetas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblEtiquetas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         caract_combo(CmbEtiqueta)
         With CmbEtiqueta
@@ -189,7 +189,7 @@ Public Class Frm_PrecioLCFuturo2
         Consulta_sql = "Select 'PM' As Padre,'PM' As Hijo Union" & vbCrLf &
                        "Select 'UC' As Padre,'ULTIMA COMPRA' As Hijo Union" & vbCrLf &
                        "SELECT KOLT As Padre,KOLT+'-'+NOKOLT AS Hijo FROM TABPP"
-        CmbLista.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        CmbLista.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         CmbLista.SelectedValue = ModListaPrecioVenta
 
     End Sub
@@ -458,7 +458,7 @@ Public Class Frm_PrecioLCFuturo2
 
         Consulta_sql = "Select Cast(0 As bit) As Chk,* From " & _Global_BaseBk & "Zw_ListaLC_Programadas_Detalles" & vbCrLf &
                        "Where Id_Enc = " & _Id_Enc & " And Eliminada = 0"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim Fm As New Frm_PrecioLCFuturoGrabar(_Codigo, _Tbl, 0)
         Fm.Id_Enc = _Id_Enc
@@ -512,7 +512,7 @@ Public Class Frm_PrecioLCFuturo2
                        "From " & _Global_BaseBk & "Zw_ListaLC_Programadas" & vbCrLf &
                        "Where FechaProgramada = '" & _Str_FechaProgramacion & "' And Activo = 1 And Aplicado = 0 And Eliminada = 0 "
 
-        Dim _Tbl_ListasProgramadas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_ListasProgramadas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not CBool(_Tbl_ListasProgramadas.Rows.Count) Then
             MessageBoxEx.Show(Me, "No hay registros programados pendientes de actualizar para la fecha: " & _FechaProgramacion.ToShortDateString,
@@ -535,7 +535,7 @@ Public Class Frm_PrecioLCFuturo2
             Dim _ValDigitado As Double = _Fila.Item("ValDigitado")
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_ListaLC_Programadas_Detalles Where Id_Enc = " & _Id_Enc
-            Dim _Tbl_ListasProgramadas_Detalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_ListasProgramadas_Detalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             _SqlQuery += "Update " & _Global_BaseBk & "Zw_ListaLC_Programadas Set " &
                          "Aplicado = 1,FechaAplica = Getdate(),Informacion = 'Ok.',ErrorAlGrabar = 0" & vbCrLf &

@@ -27,7 +27,7 @@ Public Class Frm_Usuarios_Bk
 
         With Grilla
 
-            .DataSource = _SQL.Fx_Get_Tablas(Consulta_sql)
+            .DataSource = _SQL.Fx_Get_DataTable(Consulta_sql)
 
             OcultarEncabezadoGrilla(Grilla, False)
 

@@ -623,7 +623,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
                 Consulta_sql = Replace(Consulta_sql, "#Stock#", _Sql_Query)
 
-                _Tbl_Top20 = _Sql.Fx_Get_Tablas(Consulta_sql)
+                _Tbl_Top20 = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Case Else
 
@@ -747,7 +747,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                         Drop Table #Paso"
         End If
 
-        _Tbl_Bodegas = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Bodegas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
     End Sub
 
@@ -1122,7 +1122,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                 Consulta_sql = Replace(Consulta_sql, "Inner Join MAEPREM Mpn On Mpn.EMPRESA = @Empresa And Mpn.KOPR = Mp.KOPR ", "")
             End If
 
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If Not CBool(_Tbl.Rows.Count) Then
                 _Tbl = Nothing
@@ -1472,7 +1472,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
             Consulta_sql = "Select * From MAEFICHD Where KOPR = '" & _Codigo & "' Order by SEMILLA"
 
-            Dim _Tbl_Maefichd As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Maefichd As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _Fichas As DataRow In _Tbl_Maefichd.Rows
                 _Ficha += _Fichas.Item("FICHA")
@@ -1544,7 +1544,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         Dim CodigoPr_Sel = Trim(Grilla.Rows(Grilla.CurrentRow.Index).Cells("Codigo").Value)
 
         Consulta_sql = "Select * From MAEPR Where KOPR = '" & CodigoPr_Sel & "'"
-        _Tbl_Producto_Seleccionado = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Producto_Seleccionado = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Codigo As String = _Tbl_Producto_Seleccionado.Rows(0).Item("KOPR")
 
@@ -1769,7 +1769,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         If _Global_Row_Configuracion_General.Item("PermitirMigrarProductosBaseExterna") Then
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where GrbProd_Nuevos = 1"
-            Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _FilaCx As DataRow In _Tbl_Conexiones.Rows
 
@@ -1838,7 +1838,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
             If _Global_Row_Configuracion_General.Item("PermitirMigrarProductosBaseExterna") Then
 
                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where GrbProd_Nuevos = 1"
-                Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 For Each _FilaCx As DataRow In _Tbl_Conexiones.Rows
 
@@ -2057,14 +2057,14 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         Dim _CodPadre As String
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _Codigo_Nodo
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _CodPadre = _Tbl.Rows(0).Item("Identificacdor_NodoPadre")
 
         Do While (_CodPadre <> 0)
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _CodPadre
-            _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             _CodPadre = _Tbl.Rows(0).Item("Identificacdor_NodoPadre")
             _Full = "\" & _Tbl.Rows(0).Item("Descripcion") & _Full
@@ -2319,7 +2319,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                            "Where Codigo_Nodo = " & _Codigo_Nodo & " And Codigo_Nodo <> 0)" & Space(1) &
                            "--AND KOPR <> '" & _Codigo & "'"
 
-            Dim _Tbl_Productos_Hermanos = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Productos_Hermanos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If CBool(_Tbl_Productos_Hermanos.Rows.Count) Then
 
@@ -2356,7 +2356,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
         Consulta_sql = "Select top 1 * From MAEPR Where KOPR = '" & _Codigo & "'"
 
-        Dim _TblProducto As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblProducto As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblProducto.Rows.Count) Then
             Return _TblProducto.Rows(0)
@@ -2483,7 +2483,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                       "(Select top 1 NOKOBO From TABBO " &
                       "Where EMPRESA = '" & _Empresa & "' And KOSU = '" & _Sucursal & "' And KOBO = '" & _Bodega & "') As 'NOKOBO'"
 
-            Dim _TblBod As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblBod As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             _RowBodega = _TblBod.Rows(0)
 
@@ -2913,7 +2913,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                     Dim _Filtro_Productos As String = Generar_Filtro_IN_Arreglo(_Lista, False)
 
                     Consulta_sql = "Select * From MAEPR Where KOPR In " & _Filtro_Productos
-                    _Tbl_Productos_Seleccionados = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    _Tbl_Productos_Seleccionados = _Sql.Fx_Get_DataTable(Consulta_sql)
                     _Seleccion_Multiple = True
                     Me.Close()
 
@@ -3025,7 +3025,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         Dim _Codigo As String = _Fila.Cells("Codigo").Value
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where GrbProd_Nuevos = 1"
-        Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _FilaCx As DataRow In _Tbl_Conexiones.Rows
 

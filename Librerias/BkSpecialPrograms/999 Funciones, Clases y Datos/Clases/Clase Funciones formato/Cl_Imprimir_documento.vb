@@ -68,7 +68,7 @@ Public Class Cl_Imprimir_documento
                           "FROM Zw_Formato00Pag" & vbCrLf & _
                           "Where TipoDoc = '" & _Tipo & "' and NombreFormato = '" & _NombreFormato & "'"
 
-                Dim TblEncForm = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim TblEncForm = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 If CBool(TblEncForm.Rows.Count) Then
 
@@ -161,7 +161,7 @@ Public Class Cl_Imprimir_documento
             '& vbCrLf & _
             '                          "And Seccion = 'E'"
 
-            Dim _Tbl_Fx As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Fx As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             'Dim _Columna_X As Single
             'Dim _Fila_Y As Single

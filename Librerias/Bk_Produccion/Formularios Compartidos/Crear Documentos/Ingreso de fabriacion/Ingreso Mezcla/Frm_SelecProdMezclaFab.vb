@@ -50,7 +50,7 @@ Public Class Frm_SelecProdMezclaFab
     Sub Sb_Actualizar_Grilla()
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Pdp_CPT_MzDet Where Id_Enc = " & _Id_Enc
-        _Tbl_ProductosFab = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_ProductosFab = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

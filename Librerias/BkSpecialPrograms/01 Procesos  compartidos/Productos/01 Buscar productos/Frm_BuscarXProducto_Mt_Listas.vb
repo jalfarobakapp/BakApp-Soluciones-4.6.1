@@ -58,7 +58,7 @@ Public Class Frm_BuscarXProducto_Mt_Listas
 
 
         With Grilla
-            .DataSource = _SQL.Fx_Get_Tablas(Consulta_sql)
+            .DataSource = _SQL.Fx_Get_DataTable(Consulta_sql)
 
             OcultarEncabezadoGrilla(Grilla)
 
@@ -243,7 +243,7 @@ Public Class Frm_BuscarXProducto_Mt_Listas
                                "From Zw_ListaPreCosto" & vbCrLf & _
                                "Where Id = " & _Id
 
-                _TblProd_Seleccionado = _SQL.Fx_Get_Tablas(Consulta_sql)
+                _TblProd_Seleccionado = _SQL.Fx_Get_DataTable(Consulta_sql)
 
                 _Seleccionado = True
                 Me.Close()
@@ -381,7 +381,7 @@ Public Class Frm_BuscarXProducto_Mt_Listas
                                    "From Zw_ListaPreCosto" & vbCrLf & _
                                    "Where Id = " & _Id
 
-                    _TblProd_Seleccionado = _SQL.Fx_Get_Tablas(Consulta_sql)
+                    _TblProd_Seleccionado = _SQL.Fx_Get_DataTable(Consulta_sql)
 
                     _Seleccionado = True
                     Me.Close()

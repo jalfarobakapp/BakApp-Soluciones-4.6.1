@@ -71,7 +71,7 @@ Public Class Frm_PaCiCm_Lista
                         " & _Condicion & "
                         Order By Pa.KOPA,Ci.NOKOCI,NOKOCM"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         'Dim _New_Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_Sql)
 
@@ -535,7 +535,7 @@ Public Class Frm_PaCiCm_Lista
                         Left Join TABCM Cm On Cm.KOPA = Ci.KOPA And Ci.KOCI = Cm.KOCI
                         Order By Pa.KOPA,Ci.NOKOCI,NOKOCM"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Pais_Cuidas_Comunas")
 

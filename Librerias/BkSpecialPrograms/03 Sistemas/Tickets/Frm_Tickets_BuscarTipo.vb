@@ -41,7 +41,7 @@ Public Class Frm_Tickets_BuscarTipo
                        "Left Join " & _Global_BaseBk & "Zw_Stk_Tipos Tp On Tp.Id_Area = Ar.Id" & vbCrLf &
                        "Where Area+Tipo Like '%" & _Condicion & "%'" & vbCrLf &
                        "Order By Area,Tipo"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Tipos
 

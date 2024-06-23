@@ -42,7 +42,7 @@ Public Class Frm_Reparar_Maeven
 
             Consulta_sql = My.Resources.Recursos_Reparar_Maeven.SQLQuery_Reparar_Maeven
             Consulta_sql = Replace(Consulta_sql, "#Filtro_Entidad#", _Filtro_Entidad)
-            _Tbl_Documentos = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Documentos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Progreso_Kardex.Maximum = 100
 
@@ -54,7 +54,7 @@ Public Class Frm_Reparar_Maeven
                 Dim _Abonar As Double = _Fila.Item("ABONAR")
 
                 Consulta_sql = "Select * From MAEVEN Where IDMAEEDO = " & _Idmaeedo
-                Dim _Tbl_Maeven As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Maeven As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 For Each _Fila_Mv As DataRow In _Tbl_Maeven.Rows
 

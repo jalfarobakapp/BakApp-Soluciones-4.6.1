@@ -460,7 +460,7 @@ Public Class Cl_Permisos_Asociados
 
         Consulta_sql = "Select CodUsuario From " & _Global_BaseBk & "ZW_PermisosVsUsuarios" & vbCrLf &
                        "Where CodPermiso = '" & _Codpermiso & "'"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
         Dim _Filtro_Usuarios_NOT_In As String
 
         If CBool(_Tbl.Rows.Count) Then
@@ -660,7 +660,7 @@ Public Class Cl_Permisos_Asociados
 
         Consulta_sql = "Select Distinct CodFuncionario From " & _Global_BaseBk & "Zw_Prod_Usuario_Validador 
                         Where Empresa = '" & ModEmpresa & "' And Codigo In " & _Filtro_Productos & _Filtro_Jefes & " Order By CodFuncionario"
-        _Tbl_Validadores = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Validadores = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "ZW_Permisos Where CodPermiso = 'Comp0095'"
         Dim _RowPermiso As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)

@@ -96,16 +96,15 @@ Partial Class Frm_CrearContador
         '
         Me.Chk_Activo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Activo.CheckBoxImageChecked = CType(resources.GetObject("Chk_Activo.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Activo.Enabled = False
         Me.Chk_Activo.FocusCuesEnabled = False
         Me.Chk_Activo.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Activo.Location = New System.Drawing.Point(3, 125)
+        Me.Chk_Activo.Location = New System.Drawing.Point(3, 134)
         Me.Chk_Activo.Name = "Chk_Activo"
         Me.Chk_Activo.Size = New System.Drawing.Size(115, 17)
         Me.Chk_Activo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Activo.TabIndex = 31
         Me.Chk_Activo.TabStop = False
-        Me.Chk_Activo.Text = "Inventario Activo"
+        Me.Chk_Activo.Text = "Activo"
         '
         'Txt_Email
         '
@@ -280,7 +279,7 @@ Partial Class Frm_CrearContador
         Me.Name = "Frm_CrearContador"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "FICHA DEL OPERADOR"
+        Me.Text = "MANTENCION DE CONTADOR"
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)

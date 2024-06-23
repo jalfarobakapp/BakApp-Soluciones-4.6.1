@@ -53,7 +53,7 @@ Public Class Frm_Anotaciones_Ver_Anotaciones
                        "WHERE ARCHIRVE='" & _Archive & "' AND IDRVE= " & _Idrve & vbCrLf &
                        "ORDER BY FEVENTO,HORAGRAB"
 
-        _Tbl_Mevento = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Mevento = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         'If Global_Thema = Enum_Themas.Oscuro Then
         '    Btn_Agregar_Anotacion.ForeColor = Color.White
@@ -91,7 +91,7 @@ Public Class Frm_Anotaciones_Ver_Anotaciones
                        "WHERE ARCHIRVE='" & _Archive & "' AND IDRVE= " & _Idrve & vbCrLf &
                        "ORDER BY FEVENTO,HORAGRAB"
 
-            _Tbl_Mevento = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Mevento = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         End If
 
@@ -633,7 +633,7 @@ Public Class Frm_Anotaciones_Ver_Anotaciones
                        "WHERE ARCHIRVE='" & _Archive & "' AND IDRVE= " & _Idrve & vbCrLf &
                        "ORDER BY FEVENTO,HORAGRAB"
 
-        Dim _TblAsociaciones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblAsociaciones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ExportarTabla_JetExcel_Tabla(_TblAsociaciones, Me, "Eventos del documento")
 

@@ -57,7 +57,7 @@ Public Class Frm_Modalidad_Mt
                       "KOOP IN (SELECT KOOP FROM MAEUS WHERE KOUS = '" & FUNCIONARIO & "' AND KOOP LIKE 'MO-%')" & vbCrLf & _
                       "AND KOOP <> 'MO-  '"
 
-        CmbModalidad.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        CmbModalidad.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CmbModalidad.Items.Count > 0 Then
             Modalidad = _Sql.Fx_Trae_Dato("TABFU", "MODALIDAD", "KOFU = '" & FUNCIONARIO & "'")

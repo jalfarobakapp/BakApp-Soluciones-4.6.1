@@ -50,7 +50,7 @@ Public Class Frm_03_Sectores_Inv
                        Condi & vbCrLf &
                        "Order by Descripcion"
 
-        Grilla_Inv.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Grilla_Inv.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         With Grilla_Inv

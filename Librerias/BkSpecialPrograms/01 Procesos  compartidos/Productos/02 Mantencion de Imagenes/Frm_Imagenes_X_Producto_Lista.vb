@@ -44,7 +44,7 @@ Public Class Frm_Imagenes_X_Producto_Lista
                         "From MAEPR" & vbCrLf &
                         "Where TIPR = 'FPN'" & vbCrLf &
                         "And KOPR+NOKOPR Like '%" & _Cadena & "%'"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Productos
 
@@ -127,7 +127,7 @@ Public Class Frm_Imagenes_X_Producto_Lista
                        "Inner Join MAEPR Mp On Mp.KOPR = Codigo" & vbCrLf &
                        "Where Desde_URL = 1" & vbCrLf &
                        "Order By Codigo,Principal Desc"
-        Dim _Tbl_Imagenes As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Imagenes As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Filas = _Tbl_Imagenes.Rows.Count
 
@@ -254,7 +254,7 @@ Public Class Frm_Imagenes_X_Producto_Lista
                "Where Desde_URL = 1" & vbCrLf &
                "And Codigo = '" & _Codigo & "'" & vbCrLf &
                "Order By Codigo,Principal Desc"
-        Dim _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Imagenes
 

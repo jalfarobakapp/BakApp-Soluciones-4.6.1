@@ -291,7 +291,7 @@ Public Class Clas_Despacho
                             Where Tabla = 'SIS_DESPACHO_TIPO_ENVIO'" & _Condicion
         End If
 
-        _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Return _Tbl
 
@@ -332,7 +332,7 @@ Public Class Clas_Despacho
                         Where Tabla = 'SIS_DESPACHO_TIPO_DESPACHO'"
         End If
 
-        _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Return _Tbl
 
@@ -419,7 +419,7 @@ Public Class Clas_Despacho
                             Where Tabla = 'SIS_DESPACHO_TIPO_ENTREGA'"
         End If
 
-        _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Return _Tbl
 
@@ -437,7 +437,7 @@ Public Class Clas_Despacho
         End If
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Despachos" & vbCrLf & _Condicion
-        _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql, False)
+        _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
         Return _Tbl
 
@@ -1082,7 +1082,7 @@ Public Class Clas_Despacho
                            Group By Edo.IDMAEEDO,Edo.TIDO,Edo.NUDO,Edo.NUDONODEFI"
 
 
-        _Tbl_Despacho_Doc = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Despacho_Doc = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl_Despacho_Doc.Rows.Count) Then
 
@@ -1164,7 +1164,7 @@ Public Class Clas_Despacho
                         Select Idmaeddo From " & _Global_BaseBk & "Zw_Despachos_Doc_Det
                         Where Id_Despacho = " & _Id_Despacho_Padre & ") And Ddo.IDMAEDDO Not In (Select Idmaeddo From " & _Global_BaseBk & "Zw_Despachos_Doc_Det)"
 
-        Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Nro_Sub = CInt(_Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Despachos", "Max(Nro_Sub)", "Nro_Despacho = '" & _Nro_Despacho & "'"))
 
@@ -1183,7 +1183,7 @@ Public Class Clas_Despacho
                             And Ddo.IDMAEDDO Not In (Select Idmaeddo From " & _Global_BaseBk & "Zw_Despachos_Doc_Det)
                             And Edo.EMPRESA = '" & _Empresa & "' And SULIDO = '" & _Sucursal & "' And BOSULIDO = '" & _Bodega & "'"
 
-            Dim _Tbl_Maeddo As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Maeddo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _New_Cl_Despacho As New Clas_Despacho(False)
 
@@ -1247,7 +1247,7 @@ Public Class Clas_Despacho
                                 
                                 Group By Edo.IDMAEEDO, Edo.TIDO, Edo.NUDO, Edo.NUDONODEFI"
 
-                Dim _Tbl_Maeedo As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Maeedo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 For Each _Fila_Edo As DataRow In _Tbl_Maeedo.Rows
 
@@ -1272,7 +1272,7 @@ Public Class Clas_Despacho
         Next
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Despachos_Doc_Det Where Id_Despacho = " & _Id_Despacho
-        Dim _Tbl_Documentos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Documentos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _SqlQuery = String.Empty
 
@@ -1355,7 +1355,7 @@ Public Class Clas_Despacho
                         Where Id_Despacho = " & _Id_Despacho & ") And IDMAEDDO Not In (Select Idmaeddo From " & _Global_BaseBk & "Zw_Despachos_Doc_Det)
                         And TIDO In ('FCV','BLV')"
 
-        _Tbl_Despacho_Doc = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Despacho_Doc = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl_Despacho_Doc.Rows.Count) Then
 
@@ -1518,7 +1518,7 @@ Public Class Clas_Despacho
         End If
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Despachos Where Id_Despacho_Padre = " & _Id_Despacho_Padre & " Or Id_Despacho = " & _Id_Despacho
-        Dim _Tbl_Despachos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Despachos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Consulta_sql = String.Empty
 
@@ -1716,7 +1716,7 @@ Public Class Clas_Despacho
                             Where Id_Despacho = " & _Id_Despacho & " And Estado = 'DPO'"
         End If
 
-        Dim _Tbl_Despachos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Despachos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Consulta_sql = String.Empty
 
@@ -1760,7 +1760,7 @@ Public Class Clas_Despacho
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-        Dim _TblPaso = _Sql.Fx_Get_Tablas("Select Max(Nro_Despacho) As Ult_Nro_Despacho" & Space(1) &
+        Dim _TblPaso = _Sql.Fx_Get_DataTable("Select Max(Nro_Despacho) As Ult_Nro_Despacho" & Space(1) &
                                           "From " & _Global_BaseBk & "Zw_Despachos Where Confirmado = " & Convert.ToInt32(_Confirmado))
 
         If CBool(_TblPaso.Rows.Count) Then
@@ -1884,7 +1884,7 @@ Public Class Clas_Despacho
                             Where Edo.IDMAEEDO = " & _Idmaeedo & " And KOPRCT Not In (Select CodigoRd From " & _Global_BaseBk & "Zw_Chilexpress_Conf Where Activo = 1)" & vbCrLf &
                             _Filtro_Bodegas
 
-            Dim _Tbl_Maeddo As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Maeddo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             _Id_Despacho_Padre = 0
             Dim _Nro_Sub = 0
@@ -1961,7 +1961,7 @@ Public Class Clas_Despacho
 
                                 Group By Edo.IDMAEEDO, Edo.TIDO, Edo.NUDO, Edo.NUDONODEFI"
 
-                Dim _Tbl_Maeedo As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Maeedo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 For Each _Fila_Edo As DataRow In _Tbl_Maeedo.Rows
 
@@ -2007,7 +2007,7 @@ Public Class Clas_Despacho
                         From MAEDDO Ddo
                         Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO
                         Where Edo.IDMAEEDO In (Select Idrst From " & _Global_BaseBk & "Zw_Despachos_Doc Where Id_Despacho = " & _Id_Despacho & ")"
-        Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Nro_Sub = 0
 
@@ -2022,7 +2022,7 @@ Public Class Clas_Despacho
                             Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO
                             Where Edo.IDMAEEDO In (Select Idrst From " & _Global_BaseBk & "Zw_Despachos_Doc Where Id_Despacho = " & _Id_Despacho & ")
                             And Edo.EMPRESA = '" & _Empresa & "' And SULIDO = '" & _Sucursal & "' And BOSULIDO = '" & _Bodega & "'"
-            Dim _Tbl_Maeddo As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Maeddo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _New_Cl_Despacho As New Clas_Despacho(False)
 
@@ -2088,7 +2088,7 @@ Public Class Clas_Despacho
                                 
                                 Group By Edo.IDMAEEDO, Edo.TIDO, Edo.NUDO, Edo.NUDONODEFI"
 
-                Dim _Tbl_Maeedo As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Maeedo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 For Each _Fila_Edo As DataRow In _Tbl_Maeedo.Rows
 

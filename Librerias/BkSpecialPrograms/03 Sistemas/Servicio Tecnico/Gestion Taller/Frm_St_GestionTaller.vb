@@ -78,7 +78,7 @@
         Consulta_Sql = Replace(Consulta_Sql, "#Db_BakApp#", _Global_BaseBk)
         Consulta_Sql = Replace(Consulta_Sql, "#Condicion#", _Condicion)
 
-        _Tbl_OT = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_OT = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Sb_Marcar_Grilla()
 

@@ -35,12 +35,12 @@ Public Class Frm_Crear_Entidad_Mt_Crear_Contactos
         caract_combo(CmbActividad)
         Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                        "SELECT KOCARAC AS Padre,NOKOCARAC AS Hijo FROM TABCARAC WHERE KOTABLA = 'ACTIVIDADE' ORDER BY Hijo"
-        CmbActividad.DataSource = _SQL.Fx_Get_Tablas(Consulta_sql)
+        CmbActividad.DataSource = _SQL.Fx_Get_DataTable(Consulta_sql)
 
         caract_combo(CmbCargo)
         Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                        "SELECT KOCARAC AS Padre,NOKOCARAC AS Hijo FROM TABCARAC WHERE KOTABLA = 'CARGOS' ORDER BY Hijo"
-        CmbCargo.DataSource = _SQL.Fx_Get_Tablas(Consulta_sql)
+        CmbCargo.DataSource = _SQL.Fx_Get_DataTable(Consulta_sql)
     End Sub
 
     Private Sub BtnxGrabar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnxGrabar.Click
@@ -126,7 +126,7 @@ Public Class Frm_Crear_Entidad_Mt_Crear_Contactos
 
         Consulta_sql = "Select * From MAEENCON Where KOEN = '" & _CodEntidad &
                        "' AND RUTCONTACT = '" & _RutContacto & "'"
-        Dim _TblContacto As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblContacto As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
 
         TxtRut.Text = _TblContacto.Rows(0).Item("RUTCONTACT")
         TxtRazonSocial.Text = _TblContacto.Rows(0).Item("NOKOCON")

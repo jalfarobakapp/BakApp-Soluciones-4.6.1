@@ -262,7 +262,7 @@ Public Class Frm_BusquedaDocumento_Filtro
         Consulta_sql = "SELECT KOFU AS Padre,KOFU+' - '+NOKOFU AS Hijo FROM TABFU ORDER BY KOFU"
         caract_combo(CmbFuncionarios)
 
-        CmbFuncionarios.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        CmbFuncionarios.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         CmbFuncionarios.SelectedValue = FUNCIONARIO
 
         'AddHandler ChkTipoDocumento_Todos.CheckedChanged, AddressOf Sb_Grupo_Documento
@@ -335,7 +335,7 @@ Public Class Frm_BusquedaDocumento_Filtro
             _Tbl_Filtro_Documentos = _Filtrar.Pro_Tbl_Filtro
             If _Filtrar.Pro_Filtro_Todas Then
                 Consulta_sql = "SELECT TIDO AS 'Codigo', NOTIDO AS 'Descripcion' FROM TABTIDO"
-                _Tbl_Filtro_Documentos = _Sql.Fx_Get_Tablas(Consulta_sql)
+                _Tbl_Filtro_Documentos = _Sql.Fx_Get_DataTable(Consulta_sql)
             End If
 
         End If
@@ -404,7 +404,7 @@ Public Class Frm_BusquedaDocumento_Filtro
 
         caract_combo(CmbTipoDeDocumentos)
 
-        CmbTipoDeDocumentos.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        CmbTipoDeDocumentos.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         CmbTipoDeDocumentos.SelectedValue = _TipoDoc_Seleccionado
 
     End Sub
@@ -626,7 +626,7 @@ Public Class Frm_BusquedaDocumento_Filtro
                         And Not Exists (Select * From MAEDCR Where MAEDCR.IDDDODCR = Ddo.IDMAEDDO And MAEDCR.RECARCALCU = '" & Codigo_Recargo & "')
                         And Edo.FEEMDO BETWEEN '" & Format(DtpFechaInicio.Value, "yyyyMMdd") & "' And '" & Format(DtpFechaFin.Value, "yyyyMMdd") & "'"
 
-            Dim _Tbl_Filtro_Idmaeedo As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Filtro_Idmaeedo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If _Tbl_Filtro_Idmaeedo.Rows.Count Then
                 _Usar_Otro_Filtros = True
@@ -714,7 +714,7 @@ Buscar:
 
         End If
 
-        Dim _Tbl_Paso As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Paso As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Me.Cursor = Cursors.Default
 

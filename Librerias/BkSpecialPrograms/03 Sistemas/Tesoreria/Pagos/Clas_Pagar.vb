@@ -569,7 +569,7 @@ Public Class Clas_Pagar
         Try
 
             Consulta_sql = "SELECT VAVE,VAABVE,IDMAEVEN FROM MAEVEN WHERE IDMAEEDO=" & _Idmaeedo & " AND ESPGVE<>'C'"
-            Dim _Tbl_Maeven As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Maeven As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If Convert.ToBoolean(_Tbl_Maeven.Rows.Count) Then
                 _Idmaeven = _Tbl_Maeven.Rows(0).Item("IDMAEVEN")
@@ -980,7 +980,7 @@ Public Class Clas_Pagar
         Try
 
             Consulta_sql = "SELECT VAVE,VAABVE,IDMAEVEN FROM MAEVEN WHERE IDMAEEDO = " & _Idmaeedo & " AND ESPGVE<>'C'"
-            Dim _Tbl_Maeven As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Maeven As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If Convert.ToBoolean(_Tbl_Maeven.Rows.Count) Then
                 _Idmaeven = _Tbl_Maeven.Rows(0).Item("IDMAEVEN")
@@ -1756,7 +1756,7 @@ Public Class Clas_Pagar
         Dim _Lahora = Format(FechaDelServidor, "yyyyMMdd")
 
         Consulta_sql = "SELECT VAVE,VAABVE,IDMAEVEN  FROM MAEVEN WHERE IDMAEEDO=" & _Idmaeedo & " AND ESPGVE<>'C'"
-        Dim _Tbl_Maeven As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Maeven As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         Dim _Idmaeven As Integer = _Tbl_Maeven.Rows(0).Item("IDMAEVEN")
@@ -1875,7 +1875,7 @@ Public Class Clas_Pagar
                        "From MAEDPCE With ( Nolock ) " & vbCrLf &
                        "Where 1 = 0"
 
-                Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 Dim NewFila As DataRow
                 NewFila = _Tbl.NewRow

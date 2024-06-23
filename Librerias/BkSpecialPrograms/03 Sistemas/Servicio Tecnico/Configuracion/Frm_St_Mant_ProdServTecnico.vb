@@ -24,11 +24,11 @@ Public Class Frm_St_Mant_ProdServTecnico
 
         Consulta_sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
                        "Where Informe = 'ServicioTecnico' And Filtro = 'ProdIngreso'"
-        _TblProdIngreso = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblProdIngreso = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Consulta_sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
                        "Where Informe = 'ServicioTecnico' And Filtro = 'ProdServicio'"
-        _TblProdServicio = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblProdServicio = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Sb_ActualizarCantidades()
 

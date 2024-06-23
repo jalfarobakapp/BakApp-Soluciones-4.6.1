@@ -35,7 +35,7 @@ Public Class Frm_InfoEnt_Ficha_Aseguradora
                             "Select Top 1 * From #Paso1" & vbCrLf & _
                             "Drop Table #Paso1"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl.Rows.Count) Then
             _Row_Entidad_Cia_Seguros = _Tbl.Rows(0)
@@ -49,14 +49,14 @@ Public Class Frm_InfoEnt_Ficha_Aseguradora
                        "FROM " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf & _
                        "WHERE Tabla = 'NEGOCIO_CLASCREDI'" & vbCrLf & _
                        "ORDER BY Padre"
-        Cmb_Clascrediticia.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Clascrediticia.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         caract_combo(Cmb_Moneda)
         Consulta_sql = "SELECT KOMO AS Padre,LTRIM(RTRIM(NOKOMO))+' - '+KOMO AS Hijo" & vbCrLf & _
                        "FROM TABMO" & vbCrLf & _
                        "Where KOMO In ('$','UF')" & vbCrLf & _
                        "ORDER BY Padre"
-        Cmb_Moneda.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Moneda.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
     End Sub
 

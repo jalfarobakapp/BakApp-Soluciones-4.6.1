@@ -30,7 +30,7 @@ Public Class Frm_04_Productos_por_sector
                        ") AND (CodSectorInt = '" & _CodSector & "') " & vbCrLf &
                        "ORDER BY Semilla"
 
-        _Tbl = _SQL.Fx_Get_Tablas(Consulta_sql)
+        _Tbl = _SQL.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl.Rows.Count) Then
 

@@ -177,7 +177,7 @@ Public Class Frm_Kardex_X_Producto_Lista
         '_Ds = _Sql.Fx_Get_DataSet(Consulta_sql)
         '_dv.Table = _Ds.Tables(0)
 
-        _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Productos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With GrillaListaProductos
 
@@ -242,7 +242,7 @@ Public Class Frm_Kardex_X_Producto_Lista
         Consulta_sql = Replace(Consulta_sql, "#Kofu#", FUNCIONARIO)
         Consulta_sql = Replace(Consulta_sql, "#Global_BaseBk#", _Global_BaseBk)
 
-        _Tbl_Detalle_Stock = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Detalle_Stock = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         Consulta_sql = "Select " & vbCrLf &
@@ -268,7 +268,7 @@ Public Class Frm_Kardex_X_Producto_Lista
                        "Select * From #Paso" & vbCrLf &
                        "Drop Table #Paso"
 
-        _Tbl_Total_Stock = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Total_Stock = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Sb_Formato_Y_Llenar_Grilla_Stock(Grilla_Detalle_Stock, _Tbl_Detalle_Stock, True)
         Sb_Formato_Y_Llenar_Grilla_Stock(Grilla_Total_Stock, _Tbl_Total_Stock, False)
@@ -579,7 +579,7 @@ Public Class Frm_Kardex_X_Producto_Lista
 
         Consulta_sql = "SELECT KOPR FROM MAEPR WHERE KOPR IN (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion" & Space(1) &
                        "Where Codigo_Nodo = " & _Codigo_Nodo & " And Codigo_Nodo <> 0)"
-        Fx_Tbl_Productos_Hermanos = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Fx_Tbl_Productos_Hermanos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
     End Function
 

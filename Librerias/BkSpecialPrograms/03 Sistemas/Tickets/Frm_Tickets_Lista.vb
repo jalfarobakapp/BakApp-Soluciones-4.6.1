@@ -261,7 +261,7 @@ Public Class Frm_Tickets_Lista
                        "Left Join " & _Global_BaseBk & "Zw_Stk_Tickets_Producto TkPrd On Tks.Id_Raiz = TkPrd.Id_Raiz" & vbCrLf &
                        "Where 1 > 0" & vbCrLf & _Condicion
 
-        _Tbl_Tickets = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Tickets = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 
@@ -577,7 +577,7 @@ Public Class Frm_Tickets_Lista
                        "Where 1 > 0" & vbCrLf & _Condicion & vbCrLf &
                        "Order By Numero Desc"
 
-        _Tbl_Tickets = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Tickets = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _New_Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
         _Dv = New DataView

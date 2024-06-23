@@ -63,7 +63,7 @@ Public Class Cl_SolCreaProducto
     Sub Sb_Llenar_RowProducto(_Id_CPr As Integer)
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_SolCreapr Where Id_CPr = " & _Id_CPr
-        _Tbl_NewMaepr = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_NewMaepr = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl_NewMaepr.Rows.Count) Then
 

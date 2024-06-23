@@ -285,7 +285,7 @@ Public Class Frm_ValidarPermisoUsuario
                        "FROM " & _Global_BaseBk & "ZW_PermisosVsUsuarios" & vbCrLf &
                        "Where CodUsuario <> '" & FUNCIONARIO & "'"
 
-        Dim _Tbl_Usuarios As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Usuarios As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Fila As DataRow In _Tbl_Usuarios.Rows
 
@@ -327,7 +327,7 @@ Public Class Frm_ValidarPermisoUsuario
 
         End If
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Filtro_Usuarios_NOT_In As String
 

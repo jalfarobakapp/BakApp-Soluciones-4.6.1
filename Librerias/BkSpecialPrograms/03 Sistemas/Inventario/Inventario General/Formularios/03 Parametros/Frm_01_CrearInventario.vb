@@ -252,7 +252,7 @@ Public Class Frm_01_CrearInventario
 
             Dim Tbl As New DataTable
             Consulta_sql = "Select * from Zw_TmpInv_History where IdInventario = " & _IdInventario
-            Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
             Dim Fila As DataRow
 
             Fila = Tbl.Rows(0)

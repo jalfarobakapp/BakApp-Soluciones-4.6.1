@@ -538,7 +538,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_02_Mensual
         Dim _Tbl As DataTable
 
         Consulta_sql = "Select Distinct RTEN From " & _Tabla_Paso
-        _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
         Consulta_sql = String.Empty
 
         If CBool(_Tbl.Rows.Count) Then
@@ -561,7 +561,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_02_Mensual
                        "Where FEEMDO BETWEEN '" & Format(_Fecha_Inicio_01, "yyyyMMdd") & "' AND " &
                        "'" & Format(_Fecha_Fin_01, "yyyyMMdd") & "'"
 
-        Dim _TblDias As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblDias As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Meses = DateDiff(DateInterval.Month, _Fecha_Inicio_01, _Fecha_Fin_01)
         Dim _Meses2 = DateDiff(DateInterval.Month, _Fecha_Inicio_02, _Fecha_Fin_02)
@@ -692,7 +692,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_02_Mensual
                         "Select * From #Tbl_Paso Order By CODIGO" & vbCrLf &
                         "Drop Table #Tbl_Paso"
 
-        _Tbl_Informe = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Informe = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Grilla.DataSource = Nothing
 
@@ -985,7 +985,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_02_Mensual
                        "Where FEEMDO BETWEEN '" & Format(_Fecha_Inicio_01, "yyyyMMdd") & "' AND " &
                        "'" & Format(_Fecha_Fin_01, "yyyyMMdd") & "'"
 
-        Dim _TblDias As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblDias As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Meses = DateDiff(DateInterval.Month, _Fecha_Inicio_01, _Fecha_Fin_01)
         Dim _Meses2 = DateDiff(DateInterval.Month, _Fecha_Inicio_02, _Fecha_Fin_02) + 1

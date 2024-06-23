@@ -275,7 +275,7 @@ Public Class Frm_Sel_Documentos
                             --And Ddo.EMPRESA = '" & _Empresa & "' And Ddo.SULIDO = '" & _Sucursal & "' And Ddo.BOSULIDO = '" & _Bodega & "'
                             Group By Edo.IDMAEEDO,Edo.TIDO,Edo.NUDO,Edo.NUDONODEFI"
 
-            _Tbl_Informe = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Informe = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Else
             _Tbl_Informe = Nothing

@@ -85,7 +85,7 @@ Public Class Frm_GRI_Ingreso
         Consulta_sql = "Select *,(FABRICAR-REALIZADO) As SALDO From POTL" & vbCrLf &
                        "Where IDPOTE = " & _Idpote & " And LILG <> 'IM'"
 
-        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim Fm As New Frm_GRI_ProductosOT
         Fm.Tbl_Productos = _Tbl_Productos

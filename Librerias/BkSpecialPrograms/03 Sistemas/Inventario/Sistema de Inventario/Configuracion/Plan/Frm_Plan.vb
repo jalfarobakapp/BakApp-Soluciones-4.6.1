@@ -45,7 +45,7 @@ Public Class Frm_Plan
                         Where Ubic.Id_Inventario = " & _Id_Inventario & "
                         Order By Ubic.Codigo_Sector,Ubic.Codigo_Ubic"
 
-        Dim _Tbl_Parejas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Parejas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

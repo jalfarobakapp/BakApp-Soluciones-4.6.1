@@ -99,7 +99,7 @@ Public Class Cl_Pago_Cashdro
         Consulta_Sql = "Select " & _Top & "* From " & _Global_BaseBk & "Zw_CashDro_Operaciones" & vbCrLf &
                        "Where Pagado_CashDro = 1 And Pagado_Random = 0 And Idmaeedo <> 0 And Tipo_De_Pago = 'EFV'" & Space(1) &
                        "And posid = '" & _NombreEquipo & "' Order By Id"
-        Dim _Tbl_Pagos_Pendientes As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_Pagos_Pendientes As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         If CBool(_Tbl_Pagos_Pendientes.Rows.Count) Then
 
@@ -197,7 +197,7 @@ Public Class Cl_Pago_Cashdro
                                         FROM MAEDPCD AS CD  WITH ( NOLOCK )  
                                         LEFT JOIN MAEDPCE AS PROPIO ON CD.IDMAEDPCE=PROPIO.IDMAEDPCE  
                                         WHERE CD.ARCHIRST='MAEEDO'  AND CD.IDRST=" & _Idmaeedo & " ORDER BY CD.FEASDP"
-                        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+                        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
                         For Each _Fl As DataRow In _Tbl.Rows
 
@@ -257,7 +257,7 @@ Public Class Cl_Pago_Cashdro
                        "Tipo_De_Pago = 'TJV' And Error_Extraccion_Respuesta_Transbank = 0" & Space(1) &
                        "And posid = '" & _NombreEquipo & "' Order By Id Desc"
 
-        Dim _Tbl_Pagos_Pendientes As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_Pagos_Pendientes As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Dim _Datos_Tarjeta
         Dim _Error_Extraccion_Respuesta_Transbank As Boolean
@@ -456,7 +456,7 @@ Public Class Cl_Pago_Cashdro
                                         FROM MAEDPCD AS CD  WITH ( NOLOCK )  
                                         LEFT JOIN MAEDPCE AS PROPIO ON CD.IDMAEDPCE=PROPIO.IDMAEDPCE  
                                         WHERE CD.ARCHIRST='MAEEDO'  AND CD.IDRST=" & _Idmaeedo & " ORDER BY CD.FEASDP"
-                        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+                        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
                         For Each _Fl As DataRow In _Tbl.Rows
 
@@ -507,7 +507,7 @@ Public Class Cl_Pago_Cashdro
         Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_CashDro_Operaciones" & vbCrLf &
                        "Where Tipo_De_Pago in ('ncv','NCV') And" & Space(1) &
                        "Pagado_Nota_de_credito = 1 And Pagado_Random = 0 And Idmaeedo <> 0 And posid = '" & _NombreEquipo & "' And Vuelto_Entregado = 0"
-        Dim _Tbl_Pagos_Pendientes As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_Pagos_Pendientes As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
 
         If CBool(_Tbl_Pagos_Pendientes.Rows.Count) Then
@@ -612,7 +612,7 @@ Public Class Cl_Pago_Cashdro
                                         FROM MAEDPCD AS CD  WITH ( NOLOCK )  
                                         LEFT JOIN MAEDPCE AS PROPIO ON CD.IDMAEDPCE=PROPIO.IDMAEDPCE  
                                         WHERE CD.ARCHIRST='MAEEDO'  AND CD.IDRST=" & _Idmaeedo_DOC & " ORDER BY CD.FEASDP"
-                            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+                            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
                             For Each _Fl As DataRow In _Tbl.Rows
 
@@ -663,7 +663,7 @@ Public Class Cl_Pago_Cashdro
         Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_CashDro_Operaciones" & vbCrLf &
                        "Where Pagado_CashDro = 1 And Pagado_Random = 0 And Idmaeedo <> 0 And Tipo_De_Pago = 'EFC'" & Space(1) &
                        "And posid = '" & _NombreEquipo & "'"
-        Dim _Tbl_Pagos_Pendientes As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_Pagos_Pendientes As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         For Each _Row_Operacion As DataRow In _Tbl_Pagos_Pendientes.Rows
 
@@ -692,7 +692,7 @@ Public Class Cl_Pago_Cashdro
                            "LEFT JOIN TABLUG ON TABLUG.LUVT=EDO.LUVTDO" & vbCrLf &
                            "Where EDO.IDMAEEDO = " & _Idmaeedo
 
-            Dim _Tbl_NCV As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+            Dim _Tbl_NCV As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
             Dim _Endo = _Tbl_NCV.Rows(0).Item("ENDO")
             Dim _Nudo = _Tbl_NCV.Rows(0).Item("NUDO")

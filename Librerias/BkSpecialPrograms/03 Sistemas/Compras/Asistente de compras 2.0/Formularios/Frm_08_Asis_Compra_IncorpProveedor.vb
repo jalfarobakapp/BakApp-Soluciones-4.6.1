@@ -283,13 +283,13 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
             Consulta_sql = "Select Distinct Codigo_Nodo_Madre,Descripcion_Madre" & vbCrLf &
                            "From " & _Tabla_Paso & vbCrLf &
                            "Where Comprar = 1"
-            _Tbl_Codigos_Madre = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Codigos_Madre = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _SqlQuery_2 As String = String.Empty
 
             Consulta_sql = "Select * From " & _Tabla_Paso & vbCrLf &
                            "Where Codigo+Endo_Utl_Compra+Suendo_Utl_Compra In (Select Codigo+CodEntidad+CodSucEntidad From " & _Global_BaseBk & "Zw_Entidades_ProdExcluidos Where Chk = 1)"
-            Dim _Tbl_ProdBloqueadoProveedores As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_ProdBloqueadoProveedores As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
             If CBool(_Tbl_Codigos_Madre.Rows.Count) Then
@@ -312,7 +312,7 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
                     Consulta_sql = "Select * From " & _Tabla_Paso & vbCrLf &
                                    "Where Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre & "'" & vbCrLf &
                                    "Order by Id_Ult_Compra"
-                    Dim _Tbl_Detalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _Tbl_Detalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     Dim _CantSugeridaTot As Double = _Tbl_Detalle.Rows(0).Item("CantSugeridaTot")
                     Dim _CantComprar As Double = Math.Ceiling(_CantSugeridaTot)
@@ -544,7 +544,7 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
             Consulta_sql = "Select Distinct Codigo_Nodo_Madre,Descripcion_Madre" & vbCrLf &
                            "From " & _Tabla_Paso & vbCrLf &
                            "Where Comprar = 1"
-            _Tbl_Codigos_Madre = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Codigos_Madre = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _SqlQuery_2 As String = String.Empty
 
@@ -570,7 +570,7 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
                     Consulta_sql = "Select * From " & _Tabla_Paso & vbCrLf &
                                    "Where Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre & "'" & vbCrLf &
                                    "Order by Id_Ult_Compra"
-                    Dim _Tbl_Detalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _Tbl_Detalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     Dim _CantSugeridaTot As Double = _Tbl_Detalle.Rows(0).Item("CantSugeridaTot")
                     Dim _CantComprar As Double = Math.Ceiling(_CantSugeridaTot)
@@ -684,7 +684,7 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
 
         caract_combo(Cmb_Documento_Compra)
         Consulta_sql = "SELECT TIDO AS Padre,NOTIDO AS Hijo FROM TABTIDO Where TIDO In ('GRC','FCC','OCC') ORDER BY Hijo" ' WHERE SEMILLA = " & Actividad
-        Cmb_Documento_Compra.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Documento_Compra.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Documento_Compra.SelectedValue = "GRC"
 
         With _RowParametros

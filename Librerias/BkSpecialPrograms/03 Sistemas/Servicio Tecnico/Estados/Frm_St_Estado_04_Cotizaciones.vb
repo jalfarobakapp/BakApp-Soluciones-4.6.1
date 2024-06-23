@@ -505,7 +505,7 @@ Public Class Frm_St_Estado_04_Cotizaciones
                 _Estado_Fijar = Estado_Fijar.Aceptado
 
                 Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Idmaeedo & " Order By IDMAEDDO"
-                _TblDetalle_Cov = _Sql.Fx_Get_Tablas(Consulta_sql)
+                _TblDetalle_Cov = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
             ElseIf _Rechazados > 0 Then
@@ -549,7 +549,7 @@ Public Class Frm_St_Estado_04_Cotizaciones
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_DetProd " & vbCrLf &
                    "Where Id_Ot In (Select Id_Ot From " & _Global_BaseBk & "Zw_St_OT_Encabezado Where Nro_Ot = '" & _Nro_Ot & "')"
-            Dim _Tbl_SubOt As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_SubOt As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
             Dim _SqlQuery = String.Empty
 
             For Each _Fila As DataRow In _Tbl_SubOt.Rows
@@ -702,7 +702,7 @@ Public Class Frm_St_Estado_04_Cotizaciones
         Dim _Idmaeedo = _Fila.Cells("Idmaeedo").Value
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Doc_Asociados Where Idmaeedo = " & _Idmaeedo
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If _Tbl.Rows.Count > 1 Then
 
@@ -714,7 +714,7 @@ Public Class Frm_St_Estado_04_Cotizaciones
 
         'If Fx_Revisar_Documento_Cerrado(_Idmaeedo, False) Then
         Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Idmaeedo
-        Dim _Tbl_Maeddo As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Maeddo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim Cerrar_Doc As New Clas_Cerrar_Documento
 
@@ -765,7 +765,7 @@ Public Class Frm_St_Estado_04_Cotizaciones
         Dim _Idmaeedov = _Fila.Cells("Idmaeedo").Value
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Doc_Asociados Where Idmaeedo = " & _Idmaeedov
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If _Tbl.Rows.Count > 1 Then
 
@@ -1144,7 +1144,7 @@ Public Class Frm_St_Estado_04_Cotizaciones
 
         End If
 
-        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not CBool(_Tbl_Productos.Rows.Count) Then
             MessageBoxEx.Show(Me, "No existen productos o servicios en la Orden para poder hacer la cotización", "Validación",
@@ -1184,7 +1184,7 @@ Public Class Frm_St_Estado_04_Cotizaciones
             End If
 
 
-            Dim _Tbl_SubOt As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_SubOt As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
             Dim _SqlQuery = String.Empty
 
             For Each _Fila As DataRow In _Tbl_SubOt.Rows

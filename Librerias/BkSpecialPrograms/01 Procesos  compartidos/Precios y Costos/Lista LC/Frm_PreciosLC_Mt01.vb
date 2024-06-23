@@ -116,7 +116,7 @@ Public Class Frm_PreciosLC_Mt01
                        "Left Join MAEPR On KOPR = Dres.ELEMENTO" & vbCrLf &
                        "Where '" & Format(_FechaHoy, "yyyyMMdd") & "' Between Eres.FIOFERTA And Eres.FTOFERTA --And Eres.LISTAS Like '%PB7%'" & vbCrLf &
                        "And Dres.ELEMENTO = '" & Codigo & "' "
-        Dim _TblOfertas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblOfertas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblOfertas.Rows.Count) Then
 
@@ -135,7 +135,7 @@ Public Class Frm_PreciosLC_Mt01
         End If
 
         Consulta_sql = "SELECT * FROM " & TblPaso
-        GrillaProducto.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        GrillaProducto.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Ila = De_Txt_a_Num_01(_Sql.Fx_Trae_Dato(TblPaso, "ILAVALOR"), 3) * 100
         Iva = De_Txt_a_Num_01(_Sql.Fx_Trae_Dato(TblPaso, "IVAFORM"), 3) * 100
@@ -180,7 +180,7 @@ Public Class Frm_PreciosLC_Mt01
                        "WHERE (dbo.TABRECPR.RECARGO > 0) AND " &
                        "(dbo.TABRECPR.KOPR = '" & Codigo & "') AND " &
                        "(dbo.TABRECPR.KOEN <> '')"
-        GrillaRecargos.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        GrillaRecargos.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         FormatoGrillaProducto(GrillaRecargos, 3)
 
         Flete = De_Txt_a_Num_01(_Sql.Fx_Trae_Dato("TABRECPR", "RECARGO", "KOPR = '" & Codigo & "' AND KOEN = ''"), 3)
@@ -298,7 +298,7 @@ Public Class Frm_PreciosLC_Mt01
             Consulta_sql = "Select * From " & TablaDePasoLista_LC & " ORDER BY Lista "
             SqlGrillaPrecios = Consulta_sql
 
-            GrillaPrecios.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            GrillaPrecios.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
             FormatoGrilla(GrillaPrecios)
 
         Catch ex As Exception
@@ -681,7 +681,7 @@ Public Class Frm_PreciosLC_Mt01
 
             With DataGridView1
 
-                .DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+                .DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 .Columns("Campo").Width = 80
                 .Columns("Campo").HeaderText = "Lista"
@@ -844,7 +844,7 @@ Public Class Frm_PreciosLC_Mt01
     Private Sub Btn_Grabar_Futuro_Click(sender As Object, e As EventArgs) Handles Btn_Grabar_Futuro.Click
 
         Consulta_sql = "Select Cast(0 As Bit) As Chk,* From " & TablaDePasoLista_LC & " Order By Lista"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Grabar As Boolean
 
@@ -1196,7 +1196,7 @@ Public Class Frm_PreciosLC_Mt01
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
         Consulta_sql = "Select * From " & TablaDePasoLista_LC & " ORDER BY Lista"
-        GrillaPrecios.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        GrillaPrecios.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         FormatoGrilla(GrillaPrecios)
 
     End Sub

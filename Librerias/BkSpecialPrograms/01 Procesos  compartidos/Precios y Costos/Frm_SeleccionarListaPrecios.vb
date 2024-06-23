@@ -84,7 +84,7 @@ Public Class Frm_SeleccionarListaPrecios
                             "Where CodUsuario = '" & FUNCIONARIO & "' And CodPermiso LIKE 'Lp-%')"
         End If
 
-        _Tbl_Listas = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Listas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With GrillaListas
 
@@ -189,7 +189,7 @@ Public Class Frm_SeleccionarListaPrecios
                             "From TABPP" & vbCrLf &
                             "Where KOLT = '" & _Lista & "'"
 
-            _Tbl_Listas_Seleccionadas = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Listas_Seleccionadas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Me.Close()
 
@@ -221,7 +221,7 @@ Public Class Frm_SeleccionarListaPrecios
                 MessageBoxEx.Show(Me, "Debe seleccionar una lista para el tratamiento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Else
                 Consulta_sql = "Select * From TABPP Where KOLT In " & _Fl
-                _Tbl_Listas_Seleccionadas = _Sql.Fx_Get_Tablas(Consulta_sql)
+                _Tbl_Listas_Seleccionadas = _Sql.Fx_Get_DataTable(Consulta_sql)
                 Me.Close()
             End If
 

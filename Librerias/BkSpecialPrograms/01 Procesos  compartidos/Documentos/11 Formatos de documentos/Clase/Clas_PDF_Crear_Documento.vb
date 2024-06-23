@@ -83,7 +83,7 @@ Public Class Clas_PDF_Crear_Documento
             ' Llena Formato del Encabezado
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Format_01" & vbCrLf &
                        "Where TipoDoc = '" & _TipoDoc & "' And NombreFormato = '" & _NombreFormato & "' And Subtido = '" & _SubTido & "'"
-            _TblEncForm = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _TblEncForm = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If Not CBool(_TblEncForm.Rows.Count) Then
                 Throw New System.Exception("No existe el formato de documento: " & _NombreFormato)
@@ -129,7 +129,7 @@ Public Class Clas_PDF_Crear_Documento
             ' Llena Formato del Encabezado
             Consulta_sql = "SELECT * FROM " & _Global_BaseBk & "Zw_Format_01" & vbCrLf &
                            "Where TipoDoc = '" & TipoDoc & "' and NombreFormato = '" & NombreFormato & "'"
-            _TblEncForm = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _TblEncForm = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Sql_CmSQL_Personalizada = String.Empty
 
@@ -172,7 +172,7 @@ Public Class Clas_PDF_Crear_Documento
                     Where TipoDoc = '" & _TipoDoc & "' And Subtido = '" & _SubTido & "' And NombreFormato = '" & _NombreFormato & "' And Fdt.Seccion In ('E','P')"
 
 
-            _Tbl_Fx_Encabezado = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Fx_Encabezado = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             ' Llena formato del detalle
             'Consulta_sql = "SELECT *," &
@@ -211,7 +211,7 @@ Public Class Clas_PDF_Crear_Documento
                     Where TipoDoc = '" & _TipoDoc & "' And Subtido = '" & _SubTido & "' And NombreFormato = '" & _NombreFormato & "' And Fdt.Seccion = 'D'" & vbCrLf &
                         "Order by Fdt.Orden_Detalle"
 
-            _Tbl_Fx_Detalle = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Fx_Detalle = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             'If _TipoDoc.Contains("GRP") Or _TipoDoc.Contains("GDP") Then
 
@@ -1031,7 +1031,7 @@ Public Class Clas_PDF_Crear_Documento
                 Dim _TblDoc_Relacionados As DataTable
 
                 Consulta_sql = "Select Distinct TIDOPA+'-'+NUDOPA From MAEDDO Where IDMAEEDO = " & _IdMaeedo
-                _TblDoc_Relacionados = _Sql.Fx_Get_Tablas(Consulta_sql)
+                _TblDoc_Relacionados = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 For Each _Fila As DataRow In _TblDoc_Relacionados.Rows
                     _Texto += _Fila.Item(0) & Space(1)
@@ -1056,7 +1056,7 @@ Public Class Clas_PDF_Crear_Documento
                                 FROM MAEDPCD AS CD  WITH ( NOLOCK )   
                                 LEFT JOIN MAEDPCE AS CE ON CD.IDMAEDPCE=CE.IDMAEDPCE  WHERE TIDOPA='FCV' AND ARCHIRST='MAEEDO' AND IDRST=" & _IdMaeedo
 
-                _TblDoc_Relacionados = _Sql.Fx_Get_Tablas(Consulta_sql)
+                _TblDoc_Relacionados = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 If Convert.ToBoolean(_TblDoc_Relacionados.Rows.Count) Then
 
@@ -1159,7 +1159,7 @@ Public Class Clas_PDF_Crear_Documento
                                 Inner Join TABFU ON KOFU = CodFuncionario_Autoriza
                                 Where Idmaeedo = " & _IdMaeedo
 
-                Dim _Tbl_Aurotizadores As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Aurotizadores As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 Dim _Contador_Filas = 1
 

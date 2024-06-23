@@ -47,7 +47,7 @@ Public Class Frm_TrabMaq_Sin_Cerrar
                         Left Join Zw_Pdc_Mesones Ms On Mq.Codmeson = Ms.Codmeson
                         Where Estado='EMQ' And POTE.ESTADO = 'V' And Fecha_Hora_Inicio < '" & _Fecha & "' And Obrero = '" & _Codigoob & "' "
 
-        Dim _Tbl_Mesones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Mesones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Convert.ToBoolean(_Tbl_Mesones.Rows.Count) Then
 
@@ -75,7 +75,7 @@ Public Class Frm_TrabMaq_Sin_Cerrar
                        "From " & _Global_BaseBk & "Zw_Pdp_MaquinaVsProductos Z1" & vbCrLf &
                        "Inner Join POTE On Idpote=IDPOTE
                         Where Codmeson = '" & _Codmeson & "' And Obrero = '" & _Codigoob & "' And Estado='EMQ'  And POTE.ESTADO = 'V' And Fecha_Hora_Inicio < '" & _Fecha & "' ORDER BY Fecha_Hora_Inicio ASC"
-        _Tbl_Maquina = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Maquina = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Maquinas_Meson
 

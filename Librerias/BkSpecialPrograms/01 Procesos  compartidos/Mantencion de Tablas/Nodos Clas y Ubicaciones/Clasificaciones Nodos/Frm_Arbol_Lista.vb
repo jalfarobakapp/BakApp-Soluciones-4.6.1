@@ -223,7 +223,7 @@ Public Class Frm_Arbol_Lista
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
                        "Where Identificacdor_NodoPadre = " & _Identificacdor_NodoPadre & vbCrLf &
                        _Filtro
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If _Tbl.Rows.Count = 0 Then
             Return
@@ -281,7 +281,7 @@ Public Class Frm_Arbol_Lista
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
                        "Where Identificacdor_NodoPadre = " & _Identificacdor_NodoPadre & vbCrLf &
                        _Filtro
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If _Tbl.Rows.Count = 0 Then
             Return
@@ -1065,7 +1065,7 @@ Public Class Frm_Arbol_Lista
                        "From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
                        "Where (Codigo = '" & Codigo_Heredado & "') AND (Para_filtro = 1)"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Row As DataRow In _Tbl.Rows
 

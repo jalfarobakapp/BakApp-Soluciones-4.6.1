@@ -128,7 +128,7 @@ Public Class Frm_Inf_Ventas_X_Vendedor_01
 
         Dim _Tbl As DataTable
 
-        _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Return _Tbl
 

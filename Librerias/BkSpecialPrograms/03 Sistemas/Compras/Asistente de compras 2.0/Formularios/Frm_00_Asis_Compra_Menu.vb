@@ -205,7 +205,7 @@ Public Class Frm_00_Asis_Compra_Menu
 
         caract_combo(Cmb_Lista_de_costos)
         Consulta_sql = "Select '' As Padre,'' As Hijo Union Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
-        Cmb_Lista_de_costos.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Lista_de_costos.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Lista_de_costos.SelectedValue = ""
 
     End Sub
@@ -751,22 +751,22 @@ Public Class Frm_00_Asis_Compra_Menu
             Consulta_sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
                            "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente'" & Space(1) &
                            "And Filtro = 'Bodegas_Stock' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad_Estudio & "'"
-            _TblBodCompra = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _TblBodCompra = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Consulta_sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
                            "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente'" & Space(1) &
                            "And Filtro = 'Bodegas_Rotacion_Vta' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad_Estudio & "'"
-            _TblBodVenta = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _TblBodVenta = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Consulta_sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
                            "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente'" & Space(1) &
                            "And Filtro = 'Bodegas_Reabastecen' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad_Estudio & "'"
-            _TblBodReabastecen = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _TblBodReabastecen = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Consulta_sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
                "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente'" & Space(1) &
                "And Filtro = 'Productos_Excluidos' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad_Estudio & "'"
-            _TblFiltroProductosExcluidos = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _TblFiltroProductosExcluidos = _Sql.Fx_Get_DataTable(Consulta_sql)
             Btn_ProductosExcluidos.Text = "Productos excluidos (" & FormatNumber(_TblFiltroProductosExcluidos.Rows.Count, 0) & ")"
 
             If Rdb_Productos_Seleccionar.Checked Then
@@ -774,7 +774,7 @@ Public Class Frm_00_Asis_Compra_Menu
                 Consulta_sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
                     "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente'" & Space(1) &
                     "And Filtro = 'Productos_Seleccionados' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad_Estudio & "'"
-                _TblFiltroProductos = _Sql.Fx_Get_Tablas(Consulta_sql)
+                _TblFiltroProductos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             End If
 
@@ -1620,7 +1620,7 @@ Public Class Frm_00_Asis_Compra_Menu
                                 Inner Join " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Arbol On Prod.Codigo_Nodo = Arbol.Codigo_Nodo
                                 Where Arbol.Nodo_Raiz = " & _Nodo_Raiz_Asociados & " And Es_Seleccionable = 1 And Codigo In " & _Filtro_Pro
 
-                Dim _Tbl_Codigos_Madre As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Codigos_Madre As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 _Filtro_Codigos_Madre = Generar_Filtro_IN(_Tbl_Codigos_Madre, "", "Codigo_Nodo", False, False, "")
 
@@ -1644,7 +1644,7 @@ Public Class Frm_00_Asis_Compra_Menu
 
                                 Drop Table #Paso"
 
-                _TblProductos_Con_Reemplazo = _Sql.Fx_Get_Tablas(Consulta_sql)
+                _TblProductos_Con_Reemplazo = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Else
 
@@ -1841,7 +1841,7 @@ Public Class Frm_00_Asis_Compra_Menu
                     Me.Enabled = True
 
                     Consulta_sql = "Select Codigo From " & _TblPasoInforme
-                    Dim _Tbl_Informe As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _Tbl_Informe As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
                     Barra_Progreso.Maximum = 100
@@ -2348,7 +2348,7 @@ Public Class Frm_00_Asis_Compra_Menu
                            "Where Fecha_Ult_Revision <= '" & Format(_Fecha, "yyyyMMdd") & "')" & Space(1) &
                            "Or Codigo In (Select Codigo From " & _TblPasoInforme & " Where Codigo Not In (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Stock_Enc_History))"
 
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If CBool(_Tbl.Rows.Count) Then
 
@@ -2524,7 +2524,7 @@ Public Class Frm_00_Asis_Compra_Menu
                                 Inner Join " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Arbol On Prod.Codigo_Nodo = Arbol.Codigo_Nodo
                                 Where Arbol.Nodo_Raiz = " & _Nodo_Raiz_Asociados & " And Es_Seleccionable = 1 And Codigo In " & _Filtro_Pro
 
-                            Dim _Tbl_Codigos_Madre As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                            Dim _Tbl_Codigos_Madre As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                             Dim _Filtro_Codigos_Madre = Generar_Filtro_IN(_Tbl_Codigos_Madre, "", "Codigo_Nodo", False, False, "")
 
@@ -2548,7 +2548,7 @@ Public Class Frm_00_Asis_Compra_Menu
 
                                 Drop Table #Paso"
 
-                            _TblFiltroProductos = _Sql.Fx_Get_Tablas(Consulta_sql)
+                            _TblFiltroProductos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                         End If
 
@@ -2705,7 +2705,7 @@ Public Class Frm_00_Asis_Compra_Menu
                        "From TABBO" & vbCrLf &
                        "Order by Codigo"
 
-        _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Return _Tbl
 
@@ -2918,7 +2918,7 @@ Public Class Frm_00_Asis_Compra_Menu
 
             Consulta_sql += vbCrLf & "And TIPR In ('FPN','FIN')"
 
-            _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Count = _Tbl.Rows.Count
 
@@ -3235,7 +3235,7 @@ Public Class Frm_00_Asis_Compra_Menu
         End If
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Maest Where Activo = 1"
-        Dim _Tbl_DbExtMaest As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_DbExtMaest As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Row_DbExtMaest As DataRow In _Tbl_DbExtMaest.Rows
 
@@ -3406,7 +3406,7 @@ Public Class Frm_00_Asis_Compra_Menu
                         _Filtro_SuperFamilias & vbCrLf &
                         _Filtro_Zonas
 
-        _TblFiltroProductos_Proveedor = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblFiltroProductos_Proveedor = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         'If Rdb_Traer_No_Bloqueados.Checked Then
         '    Consulta_sql += Rdb_Traer_No_Bloqueados.Tag.ToString
@@ -3490,7 +3490,7 @@ Public Class Frm_00_Asis_Compra_Menu
         Dim _RowConexion As DataRow
 
         Consulta_sql = "Select *,'****' As [Password] From " & _Global_BaseBk & "Zw_DbExt_Conexion"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not CBool(_Tbl.Rows.Count) Then
             MessageBoxEx.Show(Me, "No hay conexiones disponibles" & vbCrLf & vbCrLf &
@@ -3763,7 +3763,7 @@ Public Class Frm_00_Asis_Compra_Menu
                                 Inner Join " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Arbol On Prod.Codigo_Nodo = Arbol.Codigo_Nodo
                                 Where Arbol.Nodo_Raiz = " & _Nodo_Raiz_Asociados & " And Es_Seleccionable = 1 And Codigo In " & _Filtro_Pro
 
-                                Dim _Tbl_Codigos_Madre As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                                Dim _Tbl_Codigos_Madre As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                                 Dim _Filtro_Codigos_Madre = Generar_Filtro_IN(_Tbl_Codigos_Madre, "", "Codigo_Nodo", False, False, "")
 
@@ -3787,7 +3787,7 @@ Public Class Frm_00_Asis_Compra_Menu
 
                                 Drop Table #Paso"
 
-                                _TblFiltroProductosExcluidos = _Sql.Fx_Get_Tablas(Consulta_sql)
+                                _TblFiltroProductosExcluidos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                             End If
 

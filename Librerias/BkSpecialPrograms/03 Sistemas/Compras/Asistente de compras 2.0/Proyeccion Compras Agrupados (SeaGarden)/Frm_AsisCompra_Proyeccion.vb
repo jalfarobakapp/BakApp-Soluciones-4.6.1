@@ -104,7 +104,7 @@ Public Class Frm_AsisCompra_Proyeccion
 
         Consulta_sql = "Select Codigo_Nodo From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
                        "Where Identificacdor_NodoPadre = " & _Padre_Asociacion_Productos
-        _Tbl_Nodos = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Nodos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _Filtro_Nodos = Generar_Filtro_IN(_Tbl_Nodos, "", "Codigo_Nodo", False, False, "'")
 
@@ -223,7 +223,7 @@ Public Class Frm_AsisCompra_Proyeccion
                        "Where Es_Padre = 1 And Codigo_Nodo In (Select Distinct Identificacdor_NodoPadre" & Space(1) &
                        "From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Es_Padre = 0 And Clas_Unica_X_Producto = 1)" & vbCrLf &
                        "Order By Hijo"
-        Cmb_Padre_Asociacion_Productos.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Padre_Asociacion_Productos.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Padre_Asociacion_Productos.SelectedValue = ""
 
         caract_combo(Cmb_Proyeccion)

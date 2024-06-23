@@ -112,7 +112,7 @@
         Dim _FechaEmision As Date = FechaDelServidor()
 
         Consulta_Sql = "Select Top 20 * From " & _Global_BaseBk & "Zw_Demonio_FacAuto Where Facturar = 1"
-        Dim _Tbl_Doc_Facturar As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql, False)
+        Dim _Tbl_Doc_Facturar As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
 
         If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
             Log_Registro += _Sql.Pro_Error & vbCrLf
@@ -207,7 +207,7 @@
         Dim _FechaEmision As Date = FechaDelServidor()
 
         Consulta_Sql = "Select Top 20 * From " & _Global_BaseBk & "Zw_Demonio_FacAuto Where Facturar = 1"
-        Dim _Tbl_Doc_Facturar As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql, False)
+        Dim _Tbl_Doc_Facturar As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
 
         If CBool(_Tbl_Doc_Facturar.Rows.Count) Then
 

@@ -92,7 +92,7 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
                        "FROM MAEDPCE WITH ( NOLOCK ) " & vbCrLf &
                        "WHERE 1 = 0"
 
-        _Tbl_Maedpce = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_Maedpce = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Dim _DisplayIndex = 0
 

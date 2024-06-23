@@ -71,7 +71,7 @@ Public Class Frm_Cms_FuncMant
                        "Case When TieneSC = 1 Then 'Si' Else 'No' End As TieneSmeCorr" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Comisiones_Mis Mis" & vbCrLf &
                        "Where CodFuncionario = '" & _Row_Funcionario.Item("KOFU") & "'"
-        _Tbl_MisComisiones = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_MisComisiones = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Dim _DisplayIndex = 0
 

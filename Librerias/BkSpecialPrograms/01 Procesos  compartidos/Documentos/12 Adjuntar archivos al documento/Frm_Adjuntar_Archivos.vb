@@ -64,7 +64,7 @@ Public Class Frm_Adjuntar_Archivos
                        "From " & _Global_BaseBk & _Tabla & vbCrLf &
                        "Where " & _Campo & " = '" & _Codigo_Id & "'" & vbCrLf & _Otra_Condicion
 
-        Dim _TblArchivos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblArchivos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Listv_Archivos.Items.Clear()
 

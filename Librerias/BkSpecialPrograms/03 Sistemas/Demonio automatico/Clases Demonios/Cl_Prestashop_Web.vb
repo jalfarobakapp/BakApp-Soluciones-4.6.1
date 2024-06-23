@@ -157,7 +157,7 @@ Public Class Cl_Prestashop_Web
                         "Where 1 > 0 " & vbCrLf &
                         "And ((Revisado = 0 And NombreEquipo = '" & _Nombre_Equipo & "' And Fecha = '" & _Fecha & "')" & vbCrLf &
                         "Or (Revisado = 0 And Peticion_Manual = 1 And Fecha = '" & _Fecha & "'))"
-        Dim _Tbl_Productos_Prestashop As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+        Dim _Tbl_Productos_Prestashop As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
         If CBool(_Tbl_Productos_Prestashop.Rows.Count) Then
 
@@ -178,7 +178,7 @@ Public Class Cl_Prestashop_Web
             Consulta_Sql = "Select Codigo_Pagina,Nombre_Pagina,Host,Usuario,Clave,Puerto_X_Defecto,Puerto,Base_Datos,Cod_Lista" & vbCrLf &
                            "From " & _Global_BaseBk & "Zw_PrestaShop" & vbCrLf &
                            "Where Conexion_Activa = 1"
-            Dim _Tbl_Prestashop As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+            Dim _Tbl_Prestashop As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
             Dim _Cont_Conexion = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Demonio_Prestashop", "1>0") + 1
 
@@ -272,7 +272,7 @@ Public Class Cl_Prestashop_Web
     Sub Sb_Procedimiento_Prestashop2(_Procesar_Todo As Boolean)
 
         Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_PrestaShop"
-        Dim _Tbl_Sitios_Prestashops As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql, False)
+        Dim _Tbl_Sitios_Prestashops As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
 
         Dim _Sitio As String
         Dim _Stock_Maximo As Double
@@ -308,7 +308,7 @@ Public Class Cl_Prestashop_Web
 
             End If
 
-            _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_Sql)
+            _Tbl_Productos = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
             If CBool(_Tbl_Productos.Rows.Count) Then
 
@@ -338,7 +338,7 @@ Public Class Cl_Prestashop_Web
     Sub Sb_Procedimiento_Prestashop3()
 
         Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_PrestaShop"
-        Dim _Tbl_Sitios_Prestashops As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql, False)
+        Dim _Tbl_Sitios_Prestashops As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
 
         For Each _Row_Prestashop As DataRow In _Tbl_Sitios_Prestashops.Rows
 
@@ -573,7 +573,7 @@ Public Class Cl_Prestashop_Web
                         From " & _Global_BaseBk & "Zw_Prod_Asociacion 
                         Where Codigo_Nodo = " & _Codigo_Nodo & " And Codigo_Nodo <> 0"
 
-        Dim _Tbl_Productos_Hermanos As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_Productos_Hermanos As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Dim _Codigo_Nodo_Importados = 30106 ' Codigo_Nodo 04 IMPORTADOS
 

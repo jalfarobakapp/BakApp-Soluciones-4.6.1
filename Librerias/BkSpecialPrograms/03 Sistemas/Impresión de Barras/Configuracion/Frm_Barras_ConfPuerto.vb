@@ -131,7 +131,7 @@ Public Class Frm_Barras_ConfPuerto
         End With
 
         Consulta_sql = "select NombreEtiqueta As Padre,NombreEtiqueta As Hijo from " & _Global_BaseBk & "Zw_Tbl_DisenoBarras"
-        Dim _TblEtiquetas As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblEtiquetas As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
 
         caract_combo(CmbEtiqueta)
         With CmbEtiqueta

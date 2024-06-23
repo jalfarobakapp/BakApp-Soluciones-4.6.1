@@ -81,7 +81,7 @@ Public Class Frm_Imagenes_X_Producto
     Public Function Fx_Llenar_Grilla_Imagenes() As Boolean
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_Imagenes Where Codigo = '" & _Codigo & "' Order By Principal Desc"
-        _TblProd_Imagenes = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblProd_Imagenes = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Lbl_Url.Text = "Url: Not Found"
 

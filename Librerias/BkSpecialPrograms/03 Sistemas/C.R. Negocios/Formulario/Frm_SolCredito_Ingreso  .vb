@@ -376,7 +376,7 @@ Public Class Frm_SolCredito_Ingreso
                        ",'" & Nombre_funcionario_activo & "' As 'NomFuncionario','" & _Empresa & "' As 'Empresa'" &
                        ",'" & _Sucursal & "' As 'Sucursal', '" & _NomSucursal & "' as 'NomSucursal'"
 
-        Dim _TblEncabezado As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblEncabezado As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
 
         Sb_Formato_Grilla(_TblEncabezado, _TblEntidad)
 
@@ -384,7 +384,7 @@ Public Class Frm_SolCredito_Ingreso
                      "Where KOFU IN (SELECT CodFuncionario FROM " & _Global_BaseBk & "Zw_Negocios_02_Fun " &
                      "Where Nro_Negocio = '' And Stand_By = 0)"
 
-        _TblParticipantes = _Sql.Fx_Get_Tablas(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblParticipantes = _Sql.Fx_Get_DataTable(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
         Btn_Carpeta_negocio.Visible = False
         Btn_Calcular_Sobre_Giro.Visible = False
 
@@ -611,7 +611,7 @@ Public Class Frm_SolCredito_Ingreso
 
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Negocios_03_Apr Where Nro_Negocio = '" & _Nro_Negocio & "'"
-        Dim _TblAprobacion As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblAprobacion As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
 
         Btn_Imprimir.Visible = False
 
@@ -971,7 +971,7 @@ Public Class Frm_SolCredito_Ingreso
         Consulta_sql = _Union & "SELECT CodigoTabla AS Padre,NombreTabla AS Hijo" & vbCrLf &
                         "FROM " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones WHERE Tabla = 'NEGOCIO_TIPO'" & vbCrLf &
                         "ORDER BY Padre"
-        Cmb_Tipo.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Tipo.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
         Cmb_Tipo.SelectedValue = ""
 
         caract_combo(Cmb_Cod_Clas_Crediticia_Ac_Seg_Credito)
@@ -979,7 +979,7 @@ Public Class Frm_SolCredito_Ingreso
                         "FROM " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones WHERE Tabla = 'NEGOCIO_CLASCREDI'" & vbCrLf &
                         "ORDER BY Padre"
 
-        Cmb_Cod_Clas_Crediticia_Ac_Seg_Credito.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Cod_Clas_Crediticia_Ac_Seg_Credito.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
         Cmb_Cod_Clas_Crediticia_Ac_Seg_Credito.SelectedValue = ""
 
         caract_combo(Cmb_Cod_Doc_Venta_SI)
@@ -988,7 +988,7 @@ Public Class Frm_SolCredito_Ingreso
                         "ORDER BY Padre"
 
 
-        Cmb_Cod_Doc_Venta_SI.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Cod_Doc_Venta_SI.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
         Cmb_Cod_Doc_Venta_SI.SelectedValue = ""
 
 
@@ -998,7 +998,7 @@ Public Class Frm_SolCredito_Ingreso
                         "Where Es_Vendedor = 1" & vbCrLf &
                         "ORDER BY Hijo"
 
-        Cmb_CodVendedor.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_CodVendedor.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
         Cmb_CodVendedor.SelectedValue = ""
 
 
@@ -1424,7 +1424,7 @@ Public Class Frm_SolCredito_Ingreso
             ' ENVIAR CORREO A LOS PARTICIPANTES DEL NEGOCIO + EL VENDEDOR
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Correos Where Id = " & Trim(_Id_Correo_Al_Grabar)
-            Dim _TblCorreo As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblCorreo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
 
             If CBool(_TblCorreo.Rows.Count) Then
 
@@ -1437,7 +1437,7 @@ Public Class Frm_SolCredito_Ingreso
                 Consulta_sql = "Select CodFuncionario,NomFuncionario,Enviar_copia_al_cierre From " & _Global_BaseBk & "Zw_Negocios_02_Fun " &
                                "Where Nro_Negocio = '" & _NroNegocio & "' And Stand_By = 0 And CodFuncionario <> '" & _CodVendedor & "'"
 
-                _TblParticipantes = _Sql.Fx_Get_Tablas(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
+                _TblParticipantes = _Sql.Fx_Get_DataTable(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
 
                 If _Envio_Automatico Then
                     Sb_Enviar_Correo_De_Aviso_Participantes(_TblCorreo.Rows(0), _TblParticipantes, Correo_cerrar_grabar.Grabar)
@@ -2089,7 +2089,7 @@ Public Class Frm_SolCredito_Ingreso
         Dim _Autorizados, _Rechazados As Integer
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Negocios_03_Apr Where Nro_Negocio = '" & _NroNegocio & "'"
-        Dim _TblAprobacion As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql) ''_Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblAprobacion As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql) ''_Sql.Fx_Get_Tablas(Consulta_sql)
 
 
         If _TblAprobacion.Rows.Count > 2 Then Return True
@@ -2197,7 +2197,7 @@ Public Class Frm_SolCredito_Ingreso
     Sub Sb_Ver_Archivos_Adjuntos(ByVal _NroNegocio As String)
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Negocios_03_Apr Where Nro_Negocio = '" & _NroNegocio & "'"
-        Dim _TblAprobacion As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql) ' _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblAprobacion As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql) ' _Sql.Fx_Get_Tablas(Consulta_sql)
         Dim _Bloqueada As Boolean
 
         _Bloqueada = CBool(_TblAprobacion.Rows.Count)
@@ -2231,7 +2231,7 @@ Public Class Frm_SolCredito_Ingreso
 
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Negocios_03_Apr Where Nro_Negocio = '" & _NroNegocio & "'"
-        Dim _TblAprobacion As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql) ' _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblAprobacion As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql) ' _Sql.Fx_Get_Tablas(Consulta_sql)
         Dim _Bloqueada As Boolean
 
         _Bloqueada = CBool(_TblAprobacion.Rows.Count)
@@ -2295,7 +2295,7 @@ Public Class Frm_SolCredito_Ingreso
                             "Where Es_Vendedor = 1" & vbCrLf &
                             "ORDER BY Hijo"
 
-            Cmb_CodVendedor.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql) ' _Sql.Fx_Get_Tablas(Consulta_sql)
+            Cmb_CodVendedor.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql) ' _Sql.Fx_Get_Tablas(Consulta_sql)
             Cmb_CodVendedor.SelectedValue = _CodVendedor
 
         End If
@@ -2325,7 +2325,7 @@ Public Class Frm_SolCredito_Ingreso
 
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Negocios_03_Apr Where Nro_Negocio = '" & _NroNegocio & "'"
-            Dim _TblAprobacion As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblAprobacion As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
 
             Dim _Cierre_CodAutoriza, _Cierre_NombreAutoriza As String
             Dim _Ap_GGG, _Ap_GAF, _Ap_GCC, _Ap_EXT As String
@@ -2633,7 +2633,7 @@ Public Class Frm_SolCredito_Ingreso
                         ' ENVIAR CORREO A LOS PARTICIPANTES DEL NEGOCIO + EL VENDEDOR
 
                         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Correos Where Id = " & Trim(_Id_Correo_Al_Cerrar)
-                        Dim _TblCorreo As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
+                        Dim _TblCorreo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
 
                         If CBool(_TblCorreo.Rows.Count) Then
 
@@ -2649,7 +2649,7 @@ Public Class Frm_SolCredito_Ingreso
                                                "Union" & vbCrLf &
                                                "Select '" & _CodVendedor & "' as CodFuncionario,'" & Cmb_CodVendedor.Text & "' as NomFuncionario,1 as Enviar_copia_al_cierre"
 
-                                _TblParticipantes = _Sql.Fx_Get_Tablas(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
+                                _TblParticipantes = _Sql.Fx_Get_DataTable(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
 
                                 Sb_Enviar_Correo_De_Aviso_Participantes(_TblCorreo.Rows(0), _TblParticipantes, Correo_cerrar_grabar.Cerrar)
                             Else
@@ -2782,7 +2782,7 @@ Public Class Frm_SolCredito_Ingreso
                    "Case Chk_05 When 1 Then 'Entrega de garantia real. ' Else '. ' End + Observaciones As 'Observaciones'" & vbCrLf &
                    "From " & _Global_BaseBk & "Zw_Negocios_03_Apr Where Nro_Negocio = '" & _NroNegocio & "' And CodFuncionario <> 'ZBK'"
 
-            Dim _TblAprobacion As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql) ' _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblAprobacion As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql) ' _Sql.Fx_Get_Tablas(Consulta_sql)
 
 
 
@@ -2931,7 +2931,7 @@ Public Class Frm_SolCredito_Ingreso
                    "Case Chk_05 When 1 Then 'Entrega de garantia real - ' Else '. ' End As 'Observaciones_Chk'" & vbCrLf &
                    "From " & _Global_BaseBk & "Zw_Negocios_03_Apr Where Nro_Negocio = '" & _NroNegocio & "' And CodAprobacion = '01'"
 
-        Dim _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
 
         If CBool(_Tbl.Rows.Count) Then
 
@@ -2968,7 +2968,7 @@ Public Class Frm_SolCredito_Ingreso
                    "Case Chk_05 When 1 Then 'Entrega de garantia real - ' Else '. ' End As 'Observaciones_Chk'" & vbCrLf &
                    "From " & _Global_BaseBk & "Zw_Negocios_03_Apr Where Nro_Negocio = '" & _NroNegocio & "' And CodAprobacion = '02'"
 
-        Dim _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
 
 
         If CBool(_Tbl.Rows.Count) Then
@@ -3005,7 +3005,7 @@ Public Class Frm_SolCredito_Ingreso
                    "Case Chk_05 When 1 Then 'Entrega de garantia real - ' Else '. ' End As 'Observaciones_Chk'" & vbCrLf &
                    "From " & _Global_BaseBk & "Zw_Negocios_03_Apr Where Nro_Negocio = '" & _NroNegocio & "' And CodAprobacion = '03'"
 
-        Dim _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
 
 
         If CBool(_Tbl.Rows.Count) Then
@@ -3044,7 +3044,7 @@ Public Class Frm_SolCredito_Ingreso
                        "From " & _Global_BaseBk & "Zw_Negocios_03_Apr" & Space(1) &
                        "Where Nro_Negocio = '" & _NroNegocio & "' And CodAprobacion = 'Ex'"
 
-        Dim _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
 
@@ -3174,7 +3174,7 @@ Public Class Frm_SolCredito_Ingreso
                    "Case Chk_05 When 1 Then 'Entrega de garantia real - ' Else '. ' End As 'Observaciones_Chk'" & vbCrLf &
                    "From " & _Global_BaseBk & "Zw_Negocios_03_Apr Where Nro_Negocio = '" & _NroNegocio & "' And CodAprobacion in ('01','02','03','Ex')"
 
-        Dim _TblObsGerencia As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblObsGerencia As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
 
         'Dim _ObsGerencia = String.Empty
 
@@ -3215,7 +3215,7 @@ Public Class Frm_SolCredito_Ingreso
         ' ENVIAR CORREO A LOS PARTICIPANTES DEL NEGOCIO + EL VENDEDOR
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Correos Where Id = " & Trim(_Id_Correo_Al_Cerrar)
-        Dim _TblCorreo As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblCorreo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
 
         If CBool(_TblCorreo.Rows.Count) Then
 
@@ -3276,7 +3276,7 @@ Public Class Frm_SolCredito_Ingreso
         If Fx_Tiene_Permiso(Me, "Scn00018") Then
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Negocios_03_Apr Where Nro_Negocio = '" & _NroNegocio & "'"
-            Dim _TblAprobacion As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblAprobacion As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If Not CBool(_TblAprobacion.Rows.Count) Then
 

@@ -727,7 +727,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
         Consulta_sql = "Select Codigo From " & _Clas_Asistente_Compras.Pro_Nombre_Tbl_Paso_Informe & vbCrLf &
                        "Where Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre & "'"
-        Dim _Tbl_Productos_Hermanos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Productos_Hermanos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim Fm As New Frm_EstadisticaProducto(_Codigo)
 
@@ -757,7 +757,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
                        "From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
                        "Where Codigo_Nodo = '" & _Codigo_Nodo & "'"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim Fm As New Frm_Rotacion_Selec_Prod_Parametros
         Fm.Pro_Tbl_Productos_Seleccionados = _Tbl
@@ -882,7 +882,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
                           "TIDO = '" & _Tido & "' And ESLIDO = '' " & vbCrLf &
                           "Order By FEERLI Desc"
 
-        Return _Sql.Fx_Get_Tablas(Consulta_sql)
+        Return _Sql.Fx_Get_DataTable(Consulta_sql)
 
     End Function
 

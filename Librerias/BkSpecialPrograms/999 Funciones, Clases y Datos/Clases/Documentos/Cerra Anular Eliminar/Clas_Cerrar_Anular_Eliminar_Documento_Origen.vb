@@ -25,7 +25,7 @@ Public Class Clas_Cerrar_Anular_Eliminar_Documento_Origen
 
                 Consulta_sql = "Select EMPRESA,SULIDO,BOSULIDO,TIDO,KOPRCT As KOPR,NOKOPR,(Select Top 1 RLUD From MAEPR Where KOPR = KOPRCT) As RLUD" & vbCrLf &
                                "From MAEDDO Where IDMAEEDO = " & _Idmaeedo_Dori
-                Dim _TblConsolidar_Stock As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblConsolidar_Stock As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 Select Case _Accion
 
@@ -124,7 +124,7 @@ Public Class Clas_Cerrar_Anular_Eliminar_Documento_Origen
             Consulta_sql = "Select EMPRESA,SUDO,TIDO,NUDO,ENDO,SUENDO,FEEMDO,KOFUDO,VANEDO,VABRDO" & vbCrLf &
                            "From MAEEDO" & vbCrLf &
                            "Where IDMAEEDO = " & _Idmaeedo
-            Dim Tabla_Doc As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim Tabla_Doc As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             With Tabla_Doc.Rows(0)
 
@@ -217,7 +217,7 @@ Public Class Clas_Cerrar_Anular_Eliminar_Documento_Origen
         If _Tido = "NVV" Then _Campo1 = "STOCNV1" : _Campo2 = "STOCNV1"
 
         Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Idmaeedo & " Order By IDMAEDDO"
-        Dim _Tbl_Detalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Detalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Fila As DataRow In _Tbl_Detalle.Rows
 
@@ -252,7 +252,7 @@ Public Class Clas_Cerrar_Anular_Eliminar_Documento_Origen
         Dim _Sr As String
 
         Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Idmaeedo & " Order By IDMAEDDO"
-        Dim _Tbl_Detalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Detalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Fila As DataRow In _Tbl_Detalle.Rows
 
@@ -309,7 +309,7 @@ Public Class Clas_Cerrar_Anular_Eliminar_Documento_Origen
                                                        Optional ByVal _Mostrar_Mensaje As Boolean = False) As Boolean
 
         Consulta_sql = "Select Top 1 IDMAEEDO,TIDO,NUDO,NUDONODEFI From MAEEDO Where IDMAEEDO = " & _Idmaeedo
-        Dim _Tbl_Documento As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Documento As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl_Documento.Rows.Count) Then
 

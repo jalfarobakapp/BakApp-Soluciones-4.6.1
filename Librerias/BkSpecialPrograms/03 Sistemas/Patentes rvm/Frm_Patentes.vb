@@ -21,7 +21,7 @@
     Sub Sb_Actualizar_Grilla()
 
         Consulta_Sql = "Select * From Zw_Patentes_rvm Where Marca = '' And Modelo = ''"
-        _Tbl_Patentes = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_Patentes = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Dim _DisplayIndex = 0
 

@@ -327,7 +327,7 @@ Public Class Frm_Inf_Vencimientos_Detalle_Documentos
         End If
 
 
-        _TblInforme = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblInforme = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         If Chk_Mostrar_Pagos_Pendientes.Checked Then
@@ -398,7 +398,7 @@ Public Class Frm_Inf_Vencimientos_Detalle_Documentos
 
         Consulta_sql = "Select top 1 * From MAEVEN Where IDMAEVEN = " & _Idmaeven
 
-        Dim _TblMaeven As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblMaeven As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblMaeven.Rows.Count) Then
 
@@ -896,7 +896,7 @@ Public Class Frm_Inf_Vencimientos_Detalle_Documentos
                 If Fx_Crear_Informe_Html_Cobranza(_Ruta, _TblInforme, "Informe_cobranza") Then
 
                     Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Correos Where Id = " & _Id_Correo
-                    Dim _TblCorreo As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _TblCorreo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     If CBool(_TblCorreo.Rows.Count) Then
 
@@ -970,7 +970,7 @@ Public Class Frm_Inf_Vencimientos_Detalle_Documentos
             Dim _Suma_saldo As Double
 
             Consulta_sql = "Select TOP 1 * From MAEEN Where KOEN = '" & _CodEntidad & "'" ' And SUEN = '" & _CodSucEntidad & "'"
-            Dim _Tbl_Entidad As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Entidad As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             _Documento_Html = Replace(_Documento_Html, "#Razon_Social#", _Tbl_Entidad.Rows(0).Item("NOKOEN"))
 
@@ -1315,7 +1315,7 @@ Public Class Frm_Inf_Vencimientos_Detalle_Documentos
                         "dbo.MEVENTO Mv ON Zw.ARCHIRVE = Mv.ARCHIRVE AND Zw.IDRVE = Mv.IDRVE" & vbCrLf & vbCrLf &
                         "Order By Zw.TIDO,Zw.NUDO,Mv.IDEVENTO" & vbCrLf &
                         "Drop Table #INFVEN"
-        Dim _TblInforme_Excel = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblInforme_Excel = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         ExportarTabla_JetExcel_Tabla(_TblInforme_Excel, Me, "Cobranza")
@@ -1485,7 +1485,7 @@ Public Class Frm_Inf_Vencimientos_Detalle_Documentos
                             "Order By FEVE,FEEMDO" & vbCrLf &
                             "Drop Table #INFVEN"
 
-            Dim _Tbl_Informe As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Informe As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
             If _Tbl_Informe.Rows.Count > 0 Then
@@ -1621,7 +1621,7 @@ Public Class Frm_Inf_Vencimientos_Detalle_Documentos
                                 "Update " & _Global_BaseBk & "Zw_Pago_Prov_Autoriza_02_Det Set Id_Autoriza = 0 Where Autorizado = 0" & vbCrLf &
                                 "Select @Id_Autoriza As Id_Autoriza"
 
-                _TblAutorizar = _Sql.Fx_Get_Tablas(_Consulta_sql)
+                _TblAutorizar = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
                 If (_TblAutorizar.Rows.Count) Then
 
@@ -1726,7 +1726,7 @@ Public Class Frm_Inf_Vencimientos_Detalle_Documentos
 
                 If _Filtro_Idmaeven <> "()" Then
                     Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Pago_Prov_Autoriza_02_Det Where Idmaeven In " & _Filtro_Idmaeven
-                    _TblAutorizados = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    _TblAutorizados = _Sql.Fx_Get_DataTable(Consulta_sql)
                 End If
 
                 If Not _TblAutorizados Is Nothing Then
@@ -1810,7 +1810,7 @@ Public Class Frm_Inf_Vencimientos_Detalle_Documentos
                                             Left Join " & _Global_BaseBk & "Zw_Pago_Prov_Autoriza_02_Det Det On Det.Idmaeven = Ven.IDMAEVEN
                                             Left Join " & _Global_BaseBk & "Zw_Pago_Prov_Autoriza_01_Enc Ent On Ent.Id_Autoriza = Det.Id_Autoriza
                                             Where Ven.IDMAEVEN In " & _Filtro_Idmaeven
-                            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                             ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Doc_Autorizados")
 

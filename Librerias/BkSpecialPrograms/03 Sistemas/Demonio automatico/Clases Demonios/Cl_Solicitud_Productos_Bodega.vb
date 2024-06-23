@@ -185,7 +185,7 @@ Public Class Cl_Solicitud_Productos_Bodega
         Consulta_Sql = "Select Id From " & _Global_BaseBk & "Zw_Prod_SolBodega " &
                        "Where Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'  And Bodega = '" & ModBodega & "' And Impreso = 0"
 
-        Dim _TblProd_SolBodega = _Sql.Fx_Get_Tablas(Consulta_Sql, False)
+        Dim _TblProd_SolBodega = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
 
         If CBool(_TblProd_SolBodega.Rows.Count) Then
 

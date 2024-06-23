@@ -50,7 +50,7 @@ Public Module Mod_Funciones_Remotas
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Casi_DocEnc" & vbCrLf &
                        "Where Id_DocEnc = " & _Id_Casi_DocEnc
-        Dim _Zw_Doc_Enc As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Zw_Doc_Enc As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _TotalBruto As Double = 0
 

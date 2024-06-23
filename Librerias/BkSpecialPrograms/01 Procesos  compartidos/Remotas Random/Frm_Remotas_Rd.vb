@@ -48,7 +48,7 @@ Public Class Frm_Remotas_Rd
                        "WHERE COALESCE(Tr.OTORGA,'')=''" & vbCrLf & _
                        "ORDER BY Tr.KOFU ,Tr.NUREMOT OPTION ( FAST 20 )"
 
-        _TblRemotas = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblRemotas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 
@@ -424,7 +424,7 @@ Public Class Frm_Remotas_Rd
         If Fx_Existe_Remota(_Nuremot, _Kofu) Then
 
             Consulta_sql = "Select * From MAEEN Where KOEN = '" & _Koen & "'"
-            Dim _Tbl_Inf_Entidad As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Inf_Entidad As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
             Dim _Row_Entidad As DataRow
 
             If _Tbl_Inf_Entidad.Rows.Count Then

@@ -53,19 +53,19 @@ Public Class Frm_Crear_Entidad_Mt
         caract_combo(Cmb_Zoen)
         Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                        "SELECT KOZO AS Padre,NOKOZO AS Hijo FROM TABZO ORDER BY Padre" ' WHERE SEMILLA = " & Actividad
-        Cmb_Zoen.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Zoen.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         caract_combo(Cmb_Lcen)
         Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                        "SELECT KOLT AS Padre,'TABPP'+KOLT+' '+NOKOLT AS Hijo FROM TABPP WHERE TILT = 'C' ORDER BY Hijo "
-        Cmb_Lcen.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Lcen.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Lcen.SelectedValue = ModListaPrecioCosto
 
 
         caract_combo(Cmb_Lven)
         Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                        "SELECT KOLT AS Padre,'TABPP'+KOLT+' '+NOKOLT AS Hijo FROM TABPP WHERE TILT = 'P' ORDER BY Hijo "
-        Cmb_Lven.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Lven.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Lven.SelectedValue = ModListaPrecioVenta
 
 
@@ -75,7 +75,7 @@ Public Class Frm_Crear_Entidad_Mt
                        "From TABFU" & vbCrLf &
                        "Inner Join TABFUEM On TABFUEM.KOFU=TABFU.KOFU And TABFUEM.EMPRESA='" & ModEmpresa & "'" & vbCrLf &
                        "Order BY Hijo"
-        Cmb_Kofuen.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Kofuen.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Fx_Tiene_Permiso(Me, "CfEnt014", , False) Then
             Cmb_Kofuen.SelectedValue = FUNCIONARIO
@@ -89,7 +89,7 @@ Public Class Frm_Crear_Entidad_Mt
                        "From TABFU" & vbCrLf &
                        "Inner Join TABFUEM On TABFUEM.KOFU=TABFU.KOFU And TABFUEM.EMPRESA='" & ModEmpresa & "'" & vbCrLf &
                        "Order BY Hijo"
-        Cmb_Cobrador.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Cobrador.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Fx_Tiene_Permiso(Me, "CfEnt015", , False) Then
             Cmb_Cobrador.SelectedValue = FUNCIONARIO
@@ -101,34 +101,34 @@ Public Class Frm_Crear_Entidad_Mt
 
         caract_combo(CmbxMoneda)
         Consulta_sql = "SELECT KOMO AS Padre,LTRIM(LTRIM(KOMO))+' '+NOKOMO AS Hijo FROM TABMO" ' WHERE SEMILLA = " & Actividad
-        CmbxMoneda.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        CmbxMoneda.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dtp_Fecreen.Value = FechaDelServidor()
 
         caract_combo(Cmb_Actien)
         Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                        "SELECT KOCARAC AS Padre,NOKOCARAC AS Hijo FROM TABCARAC WHERE KOTABLA = 'ACTIVIDADE' ORDER BY Padre"
-        Cmb_Actien.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Actien.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         caract_combo(Cmb_Ruen)
         Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                        "SELECT KORU AS Padre,NOKORU AS Hijo FROM TABRU ORDER BY Padre"
-        Cmb_Ruen.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Ruen.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         caract_combo(Cmb_Tamaen)
         Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                        "SELECT KOCARAC AS Padre,NOKOCARAC AS Hijo FROM TABCARAC WHERE KOTABLA = 'TAMA¥OEMPR' ORDER BY Padre"
-        Cmb_Tamaen.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Tamaen.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         caract_combo(Cmb_Tien)
         Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                        "SELECT KOCARAC AS Padre,NOKOCARAC AS Hijo FROM TABCARAC WHERE KOTABLA = 'TIPOENTIDA' ORDER BY Padre"
-        Cmb_Tien.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Tien.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         caract_combo(Cmb_Transpoen)
         Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                        "SELECT KOCARAC AS Padre,NOKOCARAC AS Hijo FROM TABCARAC WHERE KOTABLA = 'TRANSPORTE' ORDER BY Padre"
-        Cmb_Transpoen.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Transpoen.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _CreaNuevaEntidad = False
 
@@ -136,7 +136,7 @@ Public Class Frm_Crear_Entidad_Mt
         Dim _Creditos_Mod As DataTable
 
         Consulta_sql = "SELECT CRTO,CRSD,CRCH,CRLT,CRPA FROM CONFIEST WHERE MODALIDAD = '" & Modalidad & "'"
-        _Creditos_Mod = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Creditos_Mod = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Txt_Crto.Text = _Creditos_Mod.Rows(0).Item("CRTO")
         Txt_Crsd.Text = _Creditos_Mod.Rows(0).Item("CRSD")
@@ -307,7 +307,7 @@ Public Class Frm_Crear_Entidad_Mt
                "From MAEENCTA" & vbCrLf &
                "Where KOEN = '" & Txt_Koen.Text & "'"
 
-        _Tbl_Maeencta = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Maeencta = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Grilla_Cuentas.DataSource = _Tbl_Maeencta
 
@@ -365,7 +365,7 @@ Public Class Frm_Crear_Entidad_Mt
                         From MAEENMAIL
                         Where KOEN = '" & Txt_Koen.Text & "'"
 
-        _Tbl_Maeenmail = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Maeenmail = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Grilla_Maeenmail.DataSource = _Tbl_Maeenmail
 
@@ -1588,7 +1588,7 @@ Public Class Frm_Crear_Entidad_Mt
                        "Where KOEN = '" & Txt_Koen.Text & "'" & vbCrLf &
                        "Order by TIPOSUC"
 
-        _TblEnt = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblEnt = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblEnt.Rows.Count) Then
 
@@ -1757,7 +1757,7 @@ Public Class Frm_Crear_Entidad_Mt
             caract_combo(Cmb_Tien)
             Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                            "SELECT KOCARAC AS Padre,NOKOCARAC AS Hijo FROM TABCARAC WHERE KOTABLA = 'TIPOENTIDA' ORDER BY Padre"
-            Cmb_Tien.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Cmb_Tien.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         End If
     End Sub
@@ -1773,7 +1773,7 @@ Public Class Frm_Crear_Entidad_Mt
             caract_combo(Cmb_Tamaen)
             Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                            "SELECT KOCARAC AS Padre,NOKOCARAC AS Hijo FROM TABCARAC WHERE KOTABLA = 'TAMA¥OEMPR' ORDER BY Padre"
-            Cmb_Tamaen.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Cmb_Tamaen.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         End If
     End Sub
@@ -1789,7 +1789,7 @@ Public Class Frm_Crear_Entidad_Mt
             caract_combo(Cmb_Ruen)
             Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                            "SELECT KORU AS Padre,NOKORU AS Hijo FROM TABRU ORDER BY Padre"
-            Cmb_Ruen.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Cmb_Ruen.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         End If
     End Sub
@@ -1805,7 +1805,7 @@ Public Class Frm_Crear_Entidad_Mt
             caract_combo(Cmb_Actien)
             Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                            "SELECT KOCARAC AS Padre,NOKOCARAC AS Hijo FROM TABCARAC WHERE KOTABLA = 'ACTIVIDADE' ORDER BY Padre"
-            Cmb_Actien.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Cmb_Actien.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         End If
@@ -1823,7 +1823,7 @@ Public Class Frm_Crear_Entidad_Mt
             caract_combo(Cmb_Transpoen)
             Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                            "SELECT KOCARAC AS Padre,NOKOCARAC AS Hijo FROM TABCARAC WHERE KOTABLA = 'TRANSPORTE' ORDER BY Padre"
-            Cmb_Transpoen.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Cmb_Transpoen.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         End If
     End Sub
 
@@ -1985,7 +1985,7 @@ Public Class Frm_Crear_Entidad_Mt
 
         Consulta_sql = "Select top 1 * From TABENDP" & vbCrLf &
                        "Where EMPRESA = '" & ModEmpresa & "' And KOENDP = '" & Trim(_Koendp) & "' And TIDPEN = '" & _Tidepen & "'"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _Fila.Cells("KOEN").Value = Txt_Koen.Text
         _Fila.Cells("EMISOR").Value = _Tbl.Rows(0).Item("KOENDP")
@@ -2085,7 +2085,7 @@ Public Class Frm_Crear_Entidad_Mt
         Consulta_sql = "Select KOENDP AS Padre,NOKOENDP as Hijo From TABENDP" & vbCrLf &
                        "Where TIDPEN = '" & _TipoPago & "'"
 
-        _Cmb_Banco.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Cmb_Banco.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Grilla_Cuentas.Item("BANCO", _Fila.Index) = _Cmb_Banco
 

@@ -135,7 +135,7 @@ Public Class Frm_Sol_Pro_Bodega_ListaPendientes
                        "Order by FechaHora_Solicita"
 
         With Grilla
-            _TblProductosSol = _SQL.Fx_Get_Tablas(Consulta_sql)
+            _TblProductosSol = _SQL.Fx_Get_DataTable(Consulta_sql)
 
             .DataSource = _TblProductosSol
             '.DataSource = _TblProductosSol
@@ -212,7 +212,7 @@ Public Class Frm_Sol_Pro_Bodega_ListaPendientes
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_SolBodega" & vbCrLf &
                        "Where CodSolicitud = '" & _CodSolicitud & "'"
 
-        Dim _TblProdSol As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblProdSol As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblProdSol.Rows.Count) Then
 

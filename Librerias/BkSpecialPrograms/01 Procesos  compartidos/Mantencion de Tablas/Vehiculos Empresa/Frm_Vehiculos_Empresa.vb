@@ -208,7 +208,7 @@ Public Class Frm_Vehiculos_Empresa
                        "FROM " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf & _
                        "WHERE Tabla = 'VEHIC_TIPO'" & vbCrLf & _
                        "Order by Padre"
-        _TblTipo_Vehiculo = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblTipo_Vehiculo = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         caract_combo(Cmb_Tipo_Vehiculo)
         Cmb_Tipo_Vehiculo.DataSource = _TblTipo_Vehiculo
@@ -223,7 +223,7 @@ Public Class Frm_Vehiculos_Empresa
                        "FROM " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf & _
                        "WHERE Tabla = 'VEHIC_MARCA'" & vbCrLf & _
                        "Order by Padre"
-        _TblMarca_Vehiculo = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblMarca_Vehiculo = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         caract_combo(Cmb_Marca)
         Cmb_Marca.DataSource = _TblMarca_Vehiculo
@@ -244,7 +244,7 @@ Public Class Frm_Vehiculos_Empresa
                        "FROM " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf & _
                        "WHERE Tabla = 'VEHIC_MODELO' And Padre_Tabla = 'VEHIC_MARCA' And Padre_CodigoTabla = '" & Cmb_Marca.SelectedValue & "'" & vbCrLf & _
                        "Order by Padre"
-        _TblModelo_Vehiculo = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblModelo_Vehiculo = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         caract_combo(Cmb_Modelo)
         Cmb_Modelo.DataSource = _TblModelo_Vehiculo
@@ -259,7 +259,7 @@ Public Class Frm_Vehiculos_Empresa
                        "FROM " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf & _
                        "WHERE Tabla = 'COLOR'" & vbCrLf & _
                        "Order by Padre"
-        _TblColo_Vehiculo = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblColo_Vehiculo = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         caract_combo(Cmb_Color)
         Cmb_Color.DataSource = _TblColo_Vehiculo
@@ -274,7 +274,7 @@ Public Class Frm_Vehiculos_Empresa
                        "FROM " & _Global_BaseBk & "Zw_TblChoferes_Empresa" & vbCrLf & _
                        "WHERE Habilitado = 1" & vbCrLf & _
                        "Order by Padre"
-        _TblChofer = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblChofer = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         caract_combo(Cmb_Chofer)
         Cmb_Chofer.DataSource = _TblChofer
@@ -416,7 +416,7 @@ Public Class Frm_Vehiculos_Empresa
 
         Consulta_sql = "Select Nro_CRV From " & _Global_BaseBk & "Zw_CRV_Viajes Where Patente = '" & _Patente & "'"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl.Rows.Count) Then
 

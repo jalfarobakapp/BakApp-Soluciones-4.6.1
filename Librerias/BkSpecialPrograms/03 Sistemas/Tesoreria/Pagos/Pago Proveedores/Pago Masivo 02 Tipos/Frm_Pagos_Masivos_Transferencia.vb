@@ -35,7 +35,7 @@ Public Class Frm_Pagos_Masivos_Transferencia
         Consulta_sql = Union & "SELECT KOENDP AS Padre,KOENDP+NOKOENDP+CTACTE AS Hijo FROM TABENDP" & vbCrLf &
                       "WHERE CTACTE <> ''" & vbCrLf &
                       "ORDER BY Hijo"
-        Cmb_Emdp.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Emdp.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Emdp.SelectedValue = ""
 
         Dtp_Fecha_Emision.Value = FechaDelServidor()
@@ -175,7 +175,7 @@ Public Class Frm_Pagos_Masivos_Transferencia
                     Dim _Mto_Total = _Fila.Item("SALDO")
 
                     Consulta_sql = "Select Top 1 * From MAEEN Where KOEN = '" & _Endo & "' And SUEN = '" & _Suendo & "'"
-                    Dim _TblEntidad As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _TblEntidad As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     If CBool(_TblEntidad.Rows.Count) Then
 
@@ -271,7 +271,7 @@ Public Class Frm_Pagos_Masivos_Transferencia
                     Dim _Mto_Total = _Fila.Item("SALDO")
 
                     Consulta_sql = "Select Top 1 * From MAEEN Where KOEN = '" & _Endo & "' And SUEN = '" & _Suendo & "'"
-                    Dim _TblEntidad As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _TblEntidad As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     If CBool(_TblEntidad.Rows.Count) Then
 
@@ -337,7 +337,7 @@ Public Class Frm_Pagos_Masivos_Transferencia
         End If
 
         Consulta_sql = "Select top 1 *  From TABENDP Where EMPRESA = '" & ModEmpresa & "' And KOENDP = '" & _Emdp & "'"
-        Dim _TblCtaCte As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblCtaCte As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblCtaCte.Rows.Count) Then
 

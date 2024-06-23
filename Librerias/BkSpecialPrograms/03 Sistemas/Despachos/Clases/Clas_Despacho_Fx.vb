@@ -31,7 +31,7 @@ Public Class Clas_Despacho_Fx
                         "Where CantC > CantD+CantE+CantR And Archidrst = 'MAEEDO') 
                         And Estado In ('ING')--And Reasignado = 0)"
 
-        Dim _Tbl_Despachos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Despachos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Fila As DataRow In _Tbl_Despachos.Rows
 
@@ -166,7 +166,7 @@ Public Class Clas_Despacho_Fx
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-        Dim _TblPaso = _Sql.Fx_Get_Tablas("Select Max(Nro_Despacho) As Ult_Nro_Despacho" & Space(1) &
+        Dim _TblPaso = _Sql.Fx_Get_DataTable("Select Max(Nro_Despacho) As Ult_Nro_Despacho" & Space(1) &
                                           "From " & _Global_BaseBk & "Zw_Despachos Where Confirmado = " & Convert.ToInt32(_Confirmado))
 
         If CBool(_TblPaso.Rows.Count) Then
@@ -213,7 +213,7 @@ Public Class Clas_Despacho_Fx
                                     Email_Env.Nro_Despacho = Desp.Nro_Despacho And Email_Env.Estado = Desp.Estado
                         Where Email_Env.Enviar = 1 And Email_Env.Estado <> 'CIE'"
 
-        Dim _Tbl_Despachos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Despachos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Row_Despacho As DataRow In _Tbl_Despachos.Rows
 
@@ -244,7 +244,7 @@ Public Class Clas_Despacho_Fx
                                     Where Id_Despacho In (Select Id_Despacho From " & _Global_BaseBk & "Zw_Despachos 
                                     Where Nro_Despacho = '" & _Nro_Despacho & "' And Estado = '" & _Estado & "')"
 
-                    Dim _Tbl_Adjunto As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _Tbl_Adjunto As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     For Each _FlAdj As DataRow In _Tbl_Adjunto.Rows
 
@@ -313,7 +313,7 @@ Public Class Clas_Despacho_Fx
                                     Email_Env.Nro_Despacho = Desp.Nro_Despacho And Email_Env.Estado = Desp.Estado
                         Where Email_Env.Enviar = 1 And Email_Env.Estado = 'CIE'"
 
-        _Tbl_Despachos = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Despachos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Row_Despacho As DataRow In _Tbl_Despachos.Rows
 
@@ -428,7 +428,7 @@ Public Class Clas_Despacho_Fx
                                     Where Id_Despacho In (Select Id_Despacho From " & _Global_BaseBk & "Zw_Despachos 
                                     Where Nro_Despacho = '" & _Nro_Despacho & "' And Estado = '" & _Estado & "')"
 
-                    Dim _Tbl_Adjunto As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _Tbl_Adjunto As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     For Each _FlAdj As DataRow In _Tbl_Adjunto.Rows
 
@@ -535,7 +535,7 @@ Public Class Clas_Despacho_Fx
                                 Where Id_Despacho In (Select Id_Despacho From " & _Global_BaseBk & "Zw_Despachos 
                                 Where Nro_Despacho = '" & _Nro_Despacho & "' And Estado = '" & _Estado & "')"
 
-                        Dim _Tbl_Adjunto As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                        Dim _Tbl_Adjunto As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                         For Each _FlAdj As DataRow In _Tbl_Adjunto.Rows
 
@@ -682,7 +682,7 @@ Public Class Clas_Despacho_Fx
                                "Where Id_Despacho In (Select Id_Despacho From " & _Global_BaseBk & "Zw_Despachos " &
                                "Where Nro_Despacho = '" & _Nro_Despacho & "' And Nro_Encomienda = '" & _Nro_Encomienda & "' And CantDUd1 > 0)"
 
-                Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 For Each _FilaD As DataRow In _Tbl_Productos.Rows
 
@@ -761,7 +761,7 @@ Public Class Clas_Despacho_Fx
         Consulta_sql = "Select Distinct Id_Despacho 
                         From " & _Global_BaseBk & "Zw_Despachos
                         Where Nro_Despacho = '" & _Nro_Despacho & "' And Nro_Encomienda = '" & _Nro_Encomienda & "'"
-        Dim _Tbl_Despachos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Despachos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Despacho As DataRow In _Tbl_Despachos.Rows
 
@@ -840,7 +840,7 @@ Public Class Clas_Despacho_Fx
                         From " & _Global_BaseBk & "Zw_Despachos
                         Where (Id_Despacho_Padre = " & _Id_Despacho_Padre & " Or Id_Despacho = " & _Id_Despacho_Padre & ")" &
                         " And Nro_Encomienda = '" & _Nro_Encomienda & "'"
-        Dim _Tbl_Despachos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Despachos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Despacho As DataRow In _Tbl_Despachos.Rows
 
@@ -1283,7 +1283,7 @@ Public Class Clas_Despacho_Fx
             _Nombre_Etiqueta = _Clas_CliexpressAPI.Nombre_Etiqueta
 
             Consulta_sql = "Select Idrst From " & _Global_BaseBk & "Zw_Despachos_Doc Where Id_Despacho = " & _Id_Despacho
-            Dim _Tbl_Docs As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Docs As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _Fila As DataRow In _Tbl_Docs.Rows
 

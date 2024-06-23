@@ -65,7 +65,7 @@ Public Class Cl_Stmp
         Dim _Mensaje_Stem As New LsValiciones.Mensajes
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Det Where Id_Enc = " & _Id_Enc
-        Dim _Tbl_Det As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Det As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not CBool(_Tbl_Det.Rows.Count) Then
 
@@ -126,7 +126,7 @@ Public Class Cl_Stmp
         Dim _Mensaje_Stem As New LsValiciones.Mensajes
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_DetPick Where Id_Enc = " & _Id_Enc
-        Dim _Tbl_DetPick As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_DetPick As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not CBool(_Tbl_DetPick.Rows.Count) Then
 
@@ -271,7 +271,7 @@ Public Class Cl_Stmp
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-        Dim _TblPaso = _Sql.Fx_Get_Tablas("Select Max(Numero) As Numero From " & _Global_BaseBk & "Zw_Stmp_Enc")
+        Dim _TblPaso = _Sql.Fx_Get_DataTable("Select Max(Numero) As Numero From " & _Global_BaseBk & "Zw_Stmp_Enc")
 
         Dim _Ult_Nro_OT As String = NuloPorNro(_TblPaso.Rows(0).Item("Numero"), "")
 
@@ -326,7 +326,7 @@ Public Class Cl_Stmp
             _Idmaeedo = _Row_Enc.Item("Idmaeedo")
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Det Where Idmaeedo = " & _Idmaeedo
-            Dim _Tbl_Det As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Det As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If Not CBool(_Tbl_Det.Rows.Count) Then
                 Throw New System.Exception("No se encontro el detalle del documento en la tabla Zw_Stmp_Det")
@@ -619,7 +619,7 @@ Public Class Cl_Stmp
         Consulta_sql = "Select Ddo.*,Isnull(RtuVariable,0) As RtuVariable From MAEDDO Ddo" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Docu_Det ZDet On Ddo.IDMAEDDO = ZDet.Idmaeddo" & vbCrLf &
                        "Where IDMAEEDO = " & _Row_Documento.Item("IDMAEEDO")
-        Dim _Tbl_Detalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Detalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Fila As DataRow In _Tbl_Detalle.Rows
 

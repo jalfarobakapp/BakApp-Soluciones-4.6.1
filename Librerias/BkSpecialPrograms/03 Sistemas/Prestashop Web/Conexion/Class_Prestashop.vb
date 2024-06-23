@@ -135,7 +135,7 @@ Public Class Class_Prestashop
 
 
         Consulta_sql = "Select Id_product From " & _Global_BaseBk & "Zw_Prod_PrestaShop Where Sitio = '" & _Sitio & "'"
-        Dim _Tbl_Prod_PrestaShop As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Prod_PrestaShop As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Filtro_id_product As String = Generar_Filtro_IN(_Tbl_Prod_PrestaShop, "", "id_product", True, False, "")
 
@@ -170,7 +170,7 @@ Public Class Class_Prestashop
 
         Consulta_sql = "Select Id_product From " & _Global_BaseBk & "Zw_Prod_PrestaShop Where Sitio = '" & _Sitio & "'" & Space(1) & _Filtro_Algunos
 
-        Dim _Tbl_Prod_PrestaShop As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Prod_PrestaShop As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Filtro_id_product As String = Generar_Filtro_IN(_Tbl_Prod_PrestaShop, "", "id_product", True, False, "")
 
@@ -524,7 +524,7 @@ Public Class Class_Prestashop
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_PrestaShop 
                             Where Sitio = '" & _Sitio & "'" & Space(1) & _Filtro_Productos
-            _Tbl_Prod_PrestaShop = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Prod_PrestaShop = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Else
 
@@ -535,7 +535,7 @@ Public Class Class_Prestashop
                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_PrestaShop 
                             Where Sitio = '" & _Sitio & "' And (Stock <> Stock_Rd Or Precio <> Precio_Rd) And Stock_Rd <= 50"
             End If
-            _Tbl_Prod_PrestaShop = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Prod_PrestaShop = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             '_Actualizacion_Completa = True
 
@@ -643,7 +643,7 @@ Public Class Class_Prestashop
                     Consulta_sql = "Select Codigo_Pagina, Empresa, Sucursal, Bodega, id_warehouse
                                 From " & _Global_BaseBk & "Zw_Prestashop_ps_warehouse
                                 Where Codigo_Pagina = '" & _Codigo_Pagina & "' And Activo = 1 And id_warehouse <> 0 Order By id_warehouse"
-                    Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     For Each _FilaSt As DataRow In _Tbl.Rows
 
@@ -839,11 +839,11 @@ Public Class Class_Prestashop
 
                     Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_PrestaShop 
                         Where Sitio = '" & _Sitio & "' And Active = 1"
-                    Dim _Tbl_Prod_PrestaShop_Activos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _Tbl_Prod_PrestaShop_Activos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_PrestaShop 
                         Where Sitio = '" & _Sitio & "' And Active = 0"
-                    Dim _Tbl_Prod_PrestaShop_Inactivos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _Tbl_Prod_PrestaShop_Inactivos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     Dim _Filtro_id_product_Activos As String = Generar_Filtro_IN(_Tbl_Prod_PrestaShop_Activos, "", "Id_product", False, False, "")
                     Dim _Filtro_id_product_Inactivos As String = Generar_Filtro_IN(_Tbl_Prod_PrestaShop_Inactivos, "", "Id_product", False, False, "")

@@ -61,7 +61,7 @@ Public Class Crear_Conexion
 
             Consulta_sql = "SELECT TOP 1 RUT,RAZON,NCORTO FROM CONFIGP"
 
-            Dim Tabla = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim Tabla = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim Fila As DataRow
             Fila = Tabla.Rows(0)

@@ -66,7 +66,7 @@ Public Class Frm_Crear_Entidad_Mt_Obs_CtaCte
 
         With Grilla
 
-            Grilla.DataSource = _SQL.Fx_Get_Tablas(Consulta_sql)
+            Grilla.DataSource = _SQL.Fx_Get_DataTable(Consulta_sql)
             OcultarEncabezadoGrilla(Grilla, True)
 
             .Columns("KOFU").HeaderText = "Func"

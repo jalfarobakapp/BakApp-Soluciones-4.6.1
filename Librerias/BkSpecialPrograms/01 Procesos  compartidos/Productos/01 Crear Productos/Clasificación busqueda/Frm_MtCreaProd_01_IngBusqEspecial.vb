@@ -45,7 +45,7 @@ Public Class Frm_MtCreaProd_01_IngBusqEspecial
                        "Where Codigo = '" & TxtCodigo.Text & "' And Producto = 0" & vbCrLf &
                        "And (Codigo_Nodo In (Select Codigo_Nodo From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Es_Seleccionable = 1)" & vbCrLf &
                        "Or Clas_unica = 1)"
-        Dim _TblClass As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblClass As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _SqlQuery = "Select *,Cast('' As Varchar(500)) As Full_Path,
                          Cast(Isnull((Select Top 1 Clas_Unica_X_Producto From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Z2 Where Z1.Codigo_Nodo = Z2.Codigo_Nodo ),0) As Bit) As Clas_Unica_X_Producto" & vbCrLf &
@@ -78,7 +78,7 @@ Public Class Frm_MtCreaProd_01_IngBusqEspecial
                         "Order by Clas_unica,Full_Path" & vbCrLf &
                         "Drop Table #Paso"
 
-        _TblClass = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblClass = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Clasificaciones
 
@@ -123,14 +123,14 @@ Public Class Frm_MtCreaProd_01_IngBusqEspecial
         Dim _CodPadre As String
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _Codigo_Nodo
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _CodPadre = _Tbl.Rows(0).Item("Identificacdor_NodoPadre")
 
         Do While (_CodPadre <> 0)
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _CodPadre
-            _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             _CodPadre = _Tbl.Rows(0).Item("Identificacdor_NodoPadre")
             _Full = "\" & _Tbl.Rows(0).Item("Descripcion") & _Full
@@ -215,7 +215,7 @@ Public Class Frm_MtCreaProd_01_IngBusqEspecial
             _Tbl_Nodos_Seleccionados = Nothing
         Else
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Codigo_Nodo In " & _Nodos
-            _Tbl_Nodos_Seleccionados = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Nodos_Seleccionados = _Sql.Fx_Get_DataTable(Consulta_sql)
         End If
 
 
@@ -228,7 +228,7 @@ Public Class Frm_MtCreaProd_01_IngBusqEspecial
         Else
 
             Consulta_sql = "Select KOPR As Codigo, NOKOPR as Descripcion From MAEPR Where KOPR = '" & TxtCodigo.Text & "'"
-            Dim _Tbl_Producto As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Producto As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Clas_Nodo As New Clas_Arbol_Asociaciones(Me)
 

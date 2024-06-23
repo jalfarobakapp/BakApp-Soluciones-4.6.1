@@ -151,7 +151,7 @@ Public Class Frm_ImpBarras_ListaEtiquetas
 
             With Grilla
 
-                .DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+                .DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 OcultarEncabezadoGrilla(Grilla)
 

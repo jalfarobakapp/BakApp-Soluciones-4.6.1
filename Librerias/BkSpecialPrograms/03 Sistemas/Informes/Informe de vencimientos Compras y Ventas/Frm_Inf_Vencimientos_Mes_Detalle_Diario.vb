@@ -101,7 +101,7 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
         Dim _Sql1 = Consulta_sql & vbCrLf & "Select distinct FEVE From #INFVEN" & vbCrLf & "Drop Table #INFVEN"
 
 
-        Dim _TblDias As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblDias As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Consulta_sql += "SELECT VEN.RTEN,VEN.RUT,VEN.ENDO,VEN.NOKOEN,TOTAL_D = SUM(COALESCE(VEN.VAVE-VEN.VAABVE ,0.0))," & vbCrLf
 
@@ -322,7 +322,7 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
 
         Dim _Sql1 = Consulta_sql & vbCrLf & "Select distinct FEVE From #INFVEN" & vbCrLf & "Drop Table #INFVEN"
 
-        Dim _TblDias As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblDias As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         'Consulta_sql += "SELECT VEN.RTEN,VEN.RUT,VEN.ENDO,VEN.SUENDO,VEN.NOKOEN,TOTAL_D = SUM(COALESCE(VEN.VAVE-VEN.VAABVE ,0.0))," & vbCrLf
         Consulta_sql += "SELECT VEN.RTEN,VEN.RUT,VEN.ENDO,VEN.NOKOEN,Cast(0 As Int) As DIAS_ATRASO,TOTAL_D = SUM(COALESCE(VEN.VAVE-VEN.VAABVE ,0.0))," & vbCrLf

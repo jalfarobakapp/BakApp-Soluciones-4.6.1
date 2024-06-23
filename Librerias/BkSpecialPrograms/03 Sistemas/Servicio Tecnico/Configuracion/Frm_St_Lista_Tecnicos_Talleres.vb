@@ -37,7 +37,7 @@ Public Class Frm_St_Lista_Tecnicos_Talleres
                        "Case Chk_Taller_Externo When 1 Then 'TALLER' Else 'TECNICO' End As 'Tipo'" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller" & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'"
-        _TblTecnicos = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblTecnicos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 
@@ -95,7 +95,7 @@ Public Class Frm_St_Lista_Tecnicos_Talleres
         Consulta_sql = "Select top 1 * From " & _Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller" & Space(1) &
                        "Where CodFuncionario = '" & _CodFuncionario & "'"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl.Rows.Count) Then
 

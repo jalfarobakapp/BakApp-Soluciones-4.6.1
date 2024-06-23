@@ -36,7 +36,7 @@ Public Class Frm_Tickets_BuscarAsunto
                        "Inner Join " & _Global_BaseBk & "Zw_Stk_Tipos Tp On Def.Id_Tipo = Tp.Id" & vbCrLf &
                        "Where CodFuncionario = '" & _CodFuncionario & "'"
 
-        _Tbl_Asuntos = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Asuntos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

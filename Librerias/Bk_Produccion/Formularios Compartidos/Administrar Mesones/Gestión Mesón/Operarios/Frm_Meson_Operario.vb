@@ -164,7 +164,7 @@ Public Class Frm_Meson_Operario
                        "Where Activo = 1 AND Codigoob = '" & _Codigoob & "'" & vbCrLf &
                        "Order by Nommeson"
 
-        _Tbl_Mesones = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Mesones = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Convert.ToBoolean(_Tbl_Mesones.Rows.Count) Then
 
@@ -211,7 +211,7 @@ Public Class Frm_Meson_Operario
                         Order By Orden_Meson"
 
 
-        Dim _Tbl_Productos_En_Meson As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Productos_En_Meson As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Productos_En_Meson
 
@@ -404,7 +404,7 @@ Public Class Frm_Meson_Operario
                        "From " & _Global_BaseBk & "Zw_Pdp_MaquinaVsProductos Z1" & vbCrLf &
                        "INNER JOIN POTE ON Idpote=IDPOTE
                         WHERE Codmeson='" & _Codmeson & "' AND Estado='EMQ'  And POTE.ESTADO = 'V'" & Space(1) & _Condicion_Operario & Space(1) & " ORDER BY Fecha_Hora_Inicio ASC"
-        _Tbl_Maquina = _Sql.Fx_Get_Tablas(Consulta_sql) ' _Ds_3 = _Sql.Fx_Get_DataSet(Consulta_sql)
+        _Tbl_Maquina = _Sql.Fx_Get_DataTable(Consulta_sql) ' _Ds_3 = _Sql.Fx_Get_DataSet(Consulta_sql)
 
 
         With Grilla_Maquinas_Meson
@@ -601,7 +601,7 @@ Public Class Frm_Meson_Operario
                 Dim _Row_Potpr As DataRow
 
                 Consulta_sql = "Select * From POTPR Where IDPOTL = " & _Idpotl & " And IDPOTPR <> " & _Idpotpr & " And ORDEN > " & _Orden_Potpr & " ORDER BY ORDEN"
-                Dim _Tbl_Potpr As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Potpr As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 For Each _Fila_Potpr As DataRow In _Tbl_Potpr.Rows
 
@@ -2051,7 +2051,7 @@ Public Class Frm_Meson_Operario
                         CODMAQ IN (Select CODMAQAL From PMAQALT Where CODMAQPR In
                         (Select CODMAQ From POPER Where OPERACION = '" & _Operacion & "'))"
 
-        Dim _Tbl_Maquinas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Maquinas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
         Dim _Row_Maquina As DataRow
 
         If _Tbl_Maquinas.Rows.Count > 1 Then
@@ -2175,7 +2175,7 @@ Public Class Frm_Meson_Operario
                         From " & _Global_BaseBk & "Zw_Pdp_MesonVsAlertas Aler Left Join PMAEOB On CODIGOOB = Codigoob_Envia
                         Where Idpote = " & _Idpote & " And Idpotl = " & _Idpotl & " And Idpotpr = " & _Idpotpr & " And Operacion = '" & _Operacion & "' And Eliminada = 0 And Editada = 0"
 
-        _Tbl_Alertas = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Alertas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Row_Alerta As DataRow In _Tbl_Alertas.Rows
 

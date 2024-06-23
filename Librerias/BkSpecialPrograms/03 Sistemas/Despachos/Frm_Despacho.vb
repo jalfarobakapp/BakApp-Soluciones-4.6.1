@@ -215,7 +215,7 @@ Public Class Frm_Despacho
                         From MAEEDO 
                         Left Join MAEEN On KOEN = ENDO And SUEN = SUENDO" & vbCrLf & _Filtro_Idmaeedo
 
-        Dim _Tbl_Documentos As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_Documentos As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Dim _DisplayIndex = 0
 
@@ -314,7 +314,7 @@ Public Class Frm_Despacho
 
                         Drop table #Paso_Det"
 
-        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Dim _DisplayIndex = 0
 

@@ -66,7 +66,7 @@ Public Class Cl_Sol_Recom_Compra_Pr
         Consulta_sql = "SELECT Zprod.*,NOKOEN FROM " & _Global_BaseBk & "Zw_Prod_SolCompra Zprod
                         LEFT JOIN MAEEN ON KOEN = CodCliente And SUEN = CodSucCliente
                         WHERE Id_SCom = " & _Id_SCom
-        _Tbl_Prod_SolCompra = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Prod_SolCompra = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl_Prod_SolCompra.Rows.Count) Then
 

@@ -123,7 +123,7 @@ Public Class Frm_Direc_Cli
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Despachos_Direcc_Cli 
                         Where Id = " & _Id
-        _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         'Btn_Modificar_Horario.Visible = CBool(_Id)
 

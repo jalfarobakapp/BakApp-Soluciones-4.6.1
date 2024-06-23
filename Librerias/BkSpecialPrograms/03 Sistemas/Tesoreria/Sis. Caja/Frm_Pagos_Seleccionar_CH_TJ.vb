@@ -420,7 +420,7 @@ Public Class Frm_Pagos_Seleccionar_CH_TJ
 
         End If
 
-        _Tbl_Ctas_Entidad = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_Ctas_Entidad = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         With Grilla_Ctas
 

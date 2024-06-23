@@ -286,7 +286,7 @@ Public Class Frm_ImpBarras_PorDocumento
         caract_combo(Cmbetiquetas)
         Consulta_sql = "SELECT NombreEtiqueta AS Padre,NombreEtiqueta+', Cantidad de etiquetas por fila '+RTRIM(LTRIM(STR(CantPorLinea))) AS Hijo" & vbCrLf &
                        "FROM " & _Global_BaseBk & "Zw_Tbl_DisenoBarras order by NombreEtiqueta"
-        Cmbetiquetas.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmbetiquetas.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmbetiquetas.SelectedValue = _Etiqueta
 
         AddHandler Btnimprimiretiquetas.Click, AddressOf Sb_Imprimir_Etiquetas
@@ -469,7 +469,7 @@ Public Class Frm_ImpBarras_PorDocumento
             Dim _Codigos = Generar_Filtro_IN(_TblDetalle, "", "KOPRCT", False, False, "'")
 
             Consulta_sql = "Select CAST( 0 AS bit) AS Impreso,1 As Contador,* From MAEPR WHERE KOPR IN " & _Codigos
-            _Tbl_Detalle = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Detalle = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _ClaImprimir_Barras As New Clas_Imprimir_Barras
 

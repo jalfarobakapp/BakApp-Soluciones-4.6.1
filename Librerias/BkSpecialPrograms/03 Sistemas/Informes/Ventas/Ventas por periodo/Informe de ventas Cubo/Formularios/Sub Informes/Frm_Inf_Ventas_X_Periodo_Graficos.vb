@@ -369,7 +369,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Graficos
             Consulta_sql = "Select Cast(1 As Bit) As Chk,KOFU As Codigo, NOKOFU as Descripcion" & vbCrLf &
                            "From TABFU Where KOFU = '" & FUNCIONARIO & "'"
             '_Tbl_Filtro_Vendedores = _Sql.Fx_Get_Tablas(Consulta_sql)
-            _Tbl_Filtro_Vendedores_Asignados = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Filtro_Vendedores_Asignados = _Sql.Fx_Get_DataTable(Consulta_sql)
         End If
 
         _Filtro_Responzables_Todas = True
@@ -2686,7 +2686,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Graficos
 
         Me.Cursor = Cursors.WaitCursor
 
-        Dim _Tbl_Informe As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Informe As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Me.Cursor = Cursors.Default
 
@@ -2758,7 +2758,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Graficos
         Consulta_sql = Replace(Consulta_sql, "#Filtro#", _Filtro)
 
 
-        Dim _Tbl_Informe As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Informe As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl_Informe.Rows.Count) Then
             Dim Fm As New Frm_Inf_Ventas_X_Periodo_Productos_Vs_Rangos_Venta(_Tbl_Informe)
@@ -3104,7 +3104,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Graficos
                        "And Fecha Between '" & _Fecha_Desde & "' And '" & _Fecha_Hasta & "'" & vbCrLf &
                        " And DATEPART(Dw,Fecha) In (1,2,3,4,5" & _Seis & _Siete & ")" & vbCrLf &
                        "ORDER BY Fecha"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl.Rows.Count) Then
             Input_Dias_Feriado_R1.Value = _Tbl.Rows.Count
@@ -3132,7 +3132,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Graficos
                        "And Fecha Between '" & _Fecha_Desde & "' And '" & _Fecha_Hasta & "'" & vbCrLf &
                        " And DATEPART(Dw,Fecha) In (1,2,3,4,5" & _Seis & _Siete & ")" & vbCrLf &
                        "ORDER BY Fecha"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl.Rows.Count) Then
             Input_Dias_Feriado_R2.Value = _Tbl.Rows.Count

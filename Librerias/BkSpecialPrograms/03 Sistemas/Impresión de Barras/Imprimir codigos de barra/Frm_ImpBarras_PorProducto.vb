@@ -121,7 +121,7 @@ Public Class Frm_ImpBarras_PorProducto
         End With
 
         Consulta_sql = "Select NombreEtiqueta As Padre,NombreEtiqueta As Hijo from " & _Global_BaseBk & "Zw_Tbl_DisenoBarras"
-        Dim _TblEtiquetas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblEtiquetas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         caract_combo(Cmbetiquetas)
         With Cmbetiquetas
@@ -140,7 +140,7 @@ Public Class Frm_ImpBarras_PorProducto
 
         caract_combo(CmbBodega)
         Consulta_sql = "SELECT EMPRESA+';'+KOSU+';'+KOBO AS Padre,NOKOBO AS Hijo FROM TABBO" ' WHERE SEMILLA = " & Actividad
-        CmbBodega.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        CmbBodega.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         CmbBodega.SelectedValue = ModEmpresa & ";" & ModSucursal & ";" & ModBodega
 
@@ -148,7 +148,7 @@ Public Class Frm_ImpBarras_PorProducto
         Consulta_sql = "Select 'PM' As Padre,'PM' As Hijo Union" & vbCrLf &
                        "Select 'UC' As Padre,'ULTIMA COMPRA' As Hijo Union" & vbCrLf &
                        "SELECT KOLT As Padre,KOLT+'-'+NOKOLT AS Hijo FROM TABPP"
-        CmbLista.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        CmbLista.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         CmbLista.SelectedValue = ModListaPrecioVenta
 
     End Sub
@@ -173,7 +173,7 @@ Public Class Frm_ImpBarras_PorProducto
                        "From MAEPR Z1" & vbCrLf &
                        "Where 1 > 0" & vbCrLf & _Filtro_Productos
 
-        _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Productos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 
@@ -542,7 +542,7 @@ Public Class Frm_ImpBarras_PorProducto
             Dim _Codigos = Generar_Filtro_IN(_TblDetalle, "", "Codigo", False, False, "'")
 
             Consulta_sql = "Select CAST( 0 AS bit) AS Impreso,1 As Contador,* From MAEPR WHERE KOPR IN " & _Codigos
-            _TblDetalle = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _TblDetalle = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _ClaImprimir_Barras As New Clas_Imprimir_Barras
 
@@ -598,7 +598,7 @@ Public Class Frm_ImpBarras_PorProducto
                        "Left Join MAEPR On KOPR = Dres.ELEMENTO" & vbCrLf &
                        "Where '" & Format(_FechaHoy, "yyyyMMdd") & "' Between Eres.FIOFERTA And Eres.FTOFERTA --And Eres.LISTAS Like '%PB7%'" & vbCrLf &
                        "And Dres.ELEMENTO = '" & Txt_Codigo.Text & "' "
-            Dim _TblOfertas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblOfertas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If CBool(_TblOfertas.Rows.Count) Then
 

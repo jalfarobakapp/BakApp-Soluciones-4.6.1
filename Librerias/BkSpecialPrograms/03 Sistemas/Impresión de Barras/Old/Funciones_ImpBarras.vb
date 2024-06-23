@@ -246,7 +246,7 @@
                         Where KOPR = '" & _Codigo & "'
                         Order By Primaria Desc"
 
-        Fx_Producto_Ubicaciones = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Fx_Producto_Ubicaciones = _Sql.Fx_Get_DataTable(Consulta_sql)
 
     End Function
 
@@ -1094,7 +1094,7 @@
     Private Function Fx_TraeEtiqueta(_NombreEtiqueta As String) As DataRow
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Tbl_DisenoBarras Where NombreEtiqueta = '" & _NombreEtiqueta & "'"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Row As DataRow
 
@@ -1368,7 +1368,7 @@
 
         End If
 
-        Dim _TblUbicacion As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblUbicacion As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Ubic_BakApp As String
         Dim _Stock_Minimo_Ubic As Double
@@ -1399,7 +1399,7 @@
                        "Cast(0 As Float) As PU01_Neto,Cast(0 As Float) As PU02_Neto,Cast(0 As Float) As PU01_Bruto,Cast(0 As Float) As PU02_Bruto,Getdate() As FechaProgramada" & vbCrLf &
                        "From MAEPR Where KOPR = '" & _Codigo & "'"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl.Rows.Count) Then
 

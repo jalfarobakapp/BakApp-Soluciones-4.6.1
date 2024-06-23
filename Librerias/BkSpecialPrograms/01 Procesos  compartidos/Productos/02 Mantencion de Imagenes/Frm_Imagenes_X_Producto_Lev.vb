@@ -21,7 +21,7 @@ Public Class Frm_Imagenes_X_Producto_Lev
 
         Consulta_sql = "Select KOPR As Codigo,Cast('' As Varchar(Max)) As Url" & vbCrLf &
                        "From MAEPR Where 1<0"
-        _Tbl_Productos_Levantar = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Productos_Levantar = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Sb_Color_Botones_Barra(Bar1)
 

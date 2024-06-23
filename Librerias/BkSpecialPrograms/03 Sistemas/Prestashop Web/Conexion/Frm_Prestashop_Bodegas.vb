@@ -56,7 +56,7 @@ Public Class Frm_Prestashop_Bodegas
                        "Inner Join TABBO On EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega" & vbCrLf &
                        "Where Codigo_Pagina = '" & _Codigo_Pagina & "'" & vbCrLf &
                        "Order by id_warehouse"
-        _Tbl_Bodegas = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Bodegas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

@@ -58,7 +58,7 @@ Public Class Frm_02_Detalle_Producto_Actual
                            "WHERE (Codproducto in ('','@@DESCONOCIDO') " & vbCrLf &
                            "And IdInventario = " & _IdInventario
 
-            GrillaHistoriaProducto.DataSource = _SQL.Fx_Get_Tablas(Consulta_sql)
+            GrillaHistoriaProducto.DataSource = _SQL.Fx_Get_DataTable(Consulta_sql)
 
             If GrillaHistoriaProducto.RowCount > 0 Then
                 GrillaHistoriaProducto.Columns(0).Visible = False
@@ -256,7 +256,7 @@ Public Class Frm_02_Detalle_Producto_Actual
                        "Left Join TABFU On KOFU = Responsable" & vbCrLf &
                        "Where IdInventario = " & _IdInventario & " And Codproducto = '" & _Codigo & "'"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With GrillaHistoriaProducto
 

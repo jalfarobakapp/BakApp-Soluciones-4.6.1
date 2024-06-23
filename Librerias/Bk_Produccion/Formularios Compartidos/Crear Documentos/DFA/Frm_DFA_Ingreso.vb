@@ -95,7 +95,7 @@ Public Class Frm_DFA_Ingreso
                        "WHERE POTPR.IDPOTL='" & _Idpotl & "'" & vbCrLf &
                        "AND POPER.CODMAQ = '" & _Cod_Maquina & "'"
 
-        Fx_Trae_Operaciones_SubOt = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Fx_Trae_Operaciones_SubOt = _Sql.Fx_Get_DataTable(Consulta_sql)
 
     End Function
 
@@ -123,7 +123,7 @@ Public Class Frm_DFA_Ingreso
         End If
 
         Consulta_sql = "Select * From POTL Where IDPOTE = " & _Idpote ' & " And NIVEL = 0"
-        Dim _Tbl_SubOt As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_SubOt As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If _Tbl_SubOt.Rows.Count = 1 Then
             _Row_SubOt = _Tbl_SubOt.Rows(0)
@@ -537,7 +537,7 @@ Public Class Frm_DFA_Ingreso
                     Lbl_Referencia.Text = _Row_OT.Item("REFERENCIA")
 
                     Consulta_sql = "Select * From POTL Where IDPOTE = " & _Idpote
-                    Dim _Tbl_SubOt As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _Tbl_SubOt As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     If _Tbl_SubOt.Rows.Count = 1 Then
                         _Row_SubOt = _Tbl_SubOt.Rows(0)
@@ -570,7 +570,7 @@ Public Class Frm_DFA_Ingreso
                                        "CODMAQ IN (Select CODMAQAL From PMAQALT Where CODMAQPR In" & Space(1) &
                                        "(Select CODMAQ From POPER Where OPERACION = 'IFF2'))"
 
-                        Dim _Tbl_Maquinas_Permitidas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                        Dim _Tbl_Maquinas_Permitidas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                         Sb_Agregar_Maquina_Solo_Operacion(_Fila, True, _Tbl_Maquinas_Permitidas, _Row_Operacion, _Row_Maquina)
                         'Sb_Agregar_Maquina("", _Fila, True)
@@ -591,7 +591,7 @@ Public Class Frm_DFA_Ingreso
                                        "WHERE OPERACION = '" & _Operacion & "' AND CODMAQ = '" & _Codmaq & "' AND" & Space(1) &
                                        "NUMOT = '" & Txt_Numero_OT.Text & "')" & vbCrLf &
                                        "And FECHA = '" & Format(Dtp_Fecha_Ingreso.Value, "yyyyMMdd") & "'"
-                        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
                         Dim _Ds_DFA_Encontrada As DataSet
 
                         Dim _Existe_Pre_DFA As Boolean
@@ -793,7 +793,7 @@ Public Class Frm_DFA_Ingreso
                                    "CODMAQ IN (Select CODMAQAL From PMAQALT Where CODMAQPR In" & Space(1) &
                                    "(Select CODMAQ From POPER Where OPERACION = '" & _Operacion & "'))"
 
-                    Dim _Tbl_Maquinas_Permitidas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _Tbl_Maquinas_Permitidas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     If _Tbl_Maquinas_Permitidas.Rows.Count = 1 Then
                         Consulta_sql = "Select Top 1 * From PMAQUI Where CODMAQ = '" & _Tbl_Maquinas_Permitidas.Rows(0).Item("CODMAQ") & "'"
@@ -948,7 +948,7 @@ Public Class Frm_DFA_Ingreso
                     Dim _Operacion = Trim(_Row_Dfa_Espera.Item("Operacion"))
 
                     Consulta_sql = "Select * From PDATFAE where IDPDATFAE = " & _Idpdatfae
-                    Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     'Sb_Agregar_Maquina(_Codmaq, _Fila, False)
 
@@ -1228,7 +1228,7 @@ Public Class Frm_DFA_Ingreso
                                "LEFT OUTER JOIN PVELPROP ON POTPR.OPERACION=PVELPROP.OPERACION AND POTPR.CODIGO = PVELPROP.KOPR" & vbCrLf &
                                "WHERE(POTPR.IDPOTL = " & _Idpotl & ")"
 
-                Dim _Tbl_Maquinas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Maquinas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
                 Dim Fm_m = New Frm_Seleccionar_Op_SubOt_Maq_Etc("CODMAQ", "NOMBREMAQ", _Tbl_Maquinas)
                 Fm_m.Text = ""
                 Fm_m.ShowDialog(Me)
@@ -1335,7 +1335,7 @@ Public Class Frm_DFA_Ingreso
 
             'Return
 
-            Dim _Tbl_Maquinas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Maquinas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
             Dim Fm_m = New Frm_Seleccionar_Op_SubOt_Maq_Etc("CODMAQ", "NOMBREMAQ", _Tbl_Maquinas)
             Fm_m.Text = ""
             Fm_m.ShowDialog(Me)
@@ -1402,7 +1402,7 @@ Public Class Frm_DFA_Ingreso
                     Consulta_sql = "SELECT EMPRESA,OPERACION,CODMAQPR,CODMAQAL,RENDIMIEN" & vbCrLf &
                        "FROM PMAQALT" & vbCrLf &
                        "Where CODMAQAL = '" & _Cod_Maquina & "' And CODMAQPR <> '" & _Cod_Maquina & "'"
-                    Dim _Tbl_Maquinas_Alternativas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _Tbl_Maquinas_Alternativas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     Dim _Existe_Maquina As Boolean
 

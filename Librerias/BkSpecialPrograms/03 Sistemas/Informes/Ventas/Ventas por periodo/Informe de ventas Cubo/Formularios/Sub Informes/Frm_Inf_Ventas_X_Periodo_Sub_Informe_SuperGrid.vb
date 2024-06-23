@@ -828,7 +828,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informe_SuperGrid
                        "Select * From " & _Nombre_Tabla_Paso & vbCrLf & "Where IDMAEDDO In (Select IDMAEDDO From #Paso)" &
                        vbCrLf &
                        "Drop Table #Paso"
-        _Tbl_Excel = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Excel = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ExportarTabla_JetExcel_Tabla(_Tbl_Excel, Me, "Detalle de venta")
     End Sub

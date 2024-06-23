@@ -32,7 +32,7 @@ Public Class Frm_01_Inventarios
                        "From " & _Global_BaseBk & "Zw_TmpInv_History" & vbCrLf &
                        _Filtro
 
-        Grilla.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Grilla.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

@@ -46,7 +46,7 @@ Public Class Frm_Correos_Conf_SMTP_Lista
 
         With Grilla
 
-            .DataSource = _Sql.Fx_Get_Tablas(Consulta_Sql)
+            .DataSource = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
             OcultarEncabezadoGrilla(Grilla, True)
 

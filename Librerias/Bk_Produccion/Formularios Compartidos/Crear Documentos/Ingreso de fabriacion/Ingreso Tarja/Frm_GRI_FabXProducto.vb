@@ -130,7 +130,7 @@ Public Class Frm_GRI_FabXProducto
                        "And Exists (Select TABBOPR.* From TABBOPR " &
                        "Where TABBOPR.KOPR = POTL.CODIGO And TABBOPR.KOSU = '" & ModSucursal & "' AND TABBOPR.KOBO = '" & ModBodega & "')"
 
-        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim Fm As New Frm_GRI_ProductosOT
         Fm.Text = "COMPONETES DE LA ORDEN DE TRABAJO: " & Txt_Numot.Text
@@ -934,7 +934,7 @@ Public Class Frm_GRI_FabXProducto
 
         Consulta_sql = "Select *," & _Cantidad & " As Cantidad,'" & _SucursalGRI & "' As Sucursal,'" & _BodegaGRI & "' As Bodega" & vbCrLf &
                        "From POTL Where IDPOTL = " & _Row_Potl.Item("IDPOTL")
-        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _Cl_Tarja.Zw_Pdp_CPT_Tarja.Idmaeddo = 0
 

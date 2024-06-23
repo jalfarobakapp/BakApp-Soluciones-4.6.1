@@ -840,6 +840,8 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Conceptos.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Demonio_FacAuto.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Contador.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Hoja.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Hoja_Detalle.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Pdp_CPT_MzDet.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Pdp_CPT_MzDetIngFab.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Pdp_CPT_MzEnc.vb" />
@@ -866,6 +868,13 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Contadores\Cl_Contador.vb" />
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Conteo\Cl_Conteo.vb" />
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Conteo\Frm_IngresarHoja.Designer.vb">
+      <DependentUpon>Frm_IngresarHoja.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Conteo\Frm_IngresarHoja.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Ubicaciones\Cl_InvUbicacion.vb" />
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Ubicaciones\Frm_Inv_UbicacionesImporExcel.Designer.vb">
       <DependentUpon>Frm_Inv_UbicacionesImporExcel.vb</DependentUpon>
@@ -4672,6 +4681,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Inventario\Inventario General\Formularios\03 Parametros\Frm_Inv_Inventarios.resx">
       <DependentUpon>Frm_Inv_Inventarios.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Conteo\Frm_IngresarHoja.resx">
+      <DependentUpon>Frm_IngresarHoja.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Ubicaciones\Frm_Inv_UbicacionesImporExcel.resx">
       <DependentUpon>Frm_Inv_UbicacionesImporExcel.vb</DependentUpon>

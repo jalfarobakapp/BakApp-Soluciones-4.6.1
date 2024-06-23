@@ -214,7 +214,7 @@ Public Class Frm_Tenerduria_Buscar_Documento_Pago
                        _Filtro_TP & vbCrLf &
                        "Order By Orden"
 
-        Cmb_Tipo_de_documentos.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Tipo_de_documentos.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Tipo_de_documentos.SelectedValue = ""
 
         Sb_Llena_Combo_Estado_Documento()
@@ -279,7 +279,7 @@ Public Class Frm_Tenerduria_Buscar_Documento_Pago
             Consulta_sql = Replace(Consulta_sql, "#Filtro#", _Filtro)
             Consulta_sql = Replace(Consulta_sql, "#Top#", _Top)
 
-            Fx_Generar_Informe = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Fx_Generar_Informe = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Catch ex As Exception
             MessageBoxEx.Show(ex.Message, "Problema al generar el informe", MessageBoxButtons.OK, MessageBoxIcon.Stop)

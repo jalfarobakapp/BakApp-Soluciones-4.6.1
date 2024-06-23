@@ -66,7 +66,7 @@ Public Class Frm_Conexion_Web_Prestashop
         caract_combo(Cmb_Lista_Precios)
         Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                        "SELECT KOLT AS Padre,KOLT+' - '+NOKOLT AS Hijo FROM TABPP WHERE TILT = 'P' ORDER BY Padre"
-        Cmb_Lista_Precios.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Lista_Precios.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Lista_Precios.SelectedValue = _Cod_Lista
 
     End Sub

@@ -43,7 +43,7 @@ Public Class Clase_Solicita_Producto_Bodega
                            "Where Codigo = '" & _Codigo & "' And Funcionario = '" & _Funcionario & "'" & vbCrLf &
                            "And Estado IN ('SOL','ENT')"
 
-            Dim _TblProdSol As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblProdSol As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
             If Not CBool(_TblProdSol.Rows.Count) Then
@@ -102,7 +102,7 @@ Public Class Clase_Solicita_Producto_Bodega
                        "Where Funcionario = '" & _Funcionario & "'" & vbCrLf & _
                        "And Estado IN ('SOL','ENT')"
 
-        Dim _TblProdSol As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblProdSol As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblProdSol.Rows.Count) Then
 

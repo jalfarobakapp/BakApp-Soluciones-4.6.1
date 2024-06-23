@@ -99,7 +99,7 @@ Public Class Frm_St_RecetaCrear
                        "Where Rec.Id_Rec = " & _Id_Rec & vbCrLf &
                        "Order By Orden"
 
-        _Tbl_Operaciones = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Operaciones = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

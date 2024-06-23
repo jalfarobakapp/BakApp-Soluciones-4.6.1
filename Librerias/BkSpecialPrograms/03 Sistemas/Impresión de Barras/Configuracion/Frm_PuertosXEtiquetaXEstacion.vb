@@ -36,7 +36,7 @@ Public Class Frm_PuertosXEtiquetaXEstacion
                        "From " & _Global_BaseBk & "Zw_Tbl_DisenoBarras" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Tbl_DisenoBarras_SalPtoxEstacion Est On Semilla_Padre = Semilla And NombreEquipo = '" & _NombreEquipo & "'"
 
-        _Tbl_Registros = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Registros = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Try
 

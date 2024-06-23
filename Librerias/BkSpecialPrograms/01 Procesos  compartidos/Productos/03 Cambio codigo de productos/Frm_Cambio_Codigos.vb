@@ -20,7 +20,7 @@ Public Class Frm_Cambio_Codigos
         Dim _TblProducto As DataTable
 
         Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
-        _TblProducto = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblProducto = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblProducto.Rows.Count) Then
             If _Mostrar_mensaje Then
@@ -407,7 +407,7 @@ Public Class Frm_Cambio_Codigos
                 End If
 
                 Consulta_sql = "Select * From MAEPR Where KOPR = '" & _CodigoOld & "'"
-                Dim _TblPro As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblPro As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 Fx_Cambiar_Codigo(_CodigoNew, _CodigoOld, ChkCambiarCodigoTecnico.Checked, True, FUNCIONARIO, _TblPro.Rows(0), _CodigoTecnico)
 

@@ -524,7 +524,7 @@ Public Class Frm_Ver_Documento
 
             Consulta_sql = "Insert Into MAEEDOOB (IDMAEEDO) Values (" & _Idmaeedo & ")" & vbCrLf &
                            "Select top 1 * From MAEEDOOB Where IDMAEEDO = " & _Idmaeedo
-            _TblObservaciones = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _TblObservaciones = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         End If
 
@@ -632,7 +632,7 @@ Public Class Frm_Ver_Documento
                                "WHERE ARCHIRVE='MAEEDO' AND IDRVE = " & _Idmaeedo & vbCrLf &
                                "ORDER BY FEVENTO,HORAGRAB"
 
-                _Tbl_Mevento_Edo = _Sql.Fx_Get_Tablas(Consulta_sql)
+                _Tbl_Mevento_Edo = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 If Not Convert.ToBoolean(Tbl_Referencias.Rows.Count) Then
 
@@ -1018,7 +1018,7 @@ Public Class Frm_Ver_Documento
 
             Consulta_sql = "Insert Into MAEEDOOB (IDMAEEDO) Values (" & _Idmaeedo & ")" & vbCrLf &
                            "Select top 1 * From MAEEDOOB Where IDMAEEDO = " & _Idmaeedo
-            _TblObservaciones = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _TblObservaciones = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         End If
 
@@ -2427,7 +2427,7 @@ Public Class Frm_Ver_Documento
                 Dim _Stock_Ud2_Rem As Double
 
                 Consulta_sql = "SELECT ISNULL(SUM(STFI1),0) AS STFI1,ISNULL(SUM(STFI2),0) AS STFI2 FROM MAEST Where KOPR = '" & _Codigo & "'"
-                Dim _TblStock As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblStock As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 GrillaDetalleDoc.CurrentCell = GrillaDetalleDoc.Rows(_Fila.Index).Cells("CANTIDAD")
                 System.Windows.Forms.Application.DoEvents()
@@ -2455,7 +2455,7 @@ Public Class Frm_Ver_Documento
                                    "FROM MAEST Where KOPR IN " & _Filtro_Hermanos
 
 
-                    Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     If CBool(_Tbl.Rows.Count) Then
                         _Stock_Ud1_Rem = _Tbl.Rows(0).Item("STFI1")
@@ -2575,7 +2575,7 @@ Public Class Frm_Ver_Documento
 
         Consulta_sql = "Select Distinct IDRST From MAEDDO" & vbCrLf &
                        "Where ARCHIDRST = 'MAEDDO' And IDMAEEDO = " & _Idmaeedo
-        Dim _TblDetalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblDetalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblDetalle.Rows.Count) Then
 
@@ -2812,7 +2812,7 @@ Public Class Frm_Ver_Documento
                         Correo_Para,Correo_CC,Correo_Body,Picking, NombreFormato_Correo,Para_Maeenmail
                         From " & _Global_BaseBk & "Zw_Demonio_Filtros_X_Estacion
                         Where TipoDoc = '" & _Tido & "' And Codigo = '" & _Kofudo & "'"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not CBool(_Tbl.Rows.Count) Then
 
@@ -3318,7 +3318,7 @@ Public Class Frm_Ver_Documento
 
         Consulta_sql = "Select Id_Despacho From " & _Global_BaseBk & "Zw_Despachos_Doc_Det 
                         Where Idmaeedo In (Select IDMAEEDO From MAEDDO Where IDMAEDDO In " & _Filtro_Idmaeddo_Dori & ") Or Idmaeedo = " & _Idmaeedo
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If IsNothing(_Tbl) Then
             MessageBoxEx.Show(Me, "No existen datos que mostrar", "Buscar Orden de despacho", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -4253,7 +4253,7 @@ Public Class Frm_Ver_Documento
         Consulta_sql = Replace(Consulta_sql, "#AmbienteCertificacion#", _AmbienteCertificacion)
         Consulta_sql = Replace(Consulta_sql, "#SoloFirmadosPorBakapp#", "")
 
-        Dim _Tbl_Informe As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Informe As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl_Informe.Rows.Count) Then
 
@@ -4597,7 +4597,7 @@ Public Class Frm_Ver_Documento
         Dim _Nudo As String = _TblEncabezado.Rows(0).Item("NUDO")
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where GrbOCC_Nuevas = 1"
-        Dim _Tbl_DnExt As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_DnExt As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not CBool(_Tbl_DnExt.Rows.Count) Then
             MessageBoxEx.Show(Me, "No existen conexiones a otras bases de datos para poder hacer esta gestión", "Validación",
@@ -4648,7 +4648,7 @@ Public Class Frm_Ver_Documento
         Dim _Nudo As String = _TblEncabezado.Rows(0).Item("NUDO")
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion --Where GrbOCC_Nuevas = 1"
-        Dim _Tbl_DnExt As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_DnExt As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not CBool(_Tbl_DnExt.Rows.Count) Then
             MessageBoxEx.Show(Me, "No existen conexiones a otras bases de datos para poder hacer esta gestión", "Validación",
@@ -4817,7 +4817,7 @@ Public Class Frm_Ver_Documento
 
         Consulta_sql = "Select Id_Despacho From " & _Global_BaseBk & "Zw_Despachos_Doc_Det 
                         Where Idmaeedo In (Select IDMAEEDO From MAEDDO Where IDMAEDDO In " & _Filtro_Idmaeddo_Dori & ") Or Idmaeedo = " & _Idmaeedo
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Filtro_Id_Despacho As String = Generar_Filtro_IN(_Tbl, "", "Id_Despacho", False, False, "")
 

@@ -64,7 +64,7 @@ Public Class Frm_Vehiculos_Empresa_Lista
                        "Where 1 > 0" & vbCrLf & _Condicion
 
        
-        _Tbl_Vehiculos = _SQL.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Vehiculos = _SQL.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Vehiculos
 
@@ -162,7 +162,7 @@ Public Class Frm_Vehiculos_Empresa_Lista
         Dim _Patente = _Fila.Cells("Patente").Value
 
         Consulta_sql = "Select top 1 * From " & _Global_BaseBk & "Zw_TblVehiculos_Empresa Where Patente = '" & _Patente & "'"
-        Dim _Tbl As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl.Rows.Count) Then
 

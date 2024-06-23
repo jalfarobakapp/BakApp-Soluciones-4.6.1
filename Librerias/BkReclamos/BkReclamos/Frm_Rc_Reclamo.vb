@@ -1157,7 +1157,7 @@ Public Class Frm_Rc_Reclamo
 
         Dim _Path = _Cl_Reclamo.Path_Temporales
         Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Reclamo_Archivos Where Id_Reclamo = " & _Cl_Reclamo.Id_Reclamo
-        Dim _Tbl_Adjuntos As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_Adjuntos As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         For Each _Archivo As DataRow In _Tbl_Adjuntos.Rows
 

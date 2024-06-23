@@ -51,7 +51,7 @@ Public Class Frm_Adjuntar_Archivos_X_Productos
                        "From " & _Global_BaseBk & "Zw_Prod_Archivos" & vbCrLf &
                        "Where Codigo = '" & _Row_Producto.Item("KOPR") & "'"
 
-        Dim _TblArchivos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblArchivos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Archivos
 

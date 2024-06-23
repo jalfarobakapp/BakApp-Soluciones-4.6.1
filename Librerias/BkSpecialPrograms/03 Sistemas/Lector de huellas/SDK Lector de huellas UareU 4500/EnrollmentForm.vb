@@ -115,7 +115,7 @@ Public Class EnrollmentForm
                         From " & _Global_BaseBk & "Zw_Usuarios_Huellas" & vbCrLf &
                            "Left Join TABFU On KOFU = CodFuncionario"
 
-        Dim _Tbl_Huellas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Huellas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim ver As New DPFP.Verification.Verification()
         Dim res As New DPFP.Verification.Verification.Result()

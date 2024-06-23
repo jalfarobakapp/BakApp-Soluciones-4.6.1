@@ -69,7 +69,7 @@ Public Class Frm_Imp_Diablito_X_Est
                        "SELECT TIDO AS Padre,TIDO+' - '+NOTIDO AS Hijo FROM TABTIDO ORDER BY Padre"
         caract_combo(Cmb_Tido)
 
-        Cmb_Tido.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Tido.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Tido.SelectedValue = "000"
 
     End Sub

@@ -97,7 +97,7 @@ Select * From #INFDet
 
 Drop table #INFDet"
 
-        _Tbl = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Return _Tbl
 

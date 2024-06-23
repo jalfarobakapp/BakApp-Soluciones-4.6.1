@@ -103,7 +103,7 @@ Public Class Frm_02_AutoconsultaSaldo
                            "Where TIDO = 'NCV' and  Saldo2 > Saldo1 or TIDO IN  ('BLV','FCV') and  Saldo2 < Saldo1" & vbCrLf &
                            "Order by FEEMDO"
 
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If _Tbl.Rows.Count > 0 Then
                 Suma = Fx_Suma_cantidades("Saldo3", "TblSaldoCli")

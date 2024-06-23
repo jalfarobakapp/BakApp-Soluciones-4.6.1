@@ -469,7 +469,7 @@ Public Class Frm_Formulario_Documento
         Consulta_sql = "Select top 1 * From MAEMO" & Environment.NewLine &
                        "Where KOMO = 'US$' AND FEMO = '" & Format(FechaDelServidor, "yyyyMMdd") & "'"
 
-        Dim _TblMoneda As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblMoneda As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _SubTido = String.Empty
 
@@ -573,7 +573,7 @@ Public Class Frm_Formulario_Documento
 
         caract_combo(Cmb_Lista_Costo)
         Consulta_sql = "Select KOLT AS Padre,KOLT+' - '+MOLT+' '+NOKOLT AS Hijo From TABPP Where TILT = 'C' Order by Hijo"
-        Cmb_Lista_Costo.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Lista_Costo.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Lista_Costo.SelectedValue = "PM"
 
         _Configuracion_Regional_()
@@ -1623,8 +1623,8 @@ Public Class Frm_Formulario_Documento
                        "Where 1 < 0 " & vbCrLf &
                        "Order by FEVENTO,HORAGRAB"
 
-        _Tbl_Mevento_Edo = _Sql.Fx_Get_Tablas(Consulta_sql)
-        _Tbl_Mevento_Edd = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Mevento_Edo = _Sql.Fx_Get_DataTable(Consulta_sql)
+        _Tbl_Mevento_Edd = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _Tbl_Mevento_Edo.TableName = "Mevento_Edo"
         _Tbl_Mevento_Edd.TableName = "Mevento_Edd"
@@ -1640,7 +1640,7 @@ Public Class Frm_Formulario_Documento
                        "FROM MAEDPCE WITH ( NOLOCK ) " & vbCrLf &
                        "WHERE 1 = 0"
 
-        _Tbl_Maedpce = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Maedpce = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _Tbl_Mevento_Edd.TableName = "Maedpce"
 
@@ -1654,7 +1654,7 @@ Public Class Frm_Formulario_Documento
                         "Cast(0 As Float) As Recargo,Cast(0 As Float) As Peso,Cast(0 As Float) As Volumen," & vbCrLf &
                         "Cast('' As Varchar(13)) As Codigo,Cast('' As Varchar(50)) As Descripcion," & vbCrLf &
                         "NULIDO As Nulido,RECARCALCU As Recarcalcu,IDDDODCR As Idddodcr,VALDCR As Valdcr From MAEDCR Where 1<0"
-        _Tbl_Maedcr = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Maedcr = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _Tbl_Maedcr.TableName = "Maedcr"
         _Ds_Matriz_Documentos.Tables.Add(_Tbl_Maedcr)
@@ -3074,7 +3074,7 @@ Public Class Frm_Formulario_Documento
                         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_SolBodega
                                         Where Codigo = '" & _Codigo & "' And Funcionario = '" & FUNCIONARIO & "' And Estado IN ('SOL','ENT')"
 
-                        Dim _TblProdSol As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                        Dim _TblProdSol As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                         _Solicitado_bodega = CBool(_TblProdSol.Rows.Count)
 
@@ -4321,7 +4321,7 @@ Public Class Frm_Formulario_Documento
             Consulta_sql = "Select Tbp.*,Tb.NOKOBO From TABBOPR Tbp 
                                                     Left Join TABBO Tb On Tb.EMPRESA = Tbp.EMPRESA And Tb.KOSU = Tbp.KOSU And Tb.KOBO = Tbp.KOBO
                                                 Where Tbp.EMPRESA = '" & _Empresa & "' And Tbp.KOSU = '" & _Sucursal & "' AND Tbp.KOPR = '" & _Codigo & "'"
-            Dim _TblTabbopr As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblTabbopr As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If CBool(_TblTabbopr.Rows.Count) Then
 
@@ -6514,7 +6514,7 @@ Public Class Frm_Formulario_Documento
                 End If
 
                 Consulta_sql = "Select KOIM,POIM From TABIM Where KOIM IN (Select KOIM From TABIMPR Where KOPR = '" & _Codigo & "'" & _Noaplica_Imp & ")"
-                Dim _TblIla As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblIla As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 If CBool(_TblIla.Rows.Count) Then
 
@@ -8694,7 +8694,7 @@ Public Class Frm_Formulario_Documento
 
                                                     Dim Cerrar_Doc As New Clas_Cerrar_Documento
                                                     Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Idmaeedo_Origen
-                                                    Dim _Tbl_Origen As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                                                    Dim _Tbl_Origen As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
                                                     Cerrar_Doc.Fx_Abrir_Documento(_Idmaeedo_Origen, _Tbl_Origen)
 
                                                     Dim _Row_Maeedo As DataRow = Cerrar_Doc.Pro_Row_Maeedo(_Idmaeedo_Origen)
@@ -8925,7 +8925,7 @@ Public Class Frm_Formulario_Documento
                                "Inner Join MAEPR On KOPR = ELEMENTO " & vbCrLf &
                                "Where CODIGO = '" & _Codigo & "'"
 
-                Dim _Tbl_Maedres As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Maedres As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 _Fila.Cells("Id_Oferta").Value = _Id_Oferta
                 _Fila.Cells("Es_Padre_Oferta").Value = True
@@ -9483,7 +9483,7 @@ Public Class Frm_Formulario_Documento
                             Dim _Volver_Bodega_Original As Boolean
 
                             Consulta_sql = "Select * From TABBO Where KOBO = '" & _Bodega & "'"
-                            Dim _TblBodega As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                            Dim _TblBodega As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                             If CBool(_TblBodega.Rows.Count) Then
 
@@ -12284,7 +12284,7 @@ Public Class Frm_Formulario_Documento
 
                 Dim Cerrar_Doc As New Clas_Cerrar_Documento
                 Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Idmaeedo_Origen
-                Dim _Tbl_Origen As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Origen As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
                 Cerrar_Doc.Fx_Abrir_Documento(_Idmaeedo_Origen, _Tbl_Origen)
 
             End If
@@ -14209,7 +14209,7 @@ Public Class Frm_Formulario_Documento
                                     (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Usuario_Validador " &
                                     "Where Empresa = '" & ModEmpresa & "' And Codigo In (Select KOPR From #Paso))
                                     Drop Table #Paso"
-                        Dim _Tbl_Producto As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                        Dim _Tbl_Producto As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                         Dim _Contador = 1
 
@@ -14343,7 +14343,7 @@ Public Class Frm_Formulario_Documento
                             Consulta_sql = "Select Nombre_Archivo,Archivo,Fecha,CodFuncionario" & vbCrLf &
                                            "From " & _Global_BaseBk & "Zw_Casi_DocArc" & vbCrLf &
                                            "Where NombreEquipo = '" & _NombreEquipo & "' And En_Construccion = 1"
-                            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                             If Not CBool(_Tbl.Rows.Count) Then
 
@@ -14356,7 +14356,7 @@ Public Class Frm_Formulario_Documento
                                 Consulta_sql = "Select Nombre_Archivo,Archivo,Fecha,CodFuncionario" & vbCrLf &
                                                "From " & _Global_BaseBk & "Zw_Casi_DocArc" & vbCrLf &
                                                "Where NombreEquipo = '" & _NombreEquipo & "' And En_Construccion = 1"
-                                _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+                                _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                                 If Not CBool(_Tbl.Rows.Count) Then
                                     Return
@@ -15054,7 +15054,7 @@ Public Class Frm_Formulario_Documento
         Consulta_sql = "Select Distinct Id_Despacho From " & _Global_BaseBk & "Zw_Despachos_Doc_Det 
                                         Where (Idmaeedo In (Select IDMAEEDO From MAEDDO Where IDMAEDDO In " & _Filtro_Idmaeddo_Dori & ") Or Idmaeedo = " & _Idmaeedo & ")" & vbCrLf &
                     "And (CantCUd1 - (CantDUd1+CantEUd1+CantRUd1)) > 0"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Fl As DataRow In _Tbl.Rows
 
@@ -15175,7 +15175,7 @@ Public Class Frm_Formulario_Documento
             Consulta_sql = "Select Distinct Id_Despacho,Idmaeedo From " & _Global_BaseBk & "Zw_Despachos_Doc_Det Where Idmaeedo In 
                                 (Select IDMAEEDO From MAEDDO Where IDMAEDDO in (Select IDRST From MAEDDO Where IDMAEEDO = " & _Idmaeedo & "))
                                 And Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'"
-            Dim _Tbl_Documentos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Documentos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _Fila As DataRow In _Tbl_Documentos.Rows
 
@@ -15458,7 +15458,7 @@ Public Class Frm_Formulario_Documento
                                                     CodPermiso In (Select CodPermiso From " & _Global_BaseBk & "ZW_Permisos Where CodFamilia = 'Bodega')) 
                                                     Or (EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "' And KOBO = '" & ModBodega & "')"
 
-                            Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                            Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                             Dim _Filtro As String = Generar_Filtro_IN(_Tbl_Bodegas, "", "Cod", False, False, "'")
 
@@ -16073,7 +16073,7 @@ Public Class Frm_Formulario_Documento
             If _Tido = "OCC" Then
 
                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where GrbOCC_Nuevas = 1"
-                Dim _Tbl_DnExt As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_DnExt As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 For Each _Fl_Emp As DataRow In _Tbl_DnExt.Rows
 
@@ -16168,7 +16168,7 @@ Public Class Frm_Formulario_Documento
 	                                Where Idmaeedo In (Select IDMAEEDO From MAEDDO Where IDMAEDDO In " &
                                     "(Select IDRST From MAEDDO Where IDMAEEDO = " & _Idmaeedo & ")) And Eliminada = 0"
 
-                    Dim _TblRemotasHr As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _TblRemotasHr As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     Dim _NroRemota As String
 
@@ -16767,7 +16767,7 @@ Public Class Frm_Formulario_Documento
 
                             Dim Cerrar_Doc As New Clas_Cerrar_Documento
                             Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Idmaeedo_Origen
-                            Dim _Tbl_Origen As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                            Dim _Tbl_Origen As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
                             Cerrar_Doc.Fx_Cerrar_Documento(_Idmaeedo_Origen, _Tbl_Origen)
 
                         End If
@@ -16942,7 +16942,7 @@ Public Class Frm_Formulario_Documento
 
                             Dim Cerrar_Doc As New Clas_Cerrar_Documento
                             Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Idmaeedo_Origen
-                            Dim _Tbl_Origen As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                            Dim _Tbl_Origen As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
                             Cerrar_Doc.Fx_Cerrar_Documento(_Idmaeedo_Origen, _Tbl_Origen)
 
                         End If
@@ -17021,7 +17021,7 @@ Public Class Frm_Formulario_Documento
                 Dim _Id_DocEnc = _RowMaeedo_Origen.Item("IDMAEEDO")
                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Referencias_Dte Where Id_Doc = " & _Id_DocEnc & " And Kasi = 0"
 
-                Dim _TblReferencias_Dte_Stby = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblReferencias_Dte_Stby = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 For Each _Fila As DataRow In _TblReferencias_Dte_Stby.Rows
 
@@ -17067,7 +17067,7 @@ Public Class Frm_Formulario_Documento
 
             If Fl <> "()" Then
                 Consulta_sql = "Select IDMAEEDO From MAEEDO Where IDMAEEDO IN " & Fl
-                _TblDocumentos_Dori = _Sql.Fx_Get_Tablas(Consulta_sql)
+                _TblDocumentos_Dori = _Sql.Fx_Get_DataTable(Consulta_sql)
             End If
 
             Dim _Tido_Origen As String = _Tido
@@ -17382,7 +17382,7 @@ Public Class Frm_Formulario_Documento
                             If _Tido <> "NCV" And _Tido <> "NVV" Then
 
                                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Remotas Where Idmaeedo = " & _IdDorigen
-                                Dim _TblRemotas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                                Dim _TblRemotas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                                 If CBool(_TblRemotas.Rows.Count) Then
                                     Chk_Cambiar_Bodegas.Enabled = False
@@ -18256,7 +18256,7 @@ Public Class Frm_Formulario_Documento
 
                     If CBool(_Idmaeedo_Dorigen) Then
 
-                        _Tbl_Remotas = _Sql.Fx_Get_Tablas(Consulta_sql)
+                        _Tbl_Remotas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                         For Each _FilaR As DataRow In _Tbl_Remotas.Rows
 
@@ -19971,14 +19971,14 @@ Public Class Frm_Formulario_Documento
                 Dim _Filtro_Idmaeedo_Dori = Generar_Filtro_IN(_TblDetalle, "", "Idmaeedo_Dori", True, False)
 
                 Consulta_sql = "Select IDMAEEDO From MAEEDO Where IDMAEEDO In " & _Filtro_Idmaeedo_Dori
-                Dim _Tbl_Dori As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Dori As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 'Abrimos todas las filas de los documentos relacionados
 
                 For Each _Fila As DataRow In _Tbl_Dori.Rows
                     Dim _Idmaeedo_Dori = _Fila.Item("IDMAEEDO")
                     Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Idmaeedo_Dori
-                    Dim _Tbl_Maeddo As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _Tbl_Maeddo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
                     Dim Cerrar_Doc As New Clas_Cerrar_Documento
                     Cerrar_Doc.Fx_Abrir_Documento(_Idmaeedo_Dori, _Tbl_Maeddo)
                 Next
@@ -20333,14 +20333,14 @@ Public Class Frm_Formulario_Documento
         Dim _Filtro_Idmaeedo_Dori = Generar_Filtro_IN(_TblDetalle, "", "Idmaeedo_Dori", True, False)
 
         Consulta_sql = "Select IDMAEEDO From MAEEDO Where IDMAEEDO In " & _Filtro_Idmaeedo_Dori
-        Dim _Tbl_Dori As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Dori As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         'Abrimos todas las filas de los documentos relacionados
 
         For Each _Fila As DataRow In _Tbl_Dori.Rows
             Dim _Idmaeedo_Dori = _Fila.Item("IDMAEEDO")
             Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Idmaeedo_Dori
-            Dim _Tbl_Maeddo As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Maeddo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
             Dim Cerrar_Doc As New Clas_Cerrar_Documento
             Cerrar_Doc.Fx_Abrir_Documento(_Idmaeedo_Dori, _Tbl_Maeddo)
         Next
@@ -20352,7 +20352,7 @@ Public Class Frm_Formulario_Documento
         For Each _Fila As DataRow In _Tbl_Dori.Rows
             Dim _Idmaeedo_Dori = _Fila.Item("IDMAEEDO")
             Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Idmaeedo_Dori
-            Dim _Tbl_Maeddo As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Maeddo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
             Dim Cerrar_Doc As New Clas_Cerrar_Documento
             Cerrar_Doc.Fx_Cerrar_Documento(_Idmaeedo_Dori, _Tbl_Maeddo)
         Next
@@ -20727,7 +20727,7 @@ Public Class Frm_Formulario_Documento
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Despachos_MiniCompXProd" & vbCrLf &
                            "Where Empresa = '" & ModEmpresa & "' And Codigo In " & _Filtro_Prod
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If _Tbl.Rows.Count Then
 
@@ -21434,7 +21434,7 @@ Public Class Frm_Formulario_Documento
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Remotas_En_Cadena_02_Det 
                         Where Id_Enc = " & _Id_Enc & " And NroRemota = '' Order by Orden"
-        Dim _Tbl_Det As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Det As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Nro_Det As Integer = _Tbl_Det.Rows.Count
 
@@ -21476,7 +21476,7 @@ Public Class Frm_Formulario_Documento
 
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Remotas_En_Cadena_03_Usu Where Id_Det = " & _Id_Det
-        Dim _Tbl_Usu As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Usu As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Fila_Usu As DataRow In _Tbl_Usu.Rows
 
@@ -21688,7 +21688,7 @@ Public Class Frm_Formulario_Documento
 
         Consulta_sql = "Select CodUsuario From " & _Global_BaseBk & "ZW_PermisosVsUsuarios" & Environment.NewLine &
                        "Where CodPermiso = '" & _Codpermiso & "'"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
         Dim _Filtro_Usuarios_NOT_In As String
 
         If CBool(_Tbl.Rows.Count) Then
@@ -22194,7 +22194,7 @@ Public Class Frm_Formulario_Documento
             Dim _Opera_Rev = Split(_Opera, ",")
 
             Consulta_sql = "Select Top 1 * From TABPRE Where KOLT = '" & _CodLista & "' And KOPR = '" & _Codigo & "'"
-            Dim _TblTabpre As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblTabpre As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             ' Asi es como actua el campo OPERA, este campo define como se comportaran los campos adicionales a partir del campo nro 29 en adelante
 
@@ -22211,7 +22211,7 @@ Public Class Frm_Formulario_Documento
 
             Consulta_sql = "Select Cast('' As Varchar(20)) As Tcampo,Cast(0 As Float) As Dscto,Cast(0 As Float) As Valor" & Environment.NewLine &
                            "Where 1 < 0"
-            _TblDscto = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _TblDscto = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For _i = 28 To _TblTabpre.Columns.Count - 1
 
@@ -22832,7 +22832,7 @@ Public Class Frm_Formulario_Documento
                 Dim Cerrar_Doc As New Clas_Cerrar_Documento
                 Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Idmaeedo_Origen
 
-                Dim _Tbl_Origen As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Origen As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
                 Cerrar_Doc.Fx_Abrir_Documento(_Idmaeedo_Origen, _Tbl_Origen)
 
             End If
@@ -23621,7 +23621,7 @@ Public Class Frm_Formulario_Documento
 
                     Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Despachos_MiniCompXProd" & vbCrLf &
                                    "Where Empresa = '" & ModEmpresa & "' And Codigo In " & _Filtro_Prod
-                    Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     If _Tbl.Rows.Count Then
 
@@ -23751,7 +23751,7 @@ Public Class Frm_Formulario_Documento
                             From " & _Global_BaseBk & "ZW_PermisosVsUsuarios
                             Inner Join TABPP On KOLT = SUBSTRING(CodPermiso,4,3)
                             Where CodPermiso LIKE 'Lp-%' And CodUsuario = '" & FUNCIONARIO & "' And TIMOLT = '" & _Timo & "'"
-            Dim _Tbl_Listas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Listas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If Not CBool(_Tbl_Listas.Rows.Count) Then
 
@@ -23850,7 +23850,7 @@ Public Class Frm_Formulario_Documento
                        "0 As NUDONODEFI,0 As VAPIDO,'" & _Suendo & "' As SUENDO,Cast('" & _Feulvedo & "' As Datetime) As FEULVEDO,0 As HORAGRAB," &
                        "'" & _Nokoen & "' As NOKOEN,'' As ESPGDO,'' As ESDO,Cast(" & Convert.ToInt32(_Es_Electronico) & " As Bit) As TIDOELEC"
 
-        Dim _Tbl_Maeedo_Pago As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Maeedo_Pago As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim Fm As New Frm_Pagos_Documentos("")
         Fm.Aplica_Ley_20956 = _Aplica_Ley_20956
@@ -24415,7 +24415,7 @@ Public Class Frm_Formulario_Documento
         Consulta_sql = "Select Distinct Vat_number,Firstname,Lastname,Address1,Address2,Phone,Phone_mobile,Email,State_Ciudad,State_comuna
                         From " & _Global_BaseBk & "Zw_PrestaShop_orders_customer
                         Where Id_customer = " & _Id_customer
-        Dim _Tbl_Direcciones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Direcciones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Texto = String.Empty
         Dim _Contador = 0
@@ -25915,7 +25915,7 @@ Public Class Frm_Formulario_Documento
                 Dim _DescuentoMonto = _Fila.DescuentoMonto
 
                 Consulta_sql = "Select * From TABCODAL Where KOEN = '" & _Koen & "' And KOPRAL = '" & _Kopral & "'"
-                Dim _Tbl_Tcb As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Tcb As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 Dim _Msg = String.Empty
                 Dim _MsgProd = String.Empty
@@ -26269,7 +26269,7 @@ Public Class Frm_Formulario_Documento
 
         End If
 
-        Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Filtro As String = Generar_Filtro_IN(_Tbl_Bodegas, "", "Cod", False, False, "'")
 
@@ -26277,7 +26277,7 @@ Public Class Frm_Formulario_Documento
         Consulta_sql = "Select *" & vbCrLf &
                        "From MAEDDO Where TIDO In ('FCC','OCC') And KOPRCT = '" & _Codigo & "' And ESLIDO = ''" & vbCrLf &
                        "And EMPRESA+SULIDO+BOSULIDO In " & _Filtro
-        Dim _Tbl_Documentos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Documentos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not CBool(_Tbl_Documentos.Rows.Count) Then
             MessageBoxEx.Show(Me, "No hay pedidos pendientes por recepcionar para este producto", "Información",

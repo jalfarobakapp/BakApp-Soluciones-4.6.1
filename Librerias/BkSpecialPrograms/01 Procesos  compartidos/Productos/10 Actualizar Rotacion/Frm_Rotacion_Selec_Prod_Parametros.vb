@@ -113,7 +113,7 @@ Public Class Frm_Rotacion_Selec_Prod_Parametros
         Dim _Nodo_Raiz_Asociados = _Global_Row_Configuracion_General.Item("Nodo_Raiz_Asociados")
 
         Consulta_sql = "Select EMPRESA,KOSU,KOBO From TABBO"
-        Dim _Tbl As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
 
         Consulta_sql = String.Empty
 
@@ -175,7 +175,7 @@ Public Class Frm_Rotacion_Selec_Prod_Parametros
         Consulta_sql = "Select KOPR As Codigo From MAEPR" & vbCrLf & _
                        "Where TIPR IN ('FPN','FPS','FUN','FUS')"
 
-        Dim _Tbl As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
 
         Return _Tbl
 
@@ -189,7 +189,7 @@ Public Class Frm_Rotacion_Selec_Prod_Parametros
         Consulta_sql = "Select KOPR As Codigo From MAEPR" & vbCrLf & _
                        "Where KOPR IN (SELECT DISTINCT KOPRCT FROM MAEDDO " & _
                        "WHERE FEEMLI BETWEEN '" & _F1 & "' AND '" & _F2 & "' AND TIPR IN ('FPN','FPS','FUN','FUS'))" 'KOPR IN (SELECT KOPR FROM MAEPR WHERE TIPR IN ('FPN','FPS','FUN','FUS')))"
-        Dim _Tbl As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
 
         Return _Tbl
 
@@ -218,7 +218,7 @@ Public Class Frm_Rotacion_Selec_Prod_Parametros
 
 
 
-        Dim _Tbl As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
 
         Return _Tbl
 
@@ -236,7 +236,7 @@ Public Class Frm_Rotacion_Selec_Prod_Parametros
                        "Where KOPR IN (SELECT KOPRREM FROM TABREMP " & _
                        "WHERE KOPR IN " & _Fl & " AND KOPR <> KOPRREM)"
 
-        Dim _Tbl As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
 
         Return _Tbl
 
@@ -252,7 +252,7 @@ Public Class Frm_Rotacion_Selec_Prod_Parametros
                        "Union" & vbCrLf & _
                        "Select KOPR As Codigo From MAEPR Where KOPR IN " & _Fl
 
-        Dim _Tbl As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
 
         Return _Tbl
 
@@ -370,7 +370,7 @@ Public Class Frm_Rotacion_Selec_Prod_Parametros
                                "FROM " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf & _
                                "Where Codigo_Nodo In (Select Codigo_Nodo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo In " & _Fl & ")" & Space(1) & _
                                "And Es_Seleccionable = 1 And Nodo_Raiz = " & _Nodo_Raiz_Asociados & ""
-                Dim _TblProductos_Madre As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblProductos_Madre As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
                 ''_Tbl_Productos_A_Procesar = Fx_Traer_Genericos(_Tbl_Productos_A_Procesar)
                 _Tbl_Productos_A_Procesar = Fx_Traer_Asociados_Hermanos(_TblProductos_Madre, _Tbl_Productos_A_Procesar)
             End If
@@ -442,7 +442,7 @@ Public Class Frm_Rotacion_Selec_Prod_Parametros
                        "And Codigo Not in (Select KOPR From MAEPR Where TIPR = 'SSN') And Con_Ent_Excluidas = " & CInt(Chk_Incluir_Ventas_Entidades_Excluidas.Checked) * -1 & ")" & Space(1) & _
                        "And KOPR In " & _Fl
 
-        _Tbl = _SQL.Fx_Get_Tablas(Consulta_sql)
+        _Tbl = _SQL.Fx_Get_DataTable(Consulta_sql)
         Return _Tbl
 
     End Function

@@ -143,7 +143,7 @@ Public Class Frm_St_Estado_05_Reparacion
         Consulta_sql = "SELECT CodFuncionario AS Padre,NomFuncionario AS Hijo" & vbCrLf &
                        "FROM " & _Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller" & vbCrLf &
                        "WHERE 1 > 0" & _Condicion & " ORDER BY Hijo"
-        Cmb_Tecnico.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Tecnico.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Tecnico.SelectedValue = _Tecnico
 
         'SELECT     TOP (200) CodFuncionario,NomFuncionario,Star,Chk_Taller_Externo,Chk_Habilitado,Chk_Supervisor,Chk_Domicilio
@@ -161,7 +161,7 @@ Public Class Frm_St_Estado_05_Reparacion
         Consulta_sql = "Select top 1 * From " & _Global_BaseBk & " Zw_St_Conf_Tecnicos_Taller" & vbCrLf &
                        "Where CodFuncionario = '" & _CodFuncionario & "'"
 
-        Dim _TblTecnico As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblTecnico As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Rating_Star.Rating = NuloPorNro(_TblTecnico.Rows(0).Item("Star"), 0)
         'Txt_Informacion.Text = _TblTecnico.Rows(0).Item("Informacion")

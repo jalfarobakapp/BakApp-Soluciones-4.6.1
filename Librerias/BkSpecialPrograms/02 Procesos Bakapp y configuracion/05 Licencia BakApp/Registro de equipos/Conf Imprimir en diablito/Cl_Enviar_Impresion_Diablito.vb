@@ -46,7 +46,7 @@ Public Class Cl_Enviar_Impresion_Diablito
                         Where CodFuncionario = '" & _CodFuncionario & "' And Empresa = '" & ModEmpresa & "' And " &
                        "Modalidad = '" & _Modalidad & "' And Tido = '" & _Tido & "' And Tipo = '" & _Tipo.ToString & "' And Activo = 1"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Return _Tbl
 
@@ -58,7 +58,7 @@ Public Class Cl_Enviar_Impresion_Diablito
                         Where CodFuncionario = '" & _CodFuncionario & "' And Empresa = '" & ModEmpresa & "' And " &
                        "Imp_Todas_Modalidades = 1 And Tido = '" & _Tido & "' And Tipo = '" & _Tipo.ToString & "' And Activo = 1 And Modalidad = ''"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Return _Tbl
 

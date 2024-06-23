@@ -192,7 +192,7 @@ Public Class Cl_Imprimir_Picking
         _Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_Cof_Estacion" & vbCrLf &
                         "Where NombreEquipo = '" & _Nombre_Equipo & "' And Imprimir_Picking = 1"
 
-        Dim _Tbl_Zw_Demonio_Cof_Estacion As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql, False)
+        Dim _Tbl_Zw_Demonio_Cof_Estacion As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql, False)
 
         Dim _SqlQuery_Cola = String.Empty
 
@@ -212,7 +212,7 @@ Public Class Cl_Imprimir_Picking
 
                     _Consulta_sql = "Select Codigo From " & _Global_BaseBk & "Zw_Demonio_Filtros_X_Estacion" & vbCrLf &
                                     "Where IdPadre = " & _IdPadre & " And Impresora <> '' And Picking = 1"
-                    Dim _TblFiltroFunc As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+                    Dim _TblFiltroFunc As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
                     If CBool(_TblFiltroFunc.Rows.Count) Then
 
@@ -240,7 +240,7 @@ Public Class Cl_Imprimir_Picking
                         "Where Revizado_Demonio = 0 And NombreEquipo = '" & _Nombre_Equipo & "' And" & Space(1) &
                         "Convert(varchar,Fecha,112) = '" & Format(_Fecha_Revision, "yyyyMMdd") & "' And Picking = 1"
 
-        Dim _Tbl_Doc_Sin_Imprimir As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql, False)
+        Dim _Tbl_Doc_Sin_Imprimir As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql, False)
 
         Dim _Solo_Marcar_No_Imprimir As Boolean = _Solo_Marcar_No_Imprimir
 

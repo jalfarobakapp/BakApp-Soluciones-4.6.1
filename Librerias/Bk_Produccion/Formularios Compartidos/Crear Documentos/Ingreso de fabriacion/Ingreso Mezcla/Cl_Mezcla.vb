@@ -470,7 +470,7 @@ Public Class Cl_Mezcla
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-        Dim _TblPaso = _Sql.Fx_Get_Tablas("Select Max(Nro_MZC) As Numero From " & _Global_BaseBk & "Zw_Pdp_CPT_MzEnc")
+        Dim _TblPaso = _Sql.Fx_Get_DataTable("Select Max(Nro_MZC) As Numero From " & _Global_BaseBk & "Zw_Pdp_CPT_MzEnc")
 
         Dim _Ult_Nro_OT As String = NuloPorNro(_TblPaso.Rows(0).Item("Numero"), "")
 

@@ -43,7 +43,7 @@ Public Class Frm_Rc_01_Ingreso
                         SELECT CodigoTabla AS Padre,NombreTabla AS Hijo,Orden
                         FROM " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones
                         WHERE Tabla = 'SIS_RECLAMOS_TIPO' ORDER BY Orden"
-        Cmb_Tipo_Reclamo.DataSource = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Cmb_Tipo_Reclamo.DataSource = _Sql.Fx_Get_DataTable(Consulta_Sql)
         Cmb_Tipo_Reclamo.SelectedValue = String.Empty
 
         caract_combo(Cmb_Suc_Elaboracion)
@@ -51,7 +51,7 @@ Public Class Frm_Rc_01_Ingreso
                         SELECT CodigoTabla AS Padre,NombreTabla AS Hijo,Orden
                         FROM " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones
                         WHERE Tabla = 'SIS_RECLAMOS_SUCREC' And Padre_CodigoTabla = '" & ModEmpresa & "' ORDER BY Orden"
-        Cmb_Suc_Elaboracion.DataSource = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Cmb_Suc_Elaboracion.DataSource = _Sql.Fx_Get_DataTable(Consulta_Sql)
         Cmb_Suc_Elaboracion.SelectedValue = String.Empty
 
         Sb_Formato_Generico_Grilla(Grilla_Preguntas, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
@@ -198,7 +198,7 @@ Public Class Frm_Rc_01_Ingreso
                         Where Tabla = 'SIS_RECLAMOS_PREG' And Padre_Tabla = 'SIS_RECLAMOS_TIPO'
                         And CodigoTabla Not In (Select Cod_Pregunta From " & _Global_BaseBk & "Zw_Reclamo_Preguntas Where Id_Reclamo = " & _Id_Reclamo & ")
                         And Padre_CodigoTabla = '" & _Tipo_Reclamo & "'"
-        _Cl_Reclamo.Pro_Tbl_Preguntas = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Cl_Reclamo.Pro_Tbl_Preguntas = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         With Grilla_Preguntas
 
@@ -425,7 +425,7 @@ Public Class Frm_Rc_01_Ingreso
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-        Dim _TblPaso = _Sql.Fx_Get_Tablas("Select Max(Numero) As Ult_Nro_OT From " & _Global_BaseBk & "Zw_Reclamo")
+        Dim _TblPaso = _Sql.Fx_Get_DataTable("Select Max(Numero) As Ult_Nro_OT From " & _Global_BaseBk & "Zw_Reclamo")
 
         If CBool(_TblPaso.Rows.Count) Then
 
@@ -942,7 +942,7 @@ Public Class Frm_Rc_01_Ingreso
                        "FROM " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
                        "WHERE Tabla = 'SIS_RECLAMOS_SUBTIPO' And Padre_Tabla = 'SIS_RECLAMOS_TIPO' And Padre_CodigoTabla = '" & Cmb_Tipo_Reclamo.SelectedValue & "'" & vbCrLf &
                        "Order by Padre"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         caract_combo(Cmb_Sub_Tipo_Reclamos)
         Cmb_Sub_Tipo_Reclamos.DataSource = _Tbl

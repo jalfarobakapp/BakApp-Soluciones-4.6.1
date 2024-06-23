@@ -117,7 +117,7 @@ Public Class Frm_Pago_Masivo_Autoriza_Enc
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Pago_Prov_Autoriza_01_Enc" & vbCrLf &
                            "Where Fecha_Pago = '" & Format(Dtp_Fecha_Asignacion_Pago.Value, "yyyyMMdd") & "'"
-            Dim _Tbl_Pagos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Pagos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             _Grabar = True
 

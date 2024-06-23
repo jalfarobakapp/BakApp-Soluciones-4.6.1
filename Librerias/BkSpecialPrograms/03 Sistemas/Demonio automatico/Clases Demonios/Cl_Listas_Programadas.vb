@@ -22,7 +22,7 @@
                        "From " & _Global_BaseBk & "Zw_ListaLC_Programadas" & vbCrLf &
                        "Where FechaProgramada = '" & _Str_FechaProgramacion & "' And Activo = 1 And Aplicado = 0 And Eliminada = 0 "
 
-        Dim _Tbl_ListasProgramadas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_ListasProgramadas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl_ListasProgramadas.Rows.Count) Then
 
@@ -45,7 +45,7 @@
             Dim _ValDigitado As Double = _Fila.Item("ValDigitado")
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_ListaLC_Programadas_Detalles Where Id_Enc = " & _Id_Enc
-            Dim _Tbl_ListasProgramadas_Detalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_ListasProgramadas_Detalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             _SqlQuery += "Update " & _Global_BaseBk & "Zw_ListaLC_Programadas Set " &
                          "Aplicado = 1,FechaAplica = Getdate(),Informacion = 'Ok.',ErrorAlGrabar = 0" & vbCrLf &

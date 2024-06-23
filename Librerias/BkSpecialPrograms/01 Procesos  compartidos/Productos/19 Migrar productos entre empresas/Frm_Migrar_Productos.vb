@@ -154,14 +154,14 @@
 
     Function Fx_Tabla(_Nomtabla As String, _Campo As String, _Codigo As String) As DataTable
         Dim _ConsultaSql = "SELECT * FROM " & _Nomtabla & " WHERE " & _Campo & "='" & _Codigo & "';"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(_ConsultaSql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(_ConsultaSql)
         _Tbl.TableName = _Nomtabla '.Replace(_Global_BaseBk, "")
         Return _Tbl
     End Function
 
     Function Fx_Tabla(_Nomtabla As String, _Campo As String, _Codigo As String, Conexion As Class_SQL) As DataTable
         Dim _ConsultaSql = "SELECT * FROM " & _Nomtabla & " WHERE " & _Campo & "='" & _Codigo & "';"
-        Dim _Tbl As DataTable = Conexion.Fx_Get_Tablas(_ConsultaSql)
+        Dim _Tbl As DataTable = Conexion.Fx_Get_DataTable(_ConsultaSql)
         _Tbl.TableName = _Nomtabla '.Replace(_Global_BaseBk, "")
         Return _Tbl
     End Function
@@ -382,8 +382,8 @@
         '_Sql2 = New Class_SQL(CadenaConexionExt)
 
         Dim consulta As String = "SELECT KOPR, NOKOPR FROM MAEPR;"
-        Dim Tabla2 As DataTable = _Sql.Fx_Get_Tablas(consulta)
-        Dim Tabla1 As DataTable = _Sql2.Fx_Get_Tablas(consulta)
+        Dim Tabla2 As DataTable = _Sql.Fx_Get_DataTable(consulta)
+        Dim Tabla1 As DataTable = _Sql2.Fx_Get_DataTable(consulta)
         Dim idsNotInB = Tabla1.AsEnumerable().Select(Function(r) r.Field(Of String)("KOPR")).Except(Tabla2.AsEnumerable().[Select](Function(r) r.Field(Of String)("KOPR")))
         Dim TableC As DataTable = (From row In Tabla1.AsEnumerable() Join id In idsNotInB On row.Field(Of String)("KOPR") Equals id Select row).CopyToDataTable()
         ExportarTabla_JetExcel_Tabla(TableC, Me, "MAEPR")
@@ -397,8 +397,8 @@
         '_Sql2 = New Class_SQL(CadenaConexionExt)
 
         Dim consulta As String = "SELECT KOPR, NOKOPR FROM MAEPR;"
-        Dim Tabla1 As DataTable = _Sql.Fx_Get_Tablas(consulta)
-        Dim Tabla2 As DataTable = _Sql2.Fx_Get_Tablas(consulta)
+        Dim Tabla1 As DataTable = _Sql.Fx_Get_DataTable(consulta)
+        Dim Tabla2 As DataTable = _Sql2.Fx_Get_DataTable(consulta)
 
         Dim idsNotInB = Tabla1.AsEnumerable().Select(Function(r) r.Field(Of String)("KOPR")).Except(Tabla2.AsEnumerable().[Select](Function(r) r.Field(Of String)("KOPR")))
         Dim TableC As DataTable = (From row In Tabla1.AsEnumerable() Join id In idsNotInB On row.Field(Of String)("KOPR") Equals id Select row).CopyToDataTable()

@@ -213,7 +213,7 @@ Public Class Frm_BuscarDocumento_Mt
 
     Public Sub Sb_Llenar_Grilla(ByVal Sql_Query As String)
 
-        _Tbl_Documentos = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_Documentos = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         If HabilitarNVVParaFacturar Then
 
@@ -388,7 +388,7 @@ Public Class Frm_BuscarDocumento_Mt
 
     Public Sub Sb_Llenar_Grilla_Pago_A_Documentos(ByVal Sql_Query As String)
 
-        _Tbl_Documentos = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_Documentos = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         With Grilla
 
@@ -532,7 +532,7 @@ Public Class Frm_BuscarDocumento_Mt
             Dim _Filtro_Idmaeedo = Generar_Filtro_IN(_Tbl_Documentos, "Chk", "IDMAEEDO", False, True, "")
 
             Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO In " & _Filtro_Idmaeedo
-            _Tbl_DocSeleccionados = _Sql.Fx_Get_Tablas(Consulta_Sql)
+            _Tbl_DocSeleccionados = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
             Me.Close()
 
@@ -568,7 +568,7 @@ Public Class Frm_BuscarDocumento_Mt
 
             OcultarEncabezadoGrilla(Grilla_Detalle)
 
-            .DataSource = _Sql.Fx_Get_Tablas(Consulta_Sql)
+            .DataSource = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
             Dim _DisplayIndex = 0
 
@@ -714,7 +714,7 @@ Public Class Frm_BuscarDocumento_Mt
 
         Consulta_Sql = "Select Distinct Rtrim(Ltrim(MAILTO)) As MAILTO,Rtrim(Ltrim(MAILCC)) As MAILCC From MAEENMAIL Where KOEN = '" & _Koen & "' And KOMAIL = '001'"
 
-        Dim _Tbl_Maeenmail As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_Maeenmail As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         System.Windows.Forms.Application.DoEvents()
 
@@ -790,7 +790,7 @@ Public Class Frm_BuscarDocumento_Mt
                         Correo_Para,Correo_CC,Correo_Body,Picking, NombreFormato_Correo,Para_Maeenmail
                         From " & _Global_BaseBk & "Zw_Demonio_Filtros_X_Estacion
                         Where TipoDoc = '" & _Tido & "' And Codigo = '" & _Kofudo & "'"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Dim _Documentos_Enviados = 0
 
@@ -1689,7 +1689,7 @@ Public Class Frm_BuscarDocumento_Mt
         Consulta_Sql = Replace(Consulta_Sql, "#AmbienteCertificacion#", _AmbienteCertificacion)
         Consulta_Sql = Replace(Consulta_Sql, "#SoloFirmadosPorBakapp#", "")
 
-        Dim _Tbl_Informe As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_Informe As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         If CBool(_Tbl_Informe.Rows.Count) Then
 
@@ -1790,7 +1790,7 @@ Public Class Frm_BuscarDocumento_Mt
         Dim _Nudo As String = _Fila.Cells("NUDO").Value
 
         Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where GrbOCC_Nuevas = 1"
-        Dim _Tbl_DnExt As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_DnExt As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         If Not CBool(_Tbl_DnExt.Rows.Count) Then
             MessageBoxEx.Show(Me, "No existen conexiones a otras bases de datos para poder hacer esta gestión", "Validación",

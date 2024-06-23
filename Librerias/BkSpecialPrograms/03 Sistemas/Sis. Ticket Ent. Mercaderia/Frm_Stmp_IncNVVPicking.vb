@@ -138,7 +138,7 @@ Public Class Frm_Stmp_IncNVVPicking
                         "Order By ENDO,SUENDO,NUDO" & vbCrLf &
                         "Drop Table #Paso"
 
-        _Tbl_Documentos = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Documentos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

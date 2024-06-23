@@ -44,7 +44,7 @@ Public Class Frm_Choferes_Empresa_Lista
                        "Where 1 > 0" & vbCrLf & _Condicion
 
 
-        _Tbl_Choferes = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Choferes = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 
@@ -139,7 +139,7 @@ Public Class Frm_Choferes_Empresa_Lista
         Dim _CodChofer = _Fila.Cells("CodChofer").Value
 
         Consulta_sql = "Select top 1 * From " & _Global_BaseBk & "Zw_TblChoferes_Empresa Where CodChofer = '" & _CodChofer & "'"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl.Rows.Count) Then
 

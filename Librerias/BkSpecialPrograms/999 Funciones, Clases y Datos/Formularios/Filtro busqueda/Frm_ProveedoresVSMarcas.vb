@@ -59,7 +59,7 @@ Public Class Frm_ProveedoresVSMarcas
 
         If Fx_Tiene_Permiso(Me, "CfEnt010") Then
             Consulta_sql = "Select CodMarca as Codigo,Marca as Descripcion From Zw_MrVsPro Where CodProveedor = '" & TxtCodigo.Text & "' "
-            Dim _Tbl_Marcas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Marcas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Sql_Filtro_Condicion_Extra = String.Empty
 
@@ -97,7 +97,7 @@ Public Class Frm_ProveedoresVSMarcas
                        "From " & _Global_BaseBk & "Zw_MrVsPro" & vbCrLf &
                        "Where CodProveedor = '" & TxtCodigo.Text & "'" & vbCrLf &
                        "Order by Marca"
-        _Tbl_Marcas = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Marcas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

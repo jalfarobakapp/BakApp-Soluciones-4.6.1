@@ -39,7 +39,7 @@ Public Class Frm_Cms_Fun
                        "From TABFU" & vbCrLf &
                        "Inner Join " & _Global_BaseBk & "Zw_Comisiones_Fun Uss On KOFU = Uss.CodFuncionario" & vbCrLf &
                        _Condicion
-        _Tbl_Usuarios = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_Usuarios = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Dim _DisplayIndex = 0
 

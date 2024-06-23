@@ -12,7 +12,7 @@ Public Class Cl_Contador
 
     End Sub
 
-    Function Fx_Llenar_Zw_Inv_Contadores(_Id As Integer) As LsValiciones.Mensajes
+    Function Fx_Llenar_Zw_Inv_Contador(_Id As Integer) As LsValiciones.Mensajes
 
         Dim _Mensaje_Stem As New LsValiciones.Mensajes
 

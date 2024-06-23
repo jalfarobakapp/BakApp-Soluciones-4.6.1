@@ -32,7 +32,7 @@ Public Class Frm_Cms_Periodos
 
         Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Comisiones_Enc" & vbCrLf &
                        "Order By Mes,Ano"
-        _Tbl_Periodos = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_Periodos = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Dim _DisplayIndex = 0
 

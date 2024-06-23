@@ -471,7 +471,7 @@ Public Class Frm_LiquidTJVcredito
                        "From MAEDPCE" & vbCrLf &
                        "Where 1 = 0"
 
-        _Tbl_Maedpce = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Maedpce = _Sql.Fx_Get_DataTable(Consulta_sql)
 
     End Sub
 
@@ -580,7 +580,7 @@ Public Class Frm_LiquidTJVcredito
         Dim _Filtro As String = Generar_Filtro_IN(_Dv.Table, "Incluir", "IDMAEDPCE", True, True, "")
 
         Consulta_sql = "Select * From MAEDPCE Where IDMAEDPCE In " & _Filtro
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Sb_Tabla_Maedpce()
 

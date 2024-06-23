@@ -121,7 +121,7 @@ Public Class Clas_Impirmir_Operaciones_OT_Barras
                         "ORDER BY Orden_Meson"
 
 
-        _Tbl_Productos_En_Meson = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Productos_En_Meson = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Pdc_Mesones Where Codmeson = '" & _Codmeson & "'"
         _Row_Meson = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -803,7 +803,7 @@ Public Class Clas_Impirmir_Operaciones_OT_Barras
             Consulta_sql = "SELECT CODIGOOB,RUTOB,NOMBREOB,TIFU,RTFU,CIFU,CMFU,DIFU,FOFU,PWFU,PLANO,VAHROB,CODRELCON,KOJORNADA," &
                            "VAHROBHE,INACTIVO,FECINACTIV,EMPRESA" & vbCrLf &
                            "FROM PMAEOB"
-            Dim _Tbl_Operarios As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Operarios As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
             e.Graphics.DrawString("OPERARIOS", Fx_Fuente(_Enum_Fuentes.Times_New_Roman, 18, FontStyle.Bold),
@@ -913,7 +913,7 @@ Public Class Clas_Impirmir_Operaciones_OT_Barras
                            "Left Outer Join TABFU On KOFU = KOFUDO" & vbCrLf &
                            "Left Join MAEEDOOB OBS On OBS.IDMAEEDO = EDO.IDMAEEDO" & vbCrLf &
                            "WHERE POTL.NUMOT='" & _Numot & "' AND POTL.EMPRESA = '" & ModEmpresa & "'"
-            Dim _TblDocRela As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblDocRela As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
             Dim _Row_DocRela As DataRow
 
             If CBool(_TblDocRela.Rows.Count) Then
@@ -1071,7 +1071,7 @@ Public Class Clas_Impirmir_Operaciones_OT_Barras
             _xPos -= 20
 
             Consulta_sql = "Select * From MEVENTO Where IDRVE = " & _Idpote & " And ARCHIRVE = 'POTE' Order By IDEVENTO"
-            Dim _TblMevento_Pote As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblMevento_Pote As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             _yPos += (20 - _Item) * 30
 
@@ -1146,7 +1146,7 @@ Public Class Clas_Impirmir_Operaciones_OT_Barras
                            "Left Outer Join TABFU On KOFU = KOFUDO" & vbCrLf &
                            "Left Join MAEEDOOB OBS On OBS.IDMAEEDO = EDO.IDMAEEDO" & vbCrLf &
                            "WHERE POTL.NUMOT='" & _Numot & "' AND POTL.EMPRESA = '" & ModEmpresa & "'"
-            Dim _TblDocRela As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblDocRela As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
             Dim _Row_DocRela As DataRow
 
             If CBool(_TblDocRela.Rows.Count) Then
@@ -1362,7 +1362,7 @@ Public Class Clas_Impirmir_Operaciones_OT_Barras
                            "Left Outer Join TABFU On KOFU = KOFUDO" & vbCrLf &
                            "Left Join MAEEDOOB OBS On OBS.IDMAEEDO = EDO.IDMAEEDO" & vbCrLf &
                            "WHERE POTL.NUMOT='" & _Numot & "' AND POTL.EMPRESA = '" & ModEmpresa & "'"
-        Dim _TblDocRela As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblDocRela As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
         Dim _Row_DocRela As DataRow
 
         If CBool(_TblDocRela.Rows.Count) Then

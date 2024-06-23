@@ -143,7 +143,7 @@ Public Class Frm_Formulario_Stock_Desde_WMS_Seriados
                        "Select * From #Paso1" & vbCrLf & _
                        "Drop Table #Paso1"
 
-        Dim _Tbl_Series_WMS As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Series_WMS As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Return _Tbl_Series_WMS
 

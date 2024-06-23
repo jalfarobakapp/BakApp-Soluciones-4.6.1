@@ -130,7 +130,7 @@ Public Class Cl_Informe_Meson_Familia
                         "Where Codmeson = '" & _CodMeson & "'" & vbCrLf &
                         "Group By Codmeson,Nommeson,[Prom.Carga SubOt],[Prom.Carga xPiezas]"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Return _Tbl
 
@@ -149,7 +149,7 @@ Public Class Cl_Informe_Meson_Familia
                         _Condicion & vbCrLf &
                        _Agrupar
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Return _Tbl
 
@@ -167,7 +167,7 @@ Public Class Cl_Informe_Meson_Familia
                         _Condicion & vbCrLf &
                        _Agrupar
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Return _Tbl
 

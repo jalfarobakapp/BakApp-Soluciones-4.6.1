@@ -216,8 +216,8 @@ Public Class Frm_SolCredito_Configuracion
                        "FROM " & _Global_BaseBk & "Zw_Correos" & vbCrLf & _
                        "ORDER BY Padre"
 
-        Cmb_Correo_Al_Grabar.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
-        Cmb_Correo_Al_Cerrar.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Correo_Al_Grabar.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
+        Cmb_Correo_Al_Cerrar.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
     End Sub
 

@@ -132,7 +132,7 @@ Public Class Frm_Inf_Vencimientos_Revisa_Documentos
 
             Consulta_sql = "SELECT TIDO,NUDO,IDMAEDDO From MAEDDO Where IDMAEEDO = " & _Idmaeedo
 
-            Dim _TblDetalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblDetalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _FDetalle As DataRow In _TblDetalle.Rows
 
@@ -145,7 +145,7 @@ Public Class Frm_Inf_Vencimientos_Revisa_Documentos
                 Consulta_sql = "SELECT * FROM MAEDDO" & vbCrLf &
                                "WHERE IDRST = " & _Idmaeddo_FCC & " AND ARCHIRST = 'MAEDDO' AND TIDO = 'GDD' AND ESLIDO = ''"
 
-                Dim _TblGdd As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblGdd As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 System.Windows.Forms.Application.DoEvents()
 
@@ -228,7 +228,7 @@ Public Class Frm_Inf_Vencimientos_Revisa_Documentos
             Dim _Idmaeedo As Integer = _Fila.Cells("IDMAEEDO").Value
 
             Consulta_sql = "SELECT TICT,PRCT,TIPR,KOPRCT,NOKOPR,UDTRPR,CAPRCO1,CAPRCO2 From MAEDDO Where IDMAEEDO = " & _Idmaeedo
-            Dim _TblDetalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblDetalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Cont_dt = 1
 
@@ -277,7 +277,7 @@ Public Class Frm_Inf_Vencimientos_Revisa_Documentos
                                        "FROM MAEST Where KOPR IN " &
                                        "(Select Distinct KOPRREM From TABREMP Where KOPR = '" & _Codigo & "' And KOPRREM <> '" & _Codigo & "')"
 
-                        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                         If CBool(_Tbl.Rows.Count) Then
                             _Stock_Ud1_Rem = _Tbl.Rows(0).Item("STFI1")
@@ -292,7 +292,7 @@ Public Class Frm_Inf_Vencimientos_Revisa_Documentos
 
                     Consulta_sql = "SELECT ISNULL(SUM(STFI1),0) AS STFI1,ISNULL(SUM(STFI2),0) AS STFI2" & vbCrLf &
                                    "FROM MAEST Where KOPR = '" & _Codigo & "'"
-                    Dim _TblStock As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _TblStock As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
                     If CBool(_TblStock.Rows.Count) Then

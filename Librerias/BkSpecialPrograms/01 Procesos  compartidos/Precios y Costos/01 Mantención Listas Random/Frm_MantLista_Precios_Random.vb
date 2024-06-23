@@ -140,7 +140,7 @@ Public Class Frm_MantLista_Precios_Random
         _Sql.Ej_consulta_IDU(Consulta_sql, False)
 
         Consulta_sql = "Select Top 1 * From TABPRE"
-        _TblTabpre = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblTabpre = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _Lista_Campos_Adicionales.Clear()
         _Lista_Campos_Adicionales = New List(Of ListaDePrecios.LsCamposAdicionalesTabpre)
@@ -193,7 +193,7 @@ Public Class Frm_MantLista_Precios_Random
         Consulta_sql += vbCrLf &
                        "Select * From " & _Nombre_Tbl_Paso_Precios
 
-        _Tbl_Precios = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Precios = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Sb_Formato_Grilla()
 
@@ -204,7 +204,7 @@ Public Class Frm_MantLista_Precios_Random
         If (_Tbl_Precios Is Nothing) Then
             Consulta_sql = "Truncate table " & _Nombre_Tbl_Paso_Precios & vbCrLf &
                       "Select * From " & _Nombre_Tbl_Paso_Precios
-            _Tbl_Precios = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Precios = _Sql.Fx_Get_DataTable(Consulta_sql)
         End If
 
         Grilla.DataSource = _Tbl_Precios
@@ -412,7 +412,7 @@ Public Class Frm_MantLista_Precios_Random
             If _Traer_Producto Then
 
                 Consulta_sql = "Select KOPR As Codigo From MAEPR Where KOPR = '" & _Codigo.Trim & "'"
-                _Tbl_Productos_Seleccionados = _Sql.Fx_Get_Tablas(Consulta_sql)
+                _Tbl_Productos_Seleccionados = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 Sb_Traer_Productos_Al_Tratamiento(False)
 
@@ -462,7 +462,7 @@ Public Class Frm_MantLista_Precios_Random
             _Tbl_Productos_Seleccionados = _Filtrar.Pro_Tbl_Filtro
             If _Filtrar.Pro_Filtro_Todas Then
                 Consulta_sql = "SELECT KOPR AS 'Codigo', NOKOPR AS 'Descripcion' FROM MAEPR WHERE TIPR = 'FPN'"
-                _Tbl_Productos_Seleccionados = _Sql.Fx_Get_Tablas(Consulta_sql)
+                _Tbl_Productos_Seleccionados = _Sql.Fx_Get_DataTable(Consulta_sql)
             End If
 
             Sb_Traer_Productos_Al_Tratamiento(True)
@@ -602,7 +602,7 @@ Public Class Frm_MantLista_Precios_Random
 
             Consulta_sql += vbCrLf & "Select * From " & _Nombre_Tbl_Paso_Precios
 
-            _Tbl_Precios = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Precios = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Sb_Formato_Grilla()
 
@@ -620,7 +620,7 @@ Public Class Frm_MantLista_Precios_Random
         Dim _SqlQuery1 = "Select KOLT From TABPP" & vbCrLf &
                  "Where KOLT Not In (Select KOLT From TABPRE Where KOLT In " & _Filtro_Listas & " And KOPR = '" & _Codigo & "')" & vbCrLf &
                  "And KOLT In " & _Filtro_Listas
-        Dim _ListaSinAsig As DataTable = _Sql.Fx_Get_Tablas(_SqlQuery1)
+        Dim _ListaSinAsig As DataTable = _Sql.Fx_Get_DataTable(_SqlQuery1)
 
         If _ListaSinAsig.Rows.Count Then
 
@@ -769,7 +769,7 @@ Public Class Frm_MantLista_Precios_Random
             Consulta_sql += Rdb_Traer_Bloqueados_Compra_Venta_y_Produccion.Tag.ToString
         End If
 
-        _Tbl_Productos_Seleccionados = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Productos_Seleccionados = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Sb_Traer_Productos_Al_Tratamiento(False)
         _Tbl_Productos_Seleccionados = Nothing
@@ -1831,7 +1831,7 @@ Public Class Frm_MantLista_Precios_Random
         End If
 
         Consulta_sql = "Select KOPR as Codigo From MAEPR"
-        _Tbl_Productos_Seleccionados = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Productos_Seleccionados = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Sb_Traer_Productos_Al_Tratamiento(False)
         _Tbl_Productos_Seleccionados = Nothing
@@ -2014,7 +2014,7 @@ Public Class Frm_MantLista_Precios_Random
             Consulta_sql += Rdb_Traer_Bloqueados_Compra_Venta_y_Produccion.Tag.ToString
         End If
 
-        _Tbl_Productos_Seleccionados = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Productos_Seleccionados = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Sb_Traer_Productos_Al_Tratamiento(False)
         _Tbl_Productos_Seleccionados = Nothing

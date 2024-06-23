@@ -252,7 +252,7 @@ Public Class Clase_Crear_Documento
                             CASE WHEN TIDO In ('GRD','NCV') THEN CAPRCO1-CAPREX1 ELSE (CAPRAD1+CAPREX1)-CAPRNC1 END AS 'CantUd1_Dori_Ncv',
 	                        CASE WHEN TIDO In ('GRD','NCV') THEN CAPRCO2-CAPREX2 ELSE (CAPRAD2+CAPREX2)-CAPRNC2 END AS 'CantUd2_Dori_Ncv'
                             From MAEDDO Where IDMAEDDO In " & _Filtro_Idmaeddo_Dori
-            _Tbl_Maeddo_Dori = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Maeddo_Dori = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         End If
 
@@ -262,7 +262,7 @@ Public Class Clase_Crear_Documento
         If Fl = "()" Then Fl = "(0)"
 
         Consulta_sql = "SELECT DISTINCT IDMAEEDO,TIDO FROM MAEDDO WHERE IDMAEEDO IN " & Fl
-        Dim _TblOrigen As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblOrigen As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         SQL_ServerClass.Sb_Abrir_Conexion(cn2)
@@ -2194,7 +2194,7 @@ Public Class Clase_Crear_Documento
         ' _Modalidad = "  "
 
         Dim _Consulta_sql = "Select Top 1 " & _Tido & " From CONFIEST Where MODALIDAD = '" & _Modalidad & "' And EMPRESA = '" & ModEmpresa & "'"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
         Dim _Nudo_Modalidad As String
 

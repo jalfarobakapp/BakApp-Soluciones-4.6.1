@@ -99,7 +99,7 @@ Public Class Frm_Arbol_Asociacion_01
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo = '" & _Codigo & "'" & vbCrLf &
                        "And Para_filtro = 0"
 
-        _Tbl_Nodos_Asociacios_Producto = _Sql.Fx_Get_Tablas(Consulta_sql) '_SQL.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Nodos_Asociacios_Producto = _Sql.Fx_Get_DataTable(Consulta_sql) '_SQL.Fx_Get_Tablas(Consulta_sql)
 
         If _Mostrar_Arbol_Del_Producto Then
 
@@ -383,7 +383,7 @@ Public Class Frm_Arbol_Asociacion_01
 
                 Dim _SqlQuery = "Select * From Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _Cod_Nodo
 
-                Dim _TblNodo As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblNodo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
                 Dim _Es_Padre As Boolean
 
                 If CBool(_TblNodo.Rows.Count) Then

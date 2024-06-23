@@ -73,7 +73,7 @@
                        "OR dbo.Zw_ListaLC_ValPro.FechaModif IS NULL"
 
         'Grilla.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
-        _Tbl_Grilla_Old = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Grilla_Old = _Sql.Fx_Get_DataTable(Consulta_sql)
         GrillaProdActualizados.DataSource = _Tbl_Grilla_Old
 
         ''cast((1375.0*100/1462) as decimal(10,2)) as porcentaj
@@ -118,7 +118,7 @@
 
         With GrillaProdActualizados
 
-            .DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            .DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
             .Columns("Codigo").Width = 100
@@ -319,7 +319,7 @@
         Consulta_sql = Replace(Consulta_sql, "#Global_BaseBk#", _Global_BaseBk)
         Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
 
-        _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

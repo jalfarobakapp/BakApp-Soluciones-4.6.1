@@ -18,7 +18,7 @@
         NombreTablaPasoInforme = "TblPsInf" & FUNCIONARIO & _Rd.Next(100, 999)
 
         Consulta_sql = "Select Distinct TABLE_NAME From INFORMATION_SCHEMA.COLUMNS Where TABLE_NAME Like 'TblPs" & FUNCIONARIO & "%'"
-        Dim _Tblspaso As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tblspaso As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
         Consulta_sql = String.Empty
 
         For Each _Fila As DataRow In _Tblspaso.Rows
@@ -26,7 +26,7 @@
         Next
 
         Consulta_sql = "Select Distinct TABLE_NAME From INFORMATION_SCHEMA.COLUMNS Where TABLE_NAME Like 'TblPsInf" & FUNCIONARIO & "%'"
-        _Tblspaso = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tblspaso = _Sql.Fx_Get_DataTable(Consulta_sql)
         Consulta_sql = String.Empty
 
         For Each _Fila As DataRow In _Tblspaso.Rows

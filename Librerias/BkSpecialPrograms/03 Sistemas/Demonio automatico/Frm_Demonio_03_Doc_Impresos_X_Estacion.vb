@@ -33,7 +33,7 @@ Public Class Frm_Demonio_03_Doc_Impresos_X_Estacion
 
             Consulta_sql = "Select TipoDoc as Padre,NombreDoc as Hijo From " & _Global_BaseBk & "Zw_Demonio_Cof_Estacion" & vbCrLf &
                        "WHERE Traer_Doc_Auto_Imprimir = 1 And NombreEquipo = '" & _Nombre_Equipo & "'" & vbCrLf & "ORDER BY Padre"
-            _Tbl_Doc_A_Imprimir = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Doc_A_Imprimir = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Return _Tbl_Doc_A_Imprimir
         End Get
@@ -62,7 +62,7 @@ Public Class Frm_Demonio_03_Doc_Impresos_X_Estacion
         Consulta_sql = "Select TipoDoc as Padre,NombreDoc as Hijo From " & _Global_BaseBk & "Zw_Demonio_Cof_Estacion" & vbCrLf &
                        "Where Traer_Doc_Auto_Imprimir = 1 And NombreEquipo = '" & _Nombre_Equipo & "'" & vbCrLf &
                        "Order BY Padre"
-        _Tbl_Doc_A_Imprimir = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Doc_A_Imprimir = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         caract_combo(Cmb_Tido)
         Cmb_Tido.DataSource = _Tbl_Doc_A_Imprimir
@@ -100,7 +100,7 @@ Public Class Frm_Demonio_03_Doc_Impresos_X_Estacion
 
         Consulta_sql = "Select Codigo From " & _Global_BaseBk & "Zw_Demonio_Filtros_X_Estacion" & vbCrLf &
                        "Where IdPadre = " & _IdPadre
-        Dim _TblFiltroFunc As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblFiltroFunc As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Filtro_Funcionarios As String
 
@@ -121,7 +121,7 @@ Public Class Frm_Demonio_03_Doc_Impresos_X_Estacion
 
         Consulta_sql = Replace(Consulta_sql, "#Fecha#", _Fecha)
 
-        _Tbl_Documentos_Informe = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Documentos_Informe = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

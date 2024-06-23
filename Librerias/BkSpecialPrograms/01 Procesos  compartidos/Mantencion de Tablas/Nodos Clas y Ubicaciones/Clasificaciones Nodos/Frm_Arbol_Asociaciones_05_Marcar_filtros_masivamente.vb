@@ -82,7 +82,7 @@ Public Class Frm_Arbol_Asociaciones_05_Marcar_filtros_masivamente
                 'Fm.Sb_Llenar_Arbol_completo(_Codigo)
 
                 Consulta_sql = "SELECT * FROM Zw_Prod_Asociacion Zw_Pr Where Codigo = '" & _Codigo & "'"
-                Dim _Tbl_Clasificaciones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Clasificaciones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 'Fm.Sb_Crear_Descrip_busqueda(_Codigo, _Descripcion, _Tbl_Clasificaciones)
                 'Fm.Dispose()
@@ -117,14 +117,14 @@ Public Class Frm_Arbol_Asociaciones_05_Marcar_filtros_masivamente
         Dim _CodPadre As String
 
         Consulta_sql = "Select * From Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _Codigo_Nodo
-        Dim _Tbl As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
 
         _CodPadre = _Tbl.Rows(0).Item("Identificacdor_NodoPadre")
 
         Do While (_CodPadre <> 0)
 
             Consulta_sql = "Select * From Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _CodPadre
-            _Tbl = _SQL.Fx_Get_Tablas(Consulta_sql)
+            _Tbl = _SQL.Fx_Get_DataTable(Consulta_sql)
 
             _CodPadre = _Tbl.Rows(0).Item("Identificacdor_NodoPadre")
             _Full = "\" & _Tbl.Rows(0).Item("Descripcion") & _Full
@@ -204,7 +204,7 @@ Public Class Frm_Arbol_Asociaciones_05_Marcar_filtros_masivamente
 
 
             Consulta_sql = "Select NOKOPR From MAEPR Where KOPR = '" & _Codigo & "'"
-            Dim _TblProducto As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblProducto As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
             Dim _Descripcion_pro As String = "Producto no existe"
 
             If CBool(_TblProducto.Rows.Count) Then
@@ -220,7 +220,7 @@ Public Class Frm_Arbol_Asociaciones_05_Marcar_filtros_masivamente
 
             Consulta_sql = "Select Codigo_Nodo From Zw_TblArbol_Asociaciones" & vbCrLf &
                            "Where Descripcion = '" & _Descripcion_clas & "'"
-            Dim _TblClass As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblClass As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
 
 
             If CBool(_TblClass.Rows.Count) Then
@@ -320,7 +320,7 @@ Public Class Frm_Arbol_Asociaciones_05_Marcar_filtros_masivamente
                        "Where Es_Padre = 0" & vbCrLf &
                        "Order by Descripcion"
 
-        Dim _TblClass As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblClass As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
         Dim _Descripcion_Nodo As String
 
         Dim _i = 1
@@ -333,7 +333,7 @@ Public Class Frm_Arbol_Asociaciones_05_Marcar_filtros_masivamente
                      "FROM Zw_Prod_Asociacion" & vbCrLf &
                      "Where Codigo_Nodo = " & _Codigo_Nodo & " And Para_filtro = 0 And Clas_unica = 0" & vbCrLf &
                      "Order by Codigo"
-            Dim _TblProducto As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblProducto As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
 
             Sb_AddToLog("Paso 3", "Analizando Claisficación: " & _Descripcion_Nodo & vbCrLf &
                         "Productos encontrados: " & _TblProducto.Rows.Count, TxtLog, True)
@@ -362,7 +362,7 @@ Public Class Frm_Arbol_Asociaciones_05_Marcar_filtros_masivamente
                        "From Zw_TblArbol_Asociaciones Zw2 Where Zw2.Codigo_Nodo = Zw1.Codigo_Nodo) As Descripcion" & vbCrLf &
                        "FROM Zw_Prod_Asociacion Zw1" & vbCrLf &
                        "Where Zw1.Codigo_Nodo in (Select Codigo_Nodo from Zw_TblArbol_Asociaciones Where Es_Padre = 0)"
-        _TblNodos = _SQL.Fx_Get_Tablas(Consulta_sql)
+        _TblNodos = _SQL.Fx_Get_DataTable(Consulta_sql)
 
 
         'Barra_Progreso_.Maximum = 100
@@ -381,7 +381,7 @@ Public Class Frm_Arbol_Asociaciones_05_Marcar_filtros_masivamente
             Consulta_sql = "SELECT Distinct Codigo FROM Zw_Prod_Asociacion" & vbCrLf &
                            "Where Codigo_Nodo = " & _Codigo_Nodo
 
-            _TblProductos = _SQL.Fx_Get_Tablas(Consulta_sql)
+            _TblProductos = _SQL.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Filtro_Productos As String = Generar_Filtro_IN(_TblProductos, "", "Codigo", False, False, "'")
             Dim _Descripcion_Busqueda As String = Fx_Raiz_Clasificacion_FullPath(_Codigo_Nodo) & "\" & _Descripcion
@@ -431,7 +431,7 @@ Public Class Frm_Arbol_Asociaciones_05_Marcar_filtros_masivamente
                                "Where Codigo = '" & _Codigo & "' And Codigo_Nodo In (Select Codigo_Nodo" & Space(1) &
                                "From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & Space(1) &
                                "Where Codigo_Nodo <> " & _Codigo_Nodo & " And Identificacdor_NodoPadre = " & _Nodo_Padre & ")"
-                Dim _TblPadres As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblPadres As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 If Not CBool(_TblPadres.Rows.Count) Then
                     Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo = '" & _Codigo & "'"
@@ -466,7 +466,7 @@ Public Class Frm_Arbol_Asociaciones_05_Marcar_filtros_masivamente
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
                        "Where Codigo_Nodo = " & _Codigo_Nodo & Space(1) & _Filtro_Productos
 
-        Dim _TblAsociaciones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblAsociaciones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Sql_Query = String.Empty
 
@@ -491,7 +491,7 @@ Public Class Frm_Arbol_Asociaciones_05_Marcar_filtros_masivamente
             Consulta_sql = "Select KOPR As Codigo,NOKOPR From MAEPR Where KOPR In " & _Filtro_Productos & vbCrLf &
                            "And KOPR Not In (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo_Nodo = " & _Codigo_Nodo & ")"
 
-            _TblFiltroProductos = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _TblFiltroProductos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         End If
 
@@ -511,7 +511,7 @@ Public Class Frm_Arbol_Asociaciones_05_Marcar_filtros_masivamente
                                "WHERE Codigo IN " & _Filtro_Productos & vbCrLf &
                                "And Codigo_Nodo in (Select Codigo_Nodo from " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Es_Padre = 0)"
 
-                Dim _TblNodos As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblNodos As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
 
                 Dim _Sql2 As String = String.Empty
 
@@ -564,7 +564,7 @@ Public Class Frm_Arbol_Asociaciones_05_Marcar_filtros_masivamente
                                          Optional ByVal _Consulta_Sql As String = "")
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _Codigo_Nodo
-        Dim _TblNodo As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblNodo As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Identificacdor_NodoPadre = _TblNodo.Rows(0).Item("Identificacdor_NodoPadre")
         Dim _Descripcion_Nodo = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TblArbol_Asociaciones", "Descripcion", "Codigo_Nodo = " & _Identificacdor_NodoPadre)

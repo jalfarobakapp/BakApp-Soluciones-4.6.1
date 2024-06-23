@@ -94,7 +94,7 @@ Public Class Frm_Precios_Prestashop_Web
                            "IsNull((Select SUM(STFI1) From MAEST MS Where MS.KOPR = TD.KOPR),0) As Stock" & vbCrLf &
                            "From TABCODAL TD Where KOEN = 'PRESTASHOP'"
 
-            _TblProductos_Web = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _TblProductos_Web = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Btn_Actualizar_Productos.Text = "Levantar stock en la PrestaShop"
 
@@ -421,7 +421,7 @@ Public Class Frm_Precios_Prestashop_Web
 
                 Consulta_sql = "Select KOPR as Codigo,NOKOPR as Descripcion From MAEPR Where KOPR = '" & _Codigo & "'"
 
-                Dim _TblProd As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblProd As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
                 If CBool(_TblProd.Rows.Count) Then
 
                     _Descripcion = _TblProd.Rows(0).Item("Descripcion")
@@ -663,7 +663,7 @@ Public Class Frm_Precios_Prestashop_Web
 
         ' Traer tabla con productos que existen la la Web pero no existen en Random
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_PrestaShop Where Codigo Not In (Select KOPR From MAEPR)"
-        Fx_Prod_Con_Problemas_Prestashop = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Fx_Prod_Con_Problemas_Prestashop = _Sql.Fx_Get_DataTable(Consulta_sql)
 
     End Function
 
@@ -874,7 +874,7 @@ Public Class Frm_Precios_Prestashop_Web
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_PrestaShop 
                             Where Sitio = '" & _Sitio & "'" & Space(1) & _Filtro_Productos
-            _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Productos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Sb_Actualizar_Prestashop(True, _Tbl_Productos)
 
@@ -891,7 +891,7 @@ Public Class Frm_Precios_Prestashop_Web
         Dim _Tbl_Productos As DataTable
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_PrestaShop Where Sitio = '" & _Sitio & "'"
-        _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Productos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Progress_Porcent.Maximum = 100 ' Bar.Value = ((Contador * 100) / Tabla.Rows.Count)
         Progress_Canti.Maximum = _Tbl_Productos.Rows.Count
@@ -963,7 +963,7 @@ Public Class Frm_Precios_Prestashop_Web
                         Select * From #Paso Where Mostrar = 1
                         Drop Table #Paso"
 
-        _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Productos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl_Productos.Rows.Count) Then
             Sb_Actualizar_Prestashop(False, _Tbl_Productos)

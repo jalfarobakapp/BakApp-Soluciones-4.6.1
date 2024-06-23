@@ -65,7 +65,7 @@ Public Class Cl_Cerrar_Documentos
         Consulta_Sql = Replace(Consulta_Sql, "#CantidadDoc#", "100")
         Consulta_Sql = Replace(Consulta_Sql, "Cast(0 As Bit) As Chk,", "Cast(1 As Bit) As Chk,")
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql, False)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
 
         If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
             Log_Registro += _Sql.Pro_Error & vbCrLf

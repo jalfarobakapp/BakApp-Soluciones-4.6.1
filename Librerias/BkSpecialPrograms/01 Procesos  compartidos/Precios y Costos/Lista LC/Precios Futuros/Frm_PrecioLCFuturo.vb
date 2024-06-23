@@ -105,7 +105,7 @@ Public Class Frm_PrecioLCFuturo
 
         End If
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         GrillaListasProgramadas.DataSource = _Tbl
 
@@ -161,7 +161,7 @@ Public Class Frm_PrecioLCFuturo
 
     Private Sub LlenarListasPrecios()
         Consulta_sql = "SELECT *  FROM " & _Global_BaseBk & "[Zw_ListaLC_Programadas_Detalles] WHERE Id_Enc='" & IdListaProgramada & "';"
-        GrillaPrecios.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        GrillaPrecios.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         FormatoGrilla(GrillaPrecios)
     End Sub
 

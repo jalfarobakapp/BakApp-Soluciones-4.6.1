@@ -304,7 +304,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         Fm_Hijo.Cmb_Documento_Compra.SelectedValue = "GRC"
 
         Consulta_sql = "Select '' As Padre,'' As Hijo Union Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
-        Dim _Tbl_LCosto As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_LCosto As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Tmp_Prm_Informes
                         Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente' And Campo = 'Cmb_Lista_de_costos' " &
@@ -2090,7 +2090,7 @@ Public Class Frm_01_Asis_Compra_Resultados
                 Dim _Codigo As String
 
                 Consulta_sql = "Select KOPRCT From MAEDDO Where IDMAEEDO = " & _New_Idmaeedo
-                Dim _Tb As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tb As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 If CBool(_Tb.Rows.Count) Then
                     For Each Fila As DataRow In _Tb.Rows
@@ -4161,7 +4161,7 @@ Public Class Frm_01_Asis_Compra_Resultados
                           "Where CantComprar > 0"
         End If
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, _Nombre_Excel)
 
@@ -4514,7 +4514,7 @@ Public Class Frm_01_Asis_Compra_Resultados
             Else
 
                 Consulta_sql = "Select top 1 * From MAEEN Where KOEN = '" & _Koen & "'"
-                Dim _TblProveedor As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblProveedor As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 If _TblProveedor.Rows.Count Then
                     _RowProveedor = _TblProveedor.Rows(0)
@@ -4836,12 +4836,12 @@ Public Class Frm_01_Asis_Compra_Resultados
         Consulta_sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda 
                             Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente' 
                             And Filtro = 'Bodegas_Stock' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & _Modalidad_Estudio & "'"
-        _TblBodCompra = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblBodCompra = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Consulta_sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda 
                            Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente' 
                            And Filtro = 'Bodegas_Rotacion_Vta'  And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & _Modalidad_Estudio & "'"
-        _TblBodVenta = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblBodVenta = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         '   Calculo para saber cuanto comprar S.V.R en Mediana
         _Sql.Sb_Parametro_Informe_Sql(Rdb_Rot_Mediana, "Compras_Asistente",
@@ -4933,7 +4933,7 @@ Public Class Frm_01_Asis_Compra_Resultados
                        "Where Fecha_Fin < '" & Format(_Fecha, "yyyyMMdd") & "' or Fecha_Fin is null" & vbCrLf &
                        "And Codigo Not in (Select KOPR From MAEPR Where TIPR = 'SSN')) And Codigo In " & _Filtro_Productos
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl.Rows.Count) Then
 
@@ -4962,7 +4962,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         Dim _Es_Agrupador = CInt(_Fila.Cells("Es_Agrupador").Value) * -1
 
         Consulta_sql = "Select '" & _Codigo & "' As Codigo"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim Fm As New Frm_Rotacion_Selec_Prod_Parametros
         Fm.Pro_Tbl_Productos_Seleccionados = _Tbl
@@ -5042,7 +5042,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         Consulta_sql = "Select Codigo From " & _Nombre_Tbl_Paso_Informe & vbCrLf &
                "Where CodigoGenerico = '" & _CodigoGenerico & "' And Es_Agrupador = 0"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Row As DataRow In _Tbl.Rows
             Dim _New_codigo = _Row.Item("Codigo")
@@ -5096,7 +5096,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         Consulta_sql = Replace(Consulta_sql, "#Porc_Crecimiento#", 1)
         Consulta_sql = Replace(Consulta_sql, "#Update_Dias#", _Update_Dias)
 
-        _Tbl_Genericos = _Sql.Fx_Get_Tablas(Consulta_sql) '_SQL.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Genericos = _Sql.Fx_Get_DataTable(Consulta_sql) '_SQL.Fx_Get_Tablas(Consulta_sql)
 
         If CBool(_Tbl_Genericos.Rows.Count) Then
 
@@ -5652,7 +5652,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
             Consulta_sql = "Select Codigo,Codigo_Nodo_Madre From " & _Nombre_Tbl_Paso_Informe & vbCrLf &
                            "Order By Codigo_Nodo_Madre"
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Fm_Hijo.ProgressBarX1.Value = 0
             Fm_Hijo.ProgressBarX1.Visible = True
@@ -5688,7 +5688,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
             Consulta_sql = "Select Distinct Codigo_Nodo_Madre From " & _Nombre_Tbl_Paso_Informe & vbCrLf &
                            "Where Es_Agrupador = 0 And Codigo_Nodo_Madre <> 0"
-            Dim _Tbl_Informe As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Informe As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Fm_Hijo.ProgressBarX1.Visible = True
             Fm_Hijo.ProgressBarX1.Maximum = _Tbl_Informe.Rows.Count
@@ -5708,7 +5708,7 @@ Public Class Frm_01_Asis_Compra_Resultados
                 Consulta_sql = "SELECT KOPR FROM MAEPR WHERE KOPR In" & Space(1) &
                                "(Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion" & Space(1) &
                                "Where Para_filtro = 1 And Codigo_Nodo = " & _Codigo_Nodo_Madre & ")"
-                Dim _Tbl_Reemplazo As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Reemplazo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 _Filtro_Productos = Generar_Filtro_IN(_Tbl_Reemplazo, "", "KOPR", False, False, "'")
 
@@ -5875,7 +5875,7 @@ Public Class Frm_01_Asis_Compra_Resultados
                                "UNION" & vbCrLf &
                                "SELECT KOPR FROM TABREMP WHERE KOPRREM = '" & _Codigo & "' AND KOPR <> '" & _Codigo & "' "
 
-                Dim _Tbl_Reemplazo As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Reemplazo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
                 _Filtro_Productos = Generar_Filtro_IN(_Tbl_Reemplazo, "", "KOPR", False, False, "'")
 
                 Consulta_sql = "Insert Into " & _Nombre_Tbl_Paso_Informe & Space(1) &
@@ -5943,7 +5943,7 @@ Public Class Frm_01_Asis_Compra_Resultados
             Dim CodigoPr_Sel = Trim(Fm_Hijo.Grilla.Rows(Fm_Hijo.Grilla.CurrentRow.Index).Cells("Codigo").Value)
 
             Consulta_sql = "Select * From MAEPR Where KOPR = '" & CodigoPr_Sel & "'"
-            _Tbl_Producto_Seleccionado = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Producto_Seleccionado = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If Not String.IsNullOrEmpty(Trim(_Codigo)) Then
 
@@ -6275,7 +6275,7 @@ Public Class Frm_01_Asis_Compra_Resultados
                                 Inner Join " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Arbol On Prod.Codigo_Nodo = Arbol.Codigo_Nodo
                                 Where Arbol.Nodo_Raiz = " & _Nodo_Raiz_Asociados & " And Es_Seleccionable = 1 And Codigo = '" & _Codigo & "'"
 
-            Dim _Tbl_Codigos_Madre As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Codigos_Madre As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Filtro_Codigos_Madre = Generar_Filtro_IN(_Tbl_Codigos_Madre, "", "Codigo_Nodo", False, False, "")
 
@@ -6304,7 +6304,7 @@ Public Class Frm_01_Asis_Compra_Resultados
             Consulta_sql = "Select Top 1 * From MAEPR Where KOPR = '" & _Codigo & "'"
         End If
 
-        Dim _TblProductos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblProductos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Filtro_Productos As String
 
@@ -6582,7 +6582,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         End If
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Return _Tbl
 
@@ -6642,7 +6642,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         Consulta_sql = "Select Distinct EMPRESA+KOSU+KOBO As Cod,* From TABBO Where EMPRESA = '" & ModEmpresa & "'"
 
-        Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Filtro As String = Generar_Filtro_IN(_Tbl_Bodegas, "", "Cod", False, False, "'")
 
@@ -6651,7 +6651,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         Dim _Orden_Bod = "ORDEN_BOD_" & ModEmpresa.Trim & ModSucursal.Trim
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_Stock Where Codigo = '" & _Codigo & "' And StfiBodExt" & Ud & " <> 0"
-        Dim _TblStExt As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblStExt As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Consulta_sql = My.Resources.Recursos_Alerta_Stock.Stock_productos_por_emp_suc_bod
         Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
@@ -6679,7 +6679,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         Consulta_sql = Replace(Consulta_sql, "--#Update_Conficion_Adicional#", _Update_Conficion_Adicional)
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 
@@ -6956,7 +6956,7 @@ Public Class Frm_01_Asis_Compra_Resultados
             Consulta_sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
                            "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente'" & Space(1) &
                            "And Filtro = 'Bodegas_Reabastecen' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & _Modalidad_Estudio & "'"
-            Dim _TblBodReabastecen As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblBodReabastecen As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
             If _Filtrar.Fx_Filtrar(_TblBodReabastecen,
@@ -6996,7 +6996,7 @@ Public Class Frm_01_Asis_Compra_Resultados
                     _Sql.Ej_consulta_IDU(Consulta_sql)
 
                     Consulta_sql = "Select Distinct Empresa,Sucursal,Bodega From " & _TblPaso & " Z1 Where (Select Count(*) From " & _TblPaso & " Z2 Where Z1.Codigo = Z2.Codigo) > 1"
-                    Dim _TblProdAmbasBodegas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _TblProdAmbasBodegas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     If CBool(_TblProdAmbasBodegas.Rows.Count) Then
 
@@ -7018,7 +7018,7 @@ Public Class Frm_01_Asis_Compra_Resultados
                     Fm_Espera.Close()
 
                     Consulta_sql = "Select * From " & _TblPaso
-                    _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    _Tbl_Productos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     If Not CBool(_Tbl_Productos.Rows.Count) Then
                         MessageBoxEx.Show(Me, "No se encontraron productos en otras bodegas", "Reabastecimiento entre bodegas",
@@ -7049,7 +7049,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
                                 Drop Table #Paso"
 
-                        Dim _TblProductos_Con_Reemplazo As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                        Dim _TblProductos_Con_Reemplazo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                         Dim _Filtro_Productos As String = Generar_Filtro_IN(_TblProductos_Con_Reemplazo, "", "Codigo", False, False, "'")
 
@@ -7101,7 +7101,7 @@ Public Class Frm_01_Asis_Compra_Resultados
                                             And Mst.KOPR In (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion " &
                                             "Where Codigo_Nodo = " & _Codigo_Nodo & " And Para_filtro = 1) And Mst.KOPR <> '" & _Codigo & "'
                                         Order By Mst.STFI1 Desc"
-                            Dim _Tbl_Hnos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                            Dim _Tbl_Hnos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                             For Each _Fila_H As DataRow In _Tbl_Hnos.Rows
 
@@ -7156,7 +7156,7 @@ Public Class Frm_01_Asis_Compra_Resultados
                     Fm_Espera.Close()
 
                     Consulta_sql = "Select * From " & _TblPaso
-                    _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    _Tbl_Productos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     For Each _Fl As DataRow In _Tbl_Productos.Rows
 
@@ -7173,7 +7173,7 @@ Public Class Frm_01_Asis_Compra_Resultados
                             Consulta_sql = "Select * From MAEDDO 
                                         Where TIDO = 'NVI' And EMPRESA = '" & _Empresa & "' And SULIDO = '" & _Sucursal &
                                     "' And BOSULIDO = '" & _Bodega & "' And KOPRCT = '" & _Codigo & "' And ESLIDO = ''"
-                            Dim _TblNviPdtes As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                            Dim _TblNviPdtes As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                             Dim _C = 0
 
@@ -7210,7 +7210,7 @@ Public Class Frm_01_Asis_Compra_Resultados
                     _Sql.Ej_consulta_IDU(Consulta_sql)
 
                     Consulta_sql = "Select * From " & _TblPaso
-                    _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    _Tbl_Productos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     Dim _Reg2 = _Sql.Fx_Cuenta_Registros(_TblPaso, "NVI_Pendientes <> ''")
 
@@ -7253,7 +7253,7 @@ Public Class Frm_01_Asis_Compra_Resultados
                                                  MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
                                     Consulta_sql = "Select * From " & _TblPaso
-                                    _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
+                                    _Tbl_Productos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                                     ExportarTabla_JetExcel_Tabla(_Tbl_Productos, Me, "Prod. con NVI")
 
@@ -7286,7 +7286,7 @@ Public Class Frm_01_Asis_Compra_Resultados
                                                 Inner Join " & _TblPaso & " On Codigo = KOPRCT
                                         Where Edo.TIDO = 'NVI' And Edo.SUDO = '" & _Suc_Recep & "' AND Edo.BODESTI = '" & _Bod_Recep & "' 
                                           And Ddo.ESLIDO = '' And NVI_Pendientes <> ''"
-                        _Tbl_Productos_Copy = _Sql.Fx_Get_Tablas(Consulta_sql)
+                        _Tbl_Productos_Copy = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                         Consulta_sql = String.Empty
 
@@ -7377,7 +7377,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
                                     Consulta_sql = "Select Top 20 * From " & _TblPaso & " 
                                                     Where NVI = '' And Empresa = '" & _Emp & "' And Sucursal = '" & _Suc & "' And Pedir > 0 Order By Ubicacion"
-                                    _Tbl_ProductosSol = _Sql.Fx_Get_Tablas(Consulta_sql)
+                                    _Tbl_ProductosSol = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                                     _Seguir = CBool(_Tbl_ProductosSol.Rows.Count)
 
@@ -7411,7 +7411,7 @@ Public Class Frm_01_Asis_Compra_Resultados
                                             Where IDMAEEDO In
                                             (Select Distinct Idmaeedo From " & _TblPaso & " Where Idmaeedo <> 0)"
 
-                            Dim _Tbl_ProdNVI As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                            Dim _Tbl_ProdNVI As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                             Consulta_sql = String.Empty
 
@@ -7486,12 +7486,12 @@ Public Class Frm_01_Asis_Compra_Resultados
                             If Chk_Exportar_Excel_Crear_NVI.Checked Then
 
                                 Consulta_sql = "Select * From " & _TblPaso & " Where Idmaeedo <> 0 Order By NVI,Ubicacion"
-                                _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
+                                _Tbl_Productos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                             Else
 
                                 Consulta_sql = "Select * From " & _TblPaso
-                                _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
+                                _Tbl_Productos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                             End If
 
@@ -7801,7 +7801,7 @@ Public Class Frm_01_Asis_Compra_Resultados
                                 Inner Join " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Arbol On Prod.Codigo_Nodo = Arbol.Codigo_Nodo
                                 Where Arbol.Nodo_Raiz = " & _Nodo_Raiz_Asociados & " And Es_Seleccionable = 1 And Codigo In " & _Filtro_Productos
 
-            Dim _Tbl_Codigos_Madre As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Codigos_Madre As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Else
 
@@ -7942,7 +7942,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         Consulta_sql = "Select Cast(1 As Bit) As Chk,KOBO As Codigo,NOKOBO As Descripcion 
                         From TABBO WHere EMPRESA = '" & _Emp_Reab & "' And KOSU = '" & _Suc_Reab & "' And KOBO = '" & _Bod_Reab & "'"
 
-        Dim _Tbl_Bodegas_Fl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Bodegas_Fl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _Filtro_Bodega = "And EMPRESA = '" & _Emp_Reab & "' And KOSU = '" & _Suc_Reab & "' And KOBO = '" & _Bod_Reab & "'"
 
@@ -8347,7 +8347,7 @@ Select * From #Paso Order By FechaUltCompra
 
 Drop Table #Paso"
 
-            Dim _Tbl_Proveedores As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Proveedores As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Generar_OCC As New GeneraOccAuto.Generar_Doc_Auto
 
@@ -9111,7 +9111,7 @@ Drop Table #Paso"
                 Dim _Codigo As String
 
                 Consulta_sql = "Select KOPRCT From MAEDDO Where IDMAEEDO = " & _New_Idmaeedo
-                Dim _Tb As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tb As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 If CBool(_Tb.Rows.Count) Then
                     For Each Fila As DataRow In _Tb.Rows
@@ -9204,7 +9204,7 @@ Drop Table #Paso"
                            "Where CantComprar > 0 And NoComprarProvNoTiene = 1" & vbCrLf & _Condicion & vbCrLf &
                            "Order By KOEN,SUEN,Fecha_Ult_Compra"
 
-            Dim _TblDetalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblDetalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If Not CBool(_TblDetalle.Rows.Count) Then
                 Throw New System.Exception("No hay productos que mostrar")
@@ -9388,7 +9388,7 @@ Drop Table #Paso"
             Consulta_sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
                            "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente'" & Space(1) &
                            "And Filtro = 'Bodegas_Reabastecen' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & _Modalidad_Estudio & "'"
-            Dim _TblBodReabastecen As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblBodReabastecen As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
             If CBool(_TblBodReabastecen.Rows.Count) Then
@@ -9425,7 +9425,7 @@ Drop Table #Paso"
                     _Sql.Ej_consulta_IDU(Consulta_sql)
 
                     Consulta_sql = "Select Distinct Empresa,Sucursal,Bodega From " & _TblPaso & " Z1 Where (Select Count(*) From " & _TblPaso & " Z2 Where Z1.Codigo = Z2.Codigo) > 1"
-                    Dim _TblProdAmbasBodegas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _TblProdAmbasBodegas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     If CBool(_TblProdAmbasBodegas.Rows.Count) Then
 
@@ -9445,7 +9445,7 @@ Drop Table #Paso"
                     Fm_Espera.Close()
 
                     Consulta_sql = "Select * From " & _TblPaso
-                    _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    _Tbl_Productos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     If Not Auto_GenerarAutomaticamenteNVI AndAlso Not CBool(_Tbl_Productos.Rows.Count) Then
                         MessageBoxEx.Show(Me, "No se encontraron productos en otras bodegas", "Reabastecimiento entre bodegas",
@@ -9474,7 +9474,7 @@ Drop Table #Paso"
 
                                 Drop Table #Paso"
 
-                        Dim _TblProductos_Con_Reemplazo As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                        Dim _TblProductos_Con_Reemplazo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                         Dim _Filtro_Productos As String = Generar_Filtro_IN(_TblProductos_Con_Reemplazo, "", "Codigo", False, False, "'")
 
@@ -9526,7 +9526,7 @@ Drop Table #Paso"
                                             And Mst.KOPR In (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion " &
                                             "Where Codigo_Nodo = " & _Codigo_Nodo & " And Para_filtro = 1) And Mst.KOPR <> '" & _Codigo & "'
                                         Order By Mst.STFI1 Desc"
-                            Dim _Tbl_Hnos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                            Dim _Tbl_Hnos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                             For Each _Fila_H As DataRow In _Tbl_Hnos.Rows
 
@@ -9581,7 +9581,7 @@ Drop Table #Paso"
                     Fm_Espera.Close()
 
                     Consulta_sql = "Select * From " & _TblPaso
-                    _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    _Tbl_Productos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     For Each _Fl As DataRow In _Tbl_Productos.Rows
 
@@ -9598,7 +9598,7 @@ Drop Table #Paso"
                             Consulta_sql = "Select * From MAEDDO 
                                         Where TIDO = 'NVI' And EMPRESA = '" & _Empresa & "' And SULIDO = '" & _Sucursal &
                                     "' And BOSULIDO = '" & _Bodega & "' And KOPRCT = '" & _Codigo & "' And ESLIDO = ''"
-                            Dim _TblNviPdtes As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                            Dim _TblNviPdtes As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                             Dim _C = 0
 
@@ -9635,7 +9635,7 @@ Drop Table #Paso"
                     _Sql.Ej_consulta_IDU(Consulta_sql)
 
                     Consulta_sql = "Select * From " & _TblPaso
-                    _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    _Tbl_Productos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     Dim _Reg2 = _Sql.Fx_Cuenta_Registros(_TblPaso, "NVI_Pendientes <> ''")
 
@@ -9718,7 +9718,7 @@ Drop Table #Paso"
                                                 Inner Join " & _TblPaso & " On Codigo = KOPRCT
                                         Where Edo.TIDO = 'NVI' And Edo.SUDO = '" & _Suc_Recep & "' AND Edo.BODESTI = '" & _Bod_Recep & "' 
                                           And Ddo.ESLIDO = '' And NVI_Pendientes <> ''"
-                        _Tbl_Productos_Copy = _Sql.Fx_Get_Tablas(Consulta_sql)
+                        _Tbl_Productos_Copy = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                         Consulta_sql = String.Empty
 
@@ -9805,7 +9805,7 @@ Drop Table #Paso"
 
                                 Consulta_sql = "Select Top 20 * From " & _TblPaso & " 
                                                     Where NVI = '' And Empresa = '" & _Emp & "' And Sucursal = '" & _Suc & "' And Pedir > 0 Order By Ubicacion"
-                                _Tbl_ProductosSol = _Sql.Fx_Get_Tablas(Consulta_sql)
+                                _Tbl_ProductosSol = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                                 _Seguir = CBool(_Tbl_ProductosSol.Rows.Count)
 
@@ -9841,7 +9841,7 @@ Drop Table #Paso"
                                             Where IDMAEEDO In
                                             (Select Distinct Idmaeedo From " & _TblPaso & " Where Idmaeedo <> 0)"
 
-                        Dim _Tbl_ProdNVI As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                        Dim _Tbl_ProdNVI As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                         Consulta_sql = String.Empty
 

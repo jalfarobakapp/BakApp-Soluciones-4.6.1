@@ -35,7 +35,7 @@ Public Class Frm_Infor_Ent_Estado_Creditos_Vigentes
                        "Where IDMAEEDO Not In (Select IDMAEEDO From MAEVEN) And TIDO In " &
                        "('BLV','BLX','BSV','ESC','FCV','FDB','FDV','FDX','FDZ','FEE','FEV','FVL','FVT','FVX','FVZ','NCE','NCV','NCX','NCZ','NEV','RIN') " &
                        "And VABRDO > VAABDO Order by NUDO"
-        Dim _TblDocSinVenci As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblDocSinVenci As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblDocSinVenci.Rows.Count) Then
 

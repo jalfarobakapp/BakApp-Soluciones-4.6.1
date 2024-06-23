@@ -811,7 +811,7 @@ Public Class Frm_St_Estado_03_Presupuesto2
         End If
 
         Consulta_sql = "Select top 1 * From MAEPR Where KOPR = '" & _Codigo & "'"
-        _TblProducto = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblProducto = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblProducto.Rows.Count) Then
             Return _TblProducto.Rows(0)
@@ -886,7 +886,7 @@ Public Class Frm_St_Estado_03_Presupuesto2
                            "And Pre.Empresa = '" & ModEmpresa & "' And Pre.Sucursal = '" & ModSucursal & "'" & vbCrLf &
                            "Where CodReceta = '" & _CodReceta & "'"
 
-            Dim _TblOperaciones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblOperaciones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _Fl As DataRow In _TblOperaciones.Rows
                 _Fl.Item("Cantidad") = 0

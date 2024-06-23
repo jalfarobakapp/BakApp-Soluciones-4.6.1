@@ -288,7 +288,7 @@ Public Class Frm_St_Mant_Tecnicos_Talleres
         Dim _NvoNro_CodFuncionario As String
 
 
-        Dim _TblPaso = _Sql.Fx_Get_Tablas("Select Max(CodFuncionario) As CodFuncionario " &
+        Dim _TblPaso = _Sql.Fx_Get_DataTable("Select Max(CodFuncionario) As CodFuncionario " &
                                           "From " & _Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller") ' cn1, "MAX(Nro_SOC)", _Global_BaseBk & "ZW_SOC_Encabezado", "Stand_By = " & Stby)
 
         If CBool(_TblPaso.Rows.Count) Then

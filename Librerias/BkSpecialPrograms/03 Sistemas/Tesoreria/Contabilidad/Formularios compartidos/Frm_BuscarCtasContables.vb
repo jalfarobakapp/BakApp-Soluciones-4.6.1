@@ -69,7 +69,7 @@ Public Class Frm_BuscarCtasContables
                        "Where PERIODO = '" & _Percontact & "' And 1>0" & vbCrLf &
                        "And GRANCUE+MAYOR+CUENTA+NOCUENTA LIKE '%" & _Cadena & "%'" & vbCrLf &
                        "Order By PERIODO,GRANCUE,MAYOR,CUENTA"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

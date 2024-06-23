@@ -74,7 +74,7 @@ Public Class Clas_Crear_DFA_Desde_Meson
                         Inner Join " & _Global_BaseBk & "Zw_Pdp_MesonVsProductos Op On Op.Idpotpr = Mq.Idpotpr 
                         Where Op.Idpote = " & _Idpote & " And Op.Idpotl = " & _Idpotl & " And Mq.Idpdatfae = 0 And Mq.Estado = 'FMQ'"
 
-        _Tbl_Fabricacion = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_Fabricacion = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Fx_Ingresar_Nueva_DFA_PDATFAE(_Numdf)
 

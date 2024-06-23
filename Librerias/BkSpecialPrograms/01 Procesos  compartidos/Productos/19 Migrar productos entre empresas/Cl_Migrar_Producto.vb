@@ -299,7 +299,7 @@ Namespace Bk_Migrar_Producto
             Dim Tabla = Replace(_Nomtabla, "2", "")
 
             Dim _ConsultaSql = "SELECT * FROM " & Tabla & " WHERE " & _Campo & "='" & _Codigo & "';"
-            Dim _Tbl As DataTable = Conexion.Fx_Get_Tablas(_ConsultaSql)
+            Dim _Tbl As DataTable = Conexion.Fx_Get_DataTable(_ConsultaSql)
             _Tbl.TableName = _Nomtabla
             Return _Tbl
         End Function
@@ -437,7 +437,7 @@ Namespace Bk_Migrar_Producto
             If String.IsNullOrWhiteSpace(_GrbProd_Bodegas) Then Return ""
 
             Consulta_sql = "Select * From TABBO Where EMPRESA+KOSU+KOBO In " & _GrbProd_Bodegas
-            Dim _TblBodegas As DataTable = _Sql2.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblBodegas As DataTable = _Sql2.Fx_Get_DataTable(Consulta_sql)
 
             For Each _Fila As DataRow In _TblBodegas.Rows
 
@@ -468,7 +468,7 @@ Namespace Bk_Migrar_Producto
             Dim _Koprte As String = _RowProducto.Item("KOPRTE")
 
             Consulta_sql = "Select * From TABPP Where KOLT In " & _GrbProd_Listas
-            Dim _TblListas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblListas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _Fila As DataRow In _TblListas.Rows
 

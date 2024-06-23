@@ -169,7 +169,7 @@ Public Class Frm_RegistrarEquipo_Listado
     Private Sub Btn_Btn_Exportar_Excel_Estaciones_Click(sender As Object, e As EventArgs) Handles Btn_Btn_Exportar_Excel_Estaciones.Click
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_EstacionesBkp"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Estaciones_Bk")
 
@@ -178,7 +178,7 @@ Public Class Frm_RegistrarEquipo_Listado
     Private Sub Btn_Btn_Exportar_Excel_Estaciones_Diablito_Click(sender As Object, e As EventArgs) Handles Btn_Btn_Exportar_Excel_Estaciones_Diablito.Click
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Estaciones_Impresion"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Estaciones_Bk_ImpDiablito")
 
@@ -225,7 +225,7 @@ Public Class Frm_RegistrarEquipo_Listado
         Consulta_sql = "Select *,Isnull(NOKOFU,'') As Nomre_Usuario_X_Defecto From " & _Global_BaseBk & "Zw_EstacionesBkp" &
                        "Left Join TABFU On KOFU = KOFU = Usuario_X_Defecto" & vbCrLf &
                         vbCrLf & _Condicion
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Estaciones_Bk")
 

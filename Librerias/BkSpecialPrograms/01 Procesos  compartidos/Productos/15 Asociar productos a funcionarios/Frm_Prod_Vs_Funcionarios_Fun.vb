@@ -89,7 +89,7 @@ Public Class Frm_Prod_Vs_Funcionarios_Fun
                         Inner Join TABFU AS F ON U.CodFuncionario =F.KOFU
                         Inner Join CONFIGP AS E ON U.Empresa =E.EMPRESA"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Funcionarios")
     End Sub

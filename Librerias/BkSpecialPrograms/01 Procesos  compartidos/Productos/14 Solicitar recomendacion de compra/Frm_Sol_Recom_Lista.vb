@@ -78,7 +78,7 @@ Public Class Frm_Sol_Recom_Lista
                         Left Join TABFU T1 On CodFun_Solicita = T1.KOFU
                         Left Join " & _Global_BaseBk & "Zw_Prod_SolCompra_Resp Resp On Resp.Id_SCom = Soc.Id_SCom And Resp.Estado = 'RPD'
                         Where 1 > 0 " & Environment.NewLine & _Filtro_Solicitudes
-        _Tbl_Solicitudes = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_Solicitudes = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         With Grilla
 

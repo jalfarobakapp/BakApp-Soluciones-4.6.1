@@ -70,7 +70,7 @@ Public Class Frm_Archivos_Adjuntos
                        "From " & _Global_BaseBk & "Zw_Reclamo_Archivos" & vbCrLf &
                        "Where Id_Reclamo = " & _Id_Reclamo & " And Estado = '" & _Estado & "' And Sub_Estado = '" & _Sub_Estado & "'"
 
-        Dim _TblArchivos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblArchivos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Archivos
 

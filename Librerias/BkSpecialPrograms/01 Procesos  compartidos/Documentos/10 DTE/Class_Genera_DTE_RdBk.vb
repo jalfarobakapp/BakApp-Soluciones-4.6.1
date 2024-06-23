@@ -354,7 +354,7 @@ Public Class Class_Genera_DTE_RdBk
         Try
 
             Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Referencias_Dte Where 1<0"
-            _Referencias_DTE = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Referencias_DTE = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Referencias As New Class_Referencias_DTE(_Idmaeedo)
             _Referencias.Tbl_Referencias = _Referencias_DTE
@@ -373,7 +373,7 @@ Public Class Class_Genera_DTE_RdBk
                                 From MEVENTO Mv
                                 Left Join MAEEDO Edo On Edo.IDMAEEDO = ISNULL(IDRSE,0)
                                 Where ARCHIRVE='MAEEDO' And IDRVE= " & _Idmaeedo
-                Dim _TblRefNCV As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblRefNCV As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 For Each _Fila As DataRow In _TblRefNCV.Rows
 
@@ -415,7 +415,7 @@ Public Class Class_Genera_DTE_RdBk
                             From MAEEDO 
                             Where IDMAEEDO In (Select IDMAEEDO From MAEDDO Where IDMAEDDO In (Select IDRST From MAEDDO Where IDMAEEDO = " & _Idmaeedo & "))
                             And TIDO In (" & _In & ") And TIDOELEC = 1"
-                Dim _FRef As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _FRef As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 For Each _Fila As DataRow In _FRef.Rows
 
@@ -608,7 +608,7 @@ Public Class Class_Genera_DTE_RdBk
 
 
         Consulta_sql = "Select top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
-        _Row_Configp = _Sql.Fx_Get_Tablas(Consulta_sql).Rows(0)
+        _Row_Configp = _Sql.Fx_Get_DataTable(Consulta_sql).Rows(0)
 
         Dim _Empresa = _Row_Configp.Item("EMPRESA")
         Dim _Nroresol = _Row_Configp.Item("NRORESOL")
@@ -853,7 +853,7 @@ Public Class Class_Genera_DTE_RdBk
             Dim _Tido = _Maeedo.Rows.Item(0).Item("TIDO")
 
             Consulta_sql = "Select top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
-            _Row_Configp = _Sql.Fx_Get_Tablas(Consulta_sql).Rows(0)
+            _Row_Configp = _Sql.Fx_Get_DataTable(Consulta_sql).Rows(0)
 
             _Empresa = _Row_Configp.Item("EMPRESA")
             _Nroresol = _Row_Configp.Item("NRORESOL")
@@ -973,7 +973,7 @@ Public Class Class_Genera_DTE_RdBk
 
         Dim _TblPaso As DataTable
 
-        _TblPaso = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblPaso = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblPaso.Rows.Count) Then
             Return _TblPaso.Rows(0)
@@ -1652,7 +1652,7 @@ Public Class Class_Genera_DTE_RdBk
         _Nro_Documento = _Maeedo.Rows(0).Item("NUDO")
 
         Consulta_sql = "Select top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
-        _Row_Configp = _Sql.Fx_Get_Tablas(Consulta_sql).Rows(0)
+        _Row_Configp = _Sql.Fx_Get_DataTable(Consulta_sql).Rows(0)
 
         If _Tido <> "FCC" And _Tido <> "GRC" And _Tido <> "NCC" Then
 

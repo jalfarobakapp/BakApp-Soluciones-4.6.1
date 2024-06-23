@@ -63,7 +63,7 @@ Public Class Frm_Tickets_Grupos
                        "Where Gr.Grupo+Isnull(NOKOFU,'') Like '%" & _Cadena & "%'" & vbCrLf &
                        Sql_Filtro_Condicion_Extra & vbCrLf &
                        "Order by Gr.Grupo"
-        _Tbl_Grupos = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Grupos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Grupos
 
@@ -257,7 +257,7 @@ Public Class Frm_Tickets_Grupos
                        "Where Id_Grupo = " & _Id_Grupo & vbCrLf &
                        "Order by Tf.NOKOFU"
 
-        _Tbl_Agentes = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Agentes = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Agentes
 
@@ -281,7 +281,7 @@ Public Class Frm_Tickets_Grupos
                        "Left Join " & _Global_BaseBk & "Zw_Stk_Grupos Gr On Gr.Id = Tp.Id_Grupo" & vbCrLf &
                        "Where Id_Grupo = " & _Id_Grupo
 
-        Dim _Tbl_Tipos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Tipos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Tipos
 

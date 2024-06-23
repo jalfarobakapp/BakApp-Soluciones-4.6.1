@@ -12,7 +12,7 @@ Public Module ExportarJetExcel
 
         Consulta_sql = _Consulta_sql
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If _Tbl.Rows.Count > 0 Then
             Dim Fm As New Frm_Exportar_Excel(_Tbl)
@@ -51,7 +51,7 @@ Public Module ExportarJetExcel
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
         Dim Fm_xls As New Frm_ExportarJetExcel
-        Fm_xls.Pro_TablaExcel = _Sql.Fx_Get_Tablas(SQl)
+        Fm_xls.Pro_TablaExcel = _Sql.Fx_Get_DataTable(SQl)
         Fm_xls.TxtNombreArchivo.Text = Nombre_Archivo
 
         If Fm_xls.Pro_TablaExcel.Rows.Count > 0 Then

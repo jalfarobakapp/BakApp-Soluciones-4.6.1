@@ -636,7 +636,7 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         Consulta_Sql = Replace(Consulta_Sql, "#CodEntidad#", _CodEntidad)
         Consulta_Sql = Replace(Consulta_Sql, "#Fecha#", _Fecha)
 
-        Dim _TblDeuda As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _TblDeuda As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         If CBool(_TblDeuda.Rows.Count) Then
 
@@ -675,7 +675,7 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         Consulta_Sql = Replace(Consulta_Sql, "#CodEntidad#", _CodEntidad)
         Consulta_Sql = Replace(Consulta_Sql, "#Fecha#", _Fecha)
 
-        _TblDeuda = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _TblDeuda = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         If CBool(_TblDeuda.Rows.Count) Then
 

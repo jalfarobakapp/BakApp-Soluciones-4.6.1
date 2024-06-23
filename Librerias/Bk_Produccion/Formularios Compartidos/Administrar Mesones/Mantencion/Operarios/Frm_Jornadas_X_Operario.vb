@@ -92,7 +92,7 @@ Public Class Frm_Jornadas_X_Operario
                         Hora_Entrada As Hora_Entrada_Old,Hora_Salida As Hora_Salida_Old
                         From " & _Global_BaseBk & "Zw_Pdc_Jornada_X_Operario
                         Where Codigoob = '" & _Codigoob & "'"
-        _Tbl_Jornada = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Jornada = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

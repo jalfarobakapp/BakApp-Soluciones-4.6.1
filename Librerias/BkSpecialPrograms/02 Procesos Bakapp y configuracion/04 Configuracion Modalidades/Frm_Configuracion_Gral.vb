@@ -344,7 +344,7 @@ Public Class Frm_Configuracion_Gral
             Dim _Fl = Generar_Filtro_IN_Arreglo(_Tidos, False)
 
             Consulta_sql = "Select TIDO As Codigo,NOTIDO As Descripcion From TABTIDO Where TIDO In " & _Fl
-            _Tbl_Filtro_Documentos_Excluidos = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Filtro_Documentos_Excluidos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         End If
 
@@ -727,7 +727,7 @@ Public Class Frm_Configuracion_Gral
                        "FROM " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
                        "WHERE Nodo_Raiz = 0" & vbCrLf &
                        "ORDER BY Padre"
-        Cmb_Nodo_Raiz_Asociados.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Nodo_Raiz_Asociados.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Nodo_Raiz_Asociados.SelectedValue = "0"
 
     End Sub

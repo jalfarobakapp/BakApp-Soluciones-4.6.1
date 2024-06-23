@@ -43,7 +43,7 @@ Public Class Frm_ImpBarras_Ubicaciones
         Consulta_sql = "Select '' As Padre,'' As Hijo Union" & vbCrLf &
                        "SELECT NombreEtiqueta AS Padre,Upper(NombreEtiqueta)+', Cantidad de etiquetas '+RTRIM(LTRIM(STR(CantPorLinea))) AS Hijo" & vbCrLf &
                        "FROM " & _Global_BaseBk & "Zw_Tbl_DisenoBarras order by Padre"
-        Cmbetiquetas.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmbetiquetas.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim Fm As New Frm_Barras_ConfPuerto("Configuracion_local.xml")
 
@@ -75,7 +75,7 @@ Public Class Frm_ImpBarras_Ubicaciones
         Dim _Nombre_Mapa
 
         Consulta_sql = "Select top 1 * From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Enc Where Id_Mapa = " & _Id_Mapa
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl.Rows.Count) Then
             _Nombre_Mapa = _Tbl.Rows(0).Item("Nombre_Mapa")
@@ -107,7 +107,7 @@ Public Class Frm_ImpBarras_Ubicaciones
                        "Order by Codigo_Ubic"
         End If
 
-        Dim _TblUbicaciones = _Sql.Fx_Get_Tablas(Consulta_sql) ' _DsEstante.Tables(1)
+        Dim _TblUbicaciones = _Sql.Fx_Get_DataTable(Consulta_sql) ' _DsEstante.Tables(1)
 
         Dim _DisplayIndex = 0
 

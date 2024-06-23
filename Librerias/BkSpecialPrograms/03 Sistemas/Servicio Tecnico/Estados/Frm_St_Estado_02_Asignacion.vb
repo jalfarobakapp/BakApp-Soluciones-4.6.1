@@ -148,7 +148,7 @@ Public Class Frm_St_Estado_02_Asignacion
         Consulta_sql = "SELECT CodFuncionario AS Padre,NomFuncionario AS Hijo" & vbCrLf &
                        "FROM " & _Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller" & vbCrLf &
                        "WHERE 1 > 0" & _Condicion & " ORDER BY Hijo"
-        Cmb_Tecnico.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Tecnico.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Tecnico.SelectedValue = _Tecnico
 
         'SELECT     TOP (200) CodFuncionario,NomFuncionario,Star,Chk_Taller_Externo,Chk_Habilitado,Chk_Supervisor,Chk_Domicilio
@@ -174,7 +174,7 @@ Public Class Frm_St_Estado_02_Asignacion
         Consulta_sql = "Select top 1 * From " & _Global_BaseBk & " Zw_St_Conf_Tecnicos_Taller" & vbCrLf &
                        "Where CodFuncionario = '" & _CodFuncionario & "'"
 
-        Dim _TblTecnico As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblTecnico As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblTecnico.Rows.Count) Then
 
@@ -387,7 +387,7 @@ Public Class Frm_St_Estado_02_Asignacion
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Encabezado" & vbCrLf &
                        "Where Nro_Ot = '" & _Nro_Ot & "' And CodEstado = 'I' --And Pertenece = '" & _Pertenece & "'"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim myTrans As SqlClient.SqlTransaction
         Dim Comando As SqlClient.SqlCommand

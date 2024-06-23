@@ -80,7 +80,7 @@ Public Class Frm_Correos_SMTP
                        _Filtro_Extra &
                        "Order by Nombre_Correo"
 
-        Dim _Tbl_Correos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Correos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

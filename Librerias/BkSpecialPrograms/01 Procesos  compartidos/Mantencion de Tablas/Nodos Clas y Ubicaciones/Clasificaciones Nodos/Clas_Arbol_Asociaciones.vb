@@ -30,7 +30,7 @@ Public Class Clas_Arbol_Asociaciones
         Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
                        "Where Codigo_Nodo = " & _Codigo_Nodo & Space(1) & _Filtro_Productos
 
-        Dim _TblAsociaciones As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _TblAsociaciones As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Dim _Sql_Query = String.Empty
 
@@ -52,7 +52,7 @@ Public Class Clas_Arbol_Asociaciones
             Consulta_Sql = "Select KOPR As Codigo,NOKOPR From MAEPR Where KOPR In " & _Filtro_Productos & vbCrLf &
                            "And KOPR Not In (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo_Nodo = " & _Codigo_Nodo & ")"
 
-            _TblFiltroProductos = _Sql.Fx_Get_Tablas(Consulta_Sql)
+            _TblFiltroProductos = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         End If
 
@@ -71,7 +71,7 @@ Public Class Clas_Arbol_Asociaciones
                                "WHERE Codigo IN " & _Filtro_Productos & vbCrLf &
                                "And Codigo_Nodo in (Select Codigo_Nodo from " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Es_Seleccionable = 1)"
 
-                Dim _TblNodos As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+                Dim _TblNodos As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
                 Dim _Sql2 As String = String.Empty
 
@@ -113,7 +113,7 @@ Public Class Clas_Arbol_Asociaciones
                                          Optional _Consulta_Sql As String = "")
 
         Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _Codigo_Nodo
-        Dim _TblNodo As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _TblNodo As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Dim _Identificacdor_NodoPadre = _TblNodo.Rows(0).Item("Identificacdor_NodoPadre")
         Dim _Descripcion_Nodo = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TblArbol_Asociaciones", "Descripcion",
@@ -172,7 +172,7 @@ Public Class Clas_Arbol_Asociaciones
                                "Where Codigo = '" & _Codigo & "' And Codigo_Nodo In (Select Codigo_Nodo" & Space(1) &
                                "From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & Space(1) &
                                "Where Codigo_Nodo <> " & _Codigo_Nodo & " And Identificacdor_NodoPadre = " & _Nodo_Padre & ")"
-                Dim _TblPadres As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+                Dim _TblPadres As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
                 If Not CBool(_TblPadres.Rows.Count) Then
                     Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo = '" & _Codigo & "'"
@@ -194,7 +194,7 @@ Public Class Clas_Arbol_Asociaciones
         Dim _CodPadre As String
 
         Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _Codigo_Nodo
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         _CodPadre = _Tbl.Rows(0).Item("Identificacdor_NodoPadre")
 
@@ -205,7 +205,7 @@ Public Class Clas_Arbol_Asociaciones
         Do While (_CodPadre <> 0)
 
             Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _CodPadre
-            _Tbl = _Sql.Fx_Get_Tablas(Consulta_Sql) '_SQL.Fx_Get_Tablas(Consulta_sql)
+            _Tbl = _Sql.Fx_Get_DataTable(Consulta_Sql) '_SQL.Fx_Get_Tablas(Consulta_sql)
 
             _CodPadre = _Tbl.Rows(0).Item("Identificacdor_NodoPadre")
             _Full = "\" & _Tbl.Rows(0).Item("Descripcion") & _Full

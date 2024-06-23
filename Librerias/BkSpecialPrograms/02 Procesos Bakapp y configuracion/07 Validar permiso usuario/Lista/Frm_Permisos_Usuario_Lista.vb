@@ -111,7 +111,7 @@ Public Class Frm_Permisos_Usuario_Lista
 
         With Grilla
 
-            .DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            .DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             OcultarEncabezadoGrilla(Grilla, True)
 
@@ -161,7 +161,7 @@ Public Class Frm_Permisos_Usuario_Lista
 
         With Grilla
 
-            .DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            .DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             OcultarEncabezadoGrilla(Grilla, True)
 
@@ -269,7 +269,7 @@ Public Class Frm_Permisos_Usuario_Lista
                         Where CodUsuario In (Select KOFU From TABFU)
                         Order by CodUsuario"
 
-        Dim _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Consulta_sql = String.Empty
 
@@ -362,14 +362,14 @@ Public Class Frm_Permisos_Usuario_Lista
 
         Consulta_sql = "Select CodPermiso,DescripcionPermiso As Permiso,CodFamilia,NombreFamiliaPermiso As Familia,Descuento,Max_Compra 
                         From " & _Global_BaseBk & "ZW_Permisos"
-        _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Permisos")
 
         Consulta_sql = "Select CodUsuario,NOKOFU As Usuario,Z1.CodPermiso,DescripcionPermiso As Permiso,CodFamilia,NombreFamiliaPermiso,Descuento,Max_Compra
                         From " & _Global_BaseBk & "ZW_PermisosVsUsuarios Z1 
                         Inner Join " & _Global_BaseBk & "ZW_Permisos Z2 On Z1.CodPermiso = Z2.CodPermiso
                         Left Join TABFU On KOFU = CodUsuario"
-        _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "PermisosVsUsuarios")
 
     End Sub

@@ -478,7 +478,7 @@ Public Class Menu
                 _Nombre_Etiqueta = _Clas_CliexpressAPI.Nombre_Etiqueta
 
                 Consulta_sql = "Select Idrst From " & _Global_BaseBk & "Zw_Despachos_Doc Where Id_Despacho = " & _Id_Despacho
-                Dim _Tbl_Docs As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Docs As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 For Each _Fila As DataRow In _Tbl_Docs.Rows
 
@@ -860,7 +860,7 @@ Public Class Menu
         Dim _Fecha_Emision As DateTime = FechaDelServidor()
 
         Consulta_sql = "Select *,1 As Precio From " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet Where Id_Enc = " & _Id_Enc
-        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim Fm As New Frm_Formulario_Documento(_Tido,
                                                csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta,

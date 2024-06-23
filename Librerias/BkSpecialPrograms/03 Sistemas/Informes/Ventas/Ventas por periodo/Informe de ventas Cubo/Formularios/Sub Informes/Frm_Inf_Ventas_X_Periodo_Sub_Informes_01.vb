@@ -161,7 +161,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
                                "And ENDO+SUENDO+RAZON+VENDEDOR+RUBRO_EN+ZONA_EN+CIUDAD+COMUNA Like '%" & _Cadena & "%'" & vbCrLf &
                                "Group By RTEN,RUT,ENDO,SUENDO,RAZON,KOFULIDO,VENDEDOR,RUEN,RUBRO_EN,ZOEN,ZONA_EN,DIEN,CIEN,CIUDAD,CMEN,COMUNA,SUDO,SUCURSAL"
 
-        _Tbl_Informe = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Informe = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 
@@ -209,7 +209,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
                       _SqlFiltro & vbCrLf & _
                       "And ENDO+SUENDO+RAZON+VENDEDOR+RUBRO_EN+ZONA_EN+CIUDAD+COMUNA Like '%" & _Cadena & "%'"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Total_Cantidad As Double
         Dim _Total_Neto As Double
@@ -250,7 +250,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
                                "And TIDO+NUDO+ENDO+SUENDO+RAZON+VENDEDOR+RUBRO_EN+ZONA_EN+CIUDAD+COMUNA Like '%" & _Cadena & "%'" & vbCrLf &
                                "Group By IDMAEEDO,TIDO,NUDO,RTEN,RUT,ENDO,SUENDO,RAZON,FEEMDO,KOFULIDO,VENDEDOR,RUEN,RUBRO_EN,ZOEN,ZONA_EN,DIEN,CIEN,CIUDAD,CMEN,COMUNA,SUDO,SUCURSAL"
 
-        _Tbl_Informe = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Informe = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 
@@ -310,7 +310,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
                        _SqlFiltro & vbCrLf & _
                        "And TIDO+NUDO+ENDO+SUENDO+RAZON+VENDEDOR+RUBRO_EN+ZONA_EN+CIUDAD+COMUNA Like '%" & _Cadena & "%'"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Total_Cantidad As Double
         Dim _Total_Neto As Double
@@ -351,7 +351,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
                                _SqlFiltro & vbCrLf &
                                "Group By IDMAEDDO,IDMAEEDO,KOPRCT,NOKOPR,TIDO,NUDO,SULIDO,BOSULIDO,FEEMDO,KOFULIDO,UD,PPPRNE,FMPR,SUPER_FAMILIA,PFPR,FAMILIA,HFPR,SUB_FAMILIA,MRPR,MARCA,RUPR,RUBRO_PR,CLALIBPR,CLAS_LIBRE,ZOPR,ZONA_PR"
 
-        _Tbl_Informe = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Informe = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 
@@ -422,7 +422,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
                        _SqlFiltro & vbCrLf & _
                        "And KOPRCT+NOKOPR+TIDO+NUDO+VENDEDOR+SUPER_FAMILIA+FAMILIA+SUB_FAMILIA+MARCA+RUBRO_PR+CLAS_LIBRE+ZONA_PR Like '%" & _Cadena & "%'"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Total_Cantidad As Double
         Dim _Total_Neto As Double
@@ -782,7 +782,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
 
         'End If
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(_SqlExcelVistaAltual)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(_SqlExcelVistaAltual)
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, _Nombre_Excel)
 
     End Sub

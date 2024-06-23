@@ -104,7 +104,7 @@ Public Class Cl_Wordpress
     Function ConsultarProducto(Kopr As String) As Boolean
         Try
             Dim ConsultaSQL = "Select KOPR From MAEPR Where KOPR='" & Kopr & "'"
-            Dim Producto As DataTable = _Sql.Fx_Get_Tablas(ConsultaSQL)
+            Dim Producto As DataTable = _Sql.Fx_Get_DataTable(ConsultaSQL)
             Dim Filas As Integer = Producto.Rows.Count
             If Filas > 0 Then
                 Return True
@@ -136,7 +136,7 @@ Public Class Cl_Wordpress
             'Ejemplo: Tabla = 'WORDPRESS_BOD', Campo = '01SUCBOD',NombreTabla = 'NOMBRE BODEGA'
 
             Consulta_sql = "Select CodigoTabla From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Where Tabla = 'WORDPRESS_BOD'"
-            Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql, False)
+            Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
             Dim _Filtros_Bod As String = "And EMPRESA = '" & _Empresa & "'" & vbCrLf
 
@@ -165,7 +165,7 @@ Public Class Cl_Wordpress
             _Sql.Ej_consulta_IDU(Consulta_sql, False)
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_Wordpress Where Revisado = 0"
-            Dim _TblStockActualizado As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblStockActualizado As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Contador = 1
 

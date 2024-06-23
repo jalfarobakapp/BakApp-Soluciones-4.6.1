@@ -80,7 +80,7 @@ Public Class Frm_Despacho_Configuracion
         Consulta_Sql = "Select CodigoTabla As Padre,NombreTabla As Hijo" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
                        "Where Tabla = 'SIS_DESPACHO_ESTADOS' Order by Orden"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         caract_combo(Cmb_Estados)
         Cmb_Estados.DataSource = _Tbl
@@ -95,7 +95,7 @@ Public Class Frm_Despacho_Configuracion
                        "Select CodigoTabla As Padre,NombreTabla As Hijo" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
                        "Where Tabla = 'SIS_DESPACHO_TIPO_VENTA' Order by Padre"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         caract_combo(Cmb_Tipo_Venta)
         Cmb_Tipo_Venta.DataSource = _Tbl
@@ -122,7 +122,7 @@ Public Class Frm_Despacho_Configuracion
                         Left Join " & _Global_BaseBk & "Zw_Correos Tcorreos On Temail.Id_Correo = Tcorreos.Id
                         Where (Tabla LIKE 'SIS_DESPACHO_TIPO_ENVIO') "
 
-        _Tbl_Email = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_Email = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         With Grilla_Correos
 

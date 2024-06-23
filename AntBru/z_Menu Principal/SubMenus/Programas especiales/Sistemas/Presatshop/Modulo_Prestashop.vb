@@ -56,7 +56,7 @@ Public Class Modulo_Prestashop
                            "Where KOEN In (Select Codigo_Pagina From " & _Global_BaseBk & "Zw_PrestaShop" & Space(1) &
                            "Where Conexion_Activa = 1))"
 
-            Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If CBool(_Tbl_Productos.Rows.Count) Then
 

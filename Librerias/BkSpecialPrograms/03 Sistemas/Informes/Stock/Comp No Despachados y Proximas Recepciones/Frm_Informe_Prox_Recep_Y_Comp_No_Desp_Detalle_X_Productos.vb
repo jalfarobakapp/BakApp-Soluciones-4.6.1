@@ -432,7 +432,7 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Detalle_X_Productos
                         "Left Join TABFU On KOFU = KOFULIDO" & vbCrLf &
                         "Where 1 > 0" & vbCrLf &
                         _SqlFiltro & _SqlFiltro_Prod
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Productos_Resumen")
 

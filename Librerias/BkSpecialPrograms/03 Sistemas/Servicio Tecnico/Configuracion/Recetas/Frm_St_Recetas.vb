@@ -51,7 +51,7 @@ Public Class Frm_St_Recetas
                        "From " & _Global_BaseBk & "Zw_St_OT_Recetas_Enc" & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' --And Sucursal = '" & ModSucursal & "'" & vbCrLf &
                        "And CodReceta+Descripcion Like '%" & _Cadena & "%'" & _CondicionProd
-        _Tbl_Recetas = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Recetas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Sb_Actualizar_Grilla_Productos(0)
 
@@ -87,7 +87,7 @@ Public Class Frm_St_Recetas
                "From " & _Global_BaseBk & "Zw_St_OT_Recetas_Prod" & vbCrLf &
                "Left Join MAEPR On KOPR = Codigo" & vbCrLf &
                "Where Id_Rec = " & _Id_Rec
-        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Productos
 
@@ -213,7 +213,7 @@ Public Class Frm_St_Recetas
         End If
 
         Consulta_sql = "Select top 1 * From MAEPR Where KOPR = '" & _Codigo & "'"
-        _TblProducto = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblProducto = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblProducto.Rows.Count) Then
             Return _TblProducto.Rows(0)
@@ -306,7 +306,7 @@ Public Class Frm_St_Recetas
                        "From " & _Global_BaseBk & "Zw_St_OT_Recetas_Prod" & vbCrLf &
                        "Left Join MAEPR On KOPR = Codigo" & vbCrLf &
                        "Where Id_Rec = " & _Id_Rec
-        Dim _TblProductos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblProductos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Sql_Filtro_Condicion_Extra = "And TIPR = 'SSN' And KOPR Not In " &
                                           "(Select Codigo From " & _Global_BaseBk & "Zw_St_OT_Recetas_Prod Where Id_Rec = " & _Id_Rec & ")"

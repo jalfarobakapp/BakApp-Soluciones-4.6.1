@@ -41,11 +41,11 @@ Public Class Frm_PrecioLC_ImpFleje
                        "SELECT SUBSTRING(KOOP, 4, 3) " & vbCrLf &
                        "FROM  MAEUS WHERE (KOOP LIKE '%LI%') AND (KOUS = '" & FUNCIONARIO & "'))" & vbCrLf &
                        "ORDER BY TILT,NOKOLT"
-        CmbLista.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        CmbLista.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         caract_combo(Cmbetiquetas)
         Consulta_sql = "SELECT Semilla AS Padre,NombreEtiqueta AS Hijo FROM Zw_Tbl_DisenoBarras order by Semilla"
-        Cmbetiquetas.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmbetiquetas.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
     End Sub
 
