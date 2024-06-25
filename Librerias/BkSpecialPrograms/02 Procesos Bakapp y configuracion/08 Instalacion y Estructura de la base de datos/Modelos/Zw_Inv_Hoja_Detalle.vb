@@ -11,9 +11,10 @@
     Public Property IdContador2 As Integer
     Public Property Item_Hoja As String
     Public Property IdUbicacion As Integer
-    Public Property CodUbicacion As String
+    Public Property Ubicacion As String
     Public Property TipoConteo As String
-    Public Property Codproducto As String
+    Public Property Codigo As String
+    Public Property Descripcion As String
     Public Property EsSeriado As Boolean
     Public Property NroSerie As String
     Public Property FechaHoraToma As DateTime?

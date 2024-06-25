@@ -435,11 +435,18 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
 
         Dim _Codigo As String = Grilla.Rows(Grilla.CurrentRow.Index).Cells("Codigo").Value
 
-        Dim Fm As New Frm_Arbol_Asociacion_01
-        Fm.Pro_Codigo_Producto = _Codigo
-        Fm.Chk_Ver_Clas_Unicas.Checked = True
+        Dim Fm As New Frm_Arbol_Lista(False)
+        Fm.Codigo_Heredado = _Codigo
+        Fm.ModoCheckButton = True
+        Fm.MostrarClasProducto = True
         Fm.ShowDialog(Me)
         Fm.Dispose()
+
+        'Dim Fm As New Frm_Arbol_Asociacion_01
+        'Fm.Pro_Codigo_Producto = _Codigo
+        'Fm.Chk_Ver_Clas_Unicas.Checked = True
+        'Fm.ShowDialog(Me)
+        'Fm.Dispose()
 
     End Sub
 

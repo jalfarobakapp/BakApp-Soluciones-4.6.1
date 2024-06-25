@@ -148,7 +148,6 @@ Public Class Frm_Inv_Ubicaciones
         With _Cl_InvUbicacion.Zw_Inv_Ubicaciones
 
             .Id = 0
-            .CodUbicacion = String.Empty
             .Ubicacion = _Ubicacion
             .IdInventario = _Cl_Inventario.Zw_Inv_Inventario.Id
             .Empresa = _Cl_Inventario.Zw_Inv_Inventario.Empresa

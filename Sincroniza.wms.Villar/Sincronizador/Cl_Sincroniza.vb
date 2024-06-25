@@ -1,5 +1,5 @@
 ﻿Imports BkSpecialPrograms
-Imports BkSpecialPrograms.LsValiciones
+
 Public Class Cl_Sincroniza
 
     Dim _SqlRandom As New Class_SQL(Cadena_ConexionSQL_Server)
@@ -27,7 +27,7 @@ Public Class Cl_Sincroniza
         Consulta_sql = "Select IDMAEEDO From [@WMS_GATEWAY_TRANSFERENCIA]" & vbCrLf &
                        "Where 1>0 --(CONVERT(varchar, FECHA_DOWNLOAD, 112)) = '" & Format(_FechaRevision, "yyyyMMdd") & "'" & vbCrLf &
                        "And IDMAEEDO In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Docu_Ent Where Pickear = 1 And Estaenwms = 0)"
-        Dim _Tbl_wms As DataTable = _SqlRandom.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_wms As DataTable = _SqlRandom.Fx_Get_DataTable(Consulta_sql)
         Dim _Filtro As String = Generar_Filtro_IN(_Tbl_wms, "", "IDMAEEDO", True, False, "")
 
         If _Filtro <> "()" Then
@@ -40,7 +40,7 @@ Public Class Cl_Sincroniza
         End If
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Estado In ('INGRE','PREPA','COMPL') And Planificada = 0"
-        Dim _Tbl As DataTable = _SqlRandom.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _SqlRandom.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Fila As DataRow In _Tbl.Rows
 
@@ -96,7 +96,7 @@ Public Class Cl_Sincroniza
         _SqlRandom.Ej_consulta_IDU(Consulta_sql)
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Estado In ('PREPA') And Planificada = 1"
-        _Tbl = _SqlRandom.Fx_Get_Tablas(Consulta_sql)
+        _Tbl = _SqlRandom.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Fila As DataRow In _Tbl.Rows
 
@@ -230,7 +230,7 @@ Public Class Cl_Sincroniza
                        "And Wms.IDMAEEDO Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Stmp_Enc Where (CONVERT(varchar, FechaCreacion, 112) Between '" & _FechaDesde & "' And '" & _FechaHasta & "'))" & vbCrLf &
                        "And Edo.SUDO = '01' And Edo.TIDO = 'NVV'"
 
-        Dim _Tbl_wms As DataTable = _SqlRandom.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_wms As DataTable = _SqlRandom.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Fila As DataRow In _Tbl_wms.Rows
 
@@ -350,7 +350,7 @@ Public Class Cl_Sincroniza
     Sub Sb_RevisarCompletadasCanceladas(Txt_Log As Object)
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where (Estado = 'COMPL')"
-        Dim _Tbl As DataTable = _SqlRandom.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _SqlRandom.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Fila As DataRow In _Tbl.Rows
 
@@ -388,7 +388,7 @@ Public Class Cl_Sincroniza
     Sub Sb_RevisarCanceladasLiberadas(Txt_Log As Object, _FechaRevision As DateTime)
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Estado = 'CANCE' And CONVERT(varchar, FechaCreacion, 112) = '" & Format(_FechaRevision, "yyyyMMdd") & "'"
-        Dim _Tbl As DataTable = _SqlRandom.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _SqlRandom.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Fila As DataRow In _Tbl.Rows
 
@@ -427,7 +427,7 @@ Public Class Cl_Sincroniza
     Sub Sb_RevisarRezagadasSinFuncionarioQueFactura(Txt_Log As Object)
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Facturar = 1 And Estado = 'COMPL' And EnvFacAutoBk = 0 And CodFuncionario_Factura = ''"
-        Dim _Tbl As DataTable = _SqlRandom.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _SqlRandom.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Fila As DataRow In _Tbl.Rows
 

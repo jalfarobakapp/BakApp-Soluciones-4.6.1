@@ -15,18 +15,18 @@ Public Class Cl_InvUbicacion
 
     Function Fx_Llenar_Zw_Inv_Ubicaciones(_Id As Integer) As LsValiciones.Mensajes
 
-        Dim _Mensaje_Stem As New LsValiciones.Mensajes
+        Dim _Mensaje As New LsValiciones.Mensajes
 
-        _Mensaje_Stem.EsCorrecto = False
-        _Mensaje_Stem.Detalle = "Cargar Ubicación de Inventario"
-        _Mensaje_Stem.Mensaje = String.Empty
+        _Mensaje.EsCorrecto = False
+        _Mensaje.Detalle = "Cargar Ubicación de Inventario"
+        _Mensaje.Mensaje = String.Empty
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Inv_Ubicaciones Where Id = " & _Id
         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If IsNothing(_Row) Then
-            _Mensaje_Stem.Mensaje = "No se encontro el registro en la tabla Zw_TmpInv_Ubicaciones con el Id " & _Id
-            Return _Mensaje_Stem
+            _Mensaje.Mensaje = "No se encontro el registro en la tabla Zw_TmpInv_Ubicaciones con el Id " & _Id
+            Return _Mensaje
         End If
 
         With Zw_Inv_Ubicaciones
@@ -36,14 +36,50 @@ Public Class Cl_InvUbicacion
             .Empresa = _Row.Item("Empresa")
             .Sucursal = _Row.Item("Sucursal")
             .Bodega = _Row.Item("Bodega")
-            .CodUbicacion = _Row.Item("CodUbicacion")
             .Ubicacion = _Row.Item("Ubicacion")
             .Abierto = _Row.Item("Abierto")
 
         End With
 
-        _Mensaje_Stem.EsCorrecto = True
-        _Mensaje_Stem.Mensaje = "Registros cargados correctamente"
+        _Mensaje.EsCorrecto = True
+        _Mensaje.Mensaje = "Registros cargados correctamente"
+
+        Return _Mensaje
+
+    End Function
+
+    Function Fx_Llenar_Zw_Inv_Ubicaciones(_IdInventario As Integer, _Ubicacion As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        _Mensaje.EsCorrecto = False
+        _Mensaje.Detalle = "Cargar Ubicación de Inventario"
+        _Mensaje.Mensaje = String.Empty
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Inv_Ubicaciones Where IdInventario = " & _IdInventario & " And Ubicacion = '" & _Ubicacion & "'"
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_Row) Then
+            _Mensaje.Mensaje = "No se encontro el registro en la tabla Zw_TmpInv_Ubicaciones con el Ubicacion " & _Ubicacion
+            Return _Mensaje
+        End If
+
+        With Zw_Inv_Ubicaciones
+
+            .Id = _Row.Item("Id")
+            .IdInventario = _Row.Item("IdInventario")
+            .Empresa = _Row.Item("Empresa")
+            .Sucursal = _Row.Item("Sucursal")
+            .Bodega = _Row.Item("Bodega")
+            .Ubicacion = _Row.Item("Ubicacion")
+            .Abierto = _Row.Item("Abierto")
+
+        End With
+
+        _Mensaje.EsCorrecto = True
+        _Mensaje.Mensaje = "Registros cargados correctamente"
+
+        Return _Mensaje
 
     End Function
 
@@ -80,10 +116,8 @@ Public Class Cl_InvUbicacion
 
             With Zw_Inv_Ubicaciones
 
-                .CodUbicacion = Fx_NvoCodUbicacion()
-
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Inv_Ubicaciones (IdInventario,Empresa,Sucursal,Bodega,CodUbicacion,Ubicacion,Abierto) Values " &
-                               "(" & .IdInventario & ",'" & .Empresa & "','" & .Sucursal & "','" & .Bodega & "','" & .CodUbicacion & "','" & .Ubicacion & "'," & Convert.ToInt32(.Abierto) & ")"
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Inv_Ubicaciones (IdInventario,Empresa,Sucursal,Bodega,Ubicacion,Abierto) Values " &
+                               "(" & .IdInventario & ",'" & .Empresa & "','" & .Sucursal & "','" & .Bodega & "','" & .Ubicacion & "'," & Convert.ToInt32(.Abierto) & ")"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                 Comando.Transaction = myTrans
@@ -242,25 +276,25 @@ Public Class Cl_InvUbicacion
 
     End Function
 
-    Function Fx_NvoCodUbicacion() As String
+    'Function Fx_NvoCodUbicacion() As String
 
-        Dim _NvoCodUbicacion As String
+    '    Dim _NvoCodUbicacion As String
 
-        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+    '    Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-        Dim _TblPaso = _Sql.Fx_Get_DataTable("Select Max(CodUbicacion) As CodUbicacion From " & _Global_BaseBk & "Zw_Inv_Ubicaciones")
+    '    Dim _TblPaso = _Sql.Fx_Get_DataTable("Select Max(CodUbicacion) As CodUbicacion From " & _Global_BaseBk & "Zw_Inv_Ubicaciones")
 
-        Dim _Ult_Nro_OT As String = NuloPorNro(_TblPaso.Rows(0).Item("CodUbicacion"), "")
+    '    Dim _Ult_Nro_OT As String = NuloPorNro(_TblPaso.Rows(0).Item("CodUbicacion"), "")
 
-        If String.IsNullOrEmpty(Trim(_Ult_Nro_OT)) Then
-            _Ult_Nro_OT = "0000000000"
-        End If
+    '    If String.IsNullOrEmpty(Trim(_Ult_Nro_OT)) Then
+    '        _Ult_Nro_OT = "0000000000"
+    '    End If
 
-        _NvoCodUbicacion = Fx_Proximo_NroDocumento(_Ult_Nro_OT, 10)
+    '    _NvoCodUbicacion = Fx_Proximo_NroDocumento(_Ult_Nro_OT, 10)
 
-        Return _NvoCodUbicacion
+    '    Return _NvoCodUbicacion
 
-    End Function
+    'End Function
 
 
 

@@ -148,7 +148,6 @@ Public Class Frm_Inv_UbicacionesImporExcel
                     .Empresa = _Cl_inventario.Zw_Inv_Inventario.Empresa
                     .Sucursal = _Cl_inventario.Zw_Inv_Inventario.Sucursal
                     .Bodega = _Cl_inventario.Zw_Inv_Inventario.Bodega
-                    .CodUbicacion = String.Empty
                 End With
 
             Catch ex As Exception

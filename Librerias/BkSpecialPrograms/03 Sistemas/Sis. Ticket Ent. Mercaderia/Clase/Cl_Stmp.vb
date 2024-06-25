@@ -767,53 +767,59 @@ Public Class Cl_Stmp
 
                     Zw_Stmp_DetPick.Add(_DetPick)
 
-                    For Each _Det As Zw_Stmp_Det In Zw_Stmp_Det
+                Next
 
-                        If _Det.Codigo.Trim = _sku.Trim And _Det.EnProceso Then
+                For Each _Det As Zw_Stmp_Det In Zw_Stmp_Det
 
-                            With _Det
+                    For Each _Fila As DataRow In _Detalle.Rows
 
-                                Dim _Cantidad As Double = _Saldo_qty - .Caprco1_Real
+                        Dim _Cont As String = _Fila.Item("CONT")
+                        Dim _tag As String = _Fila.Item("tag")
+                        Dim _loc As String = NuloPorNro(_Fila.Item("loc"), "")
 
-                                .Cantidad += _Cantidad
-                                .Caprco1_Real += _Cantidad
-                                .Caprco2_Real += _Cantidad
+                        Dim _sku As String = _Fila.Item("sku")
+                        Dim _qty As Double = _Fila.Item("qty")
+                        Dim _Saldo_qty As Double = _Fila.Item("Saldo_qty")
 
-                                _Saldo_qty = _Cantidad - _Saldo_qty
+                        If _Det.Codigo.Trim = _sku.Trim And CBool(_Saldo_qty) Then
 
-                                _Fila.Item("Saldo_qty") = _Saldo_qty
+                            Dim _Cantidad As Double = _Saldo_qty
 
-                                If _Fila.Item("Saldo_qty") = 0 Then
+                            If _Det.Caprco1_Ori < _Cantidad Then
+                                _Cantidad = _Det.Caprco1_Ori
+                            End If
 
-                                    .Pickeado = True
-                                    .EnProceso = False
+                            _Saldo_qty = _Saldo_qty - _Cantidad
 
-                                End If
+                            _Det.Cantidad += _Cantidad
+                            _Det.Caprco1_Real += _Cantidad
+                            _Det.Caprco2_Real += _Cantidad
 
-                                If .Pickeado Then
+                            _Fila.Item("Saldo_qty") = _Saldo_qty
 
-                                    .CodFuncionario_Pickea = "wms"
+                            _QuerySql += "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
+                                         "('MAEDDO'," & _Det.Idmaeddo & ",'wms','" & _Fecha & "','wms','CONT','" & _Cont & "')" & vbCrLf &
+                                         "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
+                                         "('MAEDDO'," & _Det.Idmaeddo & ",'wms','" & _Fecha & "','wms','tag','" & _tag & "')" & vbCrLf &
+                                         "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
+                                         "('MAEDDO'," & _Det.Idmaeddo & ",'wms','" & _Fecha & "','wms','loc','" & _loc & "')" & vbCrLf &
+                                         "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
+                                         "('MAEDDO'," & _Det.Idmaeddo & ",'wms','" & _Fecha & "','wms','qty','" & _qty & "')" & vbCrLf
 
-                                    _QuerySql += "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
-                                             "('MAEDDO'," & .Idmaeddo & ",'wms','" & _Fecha & "','wms','CONT','" & _Cont & "')" & vbCrLf &
-                                             "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
-                                             "('MAEDDO'," & .Idmaeddo & ",'wms','" & _Fecha & "','wms','tag','" & _tag & "')" & vbCrLf &
-                                             "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
-                                             "('MAEDDO'," & .Idmaeddo & ",'wms','" & _Fecha & "','wms','loc','" & _loc & "')" & vbCrLf &
-                                             "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
-                                             "('MAEDDO'," & .Idmaeddo & ",'wms','" & _Fecha & "','wms','qty','" & _qty & "')" & vbCrLf
-
-                                End If
-
-                                If _Saldo_qty = 0 Then
-                                    Exit For
-                                End If
-
-                            End With
+                            If _Det.Caprco1_Real = _Det.Caprco1_Ori Then
+                                Exit For
+                            End If
 
                         End If
 
                     Next
+
+                    If _Det.Caprco1_Real > 0 Then
+                        _Det.Pickeado = True
+                    End If
+
+                    _Det.EnProceso = False
+                    _Det.CodFuncionario_Pickea = "wms"
 
                 Next
 
@@ -844,10 +850,10 @@ Public Class Cl_Stmp
 
     End Function
 
-    Function Fx_Revisar_WMSVillar2(_Idmaeedo As Integer,
-                                   _Tido As String,
-                                   _Nudo As String,
-                                   _CadenaConexionWms As String) As LsValiciones.Mensajes
+    Function Fx_Revisar_WMSVillar_Resp(_Idmaeedo As Integer,
+                                  _Tido As String,
+                                  _Nudo As String,
+                                  _CadenaConexionWms As String) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -892,6 +898,8 @@ Public Class Cl_Stmp
                 Return _Mensaje
             End If
 
+            '_Detalle.Columns.Add("Saldo_qty", GetType(Double))
+
             Dim _CanalEntrada As String = Mid(_ob_type, 1, 1)
             Dim _TipoPago As String = Mid(_ob_type, 2, 1)
             Dim _Entrega As String = Mid(_ob_type, 3, 1)
@@ -932,6 +940,7 @@ Public Class Cl_Stmp
 
                     Dim _sku As String = _Fila.Item("sku")
                     Dim _qty As Double = _Fila.Item("qty")
+                    Dim _Saldo_qty As Double = _Fila.Item("Saldo_qty")
 
                     Dim _DetPick As New Zw_Stmp_DetPick
 
@@ -953,18 +962,32 @@ Public Class Cl_Stmp
 
                     For Each _Det As Zw_Stmp_Det In Zw_Stmp_Det
 
-                        If _Det.Codigo.Trim = _sku.Trim Then
+                        If _Det.Codigo.Trim = _sku.Trim And _Det.EnProceso Then
 
                             With _Det
 
-                                .Cantidad = _qty
-                                .Caprco1_Real += _qty
-                                .Caprco2_Real += _qty
-                                .Pickeado = True
-                                .EnProceso = False
-                                .CodFuncionario_Pickea = "wms"
+                                Dim _Cantidad As Double = _Saldo_qty - .Caprco1_Real
 
-                                _QuerySql += "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
+                                .Cantidad += _Cantidad
+                                .Caprco1_Real += _Cantidad
+                                .Caprco2_Real += _Cantidad
+
+                                _Saldo_qty = _Cantidad - _Saldo_qty
+
+                                _Fila.Item("Saldo_qty") = _Saldo_qty
+
+                                If _Fila.Item("Saldo_qty") = 0 Then
+
+                                    .Pickeado = True
+                                    .EnProceso = False
+
+                                End If
+
+                                If .Pickeado Then
+
+                                    .CodFuncionario_Pickea = "wms"
+
+                                    _QuerySql += "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
                                              "('MAEDDO'," & .Idmaeddo & ",'wms','" & _Fecha & "','wms','CONT','" & _Cont & "')" & vbCrLf &
                                              "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
                                              "('MAEDDO'," & .Idmaeddo & ",'wms','" & _Fecha & "','wms','tag','" & _tag & "')" & vbCrLf &
@@ -973,9 +996,13 @@ Public Class Cl_Stmp
                                              "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
                                              "('MAEDDO'," & .Idmaeddo & ",'wms','" & _Fecha & "','wms','qty','" & _qty & "')" & vbCrLf
 
-                            End With
+                                End If
 
-                            Exit For
+                                If _Saldo_qty = 0 Then
+                                    Exit For
+                                End If
+
+                            End With
 
                         End If
 

@@ -65,9 +65,9 @@ Public Class Cl_Conteo
                 .IdContador2 = _Row.Item("IdContador2")
                 .Item_Hoja = _Row.Item("Item_Hoja")
                 .IdUbicacion = _Row.Item("IdUbicacion")
-                .CodUbicacion = _Row.Item("CodUbicacion")
+                .Ubicacion = _Row.Item("CodUbicacion")
                 .TipoConteo = _Row.Item("TipoConteo")
-                .Codproducto = _Row.Item("Codproducto")
+                .Codigo = _Row.Item("Codproducto")
                 .EsSeriado = _Row.Item("EsSeriado")
                 .NroSerie = _Row.Item("NroSerie")
                 .FechaHoraToma = _Row.Item("FechaHoraToma")
@@ -116,42 +116,42 @@ Public Class Cl_Conteo
 
         End With
 
-        Dim _Zw_Inv_Hoja_Detalle As New Zw_Inv_Hoja_Detalle
+        'Dim _Zw_Inv_Hoja_Detalle As New Zw_Inv_Hoja_Detalle
 
-        With _Zw_Inv_Hoja_Detalle
+        'With _Zw_Inv_Hoja_Detalle
 
-            .Id = 0
-            .IdHoja = 1
-            .Nro_Hoja = String.Empty
-            .IdInventario = Zw_Inv_Inventario.Id
-            .Empresa = Zw_Inv_Inventario.Empresa
-            .Sucursal = Zw_Inv_Inventario.Sucursal
-            .Bodega = Zw_Inv_Inventario.Bodega
-            .Responsable = String.Empty
-            .IdContador1 = 0
-            .IdContador2 = 0
-            .Item_Hoja = "001"
-            .IdUbicacion = 0
-            .CodUbicacion = String.Empty
-            .TipoConteo = String.Empty
-            .Codproducto = String.Empty
-            .EsSeriado = False
-            .NroSerie = String.Empty
-            .Rtu = 0
-            .RtuVariable = False
-            .Udtrpr = 1
-            .Ud1 = String.Empty
-            .CantidadUd1 = 0
-            .Ud2 = String.Empty
-            .CantidadUd2 = 0
-            .Observaciones = String.Empty
-            .Recontado = False
-            .Actualizado_por = String.Empty
-            .Obs_Actualizacion = String.Empty
+        '    .Id = 0
+        '    .IdHoja = 1
+        '    .Nro_Hoja = String.Empty
+        '    .IdInventario = Zw_Inv_Inventario.Id
+        '    .Empresa = Zw_Inv_Inventario.Empresa
+        '    .Sucursal = Zw_Inv_Inventario.Sucursal
+        '    .Bodega = Zw_Inv_Inventario.Bodega
+        '    .Responsable = String.Empty
+        '    .IdContador1 = 0
+        '    .IdContador2 = 0
+        '    .Item_Hoja = "001"
+        '    .IdUbicacion = 0
+        '    .CodUbicacion = String.Empty
+        '    .TipoConteo = String.Empty
+        '    .Codproducto = String.Empty
+        '    .EsSeriado = False
+        '    .NroSerie = String.Empty
+        '    .Rtu = 0
+        '    .RtuVariable = False
+        '    .Udtrpr = 1
+        '    .Ud1 = String.Empty
+        '    .CantidadUd1 = 0
+        '    .Ud2 = String.Empty
+        '    .CantidadUd2 = 0
+        '    .Observaciones = String.Empty
+        '    .Recontado = False
+        '    .Actualizado_por = String.Empty
+        '    .Obs_Actualizacion = String.Empty
 
-            Ls_Zw_Inv_Hoja_Detalle.Add(_Zw_Inv_Hoja_Detalle)
+        '    Ls_Zw_Inv_Hoja_Detalle.Add(_Zw_Inv_Hoja_Detalle)
 
-        End With
+        'End With
 
         _Mensaje_Stem.EsCorrecto = True
         _Mensaje_Stem.Mensaje = "Registros cargados correctamente"
@@ -203,7 +203,7 @@ Public Class Cl_Conteo
                 With _Zw_Inv_Hoja_Detalle
 
                     Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle (IdHoja,Nro_Hoja,IdInventario,Empresa,Sucursal,Bodega,Responsable,IdContador1,IdContador2,Item_Hoja,IdUbicacion,CodUbicacion,TipoConteo,Codproducto,EsSeriado,NroSerie,FechaHoraToma,Rtu,RtuVariable,Udtrpr,Ud1,CantidadUd1,Ud2,CantidadUd2,Observaciones,Recontado,Actualizado_por,Obs_Actualizacion) Values " &
-                                   "(" & .IdHoja & ",'" & .Nro_Hoja & "'," & .IdInventario & ",'" & .Empresa & "','" & .Sucursal & "','" & .Bodega & "','" & .Responsable & "'," & .IdContador1 & "," & .IdContador2 & ",'" & .Item_Hoja & "'," & .IdUbicacion & ",'" & .CodUbicacion & "','" & .TipoConteo & "','" & .Codproducto & "'," & Convert.ToInt32(.EsSeriado) & ",'" & .NroSerie & "','" & .FechaHoraToma & "','" & .Rtu & "','" & .RtuVariable & "','" & .Udtrpr & "','" & .Ud1 & "'," & .CantidadUd1 & ",'" & .Ud2 & "'," & .CantidadUd2 & ",'" & .Observaciones & "'," & Convert.ToInt32(.Recontado) & ",'" & .Actualizado_por & "','" & .Obs_Actualizacion & "')"
+                                   "(" & .IdHoja & ",'" & .Nro_Hoja & "'," & .IdInventario & ",'" & .Empresa & "','" & .Sucursal & "','" & .Bodega & "','" & .Responsable & "'," & .IdContador1 & "," & .IdContador2 & ",'" & .Item_Hoja & "'," & .IdUbicacion & ",'" & .Ubicacion & "','" & .TipoConteo & "','" & .Codigo & "'," & Convert.ToInt32(.EsSeriado) & ",'" & .NroSerie & "','" & .FechaHoraToma & "','" & .Rtu & "','" & .RtuVariable & "','" & .Udtrpr & "','" & .Ud1 & "'," & .CantidadUd1 & ",'" & .Ud2 & "'," & .CantidadUd2 & ",'" & .Observaciones & "'," & Convert.ToInt32(.Recontado) & ",'" & .Actualizado_por & "','" & .Obs_Actualizacion & "')"
 
                     Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                     Comando.Transaction = myTrans
