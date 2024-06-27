@@ -51,7 +51,8 @@ Public Module Mod_Fx
                                 Optional _PasswordChar As String = "",
                                 Optional ByRef _Chk As Controls.CheckBoxX = Nothing,
                                 Optional _BuscarCarpeta As Boolean = False,
-                                Optional _NoPermitirEntradaDeTeclado As Boolean = False) As Boolean
+                                Optional _NoPermitirEntradaDeTeclado As Boolean = False,
+                                Optional ByRef _CerradoPorX As Boolean = False) As Boolean
 
         Dim _Aceptado As Boolean
 
@@ -91,6 +92,7 @@ Public Module Mod_Fx
         Fm.ShowDialog(Frm_Origen)
 
         _Aceptado = Fm.Pro_Aceptado
+        _CerradoPorX = Fm.CerradoPorX
 
         Fm.Dispose()
 

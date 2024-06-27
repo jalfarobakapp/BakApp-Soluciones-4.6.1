@@ -11,6 +11,7 @@ Public Class Frm_InpunBox_Bk
     Dim _Tipo_de_Caracter As _Tipo_Caracter
 
     Public Property Chk As Controls.CheckBoxX
+    Public Property CerradoPorX As Boolean
 
     Private _TiempoInicial As DateTime
     Private _TiempoFinal As DateTime
@@ -115,6 +116,8 @@ Public Class Frm_InpunBox_Bk
 
         Chk_Teclear.Visible = NoPermitirEntradaDeTeclado
         TxtDescripcion.ShortcutsEnabled = Not NoPermitirEntradaDeTeclado
+
+        Me.ControlBox = BtnCancelar.Visible
 
     End Sub
 
@@ -241,11 +244,13 @@ Public Class Frm_InpunBox_Bk
 
     Private Sub Frm_InpunBox_Bk_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
+            CerradoPorX = True
             Me.Close()
         End If
     End Sub
 
     Private Sub BtnCancelar_Click(sender As System.Object, e As System.EventArgs) Handles BtnCancelar.Click
+        CerradoPorX = True
         Me.Close()
     End Sub
 
@@ -369,4 +374,13 @@ Public Class Frm_InpunBox_Bk
         TxtDescripcion.Focus()
 
     End Sub
+
+    Private Sub Form1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        If e.CloseReason = CloseReason.UserClosing Then
+            If Not Pro_Aceptado Then
+                CerradoPorX = Not CerradoPorX
+            End If
+        End If
+    End Sub
+
 End Class

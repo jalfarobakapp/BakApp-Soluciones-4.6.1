@@ -176,6 +176,7 @@ Namespace LsValiciones
         Public Property Icono As Object
         Public Property Cancelado As Boolean
         Public Property MostrarMensaje As Boolean = True
+        Public Property Cerrar As Boolean
 
     End Class
 

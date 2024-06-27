@@ -203,7 +203,7 @@
             End If
 
             If _Estado = "PREPA" Then
-                _Icono = _Imagenes_List.Images.Item("clock.png.png")
+                _Icono = _Imagenes_List.Images.Item("menu-more.png")
                 _Fila.Cells("NOKOEN").Style.ForeColor = Color.Gray
                 _Fila.Cells("NOKOEN").Style.Alignment = DataGridViewContentAlignment.MiddleCenter
             End If
@@ -217,6 +217,9 @@
 
         Next
 
+        Grilla.ClearSelection()
+        Grilla.CurrentCell = Nothing
+        Grilla.Focus()
     End Sub
 
     Private Sub Timer_Paginar_Tick(sender As Object, e As EventArgs) Handles Timer_Paginar.Tick

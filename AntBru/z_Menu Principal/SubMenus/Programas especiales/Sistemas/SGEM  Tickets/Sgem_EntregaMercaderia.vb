@@ -61,7 +61,10 @@ Public Class Sgem_EntregaMercaderia
 
         If Not _Mensaje.EsCorrecto And Not _Mensaje.Cancelado Then
             MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
-            Return
+        End If
+
+        If Not _Mensaje.Cerrar Then
+            Call Btn_Sgem_EntregarMercaderia_Click(Nothing, Nothing)
         End If
 
     End Sub
@@ -78,14 +81,17 @@ Public Class Sgem_EntregaMercaderia
                 _Aceptar = True
             End If
 
+            Dim _CerradPorX As Boolean = False
+
             If Not _Aceptar Then
                 _Aceptar = InputBox_Bk(_Fm_Menu_Padre, "Ingrese el número de documento que ya ha sido entregado." & vbCrLf & "El formato debe ser Ejemplo: FCV2365",
-                                       "Entregar mercadería", _Numero, False, _Tipo_Mayus_Minus.Normal, 15, True, _Tipo_Imagen.Barra,,,,,,, False)
+                                       "Entregar mercadería", _Numero, False, _Tipo_Mayus_Minus.Normal, 15, True, _Tipo_Imagen.Barra,,,,,,, False, _CerradPorX)
             End If
 
             If Not _Aceptar Then
                 _Mensaje.Detalle = "Acción cancelada"
                 _Mensaje.Cancelado = True
+                _Mensaje.Cerrar = _CerradPorX
                 Throw New System.Exception("An exception has occurred.")
             End If
 
