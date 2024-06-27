@@ -23,7 +23,7 @@
 
     Private Sub Frm_Stmp_SalaEspera_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        _TamanoDePagina = 10
+        _TamanoDePagina = 12
 
         Sb_InsertarBotonenGrilla(Grilla, "BtnImagen_Estado", "Est.", "Img_Estado", 0, _Tipo_Boton.Imagen)
 
@@ -32,6 +32,7 @@
 
         Timer_Paginar.Interval = (1000 * 10)
         Timer_Paginar.Start()
+        CircularPgrs.IsRunning = True
 
     End Sub
 
@@ -39,7 +40,7 @@
 
         Dim _Condicion As String = String.Empty
 
-        _Condicion = vbCrLf & "And Estado = 'FACTU' Or (Estado In ('PREPA','COMPL') And Planificada = 1)-- And Facturar = 1)"
+        _Condicion = vbCrLf & "And Estado = 'FACTU' Or (Estado = 'PREPA' And Planificada = 1 And Facturar = 1)"
 
         Dim _Select_Paginacion As String = "-- Definir la página que deseas mostrar y el tamaño de página" & vbCrLf &
                                            "DECLARE @TamañoDePágina INT = 10;" & vbCrLf &
@@ -120,16 +121,9 @@
             .Columns("NumeroDelItem").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
             .Columns("NumeroDelItem").DefaultCellStyle.Format = "0000"
             .Columns("NumeroDelItem").Visible = True
-            .Columns("NumeroDelItem").Width = 100
+            .Columns("NumeroDelItem").Width = 130
             .Columns("NumeroDelItem").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
-
-            For i As Integer = 0 To Grilla.Rows.Count - 1 'Step 2
-                Grilla.Rows(i).Cells("NumeroDelItem").Style.Font = New Font("Arial", 24, FontStyle.Bold)
-                Grilla.Rows(i).Cells("NumeroDelItem").Style.ForeColor = Azul
-                Grilla.Rows(i).Cells("NumeroDelItem").Style.Alignment = DataGridViewContentAlignment.MiddleCenter
-                Grilla.Rows(i).Cells("NumeroDelItem").Style.Format = "0000"
-            Next
 
             '.Columns("Numero").Visible = True
             '.Columns("Numero").HeaderText = "#Ticket"
@@ -208,11 +202,18 @@
                 _Icono = _Imagenes_List.Images.Item("cancel.png")
             End If
 
-            If _Estado = "PREPA" Or _Estado = "PREPA" Then
-                _Icono = _Imagenes_List.Images.Item("symbol-delete.png")
+            If _Estado = "PREPA" Then
+                _Icono = _Imagenes_List.Images.Item("clock.png.png")
+                _Fila.Cells("NOKOEN").Style.ForeColor = Color.Gray
+                _Fila.Cells("NOKOEN").Style.Alignment = DataGridViewContentAlignment.MiddleCenter
             End If
 
             _Fila.Cells("BtnImagen_Estado").Value = _Icono
+
+            _Fila.Cells("NumeroDelItem").Style.Font = New Font("Arial", 24, FontStyle.Bold)
+            _Fila.Cells("NumeroDelItem").Style.ForeColor = Azul
+            _Fila.Cells("NumeroDelItem").Style.Alignment = DataGridViewContentAlignment.MiddleCenter
+            _Fila.Cells("NumeroDelItem").Style.Format = "0000"
 
         Next
 

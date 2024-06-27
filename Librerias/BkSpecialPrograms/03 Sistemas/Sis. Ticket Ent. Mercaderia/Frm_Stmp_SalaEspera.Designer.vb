@@ -54,9 +54,9 @@ Partial Class Frm_Stmp_SalaEspera
         Me.Metro_Bar_Color.ForeColor = System.Drawing.Color.Black
         Me.Metro_Bar_Color.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Estatus})
         Me.Metro_Bar_Color.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 963)
+        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 476)
         Me.Metro_Bar_Color.Name = "Metro_Bar_Color"
-        Me.Metro_Bar_Color.Size = New System.Drawing.Size(1264, 22)
+        Me.Metro_Bar_Color.Size = New System.Drawing.Size(1077, 22)
         Me.Metro_Bar_Color.TabIndex = 173
         Me.Metro_Bar_Color.Text = "MetroStatusBar1"
         '
@@ -68,13 +68,16 @@ Partial Class Frm_Stmp_SalaEspera
         '
         'GroupPanel1
         '
+        Me.GroupPanel1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel1.Controls.Add(Me.Grilla)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 35)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(1237, 922)
+        Me.GroupPanel1.Size = New System.Drawing.Size(1050, 435)
         '
         '
         '
@@ -141,7 +144,7 @@ Partial Class Frm_Stmp_SalaEspera
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.Grilla.Size = New System.Drawing.Size(1231, 916)
+        Me.Grilla.Size = New System.Drawing.Size(1044, 429)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 27
         '
@@ -170,7 +173,7 @@ Partial Class Frm_Stmp_SalaEspera
         Me.CircularPgrs.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.CircularPgrs.Enabled = False
         Me.CircularPgrs.FocusCuesEnabled = False
-        Me.CircularPgrs.Location = New System.Drawing.Point(1199, -2)
+        Me.CircularPgrs.Location = New System.Drawing.Point(1012, -2)
         Me.CircularPgrs.Name = "CircularPgrs"
         Me.CircularPgrs.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Dot
         Me.CircularPgrs.ProgressColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
@@ -239,16 +242,18 @@ Partial Class Frm_Stmp_SalaEspera
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1264, 985)
+        Me.ClientSize = New System.Drawing.Size(1077, 498)
         Me.Controls.Add(Me.CircularPgrs)
         Me.Controls.Add(Me.LabelX1)
         Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.Metro_Bar_Color)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.MaximizeBox = False
+        Me.MaximumSize = New System.Drawing.Size(1280, 686)
         Me.MinimizeBox = False
+        Me.MinimumSize = New System.Drawing.Size(1093, 537)
         Me.Name = "Frm_Stmp_SalaEspera"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.GroupPanel1.ResumeLayout(False)

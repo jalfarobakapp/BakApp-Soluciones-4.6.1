@@ -360,13 +360,11 @@ Public Class Modulo_Programas_Especiales
 
     End Sub
 
-    Private Sub Btn_Stem_Click(sender As Object, e As EventArgs) Handles Btn_Stem.Click
+    Private Sub Btn_Sgem_Click(sender As Object, e As EventArgs) Handles Btn_Sgem.Click
 
-        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Stem0001") Then Return
-
-        Dim Fm As New Frm_Stmp_Listado
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
+        Dim NewPanel As Sgem_EntregaMercaderia = Nothing
+        NewPanel = New Sgem_EntregaMercaderia(_Fm_Menu_Padre)
+        _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
 
     End Sub
 

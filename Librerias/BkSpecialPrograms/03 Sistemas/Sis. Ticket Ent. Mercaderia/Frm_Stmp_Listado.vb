@@ -91,7 +91,7 @@ Public Class Frm_Stmp_Listado
                 _TidoGen = True
                 _NudoGen = True
             Case "Tab_Entregadas"
-                _Condicion += vbCrLf & "And Estado In ('ENTRE','CERRA') And CONVERT(varchar, FechaEntrega, 112) = '" & Format(Now.Date, "yyyyMMdd") & "'"
+                _Condicion += vbCrLf & "And Estado = 'ENTRE' --And CONVERT(varchar, FechaEntrega, 112) = '" & Format(Now.Date, "yyyyMMdd") & "'"
                 _TidoGen = True
                 _NudoGen = True
             Case "Tab_Cerradas"
@@ -445,8 +445,8 @@ Public Class Frm_Stmp_Listado
             End If
 
             If Not _Aceptar Then
-                _Aceptar = InputBox_Bk(Me, "Ingrese el numero de documento a cerrar" & vbCrLf & "El formato debe ser Ejemplo: FCV2365",
-                                                  "Entregar mercadería", _Numero, False, _Tipo_Mayus_Minus.Normal, 15, True, _Tipo_Imagen.Barra,,,,,,, False)
+                _Aceptar = InputBox_Bk(Me, "Ingrese el número de documento que ya ha sido entregado." & vbCrLf & "El formato debe ser Ejemplo: FCV2365",
+                                       "Entregar mercadería", _Numero, False, _Tipo_Mayus_Minus.Normal, 15, True, _Tipo_Imagen.Barra,,,,,,, False)
             End If
 
             If Not _Aceptar Then
@@ -523,6 +523,80 @@ Public Class Frm_Stmp_Listado
 
     End Function
 
+    Function Fx_CerrarTicket(_CodFuncionario_Cierra As String, _NumeroTicket As String) As LsValiciones.Mensajes
+
+        Timer_Monitoreo.Stop()
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            Dim _Aceptar As Boolean
+
+            If Not String.IsNullOrEmpty(_NumeroTicket) Then
+                _Aceptar = True
+            End If
+
+            If Not _Aceptar Then
+                _Aceptar = InputBox_Bk(Me, "Ingrese el número del ticket que desea cerrar.",
+                                       "Entregar mercadería", _NumeroTicket, False, _Tipo_Mayus_Minus.Normal, 15, True, _Tipo_Imagen.Barra,,,,,,, False)
+            End If
+
+            If Not _Aceptar Then
+                _Mensaje.Detalle = "Acción cancelada"
+                _Mensaje.Cancelado = True
+                Throw New System.Exception("An exception has occurred.")
+            End If
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Numero = '" & _NumeroTicket & "'"
+            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+            If IsNothing(_Row) Then
+
+                _Mensaje.Detalle = "Validación"
+
+                If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                    Throw New System.Exception(_Sql.Pro_Error)
+                Else
+                    Throw New System.Exception("No existe Ticket número " & _NumeroTicket & " En el sistema de Ticket de entrega")
+                End If
+
+            End If
+
+            If MessageBoxEx.Show(Me, "¿Confirma cerrar el Ticket " & _NumeroTicket & "?",
+                                 "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                _Mensaje.Detalle = "Validación"
+                _Mensaje.Cancelado = True
+                Throw New System.Exception("Acción cancelada por el usuario")
+            End If
+
+            Dim _Id_Enc As Integer = _Row.Item("Id")
+
+            Dim _Cl_Stmp As New Cl_Stmp
+            _Cl_Stmp.Fx_Llenar_Encabezado(_Id_Enc)
+
+            _Cl_Stmp.Zw_Stmp_Enc.Estado = "CERRA"
+            _Cl_Stmp.Zw_Stmp_Enc.CodFuncionario_Entrega = _CodFuncionario_Cierra
+
+            _Mensaje = _Cl_Stmp.Fx_Cerrar_Ticket
+
+        Catch ex As Exception
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
+        Finally
+            If Chk_Monitorear.Checked Then
+                Timer_Monitoreo.Start()
+            End If
+        End Try
+
+        If Not _Mensaje.EsCorrecto And Not _Mensaje.Cancelado Then
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            _Mensaje = Fx_Entregar(_CodFuncionario_Cierra, "")
+        End If
+
+        Return _Mensaje
+
+    End Function
 
     Function Fx_Cargar_NVV_FechaDespachoHoy() As List(Of LsValiciones.Mensajes)
 
@@ -942,6 +1016,7 @@ Public Class Frm_Stmp_Listado
                     LabelItem1.Text = "Opciones (Id: " & _Idmaeedo & ")"
 
                     Btn_Mnu_EntregarMercaderia.Visible = (Super_TabS.SelectedTab.Name = "Tab_Facturadas")
+                    Btn_CerrarTicket.Visible = (Super_TabS.SelectedTab.Name = "Tab_Entregadas")
 
                     ShowContextMenu(Menu_Contextual_01_Opciones_Documento)
 
@@ -1269,10 +1344,12 @@ Public Class Frm_Stmp_Listado
 
         _Mensaje = Fx_Entregar(FUNCIONARIO, _TidoGen & _NudoGen)
 
-        If _Mensaje.EsCorrecto Then
-            Sb_Actualizar_Grilla()
+        If Not _Mensaje.EsCorrecto And Not _Mensaje.Cancelado Then
             MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            Return
         End If
+
+        Sb_Actualizar_Grilla()
 
     End Sub
 
@@ -1329,5 +1406,73 @@ Public Class Frm_Stmp_Listado
         If Txt_Filtrar.Text = String.Empty Then
             Sb_Filtrar()
         End If
+    End Sub
+
+    Private Sub Btn_Exportar_Excel_Click(sender As Object, e As EventArgs) Handles Btn_Exportar_Excel.Click
+
+        ' Obtener la vista actual de la grilla
+        'Dim vista As DataView = CType(Grilla.DataSource, DataTable).DefaultView
+        Dim vista As DataView = CType(Grilla.DataSource, DataView)
+        Dim dataTable As DataTable = vista.Table
+
+        ' Crear un nuevo DataTable para almacenar los registros visibles
+        Dim dataTablePaso As New DataTable()
+
+        ' Agregar las columnas al DataTable de paso
+        For Each columna As DataColumn In vista.Table.Columns
+
+            Dim _NombreColumna As String = columna.ColumnName
+
+            If Grilla.Columns(_NombreColumna).Visible Then
+                dataTablePaso.Columns.Add(columna.ColumnName, columna.DataType)
+            End If
+
+        Next
+
+        ' Recorrer cada fila de la vista y agregar una nueva fila al DataTable de paso
+        For Each fila As DataRowView In vista
+            Dim nuevaFila As DataRow = dataTablePaso.NewRow()
+
+            ' Utilizar los valores de las celdas visibles para llenar las columnas del DataTable de paso
+            For Each columna As DataColumn In vista.Table.Columns
+
+                ' Asumiendo que dataTablePaso es tu DataTable y nuevaFila es tu DataRow
+                Dim nombreColumna As String = columna.ColumnName '"Id" ' El nombre de la columna que quieres verificar
+
+                ' Verifica si la columna existe en el DataTable
+                If dataTablePaso.Columns.Contains(nombreColumna) Then
+                    ' Si la columna existe, procede con tu lógica para asignar el valor
+                    nuevaFila(nombreColumna) = fila(columna.ColumnName) ' Asegúrate de reemplazar 'valor' con el valor real que deseas asignar
+                End If
+            Next
+
+            dataTablePaso.Rows.Add(nuevaFila)
+        Next
+
+        ' Utilizar el DataTable de paso según tus necesidades
+        ' Por ejemplo, exportarlo a un archivo de Excel
+        ExportarTabla_JetExcel_Tabla(dataTablePaso, Me, "Listado de documentos")
+        ' ...
+
+    End Sub
+
+    Private Sub Btn_CerrarTicket_Click(sender As Object, e As EventArgs) Handles Btn_CerrarTicket.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+
+        Dim _Id As Integer = _Fila.Cells("Id").Value
+        Dim _Numero = _Fila.Cells("Numero").Value
+
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        _Mensaje = Fx_CerrarTicket(FUNCIONARIO, _Numero)
+
+        If Not _Mensaje.EsCorrecto And Not _Mensaje.Cancelado Then
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            Return
+        End If
+
+        Grilla.Rows.Remove(_Fila)
+
     End Sub
 End Class

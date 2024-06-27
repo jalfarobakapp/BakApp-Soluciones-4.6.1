@@ -909,11 +909,5 @@ Public Class Menu
 
     End Sub
 
-    Private Sub ButtonItem6_Click(sender As Object, e As EventArgs) Handles ButtonItem6.Click
 
-        Dim Fm As New Frm_Stmp_SalaEspera
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
-
-    End Sub
 End Class

@@ -42,7 +42,7 @@ Partial Class Modulo_Programas_Especiales
         Me.Btn_Patentes_rvm = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_SisComisiones = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Tickets = New DevComponents.DotNetBar.Metro.MetroTileItem()
-        Me.Btn_Stem = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_Sgem = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.BtnSalir = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnCambiarDeUsuario = New DevComponents.DotNetBar.ButtonItem()
@@ -78,7 +78,7 @@ Partial Class Modulo_Programas_Especiales
         Me.MnuEspecialOtros.FixedSize = New System.Drawing.Size(1000, 550)
         Me.MnuEspecialOtros.MultiLine = True
         Me.MnuEspecialOtros.Name = "MnuEspecialOtros"
-        Me.MnuEspecialOtros.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Demonio, Me.BtnSQL2Excel, Me.BtnDTE2PDF, Me.BtnCorreos_SMTP, Me.Btn_CRV_Control_Ruta_Vehiculos, Me.Btn_Etiquetas_De_Barra, Me.BtnCrearFormatos, Me.Btn_DTE_Respuestas_XML, Me.Btn_Precios_PrestaShop, Me.Btn_Huella, Me.Btn_Pocket_PC, Me.Btn_Archivador, Me.Btn_Cierre_Reactivacion_Documentos, Me.Btn_Habilitar_Nvv_Para_Facturar, Me.Btn_Patentes_rvm, Me.Btn_SisComisiones, Me.Btn_Tickets, Me.Btn_Stem})
+        Me.MnuEspecialOtros.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Demonio, Me.BtnSQL2Excel, Me.BtnDTE2PDF, Me.BtnCorreos_SMTP, Me.Btn_CRV_Control_Ruta_Vehiculos, Me.Btn_Etiquetas_De_Barra, Me.BtnCrearFormatos, Me.Btn_DTE_Respuestas_XML, Me.Btn_Precios_PrestaShop, Me.Btn_Huella, Me.Btn_Pocket_PC, Me.Btn_Archivador, Me.Btn_Cierre_Reactivacion_Documentos, Me.Btn_Habilitar_Nvv_Para_Facturar, Me.Btn_Patentes_rvm, Me.Btn_SisComisiones, Me.Btn_Tickets, Me.Btn_Sgem})
         '
         '
         '
@@ -544,32 +544,32 @@ Partial Class Modulo_Programas_Especiales
         Me.Btn_Tickets.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_Tickets.TitleText = "BakApp"
         '
-        'Btn_Stem
+        'Btn_Sgem
         '
-        Me.Btn_Stem.Image = CType(resources.GetObject("Btn_Stem.Image"), System.Drawing.Image)
-        Me.Btn_Stem.ImageIndent = New System.Drawing.Point(8, -10)
-        Me.Btn_Stem.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
-        Me.Btn_Stem.Name = "Btn_Stem"
-        Me.Btn_Stem.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_Stem.Text = "<font size=""+4""><b>STEM Tickets entrega mercadería</b></font><br/><font size=""-1""" &
-    ">Ticketes<br/>Control de entrega de mercadería</font>"
-        Me.Btn_Stem.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
-        Me.Btn_Stem.TileSize = New System.Drawing.Size(200, 100)
+        Me.Btn_Sgem.Image = CType(resources.GetObject("Btn_Sgem.Image"), System.Drawing.Image)
+        Me.Btn_Sgem.ImageIndent = New System.Drawing.Point(8, -10)
+        Me.Btn_Sgem.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_Sgem.Name = "Btn_Sgem"
+        Me.Btn_Sgem.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_Sgem.Text = "<font size=""+4""><b>SGEM - Tickets Entrega mercadería</b></font><br/><font size=""-" &
+    "1"">Ticketes<br/>Control de entrega de mercadería</font>"
+        Me.Btn_Sgem.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
+        Me.Btn_Sgem.TileSize = New System.Drawing.Size(200, 100)
         '
         '
         '
-        Me.Btn_Stem.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(76, Byte), Integer))
-        Me.Btn_Stem.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(76, Byte), Integer))
-        Me.Btn_Stem.TileStyle.BackColorGradientAngle = 45
-        Me.Btn_Stem.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(76, Byte), Integer))
-        Me.Btn_Stem.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(76, Byte), Integer))
-        Me.Btn_Stem.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.Btn_Stem.TileStyle.PaddingBottom = 4
-        Me.Btn_Stem.TileStyle.PaddingLeft = 4
-        Me.Btn_Stem.TileStyle.PaddingRight = 4
-        Me.Btn_Stem.TileStyle.PaddingTop = 4
-        Me.Btn_Stem.TileStyle.TextColor = System.Drawing.Color.White
-        Me.Btn_Stem.TitleText = "BakApp"
+        Me.Btn_Sgem.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(76, Byte), Integer))
+        Me.Btn_Sgem.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(76, Byte), Integer))
+        Me.Btn_Sgem.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_Sgem.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(76, Byte), Integer))
+        Me.Btn_Sgem.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(76, Byte), Integer))
+        Me.Btn_Sgem.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_Sgem.TileStyle.PaddingBottom = 4
+        Me.Btn_Sgem.TileStyle.PaddingLeft = 4
+        Me.Btn_Sgem.TileStyle.PaddingRight = 4
+        Me.Btn_Sgem.TileStyle.PaddingTop = 4
+        Me.Btn_Sgem.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_Sgem.TitleText = "BakApp"
         '
         'Bar2
         '
@@ -653,5 +653,5 @@ Partial Class Modulo_Programas_Especiales
     Private WithEvents Btn_Patentes_rvm As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_SisComisiones As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Tickets As DevComponents.DotNetBar.Metro.MetroTileItem
-    Private WithEvents Btn_Stem As DevComponents.DotNetBar.Metro.MetroTileItem
+    Private WithEvents Btn_Sgem As DevComponents.DotNetBar.Metro.MetroTileItem
 End Class

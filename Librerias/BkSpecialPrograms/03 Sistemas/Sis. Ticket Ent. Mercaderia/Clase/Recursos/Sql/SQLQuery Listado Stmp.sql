@@ -48,6 +48,7 @@ Update #Paso Set Duracion = CASE
         END +
         CASE 
             WHEN DATEDIFF(HOUR, FechaCreacion, GETDATE()) % 24 = 0 THEN ''
+			WHEN DATEDIFF(MINUTE, FechaCreacion, GETDATE()) < 60 THEN ''
             ELSE CAST(DATEDIFF(HOUR, FechaCreacion, GETDATE()) % 24 AS VARCHAR) + ' hr(s), '
         END +
         CASE 
@@ -68,6 +69,7 @@ Update #Paso Set Duracion = CASE
         END +
         CASE 
             WHEN DATEDIFF(HOUR, Case FechaPlanificacion When NULL then FechaCreacion Else FechaPlanificacion End, GETDATE()) % 24 = 0 THEN ''
+			WHEN DATEDIFF(MINUTE, Case FechaPlanificacion When NULL then FechaCreacion Else FechaPlanificacion End, GETDATE()) < 60 THEN ''
             ELSE CAST(DATEDIFF(HOUR, Case FechaPlanificacion When NULL then FechaCreacion Else FechaPlanificacion End, GETDATE()) % 24 AS VARCHAR) + ' hr(s), '
         END +
         CASE 
@@ -88,6 +90,7 @@ Update #Paso Set Duracion = CASE
         END +
         CASE 
             WHEN DATEDIFF(HOUR, FechaPickeado, GETDATE()) % 24 = 0 THEN ''
+			WHEN DATEDIFF(MINUTE, FechaPickeado, GETDATE()) < 60 THEN ''
             ELSE CAST(DATEDIFF(HOUR, FechaPickeado, GETDATE()) % 24 AS VARCHAR) + ' hr(s), '
         END +
         CASE 
@@ -108,6 +111,7 @@ Update #Paso Set Duracion = CASE
         END +
         CASE 
             WHEN DATEDIFF(HOUR, FechaFactu, GETDATE()) % 24 = 0 THEN ''
+			WHEN DATEDIFF(MINUTE, FechaFactu, GETDATE()) < 60 THEN ''
             ELSE CAST(DATEDIFF(HOUR, FechaFactu, GETDATE()) % 24 AS VARCHAR) + ' hr(s), '
         END +
         CASE 
