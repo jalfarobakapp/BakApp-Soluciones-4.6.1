@@ -2330,6 +2330,12 @@
     <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_IncNVVPicking.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_SalaEspera.Designer.vb">
+      <DependentUpon>Frm_Stmp_SalaEspera.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_SalaEspera.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Pickeo\Frm_Stmp_IngCantVar.Designer.vb">
       <DependentUpon>Frm_Stmp_IngCantVar.vb</DependentUpon>
     </Compile>
@@ -5467,6 +5473,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_IncNVVPicking.resx">
       <DependentUpon>Frm_Stmp_IncNVVPicking.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_SalaEspera.resx">
+      <DependentUpon>Frm_Stmp_SalaEspera.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Pickeo\Frm_Stmp_IngCantVar.resx">
       <DependentUpon>Frm_Stmp_IngCantVar.vb</DependentUpon>

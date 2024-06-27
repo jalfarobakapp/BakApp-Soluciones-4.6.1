@@ -121,4 +121,7 @@ Where Estado = 'FACTU'
 Update #Paso Set Informacion = Estado_Str+', hace '+Duracion Where Estado In ('INGRE','PREPA','COMPL','FACTU') 
 
 Select * From #Paso Order by Tido,Nudo
+
+--#Select_Paginacion#
+
 Drop table #Paso
