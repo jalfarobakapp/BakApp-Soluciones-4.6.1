@@ -121,6 +121,9 @@
   <data name="SQLQuery_Listado_Stmp" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Sql\SQLQuery Listado Stmp.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="SQLQuery_Lista_de_espera_Sgem" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Sql\SQLQuery Lista de espera Sgem.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="SQLQuery_Revisar_Nota_de_venta_activa_en_WMS_Villar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Sql\SQLQuery Revisar Nota de venta activa en WMS Villar.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>

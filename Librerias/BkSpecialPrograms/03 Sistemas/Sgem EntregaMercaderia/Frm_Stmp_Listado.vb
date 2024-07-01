@@ -1084,6 +1084,17 @@ Public Class Frm_Stmp_Listado
                 Return
             End If
 
+
+            Dim _Mensaje As LsValiciones.Mensajes
+
+            _Mensaje = Fx_RevisarCuentaCteCliente(_Row.Item("ENDO"), _Row.Item("SUENDO"))
+
+            If Not _Mensaje.EsCorrecto Then
+                MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                Call Btn_SalaEsperaFacturar_Click(Nothing, Nothing)
+                Return
+            End If
+
             If MessageBoxEx.Show(Me, "¿Confirma el documento " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO") & "?",
                                  "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
                 Call Btn_SalaEsperaFacturar_Click(Nothing, Nothing)
@@ -1106,6 +1117,45 @@ Public Class Frm_Stmp_Listado
         End Try
 
     End Sub
+
+    Function Fx_RevisarCuentaCteCliente(_Endo As String, _Suendo As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            Dim _RowEntidad As DataRow = Fx_Traer_Datos_Entidad(_Endo, _Suendo)
+
+            If Not IsNothing(_RowEntidad) Then
+
+                Dim _Bloqueada As Boolean = _RowEntidad.Item("BLOQUEADO")
+
+                If _Bloqueada Then
+                    Throw New System.Exception("Entidad bloqueada para ventas y compras")
+                End If
+
+                If Not Fx_Entidad_Tiene_Deudas_CtaCte(Me, _RowEntidad, False, False, _Bloqueada) Then
+                    Throw New System.Exception("La entidad presenta morosidad" & Environment.NewLine &
+                                               "Informe de esta situación a la administración")
+                End If
+
+            End If
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Detalle = "Validación"
+            _Mensaje.Mensaje = "El cliente no presenta morosidad"
+            _Mensaje.Icono = MessageBoxIcon.Information
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Detalle = "Validación"
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
+        End Try
+
+        Return _Mensaje
+
+    End Function
 
     Private Sub Btn_EntregarMercaderia_Click(sender As Object, e As EventArgs) Handles Btn_EntregarMercaderia.Click
 

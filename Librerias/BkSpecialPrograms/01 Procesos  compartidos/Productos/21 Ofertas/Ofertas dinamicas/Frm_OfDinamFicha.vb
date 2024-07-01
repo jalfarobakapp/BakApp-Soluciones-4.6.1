@@ -42,6 +42,7 @@ Public Class Frm_OfDinamFicha
         AddHandler Chk_Tipotrat2.CheckedChanged, AddressOf Chk_Tipotrat_CheckedChanged
         AddHandler Chk_Tipotrat3.CheckedChanged, AddressOf Chk_Tipotrat_CheckedChanged
         AddHandler Chk_Tipotrat4.CheckedChanged, AddressOf Chk_Tipotrat_CheckedChanged
+        AddHandler Txt_Valdesc.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros
 
         caract_combo(Cmb_Concepto)
         Consulta_sql = "SELECT KOCT AS Padre,LTRIM(RTRIM(KOCT))+'-'+LTRIM(RTRIM(NOKOCT)) AS Hijo FROM TABCT WHERE TICT = 'D' ORDER BY Hijo"
@@ -262,7 +263,7 @@ Public Class Frm_OfDinamFicha
         If Chk_Desc_Sab.Checked Then _Desc_sab = "S"
         If Chk_Desc_Dom.Checked Then _Desc_dom = "S"
 
-        Dim _Valdesc As String = De_Num_a_Tx_01(Val(Txt_Valdesc.Text), False, 5)
+        Dim _Valdesc As String = De_Num_a_Tx_01(CDbl(Txt_Valdesc.Text), False, 5)
 
         Dim _Tipotrat As Integer = 1
 

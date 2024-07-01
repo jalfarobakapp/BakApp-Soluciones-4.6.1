@@ -21,6 +21,7 @@ CREATE TABLE [dbo].[Zw_Fincred_TramaRespuesta](
 	[Tido]							[varchar](3)		NOT NULL DEFAULT (''),
 	[Nudo]							[varchar](10)		NOT NULL DEFAULT (''),
 	[Json]							[varchar](max)		NOT NULL DEFAULT (''),
+    [FechaCreacion]                 [datetime]          NULL DEFAULT (getdate()),
  CONSTRAINT [PK_Zw_Fincred_TramaRespuesta] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

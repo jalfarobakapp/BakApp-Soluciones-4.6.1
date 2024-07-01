@@ -839,6 +839,7 @@
     </Compile>
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Conceptos.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Demonio_FacAuto.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Despachos_Configuracion.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Contador.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Hoja.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Hoja_Detalle.vb" />
@@ -860,6 +861,7 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_TblArbol_Asociaciones.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Inventario.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Ubicaciones.vb" />
+    <Compile Include="03 Sistemas\Despachos\Clases\Cl_Despachos.vb" />
     <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\03 Parametros\Cl_Inventario.vb" />
     <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\03 Parametros\Frm_Inv_Inventarios.Designer.vb">
       <DependentUpon>Frm_Inv_Inventarios.vb</DependentUpon>
@@ -1751,9 +1753,9 @@
     <Compile Include="03 Sistemas\Demonio automatico\Procedimientos\Ds_Config_Picking.vb">
       <DependentUpon>Ds_Config_Picking.xsd</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Despachos\Clases\Clas_Despacho.vb" />
-    <Compile Include="03 Sistemas\Despachos\Clases\Clas_Despacho_Fx.vb" />
-    <Compile Include="03 Sistemas\Despachos\Clases\Clas_Imprimir_Despacho.vb" />
+    <Compile Include="03 Sistemas\Despachos\Clases\Old Clase\Clas_Despacho.vb" />
+    <Compile Include="03 Sistemas\Despachos\Clases\Old Clase\Clas_Despacho_Fx.vb" />
+    <Compile Include="03 Sistemas\Despachos\Clases\Old Clase\Clas_Imprimir_Despacho.vb" />
     <Compile Include="03 Sistemas\Despachos\Configuracion\Frm_Despacho_Configuracion.designer.vb">
       <DependentUpon>Frm_Despacho_Configuracion.vb</DependentUpon>
     </Compile>
@@ -2318,40 +2320,40 @@
     <Compile Include="03 Sistemas\Servicio Tecnico\Ingreso Varios\Frm_St_EncIngreso.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Clase\Cl_Stmp.vb" />
-    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Clase\Recursos\Recursos_WmsVillar.Designer.vb">
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Clase\Cl_Stmp.vb" />
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Clase\Recursos\Recursos_WmsVillar.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Recursos_WmsVillar.resx</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_IncNVVPicking.Designer.vb">
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_IncNVVPicking.Designer.vb">
       <DependentUpon>Frm_Stmp_IncNVVPicking.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_IncNVVPicking.vb">
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_IncNVVPicking.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_SalaEspera.Designer.vb">
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_SalaEspera.Designer.vb">
       <DependentUpon>Frm_Stmp_SalaEspera.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_SalaEspera.vb">
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_SalaEspera.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Pickeo\Frm_Stmp_IngCantVar.Designer.vb">
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Pickeo\Frm_Stmp_IngCantVar.Designer.vb">
       <DependentUpon>Frm_Stmp_IngCantVar.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Pickeo\Frm_Stmp_IngCantVar.vb">
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Pickeo\Frm_Stmp_IngCantVar.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Pickeo\Frm_Stmp_IngPickeo.Designer.vb">
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Pickeo\Frm_Stmp_IngPickeo.Designer.vb">
       <DependentUpon>Frm_Stmp_IngPickeo.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Pickeo\Frm_Stmp_IngPickeo.vb">
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Pickeo\Frm_Stmp_IngPickeo.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_Listado.Designer.vb">
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_Listado.Designer.vb">
       <DependentUpon>Frm_Stmp_Listado.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_Listado.vb">
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_Listado.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Sistema WMS\Gestión WMS\Clases\Cl_Documento_Wms.vb" />
@@ -5466,24 +5468,24 @@
     <EmbeddedResource Include="03 Sistemas\Servicio Tecnico\Ingreso Varios\Frm_St_EncIngreso.resx">
       <DependentUpon>Frm_St_EncIngreso.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Clase\Recursos\Recursos_WmsVillar.resx">
+    <EmbeddedResource Include="03 Sistemas\Sgem EntregaMercaderia\Clase\Recursos\Recursos_WmsVillar.resx">
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Recursos_WmsVillar.Designer.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_IncNVVPicking.resx">
+    <EmbeddedResource Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_IncNVVPicking.resx">
       <DependentUpon>Frm_Stmp_IncNVVPicking.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_SalaEspera.resx">
+    <EmbeddedResource Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_SalaEspera.resx">
       <DependentUpon>Frm_Stmp_SalaEspera.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Pickeo\Frm_Stmp_IngCantVar.resx">
+    <EmbeddedResource Include="03 Sistemas\Sgem EntregaMercaderia\Pickeo\Frm_Stmp_IngCantVar.resx">
       <DependentUpon>Frm_Stmp_IngCantVar.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Pickeo\Frm_Stmp_IngPickeo.resx">
+    <EmbeddedResource Include="03 Sistemas\Sgem EntregaMercaderia\Pickeo\Frm_Stmp_IngPickeo.resx">
       <DependentUpon>Frm_Stmp_IngPickeo.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_Listado.resx">
+    <EmbeddedResource Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_Listado.resx">
       <DependentUpon>Frm_Stmp_Listado.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Frm_Formulario_Diseno_Mapa_Crear_Sector.resx">
@@ -8175,8 +8177,9 @@
     <None Include="03 Sistemas\Tesoreria\Pagos\Recursos\Sql\SQLQuery_Revisar_Data_Eliminar_Pago.sql" />
     <None Include="03 Sistemas\Produccion\Recursos\Sql\SQLQuery Informe de OT avance Vs SubOt por Operaciones.sql" />
     <None Include="03 Sistemas\Servicio Tecnico\Recursos\Consultas SQL\SqlQuery_Lista_OT2.sql" />
-    <Content Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Clase\Recursos\Sql\SQLQuery Listado Stmp.sql" />
-    <Content Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Clase\Recursos\Sql\SQLQuery Revisar Nota de venta activa en WMS Villar.sql" />
+    <Content Include="03 Sistemas\Sgem EntregaMercaderia\Clase\Recursos\Sql\SQLQuery Lista de espera Sgem.sql" />
+    <Content Include="03 Sistemas\Sgem EntregaMercaderia\Clase\Recursos\Sql\SQLQuery Listado Stmp.sql" />
+    <Content Include="03 Sistemas\Sgem EntregaMercaderia\Clase\Recursos\Sql\SQLQuery Revisar Nota de venta activa en WMS Villar.sql" />
     <Content Include="03 Sistemas\Tesoreria\Contabilidad\Recursos\Sql\Nomina de tarjetas de credito a liquidacion.sql" />
     <Content Include="999 Funciones, Clases y Datos\Clases\Documentos\Creacion de documento\Consultas SQL\Crear Htm document.htm" />
     <Content Include="999 Funciones, Clases y Datos\Clases\Documentos\Creacion de documento\Consultas SQL\Crear Htm document_Sp.htm" />
@@ -8357,7 +8360,7 @@
   <ItemGroup>
     <Folder Include="01 Procesos  compartidos\Productos\01 Buscar productos\New ProdFind\" />
     <Folder Include="03 Sistemas\Comisiones\Recursos\" />
-    <Folder Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Configuracion\" />
+    <Folder Include="03 Sistemas\Sgem EntregaMercaderia\Configuracion\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

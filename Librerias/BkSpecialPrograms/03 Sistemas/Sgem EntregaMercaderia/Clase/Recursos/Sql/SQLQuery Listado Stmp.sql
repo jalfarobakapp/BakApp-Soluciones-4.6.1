@@ -1,5 +1,5 @@
-Declare @Empresa as Char(2) = '01'
-Declare @Sucursal as Char(3) = '01 '
+Declare @Empresa as Char(2) = '#Empresa#'
+Declare @Sucursal as Char(3) = '#Sucursal#'
 
 Select Enc.*,Edo.FEEMDO,Edo.SUDO,En.NOKOEN,
 Case Estado 

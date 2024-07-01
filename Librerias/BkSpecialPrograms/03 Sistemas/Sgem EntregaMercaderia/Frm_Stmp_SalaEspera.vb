@@ -34,13 +34,15 @@
         Timer_Paginar.Start()
         CircularPgrs.IsRunning = True
 
+        Lbl_Fecha.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm")
+
     End Sub
 
     Sub Sb_Actualizar_Grilla()
 
         Dim _Condicion As String = String.Empty
 
-        _Condicion = vbCrLf & "And Estado = 'FACTU' Or (Estado = 'PREPA' And Planificada = 1 And Facturar = 1)"
+        _Condicion = vbCrLf & "And Estado = 'FACTU' Or (Estado IN ('PREPA','COMPL') And Planificada = 1 And Facturar = 1)"
 
         Dim _Select_Paginacion As String = "-- Definir la página que deseas mostrar y el tamaño de página" & vbCrLf &
                                            "DECLARE @TamañoDePágina INT = 10;" & vbCrLf &
@@ -53,7 +55,7 @@
                                            "OFFSET (@NúmeroDePágina - 1) * @TamañoDePágina ROWS" & vbCrLf &
                                            "FETCH NEXT @TamañoDePágina ROWS ONLY;"
 
-        Consulta_sql = My.Resources.Recursos_WmsVillar.SQLQuery_Listado_Stmp
+        Consulta_sql = My.Resources.Recursos_WmsVillar.SQLQuery_Lista_de_espera_Sgem
         Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
         Consulta_sql = Replace(Consulta_sql, "#Sucursal#", ModSucursal)
         Consulta_sql = Replace(Consulta_sql, "--#Condicion#", _Condicion)
@@ -91,6 +93,7 @@
         End If
 
         Lbl_Estatus.Text = "Pagina: " & _PaginaActual & " de " & _TotalDePaginas
+        LabelX1.Text = "PEDIDOS PARA RETIRO, " & Lbl_Estatus.Text
 
         ' Crear un nuevo DataTable para la página actual
         Dim dataTablePaginado As DataTable = _Tbl_SalaEspera.Clone() ' Clonar la estructura, no los datos
@@ -117,7 +120,7 @@
 
             .Columns("NumeroDelItem").DefaultCellStyle.Font = New Font("Arial", 20, FontStyle.Bold)
             .Columns("NumeroDelItem").DefaultCellStyle.ForeColor = Color.Blue
-            .Columns("NumeroDelItem").HeaderText = "Item"
+            .Columns("NumeroDelItem").HeaderText = "TICKET Nro."
             .Columns("NumeroDelItem").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
             .Columns("NumeroDelItem").DefaultCellStyle.Format = "0000"
             .Columns("NumeroDelItem").Visible = True
@@ -230,6 +233,7 @@
             _PaginaActual = 0 ' Volver a empezar si se alcanza el final
             Sb_Actualizar_Grilla()
         End If
+        Lbl_Fecha.Text = "Fecha: " & DateTime.Now.ToString("dd/MM/yyyy") & "       Hora: " & DateTime.Now.ToString("HH:mm")
 
     End Sub
 

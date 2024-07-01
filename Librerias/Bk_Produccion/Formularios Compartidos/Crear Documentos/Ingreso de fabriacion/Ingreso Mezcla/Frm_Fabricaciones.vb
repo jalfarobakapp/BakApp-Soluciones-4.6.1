@@ -161,7 +161,7 @@ Public Class Frm_Fabricaciones
 
         End If
 
-        Consulta_sql = "Select SUM(CANTIDAD) As Factor" & vbCrLf &
+        Consulta_sql = "Select ISNULL(SUM(CANTIDAD),0) As Factor" & vbCrLf &
                        "From PNPD" & vbCrLf &
                        "Inner Join MAEPR On KOPR = ELEMENTO" & vbCrLf &
                        "Where CODIGO = '" & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Codnomen & "'" & vbCrLf &

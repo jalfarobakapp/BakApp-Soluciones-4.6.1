@@ -4213,11 +4213,19 @@ Public Class Frm_Formulario_Documento
             Dim _Tidopa = _Fl.Cells("Tidopa").Value
             Dim _CodLista2 = _Fl.Cells("CodLista").Value
 
+            Dim _TieneTidopa As Boolean = Not String.IsNullOrEmpty(_Tidopa.ToString.Trim)
+
+            If _Editar_documento Then
+                _TieneTidopa = False
+            End If
+
             If _Codigo2 = _Codigo And _Sucursal2 = _Sucursal And _Bodega2 = _Bodega And _CodLista = _CodLista2 And Not _Nuevo_Producto2 And
-                _Tipr2 = "FPN" And Not _Aplica_Oferta2 And String.IsNullOrEmpty(_Tidopa.ToString.Trim) Then
+                _Tipr2 = "FPN" And Not _Aplica_Oferta2 And Not _TieneTidopa Then
+
                 _Indice_Agrupa = _Fl.Index
                 _Existe_En_Lista = True
                 Exit For
+
             End If
 
         Next
@@ -4239,59 +4247,6 @@ Public Class Frm_Formulario_Documento
             End If
 
         End If
-
-        'If Not _No_Volver_A_Preguntar_Agrupa_Producto Then
-
-        '    If _Existe_En_Lista Then
-
-        '        Dim Chk_Agrupar As New Command
-        '        Chk_Agrupar.Checked = True
-        '        Chk_Agrupar.Name = "Chk_Agrupar"
-        '        Chk_Agrupar.Text = "Agrupar en el registro existente"
-
-        '        Dim Chk_INSERTar As New Command
-        '        Chk_INSERTar.Checked = False
-        '        Chk_INSERTar.Name = "Chk_INSERTar"
-        '        Chk_INSERTar.Text = "Insertar el producto en un registro nuevo"
-
-        '        Dim Chk_No_Volver_A_Preguntar As New Command
-        '        Chk_No_Volver_A_Preguntar.Checked = False
-        '        Chk_No_Volver_A_Preguntar.Name = "Chk_INSERTar"
-        '        Chk_No_Volver_A_Preguntar.Text = "No volver a preguntar"
-
-        '        Dim _Opciones() As Command = {Chk_Agrupar, Chk_INSERTar}
-
-        '        Dim _Info As New TaskDialogInfo("Producto: " & _Codigo.trim & ", " & _Descripcion.trim,
-        '            eTaskDialogIcon.Information2,
-        '            "El producto ya esta en la lista",
-        '            "Indique su opción",
-        '            eTaskDialogButton.Ok, eTaskDialogBackgroundColor.Red, _Opciones, Nothing, Chk_No_Volver_A_Preguntar, Nothing, Nothing)
-
-        '        Dim _Resultado As eTaskDialogResult = TaskDialog.Show(_Info)
-
-        '        _No_Volver_A_Preguntar_Agrupa_Producto = Chk_No_Volver_A_Preguntar.Checked
-
-        '        If _Resultado = eTaskDialogResult.Ok Then
-
-        '            If Chk_Agrupar.Checked Then
-
-        '                _Fila.Cells("Codigo").Value = String.Empty
-        '                Grilla_Detalle.CurrentCell = Grilla_Detalle.Rows(_Indice_Agrupa).Cells("Cantidad")
-        '                Grilla_Detalle.Focus()
-        '                Return
-
-        '            End If
-
-        '        Else
-
-        '            _Fila.Cells("Codigo").Value = String.Empty
-        '            Return
-
-        '        End If
-
-        '    End If
-
-        'End If
 
         Consulta_sql = "Select Top 1 PP01UD,PP02UD,DTMA01UD As DSCTOMAX,ECUACION," &
                        "(Select top 1 MELT From TABPP Where KOLT = '" & _CodLista & "') as MELT From TABPRE" & Space(1) &
@@ -19522,7 +19477,21 @@ Public Class Frm_Formulario_Documento
         If Not _Vizado Then
 
             If Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Bkp00058", Nothing, _Koen, _Suen) Then
+
                 Sb_Buscar_Documento("NVV", True)
+
+                If _Editar_documento And SoloprodEnDoc_CLALIBPR Then
+
+                    Dim _Codigo As String = _TblDetalle.Rows(0).Item("Codigo")
+                    Dim _Clalibpr As String = _Sql.Fx_Trae_Dato("MAEPR", "CLALIBPR", "KOPR = '" & _Codigo & "'")
+                    Dim _Descripcion As String = _Sql.Fx_Trae_Dato("TABCARAC", "NOKOCARAC", "KOTABLA = 'CLALIBPR' And KOCARAC = '" & _Clalibpr & "'")
+
+                    _TblEncabezado.Rows(0).Item("TblTipoVenta") = "CLALIBPR"
+                    _TblEncabezado.Rows(0).Item("CodTipoVenta") = _Clalibpr
+                    Lbl_TipoVenta.Text = "Tipo de venta: " & _Descripcion
+
+                End If
+
             End If
 
         Else
@@ -20763,22 +20732,54 @@ Public Class Frm_Formulario_Documento
                 Return True
             End If
 
-            If TotalKilos < _Peso_Min_Despacho And _TotalNetoDoc < _Valor_Min_Despacho Then
+            If _Peso_Min_Despacho > 0 AndAlso _Valor_Min_Despacho > 0 Then
 
-                _Tiene_X_07_Min_Despacho = True
+                If TotalKilos < _Peso_Min_Despacho And _TotalNetoDoc < _Valor_Min_Despacho Then
 
-                If _Mostrar_Mensaje Then
+                    _Tiene_X_07_Min_Despacho = True
 
-                    MessageBoxEx.Show(Me, "Para poder hacer un despacho a domicilio debe cumplir con ciertos requisitos mínimos." & vbCrLf & vbCrLf &
-                                  "Mínimo en Kg: " & FormatNumber(_Peso_Min_Despacho, 1) & ", mínimo de total neto: " & FormatCurrency(_Valor_Min_Despacho, 0) & vbCrLf &
-                                  "Valores del documento: Kg " & FormatNumber(TotalKilos, 1) & ", total neto: " & FormatCurrency(_TotalNetoDoc, 0) & vbCrLf & vbCrLf &
-                                  "¡Se necesitara permiso para poder grabar el documento!",
-                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    If _Mostrar_Mensaje Then
+
+                        MessageBoxEx.Show(Me, "Para poder hacer un despacho a domicilio debe cumplir con ciertos requisitos mínimos." & vbCrLf & vbCrLf &
+                                      "Mínimo en Kg: " & FormatNumber(_Peso_Min_Despacho, 1) & ", mínimo de total neto: " & FormatCurrency(_Valor_Min_Despacho, 0) & vbCrLf &
+                                      "Valores del documento: Kg " & FormatNumber(TotalKilos, 1) & ", total neto: " & FormatCurrency(_TotalNetoDoc, 0) & vbCrLf & vbCrLf &
+                                      "¡Se necesitara permiso para poder grabar el documento!",
+                                      "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                    End If
+
+                    If Fx_Tiene_Permiso(Me, "ODp00017", FUNCIONARIO, False) Then
+                        Return True
+                    End If
 
                 End If
 
-                If Fx_Tiene_Permiso(Me, "ODp00017", FUNCIONARIO, False) Then
-                    Return True
+            Else
+
+                If _Valor_Min_Despacho > 0 Then
+
+                    If _TotalNetoDoc < _Valor_Min_Despacho Then
+
+                        _Tiene_X_07_Min_Despacho = True
+
+                        If _Mostrar_Mensaje Then
+
+                            Dim _Msg As String = "El monto neto total del documento es inferior al valor neto mínimo de venta necesario para realizar el despacho." & vbCrLf & vbCrLf &
+                                              "Valor neto documento: " & FormatCurrency(_TotalNetoDoc, 0) & vbCrLf &
+                                              "Valor mínimo para despachar: " & FormatCurrency(_Valor_Min_Despacho, 0) & vbCrLf & vbCrLf &
+                                              "Para poder grabar el despacho a domicilio se necesitara un permiso"
+
+                            MessageBoxEx.Show(Me, _Msg, "Validación",
+                                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                        End If
+
+                        If Fx_Tiene_Permiso(Me, "ODp00017", FUNCIONARIO, False) Then
+                            Return True
+                        End If
+
+                    End If
+
                 End If
 
             End If
