@@ -464,6 +464,144 @@ Public Class Cl_Mezcla
 
     End Function
 
+    Function Fx_Eliminar_OrdenDeFabricacion(_Id_Enc As Integer) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+        Dim Cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        Try
+
+            Consulta_sql = "Select * From POTE" & vbCrLf &
+                           "Inner Join " & _Global_BaseBk & "Zw_Pdp_CPT_MzEnc On POTE.IDPOTE = Idpote" & vbCrLf &
+                           "And Id = " & _Id_Enc
+            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If Not IsNothing(_Row) Then
+                Throw New System.Exception("No se puede eliminar la orden de fabricación, ya que esta asociada a una OT en el sistema")
+            End If
+
+            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Pdp_CPT_MzDetIngFab", "Id_Enc = " & _Id_Enc)
+
+            If _Reg > 0 Then
+                Throw New System.Exception("No se puede eliminar la orden de fabricación, ya que ya se han ingresado fabricaciones")
+            End If
+
+            Consulta_sql = String.Empty
+
+            SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
+
+            myTrans = Cn2.BeginTransaction()
+
+            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Pdp_CPT_MzEnc" & vbCrLf &
+                           "Where Id = " & _Id_Enc
+
+            Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+            Comando.Transaction = myTrans
+            Comando.ExecuteNonQuery()
+
+            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Pdp_CPT_MzDet" & vbCrLf &
+                           "Where Id_Enc = " & _Id_Enc
+
+            Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+            Comando.Transaction = myTrans
+            Comando.ExecuteNonQuery()
+
+            myTrans.Commit()
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Id = 0
+            _Mensaje.Detalle = "Eliminar Orden de fabricación de mezcla"
+            _Mensaje.Mensaje = "Orden de fabricación de mezcla eliminada correctamente"
+            _Mensaje.Icono = MessageBoxIcon.Information
+
+        Catch ex As Exception
+
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Resultado = Consulta_sql
+            _Mensaje.Icono = MessageBoxIcon.Stop
+            If Not IsNothing(myTrans) Then myTrans.Rollback()
+
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
+    Function Fx_CambiarNomenclatura(_Id_Det As Integer,
+                                    _Codigomz As String,
+                                    _Formularmz As String,
+                                    _Formularmz_old As String,
+                                    _Idpote As Integer,
+                                    _Idpotl As Integer) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+        Dim _Codnomen As String = _Formularmz
+
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+        Dim Cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        Try
+
+            Dim _CantFabricada As Double = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Pdp_CPT_MzDet", "CantFabricada", "Id = " & _Id_Det)
+
+            If CBool(_CantFabricada) Then
+                Throw New System.Exception("No se puede cambiar la nomenclatura, ya que ya se han ingresado fabricaciones")
+            End If
+
+            Dim _Row As DataRow = _Sql.Fx_Get_DataRow("Select * From PNPE Where CODIGO = '" & _Codnomen & "'")
+
+            SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
+
+            myTrans = Cn2.BeginTransaction()
+
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Pdp_CPT_MzDet Set Codnomen = '" & _Row.Item("CODIGO") & "', Descriptor = '" & _Row.Item("DESCRIPTOR") & "'" & vbCrLf &
+                           "Where Id =" & _Id_Det
+            Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+            Comando.Transaction = myTrans
+            Comando.ExecuteNonQuery()
+
+            Consulta_sql = "Update ZNUEVA_PRODUCCIOND Set FORMULAMZ = '" & _Codnomen & "'" & vbCrLf &
+                           "Where CODIGOMZ = '" & _Codigomz & "' And FORMULAMZ = '" & _Formularmz_old & "' And IDPOTE = " & _Idpote & " And IDPOTL = " & _Idpotl
+            Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+            Comando.Transaction = myTrans
+            Comando.ExecuteNonQuery()
+
+            myTrans.Commit()
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Id = 0
+            _Mensaje.Detalle = "Cambiar Nomenclatura"
+            _Mensaje.Mensaje = "Nomenclatura cambiada correctamente"
+
+            _Mensaje.Icono = MessageBoxIcon.Information
+
+        Catch ex As Exception
+
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Resultado = Consulta_sql
+            _Mensaje.Icono = MessageBoxIcon.Stop
+            If Not IsNothing(myTrans) Then myTrans.Rollback()
+
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
     Function Fx_NvoNro_OFMezcla() As String
 
         Dim _Nro_CPT As String

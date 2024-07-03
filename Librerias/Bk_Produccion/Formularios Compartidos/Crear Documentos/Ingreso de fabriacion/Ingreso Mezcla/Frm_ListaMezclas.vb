@@ -16,6 +16,7 @@ Public Class Frm_ListaMezclas
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
+        Sb_Color_Botones_Barra(Bar1)
 
     End Sub
 
@@ -23,6 +24,9 @@ Public Class Frm_ListaMezclas
 
         AddHandler Tab_Preparacion.Click, AddressOf Sb_Actualizar_Grilla
         AddHandler Tab_Fabricadas.Click, AddressOf Sb_Actualizar_Grilla
+
+        AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+        AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
 
         Sb_Actualizar_Grilla()
 
@@ -46,7 +50,8 @@ Public Class Frm_ListaMezclas
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Pdp_CPT_MzEnc" & vbCrLf &
                        "Where 1>0" & vbCrLf & _Condicion & vbCrLf &
-                       "And Nro_MZC+Numot_Otm+Codigo_Otm+Descripcion_Otm Like '%" & _Filtro & "%'"
+                       "And Nro_MZC+Numot_Otm+Codigo_Otm+Descripcion_Otm Like '%" & _Filtro & "%'" & vbCrLf &
+                       "Order By Nro_MZC"
         _Tbl_Mezclas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
@@ -327,8 +332,6 @@ Public Class Frm_ListaMezclas
 
             End With
 
-            Consulta_sql = "Select * From ZNUEVA_PRODUCCIOND Where IDPOTL = " & _Idpotl
-
             Consulta_sql = "Select Distinct Znpt.*,NOKOPR,CODNOMEN,DESCRIPTOR,PNPE.CANTIDAD,PNPE.UDAD " & vbCrLf &
                            "From ZNUEVA_PRODUCCIOND Znpd" & vbCrLf &
                            "Inner Join ZNUEVA_PRODUCCIONT Znpt On Znpd.NUMERO = Znpt.NUMERO" & vbCrLf &
@@ -406,5 +409,48 @@ Public Class Frm_ListaMezclas
     Private Sub Txt_Filtrar_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Filtrar.ButtonCustomClick
         Txt_Filtrar.Text = String.Empty
         Sb_Actualizar_Grilla()
+    End Sub
+
+    Private Sub Btn_Eliminar_Click(sender As Object, e As EventArgs) Handles Btn_Eliminar.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Pdc00010") Then
+            Return
+        End If
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Id_Enc As Integer = _Fila.Cells("Id").Value
+
+        If MessageBoxEx.Show(Me, "¿Está seguro de eliminar la orden de fabricación seleccionada?", "Eliminar orden de fabricación",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> Windows.Forms.DialogResult.Yes Then
+            Return
+        End If
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Dim _Cl_Mezcla As New Cl_Mezcla
+        _Mensaje = _Cl_Mezcla.Fx_Eliminar_OrdenDeFabricacion(_Id_Enc)
+
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+
+        If _Mensaje.EsCorrecto Then
+            Grilla.Rows.Remove(_Fila)
+        End If
+
+    End Sub
+
+    Private Sub Sb_Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
+        If e.Button = Windows.Forms.MouseButtons.Right Then
+            With sender
+                Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
+                If Hitest.Type = DataGridViewHitTestType.Cell Then
+                    .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
+                    ShowContextMenu(Menu_Contextual_01)
+                End If
+            End With
+        End If
+    End Sub
+
+    Private Sub Btn_Fabricar_Click(sender As Object, e As EventArgs) Handles Btn_Fabricar.Click
+        Call Grilla_CellDoubleClick(Nothing, Nothing)
     End Sub
 End Class

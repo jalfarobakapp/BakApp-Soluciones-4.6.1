@@ -21,9 +21,9 @@ Public Class Frm_SelecProdMezclaFab
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
-
+        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, True, False)
         _Id_Enc = Id_Enc
+        Sb_Color_Botones_Barra(Bar1)
 
     End Sub
 
@@ -41,7 +41,8 @@ Public Class Frm_SelecProdMezclaFab
 
         _MaxCantFabricar = _Row.Item("Valor")
 
-        AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+        'AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+        AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
 
         Sb_Actualizar_Grilla()
 
@@ -68,7 +69,7 @@ Public Class Frm_SelecProdMezclaFab
             .Columns("Codigo").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Descripcion").Width = 340
+            .Columns("Descripcion").Width = 220
             .Columns("Descripcion").HeaderText = "Descripción"
             .Columns("Descripcion").Visible = True
             .Columns("Descripcion").DisplayIndex = _DisplayIndex
@@ -78,6 +79,18 @@ Public Class Frm_SelecProdMezclaFab
             .Columns("Udad").HeaderText = "Udad"
             .Columns("Udad").Visible = True
             .Columns("Udad").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Codnomen").Width = 100
+            .Columns("Codnomen").HeaderText = "Cód.Receta"
+            .Columns("Codnomen").Visible = True
+            .Columns("Codnomen").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Descriptor").Width = 300
+            .Columns("Descriptor").HeaderText = "Receta"
+            .Columns("Descriptor").Visible = True
+            .Columns("Descriptor").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Cantnomen").Visible = True
@@ -121,7 +134,6 @@ Public Class Frm_SelecProdMezclaFab
         Dim _Descriptor As String = _Fila.Cells("Descriptor").Value
 
         Dim Fm As New Frm_Fabricaciones(_Id_Det)
-        Fm.Text = _Codnomen & " - " & _Descriptor
         Fm.MaxCantidadFabricar = _MaxCantFabricar
         Fm.ShowDialog(Me)
         Fm.Dispose()
@@ -130,4 +142,95 @@ Public Class Frm_SelecProdMezclaFab
 
     End Sub
 
+    Private Sub Btn_IngresarFabircaciones_Click(sender As Object, e As EventArgs) Handles Btn_IngresarFabircaciones.Click
+        Call Grilla_CellDoubleClick(Nothing, Nothing)
+    End Sub
+
+    Private Sub Btn_EditarNomenclatura_Click(sender As Object, e As EventArgs) Handles Btn_EditarNomenclatura.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Pdc00011") Then
+            Return
+        End If
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Id As Integer = _Fila.Cells("Id").Value
+        Dim _Codigomz As String = _Fila.Cells("Codigo").Value
+        Dim _Formularmz_Old As String = _Fila.Cells("Codnomen").Value
+        Dim _Idpote_Otm As Integer = _Fila.Cells("Idpote_Otm").Value
+        Dim _Idpotl_Otm As Integer = _Fila.Cells("Idpotl_Otm").Value
+        Dim _CantFabricada As Double = _Fila.Cells("CantFabricada").Value
+
+        If CBool(_CantFabricada) Then
+            MessageBoxEx.Show(Me, "No se puede cambiar la nomenclatura de un producto que ya ha sido fabricado.",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
+
+        Dim _RowNomenclatura As DataRow
+
+        Dim Fm As New Frm_Select_Nomenclatura(_Codigomz)
+        Fm.ShowDialog(Me)
+        _RowNomenclatura = Fm.RowNomenclatura
+        Fm.Dispose()
+
+        If IsNothing(_RowNomenclatura) Then
+            Return
+        End If
+
+        Dim _Formularmz As String = _RowNomenclatura.Item("CODIGO")
+
+        If _Formularmz_Old = _Formularmz Then
+            MessageBoxEx.Show(Me, "La receta seleccionada es la misma que la actual.",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Call Btn_EditarNomenclatura_Click(Nothing, Nothing)
+            Return
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Está seguro de cambiar la receta por la nomenclatura seleccionada?" & vbCrLf &
+                             "Receta seleccionada: " & _RowNomenclatura.Item("CODIGO") & " - " & _RowNomenclatura.Item("DESCRIPTOR"),
+                             "Cambiar receta", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> Windows.Forms.DialogResult.Yes Then
+            Call Btn_EditarNomenclatura_Click(Nothing, Nothing)
+            Return
+        End If
+
+        Dim Cl_Mezcla As New Cl_Mezcla
+
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        _Mensaje = Cl_Mezcla.Fx_CambiarNomenclatura(_Id, _Codigomz, _Formularmz, _Formularmz, _Idpote_Otm, _Idpotl_Otm)
+
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+
+        If _Mensaje.EsCorrecto Then
+            Sb_Actualizar_Grilla()
+        End If
+
+    End Sub
+
+    Private Sub Sb_Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
+        If e.Button = Windows.Forms.MouseButtons.Right Then
+            With sender
+                Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
+                If Hitest.Type = DataGridViewHitTestType.Cell Then
+                    .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
+                    ShowContextMenu(Menu_Contextual_01)
+                End If
+            End With
+        End If
+    End Sub
+
+    Private Sub Btn_Actualizar_Click(sender As Object, e As EventArgs) Handles Btn_Actualizar.Click
+        Sb_Actualizar_Grilla()
+    End Sub
+
+    Private Sub Btn_VerReceta_Click(sender As Object, e As EventArgs) Handles Btn_VerReceta.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Codnomen As String = _Fila.Cells("Codnomen").Value
+
+        Dim Fm As New Frm_VerReceta(_Codnomen)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
 End Class

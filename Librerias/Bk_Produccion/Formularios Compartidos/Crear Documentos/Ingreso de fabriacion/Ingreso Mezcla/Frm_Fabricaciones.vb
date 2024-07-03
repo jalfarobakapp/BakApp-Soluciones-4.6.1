@@ -27,6 +27,8 @@ Public Class Frm_Fabricaciones
 
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
 
     Private Sub Frm_Fabricaciones_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -46,6 +48,8 @@ Public Class Frm_Fabricaciones
         If Not _Fabricada Then
             Dtp_Fecha_Ingreso.Value = _Cl_Mezcla.Zw_Pdp_CPT_MzDet.FechaCreacion
         End If
+
+        Txt_Receta.Text = _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Codnomen & " - " & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Descriptor
 
     End Sub
 
@@ -478,4 +482,33 @@ Public Class Frm_Fabricaciones
 
     End Function
 
+    Private Sub Frm_Fabricaciones_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+
+        If e.KeyValue = Keys.F5 Then
+            Call Btn_Actualizar_Click(Nothing, Nothing)
+        End If
+
+        If e.KeyValue = Keys.F2 Then
+            Call Btn_IngresarNuevaFabricacion_Click(Nothing, Nothing)
+        End If
+
+        If e.KeyValue = Keys.F8 Then
+            Call Btn_Grabar_Click(Nothing, Nothing)
+        End If
+
+        If e.KeyValue = Keys.Escape Then
+            Me.Close()
+        End If
+
+    End Sub
+
+    Private Sub Btn_VerReceta_Click(sender As Object, e As EventArgs) Handles Btn_VerReceta.Click
+
+        Dim _Codnomen As String = _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Codnomen
+
+        Dim Fm As New Frm_VerReceta(_Codnomen)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
 End Class
