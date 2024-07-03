@@ -165,17 +165,18 @@ Public Class Frm_Fabricaciones
 
         End If
 
-        Consulta_sql = "Select ISNULL(SUM(CANTIDAD),0) As Factor" & vbCrLf &
+        Consulta_sql = "Select Isnull(SUM(CANTIDAD),0) As Factor" & vbCrLf &
                        "From PNPD" & vbCrLf &
                        "Inner Join MAEPR On KOPR = ELEMENTO" & vbCrLf &
                        "Where CODIGO = '" & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Codnomen & "'" & vbCrLf &
-                       "And MRPR In ('06MAPVIT','06MAPLIQ')"
-        Dim _Row_Facto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                       "And MRPR In (Select CodigoTabla From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Where Tabla = 'TARJA_MEZCLASMRFACTOR')"
+        Dim _Row_Factor As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        Dim _Factor As Double = _Row_Facto.Item("Factor")
+        Dim _Factor As Double
 
-        'Consulta_sql = "Select * From PNPD Where CODIGO = '" & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Codnomen & "'"
-        'Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        If Not IsNothing(_Row_Factor) Then
+            _Factor = _Row_Factor.Item("Factor")
+        End If
 
         Dim _Zw_Pdp_CPT_MzDetIngFab As New Zw_Pdp_CPT_MzDetIngFab
 
@@ -227,14 +228,18 @@ Public Class Frm_Fabricaciones
 
         Dim _Aceptar As Boolean
 
-        Consulta_sql = "Select SUM(CANTIDAD) As Factor" & vbCrLf &
+        Consulta_sql = "Select Isnull(SUM(CANTIDAD),0) As Factor" & vbCrLf &
                        "From PNPD" & vbCrLf &
                        "Inner Join MAEPR On KOPR = ELEMENTO" & vbCrLf &
                        "Where CODIGO = '" & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Codnomen & "'" & vbCrLf &
-                       "And MRPR In ('06MAPVIT','06MAPLIQ')"
+                       "And MRPR In (Select CodigoTabla From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Where Tabla = 'TARJA_MEZCLASMRFACTOR')"
         Dim _Row_Facto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        Dim _Factor As Double = _Row_Facto.Item("Factor")
+        Dim _Factor As Double
+
+        If Not IsNothing(_Row_Facto) Then
+            _Factor = _Row_Facto.Item("Factor")
+        End If
 
         With _Cl_Mezcla.Zw_Pdp_CPT_MzDetIngFab
 
@@ -322,6 +327,7 @@ Public Class Frm_Fabricaciones
 
     Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
 
+
         If _Cl_Mezcla.Zw_Pdp_CPT_MzDet.CantFabricada = 0 Then
             MessageBoxEx.Show(Me, "No existen datos de fabricación", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
@@ -341,7 +347,9 @@ Public Class Frm_Fabricaciones
         ' Si no tiene Idpote se crea la OT
         If _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpote_New = 0 Then
 
+            Me.Enabled = False
             _Mensaje = Fx_Crear_OT()
+            Me.Enabled = True
 
             MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
@@ -351,7 +359,9 @@ Public Class Frm_Fabricaciones
 
         End If
 
+        Me.Enabled = False
         _Mensaje = Fx_GrabarGRI(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpotl_New)
+        Me.Enabled = True
 
         If Not _Mensaje.EsCorrecto Then
             MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -467,15 +477,16 @@ Public Class Frm_Fabricaciones
 
             _Mensaje.EsCorrecto = True
             _Mensaje.Id = _Row_Maeddo.Item("IDMAEDDO")
-            _Mensaje.Detalle = "GRI Creada correctamente"
-            _Mensaje.Mensaje = "Grabación Exitosa"
-            '"Se crea GRI Nro " & _Row_Maeddo.Item("NUDO") & vbCrLf &
-            '               "Producto: " & _Row_Maeddo.Item("KOPRCT") & " - " & _Row_Maeddo.Item("NOKOPR") & vbCrLf &
-            '               "Cantidad: " & FormatNumber(_Row_Maeddo.Item("CAPRCO1"), 0)
+            _Mensaje.Detalle = "Crear GRI"
+            _Mensaje.Mensaje = "Grabación Exitosa. GRI Creada correctamente"
+            _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Detalle = "Problema al crear la GRI"
             _Mensaje.Mensaje = ex.Message
             _Mensaje.Resultado = Consulta_sql
+            _Mensaje.Icono = MessageBoxIcon.Error
         End Try
 
         Return _Mensaje
@@ -507,6 +518,7 @@ Public Class Frm_Fabricaciones
         Dim _Codnomen As String = _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Codnomen
 
         Dim Fm As New Frm_VerReceta(_Codnomen)
+        Fm.NoMostrarMarcaFactorMezcla = True
         Fm.ShowDialog(Me)
         Fm.Dispose()
 

@@ -8,6 +8,8 @@ Public Class Frm_VerReceta
     Dim _Tbl_Receta As DataTable
     Dim _Codnomen As String
 
+    Public Property NoMostrarMarcaFactorMezcla As Boolean
+
     Public Sub New(_Codnomen As String)
 
         ' Esta llamada es exigida por el diseñador.
@@ -35,9 +37,18 @@ Public Class Frm_VerReceta
 
     Sub Sb_ActualizaGrilla()
 
+        Dim _Condicion As String = String.Empty
+
+        If NoMostrarMarcaFactorMezcla Then
+            _Condicion = "And PNPD.ELEMENTO Not In " &
+                         "(Select KOPR From MAEPR Where MRPR In " &
+                         "(Select CodigoTabla From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Where Tabla = 'TARJA_MEZCLASMRFACTOR'))" & vbCrLf
+        End If
+
         Consulta_sql = "Select PNPD.ELEMENTO,NOKOPR,PNPD.UDAD,CANTIDAD From PNPD" & vbCrLf &
                        "Inner Join MAEPR On KOPR = ELEMENTO" & vbCrLf &
                        "Where CODIGO = '" & _Codnomen & "'" & vbCrLf &
+                       _Condicion &
                        "Order By NREG"
         _Tbl_Receta = _Sql.Fx_Get_DataTable(Consulta_sql)
 

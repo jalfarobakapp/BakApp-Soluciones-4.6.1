@@ -14,7 +14,9 @@ Public Class Frm_Exportar_Excel
     Dim _CodPermiso As String
 
     Dim _No_Abrir_Archivo As Boolean
+    Dim _HojaRevisada As Integer = 1
 
+    Public Property Ds_Excel As DataSet
     Public Property CodPermiso As String
         Get
             Return _CodPermiso
@@ -23,12 +25,11 @@ Public Class Frm_Exportar_Excel
             _CodPermiso = value
         End Set
     End Property
-
     Public Property Pro_Directorio_Destino() As String
         Get
             Return _Directorio_Destino
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             _Directorio_Destino = value
         End Set
     End Property
@@ -44,7 +45,7 @@ Public Class Frm_Exportar_Excel
             End If
             Return Txt_Nombre_Archivo.Text
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             Txt_Nombre_Archivo.Text = value
         End Set
     End Property
@@ -54,14 +55,14 @@ Public Class Frm_Exportar_Excel
         End Get
     End Property
 
-    Dim _Extencion As Enum_Extencion
+    Dim _Extension As Enum_Extension
 
-    Enum Enum_Extencion
+    Enum Enum_Extension
         xlsx
         xls
     End Enum
 
-    Public Sub New(ByVal Tbl_Excel As DataTable)
+    Public Sub New(Tbl_Excel As DataTable)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -82,7 +83,7 @@ Public Class Frm_Exportar_Excel
 
     End Sub
 
-    Private Sub Frm_Exportar_Excel_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Exportar_Excel_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         Me.ActiveControl = Txt_Nombre_Archivo
         Txt_Nombre_Archivo.SelectAll()
@@ -107,9 +108,9 @@ Public Class Frm_Exportar_Excel
 
     End Sub
 
-    Function Fx_Exportar_ExcelJet(ByVal NombreArchivo As String,
-                                  ByVal Directorio As String,
-                                  Optional ByVal Extencion As Enum_Extencion = Enum_Extencion.xlsx,
+    Function Fx_Exportar_ExcelJet(NombreArchivo As String,
+                                  Directorio As String,
+                                  Optional Extencion As Enum_Extension = Enum_Extension.xlsx,
                                   Optional ByRef _Error As String = "") As String
 
         Dim fila As Integer = 0
@@ -121,7 +122,7 @@ Public Class Frm_Exportar_Excel
                 Directorio = _Directorio_Destino
             End If
 
-            _Extencion = Extencion
+            _Extension = Extencion
 
             Sb_Procesando(True)
 
@@ -227,6 +228,7 @@ Public Class Frm_Exportar_Excel
                     'objHojaExcel.Range(nombreColumna(columna) & fila).Value = "'" & dr(dc.ColumnName).ToString
                     columna += 1
                 Next
+
                 fila += 1
 
                 '3000 = 100
@@ -241,6 +243,10 @@ Public Class Frm_Exportar_Excel
                     Exit Function
                 End If
 
+            Next
+
+            For i = 0 To columna - 1
+                Wbook.Worksheets(0).Columns(i).Autofit()
             Next
 
             'If _Cancelar = True Then
@@ -268,9 +274,9 @@ Public Class Frm_Exportar_Excel
             Loop
 
 
-            If _Extencion = Enum_Extencion.xlsx Then
+            If _Extension = Enum_Extension.xlsx Then
                 Wbook.WriteXLSX(_Archivo)
-            ElseIf _Extencion = Enum_Extencion.xls Then
+            ElseIf _Extension = Enum_Extension.xls Then
                 Wbook.WriteXLS(_Archivo)
             End If
 
@@ -294,6 +300,199 @@ Public Class Frm_Exportar_Excel
             Circular_Progres_Contador.Value = 0 : Circular_Progres_Porcentaje.Value = 0
             Sb_Procesando(False)
         End Try
+    End Function
+
+    Function Fx_Exportar_ExcelJetXHoja(NombreArchivo As String,
+                                       Directorio As String,
+                                       Ds_Hojas As DataSet,
+                                       Extencion As Enum_Extension) As LsValiciones.Mensajes
+
+        Dim _fila As Integer = 0
+        Dim _columna As Integer = 0
+        Dim _Nro_Hoja = 0
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            If String.IsNullOrEmpty(Directorio) Then
+                Directorio = _Directorio_Destino
+            End If
+
+            _Extension = Extencion
+
+            Sb_Procesando(True)
+
+            _Configuracion_Regional_()
+
+            _Cancelar = False
+
+            'Create a new workbook.
+            ExcelWorkbook.SetLicenseCode("SA014N-E4113A-E1ALDA-101800")
+            Dim Wbook = New ExcelWorkbook()
+
+
+            For Each _Hojas As DataTable In Ds_Hojas.Tables
+
+                _fila = 0
+                _columna = 0
+
+                _Tbl_Excel = _Hojas
+
+                'Add new worksheet to workbook.
+                Wbook.Worksheets.Add("Hoja" & _Nro_Hoja + 1)
+
+
+                ' xls, xlsx
+                '/////////////////////////////////////////////////
+                '// Armamos la linea con los títulos de columnas
+                '/////////////////////////////////////////////////
+
+                For Each dc In _Tbl_Excel.Columns
+                    With Wbook.Worksheets(_Nro_Hoja).Rows(0).Cells(_columna)
+                        .Style.Font.Bold = True
+                        .Style.Font.Color = ColorPalette.Blue
+                        .Value = dc.ColumnName
+                        _columna += 1
+                    End With
+
+                    If _Cancelar = True Then
+                        Circular_Progres_Porcentaje.Value = 0
+                        Sb_Procesando(False)
+                        Exit Function
+                    End If
+                Next
+                _fila += 1
+
+                'Bar = BarraProgreso
+
+                Circular_Progres_Porcentaje.Maximum = 100 ' Bar.Value = ((Contador * 100) / Tabla.Rows.Count)
+                Circular_Progres_Contador.Maximum = _Tbl_Excel.Rows.Count
+
+                _columna = 1
+                Circular_Progres_Porcentaje.Value = 0
+                Circular_Progres_Contador.Value = 0
+
+                Dim Contador = 0
+
+                For Each dr In _Tbl_Excel.Rows
+
+                    System.Windows.Forms.Application.DoEvents()
+                    _columna = 0
+                    For Each dc In _Tbl_Excel.Columns
+
+                        Dim Contenido = dr(dc.ColumnName).ToString
+
+                        Dim ty As Type = dc.DataType
+                        Dim TipoDeDato As String = ty.Name.ToString
+
+                        Dim _Valor
+
+                        If dc.ColumnName = "Consolidado" Then
+                            Dim _ssa = 0
+                        End If
+
+                        If TipoDeDato = "Double" Or TipoDeDato = "Decimal" Or TipoDeDato = "Int32" Then
+                            Dim _Valor_ As Double = De_Txt_a_Num_01(Contenido, 3) 'Gl_Fx_De_Num_a_Tx_01(Contenido, False, 2)
+                            Wbook.Worksheets(_Nro_Hoja).Cells(_fila, _columna).Value = _Valor_ ' FormatNumber(_Valor_, 2) 'Gl_Fx_De_Num_a_Tx_01(Contenido, 3)
+                        ElseIf TipoDeDato = "DateTime" Then
+                            Dim _Fecha As Date = NuloPorNro(dr(dc.ColumnName), "01/01/1900")
+                            Wbook.Worksheets(_Nro_Hoja).Cells(_fila, _columna).Value = FormatDateTime(_Fecha, DateFormat.ShortDate) 'dr(dc.ColumnName)
+                        ElseIf TipoDeDato = "Boolean" Then
+                            _Valor = CInt(NuloPorNro(dr(dc.ColumnName), False)) * -1
+                            Wbook.Worksheets(_Nro_Hoja).Rows(_fila).Cells(_columna).Value = _Valor
+                        Else
+
+                            _Valor = CStr(dr(dc.ColumnName).ToString)
+
+                            ' Limpieza de valores ASCII
+                            For _i = 0 To 31
+                                _Valor = Replace(_Valor, Chr(_i), " ")
+                            Next
+                            _Valor = Replace(_Valor, Chr(127), " ")
+
+                            If IsNothing(_Valor) Then _Valor = String.Empty
+
+                            Wbook.Worksheets(_Nro_Hoja).Rows(_fila).Cells(_columna).Value = _Valor.ToString.Trim
+                        End If
+
+                        If _Cancelar = True Then
+                            Exit For
+                        End If
+
+                        _columna += 1
+
+                    Next
+
+                    _fila += 1
+
+                    Contador += 1
+                    Circular_Progres_Porcentaje.Value = ((Contador * 100) / _Tbl_Excel.Rows.Count)
+                    Circular_Progres_Contador.Value += 1
+
+                    If _Cancelar = True Then
+                        Exit For
+                    End If
+
+                Next
+
+                'Merged range.
+
+                For i = 0 To _columna - 1
+                    Wbook.Worksheets(_Nro_Hoja).Columns(i).Autofit()
+                Next
+
+                _Nro_Hoja += 1
+
+            Next
+
+            If _Cancelar Then
+                _Mensaje.Cancelado = True
+                Throw New Exception("Proceso cancelado por el usuario")
+            End If
+
+            Dim _Contador = 1
+            Dim _Archivo As String
+            _Archivo = Directorio & "\" & NombreArchivo & "." & Extencion.ToString
+
+            Do While File.Exists(_Archivo)
+
+                If Fx_IsFileOpen(_Archivo) Then
+                    _Archivo = Directorio & "\" & NombreArchivo & "_(" & _Contador & ")" & "." & Extencion.ToString
+                    _Contador += 1
+                Else
+                    Exit Do
+                End If
+
+            Loop
+
+            If _Extension = Enum_Extension.xlsx Then
+                Wbook.WriteXLSX(_Archivo)
+            ElseIf _Extension = Enum_Extension.xls Then
+                Wbook.WriteXLS(_Archivo)
+            End If
+
+            Txt_Nombre_Archivo.Text = NombreArchivo & "." & Extencion.ToString
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "El archivo fue guardado con exito en la carpeta:" & vbCrLf & _Archivo
+            _Mensaje.Detalle = "Exportar a Excel"
+            _Mensaje.Icono = MessageBoxIcon.Information
+            _Mensaje.Tag = _Archivo
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = "Hoja: Hoja" & _Nro_Hoja + 1 & ", Fila: " & _fila & ", Columna: " & _columna & vbCrLf & ex.Message
+            _Mensaje.Detalle = "Exportar a Excel"
+            _Mensaje.Tag = ""
+            _Mensaje.Icono = MessageBoxIcon.Error
+        Finally
+            Circular_Progres_Contador.Value = 0 : Circular_Progres_Porcentaje.Value = 0
+            Sb_Procesando(False)
+        End Try
+
+        Return _Mensaje
+
     End Function
 
     Function Fx_Crear_CSV(_Nombre_Archivo As String,
@@ -579,7 +778,7 @@ Public Class Frm_Exportar_Excel
 
     End Function
 
-    Sub Sb_Procesando(ByVal _Procesando As Boolean)
+    Sub Sb_Procesando(_Procesando As Boolean)
 
         If _Procesando Then
             Btn_Exportar_a_Excel.Enabled = False
@@ -605,7 +804,7 @@ Public Class Frm_Exportar_Excel
 
     End Sub
 
-    Private Sub Btn_Exportar_a_Excel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Exportar_a_Excel.Click
+    Private Sub Btn_Exportar_a_Excel_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Exportar_a_Excel.Click
 
         If _Necesita_Permiso Then
             If Not Fx_Tiene_Permiso(Me, _CodPermiso) Then
@@ -620,21 +819,34 @@ Public Class Frm_Exportar_Excel
             Return
         End If
 
-        'Fx_IsFileOpen
-
         If Rdb_xls.Checked Then
-            _Archivo = Fx_Exportar_ExcelJet(Txt_Nombre_Archivo.Text, _Directorio_Destino, Enum_Extencion.xls)
+            _Extension = Enum_Extension.xls
         ElseIf Rdb_Xlsx.Checked Then
-            _Archivo = Fx_Exportar_ExcelJet(Txt_Nombre_Archivo.Text, _Directorio_Destino, Enum_Extencion.xlsx)
+            _Extension = Enum_Extension.xlsx
+        End If
+
+        _Archivo = String.Empty
+
+        If Not IsNothing(Ds_Excel) Then
+
+            Dim _Mensaje As LsValiciones.Mensajes = Fx_Exportar_ExcelJetXHoja(Txt_Nombre_Archivo.Text, _Directorio_Destino, Ds_Excel, _Extension)
+
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, Windows.Forms.MessageBoxButtons.OK, _Mensaje.Icono)
+
+            If _Mensaje.EsCorrecto Then
+                _Archivo = _Mensaje.Tag
+            End If
+
+        Else
+
+            _Archivo = Fx_Exportar_ExcelJet(Txt_Nombre_Archivo.Text, _Directorio_Destino, _Extension)
+
         End If
 
         If Not String.IsNullOrEmpty(_Archivo) Then
 
-            'MessageBoxEx.Show(Me, "El documento fue guardado con exito en la carpeta:" & vbCrLf & _
-            '       _Archivo, "Exportar a Excel", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-            If MsgBox("¿Desea Abrir el archivo " & Txt_Nombre_Archivo.Text & "?",
-                      MsgBoxStyle.YesNo + MsgBoxStyle.Question, "Abrir docuemto Excel") = MsgBoxResult.Yes Then
+            If MessageBoxEx.Show(Me, "¿Desea Abrir el archivo " & Txt_Nombre_Archivo.Text & "?", "Abrir documento Excel",
+                                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
                 Try
                     System.Diagnostics.Process.Start(_Archivo)
                 Catch ex As Exception
@@ -643,13 +855,30 @@ Public Class Frm_Exportar_Excel
             End If
 
             Me.Close()
+
         Else
             MessageBoxEx.Show(Me, "Error al exportar datos a excel." & vbCrLf & _Error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End If
 
     End Sub
 
-    Private Sub Btn_Exportar_Csv_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Exportar_Csv.Click
+    Private Sub Btn_Exportar_Csv_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Exportar_Csv.Click
+
+        If Not IsNothing(Ds_Excel) Then
+
+            _Tbl_Excel = Nothing
+
+            If Ds_Excel.Tables.Count > 1 Then
+                MessageBoxEx.Show(Me, "No se puede exportar a CSV, ya que se han generado " & Ds_Excel.Tables.Count & " hojas como resultado." & vbCrLf &
+                                  "Solo se puede exportar cuando el resultado es 1 hoja" & vbCrLf & vbCrLf &
+                                  "Solo podrá exportar a Excel",
+                                  "Exportar a CSV", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+            _Tbl_Excel = Ds_Excel.Tables(0)
+
+        End If
 
         If _Necesita_Permiso Then
             If Not Fx_Tiene_Permiso(Me, _CodPermiso) Then
@@ -683,17 +912,17 @@ Public Class Frm_Exportar_Excel
 
     End Sub
 
-    Private Sub Btn_Cancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cancelar.Click
+    Private Sub Btn_Cancelar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cancelar.Click
         _Cancelar = True
     End Sub
 
-    Private Sub Frm_Exportar_Excel_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_Exportar_Excel_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
-    Private Sub Btn_Direccion_File_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Direccion_File.Click
+    Private Sub Btn_Direccion_File_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Direccion_File.Click
 
         If _Necesita_Permiso Then
             If Not Fx_Tiene_Permiso(Me, _CodPermiso) Then
@@ -717,22 +946,97 @@ Public Class Frm_Exportar_Excel
 
     End Sub
 
-    Private Sub Btn_Ver_Detalle_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Ver_Detalle.Click
+    Private Sub Btn_Ver_Detalle_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ver_Detalle.Click
+
+        If Not IsNothing(Ds_Excel) Then
+            _Tbl_Excel = Nothing
+        End If
+
+        If IsNothing(_Tbl_Excel) Then
+
+            If IsNothing(Ds_Excel) Then
+                MessageBoxEx.Show(Me, "No existen datos que mostrar", "Ver detalle", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+            If Ds_Excel.Tables.Count > 1 Then
+
+                Dim _Msg As String = "Se han generado " & Ds_Excel.Tables.Count & " hojas como resultado. " & vbCrLf &
+                       "Por favor, indícame el número de la hoja que deseas revisar (del 1 al " & Ds_Excel.Tables.Count & ")."
+                Dim _Aceptar As Boolean = InputBox_Bk(Me, _Msg, "Ver detalle",
+                                                      _HojaRevisada, False, _Tipo_Mayus_Minus.Normal, 2, True, _Tipo_Imagen.Texto,,
+                                                      _Tipo_Caracter.Solo_Numeros_Enteros, False)
+
+                If Not _Aceptar Then
+                    Return
+                End If
+
+                If _HojaRevisada > Ds_Excel.Tables.Count Then
+                    MessageBoxEx.Show(Me, "El número de hoja no es valido, debe ser del 1 al " & Ds_Excel.Tables.Count, "Validación",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    _HojaRevisada = 1
+                    Call Btn_Ver_Detalle_Click(Nothing, Nothing)
+                    Return
+                End If
+
+                _Tbl_Excel = Ds_Excel.Tables(_HojaRevisada - 1)
+
+                If _Tbl_Excel.Rows.Count = 0 Then
+                    MessageBoxEx.Show(Me, "No existen datos que mostrar en la hoja " & _HojaRevisada, "Ver detalle", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Call Btn_Ver_Detalle_Click(Nothing, Nothing)
+                    Return
+                End If
+
+            Else
+                _Tbl_Excel = Ds_Excel.Tables(0)
+            End If
+
+        End If
+
         If _Tbl_Excel.Rows.Count > 0 Then
+
             Dim Fm As New Frm_CargarTablasDePaso
             Fm._Tabla_de_Paso = _Tbl_Excel
             Fm.ShowDialog(Me)
+
+            If Not IsNothing(Ds_Excel) Then
+
+                If Ds_Excel.Tables.Count > 1 Then
+                    If MessageBoxEx.Show(Me, "¿Desea ver otras hojas?", "Ver detalle",
+                                         MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+                        Call Btn_Ver_Detalle_Click(Nothing, Nothing)
+                    End If
+                End If
+
+            End If
+
         Else
             MessageBoxEx.Show("No existen datos que mostrar", "Ver detalle", Windows.Forms.MessageBoxButtons.OK, Windows.Forms.MessageBoxIcon.Stop)
         End If
     End Sub
 
-    Private Sub Btn_Carpeta_Informes_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Carpeta_Informes.Click
+    Private Sub Btn_Carpeta_Informes_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Carpeta_Informes.Click
         Dim _Temporales = Application.StartupPath & "\Data\" & RutEmpresa & "\Tmp\Excel"
         Shell("explorer.exe " & _Temporales, AppWinStyle.NormalFocus)
     End Sub
 
     Private Sub Btn_Exportar_Txt_Click(sender As Object, e As EventArgs) Handles Btn_Exportar_Txt.Click
+
+        If Not IsNothing(Ds_Excel) Then
+
+            _Tbl_Excel = Nothing
+
+            If Ds_Excel.Tables.Count > 1 Then
+                MessageBoxEx.Show(Me, "No se puede exportar a TXT, ya que se han generado " & Ds_Excel.Tables.Count & " hojas como resultado." & vbCrLf &
+                                  "Solo se puede exportar cuando el resultado es 1 hoja" & vbCrLf & vbCrLf &
+                                  "Solo podrá exportar a Excel",
+                                  "Exportar a TXT", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+            _Tbl_Excel = Ds_Excel.Tables(0)
+
+        End If
 
         If _Necesita_Permiso Then
             If Not Fx_Tiene_Permiso(Me, _CodPermiso) Then

@@ -1728,7 +1728,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     Private Sub BtnExportaExcel_Click_1(sender As System.Object, e As System.EventArgs) Handles BtnExportaExcel.Click
         Consulta_sql = "Select * From MAEPR"
-        ExportarTabla_JetExcel_Old(Consulta_sql, Me, "Maestro productos")
+        ExportarTabla_JetExcel(Consulta_sql, Me, "Maestro productos")
     End Sub
 
     Private Sub BtnCrearProductos_Click(sender As System.Object, e As System.EventArgs) Handles BtnCrearProductos.Click

@@ -150,13 +150,24 @@ Public Class Frm_SQL2Excel_Diseno
 
     End Function
 
-    Function Fx_Ejecutar_Comsulta_SQL() As DataTable
+    'Function Fx_Ejecutar_Comsulta_SQL() As DataTable
+
+    '    If Not _Sql.Ej_consulta_IDU(Txt_Query_SQL.Text, False) Then
+    '        MessageBoxEx.Show(Me, _Sql.Pro_Error, "ERROR EN LA CONSULTA", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+    '        Return Nothing
+    '    Else
+    '        Fx_Ejecutar_Comsulta_SQL = _Sql.Fx_Get_DataTable(Txt_Query_SQL.Text)
+    '    End If
+
+    'End Function
+
+    Function Fx_Ejecutar_Comsulta_SQL() As DataSet
 
         If Not _Sql.Ej_consulta_IDU(Txt_Query_SQL.Text, False) Then
             MessageBoxEx.Show(Me, _Sql.Pro_Error, "ERROR EN LA CONSULTA", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return Nothing
         Else
-            Fx_Ejecutar_Comsulta_SQL = _Sql.Fx_Get_DataTable(Txt_Query_SQL.Text)
+            Fx_Ejecutar_Comsulta_SQL = _Sql.Fx_Get_DataSet(Txt_Query_SQL.Text)
         End If
 
     End Function
@@ -167,11 +178,23 @@ Public Class Frm_SQL2Excel_Diseno
             If Fx_Revisar_Consulta_Sin_Modificaciones_En_Tablas_del_Sistema(Txt_Query_SQL.Text) Then
 
                 Me.Cursor = Cursors.WaitCursor
-                _Tbl_Query = Fx_Ejecutar_Comsulta_SQL()
+
+                Dim _Ds As DataSet = Fx_Ejecutar_Comsulta_SQL()
+
                 Me.Cursor = Cursors.Default
 
-                If Not (_Tbl_Query Is Nothing) Then
-                    ExportarTabla_JetExcel_Tabla(_Tbl_Query, Me, "Consulta_SQL_personalizada")
+                If Not (_Ds Is Nothing) Then
+
+                    If _Ds.Tables.Count > 1 Then
+
+                        Dim _Msg = "La consulta generó varias tablas. Por eso, el archivo de Excel tendrá más de una hoja para mostrar los resultados."
+
+                        MessageBoxEx.Show(Me, Fx_AjustarTexto(_Msg, 80), "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                    End If
+
+                    ExportarTabla_JetExcel_DataSet(_Ds, Me, "Consulta_SQL_personalizada")
+
                 End If
 
             Else
