@@ -514,13 +514,32 @@ Public Class Frm_Fabricaciones
     End Sub
 
     Private Sub Btn_VerReceta_Click(sender As Object, e As EventArgs) Handles Btn_VerReceta.Click
+        ShowContextMenu(Menu_contextual_02)
+    End Sub
 
+    Private Sub Btn_VerRecetaCompleta_Click(sender As Object, e As EventArgs) Handles Btn_VerRecetaCompleta.Click
+        Dim _Codnomen As String = _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Codnomen
+
+        Dim Fm As New Frm_VerReceta(_Codnomen)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+    End Sub
+
+    Private Sub Btn_VerRecetaSinProdExcluidos_Click(sender As Object, e As EventArgs) Handles Btn_VerRecetaSinProdExcluidos.Click
         Dim _Codnomen As String = _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Codnomen
 
         Dim Fm As New Frm_VerReceta(_Codnomen)
         Fm.NoMostrarMarcaFactorMezcla = True
         Fm.ShowDialog(Me)
         Fm.Dispose()
+    End Sub
 
+    Private Sub Btn_VerRecetaSoloProdExcluidos_Click(sender As Object, e As EventArgs) Handles Btn_VerRecetaSoloProdExcluidos.Click
+        Dim _Codnomen As String = _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Codnomen
+
+        Dim Fm As New Frm_VerReceta(_Codnomen)
+        Fm.MostrarSoloMarcaFactorMezcla = True
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
     End Sub
 End Class

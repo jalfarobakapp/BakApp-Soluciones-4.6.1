@@ -1727,7 +1727,9 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
     End Sub
 
     Private Sub BtnExportaExcel_Click_1(sender As System.Object, e As System.EventArgs) Handles BtnExportaExcel.Click
-        Consulta_sql = "Select * From MAEPR"
+        Consulta_sql = "SELECT TIPR,KOPR,KOPRRA,KOPRTE,NOKOPRRA,NOKOPR,NMARCA,UD01PR,UD02PR,RLUD,POIVPR,RGPR,MRPR,ZONAPR,RUPR,FMPR,PFPR,HFPR," &
+                       "DIVISIBLE, DIVISIBLE2, LISCOSTO, CLALIBPR, PESOUBIC" & vbCrLf &
+                       "FROM MAEPR"
         ExportarTabla_JetExcel(Consulta_sql, Me, "Maestro productos")
     End Sub
 

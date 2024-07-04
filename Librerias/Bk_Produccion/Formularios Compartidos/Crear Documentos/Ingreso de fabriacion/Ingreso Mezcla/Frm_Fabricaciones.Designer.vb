@@ -23,9 +23,9 @@ Partial Class Frm_Fabricaciones
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Fabricaciones))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_IngresarNuevaFabricacion = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_VerReceta = New DevComponents.DotNetBar.ButtonItem()
@@ -45,6 +45,10 @@ Partial Class Frm_Fabricaciones
         Me.Dtp_Fecha_Ingreso = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Receta = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Menu_contextual_02 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_VerRecetaCompleta = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_VerRecetaSinProdExcluidos = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_VerRecetaSoloProdExcluidos = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel4.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -151,7 +155,7 @@ Partial Class Frm_Fabricaciones
         '
         Me.Menu_Contextual.AntiAlias = True
         Me.Menu_Contextual.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
+        Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01, Me.Menu_contextual_02})
         Me.Menu_Contextual.Location = New System.Drawing.Point(130, 41)
         Me.Menu_Contextual.Name = "Menu_Contextual"
         Me.Menu_Contextual.Size = New System.Drawing.Size(329, 25)
@@ -187,37 +191,37 @@ Partial Class Frm_Fabricaciones
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle8
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.MultiSelect = False
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
         Me.Grilla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.Grilla.Size = New System.Drawing.Size(721, 349)
         Me.Grilla.TabIndex = 1
@@ -442,6 +446,34 @@ Partial Class Frm_Fabricaciones
         Me.Txt_Receta.TabIndex = 171
         Me.Txt_Receta.Text = "DSDSD SDS DSD - SD SDSDFSAFSFSDF A DSAF SDF SDF SDFSD"
         '
+        'Menu_contextual_02
+        '
+        Me.Menu_contextual_02.AutoExpandOnClick = True
+        Me.Menu_contextual_02.Name = "Menu_contextual_02"
+        Me.Menu_contextual_02.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_VerRecetaCompleta, Me.Btn_VerRecetaSinProdExcluidos, Me.Btn_VerRecetaSoloProdExcluidos})
+        Me.Menu_contextual_02.Text = "Opciones"
+        '
+        'Btn_VerRecetaCompleta
+        '
+        Me.Btn_VerRecetaCompleta.Image = CType(resources.GetObject("Btn_VerRecetaCompleta.Image"), System.Drawing.Image)
+        Me.Btn_VerRecetaCompleta.ImageAlt = CType(resources.GetObject("Btn_VerRecetaCompleta.ImageAlt"), System.Drawing.Image)
+        Me.Btn_VerRecetaCompleta.Name = "Btn_VerRecetaCompleta"
+        Me.Btn_VerRecetaCompleta.Text = "Ver receta completa"
+        '
+        'Btn_VerRecetaSinProdExcluidos
+        '
+        Me.Btn_VerRecetaSinProdExcluidos.Image = CType(resources.GetObject("Btn_VerRecetaSinProdExcluidos.Image"), System.Drawing.Image)
+        Me.Btn_VerRecetaSinProdExcluidos.ImageAlt = CType(resources.GetObject("Btn_VerRecetaSinProdExcluidos.ImageAlt"), System.Drawing.Image)
+        Me.Btn_VerRecetaSinProdExcluidos.Name = "Btn_VerRecetaSinProdExcluidos"
+        Me.Btn_VerRecetaSinProdExcluidos.Text = "Ver la receta solo con productos de marcas NO excluidas."
+        '
+        'Btn_VerRecetaSoloProdExcluidos
+        '
+        Me.Btn_VerRecetaSoloProdExcluidos.Image = CType(resources.GetObject("Btn_VerRecetaSoloProdExcluidos.Image"), System.Drawing.Image)
+        Me.Btn_VerRecetaSoloProdExcluidos.ImageAlt = CType(resources.GetObject("Btn_VerRecetaSoloProdExcluidos.ImageAlt"), System.Drawing.Image)
+        Me.Btn_VerRecetaSoloProdExcluidos.Name = "Btn_VerRecetaSoloProdExcluidos"
+        Me.Btn_VerRecetaSoloProdExcluidos.Text = "Ver la receta solo con productos de marcas excluidas."
+        '
         'Frm_Fabricaciones
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -496,4 +528,8 @@ Partial Class Frm_Fabricaciones
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Txt_Receta As DevComponents.DotNetBar.Controls.TextBoxX
     Public WithEvents Btn_VerReceta As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Menu_contextual_02 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_VerRecetaCompleta As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_VerRecetaSinProdExcluidos As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_VerRecetaSoloProdExcluidos As DevComponents.DotNetBar.ButtonItem
 End Class

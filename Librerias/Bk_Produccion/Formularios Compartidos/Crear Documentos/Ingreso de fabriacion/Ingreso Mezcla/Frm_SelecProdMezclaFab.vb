@@ -223,14 +223,32 @@ Public Class Frm_SelecProdMezclaFab
         Sb_Actualizar_Grilla()
     End Sub
 
-    Private Sub Btn_VerReceta_Click(sender As Object, e As EventArgs) Handles Btn_VerReceta.Click
-
+    Private Sub Btn_VerRecetaCompleta_Click(sender As Object, e As EventArgs) Handles Btn_VerRecetaCompleta.Click
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
         Dim _Codnomen As String = _Fila.Cells("Codnomen").Value
 
         Dim Fm As New Frm_VerReceta(_Codnomen)
         Fm.ShowDialog(Me)
         Fm.Dispose()
+    End Sub
 
+    Private Sub Btn_VerRecetaSinProdExcluidos_Click(sender As Object, e As EventArgs) Handles Btn_VerRecetaSinProdExcluidos.Click
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Codnomen As String = _Fila.Cells("Codnomen").Value
+
+        Dim Fm As New Frm_VerReceta(_Codnomen)
+        Fm.NoMostrarMarcaFactorMezcla = True
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+    End Sub
+
+    Private Sub Btn_VerRecetaSoloProdExcluidos_Click(sender As Object, e As EventArgs) Handles Btn_VerRecetaSoloProdExcluidos.Click
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Codnomen As String = _Fila.Cells("Codnomen").Value
+
+        Dim Fm As New Frm_VerReceta(_Codnomen)
+        Fm.MostrarSoloMarcaFactorMezcla = True
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
     End Sub
 End Class

@@ -9,6 +9,7 @@ Public Class Frm_VerReceta
     Dim _Codnomen As String
 
     Public Property NoMostrarMarcaFactorMezcla As Boolean
+    Public Property MostrarSoloMarcaFactorMezcla As Boolean
 
     Public Sub New(_Codnomen As String)
 
@@ -41,6 +42,12 @@ Public Class Frm_VerReceta
 
         If NoMostrarMarcaFactorMezcla Then
             _Condicion = "And PNPD.ELEMENTO Not In " &
+                         "(Select KOPR From MAEPR Where MRPR In " &
+                         "(Select CodigoTabla From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Where Tabla = 'TARJA_MEZCLASMRFACTOR'))" & vbCrLf
+        End If
+
+        If MostrarSoloMarcaFactorMezcla Then
+            _Condicion = "And PNPD.ELEMENTO In " &
                          "(Select KOPR From MAEPR Where MRPR In " &
                          "(Select CodigoTabla From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Where Tabla = 'TARJA_MEZCLASMRFACTOR'))" & vbCrLf
         End If
@@ -89,6 +96,15 @@ Public Class Frm_VerReceta
             .Columns("CANTIDAD").DefaultCellStyle.Format = "N2"
 
         End With
+
+        Dim _SumaCantiades As Double = 0
+
+        For Each row As DataRow In _Tbl_Receta.Rows
+            Dim cantidad As Double = CDbl(row("CANTIDAD"))
+            _SumaCantiades += cantidad
+        Next
+
+        Lbl_TotalCantidades.Text = _SumaCantiades.ToString("N2")
 
     End Sub
 

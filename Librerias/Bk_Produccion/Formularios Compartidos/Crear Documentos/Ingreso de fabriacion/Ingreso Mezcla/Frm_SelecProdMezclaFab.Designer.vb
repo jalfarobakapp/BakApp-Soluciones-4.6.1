@@ -23,18 +23,21 @@ Partial Class Frm_SelecProdMezclaFab
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_SelecProdMezclaFab))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_IngresarFabircaciones = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_EditarNomenclatura = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_VerReceta = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_VerRecetaCompleta = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_VerRecetaSinProdExcluidos = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_EditarNomenclatura = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
+        Me.Btn_VerRecetaSoloProdExcluidos = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel4.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -135,6 +138,28 @@ Partial Class Frm_SelecProdMezclaFab
         Me.Btn_IngresarFabircaciones.Name = "Btn_IngresarFabircaciones"
         Me.Btn_IngresarFabircaciones.Text = "Ingresar a fabricaciones"
         '
+        'Btn_VerReceta
+        '
+        Me.Btn_VerReceta.Image = CType(resources.GetObject("Btn_VerReceta.Image"), System.Drawing.Image)
+        Me.Btn_VerReceta.ImageAlt = CType(resources.GetObject("Btn_VerReceta.ImageAlt"), System.Drawing.Image)
+        Me.Btn_VerReceta.Name = "Btn_VerReceta"
+        Me.Btn_VerReceta.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_VerRecetaCompleta, Me.Btn_VerRecetaSinProdExcluidos, Me.Btn_VerRecetaSoloProdExcluidos})
+        Me.Btn_VerReceta.Text = "Visualizar los detalles de la receta o nomenclatura."
+        '
+        'Btn_VerRecetaCompleta
+        '
+        Me.Btn_VerRecetaCompleta.Image = CType(resources.GetObject("Btn_VerRecetaCompleta.Image"), System.Drawing.Image)
+        Me.Btn_VerRecetaCompleta.ImageAlt = CType(resources.GetObject("Btn_VerRecetaCompleta.ImageAlt"), System.Drawing.Image)
+        Me.Btn_VerRecetaCompleta.Name = "Btn_VerRecetaCompleta"
+        Me.Btn_VerRecetaCompleta.Text = "Ver receta completa"
+        '
+        'Btn_VerRecetaSinProdExcluidos
+        '
+        Me.Btn_VerRecetaSinProdExcluidos.Image = CType(resources.GetObject("Btn_VerRecetaSinProdExcluidos.Image"), System.Drawing.Image)
+        Me.Btn_VerRecetaSinProdExcluidos.ImageAlt = CType(resources.GetObject("Btn_VerRecetaSinProdExcluidos.ImageAlt"), System.Drawing.Image)
+        Me.Btn_VerRecetaSinProdExcluidos.Name = "Btn_VerRecetaSinProdExcluidos"
+        Me.Btn_VerRecetaSinProdExcluidos.Text = "Ver la receta solo con productos de marcas NO excluidas."
+        '
         'Btn_EditarNomenclatura
         '
         Me.Btn_EditarNomenclatura.Image = CType(resources.GetObject("Btn_EditarNomenclatura.Image"), System.Drawing.Image)
@@ -142,52 +167,52 @@ Partial Class Frm_SelecProdMezclaFab
         Me.Btn_EditarNomenclatura.Name = "Btn_EditarNomenclatura"
         Me.Btn_EditarNomenclatura.Text = "Editar formula (cambiar receta/nomenclatura)"
         '
-        'Btn_VerReceta
-        '
-        Me.Btn_VerReceta.Image = CType(resources.GetObject("Btn_VerReceta.Image"), System.Drawing.Image)
-        Me.Btn_VerReceta.ImageAlt = CType(resources.GetObject("Btn_VerReceta.ImageAlt"), System.Drawing.Image)
-        Me.Btn_VerReceta.Name = "Btn_VerReceta"
-        Me.Btn_VerReceta.Text = "Visualizar los detalles de la receta o nomenclatura."
-        '
         'Grilla
         '
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.MultiSelect = False
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.Grilla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.Grilla.Size = New System.Drawing.Size(968, 304)
         Me.Grilla.TabIndex = 1
+        '
+        'Btn_VerRecetaSoloProdExcluidos
+        '
+        Me.Btn_VerRecetaSoloProdExcluidos.Image = CType(resources.GetObject("Btn_VerRecetaSoloProdExcluidos.Image"), System.Drawing.Image)
+        Me.Btn_VerRecetaSoloProdExcluidos.ImageAlt = CType(resources.GetObject("Btn_VerRecetaSoloProdExcluidos.ImageAlt"), System.Drawing.Image)
+        Me.Btn_VerRecetaSoloProdExcluidos.Name = "Btn_VerRecetaSoloProdExcluidos"
+        Me.Btn_VerRecetaSoloProdExcluidos.Text = "Ver la receta solo con productos de marcas excluidas."
         '
         'Frm_SelecProdMezclaFab
         '
@@ -223,4 +248,7 @@ Partial Class Frm_SelecProdMezclaFab
     Friend WithEvents Btn_IngresarFabircaciones As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_EditarNomenclatura As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_VerReceta As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_VerRecetaCompleta As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_VerRecetaSinProdExcluidos As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_VerRecetaSoloProdExcluidos As DevComponents.DotNetBar.ButtonItem
 End Class

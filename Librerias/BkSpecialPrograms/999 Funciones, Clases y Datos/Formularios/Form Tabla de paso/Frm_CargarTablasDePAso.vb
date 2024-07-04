@@ -13,6 +13,10 @@ Public Class Frm_CargarTablasDePaso
         Grilla.DataSource = _Tabla_de_Paso
         Grilla.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
 
+        AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+
+        Me.Cursor = Cursors.Default
+
     End Sub
 
 End Class

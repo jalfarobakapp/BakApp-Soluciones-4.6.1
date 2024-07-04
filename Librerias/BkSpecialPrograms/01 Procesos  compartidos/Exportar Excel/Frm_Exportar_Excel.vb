@@ -995,9 +995,13 @@ Public Class Frm_Exportar_Excel
 
         If _Tbl_Excel.Rows.Count > 0 Then
 
+            Me.Cursor = Cursors.WaitCursor
+
             Dim Fm As New Frm_CargarTablasDePaso
             Fm._Tabla_de_Paso = _Tbl_Excel
             Fm.ShowDialog(Me)
+
+            Me.Cursor = Cursors.Default
 
             If Not IsNothing(Ds_Excel) Then
 
