@@ -42,6 +42,7 @@ Partial Class Frm_Familias_Lista
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Descripcion = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
+        Me.Btn_Aceptar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Exportar_Excel = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Crear = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Sincronizar = New DevComponents.DotNetBar.ButtonItem()
@@ -262,6 +263,7 @@ Partial Class Frm_Familias_Lista
         '
         'Txt_Descripcion
         '
+        Me.Txt_Descripcion.BackColor = System.Drawing.Color.White
         '
         '
         '
@@ -280,7 +282,7 @@ Partial Class Frm_Familias_Lista
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Exportar_Excel, Me.Btn_Crear, Me.Btn_Sincronizar})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Aceptar, Me.Btn_Exportar_Excel, Me.Btn_Crear, Me.Btn_Sincronizar})
         Me.Bar1.Location = New System.Drawing.Point(0, 534)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(585, 41)
@@ -289,6 +291,15 @@ Partial Class Frm_Familias_Lista
         Me.Bar1.TabIndex = 20
         Me.Bar1.TabStop = False
         Me.Bar1.Text = "Bar1"
+        '
+        'Btn_Aceptar
+        '
+        Me.Btn_Aceptar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Aceptar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Aceptar.Image = CType(resources.GetObject("Btn_Aceptar.Image"), System.Drawing.Image)
+        Me.Btn_Aceptar.ImageAlt = CType(resources.GetObject("Btn_Aceptar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Aceptar.Name = "Btn_Aceptar"
+        Me.Btn_Aceptar.Text = "Aceptar"
         '
         'Btn_Exportar_Excel
         '
@@ -397,4 +408,5 @@ Partial Class Frm_Familias_Lista
     Friend WithEvents Menu_Contextual_Sub_Familia As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Sincronizar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents WarningBox As DevComponents.DotNetBar.Controls.WarningBox
+    Friend WithEvents Btn_Aceptar As DevComponents.DotNetBar.ButtonItem
 End Class

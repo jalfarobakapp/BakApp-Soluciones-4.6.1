@@ -64,6 +64,10 @@ Public Class Frm_00_Asis_Compra_Menu
     Dim _TblFiltroProductos_Proveedor As DataTable
     Dim _Cancelar As Boolean
 
+    Public Property Ls_SelSuperFamilias As New List(Of SelSuperFamilias)
+    Public Property Ls_SelFamilias As New List(Of SelFamilias)
+    Public Property Ls_SelSubFamilias As New List(Of SelSubFamilias)
+
     Public Property Accion_Automatica As Boolean
     Public Property Auto_GenerarAutomaticamenteOCCProveedorStar As Boolean
     Public Property Auto_GenerarAutomaticamenteNVI As Boolean
@@ -3313,7 +3317,6 @@ Public Class Frm_00_Asis_Compra_Menu
         Fm.Pro_Filtro_Extra_Clalibpr = "And KOCARAC In (Select CLALIBPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 " & _Sql_Filtro_Condicion_Extra & "))"
         Fm.Pro_Filtro_Extra_Zonas = "And KOZO In (Select ZONAPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 " & _Sql_Filtro_Condicion_Extra & "))"
 
-
         Fm.Pro_Filtro_Productos_Todos = _Filtro_Productos_Todos
         Fm.Pro_Filtro_Clalibpr_Todas = _Filtro_Clalibpr_Todas
         Fm.Pro_Filtro_Marcas_Todas = _Filtro_Marcas_Todas
@@ -3327,6 +3330,10 @@ Public Class Frm_00_Asis_Compra_Menu
         Fm.Pro_Tbl_Filtro_Rubro = _Tbl_Filtro_Rubro
         Fm.Pro_Tbl_Filtro_Super_Familias = _Tbl_Filtro_Super_Familias
         Fm.Pro_Tbl_Filtro_Zonas = _Tbl_Filtro_Zonas
+
+        Fm.Ls_SelSuperFamilias = Ls_SelSuperFamilias
+        Fm.Ls_SelFamilias = Ls_SelFamilias
+        Fm.Ls_SelSubFamilias = Ls_SelSubFamilias
 
         Fm.ShowDialog(Me)
 
@@ -3343,6 +3350,10 @@ Public Class Frm_00_Asis_Compra_Menu
         _Filtro_Rubro_Todas = Fm.Pro_Filtro_Rubro_Todas
         _Filtro_Super_Familias_Todas = Fm.Pro_Filtro_Super_Familias_Todas
         _Filtro_Zonas_Todas = Fm.Pro_Filtro_Zonas_Todas
+
+        Ls_SelSuperFamilias = Fm.Ls_SelSuperFamilias
+        Ls_SelFamilias = Fm.Ls_SelFamilias
+        Ls_SelSubFamilias = Fm.Ls_SelSubFamilias
 
         Fm.Dispose()
 
@@ -3407,46 +3418,6 @@ Public Class Frm_00_Asis_Compra_Menu
                         _Filtro_Zonas
 
         _TblFiltroProductos_Proveedor = _Sql.Fx_Get_DataTable(Consulta_sql)
-
-        'If Rdb_Traer_No_Bloqueados.Checked Then
-        '    Consulta_sql += Rdb_Traer_No_Bloqueados.Tag.ToString
-        'End If
-
-        'If Rdb_Traer_Bloqueados_Compras.Checked Then
-        '    Consulta_sql += Rdb_Traer_Bloqueados_Compras.Tag.ToString
-        'End If
-
-        'If Rdb_Traer_Bloqueados_Venta.Checked Then
-        '    Consulta_sql += Rdb_Traer_Bloqueados_Venta.Tag.ToString
-        'End If
-
-        'If Rdb_Traer_Bloqueados_Compra_y_Venta.Checked Then
-        '    Consulta_sql += Rdb_Traer_Bloqueados_Compra_y_Venta.Tag.ToString
-        'End If
-
-        'If Rdb_Traer_Bloqueados_Compra_Venta_y_Produccion.Checked Then
-        '    Consulta_sql += Rdb_Traer_Bloqueados_Compra_Venta_y_Produccion.Tag.ToString
-        'End If
-
-
-
-
-
-
-
-
-        'Dim _Filtrar As New Clas_Filtros_Random(Me)
-
-        'If _Filtrar.Fx_Filtrar(_TblFiltroProductos_Proveedor,
-        '                       Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra,
-        '                       False, False) Then
-
-        '    _TblFiltroProductos_Proveedor = _Filtrar.Pro_Tbl_Filtro
-        '    If _Filtrar.Pro_Filtro_Todas Then
-        '        _TblFiltroProductos_Proveedor = Nothing
-        '    End If
-
-        'End If
 
     End Sub
 

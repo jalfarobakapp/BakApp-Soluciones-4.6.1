@@ -1727,10 +1727,27 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
     End Sub
 
     Private Sub BtnExportaExcel_Click_1(sender As System.Object, e As System.EventArgs) Handles BtnExportaExcel.Click
-        Consulta_sql = "SELECT TIPR,KOPR,KOPRRA,KOPRTE,NOKOPRRA,NOKOPR,NMARCA,UD01PR,UD02PR,RLUD,POIVPR,RGPR,MRPR,ZONAPR,RUPR,FMPR,PFPR,HFPR," &
-                       "DIVISIBLE, DIVISIBLE2, LISCOSTO, CLALIBPR, PESOUBIC" & vbCrLf &
-                       "FROM MAEPR"
+
+        If Not Fx_Tiene_Permiso(Me, "Prod076") Then
+            Exit Sub
+        End If
+
+        Consulta_sql = "SELECT TIPR,KOPR,KOPRRA,KOPRTE,NOKOPRRA,NOKOPR,NMARCA,UD01PR,UD02PR,RLUD,POIVPR,RGPR,Isnull(MRPR,'') As MRPR," & vbCrLf &
+                       "Isnull(NOKOMR,'') As 'NOKOMR',Isnull(ZONAPR,'') As ZONAPR,Isnull(NOKOZO,'') As NOKOZO," & vbCrLf &
+                       "Isnull(RUPR,'') As RUPR,Isnull(NOKORU,'') As NOKORU,Isnull(FMPR,'') As FMPR,Isnull(NOKOFM,'') As NOKOFM," & vbCrLf &
+                       "Isnull(PFPR,'') As PFPR,Isnull(Pf.NOKOPF,'') As NOKOPF,Isnull(HFPR,'') As HFPR,Isnull(Hf.NOKOHF,'') As NOKOHF," & vbCrLf &
+                       "DIVISIBLE,DIVISIBLE2,LISCOSTO,Isnull(CLALIBPR,'') As CLALIBPR,Isnull(NOKOCARAC,'') As NOKOCARAC" & vbCrLf &
+                       "FROM MAEPR" & vbCrLf &
+                       "Left Join TABMR On KOMR = MRPR" & vbCrLf &
+                       "Left Join TABRU On KORU = RUPR" & vbCrLf &
+                       "Left Join TABFM On KOFM = FMPR" & vbCrLf &
+                       "Left Join TABPF Pf On Pf.KOFM = FMPR And Pf.KOPF = PFPR" & vbCrLf &
+                       "Left Join TABHF Hf On Hf.KOFM = FMPR And Hf.KOPF = PFPR And Hf.KOHF = HFPR" & vbCrLf &
+                       "Left Join TABZO On KOZO = ZONAPR" & vbCrLf &
+                       "Left Join TABCARAC On CLALIBPR = KOCARAC And KOTABLA = 'CLALIBPR'"
+
         ExportarTabla_JetExcel(Consulta_sql, Me, "Maestro productos")
+
     End Sub
 
     Private Sub BtnCrearProductos_Click(sender As System.Object, e As System.EventArgs) Handles BtnCrearProductos.Click

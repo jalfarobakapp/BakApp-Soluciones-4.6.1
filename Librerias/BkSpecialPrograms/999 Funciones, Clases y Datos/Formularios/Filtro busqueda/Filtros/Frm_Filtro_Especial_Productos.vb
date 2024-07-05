@@ -20,6 +20,10 @@ Public Class Frm_Filtro_Especial_Productos
 
     Dim _Aceptar As Boolean
 
+    Public Property Ls_SelSuperFamilias As New List(Of SelSuperFamilias)
+    Public Property Ls_SelFamilias As New List(Of SelFamilias)
+    Public Property Ls_SelSubFamilias As New List(Of SelSubFamilias)
+
     Public ReadOnly Property Pro_Aceptar() As Boolean
 
     Public Property Pro_Tbl_Filtro_Productos() As DataTable
@@ -277,6 +281,27 @@ Public Class Frm_Filtro_Especial_Productos
         End Select
 
         If _Control.Checked Then
+
+            If _Nombre_Control = "Rdb_Super_Familias_Algunas" Then
+
+                Dim Fm_fm As New Frm_Familias_Lista(Frm_Familias_Lista.Enum_Tipo_Vista_Familias.Super_Familias)
+                Fm_fm.Ls_SelSuperFamilias = Ls_SelSuperFamilias
+                Fm_fm.Ls_SelFamilias = Ls_SelFamilias
+                Fm_fm.Ls_SelSubFamilias = Ls_SelSubFamilias
+                'Fm_fm.Kofm = _Kofm
+                'Fm_fm.Kopf = _Kopf
+                'Fm_fm.Text = _Texto
+                Fm_fm.ModoSeleccion = True
+                Fm_fm.ShowDialog(Me)
+
+                Ls_SelSuperFamilias = Fm_fm.Ls_SelSuperFamilias
+                Ls_SelFamilias = Fm_fm.Ls_SelFamilias
+                Ls_SelSubFamilias = Fm_fm.Ls_SelSubFamilias
+                Fm_fm.Dispose()
+
+                Return
+
+            End If
 
             Dim Fm As New Frm_Filtro_Especial_Informes(_Tabla_Fl, True)
             Fm.Pro_Tbl_Filtro = _Tbl_Filtro
