@@ -2413,7 +2413,12 @@ Public Class Frm_00_Asis_Compra_Menu
         Fm.Pro_Tbl_Filtro_Clalibpr = _Tbl_Filtro_Clalibpr
         Fm.Pro_Tbl_Filtro_Marcas = _Tbl_Filtro_Marcas
         Fm.Pro_Tbl_Filtro_Rubro = _Tbl_Filtro_Rubro
+
         Fm.Pro_Tbl_Filtro_Super_Familias = _Tbl_Filtro_Super_Familias
+        Fm.Ls_SelSuperFamilias = Ls_SelSuperFamilias
+        Fm.Ls_SelFamilias = Ls_SelFamilias
+        Fm.Ls_SelSubFamilias = Ls_SelSubFamilias
+
         Fm.Pro_Tbl_Filtro_Zonas = _Tbl_Filtro_Zonas
 
         Fm.Accion_Automatica = _Accion_Automatica
@@ -2459,6 +2464,11 @@ Public Class Frm_00_Asis_Compra_Menu
 
         Fm.Chk_QuitarProdExcluidos.Checked = Chk_QuitarProdExcluidos.Checked
         Fm.Chk_MarcarFilas.Checked = Chk_MarcarFilas.Checked
+
+        If Not Chk_InformeDeComprasAgrupadoporAsociacion.Visible Then
+            Chk_InformeDeComprasAgrupadoporAsociacion.Checked = False
+        End If
+
         Fm.InformeDeComprasAgrupadoporAsociacion = Chk_InformeDeComprasAgrupadoporAsociacion.Checked
 
         Fm.Chk_CompMinXProveedores.Checked = Chk_CompMinXProveedores.Checked
@@ -2886,9 +2896,68 @@ Public Class Frm_00_Asis_Compra_Menu
             If _Filtro_Super_Familias_Todas Then
                 _Filtro_SuperFamilias = String.Empty
             Else
-                _Filtro_SuperFamilias = Generar_Filtro_IN(_Tbl_Filtro_Super_Familias, "Chk", "Codigo", False, True, "'")
-                _Filtro_SuperFamilias = "And FMPR In " & _Filtro_SuperFamilias
-                '_Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where FMPR In " & _Filtro_SuperFamilias & ")"
+
+                If Not _Filtro_Super_Familias_Todas Then
+
+                    Dim _Fl_SuperFamilias As String = String.Empty
+                    Dim _Fl_Familias As String = String.Empty
+                    Dim _Fl_SubFamilias As String = String.Empty
+
+                    For Each _Sfm As SelSubFamilias In Ls_SelSubFamilias
+                        _Fl_SubFamilias += "(FMPR = '" & _Sfm.Kofm & "' And PFPR = '" & _Sfm.Kopf & "' And HFPR = '" & _Sfm.Kopf & "');"
+                    Next
+                    _Fl_SubFamilias = _Fl_SubFamilias.TrimEnd(";").ToString.Replace(";", " Or ")
+
+                    For Each _Fm As SelFamilias In Ls_SelFamilias
+                        If _Fl_SubFamilias.Contains("FMPR = '" & _Fm.Kofm & "'") And _Fl_SubFamilias.Contains("PFPR = '" & _Fm.Kopf & "'") Then
+                            Continue For
+                        End If
+                        _Fl_Familias += "(FMPR = '" & _Fm.Kofm & "' And PFPR = '" & _Fm.Kopf & "');"
+                    Next
+                    _Fl_Familias = _Fl_Familias.TrimEnd(";").ToString.Replace(";", " Or ")
+
+                    For Each _Spfm As SelSuperFamilias In Ls_SelSuperFamilias
+                        If _Fl_SubFamilias.Contains("FMPR = '" & _Spfm.Kofm & "'") Or _Fl_Familias.Contains("FMPR = '" & _Spfm.Kofm & "'") Then
+                            Continue For
+                        End If
+                        _Fl_SuperFamilias += "(FMPR = '" & _Spfm.Kofm & "');"
+                    Next
+                    _Fl_SuperFamilias = _Fl_SuperFamilias.TrimEnd(";").ToString.Replace(";", " Or ")
+
+                    If Not String.IsNullOrWhiteSpace(_Fl_SuperFamilias) Then
+                        _Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where " & _Fl_SuperFamilias & ")"
+                    End If
+
+                    If Not String.IsNullOrWhiteSpace(_Fl_Familias) Then
+                        If String.IsNullOrWhiteSpace(_Fl_SuperFamilias) Then
+                            _Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where " & _Fl_Familias & ")"
+                        Else
+                            _Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where " & _Fl_SuperFamilias & " Or " & _Fl_Familias & ")"
+                        End If
+                    End If
+
+                    If Not String.IsNullOrWhiteSpace(_Fl_SubFamilias) Then
+                        If String.IsNullOrWhiteSpace(_Fl_Familias) Then
+                            _Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where " & _Fl_SubFamilias & ")"
+                        Else
+
+                            If String.IsNullOrWhiteSpace(_Fl_SuperFamilias) Then
+                                _Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where " & _Fl_Familias & " Or " & _Fl_SubFamilias & ")"
+                            Else
+                                _Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where " & _Fl_SuperFamilias & " Or " & _Fl_Familias & " Or " & _Fl_SubFamilias & ")"
+                            End If
+
+                        End If
+                    End If
+
+                    '_Filtro_SuperFamilias = Generar_Filtro_IN(_Tbl_Filtro_Super_Familias, "Chk", "Codigo", False, True, "'")
+                    '_Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where FMPR In " & _Filtro_SuperFamilias & ")"
+
+                End If
+
+                '_Filtro_SuperFamilias = Generar_Filtro_IN(_Tbl_Filtro_Super_Familias, "Chk", "Codigo", False, True, "'")
+                '_Filtro_SuperFamilias = "And FMPR In " & _Filtro_SuperFamilias
+
             End If
 
             If _Filtro_Clalibpr_Todas Then
@@ -3331,6 +3400,7 @@ Public Class Frm_00_Asis_Compra_Menu
         Fm.Pro_Tbl_Filtro_Super_Familias = _Tbl_Filtro_Super_Familias
         Fm.Pro_Tbl_Filtro_Zonas = _Tbl_Filtro_Zonas
 
+        Fm.BuscarSpfmfmsubfm = True
         Fm.Ls_SelSuperFamilias = Ls_SelSuperFamilias
         Fm.Ls_SelFamilias = Ls_SelFamilias
         Fm.Ls_SelSubFamilias = Ls_SelSubFamilias
@@ -3381,8 +3451,61 @@ Public Class Frm_00_Asis_Compra_Menu
             End If
 
             If Not _Filtro_Super_Familias_Todas Then
-                _Filtro_SuperFamilias = Generar_Filtro_IN(_Tbl_Filtro_Super_Familias, "Chk", "Codigo", False, True, "'")
-                _Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where FMPR In " & _Filtro_SuperFamilias & ")"
+
+                Dim _Fl_SuperFamilias As String = String.Empty
+                Dim _Fl_Familias As String = String.Empty
+                Dim _Fl_SubFamilias As String = String.Empty
+
+                For Each _Sfm As SelSubFamilias In Ls_SelSubFamilias
+                    _Fl_SubFamilias += "(FMPR = '" & _Sfm.Kofm & "' And PFPR = '" & _Sfm.Kopf & "' And HFPR = '" & _Sfm.Kopf & "');"
+                Next
+                _Fl_SubFamilias = _Fl_SubFamilias.TrimEnd(";").ToString.Replace(";", " Or ")
+
+                For Each _Fm As SelFamilias In Ls_SelFamilias
+                    If _Fl_SubFamilias.Contains("FMPR = '" & _Fm.Kofm & "'") And _Fl_SubFamilias.Contains("PFPR = '" & _Fm.Kopf & "'") Then
+                        Continue For
+                    End If
+                    _Fl_Familias += "(FMPR = '" & _Fm.Kofm & "' And PFPR = '" & _Fm.Kopf & "');"
+                Next
+                _Fl_Familias = _Fl_Familias.TrimEnd(";").ToString.Replace(";", " Or ")
+
+                For Each _Spfm As SelSuperFamilias In Ls_SelSuperFamilias
+                    If _Fl_SubFamilias.Contains("FMPR = '" & _Spfm.Kofm & "'") Or _Fl_Familias.Contains("FMPR = '" & _Spfm.Kofm & "'") Then
+                        Continue For
+                    End If
+                    _Fl_SuperFamilias += "(FMPR = '" & _Spfm.Kofm & "');"
+                Next
+                _Fl_SuperFamilias = _Fl_SuperFamilias.TrimEnd(";").ToString.Replace(";", " Or ")
+
+                If Not String.IsNullOrWhiteSpace(_Fl_SuperFamilias) Then
+                    _Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where " & _Fl_SuperFamilias & ")"
+                End If
+
+                If Not String.IsNullOrWhiteSpace(_Fl_Familias) Then
+                    If String.IsNullOrWhiteSpace(_Fl_SuperFamilias) Then
+                        _Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where " & _Fl_Familias & ")"
+                    Else
+                        _Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where " & _Fl_SuperFamilias & " Or " & _Fl_Familias & ")"
+                    End If
+                End If
+
+                If Not String.IsNullOrWhiteSpace(_Fl_SubFamilias) Then
+                    If String.IsNullOrWhiteSpace(_Fl_Familias) Then
+                        _Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where " & _Fl_SubFamilias & ")"
+                    Else
+
+                        If String.IsNullOrWhiteSpace(_Fl_SuperFamilias) Then
+                            _Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where " & _Fl_Familias & " Or " & _Fl_SubFamilias & ")"
+                        Else
+                            _Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where " & _Fl_SuperFamilias & " Or " & _Fl_Familias & " Or " & _Fl_SubFamilias & ")"
+                        End If
+
+                    End If
+                End If
+
+                '_Filtro_SuperFamilias = Generar_Filtro_IN(_Tbl_Filtro_Super_Familias, "Chk", "Codigo", False, True, "'")
+                '_Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where FMPR In " & _Filtro_SuperFamilias & ")"
+
             End If
 
             If Not _Filtro_Clalibpr_Todas Then

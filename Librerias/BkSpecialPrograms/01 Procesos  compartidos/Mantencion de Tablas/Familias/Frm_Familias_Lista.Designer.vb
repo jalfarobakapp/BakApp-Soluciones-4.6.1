@@ -23,9 +23,9 @@ Partial Class Frm_Familias_Lista
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Familias_Lista))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_Super_Familia = New DevComponents.DotNetBar.ButtonItem()
@@ -35,8 +35,8 @@ Partial Class Frm_Familias_Lista
         Me.Btn_Edit_Familia = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Elim_Familia = New DevComponents.DotNetBar.ButtonItem()
         Me.Menu_Contextual_Sub_Familia = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Edit_Comuna = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Elim_Comuna = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Edit_SubFamilia = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Elim_SubFamilia = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
@@ -152,56 +152,56 @@ Partial Class Frm_Familias_Lista
         '
         Me.Menu_Contextual_Sub_Familia.AutoExpandOnClick = True
         Me.Menu_Contextual_Sub_Familia.Name = "Menu_Contextual_Sub_Familia"
-        Me.Menu_Contextual_Sub_Familia.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Edit_Comuna, Me.Btn_Elim_Comuna})
+        Me.Menu_Contextual_Sub_Familia.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Edit_SubFamilia, Me.Btn_Elim_SubFamilia})
         Me.Menu_Contextual_Sub_Familia.Text = "Sub Familias"
         '
-        'Btn_Edit_Comuna
+        'Btn_Edit_SubFamilia
         '
-        Me.Btn_Edit_Comuna.Image = CType(resources.GetObject("Btn_Edit_Comuna.Image"), System.Drawing.Image)
-        Me.Btn_Edit_Comuna.Name = "Btn_Edit_Comuna"
-        Me.Btn_Edit_Comuna.Text = "Editar nombre de la Sub-Familia"
+        Me.Btn_Edit_SubFamilia.Image = CType(resources.GetObject("Btn_Edit_SubFamilia.Image"), System.Drawing.Image)
+        Me.Btn_Edit_SubFamilia.Name = "Btn_Edit_SubFamilia"
+        Me.Btn_Edit_SubFamilia.Text = "Editar nombre de la Sub-Familia"
         '
-        'Btn_Elim_Comuna
+        'Btn_Elim_SubFamilia
         '
-        Me.Btn_Elim_Comuna.Image = CType(resources.GetObject("Btn_Elim_Comuna.Image"), System.Drawing.Image)
-        Me.Btn_Elim_Comuna.Name = "Btn_Elim_Comuna"
-        Me.Btn_Elim_Comuna.Text = "Eliminar la Sub-Familia"
+        Me.Btn_Elim_SubFamilia.Image = CType(resources.GetObject("Btn_Elim_SubFamilia.Image"), System.Drawing.Image)
+        Me.Btn_Elim_SubFamilia.Name = "Btn_Elim_SubFamilia"
+        Me.Btn_Elim_SubFamilia.Text = "Eliminar la Sub-Familia"
         '
         'Grilla
         '
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.Grilla.Size = New System.Drawing.Size(564, 363)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 29
@@ -394,8 +394,8 @@ Partial Class Frm_Familias_Lista
     Friend WithEvents Btn_Elim_Super_Familia As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Edit_Familia As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Elim_Familia As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_Edit_Comuna As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_Elim_Comuna As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Edit_SubFamilia As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Elim_SubFamilia As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX

@@ -671,8 +671,6 @@ Public Class Frm_MantLista_Precios_Random
 
         Fm.ShowDialog(Me)
 
-
-
         _Tbl_Filtro_Productos = Fm.Pro_Tbl_Filtro_Productos
         _Tbl_Filtro_Clalibpr = Fm.Pro_Tbl_Filtro_Clalibpr
         _Tbl_Filtro_Marcas = Fm.Pro_Tbl_Filtro_Marcas

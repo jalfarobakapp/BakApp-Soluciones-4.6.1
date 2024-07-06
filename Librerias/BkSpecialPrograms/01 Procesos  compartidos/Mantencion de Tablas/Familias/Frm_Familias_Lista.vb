@@ -22,7 +22,7 @@ Public Class Frm_Familias_Lista
     Public Property Ls_SelSuperFamilias As New List(Of SelSuperFamilias)
     Public Property Ls_SelFamilias As New List(Of SelFamilias)
     Public Property Ls_SelSubFamilias As New List(Of SelSubFamilias)
-
+    Public Property Seleccionados As Boolean
     Enum Enum_Tipo_Vista_Familias
         Super_Familias
         Familias
@@ -282,14 +282,6 @@ Public Class Frm_Familias_Lista
 
         Dim _Chk As Boolean = _Fila.Cells("Chk").Value
 
-        If ModoSeleccion Then
-            If Not _Chk Then
-                MessageBoxEx.Show(Me, "Debe seleccionar el registro para poder revisar la sub clasificación",
-                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Return
-            End If
-        End If
-
         Dim _Kofm = _Fila.Cells("KOFM").Value.ToString.Trim
         Dim _Kopf = String.Empty
         Dim _Kohf = String.Empty
@@ -322,14 +314,40 @@ Public Class Frm_Familias_Lista
 
         Fm.ShowDialog(Me)
 
-        Select Case _Tipo_Vista_Familias
-            Case Enum_Tipo_Vista_Familias.Super_Familias
-                Ls_SelSuperFamilias = Fm.Ls_SelSuperFamilias
-            Case Enum_Tipo_Vista_Familias.Familias
-                Ls_SelFamilias = Fm.Ls_SelFamilias
-            Case Enum_Tipo_Vista_Familias.Sub_Familias
-                Ls_SelSubFamilias = Fm.Ls_SelSubFamilias
-        End Select
+        If Fm.Seleccionados Then
+
+            Select Case _Tipo_Vista_Familias
+                Case Enum_Tipo_Vista_Familias.Super_Familias
+
+                    Ls_SelSuperFamilias = Fm.Ls_SelSuperFamilias
+                    Ls_SelFamilias = Fm.Ls_SelFamilias
+
+                    If Not _Chk And Fm.Ls_SelFamilias.Any(Function(sf) sf.Kofm = _Kofm) Then
+                        Dim _SelSuperFamilias As New SelSuperFamilias
+                        _SelSuperFamilias.Kofm = _Kofm
+                        _SelSuperFamilias.Nokofm = _Fila.Cells("NOKOFM").Value.ToString.Trim
+                        Ls_SelSuperFamilias.Add(_SelSuperFamilias)
+                        _Fila.Cells("Chk").Value = True
+                    End If
+
+                Case Enum_Tipo_Vista_Familias.Familias
+
+                    Ls_SelFamilias = Fm.Ls_SelFamilias
+
+                    If Not _Chk And Fm.Ls_SelSubFamilias.Any(Function(sf) sf.Kofm = _Kofm AndAlso sf.Kopf = _Kopf) Then
+                        Dim _SelFamilias As New SelFamilias
+                        _SelFamilias.Kofm = _Kofm
+                        _SelFamilias.Kopf = _Kopf
+                        _SelFamilias.Nokopf = _Fila.Cells("NOKOPF").Value.ToString.Trim
+                        Ls_SelFamilias.Add(_SelFamilias)
+                        _Fila.Cells("Chk").Value = True
+                    End If
+
+                Case Enum_Tipo_Vista_Familias.Sub_Familias
+                    Ls_SelSubFamilias = Fm.Ls_SelSubFamilias
+            End Select
+
+        End If
 
         Fm.Dispose()
 
@@ -469,7 +487,7 @@ Public Class Frm_Familias_Lista
 
     End Sub
 
-    Private Sub Btn_Edit_Comuna_Click(sender As Object, e As EventArgs) Handles Btn_Edit_Comuna.Click
+    Private Sub Btn_Edit_Comuna_Click(sender As Object, e As EventArgs) Handles Btn_Edit_SubFamilia.Click
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
@@ -598,7 +616,7 @@ Public Class Frm_Familias_Lista
 
     End Sub
 
-    Private Sub Btn_Elim_Comuna_Click(sender As Object, e As EventArgs) Handles Btn_Elim_Comuna.Click
+    Private Sub Btn_Elim_Comuna_Click(sender As Object, e As EventArgs) Handles Btn_Elim_SubFamilia.Click
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
@@ -828,52 +846,27 @@ Public Class Frm_Familias_Lista
     Private Sub Btn_Aceptar_Click(sender As Object, e As EventArgs) Handles Btn_Aceptar.Click
 
         Select Case _Tipo_Vista_Familias
-
             Case Enum_Tipo_Vista_Familias.Super_Familias
-
-                Ls_SelSuperFamilias.Clear()
-
-                For Each _Fila As DataGridViewRow In Grilla.Rows
-                    Dim _SelSuperFamilias As New SelSuperFamilias
-                    If CBool(_Fila.Cells("Chk").Value) Then
-                        _SelSuperFamilias.Kofm = _Fila.Cells("KOFM").Value.ToString.Trim
-                        _SelSuperFamilias.Nokofm = _Fila.Cells("NOKOFM").Value.ToString.Trim
-                        Ls_SelSuperFamilias.Add(_SelSuperFamilias)
-                    End If
-                Next
-
+                If Ls_SelSuperFamilias.Count = 0 Then
+                    MessageBoxEx.Show(Me, "Debe seleccionar al menos una Super Familia", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Return
+                End If
             Case Enum_Tipo_Vista_Familias.Familias
-
-                'Ls_SelSubFamilias.Clear()
-                Ls_SelFamilias.RemoveAll(Function(item) item.Kofm = Kofm)
-
-                For Each _Fila As DataGridViewRow In Grilla.Rows
-                    Dim _SelFamilias As New SelFamilias
-                    If CBool(_Fila.Cells("Chk").Value) Then
-                        _SelFamilias.Kofm = _Fila.Cells("KOFM").Value.ToString.Trim
-                        _SelFamilias.Kopf = _Fila.Cells("KOPF").Value.ToString.Trim
-                        _SelFamilias.Nokopf = _Fila.Cells("NOKOPF").Value.ToString.Trim
-                        Ls_SelFamilias.Add(_SelFamilias)
-                    End If
-                Next
-
+                If Ls_SelFamilias.Count = 0 Then
+                    MessageBoxEx.Show(Me, "Debe seleccionar al menos una Familia", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Return
+                End If
             Case Enum_Tipo_Vista_Familias.Sub_Familias
-
-                Ls_SelSubFamilias.RemoveAll(Function(item) item.Kofm = Kofm AndAlso item.Kopf = Kopf)
-
-                For Each _Fila As DataGridViewRow In Grilla.Rows
-                    Dim _SelSubFamilias As New SelSubFamilias
-                    If CBool(_Fila.Cells("Chk").Value) Then
-                        _SelSubFamilias.Kofm = _Fila.Cells("KOFM").Value.ToString.Trim
-                        _SelSubFamilias.Kopf = _Fila.Cells("KOPF").Value.ToString.Trim
-                        _SelSubFamilias.Kohf = _Fila.Cells("KOHF").Value.ToString.Trim
-                        _SelSubFamilias.Nokohf = _Fila.Cells("NOKOHF").Value.ToString.Trim
-                        Ls_SelSubFamilias.Add(_SelSubFamilias)
-                    End If
-                Next
-
+                If Ls_SelSubFamilias.Count = 0 Then
+                    MessageBoxEx.Show(Me, "Debe seleccionar al menos una Sub Familia", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Return
+                End If
         End Select
 
+        Seleccionados = True
+        Ls_SelSuperFamilias = Ls_SelSuperFamilias.Distinct().ToList()
+        Ls_SelFamilias = Ls_SelFamilias.Distinct().ToList()
+        Ls_SelSubFamilias = Ls_SelSubFamilias.Distinct().ToList()
         Me.Close()
 
     End Sub
@@ -926,9 +919,74 @@ Public Class Frm_Familias_Lista
         Next
     End Sub
 
-    Private Sub Grilla_KeyUp(sender As Object, e As KeyEventArgs) Handles Grilla.KeyUp
+    Private Sub Grilla_MouseUp(sender As Object, e As MouseEventArgs) Handles Grilla.MouseUp
         Grilla.EndEdit()
     End Sub
+
+    Private Sub Grilla_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellEndEdit
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Cabeza As String = Grilla.Columns(e.ColumnIndex).Name
+
+        Dim _Chk As Boolean = _Fila.Cells("Chk").Value
+        Dim _Kofm As String = _Fila.Cells("KOFM").Value
+        Dim _Kopf As String = String.Empty
+        Dim _Kohf As String = String.Empty
+
+        If _Cabeza = "Chk" Then
+
+            Select Case _Tipo_Vista_Familias
+
+                Case Enum_Tipo_Vista_Familias.Super_Familias
+
+                    If _Chk Then
+                        Dim _SelSuperFamilias As New SelSuperFamilias
+                        _SelSuperFamilias.Kofm = _Kofm
+                        _SelSuperFamilias.Nokofm = _Fila.Cells("NOKOFM").Value.ToString.Trim
+                        Ls_SelSuperFamilias.Add(_SelSuperFamilias)
+                    Else
+                        Ls_SelSuperFamilias.RemoveAll(Function(sf) sf.Kofm = _Kofm)
+                        Ls_SelFamilias.RemoveAll(Function(sf) sf.Kofm = _Kofm)
+                        Ls_SelSubFamilias.RemoveAll(Function(sf) sf.Kofm = _Kofm)
+                    End If
+
+                Case Enum_Tipo_Vista_Familias.Familias
+
+                    _Kopf = _Fila.Cells("KOPF").Value.ToString.Trim
+
+                    If _Chk Then
+                        Dim _SelFamilias As New SelFamilias
+                        _SelFamilias.Kofm = _Kofm
+                        _SelFamilias.Kopf = _Kopf
+                        _SelFamilias.Nokopf = _Fila.Cells("NOKOPF").Value.ToString.Trim
+                        Ls_SelFamilias.Add(_SelFamilias)
+                    Else
+                        Ls_SelFamilias.RemoveAll(Function(sf) sf.Kofm = _Kofm AndAlso sf.Kopf = _Kopf)
+                        Ls_SelSubFamilias.RemoveAll(Function(sf) sf.Kofm = _Kofm AndAlso sf.Kopf = _Kopf)
+                    End If
+
+                Case Enum_Tipo_Vista_Familias.Sub_Familias
+
+                    _Kopf = _Fila.Cells("KOPF").Value.ToString.Trim
+                    _Kohf = _Fila.Cells("KOHF").Value.ToString.Trim
+
+                    If _Chk Then
+                        Dim _SelSubFamilias As New SelSubFamilias
+                        _SelSubFamilias.Kofm = _Kofm
+                        _SelSubFamilias.Kopf = _Kopf
+                        _SelSubFamilias.Kohf = _Kohf
+                        _SelSubFamilias.Nokohf = _Fila.Cells("NOKOHF").Value.ToString.Trim
+                        Ls_SelSubFamilias.Add(_SelSubFamilias)
+                    Else
+                        Ls_SelSubFamilias.RemoveAll(Function(sf) sf.Kofm = _Kofm AndAlso sf.Kopf = _Kopf AndAlso sf.Kohf = _Kohf)
+                    End If
+
+            End Select
+
+        End If
+
+    End Sub
+
 End Class
 
 Public Class SelSuperFamilias

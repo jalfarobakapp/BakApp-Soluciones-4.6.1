@@ -773,13 +773,13 @@ Public Class Frm_Kardex_X_Producto_Lista
 
         If Fx_Tiene_Permiso(Me, "Prod058") Then
 
-            Dim _Fila As DataGridViewRow = Grilla_Detalle_Stock.Rows(Grilla_Detalle_Stock.CurrentRow.Index)
+            Dim _Fila As DataGridViewRow = Grilla_Detalle_Stock.CurrentRow
 
             Dim _Codigo = _Fila.Cells("KOPR").Value
-            Dim _Empresa = Trim(_Fila.Cells("EMPRESA").Value)
-            Dim _Sucursal = Trim(_Fila.Cells("KOSU").Value)
-            Dim _Bodega = Trim(_Fila.Cells("KOBO").Value)
-            Dim _Ubicacion As String = Trim(_Fila.Cells("DATOSUBIC").Value)
+            Dim _Empresa = _Fila.Cells("EMPRESA").Value.ToString.Trim
+            Dim _Sucursal = _Fila.Cells("KOSU").Value.ToString.Trim
+            Dim _Bodega = _Fila.Cells("KOBO").Value.ToString.Trim
+            Dim _Ubicacion As String = NuloPorNro(Of String)(_Fila.Cells("DATOSUBIC").Value.ToString.Trim, "")
             Dim _OldUbicacion As String = "([" & _Empresa & "-" & _Sucursal & "-" & _Bodega & "] --> " & _Ubicacion & ")"
 
             Dim _Ingresar As Boolean

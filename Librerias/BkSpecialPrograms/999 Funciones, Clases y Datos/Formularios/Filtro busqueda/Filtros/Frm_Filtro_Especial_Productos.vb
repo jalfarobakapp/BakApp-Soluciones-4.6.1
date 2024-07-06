@@ -20,6 +20,7 @@ Public Class Frm_Filtro_Especial_Productos
 
     Dim _Aceptar As Boolean
 
+    Public Property BuscarSpfmfmsubfm As Boolean = False
     Public Property Ls_SelSuperFamilias As New List(Of SelSuperFamilias)
     Public Property Ls_SelFamilias As New List(Of SelFamilias)
     Public Property Ls_SelSubFamilias As New List(Of SelSubFamilias)
@@ -208,6 +209,10 @@ Public Class Frm_Filtro_Especial_Productos
 
     End Sub
 
+    Private Sub Rdb_Super_Familias_Algunas_DoubleClick(sender As Object, e As EventArgs) Handles Rdb_Super_Familias_Algunas.DoubleClick
+        Call Rdb_CheckedChanged(sender, Nothing)
+    End Sub
+
     Private Sub Frm_Filtro_Especial_Productos_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         AddHandler Rdb_Productos_Algunos.CheckedChanged, AddressOf Rdb_CheckedChanged
@@ -282,15 +287,12 @@ Public Class Frm_Filtro_Especial_Productos
 
         If _Control.Checked Then
 
-            If _Nombre_Control = "Rdb_Super_Familias_Algunas" Then
+            If BuscarSpfmfmsubfm AndAlso _Nombre_Control = "Rdb_Super_Familias_Algunas" Then
 
                 Dim Fm_fm As New Frm_Familias_Lista(Frm_Familias_Lista.Enum_Tipo_Vista_Familias.Super_Familias)
                 Fm_fm.Ls_SelSuperFamilias = Ls_SelSuperFamilias
                 Fm_fm.Ls_SelFamilias = Ls_SelFamilias
                 Fm_fm.Ls_SelSubFamilias = Ls_SelSubFamilias
-                'Fm_fm.Kofm = _Kofm
-                'Fm_fm.Kopf = _Kopf
-                'Fm_fm.Text = _Texto
                 Fm_fm.ModoSeleccion = True
                 Fm_fm.ShowDialog(Me)
 
@@ -298,6 +300,10 @@ Public Class Frm_Filtro_Especial_Productos
                 Ls_SelFamilias = Fm_fm.Ls_SelFamilias
                 Ls_SelSubFamilias = Fm_fm.Ls_SelSubFamilias
                 Fm_fm.Dispose()
+
+                If Ls_SelSuperFamilias.Count = 0 Then
+                    _Control_Todas.Checked = True
+                End If
 
                 Return
 

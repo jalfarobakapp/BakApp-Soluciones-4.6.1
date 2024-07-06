@@ -194,6 +194,23 @@ Public Class Cl_Sincroniza
 
                         End If
 
+                        'Imprimir Despachos
+                        If _Tipo_wms.Contains("O") Then
+
+                            If ConfiguracionLocal.Ls_ImpFormatos.Item(1).Imprimir Then
+
+                                With ConfiguracionLocal.Ls_ImpFormatos.Item(1)
+
+                                    _Mensaje = Fx_EnviarAImprimnirListaDeVerificacion(_Idmaeedoo, "NVV", _Nudo, True,
+                                                                                  ConfiguracionLocal.NombreEquipoImprime, .Impresora, .NombreFormato)
+                                    Sb_AddToLog(_Mensaje.Detalle, _Mensaje.Detalle, Txt_Log)
+
+                                End With
+
+                            End If
+
+                        End If
+
                     End If
 
                 End If
@@ -458,25 +475,24 @@ Public Class Cl_Sincroniza
 
             Sb_AddToLog("Sincronizando notas", "NVV " & _Nudo & " - Se marca funcionario que factura = '" & _CodFuncionario_Factura & "'", Txt_Log)
 
-            'Imprimir Despachos
-            If _Accion.Contains("O") Then
+            ''Imprimir Despachos
+            'If _Accion.Contains("O") Then
 
-                If ConfiguracionLocal.Ls_ImpFormatos.Item(1).Imprimir Then
+            '    If ConfiguracionLocal.Ls_ImpFormatos.Item(1).Imprimir Then
 
-                    With ConfiguracionLocal.Ls_ImpFormatos.Item(1)
+            '        With ConfiguracionLocal.Ls_ImpFormatos.Item(1)
 
-                        Dim _Mensaje As New LsValiciones.Mensajes
+            '            Dim _Mensaje As New LsValiciones.Mensajes
 
-                        _Mensaje = Fx_EnviarAImprimnirListaDeVerificacion(_Idmaeedoo, "NVV", _Nudo, True,
-                                                                      ConfiguracionLocal.NombreEquipoImprime, .Impresora, .NombreFormato)
-                        Sb_AddToLog(_Mensaje.Detalle, _Mensaje.Detalle, Txt_Log)
+            '            _Mensaje = Fx_EnviarAImprimnirListaDeVerificacion(_Idmaeedoo, "NVV", _Nudo, True,
+            '                                                          ConfiguracionLocal.NombreEquipoImprime, .Impresora, .NombreFormato)
+            '            Sb_AddToLog(_Mensaje.Detalle, _Mensaje.Detalle, Txt_Log)
 
-                    End With
+            '        End With
 
-                End If
+            '    End If
 
-            End If
-
+            'End If
 
         Next
 
