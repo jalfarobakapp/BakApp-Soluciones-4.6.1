@@ -3127,6 +3127,11 @@ Public Class Frm_00_Asis_Compra_Menu
         Fm.Pro_Tbl_Filtro_Super_Familias = _Tbl_Filtro_Super_Familias
         Fm.Pro_Tbl_Filtro_Zonas = _Tbl_Filtro_Zonas
 
+        Fm.BuscarSpfmfmsubfm = True
+        Fm.Ls_SelSuperFamilias = Ls_SelSuperFamilias
+        Fm.Ls_SelFamilias = Ls_SelFamilias
+        Fm.Ls_SelSubFamilias = Ls_SelSubFamilias
+
         Fm.ShowDialog(Me)
 
         _Tbl_Filtro_Clalibpr = Fm.Pro_Tbl_Filtro_Clalibpr
@@ -3140,6 +3145,10 @@ Public Class Frm_00_Asis_Compra_Menu
         _Filtro_Rubro_Todas = Fm.Pro_Filtro_Rubro_Todas
         _Filtro_Super_Familias_Todas = Fm.Pro_Filtro_Super_Familias_Todas
         _Filtro_Zonas_Todas = Fm.Pro_Filtro_Zonas_Todas
+
+        Ls_SelSuperFamilias = Fm.Ls_SelSuperFamilias
+        Ls_SelFamilias = Fm.Ls_SelFamilias
+        Ls_SelSubFamilias = Fm.Ls_SelSubFamilias
 
         Fm.Dispose()
 

@@ -125,6 +125,7 @@ Partial Class Frm_Contadores
         'Grilla
         '
         Me.Grilla.AllowUserToAddRows = False
+        Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control

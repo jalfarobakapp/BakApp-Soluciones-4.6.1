@@ -29,22 +29,28 @@ Partial Class Frm_IngresarHoja
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Chk_Ver_Solo_Habilitados = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
-        Me.DateTimeInput1 = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
+        Me.Dtp_FechaCreacion = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.Txt_IdContador2 = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_IdContador1 = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Txt_Numero = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_Nro_Hoja = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
+        Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Observaciones = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla_Detalle = New DevComponents.DotNetBar.Controls.DataGridViewX()
+        Me.LabelItem3 = New DevComponents.DotNetBar.LabelItem()
         Me.GroupPanel1.SuspendLayout()
-        CType(Me.DateTimeInput1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Dtp_FechaCreacion, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel4.SuspendLayout()
+        CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla_Detalle, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -54,11 +60,11 @@ Partial Class Frm_IngresarHoja
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel1.Controls.Add(Me.Chk_Ver_Solo_Habilitados)
         Me.GroupPanel1.Controls.Add(Me.LabelX4)
-        Me.GroupPanel1.Controls.Add(Me.DateTimeInput1)
+        Me.GroupPanel1.Controls.Add(Me.Dtp_FechaCreacion)
         Me.GroupPanel1.Controls.Add(Me.Txt_IdContador2)
         Me.GroupPanel1.Controls.Add(Me.LabelX2)
         Me.GroupPanel1.Controls.Add(Me.Txt_IdContador1)
-        Me.GroupPanel1.Controls.Add(Me.Txt_Numero)
+        Me.GroupPanel1.Controls.Add(Me.Txt_Nro_Hoja)
         Me.GroupPanel1.Controls.Add(Me.LabelX3)
         Me.GroupPanel1.Controls.Add(Me.LabelX1)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
@@ -130,57 +136,57 @@ Partial Class Frm_IngresarHoja
         Me.LabelX4.TabIndex = 9
         Me.LabelX4.Text = "Fecha"
         '
-        'DateTimeInput1
+        'Dtp_FechaCreacion
         '
-        Me.DateTimeInput1.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.DateTimeInput1.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.DateTimeInput1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.DateTimeInput1.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
-        Me.DateTimeInput1.ButtonDropDown.Visible = True
-        Me.DateTimeInput1.ForeColor = System.Drawing.Color.Black
-        Me.DateTimeInput1.IsPopupCalendarOpen = False
-        Me.DateTimeInput1.Location = New System.Drawing.Point(594, 10)
+        Me.Dtp_FechaCreacion.BackColor = System.Drawing.Color.White
         '
         '
         '
-        Me.DateTimeInput1.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
+        Me.Dtp_FechaCreacion.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Dtp_FechaCreacion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaCreacion.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
+        Me.Dtp_FechaCreacion.ButtonDropDown.Visible = True
+        Me.Dtp_FechaCreacion.ForeColor = System.Drawing.Color.Black
+        Me.Dtp_FechaCreacion.IsPopupCalendarOpen = False
+        Me.Dtp_FechaCreacion.Location = New System.Drawing.Point(594, 10)
         '
         '
         '
-        Me.DateTimeInput1.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.DateTimeInput1.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
-        Me.DateTimeInput1.MonthCalendar.ClearButtonVisible = True
+        Me.Dtp_FechaCreacion.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
         '
         '
         '
-        Me.DateTimeInput1.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
-        Me.DateTimeInput1.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
-        Me.DateTimeInput1.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
-        Me.DateTimeInput1.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.DateTimeInput1.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
-        Me.DateTimeInput1.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
-        Me.DateTimeInput1.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.DateTimeInput1.MonthCalendar.DisplayMonth = New Date(2024, 6, 1, 0, 0, 0, 0)
-        Me.DateTimeInput1.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
-        Me.DateTimeInput1.MonthCalendar.MarkedDates = New Date(-1) {}
-        Me.DateTimeInput1.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        Me.Dtp_FechaCreacion.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaCreacion.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
+        Me.Dtp_FechaCreacion.MonthCalendar.ClearButtonVisible = True
         '
         '
         '
-        Me.DateTimeInput1.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.DateTimeInput1.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
-        Me.DateTimeInput1.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.DateTimeInput1.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.DateTimeInput1.MonthCalendar.TodayButtonVisible = True
-        Me.DateTimeInput1.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
-        Me.DateTimeInput1.Name = "DateTimeInput1"
-        Me.DateTimeInput1.Size = New System.Drawing.Size(91, 22)
-        Me.DateTimeInput1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.DateTimeInput1.TabIndex = 8
-        Me.DateTimeInput1.Value = New Date(2024, 6, 23, 12, 19, 44, 0)
+        Me.Dtp_FechaCreacion.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
+        Me.Dtp_FechaCreacion.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_FechaCreacion.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
+        Me.Dtp_FechaCreacion.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Dtp_FechaCreacion.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
+        Me.Dtp_FechaCreacion.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
+        Me.Dtp_FechaCreacion.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaCreacion.MonthCalendar.DisplayMonth = New Date(2024, 6, 1, 0, 0, 0, 0)
+        Me.Dtp_FechaCreacion.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
+        Me.Dtp_FechaCreacion.MonthCalendar.MarkedDates = New Date(-1) {}
+        Me.Dtp_FechaCreacion.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_FechaCreacion.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Dtp_FechaCreacion.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_FechaCreacion.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Dtp_FechaCreacion.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaCreacion.MonthCalendar.TodayButtonVisible = True
+        Me.Dtp_FechaCreacion.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
+        Me.Dtp_FechaCreacion.Name = "Dtp_FechaCreacion"
+        Me.Dtp_FechaCreacion.Size = New System.Drawing.Size(91, 22)
+        Me.Dtp_FechaCreacion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Dtp_FechaCreacion.TabIndex = 8
+        Me.Dtp_FechaCreacion.Value = New Date(2024, 6, 23, 12, 19, 44, 0)
         '
         'Txt_IdContador2
         '
@@ -238,22 +244,21 @@ Partial Class Frm_IngresarHoja
         Me.Txt_IdContador1.Size = New System.Drawing.Size(267, 22)
         Me.Txt_IdContador1.TabIndex = 5
         '
-        'Txt_Numero
+        'Txt_Nro_Hoja
         '
-        Me.Txt_Numero.BackColor = System.Drawing.Color.White
+        Me.Txt_Nro_Hoja.BackColor = System.Drawing.Color.White
         '
         '
         '
-        Me.Txt_Numero.Border.Class = "TextBoxBorder"
-        Me.Txt_Numero.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Numero.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_Numero.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Numero.Location = New System.Drawing.Point(106, 12)
-        Me.Txt_Numero.Name = "Txt_Numero"
-        Me.Txt_Numero.PreventEnterBeep = True
-        Me.Txt_Numero.ReadOnly = True
-        Me.Txt_Numero.Size = New System.Drawing.Size(100, 22)
-        Me.Txt_Numero.TabIndex = 3
+        Me.Txt_Nro_Hoja.Border.Class = "TextBoxBorder"
+        Me.Txt_Nro_Hoja.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Nro_Hoja.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Nro_Hoja.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Nro_Hoja.Location = New System.Drawing.Point(106, 12)
+        Me.Txt_Nro_Hoja.Name = "Txt_Nro_Hoja"
+        Me.Txt_Nro_Hoja.PreventEnterBeep = True
+        Me.Txt_Nro_Hoja.Size = New System.Drawing.Size(100, 22)
+        Me.Txt_Nro_Hoja.TabIndex = 3
         '
         'LabelX3
         '
@@ -320,6 +325,7 @@ Partial Class Frm_IngresarHoja
         '
         Me.GroupPanel4.BackColor = System.Drawing.Color.White
         Me.GroupPanel4.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel4.Controls.Add(Me.ContextMenuBar1)
         Me.GroupPanel4.Controls.Add(Me.Grilla_Detalle)
         Me.GroupPanel4.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel4.Location = New System.Drawing.Point(12, 119)
@@ -356,8 +362,44 @@ Partial Class Frm_IngresarHoja
         Me.GroupPanel4.TabIndex = 162
         Me.GroupPanel4.Text = "Detalle de los productos inventariados"
         '
+        'ContextMenuBar1
+        '
+        Me.ContextMenuBar1.AntiAlias = True
+        Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
+        Me.ContextMenuBar1.Location = New System.Drawing.Point(31, 31)
+        Me.ContextMenuBar1.Name = "ContextMenuBar1"
+        Me.ContextMenuBar1.Size = New System.Drawing.Size(250, 25)
+        Me.ContextMenuBar1.Stretch = True
+        Me.ContextMenuBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.ContextMenuBar1.TabIndex = 49
+        Me.ContextMenuBar1.TabStop = False
+        Me.ContextMenuBar1.Text = "ContextMenuBar1"
+        '
+        'Menu_Contextual_01
+        '
+        Me.Menu_Contextual_01.AutoExpandOnClick = True
+        Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Observaciones, Me.LabelItem3, Me.Btn_Copiar})
+        Me.Menu_Contextual_01.Text = "Opciones"
+        '
+        'Btn_Observaciones
+        '
+        Me.Btn_Observaciones.Image = CType(resources.GetObject("Btn_Observaciones.Image"), System.Drawing.Image)
+        Me.Btn_Observaciones.ImageAlt = CType(resources.GetObject("Btn_Observaciones.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Observaciones.Name = "Btn_Observaciones"
+        Me.Btn_Observaciones.Text = "Observaciones"
+        '
+        'Btn_Copiar
+        '
+        Me.Btn_Copiar.Image = CType(resources.GetObject("Btn_Copiar.Image"), System.Drawing.Image)
+        Me.Btn_Copiar.ImageAlt = CType(resources.GetObject("Btn_Copiar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Copiar.Name = "Btn_Copiar"
+        Me.Btn_Copiar.Text = "Copiar (portapapeles)"
+        '
         'Grilla_Detalle
         '
+        Me.Grilla_Detalle.AllowUserToDeleteRows = False
         Me.Grilla_Detalle.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
@@ -393,6 +435,20 @@ Partial Class Frm_IngresarHoja
         Me.Grilla_Detalle.StandardTab = True
         Me.Grilla_Detalle.TabIndex = 27
         '
+        'LabelItem3
+        '
+        Me.LabelItem3.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem3.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem3.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem3.ImageTextSpacing = 1
+        Me.LabelItem3.Name = "LabelItem3"
+        Me.LabelItem3.PaddingBottom = 1
+        Me.LabelItem3.PaddingLeft = 10
+        Me.LabelItem3.PaddingTop = 1
+        Me.LabelItem3.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem3.Text = "-------------------------------------------"
+        '
         'Frm_IngresarHoja
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -403,6 +459,7 @@ Partial Class Frm_IngresarHoja
         Me.Controls.Add(Me.GroupPanel4)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
@@ -412,9 +469,10 @@ Partial Class Frm_IngresarHoja
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "MetroForm"
         Me.GroupPanel1.ResumeLayout(False)
-        CType(Me.DateTimeInput1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Dtp_FechaCreacion, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel4.ResumeLayout(False)
+        CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grilla_Detalle, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -422,7 +480,7 @@ Partial Class Frm_IngresarHoja
 
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Txt_IdContador1 As DevComponents.DotNetBar.Controls.TextBoxX
-    Friend WithEvents Txt_Numero As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Txt_Nro_Hoja As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
@@ -431,8 +489,13 @@ Partial Class Frm_IngresarHoja
     Friend WithEvents Txt_IdContador2 As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
-    Friend WithEvents DateTimeInput1 As DevComponents.Editors.DateTimeAdv.DateTimeInput
+    Friend WithEvents Dtp_FechaCreacion As DevComponents.Editors.DateTimeAdv.DateTimeInput
     Friend WithEvents Chk_Ver_Solo_Habilitados As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Eliminar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents ContextMenuBar1 As DevComponents.DotNetBar.ContextMenuBar
+    Friend WithEvents Menu_Contextual_01 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Observaciones As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Copiar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelItem3 As DevComponents.DotNetBar.LabelItem
 End Class

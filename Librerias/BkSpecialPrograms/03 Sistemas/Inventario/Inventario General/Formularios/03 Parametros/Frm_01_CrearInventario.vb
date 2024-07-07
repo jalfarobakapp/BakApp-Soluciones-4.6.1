@@ -37,9 +37,9 @@ Public Class Frm_01_CrearInventario
 
         With Cl_Inventario.Zw_Inv_Inventario
 
-            Lbl_Empresa.Text = .Nombre_Empresa
-            Lbl_Sucursal.Text = .Nombre_Sucursal
-            Lbl_Bodega.Text = .Nombre_Bodega
+            Lbl_Empresa.Text = .Empresa & " - " & .Nombre_Empresa
+            Lbl_Sucursal.Text = .Sucursal & " - " & .Nombre_Sucursal
+            Lbl_Bodega.Text = .Bodega & " - " & .Nombre_Bodega
             Txt_NombreInventario.Text = .NombreInventario
             Txt_FuncCargo.Tag = .FuncionarioCargo
             Txt_FuncCargo.Text = .NombreFuncionario

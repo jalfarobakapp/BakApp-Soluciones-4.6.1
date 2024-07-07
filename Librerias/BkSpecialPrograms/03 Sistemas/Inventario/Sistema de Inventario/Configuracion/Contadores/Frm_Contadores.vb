@@ -8,6 +8,10 @@ Public Class Frm_Contadores
     Dim _Tbl_Contadores As DataTable
     Dim _Dv As New DataView
 
+    Public Property ModoSeleccion As Boolean
+    Public Property Seleccionado As Boolean
+    Public Property Cl_Contador As New Cl_Contador
+
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -23,9 +27,12 @@ Public Class Frm_Contadores
 
         AddHandler Chk_Ver_Solo_Habilitados.CheckedChanged, AddressOf Chk_Ver_Solo_Habilitados_CheckedChanged
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
-        AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
+        If Not ModoSeleccion Then AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
 
         Sb_Actualizar_Grilla()
+
+        Btn_CrearContador.Visible = Not ModoSeleccion
+        Chk_Ver_Solo_Habilitados.Enabled = Not ModoSeleccion
 
     End Sub
 
@@ -108,7 +115,21 @@ Public Class Frm_Contadores
     End Sub
 
     Private Sub Grilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Id As Integer = _Fila.Cells("Id").Value
+
+        If ModoSeleccion Then
+
+            Cl_Contador.Fx_Llenar_Zw_Inv_Contador(_Id)
+            Seleccionado = True
+            Me.Close()
+            Return
+
+        End If
+
         Call Btn_EditarContador_Click(Nothing, Nothing)
+
     End Sub
 
     Private Sub Btn_EditarContador_Click(sender As Object, e As EventArgs) Handles Btn_EditarContador.Click
@@ -228,5 +249,11 @@ Public Class Frm_Contadores
     Private Sub Chk_Ver_Solo_Habilitados_CheckedChanged(sender As Object, e As EventArgs)
         Txt_Filtrar.Text = String.Empty
         Sb_Actualizar_Grilla()
+    End Sub
+
+    Private Sub Frm_Contadores_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+        If e.KeyValue = Keys.Escape Then
+            Me.Close()
+        End If
     End Sub
 End Class

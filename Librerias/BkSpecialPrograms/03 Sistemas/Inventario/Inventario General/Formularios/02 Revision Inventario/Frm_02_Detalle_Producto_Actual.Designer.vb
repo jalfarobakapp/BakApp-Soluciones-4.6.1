@@ -27,9 +27,9 @@ Partial Class Frm_02_Detalle_Producto_Actual
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
-        Me.BtnEstadisticas = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnAgregarConteo = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnGrabarAnalisis_Reconteo = New DevComponents.DotNetBar.ButtonItem()
+        Me.BtnEstadisticas = New DevComponents.DotNetBar.ButtonItem()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.LblContador1 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
@@ -99,14 +99,6 @@ Partial Class Frm_02_Detalle_Producto_Actual
         Me.Bar2.TabStop = False
         Me.Bar2.Text = "Bar2"
         '
-        'BtnEstadisticas
-        '
-        Me.BtnEstadisticas.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.BtnEstadisticas.ForeColor = System.Drawing.Color.Black
-        Me.BtnEstadisticas.Image = CType(resources.GetObject("BtnEstadisticas.Image"), System.Drawing.Image)
-        Me.BtnEstadisticas.Name = "BtnEstadisticas"
-        Me.BtnEstadisticas.Tooltip = "Ultimos movimientos (Compra, Ventas, Estadisticas)"
-        '
         'BtnAgregarConteo
         '
         Me.BtnAgregarConteo.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
@@ -122,6 +114,14 @@ Partial Class Frm_02_Detalle_Producto_Actual
         Me.BtnGrabarAnalisis_Reconteo.Image = CType(resources.GetObject("BtnGrabarAnalisis_Reconteo.Image"), System.Drawing.Image)
         Me.BtnGrabarAnalisis_Reconteo.Name = "BtnGrabarAnalisis_Reconteo"
         Me.BtnGrabarAnalisis_Reconteo.Text = "Grabar analisis, reconteo"
+        '
+        'BtnEstadisticas
+        '
+        Me.BtnEstadisticas.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.BtnEstadisticas.ForeColor = System.Drawing.Color.Black
+        Me.BtnEstadisticas.Image = CType(resources.GetObject("BtnEstadisticas.Image"), System.Drawing.Image)
+        Me.BtnEstadisticas.Name = "BtnEstadisticas"
+        Me.BtnEstadisticas.Tooltip = "Ultimos movimientos (Compra, Ventas, Estadisticas)"
         '
         'TableLayoutPanel1
         '
@@ -544,7 +544,7 @@ Partial Class Frm_02_Detalle_Producto_Actual
         Me.Menu_Contextual.AntiAlias = True
         Me.Menu_Contextual.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
-        Me.Menu_Contextual.Location = New System.Drawing.Point(45, 53)
+        Me.Menu_Contextual.Location = New System.Drawing.Point(22, 13)
         Me.Menu_Contextual.Name = "Menu_Contextual"
         Me.Menu_Contextual.Size = New System.Drawing.Size(412, 25)
         Me.Menu_Contextual.Stretch = True
@@ -655,7 +655,6 @@ Partial Class Frm_02_Detalle_Producto_Actual
         'GroupPanel2
         '
         Me.GroupPanel2.BackColor = System.Drawing.Color.White
-        Me.GroupPanel2.CanvasColor = System.Drawing.SystemColors.Control
         Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel2.Controls.Add(Me.TableLayoutPanel1)
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
@@ -696,7 +695,6 @@ Partial Class Frm_02_Detalle_Producto_Actual
         'GroupPanel3
         '
         Me.GroupPanel3.BackColor = System.Drawing.Color.White
-        Me.GroupPanel3.CanvasColor = System.Drawing.SystemColors.Control
         Me.GroupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel3.Controls.Add(Me.TableLayoutPanel2)
         Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
@@ -737,7 +735,6 @@ Partial Class Frm_02_Detalle_Producto_Actual
         'GroupPanel4
         '
         Me.GroupPanel4.BackColor = System.Drawing.Color.White
-        Me.GroupPanel4.CanvasColor = System.Drawing.SystemColors.Control
         Me.GroupPanel4.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel4.Controls.Add(Me.TableLayoutPanel3)
         Me.GroupPanel4.DisabledBackColor = System.Drawing.Color.Empty

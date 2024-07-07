@@ -21,6 +21,7 @@
     Public Property Rtu As Double
     Public Property RtuVariable As Boolean
     Public Property Udtrpr As Integer
+    Public Property Cantidad As Double
     Public Property Ud1 As String
     Public Property CantidadUd1 As Double
     Public Property Ud2 As String

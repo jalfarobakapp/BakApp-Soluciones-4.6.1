@@ -61,6 +61,7 @@ Public Class Cl_InvUbicacion
 
         If IsNothing(_Row) Then
             _Mensaje.Mensaje = "No se encontro el registro en la tabla Zw_TmpInv_Ubicaciones con el Ubicacion " & _Ubicacion
+            _Mensaje.Icono = MessageBoxIcon.Stop
             Return _Mensaje
         End If
 
@@ -78,6 +79,7 @@ Public Class Cl_InvUbicacion
 
         _Mensaje.EsCorrecto = True
         _Mensaje.Mensaje = "Registros cargados correctamente"
+        _Mensaje.Icono = MessageBoxIcon.Information
 
         Return _Mensaje
 
@@ -227,7 +229,7 @@ Public Class Cl_InvUbicacion
 
         Consulta_sql = String.Empty
 
-        Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_ProductosInventariados",
+        Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_Hoja_Detalle",
                                             "IdInventario = " & Zw_Inv_Ubicaciones.IdInventario & " And IdUbicacion = " & Zw_Inv_Ubicaciones.Id)
         If CBool(_Reg) Then
             _Mensaje_Stem.Mensaje = "No se puede eliminar la ubicación, tiene registros inventariados"

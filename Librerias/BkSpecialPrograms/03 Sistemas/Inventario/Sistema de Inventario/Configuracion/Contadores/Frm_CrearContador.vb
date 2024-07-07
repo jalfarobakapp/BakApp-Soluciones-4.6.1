@@ -26,6 +26,10 @@ Public Class Frm_CrearContador
 
     Private Sub Frm_Operadores_Crear_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        Chk_Activo.Checked = True
+        Txt_Nombre.CharacterCasing = CharacterCasing.Upper
+        Txt_Email.CharacterCasing = CharacterCasing.Lower
+
         If CBool(_IdContador) Then
 
             With Cl_Contador.Zw_Inv_Contador
@@ -37,7 +41,9 @@ Public Class Frm_CrearContador
                 Chk_Activo.Checked = .Activo
 
             End With
-
+            Me.ActiveControl = Txt_Nombre
+        Else
+            Me.ActiveControl = Txt_Rut
         End If
 
         Btn_Eliminar.Visible = CBool(_IdContador)

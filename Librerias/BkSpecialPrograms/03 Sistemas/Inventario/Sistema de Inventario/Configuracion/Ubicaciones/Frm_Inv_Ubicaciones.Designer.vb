@@ -57,6 +57,8 @@ Partial Class Frm_Inv_Ubicaciones
         '
         'GroupPanel1
         '
+        Me.GroupPanel1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel1.Controls.Add(Me.ContextMenuBar1)
@@ -64,7 +66,7 @@ Partial Class Frm_Inv_Ubicaciones
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 41)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(708, 405)
+        Me.GroupPanel1.Size = New System.Drawing.Size(567, 405)
         '
         '
         '
@@ -234,6 +236,7 @@ Partial Class Frm_Inv_Ubicaciones
         'Grilla
         '
         Me.Grilla.AllowUserToAddRows = False
+        Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
@@ -265,7 +268,7 @@ Partial Class Frm_Inv_Ubicaciones
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.Grilla.Size = New System.Drawing.Size(702, 382)
+        Me.Grilla.Size = New System.Drawing.Size(561, 382)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 30
         '
@@ -277,7 +280,7 @@ Partial Class Frm_Inv_Ubicaciones
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Crear_Ubicacion, Me.Btn_Importar_Desde_Excel, Me.Btn_ExportarExcel, Me.Btn_Actualizar})
         Me.Bar1.Location = New System.Drawing.Point(0, 459)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(732, 41)
+        Me.Bar1.Size = New System.Drawing.Size(591, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 32
@@ -341,6 +344,8 @@ Partial Class Frm_Inv_Ubicaciones
         '
         'Txt_Filtrar
         '
+        Me.Txt_Filtrar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Txt_Filtrar.BackColor = System.Drawing.Color.White
         '
         '
@@ -354,14 +359,14 @@ Partial Class Frm_Inv_Ubicaciones
         Me.Txt_Filtrar.Location = New System.Drawing.Point(75, 13)
         Me.Txt_Filtrar.Name = "Txt_Filtrar"
         Me.Txt_Filtrar.PreventEnterBeep = True
-        Me.Txt_Filtrar.Size = New System.Drawing.Size(645, 22)
+        Me.Txt_Filtrar.Size = New System.Drawing.Size(504, 22)
         Me.Txt_Filtrar.TabIndex = 175
         '
         'Frm_Inv_Ubicaciones
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(732, 500)
+        Me.ClientSize = New System.Drawing.Size(591, 500)
         Me.Controls.Add(Me.LabelX2)
         Me.Controls.Add(Me.Txt_Filtrar)
         Me.Controls.Add(Me.GroupPanel1)

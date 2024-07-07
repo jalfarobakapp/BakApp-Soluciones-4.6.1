@@ -59,40 +59,7 @@ Public Class Frm_01_Inventario_Actual
 
         Try
 
-            'Dim Pie As String
-            'Dim Tbl_Paso As String = "_Tbl" & FUNCIONARIO
-            'Dim Tbl_Paso_2 As String = "ZW_TmpInvPs01" & FUNCIONARIO
-
-            ''Consulta_sql = "DROP TABLE " & Tbl_Paso_2
-            ''_Sql.Ej_consulta_IDU(Consulta_sql, False)
-
-            ''Consulta_sql = "Drop Table " & Tbl_Paso
-            ''_Sql.Ej_consulta_IDU(Consulta_sql, False)
-
             Consulta_sql = My.Resources._Procedimientos_Inv.Inv_Sumar_Cantidades
-
-            'Consulta_sql = Replace(Consulta_sql, "@Funcionario", FUNCIONARIO)
-            ''Consulta_sql = Replace(Consulta_sql, "@Codigo", Codigo_abuscar)
-            ''Consulta_sql = Replace(Consulta_sql, "@IdBodega", IdBodega)
-            ''Consulta_sql = Replace(Consulta_sql, "@Ano", Inventario_AnoActivo)
-            ''Consulta_sql = Replace(Consulta_sql, "@Mes", Inventario_MesActivo)
-            ''Consulta_sql = Replace(Consulta_sql, "@Dia", inventario_DiaActivo)
-
-            'Consulta_sql = Replace(Consulta_sql, "#Empresa#", _Empresa)
-            'Consulta_sql = Replace(Consulta_sql, "#Sucursal#", _Sucursal)
-            'Consulta_sql = Replace(Consulta_sql, "#Bodega#", _Bodega)
-            'Consulta_sql = Replace(Consulta_sql, "#FechaInv#", Format(_Fecha_Inventario, "yyyyMMdd"))
-
-            'Consulta_sql = "Select Codproducto,SUM(Case" & vbCrLf &
-            '               "When Recontado = 0 then ISNULL(CantidadInventariada, 0)" & vbCrLf &
-            '               "When Recontado = 1 then ISNULL(Cantidad_Recontada, 0)" & vbCrLf &
-            '               "End) AS TotalInv" & vbCrLf &
-            '               "From " & _Global_BaseBk & "ZW_TmpInvProductosInventariados" & vbCrLf &
-            '               "Where IdInventario = " & _Id
-
-            '_Sql.Ej_consulta_IDU(Consulta_sql)
-
-
             Consulta_sql = My.Resources._Procedimientos_Inv.Inv_Invetario_Todos
 
             ''Consulta_sql = Replace(Consulta_sql, "@Top", "")

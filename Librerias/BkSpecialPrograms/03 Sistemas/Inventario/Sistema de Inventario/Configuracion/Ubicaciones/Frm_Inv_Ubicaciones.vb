@@ -82,10 +82,10 @@ Public Class Frm_Inv_Ubicaciones
             .Columns("Id").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("CodUbicacion").Visible = True
-            .Columns("CodUbicacion").HeaderText = "Cod.Ubic."
-            .Columns("CodUbicacion").Width = 100
-            .Columns("CodUbicacion").DisplayIndex = _DisplayIndex
+            .Columns("Ubicacion").Visible = True
+            .Columns("Ubicacion").HeaderText = "Cod.Ubic."
+            .Columns("Ubicacion").Width = 100
+            .Columns("Ubicacion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Ubicacion").Visible = True
@@ -212,6 +212,19 @@ Public Class Frm_Inv_Ubicaciones
 
         _Cl_InvUbicacion.Fx_Llenar_Zw_Inv_Ubicaciones(_Id)
 
+        Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_Hoja_Detalle",
+                                            "IdInventario = " & _IdInventario & " And IdUbicacion = " & _Id)
+        If CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "No se puede eliminar la ubicación, tiene registros inventariados", "Eliminar Ubicación",
+                             MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Esta seguro de querer eliminar la Ubicación " & _Fila.Cells("Ubicacion").Value & "?", "Eliminar Ubicación",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
+
         _Mensaje = _Cl_InvUbicacion.Fx_Eliminar_Ubicacion
 
         MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
@@ -303,5 +316,24 @@ Public Class Frm_Inv_Ubicaciones
     Private Sub Txt_Filtrar_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Filtrar.ButtonCustom2Click
         Txt_Filtrar.Text = String.Empty
         _Dv.RowFilter = String.Empty
+    End Sub
+
+    Private Sub Btn_Copiar_Click(sender As Object, e As EventArgs) Handles Btn_Copiar.Click
+        With Grilla
+
+            Try
+
+                Dim _Cabeza = .Columns(.CurrentCell.ColumnIndex).Name
+                Dim _Texto_Cabeza = .Columns(.CurrentCell.ColumnIndex).HeaderText
+
+                Dim Copiar = .Rows(.CurrentRow.Index).Cells(_Cabeza).Value
+                Clipboard.SetText(Copiar)
+
+                ToastNotification.Show(Me, _Texto_Cabeza & " esta en el portapapeles", Btn_Copiar.Image,
+                                       2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
+            Catch ex As Exception
+                MessageBoxEx.Show(Me, ex.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            End Try
+        End With
     End Sub
 End Class

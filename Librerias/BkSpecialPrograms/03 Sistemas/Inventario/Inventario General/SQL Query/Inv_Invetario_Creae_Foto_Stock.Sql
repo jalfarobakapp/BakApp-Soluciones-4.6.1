@@ -1,17 +1,15 @@
 Declare @IdInventario Int = #IdInventario#,
-        @Ano Char(4) = '#Ano#',
-        @Mes Char(2) = '#Mes#',
-        @Dia Char(2) = '#Dia#',
         @Empresa Char(2) = '#Empresa#',
         @Sucursal Char(3) = '#Sucursal#',
         @Bodega Char(3) = '#Bodega#'
 
 
 INSERT INTO Zw_Inv_FotoInventario 
-(IdInventario,Ano,Mes,Dia,IdBodega,Empresa,Sucursal,Bodega,Tipr,CodigoPR,CodigoRaPR,CodigoTePR,DescripcionPR,
- StFisicoUd1,PPP,PUltCompra,FechaFoto,HoraFoto,SuperFamilia,Familia,SubFamilia,Marca,Rubro,ClasLibre,Zona)
-SELECT @IdInventario,@Ano,@Mes,@Dia,0,@Empresa,@Sucursal,@Bodega,MAEPR.TIPR,MAEPR.KOPR, MAEPR.KOPRRA, MAEPR.KOPRTE, 
-MAEPR.NOKOPR, SUM(MAEST.STFI1) AS STOCK,ISNULL(MAEPREM.PM, 0) AS PM, ISNULL(MAEPREM.PPUL01, 0) AS PPUL01,
+(IdInventario,Empresa,Sucursal,Bodega,Tipr,Codigo,CodigoRap,CodigoTec,Descripcion,
+ StFisicoUd1,StFisicoUd2,Costo,PPP,PUltCompra,FechaFoto,HoraFoto,SuperFamilia,Familia,SubFamilia,Marca,Rubro,ClasLibre,Zona)
+SELECT @IdInventario,@Empresa,@Sucursal,@Bodega,MAEPR.TIPR,MAEPR.KOPR,MAEPR.KOPRRA,MAEPR.KOPRTE, 
+MAEPR.NOKOPR,SUM(MAEST.STFI1) AS StFisicoUd1,SUM(MAEST.STFI2) AS StFisicoUd2,
+ISNULL(MAEPREM.PM,0) AS Costo,ISNULL(MAEPREM.PM,0) AS PM,ISNULL(MAEPREM.PPUL01, 0) AS PPUL01,
 GETDATE()AS F1,GETDATE() AS H1,
 ISNULL(MAEPR.FMPR,''),
 ISNULL(MAEPR.PFPR,''),
@@ -25,7 +23,7 @@ MAEPR ON MAEPREM.KOPR = MAEPR.KOPR LEFT OUTER JOIN
 MAEST ON MAEPR.KOPR = MAEST.KOPR
 WHERE     (MAEST.KOSU = @Sucursal) AND (MAEST.KOBO = @Bodega) AND (MAEPREM.EMPRESA = @Empresa)
 GROUP BY MAEPREM.EMPRESA, MAEST.KOSU, MAEST.KOBO, MAEPR.KOPR, 
-MAEPR.KOPRRA, MAEPR.KOPRTE, MAEPR.NOKOPR, MAEPREM.PM, MAEPREM.PPUL01,MAEPR.TIPR,
+MAEPR.KOPRRA,MAEPR.KOPRTE,MAEPR.NOKOPR,MAEPREM.PM, MAEPREM.PPUL01,MAEPR.TIPR,
 MAEPR.FMPR,
 MAEPR.PFPR,
 MAEPR.HFPR,
@@ -35,11 +33,11 @@ MAEPR.CLALIBPR,
 MAEPR.ZONAPR
 
 
-INSERT INTO Zw_Inv_FotoInventario (IdInventario,Ano,Mes,Dia,IdBodega,Empresa,Sucursal,Bodega,Tipr,CodigoPR,
-CodigoRaPR,CodigoTePR,DescripcionPR,StFisicoUd1,PPP,PUltCompra,FechaFoto,HoraFoto,
+INSERT INTO Zw_Inv_FotoInventario (IdInventario,Empresa,Sucursal,Bodega,Tipr,Codigo,
+CodigoRap,CodigoTec,Descripcion,StFisicoUd1,StFisicoUd2,Costo,PPP,PUltCompra,FechaFoto,HoraFoto,
 SuperFamilia,Familia,SubFamilia,Marca,Rubro,ClasLibre,Zona)
-SELECT @IdInventario,@Ano,@Mes,@Dia,0,@Empresa,@Sucursal,@Bodega,MAEPR.TIPR, MAEPR.KOPR, MAEPR.KOPRRA,MAEPR.KOPRTE, 
-MAEPR.NOKOPR, 0 AS STOCK,ISNULL(MAEPREM.PM, 0) AS PM, ISNULL(MAEPREM.PPUL01, 0) AS PPUL01,
+SELECT @IdInventario,@Empresa,@Sucursal,@Bodega,MAEPR.TIPR, MAEPR.KOPR, MAEPR.KOPRRA,MAEPR.KOPRTE, 
+MAEPR.NOKOPR,0 AS StFisicoUd1,0 AS StFisicoUd2,ISNULL(MAEPREM.PM, 0) AS Costo,ISNULL(MAEPREM.PM, 0) AS PM, ISNULL(MAEPREM.PPUL01, 0) AS PPUL01,
 GETDATE()AS F1,GETDATE() AS H1,
 ISNULL(MAEPR.FMPR,''),
 ISNULL(MAEPR.PFPR,''),
@@ -50,7 +48,7 @@ ISNULL(MAEPR.CLALIBPR,''),
 ISNULL(MAEPR.ZONAPR,'')
 FROM         MAEPREM LEFT OUTER JOIN
 MAEPR ON MAEPREM.KOPR = MAEPR.KOPR
-WHERE     (MAEPR.KOPR NOT IN (SELECT CodigoPR FROM Zw_Inv_FotoInventario WHERE IdInventario = @IdInventario)) 
+WHERE     (MAEPR.KOPR NOT IN (SELECT Codigo FROM Zw_Inv_FotoInventario WHERE IdInventario = @IdInventario)) 
 order by MAEPR.KOPR 
 
 
@@ -65,3 +63,5 @@ Update Zw_Inv_FotoInventario Set
                                             Where KOFM = SuperFamilia And KOPF = Familia And KOHF = SubFamilia),''),
                        Nom_ClasLibre = Isnull((Select Top 1 NOKOCARAC From TABCARAC 
                                             Where KOTABLA = 'CLALIBPR' And KOCARAC = ClasLibre),'')
+
+Update Zw_Inv_FotoInventario Set Total_Costo_Foto = StFisicoUd1 * PPP

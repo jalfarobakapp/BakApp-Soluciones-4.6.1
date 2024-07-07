@@ -116,43 +116,6 @@ Public Class Cl_Conteo
 
         End With
 
-        'Dim _Zw_Inv_Hoja_Detalle As New Zw_Inv_Hoja_Detalle
-
-        'With _Zw_Inv_Hoja_Detalle
-
-        '    .Id = 0
-        '    .IdHoja = 1
-        '    .Nro_Hoja = String.Empty
-        '    .IdInventario = Zw_Inv_Inventario.Id
-        '    .Empresa = Zw_Inv_Inventario.Empresa
-        '    .Sucursal = Zw_Inv_Inventario.Sucursal
-        '    .Bodega = Zw_Inv_Inventario.Bodega
-        '    .Responsable = String.Empty
-        '    .IdContador1 = 0
-        '    .IdContador2 = 0
-        '    .Item_Hoja = "001"
-        '    .IdUbicacion = 0
-        '    .CodUbicacion = String.Empty
-        '    .TipoConteo = String.Empty
-        '    .Codproducto = String.Empty
-        '    .EsSeriado = False
-        '    .NroSerie = String.Empty
-        '    .Rtu = 0
-        '    .RtuVariable = False
-        '    .Udtrpr = 1
-        '    .Ud1 = String.Empty
-        '    .CantidadUd1 = 0
-        '    .Ud2 = String.Empty
-        '    .CantidadUd2 = 0
-        '    .Observaciones = String.Empty
-        '    .Recontado = False
-        '    .Actualizado_por = String.Empty
-        '    .Obs_Actualizacion = String.Empty
-
-        '    Ls_Zw_Inv_Hoja_Detalle.Add(_Zw_Inv_Hoja_Detalle)
-
-        'End With
-
         _Mensaje_Stem.EsCorrecto = True
         _Mensaje_Stem.Mensaje = "Registros cargados correctamente"
 
@@ -236,6 +199,148 @@ Public Class Cl_Conteo
         End Try
 
         Return _Mensaje_Stem
+
+    End Function
+
+    Function Fx_Grabar_Nueva_Hoja() As LsValiciones.Mensajes
+
+        Dim _Mensaje_Stem As New LsValiciones.Mensajes
+
+        Consulta_sql = String.Empty
+
+        Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_Hoja",
+                                            "IdInventario = " & Zw_Inv_Hoja.IdInventario & " And Nro_Hoja = '" & Zw_Inv_Hoja.Nro_Hoja & "'")
+
+        If CBool(_Reg) Then
+            _Mensaje_Stem.EsCorrecto = False
+            _Mensaje_Stem.Detalle = "Crear Hoja"
+            _Mensaje_Stem.Mensaje = "El Nro de Hoja " & Zw_Inv_Hoja.Nro_Hoja & " ya existe para este inventario"
+            _Mensaje_Stem.Icono = MessageBoxIcon.Stop
+            Return _Mensaje_Stem
+        End If
+
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+        Dim Cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
+
+        Try
+
+            myTrans = Cn2.BeginTransaction()
+
+            With Zw_Inv_Hoja
+
+                '.Nro_Hoja = Fx_NvoNroHoja(.IdInventario)
+
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Inv_Hoja (IdInventario,Nro_Hoja,NombreEquipo,FechaCreacion,CodResponsable," &
+                               "IdContador1,IdContador2,FechaLevantamiento,Reconteo) Values " &
+                               "(" & .IdInventario & ",'" & .Nro_Hoja & "','" & .NombreEquipo & "','" & .FechaCreacion & "','" & .CodResponsable & "'" &
+                               "," & .IdContador1 & "," & .IdContador2 & ",'" & Format(.FechaLevantamiento, "yyyyMMdd") & "'," & Convert.ToInt32(.Reconteo) & ")"
+
+
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+                Comando = New System.Data.SqlClient.SqlCommand("SELECT @@IDENTITY AS 'Identity'", Cn2)
+                Comando.Transaction = myTrans
+                Dim dfd1 As System.Data.SqlClient.SqlDataReader = Comando.ExecuteReader()
+                While dfd1.Read()
+                    .Id = dfd1("Identity")
+                End While
+                dfd1.Close()
+
+            End With
+
+            For Each _Fila As Zw_Inv_Hoja_Detalle In Ls_Zw_Inv_Hoja_Detalle
+
+                With _Fila
+
+                    .IdHoja = Zw_Inv_Hoja.Id
+
+                    If Not String.IsNullOrEmpty(.Codigo) Then
+
+                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle (IdHoja,Nro_Hoja,IdInventario,Empresa,Sucursal,Bodega," &
+                                       "Responsable,IdContador1,IdContador2,Item_Hoja,IdUbicacion,Ubicacion,TipoConteo,Codigo,EsSeriado," &
+                                       "NroSerie,FechaHoraToma,Rtu,RtuVariable,Udtrpr,Cantidad,Ud1,CantidadUd1,Ud2,CantidadUd2,Observaciones," &
+                                       "Recontado,Actualizado_por,Obs_Actualizacion) Values " &
+                                       "(" & .IdHoja & ",'" & .Nro_Hoja & "'," & .IdInventario & ",'" & .Empresa & "','" & .Sucursal & "','" & .Bodega & "'" &
+                                       ",'" & .Responsable & "'," & .IdContador1 & "," & .IdContador2 & ",'" & .Item_Hoja & "'," & .IdUbicacion &
+                                       ",'" & .Ubicacion & "','" & .TipoConteo & "','" & .Codigo & "'," & Convert.ToInt32(.EsSeriado) & ",'" & .NroSerie & "'" &
+                                       ",Getdate(),'" & .Rtu & "','" & .RtuVariable & "','" & .Udtrpr & "'" &
+                                       "," & De_Num_a_Tx_01(.Cantidad, False, 5) & ",'" & .Ud1 &
+                                       "'," & De_Num_a_Tx_01(.CantidadUd1, False, 5) & ",'" & .Ud2 & "'," & De_Num_a_Tx_01(.CantidadUd2, False, 5) &
+                                       ",'" & .Observaciones & "'," & Convert.ToInt32(.Recontado) & ",'" & .Actualizado_por & "','" & .Obs_Actualizacion & "')"
+
+                        Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                        Comando.Transaction = myTrans
+                        Comando.ExecuteNonQuery()
+
+                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Cant_Inventariada +=" & .Cantidad & vbCrLf &
+                                       "Where IdInventario = " & .IdInventario & " And Codigo = '" & .Codigo & "'"
+
+                        Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                        Comando.Transaction = myTrans
+                        Comando.ExecuteNonQuery()
+
+                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Total_Costo_Inv = Cant_Inventariada*Costo" & vbCrLf &
+                                       "Where IdInventario = " & .IdInventario & " And Codigo = '" & .Codigo & "'"
+
+                        Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                        Comando.Transaction = myTrans
+                        Comando.ExecuteNonQuery()
+
+                    End If
+
+                End With
+
+            Next
+
+            myTrans.Commit()
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+            _Mensaje_Stem.EsCorrecto = True
+            _Mensaje_Stem.Detalle = "Crear Hoja"
+            _Mensaje_Stem.Mensaje = "Documento grabado correctamente"
+            _Mensaje_Stem.Icono = MessageBoxIcon.Information
+
+        Catch ex As Exception
+
+            _Mensaje_Stem.EsCorrecto = False
+            _Mensaje_Stem.Detalle = "Error al grabar"
+            _Mensaje_Stem.Mensaje = ex.Message
+            _Mensaje_Stem.Icono = MessageBoxIcon.Stop
+
+            If Not IsNothing(myTrans) Then myTrans.Rollback()
+
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+        End Try
+
+        Return _Mensaje_Stem
+
+    End Function
+
+    Function Fx_NvoNroHoja(_IdInventario As Integer) As String
+
+        Dim _Nro_Hoja As String
+
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+        Consulta_sql = "Select Max(Nro_Hoja) As Nro_Hoja From " & _Global_BaseBk & "Zw_Inv_Hoja Where IdInventario = " & _IdInventario
+
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+        Dim _Ult_Nro_OT As String = NuloPorNro(_Row.Item("Nro_Hoja"), "")
+
+        If String.IsNullOrEmpty(Trim(_Ult_Nro_OT)) Then
+            _Ult_Nro_OT = "0000000000"
+        End If
+
+        _Nro_Hoja = Fx_Proximo_NroDocumento(_Ult_Nro_OT, 10)
+
+        Return _Nro_Hoja
 
     End Function
 

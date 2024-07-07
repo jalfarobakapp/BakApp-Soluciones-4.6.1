@@ -30,6 +30,7 @@ Public Class Frm_Inv_Ctrl_Inventario
     Private Sub Btn_Sectores_Click(sender As Object, e As EventArgs) Handles Btn_Sectores.Click
 
         Dim Fm As New Frm_Inv_Ubicaciones(_Id)
+        Fm.Text = "UBICACIONES DEL INVENTARIO: " & Cl_Inventario.Zw_Inv_Inventario.NombreInventario
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
