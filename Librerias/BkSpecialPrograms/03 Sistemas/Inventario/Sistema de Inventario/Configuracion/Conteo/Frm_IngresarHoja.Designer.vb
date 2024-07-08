@@ -23,11 +23,11 @@ Partial Class Frm_IngresarHoja
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_IngresarHoja))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Chk_Ver_Solo_Habilitados = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_Reconteo = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
         Me.Dtp_FechaCreacion = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.Txt_IdContador2 = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -43,9 +43,9 @@ Partial Class Frm_IngresarHoja
         Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Observaciones = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem3 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla_Detalle = New DevComponents.DotNetBar.Controls.DataGridViewX()
-        Me.LabelItem3 = New DevComponents.DotNetBar.LabelItem()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Dtp_FechaCreacion, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -58,7 +58,7 @@ Partial Class Frm_IngresarHoja
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.GroupPanel1.Controls.Add(Me.Chk_Ver_Solo_Habilitados)
+        Me.GroupPanel1.Controls.Add(Me.Chk_Reconteo)
         Me.GroupPanel1.Controls.Add(Me.LabelX4)
         Me.GroupPanel1.Controls.Add(Me.Dtp_FechaCreacion)
         Me.GroupPanel1.Controls.Add(Me.Txt_IdContador2)
@@ -102,25 +102,26 @@ Partial Class Frm_IngresarHoja
         Me.GroupPanel1.TabIndex = 164
         Me.GroupPanel1.Text = "Encabezado de hoja de conteo"
         '
-        'Chk_Ver_Solo_Habilitados
+        'Chk_Reconteo
         '
-        Me.Chk_Ver_Solo_Habilitados.BackColor = System.Drawing.Color.Transparent
+        Me.Chk_Reconteo.BackColor = System.Drawing.Color.Transparent
         '
         '
         '
-        Me.Chk_Ver_Solo_Habilitados.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Ver_Solo_Habilitados.CheckBoxImageChecked = CType(resources.GetObject("Chk_Ver_Solo_Habilitados.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Ver_Solo_Habilitados.Checked = True
-        Me.Chk_Ver_Solo_Habilitados.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.Chk_Ver_Solo_Habilitados.CheckValue = "Y"
-        Me.Chk_Ver_Solo_Habilitados.FocusCuesEnabled = False
-        Me.Chk_Ver_Solo_Habilitados.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Ver_Solo_Habilitados.Location = New System.Drawing.Point(3, 66)
-        Me.Chk_Ver_Solo_Habilitados.Name = "Chk_Ver_Solo_Habilitados"
-        Me.Chk_Ver_Solo_Habilitados.Size = New System.Drawing.Size(171, 23)
-        Me.Chk_Ver_Solo_Habilitados.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Ver_Solo_Habilitados.TabIndex = 39
-        Me.Chk_Ver_Solo_Habilitados.Text = "Es reconteo"
+        Me.Chk_Reconteo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Reconteo.CheckBoxImageChecked = CType(resources.GetObject("Chk_Reconteo.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Reconteo.Checked = True
+        Me.Chk_Reconteo.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Chk_Reconteo.CheckValue = "Y"
+        Me.Chk_Reconteo.Enabled = False
+        Me.Chk_Reconteo.FocusCuesEnabled = False
+        Me.Chk_Reconteo.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Reconteo.Location = New System.Drawing.Point(3, 66)
+        Me.Chk_Reconteo.Name = "Chk_Reconteo"
+        Me.Chk_Reconteo.Size = New System.Drawing.Size(171, 23)
+        Me.Chk_Reconteo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Reconteo.TabIndex = 39
+        Me.Chk_Reconteo.Text = "Es reconteo"
         '
         'LabelX4
         '
@@ -320,6 +321,7 @@ Partial Class Frm_IngresarHoja
         Me.Btn_Eliminar.ImageAlt = CType(resources.GetObject("Btn_Eliminar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Eliminar.Name = "Btn_Eliminar"
         Me.Btn_Eliminar.Tooltip = "Eliminar"
+        Me.Btn_Eliminar.Visible = False
         '
         'GroupPanel4
         '
@@ -390,51 +392,6 @@ Partial Class Frm_IngresarHoja
         Me.Btn_Observaciones.Name = "Btn_Observaciones"
         Me.Btn_Observaciones.Text = "Observaciones"
         '
-        'Btn_Copiar
-        '
-        Me.Btn_Copiar.Image = CType(resources.GetObject("Btn_Copiar.Image"), System.Drawing.Image)
-        Me.Btn_Copiar.ImageAlt = CType(resources.GetObject("Btn_Copiar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Copiar.Name = "Btn_Copiar"
-        Me.Btn_Copiar.Text = "Copiar (portapapeles)"
-        '
-        'Grilla_Detalle
-        '
-        Me.Grilla_Detalle.AllowUserToDeleteRows = False
-        Me.Grilla_Detalle.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Detalle.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
-        Me.Grilla_Detalle.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Detalle.DefaultCellStyle = DataGridViewCellStyle2
-        Me.Grilla_Detalle.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Grilla_Detalle.EnableHeadersVisualStyles = False
-        Me.Grilla_Detalle.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
-        Me.Grilla_Detalle.Location = New System.Drawing.Point(0, 0)
-        Me.Grilla_Detalle.Name = "Grilla_Detalle"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Detalle.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.Grilla_Detalle.Size = New System.Drawing.Size(693, 434)
-        Me.Grilla_Detalle.StandardTab = True
-        Me.Grilla_Detalle.TabIndex = 27
-        '
         'LabelItem3
         '
         Me.LabelItem3.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
@@ -449,6 +406,51 @@ Partial Class Frm_IngresarHoja
         Me.LabelItem3.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
         Me.LabelItem3.Text = "-------------------------------------------"
         '
+        'Btn_Copiar
+        '
+        Me.Btn_Copiar.Image = CType(resources.GetObject("Btn_Copiar.Image"), System.Drawing.Image)
+        Me.Btn_Copiar.ImageAlt = CType(resources.GetObject("Btn_Copiar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Copiar.Name = "Btn_Copiar"
+        Me.Btn_Copiar.Text = "Copiar (portapapeles)"
+        '
+        'Grilla_Detalle
+        '
+        Me.Grilla_Detalle.AllowUserToDeleteRows = False
+        Me.Grilla_Detalle.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Detalle.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        Me.Grilla_Detalle.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_Detalle.DefaultCellStyle = DataGridViewCellStyle5
+        Me.Grilla_Detalle.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Grilla_Detalle.EnableHeadersVisualStyles = False
+        Me.Grilla_Detalle.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
+        Me.Grilla_Detalle.Location = New System.Drawing.Point(0, 0)
+        Me.Grilla_Detalle.Name = "Grilla_Detalle"
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Detalle.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        Me.Grilla_Detalle.Size = New System.Drawing.Size(693, 434)
+        Me.Grilla_Detalle.StandardTab = True
+        Me.Grilla_Detalle.TabIndex = 27
+        '
         'Frm_IngresarHoja
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -459,7 +461,6 @@ Partial Class Frm_IngresarHoja
         Me.Controls.Add(Me.GroupPanel4)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
@@ -490,7 +491,7 @@ Partial Class Frm_IngresarHoja
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Dtp_FechaCreacion As DevComponents.Editors.DateTimeAdv.DateTimeInput
-    Friend WithEvents Chk_Ver_Solo_Habilitados As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_Reconteo As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Eliminar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents ContextMenuBar1 As DevComponents.DotNetBar.ContextMenuBar

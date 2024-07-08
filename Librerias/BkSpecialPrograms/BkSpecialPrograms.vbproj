@@ -841,6 +841,7 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Demonio_FacAuto.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Despachos_Configuracion.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Contador.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_FotoInventario.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Hoja.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Hoja_Detalle.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Pdp_CPT_MzDet.vb" />
@@ -862,11 +863,11 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Inventario.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Ubicaciones.vb" />
     <Compile Include="03 Sistemas\Despachos\Clases\Cl_Despachos.vb" />
-    <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\03 Parametros\Cl_Inventario.vb" />
-    <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\03 Parametros\Frm_Inv_Inventarios.Designer.vb">
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Cl_Inventario.vb" />
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Frm_Inv_Inventarios.Designer.vb">
       <DependentUpon>Frm_Inv_Inventarios.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\03 Parametros\Frm_Inv_Inventarios.vb">
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Frm_Inv_Inventarios.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Contadores\Cl_Contador.vb" />
@@ -3893,16 +3894,16 @@
     <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\01 Ingreso de productos\Frm_01_HojaConteo.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\02 Revision Inventario\Frm_02_Detalle_Producto_Actual.Designer.vb">
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Frm_02_Detalle_Producto_Actual.Designer.vb">
       <DependentUpon>Frm_02_Detalle_Producto_Actual.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\02 Revision Inventario\Frm_02_Detalle_Producto_Actual.vb">
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Frm_02_Detalle_Producto_Actual.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\02 Revision Inventario\Frm_01_Inventario_Actual.Designer.vb">
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Frm_01_Inventario_Actual.Designer.vb">
       <DependentUpon>Frm_01_Inventario_Actual.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\02 Revision Inventario\Frm_01_Inventario_Actual.vb">
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Frm_01_Inventario_Actual.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\02 Revision Inventario\Frm_03_ProNoIdentificados.Designer.vb">
@@ -4687,7 +4688,7 @@
       <DependentUpon>Frm_Configuracion_Gral.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Inventario\Inventario General\Formularios\03 Parametros\Frm_Inv_Inventarios.resx">
+    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Frm_Inv_Inventarios.resx">
       <DependentUpon>Frm_Inv_Inventarios.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Conteo\Frm_IngresarHoja.resx">
@@ -6187,10 +6188,10 @@
     <EmbeddedResource Include="03 Sistemas\Inventario\Inventario General\Formularios\01 Ingreso de productos\Frm_01_HojaConteo.resx">
       <DependentUpon>Frm_01_HojaConteo.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Inventario\Inventario General\Formularios\02 Revision Inventario\Frm_02_Detalle_Producto_Actual.resx">
+    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Frm_02_Detalle_Producto_Actual.resx">
       <DependentUpon>Frm_02_Detalle_Producto_Actual.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Inventario\Inventario General\Formularios\02 Revision Inventario\Frm_01_Inventario_Actual.resx">
+    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Frm_01_Inventario_Actual.resx">
       <DependentUpon>Frm_01_Inventario_Actual.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Inventario\Inventario General\Formularios\02 Revision Inventario\Frm_03_ProNoIdentificados.resx">

@@ -121,7 +121,7 @@
   <data name="BtnAgregarConteo.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wQAADsEBuJFr7QAAAltJREFUWEe9l79rFFEQx0/SWNrZ+RcIIgYstBY5xEMLQRCFLCeIRhIQBAutLCKC
+        vQAADr0BR/uQrQAAAltJREFUWEe9l79rFFEQx0/SWNrZ+RcIIgYstBY5xEMLQRCFLCeIRhIQBAutLCKC
         CDZ2BxYWNkJM46WIEiy0EX+kCqmChgOJB8IldwfjzM6+ZebNW/ftsd4XPtnv3c59v5Njb3NpAEA0SZKA
         x4HQXBWCT4bAsstZ6TfkS+avhWarEHwyBJY9ykrPIWcy/zQ0WwU2q80lZIhATrf5e+vl+QeP71252E7m
         Olg2ykp7yE7mx0ky9+L+4tWzXzsXbsLb5k+VwZlLfqmEzWpzJF6U8qN799TCrWQtKypl/kayvvnmzmk/
@@ -132,22 +132,6 @@
         3H/fyovJA3xKz7N6ppgA2M/9RAtkS9AP+ls/gVaqL+DfiFANFyKRKjovH1dawLsRTXcBH9T0FijQf1og
         lpoXMN+KSylYoAySfOwWsP8XlFHrAhMig2IhOY83rw/B4FhkcCwk53GB48HgWGRwLCQ69pdnn1FGMDgW
         /A2e+wVlsLo9+D5/CAAafwFhpl05YntcHQAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="BtnGrabarAnalisis_Reconteo.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wQAADsEBuJFr7QAAAlBJREFUWEe9l79LHFEQx1cU65DKynT21kmRKoQleEQQDIoG1ytiIigIAQutLExs
-        8h8IKdIJIYGALmjQyjKGpJGUGiKC2BzmIpuZ92N98968fW+PS77wwdm3c/MZzmO5S4qiiCbLssKih+ur
-        A3vIAbInSvoV+KLqaa63DuwhB8heKekj4IGq33C9dZBFnq4Dv4GiZCe9+PFuZHVjeXK0mc1sgqytpL+A
-        n6r+k2Uzb1cWpx4ebT5+Xmynp2SGnLluS01kkadt40WCk52XdxdeZHtKFGT+WXZw/HHpnj0HaNtSE1mY
-        LzDSbDZZGQf2ktCZjlgjC9rcndCZjlgjC9rcndCZjlgjC9rspNFosGC+DSYCJ3QmkZrIgjY70TKdVqsl
-        0PL/toApq5Rj6MxSaCML2uzEXiAox9CZRGoiC9rsBBfAtxwTJcfQmVQ6/uEyGdsS57UW0Evo2J8NEjrz
-        Rg5igrhBm52gyIc3NzOv4ErL99VfvUA7aoGOouV5OgJXpvSwvB5/3/cvF+Dkmu94Lu6JIrAA99YjGM8H
-        skpeJBOfbuM9cV8UEQuYCTyI8H9eJe/He5paC5iybshFnyhqLtAtuegVRcQCgQdRR3JEFpELeB5EHcsR
-        WUQs4CEsz9NhvO9DFoEFPImT5+k59viQhblAHNfAhBgQkmO/IbSRBfOtOMBaOSAkj/xW7P4u8HMG3FLC
-        OTHEL4/8XdABpXRsaxave6byO3ZPDOxhCJDuGQvAEd8XA3tYRe/TzwNKfJlMbg9xPXVgD6vond59DfL7
-        3L36FMlfsb/xuGFEmvoAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="BtnEstadisticas.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

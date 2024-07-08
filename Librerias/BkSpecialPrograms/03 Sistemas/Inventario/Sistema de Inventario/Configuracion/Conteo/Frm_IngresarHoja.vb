@@ -8,6 +8,8 @@ Public Class Frm_IngresarHoja
 
     Public Property Cl_Inventario As New Cl_Inventario
     Public Property Cl_Conteo As New Cl_Conteo
+    Public Property Reconteo As Boolean
+    Public Property CodigoReconteo As String
 
     Dim _IdInventario As Integer
     Dim _IdHoja As Integer
@@ -42,7 +44,7 @@ Public Class Frm_IngresarHoja
 
     Private Sub Frm_IngresarHoja_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        'Txt_Nro_Hoja.Text = Cl_Conteo.Fx_NvoNroHoja(_IdInventario)
+        Chk_Reconteo.Checked = Reconteo
 
         Me.ActiveControl = Txt_Nro_Hoja
         Sb_ActualizarGrilla()
@@ -379,7 +381,7 @@ Public Class Frm_IngresarHoja
 
                     With _Fila
 
-                        .Cells("Id").Value = _Fila.Index '+ 1
+                        .Cells("Id").Value = _Fila.Index
                         .Cells("IdInventario").Value = _IdInventario
                         .Cells("Empresa").Value = Cl_Inventario.Zw_Inv_Inventario.Empresa
                         .Cells("Sucursal").Value = Cl_Inventario.Zw_Inv_Inventario.Sucursal
@@ -393,6 +395,7 @@ Public Class Frm_IngresarHoja
                         .Cells("Cantidad").Value = 0
                         .Cells("Ud1").Value = _Row.Item("UD01PR")
                         .Cells("Ud2").Value = _Row.Item("UD02PR")
+                        .Cells("Reconteo").Value = Chk_Reconteo.Checked
 
                     End With
 
@@ -439,7 +442,38 @@ Public Class Frm_IngresarHoja
                     End If
 
                     _Fila.Cells("IdUbicacion").Value = _Cl_InvUbicacion.Zw_Inv_Ubicaciones.Id
-                    Grilla_Detalle.CurrentCell = _Fila.Cells("Codigo")
+
+                    If Reconteo Then
+
+                        _Fila.Cells("Codigo").Value = CodigoReconteo
+
+                        Consulta_sql = "Select KOPR,NOKOPR,RLUD,UD01PR,UD02PR From MAEPR Where KOPR = '" & CodigoReconteo & "'"
+                        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                        With _Fila
+
+                            .Cells("Id").Value = _Fila.Index
+                            .Cells("IdInventario").Value = _IdInventario
+                            .Cells("Empresa").Value = Cl_Inventario.Zw_Inv_Inventario.Empresa
+                            .Cells("Sucursal").Value = Cl_Inventario.Zw_Inv_Inventario.Sucursal
+                            .Cells("Bodega").Value = Cl_Inventario.Zw_Inv_Inventario.Bodega
+                            .Cells("Responsable").Value = FUNCIONARIO
+                            .Cells("TipoConteo").Value = String.Empty
+                            .Cells("Codigo").Value = _Row.Item("KOPR")
+                            .Cells("Descripcion").Value = _Row.Item("NOKOPR")
+                            .Cells("Udtrpr").Value = 1
+                            .Cells("Rtu").Value = _Row.Item("RLUD")
+                            .Cells("Cantidad").Value = 0
+                            .Cells("Ud1").Value = _Row.Item("UD01PR")
+                            .Cells("Ud2").Value = _Row.Item("UD02PR")
+                            .Cells("Recontado").Value = Chk_Reconteo.Checked
+
+                        End With
+
+                        Grilla_Detalle.CurrentCell = _Fila.Cells("Cantidad")
+                    Else
+                        Grilla_Detalle.CurrentCell = _Fila.Cells("Codigo")
+                    End If
 
             End Select
 
@@ -502,6 +536,11 @@ Public Class Frm_IngresarHoja
         End If
 
         If _Cabeza = "Cantidad" And cantidad <= 0 Then
+            Return False
+        End If
+
+        If _Cabeza = "Codigo" And cantidad = 0 Then
+            Grilla_Detalle.CurrentCell = _Fila.Cells("Cantidad")
             Return False
         End If
 
@@ -646,11 +685,17 @@ Public Class Frm_IngresarHoja
         Next
 
         Cl_Conteo.Ls_Zw_Inv_Hoja_Detalle.RemoveAll(Function(d) d.Codigo = "")
-        Cl_Conteo.Zw_Inv_Hoja.NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
-        Cl_Conteo.Zw_Inv_Hoja.IdContador1 = Txt_IdContador1.Tag
-        Cl_Conteo.Zw_Inv_Hoja.IdContador2 = Txt_IdContador2.Tag
-        Cl_Conteo.Zw_Inv_Hoja.Nro_Hoja = Txt_Nro_Hoja.Text
-        Cl_Conteo.Zw_Inv_Hoja.FechaCreacion = Dtp_FechaCreacion.Value
+
+        With Cl_Conteo.Zw_Inv_Hoja
+
+            .NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
+            .IdContador1 = Txt_IdContador1.Tag
+            .IdContador2 = Txt_IdContador2.Tag
+            .Nro_Hoja = Txt_Nro_Hoja.Text
+            .FechaCreacion = Dtp_FechaCreacion.Value
+            .Reconteo = Chk_Reconteo.Checked
+
+        End With
 
         Dim _Mensaje As LsValiciones.Mensajes
 
@@ -737,10 +782,12 @@ Public Class Frm_IngresarHoja
 
         Dim _Fila As DataGridViewRow = Grilla_Detalle.CurrentRow
         Dim _Observaciones As String = NuloPorNro(Of String)(_Fila.Cells("Observaciones").Value, "")
-
+        Dim _Codigo As String = NuloPorNro(Of String)(_Fila.Cells("Codigo").Value, "")
+        Dim _Descripcion As String = NuloPorNro(Of String)(_Fila.Cells("Descripcion").Value, "")
         Dim _Aceptar As Boolean
 
-        _Aceptar = InputBox_Bk(Me, "Observaciones de la línea activa", "Observaciones", _Observaciones,
+        _Aceptar = InputBox_Bk(Me, "Observaciones de la línea activa" & vbCrLf &
+                               _Codigo & " - " & _Descripcion, "Observaciones", _Observaciones,
                                True, _Tipo_Mayus_Minus.Mayusculas, 200, True)
 
         If Not _Aceptar Then
@@ -777,6 +824,14 @@ Public Class Frm_IngresarHoja
             Dim _Hti As DataGridView.HitTestInfo = Grilla_Detalle.HitTest(e.X, e.Y)
 
             If _Hti.RowIndex >= 0 Then
+
+                Dim Hitest As DataGridView.HitTestInfo = Grilla_Detalle.HitTest(e.X, e.Y)
+
+                If Hitest.Type = DataGridViewHitTestType.Cell Then
+                    Grilla_Detalle.CurrentCell = Grilla_Detalle.Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
+                Else
+                    Return
+                End If
 
                 Grilla_Detalle.Rows(_Hti.RowIndex).Selected = True
 

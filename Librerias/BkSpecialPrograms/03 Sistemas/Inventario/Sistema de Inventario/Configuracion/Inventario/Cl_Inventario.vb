@@ -7,6 +7,7 @@ Public Class Cl_Inventario
     Dim Consulta_sql As String
 
     Public Property Zw_Inv_Inventario As New Zw_Inv_Inventario
+    Public Property Zw_Inv_FotoInventario As New Zw_Inv_FotoInventario
 
     Public Sub New()
 
@@ -48,6 +49,80 @@ Public Class Cl_Inventario
 
         _Mensaje_Stem.EsCorrecto = True
         _Mensaje_Stem.Mensaje = "Registro encontrado."
+
+        Return _Mensaje_Stem
+
+    End Function
+
+    Function Fx_Llenar_Zw_Inv_FotoInventario(_IdInventario As Integer, _Codigo As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje_Stem As New LsValiciones.Mensajes
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Inv_FotoInventario" & vbCrLf &
+                       "Where IdInventario = " & _IdInventario & " And Codigo = '" & _Codigo & "'"
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _Zw_Inv_FotoInventario As New Zw_Inv_FotoInventario
+
+        With _Zw_Inv_FotoInventario
+
+            If IsNothing(_Row) Then
+
+                _Mensaje_Stem.EsCorrecto = False
+                _Mensaje_Stem.Mensaje = "No se encontro el registro en la tabla Zw_Inv_FotoInventario con el IdInventario = " & _IdInventario & " y Código = " & _Codigo
+
+                Return _Mensaje_Stem
+
+            End If
+
+            .IdInventario = _Row.Item("IdInventario")
+            .Estado = _Row.Item("Estado")
+            .Empresa = _Row.Item("Empresa")
+            .Sucursal = _Row.Item("Sucursal")
+            .Bodega = _Row.Item("Bodega")
+            .Semilla = _Row.Item("Semilla")
+            .Tipr = _Row.Item("Tipr")
+            .Codigo = _Row.Item("Codigo")
+            .CodigoRap = _Row.Item("CodigoRap")
+            .CodigoTec = _Row.Item("CodigoTec")
+            .Descripcion = _Row.Item("Descripcion")
+            .StFisicoUd1 = _Row.Item("StFisicoUd1")
+            .StFisicoUd2 = _Row.Item("StFisicoUd2")
+            .Cant_Inventariada = _Row.Item("Cant_Inventariada")
+            .Dif_Inv_Cantidad = _Row.Item("Dif_Inv_Cantidad")
+            .Dif_Inv_Costo = _Row.Item("Dif_Inv_Costo")
+            .Costo = _Row.Item("Costo")
+            .PPP = _Row.Item("PPP")
+            .PUltCompra = _Row.Item("PUltCompra")
+            .PLCostoPR = _Row.Item("PLCostoPR")
+            .Total_Costo_Foto = _Row.Item("Total_Costo_Foto")
+            .Total_Costo_Inv = _Row.Item("Total_Costo_Inv")
+            .FechaFoto = _Row.Item("FechaFoto")
+            .HoraFoto = _Row.Item("HoraFoto")
+            .Recontado = _Row.Item("Recontado")
+            .Cerrado = _Row.Item("Cerrado")
+            .Levantado = _Row.Item("Levantado")
+            .Diferencia = _Row.Item("Diferencia")
+            .SuperFamilia = _Row.Item("SuperFamilia")
+            .Familia = _Row.Item("Familia")
+            .SubFamilia = _Row.Item("SubFamilia")
+            .Nom_SuperFamilia = _Row.Item("Nom_SuperFamilia")
+            .Nom_Familia = _Row.Item("Nom_Familia")
+            .Nom_SubFamilia = _Row.Item("Nom_SubFamilia")
+            .Marca = _Row.Item("Marca")
+            .Nom_Marca = _Row.Item("Nom_Marca")
+            .Rubro = _Row.Item("Rubro")
+            .Nom_Rubro = _Row.Item("Nom_Rubro")
+            .ClasLibre = _Row.Item("ClasLibre")
+            .Nom_ClasLibre = _Row.Item("Nom_ClasLibre")
+            .Zona = _Row.Item("Zona")
+            .Nom_Zona = _Row.Item("Nom_Zona")
+
+        End With
+
+        _Mensaje_Stem.EsCorrecto = True
+        _Mensaje_Stem.Mensaje = "Registro encontrado."
+        _Mensaje_Stem.Tag = _Zw_Inv_FotoInventario
 
         Return _Mensaje_Stem
 

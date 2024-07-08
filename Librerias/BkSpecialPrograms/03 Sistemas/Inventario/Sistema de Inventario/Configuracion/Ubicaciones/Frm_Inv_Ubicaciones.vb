@@ -320,12 +320,9 @@ Public Class Frm_Inv_Ubicaciones
 
     Private Sub Btn_Copiar_Click(sender As Object, e As EventArgs) Handles Btn_Copiar.Click
         With Grilla
-
             Try
-
                 Dim _Cabeza = .Columns(.CurrentCell.ColumnIndex).Name
                 Dim _Texto_Cabeza = .Columns(.CurrentCell.ColumnIndex).HeaderText
-
                 Dim Copiar = .Rows(.CurrentRow.Index).Cells(_Cabeza).Value
                 Clipboard.SetText(Copiar)
 

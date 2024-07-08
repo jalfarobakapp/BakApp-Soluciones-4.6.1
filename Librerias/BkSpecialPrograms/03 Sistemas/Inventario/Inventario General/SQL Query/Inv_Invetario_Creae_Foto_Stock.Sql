@@ -64,4 +64,3 @@ Update Zw_Inv_FotoInventario Set
                        Nom_ClasLibre = Isnull((Select Top 1 NOKOCARAC From TABCARAC 
                                             Where KOTABLA = 'CLALIBPR' And KOCARAC = ClasLibre),'')
 
-Update Zw_Inv_FotoInventario Set Total_Costo_Foto = StFisicoUd1 * PPP

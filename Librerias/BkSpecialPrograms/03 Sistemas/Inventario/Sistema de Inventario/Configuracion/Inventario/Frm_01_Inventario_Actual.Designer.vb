@@ -22,11 +22,10 @@ Partial Class Frm_01_Inventario_Actual
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_01_Inventario_Actual))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.BtnActualizar = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnExcel = New DevComponents.DotNetBar.ButtonItem()
@@ -39,33 +38,27 @@ Partial Class Frm_01_Inventario_Actual
         Me.ButtonItem1 = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnExporAjuTodos = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnExporAjuCerrados = New DevComponents.DotNetBar.ButtonItem()
-        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.DetalleDelCToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.UltimodMovimientosCompraYVentasToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BtnFiltroSectores = New DevComponents.DotNetBar.ButtonItem()
+        Me.ButtonItem2 = New DevComponents.DotNetBar.ButtonItem()
+        Me.ChkTodosLosSectores = New DevComponents.DotNetBar.CheckBoxItem()
         Me.LblTotal_Diferencia = New DevComponents.DotNetBar.LabelX()
         Me.LblTotal_Inventario = New DevComponents.DotNetBar.LabelX()
         Me.LblTotal_FotoStock = New DevComponents.DotNetBar.LabelX()
-        Me.Bar1 = New DevComponents.DotNetBar.Bar()
-        Me.BtnFiltroSectores = New DevComponents.DotNetBar.ButtonItem()
-        Me.ChkTodosLosSectores = New DevComponents.DotNetBar.CheckBoxItem()
-        Me.ChkMostrarSoloInv = New DevComponents.DotNetBar.CheckBoxItem()
-        Me.ButtonItem2 = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
-        Me.Btn_EditarInventario = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_EliminarInventario = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_ActivarInventario = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_RevisarProducto = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem3 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_Filtrar = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Chk_MostrarSoloInventariados = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.ContextMenuStrip1.SuspendLayout()
-        CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -79,10 +72,10 @@ Partial Class Frm_01_Inventario_Actual
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnActualizar, Me.BtnExcel, Me.BtnBuscarProducto, Me.BtnCerrar, Me.ButtonItem1})
-        Me.Bar2.Location = New System.Drawing.Point(0, 589)
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnActualizar, Me.BtnExcel, Me.BtnBuscarProducto, Me.BtnCerrar, Me.ButtonItem1, Me.BtnFiltroSectores, Me.ButtonItem2, Me.ChkTodosLosSectores})
+        Me.Bar2.Location = New System.Drawing.Point(0, 603)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(1018, 41)
+        Me.Bar2.Size = New System.Drawing.Size(1078, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 30
@@ -160,23 +153,26 @@ Partial Class Frm_01_Inventario_Actual
         Me.BtnExporAjuCerrados.Name = "BtnExporAjuCerrados"
         Me.BtnExporAjuCerrados.Text = "Exportar solo cerrados"
         '
-        'ContextMenuStrip1
+        'BtnFiltroSectores
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DetalleDelCToolStripMenuItem, Me.UltimodMovimientosCompraYVentasToolStripMenuItem})
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(292, 48)
+        Me.BtnFiltroSectores.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.BtnFiltroSectores.Enabled = False
+        Me.BtnFiltroSectores.Image = CType(resources.GetObject("BtnFiltroSectores.Image"), System.Drawing.Image)
+        Me.BtnFiltroSectores.Name = "BtnFiltroSectores"
+        Me.BtnFiltroSectores.Text = "Filtrar por sector tomado"
         '
-        'DetalleDelCToolStripMenuItem
+        'ButtonItem2
         '
-        Me.DetalleDelCToolStripMenuItem.Name = "DetalleDelCToolStripMenuItem"
-        Me.DetalleDelCToolStripMenuItem.Size = New System.Drawing.Size(291, 22)
-        Me.DetalleDelCToolStripMenuItem.Text = "Detalle del inventario del producto activo"
+        Me.ButtonItem2.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.ButtonItem2.Image = CType(resources.GetObject("ButtonItem2.Image"), System.Drawing.Image)
+        Me.ButtonItem2.Name = "ButtonItem2"
         '
-        'UltimodMovimientosCompraYVentasToolStripMenuItem
+        'ChkTodosLosSectores
         '
-        Me.UltimodMovimientosCompraYVentasToolStripMenuItem.Name = "UltimodMovimientosCompraYVentasToolStripMenuItem"
-        Me.UltimodMovimientosCompraYVentasToolStripMenuItem.Size = New System.Drawing.Size(291, 22)
-        Me.UltimodMovimientosCompraYVentasToolStripMenuItem.Text = "Ver estadísticas del producto"
+        Me.ChkTodosLosSectores.Checked = True
+        Me.ChkTodosLosSectores.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.ChkTodosLosSectores.Name = "ChkTodosLosSectores"
+        Me.ChkTodosLosSectores.Text = "Mostrar todos los sectores"
         '
         'LblTotal_Diferencia
         '
@@ -226,48 +222,6 @@ Partial Class Frm_01_Inventario_Actual
         Me.LblTotal_FotoStock.Text = "0"
         Me.LblTotal_FotoStock.TextAlignment = System.Drawing.StringAlignment.Far
         '
-        'Bar1
-        '
-        Me.Bar1.AntiAlias = True
-        Me.Bar1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnFiltroSectores, Me.ChkTodosLosSectores, Me.ChkMostrarSoloInv, Me.ButtonItem2})
-        Me.Bar1.Location = New System.Drawing.Point(0, 0)
-        Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(1018, 41)
-        Me.Bar1.Stretch = True
-        Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Bar1.TabIndex = 45
-        Me.Bar1.TabStop = False
-        Me.Bar1.Text = "Bar1"
-        '
-        'BtnFiltroSectores
-        '
-        Me.BtnFiltroSectores.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.BtnFiltroSectores.Enabled = False
-        Me.BtnFiltroSectores.Image = CType(resources.GetObject("BtnFiltroSectores.Image"), System.Drawing.Image)
-        Me.BtnFiltroSectores.Name = "BtnFiltroSectores"
-        Me.BtnFiltroSectores.Text = "Filtrar por sector tomado"
-        '
-        'ChkTodosLosSectores
-        '
-        Me.ChkTodosLosSectores.Checked = True
-        Me.ChkTodosLosSectores.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.ChkTodosLosSectores.Name = "ChkTodosLosSectores"
-        Me.ChkTodosLosSectores.Text = "Mostrar todos los sectores"
-        '
-        'ChkMostrarSoloInv
-        '
-        Me.ChkMostrarSoloInv.Name = "ChkMostrarSoloInv"
-        Me.ChkMostrarSoloInv.Text = "Mostrar solo productos inventariados"
-        '
-        'ButtonItem2
-        '
-        Me.ButtonItem2.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.ButtonItem2.Image = CType(resources.GetObject("ButtonItem2.Image"), System.Drawing.Image)
-        Me.ButtonItem2.Name = "ButtonItem2"
-        Me.ButtonItem2.Text = "Ver inf. por Familias"
-        '
         'GroupPanel1
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
@@ -275,9 +229,9 @@ Partial Class Frm_01_Inventario_Actual
         Me.GroupPanel1.Controls.Add(Me.Menu_Contextual)
         Me.GroupPanel1.Controls.Add(Me.Grilla)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel1.Location = New System.Drawing.Point(12, 47)
+        Me.GroupPanel1.Location = New System.Drawing.Point(12, 29)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(994, 465)
+        Me.GroupPanel1.Size = New System.Drawing.Size(1054, 483)
         '
         '
         '
@@ -327,7 +281,7 @@ Partial Class Frm_01_Inventario_Actual
         '
         Me.Menu_Contextual_01.AutoExpandOnClick = True
         Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
-        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_EditarInventario, Me.Btn_EliminarInventario, Me.Btn_ActivarInventario, Me.LabelItem3, Me.Btn_Copiar})
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_RevisarProducto, Me.LabelItem3, Me.Btn_Copiar})
         Me.Menu_Contextual_01.Text = "Opciones documento"
         '
         'LabelItem1
@@ -343,26 +297,12 @@ Partial Class Frm_01_Inventario_Actual
         Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
         Me.LabelItem1.Text = "Opciones"
         '
-        'Btn_EditarInventario
+        'Btn_RevisarProducto
         '
-        Me.Btn_EditarInventario.Image = CType(resources.GetObject("Btn_EditarInventario.Image"), System.Drawing.Image)
-        Me.Btn_EditarInventario.ImageAlt = CType(resources.GetObject("Btn_EditarInventario.ImageAlt"), System.Drawing.Image)
-        Me.Btn_EditarInventario.Name = "Btn_EditarInventario"
-        Me.Btn_EditarInventario.Text = "Editar"
-        '
-        'Btn_EliminarInventario
-        '
-        Me.Btn_EliminarInventario.Image = CType(resources.GetObject("Btn_EliminarInventario.Image"), System.Drawing.Image)
-        Me.Btn_EliminarInventario.ImageAlt = CType(resources.GetObject("Btn_EliminarInventario.ImageAlt"), System.Drawing.Image)
-        Me.Btn_EliminarInventario.Name = "Btn_EliminarInventario"
-        Me.Btn_EliminarInventario.Text = "Eliminar"
-        '
-        'Btn_ActivarInventario
-        '
-        Me.Btn_ActivarInventario.Image = CType(resources.GetObject("Btn_ActivarInventario.Image"), System.Drawing.Image)
-        Me.Btn_ActivarInventario.ImageAlt = CType(resources.GetObject("Btn_ActivarInventario.ImageAlt"), System.Drawing.Image)
-        Me.Btn_ActivarInventario.Name = "Btn_ActivarInventario"
-        Me.Btn_ActivarInventario.Text = "Dejar como inventario activo"
+        Me.Btn_RevisarProducto.Image = CType(resources.GetObject("Btn_RevisarProducto.Image"), System.Drawing.Image)
+        Me.Btn_RevisarProducto.ImageAlt = CType(resources.GetObject("Btn_RevisarProducto.ImageAlt"), System.Drawing.Image)
+        Me.Btn_RevisarProducto.Name = "Btn_RevisarProducto"
+        Me.Btn_RevisarProducto.Text = "Revisar inventario del producto"
         '
         'LabelItem3
         '
@@ -388,37 +328,37 @@ Partial Class Frm_01_Inventario_Actual
         '
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle13.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle13.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle13.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle13
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle14.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle14.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle14.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle14.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle14
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.Grilla.Size = New System.Drawing.Size(988, 442)
+        DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle15.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle15.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle15.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle15
+        Me.Grilla.Size = New System.Drawing.Size(1048, 460)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 30
         '
@@ -429,7 +369,7 @@ Partial Class Frm_01_Inventario_Actual
         Me.GroupPanel2.Controls.Add(Me.LblTotal_FotoStock)
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel2.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
-        Me.GroupPanel2.Location = New System.Drawing.Point(520, 518)
+        Me.GroupPanel2.Location = New System.Drawing.Point(580, 518)
         Me.GroupPanel2.Name = "GroupPanel2"
         Me.GroupPanel2.Size = New System.Drawing.Size(158, 65)
         '
@@ -470,7 +410,7 @@ Partial Class Frm_01_Inventario_Actual
         Me.GroupPanel3.Controls.Add(Me.LblTotal_Inventario)
         Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel3.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
-        Me.GroupPanel3.Location = New System.Drawing.Point(684, 518)
+        Me.GroupPanel3.Location = New System.Drawing.Point(744, 518)
         Me.GroupPanel3.Name = "GroupPanel3"
         Me.GroupPanel3.Size = New System.Drawing.Size(158, 65)
         '
@@ -511,7 +451,7 @@ Partial Class Frm_01_Inventario_Actual
         Me.GroupPanel4.Controls.Add(Me.LblTotal_Diferencia)
         Me.GroupPanel4.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel4.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
-        Me.GroupPanel4.Location = New System.Drawing.Point(848, 518)
+        Me.GroupPanel4.Location = New System.Drawing.Point(908, 518)
         Me.GroupPanel4.Name = "GroupPanel4"
         Me.GroupPanel4.Size = New System.Drawing.Size(158, 65)
         '
@@ -545,16 +485,72 @@ Partial Class Frm_01_Inventario_Actual
         Me.GroupPanel4.TabIndex = 49
         Me.GroupPanel4.Text = "Diferencia"
         '
+        'LabelX2
+        '
+        Me.LabelX2.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX2.ForeColor = System.Drawing.Color.Black
+        Me.LabelX2.Image = CType(resources.GetObject("LabelX2.Image"), System.Drawing.Image)
+        Me.LabelX2.ImagePosition = DevComponents.DotNetBar.eImagePosition.Right
+        Me.LabelX2.ImageTextSpacing = 3
+        Me.LabelX2.Location = New System.Drawing.Point(12, 0)
+        Me.LabelX2.Name = "LabelX2"
+        Me.LabelX2.Size = New System.Drawing.Size(57, 23)
+        Me.LabelX2.TabIndex = 178
+        Me.LabelX2.Text = "Buscar"
+        '
+        'Txt_Filtrar
+        '
+        Me.Txt_Filtrar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Txt_Filtrar.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Filtrar.Border.Class = "TextBoxBorder"
+        Me.Txt_Filtrar.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Filtrar.ButtonCustom2.Image = CType(resources.GetObject("Txt_Filtrar.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Filtrar.ButtonCustom2.Visible = True
+        Me.Txt_Filtrar.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Filtrar.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Filtrar.Location = New System.Drawing.Point(75, 1)
+        Me.Txt_Filtrar.Name = "Txt_Filtrar"
+        Me.Txt_Filtrar.PreventEnterBeep = True
+        Me.Txt_Filtrar.Size = New System.Drawing.Size(504, 22)
+        Me.Txt_Filtrar.TabIndex = 177
+        '
+        'Chk_MostrarSoloInventariados
+        '
+        Me.Chk_MostrarSoloInventariados.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_MostrarSoloInventariados.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_MostrarSoloInventariados.CheckBoxImageChecked = CType(resources.GetObject("Chk_MostrarSoloInventariados.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_MostrarSoloInventariados.FocusCuesEnabled = False
+        Me.Chk_MostrarSoloInventariados.ForeColor = System.Drawing.Color.Black
+        Me.Chk_MostrarSoloInventariados.Location = New System.Drawing.Point(12, 518)
+        Me.Chk_MostrarSoloInventariados.Name = "Chk_MostrarSoloInventariados"
+        Me.Chk_MostrarSoloInventariados.Size = New System.Drawing.Size(238, 23)
+        Me.Chk_MostrarSoloInventariados.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_MostrarSoloInventariados.TabIndex = 179
+        Me.Chk_MostrarSoloInventariados.Text = "Mostrar solo productos inventariados"
+        '
         'Frm_01_Inventario_Actual
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1018, 630)
+        Me.ClientSize = New System.Drawing.Size(1078, 644)
+        Me.Controls.Add(Me.Chk_MostrarSoloInventariados)
+        Me.Controls.Add(Me.LabelX2)
+        Me.Controls.Add(Me.Txt_Filtrar)
         Me.Controls.Add(Me.GroupPanel4)
         Me.Controls.Add(Me.GroupPanel3)
         Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.GroupPanel1)
-        Me.Controls.Add(Me.Bar1)
         Me.Controls.Add(Me.Bar2)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -567,8 +563,6 @@ Partial Class Frm_01_Inventario_Actual
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Inventario Actual"
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ContextMenuStrip1.ResumeLayout(False)
-        CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
@@ -580,9 +574,6 @@ Partial Class Frm_01_Inventario_Actual
     End Sub
     Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
     Friend WithEvents BtnActualizar As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents ContextMenuStrip1 As System.Windows.Forms.ContextMenuStrip
-    Friend WithEvents DetalleDelCToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents UltimodMovimientosCompraYVentasToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents LblTotal_Diferencia As DevComponents.DotNetBar.LabelX
     Friend WithEvents LblTotal_Inventario As DevComponents.DotNetBar.LabelX
     Friend WithEvents LblTotal_FotoStock As DevComponents.DotNetBar.LabelX
@@ -596,22 +587,21 @@ Partial Class Frm_01_Inventario_Actual
     Friend WithEvents BtnCerrarTodosInvCero As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents BtnExporAjuTodos As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents BtnExporAjuCerrados As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
-    Friend WithEvents BtnFiltroSectores As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents ChkTodosLosSectores As DevComponents.DotNetBar.CheckBoxItem
-    Friend WithEvents ButtonItem2 As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents ChkMostrarSoloInv As DevComponents.DotNetBar.CheckBoxItem
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Menu_Contextual As DevComponents.DotNetBar.ContextMenuBar
     Friend WithEvents Menu_Contextual_01 As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LabelItem1 As DevComponents.DotNetBar.LabelItem
-    Friend WithEvents Btn_EditarInventario As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_EliminarInventario As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_ActivarInventario As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_RevisarProducto As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LabelItem3 As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Btn_Copiar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents GroupPanel2 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents GroupPanel3 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents GroupPanel4 As DevComponents.DotNetBar.Controls.GroupPanel
+    Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_Filtrar As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents BtnFiltroSectores As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents ButtonItem2 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents ChkTodosLosSectores As DevComponents.DotNetBar.CheckBoxItem
+    Friend WithEvents Chk_MostrarSoloInventariados As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

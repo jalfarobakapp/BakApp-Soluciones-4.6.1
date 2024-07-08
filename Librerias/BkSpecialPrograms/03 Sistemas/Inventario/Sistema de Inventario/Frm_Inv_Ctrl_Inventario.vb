@@ -42,10 +42,6 @@ Public Class Frm_Inv_Ctrl_Inventario
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
-        'Dim Fm As New Frm_Plan(_Id)
-        'Fm.ShowDialog(Me)
-        'Fm.Dispose()
-
     End Sub
 
     Private Sub Btn_Salir_Click(sender As Object, e As EventArgs) Handles Btn_Salir.Click
