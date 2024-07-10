@@ -81,21 +81,15 @@ Public Class Frm_IngresarHoja
             .Columns("Id").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("IdHoja").Visible = False
-            .Columns("IdHoja").HeaderText = "IdHoja"
-            .Columns("IdHoja").Width = 40
-            .Columns("IdHoja").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
-            .Columns("IdUbicacion").Visible = False
-            .Columns("IdUbicacion").HeaderText = "IdUbicacion"
-            .Columns("IdUbicacion").Width = 40
-            .Columns("IdUbicacion").DisplayIndex = _DisplayIndex
+            .Columns("Sector").Visible = True
+            .Columns("Sector").HeaderText = "Sector"
+            .Columns("Sector").Width = 100
+            .Columns("Sector").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Ubicacion").Visible = True
-            .Columns("Ubicacion").HeaderText = "Ubicacion"
-            .Columns("Ubicacion").Width = 120
+            .Columns("Ubicacion").HeaderText = "Ubicación"
+            .Columns("Ubicacion").Width = 100
             .Columns("Ubicacion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -107,41 +101,17 @@ Public Class Frm_IngresarHoja
 
             .Columns("Descripcion").Visible = True
             .Columns("Descripcion").HeaderText = "Descripción"
-            .Columns("Descripcion").Width = 300
+            .Columns("Descripcion").Width = 250
             .Columns("Descripcion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Cantidad").Visible = True
             .Columns("Cantidad").HeaderText = "Cantidad"
-            .Columns("Cantidad").Width = 80
+            .Columns("Cantidad").Width = 60
             .Columns("Cantidad").DefaultCellStyle.Format = "##,###0.#####"
             .Columns("Cantidad").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Cantidad").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
-
-            '.Columns("Fecha").Visible = True
-            '.Columns("Fecha").HeaderText = "Fecha"
-            '.Columns("Fecha").Width = 80
-            '.Columns("Fecha").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
-
-            '.Columns("Hora").Visible = True
-            '.Columns("Hora").HeaderText = "Hora"
-            '.Columns("Hora").Width = 80
-            '.Columns("Hora").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
-
-            '.Columns("Observaciones").Visible = True
-            '.Columns("Observaciones").HeaderText = "Observaciones"
-            '.Columns("Observaciones").Width = 80
-            '.Columns("Observaciones").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
-
-            '.Columns("Recontado").Visible = True
-            '.Columns("Recontado").HeaderText = "Recontado"
-            '.Columns("Recontado").Width = 80
-            '.Columns("Recontado").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
 
         End With
 
@@ -158,7 +128,7 @@ Public Class Frm_IngresarHoja
 
         Dim _Codproducto As String = NuloPorNro(Of String)(_Fila.Cells("Codigo").Value, "")
         Dim _CantidadUd1 As Double = _Fila.Cells("Cantidad").Value
-        Dim _Ubicacion As String = NuloPorNro(Of String)(_Fila.Cells("Ubicacion").Value, "")
+        Dim _Sector As String = NuloPorNro(Of String)(_Fila.Cells("Sector").Value, "")
 
         Dim _Index As Integer = _Fila.Index
 
@@ -171,7 +141,7 @@ Public Class Frm_IngresarHoja
                     Return
                 End If
 
-                If _Cabeza = "Codigo" Or _Cabeza = "Cantidad" Or _Cabeza = "Ubicacion" Then
+                If _Cabeza = "Codigo" Or _Cabeza = "Cantidad" Or _Cabeza = "Sector" Or _Cabeza = "Ubicacion" Then
 
                     If _Fila.IsNewRow Then
 
@@ -189,9 +159,9 @@ Public Class Frm_IngresarHoja
 
                         If _Cabeza = "Cantidad" Then
 
-                            If String.IsNullOrEmpty(_Ubicacion) Then
-                                MessageBoxEx.Show(Me, "Debe ingresar la ubicación", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                                Grilla_Detalle.CurrentCell = _Fila.Cells("Ubicacion")
+                            If String.IsNullOrEmpty(_Sector) Then
+                                MessageBoxEx.Show(Me, "Debe ingresar el sector", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                Grilla_Detalle.CurrentCell = _Fila.Cells("Sector")
                                 Return
                             End If
 
@@ -203,9 +173,9 @@ Public Class Frm_IngresarHoja
 
                         End If
 
-                        If _Cabeza = "Codigo" And String.IsNullOrEmpty(_Ubicacion) Then
-                            MessageBoxEx.Show(Me, "Debe ingresar la ubicación", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                            Grilla_Detalle.CurrentCell = _Fila.Cells("Ubicacion")
+                        If _Cabeza = "Codigo" And String.IsNullOrEmpty(_Sector) Then
+                            MessageBoxEx.Show(Me, "Debe ingresar el sector", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                            Grilla_Detalle.CurrentCell = _Fila.Cells("Sector")
                             Return
                         End If
 
@@ -220,9 +190,9 @@ Public Class Frm_IngresarHoja
 
                         If _Cabeza = "Cantidad" Then
 
-                            If String.IsNullOrEmpty(_Ubicacion) Then
+                            If String.IsNullOrEmpty(_Sector) Then
                                 MessageBoxEx.Show(Me, "Debe ingresar la ubicación", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                                Grilla_Detalle.CurrentCell = _Fila.Cells("Ubicacion")
+                                Grilla_Detalle.CurrentCell = _Fila.Cells("Sector")
                                 e.Handled = True
                                 Return
                             End If
@@ -238,9 +208,9 @@ Public Class Frm_IngresarHoja
 
                         If _Cabeza = "Codigo" Then
 
-                            If String.IsNullOrEmpty(_Ubicacion) Then
-                                MessageBoxEx.Show(Me, "Debe ingresar la ubicación", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                                Grilla_Detalle.CurrentCell = _Fila.Cells("Ubicacion")
+                            If String.IsNullOrEmpty(_Sector) Then
+                                MessageBoxEx.Show(Me, "Debe ingresar el sector", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                Grilla_Detalle.CurrentCell = _Fila.Cells("Sector")
                                 e.Handled = True
                                 Return
                             End If
@@ -254,7 +224,18 @@ Public Class Frm_IngresarHoja
 
                         If _Cabeza = "Ubicacion" Then
 
-                            If Not String.IsNullOrEmpty(_Ubicacion) Then
+                            If String.IsNullOrEmpty(_Sector) Then
+                                MessageBoxEx.Show(Me, "Debe ingresar el sector", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                Grilla_Detalle.CurrentCell = _Fila.Cells("Sector")
+                                e.Handled = True
+                                Return
+                            End If
+
+                        End If
+
+                        If _Cabeza = "Sector" Then
+
+                            If Not String.IsNullOrEmpty(_Sector) Then
                                 e.Handled = True
                                 Return
                             End If
@@ -293,11 +274,9 @@ Public Class Frm_IngresarHoja
 
             Case Keys.Down
 
-                'AgregarNuevaFila()
-
         End Select
+
         Grilla_Detalle.Refresh()
-        'Dim _ss = _Cl_Stmp.Zw_Stmp_Det
 
     End Sub
 
@@ -381,6 +360,7 @@ Public Class Frm_IngresarHoja
 
                     With _Fila
 
+                        .Cells("Nro_Hoja").Value = Txt_Nro_Hoja.Text
                         .Cells("Id").Value = _Fila.Index
                         .Cells("IdInventario").Value = _IdInventario
                         .Cells("Empresa").Value = Cl_Inventario.Zw_Inv_Inventario.Empresa
@@ -417,22 +397,22 @@ Public Class Frm_IngresarHoja
                         _Fila.Cells("CantidadUd1").Value = _Cantidad / _Rtu
                     End If
 
-                Case "Ubicacion"
+                Case "Sector"
 
-                    Dim _Ubicacion As String = NuloPorNro(Of String)(_Fila.Cells("Ubicacion").Value?.ToString.Trim, "")
+                    Dim _Sector As String = NuloPorNro(Of String)(_Fila.Cells("Sector").Value?.ToString.Trim, "")
 
-                    If String.IsNullOrEmpty(_Ubicacion) Then
+                    If String.IsNullOrEmpty(_Sector) Then
                         Return
                     End If
 
-                    Dim _Cl_InvUbicacion As New Cl_InvUbicacion
+                    Dim _Cl_InvUbicacion As New Cl_InvSectores
                     Dim _Mensaje As New LsValiciones.Mensajes
 
-                    _Mensaje = _Cl_InvUbicacion.Fx_Llenar_Zw_Inv_Ubicaciones(_IdInventario, _Ubicacion)
+                    _Mensaje = _Cl_InvUbicacion.Fx_Llenar_Zw_Inv_Sector(_IdInventario, _Sector)
 
                     If Not _Mensaje.EsCorrecto Then
 
-                        MessageBoxEx.Show(Me, "Ubicación no existe", "Validación", MessageBoxButtons.OK, _Mensaje.Icono)
+                        MessageBoxEx.Show(Me, "Sector no existe", "Validación", MessageBoxButtons.OK, _Mensaje.Icono)
 
                         If Not _Fila.IsNewRow Then
                             Grilla_Detalle.Rows.RemoveAt(_Index)
@@ -441,7 +421,7 @@ Public Class Frm_IngresarHoja
 
                     End If
 
-                    _Fila.Cells("IdUbicacion").Value = _Cl_InvUbicacion.Zw_Inv_Ubicaciones.Id
+                    _Fila.Cells("IdSector").Value = _Cl_InvUbicacion.Zw_Inv_Sector.Id
 
                     If Reconteo Then
 
@@ -452,6 +432,7 @@ Public Class Frm_IngresarHoja
 
                         With _Fila
 
+                            .Cells("Nro_Hoja").Value = Txt_Nro_Hoja.Text
                             .Cells("Id").Value = _Fila.Index
                             .Cells("IdInventario").Value = _IdInventario
                             .Cells("Empresa").Value = Cl_Inventario.Zw_Inv_Inventario.Empresa
@@ -472,9 +453,11 @@ Public Class Frm_IngresarHoja
 
                         Grilla_Detalle.CurrentCell = _Fila.Cells("Cantidad")
                     Else
-                        Grilla_Detalle.CurrentCell = _Fila.Cells("Codigo")
+                        Grilla_Detalle.CurrentCell = _Fila.Cells("Ubicacion")
                     End If
 
+                Case "Ubicacion"
+                    Grilla_Detalle.CurrentCell = _Fila.Cells("Codigo")
             End Select
 
         Catch ex As Exception
@@ -513,6 +496,12 @@ Public Class Frm_IngresarHoja
                 End If
             End If
 
+            If _Cabeza = "Sector" Then
+                If _Fila.Cells("Sector").Value Is Nothing Then
+                    Return False
+                End If
+            End If
+
             If _Cabeza = "Ubicacion" Then
                 If _Fila.Cells("Ubicacion").Value Is Nothing Then
                     Return False
@@ -521,7 +510,6 @@ Public Class Frm_IngresarHoja
 
         End If
 
-
         If IsNothing(_Fila.Cells("Codigo").Value) Then
             Return True
         End If
@@ -529,9 +517,9 @@ Public Class Frm_IngresarHoja
         Dim cantidad As Integer = Convert.ToInt32(_Fila.Cells("Cantidad").Value)
 
         Dim codigoProducto As String = _Fila.Cells("Codigo").Value?.ToString()
-        Dim codigoUbicacion As String = _Fila.Cells("Ubicacion").Value?.ToString()
+        Dim codigoSector As String = _Fila.Cells("Sector").Value?.ToString()
 
-        If String.IsNullOrEmpty(codigoProducto) OrElse String.IsNullOrEmpty(codigoUbicacion) Then
+        If String.IsNullOrEmpty(codigoProducto) OrElse String.IsNullOrEmpty(codigoSector) Then
             Return False
         End If
 
@@ -553,17 +541,6 @@ Public Class Frm_IngresarHoja
         Return True
     End Function
 
-    'Private Sub Grilla_Detalle_RowsAdded(sender As Object, e As DataGridViewRowsAddedEventArgs) Handles Grilla_Detalle.RowsAdded
-    '    ' Obtener la nueva fila agregada
-    '    Dim nuevaFila As DataGridViewRow = Grilla_Detalle.Rows(e.RowIndex)
-
-    '    ' Desactivar la creación automática de filas nuevas
-    '    Grilla_Detalle.AllowUserToAddRows = False
-
-    '    '' Poner el foco en la columna deseada de la nueva fila
-    '    'nuevaFila.Cells("Ubicacion").Selected = True
-    'End Sub
-
     Private Sub Grilla_Detalle_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Detalle.CellEnter
         ' Obtener la columna deseada
         Dim columnaDeseada As DataGridViewColumn = Grilla_Detalle.Columns("Cantidad")
@@ -575,8 +552,8 @@ Public Class Frm_IngresarHoja
             Me.BeginInvoke(New MethodInvoker(Sub()
                                                  Try
                                                      ' Verificar si la celda aún es accesible antes de cambiar el foco
-                                                     If nuevaFila.IsNewRow AndAlso nuevaFila.Cells("Ubicacion").RowIndex < Grilla_Detalle.Rows.Count Then
-                                                         Grilla_Detalle.CurrentCell = nuevaFila.Cells("Ubicacion")
+                                                     If nuevaFila.IsNewRow AndAlso nuevaFila.Cells("Sector").RowIndex < Grilla_Detalle.Rows.Count Then
+                                                         Grilla_Detalle.CurrentCell = nuevaFila.Cells("Sector")
                                                          Grilla_Detalle.BeginEdit(True)
                                                      End If
                                                  Catch ex As Exception
@@ -633,8 +610,8 @@ Public Class Frm_IngresarHoja
             ' es el separador decimal, y que no contiene ya el separador  
             If (Char.IsNumber(_Caracter)) Or
                (_Caracter = ChrW(Keys.Back)) Or
-               (_Caracter = ",") And
-               (_Txt.Text.Contains(",") = False) Then
+               ((_Caracter = "-") And (_Txt.Text.Contains("-") = False)) Or
+               (_Caracter = ",") And (_Txt.Text.Contains(",") = False) Then
                 e.Handled = False
             Else
                 e.Handled = True
@@ -661,7 +638,7 @@ Public Class Frm_IngresarHoja
         If Cl_Conteo.Ls_Zw_Inv_Hoja_Detalle.Count = 0 Then
             MessageBoxEx.Show(Me, "Debe ingresar al menos un producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Grilla_Detalle.Focus()
-            Grilla_Detalle.CurrentCell = Grilla_Detalle.Rows(Grilla_Detalle.Rows.Count - 1).Cells("Ubicacion")
+            Grilla_Detalle.CurrentCell = Grilla_Detalle.Rows(Grilla_Detalle.Rows.Count - 1).Cells("Sector")
             Return
         End If
 

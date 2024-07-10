@@ -64,7 +64,8 @@ Public Class Cl_Conteo
                 .IdContador1 = _Row.Item("IdContador1")
                 .IdContador2 = _Row.Item("IdContador2")
                 .Item_Hoja = _Row.Item("Item_Hoja")
-                .IdUbicacion = _Row.Item("IdUbicacion")
+                .IdSector = _Row.Item("IdSector")
+                .Sector = _Row.Item("Sector")
                 .Ubicacion = _Row.Item("CodUbicacion")
                 .TipoConteo = _Row.Item("TipoConteo")
                 .Codigo = _Row.Item("Codproducto")
@@ -165,8 +166,8 @@ Public Class Cl_Conteo
 
                 With _Zw_Inv_Hoja_Detalle
 
-                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle (IdHoja,Nro_Hoja,IdInventario,Empresa,Sucursal,Bodega,Responsable,IdContador1,IdContador2,Item_Hoja,IdUbicacion,CodUbicacion,TipoConteo,Codproducto,EsSeriado,NroSerie,FechaHoraToma,Rtu,RtuVariable,Udtrpr,Ud1,CantidadUd1,Ud2,CantidadUd2,Observaciones,Recontado,Actualizado_por,Obs_Actualizacion) Values " &
-                                   "(" & .IdHoja & ",'" & .Nro_Hoja & "'," & .IdInventario & ",'" & .Empresa & "','" & .Sucursal & "','" & .Bodega & "','" & .Responsable & "'," & .IdContador1 & "," & .IdContador2 & ",'" & .Item_Hoja & "'," & .IdUbicacion & ",'" & .Ubicacion & "','" & .TipoConteo & "','" & .Codigo & "'," & Convert.ToInt32(.EsSeriado) & ",'" & .NroSerie & "','" & .FechaHoraToma & "','" & .Rtu & "','" & .RtuVariable & "','" & .Udtrpr & "','" & .Ud1 & "'," & .CantidadUd1 & ",'" & .Ud2 & "'," & .CantidadUd2 & ",'" & .Observaciones & "'," & Convert.ToInt32(.Recontado) & ",'" & .Actualizado_por & "','" & .Obs_Actualizacion & "')"
+                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle (IdHoja,Nro_Hoja,IdInventario,Empresa,Sucursal,Bodega,Responsable,IdContador1,IdContador2,Item_Hoja,IdSector,Sector,Ubicacion,TipoConteo,Codproducto,EsSeriado,NroSerie,FechaHoraToma,Rtu,RtuVariable,Udtrpr,Ud1,CantidadUd1,Ud2,CantidadUd2,Observaciones,Recontado,Actualizado_por,Obs_Actualizacion) Values " &
+                                   "(" & .IdHoja & ",'" & .Nro_Hoja & "'," & .IdInventario & ",'" & .Empresa & "','" & .Sucursal & "','" & .Bodega & "','" & .Responsable & "'," & .IdContador1 & "," & .IdContador2 & ",'" & .Item_Hoja & "'," & .IdSector & ",'" & .Ubicacion & "','" & .TipoConteo & "','" & .Codigo & "'," & Convert.ToInt32(.EsSeriado) & ",'" & .NroSerie & "','" & .FechaHoraToma & "','" & .Rtu & "','" & .RtuVariable & "','" & .Udtrpr & "','" & .Ud1 & "'," & .CantidadUd1 & ",'" & .Ud2 & "'," & .CantidadUd2 & ",'" & .Observaciones & "'," & Convert.ToInt32(.Recontado) & ",'" & .Actualizado_por & "','" & .Obs_Actualizacion & "')"
 
                     Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                     Comando.Transaction = myTrans
@@ -264,12 +265,12 @@ Public Class Cl_Conteo
                     If Not String.IsNullOrEmpty(.Codigo) Then
 
                         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle (IdHoja,Nro_Hoja,IdInventario,Empresa,Sucursal,Bodega," &
-                                       "Responsable,IdContador1,IdContador2,Item_Hoja,IdUbicacion,Ubicacion,TipoConteo,Codigo,EsSeriado," &
+                                       "Responsable,IdContador1,IdContador2,Item_Hoja,IdSector,Sector,Ubicacion,TipoConteo,Codigo,EsSeriado," &
                                        "NroSerie,FechaHoraToma,Rtu,RtuVariable,Udtrpr,Cantidad,Ud1,CantidadUd1,Ud2,CantidadUd2,Observaciones," &
                                        "Recontado,Actualizado_por,Obs_Actualizacion) Values " &
                                        "(" & .IdHoja & ",'" & .Nro_Hoja & "'," & .IdInventario & ",'" & .Empresa & "','" & .Sucursal & "','" & .Bodega & "'" &
-                                       ",'" & .Responsable & "'," & .IdContador1 & "," & .IdContador2 & ",'" & .Item_Hoja & "'," & .IdUbicacion &
-                                       ",'" & .Ubicacion & "','" & .TipoConteo & "','" & .Codigo & "'," & Convert.ToInt32(.EsSeriado) & ",'" & .NroSerie & "'" &
+                                       ",'" & .Responsable & "'," & .IdContador1 & "," & .IdContador2 & ",'" & .Item_Hoja & "'," & .IdSector &
+                                       ",'" & .Sector & "','" & .Ubicacion & "','" & .TipoConteo & "','" & .Codigo & "'," & Convert.ToInt32(.EsSeriado) & ",'" & .NroSerie & "'" &
                                        ",Getdate(),'" & .Rtu & "','" & .RtuVariable & "','" & .Udtrpr & "'" &
                                        "," & De_Num_a_Tx_01(.Cantidad, False, 5) & ",'" & .Ud1 &
                                        "'," & De_Num_a_Tx_01(.CantidadUd1, False, 5) & ",'" & .Ud2 & "'," & De_Num_a_Tx_01(.CantidadUd2, False, 5) &

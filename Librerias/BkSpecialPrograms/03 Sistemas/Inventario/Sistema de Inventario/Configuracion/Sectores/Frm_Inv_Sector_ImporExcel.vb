@@ -1,11 +1,11 @@
 ﻿Imports DevComponents.DotNetBar
 
-Public Class Frm_Inv_UbicacionesImporExcel
+Public Class Frm_Inv_Sector_ImporExcel
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-    Private Ls_Zw_Inv_Ubicaciones As List(Of Zw_Inv_Ubicaciones)
+    Private Ls_Zw_Inv_Ubicaciones As List(Of Zw_Inv_Sector)
     Private Ls_Errores As New List(Of LsValiciones.Mensajes)
     Private _Cancelar As Boolean
     Private _Cl_inventario As Cl_Inventario
@@ -22,6 +22,8 @@ Public Class Frm_Inv_UbicacionesImporExcel
         _Cl_inventario = New Cl_Inventario
         _Cl_inventario.Fx_Llenar_Zw_Inv_Inventario(_IdInventario)
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
     Private Sub Frm_Inv_UbicacionesImporExcel_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -32,7 +34,7 @@ Public Class Frm_Inv_UbicacionesImporExcel
         Dim _Ubic_Archivo As String
 
         Dim _Limpiar_Lista As Boolean
-        Ls_Zw_Inv_Ubicaciones = New List(Of Zw_Inv_Ubicaciones)
+        Ls_Zw_Inv_Ubicaciones = New List(Of Zw_Inv_Sector)
 
         With OpenFileDialog1
             '.Filter = "Ficheros DBF (PFMDSP10.dbf)|PFMDSP10.dbf|Todos (*.*)|*.*"
@@ -97,7 +99,7 @@ Public Class Frm_Inv_UbicacionesImporExcel
         For i = _Desde To _Filas
 
             Dim _Msg_Error As New LsValiciones.Mensajes
-            Dim _Zw_Inv_Ubicaciones As New Zw_Inv_Ubicaciones
+            Dim _Zw_Inv_Ubicaciones As New Zw_Inv_Sector
 
             System.Windows.Forms.Application.DoEvents()
 
@@ -106,33 +108,39 @@ Public Class Frm_Inv_UbicacionesImporExcel
                 Circular_Progres_Val.ProgressColor = Color.Red
             End If
 
-            Dim _Ubicacion As String
+            Dim _Sector As String
+            Dim _NombreSector As String
 
             Try
 
-                _Ubicacion = If(_Arreglo(i, 0) Is Nothing, "", _Arreglo(i, 0).ToString().Trim())
+                _Sector = If(_Arreglo(i, 0) Is Nothing, "", _Arreglo(i, 0).ToString().Trim())
+                _NombreSector = If(_Arreglo(i, 1) Is Nothing, "", _Arreglo(i, 0).ToString().Trim())
 
-                If String.IsNullOrWhiteSpace(_Ubicacion) Then
-                    Throw New System.Exception("La columna ubicación esta vacía")
+                If String.IsNullOrWhiteSpace(_Sector) Then
+                    Throw New System.Exception("La columna Sector esta vacía")
                 End If
 
                 Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_Ubicaciones",
-                                            "Ubicacion = '" & _Ubicacion & "' And IdInventario = " & _Cl_inventario.Zw_Inv_Inventario.Id)
+                                            "Sector = '" & _Sector & "' And IdInventario = " & _Cl_inventario.Zw_Inv_Inventario.Id)
 
                 If CBool(_Reg) Then
-                    Throw New System.Exception("La ubicación """ & _Ubicacion & """ ya existe en este inventario")
+                    Throw New System.Exception("El Sector """ & _Sector & """ ya existe en este inventario")
                 End If
 
-                If _Ubicacion.Length > 30 Then
-                    Throw New System.Exception("La ubicación """ & _Ubicacion & """ excede los 30 caracteres")
+                If _Sector.Length > 30 Then
+                    Throw New System.Exception("El Sector """ & _Sector & """ excede los 30 caracteres")
+                End If
+
+                If _NombreSector.Length > 50 Then
+                    Throw New System.Exception("El Sector """ & _NombreSector & """ excede los 50 caracteres")
                 End If
 
                 ' Verificando si el valor existe en la lista
-                If _ListaUbicaciones.Contains(_Ubicacion) And Not String.IsNullOrEmpty(_Ubicacion) Then
-                    Throw New System.Exception("La ubicación """ & _Ubicacion & """ aparece varias veces en la lista.")
+                If _ListaUbicaciones.Contains(_Sector) And Not String.IsNullOrEmpty(_Sector) Then
+                    Throw New System.Exception("El Sector """ & _Sector & """ aparece varias veces en la lista.")
                 End If
 
-                _ListaUbicaciones.Add(_Ubicacion)
+                _ListaUbicaciones.Add(_Sector)
 
                 If _Cancelar Then
                     Exit For
@@ -143,7 +151,8 @@ Public Class Frm_Inv_UbicacionesImporExcel
 
                 With _Zw_Inv_Ubicaciones
                     .IdInventario = _Cl_inventario.Zw_Inv_Inventario.Id
-                    .Ubicacion = _Ubicacion
+                    .Sector = _Sector
+                    .NombreSector = _NombreSector
                     .Abierto = True
                     .Empresa = _Cl_inventario.Zw_Inv_Inventario.Empresa
                     .Sucursal = _Cl_inventario.Zw_Inv_Inventario.Sucursal
@@ -152,7 +161,7 @@ Public Class Frm_Inv_UbicacionesImporExcel
 
             Catch ex As Exception
                 _Msg_Error.Mensaje = ex.Message
-                _Msg_Error.Detalle = "Fila (" & i & ") - " & _Ubicacion
+                _Msg_Error.Detalle = "Fila (" & i & ") - " & _Sector & " - " & _NombreSector
                 _Msg_Error.EsCorrecto = False
                 _Msg_Error.Icono = MessageBoxIcon.Error
             End Try
@@ -237,17 +246,17 @@ Public Class Frm_Inv_UbicacionesImporExcel
 
     Sub Sb_GrabarUbicaciones()
 
-        Dim _Cl_InvUbicacion As New Cl_InvUbicacion
+        Dim _Cl_InvUbicacion As New Cl_InvSectores
         Dim _Ls_Mensajes As New List(Of LsValiciones.Mensajes)
         Dim _CuentaInsertadas As Integer
 
         For Each _Ubicacion In Ls_Zw_Inv_Ubicaciones
 
-            _Cl_InvUbicacion.Zw_Inv_Ubicaciones = _Ubicacion
+            _Cl_InvUbicacion.Zw_Inv_Sector = _Ubicacion
 
             Dim _Mensaje As New LsValiciones.Mensajes
 
-            _Mensaje = _Cl_InvUbicacion.Fx_Crear_Ubicacion(_Ubicacion)
+            _Mensaje = _Cl_InvUbicacion.Fx_Crear_Sector(_Ubicacion)
 
             If _Mensaje.EsCorrecto Then
                 _CuentaInsertadas += 1
@@ -304,7 +313,7 @@ Public Class Frm_Inv_UbicacionesImporExcel
 
     Private Sub Btn_Archivo_Ayuda_Excel_Click(sender As Object, e As EventArgs) Handles Btn_Archivo_Ayuda_Excel.Click
         Dim _Nom_Excel As String
-        Consulta_sql = "Select 'Caracter [30]' As 'Ubicaciones'"
+        Consulta_sql = "Select 'Caracter [30]' As 'Sector','Caracter [50]' As 'NombreSector'"
         _Nom_Excel = "Ejemplo importar ubicaciones"
         ExportarTabla_JetExcel(Consulta_sql, Me, _Nom_Excel)
     End Sub

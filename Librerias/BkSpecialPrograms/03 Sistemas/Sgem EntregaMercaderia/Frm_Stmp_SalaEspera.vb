@@ -208,7 +208,7 @@
             If _Estado = "PREPA" Then
                 _Icono = _Imagenes_List.Images.Item("menu-more.png")
                 _Fila.Cells("NOKOEN").Style.ForeColor = Color.Gray
-                _Fila.Cells("NOKOEN").Style.Alignment = DataGridViewContentAlignment.MiddleCenter
+                '_Fila.Cells("NOKOEN").Style.Alignment = DataGridViewContentAlignment.MiddleCenter
             End If
 
             _Fila.Cells("BtnImagen_Estado").Value = _Icono
@@ -216,7 +216,7 @@
             _Fila.Cells("NumeroDelItem").Style.Font = New Font("Arial", 24, FontStyle.Bold)
             _Fila.Cells("NumeroDelItem").Style.ForeColor = Azul
             _Fila.Cells("NumeroDelItem").Style.Alignment = DataGridViewContentAlignment.MiddleCenter
-            _Fila.Cells("NumeroDelItem").Style.Format = "0000"
+            _Fila.Cells("NumeroDelItem").Style.Format = "00000"
 
         Next
 

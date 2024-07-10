@@ -861,7 +861,7 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stmp_DetPick.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_TblArbol_Asociaciones.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Inventario.vb" />
-    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Ubicaciones.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Sector.vb" />
     <Compile Include="03 Sistemas\Despachos\Clases\Cl_Despachos.vb" />
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Cl_Inventario.vb" />
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Frm_Inv_Inventarios.Designer.vb">
@@ -878,11 +878,23 @@
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Conteo\Frm_IngresarHoja.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Ubicaciones\Cl_InvUbicacion.vb" />
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Ubicaciones\Frm_Inv_UbicacionesImporExcel.Designer.vb">
-      <DependentUpon>Frm_Inv_UbicacionesImporExcel.vb</DependentUpon>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Cl_InvSectores.vb" />
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_Crear.Designer.vb">
+      <DependentUpon>Frm_Inv_Sector_Crear.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Ubicaciones\Frm_Inv_UbicacionesImporExcel.vb">
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_Crear.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_ImporExcel.Designer.vb">
+      <DependentUpon>Frm_Inv_Sector_ImporExcel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_ImporExcel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_Productos.Designer.vb">
+      <DependentUpon>Frm_Inv_Sector_Productos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_Productos.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Puntos Venta\Cl_Puntos.vb" />
@@ -1970,10 +1982,10 @@
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Plan\Frm_Plan.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Ubicaciones\Frm_Inv_Ubicaciones.Designer.vb">
-      <DependentUpon>Frm_Inv_Ubicaciones.vb</DependentUpon>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_Lista.Designer.vb">
+      <DependentUpon>Frm_Inv_Sector_Lista.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Ubicaciones\Frm_Inv_Ubicaciones.vb">
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_Lista.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Frm_Inv_Ctrl_Inventario.Designer.vb">
@@ -4694,8 +4706,14 @@
     <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Conteo\Frm_IngresarHoja.resx">
       <DependentUpon>Frm_IngresarHoja.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Ubicaciones\Frm_Inv_UbicacionesImporExcel.resx">
-      <DependentUpon>Frm_Inv_UbicacionesImporExcel.vb</DependentUpon>
+    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_Crear.resx">
+      <DependentUpon>Frm_Inv_Sector_Crear.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_ImporExcel.resx">
+      <DependentUpon>Frm_Inv_Sector_ImporExcel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_Productos.resx">
+      <DependentUpon>Frm_Inv_Sector_Productos.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Puntos Venta\Frm_ConfPuntosVta.resx">
       <DependentUpon>Frm_ConfPuntosVta.vb</DependentUpon>
@@ -5233,8 +5251,8 @@
     <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Plan\Frm_Plan.resx">
       <DependentUpon>Frm_Plan.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Ubicaciones\Frm_Inv_Ubicaciones.resx">
-      <DependentUpon>Frm_Inv_Ubicaciones.vb</DependentUpon>
+    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_Lista.resx">
+      <DependentUpon>Frm_Inv_Sector_Lista.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Frm_Inv_Ctrl_Inventario.resx">
       <DependentUpon>Frm_Inv_Ctrl_Inventario.vb</DependentUpon>

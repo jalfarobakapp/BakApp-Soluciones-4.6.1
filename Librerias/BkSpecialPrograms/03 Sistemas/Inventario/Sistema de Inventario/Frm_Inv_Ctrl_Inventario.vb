@@ -29,7 +29,7 @@ Public Class Frm_Inv_Ctrl_Inventario
 
     Private Sub Btn_Sectores_Click(sender As Object, e As EventArgs) Handles Btn_Sectores.Click
 
-        Dim Fm As New Frm_Inv_Ubicaciones(_Id)
+        Dim Fm As New Frm_Inv_Sector_Lista(_Id)
         Fm.Text = "UBICACIONES DEL INVENTARIO: " & Cl_Inventario.Zw_Inv_Inventario.NombreInventario
         Fm.ShowDialog(Me)
         Fm.Dispose()
@@ -88,7 +88,7 @@ Public Class Frm_Inv_Ctrl_Inventario
 
     End Sub
 
-    Private Sub Btn_Contadores_Click(sender As Object, e As EventArgs) Handles Btn_Contadores.Click
+    Private Sub Btn_Contadores_Click(sender As Object, e As EventArgs)
 
         Dim Fm As New Frm_Contadores
         Fm.ShowDialog(Me)
@@ -96,4 +96,13 @@ Public Class Frm_Inv_Ctrl_Inventario
 
     End Sub
 
+    Private Sub Btn_InventarioXSector_Click(sender As Object, e As EventArgs) Handles Btn_InventarioXSector.Click
+
+        Dim Fm As New Frm_Inv_Sector_Lista(_Id)
+        Fm.ModoRevisionInventario = True
+        Fm.Text = "UBICACIONES DEL INVENTARIO: " & Cl_Inventario.Zw_Inv_Inventario.NombreInventario
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
 End Class

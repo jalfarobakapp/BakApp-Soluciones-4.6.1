@@ -58,7 +58,7 @@ Public Class Inv_General_Activo
 
         Dim _Id As Integer = _Row_InventarioActivo.Item("Id")
 
-        Dim Fm As New Frm_Inv_Ubicaciones(_Id)
+        Dim Fm As New Frm_Inv_Sector_Lista(_Id)
         Fm.ShowDialog(Me)
         Fm.Dispose()
 

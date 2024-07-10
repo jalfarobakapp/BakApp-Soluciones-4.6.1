@@ -10,7 +10,8 @@
     Public Property IdContador1 As Integer
     Public Property IdContador2 As Integer
     Public Property Item_Hoja As String
-    Public Property IdUbicacion As Integer
+    Public Property IdSector As Integer
+    Public Property Sector As String
     Public Property Ubicacion As String
     Public Property TipoConteo As String
     Public Property Codigo As String
