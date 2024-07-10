@@ -31,11 +31,17 @@ Public Class Frm_01_CrearInventario
 
     Private Sub Frm_01_CrearInventario_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        Chk_Estado.Checked = True
+
         If CBool(_IdInventario) Then
             Cl_Inventario.Fx_Llenar_Zw_Inv_Inventario(_IdInventario)
         End If
 
         With Cl_Inventario.Zw_Inv_Inventario
+
+            If Not CBool(_IdInventario) Then
+                .Activo = True
+            End If
 
             Lbl_Empresa.Text = .Empresa & " - " & .Nombre_Empresa
             Lbl_Sucursal.Text = .Sucursal & " - " & .Nombre_Sucursal
@@ -122,7 +128,7 @@ Public Class Frm_01_CrearInventario
 
         With Cl_Inventario.Zw_Inv_Inventario
 
-            Dim Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_TmpInv_History",
+            Dim Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_Inventario",
                                                           "Fecha_Inventario = '" & Format(Dtp_Fecha_Inventario.Value, "yyyyMMdd") &
                                                           "' And Empresa = '" & .Empresa &
                                                           "' And Sucursal = '" & .Sucursal & "'" & vbCrLf &

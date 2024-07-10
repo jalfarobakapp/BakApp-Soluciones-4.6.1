@@ -17,7 +17,7 @@
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        Sb_Formato_Generico_Grilla(Grilla, 45, New Font("Tahoma", 14), Color.AliceBlue, ScrollBars.Both, False, False, False)
+        Sb_Formato_Generico_Grilla(Grilla, 45, New Font("Tahoma", 14), Color.AliceBlue, ScrollBars.None, False, False, False)
 
     End Sub
 
@@ -148,7 +148,7 @@
 
             .Columns("NOKOEN").Visible = True
             .Columns("NOKOEN").HeaderText = "Razón Social"
-            .Columns("NOKOEN").Width = 400
+            .Columns("NOKOEN").Width = 500
             .Columns("NOKOEN").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 

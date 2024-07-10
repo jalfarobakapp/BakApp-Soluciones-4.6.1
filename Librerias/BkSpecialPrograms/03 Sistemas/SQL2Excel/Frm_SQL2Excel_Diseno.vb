@@ -187,7 +187,7 @@ Public Class Frm_SQL2Excel_Diseno
 
                     If _Ds.Tables.Count > 1 Then
 
-                        Dim _Msg = "La consulta generó varias tablas. Por eso, el archivo de Excel tendrá más de una hoja para mostrar los resultados."
+                        Dim _Msg = "La consulta generó varias tablas, por eso, el archivo de Excel tendrá más de una hoja para mostrar los resultados."
 
                         MessageBoxEx.Show(Me, Fx_AjustarTexto(_Msg, 80), "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
 

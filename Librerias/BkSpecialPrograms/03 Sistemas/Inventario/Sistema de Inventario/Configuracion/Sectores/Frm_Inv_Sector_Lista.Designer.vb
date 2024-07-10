@@ -22,24 +22,29 @@ Partial Class Frm_Inv_Sector_Lista
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Inv_Sector_Lista))
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_MantSector = New DevComponents.DotNetBar.ButtonItem()
         Me.Lbl_Sector = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_EditarUbicacion = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_EliminarUbicacion = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_AbrirUbicacion = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_CerrarUbicacion = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem3 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
         Me.Menu_Contextual_Importar_Lista = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem4 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_ImportarExcel = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_ImportarExcelEjemplo = New DevComponents.DotNetBar.ButtonItem()
+        Me.Menu_Contextual_GestSector = New DevComponents.DotNetBar.ButtonItem()
+        Me.Lbl_Gestion = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_VerProductos = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_AbrirUbicacion = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_CerrarUbicacion = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_Copiar2 = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Crear_Ubicacion = New DevComponents.DotNetBar.ButtonItem()
@@ -49,11 +54,7 @@ Partial Class Frm_Inv_Sector_Lista
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Filtrar = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Lbl_UsuarioACargo = New DevComponents.DotNetBar.LabelX()
-        Me.Lbl_Gestion = New DevComponents.DotNetBar.LabelItem()
-        Me.Btn_VerProductos = New DevComponents.DotNetBar.ButtonItem()
-        Me.Menu_Contextual_GestSector = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Copiar2 = New DevComponents.DotNetBar.ButtonItem()
-        Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_ImprimirSector = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -121,7 +122,7 @@ Partial Class Frm_Inv_Sector_Lista
         '
         Me.Menu_Contextual_MantSector.AutoExpandOnClick = True
         Me.Menu_Contextual_MantSector.Name = "Menu_Contextual_MantSector"
-        Me.Menu_Contextual_MantSector.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Sector, Me.Btn_EditarUbicacion, Me.Btn_EliminarUbicacion, Me.LabelItem3, Me.Btn_Copiar})
+        Me.Menu_Contextual_MantSector.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Sector, Me.Btn_EditarUbicacion, Me.Btn_EliminarUbicacion, Me.Btn_ImprimirSector, Me.LabelItem3, Me.Btn_Copiar})
         Me.Menu_Contextual_MantSector.Text = "Opciones Despacho"
         '
         'Lbl_Sector
@@ -152,22 +153,6 @@ Partial Class Frm_Inv_Sector_Lista
         Me.Btn_EliminarUbicacion.Name = "Btn_EliminarUbicacion"
         Me.Btn_EliminarUbicacion.Text = "Eliminar Sector"
         Me.Btn_EliminarUbicacion.Tooltip = "Dar "
-        '
-        'Btn_AbrirUbicacion
-        '
-        Me.Btn_AbrirUbicacion.Image = CType(resources.GetObject("Btn_AbrirUbicacion.Image"), System.Drawing.Image)
-        Me.Btn_AbrirUbicacion.ImageAlt = CType(resources.GetObject("Btn_AbrirUbicacion.ImageAlt"), System.Drawing.Image)
-        Me.Btn_AbrirUbicacion.Name = "Btn_AbrirUbicacion"
-        Me.Btn_AbrirUbicacion.Text = "Abrir Sector"
-        Me.Btn_AbrirUbicacion.Tooltip = "Dar "
-        '
-        'Btn_CerrarUbicacion
-        '
-        Me.Btn_CerrarUbicacion.Image = CType(resources.GetObject("Btn_CerrarUbicacion.Image"), System.Drawing.Image)
-        Me.Btn_CerrarUbicacion.ImageAlt = CType(resources.GetObject("Btn_CerrarUbicacion.ImageAlt"), System.Drawing.Image)
-        Me.Btn_CerrarUbicacion.Name = "Btn_CerrarUbicacion"
-        Me.Btn_CerrarUbicacion.Text = "Cerrar Sector"
-        Me.Btn_CerrarUbicacion.Tooltip = "Dar "
         '
         'LabelItem3
         '
@@ -224,41 +209,106 @@ Partial Class Frm_Inv_Sector_Lista
         Me.Btn_ImportarExcelEjemplo.Name = "Btn_ImportarExcelEjemplo"
         Me.Btn_ImportarExcelEjemplo.Text = "Ayuda, ejemplo archivo excel."
         '
+        'Menu_Contextual_GestSector
+        '
+        Me.Menu_Contextual_GestSector.AutoExpandOnClick = True
+        Me.Menu_Contextual_GestSector.Name = "Menu_Contextual_GestSector"
+        Me.Menu_Contextual_GestSector.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Gestion, Me.Btn_VerProductos, Me.Btn_AbrirUbicacion, Me.Btn_CerrarUbicacion, Me.LabelItem1, Me.Btn_Copiar2})
+        Me.Menu_Contextual_GestSector.Text = "Opciones Importar lista"
+        '
+        'Lbl_Gestion
+        '
+        Me.Lbl_Gestion.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.Lbl_Gestion.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.Lbl_Gestion.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.Lbl_Gestion.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.Lbl_Gestion.Name = "Lbl_Gestion"
+        Me.Lbl_Gestion.PaddingBottom = 1
+        Me.Lbl_Gestion.PaddingLeft = 10
+        Me.Lbl_Gestion.PaddingTop = 1
+        Me.Lbl_Gestion.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.Lbl_Gestion.Text = "Gestión"
+        '
+        'Btn_VerProductos
+        '
+        Me.Btn_VerProductos.Image = CType(resources.GetObject("Btn_VerProductos.Image"), System.Drawing.Image)
+        Me.Btn_VerProductos.ImageAlt = CType(resources.GetObject("Btn_VerProductos.ImageAlt"), System.Drawing.Image)
+        Me.Btn_VerProductos.Name = "Btn_VerProductos"
+        Me.Btn_VerProductos.Text = "Ver productos contados en este sector"
+        Me.Btn_VerProductos.Tooltip = "Dar "
+        '
+        'Btn_AbrirUbicacion
+        '
+        Me.Btn_AbrirUbicacion.Image = CType(resources.GetObject("Btn_AbrirUbicacion.Image"), System.Drawing.Image)
+        Me.Btn_AbrirUbicacion.ImageAlt = CType(resources.GetObject("Btn_AbrirUbicacion.ImageAlt"), System.Drawing.Image)
+        Me.Btn_AbrirUbicacion.Name = "Btn_AbrirUbicacion"
+        Me.Btn_AbrirUbicacion.Text = "Abrir Sector"
+        Me.Btn_AbrirUbicacion.Tooltip = "Dar "
+        '
+        'Btn_CerrarUbicacion
+        '
+        Me.Btn_CerrarUbicacion.Image = CType(resources.GetObject("Btn_CerrarUbicacion.Image"), System.Drawing.Image)
+        Me.Btn_CerrarUbicacion.ImageAlt = CType(resources.GetObject("Btn_CerrarUbicacion.ImageAlt"), System.Drawing.Image)
+        Me.Btn_CerrarUbicacion.Name = "Btn_CerrarUbicacion"
+        Me.Btn_CerrarUbicacion.Text = "Cerrar Sector"
+        Me.Btn_CerrarUbicacion.Tooltip = "Dar "
+        '
+        'LabelItem1
+        '
+        Me.LabelItem1.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem1.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem1.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem1.ImageTextSpacing = 1
+        Me.LabelItem1.Name = "LabelItem1"
+        Me.LabelItem1.PaddingBottom = 1
+        Me.LabelItem1.PaddingLeft = 10
+        Me.LabelItem1.PaddingTop = 1
+        Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem1.Text = "-------------------------------------------"
+        '
+        'Btn_Copiar2
+        '
+        Me.Btn_Copiar2.Image = CType(resources.GetObject("Btn_Copiar2.Image"), System.Drawing.Image)
+        Me.Btn_Copiar2.ImageAlt = CType(resources.GetObject("Btn_Copiar2.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Copiar2.Name = "Btn_Copiar2"
+        Me.Btn_Copiar2.Text = "Copiar"
+        '
         'Grilla
         '
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle8.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.Grilla.Size = New System.Drawing.Size(561, 437)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 30
@@ -367,56 +417,15 @@ Partial Class Frm_Inv_Sector_Lista
         Me.Lbl_UsuarioACargo.TabIndex = 177
         Me.Lbl_UsuarioACargo.Text = "Usuario a cargo:"
         '
-        'Lbl_Gestion
+        'Btn_ImprimirSector
         '
-        Me.Lbl_Gestion.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
-        Me.Lbl_Gestion.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
-        Me.Lbl_Gestion.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
-        Me.Lbl_Gestion.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.Lbl_Gestion.Name = "Lbl_Gestion"
-        Me.Lbl_Gestion.PaddingBottom = 1
-        Me.Lbl_Gestion.PaddingLeft = 10
-        Me.Lbl_Gestion.PaddingTop = 1
-        Me.Lbl_Gestion.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.Lbl_Gestion.Text = "Gestión"
+        Me.Btn_ImprimirSector.Image = CType(resources.GetObject("Btn_ImprimirSector.Image"), System.Drawing.Image)
+        Me.Btn_ImprimirSector.ImageAlt = CType(resources.GetObject("Btn_ImprimirSector.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ImprimirSector.Name = "Btn_ImprimirSector"
+        Me.Btn_ImprimirSector.Text = "Imprimir sector"
+        Me.Btn_ImprimirSector.Tooltip = "Dar "
         '
-        'Btn_VerProductos
-        '
-        Me.Btn_VerProductos.Image = CType(resources.GetObject("Btn_VerProductos.Image"), System.Drawing.Image)
-        Me.Btn_VerProductos.ImageAlt = CType(resources.GetObject("Btn_VerProductos.ImageAlt"), System.Drawing.Image)
-        Me.Btn_VerProductos.Name = "Btn_VerProductos"
-        Me.Btn_VerProductos.Text = "Ver productos contados en este sector"
-        Me.Btn_VerProductos.Tooltip = "Dar "
-        '
-        'Menu_Contextual_GestSector
-        '
-        Me.Menu_Contextual_GestSector.AutoExpandOnClick = True
-        Me.Menu_Contextual_GestSector.Name = "Menu_Contextual_GestSector"
-        Me.Menu_Contextual_GestSector.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Gestion, Me.Btn_VerProductos, Me.Btn_AbrirUbicacion, Me.Btn_CerrarUbicacion, Me.LabelItem1, Me.Btn_Copiar2})
-        Me.Menu_Contextual_GestSector.Text = "Opciones Importar lista"
-        '
-        'Btn_Copiar2
-        '
-        Me.Btn_Copiar2.Image = CType(resources.GetObject("Btn_Copiar2.Image"), System.Drawing.Image)
-        Me.Btn_Copiar2.ImageAlt = CType(resources.GetObject("Btn_Copiar2.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Copiar2.Name = "Btn_Copiar2"
-        Me.Btn_Copiar2.Text = "Copiar"
-        '
-        'LabelItem1
-        '
-        Me.LabelItem1.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
-        Me.LabelItem1.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
-        Me.LabelItem1.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
-        Me.LabelItem1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.LabelItem1.ImageTextSpacing = 1
-        Me.LabelItem1.Name = "LabelItem1"
-        Me.LabelItem1.PaddingBottom = 1
-        Me.LabelItem1.PaddingLeft = 10
-        Me.LabelItem1.PaddingTop = 1
-        Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.LabelItem1.Text = "-------------------------------------------"
-        '
-        'Frm_Inv_Sectores
+        'Frm_Inv_Sector_Lista
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -433,7 +442,7 @@ Partial Class Frm_Inv_Sector_Lista
         Me.KeyPreview = True
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "Frm_Inv_Sectores"
+        Me.Name = "Frm_Inv_Sector_Lista"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "MetroForm"
@@ -473,4 +482,5 @@ Partial Class Frm_Inv_Sector_Lista
     Friend WithEvents Menu_Contextual_GestSector As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LabelItem1 As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Btn_Copiar2 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_ImprimirSector As DevComponents.DotNetBar.ButtonItem
 End Class

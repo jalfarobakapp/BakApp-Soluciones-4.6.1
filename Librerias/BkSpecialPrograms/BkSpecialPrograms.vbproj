@@ -205,8 +205,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Dll especiales\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Mail, Version=3.0.22234.1038, Culture=neutral, PublicKeyToken=6dc438ab78a525b3, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Mail.dll.3.0.22234.1038\lib\net45\Mail.dll</HintPath>
+    <Reference Include="Mail, Version=3.0.24129.1605, Culture=neutral, PublicKeyToken=6dc438ab78a525b3, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Mail.dll.3.0.24129.1605\lib\net45\Mail.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
@@ -344,8 +344,8 @@
     <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Text.Encodings.Web.8.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
-    <Reference Include="System.Text.Json, Version=8.0.0.3, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Text.Json.8.0.3\lib\net462\System.Text.Json.dll</HintPath>
+    <Reference Include="System.Text.Json, Version=8.0.0.4, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Text.Json.8.0.4\lib\net462\System.Text.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
@@ -2731,7 +2731,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>21_Recursos.resx</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Sistema WMS\Mapa\Ubicaciones\Ubicaciones\Ubicaciones productos\Recursos\Clas_Imprimir_Sectores.vb" />
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Cl_Imprimir_Sectores.vb" />
     <Compile Include="03 Sistemas\Sistema WMS\Mapa\Ubicaciones\Ubicaciones\Ubicaciones productos\Recursos\Dts_Sectores.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

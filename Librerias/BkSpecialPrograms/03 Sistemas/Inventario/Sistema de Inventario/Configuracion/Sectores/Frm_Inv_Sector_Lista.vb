@@ -1,4 +1,5 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports System.Drawing.Printing
+Imports DevComponents.DotNetBar
 
 Public Class Frm_Inv_Sector_Lista
 
@@ -42,7 +43,7 @@ Public Class Frm_Inv_Sector_Lista
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
 
         Btn_Crear_Ubicacion.Visible = Not ModoRevisionInventario
-        Btn_ImportarExcel.Visible = Not ModoRevisionInventario
+        Btn_Importar_Desde_Excel.Visible = Not ModoRevisionInventario
 
     End Sub
 
@@ -99,7 +100,11 @@ Public Class Frm_Inv_Sector_Lista
 
             .Columns("NombreSector").Visible = True
             .Columns("NombreSector").HeaderText = "Nombre Sector"
-            .Columns("NombreSector").Width = 200
+            If ModoRevisionInventario Then
+                .Columns("NombreSector").Width = 200
+            Else
+                .Columns("NombreSector").Width = 260
+            End If
             .Columns("NombreSector").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -115,6 +120,7 @@ Public Class Frm_Inv_Sector_Lista
             .Columns("Estado").HeaderText = "Estado"
             .Columns("Estado").Width = 60
             .Columns("Estado").DisplayIndex = _DisplayIndex
+            .Columns("Estado").Visible = ModoRevisionInventario
             _DisplayIndex += 1
 
         End With
@@ -242,14 +248,14 @@ Public Class Frm_Inv_Sector_Lista
         _Cl_InvUbicacion.Fx_Llenar_Zw_Inv_Sector(_Id)
 
         Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_Hoja_Detalle",
-                                            "IdInventario = " & _IdInventario & " And IdUbicacion = " & _Id)
+                                            "IdInventario = " & _IdInventario & " And IdSector = " & _Id)
         If CBool(_Reg) Then
-            MessageBoxEx.Show(Me, "No se puede eliminar la ubicación, tiene registros inventariados", "Eliminar Ubicación",
+            MessageBoxEx.Show(Me, "No se puede eliminar el sector, tiene registros inventariados", "Eliminar Sector",
                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
 
-        If MessageBoxEx.Show(Me, "¿Esta seguro de querer eliminar la Ubicación " & _Fila.Cells("Ubicacion").Value & "?", "Eliminar Ubicación",
+        If MessageBoxEx.Show(Me, "¿Esta seguro de querer eliminar el sector " & _Fila.Cells("Sector").Value & "?", "Eliminar Sector",
                              MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
             Return
         End If
@@ -382,4 +388,37 @@ Public Class Frm_Inv_Sector_Lista
         Fm.Dispose()
 
     End Sub
+
+    Private Sub Btn_ImprimirSector_Click(sender As Object, e As EventArgs) Handles Btn_ImprimirSector.Click
+
+        Dim _Sel_Impresora As Sel_Impresora = Fx_seleccionar_Impresora(Me)
+
+        If Not _Sel_Impresora.ImpresoraSeleccionada Then
+            Return
+        End If
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _IdSector As Integer = _Fila.Cells("Id").Value
+        Dim _CodigoBarras As String = _Fila.Cells("Sector").Value
+
+        'Dim _Impresora As String = _Sel_Impresora.PrtSettings.PrinterName
+
+        Sb_Imprimir_Sector(_IdSector, _CodigoBarras, _Sel_Impresora.PrtSettings)
+
+    End Sub
+
+    Sub Sb_Imprimir_Sector(_IdSector As Integer, _CodigoBarras As String, _PrinterSettings As PrinterSettings)
+
+        Dim _Cl_Imprimir_Sectores As New Cl_Imprimir_Sectores(_IdSector)
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        _Mensaje = _Cl_Imprimir_Sectores.Fx_Imprimir_Sector(_PrinterSettings)
+
+        If Not _Mensaje.EsCorrecto Then
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        End If
+
+    End Sub
+
 End Class

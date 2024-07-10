@@ -2535,4 +2535,50 @@ Error_Numero:
 
     End Function
 
+    Public Function Fx_seleccionar_Impresora(_Formulario As Form) As Sel_Impresora
+
+        Dim _Impresora As New Sel_Impresora
+
+        Dim _prtDialog As New PrintDialog
+        Dim _PrtSettings As New PrinterSettings
+
+        If _PrtSettings Is Nothing Then
+            _PrtSettings = New PrinterSettings
+        End If
+
+        With _prtDialog
+
+            .AllowPrintToFile = False
+            .AllowSelection = False
+            .AllowSomePages = False
+            .PrintToFile = False
+            .ShowHelp = False
+            .ShowNetwork = True
+
+            .PrinterSettings = _PrtSettings
+            .PrinterSettings.Copies = 1
+
+            If .ShowDialog(_Formulario) = DialogResult.OK Then
+                _PrtSettings = .PrinterSettings
+                _Impresora.ImpresoraSeleccionada = True
+                _Impresora.prtDialog = _prtDialog
+                _Impresora.PrtSettings = _PrtSettings
+            End If
+
+        End With
+
+        Return _Impresora
+
+    End Function
+
 End Module
+
+Public Class Sel_Impresora
+
+    Public Property ImpresoraSeleccionada As Boolean
+    Public Property prtDialog As New PrintDialog
+    Public Property PrtSettings As New PrinterSettings
+
+End Class
+
+

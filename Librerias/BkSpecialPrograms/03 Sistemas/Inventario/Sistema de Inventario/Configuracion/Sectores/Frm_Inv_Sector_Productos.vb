@@ -1,5 +1,4 @@
 ﻿Imports System.Drawing.Printing
-Imports BkSpecialPrograms.LsValiciones
 Imports DevComponents.DotNetBar
 
 Public Class Frm_Inv_Sector_Productos
@@ -116,24 +115,18 @@ Public Class Frm_Inv_Sector_Productos
 
     End Sub
 
-    Public Function ImprimirPicking(_Impresora As String)
+    Public Function Sb_Imprimir_Listado(_PrinterSettings As PrinterSettings)
 
         Try
 
             Dim printDoc As New PrintDocument
 
-            'Dim pkCustomSize1 As New Printing.PaperSize("Custom Paper Size", 612, 792) ' CARTA
-            'printDoc.PrinterSettings.DefaultPageSettings.PaperSize = pkCustomSize1
-            ' printDoc.DefaultPageSettings.Landscape = True
-            ' asignamos el método de evento para cada página a imprimir
             AddHandler printDoc.PrintPage, AddressOf print_PrintPage
 
-            'Indicamos la impresora
-            'Dim Imp As String
-            'Imp = trae_datoAccess(tb, "Impresora", "Tmp_Conf_Local", "Modulo = 'Imp_Picking'")
             _Pagina = 0
-            printDoc.PrinterSettings.PrinterName = _Impresora
+            printDoc.PrinterSettings = _PrinterSettings
             printDoc.Print()
+
             Return True
         Catch ex As Exception
             Return False
@@ -143,10 +136,8 @@ Public Class Frm_Inv_Sector_Productos
 
     Private Sub print_PrintPage(sender As Object, e As PrintPageEventArgs)
 
-
         ' Este evento se producirá cada vez que se imprima una nueva página
         ' imprimir HOLA MUNDO en Arial tamaño 24 y negrita
-
 
         Try
             'Vale-BkPost
@@ -337,60 +328,60 @@ Public Class Frm_Inv_Sector_Productos
 
     Private Sub BtnImprimir_Click(sender As Object, e As EventArgs) Handles BtnImprimir.Click
 
-        Dim Fm_Imp As New Frm_Seleccionar_Impresoras("")
-        Fm_Imp.ShowDialog(Me)
-        Dim Impresora As String = Fm_Imp.Pro_Impresora_Seleccionada
 
-        If Not String.IsNullOrEmpty(Impresora) Then
+        Dim _Sel_Impresora As Sel_Impresora = Fx_seleccionar_Impresora(Me)
 
-            Dim Rdb_Kopr As New Command
-            Rdb_Kopr.Checked = True
-            Rdb_Kopr.Name = "Rdb_Kopr"
-            Rdb_Kopr.Text = "Principal"
+        If Not _Sel_Impresora.ImpresoraSeleccionada Then
+            Return
+        End If
 
-            Dim Rdb_Koprra As New Command
-            Rdb_Koprra.Checked = False
-            Rdb_Koprra.Name = "Rdb_Koprra"
-            Rdb_Koprra.Text = "Rapido"
 
-            Dim Rdb_Tecnico As New Command
-            Rdb_Tecnico.Checked = False
-            Rdb_Tecnico.Name = "Rdb_Tecnico"
-            Rdb_Tecnico.Text = "Técnico"
+        Dim Rdb_Kopr As New Command
+        Rdb_Kopr.Checked = True
+        Rdb_Kopr.Name = "Rdb_Kopr"
+        Rdb_Kopr.Text = "Principal"
 
-            Dim _Opciones() As Command = {Rdb_Kopr, Rdb_Koprra, Rdb_Tecnico}
+        Dim Rdb_Koprra As New Command
+        Rdb_Koprra.Checked = False
+        Rdb_Koprra.Name = "Rdb_Koprra"
+        Rdb_Koprra.Text = "Rapido"
 
-            Dim _Info As New TaskDialogInfo("Tipo de código",
-                    eTaskDialogIcon.Information2,
-                    "Seleccione el tipo de código a imprmir",
-                    "Indique su opción",
-                    eTaskDialogButton.Ok, eTaskDialogBackgroundColor.Red, _Opciones, Nothing, Nothing, Nothing, Nothing)
+        Dim Rdb_Tecnico As New Command
+        Rdb_Tecnico.Checked = False
+        Rdb_Tecnico.Name = "Rdb_Tecnico"
+        Rdb_Tecnico.Text = "Técnico"
 
-            Dim _Resultado As eTaskDialogResult = TaskDialog.Show(_Info)
+        Dim _Opciones() As Command = {Rdb_Kopr, Rdb_Koprra, Rdb_Tecnico}
 
-            If _Resultado <> eTaskDialogResult.Ok Then
-                Return
+        Dim _Info As New TaskDialogInfo("Tipo de código",
+                eTaskDialogIcon.Information2,
+                "Seleccione el tipo de código a imprmir",
+                "Indique su opción",
+                eTaskDialogButton.Ok, eTaskDialogBackgroundColor.Red, _Opciones, Nothing, Nothing, Nothing, Nothing)
+
+        Dim _Resultado As eTaskDialogResult = TaskDialog.Show(_Info)
+
+        If _Resultado <> eTaskDialogResult.Ok Then
+            Return
+        End If
+
+        If _Resultado = eTaskDialogResult.Ok Then
+
+            If Rdb_Kopr.Checked Then
+                _CampoCodigo = "KOPR"
             End If
 
-            If _Resultado = eTaskDialogResult.Ok Then
-
-                If Rdb_Kopr.Checked Then
-                    _CampoCodigo = "KOPR"
-                End If
-
-                If Rdb_Koprra.Checked Then
-                    _CampoCodigo = "KOPRRA"
-                End If
-
-                If Rdb_Tecnico.Checked Then
-                    _CampoCodigo = "KOPRTE"
-                End If
-
+            If Rdb_Koprra.Checked Then
+                _CampoCodigo = "KOPRRA"
             End If
 
-            ImprimirPicking(Impresora)
+            If Rdb_Tecnico.Checked Then
+                _CampoCodigo = "KOPRTE"
+            End If
 
         End If
+
+        Sb_Imprimir_Listado(_Sel_Impresora.PrtSettings)
 
     End Sub
 

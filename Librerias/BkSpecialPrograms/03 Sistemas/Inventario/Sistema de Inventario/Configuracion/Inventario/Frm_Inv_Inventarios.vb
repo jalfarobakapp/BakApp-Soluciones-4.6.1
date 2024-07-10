@@ -112,6 +112,17 @@ Public Class Frm_Inv_Inventarios
             Return
         End If
 
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_Inventario",
+                                                       "Empresa = '" & _Row_Bodega.Item("Empresa") &
+                                                       "' And Sucursal = '" & _Row_Bodega.Item("KOSU") &
+                                                       "' And Bodega = '" & _Row_Bodega.Item("KOBO") & "' And Activo = 1")
+
+        If CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "Ya existe un inventario activo para la bodega seleccionada", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
         Dim Cl_Inventario As New Cl_Inventario
         Cl_Inventario.Fx_Llenar_Zw_Inv_Inventario(0)
 
