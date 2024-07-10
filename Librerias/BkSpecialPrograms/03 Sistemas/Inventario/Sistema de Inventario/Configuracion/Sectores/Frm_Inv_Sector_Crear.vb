@@ -39,18 +39,20 @@ Public Class Frm_Inv_Sector_Crear
 
         End If
 
+        Btn_Eliminar.Visible = CBool(_Id)
+
     End Sub
 
     Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
 
         If String.IsNullOrEmpty(Txt_Sector.Text) Then
-            MessageBoxEx.Show(Me, "Debe ingresar la ubicación", "Ubicación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            MessageBoxEx.Show(Me, "Debe ingresar la ubicación", "Ubicación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Txt_Sector.Focus()
             Return
         End If
 
         If String.IsNullOrEmpty(Txt_NombreSector.Text) Then
-            MessageBoxEx.Show(Me, "Debe ingresar el nombre de la ubicación", "Nombre de la ubicación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            MessageBoxEx.Show(Me, "Debe ingresar el nombre de la ubicación", "Nombre de la ubicación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Txt_NombreSector.Focus()
             Return
         End If
@@ -86,14 +88,14 @@ Public Class Frm_Inv_Sector_Crear
     Private Sub Btn_Eliminar_Click(sender As Object, e As EventArgs) Handles Btn_Eliminar.Click
 
         Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_Hoja_Detalle",
-                                            "IdInventario = " & Cl_Inventario.Zw_Inv_Inventario.Id & " And IdUbicacion = " & _Id)
+                                            "IdInventario = " & Cl_Inventario.Zw_Inv_Inventario.Id & " And IdSector = " & _Id)
         If CBool(_Reg) Then
-            MessageBoxEx.Show(Me, "No se puede eliminar la ubicación, tiene registros inventariados", "Eliminar Ubicación",
+            MessageBoxEx.Show(Me, "No se puede eliminar el sector, tiene registros inventariados", "Eliminar Sector",
                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
 
-        If MessageBoxEx.Show(Me, "¿Esta seguro de querer eliminar la Ubicación?", "Eliminar Ubicación",
+        If MessageBoxEx.Show(Me, "¿Esta seguro de querer eliminar el Sector?", "Eliminar Sector",
                              MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
             Return
         End If

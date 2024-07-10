@@ -15,6 +15,8 @@ Public Class Frm_Inv_Inventarios
 
         Sb_Formato_Generico_Grilla(Grilla_Inventarios, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Both, True, True, False)
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
 
     Private Sub Frm_Inventarios_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -120,6 +122,7 @@ Public Class Frm_Inv_Inventarios
         If CBool(_Reg) Then
             MessageBoxEx.Show(Me, "Ya existe un inventario activo para la bodega seleccionada", "Validación",
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Call Btn_Crear_Inventario_Click(Nothing, Nothing)
             Return
         End If
 
@@ -195,7 +198,7 @@ Public Class Frm_Inv_Inventarios
         Dim Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_FotoInventario", "IdInventario = " & _Id)
 
         If CBool(Reg) Then
-            MessageBoxEx.Show(Me, "Actualmente hay operaciones registradas para este inventario. " & vbCrLf &
+            MessageBoxEx.Show(Me, "Actualmente hay una Foto Stock registrada para este inventario. " & vbCrLf &
                               "No es posible eliminar la fila", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If

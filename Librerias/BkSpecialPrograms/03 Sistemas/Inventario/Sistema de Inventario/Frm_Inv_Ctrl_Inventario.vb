@@ -23,6 +23,7 @@ Public Class Frm_Inv_Ctrl_Inventario
     Private Sub Frm_Control_Inventario_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Lbl_Nombre_Inventario.Text = Cl_Inventario.Zw_Inv_Inventario.NombreInventario
+        Lbl_Estatus.Text = "Fecha de inventario: " & Cl_Inventario.Zw_Inv_Inventario.Fecha_Inventario
 
         SuperTabControl1.SelectedTabIndex = 0
 

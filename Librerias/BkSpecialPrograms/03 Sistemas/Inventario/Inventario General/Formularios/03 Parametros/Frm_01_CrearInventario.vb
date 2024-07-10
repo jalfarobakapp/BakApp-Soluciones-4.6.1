@@ -54,7 +54,7 @@ Public Class Frm_01_CrearInventario
 
         End With
 
-        Btn_FotoStock.Enabled = CBool(_IdInventario)
+        Btn_FotoStock.Visible = CBool(_IdInventario)
 
         Me.ActiveControl = Txt_NombreInventario
 
