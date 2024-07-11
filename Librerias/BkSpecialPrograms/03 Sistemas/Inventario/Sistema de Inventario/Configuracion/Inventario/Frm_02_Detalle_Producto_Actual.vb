@@ -71,7 +71,7 @@ Public Class Frm_02_Detalle_Producto_Actual
 
     Sub Sb_Ver_Detalle_Del_Producto()
 
-        Consulta_sql = "Select HDet.Id,IdHoja,Recontado,Ubicacion,Isnull(HEnc.Nro_Hoja,'') As Nro_Hoja," & vbCrLf &
+        Consulta_sql = "Select HDet.Id,IdHoja,Recontado,Sector,Ubicacion,Isnull(HEnc.Nro_Hoja,'') As Nro_Hoja," & vbCrLf &
                        "Item_Hoja,FechaHoraToma,FechaHoraToma AS Hora,Cantidad as 'Cantidad',Responsable,ISNULL(Resp.NOKOFU,'') As Digitador," & vbCrLf &
                        "HEnc.IdContador1,ISNULL(C1.Nombre,'') As Contador1,HEnc.IdContador2,ISNULL(C2.Nombre,'') As Contador2," & vbCrLf &
                        "Observaciones,Actualizado_por,Obs_Actualizacion" & vbCrLf &
@@ -91,12 +91,17 @@ Public Class Frm_02_Detalle_Producto_Actual
             OcultarEncabezadoGrilla(Grilla, True)
 
             .Columns("Recontado").HeaderText = "Recontado"
-            .Columns("Recontado").Width = 80
+            .Columns("Recontado").Width = 70
             .Columns("Recontado").Visible = True
             .Columns("Recontado").ReadOnly = True
 
+            .Columns("Sector").HeaderText = "Sector"
+            .Columns("Sector").Width = 200
+            .Columns("Sector").Visible = True
+            .Columns("Sector").ReadOnly = True
+
             .Columns("Ubicacion").HeaderText = "Ubicación"
-            .Columns("Ubicacion").Width = 180
+            .Columns("Ubicacion").Width = 100
             .Columns("Ubicacion").Visible = True
             .Columns("Ubicacion").ReadOnly = True
 
@@ -122,7 +127,7 @@ Public Class Frm_02_Detalle_Producto_Actual
             .Columns("Hora").HeaderText = "Hora"
             .Columns("Hora").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
             .Columns("Hora").DefaultCellStyle.Format = "HH:mm"
-            .Columns("Hora").Width = 55
+            .Columns("Hora").Width = 45
             .Columns("Hora").Visible = True
             .Columns("Hora").ReadOnly = True
 

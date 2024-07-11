@@ -1,5 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports DevComponents.DotNetBar
+Imports DevComponents.DotNetBar.Controls
 
 Public Class Frm_IngresarHoja
 
@@ -36,9 +37,11 @@ Public Class Frm_IngresarHoja
             Cl_Conteo.Fx_Llenar_Zw_Inv_Hoja(_IdHoja)
         Else
             Cl_Conteo.Fx_Nueva_Hoja(Cl_Inventario.Zw_Inv_Inventario, _NombreEquipo, FUNCIONARIO)
+            Txt_Nro_Hoja.Text = "En Construcción..."
         End If
 
         Sb_Formato_Generico_Grilla(Grilla_Detalle, 18, New Font("Tahoma", 8), Color.White, ScrollBars.Vertical, True, False, False)
+        Sb_Color_Botones_Barra(Bar1)
 
     End Sub
 
@@ -46,13 +49,16 @@ Public Class Frm_IngresarHoja
 
         Chk_Reconteo.Checked = Reconteo
 
-        Me.ActiveControl = Txt_Nro_Hoja
+        Me.ActiveControl = Txt_IdContador1
         Sb_ActualizarGrilla()
 
         AddHandler Grilla_Detalle.RowValidating, AddressOf Grilla_Detalle_RowValidating
         AddHandler Grilla_Detalle.EditingControlShowing, AddressOf Grilla_Detalle_EditingControlShowing
-        AddHandler Grilla_Detalle.MouseDown, AddressOf Sb_Grilla_MouseDown
+        AddHandler Grilla_Detalle.MouseDown, AddressOf Grilla_MouseDown
         AddHandler Grilla_Detalle.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+
+        Txt_Nro_Hoja.ReadOnly = True
+        Txt_Nro_Hoja.Enabled = CBool(_IdHoja)
 
         Txt_IdContador1.Tag = 0
         Txt_IdContador2.Tag = 0
@@ -83,7 +89,7 @@ Public Class Frm_IngresarHoja
 
             .Columns("Sector").Visible = True
             .Columns("Sector").HeaderText = "Sector"
-            .Columns("Sector").Width = 100
+            .Columns("Sector").Width = 110
             .Columns("Sector").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -177,6 +183,21 @@ Public Class Frm_IngresarHoja
                             MessageBoxEx.Show(Me, "Debe ingresar el sector", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                             Grilla_Detalle.CurrentCell = _Fila.Cells("Sector")
                             Return
+                        End If
+
+                        If _Cabeza = "Sector" Then
+
+                            Dim _Codigo As String
+
+                            If Grilla_Detalle.RowCount > 1 Then
+                                _Codigo = Grilla_Detalle.Rows(Grilla_Detalle.CurrentCell.RowIndex - 1).Cells("Codigo").Value
+                                If String.IsNullOrWhiteSpace(_Codigo) Then
+                                    MessageBoxEx.Show(Me, "Debe ingresar un código de producto en la fila anterior", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                    Grilla_Detalle.CurrentCell = Grilla_Detalle.Rows(Grilla_Detalle.RowCount - 1).Cells("Codigo")
+                                    Return
+                                End If
+                            End If
+
                         End If
 
                         SendKeys.Send("{F2}")
@@ -414,10 +435,19 @@ Public Class Frm_IngresarHoja
 
                         MessageBoxEx.Show(Me, "Sector no existe", "Validación", MessageBoxButtons.OK, _Mensaje.Icono)
 
-                        If Not _Fila.IsNewRow Then
-                            Grilla_Detalle.Rows.RemoveAt(_Index)
+                        _Sector = Fx_BuscarSector()
+                        If String.IsNullOrEmpty(_Sector) Then
+                            If Not _Fila.IsNewRow Then
+                                Grilla_Detalle.Rows.RemoveAt(_Index)
+                            End If
+                            Return
                         End If
-                        Return
+                        _Fila.Cells("Sector").Value = _Sector
+
+                        'If Not _Fila.IsNewRow Then
+                        '    Grilla_Detalle.Rows.RemoveAt(_Index)
+                        'End If
+                        'Return
 
                     End If
 
@@ -468,6 +498,22 @@ Public Class Frm_IngresarHoja
         End Try
 
     End Sub
+
+    Function Fx_BuscarSector() As String
+
+        Dim _Sector As String = String.Empty
+
+        Dim Fm As New Frm_Inv_Sector_Lista(_IdInventario)
+        Fm.ModoSeleccionSector = True
+        Fm.Text = "UBICACIONES DEL INVENTARIO: " & Cl_Inventario.Zw_Inv_Inventario.NombreInventario
+        Fm.ShowDialog(Me)
+        If Fm._SectorSeleccionado Then
+            _Sector = Fm._Zw_Inv_Sector_Seleccionado.Sector
+        End If
+
+        Return _Sector
+
+    End Function
 
     Private Sub Grilla_Detalle_RowValidating(sender As Object, e As DataGridViewCellCancelEventArgs)
 
@@ -623,11 +669,11 @@ Public Class Frm_IngresarHoja
 
     Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
 
-        If String.IsNullOrEmpty(Txt_Nro_Hoja.Text) Then
-            MessageBoxEx.Show(Me, "Debe ingresar el número de hoja", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Txt_Nro_Hoja.Focus()
-            Return
-        End If
+        'If String.IsNullOrEmpty(Txt_Nro_Hoja.Text) Then
+        '    MessageBoxEx.Show(Me, "Debe ingresar el número de hoja", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        '    Txt_Nro_Hoja.Focus()
+        '    Return
+        'End If
 
         If String.IsNullOrEmpty(Txt_IdContador1.Text) Then
             MessageBoxEx.Show(Me, "Debe ingresar el contador 1", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -794,7 +840,7 @@ Public Class Frm_IngresarHoja
         End With
     End Sub
 
-    Sub Sb_Grilla_MouseDown(sender As Object, e As MouseEventArgs)
+    Sub Grilla_MouseDown(sender As Object, e As MouseEventArgs)
 
         If e.Button = MouseButtons.Right Then
 
@@ -810,14 +856,47 @@ Public Class Frm_IngresarHoja
                     Return
                 End If
 
-                Grilla_Detalle.Rows(_Hti.RowIndex).Selected = True
+                If Grilla_Detalle.CurrentRow.IsNewRow Then
+                    Return
+                End If
 
+                Grilla_Detalle.Rows(_Hti.RowIndex).Selected = True
                 ShowContextMenu(Menu_Contextual_01)
 
             End If
 
         End If
 
+    End Sub
+
+    Private Sub Btn_EliminarFila_Click(sender As Object, e As EventArgs) Handles Btn_EliminarFila.Click
+
+        Dim _Fila As DataGridViewRow = Grilla_Detalle.CurrentRow
+        Dim _Index As Integer = _Fila.Index
+
+        Try
+            If Not _Fila.IsNewRow Then
+                ' Asegúrate de que el índice sea válido antes de intentar eliminar
+                If _Index >= 0 AndAlso _Index < Grilla_Detalle.Rows.Count Then
+
+                    If MessageBoxEx.Show(Me, "¿Está seguro de eliminar la fila seleccionada?", "Eliminar Fila",
+                                         MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                        Return
+                    End If
+
+                    Grilla_Detalle.Rows.RemoveAt(_Index)
+
+                End If
+            End If
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, "Error al eliminar la fila: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
+    End Sub
+
+    Private Sub Grilla_Detalle_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Detalle.CellDoubleClick
+        ' Simula la presión de la tecla Enter
+        SendKeys.Send("{ENTER}")
     End Sub
 End Class
 

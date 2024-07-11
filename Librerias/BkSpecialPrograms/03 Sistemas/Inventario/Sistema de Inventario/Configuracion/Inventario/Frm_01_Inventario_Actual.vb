@@ -48,6 +48,7 @@ Public Class Frm_01_Inventario_Actual
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Chk_MostrarSoloInventariados.CheckedChanged, AddressOf Sb_Filtrar
 
+
         Sb_ActualizarGrilla()
 
     End Sub
@@ -190,6 +191,7 @@ Public Class Frm_01_Inventario_Actual
                 Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
                 If Hitest.Type = DataGridViewHitTestType.Cell Then
                     .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
+                    ShowContextMenu(Menu_Contextual_01)
                 End If
             End With
         End If
@@ -200,7 +202,7 @@ Public Class Frm_01_Inventario_Actual
         Me.Close()
     End Sub
 
-    Private Sub BtnExcel_Click(sender As System.Object, e As System.EventArgs) Handles BtnExcel.Click
+    Private Sub BtnExcel_Click(sender As System.Object, e As System.EventArgs)
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Inv_Inventario" & vbCrLf &
                         "Where IdInventario = " & _IdInventario
@@ -322,30 +324,6 @@ Public Class Frm_01_Inventario_Actual
 
     End Sub
 
-
-
-    Private Sub ButtonItem2_Click(sender As System.Object, e As System.EventArgs) Handles BtnExporAjuTodos.Click
-        Consulta_sql = "select CodigoPR as 'Codigo',Cant_Inventariada as 'Cantidad',PPP as 'Costo'" & vbCrLf &
-                      "From Zw_Inv_Inventario" & vbCrLf &
-                      "Where IdInventario = " & _IdInventario
-
-        Dim NombreFile As String = "Inventario TODOS " & FormatDateTime(_Fecha_Inventario, DateFormat.LongDate)
-
-        ExportarTabla_JetExcel(Consulta_sql, Me, NombreFile)
-
-    End Sub
-
-    Private Sub ButtonItem3_Click(sender As System.Object, e As System.EventArgs) Handles BtnExporAjuCerrados.Click
-        Consulta_sql = "select CodigoPR as 'Codigo',Cant_Inventariada as 'Cantidad',PPP as 'Costo'" & vbCrLf &
-                       "From Zw_Inv_Inventario" & vbCrLf &
-                       "Where IdInventario = " & _IdInventario & vbCrLf &
-                       "And Cerrado = 1 and Cant_Inventariada > 0"
-
-        Dim NombreFile As String = "Inventario SOLO CERRADOS " & FormatDateTime(_Fecha_Inventario, DateFormat.LongDate)
-
-        ExportarTabla_JetExcel(Consulta_sql, Me, NombreFile)
-    End Sub
-
     Private Sub BtnFiltroSectores_Click(sender As System.Object, e As System.EventArgs)
 
         Dim Fm As New Frm_03_Sectores_Inv
@@ -363,16 +341,6 @@ Public Class Frm_01_Inventario_Actual
         'If String.IsNullOrEmpty(Trim(_CodSectorSel)) Then
         '    MessageBoxEx.Show("No se selecciono ningun sector", "Filtrar por sector", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         'End If
-
-    End Sub
-
-    Private Sub ChkTodosLosSectores_Click(sender As System.Object, e As System.EventArgs)
-
-        If ChkTodosLosSectores.Checked Then
-            BtnFiltroSectores.Enabled = False
-        Else
-            BtnFiltroSectores.Enabled = True
-        End If
 
     End Sub
 
@@ -443,4 +411,35 @@ Public Class Frm_01_Inventario_Actual
             End Try
         End With
     End Sub
+
+    Private Sub Btn_ExportarAjuste_Todo_Click(sender As Object, e As EventArgs) Handles Btn_ExportarAjuste_Todo.Click
+
+        Consulta_sql = "select Codigo As 'Codigo',Cantidad As 'Cantidad',Costo as 'Costo'" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Inv_Inventario" & vbCrLf &
+                       "Where IdInventario = " & _IdInventario
+
+        Dim NombreFile As String = "Inventario TODOS " & FormatDateTime(_Fecha_Inventario, DateFormat.LongDate)
+
+        ExportarTabla_JetExcel(Consulta_sql, Me, NombreFile)
+
+    End Sub
+
+    Private Sub Btn_ExportarAjuste_Cerrados_Click(sender As Object, e As EventArgs) Handles Btn_ExportarAjuste_Cerrados.Click
+
+        Consulta_sql = "select Codigo As 'Codigo',Cantidad As 'Cantidad',Costo as 'Costo'" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Inv_Inventario" & vbCrLf &
+                       "Where IdInventario = " & _IdInventario & vbCrLf &
+                       "And Cerrado = 1 And Cantidad > 0"
+
+        Dim NombreFile As String = "Inventario SOLO CERRADOS " & FormatDateTime(_Fecha_Inventario, DateFormat.LongDate)
+
+        ExportarTabla_JetExcel(Consulta_sql, Me, NombreFile)
+
+    End Sub
+
+    Private Sub Btn_ExportarAjuste_Click(sender As Object, e As EventArgs) Handles Btn_ExportarAjuste.Click
+        ShowContextMenu(Menu_Contextual_ExportarAjuste)
+    End Sub
+
+
 End Class

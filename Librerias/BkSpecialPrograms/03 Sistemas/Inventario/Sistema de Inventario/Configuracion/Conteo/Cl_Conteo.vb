@@ -234,12 +234,12 @@ Public Class Cl_Conteo
 
             With Zw_Inv_Hoja
 
-                '.Nro_Hoja = Fx_NvoNroHoja(.IdInventario)
+                .Nro_Hoja = Fx_NvoNroHoja(.IdInventario)
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Inv_Hoja (IdInventario,Nro_Hoja,NombreEquipo,FechaCreacion,CodResponsable," &
-                               "IdContador1,IdContador2,FechaLevantamiento,Reconteo) Values " &
+                               "IdContador1,IdContador2,Reconteo) Values " &
                                "(" & .IdInventario & ",'" & .Nro_Hoja & "','" & .NombreEquipo & "','" & .FechaCreacion & "','" & .CodResponsable & "'" &
-                               "," & .IdContador1 & "," & .IdContador2 & ",'" & Format(.FechaLevantamiento, "yyyyMMdd") & "'," & Convert.ToInt32(.Reconteo) & ")"
+                               "," & .IdContador1 & "," & .IdContador2 & "," & Convert.ToInt32(.Reconteo) & ")"
 
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
@@ -261,6 +261,7 @@ Public Class Cl_Conteo
                 With _Fila
 
                     .IdHoja = Zw_Inv_Hoja.Id
+                    .Nro_Hoja = Zw_Inv_Hoja.Nro_Hoja
 
                     If Not String.IsNullOrEmpty(.Codigo) Then
 
@@ -305,7 +306,8 @@ Public Class Cl_Conteo
 
             _Mensaje_Stem.EsCorrecto = True
             _Mensaje_Stem.Detalle = "Crear Hoja"
-            _Mensaje_Stem.Mensaje = "Documento grabado correctamente"
+            _Mensaje_Stem.Mensaje = "Documento grabado correctamente" & vbCrLf &
+                                    "Número de Hoja: " & Zw_Inv_Hoja.Nro_Hoja
             _Mensaje_Stem.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception

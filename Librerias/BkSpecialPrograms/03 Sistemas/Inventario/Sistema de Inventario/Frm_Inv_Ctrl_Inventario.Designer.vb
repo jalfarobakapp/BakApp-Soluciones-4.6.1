@@ -27,6 +27,7 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Me.ConsultaPreciosContenedor = New DevComponents.DotNetBar.ItemContainer()
         Me.Btn_VerInventario = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_CrearHoja = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_InventarioXSector = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Lbl_Nombre_Inventario = New DevComponents.DotNetBar.LabelX()
         Me.Line1 = New DevComponents.DotNetBar.Controls.Line()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
@@ -40,13 +41,12 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.MetroTilePanel2 = New DevComponents.DotNetBar.Metro.MetroTilePanel()
         Me.ItemContainer1 = New DevComponents.DotNetBar.ItemContainer()
+        Me.Btn_Sectores = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_Contadores = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_Parejas = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.SuperTabItem2 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
-        Me.Btn_Parejas = New DevComponents.DotNetBar.Metro.MetroTileItem()
-        Me.Btn_Sectores = New DevComponents.DotNetBar.Metro.MetroTileItem()
-        Me.Btn_InventarioXSector = New DevComponents.DotNetBar.Metro.MetroTileItem()
-        Me.Btn_Contadores = New DevComponents.DotNetBar.Metro.MetroTileItem()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControl1.SuspendLayout()
@@ -97,7 +97,7 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Me.Btn_VerInventario.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
         Me.Btn_VerInventario.Name = "Btn_VerInventario"
         Me.Btn_VerInventario.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_VerInventario.Text = "<font size=""+4""><b>INVENTARIO</b></font><br/><font size=""-1"">Ver estadi de avance" &
+        Me.Btn_VerInventario.Text = "<font size=""+4""><b>INVENTARIO</b></font><br/><font size=""-1"">Ver estado de avance" &
     " del inventario.</font>"
         Me.Btn_VerInventario.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
         Me.Btn_VerInventario.TileSize = New System.Drawing.Size(200, 100)
@@ -124,8 +124,8 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Me.Btn_CrearHoja.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
         Me.Btn_CrearHoja.Name = "Btn_CrearHoja"
         Me.Btn_CrearHoja.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_CrearHoja.Text = "<font size=""+4""><b>CREAR HOJA</b></font><br/><font size=""-1"">Detalle del plan de " &
-    "trabajo</font>"
+        Me.Btn_CrearHoja.Text = "<font size=""+4""><b>CREAR HOJA</b></font><br/><font size=""-1"">Ingresar datos de co" &
+    "nteo al sistema</font>"
         Me.Btn_CrearHoja.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
         Me.Btn_CrearHoja.TileSize = New System.Drawing.Size(200, 100)
         '
@@ -143,6 +143,33 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Me.Btn_CrearHoja.TileStyle.PaddingTop = 4
         Me.Btn_CrearHoja.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_CrearHoja.TitleText = "BakApp"
+        '
+        'Btn_InventarioXSector
+        '
+        Me.Btn_InventarioXSector.Image = CType(resources.GetObject("Btn_InventarioXSector.Image"), System.Drawing.Image)
+        Me.Btn_InventarioXSector.ImageIndent = New System.Drawing.Point(8, -10)
+        Me.Btn_InventarioXSector.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_InventarioXSector.Name = "Btn_InventarioXSector"
+        Me.Btn_InventarioXSector.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_InventarioXSector.Text = "<font size=""+4""><b>INVENTARIO POR SECTORES</b></font><br/><font size=""-1"">Ver inf" &
+    "orme  de avance por sectores</font>"
+        Me.Btn_InventarioXSector.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
+        Me.Btn_InventarioXSector.TileSize = New System.Drawing.Size(200, 100)
+        '
+        '
+        '
+        Me.Btn_InventarioXSector.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(76, Byte), Integer))
+        Me.Btn_InventarioXSector.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(76, Byte), Integer))
+        Me.Btn_InventarioXSector.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_InventarioXSector.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(76, Byte), Integer))
+        Me.Btn_InventarioXSector.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(76, Byte), Integer))
+        Me.Btn_InventarioXSector.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_InventarioXSector.TileStyle.PaddingBottom = 4
+        Me.Btn_InventarioXSector.TileStyle.PaddingLeft = 4
+        Me.Btn_InventarioXSector.TileStyle.PaddingRight = 4
+        Me.Btn_InventarioXSector.TileStyle.PaddingTop = 4
+        Me.Btn_InventarioXSector.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_InventarioXSector.TitleText = "BakApp"
         '
         'Lbl_Nombre_Inventario
         '
@@ -262,8 +289,8 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Me.SuperTabControl1.ControlBox.MenuBox.Name = ""
         Me.SuperTabControl1.ControlBox.Name = ""
         Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
         Me.SuperTabControl1.ForeColor = System.Drawing.Color.Black
         Me.SuperTabControl1.Location = New System.Drawing.Point(32, 63)
         Me.SuperTabControl1.Name = "SuperTabControl1"
@@ -323,29 +350,59 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Me.ItemContainer1.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.ItemContainer1.TitleStyle.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         '
-        'SuperTabItem2
+        'Btn_Sectores
         '
-        Me.SuperTabItem2.AttachedControl = Me.SuperTabControlPanel2
-        Me.SuperTabItem2.GlobalItem = False
-        Me.SuperTabItem2.Name = "SuperTabItem2"
-        Me.SuperTabItem2.Text = "CONFIGURACION"
+        Me.Btn_Sectores.Image = CType(resources.GetObject("Btn_Sectores.Image"), System.Drawing.Image)
+        Me.Btn_Sectores.ImageIndent = New System.Drawing.Point(8, -10)
+        Me.Btn_Sectores.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_Sectores.Name = "Btn_Sectores"
+        Me.Btn_Sectores.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_Sectores.Text = "<font size=""+4""><b>SECTORES</b></font><br/><font size=""-1"">Mantención de sectores" &
+    "</font>"
+        Me.Btn_Sectores.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
+        Me.Btn_Sectores.TileSize = New System.Drawing.Size(200, 100)
         '
-        'SuperTabControlPanel1
         '
-        Me.SuperTabControlPanel1.Controls.Add(Me.MetroTilePanel1)
-        Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 25)
-        Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
-        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(650, 393)
-        Me.SuperTabControlPanel1.TabIndex = 1
-        Me.SuperTabControlPanel1.TabItem = Me.SuperTabItem1
         '
-        'SuperTabItem1
+        Me.Btn_Sectores.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(76, Byte), Integer))
+        Me.Btn_Sectores.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(76, Byte), Integer))
+        Me.Btn_Sectores.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_Sectores.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(76, Byte), Integer))
+        Me.Btn_Sectores.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(76, Byte), Integer))
+        Me.Btn_Sectores.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_Sectores.TileStyle.PaddingBottom = 4
+        Me.Btn_Sectores.TileStyle.PaddingLeft = 4
+        Me.Btn_Sectores.TileStyle.PaddingRight = 4
+        Me.Btn_Sectores.TileStyle.PaddingTop = 4
+        Me.Btn_Sectores.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_Sectores.TitleText = "BakApp"
         '
-        Me.SuperTabItem1.AttachedControl = Me.SuperTabControlPanel1
-        Me.SuperTabItem1.GlobalItem = False
-        Me.SuperTabItem1.Name = "SuperTabItem1"
-        Me.SuperTabItem1.Text = "MANTENCION DE INVENTARIO"
+        'Btn_Contadores
+        '
+        Me.Btn_Contadores.Image = CType(resources.GetObject("Btn_Contadores.Image"), System.Drawing.Image)
+        Me.Btn_Contadores.ImageIndent = New System.Drawing.Point(8, -10)
+        Me.Btn_Contadores.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_Contadores.Name = "Btn_Contadores"
+        Me.Btn_Contadores.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_Contadores.Text = "<font size=""+4""><b>CONTADORES</b></font><br/><font size=""-1"">Crear, editar, elimi" &
+    "nar</font>"
+        Me.Btn_Contadores.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
+        Me.Btn_Contadores.TileSize = New System.Drawing.Size(200, 100)
+        '
+        '
+        '
+        Me.Btn_Contadores.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(155, Byte), Integer))
+        Me.Btn_Contadores.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(155, Byte), Integer))
+        Me.Btn_Contadores.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_Contadores.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(155, Byte), Integer))
+        Me.Btn_Contadores.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(155, Byte), Integer))
+        Me.Btn_Contadores.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_Contadores.TileStyle.PaddingBottom = 4
+        Me.Btn_Contadores.TileStyle.PaddingLeft = 4
+        Me.Btn_Contadores.TileStyle.PaddingRight = 4
+        Me.Btn_Contadores.TileStyle.PaddingTop = 4
+        Me.Btn_Contadores.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_Contadores.TitleText = "BakApp"
         '
         'Btn_Parejas
         '
@@ -375,86 +432,29 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Me.Btn_Parejas.TitleText = "BakApp"
         Me.Btn_Parejas.Visible = False
         '
-        'Btn_Sectores
+        'SuperTabItem2
         '
-        Me.Btn_Sectores.Image = CType(resources.GetObject("Btn_Sectores.Image"), System.Drawing.Image)
-        Me.Btn_Sectores.ImageIndent = New System.Drawing.Point(8, -10)
-        Me.Btn_Sectores.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
-        Me.Btn_Sectores.Name = "Btn_Sectores"
-        Me.Btn_Sectores.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_Sectores.Text = "<font size=""+4""><b>UBICACIONES/SECTORES</b></font><font size=""-1"">Mantención de u" &
-    "bicaciones y/o sectores</font>"
-        Me.Btn_Sectores.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
-        Me.Btn_Sectores.TileSize = New System.Drawing.Size(200, 100)
+        Me.SuperTabItem2.AttachedControl = Me.SuperTabControlPanel2
+        Me.SuperTabItem2.GlobalItem = False
+        Me.SuperTabItem2.Name = "SuperTabItem2"
+        Me.SuperTabItem2.Text = "CONFIGURACION"
         '
+        'SuperTabControlPanel1
         '
+        Me.SuperTabControlPanel1.Controls.Add(Me.MetroTilePanel1)
+        Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 25)
+        Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
+        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(650, 393)
+        Me.SuperTabControlPanel1.TabIndex = 1
+        Me.SuperTabControlPanel1.TabItem = Me.SuperTabItem1
         '
-        Me.Btn_Sectores.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(76, Byte), Integer))
-        Me.Btn_Sectores.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(76, Byte), Integer))
-        Me.Btn_Sectores.TileStyle.BackColorGradientAngle = 45
-        Me.Btn_Sectores.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(76, Byte), Integer))
-        Me.Btn_Sectores.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(76, Byte), Integer))
-        Me.Btn_Sectores.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.Btn_Sectores.TileStyle.PaddingBottom = 4
-        Me.Btn_Sectores.TileStyle.PaddingLeft = 4
-        Me.Btn_Sectores.TileStyle.PaddingRight = 4
-        Me.Btn_Sectores.TileStyle.PaddingTop = 4
-        Me.Btn_Sectores.TileStyle.TextColor = System.Drawing.Color.White
-        Me.Btn_Sectores.TitleText = "BakApp"
+        'SuperTabItem1
         '
-        'Btn_InventarioXSector
-        '
-        Me.Btn_InventarioXSector.Image = CType(resources.GetObject("Btn_InventarioXSector.Image"), System.Drawing.Image)
-        Me.Btn_InventarioXSector.ImageIndent = New System.Drawing.Point(8, -10)
-        Me.Btn_InventarioXSector.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
-        Me.Btn_InventarioXSector.Name = "Btn_InventarioXSector"
-        Me.Btn_InventarioXSector.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_InventarioXSector.Text = "<font size=""+4""><b>INVENTARIO POR SECTORES</b></font><br/><font size=""-1"">Ver inf" &
-    "orme de avance por sectores</font>"
-        Me.Btn_InventarioXSector.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
-        Me.Btn_InventarioXSector.TileSize = New System.Drawing.Size(200, 100)
-        '
-        '
-        '
-        Me.Btn_InventarioXSector.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(76, Byte), Integer))
-        Me.Btn_InventarioXSector.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(76, Byte), Integer))
-        Me.Btn_InventarioXSector.TileStyle.BackColorGradientAngle = 45
-        Me.Btn_InventarioXSector.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(76, Byte), Integer))
-        Me.Btn_InventarioXSector.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(76, Byte), Integer))
-        Me.Btn_InventarioXSector.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.Btn_InventarioXSector.TileStyle.PaddingBottom = 4
-        Me.Btn_InventarioXSector.TileStyle.PaddingLeft = 4
-        Me.Btn_InventarioXSector.TileStyle.PaddingRight = 4
-        Me.Btn_InventarioXSector.TileStyle.PaddingTop = 4
-        Me.Btn_InventarioXSector.TileStyle.TextColor = System.Drawing.Color.White
-        Me.Btn_InventarioXSector.TitleText = "BakApp"
-        '
-        'Btn_Contadores
-        '
-        Me.Btn_Contadores.Image = CType(resources.GetObject("Btn_Contadores.Image"), System.Drawing.Image)
-        Me.Btn_Contadores.ImageIndent = New System.Drawing.Point(8, -10)
-        Me.Btn_Contadores.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
-        Me.Btn_Contadores.Name = "Btn_Contadores"
-        Me.Btn_Contadores.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_Contadores.Text = "<font size=""+4""><b>CONTADORES</b></font><br/><font size=""-1"">Crear, editar, elimi" &
-    "nar</font>"
-        Me.Btn_Contadores.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
-        Me.Btn_Contadores.TileSize = New System.Drawing.Size(200, 100)
-        '
-        '
-        '
-        Me.Btn_Contadores.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(155, Byte), Integer))
-        Me.Btn_Contadores.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(155, Byte), Integer))
-        Me.Btn_Contadores.TileStyle.BackColorGradientAngle = 45
-        Me.Btn_Contadores.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(155, Byte), Integer))
-        Me.Btn_Contadores.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(155, Byte), Integer))
-        Me.Btn_Contadores.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.Btn_Contadores.TileStyle.PaddingBottom = 4
-        Me.Btn_Contadores.TileStyle.PaddingLeft = 4
-        Me.Btn_Contadores.TileStyle.PaddingRight = 4
-        Me.Btn_Contadores.TileStyle.PaddingTop = 4
-        Me.Btn_Contadores.TileStyle.TextColor = System.Drawing.Color.White
-        Me.Btn_Contadores.TitleText = "BakApp"
+        Me.SuperTabItem1.AttachedControl = Me.SuperTabControlPanel1
+        Me.SuperTabItem1.GlobalItem = False
+        Me.SuperTabItem1.Name = "SuperTabItem1"
+        Me.SuperTabItem1.Text = "MANTENCION DE INVENTARIO"
         '
         'Frm_Inv_Ctrl_Inventario
         '

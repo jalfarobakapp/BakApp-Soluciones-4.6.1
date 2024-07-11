@@ -23,34 +23,28 @@ Partial Class Frm_01_Inventario_Actual
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_01_Inventario_Actual))
-        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
-        Me.BtnActualizar = New DevComponents.DotNetBar.ButtonItem()
-        Me.BtnExcel = New DevComponents.DotNetBar.ButtonItem()
-        Me.BtnBuscarProducto = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnCerrar = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnCerrarSinDiferencias = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnCerrarInventariados = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnCerrarTodosInvCero = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnLevantados = New DevComponents.DotNetBar.ButtonItem()
-        Me.ButtonItem1 = New DevComponents.DotNetBar.ButtonItem()
-        Me.BtnExporAjuTodos = New DevComponents.DotNetBar.ButtonItem()
-        Me.BtnExporAjuCerrados = New DevComponents.DotNetBar.ButtonItem()
-        Me.BtnFiltroSectores = New DevComponents.DotNetBar.ButtonItem()
-        Me.ButtonItem2 = New DevComponents.DotNetBar.ButtonItem()
-        Me.ChkTodosLosSectores = New DevComponents.DotNetBar.CheckBoxItem()
+        Me.Btn_ExportarAjuste = New DevComponents.DotNetBar.ButtonItem()
         Me.LblTotal_Diferencia = New DevComponents.DotNetBar.LabelX()
         Me.LblTotal_Inventario = New DevComponents.DotNetBar.LabelX()
         Me.LblTotal_FotoStock = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
-        Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_RevisarProducto = New DevComponents.DotNetBar.ButtonItem()
-        Me.LabelItem3 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Menu_Contextual_ExportarAjuste = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_ExportarAjuste_Todo = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_ExportarAjuste_Cerrados = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
@@ -58,6 +52,9 @@ Partial Class Frm_01_Inventario_Actual
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Filtrar = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Chk_MostrarSoloInventariados = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.ButtonItem1 = New DevComponents.DotNetBar.ButtonItem()
+        Me.ButtonItem2 = New DevComponents.DotNetBar.ButtonItem()
+        Me.ButtonItem3 = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -72,7 +69,7 @@ Partial Class Frm_01_Inventario_Actual
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnActualizar, Me.BtnExcel, Me.BtnBuscarProducto, Me.BtnCerrar, Me.ButtonItem1, Me.BtnFiltroSectores, Me.ButtonItem2, Me.ChkTodosLosSectores})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Actualizar, Me.Btn_ExportarAjuste, Me.BtnCerrar})
         Me.Bar2.Location = New System.Drawing.Point(0, 603)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(1078, 41)
@@ -82,29 +79,13 @@ Partial Class Frm_01_Inventario_Actual
         Me.Bar2.TabStop = False
         Me.Bar2.Text = "Bar2"
         '
-        'BtnActualizar
+        'Btn_Actualizar
         '
-        Me.BtnActualizar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.BtnActualizar.ForeColor = System.Drawing.Color.Black
-        Me.BtnActualizar.Image = CType(resources.GetObject("BtnActualizar.Image"), System.Drawing.Image)
-        Me.BtnActualizar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.BtnActualizar.Name = "BtnActualizar"
-        '
-        'BtnExcel
-        '
-        Me.BtnExcel.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.BtnExcel.ForeColor = System.Drawing.Color.Black
-        Me.BtnExcel.Image = CType(resources.GetObject("BtnExcel.Image"), System.Drawing.Image)
-        Me.BtnExcel.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.BtnExcel.Name = "BtnExcel"
-        '
-        'BtnBuscarProducto
-        '
-        Me.BtnBuscarProducto.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.BtnBuscarProducto.ForeColor = System.Drawing.Color.Black
-        Me.BtnBuscarProducto.Image = CType(resources.GetObject("BtnBuscarProducto.Image"), System.Drawing.Image)
-        Me.BtnBuscarProducto.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.BtnBuscarProducto.Name = "BtnBuscarProducto"
+        Me.Btn_Actualizar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Actualizar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Actualizar.Image = CType(resources.GetObject("Btn_Actualizar.Image"), System.Drawing.Image)
+        Me.Btn_Actualizar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_Actualizar.Name = "Btn_Actualizar"
         '
         'BtnCerrar
         '
@@ -134,45 +115,13 @@ Partial Class Frm_01_Inventario_Actual
         Me.BtnLevantados.Name = "BtnLevantados"
         Me.BtnLevantados.Text = "Marcar como levantados todos los productos cerrados"
         '
-        'ButtonItem1
+        'Btn_ExportarAjuste
         '
-        Me.ButtonItem1.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.ButtonItem1.ForeColor = System.Drawing.Color.Black
-        Me.ButtonItem1.Image = CType(resources.GetObject("ButtonItem1.Image"), System.Drawing.Image)
-        Me.ButtonItem1.Name = "ButtonItem1"
-        Me.ButtonItem1.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnExporAjuTodos, Me.BtnExporAjuCerrados})
-        Me.ButtonItem1.Text = "Expotar archivo apara ajuste"
-        '
-        'BtnExporAjuTodos
-        '
-        Me.BtnExporAjuTodos.Name = "BtnExporAjuTodos"
-        Me.BtnExporAjuTodos.Text = "Exportar todo"
-        '
-        'BtnExporAjuCerrados
-        '
-        Me.BtnExporAjuCerrados.Name = "BtnExporAjuCerrados"
-        Me.BtnExporAjuCerrados.Text = "Exportar solo cerrados"
-        '
-        'BtnFiltroSectores
-        '
-        Me.BtnFiltroSectores.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.BtnFiltroSectores.Enabled = False
-        Me.BtnFiltroSectores.Image = CType(resources.GetObject("BtnFiltroSectores.Image"), System.Drawing.Image)
-        Me.BtnFiltroSectores.Name = "BtnFiltroSectores"
-        Me.BtnFiltroSectores.Text = "Filtrar por sector tomado"
-        '
-        'ButtonItem2
-        '
-        Me.ButtonItem2.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.ButtonItem2.Image = CType(resources.GetObject("ButtonItem2.Image"), System.Drawing.Image)
-        Me.ButtonItem2.Name = "ButtonItem2"
-        '
-        'ChkTodosLosSectores
-        '
-        Me.ChkTodosLosSectores.Checked = True
-        Me.ChkTodosLosSectores.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.ChkTodosLosSectores.Name = "ChkTodosLosSectores"
-        Me.ChkTodosLosSectores.Text = "Mostrar todos los sectores"
+        Me.Btn_ExportarAjuste.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_ExportarAjuste.ForeColor = System.Drawing.Color.Black
+        Me.Btn_ExportarAjuste.Image = CType(resources.GetObject("Btn_ExportarAjuste.Image"), System.Drawing.Image)
+        Me.Btn_ExportarAjuste.Name = "Btn_ExportarAjuste"
+        Me.Btn_ExportarAjuste.Text = "Expotar archivo apara ajuste"
         '
         'LblTotal_Diferencia
         '
@@ -267,10 +216,10 @@ Partial Class Frm_01_Inventario_Actual
         '
         Me.Menu_Contextual.AntiAlias = True
         Me.Menu_Contextual.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
+        Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01, Me.Menu_Contextual_ExportarAjuste, Me.ButtonItem1})
         Me.Menu_Contextual.Location = New System.Drawing.Point(45, 53)
         Me.Menu_Contextual.Name = "Menu_Contextual"
-        Me.Menu_Contextual.Size = New System.Drawing.Size(412, 25)
+        Me.Menu_Contextual.Size = New System.Drawing.Size(519, 25)
         Me.Menu_Contextual.Stretch = True
         Me.Menu_Contextual.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Menu_Contextual.TabIndex = 49
@@ -281,21 +230,8 @@ Partial Class Frm_01_Inventario_Actual
         '
         Me.Menu_Contextual_01.AutoExpandOnClick = True
         Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
-        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_RevisarProducto, Me.LabelItem3, Me.Btn_Copiar})
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_RevisarProducto, Me.Btn_Copiar})
         Me.Menu_Contextual_01.Text = "Opciones documento"
-        '
-        'LabelItem1
-        '
-        Me.LabelItem1.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
-        Me.LabelItem1.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
-        Me.LabelItem1.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
-        Me.LabelItem1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.LabelItem1.Name = "LabelItem1"
-        Me.LabelItem1.PaddingBottom = 1
-        Me.LabelItem1.PaddingLeft = 10
-        Me.LabelItem1.PaddingTop = 1
-        Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.LabelItem1.Text = "Opciones"
         '
         'Btn_RevisarProducto
         '
@@ -304,19 +240,6 @@ Partial Class Frm_01_Inventario_Actual
         Me.Btn_RevisarProducto.Name = "Btn_RevisarProducto"
         Me.Btn_RevisarProducto.Text = "Revisar inventario del producto"
         '
-        'LabelItem3
-        '
-        Me.LabelItem3.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
-        Me.LabelItem3.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
-        Me.LabelItem3.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
-        Me.LabelItem3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.LabelItem3.Name = "LabelItem3"
-        Me.LabelItem3.PaddingBottom = 1
-        Me.LabelItem3.PaddingLeft = 10
-        Me.LabelItem3.PaddingTop = 1
-        Me.LabelItem3.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.LabelItem3.Text = "-----------------------------------------"
-        '
         'Btn_Copiar
         '
         Me.Btn_Copiar.Image = CType(resources.GetObject("Btn_Copiar.Image"), System.Drawing.Image)
@@ -324,40 +247,61 @@ Partial Class Frm_01_Inventario_Actual
         Me.Btn_Copiar.Name = "Btn_Copiar"
         Me.Btn_Copiar.Text = "Copiar (portapapeles)"
         '
+        'Menu_Contextual_ExportarAjuste
+        '
+        Me.Menu_Contextual_ExportarAjuste.AutoExpandOnClick = True
+        Me.Menu_Contextual_ExportarAjuste.Name = "Menu_Contextual_ExportarAjuste"
+        Me.Menu_Contextual_ExportarAjuste.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_ExportarAjuste_Todo, Me.Btn_ExportarAjuste_Cerrados})
+        Me.Menu_Contextual_ExportarAjuste.Text = "Opciones exportar ajuste"
+        '
+        'Btn_ExportarAjuste_Todo
+        '
+        Me.Btn_ExportarAjuste_Todo.Image = CType(resources.GetObject("Btn_ExportarAjuste_Todo.Image"), System.Drawing.Image)
+        Me.Btn_ExportarAjuste_Todo.ImageAlt = CType(resources.GetObject("Btn_ExportarAjuste_Todo.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ExportarAjuste_Todo.Name = "Btn_ExportarAjuste_Todo"
+        Me.Btn_ExportarAjuste_Todo.Text = "Exportar todo"
+        '
+        'Btn_ExportarAjuste_Cerrados
+        '
+        Me.Btn_ExportarAjuste_Cerrados.Image = CType(resources.GetObject("Btn_ExportarAjuste_Cerrados.Image"), System.Drawing.Image)
+        Me.Btn_ExportarAjuste_Cerrados.ImageAlt = CType(resources.GetObject("Btn_ExportarAjuste_Cerrados.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ExportarAjuste_Cerrados.Name = "Btn_ExportarAjuste_Cerrados"
+        Me.Btn_ExportarAjuste_Cerrados.Text = "Exportar solo cerrados"
+        '
         'Grilla
         '
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle13.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle13.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle13.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle13
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle14.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle14.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle14.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle14.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle14
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle15.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle15.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle15.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle15
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla.Size = New System.Drawing.Size(1048, 460)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 30
@@ -539,6 +483,27 @@ Partial Class Frm_01_Inventario_Actual
         Me.Chk_MostrarSoloInventariados.TabIndex = 179
         Me.Chk_MostrarSoloInventariados.Text = "Mostrar solo productos inventariados"
         '
+        'ButtonItem1
+        '
+        Me.ButtonItem1.AutoExpandOnClick = True
+        Me.ButtonItem1.Name = "ButtonItem1"
+        Me.ButtonItem1.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ButtonItem2, Me.ButtonItem3})
+        Me.ButtonItem1.Text = "Opciones exportar ajuste"
+        '
+        'ButtonItem2
+        '
+        Me.ButtonItem2.Image = CType(resources.GetObject("ButtonItem2.Image"), System.Drawing.Image)
+        Me.ButtonItem2.ImageAlt = CType(resources.GetObject("ButtonItem2.ImageAlt"), System.Drawing.Image)
+        Me.ButtonItem2.Name = "ButtonItem2"
+        Me.ButtonItem2.Text = "Exportar todo"
+        '
+        'ButtonItem3
+        '
+        Me.ButtonItem3.Image = CType(resources.GetObject("ButtonItem3.Image"), System.Drawing.Image)
+        Me.ButtonItem3.ImageAlt = CType(resources.GetObject("ButtonItem3.ImageAlt"), System.Drawing.Image)
+        Me.ButtonItem3.Name = "ButtonItem3"
+        Me.ButtonItem3.Text = "Exportar solo cerrados"
+        '
         'Frm_01_Inventario_Actual
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -573,26 +538,20 @@ Partial Class Frm_01_Inventario_Actual
 
     End Sub
     Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
-    Friend WithEvents BtnActualizar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Actualizar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LblTotal_Diferencia As DevComponents.DotNetBar.LabelX
     Friend WithEvents LblTotal_Inventario As DevComponents.DotNetBar.LabelX
     Friend WithEvents LblTotal_FotoStock As DevComponents.DotNetBar.LabelX
-    Friend WithEvents BtnExcel As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents BtnBuscarProducto As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents BtnCerrar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents BtnCerrarSinDiferencias As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents BtnLevantados As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents BtnCerrarInventariados As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents ButtonItem1 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_ExportarAjuste As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents BtnCerrarTodosInvCero As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents BtnExporAjuTodos As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents BtnExporAjuCerrados As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Menu_Contextual As DevComponents.DotNetBar.ContextMenuBar
     Friend WithEvents Menu_Contextual_01 As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents LabelItem1 As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Btn_RevisarProducto As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents LabelItem3 As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Btn_Copiar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents GroupPanel2 As DevComponents.DotNetBar.Controls.GroupPanel
@@ -600,8 +559,11 @@ Partial Class Frm_01_Inventario_Actual
     Friend WithEvents GroupPanel4 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Txt_Filtrar As DevComponents.DotNetBar.Controls.TextBoxX
-    Friend WithEvents BtnFiltroSectores As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents ButtonItem2 As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents ChkTodosLosSectores As DevComponents.DotNetBar.CheckBoxItem
     Friend WithEvents Chk_MostrarSoloInventariados As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Menu_Contextual_ExportarAjuste As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_ExportarAjuste_Todo As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_ExportarAjuste_Cerrados As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents ButtonItem1 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents ButtonItem2 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents ButtonItem3 As DevComponents.DotNetBar.ButtonItem
 End Class

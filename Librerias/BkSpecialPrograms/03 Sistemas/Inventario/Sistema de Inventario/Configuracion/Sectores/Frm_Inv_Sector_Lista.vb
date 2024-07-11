@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing.Printing
 Imports DevComponents.DotNetBar
+Imports DevComponents.DotNetBar.Controls
 
 Public Class Frm_Inv_Sector_Lista
 
@@ -8,10 +9,14 @@ Public Class Frm_Inv_Sector_Lista
 
     Dim _IdInventario As Integer
     Dim _Cl_Inventario As New Cl_Inventario
-    Dim _Tbl_Ubicaciones As New DataTable
+    Dim _Tbl_Sectores As New DataTable
     Dim _Dv As New DataView
 
+    Public _Zw_Inv_Sector_Seleccionado As Zw_Inv_Sector
+    Public _SectorSeleccionado As Boolean
+
     Public Property ModoRevisionInventario As Boolean
+    Public Property ModoSeleccionSector As Boolean
 
     Public Sub New(_Id_Inventario As Integer)
 
@@ -26,7 +31,6 @@ Public Class Frm_Inv_Sector_Lista
         _Cl_Inventario.Fx_Llenar_Zw_Inv_Inventario(_Id_Inventario)
 
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.White, ScrollBars.Vertical, True, True, False)
-
         Sb_Color_Botones_Barra(Bar1)
 
     End Sub
@@ -42,8 +46,8 @@ Public Class Frm_Inv_Sector_Lista
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
 
-        Btn_Crear_Ubicacion.Visible = Not ModoRevisionInventario
-        Btn_Importar_Desde_Excel.Visible = Not ModoRevisionInventario
+        Btn_Crear_Ubicacion.Visible = (Not ModoRevisionInventario And Not ModoSeleccionSector)
+        Btn_Importar_Desde_Excel.Visible = Not ModoRevisionInventario And Not ModoSeleccionSector
 
     End Sub
 
@@ -57,7 +61,7 @@ Public Class Frm_Inv_Sector_Lista
         Dim _New_Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
         _Dv = New DataView
         _Dv.Table = _New_Ds.Tables("Table")
-        _Tbl_Ubicaciones = _Dv.Table
+        _Tbl_Sectores = _Dv.Table
 
         With Grilla
 
@@ -164,46 +168,6 @@ Public Class Frm_Inv_Sector_Lista
         If _Grabar Then
             Sb_Actualizar_Grilla()
         End If
-
-        'Dim _Aceptar As Boolean
-        'Dim _Ubicacion As String
-        'Dim _Cl_InvUbicacion As New Cl_InvUbicacion
-
-        '_Aceptar = InputBox_Bk(Me, "Ingrese la Ubicación" & vbCrLf &
-        '                       "Máximo 30 caracteres", "Crear Ubiación/Sector", _Ubicacion, False,, 30, True, _Tipo_Imagen.Texto)
-
-        'If Not _Aceptar Then
-        '    Return
-        'End If
-
-        'With _Cl_InvUbicacion.Zw_Inv_Ubicaciones
-
-        '    .Id = 0
-        '    .Ubicacion = _Ubicacion
-        '    .IdInventario = _Cl_Inventario.Zw_Inv_Inventario.Id
-        '    .Empresa = _Cl_Inventario.Zw_Inv_Inventario.Empresa
-        '    .Sucursal = _Cl_Inventario.Zw_Inv_Inventario.Sucursal
-        '    .Bodega = _Cl_Inventario.Zw_Inv_Inventario.Bodega
-        '    .Abierto = True
-
-        'End With
-
-        'Dim _Mensaje As New LsValiciones.Mensajes
-
-        '_Mensaje = _Cl_InvUbicacion.Fx_Crear_Ubicacion(_Cl_InvUbicacion.Zw_Inv_Ubicaciones)
-
-        'If Not _Mensaje.EsCorrecto Then
-        '    MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
-        '    Call Btn_Crear_Ubicacion_Click(Nothing, Nothing)
-        '    Return
-        'End If
-
-        'Sb_Actualizar_Grilla()
-
-        'If MessageBoxEx.Show(Me, _Mensaje.Mensaje & vbCrLf & vbCrLf & "¿Desea crear una nueva Ubicación?", "Grabar",
-        '                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-        '    Call Btn_Crear_Ubicacion_Click(Nothing, Nothing)
-        'End If
 
     End Sub
     Private Sub Btn_EditarUbicacion_Click(sender As Object, e As EventArgs) Handles Btn_EditarUbicacion.Click
@@ -341,7 +305,7 @@ Public Class Frm_Inv_Sector_Lista
     End Sub
 
     Private Sub Btn_ExportarExcel_Click(sender As Object, e As EventArgs) Handles Btn_ExportarExcel.Click
-        ExportarTabla_JetExcel_Tabla(_Tbl_Ubicaciones, Me, "Sectores inventario")
+        ExportarTabla_JetExcel_Tabla(_Tbl_Sectores, Me, "Sectores inventario")
     End Sub
 
     Private Sub Btn_Actualizar_Click(sender As Object, e As EventArgs) Handles Btn_Actualizar.Click
@@ -401,8 +365,6 @@ Public Class Frm_Inv_Sector_Lista
         Dim _IdSector As Integer = _Fila.Cells("Id").Value
         Dim _CodigoBarras As String = _Fila.Cells("Sector").Value
 
-        'Dim _Impresora As String = _Sel_Impresora.PrtSettings.PrinterName
-
         Sb_Imprimir_Sector(_IdSector, _CodigoBarras, _Sel_Impresora.PrtSettings)
 
     End Sub
@@ -421,4 +383,35 @@ Public Class Frm_Inv_Sector_Lista
 
     End Sub
 
+    Private Sub Grilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
+
+        If Not ModoSeleccionSector Then
+            Return
+        End If
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _IdSector As Integer = _Fila.Cells("Id").Value
+
+        Dim _Cl_InvSector As New Cl_InvSectores
+        _Cl_InvSector.Fx_Llenar_Zw_Inv_Sector(_IdSector)
+
+        _Zw_Inv_Sector_Seleccionado = _Cl_InvSector.Zw_Inv_Sector
+        _SectorSeleccionado = True
+
+        Me.Close()
+
+    End Sub
+
+    Private Sub Grilla_KeyDown(sender As Object, e As KeyEventArgs) Handles Grilla.KeyDown
+        If ModoSeleccionSector Then
+            If e.KeyCode = Keys.Enter Then
+                ' Simula el evento CellDoubleClick
+                Dim cellEventArgs As New DataGridViewCellEventArgs(Grilla.CurrentCell.ColumnIndex, Grilla.CurrentCell.RowIndex)
+                Dim currentRowIndex As Integer = Grilla.CurrentCell.RowIndex
+                Dim currentColumnIndex As Integer = Grilla.CurrentCell.ColumnIndex
+                Grilla_CellDoubleClick(Grilla, cellEventArgs)
+                Grilla.CurrentCell = Grilla.Rows(currentRowIndex).Cells(currentColumnIndex)
+            End If
+        End If
+    End Sub
 End Class

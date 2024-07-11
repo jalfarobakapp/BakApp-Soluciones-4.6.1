@@ -30,9 +30,9 @@ CREATE TABLE [dbo].[Zw_Stmp_Enc](
     [FechaEntrega]                  [datetime]		NULL,
     [CodFuncionario_Cierra]	        [char](3)		NOT NULL DEFAULT (''),
     [EnvFacAutoBk]                  [bit]			NOT NULL DEFAULT (0),
-    [CodFuncionario_Factura]        [char](3)	    NOT NULL DEFAULT (''),
-    [ProblemaFac]                   [bit]			NOT NULL DEFAULT (0),
     [Log_Error]                     [varchar](max)  NOT NULL DEFAULT (''),
+    [ProblemaFac]                   [bit]			NOT NULL DEFAULT (0),
+    [CodFuncionario_Factura]        [char](3)	    NOT NULL DEFAULT (''),
     [CodFuncionario_MarcaFacturar]  [char](3)       NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_Stmp_Enc] PRIMARY KEY CLUSTERED 
 (

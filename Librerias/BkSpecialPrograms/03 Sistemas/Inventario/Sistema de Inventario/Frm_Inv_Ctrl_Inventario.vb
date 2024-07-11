@@ -39,7 +39,7 @@ Public Class Frm_Inv_Ctrl_Inventario
 
     End Sub
 
-    Private Sub Btn_Plan_Click(sender As Object, e As EventArgs) Handles Btn_CrearHoja.Click
+    Private Sub Btn_CrearHoja_Click(sender As Object, e As EventArgs) Handles Btn_CrearHoja.Click
 
         If Not Fx_Validar_Inventario() Then
             Return
@@ -99,7 +99,7 @@ Public Class Frm_Inv_Ctrl_Inventario
 
     End Sub
 
-    Private Sub Btn_Contadores_Click(sender As Object, e As EventArgs)
+    Private Sub Btn_Contadores_Click(sender As Object, e As EventArgs) Handles Btn_Contadores.Click
 
         Dim Fm As New Frm_Contadores
         Fm.ShowDialog(Me)

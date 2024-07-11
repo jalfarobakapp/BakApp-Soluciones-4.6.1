@@ -70,6 +70,10 @@ Public Class Frm_Cantidades_Ud_Disintas
 
         Chk_RtuVariable.Enabled = (_Fila.Cells("Nmarca").Value = "¡")
 
+        If Chk_RtuVariable.Checked Then
+            Label3.Text = "R.T.U.  (" & _Rtu & ")"
+        End If
+
         If _Rtu = 1 Then TxtCantUD2.Enabled = False
 
         If _UnTrans = 1 Then
