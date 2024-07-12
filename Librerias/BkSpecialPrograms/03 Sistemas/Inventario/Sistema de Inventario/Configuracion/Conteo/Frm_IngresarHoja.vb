@@ -422,9 +422,9 @@ Public Class Frm_IngresarHoja
 
                     Dim _Sector As String = NuloPorNro(Of String)(_Fila.Cells("Sector").Value?.ToString.Trim, "")
 
-                    If String.IsNullOrEmpty(_Sector) Then
-                        Return
-                    End If
+                    'If String.IsNullOrEmpty(_Sector) Then
+                    '    Return
+                    'End If
 
                     Dim _Cl_InvUbicacion As New Cl_InvSectores
                     Dim _Mensaje As New LsValiciones.Mensajes
@@ -433,7 +433,9 @@ Public Class Frm_IngresarHoja
 
                     If Not _Mensaje.EsCorrecto Then
 
-                        MessageBoxEx.Show(Me, "Sector no existe", "Validación", MessageBoxButtons.OK, _Mensaje.Icono)
+                        If Not String.IsNullOrEmpty(_Sector) Then
+                            MessageBoxEx.Show(Me, "Sector no existe", "Validación", MessageBoxButtons.OK, _Mensaje.Icono)
+                        End If
 
                         _Sector = Fx_BuscarSector()
                         If String.IsNullOrEmpty(_Sector) Then
@@ -599,8 +601,10 @@ Public Class Frm_IngresarHoja
                                                  Try
                                                      ' Verificar si la celda aún es accesible antes de cambiar el foco
                                                      If nuevaFila.IsNewRow AndAlso nuevaFila.Cells("Sector").RowIndex < Grilla_Detalle.Rows.Count Then
-                                                         Grilla_Detalle.CurrentCell = nuevaFila.Cells("Sector")
-                                                         Grilla_Detalle.BeginEdit(True)
+                                                         If String.IsNullOrWhiteSpace(nuevaFila.Cells("Sector").Value) Then
+                                                             Grilla_Detalle.CurrentCell = nuevaFila.Cells("Sector")
+                                                             Grilla_Detalle.BeginEdit(True)
+                                                         End If
                                                      End If
                                                  Catch ex As Exception
                                                      ' Manejar la excepción si es necesario
