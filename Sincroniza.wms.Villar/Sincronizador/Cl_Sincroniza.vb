@@ -287,15 +287,15 @@ Public Class Cl_Sincroniza
             End If
 
             _Mensaje_Stem = _Cl_Stmp.Fx_Crear_Ticket(_Idmaeedo,
-                                     _Tido,
-                                     _Nudo,
-                                     False,
-                                     _FechaServidor,
-                                     "R",
-                                     True,
-                                     "01",
-                                     "01",
-                                     "DWB")
+                                                     _Tido,
+                                                     _Nudo,
+                                                     False,
+                                                     _FechaServidor,
+                                                     "R",
+                                                     True,
+                                                     "01",
+                                                     "01",
+                                                     "DWB")
 
             If _Mensaje_Stem.EsCorrecto Then
                 Sb_AddToLog(_Mensaje_Stem.Detalle, _Mensaje_Stem.Mensaje, Txt_Log)

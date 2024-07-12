@@ -19,8 +19,12 @@
     Dim _Codigo_Alternativo = String.Empty
     Dim _Descripcion
     Dim _Descripcion_Corta
-    Dim _Desc0125
-    Dim _Desc2650
+    Dim _Desc0125 As String
+    Dim _Desc2650 As String
+
+    Dim _Desc_0135 As String
+    Dim _Desc_0235 As String
+
     Dim _Ubicacion
     Dim _Precio_ud1
     Dim _Precio_ud2
@@ -185,6 +189,22 @@
             _Descripcion = Replace(_Descripcion, Chr(34), "")
             _Desc0125 = Mid(_Descripcion, 1, 25)
             _Desc2650 = Mid(_Descripcion, 26, 50)
+
+            Dim _Descri25_Aju = Fx_AjustarTexto(_Descripcion, 35)
+
+            Dim _Desc_Aju = Split(_Descri25_Aju, vbCrLf, 2)
+
+            If _Desc_Aju.Length > 1 Then 'AndAlso _Desc_Aju(1).ToString.Replace(vbCrLf, " ").ToString.Length <= 25 Then
+
+                _Desc_0135 = _Desc_Aju(0)
+                _Desc_0235 = _Desc_Aju(1)
+
+            Else
+
+                _Desc_0135 = _Desc_Aju(0)
+                _Desc_0235 = String.Empty
+
+            End If
 
             _Nodim1 = _RowProducto.Item("NODIM1").ToString.Trim
             _Nodim2 = _RowProducto.Item("NODIM2").ToString.Trim
@@ -1150,6 +1170,8 @@
         _Texto = Replace(_Texto, "<DESCRIPCION_1-25>", _Desc0125)
         _Texto = Replace(_Texto, "<DESCRIPCION_26-50>", _Desc2650)
 
+        _Texto = Replace(_Texto, "<DESCRIPCION_1-35>", _Desc_0135)
+        _Texto = Replace(_Texto, "<DESCRIPCION_2-35>", _Desc_0235)
 
         _Texto = Replace(_Texto, "<UBICACION_PR>", _Ubicacion)
         _Texto = Replace(_Texto, "<UBICACION>", _Ubicacion)

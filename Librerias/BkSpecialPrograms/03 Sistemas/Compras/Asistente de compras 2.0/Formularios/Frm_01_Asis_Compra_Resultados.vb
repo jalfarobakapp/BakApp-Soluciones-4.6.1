@@ -2646,16 +2646,22 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     Private Sub Grilla_ColumnHeaderMouseClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs)
 
-        Dim Grilla = CType(sender, DataGridView)
+        Try
 
-        My.Settings.Asis_Compra_Campo_Orden = Grilla.SortedColumn.Name
-        My.Settings.Asis_Compra_Campo_Orden_Orden = Grilla.SortOrder.ToString
-        My.Settings.Save()
+            Dim Grilla = CType(sender, DataGridView)
 
-        Codigo_abuscar = Fm_Hijo.Grilla.Rows(Grilla.CurrentRow.Index).Cells("Codigo").Value
-        BuscarEnGrilla(Codigo_abuscar)
+            My.Settings.Asis_Compra_Campo_Orden = Grilla.SortedColumn.Name
+            My.Settings.Asis_Compra_Campo_Orden_Orden = Grilla.SortOrder.ToString
+            My.Settings.Save()
 
-        Sb_Grilla_Marcar(Fm_Hijo.Grilla, False)
+            Codigo_abuscar = Fm_Hijo.Grilla.Rows(Grilla.CurrentRow.Index).Cells("Codigo").Value
+            BuscarEnGrilla(Codigo_abuscar)
+
+            Sb_Grilla_Marcar(Fm_Hijo.Grilla, False)
+
+        Catch ex As Exception
+
+        End Try
 
     End Sub
 
@@ -5307,19 +5313,33 @@ Public Class Frm_01_Asis_Compra_Resultados
         Fm.Pro_Tbl_Filtro_Super_Familias = _Tbl_Filtro_Super_Familias
         Fm.Pro_Tbl_Filtro_Zonas = _Tbl_Filtro_Zonas
 
+        Fm.BuscarSpfmfmsubfm = True
+        Fm.Ls_SelSuperFamilias = _Ls_SelSuperFamilias
+        Fm.Ls_SelFamilias = _Ls_SelFamilias
+        Fm.Ls_SelSubFamilias = _Ls_SelSubFamilias
+
         Fm.ShowDialog(Me)
 
-        _Tbl_Filtro_Clalibpr = Fm.Pro_Tbl_Filtro_Clalibpr
-        _Tbl_Filtro_Marcas = Fm.Pro_Tbl_Filtro_Marcas
-        _Tbl_Filtro_Rubro = Fm.Pro_Tbl_Filtro_Rubro
-        _Tbl_Filtro_Super_Familias = Fm.Pro_Tbl_Filtro_Super_Familias
-        _Tbl_Filtro_Zonas = Fm.Pro_Tbl_Filtro_Zonas
+        'If Fm.Pro_Aceptar Then
 
-        _Filtro_Clalibpr_Todas = Fm.Pro_Filtro_Clalibpr_Todas
-        _Filtro_Marcas_Todas = Fm.Pro_Filtro_Marcas_Todas
-        _Filtro_Rubro_Todas = Fm.Pro_Filtro_Rubro_Todas
-        _Filtro_Super_Familias_Todas = Fm.Pro_Filtro_Super_Familias_Todas
-        _Filtro_Zonas_Todas = Fm.Pro_Filtro_Zonas_Todas
+        '    _Tbl_Filtro_Clalibpr = Fm.Pro_Tbl_Filtro_Clalibpr
+        '    _Tbl_Filtro_Marcas = Fm.Pro_Tbl_Filtro_Marcas
+        '    _Tbl_Filtro_Rubro = Fm.Pro_Tbl_Filtro_Rubro
+        '    _Tbl_Filtro_Super_Familias = Fm.Pro_Tbl_Filtro_Super_Familias
+
+        '    Ls_SelSuperFamilias = Fm.Ls_SelSuperFamilias
+        '    Ls_SelFamilias = Fm.Ls_SelFamilias
+        '    Ls_SelSubFamilias = Fm.Ls_SelSubFamilias
+
+        '    _Tbl_Filtro_Zonas = Fm.Pro_Tbl_Filtro_Zonas
+
+        '    _Filtro_Clalibpr_Todas = Fm.Pro_Filtro_Clalibpr_Todas
+        '    _Filtro_Marcas_Todas = Fm.Pro_Filtro_Marcas_Todas
+        '    _Filtro_Rubro_Todas = Fm.Pro_Filtro_Rubro_Todas
+        '    _Filtro_Super_Familias_Todas = Fm.Pro_Filtro_Super_Familias_Todas
+        '    _Filtro_Zonas_Todas = Fm.Pro_Filtro_Zonas_Todas
+
+        'End If
 
         Fm.Dispose()
 

@@ -23,6 +23,7 @@ Public Class Frm_Familias_Lista
     Public Property Ls_SelFamilias As New List(Of SelFamilias)
     Public Property Ls_SelSubFamilias As New List(Of SelSubFamilias)
     Public Property Seleccionados As Boolean
+    Public Property ObligaSeleccionar As Boolean = True
     Enum Enum_Tipo_Vista_Familias
         Super_Familias
         Familias
@@ -285,6 +286,7 @@ Public Class Frm_Familias_Lista
         Dim _Kofm = _Fila.Cells("KOFM").Value.ToString.Trim
         Dim _Kopf = String.Empty
         Dim _Kohf = String.Empty
+        Dim _ObligaSeleccionar As Boolean = Not _Chk
 
         Dim _vTipo_Vista_Familias As Enum_Tipo_Vista_Familias
         Dim _Texto As String
@@ -304,6 +306,7 @@ Public Class Frm_Familias_Lista
 
         Dim Fm As New Frm_Familias_Lista(_vTipo_Vista_Familias)
         Fm.ModoSeleccion = ModoSeleccion
+        Fm.ObligaSeleccionar = _ObligaSeleccionar
         Fm.Kofm = _Kofm
         Fm.Kopf = _Kopf
         Fm.Text = _Texto
@@ -845,23 +848,27 @@ Public Class Frm_Familias_Lista
 
     Private Sub Btn_Aceptar_Click(sender As Object, e As EventArgs) Handles Btn_Aceptar.Click
 
-        Select Case _Tipo_Vista_Familias
-            Case Enum_Tipo_Vista_Familias.Super_Familias
-                If Ls_SelSuperFamilias.Count = 0 Then
-                    MessageBoxEx.Show(Me, "Debe seleccionar al menos una Super Familia", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                    Return
-                End If
-            Case Enum_Tipo_Vista_Familias.Familias
-                If Ls_SelFamilias.Count = 0 Then
-                    MessageBoxEx.Show(Me, "Debe seleccionar al menos una Familia", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                    Return
-                End If
-            Case Enum_Tipo_Vista_Familias.Sub_Familias
-                If Ls_SelSubFamilias.Count = 0 Then
-                    MessageBoxEx.Show(Me, "Debe seleccionar al menos una Sub Familia", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                    Return
-                End If
-        End Select
+        If ObligaSeleccionar Then
+
+            Select Case _Tipo_Vista_Familias
+                Case Enum_Tipo_Vista_Familias.Super_Familias
+                    If Ls_SelSuperFamilias.Count = 0 Then
+                        MessageBoxEx.Show(Me, "Debe seleccionar al menos una Super Familia", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        Return
+                    End If
+                Case Enum_Tipo_Vista_Familias.Familias
+                    If Ls_SelFamilias.Count = 0 Then
+                        MessageBoxEx.Show(Me, "Debe seleccionar al menos una Familia", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        Return
+                    End If
+                Case Enum_Tipo_Vista_Familias.Sub_Familias
+                    If Ls_SelSubFamilias.Count = 0 Then
+                        MessageBoxEx.Show(Me, "Debe seleccionar al menos una Sub Familia", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        Return
+                    End If
+            End Select
+
+        End If
 
         Seleccionados = True
         Ls_SelSuperFamilias = Ls_SelSuperFamilias.Distinct().ToList()
@@ -987,6 +994,11 @@ Public Class Frm_Familias_Lista
 
     End Sub
 
+    Private Sub Chk_Seleccionar_Todos_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Seleccionar_Todos.CheckedChanged
+        For Each _Fila As DataGridViewRow In Grilla.Rows
+            _Fila.Cells("Chk").Value = Chk_Seleccionar_Todos.Checked
+        Next
+    End Sub
 End Class
 
 Public Class SelSuperFamilias

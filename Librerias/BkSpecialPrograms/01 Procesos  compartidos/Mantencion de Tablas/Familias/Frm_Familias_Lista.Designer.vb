@@ -48,6 +48,7 @@ Partial Class Frm_Familias_Lista
         Me.Btn_Sincronizar = New DevComponents.DotNetBar.ButtonItem()
         Me.Lbl_Encabezado = New DevComponents.DotNetBar.LabelX()
         Me.WarningBox = New DevComponents.DotNetBar.Controls.WarningBox()
+        Me.Chk_Seleccionar_Todos = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -350,19 +351,37 @@ Partial Class Frm_Familias_Lista
         Me.WarningBox.CloseButtonVisible = False
         Me.WarningBox.ForeColor = System.Drawing.Color.Black
         Me.WarningBox.Image = CType(resources.GetObject("WarningBox.Image"), System.Drawing.Image)
-        Me.WarningBox.Location = New System.Drawing.Point(8, 482)
+        Me.WarningBox.Location = New System.Drawing.Point(113, 485)
         Me.WarningBox.Name = "WarningBox"
         Me.WarningBox.OptionsText = "Información..."
-        Me.WarningBox.Size = New System.Drawing.Size(570, 33)
+        Me.WarningBox.Size = New System.Drawing.Size(465, 33)
         Me.WarningBox.TabIndex = 25
         Me.WarningBox.Text = "<b>Atención: </b>Esta tabla esta bloqueada desde la configuración general"
         Me.WarningBox.Visible = False
+        '
+        'Chk_Seleccionar_Todos
+        '
+        Me.Chk_Seleccionar_Todos.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_Seleccionar_Todos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Seleccionar_Todos.CheckBoxImageChecked = CType(resources.GetObject("Chk_Seleccionar_Todos.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Seleccionar_Todos.FocusCuesEnabled = False
+        Me.Chk_Seleccionar_Todos.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Seleccionar_Todos.Location = New System.Drawing.Point(8, 485)
+        Me.Chk_Seleccionar_Todos.Name = "Chk_Seleccionar_Todos"
+        Me.Chk_Seleccionar_Todos.Size = New System.Drawing.Size(99, 23)
+        Me.Chk_Seleccionar_Todos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Seleccionar_Todos.TabIndex = 26
+        Me.Chk_Seleccionar_Todos.Text = "Seleccionar todo"
         '
         'Frm_Familias_Lista
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(585, 575)
+        Me.Controls.Add(Me.Chk_Seleccionar_Todos)
         Me.Controls.Add(Me.WarningBox)
         Me.Controls.Add(Me.Lbl_Encabezado)
         Me.Controls.Add(Me.GroupPanel2)
@@ -409,4 +428,5 @@ Partial Class Frm_Familias_Lista
     Friend WithEvents Btn_Sincronizar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents WarningBox As DevComponents.DotNetBar.Controls.WarningBox
     Friend WithEvents Btn_Aceptar As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Chk_Seleccionar_Todos As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

@@ -326,11 +326,11 @@ Public Class Frm_EstadisticaProducto
             TxtUnidad1.Text = _Row_Producto.Item("UD01PR")
             TxtUnidad2.Text = _Row_Producto.Item("UD02PR")
 
-            Dim _Marca As String = _Row_Producto.Item("Marca")
-            Dim _SuperFamilia As String = _Row_Producto.Item("SuperFamilia")
-            Dim _Familia As String = _Row_Producto.Item("Familia")
-            Dim _SubFamilia As String = _Row_Producto.Item("SubFamilia")
-            Dim _Rubro As String = _Row_Producto.Item("Rubro")
+            Dim _Marca As String = _Row_Producto.Item("MRPR").ToString.Trim & " - " & _Row_Producto.Item("Marca")
+            Dim _SuperFamilia As String = _Row_Producto.Item("FMPR").ToString.Trim & " - " & _Row_Producto.Item("SuperFamilia")
+            Dim _Familia As String = _Row_Producto.Item("PFPR").ToString.Trim & " - " & _Row_Producto.Item("Familia")
+            Dim _SubFamilia As String = _Row_Producto.Item("HFPR").ToString.Trim & " - " & _Row_Producto.Item("SubFamilia")
+            Dim _Rubro As String = _Row_Producto.Item("RUPR").ToString.Trim & " - " & _Row_Producto.Item("Rubro")
             Dim _ClasLibre As String = _Row_Producto.Item("CLALIBPR")
             Dim _Zona As String = _Row_Producto.Item("Zona")
 
@@ -339,7 +339,7 @@ Public Class Frm_EstadisticaProducto
             LblSubFamilia.Text = _SubFamilia
             LblFamilia.Text = _Familia
             LblRubro.Text = _Rubro
-            LblClasLibre.Text = _Sql.Fx_Trae_Dato("TABCARAC", "NOKOCARAC",
+            LblClasLibre.Text = _Row_Producto.Item("CLALIBPR").ToString.Trim & " - " & _Sql.Fx_Trae_Dato("TABCARAC", "NOKOCARAC",
                                                   "KOTABLA = 'CLALIBPR' and KOCARAC = '" & _ClasLibre & "'")
             LblZona.Text = _Zona
 
