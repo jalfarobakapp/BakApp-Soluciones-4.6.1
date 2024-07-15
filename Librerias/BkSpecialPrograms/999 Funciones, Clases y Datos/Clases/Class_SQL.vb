@@ -267,6 +267,46 @@ Public Class Class_SQL
 
     End Function
 
+    Function Fx_Get_DataSet(Consulta_sql As String,
+                            _Traer_Schema As Boolean,
+                            _MostrarError As Boolean) As DataSet
+
+        Try
+
+            Sb_Abrir_Conexion(_Cn, _MostrarError)
+
+            _Error = String.Empty
+
+            Dim _SqlDa As New SqlDataAdapter
+            Dim _DataSt As New DataSet
+
+            _SqlDa = New SqlDataAdapter(Consulta_sql, _Cn)
+            _SqlDa.SelectCommand.CommandTimeout = 8000
+
+            If _Traer_Schema Then _SqlDa.MissingSchemaAction = MissingSchemaAction.AddWithKey
+
+            _SqlDa.Fill(_DataSt)
+
+            For Each Tbl As DataTable In _DataSt.Tables
+                For Each col As DataColumn In Tbl.Columns
+                    col.[ReadOnly] = False
+                Next
+            Next
+
+            Sb_Cerrar_Conexion(_Cn)
+
+            Return _DataSt
+            ' errores
+        Catch ex As Exception
+            _Error = ex.Message.ToString
+            If _MostrarError Then
+                MsgBox(ex.Message.ToString)
+            End If
+        End Try
+        Return Nothing
+
+    End Function
+
     Function Fx_Extrae_Archivo_desde_BD(_Tabla As String,
                                         _Campo As String,
                                         _Condicion As String,

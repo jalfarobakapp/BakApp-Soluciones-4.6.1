@@ -671,7 +671,14 @@ Public Class Cl_Stmp
             Consulta_sql = My.Resources.Recursos_WmsVillar.SQLQuery_Revisar_Nota_de_venta_activa_en_WMS_Villar
             Consulta_sql = Replace(Consulta_sql, "#Nudo#", _Nudo)
 
-            Dim _Ds As DataSet = _Sql_WMS.Fx_Get_DataSet(Consulta_sql)
+            Dim _Ds As DataSet = _Sql_WMS.Fx_Get_DataSet(Consulta_sql, True, False)
+
+            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                _Mensaje.EsCorrecto = False
+                _Mensaje.Detalle = "Error a extraer datos desde el WMS"
+                _Mensaje.Mensaje = _Sql.Pro_Error
+                Return _Mensaje
+            End If
 
             _Ds.Tables(0).TableName = "ticket_verde"
             _Ds.Tables(1).TableName = "Detalle"
