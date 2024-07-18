@@ -23,12 +23,11 @@ Partial Class Frm_02_Detalle_Producto_Actual
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_02_Detalle_Producto_Actual))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.BtnAgregarConteo = New DevComponents.DotNetBar.ButtonItem()
-        Me.BtnEstadisticas = New DevComponents.DotNetBar.ButtonItem()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.LblContador1 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
@@ -64,6 +63,7 @@ Partial Class Frm_02_Detalle_Producto_Actual
         Me.ChkRecontado = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.ChkCerrado = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.ChkLevantado = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_NoInventariar = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
@@ -81,7 +81,7 @@ Partial Class Frm_02_Detalle_Producto_Actual
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnAgregarConteo, Me.BtnEstadisticas})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnAgregarConteo})
         Me.Bar2.Location = New System.Drawing.Point(0, 484)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(716, 41)
@@ -97,16 +97,8 @@ Partial Class Frm_02_Detalle_Producto_Actual
         Me.BtnAgregarConteo.ForeColor = System.Drawing.Color.Black
         Me.BtnAgregarConteo.Image = CType(resources.GetObject("BtnAgregarConteo.Image"), System.Drawing.Image)
         Me.BtnAgregarConteo.Name = "BtnAgregarConteo"
-        Me.BtnAgregarConteo.Text = "Agregar conteo"
+        Me.BtnAgregarConteo.Text = "Agregar reconteo"
         Me.BtnAgregarConteo.Tooltip = "Ingresar hoja de reconteo para el producto activo"
-        '
-        'BtnEstadisticas
-        '
-        Me.BtnEstadisticas.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.BtnEstadisticas.ForeColor = System.Drawing.Color.Black
-        Me.BtnEstadisticas.Image = CType(resources.GetObject("BtnEstadisticas.Image"), System.Drawing.Image)
-        Me.BtnEstadisticas.Name = "BtnEstadisticas"
-        Me.BtnEstadisticas.Tooltip = "Ultimos movimientos (Compra, Ventas, Estadisticas)"
         '
         'TableLayoutPanel1
         '
@@ -503,36 +495,36 @@ Partial Class Frm_02_Detalle_Producto_Actual
         '
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle8
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
         Me.Grilla.Size = New System.Drawing.Size(689, 127)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 30
@@ -732,11 +724,31 @@ Partial Class Frm_02_Detalle_Producto_Actual
         Me.ChkLevantado.TabStop = False
         Me.ChkLevantado.Text = "Levantado"
         '
+        'Chk_NoInventariar
+        '
+        Me.Chk_NoInventariar.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_NoInventariar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_NoInventariar.CheckBoxImageChecked = CType(resources.GetObject("Chk_NoInventariar.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_NoInventariar.Enabled = False
+        Me.Chk_NoInventariar.FocusCuesEnabled = False
+        Me.Chk_NoInventariar.ForeColor = System.Drawing.Color.Black
+        Me.Chk_NoInventariar.Location = New System.Drawing.Point(473, 20)
+        Me.Chk_NoInventariar.Name = "Chk_NoInventariar"
+        Me.Chk_NoInventariar.Size = New System.Drawing.Size(233, 17)
+        Me.Chk_NoInventariar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_NoInventariar.TabIndex = 60
+        Me.Chk_NoInventariar.TabStop = False
+        Me.Chk_NoInventariar.Text = "Bloqueado para ser levantado en inventario"
+        '
         'Frm_02_Detalle_Producto_Actual
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(716, 525)
+        Me.Controls.Add(Me.Chk_NoInventariar)
         Me.Controls.Add(Me.ChkLevantado)
         Me.Controls.Add(Me.ChkCerrado)
         Me.Controls.Add(Me.ChkRecontado)
@@ -783,7 +795,6 @@ Partial Class Frm_02_Detalle_Producto_Actual
     Public WithEvents Lbl_Cant_Inventariada As DevComponents.DotNetBar.LabelX
     Public WithEvents Lbl_Dif_Inv_Cantidad As DevComponents.DotNetBar.LabelX
     Public WithEvents Lbl_StFisicoUd1 As DevComponents.DotNetBar.LabelX
-    Friend WithEvents BtnEstadisticas As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents GroupBox5 As System.Windows.Forms.GroupBox
     Friend WithEvents TableLayoutPanel4 As System.Windows.Forms.TableLayoutPanel
     Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
@@ -806,4 +817,5 @@ Partial Class Frm_02_Detalle_Producto_Actual
     Friend WithEvents ChkCerrado As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents ChkLevantado As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Txt_Observaciones As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Chk_NoInventariar As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

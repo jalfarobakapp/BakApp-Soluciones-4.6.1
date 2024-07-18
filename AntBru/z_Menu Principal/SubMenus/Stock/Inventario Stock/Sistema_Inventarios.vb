@@ -63,13 +63,14 @@ Public Class Sistema_Inventarios
 
     Private Sub BtnPreciosCostos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Inventario_General.Click
 
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Invg0001") Then
+            Return
+        End If
+
         Dim Fm As New Frm_Inv_Inventarios
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
-        'Dim NewPanel As Inv_General = Nothing
-        'NewPanel = New Inv_General(_Fm_Menu_Padre)
-        'Frm_Menu.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
     End Sub
 
     Private Sub BtnUbicProductos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnUbicProductos.Click

@@ -75,12 +75,12 @@ Public Class Cl_Inventario
 
             End If
 
+            .Id = _Row.Item("Id")
             .IdInventario = _Row.Item("IdInventario")
             .Estado = _Row.Item("Estado")
             .Empresa = _Row.Item("Empresa")
             .Sucursal = _Row.Item("Sucursal")
             .Bodega = _Row.Item("Bodega")
-            .Semilla = _Row.Item("Semilla")
             .Tipr = _Row.Item("Tipr")
             .Codigo = _Row.Item("Codigo")
             .CodigoRap = _Row.Item("CodigoRap")
@@ -103,6 +103,7 @@ Public Class Cl_Inventario
             .Cerrado = _Row.Item("Cerrado")
             .Levantado = _Row.Item("Levantado")
             .Diferencia = _Row.Item("Diferencia")
+            .NoInventariar = _Row.Item("NoInventariar")
             .SuperFamilia = _Row.Item("SuperFamilia")
             .Familia = _Row.Item("Familia")
             .SubFamilia = _Row.Item("SubFamilia")

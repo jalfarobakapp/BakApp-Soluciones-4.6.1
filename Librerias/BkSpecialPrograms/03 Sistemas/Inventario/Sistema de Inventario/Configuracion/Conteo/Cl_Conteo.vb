@@ -241,7 +241,6 @@ Public Class Cl_Conteo
                                "(" & .IdInventario & ",'" & .Nro_Hoja & "','" & .NombreEquipo & "','" & .FechaCreacion & "','" & .CodResponsable & "'" &
                                "," & .IdContador1 & "," & .IdContador2 & "," & Convert.ToInt32(.Reconteo) & ")"
 
-
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                 Comando.Transaction = myTrans
                 Comando.ExecuteNonQuery()
@@ -291,9 +290,16 @@ Public Class Cl_Conteo
                         Consulta_sql = "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Total_Costo_Inv = Cant_Inventariada*Costo" & vbCrLf &
                                        "Where IdInventario = " & .IdInventario & " And Codigo = '" & .Codigo & "'"
 
-                        Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
-                        Comando.Transaction = myTrans
-                        Comando.ExecuteNonQuery()
+                        If Zw_Inv_Hoja.Reconteo Then
+
+                            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set IdHojaUltReconteo = " & .IdHoja & vbCrLf &
+                                           "Where IdInventario = " & .IdInventario & " And Codigo = '" & .Codigo & "'"
+
+                            Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                            Comando.Transaction = myTrans
+                            Comando.ExecuteNonQuery()
+
+                        End If
 
                     End If
 

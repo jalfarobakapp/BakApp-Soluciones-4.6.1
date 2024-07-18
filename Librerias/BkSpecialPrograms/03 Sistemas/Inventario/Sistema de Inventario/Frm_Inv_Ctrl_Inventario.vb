@@ -18,12 +18,21 @@ Public Class Frm_Inv_Ctrl_Inventario
         Me._IdInventario = _IdInventario
         Cl_Inventario.Fx_Llenar_Zw_Inv_Inventario(_IdInventario)
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
 
     Private Sub Frm_Control_Inventario_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        Lbl_Nombre_Inventario.Text = Cl_Inventario.Zw_Inv_Inventario.NombreInventario
-        Lbl_Estatus.Text = "Fecha de inventario: " & Cl_Inventario.Zw_Inv_Inventario.Fecha_Inventario
+        With Cl_Inventario.Zw_Inv_Inventario
+
+            Lbl_Nombre_Inventario.Text = .NombreInventario
+            Lbl_Estatus.Text = "Fecha de inventario: " & .Fecha_Inventario
+
+            Btn_Cerrar_Inventario.Visible = .Activo
+            Btn_Abrir_Inventario.Visible = Not .Activo
+
+        End With
 
         SuperTabControl1.SelectedTabIndex = 0
 
@@ -45,7 +54,7 @@ Public Class Frm_Inv_Ctrl_Inventario
             Return
         End If
 
-        Dim Fm As New Frm_IngresarHoja(_IdInventario, 0)
+        Dim Fm As New Frm_IngresarHoja(_IdInventario, 0, FUNCIONARIO)
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
@@ -85,9 +94,9 @@ Public Class Frm_Inv_Ctrl_Inventario
 
     Private Sub Btn_VerInventario_Click(sender As Object, e As EventArgs) Handles Btn_VerInventario.Click
 
-        If Not Fx_Tiene_Permiso(Me, "In0011") Then
-            Return
-        End If
+        'If Not Fx_Tiene_Permiso(Me, "In0011") Then
+        '    Return
+        'End If
 
         If Not Fx_Validar_Inventario() Then
             Return
@@ -141,4 +150,27 @@ Public Class Frm_Inv_Ctrl_Inventario
 
     End Function
 
+    Private Sub Stab_Configuracion_Click(sender As Object, e As EventArgs) Handles Stab_Configuracion.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Invg0002") Then
+            SuperTabControl1.SelectedTabIndex = 0
+        End If
+
+    End Sub
+
+    Private Sub Btn_Abrir_Inventario_Click(sender As Object, e As EventArgs) Handles Btn_Abrir_Inventario.Click
+
+        If Not Fx_Tiene_Permiso(Me, "xxx") Then
+            Return
+        End If
+
+    End Sub
+
+    Private Sub Btn_Cerrar_Inventario_Click(sender As Object, e As EventArgs) Handles Btn_Cerrar_Inventario.Click
+
+        If Not Fx_Tiene_Permiso(Me, "xxx") Then
+            Return
+        End If
+
+    End Sub
 End Class

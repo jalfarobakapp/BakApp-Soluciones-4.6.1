@@ -178,6 +178,12 @@ Public Class Frm_Login
         Me.WindowState = FormWindowState.Normal
         Me.StartPosition = FormStartPosition.CenterScreen
         TxtxPassword.Focus()
+
+        If Global_Thema = Enum_Themas.Oscuro Then
+            Me.ReflectionLabel2.Text = "<b><font size=""+3"">C<font color=""#B4C6E7"">ontraseña (Random)</font></font></b>"
+            Me.ReflectionLabel1.Text = "<b><font size=""+3"">N<font color=""#B4C6E7"">ombre de usuario</font></font></b>"
+        End If
+
     End Sub
 
     Function Fx_Activar_Deactivar_Teclado(_Teclado As Boolean)

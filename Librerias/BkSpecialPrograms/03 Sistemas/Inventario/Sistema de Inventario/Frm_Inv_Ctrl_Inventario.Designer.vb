@@ -44,9 +44,11 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Me.Btn_Sectores = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Contadores = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Parejas = New DevComponents.DotNetBar.Metro.MetroTileItem()
-        Me.SuperTabItem2 = New DevComponents.DotNetBar.SuperTabItem()
+        Me.Stab_Configuracion = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
+        Me.Stab_MantInventario = New DevComponents.DotNetBar.SuperTabItem()
+        Me.Btn_Cerrar_Inventario = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Abrir_Inventario = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControl1.SuspendLayout()
@@ -180,9 +182,9 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Me.Lbl_Nombre_Inventario.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Lbl_Nombre_Inventario.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Lbl_Nombre_Inventario.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Nombre_Inventario.Location = New System.Drawing.Point(32, 12)
+        Me.Lbl_Nombre_Inventario.Location = New System.Drawing.Point(12, 12)
         Me.Lbl_Nombre_Inventario.Name = "Lbl_Nombre_Inventario"
-        Me.Lbl_Nombre_Inventario.Size = New System.Drawing.Size(662, 23)
+        Me.Lbl_Nombre_Inventario.Size = New System.Drawing.Size(680, 23)
         Me.Lbl_Nombre_Inventario.TabIndex = 38
         Me.Lbl_Nombre_Inventario.Text = "INVENTARIO: NOMBRE DEL INVENTARIO ACTIVO"
         '
@@ -201,7 +203,7 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_FotoStock, Me.Btn_Salir})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Abrir_Inventario, Me.Btn_Cerrar_Inventario, Me.Btn_FotoStock, Me.Btn_Salir})
         Me.Bar1.Location = New System.Drawing.Point(0, 328)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(704, 41)
@@ -300,7 +302,7 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Me.SuperTabControl1.Size = New System.Drawing.Size(650, 418)
         Me.SuperTabControl1.TabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SuperTabControl1.TabIndex = 57
-        Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem1, Me.SuperTabItem2})
+        Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Stab_MantInventario, Me.Stab_Configuracion})
         Me.SuperTabControl1.TabStyle = DevComponents.DotNetBar.eSuperTabStyle.Office2010BackstageBlue
         Me.SuperTabControl1.Text = "SuperTabControl1"
         '
@@ -308,11 +310,11 @@ Partial Class Frm_Inv_Ctrl_Inventario
         '
         Me.SuperTabControlPanel2.Controls.Add(Me.MetroTilePanel2)
         Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 25)
+        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 0)
         Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
-        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(650, 393)
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(650, 418)
         Me.SuperTabControlPanel2.TabIndex = 0
-        Me.SuperTabControlPanel2.TabItem = Me.SuperTabItem2
+        Me.SuperTabControlPanel2.TabItem = Me.Stab_Configuracion
         '
         'MetroTilePanel2
         '
@@ -432,12 +434,12 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Me.Btn_Parejas.TitleText = "BakApp"
         Me.Btn_Parejas.Visible = False
         '
-        'SuperTabItem2
+        'Stab_Configuracion
         '
-        Me.SuperTabItem2.AttachedControl = Me.SuperTabControlPanel2
-        Me.SuperTabItem2.GlobalItem = False
-        Me.SuperTabItem2.Name = "SuperTabItem2"
-        Me.SuperTabItem2.Text = "CONFIGURACION"
+        Me.Stab_Configuracion.AttachedControl = Me.SuperTabControlPanel2
+        Me.Stab_Configuracion.GlobalItem = False
+        Me.Stab_Configuracion.Name = "Stab_Configuracion"
+        Me.Stab_Configuracion.Text = "CONFIGURACION"
         '
         'SuperTabControlPanel1
         '
@@ -447,14 +449,32 @@ Partial Class Frm_Inv_Ctrl_Inventario
         Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
         Me.SuperTabControlPanel1.Size = New System.Drawing.Size(650, 393)
         Me.SuperTabControlPanel1.TabIndex = 1
-        Me.SuperTabControlPanel1.TabItem = Me.SuperTabItem1
+        Me.SuperTabControlPanel1.TabItem = Me.Stab_MantInventario
         '
-        'SuperTabItem1
+        'Stab_MantInventario
         '
-        Me.SuperTabItem1.AttachedControl = Me.SuperTabControlPanel1
-        Me.SuperTabItem1.GlobalItem = False
-        Me.SuperTabItem1.Name = "SuperTabItem1"
-        Me.SuperTabItem1.Text = "MANTENCION DE INVENTARIO"
+        Me.Stab_MantInventario.AttachedControl = Me.SuperTabControlPanel1
+        Me.Stab_MantInventario.GlobalItem = False
+        Me.Stab_MantInventario.Name = "Stab_MantInventario"
+        Me.Stab_MantInventario.Text = "MANTENCION DE INVENTARIO"
+        '
+        'Btn_Cerrar_Inventario
+        '
+        Me.Btn_Cerrar_Inventario.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Cerrar_Inventario.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Cerrar_Inventario.Image = CType(resources.GetObject("Btn_Cerrar_Inventario.Image"), System.Drawing.Image)
+        Me.Btn_Cerrar_Inventario.ImageAlt = CType(resources.GetObject("Btn_Cerrar_Inventario.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Cerrar_Inventario.Name = "Btn_Cerrar_Inventario"
+        Me.Btn_Cerrar_Inventario.Text = "Cerrar Inventario"
+        '
+        'Btn_Abrir_Inventario
+        '
+        Me.Btn_Abrir_Inventario.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Abrir_Inventario.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Abrir_Inventario.Image = CType(resources.GetObject("Btn_Abrir_Inventario.Image"), System.Drawing.Image)
+        Me.Btn_Abrir_Inventario.ImageAlt = CType(resources.GetObject("Btn_Abrir_Inventario.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Abrir_Inventario.Name = "Btn_Abrir_Inventario"
+        Me.Btn_Abrir_Inventario.Text = "Abrir inventario"
         '
         'Frm_Inv_Ctrl_Inventario
         '
@@ -502,12 +522,14 @@ Partial Class Frm_Inv_Ctrl_Inventario
     Friend WithEvents SuperTabControlPanel2 As DevComponents.DotNetBar.SuperTabControlPanel
     Friend WithEvents MetroTilePanel2 As DevComponents.DotNetBar.Metro.MetroTilePanel
     Friend WithEvents ItemContainer1 As DevComponents.DotNetBar.ItemContainer
-    Friend WithEvents SuperTabItem2 As DevComponents.DotNetBar.SuperTabItem
+    Friend WithEvents Stab_Configuracion As DevComponents.DotNetBar.SuperTabItem
     Friend WithEvents SuperTabControlPanel1 As DevComponents.DotNetBar.SuperTabControlPanel
-    Friend WithEvents SuperTabItem1 As DevComponents.DotNetBar.SuperTabItem
+    Friend WithEvents Stab_MantInventario As DevComponents.DotNetBar.SuperTabItem
     Private WithEvents Btn_CrearHoja As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_InventarioXSector As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Sectores As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Contadores As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Parejas As DevComponents.DotNetBar.Metro.MetroTileItem
+    Public WithEvents Btn_Cerrar_Inventario As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_Abrir_Inventario As DevComponents.DotNetBar.ButtonItem
 End Class

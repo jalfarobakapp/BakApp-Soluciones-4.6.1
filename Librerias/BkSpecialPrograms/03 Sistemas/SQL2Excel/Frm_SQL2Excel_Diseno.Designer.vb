@@ -35,10 +35,14 @@ Partial Class Frm_SQL2Excel_Diseno
         Me.Mnu_CopiarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.Txt_Query_SQL = New System.Windows.Forms.RichTextBox()
         Me.SuperTabItem2 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.SuperTabControl1 = New DevComponents.DotNetBar.SuperTabControl()
+        Me.SuperTabControlPanel3 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.Txt_Nota = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.SuperTabItem3 = New DevComponents.DotNetBar.SuperTabItem()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Ejecutar_Consulta_SQL = New DevComponents.DotNetBar.ButtonItem()
@@ -50,7 +54,6 @@ Partial Class Frm_SQL2Excel_Diseno
         Me.Txt_Nombre_Query = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Rdb_Consulta_Global = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_Consulta_Personal = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Txt_Query_SQL = New System.Windows.Forms.RichTextBox()
         Me.ContextMenuStrip2.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.SuperTabControlPanel1.SuspendLayout()
@@ -58,6 +61,7 @@ Partial Class Frm_SQL2Excel_Diseno
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControl1.SuspendLayout()
+        Me.SuperTabControlPanel3.SuspendLayout()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
@@ -120,6 +124,18 @@ Partial Class Frm_SQL2Excel_Diseno
         Me.SuperTabControlPanel1.TabIndex = 1
         Me.SuperTabControlPanel1.TabItem = Me.SuperTabItem1
         '
+        'Txt_Query_SQL
+        '
+        Me.Txt_Query_SQL.BackColor = System.Drawing.Color.White
+        Me.Txt_Query_SQL.ContextMenuStrip = Me.ContextMenuStrip2
+        Me.Txt_Query_SQL.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Txt_Query_SQL.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Query_SQL.Location = New System.Drawing.Point(0, 0)
+        Me.Txt_Query_SQL.Name = "Txt_Query_SQL"
+        Me.Txt_Query_SQL.Size = New System.Drawing.Size(879, 373)
+        Me.Txt_Query_SQL.TabIndex = 28
+        Me.Txt_Query_SQL.Text = ""
+        '
         'SuperTabItem2
         '
         Me.SuperTabItem2.AttachedControl = Me.SuperTabControlPanel2
@@ -132,9 +148,9 @@ Partial Class Frm_SQL2Excel_Diseno
         '
         Me.SuperTabControlPanel2.Controls.Add(Me.Grilla)
         Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 25)
+        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 0)
         Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
-        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(879, 373)
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(879, 398)
         Me.SuperTabControlPanel2.TabIndex = 0
         Me.SuperTabControlPanel2.TabItem = Me.SuperTabItem2
         '
@@ -174,7 +190,7 @@ Partial Class Frm_SQL2Excel_Diseno
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.Grilla.Size = New System.Drawing.Size(879, 373)
+        Me.Grilla.Size = New System.Drawing.Size(879, 398)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 67
         '
@@ -199,6 +215,7 @@ Partial Class Frm_SQL2Excel_Diseno
         Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel3)
         Me.SuperTabControl1.ForeColor = System.Drawing.Color.Black
         Me.SuperTabControl1.Location = New System.Drawing.Point(8, 3)
         Me.SuperTabControl1.Name = "SuperTabControl1"
@@ -208,9 +225,46 @@ Partial Class Frm_SQL2Excel_Diseno
         Me.SuperTabControl1.Size = New System.Drawing.Size(879, 398)
         Me.SuperTabControl1.TabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SuperTabControl1.TabIndex = 1
-        Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem1, Me.SuperTabItem2})
+        Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem1, Me.SuperTabItem3, Me.SuperTabItem2})
         Me.SuperTabControl1.TabStyle = DevComponents.DotNetBar.eSuperTabStyle.Office2010BackstageBlue
         Me.SuperTabControl1.Text = "SuperTabControl1"
+        '
+        'SuperTabControlPanel3
+        '
+        Me.SuperTabControlPanel3.Controls.Add(Me.Txt_Nota)
+        Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
+        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(879, 398)
+        Me.SuperTabControlPanel3.TabIndex = 0
+        Me.SuperTabControlPanel3.TabItem = Me.SuperTabItem3
+        '
+        'Txt_Nota
+        '
+        Me.Txt_Nota.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Txt_Nota.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Nota.Border.Class = "TextBoxBorder"
+        Me.Txt_Nota.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Nota.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Nota.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Nota.Location = New System.Drawing.Point(3, 3)
+        Me.Txt_Nota.Multiline = True
+        Me.Txt_Nota.Name = "Txt_Nota"
+        Me.Txt_Nota.PreventEnterBeep = True
+        Me.Txt_Nota.Size = New System.Drawing.Size(870, 392)
+        Me.Txt_Nota.TabIndex = 1
+        '
+        'SuperTabItem3
+        '
+        Me.SuperTabItem3.AttachedControl = Me.SuperTabControlPanel3
+        Me.SuperTabItem3.GlobalItem = False
+        Me.SuperTabItem3.Name = "SuperTabItem3"
+        Me.SuperTabItem3.Text = "Reseña"
         '
         'GroupPanel2
         '
@@ -416,18 +470,6 @@ Partial Class Frm_SQL2Excel_Diseno
         Me.Rdb_Consulta_Personal.TabIndex = 72
         Me.Rdb_Consulta_Personal.Text = "Consulta personal"
         '
-        'Txt_Query_SQL
-        '
-        Me.Txt_Query_SQL.BackColor = System.Drawing.Color.White
-        Me.Txt_Query_SQL.ContextMenuStrip = Me.ContextMenuStrip2
-        Me.Txt_Query_SQL.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Txt_Query_SQL.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Query_SQL.Location = New System.Drawing.Point(0, 0)
-        Me.Txt_Query_SQL.Name = "Txt_Query_SQL"
-        Me.Txt_Query_SQL.Size = New System.Drawing.Size(879, 373)
-        Me.Txt_Query_SQL.TabIndex = 28
-        Me.Txt_Query_SQL.Text = ""
-        '
         'Frm_SQL2Excel_Diseno
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -455,6 +497,7 @@ Partial Class Frm_SQL2Excel_Diseno
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControl1.ResumeLayout(False)
+        Me.SuperTabControlPanel3.ResumeLayout(False)
         Me.GroupPanel2.ResumeLayout(False)
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel1.ResumeLayout(False)
@@ -485,4 +528,7 @@ Partial Class Frm_SQL2Excel_Diseno
     Friend WithEvents Rdb_Consulta_Personal As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents Txt_Query_SQL As RichTextBox
+    Friend WithEvents SuperTabControlPanel3 As DevComponents.DotNetBar.SuperTabControlPanel
+    Friend WithEvents SuperTabItem3 As DevComponents.DotNetBar.SuperTabItem
+    Friend WithEvents Txt_Nota As DevComponents.DotNetBar.Controls.TextBoxX
 End Class

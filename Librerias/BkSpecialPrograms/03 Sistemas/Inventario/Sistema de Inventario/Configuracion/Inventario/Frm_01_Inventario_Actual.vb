@@ -46,29 +46,36 @@ Public Class Frm_01_Inventario_Actual
 
         AddHandler Grilla.MouseDown, AddressOf Grilla_MouseDown
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
-        AddHandler Chk_MostrarSoloInventariados.CheckedChanged, AddressOf Sb_Filtrar
+        AddHandler Rdb_MostrarSoloInventariados.CheckedChanged, AddressOf Rdb_CheckedChanged
+        AddHandler Rdb_MostrarSoloConStockSinInventariar.CheckedChanged, AddressOf Rdb_CheckedChanged
+        AddHandler Rdb_MostrarTodosLosProductos.CheckedChanged, AddressOf Rdb_CheckedChanged
 
-
-        Sb_ActualizarGrilla()
+        Sb_Actualizar_Grilla()
 
     End Sub
 
-    Private Sub Sb_ActualizarGrilla()
+    Private Sub Sb_Actualizar_Grilla()
 
         Consulta_sql = "Select Codigo,Recontado, SUM(Cantidad) As Cantidad" & vbCrLf &
                        "Into #Paso" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle" & vbCrLf &
                        "Group By Codigo,Recontado" & vbCrLf &
+                       vbCrLf &
+                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 0 Where IdInventario = 1" & vbCrLf &
+                       vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 1" & vbCrLf &
-                       "Where Codigo In (Select Codigo From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle Where Recontado = 1)" & vbCrLf &
+                       "Where Codigo In (Select Codigo From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle Where Recontado = 1 And IdInventario = " & _IdInventario & ") And IdInventario = " & _IdInventario & vbCrLf &
+                       vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Cant_Inventariada = Cantidad" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Inv_FotoInventario Foto" & vbCrLf &
                        "Inner Join #Paso On #Paso.Codigo = Foto.Codigo And Foto.Recontado = #Paso.Recontado" & vbCrLf &
-                       "Where Foto.Recontado = 0" & vbCrLf &
+                       "Where Foto.Recontado = 0 And IdInventario = " & _IdInventario & vbCrLf &
+                       vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Cant_Inventariada = Cantidad" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Inv_FotoInventario Foto" & vbCrLf &
                        "Inner Join #Paso On #Paso.Codigo = Foto.Codigo And Foto.Recontado = #Paso.Recontado" & vbCrLf &
-                       "Where Foto.Recontado = 1" & vbCrLf &
+                       "Where Foto.Recontado = 1 And IdInventario = " & _IdInventario & vbCrLf &
+                       vbCrLf &
                        "Drop table #Paso" & vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set " &
                        "Dif_Inv_Cantidad = Cant_Inventariada-StFisicoUd1" &
@@ -92,67 +99,99 @@ Public Class Frm_01_Inventario_Actual
 
             OcultarEncabezadoGrilla(Grilla)
 
+            Dim DisplayIndex As Integer = 0
+
             .Columns("Codigo").Width = 100
             .Columns("Codigo").HeaderText = "Código"
             .Columns("Codigo").Visible = True
+            .Columns("Codigo").DisplayIndex = DisplayIndex
+            DisplayIndex += 1
 
             .Columns("Descripcion").Width = 290
             .Columns("Descripcion").HeaderText = "Descripción"
             .Columns("Descripcion").Visible = True
+            .Columns("Descripcion").DisplayIndex = DisplayIndex
+            DisplayIndex += 1
 
             .Columns("StFisicoUd1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("StFisicoUd1").DefaultCellStyle.Format = "###,##.##"
             .Columns("StFisicoUd1").HeaderText = "Stock"
             .Columns("StFisicoUd1").Width = 50
             .Columns("StFisicoUd1").Visible = True
+            .Columns("StFisicoUd1").DisplayIndex = DisplayIndex
+            DisplayIndex += 1
 
             .Columns("Cant_Inventariada").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Cant_Inventariada").DefaultCellStyle.Format = "###,##.##"
             .Columns("Cant_Inventariada").HeaderText = "Inventario"
             .Columns("Cant_Inventariada").Width = 70
             .Columns("Cant_Inventariada").Visible = True
-
-            .Columns("Recontado").HeaderText = "[R]"
-            .Columns("Recontado").Width = 30
-            .Columns("Recontado").Visible = True
-
-            .Columns("Cerrado").HeaderText = "[C]"
-            .Columns("Cerrado").Width = 30
-            .Columns("Cerrado").Visible = True
-
-            .Columns("Levantado").HeaderText = "[L]"
-            .Columns("Levantado").Width = 30
-            .Columns("Levantado").Visible = True
+            .Columns("Cant_Inventariada").DisplayIndex = DisplayIndex
+            DisplayIndex += 1
 
             .Columns("Costo").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Costo").DefaultCellStyle.Format = "$ ###,#0"
             .Columns("Costo").HeaderText = "Costo PM"
-            .Columns("Costo").Width = 70
+            .Columns("Costo").Width = 60
             .Columns("Costo").Visible = True
+            .Columns("Costo").DisplayIndex = DisplayIndex
+            DisplayIndex += 1
 
             .Columns("Dif_Inv_Cantidad").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Dif_Inv_Cantidad").DefaultCellStyle.Format = "###,##.##"
             .Columns("Dif_Inv_Cantidad").HeaderText = "Dif. Inv."
             .Columns("Dif_Inv_Cantidad").Width = 70
             .Columns("Dif_Inv_Cantidad").Visible = True
+            .Columns("Dif_Inv_Cantidad").DisplayIndex = DisplayIndex
+            DisplayIndex += 1
 
             .Columns("Total_Costo_Foto").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Total_Costo_Foto").DefaultCellStyle.Format = "$ ###,#0"
             .Columns("Total_Costo_Foto").HeaderText = "Total Foto $"
             .Columns("Total_Costo_Foto").Width = 70
             .Columns("Total_Costo_Foto").Visible = True
+            .Columns("Total_Costo_Foto").DisplayIndex = DisplayIndex
+            DisplayIndex += 1
 
             .Columns("Total_Costo_Inv").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Total_Costo_Inv").DefaultCellStyle.Format = "$ ###,#0"
             .Columns("Total_Costo_Inv").HeaderText = "Total Inv. $"
             .Columns("Total_Costo_Inv").Width = 70
             .Columns("Total_Costo_Inv").Visible = True
+            .Columns("Total_Costo_Inv").DisplayIndex = DisplayIndex
+            DisplayIndex += 1
 
             .Columns("Dif_Inv_Costo").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Dif_Inv_Costo").DefaultCellStyle.Format = "$ ###,#0"
             .Columns("Dif_Inv_Costo").HeaderText = "Dif. $"
             .Columns("Dif_Inv_Costo").Width = 70
             .Columns("Dif_Inv_Costo").Visible = True
+            .Columns("Dif_Inv_Costo").DisplayIndex = DisplayIndex
+            DisplayIndex += 1
+
+            .Columns("Recontado").HeaderText = "[R]"
+            .Columns("Recontado").Width = 30
+            .Columns("Recontado").Visible = True
+            .Columns("Recontado").DisplayIndex = DisplayIndex
+            DisplayIndex += 1
+
+            .Columns("Cerrado").HeaderText = "[C]"
+            .Columns("Cerrado").Width = 30
+            .Columns("Cerrado").Visible = True
+            .Columns("Cerrado").DisplayIndex = DisplayIndex
+            DisplayIndex += 1
+
+            .Columns("Levantado").HeaderText = "[L]"
+            .Columns("Levantado").Width = 30
+            .Columns("Levantado").Visible = True
+            .Columns("Levantado").DisplayIndex = DisplayIndex
+            DisplayIndex += 1
+
+            .Columns("NoInventariar").HeaderText = "NO Inv."
+            .Columns("NoInventariar").ToolTipText = "No Inventariar"
+            .Columns("NoInventariar").Width = 30
+            .Columns("NoInventariar").Visible = True
+            .Columns("NoInventariar").DisplayIndex = DisplayIndex
 
         End With
 
@@ -177,9 +216,9 @@ Public Class Frm_01_Inventario_Actual
         LblTotal_Diferencia.Text = FormatCurrency(_Total_Diferencia, 0)
 
         If _Total_Diferencia < 0 Then
-            LblTotal_Diferencia.ForeColor = Color.Red
+            LblTotal_Diferencia.ForeColor = Rojo
         Else
-            LblTotal_Diferencia.ForeColor = Color.Green
+            LblTotal_Diferencia.ForeColor = Verde
         End If
 
     End Sub
@@ -241,88 +280,12 @@ Public Class Frm_01_Inventario_Actual
         _Fila.Cells("Cerrado").Value = Fm.Zw_Inv_FotoInventario.Cerrado
         _Fila.Cells("Recontado").Value = Fm.Zw_Inv_FotoInventario.Recontado
         _Fila.Cells("Levantado").Value = Fm.Zw_Inv_FotoInventario.Levantado
+        _Fila.Cells("NoInventariar").Value = Fm.Zw_Inv_FotoInventario.NoInventariar
 
         Fm.Dispose()
 
     End Sub
 
-
-
-    Private Sub BtnCerrarSinDiferencias_Click(sender As System.Object, e As System.EventArgs) Handles BtnCerrarSinDiferencias.Click
-
-        Dim _Condicion As String = "IdInventario = " & _IdInventario & vbCrLf &
-                                   "And Diferencia = ''" & vbCrLf &
-                                   "And Recontado = 0" & vbCrLf &
-                                   "And Levantado = 0"
-
-        Dim Reg As Integer = _Sql.Fx_Cuenta_Registros("Zw_Inv_Inventario", _Condicion)
-
-        If Reg > 0 Then
-
-            Consulta_sql = "Update Zw_Inv_Inventario Set Cerrado = 1 " & vbCrLf &
-                           "Where " & vbCrLf & _Condicion
-
-            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-                MessageBoxEx.Show("Productos cerrados " & Reg, "Cerrar",
-                                  MessageBoxButtons.OK, MessageBoxIcon.Information)
-            End If
-
-        Else
-            MessageBoxEx.Show("No existen productos que marcar", "Cerrar",
-                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        End If
-
-    End Sub
-
-
-    Private Sub BtnLevantados_Click(sender As System.Object, e As System.EventArgs) Handles BtnLevantados.Click
-
-
-        Dim _Condicion As String = "IdInventario = " & _IdInventario & vbCrLf &
-                                   "And Cerrado = 1" & vbCrLf &
-                                   "And Levantado = 0"
-
-        Dim Reg As Integer = _Sql.Fx_Cuenta_Registros("Zw_Inv_Inventario", _Condicion)
-
-        If Reg > 0 Then
-            Consulta_sql = "Update Zw_Inv_Inventario Set Levantado = 1 " & vbCrLf &
-                           "Where " & vbCrLf & _Condicion
-
-            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-                MessageBoxEx.Show("Productos Levantados " & Reg, "Marcar Levantados",
-                                  MessageBoxButtons.OK, MessageBoxIcon.Information)
-            End If
-
-        Else
-            MessageBoxEx.Show("No existen productos que marcar", "Marcar Levantados",
-                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        End If
-
-    End Sub
-
-    Private Sub BtnMarcarLevantadosInventariados_Click(sender As System.Object, e As System.EventArgs) Handles BtnCerrarInventariados.Click
-
-        Dim _Condicion As String = "IdInventario = " & _IdInventario & vbCrLf &
-                                   "And Cant_Inventariada > 0" & vbCrLf &
-                                   "And Cerrado = 0"
-
-        Dim Reg As Integer = _Sql.Fx_Cuenta_Registros("Zw_Inv_Inventario", _Condicion)
-
-        If Reg > 0 Then
-            Consulta_sql = "Update Zw_Inv_Inventario Set Cerrado = 1 " & vbCrLf &
-                           "Where " & vbCrLf & _Condicion
-
-            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-                MessageBoxEx.Show("Productos Levantados " & Reg, "Marcar Levantados",
-                                  MessageBoxButtons.OK, MessageBoxIcon.Information)
-            End If
-
-        Else
-            MessageBoxEx.Show("No existen productos que marcar", "Marcar Levantados",
-                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        End If
-
-    End Sub
 
     Private Sub BtnFiltroSectores_Click(sender As System.Object, e As System.EventArgs)
 
@@ -350,10 +313,6 @@ Public Class Frm_01_Inventario_Actual
         Fm.ShowDialog(Me)
     End Sub
 
-    Private Sub BtnCerrarTodosInvCero_Click(sender As System.Object, e As System.EventArgs) Handles BtnCerrarTodosInvCero.Click
-        MessageBoxEx.Show(Me, "En Construcción")
-    End Sub
-
     Sub Sb_Filtrar()
         Try
             Me.Enabled = False
@@ -361,10 +320,14 @@ Public Class Frm_01_Inventario_Actual
 
             If IsNothing(_Dv) Then Return
 
-            If Chk_MostrarSoloInventariados.Checked Then
-                _Dv.RowFilter = String.Format("Codigo+CodigoRap+CodigoTec+Descripcion Like '%{0}%' And Cant_Inventariada > 0", Txt_Filtrar.Text.Trim)
-            Else
+            If Rdb_MostrarTodosLosProductos.Checked Then
                 _Dv.RowFilter = String.Format("Codigo+CodigoRap+CodigoTec+Descripcion Like '%{0}%'", Txt_Filtrar.Text.Trim)
+            End If
+            If Rdb_MostrarSoloInventariados.Checked Then
+                _Dv.RowFilter = String.Format("Codigo+CodigoRap+CodigoTec+Descripcion Like '%{0}%' And Cant_Inventariada > 0", Txt_Filtrar.Text.Trim)
+            End If
+            If Rdb_MostrarSoloConStockSinInventariar.Checked Then
+                _Dv.RowFilter = String.Format("Codigo+CodigoRap+CodigoTec+Descripcion Like '%{0}%' And Cant_Inventariada = 0 And StFisicoUd1 > 0", Txt_Filtrar.Text.Trim)
             End If
             Sb_SumarTotales()
         Catch ex As Exception
@@ -441,5 +404,13 @@ Public Class Frm_01_Inventario_Actual
         ShowContextMenu(Menu_Contextual_ExportarAjuste)
     End Sub
 
+    Private Sub Btn_Actualizar_Click(sender As Object, e As EventArgs) Handles Btn_Actualizar.Click
+        Sb_Actualizar_Grilla()
+    End Sub
 
+    Private Sub Rdb_CheckedChanged(sender As Object, e As EventArgs)
+        If sender.Checked Then
+            Sb_Filtrar()
+        End If
+    End Sub
 End Class

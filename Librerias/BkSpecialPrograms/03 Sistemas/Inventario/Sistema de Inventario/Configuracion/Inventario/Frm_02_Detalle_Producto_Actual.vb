@@ -28,9 +28,14 @@ Public Class Frm_02_Detalle_Producto_Actual
     End Sub
     Private Sub Frm_Detalle_Producto_Actual_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
+        Chk_NoInventariar.Enabled = True
+
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
         Sb_Ver_Detalle_Del_Producto()
+
+        AddHandler Chk_NoInventariar.CheckedChanged, AddressOf Chk_NoInventariar_CheckedChanged
+        AddHandler Chk_NoInventariar.CheckedChanging, AddressOf Chk_NoInventariar_CheckedChanging
 
     End Sub
 
@@ -61,7 +66,7 @@ Public Class Frm_02_Detalle_Producto_Actual
     End Sub
 
 
-    Private Sub BtnEstadisticas_Click(sender As System.Object, e As System.EventArgs) Handles BtnEstadisticas.Click
+    Private Sub BtnEstadisticas_Click(sender As System.Object, e As System.EventArgs)
 
         Dim Fm As New Frm_EstadisticaProducto(_Codigo)
         Fm.ShowDialog(Me)
@@ -140,22 +145,27 @@ Public Class Frm_02_Detalle_Producto_Actual
 
         End With
 
-
         Consulta_sql = "Select Codigo,Recontado, SUM(Cantidad) As Cantidad" & vbCrLf &
                        "Into #Paso" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle" & vbCrLf &
                        "Where Codigo = '" & _Codigo & "'" & vbCrLf &
                        "Group By Codigo,Recontado" & vbCrLf &
+                       vbCrLf &
+                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 0 Where IdInventario = 1" & vbCrLf &
+                       vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 1" & vbCrLf &
-                       "Where Codigo In (Select Codigo From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle Where Recontado = 1)" & vbCrLf &
+                       "Where Codigo In (Select Codigo From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle Where Recontado = 1 And IdInventario = " & _IdInventario & ") And IdInventario = " & _IdInventario & vbCrLf &
+                       vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Cant_Inventariada = Cantidad" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Inv_FotoInventario Foto" & vbCrLf &
                        "Inner Join #Paso On #Paso.Codigo = Foto.Codigo And Foto.Recontado = #Paso.Recontado" & vbCrLf &
-                       "Where Foto.Recontado = 0" & vbCrLf &
+                       "Where Foto.Recontado = 0 And IdInventario = " & _IdInventario & vbCrLf &
+                       vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Cant_Inventariada = Cantidad" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Inv_FotoInventario Foto" & vbCrLf &
                        "Inner Join #Paso On #Paso.Codigo = Foto.Codigo And Foto.Recontado = #Paso.Recontado" & vbCrLf &
-                       "Where Foto.Recontado = 1" & vbCrLf &
+                       "Where Foto.Recontado = 1 And IdInventario = " & _IdInventario & vbCrLf &
+                       vbCrLf &
                        "Drop table #Paso" & vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set " &
                        "Dif_Inv_Cantidad = Cant_Inventariada-StFisicoUd1" &
@@ -182,6 +192,8 @@ Public Class Frm_02_Detalle_Producto_Actual
             ChkLevantado.Checked = .Levantado
             ChkRecontado.Checked = .Recontado
 
+            Chk_NoInventariar.Checked = .NoInventariar
+
             If .Dif_Inv_Cantidad < 0 Then
                 Lbl_Dif_Inv_Cantidad.ForeColor = Rojo
             Else
@@ -195,16 +207,61 @@ Public Class Frm_02_Detalle_Producto_Actual
 
     Private Sub BtnAgregarConteo_Click(sender As System.Object, e As System.EventArgs) Handles BtnAgregarConteo.Click
 
-        'If Not Fx_Tiene_Permiso(Me, "In0014") Then Return
+        If Chk_NoInventariar.Checked Then
+            MessageBoxEx.Show(Me, "El producto esta marcado para no inventariar", "Producto marcado",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
-        Dim Fm_Inv As New Frm_IngresarHoja(_IdInventario, 0)
+        Dim _Old_Funcionario = FUNCIONARIO
+        Dim _Aceptar As Boolean
+
+        Dim Fml As New Frm_Login
+        Fml.ValidarPermiso = True
+        Fml.Permiso = "Doc00086"
+        Fml.ShowDialog()
+        _Aceptar = Fml.Aceptar
+        Fml.Dispose()
+
+        If Not _Aceptar Then
+            Return
+        End If
+
+        Dim Fm_Inv As New Frm_IngresarHoja(_IdInventario, 0, FUNCIONARIO)
         Fm_Inv.Reconteo = True
         Fm_Inv.CodigoReconteo = _Codigo
         Fm_Inv.ShowDialog(Me)
         Fm_Inv.Dispose()
 
+        FUNCIONARIO = _Old_Funcionario
+
         Sb_Ver_Detalle_Del_Producto()
 
     End Sub
 
+    Private Sub Chk_NoInventariar_CheckedChanged(sender As Object, e As EventArgs)
+
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set NoInventariar = " & Convert.ToInt32(Chk_NoInventariar.Checked) & vbCrLf &
+                       "Where IdInventario = " & _IdInventario & " And Codigo = '" & _Codigo & "'"
+        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+            If Chk_NoInventariar.Checked Then
+                MessageBoxEx.Show(Me, "Se ha marcado el producto para no inventariar", "Producto marcado",
+                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Else
+                MessageBoxEx.Show(Me, "Se ha desmarcado el producto para no inventariar", "Producto desmarcado",
+                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+        End If
+
+        Zw_Inv_FotoInventario.NoInventariar = Chk_NoInventariar.Checked
+
+    End Sub
+
+    Private Sub Chk_NoInventariar_CheckedChanging(sender As Object, e As Controls.CheckBoxXChangeEventArgs)
+
+        If Not Fx_Tiene_Permiso(Me, "Invg0001") Then
+            e.Cancel = True
+        End If
+
+    End Sub
 End Class

@@ -2133,6 +2133,28 @@ Public Class Frm_Ver_Documento
                 Sb_Ver_Vencimientos()
             Case "FEER"
                 Call Btn_Observaciones_Click(Nothing, Nothing)
+            Case "ELECTRONICO"
+
+                If Not _RowEncabezado.Item("TIDOELEC") AndAlso _RowEncabezado.Item("TIDO") = "FCC" Then
+
+                    If Fx_Tiene_Permiso(Me, "Doc00093") Then
+
+                        If MessageBoxEx.Show(Me, "¿Confirma dejar el documento como electrónico?", "Cambiar LIBRO",
+                                         MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+
+                            Consulta_sql = "Update MAEEDO Set TIDOELEC = 1 Where IDMAEEDO = " & _Idmaeedo
+                            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+                                _TblEncabezado.Rows(0).Item("TIDOELEC") = True
+                                _TblEncabezado.Rows(0).Item("ELECTRONICO") = "Si"
+                                MessageBoxEx.Show(Me, "El documento ahora es electrónico", "Información",
+                                                  MessageBoxButtons.OK, MessageBoxIcon.Information)
+                            End If
+                        End If
+
+                    End If
+
+                End If
+
             Case "LIBRO"
 
                 Dim _Tido As String = _RowEncabezado.Item("TIDO")
@@ -3218,6 +3240,7 @@ Public Class Frm_Ver_Documento
             Dim _Endo = _TblEncabezado.Rows(0).Item("ENDO")
             Dim _Suendo = _TblEncabezado.Rows(0).Item("SUENDO")
             Dim _Idmaeedo = _TblEncabezado.Rows(0).Item("IDMAEEDO")
+            Dim _Tidoelec = Convert.ToInt32(_TblEncabezado.Rows(0).Item("TIDOELEC"))
 
             Dim _Aceptado As Boolean
 
@@ -3234,7 +3257,7 @@ Public Class Frm_Ver_Documento
 
                 Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros("MAEEDO",
                                      "EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'" & Space(1) &
-                                     "And ENDO = '" & _Endo & "' And SUENDO = '" & _Suendo & "'")
+                                     "And ENDO = '" & _Endo & "' And SUENDO = '" & _Suendo & "' And TIDOELEC = " & _Tidoelec)
 
                 If Not CBool(_Reg) Then
                     Consulta_sql = "Update MAEEDO Set NUDO = '" & _Nudo & "' Where IDMAEEDO = " & _Idmaeedo & vbCrLf &

@@ -851,6 +851,7 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Pdp_CPT_Tarja_Det.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Productos.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Prod_Asociacion.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_SQL_Querys.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stk_Areas.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stk_Tickets.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stk_Tickets_Acciones.vb" />
@@ -2418,6 +2419,7 @@
     <Compile Include="03 Sistemas\Sistema WMS\Mapa\Ubicaciones\Ubicaciones\Ubicaciones productos\Frm_AsociarUbicXprod.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\SQL2Excel\Cl_SQL2Query.vb" />
     <Compile Include="03 Sistemas\Tesoreria\CashDro\Formularios\Cl_Pago_Cashdro.vb" />
     <Compile Include="03 Sistemas\Tesoreria\CashDro\Formularios\Formas de Pago\Frm_Cashdro_Pago_Efectivo_y_Tarjeta.Designer.vb">
       <DependentUpon>Frm_Cashdro_Pago_Efectivo_y_Tarjeta.vb</DependentUpon>

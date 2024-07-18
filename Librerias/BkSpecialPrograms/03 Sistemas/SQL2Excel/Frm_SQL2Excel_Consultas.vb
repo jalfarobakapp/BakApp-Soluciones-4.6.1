@@ -116,9 +116,9 @@ Public Class Frm_SQL2Excel_Consultas
 
     Private Sub Btn_Crear_Nueva_Consulta_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Crear_Nueva_Consulta.Click
 
-        Dim Fm As New Frm_SQL2Excel_Diseno
+        Dim Fm As New Frm_SQL2Excel_Diseno(0)
         Fm.ShowDialog(Me)
-        If Fm.Pro_Grabacion_Realizada Then
+        If Fm.Grabar Then
             Sb_Actualizar_Grilla()
         End If
         Fm.Dispose()
@@ -149,16 +149,26 @@ Public Class Frm_SQL2Excel_Consultas
         If MessageBoxEx.Show(Me, "¿Está seguro de eliminar esta consulta?", "Eliminar consulta",
                              MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
 
-            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_SQL_Querys Where Id = " & _Id
-            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-                Grilla.Rows.RemoveAt(_Fila.Index)
+            Dim Cl_SQL2Query As New Cl_SQL2Query
+
+            Cl_SQL2Query.Fx_Llenar_Zw_SQL_Querys(_Id)
+
+            Dim _Mensaje As LsValiciones.Mensajes = Cl_SQL2Query.Fx_Eliminar_SqlQuery()
+
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+
+            If Not _Mensaje.EsCorrecto Then
+                Return
             End If
+
+            Grilla.Rows.RemoveAt(_Fila.Index)
 
         End If
 
     End Sub
 
     Private Sub Btn_Editar_Consulta_Sql_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Editar_Consulta_Sql.Click
+
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
         Dim _Id = _Fila.Cells("Id").Value
@@ -176,15 +186,15 @@ Public Class Frm_SQL2Excel_Consultas
             Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If Not (_Row Is Nothing) Then
-                Dim Fm As New Frm_SQL2Excel_Diseno
-                Fm.Pro_Row_SQL_Querys = _Row
+                Dim Fm As New Frm_SQL2Excel_Diseno(_Id)
                 Fm.ShowDialog(Me)
-                If Fm.Pro_Grabacion_Realizada Then
+                If Fm.Grabar Then
                     Sb_Actualizar_Grilla()
                 End If
                 Fm.Dispose()
             End If
         End If
+
     End Sub
 
     Private Sub Sb_Grilla_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
@@ -199,4 +209,8 @@ Public Class Frm_SQL2Excel_Consultas
         End If
     End Sub
 
+    Private Sub Grilla_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellEnter
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Txt_Nota.Text = _Fila.Cells("Nota").Value
+    End Sub
 End Class

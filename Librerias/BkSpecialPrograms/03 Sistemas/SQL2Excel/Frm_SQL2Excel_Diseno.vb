@@ -1,54 +1,48 @@
-﻿'Imports Lib_Bakapp_VarClassFunc
-Imports System.Text
-Imports System.Text.RegularExpressions
-'Imports System.Web.Routing
+﻿Imports System.Text.RegularExpressions
 Imports DevComponents.DotNetBar
-Imports DevComponents.DotNetBar.Controls
-'Imports Microsoft.Office.Interop.Word
 
 Public Class Frm_SQL2Excel_Diseno
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-
     Dim _Tbl_Query As DataTable
     Dim _Tbl_Sql_Command As DataTable
-    Dim _Row_SQL_Querys As DataRow
 
     Dim _Tbl_Tablas_Random As DataTable
     Dim _Tbl_Tablas_BakApp As DataTable
 
-    Dim _Grabacion_Realizada As Boolean
+    Public Grabar As Boolean
 
     Dim _Sql_Query_Original As String
     Dim _Color_Selection As Color = Color.Black
 
     Dim _SqlCommandos As SqlCommandos.SqlLscm
+    Public Property Cl_SQL2Query As New Cl_SQL2Query
 
-    Public Property Pro_Row_SQL_Querys() As DataRow
-        Get
-            Return _Row_SQL_Querys
-        End Get
-        Set(value As DataRow)
-            _Row_SQL_Querys = value
-            Me.Text = "CONSULTA SQL EN LINEA (" & _Row_SQL_Querys.Item("Id") & ")"
-            Txt_Nombre_Query.Text = _Row_SQL_Querys.Item("Nombre_Query")
-            Txt_Query_SQL.Text = _Row_SQL_Querys.Item("SQL_Query")
-            _Sql_Query_Original = _Row_SQL_Querys.Item("SQL_Query")
+    'Public Property Pro_Row_SQL_Querys() As DataRow
+    '    Get
+    '        Return _Row_SQL_Querys
+    '    End Get
+    '    Set(value As DataRow)
+    '        _Row_SQL_Querys = value
+    '        Me.Text = "CONSULTA SQL EN LINEA (" & _Row_SQL_Querys.Item("Id") & ")"
+    '        Txt_Nombre_Query.Text = _Row_SQL_Querys.Item("Nombre_Query")
+    '        Txt_Query_SQL.Text = _Row_SQL_Querys.Item("SQL_Query")
+    '        _Sql_Query_Original = _Row_SQL_Querys.Item("SQL_Query")
 
-            Rdb_Consulta_Global.Checked = _Row_SQL_Querys.Item("Consulta_Global")
-            Rdb_Consulta_Personal.Checked = _Row_SQL_Querys.Item("Consulta_Personal")
+    '        Rdb_Consulta_Global.Checked = _Row_SQL_Querys.Item("Consulta_Global")
+    '        Rdb_Consulta_Personal.Checked = _Row_SQL_Querys.Item("Consulta_Personal")
 
-        End Set
-    End Property
-    Public ReadOnly Property Pro_Grabacion_Realizada() As Boolean
-        Get
-            Return _Grabacion_Realizada
-        End Get
-    End Property
+    '    End Set
+    'End Property
+    'Public ReadOnly Property Pro_Grabacion_Realizada() As Boolean
+    '    Get
+    '        Return _Grabacion_Realizada
+    '    End Get
+    'End Property
 
-    Public Sub New()
+    Public Sub New(_Id As Integer)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -56,8 +50,9 @@ Public Class Frm_SQL2Excel_Diseno
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
-
         Sb_Color_Botones_Barra(Bar1)
+
+        Cl_SQL2Query.Fx_Llenar_Zw_SQL_Querys(_Id)
 
         _SqlCommandos = New SqlCommandos.SqlLscm
 
@@ -68,16 +63,26 @@ Public Class Frm_SQL2Excel_Diseno
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_Mouse_Clic_Boton_derecho_Grilla
 
+        If CBool(Cl_SQL2Query.Zw_SQL_Querys.Id) Then
+
+            With Cl_SQL2Query.Zw_SQL_Querys
+
+                Txt_Query_SQL.Text = .SQL_Query
+                _Sql_Query_Original = .SQL_Query
+                Txt_Nombre_Query.Text = .Nombre_Query
+                Txt_Nota.Text = .Nota
+
+                Rdb_Consulta_Global.Checked = .Consulta_Global
+                Rdb_Consulta_Personal.Checked = .Consulta_Personal
+
+            End With
+
+        End If
+
         Sb_Actualizar_Grilla()
 
         Txt_Query_SQL.SelectionStart = 0
         Txt_Query_SQL.SelectionLength = _Txt_Query_SQL.TextLength
-
-        'If Global_Thema = Enum_Themas.Oscuro Then
-        '    _Color_Selection = Color.White
-        'End If
-
-        'Txt_Query_SQL.SelectionColor = _Color_Selection
 
         If Global_Thema = Enum_Themas.Oscuro Then
             Txt_Query_SQL.BackColor = Color.White
@@ -86,24 +91,12 @@ Public Class Frm_SQL2Excel_Diseno
 
         AddHandler Txt_Query_SQL.KeyUp, AddressOf Sb_Txt_Query_SQL_KeyUp
         AddHandler Rdb_Consulta_Global.CheckedChanged, AddressOf Sb_Rdb_Consulta_Global_CheckedChanged
+        'AddHandler Txt_Query_SQL.TextChanged, AddressOf Txt_Query_SQL_TextChanged
 
         Txt_Query_SQL.SelectionStart = 0
         Txt_Query_SQL.SelectionLength = Txt_Query_SQL.TextLength
 
         Sb_Cambiar_Color(0, 0, Txt_Query_SQL.TextLength)
-
-        'Dim tabla As New StringBuilder()
-
-        '' Agregar encabezados de columna
-        'tabla.AppendLine("Nombre" & vbTab & "Edad" & vbTab & "País")
-
-        '' Agregar filas de datos
-        'tabla.AppendLine("Juan" & vbTab & "25" & vbTab & "España")
-        'tabla.AppendLine("María" & vbTab & "30" & vbTab & "México")
-        'tabla.AppendLine("Carlos" & vbTab & "28" & vbTab & "Argentina")
-
-        '' Insertar la tabla en el RichTextBox
-        'Txt_Query_SQL.Text = tabla.ToString()
 
     End Sub
 
@@ -150,17 +143,6 @@ Public Class Frm_SQL2Excel_Diseno
 
     End Function
 
-    'Function Fx_Ejecutar_Comsulta_SQL() As DataTable
-
-    '    If Not _Sql.Ej_consulta_IDU(Txt_Query_SQL.Text, False) Then
-    '        MessageBoxEx.Show(Me, _Sql.Pro_Error, "ERROR EN LA CONSULTA", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-    '        Return Nothing
-    '    Else
-    '        Fx_Ejecutar_Comsulta_SQL = _Sql.Fx_Get_DataTable(Txt_Query_SQL.Text)
-    '    End If
-
-    'End Function
-
     Function Fx_Ejecutar_Comsulta_SQL() As DataSet
 
         If Not _Sql.Ej_consulta_IDU(Txt_Query_SQL.Text, False) Then
@@ -175,6 +157,7 @@ Public Class Frm_SQL2Excel_Diseno
     Private Sub Btn_Ejecutar_Consulta_SQL_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ejecutar_Consulta_SQL.Click
 
         If Not String.IsNullOrEmpty(Txt_Query_SQL.Text) Then
+
             If Fx_Revisar_Consulta_Sin_Modificaciones_En_Tablas_del_Sistema(Txt_Query_SQL.Text) Then
 
                 Me.Cursor = Cursors.WaitCursor
@@ -252,38 +235,11 @@ Public Class Frm_SQL2Excel_Diseno
     End Sub
 #End Region
 
-#Region "GRABAR"
-
-    'Sub Sb_Grabar()
-
-    'If String.IsNullOrEmpty(Trim(TxtNombreEtiqueta.Text)) Then
-    'MessageBoxEx.Show(Me, "Falta nombre de etiqueta", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-    'TxtNombreEtiqueta.Focus()
-    'Return
-    'End If
-
-    'Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Tbl_DisenoBarras Where NombreEtiqueta = '" & TxtNombreEtiqueta.Text & "'" & vbCrLf & _
-    '"INSERT INTO " & _Global_BaseBk & "Zw_Tbl_DisenoBarras (NombreEtiqueta,FUNCION,CantPorLinea) VALUES ('" & _
-    'TxtNombreEtiqueta.Text & "','" & TxtFuncion.Text & "'," & CmbCantPorLinea.Text & ")"
-    'If  _Sql.Ej_consulta_IDU(Consulta_Sql) Then
-    '_Grabado = True
-    'Beep()
-    'ToastNotification.Show(Me, "ETIQUETA GUARDADA CORRECTAMENTE", _
-    'My.Resources.save, _
-    '2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
-    'Me.Close()
-    'End If
-
-    'End Sub
-
-#End Region
-
 #Region "CAMBIAR COLOR DE PALABRA EN TEXTO"
 
     Sub Sb_Cambiar_Color(_Posicion_Origen As Long,
                          _Posicion_Desde As Long,
                          _Posicion_Hasta As Long)
-
 
         For Each _Fila As SqlCommandos.SqlCm In _SqlCommandos._SqlCm 'Grilla.Rows
 
@@ -309,15 +265,12 @@ Public Class Frm_SQL2Excel_Diseno
 
         Next
 
-        ChangeColorForPrefixComentarios(Txt_Query_SQL, "'", "'", Color.Red)
-        ChangeColorForPrefix(Txt_Query_SQL, "--", Color.Green)
-        ChangeColorForPrefixComentarios(Txt_Query_SQL, "/*", "*/", Color.Green)
-
+        'ChangeColorForPrefixComentarios(Txt_Query_SQL, "'", "'", Color.Red)
+        'ChangeColorForPrefix(Txt_Query_SQL, "--", Color.Green)
+        'ChangeColorForPrefixComentarios(Txt_Query_SQL, "/*", "*/", Color.Green)
 
         Txt_Query_SQL.SelectionStart = _Posicion_Origen
         Txt_Query_SQL.SelectionLength = 0
-
-
 
     End Sub
 
@@ -332,10 +285,7 @@ Public Class Frm_SQL2Excel_Diseno
 
         Dim _Cadena As String = _Texto.Text
 
-        'Dim _i = Txt_Query_SQL.GetLineFromCharIndex(_Posicion)
-        '_i = _Posicion - _i
-
-        For i = _Posicion_Desde To _Posicion_Hasta '_Texto.TextLength
+        For i = _Posicion_Desde To _Posicion_Hasta
 
             Dim _Resto = Txt_Query_SQL.TextLength - i
             If _Resto > _LargoFx Then
@@ -348,7 +298,6 @@ Public Class Frm_SQL2Excel_Diseno
                     With _Texto
                         .Select(i, _LargoFx)
                         .SelectionColor = _Color
-                        '.SelectionFont = New Font(currentFont.FontFamily, currentFont.Size, FontStyle.Bold)
                     End With
                     i += 1
                 End If
@@ -491,6 +440,102 @@ Public Class Frm_SQL2Excel_Diseno
         Dim originalSelectionStart As Integer = richTextBox.SelectionStart
         Dim originalSelectionLength As Integer = richTextBox.SelectionLength
 
+        ' Obtener la posición actual del cursor
+        Dim posicionActual As Integer = richTextBox.SelectionStart
+
+        ' Encontrar el inicio de la línea actual
+        Dim inicioLinea As Integer = posicionActual
+        While inicioLinea > 0 AndAlso richTextBox.Text(inicioLinea - 1) <> vbCr AndAlso richTextBox.Text(inicioLinea - 1) <> vbLf
+            inicioLinea -= 1
+        End While
+
+        ' Encontrar el final de la línea actual
+        Dim finalLinea As Integer = posicionActual
+        While finalLinea < richTextBox.Text.Length AndAlso richTextBox.Text(finalLinea) <> vbCr AndAlso richTextBox.Text(finalLinea) <> vbLf
+            finalLinea += 1
+        End While
+
+        ' Extraer el texto de la línea actual
+        Dim textoLinea As String = richTextBox.Text.Substring(inicioLinea, finalLinea - inicioLinea)
+
+
+        Dim index As Integer = 0
+        Dim vB = prefixFIN.Length
+
+        'index = richTextBox.Find(prefix, index, RichTextBoxFinds.None)
+
+        ' Buscar la palabra objetivo en la línea actual
+        index = textoLinea.IndexOf(prefix, StringComparison.CurrentCultureIgnoreCase)
+
+        Dim _Contador = 0
+
+        If index <> -1 Then
+
+            'index = 0 'posicionActual - index
+
+            Dim _Index2 = index
+            Dim _Fin = False
+            Dim _Palabra = String.Empty
+
+            Do While Not _Fin
+                _Contador += 1
+                If _Index2 = textoLinea.Length Then
+                    Exit Do
+                End If
+                Dim _Cadena_Extraida
+                Try
+                    _Cadena_Extraida = textoLinea.Substring(_Index2, vB)
+                Catch ex As Exception
+                    _Cadena_Extraida = prefixFIN
+                End Try
+
+                If _Cadena_Extraida = prefixFIN And _Index2 <> index Then
+                    _Fin = True
+                    _Contador += 1
+                Else
+                    _Palabra += _Cadena_Extraida
+                    _Index2 += 1
+                End If
+            Loop
+
+            richTextBox.SelectionStart = originalSelectionStart + index
+            richTextBox.SelectionLength = _Contador '- 1
+            richTextBox.SelectionColor = color
+
+        End If
+
+        index += _Contador - 1
+
+        richTextBox.SelectionStart = originalSelectionStart
+        richTextBox.SelectionLength = originalSelectionLength
+        'richTextBox.SelectionColor = richTextBox.ForeColor
+
+    End Sub
+
+    Private Sub ChangeColorForPrefixComentarios_Old(richTextBox As RichTextBox, prefix As String, prefixFIN As String, color As Color)
+
+        Dim originalSelectionStart As Integer = richTextBox.SelectionStart
+        Dim originalSelectionLength As Integer = richTextBox.SelectionLength
+
+        ' Obtener la posición actual del cursor
+        Dim posicionActual As Integer = richTextBox.SelectionStart
+
+        ' Encontrar el inicio de la línea actual
+        Dim inicioLinea As Integer = posicionActual
+        While inicioLinea > 0 AndAlso richTextBox.Text(inicioLinea - 1) <> vbCr AndAlso richTextBox.Text(inicioLinea - 1) <> vbLf
+            inicioLinea -= 1
+        End While
+
+        ' Encontrar el final de la línea actual
+        Dim finalLinea As Integer = posicionActual
+        While finalLinea < richTextBox.Text.Length AndAlso richTextBox.Text(finalLinea) <> vbCr AndAlso richTextBox.Text(finalLinea) <> vbLf
+            finalLinea += 1
+        End While
+
+        ' Extraer el texto de la línea actual
+        Dim textoLinea As String = richTextBox.Text.Substring(inicioLinea, finalLinea - inicioLinea)
+
+
         Dim index As Integer = 0
         Dim vB = prefixFIN.Length
 
@@ -577,6 +622,7 @@ Public Class Frm_SQL2Excel_Diseno
     End Sub
 
     Private Sub Mnu_Tex_PegarToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles Mnu_Tex_PegarToolStripMenuItem.Click
+
         Txt_Query_SQL.Paste()
 
         Dim _Posicion = Txt_Query_SQL.SelectionStart
@@ -585,10 +631,8 @@ Public Class Frm_SQL2Excel_Diseno
         Txt_Query_SQL.SelectionColor = Color.Black
 
         Sb_Cambiar_Color(_Posicion, Txt_Query_SQL.GetLineFromCharIndex(_Posicion), Txt_Query_SQL.TextLength)
-        'AddHandler Txt_Query_SQL.TextChanged, AddressOf Sb_Txt_Query_SQL_KeyUp
 
     End Sub
-
 
     Sub Sb_Buscar_Coincidencia(
         _Texto As String,
@@ -666,11 +710,28 @@ Public Class Frm_SQL2Excel_Diseno
                 Dim _Ok As Boolean
                 Dim _Contador = 0
 
+                ' Guardar la posición actual del cursor y la longitud de la selección
+                Dim seleccionInicio As Integer = Txt_Query_SQL.SelectionStart
+                Dim seleccionLongitud As Integer = Txt_Query_SQL.SelectionLength
+
+                ' Determinar la línea actual
+                Dim indiceLineaActual As Integer = Txt_Query_SQL.GetLineFromCharIndex(seleccionInicio)
+                Dim inicioLinea As Integer = Txt_Query_SQL.GetFirstCharIndexFromLine(indiceLineaActual)
+                Dim longitudLinea As Integer
+                If indiceLineaActual < Txt_Query_SQL.Lines.Length - 1 Then
+                    Dim inicioSiguienteLinea As Integer = Txt_Query_SQL.GetFirstCharIndexFromLine(indiceLineaActual + 1)
+                    longitudLinea = inicioSiguienteLinea - inicioLinea
+                Else
+                    longitudLinea = Txt_Query_SQL.TextLength - inicioLinea
+                End If
+
+                ' Extraer el texto de la línea actual
+                Dim textoLinea As String = Txt_Query_SQL.Text.Substring(inicioLinea, longitudLinea)
+
                 If String.IsNullOrEmpty(Txt_Query_SQL.Text) Then
                     Txt_Query_SQL.SelectionLength = 1000
                     Txt_Query_SQL.SelectionStart = 0 '_Posicion - _Contador '- _i '_Posicion_Desde 'Txt_Query_SQL.GetLineFromCharIndex(_Posicion)
                     Txt_Query_SQL.SelectionColor = Color.Black
-
                 Else
 
                     If _Cursor > 0 Then
@@ -697,6 +758,7 @@ Public Class Frm_SQL2Excel_Diseno
                         End If
                         _Posicion_Hasta = _Posicion
 
+                        '9140 - 9201
                         Txt_Query_SQL.SelectionLength = _Contador
                         Txt_Query_SQL.SelectionStart = _Posicion - _Contador '- _i '_Posicion_Desde 'Txt_Query_SQL.GetLineFromCharIndex(_Posicion)
                         Txt_Query_SQL.SelectionColor = Color.Black
@@ -717,115 +779,150 @@ Public Class Frm_SQL2Excel_Diseno
             End If
         End If
 
-        Sb_Guardar()
+        If String.IsNullOrEmpty(Txt_Nombre_Query.Text) Then
+            MessageBoxEx.Show(Me, "FALTA EL NOMBRE DE LA CONSULTA", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If String.IsNullOrEmpty(Txt_Query_SQL.Text) Then
+            MessageBoxEx.Show(Me, "NO HAY DATOS EN LA CONSULTA", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        With Cl_SQL2Query.Zw_SQL_Querys
+
+            .Nombre_Query = Txt_Nombre_Query.Text
+            .SQL_Query = Txt_Query_SQL.Text
+            .Nota = Txt_Nota.Text
+            .Consulta_Global = Rdb_Consulta_Global.Checked
+            .Consulta_Personal = Rdb_Consulta_Personal.Checked
+            .Funcionario = FUNCIONARIO
+
+        End With
+
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        If CBool(Cl_SQL2Query.Zw_SQL_Querys.Id) Then
+            _Mensaje = Cl_SQL2Query.Fx_Editar_SqlQuery
+        Else
+            _Mensaje = Cl_SQL2Query.Fx_Crear_SQlQuery
+        End If
+
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK, _Mensaje.Icono)
+
+        If Not _Mensaje.EsCorrecto Then
+            Return
+        End If
+
+        _Sql_Query_Original = Txt_Query_SQL.Text
+        Txt_Query_SQL.Enabled = False
+        Grabar = True
+
+        'Sb_Guardar()
 
     End Sub
 
-    Sub Sb_Guardar()
+    'Sub Sb_Guardar()
 
-        Try
+    '    Try
 
-            Dim _Grabado As Boolean
+    '        Dim _Grabado As Boolean
 
-            If String.IsNullOrEmpty(Txt_Nombre_Query.Text) Then
-                Throw New Exception("FALTA EL NOMBRE DE LA CONSULTA")
-            End If
-
-
-            If String.IsNullOrEmpty(Txt_Query_SQL.Text) Then
-                If MessageBoxEx.Show(Me, "NO HAY DATOS EN LA CONSULTA" & vbCrLf & vbCrLf &
-                                     "¿Desea guardar de todos modos?", "Validación", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning) <> Windows.Forms.DialogResult.Yes Then
-                    Return
-                End If
-            End If
+    '        If String.IsNullOrEmpty(Txt_Nombre_Query.Text) Then
+    '            Throw New Exception("FALTA EL NOMBRE DE LA CONSULTA")
+    '        End If
 
 
-            Dim _Existe_Nombre = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_SQL_Querys",
-                                 "Nombre_Query = '" & Trim(Txt_Nombre_Query.Text) & "'"))
-
-            Dim _SQL_Query As String = Trim(Txt_Query_SQL.Text)
-            _SQL_Query = Replace(_SQL_Query, "'", "''")
-
-
-            If (_Row_SQL_Querys Is Nothing) Then
-
-                If _Existe_Nombre Then
-                    Throw New Exception("El nombre de la consulta ya existe")
-                End If
+    '        If String.IsNullOrEmpty(Txt_Query_SQL.Text) Then
+    '            If MessageBoxEx.Show(Me, "NO HAY DATOS EN LA CONSULTA" & vbCrLf & vbCrLf &
+    '                                 "¿Desea guardar de todos modos?", "Validación", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning) <> Windows.Forms.DialogResult.Yes Then
+    '                Return
+    '            End If
+    '        End If
 
 
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_SQL_Querys (Nombre_Query,SQL_Query,Funcionario,Consulta_Global,Consulta_Personal) Values " & Space(1) &
-                "('" & Trim(Txt_Nombre_Query.Text) & "'," & vbCrLf &
-                "'" & _SQL_Query & "'" & vbCrLf &
-                ",'" & FUNCIONARIO &
-                "'," & CInt(Rdb_Consulta_Global.Checked) * -1 & "," & CInt(Rdb_Consulta_Personal.Checked) * -1 & ")"
+    '        Dim _Existe_Nombre = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_SQL_Querys",
+    '                             "Nombre_Query = '" & Trim(Txt_Nombre_Query.Text) & "'"))
 
-                _Grabado = _Sql.Ej_consulta_IDU(Consulta_sql)
+    '        Dim _SQL_Query As String = Trim(Txt_Query_SQL.Text)
+    '        _SQL_Query = Replace(_SQL_Query, "'", "''")
 
-                If _Grabado Then
 
-                    Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_SQL_Querys" & vbCrLf &
-                                   "Where Nombre_Query = '" & Trim(Txt_Nombre_Query.Text) & "'"
-                    _Row_SQL_Querys = _Sql.Fx_Get_DataRow(Consulta_sql)
+    '        If (_Row_SQL_Querys Is Nothing) Then
 
-                End If
+    '            If _Existe_Nombre Then
+    '                Throw New Exception("El nombre de la consulta ya existe")
+    '            End If
 
-            Else
 
-                If Rdb_Consulta_Global.Checked Then
-                    If Not Fx_Tiene_Permiso(Me, "Sql00004") Then
-                        Return
-                    End If
-                End If
+    '            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_SQL_Querys (Nombre_Query,SQL_Query,Funcionario,Consulta_Global,Consulta_Personal) Values " & Space(1) &
+    '            "('" & Trim(Txt_Nombre_Query.Text) & "'," & vbCrLf &
+    '            "'" & _SQL_Query & "'" & vbCrLf &
+    '            ",'" & FUNCIONARIO &
+    '            "'," & CInt(Rdb_Consulta_Global.Checked) * -1 & "," & CInt(Rdb_Consulta_Personal.Checked) * -1 & ")"
 
-                Dim _Id = _Row_SQL_Querys.Item("Id")
+    '            _Grabado = _Sql.Ej_consulta_IDU(Consulta_sql)
 
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_SQL_Querys Set" & Space(1) &
-                               "Nombre_Query = '" & FUNCIONARIO & "_Paso'" & vbCrLf &
-                               "Where Id =" & _Id
-                _Sql.Ej_consulta_IDU(Consulta_sql)
+    '            If _Grabado Then
 
-                _Existe_Nombre = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_SQL_Querys",
-                                 "Nombre_Query = '" & Trim(Txt_Nombre_Query.Text) & "'"))
+    '                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_SQL_Querys" & vbCrLf &
+    '                               "Where Nombre_Query = '" & Trim(Txt_Nombre_Query.Text) & "'"
+    '                _Row_SQL_Querys = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-                If _Existe_Nombre Then
-                    'Consulta_sql = "Update Zw_SQL_Querys Set" & Space(1) &
-                    '               "Nombre_Query = '" & _Row_SQL_Querys.Item("Nombre_Query") & "'" & vbCrLf &
-                    '               "Where Id =" & _Id
-                    '_Sql.Ej_consulta_IDU(Consulta_sql)
-                    Throw New Exception("El nombre de la consulta ya existe")
-                End If
+    '            End If
 
-                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_SQL_Querys" & vbCrLf &
-                               "Where Id =" & _Id
-                _Row_SQL_Querys = _Sql.Fx_Get_DataRow(Consulta_sql)
+    '        Else
 
-                If Not (_Row_SQL_Querys Is Nothing) Then
-                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_SQL_Querys Set 
-                                    Nombre_Query = '" & Txt_Nombre_Query.Text.Trim & "',
-                                    SQL_Query = '" & _SQL_Query & "',
-                                    Consulta_Global = " & CInt(Rdb_Consulta_Global.Checked) * -1 & ",
-                                    Consulta_Personal = " & CInt(Rdb_Consulta_Personal.Checked) * -1 & "
-                                    Where Id =" & _Id
-                    _Grabado = _Sql.Ej_consulta_IDU(Consulta_sql)
-                Else
-                    Sb_Guardar()
-                    Return
-                End If
+    '            If Rdb_Consulta_Global.Checked Then
+    '                If Not Fx_Tiene_Permiso(Me, "Sql00004") Then
+    '                    Return
+    '                End If
+    '            End If
 
-            End If
+    '            Dim _Id = _Row_SQL_Querys.Item("Id")
 
-            If _Grabado Then
-                _Sql_Query_Original = Txt_Query_SQL.Text
-                _Grabacion_Realizada = True
-                MessageBoxEx.Show(Me, "Datos guardados correctamente", "Guardar", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            End If
+    '            Consulta_sql = "Update " & _Global_BaseBk & "Zw_SQL_Querys Set" & Space(1) &
+    '                           "Nombre_Query = '" & FUNCIONARIO & "_Paso'" & vbCrLf &
+    '                           "Where Id =" & _Id
+    '            _Sql.Ej_consulta_IDU(Consulta_sql)
 
-        Catch ex As Exception
-            MessageBoxEx.Show(ex.Message, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        End Try
+    '            _Existe_Nombre = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_SQL_Querys",
+    '                             "Nombre_Query = '" & Trim(Txt_Nombre_Query.Text) & "'"))
 
-    End Sub
+    '            If _Existe_Nombre Then
+    '                Throw New Exception("El nombre de la consulta ya existe")
+    '            End If
+
+    '            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_SQL_Querys" & vbCrLf &
+    '                           "Where Id =" & _Id
+    '            _Row_SQL_Querys = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+    '            If Not (_Row_SQL_Querys Is Nothing) Then
+    '                Consulta_sql = "Update " & _Global_BaseBk & "Zw_SQL_Querys Set 
+    '                                Nombre_Query = '" & Txt_Nombre_Query.Text.Trim & "',
+    '                                SQL_Query = '" & _SQL_Query & "',
+    '                                Consulta_Global = " & CInt(Rdb_Consulta_Global.Checked) * -1 & ",
+    '                                Consulta_Personal = " & CInt(Rdb_Consulta_Personal.Checked) * -1 & "
+    '                                Where Id =" & _Id
+    '                _Grabado = _Sql.Ej_consulta_IDU(Consulta_sql)
+    '            Else
+    '                Sb_Guardar()
+    '                Return
+    '            End If
+
+    '        End If
+
+    '        If _Grabado Then
+    '            _Sql_Query_Original = Txt_Query_SQL.Text
+    '            _Grabar = True
+    '            MessageBoxEx.Show(Me, "Datos guardados correctamente", "Guardar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+    '        End If
+
+    '    Catch ex As Exception
+    '        MessageBoxEx.Show(ex.Message, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+    '    End Try
+
+    'End Sub
 
     Private Sub Sb_Rdb_Consulta_Global_CheckedChanged(sender As System.Object, e As System.EventArgs)
         If Rdb_Consulta_Global.Checked Then
@@ -840,17 +937,83 @@ Public Class Frm_SQL2Excel_Diseno
             Dim _Accion = MessageBoxEx.Show(Me, "¿Desea guardar los Cambios?", "Salir",
                                             MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
             If _Accion = Windows.Forms.DialogResult.Yes Then
-                Sb_Guardar()
+                Call Btn_Guardar_Consulta_Click(Nothing, Nothing)
             ElseIf _Accion = Windows.Forms.DialogResult.Cancel Then
                 e.Cancel = True
             End If
         End If
     End Sub
 
+    Private Sub Txt_Query_SQL_TextChanged(sender As Object, e As EventArgs)
+
+        ' Palabra objetivo y color
+        Dim palabraObjetivo As String = "ejemplo"
+        Dim colorObjetivo As Color = Color.Red
+
+        ' Evitar que el evento se dispare de nuevo mientras se actualiza el texto
+        RemoveHandler Txt_Query_SQL.TextChanged, AddressOf Txt_Query_SQL_TextChanged
+
+        ' Obtener la posición actual del cursor
+        Dim posicionActual As Integer = Txt_Query_SQL.SelectionStart
+
+        ' Encontrar el inicio de la línea actual
+        Dim inicioLinea As Integer = posicionActual
+        While inicioLinea > 0 AndAlso Txt_Query_SQL.Text(inicioLinea - 1) <> vbCr AndAlso Txt_Query_SQL.Text(inicioLinea - 1) <> vbLf
+            inicioLinea -= 1
+        End While
+
+        ' Encontrar el final de la línea actual
+        Dim finalLinea As Integer = posicionActual
+        While finalLinea < Txt_Query_SQL.Text.Length AndAlso Txt_Query_SQL.Text(finalLinea) <> vbCr AndAlso Txt_Query_SQL.Text(finalLinea) <> vbLf
+            finalLinea += 1
+        End While
+
+        ' Extraer el texto de la línea actual
+        Dim textoLinea As String = Txt_Query_SQL.Text.Substring(inicioLinea, finalLinea - inicioLinea)
+
+        ' Buscar la palabra objetivo en la línea actual
+        Dim indexPalabra As Integer = textoLinea.IndexOf(palabraObjetivo, StringComparison.CurrentCultureIgnoreCase)
+
+        ' Si se encuentra la palabra objetivo, cambiar el color
+        If indexPalabra <> -1 Then
+
+            ' Cambiar el color de la palabra objetivo
+            Txt_Query_SQL.Select(inicioLinea + indexPalabra, palabraObjetivo.Length)
+            Txt_Query_SQL.SelectionColor = colorObjetivo
+
+            ' Restaurar la posición del cursor y el color original
+            Txt_Query_SQL.Select(posicionActual, 0)
+            Txt_Query_SQL.SelectionColor = Color.Black
+
+        End If
+
+        ' Buscar y cambiar el color del texto entre comillas simples en la línea actual
+        Dim index As Integer = 0
+        While index < textoLinea.Length
+            Dim inicio As Integer = textoLinea.IndexOf("'", index)
+            If inicio = -1 Then Exit While ' No se encontraron más comillas simples
+
+            Dim final As Integer = textoLinea.IndexOf("'", inicio + 1)
+            If final = -1 Then Exit While ' No se encontró el par de comillas simples
+
+            ' Cambiar el color del texto entre las comillas simples
+            Txt_Query_SQL.Select(inicioLinea + inicio + 1, final - inicio - 1)
+            Txt_Query_SQL.SelectionColor = colorObjetivo
+
+            ' Actualizar el índice para continuar la búsqueda
+            index = final + 1
+        End While
+
+        ' Restaurar la posición del cursor y el color original
+        Txt_Query_SQL.Select(posicionActual, 0)
+        Txt_Query_SQL.SelectionColor = Color.Black
+
+        ' Reanudar el manejo del evento TextChanged
+        AddHandler Txt_Query_SQL.TextChanged, AddressOf Txt_Query_SQL_TextChanged
+
+    End Sub
 End Class
-
 Namespace SqlCommandos
-
     Enum Tipos
         PRACTICAS
         OPERADOR

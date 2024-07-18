@@ -1,10 +1,10 @@
 ﻿Public Class Zw_Inv_FotoInventario
+    Public Property Id As Integer
     Public Property IdInventario As Integer
     Public Property Estado As Boolean
     Public Property Empresa As String
     Public Property Sucursal As String
     Public Property Bodega As String
-    Public Property Semilla As Integer
     Public Property Tipr As String
     Public Property Codigo As String
     Public Property CodigoRap As String
@@ -27,6 +27,8 @@
     Public Property Cerrado As Boolean
     Public Property Levantado As Boolean
     Public Property Diferencia As String
+    Public Property NoInventariar As Boolean
+    Public Property IdHojaUltReconteo As Integer
     Public Property SuperFamilia As String
     Public Property Familia As String
     Public Property SubFamilia As String
@@ -41,4 +43,5 @@
     Public Property Nom_ClasLibre As String
     Public Property Zona As String
     Public Property Nom_Zona As String
+
 End Class

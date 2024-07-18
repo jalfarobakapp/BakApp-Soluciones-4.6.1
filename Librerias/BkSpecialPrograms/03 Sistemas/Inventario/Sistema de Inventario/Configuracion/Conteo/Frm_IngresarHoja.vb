@@ -1,6 +1,5 @@
 ﻿Imports System.ComponentModel
 Imports DevComponents.DotNetBar
-Imports DevComponents.DotNetBar.Controls
 
 Public Class Frm_IngresarHoja
 
@@ -12,14 +11,14 @@ Public Class Frm_IngresarHoja
     Public Property Reconteo As Boolean
     Public Property CodigoReconteo As String
 
-    Dim _IdInventario As Integer
-    Dim _IdHoja As Integer
-    Public Grabar As Boolean
+    Private _IdInventario As Integer
+    Private _IdHoja As Integer
+    Private _CodFuncionario As String
 
     ' Crear un BindingSource y enlazarlo al DataGridView
     Dim _Source As BindingSource
 
-    Public Sub New(_IdInventario As Integer, _IdHoja As Integer)
+    Public Sub New(_IdInventario As Integer, _IdHoja As Integer, _CodFuncionario As String)
 
         ' Esta llamada es exigida por el diseñador.
         InitializeComponent()
@@ -28,6 +27,7 @@ Public Class Frm_IngresarHoja
 
         Me._IdHoja = _IdHoja
         Me._IdInventario = _IdInventario
+        Me._CodFuncionario = _CodFuncionario
 
         Cl_Inventario.Fx_Llenar_Zw_Inv_Inventario(_IdInventario)
 
@@ -36,7 +36,7 @@ Public Class Frm_IngresarHoja
         If CBool(_IdHoja) Then
             Cl_Conteo.Fx_Llenar_Zw_Inv_Hoja(_IdHoja)
         Else
-            Cl_Conteo.Fx_Nueva_Hoja(Cl_Inventario.Zw_Inv_Inventario, _NombreEquipo, FUNCIONARIO)
+            Cl_Conteo.Fx_Nueva_Hoja(Cl_Inventario.Zw_Inv_Inventario, _NombreEquipo, _CodFuncionario)
             Txt_Nro_Hoja.Text = "En Construcción..."
         End If
 
@@ -387,7 +387,7 @@ Public Class Frm_IngresarHoja
                         .Cells("Empresa").Value = Cl_Inventario.Zw_Inv_Inventario.Empresa
                         .Cells("Sucursal").Value = Cl_Inventario.Zw_Inv_Inventario.Sucursal
                         .Cells("Bodega").Value = Cl_Inventario.Zw_Inv_Inventario.Bodega
-                        .Cells("Responsable").Value = FUNCIONARIO
+                        .Cells("Responsable").Value = _CodFuncionario
                         .Cells("TipoConteo").Value = String.Empty
                         .Cells("Codigo").Value = _Row.Item("KOPR")
                         .Cells("Descripcion").Value = _Row.Item("NOKOPR")
@@ -470,7 +470,7 @@ Public Class Frm_IngresarHoja
                             .Cells("Empresa").Value = Cl_Inventario.Zw_Inv_Inventario.Empresa
                             .Cells("Sucursal").Value = Cl_Inventario.Zw_Inv_Inventario.Sucursal
                             .Cells("Bodega").Value = Cl_Inventario.Zw_Inv_Inventario.Bodega
-                            .Cells("Responsable").Value = FUNCIONARIO
+                            .Cells("Responsable").Value = _CodFuncionario
                             .Cells("TipoConteo").Value = String.Empty
                             .Cells("Codigo").Value = _Row.Item("KOPR")
                             .Cells("Descripcion").Value = _Row.Item("NOKOPR")
