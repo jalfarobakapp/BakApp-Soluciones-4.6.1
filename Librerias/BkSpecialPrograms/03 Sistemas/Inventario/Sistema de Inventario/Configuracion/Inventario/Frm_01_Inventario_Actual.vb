@@ -57,61 +57,35 @@ Public Class Frm_01_Inventario_Actual
     Private Sub Sb_Actualizar_Grilla()
 
         Consulta_sql = "Select Codigo,Recontado, SUM(Cantidad) As Cantidad" & vbCrLf &
-                       "Into #Paso" & vbCrLf &
+                       "Into #PasoR" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle" & vbCrLf &
+                       "Where IdInventario = " & _IdInventario & " And Recontado = 1" & vbCrLf &
+                       "Group By Codigo,Recontado" & vbCrLf &
+                       vbCrLf &
+                       "Select Codigo,Recontado, SUM(Cantidad) As Cantidad" & vbCrLf &
+                       "Into #PasoC" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle" & vbCrLf &
+                       "Where IdInventario = " & _IdInventario & " And Codigo Not In (Select Codigo From #PasoR)" & vbCrLf &
                        "Group By Codigo,Recontado" & vbCrLf &
                        vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 0 Where IdInventario = 1" & vbCrLf &
                        vbCrLf &
-                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 1" & vbCrLf &
-                       "Where Codigo In (Select Codigo From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle Where Recontado = 1 And IdInventario = " & _IdInventario & ") And IdInventario = " & _IdInventario & vbCrLf &
+                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 1,Cant_Inventariada = Cantidad" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Inv_FotoInventario Foto" & vbCrLf &
+                       "Inner Join #PasoR On #PasoR.Codigo = Foto.Codigo" & vbCrLf &
+                       "Where IdInventario = " & _IdInventario & vbCrLf &
                        vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Cant_Inventariada = Cantidad" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Inv_FotoInventario Foto" & vbCrLf &
-                       "Inner Join #Paso On #Paso.Codigo = Foto.Codigo And Foto.Recontado = #Paso.Recontado" & vbCrLf &
-                       "Where Foto.Recontado = 0 And IdInventario = " & _IdInventario & vbCrLf &
+                       "Inner Join #PasoC On #PasoC.Codigo = Foto.Codigo" & vbCrLf &
+                       "Where IdInventario = " & _IdInventario & "" & vbCrLf &
                        vbCrLf &
-                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Cant_Inventariada = Cantidad" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Inv_FotoInventario Foto" & vbCrLf &
-                       "Inner Join #Paso On #Paso.Codigo = Foto.Codigo And Foto.Recontado = #Paso.Recontado" & vbCrLf &
-                       "Where Foto.Recontado = 1 And IdInventario = " & _IdInventario & vbCrLf &
-                       vbCrLf &
-                       "Drop table #Paso" & vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set " &
-                       "Dif_Inv_Cantidad = Cant_Inventariada-StFisicoUd1" &
-                       ",Total_Costo_Foto = StFisicoUd1*Costo" &
-                       ",Total_Costo_Inv = Cant_Inventariada*Costo" & vbCrLf &
-                       "Where IdInventario = " & _IdInventario
-
-        Consulta_sql = "Select Codigo,Recontado, SUM(Cantidad) As Cantidad
-Into #PasoR
-From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle
-Where IdInventario = " & _IdInventario & " And Recontado = 1 
-Group By Codigo,Recontado
-
-Select Codigo,Recontado, SUM(Cantidad) As Cantidad
-Into #PasoC
-From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle
-Where IdInventario = " & _IdInventario & " And Codigo Not In (Select Codigo From #PasoR)
-Group By Codigo,Recontado
-
-Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 0 Where IdInventario = 1
-
-Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 1,Cant_Inventariada = Cantidad
-From " & _Global_BaseBk & "Zw_Inv_FotoInventario Foto
-Inner Join #PasoR On #PasoR.Codigo = Foto.Codigo
-Where IdInventario = " & _IdInventario & "
-
-Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Cant_Inventariada = Cantidad
-From " & _Global_BaseBk & "Zw_Inv_FotoInventario Foto
-Inner Join #PasoC On #PasoC.Codigo = Foto.Codigo
-Where IdInventario = " & _IdInventario & "
-
-Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Dif_Inv_Cantidad = Cant_Inventariada-StFisicoUd1,Total_Costo_Foto = StFisicoUd1*Costo,Total_Costo_Inv = Cant_Inventariada*Costo
-Where IdInventario = " & _IdInventario & "
-
-Drop Table #PasoR
-Drop Table #PasoC"
+                       "Dif_Inv_Cantidad = Cant_Inventariada-StFisicoUd1,Total_Costo_Foto = StFisicoUd1*Costo,Total_Costo_Inv = Cant_Inventariada*Costo" & vbCrLf &
+                       "Where IdInventario = " & _IdInventario & vbCrLf &
+                       vbCrLf &
+                       "Drop Table #PasoR" & vbCrLf &
+                       "Drop Table #PasoC"
 
         _Sql.Ej_consulta_IDU(Consulta_sql)
 

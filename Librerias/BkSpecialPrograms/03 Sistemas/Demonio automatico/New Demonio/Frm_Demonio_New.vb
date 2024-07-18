@@ -558,12 +558,11 @@ Public Class Frm_Demonio_New
 
     End Sub
 
-
     Sub Sb_Imprimir_Documentos(state As Object)
 
         If IsNothing(_Timer_ImprimirDocumentos) Then Return
 
-        If _Cl_Imprimir_Documentos.Procesando Then
+        If _Cl_Imprimir_Documentos.Procesando Or _Cl_FacturacionAuto.Procesando Then
 
             Dim horaProgramada As DateTime = DateTime.Now.AddSeconds(2) 'DateTime.Now.AddMinutes(1)
             Dim tiempoRestante As TimeSpan = horaProgramada - DateTime.Now
@@ -571,7 +570,7 @@ Public Class Frm_Demonio_New
             _Timer_ImprimirDocumentos.Change(tiempoRestante, Timeout.InfiniteTimeSpan)
 
             ' Este método se ejecuta cada vez que se activa el temporizador (cada 1 minuto adicional)
-            Dim registro As String = DateTime.Now.ToString() & " - Imprimir documentos (Proceso en curso se volverá a revisar en 3 segundos mas...)"
+            Dim registro As String = DateTime.Now.ToString() & " - Imprimir documentos (Proceso en curso se volverá a revisar en 2 segundos mas...)"
 
             ' Registrar la información en un archivo de registro
             RegistrarLog(registro)

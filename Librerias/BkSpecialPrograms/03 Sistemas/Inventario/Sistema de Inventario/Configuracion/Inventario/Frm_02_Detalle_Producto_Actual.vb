@@ -147,32 +147,35 @@ Public Class Frm_02_Detalle_Producto_Actual
         End With
 
         Consulta_sql = "Select Codigo,Recontado, SUM(Cantidad) As Cantidad" & vbCrLf &
-                       "Into #Paso" & vbCrLf &
+                       "Into #PasoR" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle" & vbCrLf &
-                       "Where Codigo = '" & _Codigo & "'" & vbCrLf &
+                       "Where IdInventario = " & _IdInventario & " And Recontado = 1 And Codigo = '" & _Codigo & "'" & vbCrLf &
                        "Group By Codigo,Recontado" & vbCrLf &
                        vbCrLf &
-                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 0 Where IdInventario = 1" & vbCrLf &
+                       "Select Codigo,Recontado, SUM(Cantidad) As Cantidad" & vbCrLf &
+                       "Into #PasoC" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle" & vbCrLf &
+                       "Where IdInventario = " & _IdInventario & " And Codigo = '" & _Codigo & "'" & vbCrLf &
+                       "Group By Codigo,Recontado" & vbCrLf &
                        vbCrLf &
-                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 1" & vbCrLf &
-                       "Where Codigo In (Select Codigo From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle Where Recontado = 1 And IdInventario = " & _IdInventario & ") And IdInventario = " & _IdInventario & vbCrLf &
+                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 0 Where IdInventario = 1 And Codigo = '" & _Codigo & "'" & vbCrLf &
+                       vbCrLf &
+                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 1,Cant_Inventariada = Cantidad" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Inv_FotoInventario Foto" & vbCrLf &
+                       "Inner Join #PasoR On #PasoR.Codigo = Foto.Codigo" & vbCrLf &
+                       "Where IdInventario = " & _IdInventario & " And Foto.Codigo = '" & _Codigo & "'" & vbCrLf &
                        vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Cant_Inventariada = Cantidad" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Inv_FotoInventario Foto" & vbCrLf &
-                       "Inner Join #Paso On #Paso.Codigo = Foto.Codigo And Foto.Recontado = #Paso.Recontado" & vbCrLf &
-                       "Where Foto.Recontado = 0 And IdInventario = " & _IdInventario & vbCrLf &
+                       "Inner Join #PasoC On #PasoC.Codigo = Foto.Codigo" & vbCrLf &
+                       "Where IdInventario = " & _IdInventario & " And Foto.Codigo = '" & _Codigo & "'" & vbCrLf &
                        vbCrLf &
-                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Cant_Inventariada = Cantidad" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Inv_FotoInventario Foto" & vbCrLf &
-                       "Inner Join #Paso On #Paso.Codigo = Foto.Codigo And Foto.Recontado = #Paso.Recontado" & vbCrLf &
-                       "Where Foto.Recontado = 1 And IdInventario = " & _IdInventario & vbCrLf &
-                       vbCrLf &
-                       "Drop table #Paso" & vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set " &
-                       "Dif_Inv_Cantidad = Cant_Inventariada-StFisicoUd1" &
-                       ",Total_Costo_Foto = StFisicoUd1*Costo" &
-                       ",Total_Costo_Inv = Cant_Inventariada*Costo" & vbCrLf &
-                       "Where IdInventario = " & _IdInventario & " And Codigo = '" & _Codigo & "'"
+                       "Dif_Inv_Cantidad = Cant_Inventariada-StFisicoUd1,Total_Costo_Foto = StFisicoUd1*Costo,Total_Costo_Inv = Cant_Inventariada*Costo" & vbCrLf &
+                       "Where IdInventario = " & _IdInventario & " And Codigo = '" & _Codigo & "'" & vbCrLf &
+                       vbCrLf &
+                       "Drop Table #PasoR" & vbCrLf &
+                       "Drop Table #PasoC"
 
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
