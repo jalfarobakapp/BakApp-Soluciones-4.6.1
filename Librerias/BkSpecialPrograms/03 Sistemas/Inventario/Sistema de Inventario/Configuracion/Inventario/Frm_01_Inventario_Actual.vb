@@ -83,6 +83,36 @@ Public Class Frm_01_Inventario_Actual
                        ",Total_Costo_Inv = Cant_Inventariada*Costo" & vbCrLf &
                        "Where IdInventario = " & _IdInventario
 
+        Consulta_sql = "Select Codigo,Recontado, SUM(Cantidad) As Cantidad
+Into #PasoR
+From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle
+Where IdInventario = " & _IdInventario & " And Recontado = 1 
+Group By Codigo,Recontado
+
+Select Codigo,Recontado, SUM(Cantidad) As Cantidad
+Into #PasoC
+From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle
+Where IdInventario = " & _IdInventario & " And Codigo Not In (Select Codigo From #PasoR)
+Group By Codigo,Recontado
+
+Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 0 Where IdInventario = 1
+
+Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 1,Cant_Inventariada = Cantidad
+From " & _Global_BaseBk & "Zw_Inv_FotoInventario Foto
+Inner Join #PasoR On #PasoR.Codigo = Foto.Codigo
+Where IdInventario = " & _IdInventario & "
+
+Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Cant_Inventariada = Cantidad
+From " & _Global_BaseBk & "Zw_Inv_FotoInventario Foto
+Inner Join #PasoC On #PasoC.Codigo = Foto.Codigo
+Where IdInventario = " & _IdInventario & "
+
+Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Dif_Inv_Cantidad = Cant_Inventariada-StFisicoUd1,Total_Costo_Foto = StFisicoUd1*Costo,Total_Costo_Inv = Cant_Inventariada*Costo
+Where IdInventario = " & _IdInventario & "
+
+Drop Table #PasoR
+Drop Table #PasoC"
+
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Inv_FotoInventario" & vbCrLf &
@@ -410,6 +440,7 @@ Public Class Frm_01_Inventario_Actual
 
     Private Sub Rdb_CheckedChanged(sender As Object, e As EventArgs)
         If sender.Checked Then
+            Txt_Filtrar.Text = String.Empty
             Sb_Filtrar()
         End If
     End Sub

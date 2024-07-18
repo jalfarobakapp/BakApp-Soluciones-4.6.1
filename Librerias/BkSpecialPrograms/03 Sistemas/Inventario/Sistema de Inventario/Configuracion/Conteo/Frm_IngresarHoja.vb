@@ -827,9 +827,7 @@ Public Class Frm_IngresarHoja
 
     Private Sub Btn_Copiar_Click(sender As Object, e As EventArgs) Handles Btn_Copiar.Click
         With Grilla_Detalle
-
             Try
-
                 Dim _Cabeza = .Columns(.CurrentCell.ColumnIndex).Name
                 Dim _Texto_Cabeza = .Columns(.CurrentCell.ColumnIndex).HeaderText
 

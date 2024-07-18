@@ -23,9 +23,9 @@ Partial Class Frm_02_Detalle_Producto_Actual
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_02_Detalle_Producto_Actual))
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.BtnAgregarConteo = New DevComponents.DotNetBar.ButtonItem()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
@@ -50,9 +50,8 @@ Partial Class Frm_02_Detalle_Producto_Actual
         Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
-        Me.Btn_EditarInventario = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_EliminarInventario = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_ActivarInventario = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Editar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem3 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
@@ -434,7 +433,7 @@ Partial Class Frm_02_Detalle_Producto_Actual
         '
         Me.Menu_Contextual_01.AutoExpandOnClick = True
         Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
-        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_EditarInventario, Me.Btn_EliminarInventario, Me.Btn_ActivarInventario, Me.LabelItem3, Me.Btn_Copiar})
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_Editar, Me.Btn_Eliminar, Me.LabelItem3, Me.Btn_Copiar})
         Me.Menu_Contextual_01.Text = "Opciones documento"
         '
         'LabelItem1
@@ -450,26 +449,19 @@ Partial Class Frm_02_Detalle_Producto_Actual
         Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
         Me.LabelItem1.Text = "Opciones"
         '
-        'Btn_EditarInventario
+        'Btn_Editar
         '
-        Me.Btn_EditarInventario.Image = CType(resources.GetObject("Btn_EditarInventario.Image"), System.Drawing.Image)
-        Me.Btn_EditarInventario.ImageAlt = CType(resources.GetObject("Btn_EditarInventario.ImageAlt"), System.Drawing.Image)
-        Me.Btn_EditarInventario.Name = "Btn_EditarInventario"
-        Me.Btn_EditarInventario.Text = "Editar"
+        Me.Btn_Editar.Image = CType(resources.GetObject("Btn_Editar.Image"), System.Drawing.Image)
+        Me.Btn_Editar.ImageAlt = CType(resources.GetObject("Btn_Editar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Editar.Name = "Btn_Editar"
+        Me.Btn_Editar.Text = "Editar cantidad"
         '
-        'Btn_EliminarInventario
+        'Btn_Eliminar
         '
-        Me.Btn_EliminarInventario.Image = CType(resources.GetObject("Btn_EliminarInventario.Image"), System.Drawing.Image)
-        Me.Btn_EliminarInventario.ImageAlt = CType(resources.GetObject("Btn_EliminarInventario.ImageAlt"), System.Drawing.Image)
-        Me.Btn_EliminarInventario.Name = "Btn_EliminarInventario"
-        Me.Btn_EliminarInventario.Text = "Eliminar"
-        '
-        'Btn_ActivarInventario
-        '
-        Me.Btn_ActivarInventario.Image = CType(resources.GetObject("Btn_ActivarInventario.Image"), System.Drawing.Image)
-        Me.Btn_ActivarInventario.ImageAlt = CType(resources.GetObject("Btn_ActivarInventario.ImageAlt"), System.Drawing.Image)
-        Me.Btn_ActivarInventario.Name = "Btn_ActivarInventario"
-        Me.Btn_ActivarInventario.Text = "Dejar como inventario activo"
+        Me.Btn_Eliminar.Image = CType(resources.GetObject("Btn_Eliminar.Image"), System.Drawing.Image)
+        Me.Btn_Eliminar.ImageAlt = CType(resources.GetObject("Btn_Eliminar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Eliminar.Name = "Btn_Eliminar"
+        Me.Btn_Eliminar.Text = "Eliminar (hoja reconteo)"
         '
         'LabelItem3
         '
@@ -495,36 +487,36 @@ Partial Class Frm_02_Detalle_Producto_Actual
         '
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle13.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle13.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle13.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle13
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle8.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle14.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle14.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle14.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle14.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle14
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle15.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle15.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle15.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle15
         Me.Grilla.Size = New System.Drawing.Size(689, 127)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 30
@@ -804,9 +796,8 @@ Partial Class Frm_02_Detalle_Producto_Actual
     Friend WithEvents Menu_Contextual As DevComponents.DotNetBar.ContextMenuBar
     Friend WithEvents Menu_Contextual_01 As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LabelItem1 As DevComponents.DotNetBar.LabelItem
-    Friend WithEvents Btn_EditarInventario As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_EliminarInventario As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_ActivarInventario As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Editar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Eliminar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LabelItem3 As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Btn_Copiar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX

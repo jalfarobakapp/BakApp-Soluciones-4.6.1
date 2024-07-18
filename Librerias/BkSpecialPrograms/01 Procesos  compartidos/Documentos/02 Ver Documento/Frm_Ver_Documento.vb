@@ -77,7 +77,7 @@ Public Class Frm_Ver_Documento
         Get
             Return _Marcar_Grilla_Pendientes
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Marcar_Grilla_Pendientes = value
         End Set
     End Property
@@ -86,7 +86,7 @@ Public Class Frm_Ver_Documento
         Get
             Return _Folio_Cambiado
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Folio_Cambiado = value
         End Set
     End Property
@@ -279,7 +279,7 @@ Public Class Frm_Ver_Documento
 
     End Sub
 
-    Private Sub Frm_Documento_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Documento_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         Btn_CopiarDocOtrEmpresa.Visible = (RutEmpresa = "77458040-9" Or RutEmpresa = "07251245-6" Or RutEmpresa = "77634877-5" Or RutEmpresa = "77634879-1")
         Btn_CrearNVVdesdeOCCOtraEmpresa.Visible = (RutEmpresa = "79514800-0")
@@ -1705,7 +1705,7 @@ Public Class Frm_Ver_Documento
 
     End Sub
 
-    Sub Sb_Formato_Grilla_EncPie_Bakapp(ByVal Tipo As _Sector)
+    Sub Sb_Formato_Grilla_EncPie_Bakapp(Tipo As _Sector)
 
         Dim _Tido = _TblEncabezado.Rows(0).Item("TipoDoc")
 
@@ -2093,14 +2093,14 @@ Public Class Frm_Ver_Documento
         MyBase.Finalize()
     End Sub
 
-    Private Sub Frm_DocumentoTraza_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_DocumentoTraza_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             _Configuracion_Regional_()
             Me.Close()
         End If
     End Sub
 
-    Private Sub Btn_Observaciones_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Observaciones.Click
+    Private Sub Btn_Observaciones_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Observaciones.Click
 
         Dim Fm As New Frm_Ver_Documento_Observaciones(_TblEncabezado.Rows(0), _TblObservaciones.Rows(0),
                                                       (_Tipo_Apertura = Enum_Tipo_Apertura.Desde_Random_SQL Or
@@ -2120,7 +2120,7 @@ Public Class Frm_Ver_Documento
 
     End Sub
 
-    Private Sub GrillaEncabezado_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GrillaEncabezado.CellDoubleClick
+    Private Sub GrillaEncabezado_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GrillaEncabezado.CellDoubleClick
 
         Dim _Cabeza = GrillaEncabezado.Columns(GrillaEncabezado.CurrentCell.ColumnIndex).Name
         Dim _RowEncabezado As DataRow = _TblEncabezado.Rows(0)
@@ -2245,7 +2245,7 @@ Public Class Frm_Ver_Documento
 
     End Sub
 
-    Private Sub Btn_Anotaciones_al_documento_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Anotaciones_al_documento.Click
+    Private Sub Btn_Anotaciones_al_documento_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Anotaciones_al_documento.Click
 
         Dim Fm As New Frm_Anotaciones_Ver_Anotaciones(_Idmaeedo, Frm_Anotaciones_Ver_Anotaciones.Tipo_Tabla.MAEEDO)
         Fm.ShowDialog(Me)
@@ -2253,7 +2253,7 @@ Public Class Frm_Ver_Documento
 
     End Sub
 
-    Private Sub Sb_Grilla_Detalle_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Sb_Grilla_Detalle_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
         If e.Button = Windows.Forms.MouseButtons.Right Then
             With sender
                 Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
@@ -2271,7 +2271,7 @@ Public Class Frm_Ver_Documento
         End If
     End Sub
 
-    Private Sub Sb_Grilla_Encabezado_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Sb_Grilla_Encabezado_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
         If e.Button = Windows.Forms.MouseButtons.Right Then
             With sender
                 Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
@@ -2283,7 +2283,7 @@ Public Class Frm_Ver_Documento
         End If
     End Sub
 
-    Private Sub Btn_Estadisticas_Producto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Estadisticas_Producto.Click
+    Private Sub Btn_Estadisticas_Producto_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Estadisticas_Producto.Click
 
         Dim _Codigo As String
 
@@ -2298,7 +2298,7 @@ Public Class Frm_Ver_Documento
 
     End Sub
 
-    Private Sub GrillaDetalleDoc_CellEnter(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub GrillaDetalleDoc_CellEnter(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
 
         Dim _Fila As DataGridViewRow = GrillaDetalleDoc.Rows(GrillaDetalleDoc.CurrentRow.Index)
 
@@ -2332,19 +2332,19 @@ Public Class Frm_Ver_Documento
 
     End Sub
 
-    Private Sub Btn_Ver_Vencimientos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Ver_Vencimientos.Click
+    Private Sub Btn_Ver_Vencimientos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ver_Vencimientos.Click
         Sb_Ver_Vencimientos()
     End Sub
 
-    Private Sub Btn_Ver_Entidad_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Ver_Entidad.Click
+    Private Sub Btn_Ver_Entidad_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ver_Entidad.Click
         Sb_Ver_Entidad()
     End Sub
 
-    Private Sub Btn_Enviar_documento_por_correo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Enviar_documento_por_correo.Click
+    Private Sub Btn_Enviar_documento_por_correo_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Enviar_documento_por_correo.Click
         ShowContextMenu(Menu_Contextual_Correo)
     End Sub
 
-    Private Sub Btn_Observacione_linea_documento_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Observacione_linea_documento.Click
+    Private Sub Btn_Observacione_linea_documento_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Observacione_linea_documento.Click
 
         Dim _Fila As DataGridViewRow = GrillaDetalleDoc.Rows(GrillaDetalleDoc.CurrentRow.Index)
 
@@ -2381,7 +2381,7 @@ Public Class Frm_Ver_Documento
 
     End Sub
 
-    Private Sub Btn_Anotaciones_a_la_linea_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Anotaciones_a_la_linea.Click
+    Private Sub Btn_Anotaciones_a_la_linea_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Anotaciones_a_la_linea.Click
 
         Dim _Fila As DataGridViewRow = GrillaDetalleDoc.Rows(GrillaDetalleDoc.CurrentRow.Index)
 
@@ -2394,7 +2394,7 @@ Public Class Frm_Ver_Documento
 
     End Sub
 
-    Private Sub Btn_Ver_documento_origen_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Ver_documento_origen.Click
+    Private Sub Btn_Ver_documento_origen_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ver_documento_origen.Click
         Sb_Ver_Documento_Origen()
     End Sub
 
@@ -2579,7 +2579,7 @@ Public Class Frm_Ver_Documento
 
 #End Region
 
-    Private Sub Btn_Traza_Documento_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Traza_Documento.Click
+    Private Sub Btn_Traza_Documento_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Traza_Documento.Click
 
         Dim _Tido As String = Trim(_TblEncabezado.Rows(0).Item("TIDO"))
         Dim _Nudo As String = Trim(_TblEncabezado.Rows(0).Item("NUDO"))
@@ -2593,7 +2593,7 @@ Public Class Frm_Ver_Documento
     End Sub
 
 
-    Function Fx_Origen(ByVal _Idmaeedo As Integer)
+    Function Fx_Origen(_Idmaeedo As Integer)
 
         Consulta_sql = "Select Distinct IDRST From MAEDDO" & vbCrLf &
                        "Where ARCHIDRST = 'MAEDDO' And IDMAEEDO = " & _Idmaeedo
@@ -2606,11 +2606,11 @@ Public Class Frm_Ver_Documento
 
     End Function
 
-    Private Sub Btn_Marcar_Baja_Rotacion_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Marcar_Baja_Rotacion.Click
+    Private Sub Btn_Marcar_Baja_Rotacion_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Marcar_Baja_Rotacion.Click
         Sb_Revisar_Stock_VS_Cantidad()
     End Sub
 
-    Private Sub Btn_Ver_Pagos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Ver_Pagos.Click
+    Private Sub Btn_Ver_Pagos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ver_Pagos.Click
 
         Dim _Pagos_Actualizados As Boolean
 
@@ -2625,7 +2625,7 @@ Public Class Frm_Ver_Documento
 
     End Sub
 
-    Private Sub Btn_Imprimir_Documento_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Imprimir_Documento.Click
+    Private Sub Btn_Imprimir_Documento_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Imprimir_Documento.Click
 
         Select Case _Tipo_Apertura
             Case Enum_Tipo_Apertura.Desde_Random_SQL
@@ -2638,7 +2638,7 @@ Public Class Frm_Ver_Documento
 
     End Sub
 
-    Private Sub Btn_Firmar_Documento_DTE_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Firmar_Documento_DTE.Click
+    Private Sub Btn_Firmar_Documento_DTE_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Firmar_Documento_DTE.Click
 
         Dim _Firma_Bakapp As Boolean
         Dim _Firma_RunMonitor As Boolean
@@ -3219,7 +3219,7 @@ Public Class Frm_Ver_Documento
 
     End Sub
 
-    Private Sub Btn_Cierre_Reactivacion_Documento_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cierre_Reactivacion_Documento.Click
+    Private Sub Btn_Cierre_Reactivacion_Documento_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cierre_Reactivacion_Documento.Click
 
         Dim _Idmaeedo = _TblEncabezado.Rows(0).Item("IDMAEEDO")
 
@@ -3231,7 +3231,7 @@ Public Class Frm_Ver_Documento
 
     End Sub
 
-    Private Sub Btn_Cambiar_Nro_Documento_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cambiar_Nro_Documento.Click
+    Private Sub Btn_Cambiar_Nro_Documento_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cambiar_Nro_Documento.Click
 
         If Fx_Tiene_Permiso(Me, "Doc00020") Then
 
@@ -3249,7 +3249,6 @@ Public Class Frm_Ver_Documento
                                                     False, _Tipo_Mayus_Minus.Normal, 10, True,
                                                     _Tipo_Imagen.Texto, False,
                                                     _Tipo_Caracter.Cualquier_caracter, False)
-
 
             _Nudo = Fx_Rellena_ceros(_Nudo, 10)
 
@@ -3273,7 +3272,9 @@ Public Class Frm_Ver_Documento
                     MessageBoxEx.Show(Me, "Este folio ya existe en la base de datos", "Validación",
                                       MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 End If
+
             End If
+
         End If
 
     End Sub
@@ -4009,7 +4010,7 @@ Public Class Frm_Ver_Documento
 
     End Sub
 
-    Public Sub PoneMarcaAgua(ByVal FileName As String, ByVal Texto As String, ByVal rotacion() As Double)
+    Public Sub PoneMarcaAgua(FileName As String, Texto As String, rotacion() As Double)
 
         Dim watermark As String = Texto
         Const emSize As Integer = 75
@@ -4035,7 +4036,6 @@ Public Class Frm_Ver_Documento
             gfx.TranslateTransform(gfx.PageSize.Width / rotacion(0), gfx.PageSize.Height / rotacion(1))
             gfx.RotateTransform(-Math.Atan(gfx.PageSize.Height / gfx.PageSize.Width) * 180 / Math.PI)
             gfx.TranslateTransform(-gfx.PageSize.Width / rotacion(2), -gfx.PageSize.Height / rotacion(3))
-
 
             Dim path As New XGraphicsPath()
             path.AddString(watermark, font.FontFamily, XFontStyle.Italic, 75, New XPoint((page.Width.Centimeter - size.Width) / 2, (page.Height.Centimeter - size.Height) / 2), XStringFormat.Default)
@@ -4197,9 +4197,9 @@ Public Class Frm_Ver_Documento
 
     End Sub
 
-    Sub Sb_Ver_Deuda_Pendiente(ByVal _Koen As String,
-                                   ByVal _Suen As String,
-                                   ByVal _Deuda_Efectiva As Boolean)
+    Sub Sb_Ver_Deuda_Pendiente(_Koen As String,
+                                   _Suen As String,
+                                   _Deuda_Efectiva As Boolean)
 
 
         Dim _Fx_Fecha_Inicio = "19000101"

@@ -124,12 +124,12 @@ Public Class Cl_Conteo
 
     Function Fx_Crear_Hoja(_Zw_Inv_Hoja As Zw_Inv_Hoja, Ls_Zw_Inv_Hoja_Detalle As List(Of Zw_Inv_Hoja_Detalle)) As LsValiciones.Mensajes
 
-        Dim _Mensaje_Stem As New LsValiciones.Mensajes
+        Dim _Mensaje As New LsValiciones.Mensajes
 
-        _Mensaje_Stem.Detalle = "Crear Hoja de Inventario"
-        _Mensaje_Stem.EsCorrecto = False
-        _Mensaje_Stem.Mensaje = String.Empty
-        _Mensaje_Stem.Icono = MessageBoxIcon.Stop
+        _Mensaje.Detalle = "Crear Hoja de Inventario"
+        _Mensaje.EsCorrecto = False
+        _Mensaje.Mensaje = String.Empty
+        _Mensaje.Icono = MessageBoxIcon.Stop
 
         Consulta_sql = String.Empty
 
@@ -183,29 +183,29 @@ Public Class Cl_Conteo
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Inv_Hoja Where Id = " & _Zw_Inv_Hoja.Id
             Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-            _Mensaje_Stem.EsCorrecto = True
-            _Mensaje_Stem.Mensaje = "Hoja creada correctamente"
-            _Mensaje_Stem.Icono = MessageBoxIcon.Information
-            _Mensaje_Stem.Detalle = "Hoja creada correctamente con el Id " & _Row.Item("Id")
-            _Mensaje_Stem.Tag = _Row
-            _Mensaje_Stem.Id = _Row.Item("Id")
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Hoja creada correctamente"
+            _Mensaje.Icono = MessageBoxIcon.Information
+            _Mensaje.Detalle = "Hoja creada correctamente con el Id " & _Row.Item("Id")
+            _Mensaje.Tag = _Row
+            _Mensaje.Id = _Row.Item("Id")
 
         Catch ex As Exception
 
-            _Mensaje_Stem.Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
             If Not IsNothing(myTrans) Then myTrans.Rollback()
 
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
         End Try
 
-        Return _Mensaje_Stem
+        Return _Mensaje
 
     End Function
 
     Function Fx_Grabar_Nueva_Hoja() As LsValiciones.Mensajes
 
-        Dim _Mensaje_Stem As New LsValiciones.Mensajes
+        Dim _Mensaje As New LsValiciones.Mensajes
 
         Consulta_sql = String.Empty
 
@@ -213,11 +213,11 @@ Public Class Cl_Conteo
                                             "IdInventario = " & Zw_Inv_Hoja.IdInventario & " And Nro_Hoja = '" & Zw_Inv_Hoja.Nro_Hoja & "'")
 
         If CBool(_Reg) Then
-            _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Detalle = "Crear Hoja"
-            _Mensaje_Stem.Mensaje = "El Nro de Hoja " & Zw_Inv_Hoja.Nro_Hoja & " ya existe para este inventario"
-            _Mensaje_Stem.Icono = MessageBoxIcon.Stop
-            Return _Mensaje_Stem
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Detalle = "Crear Hoja"
+            _Mensaje.Mensaje = "El Nro de Hoja " & Zw_Inv_Hoja.Nro_Hoja & " ya existe para este inventario"
+            _Mensaje.Icono = MessageBoxIcon.Stop
+            Return _Mensaje
         End If
 
         Dim myTrans As SqlClient.SqlTransaction
@@ -310,18 +310,18 @@ Public Class Cl_Conteo
             myTrans.Commit()
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
-            _Mensaje_Stem.EsCorrecto = True
-            _Mensaje_Stem.Detalle = "Crear Hoja"
-            _Mensaje_Stem.Mensaje = "Documento grabado correctamente" & vbCrLf &
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Detalle = "Crear Hoja"
+            _Mensaje.Mensaje = "Documento grabado correctamente" & vbCrLf &
                                     "Número de Hoja: " & Zw_Inv_Hoja.Nro_Hoja
-            _Mensaje_Stem.Icono = MessageBoxIcon.Information
+            _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
 
-            _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Detalle = "Error al grabar"
-            _Mensaje_Stem.Mensaje = ex.Message
-            _Mensaje_Stem.Icono = MessageBoxIcon.Stop
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Detalle = "Error al grabar"
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
 
             If Not IsNothing(myTrans) Then myTrans.Rollback()
 
@@ -329,7 +329,89 @@ Public Class Cl_Conteo
 
         End Try
 
-        Return _Mensaje_Stem
+        Return _Mensaje
+
+    End Function
+
+    Function Fx_Eliminar_Hoja(_IdHoja As Integer, _NombreEquipoEli As String, _CodFuncionarioEli As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Consulta_sql = String.Empty
+
+        'Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_Hoja",
+        '                                    "IdInventario = " & Zw_Inv_Hoja.IdInventario & " And Nro_Hoja = '" & Zw_Inv_Hoja.Nro_Hoja & "'")
+
+        'If CBool(_Reg) Then
+        '    _Mensaje_Stem.EsCorrecto = False
+        '    _Mensaje_Stem.Detalle = "Crear Hoja"
+        '    _Mensaje_Stem.Mensaje = "El Nro de Hoja " & Zw_Inv_Hoja.Nro_Hoja & " ya existe para este inventario"
+        '    _Mensaje_Stem.Icono = MessageBoxIcon.Stop
+        '    Return _Mensaje_Stem
+        'End If
+
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+        Dim Cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
+
+        Try
+
+            myTrans = Cn2.BeginTransaction()
+
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Inv_HojaEli (Id,IdInventario,Nro_Hoja,NombreEquipo,FechaCreacion,CodResponsable,IdContador1,IdContador2,FechaLevantamiento,Reconteo,CodFuncionarioEli,FechaEli,NombreEquipoEli)" & vbCrLf &
+                           "Select Id,IdInventario,Nro_Hoja,NombreEquipo,FechaCreacion,CodResponsable,IdContador1,IdContador2,FechaLevantamiento,Reconteo,'" & _CodFuncionarioEli & "',GETDATE(),'" & _NombreEquipoEli & "'" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_Inv_Hoja" & vbCrLf &
+                           "Where Id = " & _IdHoja
+            Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+            Comando.Transaction = myTrans
+            Comando.ExecuteNonQuery()
+
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Inv_HojaEli_Detalle(IdHoja,Nro_Hoja,IdInventario,Empresa,Sucursal,Bodega,Responsable,IdContador1,IdContador2,Item_Hoja,IdSector,Sector,Ubicacion,TipoConteo,Codigo,EsSeriado,NroSerie,FechaHoraToma,Rtu," & vbCrLf &
+                           "RtuVariable,Udtrpr,Cantidad,Ud1,CantidadUd1,Ud2,CantidadUd2,Observaciones,Recontado,Actualizado_por,Obs_Actualizacion)" & vbCrLf &
+                           "Select IdHoja,Nro_Hoja,IdInventario,Empresa,Sucursal,Bodega,Responsable,IdContador1,IdContador2,Item_Hoja,IdSector,Sector,Ubicacion,TipoConteo,Codigo,EsSeriado,NroSerie,FechaHoraToma,Rtu," & vbCrLf &
+                           "RtuVariable,Udtrpr,Cantidad,Ud1,CantidadUd1,Ud2,CantidadUd2,Observaciones,Recontado,Actualizado_por,Obs_Actualizacion" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle" & vbCrLf &
+                           "Where IdHoja = " & _IdHoja
+            Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+            Comando.Transaction = myTrans
+            Comando.ExecuteNonQuery()
+
+            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Inv_Hoja Where Id = " & _IdHoja
+            Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+            Comando.Transaction = myTrans
+            Comando.ExecuteNonQuery()
+
+            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle Where IdHoja = " & _IdHoja
+            Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+            Comando.Transaction = myTrans
+            Comando.ExecuteNonQuery()
+
+            myTrans.Commit()
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Detalle = "Eliminar Hoja"
+            _Mensaje.Mensaje = "Documento eliminado correctamente"
+            _Mensaje.Icono = MessageBoxIcon.Information
+
+        Catch ex As Exception
+
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Detalle = "Error al eliminar"
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
+
+            If Not IsNothing(myTrans) Then myTrans.Rollback()
+
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+        End Try
+
+        Return _Mensaje
 
     End Function
 
@@ -344,7 +426,7 @@ Public Class Cl_Conteo
         Dim _Ult_Nro_OT As String = NuloPorNro(_Row.Item("Nro_Hoja"), "")
 
         If String.IsNullOrEmpty(Trim(_Ult_Nro_OT)) Then
-            _Ult_Nro_OT = "0000000000"
+            _Ult_Nro_OT = "00000"
         End If
 
         _Nro_Hoja = Fx_Proximo_NroDocumento(_Ult_Nro_OT, 10)

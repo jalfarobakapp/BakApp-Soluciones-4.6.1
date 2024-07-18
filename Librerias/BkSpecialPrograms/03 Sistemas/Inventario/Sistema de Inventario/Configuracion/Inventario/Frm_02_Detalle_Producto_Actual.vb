@@ -36,6 +36,7 @@ Public Class Frm_02_Detalle_Producto_Actual
 
         AddHandler Chk_NoInventariar.CheckedChanged, AddressOf Chk_NoInventariar_CheckedChanged
         AddHandler Chk_NoInventariar.CheckedChanging, AddressOf Chk_NoInventariar_CheckedChanging
+        AddHandler Grilla.MouseDown, AddressOf Grilla_MouseDown
 
     End Sub
 
@@ -204,7 +205,6 @@ Public Class Frm_02_Detalle_Producto_Actual
 
     End Sub
 
-
     Private Sub BtnAgregarConteo_Click(sender As System.Object, e As System.EventArgs) Handles BtnAgregarConteo.Click
 
         If Chk_NoInventariar.Checked Then
@@ -213,27 +213,40 @@ Public Class Frm_02_Detalle_Producto_Actual
             Return
         End If
 
-        Dim _Old_Funcionario = FUNCIONARIO
-        Dim _Aceptar As Boolean
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_Hoja_Detalle",
+                                                       "IdInventario = " & _IdInventario & " And Codigo = '" & _Codigo & "' And Recontado = 1")
 
-        Dim Fml As New Frm_Login
-        Fml.ValidarPermiso = True
-        Fml.Permiso = "Doc00086"
-        Fml.ShowDialog()
-        _Aceptar = Fml.Aceptar
-        Fml.Dispose()
-
-        If Not _Aceptar Then
+        If CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "Este producto ya tiene un reconteo previamente registrado." & vbCrLf &
+                              "Para realizar un nuevo reconteo, es necesario anular el registro anterior.", "Conteo recontado",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
 
-        Dim Fm_Inv As New Frm_IngresarHoja(_IdInventario, 0, FUNCIONARIO)
+        If Not Fx_Tiene_Permiso(Me, "Invg0003",, , False,,,, False) Then
+            Return
+        End If
+
+        Dim _PermisoAceptado As Boolean
+
+        Dim Fm As New Frm_ValidarPermiso(Frm_ValidarPermiso.Tipo_Accion.Validar_Permiso, "Invg0003", True, False)
+        Fm.Text = "INGRESE CLAVE DE AUTORIZACION"
+        Fm.Pro_Cerrar_Automaticamente = True
+        Fm.ShowDialog(Me)
+
+        _PermisoAceptado = Fm.Pro_Permiso_Aceptado
+        Dim _RowUsuario As DataRow = Fm.Pro_RowUsuario
+        Fm.Dispose()
+
+        If Not _PermisoAceptado Then
+            Return
+        End If
+
+        Dim Fm_Inv As New Frm_IngresarHoja(_IdInventario, 0, _RowUsuario.Item("KOFU"))
         Fm_Inv.Reconteo = True
         Fm_Inv.CodigoReconteo = _Codigo
         Fm_Inv.ShowDialog(Me)
         Fm_Inv.Dispose()
-
-        FUNCIONARIO = _Old_Funcionario
 
         Sb_Ver_Detalle_Del_Producto()
 
@@ -259,9 +272,112 @@ Public Class Frm_02_Detalle_Producto_Actual
 
     Private Sub Chk_NoInventariar_CheckedChanging(sender As Object, e As Controls.CheckBoxXChangeEventArgs)
 
-        If Not Fx_Tiene_Permiso(Me, "Invg0001") Then
+        If Not Fx_Tiene_Permiso(Me, "Invg0001",, , False,,,, False) Then
+            Return
+        End If
+
+        Dim _PermisoAceptado As Boolean
+
+        Dim Fm As New Frm_ValidarPermiso(Frm_ValidarPermiso.Tipo_Accion.Validar_Permiso, "Invg0001", True, False)
+        Fm.Text = "INGRESE CLAVE DE AUTORIZACION"
+        Fm.Pro_Cerrar_Automaticamente = True
+        Fm.ShowDialog(Me)
+
+        _PermisoAceptado = Fm.Pro_Permiso_Aceptado
+        Dim _RowUsuario As DataRow = Fm.Pro_RowUsuario
+        Fm.Dispose()
+
+        If Not _PermisoAceptado Then
             e.Cancel = True
         End If
 
+    End Sub
+
+    Private Sub Btn_Editar_Click(sender As Object, e As EventArgs) Handles Btn_Editar.Click
+
+    End Sub
+
+    Private Sub Btn_Eliminar_Click(sender As Object, e As EventArgs) Handles Btn_Eliminar.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Id = _Fila.Cells("Id").Value
+        Dim _IdHoja = _Fila.Cells("IdHoja").Value
+        Dim _Recontado = _Fila.Cells("Recontado").Value
+        Dim _Nro_Hoja = _Fila.Cells("Nro_Hoja").Value
+
+        Dim _Cl_Conteo As New Cl_Conteo
+
+        Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+        Dim _PermisoAceptado As Boolean
+
+        If Not Fx_Tiene_Permiso(Me, "Invg0004",, , False,,,, False) Then
+            Return
+        End If
+
+        Dim Fm As New Frm_ValidarPermiso(Frm_ValidarPermiso.Tipo_Accion.Validar_Permiso, "Invg0004", True, False)
+        Fm.Text = "INGRESE CLAVE DE AUTORIZACION"
+        Fm.Pro_Cerrar_Automaticamente = True
+        Fm.ShowDialog(Me)
+
+        _PermisoAceptado = Fm.Pro_Permiso_Aceptado
+        Dim _RowUsuario As DataRow = Fm.Pro_RowUsuario
+        Fm.Dispose()
+
+        If Not _PermisoAceptado Then
+            Return
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Desea eliminar el reconteo de la hoja " & _Nro_Hoja & "?", "Eliminar reconteo",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
+
+        Dim _Mensaje As LsValiciones.Mensajes = _Cl_Conteo.Fx_Eliminar_Hoja(_IdHoja, _NombreEquipo, _RowUsuario.Item("KOFU"))
+
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+
+        If Not _Mensaje.EsCorrecto Then
+            Return
+        End If
+
+        Sb_Ver_Detalle_Del_Producto()
+
+    End Sub
+
+    Private Sub Btn_Copiar_Click(sender As Object, e As EventArgs) Handles Btn_Copiar.Click
+        With Grilla
+            Try
+                Dim _Cabeza = .Columns(.CurrentCell.ColumnIndex).Name
+                Dim _Texto_Cabeza = .Columns(.CurrentCell.ColumnIndex).HeaderText
+
+                Dim Copiar = .Rows(.CurrentRow.Index).Cells(_Cabeza).Value
+                Clipboard.SetText(Copiar)
+
+                ToastNotification.Show(Me, _Texto_Cabeza & " esta en el portapapeles", Btn_Copiar.Image,
+                                       2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
+            Catch ex As Exception
+                MessageBoxEx.Show(Me, ex.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            End Try
+        End With
+    End Sub
+
+    Private Sub Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
+        If e.Button = Windows.Forms.MouseButtons.Right Then
+            With sender
+                Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
+                If Hitest.Type = DataGridViewHitTestType.Cell Then
+                    .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
+
+                    Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+                    Dim _Recontado As Boolean = _Fila.Cells("Recontado").Value
+
+                    Btn_Editar.Enabled = Not _Recontado
+                    Btn_Eliminar.Enabled = _Recontado
+
+                    ShowContextMenu(Menu_Contextual_01)
+
+                End If
+            End With
+        End If
     End Sub
 End Class
