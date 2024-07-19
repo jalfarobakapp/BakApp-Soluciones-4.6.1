@@ -54,6 +54,7 @@ Partial Class Frm_Arbol_Lista
         Me.Tree_Bandeja_Adv = New DevComponents.AdvTree.AdvTree()
         Me.nodeConnector2 = New DevComponents.AdvTree.NodeConnector()
         Me.elementStyle7 = New DevComponents.DotNetBar.ElementStyle()
+        Me.Btn_Aceptar = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Tree_Bandeja_Adv, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -113,7 +114,7 @@ Partial Class Frm_Arbol_Lista
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Actualizar, Me.Btn_Exportar_Excel})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Aceptar, Me.Btn_Grabar, Me.Btn_Actualizar, Me.Btn_Exportar_Excel})
         Me.Bar2.Location = New System.Drawing.Point(0, 493)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(705, 41)
@@ -429,6 +430,15 @@ Partial Class Frm_Arbol_Lista
         Me.elementStyle7.Name = "elementStyle7"
         Me.elementStyle7.TextColor = System.Drawing.Color.Black
         '
+        'Btn_Aceptar
+        '
+        Me.Btn_Aceptar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Aceptar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Aceptar.Image = CType(resources.GetObject("Btn_Aceptar.Image"), System.Drawing.Image)
+        Me.Btn_Aceptar.ImageAlt = CType(resources.GetObject("Btn_Aceptar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Aceptar.Name = "Btn_Aceptar"
+        Me.Btn_Aceptar.Text = "Aceptar"
+        '
         'Frm_Arbol_Lista
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -489,4 +499,5 @@ Partial Class Frm_Arbol_Lista
     Private WithEvents nodeConnector2 As DevComponents.AdvTree.NodeConnector
     Private WithEvents elementStyle7 As DevComponents.DotNetBar.ElementStyle
     Public WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Aceptar As DevComponents.DotNetBar.ButtonItem
 End Class

@@ -147,56 +147,15 @@ Public Class Frm_MtCreaProd_01_IngBusqEspecial
         Me.Enabled = False
 
         Clipboard.SetText(TxtCodigo.Text)
+
         Dim Fm As New Frm_Arbol_Lista(False)
         Fm.Codigo_Heredado = TxtCodigo.Text
         Fm.ModoCheckButton = True
-        'Fm.MostrarClasProducto = True
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
         Me.Cursor = Cursors.Default
         Sb_Actualizar_Grilla()
-
-        'Dim _Aceptar As Boolean
-
-        'Try
-        '    Me.Enabled = False
-
-        '    If Fx_Tiene_Permiso(Me, "Tbl00002") Then
-
-        '        Dim _Tbl As DataTable
-
-        '        Consulta_sql = "Select Cast(1 As Bit) As Chk, Codigo_Nodo From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
-        '                       "Where Codigo = '" & TxtCodigo.Text & "' And Producto = 0"
-        '        _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-        '        Dim Fm As New Frm_Arbol_Asociacion_05_Busqueda(
-        '        Frm_Arbol_Asociacion_05_Busqueda.Enum_Tipo_De_Carpeta.Clas_Filtro_Hijos, True) 'Frm_Arbol_Asociacion_03_buscar("")
-        '        'Fm.Pro_Seleccion_Solo_Seleccionables = True
-        '        Fm.Pro_Seleccionar_Todo = False
-        '        Fm.Pro_Tbl_Nodos_Seleccionados = _Tbl
-        '        Fm.Text = "Busqueda de carpetas"
-
-        '        Fm.ShowDialog(Me)
-        '        Dim _Row_Nodo_Seleccionado As DataRow = Fm.Pro_Row_Nodo_Seleccionado ' = Fm._Tbl_Nodo_Seleccionado
-        '        Dim _Tbl_Nodos_Seleccionados As DataTable = Fm.Pro_Tbl_Nodos_Seleccionados
-        '        _Aceptar = Fm.Pro_Aceptar
-        '        Fm.Dispose()
-
-        '        If _Aceptar Then
-
-        '            Sb_Grabar_Arbol(_Tbl_Nodos_Seleccionados)
-
-        '        End If
-
-        '    End If
-
-        'Catch ex As Exception
-
-        'Finally
-        '    If _Aceptar Then Sb_Actualizar_Grilla()
-        '    Me.Enabled = True
-        'End Try
 
     End Sub
 

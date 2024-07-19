@@ -1144,9 +1144,10 @@ Public Class Frm_Demonio_New
 
         If _Cl_FacturacionAuto.Ejecutar Then
 
-            If Not _Cl_FacturacionAuto.Procesando Then
+            If Not _Cl_FacturacionAuto.Procesando AndAlso Not _Cl_Imprimir_Documentos.Procesando Then
 
                 _Cl_FacturacionAuto.Procesando = True
+
                 _Cl_FacturacionAuto.Log_Registro = String.Empty
                 _Cl_FacturacionAuto.Fecha_Revision = DtpFecharevision.Value
                 _Cl_FacturacionAuto.Nombre_Equipo = _NombreEquipo

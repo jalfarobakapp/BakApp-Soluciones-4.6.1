@@ -24,6 +24,7 @@ Public Class Frm_Filtro_Especial_Productos
     Public Property Ls_SelSuperFamilias As New List(Of SelSuperFamilias)
     Public Property Ls_SelFamilias As New List(Of SelFamilias)
     Public Property Ls_SelSubFamilias As New List(Of SelSubFamilias)
+    Public Property Ls_SelArbol_Asociaciones As New List(Of Zw_TblArbol_Asociaciones)
 
     Public ReadOnly Property Pro_Aceptar() As Boolean
 
@@ -148,6 +149,18 @@ Public Class Frm_Filtro_Especial_Productos
             End If
         End Set
     End Property
+    Public Property Pro_Filtro_Bakapp_Todas() As Boolean
+        Get
+            Return Rdb_Bakapp_Todas.Checked
+        End Get
+        Set(value As Boolean)
+            If value Then
+                Rdb_Bakapp_Todas.Checked = True
+            Else
+                Rdb_Bakapp_Algunas.Checked = True
+            End If
+        End Set
+    End Property
 
     Public Property Pro_Filtro_Extra_Productos()
         Get
@@ -233,6 +246,10 @@ Public Class Frm_Filtro_Especial_Productos
         Call Rdb_CheckedChanged(Rdb_Zonas_Algunas, Nothing)
     End Sub
 
+    Private Sub Btn_Bakapp_Algunas_Click(sender As Object, e As EventArgs) Handles Btn_Bakapp_Algunas.Click
+        Call Rdb_CheckedChanged(Rdb_Bakapp_Algunas, Nothing)
+    End Sub
+
     Private Sub Frm_Filtro_Especial_Productos_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         AddHandler Rdb_Productos_Algunos.CheckedChanged, AddressOf Rdb_CheckedChanged
@@ -241,6 +258,7 @@ Public Class Frm_Filtro_Especial_Productos
         AddHandler Rdb_Rubros_Algunos.CheckedChanged, AddressOf Rdb_CheckedChanged
         AddHandler Rdb_Super_Familias_Algunas.CheckedChanged, AddressOf Rdb_CheckedChanged
         AddHandler Rdb_Zonas_Algunas.CheckedChanged, AddressOf Rdb_CheckedChanged
+        AddHandler Rdb_Bakapp_Algunas.CheckedChanged, AddressOf Rdb_CheckedChanged
 
         Panel_Otros_Filtros.Enabled = Rdb_Productos_Todos.Checked
 
@@ -250,6 +268,7 @@ Public Class Frm_Filtro_Especial_Productos
         Btn_Super_Familias_Algunas.Visible = Rdb_Super_Familias_Algunas.Checked
         Btn_Rubros_Algunos.Visible = Rdb_Rubros_Algunos.Checked
         Btn_Zonas_Algunas.Visible = Rdb_Zonas_Algunas.Checked
+        Btn_Bakapp_Algunas.Visible = Rdb_Bakapp_Algunas.Checked
 
     End Sub
 
@@ -318,6 +337,11 @@ Public Class Frm_Filtro_Especial_Productos
                 _Sql_Filtro_Condicion_Extra = _Filtro_Extra_Zonas
                 Btn_Zonas_Algunas.Visible = _Control.Checked
 
+            Case "Rdb_Bakapp_Algunas"
+
+                Btn_Bakapp_Algunas.Visible = _Control.Checked
+                _Control_Todas = Rdb_Bakapp_Todas
+
         End Select
 
         If _Control.Checked Then
@@ -340,6 +364,24 @@ Public Class Frm_Filtro_Especial_Productos
                 If Ls_SelSuperFamilias.Count = 0 Then
                     _Control_Todas.Checked = True
                 End If
+
+                Return
+
+            End If
+
+            If _Nombre_Control = "Rdb_Bakapp_Algunas" Then
+
+                Dim Fm_As As New Frm_Arbol_Lista(True)
+                Fm_As.ModoRadioButton = True
+                Fm_As.ModoSeleccion = True
+                Fm_As.Ls_SelArbol_Asociaciones = Ls_SelArbol_Asociaciones
+                Fm_As.ShowDialog(Me)
+
+                If Fm_As.seleccionados Then
+                    Ls_SelArbol_Asociaciones = Fm_As.Ls_SelArbol_Asociaciones
+                End If
+
+                Fm_As.Dispose()
 
                 Return
 

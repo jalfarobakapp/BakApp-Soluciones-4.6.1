@@ -28,6 +28,7 @@ Public Class Frm_01_Asis_Compra_Resultados
     Public Property Ls_SelSuperFamilias As New List(Of SelSuperFamilias)
     Public Property Ls_SelFamilias As New List(Of SelFamilias)
     Public Property Ls_SelSubFamilias As New List(Of SelSubFamilias)
+    Public Property Ls_SelArbol_Asociaciones As New List(Of Zw_TblArbol_Asociaciones)
 
 
     Dim _Tbl_Filtro_Marcas As DataTable

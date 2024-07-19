@@ -16,6 +16,10 @@ Public Class Frm_Arbol_Lista
     Public Property ModoRadioButton As Boolean
     Public Property ModoCheckButton As Boolean
     Public Property MostrarClasProducto As Boolean
+    Public Property ModoSeleccion As Boolean
+
+    Public seleccionados As Boolean
+    Public Ls_SelArbol_Asociaciones As New List(Of Zw_TblArbol_Asociaciones)
 
     Public Sub New(_Clas_Unica_X_Producto As Boolean)
 
@@ -71,7 +75,8 @@ Public Class Frm_Arbol_Lista
         _ListaBusquedaNodos = New List(Of TreeNode)
         _ListaBusquedaNodos_Advt = New List(Of AdvTree.Node)
 
-        Btn_Grabar.Visible = (ModoCheckButton Or ModoRadioButton)
+        Btn_Grabar.Visible = (ModoCheckButton Or ModoRadioButton) And Not ModoSeleccion
+        Btn_Aceptar.Visible = ModoSeleccion
 
         If MostrarClasProducto Then
             Btn_Grabar.Visible = False
@@ -1173,6 +1178,7 @@ Public Class Frm_Arbol_Lista
     Private Sub Btn_Grabar_Click_1(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
 
         Dim _NodosSeleccionados As List(Of AdvTree.Node) = Fx_ObtenerNodosConCheck(Tree_Bandeja_Adv.Nodes(0))
+
         Dim _Msg = String.Empty
 
         'Dim _Todoslosnodos As New List(Of AdvTree.Node)()
@@ -1186,7 +1192,6 @@ Public Class Frm_Arbol_Lista
             If Not _nodos.Contains(_Nodo.Parent) Then
                 _nodos.AddRange(Fx_ObtenerDescendientes(_Nodo))
             End If
-            '_Todoslosnodos.AddRange(_nodos)
 
         Next
 
@@ -1233,15 +1238,10 @@ Public Class Frm_Arbol_Lista
 
         Next
 
-        'If Not String.IsNullOrEmpty(_Msg) Then
-        'If MessageBoxEx.Show(Me, _Msg, "¿Confirma las clasificaciones seleccionadas?",
-        'MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
             MessageBoxEx.Show(Me, "Datos guardados correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Me.Close()
         End If
-        'End If
-        'End If
 
     End Sub
 
@@ -1334,4 +1334,26 @@ Public Class Frm_Arbol_Lista
         Return contador
     End Function
 
+    Private Sub Btn_Aceptar_Click(sender As Object, e As EventArgs) Handles Btn_Aceptar.Click
+
+        Dim _NodosSeleccionados As List(Of AdvTree.Node) = Fx_ObtenerNodosConCheck(Tree_Bandeja_Adv.Nodes(0))
+
+        If _NodosSeleccionados.Count = 0 Then
+            MessageBoxEx.Show(Me, "No se ha seleccionado ninguna clasificación", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Cl_Arbol_Asociaciones As New Cl_Arbol_Asociaciones
+
+        For Each _Nodo As AdvTree.Node In _NodosSeleccionados
+
+            _Cl_Arbol_Asociaciones.Fx_Llenar_Asociacion(_Nodo.Name)
+            Ls_SelArbol_Asociaciones.Add(_Cl_Arbol_Asociaciones.Zw_TblArbol_Asociaciones)
+
+        Next
+
+        seleccionados = True
+        Me.Close()
+
+    End Sub
 End Class
