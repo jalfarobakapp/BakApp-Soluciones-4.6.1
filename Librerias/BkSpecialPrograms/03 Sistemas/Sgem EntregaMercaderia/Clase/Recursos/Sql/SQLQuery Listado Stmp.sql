@@ -25,7 +25,7 @@ Convert(datetime, (EdoF.HORAGRAB*1.0/3600)/24) As 'HoraFactu',
 --EdoF.LAHORA As 'FechaFacturacion',
 CAST('' As varchar(300)) As 'Informacion'
 Into #Paso
-From BAKAPP_VH.dbo.Zw_Stmp_Enc Enc
+From Zw_Stmp_Enc Enc
 Inner Join MAEEDO Edo On Edo.IDMAEEDO = Enc.Idmaeedo
 Left Join MAEEN En On En.KOEN = Enc.Endo And En.SUEN = Enc.Suendo
 Left Join TABFU FEnt On FEnt.KOFU = CodFuncionario_Entrega

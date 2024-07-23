@@ -10,6 +10,7 @@ Public Class Frm_Stmp_Listado
     Dim _FechaServidor As DateTime
 
     Dim _Dv As New DataView
+
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -32,6 +33,7 @@ Public Class Frm_Stmp_Listado
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
         AddHandler Tab_Preparacion.Click, AddressOf Sb_Actualizar_Grilla
+        AddHandler Tab_Ingresadas.Click, AddressOf Sb_Actualizar_Grilla
         AddHandler Tab_Completadas.Click, AddressOf Sb_Actualizar_Grilla
         AddHandler Tab_Facturadas.Click, AddressOf Sb_Actualizar_Grilla
         AddHandler Tab_Entregadas.Click, AddressOf Sb_Actualizar_Grilla
@@ -68,12 +70,16 @@ Public Class Frm_Stmp_Listado
 
         Select Case _Tbas.Name
             Case "Tab_Pendientes"
-                _Condicion += vbCrLf & "And (Estado In ('PREPA','COMPL') And Planificada = 1)"
+                _Condicion += vbCrLf & "And (Estado In ('PREPA','COMPL') And Planificada = 1) Or (Estado = 'INGRE')"
                 _DocEmitir = True
                 _FechaPickeado = True
                 _HoraPickeado = True
                 _MostrarImagenes = True
-                '_FechaPlanificacion = True
+            Case "Tab_Ingresadas"
+                _Condicion += vbCrLf & "And Estado = 'INGRE'"
+                _DocEmitir = True
+                _MostrarImagenes = True
+                _FechaPlanificacion = True
             Case "Tab_Preparacion"
                 _Condicion += vbCrLf & "And Estado = 'PREPA' And Planificada = 1"
                 _DocEmitir = True
@@ -106,6 +112,7 @@ Public Class Frm_Stmp_Listado
         Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
         Consulta_sql = Replace(Consulta_sql, "#Sucursal#", ModSucursal)
         Consulta_sql = Replace(Consulta_sql, "--#Condicion#", _Condicion)
+        Consulta_sql = Replace(Consulta_sql, "Zw_Stmp_Enc", _Global_BaseBk & "Zw_Stmp_Enc")
 
         Dim _New_Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
         _Dv = New DataView
@@ -624,6 +631,7 @@ Public Class Frm_Stmp_Listado
         Return _Lista
 
     End Function
+
     Function Fx_Crear_Ticket(_Idmaeedo As Integer,
                              _Facturar As Boolean,
                              _TipoPago As String) As LsValiciones.Mensajes
@@ -1011,12 +1019,14 @@ Public Class Frm_Stmp_Listado
                     .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
 
                     Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
-                    Dim _Idmaeedo = _Fila.Cells("IDMAEEDO").Value
+                    Dim _Idmaeedo As Integer = _Fila.Cells("IDMAEEDO").Value
+                    Dim _Estado As String = _Fila.Cells("Estado").Value
 
                     LabelItem1.Text = "Opciones (Id: " & _Idmaeedo & ")"
 
                     Btn_Mnu_EntregarMercaderia.Visible = (Super_TabS.SelectedTab.Name = "Tab_Facturadas")
                     Btn_CerrarTicket.Visible = (Super_TabS.SelectedTab.Name = "Tab_Entregadas")
+                    Btn_Mnu_Preparacion.Visible = (Super_TabS.SelectedTab.Name = "Tab_Ingresadas")
 
                     ShowContextMenu(Menu_Contextual_01_Opciones_Documento)
 
@@ -1339,7 +1349,7 @@ Public Class Frm_Stmp_Listado
         Dim _Tbas = Super_TabS.SelectedTab
 
         Select Case _Tbas.Name
-            Case "Tab_Pendientes", "Tab_Preparacion", "Tab_Completadas"
+            Case "Tab_Pendientes", "Tab_Preparacion", "Tab_Completadas", "Tab_Ingresadas"
                 _MostrarImagenes = True
             Case Else
                 _MostrarImagenes = False
@@ -1363,6 +1373,10 @@ Public Class Frm_Stmp_Listado
             End If
 
             _Icono = Nothing
+
+            If _Estado = "INGRE" Then
+                _Icono = _Imagenes_List.Images.Item("menu-more.png")
+            End If
 
             If _Estado = "COMPL" Then
                 _Icono = _Imagenes_List.Images.Item("ok.png")
@@ -1523,6 +1537,31 @@ Public Class Frm_Stmp_Listado
         End If
 
         Grilla.Rows.Remove(_Fila)
+
+    End Sub
+
+    Private Sub Btn_Mnu_Preparacion_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_Preparacion.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+        Dim _Id As Integer = _Fila.Cells("Id").Value
+
+        Dim _Cl_Stmp As New Cl_Stmp
+        _Cl_Stmp.Fx_Llenar_Encabezado(_Id)
+
+        _Cl_Stmp.Zw_Stmp_Enc.Estado = "PREPA"
+        _Cl_Stmp.Zw_Stmp_Enc.Planificada = True
+
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        _Mensaje = _Cl_Stmp.Fx_EnviarAPerparacionPlanificar
+
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+
+        If Not _Mensaje.EsCorrecto Then
+            Return
+        End If
+
+        Sb_Actualizar_Grilla()
 
     End Sub
 End Class

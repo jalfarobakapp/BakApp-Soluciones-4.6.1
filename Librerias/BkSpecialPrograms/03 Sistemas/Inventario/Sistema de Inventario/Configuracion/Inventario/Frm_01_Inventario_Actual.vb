@@ -56,6 +56,8 @@ Public Class Frm_01_Inventario_Actual
 
     Private Sub Sb_Actualizar_Grilla()
 
+        Me.Cursor = Cursors.WaitCursor
+
         Consulta_sql = "Select Codigo,Recontado, SUM(Cantidad) As Cantidad" & vbCrLf &
                        "Into #PasoR" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle" & vbCrLf &
@@ -128,6 +130,7 @@ Public Class Frm_01_Inventario_Actual
             .Columns("Cant_Inventariada").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Cant_Inventariada").DefaultCellStyle.Format = "###,##.##"
             .Columns("Cant_Inventariada").HeaderText = "Inventario"
+            .Columns("Cant_Inventariada").ToolTipText = "Cantidad Inventariada"
             .Columns("Cant_Inventariada").Width = 70
             .Columns("Cant_Inventariada").Visible = True
             .Columns("Cant_Inventariada").DisplayIndex = DisplayIndex
@@ -174,22 +177,23 @@ Public Class Frm_01_Inventario_Actual
             DisplayIndex += 1
 
             .Columns("Recontado").HeaderText = "[R]"
+            .Columns("Recontado").ToolTipText = "Recontado"
             .Columns("Recontado").Width = 30
             .Columns("Recontado").Visible = True
             .Columns("Recontado").DisplayIndex = DisplayIndex
             DisplayIndex += 1
 
-            .Columns("Cerrado").HeaderText = "[C]"
-            .Columns("Cerrado").Width = 30
-            .Columns("Cerrado").Visible = True
-            .Columns("Cerrado").DisplayIndex = DisplayIndex
-            DisplayIndex += 1
+            '.Columns("Cerrado").HeaderText = "[C]"
+            '.Columns("Cerrado").Width = 30
+            '.Columns("Cerrado").Visible = True
+            '.Columns("Cerrado").DisplayIndex = DisplayIndex
+            'DisplayIndex += 1
 
-            .Columns("Levantado").HeaderText = "[L]"
-            .Columns("Levantado").Width = 30
-            .Columns("Levantado").Visible = True
-            .Columns("Levantado").DisplayIndex = DisplayIndex
-            DisplayIndex += 1
+            '.Columns("Levantado").HeaderText = "[L]"
+            '.Columns("Levantado").Width = 30
+            '.Columns("Levantado").Visible = True
+            '.Columns("Levantado").DisplayIndex = DisplayIndex
+            'DisplayIndex += 1
 
             .Columns("NoInventariar").HeaderText = "NO Inv."
             .Columns("NoInventariar").ToolTipText = "No Inventariar"
@@ -200,6 +204,9 @@ Public Class Frm_01_Inventario_Actual
         End With
 
         Sb_SumarTotales()
+        Me.Cursor = Cursors.Default
+
+        Sb_Filtrar()
 
     End Sub
 
@@ -381,13 +388,30 @@ Public Class Frm_01_Inventario_Actual
 
     Private Sub Btn_ExportarAjuste_Todo_Click(sender As Object, e As EventArgs) Handles Btn_ExportarAjuste_Todo.Click
 
-        Consulta_sql = "select Codigo As 'Codigo',Cantidad As 'Cantidad',Costo as 'Costo'" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Inv_Inventario" & vbCrLf &
-                       "Where IdInventario = " & _IdInventario
+        Consulta_sql = "Select Empresa,Sucursal,Bodega,Codigo,Sum(Cantidad) As Cantidad,Sum(CantidadUd1) As CantidadUd1,Sum(CantidadUd2) As CantidadUd2" & vbCrLf &
+                       "Into #PasoR" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle" & vbCrLf &
+                       "Where IdInventario = 1 And Recontado = 1" & vbCrLf &
+                       "Group by Empresa,Sucursal,Bodega,Codigo" & vbCrLf &
+                       vbCrLf &
+                       "Select Empresa,Sucursal,Bodega,Codigo,Sum(Cantidad) As Cantidad,Sum(CantidadUd1) As CantidadUd1,Sum(CantidadUd2) As CantidadUd2" & vbCrLf &
+                       "Into #PasoC" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle" & vbCrLf &
+                       "Where IdInventario = 1 And Recontado = 0 And Codigo Not In (Select Codigo From #PasoR)" & vbCrLf &
+                       "Group by Empresa,Sucursal,Bodega,Codigo" & vbCrLf &
+                       vbCrLf &
+                       "Select * From #PasoC" & vbCrLf &
+                       "Union" & vbCrLf &
+                       "Select * From #PasoR" & vbCrLf &
+                       vbCrLf &
+                       "Drop table #PasoC" & vbCrLf &
+                       "Drop table #PasoR"
+
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim NombreFile As String = "Inventario TODOS " & FormatDateTime(_Fecha_Inventario, DateFormat.LongDate)
 
-        ExportarTabla_JetExcel(Consulta_sql, Me, NombreFile)
+        ExportarTabla_JetExcel_Tabla(_Tbl, Me, NombreFile)
 
     End Sub
 
@@ -405,7 +429,16 @@ Public Class Frm_01_Inventario_Actual
     End Sub
 
     Private Sub Btn_ExportarAjuste_Click(sender As Object, e As EventArgs) Handles Btn_ExportarAjuste.Click
+
+        If _Cl_Inventario.Zw_Inv_Inventario.Activo Then
+            MessageBoxEx.Show(Me, "Actualmente, el inventario está abierto, lo que significa que no es posible" & vbCrLf &
+                              "exportar los ajustes. Para poder realizar esta acción, es necesario cerrar el inventario primero.", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
         ShowContextMenu(Menu_Contextual_ExportarAjuste)
+
     End Sub
 
     Private Sub Btn_Actualizar_Click(sender As Object, e As EventArgs) Handles Btn_Actualizar.Click

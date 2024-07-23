@@ -1039,12 +1039,12 @@ Drop Table #Paso_Tabim"
                 _SqlQuery += "Update MAEPR Set NOKOPRAMP = '" & _RowProducto.Item("NOKOPRAMP").ToString.Trim & "' Where KOPR = '" & _kopr & "'" & vbCrLf
             End If
 
-
             With Zw_Producto
 
                 _SqlQuery += vbCrLf & "Update " & _Global_BaseBk & "Zw_Productos Set " & vbCrLf &
                              "Descripcion = '" & .Descripcion & "'" &
                              ",ExluyeTipoVenta = " & Convert.ToInt32(.ExluyeTipoVenta) & vbCrLf &
+                             ",RtuXWms = " & Convert.ToInt32(.RtuXWms) & vbCrLf &
                              "Where Codigo = '" & .Codigo & "'"
 
             End With
@@ -1451,7 +1451,7 @@ Drop Table #Paso_Tabim"
 
     Function Fx_Llenar_Zw_Producto(_Codigo As String) As LsValiciones.Mensajes
 
-        Dim _Mensaje_Stem As New LsValiciones.Mensajes
+        Dim _Mensaje As New LsValiciones.Mensajes
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Productos Where Codigo = '" & _Codigo & "'"
         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -1473,10 +1473,10 @@ Drop Table #Paso_Tabim"
 
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Productos () Select KOPR,NOKOPR From MAEPR Where KOPR = '" & _Codigo & "'"
 
-            _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Mensaje = "No se encontro el registro en la tabla Zw_Productos con el Código " & _Codigo
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = "No se encontro el registro en la tabla Zw_Productos con el Código " & _Codigo
 
-            Return _Mensaje_Stem
+            Return _Mensaje
 
         End If
 
@@ -1485,13 +1485,76 @@ Drop Table #Paso_Tabim"
             .Codigo = _Row.Item("Codigo")
             .Descripcion = _Row.Item("Descripcion")
             .ExluyeTipoVenta = _Row.Item("ExluyeTipoVenta")
+            .RtuXWms = _Row.Item("RtuXWms")
 
         End With
 
-        _Mensaje_Stem.EsCorrecto = True
-        _Mensaje_Stem.Mensaje = "Registro encontrado."
+        _Mensaje.EsCorrecto = True
+        _Mensaje.Mensaje = "Registro encontrado."
+        _Mensaje.Tag = Zw_Producto
 
-        Return _Mensaje_Stem
+        Return _Mensaje
+
+    End Function
+
+    Function Fx_ActualizarRtuAutomaticaWMS(_Codigo As String,
+                                           _Empresa As String,
+                                           _Sucursal As String,
+                                           _Bodega As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Productos Where Codigo = '" & _Codigo & "'"
+        Dim _Row_Producto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If _Row_Producto.Item("RtuXWms") = 0 Then
+
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = "El producto " & _Codigo & " no tiene la actualización de RTU por WMS activa."
+            _Mensaje.Detalle = "Actualizar RTU"
+
+            Return _Mensaje
+
+        End If
+
+        Consulta_sql = "Select Isnull(SUM(STOCNV1),0) As STOCNV1,Isnull(SUM(STOCNV2),0) As STOCNV2" &
+                       ",Isnull(Sum(StPedi1),0) As StPedi1,Isnull(Sum(StPedi2),0) As StPedi2" & vbCrLf &
+                       "From MAEST" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Prod_Stock On Empresa = EMPRESA And Sucursal = KOSU And Bodega = KOBO And Codigo = KOPR" & vbCrLf &
+                       "Where KOPR = '" & _Codigo & "' And EMPRESA = '" & _Empresa & "' And KOSU = '" & _Sucursal & "' And KOBO = '" & _Bodega & "'"
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _PedidoUd1 As Double = _Row.Item("STOCNV1") + _Row.Item("StPedi1")
+        Dim _PedidoUd2 As Double = _Row.Item("STOCNV2") + _Row.Item("StPedi2")
+
+        Dim _Top As Integer = Math.Round(_PedidoUd2, 0)
+
+        Consulta_sql = "Select Round(AVG(Stock_Ud1),5) AS Promedio,(Round(AVG(Stock_Ud1),5)+MAX(Stock_Ud1))/2 As Prom2,MAX(Stock_Ud1) As Max_Stock_Ud1" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Stock_X_Producto" & vbCrLf &
+                       "Where Codigo = '" & _Codigo & "' And Disponible = 1"
+        _Row = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _Rtu As Double = _Row.Item("Prom2")
+
+        Consulta_sql = "Update MAEPR Set RLUD = " & De_Num_a_Tx_01(_Rtu, False, 5) & vbCrLf &
+                       "Where KOPR = '" & _Codigo & "'"
+        If _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Se actualizo el RTU del producto " & _Codigo & " a " & _Rtu
+            _Mensaje.Detalle = "Actualizar RTU"
+            _Mensaje.Tag = _Sql.Fx_Trae_Dato("MAEPR", "RLUD", "KOPR = '" & _Codigo & "'", True)
+
+        Else
+
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = "No se pudo actualizar el RTU del producto " & _Codigo & " a " & _Rtu
+            _Mensaje.Detalle = "Actualizar RTU"
+            _Mensaje.Resultado = _Sql.Pro_Error
+
+        End If
+
+        Return _Mensaje
 
     End Function
 

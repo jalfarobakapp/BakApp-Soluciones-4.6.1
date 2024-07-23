@@ -86,8 +86,8 @@ Public Class Frm_Inv_Inventarios
             .Columns("NombreInventario").HeaderText = "Nombre inventario"
             .Columns("NombreInventario").Visible = True
             .Columns("NombreInventario").DisplayIndex = _DisplayIndex
-
             _DisplayIndex += 1
+
             .Columns("Activo").Width = 40
             .Columns("Activo").HeaderText = "Activo"
             .Columns("Activo").Visible = True
@@ -216,6 +216,8 @@ Public Class Frm_Inv_Inventarios
         Dim Fm As New Frm_Inv_Ctrl_Inventario(_Id)
         Fm.ShowDialog(Me)
         Fm.Dispose()
+
+        Sb_Actualizar_Grilla()
 
     End Sub
 End Class

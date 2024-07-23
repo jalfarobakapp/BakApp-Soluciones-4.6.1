@@ -54,7 +54,7 @@ Partial Class Frm_Inv_Inventarios
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 12)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(565, 502)
+        Me.GroupPanel1.Size = New System.Drawing.Size(663, 502)
         '
         '
         '
@@ -195,7 +195,7 @@ Partial Class Frm_Inv_Inventarios
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla_Inventarios.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.Grilla_Inventarios.Size = New System.Drawing.Size(559, 479)
+        Me.Grilla_Inventarios.Size = New System.Drawing.Size(657, 479)
         Me.Grilla_Inventarios.StandardTab = True
         Me.Grilla_Inventarios.TabIndex = 30
         '
@@ -207,7 +207,7 @@ Partial Class Frm_Inv_Inventarios
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Crear_Inventario})
         Me.Bar1.Location = New System.Drawing.Point(0, 551)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(589, 41)
+        Me.Bar1.Size = New System.Drawing.Size(687, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 30
@@ -243,7 +243,7 @@ Partial Class Frm_Inv_Inventarios
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(589, 592)
+        Me.ClientSize = New System.Drawing.Size(687, 592)
         Me.Controls.Add(Me.Chk_Activos)
         Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.Bar1)

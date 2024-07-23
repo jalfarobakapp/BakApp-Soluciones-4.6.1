@@ -16,7 +16,7 @@ When 'FACTU' Then Case TipoPago When 'Contado' Then 'pase por CAJA...' When 'Cre
 End As 'InfoCliente'
 
 --Into #Paso
-From BAKAPP_VH.dbo.Zw_Stmp_Enc Enc
+From Zw_Stmp_Enc Enc
 Inner Join MAEEDO Edo On Edo.IDMAEEDO = Enc.Idmaeedo
 Left Join MAEEN En On En.KOEN = Enc.Endo And En.SUEN = Enc.Suendo
 Left Join TABFU FEnt On FEnt.KOFU = CodFuncionario_Entrega

@@ -157,6 +157,12 @@ Public Class Frm_Inv_Sector_Lista
 
     Private Sub Btn_Crear_Ubicacion_Click(sender As Object, e As EventArgs) Handles Btn_Crear_Ubicacion.Click
 
+        If Not _Cl_Inventario.Zw_Inv_Inventario.Activo Then
+            MessageBoxEx.Show(Me, "El inventario se encuentra cerrado, no se puede realizar esta gestión", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
+
         Dim _Grabar As Boolean
 
         Dim Fm As New Frm_Inv_Sector_Crear(0)
@@ -171,6 +177,12 @@ Public Class Frm_Inv_Sector_Lista
 
     End Sub
     Private Sub Btn_EditarUbicacion_Click(sender As Object, e As EventArgs) Handles Btn_EditarUbicacion.Click
+
+        If Not _Cl_Inventario.Zw_Inv_Inventario.Activo Then
+            MessageBoxEx.Show(Me, "El inventario se encuentra cerrado, no se puede realizar esta gestión", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
 
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
         Dim _Id As Integer = _Fila.Cells("Id").Value
@@ -203,6 +215,12 @@ Public Class Frm_Inv_Sector_Lista
 
     End Sub
     Private Sub Btn_EliminarUbicacion_Click(sender As Object, e As EventArgs) Handles Btn_EliminarUbicacion.Click
+
+        If Not _Cl_Inventario.Zw_Inv_Inventario.Activo Then
+            MessageBoxEx.Show(Me, "El inventario se encuentra cerrado, no se puede realizar esta gestión", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
 
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
         Dim _Id As Integer = _Fila.Cells("Id").Value
@@ -267,6 +285,12 @@ Public Class Frm_Inv_Sector_Lista
     End Sub
 
     Private Sub Btn_Importar_Desde_Excel_Click(sender As Object, e As EventArgs) Handles Btn_Importar_Desde_Excel.Click
+
+        If Not _Cl_Inventario.Zw_Inv_Inventario.Activo Then
+            MessageBoxEx.Show(Me, "El inventario se encuentra cerrado, no se puede realizar esta gestión", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
 
         Dim _UbicacionesInsertadas As Boolean
 
@@ -354,6 +378,12 @@ Public Class Frm_Inv_Sector_Lista
     End Sub
 
     Private Sub Btn_ImprimirSector_Click(sender As Object, e As EventArgs) Handles Btn_ImprimirSector.Click
+
+        If Not _Cl_Inventario.Zw_Inv_Inventario.Activo Then
+            MessageBoxEx.Show(Me, "El inventario se encuentra cerrado, no se puede realizar esta gestión", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
 
         Dim _Sel_Impresora As Sel_Impresora = Fx_seleccionar_Impresora(Me)
 

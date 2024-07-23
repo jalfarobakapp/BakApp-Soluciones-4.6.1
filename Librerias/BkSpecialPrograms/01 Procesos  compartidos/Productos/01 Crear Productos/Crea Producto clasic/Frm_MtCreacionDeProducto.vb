@@ -676,6 +676,7 @@ Public Class Frm_MtCreacionDeProducto
                 .Codigo = Txt_Kopr.Text
                 .Descripcion = Txt_Nokopr.Text.Trim
                 .ExluyeTipoVenta = Chk_ExluyeTipoVenta.Checked
+                .RtuXWms = Chk_RtuXWms.Checked
 
             End With
 
@@ -2020,6 +2021,7 @@ Sigue_Loop_01:
         _Cl_Producto.Fx_Llenar_Zw_Producto(_RowProducto.Item("KOPR"))
 
         Chk_ExluyeTipoVenta.Checked = _Cl_Producto.Zw_Producto.ExluyeTipoVenta
+        Chk_RtuXWms.Checked = _Cl_Producto.Zw_Producto.RtuXWms
 
     End Sub
 

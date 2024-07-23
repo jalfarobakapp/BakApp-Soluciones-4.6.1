@@ -458,6 +458,7 @@ Public Class Frm_Stmp_IncNVVPicking
 
         Dim _Cl_Stmp As New Cl_Stmp
 
+
         For Each _Fila As DataRow In _Tbl_Documentos.Rows
 
             Dim _Mensaje_Stem As New LsValiciones.Mensajes

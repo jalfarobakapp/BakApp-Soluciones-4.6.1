@@ -98,7 +98,7 @@ Public Class Frm_Stmp_IngPickeo
             .Columns("Caprco1_Ori").Width = 60
             .Columns("Caprco1_Ori").HeaderText = "Cant.Ori"
             .Columns("Caprco1_Ori").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("Caprco1_Ori").DefaultCellStyle.Format = "###,##0.##"
+            .Columns("Caprco1_Ori").DefaultCellStyle.Format = "###,##0.#####"
             .Columns("Caprco1_Ori").Visible = True
             .Columns("Caprco1_Ori").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
@@ -106,7 +106,7 @@ Public Class Frm_Stmp_IngPickeo
             .Columns("Cantidad").Width = 60
             .Columns("Cantidad").HeaderText = "Cantidad"
             .Columns("Cantidad").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("Cantidad").DefaultCellStyle.Format = "###,##0.##"
+            .Columns("Cantidad").DefaultCellStyle.Format = "###,##0.#####"
             .Columns("Cantidad").Visible = True
             .Columns("Cantidad").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
@@ -214,7 +214,7 @@ Public Class Frm_Stmp_IngPickeo
         Dim _Cantidad As Double = _Fila.Cells("Cantidad").Value
         Dim _Cantidad_Ori As Double
         Dim _Udtrpr As Integer = _Fila.Cells("Udtrpr").Value
-        Dim _Rludpr As Integer = _Fila.Cells("Rludpr").Value
+        Dim _Rludpr As Double = _Fila.Cells("Rludpr").Value
 
         _Cantidad_Ori = _Fila.Cells("Caprco" & _Udtrpr & "_Ori").Value
 

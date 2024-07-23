@@ -54,6 +54,12 @@ Public Class Frm_Inv_Ctrl_Inventario
             Return
         End If
 
+        If Not Cl_Inventario.Zw_Inv_Inventario.Activo Then
+            MessageBoxEx.Show(Me, "El inventario se encuentra cerrado, no se puede ingresar hojas de conteo", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
+
         Dim Fm As New Frm_IngresarHoja(_IdInventario, 0, FUNCIONARIO)
         Fm.ShowDialog(Me)
         Fm.Dispose()
@@ -94,17 +100,17 @@ Public Class Frm_Inv_Ctrl_Inventario
 
     Private Sub Btn_VerInventario_Click(sender As Object, e As EventArgs) Handles Btn_VerInventario.Click
 
-        'If Not Fx_Tiene_Permiso(Me, "In0011") Then
-        '    Return
-        'End If
-
         If Not Fx_Validar_Inventario() Then
             Return
         End If
 
+        Me.Enabled = False
+
         Dim Fm As New Frm_01_Inventario_Actual(_IdInventario)
         Fm.ShowDialog(Me)
         Fm.Dispose()
+
+        Me.Enabled = True
 
     End Sub
 
@@ -160,16 +166,82 @@ Public Class Frm_Inv_Ctrl_Inventario
 
     Private Sub Btn_Abrir_Inventario_Click(sender As Object, e As EventArgs) Handles Btn_Abrir_Inventario.Click
 
-        If Not Fx_Tiene_Permiso(Me, "xxx") Then
+        Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+        Dim _PermisoAceptado As Boolean
+
+        If Not Fx_Tiene_Permiso(Me, "Invg0005",, , False,,,, False) Then
             Return
+        End If
+
+        Dim Fm As New Frm_ValidarPermiso(Frm_ValidarPermiso.Tipo_Accion.Validar_Permiso, "Invg0005", True, False)
+        Fm.Text = "INGRESE CLAVE DE AUTORIZACION"
+        Fm.Pro_Cerrar_Automaticamente = True
+        Fm.ShowDialog(Me)
+
+        _PermisoAceptado = Fm.Pro_Permiso_Aceptado
+        Dim _RowUsuario As DataRow = Fm.Pro_RowUsuario
+        Fm.Dispose()
+
+        If Not _PermisoAceptado Then
+            Return
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Está seguro de abrir el inventario?" & vbCrLf &
+                             "Recuerde que si abre el inventario, podrá realizar gestión de ingreso de hojas" & vbCrLf &
+                             "de conteo y/o reconteo.", "Abrir inventario",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Warning) <> Windows.Forms.DialogResult.Yes Then
+            Return
+        End If
+
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        _Mensaje = Cl_Inventario.Fx_Abrir_Inventario(_NombreEquipo, _RowUsuario.Item("KOFU"))
+
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+
+        If _Mensaje.EsCorrecto Then
+            Me.Close()
         End If
 
     End Sub
 
     Private Sub Btn_Cerrar_Inventario_Click(sender As Object, e As EventArgs) Handles Btn_Cerrar_Inventario.Click
 
-        If Not Fx_Tiene_Permiso(Me, "xxx") Then
+        Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+        Dim _PermisoAceptado As Boolean
+
+        If Not Fx_Tiene_Permiso(Me, "Invg0006",, , False,,,, False) Then
             Return
+        End If
+
+        Dim Fm As New Frm_ValidarPermiso(Frm_ValidarPermiso.Tipo_Accion.Validar_Permiso, "Invg0006", True, False)
+        Fm.Text = "INGRESE CLAVE DE AUTORIZACION"
+        Fm.Pro_Cerrar_Automaticamente = True
+        Fm.ShowDialog(Me)
+
+        _PermisoAceptado = Fm.Pro_Permiso_Aceptado
+        Dim _RowUsuario As DataRow = Fm.Pro_RowUsuario
+        Fm.Dispose()
+
+        If Not _PermisoAceptado Then
+            Return
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Está seguro de cerrar el inventario?" & vbCrLf &
+                             "Recuerde que si cierra el inventario, no podrá realizar más gestión de ingreso de hojas" & vbCrLf &
+                             "de conteo y/o reconteo.", "Cerrar inventario",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Warning) <> Windows.Forms.DialogResult.Yes Then
+            Return
+        End If
+
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        _Mensaje = Cl_Inventario.Fx_Cerrar_Inventario(_NombreEquipo, _RowUsuario.Item("KOFU"))
+
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+
+        If _Mensaje.EsCorrecto Then
+            Me.Close()
         End If
 
     End Sub

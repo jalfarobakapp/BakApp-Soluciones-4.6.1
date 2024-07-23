@@ -60,8 +60,7 @@
         Consulta_sql = Replace(Consulta_sql, "#Sucursal#", ModSucursal)
         Consulta_sql = Replace(Consulta_sql, "--#Condicion#", _Condicion)
         Consulta_sql = Replace(Consulta_sql, "Select * From #Paso Order by Tido,Nudo", "Select * From #Paso Order by Numero")
-        'Consulta_sql = Replace(Consulta_sql, "--#Select_Paginacion#", _Select_Paginacion)
-
+        Consulta_sql = Replace(Consulta_sql, "Zw_Stmp_Enc", _Global_BaseBk & "Zw_Stmp_Enc")
         _Tbl_SalaEspera = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ' Asegúrate de que la columna exista

@@ -151,7 +151,7 @@ Public Class Cl_Inventario
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Inv_Inventario " &
                                "(Ano,Mes,Dia,Fecha_Inventario,Empresa,Sucursal,Bodega,Nombre_Empresa,Nombre_Sucursal," &
-                               "Nombre_Bodega,NombreInventario,FuncionarioCargo,NombreFuncionario,Activo) Values " &
+                               "Nombre_Bodega,NombreInventario,FuncionarioCargo,NombreFuncionario,Activo,Estado) Values " &
                                "('" & .Ano & "','" & .Mes & "','" & .Dia & "','" & Format(.Fecha_Inventario, "yyyyMMdd") & "'" &
                                ",'" & .Empresa & "','" & .Sucursal & "','" & .Bodega & "'" &
                                ",'" & .Nombre_Empresa & "','" & .Nombre_Sucursal & "','" & .Nombre_Bodega & "'" &
@@ -245,6 +245,144 @@ Public Class Cl_Inventario
 
             _Mensaje.EsCorrecto = False
             _Mensaje.Detalle = "Error al grabar"
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
+            Zw_Inv_Inventario.Id = 0
+
+            If Not IsNothing(myTrans) Then
+                myTrans.Rollback()
+            End If
+
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
+    Function Fx_Cerrar_Inventario(_NombreEquipo As String,
+                                  _CodFuncionario As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Consulta_sql = String.Empty
+
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+        Dim Cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
+
+        Try
+
+            myTrans = Cn2.BeginTransaction()
+
+            With Zw_Inv_Inventario
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Inv_Inventario Set " & vbCrLf &
+                               "Activo = 0" & vbCrLf &
+                               ",FechaCierre = Getdate()" & vbCrLf &
+                               "Where Id = " & .Id
+
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Log_Gestiones (NombreEquipo,Funcionario,Modalidad,Archirst,Idrst,Fecha_Hora," &
+                               "CodAccion,Accion,CodPermiso) Values " &
+                               "('" & _NombreEquipo & "','" & _CodFuncionario & "','" & Modalidad & "','Zw_Inv_Inventario'" &
+                               "," & .Id & ",Getdate(),'','Cierra inventario','Invg0006')"
+
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+                _Mensaje.Detalle = "Cerrar inventario"
+                _Mensaje.Mensaje = "Inventario cerrado correctamente"
+
+            End With
+
+            myTrans.Commit()
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Icono = MessageBoxIcon.Information
+
+        Catch ex As Exception
+
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Detalle = "Error al cerrar inventario"
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
+            Zw_Inv_Inventario.Id = 0
+
+            If Not IsNothing(myTrans) Then
+                myTrans.Rollback()
+            End If
+
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
+    Function Fx_Abrir_Inventario(_NombreEquipo As String,
+                                 _CodFuncionario As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Consulta_sql = String.Empty
+
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+        Dim Cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
+
+        Try
+
+            myTrans = Cn2.BeginTransaction()
+
+            With Zw_Inv_Inventario
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Inv_Inventario Set " & vbCrLf &
+                               "Activo = 1" & vbCrLf &
+                               ",FechaCierre = Null" & vbCrLf &
+                               "Where Id = " & .Id
+
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Log_Gestiones (NombreEquipo,Funcionario,Modalidad,Archirst,Idrst,Fecha_Hora," &
+                               "CodAccion,Accion,CodPermiso) Values " &
+                               "('" & _NombreEquipo & "','" & _CodFuncionario & "','" & Modalidad & "','Zw_Inv_Inventario'" &
+                               "," & .Id & ",Getdate(),'','Abre inventario','Invg0005')"
+
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+            End With
+
+            myTrans.Commit()
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Detalle = "Abrir inventario"
+            _Mensaje.Mensaje = "Inventario abierto correctamente"
+            _Mensaje.Icono = MessageBoxIcon.Information
+
+        Catch ex As Exception
+
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Detalle = "Error al abrir inventario"
             _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
             Zw_Inv_Inventario.Id = 0

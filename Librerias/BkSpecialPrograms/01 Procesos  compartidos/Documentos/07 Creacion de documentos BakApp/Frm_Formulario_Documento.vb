@@ -4518,6 +4518,7 @@ Public Class Frm_Formulario_Documento
 
         Dim _CodEntidadFisica = _TblEncabezado.Rows(0).Item("CodEntidadFisica")
 
+        Dim _Empresa = _Fila.Cells("Empresa").Value
         Dim _Sucursal = _Fila.Cells("Sucursal").Value
         Dim _Bodega = _Fila.Cells("Bodega").Value
 
@@ -4587,6 +4588,21 @@ Public Class Frm_Formulario_Documento
         Dim _CostoLista As Double
 
         Dim _Rtu As Double = _RowProducto.Item("RLUD")
+
+        Dim _Cl_Producto As Cl_Producto = New Cl_Producto()
+        _Cl_Producto.Fx_Llenar_Zw_Producto(_Codigo)
+
+        If _Cl_Producto.Zw_Producto.RtuXWms Then
+
+            Dim _Mensaje As LsValiciones.Mensajes
+            _Mensaje = _Cl_Producto.Fx_ActualizarRtuAutomaticaWMS(_Codigo, _Empresa, _Sucursal, _Bodega)
+
+            If _Mensaje.EsCorrecto Then
+                _Rtu = _Mensaje.Tag
+            End If
+
+        End If
+
         Dim _DescMaximo As Double = NuloPorNro(_RowPrecios.Item("DTMA01UD"), 0)
         Dim _Ecuacion As String = NuloPorNro(_RowPrecios.Item("ECUACION").ToString.Trim, "")
         Dim _Ecuacionu2 As String = NuloPorNro(_RowPrecios.Item("ECUACIONU2").ToString.Trim, "")
