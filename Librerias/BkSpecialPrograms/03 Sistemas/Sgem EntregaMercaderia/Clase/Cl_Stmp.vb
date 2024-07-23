@@ -59,7 +59,6 @@ Public Class Cl_Stmp
         Return _Mensaje_Stem
 
     End Function
-
     Function Fx_Llenar_Detalle(_Id_Enc As Integer) As LsValiciones.Mensajes
 
         Dim _Mensaje_Stem As New LsValiciones.Mensajes
@@ -120,7 +119,6 @@ Public Class Cl_Stmp
         Return _Mensaje_Stem
 
     End Function
-
     Function Fx_Llenar_Detalle_Pickeo(_Id_Enc As Integer) As LsValiciones.Mensajes
 
         Dim _Mensaje_Stem As New LsValiciones.Mensajes
@@ -164,7 +162,43 @@ Public Class Cl_Stmp
         Return _Mensaje_Stem
 
     End Function
+    Function Fx_Llenar_Permiso(_Id_Enc As Integer, _CodPermiso As String) As LsValiciones.Mensajes
 
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc_Permisos Where Id_Enc = " & _Id_Enc & " And CodPermiso = '" & _CodPermiso & "'"
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_Row) Then
+
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = "No se encontro el registro en la tabla Zw_Stmp_Enc_Permisos con el Id_Enc " & _Id_Enc & " And CodPermiso = '" & _CodPermiso & "'"
+
+            Return _Mensaje
+
+        End If
+
+        Dim Zw_Stmp_Enc_Permisos As New Zw_Stmp_Enc_Permisos
+
+        With Zw_Stmp_Enc_Permisos
+
+            .Id = _Row.Item("Id")
+            .Id_Enc = _Row.Item("Id_Enc")
+            .CodPermiso = _Row.Item("CodPermiso")
+            .NroRemota = _Row.Item("NroRemota").ToString.Trim
+            .CodFuncionario_Solicita = _Row.Item("CodFuncionario_Solicita")
+            .CodFuncionario_Autoriza = _Row.Item("CodFuncionario_Autoriza")
+            .FechaHora = _Row.Item("FechaHora")
+
+        End With
+
+        _Mensaje.EsCorrecto = True
+        _Mensaje.Mensaje = "Registro encontrado."
+        _Mensaje.Tag = Zw_Stmp_Enc_Permisos
+
+        Return _Mensaje
+
+    End Function
     Function Fx_Grabar_Nuevo_Tickets() As LsValiciones.Mensajes
 
         Dim _Mensaje_Stem As New LsValiciones.Mensajes
@@ -513,16 +547,16 @@ Public Class Cl_Stmp
 
         Dim _FechaServidor As DateTime = FechaDelServidor()
 
-        Dim _Mensaje_Stem As New LsValiciones.Mensajes
+        Dim _Mensaje As New LsValiciones.Mensajes
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Idmaeedo = " & _Idmaeedo & " And Tido = '" & _Tido & "' And Nudo = '" & _Nudo & "'"
         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If Not IsNothing(_Row) Then
-            _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Mensaje = "El documento ya esta ingresado en el sistema de Ticket Picking (Ticket Nro: " & _Row.Item("Numero") & ")"
-            _Mensaje_Stem.Detalle = "Documento: " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO")
-            Return _Mensaje_Stem
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = "El documento ya esta ingresado en el sistema de Ticket Picking (Ticket Nro: " & _Row.Item("Numero") & ")"
+            _Mensaje.Detalle = "Documento: " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO")
+            Return _Mensaje
         End If
 
         Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Docu_Ent",
@@ -559,25 +593,25 @@ Public Class Cl_Stmp
         Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If IsNothing(_Row_Documento) Then
-            _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Mensaje = "No se encontro el registro en la tabla MAEEDO, Documento: " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO")
-            _Mensaje_Stem.Detalle = "IDMAEEDO " & _Idmaeedo
-            Return _Mensaje_Stem
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = "No se encontro el registro en la tabla MAEEDO, Documento: " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO")
+            _Mensaje.Detalle = "IDMAEEDO " & _Idmaeedo
+            Return _Mensaje
         End If
 
         If Not _Row_Documento.Item("Pickear") Then
-            _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Mensaje = "Este documento no esta marcado para ser Pickeado en la tabla Zw_Docu_Ent"
-            _Mensaje_Stem.Detalle = "Documento: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
-            Return _Mensaje_Stem
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = "Este documento no esta marcado para ser Pickeado en la tabla Zw_Docu_Ent"
+            _Mensaje.Detalle = "Documento: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
+            Return _Mensaje
         End If
 
         If Not _Row_Documento.Item("Estaenwms") Then
-            _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Mensaje = "Este documento no esta ingresado en el WMS" & vbCrLf &
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = "Este documento no esta ingresado en el WMS" & vbCrLf &
                                     "Vuelva a intentarlo en 10 segundos y si no se encuentra informe de esta situación al personal de logística"
-            _Mensaje_Stem.Detalle = "Documento: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
-            Return _Mensaje_Stem
+            _Mensaje.Detalle = "Documento: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
+            Return _Mensaje
         End If
 
         Dim _Row_Entidad As DataRow = Fx_Traer_Datos_Entidad(_Row_Documento.Item("ENDO"), _Row_Documento.Item("SUENDO"))
@@ -651,12 +685,11 @@ Public Class Cl_Stmp
 
         Next
 
-        _Mensaje_Stem = _Cl_Stem.Fx_Grabar_Nuevo_Tickets
+        _Mensaje = _Cl_Stem.Fx_Grabar_Nuevo_Tickets
 
-        Return _Mensaje_Stem
+        Return _Mensaje
 
     End Function
-
     Function Fx_Revisar_WMSVillar(_Idmaeedo As Integer,
                                   _Tido As String,
                                   _Nudo As String,
@@ -856,7 +889,6 @@ Public Class Cl_Stmp
         Return _Mensaje
 
     End Function
-
     Function Fx_Revisar_WMSVillar_Resp(_Idmaeedo As Integer,
                                   _Tido As String,
                                   _Nudo As String,
@@ -1043,7 +1075,6 @@ Public Class Cl_Stmp
         Return _Mensaje
 
     End Function
-
     Function Fx_Revisar_WMSVillar2(_Idmaeedo As Integer,
                                   _Nudo As String,
                                   _CadenaConexionWms As String) As LsValiciones.Mensajes
@@ -1187,7 +1218,6 @@ Public Class Cl_Stmp
         Return _Mensaje
 
     End Function
-
     Function Fx_Entregar_Mercaderia() As LsValiciones.Mensajes
 
         Dim _Mensaje_Stem As New LsValiciones.Mensajes
@@ -1244,7 +1274,6 @@ Public Class Cl_Stmp
         Return _Mensaje_Stem
 
     End Function
-
     Function Fx_EnviarAPerparacionPlanificar() As LsValiciones.Mensajes
 
         Dim _Mensaje_Stem As New LsValiciones.Mensajes
@@ -1358,7 +1387,69 @@ Public Class Cl_Stmp
 
     End Function
 
+    Function Fx_Grabar_Permiso(Zw_Stmp_Enc_Permisos As Zw_Stmp_Enc_Permisos) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        _Mensaje = Fx_Llenar_Permiso(Zw_Stmp_Enc_Permisos.Id_Enc, Zw_Stmp_Enc_Permisos.CodPermiso)
+
+        If _Mensaje.EsCorrecto Then
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Detalle = "Permiso ya existe"
+            _Mensaje.Mensaje = "Este permiso ya fue otorgado al registro actual"
+            _Mensaje.Icono = MessageBoxIcon.Information
+            Return _Mensaje
+        End If
+
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+        Dim Cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
+
+        Try
+
+            myTrans = Cn2.BeginTransaction()
+
+            With Zw_Stmp_Enc_Permisos
+
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stmp_Enc_Permisos (Id_Enc,CodPermiso,NroRemota,CodFuncionario_Solicita,CodFuncionario_Autoriza,FechaHora) Values " & vbCrLf &
+                               "(" & .Id_Enc & ",'" & .CodPermiso & "','" & .NroRemota & "','" & .CodFuncionario_Solicita & "','" & .CodFuncionario_Autoriza & "',Getdate())"
+
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+            End With
+
+            myTrans.Commit()
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Detalle = "Permiso grabado correctamente"
+            _Mensaje.Mensaje = "Permiso grabado correctamente"
+
+        Catch ex As Exception
+
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Detalle = "Error al grabar permiso"
+            _Mensaje.Mensaje = ex.Message
+            _Zw_Stmp_Enc.Id = 0
+
+            If Not IsNothing(myTrans) Then myTrans.Rollback()
+
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
 End Class
+
 
 Namespace Stmp_BD
 

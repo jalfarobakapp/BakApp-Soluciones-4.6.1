@@ -1685,7 +1685,7 @@ Public Class Frm_Crear_Entidad_Mt
         Dim _Observacion = String.Empty
 
         If MessageBoxEx.Show(Me, "¿Desea agregar un comentario con respecto al " & _Palabra & "?", "Comentario",
-                             MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
 
             _Observacion = InputBox_Bk(Me, "Ingrese una observación",
                                                  "Observación", "", True, _Tipo_Mayus_Minus.Mayusculas)

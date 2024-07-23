@@ -12796,7 +12796,7 @@ Public Class Frm_Formulario_Documento
             If _Cabeza = "CodEntidad" Or (_Cabeza = "CodSucEntidad" And _Tido = "GTI") Then
 
                 Dim _CodEntidad As String = NuloPorNro(_Fila.Cells("CodEntidad").Value, "")
-                Dim _CodSucEntidad As String = NuloPorNro(_Fila.Cells("CodSucEntidad").Value, "")
+                Dim _CodSucEntidad As String = NuloPorNro(_Fila.Cells("CodSucEntidad").Value, "").ToString.Trim
 
                 If Not IsNothing(_RowEntidad) And _Cabeza = "CodEntidad" Then
 

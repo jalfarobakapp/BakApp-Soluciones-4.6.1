@@ -1,4 +1,5 @@
 ﻿Imports System.Threading
+Imports BkSpecialPrograms.LsValiciones
 Imports DevComponents.DotNetBar
 
 Public Class Frm_Stmp_Listado
@@ -1041,6 +1042,9 @@ Public Class Frm_Stmp_Listado
     Private Sub Btn_SalaEsperaFacturar_Click(sender As Object, e As EventArgs) Handles Btn_SalaEsperaFacturar.Click
 
         Try
+
+            Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+
             If Not Fx_Tiene_Permiso(Me, "Stem0004") Then Return
 
             Timer_Monitoreo.Stop()
@@ -1094,29 +1098,52 @@ Public Class Frm_Stmp_Listado
                 Return
             End If
 
-
-            Dim _Mensaje As LsValiciones.Mensajes
-
-            _Mensaje = Fx_RevisarCuentaCteCliente(_Row.Item("ENDO"), _Row.Item("SUENDO"))
-
-            If Not _Mensaje.EsCorrecto Then
-                MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
-                Call Btn_SalaEsperaFacturar_Click(Nothing, Nothing)
-                Return
-            End If
-
             If MessageBoxEx.Show(Me, "¿Confirma el documento " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO") & "?",
-                                 "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                                "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
                 Call Btn_SalaEsperaFacturar_Click(Nothing, Nothing)
                 Return
             End If
+
+
+            Dim _RowEntidad As DataRow = Fx_Traer_Datos_Entidad(_Row.Item("ENDO"), _Row.Item("SUENDO"))
+
+            If Not IsNothing(_RowEntidad) Then
+
+                Dim _Bloqueada As Boolean = _RowEntidad.Item("BLOQUEADO")
+                Dim _Msg = String.Empty
+
+                If _Bloqueada Then
+
+                    _Msg = "Entidad bloqueada" & vbCrLf & vbCrLf &
+                           "Cliente: " & _RowEntidad.Item("Rut").ToString.Trim & " - " & _RowEntidad.Item("NOKOEN") & vbCrLf &
+                           "Informe de esta situación a la administración."
+
+                    If Not Fx_RevisarPermiso(_Fila.Cells("Id").Value, "Bkp00021", _Msg, _Fila.Cells("Idmaeedo").Value) Then
+                        Return
+                    End If
+
+                End If
+
+                If Not Fx_Entidad_Tiene_Deudas_CtaCte(Me, _RowEntidad, False, False, False) Then
+
+                    _Msg = "Entidad presenta morosidad" & vbCrLf & vbCrLf &
+                           "Cliente: " & _RowEntidad.Item("Rut").ToString.Trim & " - " & _RowEntidad.Item("NOKOEN") & vbCrLf &
+                           "Informe de esta situación a la administración."
+
+                    If Not Fx_RevisarPermiso(_Fila.Cells("Id").Value, "Bkp00019", _Msg, _Fila.Cells("Idmaeedo").Value) Then
+                        Return
+                    End If
+
+                End If
+
+            End If
+
 
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Facturar = 1,CodFuncionario_MarcaFacturar = '" & FUNCIONARIO & "'" & vbCrLf &
                            "Where Id = " & _Row.Item("Id")
             If _Sql.Ej_consulta_IDU(Consulta_sql) Then
                 MessageBoxEx.Show(Me, "Documento marcado", "Marcar documento", MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
-
             Sb_Actualizar_Grilla()
 
         Catch ex As Exception
@@ -1125,8 +1152,52 @@ Public Class Frm_Stmp_Listado
                 Timer_Monitoreo.Start()
             End If
         End Try
-
     End Sub
+
+    Function Fx_RevisarPermiso(_Id_Enc As Integer, _CodPermiso As String, _Msg As String, _Idmaeedo As Integer) As Boolean
+
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        Dim _Zw_Stmp_Enc_Permisos As New Zw_Stmp_Enc_Permisos
+        Dim _Cl_Stmp As New Cl_Stmp
+
+        _Mensaje = _Cl_Stmp.Fx_Llenar_Permiso(_Id_Enc, _CodPermiso)
+        _Mensaje.Detalle = "Validación"
+
+        If Not _Mensaje.EsCorrecto Then
+
+            If MessageBoxEx.Show(Me, _Msg & vbCrLf & vbCrLf &
+                                 "¿Desea ingresar el permiso para realizar esta acción?", _Mensaje.Detalle,
+                                 MessageBoxButtons.YesNo, MessageBoxIcon.Stop) <> DialogResult.Yes Then
+                Return False
+            End If
+
+            Dim _RowUsPermiso As DataRow
+
+            If Not Fx_Tiene_Permiso(Me, _CodPermiso, "", True, True, ,,,, False, _RowUsPermiso,,,,,,,, _Idmaeedo) Then
+                Return False
+            End If
+
+            With _Zw_Stmp_Enc_Permisos
+
+                .Id_Enc = _Id_Enc
+                .CodPermiso = _CodPermiso
+                .CodFuncionario_Solicita = FUNCIONARIO
+                .CodFuncionario_Autoriza = _RowUsPermiso.Item("KOFU")
+
+                If Not IsNothing(_Rows_Info_Remota) Then
+                    .NroRemota = _Rows_Info_Remota.Item("NroRemota")
+                End If
+
+            End With
+
+            _Mensaje = _Cl_Stmp.Fx_Grabar_Permiso(_Zw_Stmp_Enc_Permisos)
+
+        End If
+
+        Return _Mensaje.EsCorrecto
+
+    End Function
 
     Function Fx_RevisarCuentaCteCliente(_Endo As String, _Suendo As String) As LsValiciones.Mensajes
 
@@ -1141,12 +1212,17 @@ Public Class Frm_Stmp_Listado
                 Dim _Bloqueada As Boolean = _RowEntidad.Item("BLOQUEADO")
 
                 If _Bloqueada Then
-                    Throw New System.Exception("Entidad bloqueada para ventas y compras")
+                    _Mensaje.Tag = "Bkp00021"
+                    Throw New System.Exception("Entidad bloqueada para ventas y compras" & vbCrLf &
+                                               "Informe de esta situación a la administración." & vbCrLf & vbCrLf &
+                                               "El documento no puede ser facturado automáticamente")
                 End If
 
                 If Not Fx_Entidad_Tiene_Deudas_CtaCte(Me, _RowEntidad, False, False, _Bloqueada) Then
+                    _Mensaje.Tag = "Bkp00019"
                     Throw New System.Exception("La entidad presenta morosidad" & Environment.NewLine &
-                                               "Informe de esta situación a la administración")
+                                               "Informe de esta situación a la administración." & vbCrLf & vbCrLf &
+                                               "El documento no puede ser facturado automáticamente")
                 End If
 
             End If

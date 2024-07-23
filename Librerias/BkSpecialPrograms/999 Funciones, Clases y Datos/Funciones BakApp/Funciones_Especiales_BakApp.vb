@@ -932,7 +932,7 @@ Public Module Funciones_Especiales_BakApp
         Consulta_sql = Replace(Consulta_sql, "#CodEntidad#", _CodEntidad)
         Consulta_sql = Replace(Consulta_sql, "#SucEntidad#", _SucEntidad)
 
-        If String.IsNullOrEmpty(_SucEntidad) Then
+        If String.IsNullOrWhiteSpace(_SucEntidad) Then
             Consulta_sql = Replace(Consulta_sql, "And SUEN = @SucEntidad", "")
         End If
 
