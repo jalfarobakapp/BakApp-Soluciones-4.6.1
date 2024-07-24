@@ -640,6 +640,8 @@ Module Mod_Imprimir
 
         '_SqlQuery = UCase(_SqlQuery)
 
+        _Sql = New Class_SQL(Cadena_ConexionSQL_Server)
+
         Dim _Row As DataRow
 
         _Row = _Sql.Fx_Get_DataRow(_SqlQuery, False)

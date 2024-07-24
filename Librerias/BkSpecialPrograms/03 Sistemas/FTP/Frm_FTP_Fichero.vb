@@ -1,6 +1,4 @@
-'Imports Lib_Bakapp_VarClassFunc
-Imports DevComponents.DotNetBar
-Imports System.Collections.Generic
+ÔªøImports DevComponents.DotNetBar
 
 Public Class Frm_FTP_Fichero
 
@@ -9,13 +7,11 @@ Public Class Frm_FTP_Fichero
     Public _Archivo_No_Se_Puede_Borrar As String
     Public _Permitir_Pisar_Archivos As Boolean
 
-    Private Sub Frm_FTP_Fichero_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_FTP_Fichero_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         Sb_Ver_FTP(True)
     End Sub
 
-
-
-    Private Sub Sb_Llenat_Lista(ByVal _Lista_Archivos)
+    Private Sub Sb_Llenat_Lista(_Lista_Archivos)
 
         ' With List_Carpeta_FTP
         List_Carpeta_FTP.Items.Clear()
@@ -23,10 +19,10 @@ Public Class Frm_FTP_Fichero
         ' .View = View.Details
         ' .GridLines = True
         ' .FullRowSelect = True
-        ' ' aÒadir los nombres de columnas  
+        ' ' a√±adir los nombres de columnas  
         ' .Columns.Add("Archivo", 55, HorizontalAlignment.Left)
         ' .Columns.Add("Zise", 65, HorizontalAlignment.Left)
-        '.Columns.Add("Fecha creaciÛn", 90, HorizontalAlignment.Left)
+        '.Columns.Add("Fecha creaci√≥n", 90, HorizontalAlignment.Left)
         '' '.Columns.Add("HORARIOS", 140, HorizontalAlignment.Left)
         ' ' .Columns.Add("ALUMNOS", 80, HorizontalAlignment.Left)
         ' End With
@@ -84,7 +80,7 @@ Public Class Frm_FTP_Fichero
 
     End Sub
 
-    Private Sub Btn_Descargar_Archivos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Descargar_Archivos.Click
+    Private Sub Btn_Descargar_Archivos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Descargar_Archivos.Click
         If CBool(List_Carpeta_FTP.SelectedItems.Count) Then
             Dim _Dir = "ftp://" & Txt_Ftp_Host.Text & ":" & Txt_Ftp_Puerto.Text
             Dim _Carpeta = "SCN Negocios"
@@ -171,16 +167,16 @@ Public Class Frm_FTP_Fichero
 
             .SelectedPath = _SPath 'Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
 
-            ' deshabilita el botÛn " crear nueva carpeta "
+            ' deshabilita el bot√≥n " crear nueva carpeta "
             .ShowNewFolderButton = True
             '.RootFolder = Environment.SpecialFolder.Desktop
             '.RootFolder = Environment.SpecialFolder.StartMenu
 
-            Dim ret As DialogResult = .ShowDialog ' abre el di·logo
+            Dim ret As DialogResult = .ShowDialog ' abre el di√°logo
             Dim _Directorio_Seleccionado As String = .SelectedPath
 
             .Dispose()
-            ' si se presionÛ el botÛn aceptar ...
+            ' si se presion√≥ el bot√≥n aceptar ...
             If ret = Windows.Forms.DialogResult.OK Then
                 Return _Directorio_Seleccionado
             Else
@@ -193,7 +189,7 @@ Public Class Frm_FTP_Fichero
 
     End Function
 
-    Private Sub Btn_Subir_Archivos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Subir_Archivos.Click
+    Private Sub Btn_Subir_Archivos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Subir_Archivos.Click
         Dim oFD As New OpenFileDialog
         With oFD
             .Title = "Seleccionar fichero"
@@ -217,8 +213,8 @@ Public Class Frm_FTP_Fichero
                     TxtLog.Text = String.Empty
                     AddToLog("Subir archivo", "Archivos seleccionados " & .SafeFileNames.Length)
                     'fichero: Ruta local del fichero
-                    'destino: DirecciÛn FTP del destino del fichero. Ej: "ftp://ftp.BAKAPP.cl/Negocios/fichero.txt"
-                    'dir: DirecciÛn FTP del directorio donde se almacenar· el fichero. Ej: "ftp://ftp.BAKAPP.cl/Negocios"
+                    'destino: Direcci√≥n FTP del destino del fichero. Ej: "ftp://ftp.BAKAPP.cl/Negocios/fichero.txt"
+                    'dir: Direcci√≥n FTP del directorio donde se almacenar√° el fichero. Ej: "ftp://ftp.BAKAPP.cl/Negocios"
                     Dim _i = 0
                     Dim _Ruta_Archivos(.FileNames.Length - 1)
                     For Each _Ruta As String In .FileNames
@@ -235,7 +231,7 @@ Public Class Frm_FTP_Fichero
                             If _Permitir_Pisar_Archivos Then
                                 _Subir = _Ftp.Fx_Subir_Fichero(_Ruta_Local, _Fichero & "/" & _Archivo)
                             Else
-                                AddToLog("Problema", _
+                                AddToLog("Problema",
                                          "Archivo [" & _Archivo & "] ya existe, no se puede levantar archivos con el mismo nombre")
                             End If
                         Else
@@ -268,8 +264,8 @@ Public Class Frm_FTP_Fichero
 
     End Sub
 
-    Private Sub AddToLog(ByVal Accion As String, _
-                         ByVal Descripcion As String)
+    Private Sub AddToLog(Accion As String,
+                         Descripcion As String)
         TxtLog.Text += DateTime.Now.ToString() & " - " & Accion & " (" & Descripcion & ")" & vbCrLf
         TxtLog.Select(TxtLog.Text.Length - 1, 0)
         TxtLog.ScrollToCaret()
@@ -277,7 +273,7 @@ Public Class Frm_FTP_Fichero
     End Sub
 
 
-    Private Sub List_Carpeta_FTP_ItemSelectionChanged(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ListViewItemSelectionChangedEventArgs) Handles List_Carpeta_FTP.ItemSelectionChanged
+    Private Sub List_Carpeta_FTP_ItemSelectionChanged(sender As System.Object, e As System.Windows.Forms.ListViewItemSelectionChangedEventArgs) Handles List_Carpeta_FTP.ItemSelectionChanged
 
         If CBool(List_Carpeta_FTP.SelectedItems.Count) Then
             Btn_Eliminar_documento.Enabled = True
@@ -290,7 +286,7 @@ Public Class Frm_FTP_Fichero
         End If
     End Sub
 
-    Private Sub Btn_Renombrar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Renombrar.Click
+    Private Sub Btn_Renombrar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Renombrar.Click
 
         If List_Carpeta_FTP.SelectedItems.Count = 1 Then
             Dim _Dir = "ftp://" & Txt_Ftp_Host.Text & ":" & Txt_Ftp_Puerto.Text
@@ -306,7 +302,7 @@ Public Class Frm_FTP_Fichero
 
 
             If UCase(_Archivo_No_Se_Puede_Borrar) = UCase(_OldName) Then
-                MessageBoxEx.Show(Me, "Este Archivo no se puede editar, ya que est· protegido por el sistema", "ValidaciÛn", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                MessageBoxEx.Show(Me, "Este Archivo no se puede editar, ya que est√° protegido por el sistema", "Validaci√≥n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Exit Sub
             End If
 
@@ -315,7 +311,7 @@ Public Class Frm_FTP_Fichero
             Dim _NewName As String = _OldName
 
             _Aceptado = InputBox_Bk(Me, "Ingrese nuevo nombre de archivo" & vbCrLf &
-                                    "Sin extenciÛn",
+                                    "Sin extenci√≥n",
                                     "Renombrar archivo",
                                     _NewName,
                                     False,
@@ -345,9 +341,9 @@ Public Class Frm_FTP_Fichero
                     Sb_Ver_FTP()
                 Else
 
-                    MessageBoxEx.Show(Me, "No se puede editar la descripciÛn de este archivo" & vbCrLf &
+                    MessageBoxEx.Show(Me, "No se puede editar la descripci√≥n de este archivo" & vbCrLf &
                                       "Ya hay un archivo con este nombre en la lista" & vbCrLf & vbCrLf &
-                                      _NewName, "ValidaciÛn",
+                                      _NewName, "Validaci√≥n",
                                       MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
                 End If
@@ -359,7 +355,7 @@ Public Class Frm_FTP_Fichero
 
     End Sub
 
-    Private Sub Btn_Eliminar_documento_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Eliminar_documento.Click
+    Private Sub Btn_Eliminar_documento_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Eliminar_documento.Click
 
         If CBool(List_Carpeta_FTP.SelectedItems.Count) Then
             Dim _Dir = "ftp://" & Txt_Ftp_Host.Text & ":" & Txt_Ftp_Puerto.Text
@@ -375,7 +371,7 @@ Public Class Frm_FTP_Fichero
                     Dim _Archivo = _Fila.Text
 
                     If UCase(_Archivo_No_Se_Puede_Borrar) = UCase(_Archivo) Then
-                        MessageBoxEx.Show(Me, "Este Archivo no se puede eliminar, ya que est· protegido por el sistema", "ValidaciÛn", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        MessageBoxEx.Show(Me, "Este Archivo no se puede eliminar, ya que est√° protegido por el sistema", "Validaci√≥n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                         Exit Sub
                     End If
                     _Mensaje = "este archivo"
@@ -383,7 +379,7 @@ Public Class Frm_FTP_Fichero
                     _Mensaje = "estos archivos"
                 End If
 
-                If MessageBoxEx.Show(Me, "Esta seguro de querer eliminar " & _Mensaje, "Eliminar Archivo(s)", _
+                If MessageBoxEx.Show(Me, "Esta seguro de querer eliminar " & _Mensaje, "Eliminar Archivo(s)",
                                      MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
 
                     Sb_Trabajo_FTP(True)
@@ -425,7 +421,7 @@ Public Class Frm_FTP_Fichero
     End Sub
 
 
-    Sub Sb_Trabajo_FTP(ByVal _Trabajando As Boolean)
+    Sub Sb_Trabajo_FTP(_Trabajando As Boolean)
 
         If _Trabajando Then
 
@@ -455,12 +451,12 @@ Public Class Frm_FTP_Fichero
     End Sub
 
 
-    Private Sub Btn_Refresh_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Refresh.Click
-        AddToLog("ConexiÛn Ftp", "Reconectando...")
+    Private Sub Btn_Refresh_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Refresh.Click
+        AddToLog("Conexi√≥n Ftp", "Reconectando...")
         Sb_Ver_FTP(True)
     End Sub
 
-    Sub Sb_Ver_FTP(Optional ByVal _Mostrar_Log As Boolean = False)
+    Sub Sb_Ver_FTP(Optional _Mostrar_Log As Boolean = False)
 
         Try
             Me.Enabled = False
@@ -477,12 +473,12 @@ Public Class Frm_FTP_Fichero
 
                     Dim _Lista_Archivos = _Ftp.Fx_Obtener_Archivos_Directorio(_Fichero)
                     Sb_Llenat_Lista(_Lista_Archivos)
-                    If _Mostrar_Log Then AddToLog("ConexiÛn Ftp", "ConexiÛn establecida...")
+                    If _Mostrar_Log Then AddToLog("Conexi√≥n Ftp", "Conexi√≥n establecida...")
 
                 End If
             End If
         Catch ex As Exception
-            MessageBoxEx.Show(Me, ex.Message, "Problemas de conexiÛn...", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show(Me, ex.Message, "Problemas de conexi√≥n...", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         Finally
             Sb_Trabajo_FTP(False)
             Me.Enabled = True

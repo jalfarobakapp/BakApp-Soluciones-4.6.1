@@ -184,7 +184,7 @@ Public Class Cl_Sincroniza
                                 With ConfiguracionLocal.Ls_ImpFormatos.Item(0)
 
                                     _Mensaje = Fx_EnviarAImprimnirListaDeVerificacion(_Idmaeedoo, "NVV", _Nudo, True,
-                                                                                  ConfiguracionLocal.NombreEquipoImprime, .Impresora, .NombreFormato)
+                                                                                  .NombreEquipoImprime, .Impresora, .NombreFormato)
 
                                 End With
 
@@ -202,12 +202,25 @@ Public Class Cl_Sincroniza
                                 With ConfiguracionLocal.Ls_ImpFormatos.Item(1)
 
                                     _Mensaje = Fx_EnviarAImprimnirListaDeVerificacion(_Idmaeedoo, "NVV", _Nudo, True,
-                                                                                  ConfiguracionLocal.NombreEquipoImprime, .Impresora, .NombreFormato)
+                                                                                  .NombreEquipoImprime, .Impresora, .NombreFormato)
                                     Sb_AddToLog(_Mensaje.Detalle, _Mensaje.Detalle, Txt_Log)
 
                                 End With
 
                             End If
+
+                        End If
+
+                        If ConfiguracionLocal.Ls_ImpFormatos.Item(2).Imprimir Then
+
+                            With ConfiguracionLocal.Ls_ImpFormatos.Item(2)
+
+                                _Mensaje = Fx_EnviarAImprimnirListaDeVerificacion(_Idmaeedoo, "NVV", _Nudo, True,
+                                                                              .NombreEquipoImprime, .Impresora, .NombreFormato)
+
+                            End With
+
+                            Sb_AddToLog(_Mensaje.Detalle, _Mensaje.Detalle, Txt_Log)
 
                         End If
 

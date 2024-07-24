@@ -24,11 +24,12 @@ Partial Class Frm_Stmp_Listado
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Stmp_Listado))
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Super_TabS = New DevComponents.DotNetBar.SuperTabStrip()
         Me.Tab_Pendientes = New DevComponents.DotNetBar.SuperTabItem()
+        Me.Tab_Ingresadas = New DevComponents.DotNetBar.SuperTabItem()
         Me.Tab_Preparacion = New DevComponents.DotNetBar.SuperTabItem()
         Me.Tab_Completadas = New DevComponents.DotNetBar.SuperTabItem()
         Me.Tab_Facturadas = New DevComponents.DotNetBar.SuperTabItem()
@@ -48,6 +49,7 @@ Partial Class Frm_Stmp_Listado
         Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_VerDocumento = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Imprimir = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_Preparacion = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_EntregarMercaderia = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_CerrarTicket = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem3 = New DevComponents.DotNetBar.LabelItem()
@@ -66,8 +68,7 @@ Partial Class Frm_Stmp_Listado
         Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Filtrar = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Tab_Ingresadas = New DevComponents.DotNetBar.SuperTabItem()
-        Me.Btn_Mnu_Preparacion = New DevComponents.DotNetBar.ButtonItem()
+        Me.Chk_VerIngresadas = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.Super_TabS, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
@@ -115,6 +116,12 @@ Partial Class Frm_Stmp_Listado
         Me.Tab_Pendientes.GlobalItem = False
         Me.Tab_Pendientes.Name = "Tab_Pendientes"
         Me.Tab_Pendientes.Text = "Pendientes"
+        '
+        'Tab_Ingresadas
+        '
+        Me.Tab_Ingresadas.GlobalItem = False
+        Me.Tab_Ingresadas.Name = "Tab_Ingresadas"
+        Me.Tab_Ingresadas.Text = "Ingresadas"
         '
         'Tab_Preparacion
         '
@@ -318,6 +325,13 @@ Partial Class Frm_Stmp_Listado
         Me.Btn_Imprimir.Name = "Btn_Imprimir"
         Me.Btn_Imprimir.Text = "Imprimir"
         '
+        'Btn_Mnu_Preparacion
+        '
+        Me.Btn_Mnu_Preparacion.Image = CType(resources.GetObject("Btn_Mnu_Preparacion.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Preparacion.ImageAlt = CType(resources.GetObject("Btn_Mnu_Preparacion.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_Preparacion.Name = "Btn_Mnu_Preparacion"
+        Me.Btn_Mnu_Preparacion.Text = "Enviar a preparación "
+        '
         'Btn_Mnu_EntregarMercaderia
         '
         Me.Btn_Mnu_EntregarMercaderia.Image = CType(resources.GetObject("Btn_Mnu_EntregarMercaderia.Image"), System.Drawing.Image)
@@ -391,37 +405,37 @@ Partial Class Frm_Stmp_Listado
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle8.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
         Me.Grilla.ReadOnly = True
-        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.Grilla.Size = New System.Drawing.Size(1176, 466)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 27
@@ -579,24 +593,29 @@ Partial Class Frm_Stmp_Listado
         Me.Txt_Filtrar.Size = New System.Drawing.Size(458, 22)
         Me.Txt_Filtrar.TabIndex = 173
         '
-        'Tab_Ingresadas
+        'Chk_VerIngresadas
         '
-        Me.Tab_Ingresadas.GlobalItem = False
-        Me.Tab_Ingresadas.Name = "Tab_Ingresadas"
-        Me.Tab_Ingresadas.Text = "Ingresadas"
+        Me.Chk_VerIngresadas.BackColor = System.Drawing.Color.Transparent
         '
-        'Btn_Mnu_Preparacion
         '
-        Me.Btn_Mnu_Preparacion.Image = CType(resources.GetObject("Btn_Mnu_Preparacion.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_Preparacion.ImageAlt = CType(resources.GetObject("Btn_Mnu_Preparacion.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_Preparacion.Name = "Btn_Mnu_Preparacion"
-        Me.Btn_Mnu_Preparacion.Text = "Enviar a preparación "
+        '
+        Me.Chk_VerIngresadas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_VerIngresadas.CheckBoxImageChecked = CType(resources.GetObject("Chk_VerIngresadas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_VerIngresadas.FocusCuesEnabled = False
+        Me.Chk_VerIngresadas.ForeColor = System.Drawing.Color.Black
+        Me.Chk_VerIngresadas.Location = New System.Drawing.Point(187, 540)
+        Me.Chk_VerIngresadas.Name = "Chk_VerIngresadas"
+        Me.Chk_VerIngresadas.Size = New System.Drawing.Size(169, 23)
+        Me.Chk_VerIngresadas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_VerIngresadas.TabIndex = 175
+        Me.Chk_VerIngresadas.Text = "Ver ingresadas"
         '
         'Frm_Stmp_Listado
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1204, 630)
+        Me.Controls.Add(Me.Chk_VerIngresadas)
         Me.Controls.Add(Me.LabelX1)
         Me.Controls.Add(Me.Txt_Filtrar)
         Me.Controls.Add(Me.CircularPgrs)
@@ -666,4 +685,5 @@ Partial Class Frm_Stmp_Listado
     Friend WithEvents Btn_CerrarTicket As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Tab_Ingresadas As DevComponents.DotNetBar.SuperTabItem
     Friend WithEvents Btn_Mnu_Preparacion As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Chk_VerIngresadas As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

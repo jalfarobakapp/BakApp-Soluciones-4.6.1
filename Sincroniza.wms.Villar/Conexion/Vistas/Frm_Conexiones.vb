@@ -33,7 +33,8 @@ Public Class Frm_Conexiones
         End If
 
         With _Cl_ConfiguracionLocal.Configuracion
-            Txt_NombreEquipoImprime.Text = .NombreEquipoImprime
+            'Txt_NombreEquipoImprime_Retiros.Text = .NombreEquipoImprime
+            'Txt_NombreEquipoImprime_Ticket.Text = .NombreEquipoImprimeTicket
             Input_DiasRevNVV.Value = .DiasRevNVV
         End With
 
@@ -69,12 +70,21 @@ Public Class Frm_Conexiones
                 Chk_ImprimirRetiros.Checked = .Imprimir
                 Txt_Impresora_Retiros.Text = .Impresora
                 Txt_NombreFormato_Retiros.Text = .NombreFormato
+                Txt_NombreEquipoImprime_Retiros.Text = .NombreEquipoImprime
             End With
 
             With .Item(1)
                 Chk_ImprimirDespachos.Checked = .Imprimir
                 Txt_Impresora_Despachos.Text = .Impresora
                 Txt_NombreFormato_Despachos.Text = .NombreFormato
+                Txt_NombreEquipoImprime_Despachos.Text = .NombreEquipoImprime
+            End With
+
+            With .Item(2)
+                Chk_ImprimirTicket.Checked = .Imprimir
+                Txt_Impresora_Ticket.Text = .Impresora
+                Txt_NombreFormato_Ticket.Text = .NombreFormato
+                Txt_NombreEquipoImprime_Ticket.Text = .NombreEquipoImprime
             End With
 
         End With
@@ -261,19 +271,23 @@ Public Class Frm_Conexiones
         End If
 
         If Chk_ImprimirRetiros.Checked Or Chk_ImprimirDespachos.Checked Then
-            If String.IsNullOrWhiteSpace(Txt_NombreEquipoImprime.Text.Trim) Then
+            If String.IsNullOrWhiteSpace(Txt_NombreEquipoImprime_Retiros.Text.Trim) Then
                 MessageBoxEx.Show(Me, "Falta el nombre del servidor de impresión (equipo que imprime)",
                                   "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Txt_NombreEquipoImprime.Focus()
+                Txt_NombreEquipoImprime_Retiros.Focus()
                 Return False
             End If
         End If
+
+        '_Cl_ConfiguracionLocal.Configuracion.NombreEquipoImprime = Txt_NombreEquipoImprime_Retiros.Text
+        '_Cl_ConfiguracionLocal.Configuracion.NombreEquipoImprimeTicket = Txt_NombreEquipoImprime_Ticket.Text
 
         With _Cl_ConfiguracionLocal.Configuracion.Ls_ImpFormatos(0)
 
             .Impresora = Txt_Impresora_Retiros.Text
             .Imprimir = Chk_ImprimirRetiros.Checked
             .NombreFormato = Txt_NombreFormato_Retiros.Text
+            .NombreEquipoImprime = Txt_NombreEquipoImprime_Retiros.Text
 
         End With
 
@@ -282,6 +296,22 @@ Public Class Frm_Conexiones
             .Impresora = Txt_Impresora_Despachos.Text
             .Imprimir = Chk_ImprimirDespachos.Checked
             .NombreFormato = Txt_NombreFormato_Despachos.Text
+            .NombreEquipoImprime = Txt_NombreEquipoImprime_Despachos.Text
+
+        End With
+
+        If _Cl_ConfiguracionLocal.Configuracion.Ls_ImpFormatos.Count = 2 Then
+            Dim _ImpFormatos As New ImpFormatos
+            _Cl_ConfiguracionLocal.Configuracion.Ls_ImpFormatos.Add(_ImpFormatos)
+        End If
+
+        With _Cl_ConfiguracionLocal.Configuracion.Ls_ImpFormatos(2)
+
+            .Tipo = "Ticket"
+            .Impresora = Txt_Impresora_Ticket.Text
+            .Imprimir = Chk_ImprimirTicket.Checked
+            .NombreFormato = Txt_NombreFormato_Ticket.Text
+            .NombreEquipoImprime = Txt_NombreEquipoImprime_Ticket.Text
 
         End With
 
@@ -347,7 +377,7 @@ Public Class Frm_Conexiones
 
         If _Filtrar.Fx_Filtrar(Nothing,
                                Clas_Filtros_Random.Enum_Tabla_Fl._Otra,
-                               "And NombreEquipo = '" & Txt_NombreEquipoImprime.Text & "'",
+                               "And NombreEquipo = '" & Txt_NombreEquipoImprime_Retiros.Text & "'",
                                Nothing, False, True) Then
 
             Dim _Row As DataRow = _Filtrar.Pro_Tbl_Filtro.Rows(0)
@@ -385,7 +415,7 @@ Public Class Frm_Conexiones
 
         If _Filtrar.Fx_Filtrar(Nothing,
                                Clas_Filtros_Random.Enum_Tabla_Fl._Otra,
-                               "And NombreEquipo = '" & Txt_NombreEquipoImprime.Text & "'",
+                               "And NombreEquipo = '" & Txt_NombreEquipoImprime_Retiros.Text & "'",
                                Nothing, False, True) Then
 
             Dim _Row As DataRow = _Filtrar.Pro_Tbl_Filtro.Rows(0)
@@ -405,7 +435,7 @@ Public Class Frm_Conexiones
         Txt_Impresora_Despachos.Text = String.Empty
     End Sub
 
-    Private Sub Txt_NombreEquipoImprime_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_NombreEquipoImprime.ButtonCustomClick
+    Private Sub Txt_NombreEquipoImprime_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_NombreEquipoImprime_Retiros.ButtonCustomClick
 
         If String.IsNullOrWhiteSpace(Cadena_ConexionSQL_Server) Then
             MessageBoxEx.Show(Me, "Faltan los datos de conexión a la base de datos de Random", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -430,15 +460,15 @@ Public Class Frm_Conexiones
             Dim _Codigo = _Row.Item("Codigo").ToString.Trim
             Dim _Descripcion = _Row.Item("Descripcion").ToString.Trim
 
-            Txt_NombreEquipoImprime.Text = _Codigo
+            Txt_NombreEquipoImprime_Retiros.Text = _Codigo
 
         End If
 
     End Sub
 
-    Private Sub Txt_NombreEquipoImprime_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_NombreEquipoImprime.ButtonCustom2Click
-        Txt_NombreEquipoImprime.Tag = String.Empty
-        Txt_NombreEquipoImprime.Text = String.Empty
+    Private Sub Txt_NombreEquipoImprime_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_NombreEquipoImprime_Retiros.ButtonCustom2Click
+        Txt_NombreEquipoImprime_Retiros.Tag = String.Empty
+        Txt_NombreEquipoImprime_Retiros.Text = String.Empty
     End Sub
 
     Private Sub Txt_NombreFormato_Retiros_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_NombreFormato_Retiros.ButtonCustomClick
@@ -516,4 +546,171 @@ Public Class Frm_Conexiones
         CType(sender, Controls.TextBoxX).Text = String.Empty
     End Sub
 
+    Private Sub Txt_NombreEquipoImprime_Ticket_ButtonCustomClick(sender As Object, e As EventArgs)
+
+        If String.IsNullOrWhiteSpace(Cadena_ConexionSQL_Server) Then
+            MessageBoxEx.Show(Me, "Faltan los datos de conexión a la base de datos de Random", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Pro_Nombre_Encabezado_Informe = "DESDE DONDE SE IMPRIMIRAN LOS TICKET (Solo estaciones con Diablito)"
+
+        _Filtrar.Tabla = _Global_BaseBk & "Zw_EstacionesBkp"
+        _Filtrar.Campo = "NombreEquipo"
+        _Filtrar.Descripcion = "Alias"
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra,
+                               "And NombreEquipo In (Select Distinct NombreEquipo From " & _Global_BaseBk & "Zw_Estaciones_Impresoras)",
+                               Nothing, False, True) Then
+
+            Dim _Row As DataRow = _Filtrar.Pro_Tbl_Filtro.Rows(0)
+
+            Dim _Codigo = _Row.Item("Codigo").ToString.Trim
+            Dim _Descripcion = _Row.Item("Descripcion").ToString.Trim
+
+            Txt_NombreEquipoImprime_Ticket.Text = _Codigo
+
+        End If
+
+    End Sub
+
+    Private Sub Txt_NombreEquipoImprime_Ticket_ButtonCustom2Click(sender As Object, e As EventArgs)
+        Txt_NombreEquipoImprime_Ticket.Tag = String.Empty
+        Txt_NombreEquipoImprime_Ticket.Text = String.Empty
+    End Sub
+
+    Private Sub Txt_Impresora_Ticket_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Impresora_Ticket.ButtonCustomClick
+
+        If String.IsNullOrWhiteSpace(Cadena_ConexionSQL_Server) Then
+            MessageBoxEx.Show(Me, "Faltan los datos de conexión a la base de datos de Random", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Pro_Nombre_Encabezado_Informe = "IMPRESORAS DISPONIBLES"
+
+        _Filtrar.Tabla = _Global_BaseBk & "Zw_Estaciones_Impresoras"
+        _Filtrar.Campo = "Impresora"
+        _Filtrar.Descripcion = "Impresora"
+        _Filtrar.Ver_Codigo = False
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra,
+                               "And NombreEquipo = '" & Txt_NombreEquipoImprime_Ticket.Text & "'",
+                               Nothing, False, True) Then
+
+            Dim _Row As DataRow = _Filtrar.Pro_Tbl_Filtro.Rows(0)
+
+            Dim _Codigo = _Row.Item("Codigo").ToString.Trim
+            Dim _Descripcion = _Row.Item("Descripcion").ToString.Trim
+
+            Txt_Impresora_Ticket.Tag = _Codigo
+            Txt_Impresora_Ticket.Text = _Descripcion
+
+        End If
+
+    End Sub
+
+    Private Sub Txt_Impresora_Ticket_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Impresora_Ticket.ButtonCustom2Click, Txt_NombreFormato_Ticket.ButtonCustom2Click
+        Txt_Impresora_Ticket.Tag = String.Empty
+        Txt_Impresora_Ticket.Text = String.Empty
+    End Sub
+
+    Private Sub Txt_NombreFormato_Ticket_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_NombreFormato_Ticket.ButtonCustomClick
+
+        If String.IsNullOrWhiteSpace(Cadena_ConexionSQL_Server) Then
+            MessageBoxEx.Show(Me, "Faltan los datos de conexión a la base de datos de Random", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim Fm As New Frm_Seleccionar_Formato("NVV")
+        Fm.ShowDialog(Me)
+        If Fm.Formato_Seleccionado Then
+            Txt_NombreFormato_Ticket.Tag = Fm.Row_Formato_Seleccionado.Item("NombreFormato")
+            Txt_NombreFormato_Ticket.Text = Fm.Row_Formato_Seleccionado.Item("NombreFormato")
+        End If
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Txt_NombreFormato_Ticket_ButtonCustom2Click(sender As Object, e As EventArgs)
+        Txt_NombreFormato_Ticket.Tag = String.Empty
+        Txt_NombreFormato_Ticket.Text = String.Empty
+    End Sub
+
+    Private Sub Txt_NombreEquipoImprime_Ticket_ButtonCustomClick_1(sender As Object, e As EventArgs) Handles Txt_NombreEquipoImprime_Ticket.ButtonCustomClick
+
+        If String.IsNullOrWhiteSpace(Cadena_ConexionSQL_Server) Then
+            MessageBoxEx.Show(Me, "Faltan los datos de conexión a la base de datos de Random", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Pro_Nombre_Encabezado_Informe = "DESDE DONDE SE IMPRIMIRAN LOS DOCUMENTOS (Solo estaciones con Diablito)"
+
+        _Filtrar.Tabla = _Global_BaseBk & "Zw_EstacionesBkp"
+        _Filtrar.Campo = "NombreEquipo"
+        _Filtrar.Descripcion = "Alias"
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra,
+                               "And NombreEquipo In (Select Distinct NombreEquipo From " & _Global_BaseBk & "Zw_Estaciones_Impresoras)",
+                               Nothing, False, True) Then
+
+            Dim _Row As DataRow = _Filtrar.Pro_Tbl_Filtro.Rows(0)
+
+            Dim _Codigo = _Row.Item("Codigo").ToString.Trim
+            Dim _Descripcion = _Row.Item("Descripcion").ToString.Trim
+
+            Txt_NombreEquipoImprime_Ticket.Text = _Codigo
+
+        End If
+
+    End Sub
+
+    Private Sub Txt_NombreEquipoImprime_Ticket_ButtonCustom2Click_1(sender As Object, e As EventArgs) Handles Txt_NombreEquipoImprime_Ticket.ButtonCustom2Click
+        Txt_NombreEquipoImprime_Ticket.Tag = String.Empty
+        Txt_NombreEquipoImprime_Ticket.Text = String.Empty
+    End Sub
+
+    Private Sub Txt_NombreEquipoImprime_Despachos_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_NombreEquipoImprime_Despachos.ButtonCustomClick
+
+        If String.IsNullOrWhiteSpace(Cadena_ConexionSQL_Server) Then
+            MessageBoxEx.Show(Me, "Faltan los datos de conexión a la base de datos de Random", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Pro_Nombre_Encabezado_Informe = "DESDE DONDE SE IMPRIMIRAN LOS DOCUMENTOS (Solo estaciones con Diablito)"
+
+        _Filtrar.Tabla = _Global_BaseBk & "Zw_EstacionesBkp"
+        _Filtrar.Campo = "NombreEquipo"
+        _Filtrar.Descripcion = "Alias"
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra,
+                               "And NombreEquipo In (Select Distinct NombreEquipo From " & _Global_BaseBk & "Zw_Estaciones_Impresoras)",
+                               Nothing, False, True) Then
+
+            Dim _Row As DataRow = _Filtrar.Pro_Tbl_Filtro.Rows(0)
+
+            Dim _Codigo = _Row.Item("Codigo").ToString.Trim
+            Dim _Descripcion = _Row.Item("Descripcion").ToString.Trim
+
+            Txt_NombreEquipoImprime_Despachos.Text = _Codigo
+
+        End If
+
+    End Sub
+
+    Private Sub Txt_NombreEquipoImprime_Despachos_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_NombreEquipoImprime_Despachos.ButtonCustom2Click
+        Txt_NombreEquipoImprime_Despachos.Tag = String.Empty
+        Txt_NombreEquipoImprime_Despachos.Text = String.Empty
+    End Sub
 End Class

@@ -1,6 +1,5 @@
 ﻿Imports System.ComponentModel
 Imports DevComponents.DotNetBar
-Imports DevComponents.DotNetBar.Controls
 
 Public Class Cl_Solicitud_Productos_Bodega
 

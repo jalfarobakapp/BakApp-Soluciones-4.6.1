@@ -18,14 +18,15 @@ Public Class Class_FTP
     Dim _Proxy_Usa As Boolean
     Dim _Proxy_Host, _Proxy_Dominio, _Proxy_User, _Proxy_Pass As String
 
-    Public Sub New(ByVal host As String, _
-                   ByVal user As String, _
-                   ByVal pass As String) ', _
-        'ByVal Usa_Proxy As Boolean, _
-        'ByVal Proxy_Host As String, _
-        'ByVal Proxy_Dominio As String, _
-        'ByVal Proxy_User As String, _
-        'ByVal Proxy_Pass As String)
+    Public Sub New(host As String,
+                   user As String,
+                   pass As String)
+
+        'Usa_Proxy As Boolean, _
+        'Proxy_Host As String, _
+        'Proxy_Dominio As String, _
+        'Proxy_User As String, _
+        'Proxy_Pass As String)
 
         Me.host = host
         Me.user = user
@@ -44,7 +45,7 @@ Public Class Class_FTP
         Fecha_creacion
     End Enum
 
-    Public Function Fx_Eliminar_Fichero_Ftp(ByVal _Fichero As String) As String
+    Public Function Fx_Eliminar_Fichero_Ftp(_Fichero As String) As String
 
         Dim peticionFTP As FtpWebRequest
         Dim Fm As New Frm_Form_Esperar
@@ -80,8 +81,7 @@ Public Class Class_FTP
         End Try
     End Function
 
-
-    Public Function Fx_Renombrar_Fichero_Ftp(ByVal _Fichero As String, ByVal _NewName As String) As String
+    Public Function Fx_Renombrar_Fichero_Ftp(_Fichero As String, _NewName As String) As String
         Dim peticionFTP As FtpWebRequest
 
         ' Creamos una petición FTP con la dirección del fichero a eliminar
@@ -105,12 +105,8 @@ Public Class Class_FTP
             Return ex.Message
         End Try
     End Function
+    Private Sub RenameFileOnServer(TheServerURL As String, OldFile As String, NewName As String)
 
-
-
-
-
-    Private Sub RenameFileOnServer(ByVal TheServerURL As String, ByVal OldFile As String, ByVal NewName As String)
         Dim MyFtpWebRequest As System.Net.FtpWebRequest = CType(System.Net.FtpWebRequest.Create(TheServerURL & OldFile), FtpWebRequest)
         MyFtpWebRequest.Credentials = New System.Net.NetworkCredential(user, pass)
         MyFtpWebRequest.Method = System.Net.WebRequestMethods.Ftp.Rename
@@ -132,15 +128,11 @@ Public Class Class_FTP
             MessageBox.Show("*** Rename " & OldFile & " to " & NewName & " failed due to the following error: " & ex.Message)
 
         End Try
+
     End Sub
 
+    Public Function Fx_Existe_Archivo(_Dir As String) As Boolean
 
-
-
-
-
-
-    Public Function Fx_Existe_Archivo(ByVal _Dir As String) As Boolean
         Dim peticionFTP As FtpWebRequest
 
         ' Creamos una peticion FTP con la dirección del objeto que queremos saber si existe
@@ -165,9 +157,11 @@ Public Class Class_FTP
             'MsgBox(ex.Message)
             Return False
         End Try
+
     End Function
 
-    Public Function Fx_Existe_Directorio(ByVal _Dir As String) As Boolean
+    Public Function Fx_Existe_Directorio(_Dir As String) As Boolean
+
         Dim peticionFTP As FtpWebRequest
         '"http://proxyserver:port"
         Dim myProxy As New WebProxy(_Proxy_Host, True)
@@ -207,9 +201,11 @@ Public Class Class_FTP
             'MsgBox(ex.Message)
             Return False
         End Try
+
     End Function
 
-    Public Function Fx_Crear_Directorio(ByVal _Dir As String) As String
+    Public Function Fx_Crear_Directorio(_Dir As String) As String
+
         Dim peticionFTP As FtpWebRequest
         Try
 
@@ -234,11 +230,12 @@ Public Class Class_FTP
             ' Si se produce algún fallo, se devolverá el mensaje del error
             Return ex.Message
         End Try
+
     End Function
 
-    Public Function Fx_Subir_Fichero_oLD(ByVal _Fichero As String, _
-                                     ByVal _Destino As String, _
-                                     ByVal _Dir As String) As String
+    Public Function Fx_Subir_Fichero_oLD(_Fichero As String,
+                                     _Destino As String,
+                                     _Dir As String) As String
 
         Dim _InfoFichero As New FileInfo(_Fichero)
 
@@ -256,10 +253,6 @@ Public Class Class_FTP
         Dim lector As Byte() = System.IO.File.ReadAllBytes(_Fichero) 'New Byte(2048) {}
         'Dim lector As Byte() = System.IO.File.ReadAllBytes(_Fichero) 'New Byte(2048) {}
         'Dim bFile() As Byte = System.IO.File.ReadAllBytes(_Fichero)
-
-
-
-
 
         Try
 
@@ -285,19 +278,15 @@ Public Class Class_FTP
 
             ' Informamos al servidor sobre el tamaño del fichero que vamos a subir
             ''peticionFTP.ContentLength = _InfoFichero.Length
-
-
             ''fs = _InfoFichero.OpenRead()
 
         Catch ex As Exception
             Return ex.Message
         End Try
 
-
-
         Try
             Dim bFile() As Byte = System.IO.File.ReadAllBytes(_Fichero)
-            Dim clsStream As System.IO.Stream = _
+            Dim clsStream As System.IO.Stream =
             peticionFTP.GetRequestStream()
             clsStream.Write(bFile, 0, bFile.Length)
             clsStream.Close()
@@ -308,8 +297,6 @@ Public Class Class_FTP
 
 
         Exit Function
-
-
 
         Try
             Dim escritor As Stream
@@ -327,11 +314,9 @@ Public Class Class_FTP
                 num = fs.Read(lector, 0, longitudBuffer)
             End While
 
-
-            '            miStream.Write(bFile, 0, bFile.Length)
-            '           miStream.Close()
+            '          miStream.Write(bFile, 0, bFile.Length)
+            '          miStream.Close()
             '          miStream.Dispose()
-
 
             escritor.Close()
             fs.Close()
@@ -343,10 +328,8 @@ Public Class Class_FTP
         End Try
     End Function
 
-
-
-    Public Function Fx_Subir_Fichero(ByVal _Fichero As String, _
-                                     ByVal _Destino As String)
+    Public Function Fx_Subir_Fichero(_Fichero As String,
+                                     _Destino As String)
 
         Dim Fm As New Frm_Form_Esperar
         Fm.BarraCircular.IsRunning = True
@@ -360,7 +343,7 @@ Public Class Class_FTP
         clsRequest.Method = System.Net.WebRequestMethods.Ftp.UploadFile
         Try
             Dim bFile() As Byte = System.IO.File.ReadAllBytes(_Fichero)
-            Dim clsStream As System.IO.Stream = _
+            Dim clsStream As System.IO.Stream =
             clsRequest.GetRequestStream()
             clsStream.Write(bFile, 0, bFile.Length)
             clsStream.Close()
@@ -373,14 +356,8 @@ Public Class Class_FTP
         End Try
 
     End Function
-
-
-
-
-
-
-    Public Function Fx_Descargar_Fichero(ByVal _Destino As String, _
-                                         ByVal _Fichero As String)
+    Public Function Fx_Descargar_Fichero(_Destino As String,
+                                         _Fichero As String)
 
         Dim peticionFTP As FtpWebRequest
 
@@ -490,12 +467,8 @@ Public Class Class_FTP
             Return listaRutas
         End Try
 
-
-
-
     End Function
-
-    Public Function Fx_Obtener_Size_Archivo(ByVal _Destino As String) As String
+    Public Function Fx_Obtener_Size_Archivo(_Destino As String) As String
         Dim peticionFTP As FtpWebRequest
 
         ' Creamos una peticion FTP con la dirección del objeto que queremos saber si existe
@@ -524,9 +497,7 @@ Public Class Class_FTP
             Return ""
         End Try
     End Function
-
-
-    Public Function Fx_Obtener_Fecha_Archivo(ByVal _Destino As String) As String
+    Public Function Fx_Obtener_Fecha_Archivo(_Destino As String) As String
         Dim peticionFTP As FtpWebRequest
 
         ' Creamos una peticion FTP con la dirección del objeto que queremos saber si existe
@@ -555,11 +526,9 @@ Public Class Class_FTP
             Return ""
         End Try
     End Function
-
-
-    Public Function Fx_Verificar_Coneccion_FTP(ByVal _Fm As Form, _
-                                               ByVal _Host As String, _
-                                               Optional ByVal _Puerto As Integer = 21) As Boolean
+    Public Function Fx_Verificar_Coneccion_FTP(_Fm As Form,
+                                               _Host As String,
+                                               Optional _Puerto As Integer = 21) As Boolean
 
         Dim ClienteFtp As New Sockets.TcpClient
         Try
@@ -571,9 +540,7 @@ Public Class Class_FTP
             Return False ' si devuelve False significa que tienes que ir corriendo a ver que pasa en el server
         End Try
     End Function
-
-
-    Public Sub Sb_Descargar_Archivo_FTP(ByVal _RutaArchivo_Destino As String, ByVal _RutaArchivo_FTP As String)
+    Public Sub Sb_Descargar_Archivo_FTP(_RutaArchivo_Destino As String, _RutaArchivo_FTP As String)
 
         '  Dim localFile As String = RutaArchivo
         '  Dim remoteFile As String = NombreArchivo
@@ -585,13 +552,13 @@ Public Class Class_FTP
 
         Dim URI As String = _RutaArchivo_FTP ' nombre completo de la ruta del archivo
         Dim ftp As System.Net.FtpWebRequest = CType(Net.FtpWebRequest.Create(URI), Net.FtpWebRequest)
-        ftp.Credentials = New  _
+        ftp.Credentials = New _
         System.Net.NetworkCredential(user, pass)
         ftp.KeepAlive = False
         ftp.UseBinary = True
         ftp.Method = System.Net.WebRequestMethods.Ftp.DownloadFile
         Try
-            Using response As System.Net.FtpWebResponse = _
+            Using response As System.Net.FtpWebResponse =
             CType(ftp.GetResponse, System.Net.FtpWebResponse)
                 Using responseStream As IO.Stream = response.GetResponseStream
                     Using fs As New IO.FileStream(_RutaArchivo_Destino, IO.FileMode.Create)

@@ -65,8 +65,7 @@ Partial Class Frm_FTP_Fichero
         '
         'Grupo_Configuracion_Ftp
         '
-        Me.Grupo_Configuracion_Ftp.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.Grupo_Configuracion_Ftp.CanvasColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Grupo_Configuracion_Ftp.BackColor = System.Drawing.Color.White
         Me.Grupo_Configuracion_Ftp.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.Grupo_Configuracion_Ftp.Controls.Add(Me.LabelX5)
         Me.Grupo_Configuracion_Ftp.Controls.Add(Me.TableLayoutPanel1)
@@ -338,8 +337,7 @@ Partial Class Frm_FTP_Fichero
         '
         'Grupo_Fichero
         '
-        Me.Grupo_Fichero.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.Grupo_Fichero.CanvasColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Grupo_Fichero.BackColor = System.Drawing.Color.White
         Me.Grupo_Fichero.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.Grupo_Fichero.Controls.Add(Me.List_Carpeta_FTP)
         Me.Grupo_Fichero.DisabledBackColor = System.Drawing.Color.Empty
@@ -373,6 +371,7 @@ Partial Class Frm_FTP_Fichero
         Me.List_Carpeta_FTP.Dock = System.Windows.Forms.DockStyle.Fill
         Me.List_Carpeta_FTP.ForeColor = System.Drawing.Color.Black
         Me.List_Carpeta_FTP.FullRowSelect = True
+        Me.List_Carpeta_FTP.HideSelection = False
         Me.List_Carpeta_FTP.Location = New System.Drawing.Point(0, 0)
         Me.List_Carpeta_FTP.Name = "List_Carpeta_FTP"
         Me.List_Carpeta_FTP.Size = New System.Drawing.Size(617, 251)
@@ -430,8 +429,7 @@ Partial Class Frm_FTP_Fichero
         '
         'Grupo_Estatus
         '
-        Me.Grupo_Estatus.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.Grupo_Estatus.CanvasColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Grupo_Estatus.BackColor = System.Drawing.Color.White
         Me.Grupo_Estatus.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.Grupo_Estatus.Controls.Add(Me.TxtLog)
         Me.Grupo_Estatus.DisabledBackColor = System.Drawing.Color.Empty
@@ -471,8 +469,7 @@ Partial Class Frm_FTP_Fichero
         '
         'GroupPanel3
         '
-        Me.GroupPanel3.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.GroupPanel3.CanvasColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.GroupPanel3.BackColor = System.Drawing.Color.White
         Me.GroupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel3.Controls.Add(Me.Bar2)
         Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty

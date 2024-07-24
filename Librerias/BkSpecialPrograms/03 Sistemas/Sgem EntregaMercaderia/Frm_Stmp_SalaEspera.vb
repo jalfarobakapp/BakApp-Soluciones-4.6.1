@@ -9,6 +9,7 @@
     Private _TotalDePaginas As Integer
     Private _Dv As DataView
     Private _Actualizar As Boolean = False
+    Private parpadeo As Boolean
 
     Public Sub New()
 
@@ -30,8 +31,15 @@
         Sb_Actualizar_Grilla()
         Sb_MostrarRegistros()
 
-        Timer_Paginar.Interval = (1000 * 10)
+        Timer_Paginar.Interval = (1000 * 6)
         Timer_Paginar.Start()
+
+        Timer_Parpadeo.Interval = 500
+        Timer_Parpadeo.Start()
+
+        Timer_Beep.Interval = 1000 * 60
+        Timer_Beep.Stop()
+
         CircularPgrs.IsRunning = True
 
         Lbl_Fecha.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm")
@@ -41,6 +49,63 @@
     Sub Sb_Actualizar_Grilla()
 
         Dim _Condicion As String = String.Empty
+        Dim _DocConBeep = 0
+
+        _Condicion = vbCrLf & "And Estado = 'FACTU' Or (Estado IN ('PREPA','COMPL') And Planificada = 1 And Facturar = 1)"
+
+        Consulta_sql = My.Resources.Recursos_WmsVillar.SQLQuery_Lista_de_espera_Sgem
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+        Consulta_sql = Replace(Consulta_sql, "#Sucursal#", ModSucursal)
+        Consulta_sql = Replace(Consulta_sql, "--#Condicion#", _Condicion)
+        Consulta_sql = Replace(Consulta_sql, "Select * From #Paso Order by Tido,Nudo", "Select * From #Paso Order by Numero")
+        Consulta_sql = Replace(Consulta_sql, "Zw_Stmp_Enc", _Global_BaseBk & "Zw_Stmp_Enc")
+        Consulta_sql = Replace(Consulta_sql, "Zw_Stmp_SalaEspera", _Global_BaseBk & "Zw_Stmp_SalaEspera")
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_SalaEspera"
+
+        _Tbl_SalaEspera = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+        ' Asegúrate de que la columna exista
+        If Not _Tbl_SalaEspera.Columns.Contains("NumeroDelItem") Then
+            _Tbl_SalaEspera.Columns.Add("NumeroDelItem", GetType(Integer))
+        End If
+
+        For Each row As DataRow In _Tbl_SalaEspera.Rows
+
+            row("NumeroDelItem") = row.Item("NroTicket") 'CInt(Replace(row.Item("Numero"), "#T", ""))
+
+            If row.Item("Estado") = "FACTU" AndAlso row.Item("Beep") = 0 Then
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_SalaEspera Set Beep = 1 Where Id = " & row.Item("Id")
+                _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                'Console.Beep(500, 2000)
+                'Console.Beep(500, 2000)
+
+                _DocConBeep += 1
+
+            End If
+
+        Next
+
+        'If CBool(_DocConBeep) Then
+        '    'Beep()
+        '    Console.Beep(500, 1000)
+        '    Console.Beep(500, 1000)
+        'End If
+
+        ' Calcular el número total de páginas
+        Dim totalDeRegistros As Integer = _Tbl_SalaEspera.Rows.Count
+        _TotalDePaginas = Math.Ceiling(totalDeRegistros / _TamanoDePagina)
+
+        _Actualizar = False
+
+    End Sub
+
+    Sub Sb_Actualizar_Grilla_Old()
+
+        Dim _Condicion As String = String.Empty
+        Dim _DocGenerados = 0
 
         _Condicion = vbCrLf & "And Estado = 'FACTU' Or (Estado IN ('PREPA','COMPL') And Planificada = 1 And Facturar = 1)"
 
@@ -71,6 +136,9 @@
         For Each row As DataRow In _Tbl_SalaEspera.Rows
             'row("NumeroDelItem") = _Tbl_SalaEspera.Rows.IndexOf(row) + 1
             row("NumeroDelItem") = CInt(Replace(row.Item("Numero"), "#T", ""))
+            If row.Item("Estado") = "FACTU" Then
+                _DocGenerados += 1
+            End If
         Next
 
         ' Calcular el número total de páginas
@@ -78,6 +146,11 @@
         _TotalDePaginas = Math.Ceiling(totalDeRegistros / _TamanoDePagina)
 
         _Actualizar = False
+
+        If CBool(_DocGenerados) Then
+            'Beep()
+            Console.Beep(500, 1000)
+        End If
 
     End Sub
 
@@ -88,6 +161,11 @@
 
         If _PaginaActual > _TotalDePaginas Then
             _Actualizar = True
+            Return
+        End If
+
+        If _TotalDePaginas = 0 Then
+            Grilla.DataSource = Nothing
             Return
         End If
 
@@ -127,24 +205,6 @@
             .Columns("NumeroDelItem").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            '.Columns("Numero").Visible = True
-            '.Columns("Numero").HeaderText = "#Ticket"
-            '.Columns("Numero").Width = 110
-            '.Columns("Numero").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
-
-            '.Columns("Tido").Visible = True
-            '.Columns("Tido").HeaderText = "TD"
-            '.Columns("Tido").Width = 30
-            '.Columns("Tido").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
-
-            '.Columns("Nudo").Visible = True
-            '.Columns("Nudo").HeaderText = "Número"
-            '.Columns("Nudo").Width = 70
-            '.Columns("Nudo").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
-
             .Columns("NOKOEN").Visible = True
             .Columns("NOKOEN").HeaderText = "Razón Social"
             .Columns("NOKOEN").Width = 500
@@ -163,23 +223,9 @@
             .Columns("InfoCliente").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            '.Columns("FechaFactu").Visible = _TidoGen
-            '.Columns("FechaFactu").HeaderText = "F.Factu."
-            '.Columns("FechaFactu").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            '.Columns("FechaFactu").DefaultCellStyle.Format = "dd/MM/yyyy"
-            '.Columns("FechaFactu").Width = 70
-            '.Columns("FechaFactu").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
-
-            '.Columns("HoraFactu").Visible = _TidoGen
-            '.Columns("HoraFactu").HeaderText = "H.Factu."
-            '.Columns("HoraFactu").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            '.Columns("HoraFactu").DefaultCellStyle.Format = "HH:mm"
-            '.Columns("HoraFactu").Width = 50
-            '.Columns("HoraFactu").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
         End With
+
+        Dim _DocConBeep = 0
 
         For Each _Fila As DataGridViewRow In Grilla.Rows
 
@@ -217,7 +263,20 @@
             _Fila.Cells("NumeroDelItem").Style.Alignment = DataGridViewContentAlignment.MiddleCenter
             _Fila.Cells("NumeroDelItem").Style.Format = "00000"
 
+            If _Fila.Cells("Estado").Value = "FACTU" Then
+                If _Fila.Cells("Beep").Value = 0 Then
+                    Console.Beep(500, 2000)
+                    _DocConBeep += 1
+                    _Fila.Cells("Beep").Value = 1
+                End If
+            End If
+
         Next
+
+        'If _DocConBeep > 0 Then
+        '    Console.Beep(500, 2000)
+        '    Console.Beep(500, 2000)
+        'End If
 
         Grilla.ClearSelection()
         Grilla.CurrentCell = Nothing
@@ -236,4 +295,43 @@
 
     End Sub
 
+    Private Sub Timer_Parpadeo_Tick(sender As Object, e As EventArgs) Handles Timer_Parpadeo.Tick
+
+        ' Asume que quieres hacer parpadear la celda en la fila 0, columna 0
+
+        For Each _Fila As DataGridViewRow In Grilla.Rows
+
+            If parpadeo Then
+                If _Fila.Cells("Estado").Value = "FACTU" Then
+                    _Fila.Cells("NumeroDelItem").Style.BackColor = Grilla.DefaultCellStyle.BackColor
+                End If
+            Else
+                If _Fila.Cells("Estado").Value = "FACTU" Then
+                    _Fila.Cells("NumeroDelItem").Style.BackColor = Amarillo
+                End If
+            End If
+            Me.Refresh()
+        Next
+
+        parpadeo = Not parpadeo
+
+    End Sub
+
+    Private Sub Timer_Beep_Tick(sender As Object, e As EventArgs) Handles Timer_Beep.Tick
+
+        Timer_Beep.Stop()
+
+        Dim _Beep0 = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stmp_SalaEspera", "Estado = 'FACTU' And Beep = 0")
+        Dim _Beep1 = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stmp_SalaEspera", "Estado = 'FACTU' And Beep = 1")
+
+        If _Beep0 = 0 AndAlso _Beep1 > 0 Then
+            Console.Beep(500, 2000)
+            Console.Beep(500, 2000)
+        End If
+
+        Timer_Beep.Start()
+
+        'Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_SalaEspera Set Beep = 2 Where Estado = 'FACTU' And Beep = 0 "
+        '_Sql.Ej_consulta_IDU(Consulta_sql)
+    End Sub
 End Class

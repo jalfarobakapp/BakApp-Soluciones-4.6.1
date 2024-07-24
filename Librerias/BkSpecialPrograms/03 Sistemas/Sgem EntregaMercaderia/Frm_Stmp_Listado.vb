@@ -44,6 +44,7 @@ Public Class Frm_Stmp_Listado
         AddHandler Grilla.ColumnHeaderMouseClick, AddressOf Grilla_ColumnHeaderMouseClick
 
         Super_TabS.SelectedTabIndex = 0
+        Tab_Ingresadas.Visible = Chk_VerIngresadas.Checked
 
         Sb_Actualizar_Grilla()
 
@@ -56,7 +57,7 @@ Public Class Frm_Stmp_Listado
 
     Sub Sb_Actualizar_Grilla()
 
-        'Txt_Filtrar.Text = String.Empty
+        Me.Cursor = Cursors.WaitCursor
 
         Dim _Condicion As String = String.Empty
         Dim _DocEmitir As Boolean
@@ -71,7 +72,11 @@ Public Class Frm_Stmp_Listado
 
         Select Case _Tbas.Name
             Case "Tab_Pendientes"
-                _Condicion += vbCrLf & "And (Estado In ('PREPA','COMPL') And Planificada = 1) Or (Estado = 'INGRE')"
+                If Chk_VerIngresadas.Checked Then
+                    _Condicion += vbCrLf & "And (Estado In ('PREPA','COMPL') And Planificada = 1) Or (Estado = 'INGRE')"
+                Else
+                    _Condicion += vbCrLf & "And (Estado In ('PREPA','COMPL') And Planificada = 1)"
+                End If
                 _DocEmitir = True
                 _FechaPickeado = True
                 _HoraPickeado = True
@@ -327,6 +332,8 @@ Public Class Frm_Stmp_Listado
         End If
 
         Sb_MarcarPendientes()
+
+        Me.Cursor = Cursors.Default
 
     End Sub
 
@@ -1138,7 +1145,6 @@ Public Class Frm_Stmp_Listado
 
             End If
 
-
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Facturar = 1,CodFuncionario_MarcaFacturar = '" & FUNCIONARIO & "'" & vbCrLf &
                            "Where Id = " & _Row.Item("Id")
             If _Sql.Ej_consulta_IDU(Consulta_sql) Then
@@ -1639,5 +1645,10 @@ Public Class Frm_Stmp_Listado
 
         Sb_Actualizar_Grilla()
 
+    End Sub
+
+    Private Sub Chk_VerIngresadas_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_VerIngresadas.CheckedChanged
+        Tab_Ingresadas.Visible = Chk_VerIngresadas.Checked
+        Sb_Actualizar_Grilla()
     End Sub
 End Class

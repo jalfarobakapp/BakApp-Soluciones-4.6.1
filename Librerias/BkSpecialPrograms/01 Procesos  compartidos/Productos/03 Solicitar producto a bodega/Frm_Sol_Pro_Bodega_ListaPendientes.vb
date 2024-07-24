@@ -555,14 +555,9 @@ Public Class Frm_Sol_Pro_Bodega_ListaPendientes
         End If
 
     End Sub
-
-
     Private Sub BtnActualizar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnActualizar.Click
         Sb_Actualizar_Grilla(_Condicion)
     End Sub
-
-
-
     Private Sub Grilla_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Grilla.MouseDown
 
         If e.Button = Windows.Forms.MouseButtons.Right Then
@@ -583,7 +578,6 @@ Public Class Frm_Sol_Pro_Bodega_ListaPendientes
     Private Sub Frm_Sol_Pro_Bodega_ListaPendientes_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then Me.Close()
     End Sub
-
 
     Private Sub Sb_Chk_Validar_Usuario_Con_Huella_CheckedChanged(sender As Object, e As EventArgs)
         If Not Chk_Validar_Usuario_Con_Huella.Checked Then
