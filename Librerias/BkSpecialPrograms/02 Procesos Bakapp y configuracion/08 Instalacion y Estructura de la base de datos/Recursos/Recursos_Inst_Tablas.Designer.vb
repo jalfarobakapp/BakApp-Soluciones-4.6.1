@@ -516,16 +516,13 @@ Namespace My.Resources
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
         '''CREATE TABLE [dbo].[Zw_Conceptos](
-        '''	[Koct]							[char](13) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[ModFechVto]					[bit] NOT NULL DEFAULT (0),
-        '''	[ModFechVto_Dias1erVenci]		[int] NOT NULL DEFAULT (0),
-        '''	[NoPermitirMismoConceptoEnDoc]	[bit] NOT NULL DEFAULT (0),
-        '''	[NoAfectaDsctoGlobal]	        [bit] NOT NULL DEFAULT (0),
-        '''	[NoPermitirModificarValor]	    [bit] NOT NULL DEFAULT (0),
-        ''' CONSTRAINT [PK_Zw_Conceptos] PRIMARY KEY CLUSTERED 
-        '''(
-        '''	[Koct] ASC
-        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, I [resto de la cadena truncado]&quot;;.
+        '''	[Koct]							[char](13)      NOT NULL DEFAULT (&apos;&apos;),
+        '''	[ModFechVto]					[bit]           NOT NULL DEFAULT (0),
+        '''	[ModFechVto_Dias1erVenci]		[int]           NOT NULL DEFAULT (0),
+        '''	[NoPermitirMismoConceptoEnDoc]	[bit]           NOT NULL DEFAULT (0),
+        '''	[NoAfectaDsctoGlobal]	        [bit]           NOT NULL DEFAULT (0),
+        '''	[NoPermitirModificarValor]	    [bit]           NOT NULL DEFAULT (0),
+        '''    [Condicionado]                  [bit]           NOT NULL DEFAULT ( [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Conceptos() As String
             Get
@@ -864,16 +861,15 @@ Namespace My.Resources
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
         '''CREATE TABLE [dbo].[Zw_Demonio_FacAuto](
-        '''	[Id]				[int] IDENTITY(1,1) NOT NULL,
-        '''	[NombreEquipo]		[varchar](50)		NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Idmaeedo_NVV]		[int]				NOT NULL DEFAULT (0),
-        '''	[Nudo_NVV]			[varchar](10)		NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Modalidad_Fac]		[varchar](5)		NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Fecha_Facturar]	[datetime]			NULL,
-        '''	[Facturar]			[bit]				NOT NULL DEFAULT (0),
-        '''	[Facturando]		[bit]				NOT NULL DEFAULT (0),
-        '''	[Facturado]			[bit]				NOT NULL DEFAULT (0),
-        '''	[Idmaeedo_FCV]		[int] [resto de la cadena truncado]&quot;;.
+        '''	[Id]				        [int] IDENTITY(1,1) NOT NULL,
+        '''	[NombreEquipo]		        [varchar](50)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Idmaeedo_NVV]		        [int]				NOT NULL DEFAULT (0),
+        '''	[Nudo_NVV]			        [varchar](10)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Modalidad_Fac]		        [varchar](5)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Fecha_Facturar]	        [datetime]			NULL,
+        '''	[Facturar]			        [bit]				NOT NULL DEFAULT (0),
+        '''	[Facturando]		        [bit]				NOT NULL DEFAULT (0),
+        '''	[Fac [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Demonio_FacAuto() As String
             Get
@@ -3301,7 +3297,8 @@ Namespace My.Resources
         '''CREATE TABLE [dbo].[Zw_Productos](
         '''	[Codigo]			[varchar](13)	NOT NULL Default(&apos;&apos;),
         '''	[Descripcion]		[varchar](50)	NOT NULL Default(&apos;&apos;),
-        '''	[ExluyeTipoVenta]	[bit]			NOT NULL Default(&apos;&apos;),
+        '''	[ExluyeTipoVenta]	[bit]			NOT NULL Default(0),
+        '''    [RtuXWms]	        [bit]			NOT NULL Default(0),
         ''' CONSTRAINT [PK_Zw_Productos] PRIMARY KEY CLUSTERED 
         '''(
         '''	[Codigo] ASC
@@ -3744,9 +3741,7 @@ Namespace My.Resources
         '''	[Funcionario]           [varchar](3)        NOT NULL DEFAULT (&apos;&apos;),
         '''	[Consulta_Global]       [bit]               NOT NULL DEFAULT (0),
         '''	[Consulta_Personal]     [bit]               NOT NULL DEFAULT (0),
-        ''' CONSTRAINT [PK_Zw_SQL_Querys] PRIMARY KEY CLUSTERED 
-        '''(
-        ''' [resto de la cadena truncado]&quot;;.
+        '''    [Nota]                  [varchar](max)      NOT NULL D [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_SQL_Querys() As String
             Get
@@ -4208,7 +4203,7 @@ Namespace My.Resources
         '''	[Id]					[int] IDENTITY(1,1) NOT NULL,
         '''    [Id_Raiz]   			[int] NOT NULL DEFAULT (0),
         '''	[Empresa]				[char](2) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Sucursal]				[varchar](2) NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Sucursal]				[varchar](3) NOT NULL DEFAULT (&apos;&apos;),
         '''	[Numero]				[varchar](10) NOT NULL DEFAULT (&apos;&apos;),
         '''	[SubNro]				[varchar](3) NOT NULL DEFAULT (&apos;&apos;),
         '''	[Id_Area]				[int] NOT NULL DEFAULT (0),
@@ -4446,19 +4441,42 @@ Namespace My.Resources
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
         '''CREATE TABLE [dbo].[Zw_Stmp_Enc](
-        '''	[Id]					    [int] IDENTITY(1,1) NOT NULL,
-        '''	[Empresa]				    [char](2)		NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Sucursal]				    [varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Numero]				    [varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[CodFuncionario_Crea]	    [char](3)		NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Idmaeedo]				    [int]			NOT NULL DEFAULT (0),
-        '''	[Tido]					    [char](3)		NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Nudo]					    [varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Endo]					    [varchar](10)	NULL, [resto de la cadena truncado]&quot;;.
+        '''	[Id]					        [int] IDENTITY(1,1) NOT NULL,
+        '''	[Empresa]				        [char](2)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Sucursal]				        [varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Numero]				        [varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[CodFuncionario_Crea]	        [char](3)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Idmaeedo]				        [int]			NOT NULL DEFAULT (0),
+        '''	[Tido]					        [char](3)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Nudo]					        [varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[E [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Stmp_Enc() As String
             Get
                 Return ResourceManager.GetString("Zw_Stmp_Enc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_Stmp_Enc_Permisos](
+        '''	[Id]						[int] IDENTITY(1,1) NOT NULL,
+        '''	[Id_Enc]					[int]				NOT NULL,
+        '''	[CodPermiso]				[varchar](10)		NOT NULL,
+        '''	[NroRemota]					[char](10)			NOT NULL,
+        '''	[CodFuncionario_Solicita]	[char](3)			NOT NULL,
+        '''	[CodFuncionario_Autoriza]	[char](3)			NOT NULL,
+        '''	[FechaHora]					[datetime]			NULL
+        ''') ON [PRIMARY]
+        '''
+        '''
+        '''
+        '''.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Stmp_Enc_Permisos() As String
+            Get
+                Return ResourceManager.GetString("Zw_Stmp_Enc_Permisos", resourceCulture)
             End Get
         End Property
         
@@ -5097,16 +5115,14 @@ Namespace My.Resources
         '''
         '''
         '''CREATE TABLE [dbo].[Zw_WMS_Ubicaciones_Bodega](
-        '''	[Id_Mapa] [int] NOT NULL DEFAULT (0),
-        '''	[Id_Ubicacion] [int] IDENTITY(1,1) NOT NULL,
-        '''	[Empresa] [char](2) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Sucursal] [char](3) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Bodega] [char](3) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Codigo_Sector] [varchar](20) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Columna] [varchar](10) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[NomColumna] [varchar](20) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Fila] [varchar](10) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Alto] [float] NOT N [resto de la cadena truncado]&quot;;.
+        '''	[Id_Mapa]           [int]               NOT NULL DEFAULT (0),
+        '''	[Id_Ubicacion]      [int] IDENTITY(1,1) NOT NULL,
+        '''	[Empresa]           [char](2)           NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Sucursal]          [char](3)           NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Bodega]            [char](3)           NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Codigo_Sector]     [varchar](20)       NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Columna]           [varchar](10)       NOT NULL DEFAULT (&apos;&apos;),
+        '''	[No [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_WMS_Ubicaciones_Bodega() As String
             Get
@@ -5119,16 +5135,14 @@ Namespace My.Resources
         '''
         '''
         '''CREATE TABLE [dbo].[Zw_WMS_Ubicaciones_Mapa_Det](
-        '''	[Id_Mapa] [int] NOT NULL DEFAULT (0),
-        '''	[Id] [int] IDENTITY(1,1) NOT NULL,
-        '''	[Empresa] [char](2) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Sucursal] [char](3) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Bodega] [char](3) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Codigo_Sector] [varchar](20) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Nombre_Sector] [varchar](50) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Tipo_Objeto] [varchar](50) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Nombre_Objeto] [varchar](50) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Texto] [var [resto de la cadena truncado]&quot;;.
+        '''	[Id_Mapa]           [int]               NOT NULL DEFAULT (0),
+        '''	[Id]                [int] IDENTITY(1,1) NOT NULL,
+        '''	[Empresa]           [char](2)           NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Sucursal]          [char](3)           NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Bodega]            [char](3)           NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Codigo_Sector]     [varchar](20)       NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Nombre_Sector]     [varchar](50)       NOT NULL DEFAULT (&apos;&apos;),
+        '''	[ [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_WMS_Ubicaciones_Mapa_Det() As String
             Get
@@ -5141,16 +5155,13 @@ Namespace My.Resources
         '''
         '''
         '''CREATE TABLE [dbo].[Zw_WMS_Ubicaciones_Mapa_Enc](
-        '''	[Id_Mapa] [int] IDENTITY(1,1) NOT NULL,
-        '''	[Empresa] [char](2) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Sucursal] [char](3) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Bodega] [char](3) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Nombre_Mapa] [varchar](100) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Suelo_es_Ubicacion] [bit] NOT NULL DEFAULT (0),
-        '''	[Nivel] [int] NOT NULL DEFAULT (0),
-        '''	[Orden] [int] NOT NULL DEFAULT (0),
-        '''	[Id_Mapa_Padre] [int] NOT NULL DEFAULT (0),
-        '''	[Es_Sub_Mapa] [bit] NOT NULL DEFAULT ( [resto de la cadena truncado]&quot;;.
+        '''	[Id_Mapa]               [int] IDENTITY(1,1) NOT NULL,
+        '''	[Empresa]               [char](2)           NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Sucursal]              [char](3)           NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Bodega]                [char](3)           NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Nombre_Mapa]           [varchar](100)      NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Suelo_es_Ubicacion]    [bit]               NOT NULL DEFAULT (0),
+        '''	[Nivel]                 [int]              [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_WMS_Ubicaciones_Mapa_Enc() As String
             Get
@@ -5163,15 +5174,14 @@ Namespace My.Resources
         '''
         '''
         '''CREATE TABLE [dbo].[Zw_WMS_Ubicaciones_Stock_X_Producto](
-        '''	[Id_Movimiento] [int] IDENTITY(1,1) NOT NULL,
-        '''	[Tipo_Movimiento] [char](1) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Nro_Movimiento] [varchar](10) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Empresa] [char](2) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Sucursal] [char](3) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Bodega] [char](3) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Codigo_Sector] [varchar](20) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Codigo_Ubic] [varchar](20) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Codigo] [char](13) NOT NULL DEFAU [resto de la cadena truncado]&quot;;.
+        '''	[Id]                [int]           IDENTITY(1,1) NOT NULL,
+        '''	[Empresa]           [char](2)       NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Sucursal]          [char](3)       NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Bodega]            [char](3)       NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Codigo_Sector]     [varchar](20)   NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Codigo_Ubic]       [varchar](20)   NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Codigo]            [char](13)      NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Rtu]  [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_WMS_Ubicaciones_Stock_X_Producto() As String
             Get

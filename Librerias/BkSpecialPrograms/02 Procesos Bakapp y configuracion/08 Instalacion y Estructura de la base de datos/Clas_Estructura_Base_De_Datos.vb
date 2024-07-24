@@ -1058,6 +1058,8 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Stmp_Det
             Case "Zw_Stmp_DetPick"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Stmp_DetPick
+            Case "Zw_Stmp_Enc_Permisos"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Stmp_Enc_Permisos
 
             Case "Zw_TablaDeCaracterizaciones"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_TablaDeCaracterizaciones

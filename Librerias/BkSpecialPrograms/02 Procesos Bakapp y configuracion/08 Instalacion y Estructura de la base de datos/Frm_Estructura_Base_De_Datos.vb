@@ -326,6 +326,7 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Stmp_Enc", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Stmp_Det", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Stmp_DetPick", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Stmp_Enc_Permisos", _Modificar, Lbl_Eventos)
 
             .Sb_Revisar_Tabla2(Me, "Zw_TablaDeCaracterizaciones", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Tablas_Equivalentes_Rd_Bk", _Modificar, Lbl_Eventos)
