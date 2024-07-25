@@ -149,7 +149,7 @@ Public Class Frm_SQL2Excel_Diseno
             MessageBoxEx.Show(Me, _Sql.Pro_Error, "ERROR EN LA CONSULTA", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return Nothing
         Else
-            Fx_Ejecutar_Comsulta_SQL = _Sql.Fx_Get_DataSet(Txt_Query_SQL.Text)
+            Fx_Ejecutar_Comsulta_SQL = _Sql.Fx_Get_DataSet(Txt_Query_SQL.Text, False)
         End If
 
     End Function

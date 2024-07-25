@@ -199,7 +199,7 @@
             .Columns("NumeroDelItem").DefaultCellStyle.ForeColor = Color.Blue
             .Columns("NumeroDelItem").HeaderText = "TICKET Nro."
             .Columns("NumeroDelItem").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("NumeroDelItem").DefaultCellStyle.Format = "0000"
+            '.Columns("NumeroDelItem").DefaultCellStyle.Format = "0000"
             .Columns("NumeroDelItem").Visible = True
             .Columns("NumeroDelItem").Width = 130
             .Columns("NumeroDelItem").DisplayIndex = _DisplayIndex
@@ -261,7 +261,7 @@
             _Fila.Cells("NumeroDelItem").Style.Font = New Font("Arial", 24, FontStyle.Bold)
             _Fila.Cells("NumeroDelItem").Style.ForeColor = Azul
             _Fila.Cells("NumeroDelItem").Style.Alignment = DataGridViewContentAlignment.MiddleCenter
-            _Fila.Cells("NumeroDelItem").Style.Format = "00000"
+            _Fila.Cells("NumeroDelItem").Style.Format = "0000"
 
             If _Fila.Cells("Estado").Value = "FACTU" Then
                 If _Fila.Cells("Beep").Value = 0 Then
