@@ -43,6 +43,7 @@ Partial Class Frm_Stmp_Listado
         Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnIrAptincipio = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnIrAlFin = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_ConfLocal = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_01_Opciones_Documento = New DevComponents.DotNetBar.ButtonItem()
@@ -103,7 +104,7 @@ Partial Class Frm_Stmp_Listado
         Me.Super_TabS.Name = "Super_TabS"
         Me.Super_TabS.ReorderTabsEnabled = True
         Me.Super_TabS.SelectedTabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
-        Me.Super_TabS.SelectedTabIndex = 1
+        Me.Super_TabS.SelectedTabIndex = 0
         Me.Super_TabS.Size = New System.Drawing.Size(592, 27)
         Me.Super_TabS.TabCloseButtonHot = Nothing
         Me.Super_TabS.TabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -158,7 +159,7 @@ Partial Class Frm_Stmp_Listado
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_AgregarTicket, Me.Btn_SalaEsperaFacturar, Me.Btn_EntregarMercaderia, Me.Btn_Exportar_Excel, Me.Btn_Actualizar, Me.BtnIrAptincipio, Me.BtnIrAlFin})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_AgregarTicket, Me.Btn_SalaEsperaFacturar, Me.Btn_EntregarMercaderia, Me.Btn_Exportar_Excel, Me.Btn_Actualizar, Me.BtnIrAptincipio, Me.BtnIrAlFin, Me.Btn_ConfLocal})
         Me.Bar2.Location = New System.Drawing.Point(0, 567)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(1204, 41)
@@ -235,6 +236,17 @@ Partial Class Frm_Stmp_Listado
         Me.BtnIrAlFin.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.BtnIrAlFin.Name = "BtnIrAlFin"
         Me.BtnIrAlFin.Tooltip = "Ir al último registro"
+        '
+        'Btn_ConfLocal
+        '
+        Me.Btn_ConfLocal.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_ConfLocal.ForeColor = System.Drawing.Color.Black
+        Me.Btn_ConfLocal.Image = CType(resources.GetObject("Btn_ConfLocal.Image"), System.Drawing.Image)
+        Me.Btn_ConfLocal.ImageAlt = CType(resources.GetObject("Btn_ConfLocal.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ConfLocal.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_ConfLocal.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
+        Me.Btn_ConfLocal.Name = "Btn_ConfLocal"
+        Me.Btn_ConfLocal.Tooltip = "Agregar Ticket buscando por numero de nota de venta"
         '
         'GroupPanel1
         '
@@ -686,4 +698,5 @@ Partial Class Frm_Stmp_Listado
     Friend WithEvents Tab_Ingresadas As DevComponents.DotNetBar.SuperTabItem
     Friend WithEvents Btn_Mnu_Preparacion As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Chk_VerIngresadas As DevComponents.DotNetBar.Controls.CheckBoxX
+    Public WithEvents Btn_ConfLocal As DevComponents.DotNetBar.ButtonItem
 End Class

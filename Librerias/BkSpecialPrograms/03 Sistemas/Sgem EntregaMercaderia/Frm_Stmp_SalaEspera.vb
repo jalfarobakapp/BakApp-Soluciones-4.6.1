@@ -61,7 +61,7 @@
         Consulta_sql = Replace(Consulta_sql, "Zw_Stmp_Enc", _Global_BaseBk & "Zw_Stmp_Enc")
         Consulta_sql = Replace(Consulta_sql, "Zw_Stmp_SalaEspera", _Global_BaseBk & "Zw_Stmp_SalaEspera")
 
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_SalaEspera"
+        'Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_SalaEspera"
 
         _Tbl_SalaEspera = _Sql.Fx_Get_DataTable(Consulta_sql)
 

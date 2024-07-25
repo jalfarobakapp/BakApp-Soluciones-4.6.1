@@ -2342,6 +2342,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Recursos_WmsVillar.resx</DependentUpon>
     </Compile>
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Configuracion\Frm_Stmp_ConfLocal.Designer.vb">
+      <DependentUpon>Frm_Stmp_ConfLocal.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Configuracion\Frm_Stmp_ConfLocal.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_IncNVVPicking.Designer.vb">
       <DependentUpon>Frm_Stmp_IncNVVPicking.vb</DependentUpon>
     </Compile>
@@ -5496,6 +5502,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Recursos_WmsVillar.Designer.vb</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Sgem EntregaMercaderia\Configuracion\Frm_Stmp_ConfLocal.resx">
+      <DependentUpon>Frm_Stmp_ConfLocal.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_IncNVVPicking.resx">
       <DependentUpon>Frm_Stmp_IncNVVPicking.vb</DependentUpon>
     </EmbeddedResource>
@@ -8114,6 +8123,7 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stmp_DetPick.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stmp_Enc.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stmp_Enc_Permisos.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stmp_SalaEspera.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_St_Conf_Info_Reportes.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_St_Conf_Tecnicos_Taller.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_St_OT_Accesorios.sql" />
@@ -8384,7 +8394,6 @@
   <ItemGroup>
     <Folder Include="01 Procesos  compartidos\Productos\01 Buscar productos\New ProdFind\" />
     <Folder Include="03 Sistemas\Comisiones\Recursos\" />
-    <Folder Include="03 Sistemas\Sgem EntregaMercaderia\Configuracion\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

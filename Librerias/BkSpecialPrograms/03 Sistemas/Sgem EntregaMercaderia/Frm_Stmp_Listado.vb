@@ -1,6 +1,9 @@
 ﻿Imports System.Threading
 Imports BkSpecialPrograms.LsValiciones
+Imports BkSpecialPrograms.Stmp_Configuracion
 Imports DevComponents.DotNetBar
+Imports MySql.Data.Authentication
+Imports Org.BouncyCastle.Math.EC
 
 Public Class Frm_Stmp_Listado
 
@@ -1050,8 +1053,6 @@ Public Class Frm_Stmp_Listado
 
         Try
 
-            Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
-
             If Not Fx_Tiene_Permiso(Me, "Stem0004") Then Return
 
             Timer_Monitoreo.Stop()
@@ -1125,7 +1126,7 @@ Public Class Frm_Stmp_Listado
                            "Cliente: " & _RowEntidad.Item("Rut").ToString.Trim & " - " & _RowEntidad.Item("NOKOEN") & vbCrLf &
                            "Informe de esta situación a la administración."
 
-                    If Not Fx_RevisarPermiso(_Fila.Cells("Id").Value, "Bkp00021", _Msg, _Fila.Cells("Idmaeedo").Value) Then
+                    If Not Fx_RevisarPermiso(_Row.Item("Id"), "Bkp00021", _Msg, _Row.Item("Idmaeedo")) Then
                         Return
                     End If
 
@@ -1137,7 +1138,7 @@ Public Class Frm_Stmp_Listado
                            "Cliente: " & _RowEntidad.Item("Rut").ToString.Trim & " - " & _RowEntidad.Item("NOKOEN") & vbCrLf &
                            "Informe de esta situación a la administración."
 
-                    If Not Fx_RevisarPermiso(_Fila.Cells("Id").Value, "Bkp00019", _Msg, _Fila.Cells("Idmaeedo").Value) Then
+                    If Not Fx_RevisarPermiso(_Row.Item("Id"), "Bkp00019", _Msg, _Row.Item("Idmaeedo")) Then
                         Return
                     End If
 
@@ -1148,7 +1149,16 @@ Public Class Frm_Stmp_Listado
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Facturar = 1,CodFuncionario_MarcaFacturar = '" & FUNCIONARIO & "'" & vbCrLf &
                            "Where Id = " & _Row.Item("Id")
             If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+
+                Dim _Mensaje As LsValiciones.Mensajes
+                _Mensaje = Fx_EnviarImprimirTicket(_Row)
+
+                If Not _Mensaje.EsCorrecto Then
+                    MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                End If
+
                 MessageBoxEx.Show(Me, "Documento marcado", "Marcar documento", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
             End If
             Sb_Actualizar_Grilla()
 
@@ -1159,6 +1169,81 @@ Public Class Frm_Stmp_Listado
             End If
         End Try
     End Sub
+
+    Function Fx_EnviarImprimirTicket(_Row As DataRow) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+            Dim _Idmaeedo As Integer = _Row.Item("Idmaeedo")
+            Dim _Tido As String = _Row.Item("Tido")
+            Dim _Nudo As String = _Row.Item("Nudo")
+
+            Dim ConfLocal As New Stmp_Configuracion.ConfLocal
+
+            With ConfLocal
+
+                Dim ImprimirTicket As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
+                                                      "Valor", "Campo = 'Chk_ImprimirTicket' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "' And Informe = 'ConfLocal_Sgem'")
+
+
+                Boolean.TryParse(ImprimirTicket, .ImprimirTicket)
+
+                If Not .ImprimirTicket Then
+                    _Mensaje.EsCorrecto = False
+                    _Mensaje.Mensaje = "Impresora no configurada"
+                    _Mensaje.Detalle = "No se ha configurado la impresora para imprimir el ticket"
+                    _Mensaje.Icono = MessageBoxIcon.Stop
+                    Return _Mensaje
+                End If
+
+                .NombreEquipoImprime_Ticket = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
+                                                   "Valor", "Campo = 'Txt_NombreEquipoImprime_Ticket' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "' And Informe = 'ConfLocal_Sgem'")
+                .Impresora_Ticket = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
+                                                      "Valor", "Campo = 'Txt_Impresora_Ticket' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "' And Informe = 'ConfLocal_Sgem'")
+                .NombreFormato_Ticket = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
+                                                          "Valor", "Campo = 'Txt_NombreFormato_Ticket' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "' And Informe = 'ConfLocal_Sgem'")
+
+                If String.IsNullOrWhiteSpace(.NombreEquipoImprime_Ticket) Or
+                   String.IsNullOrWhiteSpace(.Impresora_Ticket) Or
+                   String.IsNullOrWhiteSpace(.NombreFormato_Ticket) Then
+                    _Mensaje.EsCorrecto = False
+                    _Mensaje.Mensaje = "Impresora no configurada"
+                    _Mensaje.Detalle = "No se ha configurado la impresora para imprimir el ticket"
+                    _Mensaje.Icono = MessageBoxIcon.Stop
+                    Return _Mensaje
+                End If
+
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion (NombreEquipo,Idmaeedo,Tido,Nudo,Funcionario,Fecha,NombreFormato,Impresora,Impreso)" & vbCrLf &
+                               "Values ('" & .NombreEquipoImprime_Ticket & "'," & _Idmaeedo & ",'" & _Tido & "','" & _Nudo & "'" &
+                               ",'wms',GETDATE(),'" & .NombreFormato_Ticket & "','" & .Impresora_Ticket & "',0)"
+                If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+                    _Mensaje.EsCorrecto = False
+                    _Mensaje.Mensaje = "Error al enviar a impresión"
+                    _Mensaje.Detalle = "Documento: " & _Tido & "-" & _Nudo & vbCrLf & _Sql.Pro_Error
+                    _Mensaje.Icono = MessageBoxIcon.Stop
+                    Return _Mensaje
+                End If
+
+            End With
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Documento enviado a impresión"
+            _Mensaje.Detalle = "Documento: " & _Tido & "-" & _Nudo
+            _Mensaje.Icono = MessageBoxIcon.Information
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Detalle = "Error al enviar a impresión"
+            _Mensaje.Icono = MessageBoxIcon.Stop
+        End Try
+
+        Return _Mensaje
+
+    End Function
 
     Function Fx_RevisarPermiso(_Id_Enc As Integer, _CodPermiso As String, _Msg As String, _Idmaeedo As Integer) As Boolean
 
@@ -1651,4 +1736,23 @@ Public Class Frm_Stmp_Listado
         Tab_Ingresadas.Visible = Chk_VerIngresadas.Checked
         Sb_Actualizar_Grilla()
     End Sub
+
+    Private Sub Btn_ConfLocal_Click(sender As Object, e As EventArgs) Handles Btn_ConfLocal.Click
+
+        Dim Fm As New Frm_Stmp_ConfLocal
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
 End Class
+
+Namespace Stmp_Configuracion
+    Public Class ConfLocal
+        Public Property ImprimirTicket As Boolean
+        Public Property NombreEquipoImprime_Ticket As String
+        Public Property Impresora_Ticket As String
+        Public Property NombreFormato_Ticket As String
+
+    End Class
+
+End Namespace

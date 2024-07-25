@@ -115,6 +115,8 @@ Public Class Frm_RegistrarEquipo
             TextBoxX1.FocusHighlightEnabled = False
         End If
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
 
     Private Sub Frm_RegistrarEquipo_Load(sender As Object, e As System.EventArgs) Handles Me.Load

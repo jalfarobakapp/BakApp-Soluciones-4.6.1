@@ -710,7 +710,7 @@ Public Class Class_SQL
 
                 If _Insertar_dato Then
 
-                    Consulta_sql = "INSERT INTO " & _Global_BaseBk & "Zw_Tmp_Prm_Informes (Funcionario,Informe,Campo,Tipo,Valor,Grupo,NombreEquipo,Modalidad) VALUES" & Space(1) &
+                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Tmp_Prm_Informes (Funcionario,Informe,Campo,Tipo,Valor,Grupo,NombreEquipo,Modalidad) VALUES" & Space(1) &
                           "('" & _Funcionario & "','" & _Informe & "','" & _Campo & "','" & Replace(_Tipo.ToString, "_", "") & "'," &
                           "'" & _Valor & "','" & _Grupo & "','" & _NombreEquipo & "','" & _Modalidad & "')"
                     Ej_consulta_IDU(Consulta_sql, False)

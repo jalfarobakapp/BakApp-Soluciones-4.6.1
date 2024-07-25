@@ -211,18 +211,18 @@ Public Class Cl_Sincroniza
 
                         End If
 
-                        If ConfiguracionLocal.Ls_ImpFormatos.Item(2).Imprimir Then
+                        'If ConfiguracionLocal.Ls_ImpFormatos.Item(2).Imprimir Then
 
-                            With ConfiguracionLocal.Ls_ImpFormatos.Item(2)
+                        '    With ConfiguracionLocal.Ls_ImpFormatos.Item(2)
 
-                                _Mensaje = Fx_EnviarAImprimnirListaDeVerificacion(_Idmaeedoo, "NVV", _Nudo, True,
-                                                                              .NombreEquipoImprime, .Impresora, .NombreFormato)
+                        '        _Mensaje = Fx_EnviarAImprimnirListaDeVerificacion(_Idmaeedoo, "NVV", _Nudo, True,
+                        '                                                      .NombreEquipoImprime, .Impresora, .NombreFormato)
 
-                            End With
+                        '    End With
 
-                            Sb_AddToLog(_Mensaje.Detalle, _Mensaje.Detalle, Txt_Log)
+                        '    Sb_AddToLog(_Mensaje.Detalle, _Mensaje.Detalle, Txt_Log)
 
-                        End If
+                        'End If
 
                     End If
 

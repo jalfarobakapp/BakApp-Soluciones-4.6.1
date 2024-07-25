@@ -4483,6 +4483,27 @@ Namespace My.Resources
         '''<summary>
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
+        '''CREATE TABLE [dbo].[Zw_Stmp_SalaEspera](
+        '''	[Id]			[int] IDENTITY(1,1) NOT NULL,
+        '''	[Numero]		[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[NroTicket]		[varchar](4)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Tido]			[char](3)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Nudo]			[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[TidoGen]		[char](3)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[NudoGen]		[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Estado]		[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Sudo]			[char](3)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Nokoen]		[varchar](50)	NOT NU [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Stmp_SalaEspera() As String
+            Get
+                Return ResourceManager.GetString("Zw_Stmp_SalaEspera", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
         '''
         '''CREATE TABLE [dbo].[Zw_TablaDeCaracterizaciones](
         '''	[Tabla]				[varchar](50)   NOT NULL DEFAULT (&apos;&apos;),
