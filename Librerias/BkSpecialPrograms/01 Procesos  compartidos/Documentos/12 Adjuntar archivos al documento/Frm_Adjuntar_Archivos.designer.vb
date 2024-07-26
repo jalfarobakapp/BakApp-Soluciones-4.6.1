@@ -39,6 +39,7 @@ Partial Class Frm_Adjuntar_Archivos
         Me.Btn_Descargar_Archivos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Agregar_Observacion = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Refresh = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Agregar_Imagen = New DevComponents.DotNetBar.ButtonItem()
         Me.Barra_Progreso = New DevComponents.DotNetBar.Controls.ProgressBarX()
         Me.Imagenes = New System.Windows.Forms.ImageList(Me.components)
         Me.Listv_Archivos = New DevComponents.DotNetBar.Controls.ListViewEx()
@@ -132,7 +133,7 @@ Partial Class Frm_Adjuntar_Archivos
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Subir_Archivos, Me.Btn_Descargar_Archivos, Me.Btn_Agregar_Observacion, Me.Btn_Refresh})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Subir_Archivos, Me.Btn_Descargar_Archivos, Me.Btn_Agregar_Observacion, Me.Btn_Agregar_Imagen, Me.Btn_Refresh})
         Me.Bar1.Location = New System.Drawing.Point(0, 496)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(628, 41)
@@ -177,6 +178,15 @@ Partial Class Frm_Adjuntar_Archivos
         Me.Btn_Refresh.ImageAlt = CType(resources.GetObject("Btn_Refresh.ImageAlt"), System.Drawing.Image)
         Me.Btn_Refresh.Name = "Btn_Refresh"
         Me.Btn_Refresh.Tooltip = "Actualizar(F5)"
+        '
+        'Btn_Agregar_Imagen
+        '
+        Me.Btn_Agregar_Imagen.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Agregar_Imagen.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Agregar_Imagen.Image = CType(resources.GetObject("Btn_Agregar_Imagen.Image"), System.Drawing.Image)
+        Me.Btn_Agregar_Imagen.ImageAlt = CType(resources.GetObject("Btn_Agregar_Imagen.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Agregar_Imagen.Name = "Btn_Agregar_Imagen"
+        Me.Btn_Agregar_Imagen.Tooltip = "Agregar imagen desde el portapapeles."
         '
         'Barra_Progreso
         '
@@ -296,4 +306,5 @@ Partial Class Frm_Adjuntar_Archivos
     Public WithEvents Btn_Subir_Archivos2 As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_Agregar_Observacion2 As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents ColumnHeader1 As ColumnHeader
+    Public WithEvents Btn_Agregar_Imagen As DevComponents.DotNetBar.ButtonItem
 End Class

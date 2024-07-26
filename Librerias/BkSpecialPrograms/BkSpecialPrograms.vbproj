@@ -580,6 +580,12 @@
     <Compile Include="01 Procesos  compartidos\Documentos\12 Adjuntar archivos al documento\Frm_Adjuntar_Archivos.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\12 Adjuntar archivos al documento\Frm_Adjuntar_Imagen.Designer.vb">
+      <DependentUpon>Frm_Adjuntar_Imagen.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\12 Adjuntar archivos al documento\Frm_Adjuntar_Imagen.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\13 Facturacion Masiva\Clas_Facturacion_Masiva.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\13 Facturacion Masiva\Frm_Facturacion_Masiva.Designer.vb">
       <DependentUpon>Frm_Facturacion_Masiva.vb</DependentUpon>
@@ -4584,6 +4590,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\12 Adjuntar archivos al documento\Frm_Adjuntar_Archivos.resx">
       <DependentUpon>Frm_Adjuntar_Archivos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Documentos\12 Adjuntar archivos al documento\Frm_Adjuntar_Imagen.resx">
+      <DependentUpon>Frm_Adjuntar_Imagen.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\13 Facturacion Masiva\Frm_Facturacion_Masiva.resx">
       <DependentUpon>Frm_Facturacion_Masiva.vb</DependentUpon>

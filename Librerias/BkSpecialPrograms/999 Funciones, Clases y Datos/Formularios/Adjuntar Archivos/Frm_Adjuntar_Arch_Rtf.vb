@@ -120,6 +120,8 @@ Public Class Frm_Adjuntar_Arch_Rtf
 
         _Dir_Temp = _Path
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
 
     Private Sub Frm_Adjuntar_Arch_Rtf_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -146,8 +148,8 @@ Public Class Frm_Adjuntar_Arch_Rtf
         If _Aceptar Then
 
             Dim _Id As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & _Tabla,
-                                                              _Campo & " = '" & _Codigo_Id & "'" &
-                                                              " And (Nombre_Archivo = '" & _Nombre_Archivo & ".rtf' Or Nombre_Archivo Like '" & _Nombre_Archivo & "%')")
+                                                          _Campo & " = '" & _Codigo_Id & "'" &
+                                                          " And (Nombre_Archivo = '" & _Nombre_Archivo & ".rtf' Or Nombre_Archivo Like '" & _Nombre_Archivo & "%')")
 
             If CBool(_Id) Then
                 _Nombre_Archivo += "(" & _Id & ")"

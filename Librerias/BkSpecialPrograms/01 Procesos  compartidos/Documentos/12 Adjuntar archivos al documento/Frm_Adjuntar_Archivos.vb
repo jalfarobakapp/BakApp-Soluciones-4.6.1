@@ -744,4 +744,55 @@ Public Class Frm_Adjuntar_Archivos
 
     End Sub
 
+    Private Sub Btn_Agregar_Imagen_Click(sender As Object, e As EventArgs) Handles Btn_Agregar_Imagen.Click
+
+        If _Pedir_Permiso Then
+            If Not Fx_Tiene_Permiso(Me, "Doc00032") Then
+                Return
+            End If
+        End If
+
+        Dim _Grabar As Boolean
+        Dim _Nombre_Archivo As String
+        Dim _Dir_Temp = _Path
+
+        Dim _Ruta_y_Archivo As String
+
+        Dim Fm As New Frm_Adjuntar_Imagen()
+        Fm.Text = "ADJUNTAR IMAGEN..."
+        _Grabar = Fm.Grabar
+        _Nombre_Archivo = Fm.Nombre_Archivo
+        Fm.ShowDialog(Me)
+        _Grabar = Fm.Grabar
+        _Nombre_Archivo = Fm.Nombre_Archivo
+        _Ruta_y_Archivo = Fm.Ruta_y_Archivo
+
+        If _Grabar Then
+
+            Dim _Id As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & _Tabla,
+                                                          _Campo & " = '" & _Codigo_Id & "'" &
+                                                          " And (Nombre_Archivo = '" & _Nombre_Archivo & ".jpg' Or Nombre_Archivo Like '" & _Nombre_Archivo & "%')")
+
+            If CBool(_Id) Then
+                _Nombre_Archivo += "(" & _Id & ")"
+            End If
+
+            _Nombre_Archivo += ".jpg"
+
+            Fx_Grabar_Observacion_Adjunta(_Ruta_y_Archivo, _Nombre_Archivo, True)
+
+            Sb_Eliminar_Archivos_Temporales()
+
+            Beep()
+            ToastNotification.Show(Me, "OBSERVACIONES ACTUALIZADAS CORRECTAMENTE", My.Resources.ok_button,
+                               2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
+
+            Sb_Actualizar_ListView()
+
+        End If
+
+        Fm.Dispose()
+
+    End Sub
+
 End Class
