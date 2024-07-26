@@ -439,6 +439,26 @@ Public Class Frm_Formulario_Observaciones
 
                         End If
 
+                    Case "GDI"
+
+                        If String.IsNullOrEmpty(_Row_Encabezado.Item("Subtido")) Then
+
+                            If Not Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00094", _Ds_Matriz_Documentos, "", "") Then
+                                Return False
+                            End If
+
+                        Else
+
+                            If String.IsNullOrEmpty(_Row_Encabezado.Item("Bodega_Destino")) Then
+
+                                If Not Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00095", _Ds_Matriz_Documentos, "", "") Then
+                                    Return False
+                                End If
+
+                            End If
+
+                        End If
+
                 End Select
 
                 .Item("Observaciones") = TxtObservaciones.Text
@@ -846,9 +866,14 @@ Public Class Frm_Formulario_Observaciones
             _Row_Bodega_Destino = Fm_Bd.Pro_Row_Bodega
             Fm_Bd.Dispose()
 
-            If Not _Row_Bodega_Destino Is Nothing Then
-                _Row_Encabezado.Item("Bodega_Destino") = _Row_Bodega_Destino.Item("KOBO")
+            If IsNothing(_Row_Bodega_Destino) Then
+                MessageBoxEx.Show(Me, "No se ha seleccionado ninguna bodega de destino." & vbCrLf &
+                                  "Esta acción requerirá permiso al grabar el documento.", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                Return
             End If
+
+            _Row_Encabezado.Item("Bodega_Destino") = _Row_Bodega_Destino.Item("KOBO")
 
         End If
 
@@ -857,12 +882,23 @@ Public Class Frm_Formulario_Observaciones
                              "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
             _Row_Encabezado.Item("Subtido") = "GTI"
             Btn_GDI_GTI.Text = "Se grabara GDI modo traspaso interno"
+
+            If String.IsNullOrEmpty(_Row_Encabezado.Item("Bodega_Destino")) Then
+                MessageBoxEx.Show(Me, "No se ha seleccionado ninguna bodega de destino." & vbCrLf &
+                                  "Esta acción requerirá permiso al grabar el documento.", "Validación",
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            End If
+
         Else
             _Row_Encabezado.Item("Subtido") = String.Empty
             _Row_Encabezado.Item("Bodega_Destino") = String.Empty
             Btn_GDI_GTI.Text = "Grabar GDI modo traspaso interno"
-        End If
 
+            MessageBoxEx.Show(Me, "Se ha cancelado la grabación de GDI modo traspaso interno." & vbCrLf &
+                              "Esta acción requerirá permiso al grabar el documento.", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+
+        End If
 
     End Sub
 

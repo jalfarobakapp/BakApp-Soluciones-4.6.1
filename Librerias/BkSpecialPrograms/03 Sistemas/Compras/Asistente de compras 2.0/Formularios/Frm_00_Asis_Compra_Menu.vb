@@ -2412,6 +2412,7 @@ Public Class Frm_00_Asis_Compra_Menu
         Fm.Pro_Filtro_Rubro_Todas = _Filtro_Rubro_Todas
         Fm.Pro_Filtro_Super_Familias_Todas = _Filtro_Super_Familias_Todas
         Fm.Pro_Filtro_Zonas_Todas = _Filtro_Zonas_Todas
+        Fm.Pro_Filtro_Bakapp_Todas = _Filtro_Bakapp_Todas
 
         Fm.Pro_Tbl_Filtro_Clalibpr = _Tbl_Filtro_Clalibpr
         Fm.Pro_Tbl_Filtro_Marcas = _Tbl_Filtro_Marcas
@@ -2958,8 +2959,10 @@ Public Class Frm_00_Asis_Compra_Menu
             Else
 
                 For Each _Asoc As Zw_TblArbol_Asociaciones In Ls_SelArbol_Asociaciones
-                    _Filtro_Bakapp += "," & _Asoc.Codigo_Nodo
+                    _Filtro_Bakapp += _Asoc.Codigo_Nodo & ","
                 Next
+
+                _Filtro_Bakapp = _Filtro_Bakapp.TrimEnd(",")
 
                 If Not String.IsNullOrWhiteSpace(_Filtro_Bakapp) Then
                     _Filtro_Bakapp = "And KOPR IN (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo_Nodo In (" & _Filtro_Bakapp & "))"

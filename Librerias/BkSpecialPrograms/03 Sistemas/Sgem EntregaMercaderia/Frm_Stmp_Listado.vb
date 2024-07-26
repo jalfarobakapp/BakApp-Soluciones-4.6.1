@@ -1,9 +1,5 @@
 ﻿Imports System.Threading
-Imports BkSpecialPrograms.LsValiciones
-Imports BkSpecialPrograms.Stmp_Configuracion
 Imports DevComponents.DotNetBar
-Imports MySql.Data.Authentication
-Imports Org.BouncyCastle.Math.EC
 
 Public Class Frm_Stmp_Listado
 
@@ -60,7 +56,7 @@ Public Class Frm_Stmp_Listado
 
     Sub Sb_Actualizar_Grilla()
 
-        Me.Cursor = Cursors.WaitCursor
+        'Me.Cursor = Cursors.WaitCursor
 
         Dim _Condicion As String = String.Empty
         Dim _DocEmitir As Boolean
@@ -165,6 +161,12 @@ Public Class Frm_Stmp_Listado
             .Columns("Nudo").HeaderText = "Número"
             .Columns("Nudo").Width = 70
             .Columns("Nudo").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Accion").Visible = True
+            .Columns("Accion").HeaderText = "Acción"
+            .Columns("Accion").Width = 50
+            .Columns("Accion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("SUDO").Visible = True
@@ -1387,7 +1389,7 @@ Public Class Frm_Stmp_Listado
                 Return
             End If
 
-            Me.Cursor = Cursors.WaitCursor
+            'Me.Cursor = Cursors.WaitCursor
 
             Sb_Crear_Ticket(_Row_Documento.Item("IDMAEEDO"), _Row_Documento.Item("TIDO"), _Row_Documento.Item("NUDO"), 1)
 
@@ -1451,7 +1453,7 @@ Public Class Frm_Stmp_Listado
                 Return
             End If
 
-            Me.Cursor = Cursors.WaitCursor
+            'Me.Cursor = Cursors.WaitCursor
 
             Sb_Crear_Ticket(_Row_Documento.Item("IDMAEEDO"), _Row_Documento.Item("TIDO"), _Row_Documento.Item("NUDO"), 1)
 

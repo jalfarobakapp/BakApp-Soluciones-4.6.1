@@ -20989,7 +20989,7 @@ Public Class Frm_Formulario_Documento
 
         Dim _Necesita_Permiso As Boolean
         Dim _Autorizado As Boolean
-        Dim _Revisar_Stock_FcvBlv As Boolean
+        Dim _Revisar_Stock_FcvBlv As Boolean = False
 
         If RutEmpresa.Trim = _RowEntidad.Item("KOEN").ToString.Trim Then
             Return
@@ -21016,6 +21016,10 @@ Public Class Frm_Formulario_Documento
                 End If
 
             Next
+
+            If Not _Revisar_Stock_FcvBlv Then
+                Sb_Revisar_Permiso("Bkp00015", False, False)
+            End If
 
         End If
 

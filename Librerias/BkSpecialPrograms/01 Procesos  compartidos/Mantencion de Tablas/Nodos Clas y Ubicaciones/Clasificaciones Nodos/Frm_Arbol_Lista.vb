@@ -336,6 +336,18 @@ Public Class Frm_Arbol_Lista
 
                     Next
 
+                    If ModoSeleccion Then
+
+                        Dim valorBuscado As String = _Codigo_Nodo
+                        Dim existeValor As Boolean = Ls_SelArbol_Asociaciones.Any(Function(item) item.Codigo_Nodo = valorBuscado)
+
+                        If existeValor Then
+                            _Checked = True
+                            Sb_MarcarPadre(_Nodo_Padre, CheckState.Indeterminate)
+                        End If
+
+                    End If
+
                 End If
 
                 _Nodo = Fx_CrearNodo_Advt(_Codigo_Nodo, _Descripcion, _Checked, _Es_Seleccionable, 7, 8, _eCheckBoxStyle)
@@ -1342,6 +1354,8 @@ Public Class Frm_Arbol_Lista
             MessageBoxEx.Show(Me, "No se ha seleccionado ninguna clasificación", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
+
+        Ls_SelArbol_Asociaciones.Clear()
 
         Dim _Cl_Arbol_Asociaciones As New Cl_Arbol_Asociaciones
 

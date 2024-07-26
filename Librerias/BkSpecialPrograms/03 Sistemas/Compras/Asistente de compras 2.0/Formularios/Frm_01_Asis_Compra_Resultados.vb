@@ -196,6 +196,9 @@ Public Class Frm_01_Asis_Compra_Resultados
             _Filtro_Zonas_Todas = value
         End Set
     End Property
+
+    Public Property Pro_Filtro_Bakapp_Todas As Boolean
+
     Public Property Pro_RowParametros() As DataRow
         Get
             Return _RowParametros
@@ -1534,6 +1537,7 @@ Public Class Frm_01_Asis_Compra_Resultados
             _Filtro_Marcas,
             _Filtro_Zonas,
             _Filtro_SuperFamilias,
+            _Filtro_Bakapp,
             _Filtro_ClasLibre,
             _Filtro_Bodega,
             _Filtro_Stock_Pedido,
@@ -1622,6 +1626,22 @@ Public Class Frm_01_Asis_Compra_Resultados
             '_Filtro_SuperFamilias = "And Codigo IN (Select KOPR From MAEPR Where FMPR In " & _Filtro_SuperFamilias & ")"
         End If
 
+        If Pro_Filtro_Bakapp_Todas Then
+            _Filtro_Bakapp = String.Empty
+        Else
+
+            For Each _Asoc As Zw_TblArbol_Asociaciones In Ls_SelArbol_Asociaciones
+                _Filtro_Bakapp += _Asoc.Codigo_Nodo & ","
+            Next
+
+            _Filtro_Bakapp = _Filtro_Bakapp.TrimEnd(",")
+
+            If Not String.IsNullOrWhiteSpace(_Filtro_Bakapp) Then
+                _Filtro_Bakapp = "And Codigo IN (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo_Nodo In (" & _Filtro_Bakapp & "))"
+            End If
+
+        End If
+
         If _Filtro_Clalibpr_Todas Then
             _Filtro_ClasLibre = String.Empty
         Else
@@ -1661,6 +1681,7 @@ Public Class Frm_01_Asis_Compra_Resultados
                       _Filtro_Marcas & vbCrLf &
                       _Filtro_Rubros & vbCrLf &
                       _Filtro_SuperFamilias & vbCrLf &
+                      _Filtro_Bakapp & vbCrLf &
                       _Filtro_Zonas & vbCrLf &
                       _Filtro_Stock_Pedido & vbCrLf &
                       _Filtro_Solo_a_Comprar & vbCrLf &

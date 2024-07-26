@@ -31,7 +31,7 @@
         Sb_Actualizar_Grilla()
         Sb_MostrarRegistros()
 
-        Timer_Paginar.Interval = (1000 * 6)
+        Timer_Paginar.Interval = (1000 * 10)
         Timer_Paginar.Start()
 
         Timer_Parpadeo.Interval = 500

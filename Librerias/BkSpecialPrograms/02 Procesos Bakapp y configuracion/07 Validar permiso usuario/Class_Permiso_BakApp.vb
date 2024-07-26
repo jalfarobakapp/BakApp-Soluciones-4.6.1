@@ -573,6 +573,8 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Doc00091", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00092", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00093", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00094", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00095", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Ope00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ope00002", _Objeto, _Formulario)
@@ -2536,6 +2538,16 @@ Public Class Class_Permiso_BakApp
 
             Case "Doc00093"
                 _DescripcionPermiso = "CAMBIAR A ELECTRONICO UNA FACTURA DE COMPRA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+
+            Case "Doc00094"
+                _DescripcionPermiso = "PERMITIR CREAR (GDI) GUIAS DE DESPACHO INTERNA SIN MODO DE TRASPASO INTERNO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+
+            Case "Doc00095"
+                _DescripcionPermiso = "PERMITIR CREAR (GDI) GUIAS DE DESPACHO INTERNA EN MODO DE TRASPASO INTERNO, PERO SIN ASIGNAR UNA BODEGA DE DESTINO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
 
