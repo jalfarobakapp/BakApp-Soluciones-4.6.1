@@ -34,7 +34,7 @@ From #Tabla_Paso# Z1
 Inner Join TABFU Tf On Tf.KOFU = Z1.KOFUEN
 WHERE IDMAEEDO IN (#Idmaeedo#)
 
--- ACTUALIZA RESPONZABLE DOCUMENTO
+-- ACTUALIZA RESPONSABLE DOCUMENTO
 
 Update #Tabla_Paso# Set KOFUDO = Edo.KOFUDO
 From #Tabla_Paso# Z1

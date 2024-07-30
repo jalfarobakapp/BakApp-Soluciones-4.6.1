@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_Arbol_Asociacion_05_Busqueda
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -129,7 +129,7 @@ Partial Class Frm_Arbol_Asociacion_05_Busqueda
         '
         Me.Btn_Filtro_Ent_Tamano_Empresa.Image = CType(resources.GetObject("Btn_Filtro_Ent_Tamano_Empresa.Image"), System.Drawing.Image)
         Me.Btn_Filtro_Ent_Tamano_Empresa.Name = "Btn_Filtro_Ent_Tamano_Empresa"
-        Me.Btn_Filtro_Ent_Tamano_Empresa.Text = "Filtrar por <b><font color=""#4E5D30""><font color=""#0072BC"">TAMAÑO EMPRESA</font><" &
+        Me.Btn_Filtro_Ent_Tamano_Empresa.Text = "Filtrar por <b><font color=""#4E5D30""><font color=""#0072BC"">TAMAÃ‘O EMPRESA</font><" &
     "/font></b>"
         '
         'LabelItem2
@@ -240,7 +240,7 @@ Partial Class Frm_Arbol_Asociacion_05_Busqueda
         '
         Me.Btn_Filtro_Responzables.Image = CType(resources.GetObject("Btn_Filtro_Responzables.Image"), System.Drawing.Image)
         Me.Btn_Filtro_Responzables.Name = "Btn_Filtro_Responzables"
-        Me.Btn_Filtro_Responzables.Text = "Filtrar por <b><font color=""#0072BC"">RESPONZABLE</font></b>"
+        Me.Btn_Filtro_Responzables.Text = "Filtrar por <b><font color=""#0072BC"">RESPONSABLE</font></b>"
         '
         'Btn_Filtro_Vendedores
         '
@@ -381,7 +381,7 @@ Partial Class Frm_Arbol_Asociacion_05_Busqueda
         '
         Me.GroupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel2.TabIndex = 1
-        Me.GroupPanel2.Text = "Buscar vista de selección"
+        Me.GroupPanel2.Text = "Buscar vista de selecciÃ³n"
         '
         'Txt_Descripcion
         '

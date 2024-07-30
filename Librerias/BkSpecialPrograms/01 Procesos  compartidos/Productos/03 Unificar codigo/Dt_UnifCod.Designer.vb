@@ -731,7 +731,7 @@ Partial Public Class Dt_UnifCod
                 Try 
                     Return CType(Me(Me.tableTmp_UnificadosHitory.ResponzableColumn),String)
                 Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Responzable' de la tabla 'Tmp_UnificadosHitory' es DBNull"& _ 
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Responsable' de la tabla 'Tmp_UnificadosHitory' es DBNull" &
                             ".", e)
                 End Try
             End Get

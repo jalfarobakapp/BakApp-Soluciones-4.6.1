@@ -21,7 +21,7 @@ Public Class Clase_Crear_Documento
     Dim _Tigedo As String       ' Tipo de generacion del documento E o I, desde TABTIDO
 
     Dim _Feemdo As String       ' Fecha emisión - FEEMDO
-    Dim _Kofudo As String       ' Responzable del documento
+    Dim _Kofudo As String       ' Responsable del documento
     Dim _Luvtdo As String      ' Centro de Costo
 
     Dim _Caprco As String       ' Cantidad total productos del documento

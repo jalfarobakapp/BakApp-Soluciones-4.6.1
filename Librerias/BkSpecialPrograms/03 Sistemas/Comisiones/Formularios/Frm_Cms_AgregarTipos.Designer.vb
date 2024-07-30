@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_Cms_AgregarTipos
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -274,7 +274,7 @@ Partial Class Frm_Cms_AgregarTipos
         Me.Btn_Filtro_Ent_Tamano_Empresa.Image = CType(resources.GetObject("Btn_Filtro_Ent_Tamano_Empresa.Image"), System.Drawing.Image)
         Me.Btn_Filtro_Ent_Tamano_Empresa.ImageAlt = CType(resources.GetObject("Btn_Filtro_Ent_Tamano_Empresa.ImageAlt"), System.Drawing.Image)
         Me.Btn_Filtro_Ent_Tamano_Empresa.Name = "Btn_Filtro_Ent_Tamano_Empresa"
-        Me.Btn_Filtro_Ent_Tamano_Empresa.Text = "Filtrar por <b><font color=""#4E5D30""><font color=""#0072BC"">TAMAÑO EMPRESA</font><" &
+        Me.Btn_Filtro_Ent_Tamano_Empresa.Text = "Filtrar por <b><font color=""#4E5D30""><font color=""#0072BC"">TAMAÃ‘O EMPRESA</font><" &
     "/font></b>"
         '
         'Btn_Filtro_Ent_Lista_Precio_Asig
@@ -451,7 +451,7 @@ Partial Class Frm_Cms_AgregarTipos
         Me.Btn_Filtro_Sucursales.Image = CType(resources.GetObject("Btn_Filtro_Sucursales.Image"), System.Drawing.Image)
         Me.Btn_Filtro_Sucursales.ImageAlt = CType(resources.GetObject("Btn_Filtro_Sucursales.ImageAlt"), System.Drawing.Image)
         Me.Btn_Filtro_Sucursales.Name = "Btn_Filtro_Sucursales"
-        Me.Btn_Filtro_Sucursales.Text = "Filtrar por <b><font color=""#0072BC"">SUCURSAL</font></b> (Línea Doc. Detalle)"
+        Me.Btn_Filtro_Sucursales.Text = "Filtrar por <b><font color=""#0072BC"">SUCURSAL</font></b> (LÃ­nea Doc. Detalle)"
         '
         'Btn_Filtro_Bodegas
         '
@@ -485,7 +485,7 @@ Partial Class Frm_Cms_AgregarTipos
         Me.Btn_Filtro_Responzables.Image = CType(resources.GetObject("Btn_Filtro_Responzables.Image"), System.Drawing.Image)
         Me.Btn_Filtro_Responzables.ImageAlt = CType(resources.GetObject("Btn_Filtro_Responzables.ImageAlt"), System.Drawing.Image)
         Me.Btn_Filtro_Responzables.Name = "Btn_Filtro_Responzables"
-        Me.Btn_Filtro_Responzables.Text = "Filtrar por <b><font color=""#0072BC"">RESPONZABLE</font></b>"
+        Me.Btn_Filtro_Responzables.Text = "Filtrar por <b><font color=""#0072BC"">RESPONSABLE</font></b>"
         '
         'Btn_Filtro_Vendedores
         '
@@ -533,7 +533,7 @@ Partial Class Frm_Cms_AgregarTipos
         Me.Chk_TieneSC.Size = New System.Drawing.Size(242, 23)
         Me.Chk_TieneSC.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_TieneSC.TabIndex = 41
-        Me.Chk_TieneSC.Text = "Tiene comisión bruta sujeta a semana corrida"
+        Me.Chk_TieneSC.Text = "Tiene comisiÃ³n bruta sujeta a semana corrida"
         '
         'LabelX2
         '
@@ -547,7 +547,7 @@ Partial Class Frm_Cms_AgregarTipos
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(75, 23)
         Me.LabelX2.TabIndex = 2
-        Me.LabelX2.Text = "% Comisión"
+        Me.LabelX2.Text = "% ComisiÃ³n"
         '
         'Txt_Descripcion
         '
@@ -578,7 +578,7 @@ Partial Class Frm_Cms_AgregarTipos
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.Size = New System.Drawing.Size(142, 23)
         Me.LabelX1.TabIndex = 0
-        Me.LabelX1.Text = "Nombre comisión"
+        Me.LabelX1.Text = "Nombre comisiÃ³n"
         '
         'Bar2
         '
@@ -611,7 +611,7 @@ Partial Class Frm_Cms_AgregarTipos
         Me.Btn_Eliminar.Image = CType(resources.GetObject("Btn_Eliminar.Image"), System.Drawing.Image)
         Me.Btn_Eliminar.ImageAlt = CType(resources.GetObject("Btn_Eliminar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Eliminar.Name = "Btn_Eliminar"
-        Me.Btn_Eliminar.Tooltip = "Eliminar comisión"
+        Me.Btn_Eliminar.Tooltip = "Eliminar comisiÃ³n"
         '
         'Imagenes_16x16
         '

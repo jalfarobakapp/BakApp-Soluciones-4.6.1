@@ -567,7 +567,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.Btn_Filtro_Responzables.Image = CType(resources.GetObject("Btn_Filtro_Responzables.Image"), System.Drawing.Image)
         Me.Btn_Filtro_Responzables.ImageAlt = CType(resources.GetObject("Btn_Filtro_Responzables.ImageAlt"), System.Drawing.Image)
         Me.Btn_Filtro_Responzables.Name = "Btn_Filtro_Responzables"
-        Me.Btn_Filtro_Responzables.Text = "Filtrar por <b><font color=""#0072BC"">RESPONZABLE</font></b>"
+        Me.Btn_Filtro_Responzables.Text = "Filtrar por <b><font color=""#0072BC"">RESPONSABLE</font></b>"
         '
         'Btn_Filtro_Vendedores
         '

@@ -21,7 +21,7 @@ Public Class Cl_Sincroniza
         Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set FechaCierre = Getdate(),CodFuncionario_Cierra = 'wms',Estado = 'CERRA'" & vbCrLf &
                        "From [@WMS_GATEWAY_TRANSFERENCIA]" & vbCrLf &
                        "Inner Join " & _Global_BaseBk & "Zw_Stmp_Enc On Idmaeedo = IDMAEEDO" & vbCrLf &
-                       "And Estado Not In ('CERRA') And UPLOAD In (2,4) "
+                       "And Estado Not In ('CERRA') And UPLOAD In (2) "
         _SqlRandom.Ej_consulta_IDU(Consulta_sql, False)
 
         Consulta_sql = "Select IDMAEEDO From [@WMS_GATEWAY_TRANSFERENCIA]" & vbCrLf &

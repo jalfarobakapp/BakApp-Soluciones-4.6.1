@@ -201,7 +201,7 @@ Public Class Frm_ImpBarras_PorDocumento
             .Columns("KOFUDO").Width = 30
             .Columns("KOFUDO").DisplayIndex = 8
 
-            .Columns("FUNCIONARIO").HeaderText = "Responzable"
+            .Columns("FUNCIONARIO").HeaderText = "Responsable"
             .Columns("FUNCIONARIO").Visible = True
             .Columns("FUNCIONARIO").Width = 150
             .Columns("FUNCIONARIO").DisplayIndex = 9
