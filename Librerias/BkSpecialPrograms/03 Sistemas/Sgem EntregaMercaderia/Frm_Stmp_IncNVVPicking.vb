@@ -135,7 +135,7 @@ Public Class Frm_Stmp_IncNVVPicking
                         "Update #Paso Set HORA = SUBSTRING(HORA,1,5),ENDO = Ltrim(Rtrim(ENDO)),SUENDO = Ltrim(Rtrim(SUENDO))" & vbCrLf &
                         "Update #Paso Set SALDO_CRV = VABRDO-VADP Where VADP > 0" & vbCrLf &
                         "Select * From #Paso" & vbCrLf &
-                        "Order By ENDO,SUENDO,NUDO" & vbCrLf &
+                        "Order By IDMAEEDO --ENDO,SUENDO,NUDO" & vbCrLf &
                         "Drop Table #Paso"
 
         _Tbl_Documentos = _Sql.Fx_Get_DataTable(Consulta_sql)

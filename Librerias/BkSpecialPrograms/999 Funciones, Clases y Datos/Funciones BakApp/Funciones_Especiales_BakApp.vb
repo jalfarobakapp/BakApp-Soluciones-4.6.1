@@ -4200,7 +4200,7 @@ Public Module Crear_Documentos_Desde_Otro
                                                                         0, False, _Subtido)
 
                         If Not String.IsNullOrEmpty(Trim(_Imprime)) Then
-                            MessageBoxEx.Show(_Formulario, "Problemas al Imprimir", "Imprimir", MessageBoxButtons.OK, MessageBoxIcon.Stop,
+                            MessageBoxEx.Show(_Formulario, _Imprime, "Problemas al Imprimir", MessageBoxButtons.OK, MessageBoxIcon.Stop,
                                       MessageBoxDefaultButton.Button1, _Formulario.TopMost)
                         End If
 

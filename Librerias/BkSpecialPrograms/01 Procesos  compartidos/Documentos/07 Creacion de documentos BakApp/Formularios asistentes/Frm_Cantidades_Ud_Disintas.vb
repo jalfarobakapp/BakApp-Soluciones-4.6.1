@@ -58,10 +58,17 @@ Public Class Frm_Cantidades_Ud_Disintas
 
             If _Fila.Cells("Nmarca").Value = "¡" Then
 
-                Chk_RtuVariable.Checked = RtuVariable
+                Dim _Cl_Producto As Cl_Producto = New Cl_Producto()
+                _Cl_Producto.Fx_Llenar_Zw_Producto(_Codigo)
 
-                If Not RtuVariable AndAlso Not CBool(Cantidad_Ud1) AndAlso Not CBool(Cantidad_Ud2) Then
-                    Chk_RtuVariable.Checked = True
+                If Not _Cl_Producto.Zw_Producto.RtuXWms Then
+
+                    Chk_RtuVariable.Checked = RtuVariable
+
+                    If Not RtuVariable AndAlso Not CBool(Cantidad_Ud1) AndAlso Not CBool(Cantidad_Ud2) Then
+                        Chk_RtuVariable.Checked = True
+                    End If
+
                 End If
 
             End If

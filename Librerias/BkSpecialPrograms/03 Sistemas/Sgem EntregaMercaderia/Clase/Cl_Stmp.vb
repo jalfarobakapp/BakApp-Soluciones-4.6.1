@@ -606,12 +606,16 @@ Public Class Cl_Stmp
             Return _Mensaje
         End If
 
-        If Not _Row_Documento.Item("Estaenwms") Then
-            _Mensaje.EsCorrecto = False
-            _Mensaje.Mensaje = "Este documento no esta ingresado en el WMS" & vbCrLf &
-                                    "Vuelva a intentarlo en 10 segundos y si no se encuentra informe de esta situación al personal de logística"
-            _Mensaje.Detalle = "Documento: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
-            Return _Mensaje
+        If Not _Global_Row_Configuracion_General.Item("Pickear_SinoEstaEnWMSIgualPickear") Then
+
+            If Not _Row_Documento.Item("Estaenwms") Then
+                _Mensaje.EsCorrecto = False
+                _Mensaje.Mensaje = "Este documento no esta ingresado en el WMS" & vbCrLf &
+                                   "Vuelva a intentarlo en 10 segundos y si no se encuentra informe de esta situación al personal de logística"
+                _Mensaje.Detalle = "Documento: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
+                Return _Mensaje
+            End If
+
         End If
 
         Dim _Row_Entidad As DataRow = Fx_Traer_Datos_Entidad(_Row_Documento.Item("ENDO"), _Row_Documento.Item("SUENDO"))

@@ -233,6 +233,7 @@ Public Class Frm_Configuracion_Gral
             Chk_Pickear_NVVTodas.Checked = .Item("Pickear_NVVTodas")
             Chk_Pickear_ProdPesoVariable.Checked = .Item("Pickear_ProdPesoVariable")
             Chk_Pickear_FacturarAutoCompletas.Checked = .Item("Pickear_FacturarAutoCompletas")
+            Chk_Pickear_SinoEstaEnWMSIgualPickear.Checked = .Item("Pickear_SinoEstaEnWMSIgualPickear")
 
             Chk_SoloprodEnDoc_CLALIBPR.Checked = .Item("SoloprodEnDoc_CLALIBPR")
 
@@ -324,6 +325,7 @@ Public Class Frm_Configuracion_Gral
         Chk_Pickear_NVVTodas.Enabled = _Modalidad_General
         Chk_Pickear_ProdPesoVariable.Enabled = _Modalidad_General
         Chk_Pickear_FacturarAutoCompletas.Enabled = _Modalidad_General
+        Chk_Pickear_SinoEstaEnWMSIgualPickear.Enabled = _Modalidad_General
 
         Chk_SoloprodEnDoc_CLALIBPR.Enabled = Not _Modalidad_General
 
@@ -525,6 +527,7 @@ Public Class Frm_Configuracion_Gral
                        ",Pickear_ProdPesoVariable = " & Convert.ToInt32(Chk_Pickear_ProdPesoVariable.Checked) & vbCrLf &
                        ",Pickear_FacturarAutoCompletas = " & Convert.ToInt32(Chk_Pickear_FacturarAutoCompletas.Checked) & vbCrLf &
                        ",SoloprodEnDoc_CLALIBPR = " & Convert.ToInt32(Chk_SoloprodEnDoc_CLALIBPR.Checked) & vbCrLf &
+                       ",Pickear_SinoEstaEnWMSIgualPickear = " & Convert.ToInt32(Chk_Pickear_SinoEstaEnWMSIgualPickear.Checked) & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then

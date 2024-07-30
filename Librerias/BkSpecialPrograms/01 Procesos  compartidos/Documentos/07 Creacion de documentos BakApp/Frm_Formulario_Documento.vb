@@ -4589,19 +4589,21 @@ Public Class Frm_Formulario_Documento
 
         Dim _Rtu As Double = _RowProducto.Item("RLUD")
 
-        Dim _Cl_Producto As Cl_Producto = New Cl_Producto()
-        _Cl_Producto.Fx_Llenar_Zw_Producto(_Codigo)
+        '' Aca de debe poner la validación de RTU con el Web Service de BodOne
 
-        If _Cl_Producto.Zw_Producto.RtuXWms Then
+        'Dim _Cl_Producto As Cl_Producto = New Cl_Producto()
+        '_Cl_Producto.Fx_Llenar_Zw_Producto(_Codigo)
 
-            Dim _Mensaje As LsValiciones.Mensajes
-            _Mensaje = _Cl_Producto.Fx_ActualizarRtuAutomaticaWMS(_Codigo, _Empresa, _Sucursal, _Bodega)
+        'If _Cl_Producto.Zw_Producto.RtuXWms Then
 
-            If _Mensaje.EsCorrecto Then
-                _Rtu = _Mensaje.Tag
-            End If
+        '    Dim _Mensaje As LsValiciones.Mensajes
+        '    _Mensaje = _Cl_Producto.Fx_ActualizarRtuAutomaticaWMS(_Codigo, _Empresa, _Sucursal, _Bodega)
 
-        End If
+        '    If _Mensaje.EsCorrecto Then
+        '        _Rtu = _Mensaje.Tag
+        '    End If
+
+        'End If
 
         Dim _DescMaximo As Double = NuloPorNro(_RowPrecios.Item("DTMA01UD"), 0)
         Dim _Ecuacion As String = NuloPorNro(_RowPrecios.Item("ECUACION").ToString.Trim, "")
