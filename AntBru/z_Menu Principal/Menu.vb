@@ -909,5 +909,11 @@ Public Class Menu
 
     End Sub
 
+    Private Sub ButtonItem6_Click(sender As Object, e As EventArgs) Handles ButtonItem6.Click
 
+        Dim Fm As New Frm_FTP_Fichero
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
 End Class

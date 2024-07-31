@@ -7,8 +7,30 @@ Public Class Frm_FTP_Fichero
     Public _Archivo_No_Se_Puede_Borrar As String
     Public _Permitir_Pisar_Archivos As Boolean
 
+    Public Sub New()
+
+        ' Esta llamada es exigida por el diseñador.
+        InitializeComponent()
+
+        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+
+        Sb_Color_Botones_Barra(Bar1)
+        Sb_Color_Botones_Barra(Bar2)
+
+    End Sub
+
     Private Sub Frm_FTP_Fichero_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
+
+        Txt_Ftp_Usuario.Text = "productos@bakapp.cl"
+        Txt_Ftp_Contrasena.Text = "JvBa$O$=mQFo"
+        Txt_Ftp_Host.Text = "ftp.bakapp.cl"
+        Txt_Ftp_Puerto.Text = "21"
+
+        _Fichero = "ftp://ftp.bakapp.cl"
+        Txt_Directorio_Seleccionado.Text = _Fichero
+
         Sb_Ver_FTP(True)
+
     End Sub
 
     Private Sub Sb_Llenat_Lista(_Lista_Archivos)

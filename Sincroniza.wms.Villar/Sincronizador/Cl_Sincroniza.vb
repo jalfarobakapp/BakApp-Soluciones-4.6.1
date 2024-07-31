@@ -511,4 +511,82 @@ Public Class Cl_Sincroniza
 
     End Sub
 
+    Sub Sb_RevisarFacturadasConfirmadasSinCerrar(Txt_Log As Object)
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Estado In ('FACTU')"
+        Dim _Tbl As DataTable = _SqlRandom.Fx_Get_DataTable(Consulta_sql)
+
+        For Each _Fila As DataRow In _Tbl.Rows
+
+            Dim _Id_Enc As Integer = _Fila.Item("Id")
+            Dim _Idmaeedoo As Integer = _Fila.Item("Idmaeedo")
+            Dim _Nudo As String = _Fila.Item("Nudo")
+            Dim _Estado As String = _Fila.Item("Estado")
+
+            Consulta_sql = "Select TOP 1 trans_act_mod,dt_start from viaware.dbo.history_master " & vbCrLf &
+                           "where oid='" & _Nudo & "' AND (trans_class = 'OBO') AND (trans_obj = 'OBORD') AND (trans_act = 'SHIP')"
+            Dim _RowConfirmada As DataRow = _SqlWms.Fx_Get_DataRow(Consulta_sql)
+
+            Dim _dt_start As String
+
+            If Not IsNothing(_RowConfirmada) Then
+
+                _dt_start = Format(_RowConfirmada.Item("dt_start"), "yyyyMMdd HH:mm")
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Estado ='CERRA',FechaCierre = '" & _dt_start & "'" & vbCrLf &
+                               "Where Id = " & _Id_Enc
+                _SqlRandom.Ej_consulta_IDU(Consulta_sql)
+
+                Sb_AddToLog("Sincronizando notas", "NVV" & _Nudo & " - Confirmada en WMS, Cerrada en Bakapp Sgem", Txt_Log)
+
+            End If
+
+        Next
+
+    End Sub
+
+    Sub Sb_RevisarIngresadasRezagadas(Txt_Log As Object)
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Estado In ('INGRE')"
+        Dim _Tbl As DataTable = _SqlRandom.Fx_Get_DataTable(Consulta_sql)
+
+        For Each _Fila As DataRow In _Tbl.Rows
+
+            Dim _Id_Enc As Integer = _Fila.Item("Id")
+            Dim _Idmaeedoo As Integer = _Fila.Item("Idmaeedo")
+            Dim _Nudo As String = _Fila.Item("Nudo")
+            Dim _Estado As String = _Fila.Item("Estado")
+            Dim _Anular As Boolean
+
+            Consulta_sql = "Select TOP 1 trans_act_mod,dt_start from viaware.dbo.history_master " & vbCrLf &
+                           "where oid='" & _Nudo & "' AND (trans_class = 'OBO') AND (trans_obj = 'OBORD') AND (trans_act = 'DELETE')"
+            Dim _RowEliminada As DataRow = _SqlWms.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_RowEliminada) Then
+
+                Consulta_sql = "select Top 1 * from om_f where ob_oid = '" & _Nudo & "'"
+                _RowEliminada = _SqlWms.Fx_Get_DataRow(Consulta_sql)
+
+                If IsNothing(_RowEliminada) Then
+                    _Anular = True
+                End If
+
+            Else
+                _Anular = True
+            End If
+
+            If _Anular Then
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Estado ='NULO'" & vbCrLf &
+                               "Where Id = " & _Id_Enc
+                _SqlRandom.Ej_consulta_IDU(Consulta_sql)
+
+                Sb_AddToLog("Sincronizando notas", "NVV" & _Nudo & " - Anulada ya que esta eliminada en WMS", Txt_Log)
+
+            End If
+
+        Next
+
+    End Sub
+
 End Class
