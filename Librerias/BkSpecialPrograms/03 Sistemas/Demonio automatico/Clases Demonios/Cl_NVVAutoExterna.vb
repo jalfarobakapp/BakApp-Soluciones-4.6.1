@@ -238,16 +238,17 @@ Drop table #Paso"
             Fm.Pro_RowEntidad = _Row_Entidad
             Fm.Sb_Crear_Documento_Interno_Con_Tabla(_Formulario, _Tbl_Productos, _Fecha_Emision,
                                                     "Codigo", "CantidadDefinitiva", "Precio", "Observacion", False, True,, True)
-            'Fm.Pro_Bodega_Destino = _Bod_Destino
-            Dim _New_Idmaeedo = Fm.Fx_Grabar_Documento(False)
+
+            Dim _Mensaje As LsValiciones.Mensajes = Fm.Fx_Grabar_Documento(False)
+
             Fm.Dispose()
 
-            If CBool(_New_Idmaeedo) Then
+            If _Mensaje.EsCorrecto Then
 
                 Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito
-                _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Modalidad, _New_Idmaeedo)
+                _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Modalidad, _Mensaje.Id)
 
-                Consulta_Sql = "Select Top 1 * From MAEEDO Where IDMAEEDO = " & _New_Idmaeedo
+                Consulta_Sql = "Select Top 1 * From MAEEDO Where IDMAEEDO = " & _Mensaje.Id
                 Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
                 Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_NVVAuto Set " &
@@ -259,11 +260,10 @@ Drop table #Paso"
                 _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
                 Consulta_Sql = "Update MAEEDOOB Set OBDO = 'Documento generado desde diablito automático desde OCC Nro: " & _Row_Encabezado.Item("NudoOCC_Ori") & "'" & vbCrLf &
-                               "Where IDMAEEDO = " & _New_Idmaeedo
+                               "Where IDMAEEDO = " & _Mensaje.Id
                 _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
             End If
-
 
         Catch ex As Exception
             _LogR = ex.Message

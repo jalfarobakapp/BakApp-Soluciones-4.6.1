@@ -804,7 +804,6 @@ Public Class Frm_GRI_FabXProducto
             Return
         End If
 
-        Dim _New_Idmaeedo As Integer
         Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
         Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -966,10 +965,10 @@ Public Class Frm_GRI_FabXProducto
 
         Fm.Pro_RowEntidad = _Row_Entidad
         Fm.Sb_Crear_Documento_Interno_Con_Tabla3Potl(Me, _Tbl_Productos, _FechaEmision, "CODIGO", "Cantidad", "C_FABRIC", _Observaciones, False, False, 1)
-        _New_Idmaeedo = Fm.Fx_Grabar_Documento(False)
+        _Mensaje = Fm.Fx_Grabar_Documento(False)
         Fm.Dispose()
 
-        If Not CBool(_New_Idmaeedo) Then
+        If Not CBool(_Mensaje.Id) Then
             Fm_Espera.Close()
             Fm_Espera.Dispose()
             Fm_Espera = Nothing
@@ -981,7 +980,7 @@ Public Class Frm_GRI_FabXProducto
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Lotes_Enc Where NroLote = '" & Txt_NroLote.Text & "'"
         Dim _Row_Lote As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        Consulta_sql = "Select top 1 IDMAEDDO,NUDO From MAEDDO Where IDMAEEDO = " & _New_Idmaeedo
+        Consulta_sql = "Select top 1 IDMAEDDO,NUDO From MAEDDO Where IDMAEEDO = " & _Mensaje.Id
         Dim _Row_Maeddo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Dim _Nudo As String = _Row_Maeddo.Item("NUDO")

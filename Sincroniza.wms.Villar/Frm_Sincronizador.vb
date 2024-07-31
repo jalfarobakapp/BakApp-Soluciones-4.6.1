@@ -33,6 +33,7 @@ Public Class Frm_Sincronizador
 
         Timer_Limpiar.Interval = (1000 * 60) * 5
         Timer_AjustarFecha.Interval = (1000 * 60) * 30
+        Timer_CerrarConfirmadas.Interval = (1000 * 60) * 15
 
         Sb_Ejecutar_diablito()
 
@@ -91,6 +92,7 @@ Public Class Frm_Sincronizador
             Timer_Ejecutar.Start()
             Timer_Limpiar.Start()
             Timer_AjustarFecha.Start()
+            Timer_CerrarConfirmadas.Start()
             Sb_AddToLog("Sincronizar", "Sincronización en ejecución.", Txt_Log)
 
         Catch ex As Exception
@@ -138,7 +140,7 @@ Public Class Frm_Sincronizador
         _Cl_Sincroniza.Sb_MarcarFacturadasPorFuera(Txt_Log)
         _Cl_Sincroniza.Sb_RevisarCanceladasLiberadas(Txt_Log, _FechaRevision)
         _Cl_Sincroniza.Sb_RevisarRezagadasSinFuncionarioQueFactura(Txt_Log)
-        _Cl_Sincroniza.Sb_RevisarFacturadasConfirmadasSinCerrar(Txt_Log)
+        '_Cl_Sincroniza.Sb_RevisarFacturadasConfirmadasSinCerrar(Txt_Log)
         '_Cl_Sincroniza.Sb_RevisarIngresadasRezagadas(Txt_Log)
 
         Switch_Sincronizacion.Value = True
@@ -189,4 +191,12 @@ Public Class Frm_Sincronizador
         Dtp_FechaRevision.Value = Now.Date
         Sb_AddToLog("Sincronizar", "Se actualiza la fecha: " & Dtp_FechaRevision.Value, Txt_Log)
     End Sub
+
+    Private Sub Timer_CerrarConfirmadas_Tick(sender As Object, e As EventArgs) Handles Timer_CerrarConfirmadas.Tick
+        Timer_Ejecutar.Stop()
+        Sb_AddToLog("Sincronizar", "Revisar facturadas y confirmadas en WMS para cerrar", Txt_Log)
+        _Cl_Sincroniza.Sb_RevisarFacturadasConfirmadasSinCerrar(Txt_Log)
+        Timer_Ejecutar.Start()
+    End Sub
+
 End Class

@@ -422,8 +422,6 @@ Public Class Frm_St_Documento
 
     Function Fx_Crear_GRP_PRE(_Nro_OT As String, _Nro_GRP As String) As Integer
 
-        Dim _Idmaeedo As Integer
-
         Dim _ServTecnico_Empresa As String = _Global_Row_Configuracion_Estacion.Item("ServTecnico_Empresa").ToString.Trim
         Dim _ServTecnico_Sucursal As String = _Global_Row_Configuracion_Estacion.Item("ServTecnico_Sucursal").ToString.Trim
         Dim _ServTecnico_Bodega As String = _Global_Row_Configuracion_Estacion.Item("ServTecnico_Bodega").ToString.Trim
@@ -490,16 +488,16 @@ Public Class Frm_St_Documento
         Fm.Pro_RowEntidad = _RowEntidad
         Fm.Sb_Crear_Documento_Interno_Con_Tabla2(Me, _Tbl_Productos, FechaDelServidor,
                                                      "Codigo", "Cantidad", "Costo", _Observaciones, False, False, _NroDocumento)
-        _Idmaeedo = Fm.Fx_Grabar_Documento(False,, False)
+        Dim _Mensaje As LsValiciones.Mensajes = Fm.Fx_Grabar_Documento(False,, False)
         Fm.Dispose()
 
-        Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set Idmaeedo_GRP_PRE = " & _Idmaeedo & " 
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set Idmaeedo_GRP_PRE = " & _Mensaje.Id & " 
                         Where Id_Ot = " & _Id_Ot & vbCrLf &
                        "Update MAEEDOOB Set OCDO = '" & _Nro_OT & "',TEXTO1 = '" & Txt_Nombre_Contacto.Text & "'
-                        Where IDMAEEDO = " & _Idmaeedo
+                        Where IDMAEEDO = " & _Mensaje.Id
         _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
-        If CBool(_Idmaeedo) Then
+        If _Mensaje.EsCorrecto Then
 
             Dim _Koen = _RowEntidad.Item("KOEN")
             Dim _Suen = _RowEntidad.Item("SUEN")
@@ -509,7 +507,7 @@ Public Class Frm_St_Documento
 
         End If
 
-        Return _Idmaeedo
+        Return _Mensaje.Id
 
     End Function
 

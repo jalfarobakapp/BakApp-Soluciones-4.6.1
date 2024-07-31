@@ -429,7 +429,6 @@ Public Class Frm_Fabricaciones
 
         Try
 
-            Dim _New_Idmaeedo As Integer
             Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
             Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -455,10 +454,10 @@ Public Class Frm_Fabricaciones
 
             Fm.Pro_RowEntidad = _Row_Entidad
             Fm.Sb_Crear_Documento_Interno_Con_Tabla3Potl(Me, _Tbl_Productos, _FechaEmision, "CODIGO", "Cantidad", "C_FABRIC", _Observaciones, False, False, 1)
-            _New_Idmaeedo = Fm.Fx_Grabar_Documento(False)
+            _Mensaje = Fm.Fx_Grabar_Documento(False)
             Fm.Dispose()
 
-            Consulta_sql = "Select top 1 IDMAEDDO,NUDO,KOPRCT,NOKOPR,CAPRCO1 From MAEDDO Where IDMAEEDO = " & _New_Idmaeedo
+            Consulta_sql = "Select top 1 IDMAEDDO,NUDO,KOPRCT,NOKOPR,CAPRCO1 From MAEDDO Where IDMAEEDO = " & _Mensaje.Id
             Dim _Row_Maeddo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_Pdp_CPT_MzDet Set Idmaeddo = " & _Row_Maeddo.Item("IDMAEDDO") & vbCrLf &

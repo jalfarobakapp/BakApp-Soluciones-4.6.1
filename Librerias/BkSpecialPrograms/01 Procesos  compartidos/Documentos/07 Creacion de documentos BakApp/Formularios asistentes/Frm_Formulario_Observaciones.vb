@@ -227,7 +227,22 @@ Public Class Frm_Formulario_Observaciones
             Btn_GDI_GTI.Visible = True
 
             If _Row_Encabezado.Item("Subtido") = "GTI" Then
-                Btn_GDI_GTI.Text = "Se grabara GDI modo traspaso interno"
+
+                Consulta_sql = "Select Top 1 KOBO,NOKOBO From TABBO Where EMPRESA = '" & _Row_Encabezado.Item("Empresa") & "' And KOBO = '" & _Row_Encabezado.Item("Bodega_Destino") & "'"
+                Dim _Row_Bodega_Destino As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                If IsNothing(_Row_Bodega_Destino) Then
+
+                    Btn_GDI_GTI.Text = "Se grabara GDI modo traspaso interno" & vbCrLf &
+                                   "No se ha seleccionado ninguna bodega de destino"
+
+                Else
+
+                    Btn_GDI_GTI.Text = "Se grabara GDI modo traspaso interno" & vbCrLf &
+                                   "Destino: " & _Row_Bodega_Destino.Item("KOBO").ToString.Trim & " - " & _Row_Bodega_Destino.Item("NOKOBO").ToString.Trim
+
+                End If
+
             Else
                 Btn_GDI_GTI.Text = "Grabar GDI modo traspaso interno"
             End If

@@ -440,7 +440,6 @@
                                                            _Fecha_Emision As DateTime,
                                                            _Modalidad As String) As LsValiciones.Mensajes
 
-        Dim _New_Idmaeedo As Integer
         Dim _Mensaje As New LsValiciones.Mensajes
         Dim _Modalidad_Old = Modalidad
 
@@ -456,6 +455,8 @@
 
             Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Origen
             Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+            Dim _Msj_GrabarDoc As New LsValiciones.Mensajes
 
             If Not IsNothing(_Row_Documento) Then
 
@@ -510,22 +511,27 @@
                 Dim Fm_Post As New Frm_Formulario_Documento(_Tido_Destino, csGlobales.Enum_Tipo_Documento.Venta, False,,,,,, True)
                 Fm_Post.Sb_Limpiar(_Modalidad)
                 Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(_Formulario, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True)
-                Fm_Post.Fx_Grabar_Documento(False, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento, True, False)
-                _New_Idmaeedo = Fm_Post.Pro_Idmaeedo
-                Fm_Post.Sb_Activar_Orden_De_Despacho(_New_Idmaeedo)
+
+                _Msj_GrabarDoc = Fm_Post.Fx_Grabar_Documento(False, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento,
+                                                             True, False,,, False)
+
+                If _Msj_GrabarDoc.EsCorrecto Then
+                    Fm_Post.Sb_Activar_Orden_De_Despacho(_Msj_GrabarDoc.Id)
+                End If
+
                 Fm_Post.Dispose()
 
             End If
 
-            If CBool(_New_Idmaeedo) Then
+            If _Msj_GrabarDoc.EsCorrecto Then
 
-                Consulta_Sql = "Select TIDO,NUDO From MAEEDO Where IDMAEEDO = " & _New_Idmaeedo
+                Consulta_Sql = "Select TIDO,NUDO From MAEEDO Where IDMAEEDO = " & _Msj_GrabarDoc.Id
                 Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
                 _Mensaje.EsCorrecto = True
                 _Mensaje.Detalle = "Documento: " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO") & " grabado con exito"
                 _Mensaje.Mensaje = "Nota de venta gestionada correctamente Ok."
-                _Mensaje.Id = _New_Idmaeedo
+                _Mensaje.Id = _Msj_GrabarDoc.Id
             Else
                 Throw New System.Exception("No fue posible generar la factura")
             End If
@@ -636,33 +642,39 @@
                                 '-- 100 Con derecho a credito fiscal y sin documento contiene activo fijo
                                 '-- '' -- No incluye este documento en el libro de compras 
 
+                                Dim _Msj_GrabarDoc As New LsValiciones.Mensajes
+
                                 Dim _Ds_Maeedo_Origen As DataSet = _Sql.Fx_Get_DataSet(Consulta_Sql)
 
                                 Dim Fm_Post As New Frm_Formulario_Documento(_TidoDocEmitir,
                                                                             csGlobales.Enum_Tipo_Documento.Venta, False)
 
-                                If Fm_Post.MensajeRevFolio.EsCorrecto Then
+                                'If Fm_Post.MensajeRevFolio.EsCorrecto Then
 
-                                    Fm_Post.Sb_Limpiar(_Modalidad)
-                                    Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(_Formulario, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True)
-                                    Fm_Post.Fx_Grabar_Documento(False, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento, True, False)
-                                    _New_Idmaeedo = Fm_Post.Pro_Idmaeedo
+                                Fm_Post.Sb_Limpiar(_Modalidad)
+                                Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(_Formulario, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True)
 
-                                    If CBool(_New_Idmaeedo) Then
-                                        Fm_Post.Sb_Activar_Orden_De_Despacho(_New_Idmaeedo)
-                                    End If
+                                _Msj_GrabarDoc = Fm_Post.Fx_Grabar_Documento(False,
+                                                                             csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento,
+                                                                             True, False,,, False)
 
-                                Else
+                                '_New_Idmaeedo = Fm_Post.Pro_Idmaeedo
 
-                                    _Mensaje = Fm_Post.MensajeRevFolio
-
+                                If CBool(_Msj_GrabarDoc.Id) Then
+                                    Fm_Post.Sb_Activar_Orden_De_Despacho(_Msj_GrabarDoc.Id)
                                 End If
+
+                                'Else
+
+                                '_Mensaje = Fm_Post.MensajeRevFolio
+
+                                'End If
 
                                 Fm_Post.Dispose()
 
-                                If Not CBool(_New_Idmaeedo) Then
+                                If Not _Msj_GrabarDoc.EsCorrecto Then 'Not CBool(_New_Idmaeedo) Then
 
-                                    _Mensaje.Mensaje = _Mensaje.Mensaje.Replace(vbCrLf, ". ")
+                                    _Mensaje.Mensaje = _Msj_GrabarDoc.Mensaje.Replace(vbCrLf, ". ")
                                     _Mensaje.Mensaje = "No fue posible realizar la grabación de la Factura. " & _Mensaje.Mensaje
 
                                     Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set " &
@@ -673,6 +685,7 @@
 
                                     _Mensaje.Detalle = "Error al grabar documento"
                                     Throw New System.Exception(_Mensaje.Mensaje)
+
                                 End If
 
                                 If _CerrarDespFact Then
@@ -681,11 +694,15 @@
 
                                     Consulta_Sql = Replace(My.Resources.Recursos_Ver_Documento.Traer_Documento_Random, "#Idmaeedo#", _Idmaeedo_Origen)
 
-                                    Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_Sql)
+                                    Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_Sql, True, False)
 
-                                    Dim _Tbl_Maeddo = _Ds.Tables(1)
+                                    If String.IsNullOrEmpty(_Sql.Pro_Error) Then
 
-                                    If Cerrar_Doc.Fx_Cerrar_Documento(_Idmaeedo_Origen, _Tbl_Maeddo) Then
+                                        Dim _Tbl_Maeddo = _Ds.Tables(1)
+
+                                        If Cerrar_Doc.Fx_Cerrar_Documento(_Idmaeedo_Origen, _Tbl_Maeddo) Then
+
+                                        End If
 
                                     End If
 
@@ -713,7 +730,7 @@
                                 End If
 
                                 _Mensaje.EsCorrecto = True
-                                _Mensaje.Id = _New_Idmaeedo
+                                _Mensaje.Id = _Msj_GrabarDoc.Id
                                 _Mensaje.Fecha = FechaDelServidor()
                                 _Mensaje.Mensaje = "Documento creado correctamente"
                                 _Mensaje.Detalle = "Se crea el documento: " & _Tido & "-" & _Nudo

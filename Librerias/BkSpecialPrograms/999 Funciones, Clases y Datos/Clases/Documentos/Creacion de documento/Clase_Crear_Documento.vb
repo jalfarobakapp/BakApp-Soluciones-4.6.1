@@ -188,11 +188,14 @@ Public Class Clase_Crear_Documento
                                 Optional _Cambiar_NroDocumento As Boolean = True,
                                 Optional ByRef _Origen_Modificado_Intertanto As Boolean = False,
                                 Optional _Es_TLV As Boolean = False,
-                                Optional _HoraAlFinalDelDia As Boolean = False) As Integer
+                                Optional _HoraAlFinalDelDia As Boolean = False) As LsValiciones.Mensajes
 
         'Optional _Tbl_Mevento_Edo As DataTable = Nothing,
         'Optional _Tbl_Mevento_Edd As DataTable = Nothing,
         'Optional _Tbl_Referencias_DTE As DataTable = Nothing) As Integer
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
 
         If False Then
             Throw New System.Exception("An exception has occurred.")
@@ -307,11 +310,11 @@ Public Class Clase_Crear_Documento
 
                         If Not _Es_ValeTransitorio Then
 
-                            Dim _Mensaje As New LsValiciones.Mensajes
+                            Dim _Msj As New LsValiciones.Mensajes
 
-                            _Mensaje = Fx_Revisar_Expiracion_Folio_SII(Nothing, _Tido, Numero_de_documento, False)
+                            _Msj = Fx_Revisar_Expiracion_Folio_SII(Nothing, _Tido, Numero_de_documento, False)
 
-                            If Not _Mensaje.EsCorrecto Then 'Not Fx_Revisar_Expiracion_Folio_SII(_Formulario, _Tido, _Nudo, True) Then
+                            If Not _Msj.EsCorrecto Then 'Not Fx_Revisar_Expiracion_Folio_SII(_Formulario, _Tido, _Nudo, True) Then
                                 Throw New System.Exception("El folio del documento electrónico (" & Numero_de_documento & ") ya expiró en el SII." & vbCrLf &
                                                        "Informe al administrador del sistema")
                             End If
@@ -323,14 +326,14 @@ Public Class Clase_Crear_Documento
                 End If
 
                 If String.IsNullOrEmpty(Numero_de_documento) Then
-                    Return 0
+                    Throw New System.Exception("El folio del documento NO puede estar vacío")
                 End If
 
                 .Item("NroDocumento") = Numero_de_documento
                 _Nudo = .Item("NroDocumento")
 
                 If String.IsNullOrEmpty(Trim(_Nudo)) Then
-                    Return 0
+                    Throw New System.Exception("El número de documento no puede estar vacío")
                 End If
 
                 For Each _Fila As DataRow In _Tbl_Referencias_DTE.Rows
@@ -1923,26 +1926,37 @@ Public Class Clase_Crear_Documento
             myTrans.Commit()
             SQL_ServerClass.Sb_Cerrar_Conexion(cn2)
 
-            Return _Idmaeedo
+            _Mensaje.Detalle = "Documento grabado con éxito"
+            _Mensaje.Id = _Idmaeedo
+            _Mensaje.Mensaje = "Ok"
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Icono = MessageBoxIcon.Information
+
+            'Return _Idmaeedo
 
         Catch ex As Exception
 
-            Dim _Erro_VB As String = ex.Message & vbCrLf & ex.StackTrace & vbCrLf &
-                                     "Código: " & _Koprct
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message & vbCrLf & vbCrLf & "Transaccion desecha"
+            _Mensaje.Detalle = "Problema"
+            _Mensaje.Id = 0
+            _Mensaje.Icono = MessageBoxIcon.Stop
+
+            Dim _Erro_VB As String = ex.Message & vbCrLf & ex.StackTrace & vbCrLf & "Código: " & _Koprct
             Clipboard.SetText(_Erro_VB)
 
             My.Computer.FileSystem.WriteAllText("ArchivoSalida", ex.Message & vbCrLf & ex.StackTrace, False)
-            MessageBoxEx.Show(ex.Message & vbCrLf & vbCrLf & "Transaccion desecha", "Problema",
-                              Windows.Forms.MessageBoxButtons.OK, Windows.Forms.MessageBoxIcon.Stop)
+            'MessageBoxEx.Show(ex.Message & vbCrLf & vbCrLf & "Transaccion desecha", "Problema", Windows.Forms.MessageBoxButtons.OK, Windows.Forms.MessageBoxIcon.Stop)
 
             If Not IsNothing(myTrans) Then
                 myTrans.Rollback()
             End If
 
             SQL_ServerClass.Sb_Cerrar_Conexion(cn2)
-            Return 0
 
         End Try
+
+        Return _Mensaje
 
     End Function
 
@@ -2101,7 +2115,7 @@ Public Class Clase_Crear_Documento
 
     End Function
 
-    Private Function Fx_Vencimientos(ByVal _RowEncabezado As DataRow) As String
+    Private Function Fx_Vencimientos(_RowEncabezado As DataRow) As String
 
         Dim _SqlQuery As String
 
@@ -2242,11 +2256,11 @@ Public Class Clase_Crear_Documento
 
 #Region "FUNCION CREAR DOCUMENTO RANDOM KASI"
 
-    Function Fx_Crear_Documento_KASI(ByVal _Tipo_de_documento As String,
-                                     ByVal _Numero_de_documento As String,
-                                     ByVal _Es_Documento_Electronico As Boolean,
-                                     ByVal _Bd_Documento As DataSet,
-                                     Optional ByVal _EsAjuste As Boolean = False) As Integer
+    Function Fx_Crear_Documento_KASI(_Tipo_de_documento As String,
+                                     _Numero_de_documento As String,
+                                     _Es_Documento_Electronico As Boolean,
+                                     _Bd_Documento As DataSet,
+                                     Optional _EsAjuste As Boolean = False) As Integer
 
 
 
@@ -3648,11 +3662,13 @@ Public Class Clase_Crear_Documento
 
 #Region "EDITAR DOCUMENTO"
 
-    Function Fx_Editar_Documento(ByVal _Formulario As Form,
-                                 ByVal _Idmaeedo As Integer,
-                                 ByVal _Cod_Func_Eliminado As String,
-                                 ByVal Bd_Documento As DataSet,
-                                 ByRef _Origen_Modificado_Intertanto As Boolean) As Integer
+    Function Fx_Editar_Documento(_Formulario As Form,
+                                 _Idmaeedo As Integer,
+                                 _Cod_Func_Eliminado As String,
+                                 Bd_Documento As DataSet,
+                                 ByRef _Origen_Modificado_Intertanto As Boolean) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
 
         ' Obtengo el tipo y numero de documento que hay que modificar
         Dim _Tipo_de_documento As String = _Sql.Fx_Trae_Dato("MAEEDO", "TIDO", "IDMAEEDO = " & _Idmaeedo)
@@ -3661,16 +3677,15 @@ Public Class Clase_Crear_Documento
         ' Obtengo la fecha del servidor para poner la fecha de eliminación del documento
         Dim _FechaEliminacion = FechaDelServidor()
 
-        Dim _New_Idmaeedo As Integer = Fx_Crear_Documento(_Tipo_de_documento,
-                                                          _Numero_de_documento,
-                                                          False,
-                                                          False,
-                                                          Bd_Documento,
-                                                          False,, _Origen_Modificado_Intertanto)
+        _Mensaje = Fx_Crear_Documento(_Tipo_de_documento,
+                                      _Numero_de_documento,
+                                      False,
+                                      False,
+                                      Bd_Documento,
+                                      False,, _Origen_Modificado_Intertanto)
 
-        If CBool(_New_Idmaeedo) Then
+        If _Mensaje.EsCorrecto Then
 
-            'Dim _Class_E As New Clase_EliminarAnular_Documento
             Dim _Class_E As New Clas_Cerrar_Anular_Eliminar_Documento_Origen
 
             Dim _Eliminado As Boolean = _Class_E.Fx_EliminarAnular_Doc(_Formulario,
@@ -3681,24 +3696,30 @@ Public Class Clase_Crear_Documento
 
             If _Eliminado Then
 
-                Consulta_sql = "Update MAEEDO Set NUDO = '" & _Numero_de_documento & "' Where IDMAEEDO = " & _New_Idmaeedo & vbCrLf &
-                               "Update MAEDDO Set NUDO = '" & _Numero_de_documento & "' Where IDMAEEDO = " & _New_Idmaeedo
+                Consulta_sql = "Update MAEEDO Set NUDO = '" & _Numero_de_documento & "' Where IDMAEEDO = " & _Mensaje.Id & vbCrLf &
+                               "Update MAEDDO Set NUDO = '" & _Numero_de_documento & "' Where IDMAEEDO = " & _Mensaje.Id
                 If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-                    Return _New_Idmaeedo
+
+                    _Mensaje.EsCorrecto = True
+                    _Mensaje.Detalle = "Editar documento"
+                    _Mensaje.Mensaje = "Documento modificado correctamente"
+
+                    Return _Mensaje
+
                 End If
 
             Else
 
                 _Class_E.Fx_EliminarAnular_Doc(_Formulario,
-                                               _New_Idmaeedo,
+                                               _Mensaje.Id,
                                                _Cod_Func_Eliminado,
                                                Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion.Modificar,
                                                False, False)
             End If
 
-        Else
-            Return False
         End If
+
+        Return _Mensaje
 
     End Function
 

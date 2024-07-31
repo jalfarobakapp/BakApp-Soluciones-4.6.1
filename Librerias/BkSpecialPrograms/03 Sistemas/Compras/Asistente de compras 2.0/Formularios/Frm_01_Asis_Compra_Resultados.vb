@@ -7649,11 +7649,13 @@ Public Class Frm_01_Asis_Compra_Resultados
         Fm.Sb_Crear_Documento_Interno_Con_Tabla2(Me, _Tbl_Productos, _Fecha_Emision,
                                                 "Codigo", "Pedir", "Costo", "Observacion", False, False)
         Fm.Pro_Bodega_Destino = _Bod_Destino
-        Dim _New_Idmaeedo = Fm.Fx_Grabar_Documento(False)
+
+        Dim _Mensaje As LsValiciones.Mensajes = Fm.Fx_Grabar_Documento(False)
+
         Fm.Dispose()
 
-        If CBool(_New_Idmaeedo) Then
-            Consulta_sql = "Select Top 1 * From MAEEDO Where IDMAEEDO = " & _New_Idmaeedo
+        If _Mensaje.EsCorrecto Then
+            Consulta_sql = "Select Top 1 * From MAEEDO Where IDMAEEDO = " & _Mensaje.Id
             Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
             Return _Row
         Else

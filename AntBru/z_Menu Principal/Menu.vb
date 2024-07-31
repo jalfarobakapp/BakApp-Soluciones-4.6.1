@@ -1,5 +1,6 @@
 ﻿Imports Bk_Produccion
 Imports BkSpecialPrograms
+Imports BkSpecialPrograms.LsValiciones
 Imports DevComponents.DotNetBar
 
 Public Class Menu
@@ -869,12 +870,12 @@ Public Class Menu
         Fm.Pro_RowEntidad = _Row_Entidad
         Fm.Sb_Crear_Documento_Interno_Con_Tabla(_Fm_Menu_Padre, _Tbl_Productos, _Fecha_Emision,
                                                 "Codigo", "Cantidad", "Precio", "Observacion", False, True)
-        'Fm.Pro_Bodega_Destino = _Bod_Destino
-        Dim _New_Idmaeedo = Fm.Fx_Grabar_Documento(False)
+        Dim _Mensaje As LsValiciones.Mensajes = Fm.Fx_Grabar_Documento(False)
         Fm.Dispose()
 
-        If CBool(_New_Idmaeedo) Then
-            Consulta_sql = "Select Top 1 * From MAEEDO Where IDMAEEDO = " & _New_Idmaeedo
+        If _Mensaje.EsCorrecto Then
+
+            Consulta_sql = "Select Top 1 * From MAEEDO Where IDMAEEDO = " & _Mensaje.Id
             Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_NVVAuto Set " &

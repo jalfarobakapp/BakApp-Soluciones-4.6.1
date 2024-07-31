@@ -396,6 +396,7 @@ Public Class Frm_Stmp_Listado
             End If
 
         Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         Finally
             Me.Enabled = True
         End Try

@@ -1,4 +1,4 @@
-Imports DevComponents.DotNetBar
+﻿Imports DevComponents.DotNetBar
 Imports System.IO
 Imports System.Data.SqlClient
 
@@ -22,7 +22,7 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
     Dim _Row_InvParcial_Inventarios As DataRow
 
     Enum TipoGrabacion
-        Con_Numeraci�n = 0
+        Con_Numeración = 0
         EnBlanco = 1
         Puros_Ceros = 2
     End Enum
@@ -51,10 +51,10 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
                    ByVal Ajuste_PM As Boolean,
                    ByVal Dejar_Doc_Final_Del_Dia As Boolean)
 
-        ' Esta llamada es exigida por el dise�ador.
+        ' Esta llamada es exigida por el diseñador.
         InitializeComponent()
 
-        ' Agregue cualquier inicializaci�n despu�s de la llamada a InitializeComponent().
+        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
         _Row_InvParcial_Inventarios = Row_InvParcial_Inventarios
         _Tbl_Productos = Tbl_Productos
@@ -113,21 +113,21 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
 
             If Not (_Row_GDI_Ajuste Is Nothing) Then
                 _Nro_GDI_Ajuste = _Row_GDI_Ajuste.Item("NUDO")
-                _Nro_GDI_Ajuste = "Gu�a de ajuste GDI: " & _Nro_GDI_Ajuste & vbCrLf
+                _Nro_GDI_Ajuste = "Guía de ajuste GDI: " & _Nro_GDI_Ajuste & vbCrLf
             End If
 
             If Not (_Row_GRI_Ajuste Is Nothing) Then
                 _Nro_GRI_Ajuste = _Row_GRI_Ajuste.Item("NUDO")
-                _Nro_GRI_Ajuste = "Gu�a de ajuste GRI: " & _Nro_GRI_Ajuste & vbCrLf
+                _Nro_GRI_Ajuste = "Guía de ajuste GRI: " & _Nro_GRI_Ajuste & vbCrLf
             End If
 
             Dim _Msg As String
 
             If String.IsNullOrEmpty(_Nro_GDI_Ajuste) And String.IsNullOrEmpty(_Nro_GRI_Ajuste) Then
-                _Msg = "No fue necesario generar gu�as de ajuste"
+                _Msg = "No fue necesario generar guías de ajuste"
             Else
                 _Msg = "Proceso Generado correctamente" & vbCrLf & vbCrLf &
-                                                  "Gu�as: " & vbCrLf &
+                                                  "Guías: " & vbCrLf &
                                                   _Nro_GDI_Ajuste & _Nro_GRI_Ajuste
             End If
 
@@ -158,7 +158,7 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
 
             AddToLog("Iniciando Analisis", "-----------------------------------------")
             AddToLog("Iniciando Analisis", "Revisando si existen productos que procesar...")
-            AddToLog("Consolidaci�n de Stock...", "Preparandose para la consilidaci�n de Stock")
+            AddToLog("Consolidación de Stock...", "Preparandose para la consilidación de Stock")
 
             Dim Contador As Integer = 0
 
@@ -192,7 +192,7 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
                     _Dif_GDI_Ud1 = _Dif
                 ElseIf _Dif < 0 Then
                     _Dif_GRI_Ud1 = _Dif * -1
-                ElseIf _DIF = 0 Then
+                ElseIf _Dif = 0 Then
                     _Dif_GDI_Ud1 = 0
                 End If
 
@@ -234,8 +234,8 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
             Next
 
             'Exit Function
-            LblEstado.Text = "Productos consolidados correctamente, Stock f�sico"
-            AddToLog("Consolidaci�n de Stock...", "Stock consolidaddo correctamente")
+            LblEstado.Text = "Productos consolidados correctamente, Stock físico"
+            AddToLog("Consolidación de Stock...", "Stock consolidaddo correctamente")
             System.Windows.Forms.Application.DoEvents()
 
             Progreso_Cont.Value = 0
@@ -263,7 +263,7 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
                 _Row_GDI_Ajuste = Fx_Generar_Guia_De_Ajuste(Enum_Tido_Doc_Ajuste.GDI_Stock_Cero)
 
                 If (_Row_GDI_Ajuste Is Nothing) Then 'NroDoc = Nothing Then
-                    AddToLog("Proceso interrumpido", "Problema en la generaci�n de Gu�a GDI de ajuste!")
+                    AddToLog("Proceso interrumpido", "Problema en la generación de Guía GDI de ajuste!")
                     AddToLog("Proceso interrumpido", "Fin del proceso")
                     System.Windows.Forms.Application.DoEvents()
                     Return False
@@ -306,7 +306,7 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
                 _Row_GRI_Ajuste = Fx_Generar_Guia_De_Ajuste(Enum_Tido_Doc_Ajuste.GRI_Stock_Cero)
 
                 If (_Row_GRI_Ajuste Is Nothing) Then 'If NroDoc = Nothing Then
-                    AddToLog("Proceso interrumpido", "Problema en la generaci�n de Gu�a GRI de ajuste!")
+                    AddToLog("Proceso interrumpido", "Problema en la generación de Guía GRI de ajuste!")
                     AddToLog("Proceso interrumpido", "Fin del proceso")
                     System.Windows.Forms.Application.DoEvents()
                     Return False
@@ -332,7 +332,7 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
 
             End If
 
-            AddToLog("Respaldando informaci�n", "Termanando el proceso...")
+            AddToLog("Respaldando información", "Termanando el proceso...")
             System.Windows.Forms.Application.DoEvents()
 
             Progreso_Cont.Value = 0
@@ -437,7 +437,6 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
 
     Function Fx_Generar_Guia_De_Ajuste(ByVal _Tipo_Documento As Enum_Tido_Doc_Ajuste) As DataRow
 
-        Dim _New_Idmaeedo As Integer
         Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
         Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -476,11 +475,11 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
         Fm.Pro_RowEntidad = _Row_Entidad
         Fm.Sb_Crear_Documento_Interno_Con_Tabla(Me, _Tbl_Productos, DtFechaInv.Value,
                                                 "CodigoPr", _Campo_Cantidad, "CostoUnitUd1", _Observaciones, False, False)
-        _New_Idmaeedo = Fm.Fx_Grabar_Documento(False)
+        Dim _Mensaje As LsValiciones.Mensajes = Fm.Fx_Grabar_Documento(False)
         Fm.Dispose()
 
-        If CBool(_New_Idmaeedo) Then
-            Consulta_sql = "Select Top 1 * From MAEEDO Where IDMAEEDO = " & _New_Idmaeedo
+        If _Mensaje.EsCorrecto Then
+            Consulta_sql = "Select Top 1 * From MAEEDO Where IDMAEEDO = " & _Mensaje.Id
             Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
             Return _Row
         Else

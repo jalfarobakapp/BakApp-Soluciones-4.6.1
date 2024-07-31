@@ -13972,7 +13972,12 @@ Public Class Frm_Formulario_Documento
                 Return
             End If
 
-            If Not Fx_Validar_Cantidades_En_Documentos() Then
+            Dim _Validar_Cantidad As String = Fx_Validar_Cantidades_En_Documentos()
+
+            If Not String.IsNullOrEmpty(_Validar_Cantidad) Then
+
+                MessageBoxEx.Show(Me, "Existen productos con cantidad cero, debe corregir", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return
             End If
 
@@ -14780,12 +14785,15 @@ Public Class Frm_Formulario_Documento
                     _Cambiar_NroDocumento = False
                 End If
 
+                Dim _Mensaje As New LsValiciones.Mensajes
 
+                '_Idmaeedo = 
 
+                _Mensaje = Fx_Grabar_Documento(_Solicitar_Observaciones_Al_Grabar,
+                                               csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento,
+                                               _Cambiar_NroDocumento,, _Grabar_e_Imprimir, _Grabar_Y_Pagar_Vale)
 
-                _Idmaeedo = Fx_Grabar_Documento(_Solicitar_Observaciones_Al_Grabar,
-                                                csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento,
-                                                _Cambiar_NroDocumento,, _Grabar_e_Imprimir, _Grabar_Y_Pagar_Vale)
+                _Idmaeedo = _Mensaje.Id
 
                 ' GRABAR PERMISOS AUTORIZADOS PRECENCIALMENTE EN TABAL REMOTAS
 
@@ -15725,7 +15733,15 @@ Public Class Frm_Formulario_Documento
                                  Optional _Cambiar_NroDocumento As Boolean = True,
                                  Optional _Solicitar_Pago As Boolean = True,
                                  Optional ByRef _Grabar_e_Imprimir As Boolean = False,
-                                 Optional _Grabar_Y_Pagar_Vale As Boolean = False)
+                                 Optional _Grabar_Y_Pagar_Vale As Boolean = False,
+                                 Optional _Mostrar_Mensaje As Boolean = True) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        _Mensaje.EsCorrecto = False
+        _Mensaje.Detalle = "Problema al Grabar documento"
+        _Mensaje.Id = 0
+        _Mensaje.Icono = MessageBoxIcon.Stop
 
         Dim _Grabar As Boolean
 
@@ -15741,7 +15757,7 @@ Public Class Frm_Formulario_Documento
                                                                               _TblDetalle,
                                                                               _Tbl_Mevento_Edo,
                                                                               _RowEntidad) Then
-                    Return 0
+                    Return _Mensaje
 
                 End If
 
@@ -15802,11 +15818,14 @@ Public Class Frm_Formulario_Documento
         End If
 
         If Not _Grabar Then
-            Return 0
+
+            _Mensaje.Mensaje = "Acción cancelada por el usurario"
+            Return _Mensaje
+
         End If
 
         Dim _Nudo As String
-        Dim _Idmaeedo As Integer
+        'Dim _Idmaeedo As Integer
         Dim _Modalidad As String
 
         _Modalidad = _TblEncabezado.Rows(0).Item("Modalidad")
@@ -15818,9 +15837,11 @@ Public Class Frm_Formulario_Documento
             _Nudo = _TblEncabezado.Rows(0).Item("NroDocumento")
         End If
 
-
         If String.IsNullOrEmpty(Trim(_Nudo)) Then
-            Return False
+
+            _Mensaje.Mensaje = "No se pudo obtener el número de documento"
+            Return _Mensaje
+
         End If
 
         Dim _Es_ValeTransitorio As Boolean
@@ -15855,8 +15876,13 @@ Public Class Frm_Formulario_Documento
 
         End If
 
-        If Not Fx_Validar_Cantidades_En_Documentos() Then
-            Return 0
+        Dim _Validadar_Cantidad As String = Fx_Validar_Cantidades_En_Documentos()
+
+        If Not String.IsNullOrEmpty(_Validadar_Cantidad) Then
+
+            _Mensaje.Mensaje = _Validadar_Cantidad
+            Return _Mensaje
+
         End If
 
         Dim _Es_TLV As Boolean
@@ -15908,11 +15934,17 @@ Public Class Frm_Formulario_Documento
                 End If
 
                 If Not _Existe_Archivo_GenDTE Then
-                    MessageBoxEx.Show(Me, "No se puede grabar el documento definitivo, debe grabar solo el Vale transitorio." & vbCrLf &
+
+                    If _Mostrar_Mensaje Then
+
+                        MessageBoxEx.Show(Me, "No se puede grabar el documento definitivo, debe grabar solo el Vale transitorio." & vbCrLf &
                                       "No se encontro el archivo GenDTE.BAT en el directorio (" & _Directorio_GenDTE & ")" & vbCrLf &
                                       "Este archivo es necesario para la generación de documentos electrónicos en DTE RunMonitor" & vbCrLf &
                                       "Debe configurar esta salidad desde la configuración de esta estación",
                                       "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                    End If
+
                     Modalidad = _Modalidad_Origen
 
                     _Mod.Sb_Actualiza_Formatos_X_Modalidad()
@@ -15922,7 +15954,9 @@ Public Class Frm_Formulario_Documento
                     _TblEncabezado.Rows(0).Item("Modalidad") = _Modalidad_Origen
                     _TblEncabezado.Rows(0).Item("NroDocumento") = _Nudo
                     _TblEncabezado.Rows(0).Item("Es_ValeTransitorio") = 1
-                    Return 0
+
+                    Return _Mensaje
+
                 End If
 
             End If
@@ -15936,15 +15970,15 @@ Public Class Frm_Formulario_Documento
 
             If _Tido = "FCV" Or _Tido = "BLV" Then
 
-                Dim _Mensaje As New LsValiciones.Mensajes
+                Dim _Msj As LsValiciones.Mensajes = Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nudo, False)
 
-                _Mensaje = Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nudo, False)
-
-                If Not _Mensaje.EsCorrecto Then 'Not Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nudo, True) Then
+                If Not _Msj.EsCorrecto Then
 
                     If Not String.IsNullOrEmpty(_Nudo) Then
 
-                        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                        If _Mostrar_Mensaje Then
+                            MessageBoxEx.Show(Me, _Msj.Mensaje, _Msj.Detalle, MessageBoxButtons.OK, _Msj.Icono)
+                        End If
 
                         Modalidad = _Modalidad_Origen
 
@@ -15956,7 +15990,11 @@ Public Class Frm_Formulario_Documento
                         _TblEncabezado.Rows(0).Item("NroDocumento") = _Nudo
                         _TblEncabezado.Rows(0).Item("Es_ValeTransitorio") = 1
 
-                        Return 0
+                        _Mensaje.EsCorrecto = False
+                        _Mensaje.Mensaje = _Msj.Mensaje
+                        _Mensaje.Id = 0
+
+                        Return _Mensaje
 
                     End If
 
@@ -15983,7 +16021,10 @@ Public Class Frm_Formulario_Documento
 
                         End If
 
-                        Return 0
+                        _Mensaje.EsCorrecto = False
+                        _Mensaje.Id = 0
+
+                        Return _Mensaje
 
                     End If
 
@@ -15998,9 +16039,11 @@ Public Class Frm_Formulario_Documento
 
         Dim _Origen_Modificado_Intertanto As Boolean
 
+        'Dim _Mensaje As New LsValiciones.Mensajes
+
         If _TipoGrab = _Tipo_de_Grabacion.Nuevo_documento Then
 
-            _Idmaeedo = _New_Doc.Fx_Crear_Documento(_Tido,
+            _Mensaje = _New_Doc.Fx_Crear_Documento(_Tido,
                                                     _Nudo,
                                                     _Es_ValeTransitorio,
                                                     _Es_Electronico,
@@ -16011,13 +16054,31 @@ Public Class Frm_Formulario_Documento
                                                     _Es_TLV,
                                                     _HoraAlFinalDelDia)
 
+            If Not _Mensaje.EsCorrecto Then
+
+                If _Mostrar_Mensaje Then
+                    MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                End If
+
+                Modalidad = _Modalidad_Origen
+
+                _Mod.Sb_Actualiza_Formatos_X_Modalidad()
+                _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+
+                Return _Mensaje
+
+            End If
+
+
         ElseIf _TipoGrab = _Tipo_de_Grabacion.Editar_documento Then
 
             Dim _Idmaeddo_Dori = _TblEncabezado.Rows(0).Item("Idmaeedo_Dori")
 
-            _Idmaeedo = _New_Doc.Fx_Editar_Documento(Me, _Idmaeddo_Dori, FUNCIONARIO, _Ds_Matriz_Documentos, _Origen_Modificado_Intertanto)
+            _Mensaje = _New_Doc.Fx_Editar_Documento(Me, _Idmaeddo_Dori, FUNCIONARIO, _Ds_Matriz_Documentos, _Origen_Modificado_Intertanto)
 
         End If
+
+        Dim _Idmaeedo As Integer = _Mensaje.Id
 
         If CBool(_Idmaeedo) Then
 
@@ -16065,14 +16126,18 @@ Public Class Frm_Formulario_Documento
                     Dim _Empresa = _Respuesta.RowEmpresa.Item("EMPRESA")
                     Dim _Razon = _Respuesta.RowEmpresa.Item("RAZON")
 
-                    If _Respuesta.EsCorrecto Then
-                        MessageBoxEx.Show(Me, "Se grabo correctamente la OCC en la empresa: " & _Empresa & " - " & _Razon & vbCrLf & _Msg,
-                                          "Grabar Migrar OCC",
-                                      MessageBoxButtons.OK, MessageBoxIcon.Information)
-                    Else
-                        MessageBoxEx.Show(Me, "Problema al grabar la OCC en la empresa: " & _Empresa & " - " & _Razon & vbCrLf & _Msg,
-                                          "Validación",
-                                      MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    If _Mostrar_Mensaje Then
+
+                        If _Respuesta.EsCorrecto Then
+                            MessageBoxEx.Show(Me, "Se grabo correctamente la OCC en la empresa: " & _Empresa & " - " & _Razon & vbCrLf & _Msg,
+                                              "Grabar Migrar OCC",
+                                          MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        Else
+                            MessageBoxEx.Show(Me, "Problema al grabar la OCC en la empresa: " & _Empresa & " - " & _Razon & vbCrLf & _Msg,
+                                              "Validación",
+                                          MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        End If
+
                     End If
 
                 Next
@@ -16463,7 +16528,7 @@ Public Class Frm_Formulario_Documento
         _Mod.Sb_Actualiza_Formatos_X_Modalidad()
         _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
 
-        Return _Idmaeedo
+        Return _Mensaje
 
     End Function
 
@@ -20611,7 +20676,7 @@ Public Class Frm_Formulario_Documento
 
     End Function
 
-    Function Fx_Validar_Cantidades_En_Documentos()
+    Function Fx_Validar_Cantidades_En_Documentos() As String
 
         For Each _Fila As DataRow In _TblDetalle.Rows
 
@@ -20622,9 +20687,11 @@ Public Class Frm_Formulario_Documento
 
                 If Not CBool(_Cantidad) Then
 
-                    MessageBoxEx.Show(Me, "Existen productos con cantidad cero, debe corregir", "Validación",
-                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                    Return False
+                    Return "Existen productos con cantidad cero, debe corregir"
+
+                    'MessageBoxEx.Show(Me, "Existen productos con cantidad cero, debe corregir", "Validación",
+                    '                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    'Return False
 
                 End If
 
@@ -20632,7 +20699,7 @@ Public Class Frm_Formulario_Documento
 
         Next
 
-        Return True
+        Return String.Empty
 
     End Function
 
@@ -20992,6 +21059,13 @@ Public Class Frm_Formulario_Documento
         Dim _Necesita_Permiso As Boolean
         Dim _Autorizado As Boolean
         Dim _Revisar_Stock_FcvBlv As Boolean = False
+
+        If _Tido = "GDI" Or _Tido = "GTI" Then
+            _Autorizado = False : _Necesita_Permiso = False
+            _Autorizado = Fx_Validar_Stock(False, _Necesita_Permiso)
+            Sb_Revisar_Permiso("Bkp00015", _Autorizado, _Necesita_Permiso)
+            Return
+        End If
 
         If RutEmpresa.Trim = _RowEntidad.Item("KOEN").ToString.Trim Then
             Return
@@ -23860,7 +23934,7 @@ Public Class Frm_Formulario_Documento
         Dim _Nuvedo = _TblEncabezado.Rows(0).Item("Cuotas")
         Dim _Fe01vedo = Format(_TblEncabezado.Rows(0).Item("Fecha_1er_Vencimiento"), "yyyyMMdd")
         Dim _Feulvedo = Format(_TblEncabezado.Rows(0).Item("FechaUltVencimiento"), "yyyyMMdd")
-        Dim _Vabrdo = _TblEncabezado.Rows(0).Item("TotalBrutoDoc")
+        Dim _Vabrdo = De_Num_a_Tx_01(_TblEncabezado.Rows(0).Item("TotalBrutoDoc"), False, 5)
         Dim _Saldo = 0
         Dim _Vaabdo = 0
 
