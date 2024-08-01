@@ -69,8 +69,8 @@
 
     Sub Sb_Traer_NVV_De_Picking_A_Facturar()
 
-        Dim _Empresa As String = _Sql.Fx_Trae_Dato("CONFIEST", "EMPRESA", "MODALIDAD = '" & Modalidad_Fac & "'")
-        Dim _Esucursal As String = _Sql.Fx_Trae_Dato("CONFIEST", "ESUCURSAL", "MODALIDAD = '" & Modalidad_Fac & "'")
+        Dim _Empresa As String = _Sql.Fx_Trae_Dato("CONFIEST", "EMPRESA", "MODALIDAD = '" & Modalidad_Fac & "'",, False)
+        Dim _Esucursal As String = _Sql.Fx_Trae_Dato("CONFIEST", "ESUCURSAL", "MODALIDAD = '" & Modalidad_Fac & "'",, False)
 
         Dim _CondicionSuc = String.Empty
 
@@ -208,6 +208,11 @@
 
         Consulta_Sql = "Select Top 20 * From " & _Global_BaseBk & "Zw_Demonio_FacAuto Where Facturar = 1"
         Dim _Tbl_Doc_Facturar As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
+
+        If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+            Log_Registro += _Sql.Pro_Error
+            Return
+        End If
 
         If CBool(_Tbl_Doc_Facturar.Rows.Count) Then
 
@@ -361,8 +366,16 @@
                 Dim _Tido = _Row_Documento.Item("TIDO")
                 Dim _Nudo = _Row_Documento.Item("NUDO")
 
-                If Not Fx_Revisar_Taza_Cambio(Nothing) Then
-                    Throw New System.Exception("No existe taza de cambio para la fecha: " & FechaDelServidor.ToShortDateString)
+                Dim _Msj_Tsc As LsValiciones.Mensajes
+
+                _Msj_Tsc = Fx_Revisar_Tasa_Cambio(Nothing,,, False)
+
+                If Not _Msj_Tsc.EsCorrecto Then
+
+                    _Mensaje.ErrorDeConexionSQL = _Msj_Tsc.ErrorDeConexionSQL
+                    Throw New System.Exception(_Mensaje.Mensaje)
+                    'Throw New System.Exception("No existe taza de cambio para la fecha: " & FechaDelServidor.ToShortDateString)
+
                 End If
 
                 If Not Fx_Se_Puede_Trasladar_Para_Crear_Otro_Documento(_Idmaeedo_Origen) Then
@@ -464,8 +477,16 @@
                 Dim _Tido = _Row_Documento.Item("TIDO")
                 Dim _Nudo = _Row_Documento.Item("NUDO")
 
-                If Not Fx_Revisar_Taza_Cambio(Nothing) Then
-                    Throw New System.Exception("No existe taza de cambio para la fecha: " & FechaDelServidor.ToShortDateString)
+                Dim _Msj_Tsc As LsValiciones.Mensajes
+
+                _Msj_Tsc = Fx_Revisar_Tasa_Cambio(Nothing,,, False)
+
+                If Not _Msj_Tsc.EsCorrecto Then
+
+                    _Mensaje.ErrorDeConexionSQL = _Msj_Tsc.ErrorDeConexionSQL
+                    Throw New System.Exception(_Mensaje.Mensaje)
+                    'Throw New System.Exception("No existe taza de cambio para la fecha: " & FechaDelServidor.ToShortDateString)
+
                 End If
 
                 If Not Fx_Se_Puede_Trasladar_Para_Crear_Otro_Documento(_Idmaeedo_Origen) Then
@@ -572,7 +593,12 @@
             If Not IsNothing(_RowFormato) Then
 
                 Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Origen
-                Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+                Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
+
+                If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                    _Mensaje.Mensaje = "Error"
+                    Throw New System.Exception(_Sql.Pro_Error)
+                End If
 
                 If Not IsNothing(_Row_Documento) Then
 
@@ -580,172 +606,199 @@
                     Dim _Tido = _Row_Documento.Item("TIDO")
                     Dim _Nudo = _Row_Documento.Item("NUDO")
 
-                    If Fx_Revisar_Taza_Cambio(_Formulario) Then
+                    Dim _Msj_Tsc As LsValiciones.Mensajes
 
-                        If Fx_Se_Puede_Trasladar_Para_Crear_Otro_Documento(_Idmaeedo_Origen) Then
+                    _Msj_Tsc = Fx_Revisar_Tasa_Cambio(Nothing,,, False)
 
-                            Dim _Empresa As String = ModEmpresa
-                            Dim _Sucursal As String = ModSucursal
-                            Dim _Bodega As String = ModBodega
+                    If Not _Msj_Tsc.EsCorrecto Then
 
-                            Dim _Permiso = "Bo" & _Empresa & _Sucursal & _Bodega
+                        _Mensaje.ErrorDeConexionSQL = _Msj_Tsc.ErrorDeConexionSQL
+                        Throw New System.Exception(_Mensaje.Mensaje)
+                        'Throw New System.Exception("No existe taza de cambio para la fecha: " & FechaDelServidor.ToShortDateString)
 
-                            If Not Fx_Tiene_Permiso(_Formulario, _Permiso, , True) Then
+                    End If
 
-                                Dim _Bod = _Global_Row_Configuracion_Estacion.Item("NOKOBO")
+                    'If Fx_Revisar_Tasa_Cambio(_Formulario) Then
 
-                                _Mensaje.Mensaje = "VALIDACION"
-                                Throw New System.Exception("NO ESTA AUTORIZADO PARA EFECTUAR DOCUMENTOS DESDE LA BODEGA DE ESTA MODALIDAD" & vbCrLf & vbCrLf &
-                                                  "BODEGA: " & _Bodega & " - " & _Bod)
+                    Consulta_Sql = "SELECT IDMAEEDO FROM MAEDDO WHERE IDMAEEDO = " & _Idmaeedo_Origen & " AND ( ESLIDO<>'C' OR ESFALI='I' ) AND TICT = ''"
 
+                    Dim _Tbl_Saldo_Facturar As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
+
+                    If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                        _Mensaje.Mensaje = "Error"
+                        Throw New System.Exception(_Sql.Pro_Error)
+                    End If
+
+                    If CBool(_Tbl_Saldo_Facturar.Rows.Count) Then
+
+                        Dim _Empresa As String = ModEmpresa
+                        Dim _Sucursal As String = ModSucursal
+                        Dim _Bodega As String = ModBodega
+
+                        Dim _Permiso = "Bo" & _Empresa & _Sucursal & _Bodega
+
+                        If Not Fx_Tiene_Permiso(_Permiso, FUNCIONARIO) Then
+
+                            Dim _Bod = _Global_Row_Configuracion_Estacion.Item("NOKOBO")
+
+                            _Mensaje.Mensaje = "VALIDACION"
+                            Throw New System.Exception("NO ESTA AUTORIZADO PARA EFECTUAR DOCUMENTOS DESDE LA BODEGA DE ESTA MODALIDAD" & vbCrLf & vbCrLf &
+                                              "BODEGA: " & _Bodega & " - " & _Bod)
+
+                        End If
+
+                        If Fx_Tiene_Permiso(_Permiso, FUNCIONARIO) Then
+
+                            Dim _CampoPrecio As String
+
+                            If _Meardo = "N" Then ' Neto
+                                _CampoPrecio = "PPPRNE"
+                            Else ' Bruto
+                                _CampoPrecio = "PPPRBR"
                             End If
 
-                            If Fx_Tiene_Permiso(_Formulario, _Permiso) Then
+                            Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
+                                           vbCrLf &
+                                           "Select Ddo.*," & vbCrLf &
+                                           "Case PRCT When 0 Then Det.Cantidad Else Case When UDTRPR = 1 Then CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 End End As 'Cantidad'," & vbCrLf &
+                                           "Case PRCT When 0 Then Det.Caprco1_Real Else CAPRCO1-CAPREX1 End As 'CantUd1_Pickea'," & vbCrLf &
+                                           "Case PRCT When 0 Then Det.Caprco2_Real Else CAPRCO1-CAPREX1 End As 'CantUd2_Pickea'," & vbCrLf &
+                                           "Cast(1 As Bit) As DesdePickeo," & vbCrLf &
+                                           "CAPRCO1-CAPREX1 As 'CantUd1_Dori',CAPRCO2-CAPREX2 As 'CantUd2_Dori'," & vbCrLf &
+                                           "Case WHEN UDTRPR = 1 Then PPPRNE Else PPPRNE*RLUDPR End AS 'Precio'," & vbCrLf &
+                                           "0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta," & vbCrLf &
+                                           "Isnull(Det.RtuVariable,0) As 'RtuVariable'" & vbCrLf &
+                                           "From MAEDDO Ddo With ( NOLOCK )" & vbCrLf &
+                                           "Left Join " & _Global_BaseBk & "Zw_Stmp_Det Det On Ddo.IDMAEDDO = Det.Idmaeddo" & vbCrLf &
+                                           "Where IDMAEEDO = " & _Idmaeedo_Origen & " AND ( ESLIDO<>'C' OR ESFALI='I' ) --AND TICT = ''" & vbCrLf &
+                                           "Order by IDMAEEDO,IDMAEDDO " & vbCrLf &
+                                           vbCrLf &
+                                           "Select * From MAEIMLI Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
+                                           vbCrLf &
+                                           "Select * From MAEDTLI Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
+                                           vbCrLf &
+                                           "Select TOP 1 * From MAEEDOOB Where IDMAEEDO = " & _Idmaeedo_Origen
 
-                                Dim _CampoPrecio As String
+                            'Falta revisar el campo SUBTIDO, ya que al parecer se guardan datos dependiendo del tipo de FCC por ejemplo si tiene derecho a credito fiscal
+                            'Falta campo FECHATRIB = Fecha de ingreso
 
-                                If _Meardo = "N" Then ' Neto
-                                    _CampoPrecio = "PPPRNE"
-                                Else ' Bruto
-                                    _CampoPrecio = "PPPRBR"
-                                End If
+                            ' SUBTIDO
+                            '-- 001 Sin derecho a credito fiscal y Sin documento contiene activo fijo
+                            '-- 000 Documento contiene activo fijo y Sin derecho a credito fiscal
+                            '-- 101 Conderecho a credito fiscal y documento contiene activo fijo
+                            '-- 100 Con derecho a credito fiscal y sin documento contiene activo fijo
+                            '-- '' -- No incluye este documento en el libro de compras 
 
-                                Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
-                                               vbCrLf &
-                                               "Select Ddo.*," & vbCrLf &
-                                               "Case PRCT When 0 Then Det.Cantidad Else Case When UDTRPR = 1 Then CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 End End As 'Cantidad'," & vbCrLf &
-                                               "Case PRCT When 0 Then Det.Caprco1_Real Else CAPRCO1-CAPREX1 End As 'CantUd1_Pickea'," & vbCrLf &
-                                               "Case PRCT When 0 Then Det.Caprco2_Real Else CAPRCO1-CAPREX1 End As 'CantUd2_Pickea'," & vbCrLf &
-                                               "Cast(1 As Bit) As DesdePickeo," & vbCrLf &
-                                               "CAPRCO1-CAPREX1 As 'CantUd1_Dori',CAPRCO2-CAPREX2 As 'CantUd2_Dori'," & vbCrLf &
-                                               "Case WHEN UDTRPR = 1 Then PPPRNE Else PPPRNE*RLUDPR End AS 'Precio'," & vbCrLf &
-                                               "0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta," & vbCrLf &
-                                               "Isnull(Det.RtuVariable,0) As 'RtuVariable'" & vbCrLf &
-                                               "From MAEDDO Ddo With ( NOLOCK )" & vbCrLf &
-                                               "Left Join " & _Global_BaseBk & "Zw_Stmp_Det Det On Ddo.IDMAEDDO = Det.Idmaeddo" & vbCrLf &
-                                               "Where IDMAEEDO = " & _Idmaeedo_Origen & " AND ( ESLIDO<>'C' OR ESFALI='I' ) --AND TICT = ''" & vbCrLf &
-                                               "Order by IDMAEEDO,IDMAEDDO " & vbCrLf &
-                                               vbCrLf &
-                                               "Select * From MAEIMLI Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
-                                               vbCrLf &
-                                               "Select * From MAEDTLI Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
-                                               vbCrLf &
-                                               "Select TOP 1 * From MAEEDOOB Where IDMAEEDO = " & _Idmaeedo_Origen
+                            Dim _Msj_GrabarDoc As New LsValiciones.Mensajes
 
-                                'Falta revisar el campo SUBTIDO, ya que al parecer se guardan datos dependiendo del tipo de FCC por ejemplo si tiene derecho a credito fiscal
-                                'Falta campo FECHATRIB = Fecha de ingreso
+                            Dim _Ds_Maeedo_Origen As DataSet = _Sql.Fx_Get_DataSet(Consulta_Sql, True, False)
 
-                                ' SUBTIDO
-                                '-- 001 Sin derecho a credito fiscal y Sin documento contiene activo fijo
-                                '-- 000 Documento contiene activo fijo y Sin derecho a credito fiscal
-                                '-- 101 Conderecho a credito fiscal y documento contiene activo fijo
-                                '-- 100 Con derecho a credito fiscal y sin documento contiene activo fijo
-                                '-- '' -- No incluye este documento en el libro de compras 
+                            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                                _Mensaje.Mensaje = "Error"
+                                Throw New System.Exception(_Sql.Pro_Error)
+                            End If
 
-                                Dim _Msj_GrabarDoc As New LsValiciones.Mensajes
+                            Dim Fm_Post As New Frm_Formulario_Documento(_TidoDocEmitir,
+                                                                        csGlobales.Enum_Tipo_Documento.Venta, False,,,,,, True)
 
-                                Dim _Ds_Maeedo_Origen As DataSet = _Sql.Fx_Get_DataSet(Consulta_Sql)
+                            'If Fm_Post.MensajeRevFolio.EsCorrecto Then
+                            Dim _Msj_Limpiar As LsValiciones.Mensajes
 
-                                Dim Fm_Post As New Frm_Formulario_Documento(_TidoDocEmitir,
-                                                                            csGlobales.Enum_Tipo_Documento.Venta, False)
+                            _Msj_Limpiar = Fm_Post.Fx_Limpiar(_Modalidad)
 
-                                'If Fm_Post.MensajeRevFolio.EsCorrecto Then
+                            If _Msj_Limpiar.EsCorrecto Then
 
-                                Fm_Post.Sb_Limpiar(_Modalidad)
                                 Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(_Formulario, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True)
 
                                 _Msj_GrabarDoc = Fm_Post.Fx_Grabar_Documento(False,
                                                                              csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento,
                                                                              True, False,,, False)
 
-                                '_New_Idmaeedo = Fm_Post.Pro_Idmaeedo
-
                                 If CBool(_Msj_GrabarDoc.Id) Then
                                     Fm_Post.Sb_Activar_Orden_De_Despacho(_Msj_GrabarDoc.Id)
                                 End If
-
-                                'Else
-
-                                '_Mensaje = Fm_Post.MensajeRevFolio
-
-                                'End If
-
                                 Fm_Post.Dispose()
+                            Else
 
-                                If Not _Msj_GrabarDoc.EsCorrecto Then 'Not CBool(_New_Idmaeedo) Then
+                                Throw New System.Exception(_Msj_Limpiar.Mensaje)
 
-                                    _Mensaje.Mensaje = _Msj_GrabarDoc.Mensaje.Replace(vbCrLf, ". ")
-                                    _Mensaje.Mensaje = "No fue posible realizar la grabación de la Factura. " & _Mensaje.Mensaje
+                            End If
 
-                                    Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set " &
-                                                   "ProblemaFac = 1" &
-                                                   ",Log_Error = '" & _Mensaje.Mensaje & "'" & vbCrLf &
-                                                   "Where Id = " & _Id_Pickeo
-                                    _Sql.Ej_consulta_IDU(Consulta_Sql, False)
+                            If Not _Msj_GrabarDoc.EsCorrecto Then 'Not CBool(_New_Idmaeedo) Then
 
-                                    _Mensaje.Detalle = "Error al grabar documento"
-                                    Throw New System.Exception(_Mensaje.Mensaje)
+                                _Mensaje.Mensaje = _Msj_GrabarDoc.Mensaje.Replace(vbCrLf, ". ")
+                                _Mensaje.Mensaje = "No fue posible realizar la grabación de la Factura. " & _Mensaje.Mensaje
 
-                                End If
+                                Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set " &
+                                               "ProblemaFac = 1" &
+                                               ",Log_Error = '" & _Mensaje.Mensaje & "'" & vbCrLf &
+                                               "Where Id = " & _Id_Pickeo
+                                _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
-                                If _CerrarDespFact Then
+                                _Mensaje.Detalle = "Error al grabar documento"
+                                Throw New System.Exception(_Mensaje.Mensaje)
 
-                                    Dim Cerrar_Doc As New Clas_Cerrar_Documento
+                            End If
 
-                                    Consulta_Sql = Replace(My.Resources.Recursos_Ver_Documento.Traer_Documento_Random, "#Idmaeedo#", _Idmaeedo_Origen)
+                            If _CerrarDespFact Then
 
-                                    Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_Sql, True, False)
+                                Dim Cerrar_Doc As New Clas_Cerrar_Documento
 
-                                    If String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                                Consulta_Sql = Replace(My.Resources.Recursos_Ver_Documento.Traer_Documento_Random, "#Idmaeedo#", _Idmaeedo_Origen)
 
-                                        Dim _Tbl_Maeddo = _Ds.Tables(1)
+                                Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_Sql, True, False)
 
-                                        If Cerrar_Doc.Fx_Cerrar_Documento(_Idmaeedo_Origen, _Tbl_Maeddo) Then
+                                If String.IsNullOrEmpty(_Sql.Pro_Error) Then
 
-                                        End If
+                                    Dim _Tbl_Maeddo = _Ds.Tables(1)
+
+                                    If Cerrar_Doc.Fx_Cerrar_Documento(_Idmaeedo_Origen, _Tbl_Maeddo) Then
 
                                     End If
 
                                 End If
 
-                                Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO = " & _New_Idmaeedo
-                                Dim _Row_Maeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
+                            End If
 
-                                _Tido = String.Empty
-                                _Nudo = String.Empty
+                            Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO = " & _New_Idmaeedo
+                            Dim _Row_Maeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
 
-                                If Not IsNothing(_Row_Maeedo) Then
+                            _Tido = String.Empty
+                            _Nudo = String.Empty
 
-                                    _Tido = _Row_Maeedo.Item("TIDO")
-                                    _Nudo = _Row_Maeedo.Item("NUDO")
+                            If Not IsNothing(_Row_Maeedo) Then
 
-                                    Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set " &
-                                                   "Estado = 'FACTU'" &
-                                                   ",IdmaeedoGen = " & _New_Idmaeedo &
-                                                   ",TidoGen = '" & _Tido &
-                                                   "',NudoGen = '" & _Nudo & "'" & vbCrLf &
-                                                   "Where Id = " & _Id_Pickeo
-                                    _Sql.Ej_consulta_IDU(Consulta_Sql, False)
+                                _Tido = _Row_Maeedo.Item("TIDO")
+                                _Nudo = _Row_Maeedo.Item("NUDO")
 
-                                End If
-
-                                _Mensaje.EsCorrecto = True
-                                _Mensaje.Id = _Msj_GrabarDoc.Id
-                                _Mensaje.Fecha = FechaDelServidor()
-                                _Mensaje.Mensaje = "Documento creado correctamente"
-                                _Mensaje.Detalle = "Se crea el documento: " & _Tido & "-" & _Nudo
+                                Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set " &
+                                               "Estado = 'FACTU'" &
+                                               ",IdmaeedoGen = " & _New_Idmaeedo &
+                                               ",TidoGen = '" & _Tido &
+                                               "',NudoGen = '" & _Nudo & "'" & vbCrLf &
+                                               "Where Id = " & _Id_Pickeo
+                                _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
                             End If
 
-                        Else
-
-                            _Mensaje.Mensaje = "Documento cerrado"
-                            Throw New System.Exception("Nota de venta Nro: " & _Nudo & " se encuentra cerrado completamente")
+                            _Mensaje.EsCorrecto = True
+                            _Mensaje.Id = _Msj_GrabarDoc.Id
+                            _Mensaje.Fecha = FechaDelServidor()
+                            _Mensaje.Mensaje = "Documento creado correctamente"
+                            _Mensaje.Detalle = "Se crea el documento: " & _Tido & "-" & _Nudo
 
                         End If
 
+                    Else
+
+                        _Mensaje.Mensaje = "Documento cerrado"
+                        Throw New System.Exception("Nota de venta Nro: " & _Nudo & " se encuentra cerrado completamente")
+
                     End If
+
+                    'End If
                 End If
+
             Else
 
                 _Mensaje.Mensaje = "Información"

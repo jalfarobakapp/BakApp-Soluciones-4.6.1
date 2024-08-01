@@ -177,6 +177,7 @@ Namespace LsValiciones
         Public Property Cancelado As Boolean
         Public Property MostrarMensaje As Boolean = True
         Public Property Cerrar As Boolean
+        Public Property ErrorDeConexionSQL As Boolean
 
     End Class
 

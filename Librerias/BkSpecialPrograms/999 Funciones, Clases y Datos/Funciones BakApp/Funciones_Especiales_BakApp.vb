@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Security.Cryptography
 Imports BkSpecialPrograms.Bk_Migrar_Producto
+Imports BkSpecialPrograms.LsValiciones
 Imports DevComponents.DotNetBar
 Imports Newtonsoft.Json
 Public Module Funciones_Especiales_BakApp
@@ -15,17 +16,16 @@ Public Module Funciones_Especiales_BakApp
 
         Dim _NombreFormato As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad",
                                                          "NombreFormato",
-                                                         "Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _TipoDoc & "'")
+                                                         "Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _TipoDoc & "'",, _Mostrar_Mensaje)
 
         Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Format_01" & vbCrLf &
                        "Where TipoDoc = '" & _TipoDoc & "' And NombreFormato = '" & _NombreFormato & "'"
-        Dim _RowFormato As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
+        Dim _RowFormato As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, _Mostrar_Mensaje)
 
         If _RowFormato Is Nothing Then
 
             Consulta_sql = "Select top 1 * From TABTIDO Where TIDO = '" & _TipoDoc & "'"
-            Dim _RowTido As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+            Dim _RowTido As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, _Mostrar_Mensaje)
 
             Dim _Notido As String = _TipoDoc
 
@@ -850,8 +850,13 @@ Public Module Funciones_Especiales_BakApp
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
         Consulta_sql = "select getdate() As Fecha"
-        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-        FechaDelServidor = _Row.Item("Fecha")
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+        If IsNothing(_Row) Then
+            FechaDelServidor = Now
+        Else
+            FechaDelServidor = _Row.Item("Fecha")
+        End If
 
     End Function
 
@@ -891,7 +896,7 @@ Public Module Funciones_Especiales_BakApp
         Consulta_sql = Replace(Consulta_sql, "#CodEntidad#", _CodEntidad)
         Consulta_sql = Replace(Consulta_sql, "#SucEntidad#", _SucEntidad)
 
-        _Row_Entidad = _Sql.Fx_Get_DataRow(Consulta_sql)
+        _Row_Entidad = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 
         If Not (_Row_Entidad Is Nothing) Then
 
@@ -1596,85 +1601,130 @@ Public Module Funciones_Especiales_BakApp
 
     End Function
 
-    Function Fx_Revisar_Taza_Cambio(_Formulario As Form,
-                                    Optional _Fecha_Taza As Date = Nothing,
-                                    Optional _Revisar_Obligado As Boolean = False) As Boolean
+    Function Fx_Revisar_Tasa_Cambio(_Formulario As Form,
+                                    Optional _Fecha_Tasa As Date = Nothing,
+                                    Optional _Revisar_Obligado As Boolean = False,
+                                    Optional _Mostrar_Mensaje As Boolean = True) As LsValiciones.Mensajes
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+        Dim _Mensaje As New LsValiciones.Mensajes
 
-        Dim _Revisa_Taza_Cambio As Boolean = True '_Global_Row_Configuracion_General.Item("Revisa_Taza_Cambio")
-        Dim _Revisar_Taza_Solo_Mon_Extranjeras As Boolean = _Global_Row_Configuracion_General.Item("Revisar_Taza_Solo_Mon_Extranjeras")
+        Try
 
-        If _Revisar_Obligado Then
-            _Revisa_Taza_Cambio = True
-        End If
+            Dim _Revisa_Taza_Cambio As Boolean = True
+            Dim _Revisar_Taza_Solo_Mon_Extranjeras As Boolean = _Global_Row_Configuracion_General.Item("Revisar_Taza_Solo_Mon_Extranjeras")
 
-        If Not _Revisa_Taza_Cambio Then
-            Return True
-        End If
+            If _Revisar_Obligado Then
+                _Revisa_Taza_Cambio = True
+            End If
 
-        Dim _Fecha As String
+            If Not _Revisa_Taza_Cambio Then
 
-        If (_Fecha_Taza = Nothing) Then
-            _Fecha_Taza = FormatDateTime(FechaDelServidor(), DateFormat.ShortDate)
-        End If
+                _Mensaje.Detalle = "Revisar tasa de cambio"
+                _Mensaje.Mensaje = "No se necesita revisar la tasa de cambio"
+                _Mensaje.EsCorrecto = True
+                _Mensaje.Icono = MessageBoxIcon.Information
 
-        _Fecha = Format(_Fecha_Taza, "yyyyMMdd")
+                Return _Mensaje
 
+            End If
 
-        Dim _CantMonedas As Integer = _Sql.Fx_Cuenta_Registros("TABMO", "TIMO = 'E' Or KOMO <> '$'")
+            Dim _Fecha As String
 
-        Consulta_sql = "Select Distinct KOMO From MAEMO Where (FEMO = '" & _Fecha & "' AND TIMO = 'E') Or " &
-                       "(FEMO = '" & _Fecha & "' And KOMO <> '$')"
-        Dim _CantMonedas_Con_Taza = _Sql.Fx_Get_DataTable(Consulta_sql)
+            If (_Fecha_Tasa = Nothing) Then
+                _Fecha_Tasa = FormatDateTime(FechaDelServidor(), DateFormat.ShortDate)
+            End If
 
-        If CBool(_CantMonedas) Then
+            _Fecha = Format(_Fecha_Tasa, "yyyyMMdd")
 
-            If _CantMonedas_Con_Taza.Rows.Count = _CantMonedas Then
-                Return True
-            Else
+            Dim _CantMonedas As Integer = _Sql.Fx_Cuenta_Registros("TABMO", "TIMO = 'E' Or KOMO <> '$'", _Mostrar_Mensaje)
 
-                Consulta_sql = "Select *,(select COUNT(*) From TABMO WHERE TIMO = 'E') as NroMonedas" & vbCrLf &
-                               "From TABMO Where (TIMO = 'E' Or KOMO <> '$')" & vbCrLf &
-                               "And KOMO Not IN (Select Distinct KOMO From MAEMO Where FEMO = '" & _Fecha & "')"
+            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                Throw New System.Exception(_Sql.Pro_Error)
+                _Mensaje.ErrorDeConexionSQL = True
+            End If
 
-                Dim _TblMoneda As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+            Consulta_sql = "Select Distinct KOMO From MAEMO Where (FEMO = '" & _Fecha & "' AND TIMO = 'E') Or " &
+                           "(FEMO = '" & _Fecha & "' And KOMO <> '$')"
+            Dim _CantMonedas_Con_Taza = _Sql.Fx_Get_DataTable(Consulta_sql, _Mostrar_Mensaje)
 
-                Dim _Monedas = String.Empty
+            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                Throw New System.Exception(_Sql.Pro_Error)
+                _Mensaje.ErrorDeConexionSQL = True
+            End If
 
-                For Each _Filas As DataRow In _TblMoneda.Rows
+            If CBool(_CantMonedas) Then
 
-                    Dim _Revisar = False
-                    Dim _Timo = _Filas.Item("TIMO")
+                If _CantMonedas_Con_Taza.Rows.Count = _CantMonedas Then
 
-                    If _Revisar_Taza_Solo_Mon_Extranjeras Then
-                        If _Timo = "E" Then
+                    _Mensaje.Detalle = "Revisar tasa de cambio"
+                    _Mensaje.Mensaje = "No se necesita revisar la tasa de cambio"
+                    _Mensaje.EsCorrecto = True
+                    _Mensaje.Icono = MessageBoxIcon.Information
+
+                    Return _Mensaje
+
+                Else
+
+                    Consulta_sql = "Select *,(select COUNT(*) From TABMO WHERE TIMO = 'E') as NroMonedas" & vbCrLf &
+                                   "From TABMO Where (TIMO = 'E' Or KOMO <> '$')" & vbCrLf &
+                                   "And KOMO Not IN (Select Distinct KOMO From MAEMO Where FEMO = '" & _Fecha & "')"
+
+                    Dim _TblMoneda As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, _Mostrar_Mensaje)
+
+                    If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                        Throw New System.Exception(_Sql.Pro_Error)
+                        _Mensaje.ErrorDeConexionSQL = True
+                    End If
+
+                    Dim _Monedas = String.Empty
+
+                    For Each _Filas As DataRow In _TblMoneda.Rows
+
+                        Dim _Revisar = False
+                        Dim _Timo = _Filas.Item("TIMO")
+
+                        If _Revisar_Taza_Solo_Mon_Extranjeras Then
+                            If _Timo = "E" Then
+                                _Revisar = True
+                            End If
+                        Else
                             _Revisar = True
                         End If
+
+                        If _Revisar Then
+                            _Monedas += _Filas.Item("KOMO") & "-" & Trim(_Filas.Item("NOKOMO") & vbCrLf)
+                        End If
+
+                    Next
+
+                    If String.IsNullOrEmpty(_Monedas) Then
+
+                        _Mensaje.Detalle = "Revisar tasa de cambio"
+                        _Mensaje.Mensaje = "No se necesita revisar la tasa de cambio"
+                        _Mensaje.EsCorrecto = True
+                        _Mensaje.Icono = MessageBoxIcon.Information
+
+                        Return _Mensaje
+
                     Else
-                        _Revisar = True
-                    End If
+                        If Not IsNothing(_Formulario) Then
 
-                    If _Revisar Then
-                        _Monedas += _Filas.Item("KOMO") & "-" & Trim(_Filas.Item("NOKOMO") & vbCrLf)
-                    End If
+                            If _Mostrar_Mensaje Then
 
-                Next
+                                If MessageBoxEx.Show(_Formulario, "No existe tasa de cambio para la fecha: " & FormatDateTime(_Fecha_Tasa, DateFormat.ShortDate) & vbCrLf &
+                                                     "Para las monedas: " & vbCrLf & vbCrLf & _Monedas & vbCrLf & vbCrLf & "¿Desea ingresar la tasa de cambio?", "Validación",
+                                                     MessageBoxButtons.YesNo, MessageBoxIcon.Stop) = DialogResult.Yes Then
 
-                If String.IsNullOrEmpty(_Monedas) Then
-                    Return True
-                Else
-                    If Not IsNothing(_Formulario) Then
+                                    If Fx_Tiene_Permiso(_Formulario, "Espr0032") Then
 
-                        If MessageBoxEx.Show(_Formulario, "No existe tasa de cambio para la fecha: " & FormatDateTime(_Fecha_Taza, DateFormat.ShortDate) & vbCrLf &
-                                      "Para las monedas: " & vbCrLf & vbCrLf & _Monedas & vbCrLf & vbCrLf & "¿Desea ingresar la tasa de cambio?", "Validación",
-                                      MessageBoxButtons.YesNo, MessageBoxIcon.Stop) = DialogResult.Yes Then
+                                        Dim Fm As New Frm_MonedasLista
+                                        Fm.ShowDialog(_Formulario)
+                                        Fm.Dispose()
 
-                            If Fx_Tiene_Permiso(_Formulario, "Espr0032") Then
+                                    End If
 
-                                Dim Fm As New Frm_MonedasLista
-                                Fm.ShowDialog(_Formulario)
-                                Fm.Dispose()
+                                End If
 
                             End If
 
@@ -1684,11 +1734,25 @@ Public Module Funciones_Especiales_BakApp
 
                 End If
 
+            Else
+
+                _Mensaje.Detalle = "Revisar tasa de cambio"
+                _Mensaje.Mensaje = "No se necesita revisar la tasa de cambio"
+                _Mensaje.EsCorrecto = True
+                _Mensaje.Icono = MessageBoxIcon.Information
+
+                Return _Mensaje
+
             End If
 
-        Else
-            Return True
-        End If
+        Catch ex As Exception
+            _Mensaje.Detalle = "Error al revisar tasa de cambio"
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Icono = MessageBoxIcon.Stop
+        End Try
+
+        Return _Mensaje
 
     End Function
 
@@ -3092,7 +3156,18 @@ Public Module Crear_Documentos_Desde_Otro
                 Dim _Tido = _Row_Documento.Item("TIDO")
                 Dim _Nudo = _Row_Documento.Item("NUDO")
 
-                If Fx_Revisar_Taza_Cambio(_Formulario) Then
+                Dim _Msj_Tsc As LsValiciones.Mensajes
+
+                _Msj_Tsc = Fx_Revisar_Tasa_Cambio(Nothing,,, False)
+                'If Not _Msj_Tsc.EsCorrecto Then
+
+                '    _Mensaje.ErrorDeConexionSQL = _Msj_Tsc.ErrorDeConexionSQL
+                '    Throw New System.Exception(_Mensaje.Mensaje)
+                '    'Throw New System.Exception("No existe taza de cambio para la fecha: " & FechaDelServidor.ToShortDateString)
+
+                'End If
+
+                If _Msj_Tsc.EsCorrecto Then
 
                     If Fx_Se_Puede_Trasladar_Para_Crear_Otro_Documento(_Idmaeedo_Origen) Then
 
@@ -3158,7 +3233,11 @@ Public Module Crear_Documentos_Desde_Otro
                         FROM MAEDDO  WITH ( NOLOCK ) 
                         WHERE IDMAEEDO =  " & _Idmaeedo & " AND ( ESLIDO<>'C' OR ESFALI='I' ) AND TICT = ''"
 
-        Dim _Tbl_Saldo_Facturar As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+        Dim _Tbl_Saldo_Facturar As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
+
+        If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+            Return False
+        End If
 
         Return CBool(_Tbl_Saldo_Facturar.Rows.Count)
 

@@ -441,7 +441,7 @@ Public Class Frm_Formulario_Documento
                         (CodPermiso,DescripcionPermiso,CodFamilia,NombreFamiliaPermiso)
                         Select 'Lp-'+KOLT As CodPermiso,NOKOLT as DescripcionPermiso,'Lp','Listas de precios'
                         From TABPP"
-        _Sql.Ej_consulta_IDU(Consulta_sql)
+        _Sql.Ej_consulta_IDU(Consulta_sql, Not _Facturacion_Automatica)
 
 
         Lbl_Version.Text = "Versión: " & _Global_Version_BakApp
@@ -469,7 +469,7 @@ Public Class Frm_Formulario_Documento
         Consulta_sql = "Select top 1 * From MAEMO" & Environment.NewLine &
                        "Where KOMO = 'US$' AND FEMO = '" & Format(FechaDelServidor, "yyyyMMdd") & "'"
 
-        Dim _TblMoneda As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+        Dim _TblMoneda As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, Not _Facturacion_Automatica)
 
         _SubTido = String.Empty
 
@@ -517,10 +517,11 @@ Public Class Frm_Formulario_Documento
         Btn_Desde_COV_OCC.Visible = _Post_Venta
 
         If Not _Facturacion_Automatica Then
-            Sb_Limpiar(Modalidad, True)
-        End If
 
-        Chk_Ver_Dscto_Maximo.Checked = Fx_Tiene_Permiso(Me, "Doc00048",, False)
+            Sb_Limpiar(Modalidad, True)
+            Chk_Ver_Dscto_Maximo.Checked = Fx_Tiene_Permiso(Me, "Doc00048",, False)
+
+        End If
 
         AddHandler Chk_Ver_Dscto_Maximo.CheckedChanging, AddressOf Chk_Ver_Dscto_Maximo_CheckedChanging
         AddHandler Chk_Ver_Dscto_Maximo.CheckedChanged, AddressOf Chk_Ver_Dscto_Maximo_CheckedChanged
@@ -1764,6 +1765,681 @@ Public Class Frm_Formulario_Documento
         Me.Refresh()
 
     End Sub
+
+    Function Fx_Nuevo_Doc_Auto(_Cambiar_Tido As Boolean) As String
+
+        Try
+
+            If _Cambiar_Tido Then _Tido = _Tido_Original
+
+            _Grabar = False
+            _No_Volver_A_Preguntar_Agrupa_Producto = False
+            _Idmaeedo_Relacionado = 0
+            _Idmaeedo_Origen = 0
+            _NroDocumento_Editado_Por_Usuario = False
+            _Doc_Desde_Arch_Txt_Especial_Saime = False
+            _Nombre_Archivo_Txt_Especial_Saime = String.Empty
+            _Desde_Prestahop = False
+            _ListaCodQRUnicosLeidos = New List(Of CodigosDeBarra.CodigosQRLeidos)
+            _ListaCodConDocLeidos = New List(Of CodigosDeBarra.CodigosConDocLeidos)
+            _Patente_rvm = String.Empty
+
+            Lbl_NroDecimales.Text = FormatNumber(0, _DecimalesGl)
+
+            Chk_Redondear_Cero.Enabled = False
+
+            _Cl_Despacho = Nothing
+
+            If Not IsNothing(Fm_MPC) Then
+                Fm_MPC.Close()
+                Fm_MPC.Dispose()
+                Fm_MPC = Nothing
+            End If
+
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Conceptos (Koct)" & vbCrLf &
+                           "Select KOCT From TABCT" & vbCrLf &
+                           "Where KOCT Not In (Select Koct From " & _Global_BaseBk & "Zw_Conceptos)"
+            _Sql.Ej_consulta_IDU(Consulta_sql, False)
+
+            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Conceptos" & vbCrLf &
+                           "Where Koct Not In (Select KOCT From TABCT)"
+            _Sql.Ej_consulta_IDU(Consulta_sql, False)
+
+            'If Not _Revision_Remota Then
+
+            '    If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Casi_DocArc") Then
+
+            '        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Casi_DocArc Where NombreEquipo = '" & _NombreEquipo & "' And En_Construccion = 1"
+            '        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+            '    End If
+
+            'End If
+
+            'If _Global_Row_Configuracion_General.Item("BuscarProdConCodRapido") Then
+            '    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Asociacion (Codigo,DescripcionBusqueda)" & vbCrLf &
+            '                   "Select KOPR,KOPRRA From MAEPR" & vbCrLf &
+            '                   "Where KOPRRA Not In (Select DescripcionBusqueda From " & _Global_BaseBk & "Zw_Prod_Asociacion)"
+            '    _Sql.Ej_consulta_IDU(Consulta_sql)
+            'End If
+
+            'If _Global_Row_Configuracion_General.Item("BuscarProdConCodTecnico") Then
+            '    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Asociacion (Codigo,DescripcionBusqueda)" & vbCrLf &
+            '                   "Select KOPR,KOPRTE From MAEPR" & vbCrLf &
+            '                   "Where KOPRTE Not In (Select DescripcionBusqueda From " & _Global_BaseBk & "Zw_Prod_Asociacion)"
+            '    _Sql.Ej_consulta_IDU(Consulta_sql)
+            'End If
+
+
+            'Consulta_sql = "Select Modalidad, TipoDoc, NombreFormato, Grabar_Con_Huella
+            '            From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & Modalidad & "' And TipoDoc = '" & _Tido & "'"
+            'Dim _RowFormato_Mod As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            'Dim _Grabar_Con_Huella As Boolean = _RowFormato_Mod.Item("Grabar_Con_Huella")
+
+            'Btn_Huella.Visible = _Grabar_Con_Huella
+
+            'If _Grabar_Con_Huella Then
+
+            '    If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_EstacionesBkp", "Tiene_Lector_Huella") And
+            '       _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_EstacionesBkp", "Lector_Huella") Then
+
+            '        Dim _Tiene_Lector_Huella As Boolean = _Global_Row_EstacionBk.Item("Tiene_Lector_Huella")
+
+            '        _Global_Row_EstacionBk.Item("Lector_Huella") = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_EstacionesBkp", "Lector_Huella", "NombreEquipo = '" & _NombreEquipo & "'")
+
+            '        If _Tiene_Lector_Huella Then
+            '            Lbl_Version.Text = "Versión: " & _Global_Version_BakApp & ", DOCUMENTO SE TIENE QUE GRABAR CON LECTOR DE HUELLAS: " & _Global_Row_EstacionBk.Item("Lector_Huella")
+            '            Btn_Huella.Tag = 1
+            '        End If
+
+            '    Else
+            '        Btn_Huella.Tag = 0
+            '        Btn_Huella.Tooltip = Lbl_Version.Text = "Versión: " & _Global_Version_BakApp & "Falta configuración de huella para este equipo"
+            '    End If
+
+            'End If
+
+            _Id_DocEnc_Arc = 0
+
+            '_No_Puede_Ver_Precios = Fx_Tiene_Permiso(Me, "NO00001", , False)
+
+            Btn_Cambiar_IVA.Enabled = False
+
+            Table_Totales_Comerciales.Visible = False
+            Table_Metodo_Costeo_Comercial.Visible = False
+
+            Dim _Aplicar_Venciminetos = True
+
+            'LabelX2.Text = "Funcionario activo"
+
+            'If Not _Post_Venta Then
+
+            '    Me.Text = _Sql.Fx_Trae_Dato("TABTIDO", "NOTIDO", "TIDO = '" & _Tido & "'").ToString.Trim
+            '    Lbl_Tido.Text = Me.Text
+
+            '    If _Es_Ajuste Then
+            '        Me.Text += Space(1) & "(AJUSTE)"
+            '        Lbl_Tido.Text += Space(1) & "(AJUSTE)"
+            '        Lbl_Tido.ForeColor = Color.Yellow
+            '    End If
+
+            '    If _SubTido = "IMP" Then Me.Text += " PROVEEDOR EXTRANJERO"
+
+            'Else
+
+            '    Lbl_Tido.Text = "Post-Venta"
+
+            'End If
+
+            _New_Idmaeedo = 0
+            Dim _TipoValor = _Global_Row_Configuracion_Estacion.Item("Vnta_TipoValor_Bruto_Neto")
+
+            _Ds_Matriz_Documentos.Clear()
+            _Ds_Matriz_Documentos = New Ds_Matriz_Documentos
+
+            _Ds_Documento_de_Origen = Nothing
+
+            _Hay_Descuentos_Individuales = False
+            _Hay_Descuentos_Globales = False
+
+            _RowEntidad = Nothing
+            _RowEntidad_Despacho = Nothing
+
+            Lbl_Nombre_Entidad.Text = String.Empty
+            Lbl_Nombre_Entidad_Fisica.Text = String.Empty
+
+            _TblDocumentos_Dori = Nothing
+
+            If _Post_Venta Or _Tido = "BLV" Then
+
+                If Not _Documento_Reciclado Then If _Cambiar_Tido Then _Tido = "BLV"
+                _RowEntidad = Pro_RowEntidad_X_Defecto
+
+            Else
+
+                ' DOCUMENTOS INTERNOS
+
+                'If _Documento_Interno Then
+
+                '    Dim _Rten = Split(RutEmpresa, "-")
+
+                '    Consulta_sql = "Select Top 1 * From MAEEN Where KOEN = '" & RutEmpresa & "' And TIPOSUC = 'P'"
+                '    _RowEntidad = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                '    If IsNothing(_RowEntidad) Then
+                '        Consulta_sql = "Select Top 1 * From MAEEN Where KOEN LIKE '" & _Rten(0) & "%' AND RTEN = '" & _Rten(0) & "' And TIPOSUC = 'P'"
+                '        _RowEntidad = _Sql.Fx_Get_DataRow(Consulta_sql)
+                '    End If
+
+                '    If IsNothing(_RowEntidad) Then
+                '        Consulta_sql = "Select Top 1 * From MAEEN Where KOEN LIKE '" & _Rten(0) & "%' And TIPOSUC = 'P'"
+                '        _RowEntidad = _Sql.Fx_Get_DataRow(Consulta_sql)
+                '    End If
+
+                '    If _Tipo_Documento = csGlobales.Enum_Tipo_Documento.Guia_Traslado_Interno Or
+                '       _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Nota_Venta_Interna Or
+                '       _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Recepcion_Interna Then
+                '        _RowEntidad.Item("KOEN") = RutEmpresa
+                '        _RowEntidad.Item("SUEN") = String.Empty
+                '    End If
+
+                '    If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Despacho_Interna Then
+                '        _RowEntidad.Item("KOEN") = RutEmpresa
+                '        _RowEntidad.Item("SUEN") = ModSucursal
+                '    End If
+
+                '    _Aplicar_Venciminetos = False
+
+                'Else
+
+                '    _RowEntidad = Nothing
+
+                'End If
+
+            End If
+
+            ' ESTO SIRVE PARA VINCULAR LA TABLA DE PASO DE LOS DESCUENTOS CON LA TABLA DE PASO DEL DETALLE
+            Try
+                Dim _ds As Object = _Ds_Matriz_Documentos
+                Dim ParentCol As DataColumn = _Ds_Matriz_Documentos.Tables("Detalle_Doc").Columns("Id")
+                Dim ChildCol As DataColumn = _Ds_Matriz_Documentos.Tables("Descuentos_Doc").Columns("Id")
+
+                Dim _Dr As New DataRelation("Productos", ParentCol, ChildCol)
+                _Dr.Nested = True
+                _Ds_Matriz_Documentos.Relations.Add(_Dr)
+            Catch ex As Exception
+
+            End Try
+
+            Try
+                Dim _ds As Object = _Ds_Matriz_Documentos
+                Dim ParentCol As DataColumn = _Ds_Matriz_Documentos.Tables("Detalle_Doc").Columns("Id")
+                Dim ChildCol As DataColumn = _Ds_Matriz_Documentos.Tables("Impuestos_Doc").Columns("Id")
+                Dim _Dr As New DataRelation("Productos_", ParentCol, ChildCol)
+                _Dr.Nested = True
+                _Ds_Matriz_Documentos.Relations.Add(_Dr)
+            Catch ex As Exception
+
+            End Try
+
+            Try
+                Dim _ds As Object = _Ds_Matriz_Documentos
+                Dim ParentCol As DataColumn = _Ds_Matriz_Documentos.Tables("Detalle_Doc").Columns("Id")
+                Dim ChildCol As DataColumn = _Ds_Matriz_Documentos.Tables("Tbl_Wms").Columns("Id")
+                Dim _Dr As New DataRelation("Productos_", ParentCol, ChildCol)
+                _Dr.Nested = True
+                _Ds_Matriz_Documentos.Relations.Add(_Dr)
+            Catch ex As Exception
+
+            End Try
+
+            _TblDetalle = _Ds_Matriz_Documentos.Tables("Detalle_Doc")
+            Grilla_Detalle.DataSource = _TblDetalle 'Nothing
+
+            'Grilla_Detalle.DataSource = _Ds_Matriz_Documentos
+            'Grilla_Detalle.DataMember = _Ds_Matriz_Documentos.Tables("Detalle_Doc").TableName
+
+            Dim _FechaEmision As Date = Now
+            Dim _Fecha_1er_Vencimiento As Date = Now
+            Dim _FechaUltVencimiento As Date = Now
+            Dim _FechaRecepcion As Date = Now
+
+            Dim _Cuotas = 0
+            Dim _Dias_1er_Vencimiento = 0
+            Dim _Dias_Vencimiento = 0
+            Dim _Forma_de_Pago = String.Empty
+
+            Dim _NewNeroDocumento As String
+
+            If _Tipo_Documento = csGlobales.Enum_Tipo_Documento.Venta Then
+
+            End If
+
+            '*********************************************************************
+
+            If _Cuotas = 0 Then _Cuotas = 1
+
+            Dim _Cuotas_(_Cuotas - 1) As Date
+            _Cuotas_(0) = _FechaUltVencimiento
+
+            Dim _FechasVenci As Date = _FechaEmision
+            Dim _dias As Integer
+            'If Cuotas > 1 Then
+            _dias = _Dias_1er_Vencimiento
+            For i = 1 To _Cuotas
+                _FechasVenci = DateAdd(DateInterval.Day, _dias, _FechasVenci)
+                _Cuotas_(i - 1) = _FechasVenci
+                _dias = _Dias_Vencimiento
+            Next
+            _FechaUltVencimiento = _FechasVenci
+            _Fecha_1er_Vencimiento = _Cuotas_(0)
+
+            Dim _Centro_Costo As String
+
+            Consulta_sql = "Select TOP 1 * From TABMO Where KOMO = '$'"
+            _RowMoneda_Doc = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+            Dim _Moneda As String = _RowMoneda_Doc.Item("KOMO").ToString.Trim
+            Dim _Tasadorig_Doc As Double = _RowMoneda_Doc.Item("VAMO")
+            Dim _Tipo_Moneda As String = _RowMoneda_Doc.Item("TIMO")
+
+            Dim _Valor_Dolar As Double
+
+            Consulta_sql = "Select TOP 1 * From MAEMO Where KOMO = 'US$' AND FEMO = '" & Format(FechaDelServidor, "yyyyMMdd") & "' Order by IDMAEMO DESC"
+            Dim _RowMoneda_USdolar = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+            If Not IsNothing(_RowMoneda_USdolar) Then
+                _Valor_Dolar = _RowMoneda_USdolar.Item("VAMO")
+            End If
+
+            LblMoneda.Tag = _Moneda
+            LblMoneda.Text = _Moneda
+
+            Dim _ListaPrecios As String
+
+            Dim _CodEntidad = String.Empty
+            Dim _CodSucEntidad = String.Empty
+            Dim _Entidad_Fisica_Doc = String.Empty
+            Dim _EntidadSuc_Fisica_Doc = String.Empty
+
+            If Not (_RowEntidad Is Nothing) Then
+                _CodEntidad = _RowEntidad.Item("KOEN")
+                _CodSucEntidad = _RowEntidad.Item("SUEN")
+            End If
+
+            If Not (_RowEntidad_Despacho Is Nothing) Then
+                _Entidad_Fisica_Doc = _RowEntidad_Despacho.Item("KOEN")
+                _EntidadSuc_Fisica_Doc = _RowEntidad_Despacho.Item("SUEN")
+            End If
+
+            If _Sql.Fx_Exite_Campo("CONFIEST", _Tido) And _Tido <> "GRP" Then
+                _NewNeroDocumento = Traer_Numero_Documento(_Tido, , , False, True, Me)
+            End If
+
+            Select Case _Tido
+                Case "GRC", "FCC", "GRD"
+                    _NewNeroDocumento = String.Empty
+            End Select
+
+            _TipoValor = _Sql.Fx_Trae_Dato("TABTIDO", "MEARDO", "TIDO = '" & _Tido & "'",, False)
+
+            If _TipoValor = "N" Then
+                ChkValores.Checked = True
+            ElseIf _TipoValor = "B" Then
+                ChkValores.Checked = False
+            End If
+
+            If _Tipo_Documento = csGlobales.Enum_Tipo_Documento.Venta Then
+                _Centro_Costo = "LUVTVEN"
+                _ListaPrecios = _ElistaVen
+
+                If _RowEntidad Is Nothing Then
+                    If _Tido = "BLV" Then
+                        '_CodEntidad = _EntidadXdefecto
+                        '_CodSucEntidad = _SucEntXdefecto
+                    End If
+                End If
+
+                ChkValores.Visible = True
+                ChkValores.Enabled = False
+
+            Else
+                _Centro_Costo = "LUVTCOM"
+
+                If _Documento_Interno Then
+                    _ListaPrecios = _Elistaint
+                Else
+                    _ListaPrecios = _ElistaCom
+                End If
+
+            End If
+
+            _Centro_Costo = _Global_Row_Configuracion_Estacion.Item(_Centro_Costo).ToString.Trim
+
+            If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Nota_Venta_Interna Or
+                _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Traslado_Interno Then
+                _Centro_Costo = String.Empty
+            End If
+
+            Dim _Modalidad_Doc As String = _Global_Row_Configuracion_Estacion.Item("Modalidad")
+
+            _TblEncabezado = _Ds_Matriz_Documentos.Tables("Encabezado_Doc")
+            Grilla_Encabezado.DataSource = _TblEncabezado
+
+            Dim _Campo_NroDocumemto As DataGridViewTextBoxColumn
+            _Campo_NroDocumemto = Grilla_Encabezado.Columns("NroDocumento")
+            _Campo_NroDocumemto.MaxInputLength = 10
+
+            Dim NewFila As DataRow
+            NewFila = _TblEncabezado.NewRow
+            With NewFila
+
+                .Item("Id_DocEnc") = 0
+                .Item("Post_Venta") = _Post_Venta
+                .Item("Tipo_Documento") = _Tipo_Documento.ToString
+
+                .Item("Modalidad") = _Modalidad_Doc
+                .Item("Empresa") = ModEmpresa
+                .Item("Sucursal") = ModSucursal
+                .Item("TipoDoc") = _Tido
+                .Item("SubTido") = _SubTido
+
+                .Item("NroDocumento") = _NewNeroDocumento '"XXXXXXXXXX"
+                .Item("CodEntidad") = NuloPorNro(_CodEntidad, String.Empty)
+                .Item("CodSucEntidad") = NuloPorNro(_CodSucEntidad, String.Empty)
+
+                .Item("CodSucEntidadFisica") = NuloPorNro(_Entidad_Fisica_Doc, String.Empty)
+                .Item("CodSucEntidadFisica") = NuloPorNro(_EntidadSuc_Fisica_Doc, String.Empty)
+                .Item("ListaPrecios") = _ListaPrecios
+                .Item("CodFuncionario") = FUNCIONARIO
+                .Item("NomFuncionario") = Trim(Nombre_funcionario_activo)
+
+                .Item("Es_Electronico") = Fx_Es_Electronico(_Tido)
+
+                .Item("FechaEmision") = _FechaEmision
+                .Item("Fecha_1er_Vencimiento") = _Fecha_1er_Vencimiento
+                .Item("FechaUltVencimiento") = _FechaUltVencimiento
+                .Item("FechaRecepcion") = _FechaRecepcion
+                .Item("FechaMaxRecepcion") = _FechaRecepcion
+
+                .Item("Cuotas") = _Cuotas
+
+                .Item("Dias_1er_Vencimiento") = _Dias_1er_Vencimiento
+                .Item("Dias_Vencimiento") = _Dias_Vencimiento
+
+                .Item("Moneda_Doc") = _Moneda
+                .Item("Valor_Dolar") = _Valor_Dolar
+                .Item("DocEn_Neto_Bruto") = _TipoValor
+                .Item("TipoMoneda") = _Tipo_Moneda  ' -- Tipo Moneda del documento: Nacional/Extranjera
+                .Item("Tasadorig_Doc") = _Tasadorig_Doc
+
+                .Item("Centro_Costo") = _Centro_Costo
+                .Item("Contacto_Ent") = String.Empty
+
+                .Item("TotalNetoDoc") = 0
+                .Item("TotalIvaDoc") = 0
+                .Item("TotalIlaDoc") = 0
+                .Item("TotalBrutoDoc") = 0
+
+                .Item("CantTotal") = 0
+                .Item("CantDesp") = 0
+
+                .Item("Vizado") = False
+                .Item("Idmaeedo_Origen") = 0
+
+                .Item("CodUsuario_Permiso_Dscto") = String.Empty
+                .Item("Fun_Auto_Deuda_Ven") = String.Empty
+
+                '.Item("Vizado_Stock") = False
+                .Item("Fun_Auto_Stock_Ins") = String.Empty
+                .Item("Fun_Auto_Cupo_Exe") = String.Empty
+                .Item("Fun_Auto_Fecha_Des") = String.Empty
+
+                .Item("Stand_by") = False
+                .Item("Libro") = String.Empty
+                .Item("Fecha_Tributaria") = String.Empty
+
+                .Item("Reserva_NroOCC") = False
+                .Item("Reserva_Idmaeedo") = 0
+
+                .Item("Bodega_Destino") = String.Empty
+                .Item("TotalKilos") = 0
+
+                .Item("MinKgDesp") = 0
+                .Item("MinNetoDesp") = 0
+
+                .Item("Es_ValeTransitorio") = (_Post_Venta And (_Tido = "BLV" Or _Tido = "FCV"))
+
+                .Item("TblTipoVenta") = String.Empty
+                .Item("CodTipoVenta") = String.Empty
+
+                _TblEncabezado.Rows.Add(NewFila)
+            End With
+
+            Lbl_TipoVenta.Text = "..."
+
+            ' LINEAS OFERTA
+
+            '_TblDetalle.Columns.Add("Idmaeddo_Oferta", System.Type.[GetType]("System.Int32"))
+
+            Sb_Nueva_Linea(_ListaPrecios)
+
+            _TblObservaciones = _Ds_Matriz_Documentos.Tables("Observaciones_Doc")
+            NewFila = _TblObservaciones.NewRow
+            With NewFila
+                .Item("Observaciones") = String.Empty
+                .Item("Forma_pago") = String.Empty
+                .Item("Motivo") = String.Empty
+                .Item("Orden_compra") = String.Empty
+                .Item("Placa") = String.Empty
+                .Item("CodRetirador") = String.Empty
+                _Ds_Matriz_Documentos.Tables("Observaciones_Doc").Rows.Add(NewFila)
+            End With
+
+            _TblEmpaque = _Ds_Matriz_Documentos.Tables("Tbl_Empaque")
+            NewFila = _TblEmpaque.NewRow
+            With NewFila
+                .Item("Funcionario_Inicia") = FUNCIONARIO
+                .Item("Funcionario_Finaliza") = String.Empty
+                _Ds_Matriz_Documentos.Tables("Tbl_Empaque").Rows.Add(NewFila)
+            End With
+
+            If Not (_RowEntidad Is Nothing) Then
+
+                Dim _No_Puede_Acceder As Boolean
+
+                Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, False, _Aplicar_Venciminetos)
+
+            End If
+
+            Sb_Sumar_Totales()
+
+            LblDescripcion.Text = String.Empty
+            Lbl_Responsable.Text = " " & Nombre_funcionario_activo
+
+            LblTotalNeto.Tag = 0
+            LblTotalIva.Tag = 0
+            LblTotalImpuestos.Tag = 0
+            LblTotalBruto.Tag = 0
+
+            LblTotalNeto.Text = FormatNumber(0, 0)
+            LblTotalIva.Text = FormatNumber(0, 0)
+            LblTotalImpuestos.Text = FormatNumber(0, 0)
+            LblTotalBruto.Text = FormatNumber(0, 0)
+
+            Grilla_Encabezado.ClearSelection()
+
+            Sb_Formato_Grilla_Encabezado()
+            Sb_Formato_Grilla_Detalle()
+
+            Dim _Cl_Permisos_Asociados As New Cl_Permisos_Asociados(_Ds_Matriz_Documentos)
+
+            _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Bkp00015", False, False, "", "", False, False, False) ' Stock
+            _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Bkp00014", False, False, "", "", False, False, False) ' Descuento
+            _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Bkp00039", False, False, "", "", False, False, False) ' Descuento
+            _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Bkp00019", False, False, "", "", False, False, False) ' Morosidad
+            _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Bkp00033", False, False, "", "", False, False, False) ' Cupo exedido
+            _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Bkp00057", False, False, "", "", False, False, False) ' Fecha despacho
+            _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Comp0092", False, False, "", "", False, False, False) ' Solicitud de compra
+            _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Comp0095", False, False, "", "", False, False, False) ' Solicitud de compra Validar producto a comprar
+            _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Bkp00062", False, False, "", "", False, False, False) ' Minimo de venta por documento
+            _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "ODp00017", False, False, "", "", False, False, False) ' Despacho mínimo en Kg o Total Neto
+
+            _TblPermisos = _Ds_Matriz_Documentos.Tables("Permisos_Doc")
+
+            Consulta_sql = "Select IDEVENTO,ARCHIRVE,IDRVE,KOFU," &
+                           "Isnull((Select top 1 NOKOFU From TABFU Tf Where Tf.KOFU = Mv.KOFU),'') As 'Funcionario'," & vbCrLf &
+                           "FEVENTO,FEVENTO AS Hora2,HORAGRAB,Convert(nvarchar, convert(datetime, (HORAGRAB*1.0/3600)/24), 108) As Hora,FECHAREF," & vbCrLf &
+                           "KOTABLA,KOCARAC,(CASE WHEN LINK = '' THEN NOKOCARAC ELSE '(*) '+ NOKOCARAC END) AS 'NOKOCARAC'" & vbCrLf &
+                           ",ISNULL(ARCHIRSE,'')AS ARCHIRSE,ISNULL(IDRSE,0) AS IDRSE,LINK,KOFUDEST,Cast(0 As Float) As LEY20956" & vbCrLf &
+                           "From MEVENTO Mv" & vbCrLf &
+                           "Where 1 < 0 " & vbCrLf &
+                           "Order by FEVENTO,HORAGRAB"
+
+            _Tbl_Mevento_Edo = _Sql.Fx_Get_DataTable(Consulta_sql)
+            _Tbl_Mevento_Edd = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+            _Tbl_Mevento_Edo.TableName = "Mevento_Edo"
+            _Tbl_Mevento_Edd.TableName = "Mevento_Edd"
+
+            _Ds_Matriz_Documentos.Tables.Add(_Tbl_Mevento_Edo)
+            _Ds_Matriz_Documentos.Tables.Add(_Tbl_Mevento_Edd)
+
+            ' Agregamos tabla Maedpce para los pagos asociados
+
+            Consulta_sql = "SELECT TOP 1 IDMAEDPCE,EMPRESA,SUREDP,CJREDP,TIDP,NUDP,ENDP,EMDP,SUEMDP,CUDP,NUCUDP,FEEMDP,FEVEDP,MODP," & vbCrLf &
+                           "TIMODP,TAMODP,VADP,VAABDP,VAASDP,VAVUDP,ESPGDP,REFANTI,KOTU,NUTRANSMI,DOCUENANTI,KOFUDP,KOTNDP,SUTNDP,ESASDP,ESPGDP,CUOTAS," &
+                           "CAST(0 AS INT) AS IDMAEEDO,CAST(0 AS FLOAT) AS SALDO" & vbCrLf &
+                           "FROM MAEDPCE WITH ( NOLOCK ) " & vbCrLf &
+                           "WHERE 1 = 0"
+
+            _Tbl_Maedpce = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+            _Tbl_Mevento_Edd.TableName = "Maedpce"
+
+            _Ds_Matriz_Documentos.Tables.Add(_Tbl_Maedpce)
+
+            ' Agregamos tabla Maedcr para los recargos asociados
+
+            Consulta_sql = "Select Cast(0 As Float) As Id,Cast('' As Varchar(2)) As Empresa,Cast('' As Varchar(3)) As Sulido,Cast('' As Varchar(13)) As Endo," & vbCrLf &
+                           "Cast('' As Varchar(3)) As Tido,Cast('' As Varchar(10)) As Nudo," & vbCrLf &
+                            "Cast('' As Varchar(10)) As Suendo,Cast(0 As Float) As Cantidad,Cast(0 As Float) As ValNeto,Cast(0 As Float) As VUnitario," & vbCrLf &
+                            "Cast(0 As Float) As Recargo,Cast(0 As Float) As Peso,Cast(0 As Float) As Volumen," & vbCrLf &
+                            "Cast('' As Varchar(13)) As Codigo,Cast('' As Varchar(50)) As Descripcion," & vbCrLf &
+                            "NULIDO As Nulido,RECARCALCU As Recarcalcu,IDDDODCR As Idddodcr,VALDCR As Valdcr From MAEDCR Where 1<0"
+            _Tbl_Maedcr = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+            _Tbl_Maedcr.TableName = "Maedcr"
+            _Ds_Matriz_Documentos.Tables.Add(_Tbl_Maedcr)
+
+            _Class_Referencias_DTE = New Class_Referencias_DTE(0)
+            _Ds_Matriz_Documentos.Tables.Add(_Class_Referencias_DTE.Tbl_Referencias)
+
+            '_Row_PermisosNecesarios = NewFila
+            Warning_Visado.Visible = False
+            Btn_Desbloquear_Visado.Visible = False
+
+            Me.ActiveControl = Grilla_Detalle
+            Grilla_Detalle.CurrentCell = Grilla_Detalle.Rows(0).Cells("Codigo")
+
+            Sb_Mostrar_Datos_Producto_Activo(False)
+
+            If _Tido = "GRC" Or _Tido = "FCC" Or _Tido = "GRD" Then
+
+                Me.ActiveControl = Grilla_Encabezado
+                Grilla_Encabezado.CurrentCell = Grilla_Encabezado.Rows(0).Cells("NroDocumento")
+
+            End If
+
+            Dim _Es_Electronico As Boolean = _TblEncabezado.Rows(0).Item("Es_Electronico")
+
+            If _Es_Electronico Then
+
+                If _Global_Row_Configuracion_General.Item("FacElec_Bakapp_Hefesto") Then
+
+                    Dim _Cn As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & ModEmpresa & "' And Campo = 'Cn'")
+
+                    If String.IsNullOrEmpty(_Cn) Then
+
+                        'MessageBoxEx.Show(Me, "Falta incorporar el nombre del certificado digital" & vbCrLf & vbCrLf &
+                        '                  "INFORME ESTA SITUACION AL ADMINISTRADOR DEL SISTEMA POR FAVOR", "Validación Modalidad: " & Modalidad,
+                        '                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                        If Me.Visible Then
+                            Me.Close()
+                        End If
+
+                        Throw New System.Exception("Falta incorporar el nombre del certificado digital" & vbCrLf & vbCrLf &
+                                          "INFORME ESTA SITUACION AL ADMINISTRADOR DEL SISTEMA POR FAVOR")
+
+                    Else
+
+                        'Dim _Certificado As Security.Cryptography.X509Certificates.X509Certificate2 = FuncionesComunes.RecuperarCertificado(_Cn)
+
+                        'If IsNothing(_Certificado) Then
+
+                        '    MessageBoxEx.Show(Me, "Falta instalar el certificado digital en este equipo" & vbCrLf &
+                        '                      "Cetificado: " & _Cn & vbCrLf & vbCrLf &
+                        '                      "INFORME ESTA SITUACION AL ADMINISTRADOR DEL SISTEMA POR FAVOR", "Validación Modalidad: " & Modalidad,
+                        '                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                        'End If
+
+                    End If
+
+                End If
+
+                MensajeRevFolio = Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _NewNeroDocumento, False)
+
+                If Not MensajeRevFolio.EsCorrecto Then 'Not Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _NewNeroDocumento, True) Then
+
+                    _NewNeroDocumento = String.Empty
+                    Throw New System.Exception(MensajeRevFolio.Mensaje)
+
+                End If
+
+            End If
+
+            Lbl_Costo_Lista.Visible = False
+
+            'If _Documento_Interno And Not _Cerrar_Al_Grabar Then
+
+            '    Dim _SucEntidad As String = _RowEntidad.Item("SUEN")
+
+            '    If String.IsNullOrEmpty(_SucEntidad) Then
+
+            '        Dim _Msg = String.Empty
+
+            '        'If _Tido = "GTI" Then _Msg = "Debe indicar sucursal de destino del traslado"
+            '        If _Tido = "NVI" Then _Msg = "1.- Debera indicar la bodega que recibira los productos." & vbCrLf &
+            '                                     "Bodega de destino."
+
+            '        If Not String.IsNullOrEmpty(_Msg) Then
+
+            '            'MessageBoxEx.Show(Me, _Msg, "Asistente de cración de NVI",
+            '            '                  MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, Me.TopMost)
+
+            '            Grilla_Encabezado.CurrentCell = Grilla_Encabezado.Rows(0).Cells("CodSucEntidad")
+            '            Call Grilla_Encabezado_CellDoubleClick(Nothing, Nothing)
+
+            '        End If
+
+            '    End If
+
+            'End If
+
+            'If Not _Documento_Interno Then
+            '    Grilla_Encabezado.Columns("CodEntidad").ReadOnly = False
+            'End If
+
+        Catch ex As Exception
+            Fx_Nuevo_Doc_Auto = ex.Message
+        End Try
+
+        Return String.Empty
+
+    End Function
 
     Private Sub Sb_Nueva_Linea(_CodLista As String)
 
@@ -12314,6 +12990,87 @@ Public Class Frm_Formulario_Documento
 
     End Sub
 
+    Function Fx_Limpiar(_Modalidad As String) As LsValiciones.Mensajes
+
+        _Tido = _Tido_Original
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresa & "\BkPost") Then
+                System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresa & "\BkPost")
+            End If
+
+            If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresa & "\BkPost\DC_En_Construccion") Then
+                System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresa & "\BkPost\DC_En_Construccion")
+            End If
+
+            If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresa & "\BkPost\DC_En_Construccion\Modalidad " & Modalidad) Then
+                System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresa & "\BkPost\DC_En_Construccion\Modalidad " & Modalidad)
+            End If
+
+            _Ruta_Documento_Bkp = AppPath() & "\Data\" & RutEmpresa & "\BkPost\DC_En_Construccion\Modalidad " & Modalidad & "\DC_" & _Tido & ".xml"
+
+            'If CBool(_Idmaeedo_Origen) Then
+
+            '    Dim Cerrar_Doc As New Clas_Cerrar_Documento
+
+            '    Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Idmaeedo_Origen
+            '    Dim _Tbl_Origen As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
+
+            '    Cerrar_Doc.Fx_Abrir_Documento(_Idmaeedo_Origen, _Tbl_Origen)
+
+            'End If
+
+            'If Not IsNothing(_TblPermisos) Then
+            '    For Each _Fl As DataRow In _TblPermisos.Rows
+
+            '        Dim _PermisoIndependiente As Boolean = _Fl.Item("PermisoIndependiente")
+            '        Dim _NroRemota As String = NuloPorNro(_Fl.Item("NroRemota"), "")
+
+            '        If _PermisoIndependiente And Not String.IsNullOrEmpty(_NroRemota) Then
+            '            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Remotas Set Eliminada = 1, Observaciones = 'El documento no se grabo'" & vbCrLf &
+            '                           "Where NroRemota = '" & _NroRemota & "' And Idmaeedo = 0"
+            '            _Sql.Ej_consulta_IDU(Consulta_sql)
+            '        End If
+
+            '    Next
+            'End If
+
+            _Idmaeedo_Origen = 0
+            _Editar_documento = False
+
+            _CodVendedor = FUNCIONARIO
+
+            Modalidad = _Modalidad
+
+            Dim _Mod As New Clas_Modalidades
+
+            _Mod.Sb_Actualiza_Formatos_X_Modalidad(False)
+            _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "", False)
+            _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Modalidad, False)
+            _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad, False)
+
+            If Not IsNothing(_Global_Frm_Menu) Then _Global_Frm_Menu.Refresh()
+
+            _Mensaje.Mensaje = Fx_Nuevo_Doc_Auto(False)
+
+            If Not String.IsNullOrEmpty(_Mensaje.Mensaje) Then
+                Throw New System.Exception(_Mensaje.Mensaje)
+            End If
+
+            _Mensaje.EsCorrecto = True
+
+        Catch ex As Exception
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.EsCorrecto = False
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
     Private Sub Grilla_Encabezado_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles Grilla_Encabezado.KeyDown
 
         Dim _Cabeza = Grilla_Encabezado.Columns(Grilla_Encabezado.CurrentCell.ColumnIndex).Name
@@ -13445,7 +14202,11 @@ Public Class Frm_Formulario_Documento
 
                 Dim _FechaEmision_Old As Date = _Fila_Clonada_Enc.Cells(11).Value
 
-                If Not Fx_Revisar_Taza_Cambio(Me, _FechaEmision) Then
+                Dim _Mensaje As LsValiciones.Mensajes
+
+                _Mensaje = Fx_Revisar_Tasa_Cambio(Me, _FechaEmision)
+
+                If Not _Mensaje.EsCorrecto Then 'Not Fx_Revisar_Tasa_Cambio(Me, _FechaEmision) Then
                     _Fila.Cells("FechaEmision").Value = _FechaEmision_Old
                     Return
                 End If

@@ -800,9 +800,19 @@ Public Class Frm_Stmp_Listado
                     Dim _Tido = _Row_Documento.Item("TIDO")
                     Dim _Nudo = _Row_Documento.Item("NUDO")
 
-                    If Fx_Revisar_Taza_Cambio(_Formulario) Then
 
-                        If Fx_Se_Puede_Trasladar_Para_Crear_Otro_Documento(_Idmaeedo_Origen) Then
+                    Dim _Msj_Tsc As LsValiciones.Mensajes
+
+                    _Msj_Tsc = Fx_Revisar_Tasa_Cambio(Me, FechaDelServidor)
+
+                    If Not _Msj_Tsc.EsCorrecto Then
+                        _Mensaje.ErrorDeConexionSQL = _Msj_Tsc.ErrorDeConexionSQL
+                        Throw New System.Exception(_Msj_Tsc.Mensaje)
+                    End If
+
+                    'If Fx_Revisar_Tasa_Cambio(_Formulario) Then
+
+                    If Fx_Se_Puede_Trasladar_Para_Crear_Otro_Documento(_Idmaeedo_Origen) Then
 
                             Dim _Empresa As String = ModEmpresa
                             Dim _Sucursal As String = ModSucursal
@@ -913,7 +923,8 @@ Public Class Frm_Stmp_Listado
 
                         End If
 
-                    End If
+                    'End If
+                    ''
                 End If
             Else
 

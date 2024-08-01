@@ -24,7 +24,7 @@ Public Class Class_SQL
         Try
             'Abrimos la conexión con la base de datos
             _Error = String.Empty
-            Sb_Abrir_Conexion(_Cn)
+            Sb_Abrir_Conexion(_Cn, MostrarError)
             'System.Windows.Forms.Application.DoEvents()
             Dim cmd As System.Data.SqlClient.SqlCommand
             cmd = New System.Data.SqlClient.SqlCommand()
@@ -433,7 +433,7 @@ Public Class Class_SQL
         End Try
     End Sub
 
-    Function Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql As String) As Boolean
+    Function Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql As String, Optional _Mostrar_Error As Boolean = True) As Boolean
 
         Dim myTrans As SqlClient.SqlTransaction
         Dim Comando As SqlClient.SqlCommand
@@ -444,7 +444,7 @@ Public Class Class_SQL
         Try
 
 
-            Sb_Abrir_Conexion(_Cn)
+            Sb_Abrir_Conexion(_Cn, _Mostrar_Error)
             myTrans = _Cn.BeginTransaction()
 
 
@@ -569,7 +569,8 @@ Public Class Class_SQL
     End Function
 
     Function Fx_Cuenta_Registros(_Tabla As String,
-                                 Optional _Condicion As String = "") As Double
+                                 Optional _Condicion As String = "",
+                                 Optional _Mostrar_Mensaje As Boolean = True) As Double
 
         If Not String.IsNullOrEmpty(_Condicion) Then
             _Condicion = vbCrLf & "And " & _Condicion
@@ -577,7 +578,7 @@ Public Class Class_SQL
 
         Dim _Sql As String = "Select Count(*) As Cuenta From " & _Tabla & " Where 1 > 0 " & _Condicion
 
-        Dim _RowTabpre As DataRow = Fx_Get_DataRow(_Sql)
+        Dim _RowTabpre As DataRow = Fx_Get_DataRow(_Sql, _Mostrar_Mensaje)
 
         Dim _Cuenta As Double
 
