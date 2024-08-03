@@ -56,6 +56,26 @@ Public Class Frm_Stmp_Listado
 
     Sub Sb_Actualizar_Grilla()
 
+
+        'Deja los documentos en Facturadas cuando ya estan listos y el diablito no alcanza a tomarlos.
+        Consulta_sql = "Select Distinct Edo.IDMAEEDO,Edo.TIDO,Edo.NUDO,Edo.ENDO,Edo.SUENDO,Edo.FEEMDO," &
+                       "DdoFcv.IDMAEEDO As 'IDMAEEDO_Fcv',DdoFcv.TIDO As 'TD',DdoFcv.NUDO As 'NUDO_Fcv'--,DdoFcv.FEEMLI as 'F.Cierre'" & vbCrLf &
+                       "Into #PasoFacturadas" & vbCrLf &
+                       "From MAEDDO Ddo" & vbCrLf &
+                       "Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO" & vbCrLf &
+                       "Inner Join MAEDDO DdoFcv on Ddo.IDMAEDDO = DdoFcv.IDRST And DdoFcv.ARCHIRST = 'MAEDDO'" & vbCrLf &
+                       "Where Edo.IDMAEEDO In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Stmp_Enc " &
+                       "Where Estado In ('PREPA','COMPL'))" & vbCrLf &
+                       "Order By Edo.TIDO,Edo.NUDO" & vbCrLf &
+                        vbCrLf &
+                       "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Estado = 'FACTU',Facturar = 1,IdmaeedoGen = Ps.IDMAEEDO_Fcv,TidoGen = Ps.TD,NudoGen = Ps.NUDO_Fcv" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Stmp_Enc Enc" & vbCrLf &
+                       "Inner Join #PasoFacturadas Ps On Enc.Idmaeedo = Ps.IDMAEEDO" & vbCrLf &
+                       "Drop Table #PasoFacturadas"
+
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+
         'Me.Cursor = Cursors.WaitCursor
 
         Dim _Condicion As String = String.Empty
@@ -1047,12 +1067,15 @@ Public Class Frm_Stmp_Listado
                     Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
                     Dim _Idmaeedo As Integer = _Fila.Cells("IDMAEEDO").Value
                     Dim _Estado As String = _Fila.Cells("Estado").Value
+                    Dim _Error_FacAuto As Boolean = _Fila.Cells("Error_FacAuto").Value
 
                     LabelItem1.Text = "Opciones (Id: " & _Idmaeedo & ")"
 
                     Btn_Mnu_EntregarMercaderia.Visible = (Super_TabS.SelectedTab.Name = "Tab_Facturadas")
                     Btn_CerrarTicket.Visible = (Super_TabS.SelectedTab.Name = "Tab_Entregadas")
                     Btn_Mnu_Preparacion.Visible = (Super_TabS.SelectedTab.Name = "Tab_Ingresadas")
+                    Btn_ReenviaFacturar.Visible = (Super_TabS.SelectedTab.Name = "Tab_Completadas")
+                    Btn_ReenviaFacturar.Enabled = _Error_FacAuto
 
                     ShowContextMenu(Menu_Contextual_01_Opciones_Documento)
 
@@ -1801,18 +1824,28 @@ Public Class Frm_Stmp_Listado
         If _Row.Item("Facturado") Then
 
             MessageBoxEx.Show(Me, "Este documento ya se encuentra facturado" & vbCrLf &
-                              _Row.Item("TidoGen") & "-" & _Row.Item("NudoGen"), "Validación",
+                              _Row.Item("DocEmitir") & "-" & _Row.Item("Nudo_Fcv"), "Validación",
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
 
         End If
 
-        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Demonio_FacAuto " & vbCrLf &
-                       "Set Facturar = 1,ErrorGrabar = 0,Informacion = ''" & vbCrLf &
-                       "Where Idmaeedo_NVV = " & _Idmaeedo
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto " & vbCrLf &
+                       "Set NombreEquipo = '',Facturar = 1,ErrorGrabar = 0,Informacion = ''" & vbCrLf &
+                       "Where Id = " & _Row.Item("Id")
         If _Sql.Ej_consulta_IDU(Consulta_sql) Then
             MessageBoxEx.Show(Me, "La nota de venta se envio nuevamente a facturar al diablito", "Información",
                               MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Dim _Imagenes_List As ImageList
+            If Global_Thema = Enum_Themas.Oscuro Then
+                _Imagenes_List = Imagenes_16x16_Dark
+            Else
+                _Imagenes_List = Imagenes_16x16
+            End If
+
+            _Fila.Cells("BtnImagen_Estado").Value = _Imagenes_List.Images.Item("ok.png")
+
         End If
 
     End Sub

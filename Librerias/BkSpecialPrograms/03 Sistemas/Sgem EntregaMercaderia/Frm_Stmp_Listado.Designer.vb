@@ -489,6 +489,7 @@ Partial Class Frm_Stmp_Listado
         Me.Imagenes_16x16.Images.SetKeyName(19, "comment-number-9-plus.png")
         Me.Imagenes_16x16.Images.SetKeyName(20, "menu-more.png")
         Me.Imagenes_16x16.Images.SetKeyName(21, "symbol-delete.png")
+        Me.Imagenes_16x16.Images.SetKeyName(22, "symbol-ok-warning.png")
         '
         'Imagenes_16x16_Dark
         '
@@ -516,6 +517,7 @@ Partial Class Frm_Stmp_Listado
         Me.Imagenes_16x16_Dark.Images.SetKeyName(19, "comment-number-2.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(20, "comment-number-1.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(21, "symbol-delete.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(22, "symbol-ok-warning.png")
         '
         'Chk_Monitorear
         '
