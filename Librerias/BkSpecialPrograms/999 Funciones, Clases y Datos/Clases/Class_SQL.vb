@@ -546,7 +546,7 @@ Public Class Class_SQL
 
         Catch ex As Exception
 
-            _Error = String.Empty
+            _Error = ex.Message
 
             If _MostrarError Then
                 MsgBox(ex.Message, MsgBoxStyle.Critical, "Error!!")
@@ -1001,7 +1001,7 @@ Public Class Class_SQL
 
     End Sub
 
-    Function Fx_Existe_Tabla(_Tabla As String) As Boolean
+    Function Fx_Existe_Tabla(_Tabla As String, Optional _Mostrar_Mensaje As Boolean = True) As Boolean
 
         Dim _ConsultaSql As String
 
@@ -1020,7 +1020,7 @@ Public Class Class_SQL
 
         End If
 
-        Dim _Tbl As DataTable = Fx_Get_DataTable(_ConsultaSql)
+        Dim _Tbl As DataTable = Fx_Get_DataTable(_ConsultaSql, _Mostrar_Mensaje)
 
         Return _Tbl.Rows.Count
 

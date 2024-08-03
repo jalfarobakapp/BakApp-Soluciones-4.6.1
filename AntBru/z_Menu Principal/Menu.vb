@@ -333,13 +333,15 @@ Public Class Menu
 
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Ppro0007") Then
 
-            If Fx_Revisar_Taza_Cambio(_Fm_Menu_Padre) Then
+            Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(_Fm_Menu_Padre)
 
-                Dim NewPanel As Modulo_Tesoreria = Nothing
-                NewPanel = New Modulo_Tesoreria(_Fm_Menu_Padre)
-                _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
-
+            If Not _Msj_Tsc.EsCorrecto Then
+                Return
             End If
+
+            Dim NewPanel As Modulo_Tesoreria = Nothing
+            NewPanel = New Modulo_Tesoreria(_Fm_Menu_Padre)
+            _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
 
         End If
 

@@ -1277,3 +1277,5 @@ Public Class Clas_Hefesto_Dte_Libro
     End Function
 
 End Class
+
+

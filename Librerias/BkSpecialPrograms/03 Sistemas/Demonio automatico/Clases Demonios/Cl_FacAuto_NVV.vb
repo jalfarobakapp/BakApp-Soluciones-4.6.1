@@ -613,7 +613,7 @@
                     If Not _Msj_Tsc.EsCorrecto Then
 
                         _Mensaje.ErrorDeConexionSQL = _Msj_Tsc.ErrorDeConexionSQL
-                        Throw New System.Exception(_Mensaje.Mensaje)
+                        Throw New System.Exception(_Msj_Tsc.Mensaje)
                         'Throw New System.Exception("No existe taza de cambio para la fecha: " & FechaDelServidor.ToShortDateString)
 
                     End If

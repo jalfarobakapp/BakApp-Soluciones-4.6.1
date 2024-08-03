@@ -40,7 +40,9 @@ Public Class Frm_GRI_Ingreso
 
     Private Sub Btn_Ingresar_GRI_Click(sender As Object, e As EventArgs) Handles Btn_Ingresar_GRI.Click
 
-        If Not Fx_Revisar_Taza_Cambio(Me) Then
+        Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(Me)
+
+        If Not _Msj_Tsc.EsCorrecto Then
             Return
         End If
 
@@ -142,7 +144,9 @@ Public Class Frm_GRI_Ingreso
 
     Private Sub Btn_FabMezcla_Click(sender As Object, e As EventArgs) Handles Btn_FabMezcla.Click
 
-        If Not Fx_Revisar_Taza_Cambio(Me) Then
+        Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(Me)
+
+        If Not _Msj_Tsc.EsCorrecto Then
             Return
         End If
 

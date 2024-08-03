@@ -23,13 +23,15 @@ FechaPlanificacion As 'HoraPlanificacion',
 Cast(CONVERT(DATE, EdoF.LAHORA) As datetime) As 'FechaFactu',
 Convert(datetime, (EdoF.HORAGRAB*1.0/3600)/24) As 'HoraFactu',
 --EdoF.LAHORA As 'FechaFacturacion',
-CAST('' As varchar(300)) As 'Informacion'
+CAST('' As varchar(300)) As 'Informacion',
+Cast(Isnull(FA.ErrorGrabar,0) As bit) As 'Error_FacAuto',Isnull(FA.Informacion,'') As 'Info_FacAuto'
 Into #Paso
 From Zw_Stmp_Enc Enc
 Inner Join MAEEDO Edo On Edo.IDMAEEDO = Enc.Idmaeedo
 Left Join MAEEN En On En.KOEN = Enc.Endo And En.SUEN = Enc.Suendo
 Left Join TABFU FEnt On FEnt.KOFU = CodFuncionario_Entrega
 Left Join MAEEDO EdoF on EdoF.IDMAEEDO = Enc.IdmaeedoGen
+Left Join Zw_Demonio_FacAuto FA On FA.Idmaeedo_NVV = Enc.Idmaeedo
 Where 1 > 0
 --#Condicion#
 Update #Paso Set ItemxDoc = (Select Count(*) From MAEDDO Ddo Where Ddo.IDMAEEDO = #Paso.Idmaeedo And PRCT = 0)

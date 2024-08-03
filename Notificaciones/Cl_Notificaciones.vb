@@ -149,7 +149,7 @@ Public Class Cl_Notificaciones
                                     Where NroRemota In (Select  NroRemota From " & _Global_BaseBk & "Zw_Notificaciones 
                                         Where Usuario_Destino = '" & FUNCIONARIO & "' And Accion = 'Remota') And Otorga = '' And Eliminada = 0 And Empresa = '" & ModEmpresa & "' -- And RCadena_Id_Enc = 0"
 
-                Dim _TblRemotas_Pendientes As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql, False)
+                Dim _TblRemotas_Pendientes As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
                 If CBool(_TblRemotas_Pendientes.Rows.Count) Then
 
@@ -205,7 +205,7 @@ Public Class Cl_Notificaciones
                                     Where NroRemota In (Select  NroRemota From " & _Global_BaseBk & "Zw_Notificaciones 
                                         Where Usuario_Destino = '" & FUNCIONARIO & "' And Accion = 'Remota') And Otorga = '' And Eliminada = 0 And Empresa = '" & ModEmpresa & "' And RCadena_Id_Enc = 0"
 
-                    Dim _TblRemotas_Pendientes As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql, False)
+                    Dim _TblRemotas_Pendientes As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
                     If CBool(_TblRemotas_Pendientes.Rows.Count) Then
 
@@ -256,7 +256,7 @@ Public Class Cl_Notificaciones
 
                 End If
 
-                Dim _TblNotificaciones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql, False)
+                Dim _TblNotificaciones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
                 Dim rnd As New Random()
 
@@ -318,7 +318,7 @@ Public Class Cl_Notificaciones
                                         Inner Join CONFIGP On Empresa = EMPRESA
                                     Where Usuario_Destino = '" & FUNCIONARIO & "' And Mostrar = 1 And RCadena_Id_Enc > 0 And Empresa <> '" & ModEmpresa & "'"
 
-                _TblNotificaciones = _Sql.Fx_Get_Tablas(Consulta_sql, False)
+                _TblNotificaciones = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
                 If CBool(_TblNotificaciones.Rows.Count) Then
 
@@ -462,7 +462,7 @@ Public Class Cl_Notificaciones
                                     Where Usuario_Destino = '" & FUNCIONARIO & "' And Mostrar = 1 And Id_SCom > 0
                                     Order by Id"
 
-                Dim _TblNotificaciones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql, False)
+                Dim _TblNotificaciones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
                 If CBool(_TblNotificaciones.Rows.Count) Then
 

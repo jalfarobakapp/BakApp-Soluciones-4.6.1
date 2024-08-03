@@ -10,66 +10,68 @@ Module Modulo_Documentos
 
         If Not Fx_Tido_Excluido(_Fm_Menu_Padre, _Tido) Then Return
 
-        If Fx_Revisar_Taza_Cambio(_Fm_Menu_Padre) Then
+        Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(_Fm_Menu_Padre)
 
-            Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Fm_Menu_Padre, Modalidad, _Tido, True)
+        If Not _Msj_Tsc.EsCorrecto Then
+            Return
+        End If
 
-            If Not IsNothing(_RowFormato) Then
+        Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Fm_Menu_Padre, Modalidad, _Tido, True)
 
-                Dim _Empresa As String = ModEmpresa
-                Dim _Sucursal As String = ModSucursal
-                Dim _Bodega As String = ModBodega
+        If Not IsNothing(_RowFormato) Then
 
-                Dim _Permiso = "Bo" & _Empresa & _Sucursal & _Bodega
+            Dim _Empresa As String = ModEmpresa
+            Dim _Sucursal As String = ModSucursal
+            Dim _Bodega As String = ModBodega
 
-                If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, _Permiso, , True) Then
+            Dim _Permiso = "Bo" & _Empresa & _Sucursal & _Bodega
 
-                    Dim _Bod = _Global_Row_Configuracion_Estacion.Item("NOKOBO")
+            If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, _Permiso, , True) Then
 
-                    MessageBoxEx.Show(_Fm_Menu_Padre, "NO ESTA AUTORIZADO PARA EFECTUAR VENTAS DESDE LA BODEGA DE ESTA MODALIDAD" & vbCrLf & vbCrLf &
-                                      "BODEGA: " & _Bodega & " - " & _Bod,
-                                      "VALIDACION",
-                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Dim _Bod = _Global_Row_Configuracion_Estacion.Item("NOKOBO")
+
+                MessageBoxEx.Show(_Fm_Menu_Padre, "NO ESTA AUTORIZADO PARA EFECTUAR VENTAS DESDE LA BODEGA DE ESTA MODALIDAD" & vbCrLf & vbCrLf &
+                                  "BODEGA: " & _Bodega & " - " & _Bod,
+                                  "VALIDACION",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+            End If
+
+            If Fx_Tiene_Permiso(_Fm_Menu_Padre, _Permiso) Then
+
+                Dim _Revisar_Directorio_GenDTE = True
+
+                Try
+                    _Revisar_Directorio_GenDTE = Not _Global_Row_Configuracion_General.Item("FacElec_Bakapp_Hefesto")
+                Catch ex As Exception
+                    _Revisar_Directorio_GenDTE = True
+                End Try
+
+                If _Revisar_Directorio_GenDTE Then
+
+                    If Fx_Es_Electronico(_Tido) Then
+
+                        Dim _Directorio_GenDTE As String = _Global_Row_EstacionBk.Item("Directorio_GenDTE")
+                        Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+
+                        Fx_Datos_Directorio_GenDTE(_Directorio_GenDTE, _NombreEquipo)
+
+                    End If
 
                 End If
 
-                If Fx_Tiene_Permiso(_Fm_Menu_Padre, _Permiso) Then
+                If Fx_Tiene_Permiso_Generar_Documento(_Fm_Menu_Padre, _Tido, _SubTido) Then
 
-                    Dim _Revisar_Directorio_GenDTE = True
+                    Dim _Es_Ajuste As Boolean
 
-                    Try
-                        _Revisar_Directorio_GenDTE = Not _Global_Row_Configuracion_General.Item("FacElec_Bakapp_Hefesto")
-                    Catch ex As Exception
-                        _Revisar_Directorio_GenDTE = True
-                    End Try
+                    If _SubTido = "AJU" Then _Es_Ajuste = True
 
-                    If _Revisar_Directorio_GenDTE Then
-
-                        If Fx_Es_Electronico(_Tido) Then
-
-                            Dim _Directorio_GenDTE As String = _Global_Row_EstacionBk.Item("Directorio_GenDTE")
-                            Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
-
-                            Fx_Datos_Directorio_GenDTE(_Directorio_GenDTE, _NombreEquipo)
-
-                        End If
-
-                    End If
-
-                    If Fx_Tiene_Permiso_Generar_Documento(_Fm_Menu_Padre, _Tido, _SubTido) Then
-
-                        Dim _Es_Ajuste As Boolean
-
-                        If _SubTido = "AJU" Then _Es_Ajuste = True
-
-                        Dim Fm_Post As New Frm_Formulario_Documento(_Tido, _Tipo_Documento, False,,, _Es_Ajuste)
-                        If _Fm_Menu_Padre.Name <> "Frm_Menu_Extra" Then Fm_Post.MinimizeBox = True
-                        Fm_Post.MinimizeBox = _Minimizar
-                        Fm_Post.Pro_SubTido = _SubTido
-                        Fm_Post.ShowDialog(_Fm_Menu_Padre)
-                        Fm_Post.Dispose()
-
-                    End If
+                    Dim Fm_Post As New Frm_Formulario_Documento(_Tido, _Tipo_Documento, False,,, _Es_Ajuste)
+                    If _Fm_Menu_Padre.Name <> "Frm_Menu_Extra" Then Fm_Post.MinimizeBox = True
+                    Fm_Post.MinimizeBox = _Minimizar
+                    Fm_Post.Pro_SubTido = _SubTido
+                    Fm_Post.ShowDialog(_Fm_Menu_Padre)
+                    Fm_Post.Dispose()
 
                 End If
 
@@ -79,7 +81,6 @@ Module Modulo_Documentos
 
             MessageBoxEx.Show(_Fm_Menu_Padre, "Debe configurar el formato de salida en la configuración por modalidad de trabajo",
                       "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
         End If
 
     End Sub

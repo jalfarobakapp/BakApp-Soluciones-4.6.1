@@ -118,6 +118,7 @@ Public Class Frm_Stmp_Listado
         Consulta_sql = Replace(Consulta_sql, "#Sucursal#", ModSucursal)
         Consulta_sql = Replace(Consulta_sql, "--#Condicion#", _Condicion)
         Consulta_sql = Replace(Consulta_sql, "Zw_Stmp_Enc", _Global_BaseBk & "Zw_Stmp_Enc")
+        Consulta_sql = Replace(Consulta_sql, "Zw_Demonio_FacAuto", _Global_BaseBk & "Zw_Demonio_FacAuto")
 
         Dim _New_Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
         _Dv = New DataView
@@ -1543,7 +1544,10 @@ Public Class Frm_Stmp_Listado
         For Each _Fila As DataGridViewRow In Grilla.Rows
 
             Dim _Estado As String = _Fila.Cells("Estado").Value
+            Dim _Error_FacAuto As Boolean = _Fila.Cells("Error_FacAuto").Value
+            Dim _Info_FacAuto As String = _Fila.Cells("Info_FacAuto").Value
 
+            'warning.png
             Dim _Icono As Image
 
             Dim _Imagenes_List As ImageList
@@ -1569,6 +1573,10 @@ Public Class Frm_Stmp_Listado
 
             If _Estado = "PREPA" Or _Estado = "PREPA" Then
                 _Icono = _Imagenes_List.Images.Item("symbol-delete.png")
+            End If
+
+            If _Error_FacAuto Then
+                _Icono = _Imagenes_List.Images.Item("warning.png")
             End If
 
             _Fila.Cells("BtnImagen_Estado").Value = _Icono
@@ -1747,8 +1755,10 @@ Public Class Frm_Stmp_Listado
     End Sub
 
     Private Sub Chk_VerIngresadas_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_VerIngresadas.CheckedChanged
+
         Tab_Ingresadas.Visible = Chk_VerIngresadas.Checked
         Sb_Actualizar_Grilla()
+
     End Sub
 
     Private Sub Btn_ConfLocal_Click(sender As Object, e As EventArgs) Handles Btn_ConfLocal.Click
@@ -1758,6 +1768,55 @@ Public Class Frm_Stmp_Listado
         Fm.Dispose()
 
     End Sub
+
+    Private Sub Grilla_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellEnter
+
+        Try
+            Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+            Dim _Info_FacAuto As String = _Fila.Cells("Info_FacAuto").Value.ToString.Trim
+            Lbl_Informacion.Text = _Info_FacAuto
+        Catch ex As Exception
+            Lbl_Informacion.Text = String.Empty
+        End Try
+
+    End Sub
+
+    Private Sub Btn_ReenviaFacturar_Click(sender As Object, e As EventArgs) Handles Btn_ReenviaFacturar.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Idmaeedo As Integer = _Fila.Cells("Idmaeedo").Value
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_FacAuto Where Idmaeedo_NVV = " & _Idmaeedo
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_Row) Then
+
+            MessageBoxEx.Show(Me, "No se encontro este docuemnto en el sistema de facturación." & vbCrLf &
+                              "Documento NVV - " & _Fila.Cells("Nudo").Value, "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+
+        End If
+
+        If _Row.Item("Facturado") Then
+
+            MessageBoxEx.Show(Me, "Este documento ya se encuentra facturado" & vbCrLf &
+                              _Row.Item("TidoGen") & "-" & _Row.Item("NudoGen"), "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+
+        End If
+
+        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Demonio_FacAuto " & vbCrLf &
+                       "Set Facturar = 1,ErrorGrabar = 0,Informacion = ''" & vbCrLf &
+                       "Where Idmaeedo_NVV = " & _Idmaeedo
+        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+            MessageBoxEx.Show(Me, "La nota de venta se envio nuevamente a facturar al diablito", "Información",
+                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+
+    End Sub
+
 End Class
 
 Namespace Stmp_Configuracion

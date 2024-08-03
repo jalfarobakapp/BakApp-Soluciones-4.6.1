@@ -1768,6 +1768,8 @@ Public Class Frm_Formulario_Documento
 
     Function Fx_Nuevo_Doc_Auto(_Cambiar_Tido As Boolean) As String
 
+        Dim _Mensaje = String.Empty
+
         Try
 
             If _Cambiar_Tido Then _Tido = _Tido_Original
@@ -2247,7 +2249,7 @@ Public Class Frm_Formulario_Documento
 
             If Not (_RowEntidad Is Nothing) Then
 
-                Dim _No_Puede_Acceder As Boolean
+                'Dim _No_Puede_Acceder As Boolean
 
                 Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, False, _Aplicar_Venciminetos)
 
@@ -2306,7 +2308,7 @@ Public Class Frm_Formulario_Documento
             _Ds_Matriz_Documentos.Tables.Add(_Tbl_Mevento_Edo)
             _Ds_Matriz_Documentos.Tables.Add(_Tbl_Mevento_Edd)
 
-            ' Agregamos tabla Maedpce para los pagos asociados
+            'Agregamos tabla Maedpce para los pagos asociados
 
             Consulta_sql = "SELECT TOP 1 IDMAEDPCE,EMPRESA,SUREDP,CJREDP,TIDP,NUDP,ENDP,EMDP,SUEMDP,CUDP,NUCUDP,FEEMDP,FEVEDP,MODP," & vbCrLf &
                            "TIMODP,TAMODP,VADP,VAABDP,VAASDP,VAVUDP,ESPGDP,REFANTI,KOTU,NUTRANSMI,DOCUENANTI,KOFUDP,KOTNDP,SUTNDP,ESASDP,ESPGDP,CUOTAS," &
@@ -2343,14 +2345,14 @@ Public Class Frm_Formulario_Documento
             Me.ActiveControl = Grilla_Detalle
             Grilla_Detalle.CurrentCell = Grilla_Detalle.Rows(0).Cells("Codigo")
 
-            Sb_Mostrar_Datos_Producto_Activo(False)
+            'Sb_Mostrar_Datos_Producto_Activo(False)
 
-            If _Tido = "GRC" Or _Tido = "FCC" Or _Tido = "GRD" Then
+            'If _Tido = "GRC" Or _Tido = "FCC" Or _Tido = "GRD" Then
 
-                Me.ActiveControl = Grilla_Encabezado
-                Grilla_Encabezado.CurrentCell = Grilla_Encabezado.Rows(0).Cells("NroDocumento")
+            '    Me.ActiveControl = Grilla_Encabezado
+            '    Grilla_Encabezado.CurrentCell = Grilla_Encabezado.Rows(0).Cells("NroDocumento")
 
-            End If
+            'End If
 
             Dim _Es_Electronico As Boolean = _TblEncabezado.Rows(0).Item("Es_Electronico")
 
@@ -2358,7 +2360,8 @@ Public Class Frm_Formulario_Documento
 
                 If _Global_Row_Configuracion_General.Item("FacElec_Bakapp_Hefesto") Then
 
-                    Dim _Cn As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & ModEmpresa & "' And Campo = 'Cn'")
+                    Dim _Cn As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
+                                                          "Empresa = '" & ModEmpresa & "' And Campo = 'Cn'",, False)
 
                     If String.IsNullOrEmpty(_Cn) Then
 
@@ -2434,10 +2437,10 @@ Public Class Frm_Formulario_Documento
             'End If
 
         Catch ex As Exception
-            Fx_Nuevo_Doc_Auto = ex.Message
+            _Mensaje = ex.Message
         End Try
 
-        Return String.Empty
+        Return _Mensaje
 
     End Function
 
@@ -2545,7 +2548,11 @@ Public Class Frm_Formulario_Documento
                             "Inner Join TABMO On MOLT = KOMO" & vbCrLf &
                             "Where KOLT = '" & _CodLista & "'"
 
-            _RowMoneda_Det = _Sql.Fx_Get_DataRow(Consulta_sql)
+            _RowMoneda_Det = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                Throw New System.Exception(_Sql.Pro_Error)
+            End If
 
             .Item("Moneda") = _RowMoneda_Det.Item("KOMO")
             .Item("Tipo_Cambio") = _RowMoneda_Det.Item("VAMO")

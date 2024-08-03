@@ -37,6 +37,12 @@ Public Class Sgem_EntregaMercaderia
 
     Private Sub Btn_MisTicket_Click(sender As Object, e As EventArgs) Handles Btn_MisTicket.Click
 
+        Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(_Fm_Menu_Padre)
+
+        If Not _Msj_Tsc.EsCorrecto Then
+            Return
+        End If
+
         If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Stem0001") Then Return
 
         Dim Fm As New Frm_Stmp_Listado

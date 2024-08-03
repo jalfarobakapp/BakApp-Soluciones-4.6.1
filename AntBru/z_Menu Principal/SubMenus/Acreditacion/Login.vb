@@ -1,5 +1,6 @@
 ﻿Imports DevComponents.DotNetBar
 Imports BkSpecialPrograms
+Imports BkSpecialPrograms.LsValiciones
 
 Public Class Login
 
@@ -247,7 +248,11 @@ Public Class Login
                             Frm_Menu.Mnu_Ventas.Visible = False
                             Frm_Menu.Notify_Menu_BakApp.Visible = True
 
-                            If Fx_Revisar_Taza_Cambio(_Fm_Menu_Padre) Then
+                            Dim _Msj_Tsc As LsValiciones.Mensajes
+
+                            _Msj_Tsc = Fx_Revisar_Tasa_Cambio(_Fm_Menu_Padre)
+
+                            If _Msj_Tsc.EsCorrecto Then
                                 _Fm_Menu_Padre.Hide()
                                 Dim Fm_Pd As New Frm_Pagos_Documentos
                                 Fm_Pd.ShowInTaskbar = True
@@ -343,12 +348,17 @@ Public Class Login
 
                 If _Revisar_Demonio Then Sb_Demonio(False, True)
 
-                If Fx_Revisar_Taza_Cambio(_Fm_Menu_Padre) Then
+                Dim _Msj_Tsc As LsValiciones.Mensajes
+
+                _Msj_Tsc = Fx_Revisar_Tasa_Cambio(_Fm_Menu_Padre)
+
+                If _Msj_Tsc.EsCorrecto Then
+
                     Dim Fm_Post As New Frm_Formulario_Documento("BLV", csGlobales.Enum_Tipo_Documento.Venta, True)
-                    'Fm_Post.Btn_Minimizar.Visible = True
                     Fm_Post.ShowInTaskbar = True
                     Fm_Post.ShowDialog(Me)
                     Fm_Post.Dispose()
+
                 End If
             End If
 
@@ -378,10 +388,13 @@ Public Class Login
 
                 If _Revisar_Demonio Then Sb_Demonio(False, True)
 
-                If Fx_Revisar_Taza_Cambio(_Fm_Menu_Padre) Then
+                Dim _Msj_Tsc As LsValiciones.Mensajes
+
+                _Msj_Tsc = Fx_Revisar_Tasa_Cambio(_Fm_Menu_Padre)
+
+                If _Msj_Tsc.EsCorrecto Then
 
                     Dim Fm_Post As New Frm_Formulario_Documento("NVV", csGlobales.Enum_Tipo_Documento.Venta)
-                    'Fm_Post.Btn_Minimizar.Visible = True
                     Fm_Post.MinimizeBox = True
                     Fm_Post.ShowInTaskbar = True
                     Fm_Post.ShowDialog(Me)

@@ -79,15 +79,17 @@ Public Class Modulo_Compras
 
     Private Sub Btn_Recomendacion_Compra_Click(sender As Object, e As EventArgs) Handles Btn_Recomendacion_Compra.Click
 
-        If Fx_Revisar_Taza_Cambio(_Fm_Menu_Padre) Then
+        Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(_Fm_Menu_Padre)
 
-            If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Prod060") Then
+        If Not _Msj_Tsc.EsCorrecto Then
+            Return
+        End If
 
-                Dim Fm As New Frm_Sol_Recom_Lista(Frm_Sol_Recom_Lista.Enum_Vista_Solicitudes.Todas)
-                Fm.ShowDialog(Me)
-                Fm.Dispose()
+        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Prod060") Then
 
-            End If
+            Dim Fm As New Frm_Sol_Recom_Lista(Frm_Sol_Recom_Lista.Enum_Vista_Solicitudes.Todas)
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
 
         End If
 

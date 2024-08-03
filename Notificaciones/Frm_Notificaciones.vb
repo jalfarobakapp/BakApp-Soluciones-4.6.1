@@ -4,16 +4,16 @@ Imports System.Threading
 
 Public Class Frm_Notificaciones
 
-    Dim _Fm_Demonio As Frm_Demonio_01
+    'Dim _Fm_Demonio As Frm_Demonio_01
 
-    Public Property Pro_Fm_Demonio() As Frm_Demonio_01
-        Get
-            Return _Fm_Demonio
-        End Get
-        Set(ByVal value As Frm_Demonio_01)
-            _Fm_Demonio = value
-        End Set
-    End Property
+    'Public Property Pro_Fm_Demonio() As Frm_Demonio_01
+    '    Get
+    '        Return _Fm_Demonio
+    '    End Get
+    '    Set(ByVal value As Frm_Demonio_01)
+    '        _Fm_Demonio = value
+    '    End Set
+    'End Property
 
     Dim _Face_Pruebas As Boolean
 

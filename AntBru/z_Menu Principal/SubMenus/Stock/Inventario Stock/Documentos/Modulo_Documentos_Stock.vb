@@ -1,5 +1,5 @@
-﻿Imports DevComponents.DotNetBar
-Imports BkSpecialPrograms
+﻿Imports BkSpecialPrograms
+Imports DevComponents.DotNetBar
 
 
 Public Class Modulo_Documentos_Stock
@@ -47,19 +47,31 @@ Public Class Modulo_Documentos_Stock
     End Sub
 
     Private Sub Btn_GRI_Click(sender As Object, e As EventArgs) Handles Btn_GRI.Click
-        If Fx_Revisar_Taza_Cambio(_Fm_Menu_Padre) Then
-            Dim NewPanel As Documentos_GDI_GRI = Nothing
-            NewPanel = New Documentos_GDI_GRI(_Fm_Menu_Padre)
-            _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
+
+        Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(_Fm_Menu_Padre)
+
+        If Not _Msj_Tsc.EsCorrecto Then
+            Return
         End If
+
+        Dim NewPanel As Documentos_GDI_GRI = Nothing
+        NewPanel = New Documentos_GDI_GRI(_Fm_Menu_Padre)
+        _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
+
     End Sub
 
     Private Sub Btn_GDP_GDD_Click(sender As Object, e As EventArgs) Handles Btn_GDP_GDD.Click
-        If Fx_Revisar_Taza_Cambio(_Fm_Menu_Padre) Then
-            Dim NewPanel As Documentos_GDD_GDP = Nothing
-            NewPanel = New Documentos_GDD_GDP(_Fm_Menu_Padre)
-            _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
+
+        Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(_Fm_Menu_Padre)
+
+        If Not _Msj_Tsc.EsCorrecto Then
+            Return
         End If
+
+        Dim NewPanel As Documentos_GDD_GDP = Nothing
+        NewPanel = New Documentos_GDD_GDP(_Fm_Menu_Padre)
+        _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
+
     End Sub
 
     Private Sub Btn_Guia_Recepcion_Devoluciones_Click(sender As Object, e As EventArgs) Handles Btn_Guia_Recepcion_Devoluciones.Click

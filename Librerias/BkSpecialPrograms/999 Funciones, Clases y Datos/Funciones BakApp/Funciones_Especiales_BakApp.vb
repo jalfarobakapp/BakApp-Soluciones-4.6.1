@@ -1,7 +1,6 @@
 ﻿Imports System.IO
 Imports System.Security.Cryptography
 Imports BkSpecialPrograms.Bk_Migrar_Producto
-Imports BkSpecialPrograms.LsValiciones
 Imports DevComponents.DotNetBar
 Imports Newtonsoft.Json
 Public Module Funciones_Especiales_BakApp
@@ -1708,6 +1707,9 @@ Public Module Funciones_Especiales_BakApp
                         Return _Mensaje
 
                     Else
+
+                        _Mensaje.Mensaje = "No existe tasa de cambio para la fecha: " & FormatDateTime(_Fecha_Tasa, DateFormat.ShortDate) & ", para las monedas: " & _Monedas
+
                         If Not IsNothing(_Formulario) Then
 
                             If _Mostrar_Mensaje Then
@@ -3768,7 +3770,11 @@ Public Module Crear_Documentos_Desde_Otro
                            "Where TD='" & _Td & "' And Empresa='" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion & vbCrLf &
                            "And " & Val(_Folio) & " Between Cast(RNG_D As int) And Cast(RNG_H As int) "
 
-            Dim _Row_Folios As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+            Dim _Row_Folios As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                Throw New System.Exception(_Mensaje.Mensaje)
+            End If
 
             If IsNothing(_Row_Folios) Then
 
@@ -3796,12 +3802,20 @@ Public Module Crear_Documentos_Desde_Otro
                     _DiasAvisoExpiraFolio = 14
                 End Try
 
+                If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                    Throw New System.Exception(_Sql.Pro_Error)
+                End If
+
                 Try
                     _AvisoSaldoFolios = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad",
                                                               "AvisoSaldoFolios", "Empresa = '" & ModEmpresa & "' And TipoDoc = '" & _Tido & "' And Modalidad = '  '",, False)
                 Catch ex As Exception
                     _AvisoSaldoFolios = 20
                 End Try
+
+                If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                    Throw New System.Exception(_Sql.Pro_Error)
+                End If
 
                 Dim _DiasDif As Integer = _Row_Folios.Item("DiasDif")
                 Dim _SaldoFolios As Integer = _Row_Folios.Item("SaldoFolios")
@@ -3819,14 +3833,19 @@ Public Module Crear_Documentos_Desde_Otro
 
                         Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_DTE_Caf",
                                      "TD='" & _Td & "' And Empresa='" & ModEmpresa & "' " &
-                                     "And AmbienteCertificacion = " & _AmbienteCertificacion & " And Cast(RNG_D As int) > " & Val(_Folio))
+                                     "And AmbienteCertificacion = " & _AmbienteCertificacion & " And Cast(RNG_D As int) > " & Val(_Folio), False)
 
                         If Not CBool(_Reg) Then
                             _MsgSaldoFolios = "- Solo queda(n) " & _SaldoFolios & " folio(s) disponible(s) y no hay mas CAF registrados" & vbCrLf &
                                 "Folios Desde:" & _Rng_d & ", hasta:" & _Rng_h
                         End If
+
                     End If
 
+                End If
+
+                If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                    Throw New System.Exception(_Sql.Pro_Error)
                 End If
 
                 If Not IsNothing(_Formulario) Then
@@ -3852,32 +3871,36 @@ Public Module Crear_Documentos_Desde_Otro
 
                 Dim _Meses As Integer = 6
 
-                If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_DTE_Configuracion") Then
+                If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_DTE_Configuracion", False) Then
 
                     Try
 
                         Select Case _Tido
                             Case "BLV"
                                 _Meses = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
-                                     "Campo = 'Input_siimesesexpiranfolios_BOLETAS' And Empresa = '" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion)
+                                     "Campo = 'Input_siimesesexpiranfolios_BOLETAS' And Empresa = '" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion,, False)
                             Case "NCV"
                                 _Meses = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
-                                     "Campo = 'Input_siimesesexpiranfolios_NOTASCREDITO' And Empresa = '" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion)
+                                     "Campo = 'Input_siimesesexpiranfolios_NOTASCREDITO' And Empresa = '" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion,, False)
                             Case "FDV"
                                 _Meses = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
-                                     "Campo = 'Input_siimesesexpiranfolios_NOTASDEBITO' And Empresa = '" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion)
+                                     "Campo = 'Input_siimesesexpiranfolios_NOTASDEBITO' And Empresa = '" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion,, False)
                             Case "GDV"
                                 _Meses = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
-                                     "Campo = 'siimesesexpiranfolios_GUIAS' And Empresa = '" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion)
+                                     "Campo = 'siimesesexpiranfolios_GUIAS' And Empresa = '" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion,, False)
                             Case Else
                                 _Meses = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
-                                        "Campo = 'siimesesexpiranfolios' And Empresa = '" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion)
+                                        "Campo = 'siimesesexpiranfolios' And Empresa = '" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion,, False)
                         End Select
 
                     Catch ex As Exception
                         _Meses = 6
                     End Try
 
+                End If
+
+                If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                    Throw New System.Exception(_Sql.Pro_Error)
                 End If
 
                 Dim _Meses_Dif As Double = DateDiff(DateInterval.Month, _Fa, _Fecha_Servisor)
@@ -3887,15 +3910,15 @@ Public Module Crear_Documentos_Desde_Otro
 
                 If _Meses_Dif > _Meses Then
 
-                    If Not IsNothing(_Formulario) Then
+                    'If Not IsNothing(_Formulario) Then
 
-                        _Mensaje.Detalle = "Validación Modalidad: " & Modalidad
-                        Throw New System.Exception("Este folio " & _Folio & " tiene mas de (" & _Meses & ") meses desde su fecha de creación" & vbCrLf &
-                              "en el SII y su configuración indica que podría estar vencido." & vbCrLf &
-                              "Si usted insite en el envío, este documento podria ser rechazado." & vbCrLf & vbCrLf &
-                              "INFORME ESTA SITUACION AL ADMINISTRADOR DEL SISTEMA")
+                    _Mensaje.Detalle = "Validación Modalidad: " & Modalidad
+                    Throw New System.Exception("Este folio " & _Folio & " tiene mas de (" & _Meses & ") meses desde su fecha de creación" & vbCrLf &
+                          "en el SII y su configuración indica que podría estar vencido." & vbCrLf &
+                          "Si usted insite en el envío, este documento podria ser rechazado." & vbCrLf & vbCrLf &
+                          "INFORME ESTA SITUACION AL ADMINISTRADOR DEL SISTEMA")
 
-                    End If
+                    'End If
 
                 Else
 
@@ -3909,6 +3932,7 @@ Public Module Crear_Documentos_Desde_Otro
             End If
 
         Catch ex As Exception
+            _Mensaje.EsCorrecto = False
             _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
@@ -6098,7 +6122,7 @@ Public Module Crear_Documentos_Desde_Otro
             If _Global_Row_Configuracion_General.Item("FacElec_Bakapp_Hefesto") Then
                 Dim _TimbrarXRandom As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad",
                                                    "TimbrarXRandom",
-                                                   "Modalidad = '" & Modalidad & "' And TipoDoc = '" & _Tido & "'")
+                                                   "Modalidad = '" & Modalidad & "' And TipoDoc = '" & _Tido & "'",, False)
                 If _TimbrarXRandom Then
                     Return False
                 End If

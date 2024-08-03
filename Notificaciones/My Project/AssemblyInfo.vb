@@ -12,7 +12,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("")>
 <Assembly: AssemblyCompany("HP Inc.")>
 <Assembly: AssemblyProduct("Notificaciones")>
-<Assembly: AssemblyCopyright("Copyright © HP Inc. 2021")>
+<Assembly: AssemblyCopyright("Copyright © HP Inc. 2024")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' utilizando el carácter "*", como se muestra a continuación:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("1.0.1.7")>
-<Assembly: AssemblyFileVersion("1.0.1.7")>
+<Assembly: AssemblyVersion("1.0.1.9")>
+<Assembly: AssemblyFileVersion("1.0.1.9")>
