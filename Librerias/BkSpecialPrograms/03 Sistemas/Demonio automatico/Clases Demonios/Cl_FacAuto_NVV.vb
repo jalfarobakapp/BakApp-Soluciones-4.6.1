@@ -577,7 +577,6 @@
                                                                   _Id_Pickeo As Integer) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
-        Dim _New_Idmaeedo As Integer
 
         Try
 
@@ -760,7 +759,7 @@
 
                             End If
 
-                            Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO = " & _New_Idmaeedo
+                            Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO = " & _Msj_GrabarDoc.Id
                             Dim _Row_Maeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
 
                             _Tido = String.Empty
@@ -773,7 +772,7 @@
 
                                 Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set " &
                                                "Estado = 'FACTU'" &
-                                               ",IdmaeedoGen = " & _New_Idmaeedo &
+                                               ",IdmaeedoGen = " & _Msj_GrabarDoc.Id &
                                                ",TidoGen = '" & _Tido &
                                                "',NudoGen = '" & _Nudo & "'" & vbCrLf &
                                                "Where Id = " & _Id_Pickeo

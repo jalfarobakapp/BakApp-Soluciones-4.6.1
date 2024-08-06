@@ -962,8 +962,8 @@ Public Class Class_Genera_DTE_RdBk
 
         If _Firma_Bakapp Then
             Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_DTE_Caf With ( NOLOCK )" & vbCrLf &
-                      "Where Cast(RNG_D AS INT)<=" & _Nro_Documento & " And Cast(RNG_H AS INT)>=" & _Nro_Documento &
-                      " And TD='" & _Td & "' And Empresa='" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion
+                           "Where Cast(RNG_D AS INT)<=" & _Nro_Documento & " And Cast(RNG_H AS INT)>=" & _Nro_Documento &
+                           " And TD='" & _Td & "' And Empresa='" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion
         Else
             Consulta_sql = "Select TOP 1 * FROM FFOLIOS WITH ( NOLOCK )" & vbCrLf &
                            "Where CAST(RNG_D AS INT)<=" & _Nro_Documento & " And Cast(RNG_H AS INT)>=" & _Nro_Documento &

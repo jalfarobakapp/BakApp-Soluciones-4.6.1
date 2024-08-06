@@ -2,17 +2,24 @@
 
 Public Class Frm_FTP_Fichero
 
-    Public _Fichero As String
-    Public _Abrir_carpeta_despues_de_descargar As Boolean
-    Public _Archivo_No_Se_Puede_Borrar As String
-    Public _Permitir_Pisar_Archivos As Boolean
+    Private _Fichero As String
+    Private _Abrir_carpeta_despues_de_descargar As Boolean
+    Private _Archivo_No_Se_Puede_Borrar As String
+    Private _Permitir_Pisar_Archivos As Boolean
 
-    Public Sub New()
+    Private _Id_Ftp As Integer
+    Private _Tipo_Ftp As Cl_Ftp.eTipo_Ftp
+    Public Property Ftp As New Cl_Ftp
+
+    Public Sub New(_Id_Ftp As Integer, _Tipo_Ftp As Cl_Ftp.eTipo_Ftp)
 
         ' Esta llamada es exigida por el diseñador.
         InitializeComponent()
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+
+        Me._Id_Ftp = _Id_Ftp
+        Me._Tipo_Ftp = _Tipo_Ftp
 
         Sb_Color_Botones_Barra(Bar1)
         Sb_Color_Botones_Barra(Bar2)
@@ -21,19 +28,34 @@ Public Class Frm_FTP_Fichero
 
     Private Sub Frm_FTP_Fichero_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
-        Txt_Ftp_Usuario.Text = "productos@bakapp.cl"
-        Txt_Ftp_Contrasena.Text = "JvBa$O$=mQFo"
-        Txt_Ftp_Host.Text = "ftp.bakapp.cl"
-        Txt_Ftp_Puerto.Text = "21"
+        Ftp.Fx_Llenar_Host(_Id_Ftp)
 
-        _Fichero = "ftp://ftp.bakapp.cl"
-        Txt_Directorio_Seleccionado.Text = _Fichero
+        With Ftp.Zw_Ftp_Conexiones
+            Txt_Usuario.Text = .Usuario
+            Txt_Clave.Text = .Clave
+            Txt_Host.Text = .Host
+            Txt_Puerto.Text = .Puerto
+            Txt_Fichero.Text = .Fichero
+        End With
 
-        Sb_Ver_FTP(True)
+        'Txt_Usuario.Text = "productos@bakapp.cl"
+        'Txt_Clave.Text = "JvBa$O$=mQFo"
+        'Txt_Host.Text = "ftp.bakapp.cl"
+        'Txt_Puerto.Text = "21"
+
+        '_Fichero = "ftp://ftp.bakapp.cl"
+        'Txt_Fichero.Text = _Fichero
+
+        _Fichero = Txt_Fichero.Text '"ftp://" & Txt_Host.Text & ":" & Txt_Puerto.Text & "/" & Txt_Fichero.Text
+
+        If CBool(_Id_Ftp) Then
+            Txt_Fichero.Text = Ftp.Zw_Ftp_Conexiones.Fichero & "/" & Ftp.Zw_Ftp_Conexiones.Tipo
+            Sb_Ver_FTP(True)
+        End If
 
     End Sub
 
-    Private Sub Sb_Llenat_Lista(_Lista_Archivos)
+    Private Sub Sb_Llenar_Lista(_Lista_Archivos)
 
         ' With List_Carpeta_FTP
         List_Carpeta_FTP.Items.Clear()
@@ -104,12 +126,12 @@ Public Class Frm_FTP_Fichero
 
     Private Sub Btn_Descargar_Archivos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Descargar_Archivos.Click
         If CBool(List_Carpeta_FTP.SelectedItems.Count) Then
-            Dim _Dir = "ftp://" & Txt_Ftp_Host.Text & ":" & Txt_Ftp_Puerto.Text
+            Dim _Dir = "ftp://" & Txt_Host.Text & ":" & Txt_Puerto.Text
             Dim _Carpeta = "SCN Negocios"
 
-            Dim _Ftp As New Class_FTP(_Dir, Trim(Txt_Ftp_Usuario.Text), Trim(Txt_Ftp_Contrasena.Text))
+            Dim _Ftp As New Class_FTP(_Dir, Trim(Txt_Usuario.Text), Trim(Txt_Clave.Text))
 
-            If _Ftp.Fx_Verificar_Coneccion_FTP(Me, Txt_Ftp_Host.Text, Txt_Ftp_Puerto.Text) Then
+            If _Ftp.Fx_Verificar_Conexion_FTP(Me, Txt_Host.Text, Txt_Puerto.Text) Then
 
                 Dim _Directorio_Destino = Fx_Seleccionar_Directorio()
 
@@ -129,7 +151,7 @@ Public Class Frm_FTP_Fichero
 
                         Try
                             My.Computer.Network.DownloadFile(_Fichero & "/" & _Archivo, _Directorio_Destino & "\" & _Archivo,
-                                                         Trim(Txt_Ftp_Usuario.Text), Trim(Txt_Ftp_Contrasena.Text), True, 100, True)
+                                                         Trim(Txt_Usuario.Text), Trim(Txt_Clave.Text), True, 100, True)
                             AddToLog("Ok", "..\" & _Archivo)
                         Catch ex As Exception
                             'MessageBoxEx.Show(ex.Message, "Problema al descargar el archivo", _
@@ -181,9 +203,9 @@ Public Class Frm_FTP_Fichero
             .Description = "Seleccionar una carpeta "
             ' Path " Mis documentos "
 
-            Dim _SPath As String = Txt_Directorio_Seleccionado.Text
+            Dim _SPath As String = Txt_Fichero.Text
 
-            If String.IsNullOrEmpty(Txt_Directorio_Seleccionado.Text) Then
+            If String.IsNullOrEmpty(Txt_Fichero.Text) Then
                 _SPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
             End If
 
@@ -223,12 +245,12 @@ Public Class Frm_FTP_Fichero
 
 
 
-                Dim _Dir = "ftp://" & Txt_Ftp_Host.Text & ":" & Txt_Ftp_Puerto.Text
+                Dim _Dir = "ftp://" & Txt_Host.Text & ":" & Txt_Puerto.Text
                 Dim _Carpeta = "SCN Negocios"
 
-                Dim _Ftp As New Class_FTP(_Dir, Trim(Txt_Ftp_Usuario.Text), Trim(Txt_Ftp_Contrasena.Text))
+                Dim _Ftp As New Class_FTP(_Dir, Trim(Txt_Usuario.Text), Trim(Txt_Clave.Text))
 
-                If _Ftp.Fx_Verificar_Coneccion_FTP(Me, Txt_Ftp_Host.Text, Txt_Ftp_Puerto.Text) Then
+                If _Ftp.Fx_Verificar_Conexion_FTP(Me, Txt_Host.Text, Txt_Puerto.Text) Then
 
                     Sb_Trabajo_FTP(True)
 
@@ -249,6 +271,9 @@ Public Class Frm_FTP_Fichero
                         Dim _Ruta_Local = _Ruta_Archivos(_i)
 
                         Dim _Subir As String
+
+                        _Fichero = Txt_Fichero.Text
+
                         If _Ftp.Fx_Existe_Archivo(_Fichero & "/" & _Archivo) Then
                             If _Permitir_Pisar_Archivos Then
                                 _Subir = _Ftp.Fx_Subir_Fichero(_Ruta_Local, _Fichero & "/" & _Archivo)
@@ -257,15 +282,6 @@ Public Class Frm_FTP_Fichero
                                          "Archivo [" & _Archivo & "] ya existe, no se puede levantar archivos con el mismo nombre")
                             End If
                         Else
-
-                            'My.Computer.Network.UploadFile(_Ruta_Local, _
-                            '                               _Fichero & "/" & _Archivo, _
-                            '                               Trim(Txt_Ftp_Usuario.Text), _
-                            '                               Trim(Txt_Ftp_Contrasena.Text))
-
-                            'Y para bajar un fichero del ftp, como vais a ver tampoco es complicado.
-                            'My.Computer.Network.DownloadFile(_Fichero & "/" & _Archivo, _Ruta_Local, Trim(Txt_Ftp_Usuario.Text), Trim(Txt_Ftp_Contrasena.Text), True, 100, True)
-
                             _Subir = _Ftp.Fx_Subir_Fichero(_Ruta_Local, _Fichero & "/" & _Archivo)
                         End If
 
@@ -311,10 +327,11 @@ Public Class Frm_FTP_Fichero
     Private Sub Btn_Renombrar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Renombrar.Click
 
         If List_Carpeta_FTP.SelectedItems.Count = 1 Then
-            Dim _Dir = "ftp://" & Txt_Ftp_Host.Text & ":" & Txt_Ftp_Puerto.Text
+
+            Dim _Dir = "ftp://" & Txt_Host.Text & ":" & Txt_Puerto.Text
             Dim _Carpeta = "SCN Negocios"
 
-            Dim _Ftp As New Class_FTP(_Dir, Trim(Txt_Ftp_Usuario.Text), Trim(Txt_Ftp_Contrasena.Text))
+            Dim _Ftp As New Class_FTP(_Dir, Trim(Txt_Usuario.Text), Trim(Txt_Clave.Text))
 
             Dim _Fila As ListViewItem = List_Carpeta_FTP.SelectedItems.Item(0)
             Dim _Archivo = Split(_Fila.Text, ".")
@@ -380,12 +397,12 @@ Public Class Frm_FTP_Fichero
     Private Sub Btn_Eliminar_documento_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Eliminar_documento.Click
 
         If CBool(List_Carpeta_FTP.SelectedItems.Count) Then
-            Dim _Dir = "ftp://" & Txt_Ftp_Host.Text & ":" & Txt_Ftp_Puerto.Text
+            Dim _Dir = "ftp://" & Txt_Host.Text & ":" & Txt_Puerto.Text
             Dim _Carpeta = "SCN Negocios"
 
-            Dim _Ftp As New Class_FTP(_Dir, Trim(Txt_Ftp_Usuario.Text), Trim(Txt_Ftp_Contrasena.Text))
+            Dim _Ftp As New Class_FTP(_Dir, Trim(Txt_Usuario.Text), Trim(Txt_Clave.Text))
 
-            If _Ftp.Fx_Verificar_Coneccion_FTP(Me, Txt_Ftp_Host.Text, Txt_Ftp_Puerto.Text) Then
+            If _Ftp.Fx_Verificar_Conexion_FTP(Me, Txt_Host.Text, Txt_Puerto.Text) Then
 
                 Dim _Mensaje As String
                 If List_Carpeta_FTP.SelectedItems.Count = 1 Then
@@ -484,27 +501,118 @@ Public Class Frm_FTP_Fichero
             Me.Enabled = False
             Sb_Trabajo_FTP(True)
 
-            Dim _Dir = "ftp://" & Txt_Ftp_Host.Text & ":" & Txt_Ftp_Puerto.Text
+            'Dim _Dir = "ftp://" & Txt_Host.Text & ":" & Txt_Puerto.Text
             Dim _Carpeta = "SCN Negocios"
 
-            Dim _Ftp As New Class_FTP(_Dir, Trim(Txt_Ftp_Usuario.Text), Trim(Txt_Ftp_Contrasena.Text))
+            'Dim _Ftp As New Class_FTP(_Dir, Trim(Txt_Usuario.Text), Trim(Txt_Clave.Text))
 
-            If _Ftp.Fx_Verificar_Coneccion_FTP(Me, Txt_Ftp_Host.Text, Txt_Ftp_Puerto.Text) Then
+            Dim _Mensaje As LsValiciones.Mensajes
 
-                If _Ftp.Fx_Existe_Directorio(_Fichero) Then
+            _Mensaje = Ftp.Fx_Probar_Conexion_FTP
 
-                    Dim _Lista_Archivos = _Ftp.Fx_Obtener_Archivos_Directorio(_Fichero)
-                    Sb_Llenat_Lista(_Lista_Archivos)
-                    If _Mostrar_Log Then AddToLog("Conexión Ftp", "Conexión establecida...")
-
-                End If
+            If Not _Mensaje.EsCorrecto Then
+                Throw New Exception(_Mensaje.Mensaje)
             End If
+
+            _Mensaje = Ftp.Fx_Existe_Directorio(Ftp.Zw_Ftp_Conexiones.Fichero)
+
+            If Not _Mensaje.EsCorrecto Then
+                Throw New Exception(_Mensaje.Mensaje)
+            End If
+
+            _Mensaje = _Ftp.Fx_Obtener_Archivos_Directorio(Txt_Fichero.Text)
+
+            If Not _Mensaje.EsCorrecto Then
+                Throw New Exception(_Mensaje.Mensaje)
+            End If
+
+            Sb_Llenar_Lista(_Mensaje.Tag)
+            If _Mostrar_Log Then AddToLog("Conexión Ftp", "Conexión establecida...")
+
         Catch ex As Exception
             MessageBoxEx.Show(Me, ex.Message, "Problemas de conexión...", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         Finally
             Sb_Trabajo_FTP(False)
             Me.Enabled = True
         End Try
+    End Sub
+
+    Private Sub Btn_ProbConexion_Click(sender As Object, e As EventArgs) Handles Btn_ProbConexion.Click
+
+        With Ftp.Zw_Ftp_Conexiones
+
+            .Usuario = Trim(Txt_Usuario.Text)
+            .Clave = Trim(Txt_Clave.Text)
+            .Host = Trim(Txt_Host.Text)
+            .Puerto = Trim(Txt_Puerto.Text)
+            .Fichero = Trim(Txt_Fichero.Text)
+
+        End With
+
+        Me.Cursor = Cursors.WaitCursor
+        Me.Enabled = False
+
+        Dim _Mensaje As LsValiciones.Mensajes = Ftp.Fx_Probar_Conexion_FTP
+
+        Me.Cursor = Cursors.Default
+        Me.Enabled = True
+
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+
+    End Sub
+
+    Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
+
+        With Ftp.Zw_Ftp_Conexiones
+
+            .Usuario = Trim(Txt_Usuario.Text)
+            .Clave = Trim(Txt_Clave.Text)
+            .Host = Trim(Txt_Host.Text)
+            .Puerto = Trim(Txt_Puerto.Text)
+            .Fichero = Trim(Txt_Fichero.Text)
+            .Carpeta_Archivos = "Archivos"
+            .Carpeta_Imagenes = "Imagenes"
+
+        End With
+
+        Me.Cursor = Cursors.WaitCursor
+        Me.Enabled = False
+
+        Dim _Mensaje As LsValiciones.Mensajes = Ftp.Fx_Probar_Conexion_FTP
+
+        Me.Cursor = Cursors.Default
+        Me.Enabled = True
+
+        If Not _Mensaje.EsCorrecto Then
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            Return
+        End If
+
+        If Not Ftp.Fx_Existe_Directorio2(Ftp.Zw_Ftp_Conexiones.Fichero & "/" & _Tipo_Ftp.ToString) Then
+
+            _Mensaje = Ftp.Fx_Crear_Directorio(Ftp.Zw_Ftp_Conexiones.Fichero & "/" & _Tipo_Ftp.ToString)
+
+            If Not _Mensaje.EsCorrecto Then
+                MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                Return
+            End If
+
+        End If
+
+        'If _Tipo = Class_FTP.Tipo.Producto Then
+
+        Ftp.Zw_Ftp_Conexiones.Tipo = _Tipo_Ftp.ToString
+
+        'End If
+
+        _Mensaje = Ftp.Fx_Grabar_Host()
+
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+
+        If _Mensaje.EsCorrecto Then
+            Me.Close()
+        End If
+
     End Sub
 
 End Class

@@ -1,5 +1,7 @@
 ﻿Imports System.ComponentModel
+Imports System.IO
 Imports DevComponents.DotNetBar
+Imports Newtonsoft.Json
 
 Public Class Frm_IngresarHoja
 
@@ -723,6 +725,14 @@ Public Class Frm_IngresarHoja
             .Reconteo = Chk_Reconteo.Checked
 
         End With
+
+        'Dim json As String
+
+        'json = JsonConvert.SerializeObject(Cl_Conteo.Ls_Zw_Inv_Hoja_Detalle, Formatting.Indented)
+        'File.WriteAllText("D:\JsonB4Android\Inventario\Ls_Zw_Inv_Hoja_Detalle.json", json)
+
+        'json = JsonConvert.SerializeObject(Cl_Conteo.Zw_Inv_Hoja, Formatting.Indented)
+        'File.WriteAllText("D:\JsonB4Android\Inventario\Zw_Inv_Hoja.json", json)
 
         Dim _Mensaje As LsValiciones.Mensajes
 

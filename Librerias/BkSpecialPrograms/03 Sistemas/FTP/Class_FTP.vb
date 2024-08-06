@@ -1,10 +1,9 @@
-﻿Imports System.Net.FtpWebRequest
-Imports System.Net
+﻿Imports System.Net
 Imports System.IO
 Imports System.Text
-Imports System.Collections.Generic
 Imports DevComponents.DotNetBar
-'Imports Lib_Bakapp_VarClassFunc
+Imports System.Data.SqlClient
+Imports System.Net.WebRequestMethods
 
 'El método subirFichero recibe tres argumentos:
 
@@ -13,6 +12,8 @@ Imports DevComponents.DotNetBar
 'dir: Dirección FTP del directorio donde se almacenará el fichero. Ej: "ftp://ftp.BAKAPP.cl/Negocios"
 
 Public Class Class_FTP
+
+    Public Property Zw_Ftp_Conexiones As New Zw_Ftp_Conexiones
 
     Dim host, user, pass As String
     Dim _Proxy_Usa As Boolean
@@ -44,6 +45,7 @@ Public Class Class_FTP
         Size
         Fecha_creacion
     End Enum
+
 
     Public Function Fx_Eliminar_Fichero_Ftp(_Fichero As String) As String
 
@@ -135,18 +137,18 @@ Public Class Class_FTP
 
         Dim peticionFTP As FtpWebRequest
 
-        ' Creamos una peticion FTP con la dirección del objeto que queremos saber si existe
-        peticionFTP = CType(WebRequest.Create(New Uri(_Dir)), FtpWebRequest)
-        Dim f = New Uri(_Dir)
-        ' Fijamos el usuario y la contraseña de la petición
-        peticionFTP.Credentials = New NetworkCredential(user, pass)
-
-        ' Para saber si el objeto existe, solicitamos la fecha de creación del mismo
-        peticionFTP.Method = WebRequestMethods.Ftp.GetDateTimestamp
-
-        peticionFTP.UsePassive = False
-
         Try
+            ' Creamos una peticion FTP con la dirección del objeto que queremos saber si existe
+            peticionFTP = CType(WebRequest.Create(New Uri(_Dir)), FtpWebRequest)
+            Dim f = New Uri(_Dir)
+            ' Fijamos el usuario y la contraseña de la petición
+            peticionFTP.Credentials = New NetworkCredential(user, pass)
+
+            ' Para saber si el objeto existe, solicitamos la fecha de creación del mismo
+            peticionFTP.Method = WebRequestMethods.Ftp.GetDateTimestamp
+
+            peticionFTP.UsePassive = False
+
             ' Si el objeto existe, se devolverá True
             Dim respuestaFTP As FtpWebResponse
             respuestaFTP = CType(peticionFTP.GetResponse(), FtpWebResponse)
@@ -526,7 +528,7 @@ Public Class Class_FTP
             Return ""
         End Try
     End Function
-    Public Function Fx_Verificar_Coneccion_FTP(_Fm As Form,
+    Public Function Fx_Verificar_Conexion_FTP(_Fm As Form,
                                                _Host As String,
                                                Optional _Puerto As Integer = 21) As Boolean
 
@@ -540,6 +542,9 @@ Public Class Class_FTP
             Return False ' si devuelve False significa que tienes que ir corriendo a ver que pasa en el server
         End Try
     End Function
+
+
+
     Public Sub Sb_Descargar_Archivo_FTP(_RutaArchivo_Destino As String, _RutaArchivo_FTP As String)
 
         '  Dim localFile As String = RutaArchivo

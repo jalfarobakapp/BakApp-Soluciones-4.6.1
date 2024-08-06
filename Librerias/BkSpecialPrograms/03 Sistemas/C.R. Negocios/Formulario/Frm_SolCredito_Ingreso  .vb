@@ -2220,7 +2220,7 @@ Public Class Frm_SolCredito_Ingreso
 
         Dim _Ftp As New Class_FTP(_Dir, _Ftp_Usuario, _Ftp_Contrasena)
 
-        If _Ftp.Fx_Verificar_Coneccion_FTP(Me, _Ftp_Host, _Ftp_Puerto) Then
+        If _Ftp.Fx_Verificar_Conexion_FTP(Me, _Ftp_Host, _Ftp_Puerto) Then
             If Not _Ftp.Fx_Existe_Directorio(_Dir & "/" & _Carpeta) Then
                 If Not String.IsNullOrEmpty(_Ftp.Fx_Crear_Directorio(_Dir & "/" & _Carpeta)) Then
                     MessageBoxEx.Show(Me, "Problemas con la carpeta del FTP", "Carpeta en FTP", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -2238,19 +2238,19 @@ Public Class Frm_SolCredito_Ingreso
 
         If Fx_Tiene_Permiso(Me, "Scn00013") Then
 
-            Dim Fm As New Frm_FTP_Fichero
+            Dim Fm As New Frm_FTP_Fichero(0, Cl_Ftp.eTipo_Ftp.Documento)
 
-            Fm._Fichero = _Dir & "/" & _Carpeta
-            Fm.Txt_Ftp_Host.Text = _Ftp_Host
-            Fm.Txt_Ftp_Puerto.Text = _Ftp_Puerto
-            Fm.Txt_Ftp_Usuario.Text = _Ftp_Usuario
-            Fm.Txt_Ftp_Contrasena.Text = _Ftp_Contrasena
-            Fm.Txt_Directorio_Seleccionado.Text = "...//" & _Carpeta
+            'Fm._Fichero = _Dir & "/" & _Carpeta
+            Fm.Txt_Host.Text = _Ftp_Host
+            Fm.Txt_Puerto.Text = _Ftp_Puerto
+            Fm.Txt_Usuario.Text = _Ftp_Usuario
+            Fm.Txt_Clave.Text = _Ftp_Contrasena
+            Fm.Txt_Fichero.Text = "...//" & _Carpeta
 
-            Fm.Txt_Ftp_Host.Enabled = False
-            Fm.Txt_Ftp_Puerto.Enabled = False
-            Fm.Txt_Ftp_Usuario.Enabled = False
-            Fm.Txt_Ftp_Contrasena.Enabled = False
+            Fm.Txt_Host.Enabled = False
+            Fm.Txt_Puerto.Enabled = False
+            Fm.Txt_Usuario.Enabled = False
+            Fm.Txt_Clave.Enabled = False
 
             Dim _Cliente
             Dim _NomTipo
@@ -2274,7 +2274,7 @@ Public Class Frm_SolCredito_Ingreso
             End If
 
             ' Fm._Archivo_No_Se_Puede_Borrar = "Observaciones.rtf"
-            Fm._Abrir_carpeta_despues_de_descargar = True
+            'Fm._Abrir_carpeta_despues_de_descargar = True
             Fm.ShowDialog(Me)
 
         End If
