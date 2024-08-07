@@ -1,4 +1,7 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports System.IO
+Imports System.Net
+Imports System.Security.Cryptography
+Imports DevComponents.DotNetBar
 
 Public Class Frm_Imagenes_X_Producto
 
@@ -43,6 +46,8 @@ Public Class Frm_Imagenes_X_Producto
         Fx_Llenar_Grilla_Imagenes()
         Sb_Cargar_Imagenes()
 
+        'Sb_Cargar_Imagenes2()
+
         If CBool(Grilla_Imagenes.RowCount) Then
             Pbx_Imagen.SizeMode = PictureBoxSizeMode.Zoom ' Para ajustar tamaño de la imagen
         Else
@@ -50,12 +55,12 @@ Public Class Frm_Imagenes_X_Producto
             'Sld_Zoom.Enabled = False
         End If
 
-        'If Not Pro_Solicitado_Bodega Then
-        '    AddHandler Grilla_Imagenes.MouseDown, AddressOf Sb_Grilla_MouseDown
-        'End If
+        If Not Pro_Solicitado_Bodega Then
+            AddHandler Grilla_Imagenes.MouseDown, AddressOf Sb_Grilla_MouseDown
+        End If
 
         Btn_Eliminar.Visible = False
-        Btn_Subir_Imagen.Visible = False
+        'Btn_Subir_Imagen.Visible = False
 
         Sb_Color_Botones_Barra(Bar1)
 
@@ -73,7 +78,7 @@ Public Class Frm_Imagenes_X_Producto
                 Pbx_Imagen.Image = Image.FromFile(_Direccion_Imagen)
             End If
         Catch ex As Exception
-            MessageBoxEx.Show(Me, ex.Message, "Error", MessageBoxButtons.OK)
+            'MessageBoxEx.Show(Me, ex.Message, "Error", MessageBoxButtons.OK)
             Pbx_Imagen.Image = Pbx_Imagen.ErrorImage
         End Try
 
@@ -86,9 +91,11 @@ Public Class Frm_Imagenes_X_Producto
         Lbl_Url.Text = "Url: Not Found"
 
         With Grilla_Imagenes
+
             Datos_Imagen.Clear()
 
             Datos_Imagen = _Sql.Fx_Get_DataSet(Consulta_sql, Datos_Imagen, "Tbl_Prod_Imagenes")
+
             .DataSource = Datos_Imagen
             .DataMember = Datos_Imagen.Tables("Tbl_Prod_Imagenes").TableName
 
@@ -101,8 +108,6 @@ Public Class Frm_Imagenes_X_Producto
         End With
 
         Return CBool(Grilla_Imagenes.RowCount)
-
-
 
     End Function
 
@@ -117,15 +122,17 @@ Public Class Frm_Imagenes_X_Producto
         'System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
 
         If CBool(Datos_Imagen.Tables("Tbl_Prod_Imagenes").Rows.Count) Then
-            Try
 
-                For Each _Fila As DataRow In Datos_Imagen.Tables("Tbl_Prod_Imagenes").Rows
+            For Each _Fila As DataRow In Datos_Imagen.Tables("Tbl_Prod_Imagenes").Rows
+
+                Try
+
                     System.Windows.Forms.Application.DoEvents()
+
                     Dim _Desde_URL As Boolean = _Fila.Item("Desde_URL")
                     Dim _Direccion_Imagen As String = _Fila.Item("Direccion_Imagen")
                     Dim _Principal As Boolean = _Fila.Item("Principal")
                     If _Principal Then Sb_Mostrar_Imagen(_Direccion_Imagen, _Desde_URL)
-
 
                     Dim MyWebClient As New System.Net.WebClient
                     Dim ImageInBytes() As Byte = MyWebClient.DownloadData(_Direccion_Imagen)
@@ -154,10 +161,12 @@ Public Class Frm_Imagenes_X_Producto
 
                     _Fila.Item("Imagen_Real") = ImageInBytes
 
-                Next
-            Catch ex As Exception
-                Pbx_Imagen.Image = Pbx_Imagen.ErrorImage
-            End Try
+                Catch ex As Exception
+                    Pbx_Imagen.Image = Pbx_Imagen.ErrorImage
+                End Try
+
+            Next
+
 
         Else
             Pbx_Imagen.Image = Pbx_Imagen.ErrorImage
@@ -166,6 +175,82 @@ Public Class Frm_Imagenes_X_Producto
 
     End Sub
 
+    Sub Sb_Cargar_Imagenes2()
+
+        Dim Fm As New Frm_Form_Esperar
+        Fm.BarraCircular.IsRunning = True
+        Fm.Show()
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_Imagenes" & vbCrLf &
+                       "Where Codigo = '" & _Codigo & "' Order By Principal Desc"
+        _TblProd_Imagenes = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+        ' Add the "Imagen" column if it doesn't exist
+        If Not _TblProd_Imagenes.Columns.Contains("Imagen") Then
+            _TblProd_Imagenes.Columns.Add("Imagen", GetType(Image))
+        End If
+
+        Lbl_Url.Text = "Url: Not Found"
+
+        'Grilla_Imagenes.DataSource = _TblProd_Imagenes
+
+        ' Configurar DataGridView
+        Dim imageColumn As New DataGridViewImageColumn()
+        imageColumn.Name = "Imagen"
+        imageColumn.HeaderText = "Imagen"
+        imageColumn.ImageLayout = DataGridViewImageCellLayout.Zoom
+        Grilla_Imagenes.Columns.Add(imageColumn)
+
+        ' Agregar URLs de imágenes
+        Dim imageUrls As New List(Of String)
+        'From {
+        '    "https://example.com/image1.jpg",
+        '    "https://example.com/image2.jpg",
+        '    "https://example.com/image3.jpg"
+        '}
+
+        For Each _row As DataRow In _TblProd_Imagenes.Rows
+            imageUrls.Add(_row.Item("Direccion_Imagen"))
+        Next
+
+        ' Cargar imágenes en la grilla
+        For Each url As String In imageUrls
+            'Dim image As Image = DownloadImageFromUrl(url)
+            'Grilla_Imagenes.Rows.Add(image)
+
+            Dim image As Image = DownloadImageFromUrl(url)
+            Dim newRow As DataRow = _TblProd_Imagenes.NewRow()
+            newRow("Imagen") = image
+            _TblProd_Imagenes.Rows.Add(newRow)
+
+        Next
+
+        With Grilla_Imagenes
+
+            OcultarEncabezadoGrilla(Grilla_Imagenes, True)
+
+            Grilla_Imagenes.Columns("Imagen").HeaderText = "Imagenes"
+            Grilla_Imagenes.Columns("Imagen").Width = 125
+            Grilla_Imagenes.Columns("Imagen").Visible = True
+
+        End With
+
+        Fm.Close()
+
+    End Sub
+
+    Private Function DownloadImageFromUrl(url As String) As Image
+        Try
+            Dim webClient As New WebClient()
+            Dim imageBytes() As Byte = webClient.DownloadData(url)
+            Using ms As New MemoryStream(imageBytes)
+                Return Image.FromStream(ms)
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error al descargar la imagen: " & ex.Message)
+            Return Nothing
+        End Try
+    End Function
 
     Public Function imageToByteArray(imageIn As System.Drawing.Image,
                                      pformato As System.Drawing.Imaging.ImageFormat) As Byte()
@@ -243,9 +328,13 @@ Public Class Frm_Imagenes_X_Producto
             If MessageBoxEx.Show(Me, "¿Confirma la eliminación de este registro?" & vbCrLf & vbCrLf &
                                  "Url: " & _Direccion_Imagen, "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
                 Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Prod_Imagenes Where Id = " & _Id
+
                 If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-                    Fx_Llenar_Grilla_Imagenes()
-                    Sb_Cargar_Imagenes()
+
+                    Grilla_Imagenes.Rows.Remove(_Fila)
+
+                    'Fx_Llenar_Grilla_Imagenes()
+                    'Sb_Cargar_Imagenes()
                 End If
             End If
         Catch ex As Exception
@@ -259,6 +348,46 @@ Public Class Frm_Imagenes_X_Producto
         If Not Fx_Tiene_Permiso(Me, "Prod068") Then
             Return
         End If
+
+        ShowContextMenu(Menu_Contextual_SubirImagenes)
+
+    End Sub
+
+    Private Sub Grilla_Imagenes_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Imagenes.CellEnter
+        Try
+            Dim _Fila As DataGridViewRow = Grilla_Imagenes.Rows(Grilla_Imagenes.CurrentRow.Index)
+            Dim _Direccion_Imagen As String = _Fila.Cells("Direccion_Imagen").Value
+
+            Lbl_Url.Text = "Url: " & _Direccion_Imagen
+        Catch ex As Exception
+            Lbl_Url.Text = "Url: Not Found"
+        End Try
+
+    End Sub
+
+    Private Sub Btn_DejarXDefecto_Click(sender As Object, e As EventArgs) Handles Btn_DejarXDefecto.Click
+        Try
+            Dim _Fila As DataGridViewRow = Grilla_Imagenes.Rows(Grilla_Imagenes.CurrentRow.Index)
+            Dim _Id As Integer = _Fila.Cells("Id").Value
+
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_Imagenes Set Principal = 0 Where Codigo = '" & _Codigo & "'" & vbCrLf &
+                           "Update " & _Global_BaseBk & "Zw_Prod_Imagenes Set Principal = 1 Where Id = " & _Id
+
+            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+                MessageBoxEx.Show(Me, "Registro cambiado correctamente", "Imagen por defecto", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Fx_Llenar_Grilla_Imagenes()
+                Sb_Cargar_Imagenes()
+            End If
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub Btn_Mnu_Eliminar_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_Eliminar.Click
+        Call Btn_Eliminar_Click(Nothing, Nothing)
+    End Sub
+
+    Private Sub Btn_Mnu_SubirURL_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_SubirURL.Click
 
         Dim _Aceptar As Boolean
         Dim _Url As String
@@ -305,38 +434,22 @@ Public Class Frm_Imagenes_X_Producto
 
     End Sub
 
-    Private Sub Grilla_Imagenes_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Imagenes.CellEnter
-        Try
-            Dim _Fila As DataGridViewRow = Grilla_Imagenes.Rows(Grilla_Imagenes.CurrentRow.Index)
-            Dim _Direccion_Imagen As String = _Fila.Cells("Direccion_Imagen").Value
+    Private Sub Btn_Mnu_SubirFTP_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_SubirFTP.Click
 
-            Lbl_Url.Text = "Url: " & _Direccion_Imagen
-        Catch ex As Exception
-            Lbl_Url.Text = "Url: Not Found"
-        End Try
+        Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Ftp_Conexiones Where Tipo = 'Producto'"
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-    End Sub
+        If IsNothing(_Row) Then
+            MessageBoxEx.Show(Me, "No se ha configurado la conexión FTP para subir imágenes", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
-    Private Sub Btn_DejarXDefecto_Click(sender As Object, e As EventArgs) Handles Btn_DejarXDefecto.Click
-        Try
-            Dim _Fila As DataGridViewRow = Grilla_Imagenes.Rows(Grilla_Imagenes.CurrentRow.Index)
-            Dim _Id As Integer = _Fila.Cells("Id").Value
+        Dim Fm As New Frm_FTP_Fichero(_Row.Item("Id"), Cl_Ftp.eTipo_Ftp.Producto)
+        Fm.ModoProducto = True
+        Fm.Codigo = _Codigo
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_Imagenes Set Principal = 0 Where Codigo = '" & _Codigo & "'" & vbCrLf &
-                           "Update " & _Global_BaseBk & "Zw_Prod_Imagenes Set Principal = 1 Where Id = " & _Id
-
-            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-                MessageBoxEx.Show(Me, "Registro cambiado correctamente", "Imagen por defecto", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                Fx_Llenar_Grilla_Imagenes()
-                Sb_Cargar_Imagenes()
-            End If
-        Catch ex As Exception
-
-        End Try
-    End Sub
-
-    Private Sub Btn_Mnu_Eliminar_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_Eliminar.Click
-        Call Btn_Eliminar_Click(Nothing, Nothing)
     End Sub
 
     'Private Sub Sld_Zoom_ValueChanged(sender As System.Object, e As System.EventArgs)

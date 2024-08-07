@@ -8,4 +8,5 @@
     Public Property Fichero As String
     Public Property Carpeta_Imagenes As String
     Public Property Carpeta_Archivos As String
+    Public Property Url_public As String
 End Class

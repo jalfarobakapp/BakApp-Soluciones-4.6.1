@@ -40,6 +40,7 @@ Public Class Cl_Ftp
                 .Fichero = String.Empty
                 .Carpeta_Imagenes = String.Empty
                 .Carpeta_Archivos = String.Empty
+                .Url_public = String.Empty
 
             End With
 
@@ -64,6 +65,7 @@ Public Class Cl_Ftp
             .Fichero = _Row.Item("Fichero")
             .Carpeta_Imagenes = _Row.Item("Carpeta_Imagenes")
             .Carpeta_Archivos = _Row.Item("Carpeta_Archivos")
+            .Url_public = _Row.Item("Url_public")
 
         End With
 
@@ -324,7 +326,11 @@ Public Class Cl_Ftp
 
             For Each _F As String In _Archivos
 
-                If _F <> "." And _F <> ".." And Not String.IsNullOrEmpty(_F) Then
+                If Not _F.Contains("/.") And Not String.IsNullOrEmpty(_F) Then
+
+                    Dim _Raiz = _F.Split("/")
+
+                    _F = _Raiz(1)
 
                     Dim _Size = Fx_Obtener_Size_Archivo(_Dir & "/" & _F)
                     Dim _Fecha = Fx_Obtener_Fecha_Archivo(_Dir & "/" & _F)
@@ -334,6 +340,17 @@ Public Class Cl_Ftp
                     End If
 
                 End If
+
+                'If _F <> "." And _F <> ".." And Not String.IsNullOrEmpty(_F) Then
+
+                '    Dim _Size = Fx_Obtener_Size_Archivo(_Dir & "/" & _F)
+                '    Dim _Fecha = Fx_Obtener_Fecha_Archivo(_Dir & "/" & _F)
+
+                '    If Not String.IsNullOrEmpty(Trim(_F)) Then
+                '        listaRutas.Add(_F & ";" & _Size & ";" & _Fecha)
+                '    End If
+
+                'End If
 
             Next
 

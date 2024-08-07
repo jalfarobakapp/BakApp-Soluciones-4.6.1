@@ -2,6 +2,9 @@
 
 Public Class Frm_FTP_Fichero
 
+    Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+    Dim Consulta_sql As String
+
     Private _Fichero As String
     Private _Abrir_carpeta_despues_de_descargar As Boolean
     Private _Archivo_No_Se_Puede_Borrar As String
@@ -9,8 +12,11 @@ Public Class Frm_FTP_Fichero
 
     Private _Id_Ftp As Integer
     Private _Tipo_Ftp As Cl_Ftp.eTipo_Ftp
-    Public Property Ftp As New Cl_Ftp
+    Private _RowProducto As DataRow
 
+    Public Property Ftp As New Cl_Ftp
+    Public Property ModoProducto As Boolean
+    Public Property Codigo As String
     Public Sub New(_Id_Ftp As Integer, _Tipo_Ftp As Cl_Ftp.eTipo_Ftp)
 
         ' Esta llamada es exigida por el diseñador.
@@ -27,6 +33,11 @@ Public Class Frm_FTP_Fichero
     End Sub
 
     Private Sub Frm_FTP_Fichero_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
+
+        If ModoProducto Then
+            Consulta_sql = "Select KOPR,NOKOPR From MAEPR Where KOPR = '" & Codigo & "'"
+            _RowProducto = _Sql.Fx_Get_DataRow(Consulta_sql)
+        End If
 
         Ftp.Fx_Llenar_Host(_Id_Ftp)
 
@@ -49,8 +60,23 @@ Public Class Frm_FTP_Fichero
         _Fichero = Txt_Fichero.Text '"ftp://" & Txt_Host.Text & ":" & Txt_Puerto.Text & "/" & Txt_Fichero.Text
 
         If CBool(_Id_Ftp) Then
-            Txt_Fichero.Text = Ftp.Zw_Ftp_Conexiones.Fichero & "/" & Ftp.Zw_Ftp_Conexiones.Tipo
+
+            If ModoProducto Then
+
+                Txt_Fichero.Text = Ftp.Zw_Ftp_Conexiones.Fichero & Ftp.Zw_Ftp_Conexiones.Carpeta_Imagenes & "/" & Codigo.Trim
+
+                If Not Ftp.Fx_Existe_Directorio2(Txt_Fichero.Text.Trim) Then
+                    Ftp.Fx_Crear_Directorio(Txt_Fichero.Text.Trim)
+                End If
+
+            Else
+                Txt_Fichero.Text = Ftp.Zw_Ftp_Conexiones.Fichero & "/" & Ftp.Zw_Ftp_Conexiones.Tipo
+            End If
+
+            'Txt_Fichero.Text = Ftp.Zw_Ftp_Conexiones.Fichero & "/" & Ftp.Zw_Ftp_Conexiones.Tipo
+
             Sb_Ver_FTP(True)
+
         End If
 
     End Sub
@@ -234,16 +260,18 @@ Public Class Frm_FTP_Fichero
     End Function
 
     Private Sub Btn_Subir_Archivos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Subir_Archivos.Click
+
         Dim oFD As New OpenFileDialog
+
         With oFD
+
             .Title = "Seleccionar fichero"
             .Multiselect = True
             '.Filter = "Ficheros de texto (*.txt;*.ini)|*.txt;*.ini" & _
             '          "|Todos los ficheros (*.*)|*.*"
             '.FileName = Me.txtFichero.Text
+
             If .ShowDialog = System.Windows.Forms.DialogResult.OK Then
-
-
 
                 Dim _Dir = "ftp://" & Txt_Host.Text & ":" & Txt_Puerto.Text
                 Dim _Carpeta = "SCN Negocios"
@@ -259,13 +287,18 @@ Public Class Frm_FTP_Fichero
                     'fichero: Ruta local del fichero
                     'destino: Dirección FTP del destino del fichero. Ej: "ftp://ftp.BAKAPP.cl/Negocios/fichero.txt"
                     'dir: Dirección FTP del directorio donde se almacenará el fichero. Ej: "ftp://ftp.BAKAPP.cl/Negocios"
+
                     Dim _i = 0
+
                     Dim _Ruta_Archivos(.FileNames.Length - 1)
+
                     For Each _Ruta As String In .FileNames
                         _Ruta_Archivos(_i) = _Ruta
                         _i += 1
                     Next
+
                     _i = 0
+
                     For Each _Archivo As String In .SafeFileNames
 
                         Dim _Ruta_Local = _Ruta_Archivos(_i)
@@ -275,18 +308,29 @@ Public Class Frm_FTP_Fichero
                         _Fichero = Txt_Fichero.Text
 
                         If _Ftp.Fx_Existe_Archivo(_Fichero & "/" & _Archivo) Then
+
                             If _Permitir_Pisar_Archivos Then
                                 _Subir = _Ftp.Fx_Subir_Fichero(_Ruta_Local, _Fichero & "/" & _Archivo)
                             Else
-                                AddToLog("Problema",
-                                         "Archivo [" & _Archivo & "] ya existe, no se puede levantar archivos con el mismo nombre")
+                                AddToLog("Problema", "Archivo [" & _Archivo & "] ya existe, no se puede levantar archivos con el mismo nombre")
                             End If
+
                         Else
                             _Subir = _Ftp.Fx_Subir_Fichero(_Ruta_Local, _Fichero & "/" & _Archivo)
                         End If
 
                         If String.IsNullOrEmpty(_Subir) Then
-                            Sb_Ver_FTP()
+
+                            If ModoProducto Then
+
+                                Dim _Url As String = Ftp.Zw_Ftp_Conexiones.Url_public & Ftp.Zw_Ftp_Conexiones.Carpeta_Imagenes & "/" & Codigo.Trim & "/" & _Archivo
+
+                                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Imagenes (Codigo,Desde_URL,Direccion_Imagen) Values " &
+                                               "('" & Codigo & "',1,'" & _Url & "')"
+                                _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                            End If
+
                             AddToLog("Subir archivo", "Ok: " & _Archivo)
                         Else
                             AddToLog("Subir archivo", _Subir)
@@ -295,8 +339,12 @@ Public Class Frm_FTP_Fichero
                     Next
 
                 End If
+
             End If
+
         End With
+
+        Sb_Ver_FTP()
 
         Sb_Trabajo_FTP(False)
 
@@ -519,6 +567,8 @@ Public Class Frm_FTP_Fichero
             If Not _Mensaje.EsCorrecto Then
                 Throw New Exception(_Mensaje.Mensaje)
             End If
+
+            'Dim _Fichero = Replace(Txt_Fichero.Text, Codigo, "")
 
             _Mensaje = _Ftp.Fx_Obtener_Archivos_Directorio(Txt_Fichero.Text)
 

@@ -2225,11 +2225,11 @@ Sigue_Loop_01:
 
         Dim Fm As New Frm_Imagenes_X_Producto(Txt_Kopr.Text)
 
-        If Fm.Fx_Llenar_Grilla_Imagenes Then
-            Fm.ShowDialog(Me)
-        Else
-            MessageBoxEx.Show(Me, "No existen imagenes para el producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        End If
+        'If Fm.Fx_Llenar_Grilla_Imagenes Then
+        Fm.ShowDialog(Me)
+        'Else
+        'MessageBoxEx.Show(Me, "No existen imagenes para el producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        'End If
 
         Fm.Dispose()
 

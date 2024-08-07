@@ -23,8 +23,8 @@ Partial Class Frm_Imagenes_X_Producto
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Imagenes_X_Producto))
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Pbx_Imagen = New System.Windows.Forms.PictureBox()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Subir_Imagen = New DevComponents.DotNetBar.ButtonItem()
@@ -39,6 +39,9 @@ Partial Class Frm_Imagenes_X_Producto
         Me.Lbl_Url = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Menu_Contextual_SubirImagenes = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_SubirFTP = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_SubirURL = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Pbx_Imagen, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla_Imagenes, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -105,18 +108,18 @@ Partial Class Frm_Imagenes_X_Producto
         '
         Me.Grilla_Imagenes.AllowUserToAddRows = False
         Me.Grilla_Imagenes.AllowUserToDeleteRows = False
-        DataGridViewCellStyle3.BackColor = System.Drawing.Color.PeachPuff
-        Me.Grilla_Imagenes.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.PeachPuff
+        Me.Grilla_Imagenes.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.Grilla_Imagenes.BackgroundColor = System.Drawing.Color.White
         Me.Grilla_Imagenes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Blue
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Yellow
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Imagenes.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Blue
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Yellow
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_Imagenes.DefaultCellStyle = DataGridViewCellStyle2
         Me.Grilla_Imagenes.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla_Imagenes.Location = New System.Drawing.Point(0, 0)
         Me.Grilla_Imagenes.Name = "Grilla_Imagenes"
@@ -144,8 +147,8 @@ Partial Class Frm_Imagenes_X_Producto
         '
         Me.ContextMenuBar1.AntiAlias = True
         Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_Imagenes})
-        Me.ContextMenuBar1.Location = New System.Drawing.Point(172, 216)
+        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_Imagenes, Me.Menu_Contextual_SubirImagenes})
+        Me.ContextMenuBar1.Location = New System.Drawing.Point(64, 150)
         Me.ContextMenuBar1.Name = "ContextMenuBar1"
         Me.ContextMenuBar1.Size = New System.Drawing.Size(252, 25)
         Me.ContextMenuBar1.Stretch = True
@@ -275,6 +278,27 @@ Partial Class Frm_Imagenes_X_Producto
         Me.GroupPanel2.TabIndex = 34
         Me.GroupPanel2.Text = "Imagen"
         '
+        'Menu_Contextual_SubirImagenes
+        '
+        Me.Menu_Contextual_SubirImagenes.AutoExpandOnClick = True
+        Me.Menu_Contextual_SubirImagenes.Name = "Menu_Contextual_SubirImagenes"
+        Me.Menu_Contextual_SubirImagenes.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_SubirFTP, Me.Btn_Mnu_SubirURL})
+        Me.Menu_Contextual_SubirImagenes.Text = "Opciones subir imagen"
+        '
+        'Btn_Mnu_SubirFTP
+        '
+        Me.Btn_Mnu_SubirFTP.Image = CType(resources.GetObject("Btn_Mnu_SubirFTP.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_SubirFTP.ImageAlt = CType(resources.GetObject("Btn_Mnu_SubirFTP.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_SubirFTP.Name = "Btn_Mnu_SubirFTP"
+        Me.Btn_Mnu_SubirFTP.Text = "Subir imagen por FTP"
+        '
+        'Btn_Mnu_SubirURL
+        '
+        Me.Btn_Mnu_SubirURL.Image = CType(resources.GetObject("Btn_Mnu_SubirURL.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_SubirURL.ImageAlt = CType(resources.GetObject("Btn_Mnu_SubirURL.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_SubirURL.Name = "Btn_Mnu_SubirURL"
+        Me.Btn_Mnu_SubirURL.Text = "Ingresar una URL"
+        '
         'Frm_Imagenes_X_Producto
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -319,4 +343,7 @@ Partial Class Frm_Imagenes_X_Producto
     Friend WithEvents Btn_Mnu_Eliminar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents GroupPanel2 As DevComponents.DotNetBar.Controls.GroupPanel
+    Friend WithEvents Menu_Contextual_SubirImagenes As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Mnu_SubirFTP As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Mnu_SubirURL As DevComponents.DotNetBar.ButtonItem
 End Class
