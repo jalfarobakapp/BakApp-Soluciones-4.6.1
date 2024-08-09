@@ -70,7 +70,6 @@ Partial Class Frm_Crear_Guias_De_Ajuste_De_Stock
         '
         Me.ChkDejaStockCero.AutoSize = True
         Me.ChkDejaStockCero.BackColor = System.Drawing.Color.White
-        Me.ChkDejaStockCero.Enabled = False
         Me.ChkDejaStockCero.ForeColor = System.Drawing.Color.Black
         Me.ChkDejaStockCero.Location = New System.Drawing.Point(12, 203)
         Me.ChkDejaStockCero.Name = "ChkDejaStockCero"

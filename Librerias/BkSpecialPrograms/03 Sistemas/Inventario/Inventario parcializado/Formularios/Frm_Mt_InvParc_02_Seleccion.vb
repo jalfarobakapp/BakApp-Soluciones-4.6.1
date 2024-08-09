@@ -1,4 +1,4 @@
-Imports DevComponents.DotNetBar
+ï»¿Imports DevComponents.DotNetBar
 
 Public Class Frm_Mt_InvParc_02_Seleccion
 
@@ -44,16 +44,16 @@ Public Class Frm_Mt_InvParc_02_Seleccion
         End Get
     End Property
 
-    Public Sub New(ByVal Empresa As String, _
-                   ByVal Sucursal As String, _
-                   ByVal Bodega As String, _
-                   ByVal Fecha As Date, _
-                   ByVal Ajuste_PM As Boolean)
+    Public Sub New(Empresa As String,
+                   Sucursal As String,
+                   Bodega As String,
+                   Fecha As Date,
+                   Ajuste_PM As Boolean)
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
         Sb_Formato_Generico_Grilla(Grilla_Levantados, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 
@@ -85,7 +85,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
     End Sub
 
-    Private Sub Frm_Mt_InvParc_02_Seleccion_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+    Private Sub Frm_Mt_InvParc_02_Seleccion_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
         Sb_Actualizar_Formulario()
 
@@ -116,7 +116,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
     End Sub
 
-    Private Sub Frm_Mt_InvParc_02_Seleccion_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+    Private Sub Frm_Mt_InvParc_02_Seleccion_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
 
         Sb_Nueva_Fila()
 
@@ -137,16 +137,16 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
         If _Preguntar Then
 
-            Dim dlg As System.Windows.Forms.DialogResult = _
-            MessageBoxEx.Show(Me, "Existen datos en la lista que aun no  han sido levantados" & vbCrLf & _
-                              "¿Desea salir sin hacer ninguna acción, los datos de la lista se perderán?", _
+            Dim dlg As System.Windows.Forms.DialogResult =
+            MessageBoxEx.Show(Me, "Existen datos en la lista que aun no  han sido levantados" & vbCrLf &
+                              "Â¿Desea salir sin hacer ninguna acciÃ³n, los datos de la lista se perderÃ¡n?",
                               "Cerrar ajuste", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
             If dlg = System.Windows.Forms.DialogResult.No Then
                 e.Cancel = True
             Else
 
-                MessageBoxEx.Show(Me, "Los productos se desocultaran", "Salir", _
+                MessageBoxEx.Show(Me, "Los productos se desocultaran", "Salir",
                                   MessageBoxButtons.OK, MessageBoxIcon.Information)
 
                 With Grilla
@@ -196,7 +196,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 #Region "PROCEDIMIENTOS"
 
 #Region "CREAR TABLA DE PASO"
-    Private Sub Crear_Tabla_Paso(ByVal Fecha As String)
+    Private Sub Crear_Tabla_Paso(Fecha As String)
 
         Consulta_sql = "Drop table " & Tabla_Paso_Inv
         _Sql.Ej_consulta_IDU(Consulta_sql, False)
@@ -211,7 +211,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
 #Region "CARGAR DATOS EN GRILLAS"
 
-    Private Function Sb_Cargar_Grilla_Inv_Parcial(ByVal Fecha As String)
+    Private Function Sb_Cargar_Grilla_Inv_Parcial(Fecha As String)
 
         Ds_Invent.Clear()
 
@@ -227,7 +227,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
     End Function
 
-    Private Function Sb_Cargar_Grilla_Inv_Parcial_Levantados(ByVal Fecha As String)
+    Private Function Sb_Cargar_Grilla_Inv_Parcial_Levantados(Fecha As String)
 
         Consulta_sql = "Select *," &
                        "CAST(0 as Bit) As GDI_Cero_Nula," &
@@ -260,77 +260,90 @@ Public Class Frm_Mt_InvParc_02_Seleccion
             '.Columns("Bodega").Visible = True
             '.Columns("Bodega").DisplayIndex = 0
 
+            Dim _DisplayIndex = 0
+
             .Columns("CodigoPr").Width = 100
-            .Columns("CodigoPr").HeaderText = "Código"
+            .Columns("CodigoPr").HeaderText = "CÃ³digo"
             .Columns("CodigoPr").ReadOnly = True
             .Columns("CodigoPr").Visible = True
-            .Columns("CodigoPr").DisplayIndex = 1
+            .Columns("CodigoPr").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("CodBarras").Width = 110
-            .Columns("CodBarras").HeaderText = "Código de Barras"
+            .Columns("CodBarras").HeaderText = "CÃ³digo de Barras"
             .Columns("CodBarras").ReadOnly = True
             .Columns("CodBarras").Visible = True
-            .Columns("CodBarras").DisplayIndex = 2
+            .Columns("CodBarras").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Descripcion").Width = 165 + 150
-            .Columns("Descripcion").HeaderText = "Descripción"
+            .Columns("Descripcion").HeaderText = "DescripciÃ³n"
             .Columns("Descripcion").ReadOnly = True
             .Columns("Descripcion").Visible = True
-            .Columns("Descripcion").DisplayIndex = 3
+            .Columns("Descripcion").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Rtu").Width = 30
             .Columns("Rtu").ReadOnly = True
             .Columns("Rtu").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Rtu").Visible = True
-            .Columns("Rtu").DisplayIndex = 4
+            .Columns("Rtu").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("CantidadUd1").Width = 40 ' columna 8
             .Columns("CantidadUd1").HeaderText = "Cant."
             .Columns("CantidadUd1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("CantidadUd1").Visible = True
-            .Columns("CantidadUd1").DisplayIndex = 5
+            .Columns("CantidadUd1").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("CantidadUd2").Width = 40 ' columna 9
             .Columns("CantidadUd2").HeaderText = "Cant. Ud2"
             .Columns("CantidadUd2").ReadOnly = True
             .Columns("CantidadUd2").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("CantidadUd2").Visible = True
-            .Columns("CantidadUd2").DisplayIndex = 6
+            .Columns("CantidadUd2").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Nro_GDI_Stock_Cero").Width = 100 ' columna 9
             .Columns("Nro_GDI_Stock_Cero").HeaderText = "GDI Ajuste"
             .Columns("Nro_GDI_Stock_Cero").ReadOnly = True
-            .Columns("Nro_GDI_Stock_Cero").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            '.Columns("Nro_GDI_Stock_Cero").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Nro_GDI_Stock_Cero").Visible = True
-            .Columns("Nro_GDI_Stock_Cero").DisplayIndex = 7
+            .Columns("Nro_GDI_Stock_Cero").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Nro_GRI_Stock_Cero").Width = 100 ' columna 9
             .Columns("Nro_GRI_Stock_Cero").HeaderText = "GRI Ajuste"
             .Columns("Nro_GRI_Stock_Cero").ReadOnly = True
-            .Columns("Nro_GRI_Stock_Cero").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            '.Columns("Nro_GRI_Stock_Cero").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Nro_GRI_Stock_Cero").Visible = True
-            .Columns("Nro_GRI_Stock_Cero").DisplayIndex = 8
+            .Columns("Nro_GRI_Stock_Cero").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            '.Columns("Nro_GRI_Ajuste_Stock").Width = 90 ' columna 9
-            '.Columns("Nro_GRI_Ajuste_Stock").HeaderText = "GRI Ajuste"
-            '.Columns("Nro_GRI_Ajuste_Stock").ReadOnly = True
+            .Columns("Nro_GRI_Ajuste_Stock").Width = 100 ' columna 9
+            .Columns("Nro_GRI_Ajuste_Stock").HeaderText = "GRI Ajuste Def."
+            .Columns("Nro_GRI_Ajuste_Stock").ReadOnly = True
             '.Columns("Nro_GRI_Ajuste_Stock").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("Nro_GRI_Ajuste_Stock").Visible = True
-            '.Columns("Nro_GRI_Ajuste_Stock").DisplayIndex = 9
+            .Columns("Nro_GRI_Ajuste_Stock").Visible = True
+            .Columns("Nro_GRI_Ajuste_Stock").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("StockActual").Width = 45
             .Columns("StockActual").HeaderText = "Stock Actual"
             .Columns("StockActual").ReadOnly = True
             .Columns("StockActual").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("StockActual").Visible = True
-            .Columns("StockActual").DisplayIndex = 10
+            .Columns("StockActual").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Foto_Stock_Ud1").Width = 45
             .Columns("Foto_Stock_Ud1").HeaderText = "Foto Stock"
             .Columns("Foto_Stock_Ud1").DefaultCellStyle.Format = "###,##"
             .Columns("Foto_Stock_Ud1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Foto_Stock_Ud1").Visible = True
-            .Columns("Foto_Stock_Ud1").DisplayIndex = 11
+            .Columns("Foto_Stock_Ud1").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             '.Columns("CostoUnitUd1").Width = 60
             '.Columns("CostoUnitUd1").HeaderText = "Costo"
@@ -378,7 +391,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
     End Function
 
-    Sub Sb_Formato_Grilla(ByVal Grilla As DataGridView)
+    Sub Sb_Formato_Grilla(Grilla As DataGridView)
 
         With Grilla
 
@@ -393,15 +406,15 @@ Public Class Frm_Mt_InvParc_02_Seleccion
             .Columns("Bodega").Visible = _Mostrar_Campo
 
             .Columns("CodigoPr").Width = 100
-            .Columns("CodigoPr").HeaderText = "Código"
+            .Columns("CodigoPr").HeaderText = "CÃ³digo"
             .Columns("CodigoPr").Visible = True
 
             .Columns("CodBarras").Width = 120
-            .Columns("CodBarras").HeaderText = "Código de Barras"
+            .Columns("CodBarras").HeaderText = "CÃ³digo de Barras"
             .Columns("CodBarras").Visible = True
 
             .Columns("Descripcion").Width = 290
-            .Columns("Descripcion").HeaderText = "Descripción"
+            .Columns("Descripcion").HeaderText = "DescripciÃ³n"
             .Columns("Descripcion").Visible = True
 
             .Columns("Rtu").Width = 30
@@ -463,7 +476,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
         End With
     End Sub
 
-    Sub Sb_Marcar_Grilla(ByVal Grilla As Object)
+    Sub Sb_Marcar_Grilla(Grilla As Object)
         Return
         Try
             Me.Cursor = Cursors.WaitCursor
@@ -640,8 +653,8 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
     End Sub
 
-    Function Fx_Agregar_Nuevo_Producto_(ByVal _RowProducto As DataRow,
-                                        ByVal _Fila As DataGridViewRow) As Boolean
+    Function Fx_Agregar_Nuevo_Producto_(_RowProducto As DataRow,
+                                        _Fila As DataGridViewRow) As Boolean
 
         Dim _Codigo As String = _RowProducto.Item("KOPR")
         Dim _Descripcion As String = _RowProducto.Item("NOKOPR")
@@ -672,7 +685,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
             If Not CBool(_StockUd1) Then
 
                 MessageBoxEx.Show(Me, "Este producto no tiene Stock, por lo tanto no se puede ajustar el PM",
-                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                  "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return False
             End If
         End If
@@ -702,9 +715,9 @@ Public Class Frm_Mt_InvParc_02_Seleccion
                                               "CodigoPr = '" & _Codigo & "' and " &
                                               "Levantado = 0")
 
-                MessageBoxEx.Show(Me, "Este producto ya está siendo inventariado en la lista actual" & vbCrLf & vbCrLf &
-                                  "El producto no será incorporado en la lista",
-                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                MessageBoxEx.Show(Me, "Este producto ya estÃ¡ siendo inventariado en la lista actual" & vbCrLf & vbCrLf &
+                                  "El producto no serÃ¡ incorporado en la lista",
+                                  "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
                 Return False
             End If
@@ -732,7 +745,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
                 _Fecha_Antes = CDate(Fecha)
 
                 MessageBoxEx.Show(Me, "Este producto ya fue inventariado" & vbCrLf &
-                             "Inventariado el día: " & FormatDateTime(_Fecha_Antes, DateFormat.LongDate), "Validación",
+                             "Inventariado el dÃ­a: " & FormatDateTime(_Fecha_Antes, DateFormat.LongDate), "ValidaciÃ³n",
                              MessageBoxButtons.OK, MessageBoxIcon.Warning)
 
                 If Fx_Tiene_Permiso(Me, "In0019") Then
@@ -764,7 +777,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
                 _Costo = _Sql.Fx_Trae_Dato("MAEPREM", "PM", "EMPRESA = '" & _Empresa & "' AND KOPR = '" & _Codigo & "'", True)
 
                 If _Costo = 0 Then
-                    MessageBoxEx.Show(Me, "El PM del producto el 0 (cero) se traerá el costo de la ultima compra", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    MessageBoxEx.Show(Me, "El PM del producto el 0 (cero) se traerÃ¡ el costo de la ultima compra", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     _Costo = _Sql.Fx_Trae_Dato("MAEPREM", "PPUL01", "EMPRESA = '" & _Empresa & "' AND KOPR = '" & _Codigo & "'", True)
                 End If
 
@@ -816,7 +829,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
         Return True
     End Function
 
-    Function Fx_Buscar_Producto(ByVal _Codigo As String) As DataRow
+    Function Fx_Buscar_Producto(_Codigo As String) As DataRow
 
         _Codigo = Trim(_Codigo)
         Dim _RowProducto As DataRow
@@ -939,7 +952,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
         Dim _Nuevo_Producto As Boolean = Grilla.Rows(Grilla.Rows.Count - 1).Cells("Nuevo_Producto").Value
 
         If _Nuevo_Producto And Grilla.Rows.Count = 1 Then
-            MessageBoxEx.Show(Me, "No hay productos que procesar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show(Me, "No hay productos que procesar", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
 
@@ -980,7 +993,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
                 End If
             Else
                 MessageBoxEx.Show(Me, "Producto sin stock o stock negativo" & vbCrLf &
-                                     "No se puede ajustar PM", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                     "No se puede ajustar PM", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
             End If
 
@@ -992,11 +1005,11 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
         Dim _TblProductos As DataTable = Ds_Invent.Tables("Inv_InvParcial")
 
-        Dim _CostoPMCero = _TblProductos.Compute("Count(CantidadUd1)", "CostoUnitUd1 <= 0")
+        Dim _CostoPMCero = _TblProductos.Compute("Count(CantidadUd1)", "CostoUnitUd1 <= 0 And Nuevo_Producto = 0")
 
         If CBool(_CostoPMCero) Then
 
-            MessageBoxEx.Show(Me, "No pueden haber productos con costo <= 0", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show(Me, "No pueden haber productos con costo <= 0", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
 
         End If
@@ -1004,7 +1017,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
         Dim _Nuevo_Producto As Boolean = Grilla.Rows(Grilla.Rows.Count - 1).Cells("Nuevo_Producto").Value
 
         If _Nuevo_Producto And Grilla.Rows.Count = 1 Then
-            MessageBoxEx.Show(Me, "No hay productos que procesar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show(Me, "No hay productos que procesar", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
 
@@ -1044,7 +1057,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
                 End If
             Else
                 MessageBoxEx.Show(Me, "Producto sin stock o stock negativo" & vbCrLf &
-                                     "No se puede ajustar PM", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                     "No se puede ajustar PM", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
             End If
 
@@ -1054,7 +1067,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
 #Region "CREAR DETALLE SEGUN PM"
 
-    Function Fx_Crear_Detalle_para_PM(ByVal _TblProductos As DataTable) As DataTable
+    Function Fx_Crear_Detalle_para_PM(_TblProductos As DataTable) As DataTable
 
         Dim _Ds As New Ds_Invent_parcial
         For Each _Fila As DataRow In _TblProductos.Rows
@@ -1112,7 +1125,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 #End Region
 
 #Region "ELIMINAR FILA"
-    Sub Eliminar_Fila(ByVal _Nro_Fila As Integer, ByVal _Preguntar As Boolean)
+    Sub Eliminar_Fila(_Nro_Fila As Integer, _Preguntar As Boolean)
 
         'Sb_Nueva_Fila()
 
@@ -1136,7 +1149,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
             End If
 
             Dim dlg As System.Windows.Forms.DialogResult =
-                          MessageBoxEx.Show(Me, "¿Esta seguro de eliminar la(s) fila(s) seleccionada(s)?",
+                          MessageBoxEx.Show(Me, "Â¿Esta seguro de eliminar la(s) fila(s) seleccionada(s)?",
                                            "Eliminar fila", MessageBoxButtons.YesNo)
 
             With Grilla
@@ -1176,7 +1189,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
 
 
-    Private Sub Frm_Mt_InvParc_02_Seleccion_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_Mt_InvParc_02_Seleccion_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         Try
             Dim tecla = e.KeyCode
 
@@ -1214,57 +1227,64 @@ Public Class Frm_Mt_InvParc_02_Seleccion
     End Sub
 
 
-    Private Sub Grilla_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs)
+    Private Sub Grilla_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs)
 
         Dim tecla = e.KeyCode
         If Grilla.RowCount = 0 Then Return
 
-        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
-        Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
+        Try
 
-        Dim _Nuevo_Producto = _Fila.Cells("Nuevo_Producto").Value
+            Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+            Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
 
-        If e.KeyValue = Keys.Enter Then
+            Dim _Nuevo_Producto = _Fila.Cells("Nuevo_Producto").Value
 
-            Dim _Editar As Boolean
+            If e.KeyValue = Keys.Enter Then
+
+                Dim _Editar As Boolean
 
 
-            Select Case _Cabeza
-                Case "CodigoPr"
-                    If _Nuevo_Producto Then
+                Select Case _Cabeza
+                    Case "CodigoPr"
+                        If _Nuevo_Producto Then
 
-                        If _Autorizado_Ajustar Then
-                            _Editar = True
-                        Else
-                            _Editar = Fx_Tiene_Permiso(Me, "In0018")
-                            _Autorizado_Ajustar = _Editar
+                            If _Autorizado_Ajustar Then
+                                _Editar = True
+                            Else
+                                _Editar = Fx_Tiene_Permiso(Me, "In0018")
+                                _Autorizado_Ajustar = _Editar
+                            End If
+
                         End If
+                    Case "CantidadUd1", "CostoUnitUd1"
+                        If Not _Nuevo_Producto Then
+                            _Editar = True
+                        End If
+                End Select
 
-                    End If
-                Case "CantidadUd1", "CostoUnitUd1"
-                    If Not _Nuevo_Producto Then
-                        _Editar = True
-                    End If
-            End Select
+                If _Editar Then
 
-            If _Editar Then
+                    Grilla.Columns(_Cabeza).ReadOnly = False
+                    Grilla.BeginEdit(True)
 
-                Grilla.Columns(_Cabeza).ReadOnly = False
-                Grilla.BeginEdit(True)
+                    e.SuppressKeyPress = False
+                    e.Handled = True
+                End If
 
-                e.SuppressKeyPress = False
+            ElseIf e.KeyValue = Keys.Delete Then 'Keys.Up Then
+
                 e.Handled = True
+                Eliminar_Fila(Grilla.CurrentRow.Index, True)
+
             End If
 
-        ElseIf e.KeyValue = Keys.Delete Then 'Keys.Up Then
+        Catch ex As Exception
 
-            e.Handled = True
-            Eliminar_Fila(Grilla.CurrentRow.Index, True)
+        End Try
 
-        End If
     End Sub
 
-    Private Sub Grilla_CellEndEdit(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub Grilla_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
@@ -1309,11 +1329,11 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
     End Sub
 
-    Private Sub Grilla_Leave(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Grilla_Leave(sender As System.Object, e As System.EventArgs)
         Lbl_Nombre_Producto_Linea_Activa_Grilla.Text = String.Empty
     End Sub
 
-    Private Sub Grilla_CellEnter(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub Grilla_CellEnter(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
 
         Try
             Lbl_Nombre_Producto_Linea_Activa_Grilla.Text = Space(1) & Fx_Producto_Grilla_Activa.Item("NOKOPR")
@@ -1324,7 +1344,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
     End Sub
 
 
-    Private Sub OcultaDesocultarProductosToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub OcultaDesocultarProductosToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs)
         Dim Codigo As String = Grilla.Rows(Grilla.CurrentRow.Index).Cells("CodigoPr").Value
         Dim Fm As New Frm_OcultarPr
         Fm.TxtCodigo.Text = Trim(Codigo)
@@ -1333,7 +1353,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
         Codigo_abuscar = String.Empty
     End Sub
 
-    Private Sub BtnMaestroProductos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnMaestroProductos.Click
+    Private Sub BtnMaestroProductos_Click(sender As System.Object, e As System.EventArgs) Handles BtnMaestroProductos.Click
 
         If Fx_Tiene_Permiso(Me, "Prod012") Then
 
@@ -1356,11 +1376,11 @@ Public Class Frm_Mt_InvParc_02_Seleccion
     End Sub
 
 
-    Private Sub Btn_Mnu_Pr_Codigo_Alternativo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Btn_Mnu_Pr_Codigo_Alternativo_Click(sender As System.Object, e As System.EventArgs)
 
     End Sub
 
-    Sub Sb_Codigos_Alternativos(ByVal _Codigo As String)
+    Sub Sb_Codigos_Alternativos(_Codigo As String)
 
         ' Dim Nro As Integer = 32
         If Fx_Tiene_Permiso(Me, "Prod020") Then
@@ -1400,7 +1420,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
             Dim _Descripcion = _RowProducto.Item("NOKOPR")
             Dim _Aceptado As Boolean
 
-            _Aceptado = InputBox_Bk(Me, "Ingrese nueva descripción", "Cambiar descripción", _Descripcion, False,
+            _Aceptado = InputBox_Bk(Me, "Ingrese nueva descripciÃ³n", "Cambiar descripciÃ³n", _Descripcion, False,
                                             _Tipo_Mayus_Minus.Normal, 50, True, _Tipo_Imagen.Texto, False)
 
             If _Aceptado Then
@@ -1453,32 +1473,32 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
 
 
-    Private Sub Btn_Mnu_Pr_Estadistica_Producto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Btn_Mnu_Pr_Estadistica_Producto_Click(sender As System.Object, e As System.EventArgs)
         _Producto_Op.Sb_Ver_Informacion_Adicional_producto(Me, Fx_Producto_Grilla_Activa.Item("KOPR"))
     End Sub
 
-    Private Sub Btn_Mnu_Pr_Codigo_De_Reemplazo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Btn_Mnu_Pr_Codigo_De_Reemplazo_Click(sender As System.Object, e As System.EventArgs)
         _Producto_Op.Sb_Ver_Codigos_de_reemplazo(Me, Fx_Producto_Grilla_Activa.Item("KOPR"))
     End Sub
 
-    Private Sub Btn_Mnu_Pr_Ver_Clasificacion_Producto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Btn_Mnu_Pr_Ver_Clasificacion_Producto_Click(sender As System.Object, e As System.EventArgs)
 
     End Sub
 
-    Private Sub Btn_Mnu_Pr_Mantencion_Clasificacion_Producto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Btn_Mnu_Pr_Mantencion_Clasificacion_Producto_Click(sender As System.Object, e As System.EventArgs)
         _Producto_Op.Sb_Mantencion_Clasificacion_Codigos(Me, Fx_Producto_Grilla_Activa.Item("KOPR"))
     End Sub
 
-    Private Sub Btn_Mnu_Pr_Kardex_Inventario_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Btn_Mnu_Pr_Kardex_Inventario_Click(sender As System.Object, e As System.EventArgs)
         _Producto_Op.Sb_Ver_Kardex_Inventario(Me, Fx_Producto_Grilla_Activa.Item("KOPR"))
     End Sub
 
-    Private Sub Btn_Mnu_Pr_Ubicacion_Producto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Btn_Mnu_Pr_Ubicacion_Producto_Click(sender As System.Object, e As System.EventArgs)
 
     End Sub
 
 
-    Private Sub Grilla_Levantados_CellEnter(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla_Levantados.CellEnter
+    Private Sub Grilla_Levantados_CellEnter(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla_Levantados.CellEnter
 
         Try
             Lbl_Nombre_Producto_Linea_Activa_Grilla.Text = Space(1) & Fx_Producto_Grilla_Activa.Item("NOKOPR")
@@ -1489,7 +1509,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
     End Sub
 
 
-    Private Sub Btn_Consolidar_Stock_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Consolidar_Stock.Click
+    Private Sub Btn_Consolidar_Stock_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Consolidar_Stock.Click
 
         Dim _Index_Tab = Super_Tab.SelectedTabIndex
 
@@ -1500,7 +1520,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
             Dim _Nuevo_Producto As Boolean = Grilla.Rows(Grilla.Rows.Count - 1).Cells("Nuevo_Producto").Value
 
             If _Nuevo_Producto And Grilla.Rows.Count = 1 Then
-                MessageBoxEx.Show(Me, "No hay productos que procesar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                MessageBoxEx.Show(Me, "No hay productos que procesar", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return
             End If
 
@@ -1514,11 +1534,11 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
             Dim Fecha As String = Format(DtFechaInv.Value, "yyyyMMdd")
 
-            Consulta_sql = "Select CodigoPr, Descripcion" & vbCrLf & _
-                           "FROM " & _Global_BaseBk & "Zw_TmpInv_InvParcial" & vbCrLf & _
-                           "Where FechaInv = '" & Fecha & "'" & vbCrLf & _
-                           "And Levantado = 1" & vbCrLf & _
-                           "And DejaStockCero = 0" & _
+            Consulta_sql = "Select CodigoPr, Descripcion" & vbCrLf &
+                           "FROM " & _Global_BaseBk & "Zw_TmpInv_InvParcial" & vbCrLf &
+                           "Where FechaInv = '" & Fecha & "'" & vbCrLf &
+                           "And Levantado = 1" & vbCrLf &
+                           "And DejaStockCero = 0" &
                            "Order by Semilla DESC"
 
             Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
@@ -1535,26 +1555,26 @@ Public Class Frm_Mt_InvParc_02_Seleccion
                     Sb_Cargar_Grilla_Inv_Parcial_Levantados(DtFechaInv.Value)
                 End If
             Else
-                MessageBoxEx.Show(Me, "No hay productos que procesar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                MessageBoxEx.Show(Me, "No hay productos que procesar", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             End If
 
         End If
     End Sub
 
-    Private Sub DtFechaInv_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub DtFechaInv_ValueChanged(sender As System.Object, e As System.EventArgs)
         Sb_Actualizar_Formulario()
     End Sub
 
-    Private Sub BtnProcesar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnProcesar.Click
+    Private Sub BtnProcesar_Click(sender As System.Object, e As System.EventArgs) Handles BtnProcesar.Click
         'Sb_Procesar()
         Sb_Procesar_Ajuste()
     End Sub
 
-    Private Sub Btn_Mnu_Estadisticas_Producto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Estadisticas_Producto.Click
+    Private Sub Btn_Mnu_Estadisticas_Producto_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Estadisticas_Producto.Click
         _Producto_Op.Sb_Ver_Informacion_Adicional_producto(Me, Fx_Producto_Grilla_Activa.Item("KOPR"))
     End Sub
 
-    Private Sub Sb_Grilla_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Sb_Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
 
         If e.Button = Windows.Forms.MouseButtons.Right Then
             With sender
@@ -1633,7 +1653,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
     End Sub
 
-    Private Sub Btn_Mnu_Ver_GDI_Deja_Stock_En_Cero_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Ver_GDI_Deja_Stock_En_Cero.Click
+    Private Sub Btn_Mnu_Ver_GDI_Deja_Stock_En_Cero_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Ver_GDI_Deja_Stock_En_Cero.Click
 
         Dim _Fila As DataGridViewRow = Grilla_Levantados.Rows(Grilla_Levantados.CurrentRow.Index)
 
@@ -1644,7 +1664,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
         Sb_Ver_Documento(_Idmaeedo, _Nulo, _Tido_Nudo)
     End Sub
 
-    Private Sub Btn_Mnu_Ver_GRI_Deja_Stock_En_Cero_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Ver_GRI_Deja_Stock_En_Cero.Click
+    Private Sub Btn_Mnu_Ver_GRI_Deja_Stock_En_Cero_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Ver_GRI_Deja_Stock_En_Cero.Click
 
         Dim _Fila As DataGridViewRow = Grilla_Levantados.Rows(Grilla_Levantados.CurrentRow.Index)
 
@@ -1655,7 +1675,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
         Sb_Ver_Documento(_Idmaeedo, _Nulo, _Tido_Nudo)
     End Sub
 
-    Private Sub Btn_Mnu_Ver_GRI_Definitiva_Ajuste_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Ver_GRI_Definitiva_Ajuste.Click
+    Private Sub Btn_Mnu_Ver_GRI_Definitiva_Ajuste_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Ver_GRI_Definitiva_Ajuste.Click
 
         Dim _Fila As DataGridViewRow = Grilla_Levantados.Rows(Grilla_Levantados.CurrentRow.Index)
 
@@ -1666,9 +1686,9 @@ Public Class Frm_Mt_InvParc_02_Seleccion
         Sb_Ver_Documento(_Idmaeedo, _Nulo, _Tido_Nudo)
     End Sub
 
-    Sub Sb_Ver_Documento(ByVal _Idmaeedo As Integer, _
-                         ByVal _Nulo As Boolean, _
-                         Optional ByVal _Tido_Nudo As String = "")
+    Sub Sb_Ver_Documento(_Idmaeedo As Integer,
+                         _Nulo As Boolean,
+                         Optional _Tido_Nudo As String = "")
 
         Dim _TdNdo = Split(_Tido_Nudo, "-", 2)
         Dim _Tido, _Nudo As String
@@ -1685,7 +1705,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
                 MessageBoxEx.Show(Me,
                                     "El documento " & _Nudo & " No fue encontrado, puede haber sido anulado o eliminado",
-                                    "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                    "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return
 
             End If
@@ -1698,18 +1718,18 @@ Public Class Frm_Mt_InvParc_02_Seleccion
         If Fm.Pro_Existe_Documento Then
             Fm.ShowDialog(Me)
         Else
-            MessageBoxEx.Show(Me, "Documento no existe", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show(Me, "Documento no existe", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End If
 
         Fm.Dispose()
 
     End Sub
 
-    Private Sub Btn_Mnu_Quitar_Producto_De_La_Lista_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Quitar_Producto_De_La_Lista.Click
+    Private Sub Btn_Mnu_Quitar_Producto_De_La_Lista_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Quitar_Producto_De_La_Lista.Click
         Eliminar_Fila(Grilla.CurrentRow.Index, True)
     End Sub
 
-    Private Sub Btn_Mnu_Ocultar_Desocultar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Ocultar_Desocultar.Click
+    Private Sub Btn_Mnu_Ocultar_Desocultar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Ocultar_Desocultar.Click
 
         Dim _RowPr As DataRow = Fx_Producto_Grilla_Activa()
 
@@ -1728,23 +1748,23 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
     End Sub
 
-    Private Sub Btn_Mnu_Arbol_Clasificaciones_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Arbol_Clasificaciones.Click
+    Private Sub Btn_Mnu_Arbol_Clasificaciones_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Arbol_Clasificaciones.Click
         _Producto_Op.Sb_Ver_Clasificaciones_del_producto(Me, Fx_Producto_Grilla_Activa.Item("KOPR"))
     End Sub
 
-    Private Sub Btn_Mnu_Codigo_Alternativo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Codigo_Alternativo.Click
+    Private Sub Btn_Mnu_Codigo_Alternativo_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Codigo_Alternativo.Click
         Sb_Codigos_Alternativos(Fx_Producto_Grilla_Activa.Item("KOPR"))
     End Sub
 
-    Private Sub Btn_Mnu_Kardex_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Kardex.Click
+    Private Sub Btn_Mnu_Kardex_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Kardex.Click
         _Producto_Op.Sb_Ver_Kardex_Inventario(Me, Fx_Producto_Grilla_Activa.Item("KOPR"))
     End Sub
 
-    Private Sub Btn_Mnu_Ubicaciones_Del_Producto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Ubicaciones_Del_Producto.Click
+    Private Sub Btn_Mnu_Ubicaciones_Del_Producto_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Ubicaciones_Del_Producto.Click
         _Producto_Op.Sb_Ver_Ubicacion_Bodega(Me, Fx_Producto_Grilla_Activa.Item("KOPR"), _Empresa, _Sucursal, _Bodega)
     End Sub
 
-    Private Sub SuperTabItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SuperTabItem1.Click
+    Private Sub SuperTabItem1_Click(sender As System.Object, e As System.EventArgs) Handles SuperTabItem1.Click
         Grilla.Focus()
         Dim _Indice_fila = Grilla.Rows.Count - 1
         Grilla.CurrentCell = Grilla.Rows(_Indice_fila).Cells("CodigoPr")
@@ -1752,12 +1772,12 @@ Public Class Frm_Mt_InvParc_02_Seleccion
         Lbl_Nombre_Producto_Linea_Activa_Grilla.Text = String.Empty
     End Sub
 
-    Private Sub SuperTabItem2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SuperTabItem2.Click
+    Private Sub SuperTabItem2_Click(sender As System.Object, e As System.EventArgs) Handles SuperTabItem2.Click
         Lbl_Nombre_Producto_Linea_Activa_Grilla.Text = String.Empty
     End Sub
 
 
-    Private Sub Grilla_Levantados_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla_Levantados.CellDoubleClick
+    Private Sub Grilla_Levantados_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla_Levantados.CellDoubleClick
 
         Try
             Me.Enabled = False
@@ -1812,38 +1832,38 @@ Public Class Frm_Mt_InvParc_02_Seleccion
     End Sub
 
 
-    Private Sub Btn_Importar_Productos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Importar_Productos.Click
+    Private Sub Btn_Importar_Productos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Importar_Productos.Click
 
-        If Not _Autorizado_Ajustar Then
-            _Autorizado_Ajustar = Fx_Tiene_Permiso(Me, "In0018")
+        'If Not _Autorizado_Ajustar Then
+        '    _Autorizado_Ajustar = Fx_Tiene_Permiso(Me, "In0018")
+        'End If
+
+        'If _Autorizado_Ajustar Then
+
+        Dim Fm As New Frm_Mt_InvParc_Importar(Ds_Invent, _Empresa, _Sucursal, _Bodega)
+        Fm.ShowDialog(Me)
+
+        If Fm.Pro_Archivo_Importado_correctamente Then
+
+            Ds_Invent.Clear()
+            Ds_Invent = Fm.Pro_Ds_Invent
+
+            Grilla.DataSource = Ds_Invent '.Tables("DetalleDocumento")
+            Grilla.DataMember = Ds_Invent.Tables("Inv_InvParcial").TableName
+
+            Sb_Formato_Grilla(Grilla)
+            Sb_Nueva_Fila()
+            Grilla.Focus()
+
+            Sb_Formato_Grilla(Grilla)
         End If
+        Fm.Dispose()
 
-        If _Autorizado_Ajustar Then
-
-            Dim Fm As New Frm_Mt_InvParc_Importar(Ds_Invent, _Empresa, _Sucursal, _Bodega)
-            Fm.ShowDialog(Me)
-
-            If Fm.Pro_Archivo_Importado_correctamente Then
-
-                Ds_Invent.Clear()
-                Ds_Invent = Fm.Pro_Ds_Invent
-
-                Grilla.DataSource = Ds_Invent '.Tables("DetalleDocumento")
-                Grilla.DataMember = Ds_Invent.Tables("Inv_InvParcial").TableName
-
-                Sb_Formato_Grilla(Grilla)
-                Sb_Nueva_Fila()
-                Grilla.Focus()
-
-                Sb_Formato_Grilla(Grilla)
-            End If
-            Fm.Dispose()
-
-        End If
+        'End If
 
     End Sub
 
-    Private Sub Btn_Imprimir_Codigos_de_Barra_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Imprimir_Codigos_de_Barra.Click
+    Private Sub Btn_Imprimir_Codigos_de_Barra_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Imprimir_Codigos_de_Barra.Click
 
         Dim _Index_Tab = Super_Tab.SelectedTabIndex
         Dim _Tbl As DataTable
@@ -1858,7 +1878,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
             Dim _Fl As String = Generar_Filtro_IN(_Tbl, "", "CodigoPr", False, False, "'")
 
-            Consulta_sql = "Select Cast(1 as Bit) As Chk,KOPR As Codigo,NOKOPR As Descripcion" & vbCrLf & _
+            Consulta_sql = "Select Cast(1 as Bit) As Chk,KOPR As Codigo,NOKOPR As Descripcion" & vbCrLf &
                                           "From MAEPR Where KOPR In " & _Fl
 
             Dim _TblProductos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
@@ -1875,13 +1895,13 @@ Public Class Frm_Mt_InvParc_02_Seleccion
             Fm.ShowDialog(Me)
             Fm.Dispose()
         Else
-            MessageBoxEx.Show(Me, "No hay productos", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show(Me, "No hay productos", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End If
 
     End Sub
 
 
-    Private Sub Btn_Imprimir_Ubicacion_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Imprimir_Ubicacion.Click
+    Private Sub Btn_Imprimir_Ubicacion_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Imprimir_Ubicacion.Click
 
         Dim _Grilla As Object
 
@@ -1914,7 +1934,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
     End Sub
 
-    Private Sub Super_Tab_SelectedTabChanged(ByVal sender As System.Object, ByVal e As DevComponents.DotNetBar.SuperTabStripSelectedTabChangedEventArgs) Handles Super_Tab.SelectedTabChanged
+    Private Sub Super_Tab_SelectedTabChanged(sender As System.Object, e As DevComponents.DotNetBar.SuperTabStripSelectedTabChangedEventArgs) Handles Super_Tab.SelectedTabChanged
         Dim _Index As Integer = Super_Tab.SelectedTabIndex
         Dim _Informe As String
 
@@ -1927,24 +1947,24 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
     End Sub
 
-    Private Sub Chk_Dejar_Doc_Final_Del_Dia_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Chk_Dejar_Doc_Final_Del_Dia.CheckedChanged
+    Private Sub Chk_Dejar_Doc_Final_Del_Dia_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles Chk_Dejar_Doc_Final_Del_Dia.CheckedChanged
 
         If Chk_Dejar_Doc_Final_Del_Dia.Checked Then
 
             If Not Fx_Tiene_Permiso(Me, "In0025") Then
                 Chk_Dejar_Doc_Final_Del_Dia.Checked = False
             Else
-                MessageBoxEx.Show(Me, "Esto dejara todos los documentos generados con hora 23:59:59." & vbCrLf & _
-                                 "Esto quiere decir que los ajustes se tomaran como si las guías fueron los últimos documentos del día" & vbCrLf & _
-                                 "Solo recomendado si el ajuste de stock es para inventario general.", _
-                                 "Observación importante", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                MessageBoxEx.Show(Me, "Esto dejara todos los documentos generados con hora 23:59:59." & vbCrLf &
+                                 "Esto quiere decir que los ajustes se tomaran como si las guÃ­as fueron los Ãºltimos documentos del dÃ­a" & vbCrLf &
+                                 "Solo recomendado si el ajuste de stock es para inventario general.",
+                                 "ObservaciÃ³n importante", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             End If
 
         End If
 
     End Sub
 
-    Function Fx_Saldo_Foto_Stock(ByVal _Row_Producto As DataRow) As DataRow
+    Function Fx_Saldo_Foto_Stock(_Row_Producto As DataRow) As DataRow
 
         Dim _Idmaeedo_Gri_Cero = _Row_Producto.Item("IDMAEEDO_Aj")
         Dim _Idmaeedo_Gri = _Row_Producto.Item("GDI_Idmaeedo_Aj")
@@ -1964,7 +1984,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
         Dim _Fecha_Informe = Format(DtFechaInv.Value, "yyyyMMdd")
 
-        _Filtro_Condicion_Extra = "And MAEDDO.IDMAEEDO Not In (" & _Idmaeedo_Gri_Cero & "," & _Idmaeedo_Gri & "," & _Idmaeedo_Gdi & ")" & vbCrLf & _
+        _Filtro_Condicion_Extra = "And MAEDDO.IDMAEEDO Not In (" & _Idmaeedo_Gri_Cero & "," & _Idmaeedo_Gri & "," & _Idmaeedo_Gdi & ")" & vbCrLf &
                                   "And MAEDDO.FEEMLI <= '" & _Fecha_Informe & "'" & vbCrLf & _IdMenor
 
         Consulta_sql = My.Resources._23_ConsultasSQL.Foto_StockXProducto
@@ -1983,7 +2003,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
     End Function
 
-    Private Sub Btn_Foto_Stock_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Foto_Stock.Click
+    Private Sub Btn_Foto_Stock_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Foto_Stock.Click
         If Fx_Tiene_Permiso(Me, "In0031") Then
             Try
                 Progreso_Porc.Maximum = 100
@@ -2014,9 +2034,9 @@ Public Class Frm_Mt_InvParc_02_Seleccion
                         Dim _Foto_Stock_Ud1 As Double = _RowStfi.Item("STFISICOUD1")
                         Dim _Foto_Stock_Ud2 As Double = _RowStfi.Item("STFISICOUD2")
 
-                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_TmpInv_InvParcial Set" & Space(1) & _
-                                       "Foto_Stock_Ud1 = " & De_Num_a_Tx_01(_Foto_Stock_Ud1, False, 5) & _
-                                       ",Foto_Stock_Ud2 = " & De_Num_a_Tx_01(_Foto_Stock_Ud2, False, 5) & vbCrLf & _
+                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_TmpInv_InvParcial Set" & Space(1) &
+                                       "Foto_Stock_Ud1 = " & De_Num_a_Tx_01(_Foto_Stock_Ud1, False, 5) &
+                                       ",Foto_Stock_Ud2 = " & De_Num_a_Tx_01(_Foto_Stock_Ud2, False, 5) & vbCrLf &
                                        "Where Semilla = " & _Semilla
 
                         _Sql.Ej_consulta_IDU(Consulta_sql)
@@ -2050,7 +2070,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
         End If
     End Sub
 
-    Private Sub Btn_Exportar_Excel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Exportar_Excel.Click
+    Private Sub Btn_Exportar_Excel_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Exportar_Excel.Click
         Dim _Index_Tab = Super_Tab.SelectedTabIndex
 
 
@@ -2074,5 +2094,5 @@ Public Class Frm_Mt_InvParc_02_Seleccion
         End If
     End Sub
 
-   
+
 End Class

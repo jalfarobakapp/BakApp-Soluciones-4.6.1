@@ -58,6 +58,10 @@ Public Class Frm_01_Inventario_Actual
 
         Me.Cursor = Cursors.WaitCursor
 
+        'Consulta_sql = "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Cant_Inventariada = 0,Dif_Inv_Cantidad = 0" & vbCrLf &
+        '               "Where IdInventario = " & _IdInventario
+        '_Sql.Ej_consulta_IDU(Consulta_sql)
+
         Consulta_sql = "Select Codigo,Recontado, SUM(Cantidad) As Cantidad" & vbCrLf &
                        "Into #PasoR" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle" & vbCrLf &
@@ -70,7 +74,7 @@ Public Class Frm_01_Inventario_Actual
                        "Where IdInventario = " & _IdInventario & " And Codigo Not In (Select Codigo From #PasoR)" & vbCrLf &
                        "Group By Codigo,Recontado" & vbCrLf &
                        vbCrLf &
-                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 0 Where IdInventario = 1" & vbCrLf &
+                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 0 Where IdInventario = " & _IdInventario & vbCrLf &
                        vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 1,Cant_Inventariada = Cantidad" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Inv_FotoInventario Foto" & vbCrLf &
@@ -388,34 +392,39 @@ Public Class Frm_01_Inventario_Actual
 
     Private Sub Btn_ExportarAjuste_Todo_Click(sender As Object, e As EventArgs) Handles Btn_ExportarAjuste_Todo.Click
 
-        Consulta_sql = "Select Empresa,Sucursal,Bodega,Codigo,Sum(Cantidad) As Cantidad,Sum(CantidadUd1) As CantidadUd1,Sum(CantidadUd2) As CantidadUd2" & vbCrLf &
-                       "Into #PasoR" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle" & vbCrLf &
-                       "Where IdInventario = 1 And Recontado = 1" & vbCrLf &
-                       "Group by Empresa,Sucursal,Bodega,Codigo" & vbCrLf &
-                       vbCrLf &
-                       "Select Empresa,Sucursal,Bodega,Codigo,Sum(Cantidad) As Cantidad,Sum(CantidadUd1) As CantidadUd1,Sum(CantidadUd2) As CantidadUd2" & vbCrLf &
-                       "Into #PasoC" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle" & vbCrLf &
-                       "Where IdInventario = 1 And Recontado = 0 And Codigo Not In (Select Codigo From #PasoR)" & vbCrLf &
-                       "Group by Empresa,Sucursal,Bodega,Codigo" & vbCrLf &
-                       vbCrLf &
-                       "Select * From #PasoC" & vbCrLf &
-                       "Union" & vbCrLf &
-                       "Select * From #PasoR" & vbCrLf &
-                       vbCrLf &
-                       "Drop table #PasoC" & vbCrLf &
-                       "Drop table #PasoR"
+        Consulta_sql = "Select Hd.Empresa,Hd.Sucursal,Hd.Bodega,Hd.Codigo,Sum(Cantidad) As Cantidad,Ft.Costo
+Into #PasoR
+From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle Hd
+Left Join " & _Global_BaseBk & "Zw_Inv_FotoInventario Ft On Ft.IdInventario = Hd.IdInventario And Ft.Codigo = Hd.Codigo
+Where Hd.IdInventario = " & _IdInventario & " And Hd.Recontado = 1 And Cantidad > 0
+Group by Hd.Empresa,Hd.Sucursal,Hd.Bodega,Hd.Codigo,Ft.Costo
+
+Select Hd.Empresa,Hd.Sucursal,Hd.Bodega,Hd.Codigo,Sum(Cantidad) As Cantidad,Ft.Costo
+Into #PasoC
+From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle Hd
+Left Join " & _Global_BaseBk & "Zw_Inv_FotoInventario Ft On Ft.IdInventario = Hd.IdInventario And Ft.Codigo = Hd.Codigo
+Where Hd.IdInventario = " & _IdInventario & " And Hd.Recontado = 0 And Hd.Codigo Not In (Select Codigo From #PasoR) And Cantidad > 0
+Group by Hd.Empresa,Hd.Sucursal,Hd.Bodega,Hd.Codigo,Ft.Costo
+
+Select * From #PasoC
+Union
+Select * From #PasoR
+
+Drop table #PasoC
+Drop table #PasoR"
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
-        Dim NombreFile As String = "Inventario TODOS " & FormatDateTime(_Fecha_Inventario, DateFormat.LongDate)
+        Dim NombreFile As String = "Levantar Inventario " & FormatDateTime(_Fecha_Inventario, DateFormat.LongDate)
 
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, NombreFile)
 
     End Sub
 
     Private Sub Btn_ExportarAjuste_Cerrados_Click(sender As Object, e As EventArgs) Handles Btn_ExportarAjuste_Cerrados.Click
+
+        MessageBoxEx.Show(Me, "En construcción", "Exportar a Excel", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+        Return
 
         Consulta_sql = "select Codigo As 'Codigo',Cantidad As 'Cantidad',Costo as 'Costo'" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Inv_Inventario" & vbCrLf &
@@ -430,12 +439,12 @@ Public Class Frm_01_Inventario_Actual
 
     Private Sub Btn_ExportarAjuste_Click(sender As Object, e As EventArgs) Handles Btn_ExportarAjuste.Click
 
-        If _Cl_Inventario.Zw_Inv_Inventario.Activo Then
-            MessageBoxEx.Show(Me, "Actualmente, el inventario está abierto, lo que significa que no es posible" & vbCrLf &
-                              "exportar los ajustes. Para poder realizar esta acción, es necesario cerrar el inventario primero.", "Validación",
-                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Return
-        End If
+        'If _Cl_Inventario.Zw_Inv_Inventario.Activo Then
+        '    MessageBoxEx.Show(Me, "Actualmente, el inventario está abierto, lo que significa que no es posible" & vbCrLf &
+        '                      "exportar los ajustes. Para poder realizar esta acción, es necesario cerrar el inventario primero.", "Validación",
+        '                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        '    Return
+        'End If
 
         ShowContextMenu(Menu_Contextual_ExportarAjuste)
 

@@ -38,6 +38,8 @@ Public Class Frm_Mt_InvParc_Importar
         _Sucursal = Sucursal
         _Bodega = Bodega
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
 
     Private Sub Frm_Mt_InvParc_Importar_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load

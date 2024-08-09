@@ -93,7 +93,7 @@ Partial Class Frm_Mt_InvParc_02_Seleccion
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnProcesar, Me.BtnAgregarCodigo, Me.Btn_Importar_Productos, Me.BtnMaestroProductos, Me.Btn_Consolidar_Stock, Me.Btn_Imprimir_Codigos_de_Barra, Me.Btn_Foto_Stock, Me.Btn_Exportar_Excel})
         Me.Bar1.Location = New System.Drawing.Point(0, 581)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(1037, 41)
+        Me.Bar1.Size = New System.Drawing.Size(1113, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 11
@@ -172,7 +172,7 @@ Partial Class Frm_Mt_InvParc_02_Seleccion
         Me.Label1.AutoSize = True
         Me.Label1.BackColor = System.Drawing.Color.White
         Me.Label1.ForeColor = System.Drawing.Color.Black
-        Me.Label1.Location = New System.Drawing.Point(773, 13)
+        Me.Label1.Location = New System.Drawing.Point(849, 14)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(41, 13)
         Me.Label1.TabIndex = 13
@@ -192,7 +192,7 @@ Partial Class Frm_Mt_InvParc_02_Seleccion
         Me.DtFechaInv.ForeColor = System.Drawing.Color.Black
         Me.DtFechaInv.Format = DevComponents.Editors.eDateTimePickerFormat.[Long]
         Me.DtFechaInv.IsPopupCalendarOpen = False
-        Me.DtFechaInv.Location = New System.Drawing.Point(820, 9)
+        Me.DtFechaInv.Location = New System.Drawing.Point(896, 9)
         '
         '
         '
@@ -405,7 +405,7 @@ Partial Class Frm_Mt_InvParc_02_Seleccion
         Me.Super_Tab.ReorderTabsEnabled = True
         Me.Super_Tab.SelectedTabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
         Me.Super_Tab.SelectedTabIndex = 0
-        Me.Super_Tab.Size = New System.Drawing.Size(1013, 457)
+        Me.Super_Tab.Size = New System.Drawing.Size(1089, 457)
         Me.Super_Tab.TabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Super_Tab.TabIndex = 84
         Me.Super_Tab.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem1, Me.SuperTabItem2})
@@ -417,7 +417,7 @@ Partial Class Frm_Mt_InvParc_02_Seleccion
         Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
-        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(1013, 430)
+        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(1089, 430)
         Me.SuperTabControlPanel1.TabIndex = 1
         Me.SuperTabControlPanel1.TabItem = Me.SuperTabItem1
         '
@@ -456,7 +456,7 @@ Partial Class Frm_Mt_InvParc_02_Seleccion
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.Grilla.Size = New System.Drawing.Size(1013, 430)
+        Me.Grilla.Size = New System.Drawing.Size(1089, 430)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 53
         '
@@ -554,7 +554,7 @@ Partial Class Frm_Mt_InvParc_02_Seleccion
         '
         '
         Me.Progreso_Cont.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Progreso_Cont.Location = New System.Drawing.Point(216, 532)
+        Me.Progreso_Cont.Location = New System.Drawing.Point(495, 528)
         Me.Progreso_Cont.Name = "Progreso_Cont"
         Me.Progreso_Cont.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Donut
         Me.Progreso_Cont.ProgressColor = System.Drawing.Color.SteelBlue
@@ -573,7 +573,7 @@ Partial Class Frm_Mt_InvParc_02_Seleccion
         '
         Me.Lbl_Actualizar_Stock.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Lbl_Actualizar_Stock.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Actualizar_Stock.Location = New System.Drawing.Point(307, 539)
+        Me.Lbl_Actualizar_Stock.Location = New System.Drawing.Point(586, 535)
         Me.Lbl_Actualizar_Stock.Name = "Lbl_Actualizar_Stock"
         Me.Lbl_Actualizar_Stock.Size = New System.Drawing.Size(153, 23)
         Me.Lbl_Actualizar_Stock.TabIndex = 87
@@ -587,7 +587,7 @@ Partial Class Frm_Mt_InvParc_02_Seleccion
         '
         '
         Me.Progreso_Porc.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Progreso_Porc.Location = New System.Drawing.Point(257, 531)
+        Me.Progreso_Porc.Location = New System.Drawing.Point(536, 527)
         Me.Progreso_Porc.Name = "Progreso_Porc"
         Me.Progreso_Porc.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Donut
         Me.Progreso_Porc.ProgressColor = System.Drawing.Color.SteelBlue
@@ -607,14 +607,14 @@ Partial Class Frm_Mt_InvParc_02_Seleccion
         Me.Lbl_Nombre_Producto_Linea_Activa_Grilla.ForeColor = System.Drawing.Color.Black
         Me.Lbl_Nombre_Producto_Linea_Activa_Grilla.Location = New System.Drawing.Point(12, 500)
         Me.Lbl_Nombre_Producto_Linea_Activa_Grilla.Name = "Lbl_Nombre_Producto_Linea_Activa_Grilla"
-        Me.Lbl_Nombre_Producto_Linea_Activa_Grilla.Size = New System.Drawing.Size(1013, 22)
+        Me.Lbl_Nombre_Producto_Linea_Activa_Grilla.Size = New System.Drawing.Size(1182, 22)
         Me.Lbl_Nombre_Producto_Linea_Activa_Grilla.TabIndex = 91
         '
         'Frm_Mt_InvParc_02_Seleccion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1037, 622)
+        Me.ClientSize = New System.Drawing.Size(1113, 622)
         Me.Controls.Add(Me.Lbl_Nombre_Producto_Linea_Activa_Grilla)
         Me.Controls.Add(Me.Progreso_Porc)
         Me.Controls.Add(Me.Lbl_Actualizar_Stock)

@@ -107,13 +107,13 @@ Public Class Frm_02_Detalle_Producto_Actual
             .Columns("Sector").ReadOnly = True
 
             .Columns("Ubicacion").HeaderText = "Ubicación"
-            .Columns("Ubicacion").Width = 100
+            .Columns("Ubicacion").Width = 90
             .Columns("Ubicacion").Visible = True
             .Columns("Ubicacion").ReadOnly = True
 
             .Columns("Nro_Hoja").HeaderText = "Hoja"
             .Columns("Nro_Hoja").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("Nro_Hoja").Width = 35
+            .Columns("Nro_Hoja").Width = 40
             .Columns("Nro_Hoja").Visible = True
             .Columns("Nro_Hoja").ReadOnly = True
 
@@ -155,10 +155,10 @@ Public Class Frm_02_Detalle_Producto_Actual
                        "Select Codigo,Recontado, SUM(Cantidad) As Cantidad" & vbCrLf &
                        "Into #PasoC" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle" & vbCrLf &
-                       "Where IdInventario = " & _IdInventario & " And Codigo = '" & _Codigo & "'" & vbCrLf &
+                       "Where IdInventario = " & _IdInventario & " And Codigo = ' " & _Codigo & "' And Codigo Not In (Select Codigo From #PasoR)" & vbCrLf &
                        "Group By Codigo,Recontado" & vbCrLf &
                        vbCrLf &
-                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 0 Where IdInventario = 1 And Codigo = '" & _Codigo & "'" & vbCrLf &
+                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 0 Where IdInventario = " & _IdInventario & " And Codigo = '" & _Codigo & "'" & vbCrLf &
                        vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 1,Cant_Inventariada = Cantidad" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Inv_FotoInventario Foto" & vbCrLf &
@@ -209,6 +209,15 @@ Public Class Frm_02_Detalle_Producto_Actual
     End Sub
 
     Private Sub BtnAgregarConteo_Click(sender As System.Object, e As System.EventArgs) Handles BtnAgregarConteo.Click
+
+        Dim _Cl_Inventario As New Cl_Inventario
+        _Cl_Inventario.Fx_Llenar_Zw_Inv_Inventario(_IdInventario)
+
+        If Not _Cl_Inventario.Zw_Inv_Inventario.Activo Then
+            MessageBoxEx.Show(Me, "El inventario se encuentra cerrado, no puede realizar esta acción", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
 
         If Chk_NoInventariar.Checked Then
             MessageBoxEx.Show(Me, "El producto esta marcado para no inventariar", "Producto marcado",
