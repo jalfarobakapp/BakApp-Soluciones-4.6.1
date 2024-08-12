@@ -1348,6 +1348,14 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
             .Columns("Cant_Comprar_Sug_Red").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
+            _Campo = "SugCmbPrecio"
+            .Columns("SugCmbPrecio").Width = 30
+            .Columns("SugCmbPrecio").HeaderText = "Sug." & vbCrLf & "CBP?"
+            .Columns("SugCmbPrecio").ToolTip = "Sugiere cambio de precio"
+            .Columns("SugCmbPrecio").Visible = True
+            .Columns("SugCmbPrecio").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
             '.Columns("Dias_Abastecer").Width = 60
             '.Columns("Dias_Abastecer").HeaderText = "Stock Ud. " & _Ud
             '.Columns("Dias_Abastecer").DefaultCellStyle.Format = "##,###"

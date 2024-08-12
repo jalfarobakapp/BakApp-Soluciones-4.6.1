@@ -3563,21 +3563,21 @@ Public Module Crear_Documentos_Desde_Otro
 
             If IsNothing(_Row_Folios) Then
 
-                If Not IsNothing(_Formulario) Then
+                'If Not IsNothing(_Formulario) Then
 
-                    Dim _MsgFolio As String
+                Dim _MsgFolio As String
 
-                    If _Firma_Bakapp Then
-                        _MsgFolio = "(Folios por Hefesto BakApp)"
-                    Else
-                        _MsgFolio = "(Folios Random)"
-                    End If
-
-                    _Mensaje.Detalle = "Validación Modalidad: " & Modalidad
-                    Throw New System.Exception("El folio del documento electrónico no está autorizado por el SII: " & _Folio & vbCrLf & vbCrLf &
-                                          "INFORME ESTA SITUACION AL ADMINISTRADOR DEL SISTEMA POR FAVOR")
-
+                If _Firma_Bakapp Then
+                    _MsgFolio = "(Folios por Hefesto BakApp)"
+                Else
+                    _MsgFolio = "(Folios Random)"
                 End If
+
+                _Mensaje.Detalle = "Validación Modalidad: " & Modalidad
+                Throw New System.Exception("El folio del documento electrónico no está autorizado por el SII: " & _Folio & vbCrLf & vbCrLf &
+                                      "INFORME ESTA SITUACION AL ADMINISTRADOR DEL SISTEMA POR FAVOR")
+
+                'End If
 
             Else
 

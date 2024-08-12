@@ -1,10 +1,10 @@
-Declare @Identificador_NodoPadre Int = #Identificador_NodoPadre#, 
-        @Porc_Creciminto Float = #Porc_Creciminto#,
-        @Dias_Proyeccion Float = #Dias_Proyeccion#,
-        @Dias_Abastecer Int,
-        @Marca_Proyeccion Int = #Marca_Proyeccion#,
-        @RotCalculo Char(1) = '#RotCalculo#',
-        @Fecha_Actual Date = GetDate()
+Declare @Identificador_NodoPadre Int = #Identificador_NodoPadre#
+Declare @Porc_Creciminto Float = #Porc_Creciminto#
+Declare @Dias_Proyeccion Float = #Dias_Proyeccion#
+Declare @Dias_Abastecer Int
+Declare @Marca_Proyeccion Int = #Marca_Proyeccion#
+Declare @RotCalculo Char(1) = '#RotCalculo#'
+Declare @Fecha_Actual Date = GetDate()
 
 Set @Porc_Creciminto = @Porc_Creciminto /100.0 + 1        
 Set @Dias_Abastecer = #Dias_Abastecer#--@Dias_Proyeccion * 4
@@ -142,6 +142,15 @@ SELECT  Codigo_Nodo,
         SUM(Cant_Comprar_Sug_Red) AS Cant_Comprar_Sug_Red,
 	    Dias_Abastecer,
 	    Proyeccion_Abastecer,
+        CAST(0 As int) As 'Idmaeedo_ProxRC',
+		CAST('' As char(3)) As 'Tido_ProxRC',
+		CAST('' As char(10)) As 'Nudo_ProxRC',
+		CAST(Null As datetime) As 'Feerli_ProxRC',
+		CAST(0 As int) AS 'Dias_ProxRC',
+		CAST(0 As float) As 'Meses_ProxRC',
+		CAST(0 As float) As 'RotDiaria_NoQuiebra', 
+		CAST(0 As float) As 'RotMensual_NoQuiebra', 
+		CAST(0 As bit) As 'SugCmbPrecio',
 	    #Campos_Proyeccion#
 	    CAST('' As Char(1)) As 'Fin'
 Into #Tbl_Paso_Proyecto_01	    
@@ -260,6 +269,48 @@ Update #Tbl_Paso_Proyecto_02 Set Prom_Pond = Round((StockUd+StockPedidoUd+StockF
 Update #Tbl_Paso_Proyecto_02 Set Cant_Comprar_Sug2 = Ceiling(Round(Cant_Comprar_Sug/23000,2))
 
 
+Select KOPRCT As Codigo,Ps1.Codigo_Nodo_Madre,IDMAEEDO,TIDO,NUDO,ENDO,SUENDO,Isnull(NOKOEN,'???') As Razon,
+       UD01PR,CAPRCO1,CAPREX1,(CAPRCO1-(CAPRAD1+CAPREX1)) As Saldo, FEERLI 
+Into #PasoUltComp
+From MAEDDO Ddo
+Left Join MAEEN On KOEN = ENDO And SUEN = SUENDO
+Left Join #Tbl_Paso_Proyecto Ps1 On Ps1.Codigo = Ddo.KOPRCT 
+Where KOPRCT In (Select Codigo From #Tbl_Paso_Proyecto) And TIDO In ('OCC','FCC') And ESLIDO = '' 
+Order By FEERLI 
+
+Update #Tbl_Paso_Proyecto_01 Set Idmaeedo_ProxRC = Isnull((Select Top 1 IDMAEEDO From #PasoUltComp Ps1 Where Ps1.Codigo_Nodo_Madre = #Tbl_Paso_Proyecto_01.Codigo_Nodo_Madre Order By FEERLI),0)
+
+Update #Tbl_Paso_Proyecto_01 Set Tido_ProxRC = TIDO,Nudo_ProxRC = NUDO,Feerli_ProxRC = FEERLI
+From #Tbl_Paso_Proyecto_01
+Inner Join #PasoUltComp On Idmaeedo_ProxRC = IDMAEEDO
+
+Update #Tbl_Paso_Proyecto_01 Set Dias_ProxRC = DATEDIFF(Day,GETDATE(),Feerli_ProxRC),Meses_ProxRC = DATEDIFF(month,GETDATE(),Feerli_ProxRC)
+Where Idmaeedo_ProxRC > 0
+
+Update #Tbl_Paso_Proyecto_01 Set RotDiaria_NoQuiebra = Round((StockUd#Ud#/Dias_ProxRC),0),RotMensual_NoQuiebra = Round((StockUd#Ud#/Dias_ProxRC) * @Dias_Proyeccion,0)
+Where Idmaeedo_ProxRC > 0 And Dias_ProxRC <> 0
+
+Update #Tbl_Paso_Proyecto_01 Set SugCmbPrecio = 1
+Where RotDiaria_NoQuiebra < RotCalculo And RotDiaria_NoQuiebra > 0
+
+Select * From #Tbl_Paso_Proyecto Order by Producto
+Select * From #Tbl_Paso_Proyecto_01
+Select * From #PasoUltComp
+Select * From #Tbl_Paso_Proyecto_02
+
+Select Codigo_Nodo_Madre,Producto,StockUd#Ud#,Promedio_Mensual,RotMensualUd#Ud#,RotMensual_NoQuiebra,SugCmbPrecio,Cast(0 As Float) As 'PPV',
+Cast(0 As Float) As MinPrecio,Cast(0 As Float) As 'MaxPrecio' 
+From #Tbl_Paso_Proyecto_01 
+Where SugCmbPrecio = 1
+
+Drop Table #Tbl_Paso_Proyecto
+Drop Table #Tbl_Paso_Proyecto_01
+Drop Table #Tbl_Paso_Proyecto_02
+Drop Table #PasoUltComp
+
+
+
+/*
 Select * From #Tbl_Paso_Proyecto Order by Producto
 Select * From #Tbl_Paso_Proyecto_01
 
@@ -276,3 +327,4 @@ Drop Table #Tbl_Paso_Proyecto
 Drop Table #Tbl_Paso_Proyecto_01
 Drop Table #Tbl_Paso_Proyecto_02
 
+*/
