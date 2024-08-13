@@ -324,6 +324,8 @@ Public Class Cl_Ftp
             Dim res As String = reader.ReadToEnd()
             Dim _Archivos = Split(res, vbCrLf) 'res.Split
 
+            listaRutas.Add("..;;")
+
             For Each _F As String In _Archivos
 
                 If Not _F.Contains("/.") And Not String.IsNullOrEmpty(_F) Then
@@ -331,6 +333,10 @@ Public Class Cl_Ftp
                     Dim _Raiz = _F.Split("/")
 
                     _F = _Raiz(1)
+
+                    ' Verificar si el archivo es una carpeta
+                    Dim esCarpeta As Boolean = Fx_Existe_Directorio(_Dir & "/" & _F).EsCorrecto
+
 
                     Dim _Size = Fx_Obtener_Size_Archivo(_Dir & "/" & _F)
                     Dim _Fecha = Fx_Obtener_Fecha_Archivo(_Dir & "/" & _F)
@@ -368,7 +374,7 @@ Public Class Cl_Ftp
 
             _Mensaje.EsCorrecto = False
             _Mensaje.Mensaje = ex.Message
-            _Mensaje.Detalle = "Existe directorio FTP"
+            _Mensaje.Detalle = "Obtener directorio FTP"
             _Mensaje.Icono = MessageBoxIcon.Error
 
         End Try
@@ -437,6 +443,35 @@ Public Class Cl_Ftp
             Return ""
         End Try
 
+    End Function
+
+    Public Function AccederCarpetaFTP(_Url_Directorio As String) As List(Of String)
+        Dim listaArchivos As New List(Of String)
+
+        Try
+            ' Crear la solicitud FTP
+            Dim solicitud As FtpWebRequest = CType(WebRequest.Create(_Url_Directorio), FtpWebRequest)
+            solicitud.Method = WebRequestMethods.Ftp.ListDirectory
+            solicitud.Credentials = New NetworkCredential(Zw_Ftp_Conexiones.Usuario, Zw_Ftp_Conexiones.Clave)
+
+            ' Obtener la respuesta del servidor
+            Using respuesta As FtpWebResponse = CType(solicitud.GetResponse(), FtpWebResponse)
+                ' Leer el contenido de la carpeta
+                Using stream As Stream = respuesta.GetResponseStream()
+                    Using reader As New StreamReader(stream)
+                        While Not reader.EndOfStream
+                            Dim archivo As String = reader.ReadLine()
+                            listaArchivos.Add(archivo)
+                        End While
+                    End Using
+                End Using
+            End Using
+        Catch ex As WebException
+            ' Manejar cualquier error de conexión o autenticación
+            Console.WriteLine("Error al acceder a la carpeta FTP: " & ex.Message)
+        End Try
+
+        Return listaArchivos
     End Function
 
 End Class

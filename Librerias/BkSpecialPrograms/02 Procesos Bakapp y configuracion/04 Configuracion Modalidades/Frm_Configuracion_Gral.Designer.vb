@@ -53,6 +53,7 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControl1 = New DevComponents.DotNetBar.SuperTabControl()
         Me.SuperTabControlPanel9 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.TableLayoutPanel7 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Pickear_FacturarAutoCompletas = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Pickear_NVVTodas = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Pickear_ProdPesoVariable = New DevComponents.DotNetBar.Controls.CheckBoxX()
@@ -169,7 +170,7 @@ Partial Class Frm_Configuracion_Gral
         Me.Btn_DocConceptosVsPagos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_ConfPuntosVta = New DevComponents.DotNetBar.ButtonItem()
         Me.CheckBoxX2 = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Btn_ConfFTPProductos = New DevComponents.DotNetBar.ButtonX()
         Me.TableLayoutPanel3.SuspendLayout()
         CType(Me.Input_Monto_Max_CRV_FacMasiva, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel4.SuspendLayout()
@@ -701,12 +702,12 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControl1.ControlBox.MenuBox.Name = ""
         Me.SuperTabControl1.ControlBox.Name = ""
         Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel9)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel7)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel9)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel4)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel6)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel5)
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel7)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel8)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel3)
@@ -727,9 +728,9 @@ Partial Class Frm_Configuracion_Gral
         '
         Me.SuperTabControlPanel9.Controls.Add(Me.TableLayoutPanel7)
         Me.SuperTabControlPanel9.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel9.Location = New System.Drawing.Point(125, 0)
+        Me.SuperTabControlPanel9.Location = New System.Drawing.Point(132, 0)
         Me.SuperTabControlPanel9.Name = "SuperTabControlPanel9"
-        Me.SuperTabControlPanel9.Size = New System.Drawing.Size(667, 539)
+        Me.SuperTabControlPanel9.Size = New System.Drawing.Size(660, 539)
         Me.SuperTabControlPanel9.TabIndex = 0
         Me.SuperTabControlPanel9.TabItem = Me.SpTab_Logistica
         '
@@ -758,6 +759,24 @@ Partial Class Frm_Configuracion_Gral
         Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
         Me.TableLayoutPanel7.Size = New System.Drawing.Size(666, 224)
         Me.TableLayoutPanel7.TabIndex = 103
+        '
+        'Chk_Pickear_SinoEstaEnWMSIgualPickear
+        '
+        '
+        '
+        '
+        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.CheckBoxImageChecked = CType(resources.GetObject("Chk_Pickear_SinoEstaEnWMSIgualPickear.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_Pickear_SinoEstaEnWMSIgualPickear.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.FocusCuesEnabled = False
+        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.Location = New System.Drawing.Point(3, 69)
+        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.Name = "Chk_Pickear_SinoEstaEnWMSIgualPickear"
+        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.Size = New System.Drawing.Size(635, 16)
+        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.TabIndex = 132
+        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.Text = "Poder enviar al sistema de gestión de entrega de mercadería aun que no esta en WM" &
+    "S"
         '
         'Chk_Pickear_FacturarAutoCompletas
         '
@@ -1030,9 +1049,9 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControlPanel4.Controls.Add(Me.TableLayoutPanel4)
         Me.SuperTabControlPanel4.Controls.Add(Me.Txt_ValorMinimoNVV)
         Me.SuperTabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(125, 0)
+        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(132, 0)
         Me.SuperTabControlPanel4.Name = "SuperTabControlPanel4"
-        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(667, 539)
+        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(660, 539)
         Me.SuperTabControlPanel4.TabIndex = 0
         Me.SuperTabControlPanel4.TabItem = Me.SpTab_Ventas2
         '
@@ -1254,9 +1273,9 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControlPanel6.Controls.Add(Me.TableLayoutPanel3)
         Me.SuperTabControlPanel6.Controls.Add(Me.Lbl_Dias_Para_Hacer_NCV)
         Me.SuperTabControlPanel6.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel6.Location = New System.Drawing.Point(125, 0)
+        Me.SuperTabControlPanel6.Location = New System.Drawing.Point(132, 0)
         Me.SuperTabControlPanel6.Name = "SuperTabControlPanel6"
-        Me.SuperTabControlPanel6.Size = New System.Drawing.Size(667, 539)
+        Me.SuperTabControlPanel6.Size = New System.Drawing.Size(660, 539)
         Me.SuperTabControlPanel6.TabIndex = 0
         Me.SuperTabControlPanel6.TabItem = Me.SpTab_Ventas
         '
@@ -1303,9 +1322,9 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControlPanel5.Controls.Add(Me.LabelX20)
         Me.SuperTabControlPanel5.Controls.Add(Me.TableLayoutPanel1)
         Me.SuperTabControlPanel5.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel5.Location = New System.Drawing.Point(125, 0)
+        Me.SuperTabControlPanel5.Location = New System.Drawing.Point(132, 0)
         Me.SuperTabControlPanel5.Name = "SuperTabControlPanel5"
-        Me.SuperTabControlPanel5.Size = New System.Drawing.Size(667, 539)
+        Me.SuperTabControlPanel5.Size = New System.Drawing.Size(660, 539)
         Me.SuperTabControlPanel5.TabIndex = 0
         Me.SuperTabControlPanel5.TabItem = Me.SpTab_Compras
         '
@@ -1538,13 +1557,14 @@ Partial Class Frm_Configuracion_Gral
         '
         'SuperTabControlPanel7
         '
+        Me.SuperTabControlPanel7.Controls.Add(Me.Btn_ConfFTPProductos)
         Me.SuperTabControlPanel7.Controls.Add(Me.TableLayoutPanel2)
         Me.SuperTabControlPanel7.Controls.Add(Me.Cmb_Nodo_Raiz_Asociados)
         Me.SuperTabControlPanel7.Controls.Add(Me.LabelX15)
         Me.SuperTabControlPanel7.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel7.Location = New System.Drawing.Point(125, 0)
+        Me.SuperTabControlPanel7.Location = New System.Drawing.Point(132, 0)
         Me.SuperTabControlPanel7.Name = "SuperTabControlPanel7"
-        Me.SuperTabControlPanel7.Size = New System.Drawing.Size(667, 539)
+        Me.SuperTabControlPanel7.Size = New System.Drawing.Size(660, 539)
         Me.SuperTabControlPanel7.TabIndex = 0
         Me.SuperTabControlPanel7.TabItem = Me.SpTab_Productos
         '
@@ -1909,9 +1929,9 @@ Partial Class Frm_Configuracion_Gral
         '
         Me.SuperTabControlPanel8.Controls.Add(Me.TableLayoutPanel6)
         Me.SuperTabControlPanel8.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel8.Location = New System.Drawing.Point(125, 0)
+        Me.SuperTabControlPanel8.Location = New System.Drawing.Point(132, 0)
         Me.SuperTabControlPanel8.Name = "SuperTabControlPanel8"
-        Me.SuperTabControlPanel8.Size = New System.Drawing.Size(667, 539)
+        Me.SuperTabControlPanel8.Size = New System.Drawing.Size(660, 539)
         Me.SuperTabControlPanel8.TabIndex = 0
         Me.SuperTabControlPanel8.TabItem = Me.SuperTabItem1
         '
@@ -2044,9 +2064,9 @@ Partial Class Frm_Configuracion_Gral
         '
         Me.SuperTabControlPanel2.Controls.Add(Me.GroupPanel1)
         Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(125, 0)
+        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(132, 0)
         Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
-        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(667, 539)
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(660, 539)
         Me.SuperTabControlPanel2.TabIndex = 0
         Me.SuperTabControlPanel2.TabItem = Me.SpTab_DatosEmpresa
         '
@@ -2079,7 +2099,7 @@ Partial Class Frm_Configuracion_Gral
         Me.GroupPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupPanel1.Location = New System.Drawing.Point(0, 0)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(667, 539)
+        Me.GroupPanel1.Size = New System.Drawing.Size(660, 539)
         '
         '
         '
@@ -2450,9 +2470,9 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControlPanel3.Controls.Add(Me.LabelX21)
         Me.SuperTabControlPanel3.Controls.Add(Me.Chk_Fincred_Usar)
         Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(125, 0)
+        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(132, 0)
         Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
-        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(667, 539)
+        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(660, 539)
         Me.SuperTabControlPanel3.TabIndex = 0
         Me.SuperTabControlPanel3.TabItem = Me.SpTab_FincredPays
         '
@@ -2634,23 +2654,17 @@ Partial Class Frm_Configuracion_Gral
         Me.CheckBoxX2.TabIndex = 117
         Me.CheckBoxX2.Text = "Ambiente de pruebas y certificación"
         '
-        'Chk_Pickear_SinoEstaEnWMSIgualPickear
+        'Btn_ConfFTPProductos
         '
-        '
-        '
-        '
-        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.CheckBoxImageChecked = CType(resources.GetObject("Chk_Pickear_SinoEstaEnWMSIgualPickear.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_Pickear_SinoEstaEnWMSIgualPickear.CheckBoxImageIndeterminate"), System.Drawing.Image)
-        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.FocusCuesEnabled = False
-        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.Location = New System.Drawing.Point(3, 69)
-        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.Name = "Chk_Pickear_SinoEstaEnWMSIgualPickear"
-        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.Size = New System.Drawing.Size(635, 16)
-        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.TabIndex = 132
-        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.Text = "Poder enviar al sistema de gestión de entrega de mercadería aun que no esta en WM" &
-    "S"
+        Me.Btn_ConfFTPProductos.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_ConfFTPProductos.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_ConfFTPProductos.Image = CType(resources.GetObject("Btn_ConfFTPProductos.Image"), System.Drawing.Image)
+        Me.Btn_ConfFTPProductos.Location = New System.Drawing.Point(6, 337)
+        Me.Btn_ConfFTPProductos.Name = "Btn_ConfFTPProductos"
+        Me.Btn_ConfFTPProductos.Size = New System.Drawing.Size(165, 23)
+        Me.Btn_ConfFTPProductos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_ConfFTPProductos.TabIndex = 102
+        Me.Btn_ConfFTPProductos.Text = "Conexión FTP productos"
         '
         'Frm_Configuracion_Gral
         '
@@ -2842,4 +2856,5 @@ Partial Class Frm_Configuracion_Gral
     Friend WithEvents Chk_SoloprodEnDoc_CLALIBPR As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_SoloprodEnDoc_Todos As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_Pickear_SinoEstaEnWMSIgualPickear As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Btn_ConfFTPProductos As DevComponents.DotNetBar.ButtonX
 End Class

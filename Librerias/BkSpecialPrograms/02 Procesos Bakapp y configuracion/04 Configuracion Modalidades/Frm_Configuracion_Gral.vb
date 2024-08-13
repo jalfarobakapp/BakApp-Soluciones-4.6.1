@@ -328,6 +328,7 @@ Public Class Frm_Configuracion_Gral
         Chk_Pickear_SinoEstaEnWMSIgualPickear.Enabled = _Modalidad_General
 
         Chk_SoloprodEnDoc_CLALIBPR.Enabled = Not _Modalidad_General
+        Btn_ConfFTPProductos.Enabled = _Modalidad_General
 
         AddHandler Txt_Dias_Venci_Coti.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
         AddHandler Txt_ValorMinimoNVV.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
@@ -685,6 +686,24 @@ Public Class Frm_Configuracion_Gral
         _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa)
 
         Dim Fm As New Frm_ConfPuntosVta
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_ConfFTPProductos_Click(sender As Object, e As EventArgs) Handles Btn_ConfFTPProductos.Click
+
+        Dim _Id = 0
+
+        Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Ftp_Conexiones Where Tipo = 'Producto'"
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If Not IsNothing(_Row) Then
+            _Id = _Row.Item("Id")
+        End If
+
+        Dim Fm As New Frm_FTP_Fichero(_Id, Cl_Ftp.eTipo_Ftp.Producto)
+        Fm.ModoConfiguracion = True
         Fm.ShowDialog(Me)
         Fm.Dispose()
 

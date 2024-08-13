@@ -416,6 +416,7 @@ Partial Class Frm_FTP_Fichero
         Me.ImageList1.Images.SetKeyName(4, "file_extension_jpg.png")
         Me.ImageList1.Images.SetKeyName(5, "document.png")
         Me.ImageList1.Images.SetKeyName(6, "file_extension_bmp.png")
+        Me.ImageList1.Images.SetKeyName(7, "folder.png")
         '
         'TxtLog
         '

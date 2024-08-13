@@ -1,4 +1,5 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports BkSpecialPrograms.LsValiciones
+Imports DevComponents.DotNetBar
 
 Public Class Frm_FTP_Fichero
 
@@ -16,7 +17,9 @@ Public Class Frm_FTP_Fichero
 
     Public Property Ftp As New Cl_Ftp
     Public Property ModoProducto As Boolean
+    Public Property ModoConfiguracion As Boolean
     Public Property Codigo As String
+
     Public Sub New(_Id_Ftp As Integer, _Tipo_Ftp As Cl_Ftp.eTipo_Ftp)
 
         ' Esta llamada es exigida por el diseñador.
@@ -83,6 +86,10 @@ Public Class Frm_FTP_Fichero
 
     Private Sub Sb_Llenar_Lista(_Lista_Archivos)
 
+        If IsNothing(_Lista_Archivos) Then
+            Return
+        End If
+
         ' With List_Carpeta_FTP
         List_Carpeta_FTP.Items.Clear()
         ' .Columns.Clear()
@@ -134,7 +141,15 @@ Public Class Frm_FTP_Fichero
                 Case "BMP"
                     _Imagen = 6
                 Case Else
-                    _Imagen = 5
+
+                    Dim esCarpeta As Boolean = Ftp.Fx_Existe_Directorio(Txt_Fichero.Text & "/" & _Archivo).EsCorrecto
+
+                    If esCarpeta Or _Archivo = ".." Then
+                        _Imagen = 7
+                    Else
+                        _Imagen = 5
+                    End If
+
             End Select
 
             Dim _s = _Fila(1)
@@ -253,8 +268,6 @@ Public Class Frm_FTP_Fichero
                 Return ""
             End If
 
-
-
         End With
 
     End Function
@@ -357,7 +370,6 @@ Public Class Frm_FTP_Fichero
         TxtLog.ScrollToCaret()
         System.Windows.Forms.Application.DoEvents()
     End Sub
-
 
     Private Sub List_Carpeta_FTP_ItemSelectionChanged(sender As System.Object, e As System.Windows.Forms.ListViewItemSelectionChangedEventArgs) Handles List_Carpeta_FTP.ItemSelectionChanged
 
@@ -506,7 +518,6 @@ Public Class Frm_FTP_Fichero
         Sb_Trabajo_FTP(False)
 
     End Sub
-
 
     Sub Sb_Trabajo_FTP(_Trabajando As Boolean)
 
@@ -662,6 +673,66 @@ Public Class Frm_FTP_Fichero
         If _Mensaje.EsCorrecto Then
             Me.Close()
         End If
+
+    End Sub
+
+    Private Sub List_Carpeta_FTP_DoubleClick(sender As Object, e As EventArgs) Handles List_Carpeta_FTP.DoubleClick
+
+        Me.Enabled = False
+        Me.Cursor = Cursors.WaitCursor
+        Try
+
+            ' Obtener el nombre de la carpeta seleccionada en el control List_Carpeta_FTP
+            Dim carpetaSeleccionada As String = List_Carpeta_FTP.FocusedItem.Text
+
+            _Fichero = Txt_Fichero.Text & "/" & carpetaSeleccionada
+
+            If carpetaSeleccionada = ".." Then
+
+                Dim _Carpeta = Split(Txt_Fichero.Text, "/")
+                Dim _CarpetaPadre As String = ""
+
+                For i As Integer = 0 To _Carpeta.Length - 2
+                    _CarpetaPadre &= _Carpeta(i) & "/"
+                Next
+
+                'Txt_Fichero.Text = _CarpetaPadre
+                _Fichero = _CarpetaPadre
+
+                Dim variable As String = _Fichero
+                _Fichero = variable.Substring(0, variable.Length - 1)
+
+            End If
+
+            'Dim esCarpeta As Boolean = Ftp.Fx_Existe_Directorio(_Fichero).EsCorrecto
+
+
+            'If Not esCarpeta Then
+            '    'MessageBoxEx.Show(Me, "No se puede acceder a la carpeta seleccionada", "Problemas de conexión...", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            '    Beep()
+            '    Return
+            'End If
+
+            'Dim _Archivos As List(Of String) = Ftp.AccederCarpetaFTP(Txt_Fichero.Text & "/" & carpetaSeleccionada)
+
+            Dim _Mensaje As LsValiciones.Mensajes
+
+            _Mensaje = _Ftp.Fx_Obtener_Archivos_Directorio(_Fichero)
+            If Not _Mensaje.EsCorrecto Then
+                'MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Problemas de conexión...", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+            Txt_Fichero.Text = _Fichero
+
+            Sb_Llenar_Lista(_Mensaje.Tag)
+            'AddToLog("Conexión Ftp", "Conexión establecida...")
+
+        Catch ex As Exception
+        Finally
+            Me.Enabled = True
+            Me.Cursor = Cursors.Default
+        End Try
 
     End Sub
 
