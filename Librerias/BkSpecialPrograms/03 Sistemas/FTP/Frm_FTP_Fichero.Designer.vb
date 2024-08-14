@@ -55,6 +55,7 @@ Partial Class Frm_FTP_Fichero
         Me.Btn_Eliminar_documento = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Renombrar = New DevComponents.DotNetBar.ButtonItem()
         Me.CirProgres_FTP = New DevComponents.DotNetBar.CircularProgressItem()
+        Me.Btn_Volver = New DevComponents.DotNetBar.ButtonItem()
         Me.Grupo_Configuracion_Ftp.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -290,7 +291,7 @@ Partial Class Frm_FTP_Fichero
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_ProbConexion, Me.Btn_Refresh, Me.Btn_Descargar_Archivos, Me.Btn_Subir_Archivos})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Refresh, Me.Btn_Descargar_Archivos, Me.Btn_Subir_Archivos, Me.Btn_Grabar, Me.Btn_ProbConexion})
         Me.Bar1.Location = New System.Drawing.Point(0, 615)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(642, 41)
@@ -309,6 +310,7 @@ Partial Class Frm_FTP_Fichero
         Me.Btn_Grabar.ImageAlt = CType(resources.GetObject("Btn_Grabar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Grabar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.Btn_Grabar.Name = "Btn_Grabar"
+        Me.Btn_Grabar.Visible = False
         '
         'Btn_ProbConexion
         '
@@ -318,6 +320,7 @@ Partial Class Frm_FTP_Fichero
         Me.Btn_ProbConexion.ImageAlt = CType(resources.GetObject("Btn_ProbConexion.ImageAlt"), System.Drawing.Image)
         Me.Btn_ProbConexion.Name = "Btn_ProbConexion"
         Me.Btn_ProbConexion.Text = "Probar conexión"
+        Me.Btn_ProbConexion.Visible = False
         '
         'Btn_Refresh
         '
@@ -520,7 +523,7 @@ Partial Class Frm_FTP_Fichero
         Me.Bar2.AntiAlias = True
         Me.Bar2.BackColor = System.Drawing.Color.Transparent
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Eliminar_documento, Me.Btn_Renombrar, Me.CirProgres_FTP})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Eliminar_documento, Me.Btn_Renombrar, Me.Btn_Volver, Me.CirProgres_FTP})
         Me.Bar2.Location = New System.Drawing.Point(3, 2)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(603, 27)
@@ -540,6 +543,7 @@ Partial Class Frm_FTP_Fichero
         '
         Me.Btn_Renombrar.Image = CType(resources.GetObject("Btn_Renombrar.Image"), System.Drawing.Image)
         Me.Btn_Renombrar.Name = "Btn_Renombrar"
+        Me.Btn_Renombrar.Visible = False
         '
         'CirProgres_FTP
         '
@@ -547,6 +551,12 @@ Partial Class Frm_FTP_Fichero
         Me.CirProgres_FTP.Name = "CirProgres_FTP"
         Me.CirProgres_FTP.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Dot
         Me.CirProgres_FTP.Visible = False
+        '
+        'Btn_Volver
+        '
+        Me.Btn_Volver.Image = CType(resources.GetObject("Btn_Volver.Image"), System.Drawing.Image)
+        Me.Btn_Volver.ImageAlt = CType(resources.GetObject("Btn_Volver.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Volver.Name = "Btn_Volver"
         '
         'Frm_FTP_Fichero
         '
@@ -610,4 +620,5 @@ Partial Class Frm_FTP_Fichero
     Public WithEvents Btn_Refresh As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_ProbConexion As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_Volver As DevComponents.DotNetBar.ButtonItem
 End Class

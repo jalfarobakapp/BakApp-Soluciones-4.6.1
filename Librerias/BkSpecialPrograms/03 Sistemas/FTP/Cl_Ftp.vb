@@ -1,7 +1,6 @@
 ﻿Imports System.Data.SqlClient
 Imports System.IO
 Imports System.Net
-Imports Microsoft.VisualBasic.ApplicationServices
 
 Public Class Cl_Ftp
 
@@ -96,8 +95,8 @@ Public Class Cl_Ftp
 
             With Zw_Ftp_Conexiones
 
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Ftp_Conexiones (Tipo,Usuario,Clave,Host,Puerto,Fichero,Carpeta_Imagenes,Carpeta_Archivos) Values " &
-                               "('" & .Tipo & "','" & .Usuario & "','" & .Clave & "','" & .Host & "'," & .Puerto & ",'" & .Fichero & "','" & .Carpeta_Imagenes & "','" & .Carpeta_Archivos & "')"
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Ftp_Conexiones (Tipo,Usuario,Clave,Host,Puerto,Fichero,Carpeta_Imagenes,Carpeta_Archivos,Url_public) Values " &
+                               "('" & .Tipo & "','" & .Usuario & "','" & .Clave & "','" & .Host & "'," & .Puerto & ",'" & .Fichero & "','" & .Carpeta_Imagenes & "','" & .Carpeta_Archivos & "','" & .Url_public & "')"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                 Comando.Transaction = myTrans
@@ -119,6 +118,8 @@ Public Class Cl_Ftp
             _Mensaje.EsCorrecto = True
             _Mensaje.Detalle = "Grabar conexión FTP"
             _Mensaje.Mensaje = "Conexión FTP grabada con exito"
+            _Mensaje.Id = Zw_Ftp_Conexiones.Id
+            _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
 
@@ -126,6 +127,72 @@ Public Class Cl_Ftp
             _Mensaje.Detalle = "Error al grabar"
             _Mensaje.Mensaje = ex.Message
             _Mensaje.Id = 0
+            _Mensaje.Icono = MessageBoxIcon.Error
+
+            If Not IsNothing(myTrans) Then myTrans.Rollback()
+
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
+    Function Fx_Editar_Host() As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Consulta_sql = String.Empty
+
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+        Dim Cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
+
+        Try
+
+            myTrans = Cn2.BeginTransaction()
+
+            With Zw_Ftp_Conexiones
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Ftp_Conexiones Set " & vbCrLf &
+                               "Tipo = '" & .Tipo & "'" &
+                               ",Usuario = '" & .Usuario & "'," &
+                               "Clave = '" & .Clave & "'," &
+                               "Host = '" & .Host & "'," &
+                               "Puerto = " & .Puerto & "," &
+                               "Fichero = '" & .Fichero & "'," &
+                               "Carpeta_Imagenes = '" & .Carpeta_Imagenes & "'," &
+                               "Carpeta_Archivos = '" & .Carpeta_Archivos & "'," &
+                               "Url_public = '" & .Url_public & "'" & vbCrLf &
+                               "Where Id = " & .Id
+
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+            End With
+
+            myTrans.Commit()
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Detalle = "Editar conexión FTP"
+            _Mensaje.Mensaje = "Conexión FTP editada correctamente"
+            _Mensaje.Id = Zw_Ftp_Conexiones.Id
+            _Mensaje.Icono = MessageBoxIcon.Information
+
+        Catch ex As Exception
+
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Detalle = "Error al grabar"
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Id = 0
+            _Mensaje.Icono = MessageBoxIcon.Error
 
             If Not IsNothing(myTrans) Then myTrans.Rollback()
 
@@ -203,12 +270,10 @@ Public Class Cl_Ftp
 
             ' Si el objeto existe, se devolverá True
             Dim respuestaFTP As FtpWebResponse
-            Try
-                respuestaFTP = CType(peticionFTP.GetResponse(), FtpWebResponse)
-            Catch ex As Exception
-
-            End Try
-
+            'Try
+            respuestaFTP = CType(peticionFTP.GetResponse(), FtpWebResponse)
+            'Catch ex As Exception
+            'End Try
 
             _Mensaje.EsCorrecto = True
             _Mensaje.Mensaje = "Directorio encontrado."

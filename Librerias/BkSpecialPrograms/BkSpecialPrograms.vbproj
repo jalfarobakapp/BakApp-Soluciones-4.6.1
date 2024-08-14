@@ -881,6 +881,12 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Sector.vb" />
     <Compile Include="03 Sistemas\Despachos\Clases\Cl_Despachos.vb" />
     <Compile Include="03 Sistemas\FTP\Cl_Ftp.vb" />
+    <Compile Include="03 Sistemas\FTP\Frm_FTP_Conexion.Designer.vb">
+      <DependentUpon>Frm_FTP_Conexion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\FTP\Frm_FTP_Conexion.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Cl_Inventario.vb" />
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Frm_Inv_Inventarios.Designer.vb">
       <DependentUpon>Frm_Inv_Inventarios.vb</DependentUpon>
@@ -4730,6 +4736,9 @@
     <EmbeddedResource Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Frm_Configuracion_Gral.resx">
       <DependentUpon>Frm_Configuracion_Gral.vb</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\FTP\Frm_FTP_Conexion.resx">
+      <DependentUpon>Frm_FTP_Conexion.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Frm_Inv_Inventarios.resx">
       <DependentUpon>Frm_Inv_Inventarios.vb</DependentUpon>

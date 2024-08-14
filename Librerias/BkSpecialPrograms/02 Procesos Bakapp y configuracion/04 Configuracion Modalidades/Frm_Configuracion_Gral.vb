@@ -702,10 +702,14 @@ Public Class Frm_Configuracion_Gral
             _Id = _Row.Item("Id")
         End If
 
-        Dim Fm As New Frm_FTP_Fichero(_Id, Cl_Ftp.eTipo_Ftp.Producto)
-        Fm.ModoConfiguracion = True
+        Dim Fm As New Frm_FTP_Conexion(Cl_Ftp.eTipo_Ftp.Producto)
         Fm.ShowDialog(Me)
         Fm.Dispose()
+
+        'Dim Fm As New Frm_FTP_Fichero(_Id, Cl_Ftp.eTipo_Ftp.Producto)
+        'Fm.ModoConfiguracion = True
+        'Fm.ShowDialog(Me)
+        'Fm.Dispose()
 
     End Sub
 

@@ -631,6 +631,10 @@ Public Class Frm_Recibir_Correos_DTE
 
                     _Leidos += 1
 
+                    'If Progreso_Cont.Value = 355 Then
+                    '    Dim a = 1
+                    'End If
+
                     If Not IsNothing(email) Then
 
                         Dim _STRSS As String = "Subject: " & email.Subject & vbCrLf &
@@ -668,6 +672,9 @@ Public Class Frm_Recibir_Correos_DTE
                                             Dim _Nombre_Archivo As String = numero_(_Contador + 1, 5) & "_" & .FileName
 
                                             _Nombre_Archivo = Replace(_Nombre_Archivo, "/", "_")
+                                            _Nombre_Archivo = Replace(_Nombre_Archivo, ":", "_")
+                                            _Nombre_Archivo = Replace(_Nombre_Archivo, " ", "_")
+
                                             .Save(Txt_Directorio.Text & "\" & _Nombre_Archivo)
 
                                             If Fx_Validar_Archivo_XML_DTE(Txt_Directorio.Text & "\" & _Nombre_Archivo) Then

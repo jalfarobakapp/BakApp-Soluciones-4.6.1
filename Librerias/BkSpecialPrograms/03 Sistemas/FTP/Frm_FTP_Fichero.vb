@@ -1,5 +1,4 @@
-﻿Imports BkSpecialPrograms.LsValiciones
-Imports DevComponents.DotNetBar
+﻿Imports DevComponents.DotNetBar
 
 Public Class Frm_FTP_Fichero
 
@@ -82,6 +81,8 @@ Public Class Frm_FTP_Fichero
 
         End If
 
+        Btn_Volver.Enabled = Not ModoProducto
+
     End Sub
 
     Private Sub Sb_Llenar_Lista(_Lista_Archivos)
@@ -125,6 +126,10 @@ Public Class Frm_FTP_Fichero
             Dim _Extn = Split(_Archivo, ".")
             Dim _l = _Extn.Length - 1
             _Ext = _Extn(_l)
+
+            If _Archivo = ".." And ModoProducto Then
+                Continue For
+            End If
 
             Select Case UCase(_Ext)
 
@@ -704,17 +709,6 @@ Public Class Frm_FTP_Fichero
 
             End If
 
-            'Dim esCarpeta As Boolean = Ftp.Fx_Existe_Directorio(_Fichero).EsCorrecto
-
-
-            'If Not esCarpeta Then
-            '    'MessageBoxEx.Show(Me, "No se puede acceder a la carpeta seleccionada", "Problemas de conexión...", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            '    Beep()
-            '    Return
-            'End If
-
-            'Dim _Archivos As List(Of String) = Ftp.AccederCarpetaFTP(Txt_Fichero.Text & "/" & carpetaSeleccionada)
-
             Dim _Mensaje As LsValiciones.Mensajes
 
             _Mensaje = _Ftp.Fx_Obtener_Archivos_Directorio(_Fichero)
@@ -726,7 +720,6 @@ Public Class Frm_FTP_Fichero
             Txt_Fichero.Text = _Fichero
 
             Sb_Llenar_Lista(_Mensaje.Tag)
-            'AddToLog("Conexión Ftp", "Conexión establecida...")
 
         Catch ex As Exception
         Finally
@@ -736,4 +729,42 @@ Public Class Frm_FTP_Fichero
 
     End Sub
 
+    Private Sub Btn_Volver_Click(sender As Object, e As EventArgs) Handles Btn_Volver.Click
+
+        Me.Enabled = False
+        Me.Cursor = Cursors.WaitCursor
+
+        Try
+
+            Dim _Carpeta = Split(Txt_Fichero.Text, "/")
+            Dim _CarpetaPadre As String = ""
+
+            For i As Integer = 0 To _Carpeta.Length - 2
+                _CarpetaPadre &= _Carpeta(i) & "/"
+            Next
+
+            _Fichero = _CarpetaPadre
+
+            Dim variable As String = _Fichero
+            _Fichero = variable.Substring(0, variable.Length - 1)
+
+            Dim _Mensaje As LsValiciones.Mensajes
+
+            _Mensaje = _Ftp.Fx_Obtener_Archivos_Directorio(_Fichero)
+
+            If Not _Mensaje.EsCorrecto Then
+                Return
+            End If
+
+            Txt_Fichero.Text = _Fichero
+
+            Sb_Llenar_Lista(_Mensaje.Tag)
+
+        Catch ex As Exception
+        Finally
+            Me.Enabled = True
+            Me.Cursor = Cursors.Default
+        End Try
+
+    End Sub
 End Class
