@@ -1,4 +1,6 @@
 ﻿
+Imports BkSpecialPrograms.My.Resources
+
 Namespace Bk_Migrar_Producto
 
     Public Class Cl_Migrar_Producto
@@ -217,6 +219,18 @@ Namespace Bk_Migrar_Producto
                     _Consulta_sql += Fx_Insertar_Bodegas(_Codigo) & vbCrLf
                     _Consulta_sql += Fx_Insertar_Listas(_Codigo)
                 End If
+
+
+                Dim _Ippide As String = getIp()
+                Dim _Horagrab As String = Hora_Grab_fx(False)
+
+                Dim _SqlTabactus As String
+
+                _SqlTabactus = "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ") ','Creación de Productos : " & _Codigo & "')" & vbCrLf &
+                               "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ") ','Migrado desde una base a otra por Bakapp : " & _Codigo & "')"
+
+                _Consulta_sql += vbCrLf & vbCrLf & _SqlTabactus
+
 
                 If _Sql2.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_Consulta_sql) Then
 

@@ -1925,7 +1925,9 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
     End Sub
 
     Function Fx_Eliminar_Producto(_Codigo_a_eliminar As String,
-                                  _Descripcion As String)
+                                  _Descripcion As String) As Boolean
+
+        Dim _Eliminado As Boolean
 
         If Fx_Tiene_Permiso(Me, "Prod015") Then
 
@@ -1989,11 +1991,23 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                                "DELETE " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo = '" & _Codigo_a_eliminar & "' And Producto = 1" & vbCrLf &
                                "DELETE " & _Global_BaseBk & "Zw_Productos Where Codigo = '" & _Codigo_a_eliminar & "'"
 
-                Return _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+                _Eliminado = _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+                If _Eliminado Then
+
+                    Dim _Ippide As String = getIp()
+                    Dim _Horagrab As String = Hora_Grab_fx(False)
+
+                    Consulta_sql = "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ") ','Eliminacion de Productos : " & _Codigo_a_eliminar & "')"
+                    _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                End If
 
             End If
 
         End If
+
+        Return _Eliminado
 
     End Function
 
@@ -2052,6 +2066,13 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                        "WHERE  Codigo = '" & _Codigo_a_eliminar & "' AND Proveedor <> ''" & vbCrLf &
                        "DELETE " & _Global_BaseBk_Externa & "Zw_Prod_Asociacion Where Codigo = '" & _Codigo_a_eliminar & "' And Producto = 1" & vbCrLf &
                        "DELETE " & _Global_BaseBk_Externa & "Zw_Productos Where Codigo = '" & _Codigo_a_eliminar & "'"
+
+
+        Dim _Ippide As String = getIp()
+        Dim _Horagrab As String = Hora_Grab_fx(False)
+
+        Consulta_sql += vbCrLf & "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ") ','Eliminacion de Productos : " & _Codigo_a_eliminar & "')" & vbCrLf &
+                                 "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ") ','Eliminado desde una base a otra por Bakapp : " & _Codigo_a_eliminar & "')"
 
         _Cl_EliminaProd.SqlQueruDelete = Consulta_sql
 

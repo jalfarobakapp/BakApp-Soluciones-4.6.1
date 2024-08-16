@@ -806,6 +806,9 @@ Public Class Frm_MtCreacionDeProducto
                                     Consulta_sql = Replace(Consulta_sql, "BLOQUEAPR = @BLOQUEAPR,", "--BLOQUEAPR = @BLOQUEAPR,")
                                     Consulta_sql = Replace(Consulta_sql, "LISCOSTO = @LISCOSTO,", "--LISCOSTO = @LISCOSTO,")
                                     Consulta_sql = Replace(Consulta_sql, "FUNCLOTE = @FUNCLOTE,", "--FUNCLOTE = @FUNCLOTE,")
+
+
+
                                     'BLOQUEAPR = @BLOQUEAPR,
                                     If _Sql2.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
 

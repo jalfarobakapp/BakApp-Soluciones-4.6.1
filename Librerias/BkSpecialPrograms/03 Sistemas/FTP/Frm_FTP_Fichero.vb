@@ -18,6 +18,7 @@ Public Class Frm_FTP_Fichero
     Public Property ModoProducto As Boolean
     Public Property ModoConfiguracion As Boolean
     Public Property Codigo As String
+    Public Property GestionRealizada As Boolean
 
     Public Sub New(_Id_Ftp As Integer, _Tipo_Ftp As Cl_Ftp.eTipo_Ftp)
 
@@ -37,8 +38,12 @@ Public Class Frm_FTP_Fichero
     Private Sub Frm_FTP_Fichero_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         If ModoProducto Then
+
             Consulta_sql = "Select KOPR,NOKOPR From MAEPR Where KOPR = '" & Codigo & "'"
             _RowProducto = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Me.Text = "FTP - " & _RowProducto.Item("KOPR").ToString.Trim & " - " & _RowProducto("NOKOPR").ToString.Trim
+
         End If
 
         Ftp.Fx_Llenar_Host(_Id_Ftp)
@@ -50,6 +55,19 @@ Public Class Frm_FTP_Fichero
             Txt_Puerto.Text = .Puerto
             Txt_Fichero.Text = .Fichero
         End With
+
+        If ModoProducto Then
+            Txt_Usuario.Enabled = False
+            Txt_Clave.Enabled = False
+            Txt_Host.Enabled = False
+            Txt_Puerto.Enabled = False
+            Txt_Host.PasswordChar = "*"
+            Txt_Puerto.PasswordChar = "*"
+            Txt_Usuario.PasswordChar = "*"
+            Btn_Descargar_Archivos.Enabled = False
+        End If
+
+        Txt_Fichero.ReadOnly = True
 
         'Txt_Usuario.Text = "productos@bakapp.cl"
         'Txt_Clave.Text = "JvBa$O$=mQFo"
@@ -339,15 +357,17 @@ Public Class Frm_FTP_Fichero
 
                         If String.IsNullOrEmpty(_Subir) Then
 
-                            If ModoProducto Then
+                            'If ModoProducto Then
 
-                                Dim _Url As String = Ftp.Zw_Ftp_Conexiones.Url_public & Ftp.Zw_Ftp_Conexiones.Carpeta_Imagenes & "/" & Codigo.Trim & "/" & _Archivo
+                            '    Fx_GrabarSQL()
 
-                                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Imagenes (Codigo,Desde_URL,Direccion_Imagen) Values " &
-                                               "('" & Codigo & "',1,'" & _Url & "')"
-                                _Sql.Ej_consulta_IDU(Consulta_sql)
+                            '    'Dim _Url As String = Ftp.Zw_Ftp_Conexiones.Url_public & Ftp.Zw_Ftp_Conexiones.Carpeta_Imagenes & "/" & Codigo.Trim & "/" & _Archivo
 
-                            End If
+                            '    'Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Imagenes (Codigo,Desde_URL,Direccion_Imagen,DesdeFtp,Id_FTP) Values " &
+                            '    '               "('" & Codigo & "',1,'" & _Url & "',1," & Ftp.Zw_Ftp_Conexiones.Id & ")"
+                            '    '_Sql.Ej_consulta_IDU(Consulta_sql)
+
+                            'End If
 
                             AddToLog("Subir archivo", "Ok: " & _Archivo)
                         Else
@@ -356,6 +376,8 @@ Public Class Frm_FTP_Fichero
                         _i += 1
                     Next
 
+                    GestionRealizada = True
+
                 End If
 
             End If
@@ -363,10 +385,32 @@ Public Class Frm_FTP_Fichero
         End With
 
         Sb_Ver_FTP()
-
         Sb_Trabajo_FTP(False)
 
     End Sub
+
+    Function Fx_GrabarSQL()
+
+        For Each fila As ListViewItem In List_Carpeta_FTP.Items
+
+            ' Acceder a los datos de cada fila
+            Dim _Archivo As String = fila.Text
+
+            Dim _Url As String = Ftp.Zw_Ftp_Conexiones.Url_public & Ftp.Zw_Ftp_Conexiones.Carpeta_Imagenes & "/" & Codigo.Trim & "/" & _Archivo
+
+            Dim _Reg = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_Imagenes", "Codigo = '" & Codigo & "' And Direccion_Imagen = '" & _Url & "'"))
+
+            If Not _Reg Then
+
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Imagenes (Codigo,Desde_URL,Direccion_Imagen,DesdeFtp,Id_FTP) Values " &
+                               "('" & Codigo & "',1,'" & _Url & "',1," & Ftp.Zw_Ftp_Conexiones.Id & ")"
+                _Sql.Ej_consulta_IDU(Consulta_sql)
+
+            End If
+
+        Next
+
+    End Function
 
     Private Sub AddToLog(Accion As String,
                          Descripcion As String)
@@ -594,6 +638,10 @@ Public Class Frm_FTP_Fichero
 
             Sb_Llenar_Lista(_Mensaje.Tag)
             If _Mostrar_Log Then AddToLog("Conexión Ftp", "Conexión establecida...")
+
+            If ModoProducto Then
+                Fx_GrabarSQL()
+            End If
 
         Catch ex As Exception
             MessageBoxEx.Show(Me, ex.Message, "Problemas de conexión...", MessageBoxButtons.OK, MessageBoxIcon.Stop)

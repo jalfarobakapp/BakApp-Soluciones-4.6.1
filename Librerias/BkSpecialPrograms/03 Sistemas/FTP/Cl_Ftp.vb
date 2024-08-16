@@ -1,6 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Imports System.IO
 Imports System.Net
+Imports Microsoft.VisualBasic.ApplicationServices
 
 Public Class Cl_Ftp
 
@@ -357,6 +358,42 @@ Public Class Cl_Ftp
 
     End Function
 
+    Public Function Fx_Eliminar_Fichero_Ftp(_Fichero As String) As String
+
+        Dim peticionFTP As FtpWebRequest
+        Dim Fm As New Frm_Form_Esperar
+        Fm.BarraCircular.IsRunning = True
+        Fm.Show()
+
+        Try
+
+            ' Creamos una petición FTP con la dirección del fichero a eliminar
+            peticionFTP = CType(WebRequest.Create(New Uri(_Fichero)), FtpWebRequest)
+
+            ' Fijamos el usuario y la contraseña de la petición
+            peticionFTP.Credentials = New NetworkCredential(Zw_Ftp_Conexiones.Usuario, Zw_Ftp_Conexiones.Clave)
+
+            ' Seleccionamos el comando que vamos a utilizar: Eliminar un fichero
+            peticionFTP.Method = WebRequestMethods.Ftp.DeleteFile
+            peticionFTP.UsePassive = False
+        Catch ex As Exception
+            Return ex.Message
+        Finally
+            Fm.Close()
+        End Try
+
+        Try
+            Dim respuestaFTP As FtpWebResponse
+            respuestaFTP = CType(peticionFTP.GetResponse(), FtpWebResponse)
+            respuestaFTP.Close()
+            ' Si todo ha ido bien, devolvemos String.Empty
+            Return String.Empty
+        Catch ex As Exception
+            ' Si se produce algún fallo, se devolverá el mensaje del error
+            Return ex.Message
+        End Try
+
+    End Function
     Public Function Fx_Obtener_Archivos_Directorio(ByRef _Dir As String) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes

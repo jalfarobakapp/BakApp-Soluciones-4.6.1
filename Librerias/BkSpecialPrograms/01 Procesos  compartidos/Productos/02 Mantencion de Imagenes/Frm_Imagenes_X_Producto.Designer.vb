@@ -36,12 +36,12 @@ Partial Class Frm_Imagenes_X_Producto
         Me.Menu_Contextual_Imagenes = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_DejarXDefecto = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_Eliminar = New DevComponents.DotNetBar.ButtonItem()
-        Me.Lbl_Url = New DevComponents.DotNetBar.LabelX()
-        Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Menu_Contextual_SubirImagenes = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_SubirFTP = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_SubirURL = New DevComponents.DotNetBar.ButtonItem()
+        Me.Lbl_Url = New DevComponents.DotNetBar.LabelX()
+        Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         CType(Me.Pbx_Imagen, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla_Imagenes, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -178,6 +178,27 @@ Partial Class Frm_Imagenes_X_Producto
         Me.Btn_Mnu_Eliminar.Name = "Btn_Mnu_Eliminar"
         Me.Btn_Mnu_Eliminar.Text = "Eliminar"
         '
+        'Menu_Contextual_SubirImagenes
+        '
+        Me.Menu_Contextual_SubirImagenes.AutoExpandOnClick = True
+        Me.Menu_Contextual_SubirImagenes.Name = "Menu_Contextual_SubirImagenes"
+        Me.Menu_Contextual_SubirImagenes.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_SubirFTP, Me.Btn_Mnu_SubirURL})
+        Me.Menu_Contextual_SubirImagenes.Text = "Opciones subir imagen"
+        '
+        'Btn_Mnu_SubirFTP
+        '
+        Me.Btn_Mnu_SubirFTP.Image = CType(resources.GetObject("Btn_Mnu_SubirFTP.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_SubirFTP.ImageAlt = CType(resources.GetObject("Btn_Mnu_SubirFTP.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_SubirFTP.Name = "Btn_Mnu_SubirFTP"
+        Me.Btn_Mnu_SubirFTP.Text = "Subir imagen por FTP"
+        '
+        'Btn_Mnu_SubirURL
+        '
+        Me.Btn_Mnu_SubirURL.Image = CType(resources.GetObject("Btn_Mnu_SubirURL.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_SubirURL.ImageAlt = CType(resources.GetObject("Btn_Mnu_SubirURL.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_SubirURL.Name = "Btn_Mnu_SubirURL"
+        Me.Btn_Mnu_SubirURL.Text = "Ingresar una URL"
+        '
         'Lbl_Url
         '
         Me.Lbl_Url.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
@@ -277,27 +298,6 @@ Partial Class Frm_Imagenes_X_Producto
         Me.GroupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel2.TabIndex = 34
         Me.GroupPanel2.Text = "Imagen"
-        '
-        'Menu_Contextual_SubirImagenes
-        '
-        Me.Menu_Contextual_SubirImagenes.AutoExpandOnClick = True
-        Me.Menu_Contextual_SubirImagenes.Name = "Menu_Contextual_SubirImagenes"
-        Me.Menu_Contextual_SubirImagenes.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_SubirFTP, Me.Btn_Mnu_SubirURL})
-        Me.Menu_Contextual_SubirImagenes.Text = "Opciones subir imagen"
-        '
-        'Btn_Mnu_SubirFTP
-        '
-        Me.Btn_Mnu_SubirFTP.Image = CType(resources.GetObject("Btn_Mnu_SubirFTP.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_SubirFTP.ImageAlt = CType(resources.GetObject("Btn_Mnu_SubirFTP.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_SubirFTP.Name = "Btn_Mnu_SubirFTP"
-        Me.Btn_Mnu_SubirFTP.Text = "Subir imagen por FTP"
-        '
-        'Btn_Mnu_SubirURL
-        '
-        Me.Btn_Mnu_SubirURL.Image = CType(resources.GetObject("Btn_Mnu_SubirURL.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_SubirURL.ImageAlt = CType(resources.GetObject("Btn_Mnu_SubirURL.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_SubirURL.Name = "Btn_Mnu_SubirURL"
-        Me.Btn_Mnu_SubirURL.Text = "Ingresar una URL"
         '
         'Frm_Imagenes_X_Producto
         '

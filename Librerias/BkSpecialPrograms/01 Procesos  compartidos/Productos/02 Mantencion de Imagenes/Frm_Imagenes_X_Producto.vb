@@ -1,7 +1,9 @@
 ﻿Imports System.IO
 Imports System.Net
+Imports System.Net.WebRequestMethods
 Imports System.Security.Cryptography
 Imports DevComponents.DotNetBar
+Imports NUnrar
 
 Public Class Frm_Imagenes_X_Producto
 
@@ -85,29 +87,36 @@ Public Class Frm_Imagenes_X_Producto
     End Sub
     Public Function Fx_Llenar_Grilla_Imagenes() As Boolean
 
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_Imagenes Where Codigo = '" & _Codigo & "' Order By Principal Desc"
-        _TblProd_Imagenes = _Sql.Fx_Get_DataTable(Consulta_sql)
+        Try
 
-        Lbl_Url.Text = "Url: Not Found"
 
-        With Grilla_Imagenes
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_Imagenes Where Codigo = '" & _Codigo & "' Order By Principal Desc"
+            _TblProd_Imagenes = _Sql.Fx_Get_DataTable(Consulta_sql)
 
-            Datos_Imagen.Clear()
+            Lbl_Url.Text = "Url: Not Found"
 
-            Datos_Imagen = _Sql.Fx_Get_DataSet(Consulta_sql, Datos_Imagen, "Tbl_Prod_Imagenes")
+            With Grilla_Imagenes
 
-            .DataSource = Datos_Imagen
-            .DataMember = Datos_Imagen.Tables("Tbl_Prod_Imagenes").TableName
+                Datos_Imagen.Clear()
 
-            OcultarEncabezadoGrilla(Grilla_Imagenes, True)
+                Datos_Imagen = _Sql.Fx_Get_DataSet(Consulta_sql, Datos_Imagen, "Tbl_Prod_Imagenes")
 
-            Grilla_Imagenes.Columns("Imagen_Muestra").HeaderText = "Imagenes"
-            Grilla_Imagenes.Columns("Imagen_Muestra").Width = 125
-            Grilla_Imagenes.Columns("Imagen_Muestra").Visible = True
+                .DataSource = Datos_Imagen
+                .DataMember = Datos_Imagen.Tables("Tbl_Prod_Imagenes").TableName
 
-        End With
+                OcultarEncabezadoGrilla(Grilla_Imagenes, True)
 
-        Return CBool(Grilla_Imagenes.RowCount)
+                Grilla_Imagenes.Columns("Imagen_Muestra").HeaderText = "Imagenes"
+                Grilla_Imagenes.Columns("Imagen_Muestra").Width = 125
+                Grilla_Imagenes.Columns("Imagen_Muestra").Visible = True
+
+            End With
+
+            Return CBool(Grilla_Imagenes.RowCount)
+
+        Catch ex As Exception
+
+        End Try
 
     End Function
 
@@ -117,8 +126,11 @@ Public Class Frm_Imagenes_X_Producto
         Fm.BarraCircular.IsRunning = True
         Fm.Show()
 
+        Dim _PrimeraURL As String = ""
+        Dim _PrimeraDesdeUrl As Boolean = False
+
         '' Esto sirve con Frameweork 4.5+
-        'Es para poder descargar imagenes desde sitios segros https - se sugiere para este framework http solamente
+        'Es para poder descargar imagenes desde sitios seguros https - se sugiere para este framework http solamente
         'System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
 
         If CBool(Datos_Imagen.Tables("Tbl_Prod_Imagenes").Rows.Count) Then
@@ -132,7 +144,13 @@ Public Class Frm_Imagenes_X_Producto
                     Dim _Desde_URL As Boolean = _Fila.Item("Desde_URL")
                     Dim _Direccion_Imagen As String = _Fila.Item("Direccion_Imagen")
                     Dim _Principal As Boolean = _Fila.Item("Principal")
-                    If _Principal Then Sb_Mostrar_Imagen(_Direccion_Imagen, _Desde_URL)
+
+                    'If _Principal Then Sb_Mostrar_Imagen(_Direccion_Imagen, _Desde_URL)
+
+                    If _Desde_URL AndAlso String.IsNullOrWhiteSpace(_PrimeraURL) Then
+                        _PrimeraDesdeUrl = _Desde_URL
+                        _PrimeraURL = _Direccion_Imagen
+                    End If
 
                     Dim MyWebClient As New System.Net.WebClient
                     Dim ImageInBytes() As Byte = MyWebClient.DownloadData(_Direccion_Imagen)
@@ -167,11 +185,12 @@ Public Class Frm_Imagenes_X_Producto
 
             Next
 
-
         Else
             Pbx_Imagen.Image = Pbx_Imagen.ErrorImage
         End If
         Fm.Close()
+
+        Sb_Mostrar_Imagen(_PrimeraURL, _PrimeraDesdeUrl)
 
     End Sub
 
@@ -320,10 +339,27 @@ Public Class Frm_Imagenes_X_Producto
         End If
 
         Try
+
             Dim _Fila As DataGridViewRow = Grilla_Imagenes.Rows(Grilla_Imagenes.CurrentRow.Index)
 
             Dim _Id As Integer = _Fila.Cells("Id").Value
             Dim _Direccion_Imagen As String = _Fila.Cells("Direccion_Imagen").Value.ToString.Trim
+
+            Dim _DesdeFtp As Boolean
+            Dim _Id_FTP As Integer
+
+            Dim codigo As String = _Id
+            Dim filtro As String = "Id = '" & codigo & "'"
+            Dim filasEncontradas() As DataRow = _TblProd_Imagenes.Select(filtro)
+
+            If filasEncontradas.Length > 0 Then
+
+                Dim filaEncontrada As DataRow = filasEncontradas(0)
+
+                _DesdeFtp = filaEncontrada.Item("DesdeFtp")
+                _Id_FTP = filaEncontrada.Item("Id_FTP")
+
+            End If
 
             If MessageBoxEx.Show(Me, "¿Confirma la eliminación de este registro?" & vbCrLf & vbCrLf &
                                  "Url: " & _Direccion_Imagen, "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
@@ -333,12 +369,46 @@ Public Class Frm_Imagenes_X_Producto
 
                     Grilla_Imagenes.Rows.Remove(_Fila)
 
-                    'Fx_Llenar_Grilla_Imagenes()
-                    'Sb_Cargar_Imagenes()
-                End If
-            End If
-        Catch ex As Exception
+                    If _DesdeFtp Then
 
+                        Dim Ftp As New Cl_Ftp
+                        Ftp.Fx_Llenar_Host(_Id_FTP)
+
+                        Dim _Fichero As String = Ftp.Zw_Ftp_Conexiones.Fichero & Ftp.Zw_Ftp_Conexiones.Carpeta_Imagenes & "/" & _Codigo.Trim
+                        Dim _Arch() As String = Split(_Direccion_Imagen, "/")
+                        Dim _Archivo As String = _Arch(_Arch.Length - 1)
+
+                        Dim _Eliminar As String = Ftp.Fx_Eliminar_Fichero_Ftp(_Fichero & "/" & _Archivo)
+
+                        If String.IsNullOrWhiteSpace(_Eliminar) Then
+
+                            MessageBoxEx.Show(Me, "Registro eliminado correctamente", "Eliminar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                            If Datos_Imagen.Tables("Tbl_Prod_Imagenes").Rows.Count = 0 Then
+                                Pbx_Imagen.Image = Nothing
+                            Else
+
+                                Dim _Row As DataRow = _TblProd_Imagenes.Rows(0)
+
+                                Dim _EsURL As Boolean = _Row.Item("Desde_URL")
+                                _Direccion_Imagen = _Row.Item("Direccion_Imagen")
+
+                                Sb_Mostrar_Imagen(_Direccion_Imagen, _EsURL)
+
+                            End If
+
+                        Else
+                            MessageBoxEx.Show(Me, "Error al eliminar el archivo del servidor FTP" & vbCrLf & _Eliminar, "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        End If
+
+                    End If
+
+                End If
+
+            End If
+
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End Try
 
     End Sub
@@ -448,7 +518,28 @@ Public Class Frm_Imagenes_X_Producto
         Fm.ModoProducto = True
         Fm.Codigo = _Codigo
         Fm.ShowDialog(Me)
+
+        If Fm.GestionRealizada Then
+
+            Fx_Llenar_Grilla_Imagenes()
+            Sb_Cargar_Imagenes()
+
+            If CBool(Grilla_Imagenes.RowCount) Then
+                Pbx_Imagen.SizeMode = PictureBoxSizeMode.Zoom ' Para ajustar tamaño de la imagen
+            Else
+                Pbx_Imagen.SizeMode = PictureBoxSizeMode.CenterImage ' Para ajustar tamaño de la imagen
+            End If
+
+        End If
+
         Fm.Dispose()
+
+    End Sub
+
+    Private Sub Lbl_Url_DoubleClick(sender As Object, e As EventArgs) Handles Lbl_Url.DoubleClick
+
+        Clipboard.SetText(Lbl_Url.Text.Replace("Url: ", ""))
+        MessageBoxEx.Show(Me, "Url copiada al portapapeles", "Url", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
     End Sub
 

@@ -37,11 +37,11 @@ Partial Class Frm_FTP_Fichero
         Me.Txt_Puerto = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_Fichero = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
-        Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_ProbConexion = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Refresh = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Descargar_Archivos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Subir_Archivos = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_ProbConexion = New DevComponents.DotNetBar.ButtonItem()
         Me.Grupo_Fichero = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.List_Carpeta_FTP = New DevComponents.DotNetBar.Controls.ListViewEx()
         Me.Archivo = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -54,8 +54,8 @@ Partial Class Frm_FTP_Fichero
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Eliminar_documento = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Renombrar = New DevComponents.DotNetBar.ButtonItem()
-        Me.CirProgres_FTP = New DevComponents.DotNetBar.CircularProgressItem()
         Me.Btn_Volver = New DevComponents.DotNetBar.ButtonItem()
+        Me.CirProgres_FTP = New DevComponents.DotNetBar.CircularProgressItem()
         Me.Grupo_Configuracion_Ftp.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -301,27 +301,6 @@ Partial Class Frm_FTP_Fichero
         Me.Bar1.TabStop = False
         Me.Bar1.Text = "Bar1"
         '
-        'Btn_Grabar
-        '
-        Me.Btn_Grabar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Grabar.FontBold = True
-        Me.Btn_Grabar.ForeColor = System.Drawing.Color.Navy
-        Me.Btn_Grabar.Image = CType(resources.GetObject("Btn_Grabar.Image"), System.Drawing.Image)
-        Me.Btn_Grabar.ImageAlt = CType(resources.GetObject("Btn_Grabar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Grabar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_Grabar.Name = "Btn_Grabar"
-        Me.Btn_Grabar.Visible = False
-        '
-        'Btn_ProbConexion
-        '
-        Me.Btn_ProbConexion.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_ProbConexion.ForeColor = System.Drawing.Color.Black
-        Me.Btn_ProbConexion.Image = CType(resources.GetObject("Btn_ProbConexion.Image"), System.Drawing.Image)
-        Me.Btn_ProbConexion.ImageAlt = CType(resources.GetObject("Btn_ProbConexion.ImageAlt"), System.Drawing.Image)
-        Me.Btn_ProbConexion.Name = "Btn_ProbConexion"
-        Me.Btn_ProbConexion.Text = "Probar conexión"
-        Me.Btn_ProbConexion.Visible = False
-        '
         'Btn_Refresh
         '
         Me.Btn_Refresh.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
@@ -345,6 +324,27 @@ Partial Class Frm_FTP_Fichero
         Me.Btn_Subir_Archivos.Image = CType(resources.GetObject("Btn_Subir_Archivos.Image"), System.Drawing.Image)
         Me.Btn_Subir_Archivos.Name = "Btn_Subir_Archivos"
         Me.Btn_Subir_Archivos.Tooltip = "Subir archivo"
+        '
+        'Btn_Grabar
+        '
+        Me.Btn_Grabar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Grabar.FontBold = True
+        Me.Btn_Grabar.ForeColor = System.Drawing.Color.Navy
+        Me.Btn_Grabar.Image = CType(resources.GetObject("Btn_Grabar.Image"), System.Drawing.Image)
+        Me.Btn_Grabar.ImageAlt = CType(resources.GetObject("Btn_Grabar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Grabar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_Grabar.Name = "Btn_Grabar"
+        Me.Btn_Grabar.Visible = False
+        '
+        'Btn_ProbConexion
+        '
+        Me.Btn_ProbConexion.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_ProbConexion.ForeColor = System.Drawing.Color.Black
+        Me.Btn_ProbConexion.Image = CType(resources.GetObject("Btn_ProbConexion.Image"), System.Drawing.Image)
+        Me.Btn_ProbConexion.ImageAlt = CType(resources.GetObject("Btn_ProbConexion.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ProbConexion.Name = "Btn_ProbConexion"
+        Me.Btn_ProbConexion.Text = "Probar conexión"
+        Me.Btn_ProbConexion.Visible = False
         '
         'Grupo_Fichero
         '
@@ -545,18 +545,18 @@ Partial Class Frm_FTP_Fichero
         Me.Btn_Renombrar.Name = "Btn_Renombrar"
         Me.Btn_Renombrar.Visible = False
         '
+        'Btn_Volver
+        '
+        Me.Btn_Volver.Image = CType(resources.GetObject("Btn_Volver.Image"), System.Drawing.Image)
+        Me.Btn_Volver.ImageAlt = CType(resources.GetObject("Btn_Volver.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Volver.Name = "Btn_Volver"
+        '
         'CirProgres_FTP
         '
         Me.CirProgres_FTP.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
         Me.CirProgres_FTP.Name = "CirProgres_FTP"
         Me.CirProgres_FTP.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Dot
         Me.CirProgres_FTP.Visible = False
-        '
-        'Btn_Volver
-        '
-        Me.Btn_Volver.Image = CType(resources.GetObject("Btn_Volver.Image"), System.Drawing.Image)
-        Me.Btn_Volver.ImageAlt = CType(resources.GetObject("Btn_Volver.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Volver.Name = "Btn_Volver"
         '
         'Frm_FTP_Fichero
         '

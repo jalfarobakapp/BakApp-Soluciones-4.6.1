@@ -811,13 +811,6 @@
     <Compile Include="01 Procesos  compartidos\Productos\22 Media y promedio de venta\Frm_MediaYPromedioXProd_Estudio.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Productos\23 FTP Imagenes\Cl_FtpProduc.vb" />
-    <Compile Include="01 Procesos  compartidos\Productos\23 FTP Imagenes\Frm_ConfFtpProduc.Designer.vb">
-      <DependentUpon>Frm_ConfFtpProduc.vb</DependentUpon>
-    </Compile>
-    <Compile Include="01 Procesos  compartidos\Productos\23 FTP Imagenes\Frm_ConfFtpProduc.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="02 Procesos Bakapp y configuracion\01 Actualizacion BakApp\Clas_Actualiza_BakApp_Sql.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Frm_Usuarios_Random.Designer.vb">
       <DependentUpon>Frm_Usuarios_Random.vb</DependentUpon>
@@ -4717,9 +4710,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Productos\22 Media y promedio de venta\Frm_MediaYPromedioXProd_Estudio.resx">
       <DependentUpon>Frm_MediaYPromedioXProd_Estudio.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="01 Procesos  compartidos\Productos\23 FTP Imagenes\Frm_ConfFtpProduc.resx">
-      <DependentUpon>Frm_ConfFtpProduc.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Frm_Usuarios_Random.resx">
       <DependentUpon>Frm_Usuarios_Random.vb</DependentUpon>
