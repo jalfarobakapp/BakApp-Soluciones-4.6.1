@@ -1800,5 +1800,16 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
         End If
     End Sub
 
+    Private Sub Btn_SugCambioPrecio_Click(sender As Object, e As EventArgs) Handles Btn_SugCambioPrecio.Click
 
+        'Dim _CodMadre As String
+        'Dim _CantidadMax As Double
+        Dim _FechaDesde As DateTime
+        Dim _FechaHasta As DateTime
+
+        Dim Fm As New Frm_AsisCompra_CambioPrecio(_Ds_Informe.Tables(0), _FechaDesde, _FechaHasta)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
 End Class

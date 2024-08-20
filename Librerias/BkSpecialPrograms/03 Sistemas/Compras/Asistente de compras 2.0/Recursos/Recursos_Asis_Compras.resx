@@ -160,6 +160,9 @@
   <data name="SQLQuery_Reabastecer_entre_bodegas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\sqlquery reabastecer entre bodegas.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="SQLQuery_RevCambioPrecioXCodMadre" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Proyeccion Compras Agrupados (SeaGarden)\Cambio precio\Sql\SQLQuery_RevCambioPrecioXCodMadre.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="SQLQuery_Saber_Stock_a_una_fecha_X_Producto" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\sqlquery saber stock a una fecha x producto.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>

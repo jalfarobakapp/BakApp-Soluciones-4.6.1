@@ -606,17 +606,21 @@ Public Class Cl_Stmp
             Return _Mensaje
         End If
 
-        If Not _Global_Row_Configuracion_General.Item("Pickear_SinoEstaEnWMSIgualPickear") Then
+        Try
+            If Not _Global_Row_Configuracion_General.Item("Pickear_SinoEstaEnWMSIgualPickear") Then
 
-            If Not _Row_Documento.Item("Estaenwms") Then
-                _Mensaje.EsCorrecto = False
-                _Mensaje.Mensaje = "Este documento no esta ingresado en el WMS" & vbCrLf &
-                                   "Vuelva a intentarlo en 10 segundos y si no se encuentra informe de esta situación al personal de logística"
-                _Mensaje.Detalle = "Documento: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
-                Return _Mensaje
+                If Not _Row_Documento.Item("Estaenwms") Then
+                    _Mensaje.EsCorrecto = False
+                    _Mensaje.Mensaje = "Este documento no esta ingresado en el WMS" & vbCrLf &
+                                       "Vuelva a intentarlo en 10 segundos y si no se encuentra informe de esta situación al personal de logística"
+                    _Mensaje.Detalle = "Documento: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
+                    Return _Mensaje
+                End If
+
             End If
+        Catch ex As Exception
 
-        End If
+        End Try
 
         Dim _Row_Entidad As DataRow = Fx_Traer_Datos_Entidad(_Row_Documento.Item("ENDO"), _Row_Documento.Item("SUENDO"))
         Dim _Cl_Stem As New Cl_Stmp
@@ -698,6 +702,118 @@ Public Class Cl_Stmp
                                   _Tido As String,
                                   _Nudo As String,
                                   _CadenaConexionWms As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            Dim _Sql_WMS As New Class_SQL(_CadenaConexionWms)
+
+            Consulta_sql = My.Resources.Recursos_WmsVillar.SQLQuery_Revisar_Nota_de_venta_activa_en_WMS_Villar
+            Consulta_sql = Replace(Consulta_sql, "#Nudo#", _Nudo)
+
+            Dim _Ds As DataSet = _Sql_WMS.Fx_Get_DataSet(Consulta_sql, True, False)
+
+            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                _Mensaje.EsCorrecto = False
+                _Mensaje.Detalle = "Error a extraer datos desde el WMS"
+                _Mensaje.Mensaje = _Sql.Pro_Error
+                Return _Mensaje
+            End If
+
+            _Ds.Tables(0).TableName = "ticket_verde"
+            _Ds.Tables(1).TableName = "Detalle"
+            _Ds.Tables(2).TableName = "Cabecera"
+            _Ds.Tables(3).TableName = "Lineas"
+            _Ds.Tables(4).TableName = "Comandos"
+
+            Dim _ticket_verde As DataTable = _Ds.Tables("ticket_verde")
+            Dim _Detalle As DataTable = _Ds.Tables("Detalle")
+            Dim _Cabecera As DataTable = _Ds.Tables("Cabecera")
+            Dim _Lineas As DataTable = _Ds.Tables("Lineas")
+            Dim _Comandos As DataTable = _Ds.Tables("Comandos")
+
+            If _ticket_verde.Rows(0).Item("ticket_verde") <> "Y" Then
+                _Mensaje.EsCorrecto = False
+                _Mensaje.Detalle = "El pedido aun no esta listo"
+                Throw New System.Exception(_Sql.Pro_Error)
+            End If
+
+            Dim _Fecha As String = Format(FechaDelServidor, "yyyyMMdd")
+
+            Dim _ob_type As String = _Cabecera.Rows(0).Item("ob_type")
+            Dim _shipment As String = _Cabecera.Rows(0).Item("shipment")
+            Dim _wave As String = _Cabecera.Rows(0).Item("wave")
+            Dim _whse_id As String = _Cabecera.Rows(0).Item("whse_id")
+            Dim _ob_ord_stt As String = _Cabecera.Rows(0).Item("ob_ord_stt").ToString.Trim
+
+            If _ob_ord_stt <> "RDY" Then
+                _Mensaje.EsCorrecto = False
+                _Mensaje.Detalle = "El pedido aun no esta listo"
+                Throw New System.Exception(_Sql.Pro_Error)
+            End If
+
+            '_Detalle.Columns.Add("Saldo_qty", GetType(Double))
+
+            Dim _CanalEntrada As String = Mid(_ob_type, 1, 1)
+            Dim _TipoPago As String = Mid(_ob_type, 2, 1)
+            Dim _Entrega As String = Mid(_ob_type, 3, 1)
+            Dim _DocEmitir As String = Mid(_ob_type, 4, 1)
+
+            With Zw_Stmp_Enc
+
+                Select Case _DocEmitir
+                    Case "B"
+                        .DocEmitir = "BLV"
+                    Case "G"
+                        .DocEmitir = "GDV"
+                    Case "F"
+                        .DocEmitir = "FCV"
+                End Select
+
+                Select Case _TipoPago
+                    Case "C"
+                        .TipoPago = "Contado"
+                    Case "R"
+                        .TipoPago = "Credito"
+                End Select
+
+                .Estado = "COMPL"
+                .Accion = _ob_type
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set " & vbCrLf &
+                               "Estado = '" & .Estado & "',Accion = '" & .Accion & "'" &
+                               ",Fecha_Facturar = '" & Format(.Fecha_Facturar, "yyyyMMdd") & "'" &
+                               ",DocEmitir = '" & .DocEmitir & "'" &
+                               ",TipoPago = '" & .TipoPago & "'" &
+                               ",FechaPickeado = Getdate()" & vbCrLf &
+                               "Where Id = " & .Id
+
+                If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+
+                    _Mensaje.Detalle = "Error al actualizar el documento en la tabla Zw_Stmp_Enc"
+                    Throw New System.Exception(_Sql.Pro_Error)
+
+                End If
+
+                _Mensaje.EsCorrecto = True
+                _Mensaje.Detalle = "Documento actualizado correctamente"
+                _Mensaje.Mensaje = "Documento dejado como completado correctamente"
+
+            End With
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+        End Try
+
+        Return _Mensaje
+
+    End Function
+    Function Fx_Revisar_WMSVillar_Completadas(_Idmaeedo As Integer,
+                                              _Tido As String,
+                                              _Nudo As String,
+                                              _CadenaConexionWms As String) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -893,10 +1009,10 @@ Public Class Cl_Stmp
         Return _Mensaje
 
     End Function
-    Function Fx_Revisar_WMSVillar_Resp(_Idmaeedo As Integer,
-                                  _Tido As String,
-                                  _Nudo As String,
-                                  _CadenaConexionWms As String) As LsValiciones.Mensajes
+    Function Fx_Revisar_WMSVillar_Old(_Idmaeedo As Integer,
+                                      _Tido As String,
+                                      _Nudo As String,
+                                      _CadenaConexionWms As String) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -907,7 +1023,14 @@ Public Class Cl_Stmp
             Consulta_sql = My.Resources.Recursos_WmsVillar.SQLQuery_Revisar_Nota_de_venta_activa_en_WMS_Villar
             Consulta_sql = Replace(Consulta_sql, "#Nudo#", _Nudo)
 
-            Dim _Ds As DataSet = _Sql_WMS.Fx_Get_DataSet(Consulta_sql)
+            Dim _Ds As DataSet = _Sql_WMS.Fx_Get_DataSet(Consulta_sql, True, False)
+
+            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                _Mensaje.EsCorrecto = False
+                _Mensaje.Detalle = "Error a extraer datos desde el WMS"
+                _Mensaje.Mensaje = _Sql.Pro_Error
+                Return _Mensaje
+            End If
 
             _Ds.Tables(0).TableName = "ticket_verde"
             _Ds.Tables(1).TableName = "Detalle"
@@ -1003,53 +1126,59 @@ Public Class Cl_Stmp
 
                     Zw_Stmp_DetPick.Add(_DetPick)
 
-                    For Each _Det As Zw_Stmp_Det In Zw_Stmp_Det
+                Next
 
-                        If _Det.Codigo.Trim = _sku.Trim And _Det.EnProceso Then
+                For Each _Det As Zw_Stmp_Det In Zw_Stmp_Det
 
-                            With _Det
+                    For Each _Fila As DataRow In _Detalle.Rows
 
-                                Dim _Cantidad As Double = _Saldo_qty - .Caprco1_Real
+                        Dim _Cont As String = _Fila.Item("CONT")
+                        Dim _tag As String = _Fila.Item("tag")
+                        Dim _loc As String = NuloPorNro(_Fila.Item("loc"), "")
 
-                                .Cantidad += _Cantidad
-                                .Caprco1_Real += _Cantidad
-                                .Caprco2_Real += _Cantidad
+                        Dim _sku As String = _Fila.Item("sku")
+                        Dim _qty As Double = _Fila.Item("qty")
+                        Dim _Saldo_qty As Double = _Fila.Item("Saldo_qty")
 
-                                _Saldo_qty = _Cantidad - _Saldo_qty
+                        If _Det.Codigo.Trim = _sku.Trim And CBool(_Saldo_qty) Then
 
-                                _Fila.Item("Saldo_qty") = _Saldo_qty
+                            Dim _Cantidad As Double = _Saldo_qty
 
-                                If _Fila.Item("Saldo_qty") = 0 Then
+                            If _Det.Caprco1_Ori < _Cantidad Then
+                                _Cantidad = _Det.Caprco1_Ori
+                            End If
 
-                                    .Pickeado = True
-                                    .EnProceso = False
+                            _Saldo_qty = _Saldo_qty - _Cantidad
 
-                                End If
+                            _Det.Cantidad += _Cantidad
+                            _Det.Caprco1_Real += _Cantidad
+                            _Det.Caprco2_Real += _Cantidad
 
-                                If .Pickeado Then
+                            _Fila.Item("Saldo_qty") = _Saldo_qty
 
-                                    .CodFuncionario_Pickea = "wms"
+                            _QuerySql += "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
+                                         "('MAEDDO'," & _Det.Idmaeddo & ",'wms','" & _Fecha & "','wms','CONT','" & _Cont & "')" & vbCrLf &
+                                         "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
+                                         "('MAEDDO'," & _Det.Idmaeddo & ",'wms','" & _Fecha & "','wms','tag','" & _tag & "')" & vbCrLf &
+                                         "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
+                                         "('MAEDDO'," & _Det.Idmaeddo & ",'wms','" & _Fecha & "','wms','loc','" & _loc & "')" & vbCrLf &
+                                         "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
+                                         "('MAEDDO'," & _Det.Idmaeddo & ",'wms','" & _Fecha & "','wms','qty','" & _qty & "')" & vbCrLf
 
-                                    _QuerySql += "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
-                                             "('MAEDDO'," & .Idmaeddo & ",'wms','" & _Fecha & "','wms','CONT','" & _Cont & "')" & vbCrLf &
-                                             "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
-                                             "('MAEDDO'," & .Idmaeddo & ",'wms','" & _Fecha & "','wms','tag','" & _tag & "')" & vbCrLf &
-                                             "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
-                                             "('MAEDDO'," & .Idmaeddo & ",'wms','" & _Fecha & "','wms','loc','" & _loc & "')" & vbCrLf &
-                                             "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
-                                             "('MAEDDO'," & .Idmaeddo & ",'wms','" & _Fecha & "','wms','qty','" & _qty & "')" & vbCrLf
-
-                                End If
-
-                                If _Saldo_qty = 0 Then
-                                    Exit For
-                                End If
-
-                            End With
+                            If _Det.Caprco1_Real = _Det.Caprco1_Ori Then
+                                Exit For
+                            End If
 
                         End If
 
                     Next
+
+                    If _Det.Caprco1_Real > 0 Then
+                        _Det.Pickeado = True
+                    End If
+
+                    _Det.EnProceso = False
+                    _Det.CodFuncionario_Pickea = "wms"
 
                 Next
 
@@ -1079,149 +1208,7 @@ Public Class Cl_Stmp
         Return _Mensaje
 
     End Function
-    Function Fx_Revisar_WMSVillar2(_Idmaeedo As Integer,
-                                  _Nudo As String,
-                                  _CadenaConexionWms As String) As LsValiciones.Mensajes
 
-        Dim _Mensaje As New LsValiciones.Mensajes
-
-        Try
-
-            Dim _Sql_WMS As New Class_SQL(_CadenaConexionWms)
-
-            Consulta_sql = My.Resources.Recursos_WmsVillar.SQLQuery_Revisar_Nota_de_venta_activa_en_WMS_Villar
-            Consulta_sql = Replace(Consulta_sql, "#Nudo#", _Nudo)
-
-            Dim _Ds As DataSet = _Sql_WMS.Fx_Get_DataSet(Consulta_sql)
-
-            _Ds.Tables(0).TableName = "ticket_verde"
-            _Ds.Tables(1).TableName = "Detalle"
-            _Ds.Tables(2).TableName = "Cabecera"
-            _Ds.Tables(3).TableName = "Lineas"
-            _Ds.Tables(4).TableName = "Comandos"
-
-            Dim _ticket_verde As DataTable = _Ds.Tables("ticket_verde")
-            Dim _Detalle As DataTable = _Ds.Tables("Detalle")
-            Dim _Cabecera As DataTable = _Ds.Tables("Cabecera")
-            Dim _Lineas As DataTable = _Ds.Tables("Lineas")
-            Dim _Comandos As DataTable = _Ds.Tables("Comandos")
-
-            If _ticket_verde.Rows(0).Item("ticket_verde") <> "Y" Then
-                _Mensaje.EsCorrecto = False
-                _Mensaje.Detalle = "El pedido aun no esta listo"
-                Return _Mensaje
-            End If
-
-            Dim _Fecha As String = Format(FechaDelServidor, "yyyyMMdd")
-
-            Dim _ob_type As String = _Cabecera.Rows(0).Item("ob_type")
-            Dim _shipment As String = _Cabecera.Rows(0).Item("shipment")
-            Dim _wave As String = _Cabecera.Rows(0).Item("wave")
-            Dim _whse_id As String = _Cabecera.Rows(0).Item("whse_id")
-            Dim _ob_ord_stt As String = _Cabecera.Rows(0).Item("ob_ord_stt").ToString.Trim
-
-            If _ob_ord_stt <> "RDY" Then
-                _Mensaje.EsCorrecto = False
-                _Mensaje.Detalle = "El pedido aun no esta listo"
-                Return _Mensaje
-            End If
-
-            Dim _CanalEntrada As String = Mid(_ob_type, 1, 1)
-            Dim _TipoPago As String = Mid(_ob_type, 2, 1)
-            Dim _Entrega As String = Mid(_ob_type, 3, 1)
-            Dim _DocEmitir As String = Mid(_ob_type, 4, 1)
-
-            With Zw_Stmp_Enc
-
-                Select Case _DocEmitir
-                    Case "B"
-                        .DocEmitir = "BLV"
-                    Case "G"
-                        .DocEmitir = "GDV"
-                    Case "F"
-                        .DocEmitir = "FCV"
-                End Select
-
-                Select Case _TipoPago
-                    Case "C"
-                        .TipoPago = "Contado"
-                    Case "R"
-                        .TipoPago = "Credito"
-                End Select
-
-                .Estado = "COMPL"
-
-            End With
-
-            Dim _QuerySql = String.Empty
-
-            If _ticket_verde.Rows(0).Item("ticket_verde") = "Y" Then
-
-                For Each _Fila As DataRow In _Detalle.Rows
-
-                    Dim _CONT As String = _Fila.Item("CONT")
-                    Dim _tag As String = _Fila.Item("tag")
-                    Dim _loc As String = NuloPorNro(_Fila.Item("loc"), "...")
-
-                    Dim _sku As String = _Fila.Item("sku")
-                    Dim _qty As Double = _Fila.Item("qty")
-
-                    For Each _Det As Zw_Stmp_Det In Zw_Stmp_Det
-
-                        If _Det.Codigo.Trim = _sku.Trim Then
-
-                            With _Det
-
-                                .Cantidad = _qty
-                                .Caprco1_Real = _qty
-                                .Caprco2_Real = _qty
-                                .Pickeado = True
-                                .EnProceso = False
-                                .CodFuncionario_Pickea = "wms"
-
-                                _QuerySql += "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
-                                             "('MAEDDO'," & .Idmaeddo & ",'wms','" & _Fecha & "','wms','CONT','" & _CONT & "')" & vbCrLf &
-                                             "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
-                                             "('MAEDDO'," & .Idmaeddo & ",'wms','" & _Fecha & "','wms','tag','" & _tag & "')" & vbCrLf &
-                                             "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
-                                             "('MAEDDO'," & .Idmaeddo & ",'wms','" & _Fecha & "','wms','loc','" & _loc & "')" & vbCrLf
-
-                            End With
-
-                            Exit For
-
-                        End If
-
-                    Next
-
-                Next
-
-                _Mensaje = Fx_Confirmar_Picking()
-                'ob_type, shipment, wave, ,whse_id
-                If _Mensaje.EsCorrecto Then
-
-                    _QuerySql += "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
-                                 "('MAEEDO'," & _Idmaeedo & ",'wms','" & _Fecha & "','wms','ob_type','" & _ob_type & "')" & vbCrLf &
-                                 "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
-                                 "('MAEEDO'," & _Idmaeedo & ",'wms','" & _Fecha & "','wms','shipment','" & _shipment & "')" & vbCrLf &
-                                 "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
-                                 "('MAEEDO'," & _Idmaeedo & ",'wms','" & _Fecha & "','wms','wave','" & _wave & "')" & vbCrLf &
-                                 "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
-                                 "('MAEEDO'," & _Idmaeedo & ",'wms','" & _Fecha & "','wms','whse_id','" & _whse_id & "')"
-
-                    _Sql.Ej_consulta_IDU(_QuerySql, False)
-
-                End If
-
-            End If
-
-        Catch ex As Exception
-
-        End Try
-
-        Return _Mensaje
-
-    End Function
     Function Fx_Entregar_Mercaderia() As LsValiciones.Mensajes
 
         Dim _Mensaje_Stem As New LsValiciones.Mensajes

@@ -37,6 +37,8 @@ Public Class Class_Permiso_BakApp
 
         If String.IsNullOrEmpty(_Func) Then _Func = FUNCIONARIO
 
+        _Codpermiso = Trim(_Codpermiso)
+
         Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "ZW_PermisosVsUsuarios Where CodUsuario = '" & _Func & "' AND CodPermiso = '" & _Codpermiso & "'"
         Dim _Row_PermisosVsUsuarios As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 

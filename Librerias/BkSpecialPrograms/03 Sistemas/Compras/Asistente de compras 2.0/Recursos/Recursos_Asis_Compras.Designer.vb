@@ -357,18 +357,18 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Busca una cadena traducida similar a Declare @Identificador_NodoPadre Int = #Identificador_NodoPadre#, 
-        '''        @Porc_Creciminto Float = #Porc_Creciminto#,
-        '''        @Dias_Proyeccion Float = #Dias_Proyeccion#,
-        '''        @Dias_Abastecer Int,
-        '''        @Marca_Proyeccion Int = #Marca_Proyeccion#,
-        '''        @RotCalculo Char(1) = &apos;#RotCalculo#&apos;,
-        '''        @Fecha_Actual Date = GetDate()
+        '''  Busca una cadena traducida similar a Declare @Identificador_NodoPadre Int = #Identificador_NodoPadre#
+        '''Declare @Porc_Creciminto Float = #Porc_Creciminto#
+        '''Declare @Dias_Proyeccion Float = #Dias_Proyeccion#
+        '''Declare @Dias_Abastecer Int
+        '''Declare @Marca_Proyeccion Int = #Marca_Proyeccion#
+        '''Declare @RotCalculo Char(1) = &apos;#RotCalculo#&apos;
+        '''Declare @Fecha_Actual Date = GetDate()
         '''
         '''Set @Porc_Creciminto = @Porc_Creciminto /100.0 + 1        
         '''Set @Dias_Abastecer = #Dias_Abastecer#--@Dias_Proyeccion * 4
         '''        
-        '''        --select @Porc_Creciminto, [resto de la cadena truncado]&quot;;.
+        '''        --select @Porc_Creciminto,10/100. [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property SQLQuery_Proyeccion_Compras_30_60_120() As String
             Get
@@ -396,6 +396,26 @@ Namespace My.Resources
         Friend Shared ReadOnly Property SQLQuery_Reabastecer_entre_bodegas() As String
             Get
                 Return ResourceManager.GetString("SQLQuery_Reabastecer_entre_bodegas", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a Declare @Identificador_NodoPadre Int = #Identificador_NodoPadre#
+        '''Declare @Porc_Creciminto Float = #Porc_Creciminto#
+        '''Declare @Dias_Proyeccion Float = #Dias_Proyeccion#
+        '''Declare @Dias_Abastecer Int
+        '''Declare @Marca_Proyeccion Int = #Marca_Proyeccion#
+        '''Declare @RotCalculo Char(1) = &apos;#RotCalculo#&apos;
+        '''Declare @Fecha_Actual Date = GetDate()
+        '''
+        '''Set @Porc_Creciminto = @Porc_Creciminto /100.0 + 1        
+        '''Set @Dias_Abastecer = #Dias_Abastecer#--@Dias_Proyeccion * 4
+        '''        
+        '''        --select @Porc_Creciminto,10/100. [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property SQLQuery_RevCambioPrecioXCodMadre() As String
+            Get
+                Return ResourceManager.GetString("SQLQuery_RevCambioPrecioXCodMadre", resourceCulture)
             End Get
         End Property
         

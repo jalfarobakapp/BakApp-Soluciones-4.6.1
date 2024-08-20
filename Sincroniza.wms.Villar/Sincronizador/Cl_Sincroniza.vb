@@ -150,87 +150,183 @@ Public Class Cl_Sincroniza
                     _Mensaje.Detalle += ", Nota de venta #" & _Nudo
                     Sb_AddToLog("Sincronizando notas", _Mensaje.Detalle, Txt_Log)
 
-                    Dim _Tipo_wms As String
+                    'Dim _Tipo_wms As String
 
-                    _Tipo_wms = _SqlRandom.Fx_Trae_Dato("[@WMS_GATEWAY_TRANSFERENCIA]", "TIPO_WMS", "IDMAEEDO = " & _Idmaeedoo,, False)
+                    '_Tipo_wms = _SqlRandom.Fx_Trae_Dato("[@WMS_GATEWAY_TRANSFERENCIA]", "TIPO_WMS", "IDMAEEDO = " & _Idmaeedoo,, False)
 
-                    If _Facturar Then
+                    'If _Facturar Then
 
-                        ' 0 = Contado, 1 = Credito, 2 = Guia
-                        Dim _CodFuncionario_Factura As String
+                    '    ' 0 = Contado, 1 = Credito, 2 = Guia
+                    '    Dim _CodFuncionario_Factura As String
 
-                        If _DocEmitir = "BLV" Or _DocEmitir = "FCV" Then
-                            If _Cl_Stmp.Zw_Stmp_Enc.TipoPago = "Contado" Then
-                                _CodFuncionario_Factura = ConfiguracionLocal.Ls_FunFcvGdvAuto.Item(0).CodFuncionario
-                            End If
+                    '    If _DocEmitir = "BLV" Or _DocEmitir = "FCV" Then
+                    '        If _Cl_Stmp.Zw_Stmp_Enc.TipoPago = "Contado" Then
+                    '            _CodFuncionario_Factura = ConfiguracionLocal.Ls_FunFcvGdvAuto.Item(0).CodFuncionario
+                    '        End If
 
-                            If _Cl_Stmp.Zw_Stmp_Enc.TipoPago = "Credito" Then
-                                _CodFuncionario_Factura = ConfiguracionLocal.Ls_FunFcvGdvAuto.Item(1).CodFuncionario
-                            End If
-                        End If
+                    '        If _Cl_Stmp.Zw_Stmp_Enc.TipoPago = "Credito" Then
+                    '            _CodFuncionario_Factura = ConfiguracionLocal.Ls_FunFcvGdvAuto.Item(1).CodFuncionario
+                    '        End If
+                    '    End If
 
-                        If _DocEmitir = "GDV" Then
-                            _CodFuncionario_Factura = ConfiguracionLocal.Ls_FunFcvGdvAuto.Item(2).CodFuncionario
-                        End If
+                    '    If _DocEmitir = "GDV" Then
+                    '        _CodFuncionario_Factura = ConfiguracionLocal.Ls_FunFcvGdvAuto.Item(2).CodFuncionario
+                    '    End If
 
-                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set CodFuncionario_Factura = '" & _CodFuncionario_Factura & "' Where Id = " & _Id_Enc
-                        _SqlRandom.Ej_consulta_IDU(Consulta_sql)
+                    '    Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set CodFuncionario_Factura = '" & _CodFuncionario_Factura & "' Where Id = " & _Id_Enc
+                    '    _SqlRandom.Ej_consulta_IDU(Consulta_sql)
 
-                        'Imprimir Retiros inmediatos
-                        If _Tipo_wms.Contains("A") Then
+                    '    'Imprimir Retiros inmediatos
+                    '    If _Tipo_wms.Contains("A") Then
 
-                            If ConfiguracionLocal.Ls_ImpFormatos.Item(0).Imprimir Then
+                    '        If ConfiguracionLocal.Ls_ImpFormatos.Item(0).Imprimir Then
 
-                                With ConfiguracionLocal.Ls_ImpFormatos.Item(0)
+                    '            With ConfiguracionLocal.Ls_ImpFormatos.Item(0)
 
-                                    _Mensaje = Fx_EnviarAImprimnirListaDeVerificacion(_Idmaeedoo, "NVV", _Nudo, True,
-                                                                                  .NombreEquipoImprime, .Impresora, .NombreFormato)
+                    '                _Mensaje = Fx_EnviarAImprimnirListaDeVerificacion(_Idmaeedoo, "NVV", _Nudo, True,
+                    '                                                              .NombreEquipoImprime, .Impresora, .NombreFormato)
 
-                                End With
+                    '            End With
 
-                                Sb_AddToLog(_Mensaje.Detalle, _Mensaje.Detalle, Txt_Log)
+                    '            Sb_AddToLog(_Mensaje.Detalle, _Mensaje.Detalle, Txt_Log)
 
-                            End If
+                    '        End If
 
-                        End If
+                    '    End If
 
-                        'Imprimir Despachos
-                        If _Tipo_wms.Contains("O") Then
+                    '    'Imprimir Despachos
+                    '    If _Tipo_wms.Contains("O") Then
 
-                            If ConfiguracionLocal.Ls_ImpFormatos.Item(1).Imprimir Then
+                    '        If ConfiguracionLocal.Ls_ImpFormatos.Item(1).Imprimir Then
 
-                                With ConfiguracionLocal.Ls_ImpFormatos.Item(1)
+                    '            With ConfiguracionLocal.Ls_ImpFormatos.Item(1)
 
-                                    _Mensaje = Fx_EnviarAImprimnirListaDeVerificacion(_Idmaeedoo, "NVV", _Nudo, True,
-                                                                                  .NombreEquipoImprime, .Impresora, .NombreFormato)
-                                    Sb_AddToLog(_Mensaje.Detalle, _Mensaje.Detalle, Txt_Log)
+                    '                _Mensaje = Fx_EnviarAImprimnirListaDeVerificacion(_Idmaeedoo, "NVV", _Nudo, True,
+                    '                                                              .NombreEquipoImprime, .Impresora, .NombreFormato)
+                    '                Sb_AddToLog(_Mensaje.Detalle, _Mensaje.Detalle, Txt_Log)
 
-                                End With
+                    '            End With
 
-                            End If
+                    '        End If
 
-                        End If
+                    '    End If
 
-                        'If ConfiguracionLocal.Ls_ImpFormatos.Item(2).Imprimir Then
+                    '    'If ConfiguracionLocal.Ls_ImpFormatos.Item(2).Imprimir Then
 
-                        '    With ConfiguracionLocal.Ls_ImpFormatos.Item(2)
+                    '    '    With ConfiguracionLocal.Ls_ImpFormatos.Item(2)
 
-                        '        _Mensaje = Fx_EnviarAImprimnirListaDeVerificacion(_Idmaeedoo, "NVV", _Nudo, True,
-                        '                                                      .NombreEquipoImprime, .Impresora, .NombreFormato)
+                    '    '        _Mensaje = Fx_EnviarAImprimnirListaDeVerificacion(_Idmaeedoo, "NVV", _Nudo, True,
+                    '    '                                                      .NombreEquipoImprime, .Impresora, .NombreFormato)
 
-                        '    End With
+                    '    '    End With
 
-                        '    Sb_AddToLog(_Mensaje.Detalle, _Mensaje.Detalle, Txt_Log)
+                    '    '    Sb_AddToLog(_Mensaje.Detalle, _Mensaje.Detalle, Txt_Log)
 
-                        'End If
+                    '    'End If
 
-                    End If
+                    'End If
 
                 End If
 
             End If
 
             Application.DoEvents()
+
+        Next
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Estado In ('COMPL') And Facturar = 1 And Planificada = 1 And CodFuncionario_Factura = ''"
+        _Tbl = _SqlRandom.Fx_Get_DataTable(Consulta_sql)
+
+        For Each _Fila As DataRow In _Tbl.Rows
+
+            Dim _Id_Enc As Integer = _Fila.Item("Id")
+            Dim _Idmaeedo As Integer = _Fila.Item("Idmaeedo")
+            Dim _DocEmitir As String = _Fila.Item("DocEmitir")
+            Dim _TipoPago As String = _Fila.Item("TipoPago")
+            Dim _Nudo As String = _Fila.Item("Nudo")
+            Dim _Accion As String = _Fila.Item("Accion")
+            Dim _CodFuncionario_Factura = String.Empty
+            Dim _Planificada As Boolean = _Fila.Item("Planificada")
+
+            'Sb_AddToLog("Sincronizando notas", "Revisando NVV" & _Nudo, Txt_Log)
+
+            Dim _Cl_Stmp As New Cl_Stmp
+            _Cl_Stmp.Fx_Llenar_Encabezado(_Id_Enc)
+            _Cl_Stmp.Fx_Llenar_Detalle(_Id_Enc)
+
+            _Cl_Stmp.Zw_Stmp_Enc.Fecha_Facturar = FechaDelServidor()
+
+            Dim _Mensaje As New LsValiciones.Mensajes
+
+            _Mensaje = _Cl_Stmp.Fx_Revisar_WMSVillar_Completadas(_Idmaeedo, "NVV", _Nudo, Cadena_ConexionSQL_Server_Wms)
+
+            If _Mensaje.EsCorrecto Then
+
+                _DocEmitir = _Cl_Stmp.Zw_Stmp_Enc.DocEmitir
+
+                _Mensaje.Detalle += ", Nota de venta : " & _Nudo
+                Sb_AddToLog("Sincronizando notas", _Mensaje.Detalle, Txt_Log)
+
+                Dim _Tipo_wms As String
+
+                _Tipo_wms = _SqlRandom.Fx_Trae_Dato("[@WMS_GATEWAY_TRANSFERENCIA]", "TIPO_WMS", "IDMAEEDO = " & _Idmaeedo,, False)
+
+                ' 0 = Contado, 1 = Credito, 2 = Guia
+                'Dim _CodFuncionario_Factura2 As String
+
+                If _DocEmitir = "BLV" Or _DocEmitir = "FCV" Then
+                    If _Cl_Stmp.Zw_Stmp_Enc.TipoPago = "Contado" Then
+                        _CodFuncionario_Factura = ConfiguracionLocal.Ls_FunFcvGdvAuto.Item(0).CodFuncionario
+                    End If
+
+                    If _Cl_Stmp.Zw_Stmp_Enc.TipoPago = "Credito" Then
+                        _CodFuncionario_Factura = ConfiguracionLocal.Ls_FunFcvGdvAuto.Item(1).CodFuncionario
+                    End If
+                End If
+
+                If _DocEmitir = "GDV" Then
+                    _CodFuncionario_Factura = ConfiguracionLocal.Ls_FunFcvGdvAuto.Item(2).CodFuncionario
+                End If
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set CodFuncionario_Factura = '" & _CodFuncionario_Factura & "' Where Id = " & _Id_Enc
+                _SqlRandom.Ej_consulta_IDU(Consulta_sql)
+
+                'Imprimir Retiros inmediatos
+                If _Tipo_wms.Contains("A") Then
+
+                    If ConfiguracionLocal.Ls_ImpFormatos.Item(0).Imprimir Then
+
+                        With ConfiguracionLocal.Ls_ImpFormatos.Item(0)
+
+                            _Mensaje = Fx_EnviarAImprimirListaDeVerificacion(_Idmaeedo, "NVV", _Nudo, True,
+                                                                          .NombreEquipoImprime, .Impresora, .NombreFormato)
+
+                        End With
+
+                        Sb_AddToLog(_Mensaje.Detalle, _Mensaje.Detalle, Txt_Log)
+
+                    End If
+
+                End If
+
+                'Imprimir Despachos
+                If _Tipo_wms.Contains("O") Then
+
+                    If ConfiguracionLocal.Ls_ImpFormatos.Item(1).Imprimir Then
+
+                        With ConfiguracionLocal.Ls_ImpFormatos.Item(1)
+
+                            _Mensaje = Fx_EnviarAImprimirListaDeVerificacion(_Idmaeedo, "NVV", _Nudo, True,
+                                                                          .NombreEquipoImprime, .Impresora, .NombreFormato)
+                            Sb_AddToLog(_Mensaje.Detalle, _Mensaje.Detalle, Txt_Log)
+
+                        End With
+
+                    End If
+
+                End If
+
+            End If
 
         Next
 
@@ -346,7 +442,7 @@ Public Class Cl_Sincroniza
 
     End Sub
 
-    Function Fx_EnviarAImprimnirListaDeVerificacion(_Idmaeedo As Integer,
+    Function Fx_EnviarAImprimirListaDeVerificacion(_Idmaeedo As Integer,
                                                     _Tido As String,
                                                     _Nudo As String,
                                                     _Impreso As Boolean,
@@ -489,23 +585,23 @@ Public Class Cl_Sincroniza
             Sb_AddToLog("Sincronizando notas", "NVV " & _Nudo & " - Se marca funcionario que factura = '" & _CodFuncionario_Factura & "'", Txt_Log)
 
             ''Imprimir Despachos
-            'If _Accion.Contains("O") Then
+            If _Accion.Contains("O") Then
 
-            '    If ConfiguracionLocal.Ls_ImpFormatos.Item(1).Imprimir Then
+                If ConfiguracionLocal.Ls_ImpFormatos.Item(1).Imprimir Then
 
-            '        With ConfiguracionLocal.Ls_ImpFormatos.Item(1)
+                    With ConfiguracionLocal.Ls_ImpFormatos.Item(1)
 
-            '            Dim _Mensaje As New LsValiciones.Mensajes
+                        Dim _Mensaje As New LsValiciones.Mensajes
 
-            '            _Mensaje = Fx_EnviarAImprimnirListaDeVerificacion(_Idmaeedoo, "NVV", _Nudo, True,
-            '                                                          ConfiguracionLocal.NombreEquipoImprime, .Impresora, .NombreFormato)
-            '            Sb_AddToLog(_Mensaje.Detalle, _Mensaje.Detalle, Txt_Log)
+                        _Mensaje = Fx_EnviarAImprimirListaDeVerificacion(_Idmaeedoo, "NVV", _Nudo, True,
+                                                                          .NombreEquipoImprime, .Impresora, .NombreFormato)
+                        Sb_AddToLog(_Mensaje.Detalle, _Mensaje.Detalle, Txt_Log)
 
-            '        End With
+                    End With
 
-            '    End If
+                End If
 
-            'End If
+            End If
 
         Next
 

@@ -52,10 +52,7 @@ Public Class Frm_Stmp_Listado
         Timer_Monitoreo.Interval = 1000 * 5
 
     End Sub
-
-
     Sub Sb_Actualizar_Grilla()
-
 
         'Deja los documentos en Facturadas cuando ya estan listos y el diablito no alcanza a tomarlos.
         Consulta_sql = "Select Distinct Edo.IDMAEEDO,Edo.TIDO,Edo.NUDO,Edo.ENDO,Edo.SUENDO,Edo.FEEMDO," &
@@ -87,6 +84,12 @@ Public Class Frm_Stmp_Listado
         Dim _MostrarImagenes As Boolean
         Dim _FechaPlanificacion As Boolean
 
+        Dim _VerPlanificadas As String = "And Planificada = 1"
+
+        If Chk_VerIngresadas.Checked Then
+            _VerPlanificadas = String.Empty
+        End If
+
         Dim _Tbas = Super_TabS.SelectedTab
 
         Select Case _Tbas.Name
@@ -106,12 +109,12 @@ Public Class Frm_Stmp_Listado
                 _MostrarImagenes = True
                 _FechaPlanificacion = True
             Case "Tab_Preparacion"
-                _Condicion += vbCrLf & "And Estado = 'PREPA' And Planificada = 1"
+                _Condicion += vbCrLf & "And Estado = 'PREPA' " & _VerPlanificadas
                 _DocEmitir = True
                 _MostrarImagenes = True
                 _FechaPlanificacion = True
             Case "Tab_Completadas"
-                _Condicion += vbCrLf & "And Estado = 'COMPL' And Planificada = 1"
+                _Condicion += vbCrLf & "And Estado = 'COMPL' --" & _VerPlanificadas
                 _DocEmitir = True
                 _FechaPickeado = True
                 _HoraPickeado = True
@@ -271,6 +274,13 @@ Public Class Frm_Stmp_Listado
             .Columns("CantUd1xDoc").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
+            .Columns("Planificada").Visible = _FechaPlanificacion
+            .Columns("Planificada").HeaderText = "Plf."
+            .Columns("Planificada").ToolTipText = "Planificada"
+            .Columns("Planificada").Width = 30
+            .Columns("Planificada").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
             .Columns("FechaPlanificacion").Visible = _FechaPlanificacion
             .Columns("FechaPlanificacion").HeaderText = "F.Planif."
             .Columns("FechaPlanificacion").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
@@ -362,7 +372,6 @@ Public Class Frm_Stmp_Listado
         Me.Cursor = Cursors.Default
 
     End Sub
-
     Sub Sb_Crear_Ticket(_Idmaeedo As Integer, _Tido As String, _Nudo As String, _Intentos As Integer)
 
         Try
@@ -1144,6 +1153,12 @@ Public Class Frm_Stmp_Listado
                 Return
             End If
 
+            If Not _Row.Item("Planificada") Then
+                MessageBoxEx.Show(Me, "Este documento no esta planificado en el WMS", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Call Btn_SalaEsperaFacturar_Click(Nothing, Nothing)
+                Return
+            End If
+
             If MessageBoxEx.Show(Me, "¿Confirma el documento " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO") & "?",
                                 "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
                 Call Btn_SalaEsperaFacturar_Click(Nothing, Nothing)
@@ -1567,6 +1582,7 @@ Public Class Frm_Stmp_Listado
         For Each _Fila As DataGridViewRow In Grilla.Rows
 
             Dim _Estado As String = _Fila.Cells("Estado").Value
+            Dim _Planificada As Boolean = _Fila.Cells("Planificada").Value
             Dim _Error_FacAuto As Boolean = _Fila.Cells("Error_FacAuto").Value
             Dim _Info_FacAuto As String = _Fila.Cells("Info_FacAuto").Value
 
@@ -1594,7 +1610,7 @@ Public Class Frm_Stmp_Listado
                 _Icono = _Imagenes_List.Images.Item("cancel.png")
             End If
 
-            If _Estado = "PREPA" Or _Estado = "PREPA" Then
+            If _Estado = "PREPA" Then
                 _Icono = _Imagenes_List.Images.Item("symbol-delete.png")
             End If
 

@@ -36,6 +36,7 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         Me.Btn_Exportar_Excel = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Informe_Proximas_Recepciones = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Colapsar_Filas = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_SugCambioPrecio = New DevComponents.DotNetBar.ButtonItem()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Input_Redondeo = New DevComponents.Editors.IntegerInput()
         Me.Panel_Ayuda = New DevComponents.DotNetBar.ExpandablePanel()
@@ -142,7 +143,7 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Actualizar, Me.Btn_Exportar_Excel, Me.Btn_Informe_Proximas_Recepciones, Me.Btn_Colapsar_Filas})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Actualizar, Me.Btn_Exportar_Excel, Me.Btn_Informe_Proximas_Recepciones, Me.Btn_Colapsar_Filas, Me.Btn_SugCambioPrecio})
         Me.Bar1.Location = New System.Drawing.Point(0, 535)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(1082, 41)
@@ -187,6 +188,15 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         Me.Btn_Colapsar_Filas.ImageAlt = CType(resources.GetObject("Btn_Colapsar_Filas.ImageAlt"), System.Drawing.Image)
         Me.Btn_Colapsar_Filas.Name = "Btn_Colapsar_Filas"
         Me.Btn_Colapsar_Filas.Tooltip = "Colapsar todas las filas"
+        '
+        'Btn_SugCambioPrecio
+        '
+        Me.Btn_SugCambioPrecio.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_SugCambioPrecio.ForeColor = System.Drawing.Color.Black
+        Me.Btn_SugCambioPrecio.Image = CType(resources.GetObject("Btn_SugCambioPrecio.Image"), System.Drawing.Image)
+        Me.Btn_SugCambioPrecio.ImageAlt = CType(resources.GetObject("Btn_SugCambioPrecio.ImageAlt"), System.Drawing.Image)
+        Me.Btn_SugCambioPrecio.Name = "Btn_SugCambioPrecio"
+        Me.Btn_SugCambioPrecio.Tooltip = "Colapsar todas las filas"
         '
         'Label1
         '
@@ -583,4 +593,5 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
     Friend WithEvents Lbl_VerdeOscuro As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Lbl_Rosado As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Btn_SugCambioPrecio As DevComponents.DotNetBar.ButtonItem
 End Class

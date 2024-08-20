@@ -872,6 +872,12 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_TblArbol_Asociaciones.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Inventario.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Sector.vb" />
+    <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Cambio precio\Frm_AsisCompra_CambioPrecio.Designer.vb">
+      <DependentUpon>Frm_AsisCompra_CambioPrecio.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Cambio precio\Frm_AsisCompra_CambioPrecio.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Despachos\Clases\Cl_Despachos.vb" />
     <Compile Include="03 Sistemas\FTP\Cl_Ftp.vb" />
     <Compile Include="03 Sistemas\FTP\Frm_FTP_Conexion.Designer.vb">
@@ -4727,6 +4733,9 @@
       <DependentUpon>Frm_Configuracion_Gral.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Cambio precio\Frm_AsisCompra_CambioPrecio.resx">
+      <DependentUpon>Frm_AsisCompra_CambioPrecio.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\FTP\Frm_FTP_Conexion.resx">
       <DependentUpon>Frm_FTP_Conexion.vb</DependentUpon>
     </EmbeddedResource>
@@ -8202,6 +8211,7 @@
     <None Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Recursos\Sql\Informe Ventas x Perido Nivel Detalle Cubo Actualizacion2.sql" />
     <None Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Recursos\Sql\Informe Ventas x Perido Nivel Detalle Cubo Actualizacion3 Clasificaciones.sql" />
     <None Include="03 Sistemas\Compras\Asistente de compras 2.0\Recursos\Sql\SQLQuery Reabastecer entre bodegas.sql" />
+    <None Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Cambio precio\Sql\SQLQuery_RevCambioPrecioXCodMadre.sql" />
     <Content Include="03 Sistemas\Compras\Asistente de compras 2.0\Recursos\Html\Crear Html Proveedores Con Productos Sin Stock.htm" />
     <Content Include="03 Sistemas\Compras\Asistente de compras 2.0\Recursos\Sql\SQLQuery Info Estadistica X Producto Compra.sql" />
     <None Include="03 Sistemas\Compras\Asistente de compras 2.0\Recursos\Sql\SQLQuery Sacar la velocidad de venta mensual Media2.sql" />
