@@ -4015,6 +4015,10 @@ Public Class Frm_Formulario_Documento
         End If
 
         Dim _Es_Usuario_Xdefecto As Boolean = (Trim(_RowEntidad.Item("KOEN")) = Trim(_Koen_Xdefecto) And Trim(_RowEntidad.Item("SUEN")) = Trim(_Suen_Xdefecto))
+        Dim _Conservar_Vendedor_No_Preguntar As Boolean = _Global_Row_Configuracion_Estacion.Item("Conservar_Vendedor_No_Preguntar")
+        Dim _Cambiar_Vendedor_Doc = _Cambiar_Vendedor
+
+        _CodVendedor = _Kofuen
 
         If Not _Es_Usuario_Xdefecto Then
 
@@ -4027,15 +4031,9 @@ Public Class Frm_Formulario_Documento
                         Consulta_sql = "Select Top 1 * From TABFU Where KOFU = '" & _Kofuen & "'"
                         Dim _RowVendedor As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-                        _CodVendedor = _Kofuen
-
-                        Dim _Cambiar_Vendedor_Doc = True
-
                         _Cambiar_Vendedor = Not _Ejecutar_Creacion_Automaticas_Desde_Doc_Origen
 
                         If _Cambiar_Vendedor Then
-
-                            Dim _Conservar_Vendedor_No_Preguntar As Boolean = _Global_Row_Configuracion_Estacion.Item("Conservar_Vendedor_No_Preguntar")
 
                             If Not _Conservar_Vendedor_No_Preguntar Then
 
@@ -4088,22 +4086,22 @@ Public Class Frm_Formulario_Documento
 
                             End If
 
-                            If _Cambiar_Vendedor_Doc Then
+                            'If _Cambiar_Vendedor_Doc Then
 
-                                If _Post_Venta Then
+                            '    If _Post_Venta Then
 
-                                    _TblEncabezado.Rows(0).Item("CodFuncionario") = _CodVendedor
+                            '        _TblEncabezado.Rows(0).Item("CodFuncionario") = _CodVendedor
 
-                                End If
+                            '    End If
 
-                                For Each _Fila As DataRow In _TblDetalle.Rows
+                            '    For Each _Fila As DataRow In _TblDetalle.Rows
 
-                                    _Fila.Item("CodFuncionario") = _CodVendedor
-                                    _Fila.Item("CodVendedor") = _CodVendedor
+                            '        _Fila.Item("CodFuncionario") = _CodVendedor
+                            '        _Fila.Item("CodVendedor") = _CodVendedor
 
-                                Next
+                            '    Next
 
-                            End If
+                            'End If
 
                         End If
 
@@ -4112,6 +4110,23 @@ Public Class Frm_Formulario_Documento
                 End If
 
             End If
+
+        End If
+
+        If _Cambiar_Vendedor_Doc Then
+
+            If _Post_Venta Then
+
+                _TblEncabezado.Rows(0).Item("CodFuncionario") = _CodVendedor
+
+            End If
+
+            For Each _Fila As DataRow In _TblDetalle.Rows
+
+                _Fila.Item("CodFuncionario") = _CodVendedor
+                _Fila.Item("CodVendedor") = _CodVendedor
+
+            Next
 
         End If
 

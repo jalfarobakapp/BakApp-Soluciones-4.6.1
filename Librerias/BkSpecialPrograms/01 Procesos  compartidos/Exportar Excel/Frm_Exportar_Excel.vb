@@ -438,9 +438,13 @@ Public Class Frm_Exportar_Excel
 
                 'Merged range.
 
-                For i = 0 To _columna - 1
-                    Wbook.Worksheets(_Nro_Hoja).Columns(i).Autofit()
-                Next
+                If _fila < 20000 Then
+
+                    For i = 0 To _columna - 1
+                        Wbook.Worksheets(_Nro_Hoja).Columns(i).Autofit()
+                    Next
+
+                End If
 
                 _Nro_Hoja += 1
 

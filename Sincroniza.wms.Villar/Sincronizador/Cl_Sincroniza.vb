@@ -256,6 +256,15 @@ Public Class Cl_Sincroniza
 
             _Cl_Stmp.Zw_Stmp_Enc.Fecha_Facturar = FechaDelServidor()
 
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Det Set " &
+                           "Cantidad = 0,Caprco1_Real = 0,Caprco2_Real = 0,Pickeado = 0,CodFuncionario_Pickea = '', EnProceso = 0" & vbCrLf &
+                           "Where Id_Enc = " & _Id_Enc & vbCrLf &
+                           "Delete " & _Global_BaseBk & "Zw_Stmp_DetPick" & vbCrLf &
+                           "Where Id_Enc = " & _Id_Enc & vbCrLf &
+                           "Delete MEVENTO Where ARCHIRVE = 'MAEEDO' And IDRVE = " & _Idmaeedo & vbCrLf &
+                           "Delete MEVENTO Where ARCHIRVE = 'MAEDDO' And IDRVE In (Select IDMAEDDO From MAEDDO Where IDMAEEDO = " & _Idmaeedo & ")"
+            _SqlRandom.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql, False)
+
             Dim _Mensaje As New LsValiciones.Mensajes
 
             _Mensaje = _Cl_Stmp.Fx_Revisar_WMSVillar_Completadas(_Idmaeedo, "NVV", _Nudo, Cadena_ConexionSQL_Server_Wms)
