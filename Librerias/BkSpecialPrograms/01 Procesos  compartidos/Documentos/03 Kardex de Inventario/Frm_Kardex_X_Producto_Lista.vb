@@ -162,7 +162,7 @@ Public Class Frm_Kardex_X_Producto_Lista
                                MP.RLUD,
                                Isnull( TP.PP01UD,0) As PP01UD,
                                Isnull( TP.PP01UD,0) As PP02UD
-                          FROM MAEPR MP INNER JOIN MAEPREM 
+                          FROM MAEPR MP WITH (NOLOCK) INNER JOIN MAEPREM WITH (NOLOCK)
                             ON MAEPREM.KOPR=MP.KOPR 
                             AND MAEPREM.EMPRESA='" & ModEmpresa & "'  
                                 LEFT JOIN TABPRE TP 

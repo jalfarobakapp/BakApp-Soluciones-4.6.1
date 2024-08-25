@@ -562,7 +562,7 @@ Public Class Frm_BuscarDocumento_Mt
                         ELSE (CAPRCO2-(CAPRAD2+CAPREX2))
                         END     
                         AS SALDO, -- Saldo Cantidad
-                        CASE UDTRPR WHEN 1 THEN UD01PR ELSE UD02PR END AS UD,PPPRNE FROM MAEDDO WHERE IDMAEEDO = " & Idmaeedo
+                        CASE UDTRPR WHEN 1 THEN UD01PR ELSE UD02PR END AS UD,PPPRNE FROM MAEDDO WITH ( NOLOCK ) WHERE IDMAEEDO = " & Idmaeedo
 
         With Grilla_Detalle
 

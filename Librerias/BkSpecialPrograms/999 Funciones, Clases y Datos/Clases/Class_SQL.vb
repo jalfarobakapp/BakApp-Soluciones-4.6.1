@@ -328,7 +328,7 @@ Public Class Class_SQL
                 ' los documentos, filtrándolo mediante su
                 ' correspondiente campo identificador.
                 '
-                cmd.CommandText = "SELECT " & _Campo & " From " & _Tabla & " WHERE " & _Condicion
+                cmd.CommandText = "SELECT " & _Campo & " From " & _Tabla & " WITH (NOLOCK) WHERE " & _Condicion
                 ' Abrimos la conexión.
                 cn.Open()
                 ' Creamos un DataReader.
@@ -576,7 +576,7 @@ Public Class Class_SQL
             _Condicion = vbCrLf & "And " & _Condicion
         End If
 
-        Dim _Sql As String = "Select Count(*) As Cuenta From " & _Tabla & " Where 1 > 0 " & _Condicion
+        Dim _Sql As String = "Select Count(*) As Cuenta From " & _Tabla & " WITH (NOLOCK) Where 1 > 0 " & _Condicion
 
         Dim _RowTabpre As DataRow = Fx_Get_DataRow(_Sql, _Mostrar_Mensaje)
 
@@ -598,7 +598,7 @@ Public Class Class_SQL
             _Condicion = vbCrLf & "And " & _Condicion
         End If
 
-        Dim _Sql As String = "Select Count(*) As Cuenta From " & _Tabla & " Where 1 > 0 " & _Condicion
+        Dim _Sql As String = "Select Count(*) As Cuenta From " & _Tabla & " WITH (NOLOCK) Where 1 > 0 " & _Condicion
 
         Dim _RowTabpre As DataRow = Fx_Get_DataRow(_Sql, False)
 

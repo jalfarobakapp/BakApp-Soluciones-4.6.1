@@ -527,51 +527,51 @@
 
             _Llena_Tabimpr =
 "Update #Paso_Tabim Set Compras = (Case When ISNULL(NOAPLICEN,'') = '' Then 'Si' When NOAPLICEN like '%compras%' Then 'No' Else 'Si' End )
-From TABIMPR Where KOPR = '" & _kopr & "' And Codigo = KOIM
+From TABIMPR WITH (NOLOCK) Where KOPR = '" & _kopr & "' And Codigo = KOIM
 Update #Paso_Tabim Set Ventas = (Case When ISNULL(NOAPLICEN,'') = '' Then 'Si' When NOAPLICEN like '%ventas%' Then 'No' Else 'Si' End )
-From TABIMPR Where KOPR = '" & _kopr & "' And Codigo = KOIM
+From TABIMPR WITH (NOLOCK) Where KOPR = '" & _kopr & "' And Codigo = KOIM
 Update #Paso_Tabim Set Stock = (Case When ISNULL(NOAPLICEN,'') = '' Then 'Si' When NOAPLICEN like '%stock%' Then 'No' Else 'Si' End )
-From TABIMPR Where KOPR = '" & _kopr & "' And Codigo = KOIM
+From TABIMPR WITH (NOLOCK) Where KOPR = '" & _kopr & "' And Codigo = KOIM
 Update #Paso_Tabim Set Boleta = (Case When ISNULL(NOAPLICEN,'') = '' Then 'Si' When NOAPLICEN like '%BSV,BLV%' Then 'No' Else 'Si' End )
-From TABIMPR Where KOPR = '" & _kopr & "' And Codigo = KOIM"
+From TABIMPR WITH (NOLOCK) Where KOPR = '" & _kopr & "' And Codigo = KOIM"
 
         End If
 
-        Consulta_sql = "If Not Exists(Select * From MAEFICHA Where KOPR = '" & _kopr & "')" & vbCrLf &
+        Consulta_sql = "If Not Exists(Select * From MAEFICHA WITH (NOLOCK) Where KOPR = '" & _kopr & "')" & vbCrLf &
                        "Begin" & vbCrLf &
-                       "Insert Into MAEFICHA (KOPR,NOKOPR,FICHA) Select KOPR,NOKOPR,'' From MAEPR Where KOPR = '" & _kopr & "'" & vbCrLf &
+                       "Insert Into MAEFICHA (KOPR,NOKOPR,FICHA) Select KOPR,NOKOPR,'' From MAEPR WITH (NOLOCK) Where KOPR = '" & _kopr & "'" & vbCrLf &
                        "End" & vbCrLf &
-                       "If Not Exists(Select * From MAEFICHD Where KOPR = '" & _kopr & "')" & vbCrLf &
+                       "If Not Exists(Select * From MAEFICHD WITH (NOLOCK) Where KOPR = '" & _kopr & "')" & vbCrLf &
                        "Begin" & vbCrLf &
-                       "Insert Into MAEFICHD (KOPR,FICHA) Select KOPR,'' From MAEPR Where KOPR = '" & _kopr & "'" & vbCrLf &
+                       "Insert Into MAEFICHD (KOPR,FICHA) Select KOPR,'' From MAEPR WITH (NOLOCK) Where KOPR = '" & _kopr & "'" & vbCrLf &
                        "End" & vbCrLf &
                        "-- 0" & vbCrLf &
-                       "Select * From MAEPR Where KOPR = '" & _kopr & "'" & vbCrLf &
+                       "Select * From MAEPR WITH (NOLOCK) Where KOPR = '" & _kopr & "'" & vbCrLf &
                        "-- 1" & vbCrLf &
-                       "Select * From MAEPREM Where KOPR = '" & _kopr & "'" & vbCrLf &
+                       "Select * From MAEPREM WITH (NOLOCK) Where KOPR = '" & _kopr & "'" & vbCrLf &
                        "-- 2" & vbCrLf &
-                       "Select KOPR,Isnull(FICHA,'') As FICHA From MAEFICHD Where KOPR = '" & _kopr & "'" & vbCrLf &
+                       "Select KOPR,Isnull(FICHA,'') As FICHA From MAEFICHD WITH (NOLOCK) Where KOPR = '" & _kopr & "'" & vbCrLf &
                        "-- 3" & vbCrLf &
-                       "Select * From MAEPROBS Where KOPR = '" & _kopr & "'" & vbCrLf &
+                       "Select * From MAEPROBS WITH (NOLOCK) Where KOPR = '" & _kopr & "'" & vbCrLf &
                        "-- 4" & vbCrLf &
-                       "Select Cast((Select COUNT(*) From MAEPREM as MP" & vbCrLf &
+                       "Select Cast((Select COUNT(*) From MAEPREM MP WITH (NOLOCK)" & vbCrLf &
                        "Where MP.EMPRESA = EMPRESA AND MP.KOPR = '" & _Codigo & "') As Bit) as 'Select',EMPRESA AS Codigo,RAZON as Descripcion" & vbCrLf &
-                       "From CONFIGP" & vbCrLf &
+                       "From CONFIGP WITH (NOLOCK)" & vbCrLf &
                        "-- 5" & vbCrLf &
-                       "Select Cast((Select COUNT(*) From TABBOPR as TB" & vbCrLf &
+                       "Select Cast((Select COUNT(*) From TABBOPR TB WITH (NOLOCK)" & vbCrLf &
                        "Where TB.EMPRESA = TTB.EMPRESA AND TB.KOSU = TTB.KOSU AND TB.KOBO = TTB.KOBO AND KOPR = '" & _Codigo & "') As Bit) as 'Select'," & vbCrLf &
                        "EMPRESA+'-'+KOSU+'-'+KOBO as Codigo,NOKOBO as Descripcion" & vbCrLf &
-                       "From TABBO AS TTB" & vbCrLf &
+                       "From TABBO TTB WITH (NOLOCK)" & vbCrLf &
                        "-- 6" & vbCrLf &
-                       "Select Cast((Select COUNT(*) From TABPRE TP" & vbCrLf &
+                       "Select Cast((Select COUNT(*) From TABPRE TP WITH (NOLOCK)" & vbCrLf &
                        "Where TP.KOLT = TPP.KOLT And KOPR = '" & _Codigo & "' ) As Bit) AS 'Select', KOLT as Codigo,NOKOLT as Descripcion" & vbCrLf &
-                       "From TABPP TPP" & vbCrLf &
+                       "From TABPP TPP WITH (NOLOCK)" & vbCrLf &
                        "-- 7" & vbCrLf &
-                       "Select Cast((Select COUNT(*) From TABIMPR TIP
+                       "Select Cast((Select COUNT(*) From TABIMPR TIP WITH (NOLOCK)
 Where TI.KOIM = TIP.KOIM And TIP.KOPR = '" & _kopr & "' ) As Bit) As 'Select',KOIM as Codigo,NOKOIM as Descripcion,
 	  CAST('' As varchar(2)) As Compras,CAST('' As varchar(2)) As Ventas,CAST('' As varchar(2)) As Stock,CAST('' As varchar(2)) As Boleta,POIM,MEIM
 Into #Paso_Tabim
-From TABIM TI
+From TABIM TI WITH (NOLOCK)
 
 " & _Llena_Tabimpr & "
 
@@ -629,7 +629,7 @@ Drop Table #Paso_Tabim"
             _RowProducto = _Tbl_Maepr.NewRow()
             _RowProducto.Item("KOPR") = String.Empty
             _RowProducto.Item("TIPR") = "FPN"
-            _RowProducto.Item("KOPRRA") = numero_(Val(_Sql.Fx_Trae_Dato("MAEPR WITH ( NOLOCK )", "MAX(KOPRRA)+1")), 6)
+            _RowProducto.Item("KOPRRA") = numero_(Val(_Sql.Fx_Trae_Dato("MAEPR", "MAX(KOPRRA)+1")), 6)
             _RowProducto.Item("POIVPR") = _Global_Row_Configp.Item("IVAPAIS")
             _RowProducto.Item("PODEIVPR") = False
             _RowProducto.Item("PRRG") = False

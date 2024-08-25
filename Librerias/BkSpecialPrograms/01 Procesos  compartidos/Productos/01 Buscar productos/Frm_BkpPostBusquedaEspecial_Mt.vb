@@ -1076,7 +1076,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                 Dim _Sigla = _Emp & _Suc & _Bod
 
                 _Sql_Query +=
-                            "ISNULL((SELECT TOP 1 Mt.STFI1 FROM MAEST Mt" & Space(1) &
+                            "ISNULL((SELECT TOP 1 Mt.STFI1 FROM MAEST Mt WITH (NOLOCK)" & Space(1) &
                             "WHERE Mt.EMPRESA = '" & _Emp & "' AND Mt.KOSU = '" & _Suc & "' AND " & vbCrLf &
                             "Mt.KOBO = '" & _Bod & "' AND Mt.KOPR = Mp.KOPR),0) AS [STOCK_Ud1_" & _Sigla & "]," & vbCrLf
 
@@ -1119,7 +1119,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
             Consulta_sql = Replace(Consulta_sql, "#Filtro_Productos#", _Filtro_Productos)
 
             If TraerTodosLosProductos Then
-                Consulta_sql = Replace(Consulta_sql, "Inner Join MAEPREM Mpn On Mpn.EMPRESA = @Empresa And Mpn.KOPR = Mp.KOPR ", "")
+                Consulta_sql = Replace(Consulta_sql, "Inner Join MAEPREM Mpn WITH (NOLOCK) On Mpn.EMPRESA = @Empresa And Mpn.KOPR = Mp.KOPR ", "")
             End If
 
             Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
@@ -1470,7 +1470,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
             Dim _Ficha As String
 
-            Consulta_sql = "Select * From MAEFICHD Where KOPR = '" & _Codigo & "' Order by SEMILLA"
+            Consulta_sql = "Select * From MAEFICHD WITH (NOLOCK) Where KOPR = '" & _Codigo & "' Order by SEMILLA"
 
             Dim _Tbl_Maefichd As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -1512,7 +1512,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
         If Not _Prct Then
 
-            Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
+            Consulta_sql = "Select * From MAEPR WITH (NOLOCK) Where KOPR = '" & _Codigo & "'"
             _RowProducto = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         End If

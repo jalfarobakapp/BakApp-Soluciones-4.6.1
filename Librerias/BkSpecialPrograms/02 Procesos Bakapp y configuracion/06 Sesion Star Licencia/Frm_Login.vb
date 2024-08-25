@@ -345,7 +345,7 @@ Public Class Frm_Login
 
         Consulta_sql = "Select Distinct Ce.EMPRESA As Padre,Ce.EMPRESA+' - '+Cp.RAZON As Hijo
                         Into #Paso
-                        From CONFIEST Ce
+                        From CONFIEST Ce WITH (NOLOCK)
                         Inner Join CONFIGP Cp On Cp.EMPRESA = Ce.EMPRESA 
                         Where MODALIDAD <> '  '
                         Order by Ce.EMPRESA
@@ -353,7 +353,7 @@ Public Class Frm_Login
                         Select Ce.EMPRESA,Cp.RAZON,'MO-' + MODALIDAD As PERMISO,MODALIDAD,Ts.NOKOSU,Tb.NOKOBO,ESUCURSAL,EBODEGA,ECAJA,ELISTAVEN,
                                NLISTAVEN,ELISTACOM,NLISTACOM,ELISTAINT,NLISTAINT
                         Into #Paso1
-                        From CONFIEST Ce
+                        From CONFIEST Ce WITH (NOLOCK)
                         Inner Join CONFIGP Cp On Cp.EMPRESA = Ce.EMPRESA 
                         Left Join TABSU Ts On Ts.EMPRESA = Ce.EMPRESA And Ts.KOSU = Ce.ESUCURSAL
                         Left Join TABBO Tb On Tb.EMPRESA = Ce.EMPRESA And Tb.KOSU = Ce.ESUCURSAL And Tb.KOBO = Ce.EBODEGA

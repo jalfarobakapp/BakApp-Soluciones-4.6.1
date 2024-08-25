@@ -225,7 +225,7 @@ Public Class Frm_Ver_Documento_Pagos
 
                     .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
 
-                    Consulta_sql = "Select * From CONFIEST Where MODALIDAD = '  '"
+                    Consulta_sql = "Select * From CONFIEST WITH (NOLOCK) Where MODALIDAD = '  '"
                     Dim _Row_Confiest As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                     Dim _Cuotacomer As Boolean = _Row_Confiest.Item("CUOTACOMER")

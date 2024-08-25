@@ -117,7 +117,7 @@ Public Class Cl_Enviar_Impresion_Diablito
                     Dim _NombreEquipo_Imprime = _Row.Item("NombreEquipo_Imprime")
 
                     Dim _Query = "Select ESUCURSAL,EBODEGA 
-                                    From CONFIEST
+                                    From CONFIEST WITH (NOLOCK)
                                     Inner Join " & _Global_BaseBk & "Zw_EstacionesBkp On Modalidad_X_Defecto = MODALIDAD
                                     Where NombreEquipo = '" & _NombreEquipo_Imprime & "'"
                     Dim _Row_Eim As DataRow = _Sql.Fx_Get_DataRow(_Query)
@@ -147,7 +147,7 @@ Public Class Cl_Enviar_Impresion_Diablito
                     Dim _NombreEquipo_Imprime = _Row.Item("NombreEquipo_Imprime")
 
                     Dim _Query = "Select ESUCURSAL,EBODEGA 
-                                    From CONFIEST
+                                    From CONFIEST WITH (NOLOCK)
                                     Inner Join " & _Global_BaseBk & "Zw_EstacionesBkp On Modalidad_X_Defecto = MODALIDAD
                                     Where NombreEquipo = '" & _NombreEquipo_Imprime & "'"
                     Dim _Row_Eim As DataRow = _Sql.Fx_Get_DataRow(_Query)

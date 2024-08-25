@@ -375,7 +375,7 @@ Public Class Frm_MtCreacionDeProducto
         Txt_Largo.Text = 0
         Txt_Ancho.Text = 0
 
-        Txt_Koprra.Text = numero_(Val(_Sql.Fx_Trae_Dato("MAEPR WITH ( NOLOCK )", "MAX(KOPRRA)+1")), 6)
+        Txt_Koprra.Text = numero_(Val(_Sql.Fx_Trae_Dato("MAEPR", "MAX(KOPRRA)+1")), 6)
 
         SuperTabControl1.SelectedTabIndex = 0
 

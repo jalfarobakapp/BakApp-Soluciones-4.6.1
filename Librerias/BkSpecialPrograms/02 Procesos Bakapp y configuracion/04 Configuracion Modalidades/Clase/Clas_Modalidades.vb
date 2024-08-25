@@ -66,7 +66,7 @@ Public Class Clas_Modalidades
         Try
 
             Consulta_sql = "Select top 1 Cest.*,Cfgp.RAZON  
-                        From CONFIEST Cest Inner Join CONFIGP Cfgp On Cest.EMPRESA = Cfgp.EMPRESA  
+                        From CONFIEST Cest WITH (NOLOCK) Inner Join CONFIGP Cfgp On Cest.EMPRESA = Cfgp.EMPRESA  
                         Where Cest.EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'"
 
             _Global_Row_Modalidad = _Sql.Fx_Get_DataRow(Consulta_sql, _Mostrar_Error)

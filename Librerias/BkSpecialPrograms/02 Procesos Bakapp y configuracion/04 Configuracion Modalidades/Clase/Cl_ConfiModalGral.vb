@@ -146,7 +146,7 @@ Public Class Cl_ConfiModalGral
 
         Dim _Confiest As New Tablas_Configuracion.CONFIEST
 
-        Consulta_sql = "Select * From CONFIEST Where EMPRESA = '" & _Empresa & "' And MODALIDAD = '" & _Modalidad & "'"
+        Consulta_sql = "Select * From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & _Empresa & "' And MODALIDAD = '" & _Modalidad & "'"
         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         With _Confiest

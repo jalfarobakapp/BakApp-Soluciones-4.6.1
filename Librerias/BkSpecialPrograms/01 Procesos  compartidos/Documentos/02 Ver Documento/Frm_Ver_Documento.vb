@@ -759,7 +759,7 @@ Public Class Frm_Ver_Documento
         Btn_HabilitarFacturacion.Visible = False
 
         If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Docu_Ent") Then
-            Consulta_sql = "Select Dce.*,Isnull(NOKOFU,'') As NomFunHabilita From " & _Global_BaseBk & "Zw_Docu_Ent Dce" & vbCrLf &
+            Consulta_sql = "Select Dce.*,Isnull(NOKOFU,'') As NomFunHabilita From " & _Global_BaseBk & "Zw_Docu_Ent Dce WITH (NOLOCK)" & vbCrLf &
                            "Left Join TABFU On Dce.FunAutorizaFac = KOFU" & vbCrLf &
                            "Where Idmaeedo = " & _Idmaeedo
             _Row_Docu_Ent = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -2595,7 +2595,7 @@ Public Class Frm_Ver_Documento
 
     Function Fx_Origen(_Idmaeedo As Integer)
 
-        Consulta_sql = "Select Distinct IDRST From MAEDDO" & vbCrLf &
+        Consulta_sql = "Select Distinct IDRST From MAEDDO WITH (NOLOCK)" & vbCrLf &
                        "Where ARCHIDRST = 'MAEDDO' And IDMAEEDO = " & _Idmaeedo
         Dim _TblDetalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -3341,7 +3341,7 @@ Public Class Frm_Ver_Documento
         _Filtro_Idmaeddo_Dori = _Filtro_Idmaeddo_Dori.ToString.Replace("%%", "0")
 
         Consulta_sql = "Select Id_Despacho From " & _Global_BaseBk & "Zw_Despachos_Doc_Det 
-                        Where Idmaeedo In (Select IDMAEEDO From MAEDDO Where IDMAEDDO In " & _Filtro_Idmaeddo_Dori & ") Or Idmaeedo = " & _Idmaeedo
+                        Where Idmaeedo In (Select IDMAEEDO From MAEDDO WITH (NOLOCK) Where IDMAEDDO In " & _Filtro_Idmaeddo_Dori & ") Or Idmaeedo = " & _Idmaeedo
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If IsNothing(_Tbl) Then
@@ -4839,7 +4839,7 @@ Public Class Frm_Ver_Documento
         End If
 
         Consulta_sql = "Select Id_Despacho From " & _Global_BaseBk & "Zw_Despachos_Doc_Det 
-                        Where Idmaeedo In (Select IDMAEEDO From MAEDDO Where IDMAEDDO In " & _Filtro_Idmaeddo_Dori & ") Or Idmaeedo = " & _Idmaeedo
+                        Where Idmaeedo In (Select IDMAEEDO From MAEDDO WITH (NOLOCK) Where IDMAEDDO In " & _Filtro_Idmaeddo_Dori & ") Or Idmaeedo = " & _Idmaeedo
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Filtro_Id_Despacho As String = Generar_Filtro_IN(_Tbl, "", "Id_Despacho", False, False, "")

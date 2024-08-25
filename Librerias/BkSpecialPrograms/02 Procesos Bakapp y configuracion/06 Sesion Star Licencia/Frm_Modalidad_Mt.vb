@@ -16,7 +16,7 @@ Public Class Frm_Modalidad_Mt
                 Modalidad = CmbModalidad.SelectedValue.ToString
 
                 Consulta_sql = "Select top 1 Cest.*,Cfgp.RAZON  
-                                From CONFIEST Cest Inner Join CONFIGP Cfgp On Cest.EMPRESA = Cfgp.EMPRESA  
+                                From CONFIEST Cest WITH (NOLOCK) Inner Join CONFIGP Cfgp On Cest.EMPRESA = Cfgp.EMPRESA  
                                 Where MODALIDAD = '" & Modalidad & "'"
                 _Global_Row_Modalidad = _Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -76,7 +76,7 @@ Public Class Frm_Modalidad_Mt
 
     Function RevModalidad(ByVal Modalidad As String, ByVal Empresa As String)
 
-        Consulta_sql = "Select Top 1 * From CONFIEST Where MODALIDAD = '" & Modalidad & "'"
+        Consulta_sql = "Select Top 1 * From CONFIEST WITH (NOLOCK) Where MODALIDAD = '" & Modalidad & "'"
         Dim _RowConfiest As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         TxtSucursal.Text = _RowConfiest.Item("ESUCURSAL")

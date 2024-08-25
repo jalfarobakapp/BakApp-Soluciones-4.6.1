@@ -276,9 +276,9 @@ Public Class Frm_RecargosXProd
         Dim _Filtro_Idmaeedo = Generar_Filtro_IN(_Tbl_DocSeleccionados, "", "IDMAEEDO", False, False, "")
 
         Consulta_Sql = "Select Distinct Ddo.IDMAEEDO 
-                        From MAEDDO Ddo
-                        Left Join TABTIDO Tdo On Ddo.TIDO = Tdo.TIDO
-                        Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO
+                        From MAEDDO Ddo WITH (NOLOCK)
+                        Left Join TABTIDO Tdo WITH (NOLOCK) On Ddo.TIDO = Tdo.TIDO
+                        Inner Join MAEEDO Edo WITH (NOLOCK) On Edo.IDMAEEDO = Ddo.IDMAEEDO
                         Where 
 	                        Ddo.EMPRESA = '" & ModEmpresa & "' 
                         And Edo.TIDO = 'FCV'

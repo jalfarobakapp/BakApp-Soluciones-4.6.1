@@ -30,11 +30,11 @@ SELECT TOP 100
        Cast('' As Varchar(Max)) As 'Ficha'
 
 Into #Paso_Maepr      
-    From MAEPR Mp
-        Inner Join MAEPREM Mpn On Mpn.EMPRESA = @Empresa And Mpn.KOPR = Mp.KOPR 
-		    Left Join TABPRE Lp On Lp.KOLT = @Lista And Lp.KOPR = Mp.KOPR
-			    Left Join TABCARAC Tc1 On Tc1.KOTABLA = 'CLALIBPR' AND Tc1.KOCARAC = Mp.CLALIBPR
-				    Left Join TABBOPR Tb On Tb.EMPRESA = @Empresa And Tb.KOSU = @Sucursal And Tb.KOBO = @Bodega And Tb.KOPR = Mp.KOPR
+    From MAEPR Mp WITH (NOLOCK)
+        Inner Join MAEPREM Mpn WITH (NOLOCK) On Mpn.EMPRESA = @Empresa And Mpn.KOPR = Mp.KOPR 
+		    Left Join TABPRE Lp WITH (NOLOCK) On Lp.KOLT = @Lista And Lp.KOPR = Mp.KOPR
+			    Left Join TABCARAC Tc1 WITH (NOLOCK) On Tc1.KOTABLA = 'CLALIBPR' AND Tc1.KOCARAC = Mp.CLALIBPR
+				    Left Join TABBOPR Tb WITH (NOLOCK) On Tb.EMPRESA = @Empresa And Tb.KOSU = @Sucursal And Tb.KOBO = @Bodega And Tb.KOPR = Mp.KOPR
                         --Left Join MAEFICHA Mf On Mf.KOPR = Mp.KOPR
                         
 WHERE 1 > 0

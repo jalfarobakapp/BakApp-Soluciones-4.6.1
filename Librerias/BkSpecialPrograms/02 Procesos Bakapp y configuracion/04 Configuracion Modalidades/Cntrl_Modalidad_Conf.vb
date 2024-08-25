@@ -17,10 +17,10 @@ Public Class Cntrl_Modalidad_Conf
         '_Sql.Ej_consulta_IDU(Consulta_sql)
 
 
-        Consulta_sql = "Select MODALIDAD,(Select NOKOSU FROM TABSU Z2 " & _
-                       "WHERE Z2.EMPRESA = Z1.EMPRESA AND Z2.KOSU = Z1.ESUCURSAL) AS Sucursal," & _
-                       "EBODEGA as Bodega" & vbCrLf & _
-                       "From CONFIEST Z1 Where EMPRESA = '" & ModEmpresa & "'" & vbCrLf & _
+        Consulta_sql = "Select MODALIDAD,(Select NOKOSU FROM TABSU Z2 " &
+                       "WHERE Z2.EMPRESA = Z1.EMPRESA AND Z2.KOSU = Z1.ESUCURSAL) AS Sucursal," &
+                       "EBODEGA as Bodega" & vbCrLf &
+                       "From CONFIEST Z1 WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "'" & vbCrLf &
                        "And MODALIDAD <> '  '"
 
         With Grilla

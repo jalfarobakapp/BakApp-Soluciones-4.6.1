@@ -13643,7 +13643,7 @@ Public Class Frm_Formulario_Documento
 
                         If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") And _Tido_Relacionado = "NVV" Then
 
-                            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Docu_Ent Where Idmaeedo = " & _Row_Doc_Relacionado.Item("IDMAEEDO")
+                            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Docu_Ent WITH (NOLOCK) Where Idmaeedo = " & _Row_Doc_Relacionado.Item("IDMAEEDO")
                             Dim _Row_Docu_Ent As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                             Dim _HabilitadaFac = False
@@ -14550,7 +14550,7 @@ Public Class Frm_Formulario_Documento
 
                 Dim _RowFormato As DataRow = Fx_Formato_Modalidad(Me, Modalidad, _Tido, True)
 
-                Consulta_sql = "Select Top 1 * From CONFIEST Where MODALIDAD = '" & Modalidad & "'"
+                Consulta_sql = "Select Top 1 * From CONFIEST WITH (NOLOCK) Where MODALIDAD = '" & Modalidad & "'"
                 Dim _Row_Modalidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                 Dim _Empresa As String = _Row_Modalidad.Item("EMPRESA")
@@ -15316,7 +15316,7 @@ Public Class Frm_Formulario_Documento
                             Dim _CodProductoDoc As String = Generar_Filtro_IN(_TblDetalle, "", "Codigo", False, False, "'")
                             Dim _Feer As String = Format(_TblEncabezado.Rows(0).Item("FechaRecepcion"), "yyyyMMdd")
 
-                            Consulta_sql = "Select Count(*) As Detalle From MAEDDO Ddo Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO" & vbCrLf &
+                            Consulta_sql = "Select Count(*) As Detalle From MAEDDO WITH (NOLOCK) Ddo Inner Join MAEEDO Edo WITH (NOLOCK) On Edo.IDMAEEDO = Ddo.IDMAEEDO" & vbCrLf &
                                    "Where Edo.ENDO = '" & _RowEntidad.Item("KOEN") & "' And Edo.SUENDO = '" & _RowEntidad.Item("SUEN") & "' " &
                                    "And Edo.FEER = '" & _Feer & "' And Ddo.KOPRCT In " & _CodProductoDoc &
                                    " And Ddo.TIPR = 'FPN' And Edo.TIDO In ('FCV','NVV','GDV','BLV')"
@@ -15816,7 +15816,7 @@ Public Class Frm_Formulario_Documento
         Dim _Filtro_Idmaeddo_Dori = Generar_Filtro_IN(_TblDetalle, "", "Idmaeddo_Dori", True, False, "")
 
         Consulta_sql = "Select Distinct Id_Despacho From " & _Global_BaseBk & "Zw_Despachos_Doc_Det 
-                                        Where (Idmaeedo In (Select IDMAEEDO From MAEDDO Where IDMAEDDO In " & _Filtro_Idmaeddo_Dori & ") Or Idmaeedo = " & _Idmaeedo & ")" & vbCrLf &
+                                        Where (Idmaeedo In (Select IDMAEEDO From MAEDDO WITH (NOLOCK) Where IDMAEDDO In " & _Filtro_Idmaeddo_Dori & ") Or Idmaeedo = " & _Idmaeedo & ")" & vbCrLf &
                     "And (CantCUd1 - (CantDUd1+CantEUd1+CantRUd1)) > 0"
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -15937,7 +15937,7 @@ Public Class Frm_Formulario_Documento
         Try
 
             Consulta_sql = "Select Distinct Id_Despacho,Idmaeedo From " & _Global_BaseBk & "Zw_Despachos_Doc_Det Where Idmaeedo In 
-                                (Select IDMAEEDO From MAEDDO Where IDMAEDDO in (Select IDRST From MAEDDO Where IDMAEEDO = " & _Idmaeedo & "))
+                                (Select IDMAEEDO From MAEDDO WITH (NOLOCK) Where IDMAEDDO in (Select IDRST From MAEDDO WITH (NOLOCK) Where IDMAEEDO = " & _Idmaeedo & "))
                                 And Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'"
             Dim _Tbl_Documentos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -16986,8 +16986,8 @@ Public Class Frm_Formulario_Documento
                 Try
 
                     Consulta_sql = "Select Id_Rem From " & _Global_BaseBk & "Zw_Remotas 
-	                                Where Idmaeedo In (Select IDMAEEDO From MAEDDO Where IDMAEDDO In " &
-                                    "(Select IDRST From MAEDDO Where IDMAEEDO = " & _Idmaeedo & ")) And Eliminada = 0"
+	                                Where Idmaeedo In (Select IDMAEEDO From MAEDDO WITH (NOLOCK) Where IDMAEDDO In " &
+                                    "(Select IDRST From MAEDDO WITH (NOLOCK) Where IDMAEEDO = " & _Idmaeedo & ")) And Eliminada = 0"
 
                     Dim _TblRemotasHr As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -17558,7 +17558,7 @@ Public Class Frm_Formulario_Documento
 
                             If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
 
-                                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Docu_Ent Where Idmaeedo = " & _IdMaeedo
+                                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Docu_Ent WITH (NOLOCK) Where Idmaeedo = " & _IdMaeedo
                                 Dim _Row_Docu_Ent As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                                 Dim _HabilitadaFac = False
@@ -17587,7 +17587,7 @@ Public Class Frm_Formulario_Documento
                             ' CERRAMOS EL DOCUMENTO PARA PODER TRABAJAR CON SUS PRODUCTOS
 
                             Dim Cerrar_Doc As New Clas_Cerrar_Documento
-                            Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Idmaeedo_Origen
+                            Consulta_sql = "Select * From MAEDDO WITH (NOLOCK) Where IDMAEEDO = " & _Idmaeedo_Origen
                             Dim _Tbl_Origen As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
                             Cerrar_Doc.Fx_Cerrar_Documento(_Idmaeedo_Origen, _Tbl_Origen)
 
@@ -17762,7 +17762,7 @@ Public Class Frm_Formulario_Documento
                             ' CERRAMOS EL DOCUMENTO PARA PODER TRABAJAR CON SUS PRODUCTOS
 
                             Dim Cerrar_Doc As New Clas_Cerrar_Documento
-                            Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Idmaeedo_Origen
+                            Consulta_sql = "Select * From MAEDDO WITH (NOLOCK) Where IDMAEEDO = " & _Idmaeedo_Origen
                             Dim _Tbl_Origen As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
                             Cerrar_Doc.Fx_Cerrar_Documento(_Idmaeedo_Origen, _Tbl_Origen)
 

@@ -238,9 +238,9 @@ Public Class Frm_Configuracion_Estacion_Numeracion_Doc
             Else
                 _Sql1 = "SELECT Cast(0 As Bit) As Editado,
                             '" & _Tido & "' As Tido,'" & _Notido & "' As 'NombreDocumento'," & vbCrLf &
-                        "Isnull((Select " & _Tido & " From CONFIEST Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'),'') As Numero," &
+                        "Isnull((Select " & _Tido & " From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'),'') As Numero," &
                         "Cast(0 As Bit) As Edit_Numero," & vbCrLf
-                _Sql2 = "Isnull((Select " & _Tido & " From CONFIEST Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'),'') As Numero_Old,'A' as Cmb" & vbCrLf
+                _Sql2 = "Isnull((Select " & _Tido & " From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'),'') As Numero_Old,'A' as Cmb" & vbCrLf
             End If
 
             Consulta_sql += _Sql1 & vbCrLf &
@@ -433,9 +433,9 @@ Public Class Frm_Configuracion_Estacion_Numeracion_Doc
             Else
                 _Sql1 = "SELECT Cast(0 As Bit) As Editado,
                             '" & _Tido & "' As Tido,'" & _Notido & "' As 'NombreDocumento'," & vbCrLf &
-                        "Isnull((Select " & _Tido & " From CONFIEST Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'),'') As Numero," &
+                        "Isnull((Select " & _Tido & " From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'),'') As Numero," &
                         "Cast(0 As Bit) As Edit_Numero," & vbCrLf
-                _Sql2 = "Isnull((Select " & _Tido & " From CONFIEST Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'),'') As Numero_Old,'A' as Cmb" & vbCrLf
+                _Sql2 = "Isnull((Select " & _Tido & " From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'),'') As Numero_Old,'A' as Cmb" & vbCrLf
             End If
 
             Consulta_sql += _Sql1 & vbCrLf &

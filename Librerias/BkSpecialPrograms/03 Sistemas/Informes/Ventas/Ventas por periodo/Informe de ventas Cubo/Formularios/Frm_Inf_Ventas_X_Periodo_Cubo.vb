@@ -862,11 +862,11 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
             If _Actualizar_Datos_Informe Then
 
-                Consulta_sql = "SELECT Count(IDMAEEDO) AS Doc_en_DDO FROM MAEDDO WHERE FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
+                Consulta_sql = "SELECT Count(IDMAEEDO) AS Doc_en_DDO FROM MAEDDO WITH (NOLOCK) WHERE FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
                             Format(Dtp_Fecha_Hasta.Value, "yyyyMMdd") & "'" & Space(1) &
                             "AND TIDO IN ('BLV','BLX','BSV','ESC','FCV','FDB','FDV','FDX','FDZ','FEE'," &
                             "'FEV','FVL','FVT','FVX','FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV','RIN')" & Space(1) &
-                            "And IDMAEEDO Not IN (Select IDMAEEDO From MAEEDO Where NUDONODEFI = 1)" &
+                            "And IDMAEEDO Not IN (Select IDMAEEDO From MAEEDO WITH (NOLOCK) Where NUDONODEFI = 1)" &
                             vbCrLf &
                             "SELECT Count(IDMAEEDO) As Doc_en_Paso FROM " & _Nombre_Tabla_Paso & Space(1) &
                             "WHERE " &
@@ -1079,7 +1079,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
                                "Select " & _Distinct & _Cp_Codigo & " As CODIGO," & _Cp_Descripcion & " As DESCRIPCION," &
                                "CAST('' As Varchar(3)) As VND,CAST(0 as Float) As Porc," & _Campo_Mostrar & " As TOTAL" & vbCrLf &
                                "Into #Paso1" & vbCrLf &
-                               "From " & _Nombre_Tabla_Paso & vbCrLf &
+                               "From " & _Nombre_Tabla_Paso & " WITH (NOLOCK)" & vbCrLf &
                                "Where 1 > 0" & vbCrLf &
                                _SqlFiltro &
                                vbCrLf &
