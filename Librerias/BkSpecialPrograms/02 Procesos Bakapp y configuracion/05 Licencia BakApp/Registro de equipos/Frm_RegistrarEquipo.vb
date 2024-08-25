@@ -499,7 +499,7 @@ Public Class Frm_RegistrarEquipo
 
         caract_combo(Cmb_Modalidad_X_Defecto)
         Consulta_sql = "SELECT '' AS Padre,'' As Hijo Union" & vbCrLf &
-                       "SELECT MODALIDAD AS Padre,MODALIDAD AS Hijo FROM CONFIEST WHERE EMPRESA = '" & ModEmpresa & "'" & vbCrLf &
+                       "SELECT MODALIDAD AS Padre,MODALIDAD AS Hijo FROM CONFIEST WITH (NOLOCK) WHERE EMPRESA = '" & ModEmpresa & "'" & vbCrLf &
                        "AND MODALIDAD <> '  '"
         Cmb_Modalidad_X_Defecto.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Modalidad_X_Defecto.SelectedValue = ""

@@ -504,7 +504,7 @@ Public Class Class_SQL
             End If
 
 
-            Dim _Sql As String = "SELECT TOP (1) " & _Campo & " AS CAMPO FROM " & _Tabla & vbCrLf &
+            Dim _Sql As String = "SELECT TOP (1) " & _Campo & " AS CAMPO FROM " & _Tabla & " WITH (NOLOCK) " & vbCrLf &
                                  "Where 1 > 0" & _Condicion
 
 

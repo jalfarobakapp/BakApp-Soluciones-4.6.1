@@ -135,7 +135,7 @@ Public Class Frm_Crear_Entidad_Mt
 
         Dim _Creditos_Mod As DataTable
 
-        Consulta_sql = "SELECT CRTO,CRSD,CRCH,CRLT,CRPA FROM CONFIEST WHERE MODALIDAD = '" & Modalidad & "'"
+        Consulta_sql = "SELECT CRTO,CRSD,CRCH,CRLT,CRPA FROM CONFIEST WITH (NOLOCK) WHERE MODALIDAD = '" & Modalidad & "'"
         _Creditos_Mod = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Txt_Crto.Text = _Creditos_Mod.Rows(0).Item("CRTO")

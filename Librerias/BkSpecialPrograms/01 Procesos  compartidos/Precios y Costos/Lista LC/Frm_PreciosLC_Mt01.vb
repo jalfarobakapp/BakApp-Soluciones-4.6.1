@@ -724,7 +724,18 @@ Public Class Frm_PreciosLC_Mt01
                            "FROM    " & TablaDePasoLista_LC & " Left Outer Join" & vbCrLf &
                            "TABPRE ON " & TablaDePasoLista_LC &
                            ".Codigo = TABPRE.KOPR AND " & TablaDePasoLista_LC & ".Lista = TABPRE.KOLT"
-            _Sql.Ej_consulta_IDU(Consulta_sql)
+
+            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+
+                Dim _Ippide As String = getIp()
+                Dim _Horagrab As String = Hora_Grab_fx(False)
+
+                Consulta_sql = "Insert Into TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,KOOP,ACCION)" & vbCrLf &
+                               "Select Distinct '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','LI000001','Grabación en Lista de Precios : '''+Lista+''''" & vbCrLf &
+                               "From " & TablaDePasoLista_LC
+                _Sql.Ej_consulta_IDU(Consulta_sql)
+
+            End If
 
             Consulta_sql = "Delete " & _Global_BaseBk & "Zw_ListaLC_ValPro Where Codigo = '" & Txtcodigo.Text & "'"
             _Sql.Ej_consulta_IDU(Consulta_sql)

@@ -2177,7 +2177,7 @@ Public Class Frm_Demonio_01
                         If _Cl_Asistente_Compras.Ejecutado_Domingo Then _FiltroModalidades = "('XXX')"
                     End If
 
-                    Consulta_sql = "Select MODALIDAD From CONFIEST Where MODALIDAD In " & _FiltroModalidades
+                    Consulta_sql = "Select MODALIDAD From CONFIEST WITH (NOLOCK) Where MODALIDAD In " & _FiltroModalidades
                     _TblModalidades = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     Dim _ModalidadOld As String = Modalidad

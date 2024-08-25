@@ -582,7 +582,7 @@ Public Class Clas_Pagar
             Return 0
         End Try
 
-        Consulta_sql = "Select * From CONFIEST Where MODALIDAD = '  '"
+        Consulta_sql = "Select * From CONFIEST WITH (NOLOCK) Where MODALIDAD = '  '"
         Dim _Row_Confiest As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Dim _Cuotacomer As Boolean = _Row_Confiest.Item("CUOTACOMER")
@@ -993,7 +993,7 @@ Public Class Clas_Pagar
             Return 0
         End Try
 
-        Consulta_sql = "Select * From CONFIEST Where MODALIDAD = '  '"
+        Consulta_sql = "Select * From CONFIEST WITH (NOLOCK) Where MODALIDAD = '  '"
         Dim _Row_Confiest As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Dim _Cuotacomer As Boolean = _Row_Confiest.Item("CUOTACOMER")

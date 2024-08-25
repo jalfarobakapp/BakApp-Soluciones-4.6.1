@@ -250,12 +250,6 @@ Public Class Cl_Sincroniza
 
             'Sb_AddToLog("Sincronizando notas", "Revisando NVV" & _Nudo, Txt_Log)
 
-            Dim _Cl_Stmp As New Cl_Stmp
-            _Cl_Stmp.Fx_Llenar_Encabezado(_Id_Enc)
-            _Cl_Stmp.Fx_Llenar_Detalle(_Id_Enc)
-
-            _Cl_Stmp.Zw_Stmp_Enc.Fecha_Facturar = FechaDelServidor()
-
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Det Set " &
                            "Cantidad = 0,Caprco1_Real = 0,Caprco2_Real = 0,Pickeado = 0,CodFuncionario_Pickea = '', EnProceso = 0" & vbCrLf &
                            "Where Id_Enc = " & _Id_Enc & vbCrLf &
@@ -264,6 +258,12 @@ Public Class Cl_Sincroniza
                            "Delete MEVENTO Where ARCHIRVE = 'MAEEDO' And IDRVE = " & _Idmaeedo & vbCrLf &
                            "Delete MEVENTO Where ARCHIRVE = 'MAEDDO' And IDRVE In (Select IDMAEDDO From MAEDDO Where IDMAEEDO = " & _Idmaeedo & ")"
             _SqlRandom.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql, False)
+
+            Dim _Cl_Stmp As New Cl_Stmp
+            _Cl_Stmp.Fx_Llenar_Encabezado(_Id_Enc)
+            _Cl_Stmp.Fx_Llenar_Detalle(_Id_Enc)
+
+            _Cl_Stmp.Zw_Stmp_Enc.Fecha_Facturar = FechaDelServidor()
 
             Dim _Mensaje As New LsValiciones.Mensajes
 

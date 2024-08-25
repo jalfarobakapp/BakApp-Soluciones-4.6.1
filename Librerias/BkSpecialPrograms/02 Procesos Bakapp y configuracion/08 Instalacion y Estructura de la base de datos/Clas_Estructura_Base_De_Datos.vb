@@ -783,6 +783,25 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Format_Pag
             Case "Zw_Fuentes_Conf"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Fuentes_Conf
+
+            Case "Zw_Inv_Contador"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Inv_Contador
+            Case "Zw_Inv_FotoInventario"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Inv_FotoInventario
+            Case "Zw_Inv_Hoja"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Inv_Hoja
+            Case "Zw_Inv_HojaEli"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Inv_HojaEli
+            Case "Zw_Inv_HojaEli_Detalle"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Inv_HojaEli_Detalle
+            Case "Zw_Inv_Hoja_Detalle"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Inv_Hoja_Detalle
+            Case "Zw_Inv_Inventario"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Inv_Inventario
+            Case "Zw_Inv_Sector"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Inv_Sector
+
+
             Case "Zw_Licencia"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Licencia
             Case "Zw_Licencia_Mod"

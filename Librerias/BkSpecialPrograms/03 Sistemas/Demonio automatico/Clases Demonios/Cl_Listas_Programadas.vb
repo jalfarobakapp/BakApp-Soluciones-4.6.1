@@ -59,6 +59,9 @@
 
             End If
 
+            Dim _Ippide As String = getIp()
+            Dim _Horagrab As String = Hora_Grab_fx(False)
+
             For Each _FilaDet As DataRow In _Tbl_ListasProgramadas_Detalle.Rows
 
                 Dim _Kolt As String = _FilaDet.Item("Lista")
@@ -76,6 +79,10 @@
                              "ECUACION = '" & _Ecuacion & "'," &
                              "ECUACIONU2 = '" & _Ecuacion2 & "'" & Space(1) &
                              "Where KOLT = '" & _Kolt & "' And KOPR = '" & _Kopr & "'" & vbCrLf
+
+                _SqlQuery += "Insert Into TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,KOOP,ACCION)" & vbCrLf &
+                             "Values ('" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")'," &
+                             "'LI000001','Grabación en Lista de Precios : ''" & _Kolt & "''')" & vbCrLf
 
             Next
 

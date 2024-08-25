@@ -115,7 +115,7 @@ Public Class Cl_NVVAutoExterna
                 Throw New System.Exception("No se encuentran registros para la tabla Zw_Demonio_NVVAutoDet con el Id_Enc = " & _Id_Enc)
             End If
 
-            Consulta_Sql = "Select * From CONFIEST Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & Modalidad_NVV & "'"
+            Consulta_Sql = "Select * From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & Modalidad_NVV & "'"
             Dim _Row_Modalidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then Throw New System.Exception(_Sql.Pro_Error)

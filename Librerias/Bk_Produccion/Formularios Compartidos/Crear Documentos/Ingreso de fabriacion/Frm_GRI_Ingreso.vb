@@ -172,7 +172,7 @@ Public Class Frm_GRI_Ingreso
             Modalidad = _Row_Usuario.Item("MODALIDAD")
 
             Consulta_sql = "Select top 1 Cest.*,Cfgp.RAZON  
-                            From CONFIEST Cest Inner Join CONFIGP Cfgp On Cest.EMPRESA = Cfgp.EMPRESA  
+                            From CONFIEST Cest WITH (NOLOCK) Inner Join CONFIGP Cfgp On Cest.EMPRESA = Cfgp.EMPRESA  
                             Where MODALIDAD = '" & Modalidad & "'"
             _Global_Row_Modalidad = _Sql.Fx_Get_DataRow(Consulta_sql)
 

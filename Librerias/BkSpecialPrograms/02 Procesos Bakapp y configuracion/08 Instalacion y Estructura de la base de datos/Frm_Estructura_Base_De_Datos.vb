@@ -178,6 +178,17 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Format_Pag", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Fuentes_Conf", _Modificar, Lbl_Eventos)
 
+            'INVENTARIO
+            .Sb_Revisar_Tabla2(Me, "Zw_Inv_Contador", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Inv_FotoInventario", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Inv_Hoja", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Inv_HojaEli", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Inv_HojaEli_Detalle", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Inv_Hoja_Detalle", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Inv_Inventario", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Inv_Sector", _Modificar, Lbl_Eventos)
+
+
             .Sb_Revisar_Tabla2(Me, "Zw_Licencia", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Licencia_Mod", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Linea_Oferta", _Modificar, Lbl_Eventos)

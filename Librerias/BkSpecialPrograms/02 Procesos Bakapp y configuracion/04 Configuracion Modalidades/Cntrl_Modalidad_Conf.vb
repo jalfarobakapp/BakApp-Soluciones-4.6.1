@@ -13,7 +13,7 @@ Public Class Cntrl_Modalidad_Conf
     Sub Sb_Actualizar_Grilla_Conf()
 
         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Configuracion (Modalidad) 
-                        Select MODALIDA From CONFIEST Where MODALIDAD Not In (Select Modalidad From " & _Global_BaseBk & "Zw_Configuracion)"
+                        Select MODALIDA From CONFIEST WITH (NOLOCK) Where MODALIDAD Not In (Select Modalidad From " & _Global_BaseBk & "Zw_Configuracion)"
         '_Sql.Ej_consulta_IDU(Consulta_sql)
 
 

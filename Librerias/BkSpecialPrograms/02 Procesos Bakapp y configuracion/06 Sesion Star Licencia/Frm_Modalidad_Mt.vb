@@ -1,4 +1,4 @@
-Imports DevComponents.DotNetBar
+ï»¿Imports DevComponents.DotNetBar
 'Imports Lib_Bakapp_VarClassFunc
 
 Public Class Frm_Modalidad_Mt
@@ -50,11 +50,11 @@ Public Class Frm_Modalidad_Mt
     Sub Actualizar()
 
         caract_combo(CmbModalidad)
-        Consulta_sql = "SELECT MODALIDAD AS Padre,MODALIDAD AS Hijo FROM CONFIEST where EMPRESA = '01'" & vbCrLf & _
+        Consulta_sql = "SELECT MODALIDAD AS Padre,MODALIDAD AS Hijo FROM CONFIEST WITH (NOLOCK) where EMPRESA = '01'" & vbCrLf &
                        "and MODALIDAD <> '  '"
 
-        Consulta_sql = "SELECT SUBSTRING(KOOP,4,6) AS Padre ,SUBSTRING(KOOP,4,6) AS Hijo FROM MAEOP WHERE " & vbCrLf & _
-                      "KOOP IN (SELECT KOOP FROM MAEUS WHERE KOUS = '" & FUNCIONARIO & "' AND KOOP LIKE 'MO-%')" & vbCrLf & _
+        Consulta_sql = "SELECT SUBSTRING(KOOP,4,6) AS Padre ,SUBSTRING(KOOP,4,6) AS Hijo FROM MAEOP WHERE " & vbCrLf &
+                      "KOOP IN (SELECT KOOP FROM MAEUS WHERE KOUS = '" & FUNCIONARIO & "' AND KOOP LIKE 'MO-%')" & vbCrLf &
                       "AND KOOP <> 'MO-  '"
 
         CmbModalidad.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
@@ -67,8 +67,8 @@ Public Class Frm_Modalidad_Mt
                 RevModalidad(Modalidad, "01")
             End If
         Else
-            MsgBox("Usted no posee permiso para trabajar con ninguna modalidad de Random." & vbCrLf & _
-                   "Póngase en contacto con el administrador del sistema", MsgBoxStyle.Critical, "Modalidad")
+            MsgBox("Usted no posee permiso para trabajar con ninguna modalidad de Random." & vbCrLf &
+                   "PÃ³ngase en contacto con el administrador del sistema", MsgBoxStyle.Critical, "Modalidad")
         End If
 
     End Sub
@@ -81,9 +81,9 @@ Public Class Frm_Modalidad_Mt
 
         TxtSucursal.Text = _RowConfiest.Item("ESUCURSAL")
         TxtBodega.Text = _RowConfiest.Item("EBODEGA")
-        TxtCaja.Text = _RowConfiest.Item("ECAJA") 
+        TxtCaja.Text = _RowConfiest.Item("ECAJA")
         TxtLPCompra.Text = _RowConfiest.Item("ELISTACOM")
-        TxtLPVenta.Text = _RowConfiest.Item("ELISTAVEN") 
+        TxtLPVenta.Text = _RowConfiest.Item("ELISTAVEN")
 
     End Function
 
@@ -97,10 +97,10 @@ Public Class Frm_Modalidad_Mt
 
     Public Sub New()
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
         'EstiloFormulario(StyleManager1)
     End Sub
 End Class

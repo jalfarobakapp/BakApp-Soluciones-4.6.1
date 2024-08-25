@@ -179,7 +179,7 @@ Public Module Funciones_Especiales_BakApp
             Dim _Dias = DateDiff(DateInterval.Day, FechaDelServidor, _Fecha_caduca)
 
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Configuracion (Empresa,Modalidad)" & vbCrLf &
-                           "Select EMPRESA,MODALIDAD From CONFIEST" & vbCrLf &
+                           "Select EMPRESA,MODALIDAD From CONFIEST WITH (NOLOCK)" & vbCrLf &
                            "Where MODALIDAD NOT IN (Select Modalidad From " & _Global_BaseBk & "Zw_Configuracion) And EMPRESA <> ''"
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
@@ -299,7 +299,7 @@ Public Module Funciones_Especiales_BakApp
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-        Dim _Consulta_sql = "Select Top 1 " & _Tido & " From CONFIEST Where EMPRESA = '" & _Empresa & "' And MODALIDAD = '" & _Modalidad & "'"
+        Dim _Consulta_sql = "Select Top 1 " & _Tido & " From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & _Empresa & "' And MODALIDAD = '" & _Modalidad & "'"
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
         Dim _Nudo_Modalidad As String
@@ -360,7 +360,7 @@ Public Module Funciones_Especiales_BakApp
         ' _Modalidad = "  "
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-        Dim _Consulta_sql = "Select Top 1 " & _Tido & " From CONFIEST Where MODALIDAD = '" & _Modalidad & "' And EMPRESA = '" & ModEmpresa & "'"
+        Dim _Consulta_sql = "Select Top 1 " & _Tido & " From CONFIEST WITH (NOLOCK) Where MODALIDAD = '" & _Modalidad & "' And EMPRESA = '" & ModEmpresa & "'"
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
         Dim _Nudo_Modalidad As String
@@ -602,13 +602,13 @@ Public Module Funciones_Especiales_BakApp
 
         If String.IsNullOrEmpty(_NumeroDoc.Trim) Then
             If _Tido = "GDV" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "GDD" Then
-                Consulta_sql = "Select GDV As NrNumeroDoco From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
+                Consulta_sql = "Select GDV As NrNumeroDoco From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
                                 Union
-                                Select GTI As NrNumeroDoco From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
+                                Select GTI As NrNumeroDoco From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
                                 Union
-                                Select GDP As NrNumeroDoco From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
+                                Select GDP As NrNumeroDoco From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
                                 Union
-                                Select GDD As NrNumeroDoco From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
+                                Select GDD As NrNumeroDoco From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
                                 Order By NrNumeroDoco Desc"
                 Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
                 _NrNumeroDoco = _Tbl.Rows(0).Item("NrNumeroDoco")
@@ -638,13 +638,13 @@ Public Module Funciones_Especiales_BakApp
             _NrNumeroDoco = _RowModalidad.Item(_Tido)
 
             If _Tido = "GDV" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "GDD" Then
-                Consulta_sql = "Select GDV As NrNumeroDoco From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
+                Consulta_sql = "Select GDV As NrNumeroDoco From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
                                 Union
-                                Select GTI As NrNumeroDoco From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
+                                Select GTI As NrNumeroDoco From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
                                 Union
-                                Select GDP As NrNumeroDoco From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
+                                Select GDP As NrNumeroDoco From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
                                 Union
-                                Select GDD As NrNumeroDoco From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
+                                Select GDD As NrNumeroDoco From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
                                 Order By NrNumeroDoco Desc"
                 Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
                 _NrNumeroDoco = _Tbl.Rows(0).Item("NrNumeroDoco")
@@ -669,13 +669,13 @@ Public Module Funciones_Especiales_BakApp
                                        "WHERE EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '"
                         _Sql.Ej_consulta_IDU(Consulta_sql)
 
-                        Consulta_sql = "Select GDV As NrNumeroDoco From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
+                        Consulta_sql = "Select GDV As NrNumeroDoco From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
                                         Union
-                                        Select GTI As NrNumeroDoco From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
+                                        Select GTI As NrNumeroDoco From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
                                         Union
-                                        Select GDP As NrNumeroDoco From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
+                                        Select GDP As NrNumeroDoco From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
                                         Union
-                                        Select GDD As NrNumeroDoco From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
+                                        Select GDD As NrNumeroDoco From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
                                         Order By NrNumeroDoco Desc"
                         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
                         _NrNumeroDoco = _Tbl.Rows(0).Item("NrNumeroDoco")
@@ -724,13 +724,13 @@ Public Module Funciones_Especiales_BakApp
                                        "WHERE EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'"
                         _Sql.Ej_consulta_IDU(Consulta_sql)
 
-                        Consulta_sql = "Select GDV As Tido From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
+                        Consulta_sql = "Select GDV As Tido From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
                                         Union
-                                        Select GTI As Tido From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
+                                        Select GTI As Tido From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
                                         Union
-                                        Select GDP As Tido From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
+                                        Select GDP As Tido From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
                                         Union
-                                        Select GDD As Tido From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
+                                        Select GDD As Tido From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
                                         Order By Tido Desc"
                         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
                         _NrNumeroDoco = _Tbl.Rows(0).Item("Tido")
@@ -1140,7 +1140,7 @@ Public Module Funciones_Especiales_BakApp
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-        Dim _Consulta_sql = "Select Top 1 " & _Tido & " From CONFIEST Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'"
+        Dim _Consulta_sql = "Select Top 1 " & _Tido & " From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'"
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
         Dim _Nudo_Modalidad As String
