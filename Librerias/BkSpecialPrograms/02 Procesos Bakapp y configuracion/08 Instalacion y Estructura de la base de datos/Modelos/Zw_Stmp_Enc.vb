@@ -36,5 +36,6 @@ Public Class Zw_Stmp_Enc
     Public Property ProblemaFac As Boolean
     Public Property CodFuncionario_Factura As String
     Public Property CodFuncionario_MarcaFacturar As String
+    Public Property Reasignada As Boolean
 
 End Class

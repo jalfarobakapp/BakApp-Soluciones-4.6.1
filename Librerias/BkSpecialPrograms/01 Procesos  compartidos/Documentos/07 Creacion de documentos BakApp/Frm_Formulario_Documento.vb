@@ -15316,7 +15316,7 @@ Public Class Frm_Formulario_Documento
                             Dim _CodProductoDoc As String = Generar_Filtro_IN(_TblDetalle, "", "Codigo", False, False, "'")
                             Dim _Feer As String = Format(_TblEncabezado.Rows(0).Item("FechaRecepcion"), "yyyyMMdd")
 
-                            Consulta_sql = "Select Count(*) As Detalle From MAEDDO WITH (NOLOCK) Ddo Inner Join MAEEDO Edo WITH (NOLOCK) On Edo.IDMAEEDO = Ddo.IDMAEEDO" & vbCrLf &
+                            Consulta_sql = "Select Count(*) As Detalle From MAEDDO Ddo WITH (NOLOCK) Inner Join MAEEDO Edo WITH (NOLOCK) On Edo.IDMAEEDO = Ddo.IDMAEEDO" & vbCrLf &
                                    "Where Edo.ENDO = '" & _RowEntidad.Item("KOEN") & "' And Edo.SUENDO = '" & _RowEntidad.Item("SUEN") & "' " &
                                    "And Edo.FEER = '" & _Feer & "' And Ddo.KOPRCT In " & _CodProductoDoc &
                                    " And Ddo.TIPR = 'FPN' And Edo.TIDO In ('FCV','NVV','GDV','BLV')"

@@ -269,6 +269,19 @@ Public Class Cl_Sincroniza
 
             _Mensaje = _Cl_Stmp.Fx_Revisar_WMSVillar_Completadas(_Idmaeedo, "NVV", _Nudo, Cadena_ConexionSQL_Server_Wms)
 
+            If Not _Mensaje.EsCorrecto Then
+
+                If _Cl_Stmp.Zw_Stmp_Enc.Estado = "COMPL" Then
+
+                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Estado = 'PREPA',Reasignada = 1 Where Id = " & _Cl_Stmp.Zw_Stmp_Enc.Id
+                    _SqlRandom.Ej_consulta_IDU(Consulta_sql, False)
+
+                    Sb_AddToLog("Sincronizando notas", "El documento se vuelve a dejar en preparación", Txt_Log)
+
+                End If
+
+            End If
+
             If _Mensaje.EsCorrecto Then
 
                 _DocEmitir = _Cl_Stmp.Zw_Stmp_Enc.DocEmitir

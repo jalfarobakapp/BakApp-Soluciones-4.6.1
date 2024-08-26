@@ -441,7 +441,11 @@ Public Class Frm_Exportar_Excel
                 If _fila < 20000 Then
 
                     For i = 0 To _columna - 1
-                        Wbook.Worksheets(_Nro_Hoja).Columns(i).Autofit()
+                        Try
+                            Wbook.Worksheets(_Nro_Hoja).Columns(i).Autofit()
+                        Catch ex As Exception
+
+                        End Try
                     Next
 
                 End If

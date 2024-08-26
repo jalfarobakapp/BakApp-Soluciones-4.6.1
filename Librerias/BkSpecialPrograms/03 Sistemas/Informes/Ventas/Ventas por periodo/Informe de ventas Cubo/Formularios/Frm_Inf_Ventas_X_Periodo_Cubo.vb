@@ -624,6 +624,8 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
         Grafico_Pie.ChartAreas(0).BackColor = Color.FromArgb(Global_camvasColor)
 
+        Btn_CumplimientoClientes.Visible = True
+
     End Sub
 
     Private Sub Frm_Inf_Ventas_X_Periodo_Sucursal_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
@@ -1126,8 +1128,6 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
             TotalNetoComisiones = _Row_Totales.Item("TOTAL")
 
-
-
             If _Tbl_Informe.Rows.Count = 0 Then
                 Sb_Actualizar_Graficos()
                 Sb_Imagenes_Filtros()
@@ -1199,7 +1199,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             Me.Cursor = Cursors.Default
             Me.Enabled = True
 
-            Btn_CumplimientoClientes.Visible = (_Codigo = "KOFULIDO")
+            'Btn_CumplimientoClientes.Visible = (_Codigo = "KOFULIDO")
 
         End Try
 
@@ -3746,6 +3746,14 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     Private Sub Btn_Informe_X_Clientes_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Informe_X_Clientes.Click
 
+        Dim _RangoFecha As Integer = DateDiff(DateInterval.Year, Dtp_Fecha_Desde.Value, Dtp_Fecha_Hasta.Value)
+
+        If _RangoFecha > 1 Then
+            MessageBoxEx.Show(Me, "El rango de fechas no debe superar un año para poder ver este informe", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Cod = _Fila.Cells("CODIGO").Value
 
@@ -3799,6 +3807,14 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     Private Sub Btn_Informe_X_Documentos_Entidades_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Informe_X_Documentos_Entidades.Click
 
+        Dim _RangoFecha As Integer = DateDiff(DateInterval.Year, Dtp_Fecha_Desde.Value, Dtp_Fecha_Hasta.Value)
+
+        If _RangoFecha > 1 Then
+            MessageBoxEx.Show(Me, "El rango de fechas no debe superar un año para poder ver este informe", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Cod = _Fila.Cells("CODIGO").Value
 
@@ -3846,6 +3862,14 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
     End Sub
 
     Private Sub Btn_Informe_X_Productos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Informe_X_Productos.Click
+
+        Dim _RangoFecha As Integer = DateDiff(DateInterval.Year, Dtp_Fecha_Desde.Value, Dtp_Fecha_Hasta.Value)
+
+        If _RangoFecha > 1 Then
+            MessageBoxEx.Show(Me, "El rango de fechas no debe superar un año para poder ver este informe", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Cod = _Fila.Cells("CODIGO").Value
@@ -4839,6 +4863,12 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
     End Sub
 
     Private Sub Btn_CumplimientoClientes_Click(sender As Object, e As EventArgs) Handles Btn_CumplimientoClientes.Click
+
+        If Cmb_Vista_Informe.SelectedValue <> "KOFULIDO" Then
+            MessageBoxEx.Show(Me, "Este informe solo es visible cuando la [VISTA DEL INFORME] sea: VENDEDORES",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
         If Not Fx_Tiene_Permiso(Me, "Inf00047") Then
             Return

@@ -656,19 +656,15 @@ Public Class Frm_BuscarEntidad_Mt
 
     Private Sub Btn_Mnu_Eliminar_Entidad_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_Eliminar_Entidad.Click
 
-        If Fx_Tiene_Permiso(Me, "CfEnt004") Then
+        Dim _Fila As DataGridViewRow = Grilla_Entidades.Rows(Grilla_Entidades.CurrentRow.Index)
 
-            Dim _Fila As DataGridViewRow = Grilla_Entidades.Rows(Grilla_Entidades.CurrentRow.Index)
+        Dim _CodEntidad As String = _Fila.Cells("KOEN").Value
+        Dim _SucEntidad As String = _Fila.Cells("SUEN").Value
 
-            Dim _CodEntidad As String = _Fila.Cells("KOEN").Value
-            Dim _SucEntidad As String = _Fila.Cells("SUEN").Value
-
-            If Fx_Eliminar_Entidad(_CodEntidad, _SucEntidad, Me) Then
-                Sb_Actualizar_Grilla(Txtdescripcion.Text, True)
-                BtnEditarUser.Enabled = False
-                BtnEliminarUser.Enabled = False
-            End If
-
+        If Fx_Eliminar_Entidad(_CodEntidad, _SucEntidad, Me) Then
+            Sb_Actualizar_Grilla(Txtdescripcion.Text, True)
+            BtnEditarUser.Enabled = False
+            BtnEliminarUser.Enabled = False
         End If
 
     End Sub

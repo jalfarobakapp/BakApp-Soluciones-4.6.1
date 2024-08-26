@@ -787,6 +787,7 @@ Public Class Cl_Stmp
                                ",DocEmitir = '" & .DocEmitir & "'" &
                                ",TipoPago = '" & .TipoPago & "'" &
                                ",FechaPickeado = Getdate()" & vbCrLf &
+                               ",Reasignada = 0" & vbCrLf &
                                "Where Id = " & .Id
 
                 If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
@@ -846,9 +847,11 @@ Public Class Cl_Stmp
             Dim _Comandos As DataTable = _Ds.Tables("Comandos")
 
             If _ticket_verde.Rows(0).Item("ticket_verde") <> "Y" Then
+
                 _Mensaje.EsCorrecto = False
                 _Mensaje.Detalle = "El pedido aun no esta listo"
                 Return _Mensaje
+
             End If
 
             Dim _Fecha As String = Format(FechaDelServidor, "yyyyMMdd")

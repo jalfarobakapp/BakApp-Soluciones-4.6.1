@@ -668,6 +668,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Inf00045", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Inf00046", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Inf00047", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Inf00048", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Invp0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Invp0002", _Objeto, _Formulario)
@@ -2927,24 +2928,24 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "VER INFORME DE CLIENTES ASOCIADOS A OTRO USUARIO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INFORMES_DE_VENTA, 6)
                 _NombreFamiliaPermiso = _Fml.INFORMES_DE_VENTA.ToString
-
             Case "Inf00044"
                 _DescripcionPermiso = "EXPORTAR A EXCEL DIFERENCIA DE CLIENTES ENTRE RANGO 1 Y RANGO 2 EN INFORME COMPARATIVO DE VENTAS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INFORMES_DE_VENTA, 6)
                 _NombreFamiliaPermiso = _Fml.INFORMES_DE_VENTA.ToString
-
             Case "Inf00045"
                 _DescripcionPermiso = "EXPORTAR A EXCEL DIFERENCIA DE PRODUCTOS ENTRE RANGO 1 Y RANGO 2 EN INFORME COMPARATIVO DE VENTAS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INFORMES_DE_VENTA, 6)
                 _NombreFamiliaPermiso = _Fml.INFORMES_DE_VENTA.ToString
-
             Case "Inf00046"
                 _DescripcionPermiso = "QUITAR EL TICKET VER SOLO NOTAS DE VENTA HABILITADAS PARA FACTURAR"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INFORMES_DE_VENTA, 6)
                 _NombreFamiliaPermiso = _Fml.INFORMES_DE_VENTA.ToString
-
             Case "Inf00047"
                 _DescripcionPermiso = "VER INFORME DE CUMPLIMIENTO DE CLIENTES VS CARTERA DEL VENDEDOR"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.INFORMES_DE_VENTA, 6)
+                _NombreFamiliaPermiso = _Fml.INFORMES_DE_VENTA.ToString
+            Case "Inf00048"
+                _DescripcionPermiso = "EXPORTAR A EXCEL INFORME CLIENTES VS VENTAS POR PERIODO (NIVEL DETALLE)"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INFORMES_DE_VENTA, 6)
                 _NombreFamiliaPermiso = _Fml.INFORMES_DE_VENTA.ToString
 

@@ -1585,6 +1585,7 @@ Public Class Frm_Stmp_Listado
             Dim _Planificada As Boolean = _Fila.Cells("Planificada").Value
             Dim _Error_FacAuto As Boolean = _Fila.Cells("Error_FacAuto").Value
             Dim _Info_FacAuto As String = _Fila.Cells("Info_FacAuto").Value
+            Dim _Reasignada As Boolean = _Fila.Cells("Reasignada").Value
 
             'warning.png
             Dim _Icono As Image
@@ -1611,7 +1612,13 @@ Public Class Frm_Stmp_Listado
             End If
 
             If _Estado = "PREPA" Then
-                _Icono = _Imagenes_List.Images.Item("symbol-delete.png")
+
+                If _Reasignada Then
+                    _Icono = _Imagenes_List.Images.Item("symbol-remove.png")
+                Else
+                    _Icono = _Imagenes_List.Images.Item("symbol-delete.png")
+                End If
+
             End If
 
             If _Error_FacAuto Then

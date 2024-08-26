@@ -196,6 +196,8 @@ Public Class Frm_Filtro_Especial_Informes
         End Set
     End Property
 
+    Public Property MostrarNumeracionDeRegistros As Boolean
+
     Public Sub New(Tabla_filtro As _Tabla_Fl,
                    Optional Incorporar_Campo_Vacias As Boolean = False,
                    Optional Condicion_Extra As String = "",
@@ -304,6 +306,10 @@ Public Class Frm_Filtro_Especial_Informes
             AddHandler Chk_Seleccionar_Todos.CheckedChanged, AddressOf Sb_Chk_Seleccionar_Todos_CheckedChanged
         End If
 
+        If MostrarNumeracionDeRegistros Then
+            AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+        End If
+
         _Dv.RowFilter = String.Format("Codigo+Descripcion Like '%{0}%'", Txt_Codigo.Text & Txt_Descripcion.Text)
 
         Me.ActiveControl = Txt_Descripcion
@@ -375,7 +381,7 @@ Public Class Frm_Filtro_Especial_Informes
 
         Dim _Sin_Filtro As Boolean
 
-        Consulta_Sql = "Select * From " & _Tabla & vbCrLf &
+        Consulta_Sql = "Select * From " & _Tabla & " WITH (NOLOCK)" & vbCrLf &
                        "Where " & _Campo & " = ''"
 
         Dim _Tbl_p2 As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
@@ -386,23 +392,24 @@ Public Class Frm_Filtro_Especial_Informes
 
 
         If Not (_TblFiltro Is Nothing) Then
+
             If CBool(_TblFiltro.Rows.Count) Then
 
                 If _Filtrar_Todo Then
                     Consulta_Sql = "Select 1 As Chk,'' As Codigo, 'Vacias...' As Descripcion" & vbCrLf & "Union" & vbCrLf &
                                    "Select CAST( 1 AS bit) AS Chk," & _Campo & " as Codigo," & _Descripcion & " as Descripcion" & vbCrLf &
-                                   "From " & _Tabla & vbCrLf &
+                                   "From " & _Tabla & " WITH (NOLOCK)" & vbCrLf &
                                    "Where 1 > 0" & vbCrLf &
                                    _Condicion_Extra & vbCrLf &
                                    _Orden_By
                 Else
 
                     Consulta_Sql = _Union_Campo_Vacias &
-                                   "Select CAST( 1 AS bit) AS Chk," & _Campo & " as Codigo," & _Descripcion & " as Descripcion From " & _Tabla & vbCrLf &
+                                   "Select CAST( 1 AS bit) AS Chk," & _Campo & " as Codigo," & _Descripcion & " as Descripcion From " & _Tabla & " WITH (NOLOCK)" & vbCrLf &
                                    "Where " & _Campo & " IN " & _Filtro_SQl & vbCrLf &
                                    _Condicion_Extra & vbCrLf &
                                    "Union" & vbCrLf &
-                                   "Select CAST( 0 AS bit) AS Chk," & _Campo & " as Codigo," & _Descripcion & " as Descripcion From " & _Tabla & vbCrLf &
+                                   "Select CAST( 0 AS bit) AS Chk," & _Campo & " as Codigo," & _Descripcion & " as Descripcion From " & _Tabla & " WITH (NOLOCK)" & vbCrLf &
                                    "Where " & _Campo & " not IN " & _Filtro_SQl & vbCrLf &
                                    _Condicion_Extra & vbCrLf &
                                    _Orden_By
@@ -425,7 +432,7 @@ Public Class Frm_Filtro_Especial_Informes
 
             Consulta_Sql = _Union_Campo_Vacias &
                            "Select CAST(" & _Chk & " AS bit) AS Chk," & _Campo & " as Codigo," & _Descripcion & " as Descripcion" & vbCrLf &
-                           "From " & _Tabla & vbCrLf &
+                           "From " & _Tabla & " WITH (NOLOCK)" & vbCrLf &
                            "Where 1 > 0" & vbCrLf &
                            _Condicion_Extra & vbCrLf &
                            _Orden_By

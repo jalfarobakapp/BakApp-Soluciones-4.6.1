@@ -34,6 +34,7 @@ CREATE TABLE [dbo].[Zw_Stmp_Enc](
     [ProblemaFac]                   [bit]			NOT NULL DEFAULT (0),
     [CodFuncionario_Factura]        [char](3)	    NOT NULL DEFAULT (''),
     [CodFuncionario_MarcaFacturar]  [char](3)       NOT NULL DEFAULT (''),
+    [Reasignada]                    [bit]			NOT NULL DEFAULT (0),    
  CONSTRAINT [PK_Zw_Stmp_Enc] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

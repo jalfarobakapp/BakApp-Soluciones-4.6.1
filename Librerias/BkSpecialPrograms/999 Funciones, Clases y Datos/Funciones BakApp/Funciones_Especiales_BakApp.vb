@@ -5488,56 +5488,57 @@ Public Module Crear_Documentos_Desde_Otro
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-        If Fx_Tiene_Permiso(_Fmr, "CfEnt004") Then
+        If Not Fx_Tiene_Permiso(_Fmr, "CfEnt004") Then
+            Return False
+        End If
 
-            Dim _Reg As Integer = 0
+        Dim _Reg As Integer = 0
 
-            _Reg += _Sql.Fx_Cuenta_Registros("MAEEDO", "ENDO='" & _CodEntidad & "' AND SUENDO='" & _SucEntidad & "'")
+        _Reg += _Sql.Fx_Cuenta_Registros("MAEEDO", "ENDO='" & _CodEntidad & "' AND SUENDO='" & _SucEntidad & "'")
 
-            Dim _CanEnt As Integer = _Sql.Fx_Cuenta_Registros("MAEEDO", "ENDO='" & _CodEntidad & "'")
+        Dim _CanEnt As Integer = _Sql.Fx_Cuenta_Registros("MAEEDO", "ENDO='" & _CodEntidad & "'")
+
+        If _CanEnt = 1 Then
+            _Reg += _Sql.Fx_Cuenta_Registros("CDOCCOE", "ENDO='" & _CodEntidad & "'")
+            _Reg += _Sql.Fx_Cuenta_Registros("MAEDPCE", "ENDP='" & _CodEntidad & "'")
+            _Reg += _Sql.Fx_Cuenta_Registros("MAEENPRO", "KOEN='" & _CodEntidad & "'")
+        End If
+
+        If Not CBool(_Reg) Then
+
+            If MessageBoxEx.Show(_Fmr, "¿Esta seguro de querer eliminar esta entidad?", "Eliminar",
+                                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                Return False
+            End If
+
+            Consulta_sql = "Delete MAEEN Where KOEN = '" & _CodEntidad & "' AND SUEN = '" & _SucEntidad & "'" & vbCrLf
 
             If _CanEnt = 1 Then
-                _Reg += _Sql.Fx_Cuenta_Registros("CDOCCOE", "ENDO='" & _CodEntidad & "'")
-                _Reg += _Sql.Fx_Cuenta_Registros("MAEDPCE", "ENDP='" & _CodEntidad & "'")
-                _Reg += _Sql.Fx_Cuenta_Registros("MAEENPRO", "KOEN='" & _CodEntidad & "'")
+                Consulta_sql += "Delete MAEENCON Where KOEN = '" & _CodEntidad & "'" & vbCrLf &
+                                "Delete MAEENPRO Where KOEN = '" & _CodEntidad & "'" & vbCrLf &
+                                "Delete MAEENCTA Where KOEN = '" & _CodEntidad & "'" & vbCrLf
             End If
 
-            If Not CBool(_Reg) Then
+            If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Entidades") Then
+                Consulta_sql += "Delete " & _Global_BaseBk & "Zw_Entidades Where CodEntidad = '" & _CodEntidad & "' And CodSucEntidad = '" & _SucEntidad & "'"
+            End If
 
-                If MessageBoxEx.Show(_Fmr, "¿Esta seguro de querer eliminar esta entidad?", "Eliminar",
-                                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
-                    Return False
-                End If
+            If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Entidades_ProdExcluidos") Then
+                Consulta_sql += "Delete " & _Global_BaseBk & "Zw_Entidades_ProdExcluidos Where CodEntidad = '" & _CodEntidad & "' And CodSucEntidad = '" & _SucEntidad & "'"
+            End If
 
-                Consulta_sql = "Delete MAEEN Where KOEN = '" & _CodEntidad & "' AND SUEN = '" & _SucEntidad & "'" & vbCrLf
-
-                If _CanEnt = 1 Then
-                    Consulta_sql += "Delete MAEENCON Where KOEN = '" & _CodEntidad & "'" & vbCrLf &
-                                    "Delete MAEENPRO Where KOEN = '" & _CodEntidad & "'" & vbCrLf &
-                                    "Delete MAEENCTA Where KOEN = '" & _CodEntidad & "'" & vbCrLf
-                End If
-
-                If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Entidades") Then
-                    Consulta_sql += "Delete " & _Global_BaseBk & "Zw_Entidades Where CodEntidad = '" & _CodEntidad & "' And CodSucEntidad = '" & _SucEntidad & "'"
-                End If
-
-                If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Entidades_ProdExcluidos") Then
-                    Consulta_sql += "Delete " & _Global_BaseBk & "Zw_Entidades_ProdExcluidos Where CodEntidad = '" & _CodEntidad & "' And CodSucEntidad = '" & _SucEntidad & "'"
-                End If
-
-                If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
-                    MessageBoxEx.Show(_Fmr, "Entidad eliminada correctamente",
-                                      "Eliminar entidad", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                    Return True
-                Else
-                    MessageBoxEx.Show(_Fmr, "Entidad no puede ser eliminada" & vbCrLf &
-                                    _Sql.Pro_Error, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                End If
-
+            If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+                MessageBoxEx.Show(_Fmr, "Entidad eliminada correctamente",
+                                  "Eliminar entidad", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return True
             Else
                 MessageBoxEx.Show(_Fmr, "Entidad no puede ser eliminada" & vbCrLf &
-                                    "Tiene movimientos asociados", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                _Sql.Pro_Error, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             End If
+
+        Else
+            MessageBoxEx.Show(_Fmr, "Entidad no puede ser eliminada" & vbCrLf &
+                                "Tiene movimientos asociados", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End If
 
     End Function

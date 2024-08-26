@@ -562,7 +562,7 @@ Public Class Frm_MtCreacionDeProducto
 
         CodRapido = _Sql.Fx_Cuenta_Registros("MAEPR")
 
-        Txt_Koprra.Text = numero_(Val(_Sql.Fx_Trae_Dato("MAEPR WITH ( NOLOCK )", "MAX(KOPRRA)+1")), 6)
+        Txt_Koprra.Text = numero_(Val(_Sql.Fx_Trae_Dato("MAEPR", "MAX(KOPRRA)+1")), 6)
         _RowProducto.Item("KOPRRA") = Txt_Koprra.Text
         _RowProducto.Item("NOKOPR") = Txt_Nokopr.Text.Trim
         _RowProducto.Item("NOKOPRRA") = Mid(Txt_Nokoprra.Text.Trim, 1, 20)
@@ -1203,7 +1203,7 @@ Sigue_Loop_01:
 
         CodRapido = _Sql.Fx_Cuenta_Registros("MAEPR")
 
-        Txt_Koprra.Text = numero_(Val(_Sql.Fx_Trae_Dato("MAEPR WITH ( NOLOCK )", "MAX(KOPRRA)+1")), 6)
+        Txt_Koprra.Text = numero_(Val(_Sql.Fx_Trae_Dato("MAEPR", "MAX(KOPRRA)+1")), 6)
         _RowProducto.Item("KOPRRA") = Txt_Koprra.Text
         _RowProducto.Item("NOKOPR") = Txt_Nokopr.Text.Trim
         _RowProducto.Item("NOKOPRRA") = Trim(Mid(Txt_Nokoprra.Text, 20))
@@ -2269,11 +2269,10 @@ Sigue_Loop_01:
             End If
         End If
 
-        Dim _Maeddo As Long = _Sql.Fx_Cuenta_Registros("MAEDDO", "KOPRCT = '" & _Codigo_a_eliminar & "'") ' SELECT TOP 1 * FROM MAEDDO WITH ( NOLOCK )  WHERE KOPRCT='PRODUCTO DE P'
-        Dim _Tabcodal As Long = _Sql.Fx_Cuenta_Registros("TABCODAL", "KOPR = '" & _Codigo_a_eliminar & "'") 'SELECT TOP 1 * FROM TABCODAL WITH ( NOLOCK )  WHERE KOPR='PRODUCTO DE P'
-        Dim _Potd As Long = _Sql.Fx_Cuenta_Registros("POTD", "CODIGO = '" & _Codigo_a_eliminar & "'")        'SELECT TOP 1 * FROM POTD WITH ( NOLOCK )  WHERE CODIGO='PRODUCTO DE P'
-        Dim _Kasiddo As Long = _Sql.Fx_Cuenta_Registros("KASIDDO", "KOPRCT = '" & _Codigo_a_eliminar & "'") 'SELECT TOP 1 * FROM KASIDDO WITH ( NOLOCK )  WHERE KOPRCT='PRODUCTO DE P'
-
+        Dim _Maeddo As Long = _Sql.Fx_Cuenta_Registros("MAEDDO", "KOPRCT = '" & _Codigo_a_eliminar & "'")
+        Dim _Tabcodal As Long = _Sql.Fx_Cuenta_Registros("TABCODAL", "KOPR = '" & _Codigo_a_eliminar & "'")
+        Dim _Potd As Long = _Sql.Fx_Cuenta_Registros("POTD", "CODIGO = '" & _Codigo_a_eliminar & "'")
+        Dim _Kasiddo As Long = _Sql.Fx_Cuenta_Registros("KASIDDO", "KOPRCT = '" & _Codigo_a_eliminar & "'")
 
         If CBool(_Maeddo) Then
             MessageBoxEx.Show(Me, "Producto está  presente en documentos de Gestión", "PRODUCTO NO PUEDE SER ELIMINADO",
@@ -2318,23 +2317,23 @@ Sigue_Loop_01:
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
             Consulta_sql = "DELETE PDIMEN    WHERE CODIGO ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                               "DELETE MAEPROBS  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                               "DELETE MAEFICHA  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                               "DELETE MAEFICHD  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                               "DELETE TABIMPR   WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                               "DELETE TABPRE    WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                               "DELETE TABBOPR   WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                               "DELETE MPROENVA  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                               "DELETE MAEPREM   WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                               "DELETE MAEPR     WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                               "DELETE TABCODAL  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                               "DELETE " & _Global_BaseBk & "Zw_ListaPreCosto WHERE Codigo ='" & _Codigo_a_eliminar & "' And Proveedor = ''" & vbCrLf &
-                               "DELETE " & _Global_BaseBk & "Zw_ListaPreProducto WHERE Codigo ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                               "DELETE " & _Global_BaseBk & "Zw_Prod_Asociacion WHERE Codigo ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                               "UPDATE " & _Global_BaseBk & "Zw_ListaPreCosto Set Codigo = '', Descripcion = ''" & Space(1) &
-                               "WHERE  Codigo = '" & _Codigo_a_eliminar & "' AND Proveedor <> ''" & vbCrLf &
-                               "DELETE " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo = '" & _Codigo_a_eliminar & "' And Producto = 1" & vbCrLf &
-                               "DELETE " & _Global_BaseBk & "Zw_Prod_Dimensiones Where Codigo = '" & _Codigo_a_eliminar & "'"
+                           "DELETE MAEPROBS  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                           "DELETE MAEFICHA  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                           "DELETE MAEFICHD  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                           "DELETE TABIMPR   WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                           "DELETE TABPRE    WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                           "DELETE TABBOPR   WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                           "DELETE MPROENVA  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                           "DELETE MAEPREM   WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                           "DELETE MAEPR     WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                           "DELETE TABCODAL  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                           "DELETE " & _Global_BaseBk & "Zw_ListaPreCosto WHERE Codigo ='" & _Codigo_a_eliminar & "' And Proveedor = ''" & vbCrLf &
+                           "DELETE " & _Global_BaseBk & "Zw_ListaPreProducto WHERE Codigo ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                           "DELETE " & _Global_BaseBk & "Zw_Prod_Asociacion WHERE Codigo ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                           "UPDATE " & _Global_BaseBk & "Zw_ListaPreCosto Set Codigo = '', Descripcion = ''" & Space(1) &
+                           "WHERE  Codigo = '" & _Codigo_a_eliminar & "' AND Proveedor <> ''" & vbCrLf &
+                           "DELETE " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo = '" & _Codigo_a_eliminar & "' And Producto = 1" & vbCrLf &
+                           "DELETE " & _Global_BaseBk & "Zw_Prod_Dimensiones Where Codigo = '" & _Codigo_a_eliminar & "'"
 
             Return _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
