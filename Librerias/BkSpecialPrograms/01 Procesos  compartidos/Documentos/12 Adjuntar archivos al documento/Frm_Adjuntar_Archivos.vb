@@ -141,7 +141,7 @@ Public Class Frm_Adjuntar_Archivos
 
     End Sub
 
-    Private Sub Btn_Subir_Archivos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Subir_Archivos.Click, Btn_Subir_Archivos2.Click
+    Private Sub Btn_Subir_Archivos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Subir_Archivos.Click, Btn_Subir_Archivos2.Click
 
         If _Pedir_Permiso Then
             If Not Fx_Tiene_Permiso(Me, "Doc00032") Then
@@ -206,7 +206,6 @@ Public Class Frm_Adjuntar_Archivos
                         End If
 
                         Dim _Nombre_Archivo = _InfoArchivo.Name
-
 
                         Dim _Id As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & _Tabla, "Id",
                                              _Campo & " = '" & _Codigo_Id & "' And Nombre_Archivo = '" & _Nombre_Archivo & "'", True)
@@ -310,7 +309,7 @@ Public Class Frm_Adjuntar_Archivos
 
     End Function
 
-    Sub Sb_Trabajando(ByVal _Trabajando As Boolean)
+    Sub Sb_Trabajando(_Trabajando As Boolean)
 
         If _Trabajando Then
             Me.Enabled = False
@@ -323,7 +322,7 @@ Public Class Frm_Adjuntar_Archivos
 
     End Sub
 
-    Private Sub Btn_Descargar_Archivos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Descargar_Archivos.Click, Btn_Descargar_Archivos2.Click
+    Private Sub Btn_Descargar_Archivos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Descargar_Archivos.Click, Btn_Descargar_Archivos2.Click
 
         If CBool(Listv_Archivos.SelectedItems.Count) Then
 
@@ -371,8 +370,8 @@ Public Class Frm_Adjuntar_Archivos
 
     End Sub
 
-    Private Sub AddToLog(ByVal Accion As String,
-                         ByVal Descripcion As String)
+    Private Sub AddToLog(Accion As String,
+                         Descripcion As String)
         _Log += DateTime.Now.ToString() & " - " & Accion & " (" & Descripcion & ")" & vbCrLf
         'TxtLog.Select(_Log.Length - 1, 0)
         'TxtLog.ScrollToCaret()
@@ -419,9 +418,9 @@ Public Class Frm_Adjuntar_Archivos
 
     End Function
 
-    Function Fx_Extrae_Archivo_desde_BD(ByVal _Id As Integer,
-                                        ByVal _Nombre_Archivo As String,
-                                        ByVal _Dir_Temp As String) As Boolean
+    Function Fx_Extrae_Archivo_desde_BD(_Id As Integer,
+                                        _Nombre_Archivo As String,
+                                        _Dir_Temp As String) As Boolean
 
         Dim data As Byte() = Nothing
 
@@ -480,9 +479,9 @@ Public Class Frm_Adjuntar_Archivos
 
     End Function
 
-    Private Shared Sub Sb_WriteBinaryFile(ByVal _Formulario As Form,
-                                          ByVal _Ruta_Archivo As String,
-                                          ByVal data As Byte())
+    Private Shared Sub Sb_WriteBinaryFile(_Formulario As Form,
+                                          _Ruta_Archivo As String,
+                                          data As Byte())
 
         ' Comprobación de los valores de los parámetros.
         '
@@ -519,7 +518,7 @@ Public Class Frm_Adjuntar_Archivos
 
     End Sub
 
-    Private Sub Btn_Mnu_Eliminar_Archivo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Eliminar_Archivo.Click, Btn_Eliminar_Archivos.Click
+    Private Sub Btn_Mnu_Eliminar_Archivo_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Eliminar_Archivo.Click, Btn_Eliminar_Archivos.Click
 
         If CBool(Listv_Archivos.SelectedItems.Count) Then
 
@@ -589,8 +588,7 @@ Public Class Frm_Adjuntar_Archivos
 
     End Sub
 
-
-    Private Sub Btn_Mnu_Descargar_Archivo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Descargar_Archivo.Click
+    Private Sub Btn_Mnu_Descargar_Archivo_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Descargar_Archivo.Click
 
         Dim _Nombre_Archivo = Listv_Archivos.SelectedItems(0).Text
         Dim _Id = Listv_Archivos.SelectedItems(0).SubItems(4).Text
@@ -640,7 +638,7 @@ Public Class Frm_Adjuntar_Archivos
 
     End Sub
 
-    Private Sub Frm_Adjuntar_Archivos_X_Productos_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_Adjuntar_Archivos_X_Productos_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         ElseIf e.KeyValue = Keys.F5 Then
@@ -648,11 +646,11 @@ Public Class Frm_Adjuntar_Archivos
         End If
     End Sub
 
-    Private Sub Btn_Refresh_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Refresh.Click
+    Private Sub Btn_Refresh_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Refresh.Click
         Sb_Actualizar_ListView()
     End Sub
 
-    Private Sub Frm_Adjuntar_Archivos_X_Productos_FormClosed(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles MyBase.FormClosed
+    Private Sub Frm_Adjuntar_Archivos_X_Productos_FormClosed(sender As System.Object, e As System.Windows.Forms.FormClosedEventArgs) Handles MyBase.FormClosed
         Sb_Eliminar_Archivos_Temporales()
     End Sub
 

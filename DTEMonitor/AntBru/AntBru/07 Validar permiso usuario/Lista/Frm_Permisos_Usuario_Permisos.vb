@@ -66,7 +66,7 @@ Public Class Frm_Permisos_Usuario_Permisos
 
                         Drop Table #Paso"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _DisplayIndex = 0
 
@@ -509,7 +509,7 @@ Public Class Frm_Permisos_Usuario_Permisos
         Dim _Permisos_Clonados As Boolean
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "ZW_PermisosVsUsuarios Where CodUsuario = '" & _CodUsuario_Origen & "'"
-        Dim _TblPermisos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblPermisos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         If CBool(_TblPermisos.Rows.Count) Then
@@ -544,7 +544,7 @@ Public Class Frm_Permisos_Usuario_Permisos
 
         Consulta_sql = "Select CodUsuario As Codigo From " & _Global_BaseBk & "ZW_PermisosVsUsuarios" & Space(1) &
                        "Where CodPermiso = '" & _CodPermiso & "'"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         Dim _Nota = "Permiso: " & _CodPermiso & " -> " & _DescripcionPermiso

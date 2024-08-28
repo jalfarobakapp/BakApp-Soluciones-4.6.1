@@ -1841,7 +1841,7 @@ Public Class Clas_Pagar
                          _Tidp As String)
 
         ' ACA RESCATA EL NUMERO QUE CORRESPONDA AL CAMPO NUDP, LLAVE TIDP
-        Dim _Nudp As String = _Sql.Fx_Trae_Dato("MAEDPCE WITH ( NOLOCK )", "COALESCE(MAX(NUDP),'0000000000')",
+        Dim _Nudp As String = _Sql.Fx_Trae_Dato("MAEDPCE", "COALESCE(MAX(NUDP),'0000000000')",
                                         "EMPRESA='" & _Empresa & "' AND CJREDP='" & _Cjredp & "' AND TIDP='" & _Tidp & "' And NUDP Like '" & _Cjredp & "%'")
 
         Dim _Existe As Boolean

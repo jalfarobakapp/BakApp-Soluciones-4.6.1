@@ -5,6 +5,7 @@ Imports System.Text
 Imports System.Threading
 Imports System.Xml.Schema
 Imports System.Xml.XPath
+Imports BkSpecialPrograms.Frm_BkpPostBusquedaEspecial_Mt
 Imports DevComponents.DotNetBar
 'Imports HEFESTO.FIRMA.DOC.FORM
 'Imports HEFESTO.FIRMA.DOCUMENTO
@@ -455,6 +456,31 @@ Public Class Class_Genera_DTE_RdBk
                 End If
 
             End If
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Referencias_Dte Where Id_Doc = " & _Idmaeedo
+            Dim _Tbl_Referencias As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+            For Each _Fl As DataRow In _Tbl_Referencias.Rows
+
+                Dim _NroLinRef = _Referencias_DTE.Rows.Count + 1
+                Dim _TpoDocRef = _Fl.Item("TpoDocRef")
+                Dim _FolioRef = _Fl.Item("FolioRef")
+                Dim _RUTOt = String.Empty
+                Dim _IdAdicOtr = String.Empty
+                Dim _FchRef As Date = _Fl.Item("FchRef")
+                Dim _RazonRef = _Fl.Item("RazonRef")
+                Dim _CodRef = _Fl.Item("CodRef")
+
+                ' Utiliza el método Select para buscar el valor en la columna especificada
+                Dim filasEncontradas() As DataRow = _Referencias.Tbl_Referencias.Select("TpoDocRef = '" & _TpoDocRef & "' And FolioRef like '%" & _FolioRef & "'")
+
+                ' Verifica si se encontraron filas con el valor buscado
+                ' Se agrega la referencia si es que no existe
+                If filasEncontradas.Length = 0 Then
+                    _Referencias.Fx_Row_Nueva_Referencia(0, _Idmaeedo, "", _FolioRef, _NroLinRef, _TpoDocRef, _FolioRef, _RUTOt, _IdAdicOtr, _FchRef, _CodRef, _RazonRef)
+                End If
+
+            Next
 
         Catch ex As Exception
 

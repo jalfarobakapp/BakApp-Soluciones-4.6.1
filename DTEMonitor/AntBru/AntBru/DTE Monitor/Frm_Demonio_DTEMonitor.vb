@@ -160,7 +160,7 @@ Public Class Frm_Demonio_DTEMonitor
         Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa'"
-        Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not CBool(_Tbl_ConfEmpresa.Rows.Count) Then
             Throw New System.Exception("Faltan los datos de configuración DTE para la empresa")
@@ -218,7 +218,7 @@ Public Class Frm_Demonio_DTEMonitor
                            "Where Procesar = 1 And Procesado = 0 And AmbienteCertificacion = " & _AmbienteCertificacion & " And Tido <> 'BLV'" & vbCrLf &
                            "Order By Tido,Nudo"
 
-            Dim _Tbl_DTE_Documentos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql, False)
+            Dim _Tbl_DTE_Documentos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
                 Throw New System.Exception(_Sql.Pro_Error)
@@ -377,7 +377,7 @@ Public Class Frm_Demonio_DTEMonitor
         Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa'"
-        Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not CBool(_Tbl_ConfEmpresa.Rows.Count) Then
             _Resp.EsCorrecto = False
@@ -462,7 +462,7 @@ Public Class Frm_Demonio_DTEMonitor
                            "Where Procesar = 1 And Procesado = 0 And AmbienteCertificacion = " & _AmbienteCertificacion & " And Tido = 'BLV'" & vbCrLf &
                            "Order By Tido,Nudo"
 
-            Dim _Tbl_DTE_Documentos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_DTE_Documentos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
                 Throw New System.Exception(_Sql.Pro_Error)
@@ -562,7 +562,7 @@ Public Class Frm_Demonio_DTEMonitor
                    "And Tid.Idmaeedo Not In  (Select Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Trackid Tid2 Where Tid.Idmaeedo = Tid2.Idmaeedo And ((Informado = 1 And Reparo = 1 And Estado <> '107') or (Aceptado = 1)))" & vbCrLf &
                    "Order By Tido,Nudo"
 
-            Dim _Tbl_DTE_Trackid As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql, False)
+            Dim _Tbl_DTE_Trackid As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
                 Throw New System.Exception(_Sql.Pro_Error)
@@ -718,7 +718,7 @@ Public Class Frm_Demonio_DTEMonitor
             '               "Where Doc.Tido = 'BLV' And Tid.AmbienteCertificacion = " & _AmbienteCertificacion &
             '               " And Tid.Id = 16146"
 
-            Dim _Tbl_DTE_Trackid As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql, False)
+            Dim _Tbl_DTE_Trackid As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
                 Throw New System.Exception(_Sql.Pro_Error)
@@ -775,7 +775,7 @@ Public Class Frm_Demonio_DTEMonitor
                         If _HefRespuesta.EsCorrecto Then
 
                             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DTE_Trackid Where Trackid = '" & _Trackid & "'"
-                            Dim _TblTrackid As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                            Dim _TblTrackid As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                             'Dim _RowTrackid As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -926,7 +926,7 @@ Public Class Frm_Demonio_DTEMonitor
                    "And EnviarMail = 1 " &
                    "And AmbienteCertificacion = " & _AmbienteCertificacion
 
-            Dim _Tbl_DTE_Trackid As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql, False)
+            Dim _Tbl_DTE_Trackid As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
                 Throw New System.Exception(_Sql.Pro_Error)
@@ -1029,7 +1029,7 @@ Public Class Frm_Demonio_DTEMonitor
             Consulta_sql = "Select Top 5 Id_Aec,Id_Dte,Idmaeedo,Tido,Nudo" & vbCrLf &
                    "From " & _Global_BaseBk & "Zw_DTE_Aec" & vbCrLf &
                    "Where Procesar = 1 And AmbienteCertificacion = " & _AmbienteCertificacion
-            Dim _Tbl_DTE_Aec As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql, False)
+            Dim _Tbl_DTE_Aec As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
                 Throw New System.Exception(_Sql.Pro_Error)
@@ -1086,7 +1086,7 @@ Public Class Frm_Demonio_DTEMonitor
                        "And DteTk.FechaEnvSII > '" & _Fecha8Dias & "' And DteTk.FechaEnvSII < '" & _FechaHoy & "'" & vbCrLf &
                        "Order By DteDoc.Id_Dte Desc"
 
-        Dim _Tbl_DTE_Documentos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_DTE_Documentos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not CBool(_Tbl_DTE_Documentos.Rows.Count) Then
             Return
@@ -1529,7 +1529,7 @@ Public Class Frm_Demonio_DTEMonitor
             Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
                            "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
                            "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa'"
-            Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If Not CBool(_Tbl_ConfEmpresa.Rows.Count) Then
                 Throw New System.Exception("Faltan los datos de configuración DTE para la empresa")
@@ -1869,7 +1869,7 @@ Public Class Frm_Demonio_DTEMonitor
         Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa'"
-        Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not CBool(_Tbl_ConfEmpresa.Rows.Count) Then
             'MessageBoxEx.Show(Me, "Faltan los datos de configuración DTE para la empresa", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -2060,7 +2060,7 @@ Public Class Frm_Demonio_DTEMonitor
         Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa'"
-        Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _RutEmisor As String
         Dim _Cn As String
@@ -2250,7 +2250,7 @@ Public Class Frm_Demonio_DTEMonitor
                        "--And DteTk.Id Not In (Select Id_Trackid From " & _Global_BaseBk & "Zw_DTE_ListaEventosDoc Where CodEvento In ('PAG','ACD','ERM'))" & vbCrLf &
                        "Order By DteDoc.Id_Dte Desc"
 
-        Dim _Tbl_DTE_Documentos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_DTE_Documentos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not CBool(_Tbl_DTE_Documentos.Rows.Count) Then
             Return False

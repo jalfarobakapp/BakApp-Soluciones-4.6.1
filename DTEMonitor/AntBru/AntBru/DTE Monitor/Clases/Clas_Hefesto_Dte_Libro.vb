@@ -109,7 +109,7 @@ Public Class Clas_Hefesto_Dte_Libro
         Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa' And AmbienteCertificacion = 0"
-        Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not CBool(_Tbl_ConfEmpresa.Rows.Count) Then
             _Errores.Add("Faltan los datos de configuración DTE para la empresa")
@@ -260,7 +260,7 @@ Public Class Clas_Hefesto_Dte_Libro
 
             Consulta_sql = "Select IDMAEEDO,TIDO,NUDO,FEEMDO,Cast(0 As Bit) As ENVIADO From MAEEDO Where TIDO In ('FCV','NCV')" & Space(1) &
                            "And FEEMDO Between '" & Format(_Fecha_Desde, "yyyyMMdd") & "' And '" & Format(_Fecha_Hasta, "yyyyMMdd") & "' And NUDONODEFI = 0"
-            Dim _Tbl_Maeddo As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Maeddo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _Fila As DataRow In _Tbl_Registro.Rows
 

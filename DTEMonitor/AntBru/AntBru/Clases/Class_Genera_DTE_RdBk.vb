@@ -356,7 +356,7 @@ Public Class Class_Genera_DTE_RdBk
         Try
 
             Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Referencias_Dte Where 1<0"
-            _Referencias_DTE = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Referencias_DTE = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Referencias As New Class_Referencias_DTE(_Idmaeedo)
             _Referencias.Tbl_Referencias = _Referencias_DTE
@@ -375,7 +375,7 @@ Public Class Class_Genera_DTE_RdBk
                                 From MEVENTO Mv
                                 Left Join MAEEDO Edo On Edo.IDMAEEDO = ISNULL(IDRSE,0)
                                 Where ARCHIRVE='MAEEDO' And IDRVE= " & _Idmaeedo
-                Dim _TblRefNCV As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblRefNCV As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 For Each _Fila As DataRow In _TblRefNCV.Rows
 
@@ -417,7 +417,7 @@ Public Class Class_Genera_DTE_RdBk
                             From MAEEDO 
                             Where IDMAEEDO In (Select IDMAEEDO From MAEDDO Where IDMAEDDO In (Select IDRST From MAEDDO Where IDMAEEDO = " & _Idmaeedo & "))
                             And TIDO In (" & _In & ") And TIDOELEC = 1"
-                Dim _FRef As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _FRef As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 For Each _Fila As DataRow In _FRef.Rows
 
@@ -457,6 +457,31 @@ Public Class Class_Genera_DTE_RdBk
                 End If
 
             End If
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Referencias_Dte Where Id_Doc = " & _Idmaeedo
+            Dim _Tbl_Referencias As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+            For Each _Fl As DataRow In _Tbl_Referencias.Rows
+
+                Dim _NroLinRef = _Referencias_DTE.Rows.Count + 1
+                Dim _TpoDocRef = _Fl.Item("TpoDocRef")
+                Dim _FolioRef = _Fl.Item("FolioRef")
+                Dim _RUTOt = String.Empty
+                Dim _IdAdicOtr = String.Empty
+                Dim _FchRef As Date = _Fl.Item("FchRef")
+                Dim _RazonRef = _Fl.Item("RazonRef")
+                Dim _CodRef = _Fl.Item("CodRef")
+
+                ' Utiliza el método Select para buscar el valor en la columna especificada
+                Dim filasEncontradas() As DataRow = _Referencias.Tbl_Referencias.Select("TpoDocRef = '" & _TpoDocRef & "' And FolioRef like '%" & _FolioRef & "'")
+
+                ' Verifica si se encontraron filas con el valor buscado
+                ' Se agrega la referencia si es que no existe
+                If filasEncontradas.Length = 0 Then
+                    _Referencias.Fx_Row_Nueva_Referencia(0, _Idmaeedo, "", _FolioRef, _NroLinRef, _TpoDocRef, _FolioRef, _RUTOt, _IdAdicOtr, _FchRef, _CodRef, _RazonRef)
+                End If
+
+            Next
 
         Catch ex As Exception
 
@@ -611,7 +636,7 @@ Public Class Class_Genera_DTE_RdBk
 
 
         Consulta_sql = "Select top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
-        _Row_Configp = _Sql.Fx_Get_Tablas(Consulta_sql).Rows(0)
+        _Row_Configp = _Sql.Fx_Get_DataTable(Consulta_sql).Rows(0)
 
         Dim _Empresa = _Row_Configp.Item("EMPRESA")
         Dim _Nroresol = _Row_Configp.Item("NRORESOL")
@@ -856,7 +881,7 @@ Public Class Class_Genera_DTE_RdBk
             Dim _Tido = _Maeedo.Rows.Item(0).Item("TIDO")
 
             Consulta_sql = "Select top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
-            _Row_Configp = _Sql.Fx_Get_Tablas(Consulta_sql).Rows(0)
+            _Row_Configp = _Sql.Fx_Get_DataTable(Consulta_sql).Rows(0)
 
             _Empresa = _Row_Configp.Item("EMPRESA")
             _Nroresol = _Row_Configp.Item("NRORESOL")
@@ -976,7 +1001,7 @@ Public Class Class_Genera_DTE_RdBk
 
         Dim _TblPaso As DataTable
 
-        _TblPaso = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblPaso = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblPaso.Rows.Count) Then
             Return _TblPaso.Rows(0)
@@ -1655,7 +1680,7 @@ Public Class Class_Genera_DTE_RdBk
         _Nro_Documento = _Maeedo.Rows(0).Item("NUDO")
 
         Consulta_sql = "Select top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
-        _Row_Configp = _Sql.Fx_Get_Tablas(Consulta_sql).Rows(0)
+        _Row_Configp = _Sql.Fx_Get_DataTable(Consulta_sql).Rows(0)
 
         If _Tido <> "FCC" And _Tido <> "GRC" And _Tido <> "NCC" Then
 
@@ -2272,7 +2297,7 @@ Public Class Class_Genera_DTE_RdBk
         Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa' And AmbienteCertificacion = " & _AmbienteCertificacion
-        Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not CBool(_Tbl_ConfEmpresa.Rows.Count) Then
             _Errores.Add("Faltan los datos de configuración DTE para la empresa")
@@ -2521,7 +2546,7 @@ Public Class Class_Genera_DTE_RdBk
         Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa'"
-        Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not CBool(_Tbl_ConfEmpresa.Rows.Count) Then
             _Errores.Add("Faltan los datos de configuración DTE para la empresa")
@@ -3137,7 +3162,7 @@ Public Class Class_Genera_DTE_RdBk
             Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
                            "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
                            "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa' And AmbienteCertificacion = " & _AmbienteCertificacion
-            Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If Not CBool(_Tbl_ConfEmpresa.Rows.Count) Then
                 _Errores.Add("Faltan los datos de configuración DTE para la empresa")
