@@ -465,7 +465,8 @@ Public Class Cl_Stmp
                                ",Fecha_Facturar = '" & Format(.Fecha_Facturar, "yyyyMMdd") & "'" &
                                ",DocEmitir = '" & .DocEmitir & "'" &
                                ",TipoPago = '" & .TipoPago & "'" &
-                               ",FechaPickeado = Getdate()" & vbCrLf &
+                               ",FechaPickeado = Getdate()" &
+                               ",Reasignada = " & Convert.ToInt32(.Reasignada) & vbCrLf &
                                "Where Id = " & .Id
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
@@ -780,26 +781,135 @@ Public Class Cl_Stmp
 
                 .Estado = "COMPL"
                 .Accion = _ob_type
+                .Reasignada = False
 
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set " & vbCrLf &
-                               "Estado = '" & .Estado & "',Accion = '" & .Accion & "'" &
-                               ",Fecha_Facturar = '" & Format(.Fecha_Facturar, "yyyyMMdd") & "'" &
-                               ",DocEmitir = '" & .DocEmitir & "'" &
-                               ",TipoPago = '" & .TipoPago & "'" &
-                               ",FechaPickeado = Getdate()" & vbCrLf &
-                               ",Reasignada = 0" & vbCrLf &
-                               "Where Id = " & .Id
+                'Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set " & vbCrLf &
+                '               "Estado = '" & .Estado & "',Accion = '" & .Accion & "'" &
+                '               ",Fecha_Facturar = '" & Format(.Fecha_Facturar, "yyyyMMdd") & "'" &
+                '               ",DocEmitir = '" & .DocEmitir & "'" &
+                '               ",TipoPago = '" & .TipoPago & "'" &
+                '               ",FechaPickeado = Getdate()" & vbCrLf &
+                '               ",Reasignada = 0" & vbCrLf &
+                '               "Where Id = " & .Id
 
-                If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+                'If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
 
-                    _Mensaje.Detalle = "Error al actualizar el documento en la tabla Zw_Stmp_Enc"
-                    Throw New System.Exception(_Sql.Pro_Error)
+                '    _Mensaje.Detalle = "Error al actualizar el documento en la tabla Zw_Stmp_Enc"
+                '    Throw New System.Exception(_Sql.Pro_Error)
+
+                'End If
+
+                Dim _QuerySql = String.Empty
+
+                If _ticket_verde.Rows(0).Item("ticket_verde") = "Y" Then
+
+                    For Each _Fila As DataRow In _Detalle.Rows
+
+                        Dim _Cont As String = _Fila.Item("CONT")
+                        Dim _tag As String = _Fila.Item("tag")
+                        Dim _loc As String = NuloPorNro(_Fila.Item("loc"), "")
+
+                        Dim _sku As String = _Fila.Item("sku")
+                        Dim _qty As Double = _Fila.Item("qty")
+                        Dim _Saldo_qty As Double = _Fila.Item("Saldo_qty")
+
+                        Dim _DetPick As New Zw_Stmp_DetPick
+
+                        With _DetPick
+                            .Id_Enc = Zw_Stmp_Enc.Id
+                            .Idmaeedo = _Idmaeedo
+                            .Tido = _Tido
+                            .Nudo = _Nudo
+                            .Sku = _Fila.Item("sku")
+                            .Sku_desc = _Fila.Item("sku_desc")
+                            .Tag = _Fila.Item("tag")
+                            .Qty = _Fila.Item("qty")
+                            .Udtrpr = 1
+                            .Loc = _loc
+                            .Cont = _Cont
+                        End With
+
+                        Zw_Stmp_DetPick.Add(_DetPick)
+
+                    Next
+
+                    For Each _Det As Zw_Stmp_Det In Zw_Stmp_Det
+
+                        For Each _Fila As DataRow In _Detalle.Rows
+
+                            Dim _Cont As String = _Fila.Item("CONT")
+                            Dim _tag As String = _Fila.Item("tag")
+                            Dim _loc As String = NuloPorNro(_Fila.Item("loc"), "")
+
+                            Dim _sku As String = _Fila.Item("sku")
+                            Dim _qty As Double = _Fila.Item("qty")
+                            Dim _Saldo_qty As Double = _Fila.Item("Saldo_qty")
+
+                            If _Det.Codigo.Trim = _sku.Trim And CBool(_Saldo_qty) Then
+
+                                Dim _Cantidad As Double = _Saldo_qty
+
+                                If _Det.Caprco1_Ori < _Cantidad Then
+                                    _Cantidad = _Det.Caprco1_Ori
+                                End If
+
+                                _Saldo_qty = _Saldo_qty - _Cantidad
+
+                                _Det.Cantidad += _Cantidad
+                                _Det.Caprco1_Real += _Cantidad
+                                _Det.Caprco2_Real += _Cantidad
+
+                                _Fila.Item("Saldo_qty") = _Saldo_qty
+
+                                _QuerySql += "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
+                                             "('MAEDDO'," & _Det.Idmaeddo & ",'wms','" & _Fecha & "','wms','CONT','" & _Cont & "')" & vbCrLf &
+                                             "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
+                                             "('MAEDDO'," & _Det.Idmaeddo & ",'wms','" & _Fecha & "','wms','tag','" & _tag & "')" & vbCrLf &
+                                             "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
+                                             "('MAEDDO'," & _Det.Idmaeddo & ",'wms','" & _Fecha & "','wms','loc','" & _loc & "')" & vbCrLf &
+                                             "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
+                                             "('MAEDDO'," & _Det.Idmaeddo & ",'wms','" & _Fecha & "','wms','qty','" & _qty & "')" & vbCrLf
+
+                                If _Det.Caprco1_Real = _Det.Caprco1_Ori Then
+                                    Exit For
+                                End If
+
+                            End If
+
+                        Next
+
+                        If _Det.Caprco1_Real > 0 Then
+                            _Det.Pickeado = True
+                        End If
+
+                        _Det.EnProceso = False
+                        _Det.CodFuncionario_Pickea = "wms"
+
+                    Next
+
+                    _Mensaje = Fx_Confirmar_Picking()
+
+                    If _Mensaje.EsCorrecto Then
+
+                        _QuerySql += "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
+                                     "('MAEEDO'," & _Idmaeedo & ",'wms','" & _Fecha & "','wms','ob_type','" & _ob_type & "')" & vbCrLf &
+                                     "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
+                                     "('MAEEDO'," & _Idmaeedo & ",'wms','" & _Fecha & "','wms','shipment','" & _shipment & "')" & vbCrLf &
+                                     "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
+                                     "('MAEEDO'," & _Idmaeedo & ",'wms','" & _Fecha & "','wms','wave','" & _wave & "')" & vbCrLf &
+                                     "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC) Values " &
+                                     "('MAEEDO'," & _Idmaeedo & ",'wms','" & _Fecha & "','wms','whse_id','" & _whse_id & "')"
+
+                        _Sql.Ej_consulta_IDU(_QuerySql, False)
+
+                    End If
 
                 End If
 
-                _Mensaje.EsCorrecto = True
-                _Mensaje.Detalle = "Documento actualizado correctamente"
-                _Mensaje.Mensaje = "Documento dejado como completado correctamente"
+                If _Mensaje.EsCorrecto = True Then
+                    _Mensaje.Detalle = "Documento actualizado correctamente"
+                    _Mensaje.Mensaje = "Documento dejado como completado correctamente"
+                End If
 
             End With
 
