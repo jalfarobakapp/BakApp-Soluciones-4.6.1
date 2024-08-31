@@ -29,18 +29,16 @@ Public Class Frm_Inv_Inventarios
 
     Sub Sb_Actualizar_Grilla()
 
-        Dim _Condicion As String
+        Dim _Condicion As String = String.Empty
 
         If Chk_Activos.Checked Then
-            _Condicion = "Activo = 1"
-        Else
-            _Condicion = "1 = 1"
+            _Condicion = " And Activo = 1"
         End If
 
         Consulta_sql = "Select *," &
                        "Case When Activo = 1 Then 'Abierto' Else 'Cerrado' End as Estado_Str" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Inv_Inventario" & vbCrLf &
-                       "Where " & _Condicion
+                       "Where Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'" & _Condicion
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 

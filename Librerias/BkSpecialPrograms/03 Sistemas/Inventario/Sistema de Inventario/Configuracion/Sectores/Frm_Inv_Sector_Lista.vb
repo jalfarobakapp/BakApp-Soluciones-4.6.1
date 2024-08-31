@@ -89,12 +89,12 @@ Public Class Frm_Inv_Sector_Lista
             .Columns("Bodega").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            '.Columns("Id").Visible = True
-            '.Columns("Id").HeaderText = "Id"
-            '.Columns("Id").Width = 40
-            '.Columns("Id").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("Id").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
+            .Columns("Id").Visible = True
+            .Columns("Id").HeaderText = "Id"
+            .Columns("Id").Width = 30
+            .Columns("Id").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Id").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Sector").Visible = True
             .Columns("Sector").HeaderText = "Sector"

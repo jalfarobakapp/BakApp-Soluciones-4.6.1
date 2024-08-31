@@ -73,6 +73,7 @@ Public Class Frm_Inv_Sector_Crear
         If CBool(_Id) Then
             _Mensaje = _Cl_InvSectores.Fx_Editar_Sector()
         Else
+            _Cl_InvSectores.Zw_Inv_Sector.Abierto = True
             _Mensaje = _Cl_InvSectores.Fx_Crear_Sector(_Cl_InvSectores.Zw_Inv_Sector)
         End If
 

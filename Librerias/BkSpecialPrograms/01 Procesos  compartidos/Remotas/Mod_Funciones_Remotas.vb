@@ -32,7 +32,7 @@ Public Module Mod_Funciones_Remotas
         Dim _Bool_Fecha_Otorga As Boolean = _Fecha_Otorga.HasValue
 
         If _Bool_Fecha_Otorga Then
-            _Fecha_Otorga_Str = "Convert(datetime,'" & Format(_Fecha_Otorga, "dd-MM-yyyy hh:mm:ss") & "')"
+            _Fecha_Otorga_Str = "Convert(datetime,'" & Format(_Fecha_Otorga, "yyyy-MM-dd hh:mm:ss") & "',120)"
         Else
             _Fecha_Otorga_Str = "Getdate()"
         End If

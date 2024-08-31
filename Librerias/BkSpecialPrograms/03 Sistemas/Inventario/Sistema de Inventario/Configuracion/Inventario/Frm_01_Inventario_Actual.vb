@@ -95,7 +95,8 @@ Public Class Frm_01_Inventario_Actual
 
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Inv_FotoInventario" & vbCrLf &
+        Consulta_sql = "Select Codigo,CodigoRap,CodigoTec,Descripcion,StFisicoUd1,Cant_Inventariada,Costo,Dif_Inv_Cantidad,Total_Costo_Foto,Total_Costo_Inv,Dif_Inv_Costo,Recontado,NoInventariar" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Inv_FotoInventario" & vbCrLf &
                        "Where IdInventario = " & _IdInventario
 
         Dim _New_Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
@@ -278,9 +279,9 @@ Public Class Frm_01_Inventario_Actual
         Dim _StFisicoUd1 As Double = _Fila.Cells("StFisicoUd1").Value
         Dim _Cant_Inventariada As Double = _Fila.Cells("Cant_Inventariada").Value
         Dim _Dif_Inv_Cantidad As Double = _Fila.Cells("Dif_Inv_Cantidad").Value
-        Dim _Cerrado As Boolean = _Fila.Cells("Cerrado").Value
+        'Dim _Cerrado As Boolean = _Fila.Cells("Cerrado").Value
         Dim _Recontado As Boolean = _Fila.Cells("Recontado").Value
-        Dim _Levantado As Boolean = _Fila.Cells("Levantado").Value
+        'Dim _Levantado As Boolean = _Fila.Cells("Levantado").Value
 
         Dim Fm As New Frm_02_Detalle_Producto_Actual(_IdInventario, _CodigoPR)
 
@@ -292,9 +293,9 @@ Public Class Frm_01_Inventario_Actual
         _Fila.Cells("Total_Costo_Foto").Value = Fm.Zw_Inv_FotoInventario.Total_Costo_Foto
         _Fila.Cells("Total_Costo_Inv").Value = Fm.Zw_Inv_FotoInventario.Total_Costo_Inv
         _Fila.Cells("Dif_Inv_Costo").Value = Fm.Zw_Inv_FotoInventario.Dif_Inv_Costo
-        _Fila.Cells("Cerrado").Value = Fm.Zw_Inv_FotoInventario.Cerrado
+        '_Fila.Cells("Cerrado").Value = Fm.Zw_Inv_FotoInventario.Cerrado
         _Fila.Cells("Recontado").Value = Fm.Zw_Inv_FotoInventario.Recontado
-        _Fila.Cells("Levantado").Value = Fm.Zw_Inv_FotoInventario.Levantado
+        '_Fila.Cells("Levantado").Value = Fm.Zw_Inv_FotoInventario.Levantado
         _Fila.Cells("NoInventariar").Value = Fm.Zw_Inv_FotoInventario.NoInventariar
 
         Fm.Dispose()

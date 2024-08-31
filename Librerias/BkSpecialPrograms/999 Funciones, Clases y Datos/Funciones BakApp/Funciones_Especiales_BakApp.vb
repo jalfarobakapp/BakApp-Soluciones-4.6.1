@@ -3607,15 +3607,15 @@ Public Module Crear_Documentos_Desde_Otro
 
                 If _Meses_Dif > _Meses Then
 
-                    If Not IsNothing(_Formulario) Then
+                    'If Not IsNothing(_Formulario) Then
 
-                        _Mensaje.Detalle = "Validación Modalidad: " & Modalidad
-                        Throw New System.Exception("Este folio " & _Folio & " tiene mas de (" & _Meses & ") meses desde su fecha de creación" & vbCrLf &
-                              "en el SII y su configuración indica que podría estar vencido." & vbCrLf &
-                              "Si usted insite en el envío, este documento podria ser rechazado." & vbCrLf & vbCrLf &
-                              "INFORME ESTA SITUACION AL ADMINISTRADOR DEL SISTEMA")
+                    _Mensaje.Detalle = "Validación Modalidad: " & Modalidad
+                    Throw New System.Exception("Este folio " & _Folio & " tiene mas de (" & _Meses & ") meses desde su fecha de creación" & vbCrLf &
+                          "en el SII y su configuración indica que podría estar vencido." & vbCrLf &
+                          "Si usted insite en el envío, este documento podria ser rechazado." & vbCrLf & vbCrLf &
+                          "INFORME ESTA SITUACION AL ADMINISTRADOR DEL SISTEMA")
 
-                    End If
+                    'End If
 
                 Else
 

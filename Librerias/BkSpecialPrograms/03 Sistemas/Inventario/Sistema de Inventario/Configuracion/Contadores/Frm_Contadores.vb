@@ -21,6 +21,8 @@ Public Class Frm_Contadores
 
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.White, ScrollBars.Vertical, True, False, False)
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
 
     Private Sub Sb_Frm_Contadores_Load(sender As Object, e As EventArgs) Handles MyBase.Load

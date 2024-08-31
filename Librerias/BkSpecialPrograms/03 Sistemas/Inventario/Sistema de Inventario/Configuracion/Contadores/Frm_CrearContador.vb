@@ -22,6 +22,8 @@ Public Class Frm_CrearContador
         Cl_Contador.Fx_Llenar_Zw_Inv_Contador(_IdContador)
         Me._IdContador = _IdContador
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
 
     Private Sub Frm_Operadores_Crear_Load(sender As Object, e As EventArgs) Handles MyBase.Load

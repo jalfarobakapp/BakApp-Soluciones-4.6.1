@@ -151,7 +151,7 @@ Public Class Cl_Inventario
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Inv_Inventario " &
                                "(Ano,Mes,Dia,Fecha_Inventario,Empresa,Sucursal,Bodega,Nombre_Empresa,Nombre_Sucursal," &
-                               "Nombre_Bodega,NombreInventario,FuncionarioCargo,NombreFuncionario,Activo,Estado) Values " &
+                               "Nombre_Bodega,NombreInventario,FuncionarioCargo,NombreFuncionario,Activo) Values " &
                                "('" & .Ano & "','" & .Mes & "','" & .Dia & "','" & Format(.Fecha_Inventario, "yyyyMMdd") & "'" &
                                ",'" & .Empresa & "','" & .Sucursal & "','" & .Bodega & "'" &
                                ",'" & .Nombre_Empresa & "','" & .Nombre_Sucursal & "','" & .Nombre_Bodega & "'" &

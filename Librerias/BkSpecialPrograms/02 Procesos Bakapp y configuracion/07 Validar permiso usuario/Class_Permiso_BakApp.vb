@@ -680,6 +680,8 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Invg0004", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Invg0005", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Invg0006", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Invg0007", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Invg0008", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Pre0008", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Pre0009", _Objeto, _Formulario)
@@ -2979,6 +2981,14 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.INVENTARIO.ToString
             Case "Invg0006"
                 _DescripcionPermiso = "CERRAR INVENTARIO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO, 6)
+                _NombreFamiliaPermiso = _Fml.INVENTARIO.ToString
+            Case "Invg0007"
+                _DescripcionPermiso = "CREAR FOTO STOCK"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO, 6)
+                _NombreFamiliaPermiso = _Fml.INVENTARIO.ToString
+            Case "Invg0008"
+                _DescripcionPermiso = "ELIMINAR FOTO STOCK"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO, 6)
                 _NombreFamiliaPermiso = _Fml.INVENTARIO.ToString
 

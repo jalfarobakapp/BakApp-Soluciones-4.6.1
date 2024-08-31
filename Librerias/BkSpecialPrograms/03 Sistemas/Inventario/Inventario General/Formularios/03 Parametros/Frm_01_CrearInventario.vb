@@ -217,7 +217,7 @@ Public Class Frm_01_CrearInventario
 
     Private Sub Btn_EliminarFotoStock_Click(sender As Object, e As EventArgs) Handles Btn_EliminarFotoStock.Click
 
-        If Not Fx_Tiene_Permiso(Me, "In0010") Then
+        If Not Fx_Tiene_Permiso(Me, "Invg0008") Then
             Return
         End If
 
@@ -232,7 +232,7 @@ Public Class Frm_01_CrearInventario
 
     Private Sub Btn_TomarFotoStock_Click(sender As Object, e As EventArgs) Handles Btn_TomarFotoStock.Click
 
-        If Not Fx_Tiene_Permiso(Me, "In0006") Then
+        If Not Fx_Tiene_Permiso(Me, "Invg0007") Then
             Return
         End If
 
