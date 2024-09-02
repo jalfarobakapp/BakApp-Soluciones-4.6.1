@@ -49,7 +49,7 @@ Declare @FechaHasta As datetime = '" & Format(_FechaHasta, "yyyyMMdd") & "'
 Select KOFU,NOKOFU,CAST(0 As Int) As Clientes,CAST(0 As Int) As Clientes_Atendidos,CAST(0 As Int) As Clientes_NOAtendidos,CAST(0 As Float) As Porc_Atencion 
 Into #PasoCl
 From TABFU
---Where KOFU In (Select Distinct KOFULIDO From Zw_Informe_Venta Where FEEMDO BETWEEN @FechaDesde And @FechaHasta And PRCT = 0)
+--Where KOFU In (Select Distinct KOFULIDO From Zw_Informe_Venta Where FEEMDO BETWEEN @FechaDesde And @FechaHasta And PRCT = 0 And TIDO In ('FCV','BLV'))
 Where KOFU In " & _Filtro_Extra & "
 
 Update #PasoCl Set Clientes = (Select COUNT(*) From MAEEN Where KOFUEN = KOFU)

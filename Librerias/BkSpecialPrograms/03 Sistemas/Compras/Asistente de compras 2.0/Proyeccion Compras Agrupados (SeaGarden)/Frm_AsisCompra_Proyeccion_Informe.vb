@@ -138,6 +138,8 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
         Lbl_Blanco.BackColor = Color.White
         Lbl_Rosado.BackColor = Color.FromArgb(255, 182, 193)
 
+        Btn_SugCambioPrecio.Visible = False
+
     End Sub
 
     Private Sub Sb_Initialize_Grid()
@@ -1352,7 +1354,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
             .Columns("SugCmbPrecio").Width = 30
             .Columns("SugCmbPrecio").HeaderText = "Sug." & vbCrLf & "CBP?"
             .Columns("SugCmbPrecio").ToolTip = "Sugiere cambio de precio"
-            .Columns("SugCmbPrecio").Visible = True
+            .Columns("SugCmbPrecio").Visible = False 'Btn_SugCambioPrecio.Visible
             .Columns("SugCmbPrecio").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -1804,8 +1806,8 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
         'Dim _CodMadre As String
         'Dim _CantidadMax As Double
-        Dim _FechaDesde As DateTime
-        Dim _FechaHasta As DateTime
+        Dim _FechaDesde As DateTime = DateAdd(DateInterval.Month, -3, FechaDelServidor())
+        Dim _FechaHasta As DateTime = FechaDelServidor()
 
         Dim Fm As New Frm_AsisCompra_CambioPrecio(_Ds_Informe.Tables(0), _FechaDesde, _FechaHasta)
         Fm.ShowDialog(Me)

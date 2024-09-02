@@ -197,6 +197,7 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         Me.Btn_SugCambioPrecio.ImageAlt = CType(resources.GetObject("Btn_SugCambioPrecio.ImageAlt"), System.Drawing.Image)
         Me.Btn_SugCambioPrecio.Name = "Btn_SugCambioPrecio"
         Me.Btn_SugCambioPrecio.Tooltip = "Colapsar todas las filas"
+        Me.Btn_SugCambioPrecio.Visible = False
         '
         'Label1
         '

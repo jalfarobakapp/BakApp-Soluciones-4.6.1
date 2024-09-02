@@ -1,5 +1,5 @@
 DECLARE @Empresa		Char(2)  = '{Empresa}'
-DECLARE @CantidadMax	Float = #CantidadMax#	-- <-- ACA PONER LA CANTIDAD DE KILOS	
+DECLARE @CantidadMax	Float = {CantidadMax}	-- <-- ACA PONER LA CANTIDAD DE KILOS	
 DECLARE @Lista		Char(3) = '{Lista}'
 DECLARE @IDMAEDDO		Int
 DECLARE @cantidad		Decimal(10,2)

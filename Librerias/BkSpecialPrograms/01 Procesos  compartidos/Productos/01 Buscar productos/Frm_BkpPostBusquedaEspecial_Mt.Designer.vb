@@ -99,6 +99,7 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
+        Me.Chk_MostrarVendidosUlt3Meses = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Grupo_BusquedaProducto.SuspendLayout()
         CType(Me.Context_Menu_Solicitud_Compra, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -112,7 +113,7 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnCrearProductos, Me.LblOculto, Me.CirProg_Actualizando, Me.Lbl_Cargando_Productos, Me.Btn_Seleccion_Multiple, Me.Btn_Marcar_Seleccionados, Me.Btn_Desmarcar_Seleccionados, Me.Btn_Orden_Bodegas, Me.Btn_Teclado, Me.BtnExportaExcel, Me.BtnBuscarListaCostosProveedor, Me.BtnBuscarAlternativos, Me.ChkMostrarOcultos})
-        Me.Bar1.Location = New System.Drawing.Point(0, 563)
+        Me.Bar1.Location = New System.Drawing.Point(0, 590)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(860, 41)
         Me.Bar1.Stretch = True
@@ -798,6 +799,7 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Chk_Top20.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Top20.CheckBoxImageChecked = CType(resources.GetObject("Chk_Top20.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Top20.CheckBoxImageUnChecked = CType(resources.GetObject("Chk_Top20.CheckBoxImageUnChecked"), System.Drawing.Image)
+        Me.Chk_Top20.FocusCuesEnabled = False
         Me.Chk_Top20.ForeColor = System.Drawing.Color.Black
         Me.Chk_Top20.Location = New System.Drawing.Point(383, 115)
         Me.Chk_Top20.Name = "Chk_Top20"
@@ -870,11 +872,31 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Grilla.Size = New System.Drawing.Size(851, 368)
         Me.Grilla.TabIndex = 57
         '
+        'Chk_MostrarVendidosUlt3Meses
+        '
+        Me.Chk_MostrarVendidosUlt3Meses.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_MostrarVendidosUlt3Meses.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_MostrarVendidosUlt3Meses.CheckBoxImageChecked = CType(resources.GetObject("Chk_MostrarVendidosUlt3Meses.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_MostrarVendidosUlt3Meses.CheckBoxImageUnChecked = CType(resources.GetObject("Chk_MostrarVendidosUlt3Meses.CheckBoxImageUnChecked"), System.Drawing.Image)
+        Me.Chk_MostrarVendidosUlt3Meses.FocusCuesEnabled = False
+        Me.Chk_MostrarVendidosUlt3Meses.ForeColor = System.Drawing.Color.Black
+        Me.Chk_MostrarVendidosUlt3Meses.Location = New System.Drawing.Point(5, 559)
+        Me.Chk_MostrarVendidosUlt3Meses.Name = "Chk_MostrarVendidosUlt3Meses"
+        Me.Chk_MostrarVendidosUlt3Meses.Size = New System.Drawing.Size(292, 25)
+        Me.Chk_MostrarVendidosUlt3Meses.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_MostrarVendidosUlt3Meses.TabIndex = 59
+        Me.Chk_MostrarVendidosUlt3Meses.Text = "Mostrar solo productos vendidos los últimos 3 meses"
+        Me.Chk_MostrarVendidosUlt3Meses.Visible = False
+        '
         'Frm_BkpPostBusquedaEspecial_Mt
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(860, 604)
+        Me.ClientSize = New System.Drawing.Size(860, 631)
+        Me.Controls.Add(Me.Chk_MostrarVendidosUlt3Meses)
         Me.Controls.Add(Me.Context_Menu_Solicitud_Compra)
         Me.Controls.Add(Me.Lbl_Patente)
         Me.Controls.Add(Me.Txt_Patente)
@@ -981,4 +1003,5 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
     Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
     Public WithEvents Txt_CodAlternativo As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Chk_MostrarVendidosUlt3Meses As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

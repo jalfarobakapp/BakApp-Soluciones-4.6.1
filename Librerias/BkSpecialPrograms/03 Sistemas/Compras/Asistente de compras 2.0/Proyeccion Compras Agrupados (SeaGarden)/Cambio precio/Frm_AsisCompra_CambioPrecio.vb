@@ -33,6 +33,7 @@
             Consulta_sql = Replace(Consulta_sql, "{CantidadMax}", _CantidadMax)
             Consulta_sql = Replace(Consulta_sql, "{FechaDesde}", _FechaDesde.ToString("yyyyMMdd"))
             Consulta_sql = Replace(Consulta_sql, "{FechaHasta}", _FechaHasta.ToString("yyyyMMdd"))
+            Consulta_sql = Replace(Consulta_sql, "{Bakapp}", _Global_BaseBk)
 
             Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 

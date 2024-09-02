@@ -509,6 +509,8 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
     End Sub
     Private Sub Frm_BkpPostBusquedaEspecial_Mt_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
+        Chk_MostrarVendidosUlt3Meses.Visible = True
+
         Fx_Buscar_Patente()
 
         _Cl_ActFxDinXProductos = New Class_ActFxDinXProductos
@@ -526,6 +528,12 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Asociacion (Codigo,Codigo_Nodo,DescripcionBusqueda,Para_filtro,Clas_unica,Producto)" & vbCrLf &
                        "Select KOPR,0,Rtrim(Ltrim(KOPR)) + ' ' + Rtrim(Ltrim(NOKOPR)),0,0,1 From MAEPR" & vbCrLf &
                        "Where KOPR Not In (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Producto = 1)"
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_Asociacion Set DescripcionBusqueda = Rtrim(Ltrim(KOPR)) + ' ' + Rtrim(Ltrim(NOKOPR))" & vbCrLf &
+                       "From MAEPR Mp" & vbCrLf &
+                       "Inner Join " & _Global_BaseBk & "Zw_Prod_Asociacion Ps On Mp.KOPR = Ps.Codigo And Ps.Producto = 1" & vbCrLf &
+                       "Where Ps.DescripcionBusqueda <> Rtrim(Ltrim(KOPR)) + ' ' + Rtrim(Ltrim(NOKOPR))"
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
         If _Tipo_Lista = "C" Then
@@ -1114,6 +1122,10 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                 _Filtro_Productos = vbCrLf & "And Mp.KOPR In (Select Codigo From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
                                     "Where (Informe = 'ServicioTecnico') AND (Filtro = 'ProdServicio'))"
 
+            End If
+
+            If Chk_MostrarVendidosUlt3Meses.Checked Then
+                _Filtro_Productos += vbCrLf & "And Mp.KOPR In (Select KOPRCT From MAEDDO Where TIDO In ('FCV','BLV','GDV') And FEEMLI > DATEADD(month,-3,Getdate()))"
             End If
 
             Consulta_sql = Replace(Consulta_sql, "#Filtro_Productos#", _Filtro_Productos)
@@ -3155,6 +3167,10 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
             If CBool(Grilla.RowCount) Then Grilla.Focus()
         End If
 
+    End Sub
+
+    Private Sub Chk_MostrarVendidosUlt3Meses_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_MostrarVendidosUlt3Meses.CheckedChanged
+        Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
     End Sub
 
     Private Sub Txt_Patente_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Patente.ButtonCustom2Click
