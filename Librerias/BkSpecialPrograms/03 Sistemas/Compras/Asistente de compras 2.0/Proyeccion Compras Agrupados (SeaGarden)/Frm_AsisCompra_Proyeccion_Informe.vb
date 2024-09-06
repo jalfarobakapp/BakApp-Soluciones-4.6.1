@@ -138,7 +138,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
         Lbl_Blanco.BackColor = Color.White
         Lbl_Rosado.BackColor = Color.FromArgb(255, 182, 193)
 
-        Btn_SugCambioPrecio.Visible = False
+        Btn_SugCambioPrecio.Visible = True
 
     End Sub
 
@@ -1298,7 +1298,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
             _Campo = "Promedio_3Mes"
             .Columns(_Campo).Width = 100
-            .Columns(_Campo).HeaderText = "Promedio Ventas" & vbCrLf & "ultimos 3 meses"
+            .Columns(_Campo).HeaderText = "Promedio Ventas" & vbCrLf & "últimos 3 meses"
             DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##"
             .Columns(_Campo).CellStyles.Default.Alignment = Alignment.MiddleRight
             .Columns(_Campo).Visible = True
@@ -1307,7 +1307,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
             _Campo = "SumTotalQtyUd1_Ult_3Cio"
             .Columns(_Campo).Width = 80
-            .Columns(_Campo).HeaderText = "Ventas" & vbCrLf & "Ventas ultimo" & vbCrLf & "mes" '"Rot X " & _Dias_Proyeccion & " días"
+            .Columns(_Campo).HeaderText = "Ventas" & vbCrLf & "Ventas último" & vbCrLf & "mes" '"Rot X " & _Dias_Proyeccion & " días"
             DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##"
             .Columns(_Campo).CellStyles.Default.Alignment = Alignment.MiddleRight
             .Columns(_Campo).Visible = True
@@ -1351,10 +1351,11 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
             _DisplayIndex += 1
 
             _Campo = "SugCmbPrecio"
-            .Columns("SugCmbPrecio").Width = 30
-            .Columns("SugCmbPrecio").HeaderText = "Sug." & vbCrLf & "CBP?"
+            .Columns("SugCmbPrecio").Width = 40
+            .Columns("SugCmbPrecio").HeaderText = "Sug." & vbCrLf & "CDP?"
             .Columns("SugCmbPrecio").ToolTip = "Sugiere cambio de precio"
-            .Columns("SugCmbPrecio").Visible = False 'Btn_SugCambioPrecio.Visible
+            .Columns("SugCmbPrecio").Visible = True
+            .Columns("SugCmbPrecio").CellStyles.Default.Alignment = Alignment.MiddleCenter
             .Columns("SugCmbPrecio").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -1690,7 +1691,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
         'If (e.Button And MouseButtons.Right) = MouseButtons.Right Then
         'Dim item As GridElement = Super_Grilla.GetElementAt(e.Location)
 
-        '_HitColumn = _Panel_Activo.Columns(e.GridCell.ColumnIndex)
+        _HitColumn = _Panel_Activo.Columns(e.GridCell.ColumnIndex)
 
         Dim _Fila As GridRow = TryCast(Super_Grilla.ActiveRow, GridRow)
 
@@ -1705,7 +1706,15 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
                 Btn_Estadisticas_Producto.Visible = True
                 ShowContextMenu(Menu_Contextual_Productos)
             Case "Table1"
-                Sb_Revisar_Info_Producto(_Fila)
+                'Sb_Revisar_Info_Producto(_Fila)
+                If _HitColumn.Name = "SugCmbPrecio" Then
+                    If _Fila.Cells("SugCmbPrecio").Value Then
+                        MessageBoxEx.Show(Me, _HitColumn.Name, "Columna", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Else
+                        MessageBoxEx.Show(Me, "No existe información",
+                                          "Sugerencia de cambio de precio", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    End If
+                End If
             Case "Table2"
                 Dim _Idmaeedo = _Fila.Cells("IDMAEEDO").Value
                 Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
@@ -1804,14 +1813,18 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
     Private Sub Btn_SugCambioPrecio_Click(sender As Object, e As EventArgs) Handles Btn_SugCambioPrecio.Click
 
+        Me.Enabled = False
+
         'Dim _CodMadre As String
         'Dim _CantidadMax As Double
         Dim _FechaDesde As DateTime = DateAdd(DateInterval.Month, -3, FechaDelServidor())
         Dim _FechaHasta As DateTime = FechaDelServidor()
 
-        Dim Fm As New Frm_AsisCompra_CambioPrecio(_Ds_Informe.Tables(0), _FechaDesde, _FechaHasta)
+        Dim Fm As New Frm_AsisCompra_CambioPrecio(_Ds_Informe.Tables(4), "01P", _FechaDesde, _FechaHasta)
         Fm.ShowDialog(Me)
         Fm.Dispose()
+
+        Me.Enabled = True
 
     End Sub
 End Class

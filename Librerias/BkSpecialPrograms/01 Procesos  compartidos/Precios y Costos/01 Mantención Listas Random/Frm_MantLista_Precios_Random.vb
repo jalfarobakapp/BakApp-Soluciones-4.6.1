@@ -1598,23 +1598,18 @@ Public Class Frm_MantLista_Precios_Random
 
         If CBool(Grilla.Rows.Count) Then
 
-            Dim _Fevi = String.Empty
-            Dim _FechaMinima As DateTime = FechaDelServidor()
+            Dim _Fevi As Date = FechaDelServidor()
 
             If Chk_GrabarPreciosHistoricos.Checked Then
-
-                Dim _Fecha As Date
 
                 Dim _Aceptar As Boolean
 
                 _Aceptar = InputBox_Bk_Fecha(Me, "Ingrese la fecha de vigencia de estos precios" & vbCrLf & vbCrLf &
-                               "Formato fecha: dd-mm-aaaa", "Fecha de vigencia", _Fecha,, True)
+                               "Formato fecha: dd-mm-aaaa", "Fecha de vigencia", _Fevi,, True)
 
                 If Not _Aceptar Then
                     Return
                 End If
-
-                _Fevi = Format(_Fecha, "yyyyMMdd")
 
             End If
 
@@ -1635,11 +1630,9 @@ Public Class Frm_MantLista_Precios_Random
 
             Next
 
-            Dim _FeviStr = String.Empty
-
-            If Not String.IsNullOrEmpty(_Fevi) Then
-                _FeviStr = "TABPRE.FEVI = '" & _Fevi & "',"
-            End If
+            'If Not String.IsNullOrEmpty(_FeviStr) Then
+            '_FeviStr = "TABPRE.FEVI = '" & _FeviStr & "',"
+            'End If
 
             Consulta_sql = "   Update TABPRE Set 
                                TABPRE.PP01UD = Tbl.PP01UD,
@@ -1649,7 +1642,8 @@ Public Class Frm_MantLista_Precios_Random
                                TABPRE.MG02UD = Tbl.MG02UD,
                                TABPRE.DTMA02UD = Tbl.DTMA02UD,
                                TABPRE.ECUACION = Tbl.ECUACION,
-                               TABPRE.ECUACIONU2 = Tbl.ECUACIONU2," & _FeviStr & "
+                               TABPRE.ECUACIONU2 = Tbl.ECUACIONU2,
+                               TABPRE.FEVI = '" & Format(_Fevi, "yyyyMMdd") & "',
                                " & _Campos_Adicionales & "
                                TABPRE.PM01 = 0
                                From " & _Nombre_Tbl_Paso_Precios & " Tbl 

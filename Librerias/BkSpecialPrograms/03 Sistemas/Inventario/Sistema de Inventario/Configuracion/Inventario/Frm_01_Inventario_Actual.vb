@@ -87,7 +87,7 @@ Public Class Frm_01_Inventario_Actual
                        "Where IdInventario = " & _IdInventario & "" & vbCrLf &
                        vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set " &
-                       "Dif_Inv_Cantidad = Cant_Inventariada-StFisicoUd1,Total_Costo_Foto = StFisicoUd1*Costo,Total_Costo_Inv = Cant_Inventariada*Costo" & vbCrLf &
+                       "Dif_Inv_Cantidad = ROUND(Cant_Inventariada-StFisicoUd1,5),Total_Costo_Foto = StFisicoUd1*Costo,Total_Costo_Inv = Cant_Inventariada*Costo" & vbCrLf &
                        "Where IdInventario = " & _IdInventario & vbCrLf &
                        vbCrLf &
                        "Drop Table #PasoR" & vbCrLf &
@@ -125,7 +125,7 @@ Public Class Frm_01_Inventario_Actual
             DisplayIndex += 1
 
             .Columns("StFisicoUd1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("StFisicoUd1").DefaultCellStyle.Format = "###,##.##"
+            .Columns("StFisicoUd1").DefaultCellStyle.Format = "###,##.#####"
             .Columns("StFisicoUd1").HeaderText = "Stock"
             .Columns("StFisicoUd1").Width = 50
             .Columns("StFisicoUd1").Visible = True
@@ -133,7 +133,7 @@ Public Class Frm_01_Inventario_Actual
             DisplayIndex += 1
 
             .Columns("Cant_Inventariada").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("Cant_Inventariada").DefaultCellStyle.Format = "###,##.##"
+            .Columns("Cant_Inventariada").DefaultCellStyle.Format = "###,##.#####"
             .Columns("Cant_Inventariada").HeaderText = "Inventario"
             .Columns("Cant_Inventariada").ToolTipText = "Cantidad Inventariada"
             .Columns("Cant_Inventariada").Width = 70
@@ -150,7 +150,7 @@ Public Class Frm_01_Inventario_Actual
             DisplayIndex += 1
 
             .Columns("Dif_Inv_Cantidad").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("Dif_Inv_Cantidad").DefaultCellStyle.Format = "###,##.##"
+            .Columns("Dif_Inv_Cantidad").DefaultCellStyle.Format = "###,##.#####"
             .Columns("Dif_Inv_Cantidad").HeaderText = "Dif. Inv."
             .Columns("Dif_Inv_Cantidad").Width = 70
             .Columns("Dif_Inv_Cantidad").Visible = True

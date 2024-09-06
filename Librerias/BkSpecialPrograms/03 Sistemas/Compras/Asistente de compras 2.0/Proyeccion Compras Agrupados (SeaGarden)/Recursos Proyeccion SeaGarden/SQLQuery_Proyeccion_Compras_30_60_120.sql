@@ -299,7 +299,7 @@ Select * From #PasoUltComp
 Select * From #Tbl_Paso_Proyecto_02
 
 Select Codigo_Nodo_Madre,Producto,StockUd#Ud#,Promedio_Mensual,RotMensualUd#Ud#,RotMensual_NoQuiebra,SugCmbPrecio,Cast(0 As Float) As 'PPV',
-Cast(0 As Float) As MinPrecio,Cast(0 As Float) As 'MaxPrecio' 
+Cast(0 As Float) As MinPrecio,Cast(0 As Float) As 'MaxPrecio',CAST(0 As Bit) As 'RevisarPrecio'
 From #Tbl_Paso_Proyecto_01 
 Where SugCmbPrecio = 1
 

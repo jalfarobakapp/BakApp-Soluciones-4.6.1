@@ -179,7 +179,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informe_SuperGrid
             If String.IsNullOrEmpty(_SqlFiltro) Then
 
                 Consulta_sql = "Select Mn.RTEN+Mn.KOFUEN As ID,Mn.RTEN,KOEN As ENDO,SUEN As SUENDO,NOKOEN AS RAZON,Isnull(SUM(VANELI),0) As NETO,Isnull(SUM(VAIVLI),0) AS IVA,Isnull(SUM(VABRLI),0) AS TOTAL
-                            From MAEEN Mn WHIT (NOLOCK)
+                            From MAEEN Mn WITH (NOLOCK)
                             Left Join " & _Nombre_Tabla_Paso & " Inf On Inf.ENDO = Mn.KOEN and Inf.SUENDO = Mn.SUEN
                             Where 1 > 0
                             And Mn.KOFUEN = '" & _Kofuen & "'
@@ -187,7 +187,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informe_SuperGrid
             Else
 
                 Consulta_sql = "Select Mn.RTEN+Mn.KOFUEN As ID,Mn.RTEN,KOEN As ENDO,SUEN As SUENDO,NOKOEN AS RAZON,Isnull(SUM(VANELI),0) As NETO,Isnull(SUM(VAIVLI),0) AS IVA,Isnull(SUM(VABRLI),0) AS TOTAL
-                            From MAEEN Mn WHIT (NOLOCK)
+                            From MAEEN Mn WITH (NOLOCK)
                             Left Join " & _Nombre_Tabla_Paso & " Inf On Inf.ENDO = Mn.KOEN and Inf.SUENDO = Mn.SUEN
                             Where 1 > 0
                             " & _SqlFiltro & "
