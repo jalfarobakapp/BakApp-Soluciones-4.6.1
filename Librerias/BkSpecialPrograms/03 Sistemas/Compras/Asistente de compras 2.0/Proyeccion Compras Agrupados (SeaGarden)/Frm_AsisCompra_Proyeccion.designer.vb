@@ -29,11 +29,12 @@ Partial Class Frm_AsisCompra_Proyeccion
         Me.Input_Tiempo_Reposicion = New DevComponents.Editors.IntegerInput()
         Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel7 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Rdb_Ud2_Compra = New System.Windows.Forms.RadioButton()
-        Me.Rdb_Ud1_Compra = New System.Windows.Forms.RadioButton()
+        Me.Rdb_Ud2_Compra = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_Ud1_Compra = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.BtnProcesarInf = New DevComponents.DotNetBar.ButtonItem()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Arbol_Asociaciones = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_VerMaestroProductos = New DevComponents.DotNetBar.ButtonItem()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.GroupPanel5 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Cmb_Tiempo_Reposicion_Dias_Meses = New DevComponents.DotNetBar.Controls.ComboBoxEx()
@@ -51,14 +52,13 @@ Partial Class Frm_AsisCompra_Proyeccion
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Rdb_Rot_Promedio = New System.Windows.Forms.RadioButton()
         Me.Rdb_Proyeccion_Rotacion_Efectiva = New System.Windows.Forms.RadioButton()
-        Me.Rdb_Rot_Mediana = New System.Windows.Forms.RadioButton()
         Me.Input_Proyeccion_Redondeo = New DevComponents.Editors.IntegerInput()
         Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.Btn_VerMaestroProductos = New DevComponents.DotNetBar.ButtonItem()
         Me.Chk_MostrarSugCambioPrecio = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_Rot_Mediana = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_Rot_Promedio = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.Input_Dias_a_Abastecer, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Input_Tiempo_Reposicion, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel7.SuspendLayout()
@@ -186,30 +186,45 @@ Partial Class Frm_AsisCompra_Proyeccion
         '
         'Rdb_Ud2_Compra
         '
-        Me.Rdb_Ud2_Compra.AutoSize = True
         Me.Rdb_Ud2_Compra.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_Ud2_Compra.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Ud2_Compra.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Ud2_Compra.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_Ud2_Compra.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Ud2_Compra.Checked = True
+        Me.Rdb_Ud2_Compra.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Rdb_Ud2_Compra.CheckValue = "Y"
+        Me.Rdb_Ud2_Compra.FocusCuesEnabled = False
         Me.Rdb_Ud2_Compra.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Ud2_Compra.Location = New System.Drawing.Point(3, 46)
+        Me.Rdb_Ud2_Compra.Location = New System.Drawing.Point(2, 36)
         Me.Rdb_Ud2_Compra.Name = "Rdb_Ud2_Compra"
-        Me.Rdb_Ud2_Compra.Size = New System.Drawing.Size(127, 17)
-        Me.Rdb_Ud2_Compra.TabIndex = 1
-        Me.Rdb_Ud2_Compra.TabStop = True
+        Me.Rdb_Ud2_Compra.Size = New System.Drawing.Size(122, 23)
+        Me.Rdb_Ud2_Compra.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_Ud2_Compra.TabIndex = 132
         Me.Rdb_Ud2_Compra.Text = "2 [Segunda Unidad]"
-        Me.Rdb_Ud2_Compra.UseVisualStyleBackColor = False
         '
         'Rdb_Ud1_Compra
         '
-        Me.Rdb_Ud1_Compra.AutoSize = True
         Me.Rdb_Ud1_Compra.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_Ud1_Compra.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Ud1_Compra.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Ud1_Compra.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_Ud1_Compra.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Ud1_Compra.Checked = True
+        Me.Rdb_Ud1_Compra.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Rdb_Ud1_Compra.CheckValue = "Y"
+        Me.Rdb_Ud1_Compra.FocusCuesEnabled = False
         Me.Rdb_Ud1_Compra.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Ud1_Compra.Location = New System.Drawing.Point(3, 23)
+        Me.Rdb_Ud1_Compra.Location = New System.Drawing.Point(2, 16)
         Me.Rdb_Ud1_Compra.Name = "Rdb_Ud1_Compra"
-        Me.Rdb_Ud1_Compra.Size = New System.Drawing.Size(119, 17)
-        Me.Rdb_Ud1_Compra.TabIndex = 0
-        Me.Rdb_Ud1_Compra.TabStop = True
+        Me.Rdb_Ud1_Compra.Size = New System.Drawing.Size(122, 23)
+        Me.Rdb_Ud1_Compra.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_Ud1_Compra.TabIndex = 131
         Me.Rdb_Ud1_Compra.Text = "1 [Primera Unidad]"
-        Me.Rdb_Ud1_Compra.UseVisualStyleBackColor = False
         '
         'BtnProcesarInf
         '
@@ -228,7 +243,7 @@ Partial Class Frm_AsisCompra_Proyeccion
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnProcesarInf, Me.Btn_Arbol_Asociaciones, Me.Btn_VerMaestroProductos})
         Me.Bar1.Location = New System.Drawing.Point(0, 402)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(395, 41)
+        Me.Bar1.Size = New System.Drawing.Size(399, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 110
@@ -243,6 +258,15 @@ Partial Class Frm_AsisCompra_Proyeccion
         Me.Btn_Arbol_Asociaciones.ImageAlt = CType(resources.GetObject("Btn_Arbol_Asociaciones.ImageAlt"), System.Drawing.Image)
         Me.Btn_Arbol_Asociaciones.Name = "Btn_Arbol_Asociaciones"
         Me.Btn_Arbol_Asociaciones.Tooltip = "Mantención de arbol de asociaciones"
+        '
+        'Btn_VerMaestroProductos
+        '
+        Me.Btn_VerMaestroProductos.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_VerMaestroProductos.ForeColor = System.Drawing.Color.Black
+        Me.Btn_VerMaestroProductos.Image = CType(resources.GetObject("Btn_VerMaestroProductos.Image"), System.Drawing.Image)
+        Me.Btn_VerMaestroProductos.ImageAlt = CType(resources.GetObject("Btn_VerMaestroProductos.ImageAlt"), System.Drawing.Image)
+        Me.Btn_VerMaestroProductos.Name = "Btn_VerMaestroProductos"
+        Me.Btn_VerMaestroProductos.Tooltip = "Ver Maestro de productos"
         '
         'GroupPanel5
         '
@@ -360,6 +384,7 @@ Partial Class Frm_AsisCompra_Proyeccion
         Me.Chk_Mostrar_Solo_Stock_Critico.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Chk_Mostrar_Solo_Stock_Critico.CheckValue = "Y"
         Me.Chk_Mostrar_Solo_Stock_Critico.Enabled = False
+        Me.Chk_Mostrar_Solo_Stock_Critico.FocusCuesEnabled = False
         Me.Chk_Mostrar_Solo_Stock_Critico.ForeColor = System.Drawing.Color.Black
         Me.Chk_Mostrar_Solo_Stock_Critico.Location = New System.Drawing.Point(201, 76)
         Me.Chk_Mostrar_Solo_Stock_Critico.Name = "Chk_Mostrar_Solo_Stock_Critico"
@@ -418,6 +443,7 @@ Partial Class Frm_AsisCompra_Proyeccion
         '
         Me.Chk_Domingo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Domingo.CheckBoxImageChecked = CType(resources.GetObject("Chk_Domingo.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Domingo.FocusCuesEnabled = False
         Me.Chk_Domingo.ForeColor = System.Drawing.Color.Black
         Me.Chk_Domingo.Location = New System.Drawing.Point(6, 57)
         Me.Chk_Domingo.Name = "Chk_Domingo"
@@ -453,6 +479,7 @@ Partial Class Frm_AsisCompra_Proyeccion
         '
         Me.Chk_Sabado.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Sabado.CheckBoxImageChecked = CType(resources.GetObject("Chk_Sabado.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Sabado.FocusCuesEnabled = False
         Me.Chk_Sabado.ForeColor = System.Drawing.Color.Black
         Me.Chk_Sabado.Location = New System.Drawing.Point(6, 35)
         Me.Chk_Sabado.Name = "Chk_Sabado"
@@ -569,8 +596,8 @@ Partial Class Frm_AsisCompra_Proyeccion
         Me.GroupPanel3.BackColor = System.Drawing.Color.White
         Me.GroupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel3.Controls.Add(Me.Rdb_Rot_Promedio)
-        Me.GroupPanel3.Controls.Add(Me.Rdb_Proyeccion_Rotacion_Efectiva)
         Me.GroupPanel3.Controls.Add(Me.Rdb_Rot_Mediana)
+        Me.GroupPanel3.Controls.Add(Me.Rdb_Proyeccion_Rotacion_Efectiva)
         Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel3.Location = New System.Drawing.Point(12, 314)
         Me.GroupPanel3.Name = "GroupPanel3"
@@ -606,18 +633,6 @@ Partial Class Frm_AsisCompra_Proyeccion
         Me.GroupPanel3.TabIndex = 124
         Me.GroupPanel3.Text = "Velociada de salidad para el calculo de proyección"
         '
-        'Rdb_Rot_Promedio
-        '
-        Me.Rdb_Rot_Promedio.AutoSize = True
-        Me.Rdb_Rot_Promedio.BackColor = System.Drawing.Color.Transparent
-        Me.Rdb_Rot_Promedio.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Rot_Promedio.Location = New System.Drawing.Point(166, 14)
-        Me.Rdb_Rot_Promedio.Name = "Rdb_Rot_Promedio"
-        Me.Rdb_Rot_Promedio.Size = New System.Drawing.Size(74, 17)
-        Me.Rdb_Rot_Promedio.TabIndex = 130
-        Me.Rdb_Rot_Promedio.Text = "Promedio"
-        Me.Rdb_Rot_Promedio.UseVisualStyleBackColor = False
-        '
         'Rdb_Proyeccion_Rotacion_Efectiva
         '
         Me.Rdb_Proyeccion_Rotacion_Efectiva.AutoSize = True
@@ -630,20 +645,6 @@ Partial Class Frm_AsisCompra_Proyeccion
         Me.Rdb_Proyeccion_Rotacion_Efectiva.TabIndex = 1
         Me.Rdb_Proyeccion_Rotacion_Efectiva.Text = "Rotación Efectiva (Solo días de venta)"
         Me.Rdb_Proyeccion_Rotacion_Efectiva.UseVisualStyleBackColor = False
-        '
-        'Rdb_Rot_Mediana
-        '
-        Me.Rdb_Rot_Mediana.AutoSize = True
-        Me.Rdb_Rot_Mediana.BackColor = System.Drawing.Color.Transparent
-        Me.Rdb_Rot_Mediana.Checked = True
-        Me.Rdb_Rot_Mediana.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Rot_Mediana.Location = New System.Drawing.Point(6, 14)
-        Me.Rdb_Rot_Mediana.Name = "Rdb_Rot_Mediana"
-        Me.Rdb_Rot_Mediana.Size = New System.Drawing.Size(125, 17)
-        Me.Rdb_Rot_Mediana.TabIndex = 0
-        Me.Rdb_Rot_Mediana.TabStop = True
-        Me.Rdb_Rot_Mediana.Text = "Rotación (Mediana)"
-        Me.Rdb_Rot_Mediana.UseVisualStyleBackColor = False
         '
         'Input_Proyeccion_Redondeo
         '
@@ -717,15 +718,6 @@ Partial Class Frm_AsisCompra_Proyeccion
         Me.Label1.TabIndex = 128
         Me.Label1.Text = "Múltiplos de :"
         '
-        'Btn_VerMaestroProductos
-        '
-        Me.Btn_VerMaestroProductos.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_VerMaestroProductos.ForeColor = System.Drawing.Color.Black
-        Me.Btn_VerMaestroProductos.Image = CType(resources.GetObject("Btn_VerMaestroProductos.Image"), System.Drawing.Image)
-        Me.Btn_VerMaestroProductos.ImageAlt = CType(resources.GetObject("Btn_VerMaestroProductos.ImageAlt"), System.Drawing.Image)
-        Me.Btn_VerMaestroProductos.Name = "Btn_VerMaestroProductos"
-        Me.Btn_VerMaestroProductos.Tooltip = "Ver Maestro de productos"
-        '
         'Chk_MostrarSugCambioPrecio
         '
         Me.Chk_MostrarSugCambioPrecio.BackColor = System.Drawing.Color.Transparent
@@ -734,7 +726,7 @@ Partial Class Frm_AsisCompra_Proyeccion
         '
         Me.Chk_MostrarSugCambioPrecio.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_MostrarSugCambioPrecio.CheckBoxImageChecked = CType(resources.GetObject("Chk_MostrarSugCambioPrecio.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_MostrarSugCambioPrecio.Enabled = False
+        Me.Chk_MostrarSugCambioPrecio.FocusCuesEnabled = False
         Me.Chk_MostrarSugCambioPrecio.ForeColor = System.Drawing.Color.Black
         Me.Chk_MostrarSugCambioPrecio.Location = New System.Drawing.Point(12, 378)
         Me.Chk_MostrarSugCambioPrecio.Name = "Chk_MostrarSugCambioPrecio"
@@ -743,11 +735,53 @@ Partial Class Frm_AsisCompra_Proyeccion
         Me.Chk_MostrarSugCambioPrecio.TabIndex = 130
         Me.Chk_MostrarSugCambioPrecio.Text = "Mostrar sugerencia de cambio de precio"
         '
+        'Rdb_Rot_Mediana
+        '
+        Me.Rdb_Rot_Mediana.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_Rot_Mediana.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Rot_Mediana.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Rot_Mediana.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_Rot_Mediana.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Rot_Mediana.Checked = True
+        Me.Rdb_Rot_Mediana.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Rdb_Rot_Mediana.CheckValue = "Y"
+        Me.Rdb_Rot_Mediana.FocusCuesEnabled = False
+        Me.Rdb_Rot_Mediana.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_Rot_Mediana.Location = New System.Drawing.Point(6, 8)
+        Me.Rdb_Rot_Mediana.Name = "Rdb_Rot_Mediana"
+        Me.Rdb_Rot_Mediana.Size = New System.Drawing.Size(122, 23)
+        Me.Rdb_Rot_Mediana.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_Rot_Mediana.TabIndex = 133
+        Me.Rdb_Rot_Mediana.Text = "Rotación (Mediana)"
+        '
+        'Rdb_Rot_Promedio
+        '
+        Me.Rdb_Rot_Promedio.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_Rot_Promedio.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Rot_Promedio.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Rot_Promedio.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_Rot_Promedio.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Rot_Promedio.Checked = True
+        Me.Rdb_Rot_Promedio.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Rdb_Rot_Promedio.CheckValue = "Y"
+        Me.Rdb_Rot_Promedio.FocusCuesEnabled = False
+        Me.Rdb_Rot_Promedio.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_Rot_Promedio.Location = New System.Drawing.Point(201, 8)
+        Me.Rdb_Rot_Promedio.Name = "Rdb_Rot_Promedio"
+        Me.Rdb_Rot_Promedio.Size = New System.Drawing.Size(122, 23)
+        Me.Rdb_Rot_Promedio.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_Rot_Promedio.TabIndex = 134
+        Me.Rdb_Rot_Promedio.Text = "Promedio"
+        '
         'Frm_AsisCompra_Proyeccion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(395, 443)
+        Me.ClientSize = New System.Drawing.Size(399, 443)
         Me.Controls.Add(Me.Chk_MostrarSugCambioPrecio)
         Me.Controls.Add(Me.Cmb_Padre_Asociacion_Productos)
         Me.Controls.Add(Me.GroupPanel4)
@@ -771,7 +805,6 @@ Partial Class Frm_AsisCompra_Proyeccion
         CType(Me.Input_Dias_a_Abastecer, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Input_Tiempo_Reposicion, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel7.ResumeLayout(False)
-        Me.GroupPanel7.PerformLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel5.ResumeLayout(False)
         Me.GroupPanel5.PerformLayout()
@@ -791,8 +824,6 @@ Partial Class Frm_AsisCompra_Proyeccion
     Friend WithEvents LabelX6 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
     Friend WithEvents GroupPanel7 As DevComponents.DotNetBar.Controls.GroupPanel
-    Public WithEvents Rdb_Ud2_Compra As System.Windows.Forms.RadioButton
-    Public WithEvents Rdb_Ud1_Compra As System.Windows.Forms.RadioButton
     Friend WithEvents BtnProcesarInf As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
     Friend WithEvents ToolTip1 As System.Windows.Forms.ToolTip
@@ -815,12 +846,14 @@ Partial Class Frm_AsisCompra_Proyeccion
     Public WithEvents Cmb_Metodo_Abastecer_Dias_Meses As DevComponents.DotNetBar.Controls.ComboBoxEx
     Friend WithEvents GroupPanel3 As DevComponents.DotNetBar.Controls.GroupPanel
     Public WithEvents Rdb_Proyeccion_Rotacion_Efectiva As System.Windows.Forms.RadioButton
-    Public WithEvents Rdb_Rot_Mediana As System.Windows.Forms.RadioButton
     Public WithEvents Input_Proyeccion_Redondeo As DevComponents.Editors.IntegerInput
     Friend WithEvents GroupPanel4 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Txt_Padre_Asociacion_Productos As DevComponents.DotNetBar.Controls.TextBoxX
-    Public WithEvents Rdb_Rot_Promedio As RadioButton
     Friend WithEvents Btn_VerMaestroProductos As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Chk_MostrarSugCambioPrecio As DevComponents.DotNetBar.Controls.CheckBoxX
+    Public WithEvents Rdb_Ud2_Compra As DevComponents.DotNetBar.Controls.CheckBoxX
+    Public WithEvents Rdb_Rot_Mediana As DevComponents.DotNetBar.Controls.CheckBoxX
+    Public WithEvents Rdb_Ud1_Compra As DevComponents.DotNetBar.Controls.CheckBoxX
+    Public WithEvents Rdb_Rot_Promedio As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

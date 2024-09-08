@@ -250,7 +250,7 @@
 
             .Columns("NOKOEN").Visible = True
             .Columns("NOKOEN").HeaderText = "Razón social"
-            .Columns("NOKOEN").Width = 200
+            .Columns("NOKOEN").Width = 290
             .Columns("NOKOEN").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -267,16 +267,24 @@
             .Columns("KOPRCT").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("NOKOPR").Visible = True
-            .Columns("NOKOPR").HeaderText = "Descripción"
-            .Columns("NOKOPR").Width = 150
-            .Columns("NOKOPR").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
+            '.Columns("NOKOPR").Visible = True
+            '.Columns("NOKOPR").HeaderText = "Descripción"
+            '.Columns("NOKOPR").Width = 150
+            '.Columns("NOKOPR").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
 
             .Columns("UN").Visible = True
             .Columns("UN").HeaderText = "UN"
             .Columns("UN").Width = 30
             .Columns("UN").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("CANTIDAD").HeaderText = "Cantidad"
+            .Columns("CANTIDAD").Width = 60
+            .Columns("CANTIDAD").DisplayIndex = _DisplayIndex
+            .Columns("CANTIDAD").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("CANTIDAD").DefaultCellStyle.Format = "###,##0.##"
+            .Columns("CANTIDAD").Visible = True
             _DisplayIndex += 1
 
             .Columns("Precio").HeaderText = "P.Venta"
@@ -315,5 +323,22 @@
 
     Private Sub Input_CantNoQuiebra_ButtonCustomClick(sender As Object, e As EventArgs) Handles Input_CantNoQuiebra.ButtonCustomClick
         Sb_Actualizar_Grilla()
+    End Sub
+
+    Private Sub Grilla_Detalle_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Detalle.CellEnter
+        Try
+            Dim _Fila As DataGridViewRow = Grilla_Detalle.CurrentRow
+            Dim _Codigo As String = _Fila.Cells("KOPRCT").Value
+            Dim _Descripcion As String = _Fila.Cells("NOKOPR").Value
+            Dim _PrecioVenta As Double = _Fila.Cells("PrecioVenta").Value
+            Dim _PrecioLista As Double = _Fila.Cells("PrecioLista").Value
+            Dim _Lista As String = Mid(_Fila.Cells("KOLTPR").Value, 6, 3)
+            Dim _Flete As Double = _Fila.Cells("Flete").Value
+
+            Txt_InfoDetalle.Text = _Codigo.Trim & " - " & _Descripcion.Trim & ", Precio de venta: " & _PrecioVenta & " - Precio de lista: " & _PrecioLista & " - Lista: " & _Lista & " - Flete: " & _Flete
+
+        Catch ex As Exception
+            Txt_InfoDetalle.Text = String.Empty
+        End Try
     End Sub
 End Class

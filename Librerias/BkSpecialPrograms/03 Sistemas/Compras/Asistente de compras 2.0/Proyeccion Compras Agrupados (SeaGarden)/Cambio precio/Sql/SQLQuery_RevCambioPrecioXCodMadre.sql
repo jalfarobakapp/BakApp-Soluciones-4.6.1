@@ -43,8 +43,8 @@ SELECT
     Cast(0 As Float) As 'TotalNeto',
     MAEEDO.MODO,
     Ddo.KOLTPR,
-    CASE Ddo.UDTRPR WHEN 1 THEN Ddo.PPPRNERE1 ELSE Ddo.PPPRNERE2 END AS PRECIOUD,
-    Lp.PP01UD As 'PRECIO_01P',
+    CASE Ddo.UDTRPR WHEN 1 THEN Ddo.PPPRNERE1 ELSE Ddo.PPPRNERE2 END AS 'PrecioVenta',
+    Lp.PP01UD As 'PrecioLista',
     Cast(0 As Float) As 'Precio',
     Lpbk.Flete,
     Ddo.UDTRPR,
@@ -69,8 +69,8 @@ WHERE Ddo.LILG IN ('SI', 'GR')
     AND Arb.Codigo_Madre = @CodigoMadre
 
 -- Actualización de precios
-UPDATE #Detalle SET Precio = PRECIOUD - Flete
-UPDATE #Detalle SET Precio = PRECIO_01P 
+UPDATE #Detalle SET Precio = PrecioVenta - Flete
+UPDATE #Detalle SET Precio = PrecioLista 
 WHERE LTRIM(RTRIM(ENDO))+RTRIM(LTRIM(SUENDO))
  IN (Select Distinct LTRIM(RTRIM(Codigo))+LTRIM(RTRIM(Sucursal)) From BAKAPP_SG.dbo.Zw_TblInf_EntExcluidas
 Where Excluida in ('V','A','T'))

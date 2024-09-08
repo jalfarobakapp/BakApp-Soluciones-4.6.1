@@ -1564,7 +1564,7 @@ Public Class Class_Permiso_BakApp
                 _CodFamilia = Fx_Rellena_ceros(_Fml.COMPRAS, 6)
                 _NombreFamiliaPermiso = _Fml.COMPRAS.ToString
             Case "Comp0101"
-                _DescripcionPermiso = "VER ASISTENTE DE SUGERENCIAS DE CAMBIO DE PRECIOS"
+                _DescripcionPermiso = "MOSTRAR SUGERENCIAS DE CAMBIO DE PRECIOS (ASISTENTE DE COMPRAS)"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.COMPRAS, 6)
                 _NombreFamiliaPermiso = _Fml.COMPRAS.ToString
         End Select

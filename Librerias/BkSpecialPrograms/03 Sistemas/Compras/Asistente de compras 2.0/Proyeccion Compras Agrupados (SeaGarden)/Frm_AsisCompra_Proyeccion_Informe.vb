@@ -86,7 +86,8 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
                    Campos As Integer,
                    RotCalculo As String,
                    Sql_Consulta_Actualiza_Stock As String,
-                   ByRef Clas_Asistente_Compras As Clas_Asistente_Compras)
+                   ByRef Clas_Asistente_Compras As Clas_Asistente_Compras,
+                   _MostrarSugCambioPrecio As Boolean)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -109,6 +110,8 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
         _Campos = Campos
         _RotCalculo = RotCalculo
         _Sql_Consulta_Actualiza_Stock = Sql_Consulta_Actualiza_Stock
+
+        Chk_MostrarSugCambioPrecio.Checked = _MostrarSugCambioPrecio
 
         Sb_Color_Botones_Barra(Bar1)
 
@@ -464,140 +467,6 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
         Next
 
-        'Return
-
-        'For Each _Fila As GridRow In _Grilla.Rows
-
-        '    Dim _CodigoNodo = _Fila.Cells("Codigo_Nodo").Value
-
-        '    Dim _RotCalculo = Math.Round(_Fila.Cells("RotCalculo").Value, 0)
-        '    Dim _StockUd = Math.Round(_Fila.Cells("StockUd" & _Ud).Value, 0)
-        '    Dim _StockPedidoUd = Math.Round(_Fila.Cells("StockPedidoUd" & _Ud).Value, 0)
-        '    Dim _StockFacSinRecepUd = Math.Round(_Fila.Cells("StockFacSinRecepUd" & _Ud).Value, 0)
-
-        '    Dim _Producto = _Fila.Cells("Producto").Value
-
-        '    Consulta_sql = "Select KOPRCT As Codigo,IDMAEEDO,TIDO,NUDO,ENDO,SUENDO,(Select Top 1 NOKOEN From MAEEN Where KOEN+SUEN = ENDO+SUENDO) As Razon," &
-        '                   "UD01PR,CAPRCO1,CAPREX1,(CAPRCO1-(CAPRAD1+CAPREX1)) As Saldo, FEERLI " &
-        '                   "From MAEDDO" & vbCrLf &
-        '                   "Where KOPRCT  In (SELECT Codigo FROM " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo_Nodo = '" & _CodigoNodo & "') And" & vbCrLf &
-        '                   "TIDO In ('OCC','FCC') And ESLIDO = '' " & vbCrLf &
-        '                   "Order By FEERLI Desc"
-
-        '    Dim _Tbl_Detalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-        '    For Each _Row As DataRow In _Tbl_Detalle.Rows
-
-        '        Dim _Idmaeedo = NuloPorNro(_Row.Item("IDMAEEDO"), 0)
-
-        '        If CBool(_Idmaeedo) Then
-
-        '            Dim _Tido = Trim(_Row.Item("TIDO"))
-        '            Dim _Nudo = _Row.Item("NUDO")
-        '            Dim _Fecha_Recep As Date
-
-        '            If CBool(_StockPedidoUd) Then
-
-        '                _Cell = _Fila.GetCell("StockPedidoUd" & _Ud)
-
-        '                If _Tido = "OCC" Then
-
-        '                    _Fecha_Recep = FormatDateTime(_Row.Item("FEERLI"), DateFormat.ShortDate)
-
-        '                    If _Fecha_Recep < _Fecha_Servidor Then
-        '                        _Cell.CellStyles.Default.Background.Color1 = Color.White
-        '                        _Cell.CellStyles.Default.Background.Color2 = Color.LightPink
-        '                    Else
-        '                        _Cell.CellStyles.Default.Background.Color1 = Color.White
-        '                        _Cell.CellStyles.Default.Background.Color2 = Color.LightGreen
-        '                    End If
-
-        '                End If
-
-        '            End If
-
-        '            If CBool(_StockFacSinRecepUd) Then
-
-        '                If _Tido = "FCC" Then
-
-        '                    _Cell = _Fila.GetCell("StockFacSinRecepUd" & _Ud)
-
-        '                    _Fecha_Recep = FormatDateTime(_Row.Item("FEERLI"), DateFormat.ShortDate)
-
-        '                    If _Fecha_Recep < _Fecha_Servidor Then
-        '                        '_Cell.CellStyles.Default.TextColor = Color.Red
-        '                        '_Fila.Cells("StockFacSinRecepUd" & _Ud).Style.ForeColor = Color.Red
-        '                        '_Fila.Cells("StockFacSinRecepUd" & _Ud).CellStyles.Default.TextColor = Color.Red
-        '                        '_Fila.Cells("StockFacSinRecepUd" & _Ud).CellStyles.Item(StyleType.Default).TextColor = Color.Red
-        '                        _Cell.CellStyles.Default.Background.Color1 = Color.White
-        '                        _Cell.CellStyles.Default.Background.Color2 = Color.LightPink
-        '                    Else
-        '                        '_Cell.CellStyles.Default.TextColor = Color.Green
-        '                        '_Fila.Cells("StockFacSinRecepUd" & _Ud).Style.ForeColor = Color.Green
-        '                        ' _Fila.Cells("StockFacSinRecepUd" & _Ud).CellStyles.Default.TextColor = Color.Green
-        '                        '_Fila.Cells("StockFacSinRecepUd" & _Ud).CellStyles.Item(StyleType.Default).TextColor = Color.Green
-        '                        _Cell.CellStyles.Default.Background.Color1 = Color.White
-        '                        _Cell.CellStyles.Default.Background.Color2 = Color.LightGreen
-        '                    End If
-        '                    'Else
-        '                    '   _Fila.Cells("StockFacSinRecepUd" & _Ud).Style.ForeColor = Color.Red
-        '                End If
-
-        '            End If
-
-        '        End If
-
-        '    Next
-
-
-        '    If Not CBool(_RotCalculo) Then
-
-        '        For _i = 1 To _Campos ' _Stock_Asegurado_Proyeccion
-
-        '            Dim _Cmp = numero_(_i, 2)
-
-        '            _Cell = _Fila.GetCell(_Cmp)
-
-        '            If CBool(_StockUd) Then
-        '                _Cell.CellStyles.Default.Background.Color1 = Color.Green
-        '                _Cell.CellStyles.Default.Background.Color2 = Color.Green
-        '                '_Fila.Cells(_Cmp).Style.BackColor = Color.Green
-        '            ElseIf CBool(_StockPedidoUd) Or CBool(_StockFacSinRecepUd) Then
-        '                '_Fila.Cells(_Cmp).Style.BackColor = Color.GreenYellow
-        '                _Cell.CellStyles.Default.Background.Color1 = Color.GreenYellow
-        '                _Cell.CellStyles.Default.Background.Color2 = Color.GreenYellow
-        '            End If
-
-        '            If _i = _Campos Then Exit For
-
-        '        Next
-
-        '    End If
-
-        '    ' INCORPORAR CAMPO Tendencia
-
-        '    Dim _Tendencia = _Fila.Cells("Tendencia").Value
-
-        '    If CBool(_Tendencia) Then
-
-        '        _Cell = _Fila.GetCell("Tendencia")
-
-        '        If _Tendencia < 0 Then
-        '            _Cell.CellStyles.Default.Background.Color1 = Color.White
-        '            _Cell.CellStyles.Default.Background.Color2 = Color.LightPink
-        '            '_Cell.CellStyles.[Default].TextColor = Color.Red
-        '        Else
-        '            _Cell.CellStyles.Default.Background.Color1 = Color.White
-        '            _Cell.CellStyles.Default.Background.Color2 = Color.LightGreen
-        '            '_Cell.CellStyles.[Default].TextColor = Color.Green
-        '        End If
-
-        '    End If
-
-        'Next
-
-        'Me.Refresh()
-
     End Sub
 
     Private Sub Btn_Actualizar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Actualizar.Click
@@ -648,10 +517,6 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
         Dim _Rotacion_Diaria As Double = _Fila.Cells("RotCalculo").Value
         Dim _Stock_Critico As Double = _Fila.Cells("Stock_CriticoUd" & _Ud & "_Rd").Value '_Fila.Cells("Stock_CriticoUd" & _Ud).Value
 
-        ' Dim Fm As New Frm_AsisCompra_Proyeccion_Detalle(_Ds_Proyecto, _Ud, _Rotacion_Diaria, _Stock_Critico)
-        ' Fm.ShowDialog(Me)
-        ' Fm.Dispose()
-
     End Sub
 
     Private Sub Btn_Exportar_Excel_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Exportar_Excel.Click
@@ -659,11 +524,15 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
     End Sub
 
     Private Sub Btn_Informe_Proximas_Recepciones_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Informe_Proximas_Recepciones.Click
+
         If Fx_Tiene_Permiso(Me, "Inc00003") Then
+
             Dim Fm As New Frm_Informe_Proximas_Recepiones
             Fm.ShowDialog(Me)
             Fm.Dispose()
+
         End If
+
     End Sub
 
     Private Sub Sb_Grilla_ColumnHeaderMouseClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs)
@@ -682,34 +551,16 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
     Private Sub Btn_Estadisticas_Producto_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Estadisticas_Producto.Click
 
-        'Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
-
         Dim _Fila As GridRow = TryCast(Super_Grilla.ActiveRow, GridRow)
-
-        'Dim _Codigo As String = _Fila.Cells("Codigo").Value
-        'Dim _Descripcion As String = _Fila.Cells("Descripcion").Value
-
-
-        ''_Clas_Asistente_Compras.Pro_Rdb_Agrupar_x_Asociados = Rdb_Agrupar_x_Asociados.Checked
-
-        'Dim _Ud As Integer
-        'If _Clas_Asistente_Compras.Pro_Rdb_Ud1_Compra Then : _Ud = 1 : Else : _Ud = 2 : End If
-
-        '_Clas_Asistente_Compras.Sb_Info_Calculo_Rotacion(Me, _Codigo, _Descripcion, _Ud)
-
-        'Return
-
 
         Dim _Fecha_Ref_Inicio As Date = DateAdd(DateInterval.Year, -1, _Fecha_Servidor)
         Dim _Fecha_Ref_Fin As Date = _Fecha_Servidor
-
         Dim _Codigo As String = _Fila.Cells("Codigo").Value
         Dim _Codigo_Nodo_Madre As String = _Fila.Cells("Codigo_Nodo_Madre").Value
 
         Consulta_sql = "Select Top 1 * From " & _Clas_Asistente_Compras.Pro_Nombre_Tbl_Paso_Informe & vbCrLf &
                        "Where Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre & "' --And Es_Agrupador = 1"
         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
 
         Dim _Fecha_Inicio As Date = NuloPorNro(_Row.Item("Fecha_Inicio"), _Fecha_Ref_Inicio)
         Dim _Fecha_Fin As Date = NuloPorNro(_Row.Item("Fecha_Fin"), _Fecha_Ref_Fin)
@@ -775,12 +626,9 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
     Private Sub Btn_Infor_Rotacion_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Infor_Rotacion.Click
 
-        'Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
-
         Dim _Fila As GridRow = TryCast(Super_Grilla.ActiveRow, GridRow)
 
         Dim _Codigo_Nodo_Madre As String = _Fila.Cells("Codigo_Nodo_Madre").Value
-
         Dim _Codigo As String = _Sql.Fx_Trae_Dato(_Clas_Asistente_Compras.Pro_Nombre_Tbl_Paso_Informe, "Codigo", "Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre & "'")
         Dim _Descripcion As String = _Fila.Cells("Producto").Value
 
@@ -789,7 +637,6 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
     End Sub
 
     Private Sub Btn_Ver_documento_origen_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ver_documento_origen.Click
-        'Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
         If _HitColumn.IsSelected = True Then
 
@@ -797,7 +644,6 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
             Dim _Cabeza = _HitColumn.Name ' Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
             Dim _Fila As GridRow = TryCast(Super_Grilla.ActiveRow, GridRow)
-            'Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
 
             Dim Copiar As String = _Fila.Cells(_Cabeza).Value
             Clipboard.SetText(Copiar)
@@ -807,6 +653,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
     End Sub
 
     Private Sub SuperGridControl1CellValueChanged(sender As Object, e As GridCellValueChangedEventArgs)
+
         Dim panel As GridPanel = e.GridPanel
 
         'Si el valor de una celda en el panel' Detalles del pedido 'ha cambiado
@@ -815,6 +662,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
         If panel.Name.Equals("Order Details") = True Then
             UpdateDetailsFooter(panel, "VANELI", "VAIVLI", "VABRLI")
         End If
+
     End Sub
 
     Private Sub UpdateDetailsFooter(panel As GridPanel,
@@ -1350,7 +1198,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
             .Columns("SugCmbPrecio").Width = 40
             .Columns("SugCmbPrecio").HeaderText = "Sug." & vbCrLf & "CDP?"
             .Columns("SugCmbPrecio").ToolTip = "Sugiere cambio de precio"
-            .Columns("SugCmbPrecio").Visible = True
+            .Columns("SugCmbPrecio").Visible = Chk_MostrarSugCambioPrecio.Checked
             .Columns("SugCmbPrecio").CellStyles.Default.Alignment = Alignment.MiddleCenter
             .Columns("SugCmbPrecio").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
@@ -1441,10 +1289,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
                                      ", <font " & _Fsz & ">Total Cant.Sugerida: </font><font " & _Fsz & " color=""" & _Color & """>" & FormatNumber(_Total_Cant_Sugerida, 0) & "</font>" & vbCrLf &
                                      ", <font " & _Fsz & ">Total Cant.Sugerida/23.000: </font><font " & _Fsz & " color=""" & _Color & """>" & FormatNumber(_Total_Cant_Sugerida2, 0) & "</font>"
 
-
         _Grilla.Footer.Text = _Pie_Pag
-
-        'End If
 
         Me.Cursor = Cursors.Default
         Me.Enabled = True

@@ -66,13 +66,13 @@ Public Class Frm_AsisCompra_Proyeccion
 
     Private Sub Frm_AsisCompra_Proyeccion_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
-        AddHandler Cmb_Proyeccion.SelectedIndexChanged, AddressOf Cmb_Proyeccion_SelectedIndexChanged
-        AddHandler Cmb_Metodo_Abastecer_Dias_Meses.SelectedIndexChanged, AddressOf Cmb_Dias_Abastecer_SelectedIndexChanged
-        AddHandler Chk_MostrarSugCambioPrecio.Validating, AddressOf Chk_MostrarSugCambioPrecio_Validating
-
         Cmb_Tiempo_Reposicion_Dias_Meses.Enabled = False
 
         Sb_Parametros_Informe_Sql(False)
+
+        AddHandler Cmb_Proyeccion.SelectedIndexChanged, AddressOf Cmb_Proyeccion_SelectedIndexChanged
+        AddHandler Cmb_Metodo_Abastecer_Dias_Meses.SelectedIndexChanged, AddressOf Cmb_Dias_Abastecer_SelectedIndexChanged
+        AddHandler Chk_MostrarSugCambioPrecio.CheckedChanged, AddressOf Chk_MostrarSugCambioPrecio_CheckedChanged
 
         Me.WindowState = FormWindowState.Normal
 
@@ -191,7 +191,8 @@ Public Class Frm_AsisCompra_Proyeccion
                                                         _Campos,
                                                         _RotCalculo,
                                                         _Sql_Consulta_Actualiza_Stock,
-                                                        _Clas_Asistente_Compras)
+                                                        _Clas_Asistente_Compras,
+                                                        Chk_MostrarSugCambioPrecio.Checked)
 
         Fm.Pro_Input_Redondeo = Input_Proyeccion_Redondeo.Value
         Select Case Cmb_Metodo_Abastecer_Dias_Meses.SelectedValue
@@ -485,10 +486,12 @@ Public Class Frm_AsisCompra_Proyeccion
 
     End Sub
 
-    Private Sub Chk_MostrarSugCambioPrecio_Validating(sender As Object, e As System.ComponentModel.CancelEventArgs)
+    Private Sub Chk_MostrarSugCambioPrecio_CheckedChanged(sender As Object, e As EventArgs)
 
-        If Not Fx_Tiene_Permiso(Me, "Comp0101") Then
-            e.Cancel = True
+        If Chk_MostrarSugCambioPrecio.Checked Then
+            If Not Fx_Tiene_Permiso(Me, "Comp0101") Then
+                Chk_MostrarSugCambioPrecio.Checked = False
+            End If
         End If
 
     End Sub
