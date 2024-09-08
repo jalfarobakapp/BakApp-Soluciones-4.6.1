@@ -1431,7 +1431,7 @@ Public Class Frm_Stmp_Listado
             Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If IsNothing(_Row_Documento) Then
-                MessageBoxEx.Show(Me, "No existe documento NVV - """ & _Nudo & "", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                MessageBoxEx.Show(Me, "No existe documento NVV - " & _Nudo, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return
             End If
 
@@ -1472,7 +1472,7 @@ Public Class Frm_Stmp_Listado
             _Fm.Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado,
                                      "NVV",
                                      "Where TIDO = 'NVV'")
-            _Fm.Rdb_Estado_Todos.Enabled = True
+                _Fm.Rdb_Estado_Todos.Enabled = True
             _Fm.Rdb_Estado_Vigente.Checked = True
             _Fm.Rdb_Estado_Cerradas.Enabled = False
             '_Fm.HabilitarNVVParaFacturar = True

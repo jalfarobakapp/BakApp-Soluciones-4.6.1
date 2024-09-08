@@ -350,6 +350,8 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Comp0098", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Comp0099", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Comp0100", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Comp0101", _Objeto, _Formulario)
+
 
         _SqlQuery += Fx_Insertar_Permiso("CfEnt001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("CfEnt002", _Objeto, _Formulario)
@@ -1559,6 +1561,10 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.COMPRAS.ToString
             Case "Comp0100"
                 _DescripcionPermiso = "PODER BLOQUEAR O DESBLOQUEAR LA CONFIGURACION DEL ASISTENTE DE COMPRAS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.COMPRAS, 6)
+                _NombreFamiliaPermiso = _Fml.COMPRAS.ToString
+            Case "Comp0101"
+                _DescripcionPermiso = "VER ASISTENTE DE SUGERENCIAS DE CAMBIO DE PRECIOS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.COMPRAS, 6)
                 _NombreFamiliaPermiso = _Fml.COMPRAS.ToString
         End Select

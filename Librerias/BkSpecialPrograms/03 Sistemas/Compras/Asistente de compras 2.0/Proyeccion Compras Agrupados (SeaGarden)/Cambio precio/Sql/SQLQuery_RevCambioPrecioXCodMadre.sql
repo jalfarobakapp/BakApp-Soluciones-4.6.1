@@ -1,13 +1,14 @@
-DECLARE @Empresa		Char(2)  = '{Empresa}'
-DECLARE @CantidadMax	Float = {CantidadMax}	-- <-- ACA PONER LA CANTIDAD DE KILOS	
-DECLARE @Lista		Char(3) = '{Lista}'
-DECLARE @IDMAEDDO		Int
-DECLARE @cantidad		Decimal(10,2)
-DECLARE @suma_acumulada Decimal(10,2) = 0
-DECLARE @CodigoMadre	Varchar(20) = '{CodMadre}' --< -- ACA VA EL CODIGO DE LA CLASIFICACION DEL PRODUCTO
-DECLARE @Descripcion	Varchar(50) = (Select top 1 Descripcion From {Bakapp}Zw_TblArbol_Asociaciones Where Codigo_Madre = @CodigoMadre) --TILAPIA IVP' = 
-DECLARE @FechaDesde		Datetime = '{FechaDesde}'
-DECLARE @FechaHasta		Datetime = '{FechaHasta}' 
+DECLARE @Empresa		    Char(2)  = '{Empresa}'
+DECLARE @CantidadMax	    Float = {CantidadMax}	    -- <-- ACA PONER LA CANTIDAD DE KILOS PARA REVISAER	
+DECLARE @CantidadNoQuiebra	Float = {CantidadNoQuiebra}
+DECLARE @Lista		        Char(3) = '{Lista}'
+DECLARE @IDMAEDDO		    Int
+DECLARE @cantidad		    Decimal(10,2)
+DECLARE @suma_acumulada     Decimal(10,2) = 0
+DECLARE @CodigoMadre	    Varchar(20) = '{CodMadre}' --< -- ACA VA EL CODIGO DE LA CLASIFICACION DEL PRODUCTO
+DECLARE @Descripcion	    Varchar(50) = (Select top 1 Descripcion From {Bakapp}Zw_TblArbol_Asociaciones Where Codigo_Madre = @CodigoMadre) --TILAPIA IVP' = 
+DECLARE @FechaDesde		    Datetime = '{FechaDesde}'
+DECLARE @FechaHasta		    Datetime = '{FechaHasta}' 
 
 --DECLARE @Empresa        Char(2)  = '01'
 --DECLARE @CantidadMax    Float = 4413    -- <-- ACA PONER LA CANTIDAD DE KILOS    
@@ -117,7 +118,8 @@ SELECT
     @CodigoMadre AS 'CodigoMadre',
     @Descripcion AS 'Descripcion',
 	@CantidadMax As 'CantidadMax',
-    SUM(CANTIDAD) AS 'Cantidad', 
+    @CantidadNoQuiebra As 'CantidadNoQuiebra',
+    SUM(CANTIDAD) AS 'Cantidad', -- Cantidad a la que se llego a tope para el estudio
     SUM(TotalNeto) AS 'TotalNeto',
     ROUND(SUM(TotalNeto) / SUM(CANTIDAD), 0) AS 'Ppv',
     (SELECT MIN(Precio) FROM #Detalle) AS 'Minprecio',

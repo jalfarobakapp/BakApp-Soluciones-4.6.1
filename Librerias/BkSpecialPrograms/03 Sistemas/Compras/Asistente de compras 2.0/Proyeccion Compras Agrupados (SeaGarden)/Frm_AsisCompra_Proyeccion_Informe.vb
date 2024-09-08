@@ -1,11 +1,7 @@
 ﻿'Imports Lib_Bakapp_VarClassFunc
 Imports DevComponents.DotNetBar
-
-Imports System.Reflection
 Imports DevComponents.DotNetBar.SuperGrid
 Imports DevComponents.DotNetBar.SuperGrid.Style
-Imports System.Collections.Generic
-Imports System.Drawing
 
 Public Class Frm_AsisCompra_Proyeccion_Informe
 
@@ -138,7 +134,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
         Lbl_Blanco.BackColor = Color.White
         Lbl_Rosado.BackColor = Color.FromArgb(255, 182, 193)
 
-        Btn_SugCambioPrecio.Visible = True
+        'Btn_SugCambioPrecio.Visible = True
 
     End Sub
 
@@ -1708,12 +1704,30 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
             Case "Table1"
                 'Sb_Revisar_Info_Producto(_Fila)
                 If _HitColumn.Name = "SugCmbPrecio" Then
-                    If _Fila.Cells("SugCmbPrecio").Value Then
-                        MessageBoxEx.Show(Me, _HitColumn.Name, "Columna", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                    Else
-                        MessageBoxEx.Show(Me, "No existe información",
-                                          "Sugerencia de cambio de precio", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                    End If
+                    'If _Fila.Cells("SugCmbPrecio").Value Then
+                    'MessageBoxEx.Show(Me, _HitColumn.Name, "Columna", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                    Dim _FechaDesde As DateTime = DateAdd(DateInterval.Month, -3, FechaDelServidor())
+                    Dim _FechaHasta As DateTime = FechaDelServidor()
+
+                    Dim _CodigoMadre As String = _Fila.Cells("Codigo_Nodo_Madre").Value
+                    Dim _Lista As String = "01P" '_Fila.Cells("").Value
+                    Dim _CantidadMax As Double
+
+                    'If _Fila.Cells("RotMensual_NoQuiebra").Value > 0 Then
+                    _CantidadMax = _Fila.Cells("RotMensual_NoQuiebra").Value
+                    'Else
+                    '_CantidadMax = _Fila.Cells("Promedio_3Mes").Value
+                    'End If
+
+                    Dim Fm As New Frm_AsisCompra_CambioPrecioDet(_CodigoMadre, _Lista, _CantidadMax, _FechaDesde, _FechaHasta)
+                    Fm.ShowDialog(Me)
+                    Fm.Dispose()
+
+                    'Else
+                    'MessageBoxEx.Show(Me, "No existe información",
+                    '                      "Sugerencia de cambio de precio", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    'End If
                 End If
             Case "Table2"
                 Dim _Idmaeedo = _Fila.Cells("IDMAEEDO").Value

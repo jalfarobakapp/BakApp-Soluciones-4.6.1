@@ -23,19 +23,19 @@ Partial Class Frm_AsisCompra_Proyeccion_Detalle
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_AsisCompra_Proyeccion_Detalle))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Me.Bar1 = New DevComponents.DotNetBar.Bar
-        Me.BtnSalir = New DevComponents.DotNetBar.ButtonItem
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar
-        Me.Menu_Contextual_Productos = New DevComponents.DotNetBar.ButtonItem
-        Me.LabelItem3 = New DevComponents.DotNetBar.LabelItem
-        Me.Btn_Estadisticas_Producto = New DevComponents.DotNetBar.ButtonItem
-        Me.Btn_Ver_Estadisicas_Segun_Estudio = New DevComponents.DotNetBar.ButtonItem
-        Me.Grilla = New System.Windows.Forms.DataGridView
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox
-        Me.Grilla_OCC_Pendientes = New System.Windows.Forms.DataGridView
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Me.Bar1 = New DevComponents.DotNetBar.Bar()
+        Me.BtnSalir = New DevComponents.DotNetBar.ButtonItem()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
+        Me.Menu_Contextual_Productos = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem3 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_Estadisticas_Producto = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Ver_Estadisicas_Segun_Estudio = New DevComponents.DotNetBar.ButtonItem()
+        Me.Grilla = New System.Windows.Forms.DataGridView()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.Grilla_OCC_Pendientes = New System.Windows.Forms.DataGridView()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -69,7 +69,7 @@ Partial Class Frm_AsisCompra_Proyeccion_Detalle
         '
         'GroupBox1
         '
-        Me.GroupBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.GroupBox1.BackColor = System.Drawing.Color.White
         Me.GroupBox1.Controls.Add(Me.ContextMenuBar1)
         Me.GroupBox1.Controls.Add(Me.Grilla)
         Me.GroupBox1.ForeColor = System.Drawing.Color.Black
@@ -147,7 +147,7 @@ Partial Class Frm_AsisCompra_Proyeccion_Detalle
         '
         'GroupBox2
         '
-        Me.GroupBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.GroupBox2.BackColor = System.Drawing.Color.White
         Me.GroupBox2.Controls.Add(Me.Grilla_OCC_Pendientes)
         Me.GroupBox2.ForeColor = System.Drawing.Color.Black
         Me.GroupBox2.Location = New System.Drawing.Point(12, 296)

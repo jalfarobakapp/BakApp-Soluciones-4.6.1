@@ -238,17 +238,9 @@ Public Class Frm_01_UbicXpro
 
             Dim dlg As System.Windows.Forms.DialogResult =
                          MessageBoxEx.Show(Me, "¿Esta seguro de eliminar la(s) fila(s) seleccionada(s)?",
-                                          "Eliminar fila", MessageBoxButtons.YesNo)
+                                          "Eliminar fila", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
             If dlg = System.Windows.Forms.DialogResult.Yes Then
-
-                'Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Prod_Ubicacion" & vbCrLf &
-                '               "Where Empresa = '" & _Empresa &
-                '               "' And Sucursal = '" & _Sucursal &
-                '               "' And Bodega = '" & _Bodega &
-                '               "' And Id_Mapa = " & _Id_Mapa &
-                '               "  And Codigo_Sector = '" & _Codigo_Sector &
-                '               "' And Codigo = '" & _Codigo & "'"
 
                 Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Prod_Ubicacion" & vbCrLf &
                                "Where Semilla = " & _Semilla

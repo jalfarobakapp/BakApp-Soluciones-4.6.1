@@ -171,30 +171,30 @@ Public Class Productos
 #Region "MAESTRO PRODUCTOS"
     Sub Sb_Maestra_Productos()
 
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Prod012") Then
-
-            Dim Fm As New Frm_BkpPostBusquedaEspecial_Mt
-            With Fm
-                .Pro_Actualizar_Precios = False
-                .Pro_Mostrar_Info = False
-                .BtnBuscarAlternativos.Visible = True
-                .Pro_Mostrar_Imagenes = True
-                .BtnCrearProductos.Visible = True
-                .Pro_Mostrar_Editar = True
-                .Pro_Mostrar_Eliminar = True
-                .BtnExportaExcel.Visible = True
-                .Pro_Tipo_Lista = "P"
-                .Pro_Maestro_Productos = True
-                .Pro_Sucursal_Busqueda = ModSucursal
-                .Pro_Bodega_Busqueda = ModBodega
-                .Pro_Lista_Busqueda = ModListaPrecioVenta
-                .Mnu_Btn_Cambiar_Codigo_Producto.Visible = True
-                .TraerTodosLosProductos = True
-                .ShowDialog(Me)
-                .Dispose()
-            End With
-
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Prod012") Then
+            Return
         End If
+
+        Dim Fm As New Frm_BkpPostBusquedaEspecial_Mt
+        With Fm
+            .Pro_Actualizar_Precios = False
+            .Pro_Mostrar_Info = False
+            .BtnBuscarAlternativos.Visible = True
+            .Pro_Mostrar_Imagenes = True
+            .BtnCrearProductos.Visible = True
+            .Pro_Mostrar_Editar = True
+            .Pro_Mostrar_Eliminar = True
+            .BtnExportaExcel.Visible = True
+            .Pro_Tipo_Lista = "P"
+            .Pro_Maestro_Productos = True
+            .Pro_Sucursal_Busqueda = ModSucursal
+            .Pro_Bodega_Busqueda = ModBodega
+            .Pro_Lista_Busqueda = ModListaPrecioVenta
+            .Mnu_Btn_Cambiar_Codigo_Producto.Visible = True
+            .TraerTodosLosProductos = True
+            .ShowDialog(Me)
+            .Dispose()
+        End With
 
     End Sub
 #End Region

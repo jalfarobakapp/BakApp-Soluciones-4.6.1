@@ -35,7 +35,6 @@ Partial Class Frm_AsisCompra_Proyeccion
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Arbol_Asociaciones = New DevComponents.DotNetBar.ButtonItem()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.Btn_Padre_Asociacion_Productos = New DevComponents.DotNetBar.ButtonX()
         Me.GroupPanel5 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Cmb_Tiempo_Reposicion_Dias_Meses = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.Cmb_Metodo_Abastecer_Dias_Meses = New DevComponents.DotNetBar.Controls.ComboBoxEx()
@@ -58,6 +57,8 @@ Partial Class Frm_AsisCompra_Proyeccion
         Me.Input_Proyeccion_Redondeo = New DevComponents.Editors.IntegerInput()
         Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.Btn_VerMaestroProductos = New DevComponents.DotNetBar.ButtonItem()
+        Me.Chk_MostrarSugCambioPrecio = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.Input_Dias_a_Abastecer, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Input_Tiempo_Reposicion, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel7.SuspendLayout()
@@ -224,8 +225,8 @@ Partial Class Frm_AsisCompra_Proyeccion
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnProcesarInf, Me.Btn_Arbol_Asociaciones})
-        Me.Bar1.Location = New System.Drawing.Point(0, 386)
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnProcesarInf, Me.Btn_Arbol_Asociaciones, Me.Btn_VerMaestroProductos})
+        Me.Bar1.Location = New System.Drawing.Point(0, 402)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(395, 41)
         Me.Bar1.Stretch = True
@@ -242,19 +243,6 @@ Partial Class Frm_AsisCompra_Proyeccion
         Me.Btn_Arbol_Asociaciones.ImageAlt = CType(resources.GetObject("Btn_Arbol_Asociaciones.ImageAlt"), System.Drawing.Image)
         Me.Btn_Arbol_Asociaciones.Name = "Btn_Arbol_Asociaciones"
         Me.Btn_Arbol_Asociaciones.Tooltip = "Mantención de arbol de asociaciones"
-        '
-        'Btn_Padre_Asociacion_Productos
-        '
-        Me.Btn_Padre_Asociacion_Productos.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Padre_Asociacion_Productos.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Padre_Asociacion_Productos.Image = CType(resources.GetObject("Btn_Padre_Asociacion_Productos.Image"), System.Drawing.Image)
-        Me.Btn_Padre_Asociacion_Productos.ImageAlt = CType(resources.GetObject("Btn_Padre_Asociacion_Productos.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Padre_Asociacion_Productos.Location = New System.Drawing.Point(191, 7)
-        Me.Btn_Padre_Asociacion_Productos.Name = "Btn_Padre_Asociacion_Productos"
-        Me.Btn_Padre_Asociacion_Productos.Size = New System.Drawing.Size(34, 22)
-        Me.Btn_Padre_Asociacion_Productos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Padre_Asociacion_Productos.TabIndex = 131
-        Me.ToolTip1.SetToolTip(Me.Btn_Padre_Asociacion_Productos, "Seleccionar Clasificación de productos")
         '
         'GroupPanel5
         '
@@ -367,14 +355,15 @@ Partial Class Frm_AsisCompra_Proyeccion
         '
         '
         Me.Chk_Mostrar_Solo_Stock_Critico.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Mostrar_Solo_Stock_Critico.CheckBoxImageChecked = CType(resources.GetObject("Chk_Mostrar_Solo_Stock_Critico.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Mostrar_Solo_Stock_Critico.Checked = True
         Me.Chk_Mostrar_Solo_Stock_Critico.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Chk_Mostrar_Solo_Stock_Critico.CheckValue = "Y"
         Me.Chk_Mostrar_Solo_Stock_Critico.Enabled = False
         Me.Chk_Mostrar_Solo_Stock_Critico.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Mostrar_Solo_Stock_Critico.Location = New System.Drawing.Point(201, 71)
+        Me.Chk_Mostrar_Solo_Stock_Critico.Location = New System.Drawing.Point(201, 76)
         Me.Chk_Mostrar_Solo_Stock_Critico.Name = "Chk_Mostrar_Solo_Stock_Critico"
-        Me.Chk_Mostrar_Solo_Stock_Critico.Size = New System.Drawing.Size(147, 21)
+        Me.Chk_Mostrar_Solo_Stock_Critico.Size = New System.Drawing.Size(147, 16)
         Me.Chk_Mostrar_Solo_Stock_Critico.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Mostrar_Solo_Stock_Critico.TabIndex = 17
         Me.Chk_Mostrar_Solo_Stock_Critico.Text = "Mostrar solo Stock critico"
@@ -383,7 +372,6 @@ Partial Class Frm_AsisCompra_Proyeccion
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.GroupPanel1.Controls.Add(Me.Btn_Padre_Asociacion_Productos)
         Me.GroupPanel1.Controls.Add(Me.Chk_Domingo)
         Me.GroupPanel1.Controls.Add(Me.Txt_Padre_Asociacion_Productos)
         Me.GroupPanel1.Controls.Add(Me.Chk_Sabado)
@@ -429,6 +417,7 @@ Partial Class Frm_AsisCompra_Proyeccion
         '
         '
         Me.Chk_Domingo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Domingo.CheckBoxImageChecked = CType(resources.GetObject("Chk_Domingo.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Domingo.ForeColor = System.Drawing.Color.Black
         Me.Chk_Domingo.Location = New System.Drawing.Point(6, 57)
         Me.Chk_Domingo.Name = "Chk_Domingo"
@@ -445,13 +434,15 @@ Partial Class Frm_AsisCompra_Proyeccion
         '
         Me.Txt_Padre_Asociacion_Productos.Border.Class = "TextBoxBorder"
         Me.Txt_Padre_Asociacion_Productos.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Padre_Asociacion_Productos.ButtonCustom.Image = CType(resources.GetObject("Txt_Padre_Asociacion_Productos.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Padre_Asociacion_Productos.ButtonCustom.Visible = True
         Me.Txt_Padre_Asociacion_Productos.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Padre_Asociacion_Productos.ForeColor = System.Drawing.Color.Black
         Me.Txt_Padre_Asociacion_Productos.Location = New System.Drawing.Point(6, 7)
         Me.Txt_Padre_Asociacion_Productos.Name = "Txt_Padre_Asociacion_Productos"
         Me.Txt_Padre_Asociacion_Productos.PreventEnterBeep = True
         Me.Txt_Padre_Asociacion_Productos.ReadOnly = True
-        Me.Txt_Padre_Asociacion_Productos.Size = New System.Drawing.Size(179, 22)
+        Me.Txt_Padre_Asociacion_Productos.Size = New System.Drawing.Size(213, 22)
         Me.Txt_Padre_Asociacion_Productos.TabIndex = 130
         '
         'Chk_Sabado
@@ -461,6 +452,7 @@ Partial Class Frm_AsisCompra_Proyeccion
         '
         '
         Me.Chk_Sabado.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Sabado.CheckBoxImageChecked = CType(resources.GetObject("Chk_Sabado.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Sabado.ForeColor = System.Drawing.Color.Black
         Me.Chk_Sabado.Location = New System.Drawing.Point(6, 35)
         Me.Chk_Sabado.Name = "Chk_Sabado"
@@ -645,7 +637,7 @@ Partial Class Frm_AsisCompra_Proyeccion
         Me.Rdb_Rot_Mediana.BackColor = System.Drawing.Color.Transparent
         Me.Rdb_Rot_Mediana.Checked = True
         Me.Rdb_Rot_Mediana.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Rot_Mediana.Location = New System.Drawing.Point(3, 13)
+        Me.Rdb_Rot_Mediana.Location = New System.Drawing.Point(6, 14)
         Me.Rdb_Rot_Mediana.Name = "Rdb_Rot_Mediana"
         Me.Rdb_Rot_Mediana.Size = New System.Drawing.Size(125, 17)
         Me.Rdb_Rot_Mediana.TabIndex = 0
@@ -725,11 +717,38 @@ Partial Class Frm_AsisCompra_Proyeccion
         Me.Label1.TabIndex = 128
         Me.Label1.Text = "Múltiplos de :"
         '
+        'Btn_VerMaestroProductos
+        '
+        Me.Btn_VerMaestroProductos.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_VerMaestroProductos.ForeColor = System.Drawing.Color.Black
+        Me.Btn_VerMaestroProductos.Image = CType(resources.GetObject("Btn_VerMaestroProductos.Image"), System.Drawing.Image)
+        Me.Btn_VerMaestroProductos.ImageAlt = CType(resources.GetObject("Btn_VerMaestroProductos.ImageAlt"), System.Drawing.Image)
+        Me.Btn_VerMaestroProductos.Name = "Btn_VerMaestroProductos"
+        Me.Btn_VerMaestroProductos.Tooltip = "Ver Maestro de productos"
+        '
+        'Chk_MostrarSugCambioPrecio
+        '
+        Me.Chk_MostrarSugCambioPrecio.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_MostrarSugCambioPrecio.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_MostrarSugCambioPrecio.CheckBoxImageChecked = CType(resources.GetObject("Chk_MostrarSugCambioPrecio.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_MostrarSugCambioPrecio.Enabled = False
+        Me.Chk_MostrarSugCambioPrecio.ForeColor = System.Drawing.Color.Black
+        Me.Chk_MostrarSugCambioPrecio.Location = New System.Drawing.Point(12, 378)
+        Me.Chk_MostrarSugCambioPrecio.Name = "Chk_MostrarSugCambioPrecio"
+        Me.Chk_MostrarSugCambioPrecio.Size = New System.Drawing.Size(365, 17)
+        Me.Chk_MostrarSugCambioPrecio.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_MostrarSugCambioPrecio.TabIndex = 130
+        Me.Chk_MostrarSugCambioPrecio.Text = "Mostrar sugerencia de cambio de precio"
+        '
         'Frm_AsisCompra_Proyeccion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(395, 427)
+        Me.ClientSize = New System.Drawing.Size(395, 443)
+        Me.Controls.Add(Me.Chk_MostrarSugCambioPrecio)
         Me.Controls.Add(Me.Cmb_Padre_Asociacion_Productos)
         Me.Controls.Add(Me.GroupPanel4)
         Me.Controls.Add(Me.GroupPanel3)
@@ -800,7 +819,8 @@ Partial Class Frm_AsisCompra_Proyeccion
     Public WithEvents Input_Proyeccion_Redondeo As DevComponents.Editors.IntegerInput
     Friend WithEvents GroupPanel4 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents Btn_Padre_Asociacion_Productos As DevComponents.DotNetBar.ButtonX
     Friend WithEvents Txt_Padre_Asociacion_Productos As DevComponents.DotNetBar.Controls.TextBoxX
     Public WithEvents Rdb_Rot_Promedio As RadioButton
+    Friend WithEvents Btn_VerMaestroProductos As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Chk_MostrarSugCambioPrecio As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

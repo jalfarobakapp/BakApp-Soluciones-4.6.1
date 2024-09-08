@@ -796,7 +796,7 @@ Public Class Frm_Kardex_X_Producto_Lista
             If _Ingresar Then
 
                 Dim _Aceptado As Boolean = InputBox_Bk(Me, "Ingrese nueva unbicación Máx. 20 Caracteres",
-                                                       "Cambiar Ubicación", _Ubicacion, False,, 20, True)
+                                                       "Cambiar Ubicación", _Ubicacion, False,, 20, True, _Tipo_Imagen.Ubicacion, True)
 
                 If _Aceptado Then
 

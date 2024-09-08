@@ -82,7 +82,7 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
                                "AND KOBO = '" & _Bodega & "'" & vbCrLf &
                                "AND KOPR = Codigo"
 
-        Consulta_sql = "SELECT *," &
+        Consulta_sql = "SELECT Codigo," &
                        "Isnull((Select Top 1 KOPRAL From TABCODAL Td Where Td.KOPR = Codigo And KOEN = ''),'') As CodBarra," &
                        "NOKOPR As Descripcion,Primaria," &
                        "Isnull((Select Sum(STFI1) From MAEST " & _Condicion_Maest & "),0) As STFI1," &
@@ -205,12 +205,8 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
                 ToastNotification.Show(_Formulario, "¡Este producto ya esta asociado a esta ubicación!",
                                        My.Resources.cross,
                                        3 * 1000, eToastGlowColor.Red, eToastPosition.MiddleCenter)
-
-                'MessageBoxEx.Show(_Formulario, "¡Este producto ya esta asociado a esta ubicación!", _
-                '                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             End If
         End If
-
 
     End Function
 
