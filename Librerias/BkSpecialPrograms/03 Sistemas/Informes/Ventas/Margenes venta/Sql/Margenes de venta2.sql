@@ -64,7 +64,7 @@ CREATE TABLE #Zw_TblDetalle_Venta(
 	 Nom_SubFamilia    Varchar(50) DEFAULT '',
 	 Codigo_Nodo_Clas  Int DEFAULT (0),
 	 Codigo_Madre_Clas Varchar(20) DEFAULT '',
-	 Descripcion_Clas  Varchar(100) DEFAULT '',
+	 Descripcion_Clas  Varchar(500) DEFAULT '',
 	 Funcionario	   Char(3)     default '',
 	 Vendedor		   Char(3)     default '',
 	 Precio_Cambiado   Bit         default(0))   

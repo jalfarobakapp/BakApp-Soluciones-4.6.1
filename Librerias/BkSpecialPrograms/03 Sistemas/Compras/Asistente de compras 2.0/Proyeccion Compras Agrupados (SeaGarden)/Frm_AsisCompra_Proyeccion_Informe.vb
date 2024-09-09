@@ -638,17 +638,13 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
     Private Sub Btn_Ver_documento_origen_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ver_documento_origen.Click
 
-        If _HitColumn.IsSelected = True Then
+        _Panel_Activo = CType(Super_Grilla, SuperGridControl).ActiveGrid
 
-            _Panel_Activo = CType(sender, SuperGridControl).ActiveGrid
+        Dim _Cabeza = _HitColumn.Name
+        Dim _Fila As GridRow = TryCast(Super_Grilla.ActiveRow, GridRow)
 
-            Dim _Cabeza = _HitColumn.Name ' Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
-            Dim _Fila As GridRow = TryCast(Super_Grilla.ActiveRow, GridRow)
-
-            Dim Copiar As String = _Fila.Cells(_Cabeza).Value
-            Clipboard.SetText(Copiar)
-
-        End If
+        Dim Copiar As String = _Fila.Cells(_Cabeza).Value
+        Clipboard.SetText(Copiar)
 
     End Sub
 
