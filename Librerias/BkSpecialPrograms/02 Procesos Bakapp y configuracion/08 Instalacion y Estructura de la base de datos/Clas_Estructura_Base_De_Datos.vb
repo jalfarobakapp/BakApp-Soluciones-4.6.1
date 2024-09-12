@@ -752,6 +752,8 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Entidades_ProdExcluidos
             Case "Zw_Entidades_ProdMinCompra"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Entidades_ProdMinCompra
+            Case "Zw_Entidades_Holding"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Entidades_Holding
 
             Case "Zw_Estaciones_Poswi"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Estaciones_Poswi

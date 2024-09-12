@@ -1628,6 +1628,29 @@ Namespace My.Resources
         '''<summary>
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
+        '''CREATE TABLE [dbo].[Zw_Entidades_Holding](
+        '''	[Id]			[int] IDENTITY(1,1) NOT NULL,
+        '''	[CodHolding]	[varchar](10)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[NombeHolding]	[varchar](50)		NOT NULL DEFAULT (&apos;&apos;),
+        ''' CONSTRAINT [PK_Zw_Entidades_Holding] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[Id] ASC
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+        ''') ON [PRIMARY]
+        '''
+        '''
+        '''
+        '''.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Entidades_Holding() As String
+            Get
+                Return ResourceManager.GetString("Zw_Entidades_Holding", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
         '''
         '''CREATE TABLE [dbo].[Zw_Entidades_ProdExcluidos](
         '''	[Id]			[int] IDENTITY(1,1) NOT NULL,
@@ -2285,16 +2308,13 @@ Namespace My.Resources
         '''
         '''
         '''CREATE TABLE [dbo].[Zw_ListaPreGlobal](
-        '''	[Tipo] [char](1) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Moneda] [char](3) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Permiso] [varchar](20) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Lista] [char](3) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Nombre_Lista] [varchar](50) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[FormulaPrecio] [varchar](8000) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Redondear] [float] NOT NULL DEFAULT (0),
-        '''	[FormulaGrabarRD] [varchar](8000) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[ListaCostoxDefecto] [char](3) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Tip [resto de la cadena truncado]&quot;;.
+        '''	[Tipo]                  [char](1)       NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Moneda]                [char](3)       NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Permiso]               [varchar](20)   NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Lista]                 [char](3)       NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Nombre_Lista]          [varchar](50)   NOT NULL DEFAULT (&apos;&apos;),
+        '''	[FormulaPrecio]         [varchar](8000) NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Redondear]             [float]         NOT NULL DEFAULT (0),        ''' [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_ListaPreGlobal() As String
             Get

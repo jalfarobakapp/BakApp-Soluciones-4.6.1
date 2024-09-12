@@ -237,6 +237,9 @@ Public Class Frm_Configuracion_Gral
 
             Chk_SoloprodEnDoc_CLALIBPR.Checked = .Item("SoloprodEnDoc_CLALIBPR")
 
+            Chk_UsarVencListaPrecios.Checked = .Item("UsarVencListaPrecios")
+            Input_MesesVenListaPrecios.Value = .Item("MesesVenListaPrecios")
+
         End With
 
         Input_Dias_Para_Hacer_NCV.Enabled = Not _Modalidad_General
@@ -329,6 +332,9 @@ Public Class Frm_Configuracion_Gral
 
         Chk_SoloprodEnDoc_CLALIBPR.Enabled = Not _Modalidad_General
         Btn_ConfFTPProductos.Enabled = _Modalidad_General
+
+        Chk_UsarVencListaPrecios.Enabled = _Modalidad_General
+        Input_MesesVenListaPrecios.Enabled = _Modalidad_General
 
         AddHandler Txt_Dias_Venci_Coti.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
         AddHandler Txt_ValorMinimoNVV.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
@@ -529,6 +535,8 @@ Public Class Frm_Configuracion_Gral
                        ",Pickear_FacturarAutoCompletas = " & Convert.ToInt32(Chk_Pickear_FacturarAutoCompletas.Checked) & vbCrLf &
                        ",SoloprodEnDoc_CLALIBPR = " & Convert.ToInt32(Chk_SoloprodEnDoc_CLALIBPR.Checked) & vbCrLf &
                        ",Pickear_SinoEstaEnWMSIgualPickear = " & Convert.ToInt32(Chk_Pickear_SinoEstaEnWMSIgualPickear.Checked) & vbCrLf &
+                       ",UsarVencListaPrecios = " & Convert.ToInt32(Chk_UsarVencListaPrecios.Checked) & vbCrLf &
+                       ",MesesVenListaPrecios = " & Input_MesesVenListaPrecios.Value & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then

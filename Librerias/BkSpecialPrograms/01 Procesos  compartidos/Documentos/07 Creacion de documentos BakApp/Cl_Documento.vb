@@ -1,7 +1,4 @@
-﻿Imports BkSpecialPrograms
-Imports BkSpecialPrograms.Frm_BkpPostBusquedaEspecial_Mt
-Imports DevComponents.DotNetBar
-
+﻿
 Public Class Cl_Documento
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)

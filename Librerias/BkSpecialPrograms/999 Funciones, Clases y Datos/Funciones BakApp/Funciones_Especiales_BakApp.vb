@@ -2109,7 +2109,7 @@ Public Module Modulo_Precios_Costos
             _Rtu = De_Num_a_Tx_01(_RowPrecio.Item("RLUD"), False, 5)
         Catch ex As Exception
             _Rtu = _Sql.Fx_Trae_Dato("MAEPR", "RLUD", "KOPR = '" & _Kopr & "'")
-            Consulta_sql = "Update TABPRE Set RLUD = " & _Rtu & " Where KOLT = '" & _Kolt & "' And KOPR = '" & _Kopr & "'"
+            Consulta_sql = "Update TABPRE Set RLUD = " & De_Num_a_Tx_01(_Rtu, False, 5) & " Where KOLT = '" & _Kolt & "' And KOPR = '" & _Kopr & "'"
             _Sql.Ej_consulta_IDU(Consulta_sql)
         End Try
 

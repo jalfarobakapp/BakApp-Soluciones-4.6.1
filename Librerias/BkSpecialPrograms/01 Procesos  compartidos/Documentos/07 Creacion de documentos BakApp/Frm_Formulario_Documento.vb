@@ -151,6 +151,8 @@ Public Class Frm_Formulario_Documento
 
     Public Property MensajeRevFolio As LsValiciones.Mensajes
 
+    Dim _Cl_DocListaSuperior As New Cl_DocListaSuperior
+
 #Region "PROPIEDADES"
 
     Public ReadOnly Property Pro_Idmaeedo() As Integer
@@ -1110,6 +1112,8 @@ Public Class Frm_Formulario_Documento
         _ListaCodQRUnicosLeidos = New List(Of CodigosDeBarra.CodigosQRLeidos)
         _ListaCodConDocLeidos = New List(Of CodigosDeBarra.CodigosConDocLeidos)
         _Patente_rvm = String.Empty
+
+        _Cl_DocListaSuperior = New Cl_DocListaSuperior
 
         Lbl_NroDecimales.Text = FormatNumber(0, _DecimalesGl)
 
@@ -5753,6 +5757,11 @@ Public Class Frm_Formulario_Documento
         LbllBrutoLinea.Text = FormatNumber(0, 0)
         LblListaLinea.Text = _ListaPrecios
 
+        'Agregar Lista Superior
+        If _Cl_DocListaSuperior.UsarVencListaPrecios Then
+            _Cl_DocListaSuperior.Sb_Insertar_NuevaLinea(_Fila.Index, _Codigo, _ListaPrecios, _UnTrans)
+        End If
+
         If Not String.IsNullOrEmpty(_Oferta) And _Mostrar_Oferta Then
 
             _Fila.Cells("Oferta").Value = _Oferta
@@ -7361,6 +7370,13 @@ Public Class Frm_Formulario_Documento
             End If
 
         End With
+
+        If _Cl_DocListaSuperior.UsarVencListaPrecios Then
+            _Cl_DocListaSuperior.Sb_EditarRegistro(_Fila.Index,
+                                                   _Fila.Cells("Cantidad").Value,
+                                                   _Fila.Cells("CantUd1").Value,
+                                                   _Fila.Cells("CantUd2").Value)
+        End If
 
         If _Revisando_Situacion_Comercial Then
             Sb_Revisar_Margenes(True, False, False, "")
@@ -9823,6 +9839,10 @@ Public Class Frm_Formulario_Documento
 
         Eliminar_Campos(_Ds_Matriz_Documentos.Tables("Tbl_Wms"), _Index)
         Eliminar_Campos(_Ds_Matriz_Documentos.Tables("Maedcr"), _Index)
+
+        If _Cl_DocListaSuperior.UsarVencListaPrecios Then
+            _Cl_DocListaSuperior.Sb_EliminarRegistro(_Index)
+        End If
 
         Sb_Limpiar_Lista_CodBarras()
 
@@ -14790,6 +14810,19 @@ Public Class Frm_Formulario_Documento
 
             If Not Fx_Validar_Restricciones_Por_Tipo_Documento_Y_Relacion() Then
                 Return
+            End If
+
+            If _Cl_DocListaSuperior.UsarVencListaPrecios Then
+
+                Dim _TotalNetoListaSuperior As Double = _Cl_DocListaSuperior.ObtenerSumaTotales
+
+                'If _TblEncabezado.Rows(0).Item("TotalNetoDoc") Then
+
+                'End If
+
+                MessageBoxEx.Show(Me, "Puede pasar a una lista con mejor precio." & vbCrLf &
+                                  "La venta en la lista superior seria de " & FormatCurrency(_TotalNetoListaSuperior, 0),
+                                  "Lista Superior", MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
 
             'VALIDACION FINCRED
@@ -27430,6 +27463,12 @@ Public Class Frm_Formulario_Documento
         End Try
 
         Return _Mensaje
+
+    End Function
+
+    Private Function Fx_CargarProductoEnListaSuperior()
+
+
 
     End Function
 

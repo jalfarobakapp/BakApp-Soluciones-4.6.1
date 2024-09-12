@@ -171,6 +171,9 @@ Partial Class Frm_Configuracion_Gral
         Me.Btn_DocConceptosVsPagos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_ConfPuntosVta = New DevComponents.DotNetBar.ButtonItem()
         Me.CheckBoxX2 = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_UsarVencListaPrecios = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Input_MesesVenListaPrecios = New DevComponents.Editors.IntegerInput()
+        Me.LabelX18 = New DevComponents.DotNetBar.LabelX()
         Me.TableLayoutPanel3.SuspendLayout()
         CType(Me.Input_Monto_Max_CRV_FacMasiva, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel4.SuspendLayout()
@@ -195,6 +198,7 @@ Partial Class Frm_Configuracion_Gral
         Me.GroupPanel1.SuspendLayout()
         Me.SuperTabControlPanel3.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Input_MesesVenListaPrecios, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TableLayoutPanel3
@@ -702,11 +706,11 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControl1.ControlBox.MenuBox.Name = ""
         Me.SuperTabControl1.ControlBox.Name = ""
         Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel7)
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel9)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel4)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel6)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel7)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel9)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel5)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel8)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
@@ -731,9 +735,9 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControlPanel7.Controls.Add(Me.Cmb_Nodo_Raiz_Asociados)
         Me.SuperTabControlPanel7.Controls.Add(Me.LabelX15)
         Me.SuperTabControlPanel7.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel7.Location = New System.Drawing.Point(132, 0)
+        Me.SuperTabControlPanel7.Location = New System.Drawing.Point(125, 0)
         Me.SuperTabControlPanel7.Name = "SuperTabControlPanel7"
-        Me.SuperTabControlPanel7.Size = New System.Drawing.Size(660, 539)
+        Me.SuperTabControlPanel7.Size = New System.Drawing.Size(667, 539)
         Me.SuperTabControlPanel7.TabIndex = 0
         Me.SuperTabControlPanel7.TabItem = Me.SpTab_Productos
         '
@@ -1310,9 +1314,9 @@ Partial Class Frm_Configuracion_Gral
         '
         Me.SuperTabControlPanel9.Controls.Add(Me.TableLayoutPanel7)
         Me.SuperTabControlPanel9.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel9.Location = New System.Drawing.Point(132, 0)
+        Me.SuperTabControlPanel9.Location = New System.Drawing.Point(125, 0)
         Me.SuperTabControlPanel9.Name = "SuperTabControlPanel9"
-        Me.SuperTabControlPanel9.Size = New System.Drawing.Size(660, 539)
+        Me.SuperTabControlPanel9.Size = New System.Drawing.Size(667, 539)
         Me.SuperTabControlPanel9.TabIndex = 0
         Me.SuperTabControlPanel9.TabItem = Me.SpTab_Logistica
         '
@@ -1420,6 +1424,9 @@ Partial Class Frm_Configuracion_Gral
         '
         'SuperTabControlPanel4
         '
+        Me.SuperTabControlPanel4.Controls.Add(Me.Input_MesesVenListaPrecios)
+        Me.SuperTabControlPanel4.Controls.Add(Me.LabelX18)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_UsarVencListaPrecios)
         Me.SuperTabControlPanel4.Controls.Add(Me.GroupPanel2)
         Me.SuperTabControlPanel4.Controls.Add(Me.Chk_CriterioFechaGDVconFechaDistintaDocOrigenObligatorio)
         Me.SuperTabControlPanel4.Controls.Add(Me.LabelX2)
@@ -1431,9 +1438,9 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControlPanel4.Controls.Add(Me.TableLayoutPanel4)
         Me.SuperTabControlPanel4.Controls.Add(Me.Txt_ValorMinimoNVV)
         Me.SuperTabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(132, 0)
+        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(125, 0)
         Me.SuperTabControlPanel4.Name = "SuperTabControlPanel4"
-        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(660, 539)
+        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(667, 539)
         Me.SuperTabControlPanel4.TabIndex = 0
         Me.SuperTabControlPanel4.TabItem = Me.SpTab_Ventas2
         '
@@ -1655,9 +1662,9 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControlPanel6.Controls.Add(Me.TableLayoutPanel3)
         Me.SuperTabControlPanel6.Controls.Add(Me.Lbl_Dias_Para_Hacer_NCV)
         Me.SuperTabControlPanel6.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel6.Location = New System.Drawing.Point(132, 0)
+        Me.SuperTabControlPanel6.Location = New System.Drawing.Point(125, 0)
         Me.SuperTabControlPanel6.Name = "SuperTabControlPanel6"
-        Me.SuperTabControlPanel6.Size = New System.Drawing.Size(660, 539)
+        Me.SuperTabControlPanel6.Size = New System.Drawing.Size(667, 539)
         Me.SuperTabControlPanel6.TabIndex = 0
         Me.SuperTabControlPanel6.TabItem = Me.SpTab_Ventas
         '
@@ -1704,9 +1711,9 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControlPanel5.Controls.Add(Me.LabelX20)
         Me.SuperTabControlPanel5.Controls.Add(Me.TableLayoutPanel1)
         Me.SuperTabControlPanel5.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel5.Location = New System.Drawing.Point(132, 0)
+        Me.SuperTabControlPanel5.Location = New System.Drawing.Point(125, 0)
         Me.SuperTabControlPanel5.Name = "SuperTabControlPanel5"
-        Me.SuperTabControlPanel5.Size = New System.Drawing.Size(660, 539)
+        Me.SuperTabControlPanel5.Size = New System.Drawing.Size(667, 539)
         Me.SuperTabControlPanel5.TabIndex = 0
         Me.SuperTabControlPanel5.TabItem = Me.SpTab_Compras
         '
@@ -1941,9 +1948,9 @@ Partial Class Frm_Configuracion_Gral
         '
         Me.SuperTabControlPanel8.Controls.Add(Me.TableLayoutPanel6)
         Me.SuperTabControlPanel8.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel8.Location = New System.Drawing.Point(132, 0)
+        Me.SuperTabControlPanel8.Location = New System.Drawing.Point(125, 0)
         Me.SuperTabControlPanel8.Name = "SuperTabControlPanel8"
-        Me.SuperTabControlPanel8.Size = New System.Drawing.Size(660, 539)
+        Me.SuperTabControlPanel8.Size = New System.Drawing.Size(667, 539)
         Me.SuperTabControlPanel8.TabIndex = 0
         Me.SuperTabControlPanel8.TabItem = Me.SuperTabItem1
         '
@@ -2076,9 +2083,9 @@ Partial Class Frm_Configuracion_Gral
         '
         Me.SuperTabControlPanel2.Controls.Add(Me.GroupPanel1)
         Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(132, 0)
+        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(125, 0)
         Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
-        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(660, 539)
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(667, 539)
         Me.SuperTabControlPanel2.TabIndex = 0
         Me.SuperTabControlPanel2.TabItem = Me.SpTab_DatosEmpresa
         '
@@ -2111,7 +2118,7 @@ Partial Class Frm_Configuracion_Gral
         Me.GroupPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupPanel1.Location = New System.Drawing.Point(0, 0)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(660, 539)
+        Me.GroupPanel1.Size = New System.Drawing.Size(667, 539)
         '
         '
         '
@@ -2482,9 +2489,9 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControlPanel3.Controls.Add(Me.LabelX21)
         Me.SuperTabControlPanel3.Controls.Add(Me.Chk_Fincred_Usar)
         Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(132, 0)
+        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(125, 0)
         Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
-        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(660, 539)
+        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(667, 539)
         Me.SuperTabControlPanel3.TabIndex = 0
         Me.SuperTabControlPanel3.TabItem = Me.SpTab_FincredPays
         '
@@ -2666,6 +2673,54 @@ Partial Class Frm_Configuracion_Gral
         Me.CheckBoxX2.TabIndex = 117
         Me.CheckBoxX2.Text = "Ambiente de pruebas y certificación"
         '
+        'Chk_UsarVencListaPrecios
+        '
+        Me.Chk_UsarVencListaPrecios.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_UsarVencListaPrecios.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_UsarVencListaPrecios.CheckBoxImageChecked = CType(resources.GetObject("Chk_UsarVencListaPrecios.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_UsarVencListaPrecios.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_UsarVencListaPrecios.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_UsarVencListaPrecios.FocusCuesEnabled = False
+        Me.Chk_UsarVencListaPrecios.ForeColor = System.Drawing.Color.Black
+        Me.Chk_UsarVencListaPrecios.Location = New System.Drawing.Point(6, 327)
+        Me.Chk_UsarVencListaPrecios.Name = "Chk_UsarVencListaPrecios"
+        Me.Chk_UsarVencListaPrecios.Size = New System.Drawing.Size(635, 20)
+        Me.Chk_UsarVencListaPrecios.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_UsarVencListaPrecios.TabIndex = 129
+        Me.Chk_UsarVencListaPrecios.Text = "Usar vencimientos para listas de precio"
+        '
+        'Input_MesesVenListaPrecios
+        '
+        Me.Input_MesesVenListaPrecios.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Input_MesesVenListaPrecios.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_MesesVenListaPrecios.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_MesesVenListaPrecios.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_MesesVenListaPrecios.ForeColor = System.Drawing.Color.Black
+        Me.Input_MesesVenListaPrecios.Location = New System.Drawing.Point(263, 353)
+        Me.Input_MesesVenListaPrecios.Name = "Input_MesesVenListaPrecios"
+        Me.Input_MesesVenListaPrecios.ShowUpDown = True
+        Me.Input_MesesVenListaPrecios.Size = New System.Drawing.Size(58, 22)
+        Me.Input_MesesVenListaPrecios.TabIndex = 130
+        '
+        'LabelX18
+        '
+        Me.LabelX18.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX18.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX18.ForeColor = System.Drawing.Color.Black
+        Me.LabelX18.Location = New System.Drawing.Point(9, 352)
+        Me.LabelX18.Name = "LabelX18"
+        Me.LabelX18.Size = New System.Drawing.Size(248, 23)
+        Me.LabelX18.TabIndex = 131
+        Me.LabelX18.Text = "Meses para fecha de vencimineto (ult. día del mes)"
+        '
         'Frm_Configuracion_Gral
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -2706,6 +2761,7 @@ Partial Class Frm_Configuracion_Gral
         Me.GroupPanel1.ResumeLayout(False)
         Me.SuperTabControlPanel3.ResumeLayout(False)
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Input_MesesVenListaPrecios, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -2857,4 +2913,7 @@ Partial Class Frm_Configuracion_Gral
     Friend WithEvents Chk_SoloprodEnDoc_Todos As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_Pickear_SinoEstaEnWMSIgualPickear As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Btn_ConfFTPProductos As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents Input_MesesVenListaPrecios As DevComponents.Editors.IntegerInput
+    Friend WithEvents LabelX18 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Chk_UsarVencListaPrecios As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class
