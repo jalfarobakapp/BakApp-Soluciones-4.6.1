@@ -83,6 +83,8 @@ Public Class Frm_Mt_InvParc_02_Seleccion
             Lbl_Nombre_Producto_Linea_Activa_Grilla.BackColor = Color.Black
         End If
 
+        Btn_Foto_Stock.Visible = False
+
     End Sub
 
     Private Sub Frm_Mt_InvParc_02_Seleccion_Load(sender As Object, e As System.EventArgs) Handles Me.Load
@@ -1874,29 +1876,41 @@ Public Class Frm_Mt_InvParc_02_Seleccion
             _Tbl = _Tbl_Productos_Contados
         End If
 
-        If _Tbl.Rows.Count Then
+        Dim _NoHayProductos As Boolean
 
-            Dim _Fl As String = Generar_Filtro_IN(_Tbl, "", "CodigoPr", False, False, "'")
-
-            Consulta_sql = "Select Cast(1 as Bit) As Chk,KOPR As Codigo,NOKOPR As Descripcion" & vbCrLf &
-                                          "From MAEPR Where KOPR In " & _Fl
-
-            Dim _TblProductos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
-
-            Dim Fm As New Frm_ImpBarras_PorProducto
-            Fm.Pro_Chk_Imprimir_Todas_Las_Ubicaciones = True
-            Fm.Pro_Tbl_Filtro_Productos = _TblProductos
-            Fm.Pro_Cantidad_Uno = True
-            Fm.BtnBuscarProducto.Visible = False
-            Fm.BtnLimpiar.Visible = False
-            Fm.Grupo_Ubicaciones.Enabled = False
-            Fm.Grupo_Lista_Precios.Enabled = False
-            Fm.Btn_imprimir_Archivo.Visible = False
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
+        If _Tbl.Rows.Count = 0 Then
+            _NoHayProductos = True
         Else
-            MessageBoxEx.Show(Me, "No hay productos", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            If _Tbl.Rows.Count = 1 Then
+                If String.IsNullOrWhiteSpace(_Tbl.Rows(0).Item("CodigoPr")) Then
+                    _NoHayProductos = True
+                End If
+            End If
         End If
+
+        If _NoHayProductos Then
+            MessageBoxEx.Show(Me, "No hay productos", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Fl As String = Generar_Filtro_IN(_Tbl, "", "CodigoPr", False, False, "'")
+
+        Consulta_sql = "Select Cast(1 as Bit) As Chk,KOPR As Codigo,NOKOPR As Descripcion" & vbCrLf &
+                       "From MAEPR Where KOPR In " & _Fl
+
+        Dim _TblProductos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+        Dim Fm As New Frm_ImpBarras_PorProducto
+        Fm.Pro_Chk_Imprimir_Todas_Las_Ubicaciones = True
+        Fm.Pro_Tbl_Filtro_Productos = _TblProductos
+        Fm.Pro_Cantidad_Uno = True
+        Fm.BtnBuscarProducto.Visible = False
+        Fm.BtnLimpiar.Visible = False
+        Fm.Grupo_Ubicaciones.Enabled = False
+        Fm.Grupo_Lista_Precios.Enabled = False
+        Fm.Btn_imprimir_Archivo.Visible = False
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 
@@ -1951,7 +1965,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
         If Chk_Dejar_Doc_Final_Del_Dia.Checked Then
 
-            If Not Fx_Tiene_Permiso(Me, "In0025") Then
+            If Not Fx_Tiene_Permiso(Me, "Invp0004") Then
                 Chk_Dejar_Doc_Final_Del_Dia.Checked = False
             Else
                 MessageBoxEx.Show(Me, "Esto dejara todos los documentos generados con hora 23:59:59." & vbCrLf &

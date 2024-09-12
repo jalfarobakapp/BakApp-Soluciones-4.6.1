@@ -1,7 +1,6 @@
 ﻿Imports System.Data.SqlClient
 Imports System.IO
 Imports System.Net
-Imports Microsoft.VisualBasic.ApplicationServices
 
 Public Class Cl_Ftp
 
@@ -41,6 +40,8 @@ Public Class Cl_Ftp
                 .Carpeta_Imagenes = String.Empty
                 .Carpeta_Archivos = String.Empty
                 .Url_public = String.Empty
+                .Timeout = 60
+                .UsePassive = False
 
             End With
 
@@ -66,6 +67,8 @@ Public Class Cl_Ftp
             .Carpeta_Imagenes = _Row.Item("Carpeta_Imagenes")
             .Carpeta_Archivos = _Row.Item("Carpeta_Archivos")
             .Url_public = _Row.Item("Url_public")
+            .Timeout = _Row.Item("Timeout")
+            .UsePassive = _Row.Item("UsePassive")
 
         End With
 
@@ -96,8 +99,10 @@ Public Class Cl_Ftp
 
             With Zw_Ftp_Conexiones
 
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Ftp_Conexiones (Tipo,Usuario,Clave,Host,Puerto,Fichero,Carpeta_Imagenes,Carpeta_Archivos,Url_public) Values " &
-                               "('" & .Tipo & "','" & .Usuario & "','" & .Clave & "','" & .Host & "'," & .Puerto & ",'" & .Fichero & "','" & .Carpeta_Imagenes & "','" & .Carpeta_Archivos & "','" & .Url_public & "')"
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Ftp_Conexiones (Tipo,Usuario,Clave,Host,Puerto,Fichero,Carpeta_Imagenes," &
+                               "Carpeta_Archivos,Url_public,Timeout,UsePassive) Values " &
+                               "('" & .Tipo & "','" & .Usuario & "','" & .Clave & "','" & .Host & "'," & .Puerto & ",'" & .Fichero & "'" &
+                               ",'" & .Carpeta_Imagenes & "','" & .Carpeta_Archivos & "','" & .Url_public & "'," & .Timeout & "," & Convert.ToInt32(.UsePassive) & ")"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                 Comando.Transaction = myTrans
@@ -162,14 +167,16 @@ Public Class Cl_Ftp
 
                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_Ftp_Conexiones Set " & vbCrLf &
                                "Tipo = '" & .Tipo & "'" &
-                               ",Usuario = '" & .Usuario & "'," &
-                               "Clave = '" & .Clave & "'," &
-                               "Host = '" & .Host & "'," &
-                               "Puerto = " & .Puerto & "," &
-                               "Fichero = '" & .Fichero & "'," &
-                               "Carpeta_Imagenes = '" & .Carpeta_Imagenes & "'," &
-                               "Carpeta_Archivos = '" & .Carpeta_Archivos & "'," &
-                               "Url_public = '" & .Url_public & "'" & vbCrLf &
+                               ",Usuario = '" & .Usuario & "'" &
+                               ",Clave = '" & .Clave & "'" &
+                               ",Host = '" & .Host & "'" &
+                               ",Puerto = " & .Puerto &
+                               ",Fichero = '" & .Fichero & "'" &
+                               ",Carpeta_Imagenes = '" & .Carpeta_Imagenes & "'" &
+                               ",Carpeta_Archivos = '" & .Carpeta_Archivos & "'" &
+                               ",Url_public = '" & .Url_public & "'" & vbCrLf &
+                               ",Timeout = '" & .Timeout & "'" & vbCrLf &
+                               ",UsePassive = '" & Convert.ToInt32(.UsePassive) & "'" & vbCrLf &
                                "Where Id = " & .Id
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
@@ -267,8 +274,8 @@ Public Class Cl_Ftp
             ' Para saber si el objeto existe, solicitamos la fecha de creación del mismo
             peticionFTP.Method = WebRequestMethods.Ftp.PrintWorkingDirectory
 
-            peticionFTP.UsePassive = False
-
+            peticionFTP.UsePassive = Zw_Ftp_Conexiones.UsePassive
+            peticionFTP.Timeout = Zw_Ftp_Conexiones.Timeout * 1000
             ' Si el objeto existe, se devolverá True
             Dim respuestaFTP As FtpWebResponse
             'Try
@@ -301,6 +308,9 @@ Public Class Cl_Ftp
             request.Method = WebRequestMethods.Ftp.ListDirectory
             request.Credentials = New NetworkCredential(Zw_Ftp_Conexiones.Usuario, Zw_Ftp_Conexiones.Clave)
 
+            request.UsePassive = False 'Zw_Ftp_Conexiones.UsePassive
+            request.Timeout = Zw_Ftp_Conexiones.Timeout * 1000
+
             ' Obtener la respuesta del servidor
             Using response As FtpWebResponse = CType(request.GetResponse(), FtpWebResponse)
                 ' Si llegamos aquí, la carpeta existe
@@ -314,13 +324,59 @@ Public Class Cl_Ftp
                 Return False
             Else
                 ' Otro tipo de error
-                Throw
+                Return False
             End If
         End Try
 
         Return existeDirectorio
     End Function
 
+    Public Function Fx_Existe_Directorio3(_Dir As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+            ' Crear la solicitud FTP
+            Dim request As FtpWebRequest = CType(WebRequest.Create(_Dir), FtpWebRequest)
+            request.Method = WebRequestMethods.Ftp.ListDirectory
+            request.Credentials = New NetworkCredential(Zw_Ftp_Conexiones.Usuario, Zw_Ftp_Conexiones.Clave)
+
+            request.Timeout = Zw_Ftp_Conexiones.Timeout * 1000
+            request.UsePassive = Zw_Ftp_Conexiones.UsePassive
+
+            ' Obtener la respuesta del servidor
+            Using response As FtpWebResponse = CType(request.GetResponse(), FtpWebResponse)
+
+                ' Si llegamos aquí, la carpeta existe
+                _Mensaje.EsCorrecto = True
+                _Mensaje.Mensaje = "Directorio encontrado."
+                _Mensaje.Detalle = "Existe directorio FTP"
+                _Mensaje.Icono = MessageBoxIcon.Information
+
+            End Using
+
+        Catch ex As WebException
+            ' Si se lanza una excepción, verificamos si es porque la carpeta no existe
+            Dim response As FtpWebResponse = CType(ex.Response, FtpWebResponse)
+            If response.StatusCode = FtpStatusCode.ActionNotTakenFileUnavailable Then
+                ' La carpeta no existe
+                _Mensaje.EsCorrecto = False
+                _Mensaje.Mensaje = "Directorio no encontrado."
+                _Mensaje.Detalle = "No existe directorio FTP"
+                _Mensaje.Icono = MessageBoxIcon.Error
+            Else
+                _Mensaje.EsCorrecto = False
+                _Mensaje.Mensaje = ex.Message
+                _Mensaje.Detalle = "Problema de conexión FTP"
+                _Mensaje.Icono = MessageBoxIcon.Error
+                _Mensaje.HuboOtroError = True
+                _Mensaje.Tag = response
+            End If
+        End Try
+
+        Return _Mensaje
+
+    End Function
 
     Public Function Fx_Crear_Directorio(_Dir As String) As LsValiciones.Mensajes
 
@@ -408,7 +464,8 @@ Public Class Cl_Ftp
             'peticionFTP = CType(WebRequest.Create(_Dir), FtpWebRequest)
             ' Fijamos el usuario y la contraseña de la petición
             peticionFTP.Credentials = New NetworkCredential(Zw_Ftp_Conexiones.Usuario, Zw_Ftp_Conexiones.Clave)
-
+            peticionFTP.UsePassive = Zw_Ftp_Conexiones.UsePassive
+            peticionFTP.Timeout = Zw_Ftp_Conexiones.Timeout * 1000
             ' Seleccionamos el comando que vamos a utilizar: Crear un directorio
             peticionFTP.Method = WebRequestMethods.Ftp.ListDirectory
 

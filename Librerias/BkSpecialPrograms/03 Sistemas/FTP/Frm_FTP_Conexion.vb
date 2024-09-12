@@ -53,6 +53,8 @@ Public Class Frm_FTP_Conexion
             'txt_Carpeta_Imagenes.Text = .Carpeta_Imagenes
             Txt_Fichero.Text = .Fichero
             Txt_Url_public.Text = .Url_public
+            Input_Timeout.Value = .Timeout
+            Chk_UsePassive.Checked = .UsePassive
 
         End With
 
@@ -105,9 +107,11 @@ Public Class Frm_FTP_Conexion
             .Host = Txt_Host.Text.Trim
             .Puerto = Txt_Puerto.Text.Trim
             .Fichero = Txt_Fichero.Text.Trim
-            .Carpeta_Archivos = Txt_Carpeta_Archivos.Text '"/" & _eTipo_Ftp & "/Archivos"
-            .Carpeta_Imagenes = Txt_Carpeta_Imagenes.Text ' "/" & _eTipo_Ftp & "/Imagenes"
+            .Carpeta_Archivos = Txt_Carpeta_Archivos.Text
+            .Carpeta_Imagenes = Txt_Carpeta_Imagenes.Text
             .Url_public = Txt_Url_public.Text.Trim
+            .Timeout = Input_Timeout.Value
+            .UsePassive = Chk_UsePassive.Checked
 
         End With
 
@@ -136,7 +140,14 @@ Public Class Frm_FTP_Conexion
             Return
         End If
 
-        If Not Ftp.Fx_Existe_Directorio2(Ftp.Zw_Ftp_Conexiones.Fichero & "/" & _eTipo_Ftp.ToString) Then
+        _Mensaje = Ftp.Fx_Existe_Directorio3(Ftp.Zw_Ftp_Conexiones.Fichero & "/" & _eTipo_Ftp.ToString)
+
+        If Not _Mensaje.EsCorrecto Then
+
+            If _Mensaje.HuboOtroError Then
+                MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                Return
+            End If
 
             _Mensaje = Ftp.Fx_Crear_Directorio(Ftp.Zw_Ftp_Conexiones.Fichero & "/" & _eTipo_Ftp.ToString)
 
@@ -147,7 +158,14 @@ Public Class Frm_FTP_Conexion
 
         End If
 
-        If Not Ftp.Fx_Existe_Directorio2(Ftp.Zw_Ftp_Conexiones.Fichero & "/" & _eTipo_Ftp.ToString & "/Imagenes") Then
+        _Mensaje = Ftp.Fx_Existe_Directorio3(Ftp.Zw_Ftp_Conexiones.Fichero & "/" & _eTipo_Ftp.ToString & "/Imagenes")
+
+        If Not _Mensaje.EsCorrecto Then
+
+            If _Mensaje.HuboOtroError Then
+                MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                Return
+            End If
 
             _Mensaje = Ftp.Fx_Crear_Directorio(Ftp.Zw_Ftp_Conexiones.Fichero & "/" & _eTipo_Ftp.ToString & "/Imagenes")
 
@@ -158,7 +176,14 @@ Public Class Frm_FTP_Conexion
 
         End If
 
-        If Not Ftp.Fx_Existe_Directorio2(Ftp.Zw_Ftp_Conexiones.Fichero & "/" & _eTipo_Ftp.ToString & "/Archivos") Then
+        _Mensaje = Ftp.Fx_Existe_Directorio3(Ftp.Zw_Ftp_Conexiones.Fichero & "/" & _eTipo_Ftp.ToString & "/Archivos")
+
+        If Not _Mensaje.EsCorrecto Then
+
+            If _Mensaje.HuboOtroError Then
+                MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                Return
+            End If
 
             _Mensaje = Ftp.Fx_Crear_Directorio(Ftp.Zw_Ftp_Conexiones.Fichero & "/" & _eTipo_Ftp.ToString & "/Archivos")
 

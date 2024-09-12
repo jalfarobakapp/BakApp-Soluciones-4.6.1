@@ -1,4 +1,4 @@
-Imports DevComponents.DotNetBar
+锘縄mports DevComponents.DotNetBar
 'Imports Lib_Bakapp_VarClassFunc
 
 
@@ -14,10 +14,10 @@ Public Class Frm_Mt_InvParc_SelecionFechas
 
     Public Sub New(ByVal RowBodega As DataRow)
 
-        ' Llamada necesaria para el Dise馻dor de Windows Forms.
+        ' Llamada necesaria para el Dise帽ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicializaci髇 despu閟 de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaci贸n despu茅s de la llamada a InitializeComponent().
         Sb_Formato_Generico_Grilla(Grilla, 20, New Font("Tahoma", 9), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
         _RowBodega = RowBodega
 
@@ -44,6 +44,8 @@ Public Class Frm_Mt_InvParc_SelecionFechas
 
         AddHandler Grilla.MouseDown, AddressOf Grilla_MouseDown
         AddHandler Grilla.CellDoubleClick, AddressOf Sb_Seleccionar_Inventario
+
+        Btn_Actualizar_Foto_Stock.Visible = False
 
     End Sub
 
@@ -88,7 +90,7 @@ Public Class Frm_Mt_InvParc_SelecionFechas
             '.Columns("Bodega").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
 
             .Columns("Nombre_Ajuste").Width = 380
-            .Columns("Nombre_Ajuste").HeaderText = "Descripci髇"
+            .Columns("Nombre_Ajuste").HeaderText = "Descripci贸n"
             .Columns("Nombre_Ajuste").Visible = True
 
             .Columns("Productos").Width = 70
@@ -102,6 +104,11 @@ Public Class Frm_Mt_InvParc_SelecionFechas
 
 
     Sub Sb_Seleccionar_Inventario()
+
+        If Grilla.RowCount = 0 Then
+            MessageBoxEx.Show(Me, "No hay datos que revisar", "Validaci贸n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
@@ -119,9 +126,9 @@ Public Class Frm_Mt_InvParc_SelecionFechas
 
             If String.IsNullOrEmpty(_Nudo_GRI) Or String.IsNullOrEmpty(_Nudo_GDI) Then
 
-                MessageBoxEx.Show(Me, "Debe revisar la numeraci髇 para las gu韆s de ajuste GRI o GDI." & vbCrLf & _
-                                  "Revise la numeraci髇 de la configuraci髇 de estaci髇", _
-                                  "Problemas con numeraci髇 en gu韆s internas", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                MessageBoxEx.Show(Me, "Debe revisar la numeraci贸n para las gu铆as de ajuste GRI o GDI." & vbCrLf &
+                                  "Revise la numeraci贸n de la configuraci贸n de estaci贸n",
+                                  "Problemas con numeraci贸n en gu铆as internas", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
                 Return
             End If
@@ -135,7 +142,7 @@ Public Class Frm_Mt_InvParc_SelecionFechas
             Call TxtDescripcion_TextChanged(Nothing, Nothing)
             Fm.Dispose()
         Else
-            MessageBoxEx.Show(Me, "Este ajuste se encuentra cerrado", "Validaci髇", _
+            MessageBoxEx.Show(Me, "Este ajuste se encuentra cerrado", "Validaci贸n",
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End If
 
@@ -195,32 +202,34 @@ Public Class Frm_Mt_InvParc_SelecionFechas
 
     Private Sub Btn_Mnu_Editar_Nombre_De_Ajuste_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Editar_Nombre_De_Ajuste.Click
 
-        If Fx_Tiene_Permiso(Me, "In0017") Then
+        If Not Fx_Tiene_Permiso(Me, "Invp0005") Then
+            Return
+        End If
 
-            Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
-            Dim _Id = _Fila.Cells("Id").Value
-            Dim _Descripcion As String = _Fila.Cells("Nombre_Ajuste").Value
-            Dim _Aceptado As Boolean
+        Dim _Id = _Fila.Cells("Id").Value
+        Dim _Descripcion As String = _Fila.Cells("Nombre_Ajuste").Value
+        Dim _Aceptado As Boolean
 
-            _Aceptado = InputBox_Bk(Me, "Ingrese nueva descripci髇", "Cambiar descripci髇 inventario",
-                                 _Descripcion, False,
-                                 _Tipo_Mayus_Minus.Mayusculas, 100, True, _Tipo_Imagen.Texto, False)
+        _Aceptado = InputBox_Bk(Me, "Ingrese nueva descripci贸n", "Cambiar descripci贸n inventario",
+                             _Descripcion, False,
+                             _Tipo_Mayus_Minus.Mayusculas, 100, True, _Tipo_Imagen.Texto, False)
 
-            If _Aceptado Then
+        If _Aceptado Then
 
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_TmpInv_InvParcial_Inventarios Set Nombre_Ajuste = '" & _Descripcion & "'" & vbCrLf &
-                               "Where Id = " & _Id
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_TmpInv_InvParcial_Inventarios Set Nombre_Ajuste = '" & _Descripcion & "'" & vbCrLf &
+                           "Where Id = " & _Id
 
-                If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+            If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
 
-                    MessageBoxEx.Show(Me, "Descripcion cambiada correctamente",
-                                      "Cambiar descripci髇", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                    _Fila.Cells("Nombre_Ajuste").Value = _Descripcion
+                MessageBoxEx.Show(Me, "Descripcion cambiada correctamente",
+                                  "Cambiar descripci贸n", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                _Fila.Cells("Nombre_Ajuste").Value = _Descripcion
 
-                End If
             End If
         End If
+
 
     End Sub
 
@@ -232,19 +241,19 @@ Public Class Frm_Mt_InvParc_SelecionFechas
         Dim Suc As String = Grilla.Rows(Grilla.CurrentRow.Index).Cells("Sucursal").Value
         Dim Bod As String = Grilla.Rows(Grilla.CurrentRow.Index).Cells("Bodega").Value
 
-        Dim Reg As Integer =_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_TmpInv_InvParcial", _
-                                              "Empresa = '" & Emp & "' And " & _
-                                              "Sucursal = '" & Suc & "' And " & _
-                                              "Bodega = '" & Bod & "' And " & _
+        Dim Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_TmpInv_InvParcial",
+                                              "Empresa = '" & Emp & "' And " &
+                                              "Sucursal = '" & Suc & "' And " &
+                                              "Bodega = '" & Bod & "' And " &
                                               "FechaInv = '" & Fecha & "'")
         If CBool(Reg) Then
-            MessageBoxEx.Show(Me, "Existen productos ajustados para esta fecha." & vbCrLf & _
-                              "La fila no se puede eliminar", "Validaci髇", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show(Me, "Existen productos ajustados para esta fecha." & vbCrLf &
+                              "La fila no se puede eliminar", "Validaci贸n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
 
-        Dim dlg As System.Windows.Forms.DialogResult = _
-                      MessageBoxEx.Show(Me, "縀sta seguro de eliminar la(s) fila(s) seleccionada(s)?", _
+        Dim dlg As System.Windows.Forms.DialogResult =
+                      MessageBoxEx.Show(Me, "驴Esta seguro de eliminar la(s) fila(s) seleccionada(s)?",
                                        "Eliminar fila", MessageBoxButtons.YesNo)
 
         With Grilla
@@ -272,17 +281,17 @@ Public Class Frm_Mt_InvParc_SelecionFechas
             If CBool(Fm.Pro_Tbl_Inventarios.Rows.Count) Then
                 Fm.ShowDialog(Me)
             Else
-                MessageBoxEx.Show(Me, "No existen inventarios que actualizar", "Validaci髇", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                MessageBoxEx.Show(Me, "No existen inventarios que actualizar", "Validaci贸n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             End If
             Fm.Dispose()
         End If
     End Sub
 
     Private Sub Btn_Exportar_Inventarios_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Exportar_Inventarios.Click
-        Consulta_sql = "Select Ano,Mes,Dia,Fecha,Empresa,Sucursal,Bodega,Nombre_Ajuste,Funcionario,Estado" & vbCrLf & _
-                       "From " & _Global_BaseBk & "Zw_TmpInv_InvParcial_Inventarios" & vbCrLf & _
-                       "Where Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & _
-                       "' And Bodega = '" & _Bodega & "'" & vbCrLf & _
+        Consulta_sql = "Select Ano,Mes,Dia,Fecha,Empresa,Sucursal,Bodega,Nombre_Ajuste,Funcionario,Estado" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_TmpInv_InvParcial_Inventarios" & vbCrLf &
+                       "Where Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal &
+                       "' And Bodega = '" & _Bodega & "'" & vbCrLf &
                        "Order by Fecha Desc"
 
         Dim _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
@@ -291,24 +300,24 @@ Public Class Frm_Mt_InvParc_SelecionFechas
     End Sub
 
     Private Sub Btn_Exportar_Todo_Los_Productos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Exportar_Todo_Los_Productos.Click
-        Consulta_sql = "Select *," & _
-                       "Isnull((Select Top 1 DATOSUBIC From TABBOPR" & Space(1) & _
-                       "Where EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR = CodigoPr),'') As UBICACION," & _
-                       "CAST(0 as Bit) As GDI_Cero_Nula," & _
-                       "CAST(0 as Bit) As GRI_Cero_Nula," & _
-                       "CAST(0 as Bit) As GRI_Ajuste_Nula" & vbCrLf & _
-                       "Into #Paso_Inv FROM " & _Global_BaseBk & "Zw_TmpInv_InvParcial" & vbCrLf & _
-                       "Where 1 > 0" & vbCrLf & _
-                       "And Levantado = 1" & vbCrLf & _
-                       "And DejaStockCero = 0" & vbCrLf & _
-                       "Order by CodigoPr,Semilla Desc" & vbCrLf & vbCrLf & _
-                       "Update #Paso_Inv Set StockActual = Isnull((Select Top 1 STFI1 From MAEST" & Space(1) & _
-                       "Where EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR = CodigoPr),0)" & vbCrLf & _
-                       "Update #Paso_Inv Set GRI_Cero_Nula = Case When (Select COUNT(*) From MAEEDO Where IDMAEEDO = GRI_Idmaeedo_Aj) > 0 then 0 Else 1 End" & vbCrLf & _
-                       "Update #Paso_Inv Set GDI_Cero_Nula = Case When (Select COUNT(*) From MAEEDO Where IDMAEEDO = GDI_Idmaeedo_Aj) > 0 then 0 Else 1 End" & vbCrLf & _
-                       "Update #Paso_Inv Set GRI_Ajuste_Nula = Case When (Select COUNT(*) From MAEEDO Where IDMAEEDO = IDMAEEDO_Aj) > 0 then 0 Else 1 End" & vbCrLf & _
-                       "Select * From #Paso_Inv" & vbCrLf & _
-                       "Order by CodigoPr,Semilla Desc" & vbCrLf & _
+        Consulta_sql = "Select *," &
+                       "Isnull((Select Top 1 DATOSUBIC From TABBOPR" & Space(1) &
+                       "Where EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR = CodigoPr),'') As UBICACION," &
+                       "CAST(0 as Bit) As GDI_Cero_Nula," &
+                       "CAST(0 as Bit) As GRI_Cero_Nula," &
+                       "CAST(0 as Bit) As GRI_Ajuste_Nula" & vbCrLf &
+                       "Into #Paso_Inv FROM " & _Global_BaseBk & "Zw_TmpInv_InvParcial" & vbCrLf &
+                       "Where 1 > 0" & vbCrLf &
+                       "And Levantado = 1" & vbCrLf &
+                       "And DejaStockCero = 0" & vbCrLf &
+                       "Order by CodigoPr,Semilla Desc" & vbCrLf & vbCrLf &
+                       "Update #Paso_Inv Set StockActual = Isnull((Select Top 1 STFI1 From MAEST" & Space(1) &
+                       "Where EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR = CodigoPr),0)" & vbCrLf &
+                       "Update #Paso_Inv Set GRI_Cero_Nula = Case When (Select COUNT(*) From MAEEDO Where IDMAEEDO = GRI_Idmaeedo_Aj) > 0 then 0 Else 1 End" & vbCrLf &
+                       "Update #Paso_Inv Set GDI_Cero_Nula = Case When (Select COUNT(*) From MAEEDO Where IDMAEEDO = GDI_Idmaeedo_Aj) > 0 then 0 Else 1 End" & vbCrLf &
+                       "Update #Paso_Inv Set GRI_Ajuste_Nula = Case When (Select COUNT(*) From MAEEDO Where IDMAEEDO = IDMAEEDO_Aj) > 0 then 0 Else 1 End" & vbCrLf &
+                       "Select * From #Paso_Inv" & vbCrLf &
+                       "Order by CodigoPr,Semilla Desc" & vbCrLf &
                        "Drop Table #Paso_Inv"
 
         Dim _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
@@ -319,15 +328,15 @@ Public Class Frm_Mt_InvParc_SelecionFechas
 
     Private Sub Btn_Exportar_Productos_No_Inventariados_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Exportar_Productos_No_Inventariados.Click
 
-        Consulta_sql = "Select KOPR As CODIGO,NOKOPR As DESCRIPCION,RLUD As RTU,UD01PR As UN1," & _
-                       "Cast(0 As Float) StockUd1,UD02PR As UN2,Cast(0 As Float) StockUd2,MRPR AS MARCA" & vbCrLf & _
-                       "Into #Paso1" & vbCrLf & _
-                       "From MAEPR" & vbCrLf & _
-                       "Where KOPR Not in (Select CodigoPr From " & _Global_BaseBk & "Zw_TmpInv_InvParcial" & Space(1) & _
-                       "Where Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega & "')" & vbCrLf & _
-                       "Update #Paso1 Set StockUd1 = Isnull((Select STFI1 From MAEST Where EMPRESA = '" & _Empresa & "' And KOSU = '" & _Sucursal & "' AND KOBO = '" & _Bodega & "' And CODIGO = KOPR),0)" & vbCrLf & _
-                       "Update #Paso1 Set StockUd2 = Isnull((Select STFI2 From MAEST Where EMPRESA = '" & _Empresa & "' And KOSU = '" & _Sucursal & "' AND KOBO = '" & _Bodega & "' And CODIGO = KOPR),0)" & vbCrLf & _
-                       "Select * From #Paso1" & vbCrLf & _
+        Consulta_sql = "Select KOPR As CODIGO,NOKOPR As DESCRIPCION,RLUD As RTU,UD01PR As UN1," &
+                       "Cast(0 As Float) StockUd1,UD02PR As UN2,Cast(0 As Float) StockUd2,MRPR AS MARCA" & vbCrLf &
+                       "Into #Paso1" & vbCrLf &
+                       "From MAEPR" & vbCrLf &
+                       "Where KOPR Not in (Select CodigoPr From " & _Global_BaseBk & "Zw_TmpInv_InvParcial" & Space(1) &
+                       "Where Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega & "')" & vbCrLf &
+                       "Update #Paso1 Set StockUd1 = Isnull((Select STFI1 From MAEST Where EMPRESA = '" & _Empresa & "' And KOSU = '" & _Sucursal & "' AND KOBO = '" & _Bodega & "' And CODIGO = KOPR),0)" & vbCrLf &
+                       "Update #Paso1 Set StockUd2 = Isnull((Select STFI2 From MAEST Where EMPRESA = '" & _Empresa & "' And KOSU = '" & _Sucursal & "' AND KOBO = '" & _Bodega & "' And CODIGO = KOPR),0)" & vbCrLf &
+                       "Select * From #Paso1" & vbCrLf &
                        "Drop Table #Paso1"
 
         Dim _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
@@ -342,22 +351,22 @@ Public Class Frm_Mt_InvParc_SelecionFechas
 
         Dim _Fecha As Date = _Fila.Cells("Fecha").Value
 
-        Consulta_sql = "Select *," & _
-                       "CAST(0 as Bit) As GDI_Cero_Nula," & _
-                       "CAST(0 as Bit) As GRI_Cero_Nula," & _
-                       "CAST(0 as Bit) As GRI_Ajuste_Nula" & vbCrLf & _
-                       "Into #Paso_Inv FROM " & _Global_BaseBk & "Zw_TmpInv_InvParcial" & vbCrLf & _
-                       "Where FechaInv = '" & Format(_Fecha, "yyyyMMdd") & "'" & vbCrLf & _
-                       "And Levantado = 1" & vbCrLf & _
-                       "And DejaStockCero = 0" & vbCrLf & _
-                       "Order by CodigoPr,Semilla Desc" & vbCrLf & vbCrLf & _
-                       "Update #Paso_Inv Set StockActual = Isnull((Select Top 1 STFI1 From MAEST" & Space(1) & _
-                       "Where EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR = CodigoPr),0)" & vbCrLf & _
-                       "Update #Paso_Inv Set GRI_Cero_Nula = Case When (Select COUNT(*) From MAEEDO Where IDMAEEDO = GRI_Idmaeedo_Aj) > 0 then 0 Else 1 End" & vbCrLf & _
-                       "Update #Paso_Inv Set GDI_Cero_Nula = Case When (Select COUNT(*) From MAEEDO Where IDMAEEDO = GDI_Idmaeedo_Aj) > 0 then 0 Else 1 End" & vbCrLf & _
-                       "Update #Paso_Inv Set GRI_Ajuste_Nula = Case When (Select COUNT(*) From MAEEDO Where IDMAEEDO = IDMAEEDO_Aj) > 0 then 0 Else 1 End" & vbCrLf & _
-                       "Select * From #Paso_Inv" & vbCrLf & _
-                       "Order by CodigoPr,Semilla Desc" & vbCrLf & _
+        Consulta_sql = "Select *," &
+                       "CAST(0 as Bit) As GDI_Cero_Nula," &
+                       "CAST(0 as Bit) As GRI_Cero_Nula," &
+                       "CAST(0 as Bit) As GRI_Ajuste_Nula" & vbCrLf &
+                       "Into #Paso_Inv FROM " & _Global_BaseBk & "Zw_TmpInv_InvParcial" & vbCrLf &
+                       "Where FechaInv = '" & Format(_Fecha, "yyyyMMdd") & "'" & vbCrLf &
+                       "And Levantado = 1" & vbCrLf &
+                       "And DejaStockCero = 0" & vbCrLf &
+                       "Order by CodigoPr,Semilla Desc" & vbCrLf & vbCrLf &
+                       "Update #Paso_Inv Set StockActual = Isnull((Select Top 1 STFI1 From MAEST" & Space(1) &
+                       "Where EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR = CodigoPr),0)" & vbCrLf &
+                       "Update #Paso_Inv Set GRI_Cero_Nula = Case When (Select COUNT(*) From MAEEDO Where IDMAEEDO = GRI_Idmaeedo_Aj) > 0 then 0 Else 1 End" & vbCrLf &
+                       "Update #Paso_Inv Set GDI_Cero_Nula = Case When (Select COUNT(*) From MAEEDO Where IDMAEEDO = GDI_Idmaeedo_Aj) > 0 then 0 Else 1 End" & vbCrLf &
+                       "Update #Paso_Inv Set GRI_Ajuste_Nula = Case When (Select COUNT(*) From MAEEDO Where IDMAEEDO = IDMAEEDO_Aj) > 0 then 0 Else 1 End" & vbCrLf &
+                       "Select * From #Paso_Inv" & vbCrLf &
+                       "Order by CodigoPr,Semilla Desc" & vbCrLf &
                        "Drop Table #Paso_Inv"
 
         Dim _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)

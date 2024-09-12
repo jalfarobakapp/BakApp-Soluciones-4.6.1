@@ -45,21 +45,28 @@ Partial Class Frm_FTP_Conexion
         Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Fichero = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_UsePassive = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Input_Timeout = New DevComponents.Editors.IntegerInput()
         Me.Grupo_Configuracion_Ftp.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
+        CType(Me.Input_Timeout, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Grupo_Configuracion_Ftp
         '
         Me.Grupo_Configuracion_Ftp.BackColor = System.Drawing.Color.White
         Me.Grupo_Configuracion_Ftp.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.Grupo_Configuracion_Ftp.Controls.Add(Me.Input_Timeout)
+        Me.Grupo_Configuracion_Ftp.Controls.Add(Me.Chk_UsePassive)
+        Me.Grupo_Configuracion_Ftp.Controls.Add(Me.LabelX5)
         Me.Grupo_Configuracion_Ftp.Controls.Add(Me.TableLayoutPanel1)
         Me.Grupo_Configuracion_Ftp.DisabledBackColor = System.Drawing.Color.Empty
-        Me.Grupo_Configuracion_Ftp.Location = New System.Drawing.Point(12, 12)
+        Me.Grupo_Configuracion_Ftp.Location = New System.Drawing.Point(12, 3)
         Me.Grupo_Configuracion_Ftp.Name = "Grupo_Configuracion_Ftp"
-        Me.Grupo_Configuracion_Ftp.Size = New System.Drawing.Size(617, 99)
+        Me.Grupo_Configuracion_Ftp.Size = New System.Drawing.Size(617, 126)
         '
         '
         '
@@ -244,7 +251,7 @@ Partial Class Frm_FTP_Conexion
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Eliminar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 274)
+        Me.Bar1.Location = New System.Drawing.Point(0, 295)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(642, 41)
         Me.Bar1.Stretch = True
@@ -286,7 +293,7 @@ Partial Class Frm_FTP_Conexion
         Me.GroupPanel1.Controls.Add(Me.Txt_Fichero)
         Me.GroupPanel1.Controls.Add(Me.LabelX6)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel1.Location = New System.Drawing.Point(12, 117)
+        Me.GroupPanel1.Location = New System.Drawing.Point(12, 135)
         Me.GroupPanel1.Name = "GroupPanel1"
         Me.GroupPanel1.Size = New System.Drawing.Size(617, 149)
         '
@@ -442,11 +449,56 @@ Partial Class Frm_FTP_Conexion
         Me.LabelX6.TabIndex = 5
         Me.LabelX6.Text = "Fichero"
         '
+        'LabelX5
+        '
+        Me.LabelX5.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX5.ForeColor = System.Drawing.Color.Black
+        Me.LabelX5.Location = New System.Drawing.Point(6, 74)
+        Me.LabelX5.Name = "LabelX5"
+        Me.LabelX5.Size = New System.Drawing.Size(55, 21)
+        Me.LabelX5.TabIndex = 53
+        Me.LabelX5.Text = "Time out"
+        '
+        'Chk_UsePassive
+        '
+        Me.Chk_UsePassive.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_UsePassive.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_UsePassive.Location = New System.Drawing.Point(295, 74)
+        Me.Chk_UsePassive.Name = "Chk_UsePassive"
+        Me.Chk_UsePassive.Size = New System.Drawing.Size(100, 23)
+        Me.Chk_UsePassive.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_UsePassive.TabIndex = 54
+        Me.Chk_UsePassive.Text = "PASV"
+        '
+        'Input_Timeout
+        '
+        '
+        '
+        '
+        Me.Input_Timeout.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_Timeout.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_Timeout.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_Timeout.Location = New System.Drawing.Point(67, 75)
+        Me.Input_Timeout.MaxValue = 120
+        Me.Input_Timeout.MinValue = 60
+        Me.Input_Timeout.Name = "Input_Timeout"
+        Me.Input_Timeout.ShowUpDown = True
+        Me.Input_Timeout.Size = New System.Drawing.Size(51, 22)
+        Me.Input_Timeout.TabIndex = 55
+        Me.Input_Timeout.Value = 60
+        '
         'Frm_FTP_Conexion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(642, 315)
+        Me.ClientSize = New System.Drawing.Size(642, 336)
         Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.Bar1)
         Me.Controls.Add(Me.Grupo_Configuracion_Ftp)
@@ -464,6 +516,7 @@ Partial Class Frm_FTP_Conexion
         Me.TableLayoutPanel1.ResumeLayout(False)
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel1.ResumeLayout(False)
+        CType(Me.Input_Timeout, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -490,4 +543,7 @@ Partial Class Frm_FTP_Conexion
     Public WithEvents Txt_Fichero As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX6 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Btn_Eliminar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Chk_UsePassive As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Input_Timeout As DevComponents.Editors.IntegerInput
 End Class

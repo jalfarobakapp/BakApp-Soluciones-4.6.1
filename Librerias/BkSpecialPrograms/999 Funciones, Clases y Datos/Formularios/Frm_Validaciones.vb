@@ -178,6 +178,7 @@ Namespace LsValiciones
         Public Property MostrarMensaje As Boolean = True
         Public Property Cerrar As Boolean
         Public Property ErrorDeConexionSQL As Boolean
+        Public Property HuboOtroError As Boolean
 
     End Class
 

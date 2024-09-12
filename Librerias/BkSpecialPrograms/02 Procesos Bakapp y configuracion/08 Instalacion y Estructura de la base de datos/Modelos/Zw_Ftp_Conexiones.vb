@@ -9,4 +9,6 @@
     Public Property Carpeta_Imagenes As String
     Public Property Carpeta_Archivos As String
     Public Property Url_public As String
+    Public Property Timeout As Integer
+    Public Property UsePassive As Boolean
 End Class

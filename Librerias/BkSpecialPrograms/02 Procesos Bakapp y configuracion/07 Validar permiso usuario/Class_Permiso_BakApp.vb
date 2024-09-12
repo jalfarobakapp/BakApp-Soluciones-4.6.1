@@ -675,6 +675,8 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Invp0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Invp0002", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Invp0003", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Invp0004", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Invp0005", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Invg0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Invg0002", _Objeto, _Formulario)
@@ -3003,20 +3005,28 @@ Public Class Class_Permiso_BakApp
 
 #End Region
 
-#Region "INVENTARIO PARCIALIZADO"
+#Region "INVENTARIO PARCIALIZADO - AJUSTE DE INVENTARIO"
 
         Select Case _CodPermiso
 
             Case "Invp0001"
-                _DescripcionPermiso = "INGRESAR AL SISTEMA INVENTARIO PARCIALIZADO"
+                _DescripcionPermiso = "INGRESAR AL SISTEMA AJUSTE DE INVENTARIO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO_PARCIALIZADO, 6)
                 _NombreFamiliaPermiso = _Fml.INVENTARIO_PARCIALIZADO.ToString
             Case "Invp0002"
-                _DescripcionPermiso = "GRABAR DATOS INVENTARIO PARCIALIZADO"
+                _DescripcionPermiso = "GRABAR DATOS DE AJUSTE DE INVENTARIO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO_PARCIALIZADO, 6)
                 _NombreFamiliaPermiso = _Fml.INVENTARIO_PARCIALIZADO.ToString
             Case "Invp0003"
-                _DescripcionPermiso = "CREAR ARCHIVO .TXT INVENTARIO"
+                _DescripcionPermiso = "CREAR ARCHIVO .TXT AJUSTE DE INVENTARIO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO_PARCIALIZADO, 6)
+                _NombreFamiliaPermiso = _Fml.INVENTARIO_PARCIALIZADO.ToString
+            Case "Invp0004"
+                _DescripcionPermiso = "DEJAR HORA DE GRABACION AL FINAL"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO_PARCIALIZADO, 6)
+                _NombreFamiliaPermiso = _Fml.INVENTARIO_PARCIALIZADO.ToString
+            Case "Invp0005"
+                _DescripcionPermiso = "PODER EDITAR EL NOMBRE DEL AJUSTE DE INVENTARIO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO_PARCIALIZADO, 6)
                 _NombreFamiliaPermiso = _Fml.INVENTARIO_PARCIALIZADO.ToString
 

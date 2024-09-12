@@ -1654,15 +1654,15 @@ Namespace My.Resources
         '''
         '''CREATE TABLE [dbo].[Zw_Entidades_ProdExcluidos](
         '''	[Id]			[int] IDENTITY(1,1) NOT NULL,
-        '''	[CodEntidad]	[varchar](13) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[CodSucEntidad] [varchar](10) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Chk]			[bit] NOT NULL DEFAULT (0),
-        '''	[Codigo]		[varchar](13) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Motivo]		[varchar](200) NOT NULL DEFAULT (&apos;&apos;),
+        '''	[CodEntidad]	[varchar](13)       NOT NULL DEFAULT (&apos;&apos;),
+        '''	[CodSucEntidad] [varchar](10)       NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Chk]			[bit]               NOT NULL DEFAULT (0),
+        '''	[Codigo]		[varchar](13)       NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Motivo]		[varchar](200)      NOT NULL DEFAULT (&apos;&apos;),
         ''' CONSTRAINT [PK_Zw_Entidades_ProdExcluidos] PRIMARY KEY CLUSTERED 
         '''(
         '''	[Id] ASC
-        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALL [resto de la cadena truncado]&quot;;.
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOM [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Entidades_ProdExcluidos() As String
             Get
@@ -1961,6 +1961,29 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Zw_Format_Pag() As String
             Get
                 Return ResourceManager.GetString("Zw_Format_Pag", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_Ftp_Conexiones](
+        '''	[Id]				[int] IDENTITY(1,1) NOT NULL,
+        '''	[Tipo]				[varchar](10)		NOT NULL,
+        '''	[Usuario]			[varchar](50)		NOT NULL,
+        '''	[Clave]				[varchar](50)		NOT NULL,
+        '''	[Host]				[varchar](50)		NOT NULL,
+        '''	[Puerto]			[varchar](10)		NOT NULL,
+        '''	[Fichero]			[varchar](50)		NOT NULL,
+        '''	[Carpeta_Imagenes]	[varchar](200)		NOT NULL,
+        '''	[Carpeta_Archivos]	[varchar](200)		NOT NULL,
+        '''	[Url_public]		[varchar](100)		NOT NULL,
+        '''	[Timeout]			[int]				NOT NULL,
+        '''	[UsePassive]		[bi [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Ftp_Conexiones() As String
+            Get
+                Return ResourceManager.GetString("Zw_Ftp_Conexiones", resourceCulture)
             End Get
         End Property
         

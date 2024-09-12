@@ -785,6 +785,8 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Format_Pag
             Case "Zw_Fuentes_Conf"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Fuentes_Conf
+            Case "Zw_Ftp_Conexiones"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Ftp_Conexiones
 
             Case "Zw_Inv_Contador"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Inv_Contador

@@ -180,6 +180,9 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Format_Pag", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Fuentes_Conf", _Modificar, Lbl_Eventos)
 
+            'FTP
+            .Sb_Revisar_Tabla2(Me, "Zw_Ftp_Conexiones", _Modificar, Lbl_Eventos)
+
             'INVENTARIO
             .Sb_Revisar_Tabla2(Me, "Zw_Inv_Contador", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Inv_FotoInventario", _Modificar, Lbl_Eventos)

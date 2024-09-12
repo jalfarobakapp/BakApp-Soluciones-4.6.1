@@ -2,8 +2,6 @@
 Imports System.IO
 Imports System.Text
 Imports DevComponents.DotNetBar
-Imports System.Data.SqlClient
-Imports System.Net.WebRequestMethods
 
 'El método subirFichero recibe tres argumentos:
 
@@ -147,7 +145,8 @@ Public Class Class_FTP
             ' Para saber si el objeto existe, solicitamos la fecha de creación del mismo
             peticionFTP.Method = WebRequestMethods.Ftp.GetDateTimestamp
 
-            peticionFTP.UsePassive = False
+            peticionFTP.UsePassive = Zw_Ftp_Conexiones.UsePassive
+            peticionFTP.Timeout = Zw_Ftp_Conexiones.Timeout * 1000
 
             ' Si el objeto existe, se devolverá True
             Dim respuestaFTP As FtpWebResponse
@@ -337,16 +336,18 @@ Public Class Class_FTP
         Fm.BarraCircular.IsRunning = True
         Fm.Show()
 
-        Dim clsRequest As System.Net.FtpWebRequest
+        Dim peticionFTP As System.Net.FtpWebRequest
         Dim conexion As Net.Sockets.TcpClient
-        clsRequest = DirectCast(System.Net.WebRequest.Create(_Destino), System.Net.FtpWebRequest)
-        clsRequest.Proxy = Nothing ' Esta asignación es importantisimo con los que trabajen en windows XP ya que por defecto esta propiedad esta para ser asignado a un servidor http lo cual ocacionaria un error si deseamos conectarnos con un FTP, en windows Vista y el Seven no tube este problema.
-        clsRequest.Credentials = New System.Net.NetworkCredential(user, pass) ' Usuario y password de acceso al server FTP, si no tubiese, dejar entre comillas, osea ""
-        clsRequest.Method = System.Net.WebRequestMethods.Ftp.UploadFile
+        peticionFTP = DirectCast(System.Net.WebRequest.Create(_Destino), System.Net.FtpWebRequest)
+        peticionFTP.UsePassive = Zw_Ftp_Conexiones.UsePassive
+        peticionFTP.Timeout = Zw_Ftp_Conexiones.Timeout * 1000
+        peticionFTP.Proxy = Nothing ' Esta asignación es importantisimo con los que trabajen en windows XP ya que por defecto esta propiedad esta para ser asignado a un servidor http lo cual ocacionaria un error si deseamos conectarnos con un FTP, en windows Vista y el Seven no tube este problema.
+        peticionFTP.Credentials = New System.Net.NetworkCredential(user, pass) ' Usuario y password de acceso al server FTP, si no tubiese, dejar entre comillas, osea ""
+        peticionFTP.Method = System.Net.WebRequestMethods.Ftp.UploadFile
         Try
             Dim bFile() As Byte = System.IO.File.ReadAllBytes(_Fichero)
             Dim clsStream As System.IO.Stream =
-            clsRequest.GetRequestStream()
+            peticionFTP.GetRequestStream()
             clsStream.Write(bFile, 0, bFile.Length)
             clsStream.Close()
             clsStream.Dispose()

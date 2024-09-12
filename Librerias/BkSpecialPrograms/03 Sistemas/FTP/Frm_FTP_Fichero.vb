@@ -314,6 +314,8 @@ Public Class Frm_FTP_Fichero
 
                 Dim _Ftp As New Class_FTP(_Dir, Trim(Txt_Usuario.Text), Trim(Txt_Clave.Text))
 
+                _Ftp.Zw_Ftp_Conexiones = Ftp.Zw_Ftp_Conexiones
+
                 If _Ftp.Fx_Verificar_Conexion_FTP(Me, Txt_Host.Text, Txt_Puerto.Text) Then
 
                     Sb_Trabajo_FTP(True)
