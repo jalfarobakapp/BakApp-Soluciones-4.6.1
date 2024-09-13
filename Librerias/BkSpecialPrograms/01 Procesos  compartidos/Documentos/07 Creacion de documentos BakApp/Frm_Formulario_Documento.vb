@@ -14816,13 +14816,19 @@ Public Class Frm_Formulario_Documento
 
                 Dim _TotalNetoListaSuperior As Double = _Cl_DocListaSuperior.ObtenerSumaTotales
 
-                'If _TblEncabezado.Rows(0).Item("TotalNetoDoc") Then
+                Dim _Msj As LsValiciones.Mensajes
 
-                'End If
+                _Msj = _Cl_DocListaSuperior.Fx_RevisarVentasDelMes(_TblEncabezado.Rows(0).Item("CodEntidad"),
+                                                                   400000, 2, _TblEncabezado.Rows(0).Item("TotalNetoDoc"))
 
-                MessageBoxEx.Show(Me, "Puede pasar a una lista con mejor precio." & vbCrLf &
+                If _Msj.EsCorrecto Then
+
+                    MessageBoxEx.Show(Me, "Puede pasar a una lista con mejor precio." & vbCrLf &
                                   "La venta en la lista superior seria de " & FormatCurrency(_TotalNetoListaSuperior, 0),
                                   "Lista Superior", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                End If
+
             End If
 
             'VALIDACION FINCRED

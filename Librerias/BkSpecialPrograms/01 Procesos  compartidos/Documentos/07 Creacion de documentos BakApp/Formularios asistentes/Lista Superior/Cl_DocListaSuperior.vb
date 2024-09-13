@@ -114,6 +114,46 @@ Public Class Cl_DocListaSuperior
         Return suma
     End Function
 
+    Public Function Fx_RevisarVentasDelMes(_Endo As String, _VentaMinima As Double, _Meses As Integer, _VentaEnCurso As Double) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            Consulta_sql = My.Resources.Recuros_ListaSuperior.RevisarSumpliminetoDeMinoristaMayorista
+            Consulta_sql = Replace(Consulta_sql, "{VentaMinima}", _VentaMinima)
+            Consulta_sql = Replace(Consulta_sql, "{Endo}", _Endo)
+            Consulta_sql = Replace(Consulta_sql, "{Meses}", _Meses)
+            Consulta_sql = Replace(Consulta_sql, "{VentaEnCurso}", _VentaEnCurso)
+
+            Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
+
+            Dim _Row As DataRow = _Ds.Tables(3).Rows(0)
+            Dim _Cumple As String = _Row.Item("Cumple")
+
+            If _Cumple = "Cumple" Then
+                _Mensaje.EsCorrecto = True
+                _Mensaje.Detalle = "Revisar minorista mayorista"
+                _Mensaje.Mensaje = "Cliente cumple con pertenecer a la lista superior"
+                _Mensaje.Icono = MessageBoxIcon.Information
+            Else
+                _Mensaje.EsCorrecto = False
+                _Mensaje.Detalle = "Revisar minorista mayorista"
+                _Mensaje.Mensaje = "Cliente no cumple con pertenecer a la lista superior"
+                _Mensaje.Icono = MessageBoxIcon.Warning
+            End If
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Detalle = "Revisar minorista mayorista"
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Error
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
 End Class
 
 Namespace DocumentoListaSuperior

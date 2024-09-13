@@ -425,7 +425,7 @@
       <DependentUpon>Recursos_Kardex.resx</DependentUpon>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\05 Cambio Fecha Vencimientos\Cl_CambiarFechaVencimiento.vb" />
-    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Cl_DocListaSuperior.vb" />
+    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Lista Superior\Cl_DocListaSuperior.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Cl_Documento.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Cantidad Stock X Bodega\Frm_Formulario_Cantidad_Stock_X_Bodega.Designer.vb">
       <DependentUpon>Frm_Formulario_Cantidad_Stock_X_Bodega.vb</DependentUpon>
@@ -487,6 +487,11 @@
     </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Levantar Productos Masivamente\Frm_Impor_Prod_Masivamente.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Lista Superior\Recursos\Recuros_ListaSuperior.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Recuros_ListaSuperior.resx</DependentUpon>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Permisos Asociados\Cl_Permisos_Asociados.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Reservar numero OCC\Clas_Imprimir_Reserva_OCC.vb" />
@@ -4563,6 +4568,11 @@
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Levantar Productos Masivamente\Frm_Impor_Prod_Masivamente.resx">
       <DependentUpon>Frm_Impor_Prod_Masivamente.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Lista Superior\Recursos\Recuros_ListaSuperior.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Recuros_ListaSuperior.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Retiradores de mercaderia\Frm_Retirador_Mercaderia.resx">
       <DependentUpon>Frm_Retirador_Mercaderia.vb</DependentUpon>
     </EmbeddedResource>
@@ -7962,6 +7972,7 @@
     <None Include="01 Procesos  compartidos\Documentos\11 Formatos de documentos\Formato de documento\Configuración de formato\Recursos\Sql\SQLQuery Traer Prod_Sol_Bodega.sql" />
     <None Include="01 Procesos  compartidos\Documentos\02 Ver Documento\Recursos\Sql\Traer Documento Random.sql" />
     <None Include="01 Procesos  compartidos\Documentos\02 Ver Documento\Recursos\Sql\Traer Documento Bakapp.sql" />
+    <Content Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Lista Superior\Recursos\Sql\RevisarSumpliminetoDeMinoristaMayorista.sql" />
     <Content Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Recursos\Sql\SQLQuery Estado de avance de envios de DTE vs Trackid.sql" />
     <Content Include="01 Procesos  compartidos\Documentos\10 DTE\Recursos\SQLQuery_Genera_Encabezado_DTE_RdBkBOLETA.xml" />
     <Content Include="01 Procesos  compartidos\Entidades\SQL\Informacion_Entidad.txt" />
