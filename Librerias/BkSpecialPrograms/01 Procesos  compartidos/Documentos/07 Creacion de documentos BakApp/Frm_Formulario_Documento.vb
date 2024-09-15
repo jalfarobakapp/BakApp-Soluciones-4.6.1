@@ -1,7 +1,6 @@
 ﻿Imports System.IO
 Imports System.Threading
 Imports BkSpecialPrograms.Bk_Comporamiento_UdMedidas
-Imports BkSpecialPrograms.Bk_GenDoc2DTE
 Imports BkSpecialPrograms.DocumentoListaSuperior
 Imports DevComponents.DotNetBar
 
@@ -497,7 +496,7 @@ Public Class Frm_Formulario_Documento
         If _Post_Venta Then
 
             Me.Text = "POST-VENTA BAKAPP"
-            Lbl_Tido.Text = Me.Text
+            Lbl_InfoVtaAcumMes.Text = Me.Text
             Btn_Cambiar_Tipo_Documento.Visible = True
             Btn_Revisar_Situacion_Comercial.Visible = True
 
@@ -592,19 +591,19 @@ Public Class Frm_Formulario_Documento
         If Not _Post_Venta Then
 
             Me.Text = _Sql.Fx_Trae_Dato("TABTIDO", "NOTIDO", "TIDO = '" & _Tido & "'").ToString.Trim
-            Lbl_Tido.Text = Me.Text
+            Lbl_InfoVtaAcumMes.Text = Me.Text
 
             If _Es_Ajuste Then
                 Me.Text += Space(1) & "(AJUSTE)"
-                Lbl_Tido.Text += Space(1) & "(AJUSTE)"
-                Lbl_Tido.ForeColor = Color.Yellow
+                Lbl_InfoVtaAcumMes.Text += Space(1) & "(AJUSTE)"
+                Lbl_InfoVtaAcumMes.ForeColor = Color.Yellow
             End If
 
             If _SubTido = "IMP" Then Me.Text += " PROVEEDOR EXTRANJERO"
 
         Else
 
-            Lbl_Tido.Text = "Post-Venta"
+            Lbl_InfoVtaAcumMes.Text = "Post-Venta"
 
         End If
 
@@ -1116,6 +1115,7 @@ Public Class Frm_Formulario_Documento
         _Patente_rvm = String.Empty
 
         _Cl_DocListaSuperior = New Cl_DocListaSuperior
+        Lbl_InfoVtaAcumMes.Visible = False
 
         Lbl_NroDecimales.Text = FormatNumber(0, _DecimalesGl)
 
@@ -1209,19 +1209,19 @@ Public Class Frm_Formulario_Documento
         If Not _Post_Venta Then
 
             Me.Text = _Sql.Fx_Trae_Dato("TABTIDO", "NOTIDO", "TIDO = '" & _Tido & "'").ToString.Trim
-            Lbl_Tido.Text = Me.Text
+            Lbl_InfoVtaAcumMes.Text = Me.Text
 
             If _Es_Ajuste Then
                 Me.Text += Space(1) & "(AJUSTE)"
-                Lbl_Tido.Text += Space(1) & "(AJUSTE)"
-                Lbl_Tido.ForeColor = Color.Yellow
+                Lbl_InfoVtaAcumMes.Text += Space(1) & "(AJUSTE)"
+                Lbl_InfoVtaAcumMes.ForeColor = Color.Yellow
             End If
 
             If _SubTido = "IMP" Then Me.Text += " PROVEEDOR EXTRANJERO"
 
         Else
 
-            Lbl_Tido.Text = "Post-Venta"
+            Lbl_InfoVtaAcumMes.Text = "Post-Venta"
 
         End If
 
@@ -4316,10 +4316,6 @@ Public Class Frm_Formulario_Documento
         Me.ActiveControl = Grilla_Detalle
         Grilla_Detalle.CurrentCell = Grilla_Detalle.Rows(0).Cells("Codigo")
 
-        If _Cl_DocListaSuperior.UsarVencListaPrecios Then
-            _Cl_DocListaSuperior.ListaEntidad = _TblEncabezado.Rows(0).Item("ListaPrecios")
-        End If
-
     End Sub
 
     Private Sub BtnSalir_Click(sender As System.Object, e As System.EventArgs)
@@ -7382,7 +7378,8 @@ Public Class Frm_Formulario_Documento
             _Cl_DocListaSuperior.Sb_EditarRegistro(_Fila.Index,
                                                    _Fila.Cells("Cantidad").Value,
                                                    _Fila.Cells("CantUd1").Value,
-                                                   _Fila.Cells("CantUd2").Value)
+                                                   _Fila.Cells("CantUd2").Value,
+                                                   _Fila.Cells("Precio").Value)
         End If
 
         If _Revisando_Situacion_Comercial Then
@@ -8246,6 +8243,8 @@ Public Class Frm_Formulario_Documento
 
     Private Sub Grilla_Detalle_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs)
 
+        Dim _DatosDeGrillaProcesados As Boolean = False
+
         Try
 
             Dim _Cabeza = Grilla_Detalle.Columns(Grilla_Detalle.CurrentCell.ColumnIndex).Name
@@ -8404,11 +8403,11 @@ Public Class Frm_Formulario_Documento
                                         String.IsNullOrWhiteSpace(_TblEncabezado.Rows(0).Item("CodTipoVenta")) Then
 
                                     MessageBoxEx.Show(Me, "Los productos a vender solo deben ser de un tipo especifico de venta" & vbCrLf &
-                                                      "a continuación deberá seleccionar el tipo.", "Tipo de venta", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                                                      "a continuación deberá seleccionar el tipo.", "Tipo de venta", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, True)
 
                                     Dim _Mensaje As LsValiciones.Mensajes = Fx_SolicitarTipoVenta()
 
-                                    MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                                    MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono, MessageBoxDefaultButton.Button1, True)
 
                                     If Not _Mensaje.EsCorrecto Then Return
 
@@ -8503,12 +8502,15 @@ Public Class Frm_Formulario_Documento
                                 For Each _Fl As DataGridViewRow In Grilla_Detalle.Rows
                                     _Fl.Cells("Tipo_Cambio").Value = _Tipo_Cambio
                                     Sb_Procesar_Datos_De_Grilla(_Fl, "Cantidad", True, True)
+
                                 Next
 
                             Else
                                 _Fila.Cells("Tipo_Cambio").Value = _Tipo_Cambio
                                 Sb_Procesar_Datos_De_Grilla(_Fila, "Cantidad", True, True)
                             End If
+
+                            _DatosDeGrillaProcesados = True
 
                         Case "Cantidad"
 
@@ -8563,6 +8565,7 @@ Public Class Frm_Formulario_Documento
                                 If _Aceptar Then
                                     _Fila.Cells("Cantidad").Value = _Cantidad
                                     Sb_Procesar_Datos_De_Grilla(_Fila, "Cantidad", True, True)
+                                    _DatosDeGrillaProcesados = True
                                 End If
 
                             Else
@@ -8672,6 +8675,7 @@ Public Class Frm_Formulario_Documento
 
 
                                     Sb_Procesar_Datos_De_Grilla(_Fila, "Cantidad", True, True)
+                                    _DatosDeGrillaProcesados = True
 
                                     Dim _Cantidad = NuloPorNro(_Fila.Cells("Cantidad").Value, 0)
 
@@ -8752,6 +8756,8 @@ Public Class Frm_Formulario_Documento
                                         If CBool(_Total_Descuento) Then
                                             Sb_Procesar_Datos_De_Grilla(_Fila, "DescuentoValor", False, False)
                                         End If
+
+                                        _DatosDeGrillaProcesados = True
 
                                         '' Aca Incorporar funcion para OFERTAS
 
@@ -8850,6 +8856,7 @@ Public Class Frm_Formulario_Documento
 
                                         If _Aceptar Then
                                             Sb_Procesar_Datos_De_Grilla(_Fila, "Precio", False, False)
+                                            _DatosDeGrillaProcesados = True
                                         End If
 
                                     Else
@@ -8972,6 +8979,7 @@ Public Class Frm_Formulario_Documento
                                         End If
 
                                         Sb_Procesar_Datos_De_Grilla(_Fila, "DescuentoValor", True, True)
+                                        _DatosDeGrillaProcesados = True
 
                                         If _Tipo_Documento = csGlobales.Enum_Tipo_Documento.Venta Then
 
@@ -9099,6 +9107,7 @@ Public Class Frm_Formulario_Documento
                                             _Fila.Cells("ValNetoLinea").Value = _Valor_Recargo
                                             _Fila.Cells("Recargo_Distribuido").Value = _Recargo_Distribuido
                                             Sb_Procesar_Datos_De_Grilla(_Fila, _Cabeza, False, False, True)
+                                            _DatosDeGrillaProcesados = True
                                         End If
 
                                     Else
@@ -9371,6 +9380,7 @@ Public Class Frm_Formulario_Documento
                                                 Call Btn_Cpr_Eliminar_Producto_Click(Nothing, Nothing)
                                             Else
                                                 Sb_Eliminar_Fila(_Fila, True)
+                                                _DatosDeGrillaProcesados = True
                                             End If
 
                                             Sb_Recalcular_Descuentos(_Fila, False, False)
@@ -9440,6 +9450,7 @@ Public Class Frm_Formulario_Documento
                                         Call Btn_Cpr_Eliminar_Producto_Click(Nothing, Nothing)
                                     Else
                                         Sb_Eliminar_Fila(_Fila, True)
+                                        _DatosDeGrillaProcesados = True
                                     End If
 
                                 End If
@@ -9456,7 +9467,10 @@ Public Class Frm_Formulario_Documento
             End Select
 
         Catch ex As Exception
-
+        Finally
+            If _DatosDeGrillaProcesados Then
+                Sb_RevisarListaSuperior()
+            End If
         End Try
 
     End Sub
@@ -9849,6 +9863,9 @@ Public Class Frm_Formulario_Documento
 
         If _Cl_DocListaSuperior.UsarVencListaPrecios Then
             _Cl_DocListaSuperior.Sb_EliminarRegistro(_Index)
+            If Grilla_Detalle.RowCount = 0 Then
+                _Cl_DocListaSuperior.Sb_EliminarTodos()
+            End If
         End If
 
         Sb_Limpiar_Lista_CodBarras()
@@ -10996,7 +11013,13 @@ Public Class Frm_Formulario_Documento
 
                                             If _Permitir Then
 
-                                                Sb_Nueva_Linea(_TblEncabezado.Rows(0).Item("ListaPrecios"))
+                                                Dim _CodLista As String = _TblEncabezado.Rows(0).Item("ListaPrecios")
+
+                                                If _Cl_DocListaSuperior.ListaSuperiorUtilizada Then
+                                                    _CodLista = _TblDetalle.Rows(_TblDetalle.Rows.Count - 1).Item("CodLista")
+                                                End If
+
+                                                Sb_Nueva_Linea(_CodLista)
                                                 .CurrentCell = .Rows(_Fila + 1).Cells("Codigo")
 
                                             End If
@@ -12102,7 +12125,7 @@ Public Class Frm_Formulario_Documento
             Dim _RowTido As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             Me.Text = Trim(_RowTido.Item("NOTIDO"))
-            Lbl_Tido.Text = Me.Text
+            Lbl_InfoVtaAcumMes.Text = Me.Text
 
         End If
 
@@ -12874,7 +12897,7 @@ Public Class Frm_Formulario_Documento
 
                 If Not _Post_Venta Then
                     Me.Text = _Sql.Fx_Trae_Dato("TABTIDO", "NOTIDO", "TIDO = '" & _Tido & "'").ToString.Trim
-                    Lbl_Tido.Text = Me.Text
+                    Lbl_InfoVtaAcumMes.Text = Me.Text
                 End If
 
                 Me.ActiveControl = Grilla_Detalle
@@ -13729,7 +13752,71 @@ Public Class Frm_Formulario_Documento
                     Dim _No_Puede_Acceder As Boolean
 
                     If Not _Documento_Interno Then
+
+                        If _Cl_DocListaSuperior.UsarVencListaPrecios Then
+
+                            _Cl_DocListaSuperior.ListaEntidad = _TblEncabezado.Rows(0).Item("ListaPrecios")
+
+                            Dim _FechaVencLista As Date = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades",
+                                                                            "FechaVencLista",
+                                                                            "CodEntidad = '" & _RowEntidad.Item("KOEN") & "' And CodSucEntidad = '" & _RowEntidad.Item("SUEN") & "'")
+
+                            If _FechaVencLista < FechaDelServidor() Then
+
+                                Dim _ListaInferior As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_ListaPreGlobal",
+                                                                                 "ListaInferior",
+                                                                                 "Lista = '" & _Cl_DocListaSuperior.ListaEntidad & "'")
+
+                                MessageBoxEx.Show(Me, "La fecha de duración para la lista de precios del cliente ha caducado" & vbCrLf &
+                                                  "La lista ahora sera : " & _ListaInferior, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+
+                                _TblEncabezado.Rows(0).Item("ListaPrecios") = _ListaInferior
+                                _Cl_DocListaSuperior.ListaEntidad = _ListaInferior
+                                _RowEntidad.Item("LVEN") = "TABPP" & _ListaInferior
+                                _TblDetalle.Rows(0).Item("CodLista") = _ListaInferior
+
+                            End If
+
+                        End If
+
                         Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, True,, _Cambiar_Vendedor, _No_Puede_Acceder)
+
+                        If _Cl_DocListaSuperior.UsarVencListaPrecios Then
+
+                            Lbl_InfoVtaAcumMes.Visible = True
+
+                            Dim _Endo As String = _TblEncabezado.Rows(0).Item("CodEntidad")
+
+                            Dim _FechaActual As Date = FechaDelServidor()
+                            Dim _PrimerDiaDelMes As Date = Primerdiadelmes(_FechaActual)
+                            Dim _UltimoDiaDelMes As Date = ultimodiadelmes(_FechaActual)
+
+                            Consulta_sql = "SELECT  CASE" & vbCrLf &
+                                           "WHEN TIDO = 'NVV' THEN SUM(PPPRNE * (CAPRCO1 - (CAPREX1 + CAPRAD1)))" & vbCrLf &
+                                           "WHEN TIDO = 'NCV' THEN SUM(VANELI) * -1" & vbCrLf &
+                                           "ELSE SUM(VANELI)" & vbCrLf &
+                                           "END AS VentaMesEnCurso" & vbCrLf &
+                                           "INTO #MesEnCurso" & vbCrLf &
+                                           "FROM MAEDDO " & vbCrLf &
+                                           "WHERE ENDO = '" & _Endo & "' " & vbCrLf &
+                                           "AND FEEMLI between '" & Format(_PrimerDiaDelMes, "yyyyMMdd") & "' And '" & Format(_UltimoDiaDelMes, "yyyyMMdd") & "'" & vbCrLf &
+                                           "AND TIDO IN ('NVV', 'FCV', 'NCV')" & vbCrLf &
+                                           "GROUP BY YEAR(FEEMLI), MONTH(FEEMLI), TIDO;" & vbCrLf &
+                                           "SELECT ISNULL(SUM(VentaMesEnCurso),0) AS 'VentaMesEnCurso'" & vbCrLf &
+                                           "FROM #MesEnCurso;" & vbCrLf &
+                                           "DROP TABLE #MesEnCurso;"
+
+                            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                            Dim _VentaMesEnCurso As Double = NuloPorNro(_Row.Item("VentaMesEnCurso"), 0)
+
+                            Lbl_InfoVtaAcumMes.Text = "Vta.Acumulada Mes: " & FormatNumber(_VentaMesEnCurso, 0)
+
+                            Me.Refresh()
+
+                        End If
+
+
                     End If
 
                     If _Tido = "OCC" Or _Tido = "GRC" Or _Tido = "FCC" Then
@@ -14823,82 +14910,6 @@ Public Class Frm_Formulario_Documento
             If Not Fx_Revisar_Fincred() Then
                 Return
             End If
-
-
-            If _Cl_DocListaSuperior.UsarVencListaPrecios Then
-
-                Dim _TotalNetoListaSuperior As Double = _Cl_DocListaSuperior.ObtenerSumaTotales
-
-                Dim _Msj As LsValiciones.Mensajes
-
-                _Msj = _Cl_DocListaSuperior.Fx_RevisarVentasDelMes(_TblEncabezado.Rows(0).Item("CodEntidad"), _TotalNetoListaSuperior)
-
-                If _Msj.EsCorrecto Then
-
-                    If MessageBoxEx.Show(Me, "Puede pasar a una lista con mejor precio." & vbCrLf &
-                                  "Venta de mes en curso : " & FormatCurrency(_Msj.Tag, 0) & vbCrLf &
-                                  "Venta lista superior seria de " & FormatCurrency(_TotalNetoListaSuperior, 0) & vbCrLf &
-                                  "Total de eventual venta mensual: " & FormatCurrency(_Msj.Tag + _TotalNetoListaSuperior, 0),
-                                  "Lista Superior", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
-
-                        For Each _Fl As DataGridViewRow In Grilla_Detalle.Rows
-
-                            Dim _Id = _Fl.Index
-                            Dim _Registro As Cl_LsDetalle = _Cl_DocListaSuperior.LsDetalleLpSuperior.FirstOrDefault(Function(r) r.Id = _Id)
-
-                            If _Registro IsNot Nothing Then
-
-                                _Fl.Cells("CodLista").Value = _Registro.Lista
-                                _Fl.Cells("PrecioNetoUdLista").Value = _Registro.PrecioNetoUdLista
-                                _Fl.Cells("PrecioBrutoUdLista").Value = _Registro.PrecioBrutoUdLista
-                                _Fl.Cells("Precio").Value = _Registro.Precio
-                                Sb_Procesar_Datos_De_Grilla(_Fl, "Precio", False, False)
-
-                            End If
-
-                            _Cl_DocListaSuperior.ListaSuperiorUtilizada = True
-
-                        Next
-
-                        Return
-
-                    End If
-
-                Else
-
-                    If _Cl_DocListaSuperior.ListaSuperiorUtilizada Then
-
-                        MessageBoxEx.Show(Me, _Msj.Mensaje & vbCrLf &
-                                          "Volvera a los precios que corresponden a su lista", _Msj.Detalle, MessageBoxButtons.OK, _Msj.Icono)
-
-                        For Each _Fl As DataGridViewRow In Grilla_Detalle.Rows
-
-                            Dim _Id = _Fl.Index
-                            Dim _Registro As Cl_LsDetalle = _Cl_DocListaSuperior.LsDetalleLpEntidad.FirstOrDefault(Function(r) r.Id = _Id)
-
-                            If _Registro IsNot Nothing Then
-
-                                _Fl.Cells("CodLista").Value = _Registro.Lista
-                                _Fl.Cells("PrecioNetoUdLista").Value = _Registro.PrecioNetoUdLista
-                                _Fl.Cells("PrecioBrutoUdLista").Value = _Registro.PrecioBrutoUdLista
-                                _Fl.Cells("Precio").Value = _Registro.Precio
-                                Sb_Procesar_Datos_De_Grilla(_Fl, "Precio", False, False)
-
-                            End If
-
-                            _Cl_DocListaSuperior.ListaSuperiorUtilizada = False
-
-                        Next
-
-                        Return
-
-                    End If
-
-                End If
-
-            End If
-
-
 
 
             If Not Fx_Revisar_MinimoCompra() Then
@@ -20693,7 +20704,7 @@ Public Class Frm_Formulario_Documento
 
             _Bloquear_Edicion_Detalle = True
 
-            Lbl_Tido.Text = Me.Text
+            Lbl_InfoVtaAcumMes.Text = Me.Text
             Me.Text += Space(2) & ",DOCUMENTO EN ESTADO PENDIENTE PERMISO: " & _NroRemota & " - " & UCase(_Nombre_Permiso)
 
 
@@ -23520,7 +23531,7 @@ Public Class Frm_Formulario_Documento
 
             _Bloquear_Edicion_Detalle = True
 
-            Lbl_Tido.Text = Me.Text
+            Lbl_InfoVtaAcumMes.Text = Me.Text
             Me.Text += Space(2) & ",SOLICITUD DE COMPRA NRO: " & _Numero
             _TblEncabezado.Rows(0).Item("Vizado") = True
 
@@ -23768,7 +23779,7 @@ Public Class Frm_Formulario_Documento
 
         _Bloquear_Edicion_Detalle = True
 
-        Lbl_Tido.Text = Me.Text
+        Lbl_InfoVtaAcumMes.Text = Me.Text
         Me.Text += Space(2) & ",DOCUMENTO EN ESTADO PENDIENTE"
 
         _Revisando_Situacion_Comercial = False
@@ -25136,7 +25147,7 @@ Public Class Frm_Formulario_Documento
                     ToastNotification.Show(Me, "DOCUMENTO RECUPERADO CORRECTAMENTE", Btn_Revisar_Doc_Stand_By.Image,
                                           2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
 
-                    Lbl_Tido.Text = Me.Text
+                    Lbl_InfoVtaAcumMes.Text = Me.Text
                     Me.Text += Space(1) & " - (Utilizando número reservado)"
 
                     Grilla_Detalle.Focus()
@@ -27537,11 +27548,97 @@ Public Class Frm_Formulario_Documento
 
     End Function
 
-    Private Function Fx_CargarProductoEnListaSuperior()
+    Sub Sb_RevisarListaSuperior()
 
+        If _Cl_DocListaSuperior.UsarVencListaPrecios Then
 
+            Dim _TotalNetoListaSuperior As Double = _Cl_DocListaSuperior.ObtenerSumaTotales
 
-    End Function
+            Dim _Msj As LsValiciones.Mensajes
+
+            _Msj = _Cl_DocListaSuperior.Fx_RevisarVentasDelMes(_TblEncabezado.Rows(0).Item("CodEntidad"), _TotalNetoListaSuperior)
+
+            If _Msj.EsCorrecto Then
+
+                If _Cl_DocListaSuperior.ListaSuperiorUtilizada Then
+                    Return
+                End If
+
+                If MessageBoxEx.Show(Me, "Puede pasar a una lista con mejor precio." & vbCrLf &
+                                  "Venta de mes en curso : " & FormatCurrency(_Msj.Tag, 0) & vbCrLf &
+                                  "Venta lista superior seria de " & FormatCurrency(_TotalNetoListaSuperior, 0) & vbCrLf &
+                                  "Total de eventual venta mensual: " & FormatCurrency(_Msj.Tag + _TotalNetoListaSuperior, 0),
+                                  "Lista Superior", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
+
+                    For Each _Fl As DataGridViewRow In Grilla_Detalle.Rows
+
+                        Dim _Id = _Fl.Index
+                        Dim _Registro As Cl_LsDetalle = _Cl_DocListaSuperior.LsDetalleLpSuperior.FirstOrDefault(Function(r) r.Id = _Id)
+
+                        If _Registro IsNot Nothing Then
+
+                            _Fl.Cells("CodLista").Value = _Registro.Lista
+                            _Fl.Cells("PrecioNetoUdLista").Value = _Registro.PrecioNetoUdLista
+                            _Fl.Cells("PrecioBrutoUdLista").Value = _Registro.PrecioBrutoUdLista
+                            _Fl.Cells("Precio").Value = _Registro.Precio
+                            Sb_Procesar_Datos_De_Grilla(_Fl, "Precio", False, False)
+
+                        End If
+
+                        _Cl_DocListaSuperior.ListaSuperiorUtilizada = True
+
+                    Next
+
+                    Return
+
+                End If
+
+            Else
+
+                If _Cl_DocListaSuperior.ListaSuperiorUtilizada Then
+
+                    MessageBoxEx.Show(Me, _Msj.Mensaje & vbCrLf &
+                                      "Se restablecerán los precios correspondientes a su lista : " & _Cl_DocListaSuperior.ListaEntidad,
+                                      _Msj.Detalle, MessageBoxButtons.OK, _Msj.Icono)
+
+                    For Each _Fl As DataGridViewRow In Grilla_Detalle.Rows
+
+                        Dim _Id = _Fl.Index
+                        Dim _Registro As Cl_LsDetalle
+
+                        _Registro = _Cl_DocListaSuperior.LsDetalleLpEntidad.FirstOrDefault(Function(r) r.Id = _Id)
+
+                        If _Registro IsNot Nothing Then
+
+                            _Fl.Cells("CodLista").Value = _Registro.Lista
+                            _Fl.Cells("PrecioNetoUdLista").Value = _Registro.PrecioNetoUdLista
+                            _Fl.Cells("PrecioBrutoUdLista").Value = _Registro.PrecioBrutoUdLista
+                            _Fl.Cells("Precio").Value = _Registro.PrecioNetoUdLista
+                            Sb_Procesar_Datos_De_Grilla(_Fl, "Precio", False, False)
+
+                        End If
+
+                        _Registro = _Cl_DocListaSuperior.LsDetalleLpSuperior.FirstOrDefault(Function(r) r.Id = _Id)
+
+                        If _Registro IsNot Nothing Then
+
+                            _Registro.Precio = _Registro.PrecioNetoUdLista
+
+                        End If
+
+                        _Cl_DocListaSuperior.ListaSuperiorUtilizada = False
+
+                    Next
+
+                    Return
+
+                End If
+
+            End If
+
+        End If
+
+    End Sub
 
 End Class
 

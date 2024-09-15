@@ -132,7 +132,11 @@ Public Class Cl_DocListaSuperior
 
     End Function
 
-    Public Sub Sb_EditarRegistro(_Id As Integer, _Cantidad As Double, _CantUd1 As Double, _CantUd2 As Double)
+    Public Sub Sb_EditarRegistro(_Id As Integer,
+                                 _Cantidad As Double,
+                                 _CantUd1 As Double,
+                                 _CantUd2 As Double,
+                                 _Precio As Double)
 
         Dim _Registro As Cl_LsDetalle
 
@@ -141,10 +145,17 @@ Public Class Cl_DocListaSuperior
         If _Registro IsNot Nothing Then
 
             With _Registro
+
                 .Cantidad = _Cantidad
                 .CantUd1 = _CantUd1
                 .CantUd2 = _CantUd2
+
+                If ListaSuperiorUtilizada Then
+                    .Precio = _Precio
+                End If
+
                 .Total = _Cantidad * .Precio
+
             End With
 
         End If
@@ -154,10 +165,17 @@ Public Class Cl_DocListaSuperior
         If _Registro IsNot Nothing Then
 
             With _Registro
+
                 .Cantidad = _Cantidad
                 .CantUd1 = _CantUd1
                 .CantUd2 = _CantUd2
+
+                If Not ListaSuperiorUtilizada Then
+                    .Precio = _Precio
+                End If
+
                 .Total = _Cantidad * .Precio
+
             End With
 
         End If
@@ -253,23 +271,6 @@ Public Class Cl_DocListaSuperior
 
         Try
 
-            If LsDetalleLpSuperior.Count = 0 Then
-                _Mensaje.EsCorrecto = False
-                _Mensaje.Detalle = "Revisar minorista mayorista"
-                _Mensaje.Mensaje = "No se ha ingresado ningun producto"
-                _Mensaje.Icono = MessageBoxIcon.Warning
-                Return _Mensaje
-            End If
-
-            If LsDetalleLpSuperior.Count > 0 Then
-
-                Dim _ListaSuperior = LsDetalleLpSuperior(0).Lista
-                Consulta_sql = "SELECT * FROM " & _Global_BaseBk & "Zw_ListaPreGlobal WHERE Lista = '" & _ListaSuperior & "'"
-                _Row = _Sql.Fx_Get_DataRow(Consulta_sql)
-                _VentaMinVencLP = _Row.Item("VentaMinVencLP")
-
-            End If
-
             Dim _FechaActual As Date = FechaDelServidor()
             Dim _PrimerDiaDelMes As Date = Primerdiadelmes(_FechaActual)
             Dim _UltimoDiaDelMes As Date = ultimodiadelmes(_FechaActual)
@@ -293,7 +294,27 @@ Public Class Cl_DocListaSuperior
 
             Dim _VentaMesEnCurso As Double = NuloPorNro(_Row.Item("VentaMesEnCurso"), 0)
 
-            If _VentaEnCursoLsup + _VentaMesEnCurso >= _VentaMinVencLP Then
+            If LsDetalleLpSuperior.Count = 0 Then
+                _Mensaje.EsCorrecto = False
+                _Mensaje.Detalle = "Revisar minorista mayorista"
+                _Mensaje.Mensaje = "No se ha ingresado ningun producto"
+                _Mensaje.Icono = MessageBoxIcon.Warning
+                _Mensaje.Tag = _VentaMesEnCurso
+                Return _Mensaje
+            End If
+
+            If LsDetalleLpSuperior.Count > 0 Then
+
+                Dim _ListaSuperior = LsDetalleLpSuperior(0).Lista
+                Consulta_sql = "SELECT * FROM " & _Global_BaseBk & "Zw_ListaPreGlobal WHERE Lista = '" & _ListaSuperior & "'"
+                _Row = _Sql.Fx_Get_DataRow(Consulta_sql)
+                _VentaMinVencLP = _Row.Item("VentaMinVencLP")
+
+            End If
+
+            Dim _VtaMesCursoMasVtaLsup As Double = _VentaEnCursoLsup + _VentaMesEnCurso
+
+            If _VtaMesCursoMasVtaLsup >= _VentaMinVencLP Then
                 _Mensaje.EsCorrecto = True
                 _Mensaje.Detalle = "Revisar minorista mayorista"
                 _Mensaje.Mensaje = "Cliente cumple con pertenecer a la lista superior"
@@ -303,6 +324,7 @@ Public Class Cl_DocListaSuperior
                 _Mensaje.EsCorrecto = False
                 _Mensaje.Detalle = "Revisar minorista mayorista"
                 _Mensaje.Mensaje = "Cliente no cumple con pertenecer a la lista superior"
+                _Mensaje.Tag = _VentaMesEnCurso
                 _Mensaje.Icono = MessageBoxIcon.Warning
             End If
 
