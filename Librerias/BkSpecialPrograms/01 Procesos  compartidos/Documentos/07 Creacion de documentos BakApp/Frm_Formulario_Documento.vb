@@ -5759,8 +5759,9 @@ Public Class Frm_Formulario_Documento
         LbllBrutoLinea.Text = FormatNumber(0, 0)
         LblListaLinea.Text = _ListaPrecios
 
+
         'Agregar Lista Superior
-        If _Cl_DocListaSuperior.UsarVencListaPrecios Then
+        If _Cl_DocListaSuperior.UsarVencListaPrecios And Not _Revisar_Notificacion_Automatica_Remota Then
             _Cl_DocListaSuperior.Sb_Insertar_NuevaLineaLpEntidad(_Fila.Index, _Codigo, _Cl_DocListaSuperior.ListaEntidad, _UnTrans, _Impuestos, _Valor_desde_Lista)
             _Cl_DocListaSuperior.Sb_Insertar_NuevaLineaLpSuperior(_Fila.Index, _Codigo, _Cl_DocListaSuperior.ListaEntidad, _UnTrans, _Impuestos, _Valor_desde_Lista)
         End If
@@ -13753,69 +13754,11 @@ Public Class Frm_Formulario_Documento
 
                     If Not _Documento_Interno Then
 
-                        If _Cl_DocListaSuperior.UsarVencListaPrecios Then
-
-                            _Cl_DocListaSuperior.ListaEntidad = _TblEncabezado.Rows(0).Item("ListaPrecios")
-
-                            Dim _FechaVencLista As Date = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades",
-                                                                            "FechaVencLista",
-                                                                            "CodEntidad = '" & _RowEntidad.Item("KOEN") & "' And CodSucEntidad = '" & _RowEntidad.Item("SUEN") & "'")
-
-                            If _FechaVencLista < FechaDelServidor() Then
-
-                                Dim _ListaInferior As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_ListaPreGlobal",
-                                                                                 "ListaInferior",
-                                                                                 "Lista = '" & _Cl_DocListaSuperior.ListaEntidad & "'")
-
-                                MessageBoxEx.Show(Me, "La fecha de duración para la lista de precios del cliente ha caducado" & vbCrLf &
-                                                  "La lista ahora sera : " & _ListaInferior, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-
-                                _TblEncabezado.Rows(0).Item("ListaPrecios") = _ListaInferior
-                                _Cl_DocListaSuperior.ListaEntidad = _ListaInferior
-                                _RowEntidad.Item("LVEN") = "TABPP" & _ListaInferior
-                                _TblDetalle.Rows(0).Item("CodLista") = _ListaInferior
-
-                            End If
-
-                        End If
+                        Sb_RevListaSuperiosEntidad
 
                         Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, True,, _Cambiar_Vendedor, _No_Puede_Acceder)
 
-                        If _Cl_DocListaSuperior.UsarVencListaPrecios Then
-
-                            Lbl_InfoVtaAcumMes.Visible = True
-
-                            Dim _Endo As String = _TblEncabezado.Rows(0).Item("CodEntidad")
-
-                            Dim _FechaActual As Date = FechaDelServidor()
-                            Dim _PrimerDiaDelMes As Date = Primerdiadelmes(_FechaActual)
-                            Dim _UltimoDiaDelMes As Date = ultimodiadelmes(_FechaActual)
-
-                            Consulta_sql = "SELECT  CASE" & vbCrLf &
-                                           "WHEN TIDO = 'NVV' THEN SUM(PPPRNE * (CAPRCO1 - (CAPREX1 + CAPRAD1)))" & vbCrLf &
-                                           "WHEN TIDO = 'NCV' THEN SUM(VANELI) * -1" & vbCrLf &
-                                           "ELSE SUM(VANELI)" & vbCrLf &
-                                           "END AS VentaMesEnCurso" & vbCrLf &
-                                           "INTO #MesEnCurso" & vbCrLf &
-                                           "FROM MAEDDO " & vbCrLf &
-                                           "WHERE ENDO = '" & _Endo & "' " & vbCrLf &
-                                           "AND FEEMLI between '" & Format(_PrimerDiaDelMes, "yyyyMMdd") & "' And '" & Format(_UltimoDiaDelMes, "yyyyMMdd") & "'" & vbCrLf &
-                                           "AND TIDO IN ('NVV', 'FCV', 'NCV')" & vbCrLf &
-                                           "GROUP BY YEAR(FEEMLI), MONTH(FEEMLI), TIDO;" & vbCrLf &
-                                           "SELECT ISNULL(SUM(VentaMesEnCurso),0) AS 'VentaMesEnCurso'" & vbCrLf &
-                                           "FROM #MesEnCurso;" & vbCrLf &
-                                           "DROP TABLE #MesEnCurso;"
-
-                            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-                            Dim _VentaMesEnCurso As Double = NuloPorNro(_Row.Item("VentaMesEnCurso"), 0)
-
-                            Lbl_InfoVtaAcumMes.Text = "Vta.Acumulada Mes: " & FormatNumber(_VentaMesEnCurso, 0)
-
-                            Me.Refresh()
-
-                        End If
-
+                        Sb_RevListaSuperiosEntidad_VtaCurso
 
                     End If
 
@@ -14446,6 +14389,84 @@ Public Class Frm_Formulario_Documento
             'For i = 0 To 3
             '    SendKeys.Send("Right")
             'Next
+        End Try
+
+    End Sub
+
+    Private Sub Sb_RevListaSuperiosEntidad_VtaCurso()
+        'Throw New NotImplementedException()
+        Try
+
+            If _Cl_DocListaSuperior.UsarVencListaPrecios Then
+
+                Lbl_InfoVtaAcumMes.Visible = True
+
+                Dim _Endo As String = _TblEncabezado.Rows(0).Item("CodEntidad")
+
+                Dim _FechaActual As Date = FechaDelServidor()
+                Dim _PrimerDiaDelMes As Date = Primerdiadelmes(_FechaActual)
+                Dim _UltimoDiaDelMes As Date = ultimodiadelmes(_FechaActual)
+
+                Consulta_sql = "SELECT  CASE" & vbCrLf &
+                               "WHEN TIDO = 'NVV' THEN SUM(PPPRNE * (CAPRCO1 - (CAPREX1 + CAPRAD1)))" & vbCrLf &
+                               "WHEN TIDO = 'NCV' THEN SUM(VANELI) * -1" & vbCrLf &
+                               "ELSE SUM(VANELI)" & vbCrLf &
+                               "END AS VentaMesEnCurso" & vbCrLf &
+                               "INTO #MesEnCurso" & vbCrLf &
+                               "FROM MAEDDO " & vbCrLf &
+                               "WHERE ENDO = '" & _Endo & "' " & vbCrLf &
+                               "AND FEEMLI between '" & Format(_PrimerDiaDelMes, "yyyyMMdd") & "' And '" & Format(_UltimoDiaDelMes, "yyyyMMdd") & "'" & vbCrLf &
+                               "AND TIDO IN ('NVV', 'FCV', 'NCV')" & vbCrLf &
+                               "GROUP BY YEAR(FEEMLI), MONTH(FEEMLI), TIDO;" & vbCrLf &
+                               "SELECT ISNULL(SUM(VentaMesEnCurso),0) AS 'VentaMesEnCurso'" & vbCrLf &
+                               "FROM #MesEnCurso;" & vbCrLf &
+                               "DROP TABLE #MesEnCurso;"
+
+                Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                Dim _VentaMesEnCurso As Double = NuloPorNro(_Row.Item("VentaMesEnCurso"), 0)
+
+                Lbl_InfoVtaAcumMes.Text = "Vta.Acumulada Mes: " & FormatNumber(_VentaMesEnCurso, 0)
+
+                Me.Refresh()
+
+            End If
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub Sb_RevListaSuperiosEntidad()
+
+        Try
+
+            If _Cl_DocListaSuperior.UsarVencListaPrecios Then
+
+                _Cl_DocListaSuperior.ListaEntidad = _TblEncabezado.Rows(0).Item("ListaPrecios")
+
+                Dim _FechaVencLista As Date = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades",
+                                                                "FechaVencLista",
+                                                                "CodEntidad = '" & _RowEntidad.Item("KOEN") & "' And CodSucEntidad = '" & _RowEntidad.Item("SUEN") & "'")
+
+                If _FechaVencLista < FechaDelServidor() Then
+
+                    Dim _ListaInferior As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_ListaPreGlobal",
+                                                                     "ListaInferior",
+                                                                     "Lista = '" & _Cl_DocListaSuperior.ListaEntidad & "'")
+
+                    MessageBoxEx.Show(Me, "La fecha de duración para la lista de precios del cliente ha caducado" & vbCrLf &
+                                      "La lista ahora sera : " & _ListaInferior, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+
+                    _TblEncabezado.Rows(0).Item("ListaPrecios") = _ListaInferior
+                    _Cl_DocListaSuperior.ListaEntidad = _ListaInferior
+                    _RowEntidad.Item("LVEN") = "TABPP" & _ListaInferior
+                    _TblDetalle.Rows(0).Item("CodLista") = _ListaInferior
+
+                End If
+
+            End If
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 
     End Sub

@@ -310,7 +310,7 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
 
                     'BUSCA LOS PRODUCTOS AGRUPANDOLOS EN UNA TABLA DE PASO, PRODUCTOS HERMANOS
                     Consulta_sql = "Select * From " & _Tabla_Paso & vbCrLf &
-                                   "Where Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre & "'" & vbCrLf &
+                                   "Where Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre & "' And ProductoExcluido = 0" & vbCrLf &
                                    "Order by Id_Ult_Compra"
                     Dim _Tbl_Detalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -340,11 +340,11 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
                     ElseIf _Tbl_Detalle.Rows.Count > 1 Then
 
                         Consulta_sql = "Select * From " & _Tabla_Paso & vbCrLf &
-                                       "Where Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre & "'" & Space(1) &
+                                       "Where Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre & "' And ProductoExcluido = 0" & Space(1) &
                                        "And Fecha_Ult_Compra >= '" & Format(_Fecha, "yyyyMMdd") & "'" & vbCrLf &
                                        "Order by Costo_Ult_Compra_RealUd1" & vbCrLf &
                                        "Select * From " & _Tabla_Paso & vbCrLf &
-                                       "Where Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre & "'" & Space(1) &
+                                       "Where Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre & "' And ProductoExcluido = 0" & Space(1) &
                                        "And Fecha_Ult_Compra < '" & Format(_Fecha, "yyyyMMdd") & "'" & vbCrLf &
                                        "Order by Fecha_Ult_Compra Desc --,Costo_Ult_Compra_RealUd1"
                         Dim _Ds_Detalle As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)

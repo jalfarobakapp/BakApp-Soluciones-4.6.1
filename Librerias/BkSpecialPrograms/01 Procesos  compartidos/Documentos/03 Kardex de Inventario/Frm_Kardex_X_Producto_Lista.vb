@@ -304,56 +304,56 @@ Public Class Frm_Kardex_X_Producto_Lista
             .Columns("STFI" & _Unidad).HeaderText = "Stock Físico"
             .Columns("STFI" & _Unidad).Width = 80
             .Columns("STFI" & _Unidad).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("STFI" & _Unidad).DefaultCellStyle.Format = "##,#0"
+            .Columns("STFI" & _Unidad).DefaultCellStyle.Format = "##,#0.###"
             .Columns("STFI" & _Unidad).ToolTipText = "Stock Físico"
             .Columns("STFI" & _Unidad).Visible = True
 
             .Columns("STDV" & _Unidad).HeaderText = "Devengado"
             .Columns("STDV" & _Unidad).Width = 75
             .Columns("STDV" & _Unidad).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("STDV" & _Unidad).DefaultCellStyle.Format = "###,#0"
+            .Columns("STDV" & _Unidad).DefaultCellStyle.Format = "###,#0.###"
             .Columns("STDV" & _Unidad).ToolTipText = "Facturado al cliente sin entregar físicamente, pendiente de generar guía de despacho"
             .Columns("STDV" & _Unidad).Visible = True
 
             .Columns("DESPNOFAC" & _Unidad).HeaderText = "Desp.S/Fac"
             .Columns("DESPNOFAC" & _Unidad).Width = 75
             .Columns("DESPNOFAC" & _Unidad).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("DESPNOFAC" & _Unidad).DefaultCellStyle.Format = "###,#0"
+            .Columns("DESPNOFAC" & _Unidad).DefaultCellStyle.Format = "###,#0.###"
             .Columns("DESPNOFAC" & _Unidad).ToolTipText = "Despachado con guía que aún no han sido facturadas"
             .Columns("DESPNOFAC" & _Unidad).Visible = True
 
             .Columns("STOCNV" & _Unidad).HeaderText = "Comprom."
             .Columns("STOCNV" & _Unidad).Width = 75
             .Columns("STOCNV" & _Unidad).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("STOCNV" & _Unidad).DefaultCellStyle.Format = "###,#0"
+            .Columns("STOCNV" & _Unidad).DefaultCellStyle.Format = "###,#0.###"
             .Columns("STOCNV" & _Unidad).ToolTipText = "Notas de venta pendiente [NVV][NVI]"
             .Columns("STOCNV" & _Unidad).Visible = True
 
             .Columns("STDV" & _Unidad & "C").HeaderText = "Comp.N/Rec"
             .Columns("STDV" & _Unidad & "C").Width = 75
             .Columns("STDV" & _Unidad & "C").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("STDV" & _Unidad & "C").DefaultCellStyle.Format = "###,#0"
+            .Columns("STDV" & _Unidad & "C").DefaultCellStyle.Format = "###,#0.###"
             .Columns("STDV" & _Unidad & "C").ToolTipText = "Facturas de compra que no han movido Stock físico, aún falta la guía de recepción de mercadería"
             .Columns("STDV" & _Unidad & "C").Visible = True
 
             .Columns("RECENOFAC" & _Unidad).HeaderText = "Rece.S/Fac"
             .Columns("RECENOFAC" & _Unidad).Width = 75
             .Columns("RECENOFAC" & _Unidad).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("RECENOFAC" & _Unidad).DefaultCellStyle.Format = "###,#0"
+            .Columns("RECENOFAC" & _Unidad).DefaultCellStyle.Format = "###,#0.###"
             .Columns("RECENOFAC" & _Unidad).ToolTipText = "Guías de proveedores que aún no han sido facturadas"
             .Columns("RECENOFAC" & _Unidad).Visible = True
 
             .Columns("STOCNV" & _Unidad & "C").HeaderText = "Pedido"
             .Columns("STOCNV" & _Unidad & "C").Width = 75
             .Columns("STOCNV" & _Unidad & "C").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("STOCNV" & _Unidad & "C").DefaultCellStyle.Format = "###,#0"
+            .Columns("STOCNV" & _Unidad & "C").DefaultCellStyle.Format = "###,#0.###"
             .Columns("STOCNV" & _Unidad & "C").ToolTipText = "Ordenes de compra pendientes [OCI][OCC]"
             .Columns("STOCNV" & _Unidad & "C").Visible = True
 
             .Columns("StTeorico").HeaderText = "St.Teórico"
             .Columns("StTeorico").Width = 75
             .Columns("StTeorico").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("StTeorico").DefaultCellStyle.Format = "###,#0"
+            .Columns("StTeorico").DefaultCellStyle.Format = "###,#0.###"
             '.Columns("StTeorico").ToolTipText = "Ordenes de compra pendientes [OCI][OCC]"
             .Columns("StTeorico").Visible = True
 

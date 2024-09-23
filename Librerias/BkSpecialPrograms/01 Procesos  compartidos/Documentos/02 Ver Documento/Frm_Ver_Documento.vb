@@ -4798,7 +4798,7 @@ Public Class Frm_Ver_Documento
         Consulta_sql = "Select FResp.*,Isnull(FDoc.Autorizacion,'RECHAZADO') As CodAutorizacion" & vbCrLf &
                         "From " & _Global_BaseBk & "Zw_Fincred_TramaRespuesta FResp" & vbCrLf &
                         "Left Join " & _Global_BaseBk & "Zw_Fincred_Documentos FDoc On FResp.Id = FDoc.Id_TR" & vbCrLf &
-                        "Where (Idmaeedo = " & _Idmaeedo & ")"
+                        "Where Idmaeedo = " & _Idmaeedo & " And Eliminada = 0"
         Dim _RowFincred As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Dim _Codigo_negacion_transaccion = _RowFincred.Item("Codigo_negacion_transaccion")

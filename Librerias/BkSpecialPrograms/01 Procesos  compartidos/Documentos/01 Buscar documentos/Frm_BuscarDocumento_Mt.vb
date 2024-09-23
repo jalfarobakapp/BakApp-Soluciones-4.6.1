@@ -1,4 +1,5 @@
 ﻿Imports DevComponents.DotNetBar
+Imports MySql.Data.Authentication
 
 Public Class Frm_BuscarDocumento_Mt
 
@@ -1599,15 +1600,17 @@ Public Class Frm_BuscarDocumento_Mt
             Return True
         End If
 
-        Consulta_Sql = "Select FResp.*,Isnull(FDoc.Autorizacion,'RECHAZADO') As CodAutorizacion" & vbCrLf &
+        Consulta_Sql = "Select Top 1 FResp.*,Isnull(FDoc.Autorizacion,'RECHAZADO') As CodAutorizacion" & vbCrLf &
                         "From " & _Global_BaseBk & "Zw_Fincred_TramaRespuesta FResp" & vbCrLf &
                         "Left Join " & _Global_BaseBk & "Zw_Fincred_Documentos FDoc On FResp.Id = FDoc.Id_TR" & vbCrLf &
-                        "Where (Idmaeedo = " & _Idmaeedo & ")"
+                        "Where Idmaeedo = " & _Idmaeedo & " And Eliminada = 0"
         Dim _RowFincred As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
         Dim _Codigo_negacion_transaccion = 0
         Dim _Descripcion_negacion As String
         Dim _CodAutorizacion As String
+
+        Dim _Volver_A_Consultar_Fincred As Boolean
 
         If Not IsNothing(_RowFincred) Then
 
@@ -1624,16 +1627,27 @@ Public Class Frm_BuscarDocumento_Mt
                 End If
                 Return True
             Else
-                MessageBoxEx.Show(Me, "Revisión de parte de FINCRED RECHAZADA" & vbCrLf & vbCrLf &
-                                  "Documento: " & _RowMaeedo.Item("NUDO") & "-" & _RowMaeedo.Item("NUDO") & vbCrLf & vbCrLf &
-                                  "Respuesta Fincred: " & _Descripcion_negacion, "Información FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Return False
+
+                'MessageBoxEx.Show(Me, "Revisión de parte de FINCRED RECHAZADA" & vbCrLf & vbCrLf &
+                '                  "Documento: " & _RowMaeedo.Item("NUDO") & "-" & _RowMaeedo.Item("NUDO") & vbCrLf & vbCrLf &
+                '                  "Respuesta Fincred: " & _Descripcion_negacion, "Información FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                If MessageBoxEx.Show(Me, "Revisión de parte de FINCRED RECHAZADA" & vbCrLf &
+                                  "Documento: " & _RowMaeedo.Item("TIDO") & "-" & _RowMaeedo.Item("NUDO") & vbCrLf &
+                                  "Respuesta Fincred: " & _Descripcion_negacion & vbCrLf & vbCrLf &
+                                  "¿Desea volver a consultar a FINCRED este documento?", "Información FINCRED",
+                                  MessageBoxButtons.YesNo, MessageBoxIcon.Stop) <> DialogResult.Yes Then
+                    Return False
+
+                End If
+
+                _Volver_A_Consultar_Fincred = True
+
             End If
 
         End If
 
         Dim _Fincred_Respuesta As New Fincred_API.Respuesta
-
         _Fincred_Respuesta = Fx_Vaidar_Fincred(_Idmaeedo,
                                                _RowMaeedo.Item("TIDO"),
                                                _RowMaeedo.Item("NUDO"),
@@ -1643,6 +1657,14 @@ Public Class Frm_BuscarDocumento_Mt
                                                _RowEntidad.Item("FOEN").ToString.Trim)
 
         If _Fincred_Respuesta.EsCorrecto Then
+
+            If _Volver_A_Consultar_Fincred Then
+                Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Fincred_TramaRespuesta" & vbCrLf &
+                               "Set Eliminada = 1,CodFunElimina = '" & FUNCIONARIO & "'" &
+                               ",NombreEquipoElimina = '" & _Global_Row_EstacionBk.Item("NombreEquipo") & "'" & vbCrLf &
+                               "Where Id = " & _RowFincred.Item("Id")
+                _Sql.Ej_consulta_IDU(Consulta_Sql)
+            End If
 
             MessageBoxEx.Show(Me, _Fincred_Respuesta.TramaRespuesta.descripcion_negacion & vbCrLf &
                                   "Código de autorización: " & _Fincred_Respuesta.TramaRespuesta.documentos(0).autorizacion,
@@ -1654,17 +1676,13 @@ Public Class Frm_BuscarDocumento_Mt
             End If
 
             MessageBoxEx.Show(Me, "Código de autorización: RECHAZADO" & vbCrLf &
-                              "Respuesta FINCRED: " & _Fincred_Respuesta.MensajeError & vbCrLf & vbCrLf &
-                              "El documento debera seguir el conducto regular, se quitaran los plazos de vencimineto.",
-                              "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-
+                                    "Respuesta FINCRED: " & _Fincred_Respuesta.MensajeError & vbCrLf & vbCrLf &
+                                    "El documento debera seguir el conducto regular, se quitaran los plazos de vencimineto.",
+                                                                  "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Consulta_Sql = "Update MAEEDO Set FE01VEDO = FEEMDO,FEULVEDO = FEEMDO,NUVEDO = 1 Where IDMAEEDO = " & _Idmaeedo
             _Sql.Ej_consulta_IDU(Consulta_Sql)
-
             Return False
-
         End If
-
         Return True
 
     End Function
@@ -1675,7 +1693,6 @@ Public Class Frm_BuscarDocumento_Mt
         Sb_Abrir_Cerrar_Documentos()
         Me.Close()
     End Sub
-
     Sub Sb_Firmar_Documento_HefestoBakapp(_Idmaeedo As Integer)
 
         Dim _AmbienteCertificacion As Integer = Convert.ToInt32(_Global_Row_Configuracion_Estacion.Item("FacElect_Usar_AmbienteCertificacion"))
