@@ -110,17 +110,19 @@ Public Class Frm_Inv_Sector_ImporExcel
 
             Dim _Sector As String
             Dim _NombreSector As String
+            Dim _CodFuncionario As String
 
             Try
 
                 _Sector = If(_Arreglo(i, 0) Is Nothing, "", _Arreglo(i, 0).ToString().Trim())
-                _NombreSector = If(_Arreglo(i, 1) Is Nothing, "", _Arreglo(i, 0).ToString().Trim())
+                _NombreSector = If(_Arreglo(i, 1) Is Nothing, "", _Arreglo(i, 1).ToString().Trim())
+                _CodFuncionario = If(_Arreglo(i, 2) Is Nothing, "", _Arreglo(i, 2).ToString().Trim())
 
                 If String.IsNullOrWhiteSpace(_Sector) Then
                     Throw New System.Exception("La columna Sector esta vacía")
                 End If
 
-                Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_Ubicaciones",
+                Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_Sector",
                                             "Sector = '" & _Sector & "' And IdInventario = " & _Cl_inventario.Zw_Inv_Inventario.Id)
 
                 If CBool(_Reg) Then
@@ -133,6 +135,23 @@ Public Class Frm_Inv_Sector_ImporExcel
 
                 If _NombreSector.Length > 50 Then
                     Throw New System.Exception("El Sector """ & _NombreSector & """ excede los 50 caracteres")
+                End If
+
+                'Verificar si el encargado existe
+                If String.IsNullOrWhiteSpace(_CodFuncionario) Then
+                    _CodFuncionario = "''"
+                    Throw New System.Exception("Falta el Cód.Encargado")
+                End If
+
+                Consulta_sql = "Select * From TABFU Where KOFU = '" & _CodFuncionario & "'"
+                Dim _Row_Encargado As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                If IsNothing(_Row_Encargado) Then
+                    Throw New System.Exception("El Cód.Encargado """ & _CodFuncionario & """ No existe")
+                End If
+
+                If _Row_Encargado.Item("INACTIVO") Then
+                    Throw New System.Exception("El Cód.Encargado """ & _CodFuncionario & "-" & _Row_Encargado.Item("NOKOFU").ToString.Trim & """ esta inactivo en Random")
                 End If
 
                 ' Verificando si el valor existe en la lista
@@ -157,11 +176,12 @@ Public Class Frm_Inv_Sector_ImporExcel
                     .Empresa = _Cl_inventario.Zw_Inv_Inventario.Empresa
                     .Sucursal = _Cl_inventario.Zw_Inv_Inventario.Sucursal
                     .Bodega = _Cl_inventario.Zw_Inv_Inventario.Bodega
+                    .CodFuncionario = _CodFuncionario
                 End With
 
             Catch ex As Exception
                 _Msg_Error.Mensaje = ex.Message
-                _Msg_Error.Detalle = "Fila (" & i & ") - " & _Sector & " - " & _NombreSector
+                _Msg_Error.Detalle = "Fila (" & i & ") - " & _Sector & " - " & _NombreSector & ", CodEncargado: " & _CodFuncionario
                 _Msg_Error.EsCorrecto = False
                 _Msg_Error.Icono = MessageBoxIcon.Error
             End Try
@@ -313,7 +333,7 @@ Public Class Frm_Inv_Sector_ImporExcel
 
     Private Sub Btn_Archivo_Ayuda_Excel_Click(sender As Object, e As EventArgs) Handles Btn_Archivo_Ayuda_Excel.Click
         Dim _Nom_Excel As String
-        Consulta_sql = "Select 'Caracter [30]' As 'Sector','Caracter [50]' As 'NombreSector'"
+        Consulta_sql = "Select 'Caracter [30]' As 'Sector','Caracter [50]' As 'NombreSector','Caracter [3]' As 'Cód.Encargado'"
         _Nom_Excel = "Ejemplo importar ubicaciones"
         ExportarTabla_JetExcel(Consulta_sql, Me, _Nom_Excel)
     End Sub

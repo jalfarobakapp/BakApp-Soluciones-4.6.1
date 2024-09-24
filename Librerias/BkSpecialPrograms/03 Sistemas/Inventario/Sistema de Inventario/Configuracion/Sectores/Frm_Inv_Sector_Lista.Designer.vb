@@ -23,15 +23,16 @@ Partial Class Frm_Inv_Sector_Lista
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Inv_Sector_Lista))
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_MantSector = New DevComponents.DotNetBar.ButtonItem()
         Me.Lbl_Sector = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_EditarUbicacion = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_EliminarUbicacion = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_ImprimirSector = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem3 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
         Me.Menu_Contextual_Importar_Lista = New DevComponents.DotNetBar.ButtonItem()
@@ -54,7 +55,8 @@ Partial Class Frm_Inv_Sector_Lista
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Filtrar = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Lbl_UsuarioACargo = New DevComponents.DotNetBar.LabelX()
-        Me.Btn_ImprimirSector = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_ImprimirMasivamente = New DevComponents.DotNetBar.ButtonItem()
+        Me.Chk_Marcar_Todas = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -153,6 +155,14 @@ Partial Class Frm_Inv_Sector_Lista
         Me.Btn_EliminarUbicacion.Name = "Btn_EliminarUbicacion"
         Me.Btn_EliminarUbicacion.Text = "Eliminar Sector"
         Me.Btn_EliminarUbicacion.Tooltip = "Dar "
+        '
+        'Btn_ImprimirSector
+        '
+        Me.Btn_ImprimirSector.Image = CType(resources.GetObject("Btn_ImprimirSector.Image"), System.Drawing.Image)
+        Me.Btn_ImprimirSector.ImageAlt = CType(resources.GetObject("Btn_ImprimirSector.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ImprimirSector.Name = "Btn_ImprimirSector"
+        Me.Btn_ImprimirSector.Text = "Imprimir sector"
+        Me.Btn_ImprimirSector.Tooltip = "Dar "
         '
         'LabelItem3
         '
@@ -279,36 +289,36 @@ Partial Class Frm_Inv_Sector_Lista
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla.Size = New System.Drawing.Size(561, 437)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 30
@@ -318,8 +328,8 @@ Partial Class Frm_Inv_Sector_Lista
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Crear_Ubicacion, Me.Btn_Importar_Desde_Excel, Me.Btn_ExportarExcel, Me.Btn_Actualizar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 553)
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Crear_Ubicacion, Me.Btn_Importar_Desde_Excel, Me.Btn_ExportarExcel, Me.Btn_ImprimirMasivamente, Me.Btn_Actualizar})
+        Me.Bar1.Location = New System.Drawing.Point(0, 567)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(591, 41)
         Me.Bar1.Stretch = True
@@ -417,19 +427,38 @@ Partial Class Frm_Inv_Sector_Lista
         Me.Lbl_UsuarioACargo.TabIndex = 177
         Me.Lbl_UsuarioACargo.Text = "Usuario a cargo:"
         '
-        'Btn_ImprimirSector
+        'Btn_ImprimirMasivamente
         '
-        Me.Btn_ImprimirSector.Image = CType(resources.GetObject("Btn_ImprimirSector.Image"), System.Drawing.Image)
-        Me.Btn_ImprimirSector.ImageAlt = CType(resources.GetObject("Btn_ImprimirSector.ImageAlt"), System.Drawing.Image)
-        Me.Btn_ImprimirSector.Name = "Btn_ImprimirSector"
-        Me.Btn_ImprimirSector.Text = "Imprimir sector"
-        Me.Btn_ImprimirSector.Tooltip = "Dar "
+        Me.Btn_ImprimirMasivamente.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_ImprimirMasivamente.ForeColor = System.Drawing.Color.Black
+        Me.Btn_ImprimirMasivamente.Image = CType(resources.GetObject("Btn_ImprimirMasivamente.Image"), System.Drawing.Image)
+        Me.Btn_ImprimirMasivamente.ImageAlt = CType(resources.GetObject("Btn_ImprimirMasivamente.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ImprimirMasivamente.Name = "Btn_ImprimirMasivamente"
+        Me.Btn_ImprimirMasivamente.Tooltip = "Imprimir sectores en forma masiva"
+        '
+        'Chk_Marcar_Todas
+        '
+        Me.Chk_Marcar_Todas.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_Marcar_Todas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Marcar_Todas.CheckBoxImageChecked = CType(resources.GetObject("Chk_Marcar_Todas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Marcar_Todas.FocusCuesEnabled = False
+        Me.Chk_Marcar_Todas.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Marcar_Todas.Location = New System.Drawing.Point(12, 536)
+        Me.Chk_Marcar_Todas.Name = "Chk_Marcar_Todas"
+        Me.Chk_Marcar_Todas.Size = New System.Drawing.Size(100, 20)
+        Me.Chk_Marcar_Todas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Marcar_Todas.TabIndex = 178
+        Me.Chk_Marcar_Todas.Text = "Marcar todas"
         '
         'Frm_Inv_Sector_Lista
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(591, 594)
+        Me.ClientSize = New System.Drawing.Size(591, 608)
+        Me.Controls.Add(Me.Chk_Marcar_Todas)
         Me.Controls.Add(Me.Lbl_UsuarioACargo)
         Me.Controls.Add(Me.LabelX2)
         Me.Controls.Add(Me.Txt_Filtrar)
@@ -483,4 +512,6 @@ Partial Class Frm_Inv_Sector_Lista
     Friend WithEvents LabelItem1 As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Btn_Copiar2 As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_ImprimirSector As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_ImprimirMasivamente As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Chk_Marcar_Todas As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

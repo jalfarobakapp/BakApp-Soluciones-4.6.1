@@ -307,6 +307,9 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
                     Dim _Descripcion_Madre As String = Trim(Fila.Item("Descripcion_Madre"))
                     _Codigo_Comprar = String.Empty
 
+                    If ProgressBarX1.Value = 644 Then
+                        Dim _ACA = 0
+                    End If
 
                     'BUSCA LOS PRODUCTOS AGRUPANDOLOS EN UNA TABLA DE PASO, PRODUCTOS HERMANOS
                     Consulta_sql = "Select * From " & _Tabla_Paso & vbCrLf &
@@ -314,8 +317,13 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
                                    "Order by Id_Ult_Compra"
                     Dim _Tbl_Detalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
-                    Dim _CantSugeridaTot As Double = _Tbl_Detalle.Rows(0).Item("CantSugeridaTot")
-                    Dim _CantComprar As Double = Math.Ceiling(_CantSugeridaTot)
+                    Dim _CantSugeridaTot As Double = 0
+                    Dim _CantComprar As Double = 0
+
+                    If CBool(_Tbl_Detalle.Rows.Count) Then
+                        _CantSugeridaTot = _Tbl_Detalle.Rows(0).Item("CantSugeridaTot")
+                        _CantComprar = Math.Ceiling(_CantSugeridaTot)
+                    End If
 
                     If _Tbl_Detalle.Rows.Count = 1 Then
 
@@ -455,7 +463,7 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
             Return True
 
         Catch ex As Exception
-            MessageBoxEx.Show(Me, ex.Message, _Codigo_Comprar)
+            MessageBoxEx.Show(Me, ex.Message & vbCrLf & Consulta_sql, _Codigo_Comprar)
             Return False
         Finally
             Me.Enabled = True

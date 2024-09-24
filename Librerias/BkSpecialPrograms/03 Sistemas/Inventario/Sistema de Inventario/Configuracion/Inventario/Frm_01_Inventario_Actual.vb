@@ -18,6 +18,11 @@ Public Class Frm_01_Inventario_Actual
     Private _Tbl_FotoInventario As DataTable
     Private _Dv As DataView
 
+    Private _Tbl_Filtro_Sectores As DataTable
+    Private _Tbl_Filtro_Encargados As DataTable
+    Private _Filtrar_Todos_Sectores As Boolean = True
+    Private _Filtrar_Todos_Encargados As Boolean = True
+
     Public Sub New(_IdInventario As Integer)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -58,9 +63,25 @@ Public Class Frm_01_Inventario_Actual
 
         Me.Cursor = Cursors.WaitCursor
 
-        'Consulta_sql = "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Cant_Inventariada = 0,Dif_Inv_Cantidad = 0" & vbCrLf &
-        '               "Where IdInventario = " & _IdInventario
-        '_Sql.Ej_consulta_IDU(Consulta_sql)
+        Btn_Filtro_Encargados.Image = Fx_Imagen_Filtro(_Filtrar_Todos_Encargados)
+        Btn_Filtro_Sectores.Image = Fx_Imagen_Filtro(_Filtrar_Todos_Sectores)
+
+        Btn_Filtrar.Image = Fx_Imagen_Filtro(_Filtrar_Todos_Sectores And _Filtrar_Todos_Encargados)
+
+        Dim _Filtros As String = String.Empty
+
+        If Not _Filtrar_Todos_Sectores Then
+            Dim _Fl As String = Generar_Filtro_IN(_Tbl_Filtro_Sectores, "Chk", "Codigo", False, True, "'")
+            _Filtros += "And Codigo In (Select Codigo From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle " &
+                        "Where Sector In " & _Fl & ")" & vbCrLf
+        End If
+
+        If Not _Filtrar_Todos_Encargados Then
+            Dim _Fl As String = Generar_Filtro_IN(_Tbl_Filtro_Encargados, "Chk", "Codigo", False, True, "'")
+            _Filtros += "And Codigo In (Select Codigo From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle " &
+                        "Where IdSector In (Select Id From " & _Global_BaseBk & "Zw_Inv_Sector Where CodFuncionario In " & _Fl & ") " &
+                        "And IdInventario = " & _IdInventario & ")" & vbCrLf
+        End If
 
         Consulta_sql = "Select Codigo,Recontado, SUM(Cantidad) As Cantidad" & vbCrLf &
                        "Into #PasoR" & vbCrLf &
@@ -95,9 +116,11 @@ Public Class Frm_01_Inventario_Actual
 
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
-        Consulta_sql = "Select Codigo,CodigoRap,CodigoTec,Descripcion,StFisicoUd1,Cant_Inventariada,Costo,Dif_Inv_Cantidad,Total_Costo_Foto,Total_Costo_Inv,Dif_Inv_Costo,Recontado,NoInventariar" & vbCrLf &
+        Consulta_sql = "Select Codigo,CodigoRap,CodigoTec,Descripcion,StFisicoUd1,Cant_Inventariada,Costo,Dif_Inv_Cantidad," &
+                       "Total_Costo_Foto,Total_Costo_Inv,Dif_Inv_Costo,Recontado,NoInventariar," & vbCrLf &
+                       "SuperFamilia,Nom_SuperFamilia,Familia,Nom_Familia,SubFamilia,Nom_SubFamilia,Rubro,Nom_Rubro,ClasLibre,Nom_ClasLibre,Zona,Nom_Zona" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Inv_FotoInventario" & vbCrLf &
-                       "Where IdInventario = " & _IdInventario
+                       "Where IdInventario = " & _IdInventario & vbCrLf & _Filtros
 
         Dim _New_Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
         _Dv = New DataView
@@ -340,10 +363,10 @@ Public Class Frm_01_Inventario_Actual
                 _Dv.RowFilter = String.Format("Codigo+CodigoRap+CodigoTec+Descripcion Like '%{0}%'", Txt_Filtrar.Text.Trim)
             End If
             If Rdb_MostrarSoloInventariados.Checked Then
-                _Dv.RowFilter = String.Format("Codigo+CodigoRap+CodigoTec+Descripcion Like '%{0}%' And Cant_Inventariada > 0", Txt_Filtrar.Text.Trim)
+                _Dv.RowFilter = String.Format("Codigo+CodigoRap+CodigoTec+Descripcion Like '%{0}%' And Cant_Inventariada <> 0", Txt_Filtrar.Text.Trim)
             End If
             If Rdb_MostrarSoloConStockSinInventariar.Checked Then
-                _Dv.RowFilter = String.Format("Codigo+CodigoRap+CodigoTec+Descripcion Like '%{0}%' And Cant_Inventariada = 0 And StFisicoUd1 > 0", Txt_Filtrar.Text.Trim)
+                _Dv.RowFilter = String.Format("Codigo+CodigoRap+CodigoTec+Descripcion Like '%{0}%' And Cant_Inventariada = 0 And StFisicoUd1 <> 0", Txt_Filtrar.Text.Trim)
             End If
             Sb_SumarTotales()
         Catch ex As Exception
@@ -393,19 +416,19 @@ Public Class Frm_01_Inventario_Actual
 
     Private Sub Btn_ExportarAjuste_Todo_Click(sender As Object, e As EventArgs) Handles Btn_ExportarAjuste_Todo.Click
 
-        Consulta_sql = "Select Hd.Empresa,Hd.Sucursal,Hd.Bodega,Hd.Codigo,Sum(Cantidad) As Cantidad,Ft.Costo
+        Consulta_sql = "Select Hd.Codigo,Sum(Cantidad) As Cantidad,Ft.Costo
 Into #PasoR
 From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle Hd
 Left Join " & _Global_BaseBk & "Zw_Inv_FotoInventario Ft On Ft.IdInventario = Hd.IdInventario And Ft.Codigo = Hd.Codigo
 Where Hd.IdInventario = " & _IdInventario & " And Hd.Recontado = 1 And Cantidad > 0
-Group by Hd.Empresa,Hd.Sucursal,Hd.Bodega,Hd.Codigo,Ft.Costo
+Group by Hd.Codigo,Ft.Costo
 
-Select Hd.Empresa,Hd.Sucursal,Hd.Bodega,Hd.Codigo,Sum(Cantidad) As Cantidad,Ft.Costo
+Select Hd.Codigo,Sum(Cantidad) As Cantidad,Ft.Costo
 Into #PasoC
 From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle Hd
 Left Join " & _Global_BaseBk & "Zw_Inv_FotoInventario Ft On Ft.IdInventario = Hd.IdInventario And Ft.Codigo = Hd.Codigo
 Where Hd.IdInventario = " & _IdInventario & " And Hd.Recontado = 0 And Hd.Codigo Not In (Select Codigo From #PasoR) And Cantidad > 0
-Group by Hd.Empresa,Hd.Sucursal,Hd.Bodega,Hd.Codigo,Ft.Costo
+Group by Hd.Codigo,Ft.Costo
 
 Select * From #PasoC
 Union
@@ -460,5 +483,93 @@ Drop table #PasoR"
             Txt_Filtrar.Text = String.Empty
             Sb_Filtrar()
         End If
+    End Sub
+
+    Private Sub Btn_Btn_ExportarResumenActual_Click(sender As Object, e As EventArgs) Handles Btn_Btn_ExportarResumenActual.Click
+        ExportarTabla_JetExcel_Tabla(_Dv.ToTable(), Me, "Resumen1")
+    End Sub
+
+    Private Sub Btn_Btn_ExportarResumenTodo_Click(sender As Object, e As EventArgs) Handles Btn_Btn_ExportarResumenTodo.Click
+        ExportarTabla_JetExcel_Tabla(_Dv.Table(), Me, "Resumen")
+    End Sub
+
+    Private Sub Btn_Ver_Informacion_Producto_Click(sender As Object, e As EventArgs) Handles Btn_Ver_Informacion_Producto.Click
+        If Fx_Tiene_Permiso(Me, "Prod009") Then
+            Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+            Dim _Codigo As String = _Fila.Cells("Codigo").Value
+            Dim _Producto_Op As New Frm_BkpPostBusquedaEspecial_Mt
+            _Producto_Op.Sb_Ver_Informacion_Adicional_producto(Me, _Codigo)
+        End If
+    End Sub
+
+    Private Sub Btn_Filtro_Sectores_Click(sender As Object, e As EventArgs) Handles Btn_Filtro_Sectores.Click
+
+        Dim _Sql_Filtro_Condicion_Extra = "And IdInventario = " & _IdInventario
+        Dim _Filtro_Extra_Encargados = String.Empty
+
+        If Not _Filtrar_Todos_Encargados Then
+            If Not (_Tbl_Filtro_Encargados Is Nothing) Then
+                If _Tbl_Filtro_Encargados.Rows.Count Then
+
+                    Dim _Fl_Encargados = Generar_Filtro_IN(_Tbl_Filtro_Encargados, "Chk", "Codigo", False, True, "'")
+                    _Filtro_Extra_Encargados += vbCrLf & "And CodFuncionario In " & _Fl_Encargados
+
+                End If
+            End If
+        End If
+
+        _Sql_Filtro_Condicion_Extra += _Filtro_Extra_Encargados
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Tabla = _Global_BaseBk & "Zw_Inv_Sector"
+        _Filtrar.Campo = "Sector"
+        _Filtrar.Descripcion = "NombreSector"
+
+        If _Filtrar.Fx_Filtrar(_Tbl_Filtro_Sectores,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, _Sql_Filtro_Condicion_Extra,
+                               _Filtrar_Todos_Sectores, False) Then
+
+            _Tbl_Filtro_Sectores = _Filtrar.Pro_Tbl_Filtro
+            _Filtrar_Todos_Sectores = _Filtrar.Pro_Filtro_Todas
+
+            Sb_Actualizar_Grilla()
+
+        End If
+
+    End Sub
+
+    Private Sub Btn_Filtro_Encargados_Click(sender As Object, e As EventArgs) Handles Btn_Filtro_Encargados.Click
+
+        Dim _Sql_Filtro_Condicion_Extra = "And KOFU In (Select CodFuncionario From " & _Global_BaseBk &
+                                          "Zw_Inv_Sector Where IdInventario = " & _IdInventario & ")"
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(_Tbl_Filtro_Encargados,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random, _Sql_Filtro_Condicion_Extra,
+                               _Filtrar_Todos_Encargados, False) Then
+
+            _Tbl_Filtro_Encargados = _Filtrar.Pro_Tbl_Filtro
+            _Filtrar_Todos_Encargados = _Filtrar.Pro_Filtro_Todas
+
+            Sb_Actualizar_Grilla()
+
+        End If
+
+    End Sub
+
+    Function Fx_Imagen_Filtro(_Todas As Boolean) As Image
+
+        If _Todas Then
+            Return Nothing
+        Else
+            Return Imagenes_16x16.Images.Item("filter.png")
+        End If
+
+    End Function
+
+    Private Sub Btn_Filtrar_Click(sender As Object, e As EventArgs) Handles Btn_Filtrar.Click
+        ShowContextMenu(Menu_Contextual_Filtrar)
     End Sub
 End Class

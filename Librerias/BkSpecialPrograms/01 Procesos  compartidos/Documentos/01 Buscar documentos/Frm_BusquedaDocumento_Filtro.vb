@@ -782,6 +782,10 @@ Buscar:
             Fm.Cerrar_Documentos = Rdb_Estado_Vigente.Checked
             Fm.HabilitarNVVParaFacturar = HabilitarNVVParaFacturar
 
+            If HabilitarNVVParaFacturar Then
+                Fm.Pro_Abrir_Seleccionado = True
+            End If
+
             Fm.ShowDialog(Me)
 
             Dim _IdMaeedo_Doc = Fm.Pro_IdMaeedo_Doc

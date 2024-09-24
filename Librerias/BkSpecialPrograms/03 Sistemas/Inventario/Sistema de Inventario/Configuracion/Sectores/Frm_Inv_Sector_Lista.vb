@@ -17,6 +17,7 @@ Public Class Frm_Inv_Sector_Lista
 
     Public Property ModoRevisionInventario As Boolean
     Public Property ModoSeleccionSector As Boolean
+    Public Property ModoConfiguracion As Boolean
 
     Public Sub New(_Id_Inventario As Integer)
 
@@ -53,7 +54,7 @@ Public Class Frm_Inv_Sector_Lista
 
     Sub Sb_Actualizar_Grilla()
 
-        Consulta_sql = "Select Sc.*,Isnull(NOKOFU,'') As 'FunCargo',Case Abierto When 1 Then 'Abierto' Else 'Cerrado' End As 'Estado'" & vbCrLf &
+        Consulta_sql = "Select Cast(0 As Bit) As Chk, Sc.*,Isnull(NOKOFU,'') As 'FunCargo',Case Abierto When 1 Then 'Abierto' Else 'Cerrado' End As 'Estado'" & vbCrLf &
                        "From " & _Global_BaseBk & " Zw_Inv_Sector Sc" & vbCrLf &
                        "Left Join TABFU On KOFU = CodFuncionario" & vbCrLf &
                        "Where IdInventario = " & _IdInventario
@@ -70,6 +71,13 @@ Public Class Frm_Inv_Sector_Lista
             OcultarEncabezadoGrilla(Grilla, True)
 
             Dim _DisplayIndex = 0
+
+            .Columns("Chk").Visible = ModoConfiguracion
+            .Columns("Chk").HeaderText = "Sel."
+            .Columns("Chk").Width = 30
+            .Columns("Chk").ReadOnly = False
+            .Columns("Chk").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Empresa").Visible = True
             .Columns("Empresa").HeaderText = "Emp."
@@ -104,11 +112,13 @@ Public Class Frm_Inv_Sector_Lista
 
             .Columns("NombreSector").Visible = True
             .Columns("NombreSector").HeaderText = "Nombre Sector"
+
             If ModoRevisionInventario Then
-                .Columns("NombreSector").Width = 200
+                .Columns("NombreSector").Width = 220
             Else
-                .Columns("NombreSector").Width = 260
+                .Columns("NombreSector").Width = 250
             End If
+
             .Columns("NombreSector").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -444,4 +454,67 @@ Public Class Frm_Inv_Sector_Lista
             End If
         End If
     End Sub
+
+    Private Sub Btn_ImprimirMasivamente_Click(sender As Object, e As EventArgs) Handles Btn_ImprimirMasivamente.Click
+
+        If Not _Cl_Inventario.Zw_Inv_Inventario.Activo Then
+            MessageBoxEx.Show(Me, "El inventario se encuentra cerrado, no se puede realizar esta gestión", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
+
+        If Not String.IsNullOrEmpty(_Dv.RowFilter) Then
+            MessageBoxEx.Show(Me, "Debe quitar el filtro para poder imprimir masivamente", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If Not Fx_HayRegistrosTickeados() Then
+            MessageBoxEx.Show(Me, "No hay sectores seleccionados para imprimir", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
+
+        Dim _Sel_Impresora As Sel_Impresora = Fx_seleccionar_Impresora(Me)
+
+        If Not _Sel_Impresora.ImpresoraSeleccionada Then
+            Return
+        End If
+
+
+
+        For Each _Fila As DataGridViewRow In Grilla.Rows
+
+            If _Fila.Cells("Chk").Value Then
+
+                Dim _IdSector As Integer = _Fila.Cells("Id").Value
+                Dim _CodigoBarras As String = _Fila.Cells("Sector").Value
+
+                Sb_Imprimir_Sector(_IdSector, _CodigoBarras, _Sel_Impresora.PrtSettings)
+
+            End If
+
+        Next
+
+    End Sub
+
+    Private Function Fx_HayRegistrosTickeados() As Boolean
+        For Each row As DataGridViewRow In Grilla.Rows
+            Dim chkCell As DataGridViewCheckBoxCell = TryCast(row.Cells("Chk"), DataGridViewCheckBoxCell)
+            If chkCell IsNot Nothing AndAlso CBool(chkCell.Value) Then
+                Return True
+            End If
+        Next
+        Return False
+    End Function
+
+    Private Sub Grilla_CellMouseUp(sender As Object, e As DataGridViewCellMouseEventArgs) Handles Grilla.CellMouseUp
+        Grilla.EndEdit()
+    End Sub
+
+    Private Sub Chk_Marcar_Todas_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Marcar_Todas.CheckedChanged
+        For Each _Fila As DataGridViewRow In Grilla.Rows
+            _Fila.Cells("Chk").Value = Chk_Marcar_Todas.Checked
+        Next
+    End Sub
+
 End Class

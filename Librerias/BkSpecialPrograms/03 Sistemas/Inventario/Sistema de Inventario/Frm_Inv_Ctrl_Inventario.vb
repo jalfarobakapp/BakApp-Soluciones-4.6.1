@@ -43,6 +43,7 @@ Public Class Frm_Inv_Ctrl_Inventario
 
         Dim Fm As New Frm_Inv_Sector_Lista(_IdInventario)
         Fm.Text = "UBICACIONES DEL INVENTARIO: " & Cl_Inventario.Zw_Inv_Inventario.NombreInventario
+        Fm.ModoConfiguracion = True
         Fm.ShowDialog(Me)
         Fm.Dispose()
 

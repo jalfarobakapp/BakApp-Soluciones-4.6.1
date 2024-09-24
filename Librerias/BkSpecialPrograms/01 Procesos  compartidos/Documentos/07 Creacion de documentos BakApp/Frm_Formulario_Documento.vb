@@ -5761,7 +5761,7 @@ Public Class Frm_Formulario_Documento
 
 
         'Agregar Lista Superior
-        If _Cl_DocListaSuperior.UsarVencListaPrecios And Not _Revisar_Notificacion_Automatica_Remota Then
+        If _Tido = "NVV" AndAlso _Cl_DocListaSuperior.UsarVencListaPrecios And Not _Revisar_Notificacion_Automatica_Remota Then
             _Cl_DocListaSuperior.Sb_Insertar_NuevaLineaLpEntidad(_Fila.Index, _Codigo, _Cl_DocListaSuperior.ListaEntidad, _UnTrans, _Impuestos, _Valor_desde_Lista)
             _Cl_DocListaSuperior.Sb_Insertar_NuevaLineaLpSuperior(_Fila.Index, _Codigo, _Cl_DocListaSuperior.ListaEntidad, _UnTrans, _Impuestos, _Valor_desde_Lista)
         End If
@@ -11133,6 +11133,7 @@ Public Class Frm_Formulario_Documento
 
                 Me.Cursor = Cursors.Default
             End If
+
         End If
     End Sub
 
@@ -14444,15 +14445,32 @@ Public Class Frm_Formulario_Documento
 
                 _Cl_DocListaSuperior.ListaEntidad = _TblEncabezado.Rows(0).Item("ListaPrecios")
 
-                Dim _FechaVencLista As Date = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades",
-                                                                "FechaVencLista",
-                                                                "CodEntidad = '" & _RowEntidad.Item("KOEN") & "' And CodSucEntidad = '" & _RowEntidad.Item("SUEN") & "'")
+                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_ListaPreGlobal Where ListaSuperior = '" & _Cl_DocListaSuperior.ListaEntidad & "'"
+                Dim _Row_ListaInferior As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                Dim _CodEntidad As String = _RowEntidad.Item("KOEN")
+                Dim _CodSucEntidad As String = _RowEntidad.Item("SUEN")
+
+                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Entidades Where CodEntidad = '" & _CodEntidad & "' And CodSucEntidad = '" & _CodSucEntidad & "'"
+                Dim _Row_EntidadBakapp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                Dim _FechaVencLista As Date? = NuloPorNro(_Row_EntidadBakapp.Item("FechaVencLista"), #01-01-0001#)
+
+                If (_Row_EntidadBakapp.Item("FechaVencLista") Is DBNull.Value) Then
+                    Return
+                End If
 
                 If _FechaVencLista < FechaDelServidor() Then
 
-                    Dim _ListaInferior As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_ListaPreGlobal",
-                                                                     "ListaInferior",
-                                                                     "Lista = '" & _Cl_DocListaSuperior.ListaEntidad & "'")
+                    If IsNothing(_Row_ListaInferior) Then
+                        Return
+                    End If
+
+                    Dim _ListaInferior As String = _Row_ListaInferior.Item("ListaInferior").ToString.Trim
+
+                    If String.IsNullOrWhiteSpace(_ListaInferior) Then
+                        Return
+                    End If
 
                     MessageBoxEx.Show(Me, "La fecha de duración para la lista de precios del cliente ha caducado" & vbCrLf &
                                       "La lista ahora sera : " & _ListaInferior, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
@@ -15461,7 +15479,8 @@ Public Class Frm_Formulario_Documento
                             If Not IsNothing(_Row) Then
 
                                 If CBool(_Row.Item("Detalle")) Then
-                                    Dim _Msg1 = "Existen documentos de venta con la misma fecha de despacho y a demas incluyen alguno de los productos a vender"
+                                    Dim _Msg1 As String '= "Existen documentos de venta con la misma fecha de despacho y a demás incluyen alguno de los productos a vender"
+                                    _Msg1 = "Se han detectado documentos de venta con la misma fecha de despacho que incluyen algunos de los productos a vender"
                                     Dim _Msg2 = "¿DESEA SEGUIR CON LA GRABACION?" & vbCrLf & vbCrLf
 
                                     If Not Fx_Confirmar_Lectura(_Msg1, _Msg2, eTaskDialogIcon.Stop) Then
