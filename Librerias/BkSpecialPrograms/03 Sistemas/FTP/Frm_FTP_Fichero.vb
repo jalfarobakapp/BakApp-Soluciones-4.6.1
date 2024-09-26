@@ -159,7 +159,7 @@ Public Class Frm_FTP_Fichero
                     _Imagen = 2
                 Case "TXT"
                     _Imagen = 3
-                Case "JPG", "PNG"
+                Case "JPG", "PNG", "JPEG"
                     _Imagen = 4
                 Case "BMP"
                     _Imagen = 6

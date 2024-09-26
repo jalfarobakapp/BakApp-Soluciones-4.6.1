@@ -108,7 +108,9 @@ Public Class Frm_01_Inventario_Actual
                        "Where IdInventario = " & _IdInventario & "" & vbCrLf &
                        vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set " &
-                       "Dif_Inv_Cantidad = ROUND(Cant_Inventariada-StFisicoUd1,5),Total_Costo_Foto = StFisicoUd1*Costo,Total_Costo_Inv = Cant_Inventariada*Costo" & vbCrLf &
+                       "Dif_Inv_Cantidad = ROUND(Cant_Inventariada-StFisicoUd1,5)," &
+                       "Total_Costo_Foto = StFisicoUd1*Costo,Total_Costo_Inv = Cant_Inventariada*Costo," &
+                       "Dif_Inv_Costo = Total_Costo_Inv-Total_Costo_Foto" & vbCrLf &
                        "Where IdInventario = " & _IdInventario & vbCrLf &
                        vbCrLf &
                        "Drop Table #PasoR" & vbCrLf &

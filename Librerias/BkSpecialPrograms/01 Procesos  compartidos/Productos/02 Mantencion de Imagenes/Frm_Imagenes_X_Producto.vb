@@ -1,7 +1,5 @@
 ﻿Imports System.IO
 Imports System.Net
-Imports System.Net.WebRequestMethods
-Imports System.Security.Cryptography
 Imports DevComponents.DotNetBar
 Imports NUnrar
 
@@ -85,6 +83,38 @@ Public Class Frm_Imagenes_X_Producto
         End Try
 
     End Sub
+
+    Sub Sb_Mostrar_Imagen()
+        Try
+            ' Obtener la fila actual seleccionada en la grilla
+            Dim _Fila As DataGridViewRow = Grilla_Imagenes.CurrentRow
+
+            ' Asegurarse de que la fila no es nula
+            If _Fila IsNot Nothing Then
+                ' Obtener el valor del campo "Imagen_Real" de la fila actual
+                Dim _Imagen_Byte As Byte() = CType(_Fila.Cells("Imagen_Real").Value, Byte())
+
+                ' Convertir los bytes de la imagen a un objeto Image
+                Using ms As New System.IO.MemoryStream(_Imagen_Byte)
+                    Dim _Imagen_Prod As Image = Image.FromStream(ms)
+
+                    '' Redimensionar la imagen a las dimensiones deseadas
+                    'Dim _bmp As New Bitmap(_Imagen_Prod)
+                    'Dim _Destino As Image = New Bitmap(_bmp, 125, 130)
+
+                    ' Mostrar la imagen en el PictureBox
+                    Pbx_Imagen.SizeMode = PictureBoxSizeMode.Zoom
+                    Pbx_Imagen.Image = _Imagen_Prod
+                End Using
+            End If
+
+        Catch ex As Exception
+            ' En caso de error, mostrar una imagen de error en el PictureBox
+            Pbx_Imagen.Image = Pbx_Imagen.ErrorImage
+            Pbx_Imagen.SizeMode = PictureBoxSizeMode.CenterImage
+        End Try
+    End Sub
+
     Public Function Fx_Llenar_Grilla_Imagenes() As Boolean
 
         Try
@@ -120,7 +150,7 @@ Public Class Frm_Imagenes_X_Producto
 
     End Function
 
-    Sub Sb_Cargar_Imagenes()
+    Sub Sb_Cargar_Imagenes_Old()
 
         Dim Fm As New Frm_Form_Esperar
         Fm.BarraCircular.IsRunning = True
@@ -190,8 +220,113 @@ Public Class Frm_Imagenes_X_Producto
         End If
         Fm.Close()
 
-        Sb_Mostrar_Imagen(_PrimeraURL, _PrimeraDesdeUrl)
+        Sb_Mostrar_Imagen()
 
+        'Sb_Mostrar_Imagen(_PrimeraURL, _PrimeraDesdeUrl)
+
+    End Sub
+
+    Private Sub Sb_Cargar_Imagenes()
+
+        Dim Fm As New Frm_Form_Esperar
+        Fm.BarraCircular.IsRunning = True
+        Fm.Show()
+
+        Dim _PrimeraURL As String = ""
+        Dim _PrimeraDesdeUrl As Boolean = False
+
+        If CBool(Datos_Imagen.Tables("Tbl_Prod_Imagenes").Rows.Count) Then
+
+            For Each _Fila As DataRow In Datos_Imagen.Tables("Tbl_Prod_Imagenes").Rows
+
+                Try
+
+                    System.Windows.Forms.Application.DoEvents()
+
+                    Dim _Desde_URL As Boolean = _Fila.Item("Desde_URL")
+                    Dim _Direccion_Imagen As String = _Fila.Item("Direccion_Imagen")
+                    Dim _Principal As Boolean = _Fila.Item("Principal")
+
+                    If _Desde_URL AndAlso String.IsNullOrWhiteSpace(_PrimeraURL) Then
+                        _PrimeraDesdeUrl = _Desde_URL
+                        _PrimeraURL = _Direccion_Imagen
+                    End If
+
+                    Dim MyWebClient As New System.Net.WebClient
+
+                    ' Establecer el tiempo de espera en milisegundos (por ejemplo, 5000 ms = 5 segundos)
+
+                    'MyWebClient.DownloadDataCompleted += New DownloadDataCompletedEventHandler(AddressOf DownloadDataCallback)
+                    'AddHandler MyWebClient.DownloadDataCompleted, AddressOf DownloadDataCallback
+                    'MyWebClient.DownloadDataAsync(New Uri(_Direccion_Imagen))
+
+                    ' Define el tiempo de espera en milisegundos (por ejemplo, 5000 ms = 5 segundos)
+                    Dim timeout As Integer = 5000
+
+                    ' Crear una instancia de HttpWebRequest
+                    Dim request As HttpWebRequest = CType(WebRequest.Create(_Direccion_Imagen), HttpWebRequest)
+
+                    ' Establecer el tiempo de espera
+                    request.Timeout = timeout
+
+                    ' Manejar la respuesta asincrónica
+                    AddHandler MyWebClient.DownloadDataCompleted, AddressOf DownloadDataCallback
+
+                    ' Iniciar la solicitud asincrónica
+                    MyWebClient.DownloadDataAsync(New Uri(_Direccion_Imagen), _Fila)
+
+                Catch ex As Exception
+                    Pbx_Imagen.Image = Pbx_Imagen.ErrorImage
+                End Try
+
+            Next
+
+        Else
+            Pbx_Imagen.Image = Pbx_Imagen.ErrorImage
+        End If
+        Fm.Close()
+
+        Sb_Mostrar_Imagen()
+        'Sb_Mostrar_Imagen(_PrimeraURL, _PrimeraDesdeUrl)
+
+    End Sub
+
+    Private Sub DownloadDataCallback(sender As Object, e As DownloadDataCompletedEventArgs)
+        If e.Error IsNot Nothing Then
+            ' Manejar el error (por ejemplo, mostrar una imagen de error)
+            Pbx_Imagen.Image = Pbx_Imagen.ErrorImage
+        Else
+
+            Dim _Fila As DataRow = CType(e.UserState, DataRow)
+            Dim ImageInBytes() As Byte = e.Result
+            Dim _Direccion_Imagen As String = _Fila.Item("Direccion_Imagen")
+
+            'CREATE A MEMORY STREAM USING THE BYTES
+            Dim _Imagen_Byte As New IO.MemoryStream(ImageInBytes)
+            Dim _Imagen_Prod As Image = New System.Drawing.Bitmap(_Imagen_Byte)
+            Dim _bmp As New Bitmap(_Imagen_Prod)
+            Dim _Destino As Image = New Bitmap(_bmp, 125, 130)
+
+            'Dim _PBX As New PictureBox
+            '_'PBX.Image = 
+            Dim _Largo = Len(_Direccion_Imagen) - 2
+            Dim _Extencion = Mid(_Direccion_Imagen, _Largo, 3)
+
+            If UCase(_Extencion) = "JPG" Or UCase(_Extencion) = "JPEG" Or UCase(_Extencion) = "PEG" Then
+                _Fila.Item("Imagen_Muestra") = imageToByteArray(_Destino, System.Drawing.Imaging.ImageFormat.Jpeg)
+            ElseIf UCase(_Extencion) = "PNG" Then
+                _Fila.Item("Imagen_Muestra") = imageToByteArray(_Destino, System.Drawing.Imaging.ImageFormat.Png)
+            ElseIf UCase(_Extencion) = "GIF" Then
+                _Fila.Item("Imagen_Muestra") = imageToByteArray(_Destino, System.Drawing.Imaging.ImageFormat.Gif)
+            ElseIf UCase(_Extencion) = "BMP" Then
+                _Fila.Item("Imagen_Muestra") = imageToByteArray(_Destino, System.Drawing.Imaging.ImageFormat.Bmp)
+            ElseIf UCase(_Extencion) = "ICO" Then
+                _Fila.Item("Imagen_Muestra") = imageToByteArray(_Destino, System.Drawing.Imaging.ImageFormat.Icon)
+            End If
+
+            _Fila.Item("Imagen_Real") = ImageInBytes
+
+        End If
     End Sub
 
     Sub Sb_Cargar_Imagenes2()
@@ -315,21 +450,22 @@ Public Class Frm_Imagenes_X_Producto
 
     End Sub
     Private Sub Grilla_Imagenes_CellClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla_Imagenes.CellClick
-        Try
-            With Grilla_Imagenes
-                Dim _Desde_URL As Boolean = .Rows(.CurrentRow.Index).Cells.Item("Desde_URL").Value
-                Dim _Direccion_Imagen As String = .Rows(.CurrentRow.Index).Cells.Item("Direccion_Imagen").Value
-                Dim ImageInBytes() As Byte = .Rows(.CurrentRow.Index).Cells.Item("Imagen_Real").Value
+        Sb_Mostrar_Imagen()
+        'Try
+        '    With Grilla_Imagenes
+        '        Dim _Desde_URL As Boolean = .Rows(.CurrentRow.Index).Cells.Item("Desde_URL").Value
+        '        Dim _Direccion_Imagen As String = .Rows(.CurrentRow.Index).Cells.Item("Direccion_Imagen").Value
+        '        Dim ImageInBytes() As Byte = .Rows(.CurrentRow.Index).Cells.Item("Imagen_Real").Value
 
-                Dim _Imagen_Byte As New IO.MemoryStream(ImageInBytes)
-                Dim _Imagen_Prod As Image = New System.Drawing.Bitmap(_Imagen_Byte)
+        '        Dim _Imagen_Byte As New IO.MemoryStream(ImageInBytes)
+        '        Dim _Imagen_Prod As Image = New System.Drawing.Bitmap(_Imagen_Byte)
 
-                Pbx_Imagen.Image = _Imagen_Prod
+        '        Pbx_Imagen.Image = _Imagen_Prod
 
-            End With
-        Catch ex As Exception
-            MessageBoxEx.Show(Me, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        End Try
+        '    End With
+        'Catch ex As Exception
+        '    MessageBoxEx.Show(Me, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        'End Try
     End Sub
 
     Private Sub Btn_Eliminar_Click(sender As Object, e As EventArgs) Handles Btn_Eliminar.Click
@@ -393,7 +529,8 @@ Public Class Frm_Imagenes_X_Producto
                                 Dim _EsURL As Boolean = _Row.Item("Desde_URL")
                                 _Direccion_Imagen = _Row.Item("Direccion_Imagen")
 
-                                Sb_Mostrar_Imagen(_Direccion_Imagen, _EsURL)
+                                'Sb_Mostrar_Imagen(_Direccion_Imagen, _EsURL)
+                                Sb_Mostrar_Imagen()
 
                             End If
 
@@ -414,13 +551,7 @@ Public Class Frm_Imagenes_X_Producto
     End Sub
 
     Private Sub Btn_Subir_Imagen_Click(sender As Object, e As EventArgs) Handles Btn_Subir_Imagen.Click
-
-        If Not Fx_Tiene_Permiso(Me, "Prod068") Then
-            Return
-        End If
-
         ShowContextMenu(Menu_Contextual_SubirImagenes)
-
     End Sub
 
     Private Sub Grilla_Imagenes_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Imagenes.CellEnter
@@ -459,6 +590,10 @@ Public Class Frm_Imagenes_X_Producto
 
     Private Sub Btn_Mnu_SubirURL_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_SubirURL.Click
 
+        If Not Fx_Tiene_Permiso(Me, "Prod068") Then
+            Return
+        End If
+
         Dim _Aceptar As Boolean
         Dim _Url As String
 
@@ -475,7 +610,8 @@ Public Class Frm_Imagenes_X_Producto
                 Dim _bmp As New Bitmap(_Imagen_Prod)
                 Dim _Destino As Image = New Bitmap(_bmp, 125, 130)
 
-                Sb_Mostrar_Imagen(_Url, True)
+                'Sb_Mostrar_Imagen(_Url, True)
+                Sb_Mostrar_Imagen()
 
                 Dim _Principal = 1
 
@@ -506,6 +642,10 @@ Public Class Frm_Imagenes_X_Producto
 
     Private Sub Btn_Mnu_SubirFTP_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_SubirFTP.Click
 
+        If Not Fx_Tiene_Permiso(Me, "Prod077") Then
+            Return
+        End If
+
         Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Ftp_Conexiones Where Tipo = 'Producto'"
         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -519,18 +659,18 @@ Public Class Frm_Imagenes_X_Producto
         Fm.Codigo = _Codigo
         Fm.ShowDialog(Me)
 
-        If Fm.GestionRealizada Then
+        'If Fm.GestionRealizada Then
 
-            Fx_Llenar_Grilla_Imagenes()
-            Sb_Cargar_Imagenes()
+        Fx_Llenar_Grilla_Imagenes()
+        Sb_Cargar_Imagenes()
 
-            If CBool(Grilla_Imagenes.RowCount) Then
-                Pbx_Imagen.SizeMode = PictureBoxSizeMode.Zoom ' Para ajustar tamaño de la imagen
-            Else
-                Pbx_Imagen.SizeMode = PictureBoxSizeMode.CenterImage ' Para ajustar tamaño de la imagen
-            End If
-
+        If CBool(Grilla_Imagenes.RowCount) Then
+            Pbx_Imagen.SizeMode = PictureBoxSizeMode.Zoom ' Para ajustar tamaño de la imagen
+        Else
+            Pbx_Imagen.SizeMode = PictureBoxSizeMode.CenterImage ' Para ajustar tamaño de la imagen
         End If
+
+        'End If
 
         Fm.Dispose()
 

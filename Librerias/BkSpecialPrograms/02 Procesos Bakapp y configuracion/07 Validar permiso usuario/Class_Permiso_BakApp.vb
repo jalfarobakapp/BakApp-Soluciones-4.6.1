@@ -815,6 +815,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Prod074", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Prod075", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Prod076", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Prod077", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("NO00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("NO00002", _Objeto, _Formulario)
@@ -3611,6 +3612,10 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
             Case "Prod076"
                 _DescripcionPermiso = "EXPORTAR A EXCEL LISTADO DE PRODUCTOS DESDE EL MAESTRO DE PRODUCTOS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
+                _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
+            Case "Prod077"
+                _DescripcionPermiso = "AGREGAR UNA IMAGEN A UN PRODUCTO CON DESDE EL FTP"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
 
