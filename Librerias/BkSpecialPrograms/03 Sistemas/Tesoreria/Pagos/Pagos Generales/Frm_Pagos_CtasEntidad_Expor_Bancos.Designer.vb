@@ -24,9 +24,9 @@ Partial Class Frm_Pagos_CtasEntidad_Expor_Bancos
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Pagos_CtasEntidad_Expor_Bancos))
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
@@ -35,13 +35,19 @@ Partial Class Frm_Pagos_CtasEntidad_Expor_Bancos
         Me.Btn_Cambiar_Entidad = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Editar_Pago = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Eliminar_Pago = New DevComponents.DotNetBar.ButtonItem()
+        Me.Menu_Contextual_02 = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Doc_Asociado_Ver = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Doc_Asociado_Incorporar = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem2 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_AnticipoNVV = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_CruceDocParaPago = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Doc_Asociado_Quitar = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla_Maedpce = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar_Autorizacion = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Importar_Pagos = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Limpiar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_SugerirNVVRefAuto = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_SugerirFCVBLVRefAuto = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.Lbl_Referencia = New DevComponents.DotNetBar.LabelX()
@@ -58,7 +64,6 @@ Partial Class Frm_Pagos_CtasEntidad_Expor_Bancos
         Me.Lbl_Status = New DevComponents.DotNetBar.LabelItem()
         Me.Imagenes_20x20 = New System.Windows.Forms.ImageList(Me.components)
         Me.Chk_Seleccionar_Todo = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Btn_Limpiar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla_Maedpce, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -112,7 +117,7 @@ Partial Class Frm_Pagos_CtasEntidad_Expor_Bancos
         '
         Me.ContextMenuBar1.AntiAlias = True
         Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
+        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01, Me.Menu_Contextual_02})
         Me.ContextMenuBar1.Location = New System.Drawing.Point(42, 48)
         Me.ContextMenuBar1.Name = "ContextMenuBar1"
         Me.ContextMenuBar1.Size = New System.Drawing.Size(408, 25)
@@ -126,7 +131,7 @@ Partial Class Frm_Pagos_CtasEntidad_Expor_Bancos
         '
         Me.Menu_Contextual_01.AutoExpandOnClick = True
         Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
-        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_Ver_Cta_Cte, Me.Btn_Cambiar_Entidad, Me.Btn_Editar_Pago, Me.Btn_Eliminar_Pago, Me.Btn_Doc_Asociado_Ver, Me.Btn_Doc_Asociado_Incorporar, Me.Btn_Doc_Asociado_Quitar})
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_Ver_Cta_Cte, Me.Btn_Cambiar_Entidad, Me.Btn_Editar_Pago, Me.Btn_Eliminar_Pago})
         Me.Menu_Contextual_01.Text = "Opciones documento"
         '
         'LabelItem1
@@ -166,17 +171,43 @@ Partial Class Frm_Pagos_CtasEntidad_Expor_Bancos
         Me.Btn_Eliminar_Pago.Name = "Btn_Eliminar_Pago"
         Me.Btn_Eliminar_Pago.Text = "Eliminar pago (quitar fila)"
         '
+        'Menu_Contextual_02
+        '
+        Me.Menu_Contextual_02.AutoExpandOnClick = True
+        Me.Menu_Contextual_02.Name = "Menu_Contextual_02"
+        Me.Menu_Contextual_02.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem2, Me.Btn_Doc_Asociado_Ver, Me.Btn_AnticipoNVV, Me.Btn_CruceDocParaPago, Me.Btn_Doc_Asociado_Quitar})
+        Me.Menu_Contextual_02.Text = "Asociar documentos"
+        '
         'Btn_Doc_Asociado_Ver
         '
         Me.Btn_Doc_Asociado_Ver.Image = CType(resources.GetObject("Btn_Doc_Asociado_Ver.Image"), System.Drawing.Image)
         Me.Btn_Doc_Asociado_Ver.Name = "Btn_Doc_Asociado_Ver"
         Me.Btn_Doc_Asociado_Ver.Text = "Ver documento asociado (NVV-0000000000)"
         '
-        'Btn_Doc_Asociado_Incorporar
+        'LabelItem2
         '
-        Me.Btn_Doc_Asociado_Incorporar.Image = CType(resources.GetObject("Btn_Doc_Asociado_Incorporar.Image"), System.Drawing.Image)
-        Me.Btn_Doc_Asociado_Incorporar.Name = "Btn_Doc_Asociado_Incorporar"
-        Me.Btn_Doc_Asociado_Incorporar.Text = "Ingresar documento ('NVV','RES','PRO') al anticipo"
+        Me.LabelItem2.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem2.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem2.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem2.Name = "LabelItem2"
+        Me.LabelItem2.PaddingBottom = 1
+        Me.LabelItem2.PaddingLeft = 10
+        Me.LabelItem2.PaddingTop = 1
+        Me.LabelItem2.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem2.Text = "Opciones"
+        '
+        'Btn_AnticipoNVV
+        '
+        Me.Btn_AnticipoNVV.Image = CType(resources.GetObject("Btn_AnticipoNVV.Image"), System.Drawing.Image)
+        Me.Btn_AnticipoNVV.Name = "Btn_AnticipoNVV"
+        Me.Btn_AnticipoNVV.Text = "Ingresar documento ('NVV','RES','PRO') al anticipo"
+        '
+        'Btn_CruceDocParaPago
+        '
+        Me.Btn_CruceDocParaPago.Image = CType(resources.GetObject("Btn_CruceDocParaPago.Image"), System.Drawing.Image)
+        Me.Btn_CruceDocParaPago.Name = "Btn_CruceDocParaPago"
+        Me.Btn_CruceDocParaPago.Text = "Ingresar documento ('FCV','BLV') cruce de pago automático" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
         'Btn_Doc_Asociado_Quitar
         '
@@ -189,36 +220,36 @@ Partial Class Frm_Pagos_CtasEntidad_Expor_Bancos
         Me.Grilla_Maedpce.AllowUserToAddRows = False
         Me.Grilla_Maedpce.AllowUserToDeleteRows = False
         Me.Grilla_Maedpce.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Maedpce.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Maedpce.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
         Me.Grilla_Maedpce.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Maedpce.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_Maedpce.DefaultCellStyle = DataGridViewCellStyle8
         Me.Grilla_Maedpce.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla_Maedpce.EnableHeadersVisualStyles = False
         Me.Grilla_Maedpce.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla_Maedpce.Location = New System.Drawing.Point(0, 0)
         Me.Grilla_Maedpce.Name = "Grilla_Maedpce"
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Maedpce.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Maedpce.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
         Me.Grilla_Maedpce.Size = New System.Drawing.Size(1130, 336)
         Me.Grilla_Maedpce.StandardTab = True
         Me.Grilla_Maedpce.TabIndex = 53
@@ -228,7 +259,7 @@ Partial Class Frm_Pagos_CtasEntidad_Expor_Bancos
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar_Autorizacion, Me.Btn_Importar_Pagos, Me.Btn_Limpiar})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar_Autorizacion, Me.Btn_Importar_Pagos, Me.Btn_Limpiar, Me.Btn_SugerirNVVRefAuto, Me.Btn_SugerirFCVBLVRefAuto})
         Me.Bar1.Location = New System.Drawing.Point(0, 520)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(1160, 41)
@@ -243,6 +274,7 @@ Partial Class Frm_Pagos_CtasEntidad_Expor_Bancos
         Me.Btn_Grabar_Autorizacion.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Grabar_Autorizacion.ForeColor = System.Drawing.Color.Black
         Me.Btn_Grabar_Autorizacion.Image = CType(resources.GetObject("Btn_Grabar_Autorizacion.Image"), System.Drawing.Image)
+        Me.Btn_Grabar_Autorizacion.ImageAlt = CType(resources.GetObject("Btn_Grabar_Autorizacion.ImageAlt"), System.Drawing.Image)
         Me.Btn_Grabar_Autorizacion.Name = "Btn_Grabar_Autorizacion"
         Me.Btn_Grabar_Autorizacion.Tooltip = "Grabar pagos"
         '
@@ -251,8 +283,39 @@ Partial Class Frm_Pagos_CtasEntidad_Expor_Bancos
         Me.Btn_Importar_Pagos.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Importar_Pagos.ForeColor = System.Drawing.Color.Black
         Me.Btn_Importar_Pagos.Image = CType(resources.GetObject("Btn_Importar_Pagos.Image"), System.Drawing.Image)
+        Me.Btn_Importar_Pagos.ImageAlt = CType(resources.GetObject("Btn_Importar_Pagos.ImageAlt"), System.Drawing.Image)
         Me.Btn_Importar_Pagos.Name = "Btn_Importar_Pagos"
         Me.Btn_Importar_Pagos.Tooltip = "Importar pagos"
+        '
+        'Btn_Limpiar
+        '
+        Me.Btn_Limpiar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Limpiar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Limpiar.Image = CType(resources.GetObject("Btn_Limpiar.Image"), System.Drawing.Image)
+        Me.Btn_Limpiar.ImageAlt = CType(resources.GetObject("Btn_Limpiar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Limpiar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_Limpiar.Name = "Btn_Limpiar"
+        Me.Btn_Limpiar.Tooltip = "Nuevo, limpiar documento"
+        '
+        'Btn_SugerirNVVRefAuto
+        '
+        Me.Btn_SugerirNVVRefAuto.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_SugerirNVVRefAuto.ForeColor = System.Drawing.Color.Black
+        Me.Btn_SugerirNVVRefAuto.Image = CType(resources.GetObject("Btn_SugerirNVVRefAuto.Image"), System.Drawing.Image)
+        Me.Btn_SugerirNVVRefAuto.ImageAlt = CType(resources.GetObject("Btn_SugerirNVVRefAuto.ImageAlt"), System.Drawing.Image)
+        Me.Btn_SugerirNVVRefAuto.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_SugerirNVVRefAuto.Name = "Btn_SugerirNVVRefAuto"
+        Me.Btn_SugerirNVVRefAuto.Tooltip = "Sugerir NVV/Ref. Automáticamente en forma masiva"
+        '
+        'Btn_SugerirFCVBLVRefAuto
+        '
+        Me.Btn_SugerirFCVBLVRefAuto.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_SugerirFCVBLVRefAuto.ForeColor = System.Drawing.Color.Black
+        Me.Btn_SugerirFCVBLVRefAuto.Image = CType(resources.GetObject("Btn_SugerirFCVBLVRefAuto.Image"), System.Drawing.Image)
+        Me.Btn_SugerirFCVBLVRefAuto.ImageAlt = CType(resources.GetObject("Btn_SugerirFCVBLVRefAuto.ImageAlt"), System.Drawing.Image)
+        Me.Btn_SugerirFCVBLVRefAuto.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_SugerirFCVBLVRefAuto.Name = "Btn_SugerirFCVBLVRefAuto"
+        Me.Btn_SugerirFCVBLVRefAuto.Tooltip = "Sugerir documentos ('FCV','BLV') cruce de pago automático en forma masiva"
         '
         'GroupPanel3
         '
@@ -509,6 +572,8 @@ Partial Class Frm_Pagos_CtasEntidad_Expor_Bancos
         '
         '
         Me.Chk_Seleccionar_Todo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Seleccionar_Todo.CheckBoxImageChecked = CType(resources.GetObject("Chk_Seleccionar_Todo.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Seleccionar_Todo.FocusCuesEnabled = False
         Me.Chk_Seleccionar_Todo.ForeColor = System.Drawing.Color.Black
         Me.Chk_Seleccionar_Todo.Location = New System.Drawing.Point(12, 367)
         Me.Chk_Seleccionar_Todo.Name = "Chk_Seleccionar_Todo"
@@ -516,15 +581,6 @@ Partial Class Frm_Pagos_CtasEntidad_Expor_Bancos
         Me.Chk_Seleccionar_Todo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Seleccionar_Todo.TabIndex = 3
         Me.Chk_Seleccionar_Todo.Text = "Seleccionar todo"
-        '
-        'Btn_Limpiar
-        '
-        Me.Btn_Limpiar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Limpiar.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Limpiar.Image = CType(resources.GetObject("Btn_Limpiar.Image"), System.Drawing.Image)
-        Me.Btn_Limpiar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_Limpiar.Name = "Btn_Limpiar"
-        Me.Btn_Limpiar.Tooltip = "Nuevo, limpiar documento"
         '
         'Frm_Pagos_CtasEntidad_Expor_Bancos
         '
@@ -585,7 +641,12 @@ Partial Class Frm_Pagos_CtasEntidad_Expor_Bancos
     Friend WithEvents Chk_Seleccionar_Todo As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Btn_Doc_Asociado_Ver As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Ver_Cta_Cte As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_Doc_Asociado_Incorporar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Doc_Asociado_Quitar As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_Limpiar As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_SugerirNVVRefAuto As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Menu_Contextual_02 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelItem2 As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Btn_AnticipoNVV As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_CruceDocParaPago As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_SugerirFCVBLVRefAuto As DevComponents.DotNetBar.ButtonItem
 End Class

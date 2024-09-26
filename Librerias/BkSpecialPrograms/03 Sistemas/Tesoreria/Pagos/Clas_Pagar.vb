@@ -1730,57 +1730,59 @@ Public Class Clas_Pagar
 
     End Function
 
-    Private Function Fx_Crear_Pago_MAEDPCD(_Formulario As Form,
+    Function Fx_Crear_Pago_MAEDPCD(_Formulario As Form,
                                            _Idmaeedo As Integer,
                                            _Idmaedpce As Integer,
                                            _Vaabdo As Double) As Integer
 
+        Try
 
-        Dim _Row_Maeedo As DataRow
-        Consulta_sql = "Select top 1 * From MAEEDO Where IDMAEEDO = " & _Idmaeedo
-        _Row_Maeedo = _Sql.Fx_Get_DataRow(Consulta_sql)
+            Dim _Row_Maeedo As DataRow
+            Consulta_sql = "Select top 1 * From MAEEDO Where IDMAEEDO = " & _Idmaeedo
+            _Row_Maeedo = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        Dim _Row_Maedpcde As DataRow
-        Consulta_sql = "Select top 1 * From MAEDPCE Where IDMAEDCPE = " & _Idmaedpce
-        _Row_Maedpcde = _Sql.Fx_Get_DataRow(Consulta_sql)
+            Dim _Row_Maedpcde As DataRow
+            Consulta_sql = "Select top 1 * From MAEDPCE Where IDMAEDPCE = " & _Idmaedpce
+            _Row_Maedpcde = _Sql.Fx_Get_DataRow(Consulta_sql)
 
+            Dim _Feasdp As String = Format(_Row_Maedpcde.Item("FEEMDP"), "yyyyMMdd")
+            Dim _Tidopa As String = _Row_Maeedo.Item("TIDO")
+            Dim _Referencia As String = 0
+            Dim _Kofudp As String = _Row_Maedpcde.Item("KOFUDP")
+            Dim _Suemdp As String = _Row_Maedpcde.Item("SUREDP")
+            Dim _Cjredp As String = _Row_Maedpcde.Item("CJREDP")
 
-        Dim _Feasdp As String = Format(_Row_Maedpcde.Item("FEEMDP"), "yyyyMMdd")
-        Dim _Tidopa As String = _Row_Maeedo.Item("TIDO")
-        Dim _Referencia As String = String.Empty
-        Dim _Kofudp As String = _Row_Maedpcde.Item("KOFUASDP")
-        Dim _Suemdp As String = _Row_Maedpcde.Item("SUREDP")
-        Dim _Cjredp As String = _Row_Maedpcde.Item("CJREDP")
+            Dim _Horagrab = Hora_Grab_fx(False)
+            Dim _Lahora = Format(FechaDelServidor, "yyyyMMdd")
 
-        Dim _Horagrab = Hora_Grab_fx(False)
-        Dim _Lahora = Format(FechaDelServidor, "yyyyMMdd")
+            Consulta_sql = "SELECT VAVE,VAABVE,IDMAEVEN FROM MAEVEN WHERE IDMAEEDO=" & _Idmaeedo & " AND ESPGVE<>'C'"
+            Dim _Tbl_Maeven As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
-        Consulta_sql = "SELECT VAVE,VAABVE,IDMAEVEN  FROM MAEVEN WHERE IDMAEEDO=" & _Idmaeedo & " AND ESPGVE<>'C'"
-        Dim _Tbl_Maeven As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+            'Dim _Idmaeven As Integer = _Tbl_Maeven.Rows(0).Item("IDMAEVEN")
 
+            Dim _Abono As String = De_Num_a_Tx_01(_Vaabdo, False, 5)
 
-        Dim _Idmaeven As Integer = _Tbl_Maeven.Rows(0).Item("IDMAEVEN")
+            Consulta_sql =
+                     "UPDATE MAEEDO SET VAABDO= COALESCE(VAABDO,0) +" & _Abono &
+                     ",ESPGDO=CASE WHEN ROUND(VABRDO,2)-ROUND(VAABDO+" & _Abono & ",2)-COALESCE(ROUND(VAIVARET,2),0) <= 0 THEN 'C' " &
+                     "ELSE ESPGDO END WHERE IDMAEEDO=" & _Idmaeedo &
+                     vbCrLf &
+                     vbCrLf &
+                     "UPDATE MAEVEN SET VAABVE= COALESCE(VAABVE,0.0)+" & _Abono &
+                     ",ESPGVE=CASE WHEN ROUND(VAVE,2)-ROUND(VAABVE+" & _Abono & ",2) <= 0 THEN 'C' ELSE ESPGVE END WHERE IDMAEEDO=" & _Idmaeedo &
+                     vbCrLf &
+                     vbCrLf &
+                     "INSERT INTO MAEDPCD (IDMAEDPCE,VAASDP,FEASDP,IDRST,TIDOPA,ARCHIRST,TCASIG,REFERENCIA,KOFUASDP,SUASDP," &
+                     "CJASDP,HORAGRAB,LAHORA) VALUES " &
+                     "(" & _Idmaedpce & "," & _Abono & ",'" & _Feasdp & "'," & _Idmaeedo & ",'" & _Tidopa &
+                     "','MAEEDO',0.00000," & _Referencia & ",'" & _Kofudp & "','" & _Suemdp & "','" & _Cjredp & "'," & _Horagrab &
+                     ",'" & _Lahora & "')" & vbCrLf & vbCrLf
 
-        Dim _Abono As String = De_Num_a_Tx_01(_Vaabdo, False, 5)
+            'UPDATE MAEVEN SET VAABVE=ROUND( VAABVE+28940.000000,0),ESPGVE=CASE WHEN ROUND( VAVE-VAABVE-28940.000000,0) <= 0.0 THEN 'C'  ELSE ESPGVE  END  WHERE IDMAEVEN=246276
 
-
-        Consulta_sql =
-                 "UPDATE MAEEDO SET VAABDO= COALESCE(VAABDO,0) +" & _Abono &
-                 ",ESPGDO=CASE WHEN ROUND(VABRDO,2)-ROUND(VAABDO,2)-COALESCE(ROUND(VAIVARET,2),0) <= 0 THEN 'C' " &
-                 "ELSE ESPGDO END WHERE IDMAEEDO=" & _Idmaeedo &
-                 vbCrLf &
-                 vbCrLf &
-                 "UPDATE MAEVEN SET VAABVE= COALESCE(VAABVE,0.0)+" & _Abono &
-                 ",ESPGVE=CASE WHEN ROUND(VAVE,2)-ROUND(VAABVE,2) <= 0 THEN 'C' ELSE ESPGVE END WHERE IDMAEVEN=" & _Idmaeven &
-                 vbCrLf &
-                 vbCrLf &
-                 "INSERT INTO MAEDPCD (IDMAEDPCE,VAASDP,FEASDP,IDRST,TIDOPA,ARCHIRST,TCASIG,REFERENCIA,KOFUASDP,SUASDP," &
-                 "CJASDP,HORAGRAB,LAHORA) VALUES " &
-                 "(" & _Idmaedpce & "," & _Abono & ",'" & _Feasdp & "'," & _Idmaeedo & ",'" & _Tidopa &
-                 "','MAEEDO',0.00000," & _Referencia & ",'" & _Kofudp & "','" & _Suemdp & "','" & _Cjredp & "'," & _Horagrab &
-                 ",'" & _Lahora & "')" & vbCrLf & vbCrLf
-
-        'UPDATE MAEVEN SET VAABVE=ROUND( VAABVE+28940.000000,0),ESPGVE=CASE WHEN ROUND( VAVE-VAABVE-28940.000000,0) <= 0.0 THEN 'C'  ELSE ESPGVE  END  WHERE IDMAEVEN=246276
+        Catch ex As Exception
+            Return 0
+        End Try
 
         Dim myTrans As SqlClient.SqlTransaction
         Dim Comando As SqlClient.SqlCommand
@@ -1831,7 +1833,6 @@ Public Class Clas_Pagar
             Return 0
 
         End Try
-
 
     End Function
 
