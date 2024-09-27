@@ -11,7 +11,7 @@ Public Class Frm_ImpBarras_ListaEtiquetas
         InitializeComponent()
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
-        Sb_Formato_Generico_Grilla(Grilla, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
+        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
 
         If Global_Thema = Enum_Themas.Oscuro Then
             BtnNuevaEtiqueta.ForeColor = Color.White
@@ -151,7 +151,7 @@ Public Class Frm_ImpBarras_ListaEtiquetas
 
             With Grilla
 
-                .DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+                .DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 OcultarEncabezadoGrilla(Grilla)
 

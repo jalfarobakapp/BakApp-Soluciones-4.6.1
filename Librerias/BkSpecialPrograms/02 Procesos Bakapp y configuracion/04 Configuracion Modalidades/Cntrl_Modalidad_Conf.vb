@@ -13,19 +13,19 @@ Public Class Cntrl_Modalidad_Conf
     Sub Sb_Actualizar_Grilla_Conf()
 
         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Configuracion (Modalidad) 
-                        Select MODALIDA From CONFIEST Where MODALIDAD Not In (Select Modalidad From " & _Global_BaseBk & "Zw_Configuracion)"
+                        Select MODALIDA From CONFIEST WITH (NOLOCK) Where MODALIDAD Not In (Select Modalidad From " & _Global_BaseBk & "Zw_Configuracion)"
         '_Sql.Ej_consulta_IDU(Consulta_sql)
 
 
-        Consulta_sql = "Select MODALIDAD,(Select NOKOSU FROM TABSU Z2 " & _
-                       "WHERE Z2.EMPRESA = Z1.EMPRESA AND Z2.KOSU = Z1.ESUCURSAL) AS Sucursal," & _
-                       "EBODEGA as Bodega" & vbCrLf & _
-                       "From CONFIEST Z1 Where EMPRESA = '" & ModEmpresa & "'" & vbCrLf & _
+        Consulta_sql = "Select MODALIDAD,(Select NOKOSU FROM TABSU Z2 " &
+                       "WHERE Z2.EMPRESA = Z1.EMPRESA AND Z2.KOSU = Z1.ESUCURSAL) AS Sucursal," &
+                       "EBODEGA as Bodega" & vbCrLf &
+                       "From CONFIEST Z1 WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "'" & vbCrLf &
                        "And MODALIDAD <> '  '"
 
         With Grilla
 
-            .DataSource = _SQL.Fx_Get_Tablas(Consulta_sql)
+            .DataSource = _SQL.Fx_Get_DataTable(Consulta_sql)
 
             OcultarEncabezadoGrilla(Grilla, True)
 
@@ -88,7 +88,7 @@ Public Class Cntrl_Modalidad_Conf
         Dim _Clas_Mod As New Clas_Modalidades
         Dim _RowModalidad As DataRow = _Clas_Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, _Modalidad)
 
-        Dim _Fila As DataRow = _SQL.Fx_Get_Tablas(Consulta_sql).Rows(0)
+        Dim _Fila As DataRow = _SQL.Fx_Get_DataTable(Consulta_sql).Rows(0)
 
         If Not IsNothing(_Fila) Then
 

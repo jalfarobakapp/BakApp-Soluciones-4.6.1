@@ -50,7 +50,7 @@ Public Class Frm_Referencia_DTE_Det
                         From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones
                         Where (Tabla = 'DOCUMENTOS_DTE_SII')"
         caract_combo(Cmb_TpoDocRef)
-        Cmb_TpoDocRef.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_TpoDocRef.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_TpoDocRef.SelectedValue = ""
 
         Consulta_sql = "Select '0' As Padre, '' As Hijo Union 
@@ -58,7 +58,7 @@ Public Class Frm_Referencia_DTE_Det
                         From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones
                         Where (Tabla = 'CODREF_SII_NCV')"
         caract_combo(Cmb_CodRef)
-        Cmb_CodRef.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_CodRef.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_CodRef.SelectedValue = ""
 
         Sb_Llenar_Datos()

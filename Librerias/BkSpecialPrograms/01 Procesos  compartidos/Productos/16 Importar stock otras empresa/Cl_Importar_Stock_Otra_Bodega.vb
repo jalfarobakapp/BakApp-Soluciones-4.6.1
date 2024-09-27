@@ -18,7 +18,7 @@
     Private Sub Sb_Actualizar_Stock_Desde_Otra_Bodega_De_Otra_Empresa(_Tbl_Productos As DataTable)
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Maest Where Activo = 1"
-        Dim _Tbl_DbExtMaest As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_DbExtMaest As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _FilaMst As DataRow In _Tbl_DbExtMaest.Rows
 
@@ -87,7 +87,7 @@
 
         Consulta_sql = "Select Top 1 * From MAEST 
                         Where EMPRESA = '" & _Empresa_Origen & "' And KOSU = '" & _Sucursal_Origen & "' And KOBO = '" & _Bodega_Origen & "' And KOPR = '" & _Codigo & "'"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _SqlQuery = String.Empty
 
@@ -150,7 +150,7 @@
         _Sql = New Class_SQL(Cadena_ConexionSQL_Server)
 
         Consulta_sql = "Select KOPR As Codigo,NOKOPR As Descripcion From MAEPR Where KOPR In " & _Filtro_Productos
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Cadena_ConexionSQL_Server = _Cadena_ConexionSQL_Server_Original
 
@@ -175,7 +175,7 @@
                        "Where KOPR In " & _Filtro_Productos & vbCrLf &
                        "And KOPR In (Select KOPR From MAEST " &
                        "Where EMPRESA = '" & _Empresa_Origen & "' And KOSU = '" & _Sucursal_Origen & "' And KOBO = '" & _Bodega_Origen & "' And STFI1 > 0)"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Cadena_ConexionSQL_Server = _Cadena_ConexionSQL_Server_Original
 

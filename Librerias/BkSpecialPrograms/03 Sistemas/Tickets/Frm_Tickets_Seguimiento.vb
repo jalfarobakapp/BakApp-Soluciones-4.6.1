@@ -176,7 +176,7 @@ Public Class Frm_Tickets_Seguimiento
                        "Id_Ticket In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tickets Where Id_Raiz = " & _Cl_Tickets.Zw_Stk_Tickets.Id_Raiz & ")" & vbCrLf &
                        "Order By Id_Ticket,Fecha"
 
-        _Tbl_Acciones = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Acciones = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 
@@ -765,7 +765,7 @@ Public Class Frm_Tickets_Seguimiento
                        "From " & _Global_BaseBk & "Zw_Stk_Tickets_Asignado Asg" & vbCrLf &
                        "Left Join TABFU On KOFU = Asg.CodAgente " & vbCrLf &
                        "Where Id_Ticket = " & _Id_Ticket
-        Dim _Tbl_Agentes As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Agentes As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not CBool(_Tbl_Agentes.Rows.Count) Then
             MessageBoxEx.Show(Me, "No hay agentes asociados", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -997,7 +997,7 @@ Public Class Frm_Tickets_Seguimiento
                        "Id_Ticket In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tickets Where Id_Raiz = " & _Id_Raiz & ")" & vbCrLf &
                        "Order By Id_Ticket,Fecha"
 
-        Dim _Tbl_Documentos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Documentos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _UltNumero = String.Empty
 

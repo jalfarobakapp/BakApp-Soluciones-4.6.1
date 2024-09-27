@@ -23,7 +23,7 @@ Public Class Frm_Vales_Caja_01_MarcarDoc
 
         caract_combo(CmbTipoDoc)
         Consulta_sql = "SELECT TIDO as Padre,SUBSTRING(NOTIDO,1,7) as Hijo From TABTIDO Where TIDO In ('BLV','FCV')"
-        CmbTipoDoc.DataSource = _SQL.Fx_Get_Tablas(Consulta_sql)
+        CmbTipoDoc.DataSource = _SQL.Fx_Get_DataTable(Consulta_sql)
         CmbTipoDoc.SelectedValue = "BLV"
 
     End Sub
@@ -37,7 +37,7 @@ Public Class Frm_Vales_Caja_01_MarcarDoc
     Sub Sb_Buscar_Documento(ByVal _IdMaeedo As Integer)
 
         Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _IdMaeedo
-        _TblDocumento = _SQL.Fx_Get_Tablas(Consulta_sql)
+        _TblDocumento = _SQL.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Tido As String = _TblDocumento.Rows(0).Item("TIDO")
         Dim _Nudo As String = _TblDocumento.Rows(0).Item("NUDO")
@@ -48,7 +48,7 @@ Public Class Frm_Vales_Caja_01_MarcarDoc
         LblTotalBruto.Text = FormatCurrency(_TotalBruto, 0)
 
         Consulta_sql = "Select * From MAEEN Where KOEN = '" & _CodEntidad & "' And SUEN = '" & _SucEntidad & "'"
-        _TblEntDocumento = _SQL.Fx_Get_Tablas(Consulta_sql)
+        _TblEntDocumento = _SQL.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblEntDocumento.Rows.Count) Then
 
@@ -106,7 +106,7 @@ Public Class Frm_Vales_Caja_01_MarcarDoc
         If CBool(_Idmaeedo) Then
 
             Consulta_sql = "Select * From Zw_Vales_Enc Where Id_Doc_As = " & _Idmaeedo
-            Dim _Tbl_Vale As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Vale As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
 
             If CBool(_Tbl_Vale.Rows.Count) Then
 

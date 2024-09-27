@@ -34,14 +34,14 @@ Public Class Frm_Pocket_Equipos
         Dim Union = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "UNION" & vbCrLf
         Consulta_sql = Union & "SELECT KOFU AS Padre,Ltrim(Rtrim(NOKOFU))+' - '+KOFU AS Hijo FROM TABFU" & vbCrLf & _
                       "ORDER BY Hijo"
-        Cmb_Usuario.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Usuario.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Usuario.SelectedValue = ""
 
         caract_combo(Cmb_Modalidad)
         Union = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "UNION" & vbCrLf
         Consulta_sql = Union & "SELECT MODALIDAD AS Padre,MODALIDAD AS Hijo FROM TABFU" & vbCrLf & _
                       "ORDER BY Hijo"
-        Cmb_Modalidad.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Modalidad.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Modalidad.SelectedValue = ""
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Estaciones_Poswi" & vbCrLf & _

@@ -37,7 +37,7 @@ Public Class Frm_Ver_Documentos_Recargos_Asociados
                             Inner Join MAEDDO Ddo_Rec On Ddo_Rec.IDMAEDDO = Rec.IDDDODCR
                                 Left Join MAEEN On Ddo_Rec.ENDO = KOEN And Ddo_Rec.SUENDO = SUEN
                         Where Rec.IDMAEEDO = " & _Idmaeedo & " And Rec.NULIDO = '" & _Nulido & "'"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

@@ -54,7 +54,7 @@ Public Class Frm_St_CotizacionesxOT
 
         '_Ds_Ot = _Sql.Fx_Get_DataSet(Consulta_sql)
 
-        _Tbl_Documentos = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Documentos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

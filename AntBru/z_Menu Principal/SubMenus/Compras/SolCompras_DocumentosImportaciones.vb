@@ -38,14 +38,16 @@ Public Class SolCompras_DocumentosImportaciones
 
         End If
 
-        If Fx_Revisar_Taza_Cambio(_Fm_Menu_Padre) Then
+        Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(_Fm_Menu_Padre)
 
-            Dim Fm As New Frm_Formulario_Documento("OCC", csGlobales.Enum_Tipo_Documento.Compra, False, False, True)
-            Fm.Pro_SubTido = "IMP"
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
-
+        If Not _Msj_Tsc.EsCorrecto Then
+            Return
         End If
+
+        Dim Fm As New Frm_Formulario_Documento("OCC", csGlobales.Enum_Tipo_Documento.Compra, False, False, True)
+        Fm.Pro_SubTido = "IMP"
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 

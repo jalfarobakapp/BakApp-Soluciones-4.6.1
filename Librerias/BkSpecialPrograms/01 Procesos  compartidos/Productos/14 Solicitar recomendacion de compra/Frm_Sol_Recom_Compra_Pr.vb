@@ -282,7 +282,7 @@ Public Class Frm_Sol_Recom_Compra_Pr
 
         Consulta_sql = "Select CodUsuario From " & _Global_BaseBk & "ZW_PermisosVsUsuarios" & vbCrLf &
                        "Where CodPermiso = '" & _Codpermiso & "'"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
         Dim _Filtro_Usuarios_NOT_In As String
 
         If CBool(_Tbl.Rows.Count) Then

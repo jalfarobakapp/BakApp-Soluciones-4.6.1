@@ -81,7 +81,7 @@ Public Class Frm_Demonio_05_FunConecExt
 
                         Drop Table #Paso_Diablitos"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

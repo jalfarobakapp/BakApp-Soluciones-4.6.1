@@ -134,7 +134,7 @@ Public Class Frm_Choferes_Empresa
         caract_combo(Cmb_Pais)
         Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf & _
                        "SELECT KOPA AS Padre,NOKOPA AS Hijo FROM TABPA ORDER BY Padre" ' WHERE SEMILLA = " & Actividad
-        Cmb_Pais.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Pais.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Pais.SelectedValue = _Pais
 
     End Sub
@@ -144,7 +144,7 @@ Public Class Frm_Choferes_Empresa
         caract_combo(Cmb_Ciudad)
         Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf & _
                        "SELECT KOCI AS Padre,' '+RTRIM(LTRIM(KOCI))+' -'+NOKOCI AS Hijo FROM TABCI WHERE KOPA = '" & _Pais & "'"
-        Cmb_Ciudad.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Ciudad.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Ciudad.SelectedValue = _Ciudad
 
     End Sub
@@ -154,7 +154,7 @@ Public Class Frm_Choferes_Empresa
         caract_combo(Cmb_Comuna)
         Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                        "SELECT KOCM AS Padre, NOKOCM AS Hijo FROM TABCM WHERE KOPA = '" & _Pais & "' AND KOCI = '" & _Ciudad & "'"
-        Cmb_Comuna.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Comuna.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Comuna.SelectedValue = _Comuna
 
     End Sub
@@ -165,7 +165,7 @@ Public Class Frm_Choferes_Empresa
 
         Dim _NvoNro_CodFuncionario As String
 
-        Dim _TblPaso = _Sql.Fx_Get_Tablas("Select Max(CodChofer) As CodChofer " & _
+        Dim _TblPaso = _Sql.Fx_Get_DataTable("Select Max(CodChofer) As CodChofer " & _
                                           "From " & _Global_BaseBk & "Zw_TblChoferes_Empresa") ' cn1, "MAX(Nro_SOC)", _Global_BaseBk & "ZW_SOC_Encabezado", "Stand_By = " & Stby)
 
         If CBool(_TblPaso.Rows.Count) Then
@@ -193,7 +193,7 @@ Public Class Frm_Choferes_Empresa
                        "FROM " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf & _
                        "WHERE Tabla = 'LICENCIA_COND'" & vbCrLf & _
                        "Order by Padre"
-        Dim _TblLicencia As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblLicencia As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         caract_combo(Cmb_Licencia)
         Cmb_Licencia.DataSource = _TblLicencia
@@ -302,7 +302,7 @@ Public Class Frm_Choferes_Empresa
 
         Consulta_sql = "Select Nro_CRV From " & _Global_BaseBk & "Zw_CRV_Viajes Where CodChofer = '" & _CodChofer & "'"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl.Rows.Count) Then
 

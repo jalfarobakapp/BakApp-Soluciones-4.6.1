@@ -55,7 +55,7 @@ Public Class Frm_Codigos_Alternativos
                        "Order By KOPR,KOPRAL" & vbCrLf &
                        "Drop Table #Paso"
 
-        _Tbl_Tablcodal = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Tablcodal = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
             .DataSource = _Tbl_Tablcodal

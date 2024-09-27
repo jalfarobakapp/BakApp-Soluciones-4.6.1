@@ -21,7 +21,7 @@ Public Class Frm_Ranking_Menu
 
         caract_combo(CmbListaDeCostos)
         Consulta_sql = "SELECT KOLT AS Padre,KOLT+'-'+NOKOLT AS Hijo FROM TABPP WHERE TILT = 'C'"
-        CmbListaDeCostos.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        CmbListaDeCostos.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
     End Sub
@@ -125,7 +125,7 @@ Public Class Frm_Ranking_Menu
         Fm.Show()
 
         Consulta_sql = "Select KOPR,KOPRTE,KOPRRA,NOKOPR From MAEPR WHERE TIPR IN ('FPN','FIN','FPS','FUN','FUS')"
-        Dim _Tbl_Producto As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Producto As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
         Dim Filas_t As Long = _Tbl_Producto.Rows.Count
 
         If Not CBool(Filas_t) Then
@@ -188,7 +188,7 @@ Public Class Frm_Ranking_Menu
             ' If Not  _Sql.Ej_consulta_IDU(Consulta_Sql) Then
             'Return Nothing
             'End If
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Fm.Close()
             Fm.Dispose()
@@ -233,7 +233,7 @@ Public Class Frm_Ranking_Menu
                        "Order by " & CampoRk & " Desc"
 
         Dim Tabla As DataTable
-        Tabla = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Tabla = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim Suma As Double = 0
         Dim NroFila = 0
@@ -277,7 +277,7 @@ Public Class Frm_Ranking_Menu
         Consulta_sql = "Select *,Cast('' As Varchar(5)) As Star2 From " & _Global_BaseBk & "Zw_Prod_Ranking" & vbCrLf &
                       "Order by Ranking_Top"
 
-        Dim _TblProductos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblProductos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim Fm As New Frm_Ranking_Resultado(_TblProductos)
         Fm.ShowDialog(Me)

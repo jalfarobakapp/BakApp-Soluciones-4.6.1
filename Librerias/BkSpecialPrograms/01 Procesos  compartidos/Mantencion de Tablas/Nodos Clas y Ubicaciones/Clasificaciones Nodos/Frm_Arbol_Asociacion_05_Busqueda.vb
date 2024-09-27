@@ -178,7 +178,7 @@ Public Class Frm_Arbol_Asociacion_05_Busqueda
                        "Where 1 > 0 And Identificacdor_NodoPadre = " & _Codigo_Nodo & vbCrLf & _Sql_Clas_Unica & vbCrLf &
                        "Order by Descripcion"
 
-        Dim _TblHijos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblHijos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Fila As DataRow In _TblHijos.Rows
 

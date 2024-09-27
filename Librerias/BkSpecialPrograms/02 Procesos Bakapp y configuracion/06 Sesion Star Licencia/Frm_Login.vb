@@ -178,6 +178,12 @@ Public Class Frm_Login
         Me.WindowState = FormWindowState.Normal
         Me.StartPosition = FormStartPosition.CenterScreen
         TxtxPassword.Focus()
+
+        If Global_Thema = Enum_Themas.Oscuro Then
+            Me.ReflectionLabel2.Text = "<b><font size=""+3"">C<font color=""#B4C6E7"">ontraseña (Random)</font></font></b>"
+            Me.ReflectionLabel1.Text = "<b><font size=""+3"">N<font color=""#B4C6E7"">ombre de usuario</font></font></b>"
+        End If
+
     End Sub
 
     Function Fx_Activar_Deactivar_Teclado(_Teclado As Boolean)
@@ -257,7 +263,7 @@ Public Class Frm_Login
             If _KeyReg = _Key_Base Then
 
                 Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Licencia Where Rut = '" & _RutEmpresa01 & "'"
-                Dim _TblLicencia As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblLicencia As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 If CBool(_TblLicencia.Rows.Count) Then
                     With _TblLicencia.Rows(0)
@@ -339,7 +345,7 @@ Public Class Frm_Login
 
         Consulta_sql = "Select Distinct Ce.EMPRESA As Padre,Ce.EMPRESA+' - '+Cp.RAZON As Hijo
                         Into #Paso
-                        From CONFIEST Ce
+                        From CONFIEST Ce WITH (NOLOCK)
                         Inner Join CONFIGP Cp On Cp.EMPRESA = Ce.EMPRESA 
                         Where MODALIDAD <> '  '
                         Order by Ce.EMPRESA
@@ -347,7 +353,7 @@ Public Class Frm_Login
                         Select Ce.EMPRESA,Cp.RAZON,'MO-' + MODALIDAD As PERMISO,MODALIDAD,Ts.NOKOSU,Tb.NOKOBO,ESUCURSAL,EBODEGA,ECAJA,ELISTAVEN,
                                NLISTAVEN,ELISTACOM,NLISTACOM,ELISTAINT,NLISTAINT
                         Into #Paso1
-                        From CONFIEST Ce
+                        From CONFIEST Ce WITH (NOLOCK)
                         Inner Join CONFIGP Cp On Cp.EMPRESA = Ce.EMPRESA 
                         Left Join TABSU Ts On Ts.EMPRESA = Ce.EMPRESA And Ts.KOSU = Ce.ESUCURSAL
                         Left Join TABBO Tb On Tb.EMPRESA = Ce.EMPRESA And Tb.KOSU = Ce.ESUCURSAL And Tb.KOBO = Ce.EBODEGA
@@ -364,7 +370,7 @@ Public Class Frm_Login
                         Drop Table #Paso
                         Drop Table #Paso1"
 
-        Dim _Tbl_Modalidades As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Modalidades As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not CBool(_Tbl_Modalidades.Rows.Count) Then
 

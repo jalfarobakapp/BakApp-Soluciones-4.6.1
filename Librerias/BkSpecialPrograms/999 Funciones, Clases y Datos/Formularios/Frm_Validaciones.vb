@@ -170,12 +170,15 @@ Namespace LsValiciones
         Public Property Detalle As String = String.Empty
         Public Property Mensaje As String = String.Empty
         Public Property Resultado As String = String.Empty
-        Public Property Tag As String
+        Public Property Tag As Object
         Public Property UsarImagen As Boolean
         Public Property NombreImagen As String = String.Empty
         Public Property Icono As Object
         Public Property Cancelado As Boolean
         Public Property MostrarMensaje As Boolean = True
+        Public Property Cerrar As Boolean
+        Public Property ErrorDeConexionSQL As Boolean
+        Public Property HuboOtroError As Boolean
 
     End Class
 
@@ -186,7 +189,6 @@ Namespace LsValiciones
         Public Property Ancho As Integer
 
     End Class
-
 
 End Namespace
 

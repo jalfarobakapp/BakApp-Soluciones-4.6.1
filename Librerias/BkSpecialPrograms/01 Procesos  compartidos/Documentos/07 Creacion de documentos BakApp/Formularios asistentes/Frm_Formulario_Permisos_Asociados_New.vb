@@ -635,7 +635,7 @@ Public Class Frm_Formulario_Permisos_Asociados_New
 
         Consulta_sql = "Select CodUsuario From " & _Global_BaseBk & "ZW_PermisosVsUsuarios" & vbCrLf &
                        "Where CodPermiso = '" & _Codpermiso & "'"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
         Dim _Filtro_Usuarios_NOT_In As String
 
         If CBool(_Tbl.Rows.Count) Then
@@ -799,7 +799,7 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                         _Row_Remota = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Casi_DocDet Where Id_DocEnc = " & _Id_DocEnc & " Order By NroLinea"
-                        Dim _Tbl_Zw_Casi_DocDet As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                        Dim _Tbl_Zw_Casi_DocDet As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                         For Each _FilaR As DataRow In _Tbl_Zw_Casi_DocDet.Rows
 
@@ -875,7 +875,7 @@ Public Class Frm_Formulario_Permisos_Asociados_New
 
         Consulta_sql = "Select CodUsuario From " & _Global_BaseBk & "ZW_PermisosVsUsuarios" & vbCrLf &
                        "Where CodPermiso = '" & _Codpermiso & "' And CodUsuario <> '" & FUNCIONARIO & "'"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
         Dim _Filtro_Usuarios_NOT_In As String
 
         If CBool(_Tbl.Rows.Count) Then

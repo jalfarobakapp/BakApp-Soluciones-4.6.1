@@ -20,6 +20,12 @@ Public Class Frm_Filtro_Especial_Productos
 
     Dim _Aceptar As Boolean
 
+    Public Property BuscarSpfmfmsubfm As Boolean = False
+    Public Property Ls_SelSuperFamilias As New List(Of SelSuperFamilias)
+    Public Property Ls_SelFamilias As New List(Of SelFamilias)
+    Public Property Ls_SelSubFamilias As New List(Of SelSubFamilias)
+    Public Property Ls_SelArbol_Asociaciones As New List(Of Zw_TblArbol_Asociaciones)
+
     Public ReadOnly Property Pro_Aceptar() As Boolean
 
     Public Property Pro_Tbl_Filtro_Productos() As DataTable
@@ -143,6 +149,18 @@ Public Class Frm_Filtro_Especial_Productos
             End If
         End Set
     End Property
+    Public Property Pro_Filtro_Bakapp_Todas() As Boolean
+        Get
+            Return Rdb_Bakapp_Todas.Checked
+        End Get
+        Set(value As Boolean)
+            If value Then
+                Rdb_Bakapp_Todas.Checked = True
+            Else
+                Rdb_Bakapp_Algunas.Checked = True
+            End If
+        End Set
+    End Property
 
     Public Property Pro_Filtro_Extra_Productos()
         Get
@@ -204,6 +222,34 @@ Public Class Frm_Filtro_Especial_Productos
 
     End Sub
 
+    Private Sub Btn_Productos_Algunos_Click(sender As Object, e As EventArgs) Handles Btn_Productos_Algunos.Click
+        Call Rdb_CheckedChanged(Rdb_Productos_Algunos, Nothing)
+    End Sub
+
+    Private Sub Btn_Clasificacion_Libre_Algunas_Click(sender As Object, e As EventArgs) Handles Btn_Clasificacion_Libre_Algunas.Click
+        Call Rdb_CheckedChanged(Rdb_Clasificacion_Libre_Algunas, Nothing)
+    End Sub
+
+    Private Sub Btn_Marcas_Algunas_Click(sender As Object, e As EventArgs) Handles Btn_Marcas_Algunas.Click
+        Call Rdb_CheckedChanged(Rdb_Marcas_Algunas, Nothing)
+    End Sub
+
+    Private Sub Btn_Super_Familias_Algunas_Click(sender As Object, e As EventArgs) Handles Btn_Super_Familias_Algunas.Click
+        Call Rdb_CheckedChanged(Rdb_Super_Familias_Algunas, Nothing)
+    End Sub
+
+    Private Sub Btn_Rubros_Algunos_Click(sender As Object, e As EventArgs) Handles Btn_Rubros_Algunos.Click
+        Call Rdb_CheckedChanged(Rdb_Rubros_Algunos, Nothing)
+    End Sub
+
+    Private Sub Btn_Zonas_Algunas_Click(sender As Object, e As EventArgs) Handles Btn_Zonas_Algunas.Click
+        Call Rdb_CheckedChanged(Rdb_Zonas_Algunas, Nothing)
+    End Sub
+
+    Private Sub Btn_Bakapp_Algunas_Click(sender As Object, e As EventArgs) Handles Btn_Bakapp_Algunas.Click
+        Call Rdb_CheckedChanged(Rdb_Bakapp_Algunas, Nothing)
+    End Sub
+
     Private Sub Frm_Filtro_Especial_Productos_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         AddHandler Rdb_Productos_Algunos.CheckedChanged, AddressOf Rdb_CheckedChanged
@@ -212,8 +258,17 @@ Public Class Frm_Filtro_Especial_Productos
         AddHandler Rdb_Rubros_Algunos.CheckedChanged, AddressOf Rdb_CheckedChanged
         AddHandler Rdb_Super_Familias_Algunas.CheckedChanged, AddressOf Rdb_CheckedChanged
         AddHandler Rdb_Zonas_Algunas.CheckedChanged, AddressOf Rdb_CheckedChanged
+        AddHandler Rdb_Bakapp_Algunas.CheckedChanged, AddressOf Rdb_CheckedChanged
 
         Panel_Otros_Filtros.Enabled = Rdb_Productos_Todos.Checked
+
+        Btn_Productos_Algunos.Visible = Rdb_Productos_Algunos.Checked
+        Btn_Clasificacion_Libre_Algunas.Visible = Rdb_Clasificacion_Libre_Algunas.Checked
+        Btn_Marcas_Algunas.Visible = Rdb_Marcas_Algunas.Checked
+        Btn_Super_Familias_Algunas.Visible = Rdb_Super_Familias_Algunas.Checked
+        Btn_Rubros_Algunos.Visible = Rdb_Rubros_Algunos.Checked
+        Btn_Zonas_Algunas.Visible = Rdb_Zonas_Algunas.Checked
+        Btn_Bakapp_Algunas.Visible = Rdb_Bakapp_Algunas.Checked
 
     End Sub
 
@@ -226,6 +281,7 @@ Public Class Frm_Filtro_Especial_Productos
         Dim _Nombre_Control = CType(sender, Control).Name
         Dim _Tbl_Filtro As Object
         Dim _Sql_Filtro_Condicion_Extra = String.Empty
+        Dim _Incorporar_Vacias As Boolean = True
 
         Panel_Otros_Filtros.Enabled = Rdb_Productos_Todos.Checked
 
@@ -237,6 +293,8 @@ Public Class Frm_Filtro_Especial_Productos
                 _Tabla_Fl = Enum_Tabla_Fl._Productos
                 _Control_Todas = Rdb_Productos_Todos
                 _Sql_Filtro_Condicion_Extra = _Filtro_Extra_Productos
+                Btn_Productos_Algunos.Visible = _Control.Checked
+                _Incorporar_Vacias = False
 
             Case "Rdb_Clasificacion_Libre_Algunas"
 
@@ -245,6 +303,7 @@ Public Class Frm_Filtro_Especial_Productos
                 _Sql_Filtro_Condicion_Extra = "And KOTABLA = 'CLALIBPR'"
                 _Control_Todas = Rdb_Clasificacion_Masisa_Todas
                 _Sql_Filtro_Condicion_Extra = _Filtro_Extra_Clalibpr
+                Btn_Clasificacion_Libre_Algunas.Visible = _Control.Checked
 
             Case "Rdb_Marcas_Algunas"
 
@@ -252,6 +311,7 @@ Public Class Frm_Filtro_Especial_Productos
                 _Tabla_Fl = Enum_Tabla_Fl._Tabla_Marcas
                 _Control_Todas = Rdb_Marcas_Todas
                 _Sql_Filtro_Condicion_Extra = _Filtro_Extra_Marcas
+                Btn_Marcas_Algunas.Visible = _Control.Checked
 
             Case "Rdb_Super_Familias_Algunas"
 
@@ -259,6 +319,7 @@ Public Class Frm_Filtro_Especial_Productos
                 _Tabla_Fl = Enum_Tabla_Fl._Tabla_Super_Familia
                 _Control_Todas = Rdb_Super_Familias_Todas
                 _Sql_Filtro_Condicion_Extra = _Filtro_Extra_Super_Familias
+                Btn_Super_Familias_Algunas.Visible = _Control.Checked
 
             Case "Rdb_Rubros_Algunos"
 
@@ -266,6 +327,7 @@ Public Class Frm_Filtro_Especial_Productos
                 _Tabla_Fl = Enum_Tabla_Fl._Tabla_Rubros
                 _Control_Todas = Rdb_Rubros_Todos
                 _Sql_Filtro_Condicion_Extra = _Filtro_Extra_Rubro
+                Btn_Rubros_Algunos.Visible = _Control.Checked
 
             Case "Rdb_Zonas_Algunas"
 
@@ -273,12 +335,59 @@ Public Class Frm_Filtro_Especial_Productos
                 _Tabla_Fl = Enum_Tabla_Fl._Tabla_Zonas
                 _Control_Todas = Rdb_Zonas_Todas
                 _Sql_Filtro_Condicion_Extra = _Filtro_Extra_Zonas
+                Btn_Zonas_Algunas.Visible = _Control.Checked
+
+            Case "Rdb_Bakapp_Algunas"
+
+                Btn_Bakapp_Algunas.Visible = _Control.Checked
+                _Control_Todas = Rdb_Bakapp_Todas
 
         End Select
 
         If _Control.Checked Then
 
-            Dim Fm As New Frm_Filtro_Especial_Informes(_Tabla_Fl, True)
+            If BuscarSpfmfmsubfm AndAlso _Nombre_Control = "Rdb_Super_Familias_Algunas" Then
+
+                Dim Fm_fm As New Frm_Familias_Lista(Frm_Familias_Lista.Enum_Tipo_Vista_Familias.Super_Familias)
+                Fm_fm.Ls_SelSuperFamilias = Ls_SelSuperFamilias
+                Fm_fm.ObligaSeleccionar = True
+                Fm_fm.Ls_SelFamilias = Ls_SelFamilias
+                Fm_fm.Ls_SelSubFamilias = Ls_SelSubFamilias
+                Fm_fm.ModoSeleccion = True
+                Fm_fm.ShowDialog(Me)
+
+                Ls_SelSuperFamilias = Fm_fm.Ls_SelSuperFamilias
+                Ls_SelFamilias = Fm_fm.Ls_SelFamilias
+                Ls_SelSubFamilias = Fm_fm.Ls_SelSubFamilias
+                Fm_fm.Dispose()
+
+                If Ls_SelSuperFamilias.Count = 0 Then
+                    _Control_Todas.Checked = True
+                End If
+
+                Return
+
+            End If
+
+            If _Nombre_Control = "Rdb_Bakapp_Algunas" Then
+
+                Dim Fm_As As New Frm_Arbol_Lista(True)
+                Fm_As.ModoRadioButton = True
+                Fm_As.ModoSeleccion = True
+                Fm_As.Ls_SelArbol_Asociaciones = Ls_SelArbol_Asociaciones
+                Fm_As.ShowDialog(Me)
+
+                If Fm_As.seleccionados Then
+                    Ls_SelArbol_Asociaciones = Fm_As.Ls_SelArbol_Asociaciones
+                End If
+
+                Fm_As.Dispose()
+
+                Return
+
+            End If
+
+            Dim Fm As New Frm_Filtro_Especial_Informes(_Tabla_Fl, _Incorporar_Vacias)
             Fm.Pro_Tbl_Filtro = _Tbl_Filtro
             Fm.Pro_Sql_Filtro_Condicion_Extra = _Sql_Filtro_Condicion_Extra
             Fm.ShowDialog(Me)

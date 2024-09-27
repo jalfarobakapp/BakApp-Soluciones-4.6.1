@@ -1,8 +1,4 @@
-﻿'Imports Lib_Bakapp_VarClassFunc
-Imports DevComponents.DotNetBar
-Imports DevComponents.DotNetBar.Schedule
-Imports DevComponents.Schedule.Model
-Imports DevComponents.DotNetBar.Rendering
+﻿Imports DevComponents.DotNetBar
 
 Public Class Frm_Imprimir_Cierres_Transbank
 
@@ -124,7 +120,7 @@ Public Class Frm_Imprimir_Cierres_Transbank
                       "--Select Sum(Monto) As Total From #Paso1" & vbCrLf &
                       "Select * From #Paso1 Order By FechaHora_Inicio" & vbCrLf &
                       "Drop table #Paso1"
-        Dim _Tbl_Detalle_Terminal = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Detalle_Terminal = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ExportarTabla_JetExcel_Tabla(_Tbl_Detalle_Terminal, Me, "Detalle Transbank " & Format(_Fecha_Cierre, "dd_MM_yyyy"))
 
@@ -153,7 +149,7 @@ Public Class Frm_Imprimir_Cierres_Transbank
                         vbCrLf &
                        "Select * From #Paso1" & vbCrLf &
                        "Drop table #Paso1"
-        Dim _Tbl_Detalle_Terminal = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Detalle_Terminal = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl_Detalle_Terminal.Rows.Count) Then
             Dim _Cl_Voucher As New Clas_Imprimir_Voucher
@@ -166,5 +162,6 @@ Public Class Frm_Imprimir_Cierres_Transbank
         End If
 
     End Sub
+
 
 End Class

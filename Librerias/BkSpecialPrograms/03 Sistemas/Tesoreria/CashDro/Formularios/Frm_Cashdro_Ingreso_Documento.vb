@@ -281,10 +281,13 @@ Public Class Frm_Cashdro_Ingreso_Documento
                         Dim _Nro_Documento As String = Traer_Numero_Documento(_Tido, , Modalidad)
                         Dim _Tidoelec As Integer = CInt(Fx_Es_Electronico(_Tido)) * -1
 
-                        If Not Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nro_Documento, False) Then
+                        Dim _Mensaje As New LsValiciones.Mensajes
+
+                        _Mensaje = Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nro_Documento, False)
+
+                        If Not _Mensaje.EsCorrecto Then
                             Return
                         End If
-
 
                         Dim _Tipo_De_Pago As String = "EFV"
 
@@ -1692,7 +1695,7 @@ Public Class Frm_Cashdro_Ingreso_Documento
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_CashDro_Operaciones" & vbCrLf &
                        "Where Idmaeedo = " & _Idmaeedo & " And Pagado_Nota_de_credito = 1"
 
-        Dim _TblNCV As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblNCV As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Fila As DataRow In _TblNCV.Rows
 
@@ -2079,7 +2082,7 @@ Public Class Frm_Cashdro_Ingreso_Documento
                        "WHERE EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' AND NUDO = '" & _Nudo & "'" & vbCrLf &
                        "AND TIDO IN ( 'BLV','BSV','FCV','FDV','NCV' )"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not (_Tbl Is Nothing) Then
 
@@ -2324,12 +2327,12 @@ Public Class Frm_Cashdro_Ingreso_Documento
         ' ACTIVACION DE ORDENES DE DESPACHO *---------------------------------------------------------
 
         Consulta_sql = "Select IDRST From MAEDDO Where IDMAEEDO = " & _Idmaeedo
-        Dim _TblDetalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblDetalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
         Dim _Filtro_Idmaeddo_Dori = Generar_Filtro_IN(_TblDetalle, "", "IDRST", True, False, "")
 
         Consulta_sql = "Select Id_Despacho From " & _Global_BaseBk & "Zw_Despachos_Doc_Det 
                             Where Idmaeedo In (Select IDMAEEDO From MAEDDO Where IDMAEDDO In " & _Filtro_Idmaeddo_Dori & ") Or Idmaeedo = " & _Idmaeedo
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Fl As DataRow In _Tbl.Rows
 
@@ -2361,7 +2364,7 @@ Public Class Frm_Cashdro_Ingreso_Documento
         Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_CashDro_Operaciones" & vbCrLf &
                        "Where Pagado_CashDro = 1 And Pagado_Random = 0 And Idmaeedo <> 0 And Tipo_De_Pago = 'EFV'" & Space(1) &
                        "And posid = '" & _NombreEquipo & "' Order By Id Desc"
-        Dim _Tbl_Pagos_Pendientes As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Pagos_Pendientes As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         If CBool(_Tbl_Pagos_Pendientes.Rows.Count) Then
@@ -2470,7 +2473,7 @@ Public Class Frm_Cashdro_Ingreso_Documento
                        "Where Pagado_Transbank = 1 And Pagado_Random = 0 And Idmaeedo <> 0 And" & Space(1) &
                        "Tipo_De_Pago = 'TJV' And Error_Extraccion_Respuesta_Transbank = 0" & Space(1) &
                        "And posid = '" & _NombreEquipo & "' Order By Id Desc"
-        Dim _Tbl_Pagos_Pendientes As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Pagos_Pendientes As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Datos_Tarjeta
         Dim _Error_Extraccion_Respuesta_Transbank As Boolean
@@ -2677,7 +2680,7 @@ Public Class Frm_Cashdro_Ingreso_Documento
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_CashDro_Operaciones" & vbCrLf &
                        "Where Tipo_De_Pago in ('ncv','NCV') And" & Space(1) &
                        "Pagado_Nota_de_credito = 1 And Pagado_Random = 0 And Idmaeedo <> 0 And posid = '" & _NombreEquipo & "' And Vuelto_Entregado = 0 Order By Id Desc"
-        Dim _Tbl_Pagos_Pendientes As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Pagos_Pendientes As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         If CBool(_Tbl_Pagos_Pendientes.Rows.Count) Then
@@ -2796,7 +2799,7 @@ Public Class Frm_Cashdro_Ingreso_Documento
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_CashDro_Operaciones" & vbCrLf &
                        "Where Pagado_CashDro = 1 And Pagado_Random = 0 And Idmaeedo <> 0 And Tipo_De_Pago = 'EFC'" & Space(1) &
                        "And posid = '" & _NombreEquipo & "' Order by Id Desc"
-        Dim _Tbl_Pagos_Pendientes As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Pagos_Pendientes As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Row_Operacion As DataRow In _Tbl_Pagos_Pendientes.Rows
 
@@ -2821,7 +2824,7 @@ Public Class Frm_Cashdro_Ingreso_Documento
                            "LEFT JOIN TABLUG ON TABLUG.LUVT=EDO.LUVTDO" & vbCrLf &
                            "Where EDO.IDMAEEDO = " & _Idmaeedo
 
-            Dim _Tbl_NCV As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_NCV As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Endo = _Tbl_NCV.Rows(0).Item("ENDO")
             Dim _Nudo = _Tbl_NCV.Rows(0).Item("NUDO")
@@ -2893,7 +2896,7 @@ Public Class Frm_Cashdro_Ingreso_Documento
                        "FROM MAEDPCE WITH ( NOLOCK ) " & vbCrLf &
                        "WHERE 1 = 0"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Consulta_sql = "Select TIDO,NUDO,ENDO From MAEEDO Where IDMAEEDO = " & _Idmaeedo_DOC
         Dim _Row_NewMaeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)

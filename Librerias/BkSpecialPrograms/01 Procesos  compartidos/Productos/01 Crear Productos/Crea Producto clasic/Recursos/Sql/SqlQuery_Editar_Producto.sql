@@ -203,7 +203,7 @@ Select
 @COLEGPR = '#colegpr#',
 @MORGPR = '#morgpr#',
 --@FECRPR = '#fecrpr#',
-@FEMOPR = '#femopr#',
+@FEMOPR = Getdate(), --'#femopr#',
 @LOTECAJA = #lotecaja#,
 @STTR1 = #sttr1#,
 @STTR2 = #sttr2#,
@@ -362,4 +362,6 @@ PMIFRS = @PMIFRS,
 FEPMIFRS = @FEPMIFRS
 
 Where KOPR = @KOPR
+
+
 

@@ -13,17 +13,17 @@ Public Class Cl_Arbol_Asociaciones
 
     Function Fx_Llenar_Asociacion(_Codigo_Nodo As Integer) As LsValiciones.Mensajes
 
-        Dim _Mensaje_Stem As New LsValiciones.Mensajes
+        Dim _Mensaje As New LsValiciones.Mensajes
 
         Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _Codigo_Nodo
         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
         If IsNothing(_Row) Then
 
-            _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Mensaje = "No se encontro el registro en la tabla Zw_TblArbol_Asociaciones con el Codigo_Nodo " & _Codigo_Nodo
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = "No se encontro el registro en la tabla Zw_TblArbol_Asociaciones con el Codigo_Nodo " & _Codigo_Nodo
 
-            Return _Mensaje_Stem
+            Return _Mensaje
 
         End If
 
@@ -42,16 +42,17 @@ Public Class Cl_Arbol_Asociaciones
 
         End With
 
-        _Mensaje_Stem.EsCorrecto = True
-        _Mensaje_Stem.Mensaje = "Registro encontrado."
+        _Mensaje.EsCorrecto = True
+        _Mensaje.Mensaje = "Registro encontrado."
+        _Mensaje.Tag = Zw_TblArbol_Asociaciones
 
-        Return _Mensaje_Stem
+        Return _Mensaje
 
     End Function
 
     Function Fx_Grabar_Clasificacion() As LsValiciones.Mensajes
 
-        Dim _Mensaje_Stem As New LsValiciones.Mensajes
+        Dim _Mensaje As New LsValiciones.Mensajes
 
         Consulta_Sql = String.Empty
 
@@ -121,17 +122,17 @@ Public Class Cl_Arbol_Asociaciones
             myTrans.Commit()
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
-            _Mensaje_Stem.EsCorrecto = True
-            _Mensaje_Stem.Detalle = "Grabar"
-            _Mensaje_Stem.Mensaje = "Documento grabado correctamente"
-            _Mensaje_Stem.Icono = MessageBoxIcon.Information
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Detalle = "Grabar"
+            _Mensaje.Mensaje = "Documento grabado correctamente"
+            _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
 
-            _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Detalle = "Error al grabar"
-            _Mensaje_Stem.Mensaje = ex.Message
-            _Mensaje_Stem.Icono = MessageBoxIcon.Stop
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Detalle = "Error al grabar"
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
             Zw_TblArbol_Asociaciones.Identificador_Nodo = 0
             Zw_TblArbol_Asociaciones.Codigo_Nodo = 0
 
@@ -143,13 +144,13 @@ Public Class Cl_Arbol_Asociaciones
 
         End Try
 
-        Return _Mensaje_Stem
+        Return _Mensaje
 
     End Function
 
     Function Fx_Eliminar_Clasificacion() As LsValiciones.Mensajes
 
-        Dim _Mensaje_Stem As New LsValiciones.Mensajes
+        Dim _Mensaje As New LsValiciones.Mensajes
 
         Consulta_Sql = String.Empty
 
@@ -179,17 +180,17 @@ Public Class Cl_Arbol_Asociaciones
             myTrans.Commit()
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
-            _Mensaje_Stem.EsCorrecto = True
-            _Mensaje_Stem.Detalle = "Eliminar"
-            _Mensaje_Stem.Mensaje = "Clasificación y sub clasificaciones eliminadas correctamente"
-            _Mensaje_Stem.Icono = MessageBoxIcon.Information
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Detalle = "Eliminar"
+            _Mensaje.Mensaje = "Clasificación y sub clasificaciones eliminadas correctamente"
+            _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
 
-            _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Detalle = "Error al grabar"
-            _Mensaje_Stem.Mensaje = ex.Message
-            _Mensaje_Stem.Icono = MessageBoxIcon.Stop
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Detalle = "Error al grabar"
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
             Zw_TblArbol_Asociaciones.Identificador_Nodo = 0
             Zw_TblArbol_Asociaciones.Codigo_Nodo = 0
 
@@ -201,7 +202,7 @@ Public Class Cl_Arbol_Asociaciones
 
         End Try
 
-        Return _Mensaje_Stem
+        Return _Mensaje
 
     End Function
 

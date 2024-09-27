@@ -247,11 +247,11 @@ Public Class Frm_Inf_Vencimientos_Mes
 
         End If
 
-        _Tbl_Informe = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Informe = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Consulta_sql = "SELECT DISTINCT FEVE FROM MAEVEN WHERE IDMAEVEN IN " & vbCrLf &
                        "(Select Idmaeven From " & _Global_BaseBk & "Zw_Pago_Prov_Autoriza_02_Det)"
-        _Tbl_Marca_Calendario = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Marca_Calendario = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         Me.Text = "Informe de vencimientos de " & _Informe.ToString & ", Fecha desde: " & _Fecha_Inicio & " Hasta " & _Fecha_Fin
@@ -481,50 +481,46 @@ Public Class Frm_Inf_Vencimientos_Mes
         End If
     End Sub
 
-
-
     Private Sub Btn_Informe_Por_Entidad_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Informe_Por_Entidad.Click
 
-        If _Informe = Tipo_Informe.Compras Then
-            Consulta_sql = My.Resources.Recursos_Inf_Compras_Vencimiento.Informe_Vencimientos_Compras_Anuales & vbCrLf & vbCrLf
-        ElseIf _Informe = Tipo_Informe.Ventas Then
-            Consulta_sql = My.Resources.Recursos_Inf_Compras_Vencimiento.Informe_Vencimientos_Ventas_Anuales & vbCrLf & vbCrLf
-        End If
+        Try
+            Me.Enabled = False
+            If _Informe = Tipo_Informe.Compras Then
+                Consulta_sql = My.Resources.Recursos_Inf_Compras_Vencimiento.Informe_Vencimientos_Compras_Anuales & vbCrLf & vbCrLf
+            ElseIf _Informe = Tipo_Informe.Ventas Then
+                Consulta_sql = My.Resources.Recursos_Inf_Compras_Vencimiento.Informe_Vencimientos_Ventas_Anuales & vbCrLf & vbCrLf
+            End If
 
-        Dim _F_Inicio As Date = Calendario_Mes.DateSelectionStart.GetValueOrDefault()
-        Dim _F_Fin As Date = DateAdd(DateInterval.Day, -1, Calendario_Mes.DateSelectionEnd.GetValueOrDefault())
+            Dim Fm As New Frm_Inf_Vencimientos_Mes_Detalle_Diario(Consulta_sql,
+                                                                  _Fecha_Inicio,
+                                                                  _Fecha_Fin,
+                                                                  _Valor_Maximo_Marca,
+                                                                  _Id_Correo,
+                                                                  _Informe)
 
-        If _F_Inicio = Calendario_Mes.DateSelectionEnd.GetValueOrDefault() Then
-            _F_Fin = _F_Inicio
-        End If
+            Fm.Text = "Informe de vencimientos " & _Informe.ToString
+            Fm._Tipo_Informe = Frm_Inf_Vencimientos_Mes_Detalle_Diario.Tipo_Informe.Mensual
+            Fm.Pro_Chk_Deuda_Efectiva = _Chk_Deuda_Efectiva
 
-        Dim Fm As New Frm_Inf_Vencimientos_Mes_Detalle_Diario(Consulta_sql,
-                                                              _Fecha_Inicio,
-                                                              _Fecha_Fin,
-                                                              _Valor_Maximo_Marca,
-                                                              _Id_Correo,
-                                                              _Informe)
+            Fm.Pro_Filtro_Maeedo = _Filtro_Maeedo
+            Fm.Pro_Filtro_Maedpce = _Filtro_Maedpce
 
-        Fm.Text = "Informe de vencimientos " & _Informe.ToString
-        Fm._Tipo_Informe = Frm_Inf_Vencimientos_Mes_Detalle_Diario.Tipo_Informe.Mensual
-        Fm.Pro_Chk_Deuda_Efectiva = _Chk_Deuda_Efectiva
+            Fm.ShowDialog(Me)
 
-        Fm.Pro_Filtro_Maeedo = _Filtro_Maeedo
-        Fm.Pro_Filtro_Maedpce = _Filtro_Maedpce
+            If Fm.Pro_Reprocesar_Informe Then '_Vencimientos_Cambiados Then
+                Sb_Ejecutar_Informe(_Fecha_Inicio, _Fecha_Fin)
+                Sb_Actualizar_Calendario(Progreso_Cont, Progreso_Porc)
+            End If
 
-        Fm.ShowDialog(Me)
+            Fm.Dispose()
 
-        If Fm.Pro_Reprocesar_Informe Then '_Vencimientos_Cambiados Then
-            Sb_Ejecutar_Informe(_Fecha_Inicio, _Fecha_Fin)
-            Sb_Actualizar_Calendario(Progreso_Cont, Progreso_Porc)
-        End If
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, "Error inesperado", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        Finally
+            Me.Enabled = True
+        End Try
 
-        Fm.Dispose()
     End Sub
-
-
-
-
 
     Private Sub Btn_Informe_Consolidado_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Informe_Consolidado.Click
 

@@ -53,7 +53,7 @@ Public Class Frm_MantListas_Conf_Funciones
         Sb_Formato_Generico_Grilla(Grilla, 20, New Font("Tahoma", 8.5), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 
         Consulta_sql = "Select * From PNOMDIM Where DEPENDENCI In ('Por_maepr','Por_tabpp','Valor_docud','Valor_docue','Valor_propio','Por_maepr','Por_producto') "
-        Dim _Tbl_Campos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Campos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 
@@ -170,7 +170,7 @@ Public Class Frm_MantListas_Conf_Funciones
         Try
 
             Consulta_sql = "Select COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS Where TABLE_NAME = 'TABPRE'"
-            Dim _Tbl_Campos_Tabpre As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Campos_Tabpre As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _FColumnas As DataRow In _Tbl_Campos_Tabpre.Rows
 
@@ -180,7 +180,7 @@ Public Class Frm_MantListas_Conf_Funciones
             Next
 
             Consulta_sql = "Select CODIGO From PNOMDIM Where DEPENDENCI In ('Por_maepr','Por_tabpp','Valor_docud','Valor_docue','Valor_propio','Por_maepr','Por_producto') "
-            Dim _Tbl_Campos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Campos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _FColumnas As DataRow In _Tbl_Campos.Rows
 
@@ -290,7 +290,7 @@ Public Class Frm_MantListas_Conf_Funciones
                     _Calculo = Replace(_Calculo.ToString.ToUpper, _Campo_Ecu, 1)
 
                     Consulta_sql = "Select KOLT From TABPP"
-                    Dim _TblLtas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _TblLtas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     For Each _Fila As DataRow In _TblLtas.Rows
                         _Calculo = Replace(_Calculo, _Fila.Item("KOLT"), "")
@@ -317,7 +317,7 @@ Public Class Frm_MantListas_Conf_Funciones
             End If
 
             Consulta_sql = "Select KOLT From TABPP"
-            Dim _TblListas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblListas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _Fila As DataRow In _TblListas.Rows
                 _Fx = Replace(_Fx, _Fila.Item("KOLT"), "")

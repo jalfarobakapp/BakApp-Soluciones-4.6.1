@@ -161,7 +161,7 @@ Public Class Frm_Informe_Composicion_Stock_X_Productos
                            _Condicion & vbCrLf & _
                            "Order by KOPR,KOBO"
 
-            _Tbl_Informe_X_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Informe_X_Productos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             With Grilla
 

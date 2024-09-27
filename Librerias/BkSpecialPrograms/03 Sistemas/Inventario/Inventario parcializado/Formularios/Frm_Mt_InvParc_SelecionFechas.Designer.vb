@@ -343,7 +343,7 @@ Partial Class Frm_Mt_InvParc_SelecionFechas
         '
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 23
-        Me.GroupPanel1.Text = "Asjuetes"
+        Me.GroupPanel1.Text = "Ajustes"
         '
         'Grilla
         '

@@ -115,6 +115,8 @@ Public Class Frm_RegistrarEquipo
             TextBoxX1.FocusHighlightEnabled = False
         End If
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
 
     Private Sub Frm_RegistrarEquipo_Load(sender As Object, e As System.EventArgs) Handles Me.Load
@@ -134,7 +136,7 @@ Public Class Frm_RegistrarEquipo
             List_Impresoras.Items.Clear()
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Estaciones_Impresoras Where NombreEquipo = '" & LblNombreEquipo.Text & "'"
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _Fila As DataRow In _Tbl.Rows
                 List_Impresoras.Items.Add(_Fila.Item("Impresora"))
@@ -497,20 +499,20 @@ Public Class Frm_RegistrarEquipo
 
         caract_combo(Cmb_Modalidad_X_Defecto)
         Consulta_sql = "SELECT '' AS Padre,'' As Hijo Union" & vbCrLf &
-                       "SELECT MODALIDAD AS Padre,MODALIDAD AS Hijo FROM CONFIEST WHERE EMPRESA = '" & ModEmpresa & "'" & vbCrLf &
+                       "SELECT MODALIDAD AS Padre,MODALIDAD AS Hijo FROM CONFIEST WITH (NOLOCK) WHERE EMPRESA = '" & ModEmpresa & "'" & vbCrLf &
                        "AND MODALIDAD <> '  '"
-        Cmb_Modalidad_X_Defecto.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Modalidad_X_Defecto.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Modalidad_X_Defecto.SelectedValue = ""
 
         caract_combo(Cmb_Usuario_X_Defecto)
         Consulta_sql = "SELECT '' AS Padre,'' As Hijo Union" & vbCrLf &
                        "SELECT KOFU AS Padre,KOFU+'-'+NOKOFU AS Hijo FROM TABFU WHERE INACTIVO = 0"
-        Cmb_Usuario_X_Defecto.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Usuario_X_Defecto.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Usuario_X_Defecto.SelectedValue = ""
 
         caract_combo(Cmb_Empresa_X_Defecto)
         Consulta_sql = "SELECT EMPRESA AS Padre,RTRIM(LTRIM(RUT))+'-'+RAZON AS Hijo FROM CONFIGP"
-        Cmb_Empresa_X_Defecto.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Empresa_X_Defecto.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Empresa_X_Defecto.SelectedValue = ModEmpresa '"01"
 
 

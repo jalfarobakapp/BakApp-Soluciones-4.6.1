@@ -52,7 +52,7 @@ Public Class Frm_Crear_Entidad_Mt_Noficicaiones
 
         caract_combo(Cmb_Suen)
         Consulta_Sql = "Select SUEN As Hijo,SUEN As Padre From MAEEN Where KOEN = '" & _Koen & "'"
-        Cmb_Suen.DataSource = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Cmb_Suen.DataSource = _Sql.Fx_Get_DataTable(Consulta_Sql)
         Cmb_Suen.SelectedValue = _Suen
 
         Txt_Mailto.Text = _Mailto

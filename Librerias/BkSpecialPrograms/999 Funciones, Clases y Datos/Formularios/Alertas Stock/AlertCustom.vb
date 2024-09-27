@@ -372,7 +372,7 @@ Public Class AlertCustom
         _Row_Nodo_Clasificaciones = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Consulta_sql = "SELECT Distinct KOPR FROM MAEPR WHERE KOPR IN (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo_Nodo = " & _Codigo_Nodo & " And Codigo_Nodo <> 0)"
-        _TblProductos = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblProductos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If _TblProductos.Rows.Count > 1 Then
             Chk_Agrupar_Asociados.Enabled = True
@@ -433,7 +433,7 @@ Public Class AlertCustom
 
         End If
 
-        Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Filtro As String = Generar_Filtro_IN(_Tbl_Bodegas, "", "Cod", False, False, "'")
 
@@ -450,7 +450,7 @@ Public Class AlertCustom
         Consulta_sql = Replace(Consulta_sql, "#Tabla#", _Orden_Bod)
         Consulta_sql = Replace(Consulta_sql, "#Global_BaseBk#", _Global_BaseBk)
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

@@ -62,7 +62,7 @@ Public Class Frm_BuscarOT
 
         With Grilla_Pote
 
-            .DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            .DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             OcultarEncabezadoGrilla(Grilla_Pote, True)
 

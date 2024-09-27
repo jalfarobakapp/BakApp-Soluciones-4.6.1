@@ -12,6 +12,8 @@ Public Class Frm_OfDinamFicha
     Public Property Eliminado As Boolean
     Public Property Row_Maeeres As DataRow
 
+    Dim _Tbl_TipoOferta As DataTable
+
     Public Sub New(_Codigo As String)
 
         ' Esta llamada es exigida por el diseñador.
@@ -30,6 +32,8 @@ Public Class Frm_OfDinamFicha
 
         Sb_Grabar_Parametros_SQL(False)
 
+        Sb_Color_Botones_Barra(Bar2)
+
     End Sub
 
     Private Sub Frm_OfDinamFicha_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -38,13 +42,23 @@ Public Class Frm_OfDinamFicha
         AddHandler Chk_Tipotrat2.CheckedChanged, AddressOf Chk_Tipotrat_CheckedChanged
         AddHandler Chk_Tipotrat3.CheckedChanged, AddressOf Chk_Tipotrat_CheckedChanged
         AddHandler Chk_Tipotrat4.CheckedChanged, AddressOf Chk_Tipotrat_CheckedChanged
+        AddHandler Txt_Valdesc.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros
 
         caract_combo(Cmb_Concepto)
         Consulta_sql = "SELECT KOCT AS Padre,LTRIM(RTRIM(KOCT))+'-'+LTRIM(RTRIM(NOKOCT)) AS Hijo FROM TABCT WHERE TICT = 'D' ORDER BY Hijo"
-        Cmb_Concepto.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Concepto.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Concepto.SelectedValue = ""
 
+        caract_combo(Cmb_Kogen)
+        Consulta_sql = "SELECT KOCARAC AS Padre,LTRIM(RTRIM(NOKOCARAC)) AS Hijo FROM TABCARAC WHERE KOTABLA = 'TIPOOFERTA' ORDER BY Hijo"
+        _Tbl_TipoOferta = _Sql.Fx_Get_DataTable(Consulta_sql)
+        Cmb_Kogen.DataSource = _Tbl_TipoOferta
+        Cmb_Kogen.SelectedValue = ""
+
         Txt_Valdesc.Enabled = True
+
+        Lbl_Kogen.Visible = CBool(_Tbl_TipoOferta.Rows.Count)
+        Cmb_Kogen.Visible = CBool(_Tbl_TipoOferta.Rows.Count)
 
         If IsNothing(_Row_Maeeres) Then
 
@@ -52,7 +66,6 @@ Public Class Frm_OfDinamFicha
             Dtp_Ftoferta.Value = Nothing
             Txt_Codigo.Enabled = True
             Txt_Udad.Enabled = True
-            'Txt_Udad.Text = String.Empty
             Me.ActiveControl = Txt_Codigo
 
         Else
@@ -93,7 +106,7 @@ Public Class Frm_OfDinamFicha
             If _Filtro_Listas <> "()" Then
 
                 Consulta_sql = "Select Cast(1 As Bit) As Chk,KOLT As Codigo,NOKOLT As Descripcion From TABPP Where KOLT In " & _Filtro_Listas
-                _Tbl_Listas = _Sql.Fx_Get_Tablas(Consulta_sql)
+                _Tbl_Listas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             End If
 
@@ -104,6 +117,10 @@ Public Class Frm_OfDinamFicha
             Chk_Desc_Vie.Checked = (_Row_Maeeres.Item("DESC_VIE") = "S")
             Chk_Desc_Sab.Checked = (_Row_Maeeres.Item("DESC_SAB") = "S")
             Chk_Desc_Dom.Checked = (_Row_Maeeres.Item("DESC_DOM") = "S")
+
+            If CBool(_Tbl_TipoOferta.Rows.Count) Then
+                Cmb_Kogen.SelectedValue = _Row_Maeeres.Item("KOGEN")
+            End If
 
             Me.ActiveControl = Txt_Descriptor
 
@@ -177,6 +194,17 @@ Public Class Frm_OfDinamFicha
             Return
         End If
 
+        Dim _Kogen = String.Empty
+
+        If CBool(_Tbl_TipoOferta.Rows.Count) Then
+            If String.IsNullOrEmpty(Cmb_Kogen.Text) Then
+                MessageBoxEx.Show(Me, "Falta el tipo de Oferta", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Txt_Udad.Focus()
+                Return
+            End If
+            _Kogen = Cmb_Kogen.SelectedValue
+        End If
+
 
         Dim _FechaServidor As Date = FechaDelServidor()
 
@@ -197,7 +225,7 @@ Public Class Frm_OfDinamFicha
                            "And CODIGO <> '" & Txt_Codigo.Text.Trim & "' And ('" & _Fi & "' Between FIOFERTA And FTOFERTA Or '" & _Ft & "' Between FIOFERTA And FTOFERTA)" & vbCrLf &
                            "Drop Table #Ps1"
 
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If CBool(_Tbl.Rows.Count) Then
                 MessageBoxEx.Show(Me, "PRODUCTOS YA ACTIVOS EN OTRA OFERTA." & vbCrLf & "NO SE PUEDE ACTIVAR ESTE DESCUENTO." & vbCrLf & vbCrLf &
@@ -209,9 +237,6 @@ Public Class Frm_OfDinamFicha
             End If
 
         End If
-
-
-
 
         Dim _Codigo As String = Txt_Codigo.Text
         Dim _Cantmin As Integer = Input_Cantmin.Value
@@ -238,7 +263,7 @@ Public Class Frm_OfDinamFicha
         If Chk_Desc_Sab.Checked Then _Desc_sab = "S"
         If Chk_Desc_Dom.Checked Then _Desc_dom = "S"
 
-        Dim _Valdesc As String = De_Num_a_Tx_01(Txt_Valdesc.Text, False, 5)
+        Dim _Valdesc As String = De_Num_a_Tx_01(CDbl(Txt_Valdesc.Text), False, 5)
 
         Dim _Tipotrat As Integer = 1
 
@@ -250,13 +275,16 @@ Public Class Frm_OfDinamFicha
         Dim _Ecuvaldesc As String = Txt_Ecupordesc.Text
 
         Consulta_sql = "Delete MAEERES Where CODIGO = '" & _Codigo & "' And TIPORESE = 'din'" & vbCrLf &
-                       "Insert Into MAEERES (CODIGO,CANTIDAD,CANTMIN,RANGOS,DESCRIPTOR,UDAD,TIPORESE,CONCEPTO,FIOFERTA,FTOFERTA,LISTAS,APLICAUT,DESC_LUN,DESC_MAR,DESC_MIE,DESC_JUE,DESC_VIE,DESC_SAB,DESC_DOM,DESCVALOR,TIPOTRAT,VALDESC,ECUVALDESC) VALUES " &
+                       "Insert Into MAEERES (CODIGO,CANTIDAD,CANTMIN,RANGOS,DESCRIPTOR,UDAD,TIPORESE,CONCEPTO,FIOFERTA,FTOFERTA,LISTAS,APLICAUT," &
+                       "DESC_LUN,DESC_MAR,DESC_MIE,DESC_JUE,DESC_VIE,DESC_SAB,DESC_DOM,DESCVALOR,TIPOTRAT,VALDESC,ECUVALDESC,KOGEN) VALUES " &
                        "('" & _Codigo & "',0," & _Cantmin & "," & _Rangos & ",'" & _Descriptor & "','" & _Udad & "','din','" & _Concepto & "'" &
                        ",'" & _Fioferta & "','" & _Ftoferta & "','" & _Listas & "',0" &
                        ",'" & _Desc_lun & "','" & _Desc_mar & "','" & _Desc_mie & "','" & _Desc_jue & "','" & _Desc_vie & "'" &
-                       ",'" & _Desc_sab & "','" & _Desc_dom & "',0," & _Tipotrat & "," & _Valdesc & ",'" & _Ecuvaldesc & "')"
+                       ",'" & _Desc_sab & "','" & _Desc_dom & "',0," & _Tipotrat & "," & _Valdesc & ",'" & _Ecuvaldesc & "','" & _Kogen & "')"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+
+            Sb_GrabarNuevaLineaHistorica(Txt_Codigo.Text)
 
             Consulta_sql = "Select * From MAEERES Where CODIGO = '" & Txt_Codigo.Text & "' And TIPORESE = 'din'"
             Row_Maeeres = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -271,6 +299,34 @@ Public Class Frm_OfDinamFicha
         Else
             MessageBoxEx.Show(Me, _Sql.Pro_Error, "Error al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End If
+
+    End Sub
+
+    Sub Sb_GrabarNuevaLineaHistorica(_Codigo As String)
+
+        If Not _Sql.Fx_Existe_Tabla("MAEERES_Hist") Then
+            Return
+        End If
+
+        Consulta_sql = "Insert Into MAEERES_Hist (CODIGO,CANTIDAD,UDAD,DESCRIPTOR,ESTARESE,TIPORESE,
+CONCEPTO,LISTAS,FIOFERTA,FTOFERTA,APLICAUT,PORDESC,ECUPORDESC,DESC_LUN,DESC_MAR,DESC_MIE,
+DESC_JUE,DESC_VIE,DESC_SAB,DESC_DOM,DESCVALOR,VALDESC,ECUVALDESC,KOGEN,CANTMIN,TIPOTRAT,RANGOS,INCLUYENVV,TGRANEL,FGRABACION,KOFUGRABA)
+Select CODIGO,CANTIDAD,UDAD,DESCRIPTOR,ESTARESE,TIPORESE,CONCEPTO,LISTAS,FIOFERTA,FTOFERTA,APLICAUT,PORDESC,ECUPORDESC,DESC_LUN,DESC_MAR,DESC_MIE,
+DESC_JUE,DESC_VIE,DESC_SAB,DESC_DOM,DESCVALOR,VALDESC,ECUVALDESC,KOGEN,CANTMIN,TIPOTRAT,RANGOS,INCLUYENVV,TGRANEL,GETDATE(),'" & FUNCIONARIO & "'
+FROM MAEERES Pd
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM MAEERES_Hist Hj
+    WHERE Pd.CODIGO = Hj.CODIGO And Pd.CANTIDAD = Hj.CANTIDAD And Pd.UDAD = Hj.UDAD And Pd.DESCRIPTOR = Hj.DESCRIPTOR And Pd.ESTARESE = Hj.ESTARESE 
+	And Pd.TIPORESE = Hj.TIPORESE And Pd.CONCEPTO = Hj.CONCEPTO And Pd.LISTAS = Hj.LISTAS And Pd.FIOFERTA = Hj.FIOFERTA And Pd.FTOFERTA = Hj.FTOFERTA 
+	And Pd.APLICAUT = Hj.APLICAUT And Pd.PORDESC = Hj.PORDESC And Pd.ECUPORDESC = Hj.ECUPORDESC And Pd.DESC_LUN = Hj.DESC_LUN And Pd.DESC_MAR = Hj.DESC_MAR
+	And Pd.DESC_MIE = Hj.DESC_MIE And Pd.DESC_JUE = Hj.DESC_JUE And Pd.DESC_VIE = Hj.DESC_VIE And Pd.DESC_SAB = Hj.DESC_SAB And Pd.DESC_DOM = Hj.DESC_DOM 
+	And Pd.DESCVALOR = Hj.DESCVALOR And Pd.VALDESC = Hj.VALDESC And Pd.ECUVALDESC = Hj.ECUVALDESC And Pd.KOGEN = Hj.KOGEN And Pd.CANTMIN = Hj.CANTMIN
+	And Pd.TIPOTRAT = Hj.TIPOTRAT And Pd.RANGOS = Hj.RANGOS And Pd.INCLUYENVV = Hj.INCLUYENVV And Pd.TGRANEL = Hj.TGRANEL
+	And Pd.CODIGO = '" & _Codigo & "'
+)
+And CODIGO = '" & _Codigo & "'"
+        _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
     End Sub
 
@@ -294,19 +350,36 @@ Public Class Frm_OfDinamFicha
 
         Dim _Codigo As String = Txt_Codigo.Text
 
-        If MessageBoxEx.Show(Me, "¿Confirma quitar este producto de la oferta?", "Quitar productos",
+        If MessageBoxEx.Show(Me, "¿Confirma eliminar esta oferta?", "Eliminar oferta",
                              MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
             Return
         End If
 
-        Consulta_sql = "Delete From MAEERES Where CODIGO = '" & _Codigo & "'" & vbCrLf &
-                       "Delete From MAEDRES Where CODIGO = '" & _Codigo & "'"
-        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-            Grabar = True
-            Eliminado = True
-            MessageBoxEx.Show(Me, "Oferta eliminada correctamente", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Me.Close()
+        Consulta_sql = String.Empty
+
+        If _Sql.Fx_Existe_Tabla("MAEERES_Hist") Then
+
+            Consulta_sql = "Insert Into MAEERES_Hist (CODIGO,CANTIDAD,UDAD,DESCRIPTOR,ESTARESE,TIPORESE,CONCEPTO,LISTAS,FIOFERTA,FTOFERTA,APLICAUT,PORDESC,ECUPORDESC,DESC_LUN,DESC_MAR,DESC_MIE,
+DESC_JUE,DESC_VIE,DESC_SAB,DESC_DOM,DESCVALOR,VALDESC,ECUVALDESC,KOGEN,CANTMIN,TIPOTRAT,RANGOS,INCLUYENVV,TGRANEL,FGRABACION,KOFUGRABA,OFERTAELIMINADA)
+Select CODIGO,CANTIDAD,UDAD,DESCRIPTOR,ESTARESE,TIPORESE,CONCEPTO,LISTAS,FIOFERTA,FTOFERTA,APLICAUT,PORDESC,ECUPORDESC,DESC_LUN,DESC_MAR,DESC_MIE,
+DESC_JUE,DESC_VIE,DESC_SAB,DESC_DOM,DESCVALOR,VALDESC,ECUVALDESC,KOGEN,CANTMIN,TIPOTRAT,RANGOS,INCLUYENVV,TGRANEL,GETDATE(),'" & FUNCIONARIO & "',1 
+From MAEERES 
+Where CODIGO = '" & _Codigo & "'" & vbCrLf
+
         End If
+
+        Consulta_sql += "Delete From MAEERES Where CODIGO = '" & _Codigo & "'" & vbCrLf &
+                        "Delete From MAEDRES Where CODIGO = '" & _Codigo & "'"
+
+        If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+            MessageBoxEx.Show(Me, _Sql.Pro_Error, "Problema al eliminar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Grabar = True
+        Eliminado = True
+        MessageBoxEx.Show(Me, "Oferta eliminada correctamente", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Me.Close()
 
     End Sub
 

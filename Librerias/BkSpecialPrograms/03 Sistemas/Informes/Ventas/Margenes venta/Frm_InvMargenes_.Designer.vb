@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Frm_InvMargenes_
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -173,7 +173,7 @@ Partial Class Frm_InvMargenes_
         Me.RdResponzableDT.Size = New System.Drawing.Size(246, 17)
         Me.RdResponzableDT.TabIndex = 4
         Me.RdResponzableDT.TabStop = True
-        Me.RdResponzableDT.Text = "Vendedor indicado en las líneas del detalle"
+        Me.RdResponzableDT.Text = "Vendedor indicado en las lÃ­neas del detalle"
         Me.RdResponzableDT.UseVisualStyleBackColor = False
         '
         'RdResponzableENC
@@ -187,7 +187,7 @@ Partial Class Frm_InvMargenes_
         Me.RdResponzableENC.Size = New System.Drawing.Size(172, 17)
         Me.RdResponzableENC.TabIndex = 1
         Me.RdResponzableENC.TabStop = True
-        Me.RdResponzableENC.Text = "Responzable del documento"
+        Me.RdResponzableENC.Text = "Responsable del documento"
         Me.RdResponzableENC.UseVisualStyleBackColor = False
         '
         'ChkCostoDesdeFcc
@@ -217,7 +217,7 @@ Partial Class Frm_InvMargenes_
         Me.RdPmTrans.Size = New System.Drawing.Size(349, 17)
         Me.RdPmTrans.TabIndex = 10
         Me.RdPmTrans.TabStop = True
-        Me.RdPmTrans.Text = "Precio promedio ponderado al momento de la transacción (PM)"
+        Me.RdPmTrans.Text = "Precio promedio ponderado al momento de la transacciÃ³n (PM)"
         Me.RdPmTrans.UseVisualStyleBackColor = False
         '
         'CmbListaDeCostos
@@ -239,7 +239,7 @@ Partial Class Frm_InvMargenes_
         Me.RdLP.Name = "RdLP"
         Me.RdLP.Size = New System.Drawing.Size(234, 17)
         Me.RdLP.TabIndex = 7
-        Me.RdLP.Text = "Según lista de costo/precio a seleccionar"
+        Me.RdLP.Text = "SegÃºn lista de costo/precio a seleccionar"
         Me.RdLP.UseVisualStyleBackColor = False
         '
         'RdUC
@@ -314,7 +314,7 @@ Partial Class Frm_InvMargenes_
         Me.CkNoMultiproposito.Name = "CkNoMultiproposito"
         Me.CkNoMultiproposito.Size = New System.Drawing.Size(217, 17)
         Me.CkNoMultiproposito.TabIndex = 16
-        Me.CkNoMultiproposito.Text = "No incluir productos Multi-propósito"
+        Me.CkNoMultiproposito.Text = "No incluir productos Multi-propÃ³sito"
         Me.CkNoMultiproposito.UseVisualStyleBackColor = False
         '
         'CkNoServicios
@@ -512,7 +512,7 @@ Partial Class Frm_InvMargenes_
         Me.Btn_Estadisticas_Margen.Image = CType(resources.GetObject("Btn_Estadisticas_Margen.Image"), System.Drawing.Image)
         Me.Btn_Estadisticas_Margen.ImageAlt = CType(resources.GetObject("Btn_Estadisticas_Margen.ImageAlt"), System.Drawing.Image)
         Me.Btn_Estadisticas_Margen.Name = "Btn_Estadisticas_Margen"
-        Me.Btn_Estadisticas_Margen.Text = "Estadísticas margen"
+        Me.Btn_Estadisticas_Margen.Text = "EstadÃ­sticas margen"
         '
         'BtnxSalir
         '
@@ -747,7 +747,7 @@ Partial Class Frm_InvMargenes_
         Me.Tab_Sucursal_Detalle.GlobalItem = False
         Me.Tab_Sucursal_Detalle.Name = "Tab_Sucursal_Detalle"
         Me.Tab_Sucursal_Detalle.Text = "Sucursal"
-        Me.Tab_Sucursal_Detalle.Tooltip = "Sucursal línea de detalle"
+        Me.Tab_Sucursal_Detalle.Tooltip = "Sucursal lÃ­nea de detalle"
         '
         'SuperTabControlPanel7
         '

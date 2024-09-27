@@ -289,7 +289,7 @@ Public Class Frm_Informe_Gerencia_On_Line
             Consulta_sql = Replace(Consulta_sql, "#Fecha_Fin#", _Fecha_Dia)
             Consulta_sql = Replace(Consulta_sql, "#Nudonodefi#", _Nudonodefi)
 
-            _Tbl_Inf_Diario = _SQL.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Inf_Diario = _SQL.Fx_Get_DataTable(Consulta_sql)
 
             For Each _Fila As DataRow In _Tbl_Inf_Diario.Rows
                 Fx_Nueva_Linea_Venta(_Tbl_Diario, _Fila)
@@ -303,7 +303,7 @@ Public Class Frm_Informe_Gerencia_On_Line
             Consulta_sql = Replace(Consulta_sql, "#Fecha_Fin#", _Fecha_Mes_Fin)
             Consulta_sql = Replace(Consulta_sql, "#Nudonodefi#", _Nudonodefi)
 
-            _Tbl_Inf_Mensual = _SQL.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Inf_Mensual = _SQL.Fx_Get_DataTable(Consulta_sql)
 
             For Each _Fila As DataRow In _Tbl_Inf_Mensual.Rows
                 Fx_Nueva_Linea_Venta(_Tbl_Mensual, _Fila)
@@ -317,7 +317,7 @@ Public Class Frm_Informe_Gerencia_On_Line
             Consulta_sql = Replace(Consulta_sql, "#Fecha_Fin#", _Fecha_Ano_Fin)
             Consulta_sql = Replace(Consulta_sql, "#Nudonodefi#", _Nudonodefi)
 
-            _Tbl_Inf_Anual = _SQL.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Inf_Anual = _SQL.Fx_Get_DataTable(Consulta_sql)
 
             For Each _Fila As DataRow In _Tbl_Inf_Anual.Rows
                 Fx_Nueva_Linea_Venta(_Tbl_Anual, _Fila)
@@ -343,7 +343,7 @@ Public Class Frm_Informe_Gerencia_On_Line
 
             'Dim _Ds As DataSet = _SQL.Fx_Get_DataSet(Consulta_sql)
 
-            Dim _Tbl_Inf_Guias_Diario = _SQL.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Inf_Guias_Diario = _SQL.Fx_Get_DataTable(Consulta_sql)
 
             For Each _Fila As DataRow In _Tbl_Inf_Guias_Diario.Rows
                 Fx_Nueva_Linea_Guia(_Tbl_Guias_Diario, _Fila)
@@ -360,7 +360,7 @@ Public Class Frm_Informe_Gerencia_On_Line
 
 
 
-            Dim _Tbl_Inf_Guias_Mensual = _SQL.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Inf_Guias_Mensual = _SQL.Fx_Get_DataTable(Consulta_sql)
 
             For Each _Fila As DataRow In _Tbl_Inf_Guias_Mensual.Rows
                 Fx_Nueva_Linea_Guia(_Tbl_Guias_Mensual, _Fila)

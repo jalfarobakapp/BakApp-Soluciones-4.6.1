@@ -226,8 +226,8 @@ Public Class Cl_CambiarFechaVencimiento
 
         Dim _IdmaeedoFCV = _RowMaeedo.Item("IDMAEEDO")
 
-        Consulta_sql = "Select Top 1 IDMAEEDO From MAEEDO Where IDMAEEDO In (Select IDMAEEDO From MAEDDO Where IDMAEDDO In " &
-                       "(Select IDRST From MAEDDO Where IDMAEEDO = " & _IdmaeedoFCV & "))"
+        Consulta_sql = "Select Top 1 IDMAEEDO From MAEEDO Where IDMAEEDO In (Select IDMAEEDO From MAEDDO WITH (NOLOCK) Where IDMAEDDO In " &
+                       "(Select IDRST From MAEDDO WITH (NOLOCK) Where IDMAEEDO = " & _IdmaeedoFCV & "))"
         Dim _RowNVV As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If IsNothing(_RowNVV) Then

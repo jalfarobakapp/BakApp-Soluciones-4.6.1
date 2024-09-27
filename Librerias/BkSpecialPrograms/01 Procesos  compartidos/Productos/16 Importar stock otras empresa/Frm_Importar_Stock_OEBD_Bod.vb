@@ -37,7 +37,7 @@ Public Class Frm_Importar_Stock_OEBD_Bod
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Maest" & vbCrLf &
                        "Where Empresa_Ori = '" & ModEmpresa & "'"
 
-        _Tbl_Configuraciones = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Configuraciones = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

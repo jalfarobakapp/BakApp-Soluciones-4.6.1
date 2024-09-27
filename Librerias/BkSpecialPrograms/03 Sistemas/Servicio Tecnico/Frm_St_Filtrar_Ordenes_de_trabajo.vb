@@ -359,7 +359,7 @@ Public Class Frm_St_Filtrar_Ordenes_de_trabajo
         Consulta_sql = Replace(Consulta_sql, "#Db_BakApp#", _Global_BaseBk)
         Consulta_sql = Replace(Consulta_sql, "#Condicion#", _Filtro_SQl)
 
-        _Tbl_Informe = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Informe = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl_Informe.Rows.Count) Then
 

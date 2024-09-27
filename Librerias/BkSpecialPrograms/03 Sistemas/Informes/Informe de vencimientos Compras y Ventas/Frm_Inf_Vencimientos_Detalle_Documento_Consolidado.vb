@@ -84,7 +84,7 @@ Public Class Frm_Inf_Vencimientos_Detalle_Documento_Consolidado
                        "Drop Table #INF_CONSOLIDADO"
 
 
-        _TblInforme = _SQL.Fx_Get_Tablas(Consulta_sql)
+        _TblInforme = _SQL.Fx_Get_DataTable(Consulta_sql)
 
 
         Grilla.DataSource = _TblInforme

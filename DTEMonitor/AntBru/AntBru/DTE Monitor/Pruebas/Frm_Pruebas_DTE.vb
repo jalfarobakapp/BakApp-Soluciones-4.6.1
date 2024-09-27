@@ -26,7 +26,7 @@ Public Class Frm_Pruebas_DTE
         Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa'"
-        Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not CBool(_Tbl_ConfEmpresa.Rows.Count) Then
             Throw New System.Exception("Faltan los datos de configuración DTE para la empresa")
@@ -82,7 +82,7 @@ Public Class Frm_Pruebas_DTE
         '               "Inner Join " & _Global_BaseBk & "Zw_DTE_Trackid DteTk On DteDoc.Id_Dte = DteTk.Id_Dte" & vbCrLf &
         '               "Where DteDoc.Id_Dte In (85715,85716,88035)"
 
-        Dim _Tbl_DTE_Documentos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_DTE_Documentos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not CBool(_Tbl_DTE_Documentos.Rows.Count) Then
             Return

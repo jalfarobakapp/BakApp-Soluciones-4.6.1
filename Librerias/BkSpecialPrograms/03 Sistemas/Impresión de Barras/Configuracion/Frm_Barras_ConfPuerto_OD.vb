@@ -89,7 +89,7 @@ Public Class Frm_Barras_ConfPuerto_OD
         Cmb_Puerto.SelectedValue = ""
 
         Consulta_sql = "select NombreEtiqueta As Padre,NombreEtiqueta As Hijo from " & _Global_BaseBk & "Zw_Tbl_DisenoBarras"
-        Dim _TblEtiquetas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblEtiquetas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         caract_combo(Cmb_Etiqueta)
         Cmb_Etiqueta.DataSource = Nothing

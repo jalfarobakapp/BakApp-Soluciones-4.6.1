@@ -30,7 +30,7 @@ Public Class Frm_Meson_ObsXMaq
     Sub Sb_ActualizarGrilla()
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Pdp_MaquinaVsProductos Where Idpotpr = " & _Idpotpr
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _DisplayIndex = 0
 

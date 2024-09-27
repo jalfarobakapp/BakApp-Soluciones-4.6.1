@@ -81,7 +81,7 @@ Public Class Frm_Direc_Cli_Lista
                         Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Tvta On Tvta.Tabla = 'SIS_DESPACHO_TIPO_VENTA' And Tvta.CodigoTabla = Tipo_Venta
                         Left Join TABRETI On KORETI = Transportista
                         Where CodEntidad = '" & _Row_Entidad.Item("KOEN") & "' And CodSucEntidad = '" & _Row_Entidad.Item("SUEN") & "' Order By Por_Defecto Desc"
-        _Tbl_Direcciones = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Direcciones = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

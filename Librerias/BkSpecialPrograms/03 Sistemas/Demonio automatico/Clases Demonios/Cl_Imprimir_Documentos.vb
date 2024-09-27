@@ -221,7 +221,7 @@ Public Class Cl_Imprimir_Documentos
         _Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_Cof_Estacion" & vbCrLf &
                         "Where NombreEquipo = '" & _Nombre_Equipo & "' And Traer_Doc_Auto_Imprimir = 1"
 
-        Dim _Tbl_Zw_Demonio_Cof_Estacion As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql, False)
+        Dim _Tbl_Zw_Demonio_Cof_Estacion As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql, False)
 
         Dim _SqlQuery_Cola = String.Empty
 
@@ -238,7 +238,7 @@ Public Class Cl_Imprimir_Documentos
 
                 _Consulta_sql = "Select Codigo From " & _Global_BaseBk & "Zw_Demonio_Filtros_X_Estacion" & vbCrLf &
                                 "Where IdPadre = " & _IdPadre & " And Impresora <> '' And Picking = 0"
-                Dim _TblFiltroFunc As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql, False)
+                Dim _TblFiltroFunc As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql, False)
 
                 If Not IsNothing(_TblFiltroFunc) Then
 
@@ -294,7 +294,7 @@ Public Class Cl_Imprimir_Documentos
                             "Fecha Between Convert(Datetime, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 00:00:00', 102)" & vbCrLf &
                             "And Convert(Datetime, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 23:59:59', 102) And Picking = 0"
 
-            Dim _Tbl_Firmar As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+            Dim _Tbl_Firmar As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
             For Each _Fl As DataRow In _Tbl_Firmar.Rows
 
@@ -341,7 +341,7 @@ Public Class Cl_Imprimir_Documentos
         '                "Fecha Between Convert(Datetime, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 00:00:00', 102)" & vbCrLf &
         '                "And Convert(Datetime, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 23:59:59', 102) And Picking = 0"
 
-        Dim _Tbl_Doc_Sin_Imprimir As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql, False)
+        Dim _Tbl_Doc_Sin_Imprimir As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql, False)
 
         If IsNothing(_Tbl_Doc_Sin_Imprimir) Then
             _Procesando = False

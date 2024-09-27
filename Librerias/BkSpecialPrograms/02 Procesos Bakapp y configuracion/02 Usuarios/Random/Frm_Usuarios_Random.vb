@@ -52,7 +52,7 @@ Public Class Frm_Usuarios_Random
                        "Drop Table #Paso" & vbCrLf &
                        "Drop Table #Paso1"
 
-        _Tbl_Usuarios = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Usuarios = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

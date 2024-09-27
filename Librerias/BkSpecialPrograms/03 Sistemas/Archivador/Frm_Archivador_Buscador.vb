@@ -385,7 +385,7 @@ Public Class Frm_Archivador_Buscador
                 Lbl_Progress.Text = "Proceso Completado"
 
                 Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Log_Archivador"
-                Dim _TblLog As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+                Dim _TblLog As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
                 ExportarTabla_JetExcel_Tabla(_TblLog, Me, "Log_Archivador")
 

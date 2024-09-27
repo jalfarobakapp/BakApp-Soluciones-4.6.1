@@ -1,4 +1,5 @@
-﻿Imports BkSpecialPrograms
+﻿Imports System.Security.Cryptography
+Imports BkSpecialPrograms
 Imports DevComponents.DotNetBar
 
 Public Class Inv_General_Activo
@@ -18,11 +19,13 @@ Public Class Inv_General_Activo
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
         _Fm_Menu_Padre = Fm_Menu_Padre
 
-        Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_TmpInv_History Where Estado = 1"
+        Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Inv_Inventario Where Estado = 1"
         _Row_InventarioActivo = _Sql.Fx_Get_DataRow(Consulta_sql)
 
     End Sub
-
+    Private Sub Inv_General_Activo_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Lbl_InventarioActivo.Text = _Row_InventarioActivo.Item("Nombreinventario")
+    End Sub
     Private Sub BtnSalir_Click(sender As Object, e As EventArgs) Handles BtnSalir.Click
         Frm_Menu.CloseModalPanel(Me, DevComponents.DotNetBar.Controls.eSlideSide.Left)
     End Sub
@@ -33,12 +36,32 @@ Public Class Inv_General_Activo
             Return
         End If
 
-        Dim _IdInventario As Integer = _Row_InventarioActivo.Item("IdInventario")
+        Dim _Id As Integer = _Row_InventarioActivo.Item("Id")
 
-        Dim Fm As New Frm_01_Inventario_Actual(_IdInventario)
+        Dim Fm As New Frm_01_Inventario_Actual(_Id)
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
+    End Sub
+
+    Private Sub BtnConfiguracion_Click(sender As Object, e As EventArgs) Handles BtnConfiguracion.Click
+
+        Dim _Id As Integer = _Row_InventarioActivo.Item("Id")
+
+        Dim Fm As New Frm_Inv_Ctrl_Inventario(_Id)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
+
+    Private Sub Btn_Mant_Inventarios_Click(sender As Object, e As EventArgs) Handles Btn_Mant_Inventarios.Click
+
+        Dim _Id As Integer = _Row_InventarioActivo.Item("Id")
+
+        Dim Fm As New Frm_Inv_Sector_Lista(_Id)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
 End Class

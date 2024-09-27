@@ -262,7 +262,7 @@ Public Class Frm_BusquedaDocumento_Filtro
         Consulta_sql = "SELECT KOFU AS Padre,KOFU+' - '+NOKOFU AS Hijo FROM TABFU ORDER BY KOFU"
         caract_combo(CmbFuncionarios)
 
-        CmbFuncionarios.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        CmbFuncionarios.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         CmbFuncionarios.SelectedValue = FUNCIONARIO
 
         'AddHandler ChkTipoDocumento_Todos.CheckedChanged, AddressOf Sb_Grupo_Documento
@@ -335,7 +335,7 @@ Public Class Frm_BusquedaDocumento_Filtro
             _Tbl_Filtro_Documentos = _Filtrar.Pro_Tbl_Filtro
             If _Filtrar.Pro_Filtro_Todas Then
                 Consulta_sql = "SELECT TIDO AS 'Codigo', NOTIDO AS 'Descripcion' FROM TABTIDO"
-                _Tbl_Filtro_Documentos = _Sql.Fx_Get_Tablas(Consulta_sql)
+                _Tbl_Filtro_Documentos = _Sql.Fx_Get_DataTable(Consulta_sql)
             End If
 
         End If
@@ -404,7 +404,7 @@ Public Class Frm_BusquedaDocumento_Filtro
 
         caract_combo(CmbTipoDeDocumentos)
 
-        CmbTipoDeDocumentos.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        CmbTipoDeDocumentos.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         CmbTipoDeDocumentos.SelectedValue = _TipoDoc_Seleccionado
 
     End Sub
@@ -553,7 +553,7 @@ Public Class Frm_BusquedaDocumento_Filtro
 
                 Dim _Kopr = _Row_Producto.Item("KOPR")
 
-                _Sql_Filtro_Producto = "And Edo.IDMAEEDO In (Select IDMAEEDO From MAEDDO Where KOPRCT = '" & _Kopr & "')"
+                _Sql_Filtro_Producto = "And Edo.IDMAEEDO In (Select IDMAEEDO From MAEDDO WITH (NOLOCK) Where KOPRCT = '" & _Kopr & "')"
 
             Else
                 MessageBoxEx.Show(Me, "No se seleccionó ningun producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -614,7 +614,7 @@ Public Class Frm_BusquedaDocumento_Filtro
         If Filtrar_Doc_No_Asociados_Recargo Then
 
             Consulta_sql = "Select Distinct Ddo.IDMAEEDO 
-                        From MAEDDO Ddo
+                        From MAEDDO Ddo WITH ( NOLOCK )
                         Left Join TABTIDO Tdo On Ddo.TIDO = Tdo.TIDO
                         Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO
                         Where 
@@ -623,10 +623,10 @@ Public Class Frm_BusquedaDocumento_Filtro
                         And LILG In ('SI','CR') 
                         And PRCT = 0
                         And (Ddo.CAPRCO1 * Tdo.FICO + Ddo.CAPRAD1 * Tdo.FIAD ) <> 0
-                        And Not Exists (Select * From MAEDCR Where MAEDCR.IDDDODCR = Ddo.IDMAEDDO And MAEDCR.RECARCALCU = '" & Codigo_Recargo & "')
+                        And Not Exists (Select * From MAEDCR WITH ( NOLOCK ) Where MAEDCR.IDDDODCR = Ddo.IDMAEDDO And MAEDCR.RECARCALCU = '" & Codigo_Recargo & "')
                         And Edo.FEEMDO BETWEEN '" & Format(DtpFechaInicio.Value, "yyyyMMdd") & "' And '" & Format(DtpFechaFin.Value, "yyyyMMdd") & "'"
 
-            Dim _Tbl_Filtro_Idmaeedo As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Filtro_Idmaeedo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If _Tbl_Filtro_Idmaeedo.Rows.Count Then
                 _Usar_Otro_Filtros = True
@@ -643,15 +643,15 @@ Public Class Frm_BusquedaDocumento_Filtro
         End If
 
         If Not String.IsNullOrEmpty(Txt_Ocdo.Text.Trim) Then
-            _Sql_Occ = "And IDMAEEDO In (Select IDMAEEDO From MAEEDOOB Where OCDO Like '" & Txt_Ocdo.Text.Trim & "')" & vbCrLf
+            _Sql_Occ = "And IDMAEEDO In (Select IDMAEEDO From MAEEDOOB WITH ( NOLOCK ) Where OCDO Like '" & Txt_Ocdo.Text.Trim & "')" & vbCrLf
         End If
 
         If Not String.IsNullOrEmpty(Txt_Placapat.Text) Then
-            _Sql_Placa = "And IDMAEEDO In (Select IDMAEEDO From MAEEDOOB Where PLACAPAT Like '" & Txt_Placapat.Text.Trim & "')" & vbCrLf
+            _Sql_Placa = "And IDMAEEDO In (Select IDMAEEDO From MAEEDOOB WITH ( NOLOCK ) Where PLACAPAT Like '" & Txt_Placapat.Text.Trim & "')" & vbCrLf
         End If
 
         If Not String.IsNullOrEmpty(Txt_CodRetirador.Text) Then
-            _Sql_RetMerca = "And IDMAEEDO In (Select IDMAEEDO From MAEEDOOB Where DIENDESP Like '" & Txt_CodRetirador.Tag.Trim & "')" & vbCrLf
+            _Sql_RetMerca = "And IDMAEEDO In (Select IDMAEEDO From MAEEDOOB WITH ( NOLOCK ) Where DIENDESP Like '" & Txt_CodRetirador.Tag.Trim & "')" & vbCrLf
         End If
 
         Dim _Filtro_Observaciones = String.Empty
@@ -668,10 +668,10 @@ Buscar:
         Dim _Campo_SUENDOFI As String
 
         If _Sql.Fx_Exite_Campo("MAEEDO", "SUENDOFI") Then
-            _Left_Join_MAEEN_ENDOFI_SUENDOFI = "Left Join MAEEN Mae2 On Edo.ENDOFI = Mae2.KOEN And Edo.SUENDOFI = Mae2.SUEN"
+            _Left_Join_MAEEN_ENDOFI_SUENDOFI = "Left Join MAEEN Mae2 WITH ( NOLOCK ) On Edo.ENDOFI = Mae2.KOEN And Edo.SUENDOFI = Mae2.SUEN"
             _Campo_SUENDOFI = "Isnull(SUENDOFI,'') As SUENDOFI,"
         Else
-            _Left_Join_MAEEN_ENDOFI_SUENDOFI = "Left Join MAEEN Mae2 On Edo.ENDOFI = Mae2.KOEN "
+            _Left_Join_MAEEN_ENDOFI_SUENDOFI = "Left Join MAEEN Mae2 WITH ( NOLOCK ) On Edo.ENDOFI = Mae2.KOEN "
             _Campo_SUENDOFI = String.Empty
         End If
 
@@ -707,14 +707,14 @@ Buscar:
 
         If HabilitarNVVParaFacturar Then
 
-            Dim _SqlQr = "Update #Paso Set Chk = (Select HabilitadaFac From " & _Global_BaseBk & "Zw_Docu_Ent Z1 Where Z1.Idmaeedo = #Paso.IDMAEEDO And Z1.Tido = #Paso.TIDO And Z1.Nudo = #Paso.NUDO)" & vbCrLf &
+            Dim _SqlQr = "Update #Paso Set Chk = (Select HabilitadaFac From " & _Global_BaseBk & "Zw_Docu_Ent Z1 WITH (NOLOCK) Where Z1.Idmaeedo = #Paso.IDMAEEDO And Z1.Tido = #Paso.TIDO And Z1.Nudo = #Paso.NUDO)" & vbCrLf &
                          "Delete #Paso Where Chk = 1"
 
             Consulta_sql = Replace(Consulta_sql, "--#OtrasOpciones#", _SqlQr)
 
         End If
 
-        Dim _Tbl_Paso As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Paso As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Me.Cursor = Cursors.Default
 
@@ -781,6 +781,10 @@ Buscar:
             Fm.Abrir_Documentos = Rdb_Estado_Cerradas.Checked
             Fm.Cerrar_Documentos = Rdb_Estado_Vigente.Checked
             Fm.HabilitarNVVParaFacturar = HabilitarNVVParaFacturar
+
+            If HabilitarNVVParaFacturar Then
+                Fm.Pro_Abrir_Seleccionado = True
+            End If
 
             Fm.ShowDialog(Me)
 

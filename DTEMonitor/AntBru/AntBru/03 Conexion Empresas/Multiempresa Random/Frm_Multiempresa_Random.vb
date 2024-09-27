@@ -33,7 +33,7 @@ Public Class Frm_Multiempresa_Random
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 10), Color.LightYellow, ScrollBars.Vertical, True, True, False)
 
         Consulta_sql = "Select EMPRESA+' '+RUT+' '+RAZON AS EMPRESA_SEL,* From CONFIGP Order By EMPRESA"
-        _Tbl_Configp = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Configp = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

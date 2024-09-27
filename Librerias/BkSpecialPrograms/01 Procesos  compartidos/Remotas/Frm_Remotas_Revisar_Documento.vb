@@ -110,7 +110,7 @@ Public Class Frm_Remotas_Revisar_Documento
 
         caract_combo(Cmb_Lista_Costo)
         Consulta_sql = "SELECT KOLT AS Padre,KOLT+' - '+MOLT+' '+NOKOLT AS Hijo FROM TABPP WHERE TILT = 'C'  ORDER BY Hijo" ' WHERE SEMILLA = " & Actividad
-        Cmb_Lista_Costo.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Lista_Costo.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Lista_Costo.SelectedValue = "PM"
 
         AddHandler Grilla_Detalle.RowPostPaint, AddressOf Grilla_Detalle_RowPostPaint

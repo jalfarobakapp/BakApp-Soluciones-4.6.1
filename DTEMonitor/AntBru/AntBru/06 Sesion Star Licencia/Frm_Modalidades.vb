@@ -104,7 +104,7 @@ Public Class Frm_Modalidades
 
         End If
 
-        Cmb_Modalidades.DataSource = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Cmb_Modalidades.DataSource = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Modalidad = _Sql.Fx_Trae_Dato("TABFU", "MODALIDAD", "KOFU = '" & FUNCIONARIO & "'")
         Dim _Emp As String = _Sql.Fx_Trae_Dato("CONFIEST", "EMPRESA", "MODALIDAD = '" & Modalidad & "'")
@@ -154,7 +154,7 @@ Public Class Frm_Modalidades
 
         End If
 
-        Dim _Tbl_Modalidades As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_Modalidades As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         With Grilla_Modalidades
 

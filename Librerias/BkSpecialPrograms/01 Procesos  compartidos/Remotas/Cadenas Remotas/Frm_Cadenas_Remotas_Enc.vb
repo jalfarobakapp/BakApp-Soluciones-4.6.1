@@ -198,7 +198,7 @@ Public Class Frm_Cadenas_Remotas_Lista
             Consulta_sql = Replace(Consulta_sql, "#_Global_BaseBk#", _Global_BaseBk)
             Consulta_sql = Replace(Consulta_sql, "#Filtro_Empresa_Sucursal#", _Filtro_Empresa_Sucursal)
 
-            _TblCRemotas_Enc = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _TblCRemotas_Enc = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             With Grilla
 
@@ -589,7 +589,7 @@ Public Class Frm_Cadenas_Remotas_Lista
         caract_combo(Cmb_Sucursal)
         Consulta_sql = "SELECT '01Todas' AS Padre,'Todas las sucursales' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                        "SELECT KOSU AS Padre,KOSU+'-'+NOKOSU AS Hijo FROM TABSU WHERE EMPRESA = '" & ModEmpresa & "'"
-        Cmb_Sucursal.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Sucursal.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Sucursal.SelectedValue = ModSucursal
 
     End Sub

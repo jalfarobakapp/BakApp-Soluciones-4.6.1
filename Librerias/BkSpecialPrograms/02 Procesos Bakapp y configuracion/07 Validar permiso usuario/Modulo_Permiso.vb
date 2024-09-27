@@ -36,7 +36,7 @@ Public Module Modulo_Permiso
 
         If String.IsNullOrEmpty(_Func) Then _Func = FUNCIONARIO
 
-        _Func = _Func.Trim()
+        '_Func = _Func.Trim()
 
         Consulta_Sql = "Select Top 1 * From " & _Global_BaseBk & "ZW_PermisosVsUsuarios Where CodUsuario = '" & _Func & "' AND CodPermiso = '" & _Codpermiso & "'"
         Dim _Row_PermisosVsUsuarios As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
@@ -438,7 +438,7 @@ Public Module Modulo_Permiso
         Consulta_Sql = "Select Top 1 * From " & _Global_BaseBk & "ZW_PermisosVsUsuarios 
                         Where CodUsuario = '" & _Kofu & "' AND CodPermiso = '" & _CodPermiso & "'"
 
-        Dim _Row_PermisosVsUsuarios As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+        Dim _Row_PermisosVsUsuarios As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
 
         Return Not (IsNothing(_Row_PermisosVsUsuarios))
 

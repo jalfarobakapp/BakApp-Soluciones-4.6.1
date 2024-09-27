@@ -42,7 +42,7 @@ Public Class Frm_Tickets_Agentes
         Consulta_sql = "Select Ag.*,NOKOFU From " & _Global_BaseBk & "Zw_Stk_Agentes Ag" & vbCrLf &
                        "Left Join TABFU On KOFU = Ag.CodAgente" & vbCrLf &
                        "Where CodAgente+NOKOFU Like '%" & _Cadena & "%'"
-        _Tbl_Agentes = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Agentes = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Agentes
 
@@ -89,7 +89,7 @@ Public Class Frm_Tickets_Agentes
                        "Left Join " & _Global_BaseBk & "Zw_Stk_Grupos Gr On Gr.Id = Tp.Id_Grupo" & vbCrLf &
                        "Where Id_Grupo In (Select Id_Grupo From " & _Global_BaseBk & "Zw_Stk_GrupoVsAgente Where CodAgente = '" & _CodAgente & "')"
 
-        Dim _Tbl_Tipos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Tipos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Tipos
 

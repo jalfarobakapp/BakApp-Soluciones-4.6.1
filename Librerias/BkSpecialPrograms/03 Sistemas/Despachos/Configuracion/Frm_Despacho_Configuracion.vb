@@ -7,6 +7,8 @@ Public Class Frm_Despacho_Configuracion
 
     Dim _Tbl_Email As DataTable
 
+    Public Property Cl_Despachos As New Cl_Despachos
+
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -20,6 +22,10 @@ Public Class Frm_Despacho_Configuracion
             Btn_Correos.ForeColor = Color.White
         End If
 
+        Cl_Despachos.Fx_Llenar_Configuracion(ModEmpresa, ModSucursal)
+
+        Sb_Color_Botones_Barra(Bar2)
+
     End Sub
 
     Private Sub Frm_Despacho_Configuracion_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -31,33 +37,26 @@ Public Class Frm_Despacho_Configuracion
         Sb_Llenar_Combo_Estados()
         Sb_Llenar_Tipo_Venta("")
 
-        Consulta_Sql = "Select ZConf.*,
-                            Isnull(Tvta.NombreTabla,'') As Nom_Tipo_Venta,Isnull(NORETI,'') As Nom_Transportista
-                            From " & _Global_BaseBk & "Zw_Despachos_Configuracion ZConf
-                            Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Tvta On Tvta.Tabla = 'SIS_DESPACHO_TIPO_VENTA' And Tvta.CodigoTabla = Tipo_Venta_X_Defecto
-                            Left Join TABRETI On KORETI = Transportista_X_Defecto
-                            Where Empresa = '" & ModEmpresa & "'"
-        Dim _Row_Conf_Despacho As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+        With Cl_Despachos.Zw_Despachos_Configuracion
 
-        If Not IsNothing(_Row_Conf_Despacho) Then
+            Chk_Pedir_Sucursal_Retiro.Checked = .Pedir_Sucursal_Retiro
 
-            Chk_Pedir_Sucursal_Retiro.Checked = _Row_Conf_Despacho.Item("Pedir_Sucursal_Retiro")
+            Txt_Tipo_Venta.Tag = .Tipo_Venta_X_Defecto
+            Txt_Tipo_Venta.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones", "NombreTabla", "Tabla = 'SIS_DESPACHO_TIPO_VENTA' And CodigoTabla = '" & .Tipo_Venta_X_Defecto & "'")
 
-            Txt_Tipo_Venta.Tag = _Row_Conf_Despacho.Item("Tipo_Venta_X_Defecto")
-            Txt_Tipo_Venta.Text = _Row_Conf_Despacho.Item("Nom_Tipo_Venta")
+            Txt_Transportista.Tag = .Transportista_X_Defecto
+            Txt_Transportista.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones", "NombreTabla", "Tabla = 'SIS_DESPACHO_TIPO_VENTA' And CodigoTabla = '" & .Transportista_X_Defecto & "'")
 
-            Txt_Transportista.Tag = _Row_Conf_Despacho.Item("Transportista_X_Defecto")
-            Txt_Transportista.Text = _Row_Conf_Despacho.Item("Nom_Transportista")
+            Chk_Transpor_Por_Pagar.Checked = .Transpor_Por_Pagar
+            Txt_Valor_Min_Despacho.Tag = .Valor_Min_Despacho
 
-            Chk_Transpor_Por_Pagar.Checked = _Row_Conf_Despacho.Item("Transpor_Por_Pagar")
-            Txt_Valor_Min_Despacho.Tag = _Row_Conf_Despacho.Item("Valor_Min_Despacho")
+            Chk_Mostrar_RetiraTransportista.Checked = .Mostrar_RetiraTransportista
+            Chk_Mostrar_Agencia.Checked = .Mostrar_Agencia
 
-            Chk_Mostrar_RetiraTransportista.Checked = _Row_Conf_Despacho.Item("Mostrar_RetiraTransportista")
-            Chk_Mostrar_Agencia.Checked = _Row_Conf_Despacho.Item("Mostrar_Agencia")
+            Chk_ConfirmarLecturaDespacho.Checked = .ConfirmarLecturaDespacho
+            Txt_Obs_Retira_Cliente.Text = .Obs_Retira_Cliente
 
-            Chk_ConfirmarLecturaDespacho.Checked = _Row_Conf_Despacho.Item("ConfirmarLecturaDespacho")
-
-        End If
+        End With
 
         Txt_Valor_Min_Despacho.Text = FormatNumber(Txt_Valor_Min_Despacho.Tag, 0)
 
@@ -80,7 +79,7 @@ Public Class Frm_Despacho_Configuracion
         Consulta_Sql = "Select CodigoTabla As Padre,NombreTabla As Hijo" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
                        "Where Tabla = 'SIS_DESPACHO_ESTADOS' Order by Orden"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         caract_combo(Cmb_Estados)
         Cmb_Estados.DataSource = _Tbl
@@ -95,7 +94,7 @@ Public Class Frm_Despacho_Configuracion
                        "Select CodigoTabla As Padre,NombreTabla As Hijo" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
                        "Where Tabla = 'SIS_DESPACHO_TIPO_VENTA' Order by Padre"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         caract_combo(Cmb_Tipo_Venta)
         Cmb_Tipo_Venta.DataSource = _Tbl
@@ -122,7 +121,7 @@ Public Class Frm_Despacho_Configuracion
                         Left Join " & _Global_BaseBk & "Zw_Correos Tcorreos On Temail.Id_Correo = Tcorreos.Id
                         Where (Tabla LIKE 'SIS_DESPACHO_TIPO_ENVIO') "
 
-        _Tbl_Email = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_Email = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         With Grilla_Correos
 
@@ -385,89 +384,52 @@ Public Class Frm_Despacho_Configuracion
 
     Private Sub Btn_Grabar_Configuracion_Click(sender As Object, e As EventArgs) Handles Btn_Grabar_Configuracion.Click
 
-        Consulta_Sql = "Delete " & _Global_BaseBk & "Zw_Despachos_Configuracion Where Empresa = '" & ModEmpresa & "'" & vbCrLf &
-                       "Insert Into " & _Global_BaseBk & "Zw_Despachos_Configuracion (Empresa,Pedir_Sucursal_Retiro,Tipo_Venta_X_Defecto," &
-                       "Transportista_X_Defecto,Transpor_Por_Pagar,Valor_Min_Despacho,Mostrar_RetiraTransportista,Mostrar_Agencia,ConfirmarLecturaDespacho) Values " &
-                       "('" & ModEmpresa & "'" &
-                       "," & Convert.ToInt32(Chk_Pedir_Sucursal_Retiro.Checked) &
-                       ",'" & Txt_Tipo_Venta.Tag & "'" &
-                       ",'" & Txt_Transportista.Tag &
-                       "'," & Convert.ToInt32(Chk_Transpor_Por_Pagar.Checked) &
-                       "," & De_Txt_a_Num_01(Txt_Valor_Min_Despacho.Tag, 5) &
-                       "," & Convert.ToInt32(Chk_Mostrar_RetiraTransportista.Checked) &
-                       "," & Convert.ToInt32(Chk_Mostrar_Agencia.Checked) &
-                       "," & Convert.ToInt32(Chk_ConfirmarLecturaDespacho.Checked) & ")"
+        With Cl_Despachos.Zw_Despachos_Configuracion
 
-        If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql) Then
+            .Empresa = ModEmpresa
+            .Sucursal = ModSucursal
+            .Pedir_Sucursal_Retiro = Chk_Pedir_Sucursal_Retiro.Checked
+            .Transpor_Por_Pagar = Chk_Transpor_Por_Pagar.Checked
+            .Tipo_Venta_X_Defecto = Txt_Tipo_Venta.Tag
+            .Transportista_X_Defecto = Txt_Transportista.Tag
+            .Valor_Min_Despacho = Txt_Valor_Min_Despacho.Tag
+            .Mostrar_RetiraTransportista = Chk_Mostrar_RetiraTransportista.Checked
+            .Mostrar_Agencia = Chk_Mostrar_Agencia.Checked
+            .ConfirmarLecturaDespacho = Chk_ConfirmarLecturaDespacho.Checked
+            .Obs_Retira_Cliente = Txt_Obs_Retira_Cliente.Text
 
-            Dim _Cl As New Clas_Despacho(True)
+        End With
 
-            MessageBoxEx.Show(Me, "Datos de configuración actualizados correctamente", "Grabar configuración", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Dim _Mensaje As LsValiciones.Mensajes
 
-        End If
+        _Mensaje = Cl_Despachos.Fx_Grabar_Configuracion()
 
-    End Sub
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK, _Mensaje.Icono)
 
-    Private Sub Btn_Buscar_Tipo_Venta_Click(sender As Object, e As EventArgs) Handles Btn_Buscar_Tipo_Venta_x_Defecto.Click
-        Dim _Filtrar As New Clas_Filtros_Random(Me)
-
-        _Filtrar.Tabla = _Global_BaseBk & "Zw_TablaDeCaracterizaciones"
-        _Filtrar.Campo = "CodigoTabla"
-        _Filtrar.Descripcion = "NombreTabla"
-
-        _Filtrar.Pro_Nombre_Encabezado_Informe = "TIPO DE VENTA"
-
-        If _Filtrar.Fx_Filtrar(Nothing,
-                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And Tabla = 'SIS_DESPACHO_TIPO_VENTA'",
-                               Nothing, False, True) Then
-
-            Dim _Tbl_Transportista As DataTable = _Filtrar.Pro_Tbl_Filtro
-
-            Dim _Row As DataRow = _Tbl_Transportista.Rows(0)
-
-            Dim _Codigo = _Row.Item("Codigo").ToString.Trim
-            Dim _Descripcion = _Row.Item("Descripcion").ToString.Trim
-
-            Txt_Tipo_Venta.Tag = _Codigo
-            Txt_Tipo_Venta.Text = _Descripcion
-
-        End If
-    End Sub
-
-    Private Sub Btn_Buscar_Transportista_Click(sender As Object, e As EventArgs) Handles Btn_Buscar_Transportista_x_Defecto.Click
-
-        Dim _Reg As Boolean = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Despachos_Transportistas", "")
-
-        If Not _Reg Then
-            MessageBoxEx.Show(Me, "No existen transportistas asignados" & vbCrLf & vbCrLf &
-                              "Los tranportistas seran asociados desde la tabla TABRETI hacia Bakapp" & vbCrLf &
-                              "Debe hacer esa asociación", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        If Not _Mensaje.EsCorrecto Then
             Return
         End If
 
-        Dim _Filtrar As New Clas_Filtros_Random(Me)
+        'Consulta_Sql = "Delete " & _Global_BaseBk & "Zw_Despachos_Configuracion Where Empresa = '" & ModEmpresa & "'" & vbCrLf &
+        '               "Insert Into " & _Global_BaseBk & "Zw_Despachos_Configuracion (Empresa,Pedir_Sucursal_Retiro,Tipo_Venta_X_Defecto," &
+        '               "Transportista_X_Defecto,Transpor_Por_Pagar,Valor_Min_Despacho,Mostrar_RetiraTransportista,Mostrar_Agencia,ConfirmarLecturaDespacho) Values " &
+        '               "('" & ModEmpresa & "'" &
+        '               "," & Convert.ToInt32(Chk_Pedir_Sucursal_Retiro.Checked) &
+        '               ",'" & Txt_Tipo_Venta.Tag & "'" &
+        '               ",'" & Txt_Transportista.Tag &
+        '               "'," & Convert.ToInt32(Chk_Transpor_Por_Pagar.Checked) &
+        '               "," & De_Txt_a_Num_01(Txt_Valor_Min_Despacho.Tag, 5) &
+        '               "," & Convert.ToInt32(Chk_Mostrar_RetiraTransportista.Checked) &
+        '               "," & Convert.ToInt32(Chk_Mostrar_Agencia.Checked) &
+        '               "," & Convert.ToInt32(Chk_ConfirmarLecturaDespacho.Checked) & ")"
 
-        _Filtrar.Tabla = "TABRETI"
-        _Filtrar.Campo = "KORETI"
-        _Filtrar.Descripcion = "NORETI"
+        'If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql) Then
 
-        _Filtrar.Pro_Nombre_Encabezado_Informe = "TRANSPORTISTA"
+        '    Dim _Cl As New Clas_Despacho(True)
 
-        If _Filtrar.Fx_Filtrar(Nothing,
-                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And KORETI In (Select CodTransportista From " & _Global_BaseBk & "Zw_Despachos_Transportistas)",
-                               Nothing, False, True) Then
+        '    MessageBoxEx.Show(Me, "Datos de configuración actualizados correctamente", "Grabar configuración", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-            Dim _Tbl_Transportista As DataTable = _Filtrar.Pro_Tbl_Filtro
-
-            Dim _Row As DataRow = _Tbl_Transportista.Rows(0)
-
-            Dim _Koreti = _Row.Item("Codigo").ToString.Trim
-            Dim _Noreti = _Row.Item("Descripcion").ToString.Trim
-
-            Txt_Transportista.Tag = _Koreti
-            Txt_Transportista.Text = _Noreti
-
-        End If
+        'End If
 
     End Sub
 
@@ -607,5 +569,66 @@ Public Class Frm_Despacho_Configuracion
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
+    End Sub
+
+    Private Sub Txt_Tipo_Venta_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Tipo_Venta.ButtonCustomClick
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Tabla = _Global_BaseBk & "Zw_TablaDeCaracterizaciones"
+        _Filtrar.Campo = "CodigoTabla"
+        _Filtrar.Descripcion = "NombreTabla"
+
+        _Filtrar.Pro_Nombre_Encabezado_Informe = "TIPO DE VENTA"
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And Tabla = 'SIS_DESPACHO_TIPO_VENTA'",
+                               Nothing, False, True) Then
+
+            Dim _Tbl_Transportista As DataTable = _Filtrar.Pro_Tbl_Filtro
+
+            Dim _Row As DataRow = _Tbl_Transportista.Rows(0)
+
+            Dim _Codigo = _Row.Item("Codigo").ToString.Trim
+            Dim _Descripcion = _Row.Item("Descripcion").ToString.Trim
+
+            Txt_Tipo_Venta.Tag = _Codigo
+            Txt_Tipo_Venta.Text = _Descripcion
+
+        End If
+    End Sub
+
+    Private Sub Txt_Transportista_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Transportista.ButtonCustomClick
+        Dim _Reg As Boolean = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Despachos_Transportistas", "")
+
+        If Not _Reg Then
+            MessageBoxEx.Show(Me, "No existen transportistas asignados" & vbCrLf & vbCrLf &
+                              "Los tranportistas seran asociados desde la tabla TABRETI hacia Bakapp" & vbCrLf &
+                              "Debe hacer esa asociación", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Tabla = "TABRETI"
+        _Filtrar.Campo = "KORETI"
+        _Filtrar.Descripcion = "NORETI"
+
+        _Filtrar.Pro_Nombre_Encabezado_Informe = "TRANSPORTISTA"
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And KORETI In (Select CodTransportista From " & _Global_BaseBk & "Zw_Despachos_Transportistas)",
+                               Nothing, False, True) Then
+
+            Dim _Tbl_Transportista As DataTable = _Filtrar.Pro_Tbl_Filtro
+
+            Dim _Row As DataRow = _Tbl_Transportista.Rows(0)
+
+            Dim _Koreti = _Row.Item("Codigo").ToString.Trim
+            Dim _Noreti = _Row.Item("Descripcion").ToString.Trim
+
+            Txt_Transportista.Tag = _Koreti
+            Txt_Transportista.Text = _Noreti
+
+        End If
     End Sub
 End Class

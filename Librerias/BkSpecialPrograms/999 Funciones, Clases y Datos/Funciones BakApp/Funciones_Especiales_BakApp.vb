@@ -15,17 +15,16 @@ Public Module Funciones_Especiales_BakApp
 
         Dim _NombreFormato As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad",
                                                          "NombreFormato",
-                                                         "Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _TipoDoc & "'")
+                                                         "Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _TipoDoc & "'",, _Mostrar_Mensaje)
 
         Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Format_01" & vbCrLf &
                        "Where TipoDoc = '" & _TipoDoc & "' And NombreFormato = '" & _NombreFormato & "'"
-        Dim _RowFormato As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
+        Dim _RowFormato As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, _Mostrar_Mensaje)
 
         If _RowFormato Is Nothing Then
 
             Consulta_sql = "Select top 1 * From TABTIDO Where TIDO = '" & _TipoDoc & "'"
-            Dim _RowTido As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+            Dim _RowTido As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, _Mostrar_Mensaje)
 
             Dim _Notido As String = _TipoDoc
 
@@ -109,7 +108,7 @@ Public Module Funciones_Especiales_BakApp
 
         Consulta_sql = "Select EMPRESA From CONFIGP
                         Where RUT In (Select Rut From " & _Global_BaseBk & "Zw_Licencia Where Activa = 1)"
-        Dim _Tbl_Configp As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Configp As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Empresa As String
 
@@ -168,17 +167,19 @@ Public Module Funciones_Especiales_BakApp
 
         End If
 
+        Sb_Revisar_Zw_Productos()
+
         If Fx_Licencia(_Formulario, RutEmpresa) Then
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Licencia Where Rut = '" & RutEmpresa & "'"
-            Dim _TblLicencia As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblLicencia As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Fecha_caduca = _TblLicencia.Rows(0).Item("Fecha_caduca")
 
             Dim _Dias = DateDiff(DateInterval.Day, FechaDelServidor, _Fecha_caduca)
 
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Configuracion (Empresa,Modalidad)" & vbCrLf &
-                           "Select EMPRESA,MODALIDAD From CONFIEST" & vbCrLf &
+                           "Select EMPRESA,MODALIDAD From CONFIEST WITH (NOLOCK)" & vbCrLf &
                            "Where MODALIDAD NOT IN (Select Modalidad From " & _Global_BaseBk & "Zw_Configuracion) And EMPRESA <> ''"
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
@@ -298,8 +299,8 @@ Public Module Funciones_Especiales_BakApp
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-        Dim _Consulta_sql = "Select Top 1 " & _Tido & " From CONFIEST Where EMPRESA = '" & _Empresa & "' And MODALIDAD = '" & _Modalidad & "'"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+        Dim _Consulta_sql = "Select Top 1 " & _Tido & " From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & _Empresa & "' And MODALIDAD = '" & _Modalidad & "'"
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
         Dim _Nudo_Modalidad As String
 
@@ -359,8 +360,8 @@ Public Module Funciones_Especiales_BakApp
         ' _Modalidad = "  "
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-        Dim _Consulta_sql = "Select Top 1 " & _Tido & " From CONFIEST Where MODALIDAD = '" & _Modalidad & "' And EMPRESA = '" & ModEmpresa & "'"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+        Dim _Consulta_sql = "Select Top 1 " & _Tido & " From CONFIEST WITH (NOLOCK) Where MODALIDAD = '" & _Modalidad & "' And EMPRESA = '" & ModEmpresa & "'"
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
         Dim _Nudo_Modalidad As String
 
@@ -412,7 +413,7 @@ Public Module Funciones_Especiales_BakApp
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Licencia Where Rut = '" & _RutEmpresa & "'"
-        Dim _TblLicencia As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblLicencia As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblLicencia.Rows.Count) Then
 
@@ -601,15 +602,15 @@ Public Module Funciones_Especiales_BakApp
 
         If String.IsNullOrEmpty(_NumeroDoc.Trim) Then
             If _Tido = "GDV" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "GDD" Then
-                Consulta_sql = "Select GDV As NrNumeroDoco From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
+                Consulta_sql = "Select GDV As NrNumeroDoco From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
                                 Union
-                                Select GTI As NrNumeroDoco From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
+                                Select GTI As NrNumeroDoco From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
                                 Union
-                                Select GDP As NrNumeroDoco From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
+                                Select GDP As NrNumeroDoco From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
                                 Union
-                                Select GDD As NrNumeroDoco From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
+                                Select GDD As NrNumeroDoco From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
                                 Order By NrNumeroDoco Desc"
-                Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
                 _NrNumeroDoco = _Tbl.Rows(0).Item("NrNumeroDoco")
             Else
                 _NrNumeroDoco = _Sql.Fx_Trae_Dato("CONFIEST", _Tido, "EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'")
@@ -637,15 +638,15 @@ Public Module Funciones_Especiales_BakApp
             _NrNumeroDoco = _RowModalidad.Item(_Tido)
 
             If _Tido = "GDV" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "GDD" Then
-                Consulta_sql = "Select GDV As NrNumeroDoco From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
+                Consulta_sql = "Select GDV As NrNumeroDoco From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
                                 Union
-                                Select GTI As NrNumeroDoco From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
+                                Select GTI As NrNumeroDoco From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
                                 Union
-                                Select GDP As NrNumeroDoco From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
+                                Select GDP As NrNumeroDoco From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
                                 Union
-                                Select GDD As NrNumeroDoco From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
+                                Select GDD As NrNumeroDoco From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
                                 Order By NrNumeroDoco Desc"
-                Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
                 _NrNumeroDoco = _Tbl.Rows(0).Item("NrNumeroDoco")
             Else
                 _NrNumeroDoco = _Sql.Fx_Trae_Dato("CONFIEST", _Tido, "EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '")
@@ -668,15 +669,15 @@ Public Module Funciones_Especiales_BakApp
                                        "WHERE EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '"
                         _Sql.Ej_consulta_IDU(Consulta_sql)
 
-                        Consulta_sql = "Select GDV As NrNumeroDoco From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
+                        Consulta_sql = "Select GDV As NrNumeroDoco From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
                                         Union
-                                        Select GTI As NrNumeroDoco From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
+                                        Select GTI As NrNumeroDoco From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
                                         Union
-                                        Select GDP As NrNumeroDoco From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
+                                        Select GDP As NrNumeroDoco From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
                                         Union
-                                        Select GDD As NrNumeroDoco From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
+                                        Select GDD As NrNumeroDoco From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
                                         Order By NrNumeroDoco Desc"
-                        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
                         _NrNumeroDoco = _Tbl.Rows(0).Item("NrNumeroDoco")
                         _Existe_Doc = _Sql.Fx_Cuenta_Registros("MAEEDO", "EMPRESA = '" & ModEmpresa & "' And TIDO In ('GDV','GTI','GDP','GDD') And NUDO = '" & _NrNumeroDoco & "'")
                     Else
@@ -723,15 +724,15 @@ Public Module Funciones_Especiales_BakApp
                                        "WHERE EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'"
                         _Sql.Ej_consulta_IDU(Consulta_sql)
 
-                        Consulta_sql = "Select GDV As Tido From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
+                        Consulta_sql = "Select GDV As Tido From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
                                         Union
-                                        Select GTI As Tido From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
+                                        Select GTI As Tido From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
                                         Union
-                                        Select GDP As Tido From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
+                                        Select GDP As Tido From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
                                         Union
-                                        Select GDD As Tido From CONFIEST Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
+                                        Select GDD As Tido From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
                                         Order By Tido Desc"
-                        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
                         _NrNumeroDoco = _Tbl.Rows(0).Item("Tido")
 
                         _Existe_Doc = _Sql.Fx_Cuenta_Registros("MAEEDO", "EMPRESA = '" & ModEmpresa & "' And TIDO In ('GDV','GTI','GDP','GDD') And NUDO = '" & _NrNumeroDoco & "'")
@@ -848,8 +849,13 @@ Public Module Funciones_Especiales_BakApp
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
         Consulta_sql = "select getdate() As Fecha"
-        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-        FechaDelServidor = _Row.Item("Fecha")
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+        If IsNothing(_Row) Then
+            FechaDelServidor = Now
+        Else
+            FechaDelServidor = _Row.Item("Fecha")
+        End If
 
     End Function
 
@@ -873,7 +879,7 @@ Public Module Funciones_Especiales_BakApp
         Consulta_sql = "Select * From " & _Global_BaseBk & "ZW_PermisosVsUsuarios" & vbCrLf &
                        "Where CodPermiso = '" & _CodPremiso & "' And CodUsuario = '" & _CodUsuario & "'"
 
-        _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Return _Tbl
 
@@ -889,7 +895,7 @@ Public Module Funciones_Especiales_BakApp
         Consulta_sql = Replace(Consulta_sql, "#CodEntidad#", _CodEntidad)
         Consulta_sql = Replace(Consulta_sql, "#SucEntidad#", _SucEntidad)
 
-        _Row_Entidad = _Sql.Fx_Get_DataRow(Consulta_sql)
+        _Row_Entidad = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 
         If Not (_Row_Entidad Is Nothing) Then
 
@@ -930,11 +936,11 @@ Public Module Funciones_Especiales_BakApp
         Consulta_sql = Replace(Consulta_sql, "#CodEntidad#", _CodEntidad)
         Consulta_sql = Replace(Consulta_sql, "#SucEntidad#", _SucEntidad)
 
-        If String.IsNullOrEmpty(_SucEntidad) Then
+        If String.IsNullOrWhiteSpace(_SucEntidad) Then
             Consulta_sql = Replace(Consulta_sql, "And SUEN = @SucEntidad", "")
         End If
 
-        _Tbl_Entidad = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Entidad = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Row_entidad As DataRow In _Tbl_Entidad.Rows
 
@@ -1134,8 +1140,8 @@ Public Module Funciones_Especiales_BakApp
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-        Dim _Consulta_sql = "Select Top 1 " & _Tido & " From CONFIEST Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+        Dim _Consulta_sql = "Select Top 1 " & _Tido & " From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'"
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
         Dim _Nudo_Modalidad As String
 
@@ -1351,7 +1357,7 @@ Public Module Funciones_Especiales_BakApp
         End If
 
         Consulta_sql = "SELECT ROUND(SUM(" & CAMPO & ")," & Decimales & ") AS CAMPO FROM " & TABLA & condicion & ""
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim cuenta As Long = _Tbl.Rows.Count
         Dim dr As DataRow = _Tbl.Rows(0)
@@ -1386,7 +1392,7 @@ Public Module Funciones_Especiales_BakApp
         Dim _Ruta As String = AppPath() & "\Data\" & RutEmpresa & "\Tmp"
 
         Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _IdMaeedo_Doc
-        Dim _Enc_Documento As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Enc_Documento As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Enc_Documento.Rows.Count) Then
 
@@ -1522,7 +1528,7 @@ Public Module Funciones_Especiales_BakApp
                        "Where Tabla = '" & _Tabla & "'" & vbCrLf &
                        "order by Orden"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
         _Cmb.DataSource = _Tbl
         If CBool(_Tbl.Rows.Count) Then
             _Cmb.SelectedValue = _Campoxdefecto
@@ -1594,85 +1600,133 @@ Public Module Funciones_Especiales_BakApp
 
     End Function
 
-    Function Fx_Revisar_Taza_Cambio(_Formulario As Form,
-                                    Optional _Fecha_Taza As Date = Nothing,
-                                    Optional _Revisar_Obligado As Boolean = False) As Boolean
+    Function Fx_Revisar_Tasa_Cambio(_Formulario As Form,
+                                    Optional _Fecha_Tasa As Date = Nothing,
+                                    Optional _Revisar_Obligado As Boolean = False,
+                                    Optional _Mostrar_Mensaje As Boolean = True) As LsValiciones.Mensajes
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+        Dim _Mensaje As New LsValiciones.Mensajes
 
-        Dim _Revisa_Taza_Cambio As Boolean = True '_Global_Row_Configuracion_General.Item("Revisa_Taza_Cambio")
-        Dim _Revisar_Taza_Solo_Mon_Extranjeras As Boolean = _Global_Row_Configuracion_General.Item("Revisar_Taza_Solo_Mon_Extranjeras")
+        Try
 
-        If _Revisar_Obligado Then
-            _Revisa_Taza_Cambio = True
-        End If
+            Dim _Revisa_Taza_Cambio As Boolean = True
+            Dim _Revisar_Taza_Solo_Mon_Extranjeras As Boolean = _Global_Row_Configuracion_General.Item("Revisar_Taza_Solo_Mon_Extranjeras")
 
-        If Not _Revisa_Taza_Cambio Then
-            Return True
-        End If
+            If _Revisar_Obligado Then
+                _Revisa_Taza_Cambio = True
+            End If
 
-        Dim _Fecha As String
+            If Not _Revisa_Taza_Cambio Then
 
-        If (_Fecha_Taza = Nothing) Then
-            _Fecha_Taza = FormatDateTime(FechaDelServidor(), DateFormat.ShortDate)
-        End If
+                _Mensaje.Detalle = "Revisar tasa de cambio"
+                _Mensaje.Mensaje = "No se necesita revisar la tasa de cambio"
+                _Mensaje.EsCorrecto = True
+                _Mensaje.Icono = MessageBoxIcon.Information
 
-        _Fecha = Format(_Fecha_Taza, "yyyyMMdd")
+                Return _Mensaje
 
+            End If
 
-        Dim _CantMonedas As Integer = _Sql.Fx_Cuenta_Registros("TABMO", "TIMO = 'E' Or KOMO <> '$'")
+            Dim _Fecha As String
 
-        Consulta_sql = "Select Distinct KOMO From MAEMO Where (FEMO = '" & _Fecha & "' AND TIMO = 'E') Or " &
-                       "(FEMO = '" & _Fecha & "' And KOMO <> '$')"
-        Dim _CantMonedas_Con_Taza = _Sql.Fx_Get_Tablas(Consulta_sql)
+            If (_Fecha_Tasa = Nothing) Then
+                _Fecha_Tasa = FormatDateTime(FechaDelServidor(), DateFormat.ShortDate)
+            End If
 
-        If CBool(_CantMonedas) Then
+            _Fecha = Format(_Fecha_Tasa, "yyyyMMdd")
 
-            If _CantMonedas_Con_Taza.Rows.Count = _CantMonedas Then
-                Return True
-            Else
+            Dim _CantMonedas As Integer = _Sql.Fx_Cuenta_Registros("TABMO", "TIMO = 'E' Or KOMO <> '$'", _Mostrar_Mensaje)
 
-                Consulta_sql = "Select *,(select COUNT(*) From TABMO WHERE TIMO = 'E') as NroMonedas" & vbCrLf &
-                               "From TABMO Where (TIMO = 'E' Or KOMO <> '$')" & vbCrLf &
-                               "And KOMO Not IN (Select Distinct KOMO From MAEMO Where FEMO = '" & _Fecha & "')"
+            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                Throw New System.Exception(_Sql.Pro_Error)
+                _Mensaje.ErrorDeConexionSQL = True
+            End If
 
-                Dim _TblMoneda As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Consulta_sql = "Select Distinct KOMO From MAEMO Where (FEMO = '" & _Fecha & "' AND TIMO = 'E') Or " &
+                           "(FEMO = '" & _Fecha & "' And KOMO <> '$')"
+            Dim _CantMonedas_Con_Taza = _Sql.Fx_Get_DataTable(Consulta_sql, _Mostrar_Mensaje)
 
-                Dim _Monedas = String.Empty
+            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                Throw New System.Exception(_Sql.Pro_Error)
+                _Mensaje.ErrorDeConexionSQL = True
+            End If
 
-                For Each _Filas As DataRow In _TblMoneda.Rows
+            If CBool(_CantMonedas) Then
 
-                    Dim _Revisar = False
-                    Dim _Timo = _Filas.Item("TIMO")
+                If _CantMonedas_Con_Taza.Rows.Count = _CantMonedas Then
 
-                    If _Revisar_Taza_Solo_Mon_Extranjeras Then
-                        If _Timo = "E" Then
+                    _Mensaje.Detalle = "Revisar tasa de cambio"
+                    _Mensaje.Mensaje = "No se necesita revisar la tasa de cambio"
+                    _Mensaje.EsCorrecto = True
+                    _Mensaje.Icono = MessageBoxIcon.Information
+
+                    Return _Mensaje
+
+                Else
+
+                    Consulta_sql = "Select *,(select COUNT(*) From TABMO WHERE TIMO = 'E') as NroMonedas" & vbCrLf &
+                                   "From TABMO Where (TIMO = 'E' Or KOMO <> '$')" & vbCrLf &
+                                   "And KOMO Not IN (Select Distinct KOMO From MAEMO Where FEMO = '" & _Fecha & "')"
+
+                    Dim _TblMoneda As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, _Mostrar_Mensaje)
+
+                    If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                        Throw New System.Exception(_Sql.Pro_Error)
+                        _Mensaje.ErrorDeConexionSQL = True
+                    End If
+
+                    Dim _Monedas = String.Empty
+
+                    For Each _Filas As DataRow In _TblMoneda.Rows
+
+                        Dim _Revisar = False
+                        Dim _Timo = _Filas.Item("TIMO")
+
+                        If _Revisar_Taza_Solo_Mon_Extranjeras Then
+                            If _Timo = "E" Then
+                                _Revisar = True
+                            End If
+                        Else
                             _Revisar = True
                         End If
+
+                        If _Revisar Then
+                            _Monedas += _Filas.Item("KOMO") & "-" & Trim(_Filas.Item("NOKOMO") & vbCrLf)
+                        End If
+
+                    Next
+
+                    If String.IsNullOrEmpty(_Monedas) Then
+
+                        _Mensaje.Detalle = "Revisar tasa de cambio"
+                        _Mensaje.Mensaje = "No se necesita revisar la tasa de cambio"
+                        _Mensaje.EsCorrecto = True
+                        _Mensaje.Icono = MessageBoxIcon.Information
+
+                        Return _Mensaje
+
                     Else
-                        _Revisar = True
-                    End If
 
-                    If _Revisar Then
-                        _Monedas += _Filas.Item("KOMO") & "-" & Trim(_Filas.Item("NOKOMO") & vbCrLf)
-                    End If
+                        _Mensaje.Mensaje = "No existe tasa de cambio para la fecha: " & FormatDateTime(_Fecha_Tasa, DateFormat.ShortDate) & ", para las monedas: " & _Monedas
 
-                Next
+                        If Not IsNothing(_Formulario) Then
 
-                If String.IsNullOrEmpty(_Monedas) Then
-                    Return True
-                Else
-                    If Not IsNothing(_Formulario) Then
+                            If _Mostrar_Mensaje Then
 
-                        If MessageBoxEx.Show(_Formulario, "No existe tasa de cambio para la fecha: " & FormatDateTime(_Fecha_Taza, DateFormat.ShortDate) & vbCrLf &
-                                      "Para las monedas: " & vbCrLf & vbCrLf & _Monedas & vbCrLf & vbCrLf & "¿Desea ingresar la tasa de cambio?", "Validación",
-                                      MessageBoxButtons.YesNo, MessageBoxIcon.Stop) = DialogResult.Yes Then
+                                If MessageBoxEx.Show(_Formulario, "No existe tasa de cambio para la fecha: " & FormatDateTime(_Fecha_Tasa, DateFormat.ShortDate) & vbCrLf &
+                                                     "Para las monedas: " & vbCrLf & vbCrLf & _Monedas & vbCrLf & vbCrLf & "¿Desea ingresar la tasa de cambio?", "Validación",
+                                                     MessageBoxButtons.YesNo, MessageBoxIcon.Stop) = DialogResult.Yes Then
 
-                            If Fx_Tiene_Permiso(_Formulario, "Espr0032") Then
+                                    If Fx_Tiene_Permiso(_Formulario, "Espr0032") Then
 
-                                Dim Fm As New Frm_MonedasLista
-                                Fm.ShowDialog(_Formulario)
-                                Fm.Dispose()
+                                        Dim Fm As New Frm_MonedasLista
+                                        Fm.ShowDialog(_Formulario)
+                                        Fm.Dispose()
+
+                                    End If
+
+                                End If
 
                             End If
 
@@ -1682,11 +1736,25 @@ Public Module Funciones_Especiales_BakApp
 
                 End If
 
+            Else
+
+                _Mensaje.Detalle = "Revisar tasa de cambio"
+                _Mensaje.Mensaje = "No se necesita revisar la tasa de cambio"
+                _Mensaje.EsCorrecto = True
+                _Mensaje.Icono = MessageBoxIcon.Information
+
+                Return _Mensaje
+
             End If
 
-        Else
-            Return True
-        End If
+        Catch ex As Exception
+            _Mensaje.Detalle = "Error al revisar tasa de cambio"
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Icono = MessageBoxIcon.Stop
+        End Try
+
+        Return _Mensaje
 
     End Function
 
@@ -2041,7 +2109,7 @@ Public Module Modulo_Precios_Costos
             _Rtu = De_Num_a_Tx_01(_RowPrecio.Item("RLUD"), False, 5)
         Catch ex As Exception
             _Rtu = _Sql.Fx_Trae_Dato("MAEPR", "RLUD", "KOPR = '" & _Kopr & "'")
-            Consulta_sql = "Update TABPRE Set RLUD = " & _Rtu & " Where KOLT = '" & _Kolt & "' And KOPR = '" & _Kopr & "'"
+            Consulta_sql = "Update TABPRE Set RLUD = " & De_Num_a_Tx_01(_Rtu, False, 5) & " Where KOLT = '" & _Kolt & "' And KOPR = '" & _Kopr & "'"
             _Sql.Ej_consulta_IDU(Consulta_sql)
         End Try
 
@@ -2361,7 +2429,7 @@ Public Module Modulo_Precios_Costos
         Dim _Cont = 0
 
         Consulta_sql = "Select * From TABPP"
-        Dim _TblListas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblListas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For i = 0 To _Ecuaciones.Length - 1
 
@@ -2395,7 +2463,7 @@ Public Module Modulo_Precios_Costos
         _Filtro_Listas = Generar_Filtro_IN_Arreglo(_Listas, False)
 
         Consulta_sql = "Select * From TABPP Where KOLT In (" & _Filtro_Listas & ")"
-        Dim _Tbl_Listas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Listas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Campo As String
 
@@ -2415,7 +2483,7 @@ Public Module Modulo_Precios_Costos
                 Dim _Contador = 0
 
                 Consulta_sql = "Select COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS Where TABLE_NAME = 'TABPRE'"
-                Dim _Tbl_Campos_Tabpre As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Campos_Tabpre As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 For Each _FColumnas As DataRow In _Tbl_Campos_Tabpre.Rows
 
@@ -2501,7 +2569,7 @@ Public Module Modulo_Precios_Costos
         End If
 
         Consulta_sql = "Select * From PNOMDIM Where DEPENDENCI = 'Valor_propio'"
-        Dim _Tbl_Dimension_Valor_Propio As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Dimension_Valor_Propio As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _FDim_Vp As DataRow In _Tbl_Dimension_Valor_Propio.Rows
 
@@ -2524,7 +2592,7 @@ Public Module Modulo_Precios_Costos
         Next
 
         Consulta_sql = "Select * From PNOMDIM Where DEPENDENCI = 'Por_producto'"
-        Dim _Tbl_Dimension_Por_Producto As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Dimension_Por_Producto As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _FDim_Vp As DataRow In _Tbl_Dimension_Por_Producto.Rows
 
@@ -2550,7 +2618,7 @@ Public Module Modulo_Precios_Costos
         Consulta_sql = "Select * From PNOMDIM 
                         Inner Join INFORMATION_SCHEMA.COLUMNS On PNOMDIM.CODIGO = COLUMN_NAME And DATA_TYPE In ('float','int')
                         Where DEPENDENCI = 'Por_entidad' And TABLE_NAME = 'PDIMCLI'"
-        Dim _Tbl_Dimension_Por_Entidad As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Dimension_Por_Entidad As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _FDim_Vp As DataRow In _Tbl_Dimension_Por_Entidad.Rows
 
@@ -3090,7 +3158,18 @@ Public Module Crear_Documentos_Desde_Otro
                 Dim _Tido = _Row_Documento.Item("TIDO")
                 Dim _Nudo = _Row_Documento.Item("NUDO")
 
-                If Fx_Revisar_Taza_Cambio(_Formulario) Then
+                Dim _Msj_Tsc As LsValiciones.Mensajes
+
+                _Msj_Tsc = Fx_Revisar_Tasa_Cambio(Nothing,,, False)
+                'If Not _Msj_Tsc.EsCorrecto Then
+
+                '    _Mensaje.ErrorDeConexionSQL = _Msj_Tsc.ErrorDeConexionSQL
+                '    Throw New System.Exception(_Mensaje.Mensaje)
+                '    'Throw New System.Exception("No existe taza de cambio para la fecha: " & FechaDelServidor.ToShortDateString)
+
+                'End If
+
+                If _Msj_Tsc.EsCorrecto Then
 
                     If Fx_Se_Puede_Trasladar_Para_Crear_Otro_Documento(_Idmaeedo_Origen) Then
 
@@ -3156,7 +3235,11 @@ Public Module Crear_Documentos_Desde_Otro
                         FROM MAEDDO  WITH ( NOLOCK ) 
                         WHERE IDMAEEDO =  " & _Idmaeedo & " AND ( ESLIDO<>'C' OR ESFALI='I' ) AND TICT = ''"
 
-        Dim _Tbl_Saldo_Facturar As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Saldo_Facturar As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
+
+        If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+            Return False
+        End If
 
         Return CBool(_Tbl_Saldo_Facturar.Rows.Count)
 
@@ -3443,6 +3526,120 @@ Public Module Crear_Documentos_Desde_Otro
     Function Fx_Revisar_Expiracion_Folio_SII(_Formulario As Form,
                                              _Tido As String,
                                              _Folio As String,
+                                             _MostrarMensajeExpiracion As Boolean) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
+            Dim _Firma_Bakapp As Boolean = Fx_Firmar_X_Bakapp2(_Tido)
+            Dim _Firma_RunMonitor As Boolean = Not _Firma_Bakapp
+
+            If _Firma_Bakapp Then
+                Return Fx_Revisar_Expiracion_Folio_SII_Hefesto_Bakapp(_Formulario, _Tido, _Folio, _MostrarMensajeExpiracion)
+            End If
+
+            If _Tido = "GDP" Or _Tido = "GDD" Or _Tido = "GTI" Then
+                _Tido = "GDV"
+            End If
+
+            Dim _Td = Fx_Tipo_DTE_VS_TIDO(_Tido)
+
+            Dim _AmbienteCertificacion As Integer = Convert.ToInt32(_Global_Row_Configuracion_Estacion.Item("FacElect_Usar_AmbienteCertificacion"))
+
+            If _Firma_Bakapp Then
+                Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_DTE_Caf With ( NOLOCK )" & vbCrLf &
+                          "Where Cast(RNG_D AS INT)<=" & Val(_Folio) & " And Cast(RNG_H AS INT)>=" & Val(_Folio) &
+                          " And TD='" & _Td & "' And Empresa='" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion
+            Else
+                Consulta_sql = "Select TOP 1 * FROM FFOLIOS WITH ( NOLOCK )" & vbCrLf &
+                               "Where CAST(RNG_D AS INT)<=" & Val(_Folio) & " And Cast(RNG_H AS INT)>=" & Val(_Folio) &
+                               "  And TD='" & _Td & "'  AND EMPRESA='" & ModEmpresa & "' "
+            End If
+
+            Dim _Row_Folios As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_Row_Folios) Then
+
+                'If Not IsNothing(_Formulario) Then
+
+                Dim _MsgFolio As String
+
+                If _Firma_Bakapp Then
+                    _MsgFolio = "(Folios por Hefesto BakApp)"
+                Else
+                    _MsgFolio = "(Folios Random)"
+                End If
+
+                _Mensaje.Detalle = "Validación Modalidad: " & Modalidad
+                Throw New System.Exception("El folio del documento electrónico no está autorizado por el SII: " & _Folio & vbCrLf & vbCrLf &
+                                      "INFORME ESTA SITUACION AL ADMINISTRADOR DEL SISTEMA POR FAVOR")
+
+                'End If
+
+            Else
+
+                Dim _Fa As DateTime = FormatDateTime(CDate(_Row_Folios.Item("FA")), DateFormat.ShortDate)
+                Dim _Fecha_Servisor As DateTime = FormatDateTime(FechaDelServidor(), DateFormat.ShortDate)
+
+                Dim _Meses As Integer = 6
+
+                If _Sql.Fx_Existe_Tabla("FDTECONF") Then
+
+                    Try
+                        _Meses = _Sql.Fx_Trae_Dato("FDTECONF", "VALOR", "CAMPO = 'sii.meses.expiran.folios' And ACTIVO=1 And EMPRESA = '" & ModEmpresa & "'")
+                    Catch ex As Exception
+                        If _Tido = "BLV" Then
+                            _Meses = 24
+                        ElseIf _Tido = "GDV" Then
+                            _Meses = 12
+                        End If
+                    End Try
+
+                End If
+
+                Dim _Meses_Dif As Double = DateDiff(DateInterval.Month, _Fa, _Fecha_Servisor)
+                Dim _Dias_Dif As Integer = DateDiff(DateInterval.Day, _Fa, _Fecha_Servisor)
+
+                _Meses_Dif = Math.Round(_Dias_Dif / 31, 2)
+
+                If _Meses_Dif > _Meses Then
+
+                    'If Not IsNothing(_Formulario) Then
+
+                    _Mensaje.Detalle = "Validación Modalidad: " & Modalidad
+                    Throw New System.Exception("Este folio " & _Folio & " tiene mas de (" & _Meses & ") meses desde su fecha de creación" & vbCrLf &
+                          "en el SII y su configuración indica que podría estar vencido." & vbCrLf &
+                          "Si usted insite en el envío, este documento podria ser rechazado." & vbCrLf & vbCrLf &
+                          "INFORME ESTA SITUACION AL ADMINISTRADOR DEL SISTEMA")
+
+                    'End If
+
+                Else
+
+                    _Mensaje.EsCorrecto = True
+                    _Mensaje.Detalle = "Información"
+                    _Mensaje.Mensaje = "Folios encontrados correctamente."
+                    _Mensaje.Icono = MessageBoxIcon.Information
+
+                End If
+
+            End If
+
+        Catch ex As Exception
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
+    Function Fx_Revisar_Expiracion_Folio_SII_Old(_Formulario As Form,
+                                             _Tido As String,
+                                             _Folio As String,
                                              _MostrarMensajeExpiracion As Boolean) As Boolean
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
@@ -3451,7 +3648,7 @@ Public Module Crear_Documentos_Desde_Otro
         Dim _Firma_RunMonitor As Boolean = Not _Firma_Bakapp
 
         If _Firma_Bakapp Then
-            Return Fx_Revisar_Expiracion_Folio_SII_Hefesto_Bakapp(_Formulario, _Tido, _Folio, _MostrarMensajeExpiracion)
+            'Return Fx_Revisar_Expiracion_Folio_SII_Hefesto_Bakapp(_Formulario, _Tido, _Folio, _MostrarMensajeExpiracion)
         End If
 
         If _Tido = "GDP" Or _Tido = "GDD" Or _Tido = "GTI" Then
@@ -3493,9 +3690,6 @@ Public Module Crear_Documentos_Desde_Otro
             End If
 
         Else
-
-            'Dim _Hasta = _Row_Folios.Item("RNG_H")
-            'Dim _Folios_Restantes = _Hasta - CInt(_Folio)
 
             Dim _Fa As DateTime = FormatDateTime(CDate(_Row_Folios.Item("FA")), DateFormat.ShortDate)
             Dim _Fecha_Servisor As DateTime = FormatDateTime(FechaDelServidor(), DateFormat.ShortDate)
@@ -3542,8 +3736,212 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Function
 
-
     Function Fx_Revisar_Expiracion_Folio_SII_Hefesto_Bakapp(_Formulario As Form,
+                                                            _Tido As String,
+                                                            _Folio As String,
+                                                            _MostrarMensajeExpiracion As Boolean) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+        'Throw New System.Exception("No se encontro el detalle del documento en la tabla Zw_Stmp_Det")
+        Try
+
+            Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
+            If _Tido = "GDP" Or _Tido = "GDD" Or _Tido = "GTI" Then
+                _Tido = "GDV"
+            End If
+
+            Dim _Td = Fx_Tipo_DTE_VS_TIDO(_Tido)
+            Dim _AmbienteCertificacion As Integer
+
+            _AmbienteCertificacion = Convert.ToInt32(_Global_Row_Configuracion_Estacion.Item("FacElect_Usar_AmbienteCertificacion"))
+
+            Consulta_sql = "Select Empresa,Tido,RE,RS,TD,RNG_D,RNG_H,FA,DATEADD(MONTH,6,FA) As 'FechaVencFolios'," &
+                           "DATEDIFF(DAY,GETDATE(),DATEADD(MONTH,6,FA)) As 'DiasDif', RSAPK_M," & vbCrLf &
+                           "(Select COUNT(*) From MAEEDO Where TIDO = '" & _Tido & "' And NUDO Between RIGHT(REPLICATE('0', 10) + " &
+                           "CAST(RNG_D AS VARCHAR(10)), 10) And RIGHT(REPLICATE('0', 10) + CAST(RNG_H AS VARCHAR(10)), 10)) As 'DocGen'," & vbCrLf &
+                           "RNG_H-RNG_D+1 As 'NroDoc'," & vbCrLf &
+                           "(RNG_H-RNG_D+1) - (Select COUNT(*) From MAEEDO Where TIDO = '" & _Tido & "' And NUDO between RIGHT(REPLICATE('0', 10) + " &
+                           "CAST(RNG_D AS VARCHAR(10)), 10) And RIGHT(REPLICATE('0', 10) + CAST(RNG_H AS VARCHAR(10)), 10)) As 'SaldoFolios'," & vbCrLf &
+                           "RIGHT(REPLICATE('0', 10) + CAST(RNG_D AS VARCHAR(10)), 10) AS NroDesde," & vbCrLf &
+                           "RIGHT(REPLICATE('0', 10) + CAST(RNG_H AS VARCHAR(10)), 10) AS NroHasta," & vbCrLf &
+                           "RSAPK_E, IDK, FRMA, RSASK, RSAPUBK, CAF, AmbienteCertificacion" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_DTE_Caf" & vbCrLf &
+                           "Where TD='" & _Td & "' And Empresa='" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion & vbCrLf &
+                           "And " & Val(_Folio) & " Between Cast(RNG_D As int) And Cast(RNG_H As int) "
+
+            Dim _Row_Folios As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                Throw New System.Exception(_Mensaje.Mensaje)
+            End If
+
+            If IsNothing(_Row_Folios) Then
+
+                If Not IsNothing(_Formulario) Then
+
+                    _Mensaje.Detalle = "Validación Modalidad: " & Modalidad
+                    Throw New System.Exception("El folio del documento electrónico no está autorizado por el SII: " & _Folio & vbCrLf & vbCrLf &
+                                      "INFORME ESTA SITUACION AL ADMINISTRADOR DEL SISTEMA POR FAVOR")
+
+                End If
+
+            Else
+
+                Dim _FolioActual As Integer = _Folio
+                Dim _Rng_d As Integer = _Row_Folios.Item("RNG_D")
+                Dim _Rng_h As Integer = _Row_Folios.Item("RNG_H")
+
+                Dim _DiasAvisoExpiraFolio As Integer
+                Dim _AvisoSaldoFolios As Integer
+
+                Try
+                    _DiasAvisoExpiraFolio = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad",
+                                                              "DiasAvisoExpiraFolio", "Empresa = '" & ModEmpresa & "' And TipoDoc = '" & _Tido & "' And Modalidad = '  '",, False)
+                Catch ex As Exception
+                    _DiasAvisoExpiraFolio = 14
+                End Try
+
+                If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                    Throw New System.Exception(_Sql.Pro_Error)
+                End If
+
+                Try
+                    _AvisoSaldoFolios = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad",
+                                                              "AvisoSaldoFolios", "Empresa = '" & ModEmpresa & "' And TipoDoc = '" & _Tido & "' And Modalidad = '  '",, False)
+                Catch ex As Exception
+                    _AvisoSaldoFolios = 20
+                End Try
+
+                If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                    Throw New System.Exception(_Sql.Pro_Error)
+                End If
+
+                Dim _DiasDif As Integer = _Row_Folios.Item("DiasDif")
+                Dim _SaldoFolios As Integer = _Row_Folios.Item("SaldoFolios")
+
+                Dim _MsgExpiraFolios As String = String.Empty
+                Dim _MsgSaldoFolios As String = String.Empty
+
+                If _DiasDif >= 0 Then
+
+                    If (_DiasAvisoExpiraFolio >= _DiasDif) Then
+                        _MsgExpiraFolios = "- Faltan más o menos " & _DiasDif & " día(s) para que expire este correlativo de folios" & vbCrLf
+                    End If
+
+                    If (_AvisoSaldoFolios >= _SaldoFolios) Then
+
+                        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_DTE_Caf",
+                                     "TD='" & _Td & "' And Empresa='" & ModEmpresa & "' " &
+                                     "And AmbienteCertificacion = " & _AmbienteCertificacion & " And Cast(RNG_D As int) > " & Val(_Folio), False)
+
+                        If Not CBool(_Reg) Then
+                            _MsgSaldoFolios = "- Solo queda(n) " & _SaldoFolios & " folio(s) disponible(s) y no hay mas CAF registrados" & vbCrLf &
+                                "Folios Desde:" & _Rng_d & ", hasta:" & _Rng_h
+                        End If
+
+                    End If
+
+                End If
+
+                If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                    Throw New System.Exception(_Sql.Pro_Error)
+                End If
+
+                If Not IsNothing(_Formulario) Then
+
+                    If Not String.IsNullOrEmpty(_MsgExpiraFolios) Or Not String.IsNullOrEmpty(_MsgSaldoFolios) Then
+
+                        If _MostrarMensajeExpiracion Then
+
+                            Sb_Confirmar_Lectura("Información importante del SII" & vbCrLf & _Tido & "-" & _Folio,
+                                         _MsgExpiraFolios & _MsgSaldoFolios & vbCrLf & vbCrLf, eTaskDialogIcon.Shield,
+                                         "INFORME ESTA SITUACION AL ADMINISTRADOR DEL SISTEMA")
+
+                        End If
+
+                    End If
+
+                End If
+
+                Dim _DifFolios As Integer = _Rng_h - _FolioActual
+
+                Dim _Fa As DateTime = FormatDateTime(CDate(_Row_Folios.Item("FA")), DateFormat.ShortDate)
+                Dim _Fecha_Servisor As DateTime = FormatDateTime(FechaDelServidor(), DateFormat.ShortDate)
+
+                Dim _Meses As Integer = 6
+
+                If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_DTE_Configuracion", False) Then
+
+                    Try
+
+                        Select Case _Tido
+                            Case "BLV"
+                                _Meses = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
+                                     "Campo = 'Input_siimesesexpiranfolios_BOLETAS' And Empresa = '" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion,, False)
+                            Case "NCV"
+                                _Meses = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
+                                     "Campo = 'Input_siimesesexpiranfolios_NOTASCREDITO' And Empresa = '" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion,, False)
+                            Case "FDV"
+                                _Meses = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
+                                     "Campo = 'Input_siimesesexpiranfolios_NOTASDEBITO' And Empresa = '" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion,, False)
+                            Case "GDV"
+                                _Meses = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
+                                     "Campo = 'siimesesexpiranfolios_GUIAS' And Empresa = '" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion,, False)
+                            Case Else
+                                _Meses = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
+                                        "Campo = 'siimesesexpiranfolios' And Empresa = '" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion,, False)
+                        End Select
+
+                    Catch ex As Exception
+                        _Meses = 6
+                    End Try
+
+                End If
+
+                If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                    Throw New System.Exception(_Sql.Pro_Error)
+                End If
+
+                Dim _Meses_Dif As Double = DateDiff(DateInterval.Month, _Fa, _Fecha_Servisor)
+                Dim _Dias_Dif As Integer = DateDiff(DateInterval.Day, _Fa, _Fecha_Servisor)
+
+                _Meses_Dif = Math.Round(_Dias_Dif / 31, 2)
+
+                If _Meses_Dif > _Meses Then
+
+                    'If Not IsNothing(_Formulario) Then
+
+                    _Mensaje.Detalle = "Validación Modalidad: " & Modalidad
+                    Throw New System.Exception("Este folio " & _Folio & " tiene mas de (" & _Meses & ") meses desde su fecha de creación" & vbCrLf &
+                          "en el SII y su configuración indica que podría estar vencido." & vbCrLf &
+                          "Si usted insite en el envío, este documento podria ser rechazado." & vbCrLf & vbCrLf &
+                          "INFORME ESTA SITUACION AL ADMINISTRADOR DEL SISTEMA")
+
+                    'End If
+
+                Else
+
+                    _Mensaje.EsCorrecto = True
+                    _Mensaje.Detalle = "Información"
+                    _Mensaje.Mensaje = "Folios encontrados correctamente."
+                    _Mensaje.Icono = MessageBoxIcon.Information
+
+                End If
+
+            End If
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
+    Function Fx_Revisar_Expiracion_Folio_SII_Hefesto_Bakapp_Old(_Formulario As Form,
                                                             _Tido As String,
                                                             _Folio As String,
                                                             _MostrarMensajeExpiracion As Boolean) As Boolean
@@ -3905,7 +4303,7 @@ Public Module Crear_Documentos_Desde_Otro
                                                                         0, False, _Subtido)
 
                         If Not String.IsNullOrEmpty(Trim(_Imprime)) Then
-                            MessageBoxEx.Show(_Formulario, "Problemas al Imprimir", "Imprimir", MessageBoxButtons.OK, MessageBoxIcon.Stop,
+                            MessageBoxEx.Show(_Formulario, _Imprime, "Problemas al Imprimir", MessageBoxButtons.OK, MessageBoxIcon.Stop,
                                       MessageBoxDefaultButton.Button1, _Formulario.TopMost)
                         End If
 
@@ -4621,7 +5019,7 @@ Public Module Crear_Documentos_Desde_Otro
             Dim _Opera_Rev = Split(_Opera, ",")
 
             Consulta_sql = "Select Top 1 * From TABPRE"
-            Dim _TblTabpre As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblTabpre As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             ' Asi es como actua el campo OPERA, este campo define como se comportaran los campos adicionales a partir del campo nro 29 en adelante
 
@@ -5090,56 +5488,57 @@ Public Module Crear_Documentos_Desde_Otro
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-        If Fx_Tiene_Permiso(_Fmr, "CfEnt004") Then
+        If Not Fx_Tiene_Permiso(_Fmr, "CfEnt004") Then
+            Return False
+        End If
 
-            Dim _Reg As Integer = 0
+        Dim _Reg As Integer = 0
 
-            _Reg += _Sql.Fx_Cuenta_Registros("MAEEDO", "ENDO='" & _CodEntidad & "' AND SUENDO='" & _SucEntidad & "'")
+        _Reg += _Sql.Fx_Cuenta_Registros("MAEEDO", "ENDO='" & _CodEntidad & "' AND SUENDO='" & _SucEntidad & "'")
 
-            Dim _CanEnt As Integer = _Sql.Fx_Cuenta_Registros("MAEEDO", "ENDO='" & _CodEntidad & "'")
+        Dim _CanEnt As Integer = _Sql.Fx_Cuenta_Registros("MAEEDO", "ENDO='" & _CodEntidad & "'")
+
+        If _CanEnt = 1 Then
+            _Reg += _Sql.Fx_Cuenta_Registros("CDOCCOE", "ENDO='" & _CodEntidad & "'")
+            _Reg += _Sql.Fx_Cuenta_Registros("MAEDPCE", "ENDP='" & _CodEntidad & "'")
+            _Reg += _Sql.Fx_Cuenta_Registros("MAEENPRO", "KOEN='" & _CodEntidad & "'")
+        End If
+
+        If Not CBool(_Reg) Then
+
+            If MessageBoxEx.Show(_Fmr, "¿Esta seguro de querer eliminar esta entidad?", "Eliminar",
+                                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                Return False
+            End If
+
+            Consulta_sql = "Delete MAEEN Where KOEN = '" & _CodEntidad & "' AND SUEN = '" & _SucEntidad & "'" & vbCrLf
 
             If _CanEnt = 1 Then
-                _Reg += _Sql.Fx_Cuenta_Registros("CDOCCOE", "ENDO='" & _CodEntidad & "'")
-                _Reg += _Sql.Fx_Cuenta_Registros("MAEDPCE", "ENDP='" & _CodEntidad & "'")
-                _Reg += _Sql.Fx_Cuenta_Registros("MAEENPRO", "KOEN='" & _CodEntidad & "'")
+                Consulta_sql += "Delete MAEENCON Where KOEN = '" & _CodEntidad & "'" & vbCrLf &
+                                "Delete MAEENPRO Where KOEN = '" & _CodEntidad & "'" & vbCrLf &
+                                "Delete MAEENCTA Where KOEN = '" & _CodEntidad & "'" & vbCrLf
             End If
 
-            If Not CBool(_Reg) Then
+            If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Entidades") Then
+                Consulta_sql += "Delete " & _Global_BaseBk & "Zw_Entidades Where CodEntidad = '" & _CodEntidad & "' And CodSucEntidad = '" & _SucEntidad & "'"
+            End If
 
-                If MessageBoxEx.Show(_Fmr, "¿Esta seguro de querer eliminar esta entidad?", "Eliminar",
-                                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
-                    Return False
-                End If
+            If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Entidades_ProdExcluidos") Then
+                Consulta_sql += "Delete " & _Global_BaseBk & "Zw_Entidades_ProdExcluidos Where CodEntidad = '" & _CodEntidad & "' And CodSucEntidad = '" & _SucEntidad & "'"
+            End If
 
-                Consulta_sql = "Delete MAEEN Where KOEN = '" & _CodEntidad & "' AND SUEN = '" & _SucEntidad & "'" & vbCrLf
-
-                If _CanEnt = 1 Then
-                    Consulta_sql += "Delete MAEENCON Where KOEN = '" & _CodEntidad & "'" & vbCrLf &
-                                    "Delete MAEENPRO Where KOEN = '" & _CodEntidad & "'" & vbCrLf &
-                                    "Delete MAEENCTA Where KOEN = '" & _CodEntidad & "'" & vbCrLf
-                End If
-
-                If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Entidades") Then
-                    Consulta_sql += "Delete " & _Global_BaseBk & "Zw_Entidades Where CodEntidad = '" & _CodEntidad & "' And CodSucEntidad = '" & _SucEntidad & "'"
-                End If
-
-                If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Entidades_ProdExcluidos") Then
-                    Consulta_sql += "Delete " & _Global_BaseBk & "Zw_Entidades_ProdExcluidos Where CodEntidad = '" & _CodEntidad & "' And CodSucEntidad = '" & _SucEntidad & "'"
-                End If
-
-                If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
-                    MessageBoxEx.Show(_Fmr, "Entidad eliminada correctamente",
-                                      "Eliminar entidad", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                    Return True
-                Else
-                    MessageBoxEx.Show(_Fmr, "Entidad no puede ser eliminada" & vbCrLf &
-                                    _Sql.Pro_Error, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                End If
-
+            If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+                MessageBoxEx.Show(_Fmr, "Entidad eliminada correctamente",
+                                  "Eliminar entidad", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return True
             Else
                 MessageBoxEx.Show(_Fmr, "Entidad no puede ser eliminada" & vbCrLf &
-                                    "Tiene movimientos asociados", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                _Sql.Pro_Error, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             End If
+
+        Else
+            MessageBoxEx.Show(_Fmr, "Entidad no puede ser eliminada" & vbCrLf &
+                                "Tiene movimientos asociados", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End If
 
     End Function
@@ -5469,8 +5868,23 @@ Public Module Crear_Documentos_Desde_Otro
         Dim _NroRemota As String
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
+        Dim _DescripcionPermiso = _Sql.Fx_Trae_Dato(_Global_BaseBk & "ZW_Permisos", "DescripcionPermiso", "CodPermiso = '" & _CodPermiso & "'")
+        Dim _CodFuncionario_Autoriza = _Row_Usuario_Autoriza.Item("KOFU")
+        Dim _NomFuncionario_Autoriza = _Row_Usuario_Autoriza.Item("NOKOFU").ToString.Trim
+
         For Each _Fl As DataRow In _TblPermisos.Rows
             If _Fl.Item("CodPermiso") = _CodPermiso Then
+
+                If _CodPermiso = "Bkp00033" Then
+                    _Fl.Item("DescripcionPermiso") = _DescripcionPermiso
+                    _Fl.Item("CodFuncionario_Autoriza") = _CodFuncionario_Autoriza
+                    _Fl.Item("NomFuncionario_Autoriza") = _NomFuncionario_Autoriza
+                    _Fl.Item("Permiso_Presencial") = _Permiso_Presencial
+                    _Fl.Item("Solicitado_Por_Cadena") = False
+                    _Fl.Item("Necesita_Permiso") = True
+                    _Fl.Item("Autorizado") = True
+                End If
+
                 Return True
             End If
         Next
@@ -5478,10 +5892,6 @@ Public Module Crear_Documentos_Desde_Otro
         If Not IsNothing(_Rows_Info_Remota) Then
             _NroRemota = _Rows_Info_Remota.Item("NroRemota")
         End If
-
-        Dim _DescripcionPermiso = _Sql.Fx_Trae_Dato(_Global_BaseBk & "ZW_Permisos", "DescripcionPermiso", "CodPermiso = '" & _CodPermiso & "'")
-        Dim _CodFuncionario_Autoriza = _Row_Usuario_Autoriza.Item("KOFU")
-        Dim _NomFuncionario_Autoriza = _Row_Usuario_Autoriza.Item("NOKOFU").ToString.Trim
 
         Dim NewFila = _TblPermisos.NewRow
         With NewFila
@@ -5583,7 +5993,7 @@ Public Module Crear_Documentos_Desde_Otro
             Consulta_sql = "Select Id, Tabla_Random, Campo_Random, Tabla_Bakapp, Campo_Bakapp
                         From " & _Global_BaseBk & "Zw_Tablas_Equivalentes_Rd_Bk
                         Where Tabla_Bakapp = 'Zw_ListaPreCosto'"
-            Dim _Tbl_Equivalentes As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql, False)
+            Dim _Tbl_Equivalentes As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
                 Throw New System.Exception(_Sql.Pro_Error)
@@ -5713,7 +6123,7 @@ Public Module Crear_Documentos_Desde_Otro
             If _Global_Row_Configuracion_General.Item("FacElec_Bakapp_Hefesto") Then
                 Dim _TimbrarXRandom As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad",
                                                    "TimbrarXRandom",
-                                                   "Modalidad = '" & Modalidad & "' And TipoDoc = '" & _Tido & "'")
+                                                   "Modalidad = '" & Modalidad & "' And TipoDoc = '" & _Tido & "'",, False)
                 If _TimbrarXRandom Then
                     Return False
                 End If
@@ -5825,7 +6235,7 @@ Public Module Crear_Documentos_Desde_Otro
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
         Dim _Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where SincroProductos = 1"
-        Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+        Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
         If _Tbl_Conexiones.Rows.Count Then
 
@@ -6007,6 +6417,21 @@ Public Module Crear_Documentos_Desde_Otro
         Return _Rtu
 
     End Function
+
+    Public Sub Sb_Revisar_Zw_Productos()
+
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Productos") Then
+
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Productos (Codigo, Descripcion, ExluyeTipoVenta)" & vbCrLf &
+                           "Select KOPR,NOKOPR,0 From MAEPR Where KOPR Not In (Select Codigo From " & _Global_BaseBk & "Zw_Productos)" & vbCrLf &
+                           "Delete " & _Global_BaseBk & "Zw_Productos Where Codigo Not In (Select KOPR From MAEPR)"
+            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+        End If
+
+    End Sub
 
 End Module
 

@@ -33,7 +33,7 @@ Public Class Frm_ConexOtrasBases
     Sub Sb_Actualizar_Grilla()
 
         Consulta_sql = "Select *,'****' As [Password] From " & _Global_BaseBk & "Zw_DbExt_Conexion"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

@@ -11,7 +11,7 @@
     <Shape ID="DesignTable:Vencimientos_Doc" ZOrder="1" X="749" Y="25" Height="181" Width="172" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="177" />
     <Shape ID="DesignTable:Impuestos_Doc" ZOrder="8" X="953" Y="29" Height="124" Width="154" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="120" />
     <Shape ID="DesignTable:Encabezado_Doc" ZOrder="11" X="968" Y="172" Height="524" Width="190" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="520" />
-    <Shape ID="DesignTable:Detalle_Doc" ZOrder="5" X="760" Y="233" Height="353" Width="200" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="349" />
+    <Shape ID="DesignTable:Detalle_Doc" ZOrder="5" X="760" Y="233" Height="353" Width="175" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="349" />
     <Shape ID="DesignTable:Tbl_Wms" ZOrder="7" X="1253" Y="37" Height="181" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="177" />
     <Shape ID="DesignTable:Permisos_Necesarios_Doc" ZOrder="2" X="1222" Y="265" Height="257" Width="299" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="253" />
     <Shape ID="DesignTable:Tbl_Lector_Barra" ZOrder="6" X="1465" Y="40" Height="162" Width="161" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="158" />

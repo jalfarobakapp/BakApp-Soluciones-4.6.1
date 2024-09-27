@@ -221,7 +221,7 @@ Public Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
                        "Inner Join MAEPR On KOPR = PrMc.Codigo" & vbCrLf &
                        "Where CodEntidad = '" & _CodEntidad & "'"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Productos")
 
@@ -297,7 +297,7 @@ Public Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
         Consulta_Sql = "Select Distinct KOPRCT" & vbCrLf &
                        "From MAEDDO Where TIDO In ('OCC','GRC','FCC') And ENDO = '" & _CodEntidad & "'" & vbCrLf &
                        "And KOPRCT Not In (Select Codigo From " & _Global_BaseBk & "Zw_Entidades_ProdMinCompra Where CodEntidad = '" & _CodEntidad & "')"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         If Not CBool(_Tbl.Rows.Count) Then
             MessageBoxEx.Show(Me, "No existen datos que mostrar", "Buscar productos", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -339,7 +339,7 @@ Public Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
                        "From TABCODAL Where KOEN = '" & _CodEntidad & "'" & vbCrLf &
                        "And KOPR Not In (Select Codigo From " & _Global_BaseBk & "Zw_Entidades_ProdMinCompra Where CodEntidad = '" & _CodEntidad & "')"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         If Not CBool(_Tbl.Rows.Count) Then
             MessageBoxEx.Show(Me, "No existen datos que mostrar", "Buscar productos", MessageBoxButtons.OK, MessageBoxIcon.Stop)

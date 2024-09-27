@@ -27,6 +27,8 @@ Public Class Frm_Fabricaciones
 
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
 
     Private Sub Frm_Fabricaciones_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -37,13 +39,17 @@ Public Class Frm_Fabricaciones
         Sb_Actualizar_Grilla()
         Dtp_Fecha_Ingreso.Value = FechaDelServidor()
 
-        Btn_Grabar.Enabled = Not (CBool(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpotl_New))
-        Btn_IngresarNuevaFabricacion.Enabled = Not (CBool(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpotl_New))
-        Dtp_Fecha_Ingreso.Enabled = Not (CBool(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpotl_New))
+        Dim _Fabricada As Boolean = CBool(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idmaeddo)
 
-        If Not (CBool(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpotl_New)) Then
+        Btn_Grabar.Enabled = Not _Fabricada
+        Btn_IngresarNuevaFabricacion.Enabled = Not _Fabricada
+        Dtp_Fecha_Ingreso.Enabled = Not _Fabricada
+
+        If Not _Fabricada Then
             Dtp_Fecha_Ingreso.Value = _Cl_Mezcla.Zw_Pdp_CPT_MzDet.FechaCreacion
         End If
+
+        Txt_Receta.Text = _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Codnomen & " - " & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Descriptor
 
     End Sub
 
@@ -53,7 +59,7 @@ Public Class Frm_Fabricaciones
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Pdp_CPT_MzDetIngFab" & vbCrLf &
                        "Where Id_Det = " & _Id_Det
-        _Tbl_Fabricaciones = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Fabricaciones = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 
@@ -159,17 +165,18 @@ Public Class Frm_Fabricaciones
 
         End If
 
-        Consulta_sql = "Select SUM(CANTIDAD) As Factor" & vbCrLf &
+        Consulta_sql = "Select Isnull(SUM(CANTIDAD),0) As Factor" & vbCrLf &
                        "From PNPD" & vbCrLf &
                        "Inner Join MAEPR On KOPR = ELEMENTO" & vbCrLf &
                        "Where CODIGO = '" & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Codnomen & "'" & vbCrLf &
-                       "And MRPR In ('06MAPVIT','06MAPLIQ')"
-        Dim _Row_Facto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                       "And MRPR In (Select CodigoTabla From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Where Tabla = 'TARJA_MEZCLASMRFACTOR')"
+        Dim _Row_Factor As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        Dim _Factor As Double = _Row_Facto.Item("Factor")
+        Dim _Factor As Double
 
-        'Consulta_sql = "Select * From PNPD Where CODIGO = '" & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Codnomen & "'"
-        'Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        If Not IsNothing(_Row_Factor) Then
+            _Factor = _Row_Factor.Item("Factor")
+        End If
 
         Dim _Zw_Pdp_CPT_MzDetIngFab As New Zw_Pdp_CPT_MzDetIngFab
 
@@ -221,14 +228,18 @@ Public Class Frm_Fabricaciones
 
         Dim _Aceptar As Boolean
 
-        Consulta_sql = "Select SUM(CANTIDAD) As Factor" & vbCrLf &
+        Consulta_sql = "Select Isnull(SUM(CANTIDAD),0) As Factor" & vbCrLf &
                        "From PNPD" & vbCrLf &
                        "Inner Join MAEPR On KOPR = ELEMENTO" & vbCrLf &
                        "Where CODIGO = '" & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Codnomen & "'" & vbCrLf &
-                       "And MRPR In ('06MAPVIT','06MAPLIQ')"
+                       "And MRPR In (Select CodigoTabla From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Where Tabla = 'TARJA_MEZCLASMRFACTOR')"
         Dim _Row_Facto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        Dim _Factor As Double = _Row_Facto.Item("Factor")
+        Dim _Factor As Double
+
+        If Not IsNothing(_Row_Facto) Then
+            _Factor = _Row_Facto.Item("Factor")
+        End If
 
         With _Cl_Mezcla.Zw_Pdp_CPT_MzDetIngFab
 
@@ -316,6 +327,7 @@ Public Class Frm_Fabricaciones
 
     Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
 
+
         If _Cl_Mezcla.Zw_Pdp_CPT_MzDet.CantFabricada = 0 Then
             MessageBoxEx.Show(Me, "No existen datos de fabricación", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
@@ -332,15 +344,24 @@ Public Class Frm_Fabricaciones
 
         Dim _Mensaje As LsValiciones.Mensajes
 
-        _Mensaje = Fx_Crear_OT()
+        ' Si no tiene Idpote se crea la OT
+        If _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpote_New = 0 Then
 
-        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            Me.Enabled = False
+            _Mensaje = Fx_Crear_OT()
+            Me.Enabled = True
 
-        If Not _Mensaje.EsCorrecto Then
-            Return
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+
+            If Not _Mensaje.EsCorrecto Then
+                Return
+            End If
+
         End If
 
+        Me.Enabled = False
         _Mensaje = Fx_GrabarGRI(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpotl_New)
+        Me.Enabled = True
 
         If Not _Mensaje.EsCorrecto Then
             MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -391,6 +412,7 @@ Public Class Frm_Fabricaciones
             _Mensaje.Detalle = "Creación de OT"
             _Mensaje.Mensaje = "Se creo la OT " & _Row_NewOT.Item("NUMOT")
             _Mensaje.Icono = MessageBoxIcon.Information
+            _Mensaje.Tag = _Row_NewOT
 
         Catch ex As Exception
             _Mensaje.Icono = MessageBoxIcon.Stop
@@ -407,7 +429,6 @@ Public Class Frm_Fabricaciones
 
         Try
 
-            Dim _New_Idmaeedo As Integer
             Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
             Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -426,41 +447,98 @@ Public Class Frm_Fabricaciones
 
             Consulta_sql = "Select *," & _Cantidad & " As Cantidad,'" & ModSucursal & "' As Sucursal,'" & ModBodega & "' As Bodega" & vbCrLf &
                            "From POTL Where IDPOTL = " & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpotl_New
-            Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim Fm As New Frm_Formulario_Documento("GRI", csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Recepcion_Interna,
                                                    False, False, False, False, False, False)
 
             Fm.Pro_RowEntidad = _Row_Entidad
             Fm.Sb_Crear_Documento_Interno_Con_Tabla3Potl(Me, _Tbl_Productos, _FechaEmision, "CODIGO", "Cantidad", "C_FABRIC", _Observaciones, False, False, 1)
-            _New_Idmaeedo = Fm.Fx_Grabar_Documento(False)
+            _Mensaje = Fm.Fx_Grabar_Documento(False)
             Fm.Dispose()
 
-            Consulta_sql = "Select top 1 IDMAEDDO,NUDO,KOPRCT,NOKOPR,CAPRCO1 From MAEDDO Where IDMAEEDO = " & _New_Idmaeedo
+            Consulta_sql = "Select top 1 IDMAEDDO,NUDO,KOPRCT,NOKOPR,CAPRCO1 From MAEDDO Where IDMAEEDO = " & _Mensaje.Id
             Dim _Row_Maeddo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_Pdp_CPT_MzDet Set Idmaeddo = " & _Row_Maeddo.Item("IDMAEDDO") & vbCrLf &
                            "Where Id = " & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Id
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Pdp_CPT_MzEnc Set Estado = 'FABRI' Where Id = " & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Id_Enc
-            _Sql.Ej_consulta_IDU(Consulta_sql)
+            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros2(_Global_BaseBk & "Zw_Pdp_CPT_MzDet",
+                                                            "Id_Enc = " & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Id_Enc & " And Idmaeddo = 0")
+
+            If _Reg = 0 Then
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Pdp_CPT_MzEnc Set Estado = 'FABRI' Where Id = " & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Id_Enc
+                _Sql.Ej_consulta_IDU(Consulta_sql)
+
+            End If
 
             _Mensaje.EsCorrecto = True
             _Mensaje.Id = _Row_Maeddo.Item("IDMAEDDO")
-            _Mensaje.Detalle = "GRI Creada correctamente"
-            _Mensaje.Mensaje = "Grabación Exitosa"
-            '"Se crea GRI Nro " & _Row_Maeddo.Item("NUDO") & vbCrLf &
-            '               "Producto: " & _Row_Maeddo.Item("KOPRCT") & " - " & _Row_Maeddo.Item("NOKOPR") & vbCrLf &
-            '               "Cantidad: " & FormatNumber(_Row_Maeddo.Item("CAPRCO1"), 0)
+            _Mensaje.Detalle = "Crear GRI"
+            _Mensaje.Mensaje = "Grabación Exitosa. GRI Creada correctamente"
+            _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Detalle = "Problema al crear la GRI"
             _Mensaje.Mensaje = ex.Message
             _Mensaje.Resultado = Consulta_sql
+            _Mensaje.Icono = MessageBoxIcon.Error
         End Try
 
         Return _Mensaje
 
     End Function
 
+    Private Sub Frm_Fabricaciones_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+
+        If e.KeyValue = Keys.F5 Then
+            Call Btn_Actualizar_Click(Nothing, Nothing)
+        End If
+
+        If e.KeyValue = Keys.F2 Then
+            Call Btn_IngresarNuevaFabricacion_Click(Nothing, Nothing)
+        End If
+
+        If e.KeyValue = Keys.F8 Then
+            Call Btn_Grabar_Click(Nothing, Nothing)
+        End If
+
+        If e.KeyValue = Keys.Escape Then
+            Me.Close()
+        End If
+
+    End Sub
+
+    Private Sub Btn_VerReceta_Click(sender As Object, e As EventArgs) Handles Btn_VerReceta.Click
+        ShowContextMenu(Menu_contextual_02)
+    End Sub
+
+    Private Sub Btn_VerRecetaCompleta_Click(sender As Object, e As EventArgs) Handles Btn_VerRecetaCompleta.Click
+        Dim _Codnomen As String = _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Codnomen
+
+        Dim Fm As New Frm_VerReceta(_Codnomen)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+    End Sub
+
+    Private Sub Btn_VerRecetaSinProdExcluidos_Click(sender As Object, e As EventArgs) Handles Btn_VerRecetaSinProdExcluidos.Click
+        Dim _Codnomen As String = _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Codnomen
+
+        Dim Fm As New Frm_VerReceta(_Codnomen)
+        Fm.NoMostrarMarcaFactorMezcla = True
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+    End Sub
+
+    Private Sub Btn_VerRecetaSoloProdExcluidos_Click(sender As Object, e As EventArgs) Handles Btn_VerRecetaSoloProdExcluidos.Click
+        Dim _Codnomen As String = _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Codnomen
+
+        Dim Fm As New Frm_VerReceta(_Codnomen)
+        Fm.MostrarSoloMarcaFactorMezcla = True
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+    End Sub
 End Class

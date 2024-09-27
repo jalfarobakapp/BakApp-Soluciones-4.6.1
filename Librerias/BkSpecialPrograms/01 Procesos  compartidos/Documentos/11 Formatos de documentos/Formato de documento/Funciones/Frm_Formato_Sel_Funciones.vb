@@ -184,7 +184,7 @@ Public Class Frm_Formato_Sel_Funciones
         If _Accion = _Enum_Accion.Seleccionar Then
 
             Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Format_Fx Where Id = " & _Id
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If CBool(_Tbl.Rows.Count) Then
                 _RowFormato = _Tbl.Rows(0)

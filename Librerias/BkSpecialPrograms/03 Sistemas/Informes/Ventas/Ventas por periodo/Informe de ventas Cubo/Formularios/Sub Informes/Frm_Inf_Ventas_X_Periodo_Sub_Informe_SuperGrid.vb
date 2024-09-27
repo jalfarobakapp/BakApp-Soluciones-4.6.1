@@ -124,7 +124,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informe_SuperGrid
 
         If _Un_Solo_Cliente Then
 
-            Consulta_sql = "Select IDMAEDDO Into #Paso From " & _Nombre_Tabla_Paso & vbCrLf &
+            Consulta_sql = "Select IDMAEDDO Into #Paso From " & _Nombre_Tabla_Paso & " WHIT (NOLOCK)" & vbCrLf &
                            "Where 1 > 0" & vbCrLf &
                            _SqlFiltro & vbCrLf &
                            "And ENDO+SUENDO+RAZON+VENDEDOR+RUBRO_EN+ZONA_EN+CIUDAD+COMUNA+KOPRCT+NOKOPR Like '%" & _Cadena & "%'" &
@@ -179,7 +179,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informe_SuperGrid
             If String.IsNullOrEmpty(_SqlFiltro) Then
 
                 Consulta_sql = "Select Mn.RTEN+Mn.KOFUEN As ID,Mn.RTEN,KOEN As ENDO,SUEN As SUENDO,NOKOEN AS RAZON,Isnull(SUM(VANELI),0) As NETO,Isnull(SUM(VAIVLI),0) AS IVA,Isnull(SUM(VABRLI),0) AS TOTAL
-                            From MAEEN Mn
+                            From MAEEN Mn WITH (NOLOCK)
                             Left Join " & _Nombre_Tabla_Paso & " Inf On Inf.ENDO = Mn.KOEN and Inf.SUENDO = Mn.SUEN
                             Where 1 > 0
                             And Mn.KOFUEN = '" & _Kofuen & "'
@@ -187,7 +187,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informe_SuperGrid
             Else
 
                 Consulta_sql = "Select Mn.RTEN+Mn.KOFUEN As ID,Mn.RTEN,KOEN As ENDO,SUEN As SUENDO,NOKOEN AS RAZON,Isnull(SUM(VANELI),0) As NETO,Isnull(SUM(VAIVLI),0) AS IVA,Isnull(SUM(VABRLI),0) AS TOTAL
-                            From MAEEN Mn
+                            From MAEEN Mn WITH (NOLOCK)
                             Left Join " & _Nombre_Tabla_Paso & " Inf On Inf.ENDO = Mn.KOEN and Inf.SUENDO = Mn.SUEN
                             Where 1 > 0
                             " & _SqlFiltro & "
@@ -740,12 +740,11 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informe_SuperGrid
 
     Private Sub Btn_Excel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Excel.Click
 
-        If Fx_Tiene_Permiso(Me, "Inf00041") Then
-            If String.IsNullOrEmpty(_Kofuen) Then
-                ShowContextMenu(Menu_contextual_Exportar_Excel)
-            Else
-                ExportarTabla_JetExcel_Tabla(_Tbl_Excel_Vista_Actual, Me, "Vista Actual")
-            End If
+        If String.IsNullOrEmpty(_Kofuen) Then
+            ShowContextMenu(Menu_contextual_Exportar_Excel)
+        Else
+            Call Btn_Exportar_Vista_Actual_Click(Nothing, Nothing)
+            'ExportarTabla_JetExcel_Tabla(_Tbl_Excel_Vista_Actual, Me, "Vista Actual")
         End If
 
     End Sub
@@ -814,21 +813,40 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informe_SuperGrid
     End Sub
 
     Private Sub Btn_Exportar_Vista_Actual_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Exportar_Vista_Actual.Click
-        ExportarTabla_JetExcel_Tabla(_Tbl_Excel_Vista_Actual, Me, "Vista Actual")
+        If Fx_Tiene_Permiso(Me, "Inf00041") Then
+            ExportarTabla_JetExcel_Tabla(_Tbl_Excel_Vista_Actual, Me, "Vista Actual")
+        End If
     End Sub
 
     Private Sub Btn_Exportar_Detalle_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Exportar_Detalle.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Inf00048") Then
+            Return
+        End If
+
         Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(Txt_Filtro_Abanzado.Text),
                                "ENDO+SUENDO+RAZON+VENDEDOR+RUBRO_EN+ZONA_EN+CIUDAD+COMUNA+KOPRCT+NOKOPR LIKE '%")
 
-        Consulta_sql = "Select IDMAEDDO Into #Paso From " & _Nombre_Tabla_Paso & vbCrLf &
+        Dim _VerCosto As String = "COSTO,MONTO,"
+
+        If Fx_Tiene_Permiso(Me, "NO00001",, False) Then
+            _VerCosto = String.Empty
+        End If
+
+        Consulta_sql = "Select IDMAEDDO Into #Paso From " & _Nombre_Tabla_Paso & " WHIT (NOLOCK)" & vbCrLf &
                        "Where 1 > 0" & vbCrLf &
                        _SqlFiltro & vbCrLf &
-                       "And ENDO+SUENDO+RAZON+VENDEDOR+RUBRO_EN+ZONA_EN+CIUDAD+COMUNA+KOPRCT+NOKOPR Like '%" & _Cadena & "%'" &
-                       "Select * From " & _Nombre_Tabla_Paso & vbCrLf & "Where IDMAEDDO In (Select IDMAEDDO From #Paso)" &
+                       "And ENDO+SUENDO+RAZON+VENDEDOR+RUBRO_EN+ZONA_EN+CIUDAD+COMUNA+KOPRCT+NOKOPR Like '%" & _Cadena & "%'" & vbCrLf &
+                       "Select EMPRESA,TIDO,NUDO,RTEN,RUT,ENDO,SUENDO,RAZON,KOFUEN,VENDEDOR_ASIGNADO,RUEN,RUBRO_EN,ZOEN,ZONA_EN,ACTIEN," & vbCrLf &
+                       "ACTIVIDAD_ECONOMICA,TIPOEN,TIPO_ENTIDAD,TAMAEN,TAMANO_EMPRESA,TRANSPOEN,TRANSPORTISTA,DIEN,CIEN,CIUDAD,CMEN,COMUNA,SUDO,SUCURSAL," & vbCrLf &
+                       "FEEMDO,KOFUDO,FUNCIONARIO,VANEDO,VAIVDO,VABRDO,LILG,NULIDO,SULIDO,BOSULIDO,BODEGA,KOFULIDO,VENDEDOR,PRCT,TICT,TIPR,KOPRCT,NOKOPR,UD," & vbCrLf &
+                       "UDTRPR,RLUDPR,UD01PR,CAPRCO1,UD02PR,CAPRCO2,PPPRNE,PPPRBR,VANELI,VAIVLI,VAIMLI,VABRLI,FEEMLI,FEERLI,PPPRNERE1,PPPRNERE2," & vbCrLf &
+                       "FMPR,SUPER_FAMILIA,PFPR,FAMILIA,HFPR,SUB_FAMILIA,MRPR,MARCA,RUPR,RUBRO_PR,CLALIBPR,CLAS_LIBRE,ZOPR,ZONA_PR," & vbCrLf &
+                       _VerCosto & "OCDO,SUCURSALLIDO,KOLTPR,NOKOLTPR,LVEN,NOLVEN From " & _Nombre_Tabla_Paso & " WHIT (NOLOCK)" & vbCrLf &
+                       "Where IDMAEDDO In (Select IDMAEDDO From #Paso)" &
                        vbCrLf &
                        "Drop Table #Paso"
-        _Tbl_Excel = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Excel = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ExportarTabla_JetExcel_Tabla(_Tbl_Excel, Me, "Detalle de venta")
     End Sub

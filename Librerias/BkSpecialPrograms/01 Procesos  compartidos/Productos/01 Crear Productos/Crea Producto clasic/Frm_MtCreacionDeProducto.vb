@@ -56,26 +56,26 @@ Public Class Frm_MtCreacionDeProducto
 
         caract_combo(Cmb_Mrpr)
         Consulta_sql = Union & "SELECT KOMR AS Padre,NOKOMR AS Hijo FROM TABMR ORDER BY Hijo" ' WHERE SEMILLA = " & Actividad
-        Cmb_Mrpr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Mrpr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Marca = ""
         Cmb_Mrpr.SelectedValue = Marca
 
         caract_combo(Cmb_Rupr)
         Consulta_sql = Union & "SELECT KORU AS Padre,NOKORU AS Hijo FROM TABRU ORDER BY Hijo" ' WHERE SEMILLA = " & Actividad
-        Cmb_Rupr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Rupr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Rubro = ""
         Cmb_Rupr.SelectedValue = Rubro
 
         caract_combo(Cmb_Clalibpr)
         Consulta_sql = Union & "SELECT KOCARAC AS Padre,LTRIM(RTRIM(KOCARAC))+'-'+LTRIM(RTRIM(NOKOCARAC)) AS Hijo FROM TABCARAC WHERE KOTABLA = 'CLALIBPR' ORDER BY Hijo"
-        Cmb_Clalibpr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Clalibpr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         ClasifLibre = ""
         Cmb_Clalibpr.SelectedValue = ClasifLibre
 
         caract_combo(CmbSuperFamilia)
         Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                        "SELECT KOFM AS Padre,NOKOFM AS Hijo FROM TABFM ORDER BY Hijo" ' WHERE SEMILLA = " & Actividad
-        CmbSuperFamilia.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        CmbSuperFamilia.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         SuperFamilia = ""
         CmbSuperFamilia.SelectedValue = SuperFamilia
         Familia = ""
@@ -113,14 +113,14 @@ Public Class Frm_MtCreacionDeProducto
 
         caract_combo(Cmb_Codlista)
         Consulta_sql = Union & "SELECT 'TABPP'+KOLT AS Padre,KOLT+'-'+NOKOLT AS Hijo FROM TABPP"
-        Cmb_Codlista.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Codlista.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         ListaCostoPro = "TABPP" & ModListaPrecioCosto
         Cmb_Codlista.SelectedValue = ListaCostoPro
 
 
         caract_combo(Cmb_Kofupr)
         Consulta_sql = Union & "SELECT KOFU AS Padre,NOKOFU AS Hijo FROM TABFU"
-        Cmb_Kofupr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Kofupr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         JefePro = ""
         Cmb_Kofupr.SelectedValue = JefePro
 
@@ -132,7 +132,7 @@ Public Class Frm_MtCreacionDeProducto
 
         caract_combo(Cmb_Zonapr)
         Consulta_sql = Union & "SELECT KOCARAC AS Padre,LTRIM(RTRIM(KOCARAC))+'-'+LTRIM(RTRIM(NOKOCARAC)) AS Hijo FROM TABCARAC WHERE KOTABLA = 'ZONAPRODUC' ORDER BY Hijo"
-        Cmb_Zonapr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Zonapr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         ZonaPro = ""
         Cmb_Zonapr.SelectedValue = ZonaPro
 
@@ -375,7 +375,7 @@ Public Class Frm_MtCreacionDeProducto
         Txt_Largo.Text = 0
         Txt_Ancho.Text = 0
 
-        Txt_Koprra.Text = numero_(Val(_Sql.Fx_Trae_Dato("MAEPR WITH ( NOLOCK )", "MAX(KOPRRA)+1")), 6)
+        Txt_Koprra.Text = numero_(Val(_Sql.Fx_Trae_Dato("MAEPR", "MAX(KOPRRA)+1")), 6)
 
         SuperTabControl1.SelectedTabIndex = 0
 
@@ -562,7 +562,7 @@ Public Class Frm_MtCreacionDeProducto
 
         CodRapido = _Sql.Fx_Cuenta_Registros("MAEPR")
 
-        Txt_Koprra.Text = numero_(Val(_Sql.Fx_Trae_Dato("MAEPR WITH ( NOLOCK )", "MAX(KOPRRA)+1")), 6)
+        Txt_Koprra.Text = numero_(Val(_Sql.Fx_Trae_Dato("MAEPR", "MAX(KOPRRA)+1")), 6)
         _RowProducto.Item("KOPRRA") = Txt_Koprra.Text
         _RowProducto.Item("NOKOPR") = Txt_Nokopr.Text.Trim
         _RowProducto.Item("NOKOPRRA") = Mid(Txt_Nokoprra.Text.Trim, 1, 20)
@@ -676,6 +676,7 @@ Public Class Frm_MtCreacionDeProducto
                 .Codigo = Txt_Kopr.Text
                 .Descripcion = Txt_Nokopr.Text.Trim
                 .ExluyeTipoVenta = Chk_ExluyeTipoVenta.Checked
+                .RtuXWms = Chk_RtuXWms.Checked
 
             End With
 
@@ -728,7 +729,7 @@ Public Class Frm_MtCreacionDeProducto
                     Dim _Codigo As String = Txt_Kopr.Text
 
                     Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where GrbProd_Nuevos = 1"
-                    Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     For Each _FilaCx As DataRow In _Tbl_Conexiones.Rows
 
@@ -805,6 +806,9 @@ Public Class Frm_MtCreacionDeProducto
                                     Consulta_sql = Replace(Consulta_sql, "BLOQUEAPR = @BLOQUEAPR,", "--BLOQUEAPR = @BLOQUEAPR,")
                                     Consulta_sql = Replace(Consulta_sql, "LISCOSTO = @LISCOSTO,", "--LISCOSTO = @LISCOSTO,")
                                     Consulta_sql = Replace(Consulta_sql, "FUNCLOTE = @FUNCLOTE,", "--FUNCLOTE = @FUNCLOTE,")
+
+
+
                                     'BLOQUEAPR = @BLOQUEAPR,
                                     If _Sql2.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
 
@@ -917,7 +921,7 @@ Public Class Frm_MtCreacionDeProducto
                                            "From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & Space(1) &
                                            "Where Clas_Unica_X_Producto = 0 And Es_Seleccionable = 1)" & vbCrLf &
                                            "And Codigo = '" & Txt_Kopr.Text & "'"
-                            _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+                            _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                             _PuedeGrabarSinAsociaciones = CBool(_Tbl.Rows.Count)
 
@@ -933,7 +937,7 @@ Public Class Frm_MtCreacionDeProducto
                             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
                                            "Where Clas_Unica_X_Producto = 1 And Nodo_Raiz = 0 And Codigo_Nodo Not In" & Space(1) &
                                            "(Select Codigo_Nodo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo = '" & Txt_Kopr.Text & "')"
-                            _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+                            _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                             If CBool(_Tbl.Rows.Count) Then
 
@@ -1017,7 +1021,7 @@ Sigue_Loop_01:
                         Dim _Codigo As String = Txt_Kopr.Text
 
                         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where GrbProd_Nuevos = 1"
-                        Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                        Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                         For Each _FilaCx As DataRow In _Tbl_Conexiones.Rows
 
@@ -1199,7 +1203,7 @@ Sigue_Loop_01:
 
         CodRapido = _Sql.Fx_Cuenta_Registros("MAEPR")
 
-        Txt_Koprra.Text = numero_(Val(_Sql.Fx_Trae_Dato("MAEPR WITH ( NOLOCK )", "MAX(KOPRRA)+1")), 6)
+        Txt_Koprra.Text = numero_(Val(_Sql.Fx_Trae_Dato("MAEPR", "MAX(KOPRRA)+1")), 6)
         _RowProducto.Item("KOPRRA") = Txt_Koprra.Text
         _RowProducto.Item("NOKOPR") = Txt_Nokopr.Text.Trim
         _RowProducto.Item("NOKOPRRA") = Trim(Mid(Txt_Nokoprra.Text, 20))
@@ -1367,7 +1371,7 @@ Sigue_Loop_01:
                                        "From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & Space(1) &
                                        "Where Clas_Unica_X_Producto = 0 And Es_Seleccionable = 1)" & vbCrLf &
                                        "And Codigo = '" & Txt_Kopr.Text & "'"
-                        _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+                        _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                         _PuedeGrabarSinAsociaciones = CBool(_Tbl.Rows.Count)
 
@@ -1386,7 +1390,7 @@ Sigue_Loop_01:
                         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
                                        "Where Clas_Unica_X_Producto = 1 And Nodo_Raiz = 0 And Codigo_Nodo Not In" & Space(1) &
                                        "(Select Codigo_Nodo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo = '" & Txt_Kopr.Text & "')"
-                        _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+                        _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                         If CBool(_Tbl.Rows.Count) Then
 
@@ -1553,7 +1557,7 @@ Sigue_Loop_01:
             caract_combo(CmbFamilia)
             Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                            "SELECT KOPF AS Padre,NOKOPF AS Hijo FROM TABPF WHERE KOFM = '" & SuperFamilia & "'"
-            CmbFamilia.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            CmbFamilia.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             CmbFamilia.SelectedValue = Familia
 
@@ -1575,7 +1579,7 @@ Sigue_Loop_01:
             caract_combo(CmbSubFamilia)
             Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                            "SELECT KOHF AS Padre, NOKOHF AS Hijo FROM TABHF WHERE KOFM = '" & SuperFamilia & "' AND KOPF = '" & Familia & "'"
-            CmbSubFamilia.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            CmbSubFamilia.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
             CmbSubFamilia.SelectedValue = SubFamilia
 
         End Try
@@ -1603,7 +1607,7 @@ Sigue_Loop_01:
             caract_combo(CmbSuperFamilia)
             Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                            "SELECT KOFM AS Padre,NOKOFM AS Hijo FROM TABFM ORDER BY Hijo"
-            CmbSuperFamilia.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            CmbSuperFamilia.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
             CmbSuperFamilia.SelectedValue = Spfm
             CmbFamilia.SelectedValue = Fmfm
             CmbSubFamilia.SelectedValue = Subf
@@ -2020,6 +2024,7 @@ Sigue_Loop_01:
         _Cl_Producto.Fx_Llenar_Zw_Producto(_RowProducto.Item("KOPR"))
 
         Chk_ExluyeTipoVenta.Checked = _Cl_Producto.Zw_Producto.ExluyeTipoVenta
+        Chk_RtuXWms.Checked = _Cl_Producto.Zw_Producto.RtuXWms
 
     End Sub
 
@@ -2145,7 +2150,7 @@ Sigue_Loop_01:
             Fm.Dispose()
 
             Consulta_sql = Union & "SELECT KOMR AS Padre,NOKOMR AS Hijo FROM TABMR ORDER BY Hijo" ' WHERE SEMILLA = " & Actividad
-            Cmb_Mrpr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Cmb_Mrpr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
             Cmb_Mrpr.SelectedValue = _Marca
         End If
     End Sub
@@ -2162,7 +2167,7 @@ Sigue_Loop_01:
 
             caract_combo(Cmb_Rupr)
             Consulta_sql = Union & "SELECT KORU AS Padre,NOKORU AS Hijo FROM TABRU ORDER BY Hijo" ' WHERE SEMILLA = " & Actividad
-            Cmb_Rupr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Cmb_Rupr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
             Cmb_Rupr.SelectedValue = _Rubro
         End If
     End Sub
@@ -2183,7 +2188,7 @@ Sigue_Loop_01:
 
             caract_combo(Cmb_Clalibpr)
             Consulta_sql = Union & "SELECT KOCARAC AS Padre,LTRIM(RTRIM(KOCARAC))+'-'+LTRIM(RTRIM(NOKOCARAC)) AS Hijo FROM TABCARAC WHERE KOTABLA = 'CLALIBPR' ORDER BY Hijo"
-            Cmb_Clalibpr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Cmb_Clalibpr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
             Cmb_Clalibpr.SelectedValue = _ClasifLibre
 
         End If
@@ -2204,7 +2209,7 @@ Sigue_Loop_01:
 
             caract_combo(Cmb_Zonapr)
             Consulta_sql = Union & "SELECT KOCARAC AS Padre,LTRIM(RTRIM(KOCARAC))+'-'+LTRIM(RTRIM(NOKOCARAC)) AS Hijo FROM TABCARAC WHERE KOTABLA = 'ZONAPRODUC' ORDER BY Hijo"
-            Cmb_Zonapr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Cmb_Zonapr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
             Cmb_Zonapr.SelectedValue = ZonaPro
 
         End If
@@ -2223,11 +2228,11 @@ Sigue_Loop_01:
 
         Dim Fm As New Frm_Imagenes_X_Producto(Txt_Kopr.Text)
 
-        If Fm.Fx_Llenar_Grilla_Imagenes Then
-            Fm.ShowDialog(Me)
-        Else
-            MessageBoxEx.Show(Me, "No existen imagenes para el producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        End If
+        'If Fm.Fx_Llenar_Grilla_Imagenes Then
+        Fm.ShowDialog(Me)
+        'Else
+        'MessageBoxEx.Show(Me, "No existen imagenes para el producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        'End If
 
         Fm.Dispose()
 
@@ -2264,11 +2269,10 @@ Sigue_Loop_01:
             End If
         End If
 
-        Dim _Maeddo As Long = _Sql.Fx_Cuenta_Registros("MAEDDO", "KOPRCT = '" & _Codigo_a_eliminar & "'") ' SELECT TOP 1 * FROM MAEDDO WITH ( NOLOCK )  WHERE KOPRCT='PRODUCTO DE P'
-        Dim _Tabcodal As Long = _Sql.Fx_Cuenta_Registros("TABCODAL", "KOPR = '" & _Codigo_a_eliminar & "'") 'SELECT TOP 1 * FROM TABCODAL WITH ( NOLOCK )  WHERE KOPR='PRODUCTO DE P'
-        Dim _Potd As Long = _Sql.Fx_Cuenta_Registros("POTD", "CODIGO = '" & _Codigo_a_eliminar & "'")        'SELECT TOP 1 * FROM POTD WITH ( NOLOCK )  WHERE CODIGO='PRODUCTO DE P'
-        Dim _Kasiddo As Long = _Sql.Fx_Cuenta_Registros("KASIDDO", "KOPRCT = '" & _Codigo_a_eliminar & "'") 'SELECT TOP 1 * FROM KASIDDO WITH ( NOLOCK )  WHERE KOPRCT='PRODUCTO DE P'
-
+        Dim _Maeddo As Long = _Sql.Fx_Cuenta_Registros("MAEDDO", "KOPRCT = '" & _Codigo_a_eliminar & "'")
+        Dim _Tabcodal As Long = _Sql.Fx_Cuenta_Registros("TABCODAL", "KOPR = '" & _Codigo_a_eliminar & "'")
+        Dim _Potd As Long = _Sql.Fx_Cuenta_Registros("POTD", "CODIGO = '" & _Codigo_a_eliminar & "'")
+        Dim _Kasiddo As Long = _Sql.Fx_Cuenta_Registros("KASIDDO", "KOPRCT = '" & _Codigo_a_eliminar & "'")
 
         If CBool(_Maeddo) Then
             MessageBoxEx.Show(Me, "Producto está  presente en documentos de Gestión", "PRODUCTO NO PUEDE SER ELIMINADO",
@@ -2313,23 +2317,23 @@ Sigue_Loop_01:
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
             Consulta_sql = "DELETE PDIMEN    WHERE CODIGO ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                               "DELETE MAEPROBS  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                               "DELETE MAEFICHA  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                               "DELETE MAEFICHD  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                               "DELETE TABIMPR   WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                               "DELETE TABPRE    WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                               "DELETE TABBOPR   WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                               "DELETE MPROENVA  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                               "DELETE MAEPREM   WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                               "DELETE MAEPR     WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                               "DELETE TABCODAL  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                               "DELETE " & _Global_BaseBk & "Zw_ListaPreCosto WHERE Codigo ='" & _Codigo_a_eliminar & "' And Proveedor = ''" & vbCrLf &
-                               "DELETE " & _Global_BaseBk & "Zw_ListaPreProducto WHERE Codigo ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                               "DELETE " & _Global_BaseBk & "Zw_Prod_Asociacion WHERE Codigo ='" & _Codigo_a_eliminar & "'" & vbCrLf &
-                               "UPDATE " & _Global_BaseBk & "Zw_ListaPreCosto Set Codigo = '', Descripcion = ''" & Space(1) &
-                               "WHERE  Codigo = '" & _Codigo_a_eliminar & "' AND Proveedor <> ''" & vbCrLf &
-                               "DELETE " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo = '" & _Codigo_a_eliminar & "' And Producto = 1" & vbCrLf &
-                               "DELETE " & _Global_BaseBk & "Zw_Prod_Dimensiones Where Codigo = '" & _Codigo_a_eliminar & "'"
+                           "DELETE MAEPROBS  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                           "DELETE MAEFICHA  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                           "DELETE MAEFICHD  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                           "DELETE TABIMPR   WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                           "DELETE TABPRE    WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                           "DELETE TABBOPR   WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                           "DELETE MPROENVA  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                           "DELETE MAEPREM   WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                           "DELETE MAEPR     WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                           "DELETE TABCODAL  WHERE KOPR   ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                           "DELETE " & _Global_BaseBk & "Zw_ListaPreCosto WHERE Codigo ='" & _Codigo_a_eliminar & "' And Proveedor = ''" & vbCrLf &
+                           "DELETE " & _Global_BaseBk & "Zw_ListaPreProducto WHERE Codigo ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                           "DELETE " & _Global_BaseBk & "Zw_Prod_Asociacion WHERE Codigo ='" & _Codigo_a_eliminar & "'" & vbCrLf &
+                           "UPDATE " & _Global_BaseBk & "Zw_ListaPreCosto Set Codigo = '', Descripcion = ''" & Space(1) &
+                           "WHERE  Codigo = '" & _Codigo_a_eliminar & "' AND Proveedor <> ''" & vbCrLf &
+                           "DELETE " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo = '" & _Codigo_a_eliminar & "' And Producto = 1" & vbCrLf &
+                           "DELETE " & _Global_BaseBk & "Zw_Prod_Dimensiones Where Codigo = '" & _Codigo_a_eliminar & "'"
 
             Return _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
@@ -2344,7 +2348,7 @@ Sigue_Loop_01:
         If _Global_Row_Configuracion_General.Item("PermitirMigrarProductosBaseExterna") Then
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where GrbProd_Nuevos = 1"
-            Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _FilaCx As DataRow In _Tbl_Conexiones.Rows
 
@@ -2388,7 +2392,7 @@ Sigue_Loop_01:
         If _Global_Row_Configuracion_General.Item("PermitirMigrarProductosBaseExterna") Then
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where GrbProd_Nuevos = 1"
-            Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _FilaCx As DataRow In _Tbl_Conexiones.Rows
 

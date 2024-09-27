@@ -310,7 +310,7 @@ Public Class Frm_Correos_Conf
             ' Incorporación de imagenes de funcionarios
 
             Consulta_sql = "Select KOFU From TABFU"
-            Dim _Tbl_Funcionarios As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Funcionarios As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _Fila As DataRow In _Tbl_Funcionarios.Rows
 
@@ -461,11 +461,13 @@ Public Class Frm_Correos_Conf
 
     Private Function Fx_Grabar() As Boolean
 
+        Dim _Cuerpo As String = Replace(Txt_Cuerpo.Text, "'", "''")
+
         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Correos (Nombre_Correo,Remitente,Contrasena,Host,Puerto,Asunto,Auto_Asunto,Para,CC," &
                        "CuerpoMensaje,Firma,SSL,Envio_Automatico,Es_Html) Values " &
                         "('" & Txt_Nombre_Correo.Text & "','" & Txt_Remitente.Text & "','" & Txt_Contrasena.Text &
                         "','" & Txt_Host_SMTP.Text & "','" & Txt_Puerto.Text & "','" & Txt_Asunto.Text &
-                        "'," & CInt(Chk_Auto_Asunto.Checked) & ",'" & Txt_Para.Text & "','" & Txt_CC.Text & "','" & Txt_Cuerpo.Text &
+                        "'," & CInt(Chk_Auto_Asunto.Checked) & ",'" & Txt_Para.Text & "','" & Txt_CC.Text & "','" & _Cuerpo &
                         "'," & CInt(Chk_Firma.Checked) & "," & CInt(Chk_SSL.Checked) &
                         "," & CInt(Rdb_Envio_Automatico.Checked) & "," & CInt(Chk_Es_Html.Checked) & ")"
         If _Sql.Ej_consulta_IDU(Consulta_sql) Then
@@ -478,7 +480,6 @@ Public Class Frm_Correos_Conf
     Private Function Fx_Editar() As Boolean
 
         Dim _Cuerpo As String = Replace(Txt_Cuerpo.Text, "'", "''")
-
 
         Consulta_sql = "Update " & _Global_BaseBk & "Zw_Correos Set " &
                        "Remitente = '" & Txt_Remitente.Text & "'" &
@@ -1186,7 +1187,7 @@ Public Class Frm_Correos_Conf
 
 
             Using smtp As New Smtp                          ' Now connect to SMTP server and send it
-                smtp.Connect(_Host_SMT)                       ' Use overloads or ConnectSSL if you need to specify different port or SSL.
+                smtp.Connect(_Host_SMT)                     ' Use overloads or ConnectSSL if you need to specify different port or SSL.
                 'Smtp.DefaultPort = _Puerto
                 'smtp.po
                 smtp.SSLConfiguration.EnabledSslProtocols = _EnableSsl ' True

@@ -45,7 +45,7 @@ Public Class Frm_Mt_InvParc_Actualizar_Foto_Stock
                        "' And Bodega = '" & _Bodega & "'" & vbCrLf & _
                        "Order by Fecha"
 
-        _Tbl_Inventarios = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Inventarios = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         
 
@@ -289,7 +289,7 @@ Public Class Frm_Mt_InvParc_Actualizar_Foto_Stock
                        "Order by CodigoPr,Semilla Desc" & vbCrLf & _
                        "Drop Table #Paso_Inv"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Return _Tbl
 
@@ -335,7 +335,7 @@ Public Class Frm_Mt_InvParc_Actualizar_Foto_Stock
         Consulta_sql = Replace(Consulta_sql, "--Filtro_Condicion_Extra", _Filtro_Condicion_Extra)
 
 
-        Dim _TblKardex As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql) '_SQL.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblKardex As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql) '_SQL.Fx_Get_Tablas(Consulta_sql)
 
         Return _TblKardex.Rows(0)
 

@@ -491,7 +491,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Proyeccion
                        "And Fecha Between '" & _Fecha_Desde & "' And '" & _Fecha_Hasta & "'" & vbCrLf &
                        " And DATEPART(Dw,Fecha) In (1,2,3,4,5" & _Seis & _Siete & ")" & vbCrLf &
                        "ORDER BY Fecha"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         'If CBool(_Tbl.Rows.Count) Then
         '_Dias_Feriados_Proyeccion = _Tbl.Rows.Count

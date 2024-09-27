@@ -173,7 +173,7 @@ Public Class VerificationForm
                         From " & _Global_BaseBk & "Zw_Usuarios_Huellas" & vbCrLf &
                            "Left Join TABFU On KOFU = CodFuncionario"
 
-        _Tbl_Huellas = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Huellas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
     End Sub
 

@@ -28,22 +28,27 @@ Partial Class Frm_Filtro_Especial_Productos
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Panel_Otros_Filtros = New System.Windows.Forms.Panel()
         Me.Tabla_01 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Btn_Clasificacion_Libre_Algunas = New DevComponents.DotNetBar.ButtonX()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Rdb_Clasificacion_Libre_Algunas = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_Clasificacion_Masisa_Todas = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Btn_Zonas_Algunas = New DevComponents.DotNetBar.ButtonX()
         Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
         Me.Rdb_Zonas_Algunas = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_Zonas_Todas = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Btn_Super_Familias_Algunas = New DevComponents.DotNetBar.ButtonX()
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.Rdb_Super_Familias_Algunas = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_Super_Familias_Todas = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Btn_Rubros_Algunos = New DevComponents.DotNetBar.ButtonX()
         Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
         Me.Rdb_Rubros_Algunos = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_Rubros_Todos = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Btn_Marcas_Algunas = New DevComponents.DotNetBar.ButtonX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Rdb_Marcas_Algunas = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_Marcas_Todas = New DevComponents.DotNetBar.Controls.CheckBoxX()
@@ -51,6 +56,13 @@ Partial Class Frm_Filtro_Especial_Productos
         Me.LabelX9 = New DevComponents.DotNetBar.LabelX()
         Me.Rdb_Productos_Algunos = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_Productos_Todos = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Btn_Productos_Algunos = New DevComponents.DotNetBar.ButtonX()
+        Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Btn_Bakapp_Algunas = New DevComponents.DotNetBar.ButtonX()
+        Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
+        Me.Rdb_Bakapp_Algunas = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_Bakapp_Todas = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         Me.Panel_Otros_Filtros.SuspendLayout()
@@ -60,6 +72,7 @@ Partial Class Frm_Filtro_Especial_Productos
         Me.TableLayoutPanel3.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.TableLayoutPanel8.SuspendLayout()
+        Me.TableLayoutPanel5.SuspendLayout()
         Me.SuspendLayout()
         '
         'Bar1
@@ -68,9 +81,9 @@ Partial Class Frm_Filtro_Especial_Productos
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Aceptar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 259)
+        Me.Bar1.Location = New System.Drawing.Point(0, 296)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(330, 41)
+        Me.Bar1.Size = New System.Drawing.Size(332, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 14
@@ -89,14 +102,13 @@ Partial Class Frm_Filtro_Especial_Productos
         'GroupPanel1
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
-        Me.GroupPanel1.CanvasColor = System.Drawing.SystemColors.Control
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel1.Controls.Add(Me.Panel_Otros_Filtros)
         Me.GroupPanel1.Controls.Add(Me.TableLayoutPanel8)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel1.Location = New System.Drawing.Point(12, 12)
+        Me.GroupPanel1.Location = New System.Drawing.Point(9, 12)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(311, 232)
+        Me.GroupPanel1.Size = New System.Drawing.Size(311, 276)
         '
         '
         '
@@ -131,23 +143,28 @@ Partial Class Frm_Filtro_Especial_Productos
         'Panel_Otros_Filtros
         '
         Me.Panel_Otros_Filtros.BackColor = System.Drawing.Color.Transparent
+        Me.Panel_Otros_Filtros.Controls.Add(Me.LabelX7)
+        Me.Panel_Otros_Filtros.Controls.Add(Me.TableLayoutPanel5)
         Me.Panel_Otros_Filtros.Controls.Add(Me.Tabla_01)
         Me.Panel_Otros_Filtros.Controls.Add(Me.TableLayoutPanel4)
         Me.Panel_Otros_Filtros.Controls.Add(Me.TableLayoutPanel2)
         Me.Panel_Otros_Filtros.Controls.Add(Me.TableLayoutPanel3)
         Me.Panel_Otros_Filtros.Controls.Add(Me.TableLayoutPanel1)
+        Me.Panel_Otros_Filtros.ForeColor = System.Drawing.Color.Black
         Me.Panel_Otros_Filtros.Location = New System.Drawing.Point(3, 47)
         Me.Panel_Otros_Filtros.Name = "Panel_Otros_Filtros"
-        Me.Panel_Otros_Filtros.Size = New System.Drawing.Size(302, 159)
+        Me.Panel_Otros_Filtros.Size = New System.Drawing.Size(302, 208)
         Me.Panel_Otros_Filtros.TabIndex = 16
         '
         'Tabla_01
         '
         Me.Tabla_01.BackColor = System.Drawing.Color.Transparent
-        Me.Tabla_01.ColumnCount = 3
-        Me.Tabla_01.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.Tabla_01.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 84.0!))
-        Me.Tabla_01.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 106.0!))
+        Me.Tabla_01.ColumnCount = 4
+        Me.Tabla_01.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
+        Me.Tabla_01.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 82.0!))
+        Me.Tabla_01.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 76.0!))
+        Me.Tabla_01.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 28.0!))
+        Me.Tabla_01.Controls.Add(Me.Btn_Clasificacion_Libre_Algunas, 3, 0)
         Me.Tabla_01.Controls.Add(Me.LabelX1, 0, 0)
         Me.Tabla_01.Controls.Add(Me.Rdb_Clasificacion_Libre_Algunas, 2, 0)
         Me.Tabla_01.Controls.Add(Me.Rdb_Clasificacion_Masisa_Todas, 1, 0)
@@ -155,9 +172,22 @@ Partial Class Frm_Filtro_Especial_Productos
         Me.Tabla_01.Location = New System.Drawing.Point(3, 3)
         Me.Tabla_01.Name = "Tabla_01"
         Me.Tabla_01.RowCount = 1
-        Me.Tabla_01.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.Tabla_01.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.Tabla_01.Size = New System.Drawing.Size(296, 25)
         Me.Tabla_01.TabIndex = 47
+        '
+        'Btn_Clasificacion_Libre_Algunas
+        '
+        Me.Btn_Clasificacion_Libre_Algunas.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Clasificacion_Libre_Algunas.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Clasificacion_Libre_Algunas.Image = CType(resources.GetObject("Btn_Clasificacion_Libre_Algunas.Image"), System.Drawing.Image)
+        Me.Btn_Clasificacion_Libre_Algunas.Location = New System.Drawing.Point(271, 3)
+        Me.Btn_Clasificacion_Libre_Algunas.Name = "Btn_Clasificacion_Libre_Algunas"
+        Me.Btn_Clasificacion_Libre_Algunas.Size = New System.Drawing.Size(22, 19)
+        Me.Btn_Clasificacion_Libre_Algunas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Clasificacion_Libre_Algunas.TabIndex = 16
+        Me.Btn_Clasificacion_Libre_Algunas.Tooltip = "Ver clasificaciones seleccionadas"
+        Me.Btn_Clasificacion_Libre_Algunas.Visible = False
         '
         'LabelX1
         '
@@ -183,9 +213,9 @@ Partial Class Frm_Filtro_Especial_Productos
         Me.Rdb_Clasificacion_Libre_Algunas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Clasificacion_Libre_Algunas.FocusCuesEnabled = False
         Me.Rdb_Clasificacion_Libre_Algunas.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Clasificacion_Libre_Algunas.Location = New System.Drawing.Point(193, 3)
+        Me.Rdb_Clasificacion_Libre_Algunas.Location = New System.Drawing.Point(195, 3)
         Me.Rdb_Clasificacion_Libre_Algunas.Name = "Rdb_Clasificacion_Libre_Algunas"
-        Me.Rdb_Clasificacion_Libre_Algunas.Size = New System.Drawing.Size(94, 19)
+        Me.Rdb_Clasificacion_Libre_Algunas.Size = New System.Drawing.Size(62, 19)
         Me.Rdb_Clasificacion_Libre_Algunas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Clasificacion_Libre_Algunas.TabIndex = 3
         Me.Rdb_Clasificacion_Libre_Algunas.Text = "Algunas"
@@ -204,9 +234,9 @@ Partial Class Frm_Filtro_Especial_Productos
         Me.Rdb_Clasificacion_Masisa_Todas.CheckValue = "Y"
         Me.Rdb_Clasificacion_Masisa_Todas.FocusCuesEnabled = False
         Me.Rdb_Clasificacion_Masisa_Todas.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Clasificacion_Masisa_Todas.Location = New System.Drawing.Point(109, 3)
+        Me.Rdb_Clasificacion_Masisa_Todas.Location = New System.Drawing.Point(113, 3)
         Me.Rdb_Clasificacion_Masisa_Todas.Name = "Rdb_Clasificacion_Masisa_Todas"
-        Me.Rdb_Clasificacion_Masisa_Todas.Size = New System.Drawing.Size(78, 19)
+        Me.Rdb_Clasificacion_Masisa_Todas.Size = New System.Drawing.Size(76, 19)
         Me.Rdb_Clasificacion_Masisa_Todas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Clasificacion_Masisa_Todas.TabIndex = 1
         Me.Rdb_Clasificacion_Masisa_Todas.Text = "Todas "
@@ -214,10 +244,12 @@ Partial Class Frm_Filtro_Especial_Productos
         'TableLayoutPanel4
         '
         Me.TableLayoutPanel4.BackColor = System.Drawing.Color.Transparent
-        Me.TableLayoutPanel4.ColumnCount = 3
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 84.0!))
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 106.0!))
+        Me.TableLayoutPanel4.ColumnCount = 4
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 82.0!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 76.0!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 28.0!))
+        Me.TableLayoutPanel4.Controls.Add(Me.Btn_Zonas_Algunas, 3, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.LabelX5, 0, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.Rdb_Zonas_Algunas, 2, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.Rdb_Zonas_Todas, 1, 0)
@@ -225,9 +257,22 @@ Partial Class Frm_Filtro_Especial_Productos
         Me.TableLayoutPanel4.Location = New System.Drawing.Point(3, 126)
         Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
         Me.TableLayoutPanel4.RowCount = 1
-        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel4.Size = New System.Drawing.Size(296, 25)
         Me.TableLayoutPanel4.TabIndex = 51
+        '
+        'Btn_Zonas_Algunas
+        '
+        Me.Btn_Zonas_Algunas.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Zonas_Algunas.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Zonas_Algunas.Image = CType(resources.GetObject("Btn_Zonas_Algunas.Image"), System.Drawing.Image)
+        Me.Btn_Zonas_Algunas.Location = New System.Drawing.Point(271, 3)
+        Me.Btn_Zonas_Algunas.Name = "Btn_Zonas_Algunas"
+        Me.Btn_Zonas_Algunas.Size = New System.Drawing.Size(22, 19)
+        Me.Btn_Zonas_Algunas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Zonas_Algunas.TabIndex = 16
+        Me.Btn_Zonas_Algunas.Tooltip = "Ver zonas seleccionadas"
+        Me.Btn_Zonas_Algunas.Visible = False
         '
         'LabelX5
         '
@@ -253,9 +298,9 @@ Partial Class Frm_Filtro_Especial_Productos
         Me.Rdb_Zonas_Algunas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Zonas_Algunas.FocusCuesEnabled = False
         Me.Rdb_Zonas_Algunas.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Zonas_Algunas.Location = New System.Drawing.Point(193, 3)
+        Me.Rdb_Zonas_Algunas.Location = New System.Drawing.Point(195, 3)
         Me.Rdb_Zonas_Algunas.Name = "Rdb_Zonas_Algunas"
-        Me.Rdb_Zonas_Algunas.Size = New System.Drawing.Size(94, 19)
+        Me.Rdb_Zonas_Algunas.Size = New System.Drawing.Size(62, 19)
         Me.Rdb_Zonas_Algunas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Zonas_Algunas.TabIndex = 3
         Me.Rdb_Zonas_Algunas.Text = "Algunas"
@@ -274,9 +319,9 @@ Partial Class Frm_Filtro_Especial_Productos
         Me.Rdb_Zonas_Todas.CheckValue = "Y"
         Me.Rdb_Zonas_Todas.FocusCuesEnabled = False
         Me.Rdb_Zonas_Todas.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Zonas_Todas.Location = New System.Drawing.Point(109, 3)
+        Me.Rdb_Zonas_Todas.Location = New System.Drawing.Point(113, 3)
         Me.Rdb_Zonas_Todas.Name = "Rdb_Zonas_Todas"
-        Me.Rdb_Zonas_Todas.Size = New System.Drawing.Size(78, 19)
+        Me.Rdb_Zonas_Todas.Size = New System.Drawing.Size(76, 19)
         Me.Rdb_Zonas_Todas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Zonas_Todas.TabIndex = 1
         Me.Rdb_Zonas_Todas.Text = "Todas "
@@ -284,10 +329,12 @@ Partial Class Frm_Filtro_Especial_Productos
         'TableLayoutPanel2
         '
         Me.TableLayoutPanel2.BackColor = System.Drawing.Color.Transparent
-        Me.TableLayoutPanel2.ColumnCount = 3
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 84.0!))
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 106.0!))
+        Me.TableLayoutPanel2.ColumnCount = 4
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 82.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 76.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 28.0!))
+        Me.TableLayoutPanel2.Controls.Add(Me.Btn_Super_Familias_Algunas, 3, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.LabelX3, 0, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.Rdb_Super_Familias_Algunas, 2, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.Rdb_Super_Familias_Todas, 1, 0)
@@ -295,9 +342,22 @@ Partial Class Frm_Filtro_Especial_Productos
         Me.TableLayoutPanel2.Location = New System.Drawing.Point(3, 64)
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
         Me.TableLayoutPanel2.RowCount = 1
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel2.Size = New System.Drawing.Size(296, 25)
         Me.TableLayoutPanel2.TabIndex = 49
+        '
+        'Btn_Super_Familias_Algunas
+        '
+        Me.Btn_Super_Familias_Algunas.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Super_Familias_Algunas.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Super_Familias_Algunas.Image = CType(resources.GetObject("Btn_Super_Familias_Algunas.Image"), System.Drawing.Image)
+        Me.Btn_Super_Familias_Algunas.Location = New System.Drawing.Point(271, 3)
+        Me.Btn_Super_Familias_Algunas.Name = "Btn_Super_Familias_Algunas"
+        Me.Btn_Super_Familias_Algunas.Size = New System.Drawing.Size(22, 19)
+        Me.Btn_Super_Familias_Algunas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Super_Familias_Algunas.TabIndex = 16
+        Me.Btn_Super_Familias_Algunas.Tooltip = "Ver Super familias seleccionas"
+        Me.Btn_Super_Familias_Algunas.Visible = False
         '
         'LabelX3
         '
@@ -323,9 +383,9 @@ Partial Class Frm_Filtro_Especial_Productos
         Me.Rdb_Super_Familias_Algunas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Super_Familias_Algunas.FocusCuesEnabled = False
         Me.Rdb_Super_Familias_Algunas.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Super_Familias_Algunas.Location = New System.Drawing.Point(193, 3)
+        Me.Rdb_Super_Familias_Algunas.Location = New System.Drawing.Point(195, 3)
         Me.Rdb_Super_Familias_Algunas.Name = "Rdb_Super_Familias_Algunas"
-        Me.Rdb_Super_Familias_Algunas.Size = New System.Drawing.Size(94, 19)
+        Me.Rdb_Super_Familias_Algunas.Size = New System.Drawing.Size(62, 19)
         Me.Rdb_Super_Familias_Algunas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Super_Familias_Algunas.TabIndex = 3
         Me.Rdb_Super_Familias_Algunas.Text = "Algunas"
@@ -344,9 +404,9 @@ Partial Class Frm_Filtro_Especial_Productos
         Me.Rdb_Super_Familias_Todas.CheckValue = "Y"
         Me.Rdb_Super_Familias_Todas.FocusCuesEnabled = False
         Me.Rdb_Super_Familias_Todas.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Super_Familias_Todas.Location = New System.Drawing.Point(109, 3)
+        Me.Rdb_Super_Familias_Todas.Location = New System.Drawing.Point(113, 3)
         Me.Rdb_Super_Familias_Todas.Name = "Rdb_Super_Familias_Todas"
-        Me.Rdb_Super_Familias_Todas.Size = New System.Drawing.Size(78, 19)
+        Me.Rdb_Super_Familias_Todas.Size = New System.Drawing.Size(76, 19)
         Me.Rdb_Super_Familias_Todas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Super_Familias_Todas.TabIndex = 1
         Me.Rdb_Super_Familias_Todas.Text = "Todas "
@@ -354,10 +414,12 @@ Partial Class Frm_Filtro_Especial_Productos
         'TableLayoutPanel3
         '
         Me.TableLayoutPanel3.BackColor = System.Drawing.Color.Transparent
-        Me.TableLayoutPanel3.ColumnCount = 3
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 84.0!))
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 106.0!))
+        Me.TableLayoutPanel3.ColumnCount = 4
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 82.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 76.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 28.0!))
+        Me.TableLayoutPanel3.Controls.Add(Me.Btn_Rubros_Algunos, 3, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.LabelX4, 0, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.Rdb_Rubros_Algunos, 2, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.Rdb_Rubros_Todos, 1, 0)
@@ -365,9 +427,22 @@ Partial Class Frm_Filtro_Especial_Productos
         Me.TableLayoutPanel3.Location = New System.Drawing.Point(3, 95)
         Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
         Me.TableLayoutPanel3.RowCount = 1
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel3.Size = New System.Drawing.Size(296, 25)
         Me.TableLayoutPanel3.TabIndex = 50
+        '
+        'Btn_Rubros_Algunos
+        '
+        Me.Btn_Rubros_Algunos.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Rubros_Algunos.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Rubros_Algunos.Image = CType(resources.GetObject("Btn_Rubros_Algunos.Image"), System.Drawing.Image)
+        Me.Btn_Rubros_Algunos.Location = New System.Drawing.Point(271, 3)
+        Me.Btn_Rubros_Algunos.Name = "Btn_Rubros_Algunos"
+        Me.Btn_Rubros_Algunos.Size = New System.Drawing.Size(22, 19)
+        Me.Btn_Rubros_Algunos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Rubros_Algunos.TabIndex = 16
+        Me.Btn_Rubros_Algunos.Tooltip = "Ver Rubros seleccionados"
+        Me.Btn_Rubros_Algunos.Visible = False
         '
         'LabelX4
         '
@@ -393,9 +468,9 @@ Partial Class Frm_Filtro_Especial_Productos
         Me.Rdb_Rubros_Algunos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Rubros_Algunos.FocusCuesEnabled = False
         Me.Rdb_Rubros_Algunos.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Rubros_Algunos.Location = New System.Drawing.Point(193, 3)
+        Me.Rdb_Rubros_Algunos.Location = New System.Drawing.Point(195, 3)
         Me.Rdb_Rubros_Algunos.Name = "Rdb_Rubros_Algunos"
-        Me.Rdb_Rubros_Algunos.Size = New System.Drawing.Size(94, 19)
+        Me.Rdb_Rubros_Algunos.Size = New System.Drawing.Size(62, 19)
         Me.Rdb_Rubros_Algunos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Rubros_Algunos.TabIndex = 3
         Me.Rdb_Rubros_Algunos.Text = "Algunas"
@@ -414,9 +489,9 @@ Partial Class Frm_Filtro_Especial_Productos
         Me.Rdb_Rubros_Todos.CheckValue = "Y"
         Me.Rdb_Rubros_Todos.FocusCuesEnabled = False
         Me.Rdb_Rubros_Todos.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Rubros_Todos.Location = New System.Drawing.Point(109, 3)
+        Me.Rdb_Rubros_Todos.Location = New System.Drawing.Point(113, 3)
         Me.Rdb_Rubros_Todos.Name = "Rdb_Rubros_Todos"
-        Me.Rdb_Rubros_Todos.Size = New System.Drawing.Size(78, 19)
+        Me.Rdb_Rubros_Todos.Size = New System.Drawing.Size(76, 19)
         Me.Rdb_Rubros_Todos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Rubros_Todos.TabIndex = 1
         Me.Rdb_Rubros_Todos.Text = "Todas "
@@ -424,10 +499,12 @@ Partial Class Frm_Filtro_Especial_Productos
         'TableLayoutPanel1
         '
         Me.TableLayoutPanel1.BackColor = System.Drawing.Color.Transparent
-        Me.TableLayoutPanel1.ColumnCount = 3
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 84.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 106.0!))
+        Me.TableLayoutPanel1.ColumnCount = 4
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 82.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 76.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 28.0!))
+        Me.TableLayoutPanel1.Controls.Add(Me.Btn_Marcas_Algunas, 3, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.LabelX2, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Rdb_Marcas_Algunas, 2, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Rdb_Marcas_Todas, 1, 0)
@@ -435,9 +512,22 @@ Partial Class Frm_Filtro_Especial_Productos
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(3, 33)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 1
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(296, 25)
         Me.TableLayoutPanel1.TabIndex = 48
+        '
+        'Btn_Marcas_Algunas
+        '
+        Me.Btn_Marcas_Algunas.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Marcas_Algunas.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Marcas_Algunas.Image = CType(resources.GetObject("Btn_Marcas_Algunas.Image"), System.Drawing.Image)
+        Me.Btn_Marcas_Algunas.Location = New System.Drawing.Point(271, 3)
+        Me.Btn_Marcas_Algunas.Name = "Btn_Marcas_Algunas"
+        Me.Btn_Marcas_Algunas.Size = New System.Drawing.Size(22, 19)
+        Me.Btn_Marcas_Algunas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Marcas_Algunas.TabIndex = 16
+        Me.Btn_Marcas_Algunas.Tooltip = "Ver marcas seleccionadas"
+        Me.Btn_Marcas_Algunas.Visible = False
         '
         'LabelX2
         '
@@ -463,9 +553,9 @@ Partial Class Frm_Filtro_Especial_Productos
         Me.Rdb_Marcas_Algunas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Marcas_Algunas.FocusCuesEnabled = False
         Me.Rdb_Marcas_Algunas.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Marcas_Algunas.Location = New System.Drawing.Point(193, 3)
+        Me.Rdb_Marcas_Algunas.Location = New System.Drawing.Point(195, 3)
         Me.Rdb_Marcas_Algunas.Name = "Rdb_Marcas_Algunas"
-        Me.Rdb_Marcas_Algunas.Size = New System.Drawing.Size(94, 19)
+        Me.Rdb_Marcas_Algunas.Size = New System.Drawing.Size(62, 19)
         Me.Rdb_Marcas_Algunas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Marcas_Algunas.TabIndex = 3
         Me.Rdb_Marcas_Algunas.Text = "Algunas"
@@ -484,9 +574,9 @@ Partial Class Frm_Filtro_Especial_Productos
         Me.Rdb_Marcas_Todas.CheckValue = "Y"
         Me.Rdb_Marcas_Todas.FocusCuesEnabled = False
         Me.Rdb_Marcas_Todas.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Marcas_Todas.Location = New System.Drawing.Point(109, 3)
+        Me.Rdb_Marcas_Todas.Location = New System.Drawing.Point(113, 3)
         Me.Rdb_Marcas_Todas.Name = "Rdb_Marcas_Todas"
-        Me.Rdb_Marcas_Todas.Size = New System.Drawing.Size(78, 19)
+        Me.Rdb_Marcas_Todas.Size = New System.Drawing.Size(76, 19)
         Me.Rdb_Marcas_Todas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Marcas_Todas.TabIndex = 1
         Me.Rdb_Marcas_Todas.Text = "Todas "
@@ -494,18 +584,20 @@ Partial Class Frm_Filtro_Especial_Productos
         'TableLayoutPanel8
         '
         Me.TableLayoutPanel8.BackColor = System.Drawing.Color.Transparent
-        Me.TableLayoutPanel8.ColumnCount = 3
-        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 84.0!))
-        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 106.0!))
+        Me.TableLayoutPanel8.ColumnCount = 4
+        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
+        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 82.0!))
+        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 76.0!))
+        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 10.0!))
         Me.TableLayoutPanel8.Controls.Add(Me.LabelX9, 0, 0)
         Me.TableLayoutPanel8.Controls.Add(Me.Rdb_Productos_Algunos, 2, 0)
         Me.TableLayoutPanel8.Controls.Add(Me.Rdb_Productos_Todos, 1, 0)
+        Me.TableLayoutPanel8.Controls.Add(Me.Btn_Productos_Algunos, 3, 0)
         Me.TableLayoutPanel8.ForeColor = System.Drawing.Color.Black
         Me.TableLayoutPanel8.Location = New System.Drawing.Point(6, 16)
         Me.TableLayoutPanel8.Name = "TableLayoutPanel8"
         Me.TableLayoutPanel8.RowCount = 1
-        Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel8.Size = New System.Drawing.Size(296, 25)
         Me.TableLayoutPanel8.TabIndex = 53
         '
@@ -518,7 +610,7 @@ Partial Class Frm_Filtro_Especial_Productos
         Me.LabelX9.ForeColor = System.Drawing.Color.Black
         Me.LabelX9.Location = New System.Drawing.Point(3, 3)
         Me.LabelX9.Name = "LabelX9"
-        Me.LabelX9.Size = New System.Drawing.Size(100, 19)
+        Me.LabelX9.Size = New System.Drawing.Size(84, 19)
         Me.LabelX9.TabIndex = 4
         Me.LabelX9.Text = "Productos"
         '
@@ -533,9 +625,9 @@ Partial Class Frm_Filtro_Especial_Productos
         Me.Rdb_Productos_Algunos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Productos_Algunos.FocusCuesEnabled = False
         Me.Rdb_Productos_Algunos.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Productos_Algunos.Location = New System.Drawing.Point(193, 3)
+        Me.Rdb_Productos_Algunos.Location = New System.Drawing.Point(195, 3)
         Me.Rdb_Productos_Algunos.Name = "Rdb_Productos_Algunos"
-        Me.Rdb_Productos_Algunos.Size = New System.Drawing.Size(94, 19)
+        Me.Rdb_Productos_Algunos.Size = New System.Drawing.Size(62, 19)
         Me.Rdb_Productos_Algunos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Productos_Algunos.TabIndex = 3
         Me.Rdb_Productos_Algunos.Text = "Algunos"
@@ -554,18 +646,131 @@ Partial Class Frm_Filtro_Especial_Productos
         Me.Rdb_Productos_Todos.CheckValue = "Y"
         Me.Rdb_Productos_Todos.FocusCuesEnabled = False
         Me.Rdb_Productos_Todos.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Productos_Todos.Location = New System.Drawing.Point(109, 3)
+        Me.Rdb_Productos_Todos.Location = New System.Drawing.Point(113, 3)
         Me.Rdb_Productos_Todos.Name = "Rdb_Productos_Todos"
-        Me.Rdb_Productos_Todos.Size = New System.Drawing.Size(78, 19)
+        Me.Rdb_Productos_Todos.Size = New System.Drawing.Size(76, 19)
         Me.Rdb_Productos_Todos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Productos_Todos.TabIndex = 1
         Me.Rdb_Productos_Todos.Text = "Todos "
+        '
+        'Btn_Productos_Algunos
+        '
+        Me.Btn_Productos_Algunos.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Productos_Algunos.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Productos_Algunos.Image = CType(resources.GetObject("Btn_Productos_Algunos.Image"), System.Drawing.Image)
+        Me.Btn_Productos_Algunos.Location = New System.Drawing.Point(271, 3)
+        Me.Btn_Productos_Algunos.Name = "Btn_Productos_Algunos"
+        Me.Btn_Productos_Algunos.Size = New System.Drawing.Size(22, 19)
+        Me.Btn_Productos_Algunos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Productos_Algunos.TabIndex = 5
+        Me.Btn_Productos_Algunos.Tooltip = "Ver productos seleccionados"
+        Me.Btn_Productos_Algunos.Visible = False
+        '
+        'TableLayoutPanel5
+        '
+        Me.TableLayoutPanel5.BackColor = System.Drawing.Color.Transparent
+        Me.TableLayoutPanel5.ColumnCount = 4
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 82.0!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 76.0!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 28.0!))
+        Me.TableLayoutPanel5.Controls.Add(Me.Btn_Bakapp_Algunas, 3, 0)
+        Me.TableLayoutPanel5.Controls.Add(Me.LabelX6, 0, 0)
+        Me.TableLayoutPanel5.Controls.Add(Me.Rdb_Bakapp_Algunas, 2, 0)
+        Me.TableLayoutPanel5.Controls.Add(Me.Rdb_Bakapp_Todas, 1, 0)
+        Me.TableLayoutPanel5.ForeColor = System.Drawing.Color.Black
+        Me.TableLayoutPanel5.Location = New System.Drawing.Point(3, 178)
+        Me.TableLayoutPanel5.Name = "TableLayoutPanel5"
+        Me.TableLayoutPanel5.RowCount = 1
+        Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel5.Size = New System.Drawing.Size(296, 25)
+        Me.TableLayoutPanel5.TabIndex = 54
+        '
+        'Btn_Bakapp_Algunas
+        '
+        Me.Btn_Bakapp_Algunas.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Bakapp_Algunas.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Bakapp_Algunas.Image = CType(resources.GetObject("Btn_Bakapp_Algunas.Image"), System.Drawing.Image)
+        Me.Btn_Bakapp_Algunas.Location = New System.Drawing.Point(271, 3)
+        Me.Btn_Bakapp_Algunas.Name = "Btn_Bakapp_Algunas"
+        Me.Btn_Bakapp_Algunas.Size = New System.Drawing.Size(22, 19)
+        Me.Btn_Bakapp_Algunas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Bakapp_Algunas.TabIndex = 16
+        Me.Btn_Bakapp_Algunas.Tooltip = "Ver zonas seleccionadas"
+        Me.Btn_Bakapp_Algunas.Visible = False
+        '
+        'LabelX6
+        '
+        '
+        '
+        '
+        Me.LabelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX6.ForeColor = System.Drawing.Color.Black
+        Me.LabelX6.Location = New System.Drawing.Point(3, 3)
+        Me.LabelX6.Name = "LabelX6"
+        Me.LabelX6.Size = New System.Drawing.Size(100, 19)
+        Me.LabelX6.TabIndex = 4
+        Me.LabelX6.Text = "Clasificaciones"
+        '
+        'Rdb_Bakapp_Algunas
+        '
+        Me.Rdb_Bakapp_Algunas.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_Bakapp_Algunas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Bakapp_Algunas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Bakapp_Algunas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_Bakapp_Algunas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Bakapp_Algunas.FocusCuesEnabled = False
+        Me.Rdb_Bakapp_Algunas.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_Bakapp_Algunas.Location = New System.Drawing.Point(195, 3)
+        Me.Rdb_Bakapp_Algunas.Name = "Rdb_Bakapp_Algunas"
+        Me.Rdb_Bakapp_Algunas.Size = New System.Drawing.Size(62, 19)
+        Me.Rdb_Bakapp_Algunas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_Bakapp_Algunas.TabIndex = 3
+        Me.Rdb_Bakapp_Algunas.Text = "Algunas"
+        '
+        'Rdb_Bakapp_Todas
+        '
+        Me.Rdb_Bakapp_Todas.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_Bakapp_Todas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Bakapp_Todas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Bakapp_Todas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_Bakapp_Todas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Bakapp_Todas.Checked = True
+        Me.Rdb_Bakapp_Todas.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Rdb_Bakapp_Todas.CheckValue = "Y"
+        Me.Rdb_Bakapp_Todas.FocusCuesEnabled = False
+        Me.Rdb_Bakapp_Todas.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_Bakapp_Todas.Location = New System.Drawing.Point(113, 3)
+        Me.Rdb_Bakapp_Todas.Name = "Rdb_Bakapp_Todas"
+        Me.Rdb_Bakapp_Todas.Size = New System.Drawing.Size(76, 19)
+        Me.Rdb_Bakapp_Todas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_Bakapp_Todas.TabIndex = 1
+        Me.Rdb_Bakapp_Todas.Text = "Todas "
+        '
+        'LabelX7
+        '
+        Me.LabelX7.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX7.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX7.ForeColor = System.Drawing.Color.Black
+        Me.LabelX7.Location = New System.Drawing.Point(3, 157)
+        Me.LabelX7.Name = "LabelX7"
+        Me.LabelX7.Size = New System.Drawing.Size(206, 19)
+        Me.LabelX7.TabIndex = 55
+        Me.LabelX7.Text = "Clasificaciones especiales Bakapp"
         '
         'Frm_Filtro_Especial_Productos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(330, 300)
+        Me.ClientSize = New System.Drawing.Size(332, 337)
         Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.Bar1)
         Me.DoubleBuffered = True
@@ -576,6 +781,7 @@ Partial Class Frm_Filtro_Especial_Productos
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Frm_Filtro_Especial_Productos"
+        Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Filtro para productos"
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -587,6 +793,7 @@ Partial Class Frm_Filtro_Especial_Productos
         Me.TableLayoutPanel3.ResumeLayout(False)
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel8.ResumeLayout(False)
+        Me.TableLayoutPanel5.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -618,4 +825,16 @@ Partial Class Frm_Filtro_Especial_Productos
     Friend WithEvents Rdb_Productos_Algunos As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Rdb_Productos_Todos As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Panel_Otros_Filtros As Panel
+    Friend WithEvents Btn_Productos_Algunos As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents Btn_Clasificacion_Libre_Algunas As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents Btn_Zonas_Algunas As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents Btn_Super_Familias_Algunas As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents Btn_Rubros_Algunos As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents Btn_Marcas_Algunas As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents TableLayoutPanel5 As TableLayoutPanel
+    Friend WithEvents Btn_Bakapp_Algunas As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents LabelX6 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Rdb_Bakapp_Algunas As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Rdb_Bakapp_Todas As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

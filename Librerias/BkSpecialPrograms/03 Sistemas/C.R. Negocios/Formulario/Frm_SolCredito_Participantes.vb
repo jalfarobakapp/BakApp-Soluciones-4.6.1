@@ -61,7 +61,7 @@ Public Class Frm_SolCredito_Participantes
                        "Where Nro_Negocio = '" & _Nro_Negocio & "' And Stand_By = " & CInt(_Stand_By) * -1 & vbCrLf & _
                        "Order by CodFuncionario"
 
-        _TblParticipantes = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblParticipantes = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         With Grilla

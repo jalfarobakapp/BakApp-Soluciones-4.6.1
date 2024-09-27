@@ -62,7 +62,7 @@ Public Class Frm_Seleccionar_Bodega_Grilla
         Else
 
             Consulta_sql = "Select top 1 * From MAEPR Where KOPR = '" & _Codigo & "'"
-            Dim _Tbl_Producto As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Producto As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If CBool(_Tbl_Producto.Rows.Count) Then
                 Me.Text = "Producto: " & _Codigo & ", " & _Tbl_Producto.Rows(0).Item("NOKOPR")
@@ -85,11 +85,11 @@ Public Class Frm_Seleccionar_Bodega_Grilla
                        "From TABBO" & vbCrLf &
                        "Where EMPRESA = '" & ModEmpresa & "'" & _Filtro_Sucursal
 
-        Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 
-            .DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            .DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             OcultarEncabezadoGrilla(Grilla, True)
 
@@ -120,11 +120,11 @@ Public Class Frm_Seleccionar_Bodega_Grilla
                        "Ms.KOPR = '" & _Kopr & "'),0) as STFI2" & vbCrLf &
                        "FROM TABBO Tb"
 
-        Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 
-            .DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            .DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             OcultarEncabezadoGrilla(Grilla, True)
 
@@ -173,7 +173,7 @@ Public Class Frm_Seleccionar_Bodega_Grilla
         Consulta_sql = "Select top 1 EMPRESA,KOSU,KOBO,NOKOBO FROM TABBO" & vbCrLf &
                        "Where EMPRESA = '" & _Empresa & "' And KOSU = '" & _Sucursal & "' And KOBO = '" & _Bodega & "'"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl.Rows.Count) Then
 

@@ -136,7 +136,7 @@ Public Class Class_SQL
 
     End Function
 
-    Function Fx_Get_Tablas(_Consulta_sql As String,
+    Function Fx_Get_DataTable(_Consulta_sql As String,
                            Optional _Mostrar_Error As Boolean = True) As DataTable
 
         Dim _Tbl As New DataTable
@@ -183,7 +183,7 @@ Public Class Class_SQL
 
         Try
 
-            Dim _Tbl As DataTable = Fx_Get_Tablas(_Consulta_sql, _Mostrar_Error)
+            Dim _Tbl As DataTable = Fx_Get_DataTable(_Consulta_sql, _Mostrar_Error)
 
             If CBool(_Tbl.Rows.Count) Then
                 Return _Tbl.Rows(0)
@@ -468,7 +468,7 @@ Public Class Class_SQL
                                  "Where 1 > 0" & _Condicion
 
 
-            Dim _Tbl As DataTable = Fx_Get_Tablas(_Sql, _MostrarError)
+            Dim _Tbl As DataTable = Fx_Get_DataTable(_Sql, _MostrarError)
 
             Dim cuenta As Long = _Tbl.Rows.Count
 
@@ -950,7 +950,7 @@ Public Class Class_SQL
 
         End If
 
-        Dim _Tbl As DataTable = Fx_Get_Tablas(_ConsultaSql)
+        Dim _Tbl As DataTable = Fx_Get_DataTable(_ConsultaSql)
 
         Return _Tbl.Rows.Count
 
@@ -972,7 +972,7 @@ Public Class Class_SQL
 
         End If
 
-        Dim _Tbl As DataTable = Fx_Get_Tablas(_ConsultaSql)
+        Dim _Tbl As DataTable = Fx_Get_DataTable(_ConsultaSql)
 
         Return _Tbl.Rows.Count
 
@@ -996,7 +996,7 @@ Public Class Class_SQL
 
         End If
 
-        Dim _Tbl As DataTable = Fx_Get_Tablas(_ConsultaSql)
+        Dim _Tbl As DataTable = Fx_Get_DataTable(_ConsultaSql)
 
         Return CBool(_Tbl.Rows.Count)
 
@@ -1020,7 +1020,7 @@ Public Class Class_SQL
 
         End If
 
-        Dim _Tbl As DataTable = Fx_Get_Tablas(_ConsultaSql)
+        Dim _Tbl As DataTable = Fx_Get_DataTable(_ConsultaSql)
 
         Return CBool(_Tbl.Rows.Count)
 

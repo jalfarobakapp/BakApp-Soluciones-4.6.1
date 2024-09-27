@@ -167,6 +167,11 @@ Public Class Frm_LiquidImporDtExcel
                 'End If
 
                 Dim _Filtro As String = "(NUCUDP = '" & _CodAutoVenta & "' And VADP = " & _MontoParaAbono & ") Or (CUDP = '" & _CodAutoVenta & "' And VADP = " & _MontoParaAbono & ")"
+
+                If Chk_Refanti.Checked Then
+                    _Filtro += " Or (REFANTI = '" & _CodAutoVenta & "' And VADP = " & _MontoParaAbono & ")"
+                End If
+
                 Dim _FilasEncontradas As DataRow() = _Tbl_Liquidacion.Select(_Filtro)
 
                 ' Verificar si se encontraron filas y trabajar con ellas
@@ -183,6 +188,11 @@ Public Class Frm_LiquidImporDtExcel
                 Else
 
                     _Filtro = "(NUCUDP = '" & _CodAutoVenta & "' And VADP <> " & _MontoParaAbono & ") Or (CUDP = '" & _CodAutoVenta & "' And VADP <> " & _MontoParaAbono & ")"
+
+                    If Chk_Refanti.Checked Then
+                        _Filtro += " Or (REFANTI = '" & _CodAutoVenta & "' And VADP = " & _MontoParaAbono & ")"
+                    End If
+
                     Dim _FilasDiferencias As DataRow() = _Tbl_Liquidacion.Select(_Filtro)
 
                     If _FilasDiferencias.Length > 0 Then

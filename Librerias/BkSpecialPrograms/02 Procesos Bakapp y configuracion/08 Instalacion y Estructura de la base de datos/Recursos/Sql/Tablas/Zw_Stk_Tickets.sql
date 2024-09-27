@@ -4,7 +4,7 @@ CREATE TABLE [dbo].[Zw_Stk_Tickets](
 	[Id]					[int] IDENTITY(1,1) NOT NULL,
     [Id_Raiz]   			[int] NOT NULL DEFAULT (0),
 	[Empresa]				[char](2) NOT NULL DEFAULT (''),
-	[Sucursal]				[varchar](2) NOT NULL DEFAULT (''),
+	[Sucursal]				[varchar](3) NOT NULL DEFAULT (''),
 	[Numero]				[varchar](10) NOT NULL DEFAULT (''),
 	[SubNro]				[varchar](3) NOT NULL DEFAULT (''),
 	[Id_Area]				[int] NOT NULL DEFAULT (0),

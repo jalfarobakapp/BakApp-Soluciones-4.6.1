@@ -64,7 +64,7 @@ Public Class Frm_Cadenas_Remotas_Det
         Consulta_sql = Replace(Consulta_sql, "#_Global_BaseBk#", _Global_BaseBk)
         Consulta_sql = Replace(Consulta_sql, "#Filtro_Inf_01#", _Filtro)
 
-        _TblCRemotas_Det = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblCRemotas_Det = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 
@@ -126,7 +126,7 @@ Public Class Frm_Cadenas_Remotas_Det
             Consulta_sql = "Select *,(Select NOKOFU From TABFU Where KOFU = Usuario_Destino) As Usuario" & vbCrLf &
                            "From " & _Global_BaseBk & "Zw_Remotas_En_Cadena_03_Usu" & vbCrLf &
                            "Where Id_Det = " & _Id_Det
-            Dim _TblUsuarios As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblUsuarios As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
             _Fun_Solicitados = String.Empty
             Dim _C = 1
 
@@ -379,7 +379,7 @@ Public Class Frm_Cadenas_Remotas_Det
                     Dim _Tido As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Casi_DocEnc", "TipoDoc", "Id_DocEnc = " & _Id_DocEnc)
 
                     Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Casi_DocDet Where Id_DocEnc = " & _Id_DocEnc
-                    Dim _TblDetalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _TblDetalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Casi_DocEnc Where Id_DocEnc = " & _Id_DocEnc & vbCrLf &
                                    "Delete " & _Global_BaseBk & "Zw_Casi_DocDet Where Id_DocEnc = " & _Id_DocEnc & vbCrLf &
@@ -447,7 +447,7 @@ Public Class Frm_Cadenas_Remotas_Det
                 Dim _Tido As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Casi_DocEnc", "TipoDoc", "Id_DocEnc = " & _Id_DocEnc)
 
                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Casi_DocDet Where Id_DocEnc = " & _Id_DocEnc
-                Dim _TblDetalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblDetalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_Casi_DocEnc Set" & Space(1) &
                                "Stand_by = 1,Fun_Auto_Deuda_Ven = '',Fun_Auto_Stock_Ins = '',Fun_Auto_Cupo_Exe = '',Vizado = 0," & Space(1) &
@@ -528,7 +528,7 @@ Public Class Frm_Cadenas_Remotas_Det
         Consulta_sql = "Select CodUsuario From " & _Global_BaseBk & "ZW_PermisosVsUsuarios" & vbCrLf &
                        "Where CodPermiso = '" & _Codpermiso & "'" & vbCrLf & _Condicion_Compras
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Filtro_Usuarios_NOT_In As String
 
@@ -641,7 +641,7 @@ Public Class Frm_Cadenas_Remotas_Det
             If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
 
                 Consulta_sql = "SELECT * FROM " & _Global_BaseBk & "Zw_Remotas_En_Cadena_03_Usu WHERE Id_Det = " & _Id_Det
-                Dim _Tbl_Usu As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Usu As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 For Each _Fila_Usu As DataRow In _Tbl_Usu.Rows
 

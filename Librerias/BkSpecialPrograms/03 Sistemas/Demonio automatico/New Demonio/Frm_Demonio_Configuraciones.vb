@@ -538,7 +538,7 @@ Public Class Frm_Demonio_Configuraciones
                        "Where AcpA.NombreEquipo = '" & _NombreEquipo & "'" & vbCrLf &
                        "Order by Modalidad,NVI Desc,OCC_Star Desc"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_AsistenteCompras
 

@@ -87,7 +87,7 @@ Public Class Frm_Importar_Compras_SII
         Sb_Importar_Archivo_SII_Compras()
 
         Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Compras_en_SII"
-        _TblInforme = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _TblInforme = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
     End Sub
 

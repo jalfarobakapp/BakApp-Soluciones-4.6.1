@@ -109,7 +109,7 @@ Public Class Frm_MantCostosPrecios_LV
                        "Where Proveedor = '" & _Koen & "' And Sucursal = '" & _Suen & "'" & vbCrLf &
                        "Order By FechaVigenciaDesde"
 
-        Dim _Tbl_Listas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Listas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Displayindex = 0
 
@@ -365,7 +365,7 @@ Public Class Frm_MantCostosPrecios_LV
            "From " & _Global_BaseBk & "Zw_ListaPreCosto" & vbCrLf &
            "Where Proveedor = '" & _Koen & "' And Sucursal = '" & _Suen & "' And Id_Padre = 0 And CostoUd1 <> 0" & vbCrLf &
            "Order By FechaVigencia"
-        Dim _Tbl_Listas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Listas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Fila As DataRow In _Tbl_Listas.Rows
 

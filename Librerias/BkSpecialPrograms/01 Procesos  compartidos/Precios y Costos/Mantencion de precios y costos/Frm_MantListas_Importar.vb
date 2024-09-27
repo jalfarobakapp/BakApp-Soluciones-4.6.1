@@ -165,7 +165,7 @@ Public Class Frm_MantListas_Importar
 
                     Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
 
-                    Dim Tb_ = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim Tb_ = _Sql.Fx_Get_DataTable(Consulta_sql)
                     _Descripcion = Trim(Tb_.Rows(0).Item("NOKOPR")) '_Sql.Fx_Trae_Dato(, "NOKOPR", "MAEPR", "KOPR = '" & _Codigo & "'")
                     _Rtu = Tb_.Rows(0).Item("RLUD") '_Sql.Fx_Trae_Dato(, "RLUD", "MAEPR", "KOPR = '" & _Codigo & "'")
                     _Ud1 = Tb_.Rows(0).Item("UD01PR")
@@ -295,7 +295,7 @@ Public Class Frm_MantListas_Importar
 
                 If Existe_Pr Then
                     Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
-                    Dim Tbl_Pro As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+                    Dim Tbl_Pro As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
                     _Descripcion = Tbl_Pro.Rows(0).Item("NOKOPR")
                     _Rtu = Tbl_Pro.Rows(0).Item("RLUD")
                     _Ud1 = Tbl_Pro.Rows(0).Item("UD01PR")

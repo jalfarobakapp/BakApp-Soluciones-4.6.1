@@ -24,7 +24,7 @@ Public Class Class_SQL
         Try
             'Abrimos la conexión con la base de datos
             _Error = String.Empty
-            Sb_Abrir_Conexion(_Cn)
+            Sb_Abrir_Conexion(_Cn, MostrarError)
             'System.Windows.Forms.Application.DoEvents()
             Dim cmd As System.Data.SqlClient.SqlCommand
             cmd = New System.Data.SqlClient.SqlCommand()
@@ -136,7 +136,7 @@ Public Class Class_SQL
 
     End Function
 
-    Function Fx_Get_Tablas(_Consulta_sql As String,
+    Function Fx_Get_DataTable(_Consulta_sql As String,
                            Optional _Mostrar_Error As Boolean = True) As DataTable
 
         Dim _Tbl As New DataTable
@@ -183,7 +183,7 @@ Public Class Class_SQL
 
         Try
 
-            Dim _Tbl As DataTable = Fx_Get_Tablas(_Consulta_sql, _Mostrar_Error)
+            Dim _Tbl As DataTable = Fx_Get_DataTable(_Consulta_sql, _Mostrar_Error)
 
             If CBool(_Tbl.Rows.Count) Then
                 Return _Tbl.Rows(0)
@@ -267,6 +267,46 @@ Public Class Class_SQL
 
     End Function
 
+    Function Fx_Get_DataSet(Consulta_sql As String,
+                            _Traer_Schema As Boolean,
+                            _MostrarError As Boolean) As DataSet
+
+        Try
+
+            Sb_Abrir_Conexion(_Cn, _MostrarError)
+
+            _Error = String.Empty
+
+            Dim _SqlDa As New SqlDataAdapter
+            Dim _DataSt As New DataSet
+
+            _SqlDa = New SqlDataAdapter(Consulta_sql, _Cn)
+            _SqlDa.SelectCommand.CommandTimeout = 8000
+
+            If _Traer_Schema Then _SqlDa.MissingSchemaAction = MissingSchemaAction.AddWithKey
+
+            _SqlDa.Fill(_DataSt)
+
+            For Each Tbl As DataTable In _DataSt.Tables
+                For Each col As DataColumn In Tbl.Columns
+                    col.[ReadOnly] = False
+                Next
+            Next
+
+            Sb_Cerrar_Conexion(_Cn)
+
+            Return _DataSt
+            ' errores
+        Catch ex As Exception
+            _Error = ex.Message.ToString
+            If _MostrarError Then
+                MsgBox(ex.Message.ToString)
+            End If
+        End Try
+        Return Nothing
+
+    End Function
+
     Function Fx_Extrae_Archivo_desde_BD(_Tabla As String,
                                         _Campo As String,
                                         _Condicion As String,
@@ -288,7 +328,7 @@ Public Class Class_SQL
                 ' los documentos, filtrándolo mediante su
                 ' correspondiente campo identificador.
                 '
-                cmd.CommandText = "SELECT " & _Campo & " From " & _Tabla & " WHERE " & _Condicion
+                cmd.CommandText = "SELECT " & _Campo & " From " & _Tabla & " WITH (NOLOCK) WHERE " & _Condicion
                 ' Abrimos la conexión.
                 cn.Open()
                 ' Creamos un DataReader.
@@ -393,7 +433,7 @@ Public Class Class_SQL
         End Try
     End Sub
 
-    Function Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql As String) As Boolean
+    Function Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql As String, Optional _Mostrar_Error As Boolean = True) As Boolean
 
         Dim myTrans As SqlClient.SqlTransaction
         Dim Comando As SqlClient.SqlCommand
@@ -404,7 +444,7 @@ Public Class Class_SQL
         Try
 
 
-            Sb_Abrir_Conexion(_Cn)
+            Sb_Abrir_Conexion(_Cn, _Mostrar_Error)
             myTrans = _Cn.BeginTransaction()
 
 
@@ -464,11 +504,11 @@ Public Class Class_SQL
             End If
 
 
-            Dim _Sql As String = "SELECT TOP (1) " & _Campo & " AS CAMPO FROM " & _Tabla & vbCrLf &
+            Dim _Sql As String = "SELECT TOP (1) " & _Campo & " AS CAMPO FROM " & _Tabla & " WITH (NOLOCK) " & vbCrLf &
                                  "Where 1 > 0" & _Condicion
 
 
-            Dim _Tbl As DataTable = Fx_Get_Tablas(_Sql, _MostrarError)
+            Dim _Tbl As DataTable = Fx_Get_DataTable(_Sql, _MostrarError)
 
             Dim cuenta As Long = _Tbl.Rows.Count
 
@@ -506,7 +546,7 @@ Public Class Class_SQL
 
         Catch ex As Exception
 
-            _Error = String.Empty
+            _Error = ex.Message
 
             If _MostrarError Then
                 MsgBox(ex.Message, MsgBoxStyle.Critical, "Error!!")
@@ -529,15 +569,42 @@ Public Class Class_SQL
     End Function
 
     Function Fx_Cuenta_Registros(_Tabla As String,
-                                 Optional _Condicion As String = "") As Double
+                                 Optional _Condicion As String = "",
+                                 Optional _Mostrar_Mensaje As Boolean = True) As Double
 
         If Not String.IsNullOrEmpty(_Condicion) Then
             _Condicion = vbCrLf & "And " & _Condicion
         End If
 
-        Dim _Sql As String = "Select Count(*) As Cuenta From " & _Tabla & " Where 1 > 0 " & _Condicion
+        Dim _Sql As String = "Select Count(*) As Cuenta From " & _Tabla & " WITH (NOLOCK) Where 1 > 0 " & _Condicion
 
-        Dim _RowTabpre As DataRow = Fx_Get_DataRow(_Sql)
+        Dim _RowTabpre As DataRow = Fx_Get_DataRow(_Sql, _Mostrar_Mensaje)
+
+        Dim _Cuenta As Double
+
+        If (_RowTabpre Is Nothing) Then
+            _Cuenta = 0
+        Else
+            _Cuenta = _RowTabpre.Item("Cuenta")
+        End If
+
+        Return _Cuenta
+
+    End Function
+
+    Function Fx_Cuenta_Registros2(_Tabla As String, _Condicion As String) As Double
+
+        If Not String.IsNullOrEmpty(_Condicion) Then
+            _Condicion = vbCrLf & "And " & _Condicion
+        End If
+
+        Dim _Sql As String = "Select Count(*) As Cuenta From " & _Tabla & " WITH (NOLOCK) Where 1 > 0 " & _Condicion
+
+        Dim _RowTabpre As DataRow = Fx_Get_DataRow(_Sql, False)
+
+        If Not String.IsNullOrWhiteSpace(_Error) Then
+            Throw New System.Exception(_Error)
+        End If
 
         Dim _Cuenta As Double
 
@@ -644,7 +711,7 @@ Public Class Class_SQL
 
                 If _Insertar_dato Then
 
-                    Consulta_sql = "INSERT INTO " & _Global_BaseBk & "Zw_Tmp_Prm_Informes (Funcionario,Informe,Campo,Tipo,Valor,Grupo,NombreEquipo,Modalidad) VALUES" & Space(1) &
+                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Tmp_Prm_Informes (Funcionario,Informe,Campo,Tipo,Valor,Grupo,NombreEquipo,Modalidad) VALUES" & Space(1) &
                           "('" & _Funcionario & "','" & _Informe & "','" & _Campo & "','" & Replace(_Tipo.ToString, "_", "") & "'," &
                           "'" & _Valor & "','" & _Grupo & "','" & _NombreEquipo & "','" & _Modalidad & "')"
                     Ej_consulta_IDU(Consulta_sql, False)
@@ -934,9 +1001,12 @@ Public Class Class_SQL
 
     End Sub
 
-    Function Fx_Existe_Tabla(_Tabla As String) As Boolean
+    Function Fx_Existe_Tabla(_Tabla As String, Optional _Mostrar_Mensaje As Boolean = True) As Boolean
 
         Dim _ConsultaSql As String
+
+        _Tabla = _Tabla.Replace("[", "")
+        _Tabla = _Tabla.Replace("]", "")
 
         If _Tabla.Contains(_Global_BaseBk) Then
 
@@ -950,7 +1020,7 @@ Public Class Class_SQL
 
         End If
 
-        Dim _Tbl As DataTable = Fx_Get_Tablas(_ConsultaSql)
+        Dim _Tbl As DataTable = Fx_Get_DataTable(_ConsultaSql, _Mostrar_Mensaje)
 
         Return _Tbl.Rows.Count
 
@@ -972,7 +1042,7 @@ Public Class Class_SQL
 
         End If
 
-        Dim _Tbl As DataTable = Fx_Get_Tablas(_ConsultaSql)
+        Dim _Tbl As DataTable = Fx_Get_DataTable(_ConsultaSql)
 
         Return _Tbl.Rows.Count
 
@@ -996,7 +1066,7 @@ Public Class Class_SQL
 
         End If
 
-        Dim _Tbl As DataTable = Fx_Get_Tablas(_ConsultaSql)
+        Dim _Tbl As DataTable = Fx_Get_DataTable(_ConsultaSql)
 
         Return CBool(_Tbl.Rows.Count)
 
@@ -1020,7 +1090,7 @@ Public Class Class_SQL
 
         End If
 
-        Dim _Tbl As DataTable = Fx_Get_Tablas(_ConsultaSql)
+        Dim _Tbl As DataTable = Fx_Get_DataTable(_ConsultaSql)
 
         Return CBool(_Tbl.Rows.Count)
 

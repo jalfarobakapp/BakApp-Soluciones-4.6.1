@@ -111,7 +111,7 @@ Public Class Frm_Pagos_Generales
         _FechaDelServidor = FormatDateTime(FechaDelServidor(), DateFormat.ShortDate)
 
         Consulta_sql = "Select KOMO,VAMO,NOKOMO From MAEMO Where FEMO = '" & Format(_FechaDelServidor, "yyyyMMdd") & "' ORDER BY IDMAEMO "
-        Dim _Tbl_Monedas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Monedas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Ct = 0
         Lbl_Estatus.Text = "Indicadores: "
@@ -169,7 +169,7 @@ Public Class Frm_Pagos_Generales
 
         End If
 
-        _Tbl_Encabezado = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Encabezado = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Encabezado
 
@@ -1915,7 +1915,7 @@ Public Class Frm_Pagos_Generales
         _Tbl_Estado_Cuenta2 = _Tbl_Estado_Cuenta.Copy()
         _Tbl_Maedpce2 = _Tbl_Maedpce.Copy()
 
-        Consulta_sql = "Select * From CONFIEST Where MODALIDAD = '  '"
+        Consulta_sql = "Select * From CONFIEST WITH (NOLOCK) Where MODALIDAD = '  '"
         Dim _Row_Confiest As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Dim _Cuotacomer As Boolean = _Row_Confiest.Item("CUOTACOMER")

@@ -62,26 +62,28 @@ Public Class Modulo_Ventas
 
             End If
 
-            If Fx_Revisar_Taza_Cambio(_Fm_Menu_Padre) Then
+            Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(_Fm_Menu_Padre)
 
-                Dim _Koen_Xdefecto = _Global_Row_Configuracion_Estacion.Item("Vnta_EntidadXdefecto")
-                Dim _Suen_Xdefecto = _Global_Row_Configuracion_Estacion.Item("Vnta_SucEntXdefecto")
+            If Not _Msj_Tsc.EsCorrecto Then
+                Return
+            End If
 
-                If String.IsNullOrEmpty(_Koen_Xdefecto.ToString.Trim) Then
+            Dim _Koen_Xdefecto = _Global_Row_Configuracion_Estacion.Item("Vnta_EntidadXdefecto")
+            Dim _Suen_Xdefecto = _Global_Row_Configuracion_Estacion.Item("Vnta_SucEntXdefecto")
 
-                    MessageBoxEx.Show(_Fm_Menu_Padre, "Falta la entidad por defecto en esta modalidad: " & Modalidad, "Validación",
+            If String.IsNullOrEmpty(_Koen_Xdefecto.ToString.Trim) Then
+
+                MessageBoxEx.Show(_Fm_Menu_Padre, "Falta la entidad por defecto en esta modalidad: " & Modalidad, "Validación",
                                       MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                    Return
-
-                End If
-
-                Dim Fm_Post As New Frm_Formulario_Documento("BLV", csGlobales.Enum_Tipo_Documento.Venta, True)
-                If Not Fm_Post.Pro_No_puede_Acceder_Al_Documento Then
-                    Fm_Post.ShowDialog(Me)
-                End If
-                Fm_Post.Dispose()
+                Return
 
             End If
+
+            Dim Fm_Post As New Frm_Formulario_Documento("BLV", csGlobales.Enum_Tipo_Documento.Venta, True)
+            If Not Fm_Post.Pro_No_puede_Acceder_Al_Documento Then
+                Fm_Post.ShowDialog(Me)
+            End If
+            Fm_Post.Dispose()
 
         End If
 
@@ -103,62 +105,64 @@ Public Class Modulo_Ventas
 
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Pcli0001") Then
 
-            If Fx_Revisar_Taza_Cambio(_Fm_Menu_Padre, FechaDelServidor) Then
+            Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(_Fm_Menu_Padre)
 
-                Dim _Directorio_GenDTE As String = _Global_Row_EstacionBk.Item("Directorio_GenDTE")
-                Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+            If Not _Msj_Tsc.EsCorrecto Then
+                Return
+            End If
 
-                If Fx_Datos_Directorio_GenDTE(_Directorio_GenDTE, _NombreEquipo) Then
+            Dim _Directorio_GenDTE As String = _Global_Row_EstacionBk.Item("Directorio_GenDTE")
+            Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
 
-                    Dim _TblFormato_Mod As DataTable
+            If Fx_Datos_Directorio_GenDTE(_Directorio_GenDTE, _NombreEquipo) Then
 
-                    Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad" & vbCrLf &
-                                   "Where Modalidad = '" & Modalidad & "' And TipoDoc In ('BLV','FCV')"
-                    _TblFormato_Mod = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblFormato_Mod As DataTable
 
-                    Dim _Msg = String.Empty
+                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad" & vbCrLf &
+                               "Where Modalidad = '" & Modalidad & "' And TipoDoc In ('BLV','FCV')"
+                _TblFormato_Mod = _Sql.Fx_Get_DataTable(Consulta_sql)
 
-                    For Each _Fila As DataRow In _TblFormato_Mod.Rows
+                Dim _Msg = String.Empty
 
-                        Dim _TipoDoc = _Fila.Item("TipoDoc")
-                        Dim _Guardar_PDF_Auto As Boolean = _Fila.Item("Guardar_PDF_Auto")
+                For Each _Fila As DataRow In _TblFormato_Mod.Rows
 
-                        If _Guardar_PDF_Auto Then
+                    Dim _TipoDoc = _Fila.Item("TipoDoc")
+                    Dim _Guardar_PDF_Auto As Boolean = _Fila.Item("Guardar_PDF_Auto")
 
-                            Dim _Ruta_PDF = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Estaciones_Ruta_PDF", "Ruta_PDF",
-                                          "NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "' And Tido = '" & _TipoDoc & "'")
+                    If _Guardar_PDF_Auto Then
 
-                            If String.IsNullOrEmpty(_Ruta_PDF) Or Not Directory.Exists(_Ruta_PDF) Then
-                                If Not String.IsNullOrEmpty(_Msg) Then _Msg += " y "
-                                _Msg += _Sql.Fx_Trae_Dato("TABTIDO", "NOTIDO", "TIDO = '" & _TipoDoc & "'").ToString.Trim
-                            End If
+                        Dim _Ruta_PDF = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Estaciones_Ruta_PDF", "Ruta_PDF",
+                                      "NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "' And Tido = '" & _TipoDoc & "'")
 
+                        If String.IsNullOrEmpty(_Ruta_PDF) Or Not Directory.Exists(_Ruta_PDF) Then
+                            If Not String.IsNullOrEmpty(_Msg) Then _Msg += " y "
+                            _Msg += _Sql.Fx_Trae_Dato("TABTIDO", "NOTIDO", "TIDO = '" & _TipoDoc & "'").ToString.Trim
                         End If
-
-
-                    Next
-
-                    If Not String.IsNullOrEmpty(_Msg) Then
-
-                        MessageBoxEx.Show(Me, "Esta configurada la grabación de PDF automático para esta modalidad," & vbCrLf &
-                              "sin embargo falta la configuración de la carpeta de salida para grabar estos PDF." & vbCrLf & vbCrLf &
-                              "Para configurar esta operación debe hacer lo siguiente:" & vbCrLf & vbCrLf &
-                              "-> Clic en OK o cerrar" & vbCrLf &
-                              "-> En el formulario de pagos a documentos presionar el botón de configuración (computador con engranajes)" & vbCrLf &
-                              "-> Directorio de salida para PDF automático" & vbCrLf &
-                              "-> Configurar " & _Msg, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
 
                     End If
 
-                    Dim _Aplica_Ley_20956 As Boolean = _Sql.Fx_Exite_Campo("MAEDPCE", "LEY20956")
 
-                    Dim Fm As New Frm_Pagos_Documentos
-                    Fm.Aplica_Ley_20956 = _Aplica_Ley_20956
-                    Fm.MinimizeBox = False
-                    Fm.ShowDialog(Me)
-                    Fm.Dispose()
+                Next
+
+                If Not String.IsNullOrEmpty(_Msg) Then
+
+                    MessageBoxEx.Show(Me, "Esta configurada la grabación de PDF automático para esta modalidad," & vbCrLf &
+                          "sin embargo falta la configuración de la carpeta de salida para grabar estos PDF." & vbCrLf & vbCrLf &
+                          "Para configurar esta operación debe hacer lo siguiente:" & vbCrLf & vbCrLf &
+                          "-> Clic en OK o cerrar" & vbCrLf &
+                          "-> En el formulario de pagos a documentos presionar el botón de configuración (computador con engranajes)" & vbCrLf &
+                          "-> Directorio de salida para PDF automático" & vbCrLf &
+                          "-> Configurar " & _Msg, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
 
                 End If
+
+                Dim _Aplica_Ley_20956 As Boolean = _Sql.Fx_Exite_Campo("MAEDPCE", "LEY20956")
+
+                Dim Fm As New Frm_Pagos_Documentos
+                Fm.Aplica_Ley_20956 = _Aplica_Ley_20956
+                Fm.MinimizeBox = False
+                Fm.ShowDialog(Me)
+                Fm.Dispose()
 
             End If
 
@@ -207,23 +211,34 @@ Public Class Modulo_Ventas
 
     Private Sub Btn_Documentos_Venta_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Documentos_Venta.Click
 
-        If Fx_Revisar_Taza_Cambio(_Fm_Menu_Padre) Then
-            Dim NewPanel As Modulo_Documentos_Venta = Nothing
-            NewPanel = New Modulo_Documentos_Venta(_Fm_Menu_Padre)
-            _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
+        Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(_Fm_Menu_Padre)
+
+        If Not _Msj_Tsc.EsCorrecto Then
+            Return
         End If
+
+        Dim NewPanel As Modulo_Documentos_Venta = Nothing
+        NewPanel = New Modulo_Documentos_Venta(_Fm_Menu_Padre)
+        _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
 
     End Sub
 
     Private Sub Btn_Pagos_Generales_Cliente_Click(sender As Object, e As EventArgs) Handles Btn_Pagos_Generales_Cliente.Click
 
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Ppro0011") Then
-            If Fx_Revisar_Taza_Cambio(_Fm_Menu_Padre,, True) Then
-                Dim Fm As New Frm_Pagos_Generales(Frm_Pagos_Generales.Enum_Tipo_Pago.Clientes)
-                Fm.ShowDialog(Me)
-                Fm.Dispose()
+
+            Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(_Fm_Menu_Padre)
+
+            If Not _Msj_Tsc.EsCorrecto Then
+                Return
             End If
+
+            Dim Fm As New Frm_Pagos_Generales(Frm_Pagos_Generales.Enum_Tipo_Pago.Clientes)
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
+
         End If
 
     End Sub
+
 End Class

@@ -37,7 +37,7 @@ Public Class Frm_Trazabilidad_documento
         treeGX1.Refresh()
 
         Consulta_sql = "Select top 1 * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Origen
-        _Tbl_Documento = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Documento = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Sb_Crear_Arbol_Origens()
 
@@ -79,7 +79,7 @@ Public Class Frm_Trazabilidad_documento
 
             ' CREA ARBOL CON DOCUMENTOS EXTERNOS
             Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros("MAEDDO",
-            "IDRST IN  (SELECT IDMAEDDO FROM MAEDDO WHERE IDMAEEDO = " & _Idmaeedo_Origen & ") AND ARCHIRST = 'MAEDDO' ")
+            "IDRST IN  (SELECT IDMAEDDO FROM MAEDDO WITH (NOLOCK) WHERE IDMAEEDO = " & _Idmaeedo_Origen & ") AND ARCHIRST = 'MAEDDO' ")
 
             If CBool(_Reg) Then
                 Sb_Crear_Nodos_Hijos_Documentos(_Tbl_Documento.Rows(0), _Nodo, Traza.Posterior, "DOCUMENTOS POSTERIORES", , , False)
@@ -89,7 +89,7 @@ Public Class Frm_Trazabilidad_documento
                            "From MEVENTO" & vbCrLf &
                            "Where ARCHIRVE = 'MAEEDO' And IDRVE = " & _Idmaeedo_Origen & " And ARCHIRSE = 'MAEEDO' And IDRSE <> 0"
 
-            Dim _TblMevento As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblMevento As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If CBool(_TblMevento.Rows.Count) Then
 
@@ -127,7 +127,7 @@ Public Class Frm_Trazabilidad_documento
                                "FROM MAEDPCD MD WITH ( NOLOCK ) INNER JOIN MAEDPCE MC ON MD.IDMAEDPCE = MC.IDMAEDPCE" & vbCrLf &
                                "WHERE IDRST = " & _Idmaeedo_Origen & " AND ARCHIRST = 'MAEEDO'"
 
-                Dim _TblPago As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblPago As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 If CBool(_TblPago.Rows.Count) Then
 
@@ -212,9 +212,9 @@ Public Class Frm_Trazabilidad_documento
 
         If _Traza = Traza.Origen Then
             If _Desde_Detalle Then
-                Consulta_sql = "Select * From MAEDDO Where IDMAEDDO = " & _Idmaeddo_Origen
+                Consulta_sql = "Select * From MAEDDO WITH (NOLOCK) Where IDMAEDDO = " & _Idmaeddo_Origen
             Else
-                Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Idmaeedo
+                Consulta_sql = "Select * From MAEDDO WITH (NOLOCK) Where IDMAEEDO = " & _Idmaeedo
             End If
         End If
 
@@ -223,9 +223,9 @@ Public Class Frm_Trazabilidad_documento
         If _Traza = Traza.Posterior Then
             If _Desde_Detalle Then
                 Dim _Idmaeddo As Integer = _Fila.Item("IDMAEDDO")
-                Consulta_sql = "Select * From MAEDDO Where IDMAEDDO = " & _Idmaeddo
+                Consulta_sql = "Select * From MAEDDO WITH (NOLOCK) Where IDMAEDDO = " & _Idmaeddo
             Else
-                Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Idmaeedo
+                Consulta_sql = "Select * From MAEDDO WITH (NOLOCK) Where IDMAEEDO = " & _Idmaeedo
             End If
         End If
 
@@ -233,13 +233,13 @@ Public Class Frm_Trazabilidad_documento
             If _Desde_Detalle Then
                 Return
                 Dim _Idmaeddo As Integer = _Fila.Item("IDMAEDDO")
-                Consulta_sql = "Select * From MAEDDO Where IDMAEDDO = " & _Idmaeddo
+                Consulta_sql = "Select * From MAEDDO WITH (NOLOCK) Where IDMAEDDO = " & _Idmaeddo
             Else
-                Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Idmaeedo & " And CAPRODCO > 0"
+                Consulta_sql = "Select * From MAEDDO WITH (NOLOCK) Where IDMAEEDO = " & _Idmaeedo & " And CAPRODCO > 0"
             End If
         End If
 
-        Dim _TblDetalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblDetalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Sb_Crear_Nodos_hijos_detalle_documento(_TblDetalle, _Nodo, _Traza) ' EN ESTA FUNCION PONER UNA OPCION PARA DOCUMENTOS PRINCIPALES
 
@@ -253,7 +253,7 @@ Public Class Frm_Trazabilidad_documento
         Dim _Nodo As DevComponents.Tree.Node = New DevComponents.Tree.Node
 
         Consulta_sql = "Select top 1 * From MAEEDO Where IDMAEEDO = " & _Idrse
-        Dim _TblDocReferencia As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblDocReferencia As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If _TblDocReferencia.Rows.Count Then
 
@@ -277,8 +277,8 @@ Public Class Frm_Trazabilidad_documento
 
             AddHandler _Nodo.NodeDoubleClick, AddressOf Sb_Node_Documento_DoubleClick
 
-            Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Idrse
-            Dim _TblDetalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Consulta_sql = "Select * From MAEDDO WITH (NOLOCK) Where IDMAEEDO = " & _Idrse
+            Dim _TblDetalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
             Sb_Crear_Nodos_hijos_detalle_documento(_TblDetalle, _Nodo, Traza.Origen) ' EN ESTA FUNCION PONER UNA OPCION PARA DOCUMENTOS PRINCIPALES
 
         End If
@@ -366,7 +366,7 @@ Public Class Frm_Trazabilidad_documento
                        "FROM TABENDP TD WHERE TD.KOENDP =  MDC.EMDP ),'') AS BANCO" & vbCrLf &
                        "FROM MAEDPCE MDC WHERE IDMAEDPCE = " & _Idmaedpce
 
-        Dim _TblDocPago As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblDocPago As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblDocPago.Rows.Count) Then
             Sb_Crear_Nodos_Hijos_Pagos_Documentos(_TblDocPago.Rows(0), _Nodo)
@@ -434,7 +434,7 @@ Public Class Frm_Trazabilidad_documento
                        "FROM MAEDPCD LEFT OUTER JOIN MAEEDO ON MAEEDO.IDMAEEDO=MAEDPCD.IDRST AND MAEDPCD.ARCHIRST ='MAEEDO'" & vbCrLf &
                        "WHERE MAEDPCD.IDMAEDPCE= " & _Idmaedpce & "  ORDER BY IDMAEDPCD  OPTION ( FAST 20 )"
 
-        Dim _TblDocPagados As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblDocPagados As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblDocPagados.Rows.Count) Then
             For Each _Documento As DataRow In _TblDocPagados.Rows
@@ -570,9 +570,9 @@ Public Class Frm_Trazabilidad_documento
 
             If _Traza = Traza.Origen Then
                 If CBool(_Idrst) Then
-                    Consulta_sql = "Select * From MAEDDO Where IDMAEDDO = " & _Idrst
+                    Consulta_sql = "Select * From MAEDDO WITH (NOLOCK) Where IDMAEDDO = " & _Idrst
                 Else
-                    Consulta_sql = "Select * From MAEDDO Where IDMAEDDO = " & _Idmaeddo
+                    Consulta_sql = "Select * From MAEDDO WITH (NOLOCK) Where IDMAEDDO = " & _Idmaeddo
                     _SinOrigen = True
                 End If
             End If
@@ -587,7 +587,7 @@ Public Class Frm_Trazabilidad_documento
                                "Where ARCHIRST = 'MAEDDO' And IDRST = " & _Idmaeddo
             End If
 
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If CBool(_Tbl.Rows.Count) Then
 

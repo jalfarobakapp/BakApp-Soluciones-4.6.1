@@ -95,7 +95,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Crear_Sector
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Det" & vbCrLf &
                            "Where Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector & "'"
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If _Accion = _Enum_Accion.Nuevo Then
                 If CBool(_Tbl.Rows.Count) Then

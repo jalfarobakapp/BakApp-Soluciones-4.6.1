@@ -83,7 +83,7 @@ Public Class Clase_Crear_Documento_Htm
             Documento_Htm = Replace(Documento_Htm, "#Rut_Entidad_fisica#", _Rut)
 
             Consulta_sql = "Select Distinct TIDOPA+'-'+NUDOPA As Codigo,'' As Descripcion From MAEDDO Where IDMAEEDO = " & _IdMaeedo
-            Dim _TblDocPrevios As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblDocPrevios As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
             Dim _Doc_Previos = String.Empty
 
             If CBool(_TblDocPrevios.Rows.Count) Then

@@ -76,7 +76,7 @@ Public Class Frm_Seleccionar_Emisor_Doc_Pago
 
         With Grilla
 
-            .DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            .DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             OcultarEncabezadoGrilla(Grilla, False)
 

@@ -94,7 +94,7 @@ Public Class Cl_PPPPr
         Dim _Sttr1, _Sttr2 As Double      ' STOCK EN TRANSITO
 
         Consulta_sql = "Select * From TABBO"
-        Dim _TblBodegas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblBodegas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _Fecha_Max = DateAdd(DateInterval.Day, -1, _Fechinippp)
 
@@ -301,7 +301,7 @@ Public Class Cl_PPPPr
                         SELECT * FROM #DDO ORDER BY FEEMLI,HORAGRAB,IDMAEDDO,LILG,TIDODCR 
                         DROP TABLE #DDO"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Return _Tbl
 
@@ -330,7 +330,7 @@ Public Class Cl_PPPPr
             _SQLquery = Replace(_SQLquery, "#Fecha#", Format(_Fecha, "yyyyMMdd"))
             _SQLquery = Replace(_SQLquery, "Zw_TblStockConsolid", "#Zw_TblStockConsolid")
 
-            Dim Tbl As DataTable = _Sql.Fx_Get_Tablas(_SQLquery)
+            Dim Tbl As DataTable = _Sql.Fx_Get_DataTable(_SQLquery)
 
             If Tbl.Rows.Count > 0 Then
                 Stock_(0) = Math.Round(Tbl.Rows(0).Item("CantidadUd1"), 5)

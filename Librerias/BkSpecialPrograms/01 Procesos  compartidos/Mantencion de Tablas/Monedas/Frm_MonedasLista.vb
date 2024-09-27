@@ -30,7 +30,7 @@
     Sub Sb_Actualizar_Grilla_Monedas()
 
         Consulta_sql = "Select *,Case TIMO When 'N' Then 'Nacional' When 'E' Then 'Externa' Else '??' End As Tipo From TABMO"
-        _Tabmo = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tabmo = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Monedas
 

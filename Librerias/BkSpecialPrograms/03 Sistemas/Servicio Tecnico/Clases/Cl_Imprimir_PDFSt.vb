@@ -174,7 +174,7 @@ Public Class Cl_Imprimir_PDFSt
                            "Left Outer Join TABFU On KOFU = KOFUDO" & vbCrLf &
                            "Left Join MAEEDOOB OBS On OBS.IDMAEEDO = EDO.IDMAEEDO" & vbCrLf &
                            "WHERE POTL.NUMOT='" & _Nro_Ot & "' AND POTL.EMPRESA = '" & ModEmpresa & "'"
-            Dim _TblDocRela As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblDocRela As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
             Dim _Row_DocRela As DataRow
 
             If CBool(_TblDocRela.Rows.Count) Then

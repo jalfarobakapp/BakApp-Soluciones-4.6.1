@@ -24,7 +24,7 @@ Public Class Frm_Conexiones_Prestashop
     Sub Sb_Actualizar_Grilla()
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_PrestaShop"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 
@@ -175,7 +175,7 @@ Public Class Frm_Conexiones_Prestashop
         If String.IsNullOrEmpty(_Error) Then
 
             Consulta_sql = "Select Id_product From " & _Global_BaseBk & "Zw_Prod_PrestaShop"
-            Dim _Tbl_Prod_PrestaShop As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Prod_PrestaShop As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Filtro_id_product As String = Generar_Filtro_IN(_Tbl_Prod_PrestaShop, "", "id_product", True, False, "")
 

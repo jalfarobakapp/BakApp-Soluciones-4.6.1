@@ -32,9 +32,6 @@ Public Class Frm_MtCreaProd_01_IngBusqEspecial
             TxtDescripcion.ReadOnly = True
         End If
 
-        BtnAsociaciones_arbol.Visible = False
-
-        'AddHandler Grilla_Clasificaciones.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Grilla_Clasificaciones.MouseDown, AddressOf Sb_Grilla_MouseDown
 
     End Sub
@@ -48,7 +45,7 @@ Public Class Frm_MtCreaProd_01_IngBusqEspecial
                        "Where Codigo = '" & TxtCodigo.Text & "' And Producto = 0" & vbCrLf &
                        "And (Codigo_Nodo In (Select Codigo_Nodo From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Es_Seleccionable = 1)" & vbCrLf &
                        "Or Clas_unica = 1)"
-        Dim _TblClass As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblClass As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _SqlQuery = "Select *,Cast('' As Varchar(500)) As Full_Path,
                          Cast(Isnull((Select Top 1 Clas_Unica_X_Producto From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Z2 Where Z1.Codigo_Nodo = Z2.Codigo_Nodo ),0) As Bit) As Clas_Unica_X_Producto" & vbCrLf &
@@ -81,7 +78,7 @@ Public Class Frm_MtCreaProd_01_IngBusqEspecial
                         "Order by Clas_unica,Full_Path" & vbCrLf &
                         "Drop Table #Paso"
 
-        _TblClass = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblClass = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Clasificaciones
 
@@ -126,14 +123,14 @@ Public Class Frm_MtCreaProd_01_IngBusqEspecial
         Dim _CodPadre As String
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _Codigo_Nodo
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _CodPadre = _Tbl.Rows(0).Item("Identificacdor_NodoPadre")
 
         Do While (_CodPadre <> 0)
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _CodPadre
-            _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             _CodPadre = _Tbl.Rows(0).Item("Identificacdor_NodoPadre")
             _Full = "\" & _Tbl.Rows(0).Item("Descripcion") & _Full
@@ -146,57 +143,19 @@ Public Class Frm_MtCreaProd_01_IngBusqEspecial
 
     Private Sub BtnAsociaciones_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnAsociaciones.Click
 
+        Me.Cursor = Cursors.WaitCursor
+        Me.Enabled = False
 
         Clipboard.SetText(TxtCodigo.Text)
+
         Dim Fm As New Frm_Arbol_Lista(False)
         Fm.Codigo_Heredado = TxtCodigo.Text
         Fm.ModoCheckButton = True
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
+        Me.Cursor = Cursors.Default
         Sb_Actualizar_Grilla()
-
-
-        'Dim _Aceptar As Boolean
-
-        'Try
-        '    Me.Enabled = False
-
-        '    If Fx_Tiene_Permiso(Me, "Tbl00002") Then
-
-        '        Dim _Tbl As DataTable
-
-        '        Consulta_sql = "Select Cast(1 As Bit) As Chk, Codigo_Nodo From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
-        '                       "Where Codigo = '" & TxtCodigo.Text & "' And Producto = 0"
-        '        _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-        '        Dim Fm As New Frm_Arbol_Asociacion_05_Busqueda(
-        '        Frm_Arbol_Asociacion_05_Busqueda.Enum_Tipo_De_Carpeta.Clas_Filtro_Hijos, True) 'Frm_Arbol_Asociacion_03_buscar("")
-        '        'Fm.Pro_Seleccion_Solo_Seleccionables = True
-        '        Fm.Pro_Seleccionar_Todo = False
-        '        Fm.Pro_Tbl_Nodos_Seleccionados = _Tbl
-        '        Fm.Text = "Busqueda de carpetas"
-
-        '        Fm.ShowDialog(Me)
-        '        Dim _Row_Nodo_Seleccionado As DataRow = Fm.Pro_Row_Nodo_Seleccionado ' = Fm._Tbl_Nodo_Seleccionado
-        '        Dim _Tbl_Nodos_Seleccionados As DataTable = Fm.Pro_Tbl_Nodos_Seleccionados
-        '        _Aceptar = Fm.Pro_Aceptar
-        '        Fm.Dispose()
-
-        '        If _Aceptar Then
-
-        '            Sb_Grabar_Arbol(_Tbl_Nodos_Seleccionados)
-
-        '        End If
-
-        '    End If
-
-        'Catch ex As Exception
-
-        'Finally
-        '    If _Aceptar Then Sb_Actualizar_Grilla()
-        '    Me.Enabled = True
-        'End Try
 
     End Sub
 
@@ -215,7 +174,7 @@ Public Class Frm_MtCreaProd_01_IngBusqEspecial
             _Tbl_Nodos_Seleccionados = Nothing
         Else
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Codigo_Nodo In " & _Nodos
-            _Tbl_Nodos_Seleccionados = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Nodos_Seleccionados = _Sql.Fx_Get_DataTable(Consulta_sql)
         End If
 
 
@@ -228,7 +187,7 @@ Public Class Frm_MtCreaProd_01_IngBusqEspecial
         Else
 
             Consulta_sql = "Select KOPR As Codigo, NOKOPR as Descripcion From MAEPR Where KOPR = '" & TxtCodigo.Text & "'"
-            Dim _Tbl_Producto As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Producto As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Clas_Nodo As New Clas_Arbol_Asociaciones(Me)
 
@@ -285,63 +244,27 @@ Public Class Frm_MtCreaProd_01_IngBusqEspecial
 
     End Sub
 
-
-
-    Private Sub BtnAsociaciones_arbol_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnAsociaciones_arbol.Click
-
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
-                       "Where Codigo = '" & TxtCodigo.Text & "' And Producto = 0" & vbCrLf &
-                       "And Codigo_Nodo In" & Space(1) &
-                       "(Select Codigo_Nodo From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Es_Seleccionable = 1)"
-
-        Dim _TblNodos_Hijos_Asociados As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-        If _TblNodos_Hijos_Asociados.Rows.Count Then
-
-            Dim _Clas_Nodo As New Clas_Arbol_Asociaciones(Me)
-
-            'Consulta_sql = "Select Top 1 KOPR as Codigo From MAEPR Where KOPR = '" & TxtCodigo.Text & "'"
-            'Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-            Dim _Sql_Crear_Arbol = String.Empty
-
-            For Each _Fila As DataRow In _TblNodos_Hijos_Asociados.Rows
-
-                Dim _Codigo_Nodo = _Fila.Item("Codigo_Nodo")
-
-                _Sql_Crear_Arbol += "Delete BAKAPP_SG.dbo.Zw_Prod_Asociacion" & vbCrLf &
-                                    "Where Codigo = '" & TxtCodigo.Text & "'" & vbCrLf &
-                                    "And Codigo_Nodo In (Select Codigo_Nodo From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & Space(1) &
-                                    "Where Es_Seleccionable = 0) And Clas_unica = 0" & vbCrLf & vbCrLf
-
-                _Sql_Crear_Arbol += _Clas_Nodo.Fx_Crear_Arbol_de_productos(_Codigo_Nodo, _Codigo_Nodo) & vbCrLf
-
-            Next
-
-            Sb_Actualizar_Grilla()
-
-        End If
-    End Sub
-
     Private Sub Btn_VerArbol_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_VerArbol.Click
-
-        Consulta_sql = "Select Codigo_Nodo,Identificacdor_NodoPadre,Descripcion" & vbCrLf &
-                            "FROM " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
-                            "Where Codigo_Nodo in (Select Codigo_Nodo From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
-                            "Where Codigo = '" & TxtCodigo.Text & "' And Nodo_origen <> 0)"
-
 
         Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_Asociacion",
                                                     "Codigo = '" & TxtCodigo.Text & "' And Para_filtro = 1"))
 
         If _Reg Then
 
-            Dim Fm As New Frm_Arbol_Asociacion_01
-            Fm.Pro_CheckBoxes_Nodos = False
-            Fm.Pro_Codigo_Producto = Trim(TxtCodigo.Text)
-            Fm.Chk_Ver_Clas_Unicas.Checked = True
+            'Dim Fm As New Frm_Arbol_Asociacion_01
+            'Fm.Pro_CheckBoxes_Nodos = False
+            'Fm.Pro_Codigo_Producto = Trim(TxtCodigo.Text)
+            'Fm.Chk_Ver_Clas_Unicas.Checked = True
+            'Fm.ShowDialog(Me)
+
+            Dim Fm As New Frm_Arbol_Lista(False)
+            Fm.Codigo_Heredado = TxtCodigo.Text
+            Fm.ModoCheckButton = True
+            Fm.MostrarClasProducto = True
             Fm.ShowDialog(Me)
-            Sb_Actualizar_Grilla()
+            Fm.Dispose()
+
+            'Sb_Actualizar_Grilla()
 
         Else
             Beep()
@@ -539,13 +462,15 @@ Public Class Frm_MtCreaProd_01_IngBusqEspecial
             Fm.ShowDialog(Me)
             Fm.Dispose()
             Me.Cursor = Cursors.Default
+
+            Sb_Actualizar_Grilla()
+
             'Clipboard.SetText(TxtCodigo.Text)
             'Dim Fm As New Frm_Arbol_Asociacion_02(False, 0, False, Frm_Arbol_Asociacion_02.Enum_Clasificacion.Unica, 0)
             'Fm.Pro_Identificador_NodoPadre = 0
             'Fm.Pro_Codigo_Heredado = TxtCodigo.Text
             'Fm.ShowDialog(Me)
             'Fm.Dispose()
-            Sb_Actualizar_Grilla()
 
         End If
 

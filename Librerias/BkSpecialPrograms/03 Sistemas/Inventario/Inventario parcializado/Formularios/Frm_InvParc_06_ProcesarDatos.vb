@@ -49,11 +49,11 @@ Public Class Frm_InvParc_06_ProcesarDatos
         End Get
     End Property
 
-    Public Sub New(ByVal Row_InvParcial_Inventarios As DataRow,
-                   ByVal Tbl_Productos As DataTable,
-                   ByVal Fecha_Ajuste As Date,
-                   ByVal Ajuste_PM As Boolean,
-                   ByVal Dejar_Doc_Final_Del_Dia As Boolean)
+    Public Sub New(Row_InvParcial_Inventarios As DataRow,
+                   Tbl_Productos As DataTable,
+                   Fecha_Ajuste As Date,
+                   Ajuste_PM As Boolean,
+                   Dejar_Doc_Final_Del_Dia As Boolean)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -69,7 +69,7 @@ Public Class Frm_InvParc_06_ProcesarDatos
 
     End Sub
 
-    Private Sub Frm_InvParc_06_ProcesarDatos_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_InvParc_06_ProcesarDatos_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         _Empresa = _Row_InvParcial_Inventarios.Item("Empresa")
         _Sucursal = _Row_InvParcial_Inventarios.Item("Sucursal")
@@ -86,8 +86,8 @@ Public Class Frm_InvParc_06_ProcesarDatos
 
     End Sub
 
-    Private Sub AddToLog(ByVal Accion As String,
-                         ByVal Descripcion As String)
+    Private Sub AddToLog(Accion As String,
+                         Descripcion As String)
         TxtLog.Text += DateTime.Now.ToString() & " - " & Accion & " (" & Descripcion & ")" & vbCrLf
         TxtLog.Select(TxtLog.Text.Length - 1, 0)
         TxtLog.ScrollToCaret()
@@ -181,7 +181,7 @@ Public Class Frm_InvParc_06_ProcesarDatos
 
             Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _IdMaeedo_GRI
 
-            Dim _TblDetalle_GRI As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblDetalle_GRI As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
             For Each _Fila As DataRow In _TblDetalle_GRI.Rows
@@ -190,7 +190,7 @@ Public Class Frm_InvParc_06_ProcesarDatos
                 Dim _Pm As Double = _Fila.Item("PPPRNERE1")
 
                 Consulta_sql = "Select top 1 * From MAEPR Where KOPR = '" & _Codigo & "'"
-                Dim _TblProducto As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblProducto As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 Dim _Rtu As Double = _TblProducto.Rows(0).Item("RLUD")
                 Dim _ListaCosto As String = Mid(_TblProducto.Rows(0).Item("LISCOSTO"), 6, 3)
@@ -251,7 +251,7 @@ Public Class Frm_InvParc_06_ProcesarDatos
     End Sub
 #End Region '
 
-    Function Z_Fx_Generar_Inventario(ByVal tb As DataTable)
+    Function Z_Fx_Generar_Inventario(tb As DataTable)
         Exit Function
         Dim myTrans As SqlClient.SqlTransaction
         Dim Comando As SqlClient.SqlCommand
@@ -281,7 +281,7 @@ Public Class Frm_InvParc_06_ProcesarDatos
                                "Order by Semilla"
                 Dim SQLGrilla = Consulta_sql
 
-                Tabla = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Tabla = _Sql.Fx_Get_DataTable(Consulta_sql)
                 tb = Tabla
                 'ProgressBar1.Style = ProgressBarStyle.Continuous
                 Progreso_Cont.Maximum = Tabla.Rows.Count
@@ -489,9 +489,8 @@ Public Class Frm_InvParc_06_ProcesarDatos
         GRI_Ajuste
     End Enum
 
-    Function Fx_Generar_Guia_De_Ajuste(ByVal _Tipo_Documento As Enum_Tido_Doc_Ajuste) As DataRow
+    Function Fx_Generar_Guia_De_Ajuste(_Tipo_Documento As Enum_Tido_Doc_Ajuste) As DataRow
 
-        Dim _New_Idmaeedo As Integer
         Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
         Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -524,17 +523,19 @@ Public Class Frm_InvParc_06_ProcesarDatos
                 _Observaciones = "Ajuste de Stock generado desde BakApp, Documento de ajuste definitivo. Ingreso de stock."
         End Select
 
+        Dim _Mensaje As LsValiciones.Mensajes
+
         Dim Fm As New Frm_Formulario_Documento(_Tido, _Doc, False, False, False,
                                                True, Chk_Dejar_Doc_Final_Del_Dia.Checked)
 
         Fm.Pro_RowEntidad = _Row_Entidad
         Fm.Sb_Crear_Documento_Interno_Con_Tabla(Me, _Tbl_Productos, DtFechaInv.Value,
                                                 "CodigoPr", _Campo_Cantidad, "CostoUnitUd1", _Observaciones, False, False)
-        _New_Idmaeedo = Fm.Fx_Grabar_Documento(False)
+        _Mensaje = Fm.Fx_Grabar_Documento(False)
         Fm.Dispose()
 
-        If CBool(_New_Idmaeedo) Then
-            Consulta_sql = "Select Top 1 * From MAEEDO Where IDMAEEDO = " & _New_Idmaeedo
+        If _Mensaje.EsCorrecto Then
+            Consulta_sql = "Select Top 1 * From MAEEDO Where IDMAEEDO = " & _Mensaje.Id
             Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
             Return _Row
         Else
@@ -543,20 +544,19 @@ Public Class Frm_InvParc_06_ProcesarDatos
 
     End Function
 
-    Function Generar_Documento_Ajuste(
-                           ByVal _TipoDoc As String,
-                           ByVal _Entidad_Doc As String,
-                           ByVal _EntidadSuc_Doc As String,
-                           ByVal _Nombre_Entidad As String,
-                           ByVal _Lista As String,
-                           ByVal FechaInv As Date,
-                           ByVal _Tbl_DetalleDoc As DataTable,
-                           ByVal Es_GRI_Ajuste_Definitivo As Boolean,
-                           ByVal Progreso_Porc As Object,
-                           ByVal Progreso_Cont As Object,
-                           ByVal _Observacion As String,
-                           ByVal _Empresa_Ajuste As String,
-                           ByVal _Sucursal_Ajuste As String)
+    Function Generar_Documento_Ajuste(_TipoDoc As String,
+                                      _Entidad_Doc As String,
+                                      _EntidadSuc_Doc As String,
+                                      _Nombre_Entidad As String,
+                                      _Lista As String,
+                                      FechaInv As Date,
+                                      _Tbl_DetalleDoc As DataTable,
+                                      Es_GRI_Ajuste_Definitivo As Boolean,
+                                      Progreso_Porc As Object,
+                                      Progreso_Cont As Object,
+                                      _Observacion As String,
+                                      _Empresa_Ajuste As String,
+                                      _Sucursal_Ajuste As String)
 
         Dim _FechaInv As String = Format(FechaInv, "yyyyMMdd")
         Dim Dt_Documento As New Ds_Matriz_Documentos 'DatosBakApp '("Pubs")
@@ -632,7 +632,7 @@ Public Class Frm_InvParc_06_ProcesarDatos
             Dim _Codigo As String = Fila.Item("CodigoPr")
 
             Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
-            Dim _RowProducto As DataRow = _Sql.Fx_Get_Tablas(Consulta_sql).Rows(0)
+            Dim _RowProducto As DataRow = _Sql.Fx_Get_DataTable(Consulta_sql).Rows(0)
 
             Dim _Rtu As String = _RowProducto.Item("RLUD")
 
@@ -790,7 +790,7 @@ Public Class Frm_InvParc_06_ProcesarDatos
                     NrNumeroDoco = _Sql.Fx_Trae_Dato("MAEEDO", "COALESCE(MAX(NUDO),'0000000000')", "TIDO = '" & _TipoDoc & "'")
 
                     Consulta_sql = "select dbo.ProxNumero('" & NrNumeroDoco & "') as Nro"
-                    Dim TblPaso = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim TblPaso = _Sql.Fx_Get_DataTable(Consulta_sql)
                     Dim Fila As DataRow = TblPaso.Rows(0)
 
                     NrNumeroDoco = Fila.Item("Nro").ToString
@@ -833,22 +833,20 @@ Public Class Frm_InvParc_06_ProcesarDatos
         'Dt_Documento.WriteXml(AppPath(True) & _TipoDoc & ".XML")
 
         Dt_Documento.WriteXml(AppPath() & "\Data\" & RutEmpresa & "\" & _TipoDoc & ".XML") 'Documento_vta
-        Dim New_Doc_Idmaeedo As Integer
 
-        'Try
         Dim New_Doc As New Clase_Crear_Documento()
-        Dim Documento As String
-
         Dim _Es_ValeTransitorio As Boolean = False
 
-        New_Doc_Idmaeedo = New_Doc.Fx_Crear_Documento(_TipoDoc,
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        _Mensaje = New_Doc.Fx_Crear_Documento(_TipoDoc,
                                                       NrNumeroDoco,
                                                       False,
                                                       True,
                                                       Dt_Documento,
                                                       True)
 
-        If CBool(New_Doc_Idmaeedo) Then
+        If _Mensaje.EsCorrecto Then
 
             If TipGrab = TipoGrabacion.Con_Numeración Then
                 Consulta_sql = "UPDATE CONFIEST SET " & _TipoDoc & " = dbo.ProxNumero('" & NrNumeroDoco &
@@ -857,37 +855,35 @@ Public Class Frm_InvParc_06_ProcesarDatos
                 _Sql.Ej_consulta_IDU(Consulta_sql)
             End If
 
-            Return New_Doc_Idmaeedo
-
         End If
 
-
+        Return _Mensaje
 
     End Function
 
     Function Traer_Producto_al_Detalle(
-                                        ByVal _New_Ds_Documento As DataSet,
-                                        ByVal _Codigo As String,
-                                        ByVal _Descripcion As String,
-                                        ByVal _Rtu As String,
-                                        ByVal _Cantidad As Double,
-                                        ByVal _CantidadUd1 As Double,
-                                        ByVal _CantidadUd2 As Double,
-                                        ByVal _Precio As Double,
-                                        ByVal _Iva As Double,
-                                        ByVal _Ila As Double,
-                                        ByVal _Prct As String,
-                                        ByVal _Tict As String,
-                                        ByVal _Tipr As String,
-                                        ByVal _EsNeto As Boolean,
-                                        ByVal _Tido As String,
-                                        ByVal _ListaPrecio As String,
-                                        ByVal _Empresa As String,
-                                        ByVal _Sucursal As String,
-                                        ByVal _Bodega As String,
-                                        ByVal _UdTrans As Integer,
-                                        ByVal _Ud1Linea As String,
-                                        ByVal _Ud2Linea As String)
+                                        _New_Ds_Documento As DataSet,
+                                        _Codigo As String,
+                                        _Descripcion As String,
+                                        _Rtu As String,
+                                        _Cantidad As Double,
+                                        _CantidadUd1 As Double,
+                                        _CantidadUd2 As Double,
+                                        _Precio As Double,
+                                        _Iva As Double,
+                                        _Ila As Double,
+                                        _Prct As String,
+                                        _Tict As String,
+                                        _Tipr As String,
+                                        _EsNeto As Boolean,
+                                        _Tido As String,
+                                        _ListaPrecio As String,
+                                        _Empresa As String,
+                                        _Sucursal As String,
+                                        _Bodega As String,
+                                        _UdTrans As Integer,
+                                        _Ud1Linea As String,
+                                        _Ud2Linea As String)
 
         Dim CodAlternativo As String = String.Empty
 
@@ -1052,11 +1048,11 @@ Public Class Frm_InvParc_06_ProcesarDatos
 
     End Function
 
-    Private Function Stock_Fi_A_Una_Fecha_X_Producto(ByVal _Codigo As String,
-                                                ByVal _Empresa As String,
-                                                ByVal _Sucursal As String,
-                                                ByVal _Bodega As String,
-                                                ByVal _Fecha As Date) As Double()
+    Private Function Stock_Fi_A_Una_Fecha_X_Producto(_Codigo As String,
+                                                _Empresa As String,
+                                                _Sucursal As String,
+                                                _Bodega As String,
+                                                _Fecha As Date) As Double()
 
         _Sql.Sb_Eliminar_Tabla_De_Paso("Zw_TblStockConsolid")
 
@@ -1067,7 +1063,7 @@ Public Class Frm_InvParc_06_ProcesarDatos
         Consulta_sql = Replace(Consulta_sql, "#@Codigo#", _Codigo)
         Consulta_sql = Replace(Consulta_sql, "#Fecha#", Format(_Fecha, "yyyyMMdd"))
 
-        Dim Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _Sql.Sb_Eliminar_Tabla_De_Paso("Zw_TblStockConsolid")
 
@@ -1085,7 +1081,7 @@ Public Class Frm_InvParc_06_ProcesarDatos
 
     End Function
 
-    Function Fx_Procesar_Ajustes(ByVal Tbl_Detalle_Aj As DataTable)
+    Function Fx_Procesar_Ajustes(Tbl_Detalle_Aj As DataTable)
 
         Try
 
@@ -1446,7 +1442,7 @@ Public Class Frm_InvParc_06_ProcesarDatos
         End Try
     End Function
 
-    Private Sub Frm_InvParc_06_ProcesarDatos_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_InvParc_06_ProcesarDatos_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If

@@ -37,6 +37,8 @@ Public Class Frm_10_Asis_Compra_Ult3OCCxProv
 
         Me._RowProveedor = _RowProveedor
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
 
     Private Sub Frm_10_Asis_Compra_Ult3OCCxProv_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -58,7 +60,7 @@ Public Class Frm_10_Asis_Compra_Ult3OCCxProv
         Btn_Procesar.Enabled = False
 
         Consulta_sql = "Select * From " & _Tabla_Paso
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ProgressBarX1.Maximum = _Tbl.Rows.Count
         ProgressBarX1.Value = 0

@@ -71,7 +71,7 @@ Public Class Frm_Folios_Caf
                        "Where Empresa = '" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion & vbCrLf & _Condicion & vbCrLf &
                        "Order By TD,RNG_D"
 
-        Dim _Tbl_Inventarios As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Inventarios As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Parejas
 

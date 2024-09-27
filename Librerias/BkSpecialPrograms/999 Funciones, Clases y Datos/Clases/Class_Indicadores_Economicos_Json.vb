@@ -180,7 +180,7 @@ Public Class Class_Indicadores_Economicos_Json
                            "Where KOMO In (Select Distinct CodigoTabla From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Where Tabla = 'INDICADORES')" & vbCrLf & _
                            "And FEMO <> '" & _Fecha & "'"
 
-            Dim _TblMoneda As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblMoneda As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Monedas = String.Empty
 
@@ -245,7 +245,7 @@ Public Class Class_Indicadores_Economicos_Json
                            "Where KOMO In (Select Distinct CodigoTabla From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Where Tabla = 'INDICADORES')" & vbCrLf &
                            "And FEMO <> '" & _Fecha & "'"
 
-            Dim _TblMoneda As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblMoneda As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Monedas = String.Empty
 

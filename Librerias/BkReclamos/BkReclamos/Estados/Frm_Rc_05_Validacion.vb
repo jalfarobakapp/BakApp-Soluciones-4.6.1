@@ -81,7 +81,7 @@ Public Class Frm_Rc_05_Validacion
                        "From " & _Global_BaseBk & "Zw_Reclamo_Archivos" & vbCrLf &
                        "Where Id_Reclamo = " & _Id_Reclamo & " And Estado = 'VAL'"
 
-        Dim _TblArchivos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblArchivos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Archivos
 

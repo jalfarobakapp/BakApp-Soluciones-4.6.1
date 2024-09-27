@@ -46,7 +46,7 @@ Public Class Frm_Pagos_Masivos_Entiades
                        "--Select SUM(SALDO) As Total From #Paso" & vbCrLf &
                        "Drop Table #Paso"
 
-        _TblInforme = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblInforme = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 
@@ -153,7 +153,7 @@ Public Class Frm_Pagos_Masivos_Entiades
                        "--Select SUM(SALDO) As Total From #Paso" & vbCrLf &
                        "Drop Table #Paso"
 
-        Dim _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl.Rows.Count) Then
 

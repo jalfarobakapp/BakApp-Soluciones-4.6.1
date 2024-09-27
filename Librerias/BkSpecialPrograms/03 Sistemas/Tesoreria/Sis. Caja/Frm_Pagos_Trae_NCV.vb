@@ -79,7 +79,7 @@ Public Class Frm_Pagos_Trae_NCV
                            "Where ENDO = '" & _Endo & "' And TIDO = 'NCV' AND ESPGDO = 'P'"
         End If
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _Tiene_NCV_Pendientes = CBool(_Tbl.Rows.Count)
 

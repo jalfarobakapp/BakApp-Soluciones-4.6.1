@@ -62,9 +62,15 @@ Public Class Sistema_Inventarios
     End Sub
 
     Private Sub BtnPreciosCostos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Inventario_General.Click
-        Dim NewPanel As Inv_General = Nothing
-        NewPanel = New Inv_General(_Fm_Menu_Padre)
-        Frm_Menu.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
+
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Invg0001") Then
+            Return
+        End If
+
+        Dim Fm As New Frm_Inv_Inventarios
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
     End Sub
 
     Private Sub BtnUbicProductos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnUbicProductos.Click
@@ -92,11 +98,17 @@ Public Class Sistema_Inventarios
     End Sub
 
     Private Sub Btn_Documentos_Stock_Click(sender As Object, e As EventArgs) Handles Btn_Documentos_Stock.Click
-        If Fx_Revisar_Taza_Cambio(_Fm_Menu_Padre) Then
-            Dim NewPanel As Modulo_Documentos_Stock = Nothing
-            NewPanel = New Modulo_Documentos_Stock(_Fm_Menu_Padre)
-            _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
+
+        Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(_Fm_Menu_Padre)
+
+        If Not _Msj_Tsc.EsCorrecto Then
+            Return
         End If
+
+        Dim NewPanel As Modulo_Documentos_Stock = Nothing
+        NewPanel = New Modulo_Documentos_Stock(_Fm_Menu_Padre)
+        _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
+
     End Sub
 
     Private Sub BtnCambiarDeUsuario_Click(sender As Object, e As EventArgs) Handles BtnCambiarDeUsuario.Click

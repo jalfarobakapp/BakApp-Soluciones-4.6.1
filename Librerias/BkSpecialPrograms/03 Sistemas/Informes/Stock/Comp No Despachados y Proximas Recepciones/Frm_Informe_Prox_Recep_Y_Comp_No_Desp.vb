@@ -254,7 +254,7 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp
                        "Where 1 > 0" & vbCrLf &
                        _SqlFiltro
 
-        _Tbl_Informe = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Informe = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

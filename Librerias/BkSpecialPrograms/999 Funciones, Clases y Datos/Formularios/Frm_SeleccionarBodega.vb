@@ -164,7 +164,7 @@ Public Class Frm_SeleccionarBodega
 
         caract_combo(Cmbempresa)
         Consulta_Sql = "SELECT EMPRESA AS Padre,RAZON AS Hijo FROM CONFIGP" ' WHERE SEMILLA = " & Actividad
-        Cmbempresa.DataSource = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Cmbempresa.DataSource = _Sql.Fx_Get_DataTable(Consulta_Sql)
         Cmbempresa.Focus()
         Cmbempresa.SelectedValue = _Empresa
 
@@ -178,7 +178,7 @@ Public Class Frm_SeleccionarBodega
         caract_combo(Cmbsucursal)
         Consulta_Sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                        "SELECT KOSU AS Padre,KOSU+'-'+NOKOSU AS Hijo FROM TABSU WHERE EMPRESA = '" & _Empresa & "'"
-        Cmbsucursal.DataSource = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Cmbsucursal.DataSource = _Sql.Fx_Get_DataTable(Consulta_Sql)
         Cmbsucursal.SelectedValue = _Sucursal
 
     End Sub
@@ -190,7 +190,7 @@ Public Class Frm_SeleccionarBodega
         Consulta_Sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                        "SELECT KOBO AS Padre,KOBO+'-'+NOKOBO AS Hijo FROM TABBO " &
                        "WHERE EMPRESA = '" & _Empresa & "' AND KOSU = '" & _Sucursal & "'"
-        Cmbbodega.DataSource = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Cmbbodega.DataSource = _Sql.Fx_Get_DataTable(Consulta_Sql)
         Cmbbodega.SelectedValue = _Bodega
 
     End Sub

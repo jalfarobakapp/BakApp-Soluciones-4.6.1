@@ -1,5 +1,6 @@
 ﻿Imports Bk_Produccion
 Imports BkSpecialPrograms
+Imports BkSpecialPrograms.LsValiciones
 Imports DevComponents.DotNetBar
 
 Public Class Menu
@@ -10,7 +11,6 @@ Public Class Menu
     Dim NotifyIcon1 As NotifyIcon '= _Fm_Menu_Padre.Notify_Remota
     Dim _Fm_Menu_Padre As Metro.MetroAppForm
     Dim _Menu_Extra As Boolean
-
 
     Public Sub New(Fm_Menu_Padre As Metro.MetroAppForm, Menu_Extra As Boolean)
 
@@ -333,13 +333,15 @@ Public Class Menu
 
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Ppro0007") Then
 
-            If Fx_Revisar_Taza_Cambio(_Fm_Menu_Padre) Then
+            Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(_Fm_Menu_Padre)
 
-                Dim NewPanel As Modulo_Tesoreria = Nothing
-                NewPanel = New Modulo_Tesoreria(_Fm_Menu_Padre)
-                _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
-
+            If Not _Msj_Tsc.EsCorrecto Then
+                Return
             End If
+
+            Dim NewPanel As Modulo_Tesoreria = Nothing
+            NewPanel = New Modulo_Tesoreria(_Fm_Menu_Padre)
+            _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
 
         End If
 
@@ -479,7 +481,7 @@ Public Class Menu
                 _Nombre_Etiqueta = _Clas_CliexpressAPI.Nombre_Etiqueta
 
                 Consulta_sql = "Select Idrst From " & _Global_BaseBk & "Zw_Despachos_Doc Where Id_Despacho = " & _Id_Despacho
-                Dim _Tbl_Docs As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Docs As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 For Each _Fila As DataRow In _Tbl_Docs.Rows
 
@@ -861,7 +863,7 @@ Public Class Menu
         Dim _Fecha_Emision As DateTime = FechaDelServidor()
 
         Consulta_sql = "Select *,1 As Precio From " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet Where Id_Enc = " & _Id_Enc
-        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim Fm As New Frm_Formulario_Documento(_Tido,
                                                csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta,
@@ -870,12 +872,12 @@ Public Class Menu
         Fm.Pro_RowEntidad = _Row_Entidad
         Fm.Sb_Crear_Documento_Interno_Con_Tabla(_Fm_Menu_Padre, _Tbl_Productos, _Fecha_Emision,
                                                 "Codigo", "Cantidad", "Precio", "Observacion", False, True)
-        'Fm.Pro_Bodega_Destino = _Bod_Destino
-        Dim _New_Idmaeedo = Fm.Fx_Grabar_Documento(False)
+        Dim _Mensaje As LsValiciones.Mensajes = Fm.Fx_Grabar_Documento(False)
         Fm.Dispose()
 
-        If CBool(_New_Idmaeedo) Then
-            Consulta_sql = "Select Top 1 * From MAEEDO Where IDMAEEDO = " & _New_Idmaeedo
+        If _Mensaje.EsCorrecto Then
+
+            Consulta_sql = "Select Top 1 * From MAEEDO Where IDMAEEDO = " & _Mensaje.Id
             Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_NVVAuto Set " &
@@ -910,4 +912,11 @@ Public Class Menu
 
     End Sub
 
+    Private Sub ButtonItem6_Click(sender As Object, e As EventArgs) Handles ButtonItem6.Click
+
+        Dim Fm As New Frm_FTP_Fichero(1, Cl_Ftp.eTipo_Ftp.Producto)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
 End Class

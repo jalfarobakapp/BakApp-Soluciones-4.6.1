@@ -16,6 +16,10 @@ Public Class Frm_Arbol_Lista
     Public Property ModoRadioButton As Boolean
     Public Property ModoCheckButton As Boolean
     Public Property MostrarClasProducto As Boolean
+    Public Property ModoSeleccion As Boolean
+
+    Public seleccionados As Boolean
+    Public Ls_SelArbol_Asociaciones As New List(Of Zw_TblArbol_Asociaciones)
 
     Public Sub New(_Clas_Unica_X_Producto As Boolean)
 
@@ -25,15 +29,27 @@ Public Class Frm_Arbol_Lista
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
         Me._Clas_Unica_X_Producto = _Clas_Unica_X_Producto
+        Sb_Color_Botones_Barra(Bar2)
 
     End Sub
 
     Private Sub Frm_Arbol_Lista_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        Consulta_sql = "Select KOPR,NOKOPR From MAEPR Where KOPR = '" & Codigo_Heredado & "'"
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
         If _Clas_Unica_X_Producto Then
             Me.Text = "CLASIFICACIONES UNICAS"
         Else
             Me.Text = "CLASIFICACIONES DINAMICAS"
+        End If
+
+        If Not IsNothing(_Row) Then
+            If MostrarClasProducto Then
+                Me.Text = "Producto: " & _Row.Item("KOPR").ToString.Trim & " - " & _Row.Item("NOKOPR").ToString.Trim
+            Else
+                Me.Text += ", Producto: " & _Row.Item("KOPR").ToString.Trim & " - " & _Row.Item("NOKOPR").ToString.Trim
+            End If
         End If
 
         Tree_Bandeja.CheckBoxes = False
@@ -44,13 +60,27 @@ Public Class Frm_Arbol_Lista
 
         Sb_Llenar_Zw_Prod_Asociacion()
 
-        'Sb_Cargar_Arbol()
-        Sb_Cargar_Arbol_Advt()
+        If MostrarClasProducto Then
+
+            Dim _NodoRaiz_ClasDinamicas As AdvTree.Node = Fx_CrearNodo_Advt(0, "CLASIFICACIONES DINAMICAS", False, False, 9, 9, eCheckBoxStyle.CheckBox)
+            Dim _NodoRaiz_ClasUnicas As AdvTree.Node = Fx_CrearNodo_Advt(0, "CLASIFICACIONES UNICAS", False, False, 10, 10, eCheckBoxStyle.CheckBox)
+
+            Sb_Cargar_Arbol_Advt_ClProd(_NodoRaiz_ClasDinamicas, False)
+            Sb_Cargar_Arbol_Advt_ClProd(_NodoRaiz_ClasUnicas, True)
+
+        Else
+            Sb_Cargar_Arbol_Advt()
+        End If
 
         _ListaBusquedaNodos = New List(Of TreeNode)
         _ListaBusquedaNodos_Advt = New List(Of AdvTree.Node)
 
-        Btn_Grabar.Visible = (ModoCheckButton Or ModoRadioButton)
+        Btn_Grabar.Visible = (ModoCheckButton Or ModoRadioButton) And Not ModoSeleccion
+        Btn_Aceptar.Visible = ModoSeleccion
+
+        If MostrarClasProducto Then
+            Btn_Grabar.Visible = False
+        End If
 
         Me.Cursor = Cursors.Default
 
@@ -74,7 +104,7 @@ Public Class Frm_Arbol_Lista
             nodo.Expand()
         Next
 
-        Lbl_Estatus.Text = _NodoRaiz.FullPath
+        Lbl_Estatus.Text = Replace(_NodoRaiz.FullPath, ";", "\")
 
         Me.Refresh()
 
@@ -82,14 +112,26 @@ Public Class Frm_Arbol_Lista
 
     Sub Sb_Cargar_Arbol_Advt()
 
+        Me.Enabled = False
+        Me.Cursor = Cursors.WaitCursor
+
         Tree_Bandeja_Adv.Nodes.Clear()
 
         Dim fuenteNegrita As New Font(Tree_Bandeja_Adv.Font.Name, Tree_Bandeja_Adv.Font.Size, FontStyle.Bold)
 
-        Dim _NodoRaiz_Advt As AdvTree.Node ' TreeNode
+        Dim _NodoRaiz_Advt As AdvTree.Node
+        Dim _Descripcion As String
+        Dim _Icono As Integer
 
-        _NodoRaiz_Advt = Fx_CrearNodo_Advt(0, "CLASIFICACIONES UNICAS", False, False, 4, 4)
-        '_NodoRaiz.NodeFont = fuenteNegrita
+        If _Clas_Unica_X_Producto Then
+            _Descripcion = "CLASIFICACIONES UNICAS"
+            _Icono = 10
+        Else
+            _Descripcion = "CLASIFICACIONES DINAMICAS"
+            _Icono = 9
+        End If
+
+        _NodoRaiz_Advt = Fx_CrearNodo_Advt(0, _Descripcion, False, False, _Icono, _Icono, eCheckBoxStyle.CheckBox)
 
         Sb_Cargar_Nodos_Advt(_NodoRaiz_Advt, _Clas_Unica_X_Producto)
 
@@ -99,11 +141,75 @@ Public Class Frm_Arbol_Lista
             nodo.Expand()
         Next
 
-        'Lbl_Estatus.Text = _NodoRaiz.FullPath
+        If ModoCheckButton Or ModoRadioButton Then
 
+            ' Llamada a la función desde donde desees expandir los nodos marcados
+            ExpandirNodosMarcados(Tree_Bandeja_Adv) ' Reemplaza con el nombre de tu TreeView
+
+        End If
+
+        Lbl_Estatus.Text = Replace(_NodoRaiz_Advt.FullPath, ";", "\")
+
+        Me.Cursor = Cursors.Default
+        Me.Enabled = True
         Me.Refresh()
 
     End Sub
+
+    Sub Sb_Cargar_Arbol_Advt_ClProd(_NodoRaiz_Advt As AdvTree.Node, _Clas_Unica_X_Producto As Integer)
+
+        Me.Enabled = False
+        Me.Cursor = Cursors.WaitCursor
+
+        'Tree_Bandeja_Adv.Nodes.Clear()
+
+        Dim fuenteNegrita As New Font(Tree_Bandeja_Adv.Font.Name, Tree_Bandeja_Adv.Font.Size, FontStyle.Bold)
+
+        'Dim _NodoRaiz_Advt As AdvTree.Node
+
+        '_NodoRaiz_Advt = Fx_CrearNodo_Advt(0, "CLASIFICACIONES UNICAS", False, False, 4, 4)
+
+        Sb_Cargar_Nodos_Advt(_NodoRaiz_Advt, _Clas_Unica_X_Producto)
+
+        Tree_Bandeja_Adv.Nodes.Add(_NodoRaiz_Advt)
+
+        For Each nodo As AdvTree.Node In Tree_Bandeja_Adv.Nodes
+            nodo.Expand()
+        Next
+
+        'If ModoCheckButton Or ModoRadioButton Then
+
+        ' Llamada a la función desde donde desees expandir los nodos marcados
+        ExpandirNodosMarcados(Tree_Bandeja_Adv) ' Reemplaza con el nombre de tu TreeView
+
+        'End If
+
+        Lbl_Estatus.Text = Replace(_NodoRaiz_Advt.FullPath, ";", "\")
+
+        Me.Cursor = Cursors.Default
+        Me.Enabled = True
+        Me.Refresh()
+
+    End Sub
+
+    Private Sub ExpandirNodosMarcados(treeView As AdvTree.AdvTree)
+        For Each nodo As AdvTree.Node In treeView.Nodes
+            If nodo.CheckState = CheckState.Indeterminate Then
+                nodo.Expand()
+            End If
+            ExpandirNodosMarcadosRecursivo(nodo)
+        Next
+    End Sub
+
+    Private Sub ExpandirNodosMarcadosRecursivo(nodoPadre As AdvTree.Node)
+        For Each nodoHijo As AdvTree.Node In nodoPadre.Nodes
+            If nodoHijo.CheckState = CheckState.Indeterminate Then
+                nodoHijo.Expand()
+            End If
+            ExpandirNodosMarcadosRecursivo(nodoHijo)
+        Next
+    End Sub
+
 
     Sub Sb_Cargar_Nodos(_Nodo_Padre As TreeNode, _Clas_Unica_X_Producto As Boolean)
 
@@ -122,7 +228,7 @@ Public Class Frm_Arbol_Lista
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
                        "Where Identificacdor_NodoPadre = " & _Identificacdor_NodoPadre & vbCrLf &
                        _Filtro
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If _Tbl.Rows.Count = 0 Then
             Return
@@ -180,7 +286,7 @@ Public Class Frm_Arbol_Lista
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
                        "Where Identificacdor_NodoPadre = " & _Identificacdor_NodoPadre & vbCrLf &
                        _Filtro
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If _Tbl.Rows.Count = 0 Then
             Return
@@ -201,9 +307,22 @@ Public Class Frm_Arbol_Lista
                 _Descripcion = _Codigo_Madre & " - " & _Descripcion
             End If
 
+            Dim _eCheckBoxStyle As eCheckBoxStyle
+
+            If ModoCheckButton Then _eCheckBoxStyle = eCheckBoxStyle.CheckBox
+            If ModoRadioButton Then _eCheckBoxStyle = eCheckBoxStyle.RadioButton
+
+            If MostrarClasProducto Then
+                If _Clas_Unica_X_Producto Then
+                    _eCheckBoxStyle = eCheckBoxStyle.RadioButton
+                Else
+                    _eCheckBoxStyle = eCheckBoxStyle.CheckBox
+                End If
+            End If
+
             If _Es_Seleccionable Then
 
-                If _Es_Seleccionable AndAlso (ModoRadioButton Or ModoCheckButton) Then
+                If _Es_Seleccionable AndAlso (ModoRadioButton Or ModoCheckButton Or MostrarClasProducto) Then
 
                     _Checked = False
 
@@ -217,12 +336,24 @@ Public Class Frm_Arbol_Lista
 
                     Next
 
+                    If ModoSeleccion Then
+
+                        Dim valorBuscado As String = _Codigo_Nodo
+                        Dim existeValor As Boolean = Ls_SelArbol_Asociaciones.Any(Function(item) item.Codigo_Nodo = valorBuscado)
+
+                        If existeValor Then
+                            _Checked = True
+                            Sb_MarcarPadre(_Nodo_Padre, CheckState.Indeterminate)
+                        End If
+
+                    End If
+
                 End If
 
-                _Nodo = Fx_CrearNodo_Advt(_Codigo_Nodo, _Descripcion, _Checked, _Es_Seleccionable, 7, 8)
+                _Nodo = Fx_CrearNodo_Advt(_Codigo_Nodo, _Descripcion, _Checked, _Es_Seleccionable, 7, 8, _eCheckBoxStyle)
 
             Else
-                _Nodo = Fx_CrearNodo_Advt(_Codigo_Nodo, _Descripcion, _Checked, _Es_Seleccionable, 0, 0)
+                _Nodo = Fx_CrearNodo_Advt(_Codigo_Nodo, _Descripcion, _Checked, _Es_Seleccionable, 0, 0, eCheckBoxStyle.CheckBox)
             End If
 
             _Nodo_Padre.Nodes.Add(_Nodo)
@@ -264,6 +395,68 @@ Public Class Frm_Arbol_Lista
                                _Checked As Boolean,
                                _Tag As Object,
                                _ImageIndex As Integer,
+                               _SelectedImageIndex As Integer,
+                               _eCheckBoxStyle As eCheckBoxStyle) As AdvTree.Node
+
+        Dim _Nodo As New AdvTree.Node
+
+        Dim _Imagen1 As Image
+        Dim _Imagen2 As Image
+
+        Dim _Imagenes_List As ImageList
+        If Global_Thema = Enum_Themas.Oscuro Then
+            _Imagenes_List = Imagenes_16x16_Dark
+        Else
+            _Imagenes_List = Imagenes_16x16
+        End If
+
+        _Imagen1 = _Imagenes_List.Images.Item(_ImageIndex)
+        _Imagen2 = _Imagenes_List.Images.Item(_SelectedImageIndex)
+
+        Dim _CheckBoxVisible As Boolean = (ModoCheckButton Or ModoRadioButton)
+
+        If MostrarClasProducto Then
+            _CheckBoxVisible = False
+        End If
+
+        With _Nodo
+
+            .Name = _Name
+            .Text = _Text
+            .Editable = False
+
+            If Not _Tag Then
+                .Image = _Imagen1
+                .ImageExpanded = _Imagen2
+            Else
+                If Not _CheckBoxVisible And Not MostrarClasProducto Then
+                    .Image = _Imagen1
+                    .ImageExpanded = _Imagen2
+                End If
+            End If
+
+            .Checked = _Checked
+            .Tag = _Tag
+
+            If Not _Tag And _CheckBoxVisible Then
+                _CheckBoxVisible = True
+                _eCheckBoxStyle = eCheckBoxStyle.CheckBox
+            End If
+
+            .CheckBoxVisible = _CheckBoxVisible
+            .CheckBoxStyle = _eCheckBoxStyle
+
+        End With
+
+        Return _Nodo
+
+    End Function
+
+    Function Fx_CrearNodo_Advt_Old(_Name As String,
+                               _Text As String,
+                               _Checked As Boolean,
+                               _Tag As Object,
+                               _ImageIndex As Integer,
                                _SelectedImageIndex As Integer) As AdvTree.Node
 
         Dim _Nodo As New AdvTree.Node
@@ -288,15 +481,24 @@ Public Class Frm_Arbol_Lista
 
         Dim _CheckBoxVisible As Boolean = (ModoCheckButton Or ModoRadioButton)
 
+        If MostrarClasProducto Then
+            _CheckBoxVisible = False
+        End If
+
         With _Nodo
 
             .Name = _Name
             .Text = _Text
             .Editable = False
 
-            If Not _Tag Then '_CheckBoxVisible Then
+            If Not _Tag Then
                 .Image = _Imagen1
                 .ImageExpanded = _Imagen2
+            Else
+                If Not _CheckBoxVisible Then
+                    .Image = _Imagen1
+                    .ImageExpanded = _Imagen2
+                End If
             End If
 
             .Checked = _Checked
@@ -319,6 +521,7 @@ Public Class Frm_Arbol_Lista
     Private Sub Tree_Bandeja_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles Tree_Bandeja.AfterSelect
 
         Dim _Nodo As TreeNode = e.Node
+        Lbl_Estatus.Text = Replace(_Nodo.FullPath, ";", "\")
         Lbl_Estatus.Text = _Nodo.FullPath
         Me.Refresh()
 
@@ -329,7 +532,7 @@ Public Class Frm_Arbol_Lista
         Dim _Codigo_Nodo As String = _Nodo.Name
         Dim _Descripcion As String = _Nodo.Text
         Dim _Identificador_NodoPadre As Integer = _Nodo.Parent.Name
-        Dim _Es_Seleccionable = _Nodo.Checked
+        Dim _Es_Seleccionable = _Nodo.Tag
         Dim _FullPath As String = _Nodo.FullPath
 
         Dim Fm As New Frm_Arbol_Asociacion_04_Productos_x_class(_Identificador_NodoPadre,
@@ -339,9 +542,16 @@ Public Class Frm_Arbol_Lista
                                                                 _Es_Seleccionable,
                                                                 _Clas_Unica_X_Producto,
                                                                 False)
+        If ModoCheckButton Or ModoRadioButton Then
+            Fm.ModoSoloLectura = True
+        Else
+            Fm.ModoSoloLectura = Not _Es_Seleccionable
+        End If
+
         Fm.Pro_Codigo_Heredado = Codigo_Heredado
         Fm.Text = "Clasificación: (Cod. " & _Codigo_Nodo & ") " & _Descripcion
         Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 
@@ -475,13 +685,14 @@ Public Class Frm_Arbol_Lista
             Return
         End If
 
-        Dim _Nodo As TreeNode = Tree_Bandeja.SelectedNode
+        Dim _Nodo As AdvTree.Node = Tree_Bandeja_Adv.SelectedNode
         Dim _Codigo_Nodo As Integer = _Nodo.Name
         Dim _Descripcion As String = _Nodo.Text
+        Dim _Fullpath As String = _Nodo.FullPath
 
         Dim _Grabar As Boolean
 
-        Dim Fm As New Frm_Arbol_Asociacion_06_CrearEditar(_Codigo_Nodo, _Nodo.Parent.Name, 0, _Clas_Unica_X_Producto)
+        Dim Fm As New Frm_Arbol_Asociacion_06_CrearEditar(_Codigo_Nodo, _Nodo.Parent.Name, 0, _Clas_Unica_X_Producto, _Fullpath)
         Fm.ShowDialog(Me)
         _Grabar = Fm.Grabar
         Fm.Dispose()
@@ -502,15 +713,34 @@ Public Class Frm_Arbol_Lista
             Dim _Es_Padre As Boolean = _Row.Item("Es_Padre")
             Dim _Es_Seleccionable As Boolean = _Row.Item("Es_Seleccionable")
 
-            _Nodo.Checked = _Es_Seleccionable
+            _Nodo.Tag = _Es_Seleccionable
+
+            Dim _Imagen1 As Image
+            Dim _Imagen2 As Image
+
+            Dim _Imagenes_List As ImageList
+            If Global_Thema = Enum_Themas.Oscuro Then
+                _Imagenes_List = Imagenes_16x16_Dark
+            Else
+                _Imagenes_List = Imagenes_16x16
+            End If
+
+            Dim _ImageIndex As Integer
+            Dim _SelectedImageIndex As Integer
 
             If _Es_Seleccionable Then
-                _Nodo.ImageIndex = 7
-                _Nodo.SelectedImageIndex = 8
+                _ImageIndex = 7
+                _SelectedImageIndex = 8
             Else
-                _Nodo.ImageIndex = 0
-                _Nodo.SelectedImageIndex = 0
+                _ImageIndex = 0
+                _SelectedImageIndex = 0
             End If
+
+            _Imagen1 = _Imagenes_List.Images.Item(_ImageIndex)
+            _Imagen2 = _Imagenes_List.Images.Item(_SelectedImageIndex)
+
+            _Nodo.Image = _Imagen1
+            _Nodo.ImageExpanded = _Imagen2
 
         End If
 
@@ -520,7 +750,7 @@ Public Class Frm_Arbol_Lista
 
         Dim _Nodo As AdvTree.Node = Tree_Bandeja_Adv.SelectedNode
         Dim _Codigo_Nodo As Integer = _Nodo.Name
-        Dim _Descripcion As String = _Nodo.Text
+        Dim _Descripcion As String = _Codigo_Nodo & ";" & _Nodo.Text
 
         Dim Copiar = _Descripcion
         Clipboard.SetText(Copiar)
@@ -539,6 +769,7 @@ Public Class Frm_Arbol_Lista
         Dim _Nodo As AdvTree.Node = Tree_Bandeja_Adv.SelectedNode
         Dim _Codigo_Nodo As Integer = _Nodo.Name
         Dim _Descripcion As String = _Nodo.Text
+        Dim _Fullpath As String = Replace(_Nodo.FullPath, ";", "\")
         Dim _Grabar As Boolean
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _Codigo_Nodo
@@ -556,7 +787,7 @@ Public Class Frm_Arbol_Lista
 
         Dim _Cl_Arbol_Asociaciones As Cl_Arbol_Asociaciones
 
-        Dim Fm As New Frm_Arbol_Asociacion_06_CrearEditar(0, _Codigo_Nodo, _Nodo_Raiz, _Clas_Unica_X_Producto)
+        Dim Fm As New Frm_Arbol_Asociacion_06_CrearEditar(0, _Codigo_Nodo, _Nodo_Raiz, _Clas_Unica_X_Producto, _Fullpath)
         Fm.ShowDialog(Me)
         _Grabar = Fm.Grabar
         _Cl_Arbol_Asociaciones = Fm.Cl_Arbol_Asociaciones
@@ -577,10 +808,15 @@ Public Class Frm_Arbol_Lista
                 _Descripcion = _Row.Item("Descripcion")
             End If
 
+            Dim _eCheckBoxStyle As eCheckBoxStyle
+
+            If ModoCheckButton Then _eCheckBoxStyle = eCheckBoxStyle.CheckBox
+            If ModoRadioButton Then _eCheckBoxStyle = eCheckBoxStyle.RadioButton
+
             If _Row.Item("Es_Seleccionable") Then
-                _NewNodo = Fx_CrearNodo_Advt(_Codigo_Nodo, _Descripcion, True, True, 7, 8)
+                _NewNodo = Fx_CrearNodo_Advt(_Codigo_Nodo, _Descripcion, False, True, 7, 8, _eCheckBoxStyle)
             Else
-                _NewNodo = Fx_CrearNodo_Advt(_Codigo_Nodo, _Descripcion, False, False, 0, 0)
+                _NewNodo = Fx_CrearNodo_Advt(_Codigo_Nodo, _Descripcion, False, False, 0, 0, _eCheckBoxStyle)
             End If
 
             _Nodo.Nodes.Add(_NewNodo)
@@ -634,7 +870,7 @@ Public Class Frm_Arbol_Lista
         _Mensaje = _Cl_Arbol.Fx_Eliminar_Clasificacion()
 
         If _Mensaje.EsCorrecto Then
-            Tree_Bandeja_Adv.Nodes.Remove(_Nodo)
+            _Nodo.Parent.Nodes.Remove(_Nodo)
         End If
 
         MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
@@ -719,7 +955,23 @@ Public Class Frm_Arbol_Lista
 
 
     Private Sub Btn_Actualizar_Click(sender As Object, e As EventArgs) Handles Btn_Actualizar.Click
-        Sb_Cargar_Arbol_Advt()
+
+        If MostrarClasProducto Then
+
+            Tree_Bandeja_Adv.Nodes.Clear()
+
+            Dim _NodoRaiz_ClasUnicas As AdvTree.Node = Fx_CrearNodo_Advt(0, "CLASIFICACIONES UNICAS", False, False, 4, 4, eCheckBoxStyle.CheckBox)
+            Dim _NodoRaiz_ClasDinamicas As AdvTree.Node = Fx_CrearNodo_Advt(0, "CLASIFICACIONES DINAMICAS", False, False, 4, 4, eCheckBoxStyle.CheckBox)
+
+            Sb_Cargar_Arbol_Advt_ClProd(_NodoRaiz_ClasDinamicas, False)
+            Sb_Cargar_Arbol_Advt_ClProd(_NodoRaiz_ClasUnicas, True)
+
+        Else
+
+            Sb_Cargar_Arbol_Advt()
+
+        End If
+
     End Sub
 
     Private Sub Txt_Filtrar_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Filtrar.ButtonCustomClick
@@ -830,7 +1082,7 @@ Public Class Frm_Arbol_Lista
                        "From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
                        "Where (Codigo = '" & Codigo_Heredado & "') AND (Para_filtro = 1)"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Row As DataRow In _Tbl.Rows
 
@@ -860,7 +1112,7 @@ Public Class Frm_Arbol_Lista
     Private Sub Adv_Tree_Bandeja_AfterNodeSelect(sender As Object, e As AdvTree.AdvTreeNodeEventArgs) Handles Tree_Bandeja_Adv.AfterNodeSelect
         Try
             Dim _Nodo As AdvTree.Node = e.Node
-            Lbl_Estatus.Text = _Nodo.FullPath
+            Lbl_Estatus.Text = Replace(_Nodo.FullPath, ";", "\")
         Catch ex As Exception
             Lbl_Estatus.Text = "...\\"
         End Try
@@ -888,7 +1140,7 @@ Public Class Frm_Arbol_Lista
 
         If e.Button = MouseButtons.Right Then
 
-            If ModoRadioButton Or ModoCheckButton Then
+            If MostrarClasProducto Then
                 Return
             End If
 
@@ -905,9 +1157,9 @@ Public Class Frm_Arbol_Lista
             Btn_EliminarClasificacion.Visible = CBool(_Nodo.Name)
             Btn_Copiar.Visible = CBool(_Nodo.Name)
 
-            Btn_VerProductos.Enabled = _Nodo.Checked
-            Btn_TicketProducto.Enabled = _Nodo.Checked
-            Btn_CrearClasificacion.Enabled = Not _Nodo.Checked
+            Btn_VerProductos.Enabled = _Nodo.Tag
+            Btn_TicketProducto.Enabled = _Nodo.Tag
+            Btn_CrearClasificacion.Enabled = Not _Nodo.Tag
 
             ShowContextMenu(Menu_Contextual_01)
 
@@ -938,6 +1190,7 @@ Public Class Frm_Arbol_Lista
     Private Sub Btn_Grabar_Click_1(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
 
         Dim _NodosSeleccionados As List(Of AdvTree.Node) = Fx_ObtenerNodosConCheck(Tree_Bandeja_Adv.Nodes(0))
+
         Dim _Msg = String.Empty
 
         'Dim _Todoslosnodos As New List(Of AdvTree.Node)()
@@ -951,7 +1204,6 @@ Public Class Frm_Arbol_Lista
             If Not _nodos.Contains(_Nodo.Parent) Then
                 _nodos.AddRange(Fx_ObtenerDescendientes(_Nodo))
             End If
-            '_Todoslosnodos.AddRange(_nodos)
 
         Next
 
@@ -965,6 +1217,8 @@ Public Class Frm_Arbol_Lista
             End If
         Next
 
+        Dim nodosRaiz As New List(Of AdvTree.Node)()
+
         Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
                        "Where Codigo = '" & Codigo_Heredado & "' And Para_filtro = 1" & vbCrLf &
                        "And Codigo_Nodo In (Select Codigo_Nodo From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Clas_Unica_X_Producto = " & Convert.ToUInt32(_Clas_Unica_X_Producto) & ")" & vbCrLf
@@ -974,47 +1228,146 @@ Public Class Frm_Arbol_Lista
             Dim _Codigo_Nodo As Integer = _Nd.Name
             Dim _DescripcionBusqueda As String = _Nd.Text
 
+            If ModoRadioButton Then
+
+                If _Nd.Parent.Name = 0 Then
+
+                    nodosRaiz.Add(_Nd)
+                    Dim _Checkeados As Integer = ContarNodosConCheck(_Nd)
+
+                    If _Checkeados > 1 Then
+                        MessageBoxEx.Show(Me, "No es posible marcar más de una casilla en una clasificación de raíz llamada ‘" & _Nd.Text & "’" & vbCrLf &
+                                          "Actualmente, hay " & _Checkeados & " casillas marcadas.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        Return
+                    End If
+
+                End If
+
+            End If
+
             Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_Prod_Asociacion (Codigo,Codigo_Nodo,DescripcionBusqueda,Para_filtro) Values " &
                             "('" & Codigo_Heredado & "'," & _Codigo_Nodo & ",'" & _DescripcionBusqueda & "',1)" & vbCrLf
 
         Next
 
-        'If Not String.IsNullOrEmpty(_Msg) Then
-        'If MessageBoxEx.Show(Me, _Msg, "¿Confirma las clasificaciones seleccionadas?",
-        'MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
             MessageBoxEx.Show(Me, "Datos guardados correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Me.Close()
         End If
-        'End If
-        'End If
 
     End Sub
 
     Private Sub Tree_Bandeja_Adv_AfterCheck(sender As Object, e As AdvTree.AdvTreeCellEventArgs) Handles Tree_Bandeja_Adv.AfterCheck
 
-        Dim _Nodo As AdvTree.Node = Tree_Bandeja_Adv.SelectedNode
-        Dim _Codigo_Nodo As Integer = _Nodo.Name
-        Dim _Descripcion As String = _Nodo.Text
-        Dim _Es_Seleccionable As Boolean = _Nodo.Tag
-        Dim _Checked As Boolean = _Nodo.Checked
+        Dim _NodoSeleccionado As AdvTree.Node = e.Cell.Parent 'Tree_Bandeja_Adv.SelectedNode
+        Dim _Codigo_Nodo As Integer = _NodoSeleccionado.Name
+        Dim _Descripcion As String = _NodoSeleccionado.Text
+        Dim _Es_Seleccionable As Boolean = _NodoSeleccionado.Tag
+        Dim _Checked As Boolean = _NodoSeleccionado.Checked
 
         If ModoCheckButton Or ModoRadioButton Then
-            Dim _Checkeados As Boolean
-            For Each _nd As AdvTree.Node In _Nodo.Parent.Nodes
-                If _nd.Checked Then
-                    _Checkeados = True
-                    Exit For
+
+            If _NodoSeleccionado.Tag Then
+
+                If _NodoSeleccionado.Checked Then
+                    _NodoSeleccionado.Parent.CheckState = CheckState.Indeterminate
+                Else
+                    If Not RecorrerNodosYDetectarCheck(_NodoSeleccionado.Parent) Then
+                        _NodoSeleccionado.Parent.CheckState = CheckState.Unchecked
+                    End If
                 End If
-            Next
-            If _Checkeados Then
-                _Nodo.Parent.CheckState = CheckState.Indeterminate
+
             Else
-                _Nodo.Parent.CheckState = CheckState.Unchecked
+
+                If Not IsNothing(_NodoSeleccionado.Parent) Then
+                    If _NodoSeleccionado.CheckState = CheckState.Indeterminate Then
+                        _NodoSeleccionado.Parent.CheckState = _NodoSeleccionado.CheckState
+                    Else
+                        If Not RecorrerNodosYDetectarCheck(_NodoSeleccionado.Parent) Then
+                            _NodoSeleccionado.Parent.CheckState = CheckState.Unchecked
+                        End If
+                    End If
+                End If
+
             End If
+
         End If
 
         Me.Refresh()
+
+    End Sub
+
+    Private Function Fx_TieneNodosMarcados(nodoPadre As AdvTree.Node) As Boolean
+        For Each nodoHijo As AdvTree.Node In nodoPadre.Nodes
+            If nodoHijo.Tag Then
+                Return nodoHijo.Checked
+            Else
+                Return Fx_TieneNodosMarcados(nodoHijo)
+            End If
+        Next
+    End Function
+
+    Private Function Fx_DemarcarMarcarNodos(nodoPadre As AdvTree.Node, nodoNoDesmarcar As AdvTree.Node, _Marcar As Boolean) As Boolean
+        For Each nodoHijo As AdvTree.Node In nodoPadre.Nodes
+            If nodoHijo.Tag Then
+                If nodoNoDesmarcar.Name <> nodoHijo.Name Then
+                    nodoHijo.Checked = _Marcar
+                End If
+            Else
+                Fx_DemarcarMarcarNodos(nodoHijo, nodoNoDesmarcar, _Marcar)
+            End If
+        Next
+    End Function
+
+    Private Function RecorrerNodosYDetectarCheck(nodo As AdvTree.Node) As Boolean
+        If nodo.Checked Then
+            Return True
+        End If
+
+        For Each nodoHijo As AdvTree.Node In nodo.Nodes
+            If RecorrerNodosYDetectarCheck(nodoHijo) Then
+                Return True
+            End If
+        Next
+
+        Return False
+    End Function
+
+    Private Function ContarNodosConCheck(nodoPadre As AdvTree.Node) As Integer
+        Dim contador As Integer = 0
+
+        For Each nodoHijo As AdvTree.Node In nodoPadre.Nodes
+            If nodoHijo.Checked Then
+                contador += 1
+            End If
+            contador += ContarNodosConCheck(nodoHijo) ' Llamada recursiva para los nodos hijos
+        Next
+
+        Return contador
+    End Function
+
+    Private Sub Btn_Aceptar_Click(sender As Object, e As EventArgs) Handles Btn_Aceptar.Click
+
+        Dim _NodosSeleccionados As List(Of AdvTree.Node) = Fx_ObtenerNodosConCheck(Tree_Bandeja_Adv.Nodes(0))
+
+        If _NodosSeleccionados.Count = 0 Then
+            MessageBoxEx.Show(Me, "No se ha seleccionado ninguna clasificación", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Ls_SelArbol_Asociaciones.Clear()
+
+        Dim _Cl_Arbol_Asociaciones As New Cl_Arbol_Asociaciones
+
+        For Each _Nodo As AdvTree.Node In _NodosSeleccionados
+
+            _Cl_Arbol_Asociaciones.Fx_Llenar_Asociacion(_Nodo.Name)
+            Ls_SelArbol_Asociaciones.Add(_Cl_Arbol_Asociaciones.Zw_TblArbol_Asociaciones)
+
+        Next
+
+        seleccionados = True
+        Me.Close()
 
     End Sub
 End Class

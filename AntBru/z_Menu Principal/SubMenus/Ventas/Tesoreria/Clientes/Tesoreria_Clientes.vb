@@ -23,13 +23,15 @@ Public Class Tesoreria_Clientes
 
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Ppro0012") Then
 
-            If Fx_Revisar_Taza_Cambio(_Fm_Menu_Padre) Then
+            Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(_Fm_Menu_Padre)
 
-                Dim Fm As New Frm_Pagos_CtasEntidad_Expor_Bancos
-                Fm.ShowDialog(Me)
-                Fm.Dispose()
-
+            If Not _Msj_Tsc.EsCorrecto Then
+                Return
             End If
+
+            Dim Fm As New Frm_Pagos_CtasEntidad_Expor_Bancos
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
 
         End If
 
@@ -45,13 +47,15 @@ Public Class Tesoreria_Clientes
 
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Ppro0011") Then
 
-            If Fx_Revisar_Taza_Cambio(_Fm_Menu_Padre,, True) Then
+            Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(_Fm_Menu_Padre,, True)
 
-                Dim Fm As New Frm_Pagos_Generales(Frm_Pagos_Generales.Enum_Tipo_Pago.Clientes)
-                Fm.ShowDialog(Me)
-                Fm.Dispose()
-
+            If Not _Msj_Tsc.EsCorrecto Then
+                Return
             End If
+
+            Dim Fm As New Frm_Pagos_Generales(Frm_Pagos_Generales.Enum_Tipo_Pago.Clientes)
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
 
         End If
 
@@ -63,21 +67,23 @@ Public Class Tesoreria_Clientes
             Return
         End If
 
-        If Fx_Revisar_Taza_Cambio(_Fm_Menu_Padre,, True) Then
+        Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(_Fm_Menu_Padre,, True)
 
-            Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
-            Dim _Percontact As String = _Sql.Fx_Trae_Dato("TABFU", "PERCONTACT", "KOFU = '" & FUNCIONARIO & "'")
-
-            If MessageBoxEx.Show(Me, "¿Confirma el periodo " & _Percontact & "?", "Confirmación",
-                                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
-                Return
-            End If
-
-            Dim Fm As New Frm_LiquidTJVcredito
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
-
+        If Not _Msj_Tsc.EsCorrecto Then
+            Return
         End If
+
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+        Dim _Percontact As String = _Sql.Fx_Trae_Dato("TABFU", "PERCONTACT", "KOFU = '" & FUNCIONARIO & "'")
+
+        If MessageBoxEx.Show(Me, "¿Confirma el periodo " & _Percontact & "?", "Confirmación",
+                                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
+
+        Dim Fm As New Frm_LiquidTJVcredito
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 

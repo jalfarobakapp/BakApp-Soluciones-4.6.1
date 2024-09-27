@@ -63,7 +63,7 @@ Public Class Frm_Anotaciones_Tabuladas_01_Encabezados
 
         With Grilla
 
-            .DataSource = _SQL.Fx_Get_Tablas(Consulta_sql)
+            .DataSource = _SQL.Fx_Get_DataTable(Consulta_sql)
 
             OcultarEncabezadoGrilla(Grilla, True)
 

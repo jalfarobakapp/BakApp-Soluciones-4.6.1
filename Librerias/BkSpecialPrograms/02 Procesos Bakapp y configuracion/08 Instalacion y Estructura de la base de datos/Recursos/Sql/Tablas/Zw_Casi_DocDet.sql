@@ -127,6 +127,7 @@ CREATE TABLE [dbo].[Zw_Casi_DocDet](
 	[RtuVariable]           [bit]                   NOT NULL DEFAULT (0),
 	[Espuntosvta]           [bit]                   NOT NULL DEFAULT (0),  
 	[ModFechVto]            [bit]                   NOT NULL DEFAULT (0),      
+    [Condicionado]          [bit]                   NOT NULL DEFAULT (0),      
 ) ON [PRIMARY]
 
 

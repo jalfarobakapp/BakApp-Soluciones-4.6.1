@@ -319,7 +319,7 @@ Public Class Frm_Cms_AgregarTipos
 
         Consulta_Sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Comisiones_DetFlTbl" & vbCrLf &
                        "Where Id_Mis = " & _Id_Mis & " And NombreTblFiltro = '" & _NombreTblFiltro & "'"
-        _Tbl = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         If CBool(_Tbl.Rows.Count) Then
             _Tbl.TableName = _NombreTblFiltro

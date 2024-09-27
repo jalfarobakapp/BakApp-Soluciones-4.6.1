@@ -46,7 +46,7 @@ Public Class Frm_MantCostosPrecios_CreaLista
                        "And KOLT In (Select SUBSTRING(CodPermiso,4,6) From " & _Global_BaseBk & "ZW_PermisosVsUsuarios" & Space(1) &
                        "Where CodUsuario = '" & FUNCIONARIO & "' And CodPermiso LIKE 'Lp-%')"
         caract_combo(Cmb_Lista)
-        Cmb_Lista.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Lista.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Lista.SelectedValue = ""
 
         If CBool(_Id_Lista) Then

@@ -32,7 +32,7 @@ Public Class Frm_Ver_Documentos_Permisos
                         Left Join TABFU FuA On FuA.KOFU = CodFuncionario_Autoriza
                         Left Join TABFU FuS On FuS.KOFU = CodFuncionario_Solicita
                         Where Idmaeedo = " & _Idmaeedo & " And Eliminada = 0"
-        _Tbl_Remotas = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Remotas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 

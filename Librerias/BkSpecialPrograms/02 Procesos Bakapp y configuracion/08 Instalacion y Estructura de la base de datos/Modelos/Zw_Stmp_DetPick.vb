@@ -12,5 +12,6 @@
     Public Property Qty As Double
     Public Property Loc As String
     Public Property Cont As String
+    Public Property CantDestinada As Double
 
 End Class

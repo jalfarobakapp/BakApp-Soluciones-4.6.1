@@ -257,7 +257,7 @@ Public Class Frm_Login
             If _KeyReg = _Key_Base Then
 
                 Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Licencia Where Rut = '" & _RutEmpresa01 & "'"
-                Dim _TblLicencia As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblLicencia As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 If CBool(_TblLicencia.Rows.Count) Then
                     With _TblLicencia.Rows(0)
@@ -364,7 +364,7 @@ Public Class Frm_Login
                         Drop Table #Paso
                         Drop Table #Paso1"
 
-        Dim _Tbl_Modalidades As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Modalidades As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not CBool(_Tbl_Modalidades.Rows.Count) Then
 

@@ -10,7 +10,7 @@ CREATE TABLE [dbo].[#TablaPaso#](
 	[CodProveedor]              [Char](13)     DEFAULT '',
 	[CodSucProveedor]           [Char](10)     DEFAULT '',
 	[Descripcion]               [VarChar](50)  DEFAULT '',
-	[Descripcion_Madre]         [VarChar](100) DEFAULT '',
+	[Descripcion_Madre]         [VarChar](500) DEFAULT '',
 	[UD1]                       [Char](2)      DEFAULT '',
 	[UD2]                       [Char](2)      DEFAULT '',
 	[Rtu]                       [Float]        DEFAULT (0),

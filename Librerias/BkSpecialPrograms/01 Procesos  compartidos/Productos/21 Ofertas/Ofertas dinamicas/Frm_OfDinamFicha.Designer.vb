@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Frm_OfDinamFicha
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,10 +20,11 @@ Partial Class Frm_OfDinamFicha
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_OfDinamFicha))
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Cmb_Kogen = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.Input_Cantmin = New DevComponents.Editors.IntegerInput()
         Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
@@ -37,13 +38,13 @@ Partial Class Frm_OfDinamFicha
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
+        Me.Lbl_Kogen = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.LabelX10 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Ecupordesc = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Cmb_Concepto = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.LabelX9 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX8 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_Valdesc = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Lbl_Valdesc = New DevComponents.DotNetBar.LabelX()
         Me.Chk_Tipotrat4 = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Tipotrat3 = New DevComponents.DotNetBar.Controls.CheckBoxX()
@@ -63,6 +64,7 @@ Partial Class Frm_OfDinamFicha
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
         Me.Highlighter1 = New DevComponents.DotNetBar.Validator.Highlighter()
+        Me.Txt_Valdesc = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Input_Cantmin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dtp_Fioferta, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -77,6 +79,7 @@ Partial Class Frm_OfDinamFicha
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.Controls.Add(Me.Cmb_Kogen)
         Me.GroupPanel1.Controls.Add(Me.Input_Cantmin)
         Me.GroupPanel1.Controls.Add(Me.LabelX6)
         Me.GroupPanel1.Controls.Add(Me.LabelX5)
@@ -90,6 +93,7 @@ Partial Class Frm_OfDinamFicha
         Me.GroupPanel1.Controls.Add(Me.LabelX2)
         Me.GroupPanel1.Controls.Add(Me.LabelX1)
         Me.GroupPanel1.Controls.Add(Me.LabelX3)
+        Me.GroupPanel1.Controls.Add(Me.Lbl_Kogen)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 12)
         Me.GroupPanel1.Name = "GroupPanel1"
@@ -124,6 +128,19 @@ Partial Class Frm_OfDinamFicha
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 0
         Me.GroupPanel1.Text = "Detalle de la oferta"
+        '
+        'Cmb_Kogen
+        '
+        Me.Cmb_Kogen.DisplayMember = "Text"
+        Me.Cmb_Kogen.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.Cmb_Kogen.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        Me.Cmb_Kogen.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Cmb_Kogen, True)
+        Me.Cmb_Kogen.ItemHeight = 16
+        Me.Cmb_Kogen.Location = New System.Drawing.Point(626, 23)
+        Me.Cmb_Kogen.Name = "Cmb_Kogen"
+        Me.Cmb_Kogen.Size = New System.Drawing.Size(210, 22)
+        Me.Cmb_Kogen.TabIndex = 77
         '
         'Input_Cantmin
         '
@@ -360,7 +377,7 @@ Partial Class Frm_OfDinamFicha
         Me.Txt_Codigo.MaxLength = 13
         Me.Txt_Codigo.Name = "Txt_Codigo"
         Me.Txt_Codigo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.Txt_Codigo.Size = New System.Drawing.Size(161, 22)
+        Me.Txt_Codigo.Size = New System.Drawing.Size(144, 22)
         Me.Txt_Codigo.TabIndex = 0
         '
         'Txt_Descriptor
@@ -377,11 +394,11 @@ Partial Class Frm_OfDinamFicha
         Me.Txt_Descriptor.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.Txt_Descriptor.ForeColor = System.Drawing.Color.Black
         Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Descriptor, True)
-        Me.Txt_Descriptor.Location = New System.Drawing.Point(170, 23)
+        Me.Txt_Descriptor.Location = New System.Drawing.Point(153, 23)
         Me.Txt_Descriptor.MaxLength = 50
         Me.Txt_Descriptor.Name = "Txt_Descriptor"
         Me.Txt_Descriptor.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.Txt_Descriptor.Size = New System.Drawing.Size(666, 22)
+        Me.Txt_Descriptor.Size = New System.Drawing.Size(467, 22)
         Me.Txt_Descriptor.TabIndex = 1
         '
         'LabelX2
@@ -409,7 +426,7 @@ Partial Class Frm_OfDinamFicha
         Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX1.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelX1.ForeColor = System.Drawing.Color.Black
-        Me.LabelX1.Location = New System.Drawing.Point(170, 3)
+        Me.LabelX1.Location = New System.Drawing.Point(153, 3)
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.Size = New System.Drawing.Size(352, 23)
         Me.LabelX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
@@ -432,16 +449,32 @@ Partial Class Frm_OfDinamFicha
         Me.LabelX3.TabIndex = 71
         Me.LabelX3.Text = "Unidad Pr."
         '
+        'Lbl_Kogen
+        '
+        Me.Lbl_Kogen.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Lbl_Kogen.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_Kogen.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Lbl_Kogen.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_Kogen.Location = New System.Drawing.Point(626, 3)
+        Me.Lbl_Kogen.Name = "Lbl_Kogen"
+        Me.Lbl_Kogen.Size = New System.Drawing.Size(148, 23)
+        Me.Lbl_Kogen.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.Lbl_Kogen.TabIndex = 78
+        Me.Lbl_Kogen.Text = "Tipo de oferta"
+        '
         'GroupPanel2
         '
         Me.GroupPanel2.BackColor = System.Drawing.Color.White
         Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel2.Controls.Add(Me.Txt_Valdesc)
         Me.GroupPanel2.Controls.Add(Me.LabelX10)
         Me.GroupPanel2.Controls.Add(Me.Txt_Ecupordesc)
         Me.GroupPanel2.Controls.Add(Me.Cmb_Concepto)
         Me.GroupPanel2.Controls.Add(Me.LabelX9)
         Me.GroupPanel2.Controls.Add(Me.LabelX8)
-        Me.GroupPanel2.Controls.Add(Me.Txt_Valdesc)
         Me.GroupPanel2.Controls.Add(Me.Lbl_Valdesc)
         Me.GroupPanel2.Controls.Add(Me.Chk_Tipotrat4)
         Me.GroupPanel2.Controls.Add(Me.Chk_Tipotrat3)
@@ -513,10 +546,10 @@ Partial Class Frm_OfDinamFicha
         Me.Txt_Ecupordesc.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.Txt_Ecupordesc.ForeColor = System.Drawing.Color.Black
         Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Ecupordesc, True)
-        Me.Txt_Ecupordesc.Location = New System.Drawing.Point(112, 74)
+        Me.Txt_Ecupordesc.Location = New System.Drawing.Point(118, 74)
         Me.Txt_Ecupordesc.Name = "Txt_Ecupordesc"
         Me.Txt_Ecupordesc.PreventEnterBeep = True
-        Me.Txt_Ecupordesc.Size = New System.Drawing.Size(417, 22)
+        Me.Txt_Ecupordesc.Size = New System.Drawing.Size(411, 22)
         Me.Txt_Ecupordesc.TabIndex = 12
         '
         'Cmb_Concepto
@@ -557,35 +590,12 @@ Partial Class Frm_OfDinamFicha
         Me.LabelX8.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX8.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelX8.ForeColor = System.Drawing.Color.Black
-        Me.LabelX8.Location = New System.Drawing.Point(112, 49)
+        Me.LabelX8.Location = New System.Drawing.Point(118, 49)
         Me.LabelX8.Name = "LabelX8"
         Me.LabelX8.Size = New System.Drawing.Size(391, 23)
         Me.LabelX8.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.LabelX8.TabIndex = 78
         Me.LabelX8.Text = "Ecuación del Monto (se evalúa solo si monto es cero)"
-        '
-        'Txt_Valdesc
-        '
-        Me.Txt_Valdesc.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_Valdesc.Border.Class = "TextBoxBorder"
-        Me.Txt_Valdesc.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Valdesc.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.Txt_Valdesc.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_Valdesc.Enabled = False
-        Me.Txt_Valdesc.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_Valdesc.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.Txt_Valdesc.ForeColor = System.Drawing.Color.Black
-        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Valdesc, True)
-        Me.Txt_Valdesc.Location = New System.Drawing.Point(13, 74)
-        Me.Txt_Valdesc.MaxLength = 20
-        Me.Txt_Valdesc.Name = "Txt_Valdesc"
-        Me.Txt_Valdesc.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.Txt_Valdesc.Size = New System.Drawing.Size(81, 22)
-        Me.Txt_Valdesc.TabIndex = 11
-        Me.Txt_Valdesc.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Lbl_Valdesc
         '
@@ -922,6 +932,7 @@ Partial Class Frm_OfDinamFicha
         Me.Btn_Grabar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Grabar.ForeColor = System.Drawing.Color.Black
         Me.Btn_Grabar.Image = CType(resources.GetObject("Btn_Grabar.Image"), System.Drawing.Image)
+        Me.Btn_Grabar.ImageAlt = CType(resources.GetObject("Btn_Grabar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Grabar.Name = "Btn_Grabar"
         Me.Btn_Grabar.Tooltip = "Grabar"
         '
@@ -939,6 +950,24 @@ Partial Class Frm_OfDinamFicha
         Me.Highlighter1.ContainerControl = Me
         Me.Highlighter1.FocusHighlightColor = DevComponents.DotNetBar.Validator.eHighlightColor.Red
         Me.Highlighter1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
+        '
+        'Txt_Valdesc
+        '
+        Me.Txt_Valdesc.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Valdesc.Border.Class = "TextBoxBorder"
+        Me.Txt_Valdesc.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Valdesc.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Valdesc.Enabled = False
+        Me.Txt_Valdesc.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Valdesc, True)
+        Me.Txt_Valdesc.Location = New System.Drawing.Point(13, 74)
+        Me.Txt_Valdesc.Name = "Txt_Valdesc"
+        Me.Txt_Valdesc.Size = New System.Drawing.Size(100, 22)
+        Me.Txt_Valdesc.TabIndex = 84
+        Me.Txt_Valdesc.Text = "0"
         '
         'Frm_OfDinamFicha
         '
@@ -987,7 +1016,6 @@ Partial Class Frm_OfDinamFicha
     Friend WithEvents Chk_Rangos As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents GroupPanel2 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents LabelX8 As DevComponents.DotNetBar.LabelX
-    Public WithEvents Txt_Valdesc As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Lbl_Valdesc As DevComponents.DotNetBar.LabelX
     Friend WithEvents Chk_Tipotrat4 As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_Tipotrat3 As DevComponents.DotNetBar.Controls.CheckBoxX
@@ -1012,4 +1040,7 @@ Partial Class Frm_OfDinamFicha
     Friend WithEvents Input_Cantmin As DevComponents.Editors.IntegerInput
     Friend WithEvents Btn_Eliminar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Highlighter1 As DevComponents.DotNetBar.Validator.Highlighter
+    Public WithEvents Cmb_Kogen As DevComponents.DotNetBar.Controls.ComboBoxEx
+    Friend WithEvents Lbl_Kogen As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_Valdesc As DevComponents.DotNetBar.Controls.TextBoxX
 End Class

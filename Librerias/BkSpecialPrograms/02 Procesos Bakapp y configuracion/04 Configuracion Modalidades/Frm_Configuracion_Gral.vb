@@ -233,8 +233,12 @@ Public Class Frm_Configuracion_Gral
             Chk_Pickear_NVVTodas.Checked = .Item("Pickear_NVVTodas")
             Chk_Pickear_ProdPesoVariable.Checked = .Item("Pickear_ProdPesoVariable")
             Chk_Pickear_FacturarAutoCompletas.Checked = .Item("Pickear_FacturarAutoCompletas")
+            Chk_Pickear_SinoEstaEnWMSIgualPickear.Checked = .Item("Pickear_SinoEstaEnWMSIgualPickear")
 
             Chk_SoloprodEnDoc_CLALIBPR.Checked = .Item("SoloprodEnDoc_CLALIBPR")
+
+            Chk_UsarVencListaPrecios.Checked = .Item("UsarVencListaPrecios")
+            Input_MesesVenListaPrecios.Value = .Item("MesesVenListaPrecios")
 
         End With
 
@@ -324,8 +328,13 @@ Public Class Frm_Configuracion_Gral
         Chk_Pickear_NVVTodas.Enabled = _Modalidad_General
         Chk_Pickear_ProdPesoVariable.Enabled = _Modalidad_General
         Chk_Pickear_FacturarAutoCompletas.Enabled = _Modalidad_General
+        Chk_Pickear_SinoEstaEnWMSIgualPickear.Enabled = _Modalidad_General
 
         Chk_SoloprodEnDoc_CLALIBPR.Enabled = Not _Modalidad_General
+        Btn_ConfFTPProductos.Enabled = _Modalidad_General
+
+        Chk_UsarVencListaPrecios.Enabled = _Modalidad_General
+        Input_MesesVenListaPrecios.Enabled = _Modalidad_General
 
         AddHandler Txt_Dias_Venci_Coti.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
         AddHandler Txt_ValorMinimoNVV.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
@@ -344,7 +353,7 @@ Public Class Frm_Configuracion_Gral
             Dim _Fl = Generar_Filtro_IN_Arreglo(_Tidos, False)
 
             Consulta_sql = "Select TIDO As Codigo,NOTIDO As Descripcion From TABTIDO Where TIDO In " & _Fl
-            _Tbl_Filtro_Documentos_Excluidos = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Filtro_Documentos_Excluidos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         End If
 
@@ -525,6 +534,9 @@ Public Class Frm_Configuracion_Gral
                        ",Pickear_ProdPesoVariable = " & Convert.ToInt32(Chk_Pickear_ProdPesoVariable.Checked) & vbCrLf &
                        ",Pickear_FacturarAutoCompletas = " & Convert.ToInt32(Chk_Pickear_FacturarAutoCompletas.Checked) & vbCrLf &
                        ",SoloprodEnDoc_CLALIBPR = " & Convert.ToInt32(Chk_SoloprodEnDoc_CLALIBPR.Checked) & vbCrLf &
+                       ",Pickear_SinoEstaEnWMSIgualPickear = " & Convert.ToInt32(Chk_Pickear_SinoEstaEnWMSIgualPickear.Checked) & vbCrLf &
+                       ",UsarVencListaPrecios = " & Convert.ToInt32(Chk_UsarVencListaPrecios.Checked) & vbCrLf &
+                       ",MesesVenListaPrecios = " & Input_MesesVenListaPrecios.Value & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
@@ -687,6 +699,28 @@ Public Class Frm_Configuracion_Gral
 
     End Sub
 
+    Private Sub Btn_ConfFTPProductos_Click(sender As Object, e As EventArgs) Handles Btn_ConfFTPProductos.Click
+
+        Dim _Id = 0
+
+        Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Ftp_Conexiones Where Tipo = 'Producto'"
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If Not IsNothing(_Row) Then
+            _Id = _Row.Item("Id")
+        End If
+
+        Dim Fm As New Frm_FTP_Conexion(Cl_Ftp.eTipo_Ftp.Producto)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+        'Dim Fm As New Frm_FTP_Fichero(_Id, Cl_Ftp.eTipo_Ftp.Producto)
+        'Fm.ModoConfiguracion = True
+        'Fm.ShowDialog(Me)
+        'Fm.Dispose()
+
+    End Sub
+
     Sub Sb_Cargar_Combo()
 
         'caract_combo(Cmb_SOC_CodTurno)
@@ -727,7 +761,7 @@ Public Class Frm_Configuracion_Gral
                        "FROM " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
                        "WHERE Nodo_Raiz = 0" & vbCrLf &
                        "ORDER BY Padre"
-        Cmb_Nodo_Raiz_Asociados.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Nodo_Raiz_Asociados.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Nodo_Raiz_Asociados.SelectedValue = "0"
 
     End Sub

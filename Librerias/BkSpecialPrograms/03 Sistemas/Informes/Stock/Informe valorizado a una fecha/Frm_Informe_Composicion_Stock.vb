@@ -216,7 +216,7 @@ Public Class Frm_Informe_Composicion_Stock
         Consulta_sql = Replace(Consulta_sql, "#Tabla_Paso#", _Tabla_Paso)
         Consulta_sql = Replace(Consulta_sql, "#FILTRO#", _SqlFiltro & vbCrLf & _Condicion)
 
-        _Tbl_Informe = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Informe = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         'Formato_Generico_Grilla(Grilla, 20, New Font("Tahoma", 10), Color.AliceBlue, True)
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 9), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
@@ -283,7 +283,7 @@ Public Class Frm_Informe_Composicion_Stock
         Consulta_sql = Replace(Consulta_sql, "#Tabla_Paso#", _Tabla_Paso)
         Consulta_sql = Replace(Consulta_sql, "#FILTRO#", _SqlFiltro & vbCrLf & _Condicion)
 
-        _Tbl_Informe = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Informe = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 9), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 

@@ -22,6 +22,8 @@ CREATE TABLE [dbo].[Zw_Entidades](
     [EmailPuntos]                   [varchar](50)   NOT NULL DEFAULT(0),    
     [FechaInscripPuntos]            [datetime]      NULL,
     [CodFuncionario_Enrola]         [char](3)       NOT NULL DEFAULT(''),
+    [FechaVencLista]                [datetime]      NULL,
+    [CodHolding]                    [varchar](10)   NOT NULL DEFAULT(''),
  CONSTRAINT [PK_Zw_Entidades] PRIMARY KEY CLUSTERED 
 (
 	[CodEntidad] ASC,

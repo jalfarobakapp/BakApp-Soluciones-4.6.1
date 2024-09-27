@@ -37,7 +37,7 @@ Public Class Frm_Stock_History
             Consulta_sql = "Select DISTINCT EMPRESA As Empresa,SULIDO AS Sucursal,BOSULIDO AS Bodega" & vbCrLf & _
                            "From MAEDDO WHERE KOPRCT = '" & _Codigo & "'"
 
-            Dim _TblBodegas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblBodegas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _Fila_Bod As DataRow In _TblBodegas.Rows
 
@@ -50,7 +50,7 @@ Public Class Frm_Stock_History
                                "And EMPRESA = '" & _Empresa & "' And SULIDO = '" & _Sucursal & "' And BOSULIDO = '" & _Bodega & "'" & vbCrLf & _
                                "Order by FEEMLI"
 
-                Dim _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
                 Dim _Fecha_Nacimiento As Date
                 Dim _Fecha_Actual As Date = FechaDelServidor()
                 Dim _Un_Ano_Atras As Date = DateAdd(DateInterval.Year, -1, _Fecha_Actual)
@@ -81,7 +81,7 @@ Public Class Frm_Stock_History
                                "Where KOPRCT = '" & _Codigo & "' And" & Space(1) & _
                                "FEEMLI between '" & _Fecha_Nacimiento & "' And '" & _Fecha_Actual & "'"
 
-                Dim _Tbl_Movimientos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Movimientos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 Dim _Dias_Movimiento As Integer = _Tbl_Movimientos.Rows.Count
                 Dim _Contador_Dias_Movimiento = 0

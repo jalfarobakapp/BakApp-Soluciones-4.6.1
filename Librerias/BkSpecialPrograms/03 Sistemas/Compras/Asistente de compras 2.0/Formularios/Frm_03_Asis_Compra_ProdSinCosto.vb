@@ -17,7 +17,7 @@ Public Class Frm_03_Asis_Compra_ProdSinCosto
             .RowHeadersVisible = False
 
             .DataSource = Nothing
-            .DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            .DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             .RowTemplate.Height = 18
             .DefaultCellStyle.Font = New Font("Tahoma", 8)

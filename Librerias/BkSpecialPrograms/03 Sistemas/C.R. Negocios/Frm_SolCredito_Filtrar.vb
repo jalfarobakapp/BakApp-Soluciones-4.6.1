@@ -176,7 +176,7 @@ Public Class Frm_SolCredito_Filtrar
                       "From " & _Global_BaseBk & "Zw_Negocios_01_Enc Z01" & vbCrLf &
                       _Filtro
 
-        Dim _TblInforme As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblInforme As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblInforme.Rows.Count) Then
             If MessageBoxEx.Show(Me, _TblInforme.Rows.Count & " registros encontrados" & vbCrLf & vbCrLf &
@@ -204,7 +204,7 @@ Public Class Frm_SolCredito_Filtrar
                         "Where Es_Vendedor = 1" & vbCrLf & _
                         "ORDER BY Hijo"
 
-        Cmb_Vendedor.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Vendedor.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Vendedor.SelectedValue = ""
 
         AddHandler Rdb_NroNegocio_Todas.CheckedChanged, AddressOf Sb_NroSOC

@@ -38,7 +38,7 @@ Public Class Frm_Select_Nomenclatura
                        "From PRELA" & vbCrLf &
                        "Inner Join PNPE On PRELA.CODNOMEN=PNPE.CODIGO And PNPE.ESODD <> 'S' And PNPE.EMPRESA = '" & ModEmpresa & "'" & vbCrLf &
                        "Where PRELA.CODIGO = '" & _Codigo & "'"
-        _TblNomenclaturas = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblNomenclaturas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

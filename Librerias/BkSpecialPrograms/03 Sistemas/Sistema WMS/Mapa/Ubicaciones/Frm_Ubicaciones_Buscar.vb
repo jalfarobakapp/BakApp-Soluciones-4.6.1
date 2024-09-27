@@ -71,7 +71,7 @@ Public Class Frm_Ubicaciones_Buscar
                        "Where BS Like '%" & _Cadena & "%'" & vbCrLf &
                        "Drop table #Paso_Ub"
 
-        _TblSectores = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblSectores = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 
@@ -128,7 +128,7 @@ Public Class Frm_Ubicaciones_Buscar
 
         Consulta_sql = "Select top 1 * From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Det Where Codigo_Sector = '" & _Codigo_Secto & "'"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl.Rows.Count) Then
             _RowSector = _Tbl.Rows(0)

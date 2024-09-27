@@ -32,8 +32,12 @@ Public Class Frm_Sincronizador
         CircularPgrs.IsRunning = False
 
         Timer_Limpiar.Interval = (1000 * 60) * 5
+        Timer_AjustarFecha.Interval = (1000 * 60) * 30
+        Timer_CerrarConfirmadas.Interval = (1000 * 60) * 15
 
         Sb_Ejecutar_diablito()
+
+        AddHandler Switch_Sincronizacion.ValueChanged, AddressOf Switch_Sincronizacion_ValueChanged
 
     End Sub
 
@@ -87,6 +91,8 @@ Public Class Frm_Sincronizador
             Timer_Ejecutar.Interval = 1000 * 5
             Timer_Ejecutar.Start()
             Timer_Limpiar.Start()
+            Timer_AjustarFecha.Start()
+            Timer_CerrarConfirmadas.Start()
             Sb_AddToLog("Sincronizar", "Sincronización en ejecución.", Txt_Log)
 
         Catch ex As Exception
@@ -98,6 +104,10 @@ Public Class Frm_Sincronizador
     Private Sub Timer_Ejecutar_Tick(sender As Object, e As EventArgs) Handles Timer_Ejecutar.Tick
 
         Timer_Ejecutar.Stop()
+
+        If IsNothing(Cadena_ConexionSQL_Server) Then
+            Return
+        End If
 
         If Not Switch_Sincronizacion.Value Then
             CircularPgrs.IsRunning = False
@@ -127,8 +137,11 @@ Public Class Frm_Sincronizador
 
         _Cl_Sincroniza.Sb_Ejecutar_Revision_IncorporarNVVAutomaticamenteAStem(Txt_Log, _FechaDesde, _FechaHasta)
         _Cl_Sincroniza.Sb_Ejecutar_Revision(Txt_Log, _FechaRevision)
-        _Cl_Sincroniza.Sb_MarcarFacturadasPorFuera(Txt_Log, _FechaRevision)
+        _Cl_Sincroniza.Sb_MarcarFacturadasPorFuera(Txt_Log)
         _Cl_Sincroniza.Sb_RevisarCanceladasLiberadas(Txt_Log, _FechaRevision)
+        '_Cl_Sincroniza.Sb_RevisarRezagadasSinFuncionarioQueFactura(Txt_Log)
+        '_Cl_Sincroniza.Sb_RevisarFacturadasConfirmadasSinCerrar(Txt_Log)
+        '_Cl_Sincroniza.Sb_RevisarIngresadasRezagadas(Txt_Log)
 
         Switch_Sincronizacion.Value = True
         CircularPgrs.IsRunning = True
@@ -153,7 +166,7 @@ Public Class Frm_Sincronizador
         Txt_Log.Text = String.Empty
     End Sub
 
-    Private Sub Switch_Sincronizacion_ValueChanged(sender As Object, e As EventArgs) Handles Switch_Sincronizacion.ValueChanged
+    Private Sub Switch_Sincronizacion_ValueChanged(sender As Object, e As EventArgs)
 
         CircularPgrs.IsRunning = Switch_Sincronizacion.Value
 
@@ -171,6 +184,19 @@ Public Class Frm_Sincronizador
         Sb_AddToLog("Conexión", "Revisando completadas para ver si hay alguna cancelada en WMS...", Txt_Log)
         _Cl_Sincroniza.Sb_RevisarCompletadasCanceladas(Txt_Log)
         Timer_Limpiar.Start()
+    End Sub
+
+    Private Sub Timer_AjustarFecha_Tick(sender As Object, e As EventArgs) Handles Timer_AjustarFecha.Tick
+        Txt_Log.Text = String.Empty
+        Dtp_FechaRevision.Value = Now.Date
+        Sb_AddToLog("Sincronizar", "Se actualiza la fecha: " & Dtp_FechaRevision.Value, Txt_Log)
+    End Sub
+
+    Private Sub Timer_CerrarConfirmadas_Tick(sender As Object, e As EventArgs) Handles Timer_CerrarConfirmadas.Tick
+        Timer_Ejecutar.Stop()
+        Sb_AddToLog("Sincronizar", "Revisar facturadas y confirmadas en WMS para cerrar", Txt_Log)
+        _Cl_Sincroniza.Sb_RevisarFacturadasConfirmadasSinCerrar(Txt_Log)
+        Timer_Ejecutar.Start()
     End Sub
 
 End Class

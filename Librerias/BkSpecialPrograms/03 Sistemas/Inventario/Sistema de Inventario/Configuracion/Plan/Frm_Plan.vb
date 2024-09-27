@@ -30,7 +30,7 @@ Public Class Frm_Plan
 
 
     Sub Sb_Actualizar_Grilla()
-
+        Return
         Consulta_sql = "Select Ubic.*,Isnull(Toma.Id_Pareja,0) As 'IdPareja_Toma',Isnull(P1.Nombre_Pareja,'') As 'Pareja_Toma',Toma.FechaActivacion As 'FechaAsigToma',
 		  	                          Isnull(Levante.Id_Pareja,0) As 'IdPareja_Levante',Isnull(P2.Nombre_Pareja,'') As 'Pareja_Levante',Levante.FechaActivacion As 'FechaAsigLevante'  
                         From " & _Global_BaseBk & "Zw_Inv_Sector_vs_Ubicaciones Ubic
@@ -45,7 +45,7 @@ Public Class Frm_Plan
                         Where Ubic.Id_Inventario = " & _Id_Inventario & "
                         Order By Ubic.Codigo_Sector,Ubic.Codigo_Ubic"
 
-        Dim _Tbl_Parejas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Parejas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

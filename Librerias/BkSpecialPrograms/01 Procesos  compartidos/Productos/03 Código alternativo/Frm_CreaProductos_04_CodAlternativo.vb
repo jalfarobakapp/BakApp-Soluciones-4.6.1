@@ -247,7 +247,7 @@ Public Class Frm_CreaProductos_04_CodAlternativo
                            "IsNull((Select NOKOPR From MAEPR Mp Where Mp.KOPR = Td.KOPR),NOKOPRAL) as 'Descripcion'" & vbCrLf &
                            "From TABCODAL Td" & vbCrLf &
                            "Where Td.KOEN = '" & _CodProveedor & "' And Td.KOPRAL = '" & _CodigoAlternativo & "'"
-            Dim _TblPr As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblPr As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If CBool(_TblPr.Rows.Count) Then
 
@@ -366,7 +366,7 @@ Public Class Frm_CreaProductos_04_CodAlternativo
                        "IsNull((Select NOKOPR From MAEPR Mp Where Mp.KOPR = Td.KOPR),NOKOPRAL) as 'Descripcion'" & vbCrLf &
                        "From TABCODAL Td" & vbCrLf &
                        "Where Td.KOEN = '" & _Koen & "' And Td.KOPRAL = '" & _Kopral & "'"
-            Dim _TblPr As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblPr As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If CBool(_TblPr.Rows.Count) Then
 

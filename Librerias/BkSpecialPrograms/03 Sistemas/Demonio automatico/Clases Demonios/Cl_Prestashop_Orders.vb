@@ -166,7 +166,7 @@ Public Class Cl_Prestashop_Orders
                         Inner Join " & _Global_BaseBk & "Zw_PrestaShop Ps On Ps.Codigo_Pagina = Od.Codigo_Pagina
                         Where Reference = ''"
 
-        Dim _Tbl_PrestaShop_orders As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql, False)
+        Dim _Tbl_PrestaShop_orders As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
 
         If CBool(_Tbl_PrestaShop_orders.Rows.Count) Then
 

@@ -54,12 +54,12 @@ Public Class Frm_InvMargenes_
 
         caract_combo(CmbListaDeCostos)
         Consulta_Sql = "Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
-        CmbListaDeCostos.DataSource = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        CmbListaDeCostos.DataSource = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         caract_combo(Cmb_Clasificaciones)
         Consulta_Sql = "Select Codigo_Nodo As Padre,Descripcion As Hijo 
                         From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Nodo_Raiz = 0 And Clas_Unica_X_Producto = 1 "
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Cmb_Clasificaciones.DataSource = _Tbl
         Grupo_Clasificaciones.Enabled = CBool(_Tbl.Rows.Count)
@@ -766,7 +766,7 @@ Public Class Frm_InvMargenes_
                            "cast(Porc_Margen as decimal(10,2)) as Porc_Margen" & vbCrLf &
                            "From " & TblMrgProductos
 
-            Grilla_Mrg_Productos.DataSource = _Sql.Fx_Get_Tablas(Consulta_Sql)
+            Grilla_Mrg_Productos.DataSource = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
             'LblDescripcion.DataBindings.Clear()
             'LblDescripcion.DataBindings.Add("text", Grilla_Mrg_Productos.DataSource, "Nokopr")
@@ -1094,7 +1094,7 @@ Public Class Frm_InvMargenes_
         _Sql.Ej_consulta_IDU(Consulta_Sql)
 
         Consulta_Sql = "Select Min(" & Margen & ") As Minimo,Max(" & Margen & ") As Maximo From " & TblMrgProductos
-        Dim Tbla As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim Tbla As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Dim Menor, Mayor, Maximo As Double
         Menor = Tbla.Rows(0).Item("Minimo")
@@ -1102,7 +1102,7 @@ Public Class Frm_InvMargenes_
         Maximo = 100
 
         Consulta_Sql = "Select * From " & TblMrgProductos & " Order by " & Margen
-        Tbla = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Tbla = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Dim Negativos As Integer = 5
         Dim Positivos As Integer = 10

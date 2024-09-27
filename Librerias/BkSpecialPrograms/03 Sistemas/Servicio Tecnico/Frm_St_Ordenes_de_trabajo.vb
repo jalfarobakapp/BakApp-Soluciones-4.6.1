@@ -234,7 +234,7 @@ Public Class Frm_St_Ordenes_de_trabajo
         Consulta_Sql = Replace(Consulta_Sql, "#Db_BakApp#", _Global_BaseBk)
         Consulta_Sql = Replace(Consulta_Sql, "#Condicion#", _Condicion)
 
-        _Tbl_OT = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_OT = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Sb_Marcar_Grilla()
 
@@ -667,7 +667,7 @@ Public Class Frm_St_Ordenes_de_trabajo
                        "Where Id_Ot = " & _Id_Ot & Space(1) &
                        "Order by Semilla"
 
-            _Tbl_Estado = _Sql.Fx_Get_Tablas(Consulta_Sql)
+            _Tbl_Estado = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
 
             Fx_Estados(Estado_01_Ingreso, "Ingresado", "...", "1ra Etapa",

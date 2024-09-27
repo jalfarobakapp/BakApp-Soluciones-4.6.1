@@ -264,7 +264,7 @@ Public Class Frm_Rotacion_Procesar_Productos
                       "Isnull((Select Top 1 NOKOCARAC From TABCARAC Where KOTABLA = 'CLALIBPR' And KOCARAC = CLALIBPR),'') As Clasificacion_Libre" & vbCrLf & _
                       "From MAEPR Where KOPR = '" & _Codigo & "'"
 
-                Dim _Tbl As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
                 Dim _TblBodegas As DataTable
 
                 If CBool(_Tbl.Rows.Count) Then
@@ -285,7 +285,7 @@ Public Class Frm_Rotacion_Procesar_Productos
                         Consulta_sql = "Select DISTINCT EMPRESA,SULIDO AS KOSU,BOSULIDO AS KOBO " & vbCrLf & _
                                        "From MAEDDO WHERE KOPRCT = '" & _Codigo & "'"
 
-                        _TblBodegas = _SQL.Fx_Get_Tablas(Consulta_sql)
+                        _TblBodegas = _SQL.Fx_Get_DataTable(Consulta_sql)
 
                         Consulta_sql = String.Empty
 
@@ -419,13 +419,13 @@ Public Class Frm_Rotacion_Procesar_Productos
             Consulta_sql = "SELECT KOPR As Codigo FROM MAEPR WHERE KOPR IN" & vbCrLf & _
                            "(Select Distinct KOPRCT As Codigo From MAEDDO Where KOPRCT In " & _FlProductos & Space(1) & _
                            "And FEEMLI BETWEEN '" & Format(_Fecha_Desde, "yyyyMMdd") & "' And '" & Format(_Fecha_Hasta, "yyyyMMdd") & "' And TIDO NOT IN ('OCC','NVV','NVI','OCI','COV'))"
-            Dim _Tbl_ConMovimientos As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_ConMovimientos As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
 
             Consulta_sql = "SELECT KOPR As Codigo FROM MAEPR WHERE KOPR NOT IN" & vbCrLf & _
                             "(Select Distinct KOPRCT As Codigo From MAEDDO Where KOPRCT In " & _FlProductos & Space(1) & _
                             "And FEEMLI BETWEEN '" & Format(_Fecha_Desde, "yyyyMMdd") & "' And '" & Format(_Fecha_Hasta, "yyyyMMdd") & "' And TIDO NOT IN ('OCC','NVV','NVI','OCI','COV'))" & vbCrLf & _
                             "AND KOPR IN " & _FlProductos
-            Dim _Tbl_SinMovimientos As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_SinMovimientos As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
 
             If CBool(_Tbl_SinMovimientos.Rows.Count) Then
                 _FlProductos = Generar_Filtro_IN(_Tbl_SinMovimientos, "", "Codigo", False, False, "'")
@@ -457,7 +457,7 @@ Public Class Frm_Rotacion_Procesar_Productos
                       "Isnull((Select Top 1 NOKOCARAC From TABCARAC Where KOTABLA = 'CLALIBPR' And KOCARAC = CLALIBPR),'') As Clasificacion_Libre" & vbCrLf & _
                       "From MAEPR Where KOPR = '" & _Codigo & "'"
 
-                Dim _Tbl As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
                 Dim _TblBodegas As DataTable
 
                 If CBool(_Tbl.Rows.Count) Then
@@ -469,7 +469,7 @@ Public Class Frm_Rotacion_Procesar_Productos
                     Consulta_sql = "Select DISTINCT EMPRESA,SULIDO AS KOSU,BOSULIDO AS KOBO " & vbCrLf & _
                                    "From MAEDDO WHERE KOPRCT = '" & _Codigo & "'"
 
-                    _TblBodegas = _SQL.Fx_Get_Tablas(Consulta_sql)
+                    _TblBodegas = _SQL.Fx_Get_DataTable(Consulta_sql)
                     Consulta_sql = String.Empty
 
 
@@ -607,7 +607,7 @@ Public Class Frm_Rotacion_Procesar_Productos
                        "And KOPRCT = '" & _Codigo & "' And" & Space(1) & _
                        "FEEMLI between '" & _Fecha_Desde & "' And '" & _Fecha_Hasta & "'"
 
-        Dim _Tbl_Movimientos As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Movimientos As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Dias_Movimiento As Integer = _Tbl_Movimientos.Rows.Count
         Dim _Contador_Dias_Movimiento = 0
@@ -870,9 +870,9 @@ Public Class Frm_Rotacion_Procesar_Productos
                 End If
 
 
-                Dim _TblProductos As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblProductos As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
 
-                Dim _Tbl_Productos_Asociados As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Productos_Asociados As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
 
                 Dim _Filtro_Prod_Asoc = Generar_Filtro_IN(_Tbl_Productos_Asociados, "", "KOPR", False, False, "'")
 
@@ -895,7 +895,7 @@ Public Class Frm_Rotacion_Procesar_Productos
 
                         Consulta_sql = "Select DISTINCT EMPRESA,SULIDO AS KOSU,BOSULIDO AS KOBO " & vbCrLf & _
                                        "From MAEDDO WHERE KOPRCT In " & _Filtro_Prod_Asoc
-                        _TblBodegas = _SQL.Fx_Get_Tablas(Consulta_sql)
+                        _TblBodegas = _SQL.Fx_Get_DataTable(Consulta_sql)
 
                         If CBool(_TblBodegas.Rows.Count) Then
 

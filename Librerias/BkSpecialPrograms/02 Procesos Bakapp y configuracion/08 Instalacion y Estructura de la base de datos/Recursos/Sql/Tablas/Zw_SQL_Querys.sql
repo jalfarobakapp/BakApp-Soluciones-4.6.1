@@ -8,6 +8,8 @@ CREATE TABLE [dbo].[Zw_SQL_Querys](
 	[Funcionario]           [varchar](3)        NOT NULL DEFAULT (''),
 	[Consulta_Global]       [bit]               NOT NULL DEFAULT (0),
 	[Consulta_Personal]     [bit]               NOT NULL DEFAULT (0),
+    [FechaCreacion]         [datetime]          NULL,
+    [Nota]                  [varchar](max)      NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_SQL_Querys] PRIMARY KEY CLUSTERED 
 (
 	[Nombre_Query] ASC

@@ -120,6 +120,9 @@ CREATE TABLE [dbo].[Zw_Configuracion](
 [Pickear_ProdPesoVariable]                              [bit]           NOT NULL DEFAULT (0), 
 [Pickear_FacturarAutoCompletas]                         [bit]           NOT NULL DEFAULT (0), 
 [SoloprodEnDoc_CLALIBPR]                                [bit]           NOT NULL DEFAULT (0), 
+[Pickear_SinoEstaEnWMSIgualPickear]                     [bit]           NOT NULL DEFAULT (0), 
+[UsarVencListaPrecios]                                  [bit]           NOT NULL DEFAULT (0),
+[MesesVenListaPrecios]                                  [int]           NOT NULL DEFAULT (0),
 CONSTRAINT [PK_Zw_Configuracion] PRIMARY KEY CLUSTERED 
 (
 	[Modalidad] ASC

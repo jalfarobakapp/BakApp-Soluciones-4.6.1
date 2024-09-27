@@ -200,7 +200,7 @@ Public Class Cl_Consolidacion_Stock
                            "KOPR IN (SELECT Distinct KOPRCT FROM MAEDDO WHERE FEEMLI = '" & _Fecha & "')"
         End If
 
-        _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_Sql, False)
+        _Tbl_Productos = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
 
         If Not IsNothing(_Tbl_Productos) AndAlso CBool(_Tbl_Productos.Rows.Count) Then
 

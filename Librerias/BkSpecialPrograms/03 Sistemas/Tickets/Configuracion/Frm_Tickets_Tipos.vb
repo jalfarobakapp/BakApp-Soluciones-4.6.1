@@ -39,7 +39,7 @@ Public Class Frm_Tickets_Tipos
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tipos" & vbCrLf &
                        "Where Id_Area = " & _Id_Area
-        _Tbl_Tipos = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Tipos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Tipos
 

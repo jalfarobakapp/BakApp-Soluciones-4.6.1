@@ -110,7 +110,7 @@ Public Module Funciones_Especiales_BakApp
 
         Consulta_sql = "Select EMPRESA From CONFIGP
                         Where RUT In (Select Rut From " & _Global_BaseBk & "Zw_Licencia Where Activa = 1)"
-        Dim _Tbl_Configp As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Configp As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Empresa As String
 
@@ -172,7 +172,7 @@ Public Module Funciones_Especiales_BakApp
         If Fx_Licencia(_Formulario, RutEmpresa) Then
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Licencia Where Rut = '" & RutEmpresa & "'"
-            Dim _TblLicencia As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblLicencia As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Fecha_caduca = _TblLicencia.Rows(0).Item("Fecha_caduca")
 
@@ -300,7 +300,7 @@ Public Module Funciones_Especiales_BakApp
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
         Dim _Consulta_sql = "Select Top 1 " & _Tido & " From CONFIEST Where EMPRESA = '" & _Empresa & "' And MODALIDAD = '" & _Modalidad & "'"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
         Dim _Nudo_Modalidad As String
 
@@ -361,7 +361,7 @@ Public Module Funciones_Especiales_BakApp
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
         Dim _Consulta_sql = "Select Top 1 " & _Tido & " From CONFIEST Where MODALIDAD = '" & _Modalidad & "' And EMPRESA = '" & ModEmpresa & "'"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
         Dim _Nudo_Modalidad As String
 
@@ -413,7 +413,7 @@ Public Module Funciones_Especiales_BakApp
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Licencia Where Rut = '" & _RutEmpresa & "'"
-        Dim _TblLicencia As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblLicencia As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblLicencia.Rows.Count) Then
 
@@ -850,7 +850,28 @@ Public Module Funciones_Especiales_BakApp
 
         Consulta_sql = "select getdate() As Fecha"
         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-        FechaDelServidor = _Row.Item("Fecha")
+
+        If IsNothing(_Row) Then
+            Return Nothing
+        End If
+
+        Return _Row.Item("Fecha")
+
+    End Function
+
+    Function FechaDelServidor(_MostrarError As Boolean) As Date
+
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        Consulta_sql = "select getdate() As Fecha"
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, _MostrarError)
+
+        If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+            Return Nothing
+            'Throw New System.Exception(_Sql.Pro_Error)
+        End If
+
+        Return _Row.Item("Fecha")
 
     End Function
 
@@ -874,7 +895,7 @@ Public Module Funciones_Especiales_BakApp
         Consulta_sql = "Select * From " & _Global_BaseBk & "ZW_PermisosVsUsuarios" & vbCrLf &
                        "Where CodPermiso = '" & _CodPremiso & "' And CodUsuario = '" & _CodUsuario & "'"
 
-        _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Return _Tbl
 
@@ -931,7 +952,7 @@ Public Module Funciones_Especiales_BakApp
             Consulta_sql = Replace(Consulta_sql, "And SUEN = @SucEntidad", "")
         End If
 
-        _Tbl_Entidad = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Entidad = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Row_entidad As DataRow In _Tbl_Entidad.Rows
 
@@ -1108,7 +1129,7 @@ Public Module Funciones_Especiales_BakApp
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
         Dim _Consulta_sql = "Select Top 1 " & _Tido & " From CONFIEST Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
         Dim _Nudo_Modalidad As String
 
@@ -1324,7 +1345,7 @@ Public Module Funciones_Especiales_BakApp
         End If
 
         Consulta_sql = "SELECT ROUND(SUM(" & CAMPO & ")," & Decimales & ") AS CAMPO FROM " & TABLA & condicion & ""
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim cuenta As Long = _Tbl.Rows.Count
         Dim dr As DataRow = _Tbl.Rows(0)
@@ -1495,7 +1516,7 @@ Public Module Funciones_Especiales_BakApp
                        "Where Tabla = '" & _Tabla & "'" & vbCrLf &
                        "order by Orden"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
         _Cmb.DataSource = _Tbl
         If CBool(_Tbl.Rows.Count) Then
             _Cmb.SelectedValue = _Campoxdefecto
@@ -1597,7 +1618,7 @@ Public Module Funciones_Especiales_BakApp
 
         Consulta_sql = "Select Distinct KOMO From MAEMO Where (FEMO = '" & _Fecha & "' AND TIMO = 'E') Or " &
                        "(FEMO = '" & _Fecha & "' And KOMO <> '$')"
-        Dim _CantMonedas_Con_Taza = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _CantMonedas_Con_Taza = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_CantMonedas) Then
 
@@ -1609,7 +1630,7 @@ Public Module Funciones_Especiales_BakApp
                                "From TABMO Where (TIMO = 'E' Or KOMO <> '$')" & vbCrLf &
                                "And KOMO Not IN (Select Distinct KOMO From MAEMO Where FEMO = '" & _Fecha & "')"
 
-                Dim _TblMoneda As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblMoneda As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 Dim _Monedas = String.Empty
 
@@ -2335,7 +2356,7 @@ Public Module Modulo_Precios_Costos
         Dim _Cont = 0
 
         Consulta_sql = "Select * From TABPP"
-        Dim _TblListas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblListas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For i = 0 To _Ecuaciones.Length - 1
 
@@ -2369,7 +2390,7 @@ Public Module Modulo_Precios_Costos
         _Filtro_Listas = Generar_Filtro_IN_Arreglo(_Listas, False)
 
         Consulta_sql = "Select * From TABPP Where KOLT In (" & _Filtro_Listas & ")"
-        Dim _Tbl_Listas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Listas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Campo As String
 
@@ -2389,7 +2410,7 @@ Public Module Modulo_Precios_Costos
                 Dim _Contador = 0
 
                 Consulta_sql = "Select COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS Where TABLE_NAME = 'TABPRE'"
-                Dim _Tbl_Campos_Tabpre As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Campos_Tabpre As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 For Each _FColumnas As DataRow In _Tbl_Campos_Tabpre.Rows
 
@@ -2475,7 +2496,7 @@ Public Module Modulo_Precios_Costos
         End If
 
         Consulta_sql = "Select * From PNOMDIM Where DEPENDENCI = 'Valor_propio'"
-        Dim _Tbl_Dimension_Valor_Propio As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Dimension_Valor_Propio As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _FDim_Vp As DataRow In _Tbl_Dimension_Valor_Propio.Rows
 
@@ -2498,7 +2519,7 @@ Public Module Modulo_Precios_Costos
         Next
 
         Consulta_sql = "Select * From PNOMDIM Where DEPENDENCI = 'Por_producto'"
-        Dim _Tbl_Dimension_Por_Producto As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Dimension_Por_Producto As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _FDim_Vp As DataRow In _Tbl_Dimension_Por_Producto.Rows
 
@@ -2524,7 +2545,7 @@ Public Module Modulo_Precios_Costos
         Consulta_sql = "Select * From PNOMDIM 
                         Inner Join INFORMATION_SCHEMA.COLUMNS On PNOMDIM.CODIGO = COLUMN_NAME And DATA_TYPE In ('float','int')
                         Where DEPENDENCI = 'Por_entidad' And TABLE_NAME = 'PDIMCLI'"
-        Dim _Tbl_Dimension_Por_Entidad As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Dimension_Por_Entidad As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _FDim_Vp As DataRow In _Tbl_Dimension_Por_Entidad.Rows
 
@@ -3130,7 +3151,7 @@ Public Module Crear_Documentos_Desde_Otro
                         FROM MAEDDO  WITH ( NOLOCK ) 
                         WHERE IDMAEEDO =  " & _Idmaeedo & " AND ( ESLIDO<>'C' OR ESFALI='I' ) AND TICT = ''"
 
-        Dim _Tbl_Saldo_Facturar As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Saldo_Facturar As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Return CBool(_Tbl_Saldo_Facturar.Rows.Count)
 
@@ -4595,7 +4616,7 @@ Public Module Crear_Documentos_Desde_Otro
             Dim _Opera_Rev = Split(_Opera, ",")
 
             Consulta_sql = "Select Top 1 * From TABPRE"
-            Dim _TblTabpre As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblTabpre As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             ' Asi es como actua el campo OPERA, este campo define como se comportaran los campos adicionales a partir del campo nro 29 en adelante
 
@@ -5557,7 +5578,7 @@ Public Module Crear_Documentos_Desde_Otro
             Consulta_sql = "Select Id, Tabla_Random, Campo_Random, Tabla_Bakapp, Campo_Bakapp
                         From " & _Global_BaseBk & "Zw_Tablas_Equivalentes_Rd_Bk
                         Where Tabla_Bakapp = 'Zw_ListaPreCosto'"
-            Dim _Tbl_Equivalentes As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql, False)
+            Dim _Tbl_Equivalentes As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
                 Throw New System.Exception(_Sql.Pro_Error)

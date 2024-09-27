@@ -1,4 +1,5 @@
 ﻿Imports DevComponents.DotNetBar
+Imports MySql.Data.Authentication
 
 Public Class Frm_BuscarDocumento_Mt
 
@@ -213,7 +214,7 @@ Public Class Frm_BuscarDocumento_Mt
 
     Public Sub Sb_Llenar_Grilla(ByVal Sql_Query As String)
 
-        _Tbl_Documentos = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_Documentos = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         If HabilitarNVVParaFacturar Then
 
@@ -388,7 +389,7 @@ Public Class Frm_BuscarDocumento_Mt
 
     Public Sub Sb_Llenar_Grilla_Pago_A_Documentos(ByVal Sql_Query As String)
 
-        _Tbl_Documentos = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_Documentos = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         With Grilla
 
@@ -532,7 +533,7 @@ Public Class Frm_BuscarDocumento_Mt
             Dim _Filtro_Idmaeedo = Generar_Filtro_IN(_Tbl_Documentos, "Chk", "IDMAEEDO", False, True, "")
 
             Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO In " & _Filtro_Idmaeedo
-            _Tbl_DocSeleccionados = _Sql.Fx_Get_Tablas(Consulta_Sql)
+            _Tbl_DocSeleccionados = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
             Me.Close()
 
@@ -562,13 +563,13 @@ Public Class Frm_BuscarDocumento_Mt
                         ELSE (CAPRCO2-(CAPRAD2+CAPREX2))
                         END     
                         AS SALDO, -- Saldo Cantidad
-                        CASE UDTRPR WHEN 1 THEN UD01PR ELSE UD02PR END AS UD,PPPRNE FROM MAEDDO WHERE IDMAEEDO = " & Idmaeedo
+                        CASE UDTRPR WHEN 1 THEN UD01PR ELSE UD02PR END AS UD,PPPRNE FROM MAEDDO WITH ( NOLOCK ) WHERE IDMAEEDO = " & Idmaeedo
 
         With Grilla_Detalle
 
             OcultarEncabezadoGrilla(Grilla_Detalle)
 
-            .DataSource = _Sql.Fx_Get_Tablas(Consulta_Sql)
+            .DataSource = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
             Dim _DisplayIndex = 0
 
@@ -714,7 +715,7 @@ Public Class Frm_BuscarDocumento_Mt
 
         Consulta_Sql = "Select Distinct Rtrim(Ltrim(MAILTO)) As MAILTO,Rtrim(Ltrim(MAILCC)) As MAILCC From MAEENMAIL Where KOEN = '" & _Koen & "' And KOMAIL = '001'"
 
-        Dim _Tbl_Maeenmail As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_Maeenmail As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         System.Windows.Forms.Application.DoEvents()
 
@@ -790,7 +791,7 @@ Public Class Frm_BuscarDocumento_Mt
                         Correo_Para,Correo_CC,Correo_Body,Picking, NombreFormato_Correo,Para_Maeenmail
                         From " & _Global_BaseBk & "Zw_Demonio_Filtros_X_Estacion
                         Where TipoDoc = '" & _Tido & "' And Codigo = '" & _Kofudo & "'"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Dim _Documentos_Enviados = 0
 
@@ -1010,7 +1011,7 @@ Public Class Frm_BuscarDocumento_Mt
                         Btn_Facturar.Visible = (_Estado = "Vigente")
                     End If
 
-                    LabelItem1.Text = "Opciones (Id: " & _Idmaeedo & ")"
+                    Lbl_Mnu_Idmaeedo.Text = "Opciones (Id: " & _Idmaeedo & ")"
 
                     ShowContextMenu(Menu_Contextual_01)
 
@@ -1599,15 +1600,17 @@ Public Class Frm_BuscarDocumento_Mt
             Return True
         End If
 
-        Consulta_Sql = "Select FResp.*,Isnull(FDoc.Autorizacion,'RECHAZADO') As CodAutorizacion" & vbCrLf &
+        Consulta_Sql = "Select Top 1 FResp.*,Isnull(FDoc.Autorizacion,'RECHAZADO') As CodAutorizacion" & vbCrLf &
                         "From " & _Global_BaseBk & "Zw_Fincred_TramaRespuesta FResp" & vbCrLf &
                         "Left Join " & _Global_BaseBk & "Zw_Fincred_Documentos FDoc On FResp.Id = FDoc.Id_TR" & vbCrLf &
-                        "Where (Idmaeedo = " & _Idmaeedo & ")"
+                        "Where Idmaeedo = " & _Idmaeedo & " And Eliminada = 0"
         Dim _RowFincred As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
         Dim _Codigo_negacion_transaccion = 0
         Dim _Descripcion_negacion As String
         Dim _CodAutorizacion As String
+
+        Dim _Volver_A_Consultar_Fincred As Boolean
 
         If Not IsNothing(_RowFincred) Then
 
@@ -1624,16 +1627,27 @@ Public Class Frm_BuscarDocumento_Mt
                 End If
                 Return True
             Else
-                MessageBoxEx.Show(Me, "Revisión de parte de FINCRED RECHAZADA" & vbCrLf & vbCrLf &
-                                  "Documento: " & _RowMaeedo.Item("NUDO") & "-" & _RowMaeedo.Item("NUDO") & vbCrLf & vbCrLf &
-                                  "Respuesta Fincred: " & _Descripcion_negacion, "Información FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Return False
+
+                'MessageBoxEx.Show(Me, "Revisión de parte de FINCRED RECHAZADA" & vbCrLf & vbCrLf &
+                '                  "Documento: " & _RowMaeedo.Item("NUDO") & "-" & _RowMaeedo.Item("NUDO") & vbCrLf & vbCrLf &
+                '                  "Respuesta Fincred: " & _Descripcion_negacion, "Información FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                If MessageBoxEx.Show(Me, "Revisión de parte de FINCRED RECHAZADA" & vbCrLf &
+                                  "Documento: " & _RowMaeedo.Item("TIDO") & "-" & _RowMaeedo.Item("NUDO") & vbCrLf &
+                                  "Respuesta Fincred: " & _Descripcion_negacion & vbCrLf & vbCrLf &
+                                  "¿Desea volver a consultar a FINCRED este documento?", "Información FINCRED",
+                                  MessageBoxButtons.YesNo, MessageBoxIcon.Stop) <> DialogResult.Yes Then
+                    Return False
+
+                End If
+
+                _Volver_A_Consultar_Fincred = True
+
             End If
 
         End If
 
         Dim _Fincred_Respuesta As New Fincred_API.Respuesta
-
         _Fincred_Respuesta = Fx_Vaidar_Fincred(_Idmaeedo,
                                                _RowMaeedo.Item("TIDO"),
                                                _RowMaeedo.Item("NUDO"),
@@ -1643,6 +1657,14 @@ Public Class Frm_BuscarDocumento_Mt
                                                _RowEntidad.Item("FOEN").ToString.Trim)
 
         If _Fincred_Respuesta.EsCorrecto Then
+
+            If _Volver_A_Consultar_Fincred Then
+                Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Fincred_TramaRespuesta" & vbCrLf &
+                               "Set Eliminada = 1,CodFunElimina = '" & FUNCIONARIO & "'" &
+                               ",NombreEquipoElimina = '" & _Global_Row_EstacionBk.Item("NombreEquipo") & "'" & vbCrLf &
+                               "Where Id = " & _RowFincred.Item("Id")
+                _Sql.Ej_consulta_IDU(Consulta_Sql)
+            End If
 
             MessageBoxEx.Show(Me, _Fincred_Respuesta.TramaRespuesta.descripcion_negacion & vbCrLf &
                                   "Código de autorización: " & _Fincred_Respuesta.TramaRespuesta.documentos(0).autorizacion,
@@ -1654,18 +1676,14 @@ Public Class Frm_BuscarDocumento_Mt
             End If
 
             MessageBoxEx.Show(Me, "Código de autorización: RECHAZADO" & vbCrLf &
-                              "Respuesta FINCRED: " & _Fincred_Respuesta.MensajeError & vbCrLf & vbCrLf &
-                              "El documento debera seguir el conducto regular, se quitaran los plazos de vencimineto.",
-                              "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-
-                Consulta_Sql = "Update MAEEDO Set FE01VEDO = FEEMDO,FEULVEDO = FEEMDO,NUVEDO = 1 Where IDMAEEDO = " & _Idmaeedo
-                _Sql.Ej_consulta_IDU(Consulta_Sql)
-
-                Return False
-
-            End If
-
-            Return True
+                                    "Respuesta FINCRED: " & _Fincred_Respuesta.MensajeError & vbCrLf & vbCrLf &
+                                    "El documento debera seguir el conducto regular, se quitaran los plazos de vencimineto.",
+                                                                  "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Consulta_Sql = "Update MAEEDO Set FE01VEDO = FEEMDO,FEULVEDO = FEEMDO,NUVEDO = 1 Where IDMAEEDO = " & _Idmaeedo
+            _Sql.Ej_consulta_IDU(Consulta_Sql)
+            Return False
+        End If
+        Return True
 
     End Function
 
@@ -1675,7 +1693,6 @@ Public Class Frm_BuscarDocumento_Mt
         Sb_Abrir_Cerrar_Documentos()
         Me.Close()
     End Sub
-
     Sub Sb_Firmar_Documento_HefestoBakapp(_Idmaeedo As Integer)
 
         Dim _AmbienteCertificacion As Integer = Convert.ToInt32(_Global_Row_Configuracion_Estacion.Item("FacElect_Usar_AmbienteCertificacion"))
@@ -1689,7 +1706,7 @@ Public Class Frm_BuscarDocumento_Mt
         Consulta_Sql = Replace(Consulta_Sql, "#AmbienteCertificacion#", _AmbienteCertificacion)
         Consulta_Sql = Replace(Consulta_Sql, "#SoloFirmadosPorBakapp#", "")
 
-        Dim _Tbl_Informe As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_Informe As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         If CBool(_Tbl_Informe.Rows.Count) Then
 
@@ -1790,7 +1807,7 @@ Public Class Frm_BuscarDocumento_Mt
         Dim _Nudo As String = _Fila.Cells("NUDO").Value
 
         Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where GrbOCC_Nuevas = 1"
-        Dim _Tbl_DnExt As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_DnExt As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         If Not CBool(_Tbl_DnExt.Rows.Count) Then
             MessageBoxEx.Show(Me, "No existen conexiones a otras bases de datos para poder hacer esta gestión", "Validación",
@@ -1850,4 +1867,15 @@ Public Class Frm_BuscarDocumento_Mt
 
         End With
     End Sub
+
+    Private Sub Lbl_Mnu_Idmaeedo_Click(sender As Object, e As EventArgs) Handles Lbl_Mnu_Idmaeedo.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Idmaeedo As Integer = _Fila.Cells("IDMAEEDO").Value
+        Clipboard.SetText(_Idmaeedo)
+
+        ToastNotification.Show(Me, "IDMAEEDO del documento esta en el portapapeles", Btn_Copiar.Image,
+                                   2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
+    End Sub
+
 End Class

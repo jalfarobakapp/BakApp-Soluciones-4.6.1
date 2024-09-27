@@ -1,6 +1,6 @@
+锘縄mports System.IO
+Imports BkSpecialPrograms.LsValiciones
 Imports DevComponents.DotNetBar
-Imports System.IO
-Imports System.Data.SqlClient
 
 Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
 
@@ -11,6 +11,7 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
 
     Dim _Row_GDI_Ajuste As DataRow
     Dim _Row_GRI_Ajuste As DataRow
+    Dim _Row_GRI_Ajuste_Definitivo As DataRow
 
     Dim _Empresa As String
     Dim _Sucursal As String
@@ -22,7 +23,7 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
     Dim _Row_InvParcial_Inventarios As DataRow
 
     Enum TipoGrabacion
-        Con_Numeraci髇 = 0
+        Con_Numeraci贸n = 0
         EnBlanco = 1
         Puros_Ceros = 2
     End Enum
@@ -45,16 +46,16 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
         End Get
     End Property
 
-    Public Sub New(ByVal Row_InvParcial_Inventarios As DataRow,
-                   ByVal Tbl_Productos As DataTable,
-                   ByVal Fecha_Ajuste As Date,
-                   ByVal Ajuste_PM As Boolean,
-                   ByVal Dejar_Doc_Final_Del_Dia As Boolean)
+    Public Sub New(Row_InvParcial_Inventarios As DataRow,
+                   Tbl_Productos As DataTable,
+                   Fecha_Ajuste As Date,
+                   Ajuste_PM As Boolean,
+                   Dejar_Doc_Final_Del_Dia As Boolean)
 
-        ' Esta llamada es exigida por el dise馻dor.
+        ' Esta llamada es exigida por el dise帽ador.
         InitializeComponent()
 
-        ' Agregue cualquier inicializaci髇 despu閟 de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaci贸n despu茅s de la llamada a InitializeComponent().
 
         _Row_InvParcial_Inventarios = Row_InvParcial_Inventarios
         _Tbl_Productos = Tbl_Productos
@@ -79,7 +80,11 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
 
     Private Sub Btn_Procesar_Click(sender As Object, e As EventArgs) Handles Btn_Procesar.Click
 
-        _Datos_Procesados = Fx_Procesar_Ajustes(_Tbl_Productos) ', _Emp, _Suc)
+        If ChkDejaStockCero.Checked Then
+            _Datos_Procesados = Fx_Procesar_Ajustes_DejaStockCero(_Tbl_Productos)
+        Else
+            _Datos_Procesados = Fx_Procesar_Ajustes(_Tbl_Productos)
+        End If
 
         If _Datos_Procesados Then
 
@@ -101,34 +106,29 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
             sw.WriteLine(TxtLog.Text)
             sw.Close()
 
-            Dim _Filtro_Productos As String = Generar_Filtro_IN(_Tbl_Productos, "", "CodigoPr", False, False, "'")
-
-            Dim Fm As New Frm_Consolidacion_Stock_PP(_Filtro_Productos)
-            Fm.Pro_Ejecutar_Automaticamente = True
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
+            Sb_ConsolidarStock()
 
             Dim _Nro_GDI_Ajuste As String
             Dim _Nro_GRI_Ajuste As String
 
             If Not (_Row_GDI_Ajuste Is Nothing) Then
                 _Nro_GDI_Ajuste = _Row_GDI_Ajuste.Item("NUDO")
-                _Nro_GDI_Ajuste = "Gu韆 de ajuste GDI: " & _Nro_GDI_Ajuste & vbCrLf
+                _Nro_GDI_Ajuste = "Gu铆a de ajuste GDI: " & _Nro_GDI_Ajuste & vbCrLf
             End If
 
             If Not (_Row_GRI_Ajuste Is Nothing) Then
                 _Nro_GRI_Ajuste = _Row_GRI_Ajuste.Item("NUDO")
-                _Nro_GRI_Ajuste = "Gu韆 de ajuste GRI: " & _Nro_GRI_Ajuste & vbCrLf
+                _Nro_GRI_Ajuste = "Gu铆a de ajuste GRI: " & _Nro_GRI_Ajuste & vbCrLf
             End If
 
             Dim _Msg As String
 
             If String.IsNullOrEmpty(_Nro_GDI_Ajuste) And String.IsNullOrEmpty(_Nro_GRI_Ajuste) Then
-                _Msg = "No fue necesario generar gu韆s de ajuste"
+                _Msg = "No fue necesario generar gu铆as de ajuste"
             Else
                 _Msg = "Proceso Generado correctamente" & vbCrLf & vbCrLf &
-                                                  "Gu韆s: " & vbCrLf &
-                                                  _Nro_GDI_Ajuste & _Nro_GRI_Ajuste
+                                              "Gu铆as: " & vbCrLf &
+                                              _Nro_GDI_Ajuste & _Nro_GRI_Ajuste
             End If
 
             MessageBoxEx.Show(Me, _Msg, "Ajuste de inventario", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -139,14 +139,58 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
 
     End Sub
 
-    Private Sub AddToLog(ByVal Accion As String,
-                         ByVal Descripcion As String)
+    Private Sub Sb_ConsolidarStock()
+
+        Dim Chk_Confirmar_Lectura As New Command
+        Chk_Confirmar_Lectura.Checked = False
+        Chk_Confirmar_Lectura.Name = "Chk_Confirmar_Lectura"
+        Chk_Confirmar_Lectura.Text = "CONFIRMO CONSOLIDAR EL STOCK"
+
+        Dim _Opciones As Command = Chk_Confirmar_Lectura
+
+        Dim _Info As New TaskDialogInfo("Consolidar Stock",
+                                        eTaskDialogIcon.Help,
+      "驴Desea consolidar el stock de los productos inventariados?", "",
+      eTaskDialogButton.Yes + eTaskDialogButton.No, eTaskDialogBackgroundColor.Red, Nothing, Nothing,
+      _Opciones, Nothing, Nothing)
+
+        Dim _Resultado As eTaskDialogResult = TaskDialog.Show(_Info)
+
+        If _Resultado = eTaskDialogResult.Yes Then
+
+            If Not Chk_Confirmar_Lectura.Checked Then
+                MessageBoxEx.Show(Me, "Debe confirmar la lectura de la alerta", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Sb_ConsolidarStock()
+                Return
+            End If
+
+            Dim _Filtro_Productos As String = Generar_Filtro_IN(_Tbl_Productos, "", "CodigoPr", False, False, "'")
+
+            Dim Fm As New Frm_Consolidacion_Stock_PP(_Filtro_Productos)
+            Fm.Pro_Ejecutar_Automaticamente = True
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
+        Else
+            If Chk_Confirmar_Lectura.Checked Then
+                If MessageBoxEx.Show(Me, "Confirmo la consolidaci贸n del stock, pero se indic贸 que NO." & vbCrLf &
+                                     "Debe desmarcar la opci贸n ""CONFIRMO CONSOLIDAR EL STOCK""." & vbCrLf &
+                                     "Si NO desea consolidar el stock y luego seleccionar NO", "Validaci贸n",
+                                     MessageBoxButtons.OK, MessageBoxIcon.Stop) Then
+                    Sb_ConsolidarStock()
+                End If
+            End If
+        End If
+
+    End Sub
+
+    Private Sub AddToLog(Accion As String,
+                         Descripcion As String)
         TxtLog.Text += DateTime.Now.ToString() & " - " & Accion & " (" & Descripcion & ")" & vbCrLf
         TxtLog.Select(TxtLog.Text.Length - 1, 0)
         TxtLog.ScrollToCaret()
     End Sub
 
-    Function Fx_Procesar_Ajustes(ByVal Tbl_Detalle_Aj As DataTable)
+    Function Fx_Procesar_Ajustes(Tbl_Detalle_Aj As DataTable)
 
         Try
 
@@ -158,7 +202,7 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
 
             AddToLog("Iniciando Analisis", "-----------------------------------------")
             AddToLog("Iniciando Analisis", "Revisando si existen productos que procesar...")
-            AddToLog("Consolidaci髇 de Stock...", "Preparandose para la consilidaci髇 de Stock")
+            AddToLog("Consolidaci贸n de Stock...", "Preparandose para la consilidaci贸n de Stock")
 
             Dim Contador As Integer = 0
 
@@ -192,9 +236,10 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
                     _Dif_GDI_Ud1 = _Dif
                 ElseIf _Dif < 0 Then
                     _Dif_GRI_Ud1 = _Dif * -1
-                ElseIf _DIF = 0 Then
+                ElseIf _Dif = 0 Then
                     _Dif_GDI_Ud1 = 0
                 End If
+
 
                 Fila.Item("Dif_GDI_Ud1") = _Dif_GDI_Ud1
                 Fila.Item("Dif_GRI_Ud1") = _Dif_GRI_Ud1
@@ -234,8 +279,8 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
             Next
 
             'Exit Function
-            LblEstado.Text = "Productos consolidados correctamente, Stock f韘ico"
-            AddToLog("Consolidaci髇 de Stock...", "Stock consolidaddo correctamente")
+            LblEstado.Text = "Productos consolidados correctamente, Stock f铆sico"
+            AddToLog("Consolidaci贸n de Stock...", "Stock consolidaddo correctamente")
             System.Windows.Forms.Application.DoEvents()
 
             Progreso_Cont.Value = 0
@@ -263,7 +308,7 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
                 _Row_GDI_Ajuste = Fx_Generar_Guia_De_Ajuste(Enum_Tido_Doc_Ajuste.GDI_Stock_Cero)
 
                 If (_Row_GDI_Ajuste Is Nothing) Then 'NroDoc = Nothing Then
-                    AddToLog("Proceso interrumpido", "Problema en la generaci髇 de Gu韆 GDI de ajuste!")
+                    AddToLog("Proceso interrumpido", "Problema en la generaci贸n de Gu铆a GDI de ajuste!")
                     AddToLog("Proceso interrumpido", "Fin del proceso")
                     System.Windows.Forms.Application.DoEvents()
                     Return False
@@ -306,7 +351,7 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
                 _Row_GRI_Ajuste = Fx_Generar_Guia_De_Ajuste(Enum_Tido_Doc_Ajuste.GRI_Stock_Cero)
 
                 If (_Row_GRI_Ajuste Is Nothing) Then 'If NroDoc = Nothing Then
-                    AddToLog("Proceso interrumpido", "Problema en la generaci髇 de Gu韆 GRI de ajuste!")
+                    AddToLog("Proceso interrumpido", "Problema en la generaci贸n de Gu铆a GRI de ajuste!")
                     AddToLog("Proceso interrumpido", "Fin del proceso")
                     System.Windows.Forms.Application.DoEvents()
                     Return False
@@ -332,7 +377,7 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
 
             End If
 
-            AddToLog("Respaldando informaci髇", "Termanando el proceso...")
+            AddToLog("Respaldando informaci贸n", "Termanando el proceso...")
             System.Windows.Forms.Application.DoEvents()
 
             Progreso_Cont.Value = 0
@@ -429,15 +474,324 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
         End Try
     End Function
 
+    Function Fx_Procesar_Ajustes_DejaStockCero(Tbl_Detalle_Aj As DataTable)
+
+        Try
+
+            Dim Fecha As String = FechaInv
+            Dim Tabla As New DataTable
+
+            Progreso_Porc.Maximum = 100
+            Progreso_Cont.Maximum = Tbl_Detalle_Aj.Rows.Count
+
+            AddToLog("Iniciando Analisis", "-----------------------------------------")
+            AddToLog("Iniciando Analisis", "Revisando si existen productos que procesar...")
+            AddToLog("Consolidaci贸n de Stock...", "Preparandose para la consilidaci贸n de Stock")
+
+            Dim Contador As Integer = 0
+
+
+            For Each Fila As DataRow In Tbl_Detalle_Aj.Rows
+
+                System.Windows.Forms.Application.DoEvents()
+
+                Dim _Codigo As String = Fila.Item("CodigoPr")
+                Dim _Descripcion As String = Fila.Item("Descripcion")
+
+                Dim _CantidadUd1 As Double = Fila.Item("CantidadUd1")
+                Dim _CantidadUd2 As Double = Fila.Item("CantidadUd2")
+
+                Dim _Dif_GDI_Ud1 As Double = 0
+                Dim _Dif_GRI_Ud1 As Double = 0
+
+
+                LblEstado.Text = "Consolidando Stock, " & Contador + 1 & " de " &
+                                 Tbl_Detalle_Aj.Rows.Count & ",Producto: " & _Descripcion & ""
+
+                Dim _Stock_Fi(1) As Double
+                Dim _Fecha As String = Format(DtFechaInv.Value, "yyyyMMdd")
+                Dim _Dif As Double
+
+                _Stock_Fi = Stock_Fi_A_Una_Fecha_X_Producto(_Codigo, _Empresa, _Sucursal, _Bodega, DtFechaInv.Value)
+
+                _Dif = _Stock_Fi(0) '- _CantidadUd1
+
+                If _Dif > 0 Then
+                    _Dif_GDI_Ud1 = _Dif
+                ElseIf _Dif < 0 Then
+                    _Dif_GRI_Ud1 = _Dif * -1
+                ElseIf _Dif = 0 Then
+                    _Dif_GDI_Ud1 = 0
+                End If
+
+                Fila.Item("Dif_GDI_Ud1") = _Dif_GDI_Ud1
+                Fila.Item("Dif_GRI_Ud1") = _Dif_GRI_Ud1
+
+                Dim _Stock_Ud1 As Double = Math.Round(_Stock_Fi(0), 5)
+                Dim _Stock_Ud2 As Double = Math.Round(_Stock_Fi(1), 5)
+
+                If _Stock_Ud1 <> _Stock_Ud2 Then
+
+                    If _Stock_Ud1 = 0 Then
+                        If _Stock_Ud2 <> 0 Then
+                            Fila.Item("Dif_GDI_Ud1") = 1
+                        End If
+                    End If
+
+                    If CBool(_Dif_GRI_Ud1) Then
+                        _Stock_Ud1 = _Stock_Ud1 * -1
+                        If _Stock_Ud2 > 0 Then
+                            _Stock_Ud2 = _Stock_Ud2 * -1
+                        End If
+                    End If
+
+                End If
+
+                ' SI EL AJUSTE ES POSITIVO EN LA UNIDAD 1 Y NEGATIVO EN LA UNIDAD 2
+                ' EL SISTEMA DEJARA LAS CANTIDADES TAL CUAL, PARA QUE EL AJUSTE SEA UN CERO ABSOLUTO.
+
+                Fila.Item("Stock_Ud1") = _Stock_Ud1
+                Fila.Item("Stock_Ud2") = _Stock_Ud2
+
+
+                System.Windows.Forms.Application.DoEvents()
+                Contador += 1
+                Progreso_Porc.Value = ((Contador * 100) / Tbl_Detalle_Aj.Rows.Count) 'Mas
+                Progreso_Cont.Value += 1
+
+            Next
+
+            'Exit Function
+            LblEstado.Text = "Productos consolidados correctamente, Stock f铆sico"
+            AddToLog("Consolidaci贸n de Stock...", "Stock consolidaddo correctamente")
+            System.Windows.Forms.Application.DoEvents()
+
+            Progreso_Cont.Value = 0
+            Progreso_Porc.Value = 0
+
+
+            AddToLog("Guias de ajuste", "Generando Guias de Ajuste...")
+            System.Windows.Forms.Application.DoEvents()
+
+
+            ' ********* GDI DE AJUSTE GDI EN CASO DE SER NECESARIA
+
+            Dim GDI_Object As Object
+
+            For Each _Fila_GDI As DataRow In Tbl_Detalle_Aj.Rows
+                Dim Dif_GDI_Ud1 = _Fila_GDI.Item("Dif_GDI_Ud1")
+                GDI_Object += Dif_GDI_Ud1
+            Next
+
+            If CBool(GDI_Object) Then
+
+                AddToLog("Ajuste de Stock", "Generando GDI de Ajuste...")
+                System.Windows.Forms.Application.DoEvents()
+
+                _Row_GDI_Ajuste = Fx_Generar_Guia_De_Ajuste(Enum_Tido_Doc_Ajuste.GDI_Stock_Cero)
+
+                If (_Row_GDI_Ajuste Is Nothing) Then 'NroDoc = Nothing Then
+                    AddToLog("Proceso interrumpido", "Problema en la generaci贸n de Gu铆a GDI de ajuste!")
+                    AddToLog("Proceso interrumpido", "Fin del proceso")
+                    System.Windows.Forms.Application.DoEvents()
+                    Return False
+                Else
+
+                    Dim _Idmaeedo As Integer = _Row_GDI_Ajuste.Item("IDMAEEDO")
+                    Dim _Nro_GDI_Stock_Cero = _Row_GDI_Ajuste.Item("NUDO")
+
+                    For Each _Fila_GDI As DataRow In Tbl_Detalle_Aj.Rows
+
+                        Dim _Dif_GDI_Ud1 As Boolean = CBool(_Fila_GDI.Item("Dif_GDI_Ud1"))
+
+                        If _Dif_GDI_Ud1 Then
+                            _Fila_GDI.Item("GDI_Idmaeedo_Aj") = _Idmaeedo
+                            _Fila_GDI.Item("Nro_GDI_Stock_Cero") = "GDI-" & _Nro_GDI_Stock_Cero
+                        End If
+
+                    Next
+
+                    AddToLog("Dejar Stock en Cero", "GDI Nro: " & _Nro_GDI_Stock_Cero & ", Generada correctamente")
+                    System.Windows.Forms.Application.DoEvents()
+                End If
+
+            End If
+
+            ' ********* GRI DE AJUSTE GDI EN CASO DE SER NECESARIA
+
+            Dim GRI_Object As Object
+
+            For Each _Fila_GRI As DataRow In Tbl_Detalle_Aj.Rows
+                Dim Dif_GRI_Ud1 = _Fila_GRI.Item("Dif_GRI_Ud1")
+                GRI_Object += Dif_GRI_Ud1
+            Next
+
+            If CBool(GRI_Object) Then
+
+                AddToLog("Ajuste de stock", "Generando GRI de Ajuste...")
+                System.Windows.Forms.Application.DoEvents()
+
+                _Row_GRI_Ajuste = Fx_Generar_Guia_De_Ajuste(Enum_Tido_Doc_Ajuste.GRI_Stock_Cero)
+
+                If (_Row_GRI_Ajuste Is Nothing) Then 'If NroDoc = Nothing Then
+                    AddToLog("Proceso interrumpido", "Problema en la generaci贸n de Gu铆a GRI de ajuste!")
+                    AddToLog("Proceso interrumpido", "Fin del proceso")
+                    System.Windows.Forms.Application.DoEvents()
+                    Return False
+                Else
+
+                    Dim _Idmaeedo As Integer = _Row_GRI_Ajuste.Item("IDMAEEDO")
+                    Dim _Nro_GRI_Stock_Cero = _Row_GRI_Ajuste.Item("NUDO")
+
+                    For Each _Fila_GRI As DataRow In Tbl_Detalle_Aj.Rows
+
+                        Dim _Dif_GRI_Ud1 As Boolean = CBool(_Fila_GRI.Item("Dif_GRI_Ud1"))
+
+                        If _Dif_GRI_Ud1 Then
+                            _Fila_GRI.Item("GRI_Idmaeedo_Aj") = _Idmaeedo
+                            _Fila_GRI.Item("Nro_GRI_Stock_Cero") = "GRI-" & _Nro_GRI_Stock_Cero
+                        End If
+
+                    Next
+
+                    AddToLog("Dejar Stock en Cero", "GRI Nro: " & _Nro_GRI_Stock_Cero & ", Generada correctamente")
+                    System.Windows.Forms.Application.DoEvents()
+                End If
+
+            End If
+
+
+            _Row_GRI_Ajuste_Definitivo = Fx_Generar_Guia_De_Ajuste(Enum_Tido_Doc_Ajuste.GRI_Ajuste)
+
+            If (_Row_GRI_Ajuste_Definitivo Is Nothing) Then 'NroDoc = Nothing Then
+                AddToLog("Proceso interrumpido", "Problema en la generaci贸n de Gu铆a GRI de ajuste!")
+                AddToLog("Proceso interrumpido", "Fin del proceso")
+                System.Windows.Forms.Application.DoEvents()
+                Return False
+            Else
+
+                Dim _Idmaeedo As Integer = _Row_GRI_Ajuste_Definitivo.Item("IDMAEEDO")
+                Dim _Nro_GRI_AjusteDef = _Row_GRI_Ajuste_Definitivo.Item("NUDO")
+
+                For Each _Fila_GDI As DataRow In Tbl_Detalle_Aj.Rows
+
+                    Dim _Dif_GDI_Ud1 As Boolean = CBool(_Fila_GDI.Item("Dif_GDI_Ud1"))
+
+                    If _Dif_GDI_Ud1 Then
+                        _Fila_GDI.Item("IDMAEEDO_Aj") = _Idmaeedo
+                        _Fila_GDI.Item("Nro_GRI_Ajuste_Stock") = "GRI-" & _Nro_GRI_AjusteDef
+                    End If
+
+                Next
+
+                AddToLog("Graba GRI Ajuste definitiva", "GRI Nro: " & _Nro_GRI_AjusteDef & ", Generada correctamente")
+                System.Windows.Forms.Application.DoEvents()
+            End If
+
+
+            AddToLog("Respaldando informaci贸n", "Terminando el proceso...")
+            System.Windows.Forms.Application.DoEvents()
+
+            Progreso_Cont.Value = 0
+            Progreso_Porc.Value = 0
+
+            Progreso_Porc.Maximum = 100
+            Progreso_Cont.Maximum = Tbl_Detalle_Aj.Rows.Count
+
+            Contador = 0
+
+            'REPASA NUEVAMENTE TODOS LOS PRODUCTOS Y ACTUALIZA LOS STOCK EN LA TABLA MAEST
+
+            For Each Fila As DataRow In Tbl_Detalle_Aj.Rows
+
+                System.Windows.Forms.Application.DoEvents()
+
+                With Fila
+
+                    Dim _Codigo As String = .Item("CodigoPr")
+                    Dim _Descripcion As String = .Item("Descripcion")
+
+                    Dim _CodBarras As String = .Item("CodBarras")
+                    Dim _Rtu As String = .Item("Rtu")
+                    Dim _CantidadUd1 As Double = .Item("CantidadUd1")
+                    Dim _CantidadUd2 As Double = .Item("CantidadUd2")
+                    Dim _CostoUnitUd1 As String = .Item("CostoUnitUd1")
+                    Dim _TotalCostoUd1 As String = .Item("TotalCostoUd1")
+                    Dim _Dif_GRI_Ud1 As Double = .Item("Dif_GRI_Ud1")
+                    Dim _Dif_GDI_Ud1 As Double = .Item("Dif_GDI_Ud1")
+
+                    Dim _GDI_Idmaeedo_Aj As Integer = NuloPorNro(.Item("GDI_Idmaeedo_Aj"), 0)
+                    Dim _GRI_Idmaeedo_Aj As Integer = NuloPorNro(.Item("GRI_Idmaeedo_Aj"), 0)
+                    Dim _IDMAEEDO_Aj As Integer = NuloPorNro(.Item("IDMAEEDO_Aj"), 0)
+
+                    Dim _Foto_Stock_Ud1 As Double = .Item("Stock_Ud1")
+                    Dim _Foto_Stock_Ud2 As Double = .Item("Stock_Ud2")
+
+                    Dim _Nro_GDI_Stock_Cero = .Item("Nro_GDI_Stock_Cero")
+                    Dim _Nro_GRI_Stock_Cero = .Item("Nro_GRI_Stock_Cero")
+                    Dim _Nro_GRI_Ajuste_Stock = .Item("Nro_GRI_Ajuste_Stock")
+
+                    Dim _Fecha As String = Format(DtFechaInv.Value, "yyyyMMdd")
+
+
+                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_TmpInv_InvParcial (Empresa,Sucursal,Bodega,CodigoPr," &
+                                   "CodBarras,Descripcion,Rtu,CantidadUd1,CantidadUd2,CostoUnitUd1," &
+                                   "TotalCostoUd1,FechaInv,HoraInv," &
+                                   "Levantado,DejaStockCero," &
+                                   "GDI_Idmaeedo_Aj,Nro_GDI_Stock_Cero," &
+                                   "GRI_Idmaeedo_Aj,Nro_GRI_Stock_Cero," &
+                                   "IDMAEEDO_Aj,Nro_GRI_Ajuste_Stock,Foto_Stock_Ud1,Foto_Stock_Ud2) Values " & vbCrLf &
+                                   "('" & _Empresa & "','" & _Sucursal & "','" & _Bodega & "','" & _Codigo & "','" & _CodBarras &
+                                   "','" & _Descripcion & "'," & De_Num_a_Tx_01(_Rtu, 5) &
+                                   "," & De_Num_a_Tx_01(_CantidadUd1, 5) & "," & De_Num_a_Tx_01(_CantidadUd2, 5) &
+                                   "," & De_Num_a_Tx_01(_CostoUnitUd1, 5) & "," & De_Num_a_Tx_01(_TotalCostoUd1, 5) &
+                                   ",'" & _Fecha & "',Getdate(),1,0" &
+                                   "," & _GDI_Idmaeedo_Aj & ",'" & _Nro_GDI_Stock_Cero &
+                                   "'," & _GRI_Idmaeedo_Aj & ",'" & _Nro_GRI_Stock_Cero &
+                                   "'," & _IDMAEEDO_Aj & ",'" & _Nro_GRI_Ajuste_Stock &
+                                   "'," & De_Num_a_Tx_01(_Foto_Stock_Ud1, 5) &
+                                   "," & De_Num_a_Tx_01(_Foto_Stock_Ud2, 5) & ")" & vbCrLf &
+                                   "UPDATE MAEPR SET ATPR = '' WHERE KOPR = '" & _Codigo & "'"
+                    _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+
+                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_TmpInv_InvParcial Set TotalCostoUd1 = CostoUnitUd1*CantidadUd1" & vbCrLf &
+                                   "TotalCostoUd2 = CostoUnitUd1*(CantidadUd1*Rtu)"
+
+                    LblEstado.Text = "Desocultando productos... , " & Contador + 1 & " de " &
+                                     Tbl_Detalle_Aj.Rows.Count & ",Producto: " & _Descripcion & ""
+
+                End With
+
+
+                System.Windows.Forms.Application.DoEvents()
+                Contador += 1
+                Progreso_Porc.Value = ((Contador * 100) / Tbl_Detalle_Aj.Rows.Count) 'Mas
+                Progreso_Cont.Value += 1
+
+            Next
+
+            Progreso_Porc.Value = 0
+            Progreso_Cont.Value = 0
+
+            Return True
+        Catch ex As Exception
+            'myTrans.Rollback()
+            MessageBoxEx.Show(ex.Message, "Transaccion desecha", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            'SQL_ServerClass.Sb_Cerrar_Conexion(cn2)
+            AddToLog("PROBLEMAS DE EJECUCION!!!!", "Transaccion desecha")
+            Return False
+        End Try
+    End Function
+
     Enum Enum_Tido_Doc_Ajuste
         GDI_Stock_Cero
         GRI_Stock_Cero
         GRI_Ajuste
     End Enum
 
-    Function Fx_Generar_Guia_De_Ajuste(ByVal _Tipo_Documento As Enum_Tido_Doc_Ajuste) As DataRow
+    Function Fx_Generar_Guia_De_Ajuste(_Tipo_Documento As Enum_Tido_Doc_Ajuste) As DataRow
 
-        Dim _New_Idmaeedo As Integer
         Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
         Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -476,11 +830,11 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
         Fm.Pro_RowEntidad = _Row_Entidad
         Fm.Sb_Crear_Documento_Interno_Con_Tabla(Me, _Tbl_Productos, DtFechaInv.Value,
                                                 "CodigoPr", _Campo_Cantidad, "CostoUnitUd1", _Observaciones, False, False)
-        _New_Idmaeedo = Fm.Fx_Grabar_Documento(False)
+        Dim _Mensaje As LsValiciones.Mensajes = Fm.Fx_Grabar_Documento(False)
         Fm.Dispose()
 
-        If CBool(_New_Idmaeedo) Then
-            Consulta_sql = "Select Top 1 * From MAEEDO Where IDMAEEDO = " & _New_Idmaeedo
+        If _Mensaje.EsCorrecto Then
+            Consulta_sql = "Select Top 1 * From MAEEDO Where IDMAEEDO = " & _Mensaje.Id
             Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
             Return _Row
         Else
@@ -489,11 +843,11 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
 
     End Function
 
-    Private Function Stock_Fi_A_Una_Fecha_X_Producto(ByVal _Codigo As String,
-                                                ByVal _Empresa As String,
-                                                ByVal _Sucursal As String,
-                                                ByVal _Bodega As String,
-                                                ByVal _Fecha As Date) As Double()
+    Private Function Stock_Fi_A_Una_Fecha_X_Producto(_Codigo As String,
+                                                _Empresa As String,
+                                                _Sucursal As String,
+                                                _Bodega As String,
+                                                _Fecha As Date) As Double()
 
         _Sql.Sb_Eliminar_Tabla_De_Paso("Zw_TblStockConsolid")
 
@@ -504,7 +858,7 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
         Consulta_sql = Replace(Consulta_sql, "#@Codigo#", _Codigo)
         Consulta_sql = Replace(Consulta_sql, "#Fecha#", Format(_Fecha, "yyyyMMdd"))
 
-        Dim Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _Sql.Sb_Eliminar_Tabla_De_Paso("Zw_TblStockConsolid")
 

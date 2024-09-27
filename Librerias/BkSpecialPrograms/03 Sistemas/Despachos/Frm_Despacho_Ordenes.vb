@@ -47,7 +47,7 @@ Public Class Frm_Despacho_Ordenes
 
         Consulta_sql = "Select 'Todas' As Padre,'Todas...' As 'Hijo' Union Select EMPRESA+KOSU As Padre,NOKOSU As Hijo From TABSU"
         caract_combo(Cmb_Sucursal)
-        Cmb_Sucursal.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Sucursal.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If _Ver = Enum_Ver.Todas Then
             Cmb_Sucursal.SelectedValue = "Todas"

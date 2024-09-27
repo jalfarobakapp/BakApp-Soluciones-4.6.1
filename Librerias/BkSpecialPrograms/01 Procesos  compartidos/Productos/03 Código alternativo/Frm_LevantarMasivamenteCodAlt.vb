@@ -21,7 +21,7 @@ Public Class Frm_LevantarMasivamenteCodAlt
 
         Consulta_sql = "Select KOPR As Codigo,Cast('' As Varchar(Max)) As CodAlternativo,Cast(0 As Bit) As EsQr,NOKOPR As Descripcion,Cast(0 As Int) As Multiplo," &
                        "Cast(0 As Int) As Unimulti,Cast('' As Varchar(13)) As Precio,Cast('' As Varchar(3)) As Koen,Cast('' As Varchar(Max)) As Log_Inf From MAEPR Where 1<0"
-        _Tbl_Productos_Levantar = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Productos_Levantar = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Sb_Color_Botones_Barra(Bar1)
 
@@ -450,7 +450,7 @@ Public Class Frm_LevantarMasivamenteCodAlt
                            "IsNull((Select NOKOPR From MAEPR Mp Where Mp.KOPR = Td.KOPR),NOKOPRAL) as 'Descripcion'" & vbCrLf &
                            "From TABCODAL Td" & vbCrLf &
                            "Where Td.KOEN = '" & _Koen & "' And Td.KOPRAL = '" & _Kopral & "'"
-                Dim _TblPr As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblPr As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 If CBool(_TblPr.Rows.Count) Then
 

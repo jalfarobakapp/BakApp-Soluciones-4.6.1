@@ -73,7 +73,7 @@ Public Class Frm_Pagos_Seleccion_Tipo_Pago
                        _Filtro_Extrae_Sql & vbCrLf &
                        "Order by Orden"
 
-        Dim _Tbl_Tidp As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Tidp As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

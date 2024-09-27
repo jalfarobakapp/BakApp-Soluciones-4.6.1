@@ -24,7 +24,7 @@ Public Class Frm_Kardex_Informe_X_Producto
         Get
             Return _Empresa
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             _Empresa = value
         End Set
     End Property
@@ -32,7 +32,7 @@ Public Class Frm_Kardex_Informe_X_Producto
         Get
             Return _Sucursal
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             _Sucursal = value
         End Set
     End Property
@@ -40,7 +40,7 @@ Public Class Frm_Kardex_Informe_X_Producto
         Get
             Return _Bodega
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             _Bodega = value
         End Set
     End Property
@@ -48,7 +48,7 @@ Public Class Frm_Kardex_Informe_X_Producto
         Get
             Return _Row_Producto
         End Get
-        Set(ByVal value As DataRow)
+        Set(value As DataRow)
             _Row_Producto = value
         End Set
     End Property
@@ -56,7 +56,7 @@ Public Class Frm_Kardex_Informe_X_Producto
         Get
             Return _Unidad
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             _Unidad = value
         End Set
     End Property
@@ -64,7 +64,7 @@ Public Class Frm_Kardex_Informe_X_Producto
         Get
             Return _TblKardex
         End Get
-        Set(ByVal value As DataTable)
+        Set(value As DataTable)
             _TblKardex = value
         End Set
     End Property
@@ -72,7 +72,7 @@ Public Class Frm_Kardex_Informe_X_Producto
         Get
             Return _Marcar_dos
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Marcar_dos = value
         End Set
     End Property
@@ -80,12 +80,12 @@ Public Class Frm_Kardex_Informe_X_Producto
         Get
             Return GrillaKardex
         End Get
-        Set(ByVal value As DataGridViewX)
+        Set(value As DataGridViewX)
             GrillaKardex = value
         End Set
     End Property
 
-    Public Sub New(ByVal Codigo As String, ByVal Unidad As String, ByVal Marcar_dos As Boolean, Todas_Las_Bodegas As Boolean)
+    Public Sub New(Codigo As String, Unidad As String, Marcar_dos As Boolean, Todas_Las_Bodegas As Boolean)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -114,7 +114,7 @@ Public Class Frm_Kardex_Informe_X_Producto
 
     End Sub
 
-    Private Sub Frm_DocumentoKardex_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+    Private Sub Frm_DocumentoKardex_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
         AddHandler GrillaKardex.CellEnter, AddressOf Sb_CellEnter
 
@@ -138,7 +138,7 @@ Public Class Frm_Kardex_Informe_X_Producto
 
     End Sub
 
-    Sub Sb_Llenar_Grilla(ByVal _TblKardex As DataTable)
+    Sub Sb_Llenar_Grilla(_TblKardex As DataTable)
 
         With GrillaKardex
 
@@ -171,7 +171,7 @@ Public Class Frm_Kardex_Informe_X_Producto
             .Columns("CAPRCO" & _Unidad).HeaderText = "Cantidad"
             .Columns("CAPRCO" & _Unidad).Width = 65
             .Columns("CAPRCO" & _Unidad).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("CAPRCO" & _Unidad).DefaultCellStyle.Format = "###,#0.##"
+            .Columns("CAPRCO" & _Unidad).DefaultCellStyle.Format = "###,#0.###"
             .Columns("CAPRCO" & _Unidad).Visible = True
 
             .Columns("Sfisico").DisplayIndex = 5
@@ -187,14 +187,14 @@ Public Class Frm_Kardex_Informe_X_Producto
             .Columns("STFISICO").DisplayIndex = 6
             .Columns("STFISICO").HeaderText = "Stock Físico"
             .Columns("STFISICO").Width = 60
-            .Columns("STFISICO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("STFISICO").DefaultCellStyle.Format = "###,##"
+            .Columns("STFISICO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("STFISICO").DefaultCellStyle.Format = "###,##.###"
             .Columns("STFISICO").Visible = True
 
             .Columns("Sdevengado").DisplayIndex = 7
             .Columns("Sdevengado").HeaderText = ""
             .Columns("Sdevengado").Width = 20
-            .Columns("Sdevengado").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("Sdevengado").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Sdevengado").Visible = True
             .Columns("Sdevengado").DefaultCellStyle.ForeColor = Rojo
             '.Columns("Sdevengado").DefaultCellStyle.Font = New Font("Tahoma", 7, FontStyle.Bold)
@@ -202,14 +202,14 @@ Public Class Frm_Kardex_Informe_X_Producto
             .Columns("DEVENGADO").DisplayIndex = 8
             .Columns("DEVENGADO").HeaderText = "Devengado"
             .Columns("DEVENGADO").Width = 70
-            .Columns("DEVENGADO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("DEVENGADO").DefaultCellStyle.Format = "###,##"
+            .Columns("DEVENGADO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("DEVENGADO").DefaultCellStyle.Format = "###,##.###"
             .Columns("DEVENGADO").Visible = True
 
             .Columns("Sdespsfact").DisplayIndex = 9
             .Columns("Sdespsfact").HeaderText = ""
             .Columns("Sdespsfact").Width = 20
-            .Columns("Sdespsfact").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("Sdespsfact").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Sdespsfact").Visible = True
             .Columns("Sdespsfact").DefaultCellStyle.ForeColor = Rojo
             '.Columns("Sdespsfact").DefaultCellStyle.Font = New Font("Tahoma", 7, FontStyle.Bold)
@@ -217,14 +217,14 @@ Public Class Frm_Kardex_Informe_X_Producto
             .Columns("DESPSFACTURAR").DisplayIndex = 10
             .Columns("DESPSFACTURAR").HeaderText = "Desp. S/Fac"
             .Columns("DESPSFACTURAR").Width = 60
-            .Columns("DESPSFACTURAR").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("DESPSFACTURAR").DefaultCellStyle.Format = "###,##"
+            .Columns("DESPSFACTURAR").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("DESPSFACTURAR").DefaultCellStyle.Format = "###,##.###"
             .Columns("DESPSFACTURAR").Visible = True
 
             .Columns("Scomprometido").DisplayIndex = 11
             .Columns("Scomprometido").HeaderText = ""
             .Columns("Scomprometido").Width = 20
-            .Columns("Scomprometido").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("Scomprometido").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Scomprometido").Visible = True
             .Columns("Scomprometido").DefaultCellStyle.ForeColor = Rojo
             '.Columns("Scomprometido").DefaultCellStyle.Font = New Font("Tahoma", 7, FontStyle.Bold)
@@ -232,14 +232,14 @@ Public Class Frm_Kardex_Informe_X_Producto
             .Columns("COMPROMETIDO").DisplayIndex = 12
             .Columns("COMPROMETIDO").HeaderText = "Compro."
             .Columns("COMPROMETIDO").Width = 70
-            .Columns("COMPROMETIDO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("COMPROMETIDO").DefaultCellStyle.Format = "###,##"
+            .Columns("COMPROMETIDO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("COMPROMETIDO").DefaultCellStyle.Format = "###,##.###"
             .Columns("COMPROMETIDO").Visible = True
 
             .Columns("Scompranorecep").DisplayIndex = 13
             .Columns("Scompranorecep").HeaderText = ""
             .Columns("Scompranorecep").Width = 20
-            .Columns("Scompranorecep").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("Scompranorecep").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Scompranorecep").Visible = True
             .Columns("Scompranorecep").DefaultCellStyle.ForeColor = Rojo
             '.Columns("Scompranorecep").DefaultCellStyle.Font = New Font("Tahoma", 7, FontStyle.Bold)
@@ -247,14 +247,14 @@ Public Class Frm_Kardex_Informe_X_Producto
             .Columns("COMPRANREC").DisplayIndex = 14
             .Columns("COMPRANREC").HeaderText = "Compra N/R"
             .Columns("COMPRANREC").Width = 60
-            .Columns("COMPRANREC").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("COMPRANREC").DefaultCellStyle.Format = "###,##"
+            .Columns("COMPRANREC").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("COMPRANREC").DefaultCellStyle.Format = "###,##.###"
             .Columns("COMPRANREC").Visible = True
 
             .Columns("Srecesfact").DisplayIndex = 15
             .Columns("Srecesfact").HeaderText = ""
             .Columns("Srecesfact").Width = 20
-            .Columns("Srecesfact").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("Srecesfact").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Srecesfact").Visible = True
             .Columns("Srecesfact").DefaultCellStyle.ForeColor = Rojo
             '.Columns("Srecesfact").DefaultCellStyle.Font = New Font("Tahoma", 7, FontStyle.Bold)
@@ -262,14 +262,14 @@ Public Class Frm_Kardex_Informe_X_Producto
             .Columns("RECEPSFAC").DisplayIndex = 16
             .Columns("RECEPSFAC").HeaderText = "Recep. S/F"
             .Columns("RECEPSFAC").Width = 60
-            .Columns("RECEPSFAC").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("RECEPSFAC").DefaultCellStyle.Format = "###,##"
+            .Columns("RECEPSFAC").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("RECEPSFAC").DefaultCellStyle.Format = "###,##.###"
             .Columns("RECEPSFAC").Visible = True
 
             .Columns("Spedido").DisplayIndex = 17
             .Columns("Spedido").HeaderText = ""
             .Columns("Spedido").Width = 20
-            .Columns("Spedido").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("Spedido").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Spedido").Visible = True
             .Columns("Spedido").DefaultCellStyle.ForeColor = Rojo
             '.Columns("Spedido").DefaultCellStyle.Font = New Font("Tahoma", 7, FontStyle.Bold)
@@ -277,15 +277,15 @@ Public Class Frm_Kardex_Informe_X_Producto
             .Columns("PEDIDO").DisplayIndex = 18
             .Columns("PEDIDO").HeaderText = "Pedido"
             .Columns("PEDIDO").Width = 70
-            .Columns("PEDIDO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("PEDIDO").DefaultCellStyle.Format = "###,##"
+            .Columns("PEDIDO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("PEDIDO").DefaultCellStyle.Format = "###,##.###"
             .Columns("PEDIDO").Visible = True
 
         End With
 
     End Sub
 
-    Private Sub GrillaKardex_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GrillaKardex.CellDoubleClick
+    Private Sub GrillaKardex_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GrillaKardex.CellDoubleClick
 
         Me.Enabled = False
 
@@ -301,7 +301,7 @@ Public Class Frm_Kardex_Informe_X_Producto
 
     End Sub
 
-    Sub Sb_MarcarGrilla(ByVal Grilla As DataGridView)
+    Sub Sb_MarcarGrilla(Grilla As DataGridView)
 
         'Progreso_Porc.Value = 0
         Progreso_Cont.Value = 0
@@ -441,7 +441,7 @@ Public Class Frm_Kardex_Informe_X_Producto
                     Consulta_sql = "Select * From MAEST" & vbCrLf &
                                    "Where EMPRESA = '" & _Empresa & "' And KOSU = '" & _Sucursal &
                                    "'  And KOBO = '" & _Bodega & "' And KOPR = '" & _Codigo & "'"
-                    Dim _TblMaest As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+                    Dim _TblMaest As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     'MST.STFI#Ud#,        -- STOCK FISICO
                     'MST.STDV#Ud#,        -- STOCK DEVENGADO
@@ -479,7 +479,7 @@ Public Class Frm_Kardex_Informe_X_Producto
 
     End Sub
 
-    Private Sub GrillaKardex_Scroll(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ScrollEventArgs) Handles GrillaKardex.Scroll
+    Private Sub GrillaKardex_Scroll(sender As System.Object, e As System.Windows.Forms.ScrollEventArgs) Handles GrillaKardex.Scroll
         'GrillaKardex.CurrentCell = GrillaKardex.Rows(e.NewValue).Cells("TIDO")
     End Sub
 
@@ -525,7 +525,7 @@ Public Class Frm_Kardex_Informe_X_Producto
 
     End Sub
 
-    Private Sub GrillaKardex_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles GrillaKardex.MouseDown
+    Private Sub GrillaKardex_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles GrillaKardex.MouseDown
         If e.Button = Windows.Forms.MouseButtons.Right Then
             With GrillaKardex
                 Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
@@ -536,7 +536,7 @@ Public Class Frm_Kardex_Informe_X_Producto
         End If
     End Sub
 
-    Private Sub BtnIrAptincipio_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnIrAptincipio.Click
+    Private Sub BtnIrAptincipio_Click(sender As System.Object, e As System.EventArgs) Handles BtnIrAptincipio.Click
 
         If CBool(GrillaKardex.RowCount) Then
             GrillaKardex.FirstDisplayedScrollingRowIndex = 0
@@ -577,14 +577,14 @@ Public Class Frm_Kardex_Informe_X_Producto
 
     End Sub
 
-    Private Sub BtnIrAlFin_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnIrAlFin.Click
+    Private Sub BtnIrAlFin_Click(sender As System.Object, e As System.EventArgs) Handles BtnIrAlFin.Click
         If CBool(GrillaKardex.RowCount) Then
             GrillaKardex.FirstDisplayedScrollingRowIndex = GrillaKardex.RowCount - 1
             GrillaKardex.CurrentCell = GrillaKardex.Rows(GrillaKardex.RowCount - 1).Cells("NUDO")
         End If
     End Sub
 
-    Private Sub Frm_DocumentoKardex_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_DocumentoKardex_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If

@@ -46,7 +46,7 @@ Public Class Frm_Rc_Lista_Reclamos
                         SELECT CodigoTabla As Padre,NombreTabla As Hijo, Orden" & vbCrLf &
                        "FROM " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
                        "WHERE Tabla = 'SIS_RECLAMOS_TIPO' Order by Orden"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         caract_combo(Cmb_Filtro_Codigo)
         Cmb_Filtro_Codigo.DataSource = _Tbl
@@ -132,7 +132,7 @@ Public Class Frm_Rc_Lista_Reclamos
                         Where 1 > 0 " & vbCrLf &
                         _Filtro_Estados & vbCrLf & _Filtro_Externo
 
-        _Tbl_Reclamos = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_Reclamos = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         With Grilla
 

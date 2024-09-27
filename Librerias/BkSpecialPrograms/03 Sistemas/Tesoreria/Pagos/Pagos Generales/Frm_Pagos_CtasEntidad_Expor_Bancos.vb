@@ -1,4 +1,5 @@
 ﻿Imports DevComponents.DotNetBar
+Imports Org.BouncyCastle.Math.EC
 
 Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
 
@@ -42,6 +43,8 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
 
         Consulta_Sql = "Select * From TABCJ Where EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "' and KOCJ = '" & ModCaja & "'"
         _Row_Caja = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+        Sb_Color_Botones_Barra(Bar1)
 
     End Sub
 
@@ -88,11 +91,12 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
         Consulta_Sql = "Select Top 1 Cast(0 As Int) As Id,Cast(0 As Bit) As Chk,IDMAEDPCE,EMPRESA,SUREDP,CJREDP,TIDP,NUDP,ENDP,EMDP,Cast('' As Varchar(50)) As RAZON,SUEMDP,CUDP,NUCUDP,FEEMDP,FEVEDP,MODP," & vbCrLf &
                        "TIMODP,TAMODP,VADP,VAABDP,VAASDP,VAVUDP,ESPGDP,REFANTI,KOTU,NUTRANSMI,DOCUENANTI,KOFUDP,KOTNDP,SUTNDP,ESASDP,CUOTAS," &
                        "ARCHIRSD,IDRSD,CAST(0 AS INT) AS IDMAEEDO,CAST(0 AS FLOAT) AS SALDO,Cast(0 As Float) As LEY20956," &
-                       "Cast('' As Varchar(14)) As Doc_Anticipo,Cast('' As Varchar(30)) As NOTIDP,Cast('' As Varchar(30)) As NOKOENDP,Cast(0 As Bit) As Error,Cast(0 As Bit) As Exclamacion,Cast('' As Varchar(100)) As Observacion" & vbCrLf &
+                       "Cast('' As Varchar(14)) As Doc_Anticipo,Cast('' As Varchar(30)) As NOTIDP,Cast('' As Varchar(30)) As NOKOENDP,Cast(0 As Bit) As Error," &
+                       "Cast(0 As Bit) As Exclamacion,Cast('' As Varchar(100)) As Observacion,CAST(0 As Bit) As 'CruzarPagoAuto'" & vbCrLf &
                        "FROM MAEDPCE WITH ( NOLOCK ) " & vbCrLf &
                        "WHERE 1 = 0"
 
-        _Tbl_Maedpce = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_Maedpce = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Dim _DisplayIndex = 0
 
@@ -175,10 +179,18 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
             .Columns("VADP").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("REFANTI").HeaderText = "Referencia"
+            .Columns("REFANTI").HeaderText = "Referencia (REFANTI)"
             .Columns("REFANTI").Width = 180
             .Columns("REFANTI").Visible = True
             .Columns("REFANTI").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("CruzarPagoAuto").HeaderText = "CPA"
+            .Columns("CruzarPagoAuto").ToolTipText = "Cruzar pago automáticamente"
+            .Columns("CruzarPagoAuto").Width = 30
+            '.Columns("CruzarPagoAuto").ReadOnly = False
+            .Columns("CruzarPagoAuto").Visible = True
+            .Columns("CruzarPagoAuto").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Doc_Anticipo").HeaderText = "Doc.Asoc.Anticipo"
@@ -209,7 +221,7 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
 
     End Sub
 
-    Private Function Fx_Nueva_Linea_De_Pago(ByVal _Tbl As DataTable) As DataRow
+    Private Function Fx_Nueva_Linea_De_Pago(_Tbl As DataTable) As DataRow
 
         Dim NewFila As DataRow
         NewFila = _Tbl.NewRow
@@ -271,6 +283,7 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
             .Item("Error") = False
             .Item("Exclamacion") = False
             .Item("Observacion") = String.Empty
+            .Item("CruzarPagoAuto") = False
 
         End With
 
@@ -278,7 +291,7 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
 
     End Function
 
-    Private Sub Grilla_Maedpce_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla_Maedpce.CellDoubleClick
+    Private Sub Grilla_Maedpce_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla_Maedpce.CellDoubleClick
 
         Dim _Cabeza = Grilla_Maedpce.Columns(Grilla_Maedpce.CurrentCell.ColumnIndex).Name
         Dim _Fila As DataGridViewRow = Grilla_Maedpce.Rows(Grilla_Maedpce.CurrentRow.Index)
@@ -301,7 +314,7 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
 
     End Sub
 
-    Private Sub Grilla_Maedpce_CellEndEdit(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla_Maedpce.CellEndEdit
+    Private Sub Grilla_Maedpce_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla_Maedpce.CellEndEdit
 
         Dim _Cabeza = Grilla_Maedpce.Columns(e.ColumnIndex).Name
         Dim _Fila As DataGridViewRow = Grilla_Maedpce.Rows(Grilla_Maedpce.CurrentRow.Index)
@@ -356,7 +369,7 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
 
     End Sub
 
-    Private Sub Grilla_Maedpce_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Grilla_Maedpce.KeyDown
+    Private Sub Grilla_Maedpce_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles Grilla_Maedpce.KeyDown
 
         Dim _Cabeza = Grilla_Maedpce.Columns(Grilla_Maedpce.CurrentCell.ColumnIndex).Name
         Dim _Fila As DataGridViewRow = Grilla_Maedpce.Rows(Grilla_Maedpce.CurrentRow.Index)
@@ -504,9 +517,34 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
 
                     Case "Doc_Anticipo"
 
-                        Me.Enabled = False
-                        Sb_Buscar_NVV(_Fila)
-                        Me.Enabled = True
+                        Dim _Endp = _Fila.Cells("ENDP").Value
+                        Dim _Archirsd = _Fila.Cells("ARCHIRSD").Value
+                        Dim _Idrsd = _Fila.Cells("IDRSD").Value
+
+                        If CBool(_Idrsd) Then
+
+                            Dim _Idmaeedo = _Idrsd
+
+                            Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
+                            Fm.Btn_Ver_Orden_de_despacho.Visible = False
+                            Fm.ShowDialog(Me)
+                            Fm.Dispose()
+
+                            Return
+
+                        End If
+
+                        Btn_Doc_Asociado_Ver.Visible = CBool(_Idrsd)
+                        Btn_Doc_Asociado_Ver.Text = "Ver documento asociado (" & _Fila.Cells("Doc_Anticipo").Value & ")"
+                        Btn_Doc_Asociado_Quitar.Visible = CBool(_Idrsd)
+                        Btn_AnticipoNVV.Visible = Not CBool(_Idrsd)
+                        Btn_CruceDocParaPago.Visible = Not CBool(_Idrsd)
+
+                        ShowContextMenu(Menu_Contextual_02)
+
+                        'Me.Enabled = False
+                        'Sb_Buscar_NVV(_Fila)
+                        'Me.Enabled = True
 
                     Case "REFANTI"
 
@@ -556,7 +594,8 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
 
         _Filtrar.Tabla = "MAEEDO"
         _Filtrar.Campo = "IDMAEEDO"
-        _Filtrar.Descripcion = "TIDO+'-'+NUDO+'    '+Rtrim(LTrim(MODO))+'      '+PARSENAME(CONVERT(VARCHAR,CAST(VABRDO AS MONEY),1),2)"
+        '_Filtrar.Descripcion = "TIDO+'-'+NUDO+'    '+Rtrim(LTrim(MODO))+'      '+PARSENAME(CONVERT(VARCHAR,CAST(VABRDO AS MONEY),1),2)"
+        _Filtrar.Descripcion = "TIDO+'-'+NUDO+'    '+Rtrim(LTrim(MODO))+'      '+STR(VABRDO)"
 
         Dim _Condicion = "And EMPRESA='" & ModEmpresa & "'  AND ENDO='" & _Endp & "'  AND TIDO IN ('NVV','RES','PRO') AND ESDO Not In ('C','N') AND   
                           NOT EXISTS (SELECT * FROM MAEDPCE WHERE MAEDPCE.ARCHIRSD = 'MAEEDO' AND MAEDPCE.IDRSD = MAEEDO.IDMAEEDO)"
@@ -581,8 +620,96 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
             _Fila.Cells("ARCHIRSD").Value = "MAEEDO"
             _Fila.Cells("IDRSD").Value = _Tbl.Rows(0).Item("Codigo")
             _Fila.Cells("Doc_Anticipo").Value = Mid(_Tbl.Rows(0).Item("Descripcion").ToString, 1, 14)
+            _Fila.Cells("REFANTI").Value = String.Empty
 
         End If
+
+    End Sub
+
+    Sub Sb_Buscar_FCVBLV(_Fila As DataGridViewRow)
+
+        Dim _Cabeza = Grilla_Maedpce.Columns(Grilla_Maedpce.CurrentCell.ColumnIndex).Name
+
+        Dim _Endp = _Fila.Cells("ENDP").Value
+        Dim _Archirsd = _Fila.Cells("ARCHIRSD").Value
+        Dim _Idrsd = _Fila.Cells("IDRSD").Value
+        Dim _Vadp As Double = _Fila.Cells("VADP").Value
+
+        If CBool(_Idrsd) Then
+
+            Dim _Idmaeedo = _Idrsd
+
+            Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
+            Fm.Btn_Ver_Orden_de_despacho.Visible = False
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
+
+            Return
+
+        End If
+
+        If String.IsNullOrEmpty(_Endp.ToString.Trim) Then
+            MessageBoxEx.Show(Me, "Debe seleccionar una entidad", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Consulta_Sql = "Select IDMAEEDO,TIDO,NUDO,VABRDO,ESPGDO" & vbCrLf &
+                       "From MAEEDO " & vbCrLf &
+                       "Where TIDO In ('FCV','BLV') And ENDO = '" & _Endp & "' " &
+                       "And VAABDO = 0 " &
+                       "And ESPGDO = 'P' " &
+                       "And NUDONODEFI = 0 " &
+                       "And VABRDO = " & De_Num_a_Tx_01(_Vadp, False, 5)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
+
+        If Not CBool(_Tbl.Rows.Count) Then
+            MessageBoxEx.Show(Me, "No hay documentos que mostrar", "Buscar documentos", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If _Tbl.Rows.Count = 1 Then
+
+            If MessageBoxEx.Show(Me, "Se encontro el documento " & _Tbl.Rows(0).Item("TIDO") & "-" & _Tbl.Rows(0).Item("NUDO") & vbCrLf &
+                                 "¿Confirma el cruce del pago para este documento?",
+                                 "Cruzar pago", MessageBoxButtons.YesNo, MessageBoxIcon.Information) <> DialogResult.Yes Then
+                Return
+            End If
+
+            _Fila.Cells("ARCHIRSD").Value = "MAEEDO"
+            _Fila.Cells("IDRSD").Value = _Tbl.Rows(0).Item("IDMAEEDO")
+            _Fila.Cells("Doc_Anticipo").Value = _Tbl.Rows(0).Item("TIDO") & "-" & _Tbl.Rows(0).Item("NUDO")
+            _Fila.Cells("REFANTI").Value = "*** Cruce automático ***"
+            _Fila.Cells("CruzarPagoAuto").Value = True
+
+            Return
+
+        End If
+
+        MessageBoxEx.Show(Me, "Hay varios documentos disponibles." & vbCrLf &
+                  "Puede seleccionar el documento deseado en la ventana posterior.",
+                  "Buscar documentos", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+
+        Dim _Condicion As String = "And IDMAEEDO In " & Generar_Filtro_IN(_Tbl, "", "IDMAEEDO", True, False)
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Tabla = "MAEEDO"
+        _Filtrar.Campo = "IDMAEEDO"
+        _Filtrar.Descripcion = "TIDO+'-'+NUDO+'    '+Rtrim(LTrim(MODO))+'      '+STR(VABRDO)"
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                       Clas_Filtros_Random.Enum_Tabla_Fl._Otra, _Condicion,
+                       False, False, True) Then
+
+            _Tbl = _Filtrar.Pro_Tbl_Filtro
+
+            _Fila.Cells("ARCHIRSD").Value = "MAEEDO"
+            _Fila.Cells("IDRSD").Value = _Tbl.Rows(0).Item("Codigo")
+            _Fila.Cells("Doc_Anticipo").Value = Mid(_Tbl.Rows(0).Item("Descripcion").ToString, 1, 14)
+            _Fila.Cells("REFANTI").Value = "*** Cruce automático ***"
+            _Fila.Cells("CruzarPagoAuto").Value = True
+
+        End If
+
 
     End Sub
 
@@ -782,10 +909,23 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
                             Dim _Idmaedpce = _Cl_Pagar.Fx_Crear_Pago_Anticipo(_Fl)
 
                             If CBool(_Idmaedpce) Then
+
+                                If _Fl.Item("CruzarPagoAuto") Then
+
+                                    Dim _Idmaeedo As Integer = _Fila.Cells("IDRSD").Value
+                                    Dim _Vadp As Double = _Fila.Cells("VADP").Value
+
+                                    _Cl_Pagar.Fx_Crear_Pago_MAEDPCD(Me, _Idmaeedo, _Idmaedpce, _Vadp)
+
+                                End If
+
                                 _Fila.Cells("IDMAEDPCE").Value = _Idmaedpce
+
                                 Sb_Revisar_Fila(_Fila)
                                 Sb_Revisar_Fila2(_Fila)
+
                                 _Levantados += 1
+
                             End If
 
                             Exit For
@@ -1038,24 +1178,24 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
             _Fila.Cells("IDRSD").Value = 0
             _Fila.Cells("Doc_Anticipo").Value = String.Empty
             _Fila.Cells("ARCHIRSD").Value = String.Empty
+            _Fila.Cells("REFANTI").Value = String.Empty
+            _Fila.Cells("CruzarPagoAuto").Value = False
 
         End If
 
     End Sub
 
-    Private Sub Btn_Doc_Asociado_Incorporar_Click(sender As Object, e As EventArgs) Handles Btn_Doc_Asociado_Incorporar.Click
-
-        Dim _Fila As DataGridViewRow = Grilla_Maedpce.Rows(Grilla_Maedpce.CurrentRow.Index)
-
-        Sb_Buscar_NVV(_Fila)
-
-    End Sub
 
     Private Sub Grilla_Maedpce_MouseDown(sender As Object, e As MouseEventArgs) Handles Grilla_Maedpce.MouseDown
+
         If e.Button = Windows.Forms.MouseButtons.Right Then
+
             With sender
+
                 Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
+
                 If Hitest.Type = DataGridViewHitTestType.Cell Then
+
                     .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
 
                     Dim _Fila As DataGridViewRow = Grilla_Maedpce.Rows(Grilla_Maedpce.CurrentRow.Index)
@@ -1063,32 +1203,61 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
                     Dim _Idmaedpce As Boolean = _Fila.Cells("IDMAEDPCE").Value
                     Dim _Idrsd As Boolean = _Fila.Cells("IDRSD").Value
                     Dim _Endp As Boolean = Not String.IsNullOrEmpty(_Fila.Cells("ENDP").Value)
-                    Dim _Tidp As Boolean = Not String.IsNullOrEmpty(_Fila.Cells("TIDP").Value)
+                    'Dim _Tidp As Boolean = Not String.IsNullOrEmpty(_Fila.Cells("TIDP").Value)
 
-                    If _Tidp Then
+                    Dim _Cabeza = Grilla_Maedpce.Columns(Grilla_Maedpce.CurrentCell.ColumnIndex).Name
+
+                    If String.IsNullOrEmpty(_Fila.Cells("TIDP").Value) Then
+                        Return
+                    End If
+
+                    If _Idmaedpce Then
+
+                        Btn_Cambiar_Entidad.Enabled = False
+                        Btn_Ver_Cta_Cte.Enabled = True
+                        Btn_Cambiar_Entidad.Visible = False
+                        Btn_Eliminar_Pago.Visible = False
+                        Btn_Editar_Pago.Visible = False
+
+                        ShowContextMenu(Menu_Contextual_01)
+                        Return
+
+                    End If
+
+                    If _Cabeza = "Doc_Anticipo" And Not _Idmaedpce Then
+
+                        Btn_Doc_Asociado_Ver.Visible = _Idrsd
+                        Btn_Doc_Asociado_Ver.Text = "Ver documento asociado (" & _Fila.Cells("Doc_Anticipo").Value & ")"
+                        Btn_Doc_Asociado_Quitar.Visible = _Idrsd
+
+                        Btn_AnticipoNVV.Visible = Not _Idrsd
+                        Btn_CruceDocParaPago.Visible = Not _Idrsd
+
+                        ShowContextMenu(Menu_Contextual_02)
+
+                    Else
+
+                        'If _Tidp Then
 
                         Btn_Cambiar_Entidad.Enabled = _Endp
                         Btn_Ver_Cta_Cte.Enabled = _Endp
 
-                        Btn_Doc_Asociado_Ver.Visible = _Idrsd
-                        Btn_Doc_Asociado_Quitar.Visible = _Idrsd
-                        Btn_Doc_Asociado_Incorporar.Visible = Not _Idrsd
-                        Btn_Doc_Asociado_Incorporar.Enabled = _Endp
-
                         Btn_Cambiar_Entidad.Visible = Not CBool(_Idmaedpce)
                         Btn_Eliminar_Pago.Visible = Not CBool(_Idmaedpce)
                         Btn_Editar_Pago.Visible = Not CBool(_Idmaedpce)
-                        Btn_Doc_Asociado_Incorporar.Visible = Not CBool(_Idmaedpce)
-                        Btn_Doc_Asociado_Quitar.Visible = Not CBool(_Idmaedpce)
-
-                        Btn_Doc_Asociado_Ver.Text = "Ver documento asociado (" & _Fila.Cells("Doc_Anticipo").Value & ")"
 
                         ShowContextMenu(Menu_Contextual_01)
 
+                        'End If
+
                     End If
+
                 End If
+
             End With
+
         End If
+
     End Sub
 
     Private Sub Btn_Limpiar_Click(sender As Object, e As EventArgs) Handles Btn_Limpiar.Click
@@ -1110,7 +1279,7 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
 
     End Sub
 
-    Sub Sb_Pago_Cheque_o_Tarjeta(ByVal _Tidp As String)
+    Sub Sb_Pago_Cheque_o_Tarjeta(_Tidp As String)
 
         Dim _Fila As DataGridViewRow = Grilla_Maedpce.Rows(Grilla_Maedpce.CurrentRow.Index)
         Dim _Tipo_Pago As Frm_Pagos_Seleccionar_CH_TJ.Enum_Tipo_Pago
@@ -1170,6 +1339,11 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
 
             End If
 
+            _Fila.Cells("ARCHIRSD").Value = String.Empty
+            _Fila.Cells("IDRSD").Value = 0
+            _Fila.Cells("Doc_Anticipo").Value = String.Empty
+            _Fila.Cells("REFANTI").Value = String.Empty
+
             _Fila.Cells("EMDP").Value = Fm.Pro_Emdp
             _Fila.Cells("SUEMDP").Value = Fm.Pro_Suemdp
             _Fila.Cells("CUDP").Value = Fm.Pro_Cudp
@@ -1184,6 +1358,10 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
 
             Sb_Revisar_Fila(_Fila)
             Sb_Revisar_Fila2(_Fila)
+
+            If _Fila.Cells("Error").Value Then
+                _Fila.Cells("Chk").Value = False
+            End If
 
             If _Tidp = "CHV" Then
                 Grilla_Maedpce.CurrentCell = Grilla_Maedpce.Rows(Grilla_Maedpce.CurrentRow.Index).Cells("FEVEDP")
@@ -1379,12 +1557,195 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
 
     End Sub
 
-    Private Sub Grilla_EditingControlShowing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs)
+    Private Sub Btn_SugerirNVVRefAuto_Click(sender As Object, e As EventArgs) Handles Btn_SugerirNVVRefAuto.Click
+
+        Dim _Checados = 0
+
+        For Each _Fl As DataRow In _Tbl_Maedpce.Rows
+            If NuloPorNro(_Fl.Item("Chk"), False) Then
+                _Checados += 1
+            End If
+        Next
+
+        If Not CBool(_Checados) Then
+            MessageBoxEx.Show(Me, "No hay registros seleccionados", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Confirma que desea marcar los registros sugeridos para Ref. NVV en forma masiva?",
+                             "Sugerencia automática", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
+
+        Dim _RegConCoincidencias As Integer = 0
+        Dim _RegSinCoincidencias As Integer = 0
+        Dim _RegMas1Coincidencias As Integer = 0
+
+        For Each _Fila As DataGridViewRow In Grilla_Maedpce.Rows
+
+            If Not _Fila.Cells("CruzarPagoAuto").Value AndAlso Not _Fila.Cells("Error").Value = True Then
+
+                Dim _Endo As String = _Fila.Cells("ENDP").Value
+                Dim _Vadp As Double = _Fila.Cells("VADP").Value
+
+                Consulta_Sql = "Select IDMAEEDO,TIDO,NUDO From MAEEDO WITH (NOLOCK)" & vbCrLf &
+                               "Where EMPRESA = '" & ModEmpresa & "' And ENDO = '" & _Endo & "' And TIDO In ('NVV','RES','PRO') And ESDO Not In ('C','N')" & vbCrLf &
+                               "And NOT EXISTS (SELECT * FROM MAEDPCE WHERE MAEDPCE.ARCHIRSD = 'MAEEDO' AND MAEDPCE.IDRSD = MAEEDO.IDMAEEDO) And VABRDO = " & De_Num_a_Tx_01(_Vadp, False, 5)
+                Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
+
+                If Not CBool(_Tbl.Rows.Count) Then
+                    _RegSinCoincidencias += 1
+                Else
+
+                    Dim _Tido As String = _Tbl.Rows(0).Item("TIDO")
+                    Dim _Nudo As String = _Tbl.Rows(0).Item("NUDO")
+                    Dim _Referencia As String = "*** Cruce automático ***"
+
+                    If _Tbl.Rows.Count = 1 Then
+
+                        _Fila.Cells("ARCHIRSD").Value = "MAEEDO"
+                        _Fila.Cells("IDRSD").Value = _Tbl.Rows(0).Item("IDMAEEDO")
+                        _Fila.Cells("Doc_Anticipo").Value = _Tido & "-" & _Nudo
+                        _Fila.Cells("REFANTI").Value = _Referencia
+                        _RegConCoincidencias += 1
+
+                    Else
+
+                        _Fila.Cells("Observacion").Value += "LA ENTIDAD TIENE " & _Tbl.Rows.Count & " DOCUMENTOS QUE CONINCIDEN CON EL VALOR ESTABLECIDO"
+                        _Fila.Cells("REFANTI").Value = _Tbl.Rows.Count & " DOC. ENCONTRADOS"
+                        _Fila.Cells("Chk").Value = False
+                        _RegMas1Coincidencias += 1
+
+                    End If
+
+                End If
+
+            End If
+
+        Next
+
+        If _RegSinCoincidencias = Grilla_Maedpce.RowCount Then
+
+            MessageBoxEx.Show(Me, "No se encontraron registros con coincidencias exactas", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+
+        End If
+
+        MessageBoxEx.Show(Me, "Registros con coincidencias: " & _RegConCoincidencias & vbCrLf &
+                              "Registros con mas de una coincidencia: " & _RegMas1Coincidencias & vbCrLf &
+                              "Registros sin coincidencia: " & _RegSinCoincidencias,
+                              "Marcar masivamente", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+    End Sub
+
+    Private Sub Btn_AnticipoNVV_Click(sender As Object, e As EventArgs) Handles Btn_AnticipoNVV.Click
+
+        Dim _Fila As DataGridViewRow = Grilla_Maedpce.Rows(Grilla_Maedpce.CurrentRow.Index)
+        Sb_Buscar_NVV(_Fila)
+
+    End Sub
+
+    Private Sub Btn_CruceDocParaPago_Click(sender As Object, e As EventArgs) Handles Btn_CruceDocParaPago.Click
+
+        Dim _Fila As DataGridViewRow = Grilla_Maedpce.Rows(Grilla_Maedpce.CurrentRow.Index)
+        Sb_Buscar_FCVBLV(_Fila)
+
+    End Sub
+
+    Private Sub Btn_SugerirFCVBLVRefAuto_Click(sender As Object, e As EventArgs) Handles Btn_SugerirFCVBLVRefAuto.Click
+
+        Dim _Checados = 0
+
+        For Each _Fl As DataRow In _Tbl_Maedpce.Rows
+            If NuloPorNro(_Fl.Item("Chk"), False) Then
+                _Checados += 1
+            End If
+        Next
+
+        If Not CBool(_Checados) Then
+            MessageBoxEx.Show(Me, "No hay registros seleccionados", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Confirma que desea marcar los registros sugeridos para FCV/BLV con pago automático en forma masiva?",
+                             "Sugerencia automática", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
+
+        Dim _RegConCoincidencias As Integer = 0
+        Dim _RegSinCoincidencias As Integer = 0
+        Dim _RegMas1Coincidencias As Integer = 0
+
+        For Each _Fila As DataGridViewRow In Grilla_Maedpce.Rows
+
+            If Not _Fila.Cells("Error").Value = True Then
+
+                Dim _Endo As String = _Fila.Cells("ENDP").Value
+                Dim _Vadp As Double = _Fila.Cells("VADP").Value
+
+                Consulta_Sql = "Select IDMAEEDO,TIDO,NUDO,VABRDO,ESPGDO" & vbCrLf &
+                               "From MAEEDO " & vbCrLf &
+                               "Where TIDO In ('FCV','BLV') And ENDO = '" & _Endo & "' " &
+                               "And VAABDO = 0 " &
+                               "And ESPGDO = 'P' " &
+                               "And NUDONODEFI = 0 " &
+                               "And VABRDO = " & De_Num_a_Tx_01(_Vadp, False, 5)
+
+                Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
+
+                If Not CBool(_Tbl.Rows.Count) Then
+                    _RegSinCoincidencias += 1
+                Else
+
+                    Dim _Tido As String = _Tbl.Rows(0).Item("TIDO")
+                    Dim _Nudo As String = _Tbl.Rows(0).Item("NUDO")
+                    Dim _Referencia As String = "*** Cruce automático ***"
+
+                    If _Tbl.Rows.Count = 1 Then
+
+                        _Fila.Cells("ARCHIRSD").Value = "MAEEDO"
+                        _Fila.Cells("IDRSD").Value = _Tbl.Rows(0).Item("IDMAEEDO")
+                        _Fila.Cells("Doc_Anticipo").Value = _Tido & "-" & _Nudo
+                        _Fila.Cells("REFANTI").Value = _Referencia
+                        _Fila.Cells("CruzarPagoAuto").Value = True
+                        _RegConCoincidencias += 1
+
+                    Else
+
+                        _Fila.Cells("Observacion").Value += "LA ENTIDAD TIENE " & _Tbl.Rows.Count & " DOCUMENTOS QUE CONINCIDEN CON EL VALOR ESTABLECIDO"
+                        _Fila.Cells("REFANTI").Value = _Tbl.Rows.Count & " DOC. ENCONTRADOS"
+                        _RegMas1Coincidencias += 1
+
+                    End If
+
+                End If
+
+            End If
+
+        Next
+
+        If _RegSinCoincidencias = Grilla_Maedpce.RowCount Then
+
+            MessageBoxEx.Show(Me, "No se encontraron registros con coincidencias exactas", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+
+        End If
+
+        MessageBoxEx.Show(Me, "Registros con coincidencias: " & _RegConCoincidencias & vbCrLf &
+                              "Registros con mas de una coincidencia: " & _RegMas1Coincidencias & vbCrLf &
+                              "Registros sin coincidencia: " & _RegSinCoincidencias,
+                              "Marcar masivamente", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+    End Sub
+
+    Private Sub Grilla_EditingControlShowing(sender As System.Object, e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs)
         Dim validar As TextBox = CType(e.Control, TextBox)
         AddHandler validar.KeyPress, AddressOf Sb_Validar_Keypress
     End Sub
 
-    Private Sub Sb_Validar_Keypress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs)
+    Private Sub Sb_Validar_Keypress(sender As Object, e As System.Windows.Forms.KeyPressEventArgs)
 
         ' obtener indice de la columna
 

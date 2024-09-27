@@ -128,7 +128,7 @@ Public Class Clas_Imprimir_AsisCompra
                             Inner Join MAEPR Mp On Td.KOPR = Mp.KOPR
                             Where KOEN = '" & _Row_Proveedor.Item("KOEN") & "' And BLOQUEAPR In ('','V')
                             Order by " & _Orden
-            _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Productos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Return CBool(_Tbl_Productos.Rows.Count)
 

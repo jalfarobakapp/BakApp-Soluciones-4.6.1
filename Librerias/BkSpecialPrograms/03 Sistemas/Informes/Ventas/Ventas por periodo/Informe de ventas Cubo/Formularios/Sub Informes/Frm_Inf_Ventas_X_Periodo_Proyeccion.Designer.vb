@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_Inf_Ventas_X_Periodo_Proyeccion
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -160,7 +160,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Proyeccion
         '
         Me.Btn_Filtro_Ent_Tamano_Empresa.Image = CType(resources.GetObject("Btn_Filtro_Ent_Tamano_Empresa.Image"), System.Drawing.Image)
         Me.Btn_Filtro_Ent_Tamano_Empresa.Name = "Btn_Filtro_Ent_Tamano_Empresa"
-        Me.Btn_Filtro_Ent_Tamano_Empresa.Text = "Filtrar por <b><font color=""#4E5D30""><font color=""#0072BC"">TAMAÑO EMPRESA</font><" &
+        Me.Btn_Filtro_Ent_Tamano_Empresa.Text = "Filtrar por <b><font color=""#4E5D30""><font color=""#0072BC"">TAMAÃ‘O EMPRESA</font><" &
     "/font></b>"
         '
         'LabelItem2
@@ -271,7 +271,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Proyeccion
         '
         Me.Btn_Filtro_Responzables.Image = CType(resources.GetObject("Btn_Filtro_Responzables.Image"), System.Drawing.Image)
         Me.Btn_Filtro_Responzables.Name = "Btn_Filtro_Responzables"
-        Me.Btn_Filtro_Responzables.Text = "Filtrar por <b><font color=""#0072BC"">RESPONZABLE</font></b>"
+        Me.Btn_Filtro_Responzables.Text = "Filtrar por <b><font color=""#0072BC"">RESPONSABLE</font></b>"
         '
         'Btn_Filtro_Vendedores
         '
@@ -408,7 +408,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Proyeccion
         '
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 109
-        Me.GroupPanel1.Text = "Detalle de la proyección"
+        Me.GroupPanel1.Text = "Detalle de la proyecciÃ³n"
         '
         'Rdb_Prom_R1
         '
@@ -462,7 +462,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Proyeccion
         Me.Rdb_Prorroga_R1.Size = New System.Drawing.Size(281, 22)
         Me.Rdb_Prorroga_R1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Prorroga_R1.TabIndex = 158
-        Me.Rdb_Prorroga_R1.Text = "Prorrogar según % de ventas del Rango 1"
+        Me.Rdb_Prorroga_R1.Text = "Prorrogar segÃºn % de ventas del Rango 1"
         '
         'Rdb_Prorroga_Igual
         '
@@ -519,7 +519,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Proyeccion
         '
         Me.GroupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel2.TabIndex = 160
-        Me.GroupPanel2.Text = "Calculo de proyección"
+        Me.GroupPanel2.Text = "Calculo de proyecciÃ³n"
         '
         'GroupPanel3
         '
@@ -591,7 +591,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Proyeccion
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.Size = New System.Drawing.Size(90, 20)
         Me.LabelX1.TabIndex = 163
-        Me.LabelX1.Text = "Total días"
+        Me.LabelX1.Text = "Total dÃ­as"
         '
         'LabelX2
         '
@@ -604,7 +604,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Proyeccion
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(90, 18)
         Me.LabelX2.TabIndex = 165
-        Me.LabelX2.Text = "Días trascurridos"
+        Me.LabelX2.Text = "DÃ­as trascurridos"
         '
         'Input_Dias_Transcurridos
         '
@@ -635,7 +635,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Proyeccion
         Me.LabelX3.Name = "LabelX3"
         Me.LabelX3.Size = New System.Drawing.Size(90, 18)
         Me.LabelX3.TabIndex = 166
-        Me.LabelX3.Text = "Días proyección"
+        Me.LabelX3.Text = "DÃ­as proyecciÃ³n"
         '
         'TableLayoutPanel1
         '
@@ -714,7 +714,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Proyeccion
         '
         Me.GroupPanel4.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel4.TabIndex = 168
-        Me.GroupPanel4.Text = "Totales proyección"
+        Me.GroupPanel4.Text = "Totales proyecciÃ³n"
         '
         'Grilla_Totales
         '
@@ -761,7 +761,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Proyeccion
         Me.LabelX5.Name = "LabelX5"
         Me.LabelX5.Size = New System.Drawing.Size(160, 19)
         Me.LabelX5.TabIndex = 172
-        Me.LabelX5.Text = "Fecha proyección"
+        Me.LabelX5.Text = "Fecha proyecciÃ³n"
         '
         'TableLayoutPanel2
         '
@@ -924,7 +924,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Proyeccion
         Me.Chk_Domingo.Size = New System.Drawing.Size(147, 17)
         Me.Chk_Domingo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Domingo.TabIndex = 175
-        Me.Chk_Domingo.Text = "Considerar día Domingo"
+        Me.Chk_Domingo.Text = "Considerar dÃ­a Domingo"
         '
         'Chk_Sabado
         '
@@ -939,7 +939,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Proyeccion
         Me.Chk_Sabado.Size = New System.Drawing.Size(138, 17)
         Me.Chk_Sabado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Sabado.TabIndex = 174
-        Me.Chk_Sabado.Text = "Considerar día Sábado"
+        Me.Chk_Sabado.Text = "Considerar dÃ­a SÃ¡bado"
         '
         'Frm_Inf_Ventas_X_Periodo_Proyeccion
         '

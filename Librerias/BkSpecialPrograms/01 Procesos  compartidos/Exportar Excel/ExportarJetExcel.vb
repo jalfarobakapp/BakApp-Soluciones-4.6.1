@@ -12,7 +12,7 @@ Public Module ExportarJetExcel
 
         Consulta_sql = _Consulta_sql
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If _Tbl.Rows.Count > 0 Then
             Dim Fm As New Frm_Exportar_Excel(_Tbl)
@@ -44,6 +44,25 @@ Public Module ExportarJetExcel
 
     End Sub
 
+    Public Sub ExportarTabla_JetExcel_DataSet(_Ds As DataSet,
+                                              _Formulario As Form,
+                                              Optional _Nombre_Archivo As String = "Datos",
+                                              Optional _CodPermiso As String = "")
+
+        If (_Ds Is Nothing) OrElse Not CBool(_Ds.Tables.Count) Then
+            MessageBoxEx.Show(_Formulario,
+                              "No existen datos que mostrar", "Exportar a Excel", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        Else
+            Dim Fm As New Frm_Exportar_Excel(Nothing)
+            Fm.Ds_Excel = _Ds
+            Fm.CodPermiso = _CodPermiso
+            Fm.Pro_Nombre_Archivo = _Nombre_Archivo
+            Fm.ShowDialog(_Formulario)
+            Fm.Dispose()
+        End If
+
+    End Sub
+
     Public Sub ExportarTabla_JetExcel_Old(SQl As String,
                                           Formulario As Form,
                                           Optional Nombre_Archivo As String = "Datos")
@@ -51,7 +70,7 @@ Public Module ExportarJetExcel
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
         Dim Fm_xls As New Frm_ExportarJetExcel
-        Fm_xls.Pro_TablaExcel = _Sql.Fx_Get_Tablas(SQl)
+        Fm_xls.Pro_TablaExcel = _Sql.Fx_Get_DataTable(SQl)
         Fm_xls.TxtNombreArchivo.Text = Nombre_Archivo
 
         If Fm_xls.Pro_TablaExcel.Rows.Count > 0 Then
@@ -85,7 +104,7 @@ Public Module ExportarJetExcel
 
         Dim Fm As New Frm_Exportar_Excel(_Tabla) 'Frm_ExportarJetExcel
         Fm.Pro_Nombre_Archivo = _Nombre_Archivo
-        _Ruta_Archivo = Fm.Fx_Exportar_ExcelJet(_Nombre_Archivo, "", Frm_Exportar_Excel.Enum_Extencion.xlsx)
+        _Ruta_Archivo = Fm.Fx_Exportar_ExcelJet(_Nombre_Archivo, "", Frm_Exportar_Excel.Enum_Extension.xlsx)
         Fm.Dispose()
 
     End Sub

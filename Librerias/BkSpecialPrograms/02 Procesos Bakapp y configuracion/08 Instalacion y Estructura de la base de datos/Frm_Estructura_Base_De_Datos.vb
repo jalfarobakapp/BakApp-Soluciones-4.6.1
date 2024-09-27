@@ -157,6 +157,8 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Entidad_Cia_Seguros", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Entidades_ProdExcluidos", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Entidades_ProdMinCompra", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Entidades_Holding", _Modificar, Lbl_Eventos)
+
 
             'CNFIGURACION DE ESTACIONES DE TRABAJO
             .Sb_Revisar_Tabla2(Me, "Zw_Estaciones_Poswi", _Modificar, Lbl_Eventos)
@@ -177,6 +179,20 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Format_Fx", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Format_Pag", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Fuentes_Conf", _Modificar, Lbl_Eventos)
+
+            'FTP
+            .Sb_Revisar_Tabla2(Me, "Zw_Ftp_Conexiones", _Modificar, Lbl_Eventos)
+
+            'INVENTARIO
+            .Sb_Revisar_Tabla2(Me, "Zw_Inv_Contador", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Inv_FotoInventario", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Inv_Hoja", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Inv_HojaEli", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Inv_HojaEli_Detalle", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Inv_Hoja_Detalle", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Inv_Inventario", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Inv_Sector", _Modificar, Lbl_Eventos)
+
 
             .Sb_Revisar_Tabla2(Me, "Zw_Licencia", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Licencia_Mod", _Modificar, Lbl_Eventos)
@@ -326,6 +342,8 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Stmp_Enc", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Stmp_Det", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Stmp_DetPick", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Stmp_Enc_Permisos", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Stmp_SalaEspera", _Modificar, Lbl_Eventos)
 
             .Sb_Revisar_Tabla2(Me, "Zw_TablaDeCaracterizaciones", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Tablas_Equivalentes_Rd_Bk", _Modificar, Lbl_Eventos)

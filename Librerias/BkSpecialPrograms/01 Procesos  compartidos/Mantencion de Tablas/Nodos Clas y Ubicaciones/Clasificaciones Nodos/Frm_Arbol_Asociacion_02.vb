@@ -318,7 +318,7 @@ Public Class Frm_Arbol_Asociacion_02
 
             Consulta_sql = "Select * From " & _Tbl_Tabla_De_Paso & vbCrLf &
                            "Where Codigo_Nodo+Descripcion+Codigo_Madre Like '%" & _Cadena & "%'"
-            _Tbl_Carpetas = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Carpetas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
             Dim _ReadOnly As Boolean
@@ -977,7 +977,7 @@ Public Class Frm_Arbol_Asociacion_02
     Function Fx_Tiene_Productos(_NodoPadre As String) As Boolean
 
         Consulta_sql = "Select Codigo_Nodo from " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Identificacdor_NodoPadre = " & _NodoPadre
-        Dim _Tbl_Tree As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql) ' _SQL.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Tree As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql) ' _SQL.Fx_Get_Tablas(Consulta_sql)
         Dim _Cta_ProdClasificados As Boolean
         Dim _Codigo_Nodo As Integer
 
@@ -1304,7 +1304,7 @@ Public Class Frm_Arbol_Asociacion_02
                 Dim _Reg As Boolean
 
                 Consulta_sql = "Select * From " & _Tbl_Tabla_De_Paso & " Where Codigo_Madre = '" & _Codigo_Madre & "'"
-                Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 If CBool(_Tbl.Rows.Count) Then
                     Consulta_sql = "Update " & _Tbl_Tabla_De_Paso & Space(1) &

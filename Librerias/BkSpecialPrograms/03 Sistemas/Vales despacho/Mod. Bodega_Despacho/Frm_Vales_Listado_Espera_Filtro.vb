@@ -26,21 +26,21 @@ Public Class Frm_Vales_Listado_Espera_Filtro
 
         caract_combo(CmbTipoDoc)
         Consulta_sql = "SELECT TIDO as Padre,SUBSTRING(NOTIDO,1,7) as Hijo From TABTIDO Where TIDO In ('BLV','FCV')"
-        CmbTipoDoc.DataSource = _SQL.Fx_Get_Tablas(Consulta_sql)
+        CmbTipoDoc.DataSource = _SQL.Fx_Get_DataTable(Consulta_sql)
         CmbTipoDoc.SelectedValue = "BLV"
 
 
         Consulta_sql = "SELECT KOFU AS Padre,KOFU+' - '+NOKOFU AS Hijo FROM TABFU ORDER BY KOFU"
         caract_combo(Cmb_Func_Marca)
 
-        Cmb_Func_Marca.DataSource = _SQL.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Func_Marca.DataSource = _SQL.Fx_Get_DataTable(Consulta_sql)
         Cmb_Func_Marca.SelectedValue = FUNCIONARIO
 
 
         Consulta_sql = "SELECT KOFU AS Padre,KOFU+' - '+NOKOFU AS Hijo FROM TABFU ORDER BY KOFU"
         caract_combo(Cmb_Func_Activa)
 
-        Cmb_Func_Activa.DataSource = _SQL.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Func_Activa.DataSource = _SQL.Fx_Get_DataTable(Consulta_sql)
         Cmb_Func_Activa.SelectedValue = FUNCIONARIO
 
 
@@ -343,7 +343,7 @@ Filtrar:
             Consulta_sql = My.Resources.Rsc_Vales.Sql_Query_Vales_Listado
             Consulta_sql = Replace(Consulta_sql, "#Filtro_Consulta#", _Filtro_Consulta)
 
-            Dim Tbl_ As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+            Dim Tbl_ As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
 
             If CBool(Tbl_.Rows.Count) Then
             _Filtro_SQL = Consulta_sql

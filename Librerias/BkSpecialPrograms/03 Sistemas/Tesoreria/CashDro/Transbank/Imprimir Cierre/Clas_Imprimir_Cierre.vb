@@ -129,7 +129,7 @@ Public Class Clas_Imprimir_Cierre
                         Select * From #Paso1 Order by FechaHora_Inicio
                         Drop table #Paso1"
 
-        _Tbl_Detalle_Terminal = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Detalle_Terminal = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         Consulta_sql = "Declare @Fecha as date = '" & _FechaCierre & "'" & vbCrLf & _

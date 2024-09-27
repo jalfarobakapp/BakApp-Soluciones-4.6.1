@@ -267,7 +267,7 @@ Public Class Frm_BuscarXProducto_Mt
         End If
 
         QsqlExcel = Replace(Consulta_sql, "TOP (100)", "")
-        Grilla.DataSource = _SQL.Fx_Get_Tablas(Consulta_sql)
+        Grilla.DataSource = _SQL.Fx_Get_DataTable(Consulta_sql)
         FormatoGrilla(Grilla, Tabla)
 
     End Function
@@ -329,7 +329,7 @@ Public Class Frm_BuscarXProducto_Mt
 
         With Grilla
 
-            .DataSource = _SQL.Fx_Get_Tablas(Consulta_sql)
+            .DataSource = _SQL.Fx_Get_DataTable(Consulta_sql)
             OcultarEncabezadoGrilla(Grilla, True)
 
             Dim LgDescripcion As Integer
@@ -533,7 +533,7 @@ Public Class Frm_BuscarXProducto_Mt
         CodProducto_Sel = Codigo_abuscar
 
         Consulta_sql = "Select * From MAEPR Where KOPR = '" & CodigoPr_Sel & "'"
-        _Tbl_Inf_Producto = _SQL.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Inf_Producto = _SQL.Fx_Get_DataTable(Consulta_sql)
 
     End Sub
 
@@ -649,7 +649,7 @@ Public Class Frm_BuscarXProducto_Mt
 
             CodigoPr_Sel = Codigo_abuscar
             Consulta_sql = "Select * From MAEPR Where KOPR = '" & CodigoPr_Sel & "'"
-            _Tbl_Inf_Producto = _SQL.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Inf_Producto = _SQL.Fx_Get_DataTable(Consulta_sql)
             Me.Close()
 
         End If

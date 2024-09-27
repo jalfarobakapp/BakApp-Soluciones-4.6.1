@@ -493,14 +493,12 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.White, ScrollBars.Vertical, True, True, _Seleccionar_Multiple)
-        'Sb_Formato_Generico_Grilla(GrillaBusquedaOtros, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
 
         _Seleccionado = False
 
         Sb_Actualizar_Tbl_Bodegas()
 
         Sb_Color_Botones_Barra(Bar1)
-        'Sb_Color_Botones_Barra(Bar2)
         Sb_Color_Botones_Barra(Bar_Menu_Producto)
 
         If Global_Thema = Enum_Themas.Oscuro Then
@@ -510,6 +508,8 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     End Sub
     Private Sub Frm_BkpPostBusquedaEspecial_Mt_Load(sender As Object, e As System.EventArgs) Handles Me.Load
+
+        Chk_MostrarVendidosUlt3Meses.Visible = True
 
         Fx_Buscar_Patente()
 
@@ -528,6 +528,12 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Asociacion (Codigo,Codigo_Nodo,DescripcionBusqueda,Para_filtro,Clas_unica,Producto)" & vbCrLf &
                        "Select KOPR,0,Rtrim(Ltrim(KOPR)) + ' ' + Rtrim(Ltrim(NOKOPR)),0,0,1 From MAEPR" & vbCrLf &
                        "Where KOPR Not In (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Producto = 1)"
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_Asociacion Set DescripcionBusqueda = Rtrim(Ltrim(KOPR)) + ' ' + Rtrim(Ltrim(NOKOPR))" & vbCrLf &
+                       "From MAEPR Mp" & vbCrLf &
+                       "Inner Join " & _Global_BaseBk & "Zw_Prod_Asociacion Ps On Mp.KOPR = Ps.Codigo And Ps.Producto = 1" & vbCrLf &
+                       "Where Ps.DescripcionBusqueda <> Rtrim(Ltrim(KOPR)) + ' ' + Rtrim(Ltrim(NOKOPR))"
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
         If _Tipo_Lista = "C" Then
@@ -565,23 +571,11 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         ChkMostrarOcultos.Checked = False
 
         If _Trabajar_Alternativos Then
-
             AddHandler Grilla.CellDoubleClick, AddressOf Sb_Seleccionar_Producto_doble_clic_Alternativos
-            'AddHandler Btn_Seleccionar.Click, AddressOf Sb_Seleccionar_Producto_doble_clic_Alternativos
-
-            'Me.ActiveControl = TxtCodigo
         ElseIf _Trabajar_Ubicaciones Then
-
             AddHandler Grilla.CellDoubleClick, AddressOf Sb_Seleccionar_Producto_doble_clic_Ubicaciones
-            'AddHandler Btn_Seleccionar.Click, AddressOf Sb_Seleccionar_Producto_doble_clic_Ubicaciones
-
-            'Me.ActiveControl = Txtdescripcion
         Else
-
             AddHandler Grilla.CellDoubleClick, AddressOf Sb_Seleccionar_Producto_doble_clic
-            'AddHandler Btn_Seleccionar.Click, AddressOf Sb_Seleccionar_Producto_doble_clic
-
-            'Me.ActiveControl = Txtdescripcion
         End If
 
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
@@ -589,7 +583,6 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         If CBool(Grilla.Rows.Count) Then
             Grilla.CurrentCell = Grilla.Rows(0).Cells("Codigo")
         End If
-
 
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
 
@@ -602,7 +595,6 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
             Case Enum_Top20.Top_Compras, Enum_Top20.Top_Ventas
 
-                'Tab_Top20.Visible = True
                 Btn_Top20.Visible = True
 
                 Dim _Filtro_Tido As String
@@ -639,14 +631,11 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
                 Consulta_sql = Replace(Consulta_sql, "#Stock#", _Sql_Query)
 
-                _Tbl_Top20 = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-                'Sb_Formato_Grilla()
+                _Tbl_Top20 = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Case Else
 
                 Btn_Top20.Visible = False
-                'Tab_Top20.Visible = False
 
         End Select
 
@@ -766,7 +755,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                         Drop Table #Paso"
         End If
 
-        _Tbl_Bodegas = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Bodegas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
     End Sub
 
@@ -873,13 +862,6 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                 .Item(_Campo_Bod) = _Fila.Item(_Campo_Bod)
 
             Next
-
-            'If _Mostrar_Info Then
-            'If _Mostrar_Precios Then
-            ''Sb_Ejecutar_Ecuacion_Dinamica(NewFila)
-            '_Cl_ActFxDinXProductos.Sb_Iniciar(_Tbl_Productos_Grilla, _ListaBusq)
-            'End If
-            'End If
 
             _Tbl_Productos_Grilla.Rows.Add(NewFila)
 
@@ -1042,10 +1024,6 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                     If _PrimerCarac = "%" Then _Sep1 = "%"
                     If _UltimoCarac = "%" Then _Sep2 = "%"
 
-                    'If _PrimerCarac = "%" AndAlso _UltimoCarac = "%" Then
-                    '    _Sep1 = "%" : _Sep2 = "%"
-                    'End If
-
                 End If
 
                 _CodigoBuscar = _CodigoBuscar.Replace("%", "")
@@ -1106,7 +1084,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                 Dim _Sigla = _Emp & _Suc & _Bod
 
                 _Sql_Query +=
-                            "ISNULL((SELECT TOP 1 Mt.STFI1 FROM MAEST Mt" & Space(1) &
+                            "ISNULL((SELECT TOP 1 Mt.STFI1 FROM MAEST Mt WITH (NOLOCK)" & Space(1) &
                             "WHERE Mt.EMPRESA = '" & _Emp & "' AND Mt.KOSU = '" & _Suc & "' AND " & vbCrLf &
                             "Mt.KOBO = '" & _Bod & "' AND Mt.KOPR = Mp.KOPR),0) AS [STOCK_Ud1_" & _Sigla & "]," & vbCrLf
 
@@ -1146,13 +1124,17 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
             End If
 
+            If Chk_MostrarVendidosUlt3Meses.Checked Then
+                _Filtro_Productos += vbCrLf & "And Mp.KOPR In (Select KOPRCT From MAEDDO Where TIDO In ('FCV','BLV','GDV') And FEEMLI > DATEADD(month,-3,Getdate()))"
+            End If
+
             Consulta_sql = Replace(Consulta_sql, "#Filtro_Productos#", _Filtro_Productos)
 
             If TraerTodosLosProductos Then
-                Consulta_sql = Replace(Consulta_sql, "Inner Join MAEPREM Mpn On Mpn.EMPRESA = @Empresa And Mpn.KOPR = Mp.KOPR ", "")
+                Consulta_sql = Replace(Consulta_sql, "Inner Join MAEPREM Mpn WITH (NOLOCK) On Mpn.EMPRESA = @Empresa And Mpn.KOPR = Mp.KOPR ", "")
             End If
 
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If Not CBool(_Tbl.Rows.Count) Then
                 _Tbl = Nothing
@@ -1241,7 +1223,6 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                         Dim _Ancho = 60
 
                         If _Mostrar_Stock_Disponible Then
-                            '_Campo_Bod = "STDiponible_Ud1_" & _Emp & _Suc & _Bod
                             _Descr_Cam = "St." & _Bod
                             .Columns(_Campo_Bod).ToolTipText = "Stock disponible bodega " & _Bod
                         End If
@@ -1501,9 +1482,9 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
             Dim _Ficha As String
 
-            Consulta_sql = "Select * From MAEFICHD Where KOPR = '" & _Codigo & "' Order by SEMILLA"
+            Consulta_sql = "Select * From MAEFICHD WITH (NOLOCK) Where KOPR = '" & _Codigo & "' Order by SEMILLA"
 
-            Dim _Tbl_Maefichd As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Maefichd As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _Fichas As DataRow In _Tbl_Maefichd.Rows
                 _Ficha += _Fichas.Item("FICHA")
@@ -1543,7 +1524,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
         If Not _Prct Then
 
-            Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
+            Consulta_sql = "Select * From MAEPR WITH (NOLOCK) Where KOPR = '" & _Codigo & "'"
             _RowProducto = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         End If
@@ -1575,7 +1556,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         Dim CodigoPr_Sel = Trim(Grilla.Rows(Grilla.CurrentRow.Index).Cells("Codigo").Value)
 
         Consulta_sql = "Select * From MAEPR Where KOPR = '" & CodigoPr_Sel & "'"
-        _Tbl_Producto_Seleccionado = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Producto_Seleccionado = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Codigo As String = _Tbl_Producto_Seleccionado.Rows(0).Item("KOPR")
 
@@ -1632,10 +1613,10 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
         If e.KeyValue = Keys.Down Then
             Grilla.Focus()
-            Me.ActiveControl = Grilla ' Txtdescripcion
+            Me.ActiveControl = Grilla
         End If
 
-        If e.KeyValue = Keys.Return Then 'Or e.KeyValue = Keys.Space Then
+        If e.KeyValue = Keys.Return Then
 
             If _Text_Ultima_Busqueda <> Txtdescripcion.Text Then
                 _Top = _Top_Filas
@@ -1758,8 +1739,27 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
     End Sub
 
     Private Sub BtnExportaExcel_Click_1(sender As System.Object, e As System.EventArgs) Handles BtnExportaExcel.Click
-        Consulta_sql = "Select * From MAEPR"
-        ExportarTabla_JetExcel_Old(Consulta_sql, Me, "Maestro productos")
+
+        If Not Fx_Tiene_Permiso(Me, "Prod076") Then
+            Exit Sub
+        End If
+
+        Consulta_sql = "SELECT TIPR,KOPR,KOPRRA,KOPRTE,NOKOPRRA,NOKOPR,NMARCA,UD01PR,UD02PR,RLUD,POIVPR,RGPR,Isnull(MRPR,'') As MRPR," & vbCrLf &
+                       "Isnull(NOKOMR,'') As 'NOKOMR',Isnull(ZONAPR,'') As ZONAPR,Isnull(NOKOZO,'') As NOKOZO," & vbCrLf &
+                       "Isnull(RUPR,'') As RUPR,Isnull(NOKORU,'') As NOKORU,Isnull(FMPR,'') As FMPR,Isnull(NOKOFM,'') As NOKOFM," & vbCrLf &
+                       "Isnull(PFPR,'') As PFPR,Isnull(Pf.NOKOPF,'') As NOKOPF,Isnull(HFPR,'') As HFPR,Isnull(Hf.NOKOHF,'') As NOKOHF," & vbCrLf &
+                       "DIVISIBLE,DIVISIBLE2,LISCOSTO,Isnull(CLALIBPR,'') As CLALIBPR,Isnull(NOKOCARAC,'') As NOKOCARAC" & vbCrLf &
+                       "FROM MAEPR" & vbCrLf &
+                       "Left Join TABMR On KOMR = MRPR" & vbCrLf &
+                       "Left Join TABRU On KORU = RUPR" & vbCrLf &
+                       "Left Join TABFM On KOFM = FMPR" & vbCrLf &
+                       "Left Join TABPF Pf On Pf.KOFM = FMPR And Pf.KOPF = PFPR" & vbCrLf &
+                       "Left Join TABHF Hf On Hf.KOFM = FMPR And Hf.KOPF = PFPR And Hf.KOHF = HFPR" & vbCrLf &
+                       "Left Join TABZO On KOZO = ZONAPR" & vbCrLf &
+                       "Left Join TABCARAC On CLALIBPR = KOCARAC And KOTABLA = 'CLALIBPR'"
+
+        ExportarTabla_JetExcel(Consulta_sql, Me, "Maestro productos")
+
     End Sub
 
     Private Sub BtnCrearProductos_Click(sender As System.Object, e As System.EventArgs) Handles BtnCrearProductos.Click
@@ -1800,7 +1800,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         If _Global_Row_Configuracion_General.Item("PermitirMigrarProductosBaseExterna") Then
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where GrbProd_Nuevos = 1"
-            Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _FilaCx As DataRow In _Tbl_Conexiones.Rows
 
@@ -1869,7 +1869,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
             If _Global_Row_Configuracion_General.Item("PermitirMigrarProductosBaseExterna") Then
 
                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where GrbProd_Nuevos = 1"
-                Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 For Each _FilaCx As DataRow In _Tbl_Conexiones.Rows
 
@@ -1937,7 +1937,9 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
     End Sub
 
     Function Fx_Eliminar_Producto(_Codigo_a_eliminar As String,
-                                  _Descripcion As String)
+                                  _Descripcion As String) As Boolean
+
+        Dim _Eliminado As Boolean
 
         If Fx_Tiene_Permiso(Me, "Prod015") Then
 
@@ -1998,13 +2000,26 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                                "DELETE " & _Global_BaseBk & "Zw_Prod_Dimensiones WHERE Codigo ='" & _Codigo_a_eliminar & "'" & vbCrLf &
                                "UPDATE " & _Global_BaseBk & "Zw_ListaPreCosto Set Codigo = '', Descripcion = ''" & Space(1) &
                                "WHERE  Codigo = '" & _Codigo_a_eliminar & "' AND Proveedor <> ''" & vbCrLf &
-                               "DELETE " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo = '" & _Codigo_a_eliminar & "' And Producto = 1"
+                               "DELETE " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo = '" & _Codigo_a_eliminar & "' And Producto = 1" & vbCrLf &
+                               "DELETE " & _Global_BaseBk & "Zw_Productos Where Codigo = '" & _Codigo_a_eliminar & "'"
 
-                Return _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+                _Eliminado = _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+                If _Eliminado Then
+
+                    Dim _Ippide As String = getIp()
+                    Dim _Horagrab As String = Hora_Grab_fx(False)
+
+                    Consulta_sql = "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ") ','Eliminacion de Productos : " & _Codigo_a_eliminar & "')"
+                    _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                End If
 
             End If
 
         End If
+
+        Return _Eliminado
 
     End Function
 
@@ -2061,7 +2076,15 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                        "DELETE " & _Global_BaseBk_Externa & "Zw_Prod_Dimensiones WHERE Codigo ='" & _Codigo_a_eliminar & "'" & vbCrLf &
                        "UPDATE " & _Global_BaseBk_Externa & "Zw_ListaPreCosto Set Codigo = '', Descripcion = ''" & Space(1) &
                        "WHERE  Codigo = '" & _Codigo_a_eliminar & "' AND Proveedor <> ''" & vbCrLf &
-                       "DELETE " & _Global_BaseBk_Externa & "Zw_Prod_Asociacion Where Codigo = '" & _Codigo_a_eliminar & "' And Producto = 1"
+                       "DELETE " & _Global_BaseBk_Externa & "Zw_Prod_Asociacion Where Codigo = '" & _Codigo_a_eliminar & "' And Producto = 1" & vbCrLf &
+                       "DELETE " & _Global_BaseBk_Externa & "Zw_Productos Where Codigo = '" & _Codigo_a_eliminar & "'"
+
+
+        Dim _Ippide As String = getIp()
+        Dim _Horagrab As String = Hora_Grab_fx(False)
+
+        Consulta_sql += vbCrLf & "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ") ','Eliminacion de Productos : " & _Codigo_a_eliminar & "')" & vbCrLf &
+                                 "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ") ','Eliminado desde una base a otra por Bakapp : " & _Codigo_a_eliminar & "')"
 
         _Cl_EliminaProd.SqlQueruDelete = Consulta_sql
 
@@ -2086,14 +2109,14 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         Dim _CodPadre As String
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _Codigo_Nodo
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _CodPadre = _Tbl.Rows(0).Item("Identificacdor_NodoPadre")
 
         Do While (_CodPadre <> 0)
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _CodPadre
-            _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             _CodPadre = _Tbl.Rows(0).Item("Identificacdor_NodoPadre")
             _Full = "\" & _Tbl.Rows(0).Item("Descripcion") & _Full
@@ -2292,14 +2315,31 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         Dim _Row_Producto As DataRow = Fx_Row_Producto(_Formulario, _Codigo)
 
         If (_Row_Producto Is Nothing) Then
-            Exit Sub
+            Return
         End If
 
-        Dim Fm As New Frm_Arbol_Asociacion_01
-        Fm.Pro_CheckBoxes_Nodos = False
-        Fm.Pro_Codigo_Producto = _Codigo
-        Fm.ShowDialog(_Formulario)
+        Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_Asociacion",
+                                            "Codigo = '" & _Codigo & "' And Para_filtro = 1"))
+
+        If Not _Reg Then
+            Beep()
+            ToastNotification.Show(Me, "NO EXISTE INFORMACION", My.Resources.cross,
+                                 2 * 1000, eToastGlowColor.Red, eToastPosition.MiddleCenter)
+            Return
+        End If
+
+        Dim Fm As New Frm_Arbol_Lista(False)
+        Fm.Codigo_Heredado = _Codigo
+        Fm.ModoCheckButton = True
+        Fm.MostrarClasProducto = True
+        Fm.ShowDialog(Me)
         Fm.Dispose()
+
+        'Dim Fm2 As New Frm_Arbol_Asociacion_01
+        'Fm2.Pro_CheckBoxes_Nodos = False
+        'Fm2.Pro_Codigo_Producto = _Codigo
+        'Fm2.ShowDialog(_Formulario)
+        'Fm2.Dispose()
 
     End Sub
 
@@ -2331,7 +2371,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                            "Where Codigo_Nodo = " & _Codigo_Nodo & " And Codigo_Nodo <> 0)" & Space(1) &
                            "--AND KOPR <> '" & _Codigo & "'"
 
-            Dim _Tbl_Productos_Hermanos = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Productos_Hermanos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If CBool(_Tbl_Productos_Hermanos.Rows.Count) Then
 
@@ -2368,7 +2408,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
         Consulta_sql = "Select top 1 * From MAEPR Where KOPR = '" & _Codigo & "'"
 
-        Dim _TblProducto As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblProducto As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblProducto.Rows.Count) Then
             Return _TblProducto.Rows(0)
@@ -2495,7 +2535,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                       "(Select top 1 NOKOBO From TABBO " &
                       "Where EMPRESA = '" & _Empresa & "' And KOSU = '" & _Sucursal & "' And KOBO = '" & _Bodega & "') As 'NOKOBO'"
 
-            Dim _TblBod As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblBod As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             _RowBodega = _TblBod.Rows(0)
 
@@ -2925,7 +2965,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                     Dim _Filtro_Productos As String = Generar_Filtro_IN_Arreglo(_Lista, False)
 
                     Consulta_sql = "Select * From MAEPR Where KOPR In " & _Filtro_Productos
-                    _Tbl_Productos_Seleccionados = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    _Tbl_Productos_Seleccionados = _Sql.Fx_Get_DataTable(Consulta_sql)
                     _Seleccion_Multiple = True
                     Me.Close()
 
@@ -3037,7 +3077,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         Dim _Codigo As String = _Fila.Cells("Codigo").Value
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where GrbProd_Nuevos = 1"
-        Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _FilaCx As DataRow In _Tbl_Conexiones.Rows
 
@@ -3127,6 +3167,10 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
             If CBool(Grilla.RowCount) Then Grilla.Focus()
         End If
 
+    End Sub
+
+    Private Sub Chk_MostrarVendidosUlt3Meses_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_MostrarVendidosUlt3Meses.CheckedChanged
+        Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
     End Sub
 
     Private Sub Txt_Patente_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Patente.ButtonCustom2Click

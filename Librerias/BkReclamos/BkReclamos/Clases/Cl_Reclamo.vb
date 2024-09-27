@@ -376,7 +376,7 @@ Public Class Cl_Reclamo
         Dim _Enviar = True
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Reclamo_Archivos Where Id_Reclamo = " & _Id_Reclamo & " And Estado = '" & _Estado & "'"
-        Dim _Tbl_Adjuntos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Adjuntos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Archivos_Adjuntos(0) As String
         Dim _i = 0

@@ -44,6 +44,8 @@ Public Class Frm_Crear_Entidad_Mt_Puntos
         If String.IsNullOrWhiteSpace(_CodFuncionario_Enrola) Then
             _CodFuncionario_Enrola = ",FechaInscripPuntos = '" & Format(Dtp_FechaInscripPuntos.Value, "yyyyMMdd") & "'" & vbCrLf &
                                      ",CodFuncionario_Enrola = '" & FUNCIONARIO & "'" & vbCrLf
+        Else
+            _CodFuncionario_Enrola = String.Empty
         End If
 
         Consulta_sql = "Update " & _Global_BaseBk & "Zw_Entidades Set " & vbCrLf &

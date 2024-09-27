@@ -2,9 +2,9 @@
 
 Public Module Mod_Entidad
 
-    Public Function Fx_Entidad_Tiene_Deudas_CtaCte(ByVal _Formulario As Form,
-                                                   ByVal _RowEntidad As DataRow,
-                                                   ByVal _Mostrar_Formulario As Boolean,
+    Public Function Fx_Entidad_Tiene_Deudas_CtaCte(_Formulario As Form,
+                                                   _RowEntidad As DataRow,
+                                                   _Mostrar_Formulario As Boolean,
                                                    ByRef _Solicitar_Permiso_Remoto As Boolean,
                                                    ByRef _Bloqueada As Boolean) As Boolean
 
@@ -13,8 +13,6 @@ Public Module Mod_Entidad
         _Bloqueada = _RowEntidad.Item("BLOQUEADO")
 
         Dim _NOTRAEDEUD As Boolean = _RowEntidad.Item("NOTRAEDEUD")
-
-        Dim _Tiene_Deudas As Boolean
 
         If _NOTRAEDEUD Then
 

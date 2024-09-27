@@ -866,7 +866,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
                        "' And Id_Mapa= " & _Id_Mapa & vbCrLf &
                        "Order by Nombre_Objeto"
 
-        Dim _TblDetalle_Mapa = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblDetalle_Mapa = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblDetalle_Mapa.Rows.Count) Then
 
@@ -1028,7 +1028,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
     Sub Sb_Imprimir_Ubicaciones(ByVal _Codigo_Sector As String)
         'If Fx_Tiene_Permiso(Me, "7Brr0005") Then
         Consulta_sql = "Select top 1 * From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Det Where Codigo_Sector = '" & _Codigo_Sector & "'"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl.Rows.Count) Then
             Dim Fm As New Frm_ImpBarras_Ubicaciones(_Tbl.Rows(0))
@@ -1210,7 +1210,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
                             Else
                                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega" & vbCrLf &
                                                "Where Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector & "'"
-                                Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                                Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                                 Btn_Mnu_Sector_Ubicaciones.Enabled = CBool(_Tbl.Rows.Count)
                                 Btn_Mnu_Sector_Cambiar_Codigo.Enabled = CBool(_Tbl.Rows.Count)

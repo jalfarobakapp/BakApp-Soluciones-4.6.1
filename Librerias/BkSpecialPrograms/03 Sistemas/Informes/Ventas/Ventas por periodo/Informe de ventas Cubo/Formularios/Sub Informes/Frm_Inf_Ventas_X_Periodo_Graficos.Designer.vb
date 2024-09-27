@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -500,7 +500,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(75, 20)
         Me.Label12.TabIndex = 147
-        Me.Label12.Text = "Días feriados"
+        Me.Label12.Text = "DÃ­as feriados"
         Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Input_Dias_Feriado_R2
@@ -547,7 +547,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(98, 20)
         Me.Label9.TabIndex = 144
-        Me.Label9.Text = "Días feriados"
+        Me.Label9.Text = "DÃ­as feriados"
         Me.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'TableLayoutPanel2
@@ -1066,7 +1066,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         Me.Btn_Filtro_Ent_Tamano_Empresa.Image = CType(resources.GetObject("Btn_Filtro_Ent_Tamano_Empresa.Image"), System.Drawing.Image)
         Me.Btn_Filtro_Ent_Tamano_Empresa.ImageAlt = CType(resources.GetObject("Btn_Filtro_Ent_Tamano_Empresa.ImageAlt"), System.Drawing.Image)
         Me.Btn_Filtro_Ent_Tamano_Empresa.Name = "Btn_Filtro_Ent_Tamano_Empresa"
-        Me.Btn_Filtro_Ent_Tamano_Empresa.Text = "Filtrar por <b><font color=""#4E5D30""><font color=""#0072BC"">TAMAÑO EMPRESA</font><" &
+        Me.Btn_Filtro_Ent_Tamano_Empresa.Text = "Filtrar por <b><font color=""#4E5D30""><font color=""#0072BC"">TAMAÃ‘O EMPRESA</font><" &
     "/font></b>"
         '
         'Menu_Contextual_Filtros_Productos
@@ -1183,7 +1183,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         Me.Btn_Filtro_Sucursales.Image = CType(resources.GetObject("Btn_Filtro_Sucursales.Image"), System.Drawing.Image)
         Me.Btn_Filtro_Sucursales.ImageAlt = CType(resources.GetObject("Btn_Filtro_Sucursales.ImageAlt"), System.Drawing.Image)
         Me.Btn_Filtro_Sucursales.Name = "Btn_Filtro_Sucursales"
-        Me.Btn_Filtro_Sucursales.Text = "Filtrar por <b><font color=""#0072BC"">SUCURSAL</font></b> (Línea Doc. Detalle)"
+        Me.Btn_Filtro_Sucursales.Text = "Filtrar por <b><font color=""#0072BC"">SUCURSAL</font></b> (LÃ­nea Doc. Detalle)"
         '
         'Btn_Filtro_Bodegas
         '
@@ -1217,7 +1217,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         Me.Btn_Filtro_Responzables.Image = CType(resources.GetObject("Btn_Filtro_Responzables.Image"), System.Drawing.Image)
         Me.Btn_Filtro_Responzables.ImageAlt = CType(resources.GetObject("Btn_Filtro_Responzables.ImageAlt"), System.Drawing.Image)
         Me.Btn_Filtro_Responzables.Name = "Btn_Filtro_Responzables"
-        Me.Btn_Filtro_Responzables.Text = "Filtrar por <b><font color=""#0072BC"">RESPONZABLE</font></b>"
+        Me.Btn_Filtro_Responzables.Text = "Filtrar por <b><font color=""#0072BC"">RESPONSABLE</font></b>"
         '
         'Btn_Filtro_Vendedores
         '
@@ -1273,7 +1273,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         Me.Btn_Mnu_Informeacion_Credito_Cliente.Image = CType(resources.GetObject("Btn_Mnu_Informeacion_Credito_Cliente.Image"), System.Drawing.Image)
         Me.Btn_Mnu_Informeacion_Credito_Cliente.ImageAlt = CType(resources.GetObject("Btn_Mnu_Informeacion_Credito_Cliente.ImageAlt"), System.Drawing.Image)
         Me.Btn_Mnu_Informeacion_Credito_Cliente.Name = "Btn_Mnu_Informeacion_Credito_Cliente"
-        Me.Btn_Mnu_Informeacion_Credito_Cliente.Text = "Ver información de créditos vigentes del cliente"
+        Me.Btn_Mnu_Informeacion_Credito_Cliente.Text = "Ver informaciÃ³n de crÃ©ditos vigentes del cliente"
         '
         'Btn_Detalle_Rango_1
         '
@@ -1537,7 +1537,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(89, 19)
         Me.Label10.TabIndex = 144
-        Me.Label10.Text = "Días proyección"
+        Me.Label10.Text = "DÃ­as proyecciÃ³n"
         Me.Label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label11
@@ -1548,7 +1548,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(72, 16)
         Me.Label11.TabIndex = 144
-        Me.Label11.Text = "Proyección "
+        Me.Label11.Text = "ProyecciÃ³n "
         Me.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Grafico_Comparativo
@@ -1625,7 +1625,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         Me.LabelX6.Name = "LabelX6"
         Me.LabelX6.Size = New System.Drawing.Size(75, 23)
         Me.LabelX6.TabIndex = 142
-        Me.LabelX6.Text = "Proyección"
+        Me.LabelX6.Text = "ProyecciÃ³n"
         '
         'LabelX4
         '
@@ -1639,7 +1639,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         Me.LabelX4.Name = "LabelX4"
         Me.LabelX4.Size = New System.Drawing.Size(231, 23)
         Me.LabelX4.TabIndex = 141
-        Me.LabelX4.Text = "Información venta por Rango"
+        Me.LabelX4.Text = "InformaciÃ³n venta por Rango"
         '
         'TableLayoutPanel5
         '
@@ -1815,7 +1815,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(55, 19)
         Me.Label8.TabIndex = 37
-        Me.Label8.Text = "Días de venta"
+        Me.Label8.Text = "DÃ­as de venta"
         Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Lbl_Dias_Habiles_R1
@@ -1848,7 +1848,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(51, 20)
         Me.Label3.TabIndex = 33
-        Me.Label3.Text = "Prom. Venta díario"
+        Me.Label3.Text = "Prom. Venta dÃ­ario"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Lbl_Prom_Vta_Diario_R1
@@ -1919,7 +1919,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         Me.Chk_Domingo.Size = New System.Drawing.Size(147, 17)
         Me.Chk_Domingo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Domingo.TabIndex = 138
-        Me.Chk_Domingo.Text = "Considerar día Domingo"
+        Me.Chk_Domingo.Text = "Considerar dÃ­a Domingo"
         '
         'Chk_Sabado
         '
@@ -1934,7 +1934,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         Me.Chk_Sabado.Size = New System.Drawing.Size(138, 17)
         Me.Chk_Sabado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Sabado.TabIndex = 136
-        Me.Chk_Sabado.Text = "Considerar día Sábado"
+        Me.Chk_Sabado.Text = "Considerar dÃ­a SÃ¡bado"
         '
         'SuperTabItem1
         '
@@ -2091,7 +2091,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         Title1.Name = "Titulo_Serie"
         Title1.Text = "Ventas Rango 1"
         Title2.Name = "Desviacion_Standar"
-        Title2.Text = "Desviación Standar: $ 99.999.999"
+        Title2.Text = "DesviaciÃ³n Standar: $ 99.999.999"
         Title3.Name = "Media"
         Title3.Text = "Media: $ 99.999.999"
         Me.Grafico_Media_R2.Titles.Add(Title1)
@@ -2235,7 +2235,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         Title4.Name = "Titulo_Serie"
         Title4.Text = "Ventas Rango 1"
         Title5.Name = "Desviacion_Standar"
-        Title5.Text = "Desviación Standar: $ 99.999.999"
+        Title5.Text = "DesviaciÃ³n Standar: $ 99.999.999"
         Title6.Name = "Media"
         Title6.Text = "Media: $ 99.999.999"
         Me.Grafico_Media_R1.Titles.Add(Title4)
@@ -2288,7 +2288,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Graficos
         Me.Btn_Proyeccion.Image = CType(resources.GetObject("Btn_Proyeccion.Image"), System.Drawing.Image)
         Me.Btn_Proyeccion.ImageAlt = CType(resources.GetObject("Btn_Proyeccion.ImageAlt"), System.Drawing.Image)
         Me.Btn_Proyeccion.Name = "Btn_Proyeccion"
-        Me.Btn_Proyeccion.Text = "Proyección"
+        Me.Btn_Proyeccion.Text = "ProyecciÃ³n"
         '
         'Btn_Crear_Venta
         '

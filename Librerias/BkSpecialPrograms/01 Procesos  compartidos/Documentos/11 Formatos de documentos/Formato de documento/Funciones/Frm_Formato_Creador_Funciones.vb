@@ -189,7 +189,7 @@ Drop Table #Paso_Detalle"
                                    "RIGHT('00000' + CAST(ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS VARCHAR( 5)), 5) AS NULIDO" & vbCrLf &
                                    "From " & _Global_BaseBk & "Zw_Stmp_DetPick Where Idmaeedo = " & _Idmaeedo
 
-                    _Tbl_Maeddo_Picking = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    _Tbl_Maeddo_Picking = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 End If
 
@@ -255,7 +255,7 @@ Drop Table #Paso_Detalle"
         Consulta_sql = "SELECT CodigoTabla" & vbCrLf &
                        "FROM " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
                        "WHERE Tabla = 'SQL_COMMAND'"
-        _Tbl_Comandos_SQL = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Comandos_SQL = _Sql.Fx_Get_DataTable(Consulta_sql)
 
     End Sub
 

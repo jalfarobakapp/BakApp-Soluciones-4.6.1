@@ -39,7 +39,7 @@ Public Class Frm_Parejas_Plan
         caract_combo(Cmb_Bodegas)
         Consulta_sql = "Select KOBO AS Padre,KOBO+'-'+NOKOBO AS Hijo FROM TABBO " &
                        "Where EMPRESA = '" & _Empresa & "' AND KOSU = '" & _Sucursal & "'"
-        Cmb_Bodegas.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Bodegas.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Bodegas.SelectedValue = _Bodega
 
         Dim _Tb = Tabs.Tabs(Tabs.SelectedTabIndex)
@@ -59,7 +59,7 @@ Public Class Frm_Parejas_Plan
                         "Where Pln.Id_Pareja = " & _Id_Pareja & " And Pln.Empresa = '" & _Empresa & "' And Pln.Sucursal = '" & _Sucursal &
                         "' And Pln.Bodega = '" & _Bodega & "' And Pln.TipoPareja = '" & _TipoPareja & "'" & vbCrLf &
                         "Order By Codigo_Sector,Codigo_Ubic"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 
@@ -210,7 +210,7 @@ Public Class Frm_Parejas_Plan
                         Drop Table #Paso"
 
 
-        Dim _Tbl_Sectores_Disponbles As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Sectores_Disponbles As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Filtro_Sectores As String = Generar_Filtro_IN(_Tbl_Sectores_Disponbles, "", "Codigo_Sector", False, False, "'")
 
@@ -310,7 +310,7 @@ Public Class Frm_Parejas_Plan
         Consulta_sql = "Select Codigo_Sector From " & _Global_BaseBk & "Zw_Inv_Plan" & vbCrLf &
                        "Where Id_Inventario = " & _Id_Inventario & " And Id_Pareja = " & _Id_Pareja & " And TipoPareja = '" & _Tb.Tag & "'"
 
-        Dim _Tbl_Sectores_Disponbles As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Sectores_Disponbles As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not CBool(_Tbl_Sectores_Disponbles.Rows.Count) Then
             MessageBoxEx.Show(Me, "No hay ubicaciones que quitar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)

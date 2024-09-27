@@ -284,27 +284,6 @@ Public Class Modulo_Programas_Especiales
             Return
         End If
 
-        'Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
-        'Dim Consulta_sql As String
-
-        'Dim _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
-
-        'Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Docu_Ent Where FunAutorizaFac = '" & _NombreEquipo & "'"
-        'Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-        'If Not IsNothing(_Row) Then
-
-        '    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Ent (Idmaeedo,NombreEquipo,TipoEstacion,Empresa,Modalidad,Tido,Nudo,FechaHoraGrab,HabilitadaFac,FunAutorizaFac) " & vbCrLf &
-        '                   "Select Distinct Edo.IDMAEEDO,'@AUTO','N','" & ModEmpresa & "','" & Modalidad & "',Edo.TIDO,Edo.NUDO,Edo.FEEMDO,0,''" & vbCrLf &
-        '                   "From MAEEDO Edo" & vbCrLf &
-        '                   "Inner Join MAEDDO Ddo On Edo.IDMAEEDO = Ddo.IDMAEEDO" & vbCrLf &
-        '                   "Where Edo.TIDO = 'NVV' And FEEMDO > '20230301' And " & vbCrLf &
-        '                   "Edo.IDMAEEDO Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Docu_Ent Where Tido = 'NVV') And (Edo.KOFUDO = '" & FUNCIONARIO & "' Or Ddo.KOFULIDO = '" & FUNCIONARIO & "')" & vbCrLf &
-        '                   "And Ddo.ESLIDO = ''"
-        '    _Sql.Ej_consulta_IDU(Consulta_sql)
-
-        'End If
-
         Dim _Fm As New Frm_BusquedaDocumento_Filtro(False)
         _Fm.Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado, "NVV", "Where TIDO = 'NVV'")
         _Fm.Rdb_Estado_Todos.Enabled = False
@@ -360,13 +339,11 @@ Public Class Modulo_Programas_Especiales
 
     End Sub
 
-    Private Sub Btn_Stem_Click(sender As Object, e As EventArgs) Handles Btn_Stem.Click
+    Private Sub Btn_Sgem_Click(sender As Object, e As EventArgs) Handles Btn_Sgem.Click
 
-        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Stem0001") Then Return
-
-        Dim Fm As New Frm_Stmp_Listado
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
+        Dim NewPanel As Sgem_EntregaMercaderia = Nothing
+        NewPanel = New Sgem_EntregaMercaderia(_Fm_Menu_Padre)
+        _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
 
     End Sub
 

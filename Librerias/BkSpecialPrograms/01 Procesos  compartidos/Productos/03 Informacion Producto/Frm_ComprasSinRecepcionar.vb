@@ -70,7 +70,7 @@ Public Class Frm_ComprasSinRecepcionar
 
         End If
 
-        Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Filtro As String = Generar_Filtro_IN(_Tbl_Bodegas, "", "Cod", False, False, "'")
 
@@ -78,7 +78,7 @@ Public Class Frm_ComprasSinRecepcionar
         Consulta_sql = "Select Mst.*,Mst.KOSU+'-'+Mst.KOBO As 'SUC_BOD',Tb.NOKOBO From MAEST Mst" & vbCrLf &
                        "Left Join TABBO Tb On Mst.EMPRESA = Tb.EMPRESA And Mst.KOSU = Tb.KOSU And Mst.KOBO = Tb.KOBO" & vbCrLf &
                        "Where KOPR = '" & _Codigo & "' And Mst.EMPRESA+Mst.KOSU+Mst.KOBO In " & _Filtro
-        _Tbl_Stock = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Stock = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         Dim _Unidad As Integer
@@ -247,7 +247,7 @@ Public Class Frm_ComprasSinRecepcionar
         Consulta_sql = "Select *,CAPRCO" & _Ud & "-CAPREX" & _Ud & " As SALDO_Ud" & _Ud & vbCrLf &
                        "From MAEDDO Where TIDO In ('FCC','OCC') And KOPRCT = '" & _Codigo & "' And ESLIDO = ''" & vbCrLf &
                        "And EMPRESA = '" & _Empresa & "' And SULIDO = '" & _Sucursal & "' And BOSULIDO = '" & _Bodega & "'"
-        _Tbl_Documentos = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Documentos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         With Grilla_Detalle

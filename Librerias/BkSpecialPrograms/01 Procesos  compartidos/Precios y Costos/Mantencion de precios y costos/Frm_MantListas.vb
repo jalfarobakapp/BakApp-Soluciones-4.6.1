@@ -43,7 +43,7 @@ Public Class Frm_MantListas
         '               "FROM " & _Global_BaseBk & "Zw_ListaPreGlobal"
 
         Consulta_sql = "Select * From TABPP Order by KOLT"
-        _TblListas = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblListas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
             .DataSource = _TblListas

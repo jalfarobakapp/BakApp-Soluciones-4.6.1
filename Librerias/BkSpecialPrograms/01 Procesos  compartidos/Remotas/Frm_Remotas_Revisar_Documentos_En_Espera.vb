@@ -45,7 +45,7 @@ Public Class Frm_Remotas_Revisar_Documentos_En_Espera
                        _Global_BaseBk & "Zw_Remotas Zr ON Zcd.Id_DocEnc = Zr.Id_Casi_DocEnc" & vbCrLf & _
                        "WHERE Zcd.CodFuncionario = '" & _CodFuncionario & "' And Zr.Eliminada = 0"
 
-        _TblDocumentos = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblDocumentos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
     End Sub
 
@@ -77,7 +77,7 @@ Public Class Frm_Remotas_Revisar_Documentos_En_Espera
                        "WHERE Zcd.CodFuncionario = '" & _CodFuncionario & "' And Zr.Eliminada = 0"
 
 
-        _TblDocumentos = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblDocumentos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

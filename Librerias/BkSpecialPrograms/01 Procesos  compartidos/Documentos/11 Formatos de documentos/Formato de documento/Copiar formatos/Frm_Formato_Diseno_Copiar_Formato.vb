@@ -66,7 +66,7 @@ Public Class Frm_Formato_Diseno_Copiar_Formato
                         Drop Table #Paso_Fx"
 
 
-        Dim _Tbl_Documentos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Documentos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         CmbTipoDeDocumentos.DataSource = _Tbl_Documentos
         CmbTipoDeDocumentos.SelectedValue = _TipoDoc_Origen '& "," & _NombreFormato_Origen

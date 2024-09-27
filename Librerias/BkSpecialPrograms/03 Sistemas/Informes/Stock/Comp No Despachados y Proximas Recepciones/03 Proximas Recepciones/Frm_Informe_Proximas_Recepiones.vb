@@ -261,8 +261,7 @@ Public Class Frm_Informe_Proximas_Recepiones
         Dim _Filtro_Fecha_Recepcion As String
 
         If Chk_Fecha_Recepcion.Checked Then
-            _Filtro_Fecha_Recepcion = "AND DD.FEERLI BETWEEN '" & _Fecha_Recepcion_Desde &
-                                      "' AND '" & _Fecha_Recepcion_Hasta & "'" & vbCrLf
+            _Filtro_Fecha_Recepcion = "AND DD.FEERLI BETWEEN '" & _Fecha_Recepcion_Desde & "' AND '" & _Fecha_Recepcion_Hasta & "'" & vbCrLf
         Else
             _Filtro_Fecha_Recepcion = String.Empty
         End If

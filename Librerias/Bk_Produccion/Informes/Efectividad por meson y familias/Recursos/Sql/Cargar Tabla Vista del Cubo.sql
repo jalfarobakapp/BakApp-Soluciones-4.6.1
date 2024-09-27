@@ -35,7 +35,7 @@ Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('HF
 --Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('ZOPR','ZONA_PR','PRODUCTOS -> ZONAS','Inf_Zona_Pr')                         
 
 --Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('KOFULIDO','VENDEDOR','VENDEDORES','Inf_Vendedores')                         
---Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('KOFUDO','FUNCIONARIO','RESPONZABLE DE DOCUMENTOS','Inf_Responzable')   
+--Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('KOFUDO','FUNCIONARIO','RESPONSABLE DE DOCUMENTOS','Inf_Responzable')   
 --Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('KOFUEN','VENDEDOR_ASIGNADO','VENDEDOR ASIGNADO AL CLIENTE','Inf_Vendedor_Asignado')                        
 
 --Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('0','ARBOL_CLASIF','CLASIFICACIONES (BAKAPP)','Class_BakApp')                         

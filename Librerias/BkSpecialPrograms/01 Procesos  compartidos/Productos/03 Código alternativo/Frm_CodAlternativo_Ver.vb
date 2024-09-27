@@ -66,7 +66,7 @@ Public Class Frm_CodAlternativo_Ver
                        "Where Td.KOPR = '" & TxtCodigo.Text & "'" & vbCrLf &
                        "Order By KOEN"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With GrillAlternativos
 

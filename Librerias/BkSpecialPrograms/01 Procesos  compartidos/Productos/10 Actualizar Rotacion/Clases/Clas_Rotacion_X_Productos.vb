@@ -174,7 +174,7 @@ Public Class Clas_Rotacion_X_Productos
                        "And FEEMLI BETWEEN '" & Format(_Fecha_Desde, "yyyyMMdd") & "' And '" & Format(_Fecha_Hasta, "yyyyMMdd") & "' " & _EntExcluidas & ")*- 1) As 'NCV'"
 
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         If CBool(_Tbl.Rows.Count) Then
@@ -195,7 +195,7 @@ Public Class Clas_Rotacion_X_Productos
                        "And EMPRESA = '" & _Empresa & "' And SULIDO = '" & _Sucursal & "' And BOSULIDO = '" & _Bodega & "'" & vbCrLf & _
                        "Order by FEEMLI"
 
-        _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Fecha_Nacimiento As Date
 
@@ -254,7 +254,7 @@ Public Class Clas_Rotacion_X_Productos
 
         Consulta_sql = Replace(Consulta_sql, "#Entidades_Excluidas#", _EntExcluidas)
 
-        _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl.Rows.Count) Then
 
@@ -280,7 +280,7 @@ Public Class Clas_Rotacion_X_Productos
                      "Where Codigo = '" & _Codigo & "' And Con_Ent_Excluidas = " & _Con_Ent_Excluidas & vbCrLf
 
         Consulta_sql = "Select KOPR,NOKOPR From MAEPR Where KOPR = '" & _Codigo & "'"
-        Dim _TblProducto As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblProducto As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _SqlQuery += Fx_Traer_Dias_Existencia_Stock_En_Bodega(_RowProducto, _Empresa, _Sucursal, _Bodega)
 
@@ -448,7 +448,7 @@ Public Class Clas_Rotacion_X_Productos
                        "And EMPRESA = '" & _Empresa & "' And SULIDO = '" & _Sucursal & "' And BOSULIDO = '" & _Bodega & "'" & vbCrLf & _
                        "Order by FEEMLI"
 
-        Dim _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Fecha_Nacimiento As Date
 
@@ -472,7 +472,7 @@ Public Class Clas_Rotacion_X_Productos
                        "And TIDO Not In (Select TIDO From TABTIDO  WHERE FIAD = 0 and FICO = 0)"
         '"And TIDO Not In (Select TIDO From TABTIDO where ( TABTIDO.FICO = -1 OR TABTIDO.FIAD = -1 )  AND TABTIDO.TIDO <> 'GDI'  AND TABTIDO.TIDO <> 'GTI' )"
 
-        Dim _Tbl_Movimientos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Movimientos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Dias_Movimiento As Integer = _Tbl_Movimientos.Rows.Count
         Dim _Contador_Dias_Movimiento = 0
@@ -710,7 +710,7 @@ Public Class Clas_Rotacion_X_Productos
                        "And KOPRCT In " & _Filtro_Productos & " And" & Space(1) & _
                        "FEEMLI between '" & _Fecha_Desde & "' And '" & _Fecha_Hasta & "'"
 
-        Dim _Tbl_Movimientos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Movimientos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Dias_Movimiento As Integer = _Tbl_Movimientos.Rows.Count
         Dim _Contador_Dias_Movimiento = 0
@@ -879,7 +879,7 @@ Public Class Clas_Rotacion_X_Productos
                        "And EMPRESA = '" & _Empresa & "' And SULIDO = '" & _Sucursal & "' And BOSULIDO = '" & _Bodega & "'" & vbCrLf & _
                        "Order by FEEMLI"
 
-        Dim _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Fecha_Nacimiento As Date
 
@@ -894,7 +894,7 @@ Public Class Clas_Rotacion_X_Productos
                        "Where EMPRESA = '" & _Empresa & "' AND SULIDO = '" & _Sucursal & "' And BOSULIDO = '" & _Bodega & "'" & Space(1) & _
                        "And KOPRCT In " & _Filtro_Productos & " And" & Space(1) & _
                        "FEEMLI between '" & _Fecha_Desde & "' And '" & _Fecha_Hasta & "'"
-        Dim _Tbl_Movimientos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Movimientos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Dias_Movimiento As Integer = _Tbl_Movimientos.Rows.Count
         Dim _Contador_Dias_Movimiento = 0
@@ -1056,7 +1056,7 @@ Public Class Clas_Rotacion_X_Productos
                        "From " & _Global_BaseBk & "Zw_Prod_Rotacion" & vbCrLf & _
                        "Where Es_Asociador = 1 And Con_Ent_Excluidas = " & _Con_Ent_Excluidas
 
-        Dim _Tbl_Productos_Estudio As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Productos_Estudio As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Try
 
@@ -1097,7 +1097,7 @@ Public Class Clas_Rotacion_X_Productos
                                "From " & _Global_BaseBk & "Zw_Prod_Asociacion" & Space(1) & _
                                "Where Codigo_Nodo = " & _Codigo_Nodo_ & ")"
 
-                Dim _Tbl_Productos_Asociados As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Productos_Asociados As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
                 Dim _Filtro_Prod_Asoc = Generar_Filtro_IN(_Tbl_Productos_Asociados, "", "KOPR", False, False, "'")
 
                 Consulta_sql = "Select KOPR,NOKOPR" & vbCrLf & _
@@ -1115,7 +1115,7 @@ Public Class Clas_Rotacion_X_Productos
                     Consulta_sql = "Select DISTINCT EMPRESA,SULIDO AS KOSU,BOSULIDO AS KOBO " & vbCrLf & _
                                    "From MAEDDO WHERE KOPRCT In " & _Filtro_Prod_Asoc
 
-                    _TblBodegas = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    _TblBodegas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     If CBool(_TblBodegas.Rows.Count) Then
 
@@ -1292,7 +1292,7 @@ Public Class Clas_Rotacion_X_Productos
                            "And EMPRESA = '" & _Empresa & "' And SULIDO = '" & _Sucursal & "' And BOSULIDO = '" & _Bodega & "'" & vbCrLf & _
                            "Order by FEEMLI"
 
-            Dim _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Fecha_Nacimiento As Date
 
@@ -1315,7 +1315,7 @@ Public Class Clas_Rotacion_X_Productos
             Consulta_sql = Replace(Consulta_sql, "--Filtro_Condicion_Extra", _Filtro_Condicion_Extra)
             Consulta_sql = Replace(Consulta_sql, "#Ud#", 1)
 
-            _TblKardex = _Sql.Fx_Get_Tablas(Consulta_sql) '_SQL.Fx_Get_Tablas(Consulta_sql)
+            _TblKardex = _Sql.Fx_Get_DataTable(Consulta_sql) '_SQL.Fx_Get_Tablas(Consulta_sql)
 
             _Fecha_Revision = Primerdiadelmes(DateAdd(DateInterval.Day, -1, _Fecha_Estudio_Desde))
 
@@ -1541,7 +1541,7 @@ Public Class Clas_Rotacion_X_Productos
         Consulta_sql = Replace(Consulta_sql, "#Orden#", _Orden)
         Consulta_sql = Replace(Consulta_sql, "#Ud#", _Unidad)
 
-        Dim _TblKardex As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql) '_SQL.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblKardex As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql) '_SQL.Fx_Get_Tablas(Consulta_sql)
 
         Return _TblKardex
 

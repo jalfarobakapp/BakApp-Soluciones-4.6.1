@@ -235,7 +235,7 @@ Public Class Frm_Pagos_Documentos_Pagados
             '-- ESPGDP  Estado Pagado
             '-- SUREDP  Sucursal
             '-- CJREDP  Caja
-            '-- KOFUDP  Responzable 
+            '-- KOFUDP  Responsable 
 
 
         End With

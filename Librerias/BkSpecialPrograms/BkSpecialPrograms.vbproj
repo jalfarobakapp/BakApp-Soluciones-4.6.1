@@ -135,6 +135,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Dll especiales\EASendMail.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus, Version=7.2.0.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EPPlus.7.2.0\lib\net462\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus.Interfaces, Version=6.1.1.0, Culture=neutral, PublicKeyToken=a694d7f3b0907a61, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EPPlus.Interfaces.6.1.1\lib\net462\EPPlus.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus.System.Drawing, Version=6.1.1.0, Culture=neutral, PublicKeyToken=2308d35469c9bac0, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EPPlus.System.Drawing.6.1.1\lib\net462\EPPlus.System.Drawing.dll</HintPath>
+    </Reference>
     <Reference Include="Excel, Version=3.1.0.0, Culture=neutral, PublicKeyToken=7b835b529fb706c3, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Dll especiales\Excel.dll</HintPath>
@@ -196,11 +205,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Dll especiales\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Mail, Version=3.0.22234.1038, Culture=neutral, PublicKeyToken=6dc438ab78a525b3, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Mail.dll.3.0.22234.1038\lib\net45\Mail.dll</HintPath>
+    <Reference Include="Mail, Version=3.0.24129.1605, Culture=neutral, PublicKeyToken=6dc438ab78a525b3, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Mail.dll.3.0.24129.1605\lib\net45\Mail.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.IO.RecyclableMemoryStream.3.0.0\lib\netstandard2.0\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\VisualBasic.PowerPacks.Vs.1.0.0\lib\Microsoft.VisualBasic.PowerPacks.Vs.dll</HintPath>
@@ -234,6 +246,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Dll especiales\PdfSharp.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="SautinSoft.HtmlToRtf, Version=7.4.4.30, Culture=neutral, PublicKeyToken=bce916f184012969, processorArchitecture=MSIL">
       <HintPath>..\..\packages\sautinsoft.htmltortf.7.4.4.30\lib\net40\SautinSoft.HtmlToRtf.dll</HintPath>
     </Reference>
@@ -247,7 +260,11 @@
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.ConfigurationManager, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Configuration.ConfigurationManager.8.0.0\lib\net462\System.Configuration.ConfigurationManager.dll</HintPath>
@@ -327,8 +344,8 @@
     <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Text.Encodings.Web.8.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
-    <Reference Include="System.Text.Json, Version=8.0.0.3, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Text.Json.8.0.3\lib\net462\System.Text.Json.dll</HintPath>
+    <Reference Include="System.Text.Json, Version=8.0.0.4, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Text.Json.8.0.4\lib\net462\System.Text.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
@@ -408,6 +425,7 @@
       <DependentUpon>Recursos_Kardex.resx</DependentUpon>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\05 Cambio Fecha Vencimientos\Cl_CambiarFechaVencimiento.vb" />
+    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Lista Superior\Cl_DocListaSuperior.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Cl_Documento.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Cantidad Stock X Bodega\Frm_Formulario_Cantidad_Stock_X_Bodega.Designer.vb">
       <DependentUpon>Frm_Formulario_Cantidad_Stock_X_Bodega.vb</DependentUpon>
@@ -469,6 +487,11 @@
     </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Levantar Productos Masivamente\Frm_Impor_Prod_Masivamente.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Lista Superior\Recursos\Recuros_ListaSuperior.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Recuros_ListaSuperior.resx</DependentUpon>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Permisos Asociados\Cl_Permisos_Asociados.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Reservar numero OCC\Clas_Imprimir_Reserva_OCC.vb" />
@@ -561,6 +584,12 @@
       <DependentUpon>Frm_Adjuntar_Archivos.vb</DependentUpon>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\12 Adjuntar archivos al documento\Frm_Adjuntar_Archivos.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\12 Adjuntar archivos al documento\Frm_Adjuntar_Imagen.Designer.vb">
+      <DependentUpon>Frm_Adjuntar_Imagen.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\12 Adjuntar archivos al documento\Frm_Adjuntar_Imagen.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\13 Facturacion Masiva\Clas_Facturacion_Masiva.vb" />
@@ -820,13 +849,25 @@
     <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Frm_Configuracion_Gral.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Inventario.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Casi_DocDet.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Conceptos.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Demonio_FacAuto.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Despachos_Configuracion.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Contador.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_FotoInventario.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Hoja.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Hoja_Detalle.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_ListaPreGlobal.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Log_Gestiones.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Pdp_CPT_MzDet.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Pdp_CPT_MzDetIngFab.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Pdp_CPT_MzEnc.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Pdp_CPT_Tarja.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Pdp_CPT_Tarja_Det.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Productos.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Prod_Asociacion.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Ftp_Conexiones.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_SQL_Querys.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stk_Areas.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stk_Tickets.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stk_Tickets_Acciones.vb" />
@@ -835,16 +876,64 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stk_Tipos.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stmp_Det.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stmp_DetPick.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stmp_Enc_Permisos.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_TblArbol_Asociaciones.vb" />
-    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_TmpInv_History.vb" />
-    <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\03 Parametros\Cl_NewInventario.vb" />
-    <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\03 Parametros\Frm_Inv_Inventarios.Designer.vb">
-      <DependentUpon>Frm_Inv_Inventarios.vb</DependentUpon>
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Inventario.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Sector.vb" />
+    <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Cambio precio\Frm_AsisCompra_CambioPrecio.Designer.vb">
+      <DependentUpon>Frm_AsisCompra_CambioPrecio.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\03 Parametros\Frm_Inv_Inventarios.vb">
+    <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Cambio precio\Frm_AsisCompra_CambioPrecio.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Cl_Inventario.vb" />
+    <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Cambio precio\Frm_AsisCompra_CambioPrecioDet.Designer.vb">
+      <DependentUpon>Frm_AsisCompra_CambioPrecioDet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Cambio precio\Frm_AsisCompra_CambioPrecioDet.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Despachos\Clases\Cl_Despachos.vb" />
+    <Compile Include="03 Sistemas\FTP\Cl_Ftp.vb" />
+    <Compile Include="03 Sistemas\FTP\Frm_FTP_Conexion.Designer.vb">
+      <DependentUpon>Frm_FTP_Conexion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\FTP\Frm_FTP_Conexion.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Cl_Inventario.vb" />
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Frm_Inv_Inventarios.Designer.vb">
+      <DependentUpon>Frm_Inv_Inventarios.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Frm_Inv_Inventarios.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Contadores\Cl_Contador.vb" />
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Conteo\Cl_Conteo.vb" />
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Conteo\Frm_IngresarHoja.Designer.vb">
+      <DependentUpon>Frm_IngresarHoja.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Conteo\Frm_IngresarHoja.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Cl_InvSectores.vb" />
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_Crear.Designer.vb">
+      <DependentUpon>Frm_Inv_Sector_Crear.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_Crear.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_ImporExcel.Designer.vb">
+      <DependentUpon>Frm_Inv_Sector_ImporExcel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_ImporExcel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_Productos.Designer.vb">
+      <DependentUpon>Frm_Inv_Sector_Productos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_Productos.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Puntos Venta\Cl_Puntos.vb" />
     <Compile Include="03 Sistemas\Puntos Venta\Frm_ConfPuntosVta.Designer.vb">
       <DependentUpon>Frm_ConfPuntosVta.vb</DependentUpon>
@@ -1714,9 +1803,9 @@
     <Compile Include="03 Sistemas\Demonio automatico\Procedimientos\Ds_Config_Picking.vb">
       <DependentUpon>Ds_Config_Picking.xsd</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Despachos\Clases\Clas_Despacho.vb" />
-    <Compile Include="03 Sistemas\Despachos\Clases\Clas_Despacho_Fx.vb" />
-    <Compile Include="03 Sistemas\Despachos\Clases\Clas_Imprimir_Despacho.vb" />
+    <Compile Include="03 Sistemas\Despachos\Clases\Old Clase\Clas_Despacho.vb" />
+    <Compile Include="03 Sistemas\Despachos\Clases\Old Clase\Clas_Despacho_Fx.vb" />
+    <Compile Include="03 Sistemas\Despachos\Clases\Old Clase\Clas_Imprimir_Despacho.vb" />
     <Compile Include="03 Sistemas\Despachos\Configuracion\Frm_Despacho_Configuracion.designer.vb">
       <DependentUpon>Frm_Despacho_Configuracion.vb</DependentUpon>
     </Compile>
@@ -1894,22 +1983,16 @@
     <Compile Include="03 Sistemas\Inventario\Inventario parcializado\Formularios\Frm_Crear_Guias_De_Ajuste_De_Stock.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Frm_Inv_Crear_Inventario.Designer.vb">
-      <DependentUpon>Frm_Inv_Crear_Inventario.vb</DependentUpon>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Contadores\Frm_Contadores.Designer.vb">
+      <DependentUpon>Frm_Contadores.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Frm_Inv_Crear_Inventario.vb">
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Contadores\Frm_Contadores.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Operadores\Frm_Operadores.Designer.vb">
-      <DependentUpon>Frm_Operadores.vb</DependentUpon>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Contadores\Frm_CrearContador.Designer.vb">
+      <DependentUpon>Frm_CrearContador.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Operadores\Frm_Operadores.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Operadores\Frm_Operadores_Crear.Designer.vb">
-      <DependentUpon>Frm_Operadores_Crear.vb</DependentUpon>
-    </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Operadores\Frm_Operadores_Crear.vb">
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Contadores\Frm_CrearContador.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Parejas\Frm_Parejas.Designer.vb">
@@ -1936,16 +2019,10 @@
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Plan\Frm_Plan.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Zw_Inv_Sector.Designer.vb">
-      <DependentUpon>Zw_Inv_Sector.vb</DependentUpon>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_Lista.Designer.vb">
+      <DependentUpon>Frm_Inv_Sector_Lista.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Zw_Inv_Sector.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Zw_Inv_Sector_vs_Ubicaciones.Designer.vb">
-      <DependentUpon>Zw_Inv_Sector_vs_Ubicaciones.vb</DependentUpon>
-    </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Zw_Inv_Sector_vs_Ubicaciones.vb">
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_Lista.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Frm_Inv_Ctrl_Inventario.Designer.vb">
@@ -2293,34 +2370,46 @@
     <Compile Include="03 Sistemas\Servicio Tecnico\Ingreso Varios\Frm_St_EncIngreso.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Clase\Cl_Stmp.vb" />
-    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Clase\Recursos\Recursos_WmsVillar.Designer.vb">
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Clase\Cl_Stmp.vb" />
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Clase\Recursos\Recursos_WmsVillar.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Recursos_WmsVillar.resx</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_IncNVVPicking.Designer.vb">
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Configuracion\Frm_Stmp_ConfLocal.Designer.vb">
+      <DependentUpon>Frm_Stmp_ConfLocal.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Configuracion\Frm_Stmp_ConfLocal.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_IncNVVPicking.Designer.vb">
       <DependentUpon>Frm_Stmp_IncNVVPicking.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_IncNVVPicking.vb">
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_IncNVVPicking.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Pickeo\Frm_Stmp_IngCantVar.Designer.vb">
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_SalaEspera.Designer.vb">
+      <DependentUpon>Frm_Stmp_SalaEspera.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_SalaEspera.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Pickeo\Frm_Stmp_IngCantVar.Designer.vb">
       <DependentUpon>Frm_Stmp_IngCantVar.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Pickeo\Frm_Stmp_IngCantVar.vb">
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Pickeo\Frm_Stmp_IngCantVar.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Pickeo\Frm_Stmp_IngPickeo.Designer.vb">
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Pickeo\Frm_Stmp_IngPickeo.Designer.vb">
       <DependentUpon>Frm_Stmp_IngPickeo.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Pickeo\Frm_Stmp_IngPickeo.vb">
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Pickeo\Frm_Stmp_IngPickeo.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_Listado.Designer.vb">
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_Listado.Designer.vb">
       <DependentUpon>Frm_Stmp_Listado.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_Listado.vb">
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_Listado.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Sistema WMS\Gestión WMS\Clases\Cl_Documento_Wms.vb" />
@@ -2372,6 +2461,7 @@
     <Compile Include="03 Sistemas\Sistema WMS\Mapa\Ubicaciones\Ubicaciones\Ubicaciones productos\Frm_AsociarUbicXprod.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\SQL2Excel\Cl_SQL2Query.vb" />
     <Compile Include="03 Sistemas\Tesoreria\CashDro\Formularios\Cl_Pago_Cashdro.vb" />
     <Compile Include="03 Sistemas\Tesoreria\CashDro\Formularios\Formas de Pago\Frm_Cashdro_Pago_Efectivo_y_Tarjeta.Designer.vb">
       <DependentUpon>Frm_Cashdro_Pago_Efectivo_y_Tarjeta.vb</DependentUpon>
@@ -2469,10 +2559,22 @@
     <Compile Include="03 Sistemas\Tickets\Frm_Tickets_BuscarAsunto.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_BuscarTipo.Designer.vb">
+      <DependentUpon>Frm_Tickets_BuscarTipo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_BuscarTipo.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Tickets\Frm_Tickets_IngProducto.Designer.vb">
       <DependentUpon>Frm_Tickets_IngProducto.vb</DependentUpon>
     </Compile>
     <Compile Include="03 Sistemas\Tickets\Frm_Tickets_IngProducto.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_Lista_Tree.Designer.vb">
+      <DependentUpon>Frm_Tickets_Lista_Tree.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_Lista_Tree.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Tickets\Frm_Tickets_Mant.Designer.vb">
@@ -2673,7 +2775,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>21_Recursos.resx</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Sistema WMS\Mapa\Ubicaciones\Ubicaciones\Ubicaciones productos\Recursos\Clas_Imprimir_Sectores.vb" />
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Cl_Imprimir_Sectores.vb" />
     <Compile Include="03 Sistemas\Sistema WMS\Mapa\Ubicaciones\Ubicaciones\Ubicaciones productos\Recursos\Dts_Sectores.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3848,16 +3950,16 @@
     <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\01 Ingreso de productos\Frm_01_HojaConteo.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\02 Revision Inventario\Frm_02_Detalle_Producto_Actual.Designer.vb">
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Frm_02_Detalle_Producto_Actual.Designer.vb">
       <DependentUpon>Frm_02_Detalle_Producto_Actual.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\02 Revision Inventario\Frm_02_Detalle_Producto_Actual.vb">
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Frm_02_Detalle_Producto_Actual.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\02 Revision Inventario\Frm_01_Inventario_Actual.Designer.vb">
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Frm_01_Inventario_Actual.Designer.vb">
       <DependentUpon>Frm_01_Inventario_Actual.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\02 Revision Inventario\Frm_01_Inventario_Actual.vb">
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Frm_01_Inventario_Actual.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\02 Revision Inventario\Frm_03_ProNoIdentificados.Designer.vb">
@@ -4468,6 +4570,11 @@
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Levantar Productos Masivamente\Frm_Impor_Prod_Masivamente.resx">
       <DependentUpon>Frm_Impor_Prod_Masivamente.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Lista Superior\Recursos\Recuros_ListaSuperior.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Recuros_ListaSuperior.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Retiradores de mercaderia\Frm_Retirador_Mercaderia.resx">
       <DependentUpon>Frm_Retirador_Mercaderia.vb</DependentUpon>
     </EmbeddedResource>
@@ -4516,6 +4623,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\12 Adjuntar archivos al documento\Frm_Adjuntar_Archivos.resx">
       <DependentUpon>Frm_Adjuntar_Archivos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Documentos\12 Adjuntar archivos al documento\Frm_Adjuntar_Imagen.resx">
+      <DependentUpon>Frm_Adjuntar_Imagen.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\13 Facturacion Masiva\Frm_Facturacion_Masiva.resx">
       <DependentUpon>Frm_Facturacion_Masiva.vb</DependentUpon>
@@ -4642,8 +4752,29 @@
       <DependentUpon>Frm_Configuracion_Gral.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Inventario\Inventario General\Formularios\03 Parametros\Frm_Inv_Inventarios.resx">
+    <EmbeddedResource Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Cambio precio\Frm_AsisCompra_CambioPrecio.resx">
+      <DependentUpon>Frm_AsisCompra_CambioPrecio.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Cambio precio\Frm_AsisCompra_CambioPrecioDet.resx">
+      <DependentUpon>Frm_AsisCompra_CambioPrecioDet.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\FTP\Frm_FTP_Conexion.resx">
+      <DependentUpon>Frm_FTP_Conexion.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Frm_Inv_Inventarios.resx">
       <DependentUpon>Frm_Inv_Inventarios.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Conteo\Frm_IngresarHoja.resx">
+      <DependentUpon>Frm_IngresarHoja.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_Crear.resx">
+      <DependentUpon>Frm_Inv_Sector_Crear.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_ImporExcel.resx">
+      <DependentUpon>Frm_Inv_Sector_ImporExcel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_Productos.resx">
+      <DependentUpon>Frm_Inv_Sector_Productos.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Puntos Venta\Frm_ConfPuntosVta.resx">
       <DependentUpon>Frm_ConfPuntosVta.vb</DependentUpon>
@@ -5163,14 +5294,11 @@
     <EmbeddedResource Include="03 Sistemas\Inventario\Inventario parcializado\Formularios\Frm_Crear_Guias_De_Ajuste_De_Stock.resx">
       <DependentUpon>Frm_Crear_Guias_De_Ajuste_De_Stock.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Frm_Inv_Crear_Inventario.resx">
-      <DependentUpon>Frm_Inv_Crear_Inventario.vb</DependentUpon>
+    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Contadores\Frm_Contadores.resx">
+      <DependentUpon>Frm_Contadores.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Operadores\Frm_Operadores.resx">
-      <DependentUpon>Frm_Operadores.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Operadores\Frm_Operadores_Crear.resx">
-      <DependentUpon>Frm_Operadores_Crear.vb</DependentUpon>
+    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Contadores\Frm_CrearContador.resx">
+      <DependentUpon>Frm_CrearContador.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Parejas\Frm_Parejas.resx">
       <DependentUpon>Frm_Parejas.vb</DependentUpon>
@@ -5184,11 +5312,8 @@
     <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Plan\Frm_Plan.resx">
       <DependentUpon>Frm_Plan.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Zw_Inv_Sector.resx">
-      <DependentUpon>Zw_Inv_Sector.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Zw_Inv_Sector_vs_Ubicaciones.resx">
-      <DependentUpon>Zw_Inv_Sector_vs_Ubicaciones.vb</DependentUpon>
+    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_Lista.resx">
+      <DependentUpon>Frm_Inv_Sector_Lista.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Frm_Inv_Ctrl_Inventario.resx">
       <DependentUpon>Frm_Inv_Ctrl_Inventario.vb</DependentUpon>
@@ -5423,21 +5548,27 @@
     <EmbeddedResource Include="03 Sistemas\Servicio Tecnico\Ingreso Varios\Frm_St_EncIngreso.resx">
       <DependentUpon>Frm_St_EncIngreso.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Clase\Recursos\Recursos_WmsVillar.resx">
+    <EmbeddedResource Include="03 Sistemas\Sgem EntregaMercaderia\Clase\Recursos\Recursos_WmsVillar.resx">
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Recursos_WmsVillar.Designer.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_IncNVVPicking.resx">
+    <EmbeddedResource Include="03 Sistemas\Sgem EntregaMercaderia\Configuracion\Frm_Stmp_ConfLocal.resx">
+      <DependentUpon>Frm_Stmp_ConfLocal.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_IncNVVPicking.resx">
       <DependentUpon>Frm_Stmp_IncNVVPicking.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Pickeo\Frm_Stmp_IngCantVar.resx">
+    <EmbeddedResource Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_SalaEspera.resx">
+      <DependentUpon>Frm_Stmp_SalaEspera.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Sgem EntregaMercaderia\Pickeo\Frm_Stmp_IngCantVar.resx">
       <DependentUpon>Frm_Stmp_IngCantVar.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Pickeo\Frm_Stmp_IngPickeo.resx">
+    <EmbeddedResource Include="03 Sistemas\Sgem EntregaMercaderia\Pickeo\Frm_Stmp_IngPickeo.resx">
       <DependentUpon>Frm_Stmp_IngPickeo.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Frm_Stmp_Listado.resx">
+    <EmbeddedResource Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_Listado.resx">
       <DependentUpon>Frm_Stmp_Listado.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Frm_Formulario_Diseno_Mapa_Crear_Sector.resx">
@@ -6005,11 +6136,17 @@
     <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_BuscarAsunto.resx">
       <DependentUpon>Frm_Tickets_BuscarAsunto.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_BuscarTipo.resx">
+      <DependentUpon>Frm_Tickets_BuscarTipo.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_IngProducto.resx">
       <DependentUpon>Frm_Tickets_IngProducto.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_Lista.resx">
       <DependentUpon>Frm_Tickets_Lista.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_Lista_Tree.resx">
+      <DependentUpon>Frm_Tickets_Lista_Tree.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_Mant.resx">
       <DependentUpon>Frm_Tickets_Mant.vb</DependentUpon>
@@ -6133,10 +6270,10 @@
     <EmbeddedResource Include="03 Sistemas\Inventario\Inventario General\Formularios\01 Ingreso de productos\Frm_01_HojaConteo.resx">
       <DependentUpon>Frm_01_HojaConteo.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Inventario\Inventario General\Formularios\02 Revision Inventario\Frm_02_Detalle_Producto_Actual.resx">
+    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Frm_02_Detalle_Producto_Actual.resx">
       <DependentUpon>Frm_02_Detalle_Producto_Actual.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Inventario\Inventario General\Formularios\02 Revision Inventario\Frm_01_Inventario_Actual.resx">
+    <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Frm_01_Inventario_Actual.resx">
       <DependentUpon>Frm_01_Inventario_Actual.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Inventario\Inventario General\Formularios\02 Revision Inventario\Frm_03_ProNoIdentificados.resx">
@@ -7837,6 +7974,7 @@
     <None Include="01 Procesos  compartidos\Documentos\11 Formatos de documentos\Formato de documento\Configuración de formato\Recursos\Sql\SQLQuery Traer Prod_Sol_Bodega.sql" />
     <None Include="01 Procesos  compartidos\Documentos\02 Ver Documento\Recursos\Sql\Traer Documento Random.sql" />
     <None Include="01 Procesos  compartidos\Documentos\02 Ver Documento\Recursos\Sql\Traer Documento Bakapp.sql" />
+    <Content Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Lista Superior\Recursos\Sql\RevisarSumpliminetoDeMinoristaMayorista.sql" />
     <Content Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Recursos\Sql\SQLQuery Estado de avance de envios de DTE vs Trackid.sql" />
     <Content Include="01 Procesos  compartidos\Documentos\10 DTE\Recursos\SQLQuery_Genera_Encabezado_DTE_RdBkBOLETA.xml" />
     <Content Include="01 Procesos  compartidos\Entidades\SQL\Informacion_Entidad.txt" />
@@ -7848,6 +7986,7 @@
     <Content Include="01 Procesos  compartidos\Precios y Costos\01 Mantención Listas Random\Recursos Lista Precio\Leyenda ayuda lista de precios.txt" />
     <None Include="01 Procesos  compartidos\Productos\01 Crear Productos\Crea Producto clasic\Recursos\Sql\SqlQuery_Editar_Producto.sql" />
     <Content Include="01 Procesos  compartidos\Productos\03 Informacion Producto\Recursos\Sql\SQLQuery Calculo de cumplimiento de entregas por parte de un proveedor por Producto.sql" />
+    <Content Include="01 Procesos  compartidos\Productos\21 Ofertas\Ofertas dinamicas\Recursos especiales\MAEERES_Hist.sql" />
     <Content Include="01 Procesos  compartidos\Remotas\Cadenas Remotas\Recursos\Sql\SQLQuery Reenviar Solicitud De Permiso.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_CashDro_Operaciones.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_CashDro_Transbank_Cierre.sql" />
@@ -7916,6 +8055,7 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_DTE_Trackid.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Empresas.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Entidades.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Entidades_Holding.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Entidades_ProdExcluidos.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Entidades_ProdMinCompra.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Entidad_Cia_Seguros.sql" />
@@ -7932,7 +8072,16 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Format_02.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Format_Fx.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Format_Pag.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Ftp_Conexiones.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Fuentes_Conf.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Inv_Contador.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Inv_FotoInventario.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Inv_Hoja.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Inv_HojaEli.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Inv_HojaEli_Detalle.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Inv_Hoja_Detalle.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Inv_Inventario.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Inv_Sector.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Licencia.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Licencia_Mod.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Linea_Oferta.sql" />
@@ -8035,6 +8184,8 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stmp_Det.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stmp_DetPick.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stmp_Enc.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stmp_Enc_Permisos.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Stmp_SalaEspera.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_St_Conf_Info_Reportes.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_St_Conf_Tecnicos_Taller.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_St_OT_Accesorios.sql" />
@@ -8093,6 +8244,7 @@
     <None Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Recursos\Sql\Informe Ventas x Perido Nivel Detalle Cubo Actualizacion2.sql" />
     <None Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Recursos\Sql\Informe Ventas x Perido Nivel Detalle Cubo Actualizacion3 Clasificaciones.sql" />
     <None Include="03 Sistemas\Compras\Asistente de compras 2.0\Recursos\Sql\SQLQuery Reabastecer entre bodegas.sql" />
+    <None Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Cambio precio\Sql\SQLQuery_RevCambioPrecioXCodMadre.sql" />
     <Content Include="03 Sistemas\Compras\Asistente de compras 2.0\Recursos\Html\Crear Html Proveedores Con Productos Sin Stock.htm" />
     <Content Include="03 Sistemas\Compras\Asistente de compras 2.0\Recursos\Sql\SQLQuery Info Estadistica X Producto Compra.sql" />
     <None Include="03 Sistemas\Compras\Asistente de compras 2.0\Recursos\Sql\SQLQuery Sacar la velocidad de venta mensual Media2.sql" />
@@ -8122,7 +8274,9 @@
     <None Include="03 Sistemas\Tesoreria\Pagos\Recursos\Sql\SQLQuery_Revisar_Data_Eliminar_Pago.sql" />
     <None Include="03 Sistemas\Produccion\Recursos\Sql\SQLQuery Informe de OT avance Vs SubOt por Operaciones.sql" />
     <None Include="03 Sistemas\Servicio Tecnico\Recursos\Consultas SQL\SqlQuery_Lista_OT2.sql" />
-    <Content Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Clase\Recursos\Sql\SQLQuery Revisar Nota de venta activa en WMS Villar.sql" />
+    <Content Include="03 Sistemas\Sgem EntregaMercaderia\Clase\Recursos\Sql\SQLQuery Lista de espera Sgem.sql" />
+    <Content Include="03 Sistemas\Sgem EntregaMercaderia\Clase\Recursos\Sql\SQLQuery Listado Stmp.sql" />
+    <Content Include="03 Sistemas\Sgem EntregaMercaderia\Clase\Recursos\Sql\SQLQuery Revisar Nota de venta activa en WMS Villar.sql" />
     <Content Include="03 Sistemas\Tesoreria\Contabilidad\Recursos\Sql\Nomina de tarjetas de credito a liquidacion.sql" />
     <Content Include="999 Funciones, Clases y Datos\Clases\Documentos\Creacion de documento\Consultas SQL\Crear Htm document.htm" />
     <Content Include="999 Funciones, Clases y Datos\Clases\Documentos\Creacion de documento\Consultas SQL\Crear Htm document_Sp.htm" />
@@ -8303,7 +8457,6 @@
   <ItemGroup>
     <Folder Include="01 Procesos  compartidos\Productos\01 Buscar productos\New ProdFind\" />
     <Folder Include="03 Sistemas\Comisiones\Recursos\" />
-    <Folder Include="03 Sistemas\Sis. Ticket Ent. Mercaderia\Configuracion\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

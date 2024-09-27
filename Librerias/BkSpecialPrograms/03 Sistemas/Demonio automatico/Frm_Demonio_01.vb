@@ -947,7 +947,7 @@ Public Class Frm_Demonio_01
                        "(select distinct TIDOPA+NUDOPA FROM MAEDDO " & vbCrLf &
                        "WHERE IDMAEEDO = " & Idmaeedo & "))"
 
-        Dim TblUsuarios = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim TblUsuarios = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ' Dim Cont As Integer
         If TblUsuarios.Rows.Count > 0 Then
@@ -982,7 +982,7 @@ Public Class Frm_Demonio_01
                     Dim _Id As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Picking_Doc", "Id_Correo", "TipoDoc = 'GRC'")
 
                     Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Correos Where Id = " & NuloPorNro(_Id, 0)
-                    Dim _TblCorreo As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _TblCorreo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     If CBool(_TblCorreo.Rows.Count) Then
 
@@ -1952,7 +1952,7 @@ Public Class Frm_Demonio_01
                     'Ejemplo: Tabla = 'WORDPRESS_BOD', Campo = '01SUCBOD',NombreTabla = 'NOMBRE BODEGA'
 
                     Consulta_sql = "Select CodigoTabla From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Where Tabla = 'WORDPRESS_BOD'"
-                    Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     Dim _Filtros_Bod As String = "And EMPRESA = '" & _Empresa & "'" & vbCrLf
 
@@ -1981,7 +1981,7 @@ Public Class Frm_Demonio_01
                     _Sql.Ej_consulta_IDU(Consulta_sql)
 
                     Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_Wordpress Where Revisado = 0"
-                    Dim _TblStockActualizado As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _TblStockActualizado As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     Dim _Contador = 1
 
@@ -2177,8 +2177,8 @@ Public Class Frm_Demonio_01
                         If _Cl_Asistente_Compras.Ejecutado_Domingo Then _FiltroModalidades = "('XXX')"
                     End If
 
-                    Consulta_sql = "Select MODALIDAD From CONFIEST Where MODALIDAD In " & _FiltroModalidades
-                    _TblModalidades = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Consulta_sql = "Select MODALIDAD From CONFIEST WITH (NOLOCK) Where MODALIDAD In " & _FiltroModalidades
+                    _TblModalidades = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     Dim _ModalidadOld As String = Modalidad
                     Dim _Mod As New Clas_Modalidades
@@ -2371,7 +2371,7 @@ Public Class Frm_Demonio_01
                         "Select * From " & _Global_BaseBk & "Zw_Demonio_Cof_Estacion" & vbCrLf &
                         "Where NombreEquipo = '" & _Nombre_Equipo & "' And Traer_Doc_Auto_Correo = 1"
 
-        Dim _Tbl_Zw_Demonio_Cof_Estacion As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+        Dim _Tbl_Zw_Demonio_Cof_Estacion As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
         Dim _SqlQuery_Correo = String.Empty
 
@@ -2388,7 +2388,7 @@ Public Class Frm_Demonio_01
 
             _Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_Filtros_X_Estacion" & vbCrLf &
                             "Where NombreEquipo = '" & _Nombre_Equipo & "' And Nombre_Correo <> '' And (Correo_Para <> '' Or Para_Maeenmail = 1)"
-            Dim _TblFiltroFunc As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+            Dim _TblFiltroFunc As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
             If CBool(_TblFiltroFunc.Rows.Count) Then
 
@@ -2423,7 +2423,7 @@ Public Class Frm_Demonio_01
                             If Not String.IsNullOrEmpty(_Correo_Para) Then
 
                                 Consulta_sql = "Select KOFU,NOKOFU,Rtrim(Ltrim(EMAIL)) As EMAIL From TABFU Where KOFU In " & _Correo_Para
-                                _Tbl_Destinatarios = _Sql.Fx_Get_Tablas(Consulta_sql)
+                                _Tbl_Destinatarios = _Sql.Fx_Get_DataTable(Consulta_sql)
                                 _Para = Generar_Filtro_IN_Email(_Tbl_Destinatarios, "EMAIL")
 
                             End If
@@ -2472,7 +2472,7 @@ Public Class Frm_Demonio_01
                         vbCrLf &
                        "Select * From " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo" & vbCrLf &
                        "Where Enviar = 1 And Enviado = 0 And NombreEquipo In ('','" & _Nombre_Equipo & "') And Para = '' And Para_Maeenmail = 1"
-        _Tbl_Correos = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Correos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _SqlQuery = String.Empty
 
@@ -2490,7 +2490,7 @@ Public Class Frm_Demonio_01
 
             Consulta_sql = "Select Distinct Rtrim(Ltrim(MAILTO)) As MAILTO,Rtrim(Ltrim(MAILCC)) As MAILCC From MAEENMAIL Where KOEN = '" & _Koen & "' And KOMAIL = '001'"
 
-            Dim _Tbl_Maeenmail As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Maeenmail As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             System.Windows.Forms.Application.DoEvents()
 
@@ -2538,7 +2538,7 @@ Public Class Frm_Demonio_01
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo" & vbCrLf &
                        "Where Enviar = 1 And Enviado = 0 And NombreEquipo In ('','" & _Nombre_Equipo & "')"
-        _Tbl_Correos = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Correos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         Lbl_Correo.Text = "Creando correos para envio..."
@@ -2784,7 +2784,7 @@ Public Class Frm_Demonio_01
                         "Where NombreEquipo = '" & _Nombre_Equipo &
                         "' And Traer_Doc_Auto_Imprimir = 1"
 
-        Dim _Tbl_Zw_Demonio_Cof_Estacion As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+        Dim _Tbl_Zw_Demonio_Cof_Estacion As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
         Dim _SqlQuery_Cola = String.Empty
 
@@ -2799,7 +2799,7 @@ Public Class Frm_Demonio_01
 
             _Consulta_sql = "Select Codigo From " & _Global_BaseBk & "Zw_Demonio_Filtros_X_Estacion" & vbCrLf &
                             "Where IdPadre = " & _IdPadre & " And Impresora <> '' And Picking = 0"
-            Dim _TblFiltroFunc As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+            Dim _TblFiltroFunc As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
             If CBool(_TblFiltroFunc.Rows.Count) Then
 
@@ -2844,7 +2844,7 @@ Public Class Frm_Demonio_01
                         "Where Revizado_Demonio = 0 And NombreEquipo = '" & _Nombre_Equipo & "' And" & Space(1) &
                         "Fecha = '" & Format(DtpFecharevision.Value, "yyyyMMdd") & "' And Picking = 0"
 
-        Dim _Tbl_Doc_Sin_Imprimir As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+        Dim _Tbl_Doc_Sin_Imprimir As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
         Dim _Solo_Marcar_No_Imprimir As Boolean = Chk_Solo_Marcar_No_Imprimir.Checked
 
@@ -2986,7 +2986,7 @@ Public Class Frm_Demonio_01
                         "Where NombreEquipo = '" & _Nombre_Equipo &
                         "' And Imprimir_Picking = 1"
 
-        Dim _Tbl_Zw_Demonio_Cof_Estacion As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+        Dim _Tbl_Zw_Demonio_Cof_Estacion As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
         Dim _SqlQuery_Cola = String.Empty
 
@@ -3005,7 +3005,7 @@ Public Class Frm_Demonio_01
 
                 _Consulta_sql = "Select Codigo From " & _Global_BaseBk & "Zw_Demonio_Filtros_X_Estacion" & vbCrLf &
                                 "Where IdPadre = " & _IdPadre & " And Impresora <> '' And Picking = 1"
-                Dim _TblFiltroFunc As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+                Dim _TblFiltroFunc As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
                 If CBool(_TblFiltroFunc.Rows.Count) Then
 
@@ -3029,7 +3029,7 @@ Public Class Frm_Demonio_01
                         "Where Revizado_Demonio = 0 And NombreEquipo = '" & _Nombre_Equipo & "' And" & Space(1) &
                         "Fecha = '" & Format(DtpFecharevision.Value, "yyyyMMdd") & "' And Picking = 1"
 
-        Dim _Tbl_Doc_Sin_Imprimir As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+        Dim _Tbl_Doc_Sin_Imprimir As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
         Dim _Solo_Marcar_No_Imprimir As Boolean = Chk_Solo_Marcar_No_Imprimir.Checked
 
@@ -3217,7 +3217,7 @@ Public Class Frm_Demonio_01
         Consulta_sql = "Select Id From " & _Global_BaseBk & "Zw_Prod_SolBodega " &
                        "Where Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'  And Bodega = '" & ModBodega & "' And Impreso = 0"
 
-        Dim _TblProd_SolBodega = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblProd_SolBodega = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblProd_SolBodega.Rows.Count) Then
             For Each FILA As DataRow In _TblProd_SolBodega.Rows
@@ -3258,7 +3258,7 @@ Public Class Frm_Demonio_01
                        "FROM " & _Global_BaseBk & "hist_impresion" & vbCrLf &
                        "Where impreso = 0"
 
-        Dim _Tbl_hist_impresion As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_hist_impresion As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl_hist_impresion.Rows.Count) Then
 
@@ -3326,7 +3326,7 @@ Public Class Frm_Demonio_01
                        "folio,enviar" & vbCrLf &
                        "From " & _Global_BaseBk & "hist_envios_email" & vbCrLf &
                        "Where enviado = 0"
-        Dim _Tbl_hist_envios_email As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_hist_envios_email As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl_hist_envios_email.Rows.Count) Then
 
@@ -3381,7 +3381,7 @@ Public Class Frm_Demonio_01
                         "Where 1 > 0 " & vbCrLf &
                         "And ((Revisado = 0 And NombreEquipo = '" & _Nombre_Equipo & "' And Fecha = '" & _Fecha & "')" & vbCrLf &
                         "Or (Revisado = 0 And Peticion_Manual = 1 And Fecha = '" & _Fecha & "'))"
-        Dim _Tbl_Productos_Prestashop As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+        Dim _Tbl_Productos_Prestashop As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
         If CBool(_Tbl_Productos_Prestashop.Rows.Count) Then
 
@@ -3401,7 +3401,7 @@ Public Class Frm_Demonio_01
             Consulta_sql = "Select Codigo_Pagina,Nombre_Pagina,Host,Usuario,Clave,Puerto_X_Defecto,Puerto,Base_Datos,Cod_Lista" & vbCrLf &
                            "From " & _Global_BaseBk & "Zw_PrestaShop" & vbCrLf &
                            "Where Conexion_Activa = 1"
-            Dim _Tbl_Prestashop As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Prestashop As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Cont_Conexion = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Demonio_Prestashop", "1>0") + 1
 
@@ -3682,7 +3682,7 @@ Fin:
 
         End If
 
-        _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Productos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl_Productos.Rows.Count) Then
 
@@ -3873,7 +3873,7 @@ Fin:
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_Archivador 
                         Where Fecha = '" & _Fecha & "' " & _Archivado
-        Dim _Tbl_Archivos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Archivos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Leyenda As String = _Tbl_Archivos.Rows.Count
         Dim _Contador = 0
@@ -3956,7 +3956,7 @@ Fin:
         Consulta_sql = Replace(Consulta_sql, "#CantidadDoc#", "100")
         Consulta_sql = Replace(Consulta_sql, "Cast(0 As Bit) As Chk,", "Cast(1 As Bit) As Chk,")
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If _Tbl.Rows.Count Then
 
@@ -4269,7 +4269,7 @@ Fin:
                         From " & _Global_BaseBk & "Zw_Prod_Asociacion 
                         Where Codigo_Nodo = " & _Codigo_Nodo & " And Codigo_Nodo <> 0"
 
-        Dim _Tbl_Productos_Hermanos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Productos_Hermanos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Codigo_Nodo_Importados = 30106 ' Codigo_Nodo 04 IMPORTADOS
 
@@ -4485,7 +4485,7 @@ Fin:
                        "FROM " & _Global_BaseBk & "Zw_Demonio_Prestashop" & vbCrLf &
                        "Where Error = 1 And NombreEquipo = '" & _Nombre_Equipo & "'"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Errores Prestashop")
 
         Btn_LogError_Prestashop.Visible = False

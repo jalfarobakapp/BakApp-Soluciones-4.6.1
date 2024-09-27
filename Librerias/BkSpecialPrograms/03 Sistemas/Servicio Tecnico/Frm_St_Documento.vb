@@ -422,8 +422,6 @@ Public Class Frm_St_Documento
 
     Function Fx_Crear_GRP_PRE(_Nro_OT As String, _Nro_GRP As String) As Integer
 
-        Dim _Idmaeedo As Integer
-
         Dim _ServTecnico_Empresa As String = _Global_Row_Configuracion_Estacion.Item("ServTecnico_Empresa").ToString.Trim
         Dim _ServTecnico_Sucursal As String = _Global_Row_Configuracion_Estacion.Item("ServTecnico_Sucursal").ToString.Trim
         Dim _ServTecnico_Bodega As String = _Global_Row_Configuracion_Estacion.Item("ServTecnico_Bodega").ToString.Trim
@@ -483,23 +481,23 @@ Public Class Frm_St_Documento
 
         Consulta_sql = "Select '" & _ServTecnico_Sucursal & "' As Sucursal,'" & _ServTecnico_Bodega & "' As Bodega,'" & _RowProducto.Item("KOPR") & "' As Codigo,
                         1 As Cantidad," & De_Num_a_Tx_01(_Costo, False, 5) & " As Costo"
-        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim Fm As New Frm_Formulario_Documento("GRP", csGlobales.Enum_Tipo_Documento.Guia_Recepcion_Prestamos_GRP_PRE,
                                                    False, True, False, False, False)
         Fm.Pro_RowEntidad = _RowEntidad
         Fm.Sb_Crear_Documento_Interno_Con_Tabla2(Me, _Tbl_Productos, FechaDelServidor,
                                                      "Codigo", "Cantidad", "Costo", _Observaciones, False, False, _NroDocumento)
-        _Idmaeedo = Fm.Fx_Grabar_Documento(False,, False)
+        Dim _Mensaje As LsValiciones.Mensajes = Fm.Fx_Grabar_Documento(False,, False)
         Fm.Dispose()
 
-        Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set Idmaeedo_GRP_PRE = " & _Idmaeedo & " 
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set Idmaeedo_GRP_PRE = " & _Mensaje.Id & " 
                         Where Id_Ot = " & _Id_Ot & vbCrLf &
                        "Update MAEEDOOB Set OCDO = '" & _Nro_OT & "',TEXTO1 = '" & Txt_Nombre_Contacto.Text & "'
-                        Where IDMAEEDO = " & _Idmaeedo
+                        Where IDMAEEDO = " & _Mensaje.Id
         _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
-        If CBool(_Idmaeedo) Then
+        If _Mensaje.EsCorrecto Then
 
             Dim _Koen = _RowEntidad.Item("KOEN")
             Dim _Suen = _RowEntidad.Item("SUEN")
@@ -509,7 +507,7 @@ Public Class Frm_St_Documento
 
         End If
 
-        Return _Idmaeedo
+        Return _Mensaje.Id
 
     End Function
 
@@ -829,7 +827,7 @@ Public Class Frm_St_Documento
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-        Dim _TblPaso = _Sql.Fx_Get_Tablas("Select Max(Nro_Ot) As Ult_Nro_OT From " & _Global_BaseBk & "Zw_St_OT_Encabezado") ' cn1, "MAX(Nro_SOC)", _Global_BaseBk & "ZW_SOC_Encabezado", "Stand_By = " & Stby)
+        Dim _TblPaso = _Sql.Fx_Get_DataTable("Select Max(Nro_Ot) As Ult_Nro_OT From " & _Global_BaseBk & "Zw_St_OT_Encabezado") ' cn1, "MAX(Nro_SOC)", _Global_BaseBk & "ZW_SOC_Encabezado", "Stand_By = " & Stby)
 
         If CBool(_TblPaso.Rows.Count) Then
 
@@ -893,7 +891,7 @@ Public Class Frm_St_Documento
             End If
 
 
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If CBool(_Tbl.Rows.Count) Then
                 _Row_Doc_Garantia = _Tbl.Rows(0)
@@ -2767,7 +2765,7 @@ Public Class Frm_St_Documento
         Dim _Tbl_Conf_Info_Reportes As DataTable
 
         Consulta_sql = "Select top 1 * From " & _Global_BaseBk & "Zw_St_Conf_Info_Reportes"
-        _Tbl_Conf_Info_Reportes = _Sql_Query.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Conf_Info_Reportes = _Sql_Query.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Nro_Ot As String = _Row_Encabezado.Item("Nro_Ot")
         Dim _Razon_Social As String = _Row_Encabezado.Item("Cliente")
@@ -3006,7 +3004,7 @@ Public Class Frm_St_Documento
         Dim _Tbl_Conf_Info_Reportes As DataTable
 
         Consulta_sql = "Select top 1 * From " & _Global_BaseBk & "Zw_St_Conf_Info_Reportes"
-        _Tbl_Conf_Info_Reportes = _Sql_Query.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Conf_Info_Reportes = _Sql_Query.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Nro_Ot As String = _Row_Encabezado.Item("Nro_Ot")
         Dim _Razon_Social As String = _Row_Encabezado.Item("Cliente")
@@ -3164,7 +3162,7 @@ Public Class Frm_St_Documento
             _Garantia_Documento_Externo = True
 
             Consulta_sql = "Select 0 As IDMAEEDO,'" & _Tido & "' As TIDO,'" & _Nro_Documento & "' As NUDO,GetDate() as FEEMDO"
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If CBool(_Tbl.Rows.Count) Then
                 _Row_Doc_Garantia = _Tbl.Rows(0)

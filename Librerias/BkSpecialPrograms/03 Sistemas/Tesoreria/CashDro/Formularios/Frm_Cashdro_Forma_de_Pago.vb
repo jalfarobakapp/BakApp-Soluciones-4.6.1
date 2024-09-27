@@ -324,7 +324,7 @@ Public Class Frm_Cashdro_Forma_de_Pago
             Dim _Idmaeedo As Integer = _Row_Documento.Item("IDMAEEDO")
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_CashDro_Operaciones Where Idmaeedo = " & _Idmaeedo
-            Dim _Tbl_Operaciones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Operaciones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _Row_Operacion As DataRow In _Tbl_Operaciones.Rows
 

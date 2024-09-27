@@ -135,7 +135,7 @@ Public Class Frm_Formato_Diseno_Encabezado
 
         Dim _TblDocumento As DataTable
         Consulta_Sql = "Select top 1 * From TABTIDO Where TIDO = '" & _TipoDoc & "'"
-        _TblDocumento = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _TblDocumento = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         If String.IsNullOrEmpty(_Emdp) Then
             Me.Text = Trim(_Sql.Fx_Trae_Dato("TABTIDO", "NOTIDO", "TIDO = '" & _TipoDoc & "'")) & ", Formato: " & _NombreFormato
@@ -784,7 +784,7 @@ Public Class Frm_Formato_Diseno_Encabezado
 
         Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Format_01" & vbCrLf &
                        "Where TipoDoc = '" & _TipoDoc & "' and NombreFormato = '" & _NombreFormato & "' And Subtido = '" & _Subtido & "'"
-        Dim TblEncForm = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim TblEncForm = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         If TblEncForm.Rows.Count > 0 Then
 
@@ -880,7 +880,7 @@ Public Class Frm_Formato_Diseno_Encabezado
                            "From " & _Global_BaseBk & "Zw_Format_02" & vbCrLf &
                            "Where TipoDoc = '" & _TipoDoc & "' And NombreFormato = '" & _NombreFormato & "' And Subtido = '" & _Subtido & "'" & vbCrLf &
                            "Order by Funcion"
-            _Tbl_Zw_Format_02 = _Sql.Fx_Get_Tablas(Consulta_Sql)
+            _Tbl_Zw_Format_02 = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
             Dim _Contador = 1
 

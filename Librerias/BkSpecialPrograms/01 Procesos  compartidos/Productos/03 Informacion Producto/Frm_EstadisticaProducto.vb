@@ -164,7 +164,7 @@ Public Class Frm_EstadisticaProducto
 
         Consulta_sql = "Select EMPRESA+KOSU+KOBO As Codigo,1 As Chk,NOKOBO as Descripcion From TABBO" & vbCrLf &
                        "Where EMPRESA+KOSU+KOBO = '" & ModEmpresa & ModSucursal & ModBodega & "'"
-        _Tbl_Filtro_Bodegas = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Filtro_Bodegas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _Codigo = Trim(Codigo)
 
@@ -326,11 +326,11 @@ Public Class Frm_EstadisticaProducto
             TxtUnidad1.Text = _Row_Producto.Item("UD01PR")
             TxtUnidad2.Text = _Row_Producto.Item("UD02PR")
 
-            Dim _Marca As String = _Row_Producto.Item("Marca")
-            Dim _SuperFamilia As String = _Row_Producto.Item("SuperFamilia")
-            Dim _Familia As String = _Row_Producto.Item("Familia")
-            Dim _SubFamilia As String = _Row_Producto.Item("SubFamilia")
-            Dim _Rubro As String = _Row_Producto.Item("Rubro")
+            Dim _Marca As String = _Row_Producto.Item("MRPR").ToString.Trim & " - " & _Row_Producto.Item("Marca")
+            Dim _SuperFamilia As String = _Row_Producto.Item("FMPR").ToString.Trim & " - " & _Row_Producto.Item("SuperFamilia")
+            Dim _Familia As String = _Row_Producto.Item("PFPR").ToString.Trim & " - " & _Row_Producto.Item("Familia")
+            Dim _SubFamilia As String = _Row_Producto.Item("HFPR").ToString.Trim & " - " & _Row_Producto.Item("SubFamilia")
+            Dim _Rubro As String = _Row_Producto.Item("RUPR").ToString.Trim & " - " & _Row_Producto.Item("Rubro")
             Dim _ClasLibre As String = _Row_Producto.Item("CLALIBPR")
             Dim _Zona As String = _Row_Producto.Item("Zona")
 
@@ -339,7 +339,7 @@ Public Class Frm_EstadisticaProducto
             LblSubFamilia.Text = _SubFamilia
             LblFamilia.Text = _Familia
             LblRubro.Text = _Rubro
-            LblClasLibre.Text = _Sql.Fx_Trae_Dato("TABCARAC", "NOKOCARAC",
+            LblClasLibre.Text = _Row_Producto.Item("CLALIBPR").ToString.Trim & " - " & _Sql.Fx_Trae_Dato("TABCARAC", "NOKOCARAC",
                                                   "KOTABLA = 'CLALIBPR' and KOCARAC = '" & _ClasLibre & "'")
             LblZona.Text = _Zona
 
@@ -420,7 +420,7 @@ Public Class Frm_EstadisticaProducto
         Consulta_sql = "SELECT KOPR FROM MAEPR WHERE KOPR IN (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion" & Space(1) &
                        "Where Codigo_Nodo = " & _Codigo_Nodo & " And Codigo_Nodo <> 0)" & Space(1) &
                        "AND KOPR <> '" & _Codigo & "'"
-        _Tbl_Productos_Hermanos = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Productos_Hermanos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
     End Sub
 
@@ -483,7 +483,7 @@ Public Class Frm_EstadisticaProducto
 
         With _Grilla
 
-            .DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            .DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             OcultarEncabezadoGrilla(_Grilla)
 
@@ -1326,7 +1326,7 @@ Public Class Frm_EstadisticaProducto
 
         With Grilla_Alternativos
 
-            .DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            .DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
             OcultarEncabezadoGrilla(Grilla_Alternativos, True)
 
             .Columns("KOPRAL").Width = 120
@@ -1368,7 +1368,7 @@ Public Class Frm_EstadisticaProducto
         With Grilla_DetalleDocAlternativos
 
 
-            .DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            .DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
             OcultarEncabezadoGrilla(Grilla_DetalleDocAlternativos, True)
 
             .Columns("Obs").HeaderText = "Periodo"
@@ -1556,7 +1556,7 @@ Public Class Frm_EstadisticaProducto
     Function Fx_Producto_en_otra_base(_Codigo As String) As DataRow
 
         Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl.Rows.Count) Then
 
@@ -1640,7 +1640,7 @@ Public Class Frm_EstadisticaProducto
         End If
 
 
-        Dim _TblProductos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblProductos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Filtro_Productos As String
         Dim _Filtro_Bodegas As String
@@ -1679,7 +1679,7 @@ Public Class Frm_EstadisticaProducto
                        "FROM Zw_TblStockConsolid" & vbCrLf &
                        "WHERE KOPRCT In " & _Filtro_Productos
 
-        Dim Tbl_StMes As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim Tbl_StMes As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _Sql.Sb_Eliminar_Tabla_De_Paso("Zw_TblStockConsolid")
 
@@ -1746,7 +1746,7 @@ Public Class Frm_EstadisticaProducto
         Consulta_sql = Replace(Consulta_sql, "#Fecha_Hasta#", Format(FechaDelServidor, "yyyyMMdd"))
         Consulta_sql = Replace(Consulta_sql, "#FiltroBodegas#", Replace(_Filtro_Bodegas, "D.", "MAEDDO."))
 
-        Dim Tbl_ As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim Tbl_ As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Stock_Solicitado As Double
         Dim _Stock_Ingreso As Double
@@ -1877,7 +1877,7 @@ Public Class Frm_EstadisticaProducto
                         Consulta_sql = "Select KOPR From MAEPR Where KOPR IN " & _Filtro_Prod_Hermanos & vbCrLf &
                                        "Union" & vbCrLf &
                                        "Select KOPR From MAEPR Where KOPR = '" & _Codigo & "'"
-                        Dim _TblProductos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                        Dim _TblProductos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                         Sb_Actualizar_Estadisticas_Varios_Productos(_TblProductos)
                     Else
@@ -1974,7 +1974,7 @@ Public Class Frm_EstadisticaProducto
                 Consulta_sql = "Select Top 1 * From MAEPR Where KOPR = '" & _Codigo & "'"
             End If
 
-            Dim _TblProductos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblProductos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Filtro_Productos As String
 
@@ -2063,7 +2063,7 @@ Public Class Frm_EstadisticaProducto
                 Consulta_sql = "Select Top 1 * From MAEPR Where KOPR = '" & _Codigo & "'"
             End If
 
-            Dim _TblProductos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblProductos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Filtro_Productos As String
 
@@ -2238,7 +2238,7 @@ Public Class Frm_EstadisticaProducto
                 Consulta_sql = "Select Top 1 * From MAEPR Where KOPR = '" & _Codigo & "'"
             End If
 
-            Dim _TblProductos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblProductos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Filtro_Productos As String
 
@@ -2616,8 +2616,14 @@ Public Class Frm_EstadisticaProducto
     End Sub
 
     Private Sub Mnu_Btn_Ver_Clasificaciones_Arbol_Click(sender As Object, e As EventArgs) Handles Mnu_Btn_Ver_Clasificaciones_Arbol.Click
-        Dim Fm As New Frm_Arbol_Asociacion_01
-        Fm.Pro_Codigo_Producto = _Codigo
+        'Dim Fm As New Frm_Arbol_Asociacion_01
+        'Fm.Pro_Codigo_Producto = _Codigo
+        'Fm.ShowDialog(Me)
+        'Fm.Dispose()
+        Dim Fm As New Frm_Arbol_Lista(False)
+        Fm.Codigo_Heredado = _Codigo
+        Fm.ModoCheckButton = True
+        Fm.MostrarClasProducto = True
         Fm.ShowDialog(Me)
         Fm.Dispose()
     End Sub
@@ -2815,13 +2821,13 @@ Public Class Frm_EstadisticaProducto
             Consulta_sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
                            "Where Funcionario = '" & FUNCIONARIO & "' And Informe = '" & _Informe & "'" & Space(1) &
                            "And Filtro = 'Bodegas_Vta' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "'"
-            _Tbl_Filtro_Bodegas = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Filtro_Bodegas = _Sql.Fx_Get_DataTable(Consulta_sql)
         End If
 
         If Not CBool(_Tbl_Filtro_Bodegas.Rows.Count) Then
             Consulta_sql = "Select EMPRESA+KOSU+KOBO As Codigo,1 As Chk,NOKOBO as Descripcion From TABBO" & vbCrLf &
                            "Where EMPRESA+KOSU+KOBO = '" & ModEmpresa & ModSucursal & ModBodega & "'"
-            _Tbl_Filtro_Bodegas = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Filtro_Bodegas = _Sql.Fx_Get_DataTable(Consulta_sql)
         End If
 
     End Sub

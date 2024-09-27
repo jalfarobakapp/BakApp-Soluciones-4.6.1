@@ -116,7 +116,7 @@ Public Class Frm_Cambio_Codigos_UnoxUno
                                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
 
                     Consulta_sql = "Select * From MAEPR Where KOPR = '" & Txt_Codigo_Old.Text & "'"
-                    Dim _TblPro As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _TblPro As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     If Fm.Fx_Cambiar_Codigo(Txt_Codigo_New.Text, Txt_Codigo_Old.Text,
                                         ChkCambiarCodigoTecnico.Checked, True, FUNCIONARIO,

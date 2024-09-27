@@ -162,7 +162,7 @@ Public Class Frm_Kardex_X_Producto_Lista
                                MP.RLUD,
                                Isnull( TP.PP01UD,0) As PP01UD,
                                Isnull( TP.PP01UD,0) As PP02UD
-                          FROM MAEPR MP INNER JOIN MAEPREM 
+                          FROM MAEPR MP WITH (NOLOCK) INNER JOIN MAEPREM WITH (NOLOCK)
                             ON MAEPREM.KOPR=MP.KOPR 
                             AND MAEPREM.EMPRESA='" & ModEmpresa & "'  
                                 LEFT JOIN TABPRE TP 
@@ -177,7 +177,7 @@ Public Class Frm_Kardex_X_Producto_Lista
         '_Ds = _Sql.Fx_Get_DataSet(Consulta_sql)
         '_dv.Table = _Ds.Tables(0)
 
-        _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Productos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With GrillaListaProductos
 
@@ -242,7 +242,7 @@ Public Class Frm_Kardex_X_Producto_Lista
         Consulta_sql = Replace(Consulta_sql, "#Kofu#", FUNCIONARIO)
         Consulta_sql = Replace(Consulta_sql, "#Global_BaseBk#", _Global_BaseBk)
 
-        _Tbl_Detalle_Stock = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Detalle_Stock = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         Consulta_sql = "Select " & vbCrLf &
@@ -268,7 +268,7 @@ Public Class Frm_Kardex_X_Producto_Lista
                        "Select * From #Paso" & vbCrLf &
                        "Drop Table #Paso"
 
-        _Tbl_Total_Stock = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Total_Stock = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Sb_Formato_Y_Llenar_Grilla_Stock(Grilla_Detalle_Stock, _Tbl_Detalle_Stock, True)
         Sb_Formato_Y_Llenar_Grilla_Stock(Grilla_Total_Stock, _Tbl_Total_Stock, False)
@@ -304,56 +304,56 @@ Public Class Frm_Kardex_X_Producto_Lista
             .Columns("STFI" & _Unidad).HeaderText = "Stock Físico"
             .Columns("STFI" & _Unidad).Width = 80
             .Columns("STFI" & _Unidad).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("STFI" & _Unidad).DefaultCellStyle.Format = "##,#0"
+            .Columns("STFI" & _Unidad).DefaultCellStyle.Format = "##,#0.###"
             .Columns("STFI" & _Unidad).ToolTipText = "Stock Físico"
             .Columns("STFI" & _Unidad).Visible = True
 
             .Columns("STDV" & _Unidad).HeaderText = "Devengado"
             .Columns("STDV" & _Unidad).Width = 75
             .Columns("STDV" & _Unidad).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("STDV" & _Unidad).DefaultCellStyle.Format = "###,#0"
+            .Columns("STDV" & _Unidad).DefaultCellStyle.Format = "###,#0.###"
             .Columns("STDV" & _Unidad).ToolTipText = "Facturado al cliente sin entregar físicamente, pendiente de generar guía de despacho"
             .Columns("STDV" & _Unidad).Visible = True
 
             .Columns("DESPNOFAC" & _Unidad).HeaderText = "Desp.S/Fac"
             .Columns("DESPNOFAC" & _Unidad).Width = 75
             .Columns("DESPNOFAC" & _Unidad).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("DESPNOFAC" & _Unidad).DefaultCellStyle.Format = "###,#0"
+            .Columns("DESPNOFAC" & _Unidad).DefaultCellStyle.Format = "###,#0.###"
             .Columns("DESPNOFAC" & _Unidad).ToolTipText = "Despachado con guía que aún no han sido facturadas"
             .Columns("DESPNOFAC" & _Unidad).Visible = True
 
             .Columns("STOCNV" & _Unidad).HeaderText = "Comprom."
             .Columns("STOCNV" & _Unidad).Width = 75
             .Columns("STOCNV" & _Unidad).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("STOCNV" & _Unidad).DefaultCellStyle.Format = "###,#0"
+            .Columns("STOCNV" & _Unidad).DefaultCellStyle.Format = "###,#0.###"
             .Columns("STOCNV" & _Unidad).ToolTipText = "Notas de venta pendiente [NVV][NVI]"
             .Columns("STOCNV" & _Unidad).Visible = True
 
             .Columns("STDV" & _Unidad & "C").HeaderText = "Comp.N/Rec"
             .Columns("STDV" & _Unidad & "C").Width = 75
             .Columns("STDV" & _Unidad & "C").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("STDV" & _Unidad & "C").DefaultCellStyle.Format = "###,#0"
+            .Columns("STDV" & _Unidad & "C").DefaultCellStyle.Format = "###,#0.###"
             .Columns("STDV" & _Unidad & "C").ToolTipText = "Facturas de compra que no han movido Stock físico, aún falta la guía de recepción de mercadería"
             .Columns("STDV" & _Unidad & "C").Visible = True
 
             .Columns("RECENOFAC" & _Unidad).HeaderText = "Rece.S/Fac"
             .Columns("RECENOFAC" & _Unidad).Width = 75
             .Columns("RECENOFAC" & _Unidad).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("RECENOFAC" & _Unidad).DefaultCellStyle.Format = "###,#0"
+            .Columns("RECENOFAC" & _Unidad).DefaultCellStyle.Format = "###,#0.###"
             .Columns("RECENOFAC" & _Unidad).ToolTipText = "Guías de proveedores que aún no han sido facturadas"
             .Columns("RECENOFAC" & _Unidad).Visible = True
 
             .Columns("STOCNV" & _Unidad & "C").HeaderText = "Pedido"
             .Columns("STOCNV" & _Unidad & "C").Width = 75
             .Columns("STOCNV" & _Unidad & "C").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("STOCNV" & _Unidad & "C").DefaultCellStyle.Format = "###,#0"
+            .Columns("STOCNV" & _Unidad & "C").DefaultCellStyle.Format = "###,#0.###"
             .Columns("STOCNV" & _Unidad & "C").ToolTipText = "Ordenes de compra pendientes [OCI][OCC]"
             .Columns("STOCNV" & _Unidad & "C").Visible = True
 
             .Columns("StTeorico").HeaderText = "St.Teórico"
             .Columns("StTeorico").Width = 75
             .Columns("StTeorico").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("StTeorico").DefaultCellStyle.Format = "###,#0"
+            .Columns("StTeorico").DefaultCellStyle.Format = "###,#0.###"
             '.Columns("StTeorico").ToolTipText = "Ordenes de compra pendientes [OCI][OCC]"
             .Columns("StTeorico").Visible = True
 
@@ -579,7 +579,7 @@ Public Class Frm_Kardex_X_Producto_Lista
 
         Consulta_sql = "SELECT KOPR FROM MAEPR WHERE KOPR IN (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion" & Space(1) &
                        "Where Codigo_Nodo = " & _Codigo_Nodo & " And Codigo_Nodo <> 0)"
-        Fx_Tbl_Productos_Hermanos = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Fx_Tbl_Productos_Hermanos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
     End Function
 
@@ -773,13 +773,13 @@ Public Class Frm_Kardex_X_Producto_Lista
 
         If Fx_Tiene_Permiso(Me, "Prod058") Then
 
-            Dim _Fila As DataGridViewRow = Grilla_Detalle_Stock.Rows(Grilla_Detalle_Stock.CurrentRow.Index)
+            Dim _Fila As DataGridViewRow = Grilla_Detalle_Stock.CurrentRow
 
             Dim _Codigo = _Fila.Cells("KOPR").Value
-            Dim _Empresa = Trim(_Fila.Cells("EMPRESA").Value)
-            Dim _Sucursal = Trim(_Fila.Cells("KOSU").Value)
-            Dim _Bodega = Trim(_Fila.Cells("KOBO").Value)
-            Dim _Ubicacion As String = Trim(_Fila.Cells("DATOSUBIC").Value)
+            Dim _Empresa = _Fila.Cells("EMPRESA").Value.ToString.Trim
+            Dim _Sucursal = _Fila.Cells("KOSU").Value.ToString.Trim
+            Dim _Bodega = _Fila.Cells("KOBO").Value.ToString.Trim
+            Dim _Ubicacion As String = NuloPorNro(Of String)(_Fila.Cells("DATOSUBIC").Value.ToString.Trim, "")
             Dim _OldUbicacion As String = "([" & _Empresa & "-" & _Sucursal & "-" & _Bodega & "] --> " & _Ubicacion & ")"
 
             Dim _Ingresar As Boolean
@@ -796,7 +796,7 @@ Public Class Frm_Kardex_X_Producto_Lista
             If _Ingresar Then
 
                 Dim _Aceptado As Boolean = InputBox_Bk(Me, "Ingrese nueva unbicación Máx. 20 Caracteres",
-                                                       "Cambiar Ubicación", _Ubicacion, False,, 20, True)
+                                                       "Cambiar Ubicación", _Ubicacion, False,, 20, True, _Tipo_Imagen.Ubicacion, True)
 
                 If _Aceptado Then
 

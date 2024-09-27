@@ -172,7 +172,7 @@ Public Class Frm_Anotaciones_Tabuladas_02_Detalle
         End If
 
 
-        _TblDetalle = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblDetalle = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

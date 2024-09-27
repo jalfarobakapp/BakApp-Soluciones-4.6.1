@@ -18,6 +18,7 @@ Public Class Frm_Conceptos_ObliXDoc
         Sb_Formato_Generico_Grilla(Grilla, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 
         Me._Modalidad = _Modalidad
+        Sb_Color_Botones_Barra(Bar1)
 
     End Sub
 
@@ -37,13 +38,13 @@ Public Class Frm_Conceptos_ObliXDoc
                         Left Join TABCT On KOCT = Concepto
                         Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones On Tabla = 'TIDP_Cli' And CodigoTabla = Tidp 
                         Where Modalidad = '" & _Modalidad & "'"
-        _Tbl_Conceptos = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Conceptos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _DisplayIndex = 0
 
         With Grilla
 
-            .DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            .DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             OcultarEncabezadoGrilla(Grilla, True)
 

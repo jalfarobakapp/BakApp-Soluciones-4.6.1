@@ -33,7 +33,7 @@ Public Class Frm_AsisCompra_Proyeccion
         Get
             Return Input_Porc_Crecimiento.Value
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             Input_Porc_Crecimiento.Value = value
         End Set
     End Property
@@ -64,21 +64,21 @@ Public Class Frm_AsisCompra_Proyeccion
     End Sub
 
 
-    Private Sub Frm_AsisCompra_Proyeccion_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-
-        AddHandler Cmb_Proyeccion.SelectedIndexChanged, AddressOf Cmb_Proyeccion_SelectedIndexChanged
-        AddHandler Cmb_Metodo_Abastecer_Dias_Meses.SelectedIndexChanged, AddressOf Cmb_Dias_Abastecer_SelectedIndexChanged
+    Private Sub Frm_AsisCompra_Proyeccion_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         Cmb_Tiempo_Reposicion_Dias_Meses.Enabled = False
 
-        'Sb_Parametros_Informe_Conf_Local(True)
         Sb_Parametros_Informe_Sql(False)
+
+        AddHandler Cmb_Proyeccion.SelectedIndexChanged, AddressOf Cmb_Proyeccion_SelectedIndexChanged
+        AddHandler Cmb_Metodo_Abastecer_Dias_Meses.SelectedIndexChanged, AddressOf Cmb_Dias_Abastecer_SelectedIndexChanged
+        AddHandler Chk_MostrarSugCambioPrecio.CheckedChanged, AddressOf Chk_MostrarSugCambioPrecio_CheckedChanged
 
         Me.WindowState = FormWindowState.Normal
 
     End Sub
 
-    Private Sub BtnProcesarInf_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnProcesarInf.Click
+    Private Sub BtnProcesarInf_Click(sender As System.Object, e As System.EventArgs) Handles BtnProcesarInf.Click
 
         Sb_Parametros_Informe_Sql(True)
 
@@ -104,7 +104,7 @@ Public Class Frm_AsisCompra_Proyeccion
 
         Consulta_sql = "Select Codigo_Nodo From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
                        "Where Identificacdor_NodoPadre = " & _Padre_Asociacion_Productos
-        _Tbl_Nodos = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Nodos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _Filtro_Nodos = Generar_Filtro_IN(_Tbl_Nodos, "", "Codigo_Nodo", False, False, "'")
 
@@ -191,7 +191,8 @@ Public Class Frm_AsisCompra_Proyeccion
                                                         _Campos,
                                                         _RotCalculo,
                                                         _Sql_Consulta_Actualiza_Stock,
-                                                        _Clas_Asistente_Compras)
+                                                        _Clas_Asistente_Compras,
+                                                        Chk_MostrarSugCambioPrecio.Checked)
 
         Fm.Pro_Input_Redondeo = Input_Proyeccion_Redondeo.Value
         Select Case Cmb_Metodo_Abastecer_Dias_Meses.SelectedValue
@@ -223,7 +224,7 @@ Public Class Frm_AsisCompra_Proyeccion
                        "Where Es_Padre = 1 And Codigo_Nodo In (Select Distinct Identificacdor_NodoPadre" & Space(1) &
                        "From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Es_Padre = 0 And Clas_Unica_X_Producto = 1)" & vbCrLf &
                        "Order By Hijo"
-        Cmb_Padre_Asociacion_Productos.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Padre_Asociacion_Productos.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Padre_Asociacion_Productos.SelectedValue = ""
 
         caract_combo(Cmb_Proyeccion)
@@ -234,7 +235,7 @@ Public Class Frm_AsisCompra_Proyeccion
 
     End Sub
 
-    Sub Sb_Cargar_Combo_Dias(ByVal Cmb As DevComponents.DotNetBar.Controls.ComboBoxEx)
+    Sub Sb_Cargar_Combo_Dias(Cmb As DevComponents.DotNetBar.Controls.ComboBoxEx)
 
         caract_combo(Cmb)
 
@@ -259,7 +260,7 @@ Public Class Frm_AsisCompra_Proyeccion
 
     End Sub
 
-    Sub Sb_Parametros_Informe_Sql(ByVal _Actualizar As Boolean)
+    Sub Sb_Parametros_Informe_Sql(_Actualizar As Boolean)
 
         Dim _FechaHoy As Date = FormatDateTime(FechaDelServidor, DateFormat.ShortDate)
         Dim _Fecha_Hoy = Format(_FechaHoy, "dd-MM-yyyy")
@@ -279,6 +280,11 @@ Public Class Frm_AsisCompra_Proyeccion
             Txt_Padre_Asociacion_Productos.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TblArbol_Asociaciones",
                                               "Descripcion", "Codigo_Nodo = " & Val(Txt_Padre_Asociacion_Productos.Tag))
         End If
+
+        ' Ver sugerencia de cambio de precio
+        _Sql.Sb_Parametro_Informe_Sql(Chk_MostrarSugCambioPrecio, "Compras_Asistente",
+                                      Chk_MostrarSugCambioPrecio.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Chk_MostrarSugCambioPrecio.Checked, _Actualizar)
 
     End Sub
 
@@ -325,13 +331,13 @@ Public Class Frm_AsisCompra_Proyeccion
     End Sub
 
 
-    Private Sub Frm_AsisCompra_Proyeccion_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_AsisCompra_Proyeccion_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
-    Private Sub Btn_Arbol_Asociaciones_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Arbol_Asociaciones.Click
+    Private Sub Btn_Arbol_Asociaciones_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Arbol_Asociaciones.Click
         If Fx_Tiene_Permiso(Me, "Tbl00002") Then
             Dim Fm As New Frm_Arbol_Asociacion_02(False, 0, False, Frm_Arbol_Asociacion_02.Enum_Clasificacion.Unica, 0)
             Fm.Pro_Identificador_NodoPadre = 0
@@ -340,7 +346,7 @@ Public Class Frm_AsisCompra_Proyeccion
         End If
     End Sub
 
-    Private Sub Cmb_Proyeccion_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Cmb_Proyeccion_SelectedIndexChanged(sender As System.Object, e As System.EventArgs)
 
         Dim _Valor As Integer = Cmb_Proyeccion.SelectedValue
 
@@ -364,7 +370,7 @@ Public Class Frm_AsisCompra_Proyeccion
 
     End Sub
 
-    Private Sub Cmb_Dias_Abastecer_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Cmb_Dias_Abastecer_SelectedIndexChanged(sender As System.Object, e As System.EventArgs)
 
         Dim _Valor As Integer = Cmb_Metodo_Abastecer_Dias_Meses.SelectedValue
 
@@ -393,7 +399,7 @@ Public Class Frm_AsisCompra_Proyeccion
 
     End Sub
 
-    Private Sub Cmb_Tiempo_Reposicion_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Cmb_Tiempo_Reposicion_SelectedIndexChanged(sender As System.Object, e As System.EventArgs)
 
         Dim _Valor As Integer = Cmb_Tiempo_Reposicion_Dias_Meses.SelectedValue
 
@@ -414,14 +420,26 @@ Public Class Frm_AsisCompra_Proyeccion
 
     End Sub
 
+    Private Sub Frm_AsisCompra_Proyeccion_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+        Sb_Parametros_Informe_Sql(True)
+    End Sub
 
-    Private Sub Btn_Padre_Asociacion_Productos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Padre_Asociacion_Productos.Click
+    Private Sub Frm_AsisCompra_Proyeccion_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        If InformeDeComprasAgrupadoporAsociacion Then
+            If MessageBoxEx.Show(Me, "Si cierra el formulario tendrá que recargar nuevamente el estudio del proceso" & vbCrLf & vbCrLf &
+                                 "¿Esta seguro de cerra este formulario?", "Confirmación de cierre de formulario",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Warning) <> DialogResult.Yes Then
+                e.Cancel = True
+            End If
+        End If
+    End Sub
+
+    Private Sub Txt_Padre_Asociacion_Productos_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Padre_Asociacion_Productos.ButtonCustomClick
 
         If Not Fx_Tiene_Permiso(Me, "Comp0099") Then
             Return
         End If
 
-        Dim _Identificacdor_NodoPadre As Integer
         Dim _Nodo_Raiz_Asociados As Integer = _Global_Row_Configuracion_General.Item("Nodo_Raiz_Asociados")
 
         Dim Fm As New Frm_Arbol_Asociacion_05_Busqueda(
@@ -439,17 +457,43 @@ Public Class Frm_AsisCompra_Proyeccion
 
     End Sub
 
-    Private Sub Frm_AsisCompra_Proyeccion_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
-        Sb_Parametros_Informe_Sql(True)
+    Private Sub Btn_VerMaestroProductos_Click(sender As Object, e As EventArgs) Handles Btn_VerMaestroProductos.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Prod012") Then
+            Return
+        End If
+
+        Dim Fm As New Frm_BkpPostBusquedaEspecial_Mt
+        With Fm
+            .Pro_Actualizar_Precios = False
+            .Pro_Mostrar_Info = False
+            .BtnBuscarAlternativos.Visible = True
+            .Pro_Mostrar_Imagenes = True
+            .BtnCrearProductos.Visible = True
+            .Pro_Mostrar_Editar = True
+            .Pro_Mostrar_Eliminar = True
+            .BtnExportaExcel.Visible = True
+            .Pro_Tipo_Lista = "P"
+            .Pro_Maestro_Productos = True
+            .Pro_Sucursal_Busqueda = ModSucursal
+            .Pro_Bodega_Busqueda = ModBodega
+            .Pro_Lista_Busqueda = ModListaPrecioVenta
+            .Mnu_Btn_Cambiar_Codigo_Producto.Visible = True
+            .TraerTodosLosProductos = True
+            .ShowDialog(Me)
+            .Dispose()
+        End With
+
     End Sub
 
-    Private Sub Frm_AsisCompra_Proyeccion_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        If InformeDeComprasAgrupadoporAsociacion Then
-            If MessageBoxEx.Show(Me, "Si cierra el formulario tendrá que recargar nuevamente el estudio del proceso" & vbCrLf & vbCrLf &
-                                 "¿Esta seguro de cerra este formulario?", "Confirmación de cierre de formulario",
-                             MessageBoxButtons.YesNo, MessageBoxIcon.Warning) <> DialogResult.Yes Then
-                e.Cancel = True
+    Private Sub Chk_MostrarSugCambioPrecio_CheckedChanged(sender As Object, e As EventArgs)
+
+        If Chk_MostrarSugCambioPrecio.Checked Then
+            If Not Fx_Tiene_Permiso(Me, "Comp0101") Then
+                Chk_MostrarSugCambioPrecio.Checked = False
             End If
         End If
+
     End Sub
+
 End Class

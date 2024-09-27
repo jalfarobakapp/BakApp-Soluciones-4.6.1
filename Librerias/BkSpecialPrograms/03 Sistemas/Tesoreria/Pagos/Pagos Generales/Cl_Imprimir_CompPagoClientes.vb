@@ -378,7 +378,7 @@ Public Class Cl_Imprimir_CompPagoClientes
                                "LEFT JOIN MAEEDO  ON MAEDPCD.IDRST=MAEEDO.IDMAEEDO AND MAEDPCD.ARCHIRST='MAEEDO'  " &
                                "LEFT JOIN CDOCCOE ON MAEDPCD.IDRST=CDOCCOE.IDDOCCOE AND MAEDPCD.ARCHIRST='CDOCCOE '" & vbCrLf &
                                "WHERE MAEDPCD.IDMAEDPCE = " & _Idmaedpce
-                    Dim _Tbl_Documentos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _Tbl_Documentos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
                     Dim _Id As Integer = _FilaFm.Item("ID").ToString.Trim

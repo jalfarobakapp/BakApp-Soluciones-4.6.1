@@ -281,7 +281,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
                             And TIDO IN ('BLV','BLX','BSV','ESC','FCV','FDB','FDV','FDX','FDZ','FEE','FEV','FVL','FVT','FVX','FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV')
 						    Order by FEEMLI"
 
-            Dim _TblFechas As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+            Dim _TblFechas As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
             Progreso_Porc.Maximum = 100
             Progreso_Cont_Productos.Maximum = _TblFechas.Rows.Count
@@ -328,7 +328,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
                     '                'FEV','FVL','FVT','FVX','FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV') 
                     '                And Ddo.IDMAEEDO Not IN (Select IDMAEEDO From " & _Nombre_Tabla_Paso & " Where FEEMDO = '" & Format(_Fecha, "yyyyMMdd") & "')"
 
-                    Dim _Tbl_Idmaeedo As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+                    Dim _Tbl_Idmaeedo As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
 
                     Lbl_Estado.Text = "Procesando informe, día " & _Contador + 1 & " de " & _TblFechas.Rows.Count & vbCrLf &
@@ -500,7 +500,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
                            And IDMAEEDO Not In (Select IDMAEEDO From " & _Nombre_Tabla_Paso & ")
                            Order by FEEMLI"
 
-            Dim _TblFechas As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+            Dim _TblFechas As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
             Progreso_Porc.Maximum = 100
             Dim _Contador = 0
@@ -533,7 +533,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
                                 And Ddo.IDMAEEDO Not IN (Select IDMAEEDO From " & _Nombre_Tabla_Paso & " Where FEEMLI = '" & Format(_Fecha, "yyyyMMdd") & "')
                                 --And Edo.NUDONODEFI = 0"
 
-                    Dim _Tbl_Idmaeedo As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+                    Dim _Tbl_Idmaeedo As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
 
                     Lbl_Estado.Text = "Procesando informe, día " & _Contador + 1 & " de " & _TblFechas.Rows.Count & vbCrLf &
@@ -725,7 +725,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
                                 From " & _Nombre_Tabla_Paso & "
                                 Where FEEMLI Between '" & Format(_Fecha_Primer_Dia, "yyyyMMdd") & "' And '" & Format(_Fecha_Ultimo_Dia, "yyyyMMdd") & "'"
 
-                Dim _Tbl_Idmaeedo As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+                Dim _Tbl_Idmaeedo As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
                 Lbl_Estado.Text = "Actualizando filtros del mes " & _Contador + 1 & " de " & _Meses
 
@@ -839,7 +839,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
                                 From " & _Nombre_Tabla_Paso & "
                                 Where FEEMLI = '" & Format(_Fecha, "yyyyMMdd") & "'"
 
-                Dim _Tbl_Idmaeedo As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+                Dim _Tbl_Idmaeedo As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
                 'Lbl_Estado.Text = "Actualizando filtros del mes " & MonthName(_Fecha.Month) & " día: " & _Contador + 1 & " de " & _Dias
                 Lbl_Estado.Text = "Actualizando filtros del " & FormatDateTime(_Fecha, DateFormat.LongDate)

@@ -208,7 +208,7 @@ Public Class Frm_St_Estado_05_Reparacion2
                        "From " & _Global_BaseBk & "Zw_St_OT_OpeXServ Serv" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_St_OT_Operaciones Oper On Serv.Operacion = Oper.Operacion" & vbCrLf &
                        "Where Id_Ot = " & _Id_Ot & " And Semilla = " & _Semilla
-        Dim _Tbl_Operaciones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Operaciones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
 
@@ -439,7 +439,7 @@ Public Class Frm_St_Estado_05_Reparacion2
             End If
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Doc_Asociados Where Id_Ot = " & _Id_Ot
-            Dim _Doc_Asociados As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Doc_Asociados As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _FlDoc As DataRow In _Doc_Asociados.Rows
 

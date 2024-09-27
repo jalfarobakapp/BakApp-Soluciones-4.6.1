@@ -96,7 +96,7 @@ Public Class Frm_Meson_Operario_QuitarOperaciones
                     Select * From #Paso_Potpr
                     Drop Table #Paso_Potpr"
 
-        _TblMesones = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblMesones = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Fila As DataRow In _TblMesones.Rows
             If _Fila.Item("IDPOTPR") = _Idpotpr Then

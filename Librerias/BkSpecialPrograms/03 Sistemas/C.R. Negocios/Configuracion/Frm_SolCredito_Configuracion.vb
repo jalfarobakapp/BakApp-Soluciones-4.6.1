@@ -1,4 +1,4 @@
-
+ï»¿
 Imports DevComponents.DotNetBar
 Imports System.IO
 
@@ -13,10 +13,10 @@ Public Class Frm_SolCredito_Configuracion
 
     Public Sub New()
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
 
         Sb_Cargar_Combos()
 
@@ -77,7 +77,7 @@ Public Class Frm_SolCredito_Configuracion
 
     Private Sub Sb_Ruta_Directorio_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Try
-            ' Configuración del FolderBrowserDialog
+            ' ConfiguraciÃ³n del FolderBrowserDialog
 
             If Fx_Tiene_Permiso(Me, "Ncli00005") Then
 
@@ -99,18 +99,18 @@ Public Class Frm_SolCredito_Configuracion
 
                     .SelectedPath = _SPath 'Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
 
-                    ' deshabilita el botón " crear nueva carpeta "
+                    ' deshabilita el botÃ³n " crear nueva carpeta "
                     .ShowNewFolderButton = True
                     '.RootFolder = Environment.SpecialFolder.Desktop
                     '.RootFolder = Environment.SpecialFolder.StartMenu
 
-                    Dim ret As DialogResult = .ShowDialog ' abre el diálogo
+                    Dim ret As DialogResult = .ShowDialog ' abre el diÃ¡logo
                     Dim _Directorio_Seleccionado As String = .SelectedPath
 
 
                     'Shell("explorer.exe " & _Directorio_Seleccionado, AppWinStyle.MaximizedFocus)
 
-                    ' si se presionó el botón aceptar ...
+                    ' si se presionÃ³ el botÃ³n aceptar ...
                     If ret = Windows.Forms.DialogResult.OK Then
                         Txt_Directorio_Seleccionado.Text = _Directorio_Seleccionado
                         Btn_Grabar.Enabled = True
@@ -216,8 +216,8 @@ Public Class Frm_SolCredito_Configuracion
                        "FROM " & _Global_BaseBk & "Zw_Correos" & vbCrLf & _
                        "ORDER BY Padre"
 
-        Cmb_Correo_Al_Grabar.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
-        Cmb_Correo_Al_Cerrar.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Correo_Al_Grabar.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
+        Cmb_Correo_Al_Cerrar.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
     End Sub
 
@@ -238,25 +238,25 @@ Public Class Frm_SolCredito_Configuracion
 
         Dim _Ftp As New Class_FTP(_Dir, Trim(Txt_Ftp_Usuario.Text), Trim(Txt_Ftp_Contrasena.Text))
 
-        If _Ftp.Fx_Verificar_Coneccion_FTP(Me, Txt_Ftp_Host.Text, Txt_Ftp_Puerto.Text) Then
+        If _Ftp.Fx_Verificar_Conexion_FTP(Me, Txt_Ftp_Host.Text, Txt_Ftp_Puerto.Text) Then
 
             If _Ftp.Fx_Existe_Directorio(_Dir & "/" & _Carpeta) Then
 
-                MessageBoxEx.Show(Me, "La carpeta ...Ftp://.../" & _Carpeta & vbCrLf & _
-                                  "Esta operativa", _
+                MessageBoxEx.Show(Me, "La carpeta ...Ftp://.../" & _Carpeta & vbCrLf &
+                                  "Esta operativa",
                                    "Crear carpeta compartida en FTP", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Txt_Directorio_Seleccionado.Text = "...Ftp://" & Txt_Ftp_Host.Text & "/" & _Carpeta
             Else
 
-                If MessageBoxEx.Show(Me, "La carpeta [" & _Carpeta & "] no esta creada en en sitio" & vbCrLf & _
-                                   "¿Desea crear esta carpeta?", "Crear carpeta en FTP", _
+                If MessageBoxEx.Show(Me, "La carpeta [" & _Carpeta & "] no esta creada en en sitio" & vbCrLf &
+                                   "Â¿Desea crear esta carpeta?", "Crear carpeta en FTP",
                                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
 
 
                     Dim _Fichero_Creado = _Ftp.Fx_Crear_Directorio(_Dir & "/" & _Carpeta)
 
                     If String.IsNullOrEmpty(_Fichero_Creado) Then
-                        MessageBoxEx.Show(Me, "Se ha creado correctamente la carpeta ...Ftp://" & Txt_Ftp_Host.Text & "/" & _Carpeta, _
+                        MessageBoxEx.Show(Me, "Se ha creado correctamente la carpeta ...Ftp://" & Txt_Ftp_Host.Text & "/" & _Carpeta,
                                           "Crear carpeta compartida en FTP", MessageBoxButtons.OK, MessageBoxIcon.Information)
                         Txt_Directorio_Seleccionado.Text = "...Ftp://" & Txt_Ftp_Host.Text & "/" & _Carpeta
                     Else

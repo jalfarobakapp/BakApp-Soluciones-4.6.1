@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports BkSpecialPrograms.LsValiciones
 Imports DevComponents.DotNetBar
 
 Public Class Frm_Facturacion_Masiva
@@ -278,9 +279,17 @@ Public Class Frm_Facturacion_Masiva
             Return
         End If
 
-        If Not Fx_Revisar_Taza_Cambio(Me, _FechaEmision) Then
+        Dim _Msj_Tsc As LsValiciones.Mensajes
+
+        _Msj_Tsc = Fx_Revisar_Tasa_Cambio(Nothing)
+
+        If Not _Msj_Tsc.EsCorrecto Then
             Return
         End If
+
+        'If Not Fx_Revisar_Tasa_Cambio(Me, _FechaEmision) Then
+        '    Return
+        'End If
 
         If MessageBoxEx.Show(Me, "¿Confirma la fecha de las facturas?" & vbCrLf & vbCrLf &
                              "Fecha: " & FormatDateTime(_FechaEmision, DateFormat.ShortDate), "Confirmar fecha de emisión",
@@ -528,9 +537,17 @@ Public Class Frm_Facturacion_Masiva
                 Dim _Tido = _Row_Documento.Item("TIDO")
                 Dim _Nudo = _Row_Documento.Item("NUDO")
 
-                If Fx_Revisar_Taza_Cambio(_Formulario) Then
+                Dim _Msj_Tsc As LsValiciones.Mensajes
 
-                    If Fx_Se_Puede_Trasladar_Para_Crear_Otro_Documento(_Idmaeedo_Origen) Then
+                _Msj_Tsc = Fx_Revisar_Tasa_Cambio(Me, FechaDelServidor)
+
+                If Not _Msj_Tsc.EsCorrecto Then
+                    Return False
+                End If
+
+                'If Fx_Revisar_Tasa_Cambio(_Formulario) Then
+
+                If Fx_Se_Puede_Trasladar_Para_Crear_Otro_Documento(_Idmaeedo_Origen) Then
 
                         Dim _Empresa As String = ModEmpresa
                         Dim _Sucursal As String = ModSucursal
@@ -602,7 +619,7 @@ Public Class Frm_Facturacion_Masiva
 
                     End If
 
-                End If
+                'End If
 
             End If
 

@@ -26,6 +26,8 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
 
     Dim _Lista_Nodos As New List(Of Integer)
 
+    Public Property ModoSoloLectura As Boolean
+
     Public Property Pro_Codigo_Heredado() As String
         Get
             Return _Codigo_Heredado
@@ -75,12 +77,6 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
 
         _Codigo_Heredado = String.Empty
 
-        'Dim _Arr_Filtro(,) As String = {{"C", "Contiene:"},
-        '                                {"E", "Empieza por:"},
-        '                                {"T", "Termina en:"}}
-        'Sb_Llenar_Combos(_Arr_Filtro, Cmb_Filtro_Codigo)
-        'Cmb_Filtro_Codigo.SelectedValue = "C"
-
         Sb_Color_Botones_Barra(Bar2)
 
         Txt_Filtrar.ReadOnly = False
@@ -108,14 +104,16 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
 
-        Btn_AgregarProductos.Visible = _Row_Nodo.Item("Es_Seleccionable")
+        Btn_AgregarProductos.Visible = Not ModoSoloLectura
 
         If Not _Mostrar_Productos_Sin_Asociacion_En_Nodo Then
             Btn_Reparar_Arbol.Visible = True
         End If
 
-        Btn_Quitar_Marcados.Visible = _Row_Nodo.Item("Es_Seleccionable")
-        Btn_Quitar_Todo.Visible = _Row_Nodo.Item("Es_Seleccionable")
+        Btn_QuitarProducto.Visible = Not ModoSoloLectura
+        Btn_Quitar_Marcados.Visible = Not ModoSoloLectura
+        Btn_Quitar_Todo.Visible = Not ModoSoloLectura
+        Btn_Quitar_Productos.Visible = Not ModoSoloLectura
 
         If _Carpeta_Seleccionable Then
             AddHandler Grilla.MouseUp, AddressOf Sb_Grilla_MouseUp
@@ -372,14 +370,14 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
         Dim _CodPadre As String
 
         Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _Codigo_Nodo
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         _CodPadre = _Tbl.Rows(0).Item("Identificacdor_NodoPadre")
 
         Do While (_CodPadre <> 0)
 
             Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _CodPadre
-            _Tbl = _Sql.Fx_Get_Tablas(Consulta_Sql)
+            _Tbl = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
             _CodPadre = _Tbl.Rows(0).Item("Identificacdor_NodoPadre")
             _Full = "\" & _Tbl.Rows(0).Item("Descripcion") & _Full
@@ -437,11 +435,18 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
 
         Dim _Codigo As String = Grilla.Rows(Grilla.CurrentRow.Index).Cells("Codigo").Value
 
-        Dim Fm As New Frm_Arbol_Asociacion_01
-        Fm.Pro_Codigo_Producto = _Codigo
-        Fm.Chk_Ver_Clas_Unicas.Checked = True
+        Dim Fm As New Frm_Arbol_Lista(False)
+        Fm.Codigo_Heredado = _Codigo
+        Fm.ModoCheckButton = True
+        Fm.MostrarClasProducto = True
         Fm.ShowDialog(Me)
         Fm.Dispose()
+
+        'Dim Fm As New Frm_Arbol_Asociacion_01
+        'Fm.Pro_Codigo_Producto = _Codigo
+        'Fm.Chk_Ver_Clas_Unicas.Checked = True
+        'Fm.ShowDialog(Me)
+        'Fm.Dispose()
 
     End Sub
 
@@ -477,7 +482,7 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
                            "And Codigo_Nodo In" & Space(1) &
                            "(Select Codigo_Nodo From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Es_Seleccionable = 1)"
 
-            Dim _TblNodos_Hijos_Asociados As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+            Dim _TblNodos_Hijos_Asociados As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
             If _TblNodos_Hijos_Asociados.Rows.Count Then
 
@@ -517,7 +522,7 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
                                    "And Codigo_Nodo In (Select Codigo_Nodo From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & Space(1) &
                                    "Where Es_Seleccionable = 0) And Clas_unica = 0" & vbCrLf & vbCrLf
 
-                    _TblNodos_Huachos = _Sql.Fx_Get_Tablas(Consulta_Sql)
+                    _TblNodos_Huachos = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
                     If CBool(_TblNodos_Huachos.Rows.Count) Then
 
@@ -959,6 +964,10 @@ Public Class Frm_Arbol_Asociacion_04_Productos_x_class
     End Sub
 
     Private Sub Sb_Grilla_MouseUp(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
+
+        If IsNothing(Grilla.CurrentCell) Then
+            Return
+        End If
 
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
 

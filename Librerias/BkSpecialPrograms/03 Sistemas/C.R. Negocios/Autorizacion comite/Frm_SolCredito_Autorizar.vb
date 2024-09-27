@@ -51,7 +51,7 @@ Public Class Frm_SolCredito_Autorizar
     Private Sub Frm_SolCredito_Autorizar_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Negocios_03_Apr Where Nro_Negocio = '" & _Nro_Negocio & "'"
-        Dim _TblAprobacion As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblAprobacion As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblAprobacion.Rows.Count) Then
 
@@ -122,7 +122,7 @@ Public Class Frm_SolCredito_Autorizar
                    "Case Chk_05 When 1 Then 'Entrega de garantia real - ' Else '. ' End As 'Observaciones_Chk'" & vbCrLf & _
                    "From " & _Global_BaseBk & "Zw_Negocios_03_Apr Where Nro_Negocio = '" & _Nro_Negocio & "' And CodAprobacion = '01'"
 
-            Dim _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Ausente = _Tbl.Rows(0).Item("Ausente")
             Dim _Observaciones = _Tbl.Rows(0).Item("Observaciones")
@@ -173,7 +173,7 @@ Public Class Frm_SolCredito_Autorizar
                            "Case Chk_05 When 1 Then 'Entrega de garantia real - ' Else '. ' End As 'Observaciones_Chk'" & vbCrLf & _
                            "From " & _Global_BaseBk & "Zw_Negocios_03_Apr Where Nro_Negocio = '" & _Nro_Negocio & "' And CodAprobacion = '02'"
 
-            Dim _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Ausente = _Tbl.Rows(0).Item("Ausente")
             Dim _Observaciones = _Tbl.Rows(0).Item("Observaciones")
@@ -227,7 +227,7 @@ Public Class Frm_SolCredito_Autorizar
 
             'Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Negocios_03_Apr" & vbCrLf & _
             '               "Where Nro_Negocio = '" & _Nro_Negocio & "' And CodAprobacion = '03'"
-            Dim _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Ausente = _Tbl.Rows(0).Item("Ausente")
             Dim _Observaciones = _Tbl.Rows(0).Item("Observaciones")
@@ -504,7 +504,7 @@ Public Class Frm_SolCredito_Autorizar
                            "Case Chk_05 When 1 Then 'Entrega de garantia real - ' Else '. ' End As 'Observaciones_Chk'" & vbCrLf & _
                            "From " & _Global_BaseBk & "Zw_Negocios_03_Apr Where Nro_Negocio = '" & _Nro_Negocio & "' And CodAprobacion = 'Ex'"
 
-            Dim _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Ausente = _Tbl.Rows(0).Item("Ausente")
             Dim _Observaciones = _Tbl.Rows(0).Item("Observaciones")

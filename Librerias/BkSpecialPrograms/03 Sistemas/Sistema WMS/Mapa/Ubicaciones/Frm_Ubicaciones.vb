@@ -345,7 +345,7 @@ Public Class Frm_Ubicaciones
                                             "Where Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector & "' And" & vbCrLf &
                                             "Columna = '" & _Columna & "' And Fila = '" & _Nivel & "'"
 
-                            Dim _TblUbic As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                            Dim _TblUbic As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                             If CBool(_TblUbic.Rows.Count) Then
                                 Dim _Descripcion_Ubic = _TblUbic.Rows(0).Item("Descripcion_Ubic")
@@ -376,7 +376,7 @@ Public Class Frm_Ubicaciones
             Consulta_sql = "Select Codigo_Ubic From " & _Global_BaseBk & "Zw_Prod_Ubicacion" & vbCrLf &
                            "Where Codigo = '" & _RowProducto.Item("KOPR") & "' And Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector & "'"
 
-            Dim _TblUbicProd As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblUbicProd As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If CBool(_TblUbicProd.Rows.Count) Then
 
@@ -598,7 +598,7 @@ Public Class Frm_Ubicaciones
                                                      "Where Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal &
                                                      "' And Bodega = '" & _Bodega & "' And Id_Mapa = " & _Id_Mapa &
                                                      " And Codigo_Ubic = '" & _Codigo_Ubic & "' And Es_SubSector = 1"
-                                    Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(_Sql_SubSector)
+                                    Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(_Sql_SubSector)
 
                                     If Not CBool(_Tbl.Rows.Count) Then
 
@@ -679,7 +679,7 @@ Public Class Frm_Ubicaciones
                             "' And Bodega = '" & _Bodega &
                             "' And Codigo = '" & _Codigo & "' And Primaria = 1"
 
-            Dim _RowUbicacion_pri As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _RowUbicacion_pri As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Arreglo(0) As String
             Dim _i = 0
@@ -988,7 +988,7 @@ Public Class Frm_Ubicaciones
         If Fx_Tiene_Permiso(Me, "7Brr0005") Then
 
             Consulta_sql = "Select top 1 * From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Det Where Codigo_Sector = '" & _Codigo_Sector & "'"
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If CBool(_Tbl.Rows.Count) Then
                 Dim Fm As New Frm_ImpBarras_Ubicaciones(_Tbl.Rows(0))
@@ -1098,7 +1098,7 @@ Public Class Frm_Ubicaciones
                        "' AND Columna = '" & _Columna &
                        "' AND Descripcion_Ubic = '" & _Descripcion_Ubic & "'"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl.Rows.Count) Then
 
@@ -1185,7 +1185,7 @@ Public Class Frm_Ubicaciones
                       "Where Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega &
                       "' And Id_Mapa = " & _Id_Mapa
 
-        Dim _TblMapa As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblMapa As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblMapa.Rows.Count) Then
 
@@ -1451,7 +1451,7 @@ Public Class Frm_Ubicaciones
                        "Where Zw_Ub.Id_Mapa = '" & _Id_Mapa & "' And " & vbCrLf &
                        "Zw_Ub.Codigo_Sector In " & _Filtro_Sectores & "--'" & _Codigo_Sector & "'"
 
-        Dim _TblUbicaciones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblUbicaciones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ExportarTabla_JetExcel_Tabla(_TblUbicaciones, Me, "Inventario_" & _Codigo_Sector)
 
@@ -1730,7 +1730,7 @@ Public Class Frm_Ubicaciones
         Consulta_sql = "Select top 1 * From " & _Global_BaseBk & "Zw_Prod_Ubicacion" & vbCrLf &
                        "Where Id_Mapa = " & _Id_Mapa & " And Codigo_Ubic = '" & _Codigo_Ubic & "'"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Return CBool(_Tbl.Rows.Count)
 
@@ -1741,7 +1741,7 @@ Public Class Frm_Ubicaciones
         Consulta_sql = "Select top 1 * From " & _Global_BaseBk & "Zw_Prod_Ubicacion" & vbCrLf &
                        "Where Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Cod_Sector & "'"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Return CBool(_Tbl.Rows.Count)
 

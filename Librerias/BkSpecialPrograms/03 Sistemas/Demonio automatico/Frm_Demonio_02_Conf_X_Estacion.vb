@@ -94,7 +94,7 @@ Public Class Frm_Demonio_02_Conf_X_Estacion
                            "Select *,Case Tipo_Definitivo_Vale When 'D' Then 'Definitivo' When 'V' Then 'Vales transitorios' When 'A' Then 'Ambos' End As Def_Vale" & vbCrLf &
                            "From " & _Global_BaseBk & "Zw_Demonio_Cof_Estacion Where NombreEquipo = '" & _NombreEquipo & "'"
 
-            _TblDemonio_Doc = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _TblDemonio_Doc = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
             With Grilla

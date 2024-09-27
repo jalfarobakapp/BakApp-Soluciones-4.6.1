@@ -440,10 +440,10 @@
     <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Modulo_Programas_Especiales.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Sistema Entrega de Mercaderia\Stem_EntregaMercaderia.Designer.vb">
-      <DependentUpon>Stem_EntregaMercaderia.vb</DependentUpon>
+    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\SGEM  Tickets\Sgem_EntregaMercaderia.Designer.vb">
+      <DependentUpon>Sgem_EntregaMercaderia.vb</DependentUpon>
     </Compile>
-    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Sistema Entrega de Mercaderia\Stem_EntregaMercaderia.vb">
+    <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\SGEM  Tickets\Sgem_EntregaMercaderia.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Tickets\Stk_Configuracion.Designer.vb">
@@ -722,8 +722,8 @@
     <EmbeddedResource Include="z_Menu Principal\SubMenus\Programas especiales\Modulo_Programas_Especiales.resx">
       <DependentUpon>Modulo_Programas_Especiales.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Sistema Entrega de Mercaderia\Stem_EntregaMercaderia.resx">
-      <DependentUpon>Stem_EntregaMercaderia.vb</DependentUpon>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\SGEM  Tickets\Sgem_EntregaMercaderia.resx">
+      <DependentUpon>Sgem_EntregaMercaderia.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="z_Menu Principal\SubMenus\Programas especiales\Sistemas\Tickets\Stk_Configuracion.resx">
       <DependentUpon>Stk_Configuracion.vb</DependentUpon>

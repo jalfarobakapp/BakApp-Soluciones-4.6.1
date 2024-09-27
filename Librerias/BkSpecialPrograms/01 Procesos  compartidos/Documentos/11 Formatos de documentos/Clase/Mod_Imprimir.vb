@@ -47,6 +47,10 @@ Module Mod_Imprimir
         Dim _Tido = _RowMaeedo.Item("TIDO")
         Dim _Nudo = _RowMaeedo.Item("NUDO")
 
+        If _Tido = "GDI" Then
+            _Subtido = String.Empty
+        End If
+
         Consulta_sql = "Select Top 1 NombreFormato_Destino From " & _Global_BaseBk & "Zw_Prod_ImpAdicional" & vbCrLf &
                        "Where Tido = '" & _Tido & "' And Subtido = '" & _Subtido & "' And NombreFormato_Origen = '" & _NombreFormato & "' " &
                        "And Codigo In (Select KOPRCT From MAEDDO Where IDMAEEDO = " & _Idmaeedo & ") And Reemplazar_Formato_Origen = 1"
@@ -67,7 +71,7 @@ Module Mod_Imprimir
                 _Nro_Copias = _Copias
             End If
         Else
-            Return "No existe el formato (''" & _NombreFormato & "'') para el documento: " & _Tido
+            Return "No existe el formato (''" & _NombreFormato & "'') para el documento: " & _Tido & ", Subtido = '" & _Subtido & "'"
         End If
 
         Dim _Doc_Electronico As Boolean = _RowEncFormato.Item("Doc_Electronico")
@@ -146,7 +150,7 @@ Module Mod_Imprimir
                 Consulta_sql = "Select Distinct NombreFormato_Destino From " & _Global_BaseBk & "Zw_Prod_ImpAdicional" & vbCrLf &
                                "Where Tido = '" & _Tido & "' And Subtido = '" & _Subtido & "' And NombreFormato_Origen = '" & _NombreFormato & "' " &
                                "And Codigo In (Select KOPRCT From MAEDDO Where IDMAEEDO = " & _Idmaeedo & ") And Reemplazar_Formato_Origen = 0"
-                Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 For Each _Fila As DataRow In _Tbl.Rows
                     _LogError = Fx_Imprimir_Documento(_Idmaeedo, _Tido, _Nudo, _Fila.Item("NombreFormato_Destino"), False,
@@ -639,6 +643,8 @@ Module Mod_Imprimir
                     _SqlQuery
 
         '_SqlQuery = UCase(_SqlQuery)
+
+        _Sql = New Class_SQL(Cadena_ConexionSQL_Server)
 
         Dim _Row As DataRow
 

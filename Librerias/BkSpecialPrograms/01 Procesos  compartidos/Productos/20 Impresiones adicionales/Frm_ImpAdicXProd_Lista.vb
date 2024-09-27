@@ -24,7 +24,7 @@ Public Class Frm_ImpAdicXProd_Lista
         Consulta_sql = "Select IAd.*,Mp.NOKOPR From " & _Global_BaseBk & "Zw_Prod_ImpAdicional IAd" & vbCrLf &
                        "Inner Join MAEPR Mp On Mp.KOPR = IAd.Codigo" & vbCrLf &
                        "Order By Codigo"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

@@ -57,7 +57,7 @@ Public Class Frm_Pagos_Masivo_Prov_Autoriza_01_Enc
                        "Order By Fecha_Pago" & vbCrLf &
                        "Drop Table #Paso"
 
-        _TblInforme = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblInforme = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

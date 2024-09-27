@@ -130,7 +130,7 @@ Public Class Frm_Vales_Listado_Espera
                         "End ) = 1"
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
-        Grilla.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Grilla.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Sb_Formato_Grilla(Grilla)
 

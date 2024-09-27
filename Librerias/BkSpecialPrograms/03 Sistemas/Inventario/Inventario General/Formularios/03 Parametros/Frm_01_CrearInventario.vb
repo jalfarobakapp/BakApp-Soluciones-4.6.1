@@ -11,7 +11,7 @@ Public Class Frm_01_CrearInventario
     Private _IdInventario As Integer
 
     Public Property Grabar As Boolean
-    Public Property Cl_Inventario As New Cl_NewInventario
+    Public Property Cl_Inventario As New Cl_Inventario
 
     Public Sub New(_IdInventario As Integer)
 
@@ -31,31 +31,37 @@ Public Class Frm_01_CrearInventario
 
     Private Sub Frm_01_CrearInventario_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        Chk_Estado.Checked = True
+
         If CBool(_IdInventario) Then
             Cl_Inventario.Fx_Llenar_Zw_Inv_Inventario(_IdInventario)
         End If
 
-        With Cl_Inventario.Zw_TmpInv_History
+        With Cl_Inventario.Zw_Inv_Inventario
 
-            Lbl_Empresa.Text = .Nombre_Empresa
-            Lbl_Sucursal.Text = .Nombre_Sucursal
-            Lbl_Bodega.Text = .Nombre_Bodega
+            If Not CBool(_IdInventario) Then
+                .Activo = True
+            End If
+
+            Lbl_Empresa.Text = .Empresa & " - " & .Nombre_Empresa
+            Lbl_Sucursal.Text = .Sucursal & " - " & .Nombre_Sucursal
+            Lbl_Bodega.Text = .Bodega & " - " & .Nombre_Bodega
             Txt_NombreInventario.Text = .NombreInventario
             Txt_FuncCargo.Tag = .FuncionarioCargo
             Txt_FuncCargo.Text = .NombreFuncionario
             Dtp_Fecha_Inventario.Value = .Fecha_Inventario
-            Chk_Estado.Checked = .Estado
+            Chk_Estado.Checked = .Activo
 
         End With
 
-        Btn_FotoStock.Enabled = CBool(_IdInventario)
+        Btn_FotoStock.Visible = CBool(_IdInventario)
 
         Me.ActiveControl = Txt_NombreInventario
 
     End Sub
     Private Sub BtnGrabar_Click(sender As System.Object, e As System.EventArgs) Handles BtnGrabar.Click
 
-        With Cl_Inventario.Zw_TmpInv_History
+        With Cl_Inventario.Zw_Inv_Inventario
 
             .Ano = numero_(Dtp_Fecha_Inventario.Value.Year.ToString, 4)
             .Mes = numero_(Dtp_Fecha_Inventario.Value.Month.ToString, 2)
@@ -64,7 +70,7 @@ Public Class Frm_01_CrearInventario
             .FuncionarioCargo = Txt_FuncCargo.Tag
             .NombreFuncionario = Txt_FuncCargo.Text
             .Fecha_Inventario = Dtp_Fecha_Inventario.Value
-            .Estado = Chk_Estado.Checked
+            .Activo = Chk_Estado.Checked
 
         End With
 
@@ -120,9 +126,9 @@ Public Class Frm_01_CrearInventario
             Return
         End If
 
-        With Cl_Inventario.Zw_TmpInv_History
+        With Cl_Inventario.Zw_Inv_Inventario
 
-            Dim Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_TmpInv_History",
+            Dim Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_Inventario",
                                                           "Fecha_Inventario = '" & Format(Dtp_Fecha_Inventario.Value, "yyyyMMdd") &
                                                           "' And Empresa = '" & .Empresa &
                                                           "' And Sucursal = '" & .Sucursal & "'" & vbCrLf &
@@ -211,7 +217,7 @@ Public Class Frm_01_CrearInventario
 
     Private Sub Btn_EliminarFotoStock_Click(sender As Object, e As EventArgs) Handles Btn_EliminarFotoStock.Click
 
-        If Not Fx_Tiene_Permiso(Me, "In0010") Then
+        If Not Fx_Tiene_Permiso(Me, "Invg0008") Then
             Return
         End If
 
@@ -226,19 +232,9 @@ Public Class Frm_01_CrearInventario
 
     Private Sub Btn_TomarFotoStock_Click(sender As Object, e As EventArgs) Handles Btn_TomarFotoStock.Click
 
-        If Not Fx_Tiene_Permiso(Me, "In0006") Then
+        If Not Fx_Tiene_Permiso(Me, "Invg0007") Then
             Return
         End If
-
-        'Dim DatosFotos As Long
-        'DatosFotos = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "ZW_TmpInvFotoInventario", "IdInventario = " & _IdInventario)
-
-        'If DatosFotos > 0 Then
-        '    MessageBoxEx.Show("No es posible tomar una foto del stock de la bodega, ya que existen datos de una foto anterior." & vbCrLf &
-        '                      "Para poder obtener una nueva foto debe eliminar el congelado anterior", "Foto Stock", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-
-        '    Return
-        'End If
 
         Dim _Mensaje As LsValiciones.Mensajes
         _Mensaje = Cl_Inventario.Fx_CrearFoto(_IdInventario)
@@ -249,7 +245,7 @@ Public Class Frm_01_CrearInventario
             Me.Close()
         End If
 
-        'CrearFoto()
+
 
     End Sub
 
@@ -262,7 +258,7 @@ Public Class Frm_01_CrearInventario
 
             Dim Tbl As New DataTable
             Consulta_sql = "Select * from Zw_TmpInv_History where IdInventario = " & _IdInventario
-            Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
             Dim Fila As DataRow
 
             Fila = Tbl.Rows(0)

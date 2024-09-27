@@ -111,7 +111,7 @@ Public Class Frm_Desp_01_Ingreso
 
         Consulta_Sql = "Select '' As Padre,'' As 'Hijo' Union Select EMPRESA+KOSU As Padre,NOKOSU As Hijo From TABSU"
         caract_combo(Cmb_Sucursal_Retiro)
-        Cmb_Sucursal_Retiro.DataSource = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Cmb_Sucursal_Retiro.DataSource = _Sql.Fx_Get_DataTable(Consulta_Sql)
         Cmb_Sucursal_Retiro.SelectedValue = ""
 
         Sb_Color_Botones_Barra(Bar2)
@@ -937,7 +937,7 @@ Public Class Frm_Desp_01_Ingreso
             If CBool(_Cl_Despacho.Tbl_Despacho_Doc.Rows.Count) Then
 
                 Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO In " & _Filtro_Idmaeedo
-                _Tbl_Documentos = _Sql.Fx_Get_Tablas(Consulta_Sql)
+                _Tbl_Documentos = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
             End If
 
@@ -1003,7 +1003,7 @@ Public Class Frm_Desp_01_Ingreso
                         From MAEEDO 
                         Left Join MAEEN On KOEN = ENDO And SUEN = SUENDO" & vbCrLf & _Filtro_Idmaeedo
 
-        Dim _Tbl_Documentos As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_Documentos As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Dim _DisplayIndex = 0
 
@@ -1079,7 +1079,7 @@ Public Class Frm_Desp_01_Ingreso
                        "--And EMPRESA = '" & _Empresa & "' And SULIDO = '" & _Sucursal & "' " & vbCrLf &
                        "Group By KOPRCT,NOKOPR,UDTRPR,UD01PR,UD02PR"
 
-        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Dim _DisplayIndex = 0
 
@@ -1438,7 +1438,7 @@ Public Class Frm_Desp_01_Ingreso
 
                         Consulta_Sql = "Select Distinct EMPRESA,SULIDO,BOSULIDO From MAEDDO Where IDMAEEDO In (Select Idrst From " & _Global_BaseBk & "Zw_Despachos_Doc 
                                         Where Id_Despacho = " & _Cl_Despacho.Id_Despacho & ")"
-                        Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+                        Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
                         Dim _Id_Despacho_Padre As Integer
 

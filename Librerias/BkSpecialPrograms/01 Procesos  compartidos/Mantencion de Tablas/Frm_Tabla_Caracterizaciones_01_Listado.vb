@@ -553,7 +553,7 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
         If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_DbExt_Conexion", _CampoSincro) Then
 
             Dim _Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where " & _CampoSincro & " = 1"
-            Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+            Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
             If _Tbl_Conexiones.Rows.Count Then
 
@@ -573,7 +573,7 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
                 Dim _Cl_ConexionExterna As New Cl_ConexionExterna
                 Dim _Conexion As New ConexionExternas
 
-                Dim _Tabla1 As DataTable = _Sql.Fx_Get_Tablas(_SqlQuery)
+                Dim _Tabla1 As DataTable = _Sql.Fx_Get_DataTable(_SqlQuery)
 
                 For Each _FilaCx As DataRow In _Tbl_Conexiones.Rows
 
@@ -849,7 +849,7 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
                 Consulta_sql = "Select top 1 * From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
                                "Where Tabla = '" & _CodTablaClass & "' and CodigoTabla = '" & _CodigoTabla & "'"
 
-                _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+                _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 If CBool(_Tbl.Rows.Count) Then
                     _RowFilaSeleccionada = _Tbl.Rows(0)
@@ -1639,7 +1639,7 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
         Dim _Conexion As New ConexionExternas
 
         Dim _Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Conexion Where SincroTablas = 1"
-        Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+        Dim _Tbl_Conexiones As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
         For Each _FilaCx As DataRow In _Tbl_Conexiones.Rows
 

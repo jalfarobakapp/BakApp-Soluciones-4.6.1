@@ -16,6 +16,7 @@ Public Class Frm_ListaMezclas
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
+        Sb_Color_Botones_Barra(Bar1)
 
     End Sub
 
@@ -23,6 +24,9 @@ Public Class Frm_ListaMezclas
 
         AddHandler Tab_Preparacion.Click, AddressOf Sb_Actualizar_Grilla
         AddHandler Tab_Fabricadas.Click, AddressOf Sb_Actualizar_Grilla
+
+        AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+        AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
 
         Sb_Actualizar_Grilla()
 
@@ -46,8 +50,9 @@ Public Class Frm_ListaMezclas
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Pdp_CPT_MzEnc" & vbCrLf &
                        "Where 1>0" & vbCrLf & _Condicion & vbCrLf &
-                       "And Nro_MZC+Numot_Otm+Codigo_Otm+Descripcion_Otm Like '%" & _Filtro & "%'"
-        _Tbl_Mezclas = _Sql.Fx_Get_Tablas(Consulta_sql)
+                       "And Nro_MZC+Numot_Otm+Codigo_Otm+Descripcion_Otm Like '%" & _Filtro & "%'" & vbCrLf &
+                       "Order By Nro_MZC"
+        _Tbl_Mezclas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 
@@ -171,7 +176,7 @@ Public Class Frm_ListaMezclas
                        "Left Join " & _Global_BaseBk & "Zw_Pdp_CPT_MzDet Det On POTL.IDPOTL = Det.Idpotl_Otm" & vbCrLf &
                        "Where IDPOTE = " & _Idpote_Otm & " And LILG <> 'IM'"
 
-        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Marcados As Integer
 
@@ -239,7 +244,7 @@ Public Class Frm_ListaMezclas
         Consulta_sql = "Select *,(FABRICAR-REALIZADO) As SALDO,0 As SALDO2 From POTL" & vbCrLf &
                        "Where IDPOTE = " & _Idpote_Otm & " And LILG <> 'IM'"
 
-        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim Fm_Potl As New Frm_GRI_ProductosOT
         Fm_Potl.Tbl_Productos = _Tbl_Productos
@@ -262,6 +267,8 @@ Public Class Frm_ListaMezclas
 
         Dim _Id_Enc As Integer = _Fila.Cells("Id").Value
         Dim _Referencia As String = _Fila.Cells("Referencia").Value
+        Dim _Nro_MZC As String = _Fila.Cells("Nro_MZC").Value
+        Dim _Numot_Otm As String = _Fila.Cells("Numot_Otm").Value
 
         Dim _RowNomenclatura As DataRow
 
@@ -273,15 +280,17 @@ Public Class Frm_ListaMezclas
         End If
 
         Dim Fm As New Frm_SelecProdMezclaFab(_Id_Enc)
-        Fm.Text = _Referencia
+        Fm.Text = "Nro: " & _Nro_MZC & " OTM: " & _Numot_Otm & ", " & _Referencia.Trim
         Fm.Cl_Mezcla = _Cl_Mezcla
         Fm.ShowDialog(Me)
         _RowNomenclatura = Fm.RowNomenclatura
         Fm.Dispose()
 
-        If IsNothing(_RowNomenclatura) Then
-            Return
-        End If
+        'If IsNothing(_RowNomenclatura) Then
+        '    Return
+        'End If
+
+        Sb_Actualizar_Grilla()
 
     End Sub
 
@@ -301,6 +310,8 @@ Public Class Frm_ListaMezclas
                 _Mensaje.Detalle = "Validación"
                 Throw New System.Exception("No se encontro registro en POTL")
             End If
+
+            Dim _Linea As String = _Row_Potl.Item("NREG")
 
             Consulta_sql = "Select * From POTE Where IDPOTE = " & _Idpote
             _Row_Pote = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -323,8 +334,15 @@ Public Class Frm_ListaMezclas
 
             End With
 
-            Consulta_sql = "Select * From ZNUEVA_PRODUCCIOND Where IDPOTL = " & _Idpotl
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Consulta_sql = "Select Distinct Znpt.*,NOKOPR,FORMULAMZ,DESCRIPTOR,PNPE.CANTIDAD,PNPE.UDAD " & vbCrLf &
+                           "From ZNUEVA_PRODUCCIOND Znpd" & vbCrLf &
+                           "Inner Join ZNUEVA_PRODUCCIONT Znpt On Znpd.NUMERO = Znpt.NUMERO" & vbCrLf &
+                           "Left Join MAEPR On KOPR = Znpt.CODIGO" & vbCrLf &
+                           "Inner Join POTD On POTD.IDPOTL = Znpd.IDPOTL And NIVEL = 1 and Znpt.CODIGO = POTD.CODIGO And POTD.CODNOMEN is not null" & vbCrLf &
+                           "Inner Join PNPE On PNPE.CODIGO = POTD.CODNOMEN" & vbCrLf &
+                           "Where Znpd.IDPOTL = " & _Idpotl & " And Znpt.LINEA = '" & _Linea & "'"
+
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If Not CBool(_Tbl.Rows.Count) Then
                 _Mensaje.Detalle = "Validación"
@@ -333,16 +351,16 @@ Public Class Frm_ListaMezclas
 
             For Each _Fl_potl As DataRow In _Tbl.Rows
 
-                Dim _Codigomz As String = _Fl_potl.Item("CODIGOMZ")
+                Dim _Codigomz As String = _Fl_potl.Item("CODIGO") '_Fl_potl.Item("CODIGOMZ")
                 Dim _Formulamz As String = _Fl_potl.Item("FORMULAMZ")
 
-                Consulta_sql = "Select KOPR,NOKOPR From MAEPR Where KOPR = '" & _Codigomz & "'"
-                Dim _Row_Maepr As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                'Consulta_sql = "Select KOPR,NOKOPR From MAEPR Where KOPR = '" & _Codigomz & "'"
+                'Dim _Row_Maepr As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-                Consulta_sql = "Select * From PNPE Where CODIGO = '" & _Formulamz & "'"
-                Dim _Row_Pnpe As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                'Consulta_sql = "Select * From PNPE Where CODIGO = '" & _Formulamz & "'"
+                'Dim _Row_Pnpe As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-                Dim _Factor As Double = _Row_Potl.Item("FABRICAR") / _Row_Pnpe.Item("CANTIDAD")
+                Dim _Factor As Double = _Row_Potl.Item("FABRICAR") / _Fl_potl.Item("CANTIDAD") ' _Row_Pnpe.Item("CANTIDAD")
                 Dim _Fab As String = De_Num_a_Tx_01(_Factor,, 5)
 
                 Dim _Zw_Pdp_CPT_MzDet As New Zw_Pdp_CPT_MzDet
@@ -356,13 +374,13 @@ Public Class Frm_ListaMezclas
                     .Idpote_Otm = _Cl_Mezcla.Zw_Pdp_CPT_MzEnc.Idpote_Otm
                     .Idpotl_Otm = _Cl_Mezcla.Zw_Pdp_CPT_MzEnc.Idpotl_Otm
                     .CodFuncionario = FUNCIONARIO
-                    .Codigo = _Row_Maepr.Item("KOPR")
-                    .Descripcion = _Row_Maepr.Item("NOKOPR").ToString.Trim
-                    .Codnomen = _Row_Pnpe.Item("CODIGO")
-                    .Descriptor = _Row_Pnpe.Item("DESCRIPTOR").ToString.Trim
-                    .Cantnomen = _Row_Pnpe.Item("CANTIDAD")
-                    .Udad = _Row_Pnpe.Item("UDAD")
-                    .CantFabricar = _Row_Potl.Item("FABRICAR")
+                    .Codigo = _Fl_potl.Item("CODIGO") '_Row_Maepr.Item("KOPR")
+                    .Descripcion = _Fl_potl.Item("NOKOPR").ToString.Trim '_Row_Maepr.Item("NOKOPR").ToString.Trim
+                    .Codnomen = _Fl_potl.Item("FORMULAMZ") '_Row_Pnpe.Item("CODIGO")
+                    .Descriptor = _Fl_potl.Item("DESCRIPTOR").ToString.Trim ''_Row_Pnpe.Item("DESCRIPTOR").ToString.Trim
+                    .Cantnomen = _Fl_potl.Item("CANTIDAD") ''_Row_Pnpe.Item("CANTIDAD")
+                    .Udad = _Fl_potl.Item("UDAD") '_Row_Pnpe.Item("UDAD")
+                    .CantFabricar = _Fl_potl.Item("CANTIDADF") '_Row_Potl.Item("FABRICAR")
                     .CantFabricada = 0
 
                     _Cl_Mezcla.Ls_Zw_Pdp_CPT_MzDet.Add(_Zw_Pdp_CPT_MzDet)
@@ -393,5 +411,48 @@ Public Class Frm_ListaMezclas
     Private Sub Txt_Filtrar_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Filtrar.ButtonCustomClick
         Txt_Filtrar.Text = String.Empty
         Sb_Actualizar_Grilla()
+    End Sub
+
+    Private Sub Btn_Eliminar_Click(sender As Object, e As EventArgs) Handles Btn_Eliminar.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Pdc00010") Then
+            Return
+        End If
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Id_Enc As Integer = _Fila.Cells("Id").Value
+
+        If MessageBoxEx.Show(Me, "¿Está seguro de eliminar la orden de fabricación seleccionada?", "Eliminar orden de fabricación",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> Windows.Forms.DialogResult.Yes Then
+            Return
+        End If
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Dim _Cl_Mezcla As New Cl_Mezcla
+        _Mensaje = _Cl_Mezcla.Fx_Eliminar_OrdenDeFabricacion(_Id_Enc)
+
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+
+        If _Mensaje.EsCorrecto Then
+            Grilla.Rows.Remove(_Fila)
+        End If
+
+    End Sub
+
+    Private Sub Sb_Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
+        If e.Button = Windows.Forms.MouseButtons.Right Then
+            With sender
+                Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
+                If Hitest.Type = DataGridViewHitTestType.Cell Then
+                    .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
+                    ShowContextMenu(Menu_Contextual_01)
+                End If
+            End With
+        End If
+    End Sub
+
+    Private Sub Btn_Fabricar_Click(sender As Object, e As EventArgs) Handles Btn_Fabricar.Click
+        Call Grilla_CellDoubleClick(Nothing, Nothing)
     End Sub
 End Class

@@ -58,7 +58,7 @@ Public Class Frm_Libro_DescPDF
                         Filtro_SII &
                         "Order by Libro"
 
-        _Tbl_Documentos = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Documentos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         With Grilla

@@ -204,7 +204,7 @@ Public Class Frm_Diseno_Doc_y_Ubic
                            "Where Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega & "'" & vbCrLf &
                            _Condicion & vbCrLf &
                            "Order by Orden"
-            _TblMapas = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _TblMapas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _Fila_Mapa As DataRow In _TblMapas.Rows
                 Sb_Crear_Form_Mapa(_Fila_Mapa)
@@ -529,7 +529,7 @@ Public Class Frm_Diseno_Doc_y_Ubic
                                "And Id_Mapa = " & _Id_Mapa & vbCrLf &
                                "ORDER BY Id_Mapa,Codigo_Sector"
 
-                Dim _TblSectores As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblSectores As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 If CBool(_TblSectores.Rows.Count) Then
 
@@ -758,7 +758,7 @@ Public Class Frm_Diseno_Doc_y_Ubic
             Dim _RowMapa As DataRow = _FrmActivo.Pro_Row_Mapa
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Enc Where Id_Mapa = " & _Id_Mapa
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Aceptado As Boolean
             _Nombre_Mapa = _Tbl.Rows(0).Item("Nombre_Mapa")
@@ -812,7 +812,7 @@ Public Class Frm_Diseno_Doc_y_Ubic
             Dim _RowMapa As DataRow = _FrmActivo.Pro_Row_Mapa
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_Ubicacion Where Id_Mapa = " & _Id_Mapa
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If CBool(_Tbl.Rows.Count) Then
                 MessageBoxEx.Show(Me, "No se puede eliminar este mapa, ya que existen productos asociados en ubicaciones",
@@ -859,7 +859,7 @@ Public Class Frm_Diseno_Doc_y_Ubic
         Dim _Nombre_Mapa As String = _RowMapa.Item("Nombre_Mapa")
 
         Consulta_sql = "Select '" & _Nombre_Mapa & "' as Mapa,* From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Det Where Id_Mapa = " & _Id_Mapa
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Sectores Mapa")
@@ -876,7 +876,7 @@ Public Class Frm_Diseno_Doc_y_Ubic
         Dim _Nombre_Mapa As String = _RowMapa.Item("Nombre_Mapa")
 
         Consulta_sql = "Select '" & _Nombre_Mapa & "' as Mapa,* From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega Where Id_Mapa = " & _Id_Mapa
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Ubicaciones Mapa")
@@ -894,7 +894,7 @@ Public Class Frm_Diseno_Doc_y_Ubic
         Dim _Nombre_Mapa As String = _RowMapa.Item("Nombre_Mapa")
 
         Consulta_sql = "Select '" & _Nombre_Mapa & "' as Mapa,*,Isnull((Select Top 1 NOKOPR From MAEPR Where KOPR = Codigo),'') as Descripcion From " & _Global_BaseBk & "Zw_Prod_Ubicacion Where Id_Mapa = " & _Id_Mapa
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Productos Mapa")

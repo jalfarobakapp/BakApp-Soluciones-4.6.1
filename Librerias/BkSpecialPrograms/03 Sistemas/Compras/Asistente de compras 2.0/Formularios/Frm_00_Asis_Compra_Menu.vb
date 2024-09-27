@@ -42,6 +42,7 @@ Public Class Frm_00_Asis_Compra_Menu
     Dim _Filtro_Zonas_Todas As Boolean
     Dim _Filtro_Bodegas_Todas As Boolean
     Dim _Filtro_Bodegas_Est_Vta_Todas As Boolean
+    Dim _Filtro_Bakapp_Todas As Boolean
 
     Dim _RowProveedor As DataRow
     Dim _RowProveedor_Especial As DataRow
@@ -63,6 +64,11 @@ Public Class Frm_00_Asis_Compra_Menu
     Dim _Cmb_Nodo_Raiz_Asociados As String
     Dim _TblFiltroProductos_Proveedor As DataTable
     Dim _Cancelar As Boolean
+
+    Public Property Ls_SelSuperFamilias As New List(Of SelSuperFamilias)
+    Public Property Ls_SelFamilias As New List(Of SelFamilias)
+    Public Property Ls_SelSubFamilias As New List(Of SelSubFamilias)
+    Public Property Ls_SelArbol_Asociaciones As New List(Of Zw_TblArbol_Asociaciones)
 
     Public Property Accion_Automatica As Boolean
     Public Property Auto_GenerarAutomaticamenteOCCProveedorStar As Boolean
@@ -102,6 +108,7 @@ Public Class Frm_00_Asis_Compra_Menu
         _Filtro_Clalibpr_Todas = True
         _Filtro_Zonas_Todas = True
         _Filtro_Bodegas_Todas = True
+        _Filtro_Bakapp_Todas = True
 
         STabConfiguracion.SelectedTabIndex = 0
         SbTab_ConfAutomatizacion.SelectedTabIndex = 0
@@ -205,7 +212,7 @@ Public Class Frm_00_Asis_Compra_Menu
 
         caract_combo(Cmb_Lista_de_costos)
         Consulta_sql = "Select '' As Padre,'' As Hijo Union Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
-        Cmb_Lista_de_costos.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Lista_de_costos.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Lista_de_costos.SelectedValue = ""
 
     End Sub
@@ -751,22 +758,22 @@ Public Class Frm_00_Asis_Compra_Menu
             Consulta_sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
                            "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente'" & Space(1) &
                            "And Filtro = 'Bodegas_Stock' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad_Estudio & "'"
-            _TblBodCompra = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _TblBodCompra = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Consulta_sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
                            "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente'" & Space(1) &
                            "And Filtro = 'Bodegas_Rotacion_Vta' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad_Estudio & "'"
-            _TblBodVenta = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _TblBodVenta = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Consulta_sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
                            "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente'" & Space(1) &
                            "And Filtro = 'Bodegas_Reabastecen' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad_Estudio & "'"
-            _TblBodReabastecen = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _TblBodReabastecen = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Consulta_sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
                "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente'" & Space(1) &
                "And Filtro = 'Productos_Excluidos' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad_Estudio & "'"
-            _TblFiltroProductosExcluidos = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _TblFiltroProductosExcluidos = _Sql.Fx_Get_DataTable(Consulta_sql)
             Btn_ProductosExcluidos.Text = "Productos excluidos (" & FormatNumber(_TblFiltroProductosExcluidos.Rows.Count, 0) & ")"
 
             If Rdb_Productos_Seleccionar.Checked Then
@@ -774,7 +781,7 @@ Public Class Frm_00_Asis_Compra_Menu
                 Consulta_sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
                     "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente'" & Space(1) &
                     "And Filtro = 'Productos_Seleccionados' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad_Estudio & "'"
-                _TblFiltroProductos = _Sql.Fx_Get_Tablas(Consulta_sql)
+                _TblFiltroProductos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             End If
 
@@ -1620,7 +1627,7 @@ Public Class Frm_00_Asis_Compra_Menu
                                 Inner Join " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Arbol On Prod.Codigo_Nodo = Arbol.Codigo_Nodo
                                 Where Arbol.Nodo_Raiz = " & _Nodo_Raiz_Asociados & " And Es_Seleccionable = 1 And Codigo In " & _Filtro_Pro
 
-                Dim _Tbl_Codigos_Madre As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Codigos_Madre As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 _Filtro_Codigos_Madre = Generar_Filtro_IN(_Tbl_Codigos_Madre, "", "Codigo_Nodo", False, False, "")
 
@@ -1644,7 +1651,7 @@ Public Class Frm_00_Asis_Compra_Menu
 
                                 Drop Table #Paso"
 
-                _TblProductos_Con_Reemplazo = _Sql.Fx_Get_Tablas(Consulta_sql)
+                _TblProductos_Con_Reemplazo = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Else
 
@@ -1841,7 +1848,7 @@ Public Class Frm_00_Asis_Compra_Menu
                     Me.Enabled = True
 
                     Consulta_sql = "Select Codigo From " & _TblPasoInforme
-                    Dim _Tbl_Informe As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _Tbl_Informe As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
                     Barra_Progreso.Maximum = 100
@@ -2348,7 +2355,7 @@ Public Class Frm_00_Asis_Compra_Menu
                            "Where Fecha_Ult_Revision <= '" & Format(_Fecha, "yyyyMMdd") & "')" & Space(1) &
                            "Or Codigo In (Select Codigo From " & _TblPasoInforme & " Where Codigo Not In (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Stock_Enc_History))"
 
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If CBool(_Tbl.Rows.Count) Then
 
@@ -2405,11 +2412,18 @@ Public Class Frm_00_Asis_Compra_Menu
         Fm.Pro_Filtro_Rubro_Todas = _Filtro_Rubro_Todas
         Fm.Pro_Filtro_Super_Familias_Todas = _Filtro_Super_Familias_Todas
         Fm.Pro_Filtro_Zonas_Todas = _Filtro_Zonas_Todas
+        Fm.Pro_Filtro_Bakapp_Todas = _Filtro_Bakapp_Todas
 
         Fm.Pro_Tbl_Filtro_Clalibpr = _Tbl_Filtro_Clalibpr
         Fm.Pro_Tbl_Filtro_Marcas = _Tbl_Filtro_Marcas
         Fm.Pro_Tbl_Filtro_Rubro = _Tbl_Filtro_Rubro
+
         Fm.Pro_Tbl_Filtro_Super_Familias = _Tbl_Filtro_Super_Familias
+        Fm.Ls_SelSuperFamilias = Ls_SelSuperFamilias
+        Fm.Ls_SelFamilias = Ls_SelFamilias
+        Fm.Ls_SelSubFamilias = Ls_SelSubFamilias
+        Fm.Ls_SelArbol_Asociaciones = Ls_SelArbol_Asociaciones
+
         Fm.Pro_Tbl_Filtro_Zonas = _Tbl_Filtro_Zonas
 
         Fm.Accion_Automatica = _Accion_Automatica
@@ -2455,6 +2469,11 @@ Public Class Frm_00_Asis_Compra_Menu
 
         Fm.Chk_QuitarProdExcluidos.Checked = Chk_QuitarProdExcluidos.Checked
         Fm.Chk_MarcarFilas.Checked = Chk_MarcarFilas.Checked
+
+        If Not Chk_InformeDeComprasAgrupadoporAsociacion.Visible Then
+            Chk_InformeDeComprasAgrupadoporAsociacion.Checked = False
+        End If
+
         Fm.InformeDeComprasAgrupadoporAsociacion = Chk_InformeDeComprasAgrupadoporAsociacion.Checked
 
         Fm.Chk_CompMinXProveedores.Checked = Chk_CompMinXProveedores.Checked
@@ -2524,7 +2543,7 @@ Public Class Frm_00_Asis_Compra_Menu
                                 Inner Join " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Arbol On Prod.Codigo_Nodo = Arbol.Codigo_Nodo
                                 Where Arbol.Nodo_Raiz = " & _Nodo_Raiz_Asociados & " And Es_Seleccionable = 1 And Codigo In " & _Filtro_Pro
 
-                            Dim _Tbl_Codigos_Madre As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                            Dim _Tbl_Codigos_Madre As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                             Dim _Filtro_Codigos_Madre = Generar_Filtro_IN(_Tbl_Codigos_Madre, "", "Codigo_Nodo", False, False, "")
 
@@ -2548,7 +2567,7 @@ Public Class Frm_00_Asis_Compra_Menu
 
                                 Drop Table #Paso"
 
-                            _TblFiltroProductos = _Sql.Fx_Get_Tablas(Consulta_sql)
+                            _TblFiltroProductos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                         End If
 
@@ -2705,7 +2724,7 @@ Public Class Frm_00_Asis_Compra_Menu
                        "From TABBO" & vbCrLf &
                        "Order by Codigo"
 
-        _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Return _Tbl
 
@@ -2827,8 +2846,6 @@ Public Class Frm_00_Asis_Compra_Menu
 
                 'Con esta sentencia el sistema solo muestra producto
 
-
-
             ElseIf Rdb_Productos_Familias_Marcas_Etc.Checked Then
 
                 Consulta_sql = "Select KOPR From MAEPR Where 1 > 0" & vbCrLf
@@ -2854,21 +2871,19 @@ Public Class Frm_00_Asis_Compra_Menu
 
             '---- FILTROS -------------------------------
 
-            Dim _Filtro_Rubros,
-                _Filtro_Marcas,
-                _Filtro_Zonas,
-                _Filtro_SuperFamilias,
-                _Filtro_ClasLibre,
-                _Filtro_Bodega As String
-
-
+            Dim _Filtro_Rubros = String.Empty
+            Dim _Filtro_Marcas = String.Empty
+            Dim _Filtro_Zonas = String.Empty
+            Dim _Filtro_SuperFamilias = String.Empty
+            Dim _Filtro_Bakapp = String.Empty
+            Dim _Filtro_ClasLibre = String.Empty
+            Dim _Filtro_Bodega = String.Empty
 
             If _Filtro_Rubro_Todas Then
                 _Filtro_Rubros = String.Empty
             Else
                 _Filtro_Rubros = Generar_Filtro_IN(_Tbl_Filtro_Rubro, "Chk", "Codigo", False, True, "'")
                 _Filtro_Rubros = "And RUPR In " & _Filtro_Rubros
-                '_Filtro_Rubros = "And KOPR IN (Select KOPR From MAEPR Where RUPR In " & _Filtro_Rubros & ")"
             End If
 
             If _Filtro_Marcas_Todas Then
@@ -2876,15 +2891,83 @@ Public Class Frm_00_Asis_Compra_Menu
             Else
                 _Filtro_Marcas = Generar_Filtro_IN(_Tbl_Filtro_Marcas, "Chk", "Codigo", False, True, "'")
                 _Filtro_Marcas = "And MRPR In " & _Filtro_Marcas
-                '_Filtro_Marcas = "And KOPR IN (Select KOPR From MAEPR Where MRPR In " & _Filtro_Marcas & ")"
             End If
 
             If _Filtro_Super_Familias_Todas Then
                 _Filtro_SuperFamilias = String.Empty
             Else
-                _Filtro_SuperFamilias = Generar_Filtro_IN(_Tbl_Filtro_Super_Familias, "Chk", "Codigo", False, True, "'")
-                _Filtro_SuperFamilias = "And FMPR In " & _Filtro_SuperFamilias
-                '_Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where FMPR In " & _Filtro_SuperFamilias & ")"
+
+                If Not _Filtro_Super_Familias_Todas Then
+
+                    Dim _Fl_SuperFamilias As String = String.Empty
+                    Dim _Fl_Familias As String = String.Empty
+                    Dim _Fl_SubFamilias As String = String.Empty
+
+                    For Each _Sfm As SelSubFamilias In Ls_SelSubFamilias
+                        _Fl_SubFamilias += "(FMPR = '" & _Sfm.Kofm & "' And PFPR = '" & _Sfm.Kopf & "' And HFPR = '" & _Sfm.Kopf & "');"
+                    Next
+                    _Fl_SubFamilias = _Fl_SubFamilias.TrimEnd(";").ToString.Replace(";", " Or ")
+
+                    For Each _Fm As SelFamilias In Ls_SelFamilias
+                        If _Fl_SubFamilias.Contains("FMPR = '" & _Fm.Kofm & "'") And _Fl_SubFamilias.Contains("PFPR = '" & _Fm.Kopf & "'") Then
+                            Continue For
+                        End If
+                        _Fl_Familias += "(FMPR = '" & _Fm.Kofm & "' And PFPR = '" & _Fm.Kopf & "');"
+                    Next
+                    _Fl_Familias = _Fl_Familias.TrimEnd(";").ToString.Replace(";", " Or ")
+
+                    For Each _Spfm As SelSuperFamilias In Ls_SelSuperFamilias
+                        If _Fl_SubFamilias.Contains("FMPR = '" & _Spfm.Kofm & "'") Or _Fl_Familias.Contains("FMPR = '" & _Spfm.Kofm & "'") Then
+                            Continue For
+                        End If
+                        _Fl_SuperFamilias += "(FMPR = '" & _Spfm.Kofm & "');"
+                    Next
+                    _Fl_SuperFamilias = _Fl_SuperFamilias.TrimEnd(";").ToString.Replace(";", " Or ")
+
+                    If Not String.IsNullOrWhiteSpace(_Fl_SuperFamilias) Then
+                        _Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where " & _Fl_SuperFamilias & ")"
+                    End If
+
+                    If Not String.IsNullOrWhiteSpace(_Fl_Familias) Then
+                        If String.IsNullOrWhiteSpace(_Fl_SuperFamilias) Then
+                            _Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where " & _Fl_Familias & ")"
+                        Else
+                            _Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where " & _Fl_SuperFamilias & " Or " & _Fl_Familias & ")"
+                        End If
+                    End If
+
+                    If Not String.IsNullOrWhiteSpace(_Fl_SubFamilias) Then
+                        If String.IsNullOrWhiteSpace(_Fl_Familias) Then
+                            _Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where " & _Fl_SubFamilias & ")"
+                        Else
+
+                            If String.IsNullOrWhiteSpace(_Fl_SuperFamilias) Then
+                                _Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where " & _Fl_Familias & " Or " & _Fl_SubFamilias & ")"
+                            Else
+                                _Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where " & _Fl_SuperFamilias & " Or " & _Fl_Familias & " Or " & _Fl_SubFamilias & ")"
+                            End If
+
+                        End If
+                    End If
+
+                End If
+
+            End If
+
+            If _Filtro_Bakapp_Todas Then
+                _Filtro_Bakapp = String.Empty
+            Else
+
+                For Each _Asoc As Zw_TblArbol_Asociaciones In Ls_SelArbol_Asociaciones
+                    _Filtro_Bakapp += _Asoc.Codigo_Nodo & ","
+                Next
+
+                _Filtro_Bakapp = _Filtro_Bakapp.TrimEnd(",")
+
+                If Not String.IsNullOrWhiteSpace(_Filtro_Bakapp) Then
+                    _Filtro_Bakapp = "And KOPR IN (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo_Nodo In (" & _Filtro_Bakapp & "))"
+                End If
+
             End If
 
             If _Filtro_Clalibpr_Todas Then
@@ -2892,7 +2975,6 @@ Public Class Frm_00_Asis_Compra_Menu
             Else
                 _Filtro_ClasLibre = Generar_Filtro_IN(_Tbl_Filtro_Clalibpr, "Chk", "Codigo", False, True, "'")
                 _Filtro_ClasLibre = "And CLALIBPR In " & _Filtro_ClasLibre
-                '_Filtro_ClasLibre = "And KOPR IN (Select KOPR From MAEPR Where CLALIBPR In " & _Filtro_ClasLibre & ")"
             End If
 
             If _Filtro_Zonas_Todas Then
@@ -2900,7 +2982,6 @@ Public Class Frm_00_Asis_Compra_Menu
             Else
                 _Filtro_Zonas = Generar_Filtro_IN(_Tbl_Filtro_Zonas, "Chk", "Codigo", False, True, "'")
                 _Filtro_Zonas = "And ZONAPR In " & _Filtro_Zonas
-                '_Filtro_Zonas = "And KOPR IN (Select KOPR From MAEPR Where ZONAPR In " & _Filtro_Zonas & ")"
             End If
 
             '---------------------------
@@ -2912,13 +2993,14 @@ Public Class Frm_00_Asis_Compra_Menu
                             _Filtro_Marcas & vbCrLf &
                             _Filtro_Rubros & vbCrLf &
                             _Filtro_SuperFamilias & vbCrLf &
+                            _Filtro_Bakapp & vbCrLf &
                             _Filtro_Zonas & vbCrLf &
                             _FiltroBodCompra & vbCrLf &
                             _FiltroBodVenta
 
             Consulta_sql += vbCrLf & "And TIPR In ('FPN','FIN')"
 
-            _Tbl = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Count = _Tbl.Rows.Count
 
@@ -3047,12 +3129,20 @@ Public Class Frm_00_Asis_Compra_Menu
         Fm.Pro_Filtro_Rubro_Todas = _Filtro_Rubro_Todas
         Fm.Pro_Filtro_Super_Familias_Todas = _Filtro_Super_Familias_Todas
         Fm.Pro_Filtro_Zonas_Todas = _Filtro_Zonas_Todas
+        Fm.Pro_Filtro_Bakapp_Todas = _Filtro_Bakapp_Todas
 
         Fm.Pro_Tbl_Filtro_Clalibpr = _Tbl_Filtro_Clalibpr
         Fm.Pro_Tbl_Filtro_Marcas = _Tbl_Filtro_Marcas
         Fm.Pro_Tbl_Filtro_Rubro = _Tbl_Filtro_Rubro
         Fm.Pro_Tbl_Filtro_Super_Familias = _Tbl_Filtro_Super_Familias
         Fm.Pro_Tbl_Filtro_Zonas = _Tbl_Filtro_Zonas
+
+        Fm.BuscarSpfmfmsubfm = True
+        Fm.Ls_SelSuperFamilias = Ls_SelSuperFamilias
+        Fm.Ls_SelFamilias = Ls_SelFamilias
+        Fm.Ls_SelSubFamilias = Ls_SelSubFamilias
+
+        Fm.Ls_SelArbol_Asociaciones = Ls_SelArbol_Asociaciones
 
         Fm.ShowDialog(Me)
 
@@ -3067,6 +3157,13 @@ Public Class Frm_00_Asis_Compra_Menu
         _Filtro_Rubro_Todas = Fm.Pro_Filtro_Rubro_Todas
         _Filtro_Super_Familias_Todas = Fm.Pro_Filtro_Super_Familias_Todas
         _Filtro_Zonas_Todas = Fm.Pro_Filtro_Zonas_Todas
+        _Filtro_Bakapp_Todas = Fm.Pro_Filtro_Bakapp_Todas
+
+        Ls_SelSuperFamilias = Fm.Ls_SelSuperFamilias
+        Ls_SelFamilias = Fm.Ls_SelFamilias
+        Ls_SelSubFamilias = Fm.Ls_SelSubFamilias
+
+        Ls_SelArbol_Asociaciones = Fm.Ls_SelArbol_Asociaciones
 
         Fm.Dispose()
 
@@ -3235,7 +3332,7 @@ Public Class Frm_00_Asis_Compra_Menu
         End If
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Maest Where Activo = 1"
-        Dim _Tbl_DbExtMaest As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_DbExtMaest As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Row_DbExtMaest As DataRow In _Tbl_DbExtMaest.Rows
 
@@ -3313,13 +3410,13 @@ Public Class Frm_00_Asis_Compra_Menu
         Fm.Pro_Filtro_Extra_Clalibpr = "And KOCARAC In (Select CLALIBPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 " & _Sql_Filtro_Condicion_Extra & "))"
         Fm.Pro_Filtro_Extra_Zonas = "And KOZO In (Select ZONAPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 " & _Sql_Filtro_Condicion_Extra & "))"
 
-
         Fm.Pro_Filtro_Productos_Todos = _Filtro_Productos_Todos
         Fm.Pro_Filtro_Clalibpr_Todas = _Filtro_Clalibpr_Todas
         Fm.Pro_Filtro_Marcas_Todas = _Filtro_Marcas_Todas
         Fm.Pro_Filtro_Rubro_Todas = _Filtro_Rubro_Todas
         Fm.Pro_Filtro_Super_Familias_Todas = _Filtro_Super_Familias_Todas
         Fm.Pro_Filtro_Zonas_Todas = _Filtro_Zonas_Todas
+        Fm.Pro_Filtro_Bakapp_Todas = _Filtro_Bakapp_Todas
 
         Fm.Pro_Tbl_Filtro_Productos = _Tbl_Filtro_Productos
         Fm.Pro_Tbl_Filtro_Clalibpr = _Tbl_Filtro_Clalibpr
@@ -3327,6 +3424,13 @@ Public Class Frm_00_Asis_Compra_Menu
         Fm.Pro_Tbl_Filtro_Rubro = _Tbl_Filtro_Rubro
         Fm.Pro_Tbl_Filtro_Super_Familias = _Tbl_Filtro_Super_Familias
         Fm.Pro_Tbl_Filtro_Zonas = _Tbl_Filtro_Zonas
+
+        Fm.BuscarSpfmfmsubfm = True
+        Fm.Ls_SelSuperFamilias = Ls_SelSuperFamilias
+        Fm.Ls_SelFamilias = Ls_SelFamilias
+        Fm.Ls_SelSubFamilias = Ls_SelSubFamilias
+
+        Fm.Ls_SelArbol_Asociaciones = Ls_SelArbol_Asociaciones
 
         Fm.ShowDialog(Me)
 
@@ -3343,6 +3447,13 @@ Public Class Frm_00_Asis_Compra_Menu
         _Filtro_Rubro_Todas = Fm.Pro_Filtro_Rubro_Todas
         _Filtro_Super_Familias_Todas = Fm.Pro_Filtro_Super_Familias_Todas
         _Filtro_Zonas_Todas = Fm.Pro_Filtro_Zonas_Todas
+        _Filtro_Bakapp_Todas = Fm.Pro_Filtro_Bakapp_Todas
+
+        Ls_SelSuperFamilias = Fm.Ls_SelSuperFamilias
+        Ls_SelFamilias = Fm.Ls_SelFamilias
+        Ls_SelSubFamilias = Fm.Ls_SelSubFamilias
+
+        Ls_SelArbol_Asociaciones = Fm.Ls_SelArbol_Asociaciones
 
         Fm.Dispose()
 
@@ -3355,6 +3466,7 @@ Public Class Frm_00_Asis_Compra_Menu
         Dim _Filtro_SuperFamilias = String.Empty
         Dim _Filtro_ClasLibre = String.Empty
         Dim _Filtro_Bodega = String.Empty
+        Dim _Filtro_Bakapp = String.Empty
 
 
         If _Filtro_Productos_Todos Then
@@ -3370,8 +3482,75 @@ Public Class Frm_00_Asis_Compra_Menu
             End If
 
             If Not _Filtro_Super_Familias_Todas Then
-                _Filtro_SuperFamilias = Generar_Filtro_IN(_Tbl_Filtro_Super_Familias, "Chk", "Codigo", False, True, "'")
-                _Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where FMPR In " & _Filtro_SuperFamilias & ")"
+
+                Dim _Fl_SuperFamilias As String = String.Empty
+                Dim _Fl_Familias As String = String.Empty
+                Dim _Fl_SubFamilias As String = String.Empty
+
+                For Each _Sfm As SelSubFamilias In Ls_SelSubFamilias
+                    _Fl_SubFamilias += "(FMPR = '" & _Sfm.Kofm & "' And PFPR = '" & _Sfm.Kopf & "' And HFPR = '" & _Sfm.Kopf & "');"
+                Next
+                _Fl_SubFamilias = _Fl_SubFamilias.TrimEnd(";").ToString.Replace(";", " Or ")
+
+                For Each _Fm As SelFamilias In Ls_SelFamilias
+                    If _Fl_SubFamilias.Contains("FMPR = '" & _Fm.Kofm & "'") And _Fl_SubFamilias.Contains("PFPR = '" & _Fm.Kopf & "'") Then
+                        Continue For
+                    End If
+                    _Fl_Familias += "(FMPR = '" & _Fm.Kofm & "' And PFPR = '" & _Fm.Kopf & "');"
+                Next
+                _Fl_Familias = _Fl_Familias.TrimEnd(";").ToString.Replace(";", " Or ")
+
+                For Each _Spfm As SelSuperFamilias In Ls_SelSuperFamilias
+                    If _Fl_SubFamilias.Contains("FMPR = '" & _Spfm.Kofm & "'") Or _Fl_Familias.Contains("FMPR = '" & _Spfm.Kofm & "'") Then
+                        Continue For
+                    End If
+                    _Fl_SuperFamilias += "(FMPR = '" & _Spfm.Kofm & "');"
+                Next
+                _Fl_SuperFamilias = _Fl_SuperFamilias.TrimEnd(";").ToString.Replace(";", " Or ")
+
+                If Not String.IsNullOrWhiteSpace(_Fl_SuperFamilias) Then
+                    _Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where " & _Fl_SuperFamilias & ")"
+                End If
+
+                If Not String.IsNullOrWhiteSpace(_Fl_Familias) Then
+                    If String.IsNullOrWhiteSpace(_Fl_SuperFamilias) Then
+                        _Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where " & _Fl_Familias & ")"
+                    Else
+                        _Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where " & _Fl_SuperFamilias & " Or " & _Fl_Familias & ")"
+                    End If
+                End If
+
+                If Not String.IsNullOrWhiteSpace(_Fl_SubFamilias) Then
+                    If String.IsNullOrWhiteSpace(_Fl_Familias) Then
+                        _Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where " & _Fl_SubFamilias & ")"
+                    Else
+
+                        If String.IsNullOrWhiteSpace(_Fl_SuperFamilias) Then
+                            _Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where " & _Fl_Familias & " Or " & _Fl_SubFamilias & ")"
+                        Else
+                            _Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where " & _Fl_SuperFamilias & " Or " & _Fl_Familias & " Or " & _Fl_SubFamilias & ")"
+                        End If
+
+                    End If
+                End If
+
+                '_Filtro_SuperFamilias = Generar_Filtro_IN(_Tbl_Filtro_Super_Familias, "Chk", "Codigo", False, True, "'")
+                '_Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where FMPR In " & _Filtro_SuperFamilias & ")"
+
+            End If
+
+            If _Filtro_Bakapp_Todas Then
+                _Filtro_Bakapp = String.Empty
+            Else
+
+                For Each _Asoc As Zw_TblArbol_Asociaciones In Ls_SelArbol_Asociaciones
+                    _Filtro_Bakapp += "," & _Asoc.Codigo_Nodo
+                Next
+
+                If Not String.IsNullOrWhiteSpace(_Filtro_Bakapp) Then
+                    _Filtro_Bakapp = "And KOPR IN (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo_Nodo In (" & _Filtro_Bakapp & "))"
+                End If
+
             End If
 
             If Not _Filtro_Clalibpr_Todas Then
@@ -3406,47 +3585,7 @@ Public Class Frm_00_Asis_Compra_Menu
                         _Filtro_SuperFamilias & vbCrLf &
                         _Filtro_Zonas
 
-        _TblFiltroProductos_Proveedor = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-        'If Rdb_Traer_No_Bloqueados.Checked Then
-        '    Consulta_sql += Rdb_Traer_No_Bloqueados.Tag.ToString
-        'End If
-
-        'If Rdb_Traer_Bloqueados_Compras.Checked Then
-        '    Consulta_sql += Rdb_Traer_Bloqueados_Compras.Tag.ToString
-        'End If
-
-        'If Rdb_Traer_Bloqueados_Venta.Checked Then
-        '    Consulta_sql += Rdb_Traer_Bloqueados_Venta.Tag.ToString
-        'End If
-
-        'If Rdb_Traer_Bloqueados_Compra_y_Venta.Checked Then
-        '    Consulta_sql += Rdb_Traer_Bloqueados_Compra_y_Venta.Tag.ToString
-        'End If
-
-        'If Rdb_Traer_Bloqueados_Compra_Venta_y_Produccion.Checked Then
-        '    Consulta_sql += Rdb_Traer_Bloqueados_Compra_Venta_y_Produccion.Tag.ToString
-        'End If
-
-
-
-
-
-
-
-
-        'Dim _Filtrar As New Clas_Filtros_Random(Me)
-
-        'If _Filtrar.Fx_Filtrar(_TblFiltroProductos_Proveedor,
-        '                       Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra,
-        '                       False, False) Then
-
-        '    _TblFiltroProductos_Proveedor = _Filtrar.Pro_Tbl_Filtro
-        '    If _Filtrar.Pro_Filtro_Todas Then
-        '        _TblFiltroProductos_Proveedor = Nothing
-        '    End If
-
-        'End If
+        _TblFiltroProductos_Proveedor = _Sql.Fx_Get_DataTable(Consulta_sql)
 
     End Sub
 
@@ -3490,7 +3629,7 @@ Public Class Frm_00_Asis_Compra_Menu
         Dim _RowConexion As DataRow
 
         Consulta_sql = "Select *,'****' As [Password] From " & _Global_BaseBk & "Zw_DbExt_Conexion"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not CBool(_Tbl.Rows.Count) Then
             MessageBoxEx.Show(Me, "No hay conexiones disponibles" & vbCrLf & vbCrLf &
@@ -3763,7 +3902,7 @@ Public Class Frm_00_Asis_Compra_Menu
                                 Inner Join " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Arbol On Prod.Codigo_Nodo = Arbol.Codigo_Nodo
                                 Where Arbol.Nodo_Raiz = " & _Nodo_Raiz_Asociados & " And Es_Seleccionable = 1 And Codigo In " & _Filtro_Pro
 
-                                Dim _Tbl_Codigos_Madre As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                                Dim _Tbl_Codigos_Madre As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                                 Dim _Filtro_Codigos_Madre = Generar_Filtro_IN(_Tbl_Codigos_Madre, "", "Codigo_Nodo", False, False, "")
 
@@ -3787,7 +3926,7 @@ Public Class Frm_00_Asis_Compra_Menu
 
                                 Drop Table #Paso"
 
-                                _TblFiltroProductosExcluidos = _Sql.Fx_Get_Tablas(Consulta_sql)
+                                _TblFiltroProductosExcluidos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                             End If
 

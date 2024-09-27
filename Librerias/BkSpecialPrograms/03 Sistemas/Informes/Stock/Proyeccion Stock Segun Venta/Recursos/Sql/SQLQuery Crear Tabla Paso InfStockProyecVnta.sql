@@ -1,7 +1,9 @@
-DECLARE @Fecha1 Date, -- Fecha de un año atras
-        @Fecha2 Date = Getdate(), -- Fecha de Hoy
-		@MesesEstudio Int = #MesesEstudio#,
-		@MesesProyeccion Int = #MesesProyeccion#
+Declare @Empresa Char(2) = '#Empresa#'
+Declare @Sucursal Char(3) = '#Sucursal#'
+Declare @Fecha1 Date 
+Declare @Fecha2 Date = Getdate() 
+Declare @MesesEstudio Int = #MesesEstudio#
+Declare @MesesProyeccion Int = #MesesProyeccion#
 
 Declare @Contador Int = 0
 
@@ -83,7 +85,7 @@ Inner Join TABBOPR Tbp On Tbp.KOPR = Mp.KOPR
 								Left Join TABRU Rub On Rub.KORU = Mp.RUPR
 									Left Join TABCARAC Tcl On Tcl.KOTABLA = 'CLALIBPR' And KOCARAC = Mp.CLALIBPR  
 
-Where Tbp.EMPRESA = '#Empresa#' And Mp.TIPR = 'FPN'
+Where Tbp.EMPRESA = @Empresa And Ts.KOSU = @Sucursal And Mp.TIPR = 'FPN'
 Order By Tbp.KOPR,Tbp.EMPRESA,Tbp.KOSU,Tbp.KOBO
 
 Update #PasoVentas Set CantUd1 = Isnull((Select ROUND(SUM(

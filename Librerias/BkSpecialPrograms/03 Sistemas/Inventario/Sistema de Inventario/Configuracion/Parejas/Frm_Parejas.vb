@@ -25,7 +25,7 @@
     End Sub
 
     Sub Sb_Actualizar_Grilla()
-
+        Return
         Consulta_sql = "Select Prj.*,Isnull(Op1.Nombre,'') As NombreOp1,Isnull(Op2.Nombre,'') As NombreOp2," & vbCrLf &
                        "(Select Count(*) From " & _Global_BaseBk & "Zw_Inv_Plan Where Id_Inventario = Prj.Id_Inventario And Id_Pareja = Prj.Id_Pareja And TipoPareja = 'TOMA') As Toma," & vbCrLf &
                         "(Select Count(*) From " & _Global_BaseBk & "Zw_Inv_Plan Where Id_Inventario = Prj.Id_Inventario And Id_Pareja = Prj.Id_Pareja And TipoPareja = 'LEVANTE') As Levante" & vbCrLf &
@@ -33,7 +33,7 @@
                         "Left Join " & _Global_BaseBk & "Zw_Inv_Operadores Op1 On Prj.Id_Operador1 = Op1.Id_Operador" & vbCrLf &
                         "Left Join " & _Global_BaseBk & "Zw_Inv_Operadores Op2 On Prj.Id_Operador2 = Op2.Id_Operador" & vbCrLf &
                         "Where Prj.Id_Inventario = " & _Id_Inventario
-        Dim _Tbl_Parejas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Parejas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Parejas
 

@@ -43,7 +43,7 @@ Public Class Frm_Vales_Ficha_Doc
         Fm.ShowDialog(Me)
 
         Consulta_sql = "Select * From Zw_Vales_Obs Where NroVale = '" & _NroVale_activo & "'"
-        _Zw_Vales_Obs = _SQL.Fx_Get_Tablas(Consulta_sql)
+        _Zw_Vales_Obs = _SQL.Fx_Get_DataTable(Consulta_sql)
 
     End Sub
 
@@ -274,7 +274,7 @@ Public Class Frm_Vales_Ficha_Doc
         Dim _SucEntidad As String = _Tbl_Encab_Documento.Rows(0).Item("SUENDO")
 
         Consulta_sql = "Select * From MAEEN Where KOEN = '" & _CodEntidad & "' And SUEN = '" & _SucEntidad & "'"
-        _Tbl_EntidadDoc = _SQL.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_EntidadDoc = _SQL.Fx_Get_DataTable(Consulta_sql)
 
         _Ds_Query.Dispose()
 
@@ -371,7 +371,7 @@ Public Class Frm_Vales_Ficha_Doc
      
             With Grilla_Guias_DespachoNC
 
-                .DataSource = _SQL.Fx_Get_Tablas(Consulta_sql)
+                .DataSource = _SQL.Fx_Get_DataTable(Consulta_sql)
 
                 OcultarEncabezadoGrilla(Grilla_Guias_DespachoNC, True)
 
@@ -628,7 +628,7 @@ Public Class Frm_Vales_Ficha_Doc
             Dim _IdMaeedo = Grilla_Doc_Origen.Rows(0).Cells("IDMAEEDO").Value
             Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _IdMaeedo
 
-            _Tbl_Encab_Documento = _SQL.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Encab_Documento = _SQL.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Tido = _Tbl_Encab_Documento.Rows(0).Item("TIDO")
             Dim _Nudo = _Tbl_Encab_Documento.Rows(0).Item("NUDO")

@@ -8,11 +8,16 @@ Public Class Frm_Arbol_Asociacion_06_CrearEditar
     Dim _Codigo_Nodo As Integer
     Dim _Identificacdor_NodoPadre As Integer
     Dim _Nodo_Raiz As Integer
+    Dim _Fullpath As String
     Public Property Cl_Arbol_Asociaciones As New Cl_Arbol_Asociaciones
     Public Property Grabar As Boolean
     Private _Clas_Unica_X_Producto As Boolean
 
-    Public Sub New(_Codigo_Nodo As Integer, _Identificacdor_NodoPadre As Integer, _Nodo_Raiz As Integer, _Clas_Unica_X_Producto As Boolean)
+    Public Sub New(_Codigo_Nodo As Integer,
+                   _Identificacdor_NodoPadre As Integer,
+                   _Nodo_Raiz As Integer,
+                   _Clas_Unica_X_Producto As Boolean,
+                   _Fullpath As String)
 
         ' Esta llamada es exigida por el diseñador.
         InitializeComponent()
@@ -23,6 +28,9 @@ Public Class Frm_Arbol_Asociacion_06_CrearEditar
         Me._Identificacdor_NodoPadre = _Identificacdor_NodoPadre
         Me._Nodo_Raiz = _Nodo_Raiz
         Me._Clas_Unica_X_Producto = _Clas_Unica_X_Producto
+        Me._Fullpath = _Fullpath
+
+        Sb_Color_Botones_Barra(Bar2)
 
     End Sub
 
@@ -53,6 +61,7 @@ Public Class Frm_Arbol_Asociacion_06_CrearEditar
 
         Txt_Codigo_Madre.Enabled = _Clas_Unica_X_Producto
         Lbl_Codigo_Madre.Enabled = _Clas_Unica_X_Producto
+        Txt_Fullpath.Text = _Fullpath
 
         If _Clas_Unica_X_Producto Then
             Me.ActiveControl = Txt_Codigo_Madre

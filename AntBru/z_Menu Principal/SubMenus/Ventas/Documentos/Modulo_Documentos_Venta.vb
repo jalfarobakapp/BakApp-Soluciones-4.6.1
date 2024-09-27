@@ -1,5 +1,5 @@
-﻿Imports DevComponents.DotNetBar
-Imports BkSpecialPrograms
+﻿Imports BkSpecialPrograms
+Imports DevComponents.DotNetBar
 
 Public Class Modulo_Documentos_Venta
 
@@ -68,51 +68,51 @@ Public Class Modulo_Documentos_Venta
 
     Sub Sb_Generar_Documento(_Tido As String, _Minimizar As Boolean)
 
-        If Fx_Revisar_Taza_Cambio(_Fm_Menu_Padre) Then
+        Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(_Fm_Menu_Padre)
 
-            Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Fm_Menu_Padre, Modalidad, _Tido, True)
+        If Not _Msj_Tsc.EsCorrecto Then
+            Return
+        End If
 
-            If Not IsNothing(_RowFormato) Then
+        Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Fm_Menu_Padre, Modalidad, _Tido, True)
 
-                Dim _Empresa As String = ModEmpresa
-                Dim _Sucursal As String = ModSucursal
-                Dim _Bodega As String = ModBodega
+        If IsNothing(_RowFormato) Then
 
-                Dim _Permiso = "Bo" & _Empresa & _Sucursal & _Bodega
+            MessageBoxEx.Show(Me, "Debe configurar el formato de salida en la configuración por modalidad de trabajo",
+                              "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Return
+        End If
 
-                If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, _Permiso, , True) Then
-                    Dim _Bod = _Global_Row_Configuracion_Estacion.Item("NOKOBO")
-                    MessageBoxEx.Show(Me, "NO ESTA AUTORIZADO PARA EFECTUAR VENTAS DESDE LA BODEGA DE ESTA MODALIDAD" & vbCrLf & vbCrLf &
-                                      "BODEGA: " & _Bodega & " - " & _Bod,
-                                      "VALIDACION",
-                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                End If
+        Dim _Empresa As String = ModEmpresa
+        Dim _Sucursal As String = ModSucursal
+        Dim _Bodega As String = ModBodega
 
-                If Fx_Tiene_Permiso(_Fm_Menu_Padre, _Permiso) Then
+        Dim _Permiso = "Bo" & _Empresa & _Sucursal & _Bodega
 
-                    If Fx_Es_Electronico(_Tido) Then
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, _Permiso, , True) Then
+            Dim _Bod = _Global_Row_Configuracion_Estacion.Item("NOKOBO")
+            MessageBoxEx.Show(Me, "NO ESTA AUTORIZADO PARA EFECTUAR VENTAS DESDE LA BODEGA DE ESTA MODALIDAD" & vbCrLf & vbCrLf &
+                                  "BODEGA: " & _Bodega & " - " & _Bod,
+                                  "VALIDACION",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End If
 
-                        Dim _Directorio_GenDTE As String = _Global_Row_EstacionBk.Item("Directorio_GenDTE")
-                        Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+        If Fx_Tiene_Permiso(_Fm_Menu_Padre, _Permiso) Then
 
-                        Fx_Datos_Directorio_GenDTE(_Directorio_GenDTE, _NombreEquipo)
+            If Fx_Es_Electronico(_Tido) Then
 
-                    End If
+                Dim _Directorio_GenDTE As String = _Global_Row_EstacionBk.Item("Directorio_GenDTE")
+                Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
 
-                    Dim Fm_Post As New Frm_Formulario_Documento(_Tido, csGlobales.Enum_Tipo_Documento.Venta, False)
-                    If _Fm_Menu_Padre.Name <> "Frm_Menu_Extra" Then Fm_Post.MinimizeBox = True
-                    Fm_Post.MinimizeBox = _Minimizar
-                    Fm_Post.ShowDialog(Me)
-                    Fm_Post.Dispose()
-
-                End If
+                Fx_Datos_Directorio_GenDTE(_Directorio_GenDTE, _NombreEquipo)
 
             End If
 
-        Else
-
-            MessageBoxEx.Show(Me, "Debe configurar el formato de salida en la configuración por modalidad de trabajo",
-                      "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Dim Fm_Post As New Frm_Formulario_Documento(_Tido, csGlobales.Enum_Tipo_Documento.Venta, False)
+            If _Fm_Menu_Padre.Name <> "Frm_Menu_Extra" Then Fm_Post.MinimizeBox = True
+            Fm_Post.MinimizeBox = _Minimizar
+            Fm_Post.ShowDialog(Me)
+            Fm_Post.Dispose()
 
         End If
 

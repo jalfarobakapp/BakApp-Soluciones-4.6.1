@@ -50,7 +50,7 @@
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Operaciones" & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And Operacion+Descripcion Like '%" & _Cadena & "%'"
-        _Tbl_Operaciones = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Operaciones = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

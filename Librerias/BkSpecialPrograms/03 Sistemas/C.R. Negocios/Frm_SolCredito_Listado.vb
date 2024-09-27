@@ -1,4 +1,4 @@
-Imports BkSpecialPrograms
+ï»¿Imports BkSpecialPrograms
 Imports DevComponents.DotNetBar
 
 Public Class Frm_SolCredito_Listado
@@ -55,10 +55,10 @@ Public Class Frm_SolCredito_Listado
 
     Public Sub New()
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
 
         Sb_Formato_Generico_Grilla(Grilla_Inf, 22, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 
@@ -77,7 +77,7 @@ Public Class Frm_SolCredito_Listado
         St_Extra.Text = String.Empty
 
 
-        Sb_InsertarBotonenGrilla(Grilla_Inf, "BtnImagen", "Situación", "Solicitud", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla_Inf, "BtnImagen", "SituaciÃ³n", "Solicitud", 0, _Tipo_Boton.Imagen)
         Sb_Actualizar_Grilla("", False)
 
         LblBarraEstado.Text = "Usuario activo: " & Nombre_funcionario_activo
@@ -121,65 +121,65 @@ Public Class Frm_SolCredito_Listado
 
     End Function
 
-    Sub Sb_Actualizar_Grilla(ByVal _Filtro As String, _
+    Sub Sb_Actualizar_Grilla(ByVal _Filtro As String,
                              ByVal _Filtrar As Boolean)
 
         Sb_Limpiar_WF()
 
-        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Negocios_01_Enc Set Estado = 'ST'" & vbCrLf & _
-                       "Where Stand_By = 1" & vbCrLf & _
-                       vbCrLf & _
-                       "Update " & _Global_BaseBk & "Zw_Negocios_01_Enc Set Estado = 'IN'" & vbCrLf & _
-                       "Where Nro_Negocio Not In (Select Nro_Negocio From " & _Global_BaseBk & "Zw_Negocios_03_Apr) " & vbCrLf & _
-                       "And Stand_By = 0 And Estado Not In ('NL','CO') And Visado_Jefe = 0" & vbCrLf & _
-                        vbCrLf & _
-                       "Update " & _Global_BaseBk & "Zw_Negocios_01_Enc Set Estado = 'AN'" & vbCrLf & _
-                       "Where Nro_Negocio Not In (Select Nro_Negocio From " & _Global_BaseBk & "Zw_Negocios_03_Apr) " & vbCrLf & _
-                       "And Stand_By = 0 And Estado Not In ('NL','CO') And Visado_Jefe = 1" & vbCrLf & _
-                        vbCrLf & _
-                       "Update " & _Global_BaseBk & "Zw_Negocios_01_Enc Set Estado = 'PR'" & vbCrLf & _
-                       "Where Nro_Negocio In (Select Nro_Negocio From " & _Global_BaseBk & "Zw_Negocios_03_Apr Z1" & vbCrLf & _
-                       "Group by Nro_Negocio" & vbCrLf & _
-                       "having (Select COUNT(*) From " & _Global_BaseBk & "Zw_Negocios_03_Apr Z2 Where Z2.Nro_Negocio = Z1.Nro_Negocio) IN (1,2)) " & _
-                       "And Stand_By = 0" & vbCrLf & _
-                       vbCrLf & _
-                       "Update " & _Global_BaseBk & "Zw_Negocios_01_Enc Set Estado = 'CM'" & vbCrLf & _
-                       "Where Nro_Negocio In (Select Nro_Negocio From " & _Global_BaseBk & "Zw_Negocios_03_Apr Z1" & vbCrLf & _
-                       "Group by Nro_Negocio" & vbCrLf & _
-                       "having (Select COUNT(*) From " & _Global_BaseBk & "Zw_Negocios_03_Apr Z2 Where Z2.Nro_Negocio = Z1.Nro_Negocio) = 3) " & _
-                       "And Estado = 'PR' And Stand_By = 0" & vbCrLf & _
-                       vbCrLf & _
-                       "Update " & _Global_BaseBk & "Zw_Negocios_01_Enc Set Estado = 'CM'" & vbCrLf & _
-                       "Where Nro_Negocio In (Select Nro_Negocio From " & _Global_BaseBk & "Zw_Negocios_03_Apr Z1" & vbCrLf & _
-                       "Group by Nro_Negocio" & vbCrLf & _
-                       "having (Select COUNT(*) From " & _Global_BaseBk & "Zw_Negocios_03_Apr Z2 Where Z2.Nro_Negocio = Z1.Nro_Negocio) = 4) " & _
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Negocios_01_Enc Set Estado = 'ST'" & vbCrLf &
+                       "Where Stand_By = 1" & vbCrLf &
+                       vbCrLf &
+                       "Update " & _Global_BaseBk & "Zw_Negocios_01_Enc Set Estado = 'IN'" & vbCrLf &
+                       "Where Nro_Negocio Not In (Select Nro_Negocio From " & _Global_BaseBk & "Zw_Negocios_03_Apr) " & vbCrLf &
+                       "And Stand_By = 0 And Estado Not In ('NL','CO') And Visado_Jefe = 0" & vbCrLf &
+                        vbCrLf &
+                       "Update " & _Global_BaseBk & "Zw_Negocios_01_Enc Set Estado = 'AN'" & vbCrLf &
+                       "Where Nro_Negocio Not In (Select Nro_Negocio From " & _Global_BaseBk & "Zw_Negocios_03_Apr) " & vbCrLf &
+                       "And Stand_By = 0 And Estado Not In ('NL','CO') And Visado_Jefe = 1" & vbCrLf &
+                        vbCrLf &
+                       "Update " & _Global_BaseBk & "Zw_Negocios_01_Enc Set Estado = 'PR'" & vbCrLf &
+                       "Where Nro_Negocio In (Select Nro_Negocio From " & _Global_BaseBk & "Zw_Negocios_03_Apr Z1" & vbCrLf &
+                       "Group by Nro_Negocio" & vbCrLf &
+                       "having (Select COUNT(*) From " & _Global_BaseBk & "Zw_Negocios_03_Apr Z2 Where Z2.Nro_Negocio = Z1.Nro_Negocio) IN (1,2)) " &
+                       "And Stand_By = 0" & vbCrLf &
+                       vbCrLf &
+                       "Update " & _Global_BaseBk & "Zw_Negocios_01_Enc Set Estado = 'CM'" & vbCrLf &
+                       "Where Nro_Negocio In (Select Nro_Negocio From " & _Global_BaseBk & "Zw_Negocios_03_Apr Z1" & vbCrLf &
+                       "Group by Nro_Negocio" & vbCrLf &
+                       "having (Select COUNT(*) From " & _Global_BaseBk & "Zw_Negocios_03_Apr Z2 Where Z2.Nro_Negocio = Z1.Nro_Negocio) = 3) " &
+                       "And Estado = 'PR' And Stand_By = 0" & vbCrLf &
+                       vbCrLf &
+                       "Update " & _Global_BaseBk & "Zw_Negocios_01_Enc Set Estado = 'CM'" & vbCrLf &
+                       "Where Nro_Negocio In (Select Nro_Negocio From " & _Global_BaseBk & "Zw_Negocios_03_Apr Z1" & vbCrLf &
+                       "Group by Nro_Negocio" & vbCrLf &
+                       "having (Select COUNT(*) From " & _Global_BaseBk & "Zw_Negocios_03_Apr Z2 Where Z2.Nro_Negocio = Z1.Nro_Negocio) = 4) " &
                        "And Estado = 'AN' And Stand_By = 0"
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
 
         If Not _Filtrar Then
             If _Tipo_Informe = _Filtro_Negocios.Mis_Negocios Then
-                _Filtro = "Where (Estado In ('ST','IN','CO','AN','CM','C3','PR'))" & vbCrLf & _
-                                  "OR (Estado = 'CE' And Fecha_Cierre = '" & Format(FechaDelServidor, "yyyyMMdd") & "')" & vbCrLf & _
+                _Filtro = "Where (Estado In ('ST','IN','CO','AN','CM','C3','PR'))" & vbCrLf &
+                                  "OR (Estado = 'CE' And Fecha_Cierre = '" & Format(FechaDelServidor, "yyyyMMdd") & "')" & vbCrLf &
                                   "OR (Estado = 'NL' And Fecha_Cierre = '" & Format(FechaDelServidor, "yyyyMMdd") & "')"
             ElseIf _Tipo_Informe = _Filtro_Negocios.Resolucion Then
                 _Filtro = "Where Estado In ('AN','PR','CM','C3')"
             End If
         End If
 
-        Consulta_sql = "SELECT Id_Negocio,Nro_Negocio,Stand_By,Estado,Estado_Cerrado,Tipo,NomTipo," & _
-                       "CONVERT(VARCHAR, Fecha_Emision, 103) Fecha,CONVERT(VARCHAR, Fecha_Emision, 108) Hora," & _
-                       "Fecha_Emision,Fecha_Cierre,CodEntidad,CodSucursal,NomEntidad," & _
-                       "CodFuncionario,NomFuncionario," & _
-                       "(Select top 1 Linea_Credito_SC_Ac_UF From " & _Global_BaseBk & "Zw_Negocios_02_Det Z02 " & _
-                       "Where Z02.Nro_Negocio = Z01.Nro_Negocio) As 'CRED_SOL_UF'," & _
-                       "Empresa,Sucursal,NomSucursal,Cadena_Conexion," & _
-                       "(Select Count(*) From " & _Global_BaseBk & "Zw_Negocios_03_Apr Z03 " & _
-                       "Where Z03.Nro_Negocio = Z01.Nro_Negocio ) as St,'' As Color_Estatus,'' As Estatus," & _
-                       "Nom_Clas_Crediticia,Motivo_Anula,Fun_Corregir" & vbCrLf & _
-                       "From " & _Global_BaseBk & "Zw_Negocios_01_Enc Z01" & vbCrLf & _
+        Consulta_sql = "SELECT Id_Negocio,Nro_Negocio,Stand_By,Estado,Estado_Cerrado,Tipo,NomTipo," &
+                       "CONVERT(VARCHAR, Fecha_Emision, 103) Fecha,CONVERT(VARCHAR, Fecha_Emision, 108) Hora," &
+                       "Fecha_Emision,Fecha_Cierre,CodEntidad,CodSucursal,NomEntidad," &
+                       "CodFuncionario,NomFuncionario," &
+                       "(Select top 1 Linea_Credito_SC_Ac_UF From " & _Global_BaseBk & "Zw_Negocios_02_Det Z02 " &
+                       "Where Z02.Nro_Negocio = Z01.Nro_Negocio) As 'CRED_SOL_UF'," &
+                       "Empresa,Sucursal,NomSucursal,Cadena_Conexion," &
+                       "(Select Count(*) From " & _Global_BaseBk & "Zw_Negocios_03_Apr Z03 " &
+                       "Where Z03.Nro_Negocio = Z01.Nro_Negocio ) as St,'' As Color_Estatus,'' As Estatus," &
+                       "Nom_Clas_Crediticia,Motivo_Anula,Fun_Corregir" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Negocios_01_Enc Z01" & vbCrLf &
                        _Filtro
-        _Tbl_Informe = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Informe = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         With Grilla_Inf
@@ -189,11 +189,11 @@ Public Class Frm_SolCredito_Listado
             OcultarEncabezadoGrilla(Grilla_Inf, True)
 
             .Columns("BtnImagen").Visible = True
-            .Columns("BtnImagen").HeaderText = "Situación"
+            .Columns("BtnImagen").HeaderText = "SituaciÃ³n"
             .Columns("BtnImagen").Width = 50
 
             .Columns("Nro_Negocio").Visible = True
-            .Columns("Nro_Negocio").HeaderText = "N° Negocio"
+            .Columns("Nro_Negocio").HeaderText = "NÂ° Negocio"
             .Columns("Nro_Negocio").Width = 90
 
             .Columns("NomTipo").Visible = True
@@ -201,7 +201,7 @@ Public Class Frm_SolCredito_Listado
             .Columns("NomTipo").Width = 230
 
             .Columns("Fecha").Visible = True
-            .Columns("Fecha").HeaderText = "Fecha creación"
+            .Columns("Fecha").HeaderText = "Fecha creaciÃ³n"
             .Columns("Fecha").Width = 100
             .Columns("Fecha").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
 
@@ -425,8 +425,8 @@ Public Class Frm_SolCredito_Listado
         dr = dt.NewRow() : dr("Padre") = "15" : dr("Hijo") = "15 minutos" : dt.Rows.Add(dr)
         dr = dt.NewRow() : dr("Padre") = "30" : dr("Hijo") = "30 minutos" : dt.Rows.Add(dr)
 
-        'cerramos el datareader y la conexión
-        'añadimos la tabla al dataset
+        'cerramos el datareader y la conexiÃ³n
+        'aÃ±adimos la tabla al dataset
         rs.Tables.Add(dt)
 
         With Cmb_MinutosActualizacion
@@ -498,7 +498,7 @@ Public Class Frm_SolCredito_Listado
 
         Dim _Estado As String
 
-        Dim _TblFilaSeleccionada As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblFilaSeleccionada As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblFilaSeleccionada.Rows.Count) Then
 
@@ -524,7 +524,7 @@ Public Class Frm_SolCredito_Listado
 
                 Dim _Fun_Corregir_Motivo As String = _TblFilaSeleccionada.Rows(0).Item("Fun_Corregir_Motivo")
 
-                MessageBoxEx.Show(Me, _Fun_Corregir_Motivo, "Motivo corrección", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                MessageBoxEx.Show(Me, _Fun_Corregir_Motivo, "Motivo correcciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
             End If
 
@@ -554,9 +554,18 @@ Public Class Frm_SolCredito_Listado
         If Fx_Tiene_Permiso(Me, "Scn00004") Then
 
             Switch_.Value = False
-            If Not Fx_Revisar_Taza_Cambio(Me, FechaDelServidor) Then
-                Exit Sub
+
+            Dim _Msj_Tsc As LsValiciones.Mensajes
+
+            _Msj_Tsc = Fx_Revisar_Tasa_Cambio(Me, FechaDelServidor)
+
+            If Not _Msj_Tsc.EsCorrecto Then
+                Return
             End If
+
+            'If Not Fx_Revisar_Tasa_Cambio(Me, FechaDelServidor) Then
+            '    Exit Sub
+            'End If
 
             Dim _Rut_Empresa_Seleccionada = String.Empty
 
@@ -576,7 +585,7 @@ Public Class Frm_SolCredito_Listado
 
                 If Not _Exists Then
                     DatosConex.WriteXml(Directorio & "Conexiones.xml")
-                    MessageBoxEx.Show("Arvhico XML creado correctamente", "Crear XML de Conexión",
+                    MessageBoxEx.Show("Arvhico XML creado correctamente", "Crear XML de ConexiÃ³n",
                                       MessageBoxButtons.OK, MessageBoxIcon.Information)
                     Return
                 End If
@@ -683,7 +692,7 @@ Public Class Frm_SolCredito_Listado
             End If
 
             With St_00
-                .Text = "<font size=" & Chr(34) & "+2" & Chr(34) & "><b>Negocio N°: " & _Nro_Negocio &
+                .Text = "<font size=" & Chr(34) & "+2" & Chr(34) & "><b>Negocio NÂ°: " & _Nro_Negocio &
                         "</b></font><br/><font size=" & Chr(34) & "-1" & Chr(34) & ">" & _NomTipo & "<br/>Fecha: " & _Fecha & "</font>"
                 .Value = 100
                 .TextColor = Color.Black
@@ -693,7 +702,7 @@ Public Class Frm_SolCredito_Listado
 
         End With
 
-        Dim _TblAprobacion As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblAprobacion As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql) '_Sql.Fx_Get_Tablas(Consulta_sql)
 
         If CBool(_TblAprobacion.Rows.Count) Then
 
@@ -761,7 +770,7 @@ Public Class Frm_SolCredito_Listado
                         .ProgressColors = _Colores_Progreso
                     End With
                 ElseIf _CodAprobacion = "Ex" Then
-                    _NomAprobacion = "Autorización Extraordinaria (" & _CodAutoriza & ")"
+                    _NomAprobacion = "AutorizaciÃ³n Extraordinaria (" & _CodAutoriza & ")"
                     With St_Extra
                         .Text = "<font size=" & Chr(34) & "+2" & Chr(34) & "><b>" & _NomAprobacion &
                                 "</b></font><br/><font size=" & Chr(34) & "-1" & Chr(34) & ">" & _NombreAprueba & "<br/>" & _Tex_Autorizado & "</font>"
@@ -848,7 +857,7 @@ Public Class Frm_SolCredito_Listado
         End With
 
         With St_Extra
-            .Text = "<font size=" & Chr(34) & "+2" & Chr(34) & "><b>Autorización Extraordinaria</b></font><br/><font size=" & Chr(34) & "-1" & Chr(34) & ">Espera              <br/>...</font>"
+            .Text = "<font size=" & Chr(34) & "+2" & Chr(34) & "><b>AutorizaciÃ³n Extraordinaria</b></font><br/><font size=" & Chr(34) & "-1" & Chr(34) & ">Espera              <br/>...</font>"
             .Value = 100
             .TextColor = Color.Black
             .ProgressColors = New System.Drawing.Color() {Color.White, Color.White}
@@ -912,7 +921,7 @@ Public Class Frm_SolCredito_Listado
 
             If Not Fx_Tiene_Permiso(Me, "Scn00010", FUNCIONARIO, True) Then
                 MessageBoxEx.Show(Me, "Usted no tiene permiso para ver este formulario",
-                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                  "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Me.Close()
                 Exit Sub
             End If
@@ -949,13 +958,13 @@ Public Class Frm_SolCredito_Listado
                 Consulta_sql = My.Resources.Rs_NegocioCr.SqlQuery_Informe_Negocios & vbCrLf & vbCrLf &
                               "Where Enc.Nro_Negocio In " & _Filtro
 
-                Dim _TblExcel As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblExcel As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 ExportarTabla_JetExcel_Tabla(_TblExcel, Me, "Negocios")
             Else
 
                 Beep()
-                ToastNotification.Show(Me, "NO EXISEN DATOS QUE MOSTRAR", My.Resources.cross, _
+                ToastNotification.Show(Me, "NO EXISEN DATOS QUE MOSTRAR", My.Resources.cross,
                                            1 * 1000, eToastGlowColor.Red, eToastPosition.MiddleCenter)
 
             End If
@@ -989,7 +998,7 @@ Public Class Frm_SolCredito_Listado
 
                 If Not _Exists Then
                     DatosConex.WriteXml(Directorio & "Conexiones.xml")
-                    MessageBoxEx.Show("Arvhico XML creado correctamente", "Crear XML de Conexión", _
+                    MessageBoxEx.Show("Arvhico XML creado correctamente", "Crear XML de ConexiÃ³n",
                                       MessageBoxButtons.OK, MessageBoxIcon.Information)
                     Return
                 End If

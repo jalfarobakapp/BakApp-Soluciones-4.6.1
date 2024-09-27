@@ -511,7 +511,7 @@ Public Class Frm_Tickets_Mant
         Dim _Row_Tipo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If Not CBool(_Row_Tipo.Item("Id_Grupo")) Then
-            MessageBoxEx.Show(Me, "Este tipo de requerimiento no tiene asociado a ningun grupo de trabajo",
+            MessageBoxEx.Show(Me, "Este tipo de requerimiento no tiene asociado a ningún grupo de trabajo",
                               "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Rdb_AsignadoAgente.Checked = True
             Return
@@ -573,7 +573,7 @@ Public Class Frm_Tickets_Mant
             Dim _Row_Tipo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If Not CBool(_Row_Tipo.Item("Id_Grupo")) Then
-                MessageBoxEx.Show(Me, "Este tipo de requerimiento no tiene asociado a ningun grupo de trabajo",
+                MessageBoxEx.Show(Me, "Este tipo de requerimiento no tiene asociado a ningún grupo de trabajo",
                               "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Rdb_AsignadoAgente.Checked = True
                 Return
@@ -714,10 +714,15 @@ Public Class Frm_Tickets_Mant
 
         Dim _Id_Tipo As Integer
 
-        Dim Fm As New Frm_Tickets_Areas
-        Fm.ModoSeleccion = True
+        'Dim Fm As New Frm_Tickets_Areas
+        'Fm.ModoSeleccion = True
+        'Fm.ShowDialog(Me)
+        '_Id_Tipo = Fm.Id_Tipo_Seleccionado
+        'Fm.Dispose()
+
+        Dim Fm As New Frm_Tickets_BuscarTipo
         Fm.ShowDialog(Me)
-        _Id_Tipo = Fm.Id_Tipo_Seleccionado
+        _Id_Tipo = Fm.Id_Tipo
         Fm.Dispose()
 
         If CBool(_Id_Tipo) Then

@@ -21,7 +21,7 @@ Public Class Cl_NVVAutoExterna
         Log_Registro = String.Empty
 
         Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_NVVAuto Where GenerarNVV = 1"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         If CBool(_Tbl.Rows.Count) Then
 
@@ -37,7 +37,7 @@ Public Class Cl_NVVAutoExterna
                 Consulta_Sql = "Select Codigo,'Descripcion' From " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet" & vbCrLf &
                                "Where Id_Enc = " & _Id_Enc
 
-                Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+                Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
                 Dim _Filtro_Productos As String = Generar_Filtro_IN(_Tbl_Productos, "", "Codigo", False, False, "'")
 
@@ -107,7 +107,7 @@ Public Class Cl_NVVAutoExterna
             Dim _Fecha_Emision As DateTime = FechaDelServidor()
 
             Consulta_Sql = "Select *,1 As Precio From " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet Where Id_Enc = " & _Id_Enc
-            Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql, False)
+            Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then Throw New System.Exception(_Sql.Pro_Error)
 
@@ -115,7 +115,7 @@ Public Class Cl_NVVAutoExterna
                 Throw New System.Exception("No se encuentran registros para la tabla Zw_Demonio_NVVAutoDet con el Id_Enc = " & _Id_Enc)
             End If
 
-            Consulta_Sql = "Select * From CONFIEST Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & Modalidad_NVV & "'"
+            Consulta_Sql = "Select * From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & Modalidad_NVV & "'"
             Dim _Row_Modalidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then Throw New System.Exception(_Sql.Pro_Error)
@@ -128,10 +128,10 @@ Public Class Cl_NVVAutoExterna
             _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
             Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet Where Id_Enc = " & _Id_Enc
-            Dim _Tbl_NVVAutoDet As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+            Dim _Tbl_NVVAutoDet As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
             Consulta_Sql = "Select * From TABBO Where EMPRESA = '" & ModEmpresa & "' And KOSU = '" & _Sucursal & "'"
-            Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+            Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
             For Each _FlDet As DataRow In _Tbl_NVVAutoDet.Rows
 
@@ -214,7 +214,7 @@ Drop table #Paso"
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then Throw New System.Exception(_Sql.Pro_Error)
 
             Consulta_Sql = "Select *,1 As Precio From " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet Where Id_Enc = " & _Id_Enc & " And CantidadDefinitiva > 0"
-            _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_Sql, False)
+            _Tbl_Productos = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then Throw New System.Exception(_Sql.Pro_Error)
 
@@ -238,16 +238,17 @@ Drop table #Paso"
             Fm.Pro_RowEntidad = _Row_Entidad
             Fm.Sb_Crear_Documento_Interno_Con_Tabla(_Formulario, _Tbl_Productos, _Fecha_Emision,
                                                     "Codigo", "CantidadDefinitiva", "Precio", "Observacion", False, True,, True)
-            'Fm.Pro_Bodega_Destino = _Bod_Destino
-            Dim _New_Idmaeedo = Fm.Fx_Grabar_Documento(False)
+
+            Dim _Mensaje As LsValiciones.Mensajes = Fm.Fx_Grabar_Documento(False)
+
             Fm.Dispose()
 
-            If CBool(_New_Idmaeedo) Then
+            If _Mensaje.EsCorrecto Then
 
                 Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito
-                _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Modalidad, _New_Idmaeedo)
+                _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Modalidad, _Mensaje.Id)
 
-                Consulta_Sql = "Select Top 1 * From MAEEDO Where IDMAEEDO = " & _New_Idmaeedo
+                Consulta_Sql = "Select Top 1 * From MAEEDO Where IDMAEEDO = " & _Mensaje.Id
                 Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
                 Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_NVVAuto Set " &
@@ -259,11 +260,10 @@ Drop table #Paso"
                 _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
                 Consulta_Sql = "Update MAEEDOOB Set OBDO = 'Documento generado desde diablito automático desde OCC Nro: " & _Row_Encabezado.Item("NudoOCC_Ori") & "'" & vbCrLf &
-                               "Where IDMAEEDO = " & _New_Idmaeedo
+                               "Where IDMAEEDO = " & _Mensaje.Id
                 _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
             End If
-
 
         Catch ex As Exception
             _LogR = ex.Message

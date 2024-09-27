@@ -92,7 +92,7 @@ Public Class Frm_CRV_Filtrar
                        "FROM " & _Global_BaseBk & "Zw_TblChoferes_Empresa" & vbCrLf & _
                        "WHERE Habilitado = 1" & vbCrLf & _
                        "Order by Padre"
-        Dim _TblChofer = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblChofer = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         caract_combo(Cmb_Chofer)
         Cmb_Chofer.DataSource = _TblChofer
@@ -107,7 +107,7 @@ Public Class Frm_CRV_Filtrar
                        "FROM " & _Global_BaseBk & "Zw_TblVehiculos_Empresa" & vbCrLf & _
                        "WHERE 1 > 0" & vbCrLf & _
                        "Order by Padre"
-        Dim _TblVehiculo = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblVehiculo = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         caract_combo(Cmb_Nuevo_Vehiculo)
         Cmb_Nuevo_Vehiculo.DataSource = _TblVehiculo
@@ -234,7 +234,7 @@ Public Class Frm_CRV_Filtrar
         Dim Fm As New Frm_CRV_Lista
         Dim _Tbl_Informe As DataTable = Fm.Fx_Actualizar_Tbl_Crv(_Filtro_SQl)
 
-        _Tbl_Informe = _SQL.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Informe = _SQL.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl_Informe.Rows.Count) Then
 

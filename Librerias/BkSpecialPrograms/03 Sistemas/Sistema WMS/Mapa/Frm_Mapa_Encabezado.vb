@@ -80,7 +80,7 @@ Public Class Frm_Mapa_Encabezado
                       "Select * From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Enc" & Space(1) &
                       "Where Nombre_Mapa = '" & Trim(TxtNombreMapa.Text) & "'"
 
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If CBool(_Tbl.Rows.Count) Then
                 _RowMapa = _Tbl.Rows(0)

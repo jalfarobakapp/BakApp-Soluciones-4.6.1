@@ -116,7 +116,7 @@ Public Class Frm_Crear_Entidad_Mt_Lista_contactos
 
 
         With GrillaContactos
-            .DataSource = _Sql.Fx_Get_Tablas(Consulta_Sql)
+            .DataSource = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
             OcultarEncabezadoGrilla(GrillaContactos, True)
 
@@ -208,7 +208,7 @@ Public Class Frm_Crear_Entidad_Mt_Lista_contactos
 
         Consulta_Sql = "Select * From MAEENCON Where KOEN = '" & _CodEntidad &
                        "' AND RUTCONTACT = '" & _RutContacto & "'"
-        _Tbl_DatosContacto = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_DatosContacto = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Return _Tbl_DatosContacto
 

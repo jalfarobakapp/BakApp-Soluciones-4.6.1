@@ -28,19 +28,20 @@ Partial Class Frm_FTP_Fichero
         Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_Ftp_Host = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_Host = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_Ftp_Usuario = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Btn_Ver_Contrasena = New DevComponents.DotNetBar.ButtonX()
+        Me.Txt_Usuario = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_Ftp_Contrasena = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_Clave = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_Ftp_Puerto = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Txt_Directorio_Seleccionado = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_Puerto = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_Fichero = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Refresh = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Descargar_Archivos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Subir_Archivos = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_ProbConexion = New DevComponents.DotNetBar.ButtonItem()
         Me.Grupo_Fichero = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.List_Carpeta_FTP = New DevComponents.DotNetBar.Controls.ListViewEx()
         Me.Archivo = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -53,6 +54,7 @@ Partial Class Frm_FTP_Fichero
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Eliminar_documento = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Renombrar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Volver = New DevComponents.DotNetBar.ButtonItem()
         Me.CirProgres_FTP = New DevComponents.DotNetBar.CircularProgressItem()
         Me.Grupo_Configuracion_Ftp.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -65,12 +67,11 @@ Partial Class Frm_FTP_Fichero
         '
         'Grupo_Configuracion_Ftp
         '
-        Me.Grupo_Configuracion_Ftp.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.Grupo_Configuracion_Ftp.CanvasColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Grupo_Configuracion_Ftp.BackColor = System.Drawing.Color.White
         Me.Grupo_Configuracion_Ftp.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.Grupo_Configuracion_Ftp.Controls.Add(Me.LabelX5)
         Me.Grupo_Configuracion_Ftp.Controls.Add(Me.TableLayoutPanel1)
-        Me.Grupo_Configuracion_Ftp.Controls.Add(Me.Txt_Directorio_Seleccionado)
+        Me.Grupo_Configuracion_Ftp.Controls.Add(Me.Txt_Fichero)
         Me.Grupo_Configuracion_Ftp.DisabledBackColor = System.Drawing.Color.Empty
         Me.Grupo_Configuracion_Ftp.Location = New System.Drawing.Point(12, 12)
         Me.Grupo_Configuracion_Ftp.Name = "Grupo_Configuracion_Ftp"
@@ -130,14 +131,13 @@ Partial Class Frm_FTP_Fichero
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TableLayoutPanel1.Controls.Add(Me.LabelX2, 0, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.Txt_Ftp_Host, 4, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Txt_Host, 4, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.LabelX1, 3, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.Txt_Ftp_Usuario, 2, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.Btn_Ver_Contrasena, 1, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.Txt_Usuario, 2, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.LabelX3, 0, 1)
-        Me.TableLayoutPanel1.Controls.Add(Me.Txt_Ftp_Contrasena, 2, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.Txt_Clave, 2, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.LabelX4, 3, 1)
-        Me.TableLayoutPanel1.Controls.Add(Me.Txt_Ftp_Puerto, 4, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.Txt_Puerto, 4, 1)
         Me.TableLayoutPanel1.ForeColor = System.Drawing.Color.Black
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(3, 17)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
@@ -161,21 +161,21 @@ Partial Class Frm_FTP_Fichero
         Me.LabelX2.TabIndex = 2
         Me.LabelX2.Text = "Usuario"
         '
-        'Txt_Ftp_Host
+        'Txt_Host
         '
-        Me.Txt_Ftp_Host.BackColor = System.Drawing.Color.White
+        Me.Txt_Host.BackColor = System.Drawing.Color.White
         '
         '
         '
-        Me.Txt_Ftp_Host.Border.Class = "TextBoxBorder"
-        Me.Txt_Ftp_Host.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Ftp_Host.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_Ftp_Host.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Ftp_Host.Location = New System.Drawing.Point(360, 3)
-        Me.Txt_Ftp_Host.Name = "Txt_Ftp_Host"
-        Me.Txt_Ftp_Host.PreventEnterBeep = True
-        Me.Txt_Ftp_Host.Size = New System.Drawing.Size(243, 22)
-        Me.Txt_Ftp_Host.TabIndex = 1
+        Me.Txt_Host.Border.Class = "TextBoxBorder"
+        Me.Txt_Host.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Host.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Host.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Host.Location = New System.Drawing.Point(337, 3)
+        Me.Txt_Host.Name = "Txt_Host"
+        Me.Txt_Host.PreventEnterBeep = True
+        Me.Txt_Host.Size = New System.Drawing.Size(243, 22)
+        Me.Txt_Host.TabIndex = 1
         '
         'LabelX1
         '
@@ -185,39 +185,27 @@ Partial Class Frm_FTP_Fichero
         '
         Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX1.ForeColor = System.Drawing.Color.Black
-        Me.LabelX1.Location = New System.Drawing.Point(315, 3)
+        Me.LabelX1.Location = New System.Drawing.Point(292, 3)
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.Size = New System.Drawing.Size(39, 21)
         Me.LabelX1.TabIndex = 0
         Me.LabelX1.Text = "Host"
         '
-        'Txt_Ftp_Usuario
+        'Txt_Usuario
         '
-        Me.Txt_Ftp_Usuario.BackColor = System.Drawing.Color.White
+        Me.Txt_Usuario.BackColor = System.Drawing.Color.White
         '
         '
         '
-        Me.Txt_Ftp_Usuario.Border.Class = "TextBoxBorder"
-        Me.Txt_Ftp_Usuario.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Ftp_Usuario.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_Ftp_Usuario.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Ftp_Usuario.Location = New System.Drawing.Point(87, 3)
-        Me.Txt_Ftp_Usuario.Name = "Txt_Ftp_Usuario"
-        Me.Txt_Ftp_Usuario.PreventEnterBeep = True
-        Me.Txt_Ftp_Usuario.Size = New System.Drawing.Size(222, 22)
-        Me.Txt_Ftp_Usuario.TabIndex = 3
-        '
-        'Btn_Ver_Contrasena
-        '
-        Me.Btn_Ver_Contrasena.AccessibleRole = System.Windows.Forms.AccessibleRole.StaticText
-        Me.Btn_Ver_Contrasena.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Ver_Contrasena.Image = CType(resources.GetObject("Btn_Ver_Contrasena.Image"), System.Drawing.Image)
-        Me.Btn_Ver_Contrasena.Location = New System.Drawing.Point(64, 30)
-        Me.Btn_Ver_Contrasena.Name = "Btn_Ver_Contrasena"
-        Me.Btn_Ver_Contrasena.Size = New System.Drawing.Size(17, 21)
-        Me.Btn_Ver_Contrasena.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Ver_Contrasena.TabIndex = 14
-        Me.Btn_Ver_Contrasena.Tooltip = "Ver contraseña"
+        Me.Txt_Usuario.Border.Class = "TextBoxBorder"
+        Me.Txt_Usuario.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Usuario.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Usuario.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Usuario.Location = New System.Drawing.Point(64, 3)
+        Me.Txt_Usuario.Name = "Txt_Usuario"
+        Me.Txt_Usuario.PreventEnterBeep = True
+        Me.Txt_Usuario.Size = New System.Drawing.Size(222, 22)
+        Me.Txt_Usuario.TabIndex = 3
         '
         'LabelX3
         '
@@ -233,22 +221,24 @@ Partial Class Frm_FTP_Fichero
         Me.LabelX3.TabIndex = 4
         Me.LabelX3.Text = "Contraseña"
         '
-        'Txt_Ftp_Contrasena
+        'Txt_Clave
         '
-        Me.Txt_Ftp_Contrasena.BackColor = System.Drawing.Color.White
+        Me.Txt_Clave.BackColor = System.Drawing.Color.White
         '
         '
         '
-        Me.Txt_Ftp_Contrasena.Border.Class = "TextBoxBorder"
-        Me.Txt_Ftp_Contrasena.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Ftp_Contrasena.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_Ftp_Contrasena.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Ftp_Contrasena.Location = New System.Drawing.Point(87, 30)
-        Me.Txt_Ftp_Contrasena.Name = "Txt_Ftp_Contrasena"
-        Me.Txt_Ftp_Contrasena.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.Txt_Ftp_Contrasena.PreventEnterBeep = True
-        Me.Txt_Ftp_Contrasena.Size = New System.Drawing.Size(222, 22)
-        Me.Txt_Ftp_Contrasena.TabIndex = 5
+        Me.Txt_Clave.Border.Class = "TextBoxBorder"
+        Me.Txt_Clave.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Clave.ButtonCustom.Image = CType(resources.GetObject("Txt_Clave.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Clave.ButtonCustom.Visible = True
+        Me.Txt_Clave.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Clave.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Clave.Location = New System.Drawing.Point(64, 30)
+        Me.Txt_Clave.Name = "Txt_Clave"
+        Me.Txt_Clave.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
+        Me.Txt_Clave.PreventEnterBeep = True
+        Me.Txt_Clave.Size = New System.Drawing.Size(222, 22)
+        Me.Txt_Clave.TabIndex = 5
         '
         'LabelX4
         '
@@ -258,51 +248,50 @@ Partial Class Frm_FTP_Fichero
         '
         Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(315, 30)
+        Me.LabelX4.Location = New System.Drawing.Point(292, 30)
         Me.LabelX4.Name = "LabelX4"
         Me.LabelX4.Size = New System.Drawing.Size(39, 21)
         Me.LabelX4.TabIndex = 6
         Me.LabelX4.Text = "Puerto"
         '
-        'Txt_Ftp_Puerto
+        'Txt_Puerto
         '
-        Me.Txt_Ftp_Puerto.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_Ftp_Puerto.Border.Class = "TextBoxBorder"
-        Me.Txt_Ftp_Puerto.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Ftp_Puerto.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_Ftp_Puerto.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Ftp_Puerto.Location = New System.Drawing.Point(360, 30)
-        Me.Txt_Ftp_Puerto.Name = "Txt_Ftp_Puerto"
-        Me.Txt_Ftp_Puerto.PreventEnterBeep = True
-        Me.Txt_Ftp_Puerto.Size = New System.Drawing.Size(50, 22)
-        Me.Txt_Ftp_Puerto.TabIndex = 7
-        '
-        'Txt_Directorio_Seleccionado
-        '
-        Me.Txt_Directorio_Seleccionado.BackColor = System.Drawing.Color.White
+        Me.Txt_Puerto.BackColor = System.Drawing.Color.White
         '
         '
         '
-        Me.Txt_Directorio_Seleccionado.Border.Class = "TextBoxBorder"
-        Me.Txt_Directorio_Seleccionado.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Directorio_Seleccionado.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_Directorio_Seleccionado.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Directorio_Seleccionado.Location = New System.Drawing.Point(48, 77)
-        Me.Txt_Directorio_Seleccionado.Name = "Txt_Directorio_Seleccionado"
-        Me.Txt_Directorio_Seleccionado.PreventEnterBeep = True
-        Me.Txt_Directorio_Seleccionado.ReadOnly = True
-        Me.Txt_Directorio_Seleccionado.Size = New System.Drawing.Size(558, 22)
-        Me.Txt_Directorio_Seleccionado.TabIndex = 1
+        Me.Txt_Puerto.Border.Class = "TextBoxBorder"
+        Me.Txt_Puerto.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Puerto.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Puerto.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Puerto.Location = New System.Drawing.Point(337, 30)
+        Me.Txt_Puerto.Name = "Txt_Puerto"
+        Me.Txt_Puerto.PreventEnterBeep = True
+        Me.Txt_Puerto.Size = New System.Drawing.Size(50, 22)
+        Me.Txt_Puerto.TabIndex = 7
+        '
+        'Txt_Fichero
+        '
+        Me.Txt_Fichero.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Fichero.Border.Class = "TextBoxBorder"
+        Me.Txt_Fichero.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Fichero.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Fichero.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Fichero.Location = New System.Drawing.Point(48, 77)
+        Me.Txt_Fichero.Name = "Txt_Fichero"
+        Me.Txt_Fichero.PreventEnterBeep = True
+        Me.Txt_Fichero.Size = New System.Drawing.Size(558, 22)
+        Me.Txt_Fichero.TabIndex = 1
         '
         'Bar1
         '
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Refresh, Me.Btn_Descargar_Archivos, Me.Btn_Subir_Archivos})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Refresh, Me.Btn_Descargar_Archivos, Me.Btn_Subir_Archivos, Me.Btn_Grabar, Me.Btn_ProbConexion})
         Me.Bar1.Location = New System.Drawing.Point(0, 615)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(642, 41)
@@ -326,7 +315,7 @@ Partial Class Frm_FTP_Fichero
         Me.Btn_Descargar_Archivos.ForeColor = System.Drawing.Color.Black
         Me.Btn_Descargar_Archivos.Image = CType(resources.GetObject("Btn_Descargar_Archivos.Image"), System.Drawing.Image)
         Me.Btn_Descargar_Archivos.Name = "Btn_Descargar_Archivos"
-        Me.Btn_Descargar_Archivos.Text = "Descargar archivos seleccionados"
+        Me.Btn_Descargar_Archivos.Tooltip = "Descargar archivos seleccionados"
         '
         'Btn_Subir_Archivos
         '
@@ -334,12 +323,32 @@ Partial Class Frm_FTP_Fichero
         Me.Btn_Subir_Archivos.ForeColor = System.Drawing.Color.Black
         Me.Btn_Subir_Archivos.Image = CType(resources.GetObject("Btn_Subir_Archivos.Image"), System.Drawing.Image)
         Me.Btn_Subir_Archivos.Name = "Btn_Subir_Archivos"
-        Me.Btn_Subir_Archivos.Text = "Subir archivo"
+        Me.Btn_Subir_Archivos.Tooltip = "Subir archivo"
+        '
+        'Btn_Grabar
+        '
+        Me.Btn_Grabar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Grabar.FontBold = True
+        Me.Btn_Grabar.ForeColor = System.Drawing.Color.Navy
+        Me.Btn_Grabar.Image = CType(resources.GetObject("Btn_Grabar.Image"), System.Drawing.Image)
+        Me.Btn_Grabar.ImageAlt = CType(resources.GetObject("Btn_Grabar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Grabar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_Grabar.Name = "Btn_Grabar"
+        Me.Btn_Grabar.Visible = False
+        '
+        'Btn_ProbConexion
+        '
+        Me.Btn_ProbConexion.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_ProbConexion.ForeColor = System.Drawing.Color.Black
+        Me.Btn_ProbConexion.Image = CType(resources.GetObject("Btn_ProbConexion.Image"), System.Drawing.Image)
+        Me.Btn_ProbConexion.ImageAlt = CType(resources.GetObject("Btn_ProbConexion.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ProbConexion.Name = "Btn_ProbConexion"
+        Me.Btn_ProbConexion.Text = "Probar conexión"
+        Me.Btn_ProbConexion.Visible = False
         '
         'Grupo_Fichero
         '
-        Me.Grupo_Fichero.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.Grupo_Fichero.CanvasColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Grupo_Fichero.BackColor = System.Drawing.Color.White
         Me.Grupo_Fichero.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.Grupo_Fichero.Controls.Add(Me.List_Carpeta_FTP)
         Me.Grupo_Fichero.DisabledBackColor = System.Drawing.Color.Empty
@@ -373,6 +382,7 @@ Partial Class Frm_FTP_Fichero
         Me.List_Carpeta_FTP.Dock = System.Windows.Forms.DockStyle.Fill
         Me.List_Carpeta_FTP.ForeColor = System.Drawing.Color.Black
         Me.List_Carpeta_FTP.FullRowSelect = True
+        Me.List_Carpeta_FTP.HideSelection = False
         Me.List_Carpeta_FTP.Location = New System.Drawing.Point(0, 0)
         Me.List_Carpeta_FTP.Name = "List_Carpeta_FTP"
         Me.List_Carpeta_FTP.Size = New System.Drawing.Size(617, 251)
@@ -409,6 +419,7 @@ Partial Class Frm_FTP_Fichero
         Me.ImageList1.Images.SetKeyName(4, "file_extension_jpg.png")
         Me.ImageList1.Images.SetKeyName(5, "document.png")
         Me.ImageList1.Images.SetKeyName(6, "file_extension_bmp.png")
+        Me.ImageList1.Images.SetKeyName(7, "folder.png")
         '
         'TxtLog
         '
@@ -430,8 +441,7 @@ Partial Class Frm_FTP_Fichero
         '
         'Grupo_Estatus
         '
-        Me.Grupo_Estatus.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.Grupo_Estatus.CanvasColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Grupo_Estatus.BackColor = System.Drawing.Color.White
         Me.Grupo_Estatus.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.Grupo_Estatus.Controls.Add(Me.TxtLog)
         Me.Grupo_Estatus.DisabledBackColor = System.Drawing.Color.Empty
@@ -471,8 +481,7 @@ Partial Class Frm_FTP_Fichero
         '
         'GroupPanel3
         '
-        Me.GroupPanel3.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.GroupPanel3.CanvasColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.GroupPanel3.BackColor = System.Drawing.Color.White
         Me.GroupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel3.Controls.Add(Me.Bar2)
         Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
@@ -514,7 +523,7 @@ Partial Class Frm_FTP_Fichero
         Me.Bar2.AntiAlias = True
         Me.Bar2.BackColor = System.Drawing.Color.Transparent
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Eliminar_documento, Me.Btn_Renombrar, Me.CirProgres_FTP})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Eliminar_documento, Me.Btn_Renombrar, Me.Btn_Volver, Me.CirProgres_FTP})
         Me.Bar2.Location = New System.Drawing.Point(3, 2)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(603, 27)
@@ -534,6 +543,13 @@ Partial Class Frm_FTP_Fichero
         '
         Me.Btn_Renombrar.Image = CType(resources.GetObject("Btn_Renombrar.Image"), System.Drawing.Image)
         Me.Btn_Renombrar.Name = "Btn_Renombrar"
+        Me.Btn_Renombrar.Visible = False
+        '
+        'Btn_Volver
+        '
+        Me.Btn_Volver.Image = CType(resources.GetObject("Btn_Volver.Image"), System.Drawing.Image)
+        Me.Btn_Volver.ImageAlt = CType(resources.GetObject("Btn_Volver.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Volver.Name = "Btn_Volver"
         '
         'CirProgres_FTP
         '
@@ -575,18 +591,17 @@ Partial Class Frm_FTP_Fichero
     End Sub
     Friend WithEvents Grupo_Configuracion_Ftp As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
-    Friend WithEvents Txt_Directorio_Seleccionado As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Txt_Fichero As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
     Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
     Friend WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
-    Public WithEvents Txt_Ftp_Host As DevComponents.DotNetBar.Controls.TextBoxX
+    Public WithEvents Txt_Host As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
-    Public WithEvents Txt_Ftp_Usuario As DevComponents.DotNetBar.Controls.TextBoxX
-    Public WithEvents Btn_Ver_Contrasena As DevComponents.DotNetBar.ButtonX
+    Public WithEvents Txt_Usuario As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
-    Public WithEvents Txt_Ftp_Contrasena As DevComponents.DotNetBar.Controls.TextBoxX
+    Public WithEvents Txt_Clave As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
-    Public WithEvents Txt_Ftp_Puerto As DevComponents.DotNetBar.Controls.TextBoxX
+    Public WithEvents Txt_Puerto As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Grupo_Fichero As DevComponents.DotNetBar.Controls.GroupPanel
     Private WithEvents List_Carpeta_FTP As DevComponents.DotNetBar.Controls.ListViewEx
     Private WithEvents Archivo As System.Windows.Forms.ColumnHeader
@@ -603,4 +618,7 @@ Partial Class Frm_FTP_Fichero
     Public WithEvents Btn_Renombrar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents CirProgres_FTP As DevComponents.DotNetBar.CircularProgressItem
     Public WithEvents Btn_Refresh As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_ProbConexion As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_Volver As DevComponents.DotNetBar.ButtonItem
 End Class

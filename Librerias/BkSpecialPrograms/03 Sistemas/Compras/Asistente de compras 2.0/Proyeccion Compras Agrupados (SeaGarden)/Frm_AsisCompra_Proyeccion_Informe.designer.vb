@@ -36,6 +36,7 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         Me.Btn_Exportar_Excel = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Informe_Proximas_Recepciones = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Colapsar_Filas = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_SugCambioPrecio = New DevComponents.DotNetBar.ButtonItem()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Input_Redondeo = New DevComponents.Editors.IntegerInput()
         Me.Panel_Ayuda = New DevComponents.DotNetBar.ExpandablePanel()
@@ -59,6 +60,7 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         Me.Rdb_Proyeccion_Promedio_Diario = New System.Windows.Forms.RadioButton()
         Me.Rdb_Proyeccion_Rotacion_Diaria = New System.Windows.Forms.RadioButton()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_MostrarSugCambioPrecio = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Input_Redondeo, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -142,7 +144,7 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Actualizar, Me.Btn_Exportar_Excel, Me.Btn_Informe_Proximas_Recepciones, Me.Btn_Colapsar_Filas})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Actualizar, Me.Btn_Exportar_Excel, Me.Btn_Informe_Proximas_Recepciones, Me.Btn_Colapsar_Filas, Me.Btn_SugCambioPrecio})
         Me.Bar1.Location = New System.Drawing.Point(0, 535)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(1082, 41)
@@ -187,6 +189,16 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         Me.Btn_Colapsar_Filas.ImageAlt = CType(resources.GetObject("Btn_Colapsar_Filas.ImageAlt"), System.Drawing.Image)
         Me.Btn_Colapsar_Filas.Name = "Btn_Colapsar_Filas"
         Me.Btn_Colapsar_Filas.Tooltip = "Colapsar todas las filas"
+        '
+        'Btn_SugCambioPrecio
+        '
+        Me.Btn_SugCambioPrecio.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_SugCambioPrecio.ForeColor = System.Drawing.Color.Black
+        Me.Btn_SugCambioPrecio.Image = CType(resources.GetObject("Btn_SugCambioPrecio.Image"), System.Drawing.Image)
+        Me.Btn_SugCambioPrecio.ImageAlt = CType(resources.GetObject("Btn_SugCambioPrecio.ImageAlt"), System.Drawing.Image)
+        Me.Btn_SugCambioPrecio.Name = "Btn_SugCambioPrecio"
+        Me.Btn_SugCambioPrecio.Tooltip = "Colapsar todas las filas"
+        Me.Btn_SugCambioPrecio.Visible = False
         '
         'Label1
         '
@@ -471,7 +483,7 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         Me.Super_Grilla.PrimaryGrid.Filter.ShowPanelFilterExpr = True
         Me.Super_Grilla.PrimaryGrid.MultiSelect = False
         Me.Super_Grilla.PrimaryGrid.Title.RowHeaderVisibility = DevComponents.DotNetBar.SuperGrid.RowHeaderVisibility.PanelControlled
-        Me.Super_Grilla.Size = New System.Drawing.Size(1059, 462)
+        Me.Super_Grilla.Size = New System.Drawing.Size(1059, 451)
         Me.Super_Grilla.TabIndex = 2
         Me.Super_Grilla.Text = "SuperGridControl2"
         '
@@ -515,11 +527,30 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         Me.LabelX1.TabIndex = 131
         Me.LabelX1.Text = "Variable de estudio:"
         '
+        'Chk_MostrarSugCambioPrecio
+        '
+        Me.Chk_MostrarSugCambioPrecio.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Chk_MostrarSugCambioPrecio.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_MostrarSugCambioPrecio.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_MostrarSugCambioPrecio.CheckBoxImageChecked = CType(resources.GetObject("Chk_MostrarSugCambioPrecio.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_MostrarSugCambioPrecio.FocusCuesEnabled = False
+        Me.Chk_MostrarSugCambioPrecio.ForeColor = System.Drawing.Color.Black
+        Me.Chk_MostrarSugCambioPrecio.Location = New System.Drawing.Point(12, 512)
+        Me.Chk_MostrarSugCambioPrecio.Name = "Chk_MostrarSugCambioPrecio"
+        Me.Chk_MostrarSugCambioPrecio.Size = New System.Drawing.Size(365, 17)
+        Me.Chk_MostrarSugCambioPrecio.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_MostrarSugCambioPrecio.TabIndex = 132
+        Me.Chk_MostrarSugCambioPrecio.Text = "Mostrar sugerencia de cambio de precio"
+        '
         'Frm_AsisCompra_Proyeccion_Informe
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1082, 576)
+        Me.Controls.Add(Me.Chk_MostrarSugCambioPrecio)
         Me.Controls.Add(Me.LabelX1)
         Me.Controls.Add(Me.Rdb_Proyeccion_Promedio_Diario)
         Me.Controls.Add(Me.Panel_Ayuda)
@@ -583,4 +614,6 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
     Friend WithEvents Lbl_VerdeOscuro As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Lbl_Rosado As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Btn_SugCambioPrecio As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Chk_MostrarSugCambioPrecio As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

@@ -31,5 +31,11 @@ Public Class Zw_Stmp_Enc
     Public Property FechaPlanificacion As DateTime?
     Public Property FechaEntrega As DateTime?
     Public Property CodFuncionario_Cierra As String
+    Public Property EnvFacAutoBk As Boolean
+    Public Property Log_Error As String
+    Public Property ProblemaFac As Boolean
+    Public Property CodFuncionario_Factura As String
+    Public Property CodFuncionario_MarcaFacturar As String
+    Public Property Reasignada As Boolean
 
 End Class

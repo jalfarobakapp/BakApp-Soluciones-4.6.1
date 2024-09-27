@@ -29,7 +29,7 @@ Public Class Frm_BkpPostBusquedaOrdenBod
         _Orden_Bod = "ORDEN_BOD_" & ModEmpresa.Trim & ModSucursal.Trim
 
         Consulta_sql = "Select * From TABBO Where EMPRESA = '" & ModEmpresa & "'"
-        _Tbl_Bodegas = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Bodegas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Fila As DataRow In _Tbl_Bodegas.Rows
 
@@ -81,7 +81,7 @@ Public Class Frm_BkpPostBusquedaOrdenBod
                         Select * From #Paso Order by Orden
                         Drop Table #Paso"
 
-        _Tbl_Bodegas = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Bodegas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Bodegas
 

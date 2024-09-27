@@ -382,10 +382,17 @@ Public Class Frm_LiquidTJVcredito
     Sub Sb_Filtrar()
         Try
             If IsNothing(_Dv) Then Return
+
+            Dim _Refanti As String = String.Empty
+
+            If Chk_Refanti.Checked Then
+                _Refanti = "+REFANTI"
+            End If
+
             If Chk_MostrarSoloIncluidos.Checked Then
-                _Dv.RowFilter = String.Format("CUDP+NUCUDP+NUDP+ENDP+VADP+FEEMDP+FEVEDP Like '%{0}%' And Incluir = 1", Txt_Filtrar.Text.Trim)
+                _Dv.RowFilter = String.Format("CUDP+NUCUDP+NUDP+ENDP+VADP+FEEMDP+FEVEDP" & _Refanti & " Like '%{0}%' And Incluir = 1", Txt_Filtrar.Text.Trim)
             Else
-                _Dv.RowFilter = String.Format("CUDP+NUCUDP+NUDP+ENDP+VADP+FEEMDP+FEVEDP Like '%{0}%'", Txt_Filtrar.Text.Trim)
+                _Dv.RowFilter = String.Format("CUDP+NUCUDP+NUDP+ENDP+VADP+FEEMDP+FEVEDP" & _Refanti & " Like '%{0}%'", Txt_Filtrar.Text.Trim)
             End If
         Catch ex As Exception
             MessageBoxEx.Show(Me, ex.Message, "Cuek!", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -471,7 +478,7 @@ Public Class Frm_LiquidTJVcredito
                        "From MAEDPCE" & vbCrLf &
                        "Where 1 = 0"
 
-        _Tbl_Maedpce = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Maedpce = _Sql.Fx_Get_DataTable(Consulta_sql)
 
     End Sub
 
@@ -580,7 +587,7 @@ Public Class Frm_LiquidTJVcredito
         Dim _Filtro As String = Generar_Filtro_IN(_Dv.Table, "Incluir", "IDMAEDPCE", True, True, "")
 
         Consulta_sql = "Select * From MAEDPCE Where IDMAEDPCE In " & _Filtro
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Sb_Tabla_Maedpce()
 
@@ -612,6 +619,7 @@ Public Class Frm_LiquidTJVcredito
         Chk_MostrarSoloIncluidos.Checked = False
 
         Dim Fm As New Frm_LiquidImporDtExcel(_Dv.Table)
+        Fm.Chk_Refanti.Checked = Chk_Refanti.Checked
         Fm.ShowDialog(Me)
 
         If Fm.Ls_Liquid_Transbank.Count Then
@@ -792,6 +800,15 @@ Public Class Frm_LiquidTJVcredito
         Dim Fm As New Frm_Pagos_Documentos_Pagados(_Idmaedpce)
         Fm.ShowDialog(Me)
         Fm.Dispose()
+
+    End Sub
+
+    Private Sub Grilla_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellEnter
+
+        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+        Dim _Refanti As String = _Fila.Cells("REFANTI").Value
+
+        Lbl_Refanti.Text = "Ref. Anticipo: " & _Refanti
 
     End Sub
 End Class

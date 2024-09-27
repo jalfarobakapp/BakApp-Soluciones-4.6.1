@@ -50,7 +50,7 @@ Public Class Frm_03_Sectores_Inv
                        Condi & vbCrLf &
                        "Order by Descripcion"
 
-        Grilla_Inv.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Grilla_Inv.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         With Grilla_Inv
@@ -254,12 +254,12 @@ Public Class Frm_03_Sectores_Inv
         '                                          "' And CodFuncionario = '" & _CdFun & "'")
 
         'If CBool(Reg) Then
-        'MessageBoxEx.Show("Este usuario ya esta asignado como responzable a este sector", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        'MessageBoxEx.Show("Este usuario ya esta asignado como responsable a este sector", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         'Return
         'Else
 
         'Dim dlg As System.Windows.Forms.DialogResult = _
-        'MessageBoxEx.Show(Me, "Esta seguro de asigna este usuario como responzable al sector?" & vbCrLf & _
+        'MessageBoxEx.Show(Me, "Esta seguro de asigna este usuario como responsable al sector?" & vbCrLf & _
         '                                 "Usuario: " & _NmFun & vbCrLf & _
         '                                 "Sector: " & Trim(_Lugar) & ", " & _Sector, _
         '                                 "Asignar usuario", MessageBoxButtons.OKCancel, MessageBoxIcon.Question)

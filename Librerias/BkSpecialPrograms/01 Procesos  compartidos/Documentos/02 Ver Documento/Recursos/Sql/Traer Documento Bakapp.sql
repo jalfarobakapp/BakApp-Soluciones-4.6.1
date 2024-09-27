@@ -3,7 +3,7 @@ Declare @Id_DocEnc int
 Select @Id_DocEnc = #Id_DocEnc#   
 
 Select Top 1 *,
-       ISNULL((Select Top 1 NOTIDO From TABTIDO Where TipoDoc = TIDO),'') As 'TipoDocumento',
+       ISNULL((Select Top 1 NOTIDO From TABTIDO WITH (NOLOCK) Where TipoDoc = TIDO),'') As 'TipoDocumento',
 	   --CONVERT(NVARCHAR, CONVERT(datetime, (EDO.HORAGRAB*1.0/3600)/24), 108) AS HORA,
 	   CAST('' AS Varchar(10)) As NUMECOM,
        '' As 'Ent_Fisica',
@@ -73,12 +73,12 @@ Select
 		CodigoProv,         -- Código alternativo del proveedor
         Potencia
 			  
-   From #Base_Bakapp#Zw_Casi_DocDet
+   From #Base_Bakapp#Zw_Casi_DocDet WITH (NOLOCK)
    Where  
         Id_DocEnc = @Id_DocEnc  
         ORDER BY Id_DocDet
         
-Select * From #Base_Bakapp#Zw_Casi_DocObs
+Select * From #Base_Bakapp#Zw_Casi_DocObs WITH (NOLOCK)
 Where Id_DocEnc = @Id_DocEnc      
 
         

@@ -206,7 +206,7 @@ Public Class Frm_ExportarJetExcel
         Procesando(False, True)
         Consulta_sql = "SELECT * FROM MAEPR"
         CircularProgress2.IsRunning = True
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
         ExpExcelJet(_Tbl, CircularProgress1, CircularProgress2, "", TxtNombreArchivo.Text)
         CircularProgress2.IsRunning = False
         _Cancelar = False

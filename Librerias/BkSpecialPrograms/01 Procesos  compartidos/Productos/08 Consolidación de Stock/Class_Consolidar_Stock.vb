@@ -35,7 +35,7 @@
         Consulta_sql = My.Resources._SQLquery.Creacion_Tabla_Paso_Conolidacion_Stock
         Consulta_sql = Replace(Consulta_sql, "#Tabla_Paso#", _Tabla_Paso)
         Consulta_sql = Replace(Consulta_sql, "#Condicion#", "")
-        _Tbl_Productos_Diferencia = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Productos_Diferencia = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Consulta_sql = "Select Codigo,Cast('' As Varchar(50)) As Descripcion,Empresa,Sucursal,Bodega,StComp1,StComp2,StPedi1,StPedi2," &
                        "Cast(0 As Bit) As Dif_StockCom_BkUd1,Cast(0 As Bit) As Dif_StockCom_BkUd2," &
@@ -44,7 +44,7 @@
                        "Cast(0 As Float) As StockPedi1,Cast(0 As Float) As StockPedi2" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Prod_Stock" & vbCrLf &
                        "Where 1 < 0"
-        _Tbl_Productos_Diferencia_Bakapp = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Productos_Diferencia_Bakapp = _Sql.Fx_Get_DataTable(Consulta_sql)
 
     End Sub
 
@@ -656,7 +656,7 @@
             _SQLquery = Replace(_SQLquery, "#Fecha#", Format(_Fecha, "yyyyMMdd"))
             _SQLquery = Replace(_SQLquery, "Zw_TblStockConsolid", "#Zw_TblStockConsolid")
 
-            Dim Tbl As DataTable = _Sql.Fx_Get_Tablas(_SQLquery)
+            Dim Tbl As DataTable = _Sql.Fx_Get_DataTable(_SQLquery)
 
             If Tbl.Rows.Count > 0 Then
                 Stock_(0) = Math.Round(Tbl.Rows(0).Item("CantidadUd1"), 5)
@@ -698,7 +698,7 @@
                             And Det.Empresa = '" & _Empresa & "' And Det.Sucursal = '" & _Sucursal & "' And Det.Bodega = '" & _Bodega & "' And Det.Codigo = '" & _Codigo & "' And Enc.TipoDoc = '" & _TipoDoc & "'
                             Group By Det.Codigo,Det.Descripcion,Det.Empresa,Det.Sucursal,Det.Bodega"
 
-            Dim Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If Tbl.Rows.Count > 0 Then
                 Stock_(0) = Math.Round(Tbl.Rows(0).Item("CantidadUd1"), 5)

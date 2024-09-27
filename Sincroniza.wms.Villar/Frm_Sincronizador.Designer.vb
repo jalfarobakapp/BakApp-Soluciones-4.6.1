@@ -39,6 +39,8 @@ Partial Class Frm_Sincronizador
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Timer_Limpiar = New System.Windows.Forms.Timer(Me.components)
         Me.Lbl_DiasRevNVV = New DevComponents.DotNetBar.LabelX()
+        Me.Timer_AjustarFecha = New System.Windows.Forms.Timer(Me.components)
+        Me.Timer_CerrarConfirmadas = New System.Windows.Forms.Timer(Me.components)
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dtp_FechaRevision, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -276,6 +278,14 @@ Partial Class Frm_Sincronizador
         Me.Lbl_DiasRevNVV.Tag = "1"
         Me.Lbl_DiasRevNVV.Text = "Días para revisar NVV hacia atras"
         '
+        'Timer_AjustarFecha
+        '
+        Me.Timer_AjustarFecha.Interval = 2000
+        '
+        'Timer_CerrarConfirmadas
+        '
+        Me.Timer_CerrarConfirmadas.Interval = 2000
+        '
         'Frm_Sincronizador
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -320,4 +330,6 @@ Partial Class Frm_Sincronizador
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Timer_Limpiar As Timer
     Friend WithEvents Lbl_DiasRevNVV As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Timer_AjustarFecha As Timer
+    Friend WithEvents Timer_CerrarConfirmadas As Timer
 End Class

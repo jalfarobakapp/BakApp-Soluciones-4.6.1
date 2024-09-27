@@ -225,7 +225,7 @@ Public Class Frm_MantCostosPrecios
             _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
             Consulta_sql = "Select * From " & _Nombre_Tbl_Paso_Costos & " Where RepetidosAlt > 1"
-            Dim _Tbl_Repetidos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Repetidos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _Flr As DataRow In _Tbl_Repetidos.Rows
 
@@ -574,7 +574,7 @@ Public Class Frm_MantCostosPrecios
             _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
             Consulta_sql = "Select * From " & _Nombre_Tbl_Paso_Costos & " Where RepetidosAlt > 1"
-            Dim _Tbl_Repetidos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Repetidos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Chk_OrdenDeLlegada.Visible = False
 
@@ -1083,7 +1083,7 @@ Public Class Frm_MantCostosPrecios
                         vbCrLf &
                         "Drop table #Paso"
 
-        Dim _TblRepetidos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblRepetidos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If _TblRepetidos.Rows.Count Then
             MessageBoxEx.Show(Me, "Existen " & _TblRepetidos.Rows.Count & " producto(s) que tienen mas de un código alternativo para el proveedor." & vbCrLf & vbCrLf &
@@ -1104,7 +1104,7 @@ Public Class Frm_MantCostosPrecios
         Consulta_sql = "Select Id, Tabla_Random, Campo_Random, Tabla_Bakapp, Campo_Bakapp
                         From " & _Global_BaseBk & "Zw_Tablas_Equivalentes_Rd_Bk
                         Where Tabla_Bakapp = 'Zw_ListaPreCosto'"
-        Dim _Tbl_Equivalentes As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Equivalentes As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Sql_Equivalentes As String
 
@@ -1332,7 +1332,7 @@ Public Class Frm_MantCostosPrecios
         Dim _Tbl_Errores As DataTable
 
         Consulta_sql = "Select Cast('' As Varchar(20)) As Codigo,Cast('' As Varchar(300)) As Error Where 1<0"
-        _Tbl_Errores = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Errores = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Try
 
@@ -1630,18 +1630,18 @@ Public Class Frm_MantCostosPrecios
 #End Region
 
     Private Sub BtnExportarExcel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnExportarExcel.Click
+        ShowContextMenu(Menu_Contextual_Exportar_Excel)
+        'Dim _NomArch As String
 
-        Dim _NomArch As String
+        'Dim _RazonProveedor = _RowProveedor.Item("NOKOEN")
+        'Consulta_sql = "Select * From " & _Nombre_Tbl_Paso_Costos & vbCrLf &
+        '           "Where Codigo <> ''"
+        '_NomArch = "Lista de costos " & _RazonProveedor
 
-        Dim _RazonProveedor = _RowProveedor.Item("NOKOEN")
-        Consulta_sql = "Select * From " & _Nombre_Tbl_Paso_Costos & vbCrLf &
-                   "Where Codigo <> ''"
-        _NomArch = "Lista de costos " & _RazonProveedor
+        'Dim Tbl_Excel As DataTable
+        'Tbl_Excel = _Sql.Fx_Get_Tablas(Consulta_sql)
 
-        Dim Tbl_Excel As DataTable
-        Tbl_Excel = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-        ExportarTabla_JetExcel_Tabla(Tbl_Excel, Me, _NomArch.Trim)
+        'ExportarTabla_JetExcel_Tabla(Tbl_Excel, Me, _NomArch.Trim)
 
     End Sub
 
@@ -1938,7 +1938,7 @@ Public Class Frm_MantCostosPrecios
         Consulta_sql = "Select Id, Tabla_Random, Campo_Random, Tabla_Bakapp, Campo_Bakapp
                         From " & _Global_BaseBk & "Zw_Tablas_Equivalentes_Rd_Bk
                         Where Tabla_Bakapp = 'Zw_ListaPreCosto'"
-        Dim _Tbl_Equivalentes As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Equivalentes As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Sql_Equivalentes As String
 
@@ -2053,14 +2053,33 @@ Public Class Frm_MantCostosPrecios
     Private Sub Chk_Ver_Solo_Repetidos_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Ver_Solo_Repetidos.CheckedChanged
 
         Dim _e As New KeyEventArgs(Keys.Enter)
-
         Call Txt_Buscar_KeyDown(Nothing, _e)
-    End Sub
-
-    Private Sub Chk_NoUsar_Bloqueados_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_NoUsar_Bloqueados.CheckedChanged
-
-
 
     End Sub
+
+    Private Sub Btn_Mnu_ExportarExcelVistaActual_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_ExportarExcelVistaActual.Click
+
+        Dim _RazonProveedor = _RowProveedor.Item("NOKOEN")
+        Dim _NomArch As String = "Lista de costos " & _RazonProveedor
+
+        Dim Tbl_Excel As DataTable
+        Tbl_Excel = _Dv.Table
+
+        ExportarTabla_JetExcel_Tabla(Tbl_Excel, Me, _NomArch.Trim)
+    End Sub
+
+    Private Sub Btn_Mnu_ExportarExcelTodo_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_ExportarExcelTodo.Click
+
+        Dim _RazonProveedor = _RowProveedor.Item("NOKOEN")
+        Consulta_sql = "Select * From " & _Nombre_Tbl_Paso_Costos & vbCrLf &
+                   "Where Codigo <> ''"
+        Dim _NomArch As String = "Lista de costos " & _RazonProveedor
+
+        Dim Tbl_Excel As DataTable
+        Tbl_Excel = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+        ExportarTabla_JetExcel_Tabla(Tbl_Excel, Me, _NomArch.Trim)
+    End Sub
+
 
 End Class

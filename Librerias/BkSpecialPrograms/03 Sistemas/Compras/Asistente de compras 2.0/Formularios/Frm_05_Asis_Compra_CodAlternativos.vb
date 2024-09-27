@@ -26,7 +26,7 @@ Public Class Frm_05_AsisCompra_CodAlternativos
         Consulta_sql = "Select KOPRAL,NOKOPRAL From TABCODAL Where KOEN = '" & Proveedor & "' And KOPR = '" & CodigoRd & "'"
 
         With Grilla
-            .DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            .DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             .Columns("KOPRAL").Width = 100
             .Columns("KOPRAL").HeaderText = "Código Alt."

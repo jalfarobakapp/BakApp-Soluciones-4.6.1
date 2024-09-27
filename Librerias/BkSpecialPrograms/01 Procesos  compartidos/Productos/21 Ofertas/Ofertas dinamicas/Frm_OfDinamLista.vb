@@ -62,7 +62,7 @@ Public Class Frm_OfDinamLista
                         "Drop Table #Paso"
 
 
-        _Tbl_Maeeres = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Maeeres = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Codigo As String
 
@@ -147,7 +147,7 @@ Public Class Frm_OfDinamLista
         Consulta_sql = "Select Mprod.*,Mp.NOKOPR From MAEDRES Mprod" & vbCrLf &
                        "Left Join MAEPR Mp On Mp.KOPR = Mprod.ELEMENTO" & vbCrLf &
                        "Where CODIGO = '" & _Codigo & "'"
-        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Productos
 
@@ -272,7 +272,7 @@ Public Class Frm_OfDinamLista
                        "Left Join MAEPR On KOPR = ELEMENTO" & vbCrLf &
                        "Where CODIGO In (Select CODIGO From MAEERES Res Where TIPORESE = 'din' And Res.CODIGO = '" & _Codigo & "')" & vbCrLf &
                        "Order By NREG Desc"
-        Dim _TblProductos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblProductos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _FiltroProdExc As String = Generar_Filtro_IN(_TblProductos, "Chk", "Codigo", False, True, "'")
 
@@ -466,7 +466,7 @@ Public Class Frm_OfDinamLista
         Fm.Pro_CodEntidad = String.Empty
         Fm.Pro_CodSucEntidad = String.Empty
         Fm.Pro_Tipo_Lista = "P"
-        'Fm.Pro_Lista_Busqueda = ModListaPrecioVenta
+
         Fm.Pro_Sucursal_Busqueda = ModSucursal
         Fm.Pro_Bodega_Busqueda = ModBodega
         Fm.Txtdescripcion.Text = _Codigo
@@ -486,8 +486,6 @@ Public Class Frm_OfDinamLista
         Else
             Return Nothing
         End If
-
-        'End If
 
     End Function
 

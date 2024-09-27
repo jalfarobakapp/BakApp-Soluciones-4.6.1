@@ -382,7 +382,7 @@ Public Class Frm_Pagos_Masivos_Detalle
 
         Consulta_sql = "Select top 1 * From MAEVEN Where IDMAEVEN = " & _Idmaeven
 
-        Dim _TblMaeven As DataTable = _SQL.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblMaeven As DataTable = _SQL.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblMaeven.Rows.Count) Then
 

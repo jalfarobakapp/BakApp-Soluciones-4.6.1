@@ -268,7 +268,7 @@ Public Class Class_Fabricar
                 _Maestro = _Row_Meson.Item("Maestro")
 
                 Consulta_Sql = "Select * From POTPR Where IDPOTL = " & _Idpotl & " And IDPOTPR <> " & _Idpotpr & " And ORDEN > " & _Orden_Potpr & " ORDER BY ORDEN"
-                Dim _Tbl_Potpr As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+                Dim _Tbl_Potpr As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
                 For Each _Fila_Potpr As DataRow In _Tbl_Potpr.Rows
 
@@ -1126,7 +1126,7 @@ Public Class Class_Fabricar
                 _Maestro = _Row_Meson.Item("Maestro")
 
                 Consulta_Sql = "Select * From POTPR Where IDPOTL = " & _Idpotl & " And IDPOTPR <> " & _Idpotpr & " And ORDEN > " & _Orden_Potpr & " ORDER BY ORDEN"
-                Dim _Tbl_Potpr As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+                Dim _Tbl_Potpr As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
                 For Each _Fila_Potpr As DataRow In _Tbl_Potpr.Rows
 

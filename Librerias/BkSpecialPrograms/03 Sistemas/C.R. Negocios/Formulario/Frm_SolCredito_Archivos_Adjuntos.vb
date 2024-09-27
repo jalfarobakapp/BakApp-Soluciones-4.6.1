@@ -58,7 +58,7 @@ Public Class Frm_SolCredito_Archivos_Adjuntos
         Consulta_sql = "Select Semilla,Nom_Documento,DATALENGTH(Archivo) As Tamano,Cast('' As Varchar(50)) As Size,Fecha From " & _Global_BaseBk & "Zw_Negocios_04_Doc" & vbCrLf & _
                        "Where NroNegocio = '" & _NroNegocio & "' And Tipo_Obs = 'ADJUNTO'"
 
-        Dim _TblArchivos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblArchivos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
 

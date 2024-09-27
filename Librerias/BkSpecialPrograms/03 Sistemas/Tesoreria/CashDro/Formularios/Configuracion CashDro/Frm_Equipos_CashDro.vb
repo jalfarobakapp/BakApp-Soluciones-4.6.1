@@ -36,7 +36,7 @@ Public Class Frm_Equipos_CashDro
                        "Tbk_Bits_de_parada,Tbk_Bits_de_datos,Tbk_Hexadecimal,Tbk_Texto" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Estaciones_CashDro"
 
-        _Tbl_Informe = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Informe = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

@@ -19,8 +19,12 @@
     Dim _Codigo_Alternativo = String.Empty
     Dim _Descripcion
     Dim _Descripcion_Corta
-    Dim _Desc0125
-    Dim _Desc2650
+    Dim _Desc0125 As String
+    Dim _Desc2650 As String
+
+    Dim _Desc_0135 As String
+    Dim _Desc_0235 As String
+
     Dim _Ubicacion
     Dim _Precio_ud1
     Dim _Precio_ud2
@@ -186,6 +190,22 @@
             _Desc0125 = Mid(_Descripcion, 1, 25)
             _Desc2650 = Mid(_Descripcion, 26, 50)
 
+            Dim _Descri25_Aju = Fx_AjustarTexto(_Descripcion, 35)
+
+            Dim _Desc_Aju = Split(_Descri25_Aju, vbCrLf, 2)
+
+            If _Desc_Aju.Length > 1 Then 'AndAlso _Desc_Aju(1).ToString.Replace(vbCrLf, " ").ToString.Length <= 25 Then
+
+                _Desc_0135 = _Desc_Aju(0)
+                _Desc_0235 = _Desc_Aju(1)
+
+            Else
+
+                _Desc_0135 = _Desc_Aju(0)
+                _Desc_0235 = String.Empty
+
+            End If
+
             _Nodim1 = _RowProducto.Item("NODIM1").ToString.Trim
             _Nodim2 = _RowProducto.Item("NODIM2").ToString.Trim
             _Nodim3 = _RowProducto.Item("NODIM3").ToString.Trim
@@ -246,7 +266,7 @@
                         Where KOPR = '" & _Codigo & "'
                         Order By Primaria Desc"
 
-        Fx_Producto_Ubicaciones = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Fx_Producto_Ubicaciones = _Sql.Fx_Get_DataTable(Consulta_sql)
 
     End Function
 
@@ -918,13 +938,17 @@
                           _Id_Tarja As Integer)
 
 
-        Consulta_sql = "Select Trj.*,Isnull(Tf.NOKOFU,'') As 'Analista_Str',Isnull(Plt.NombreTabla,'') As 'Planta_Str'" &
-                       ",Isnull(Trn.NombreTabla,'') As 'Turno_Str',Substring(Lote,1,3) As Lote3,Substring(Lote,1,4) As Lote4,Substring(Lote,1,5) As Lote5" & vbCrLf &
+        Consulta_sql = "Select Trj.*,Isnull(Tf.NOKOFU,'') As 'Analista_Str'" & vbCrLf &
+                       ",Isnull(Plt.NombreTabla,'') As 'Planta_Str'" &
+                       ",Isnull(Trn.NombreTabla,'') As 'Turno_Str'" & vbCrLf &
+                       ",Isnull(Tol.NombreTabla,'') As 'Tolva_Str'" & vbCrLf &
+                       ",Substring(Lote,1,3) As Lote3,Substring(Lote,1,4) As Lote4,Substring(Lote,1,5) As Lote5" & vbCrLf &
                        ",'' As 'Nro_Tipo','' As 'Nro','' As 'Nro_Pallet','' As 'Max_Nro_Tipo'" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja Trj" & vbCrLf &
                        "Left Join TABFU Tf On Tf.KOFU = Analista" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Plt On Plt.Tabla = 'TARJA_PLANTA' And Plt.CodigoTabla = Planta" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Trn On Trn.Tabla = 'TARJA_TURNO' And Trn.CodigoTabla = Turno" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Tol On Tol.Tabla = 'TARJA_TOLVA' And Tol.CodigoTabla = Tolva" & vbCrLf &
                        "Where Id = " & _Id_Tarja
 
         Dim _Row_Tarja As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql) ' Fx_Datos_Ubicacion(_Empresa, _Sucursal, _Bodega, _Id_Mapa, _Codigo_Sector, _CodUbicacion)
@@ -1001,28 +1025,28 @@
                                          _Id_Tarja As Integer,
                                          _Nro As Integer)
 
-
-        Consulta_sql = "Select Trj.*,Isnull(Tf.NOKOFU,'') As 'Analista_Str',Isnull(Plt.NombreTabla,'') As 'Planta_Str'" &
-                       ",Isnull(Trn.NombreTabla,'') As 'Turno_Str'," & vbCrLf &
-                       "Substring(Trj.Lote,1,3) As Lote3,Substring(Trj.Lote,1,4) As Lote4,Substring(Trj.Lote,1,5) As Lote5," & vbCrLf &
-                       "Det.Nro_Tipo,Det.Nro,Det.Nro As 'Nro_Pallet',(Select MAX(Nro) From BAKAPP_CISTERNASR.dbo.Zw_Pdp_CPT_Tarja_Det Dt Where Dt.Lote = Trj.Lote) As 'Max_Nro_Tipo'" & vbCrLf &
+        Consulta_sql = "Select Trj.*,Isnull(Tf.NOKOFU,'') As 'Analista_Str'" &
+                       ",Isnull(Plt.NombreTabla,'') As 'Planta_Str'" & vbCrLf &
+                       ",Isnull(Trn.NombreTabla,'') As 'Turno_Str'" & vbCrLf &
+                       ",Isnull(Tol.NombreTabla,'') As 'Tolva_Str'" & vbCrLf &
+                       ",Substring(Trj.Lote,1,3) As Lote3,Substring(Trj.Lote,1,4) As Lote4,Substring(Trj.Lote,1,5) As Lote5," & vbCrLf &
+                       "Det.Nro_Tipo,Det.Nro,Det.Nro As 'Nro_Pallet',(Select MAX(Nro) From " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja_Det Dt Where Dt.Lote = Trj.Lote) As 'Max_Nro_Tipo'" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja Trj" & vbCrLf &
                        "Inner Join " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja_Det Det On Trj.Id = Det.Id_CPT And Nro = " & _Nro & vbCrLf &
                        "Left Join TABFU Tf On Tf.KOFU = Analista" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Plt On Plt.Tabla = 'TARJA_PLANTA' And Plt.CodigoTabla = Planta" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Trn On Trn.Tabla = 'TARJA_TURNO' And Trn.CodigoTabla = Turno" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Tol On Tol.Tabla = 'TARJA_TOLVA' And Tol.CodigoTabla = Tolva" & vbCrLf &
                        "Where Trj.Id = " & _Id_Tarja
 
-        Dim _Row_Tarja As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql) ' Fx_Datos_Ubicacion(_Empresa, _Sucursal, _Bodega, _Id_Mapa, _Codigo_Sector, _CodUbicacion)
+        Dim _Row_Tarja As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Dim _Fecha_impresion As Date = Now
         Dim _RowEtiqueta As DataRow = Fx_TraeEtiqueta(_NombreEtiqueta)
 
         Dim _Texto = _RowEtiqueta.Item("FUNCION")
 
-        '_Texto = _Texto.ToString.Replace("<Lote5>", "<Lote>")
-
-        Dim _FechaStr As String = _Fecha_impresion.ToString("yyMMdd_HHmmss") ' Format(_Fecha_impresion, "yyMMdd:hhmmss")
+        Dim _FechaStr As String = _Fecha_impresion.ToString("yyMMdd_HHmmss")
 
         Dim _TRJ_ETQ_Nro_CPT As String = "<TRJ>" & _Row_Tarja.Item("Nro_CPT") & "</TRJ><END>"
         Dim _TRJ_ETQ_Nro_CPT_FFHH1 As String = "<TRJ>" & _Row_Tarja.Item("Nro_CPT") & "</TRJ>" & _FechaStr.ToString.Trim & "<END>"
@@ -1042,15 +1066,13 @@
 
                 If _Funcion.Contains(_Columna.ColumnName) Then
 
-                    '_Funcion = "TRJ_" & _Funcion
-
                     Dim _Funcion_Buscar = "<" & _Funcion & ">"
                     Dim _Valor_Funcion = Fx_Parametro_Vs_Variable(_Funcion_Buscar, _Row_Tarja, "TRJ_")
 
                     If _Funcion_Buscar = "<barcode>" Then
                         Dim _New_Valor_Funcion = Mid(_Valor_Funcion, 1, 22) & ">6" & Mid(_Valor_Funcion, 23, 1)
                         _Valor_Funcion = _New_Valor_Funcion
-                        '60503035247121012939710
+
                     End If
                     _Texto = Replace(_Texto, _Funcion_Buscar, _Valor_Funcion)
                     Exit For
@@ -1092,7 +1114,7 @@
     Private Function Fx_TraeEtiqueta(_NombreEtiqueta As String) As DataRow
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Tbl_DisenoBarras Where NombreEtiqueta = '" & _NombreEtiqueta & "'"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Row As DataRow
 
@@ -1148,6 +1170,8 @@
         _Texto = Replace(_Texto, "<DESCRIPCION_1-25>", _Desc0125)
         _Texto = Replace(_Texto, "<DESCRIPCION_26-50>", _Desc2650)
 
+        _Texto = Replace(_Texto, "<DESCRIPCION_1-35>", _Desc_0135)
+        _Texto = Replace(_Texto, "<DESCRIPCION_2-35>", _Desc_0235)
 
         _Texto = Replace(_Texto, "<UBICACION_PR>", _Ubicacion)
         _Texto = Replace(_Texto, "<UBICACION>", _Ubicacion)
@@ -1366,7 +1390,7 @@
 
         End If
 
-        Dim _TblUbicacion As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblUbicacion As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Ubic_BakApp As String
         Dim _Stock_Minimo_Ubic As Double
@@ -1397,7 +1421,7 @@
                        "Cast(0 As Float) As PU01_Neto,Cast(0 As Float) As PU02_Neto,Cast(0 As Float) As PU01_Bruto,Cast(0 As Float) As PU02_Bruto,Getdate() As FechaProgramada" & vbCrLf &
                        "From MAEPR Where KOPR = '" & _Codigo & "'"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl.Rows.Count) Then
 

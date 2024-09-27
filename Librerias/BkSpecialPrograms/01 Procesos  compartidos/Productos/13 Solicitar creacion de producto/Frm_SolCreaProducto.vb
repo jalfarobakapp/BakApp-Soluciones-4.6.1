@@ -467,7 +467,7 @@ Public Class Frm_SolCreaProducto
         Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                        "SELECT Marca AS Padre,Marca As Hijo" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_MrVsPro Where CodProveedor = '" & Txt_Codproveedor.Text & "'" ' WHERE SEMILLA = " & Actividad
-        Cmb_Mrpr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Mrpr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Mrpr.SelectedValue = _Marca
 
     End Sub
@@ -475,7 +475,7 @@ Public Class Frm_SolCreaProducto
     Private Sub Btn_Marca_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
         Consulta_sql = "Select top 1 * From MAEEN Where KOEN = '" & Txt_Codproveedor.Text & "'"
-        Dim _Tbl_Entidad As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Entidad As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl_Entidad.Rows.Count) Then
 
@@ -499,13 +499,13 @@ Public Class Frm_SolCreaProducto
         Consulta_sql = "SELECT CodigoTabla AS Padre,Rtrim(Ltrim(CodigoTabla))+' - '+NombreTabla AS Hijo" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
                        "WHERE Tabla = 'RTU'"
-        Cmb_Ud01pr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Ud01pr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         caract_combo(Cmb_Ud02pr)
         Consulta_sql = "SELECT CodigoTabla AS Padre,Rtrim(Ltrim(CodigoTabla))+' - '+NombreTabla AS Hijo" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
                        "WHERE Tabla = 'RTU'"
-        Cmb_Ud02pr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Ud02pr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Cmb_Ud01pr.SelectedValue = "UN"
         Cmb_Ud02pr.SelectedValue = "UN"
@@ -589,31 +589,31 @@ Public Class Frm_SolCreaProducto
             Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                       "SELECT Marca AS Padre,Marca As Hijo" & vbCrLf &
                       "From " & _Global_BaseBk & "Zw_MrVsPro Where CodProveedor = '" & Txt_Codproveedor.Text & "'"
-            Cmb_Mrpr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Cmb_Mrpr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Else
 
             Consulta_sql = Union & "SELECT KOMR AS Padre,NOKOMR AS Hijo FROM TABMR ORDER BY Hijo"
-            Cmb_Mrpr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Cmb_Mrpr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
             Cmb_Mrpr.SelectedValue = _Cl_SolCreaProducto.Row_NewMaepr.Item("Mrpr")
 
         End If
 
         caract_combo(Cmb_Rupr)
         Consulta_sql = Union & "SELECT KORU AS Padre,NOKORU AS Hijo FROM TABRU ORDER BY Hijo" ' WHERE SEMILLA = " & Actividad
-        Cmb_Rupr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Rupr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Rupr.SelectedValue = _Cl_SolCreaProducto.Row_NewMaepr.Item("Rupr")
 
         caract_combo(Cmb_Clalibpr)
         Consulta_sql = Union & "SELECT KOCARAC AS Padre,LTRIM(RTRIM(KOCARAC))+'-'+LTRIM(RTRIM(NOKOCARAC)) AS Hijo FROM TABCARAC WHERE KOTABLA = 'CLALIBPR' ORDER BY Hijo"
-        Cmb_Clalibpr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Clalibpr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Clalibpr.SelectedValue = _Cl_SolCreaProducto.Row_NewMaepr.Item("Clalibpr")
 
         SuperFamilia = String.Empty
         caract_combo(Cmb_Fmpr)
         Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                        "SELECT KOFM AS Padre,NOKOFM AS Hijo FROM TABFM ORDER BY Hijo"
-        Cmb_Fmpr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Fmpr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Fmpr.SelectedValue = SuperFamilia
 
         Familia = ""
@@ -621,12 +621,12 @@ Public Class Frm_SolCreaProducto
 
         caract_combo(Cmb_Kofupr)
         Consulta_sql = Union & "SELECT KOFU AS Padre,NOKOFU AS Hijo FROM TABFU"
-        Cmb_Kofupr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Kofupr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Kofupr.SelectedValue = _Cl_SolCreaProducto.Row_NewMaepr.Item("Kofupr")
 
         caract_combo(Cmb_Zonapr)
         Consulta_sql = Union & "SELECT KOZO AS Padre,NOKOZO AS Hijo FROM TABZO"
-        Cmb_Zonapr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Cmb_Zonapr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Zonapr.SelectedValue = _Cl_SolCreaProducto.Row_NewMaepr.Item("Zonapr")
 
     End Sub
@@ -645,7 +645,7 @@ Public Class Frm_SolCreaProducto
             caract_combo(Cmb_Pfpr)
             Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                            "SELECT KOPF AS Padre,NOKOPF AS Hijo FROM TABPF WHERE KOFM = '" & SuperFamilia & "'"
-            Cmb_Pfpr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Cmb_Pfpr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Cmb_Pfpr.SelectedValue = Familia
 
@@ -670,7 +670,7 @@ Public Class Frm_SolCreaProducto
             Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                            "SELECT KOHF AS Padre, NOKOHF AS Hijo FROM TABHF" & vbCrLf &
                            "WHERE KOFM = '" & SuperFamilia & "' AND KOPF = '" & Familia & "'"
-            Cmb_Hfpr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Cmb_Hfpr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
             Cmb_Hfpr.SelectedValue = SubFamilia
 
         End Try
@@ -715,7 +715,7 @@ Public Class Frm_SolCreaProducto
 
                 Consulta_sql = "Select top 1 * From MAEEN Where KOEN = '" & Txt_Codproveedor.Text & "'"
 
-                Dim _Tbl_Entidad As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Entidad As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 If CBool(_Tbl_Entidad.Rows.Count) Then
 
@@ -733,7 +733,7 @@ Public Class Frm_SolCreaProducto
                     Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                                    "SELECT Marca AS Padre,Marca As Hijo" & vbCrLf &
                                    "From " & _Global_BaseBk & "Zw_MrVsPro Where CodProveedor = '" & Txt_Codproveedor.Text & "'" ' WHERE SEMILLA = " & Actividad
-                    Cmb_Mrpr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Cmb_Mrpr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
                     Cmb_Mrpr.SelectedValue = _Marca
 
                 End If
@@ -750,7 +750,7 @@ Public Class Frm_SolCreaProducto
                 caract_combo(Cmb_Mrpr)
 
                 Consulta_sql = Union & "SELECT KOMR AS Padre,NOKOMR AS Hijo FROM TABMR ORDER BY Hijo" ' WHERE SEMILLA = " & Actividad
-                Cmb_Mrpr.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Cmb_Mrpr.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
                 Cmb_Mrpr.SelectedValue = _Cl_SolCreaProducto.Row_NewMaepr.Item("Mrpr")
 
             End If

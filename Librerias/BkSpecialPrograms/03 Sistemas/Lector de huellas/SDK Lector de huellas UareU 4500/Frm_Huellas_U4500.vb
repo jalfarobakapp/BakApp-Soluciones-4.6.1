@@ -184,7 +184,7 @@ Public Class Frm_Huellas_U4500
         Dim _Nro_Huella = _Dedo
 
         Consulta_sql = "Select top 1 * From MAEPR"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         'Select Case Top(200) CodFuncionario, Nro_Huella, Huella, Huella_Uare4500 From Zw_Usuarios_Huellas
 

@@ -29,9 +29,18 @@ Partial Class Frm_SelecProdMezclaFab
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
+        Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_IngresarFabircaciones = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_VerReceta = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_VerRecetaCompleta = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_VerRecetaSinProdExcluidos = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_EditarNomenclatura = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
+        Me.Btn_VerRecetaSoloProdExcluidos = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel4.SuspendLayout()
+        CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -43,7 +52,7 @@ Partial Class Frm_SelecProdMezclaFab
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Actualizar})
         Me.Bar1.Location = New System.Drawing.Point(0, 347)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(743, 41)
+        Me.Bar1.Size = New System.Drawing.Size(998, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 103
@@ -64,11 +73,12 @@ Partial Class Frm_SelecProdMezclaFab
         '
         Me.GroupPanel4.BackColor = System.Drawing.Color.White
         Me.GroupPanel4.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel4.Controls.Add(Me.Menu_Contextual)
         Me.GroupPanel4.Controls.Add(Me.Grilla)
         Me.GroupPanel4.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel4.Location = New System.Drawing.Point(12, 6)
         Me.GroupPanel4.Name = "GroupPanel4"
-        Me.GroupPanel4.Size = New System.Drawing.Size(720, 327)
+        Me.GroupPanel4.Size = New System.Drawing.Size(974, 327)
         '
         '
         '
@@ -99,6 +109,63 @@ Partial Class Frm_SelecProdMezclaFab
         Me.GroupPanel4.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel4.TabIndex = 102
         Me.GroupPanel4.Text = "Seleccione con doble clic para ver fabricaciones"
+        '
+        'Menu_Contextual
+        '
+        Me.Menu_Contextual.AntiAlias = True
+        Me.Menu_Contextual.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
+        Me.Menu_Contextual.Location = New System.Drawing.Point(72, 44)
+        Me.Menu_Contextual.Name = "Menu_Contextual"
+        Me.Menu_Contextual.Size = New System.Drawing.Size(329, 25)
+        Me.Menu_Contextual.Stretch = True
+        Me.Menu_Contextual.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Menu_Contextual.TabIndex = 57
+        Me.Menu_Contextual.TabStop = False
+        Me.Menu_Contextual.Text = "ContextMenuBar1"
+        '
+        'Menu_Contextual_01
+        '
+        Me.Menu_Contextual_01.AutoExpandOnClick = True
+        Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_IngresarFabircaciones, Me.Btn_VerReceta, Me.Btn_EditarNomenclatura})
+        Me.Menu_Contextual_01.Text = "Opciones"
+        '
+        'Btn_IngresarFabircaciones
+        '
+        Me.Btn_IngresarFabircaciones.Image = CType(resources.GetObject("Btn_IngresarFabircaciones.Image"), System.Drawing.Image)
+        Me.Btn_IngresarFabircaciones.ImageAlt = CType(resources.GetObject("Btn_IngresarFabircaciones.ImageAlt"), System.Drawing.Image)
+        Me.Btn_IngresarFabircaciones.Name = "Btn_IngresarFabircaciones"
+        Me.Btn_IngresarFabircaciones.Text = "Ingresar a fabricaciones"
+        '
+        'Btn_VerReceta
+        '
+        Me.Btn_VerReceta.Image = CType(resources.GetObject("Btn_VerReceta.Image"), System.Drawing.Image)
+        Me.Btn_VerReceta.ImageAlt = CType(resources.GetObject("Btn_VerReceta.ImageAlt"), System.Drawing.Image)
+        Me.Btn_VerReceta.Name = "Btn_VerReceta"
+        Me.Btn_VerReceta.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_VerRecetaCompleta, Me.Btn_VerRecetaSinProdExcluidos, Me.Btn_VerRecetaSoloProdExcluidos})
+        Me.Btn_VerReceta.Text = "Visualizar los detalles de la receta o nomenclatura."
+        '
+        'Btn_VerRecetaCompleta
+        '
+        Me.Btn_VerRecetaCompleta.Image = CType(resources.GetObject("Btn_VerRecetaCompleta.Image"), System.Drawing.Image)
+        Me.Btn_VerRecetaCompleta.ImageAlt = CType(resources.GetObject("Btn_VerRecetaCompleta.ImageAlt"), System.Drawing.Image)
+        Me.Btn_VerRecetaCompleta.Name = "Btn_VerRecetaCompleta"
+        Me.Btn_VerRecetaCompleta.Text = "Ver receta completa"
+        '
+        'Btn_VerRecetaSinProdExcluidos
+        '
+        Me.Btn_VerRecetaSinProdExcluidos.Image = CType(resources.GetObject("Btn_VerRecetaSinProdExcluidos.Image"), System.Drawing.Image)
+        Me.Btn_VerRecetaSinProdExcluidos.ImageAlt = CType(resources.GetObject("Btn_VerRecetaSinProdExcluidos.ImageAlt"), System.Drawing.Image)
+        Me.Btn_VerRecetaSinProdExcluidos.Name = "Btn_VerRecetaSinProdExcluidos"
+        Me.Btn_VerRecetaSinProdExcluidos.Text = "Ver la receta solo con productos de marcas NO excluidas."
+        '
+        'Btn_EditarNomenclatura
+        '
+        Me.Btn_EditarNomenclatura.Image = CType(resources.GetObject("Btn_EditarNomenclatura.Image"), System.Drawing.Image)
+        Me.Btn_EditarNomenclatura.ImageAlt = CType(resources.GetObject("Btn_EditarNomenclatura.ImageAlt"), System.Drawing.Image)
+        Me.Btn_EditarNomenclatura.Name = "Btn_EditarNomenclatura"
+        Me.Btn_EditarNomenclatura.Text = "Editar formula (cambiar receta/nomenclatura)"
         '
         'Grilla
         '
@@ -137,14 +204,21 @@ Partial Class Frm_SelecProdMezclaFab
         DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.Grilla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.Grilla.Size = New System.Drawing.Size(714, 304)
+        Me.Grilla.Size = New System.Drawing.Size(968, 304)
         Me.Grilla.TabIndex = 1
+        '
+        'Btn_VerRecetaSoloProdExcluidos
+        '
+        Me.Btn_VerRecetaSoloProdExcluidos.Image = CType(resources.GetObject("Btn_VerRecetaSoloProdExcluidos.Image"), System.Drawing.Image)
+        Me.Btn_VerRecetaSoloProdExcluidos.ImageAlt = CType(resources.GetObject("Btn_VerRecetaSoloProdExcluidos.ImageAlt"), System.Drawing.Image)
+        Me.Btn_VerRecetaSoloProdExcluidos.Name = "Btn_VerRecetaSoloProdExcluidos"
+        Me.Btn_VerRecetaSoloProdExcluidos.Text = "Ver la receta solo con productos de marcas excluidas."
         '
         'Frm_SelecProdMezclaFab
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(743, 388)
+        Me.ClientSize = New System.Drawing.Size(998, 388)
         Me.Controls.Add(Me.Bar1)
         Me.Controls.Add(Me.GroupPanel4)
         Me.DoubleBuffered = True
@@ -159,6 +233,7 @@ Partial Class Frm_SelecProdMezclaFab
         Me.Text = "MetroForm"
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel4.ResumeLayout(False)
+        CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -168,4 +243,12 @@ Partial Class Frm_SelecProdMezclaFab
     Public WithEvents Btn_Actualizar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents GroupPanel4 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX
+    Friend WithEvents Menu_Contextual As DevComponents.DotNetBar.ContextMenuBar
+    Friend WithEvents Menu_Contextual_01 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_IngresarFabircaciones As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_EditarNomenclatura As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_VerReceta As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_VerRecetaCompleta As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_VerRecetaSinProdExcluidos As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_VerRecetaSoloProdExcluidos As DevComponents.DotNetBar.ButtonItem
 End Class

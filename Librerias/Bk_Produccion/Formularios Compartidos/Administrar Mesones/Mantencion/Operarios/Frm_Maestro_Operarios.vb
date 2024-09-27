@@ -33,7 +33,7 @@ Public Class Frm_Maestro_Operarios
 
         Consulta_sql = "Select *," &
                        "Case INACTIVO When 0 Then NOMBREOB Else Rtrim(Ltrim(NOMBREOB))+' - (Operario Inactivo)' End As Nombreob2,Cast((Case INACTIVO When 0 Then 1 Else 0 End) As Bit) As Activo From PMAEOB Where CODIGOOB+NOMBREOB Like '%" & _Cadena & "%'"
-        _Tbl_Operarios = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Operarios = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

@@ -99,7 +99,7 @@ Public Class Frm_Busqueda_OT
                         From " & _Global_BaseBk & "Zw_Pdc_Mesones Z1 Where Activo = 1
                         Order By Nommeson"
 
-        _Tbl_Mesones = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Mesones = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Mesones
 
@@ -169,7 +169,7 @@ Public Class Frm_Busqueda_OT
                        "From " & _Global_BaseBk & "Zw_Pdc_MesonVsOperario" & vbCrLf &
                        "Where Codmeson = '" & _Codmeson & "' And Codigoob In (Select CODIGOOB From PMAEOB Where INACTIVO = 0)"
 
-        _Tbl_Oper_Meson = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Oper_Meson = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Operarios_Meson
 
@@ -401,7 +401,7 @@ Public Class Frm_Busqueda_OT
                         Left Join POTL On POTL.IDPOTL = Mq.Idpotl
                         WHERE Codmeson='" & _Codmeson & "' AND Estado='EMQ' ORDER BY Fecha_Hora_Inicio ASC"
 
-        _Tbl_Prod_Maquinas = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Prod_Maquinas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Maquinas_Meson
 
@@ -655,7 +655,7 @@ Public Class Frm_Busqueda_OT
         Consulta_sql = "Select * From POTPR Where IDPOTL = " & _Idpotl & " And ORDEN < " & _Orden_Potpr & "
                         And OPERACION <> '" & _Operacion_Equivalente & "' 
                         Order by ORDEN Desc"
-        Dim _Tbl_Potpr As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Potpr As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
         Dim _New_Idpotpr As Integer
 
         For Each _Fila_Potpr As DataRow In _Tbl_Potpr.Rows

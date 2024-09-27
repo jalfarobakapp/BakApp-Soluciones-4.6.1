@@ -795,6 +795,18 @@
         jWRts9SpshoAAAAASUVORK5CYII=
 </value>
   </data>
+  <data name="Chk_Marcar_Todas.CheckBoxImageChecked" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAFxSURBVChTYwABNl4uBuOcYCbveVXRPvNqtgHxIyjeBhIzK45g4hDiA6tlYOPjYnDsyBIESu7z
+        nV/7D0j/BWFkNkjOuS9PkFOEn4HBOCuYCSSArgjGDl7U+CdmeccfkBqLshgmBu+5VVEgSWwYpPjck9u/
+        7r99/jtmeTtQU3UUA1AnyM1/E1d2//abXwtzwt8goOKzj2/9+vPnz99P37/+yd849RdILUjDo/S1E36/
+        /vzh944bp3/6zq/5E7iw/vfpRzfAij8DFRdvnvEbatAjsIb6nQt//fj18y8Q/Nt2/eTPkw+vgzj/Pn//
+        9qdky8zfMCfCNGwH6W7Zs/TXz9+//oJMBeEvP779Kd0yC+QM5MDYzgANe7C7O/ev+PXr9++/X398/1O+
+        dQ5YMQjDNHjPrY5mMCuKAAcrzNqu/St/VW6f+wvGh2GQGuvaJCYGUAy69OUTjDi3yUWC3JLCkNjmFOZn
+        sCiPwZk0rOsSmSCKGRgAe7xGxljQuvYAAAAASUVORK5CYII=
+</value>
+  </data>
   <metadata name="Tiempo_Cerrar_Documentos_Automaticamente.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>

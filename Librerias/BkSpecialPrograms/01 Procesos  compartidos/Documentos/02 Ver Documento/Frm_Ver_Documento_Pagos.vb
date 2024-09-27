@@ -41,7 +41,7 @@ Public Class Frm_Ver_Documento_Pagos
                        "LEFT JOIN MAEDPCE AS PROPIO ON CD.IDMAEDPCE=PROPIO.IDMAEDPCE  " & vbCrLf &
                        "WHERE CD.ARCHIRST='MAEEDO  '  AND CD.IDRST=" & _Idmaeedo & " ORDER BY CD.FEASDP "
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
             .DataSource = _Tbl
@@ -225,7 +225,7 @@ Public Class Frm_Ver_Documento_Pagos
 
                     .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
 
-                    Consulta_sql = "Select * From CONFIEST Where MODALIDAD = '  '"
+                    Consulta_sql = "Select * From CONFIEST WITH (NOLOCK) Where MODALIDAD = '  '"
                     Dim _Row_Confiest As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                     Dim _Cuotacomer As Boolean = _Row_Confiest.Item("CUOTACOMER")

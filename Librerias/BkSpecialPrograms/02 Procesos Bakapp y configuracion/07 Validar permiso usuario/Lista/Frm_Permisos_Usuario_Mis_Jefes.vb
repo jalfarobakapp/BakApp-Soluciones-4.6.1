@@ -24,7 +24,7 @@ Public Class Frm_Permisos_Usuario_Mis_Jefes
 
         caract_combo(Cmb_Empresa)
         Consulta_Sql = "Select EMPRESA As Padre,EMPRESA+'-'+RAZON AS Hijo From CONFIGP Order By EMPRESA"
-        _Tbl_Empresas = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_Empresas = _Sql.Fx_Get_DataTable(Consulta_Sql)
         Cmb_Empresa.DataSource = _Tbl_Empresas
         Cmb_Empresa.SelectedValue = "01"
 

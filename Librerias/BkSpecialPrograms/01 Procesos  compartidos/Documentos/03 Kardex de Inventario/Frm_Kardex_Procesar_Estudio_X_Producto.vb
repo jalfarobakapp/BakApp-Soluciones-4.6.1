@@ -91,7 +91,7 @@ Public Class Frm_Kardex_Procesar_Estudio_X_Producto
 
         Consulta_sql = Replace(Consulta_sql, "#Ud#", _Unidad)
 
-        Dim _TblKardex As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblKardex As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Return _TblKardex
 
@@ -298,7 +298,7 @@ Public Class Frm_Kardex_Procesar_Estudio_X_Producto
                     Consulta_sql = "Select * From MAEST" & vbCrLf &
                                    "Where EMPRESA = '" & _Empresa & "' And KOSU = '" & _Sucursal &
                                    "'  And KOBO = '" & _Bodega & "' And KOPR = '" & _Codigo & "'"
-                    Dim _TblMaest As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                    Dim _TblMaest As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     'MST.STFI#Ud#,        -- STOCK FISICO
                     'MST.STDV#Ud#,        -- STOCK DEVENGADO

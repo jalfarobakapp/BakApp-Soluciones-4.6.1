@@ -51,7 +51,7 @@ Public Class Frm_Modalidades
 
         Consulta_Sql = "Select Distinct Ce.EMPRESA As Padre,Ce.EMPRESA+' - '+Cp.RAZON As Hijo
                         Into #Paso
-                        From CONFIEST Ce
+                        From CONFIEST Ce WITH (NOLOCK)
                         Inner Join CONFIGP Cp On Cp.EMPRESA = Ce.EMPRESA 
                         Where MODALIDAD <> '  '
                         Order by Ce.EMPRESA
@@ -59,7 +59,7 @@ Public Class Frm_Modalidades
                         Select Ce.EMPRESA,Cp.RAZON,'MO-' + MODALIDAD As PERMISO,MODALIDAD,Ts.NOKOSU,Tb.NOKOBO,ESUCURSAL,EBODEGA,ECAJA,ELISTAVEN,
                                NLISTAVEN,ELISTACOM,NLISTACOM,ELISTAINT,NLISTAINT
                         Into #Paso1
-                        From CONFIEST Ce
+                        From CONFIEST Ce WITH (NOLOCK)
                         Inner Join CONFIGP Cp On Cp.EMPRESA = Ce.EMPRESA 
                         Left Join TABSU Ts On Ts.EMPRESA = Ce.EMPRESA And Ts.KOSU = Ce.ESUCURSAL
                         Left Join TABBO Tb On Tb.EMPRESA = Ce.EMPRESA And Tb.KOSU = Ce.ESUCURSAL And Tb.KOBO = Ce.EBODEGA
@@ -82,7 +82,7 @@ Public Class Frm_Modalidades
 
             Consulta_Sql = "Select Distinct Ce.EMPRESA As Padre,Ce.EMPRESA+' - '+Cp.RAZON As Hijo
                             Into #Paso
-                            From CONFIEST Ce
+                            From CONFIEST Ce WITH (NOLOCK)
                             Inner Join CONFIGP Cp On Cp.EMPRESA = Ce.EMPRESA 
                             Where MODALIDAD <> '  '
                             Order by Ce.EMPRESA
@@ -90,7 +90,7 @@ Public Class Frm_Modalidades
                             Select Ce.EMPRESA,Cp.RAZON,'MO-' + MODALIDAD As PERMISO,MODALIDAD,Ts.NOKOSU,Tb.NOKOBO,ESUCURSAL,EBODEGA,ECAJA,ELISTAVEN,
                                    NLISTAVEN,ELISTACOM,NLISTACOM,ELISTAINT,NLISTAINT
                             Into #Paso1
-                            From CONFIEST Ce
+                            From CONFIEST Ce WITH (NOLOCK)
                             Inner Join CONFIGP Cp On Cp.EMPRESA = Ce.EMPRESA 
                             Left Join TABSU Ts On Ts.EMPRESA = Ce.EMPRESA And Ts.KOSU = Ce.ESUCURSAL
                             Left Join TABBO Tb On Tb.EMPRESA = Ce.EMPRESA And Tb.KOSU = Ce.ESUCURSAL And Tb.KOBO = Ce.EBODEGA
@@ -104,7 +104,7 @@ Public Class Frm_Modalidades
 
         End If
 
-        Cmb_Modalidades.DataSource = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Cmb_Modalidades.DataSource = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Modalidad = _Sql.Fx_Trae_Dato("TABFU", "MODALIDAD", "KOFU = '" & FUNCIONARIO & "'")
         Dim _Emp As String = _Sql.Fx_Trae_Dato("CONFIEST", "EMPRESA", "MODALIDAD = '" & Modalidad & "'")
@@ -122,7 +122,7 @@ Public Class Frm_Modalidades
         Consulta_Sql = "Select Ce.EMPRESA,Cp.RAZON,'MO-' + MODALIDAD As PERMISO,MODALIDAD,Ts.NOKOSU,Tb.NOKOBO,ESUCURSAL,EBODEGA,ECAJA,ELISTAVEN,
                         NLISTAVEN,ELISTACOM,NLISTACOM,ELISTAINT,NLISTAINT
                         Into #Paso1
-                        From CONFIEST Ce
+                        From CONFIEST Ce WITH (NOLOCK)
                         Inner Join CONFIGP Cp On Cp.EMPRESA = Ce.EMPRESA 
                         Left Join TABSU Ts On Ts.EMPRESA = Ce.EMPRESA And Ts.KOSU = Ce.ESUCURSAL
                         Left Join TABBO Tb On Tb.EMPRESA = Ce.EMPRESA And Tb.KOSU = Ce.ESUCURSAL And Tb.KOBO = Ce.EBODEGA
@@ -140,7 +140,7 @@ Public Class Frm_Modalidades
             Consulta_Sql = "Select Ce.EMPRESA,Cp.RAZON,'MO-' + MODALIDAD As PERMISO,MODALIDAD,Ts.NOKOSU,Tb.NOKOBO,ESUCURSAL,EBODEGA,ECAJA,ELISTAVEN,
                             NLISTAVEN,ELISTACOM,NLISTACOM,ELISTAINT,NLISTAINT
                             Into #Paso1
-                            From CONFIEST Ce
+                            From CONFIEST Ce WITH (NOLOCK)
                             Inner Join CONFIGP Cp On Cp.EMPRESA = Ce.EMPRESA 
                             Left Join TABSU Ts On Ts.EMPRESA = Ce.EMPRESA And Ts.KOSU = Ce.ESUCURSAL
                             Left Join TABBO Tb On Tb.EMPRESA = Ce.EMPRESA And Tb.KOSU = Ce.ESUCURSAL And Tb.KOBO = Ce.EBODEGA
@@ -154,7 +154,7 @@ Public Class Frm_Modalidades
 
         End If
 
-        Dim _Tbl_Modalidades As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_Modalidades As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         With Grilla_Modalidades
 
@@ -280,7 +280,7 @@ Public Class Frm_Modalidades
             If _Cambiar_Modalidad Then
 
                 Consulta_Sql = "Select top 1 Cest.*,Cfgp.RAZON  
-                                From CONFIEST Cest Inner Join CONFIGP Cfgp On Cest.EMPRESA = Cfgp.EMPRESA  
+                                From CONFIEST Cest WITH (NOLOCK) Inner Join CONFIGP Cfgp On Cest.EMPRESA = Cfgp.EMPRESA  
                                 Where MODALIDAD = '" & Modalidad & "'"
                 _Global_Row_Modalidad = _Sql.Fx_Get_DataRow(Consulta_Sql)
 

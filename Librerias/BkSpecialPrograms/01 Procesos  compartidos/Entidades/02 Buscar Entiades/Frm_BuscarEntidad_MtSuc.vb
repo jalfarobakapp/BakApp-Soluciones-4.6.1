@@ -40,7 +40,7 @@ Public Class Frm_BuscarEntidad_MtSuc
                         Left Join TABCM On TABCM.KOPA = PAEN And TABCM.KOCI = CIEN And TABCM.KOCM = CMEN
                         Where KOEN = '" & _CodEntidad & "'"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         With Grilla
             .DataSource = _Tbl

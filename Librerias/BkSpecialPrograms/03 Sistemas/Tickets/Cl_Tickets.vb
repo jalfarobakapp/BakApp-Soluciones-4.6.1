@@ -164,6 +164,7 @@ Public Class Cl_Tickets
                 .CerrarAgenteSinPerm = _Row_Tipo.Item("CerrarAgenteSinPerm")
                 .RespuestaXDefecto = _Row_Tipo.Item("RespuestaXDefecto")
                 .RespuestaXDefectoCerrar = _Row_Tipo.Item("RespuestaXDefectoCerrar")
+                .EsTicketUnico = _Row_Tipo.Item("EsTicketUnico")
 
             End If
 
@@ -179,7 +180,7 @@ Public Class Cl_Tickets
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-        Dim _TblPaso = _Sql.Fx_Get_Tablas("Select Max(Numero) As Numero From " & _Global_BaseBk & "Zw_Stk_Tickets")
+        Dim _TblPaso = _Sql.Fx_Get_DataTable("Select Max(Numero) As Numero From " & _Global_BaseBk & "Zw_Stk_Tickets")
 
         Dim _Ult_Nro_OT As String = NuloPorNro(_TblPaso.Rows(0).Item("Numero"), "")
 
@@ -238,7 +239,7 @@ Public Class Cl_Tickets
 
                 If Not String.IsNullOrEmpty(Consulta_sql) Then
 
-                    _Tbl_Agentes = _Sql.Fx_Get_Tablas(Consulta_sql, False)
+                    _Tbl_Agentes = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
                     If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
                         _Mensaje.Detalle = "Error al grabar"
@@ -751,7 +752,7 @@ Public Class Cl_Tickets
         If _Zw_Stk_Tipos.AsignadoAgente Then Consulta_sql = "Select '" & _Zw_Stk_Tipos.CodAgente & "' As CodAgente"
         If _Zw_Stk_Tipos.AsignadoGrupo Then Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_GrupoVsAgente Where Id_Grupo = " & _Zw_Stk_Tipos.Id_Grupo
 
-        Dim _Tbl_Grupo As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Grupo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim myTrans As SqlClient.SqlTransaction
         Dim Comando As SqlClient.SqlCommand
@@ -832,6 +833,7 @@ Public Class Cl_Tickets
                                 ",CerrarAgenteSinPerm = " & Convert.ToInt32(.CerrarAgenteSinPerm) & vbCrLf &
                                 ",RespuestaXDefecto = '" & .RespuestaXDefecto & "'" & vbCrLf &
                                 ",RespuestaXDefectoCerrar = '" & .RespuestaXDefectoCerrar & "'" & vbCrLf &
+                                ",EsTicketUnico = '" & Convert.ToInt32(.EsTicketUnico) & "'" & vbCrLf &
                                 "Where Id = " & .Id
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)

@@ -527,51 +527,51 @@
 
             _Llena_Tabimpr =
 "Update #Paso_Tabim Set Compras = (Case When ISNULL(NOAPLICEN,'') = '' Then 'Si' When NOAPLICEN like '%compras%' Then 'No' Else 'Si' End )
-From TABIMPR Where KOPR = '" & _kopr & "' And Codigo = KOIM
+From TABIMPR WITH (NOLOCK) Where KOPR = '" & _kopr & "' And Codigo = KOIM
 Update #Paso_Tabim Set Ventas = (Case When ISNULL(NOAPLICEN,'') = '' Then 'Si' When NOAPLICEN like '%ventas%' Then 'No' Else 'Si' End )
-From TABIMPR Where KOPR = '" & _kopr & "' And Codigo = KOIM
+From TABIMPR WITH (NOLOCK) Where KOPR = '" & _kopr & "' And Codigo = KOIM
 Update #Paso_Tabim Set Stock = (Case When ISNULL(NOAPLICEN,'') = '' Then 'Si' When NOAPLICEN like '%stock%' Then 'No' Else 'Si' End )
-From TABIMPR Where KOPR = '" & _kopr & "' And Codigo = KOIM
+From TABIMPR WITH (NOLOCK) Where KOPR = '" & _kopr & "' And Codigo = KOIM
 Update #Paso_Tabim Set Boleta = (Case When ISNULL(NOAPLICEN,'') = '' Then 'Si' When NOAPLICEN like '%BSV,BLV%' Then 'No' Else 'Si' End )
-From TABIMPR Where KOPR = '" & _kopr & "' And Codigo = KOIM"
+From TABIMPR WITH (NOLOCK) Where KOPR = '" & _kopr & "' And Codigo = KOIM"
 
         End If
 
-        Consulta_sql = "If Not Exists(Select * From MAEFICHA Where KOPR = '" & _kopr & "')" & vbCrLf &
+        Consulta_sql = "If Not Exists(Select * From MAEFICHA WITH (NOLOCK) Where KOPR = '" & _kopr & "')" & vbCrLf &
                        "Begin" & vbCrLf &
-                       "Insert Into MAEFICHA (KOPR,NOKOPR,FICHA) Select KOPR,NOKOPR,'' From MAEPR Where KOPR = '" & _kopr & "'" & vbCrLf &
+                       "Insert Into MAEFICHA (KOPR,NOKOPR,FICHA) Select KOPR,NOKOPR,'' From MAEPR WITH (NOLOCK) Where KOPR = '" & _kopr & "'" & vbCrLf &
                        "End" & vbCrLf &
-                       "If Not Exists(Select * From MAEFICHD Where KOPR = '" & _kopr & "')" & vbCrLf &
+                       "If Not Exists(Select * From MAEFICHD WITH (NOLOCK) Where KOPR = '" & _kopr & "')" & vbCrLf &
                        "Begin" & vbCrLf &
-                       "Insert Into MAEFICHD (KOPR,FICHA) Select KOPR,'' From MAEPR Where KOPR = '" & _kopr & "'" & vbCrLf &
+                       "Insert Into MAEFICHD (KOPR,FICHA) Select KOPR,'' From MAEPR WITH (NOLOCK) Where KOPR = '" & _kopr & "'" & vbCrLf &
                        "End" & vbCrLf &
                        "-- 0" & vbCrLf &
-                       "Select * From MAEPR Where KOPR = '" & _kopr & "'" & vbCrLf &
+                       "Select * From MAEPR WITH (NOLOCK) Where KOPR = '" & _kopr & "'" & vbCrLf &
                        "-- 1" & vbCrLf &
-                       "Select * From MAEPREM Where KOPR = '" & _kopr & "'" & vbCrLf &
+                       "Select * From MAEPREM WITH (NOLOCK) Where KOPR = '" & _kopr & "'" & vbCrLf &
                        "-- 2" & vbCrLf &
-                       "Select KOPR,Isnull(FICHA,'') As FICHA From MAEFICHD Where KOPR = '" & _kopr & "'" & vbCrLf &
+                       "Select KOPR,Isnull(FICHA,'') As FICHA From MAEFICHD WITH (NOLOCK) Where KOPR = '" & _kopr & "'" & vbCrLf &
                        "-- 3" & vbCrLf &
-                       "Select * From MAEPROBS Where KOPR = '" & _kopr & "'" & vbCrLf &
+                       "Select * From MAEPROBS WITH (NOLOCK) Where KOPR = '" & _kopr & "'" & vbCrLf &
                        "-- 4" & vbCrLf &
-                       "Select Cast((Select COUNT(*) From MAEPREM as MP" & vbCrLf &
+                       "Select Cast((Select COUNT(*) From MAEPREM MP WITH (NOLOCK)" & vbCrLf &
                        "Where MP.EMPRESA = EMPRESA AND MP.KOPR = '" & _Codigo & "') As Bit) as 'Select',EMPRESA AS Codigo,RAZON as Descripcion" & vbCrLf &
-                       "From CONFIGP" & vbCrLf &
+                       "From CONFIGP WITH (NOLOCK)" & vbCrLf &
                        "-- 5" & vbCrLf &
-                       "Select Cast((Select COUNT(*) From TABBOPR as TB" & vbCrLf &
+                       "Select Cast((Select COUNT(*) From TABBOPR TB WITH (NOLOCK)" & vbCrLf &
                        "Where TB.EMPRESA = TTB.EMPRESA AND TB.KOSU = TTB.KOSU AND TB.KOBO = TTB.KOBO AND KOPR = '" & _Codigo & "') As Bit) as 'Select'," & vbCrLf &
                        "EMPRESA+'-'+KOSU+'-'+KOBO as Codigo,NOKOBO as Descripcion" & vbCrLf &
-                       "From TABBO AS TTB" & vbCrLf &
+                       "From TABBO TTB WITH (NOLOCK)" & vbCrLf &
                        "-- 6" & vbCrLf &
-                       "Select Cast((Select COUNT(*) From TABPRE TP" & vbCrLf &
+                       "Select Cast((Select COUNT(*) From TABPRE TP WITH (NOLOCK)" & vbCrLf &
                        "Where TP.KOLT = TPP.KOLT And KOPR = '" & _Codigo & "' ) As Bit) AS 'Select', KOLT as Codigo,NOKOLT as Descripcion" & vbCrLf &
-                       "From TABPP TPP" & vbCrLf &
+                       "From TABPP TPP WITH (NOLOCK)" & vbCrLf &
                        "-- 7" & vbCrLf &
-                       "Select Cast((Select COUNT(*) From TABIMPR TIP
+                       "Select Cast((Select COUNT(*) From TABIMPR TIP WITH (NOLOCK)
 Where TI.KOIM = TIP.KOIM And TIP.KOPR = '" & _kopr & "' ) As Bit) As 'Select',KOIM as Codigo,NOKOIM as Descripcion,
 	  CAST('' As varchar(2)) As Compras,CAST('' As varchar(2)) As Ventas,CAST('' As varchar(2)) As Stock,CAST('' As varchar(2)) As Boleta,POIM,MEIM
 Into #Paso_Tabim
-From TABIM TI
+From TABIM TI WITH (NOLOCK)
 
 " & _Llena_Tabimpr & "
 
@@ -629,7 +629,7 @@ Drop Table #Paso_Tabim"
             _RowProducto = _Tbl_Maepr.NewRow()
             _RowProducto.Item("KOPR") = String.Empty
             _RowProducto.Item("TIPR") = "FPN"
-            _RowProducto.Item("KOPRRA") = numero_(Val(_Sql.Fx_Trae_Dato("MAEPR WITH ( NOLOCK )", "MAX(KOPRRA)+1")), 6)
+            _RowProducto.Item("KOPRRA") = numero_(Val(_Sql.Fx_Trae_Dato("MAEPR", "MAX(KOPRRA)+1")), 6)
             _RowProducto.Item("POIVPR") = _Global_Row_Configp.Item("IVAPAIS")
             _RowProducto.Item("PODEIVPR") = False
             _RowProducto.Item("PRRG") = False
@@ -820,6 +820,15 @@ Drop Table #Paso_Tabim"
                              "('" & .Codigo & "','" & .Descripcion & "','" & Convert.ToInt32(.ExluyeTipoVenta) & "')"
 
             End With
+
+            Dim _Ippide As String = getIp()
+            Dim _Horagrab As String = Hora_Grab_fx(False)
+
+            Dim _SqlTabactus As String
+
+            _SqlTabactus = "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ") ','Creación de Productos : " & _kopr & "')"
+
+            _SqlQuery += vbCrLf & vbCrLf & _SqlTabactus
 
             _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery)
 
@@ -1039,15 +1048,48 @@ Drop Table #Paso_Tabim"
                 _SqlQuery += "Update MAEPR Set NOKOPRAMP = '" & _RowProducto.Item("NOKOPRAMP").ToString.Trim & "' Where KOPR = '" & _kopr & "'" & vbCrLf
             End If
 
-
             With Zw_Producto
 
                 _SqlQuery += vbCrLf & "Update " & _Global_BaseBk & "Zw_Productos Set " & vbCrLf &
                              "Descripcion = '" & .Descripcion & "'" &
                              ",ExluyeTipoVenta = " & Convert.ToInt32(.ExluyeTipoVenta) & vbCrLf &
+                             ",RtuXWms = " & Convert.ToInt32(.RtuXWms) & vbCrLf &
                              "Where Codigo = '" & .Codigo & "'"
 
             End With
+
+            'Insertar datos en TABACTUS
+
+            Dim _Ippide As String = getIp()
+            Dim _Horagrab As String = Hora_Grab_fx(False)
+
+            Dim _SqlTabactus As String
+
+            _SqlTabactus = "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ") ','modificacion de producto : " & _kopr & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','KOPR :" & _kopr & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','NOKOPR :" & _nokopr & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','KOPRRA :" & _koprra & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','KOPRTE :" & _koprte & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','NOKOPRRA :" & _nokoprra & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','POIVPR :" & _poivpr & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','EXENTO :" & _exento & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','RGPR :" & _rgpr & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','UD01PR :" & _ud01pr & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','UD02PR :" & _ud02pr & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','RLUD :" & _rlud & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','NMARCA :" & _nmarca & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','TRATALOTE :" & _tratalote & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','NUIMPR :" & _nuimpr & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','ATPR :" & _atpr & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','LISCOSTO :" & _liscosto & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','DIVISIBLE :" & _divisible & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','DIVISIBLE2:" & _divisible2 & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','STOCKASEG :" & _stockaseg & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','KOFUPR :" & _kofupr & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','ZONAPR :" & _zonapr & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','BLOQUEAPR :" & _bloqueapr & "')" & vbCrLf
+
+            _SqlQuery += vbCrLf & vbCrLf & _SqlTabactus
 
             _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery)
 
@@ -1192,9 +1234,44 @@ Drop Table #Paso_Tabim"
                            De_Num_a_Tx_01(_largo, False, 5) & "," &
                            De_Num_a_Tx_01(_ancho, False, 5) & ")" & vbCrLf
 
-            '_SqlEx.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery)
 
-            'Return _Sql.Pro_Error
+            'Insertar datos en TABACTUS
+
+            Dim _Ippide As String = getIp()
+            Dim _Horagrab As String = Hora_Grab_fx(False)
+
+            Dim _SqlTabactus As String
+            Dim _SqlEidRtu As String
+
+            If _EditarRtu Then
+                _SqlEidRtu = "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','UD01PR :" & _ud01pr & "')" & vbCrLf &
+                             "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','UD02PR :" & _ud02pr & "')" & vbCrLf &
+                             "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','RLUD :" & _rlud & "')" & vbCrLf &
+                             "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','NMARCA :" & _nmarca & "')" & vbCrLf
+            End If
+
+            _SqlTabactus = "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ") ','modificacion de producto : " & _kopr & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','KOPR :" & _kopr & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','NOKOPR :" & _nokopr & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','KOPRRA :" & _koprra & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','KOPRTE :" & _koprte & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','NOKOPRRA :" & _nokoprra & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','POIVPR :" & _poivpr & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','EXENTO :" & _exento & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','RGPR :" & _rgpr & "')" & vbCrLf &
+                           _SqlEidRtu &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','TRATALOTE :" & _tratalote & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','NUIMPR :" & _nuimpr & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','ATPR :" & _atpr & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','LISCOSTO :" & _liscosto & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','DIVISIBLE :" & _divisible & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','DIVISIBLE2:" & _divisible2 & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','STOCKASEG :" & _stockaseg & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','KOFUPR :" & _kofupr & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','ZONAPR :" & _zonapr & "')" & vbCrLf &
+                           "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ")','BLOQUEAPR :" & _bloqueapr & "')" & vbCrLf
+
+            _SqlQuery += vbCrLf & vbCrLf & _SqlTabactus
 
         Catch ex As Exception
             _SqlQuery = String.Empty
@@ -1451,7 +1528,7 @@ Drop Table #Paso_Tabim"
 
     Function Fx_Llenar_Zw_Producto(_Codigo As String) As LsValiciones.Mensajes
 
-        Dim _Mensaje_Stem As New LsValiciones.Mensajes
+        Dim _Mensaje As New LsValiciones.Mensajes
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Productos Where Codigo = '" & _Codigo & "'"
         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -1473,10 +1550,10 @@ Drop Table #Paso_Tabim"
 
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Productos () Select KOPR,NOKOPR From MAEPR Where KOPR = '" & _Codigo & "'"
 
-            _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Mensaje = "No se encontro el registro en la tabla Zw_Productos con el Código " & _Codigo
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = "No se encontro el registro en la tabla Zw_Productos con el Código " & _Codigo
 
-            Return _Mensaje_Stem
+            Return _Mensaje
 
         End If
 
@@ -1485,13 +1562,76 @@ Drop Table #Paso_Tabim"
             .Codigo = _Row.Item("Codigo")
             .Descripcion = _Row.Item("Descripcion")
             .ExluyeTipoVenta = _Row.Item("ExluyeTipoVenta")
+            .RtuXWms = _Row.Item("RtuXWms")
 
         End With
 
-        _Mensaje_Stem.EsCorrecto = True
-        _Mensaje_Stem.Mensaje = "Registro encontrado."
+        _Mensaje.EsCorrecto = True
+        _Mensaje.Mensaje = "Registro encontrado."
+        _Mensaje.Tag = Zw_Producto
 
-        Return _Mensaje_Stem
+        Return _Mensaje
+
+    End Function
+
+    Function Fx_ActualizarRtuAutomaticaWMS(_Codigo As String,
+                                           _Empresa As String,
+                                           _Sucursal As String,
+                                           _Bodega As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Productos Where Codigo = '" & _Codigo & "'"
+        Dim _Row_Producto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If _Row_Producto.Item("RtuXWms") = 0 Then
+
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = "El producto " & _Codigo & " no tiene la actualización de RTU por WMS activa."
+            _Mensaje.Detalle = "Actualizar RTU"
+
+            Return _Mensaje
+
+        End If
+
+        Consulta_sql = "Select Isnull(SUM(STOCNV1),0) As STOCNV1,Isnull(SUM(STOCNV2),0) As STOCNV2" &
+                       ",Isnull(Sum(StPedi1),0) As StPedi1,Isnull(Sum(StPedi2),0) As StPedi2" & vbCrLf &
+                       "From MAEST" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Prod_Stock On Empresa = EMPRESA And Sucursal = KOSU And Bodega = KOBO And Codigo = KOPR" & vbCrLf &
+                       "Where KOPR = '" & _Codigo & "' And EMPRESA = '" & _Empresa & "' And KOSU = '" & _Sucursal & "' And KOBO = '" & _Bodega & "'"
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _PedidoUd1 As Double = _Row.Item("STOCNV1") + _Row.Item("StPedi1")
+        Dim _PedidoUd2 As Double = _Row.Item("STOCNV2") + _Row.Item("StPedi2")
+
+        Dim _Top As Integer = Math.Round(_PedidoUd2, 0)
+
+        Consulta_sql = "Select Round(AVG(Stock_Ud1),5) AS Promedio,(Round(AVG(Stock_Ud1),5)+MAX(Stock_Ud1))/2 As Prom2,MAX(Stock_Ud1) As Max_Stock_Ud1" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Stock_X_Producto" & vbCrLf &
+                       "Where Codigo = '" & _Codigo & "' And Disponible = 1"
+        _Row = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _Rtu As Double = _Row.Item("Prom2")
+
+        Consulta_sql = "Update MAEPR Set RLUD = " & De_Num_a_Tx_01(_Rtu, False, 5) & vbCrLf &
+                       "Where KOPR = '" & _Codigo & "'"
+        If _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Se actualizo el RTU del producto " & _Codigo & " a " & _Rtu
+            _Mensaje.Detalle = "Actualizar RTU"
+            _Mensaje.Tag = _Sql.Fx_Trae_Dato("MAEPR", "RLUD", "KOPR = '" & _Codigo & "'", True)
+
+        Else
+
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = "No se pudo actualizar el RTU del producto " & _Codigo & " a " & _Rtu
+            _Mensaje.Detalle = "Actualizar RTU"
+            _Mensaje.Resultado = _Sql.Pro_Error
+
+        End If
+
+        Return _Mensaje
 
     End Function
 

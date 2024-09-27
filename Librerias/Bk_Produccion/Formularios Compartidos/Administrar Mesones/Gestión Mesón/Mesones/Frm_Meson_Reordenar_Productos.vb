@@ -65,7 +65,7 @@ Public Class Frm_Meson_Reordenar_Productos
                        "From " & _Global_BaseBk & "Zw_Pdp_MesonVsProductos Mp" & vbCrLf &
                        "Left JOIN " & _Global_BaseBk & "Zw_Pdp_OT_Prioridad Pd ON Pd.Idpote=Mp.Idpote" & vbCrLf &
                        "WHERE Codmeson='" & Trim(_Row_Meson.Item("Codmeson")) & "' And Estado In ('PD','MQ') ORDER BY Orden_Meson"
-        _Tbl_Prod_Meson = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Prod_Meson = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Productos_En_Meson
 

@@ -499,8 +499,8 @@ Namespace Bk_ExpotarDoc
 
             ' _Modalidad = "  "
 
-            Dim _Consulta_sql = "Select Top 1 " & _Tido & " From CONFIEST Where MODALIDAD = '" & _Modalidad & "' And EMPRESA = '" & _Empresa & "'"
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(_Consulta_sql)
+            Dim _Consulta_sql = "Select Top 1 " & _Tido & " From CONFIEST WITH (NOLOCK) Where MODALIDAD = '" & _Modalidad & "' And EMPRESA = '" & _Empresa & "'"
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
             Dim _Nudo_Modalidad As String
 

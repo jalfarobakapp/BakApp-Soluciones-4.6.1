@@ -132,7 +132,7 @@ Public Class Clase_Cambiar_Empresa
     Private Function Fx_Act_Usuario(_Kofu As String) As Boolean
 
         Consulta_sql = "Select top 1 * From TABFU Where KOFU = '" & _Funcionario & "'"
-        Dim _TblFun As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblFun As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         If CBool(_TblFun.Rows.Count) Then
@@ -166,7 +166,7 @@ Public Class Clase_Cambiar_Empresa
     Function Fx_Conectar_Usuario_Formulario_Actual(_CodPermiso As String) As Boolean
 
         Consulta_sql = "Select top 1 * From TABFU Where KOFU = '" & _Funcionario & "'"
-        Dim _TblFun As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblFun As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         If CBool(_TblFun.Rows.Count) Then

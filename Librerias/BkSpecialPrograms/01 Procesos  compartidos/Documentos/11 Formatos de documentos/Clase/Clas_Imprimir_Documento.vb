@@ -225,7 +225,7 @@ Public Class Clas_Imprimir_Documento
         ' Llena Formato del Encabezado
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Format_01" & vbCrLf &
                        "Where TipoDoc = '" & _TipoDoc & "' And NombreFormato = '" & _NombreFormato & "' And Subtido = '" & _Subtido & "'"
-        _TblEncForm = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblEncForm = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _Es_Picking = _TblEncForm.Rows(0).Item("Es_Picking")
 
@@ -283,7 +283,7 @@ Public Class Clas_Imprimir_Documento
                                "RIGHT('00000' + CAST(ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS VARCHAR( 5)), 5) AS NULIDO" & vbCrLf &
                                "From " & _Global_BaseBk & "Zw_Stmp_DetPick Where Idmaeedo = " & _IdDoc
 
-                _Tbl_Detalle = _Sql.Fx_Get_Tablas(Consulta_sql)
+                _Tbl_Detalle = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             End If
 
@@ -294,7 +294,7 @@ Public Class Clas_Imprimir_Documento
                 Dim _Ficha As String = String.Empty
                 Consulta_sql = "Select * From MAEFICHD Where KOPR = '" & _Fl.Item("KOPR") & "'"
 
-                Dim _Tbl_Maefichd As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Maefichd As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 For Each _Fichas As DataRow In _Tbl_Maefichd.Rows
                     _Ficha += _Fichas.Item("FICHA")
@@ -332,7 +332,7 @@ Public Class Clas_Imprimir_Documento
                     Left Join " & _Global_BaseBk & "Zw_Format_Fx Fx On Fdt.Funcion = Fx.Nombre_Funcion
                     Where TipoDoc = '" & _TipoDoc & "' And Subtido = '" & _Subtido & "' And NombreFormato = '" & _NombreFormato & "' And Fdt.Seccion In ('E','P')"
 
-        _Tbl_Fx_Encabezado = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Fx_Encabezado = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ' Llena formato del detalle
         Consulta_sql = "Select Fdt.*,
@@ -349,7 +349,7 @@ Public Class Clas_Imprimir_Documento
                     Where TipoDoc = '" & _TipoDoc & "' And Subtido = '" & _Subtido & "' And NombreFormato = '" & _NombreFormato & "' And Fdt.Seccion = 'D'" & vbCrLf &
                     "Order by Fdt.Orden_Detalle"
 
-        _Tbl_Fx_Detalle = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Fx_Detalle = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If _TipoDoc.Contains("GRP") Or _TipoDoc.Contains("GDP") Then
 
@@ -399,7 +399,7 @@ Public Class Clas_Imprimir_Documento
         ' Llena Formato del Encabezado
         Consulta_sql = "SELECT * FROM " & _Global_BaseBk & "Zw_Format_01" & vbCrLf &
                        "Where TipoDoc = '" & _TipoDoc & "' And _Subtido = '" & _Subtido & "' And NombreFormato = '" & _NombreFormato & "' And Emdp = '" & _Emdp & "'"
-        _TblEncForm = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblEncForm = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Consulta_sql = "SELECT *," &
                                      "Isnull((Select Funcion_Bk From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
@@ -415,7 +415,7 @@ Public Class Clas_Imprimir_Documento
                                      "FROM " & _Global_BaseBk & "Zw_Format_02" & vbCrLf &
                                      "Where TipoDoc = '" & _TipoDoc & "' And Subtido = '" & _Subtido & "' And NombreFormato = '" & _NombreFormato & "' And Emdp = '" & _Emdp & "' And Seccion In ('E','P')"
 
-        _Tbl_Fx_Encabezado = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Fx_Encabezado = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ' Llena formato del detalle
         Consulta_sql = "SELECT *," &
@@ -432,7 +432,7 @@ Public Class Clas_Imprimir_Documento
                           "FROM " & _Global_BaseBk & "Zw_Format_02" & vbCrLf &
                           "Where TipoDoc = '" & _TipoDoc & "' And Subtido = '" & _Subtido & "' And NombreFormato = '" & _NombreFormato & "' And Seccion = 'D'" & vbCrLf &
                           "Order by Orden_Detalle"
-        _Tbl_Fx_Detalle = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Fx_Detalle = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         '_Fx = New Frm_Formato_Creador_Funciones(_IdMaeedo)
 
@@ -474,7 +474,7 @@ Public Class Clas_Imprimir_Documento
         ' Llena Formato del Encabezado
         Consulta_sql = "SELECT * FROM " & _Global_BaseBk & "Zw_Format_01" & vbCrLf &
                        "Where TipoDoc = '" & _TipoDoc & "' And Subtido = '" & _Subtido & "' And NombreFormato = '" & _NombreFormato & "'"
-        _TblEncForm = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblEncForm = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
         Consulta_sql = "Select Fdt.*,
@@ -490,7 +490,7 @@ Public Class Clas_Imprimir_Documento
                     Left Join " & _Global_BaseBk & "Zw_Format_Fx Fx On Fdt.Funcion = Fx.Nombre_Funcion
                     Where TipoDoc = '" & _TipoDoc & "' And Subtido = '" & _Subtido & "' And NombreFormato = '" & _NombreFormato & "' And Fdt.Seccion In ('E','P')"
 
-        _Tbl_Fx_Encabezado = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Fx_Encabezado = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ' Llena formato del detalle
         Consulta_sql = "Select Fdt.*,
@@ -507,7 +507,7 @@ Public Class Clas_Imprimir_Documento
                     Where TipoDoc = '" & _TipoDoc & "' And Subtido = '" & _Subtido & "' And NombreFormato = '" & _NombreFormato & "' And Fdt.Seccion = 'D'" & vbCrLf &
                     "Order by Fdt.Orden_Detalle"
 
-        _Tbl_Fx_Detalle = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Fx_Detalle = _Sql.Fx_Get_DataTable(Consulta_sql)
 
 
 
@@ -2091,7 +2091,7 @@ Public Class Clas_Imprimir_Documento
                 Dim _TblDoc_Relacionados As DataTable
 
                 Consulta_sql = "Select Distinct TIDOPA+'-'+NUDOPA From MAEDDO Where IDMAEEDO = " & _IdDoc
-                _TblDoc_Relacionados = _Sql.Fx_Get_Tablas(Consulta_sql)
+                _TblDoc_Relacionados = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 For Each _Fila As DataRow In _TblDoc_Relacionados.Rows
                     _Texto += _Fila.Item(0)
@@ -2120,7 +2120,7 @@ Public Class Clas_Imprimir_Documento
                                 FROM MAEDPCD AS CD  WITH ( NOLOCK )   
                                 LEFT JOIN MAEDPCE AS CE ON CD.IDMAEDPCE=CE.IDMAEDPCE WHERE TIDOPA='" & _Tido & "' AND ARCHIRST='MAEEDO' AND IDRST=" & _IdDoc
 
-                _TblDoc_Relacionados = _Sql.Fx_Get_Tablas(Consulta_sql)
+                _TblDoc_Relacionados = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 If Convert.ToBoolean(_TblDoc_Relacionados.Rows.Count) Then
 
@@ -2233,7 +2233,7 @@ Public Class Clas_Imprimir_Documento
                                 Inner Join TABFU ON KOFU = CodFuncionario_Autoriza
                                 Where Idmaeedo = " & _IdDoc
 
-                Dim _Tbl_Aurotizadores As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Aurotizadores As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 Dim _Contador_Filas = 1
 
@@ -2529,16 +2529,15 @@ Public Class Clas_Imprimir_Documento
                                 Dim _Caracteres = _Formato_Texto.Length
 
                                 Dim _i = 0
-                                'Dim _Contador_Carac
+
+                                If IsNothing(_Texto) Then _Texto = String.Empty
 
                                 _Texto = Replace(_Texto, vbCrLf, " ")
                                 _Texto = Replace(_Texto, vbTab, " ")
-                                _Texto = _Texto.ToString.Trim
-                                _Texto = Replace(_Texto, "  ", " ")
 
-                                If IsNothing(_Texto) Then
-                                    _Texto = String.Empty
-                                End If
+                                If IsNothing(_Texto) Then _Texto = String.Empty
+
+                                If Not String.IsNullOrWhiteSpace(_Texto) Then _Texto = Replace(_Texto, "  ", " ")
 
                                 Dim _SubCarac = _Formato_Texto.Split(vbCrLf)
                                 Dim _TextoAjustado As String = Fx_AjustarTexto(_Texto, _SubCarac(0).Length)
@@ -2550,22 +2549,6 @@ Public Class Clas_Imprimir_Documento
                                 Dim _Fy = _Fila_Y
 
                                 For Each _Texto1 As String In _Formatext
-
-                                    'Dim _Desde = _i + 1
-                                    'Dim _Hasta = _Texto1.Length
-
-                                    'Dim _Txt = Mid(_TextoAjustado, _Desde, _Hasta)
-                                    '_i += _Texto1.Length
-
-                                    'If _Texto.Length > _Contador_Carac Then
-
-                                    '    e.Graphics.DrawString(_Txt.Trim, _Fte_Usar, _DrawBrush, _Columna_X, _Fy)
-                                    '    _Fy += (_Alto / _Formatext.Length) + 2
-                                    '    _Txt = String.Empty
-
-                                    'End If
-
-                                    '_Contador_Carac += _Texto1.Length
 
                                     e.Graphics.DrawString(_Texto1.Trim, _Fte_Usar, _DrawBrush, _Columna_X, _Fy)
                                     _Fy += _AltoL '(_Alto / _Formatext.Length) ' + 2
@@ -3203,7 +3186,7 @@ Public Class Clas_Imprimir_Documento
                            "Left Join " & _Global_BaseBk & "Zw_St_OT_Encabezado Ot On Ot.Id_Ot = Det.Id_Ot" & vbCrLf &
                            "Where Idmaeedo_Cov = " & _Idmaeedo
 
-            Dim _Tbl_Ot As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl_Ot As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _FlOt As DataRow In _Tbl_Ot.Rows
 
@@ -3222,7 +3205,7 @@ Public Class Clas_Imprimir_Documento
                "Left Join " & _Global_BaseBk & "Zw_St_OT_Operaciones Oper On Oper.Operacion = OpxS.Operacion" & vbCrLf &
                "Where Idmaeddo_Cov = " & _Idmaeddo_Cov
 
-                Dim _Tbl_Operaciones As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _Tbl_Operaciones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 Dim _EncImpreso As Boolean
 

@@ -68,7 +68,7 @@ Public Class Frm_DocsDesdeDTEXML
                         _Ver_Solo_Pendienetes & vbCrLf &
                        _Filtro_SII
 
-        Dim _Inf_02_Solo_SII As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Inf_02_Solo_SII As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _DisplayIndex = 0
 

@@ -100,7 +100,7 @@ Public Class Frm_Formulario_Stand_By
 
         End Select
 
-        _TblDocumentos = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblDocumentos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

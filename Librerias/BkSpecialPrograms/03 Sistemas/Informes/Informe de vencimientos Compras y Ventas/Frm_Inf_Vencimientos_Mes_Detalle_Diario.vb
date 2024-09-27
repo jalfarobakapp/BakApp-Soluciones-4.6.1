@@ -65,6 +65,8 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
         Sb_Formato_Generico_Grilla(Grilla, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
 
     Private Sub Frm_Inf_Vencimientos_Mes_Detalle_Diario_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -101,7 +103,7 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
         Dim _Sql1 = Consulta_sql & vbCrLf & "Select distinct FEVE From #INFVEN" & vbCrLf & "Drop Table #INFVEN"
 
 
-        Dim _TblDias As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblDias As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Consulta_sql += "SELECT VEN.RTEN,VEN.RUT,VEN.ENDO,VEN.NOKOEN,TOTAL_D = SUM(COALESCE(VEN.VAVE-VEN.VAABVE ,0.0))," & vbCrLf
 
@@ -307,6 +309,7 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
     Sub Sb_Generar_Informe_Mensual(ByVal _Fecha_Inicio As Date,
                                    ByVal _Fecha_Fin As Date)
 
+        Me.Cursor = Cursors.WaitCursor
 
         Consulta_sql = _SqlConsulta_informe 'My.Resources.Recursos_Inf_Compras_Vencimiento.Informe_Vencimientos_Compras_Anuales & vbCrLf & vbCrLf
         Consulta_sql = Replace(Consulta_sql, "#Fecha_Inicio#", Format(_Fecha_Inicio, "yyyyMMdd"))
@@ -322,7 +325,7 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
 
         Dim _Sql1 = Consulta_sql & vbCrLf & "Select distinct FEVE From #INFVEN" & vbCrLf & "Drop Table #INFVEN"
 
-        Dim _TblDias As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblDias As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         'Consulta_sql += "SELECT VEN.RTEN,VEN.RUT,VEN.ENDO,VEN.SUENDO,VEN.NOKOEN,TOTAL_D = SUM(COALESCE(VEN.VAVE-VEN.VAABVE ,0.0))," & vbCrLf
         Consulta_sql += "SELECT VEN.RTEN,VEN.RUT,VEN.ENDO,VEN.NOKOEN,Cast(0 As Int) As DIAS_ATRASO,TOTAL_D = SUM(COALESCE(VEN.VAVE-VEN.VAABVE ,0.0))," & vbCrLf
@@ -470,6 +473,8 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
 
         Sb_Formato_Informe_Mensual()
         Sb_Quitar_Columnas_en_cero()
+
+        Me.Cursor = Cursors.Default
 
     End Sub
 

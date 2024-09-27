@@ -29,7 +29,7 @@ Public Class Frm_Rc_02_Revision_Cam_Tipo_Reclamo
                         SELECT CodigoTabla AS Padre,NombreTabla AS Hijo,Orden
                         FROM " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones
                         WHERE Tabla = 'SIS_RECLAMOS_TIPO' ORDER BY Orden"
-        Cmb_Tipo_Reclamo.DataSource = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Cmb_Tipo_Reclamo.DataSource = _Sql.Fx_Get_DataTable(Consulta_Sql)
         Cmb_Tipo_Reclamo.SelectedValue = String.Empty
 
         AddHandler Cmb_Tipo_Reclamo.SelectedIndexChanged, AddressOf Sb_Cmb_Tipo_Reclamos_SelectedIndexChanged
@@ -95,7 +95,7 @@ Public Class Frm_Rc_02_Revision_Cam_Tipo_Reclamo
                        "FROM " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
                        "WHERE Tabla = 'SIS_RECLAMOS_SUBTIPO' And Padre_Tabla = 'SIS_RECLAMOS_TIPO' And Padre_CodigoTabla = '" & Cmb_Tipo_Reclamo.SelectedValue & "'" & vbCrLf &
                        "Order by Padre"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         caract_combo(Cmb_Sub_Tipo_Reclamos)
         Cmb_Sub_Tipo_Reclamos.DataSource = _Tbl

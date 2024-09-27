@@ -333,7 +333,7 @@ Public Class Frm_Correos_Conf_SMTP
             ' Incorporación de imagenes de funcionarios
 
             Consulta_Sql = "Select KOFU From TABFU"
-            Dim _Tbl_Funcionarios As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+            Dim _Tbl_Funcionarios As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
             For Each _Fila As DataRow In _Tbl_Funcionarios.Rows
 

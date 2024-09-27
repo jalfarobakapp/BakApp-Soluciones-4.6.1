@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Threading
 Imports DevComponents.DotNetBar
+Imports Org.BouncyCastle.Math.EC
 
 Public Class Frm_Pagos_Documentos
 
@@ -262,7 +263,7 @@ Public Class Frm_Pagos_Documentos
                        "CAST('' AS VARCHAR(50)) AS NOKOEN,'' AS ESPGDO,'' AS ESDO,TIDOELEC" & vbCrLf &
                        "FROM MAEEDO"
 
-        _Tbl_Maeedo = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Maeedo = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With _Tbl_Maeedo
 
@@ -523,7 +524,7 @@ Public Class Frm_Pagos_Documentos
                        "FROM MAEDPCE WITH ( NOLOCK ) " & vbCrLf &
                        "WHERE 1 = 0"
 
-        _Tbl_Maedpce = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Maedpce = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Maedpce
 
@@ -541,7 +542,7 @@ Public Class Frm_Pagos_Documentos
             .Columns("FEEMDP").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
             .Columns("FEEMDP").DefaultCellStyle.Format = "dd/MM/yyyy"
 
-            .Columns("FEVEDP").HeaderText = "F.venci."
+            .Columns("FEVEDP").HeaderText = "F.vencimiento"
             .Columns("FEVEDP").Width = 80
             .Columns("FEVEDP").Visible = True
             .Columns("FEVEDP").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
@@ -964,7 +965,7 @@ Public Class Frm_Pagos_Documentos
                        "WHERE EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' AND NUDO = '" & _Nudo & "'" & vbCrLf &
                        "AND TIDO IN ('BLV','BSV','FCV','FDV','NCV')"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not (_Tbl Is Nothing) Then
 
@@ -1222,7 +1223,7 @@ Public Class Frm_Pagos_Documentos
         Dim _Iddt As Integer
 
         Dim _Tido = _Tbl_Maeedo.Rows(0).Item("TIDO")
-        Dim _Nro_Documento As String = Traer_Numero_Documento(_Tido, , Modalidad) ' _Class_DTE.Pro_Nro_Documento
+        Dim _Nudo As String = Traer_Numero_Documento(_Tido, , Modalidad) ' _Class_DTE.Pro_Nro_Documento
 
         Dim _Tidoelec As Integer = CInt(Fx_Es_Electronico(_Tido)) * -1
 
@@ -1230,8 +1231,13 @@ Public Class Frm_Pagos_Documentos
 
         If CBool(_Tidoelec) And CBool(_Nudonodefi) Then
 
-            If Not Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nro_Documento, True) Then
+            Dim _Mensaje As New LsValiciones.Mensajes
 
+            _Mensaje = Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nudo, False)
+
+            If Not _Mensaje.EsCorrecto Then ' Not Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nudo, True) Then
+
+                MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
                 MessageBoxEx.Show(Me, "El documento no fue grabado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Sb_Nuevo_Documento()
                 Return
@@ -1240,14 +1246,14 @@ Public Class Frm_Pagos_Documentos
 
         End If
 
-        Dim _Reg = _Sql.Fx_Cuenta_Registros("MAEEDO", "TIDO = '" & _Tido & "' And NUDO = '" & _Nro_Documento & "' And IDMAEEDO <> " & _Idmaeedo)
+        Dim _Reg = _Sql.Fx_Cuenta_Registros("MAEEDO", "TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "' And IDMAEEDO <> " & _Idmaeedo)
 
         If CBool(_Reg) Then
-            _Nro_Documento = Traer_Numero_Documento(_Tido, , Modalidad)
+            _Nudo = Traer_Numero_Documento(_Tido, , Modalidad)
         End If
 
-        Consulta_sql = "Update MAEEDO Set NUDO='" & _Nro_Documento & "',NUDONODEFI=0,TIDOELEC=" & _Tidoelec & " Where IDMAEEDO=" & _Idmaeedo & vbCrLf &
-                       "Update MAEDDO Set NUDO='" & _Nro_Documento & "' Where IDMAEEDO=" & _Idmaeedo
+        Consulta_sql = "Update MAEEDO Set NUDO='" & _Nudo & "',NUDONODEFI=0,TIDOELEC=" & _Tidoelec & " Where IDMAEEDO=" & _Idmaeedo & vbCrLf &
+                       "Update MAEDDO Set NUDO='" & _Nudo & "' Where IDMAEEDO=" & _Idmaeedo
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
 
@@ -1268,7 +1274,7 @@ Public Class Frm_Pagos_Documentos
                 Consulta_sql = "Update MAEEDO Set NUDO='" & _Nudo_Old & "',NUDONODEFI=1,TIDOELEC=" & _Tidoelec & " Where IDMAEEDO=" & _Idmaeedo & vbCrLf &
                                "Update MAEDDO Set NUDO='" & _Nudo_Old & "' Where IDMAEEDO=" & _Idmaeedo
                 _Sql.Ej_consulta_IDU(Consulta_sql)
-                _Nro_Documento = String.Empty
+                _Nudo = String.Empty
 
                 MessageBoxEx.Show(Me, ex.Message, "Error al crear DTE", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
@@ -1280,7 +1286,7 @@ Public Class Frm_Pagos_Documentos
 
         ' *****  ERROR EN CAJA CUANDO IMPRIME Y NO ENCUENTRA EL FORMATO POR LA MODALIDAD DE BAKAPP
 
-        If Not String.IsNullOrEmpty(_Nro_Documento) Then
+        If Not String.IsNullOrEmpty(_Nudo) Then
 
             ' *********************************************************************
             Dim _Error_PDF As String
@@ -1332,12 +1338,12 @@ Public Class Frm_Pagos_Documentos
             ' ACTIVACION DE ORDENES DE DESPACHO *---------------------------------------------------------
 
             Consulta_sql = "Select IDRST From MAEDDO Where IDMAEEDO = " & _Idmaeedo
-            Dim _TblDetalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _TblDetalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
             Dim _Filtro_Idmaeddo_Dori = Generar_Filtro_IN(_TblDetalle, "", "IDRST", True, False, "")
 
             Consulta_sql = "Select Distinct Id_Despacho From " & _Global_BaseBk & "Zw_Despachos_Doc_Det 
                             Where Idmaeedo In (Select IDMAEEDO From MAEDDO Where IDMAEDDO In " & _Filtro_Idmaeddo_Dori & ") Or Idmaeedo = " & _Idmaeedo
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _Fl As DataRow In _Tbl.Rows
 
@@ -1426,7 +1432,7 @@ Public Class Frm_Pagos_Documentos
             End If
 
 
-            MessageBoxEx.Show(Me, _Tido & " - " & _Nro_Documento & vbCrLf & vbCrLf &
+            MessageBoxEx.Show(Me, _Tido & " - " & _Nudo & vbCrLf & vbCrLf &
                               "Grabada correctamente", "Grabar documento", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
             Sb_Nuevo_Documento()
@@ -1719,10 +1725,9 @@ Public Class Frm_Pagos_Documentos
                 '                             "¿Desea utilizar la Cta. Cte. del cliente?", "",
                 '                             MessageBoxButtons.YesNo,
                 '                             MessageBoxIcon.Error) = Windows.Forms.DialogResult.Yes Then
-
                 '    _Permiso_Pagar = Fx_Revisar_Credito_Cliente(_RowEntidad)
-
                 'End If
+
                 If Not Fx_Permitir_Grabar_Sin_Pagar(_RowEntidad) Then
                     Return
                 End If
@@ -1821,7 +1826,7 @@ Public Class Frm_Pagos_Documentos
                        "From MAEDPCE With ( Nolock ) " & vbCrLf &
                        "Where 1 = 0"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _Tbl.Rows.Add(Fx_Nueva_Linea_De_Pago(_Tbl))
 
@@ -1955,7 +1960,7 @@ Public Class Frm_Pagos_Documentos
         Consulta_sql = Replace(Consulta_sql, "#ValesTransitorios#", "")
         Consulta_sql = Replace(Consulta_sql, "#Observaciones#", "")
 
-        Dim _Tbl_Paso As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Paso As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl_Paso.Rows.Count) Then
 
@@ -2199,17 +2204,26 @@ Public Class Frm_Pagos_Documentos
         Dim _EnCurso_Pagare As Double
         Dim _Encurso_Total As Double = _TotalBruto
 
+        Dim _Utilizar_NVV_En_Credito_X_Cliente As Boolean = _Global_Row_Configuracion_General.Item("Utilizar_NVV_En_Credito_X_Cliente")
+
+        'Dim Fm_D As New Frm_InfoEnt_Deudas_Doc_Comerciales(_RowEntidad, _Encurso_Total, 0, 0, 0, True)
+        'Fm_D.Pro_Fun_Auto_Cupo_Exe = _Fun_Auto_Cupo_Exe
+        '_Autorizar_Venta_Con_Cupo_Exedido = Fm_D.Pro_Autorizar_Venta_Con_Cupo_Exedido
+        '_Crsd_Disponible = Fm_D.Pro_Crsd_Disponible
+        '_Crto_Disponible = Fm_D.Pro_Crto_Disponible
+        'Fm_D.Dispose()
+
         Dim Fm_D As New Frm_InfoEnt_Deudas_Doc_Comerciales(_RowEntidad,
                                                            _Encurso_Total,
                                                            _EnCurso_Cheque,
                                                            _EnCurso_Letra,
-                                                           _EnCurso_Pagare)
+                                                           _EnCurso_Pagare,
+                                                           _Utilizar_NVV_En_Credito_X_Cliente)
 
-        Dim _Credito_Cheque,
-            _Credito_Cta_Cte As Double
+        Dim _Credito_Cheque As Double = Fm_D.Pro_Crch_Disponible
+        Dim _Credito_Cta_Cte As Double = Fm_D.Pro_Crsd_Disponible
 
-        _Credito_Cheque = Fm_D.Pro_Crch_Disponible
-        _Credito_Cta_Cte = Fm_D.Pro_Crsd_Disponible
+        Dim _Crto_Disponible As Double = Fm_D.Pro_Crto_Disponible
 
         If _Credito_Cheque < 0 Then
 
@@ -2271,9 +2285,9 @@ Public Class Frm_Pagos_Documentos
 
 
             If MessageBoxEx.Show(Me, "Supera el límite de crédito Sin Documentar" & vbCrLf &
-                                        "Sobregiro: " & FormatCurrency(_Credito_Cta_Cte, 0) & vbCrLf & vbCrLf &
-                                        "¿Desea solicitar permiso para realizar esta acción?",
-                                        "¡Advertencia!", MessageBoxButtons.YesNo, MessageBoxIcon.Stop) = Windows.Forms.DialogResult.Yes Then
+                                     "Sobregiro: " & FormatCurrency(_Credito_Cta_Cte, 0) & vbCrLf & vbCrLf &
+                                     "¿Desea solicitar permiso para realizar esta acción?",
+                                     "¡Advertencia!", MessageBoxButtons.YesNo, MessageBoxIcon.Stop) = Windows.Forms.DialogResult.Yes Then
 
                 _Solicitar_Permiso = True
                 _CodPermiso_Necesita = "Ope00003"
@@ -2283,6 +2297,44 @@ Public Class Frm_Pagos_Documentos
             Return False
 
         End If
+
+        If _Crto_Disponible < 0 Then
+
+            _Crto_Disponible = (_Crto_Disponible * -1) - _Pago_Actual
+
+            If Fx_Tiene_Permiso(Me, "Bkp00033",, False) Then
+
+                If MessageBoxEx.Show(Me, "Supera el límite de crédito Disponible" & vbCrLf &
+                            "Sobregiro: " & FormatCurrency(_Crto_Disponible, 0) & vbCrLf & vbCrLf &
+                            "¿Desea continuar con la venta?",
+                            "¡Advertencia!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = Windows.Forms.DialogResult.Yes Then
+
+                    _Tiene_Permiso = True
+                    Return True
+
+                End If
+
+                _Solicitar_Permiso = False
+                Return False
+
+            End If
+
+
+            If MessageBoxEx.Show(Me, "Supera el límite de crédito Disponible" & vbCrLf &
+                                     "Sobregiro: " & FormatCurrency(_Crto_Disponible, 0) & vbCrLf & vbCrLf &
+                                     "¿Desea solicitar permiso para realizar esta acción?",
+                                     "¡Advertencia!", MessageBoxButtons.YesNo, MessageBoxIcon.Stop) = Windows.Forms.DialogResult.Yes Then
+
+                _Solicitar_Permiso = True
+                _CodPermiso_Necesita = "Bkp00033"
+
+            End If
+
+            Return False
+
+        End If
+
+
 
         If _NOTRAEDEUD Then
 
@@ -2415,9 +2467,16 @@ Public Class Frm_Pagos_Documentos
 
             If CBool(_Tidoelec) And CBool(_Nudonodefi) Then
 
-                If Not Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nro_Documento, True) Then
+                Dim _Mensaje As New LsValiciones.Mensajes
+
+                _Mensaje = Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nro_Documento, False)
+
+                If Not _Mensaje.EsCorrecto Then
+
+                    MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
                     Sb_Nuevo_Documento()
                     Return
+
                 End If
 
             End If
@@ -2850,7 +2909,7 @@ Public Class Frm_Pagos_Documentos
                 Dim _Otra_Condicion = String.Empty
 
                 Consulta_sql = "Select Distinct IDMAEEDO From MAEDDO Where IDMAEDDO In (Select IDRST From MAEDDO Where IDMAEEDO = " & _Idmaeedo & ")"
-                Dim _TblDetalle As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+                Dim _TblDetalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 Dim _Filtros_Idmaeedo = Generar_Filtro_IN(_TblDetalle, "", "IDMAEEDO", False, False, "")
 
@@ -2919,7 +2978,7 @@ Public Class Frm_Pagos_Documentos
             If CBool(_Idmaeedo) Then
 
                 Consulta_sql = "Select Distinct IDMAEEDO From MAEDDO Where IDMAEDDO In (Select IDRST From MAEDDO Where IDMAEEDO = " & _Idmaeedo & ") Or IDMAEEDO = " & _Idmaeedo
-                _TblDetalle = _Sql.Fx_Get_Tablas(Consulta_sql)
+                _TblDetalle = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 _Archivos = Fx_Revisar_Si_Hay_Archivos_Adjuntos(_NombreEquipo, _TblDetalle, "IDMAEEDO")
 
@@ -2992,7 +3051,7 @@ Public Class Frm_Pagos_Documentos
         Consulta_sql = "Select *,Cast(0 As Bit) As Paga_Tidp_Obl,Cast(0 As Bit) As Tiene_Concepto_Obl 
                         From " & _Global_BaseBk & "Zw_Docu_ObligPg Where Modalidad = '" & Modalidad & "' And Tido = '" & _Tido & "'"
 
-        Dim _Tbl_Docu_ObligPg As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Docu_ObligPg As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _TblDetalle As DataTable = _Ds_Matriz_Documentos.Tables("Detalle_Doc")
 
@@ -3116,7 +3175,7 @@ Public Class Frm_Pagos_Documentos
         Consulta_sql = "Select *,Cast(0 As Bit) As Paga_Tidp_Obl,Cast(0 As Bit) As Tiene_Concepto_Obl 
                         From " & _Global_BaseBk & "Zw_Docu_ObligPg Where Modalidad = '" & Modalidad & "' And Tido = '" & _Tido & "'"
 
-        Dim _Tbl_Docu_ObligPg As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Docu_ObligPg As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
         Dim _TblDetalle As DataTable = _Ds_Matriz_Documentos.Tables("Detalle_Doc")
 
         If CBool(_Tbl_Docu_ObligPg.Rows.Count) Then

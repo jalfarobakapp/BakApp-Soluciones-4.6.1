@@ -36,7 +36,7 @@ Public Class Class_Referencias_DTE
     Sub Sb_Llenar_Referencias()
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Referencias_Dte Where Id_Doc = " & _Idmaeedo
-        _Tbl_Referencias = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Referencias = _Sql.Fx_Get_DataTable(Consulta_sql)
         _Tbl_Referencias.TableName = "Referencias_DTE"
 
     End Sub

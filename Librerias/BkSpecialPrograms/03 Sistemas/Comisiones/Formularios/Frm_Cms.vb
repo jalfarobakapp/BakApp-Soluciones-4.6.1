@@ -775,7 +775,7 @@ Public Class Frm_Cms
 
         Consulta_Sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Comisiones_DetFlTbl" & vbCrLf &
                        "Where Id_Det = " & _Id_Dte & " And NombreTblFiltro = '" & _NombreTblFiltro & "'"
-        _Tbl = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         If CBool(_Tbl.Rows.Count) Then
             _Tbl.TableName = _NombreTblFiltro
@@ -843,7 +843,7 @@ Public Class Frm_Cms
         Dim _DiasTrabMes As Integer = _Habiles '- _Festivos
 
         Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Comisiones_Mis Where CodFuncionario = '" & _CodFuncionario & "'"
-        Dim _Tbl_MisComisiones As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_MisComisiones As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Comisiones_Fun Where CodFuncionario = '" & _CodFuncionario & "'"
         Dim _Row_Funcionario As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
@@ -1527,7 +1527,7 @@ Public Class Frm_Cms
                        "Inner Join TABFU On KOFU = Det.CodFuncionario" & vbCrLf &
                        "Where Id_Enc = " & _Id_Enc & " And Mis.MisVentas = 1" & vbCrLf &
                        "Group By Det.CodFuncionario,NOKOFU"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Ventas depuradas por vendedor")
 

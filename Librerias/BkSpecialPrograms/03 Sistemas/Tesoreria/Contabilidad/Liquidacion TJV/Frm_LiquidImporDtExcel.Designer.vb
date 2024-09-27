@@ -24,6 +24,7 @@ Partial Class Frm_LiquidImporDtExcel
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_LiquidImporDtExcel))
         Me.Grupo_01 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Chk_Dif1Peso = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Primera_Fila_Es_encabezado = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Lbl_Procesando = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Nombre_Archivo = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -35,7 +36,7 @@ Partial Class Frm_LiquidImporDtExcel
         Me.Btn_Archivo_Ayuda_Excel = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Cancelar = New DevComponents.DotNetBar.ButtonItem()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.Chk_Dif1Peso = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_Refanti = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Grupo_01.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -44,6 +45,7 @@ Partial Class Frm_LiquidImporDtExcel
         '
         Me.Grupo_01.BackColor = System.Drawing.Color.White
         Me.Grupo_01.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.Grupo_01.Controls.Add(Me.Chk_Refanti)
         Me.Grupo_01.Controls.Add(Me.Chk_Dif1Peso)
         Me.Grupo_01.Controls.Add(Me.Chk_Primera_Fila_Es_encabezado)
         Me.Grupo_01.Controls.Add(Me.Lbl_Procesando)
@@ -54,7 +56,7 @@ Partial Class Frm_LiquidImporDtExcel
         Me.Grupo_01.DisabledBackColor = System.Drawing.Color.Empty
         Me.Grupo_01.Location = New System.Drawing.Point(4, 6)
         Me.Grupo_01.Name = "Grupo_01"
-        Me.Grupo_01.Size = New System.Drawing.Size(585, 137)
+        Me.Grupo_01.Size = New System.Drawing.Size(585, 164)
         '
         '
         '
@@ -85,6 +87,26 @@ Partial Class Frm_LiquidImporDtExcel
         Me.Grupo_01.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Grupo_01.TabIndex = 80
         Me.Grupo_01.Text = "Importar datos desde Excel"
+        '
+        'Chk_Dif1Peso
+        '
+        Me.Chk_Dif1Peso.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Dif1Peso.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Dif1Peso.CheckBoxImageChecked = CType(resources.GetObject("Chk_Dif1Peso.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Dif1Peso.Checked = True
+        Me.Chk_Dif1Peso.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Chk_Dif1Peso.CheckValue = "Y"
+        Me.Chk_Dif1Peso.FocusCuesEnabled = False
+        Me.Chk_Dif1Peso.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Dif1Peso.Location = New System.Drawing.Point(186, 89)
+        Me.Chk_Dif1Peso.Name = "Chk_Dif1Peso"
+        Me.Chk_Dif1Peso.Size = New System.Drawing.Size(242, 23)
+        Me.Chk_Dif1Peso.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Dif1Peso.TabIndex = 82
+        Me.Chk_Dif1Peso.Text = "Diferencias de 1 peso dejar pago del sistema"
         '
         'Chk_Primera_Fila_Es_encabezado
         '
@@ -189,7 +211,7 @@ Partial Class Frm_LiquidImporDtExcel
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Importar_Archivo, Me.Btn_Archivo_Ayuda_Excel, Me.Btn_Cancelar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 155)
+        Me.Bar1.Location = New System.Drawing.Point(0, 176)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(596, 41)
         Me.Bar1.Stretch = True
@@ -231,31 +253,28 @@ Partial Class Frm_LiquidImporDtExcel
         '
         Me.OpenFileDialog1.FileName = "OpenFileDialog1"
         '
-        'Chk_Dif1Peso
+        'Chk_Refanti
         '
-        Me.Chk_Dif1Peso.BackColor = System.Drawing.Color.Transparent
+        Me.Chk_Refanti.BackColor = System.Drawing.Color.Transparent
         '
         '
         '
-        Me.Chk_Dif1Peso.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Dif1Peso.CheckBoxImageChecked = CType(resources.GetObject("Chk_Dif1Peso.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Dif1Peso.Checked = True
-        Me.Chk_Dif1Peso.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.Chk_Dif1Peso.CheckValue = "Y"
-        Me.Chk_Dif1Peso.FocusCuesEnabled = False
-        Me.Chk_Dif1Peso.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Dif1Peso.Location = New System.Drawing.Point(196, 89)
-        Me.Chk_Dif1Peso.Name = "Chk_Dif1Peso"
-        Me.Chk_Dif1Peso.Size = New System.Drawing.Size(242, 23)
-        Me.Chk_Dif1Peso.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Dif1Peso.TabIndex = 82
-        Me.Chk_Dif1Peso.Text = "Diferencias de 1 peso dejar pago del sistema"
+        Me.Chk_Refanti.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Refanti.CheckBoxImageChecked = CType(resources.GetObject("Chk_Refanti.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Refanti.FocusCuesEnabled = False
+        Me.Chk_Refanti.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Refanti.Location = New System.Drawing.Point(5, 115)
+        Me.Chk_Refanti.Name = "Chk_Refanti"
+        Me.Chk_Refanti.Size = New System.Drawing.Size(271, 23)
+        Me.Chk_Refanti.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Refanti.TabIndex = 83
+        Me.Chk_Refanti.Text = "Incluir busqueda en campo REFANTI"
         '
         'Frm_LiquidImporDtExcel
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(596, 196)
+        Me.ClientSize = New System.Drawing.Size(596, 217)
         Me.Controls.Add(Me.Grupo_01)
         Me.Controls.Add(Me.Bar1)
         Me.DoubleBuffered = True
@@ -288,4 +307,5 @@ Partial Class Frm_LiquidImporDtExcel
     Public WithEvents Btn_Cancelar As DevComponents.DotNetBar.ButtonItem
     Public WithEvents OpenFileDialog1 As OpenFileDialog
     Public WithEvents Chk_Dif1Peso As DevComponents.DotNetBar.Controls.CheckBoxX
+    Public WithEvents Chk_Refanti As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

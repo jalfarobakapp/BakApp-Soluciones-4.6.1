@@ -551,8 +551,6 @@ Public Class Frm_St_EncIngreso
 
     Function Fx_Crear_GRP_PRE(_Id_Ot_Padre As Integer, _Id_Ot As Integer, _Nro_OT As String, _Nro_GRP As String) As Integer
 
-        Dim _Idmaeedo As Integer
-
         Dim _ServTecnico_Empresa As String = _Global_Row_Configuracion_Estacion.Item("ServTecnico_Empresa").ToString.Trim
         Dim _ServTecnico_Sucursal As String = _Global_Row_Configuracion_Estacion.Item("ServTecnico_Sucursal").ToString.Trim
         Dim _ServTecnico_Bodega As String = _Global_Row_Configuracion_Estacion.Item("ServTecnico_Bodega").ToString.Trim
@@ -615,7 +613,7 @@ Public Class Frm_St_EncIngreso
                        "Left Join " & _Global_BaseBk & "Zw_St_OT_Notas Nts On Ots.Id_Ot = Nts.Id_Ot" & vbCrLf &
                        "Where Id_Ot_Padre = " & _Id_Ot_Padre
 
-        Dim _Tbl_Ots As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Ots As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Fila As DataRow In _Tbl_Ots.Rows 'Cl_OrdenServicio.DsDocumento.Tables(0).Rows
 
@@ -645,18 +643,18 @@ Public Class Frm_St_EncIngreso
 
         Dim _Observaciones As String = "Documento generado desde Sis. Servicio técnico Bakapp" & vbCrLf & "Nro OT: " & _Nro_OT
 
-        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(_SqlQuery)
+        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(_SqlQuery)
 
         Dim Fm As New Frm_Formulario_Documento("GRP", csGlobales.Enum_Tipo_Documento.Guia_Recepcion_Prestamos_GRP_PRE,
                                                False, True, False, False, False)
         Fm.Pro_RowEntidad = Cl_OrdenServicio.RowEntidad
         Fm.Sb_Crear_Documento_Interno_Con_Tabla2(Me, _Tbl_Productos, FechaDelServidor,
                                                      "Codigo", "Cantidad", "Costo", _Observaciones, False, False, _NroDocumento)
-        _Idmaeedo = Fm.Fx_Grabar_Documento(False,, False)
+        Dim _Mensaje As LsValiciones.Mensajes = Fm.Fx_Grabar_Documento(False,, False)
         Fm.Dispose()
 
-        Consulta_sql = "Select IDMAEEDO,IDMAEDDO,OBSERVA,TIDO,NUDO From MAEDDO Where IDMAEEDO = " & _Idmaeedo
-        Dim _Tbl_DetalleGrc As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Consulta_sql = "Select IDMAEEDO,IDMAEDDO,OBSERVA,TIDO,NUDO From MAEDDO Where IDMAEEDO = " & _Mensaje.Id
+        Dim _Tbl_DetalleGrc As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Consulta_sql = String.Empty
 
@@ -671,7 +669,7 @@ Public Class Frm_St_EncIngreso
 
                     Dim _Observa As String = "OTS: " & _Flst.Item("Nro_Ot") & " - SubOt: " & _Flst.Item("Sub_Ot") & ", Serie: " & _Flst.Item("NroSerie") & ", " & _Flst.Item("Defecto_segun_cliente")
 
-                    Consulta_sql += "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set Idmaeedo_GRP_PRE = " & _Idmaeedo & ", Idmaeddo_GRP_PRE = " & _Idmaeddo &
+                    Consulta_sql += "Update " & _Global_BaseBk & "Zw_St_OT_Encabezado Set Idmaeedo_GRP_PRE = " & _Mensaje.Id & ", Idmaeddo_GRP_PRE = " & _Idmaeddo &
                                     " Where Id_Ot = " & _Id_Ot & vbCrLf &
                                     "Update MAEDDO Set OBSERVA = '" & Mid(_Observa, 1, 200) & "' Where IDMAEDDO = " & _Idmaeddo & vbCrLf
 
@@ -695,7 +693,7 @@ Public Class Frm_St_EncIngreso
 
         _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
-        If CBool(_Idmaeedo) Then
+        If _Mensaje.EsCorrecto Then
 
             Dim _Koen = Cl_OrdenServicio.RowEntidad.Item("KOEN")
             Dim _Suen = Cl_OrdenServicio.RowEntidad.Item("SUEN")
@@ -705,7 +703,7 @@ Public Class Frm_St_EncIngreso
 
         End If
 
-        Return _Idmaeedo
+        Return _Mensaje.Id
 
     End Function
 

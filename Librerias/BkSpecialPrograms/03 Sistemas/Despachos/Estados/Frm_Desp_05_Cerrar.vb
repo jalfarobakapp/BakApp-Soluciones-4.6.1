@@ -54,7 +54,7 @@ Public Class Frm_Desp_05_Cerrar
         Consulta_Sql = "Select Distinct Id_Despacho 
                             From " & _Global_BaseBk & "Zw_Despachos 
                             Where Nro_Despacho = '" & _Cl_Despacho.Nro_Despacho & "' And Estado = 'DPO'"
-        Dim _Tbl_Despachos As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_Despachos As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         If Not CBool(_Tbl_Despachos.Rows.Count) Then
             Return

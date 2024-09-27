@@ -569,7 +569,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
             Consulta_sql = "Select Cast(1 As Bit) As Chk,KOFU As Codigo, NOKOFU as Descripcion" & vbCrLf &
                            "From TABFU Where KOFU = '" & FUNCIONARIO & "'"
-            _Tbl_Filtro_Vendedores_Asignados = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Filtro_Vendedores_Asignados = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         End If
 
@@ -623,6 +623,8 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Sb_Color_Botones_Barra(Bar1)
 
         Grafico_Pie.ChartAreas(0).BackColor = Color.FromArgb(Global_camvasColor)
+
+        Btn_CumplimientoClientes.Visible = True
 
     End Sub
 
@@ -862,11 +864,11 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
             If _Actualizar_Datos_Informe Then
 
-                Consulta_sql = "SELECT Count(IDMAEEDO) AS Doc_en_DDO FROM MAEDDO WHERE FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
+                Consulta_sql = "SELECT Count(IDMAEEDO) AS Doc_en_DDO FROM MAEDDO WITH (NOLOCK) WHERE FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
                             Format(Dtp_Fecha_Hasta.Value, "yyyyMMdd") & "'" & Space(1) &
                             "AND TIDO IN ('BLV','BLX','BSV','ESC','FCV','FDB','FDV','FDX','FDZ','FEE'," &
                             "'FEV','FVL','FVT','FVX','FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV','RIN')" & Space(1) &
-                            "And IDMAEEDO Not IN (Select IDMAEEDO From MAEEDO Where NUDONODEFI = 1)" &
+                            "And IDMAEEDO Not IN (Select IDMAEEDO From MAEEDO WITH (NOLOCK) Where NUDONODEFI = 1)" &
                             vbCrLf &
                             "SELECT Count(IDMAEEDO) As Doc_en_Paso FROM " & _Nombre_Tabla_Paso & Space(1) &
                             "WHERE " &
@@ -1079,7 +1081,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
                                "Select " & _Distinct & _Cp_Codigo & " As CODIGO," & _Cp_Descripcion & " As DESCRIPCION," &
                                "CAST('' As Varchar(3)) As VND,CAST(0 as Float) As Porc," & _Campo_Mostrar & " As TOTAL" & vbCrLf &
                                "Into #Paso1" & vbCrLf &
-                               "From " & _Nombre_Tabla_Paso & vbCrLf &
+                               "From " & _Nombre_Tabla_Paso & " WITH (NOLOCK)" & vbCrLf &
                                "Where 1 > 0" & vbCrLf &
                                _SqlFiltro &
                                vbCrLf &
@@ -1125,8 +1127,6 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             End If
 
             TotalNetoComisiones = _Row_Totales.Item("TOTAL")
-
-
 
             If _Tbl_Informe.Rows.Count = 0 Then
                 Sb_Actualizar_Graficos()
@@ -1199,7 +1199,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             Me.Cursor = Cursors.Default
             Me.Enabled = True
 
-            Btn_CumplimientoClientes.Visible = (_Codigo = "KOFULIDO")
+            'Btn_CumplimientoClientes.Visible = (_Codigo = "KOFULIDO")
 
         End Try
 
@@ -1962,7 +1962,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Consulta_sql = Replace(Consulta_sql, "#Filtro_Fechas#", "")
         Consulta_sql = Replace(Consulta_sql, "#Sql_Puntos_Cero#", _Sql_Puntos_Cero)
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim rows() As DataRow = _Tbl.Select("Total=MAX(Total)")
         Dim _Max
@@ -2179,7 +2179,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
                         "Select * From #Paso1" & vbCrLf &
                         "Drop Table #Paso1"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(_Sql_Grafico)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(_Sql_Grafico)
 
         Dim rows() As DataRow = _Tbl.Select("Total=MAX(Total)")
         Dim _Max
@@ -2358,7 +2358,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         _Sql_Grafico = Replace(_Sql_Grafico, "#Filtro_Fechas#", "")
         _Sql_Grafico = Replace(_Sql_Grafico, "#Sql_Puntos_Cero#", _Sql_Puntos_Cero)
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(_Sql_Grafico)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(_Sql_Grafico)
 
         Dim rows() As DataRow = _Tbl.Select("Total=MAX(Total)")
         Dim _Max
@@ -2467,7 +2467,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
                         "Select * From #Paso1" & vbCrLf &
                         "Drop Table #Paso1"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(_Sql_Grafico)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(_Sql_Grafico)
 
         Dim rows() As DataRow = _Tbl.Select("Total=MAX(Total)")
         Dim _Max
@@ -2556,7 +2556,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Consulta_sql = Replace(Consulta_sql, "#Filtro_Fechas#", "")
         Consulta_sql = Replace(Consulta_sql, "#Sql_Puntos_Cero#", _Sql_Puntos_Cero)
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim rows() As DataRow = _Tbl.Select("Total=MAX(Total)")
         Dim _Max
@@ -3746,6 +3746,14 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     Private Sub Btn_Informe_X_Clientes_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Informe_X_Clientes.Click
 
+        Dim _RangoFecha As Integer = DateDiff(DateInterval.Year, Dtp_Fecha_Desde.Value, Dtp_Fecha_Hasta.Value)
+
+        If _RangoFecha > 1 Then
+            MessageBoxEx.Show(Me, "El rango de fechas no debe superar un año para poder ver este informe", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Cod = _Fila.Cells("CODIGO").Value
 
@@ -3799,6 +3807,14 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     Private Sub Btn_Informe_X_Documentos_Entidades_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Informe_X_Documentos_Entidades.Click
 
+        Dim _RangoFecha As Integer = DateDiff(DateInterval.Year, Dtp_Fecha_Desde.Value, Dtp_Fecha_Hasta.Value)
+
+        If _RangoFecha > 1 Then
+            MessageBoxEx.Show(Me, "El rango de fechas no debe superar un año para poder ver este informe", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Cod = _Fila.Cells("CODIGO").Value
 
@@ -3846,6 +3862,14 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
     End Sub
 
     Private Sub Btn_Informe_X_Productos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Informe_X_Productos.Click
+
+        Dim _RangoFecha As Integer = DateDiff(DateInterval.Year, Dtp_Fecha_Desde.Value, Dtp_Fecha_Hasta.Value)
+
+        If _RangoFecha > 1 Then
+            MessageBoxEx.Show(Me, "El rango de fechas no debe superar un año para poder ver este informe", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Cod = _Fila.Cells("CODIGO").Value
@@ -4840,6 +4864,12 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     Private Sub Btn_CumplimientoClientes_Click(sender As Object, e As EventArgs) Handles Btn_CumplimientoClientes.Click
 
+        If Cmb_Vista_Informe.SelectedValue <> "KOFULIDO" Then
+            MessageBoxEx.Show(Me, "Este informe solo es visible cuando la [VISTA DEL INFORME] sea: VENDEDORES",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
         If Not Fx_Tiene_Permiso(Me, "Inf00047") Then
             Return
         End If
@@ -4852,7 +4882,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         End If
 
         Consulta_sql = "Select KOFU From TABFU Where KOFU In " & _Filtro
-        Dim _Tbl_FiltroVendedores As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_FiltroVendedores As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim Fm As New Frm_Inf_Ventas_CumplClientes(Dtp_Fecha_Desde.Value, Dtp_Fecha_Hasta.Value, _Tbl_FiltroVendedores)
         Fm.ShowDialog(Me)
@@ -4923,7 +4953,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Consulta_sql = Replace(Consulta_sql, "#Filtro_Fechas#", "")
         Consulta_sql = Replace(Consulta_sql, "#Sql_Puntos_Cero#", _Sql_Puntos_Cero)
 
-        Dim _Tbl_Grafico_Tendencia As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Grafico_Tendencia As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         'Dim _Tbl As DataTable = _Tbl_Grafico_Tendencia
 

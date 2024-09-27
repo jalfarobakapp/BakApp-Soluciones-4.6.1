@@ -4577,7 +4577,7 @@ Public Class Class_Permiso_BakApp
 
             Consulta_sql = "Select CodPermiso,DescripcionPermiso,CodFamilia,NombreFamiliaPermiso,Descuento,Max_Compra
                         From " & _Global_BaseBk & "ZW_Permisos Where 1<0"
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim NewFila As DataRow
             NewFila = _Tbl.NewRow

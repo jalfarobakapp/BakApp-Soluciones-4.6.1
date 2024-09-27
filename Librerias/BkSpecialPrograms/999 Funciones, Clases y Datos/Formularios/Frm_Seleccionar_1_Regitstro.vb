@@ -89,7 +89,7 @@ Public Class Frm_Seleccionar_1_Regitstro
                        _Condicion_Adicional & vbCrLf & _
                        _Filtro_Busqueda
 
-        _Tbl_Registros = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Registros = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

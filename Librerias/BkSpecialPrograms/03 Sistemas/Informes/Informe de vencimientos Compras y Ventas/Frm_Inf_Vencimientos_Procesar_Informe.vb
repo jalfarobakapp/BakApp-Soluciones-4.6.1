@@ -133,7 +133,7 @@ Public Class Frm_Inf_Vencimientos_Procesar_Informe
                        "Where IDMAEEDO Not In (Select IDMAEEDO From MAEVEN) And TIDO In " &
                        "('BLV','BLX','BSV','ESC','FCV','FDB','FDV','FDX','FDZ','FEE','FEV','FVL','FVT','FVX','FVZ','NCE','NCV','NCX','NCZ','NEV','RIN') " &
                        "And VABRDO > VAABDO Order by NUDO"
-        Dim _TblDocSinVenci As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _TblDocSinVenci As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         If CBool(_TblDocSinVenci.Rows.Count) Then
 
@@ -185,7 +185,7 @@ Public Class Frm_Inf_Vencimientos_Procesar_Informe
 
         Consulta_Sql = "Select Codigo From " & _Global_BaseBk & "Zw_TblInf_EntExcluidas" & vbCrLf &
                       "Where Funcionario = '" & FUNCIONARIO & "' And Excluida in ('C','A')"
-        Dim _TblEntExcluidas As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _TblEntExcluidas As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         If CBool(_TblEntExcluidas.Rows.Count) Then
 

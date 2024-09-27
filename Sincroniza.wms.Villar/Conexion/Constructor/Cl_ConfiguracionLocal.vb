@@ -54,16 +54,18 @@ Public Class Cl_ConfiguracionLocal
                 Configuracion.Ls_Conexiones.Add(_Conexion1)
                 Configuracion.Ls_Conexiones.Add(_Conexion2)
 
-                Dim _ImpFormatos_Reti As New ImpFormatos With {.Tipo = "Retiro", .Impresora = "", .Imprimir = False, .NombreFormato = ""}
-                Dim _ImpFormatos_Desp As New ImpFormatos With {.Tipo = "Despacho", .Impresora = "", .Imprimir = False, .NombreFormato = ""}
+                Dim _ImpFormatos_Reti As New ImpFormatos With {.Tipo = "Retiro", .Impresora = "", .Imprimir = False, .NombreFormato = "", .NombreEquipoImprime = ""}
+                Dim _ImpFormatos_Desp As New ImpFormatos With {.Tipo = "Despacho", .Impresora = "", .Imprimir = False, .NombreFormato = "", .NombreEquipoImprime = ""}
+                Dim _ImpFormatos_Tick As New ImpFormatos With {.Tipo = "Ticket", .Impresora = "", .Imprimir = False, .NombreFormato = "", .NombreEquipoImprime = ""}
 
                 Configuracion.Ls_ImpFormatos = New List(Of ImpFormatos)
 
                 Configuracion.Ls_ImpFormatos.Add(_ImpFormatos_Reti)
                 Configuracion.Ls_ImpFormatos.Add(_ImpFormatos_Desp)
+                Configuracion.Ls_ImpFormatos.Add(_ImpFormatos_Tick)
 
                 Configuracion.DiasRevNVV = 7
-                Configuracion.NombreEquipoImprime = ""
+                'Configuracion.NombreEquipoImprime = ""
 
                 json = Newtonsoft.Json.JsonConvert.SerializeObject(Configuracion)
 
@@ -76,55 +78,15 @@ Public Class Cl_ConfiguracionLocal
 
             End If
 
-
-            'If Not File.Exists(DirectorioActual & "\" & NombreArchivo_Conexion) Then
-
-            '    'Dim Js As String = "[{'NombreConexion': '', 'Host': '', 'Puerto': '', 'Usuario': '','Password': '','Basededatos': ''},
-            '    '                 {'NombreConexion': '', 'Host': '', 'Puerto': '', 'Usuario': '','Password': '','Basededatos': ''}]"
-            '    'File.WriteAllText(DirectorioActual & "\" & NombreArchivo_Conexion, Js)
-
-            '    Dim _Conexiones As New List(Of Conexion)
-
-            '    Dim _Conexion1 As New Conexion With {.Host = "", .Puerto = "", .Usuario = "", .Password = "", .Basededatos = ""}
-            '    Dim _Conexion2 As New Conexion With {.Host = "", .Puerto = "", .Usuario = "", .Password = "", .Basededatos = ""}
-
-            '    Ls_Conexiones.Add(_Conexion1)
-            '    Ls_Conexiones.Add(_Conexion2)
-
-            'End If
-
-            'json = File.ReadAllText(DirectorioActual & "\" & NombreArchivo_Conexion)
-            'Ls_Conexiones = JsonConvert.DeserializeObject(Of List(Of Conexion))(json)
-
-            'If IsNothing(Ls_Conexiones) OrElse
-            '   String.IsNullOrWhiteSpace(Ls_Conexiones.Item(0).NombreConexion) OrElse
-            '   String.IsNullOrWhiteSpace(Ls_Conexiones.Item(1).NombreConexion) Then
-            '    _Mensaje.Detalle = "Falta la configuración de la conexión"
-            '    Throw New System.Exception("Debe ingresar la configuración de conexión a las bases de datos.")
-            'End If
-
-
-            'If Not File.Exists(DirectorioActual & "\" & NombreArchivo_ImpFormatos) Then
-
-            '    'Dim Js As String = "[{'Tipo': 'Retiro', 'Imprimir': False, 'Impresora': '', 'NombreFormato': '','ImpresionConfigurada': False},
-            '    '                     {'Tipo': 'Despacho', 'Imprimir': False, 'Impresora': '', 'NombreFormato': '','ImpresionConfigurada': False}]"
-            '    'File.WriteAllText(DirectorioActual & "\" & NombreArchivo_ImpFormatos, Js)
-
-            'End If
-
-            'If IsNothing(Ls_ImpFormatos) OrElse
-            '   Not Ls_ImpFormatos.Item(0).ImpresionConfigurada AndAlso
-            '   Not Ls_ImpFormatos.Item(1).ImpresionConfigurada Then
-            '    _Mensaje.Detalle = "Faltan datos en la configuración de la salida de impresión de lista de verificación"
-            '    Throw New System.Exception("Debe ingresar la configuración de conexión a las bases de datos.")
-            'End If
-
-
-            'json = File.ReadAllText(DirectorioActual & "\" & NombreArchivo_ImpFormatos)
-            'Ls_ImpFormatos = JsonConvert.DeserializeObject(Of List(Of ImpFormatos))(json)
-
             json = File.ReadAllText(DirectorioActual & "\" & NombreArchivo_Configuracion)
             Configuracion = JsonConvert.DeserializeObject(Of Configuracion)(json)
+
+            Dim Ls_FunFcvGdvAuto As List(Of FunFcvGdvAuto) = Configuracion.Ls_FunFcvGdvAuto
+
+            If IsNothing(Ls_FunFcvGdvAuto) OrElse Not CBool(Ls_FunFcvGdvAuto.Count) Then
+                Ls_FunFcvGdvAuto = New List(Of FunFcvGdvAuto)
+                Throw New System.Exception("Debe ingresar la configuración de conexión a las bases de datos.")
+            End If
 
             Dim Ls_Conexiones As List(Of Conexion) = Configuracion.Ls_Conexiones
 

@@ -42,7 +42,7 @@ Public Class Frm_Rc_Configuracion
         Consulta_Sql = "SELECT CodigoTabla As Padre,NombreTabla As Hijo" & vbCrLf &
                        "FROM " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
                        "WHERE Tabla = 'SIS_RECLAMOS_ESTADO' And CodigoTabla In ('RVE','RCI','RSL','VAL','AVI') Order by Orden"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         caract_combo(Cmb_Estados)
         Cmb_Estados.DataSource = _Tbl
@@ -54,7 +54,7 @@ Public Class Frm_Rc_Configuracion
         Consulta_Sql = "SELECT CodigoTabla As Padre,NombreTabla As Hijo" & vbCrLf &
                        "FROM " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
                        "WHERE Tabla = 'SIS_RECLAMOS_TIPO' Order by Orden"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         caract_combo(Cmb_Tipo_Reclamos)
         Cmb_Tipo_Reclamos.DataSource = _Tbl
@@ -112,7 +112,7 @@ Public Class Frm_Rc_Configuracion
                         And Zw_Mail.Estado = '" & _Estado & "'--In ('RVE','RCI','RSL','VAL','AVI','GES')
                         Order by Zw_Est.NombreTabla,Accion"
 
-        _Tbl_Email = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_Email = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         With Grilla_Correos
 

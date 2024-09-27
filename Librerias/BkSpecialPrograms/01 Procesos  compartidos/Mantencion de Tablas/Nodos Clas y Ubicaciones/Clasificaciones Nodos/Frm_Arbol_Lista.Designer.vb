@@ -28,6 +28,7 @@ Partial Class Frm_Arbol_Lista
         Me.Tree_Bandeja = New System.Windows.Forms.TreeView()
         Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
+        Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Exportar_Excel = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem3 = New DevComponents.DotNetBar.LabelItem()
@@ -53,7 +54,7 @@ Partial Class Frm_Arbol_Lista
         Me.Tree_Bandeja_Adv = New DevComponents.AdvTree.AdvTree()
         Me.nodeConnector2 = New DevComponents.AdvTree.NodeConnector()
         Me.elementStyle7 = New DevComponents.DotNetBar.ElementStyle()
-        Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Aceptar = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Tree_Bandeja_Adv, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -86,10 +87,10 @@ Partial Class Frm_Arbol_Lista
         Me.Tree_Bandeja.ForeColor = System.Drawing.Color.Black
         Me.Tree_Bandeja.ImageIndex = 0
         Me.Tree_Bandeja.ImageList = Me.Imagenes_16x16
-        Me.Tree_Bandeja.Location = New System.Drawing.Point(606, 272)
+        Me.Tree_Bandeja.Location = New System.Drawing.Point(734, 268)
         Me.Tree_Bandeja.Name = "Tree_Bandeja"
         Me.Tree_Bandeja.SelectedImageIndex = 0
-        Me.Tree_Bandeja.Size = New System.Drawing.Size(549, 101)
+        Me.Tree_Bandeja.Size = New System.Drawing.Size(549, 79)
         Me.Tree_Bandeja.TabIndex = 179
         '
         'Imagenes_16x16
@@ -105,21 +106,33 @@ Partial Class Frm_Arbol_Lista
         Me.Imagenes_16x16.Images.SetKeyName(6, "option-check-box-unselected.png")
         Me.Imagenes_16x16.Images.SetKeyName(7, "folder-list.png")
         Me.Imagenes_16x16.Images.SetKeyName(8, "folder-open-list.png")
+        Me.Imagenes_16x16.Images.SetKeyName(9, "house-1-ok.png")
+        Me.Imagenes_16x16.Images.SetKeyName(10, "house-1-media-record.png")
         '
         'Bar2
         '
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Actualizar, Me.Btn_Exportar_Excel})
-        Me.Bar2.Location = New System.Drawing.Point(0, 515)
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Aceptar, Me.Btn_Grabar, Me.Btn_Actualizar, Me.Btn_Exportar_Excel})
+        Me.Bar2.Location = New System.Drawing.Point(0, 493)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(570, 41)
+        Me.Bar2.Size = New System.Drawing.Size(705, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 176
         Me.Bar2.TabStop = False
         Me.Bar2.Text = "Bar2"
+        '
+        'Btn_Grabar
+        '
+        Me.Btn_Grabar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Grabar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Grabar.Image = CType(resources.GetObject("Btn_Grabar.Image"), System.Drawing.Image)
+        Me.Btn_Grabar.ImageAlt = CType(resources.GetObject("Btn_Grabar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Grabar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_Grabar.Name = "Btn_Grabar"
+        Me.Btn_Grabar.Tooltip = "Refrescar datos"
         '
         'Btn_Actualizar
         '
@@ -203,9 +216,9 @@ Partial Class Frm_Arbol_Lista
         Me.Metro_Bar_Color.ForeColor = System.Drawing.Color.Black
         Me.Metro_Bar_Color.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Estatus})
         Me.Metro_Bar_Color.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 556)
+        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 534)
         Me.Metro_Bar_Color.Name = "Metro_Bar_Color"
-        Me.Metro_Bar_Color.Size = New System.Drawing.Size(570, 22)
+        Me.Metro_Bar_Color.Size = New System.Drawing.Size(705, 22)
         Me.Metro_Bar_Color.TabIndex = 181
         Me.Metro_Bar_Color.Text = "MetroStatusBar1"
         '
@@ -261,7 +274,7 @@ Partial Class Frm_Arbol_Lista
         Me.Txt_Filtrar.Location = New System.Drawing.Point(75, 12)
         Me.Txt_Filtrar.Name = "Txt_Filtrar"
         Me.Txt_Filtrar.PreventEnterBeep = True
-        Me.Txt_Filtrar.Size = New System.Drawing.Size(486, 22)
+        Me.Txt_Filtrar.Size = New System.Drawing.Size(620, 22)
         Me.Txt_Filtrar.TabIndex = 174
         '
         'Imagenes_16x16_Dark
@@ -277,6 +290,8 @@ Partial Class Frm_Arbol_Lista
         Me.Imagenes_16x16_Dark.Images.SetKeyName(6, "option-check-box-unselected.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(7, "folder-list.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(8, "folder-open-list.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(9, "house-1-ok.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(10, "house-1-media-record.png")
         '
         'Menu_Contextual
         '
@@ -381,50 +396,54 @@ Partial Class Frm_Arbol_Lista
         '
         Me.Tree_Bandeja_Adv.AccessibleRole = System.Windows.Forms.AccessibleRole.Outline
         Me.Tree_Bandeja_Adv.AllowDrop = True
-        Me.Tree_Bandeja_Adv.BackColor = System.Drawing.SystemColors.Window
+        Me.Tree_Bandeja_Adv.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Tree_Bandeja_Adv.BackColor = System.Drawing.Color.White
         '
         '
         '
         Me.Tree_Bandeja_Adv.BackgroundStyle.Class = "TreeBorderKey"
         Me.Tree_Bandeja_Adv.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Tree_Bandeja_Adv.CellEdit = True
+        Me.Tree_Bandeja_Adv.DragDropEnabled = False
+        Me.Tree_Bandeja_Adv.DragDropNodeCopyEnabled = False
         Me.Tree_Bandeja_Adv.ExpandButtonType = DevComponents.AdvTree.eExpandButtonType.Triangle
+        Me.Tree_Bandeja_Adv.ForeColor = System.Drawing.Color.Black
         Me.Tree_Bandeja_Adv.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         Me.Tree_Bandeja_Adv.Location = New System.Drawing.Point(12, 54)
         Me.Tree_Bandeja_Adv.Name = "Tree_Bandeja_Adv"
         Me.Tree_Bandeja_Adv.NodesConnector = Me.nodeConnector2
         Me.Tree_Bandeja_Adv.NodeStyle = Me.elementStyle7
         Me.Tree_Bandeja_Adv.PathSeparator = ";"
-        Me.Tree_Bandeja_Adv.Size = New System.Drawing.Size(549, 455)
+        Me.Tree_Bandeja_Adv.Size = New System.Drawing.Size(683, 433)
         Me.Tree_Bandeja_Adv.Styles.Add(Me.elementStyle7)
         Me.Tree_Bandeja_Adv.TabIndex = 183
         Me.Tree_Bandeja_Adv.Text = "advTree6"
         '
         'nodeConnector2
         '
-        Me.nodeConnector2.LineColor = System.Drawing.SystemColors.ControlText
+        Me.nodeConnector2.LineColor = System.Drawing.Color.FromArgb(CType(CType(135, Byte), Integer), CType(CType(135, Byte), Integer), CType(CType(135, Byte), Integer))
         '
         'elementStyle7
         '
         Me.elementStyle7.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.elementStyle7.Name = "elementStyle7"
-        Me.elementStyle7.TextColor = System.Drawing.SystemColors.ControlText
+        Me.elementStyle7.TextColor = System.Drawing.Color.Black
         '
-        'Btn_Grabar
+        'Btn_Aceptar
         '
-        Me.Btn_Grabar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Grabar.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Grabar.Image = CType(resources.GetObject("Btn_Grabar.Image"), System.Drawing.Image)
-        Me.Btn_Grabar.ImageAlt = CType(resources.GetObject("Btn_Grabar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Grabar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_Grabar.Name = "Btn_Grabar"
-        Me.Btn_Grabar.Tooltip = "Refrescar datos"
+        Me.Btn_Aceptar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Aceptar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Aceptar.Image = CType(resources.GetObject("Btn_Aceptar.Image"), System.Drawing.Image)
+        Me.Btn_Aceptar.ImageAlt = CType(resources.GetObject("Btn_Aceptar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Aceptar.Name = "Btn_Aceptar"
+        Me.Btn_Aceptar.Text = "Aceptar"
         '
         'Frm_Arbol_Lista
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(570, 578)
+        Me.ClientSize = New System.Drawing.Size(705, 556)
         Me.Controls.Add(Me.Menu_Contextual)
         Me.Controls.Add(Me.LabelX1)
         Me.Controls.Add(Me.Tree_Bandeja_Adv)
@@ -436,8 +455,11 @@ Partial Class Frm_Arbol_Lista
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
+        Me.MaximumSize = New System.Drawing.Size(721, 685)
         Me.MinimizeBox = False
+        Me.MinimumSize = New System.Drawing.Size(721, 595)
         Me.Name = "Frm_Arbol_Lista"
+        Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "MetroForm"
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
@@ -477,4 +499,5 @@ Partial Class Frm_Arbol_Lista
     Private WithEvents nodeConnector2 As DevComponents.AdvTree.NodeConnector
     Private WithEvents elementStyle7 As DevComponents.DotNetBar.ElementStyle
     Public WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Aceptar As DevComponents.DotNetBar.ButtonItem
 End Class

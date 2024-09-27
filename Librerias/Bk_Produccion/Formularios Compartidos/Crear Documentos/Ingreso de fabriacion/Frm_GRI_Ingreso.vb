@@ -40,7 +40,9 @@ Public Class Frm_GRI_Ingreso
 
     Private Sub Btn_Ingresar_GRI_Click(sender As Object, e As EventArgs) Handles Btn_Ingresar_GRI.Click
 
-        If Not Fx_Revisar_Taza_Cambio(Me) Then
+        Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(Me)
+
+        If Not _Msj_Tsc.EsCorrecto Then
             Return
         End If
 
@@ -85,7 +87,7 @@ Public Class Frm_GRI_Ingreso
         Consulta_sql = "Select *,(FABRICAR-REALIZADO) As SALDO From POTL" & vbCrLf &
                        "Where IDPOTE = " & _Idpote & " And LILG <> 'IM'"
 
-        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim Fm As New Frm_GRI_ProductosOT
         Fm.Tbl_Productos = _Tbl_Productos
@@ -142,7 +144,9 @@ Public Class Frm_GRI_Ingreso
 
     Private Sub Btn_FabMezcla_Click(sender As Object, e As EventArgs) Handles Btn_FabMezcla.Click
 
-        If Not Fx_Revisar_Taza_Cambio(Me) Then
+        Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(Me)
+
+        If Not _Msj_Tsc.EsCorrecto Then
             Return
         End If
 
@@ -168,8 +172,8 @@ Public Class Frm_GRI_Ingreso
             Modalidad = _Row_Usuario.Item("MODALIDAD")
 
             Consulta_sql = "Select top 1 Cest.*,Cfgp.RAZON  
-                                From CONFIEST Cest Inner Join CONFIGP Cfgp On Cest.EMPRESA = Cfgp.EMPRESA  
-                                Where MODALIDAD = '" & Modalidad & "'"
+                            From CONFIEST Cest WITH (NOLOCK) Inner Join CONFIGP Cfgp On Cest.EMPRESA = Cfgp.EMPRESA  
+                            Where MODALIDAD = '" & Modalidad & "'"
             _Global_Row_Modalidad = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             ModEmpresa = _Global_Row_Modalidad.Item("EMPRESA")

@@ -140,7 +140,7 @@ Public Class Frm_MantLista_Precios_Random
         _Sql.Ej_consulta_IDU(Consulta_sql, False)
 
         Consulta_sql = "Select Top 1 * From TABPRE"
-        _TblTabpre = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _TblTabpre = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _Lista_Campos_Adicionales.Clear()
         _Lista_Campos_Adicionales = New List(Of ListaDePrecios.LsCamposAdicionalesTabpre)
@@ -193,7 +193,7 @@ Public Class Frm_MantLista_Precios_Random
         Consulta_sql += vbCrLf &
                        "Select * From " & _Nombre_Tbl_Paso_Precios
 
-        _Tbl_Precios = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Precios = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Sb_Formato_Grilla()
 
@@ -204,7 +204,7 @@ Public Class Frm_MantLista_Precios_Random
         If (_Tbl_Precios Is Nothing) Then
             Consulta_sql = "Truncate table " & _Nombre_Tbl_Paso_Precios & vbCrLf &
                       "Select * From " & _Nombre_Tbl_Paso_Precios
-            _Tbl_Precios = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Precios = _Sql.Fx_Get_DataTable(Consulta_sql)
         End If
 
         Grilla.DataSource = _Tbl_Precios
@@ -412,7 +412,7 @@ Public Class Frm_MantLista_Precios_Random
             If _Traer_Producto Then
 
                 Consulta_sql = "Select KOPR As Codigo From MAEPR Where KOPR = '" & _Codigo.Trim & "'"
-                _Tbl_Productos_Seleccionados = _Sql.Fx_Get_Tablas(Consulta_sql)
+                _Tbl_Productos_Seleccionados = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 Sb_Traer_Productos_Al_Tratamiento(False)
 
@@ -462,7 +462,7 @@ Public Class Frm_MantLista_Precios_Random
             _Tbl_Productos_Seleccionados = _Filtrar.Pro_Tbl_Filtro
             If _Filtrar.Pro_Filtro_Todas Then
                 Consulta_sql = "SELECT KOPR AS 'Codigo', NOKOPR AS 'Descripcion' FROM MAEPR WHERE TIPR = 'FPN'"
-                _Tbl_Productos_Seleccionados = _Sql.Fx_Get_Tablas(Consulta_sql)
+                _Tbl_Productos_Seleccionados = _Sql.Fx_Get_DataTable(Consulta_sql)
             End If
 
             Sb_Traer_Productos_Al_Tratamiento(True)
@@ -602,7 +602,7 @@ Public Class Frm_MantLista_Precios_Random
 
             Consulta_sql += vbCrLf & "Select * From " & _Nombre_Tbl_Paso_Precios
 
-            _Tbl_Precios = _Sql.Fx_Get_Tablas(Consulta_sql)
+            _Tbl_Precios = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Sb_Formato_Grilla()
 
@@ -620,7 +620,7 @@ Public Class Frm_MantLista_Precios_Random
         Dim _SqlQuery1 = "Select KOLT From TABPP" & vbCrLf &
                  "Where KOLT Not In (Select KOLT From TABPRE Where KOLT In " & _Filtro_Listas & " And KOPR = '" & _Codigo & "')" & vbCrLf &
                  "And KOLT In " & _Filtro_Listas
-        Dim _ListaSinAsig As DataTable = _Sql.Fx_Get_Tablas(_SqlQuery1)
+        Dim _ListaSinAsig As DataTable = _Sql.Fx_Get_DataTable(_SqlQuery1)
 
         If _ListaSinAsig.Rows.Count Then
 
@@ -670,8 +670,6 @@ Public Class Frm_MantLista_Precios_Random
         Fm.Pro_Tbl_Filtro_Zonas = _Tbl_Filtro_Zonas
 
         Fm.ShowDialog(Me)
-
-
 
         _Tbl_Filtro_Productos = Fm.Pro_Tbl_Filtro_Productos
         _Tbl_Filtro_Clalibpr = Fm.Pro_Tbl_Filtro_Clalibpr
@@ -769,7 +767,7 @@ Public Class Frm_MantLista_Precios_Random
             Consulta_sql += Rdb_Traer_Bloqueados_Compra_Venta_y_Produccion.Tag.ToString
         End If
 
-        _Tbl_Productos_Seleccionados = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Productos_Seleccionados = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Sb_Traer_Productos_Al_Tratamiento(False)
         _Tbl_Productos_Seleccionados = Nothing
@@ -1600,23 +1598,18 @@ Public Class Frm_MantLista_Precios_Random
 
         If CBool(Grilla.Rows.Count) Then
 
-            Dim _Fevi = String.Empty
-            Dim _FechaMinima As DateTime = FechaDelServidor()
+            Dim _Fevi As Date = FechaDelServidor()
 
             If Chk_GrabarPreciosHistoricos.Checked Then
-
-                Dim _Fecha As Date
 
                 Dim _Aceptar As Boolean
 
                 _Aceptar = InputBox_Bk_Fecha(Me, "Ingrese la fecha de vigencia de estos precios" & vbCrLf & vbCrLf &
-                               "Formato fecha: dd-mm-aaaa", "Fecha de vigencia", _Fecha,, True)
+                               "Formato fecha: dd-mm-aaaa", "Fecha de vigencia", _Fevi,, True)
 
                 If Not _Aceptar Then
                     Return
                 End If
-
-                _Fevi = Format(_Fecha, "yyyyMMdd")
 
             End If
 
@@ -1637,11 +1630,9 @@ Public Class Frm_MantLista_Precios_Random
 
             Next
 
-            Dim _FeviStr = String.Empty
-
-            If Not String.IsNullOrEmpty(_Fevi) Then
-                _FeviStr = "TABPRE.FEVI = '" & _Fevi & "',"
-            End If
+            'If Not String.IsNullOrEmpty(_FeviStr) Then
+            '_FeviStr = "TABPRE.FEVI = '" & _FeviStr & "',"
+            'End If
 
             Consulta_sql = "   Update TABPRE Set 
                                TABPRE.PP01UD = Tbl.PP01UD,
@@ -1651,7 +1642,8 @@ Public Class Frm_MantLista_Precios_Random
                                TABPRE.MG02UD = Tbl.MG02UD,
                                TABPRE.DTMA02UD = Tbl.DTMA02UD,
                                TABPRE.ECUACION = Tbl.ECUACION,
-                               TABPRE.ECUACIONU2 = Tbl.ECUACIONU2," & _FeviStr & "
+                               TABPRE.ECUACIONU2 = Tbl.ECUACIONU2,
+                               TABPRE.FEVI = '" & Format(_Fevi, "yyyyMMdd") & "',
                                " & _Campos_Adicionales & "
                                TABPRE.PM01 = 0
                                From " & _Nombre_Tbl_Paso_Precios & " Tbl 
@@ -1831,7 +1823,7 @@ Public Class Frm_MantLista_Precios_Random
         End If
 
         Consulta_sql = "Select KOPR as Codigo From MAEPR"
-        _Tbl_Productos_Seleccionados = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Productos_Seleccionados = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Sb_Traer_Productos_Al_Tratamiento(False)
         _Tbl_Productos_Seleccionados = Nothing
@@ -2014,7 +2006,7 @@ Public Class Frm_MantLista_Precios_Random
             Consulta_sql += Rdb_Traer_Bloqueados_Compra_Venta_y_Produccion.Tag.ToString
         End If
 
-        _Tbl_Productos_Seleccionados = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Productos_Seleccionados = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Sb_Traer_Productos_Al_Tratamiento(False)
         _Tbl_Productos_Seleccionados = Nothing

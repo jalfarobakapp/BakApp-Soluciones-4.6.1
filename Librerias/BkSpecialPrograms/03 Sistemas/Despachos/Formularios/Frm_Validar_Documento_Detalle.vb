@@ -42,7 +42,7 @@ Public Class Frm_Validar_Documento_Detalle
                         Case Untrans When 1 then CantCUd1 else CantCUd2 End As Cantidad,Cast(0 As Float) As Cantidad_Despachada
                         From " & _Global_BaseBk & "Zw_Despachos_Doc_Det
                         Where Id_Despacho = " & _Cl_Despacho.Id_Despacho & " And Idmaeedo = " & _Idmaeedo
-        _Tbl_Detalle_Documento = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_Detalle_Documento = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Sb_Formato_Generico_Grilla(Grilla_Detalle, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 

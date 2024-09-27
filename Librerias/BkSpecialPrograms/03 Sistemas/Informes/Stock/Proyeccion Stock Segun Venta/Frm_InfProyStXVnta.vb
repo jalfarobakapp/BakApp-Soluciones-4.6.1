@@ -212,12 +212,12 @@ Public Class Frm_InfProyStXVnta
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
         Consulta_sql = "Select Top 1 * From " & _NombreTablaPaso
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _CampoStock, _UlCampoStock, _CampoPdte, _CampoFsrec As String
 
         Consulta_sql = "Select * From " & _NombreTablaPasoInforme
-        Dim _TblInfGrilla As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _TblInfGrilla As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For i = 35 To _Tbl.Columns.Count - 1
 
@@ -282,7 +282,7 @@ Public Class Frm_InfProyStXVnta
         Next
 
         Consulta_sql = "Select * From " & _NombreTablaPasoInforme
-        _Tbl_Informe = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Informe = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 

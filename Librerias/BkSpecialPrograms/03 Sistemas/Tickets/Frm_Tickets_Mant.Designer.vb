@@ -307,12 +307,13 @@ Partial Class Frm_Tickets_Mant
         '
         '
         Me.Rdb_AsignadoGrupo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_AsignadoGrupo.CheckBoxImageChecked = CType(resources.GetObject("Rdb_AsignadoGrupo.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_AsignadoGrupo.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_AsignadoGrupo.FocusCuesEnabled = False
         Me.Rdb_AsignadoGrupo.ForeColor = System.Drawing.Color.Black
         Me.Rdb_AsignadoGrupo.Location = New System.Drawing.Point(3, 332)
         Me.Rdb_AsignadoGrupo.Name = "Rdb_AsignadoGrupo"
-        Me.Rdb_AsignadoGrupo.Size = New System.Drawing.Size(125, 23)
+        Me.Rdb_AsignadoGrupo.Size = New System.Drawing.Size(137, 22)
         Me.Rdb_AsignadoGrupo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_AsignadoGrupo.TabIndex = 8
         Me.Rdb_AsignadoGrupo.TabStop = False
@@ -345,12 +346,13 @@ Partial Class Frm_Tickets_Mant
         '
         '
         Me.Rdb_AsignadoAgente.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_AsignadoAgente.CheckBoxImageChecked = CType(resources.GetObject("Rdb_AsignadoAgente.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_AsignadoAgente.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_AsignadoAgente.FocusCuesEnabled = False
         Me.Rdb_AsignadoAgente.ForeColor = System.Drawing.Color.Black
         Me.Rdb_AsignadoAgente.Location = New System.Drawing.Point(3, 360)
         Me.Rdb_AsignadoAgente.Name = "Rdb_AsignadoAgente"
-        Me.Rdb_AsignadoAgente.Size = New System.Drawing.Size(137, 23)
+        Me.Rdb_AsignadoAgente.Size = New System.Drawing.Size(137, 22)
         Me.Rdb_AsignadoAgente.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_AsignadoAgente.TabIndex = 10
         Me.Rdb_AsignadoAgente.TabStop = False

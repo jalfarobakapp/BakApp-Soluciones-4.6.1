@@ -23,19 +23,21 @@ Public Class Class_Permiso_BakApp
 
     End Sub
 
-    Function Fx_Tiene_Permiso(ByVal _Codpermiso As String,
-                              Optional ByVal _Func As String = "",
-                              Optional ByVal _Mostrar_Permiso As Boolean = False,
-                              Optional ByVal _Mostrar_Boton_BtnIngresarClave As Boolean = True,
-                              Optional ByVal _Descripcion_Permiso As String = "",
-                              Optional ByVal _CodEntidad As String = "",
-                              Optional ByVal _CodSucEntidad As String = "",
-                              Optional ByVal _Mostrar_Boton_BtnPermisoRemoto As Boolean = True,
-                              Optional ByVal _Mostrar_Boton_BtnOtorgarPermisoPermanente As Boolean = True) As Boolean
+    Function Fx_Tiene_Permiso(_Codpermiso As String,
+                              Optional _Func As String = "",
+                              Optional _Mostrar_Permiso As Boolean = False,
+                              Optional _Mostrar_Boton_BtnIngresarClave As Boolean = True,
+                              Optional _Descripcion_Permiso As String = "",
+                              Optional _CodEntidad As String = "",
+                              Optional _CodSucEntidad As String = "",
+                              Optional _Mostrar_Boton_BtnPermisoRemoto As Boolean = True,
+                              Optional _Mostrar_Boton_BtnOtorgarPermisoPermanente As Boolean = True) As Boolean
 
         Dim _Permiso As Boolean = False
 
         If String.IsNullOrEmpty(_Func) Then _Func = FUNCIONARIO
+
+        _Codpermiso = Trim(_Codpermiso)
 
         Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "ZW_PermisosVsUsuarios Where CodUsuario = '" & _Func & "' AND CodPermiso = '" & _Codpermiso & "'"
         Dim _Row_PermisosVsUsuarios As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -101,15 +103,15 @@ Public Class Class_Permiso_BakApp
 
     End Function
 
-    Function Fx_Tiene_Permiso_Random(ByVal _Codpermiso As String,
-                                     Optional ByVal _Func As String = "",
-                                     Optional ByVal _Mostrar_Permiso As Boolean = False,
-                                     Optional ByVal _Mostrar_Boton_BtnIngresarClave As Boolean = True,
-                                     Optional ByVal _Descripcion_Permiso As String = "",
-                                     Optional ByVal _CodEntidad As String = "",
-                                     Optional ByVal _CodSucEntidad As String = "",
-                                     Optional ByVal _Mostrar_Boton_BtnPermisoRemoto As Boolean = True,
-                                     Optional ByVal _Mostrar_Boton_BtnOtorgarPermisoPermanente As Boolean = True) As Boolean
+    Function Fx_Tiene_Permiso_Random(_Codpermiso As String,
+                                     Optional _Func As String = "",
+                                     Optional _Mostrar_Permiso As Boolean = False,
+                                     Optional _Mostrar_Boton_BtnIngresarClave As Boolean = True,
+                                     Optional _Descripcion_Permiso As String = "",
+                                     Optional _CodEntidad As String = "",
+                                     Optional _CodSucEntidad As String = "",
+                                     Optional _Mostrar_Boton_BtnPermisoRemoto As Boolean = True,
+                                     Optional _Mostrar_Boton_BtnOtorgarPermisoPermanente As Boolean = True) As Boolean
 
         Dim Permiso As Boolean = False
         If String.IsNullOrEmpty(_Func) Then _Func = FUNCIONARIO
@@ -348,6 +350,8 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Comp0098", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Comp0099", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Comp0100", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Comp0101", _Objeto, _Formulario)
+
 
         _SqlQuery += Fx_Insertar_Permiso("CfEnt001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("CfEnt002", _Objeto, _Formulario)
@@ -570,6 +574,11 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Doc00088", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00089", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00090", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00091", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00092", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00093", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00094", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00095", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Ope00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ope00002", _Objeto, _Formulario)
@@ -661,35 +670,22 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Inf00045", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Inf00046", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Inf00047", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Inf00048", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Invp0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Invp0002", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Invp0003", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Invp0004", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Invp0005", _Objeto, _Formulario)
 
-        _SqlQuery += Fx_Insertar_Permiso("In0001", _Objeto, _Formulario)
-        _SqlQuery += Fx_Insertar_Permiso("In0002", _Objeto, _Formulario)
-        _SqlQuery += Fx_Insertar_Permiso("In0003", _Objeto, _Formulario)
-        _SqlQuery += Fx_Insertar_Permiso("In0004", _Objeto, _Formulario)
-        _SqlQuery += Fx_Insertar_Permiso("In0005", _Objeto, _Formulario)
-        _SqlQuery += Fx_Insertar_Permiso("In0006", _Objeto, _Formulario)
-        _SqlQuery += Fx_Insertar_Permiso("In0007", _Objeto, _Formulario)
-        _SqlQuery += Fx_Insertar_Permiso("In0008", _Objeto, _Formulario)
-        _SqlQuery += Fx_Insertar_Permiso("In0009", _Objeto, _Formulario)
-        _SqlQuery += Fx_Insertar_Permiso("In0010", _Objeto, _Formulario)
-        _SqlQuery += Fx_Insertar_Permiso("In0011", _Objeto, _Formulario)
-        _SqlQuery += Fx_Insertar_Permiso("In0012", _Objeto, _Formulario)
-        _SqlQuery += Fx_Insertar_Permiso("In0013", _Objeto, _Formulario)
-        _SqlQuery += Fx_Insertar_Permiso("In0014", _Objeto, _Formulario)
-        _SqlQuery += Fx_Insertar_Permiso("In0015", _Objeto, _Formulario)
-        _SqlQuery += Fx_Insertar_Permiso("In0016", _Objeto, _Formulario)
-        _SqlQuery += Fx_Insertar_Permiso("In0017", _Objeto, _Formulario)
-        _SqlQuery += Fx_Insertar_Permiso("In0018", _Objeto, _Formulario)
-        _SqlQuery += Fx_Insertar_Permiso("In0019", _Objeto, _Formulario)
-        _SqlQuery += Fx_Insertar_Permiso("In0025", _Objeto, _Formulario)
-        _SqlQuery += Fx_Insertar_Permiso("In0030", _Objeto, _Formulario)
-        _SqlQuery += Fx_Insertar_Permiso("In0031", _Objeto, _Formulario)
-        _SqlQuery += Fx_Insertar_Permiso("In0032", _Objeto, _Formulario)
-        _SqlQuery += Fx_Insertar_Permiso("In0033", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Invg0001", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Invg0002", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Invg0003", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Invg0004", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Invg0005", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Invg0006", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Invg0007", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Invg0008", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Pre0008", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Pre0009", _Objeto, _Formulario)
@@ -818,6 +814,8 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Prod073", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Prod074", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Prod075", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Prod076", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Prod077", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("NO00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("NO00002", _Objeto, _Formulario)
@@ -986,6 +984,8 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Pdc00007", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Pdc00008", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Pdc00009", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Pdc00010", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Pdc00011", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Rcl00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Rcl00002", _Objeto, _Formulario)
@@ -1564,6 +1564,10 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.COMPRAS.ToString
             Case "Comp0100"
                 _DescripcionPermiso = "PODER BLOQUEAR O DESBLOQUEAR LA CONFIGURACION DEL ASISTENTE DE COMPRAS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.COMPRAS, 6)
+                _NombreFamiliaPermiso = _Fml.COMPRAS.ToString
+            Case "Comp0101"
+                _DescripcionPermiso = "MOSTRAR SUGERENCIAS DE CAMBIO DE PRECIOS (ASISTENTE DE COMPRAS)"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.COMPRAS, 6)
                 _NombreFamiliaPermiso = _Fml.COMPRAS.ToString
         End Select
@@ -2536,6 +2540,31 @@ Public Class Class_Permiso_BakApp
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
 
+            Case "Doc00091"
+                _DescripcionPermiso = "PERMITIR DESMARCAR EL CHECK ""NO VOLVER A PREGUNTAR"". EN INGRESO DE PRODUCTO DUPLICADO EN DOCUMENTO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+
+            Case "Doc00092"
+                _DescripcionPermiso = "PERMITIR INGRESAR PRODUCTOS DUPLICADOS EN DOCUMENTOS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+
+            Case "Doc00093"
+                _DescripcionPermiso = "CAMBIAR A ELECTRONICO UNA FACTURA DE COMPRA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+
+            Case "Doc00094"
+                _DescripcionPermiso = "PERMITIR CREAR (GDI) GUIAS DE DESPACHO INTERNA SIN MODO DE TRASPASO INTERNO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+
+            Case "Doc00095"
+                _DescripcionPermiso = "PERMITIR CREAR (GDI) GUIAS DE DESPACHO INTERNA EN MODO DE TRASPASO INTERNO, PERO SIN ASIGNAR UNA BODEGA DE DESTINO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+
         End Select
 
 #End Region
@@ -2910,24 +2939,24 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "VER INFORME DE CLIENTES ASOCIADOS A OTRO USUARIO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INFORMES_DE_VENTA, 6)
                 _NombreFamiliaPermiso = _Fml.INFORMES_DE_VENTA.ToString
-
             Case "Inf00044"
                 _DescripcionPermiso = "EXPORTAR A EXCEL DIFERENCIA DE CLIENTES ENTRE RANGO 1 Y RANGO 2 EN INFORME COMPARATIVO DE VENTAS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INFORMES_DE_VENTA, 6)
                 _NombreFamiliaPermiso = _Fml.INFORMES_DE_VENTA.ToString
-
             Case "Inf00045"
                 _DescripcionPermiso = "EXPORTAR A EXCEL DIFERENCIA DE PRODUCTOS ENTRE RANGO 1 Y RANGO 2 EN INFORME COMPARATIVO DE VENTAS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INFORMES_DE_VENTA, 6)
                 _NombreFamiliaPermiso = _Fml.INFORMES_DE_VENTA.ToString
-
             Case "Inf00046"
                 _DescripcionPermiso = "QUITAR EL TICKET VER SOLO NOTAS DE VENTA HABILITADAS PARA FACTURAR"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INFORMES_DE_VENTA, 6)
                 _NombreFamiliaPermiso = _Fml.INFORMES_DE_VENTA.ToString
-
             Case "Inf00047"
                 _DescripcionPermiso = "VER INFORME DE CUMPLIMIENTO DE CLIENTES VS CARTERA DEL VENDEDOR"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.INFORMES_DE_VENTA, 6)
+                _NombreFamiliaPermiso = _Fml.INFORMES_DE_VENTA.ToString
+            Case "Inf00048"
+                _DescripcionPermiso = "EXPORTAR A EXCEL INFORME CLIENTES VS VENTAS POR PERIODO (NIVEL DETALLE)"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INFORMES_DE_VENTA, 6)
                 _NombreFamiliaPermiso = _Fml.INFORMES_DE_VENTA.ToString
 
@@ -2939,121 +2968,66 @@ Public Class Class_Permiso_BakApp
 
         Select Case _CodPermiso
 
-            Case "In0032"
-                _DescripcionPermiso = "INGRESO TOMA DE INVENTARIO"
-                _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO, 6)
-                _NombreFamiliaPermiso = _Fml.INVENTARIO.ToString
-            Case "In0001"
+            Case "Invg0001"
                 _DescripcionPermiso = "INGRESAR SISTEMA DE INVENTARIO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO, 6)
                 _NombreFamiliaPermiso = _Fml.INVENTARIO.ToString
-            Case "In0002"
-                _DescripcionPermiso = "CONF. INV. MANTENCIÓN BODEGAS"
+            Case "Invg0002"
+                _DescripcionPermiso = "CONFIGURAR INVENTARIO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO, 6)
                 _NombreFamiliaPermiso = _Fml.INVENTARIO.ToString
-            Case "In0003"
-                _DescripcionPermiso = "CONF. INV. MANTENCIÓN UBICACIONES DE BODEGA"
+            Case "Invg0003"
+                _DescripcionPermiso = "INGRESAR RECONTEO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO, 6)
                 _NombreFamiliaPermiso = _Fml.INVENTARIO.ToString
-            Case "In0004"
-                _DescripcionPermiso = "CONF. INV. MANTENCIÓN USUARIOS RESPONZABLES"
+            Case "Invg0004"
+                _DescripcionPermiso = "ELIMINAR RECONTEO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO, 6)
                 _NombreFamiliaPermiso = _Fml.INVENTARIO.ToString
-            Case "In0005"
-                _DescripcionPermiso = "CONF. INV. MANTENCIÓN DE INVENTARIOS"
+            Case "Invg0005"
+                _DescripcionPermiso = "ABRIR INVENTARIO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO, 6)
                 _NombreFamiliaPermiso = _Fml.INVENTARIO.ToString
-            Case "In0006"
-                _DescripcionPermiso = "GRABAR FOTO DE INVENTARIO (CONGELADO)"
+            Case "Invg0006"
+                _DescripcionPermiso = "CERRAR INVENTARIO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO, 6)
                 _NombreFamiliaPermiso = _Fml.INVENTARIO.ToString
-            Case "In0007"
-                _DescripcionPermiso = "GRABAR INVENTARIO"
+            Case "Invg0007"
+                _DescripcionPermiso = "CREAR FOTO STOCK"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO, 6)
                 _NombreFamiliaPermiso = _Fml.INVENTARIO.ToString
-            Case "In0008"
-                _DescripcionPermiso = "EDITAR INVENTARIO"
+            Case "Invg0008"
+                _DescripcionPermiso = "ELIMINAR FOTO STOCK"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO, 6)
                 _NombreFamiliaPermiso = _Fml.INVENTARIO.ToString
-            Case "In0009"
-                _DescripcionPermiso = "ELIMINAR INVENTARIO"
-                _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO, 6)
-                _NombreFamiliaPermiso = _Fml.INVENTARIO.ToString
-            Case "In0010"
-                _DescripcionPermiso = "ELIMINAR FOTO DE INVENTARIO (CONGELADO)"
-                _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO, 6)
-                _NombreFamiliaPermiso = _Fml.INVENTARIO.ToString
-            Case "In0011"
-                _DescripcionPermiso = "VER INVENTARIO ACTUAL"
-                _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO, 6)
-                _NombreFamiliaPermiso = _Fml.INVENTARIO.ToString
-            Case "In0012"
-                _DescripcionPermiso = "ELIMINAR TODOS LOS REGISTROS DEL INVENTARIO"
-                _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO, 6)
-                _NombreFamiliaPermiso = _Fml.INVENTARIO.ToString
-            Case "In0013"
-                _DescripcionPermiso = "CREAR ARCHIVO .TXT INVENTARIO"
-                _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO, 6)
-                _NombreFamiliaPermiso = _Fml.INVENTARIO.ToString
-            Case "In0014"
-                _DescripcionPermiso = "INGRESAR PRODUCTOS MANUALMENTE"
-                _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO, 6)
-                _NombreFamiliaPermiso = _Fml.INVENTARIO.ToString
-            Case "In0015"
-                _DescripcionPermiso = "INGRESO TOMA DE INVENTARIO"
-                _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO, 6)
-                _NombreFamiliaPermiso = _Fml.INVENTARIO.ToString
-            Case "In0016"
-                _DescripcionPermiso = "CAMBIAR FECHA DE INVENTARIO DE AJUSTE"
-                _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO, 6)
-                _NombreFamiliaPermiso = _Fml.INVENTARIO.ToString
-            Case "In0017"
-                _DescripcionPermiso = "EDITAR NOMBRE DE AJUSTE DE INVENTARIO"
-                _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO, 6)
-                _NombreFamiliaPermiso = _Fml.INVENTARIO.ToString
-            Case "In0018"
-                _DescripcionPermiso = "HACER AJUSTES CON FECHA DISTINTA A LA FECHA DEL SERVIDOR"
-                _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO, 6)
-                _NombreFamiliaPermiso = _Fml.INVENTARIO.ToString
-            Case "In0019"
-                _DescripcionPermiso = "INCORPORAR PRODUCTOS QUE YA ESTAN INVENTARIADOS"
-                _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO, 6)
-                _NombreFamiliaPermiso = _Fml.INVENTARIO.ToString
-            Case "In0025"
-                _DescripcionPermiso = "DEJAR HORA DE GRABACION DE GRI-GDI AL FINAL DEL DIA"
-                _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO, 6)
-                _NombreFamiliaPermiso = _Fml.INVENTARIO.ToString
-            Case "In0030"
-                _DescripcionPermiso = "ACTUALIZAR FOTO STOCK (TODOS LOS INVENTARIOS)"
-                _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO, 6)
-                _NombreFamiliaPermiso = _Fml.INVENTARIO.ToString
-            Case "In0031"
-                _DescripcionPermiso = "ACTUALIZAR FOTO STOCK INVENTARIO ACTUAL"
-                _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO, 6)
-                _NombreFamiliaPermiso = _Fml.INVENTARIO.ToString
-            Case "In0033"
-                _DescripcionPermiso = "GRABAR FOTO DE INVENTARIO (CONGELADO)"
-                _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO, 6)
-                _NombreFamiliaPermiso = _Fml.INVENTARIO.ToString
+
 
         End Select
 
 #End Region
 
-#Region "INVENTARIO PARCIALIZADO"
+#Region "INVENTARIO PARCIALIZADO - AJUSTE DE INVENTARIO"
 
         Select Case _CodPermiso
 
             Case "Invp0001"
-                _DescripcionPermiso = "INGRESAR AL SISTEMA INVENTARIO PARCIALIZADO"
+                _DescripcionPermiso = "INGRESAR AL SISTEMA AJUSTE DE INVENTARIO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO_PARCIALIZADO, 6)
                 _NombreFamiliaPermiso = _Fml.INVENTARIO_PARCIALIZADO.ToString
             Case "Invp0002"
-                _DescripcionPermiso = "GRABAR DATOS INVENTARIO PARCIALIZADO"
+                _DescripcionPermiso = "GRABAR DATOS DE AJUSTE DE INVENTARIO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO_PARCIALIZADO, 6)
                 _NombreFamiliaPermiso = _Fml.INVENTARIO_PARCIALIZADO.ToString
             Case "Invp0003"
-                _DescripcionPermiso = "CREAR ARCHIVO .TXT INVENTARIO"
+                _DescripcionPermiso = "CREAR ARCHIVO .TXT AJUSTE DE INVENTARIO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO_PARCIALIZADO, 6)
+                _NombreFamiliaPermiso = _Fml.INVENTARIO_PARCIALIZADO.ToString
+            Case "Invp0004"
+                _DescripcionPermiso = "DEJAR HORA DE GRABACION AL FINAL"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO_PARCIALIZADO, 6)
+                _NombreFamiliaPermiso = _Fml.INVENTARIO_PARCIALIZADO.ToString
+            Case "Invp0005"
+                _DescripcionPermiso = "PODER EDITAR EL NOMBRE DEL AJUSTE DE INVENTARIO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO_PARCIALIZADO, 6)
                 _NombreFamiliaPermiso = _Fml.INVENTARIO_PARCIALIZADO.ToString
 
@@ -3634,6 +3608,14 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
             Case "Prod075"
                 _DescripcionPermiso = "PERMITIR GRABAR PRODUCTO SIN 3RA. DIMENSION (OBLIGATORIO POR MOD. GENERAL)"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
+                _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
+            Case "Prod076"
+                _DescripcionPermiso = "EXPORTAR A EXCEL LISTADO DE PRODUCTOS DESDE EL MAESTRO DE PRODUCTOS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
+                _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
+            Case "Prod077"
+                _DescripcionPermiso = "AGREGAR UNA IMAGEN A UN PRODUCTO CON DESDE EL FTP"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
 
@@ -4358,6 +4340,14 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "CAMBIAR FECHA DE INGRESO DE FABRICACION EN TARJA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCCION, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCCION.ToString
+            Case "Pdc00010"
+                _DescripcionPermiso = "ELIMINAR ORDEN DE FABRICACION DE MEZCLA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCCION, 6)
+                _NombreFamiliaPermiso = _Fml.PRODUCCION.ToString
+            Case "Pdc00011"
+                _DescripcionPermiso = "CAMBIAR NOMENCLATURA/RECETA EN PRODUCTOS DE ORDEN DE FABRICACION DE MEZCLA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCCION, 6)
+                _NombreFamiliaPermiso = _Fml.PRODUCCION.ToString
         End Select
 
 #End Region
@@ -4643,7 +4633,7 @@ Public Class Class_Permiso_BakApp
 
             Consulta_sql = "Select CodPermiso,DescripcionPermiso,CodFamilia,NombreFamiliaPermiso,Descuento,Max_Compra
                         From " & _Global_BaseBk & "ZW_Permisos Where 1<0"
-            Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim NewFila As DataRow
             NewFila = _Tbl.NewRow

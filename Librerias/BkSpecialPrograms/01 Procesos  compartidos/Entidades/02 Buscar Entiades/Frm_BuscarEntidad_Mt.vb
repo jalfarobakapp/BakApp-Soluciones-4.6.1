@@ -94,7 +94,7 @@ Public Class Frm_BuscarEntidad_Mt
                        "Case BLOQUEADO When 1 Then 'SI' Else '' End As Bloqueado_Venta," & vbCrLf &
                        "Case BLOQENCOM When 1 Then 'SI' Else '' End As Bloqueado_Compra" & vbCrLf &
                        "FROM MAEEN Where 1<0"
-        _Tbl_Entidades = _Sql.Fx_Get_Tablas(Consulta_sql)
+        _Tbl_Entidades = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Grilla_Entidades.DataSource = _Tbl_Entidades
 
@@ -336,7 +336,7 @@ Public Class Frm_BuscarEntidad_Mt
                        _Filtro_Entidades & vbCrLf &
                        _Filtro_Vendedores & vbCrLf &
                        "Order by KOEN"
-        Dim _Tmp As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Dim _Tmp As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Fila As DataRow In _Tmp.Rows
             Sb_Nueva_Linea(_Fila)
@@ -393,7 +393,7 @@ Public Class Frm_BuscarEntidad_Mt
                        "ORDER BY KOEN"
 
         With Grilla_Entidades
-            .DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
+            .DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             OcultarEncabezadoGrilla(Grilla_Entidades, True)
 
@@ -656,19 +656,15 @@ Public Class Frm_BuscarEntidad_Mt
 
     Private Sub Btn_Mnu_Eliminar_Entidad_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_Eliminar_Entidad.Click
 
-        If Fx_Tiene_Permiso(Me, "CfEnt004") Then
+        Dim _Fila As DataGridViewRow = Grilla_Entidades.Rows(Grilla_Entidades.CurrentRow.Index)
 
-            Dim _Fila As DataGridViewRow = Grilla_Entidades.Rows(Grilla_Entidades.CurrentRow.Index)
+        Dim _CodEntidad As String = _Fila.Cells("KOEN").Value
+        Dim _SucEntidad As String = _Fila.Cells("SUEN").Value
 
-            Dim _CodEntidad As String = _Fila.Cells("KOEN").Value
-            Dim _SucEntidad As String = _Fila.Cells("SUEN").Value
-
-            If Fx_Eliminar_Entidad(_CodEntidad, _SucEntidad, Me) Then
-                Sb_Actualizar_Grilla(Txtdescripcion.Text, True)
-                BtnEditarUser.Enabled = False
-                BtnEliminarUser.Enabled = False
-            End If
-
+        If Fx_Eliminar_Entidad(_CodEntidad, _SucEntidad, Me) Then
+            Sb_Actualizar_Grilla(Txtdescripcion.Text, True)
+            BtnEditarUser.Enabled = False
+            BtnEliminarUser.Enabled = False
         End If
 
     End Sub

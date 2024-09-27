@@ -37,7 +37,7 @@ Public Class Frm_Crear_Entidad_Mt_ProdExcluidosCompra
                        "Left Join MAEPR On KOPR = ProdEx.Codigo" & vbCrLf &
                        "Where CodEntidad = '" & _CodEntidad & "' And CodSucEntidad = '" & _CodSucEntidad & "'"
 
-        _Tbl_Producto = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_Producto = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         With Grilla
             .DataSource = _Tbl_Producto

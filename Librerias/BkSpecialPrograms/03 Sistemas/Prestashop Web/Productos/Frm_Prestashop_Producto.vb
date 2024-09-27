@@ -80,7 +80,7 @@ Public Class Frm_Prestashop_Producto
 
         End If
 
-        _Tbl_Producto = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_Producto = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Me.Text = "PRESTASHOP: " & Sitio
         Sb_Color_Botones_Barra(Bar1)
@@ -131,7 +131,7 @@ Public Class Frm_Prestashop_Producto
         Txt_Hijos.Text = String.Empty
 
         Consulta_Sql = "Select Codigo_Hijo As Codigo,Cast(1 As Bit) As Chk From " & _Global_BaseBk & "Zw_Prod_Padres Where Codigo_Padre = '" & _Tbl_Producto.Rows(0).Item("Codigo") & "'"
-        _Tbl_Hijos = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        _Tbl_Hijos = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Dim _Contador = 1
 
@@ -180,7 +180,7 @@ Public Class Frm_Prestashop_Producto
 
                 Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Prod_PrestaShop 
                             Where Sitio = '" & _Sitio & "' And Codigo = '" & Txt_Codigo.Text & "'"
-                Dim _Tbl_Productos = _Sql.Fx_Get_Tablas(Consulta_Sql)
+                Dim _Tbl_Productos = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
                 Sb_Actualizar_Prestashop(False, _Tbl_Productos)
 

@@ -70,7 +70,7 @@ Public Class Frm_RecargosXProd
                        "From TABTIDO Where TIDO In ('BLV','BLX','FCC','FCV','GDP','GDV','GRC','GRD','GRI','GTI','OCC','GDD')" & vbCrLf &
                        "ORDER BY TIDO"
         caract_combo(CmbTipoDeDocumentos)
-        CmbTipoDeDocumentos.DataSource = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        CmbTipoDeDocumentos.DataSource = _Sql.Fx_Get_DataTable(Consulta_Sql)
         CmbTipoDeDocumentos.SelectedValue = "FCV"
 
         _Sql.Sb_Parametro_Informe_Sql(CmbTipoDeDocumentos, "TraerDocumentos", CmbTipoDeDocumentos.Name, Class_SQLite.Enum_Type._ComboBox, "FCV", False, "RecargosXProd")
@@ -276,9 +276,9 @@ Public Class Frm_RecargosXProd
         Dim _Filtro_Idmaeedo = Generar_Filtro_IN(_Tbl_DocSeleccionados, "", "IDMAEEDO", False, False, "")
 
         Consulta_Sql = "Select Distinct Ddo.IDMAEEDO 
-                        From MAEDDO Ddo
-                        Left Join TABTIDO Tdo On Ddo.TIDO = Tdo.TIDO
-                        Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO
+                        From MAEDDO Ddo WITH (NOLOCK)
+                        Left Join TABTIDO Tdo WITH (NOLOCK) On Ddo.TIDO = Tdo.TIDO
+                        Inner Join MAEEDO Edo WITH (NOLOCK) On Edo.IDMAEEDO = Ddo.IDMAEEDO
                         Where 
 	                        Ddo.EMPRESA = '" & ModEmpresa & "' 
                         And Edo.TIDO = 'FCV'
@@ -288,7 +288,7 @@ Public Class Frm_RecargosXProd
                         And Not Exists (Select * From MAEDCR Where MAEDCR.IDDDODCR = Ddo.IDMAEDDO And MAEDCR.RECARCALCU = '" & _Recarcalcu & "')
                         And Edo.FEEMDO BETWEEN '" & Format(_Fecha_Inicio, "yyyyMMdd") & "' And '" & Format(_Fecha_Fin, "yyyyMMdd") & "'"
 
-        Dim _Tbl_Filtro_Idmaeedo As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl_Filtro_Idmaeedo As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Consulta_Sql = "Select MAEEDO.IDMAEEDO,MAEEDO.EMPRESA,MAEEDO.SUDO,MAEEDO.TIDO,
                         MAEEDO.NUDO,MAEEDO.ENDO,MAEEDO.SUENDO,MAEEDO.FEEMDO,MAEEDO.KOFUDO,
@@ -313,7 +313,7 @@ Public Class Frm_RecargosXProd
                                         And MAEDDO.IDMAEEDO In " & _Filtro_Idmaeedo & vbCrLf & "
                         Order By MAEDDO.KOPRCT"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         If Not CBool(_Tbl.Rows.Count) Then
             MessageBoxEx.Show(Me, "No existen productos disponibles en este documento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
