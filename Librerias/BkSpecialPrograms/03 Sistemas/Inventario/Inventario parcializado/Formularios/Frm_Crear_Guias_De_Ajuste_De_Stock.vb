@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports BkSpecialPrograms.LsValiciones
 Imports DevComponents.DotNetBar
 
 Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
@@ -105,12 +106,7 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
             sw.WriteLine(TxtLog.Text)
             sw.Close()
 
-            Dim _Filtro_Productos As String = Generar_Filtro_IN(_Tbl_Productos, "", "CodigoPr", False, False, "'")
-
-            Dim Fm As New Frm_Consolidacion_Stock_PP(_Filtro_Productos)
-            Fm.Pro_Ejecutar_Automaticamente = True
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
+            Sb_ConsolidarStock()
 
             Dim _Nro_GDI_Ajuste As String
             Dim _Nro_GRI_Ajuste As String
@@ -131,14 +127,58 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
                 _Msg = "No fue necesario generar guías de ajuste"
             Else
                 _Msg = "Proceso Generado correctamente" & vbCrLf & vbCrLf &
-                                                  "Guías: " & vbCrLf &
-                                                  _Nro_GDI_Ajuste & _Nro_GRI_Ajuste
+                                              "Guías: " & vbCrLf &
+                                              _Nro_GDI_Ajuste & _Nro_GRI_Ajuste
             End If
 
             MessageBoxEx.Show(Me, _Msg, "Ajuste de inventario", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
             Me.Close()
 
+        End If
+
+    End Sub
+
+    Private Sub Sb_ConsolidarStock()
+
+        Dim Chk_Confirmar_Lectura As New Command
+        Chk_Confirmar_Lectura.Checked = False
+        Chk_Confirmar_Lectura.Name = "Chk_Confirmar_Lectura"
+        Chk_Confirmar_Lectura.Text = "CONFIRMO CONSOLIDAR EL STOCK"
+
+        Dim _Opciones As Command = Chk_Confirmar_Lectura
+
+        Dim _Info As New TaskDialogInfo("Consolidar Stock",
+                                        eTaskDialogIcon.Help,
+      "¿Desea consolidar el stock de los productos inventariados?", "",
+      eTaskDialogButton.Yes + eTaskDialogButton.No, eTaskDialogBackgroundColor.Red, Nothing, Nothing,
+      _Opciones, Nothing, Nothing)
+
+        Dim _Resultado As eTaskDialogResult = TaskDialog.Show(_Info)
+
+        If _Resultado = eTaskDialogResult.Yes Then
+
+            If Not Chk_Confirmar_Lectura.Checked Then
+                MessageBoxEx.Show(Me, "Debe confirmar la lectura de la alerta", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Sb_ConsolidarStock()
+                Return
+            End If
+
+            Dim _Filtro_Productos As String = Generar_Filtro_IN(_Tbl_Productos, "", "CodigoPr", False, False, "'")
+
+            Dim Fm As New Frm_Consolidacion_Stock_PP(_Filtro_Productos)
+            Fm.Pro_Ejecutar_Automaticamente = True
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
+        Else
+            If Chk_Confirmar_Lectura.Checked Then
+                If MessageBoxEx.Show(Me, "Confirmo la consolidación del stock, pero se indicó que NO." & vbCrLf &
+                                     "Debe desmarcar la opción ""CONFIRMO CONSOLIDAR EL STOCK""." & vbCrLf &
+                                     "Si NO desea consolidar el stock y luego seleccionar NO", "Validación",
+                                     MessageBoxButtons.OK, MessageBoxIcon.Stop) Then
+                    Sb_ConsolidarStock()
+                End If
+            End If
         End If
 
     End Sub

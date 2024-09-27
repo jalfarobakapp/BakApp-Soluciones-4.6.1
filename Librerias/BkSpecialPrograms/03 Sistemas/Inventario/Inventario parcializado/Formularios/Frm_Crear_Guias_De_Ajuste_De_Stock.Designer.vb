@@ -34,6 +34,7 @@ Partial Class Frm_Crear_Guias_De_Ajuste_De_Stock
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Procesar = New DevComponents.DotNetBar.ButtonItem()
         Me.TxtLog = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Chk_ConsolidarStockAlFinalizar = New System.Windows.Forms.CheckBox()
         CType(Me.DtFechaInv, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -231,11 +232,25 @@ Partial Class Frm_Crear_Guias_De_Ajuste_De_Stock
         Me.TxtLog.Size = New System.Drawing.Size(615, 98)
         Me.TxtLog.TabIndex = 37
         '
+        'Chk_ConsolidarStockAlFinalizar
+        '
+        Me.Chk_ConsolidarStockAlFinalizar.AutoSize = True
+        Me.Chk_ConsolidarStockAlFinalizar.BackColor = System.Drawing.Color.White
+        Me.Chk_ConsolidarStockAlFinalizar.ForeColor = System.Drawing.Color.Black
+        Me.Chk_ConsolidarStockAlFinalizar.Location = New System.Drawing.Point(251, 180)
+        Me.Chk_ConsolidarStockAlFinalizar.Name = "Chk_ConsolidarStockAlFinalizar"
+        Me.Chk_ConsolidarStockAlFinalizar.Size = New System.Drawing.Size(168, 17)
+        Me.Chk_ConsolidarStockAlFinalizar.TabIndex = 47
+        Me.Chk_ConsolidarStockAlFinalizar.Text = "Consolidar stock al finalizar"
+        Me.Chk_ConsolidarStockAlFinalizar.UseVisualStyleBackColor = False
+        Me.Chk_ConsolidarStockAlFinalizar.Visible = False
+        '
         'Frm_Crear_Guias_De_Ajuste_De_Stock
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(705, 270)
+        Me.Controls.Add(Me.Chk_ConsolidarStockAlFinalizar)
         Me.Controls.Add(Me.Chk_Dejar_Doc_Final_Del_Dia)
         Me.Controls.Add(Me.Chk_CambiarCostoEnLCProducto)
         Me.Controls.Add(Me.ChkDejaStockCero)
@@ -275,4 +290,5 @@ Partial Class Frm_Crear_Guias_De_Ajuste_De_Stock
     Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
     Friend WithEvents Btn_Procesar As DevComponents.DotNetBar.ButtonItem
     Private WithEvents TxtLog As DevComponents.DotNetBar.Controls.TextBoxX
+    Public WithEvents Chk_ConsolidarStockAlFinalizar As CheckBox
 End Class

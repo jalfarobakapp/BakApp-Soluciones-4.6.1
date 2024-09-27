@@ -108,9 +108,9 @@ Public Class Frm_01_Inventario_Actual
                        "Where IdInventario = " & _IdInventario & "" & vbCrLf &
                        vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set " &
-                       "Dif_Inv_Cantidad = ROUND(Cant_Inventariada-StFisicoUd1,5)," &
+                       "Dif_Inv_Cantidad = ROUND(Cant_Inventariada - ABS(StFisicoUd1), 5)," &
                        "Total_Costo_Foto = StFisicoUd1*Costo,Total_Costo_Inv = Cant_Inventariada*Costo," &
-                       "Dif_Inv_Costo = Total_Costo_Inv-Total_Costo_Foto" & vbCrLf &
+                       "Dif_Inv_Costo = ABS(Total_Costo_Inv)-ABS(Total_Costo_Foto)" & vbCrLf &
                        "Where IdInventario = " & _IdInventario & vbCrLf &
                        vbCrLf &
                        "Drop Table #PasoR" & vbCrLf &
@@ -120,7 +120,7 @@ Public Class Frm_01_Inventario_Actual
 
         Consulta_sql = "Select Codigo,CodigoRap,CodigoTec,Descripcion,StFisicoUd1,Cant_Inventariada,Costo,Dif_Inv_Cantidad," &
                        "Total_Costo_Foto,Total_Costo_Inv,Dif_Inv_Costo,Recontado,NoInventariar," & vbCrLf &
-                       "SuperFamilia,Nom_SuperFamilia,Familia,Nom_Familia,SubFamilia,Nom_SubFamilia,Rubro,Nom_Rubro,ClasLibre,Nom_ClasLibre,Zona,Nom_Zona" & vbCrLf &
+                       "SuperFamilia,Nom_SuperFamilia,Familia,Nom_Familia,SubFamilia,Nom_SubFamilia,Marca,Nom_Marca,Rubro,Nom_Rubro,ClasLibre,Nom_ClasLibre,Zona,Nom_Zona" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Inv_FotoInventario" & vbCrLf &
                        "Where IdInventario = " & _IdInventario & vbCrLf & _Filtros
 

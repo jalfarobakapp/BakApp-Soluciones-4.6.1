@@ -35,24 +35,13 @@ Public Class Frm_Imagenes_X_Producto
 
     Private Sub Frm_Imagenes_X_Producto_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
-        'With Sld_Zoom
-        '    .Maximum = 100 ' valor máximo 
-        '    .Minimum = 0 ' minimo
-        '    .Value = 10
-        '    .Step = 1
-        '    '.DecimalPlaces = 1
-        'End With
-
         Fx_Llenar_Grilla_Imagenes()
         Sb_Cargar_Imagenes()
-
-        'Sb_Cargar_Imagenes2()
 
         If CBool(Grilla_Imagenes.RowCount) Then
             Pbx_Imagen.SizeMode = PictureBoxSizeMode.Zoom ' Para ajustar tamaño de la imagen
         Else
             Pbx_Imagen.SizeMode = PictureBoxSizeMode.CenterImage ' Para ajustar tamaño de la imagen
-            'Sld_Zoom.Enabled = False
         End If
 
         If Not Pro_Solicitado_Bodega Then
@@ -60,7 +49,6 @@ Public Class Frm_Imagenes_X_Producto
         End If
 
         Btn_Eliminar.Visible = False
-        'Btn_Subir_Imagen.Visible = False
 
         Sb_Color_Botones_Barra(Bar1)
 
@@ -255,12 +243,6 @@ Public Class Frm_Imagenes_X_Producto
                     Dim MyWebClient As New System.Net.WebClient
 
                     ' Establecer el tiempo de espera en milisegundos (por ejemplo, 5000 ms = 5 segundos)
-
-                    'MyWebClient.DownloadDataCompleted += New DownloadDataCompletedEventHandler(AddressOf DownloadDataCallback)
-                    'AddHandler MyWebClient.DownloadDataCompleted, AddressOf DownloadDataCallback
-                    'MyWebClient.DownloadDataAsync(New Uri(_Direccion_Imagen))
-
-                    ' Define el tiempo de espera en milisegundos (por ejemplo, 5000 ms = 5 segundos)
                     Dim timeout As Integer = 5000
 
                     ' Crear una instancia de HttpWebRequest
@@ -287,7 +269,6 @@ Public Class Frm_Imagenes_X_Producto
         Fm.Close()
 
         Sb_Mostrar_Imagen()
-        'Sb_Mostrar_Imagen(_PrimeraURL, _PrimeraDesdeUrl)
 
     End Sub
 
@@ -301,14 +282,12 @@ Public Class Frm_Imagenes_X_Producto
             Dim ImageInBytes() As Byte = e.Result
             Dim _Direccion_Imagen As String = _Fila.Item("Direccion_Imagen")
 
-            'CREATE A MEMORY STREAM USING THE BYTES
+            'CREAR UN FLUJO DE MEMORIA UTILIZANDO LOS BYTES
             Dim _Imagen_Byte As New IO.MemoryStream(ImageInBytes)
             Dim _Imagen_Prod As Image = New System.Drawing.Bitmap(_Imagen_Byte)
             Dim _bmp As New Bitmap(_Imagen_Prod)
             Dim _Destino As Image = New Bitmap(_bmp, 125, 130)
 
-            'Dim _PBX As New PictureBox
-            '_'PBX.Image = 
             Dim _Largo = Len(_Direccion_Imagen) - 2
             Dim _Extencion = Mid(_Direccion_Imagen, _Largo, 3)
 
@@ -434,7 +413,6 @@ Public Class Frm_Imagenes_X_Producto
 
             Picbox.SizeMode = PictureBoxSizeMode.Zoom
 
-
             With Picbox
                 ' Ancho y alto de la imagen   
                 Ancho = .Image.Width * (Escala / 10)
@@ -451,21 +429,6 @@ Public Class Frm_Imagenes_X_Producto
     End Sub
     Private Sub Grilla_Imagenes_CellClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla_Imagenes.CellClick
         Sb_Mostrar_Imagen()
-        'Try
-        '    With Grilla_Imagenes
-        '        Dim _Desde_URL As Boolean = .Rows(.CurrentRow.Index).Cells.Item("Desde_URL").Value
-        '        Dim _Direccion_Imagen As String = .Rows(.CurrentRow.Index).Cells.Item("Direccion_Imagen").Value
-        '        Dim ImageInBytes() As Byte = .Rows(.CurrentRow.Index).Cells.Item("Imagen_Real").Value
-
-        '        Dim _Imagen_Byte As New IO.MemoryStream(ImageInBytes)
-        '        Dim _Imagen_Prod As Image = New System.Drawing.Bitmap(_Imagen_Byte)
-
-        '        Pbx_Imagen.Image = _Imagen_Prod
-
-        '    End With
-        'Catch ex As Exception
-        '    MessageBoxEx.Show(Me, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        'End Try
     End Sub
 
     Private Sub Btn_Eliminar_Click(sender As Object, e As EventArgs) Handles Btn_Eliminar.Click
@@ -529,7 +492,6 @@ Public Class Frm_Imagenes_X_Producto
                                 Dim _EsURL As Boolean = _Row.Item("Desde_URL")
                                 _Direccion_Imagen = _Row.Item("Direccion_Imagen")
 
-                                'Sb_Mostrar_Imagen(_Direccion_Imagen, _EsURL)
                                 Sb_Mostrar_Imagen()
 
                             End If
@@ -610,7 +572,6 @@ Public Class Frm_Imagenes_X_Producto
                 Dim _bmp As New Bitmap(_Imagen_Prod)
                 Dim _Destino As Image = New Bitmap(_bmp, 125, 130)
 
-                'Sb_Mostrar_Imagen(_Url, True)
                 Sb_Mostrar_Imagen()
 
                 Dim _Principal = 1
@@ -635,7 +596,6 @@ Public Class Frm_Imagenes_X_Producto
                 Pbx_Imagen.SizeMode = PictureBoxSizeMode.AutoSize
                 Pbx_Imagen.SizeMode = PictureBoxSizeMode.CenterImage
             End Try
-
         End If
 
     End Sub

@@ -171,7 +171,7 @@ Public Class Frm_02_Detalle_Producto_Actual
                        "Where IdInventario = " & _IdInventario & " And Foto.Codigo = '" & _Codigo & "'" & vbCrLf &
                        vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set " &
-                       "Dif_Inv_Cantidad = Cant_Inventariada-StFisicoUd1,Total_Costo_Foto = StFisicoUd1*Costo,Total_Costo_Inv = Cant_Inventariada*Costo" & vbCrLf &
+                       "Dif_Inv_Cantidad = ROUND(Cant_Inventariada - ABS(StFisicoUd1), 5),Total_Costo_Foto = StFisicoUd1*Costo,Total_Costo_Inv = Cant_Inventariada*Costo" & vbCrLf &
                        "Where IdInventario = " & _IdInventario & " And Codigo = '" & _Codigo & "'" & vbCrLf &
                        vbCrLf &
                        "Drop Table #PasoR" & vbCrLf &
@@ -189,8 +189,7 @@ Public Class Frm_02_Detalle_Producto_Actual
 
             Lbl_StFisicoUd1.Text = FormatNumber(.StFisicoUd1, 2)
             Lbl_Cant_Inventariada.Text = FormatNumber(.Cant_Inventariada, 2)
-            .Dif_Inv_Cantidad = .Cant_Inventariada - .StFisicoUd1
-            Lbl_Dif_Inv_Cantidad.Text = FormatNumber(.Cant_Inventariada - .StFisicoUd1, 0)
+            Lbl_Dif_Inv_Cantidad.Text = FormatNumber(.Dif_Inv_Cantidad, 0)
 
             ChkCerrado.Checked = .Cerrado
             ChkLevantado.Checked = .Levantado
