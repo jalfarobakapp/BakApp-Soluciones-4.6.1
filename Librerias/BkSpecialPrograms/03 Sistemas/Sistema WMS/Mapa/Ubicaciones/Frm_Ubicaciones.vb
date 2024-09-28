@@ -31,6 +31,7 @@ Public Class Frm_Ubicaciones
     Dim _Grabar As Boolean
 
     Dim _EsSubSector As Boolean
+    Private _Row_Sector As DataRow
 
     Public ReadOnly Property Pro_Grabar()
         Get
@@ -96,10 +97,9 @@ Public Class Frm_Ubicaciones
             _EsSubSector = _Ds.Tables(1).Rows(0).Item("Es_SubSector")
         End If
 
-        'If Global_Thema = 2 Then
-        '    Btn_Ver_Mapa.ForeColor = Color.White
-        '    Btn_Imprimir_Toma_Inventario.ForeColor = Color.White
-        'End If
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Sectores" & vbCrLf &
+                       "Where Id_Mapa = " & _Id_Mapa & " and Codigo_Sector = '" & _Codigo_Sector & "'"
+        _Row_Sector = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Sb_Color_Botones_Barra(Bar2)
 
@@ -170,6 +170,8 @@ Public Class Frm_Ubicaciones
         End If
 
         Sb_Autoajustar_Ancho_Columnas(Grilla)
+
+        Wbox_Cabecera.Visible = _Row_Sector.Item("EsCabecera")
 
     End Sub
 
@@ -622,17 +624,6 @@ Public Class Frm_Ubicaciones
                                _Columna <> "Peso_Max" And
                                _Columna <> "Desc_Ubicacion" Then
 
-                                Dim _Row_Ubicacion As DataRow
-                                Dim _EsCabecera As Boolean
-
-                                If _Descripcion_Ubic = "cabecera" Then
-                                    _EsCabecera = True
-                                    _Descripcion_Ubic = String.Empty
-                                    'Else
-                                    '    _Row_Ubicacion = Fx_Row_Ubicacion(_Descripcion_Ubic)
-                                    '    _EsCabecera = _Row_Ubicacion.Item("EsCabecera")
-                                End If
-
                                 Dim _Codigo_Ubic_Old = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega", "Codigo_Ubic",
                                                                          "Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega & "' And Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector & "' And Fila = '" & _Nivel & "' And Columna = '" & _Columna & "'")
 
@@ -645,11 +636,10 @@ Public Class Frm_Ubicaciones
 
                                 Consulta_sql +=
                                 "Insert Into " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega (Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector," &
-                                "Columna,NomColumna,Fila,Es_SubSector,Codigo_Ubic,Descripcion_Ubic,Nombre_SubSector,EsCabecera) Values " &
+                                "Columna,NomColumna,Fila,Es_SubSector,Codigo_Ubic,Descripcion_Ubic,Nombre_SubSector) Values " &
                                 "('" & _Empresa & "','" & _Sucursal & "','" & _Bodega & "'," & _Id_Mapa & ",'" & _Codigo_Sector &
                                 "','" & _Columna & "','" & _NomColumna & "','" & _Nivel &
-                                "'," & _Es_SubSector & ",'" & _Codigo_Ubic & "','" & _Descripcion_Ubic & "','" & _Nombre_SubSector &
-                                "'," & Convert.ToInt32(_EsCabecera) & ")" & vbCrLf & _Sql_SubSector & vbCrLf
+                                "'," & _Es_SubSector & ",'" & _Codigo_Ubic & "','" & _Descripcion_Ubic & "','" & _Nombre_SubSector & "')" & vbCrLf & _Sql_SubSector & vbCrLf
 
                             End If
 
@@ -889,19 +879,6 @@ Public Class Frm_Ubicaciones
                                 Else
                                     Btn_Mnu_Dejar_Ubacion_Sub_Sector.Enabled = False
                                     Btn_Mnu_Bloquear_Ubicacion.Visible = False
-                                End If
-
-                                Dim _Row_Ubicacion As DataRow = Fx_Row_Ubicacion(_Fila.Cells(_Cabeza).Value)
-
-                                If Not IsNothing(_Row_Ubicacion) Then
-                                    Dim _EsCabecera As Boolean = _Row_Ubicacion.Item("EsCabecera")
-                                    Lbl_Cabeceras.Visible = True
-                                    Btn_Mnu_Dejar_Ubacion_Cabecera.Visible = Not _EsCabecera
-                                    Btn_Mnu_Quitar_Ubacion_Cabecera.Visible = _EsCabecera
-                                Else
-                                    Lbl_Cabeceras.Visible = False
-                                    Btn_Mnu_Dejar_Ubacion_Cabecera.Visible = False
-                                    Btn_Mnu_Quitar_Ubacion_Cabecera.Visible = False
                                 End If
 
                                 ShowContextMenu(Menu_Contextual_Ubicacion)
@@ -1675,7 +1652,6 @@ Public Class Frm_Ubicaciones
 
         If Not IsNothing(_Row_Ubicacion) Then
             _Codigo_Ubic = _Row_Ubicacion.Item("Codigo_Ubic")
-            _EsCabecera = _Row_Ubicacion.Item("EsCabecera")
         End If
 
         If _EsCabecera Then
@@ -1997,27 +1973,6 @@ Public Class Frm_Ubicaciones
 
     End Sub
 
-    Private Sub Btn_Mnu_Dejar_Ubacion_Cabecera_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_Dejar_Ubacion_Cabecera.Click
-
-        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
-        Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
-
-        Dim _Codigo_Ubic As String = _Fila.Cells(_Cabeza).Value
-        Dim _Row_Ubicacion As DataRow
-
-        _Row_Ubicacion = Fx_Row_Ubicacion(_Codigo_Ubic)
-        _Codigo_Ubic = _Row_Ubicacion.Item("Codigo_Ubic")
-
-        _Row_Ubicacion.Item("EsCabecera") = True
-
-        'Consulta_sql = "Update " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega Set EsCabecera = 1 Where Codigo_Ubic = '" & _Codigo_Ubic & "'"
-        'If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-        MessageBoxEx.Show(Me, "La ubicación ahora es Cabecera, no es necesario grabar",
-                              "Ubicación cabecera", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        'End If
-
-    End Sub
-
     Sub Sb_Autoajustar_Ancho_Columnas(Grilla As DataGridView)
 
         ' Resize the master DataGridView columns to fit the newly loaded data.
@@ -2036,6 +1991,14 @@ Public Class Frm_Ubicaciones
         Else
             Sb_Grabar_ProductosXUbic()
         End If
+
+    End Sub
+
+    Private Sub Wbox_Cabecera_OptionsClick(sender As Object, e As EventArgs) Handles Wbox_Cabecera.OptionsClick
+
+        Dim _Msj As String = "Esto significa que es una ubicación especial que actúa como cabecera de una estantería."
+        _Msj = Fx_AjustarTexto(_Msj, 50)
+        MessageBoxEx.Show(Me, _Msj, "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
     End Sub
 

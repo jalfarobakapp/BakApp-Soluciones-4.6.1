@@ -80,38 +80,21 @@ Public Class Frm_01_UbicXpro
 
     Sub Sb_ActGrilla_Ubicaciones()
 
-        'Consulta_sql = My.Resources._21_Recursos.Buscar_Ubicaciones_por_producto
-        'Consulta_sql = Replace(Consulta_sql, "#Codigo#", _Codigo)
-        'Consulta_sql = Replace(Consulta_sql, "#Empresa#", _Empresa)
-
-        Dim _Nombre_Mapa As String
-
-        Consulta_sql = "SELECT *,Isnull((Select top 1 Nombre_Mapa From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Enc Zwe Where Zwe.Id_Mapa = Zw1.Id_Mapa),'')+' '+Codigo_Sector+' -> '+Codigo_Ubic As 'Ubicacion'," & vbCrLf &
-                       "Isnull((Select Top 1 Stock_Ud1 From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Stock_X_Producto Zsu " & vbCrLf &
-                       "Where Zsu.Empresa = Zw1.Empresa And " & vbCrLf &
-                       "Zsu.Sucursal = Zw1.Sucursal And " & vbCrLf &
-                       "Zsu.Bodega= Zw1.Bodega and Zsu.Codigo_Ubic = Zw1.Codigo_Ubic And Zsu.Codigo = Zw1.Codigo),0) As Stock_Ubic_Ud1," & vbCrLf &
-                       "Isnull((Select Top 1 Stock_Ud2 From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Stock_X_Producto Zsu " & vbCrLf &
-                       "Where Zsu.Empresa = Zw1.Empresa And " & vbCrLf &
-                       "Zsu.Sucursal = Zw1.Sucursal And " & vbCrLf &
-                       "Zsu.Bodega= Zw1.Bodega and Zsu.Codigo_Ubic = Zw1.Codigo_Ubic And Zsu.Codigo = Zw1.Codigo),0) As Stock_Ubic_Ud2" & vbCrLf &
-                       "FROM " & _Global_BaseBk & "Zw_Prod_Ubicacion Zw1" & vbCrLf &
-                       "Where Codigo = '" & _Codigo & "'" & vbCrLf &
-                       "Order by Primaria desc"
-
-        Consulta_sql = "
-                        Select Ubic.*,Case Ubic.Primaria When 1 Then 'Principal' else 'secundaria' End As 'Tipo',Map.Nombre_Mapa+' '+Ubic.Codigo_Sector+' -> '+Ubic.Codigo_Ubic As 'Ubicacion',
-                        Isnull(Sum(Stock_Ud1),0) As Stock_Ubic_Ud1,
-                        Isnull(Sum(Stock_Ud2),0) As Stock_Ubic_Ud2
-                        From " & _Global_BaseBk & "Zw_Prod_Ubicacion Ubic
-                        Inner Join " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Enc Map On Map.Id_Mapa = Ubic.Id_Mapa
-                        Left join " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Stock_X_Producto Stpr On 
-			                    Stpr.Empresa = Ubic.Empresa And Stpr.Sucursal = Ubic.Sucursal And Stpr.Bodega = Ubic.Bodega And Stpr.Codigo_Ubic = Ubic.Codigo_Ubic And Stpr.Codigo = Ubic.Codigo 
-
-                        Where Ubic.Codigo = '" & _Codigo & "'
-                        Group By Map.Nombre_Mapa,Semilla,Ubic.Empresa,Ubic.Sucursal,Ubic.Bodega,Ubic.Id_Mapa,Ubic.Codigo_Sector,Ubic.Codigo_Ubic,Ubic.Codigo,Ubic.Primaria,Ubic.Stock_Minimo_Ubic,Ubic.Stock_Maximo_Ubic
-                        Order by Primaria desc"
-
+        Consulta_sql = "Select Ubic.Semilla,Ubic.Empresa,Ubic.Sucursal,Ubic.Bodega,Ubic.Id_Mapa,Ubic.Codigo_Sector,Ubic.Codigo_Ubic,Ubic.Codigo,Ubic.Primaria," & vbCrLf &
+                       "Ubic.Stock_Minimo_Ubic,Ubic.Stock_Maximo_Ubic," & vbCrLf &
+                       "Case Ubic.Primaria When 1 Then 'Principal' else 'secundaria' End As 'Tipo'," & vbCrLf &
+                       "Map.Nombre_Mapa+' '+Ubic.Codigo_Sector+' -> '+Ubic.Codigo_Ubic As 'Ubicacion'," & vbCrLf &
+                       "Isnull(Sum(Stock_Ud1),0) As Stock_Ubic_Ud1," & vbCrLf &
+                       "Isnull(Sum(Stock_Ud2),0) As Stock_Ubic_Ud2" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Prod_Ubicacion Ubic" & vbCrLf &
+                       "Inner Join " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Enc Map On Map.Id_Mapa = Ubic.Id_Mapa" & vbCrLf &
+                       "Left join " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Stock_X_Producto Stpr On" & vbCrLf &
+                       "Stpr.Empresa = Ubic.Empresa And Stpr.Sucursal = Ubic.Sucursal And Stpr.Bodega = Ubic.Bodega And " &
+                       "Stpr.Codigo_Ubic = Ubic.Codigo_Ubic And Stpr.Codigo = Ubic.Codigo" & vbCrLf &
+                       "Where Ubic.Codigo = '" & _Codigo & "'" & vbCrLf &
+                       "Group By Map.Nombre_Mapa,Ubic.Semilla,Ubic.Empresa,Ubic.Sucursal,Ubic.Bodega,Ubic.Id_Mapa,Ubic.Codigo_Sector," &
+                       "Ubic.Codigo_Ubic,Ubic.Codigo,Ubic.Primaria,Ubic.Stock_Minimo_Ubic,Ubic.Stock_Maximo_Ubic" & vbCrLf &
+                       "Order by Primaria Desc"
 
         With Grilla
 
@@ -266,7 +249,6 @@ Public Class Frm_01_UbicXpro
             End If
 
         End If
-
 
     End Sub
 

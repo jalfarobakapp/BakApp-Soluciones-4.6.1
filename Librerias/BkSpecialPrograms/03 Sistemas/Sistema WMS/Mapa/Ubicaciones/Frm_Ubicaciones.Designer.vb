@@ -23,9 +23,9 @@ Partial Class Frm_Ubicaciones
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Ubicaciones))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Grupo_Estante = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_Columna = New DevComponents.DotNetBar.ButtonItem()
@@ -40,9 +40,6 @@ Partial Class Frm_Ubicaciones
         Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Mnu_Ver_Productos_Ubicacion = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_Dejar_Ubacion_Sub_Sector = New DevComponents.DotNetBar.ButtonItem()
-        Me.Lbl_Cabeceras = New DevComponents.DotNetBar.LabelItem()
-        Me.Btn_Mnu_Dejar_Ubacion_Cabecera = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Mnu_Quitar_Ubacion_Cabecera = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem5 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Mnu_Bloquear_Ubicacion = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_Desbloquear_Ubicacion = New DevComponents.DotNetBar.ButtonItem()
@@ -74,6 +71,7 @@ Partial Class Frm_Ubicaciones
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Panel_Ayuda = New DevComponents.DotNetBar.ExpandablePanel()
         Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
+        Me.Wbox_Cabecera = New DevComponents.DotNetBar.Controls.WarningBox()
         Me.Grupo_Estante.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -210,7 +208,7 @@ Partial Class Frm_Ubicaciones
         '
         Me.Menu_Contextual_Ubicacion.AutoExpandOnClick = True
         Me.Menu_Contextual_Ubicacion.Name = "Menu_Contextual_Ubicacion"
-        Me.Menu_Contextual_Ubicacion.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_Mnu_Ver_Productos_Ubicacion, Me.Btn_Mnu_Dejar_Ubacion_Sub_Sector, Me.Lbl_Cabeceras, Me.Btn_Mnu_Dejar_Ubacion_Cabecera, Me.Btn_Mnu_Quitar_Ubacion_Cabecera, Me.LabelItem5, Me.Btn_Mnu_Bloquear_Ubicacion, Me.Btn_Mnu_Desbloquear_Ubicacion})
+        Me.Menu_Contextual_Ubicacion.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_Mnu_Ver_Productos_Ubicacion, Me.Btn_Mnu_Dejar_Ubacion_Sub_Sector, Me.LabelItem5, Me.Btn_Mnu_Bloquear_Ubicacion, Me.Btn_Mnu_Desbloquear_Ubicacion})
         Me.Menu_Contextual_Ubicacion.Text = "Opciones Ubicacion"
         '
         'LabelItem1
@@ -237,34 +235,6 @@ Partial Class Frm_Ubicaciones
         Me.Btn_Mnu_Dejar_Ubacion_Sub_Sector.Image = CType(resources.GetObject("Btn_Mnu_Dejar_Ubacion_Sub_Sector.Image"), System.Drawing.Image)
         Me.Btn_Mnu_Dejar_Ubacion_Sub_Sector.Name = "Btn_Mnu_Dejar_Ubacion_Sub_Sector"
         Me.Btn_Mnu_Dejar_Ubacion_Sub_Sector.Text = "Dejar ubicación como <b>Sub-Sector</b>"
-        '
-        'Lbl_Cabeceras
-        '
-        Me.Lbl_Cabeceras.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
-        Me.Lbl_Cabeceras.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
-        Me.Lbl_Cabeceras.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
-        Me.Lbl_Cabeceras.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.Lbl_Cabeceras.Name = "Lbl_Cabeceras"
-        Me.Lbl_Cabeceras.PaddingBottom = 1
-        Me.Lbl_Cabeceras.PaddingLeft = 10
-        Me.Lbl_Cabeceras.PaddingTop = 1
-        Me.Lbl_Cabeceras.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.Lbl_Cabeceras.Text = "Cabeceras"
-        '
-        'Btn_Mnu_Dejar_Ubacion_Cabecera
-        '
-        Me.Btn_Mnu_Dejar_Ubacion_Cabecera.Image = CType(resources.GetObject("Btn_Mnu_Dejar_Ubacion_Cabecera.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_Dejar_Ubacion_Cabecera.ImageAlt = CType(resources.GetObject("Btn_Mnu_Dejar_Ubacion_Cabecera.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_Dejar_Ubacion_Cabecera.Name = "Btn_Mnu_Dejar_Ubacion_Cabecera"
-        Me.Btn_Mnu_Dejar_Ubacion_Cabecera.Text = "Dejar ubicación como <b>Cabecera</b>"
-        '
-        'Btn_Mnu_Quitar_Ubacion_Cabecera
-        '
-        Me.Btn_Mnu_Quitar_Ubacion_Cabecera.Image = CType(resources.GetObject("Btn_Mnu_Quitar_Ubacion_Cabecera.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_Quitar_Ubacion_Cabecera.ImageAlt = CType(resources.GetObject("Btn_Mnu_Quitar_Ubacion_Cabecera.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_Quitar_Ubacion_Cabecera.Name = "Btn_Mnu_Quitar_Ubacion_Cabecera"
-        Me.Btn_Mnu_Quitar_Ubacion_Cabecera.Text = "Quitar ubicación como <b>Cabecera</b>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
-        Me.Btn_Mnu_Quitar_Ubacion_Cabecera.Tooltip = "La ubicación ya no quiero que sea una cabecera"
         '
         'LabelItem5
         '
@@ -336,36 +306,36 @@ Partial Class Frm_Ubicaciones
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle8
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
         Me.Grilla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.ColumnHeaderSelect
         Me.Grilla.Size = New System.Drawing.Size(754, 326)
         Me.Grilla.TabIndex = 11
@@ -702,11 +672,26 @@ Partial Class Frm_Ubicaciones
         Me.LabelX6.Text = "<b>Nota:</b> Para dejar una celda bloqueada debe poner ""<b><font color=""#ED1C24"">" &
     "...</font></b>"" (3 puntos) esto dejara la ceda inabilitada."
         '
+        'Wbox_Cabecera
+        '
+        Me.Wbox_Cabecera.BackColor = System.Drawing.Color.White
+        Me.Wbox_Cabecera.CloseButtonVisible = False
+        Me.Wbox_Cabecera.ForeColor = System.Drawing.Color.Black
+        Me.Wbox_Cabecera.Image = CType(resources.GetObject("Wbox_Cabecera.Image"), System.Drawing.Image)
+        Me.Wbox_Cabecera.Location = New System.Drawing.Point(12, 65)
+        Me.Wbox_Cabecera.Name = "Wbox_Cabecera"
+        Me.Wbox_Cabecera.OptionsText = "Información..."
+        Me.Wbox_Cabecera.Size = New System.Drawing.Size(282, 33)
+        Me.Wbox_Cabecera.TabIndex = 99
+        Me.Wbox_Cabecera.Text = "<b>ESTE SECTOR ES CABECERA</b>"
+        Me.Wbox_Cabecera.Visible = False
+        '
         'Frm_Ubicaciones
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(784, 561)
+        Me.Controls.Add(Me.Wbox_Cabecera)
         Me.Controls.Add(Me.Panel_Ayuda)
         Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.Bar2)
@@ -780,8 +765,6 @@ Partial Class Frm_Ubicaciones
     Friend WithEvents Btn_Mnu_Bloquear_Ubicacion As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mnu_Desbloquear_Ubicacion As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mnu_Sector_Cambiar_Codigo As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_Mnu_Dejar_Ubacion_Cabecera As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_Mnu_Quitar_Ubacion_Cabecera As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Lbl_Cabeceras As DevComponents.DotNetBar.LabelItem
     Friend WithEvents LabelItem5 As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Wbox_Cabecera As DevComponents.DotNetBar.Controls.WarningBox
 End Class

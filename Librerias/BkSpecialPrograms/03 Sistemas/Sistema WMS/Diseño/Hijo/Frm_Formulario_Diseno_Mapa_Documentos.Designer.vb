@@ -67,7 +67,7 @@ Partial Class Frm_Formulario_Diseno_Mapa_Documentos
         Me.ShapeContainer1 = New Microsoft.VisualBasic.PowerPacks.ShapeContainer()
         Me.LineaPie = New Microsoft.VisualBasic.PowerPacks.LineShape()
         Me.LineaDetalle = New Microsoft.VisualBasic.PowerPacks.LineShape()
-        Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
+        Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.ComboItem1 = New DevComponents.Editors.ComboItem()
         Me.ComboItem2 = New DevComponents.Editors.ComboItem()
@@ -433,11 +433,13 @@ Partial Class Frm_Formulario_Diseno_Mapa_Documentos
         Me.LineaDetalle.Y1 = 35
         Me.LineaDetalle.Y2 = 35
         '
-        'ImageList1
+        'Imagenes_16x16
         '
-        Me.ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), System.Windows.Forms.ImageListStreamer)
-        Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
-        Me.ImageList1.Images.SetKeyName(0, "table.ico")
+        Me.Imagenes_16x16.ImageStream = CType(resources.GetObject("Imagenes_16x16.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.Imagenes_16x16.TransparentColor = System.Drawing.Color.Transparent
+        Me.Imagenes_16x16.Images.SetKeyName(0, "table.ico")
+        Me.Imagenes_16x16.Images.SetKeyName(1, "storage-shelves.png")
+        Me.Imagenes_16x16.Images.SetKeyName(2, "storage-shelves-star.png")
         '
         'Timer1
         '
@@ -550,7 +552,7 @@ Partial Class Frm_Formulario_Diseno_Mapa_Documentos
     Friend WithEvents LineaPie As Microsoft.VisualBasic.PowerPacks.LineShape
     Friend WithEvents LineaDetalle As Microsoft.VisualBasic.PowerPacks.LineShape
     Public WithEvents Documento As System.Windows.Forms.Panel
-    Friend WithEvents ImageList1 As System.Windows.Forms.ImageList
+    Friend WithEvents Imagenes_16x16 As System.Windows.Forms.ImageList
     Public WithEvents Timer1 As System.Windows.Forms.Timer
     Friend WithEvents ContextMenuBar1 As DevComponents.DotNetBar.ContextMenuBar
     Friend WithEvents Menu_Contextual_Sectores As DevComponents.DotNetBar.ButtonItem

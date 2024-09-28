@@ -515,25 +515,11 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 
             If _Tipo_Objeto = _TipoElemento.SECTOR Then
 
-                'If False Then
-
-                '    With Documento
-                '        For Each ctr As Control In .Controls
-
-                '            Dim Tipo = ctr.Name 'CType(ctr, Control).Name
-                '            Dim Nom = Mid(Tipo, 1, 5)
-                '            If Nom = "LblFx" Then
-                '                _Cont += 1
-                '            End If
-                '        Next
-                '    End With
-
-                '    _Sectores(_Cont, 0) = .Name
-                '    _Sectores(_Cont, 1) = _Texto
-                '    _Sectores(_Cont, 2) = _Nombre_Sector
-                '    _Sectores(_Cont + 1, 0) = "#Fin#"
-
-                'End If
+                If _EsCabecera Then
+                    _LblSector.Image = Imagenes_16x16.Images.Item("storage-shelves-star.png")
+                Else
+                    _LblSector.Image = Imagenes_16x16.Images.Item("storage-shelves.png")
+                End If
 
             End If
 
@@ -1066,6 +1052,16 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
                                                      _Configuracion_Diseno, _Nombre_Sector)
 
                         _LblObjeto.Tag = _Fila
+
+                        If _Tipo_Objeto = _TipoElemento.SECTOR Then
+
+                            If _Fila.EsCabecera Then
+                                _LblObjeto.Image = Imagenes_16x16.Images.Item("storage-shelves-star.png")
+                            Else
+                                _LblObjeto.Image = Imagenes_16x16.Images.Item("storage-shelves.png")
+                            End If
+
+                        End If
 
                         Documento.Controls.Add(_LblObjeto)
 
@@ -2134,7 +2130,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
         Fm.Codigo_Sector = _Codigo_Sector
         Fm.Nombre_Sector = _Nombre_Sector
         Fm.EsCabecera = _EsCabecera
-        Fm.Chk_EsCabecera.Enabled = Not CBool(_Id)
+        'Fm.Chk_EsCabecera.Enabled = Not CBool(_Id)
 
         Fm.ShowDialog(Me)
         Dim _Grabar = Fm.Grabar
@@ -2146,20 +2142,37 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
         If _Grabar Then
 
             For Each Ctrl In _Documento.Controls
-                'Insertamos las Etiquetas y Sectores
+
                 If Mid(Ctrl.Name, 1, 3) = "Lbl" Then
+
                     Dim _Tag As Zw_WMS_Ubicaciones_Mapa_Det = Ctrl.Tag
+
                     If _Tag.Codigo_Sector = _Codigo_Sector Then
+
                         _Tag.Nombre_Sector = _Nombre_Sector
+                        _Tag.EsCabecera = _EsCabecera
                         Ctrl.Text = _Codigo_Sector
+
+                        If _EsCabecera Then
+                            Ctrl.Image = Imagenes_16x16.Images.Item("storage-shelves-star.png")
+                        Else
+                            Ctrl.Image = Imagenes_16x16.Images.Item("storage-shelves.png")
+                        End If
+
                     End If
+
                 End If
 
             Next
 
-            'CType(ObjetoActivo.Tag, Zw_WMS_Ubicaciones_Mapa_Det).EsCabecera = _EsCabecera
-            'CType(ObjetoActivo.Tag, Zw_WMS_Ubicaciones_Mapa_Det).Nombre_Sector = _Nombre_Sector
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Sectores Set " &
+                           "Nombre_Sector = '" & _Nombre_Sector & "'" & vbCrLf &
+                           ",EsCabecera = " & Convert.ToInt32(_EsCabecera) & vbCrLf &
+                           "Where Codigo_Sector = '" & _Codigo_Sector & "'"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+
             Me.ToolTip1.SetToolTip(ObjetoActivo, UCase(_Nombre_Sector))
+
         End If
 
         Me.Refresh()
@@ -2227,7 +2240,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Det" & Space(1) &
                            "Set Codigo_Sector = '" & _Codigo_Sector & "', Nombre_Sector = '" & _Nombre_Sector & "',EsCabecera = " & Convert.ToInt32(_EsCabecera) & Space(1) &
                            "Where Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector_Old & "'" & vbCrLf &
-                           "Update " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega Set Codigo_Sector = '" & _Codigo_Sector & "',EsCabecera = " & Convert.ToInt32(_EsCabecera) & Space(1) &
+                           "Update " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega Set Codigo_Sector = '" & _Codigo_Sector & "'" & Space(1) &
                            "Where Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector_Old & "'" & vbCrLf &
                            "Update " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega Set Codigo_Ubic = Codigo_Sector+Descripcion_Ubic" & Space(1) &
                            "Where Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector & "'" & vbCrLf &
@@ -2238,21 +2251,36 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
             If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
 
                 For Each Ctrl In _Documento.Controls
-                    'Insertamos las Etiquetas y Sectores
+
                     If Mid(Ctrl.Name, 1, 3) = "Lbl" Then
+
                         Dim _Tag As Zw_WMS_Ubicaciones_Mapa_Det = Ctrl.Tag
+
                         If _Tag.Codigo_Sector = _Codigo_Sector_Old Then
+
                             _Tag.Nombre_Sector = _Nombre_Sector
                             _Tag.Codigo_Sector = _Codigo_Sector
                             _Tag.EsCabecera = _EsCabecera
                             Ctrl.Text = _Codigo_Sector
+
+                            If _EsCabecera Then
+                                Ctrl.Image = Imagenes_16x16.Images.Item("storage-shelves-star.png")
+                            Else
+                                Ctrl.Image = Imagenes_16x16.Images.Item("storage-shelves.png")
+                            End If
+
                         End If
+
                     End If
 
                 Next
 
-                'CType(ObjetoActivo.Tag, Zw_WMS_Ubicaciones_Mapa_Det).Nombre_Sector = _Nombre_Sector
-                'CType(ObjetoActivo.Tag, Zw_WMS_Ubicaciones_Mapa_Det).EsCabecera = _EsCabecera
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Sectores Set " &
+                               "Codigo_Sector = '" & _Codigo_Sector & "'" & vbCrLf &
+                               ",Nombre_Sector = '" & _Nombre_Sector & "'" & vbCrLf &
+                               ",EsCabecera = " & Convert.ToInt32(_EsCabecera) & vbCrLf &
+                               "Where Codigo_Sector = '" & _Codigo_Sector_Old & "'"
+                _Sql.Ej_consulta_IDU(Consulta_sql)
 
                 Beep()
 

@@ -1,9 +1,9 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Frm_05_UbicXpro_UbicacionConProductos
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,11 +20,11 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_05_UbicXpro_UbicacionConProductos))
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.LblBodega = New DevComponents.DotNetBar.LabelX()
@@ -49,7 +49,7 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
         Me.Rdb_Ud1 = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_Ud2 = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.TxtUbicacion = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Txt_OpcAdicionales = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Btn_Mnu_Eliminar_Ubicacion = New DevComponents.DotNetBar.ButtonItem()
         Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -166,37 +166,37 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle8
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
         Me.Grilla.ReadOnly = True
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
         Me.Grilla.Size = New System.Drawing.Size(736, 239)
         Me.Grilla.TabIndex = 10
         '
@@ -304,7 +304,7 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
         Me.ContextMenuBar1.AntiAlias = True
         Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_Ubicacion})
-        Me.ContextMenuBar1.Location = New System.Drawing.Point(258, 107)
+        Me.ContextMenuBar1.Location = New System.Drawing.Point(131, 39)
         Me.ContextMenuBar1.Name = "ContextMenuBar1"
         Me.ContextMenuBar1.Size = New System.Drawing.Size(222, 25)
         Me.ContextMenuBar1.Stretch = True
@@ -317,7 +317,7 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
         '
         Me.Menu_Contextual_Ubicacion.AutoExpandOnClick = True
         Me.Menu_Contextual_Ubicacion.Name = "Menu_Contextual_Ubicacion"
-        Me.Menu_Contextual_Ubicacion.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_Mnu_Estadisticas_Producto, Me.Btn_Mnu_Ver_Ubicaciones_Del_Producto})
+        Me.Menu_Contextual_Ubicacion.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_Mnu_Estadisticas_Producto, Me.Btn_Mnu_Ver_Ubicaciones_Del_Producto, Me.Btn_Mnu_Eliminar_Ubicacion})
         Me.Menu_Contextual_Ubicacion.Text = "Opciones Ubicacion"
         '
         'LabelItem1
@@ -396,32 +396,18 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
         Me.TxtUbicacion.Size = New System.Drawing.Size(742, 22)
         Me.TxtUbicacion.TabIndex = 47
         '
-        'Txt_OpcAdicionales
+        'Btn_Mnu_Eliminar_Ubicacion
         '
-        Me.Txt_OpcAdicionales.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_OpcAdicionales.Border.Class = "TextBoxBorder"
-        Me.Txt_OpcAdicionales.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_OpcAdicionales.ButtonCustom.Image = CType(resources.GetObject("Txt_OpcAdicionales.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_OpcAdicionales.ButtonCustom.Visible = True
-        Me.Txt_OpcAdicionales.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_OpcAdicionales.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Txt_OpcAdicionales.ForeColor = System.Drawing.Color.Black
-        Me.Txt_OpcAdicionales.Location = New System.Drawing.Point(632, 71)
-        Me.Txt_OpcAdicionales.Name = "Txt_OpcAdicionales"
-        Me.Txt_OpcAdicionales.PreventEnterBeep = True
-        Me.Txt_OpcAdicionales.Size = New System.Drawing.Size(122, 25)
-        Me.Txt_OpcAdicionales.TabIndex = 49
-        Me.Txt_OpcAdicionales.Text = "ES CABECERA"
+        Me.Btn_Mnu_Eliminar_Ubicacion.ForeColor = System.Drawing.Color.Red
+        Me.Btn_Mnu_Eliminar_Ubicacion.Image = CType(resources.GetObject("Btn_Mnu_Eliminar_Ubicacion.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Eliminar_Ubicacion.Name = "Btn_Mnu_Eliminar_Ubicacion"
+        Me.Btn_Mnu_Eliminar_Ubicacion.Text = "Quitar producto de esta ubicación"
         '
         'Frm_05_UbicXpro_UbicacionConProductos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(758, 468)
-        Me.Controls.Add(Me.Txt_OpcAdicionales)
         Me.Controls.Add(Me.TxtUbicacion)
         Me.Controls.Add(Me.Rdb_Ud2)
         Me.Controls.Add(Me.Rdb_Ud1)
@@ -473,5 +459,5 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
     Friend WithEvents Btn_Mnu_Estadisticas_Producto As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Imprimir_Etiquetas As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents TxtUbicacion As DevComponents.DotNetBar.Controls.TextBoxX
-    Friend WithEvents Txt_OpcAdicionales As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Btn_Mnu_Eliminar_Ubicacion As DevComponents.DotNetBar.ButtonItem
 End Class

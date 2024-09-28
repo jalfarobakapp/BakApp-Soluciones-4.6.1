@@ -44,7 +44,8 @@ Public Class Frm_Sectores
     Sub Sb_Actualizar_Grilla()
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Sectores" & vbCrLf &
-                       "Where Id_Mapa = " & _Id_Mapa & " And Es_SubSector = 0"
+                       "Where Id_Mapa = " & _Id_Mapa & " And Es_SubSector = 0" & vbCrLf &
+                       "Order By Codigo_Sector"
 
         Dim _New_Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
         _Dv = New DataView
@@ -120,7 +121,6 @@ Public Class Frm_Sectores
                     .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
 
                     Dim _Fila As DataGridViewRow = Grilla.CurrentRow
-                    Dim _Abierto As Boolean = _Fila.Cells("Abierto").Value
 
                     ShowContextMenu(Menu_Contextual_MantSector)
 
