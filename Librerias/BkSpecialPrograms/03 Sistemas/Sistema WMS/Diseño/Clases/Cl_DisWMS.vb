@@ -1,4 +1,5 @@
-﻿Imports Microsoft.Office.Interop.Outlook
+﻿
+Imports System.Data.SqlClient
 
 Public Class Cl_DisWMS
 

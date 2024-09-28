@@ -368,7 +368,6 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
                                      Optional _Mapa As _TipoDiseno = _TipoDiseno.Mapa_Bodega_Diseño,
                                      Optional _Nombre_Sector As String = "")
 
-
         Dim _LblSector As New LabelX
         Dim _Nuevo_Sector As Boolean = String.IsNullOrEmpty(_Codigo_Sector)
         Dim _Tag As Zw_WMS_Ubicaciones_Mapa_Det
@@ -404,21 +403,20 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 
                 ElseIf _Tipo_Objeto = _TipoElemento.SECTOR Then
 
-                    Dim _Grabar As Boolean
-
-                    Dim Fm As New Frm_Formulario_Diseno_Mapa_Crear_Sector(_Id_Mapa, Frm_Formulario_Diseno_Mapa_Crear_Sector._Enum_Accion.Nuevo)
+                    Dim Fm As New Frm_Sectores(_Id_Mapa)
                     Fm.ShowDialog(Me)
-                    _Grabar = Fm.Pro_Grabar
-                    _Codigo_Sector = Fm.Codigo_Sector
-                    _Nombre_Sector = Fm.Nombre_Sector
-                    _EsCabecera = Fm.EsCabecera
+                    Dim _SectorSeleccionado As Zw_WMS_Ubicaciones_Sectores = Fm.SectorSeleccionado
                     Fm.Dispose()
 
-                    If Not _Grabar Then
+                    If IsNothing(_SectorSeleccionado) Then
                         Return Nothing
                     End If
 
-                    _Aceptado = _Grabar
+                    _Codigo_Sector = _SectorSeleccionado.Codigo_Sector
+                    _Nombre_Sector = _SectorSeleccionado.Nombre_Sector
+                    _EsCabecera = _SectorSeleccionado.EsCabecera
+
+                    _Aceptado = True
 
                 End If
             Else
@@ -486,15 +484,12 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
                     _Tag.Font_Subrayado = False
                     _Tag.Alto_H = _Alto_H
                     _Tag.Ancho_W = _Ancho_W
-                    '_Tag.BackColor = ._BackColor
-                    '_Tag.ForeColor = .ForeColor
 
                     .Tag = _Tag
 
                 End If
 
             End If
-
 
             If _Mapa = _TipoDiseno.Mapa_Bodega_Diseño Then
 
@@ -2142,7 +2137,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
         Fm.Chk_EsCabecera.Enabled = Not CBool(_Id)
 
         Fm.ShowDialog(Me)
-        Dim _Grabar = Fm.Pro_Grabar
+        Dim _Grabar = Fm.Grabar
         _Codigo_Sector = Fm.Codigo_Sector
         _Nombre_Sector = Fm.Nombre_Sector
         _EsCabecera = Fm.EsCabecera
@@ -2219,7 +2214,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
         Fm.EsCabecera = _EsCabecera
         Fm.ShowDialog(Me)
 
-        Dim _Grabar = Fm.Pro_Grabar
+        Dim _Grabar = Fm.Grabar
 
         _Codigo_Sector = Fm.Codigo_Sector
         _Nombre_Sector = Fm.Nombre_Sector

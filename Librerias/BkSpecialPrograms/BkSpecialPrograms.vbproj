@@ -881,6 +881,7 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Inventario.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Sector.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_WMS_Ubicaciones_Mapa_Det.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_WMS_Ubicaciones_Sectores.vb" />
     <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Cambio precio\Frm_AsisCompra_CambioPrecio.Designer.vb">
       <DependentUpon>Frm_AsisCompra_CambioPrecio.vb</DependentUpon>
     </Compile>
@@ -2414,6 +2415,13 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Sistema WMS\Diseño\Clases\Cl_DisWMS.vb" />
+    <Compile Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Sectores\Cl_WMS_Sectores.vb" />
+    <Compile Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Sectores\Frm_Sectores.Designer.vb">
+      <DependentUpon>Frm_Sectores.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Sectores\Frm_Sectores.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Sistema WMS\Gestión WMS\Clases\Cl_Documento_Wms.vb" />
     <Compile Include="03 Sistemas\Sistema WMS\Gestión WMS\Formularios\Frm_WMS_Documento.Designer.vb">
       <DependentUpon>Frm_WMS_Documento.vb</DependentUpon>
@@ -5578,6 +5586,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Frm_Formulario_Diseno_Mapa_Documentos.resx">
       <DependentUpon>Frm_Formulario_Diseno_Mapa_Documentos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Sectores\Frm_Sectores.resx">
+      <DependentUpon>Frm_Sectores.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Sistema WMS\Diseño\Padre\Frm_Diseno_Doc_y_Ubic.resx">
       <DependentUpon>Frm_Diseno_Doc_y_Ubic.vb</DependentUpon>

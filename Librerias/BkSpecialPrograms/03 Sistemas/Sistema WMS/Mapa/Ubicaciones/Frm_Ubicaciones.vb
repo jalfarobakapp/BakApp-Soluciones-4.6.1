@@ -1698,7 +1698,7 @@ Public Class Frm_Ubicaciones
         Fm.Codigo_Sector = _Codigo_Sector
         Fm.Nombre_Sector = _Nombre_SubSector
         Fm.ShowDialog(Me)
-        _Grabar = Fm.Pro_Grabar
+        _Grabar = Fm.Grabar
         Fm.Dispose()
 
         If _Grabar Then
@@ -1913,7 +1913,7 @@ Public Class Frm_Ubicaciones
         Fm.Es_SubSector = True
         Fm.ShowDialog(Me)
 
-        Dim _Grabar = Fm.Pro_Grabar
+        Dim _Grabar = Fm.Grabar
         _Codigo_Sector = Fm.Codigo_Sector
         _Nombre_Sector = Fm.Nombre_Sector
         Fm.Dispose()
