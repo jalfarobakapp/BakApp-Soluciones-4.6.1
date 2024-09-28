@@ -494,7 +494,7 @@ Public Class Frm_Diseno_Doc_y_Ubic
             '_Nombre_Mapa = _FrmActivo.Text
             Dim _Id_Mapa As Integer = _FrmActivo.Pro_Id_Mapa
             Dim _Documento = _FrmActivo.Documento
-            Dim _Sectores(,) = _FrmActivo.Pro_Sectores
+            Dim _Sectores(,) '= _FrmActivo.Pro_Sectores
 
             Dim _i = 1
             For Each Ctrl In _Documento.Controls
@@ -605,7 +605,7 @@ Public Class Frm_Diseno_Doc_y_Ubic
         Dim _X_Columna
 
         Dim _Orientacion = 0
-
+        Dim _EsCabecera As Boolean
 
         Dim Tipo = Mid(_Ctrl.Name, 1, 3)
 
@@ -616,18 +616,20 @@ Public Class Frm_Diseno_Doc_y_Ubic
                 _Nombre_Objeto = .Name
 
                 If Mid(.Name, 1, 5) = "LblFx" Then
+
                     _Tipo_Objeto = "SECTOR"
                     _Codigo_Sector = .Text
                     _Texto = .Text
+                    _Nombre_Sector = CType(_Ctrl.Tag, Zw_WMS_Ubicaciones_Mapa_Det).Nombre_Sector
+                    _EsCabecera = CType(_Ctrl.Tag, Zw_WMS_Ubicaciones_Mapa_Det).EsCabecera
 
-                    For i = 0 To 1000
-                        Dim _N = _Sectores(i, 1)
-                        If _Codigo_Sector = _N Then
-                            _Nombre_Sector = _Sectores(i, 2)
-                            Exit For
-                        End If
-                    Next
-
+                    'For i = 0 To 1000
+                    '    Dim _N = _Sectores(i, 1)
+                    '    If _Codigo_Sector = _N Then
+                    '        _Nombre_Sector = _Sectores(i, 2)
+                    '        Exit For
+                    '    End If
+                    'Next
 
                 Else
                     _Tipo_Objeto = "ETIQUETA"
@@ -698,18 +700,16 @@ Public Class Frm_Diseno_Doc_y_Ubic
             Return SQl_Query
         End If
 
-
-
         SQl_Query = "Insert Into " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Det(Empresa,Sucursal,Bodega,Id_Mapa,Tipo_Objeto,Nombre_Objeto," &
                     "Codigo_Sector,Nombre_Sector,Texto," &
                     "Font_Nombre,Font_Tamano,Font_Estilo,Font_Negrita,Font_Italic,Font_Tachado,Font_Subrayado," &
-                    "Alto_H,Ancho_W,BackColor,ForeColor,Relleno,Y_Fila,X_Columna,Orientacion) Values " & vbCrLf &
+                    "Alto_H,Ancho_W,BackColor,ForeColor,Relleno,Y_Fila,X_Columna,Orientacion,EsCabecera) Values " & vbCrLf &
                     "('" & _Empresa & "','" & _Sucursal & "','" & _Bodega & "'," & _Id_Mapa & ",'" & _Tipo_Objeto & "'," &
                     "'" & _Nombre_Objeto & "','" & _Codigo_Sector & "','" & _Nombre_Sector & "','" & _Texto & "','" & _Font_Nombre & "'," &
                     De_Num_a_Tx_01(_Font_Tamano, , 5) & "," & _Font_Estilo & "," & _Font_Negrita & "," & _Font_Italic & "," &
                     _Font_Tachado & "," & _Font_Subrayado & "," & _Alto_H & "," & _Ancho_W & "," &
-                    _BackColor & "," & _ForeColor & "," & _Relleno & "," & _Y_Fila & "," & _X_Columna & "," & _Orientacion & ")"
-
+                    _BackColor & "," & _ForeColor & "," & _Relleno & "," & _Y_Fila & "," & _X_Columna & "," &
+                    _Orientacion & "," & Convert.ToInt32(_EsCabecera) & ")"
 
         Return SQl_Query
 

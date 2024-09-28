@@ -40,7 +40,6 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
         Me.Btn_Imprimir_Etiquetas = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnExportarExcel = New DevComponents.DotNetBar.ButtonItem()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.TxtUbicacion = New System.Windows.Forms.TextBox()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_Ubicacion = New DevComponents.DotNetBar.ButtonItem()
@@ -49,6 +48,8 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
         Me.Btn_Mnu_Ver_Ubicaciones_Del_Producto = New DevComponents.DotNetBar.ButtonItem()
         Me.Rdb_Ud1 = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_Ud2 = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.TxtUbicacion = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_OpcAdicionales = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -196,7 +197,7 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.Grilla.Size = New System.Drawing.Size(739, 239)
+        Me.Grilla.Size = New System.Drawing.Size(736, 239)
         Me.Grilla.TabIndex = 10
         '
         'Bar1
@@ -207,7 +208,7 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Buscar_Producto, Me.Btn_Seleccion_Multiple, Me.Btn_Imprimir_Etiquetas, Me.BtnExportarExcel})
         Me.Bar1.Location = New System.Drawing.Point(0, 427)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(769, 41)
+        Me.Bar1.Size = New System.Drawing.Size(758, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 41
@@ -257,16 +258,6 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
         Me.Label3.TabIndex = 43
         Me.Label3.Text = "Ubicación"
         '
-        'TxtUbicacion
-        '
-        Me.TxtUbicacion.BackColor = System.Drawing.Color.White
-        Me.TxtUbicacion.ForeColor = System.Drawing.Color.Black
-        Me.TxtUbicacion.Location = New System.Drawing.Point(14, 99)
-        Me.TxtUbicacion.Name = "TxtUbicacion"
-        Me.TxtUbicacion.ReadOnly = True
-        Me.TxtUbicacion.Size = New System.Drawing.Size(740, 22)
-        Me.TxtUbicacion.TabIndex = 42
-        '
         'GroupPanel1
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
@@ -276,7 +267,7 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 127)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(745, 262)
+        Me.GroupPanel1.Size = New System.Drawing.Size(742, 262)
         '
         '
         '
@@ -389,16 +380,53 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
         Me.Rdb_Ud2.TabIndex = 46
         Me.Rdb_Ud2.Text = "Unidad 2"
         '
+        'TxtUbicacion
+        '
+        Me.TxtUbicacion.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.TxtUbicacion.Border.Class = "TextBoxBorder"
+        Me.TxtUbicacion.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.TxtUbicacion.DisabledBackColor = System.Drawing.Color.White
+        Me.TxtUbicacion.ForeColor = System.Drawing.Color.Black
+        Me.TxtUbicacion.Location = New System.Drawing.Point(12, 99)
+        Me.TxtUbicacion.Name = "TxtUbicacion"
+        Me.TxtUbicacion.PreventEnterBeep = True
+        Me.TxtUbicacion.Size = New System.Drawing.Size(742, 22)
+        Me.TxtUbicacion.TabIndex = 47
+        '
+        'Txt_OpcAdicionales
+        '
+        Me.Txt_OpcAdicionales.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_OpcAdicionales.Border.Class = "TextBoxBorder"
+        Me.Txt_OpcAdicionales.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_OpcAdicionales.ButtonCustom.Image = CType(resources.GetObject("Txt_OpcAdicionales.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_OpcAdicionales.ButtonCustom.Visible = True
+        Me.Txt_OpcAdicionales.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_OpcAdicionales.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Txt_OpcAdicionales.ForeColor = System.Drawing.Color.Black
+        Me.Txt_OpcAdicionales.Location = New System.Drawing.Point(632, 71)
+        Me.Txt_OpcAdicionales.Name = "Txt_OpcAdicionales"
+        Me.Txt_OpcAdicionales.PreventEnterBeep = True
+        Me.Txt_OpcAdicionales.Size = New System.Drawing.Size(122, 25)
+        Me.Txt_OpcAdicionales.TabIndex = 49
+        Me.Txt_OpcAdicionales.Text = "ES CABECERA"
+        '
         'Frm_05_UbicXpro_UbicacionConProductos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(769, 468)
+        Me.ClientSize = New System.Drawing.Size(758, 468)
+        Me.Controls.Add(Me.Txt_OpcAdicionales)
+        Me.Controls.Add(Me.TxtUbicacion)
         Me.Controls.Add(Me.Rdb_Ud2)
         Me.Controls.Add(Me.Rdb_Ud1)
         Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.Label3)
-        Me.Controls.Add(Me.TxtUbicacion)
         Me.Controls.Add(Me.Bar1)
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.DoubleBuffered = True
@@ -434,7 +462,6 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
     Friend WithEvents Btn_Buscar_Producto As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents BtnExportarExcel As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Label3 As System.Windows.Forms.Label
-    Public WithEvents TxtUbicacion As System.Windows.Forms.TextBox
     Friend WithEvents Btn_Seleccion_Multiple As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Rdb_Ud1 As DevComponents.DotNetBar.Controls.CheckBoxX
@@ -445,4 +472,6 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
     Friend WithEvents Btn_Mnu_Ver_Ubicaciones_Del_Producto As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mnu_Estadisticas_Producto As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Imprimir_Etiquetas As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents TxtUbicacion As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Txt_OpcAdicionales As DevComponents.DotNetBar.Controls.TextBoxX
 End Class

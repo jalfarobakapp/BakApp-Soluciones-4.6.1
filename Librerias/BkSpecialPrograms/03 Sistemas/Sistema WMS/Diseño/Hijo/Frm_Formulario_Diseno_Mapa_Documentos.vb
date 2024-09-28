@@ -1,6 +1,7 @@
 ﻿Imports System.Drawing.Color
 Imports DevComponents.DotNetBar
 Imports Microsoft.VisualBasic.PowerPacks
+Imports Mysqlx
 'Imports Lib_Bakapp_VarClassFunc
 
 Public Class Frm_Formulario_Diseno_Mapa_Documentos
@@ -55,13 +56,15 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 
     Dim _Cerrar_Formulario As Boolean
 
-    Dim _Sectores(1000, 2) As String
+    'Dim _Sectores(1000, 2) As String
 
-    Public ReadOnly Property Pro_Sectores() As String(,)
-        Get
-            Return _Sectores
-        End Get
-    End Property
+    'Public ReadOnly Property Pro_Sectores() As String(,)
+    '    Get
+    '        Return _Sectores
+    '    End Get
+    'End Property
+
+    Dim _Cl_DisWMS As New Cl_DisWMS
 
     Enum _TipoDiseno
         Documento
@@ -104,7 +107,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
         Get
             Return _Imprimir_Cod_Barras_Ubicaciones
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Imprimir_Cod_Barras_Ubicaciones = value
         End Set
     End Property
@@ -125,13 +128,13 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
         Get
             Return _Cerrar_Formulario
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Cerrar_Formulario = value
         End Set
     End Property
 
-    Public Sub New(ByVal RowMapa As DataRow,
-                   ByVal Configuracion_Diseno As _TipoDiseno)
+    Public Sub New(RowMapa As DataRow,
+                   Configuracion_Diseno As _TipoDiseno)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -150,7 +153,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 
     End Sub
 
-    Private Sub Frm_Formulario_Diseno_Mapa_Documentos_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+    Private Sub Frm_Formulario_Diseno_Mapa_Documentos_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
         '_FormPadre = Me.Parent
 
@@ -194,7 +197,8 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
         'Panel1.HorizontalScroll.Value = 300
         'Panel1.VerticalScroll.Value = 200
 
-        Sb_Abrir_Mapas()
+        'Sb_Abrir_Mapas()
+        Sb_Abrir_Mapas_Lista()
 
         If _Configuracion_Diseno = _TipoDiseno.Mapa_Bodega_Diseño Then
 
@@ -261,7 +265,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
         Get
             Return _Codigo_Sector_Activo
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             _Codigo_Sector_Activo = value
         End Set
     End Property
@@ -274,7 +278,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 
 #Region "CREAR NUEVO ELEMENTO"
 
-    Private Sub Cmnu_Herramientas_diseno_mapa_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Cmnu_Herramientas_diseno_mapa_Click(sender As System.Object, e As System.EventArgs)
 
         Dim _NomObjet As String = sender.Name
         Dim _Elemento As _TipoElemento
@@ -333,64 +337,44 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 
         If Not (_NuevoObjeto Is Nothing) Then
 
-            _NuevoObjeto.BackColor = LightSteelBlue 'WhiteSmoke 'White '_BackColor
-            _NuevoObjeto.ForeColor = Black '
+            _NuevoObjeto.BackColor = LightSteelBlue
+            _NuevoObjeto.ForeColor = Black
 
             Documento.Controls.Add(_NuevoObjeto)
 
             _NuevoObjeto.Focus()
             _NuevoObjeto.BringToFront()
             ObjetoActivo = _NuevoObjeto
-            'Sb_Ver_Propiedad_de_Objeto_Mapa()
+
         End If
 
     End Sub
 
-
-    'Private Function Fx_Crear_Sector(ByVal _X_Columna As Integer, _
-    '                                 ByVal _Y_Fila As Integer, _
-    '                                 ByVal _BackColor As Color, _
-    '                                ByVal _ForeColor As Color, _
-    '                                 ByVal _Tipo_Objeto As _TipoElemento, _
-    '                                 Optional ByVal _Nombre_Objeto As String = "", _
-    '                                 Optional ByVal _Codigo_Sector As String = "", _
-    '                                 Optional ByVal _Texto As String = "", _
-    '                                 Optional ByVal _Font_Nombre As String = "", _
-    '                                 Optional ByVal _Font_Tamano As Integer = 10, _
-    '                                 Optional ByVal _Font_Negrita As Boolean = False, _
-    '                                 Optional ByVal _Font_Italic As Boolean = False, _
-    '                                 Optional ByVal _Font_Tachado As Boolean = False, _
-    '                                 Optional ByVal _Font_Subrayado As Boolean = False, _
-    '                                 Optional ByVal _Alto_H As Integer = 0, _
-    '                                 Optional ByVal _Ancho_W As Integer = 0, _
-    '                                 Optional ByVal _Relleno As Boolean = False, _
-    '                                 Optional ByVal _Orientacion As Boolean = False, _
-    '                                 Optional ByVal _Mapa As _TipoDiseno = _TipoDiseno.Mapa_Bodega_Diseño, _
-    '                                 Optional ByVal _Nombre_Sector As String = "")
-
-    Private Function Fx_Crear_Sector(ByVal _X_Columna As Integer,
-                                     ByVal _Y_Fila As Integer,
-                                     ByVal _BackColor As Color,
-                                     ByVal _ForeColor As Color,
-                                     ByVal _Tipo_Objeto As _TipoElemento,
-                                     Optional ByVal _Nombre_Objeto As String = "",
-                                     Optional ByVal _Codigo_Sector As String = "",
-                                     Optional ByVal _Texto As String = "",
-                                     Optional ByVal _Font_Nombre As String = "",
-                                     Optional ByVal _Font_Tamano As Integer = 8.25,
-                                     Optional ByVal _Font_Estilo As FontStyle = FontStyle.Regular,
-                                     Optional ByVal _Alto_H As Integer = 0,
-                                     Optional ByVal _Ancho_W As Integer = 0,
-                                     Optional ByVal _Relleno As Boolean = False,
-                                     Optional ByVal _Orientacion As Boolean = False,
-                                     Optional ByVal _Mapa As _TipoDiseno = _TipoDiseno.Mapa_Bodega_Diseño,
-                                     Optional ByVal _Nombre_Sector As String = "")
+    Private Function Fx_Crear_Sector(_X_Columna As Integer,
+                                     _Y_Fila As Integer,
+                                     _BackColor As Color,
+                                     _ForeColor As Color,
+                                     _Tipo_Objeto As _TipoElemento,
+                                     Optional _Nombre_Objeto As String = "",
+                                     Optional _Codigo_Sector As String = "",
+                                     Optional _Texto As String = "",
+                                     Optional _Font_Nombre As String = "",
+                                     Optional _Font_Tamano As Integer = 8.25,
+                                     Optional _Font_Estilo As FontStyle = FontStyle.Regular,
+                                     Optional _Alto_H As Integer = 0,
+                                     Optional _Ancho_W As Integer = 0,
+                                     Optional _Relleno As Boolean = False,
+                                     Optional _Orientacion As Boolean = False,
+                                     Optional _Mapa As _TipoDiseno = _TipoDiseno.Mapa_Bodega_Diseño,
+                                     Optional _Nombre_Sector As String = "")
 
 
         Dim _LblSector As New LabelX
+        Dim _Nuevo_Sector As Boolean = String.IsNullOrEmpty(_Codigo_Sector)
+        Dim _Tag As Zw_WMS_Ubicaciones_Mapa_Det
+        Dim _EsCabecera As Boolean
 
         Dim _Cont = 0
-
 
         If String.IsNullOrEmpty(_Nombre_Objeto) Then
             _Nombre_Objeto = Fx_Crear_Nombre_Nuevo_Objeto(_Tipo_Objeto)
@@ -401,7 +385,8 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
             .Name = _Nombre_Objeto
             Dim _Aceptado As Boolean
 
-            If String.IsNullOrEmpty(_Codigo_Sector) Then
+            If _Nuevo_Sector Then 'String.IsNullOrEmpty(_Codigo_Sector) Then
+
                 If _Tipo_Objeto = _TipoElemento.ETIQUETA Then
 
                     If String.IsNullOrEmpty(_Texto) Then
@@ -424,13 +409,15 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
                     Dim Fm As New Frm_Formulario_Diseno_Mapa_Crear_Sector(_Id_Mapa, Frm_Formulario_Diseno_Mapa_Crear_Sector._Enum_Accion.Nuevo)
                     Fm.ShowDialog(Me)
                     _Grabar = Fm.Pro_Grabar
-                    _Codigo_Sector = Fm.Pro_Codigo_Sector
-                    _Nombre_Sector = Fm.Pro_Nombre_Sector
+                    _Codigo_Sector = Fm.Codigo_Sector
+                    _Nombre_Sector = Fm.Nombre_Sector
+                    _EsCabecera = Fm.EsCabecera
                     Fm.Dispose()
 
                     If Not _Grabar Then
                         Return Nothing
                     End If
+
                     _Aceptado = _Grabar
 
                 End If
@@ -460,6 +447,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
             .TextAlignment = StringAlignment.Center
             .Size() = New System.Drawing.Size(_Ancho_W, _Alto_H)
             .BorderType = eBorderType.SingleLine
+            .Tag = _Tag
 
             If Mid(.Name, 1, 5) = "LblFx" Then
                 .Cursor = Cursors.Hand
@@ -478,50 +466,86 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
                 .ForeColor = Blue 'Black '
             End If
 
+            If _Nuevo_Sector Then
+
+                If _Tipo_Objeto = _TipoElemento.SECTOR Then
+
+                    _Tag = _Cl_DisWMS.Fx_Nuevo_Sector(_Id_Mapa, _Empresa, _Sucursal, _Bodega)
+                    _Tag.Codigo_Sector = _Codigo_Sector
+                    _Tag.Nombre_Sector = _Nombre_Sector
+                    _Tag.EsCabecera = _EsCabecera
+                    _Tag.Texto = .Text
+                    _Tag.X_Columna = _X_Columna
+                    _Tag.Y_Fila = _Y_Fila
+                    _Tag.Font_Nombre = _Font_Nombre
+                    _Tag.Font_Tamano = _Font_Tamano
+                    _Tag.Font_Estilo = _Font_Estilo
+                    _Tag.Font_Negrita = False
+                    _Tag.Font_Italic = False
+                    _Tag.Font_Tachado = False
+                    _Tag.Font_Subrayado = False
+                    _Tag.Alto_H = _Alto_H
+                    _Tag.Ancho_W = _Ancho_W
+                    '_Tag.BackColor = ._BackColor
+                    '_Tag.ForeColor = .ForeColor
+
+                    .Tag = _Tag
+
+                End If
+
+            End If
+
+
             If _Mapa = _TipoDiseno.Mapa_Bodega_Diseño Then
+
                 AddHandler .MouseDown, AddressOf Me.Control_MouseDown
                 AddHandler .MouseMove, AddressOf Me.Control_MouseMove
                 AddHandler .Click, AddressOf Me.Control_Clic
                 AddHandler .DoubleClick, AddressOf Me.Control_Double_Clic
                 AddHandler .MouseUp, AddressOf Me.Control_MouseUP
-                '.ContextMenuStrip = ContextMenuStrip1
+
             ElseIf _Mapa = _TipoDiseno.Mapa_Bodega_Crear_Ubicaciones Then
+
                 AddHandler .Click, AddressOf Me.Control_Ubicacion_Diseño_Clic
                 .ContextMenuStrip = Nothing
+
             ElseIf _Mapa = _TipoDiseno.Mapa_Bodega_Asignar_Ubicaciones Then
+
                 AddHandler .Click, AddressOf Me.Control_Ubicacion_Asignar_Productos_Clic
                 .ContextMenuStrip = Nothing
-            End If
 
+            End If
 
             _LblSector.Font = New System.Drawing.Font(_Font_Nombre, _Font_Tamano, _Font_Estilo)
 
-
             If _Tipo_Objeto = _TipoElemento.SECTOR Then
 
-                With Documento
-                    For Each ctr As Control In .Controls
+                'If False Then
 
-                        Dim Tipo = ctr.Name 'CType(ctr, Control).Name
-                        Dim Nom = Mid(Tipo, 1, 5)
-                        If Nom = "LblFx" Then
-                            _Cont += 1
-                        End If
-                    Next
-                End With
+                '    With Documento
+                '        For Each ctr As Control In .Controls
 
-                'Me.ToolTip1.SetToolTip(_LblSector, UCase(_Nombre_Sector))
+                '            Dim Tipo = ctr.Name 'CType(ctr, Control).Name
+                '            Dim Nom = Mid(Tipo, 1, 5)
+                '            If Nom = "LblFx" Then
+                '                _Cont += 1
+                '            End If
+                '        Next
+                '    End With
 
-                _Sectores(_Cont, 0) = .Name
-                _Sectores(_Cont, 1) = _Texto
-                _Sectores(_Cont, 2) = _Nombre_Sector
-                _Sectores(_Cont + 1, 0) = "#Fin#"
+                '    _Sectores(_Cont, 0) = .Name
+                '    _Sectores(_Cont, 1) = _Texto
+                '    _Sectores(_Cont, 2) = _Nombre_Sector
+                '    _Sectores(_Cont + 1, 0) = "#Fin#"
+
+                'End If
 
             End If
 
-
             Return _LblSector
+
         End With
+
     End Function
 
 #End Region
@@ -643,7 +667,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 #End Region
 
 #Region "FUNCION EXISTE ELEMENTO MAPA"
-    Private Function Fx_Exite_Objeto(ByVal _Nombre_Objeto As String)
+    Private Function Fx_Exite_Objeto(_Nombre_Objeto As String)
         For Each ctr In ShapeContainer1.Shapes
             Dim _Name = ctr.Name 'CType(ctr, Control).Name
 
@@ -657,7 +681,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 
 #Region "FUNCION NOMBRE DE NUEVO ELEMENTO MAPA"
 
-    Private Function Fx_Crear_Nombre_Nuevo_Objeto(ByVal _Tipo_Elemento As _TipoElemento)
+    Private Function Fx_Crear_Nombre_Nuevo_Objeto(_Tipo_Elemento As _TipoElemento)
 
         Dim _Nombre_Objeto As String
         Dim Contador = 0
@@ -712,24 +736,24 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 
 #Region "CREAR NUEVO ELEMENTO PARA EL MAPA"
 
-    Private Function Fx_Crear_Elemento(ByVal _X_Columna As Integer,
-                                       ByVal _Y_Fila As Integer,
-                                       ByVal _BackColor As Color,
-                                       ByVal _ForeColor As Color,
-                                       ByVal _Tipo_Objeto As _TipoElemento,
-                                       Optional ByVal _Nombre_Objeto As String = "",
-                                       Optional ByVal _Codigo_Sector As String = "",
-                                       Optional ByVal _Texto As String = "",
-                                       Optional ByVal _Font_Nombre As String = "",
-                                       Optional ByVal _Font_Tamano As Integer = 8,
-                                       Optional ByVal _Font_Negrita As Boolean = False,
-                                       Optional ByVal _Font_Italic As Boolean = False,
-                                       Optional ByVal _Font_Tachado As Boolean = False,
-                                       Optional ByVal _Font_Subrayado As Boolean = False,
-                                       Optional ByVal _Alto_H As Integer = 0,
-                                       Optional ByVal _Ancho_W As Integer = 0,
-                                       Optional ByVal _Relleno As Integer = 0,
-                                       Optional ByVal _Orientacion As Boolean = False)
+    Private Function Fx_Crear_Elemento(_X_Columna As Integer,
+                                       _Y_Fila As Integer,
+                                       _BackColor As Color,
+                                       _ForeColor As Color,
+                                       _Tipo_Objeto As _TipoElemento,
+                                       Optional _Nombre_Objeto As String = "",
+                                       Optional _Codigo_Sector As String = "",
+                                       Optional _Texto As String = "",
+                                       Optional _Font_Nombre As String = "",
+                                       Optional _Font_Tamano As Integer = 8,
+                                       Optional _Font_Negrita As Boolean = False,
+                                       Optional _Font_Italic As Boolean = False,
+                                       Optional _Font_Tachado As Boolean = False,
+                                       Optional _Font_Subrayado As Boolean = False,
+                                       Optional _Alto_H As Integer = 0,
+                                       Optional _Ancho_W As Integer = 0,
+                                       Optional _Relleno As Integer = 0,
+                                       Optional _Orientacion As Boolean = False)
 
         _Tamano_Escala = 3
         Dim _Objeto As New RectangleShape
@@ -934,6 +958,10 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
                                                         _Alto_H, _Ancho_W, CBool(_Relleno), _Orientacion,
                                                         _Configuracion_Diseno, _Nombre_Sector)
 
+
+
+                        _LblObjeto.Tag = _Fila
+
                         Documento.Controls.Add(_LblObjeto)
 
                         If Mid(_Nombre_Objeto, 1, 5) = "LblCm" Then
@@ -961,6 +989,119 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 
     End Sub
 
+    Sub Sb_Abrir_Mapas_Lista()
+
+        ShapeContainer1.Shapes.Clear()
+
+        _Cl_DisWMS.Fx_Llenar_Lista_Sector(_Id_Mapa, _Empresa, _Sucursal, _Bodega)
+
+        Consulta_sql = "SELECT Tipo_Objeto,Nombre_Objeto,Codigo_Sector,Nombre_Sector,Texto," &
+                       "Font_Nombre,Font_Tamano,Font_Estilo,Font_Negrita,Font_Italic,Font_Tachado,Font_Subrayado," &
+                       "Alto_H,Ancho_W,BackColor,ForeColor,Relleno,Y_Fila,X_Columna,Orientacion" & vbCrLf &
+                       "FROM   " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Det" & vbCrLf &
+                       "Where Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega &
+                       "' And Id_Mapa= " & _Id_Mapa & vbCrLf &
+                       "Order by Nombre_Objeto"
+
+        'Dim _TblDetalle_Mapa = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+        If CBool(_Cl_DisWMS.Ls_Zw_WMS_Ubicaciones_Mapa_Det.Count) Then
+
+            For Each _Fila As Zw_WMS_Ubicaciones_Mapa_Det In _Cl_DisWMS.Ls_Zw_WMS_Ubicaciones_Mapa_Det
+
+                With _Fila
+
+                    Dim _Tipo_Objeto As _TipoElemento
+
+                    Dim _Tobj = .Tipo_Objeto
+
+                    Select Case _Tobj
+
+                        Case "MURO"
+                            _Tipo_Objeto = _TipoElemento.MURO
+                        Case "PILAR"
+                            _Tipo_Objeto = _TipoElemento.PILAR
+                        Case "ESCALERA"
+                            _Tipo_Objeto = _TipoElemento.ESCALERA
+                        Case "PUERTA"
+                            _Tipo_Objeto = _TipoElemento.PUERTA
+                        Case "VENTANA"
+                            _Tipo_Objeto = _TipoElemento.VENTANA
+                        Case "ETIQUETA"
+                            _Tipo_Objeto = _TipoElemento.ETIQUETA
+                        Case "SECTOR"
+                            _Tipo_Objeto = _TipoElemento.SECTOR
+                        Case "SUB-SECTOR"
+                    End Select
+
+                    Dim _Nombre_Objeto As String = .Nombre_Objeto
+                    Dim _Codigo_Sector As String = .Codigo_Sector
+                    Dim _Nombre_Sector As String = .Nombre_Sector
+
+                    Dim _Texto As String = .Texto
+
+                    Dim _Font_Nombre As String = .Font_Nombre
+                    Dim _Font_Tamano As Double = .Font_Tamano
+                    Dim _Font_Estilo As FontStyle = .Font_Estilo
+
+                    Dim _Font_Negrita As Boolean = .Font_Negrita
+                    Dim _Font_Italic As Boolean = .Font_Italic
+                    Dim _Font_Tachado As Boolean = .Font_Tachado
+                    Dim _Font_Subrayado As Boolean = .Font_Subrayado
+
+                    Dim _Alto_H As Integer = .Alto_H
+                    Dim _Ancho_W As Integer = .Ancho_W
+
+                    Dim _BackColor As Color = Color.FromArgb(.BackColor)
+                    Dim _ForeColor As Color = Color.FromArgb(.ForeColor)
+                    Dim _Relleno As Integer = .Relleno
+
+                    Dim _Y_Fila As Integer = .Y_Fila
+                    Dim _X_Columna As Integer = .X_Columna
+
+                    Dim _Orientacion As Boolean = .Orientacion
+
+                    If Mid(_Nombre_Objeto, 1, 3) = "Lbl" Then
+
+                        Dim _LblObjeto As New LabelX
+
+                        _LblObjeto = Fx_Crear_Sector(_X_Columna, _Y_Fila, _BackColor, _ForeColor, _Tipo_Objeto, _Nombre_Objeto,
+                                                     _Codigo_Sector, _Texto, _Font_Nombre, _Font_Tamano, _Font_Estilo,
+                                                     _Alto_H, _Ancho_W, CBool(_Relleno), _Orientacion,
+                                                     _Configuracion_Diseno, _Nombre_Sector)
+
+                        _LblObjeto.Tag = _Fila
+
+                        Documento.Controls.Add(_LblObjeto)
+
+                        If Mid(_Nombre_Objeto, 1, 5) = "LblCm" Then
+                            If Not IsNothing(_LblObjeto) Then
+                                _LblObjeto.BringToFront()
+                            End If
+                        End If
+
+                    ElseIf _Tobj <> "Sub-SECTOR" Then
+
+                        Dim _BoxElemnto As New RectangleShape
+
+                        _BoxElemnto = Fx_Crear_Elemento(_X_Columna, _Y_Fila, _BackColor, _ForeColor, _Tipo_Objeto, _Nombre_Objeto,
+                                                        _Codigo_Sector, _Texto, _Font_Nombre, _Font_Tamano, _Font_Negrita, _Font_Italic,
+                                                        _Font_Tachado, _Font_Subrayado, _Alto_H, _Ancho_W, _Relleno, _Orientacion)
+                        _BoxElemnto.Tag = _Fila
+
+                        Me.ShapeContainer1.Shapes.AddRange(New Microsoft.VisualBasic.PowerPacks.Shape() {_BoxElemnto})
+
+                    End If
+
+                End With
+
+            Next
+
+        End If
+
+    End Sub
+
+
 #End Region
 
 #End Region
@@ -968,7 +1109,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 #Region "DISEÑO DE DOCUMENTOS"
 
 
-    Private Sub Control_Inicio_Detalle(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Control_Inicio_Detalle(sender As System.Object, e As System.EventArgs)
 
         LineaDetalle.Y1 = _FormPadre.Sld_detalle_Inicio.Value 'LineaDetalle.Y1 - 1
         LineaDetalle.Y2 = _FormPadre.Sld_detalle_Inicio.Value 'LineaDetalle.Y2 - 1
@@ -980,7 +1121,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 
     End Sub
 
-    Private Sub Control_Fin_Detalle(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Control_Fin_Detalle(sender As System.Object, e As System.EventArgs)
 
         LineaPie.Y1 = _FormPadre.Sld_detalle_Fin.Value 'LineaDetalle.Y1 - 1
         LineaPie.Y2 = _FormPadre.Sld_detalle_Fin.Value 'LineaDetalle.Y2 - 1
@@ -998,15 +1139,15 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 #Region "CONTROLES DE EVENTOS PARA OBJETOS"
 
     Private Sub Control_Double_Clic(
-            ByVal sender As Object,
-            ByVal e As System.EventArgs)
+            sender As Object,
+            e As System.EventArgs)
 
         'ObjetoActivo = sender
         Sb_Ver_Propiedad_de_Objeto_Mapa()
 
     End Sub
 
-    Private Sub Control_Ubicacion_Diseño_Clic(ByVal sender As Object, ByVal e As System.EventArgs)
+    Private Sub Control_Ubicacion_Diseño_Clic(sender As Object, e As System.EventArgs)
 
         ObjetoActivo = sender
 
@@ -1025,7 +1166,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 
 #Region "IMPRIMIR UBICACIONES"
 
-    Sub Sb_Imprimir_Ubicaciones(ByVal _Codigo_Sector As String)
+    Sub Sb_Imprimir_Ubicaciones(_Codigo_Sector As String)
         'If Fx_Tiene_Permiso(Me, "7Brr0005") Then
         Consulta_sql = "Select top 1 * From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Det Where Codigo_Sector = '" & _Codigo_Sector & "'"
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
@@ -1042,7 +1183,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 
 #End Region
 
-    Private Sub Control_Ubicacion_Asignar_Productos_Clic(ByVal sender As Object, ByVal e As System.EventArgs)
+    Private Sub Control_Ubicacion_Asignar_Productos_Clic(sender As Object, e As System.EventArgs)
 
 
         If (ObjetoActivo Is Nothing) Then
@@ -1082,8 +1223,8 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 
 
     Private Sub Control_Clic(
-            ByVal sender As Object,
-            ByVal e As System.EventArgs)
+            sender As Object,
+            e As System.EventArgs)
 
         Try
 
@@ -1140,8 +1281,8 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
     End Sub
 
     Private Sub Control_MouseDown(
-            ByVal sender As Object,
-            ByVal e As System.Windows.Forms.MouseEventArgs)
+            sender As Object,
+            e As System.Windows.Forms.MouseEventArgs)
         ' Cuando se pulsa con el ratón
         DX = e.X
         DY = e.Y
@@ -1193,14 +1334,14 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 
                             _Codigo_Sector = ObjetoActivo.Text
 
-                            Dim _Nombre_Sector As String
-                            For i = 0 To 1000
-                                Dim _N = _Sectores(i, 1)
-                                If _Codigo_Sector = _N Then
-                                    _Nombre_Sector = _Sectores(i, 2)
-                                    Exit For
-                                End If
-                            Next
+                            Dim _Nombre_Sector As String = CType(ObjetoActivo.Tag, Zw_WMS_Ubicaciones_Mapa_Det).Nombre_Sector
+                            'For i = 0 To 1000
+                            '    Dim _N = _Sectores(i, 1)
+                            '    If _Codigo_Sector = _N Then
+                            '        _Nombre_Sector = _Sectores(i, 2)
+                            '        Exit For
+                            '    End If
+                            'Next
 
                             Lbl_Sector.Text = "Sector: " & ObjetoActivo.text & " - " & _Nombre_Sector
 
@@ -1208,12 +1349,12 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
                                 Btn_Mnu_Sector_Ubicaciones.Enabled = False
                                 Lbl_Sector.Enabled = False
                             Else
-                                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega" & vbCrLf &
-                                               "Where Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector & "'"
-                                Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
-                                Btn_Mnu_Sector_Ubicaciones.Enabled = CBool(_Tbl.Rows.Count)
-                                Btn_Mnu_Sector_Cambiar_Codigo.Enabled = CBool(_Tbl.Rows.Count)
+                                Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega",
+                                                                               "Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector & "'")
+
+                                Btn_Mnu_Sector_Ubicaciones.Enabled = CBool(_Reg)
+                                Btn_Mnu_Sector_Cambiar_Codigo.Enabled = CBool(_Reg)
 
                                 Lbl_Sector.Enabled = True
 
@@ -1254,7 +1395,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
     End Sub
 
     Private Sub Control_MouseUP(
-                 ByVal sender As System.Object, ByVal e As System.EventArgs)
+                 sender As System.Object, e As System.EventArgs)
         Me.Cursor = Cursors.Arrow
 
         If _Configuracion_Diseno = _TipoDiseno.Documento Then
@@ -1275,7 +1416,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
     End Sub
 
     Private Sub Control_MouseUP(
-             ByVal sender As System.Object, ByVal e As PaintEventArgs)
+             sender As System.Object, e As PaintEventArgs)
         Me.Cursor = Cursors.Arrow
 
         If _Configuracion_Diseno = _TipoDiseno.Documento Then
@@ -1297,14 +1438,14 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 
 
     'Private Sub Control_MouseEnter( _
-    '       ByVal sender As Object, _
-    '       ByVal e As System.Windows.Forms.MouseEventArgs)
+    '       sender As Object, _
+    '       e As System.Windows.Forms.MouseEventArgs)
     '    Fx_Marcar_linea(sender)
     'End Sub
 
     Private Sub Control_MouseMove(
-           ByVal sender As Object,
-           ByVal e As System.Windows.Forms.MouseEventArgs)
+           sender As Object,
+           e As System.Windows.Forms.MouseEventArgs)
 
         ' Cuando se mueve el ratón y se pulsa el botón izquierdo... mover el control
 
@@ -1392,7 +1533,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 #Region "CONTROLES COMPRATIDOS DE TAMAÑO Y UBICACION"
 
 
-    Function Fx_Marcar_linea(ByVal _Objeto As Object)
+    Function Fx_Marcar_linea(_Objeto As Object)
 
         Dim _Tipo = Mid(_Objeto.Name, 1, 3)
         Dim _Lx
@@ -1526,11 +1667,11 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 #End Region
 
 #Region "CREAR LINEA"
-    Function Fx_Crear_Linea(ByVal _PosicionX As Integer,
-                            ByVal _PosicionXX As Integer,
-                            ByVal _PosicionY As Integer,
-                            Optional ByVal _Menu As Boolean = True,
-                            Optional ByVal _Vertical As Boolean = False)
+    Function Fx_Crear_Linea(_PosicionX As Integer,
+                            _PosicionXX As Integer,
+                            _PosicionY As Integer,
+                            Optional _Menu As Boolean = True,
+                            Optional _Vertical As Boolean = False)
         'Dim GruBox As  New GroupBox
         Dim _Linea As New LineShape
 
@@ -1627,7 +1768,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 
 
 
-    Private Sub Frm_Formulario_Diseno_Mapa_Documentos_Enter(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Enter
+    Private Sub Frm_Formulario_Diseno_Mapa_Documentos_Enter(sender As System.Object, e As System.EventArgs) Handles MyBase.Enter
 
         With CType(_FormPadre, Frm_Diseno_Doc_y_Ubic)
 
@@ -1644,8 +1785,8 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 
 
 
-    Private Sub Frm_Formulario_Diseno_Mapa_Documentos_FormClosing(ByVal sender As System.Object,
-                                                                  ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
+    Private Sub Frm_Formulario_Diseno_Mapa_Documentos_FormClosing(sender As System.Object,
+                                                                  e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
 
         If _Configuracion_Diseno <> _TipoDiseno.Documento AndAlso _Configuracion_Diseno <> _TipoDiseno.Mapa_Ver_Mapa Then
             If Not _Cerrar_Formulario Then
@@ -1654,24 +1795,24 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
         End If
     End Sub
 
-    Private Sub Documento_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Documento.Click
+    Private Sub Documento_Click(sender As System.Object, e As System.EventArgs) Handles Documento.Click
         Me.Cursor = Cursors.Arrow
         If _Configuracion_Diseno <> _TipoDiseno.Mapa_Ver_Mapa Then
             ObjetoActivo = Nothing ' = String.Empty
         End If
     End Sub
 
-    Private Sub Documento_MouseLeave(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Documento.MouseLeave
+    Private Sub Documento_MouseLeave(sender As System.Object, e As System.EventArgs) Handles Documento.MouseLeave
         Me.Cursor = Cursors.Arrow
         _Objeto_Copiado = Nothing
     End Sub
 
-    Private Sub Documento_MouseMove(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Documento.MouseMove
+    Private Sub Documento_MouseMove(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles Documento.MouseMove
         PosicionX = e.X.ToString
         PosicionY = e.Y.ToString
     End Sub
 
-    Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
+    Private Sub Timer1_Tick(sender As System.Object, e As System.EventArgs) Handles Timer1.Tick
         If Not (ObjetoActivo Is Nothing) Then
             If ObjetoActivo.visible Then
                 ObjetoActivo.Visible = False
@@ -1683,17 +1824,17 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
         End If
     End Sub
 
-    Private Sub Frm_Formulario_Diseno_Mapa_Documentos_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_Formulario_Diseno_Mapa_Documentos_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
-    Private Sub Btn_Mnu_Sector_Propiedades_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Btn_Mnu_Sector_Propiedades_Click(sender As System.Object, e As System.EventArgs)
         Sb_Ver_Propiedad_de_Objeto_Mapa()
     End Sub
 
-    Private Sub Documento_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Documento.MouseDown
+    Private Sub Documento_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles Documento.MouseDown
         If _Configuracion_Diseno = _TipoDiseno.Mapa_Bodega_Diseño Then
             Me.Cursor = Cursors.Arrow
             ObjetoActivo = Nothing ' = String.Empty
@@ -1714,7 +1855,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 
 #Region "PROPIEDADES COMPARTIDAS DE OBJETOS"
 
-    Private Sub Btn_Mnu_Objeto_Editar_Color_Fuente_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Btn_Mnu_Objeto_Editar_Color_Fuente_Click(sender As System.Object, e As System.EventArgs)
         If _Clas_Formato.Fx_Editar_Color Then
             Dim _Color As Color = _Clas_Formato.Pro_Color
 
@@ -1726,7 +1867,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
         Me.Refresh()
     End Sub
 
-    Private Sub Btn_Mnu_Objeto_Editar_Color_Fondo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Btn_Mnu_Objeto_Editar_Color_Fondo_Click(sender As System.Object, e As System.EventArgs)
         If _Clas_Formato.Fx_Editar_Color Then
             Dim _Color As Color = _Clas_Formato.Pro_Color
 
@@ -1738,7 +1879,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
         Me.Refresh()
     End Sub
 
-    Private Sub Btn_Mnu_Objeto_Editar_Fuente_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Btn_Mnu_Objeto_Editar_Fuente_Click(sender As System.Object, e As System.EventArgs)
         _Clas_Formato.Fx_Editar_Fuente(ObjetoActivo)
     End Sub
 
@@ -1795,7 +1936,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 
     End Sub
 
-    Private Sub Btn_Mnu_Objeto_Pegar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Btn_Mnu_Objeto_Pegar_Click(sender As System.Object, e As System.EventArgs)
 
         Dim _Objeto_Copiado As Object
         Dim _Nuevo_Objeto As Object
@@ -1851,31 +1992,26 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
                     _Lbl = 5 ' ETIQUETA
                 ElseIf _Objeto = "LblFx" Then
 
-                    For i = 0 To 1000
-                        Dim _N = _Sectores(i, 1)
-                        If _Codigo_Sector = _N Then
-                            _Nombre_Sector = _Sectores(i, 2)
-                            Exit For
-                        End If
-                    Next
-
-                    Dim _Grabar As Boolean
-
-                    Dim Fm As New Frm_Formulario_Diseno_Mapa_Crear_Sector(_Id_Mapa,
-                                                        Frm_Formulario_Diseno_Mapa_Crear_Sector._Enum_Accion.Pegar)
-                    Fm.Pro_Codigo_Sector = _Codigo_Sector
-                    Fm.Pro_Nombre_Sector = _Nombre_Sector
-                    Fm.ShowDialog(Me)
-                    _Grabar = Fm.Pro_Grabar
-                    _Codigo_Sector = Fm.Pro_Codigo_Sector
-                    _Nombre_Sector = Fm.Pro_Nombre_Sector
-                    Fm.Dispose()
-
-                    If Not _Grabar Then
-                        Return
-                    End If
-
+                    _Nombre_Sector = CType(_Objeto_Copiado.Tag, Zw_WMS_Ubicaciones_Mapa_Det).Nombre_Sector
                     _Lbl = 6 ' SECTOR
+
+                    'Dim _Grabar As Boolean
+
+                    'Dim Fm As New Frm_Formulario_Diseno_Mapa_Crear_Sector(_Id_Mapa,
+                    '                                    Frm_Formulario_Diseno_Mapa_Crear_Sector._Enum_Accion.Pegar)
+                    'Fm.Codigo_Sector = _Codigo_Sector
+                    'Fm.Nombre_Sector = _Nombre_Sector
+                    'Fm.ShowDialog(Me)
+                    '_Grabar = Fm.Pro_Grabar
+                    '_Codigo_Sector = Fm.Codigo_Sector
+                    '_Nombre_Sector = Fm.Nombre_Sector
+                    'Fm.Dispose()
+
+                    'If Not _Grabar Then
+                    '    Return
+                    'End If
+
+                    '_Lbl = 6 ' SECTOR
 
                 End If
 
@@ -1893,6 +2029,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
                                                  CType(_Objeto_Copiado, LabelX).TextOrientation, ,
                                                  _Nombre_Sector)
 
+                _Nuevo_Objeto.Tag = _Objeto_Copiado.Tag
 
                 CType(_Nuevo_Objeto, LabelX).AutoSize = CType(_Objeto_Copiado, LabelX).AutoSize
                 CType(_Nuevo_Objeto, LabelX).BorderType = CType(_Objeto_Copiado, LabelX).BorderType
@@ -1942,7 +2079,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 
     End Sub
 
-    Private Sub Btn_Mnu_Objeto_Copiar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Btn_Mnu_Objeto_Copiar_Click(sender As System.Object, e As System.EventArgs)
         _Nombre_Objeto_Copiado = ObjetoActivo.Name
     End Sub
 
@@ -1987,39 +2124,54 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 
 #End Region
 
-    Private Sub Btn_Cambiar_Nombre_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Sector_Cambiar_Nombre.Click
+    Private Sub Btn_Cambiar_Nombre_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Sector_Cambiar_Nombre.Click
 
         Dim _Codigo_Sector = ObjetoActivo.Text
-        Dim _Nombre_Sector
-
         Dim _Id As Integer
+        Dim _Nombre_Sector As String
+        Dim _EsCabecera As Boolean
 
-        For i = 0 To 1000
-            Dim _N = _Sectores(i, 1)
-            If _Codigo_Sector = _N Then
-                _Nombre_Sector = _Sectores(i, 2)
-                _Id = i
-                Exit For
-            End If
-        Next
+        _Id = CType(ObjetoActivo.Tag, Zw_WMS_Ubicaciones_Mapa_Det).Id
+        _Nombre_Sector = CType(ObjetoActivo.Tag, Zw_WMS_Ubicaciones_Mapa_Det).Nombre_Sector
+        _EsCabecera = CType(ObjetoActivo.Tag, Zw_WMS_Ubicaciones_Mapa_Det).EsCabecera
 
         Dim Fm As New Frm_Formulario_Diseno_Mapa_Crear_Sector(_Id_Mapa, Frm_Formulario_Diseno_Mapa_Crear_Sector._Enum_Accion.Editar)
-        Fm.Pro_Codigo_Sector = _Codigo_Sector
-        Fm.Pro_Nombre_Sector = _Nombre_Sector
+        Fm.Codigo_Sector = _Codigo_Sector
+        Fm.Nombre_Sector = _Nombre_Sector
+        Fm.EsCabecera = _EsCabecera
+        Fm.Chk_EsCabecera.Enabled = Not CBool(_Id)
+
         Fm.ShowDialog(Me)
         Dim _Grabar = Fm.Pro_Grabar
-        _Codigo_Sector = Fm.Pro_Codigo_Sector
-        _Nombre_Sector = Fm.Pro_Nombre_Sector
+        _Codigo_Sector = Fm.Codigo_Sector
+        _Nombre_Sector = Fm.Nombre_Sector
+        _EsCabecera = Fm.EsCabecera
         Fm.Dispose()
 
         If _Grabar Then
-            _Sectores(_Id, 2) = _Nombre_Sector
+
+            For Each Ctrl In _Documento.Controls
+                'Insertamos las Etiquetas y Sectores
+                If Mid(Ctrl.Name, 1, 3) = "Lbl" Then
+                    Dim _Tag As Zw_WMS_Ubicaciones_Mapa_Det = Ctrl.Tag
+                    If _Tag.Codigo_Sector = _Codigo_Sector Then
+                        _Tag.Nombre_Sector = _Nombre_Sector
+                        Ctrl.Text = _Codigo_Sector
+                    End If
+                End If
+
+            Next
+
+            'CType(ObjetoActivo.Tag, Zw_WMS_Ubicaciones_Mapa_Det).EsCabecera = _EsCabecera
+            'CType(ObjetoActivo.Tag, Zw_WMS_Ubicaciones_Mapa_Det).Nombre_Sector = _Nombre_Sector
             Me.ToolTip1.SetToolTip(ObjetoActivo, UCase(_Nombre_Sector))
         End If
 
+        Me.Refresh()
+
     End Sub
 
-    Private Sub Btn_Mnu_Etiqueta_Editar_Texto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Etiqueta_Editar_Texto.Click
+    Private Sub Btn_Mnu_Etiqueta_Editar_Texto_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Etiqueta_Editar_Texto.Click
 
         Dim _Descripcion As String = ObjetoActivo.Text
         Dim _Aceptado As Boolean
@@ -2033,12 +2185,12 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 
     End Sub
 
-    Private Sub Btn_Mnu_Sector_Cambiar_Codigo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Sector_Cambiar_Codigo.Click
+    Private Sub Btn_Mnu_Sector_Cambiar_Codigo_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Sector_Cambiar_Codigo.Click
 
         Dim _Codigo_Sector = ObjetoActivo.Text
         Dim _Codigo_Sector_Old = _Codigo_Sector
         Dim _Nombre_Sector
-        Dim _Id As Integer
+        Dim _EsCabecera As Boolean
 
         Dim _Tiene_Prod As Boolean
         Dim Fm_ As New Frm_Ubicaciones(_RowBodega, _Id_Mapa, _Codigo_Sector)
@@ -2055,30 +2207,32 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 
         End If
 
-        'If Not _Tiene_Prod Then
-
         Dim _Color_F = CType(ObjetoActivo, LabelX).BackColor
         CType(ObjetoActivo, LabelX).BackColor = Gold
 
-        _Nombre_Sector = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Det", "Nombre_Sector",
-                                   "Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector & "'")
+        _Nombre_Sector = CType(ObjetoActivo.Tag, Zw_WMS_Ubicaciones_Mapa_Det).Nombre_Sector
+        _EsCabecera = CType(ObjetoActivo.Tag, Zw_WMS_Ubicaciones_Mapa_Det).EsCabecera
 
         Dim Fm As New Frm_Formulario_Diseno_Mapa_Crear_Sector(_Id_Mapa, Frm_Formulario_Diseno_Mapa_Crear_Sector._Enum_Accion.Editar_Codigo)
-        Fm.Pro_Codigo_Sector = _Codigo_Sector
-        Fm.Pro_Nombre_Sector = _Nombre_Sector
+        Fm.Codigo_Sector = _Codigo_Sector
+        Fm.Nombre_Sector = _Nombre_Sector
+        Fm.EsCabecera = _EsCabecera
         Fm.ShowDialog(Me)
 
         Dim _Grabar = Fm.Pro_Grabar
-        _Codigo_Sector = Fm.Pro_Codigo_Sector
-        _Nombre_Sector = Fm.Pro_Nombre_Sector
+
+        _Codigo_Sector = Fm.Codigo_Sector
+        _Nombre_Sector = Fm.Nombre_Sector
+        _EsCabecera = Fm.EsCabecera
+
         Fm.Dispose()
 
         If _Grabar Then
 
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Det" & Space(1) &
-                           "Set Codigo_Sector = '" & _Codigo_Sector & "', Nombre_Sector = '" & _Nombre_Sector & "'" & Space(1) &
+                           "Set Codigo_Sector = '" & _Codigo_Sector & "', Nombre_Sector = '" & _Nombre_Sector & "',EsCabecera = " & Convert.ToInt32(_EsCabecera) & Space(1) &
                            "Where Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector_Old & "'" & vbCrLf &
-                           "Update " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega Set Codigo_Sector = '" & _Codigo_Sector & "'" & Space(1) &
+                           "Update " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega Set Codigo_Sector = '" & _Codigo_Sector & "',EsCabecera = " & Convert.ToInt32(_EsCabecera) & Space(1) &
                            "Where Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector_Old & "'" & vbCrLf &
                            "Update " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega Set Codigo_Ubic = Codigo_Sector+Descripcion_Ubic" & Space(1) &
                            "Where Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector & "'" & vbCrLf &
@@ -2088,26 +2242,25 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 
             If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
 
-                For i = 0 To 1000
-                    Dim _N = _Sectores(i, 1)
-                    If _Codigo_Sector_Old = _N Then
-
-                        For Each Ctrl In _Documento.Controls
-                            'Insertamos las Etiquetas y Sectores
-                            If Mid(Ctrl.Name, 1, 5) = "LblFx" Then
-                                If Ctrl.Text = _Codigo_Sector_Old Then
-                                    Ctrl.Text = _Codigo_Sector
-                                    Me.ToolTip1.SetToolTip(Ctrl, UCase(_Nombre_Sector))
-                                End If
-                            End If
-                        Next
-                        _Sectores(i, 1) = _Codigo_Sector
-                        _Sectores(i, 2) = _Nombre_Sector
-                        'Exit For
+                For Each Ctrl In _Documento.Controls
+                    'Insertamos las Etiquetas y Sectores
+                    If Mid(Ctrl.Name, 1, 3) = "Lbl" Then
+                        Dim _Tag As Zw_WMS_Ubicaciones_Mapa_Det = Ctrl.Tag
+                        If _Tag.Codigo_Sector = _Codigo_Sector_Old Then
+                            _Tag.Nombre_Sector = _Nombre_Sector
+                            _Tag.Codigo_Sector = _Codigo_Sector
+                            _Tag.EsCabecera = _EsCabecera
+                            Ctrl.Text = _Codigo_Sector
+                        End If
                     End If
+
                 Next
 
+                'CType(ObjetoActivo.Tag, Zw_WMS_Ubicaciones_Mapa_Det).Nombre_Sector = _Nombre_Sector
+                'CType(ObjetoActivo.Tag, Zw_WMS_Ubicaciones_Mapa_Det).EsCabecera = _EsCabecera
+
                 Beep()
+
                 ToastNotification.Show(Me, "CODIGO CAMBIADO CORRECTAMENTE",
                                        My.Resources.save,
                                        2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
@@ -2115,11 +2268,9 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
             End If
 
         End If
+
         CType(ObjetoActivo, LabelX).BackColor = _Color_F
-        'Else
-        '    MessageBoxEx.Show(Me, "Existen productos asociados en las ubicaciones", "Validación",
-        '                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        'End If
+        Me.Refresh()
 
     End Sub
 

@@ -13,28 +13,29 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
     Dim _Codigo_Ubic As String
 
     Dim _Tbl_UbicXpro As DataTable
-    Dim _RowBodega As DataRow
+    Dim _Row_Bodega As DataRow
+    Dim _Row_Ubicacion As DataRow
 
     Dim _Producto_Op As New Frm_BkpPostBusquedaEspecial_Mt
 
-    Public Sub New(ByVal RowBodega As DataRow,
-                   ByVal Id_Mapa As Integer,
-                   ByVal Codigo_Sector As String,
-                   ByVal Codigo_Ubic As String)
+    Public Sub New(RowBodega As DataRow,
+                    Id_Mapa As Integer,
+                    Codigo_Sector As String,
+                    Codigo_Ubic As String)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        _RowBodega = RowBodega
+        _Row_Bodega = RowBodega
         _Id_Mapa = Id_Mapa
         _Codigo_Sector = Codigo_Sector
         _Codigo_Ubic = Codigo_Ubic
 
-        _Empresa = _RowBodega.Item("EMPRESA")
-        _Sucursal = _RowBodega.Item("KOSU")
-        _Bodega = _RowBodega.Item("KOBO")
+        _Empresa = _Row_Bodega.Item("EMPRESA")
+        _Sucursal = _Row_Bodega.Item("KOSU")
+        _Bodega = _Row_Bodega.Item("KOBO")
 
         If Global_Thema = 2 Then
             Btn_Buscar_Producto.ForeColor = Color.White
@@ -42,17 +43,33 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
             Btn_Imprimir_Etiquetas.ForeColor = Color.White
         End If
 
-        'Label3.Text += ": " & _Codigo_Ubic
-
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
+
+        Sb_Color_Botones_Barra(Bar1)
 
     End Sub
 
-    Private Sub Frm_05_UbicXpro_UbicacionConProductos_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_05_UbicXpro_UbicacionConProductos_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
-        LblEmpresa.Text = _RowBodega.Item("RAZON")
-        LblSucursal.Text = _RowBodega.Item("NOKOSU")
-        LblBodega.Text = _RowBodega.Item("NOKOBO")
+        LblEmpresa.Text = _Row_Bodega.Item("RAZON")
+        LblSucursal.Text = _Row_Bodega.Item("NOKOSU")
+        LblBodega.Text = _Row_Bodega.Item("NOKOBO")
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega" & vbCrLf &
+                       "Where Codigo_Ubic = '" & _Codigo_Ubic & "' And Empresa = '" & ModEmpresa & "' And Codigo_Sector = '" & _Codigo_Sector & "'"
+        _Row_Ubicacion = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Txt_OpcAdicionales.Text = String.Empty
+
+        If _Row_Ubicacion.Item("Es_SubSector") Then
+            Txt_OpcAdicionales.Text = "ES SUB-SECTOR"
+        End If
+
+        If _Row_Ubicacion.Item("EsCabecera") Then
+            Txt_OpcAdicionales.Text = "ES CABECERA"
+        End If
+
+        Txt_OpcAdicionales.Visible = Not String.IsNullOrEmpty(Txt_OpcAdicionales.Text)
 
         Sb_Actualizar_Grilla_Ubic()
 
@@ -143,10 +160,10 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
 
     End Sub
 
-    Public Function Fx_Agregar_producto_ubicacion(ByVal _Formulario As Form,
-                                                  ByVal _Codigo As String,
-                                                  Optional ByVal _Ver_Mensaje As Boolean = True,
-                                                  Optional ByVal _EsPrimaria As Boolean = False) As Boolean
+    Public Function Fx_Agregar_producto_ubicacion(_Formulario As Form,
+                                                   _Codigo As String,
+                                                  Optional _Ver_Mensaje As Boolean = True,
+                                                  Optional _EsPrimaria As Boolean = False) As Boolean
 
 
 
@@ -210,7 +227,7 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
 
     End Function
 
-    Private Sub BtnExportarExcel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnExportarExcel.Click
+    Private Sub BtnExportarExcel_Click(sender As System.Object, e As System.EventArgs) Handles BtnExportarExcel.Click
         Dim _Nombre = _Codigo_Sector
         ExportarTabla_JetExcel_Tabla(_Tbl_UbicXpro, Me, _Nombre)
     End Sub
@@ -218,7 +235,7 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
 
 
 
-    Private Sub Frm_05_UbicXpro_UbicacionConProductos_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_05_UbicXpro_UbicacionConProductos_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.F2 Then
             Sb_Asociar_Producto()
         ElseIf e.KeyValue = Keys.F3 Then
@@ -228,7 +245,7 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
         End If
     End Sub
 
-    Private Sub Btn_Buscar_Producto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Buscar_Producto.Click
+    Private Sub Btn_Buscar_Producto_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Buscar_Producto.Click
         Sb_Asociar_Producto()
     End Sub
 
@@ -346,7 +363,7 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
 
     End Sub
 
-    Private Function Fx_Buscar_Producto(ByVal _Codigo As String) As DataRow
+    Private Function Fx_Buscar_Producto(_Codigo As String) As DataRow
 
         Dim _RowProducto As DataRow
 
@@ -421,7 +438,7 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
 
     End Sub
 
-    Private Sub Btn_Seleccion_Multiple_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Seleccion_Multiple.Click
+    Private Sub Btn_Seleccion_Multiple_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Seleccion_Multiple.Click
         Sb_Asociar_Productos_Masivamente()
     End Sub
 
@@ -467,14 +484,14 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
 
 #End Region
 
-    Private Sub Rdb_Ud_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Rdb_Ud_CheckedChanged(sender As System.Object, e As System.EventArgs)
         If sender.Checked = True Then
             Sb_Actualizar_Grilla_Ubic()
         End If
     End Sub
 
 
-    Private Sub Btn_Mnu_Ver_Ubicaciones_Del_Producto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Ver_Ubicaciones_Del_Producto.Click
+    Private Sub Btn_Mnu_Ver_Ubicaciones_Del_Producto_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Ver_Ubicaciones_Del_Producto.Click
         If Fx_Tiene_Permiso(Me, "Ubic0002") Then
 
             Dim _Codigo As String = Grilla.Rows(Grilla.CurrentRow.Index).Cells("Codigo").Value
@@ -493,16 +510,16 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
         End If
     End Sub
 
-    Private Sub Btn_Mnu_Estadisticas_Producto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Estadisticas_Producto.Click
+    Private Sub Btn_Mnu_Estadisticas_Producto_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Estadisticas_Producto.Click
         Dim _Codigo As String = Grilla.Rows(Grilla.CurrentRow.Index).Cells("Codigo").Value
         _Producto_Op.Sb_Ver_Informacion_Adicional_producto(Me, _Codigo)
     End Sub
 
-    Private Sub Grilla_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub Grilla_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
         Call Btn_Mnu_Ver_Ubicaciones_Del_Producto_Click(Nothing, Nothing)
     End Sub
 
-    Private Sub Grilla_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
 
         If e.Button = Windows.Forms.MouseButtons.Right Then
             With sender
@@ -520,6 +537,22 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
             End With
 
         End If
+
+    End Sub
+
+    Private Sub Txt_OpcAdicionales_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_OpcAdicionales.ButtonCustomClick
+
+        Dim _Msj As String
+
+        If Txt_OpcAdicionales.Text = "ES SUB-SECTOR" Then
+            _Msj = "Esta ubicación es un sub-sector, lo que significa que es un sector con ubicaciones que están dentro de una ubicación en un sector padre."
+        ElseIf Txt_OpcAdicionales.Text = "ES CABECERA" Then
+            _Msj = "Esto significa que es una ubicación especial que actúa como cabecera de una estantería."
+        End If
+
+        _Msj = Fx_AjustarTexto(_Msj, 50)
+
+        MessageBoxEx.Show(Me, _Msj, "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
     End Sub
 

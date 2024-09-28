@@ -1,0 +1,29 @@
+﻿Public Class Zw_WMS_Ubicaciones_Mapa_Det
+    Public Property Id_Mapa As Integer
+    Public Property Id As Integer
+    Public Property Empresa As String
+    Public Property Sucursal As String
+    Public Property Bodega As String
+    Public Property Codigo_Sector As String
+    Public Property Nombre_Sector As String
+    Public Property Tipo_Objeto As String
+    Public Property Nombre_Objeto As String
+    Public Property Texto As String
+    Public Property Font_Nombre As String
+    Public Property Font_Tamano As Double
+    Public Property Font_Estilo As Integer
+    Public Property Font_Negrita As Boolean
+    Public Property Font_Italic As Boolean
+    Public Property Font_Tachado As Boolean
+    Public Property Font_Subrayado As Boolean
+    Public Property Alto_H As Double
+    Public Property Ancho_W As Double
+    Public Property BackColor As Double
+    Public Property ForeColor As Double
+    Public Property Relleno As Double
+    Public Property Y_Fila As Double
+    Public Property X_Columna As Double
+    Public Property Orientacion As Integer
+    Public Property Habilitado As Boolean
+    Public Property EsCabecera As Boolean
+End Class

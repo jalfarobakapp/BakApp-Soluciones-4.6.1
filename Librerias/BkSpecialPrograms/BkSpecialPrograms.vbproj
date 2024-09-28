@@ -880,6 +880,7 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_TblArbol_Asociaciones.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Inventario.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Sector.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_WMS_Ubicaciones_Mapa_Det.vb" />
     <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Cambio precio\Frm_AsisCompra_CambioPrecio.Designer.vb">
       <DependentUpon>Frm_AsisCompra_CambioPrecio.vb</DependentUpon>
     </Compile>
@@ -2412,6 +2413,7 @@
     <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_Listado.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Sistema WMS\Diseño\Clases\Cl_DisWMS.vb" />
     <Compile Include="03 Sistemas\Sistema WMS\Gestión WMS\Clases\Cl_Documento_Wms.vb" />
     <Compile Include="03 Sistemas\Sistema WMS\Gestión WMS\Formularios\Frm_WMS_Documento.Designer.vb">
       <DependentUpon>Frm_WMS_Documento.vb</DependentUpon>
@@ -2733,7 +2735,7 @@
     <Compile Include="01 Procesos  compartidos\Documentos\11 Formatos de documentos\Formato de documento\Funciones\Frm_Formato_Sel_Funciones.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Clas_Formato_Herramientas_Mapa.vb" />
+    <Compile Include="03 Sistemas\Sistema WMS\Diseño\Clases\Clas_Formato_Herramientas_Mapa.vb" />
     <Compile Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Frm_Formulario_Diseno_Mapa_Crear_Sector.Designer.vb">
       <DependentUpon>Frm_Formulario_Diseno_Mapa_Crear_Sector.vb</DependentUpon>
     </Compile>

@@ -16,7 +16,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Crear_Sector
         Editar_Codigo
     End Enum
 
-    Public Property Pro_Codigo_Sector() As String
+    Public Property Codigo_Sector() As String
         Get
             Return Txt_Codigo_Sector.Text
         End Get
@@ -25,12 +25,21 @@ Public Class Frm_Formulario_Diseno_Mapa_Crear_Sector
         End Set
     End Property
 
-    Public Property Pro_Nombre_Sector() As String
+    Public Property Nombre_Sector() As String
         Get
             Return Txt_Nombre_Sector.Text
         End Get
         Set(value As String)
             Txt_Nombre_Sector.Text = value
+        End Set
+    End Property
+
+    Public Property EsCabecera() As Boolean
+        Get
+            Return Chk_EsCabecera.Checked
+        End Get
+        Set(value As Boolean)
+            Chk_EsCabecera.Checked = value
         End Set
     End Property
 
@@ -66,6 +75,8 @@ Public Class Frm_Formulario_Diseno_Mapa_Crear_Sector
             Txt_Codigo_Sector.Text = Replace(Txt_Codigo_Sector.Text, "...", "")
             Txt_Nombre_Sector.Enabled = False
         End If
+
+        Chk_EsCabecera.Visible = Not Es_SubSector
 
     End Sub
 

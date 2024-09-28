@@ -31,6 +31,7 @@ Partial Class Frm_Formulario_Diseno_Mapa_Crear_Sector
         Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Chk_EsCabecera = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.GroupPanel1.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -40,6 +41,7 @@ Partial Class Frm_Formulario_Diseno_Mapa_Crear_Sector
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.Controls.Add(Me.Chk_EsCabecera)
         Me.GroupPanel1.Controls.Add(Me.TableLayoutPanel2)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 12)
@@ -87,7 +89,7 @@ Partial Class Frm_Formulario_Diseno_Mapa_Crear_Sector
         Me.TableLayoutPanel2.Controls.Add(Me.Txt_Nombre_Sector, 1, 1)
         Me.TableLayoutPanel2.Controls.Add(Me.LabelX7, 0, 1)
         Me.TableLayoutPanel2.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel2.Location = New System.Drawing.Point(5, 16)
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(5, 13)
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
         Me.TableLayoutPanel2.RowCount = 2
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
@@ -176,6 +178,22 @@ Partial Class Frm_Formulario_Diseno_Mapa_Crear_Sector
         Me.Btn_Grabar.Name = "Btn_Grabar"
         Me.Btn_Grabar.Tooltip = "Grabar"
         '
+        'Chk_EsCabecera
+        '
+        Me.Chk_EsCabecera.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_EsCabecera.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_EsCabecera.CheckBoxImageChecked = CType(resources.GetObject("Chk_EsCabecera.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_EsCabecera.FocusCuesEnabled = False
+        Me.Chk_EsCabecera.Location = New System.Drawing.Point(5, 79)
+        Me.Chk_EsCabecera.Name = "Chk_EsCabecera"
+        Me.Chk_EsCabecera.Size = New System.Drawing.Size(100, 18)
+        Me.Chk_EsCabecera.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_EsCabecera.TabIndex = 97
+        Me.Chk_EsCabecera.Text = "Es Cabecera"
+        '
         'Frm_Formulario_Diseno_Mapa_Crear_Sector
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -208,4 +226,5 @@ Partial Class Frm_Formulario_Diseno_Mapa_Crear_Sector
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
     Public WithEvents Txt_Codigo_Sector As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Chk_EsCabecera As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class
