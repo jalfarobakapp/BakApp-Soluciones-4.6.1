@@ -213,7 +213,7 @@ Public Class Cl_DocListaSuperior
         Return suma
     End Function
 
-    Function Fx_Llenar_ListaActualCliente(_Lista As String) As LsValiciones.Mensajes
+    Function Fx_Llenar_ListaBk(_Lista As String) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -228,6 +228,8 @@ Public Class Cl_DocListaSuperior
             Return _Mensaje
 
         End If
+
+        Dim Zw_ListaActCliente As New Zw_ListaPreGlobal
 
         With Zw_ListaActCliente
 
@@ -273,10 +275,14 @@ Public Class Cl_DocListaSuperior
         Try
 
             Dim _FechaActual As Date = FechaDelServidor()
+            Dim _FechaDesde As Date = DateAdd(DateInterval.Month, -MesesVenListaPrecios, _FechaActual)
             Dim _PrimerDiaDelMes As Date = Primerdiadelmes(_FechaActual)
             Dim _UltimoDiaDelMes As Date = ultimodiadelmes(_FechaActual)
 
-            Consulta_sql = "SELECT  CASE" & vbCrLf &
+            Dim _FechaEstDesde As Date = Primerdiadelmes(_FechaDesde)
+            Dim _FechaEstHasta = _UltimoDiaDelMes
+
+            Consulta_sql = "SELECT CASE" & vbCrLf &
                            "WHEN TIDO = 'NVV' THEN SUM(PPPRNE * (CAPRCO1 - (CAPREX1 + CAPRAD1)))" & vbCrLf &
                            "WHEN TIDO = 'NCV' THEN SUM(VANELI) * -1" & vbCrLf &
                            "ELSE SUM(VANELI)" & vbCrLf &
@@ -285,7 +291,7 @@ Public Class Cl_DocListaSuperior
                            "FROM MAEDDO " & vbCrLf &
                            "WHERE ENDO = '" & _Endo & "' " & vbCrLf &
                            "AND FEEMLI between '" & Format(_PrimerDiaDelMes, "yyyyMMdd") & "' And '" & Format(_UltimoDiaDelMes, "yyyyMMdd") & "'" & vbCrLf &
-                           "AND TIDO IN ('NVV', 'FCV', 'NCV')" & vbCrLf &
+                           "AND TIDO IN ('FCV', 'NCV')" & vbCrLf &
                            "GROUP BY YEAR(FEEMLI), MONTH(FEEMLI), TIDO;" & vbCrLf &
                            "SELECT ISNULL(SUM(VentaMesEnCurso),0) AS 'VentaMesEnCurso'" & vbCrLf &
                            "FROM #MesEnCurso;" & vbCrLf &
@@ -298,7 +304,7 @@ Public Class Cl_DocListaSuperior
             If LsDetalleLpSuperior.Count = 0 Then
                 _Mensaje.EsCorrecto = False
                 _Mensaje.Detalle = "Revisar minorista mayorista"
-                _Mensaje.Mensaje = "No se ha ingresado ningun producto"
+                _Mensaje.Mensaje = "No se ha ingresado ningún producto"
                 _Mensaje.Icono = MessageBoxIcon.Warning
                 _Mensaje.Tag = _VentaMesEnCurso
                 Return _Mensaje
@@ -335,6 +341,59 @@ Public Class Cl_DocListaSuperior
             _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Error
         End Try
+
+        Return _Mensaje
+
+    End Function
+
+    Function Fx_RevisarSiCumpleConTenerListaSuperior(_Endo As String, _Lista As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        _Mensaje = Fx_Llenar_ListaBk(_Lista)
+
+        If Not _Mensaje.EsCorrecto Then
+            _Mensaje.Detalle = "No cumple con la condición para tener una lista superior"
+            _Mensaje.Mensaje = "No se encontro el registro en la tabla Zw_ListaPreGlobal con la Lista = '" & _Lista & "'"
+            Return _Mensaje
+        End If
+
+        Dim _VentaMinVencLP As Double = _Mensaje.Tag.VentaMinVencLP
+
+        Consulta_sql = My.Resources.Recuros_ListaSuperior.RevisarSumpliminetoDeMinoristaMayorista
+        Consulta_sql = Replace(Consulta_sql, "{VentaMinima}", _VentaMinVencLP)
+        Consulta_sql = Replace(Consulta_sql, "{Endo}", _Endo)
+        Consulta_sql = Replace(Consulta_sql, "{Meses}", MesesVenListaPrecios)
+        Consulta_sql = Replace(Consulta_sql, "{VentaEnCurso}", 0)
+        Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
+
+        If Not CBool(_Ds.Tables(3).Rows.Count) Then
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = "No se encontro el registro en la tabla Zw_ListaPreGlobal con la Lista = '" & Zw_ListaActCliente.ListaSuperior & "'"
+            _Mensaje.Detalle = "No cumple con la condición para tener una lista superior"
+            _Mensaje.Icono = MessageBoxIcon.Stop
+            Return _Mensaje
+        End If
+
+        Dim _Row As DataRow = _Ds.Tables(3).Rows(0)
+
+        If _Row.Item("Cumple") = "Cumple" Then
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Cliente cumple con la condición para mantenerse en la lista superior"
+            _Mensaje.Detalle = "Cumple con la condición para tener una lista superior"
+            _Mensaje.Icono = MessageBoxIcon.Information
+        Else
+            _Mensaje.EsCorrecto = False
+
+            Dim _NombreListaInferior As String = _Sql.Fx_Trae_Dato("TABPP", "NOKOLT", "KOLT = '" & CType(_Mensaje.Tag, Zw_ListaPreGlobal).ListaInferior & "'").ToString.Trim
+
+            _Mensaje.Mensaje = "El cliente actualmente tiene asociada la lista de precios: " & CType(_Mensaje.Tag, Zw_ListaPreGlobal).Lista & " - " & CType(_Mensaje.Tag, Zw_ListaPreGlobal).Nombre_Lista & ". " &
+                               "Sin embargo,en los últimos " & MesesVenListaPrecios + 1 & " meses, incluyendo el mes actual, no ha alcanzado el monto mínimo de ventas mensuales necesario " &
+                               "para mantener esta lista de precios. Por lo tanto, la lista de precios se actualizará a: " & CType(_Mensaje.Tag, Zw_ListaPreGlobal).ListaInferior & " - " & _NombreListaInferior
+
+            _Mensaje.Detalle = "No cumple con la condición para tener una lista superior"
+            _Mensaje.Icono = MessageBoxIcon.Stop
+        End If
 
         Return _Mensaje
 
