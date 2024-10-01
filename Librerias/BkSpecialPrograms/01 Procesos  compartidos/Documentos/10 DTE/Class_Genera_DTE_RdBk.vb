@@ -1110,12 +1110,15 @@ Public Class Class_Genera_DTE_RdBk
 
         Dim _Vanedo As Double = _Row_Maeedo.Item("VANEDO")
         Dim _Vaivdo As Double = _Row_Maeedo.Item("VAIVDO")
+        Dim _Vaimdo As Double = _Row_Maeedo.Item("VAIMDO")
         Dim _Vabrdo As Double = _Row_Maeedo.Item("VABRDO")
 
         Dim _Iva_Calculo As Double = Math.Round(_Vanedo * 0.19, 0)
         Dim _Vanedo_Calculo As Double = Math.Round(_Vabrdo / 1.19, 0)
 
-        _Vaivdo = _Vabrdo - _Vanedo_Calculo
+        If _Vaimdo = 0 Then
+            _Vaivdo = _Vabrdo - _Vanedo_Calculo
+        End If
 
         'If Math.Round(_Vaivdo, 2) <> _Iva_Calculo Then
         '_Vaivdo = Math.Round(_Iva_Calculo, 3) '+ 1
@@ -1158,6 +1161,37 @@ Public Class Class_Genera_DTE_RdBk
                              "<IVA>#IVA#</IVA>"
             _IndServicio = String.Empty
             _FormaDePago = String.Empty
+
+            If CBool(_Vaimdo) Then
+
+                Dim _ImptoReten As String = String.Empty
+
+                Consulta_sql = "Select Round(SUM(VAIMLI),0) As MontoImp,Isnull(Im.KOIMSII,'') As 'TipoImp',Im.POIM As 'TasaImp',Im.NOKOIM" & vbCrLf &
+                               "From MAEDDO" & vbCrLf &
+                               "Inner Join TABIMPR Imp On KOPR = KOPRCT" & vbCrLf &
+                               "Inner Join TABIM Im On Imp.KOIM = Im.KOIM" & vbCrLf &
+                               "Where IDMAEEDO = " & _Idmaeedo & vbCrLf &
+                               "Group By KOIMSII,Im.NOKOIM,Im.POIM"
+                Dim _Tbl_Impuestos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+                For Each _Fl As DataRow In _Tbl_Impuestos.Rows
+
+                    Dim _TipoImp As String = _Fl.Item("TipoImp").ToString.Trim
+                    Dim _TasaImp As String = _Fl.Item("TasaImp").ToString.Trim
+                    Dim _MontoImp As String = _Fl.Item("MontoImp").ToString.Trim
+
+                    _ImptoReten += vbCrLf & "<ImptoReten>" & vbCrLf &
+                                   "<TipoImp>" & _TipoImp & "</TipoImp>" & vbCrLf &
+                                   "<TasaImp>" & _TasaImp & "</TasaImp>" & vbCrLf &
+                                   "<MontoImp>" & _MontoImp & "</MontoImp>" & vbCrLf &
+                                   "</ImptoReten>"
+
+                Next
+
+                _Totales_Netos += _ImptoReten
+
+            End If
+
 
             If _Tido = "FCV" And _Nuevo_RunMonitor Then
 
@@ -1289,6 +1323,7 @@ Public Class Class_Genera_DTE_RdBk
                 Dim _Podtglli As Double = _Fila.Item("PODTGLLI")
                 Dim _DescuentoMonto As Double
                 Dim _Str_DescuentoMonto = String.Empty
+                Dim _CodImpAdic = String.Empty
                 Dim _PrcItem = String.Empty
 
                 If _Tido = "BLV" Or _Tido = "BSV" Then
@@ -1346,6 +1381,26 @@ Public Class Class_Genera_DTE_RdBk
 
                     End If
 
+                    If CBool(_Fila.Item("POIMGLLI")) Then
+
+                        Dim _Idmaeddo As Integer = _Fila.Item("IDMAEDDO")
+
+                        Consulta_sql = "Select KOPRCT,Isnull(Im.KOIMSII,'') As CodImpAdic,Im.NOKOIM,VAIMLI" & vbCrLf &
+                                       "From MAEDDO" & vbCrLf &
+                                       "Inner Join TABIMPR Imp On KOPR = KOPRCT" & vbCrLf &
+                                       "Inner Join TABIM Im On Imp.KOIM = Im.KOIM" & vbCrLf &
+                                       "Where IDMAEDDO = " & _Idmaeddo
+                        Dim _RowImp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                        If Not IsNothing(_RowImp) Then
+
+                            _CodImpAdic = vbCrLf & "<CodImpAdic>" & _RowImp.Item("CodImpAdic").ToString.Trim & "</CodImpAdic>"
+
+                        End If
+
+                    End If
+
+
                 End If
 
                 Dim _MontoItem As Integer = Math.Round(_Fila.Item(_Campo_MontoItem), 0) 'De_Num_a_Tx_01(_Fila.Item(_Campo_MontoItem), False, 3)
@@ -1384,6 +1439,7 @@ Public Class Class_Genera_DTE_RdBk
                         "<QtyItem>" & _QtyItem_Str & "</QtyItem>" & vbCrLf &
                         "<UnmdItem>" & _UnmdItem & "</UnmdItem>" & vbCrLf &
                         "<PrcItem>" & _PrcItem & "</PrcItem>" &
+                        _CodImpAdic &
                         _Str_DescuentoMonto & vbCrLf &
                         "<MontoItem>" & _MontoItem & "</MontoItem>" & vbCrLf &
                         "</Detalle>"

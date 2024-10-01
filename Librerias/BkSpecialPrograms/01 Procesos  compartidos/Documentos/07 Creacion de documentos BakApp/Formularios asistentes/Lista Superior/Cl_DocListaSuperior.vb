@@ -384,7 +384,13 @@ Public Class Cl_DocListaSuperior
             _Mensaje.Icono = MessageBoxIcon.Information
         Else
             _Mensaje.EsCorrecto = False
-            _Mensaje.Mensaje = "Cliente no cumple con la condición para mantenerse en la lista superior"
+
+            Dim _NombreListaInferior As String = _Sql.Fx_Trae_Dato("TABPP", "NOKOLT", "KOLT = '" & CType(_Mensaje.Tag, Zw_ListaPreGlobal).ListaInferior & "'").ToString.Trim
+
+            _Mensaje.Mensaje = "El cliente actualmente tiene asociada la lista de precios: " & CType(_Mensaje.Tag, Zw_ListaPreGlobal).Lista & " - " & CType(_Mensaje.Tag, Zw_ListaPreGlobal).Nombre_Lista & ". " &
+                               "Sin embargo,en los últimos " & MesesVenListaPrecios + 1 & " meses, incluyendo el mes actual, no ha alcanzado el monto mínimo de ventas mensuales necesario " &
+                               "para mantener esta lista de precios. Por lo tanto, la lista de precios se actualizará a: " & CType(_Mensaje.Tag, Zw_ListaPreGlobal).ListaInferior & " - " & _NombreListaInferior
+
             _Mensaje.Detalle = "No cumple con la condición para tener una lista superior"
             _Mensaje.Icono = MessageBoxIcon.Stop
         End If

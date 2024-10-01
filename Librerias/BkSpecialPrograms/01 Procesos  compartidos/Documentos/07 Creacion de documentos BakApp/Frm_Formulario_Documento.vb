@@ -14454,45 +14454,44 @@ Public Class Frm_Formulario_Documento
                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Entidades Where CodEntidad = '" & _CodEntidad & "' And CodSucEntidad = '" & _CodSucEntidad & "'"
                 Dim _Row_EntidadBakapp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-                Dim _FechaVencLista As Date? = NuloPorNro(_Row_EntidadBakapp.Item("FechaVencLista"), #01-01-0001#)
+                'Dim _FechaVencLista As Date? = NuloPorNro(_Row_EntidadBakapp.Item("FechaVencLista"), #01-01-0001#)
 
-                If (_Row_EntidadBakapp.Item("FechaVencLista") Is DBNull.Value) Then
-                    _FechaVencLista = DateAdd(DateInterval.Day, -1, FechaDelServidor)
-                    'Return
+                'If (_Row_EntidadBakapp.Item("FechaVencLista") Is DBNull.Value) Then
+                '    _FechaVencLista = DateAdd(DateInterval.Day, -1, FechaDelServidor)
+                '    'Return
+                'End If
+
+                'If _FechaVencLista < FechaDelServidor() Then
+
+                If IsNothing(_Row_ListaInferior) Then
+                    Return
                 End If
 
-                If _FechaVencLista < FechaDelServidor() Then
+                Dim _ListaInferior As String = _Row_ListaInferior.Item("ListaInferior").ToString.Trim
 
-                    If IsNothing(_Row_ListaInferior) Then
-                        Return
-                    End If
-
-                    Dim _ListaInferior As String = _Row_ListaInferior.Item("ListaInferior").ToString.Trim
-
-                    If String.IsNullOrWhiteSpace(_ListaInferior) Then
-                        Return
-                    End If
-
-                    Dim _Msj As LsValiciones.Mensajes
-
-                    _Msj = _Cl_DocListaSuperior.Fx_RevisarSiCumpleConTenerListaSuperior(_TblEncabezado.Rows(0).Item("CodEntidad"),
-                                                                                        _TblEncabezado.Rows(0).Item("ListaPrecios"))
-
-                    If _Msj.EsCorrecto Then
-                        Return
-                    End If
-
-                    Dim _Nombre
-
-                    MessageBoxEx.Show(Me, "La fecha de duración para la lista de precios del cliente ha caducado" & vbCrLf &
-                                      "La lista ahora sera : " & _ListaInferior, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-
-                    _TblEncabezado.Rows(0).Item("ListaPrecios") = _ListaInferior
-                    _Cl_DocListaSuperior.ListaEntidad = _ListaInferior
-                    _RowEntidad.Item("LVEN") = "TABPP" & _ListaInferior
-                    _TblDetalle.Rows(0).Item("CodLista") = _ListaInferior
-
+                If String.IsNullOrWhiteSpace(_ListaInferior) Then
+                    Return
                 End If
+
+                Dim _Msj As LsValiciones.Mensajes
+
+                _Msj = _Cl_DocListaSuperior.Fx_RevisarSiCumpleConTenerListaSuperior(_TblEncabezado.Rows(0).Item("CodEntidad"),
+                                                                                    _TblEncabezado.Rows(0).Item("ListaPrecios"))
+
+                If _Msj.EsCorrecto Then
+                    Return
+                End If
+
+                Dim _Menje As String = Fx_AjustarTexto(_Msj.Mensaje, 100)
+
+                MessageBoxEx.Show(Me, _Menje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+
+                _TblEncabezado.Rows(0).Item("ListaPrecios") = _ListaInferior
+                _Cl_DocListaSuperior.ListaEntidad = _ListaInferior
+                _RowEntidad.Item("LVEN") = "TABPP" & _ListaInferior
+                _TblDetalle.Rows(0).Item("CodLista") = _ListaInferior
+
+                'End If
 
             End If
         Catch ex As Exception
