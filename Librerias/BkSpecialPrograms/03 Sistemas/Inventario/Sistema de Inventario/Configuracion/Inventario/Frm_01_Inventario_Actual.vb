@@ -54,6 +54,7 @@ Public Class Frm_01_Inventario_Actual
         AddHandler Rdb_MostrarSoloInventariados.CheckedChanged, AddressOf Rdb_CheckedChanged
         AddHandler Rdb_MostrarSoloConStockSinInventariar.CheckedChanged, AddressOf Rdb_CheckedChanged
         AddHandler Rdb_MostrarTodosLosProductos.CheckedChanged, AddressOf Rdb_CheckedChanged
+        AddHandler Rdb_MostrarSoloInventariadosNegativos.CheckedChanged, AddressOf Rdb_CheckedChanged
 
         Sb_Actualizar_Grilla()
 
@@ -107,10 +108,11 @@ Public Class Frm_01_Inventario_Actual
                        "Inner Join #PasoC On #PasoC.Codigo = Foto.Codigo" & vbCrLf &
                        "Where IdInventario = " & _IdInventario & "" & vbCrLf &
                        vbCrLf &
-                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set " &
-                       "Dif_Inv_Cantidad = ROUND(Cant_Inventariada - ABS(StFisicoUd1), 5)," &
-                       "Total_Costo_Foto = StFisicoUd1*Costo,Total_Costo_Inv = Cant_Inventariada*Costo," &
-                       "Dif_Inv_Costo = ABS(Total_Costo_Inv)-ABS(Total_Costo_Foto)" & vbCrLf &
+                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Dif_Inv_Cantidad = ROUND(ABS(Cant_Inventariada) - ABS(StFisicoUd1), 5)" & vbCrLf &
+                       "Where IdInventario = " & _IdInventario & vbCrLf &
+                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Total_Costo_Foto = StFisicoUd1*Costo,Total_Costo_Inv = Cant_Inventariada*Costo" & vbCrLf &
+                       "Where IdInventario = " & _IdInventario & vbCrLf &
+                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Dif_Inv_Costo = ABS(Total_Costo_Inv)-ABS(Total_Costo_Foto)" & vbCrLf &
                        "Where IdInventario = " & _IdInventario & vbCrLf &
                        vbCrLf &
                        "Drop Table #PasoR" & vbCrLf &
@@ -246,8 +248,8 @@ Public Class Frm_01_Inventario_Actual
         Dim _Total_Foto As Double
 
         For Each row As DataGridViewRow In Grilla.Rows
-            _Total_Inventario += CDbl(row.Cells("Total_Costo_Inv").Value)
             _Total_Foto += CDbl(row.Cells("Total_Costo_Foto").Value)
+            _Total_Inventario += CDbl(row.Cells("Total_Costo_Inv").Value)
         Next
 
         Dim _Total_Diferencia As Double = _Total_Inventario - _Total_Foto
@@ -370,6 +372,9 @@ Public Class Frm_01_Inventario_Actual
             If Rdb_MostrarSoloConStockSinInventariar.Checked Then
                 _Dv.RowFilter = String.Format("Codigo+CodigoRap+CodigoTec+Descripcion Like '%{0}%' And Cant_Inventariada = 0 And StFisicoUd1 <> 0", Txt_Filtrar.Text.Trim)
             End If
+            If Rdb_MostrarSoloInventariadosNegativos.Checked Then
+                _Dv.RowFilter = String.Format("Codigo+CodigoRap+CodigoTec+Descripcion Like '%{0}%' And Cant_Inventariada < 0", Txt_Filtrar.Text.Trim)
+            End If
             Sb_SumarTotales()
         Catch ex As Exception
             MessageBoxEx.Show(Me, ex.Message, "Cuek!", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -439,7 +444,59 @@ Select * From #PasoR
 Drop table #PasoC
 Drop table #PasoR"
 
+        Me.Cursor = Cursors.WaitCursor
+
+        Consulta_sql = "Select Codigo,Recontado, SUM(Cantidad) As Cantidad" & vbCrLf &
+                       "Into #PasoR" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle" & vbCrLf &
+                       "Where IdInventario = " & _IdInventario & " And Recontado = 1" & vbCrLf &
+                       "Group By Codigo,Recontado" & vbCrLf &
+                       vbCrLf &
+                       "Select Codigo,Recontado, SUM(Cantidad) As Cantidad" & vbCrLf &
+                       "Into #PasoC" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle" & vbCrLf &
+                       "Where IdInventario = " & _IdInventario & " And Codigo Not In (Select Codigo From #PasoR)" & vbCrLf &
+                       "Group By Codigo,Recontado" & vbCrLf &
+                       vbCrLf &
+                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 0 Where IdInventario = " & _IdInventario & vbCrLf &
+                       vbCrLf &
+                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 1,Cant_Inventariada = Cantidad" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Inv_FotoInventario Foto" & vbCrLf &
+                       "Inner Join #PasoR On #PasoR.Codigo = Foto.Codigo" & vbCrLf &
+                       "Where IdInventario = " & _IdInventario & vbCrLf &
+                       vbCrLf &
+                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Cant_Inventariada = Cantidad" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Inv_FotoInventario Foto" & vbCrLf &
+                       "Inner Join #PasoC On #PasoC.Codigo = Foto.Codigo" & vbCrLf &
+                       "Where IdInventario = " & _IdInventario & "" & vbCrLf &
+                       vbCrLf &
+                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Dif_Inv_Cantidad = ROUND(ABS(Cant_Inventariada) - ABS(StFisicoUd1), 5)" & vbCrLf &
+                       "Where IdInventario = " & _IdInventario & vbCrLf &
+                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Total_Costo_Foto = StFisicoUd1*Costo,Total_Costo_Inv = Cant_Inventariada*Costo" & vbCrLf &
+                       "Where IdInventario = " & _IdInventario & vbCrLf &
+                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Dif_Inv_Costo = ABS(Total_Costo_Inv)-ABS(Total_Costo_Foto)" & vbCrLf &
+                       "Where IdInventario = " & _IdInventario & vbCrLf &
+                       vbCrLf &
+                       "Drop Table #PasoR" & vbCrLf &
+                       "Drop Table #PasoC"
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_FotoInventario", "Cant_Inventariada < 0 And IdInventario = " & _IdInventario)
+
+        If CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "Existen productos con cantidades inventariadas negativas, por favor revise.", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Me.Cursor = Cursors.Default
+            Return
+        End If
+
+        Consulta_sql = "Select Codigo,Cant_Inventariada As Cantidad,Costo" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Inv_FotoInventario" & vbCrLf &
+                       "Where IdInventario = " & _IdInventario & " And Cant_Inventariada > 0"
+
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+        Me.Cursor = Cursors.Default
 
         Dim NombreFile As String = "Levantar Inventario " & FormatDateTime(_Fecha_Inventario, DateFormat.LongDate)
 

@@ -768,7 +768,7 @@ Public Class Frm_Formulario_Documento
 
         If _Es_Electronico Then
 
-            MensajeRevFolio = Fx_Revisar_Expiracion_Folio_SII(Nothing, _Tido, _NroDocumento, Not _Facturacion_Automatica)
+            MensajeRevFolio = Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _NroDocumento, Not _Facturacion_Automatica)
 
             If Not MensajeRevFolio.EsCorrecto And Not _Facturacion_Automatica Then ' Not Fx_Revisar_Expiracion_Folio_SII(Nothing, _Tido, _NroDocumento, True) Then
 

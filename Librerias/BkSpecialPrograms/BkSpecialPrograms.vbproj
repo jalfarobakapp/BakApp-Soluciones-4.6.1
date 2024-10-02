@@ -669,6 +669,7 @@
     <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Nodos Clas y Ubicaciones\Clasificaciones Nodos\Frm_Arbol_Lista.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Tabla Caracterizaciones\Cl_TablaCaractierizaciones.vb" />
     <Compile Include="01 Procesos  compartidos\Precios y Costos\01 Mantención Listas Random\Clas_Imprimir_ListaPrecios.vb" />
     <Compile Include="01 Procesos  compartidos\Precios y Costos\01 Mantención Listas Random\Precios Futuros\Frm_PrecioFuturoRd.Designer.vb">
       <DependentUpon>Frm_PrecioFuturoRd.vb</DependentUpon>
@@ -853,6 +854,7 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Conceptos.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Demonio_FacAuto.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Despachos_Configuracion.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Entidades.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Contador.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_FotoInventario.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Hoja.vb" />
@@ -877,6 +879,7 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stmp_Det.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stmp_DetPick.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stmp_Enc_Permisos.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_TablaDeCaracterizaciones.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_TblArbol_Asociaciones.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Inventario.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Sector.vb" />
@@ -1073,10 +1076,10 @@
     <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Feriados\Frm_Feriados_Anuales.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Frm_Tabla_Caracterizaciones_01_Listado.Designer.vb">
+    <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Tabla Caracterizaciones\Frm_Tabla_Caracterizaciones_01_Listado.Designer.vb">
       <DependentUpon>Frm_Tabla_Caracterizaciones_01_Listado.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Frm_Tabla_Caracterizaciones_01_Listado.vb">
+    <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Tabla Caracterizaciones\Frm_Tabla_Caracterizaciones_01_Listado.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Pais, ciudad comunas\Frm_Crear_PaCiCm.Designer.vb">
@@ -4848,7 +4851,7 @@
     <EmbeddedResource Include="01 Procesos  compartidos\Mantencion de Tablas\Feriados\Frm_Feriados_Anuales.resx">
       <DependentUpon>Frm_Feriados_Anuales.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="01 Procesos  compartidos\Mantencion de Tablas\Frm_Tabla_Caracterizaciones_01_Listado.resx">
+    <EmbeddedResource Include="01 Procesos  compartidos\Mantencion de Tablas\Tabla Caracterizaciones\Frm_Tabla_Caracterizaciones_01_Listado.resx">
       <DependentUpon>Frm_Tabla_Caracterizaciones_01_Listado.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Mantencion de Tablas\Pais, ciudad comunas\Frm_Crear_PaCiCm.resx">

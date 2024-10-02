@@ -1,10 +1,6 @@
 ﻿Imports DevComponents.DotNetBar
-Imports System.Windows.Forms
-Imports System.Drawing
-Imports System.Data.SqlClient
 Imports BkSpecialPrograms.Bk_Migrar_Producto
-Imports BkSpecialPrograms.My.Resources
-'Imports Lib_Bakapp_VarClassFunc
+
 
 Public Class Frm_Tabla_Caracterizaciones_01_Listado
 
@@ -43,7 +39,9 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
     Dim _Padre_Tabla, _Padre_CodigoTabla As String
     Dim _Ano_Feriados As Integer
 
+    Public Property Permiso As String = "Tbl00016"
     Public Property TablaBloqueadaDesdeModGeneral As Boolean
+    Public Property FilaSeleccionada_Zw As New Zw_TablaDeCaracterizaciones
 
     Dim _Accion As Accion
 
@@ -91,6 +89,8 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
         Despachos_Tipo_Venta
         Despachos_Tipo_Envio
         ZonaProducto
+        Holding
+        PagadorEntidad
     End Enum
 
     Public Property Pro_Ano_Feriados() As Integer
@@ -335,7 +335,7 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
 
         If _Accion = Accion.Seleccionar Or _Accion = Accion.Multiseleccion Then
 
-            If Fx_Tiene_Permiso(Me, "Tbl00016") Then
+            If Fx_Tiene_Permiso(Me, Permiso) Then
 
                 Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(_Tabla, Accion.Mantencion_Tabla)
                 Fm.Text = "Mantención de " & _Tabla.ToString
@@ -841,31 +841,32 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
         With Grilla
 
             Dim _CodigoTabla As String = Trim(.Rows(.CurrentRow.Index).Cells("CodigoTabla").Value)
+            Dim _Cl_TablaCaracterizaciones As New Cl_TablaCaractierizaciones
+
+            Dim _Mensaje As New LsValiciones.Mensajes
 
             If Not String.IsNullOrEmpty(_CodigoTabla) Then
 
-                Dim _Tbl As DataTable
+                _Mensaje = _Cl_TablaCaracterizaciones.Fx_Llenar_Zw_TablaDeCaracterizaciones(_CodTablaClass, _CodigoTabla)
 
-                Consulta_sql = "Select top 1 * From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
-                               "Where Tabla = '" & _CodTablaClass & "' and CodigoTabla = '" & _CodigoTabla & "'"
-
-                _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
-
-                If CBool(_Tbl.Rows.Count) Then
-                    _RowFilaSeleccionada = _Tbl.Rows(0)
-                    Me.Close()
-                Else
-                    Beep()
-                    ToastNotification.Show(Me, "ESTA FILA NO ESTA GRABADA EN LA BASE DE DATOS" & vbCrLf &
-                                           "NO SE PUEDE SELECCIONAR", My.Resources.button_rounded_red_delete,
-                                             2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
+                If Not _Mensaje.EsCorrecto Then
+                    MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     Sb_Actualizar_Grilla("")
+                    Return
                 End If
 
             End If
 
-        End With
+            FilaSeleccionada_Zw = _Mensaje.Tag
 
+            Consulta_sql = "Select top 1 * From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
+                           "Where Tabla = '" & _CodTablaClass & "' And CodigoTabla = '" & _CodigoTabla & "'"
+            _RowFilaSeleccionada = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            _Seleccion = True
+            Me.Close()
+
+        End With
 
     End Sub
 
@@ -1414,7 +1415,10 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
                  Enum_Tablas_Random.Reclamos_Estados,
                  Enum_Tablas_Random.Reclamos_Sub_Estados,
                  Enum_Tablas_Random.Despachos_Tipo_Venta,
-                 Enum_Tablas_Random.Despachos_Tipo_Envio
+                 Enum_Tablas_Random.Despachos_Tipo_Envio,
+                 Enum_Tablas_Random.Holding,
+                 Enum_Tablas_Random.PagadorEntidad
+
 
                 _InfoTabla.MaxCaracCodigo = 10
                 _InfoTabla.MaxCaracDescripcion = 50
@@ -1472,7 +1476,10 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
                         _InfoTabla.TablaEnTblCaracterizaciones = "SIS_DESPACHO_TIPO_VENTA" : _InfoTabla.MaxCaracCodigo = 5
                     Case Enum_Tablas_Random.Despachos_Tipo_Envio
                         _InfoTabla.TablaEnTblCaracterizaciones = "SIS_DESPACHO_TIPO_ENVIO" : _InfoTabla.MaxCaracCodigo = 2
-
+                    Case Enum_Tablas_Random.Holding
+                        _InfoTabla.TablaEnTblCaracterizaciones = "ENTIDADES_HOLDING" : _InfoTabla.MaxCaracCodigo = 10
+                    Case Enum_Tablas_Random.PagadorEntidad
+                        _InfoTabla.TablaEnTblCaracterizaciones = "ENTIDADES_PAGADOR" : _InfoTabla.MaxCaracCodigo = 10
                 End Select
 
         End Select
