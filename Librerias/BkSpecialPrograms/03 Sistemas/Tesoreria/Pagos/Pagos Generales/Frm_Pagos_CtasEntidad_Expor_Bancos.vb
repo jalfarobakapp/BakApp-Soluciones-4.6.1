@@ -1,4 +1,5 @@
 ﻿Imports DevComponents.DotNetBar
+Imports Org.BouncyCastle.Math.EC
 
 Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
 
@@ -626,14 +627,18 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
             Return
         End If
 
-        Dim _Filtro_Documentos = "And Edo.TIDO In ('NVV','RES','PRO')"
+        Dim _Filtro_Documentos = "('NVV','RES','PRO')"
         Dim _Mensaje As LsValiciones.Mensajes = Fx_SelecionarDocumento(_Endp, _MontoExacto, _Filtro_Documentos)
 
         If Not _Mensaje.EsCorrecto Then
-            MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            If Not _Mensaje.Cancelado Then
+                MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            End If
             Return
         End If
 
+        _Fila.Cells("ENDP").Value = CType(_Mensaje.Tag, DataRow).Item("ENDO")
+        _Fila.Cells("RAZON").Value = CType(_Mensaje.Tag, DataRow).Item("NOKOEN")
         _Fila.Cells("ARCHIRSD").Value = "MAEEDO"
         _Fila.Cells("IDRSD").Value = CType(_Mensaje.Tag, DataRow).Item("IDMAEEDO")
         _Fila.Cells("Doc_Anticipo").Value = CType(_Mensaje.Tag, DataRow).Item("TIDO") & "-" & CType(_Mensaje.Tag, DataRow).Item("NUDO")
@@ -811,7 +816,10 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
 
         If Convert.ToBoolean(_IdMaeedo_Doc) Then
 
-            Consulta_Sql = "Select IDMAEEDO,TIDO,NUDO From MAEEDO Where IDMAEEDO = " & _IdMaeedo_Doc
+            Consulta_Sql = "Select IDMAEEDO,TIDO,NUDO,ENDO,NOKOEN" & vbCrLf &
+                           "From MAEEDO" & vbCrLf &
+                           "Inner Join MAEEN On KOEN = ENDO And SUEN = SUENDO " & vbCrLf &
+                           "Where IDMAEEDO = " & _IdMaeedo_Doc
             Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
             _Mensaje.EsCorrecto = True
@@ -821,6 +829,9 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
             '_Fila.Cells("IDRSD").Value = _Row.Item("IDMAEEDO")
             '_Fila.Cells("Doc_Anticipo").Value = _Row.Item("TIDO") & "-" & _Row.Item("NUDO")
             '_Fila.Cells("REFANTI").Value = String.Empty
+        Else
+
+            _Mensaje.Cancelado = True
 
         End If
 

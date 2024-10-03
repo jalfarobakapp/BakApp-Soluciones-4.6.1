@@ -1,5 +1,7 @@
 ﻿
 Imports BkSpecialPrograms.DocumentoListaSuperior
+Imports BkSpecialPrograms.My.Resources
+Imports OfficeOpenXml.FormulaParsing.LexicalAnalysis
 
 Public Class Cl_DocListaSuperior
 
@@ -358,11 +360,28 @@ Public Class Cl_DocListaSuperior
             Return _Mensaje
         End If
 
+        Dim _PreMayMinXHolding As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "PreMayMinXHolding", "CodEntidad = '" & _Endo & "'")
+        Dim _CodHolding As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "CodHolding", "CodEntidad = '" & _Endo & "'")
+        Dim _FiltroEntidades As String
+
+        If Not _PreMayMinXHolding Then
+            _CodHolding = String.Empty
+        End If
+
+        If String.IsNullOrWhiteSpace(_CodHolding) Then
+            _FiltroEntidades = "('" & _Endo & "')"
+        Else
+            Consulta_sql = "Select CodEntidad From " & _Global_BaseBk & "Zw_Entidades Where CodHolding = '" & _CodHolding & "'"
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+            _FiltroEntidades = Generar_Filtro_IN(_Tbl, "", "CodEntidad", False, False, "'")
+        End If
+
         Dim _VentaMinVencLP As Double = _Mensaje.Tag.VentaMinVencLP
 
         Consulta_sql = My.Resources.Recuros_ListaSuperior.RevisarSumpliminetoDeMinoristaMayorista
         Consulta_sql = Replace(Consulta_sql, "{VentaMinima}", _VentaMinVencLP)
         Consulta_sql = Replace(Consulta_sql, "{Endo}", _Endo)
+        Consulta_sql = Replace(Consulta_sql, "#FiltroEntidades#", _FiltroEntidades)
         Consulta_sql = Replace(Consulta_sql, "{Meses}", MesesVenListaPrecios)
         Consulta_sql = Replace(Consulta_sql, "{VentaEnCurso}", 0)
         Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
@@ -377,7 +396,7 @@ Public Class Cl_DocListaSuperior
 
         Dim _Row As DataRow = _Ds.Tables(3).Rows(0)
 
-        If _Row.Item("Cumple") = "Cumple" Then
+        If _Row.Item("Cumple") Then
             _Mensaje.EsCorrecto = True
             _Mensaje.Mensaje = "Cliente cumple con la condición para mantenerse en la lista superior"
             _Mensaje.Detalle = "Cumple con la condición para tener una lista superior"
@@ -388,7 +407,7 @@ Public Class Cl_DocListaSuperior
             Dim _NombreListaInferior As String = _Sql.Fx_Trae_Dato("TABPP", "NOKOLT", "KOLT = '" & CType(_Mensaje.Tag, Zw_ListaPreGlobal).ListaInferior & "'").ToString.Trim
 
             _Mensaje.Mensaje = "El cliente actualmente tiene asociada la lista de precios: " & CType(_Mensaje.Tag, Zw_ListaPreGlobal).Lista & " - " & CType(_Mensaje.Tag, Zw_ListaPreGlobal).Nombre_Lista & ". " &
-                               "Sin embargo,en los últimos " & MesesVenListaPrecios + 1 & " meses, incluyendo el mes actual, no ha alcanzado el monto mínimo de ventas mensuales necesario " &
+                               "Sin embargo,en los últimos " & MesesVenListaPrecios & " meses, no ha alcanzado el monto mínimo de ventas mensuales necesario " &
                                "para mantener esta lista de precios. Por lo tanto, la lista de precios se actualizará a: " & CType(_Mensaje.Tag, Zw_ListaPreGlobal).ListaInferior & " - " & _NombreListaInferior
 
             _Mensaje.Detalle = "No cumple con la condición para tener una lista superior"

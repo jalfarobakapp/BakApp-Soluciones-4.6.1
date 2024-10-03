@@ -28,9 +28,9 @@ SELECT
     END AS TotalNeto,
     FEEMLI
 FROM MAEDDO 
-WHERE ENDO = @Endo 
+WHERE ENDO In #FiltroEntidades# --= @Endo 
   AND FEEMLI >= @Fecha
-  AND TIDO IN ('NVV', 'FCV', 'NCV')
+  AND TIDO IN ('FCV', 'NCV')
 GROUP BY YEAR(FEEMLI), MONTH(FEEMLI), ENDO, TIDO, FEEMLI
 ORDER BY Year, Mes;
 
@@ -46,9 +46,9 @@ WITH Totales AS (
             ELSE VANELI
         END) AS TotalNeto
     FROM MAEDDO 
-    WHERE ENDO = @Endo 
+    WHERE ENDO In #FiltroEntidades# --= @Endo 
       AND FEEMLI >= @Fecha
-      AND TIDO IN ('NVV', 'FCV', 'NCV')
+      AND TIDO IN ('FCV', 'NCV')
     GROUP BY YEAR(FEEMLI), MONTH(FEEMLI), ENDO
 ),
 Cumplimiento AS (
@@ -93,13 +93,14 @@ Select * From #Cumpli
 -- Agrupación final por ENDO y Cumple
 -- Esta parte también debe estar dentro del mismo bloque de la consulta
 SELECT 
-    ENDO,NOKOEN,
+    --ENDO,NOKOEN,
     CASE 
         WHEN SUM(Cumple) > 0 THEN 'Cumple'
         ELSE 'No Cumple'
-    END AS Cumple,LVEN
+    END AS 'Str_Cumple',
+	CAST((CASE WHEN SUM(Cumple) > 0 THEN 1 ELSE 0 END) AS Bit) AS 'Cumple'
 FROM #Cumpli
 Left Join MAEEN On KOEN = ENDO
-GROUP BY ENDO,NOKOEN,LVEN
+--GROUP BY ENDO,NOKOEN,LVEN
 
 Drop table #Cumpli

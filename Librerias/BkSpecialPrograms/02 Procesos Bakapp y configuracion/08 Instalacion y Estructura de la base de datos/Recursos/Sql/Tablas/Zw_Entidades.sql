@@ -24,6 +24,8 @@ CREATE TABLE [dbo].[Zw_Entidades](
     [CodFuncionario_Enrola]         [char](3)       NOT NULL DEFAULT(''),
     [FechaVencLista]                [datetime]      NULL,
     [CodHolding]                    [varchar](10)   NOT NULL DEFAULT(''),
+    [PreMayMinXHolding]             [bit]           NOT NULL DEFAULT(0),
+    [CodPagador]                    [varchar](10)   NOT NULL DEFAULT(''),
  CONSTRAINT [PK_Zw_Entidades] PRIMARY KEY CLUSTERED 
 (
 	[CodEntidad] ASC,
