@@ -19,8 +19,11 @@ CREATE TABLE [dbo].[Zw_ListaPreGlobal](
 	[Ej_Fx_documento]       [bit]           NOT NULL DEFAULT (0),
 	[Ej_Fx_documento2]      [bit]           NOT NULL DEFAULT (0),
 	[DsctoMax]              [float]         NOT NULL DEFAULT (0),
+	[Flete]                 [float]         NOT NULL DEFAULT (0),
+    [EsListaSuperior]       [bit]           NOT NULL DEFAULT (0),
     [ListaSuperior]         [char](3)       NOT NULL DEFAULT (''),
     [ListaInferior]         [char](3)       NOT NULL DEFAULT (''),
+    [VentaMinVencLP]        [float]         NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_ListaPreGlobal] PRIMARY KEY CLUSTERED 
 (
 	[Lista] ASC

@@ -284,6 +284,24 @@ Public Class Cl_DocListaSuperior
             Dim _FechaEstDesde As Date = Primerdiadelmes(_FechaDesde)
             Dim _FechaEstHasta = _UltimoDiaDelMes
 
+
+            Dim _PreMayMinXHolding As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "PreMayMinXHolding", "CodEntidad = '" & _Endo & "'",,,, True)
+            Dim _CodHolding As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "CodHolding", "CodEntidad = '" & _Endo & "'")
+            Dim _FiltroEntidades As String
+
+            If Not _PreMayMinXHolding Then
+                _CodHolding = String.Empty
+            End If
+
+            If String.IsNullOrWhiteSpace(_CodHolding) Then
+                _FiltroEntidades = "('" & _Endo & "')"
+            Else
+                Consulta_sql = "Select CodEntidad From " & _Global_BaseBk & "Zw_Entidades Where CodHolding = '" & _CodHolding & "'"
+                Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+                _FiltroEntidades = Generar_Filtro_IN(_Tbl, "", "CodEntidad", False, False, "'")
+            End If
+
+
             Consulta_sql = "SELECT CASE" & vbCrLf &
                            "WHEN TIDO = 'NVV' THEN SUM(PPPRNE * (CAPRCO1 - (CAPREX1 + CAPRAD1)))" & vbCrLf &
                            "WHEN TIDO = 'NCV' THEN SUM(VANELI) * -1" & vbCrLf &
@@ -291,7 +309,7 @@ Public Class Cl_DocListaSuperior
                            "END AS VentaMesEnCurso" & vbCrLf &
                            "INTO #MesEnCurso" & vbCrLf &
                            "FROM MAEDDO " & vbCrLf &
-                           "WHERE ENDO = '" & _Endo & "' " & vbCrLf &
+                           "WHERE ENDO In " & _FiltroEntidades & vbCrLf &
                            "AND FEEMLI between '" & Format(_PrimerDiaDelMes, "yyyyMMdd") & "' And '" & Format(_UltimoDiaDelMes, "yyyyMMdd") & "'" & vbCrLf &
                            "AND TIDO IN ('FCV', 'NCV')" & vbCrLf &
                            "GROUP BY YEAR(FEEMLI), MONTH(FEEMLI), TIDO;" & vbCrLf &
@@ -360,7 +378,7 @@ Public Class Cl_DocListaSuperior
             Return _Mensaje
         End If
 
-        Dim _PreMayMinXHolding As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "PreMayMinXHolding", "CodEntidad = '" & _Endo & "'")
+        Dim _PreMayMinXHolding As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "PreMayMinXHolding", "CodEntidad = '" & _Endo & "'",,,, True)
         Dim _CodHolding As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "CodHolding", "CodEntidad = '" & _Endo & "'")
         Dim _FiltroEntidades As String
 
