@@ -179,7 +179,7 @@ Public Class Frm_Direc_Cli_Lista
                             Left Join TABCM Cm On Cm.KOPA = Pais And Cm.KOCI = Ciudad And Cm.KOCM = Comuna
                             Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Tvta On Tvta.Tabla = 'SIS_DESPACHO_TIPO_VENTA' And Tvta.CodigoTabla = Tipo_Venta
                             Left Join TABRETI On KORETI = Transportista
-                            Where Id = " & _Id
+                            Where Desp.Id = " & _Id
             _Row_Direccion = _Sql.Fx_Get_DataRow(Consulta_sql)
             Me.Close()
 

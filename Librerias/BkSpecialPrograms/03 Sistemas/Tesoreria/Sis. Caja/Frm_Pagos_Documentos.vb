@@ -2008,7 +2008,6 @@ Public Class Frm_Pagos_Documentos
 
         End If
 
-
     End Sub
 
     Private Sub Frm_Pagos_Documentos_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown

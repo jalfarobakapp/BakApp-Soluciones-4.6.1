@@ -1,10 +1,14 @@
-DECLARE @Fecha DATETIME;
+DECLARE @Fecha Datetime;
+DECLARE @FechaMesEnCurso Datetime;
+DECLARE @FechaUltDiaMesAnteror As Datetime
 DECLARE @VentaMinima INT = {VentaMinima};
 DECLARE @Endo VARCHAR(10) = '{Endo}'            -- Puedes cambiar este valor segun sea necesario
 DECLARE @Meses INT = -{Meses};                  -- Puedes cambiar este valor segun sea necesario
 DECLARE @VentaEnCurso FLOAT = {VentaEnCurso};   -- Puedes cambiar este valor segun sea necesario
 
-SET @Fecha = DATEADD(MONTH, @Meses, DATEADD(DAY, 1-DAY(GETDATE()), CAST(GETDATE() AS DATE)));
+Set @FechaMesEnCurso = DATEADD(DAY, 1-DAY(GETDATE()), CAST(GETDATE() AS DATE));
+Set @FechaUltDiaMesAnteror = DATEADD(day,-1,@FechaMesEnCurso)
+Set @Fecha = DATEADD(MONTH, @Meses, DATEADD(DAY, 1-DAY(GETDATE()), CAST(GETDATE() AS DATE)));
 SELECT @Fecha AS PrimerDiaDelMes;
 
 -- Consulta principal
@@ -24,9 +28,9 @@ SELECT
     END AS TotalNeto,
     FEEMLI
 FROM MAEDDO 
-WHERE ENDO = @Endo 
+WHERE ENDO In #FiltroEntidades# --= @Endo 
   AND FEEMLI >= @Fecha
-  AND TIDO IN ('NVV', 'FCV', 'NCV')
+  AND TIDO IN ('FCV', 'NCV')
 GROUP BY YEAR(FEEMLI), MONTH(FEEMLI), ENDO, TIDO, FEEMLI
 ORDER BY Year, Mes;
 
@@ -42,9 +46,9 @@ WITH Totales AS (
             ELSE VANELI
         END) AS TotalNeto
     FROM MAEDDO 
-    WHERE ENDO = @Endo 
+    WHERE ENDO In #FiltroEntidades# --= @Endo 
       AND FEEMLI >= @Fecha
-      AND TIDO IN ('NVV', 'FCV', 'NCV')
+      AND TIDO IN ('FCV', 'NCV')
     GROUP BY YEAR(FEEMLI), MONTH(FEEMLI), ENDO
 ),
 Cumplimiento AS (
@@ -89,13 +93,14 @@ Select * From #Cumpli
 -- Agrupación final por ENDO y Cumple
 -- Esta parte también debe estar dentro del mismo bloque de la consulta
 SELECT 
-    ENDO,NOKOEN,
+    --ENDO,NOKOEN,
     CASE 
         WHEN SUM(Cumple) > 0 THEN 'Cumple'
         ELSE 'No Cumple'
-    END AS Cumple,LVEN
+    END AS 'Str_Cumple',
+	CAST((CASE WHEN SUM(Cumple) > 0 THEN 1 ELSE 0 END) AS Bit) AS 'Cumple'
 FROM #Cumpli
 Left Join MAEEN On KOEN = ENDO
-GROUP BY ENDO,NOKOEN,LVEN
+--GROUP BY ENDO,NOKOEN,LVEN
 
 Drop table #Cumpli

@@ -524,27 +524,33 @@ Public Class Frm_Inf_Vencimientos_Mes
 
     Private Sub Btn_Informe_Consolidado_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Informe_Consolidado.Click
 
-        If _Informe = Tipo_Informe.Compras Then
-            Consulta_sql = My.Resources.Recursos_Inf_Compras_Vencimiento.Informe_Vencimientos_Compras_Anuales & vbCrLf & vbCrLf
-        ElseIf _Informe = Tipo_Informe.Ventas Then
-            Consulta_sql = My.Resources.Recursos_Inf_Compras_Vencimiento.Informe_Vencimientos_Ventas_Anuales & vbCrLf & vbCrLf
-        End If
+        Try
 
-        Dim _F_Inicio As Date = Calendario_Mes.DateSelectionStart.GetValueOrDefault()
-        Dim _F_Fin As Date = DateAdd(DateInterval.Day, -1, Calendario_Mes.DateSelectionEnd.GetValueOrDefault())
+            If _Informe = Tipo_Informe.Compras Then
+                Consulta_sql = My.Resources.Recursos_Inf_Compras_Vencimiento.Informe_Vencimientos_Compras_Anuales & vbCrLf & vbCrLf
+            ElseIf _Informe = Tipo_Informe.Ventas Then
+                Consulta_sql = My.Resources.Recursos_Inf_Compras_Vencimiento.Informe_Vencimientos_Ventas_Anuales & vbCrLf & vbCrLf
+            End If
 
-        If _F_Inicio = Calendario_Mes.DateSelectionEnd.GetValueOrDefault() Then
-            _F_Fin = _F_Inicio
-        End If
+            Dim _F_Inicio As Date = Calendario_Mes.DateSelectionStart.GetValueOrDefault()
+            Dim _F_Fin As Date = DateAdd(DateInterval.Day, -1, Calendario_Mes.DateSelectionEnd.GetValueOrDefault())
+
+            If _F_Inicio = Calendario_Mes.DateSelectionEnd.GetValueOrDefault() Then
+                _F_Fin = _F_Inicio
+            End If
 
 
-        Dim Fm As New Frm_Inf_Vencimientos_Detalle_Documento_Consolidado(Consulta_sql, _Chk_Deuda_Efectiva)
-        Fm.Pro_Filtro_Maedpce = _Filtro_Maedpce
-        Fm.Pro_Filtro_Maeedo = _Filtro_Maeedo
+            Dim Fm As New Frm_Inf_Vencimientos_Detalle_Documento_Consolidado(Consulta_sql, _Chk_Deuda_Efectiva)
+            Fm.Pro_Filtro_Maedpce = _Filtro_Maedpce
+            Fm.Pro_Filtro_Maeedo = _Filtro_Maeedo
 
-        Fm.Sb_Generar_Informe(_Fecha_Inicio, _Fecha_Fin)
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
+            Fm.Sb_Generar_Informe(_Fecha_Inicio, _Fecha_Fin)
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
+
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, "Error inesperado", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End Try
 
     End Sub
 

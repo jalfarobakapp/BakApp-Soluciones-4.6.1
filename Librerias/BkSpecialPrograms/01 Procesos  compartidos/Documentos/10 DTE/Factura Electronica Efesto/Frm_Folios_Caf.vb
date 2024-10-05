@@ -35,7 +35,7 @@ Public Class Frm_Folios_Caf
         'Return "NOTA DE CREDITO" 61
         'Return "ORDEN DE COMPRA" 801
 
-        Sb_Formato_Generico_Grilla(Grilla_Parejas, 18, New Font("Tahoma", 8), Color.White, ScrollBars.Vertical, True, False, False)
+        Sb_Formato_Generico_Grilla(Grilla_Parejas, 18, New Font("Tahoma", 8), Color.White, ScrollBars.Vertical, True, True, False)
 
         Sb_Color_Botones_Barra(Bar1)
 

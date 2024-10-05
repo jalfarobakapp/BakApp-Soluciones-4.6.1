@@ -714,46 +714,37 @@ Public Class Frm_Configuracion_Gral
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
-        'Dim Fm As New Frm_FTP_Fichero(_Id, Cl_Ftp.eTipo_Ftp.Producto)
-        'Fm.ModoConfiguracion = True
-        'Fm.ShowDialog(Me)
-        'Fm.Dispose()
+    End Sub
 
+    Private Sub Btn_MayMinInfo_Click(sender As Object, e As EventArgs) Handles Btn_MayMinInfo.Click
+
+        Dim _Msj As String = "La aplicación controlará las listas de precios de los clientes de forma dinámica. " &
+                             "Cada vez que un cliente cumpla con la siguiente condición: en los " &
+                             "últimos " & Input_MesesVenListaPrecios.Value & " meses, " &
+                             "cada mes debe haber vendido al menos 400.000(*)" &
+                             " pesos. Si el cliente ha logrado vender " &
+                             "esta cantidad o más en cada uno de los meses, podrá usar la lista de precios mayorista. " &
+                             "De lo contrario, deberá usar la lista de precios minorista. Estos cambios serán " &
+                             "automáticos y se revisarán cada vez que se haga una nota de venta, además de una " &
+                             "revisión mensual de las ventas de todos los clientes." & vbCrLf & vbCrLf
+
+        _Msj = Fx_AjustarTexto(_Msj, 120)
+
+        _Msj += "(*) Esto se debe definir en cada lista de precios en la cual se definira la lista mayorista y la minorista que corresponda."
+
+        MessageBoxEx.Show(Me, _Msj, "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+    End Sub
+
+    Private Sub Chk_UsarVencListaPrecios_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_UsarVencListaPrecios.CheckedChanged
+        Panel_MayoristaMinorista.Enabled = Chk_UsarVencListaPrecios.Checked
     End Sub
 
     Sub Sb_Cargar_Combo()
 
-        'caract_combo(Cmb_SOC_CodTurno)
-
-        'Consulta_sql = "SELECT '' AS Padre,'' AS Hijo" & vbCrLf &
-        '               "Union" & vbCrLf &
-        '               "SELECT CodTurno AS Padre,Nombre_Turno AS Hijo" & vbCrLf &
-        '               "FROM " & _Global_BaseBk & "Zw_Turnos" & vbCrLf &
-        '               "ORDER BY Padre"
-
-        'Cmb_SOC_CodTurno.DataSource = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-        'Dim _Arr_Busca_Pr(,) As String = {{"0", "MAESTRA PRODUCTOS"}, {"1", "PRODUCTOS DEL PROVEEDOR"}}
-        'Sb_Llenar_Combos(_Arr_Busca_Pr, Cmb_SOC_Buscar_Producto)
-        'Cmb_SOC_Buscar_Producto.SelectedValue = "1"
-
-
         Dim _Arr_TipoValor_Bruto_Neto(,) As String = {{"N", "NETO"}, {"B", "BRUTO"}}
         Sb_Llenar_Combos(_Arr_TipoValor_Bruto_Neto, Cmb_TipoValor_Bruto_Neto)
         Cmb_TipoValor_Bruto_Neto.SelectedValue = "N"
-
-
-        'Dim _Arr_SOC_Tipo_Creacion_Producto_Normal_Matriz(,) As String = {{"1", "FORMULARIO CLASICO"}, {"2", "FORMULARIO MATRIZ"}}
-        'Sb_Llenar_Combos(_Arr_SOC_Tipo_Creacion_Producto_Normal_Matriz, Cmb_SOC_Tipo_Creacion_Producto_Normal_Matriz)
-        'Cmb_SOC_Tipo_Creacion_Producto_Normal_Matriz.SelectedValue = "1"
-
-        'Dim _Arr_Tablas_Para_Iniciales_Cod_Automatico(,) As String = {{"MARCAS", "MARCAS"},
-        '                                                              {"FAMILIAS", "SUPER FAMILIA"},
-        '                                                              {"RUBROS", "RUBROS"},
-        '                                                              {"CLASLIBRE", "CLASIFICACION LIBRE"}}
-        'Sb_Llenar_Combos(_Arr_Tablas_Para_Iniciales_Cod_Automatico, Cmb_Pr_AutoPr_Tablas_Para_Iniciales_Cod_Automatico)
-        'Cmb_Pr_AutoPr_Tablas_Para_Iniciales_Cod_Automatico.SelectedValue = "MARCAS"
-
 
         caract_combo(Cmb_Nodo_Raiz_Asociados)
         Consulta_sql = "SELECT '0' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &

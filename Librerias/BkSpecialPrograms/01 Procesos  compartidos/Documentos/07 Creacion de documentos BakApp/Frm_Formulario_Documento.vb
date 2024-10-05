@@ -45,6 +45,7 @@ Public Class Frm_Formulario_Documento
     Dim _RowEntidad As DataRow
     Dim _RowEntidad_Despacho As DataRow
     Dim _RowEntidad_X_Defecto As DataRow
+    Dim _RowEntidadBakapp As DataRow
 
     Dim _CodVendedor As String
 
@@ -591,19 +592,19 @@ Public Class Frm_Formulario_Documento
         If Not _Post_Venta Then
 
             Me.Text = _Sql.Fx_Trae_Dato("TABTIDO", "NOTIDO", "TIDO = '" & _Tido & "'").ToString.Trim
-            Lbl_InfoVtaAcumMes.Text = Me.Text
+            Lbl_DocActual.Text = Me.Text
 
             If _Es_Ajuste Then
                 Me.Text += Space(1) & "(AJUSTE)"
-                Lbl_InfoVtaAcumMes.Text += Space(1) & "(AJUSTE)"
-                Lbl_InfoVtaAcumMes.ForeColor = Color.Yellow
+                Lbl_DocActual.Text += Space(1) & "(AJUSTE)"
+                Lbl_DocActual.ForeColor = Color.Yellow
             End If
 
             If _SubTido = "IMP" Then Me.Text += " PROVEEDOR EXTRANJERO"
 
         Else
 
-            Lbl_InfoVtaAcumMes.Text = "Post-Venta"
+            Lbl_DocActual.Text = "Post-Venta"
 
         End If
 
@@ -768,7 +769,7 @@ Public Class Frm_Formulario_Documento
 
         If _Es_Electronico Then
 
-            MensajeRevFolio = Fx_Revisar_Expiracion_Folio_SII(Nothing, _Tido, _NroDocumento, Not _Facturacion_Automatica)
+            MensajeRevFolio = Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _NroDocumento, Not _Facturacion_Automatica)
 
             If Not MensajeRevFolio.EsCorrecto And Not _Facturacion_Automatica Then ' Not Fx_Revisar_Expiracion_Folio_SII(Nothing, _Tido, _NroDocumento, True) Then
 
@@ -1209,19 +1210,19 @@ Public Class Frm_Formulario_Documento
         If Not _Post_Venta Then
 
             Me.Text = _Sql.Fx_Trae_Dato("TABTIDO", "NOTIDO", "TIDO = '" & _Tido & "'").ToString.Trim
-            Lbl_InfoVtaAcumMes.Text = Me.Text
+            Lbl_DocActual.Text = Me.Text
 
             If _Es_Ajuste Then
                 Me.Text += Space(1) & "(AJUSTE)"
-                Lbl_InfoVtaAcumMes.Text += Space(1) & "(AJUSTE)"
-                Lbl_InfoVtaAcumMes.ForeColor = Color.Yellow
+                Lbl_DocActual.Text += Space(1) & "(AJUSTE)"
+                Lbl_DocActual.ForeColor = Color.Yellow
             End If
 
             If _SubTido = "IMP" Then Me.Text += " PROVEEDOR EXTRANJERO"
 
         Else
 
-            Lbl_InfoVtaAcumMes.Text = "Post-Venta"
+            Lbl_DocActual.Text = "Post-Venta"
 
         End If
 
@@ -3947,6 +3948,8 @@ Public Class Frm_Formulario_Documento
                                           Optional _Cambiar_Vendedor As Boolean = True,
                                           Optional ByRef _No_Puede_Acceder As Boolean = False)
 
+        Dim _Koen As String
+        Dim _Suen As String
         Dim _FechaEmision As Date = _TblEncabezado.Rows(0).Item("FechaEmision")
         Dim _Fecha_1er_Vencimiento As Date = _TblEncabezado.Rows(0).Item("Fecha_1er_Vencimiento")
         Dim _FechaUltVencimiento As Date = _TblEncabezado.Rows(0).Item("FechaUltVencimiento")
@@ -4063,8 +4066,8 @@ Public Class Frm_Formulario_Documento
 
                                 Dim _Opciones() As Command = {Chk_Conservar_Vendedor_MAEEN, Chk_Cambiar_Vendedor_Actual, Chk_Cambiar_A_Otro_Vendedor}
 
-                                Dim _Koen = _RowEntidad.Item("KOEN")
-                                Dim _Suen = _RowEntidad.Item("SUEN")
+                                _Koen = _RowEntidad.Item("KOEN")
+                                _Suen = _RowEntidad.Item("SUEN")
 
                                 Dim _Info As New TaskDialogInfo("Validación del sistema",
                                           eTaskDialogIcon.Users,
@@ -4211,6 +4214,8 @@ Public Class Frm_Formulario_Documento
         _TblEncabezado.Rows(0).Item("RevFincred") = _TblEncabezado.Rows(0).Item("RevFincredEnt")
         _TblObservaciones.Rows(0).Item("Forma_pago") = _Forma_pago
 
+        _Koen = _TblEncabezado.Rows(0).Item("CodEntidad")
+        _Suen = _TblEncabezado.Rows(0).Item("CodSucEntidad")
 
         If _Revisar_Permiso_Lista_Precio Or _Es_Usuario_Xdefecto Then
 
@@ -4245,8 +4250,7 @@ Public Class Frm_Formulario_Documento
 
                 End If
 
-                Dim _Koen = _TblEncabezado.Rows(0).Item("CodEntidad")
-                Dim _Suen = _TblEncabezado.Rows(0).Item("CodSucEntidad")
+
 
                 If MessageBoxEx.Show(_Formulario, "Usted no posee permiso para trabajar con esta lista de precios: " & _Lista & Environment.NewLine &
                                   "La lista seguirá siendo:" & _ListaPrecios & Environment.NewLine & Environment.NewLine &
@@ -4315,6 +4319,17 @@ Public Class Frm_Formulario_Documento
 
         Me.ActiveControl = Grilla_Detalle
         Grilla_Detalle.CurrentCell = Grilla_Detalle.Rows(0).Cells("Codigo")
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Entidades Where CodEntidad = '" & _Koen & "' And CodSucEntidad = '" & _Suen & "'"
+        _RowEntidadBakapp = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_RowEntidadBakapp) Then
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Entidades (CodEntidad,CodSucEntidad) Values ('" & _Koen & "','" & _Suen & "')"
+            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Entidades Where CodEntidad = '" & _Koen & "' And CodSucEntidad = '" & _Suen & "'"
+                _RowEntidadBakapp = _Sql.Fx_Get_DataRow(Consulta_sql)
+            End If
+        End If
 
     End Sub
 
@@ -12127,7 +12142,7 @@ Public Class Frm_Formulario_Documento
             Dim _RowTido As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             Me.Text = Trim(_RowTido.Item("NOTIDO"))
-            Lbl_InfoVtaAcumMes.Text = Me.Text
+            Lbl_DocActual.Text = Me.Text
 
         End If
 
@@ -12899,7 +12914,7 @@ Public Class Frm_Formulario_Documento
 
                 If Not _Post_Venta Then
                     Me.Text = _Sql.Fx_Trae_Dato("TABTIDO", "NOTIDO", "TIDO = '" & _Tido & "'").ToString.Trim
-                    Lbl_InfoVtaAcumMes.Text = Me.Text
+                    Lbl_DocActual.Text = Me.Text
                 End If
 
                 Me.ActiveControl = Grilla_Detalle
@@ -14395,7 +14410,7 @@ Public Class Frm_Formulario_Documento
     End Sub
 
     Private Sub Sb_RevListaSuperiosEntidad_VtaCurso()
-        'Throw New NotImplementedException()
+
         Try
 
             If _Cl_DocListaSuperior.UsarVencListaPrecios Then
@@ -14408,6 +14423,25 @@ Public Class Frm_Formulario_Documento
                 Dim _PrimerDiaDelMes As Date = Primerdiadelmes(_FechaActual)
                 Dim _UltimoDiaDelMes As Date = ultimodiadelmes(_FechaActual)
 
+                Dim _PreMayMinXHolding As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "PreMayMinXHolding", "CodEntidad = '" & _Endo & "'",,,, True)
+                Dim _CodHolding As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "CodHolding", "CodEntidad = '" & _Endo & "'")
+                Dim _FiltroEntidades As String
+
+                If Not _PreMayMinXHolding Then
+                    _CodHolding = String.Empty
+                End If
+
+                Dim _MsjVtasHolding = String.Empty
+
+                If String.IsNullOrWhiteSpace(_CodHolding) Then
+                    _FiltroEntidades = "('" & _Endo & "')"
+                Else
+                    Consulta_sql = "Select CodEntidad From " & _Global_BaseBk & "Zw_Entidades Where CodHolding = '" & _CodHolding & "'"
+                    Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+                    _FiltroEntidades = Generar_Filtro_IN(_Tbl, "", "CodEntidad", False, False, "'")
+                    _MsjVtasHolding = " (incluye ventas de todo el Holding)"
+                End If
+
                 Consulta_sql = "SELECT  CASE" & vbCrLf &
                                "WHEN TIDO = 'NVV' THEN SUM(PPPRNE * (CAPRCO1 - (CAPREX1 + CAPRAD1)))" & vbCrLf &
                                "WHEN TIDO = 'NCV' THEN SUM(VANELI) * -1" & vbCrLf &
@@ -14415,7 +14449,7 @@ Public Class Frm_Formulario_Documento
                                "END AS VentaMesEnCurso" & vbCrLf &
                                "INTO #MesEnCurso" & vbCrLf &
                                "FROM MAEDDO " & vbCrLf &
-                               "WHERE ENDO = '" & _Endo & "' " & vbCrLf &
+                               "WHERE ENDO In " & _FiltroEntidades & vbCrLf &
                                "AND FEEMLI between '" & Format(_PrimerDiaDelMes, "yyyyMMdd") & "' And '" & Format(_UltimoDiaDelMes, "yyyyMMdd") & "'" & vbCrLf &
                                "AND TIDO IN ('FCV', 'NCV')" & vbCrLf &
                                "GROUP BY YEAR(FEEMLI), MONTH(FEEMLI), TIDO;" & vbCrLf &
@@ -14427,7 +14461,7 @@ Public Class Frm_Formulario_Documento
 
                 Dim _VentaMesEnCurso As Double = NuloPorNro(_Row.Item("VentaMesEnCurso"), 0)
 
-                Lbl_InfoVtaAcumMes.Text = "Vta.Acumulada Mes: " & FormatNumber(_VentaMesEnCurso, 0)
+                Lbl_InfoVtaAcumMes.Text = "Vta.Acumulada Mes: " & FormatNumber(_VentaMesEnCurso, 0) & _MsjVtasHolding
 
                 Me.Refresh()
 
@@ -25885,6 +25919,10 @@ Public Class Frm_Formulario_Documento
 
             If _Nuevo_Producto Then
                 Beep()
+                Return
+            End If
+
+            If Not Fx_Tiene_Permiso(Me, "Doc00092") Then
                 Return
             End If
 

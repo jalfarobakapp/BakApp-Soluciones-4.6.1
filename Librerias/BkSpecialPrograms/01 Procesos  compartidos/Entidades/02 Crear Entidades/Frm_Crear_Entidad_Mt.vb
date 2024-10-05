@@ -1,4 +1,5 @@
 ﻿Imports System.Data.SqlClient
+Imports BkSpecialPrograms.LsValiciones
 Imports DevComponents.DotNetBar
 
 Public Class Frm_Crear_Entidad_Mt
@@ -26,7 +27,7 @@ Public Class Frm_Crear_Entidad_Mt
     Dim _Existe_Tbl_Entidades_Bakapp As Boolean
 
     Public Property Cl_Maeen As New Tablas_Entidades.Maeen
-    Public Property Cl_Entidades As New Tablas_Entidades.Zw_Entidades
+    Public Property Zw_Entidades As New Zw_Entidades
 
 
     Public Property CreaNuevaEntidad() As Boolean
@@ -570,17 +571,17 @@ Public Class Frm_Crear_Entidad_Mt
                 Return
             End If
 
-            If IsNothing(Cl_Maeen.Paen) Then Cl_Maeen.Paen = String.Empty
-            If IsNothing(Cl_Maeen.Cien) Then Cl_Maeen.Cien = String.Empty
-            If IsNothing(Cl_Maeen.Cmen) Then Cl_Maeen.Cmen = String.Empty
+            If IsNothing(Cl_Maeen.PAEN) Then Cl_Maeen.PAEN = String.Empty
+            If IsNothing(Cl_Maeen.CIEN) Then Cl_Maeen.CIEN = String.Empty
+            If IsNothing(Cl_Maeen.CMEN) Then Cl_Maeen.CMEN = String.Empty
 
-            If String.IsNullOrEmpty(Cl_Maeen.Paen.Trim) Or String.IsNullOrEmpty(Cl_Maeen.Cien) Or String.IsNullOrEmpty(Cl_Maeen.Cmen.Trim) Then
+            If String.IsNullOrEmpty(Cl_Maeen.PAEN.Trim) Or String.IsNullOrEmpty(Cl_Maeen.CIEN) Or String.IsNullOrEmpty(Cl_Maeen.CMEN.Trim) Then
                 MessageBoxEx.Show("Faltan pais, ciudad o comuna", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 TabControl1.SelectedTabIndex = 0
                 Call Btn_Buscar_Comuna_Click(Nothing, Nothing)
             End If
 
-            If String.IsNullOrEmpty(Cl_Maeen.Paen.Trim) Or String.IsNullOrEmpty(Cl_Maeen.Cien.Trim) Or String.IsNullOrEmpty(Cl_Maeen.Cmen.Trim) Then Return
+            If String.IsNullOrEmpty(Cl_Maeen.PAEN.Trim) Or String.IsNullOrEmpty(Cl_Maeen.CIEN.Trim) Or String.IsNullOrEmpty(Cl_Maeen.CMEN.Trim) Then Return
 
         End If
 
@@ -620,7 +621,7 @@ Public Class Frm_Crear_Entidad_Mt
             Dim _NewFila As DataRow = Fx_Nueva_Linea_Notificacion(_Tbl_Maeenmail,
                                                                   Txt_Koen.Text, "", "001", "", Txt_Emailcomer.Text, "", "", "", "", "", "", "", Date.Now)
 
-            With Cl_Entidades
+            With Zw_Entidades
                 .JuntaPuntos = True
                 .EmailPuntos = Txt_Emailcomer.Text
                 .FechaInscripPuntos = Date.Now
@@ -757,9 +758,9 @@ Public Class Frm_Crear_Entidad_Mt
             Consulta_sql = Replace(Consulta_sql, "#GIEN#", UCase(Trim(Txt_Gien.Text)))
             Consulta_sql = Replace(Consulta_sql, "#EMAIL#", Txt_Email.Text)
             Consulta_sql = Replace(Consulta_sql, "#EMAILCOMER#", Txt_Emailcomer.Text)
-            Consulta_sql = Replace(Consulta_sql, "#PAEN#", Cl_Maeen.Paen)
-            Consulta_sql = Replace(Consulta_sql, "#CIEN#", Cl_Maeen.Cien)
-            Consulta_sql = Replace(Consulta_sql, "#CMEN#", Cl_Maeen.Cmen)
+            Consulta_sql = Replace(Consulta_sql, "#PAEN#", Cl_Maeen.PAEN)
+            Consulta_sql = Replace(Consulta_sql, "#CIEN#", Cl_Maeen.CIEN)
+            Consulta_sql = Replace(Consulta_sql, "#CMEN#", Cl_Maeen.CMEN)
             Consulta_sql = Replace(Consulta_sql, "#DIEN#", UCase(Trim(Txt_Dien.Text)))
             Consulta_sql = Replace(Consulta_sql, "#ZOEN#", Zona)
             Consulta_sql = Replace(Consulta_sql, "#FOEN#", UCase(Trim(Txt_Foen.Text)))
@@ -987,7 +988,7 @@ Public Class Frm_Crear_Entidad_Mt
 
             If _Existe_Tbl_Entidades_Bakapp Then
 
-                With Cl_Entidades
+                With Zw_Entidades
 
                     .CodEntidad = _Koen
                     .CodSucEntidad = _Suen
@@ -997,6 +998,9 @@ Public Class Frm_Crear_Entidad_Mt
                     .RevFincred = Chk_RevFincred.Checked
                     .MontoMinCompra = Txt_MontoMinCompra.Tag
                     .NoResMtoMinComAsCompraAuto = Chk_NoResMtoMinComAsCompraAuto.Checked
+                    .CodHolding = Txt_CodHolding.Tag
+                    .CodPagador = Txt_CodPagador.Tag
+                    .PreMayMinXHolding = Chk_PreMayMinXHolding.Checked
 
                     If _CreaNuevaEntidad Then
 
@@ -1021,6 +1025,9 @@ Public Class Frm_Crear_Entidad_Mt
                                    ",EmailCompras = '" & .EmailCompras & "'" & vbCrLf &
                                    ",MontoMinCompra = " & .MontoMinCompra & vbCrLf &
                                    ",NoResMtoMinComAsCompraAuto = " & Convert.ToInt32(.NoResMtoMinComAsCompraAuto) & vbCrLf &
+                                   ",CodHolding = '" & .CodHolding & "'" & vbCrLf &
+                                   ",PreMayMinXHolding = " & Convert.ToInt32(.PreMayMinXHolding) & vbCrLf &
+                                   ",CodPagador = '" & .CodPagador & "'" & vbCrLf &
                                    "Where CodEntidad = '" & .CodEntidad & "' And CodSucEntidad = '" & .CodSucEntidad & "'"
 
                     Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
@@ -1491,18 +1498,18 @@ Public Class Frm_Crear_Entidad_Mt
                 'Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Entidades where CodEntidad = '" & _Koen & "' And CodSucEntidad = '" & _Suen & "'"
                 'Dim _Row_Entidades As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-                Cl_Entidades = _Cl_Entidad.Fx_Llenar_Zw_Entidades(_Koen, _Suen)
+                Zw_Entidades = _Cl_Entidad.Fx_Llenar_Zw_Entidades(_Koen, _Suen)
 
-                If IsNothing(Cl_Entidades) Then
+                If IsNothing(Zw_Entidades) Then
 
                     Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Entidades (CodEntidad,CodSucEntidad,Libera_NVV) Values ('" & _Koen & "','" & _Suen & "',0)"
                     _Sql.Ej_consulta_IDU(Consulta_sql)
 
-                    Cl_Entidades = _Cl_Entidad.Fx_Llenar_Zw_Entidades(_Koen, _Suen)
+                    Zw_Entidades = _Cl_Entidad.Fx_Llenar_Zw_Entidades(_Koen, _Suen)
 
                 End If
 
-                With Cl_Entidades
+                With Zw_Entidades
 
                     Chk_Libera_NVV.Checked = .Libera_NVV ' _Row_Entidades.Item("Libera_NVV")
                     Chk_FacAuto.Checked = .FacAuto ' _Row_Entidades.Item("FacAuto")
@@ -1519,6 +1526,30 @@ Public Class Frm_Crear_Entidad_Mt
                     Txt_MontoMinCompra.Text = FormatNumber(Txt_MontoMinCompra.Tag, 0)
 
                     Chk_NoResMtoMinComAsCompraAuto.Checked = .NoResMtoMinComAsCompraAuto ' _Row_Entidades.Item("NoResMtoMinComAsCompraAuto")
+
+                    Txt_CodHolding.Tag = .CodHolding
+                    Txt_CodHolding.Text = .CodHolding
+                    Txt_CodPagador.Tag = .CodPagador
+                    Txt_CodPagador.Text = .CodPagador
+                    Chk_PreMayMinXHolding.Checked = .PreMayMinXHolding
+
+                    Dim _Cl_TablaCaracterizaciones As New Cl_TablaCaractierizaciones
+                    Dim _Mensaje As LsValiciones.Mensajes
+                    Dim _Zw As Zw_TablaDeCaracterizaciones
+
+                    _Mensaje = _Cl_TablaCaracterizaciones.Fx_Llenar_Zw_TablaDeCaracterizaciones("ENTIDADES_HOLDING", .CodHolding)
+
+                    If _Mensaje.EsCorrecto Then
+                        _Zw = _Mensaje.Tag
+                        Txt_CodHolding.Text = _Zw.CodigoTabla.Trim & " - " & _Zw.NombreTabla.Trim
+                    End If
+
+                    _Mensaje = _Cl_TablaCaracterizaciones.Fx_Llenar_Zw_TablaDeCaracterizaciones("ENTIDADES_PAGADOR", .CodPagador)
+
+                    If _Mensaje.EsCorrecto Then
+                        _Zw = _Mensaje.Tag
+                        Txt_CodPagador.Text = _Zw.CodigoTabla.Trim & " - " & _Zw.NombreTabla.Trim
+                    End If
 
                 End With
 
@@ -2166,9 +2197,9 @@ Public Class Frm_Crear_Entidad_Mt
 
         If Not IsNothing(Fm.Row_Localidad) Then
 
-            Cl_Maeen.Paen = Fm.Row_Localidad.Item("KOPA")
-            Cl_Maeen.Cien = Fm.Row_Localidad.Item("KOCI")
-            Cl_Maeen.Cmen = Fm.Row_Localidad.Item("KOCM")
+            Cl_Maeen.PAEN = Fm.Row_Localidad.Item("KOPA")
+            Cl_Maeen.CIEN = Fm.Row_Localidad.Item("KOCI")
+            Cl_Maeen.CMEN = Fm.Row_Localidad.Item("KOCM")
 
             Dim _NPais = Fm.Row_Localidad.Item("NOKOPA")
             Dim _NCiudad = Fm.Row_Localidad.Item("NOKOCI")
@@ -2366,7 +2397,7 @@ Public Class Frm_Crear_Entidad_Mt
 
     Private Sub Btn_EditarConfPuntosCliente_Click(sender As Object, e As EventArgs) Handles Btn_EditarConfPuntosCliente.Click
 
-        With Cl_Entidades
+        With Zw_Entidades
 
             Dim Fm As New Frm_Crear_Entidad_Mt_Puntos(Txt_Koen.Text, Txt_Suen.Text)
             Fm.Txt_EmailPuntos.Text = .EmailPuntos.Trim
@@ -2390,6 +2421,56 @@ Public Class Frm_Crear_Entidad_Mt
         If e.KeyValue = Keys.Enter Then
             Call Btn_Buscar_Comuna_Click(Nothing, Nothing)
         End If
+    End Sub
+
+    Private Sub Txt_CodHolding_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_CodHolding.ButtonCustomClick
+
+        Dim _FilaSeleccionada_Zw As New Zw_TablaDeCaracterizaciones
+        Dim _Seleccionar As Boolean
+
+        Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.Holding,
+                                                             Frm_Tabla_Caracterizaciones_01_Listado.Accion.Seleccionar)
+        Fm.Text = "HOLDING"
+        Fm.ShowDialog(Me)
+        _Seleccionar = Fm.Pro_Seleccion_Realizada
+        _FilaSeleccionada_Zw = Fm.FilaSeleccionada_Zw
+        Fm.Dispose()
+
+        If _Seleccionar Then
+            Txt_CodHolding.Tag = _FilaSeleccionada_Zw.CodigoTabla
+            Txt_CodHolding.Text = _FilaSeleccionada_Zw.CodigoTabla.ToString.Trim & " - " & _FilaSeleccionada_Zw.NombreTabla.ToString.Trim
+        End If
+
+    End Sub
+
+    Private Sub Txt_CodHolding_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_CodHolding.ButtonCustom2Click
+        Txt_CodHolding.Text = String.Empty
+        Txt_CodHolding.Tag = String.Empty
+    End Sub
+
+    Private Sub Txt_CodPagador_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_CodPagador.ButtonCustomClick
+
+        Dim _FilaSeleccionada_Zw As New Zw_TablaDeCaracterizaciones
+        Dim _Seleccionar As Boolean
+
+        Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.PagadorEntidad,
+                                                     Frm_Tabla_Caracterizaciones_01_Listado.Accion.Seleccionar)
+        Fm.Text = "PAGADOR ENTIDAD"
+        Fm.ShowDialog(Me)
+        _Seleccionar = Fm.Pro_Seleccion_Realizada
+        _FilaSeleccionada_Zw = Fm.FilaSeleccionada_Zw
+        Fm.Dispose()
+
+        If _Seleccionar Then
+            Txt_CodPagador.Tag = _FilaSeleccionada_Zw.CodigoTabla
+            Txt_CodPagador.Text = _FilaSeleccionada_Zw.CodigoTabla.ToString.Trim & " - " & _FilaSeleccionada_Zw.NombreTabla.ToString.Trim
+        End If
+
+    End Sub
+
+    Private Sub Txt_CodPagador_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_CodPagador.ButtonCustom2Click
+        Txt_CodPagador.Text = String.Empty
+        Txt_CodPagador.Tag = String.Empty
     End Sub
 
     Private Sub Sb_Grilla_Maennmail_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)

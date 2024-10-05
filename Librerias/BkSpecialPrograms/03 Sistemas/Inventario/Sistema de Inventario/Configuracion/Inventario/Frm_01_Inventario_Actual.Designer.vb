@@ -36,6 +36,7 @@ Partial Class Frm_01_Inventario_Actual
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Ver_Informacion_Producto = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_RevisarProducto = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
         Me.Menu_Contextual_ExportarAjuste = New DevComponents.DotNetBar.ButtonItem()
@@ -45,6 +46,10 @@ Partial Class Frm_01_Inventario_Actual
         Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Btn_ExportarResumenActual = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Btn_ExportarResumenTodo = New DevComponents.DotNetBar.ButtonItem()
+        Me.Menu_Contextual_Filtrar = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem4 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_Filtro_Sectores = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Filtro_Encargados = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
@@ -54,14 +59,10 @@ Partial Class Frm_01_Inventario_Actual
         Me.Rdb_MostrarSoloInventariados = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_MostrarSoloConStockSinInventariar = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_MostrarTodosLosProductos = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Btn_Ver_Informacion_Producto = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Filtrar = New DevComponents.DotNetBar.ButtonX()
-        Me.Menu_Contextual_Filtrar = New DevComponents.DotNetBar.ButtonItem()
-        Me.LabelItem4 = New DevComponents.DotNetBar.LabelItem()
-        Me.Btn_Filtro_Sectores = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Filtro_Encargados = New DevComponents.DotNetBar.ButtonItem()
         Me.Imagenes_20x20 = New System.Windows.Forms.ImageList(Me.components)
         Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
+        Me.Rdb_MostrarSoloInventariadosNegativos = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -214,6 +215,13 @@ Partial Class Frm_01_Inventario_Actual
         Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Ver_Informacion_Producto, Me.Btn_RevisarProducto, Me.Btn_Copiar})
         Me.Menu_Contextual_01.Text = "Opciones documento"
         '
+        'Btn_Ver_Informacion_Producto
+        '
+        Me.Btn_Ver_Informacion_Producto.Image = CType(resources.GetObject("Btn_Ver_Informacion_Producto.Image"), System.Drawing.Image)
+        Me.Btn_Ver_Informacion_Producto.ImageAlt = CType(resources.GetObject("Btn_Ver_Informacion_Producto.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Ver_Informacion_Producto.Name = "Btn_Ver_Informacion_Producto"
+        Me.Btn_Ver_Informacion_Producto.Text = "Ver estadísticas del producto (Información adicional)"
+        '
         'Btn_RevisarProducto
         '
         Me.Btn_RevisarProducto.Image = CType(resources.GetObject("Btn_RevisarProducto.Image"), System.Drawing.Image)
@@ -288,6 +296,40 @@ Partial Class Frm_01_Inventario_Actual
         Me.Btn_Btn_ExportarResumenTodo.ImageAlt = CType(resources.GetObject("Btn_Btn_ExportarResumenTodo.ImageAlt"), System.Drawing.Image)
         Me.Btn_Btn_ExportarResumenTodo.Name = "Btn_Btn_ExportarResumenTodo"
         Me.Btn_Btn_ExportarResumenTodo.Text = "Exportar todo"
+        '
+        'Menu_Contextual_Filtrar
+        '
+        Me.Menu_Contextual_Filtrar.AutoExpandOnClick = True
+        Me.Menu_Contextual_Filtrar.Name = "Menu_Contextual_Filtrar"
+        Me.Menu_Contextual_Filtrar.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem4, Me.Btn_Filtro_Sectores, Me.Btn_Filtro_Encargados})
+        Me.Menu_Contextual_Filtrar.Text = "Filtros "
+        '
+        'LabelItem4
+        '
+        Me.LabelItem4.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem4.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem4.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem4.Name = "LabelItem4"
+        Me.LabelItem4.PaddingBottom = 1
+        Me.LabelItem4.PaddingLeft = 10
+        Me.LabelItem4.PaddingTop = 1
+        Me.LabelItem4.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem4.Text = "Sectores-Encargados"
+        '
+        'Btn_Filtro_Sectores
+        '
+        Me.Btn_Filtro_Sectores.Image = CType(resources.GetObject("Btn_Filtro_Sectores.Image"), System.Drawing.Image)
+        Me.Btn_Filtro_Sectores.ImageAlt = CType(resources.GetObject("Btn_Filtro_Sectores.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Filtro_Sectores.Name = "Btn_Filtro_Sectores"
+        Me.Btn_Filtro_Sectores.Text = "Filtrar por <b><font color=""#0072BC"">SECTORES</font></b> "
+        '
+        'Btn_Filtro_Encargados
+        '
+        Me.Btn_Filtro_Encargados.Image = CType(resources.GetObject("Btn_Filtro_Encargados.Image"), System.Drawing.Image)
+        Me.Btn_Filtro_Encargados.ImageAlt = CType(resources.GetObject("Btn_Filtro_Encargados.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Filtro_Encargados.Name = "Btn_Filtro_Encargados"
+        Me.Btn_Filtro_Encargados.Text = "Filtrar por <b><font color=""#0072BC"">ENCARGADOS</font></b> "
         '
         'Grilla
         '
@@ -503,7 +545,7 @@ Partial Class Frm_01_Inventario_Actual
         Me.Rdb_MostrarSoloInventariados.Size = New System.Drawing.Size(238, 20)
         Me.Rdb_MostrarSoloInventariados.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_MostrarSoloInventariados.TabIndex = 179
-        Me.Rdb_MostrarSoloInventariados.Text = "Mostrar solo productos inventariados"
+        Me.Rdb_MostrarSoloInventariados.Text = "Mostrar productos inventariados"
         '
         'Rdb_MostrarSoloConStockSinInventariar
         '
@@ -544,13 +586,6 @@ Partial Class Frm_01_Inventario_Actual
         Me.Rdb_MostrarTodosLosProductos.TabIndex = 181
         Me.Rdb_MostrarTodosLosProductos.Text = "Mostrar todos los productos"
         '
-        'Btn_Ver_Informacion_Producto
-        '
-        Me.Btn_Ver_Informacion_Producto.Image = CType(resources.GetObject("Btn_Ver_Informacion_Producto.Image"), System.Drawing.Image)
-        Me.Btn_Ver_Informacion_Producto.ImageAlt = CType(resources.GetObject("Btn_Ver_Informacion_Producto.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Ver_Informacion_Producto.Name = "Btn_Ver_Informacion_Producto"
-        Me.Btn_Ver_Informacion_Producto.Text = "Ver estadísticas del producto (Información adicional)"
-        '
         'Btn_Filtrar
         '
         Me.Btn_Filtrar.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
@@ -563,40 +598,6 @@ Partial Class Frm_01_Inventario_Actual
         Me.Btn_Filtrar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_Filtrar.TabIndex = 182
         Me.Btn_Filtrar.Text = "Filtrar"
-        '
-        'Menu_Contextual_Filtrar
-        '
-        Me.Menu_Contextual_Filtrar.AutoExpandOnClick = True
-        Me.Menu_Contextual_Filtrar.Name = "Menu_Contextual_Filtrar"
-        Me.Menu_Contextual_Filtrar.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem4, Me.Btn_Filtro_Sectores, Me.Btn_Filtro_Encargados})
-        Me.Menu_Contextual_Filtrar.Text = "Filtros "
-        '
-        'LabelItem4
-        '
-        Me.LabelItem4.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
-        Me.LabelItem4.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
-        Me.LabelItem4.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
-        Me.LabelItem4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.LabelItem4.Name = "LabelItem4"
-        Me.LabelItem4.PaddingBottom = 1
-        Me.LabelItem4.PaddingLeft = 10
-        Me.LabelItem4.PaddingTop = 1
-        Me.LabelItem4.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.LabelItem4.Text = "Sectores-Encargados"
-        '
-        'Btn_Filtro_Sectores
-        '
-        Me.Btn_Filtro_Sectores.Image = CType(resources.GetObject("Btn_Filtro_Sectores.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Sectores.ImageAlt = CType(resources.GetObject("Btn_Filtro_Sectores.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Filtro_Sectores.Name = "Btn_Filtro_Sectores"
-        Me.Btn_Filtro_Sectores.Text = "Filtrar por <b><font color=""#0072BC"">SECTORES</font></b> "
-        '
-        'Btn_Filtro_Encargados
-        '
-        Me.Btn_Filtro_Encargados.Image = CType(resources.GetObject("Btn_Filtro_Encargados.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Encargados.ImageAlt = CType(resources.GetObject("Btn_Filtro_Encargados.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Filtro_Encargados.Name = "Btn_Filtro_Encargados"
-        Me.Btn_Filtro_Encargados.Text = "Filtrar por <b><font color=""#0072BC"">ENCARGADOS</font></b> "
         '
         'Imagenes_20x20
         '
@@ -613,11 +614,30 @@ Partial Class Frm_01_Inventario_Actual
         Me.Imagenes_16x16.Images.SetKeyName(1, "ok.png")
         Me.Imagenes_16x16.Images.SetKeyName(2, "delete.png")
         '
+        'Rdb_MostrarSoloInventariadosNegativos
+        '
+        Me.Rdb_MostrarSoloInventariadosNegativos.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_MostrarSoloInventariadosNegativos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_MostrarSoloInventariadosNegativos.CheckBoxImageChecked = CType(resources.GetObject("Rdb_MostrarSoloInventariadosNegativos.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_MostrarSoloInventariadosNegativos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_MostrarSoloInventariadosNegativos.FocusCuesEnabled = False
+        Me.Rdb_MostrarSoloInventariadosNegativos.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_MostrarSoloInventariadosNegativos.Location = New System.Drawing.Point(12, 577)
+        Me.Rdb_MostrarSoloInventariadosNegativos.Name = "Rdb_MostrarSoloInventariadosNegativos"
+        Me.Rdb_MostrarSoloInventariadosNegativos.Size = New System.Drawing.Size(372, 20)
+        Me.Rdb_MostrarSoloInventariadosNegativos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_MostrarSoloInventariadosNegativos.TabIndex = 183
+        Me.Rdb_MostrarSoloInventariadosNegativos.Text = "Mostrar productos inventariados en negativo"
+        '
         'Frm_01_Inventario_Actual
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1078, 644)
+        Me.Controls.Add(Me.Rdb_MostrarSoloInventariadosNegativos)
         Me.Controls.Add(Me.Btn_Filtrar)
         Me.Controls.Add(Me.Rdb_MostrarTodosLosProductos)
         Me.Controls.Add(Me.Rdb_MostrarSoloConStockSinInventariar)
@@ -631,6 +651,7 @@ Partial Class Frm_01_Inventario_Actual
         Me.Controls.Add(Me.Bar2)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
@@ -684,4 +705,5 @@ Partial Class Frm_01_Inventario_Actual
     Public WithEvents Btn_Filtro_Encargados As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Imagenes_20x20 As ImageList
     Friend WithEvents Imagenes_16x16 As ImageList
+    Friend WithEvents Rdb_MostrarSoloInventariadosNegativos As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

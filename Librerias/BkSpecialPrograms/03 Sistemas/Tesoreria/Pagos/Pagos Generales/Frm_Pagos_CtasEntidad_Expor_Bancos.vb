@@ -332,6 +332,7 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
                                      MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) <> DialogResult.Yes Then
 
                     _Fila.Cells("Chk").Value = False
+                    Return
 
                 End If
 
@@ -567,18 +568,19 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
 
         Dim _Cabeza = Grilla_Maedpce.Columns(Grilla_Maedpce.CurrentCell.ColumnIndex).Name
 
-        Dim _Endp = _Fila.Cells("ENDP").Value
-        Dim _Archirsd = _Fila.Cells("ARCHIRSD").Value
-        Dim _Idrsd = _Fila.Cells("IDRSD").Value
+        Dim _Endp As String = _Fila.Cells("ENDP").Value
+        Dim _Archirsd As String = _Fila.Cells("ARCHIRSD").Value
+        Dim _Idrsd As Integer = _Fila.Cells("IDRSD").Value
+        Dim _Vadp As Double = _Fila.Cells("VADP").Value
 
         If CBool(_Idrsd) Then
 
             Dim _Idmaeedo = _Idrsd
 
-            Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
-            Fm.Btn_Ver_Orden_de_despacho.Visible = False
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
+            Dim Fmv As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
+            Fmv.Btn_Ver_Orden_de_despacho.Visible = False
+            Fmv.ShowDialog(Me)
+            Fmv.Dispose()
 
             Return
 
@@ -589,42 +591,255 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
             Return
         End If
 
-        Dim _Filtrar As New Clas_Filtros_Random(Me)
-        Dim _Tbl As DataTable
+        Dim Chk_VerMontoExacto As New Command
+        Chk_VerMontoExacto.Checked = False
+        Chk_VerMontoExacto.Name = "Chk_VerMontoExacto"
+        Chk_VerMontoExacto.Text = "Ver documentos solo con monto por " & FormatNumber(_Vadp, 0)
 
-        _Filtrar.Tabla = "MAEEDO"
-        _Filtrar.Campo = "IDMAEEDO"
-        '_Filtrar.Descripcion = "TIDO+'-'+NUDO+'    '+Rtrim(LTrim(MODO))+'      '+PARSENAME(CONVERT(VARCHAR,CAST(VABRDO AS MONEY),1),2)"
-        _Filtrar.Descripcion = "TIDO+'-'+NUDO+'    '+Rtrim(LTrim(MODO))+'      '+STR(VABRDO)"
+        Dim Chk_VerTodos As New Command
+        Chk_VerTodos.Checked = False
+        Chk_VerTodos.Name = "Chk_VerTodos"
+        Chk_VerTodos.Text = "Ver todos los documentos"
 
-        Dim _Condicion = "And EMPRESA='" & ModEmpresa & "'  AND ENDO='" & _Endp & "'  AND TIDO IN ('NVV','RES','PRO') AND ESDO Not In ('C','N') AND   
-                          NOT EXISTS (SELECT * FROM MAEDPCE WHERE MAEDPCE.ARCHIRSD = 'MAEEDO' AND MAEDPCE.IDRSD = MAEEDO.IDMAEEDO)"
+        Dim _Opciones() As Command = {Chk_VerMontoExacto, Chk_VerTodos}
 
-        _Filtrar.Ver_Codigo = False
+        Dim _Info As New TaskDialogInfo("Asociación de documentos",
+                    eTaskDialogIcon.BlueFlag,
+                    "Asociar notas de venta",
+                    "Indique su opción",
+                    eTaskDialogButton.Ok, eTaskDialogBackgroundColor.Red, _Opciones, Nothing, Nothing, Nothing, Nothing)
 
-        Dim _Reg = _Sql.Fx_Cuenta_Registros("MAEEDO", "1 > 0 " & _Condicion)
+        Dim _Resultado As eTaskDialogResult = TaskDialog.Show(_Info)
 
-        If _Reg = 0 Then
-
-            MessageBoxEx.Show(Me, "No hay documentos que mostrar", "Buscar documentos", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        If _Resultado <> eTaskDialogResult.Ok Then
             Return
-
         End If
 
-        If _Filtrar.Fx_Filtrar(_Tbl,
-                           Clas_Filtros_Random.Enum_Tabla_Fl._Otra, _Condicion,
-                           False, False, True) Then
+        Dim _MontoExacto As String
 
-            _Tbl = _Filtrar.Pro_Tbl_Filtro
-
-            _Fila.Cells("ARCHIRSD").Value = "MAEEDO"
-            _Fila.Cells("IDRSD").Value = _Tbl.Rows(0).Item("Codigo")
-            _Fila.Cells("Doc_Anticipo").Value = Mid(_Tbl.Rows(0).Item("Descripcion").ToString, 1, 14)
-            _Fila.Cells("REFANTI").Value = String.Empty
-
+        If Chk_VerTodos.Checked Then
+            _MontoExacto = String.Empty
+        ElseIf Chk_VerMontoExacto.Checked Then
+            _MontoExacto = vbCrLf & "And Edo.VABRDO = " & De_Num_a_Tx_01(_Vadp, False, 5)
+        Else
+            MessageBoxEx.Show(Me, "Debe seleccionar una opción", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Sb_Buscar_NVV(_Fila)
+            Return
         End If
+
+        Dim _Filtro_Documentos = "('NVV','RES','PRO')"
+        Dim _Mensaje As LsValiciones.Mensajes = Fx_SelecionarDocumento(_Endp, _MontoExacto, _Filtro_Documentos)
+
+        If Not _Mensaje.EsCorrecto Then
+            If Not _Mensaje.Cancelado Then
+                MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            End If
+            Return
+        End If
+
+        _Fila.Cells("ENDP").Value = CType(_Mensaje.Tag, DataRow).Item("ENDO")
+        _Fila.Cells("RAZON").Value = CType(_Mensaje.Tag, DataRow).Item("NOKOEN")
+        _Fila.Cells("ARCHIRSD").Value = "MAEEDO"
+        _Fila.Cells("IDRSD").Value = CType(_Mensaje.Tag, DataRow).Item("IDMAEEDO")
+        _Fila.Cells("Doc_Anticipo").Value = CType(_Mensaje.Tag, DataRow).Item("TIDO") & "-" & CType(_Mensaje.Tag, DataRow).Item("NUDO")
+        _Fila.Cells("REFANTI").Value = String.Empty
+
+        Return
+
+        'Dim _Left_Join_MAEEN_ENDOFI_SUENDOFI As String
+        'Dim _Campo_SUENDOFI As String
+
+        'If _Sql.Fx_Exite_Campo("MAEEDO", "SUENDOFI") Then
+        '    _Left_Join_MAEEN_ENDOFI_SUENDOFI = "Left Join MAEEN Mae2 On Edo.ENDOFI = Mae2.KOEN And Edo.SUENDOFI = Mae2.SUEN"
+        '    _Campo_SUENDOFI = "Isnull(SUENDOFI,'') As SUENDOFI,"
+        'Else
+        '    _Left_Join_MAEEN_ENDOFI_SUENDOFI = "Left Join MAEEN Mae2 On Edo.ENDOFI = Mae2.KOEN "
+        '    _Campo_SUENDOFI = String.Empty
+        'End If
+
+        'Dim _Otro_Filtro = "And Edo.EMPRESA='" & ModEmpresa & "' And Edo.TIDO IN ('NVV','RES','PRO') And Edo.ESDO Not In ('C','N') And" & vbCrLf &
+        '                   "Not Exists (Select * From MAEDPCE Where MAEDPCE.ARCHIRSD = 'MAEEDO' And MAEDPCE.IDRSD = Edo.IDMAEEDO)" & _MontoExacto
+
+        'Dim _CodPagador As String
+        'Dim _FiltroEntidad As String
+
+        '_CodPagador = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "CodPagador", "CodEntidad = '" & _Endp & "'")
+
+        'If Not String.IsNullOrWhiteSpace(_CodPagador) Then
+        '    _FiltroEntidad = "And Edo.ENDO In (Select CodEntidad From " & _Global_BaseBk & "Zw_Entidades Where CodPagador = '" & _CodPagador & "')"
+        'Else
+        '    _FiltroEntidad = "And Edo.ENDO = '" & _Endp & "'"
+        'End If
+
+        'Consulta_Sql = My.Resources._24_Recursos.SQLQuery_Buscar_Docmuento
+        'Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", ModEmpresa)
+        'Consulta_Sql = Replace(Consulta_Sql, "#CantidadDoc#", 1000)
+        'Consulta_Sql = Replace(Consulta_Sql, "#TipoDocumento#", _Filtro_Documentos)
+        'Consulta_Sql = Replace(Consulta_Sql, "#NroDocumento#", "")
+        'Consulta_Sql = Replace(Consulta_Sql, "#Entidad#", _FiltroEntidad)
+        'Consulta_Sql = Replace(Consulta_Sql, "#Fecha#", _Filtro_Fechas)
+        'Consulta_Sql = Replace(Consulta_Sql, "#Estado#", "")
+        'Consulta_Sql = Replace(Consulta_Sql, "#Funcionario#", "")
+        'Consulta_Sql = Replace(Consulta_Sql, "#SucursalDocumento#", "--And Edo.SUDO = '" & ModSucursal & "'")
+        'Consulta_Sql = Replace(Consulta_Sql, "#Producto#", "")
+        'Consulta_Sql = Replace(Consulta_Sql, "#Orden#", "Order by IDMAEEDO Desc")
+
+        'Consulta_Sql = Replace(Consulta_Sql, "#Left_Join_MAEEN_ENDOFI_SUENDOFI#", _Left_Join_MAEEN_ENDOFI_SUENDOFI)
+        'Consulta_Sql = Replace(Consulta_Sql, "#Campo_SUENDOFI#", _Campo_SUENDOFI)
+
+        'Consulta_Sql = Replace(Consulta_Sql, "#Otro_Filtro#", _Otro_Filtro)
+        'Consulta_Sql = Replace(Consulta_Sql, "#ValesTransitorios#", "")
+        'Consulta_Sql = Replace(Consulta_Sql, "#Observaciones#", "")
+
+        'Dim _Tbl_Paso As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
+
+        'If Not CBool(_Tbl_Paso.Rows.Count) Then
+        '    MessageBoxEx.Show(Me, "No hay documentos que mostrar", "Buscar documentos", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        '    Return
+        'End If
+
+        'Consulta_Sql = Replace(Consulta_Sql, "", "Top #CantidadDoc#")
+
+        'Dim Fm As New Frm_BuscarDocumento_Mt
+        'Fm.BtnAceptar.Visible = False
+        'Fm.Pro_Sql_Query = Consulta_Sql
+        'Fm.CmbCantFilas.Text = 1000
+        'Fm.Pro_Pago_a_Documento = True
+        'Fm.Pro_Abrir_Seleccionado = False
+        'Fm.CmbCantFilas.Enabled = False
+        'Fm.Btn_Enviar_Correos_Masivos.Visible = False
+        'Fm.SoloModoSeleccion = True
+        'Fm.ShowDialog(Me)
+
+        'Dim _IdMaeedo_Doc = Fm.Pro_IdMaeedo_Doc
+
+        'Fm.Dispose()
+
+        'If Convert.ToBoolean(_IdMaeedo_Doc) Then
+
+        '    Consulta_Sql = "Select IDMAEEDO,TIDO,NUDO From MAEEDO Where IDMAEEDO = " & _IdMaeedo_Doc
+        '    Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+        '    _Fila.Cells("ARCHIRSD").Value = "MAEEDO"
+        '    _Fila.Cells("IDRSD").Value = _Row.Item("IDMAEEDO")
+        '    _Fila.Cells("Doc_Anticipo").Value = _Row.Item("TIDO") & "-" & _Row.Item("NUDO")
+        '    _Fila.Cells("REFANTI").Value = String.Empty
+
+        'End If
+
+        'Fm.Dispose()
 
     End Sub
+
+    Function Fx_SelecionarDocumento(_Endp As String,
+                                    _FiltroMontoExacto As String,
+                                    _FiltroDocuemntos As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+
+        Dim _Filtro_Documentos = "And Edo.TIDO In " & _FiltroDocuemntos '('NVV','RES','PRO')"
+        Dim _Filtro_Fechas = String.Empty
+
+        Dim _Left_Join_MAEEN_ENDOFI_SUENDOFI As String
+        Dim _Campo_SUENDOFI As String
+
+        If _Sql.Fx_Exite_Campo("MAEEDO", "SUENDOFI") Then
+            _Left_Join_MAEEN_ENDOFI_SUENDOFI = "Left Join MAEEN Mae2 On Edo.ENDOFI = Mae2.KOEN And Edo.SUENDOFI = Mae2.SUEN"
+            _Campo_SUENDOFI = "Isnull(SUENDOFI,'') As SUENDOFI,"
+        Else
+            _Left_Join_MAEEN_ENDOFI_SUENDOFI = "Left Join MAEEN Mae2 On Edo.ENDOFI = Mae2.KOEN "
+            _Campo_SUENDOFI = String.Empty
+        End If
+
+        Dim _Otro_Filtro = "And Edo.EMPRESA='" & ModEmpresa & "' And Edo.ESDO Not In ('C','N') And" & vbCrLf &
+                           "Not Exists (Select * From MAEDPCE Where MAEDPCE.ARCHIRSD = 'MAEEDO' And MAEDPCE.IDRSD = Edo.IDMAEEDO)" & _FiltroMontoExacto
+
+        Dim _CodPagador As String
+        Dim _FiltroEntidad As String
+
+        _CodPagador = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "CodPagador", "CodEntidad = '" & _Endp & "'")
+
+        If Not String.IsNullOrWhiteSpace(_CodPagador) Then
+            _FiltroEntidad = "And Edo.ENDO In (Select CodEntidad From " & _Global_BaseBk & "Zw_Entidades Where CodPagador = '" & _CodPagador & "')"
+        Else
+            _FiltroEntidad = "And Edo.ENDO = '" & _Endp & "'"
+        End If
+
+        Consulta_Sql = My.Resources._24_Recursos.SQLQuery_Buscar_Docmuento
+        Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", ModEmpresa)
+        Consulta_Sql = Replace(Consulta_Sql, "#CantidadDoc#", 1000)
+        Consulta_Sql = Replace(Consulta_Sql, "#TipoDocumento#", _Filtro_Documentos)
+        Consulta_Sql = Replace(Consulta_Sql, "#NroDocumento#", "")
+        Consulta_Sql = Replace(Consulta_Sql, "#Entidad#", _FiltroEntidad)
+        Consulta_Sql = Replace(Consulta_Sql, "#Fecha#", _Filtro_Fechas)
+        Consulta_Sql = Replace(Consulta_Sql, "#Estado#", "")
+        Consulta_Sql = Replace(Consulta_Sql, "#Funcionario#", "")
+        Consulta_Sql = Replace(Consulta_Sql, "#SucursalDocumento#", "--And Edo.SUDO = '" & ModSucursal & "'")
+        Consulta_Sql = Replace(Consulta_Sql, "#Producto#", "")
+        Consulta_Sql = Replace(Consulta_Sql, "#Orden#", "Order by IDMAEEDO Desc")
+
+        Consulta_Sql = Replace(Consulta_Sql, "#Left_Join_MAEEN_ENDOFI_SUENDOFI#", _Left_Join_MAEEN_ENDOFI_SUENDOFI)
+        Consulta_Sql = Replace(Consulta_Sql, "#Campo_SUENDOFI#", _Campo_SUENDOFI)
+
+        Consulta_Sql = Replace(Consulta_Sql, "#Otro_Filtro#", _Otro_Filtro)
+        Consulta_Sql = Replace(Consulta_Sql, "#ValesTransitorios#", "")
+        Consulta_Sql = Replace(Consulta_Sql, "#Observaciones#", "")
+
+        Dim _Tbl_Paso As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
+
+        If Not CBool(_Tbl_Paso.Rows.Count) Then
+            'MessageBoxEx.Show(Me, "No hay documentos que mostrar", "Buscar documentos", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            _Mensaje.Detalle = "Buscar documentos"
+            _Mensaje.Mensaje = "No hay documentos que mostrar"
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Icono = MessageBoxIcon.Stop
+            Return _Mensaje
+        End If
+
+        Consulta_Sql = Replace(Consulta_Sql, "", "Top #CantidadDoc#")
+
+        Dim Fm As New Frm_BuscarDocumento_Mt
+        Fm.BtnAceptar.Visible = False
+        Fm.Pro_Sql_Query = Consulta_Sql
+        Fm.CmbCantFilas.Text = 1000
+        Fm.Pro_Pago_a_Documento = True
+        Fm.Pro_Abrir_Seleccionado = False
+        Fm.CmbCantFilas.Enabled = False
+        Fm.Btn_Enviar_Correos_Masivos.Visible = False
+        Fm.SoloModoSeleccion = True
+        Fm.ShowDialog(Me)
+
+        Dim _IdMaeedo_Doc = Fm.Pro_IdMaeedo_Doc
+
+        Fm.Dispose()
+
+        If Convert.ToBoolean(_IdMaeedo_Doc) Then
+
+            Consulta_Sql = "Select IDMAEEDO,TIDO,NUDO,ENDO,NOKOEN" & vbCrLf &
+                           "From MAEEDO" & vbCrLf &
+                           "Inner Join MAEEN On KOEN = ENDO And SUEN = SUENDO " & vbCrLf &
+                           "Where IDMAEEDO = " & _IdMaeedo_Doc
+            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Tag = _Row
+
+            '_Fila.Cells("ARCHIRSD").Value = "MAEEDO"
+            '_Fila.Cells("IDRSD").Value = _Row.Item("IDMAEEDO")
+            '_Fila.Cells("Doc_Anticipo").Value = _Row.Item("TIDO") & "-" & _Row.Item("NUDO")
+            '_Fila.Cells("REFANTI").Value = String.Empty
+        Else
+
+            _Mensaje.Cancelado = True
+
+        End If
+
+        Fm.Dispose()
+
+        Return _Mensaje
+
+    End Function
 
     Sub Sb_Buscar_FCVBLV(_Fila As DataGridViewRow)
 
@@ -686,29 +901,47 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
         End If
 
         MessageBoxEx.Show(Me, "Hay varios documentos disponibles." & vbCrLf &
-                  "Puede seleccionar el documento deseado en la ventana posterior.",
-                  "Buscar documentos", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                          "Puede seleccionar el documento deseado en la ventana posterior.",
+                          "Buscar documentos", MessageBoxButtons.OK, MessageBoxIcon.Warning)
 
-        Dim _Condicion As String = "And IDMAEEDO In " & Generar_Filtro_IN(_Tbl, "", "IDMAEEDO", True, False)
-        Dim _Filtrar As New Clas_Filtros_Random(Me)
 
-        _Filtrar.Tabla = "MAEEDO"
-        _Filtrar.Campo = "IDMAEEDO"
-        _Filtrar.Descripcion = "TIDO+'-'+NUDO+'    '+Rtrim(LTrim(MODO))+'      '+STR(VABRDO)"
+        Dim _MontoExacto As String = vbCrLf & "And Edo.VABRDO = " & De_Num_a_Tx_01(_Vadp, False, 5)
 
-        If _Filtrar.Fx_Filtrar(Nothing,
-                       Clas_Filtros_Random.Enum_Tabla_Fl._Otra, _Condicion,
-                       False, False, True) Then
+        Dim _Filtro_Documentos = "('FCV','BLV')"
+        Dim _Mensaje As LsValiciones.Mensajes = Fx_SelecionarDocumento(_Endp, _MontoExacto, _Filtro_Documentos)
 
-            _Tbl = _Filtrar.Pro_Tbl_Filtro
-
-            _Fila.Cells("ARCHIRSD").Value = "MAEEDO"
-            _Fila.Cells("IDRSD").Value = _Tbl.Rows(0).Item("Codigo")
-            _Fila.Cells("Doc_Anticipo").Value = Mid(_Tbl.Rows(0).Item("Descripcion").ToString, 1, 14)
-            _Fila.Cells("REFANTI").Value = "*** Cruce automático ***"
-            _Fila.Cells("CruzarPagoAuto").Value = True
-
+        If Not _Mensaje.EsCorrecto Then
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
         End If
+
+        _Fila.Cells("ARCHIRSD").Value = "MAEEDO"
+        _Fila.Cells("IDRSD").Value = CType(_Mensaje.Tag, DataRow).Item("IDMAEEDO")
+        _Fila.Cells("Doc_Anticipo").Value = CType(_Mensaje.Tag, DataRow).Item("TIDO") & "-" & CType(_Mensaje.Tag, DataRow).Item("NUDO")
+        _Fila.Cells("REFANTI").Value = "*** Cruce automático ***"
+        _Fila.Cells("CruzarPagoAuto").Value = True
+
+
+        'Dim _Condicion As String = "And IDMAEEDO In " & Generar_Filtro_IN(_Tbl, "", "IDMAEEDO", True, False)
+        'Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        '_Filtrar.Tabla = "MAEEDO"
+        '_Filtrar.Campo = "IDMAEEDO"
+        '_Filtrar.Descripcion = "TIDO+'-'+NUDO+'    '+Rtrim(LTrim(MODO))+'      '+STR(VABRDO)"
+
+        'If _Filtrar.Fx_Filtrar(Nothing,
+        '               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, _Condicion,
+        '               False, False, True) Then
+
+        '    _Tbl = _Filtrar.Pro_Tbl_Filtro
+
+        '    _Fila.Cells("ARCHIRSD").Value = "MAEEDO"
+        '    _Fila.Cells("IDRSD").Value = _Tbl.Rows(0).Item("Codigo")
+        '    _Fila.Cells("Doc_Anticipo").Value = Mid(_Tbl.Rows(0).Item("Descripcion").ToString, 1, 14)
+        '    _Fila.Cells("REFANTI").Value = "*** Cruce automático ***"
+        '    _Fila.Cells("CruzarPagoAuto").Value = True
+
+        'End If
 
 
     End Sub
@@ -1585,11 +1818,24 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
 
             If Not _Fila.Cells("CruzarPagoAuto").Value AndAlso Not _Fila.Cells("Error").Value = True Then
 
-                Dim _Endo As String = _Fila.Cells("ENDP").Value
+                Dim _Tipd As String = _Fila.Cells("TIDP").Value
+                Dim _Endp As String = _Fila.Cells("ENDP").Value
                 Dim _Vadp As Double = _Fila.Cells("VADP").Value
+                Dim _CodPagador As String
+                Dim _FiltroEndo As String
 
-                Consulta_Sql = "Select IDMAEEDO,TIDO,NUDO From MAEEDO WITH (NOLOCK)" & vbCrLf &
-                               "Where EMPRESA = '" & ModEmpresa & "' And ENDO = '" & _Endo & "' And TIDO In ('NVV','RES','PRO') And ESDO Not In ('C','N')" & vbCrLf &
+                _CodPagador = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "CodPagador", "CodEntidad = '" & _Endp & "'")
+
+                If Not String.IsNullOrWhiteSpace(_CodPagador) Then
+                    _FiltroEndo = "(Select CodEntidad From " & _Global_BaseBk & "Zw_Entidades Where CodPagador = '" & _CodPagador & "')"
+                Else
+                    _FiltroEndo = "('" & _Endp & "')"
+                End If
+
+                Consulta_Sql = "Select IDMAEEDO,TIDO,NUDO,ENDO,NOKOEN" & vbCrLf &
+                               "From MAEEDO WITH (NOLOCK)" & vbCrLf &
+                               "Left Join MAEEN On KOEN = ENDO And SUEN = SUENDO" & vbCrLf &
+                               "Where EMPRESA = '" & ModEmpresa & "' And ENDO In " & _FiltroEndo & " And TIDO In ('NVV','RES','PRO') And ESDO Not In ('C','N')" & vbCrLf &
                                "And NOT EXISTS (SELECT * FROM MAEDPCE WHERE MAEDPCE.ARCHIRSD = 'MAEEDO' AND MAEDPCE.IDRSD = MAEEDO.IDMAEEDO) And VABRDO = " & De_Num_a_Tx_01(_Vadp, False, 5)
                 Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
@@ -1597,23 +1843,31 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
                     _RegSinCoincidencias += 1
                 Else
 
+                    Dim _Idmaeedo As Integer = _Tbl.Rows(0).Item("IDMAEEDO")
                     Dim _Tido As String = _Tbl.Rows(0).Item("TIDO")
                     Dim _Nudo As String = _Tbl.Rows(0).Item("NUDO")
+                    Dim _Endo As String = _Tbl.Rows(0).Item("ENDO")
+                    Dim _Nokoen As String = _Tbl.Rows(0).Item("NOKOEN")
                     Dim _Referencia As String = "*** Cruce automático ***"
 
                     If _Tbl.Rows.Count = 1 Then
 
+                        _Fila.Cells("ENDP").Value = _Endo
+                        _Fila.Cells("RAZON").Value = _Nokoen
                         _Fila.Cells("ARCHIRSD").Value = "MAEEDO"
-                        _Fila.Cells("IDRSD").Value = _Tbl.Rows(0).Item("IDMAEEDO")
+                        _Fila.Cells("IDRSD").Value = _Idmaeedo
                         _Fila.Cells("Doc_Anticipo").Value = _Tido & "-" & _Nudo
                         _Fila.Cells("REFANTI").Value = _Referencia
                         _RegConCoincidencias += 1
 
                     Else
 
-                        _Fila.Cells("Observacion").Value += "LA ENTIDAD TIENE " & _Tbl.Rows.Count & " DOCUMENTOS QUE CONINCIDEN CON EL VALOR ESTABLECIDO"
-                        _Fila.Cells("REFANTI").Value = _Tbl.Rows.Count & " DOC. ENCONTRADOS"
+                        _Fila.Cells("Observacion").Value += "LA ENTIDAD TIENE " & _Tbl.Rows.Count & " DOCUMENTOS QUE COINCIDEN CON EL VALOR ESTABLECIDO, DEBE SELECCIONAR UNO MANUALMENTE"
                         _Fila.Cells("Chk").Value = False
+                        _Fila.Cells("Exclamacion").Value = True
+                        _Fila.DefaultCellStyle.ForeColor = Rojo
+                        _Fila.Cells("Btn_Ico").Value = Imagenes_20x20.Images.Item(7)
+
                         _RegMas1Coincidencias += 1
 
                     End If

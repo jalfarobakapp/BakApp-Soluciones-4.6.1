@@ -65,17 +65,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Busca una cadena traducida similar a DECLARE @Fecha DATETIME;
+        '''  Busca una cadena traducida similar a DECLARE @Fecha Datetime;
+        '''DECLARE @FechaMesEnCurso Datetime;
+        '''DECLARE @FechaUltDiaMesAnteror As Datetime
         '''DECLARE @VentaMinima INT = {VentaMinima};
         '''DECLARE @Endo VARCHAR(10) = &apos;{Endo}&apos;            -- Puedes cambiar este valor segun sea necesario
         '''DECLARE @Meses INT = -{Meses};                  -- Puedes cambiar este valor segun sea necesario
         '''DECLARE @VentaEnCurso FLOAT = {VentaEnCurso};   -- Puedes cambiar este valor segun sea necesario
         '''
-        '''SET @Fecha = DATEADD(MONTH, @Meses, DATEADD(DAY, 1-DAY(GETDATE()), CAST(GETDATE() AS DATE)));
-        '''SELECT @Fecha AS PrimerDiaDelMes;
-        '''
-        '''-- Consulta principal
-        '''SE [resto de la cadena truncado]&quot;;.
+        '''Set @FechaMesEnCurso = DATEADD(DAY, 1-DAY(GETDATE()), CAST(GETDATE() AS DAT [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property RevisarSumpliminetoDeMinoristaMayorista() As String
             Get

@@ -24,12 +24,13 @@ Public Class Frm_BuscarDocumento_Mt
     Dim _Cerrar_Documentos_Automaticamente As Boolean
 
     Public Property HabilitarNVVParaFacturar As Boolean
+    Public Property SoloModoSeleccion As Boolean
 
     Public Property Pro_Pago_a_Documento() As Boolean
         Get
             Return _Pago_a_Documento
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Pago_a_Documento = value
         End Set
     End Property
@@ -144,7 +145,7 @@ Public Class Frm_BuscarDocumento_Mt
 
     End Sub
 
-    Private Sub Frm_BuscarDocumento_Mt_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_BuscarDocumento_Mt_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         If _Enviar_Correos_Masivamente Then
             Me.Top += 20
@@ -210,9 +211,20 @@ Public Class Frm_BuscarDocumento_Mt
 
         Btn_CopiarDocOtrEmpresa.Visible = (RutEmpresa = "77458040-9" Or RutEmpresa = "07251245-6" Or RutEmpresa = "77634877-5" Or RutEmpresa = "77634879-1")
 
+        If SoloModoSeleccion Then
+            Btn_Enviar_Correo_Adjunto.Visible = False
+            LabelItem2.Visible = False
+            Btn_Cambiar_Entidad_Documento.Visible = False
+            Btn_Imprimir_Documento.Visible = False
+            Btn_Firmar_Documento.Visible = False
+            Btn_Facturar.Visible = False
+            Btn_CopiarDocOtrEmpresa.Visible = False
+            Btn_Enviar_Correos_Masivos.Visible = False
+        End If
+
     End Sub
 
-    Public Sub Sb_Llenar_Grilla(ByVal Sql_Query As String)
+    Public Sub Sb_Llenar_Grilla(Sql_Query As String)
 
         _Tbl_Documentos = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
@@ -387,7 +399,7 @@ Public Class Frm_BuscarDocumento_Mt
 
     End Sub
 
-    Public Sub Sb_Llenar_Grilla_Pago_A_Documentos(ByVal Sql_Query As String)
+    Public Sub Sb_Llenar_Grilla_Pago_A_Documentos(Sql_Query As String)
 
         _Tbl_Documentos = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
@@ -501,7 +513,7 @@ Public Class Frm_BuscarDocumento_Mt
 
     End Sub
 
-    Private Sub Grilla_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
+    Private Sub Grilla_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
 
         _IdMaeedo_Doc = Trim(Grilla.Rows(Grilla.CurrentRow.Index).Cells("IDMAEEDO").Value)
 
@@ -513,7 +525,7 @@ Public Class Frm_BuscarDocumento_Mt
 
     End Sub
 
-    Private Sub BtnAceptar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnAceptar.Click
+    Private Sub BtnAceptar_Click(sender As System.Object, e As System.EventArgs) Handles BtnAceptar.Click
 
         If _Seleccion_Multiple Then
 
@@ -553,7 +565,7 @@ Public Class Frm_BuscarDocumento_Mt
 
     End Sub
 
-    Sub Sb_Actualizar_Grilla_Detalle(ByVal Idmaeedo As String)
+    Sub Sb_Actualizar_Grilla_Detalle(Idmaeedo As String)
 
         Consulta_Sql = "SELECT KOFULIDO,SULIDO,BOSULIDO,KOPRCT,ALTERNAT,NOKOPR,
                         CASE UDTRPR WHEN 1 THEN CAPRCO1 ELSE CAPRCO2 END AS CAPRCO,   
@@ -642,7 +654,7 @@ Public Class Frm_BuscarDocumento_Mt
 
     End Sub
 
-    Private Sub Grilla_CellEnter(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellEnter
+    Private Sub Grilla_CellEnter(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellEnter
 
         Dim _Razon_Fisica As String
         Dim _Sucursal As String
@@ -822,7 +834,7 @@ Public Class Frm_BuscarDocumento_Mt
 
     End Function
 
-    Private Sub Frm_BuscarDocumento_Mt_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_BuscarDocumento_Mt_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
 
         If e.KeyValue = Keys.Escape Then
             _IdMaeedo_Doc = 0
@@ -833,7 +845,7 @@ Public Class Frm_BuscarDocumento_Mt
 
     End Sub
 
-    Function Fx_Cambiar_Entidad_Doc(ByVal _IdMaeedo As Integer, ByVal _Permiso As String) As DataTable
+    Function Fx_Cambiar_Entidad_Doc(_IdMaeedo As Integer, _Permiso As String) As DataTable
 
         If Fx_Tiene_Permiso(Me, _Permiso) Then
 
@@ -909,7 +921,7 @@ Public Class Frm_BuscarDocumento_Mt
 
     End Sub
 
-    Private Sub Btn_Cambiar_Entidad_Documento_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cambiar_Entidad_Documento.Click
+    Private Sub Btn_Cambiar_Entidad_Documento_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cambiar_Entidad_Documento.Click
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
@@ -937,7 +949,7 @@ Public Class Frm_BuscarDocumento_Mt
 
     End Sub
 
-    Private Sub Btn_Imprimir_Documento_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Imprimir_Documento.Click
+    Private Sub Btn_Imprimir_Documento_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Imprimir_Documento.Click
 
         If Fx_Tiene_Permiso(Me, "Doc00012") Then
 
@@ -988,7 +1000,7 @@ Public Class Frm_BuscarDocumento_Mt
 
     End Sub
 
-    Private Sub Sb_Grilla_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Sb_Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
 
         If e.Button = Windows.Forms.MouseButtons.Right Then
 
@@ -1007,7 +1019,7 @@ Public Class Frm_BuscarDocumento_Mt
 
                     Btn_Facturar.Visible = False
 
-                    If _Tido = "NVV" Then
+                    If _Tido = "NVV" AndAlso Not SoloModoSeleccion Then
                         Btn_Facturar.Visible = (_Estado = "Vigente")
                     End If
 
@@ -1023,11 +1035,11 @@ Public Class Frm_BuscarDocumento_Mt
 
     End Sub
 
-    Private Sub Btn_Enviar_Correo_Adjunto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Enviar_Correo_Adjunto.Click
+    Private Sub Btn_Enviar_Correo_Adjunto_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Enviar_Correo_Adjunto.Click
         Sb_Enviar_documento_por_correo()
     End Sub
 
-    Private Sub Btn_Ver_Documento_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Ver_Documento.Click
+    Private Sub Btn_Ver_Documento_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ver_Documento.Click
         Sb_Ver_Documento()
     End Sub
 
@@ -1221,7 +1233,7 @@ Public Class Frm_BuscarDocumento_Mt
 
     End Sub
 
-    Private Sub Btn_Firmar_Documento_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Firmar_Documento.Click
+    Private Sub Btn_Firmar_Documento_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Firmar_Documento.Click
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 

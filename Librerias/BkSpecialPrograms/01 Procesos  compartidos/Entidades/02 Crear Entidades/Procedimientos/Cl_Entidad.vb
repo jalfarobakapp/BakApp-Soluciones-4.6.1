@@ -141,9 +141,9 @@ Public Class Cl_Entidades
 
     End Function
 
-    Function Fx_Llenar_Zw_Entidades(_CodEntidad As String, _CodSucEntidad As String) As Tablas_Entidades.Zw_Entidades
+    Function Fx_Llenar_Zw_Entidades(_CodEntidad As String, _CodSucEntidad As String) As Zw_Entidades
 
-        Dim _Zw_Entidades As New Tablas_Entidades.Zw_Entidades
+        Dim _Zw_Entidades As New Zw_Entidades
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Entidades Where CodEntidad = '" & _CodEntidad & "' And CodSucEntidad = '" & _CodSucEntidad & "'"
         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -174,6 +174,11 @@ Public Class Cl_Entidades
             .JuntaPuntos = _Row.Item("JuntaPuntos")
             .EmailPuntos = _Row.Item("EmailPuntos")
             .FechaInscripPuntos = NuloPorNro(_Row.Item("FechaInscripPuntos"), Nothing)
+            .CodFuncionario_Enrola = _Row.Item("CodFuncionario_Enrola")
+            .FechaVencLista = NuloPorNro(_Row.Item("FechaVencLista"), Nothing)
+            .CodHolding = _Row.Item("CodHolding")
+            .PreMayMinXHolding = _Row.Item("PreMayMinXHolding")
+            .CodPagador = _Row.Item("CodPagador")
 
         End With
 
@@ -302,31 +307,6 @@ Namespace Tablas_Entidades
 
     End Class
 
-    Public Class Zw_Entidades
-
-        Public Property CodEntidad As String
-        Public Property CodSucEntidad As String
-        Public Property Libera_NVV As Boolean
-        Public Property AG_AgenciaxDefDespachos As Boolean
-        Public Property AG_Transportista As String
-        Public Property AG_Nombre_Contacto As String
-        Public Property RT_Transportista As String
-        Public Property EntregaPaletizada As Boolean
-        Public Property Metodo_Abastecer_Dias_Meses As Integer
-        Public Property Dias_a_Abastecer As Integer
-        Public Property Tiempo_Reposicion_Dias_Meses As Integer
-        Public Property Tiempo_Reposicion As Integer
-        Public Property FacAuto As Boolean
-        Public Property RevFincred As Boolean
-        Public Property EmailCompras As String
-        Public Property MontoMinCompra As Double
-        Public Property NoResMtoMinComAsCompraAuto As Boolean
-        Public Property JuntaPuntos As Boolean
-        Public Property EmailPuntos As String
-        Public Property FechaInscripPuntos As DateTime?
-        Public Property CodFuncionario_Enrola As String
-
-    End Class
 
 End Namespace
 

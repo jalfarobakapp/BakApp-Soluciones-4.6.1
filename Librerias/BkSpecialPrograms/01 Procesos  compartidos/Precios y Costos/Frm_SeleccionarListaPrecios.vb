@@ -26,6 +26,7 @@ Public Class Frm_SeleccionarListaPrecios
 
     Public Property NoPedirPermiso As Boolean
     Public Property Permiso As String
+    Public Property FiltroAdicional As String
 
     Public Sub New(Tipo_Listas As Enum_Tipo_Lista,
                    Multiseleccion As Boolean,
@@ -56,6 +57,8 @@ Public Class Frm_SeleccionarListaPrecios
 
     Private Sub Frm_SeleccionarListaPrecios_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
+        AddHandler GrillaListas.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+
         Sb_Parametro_Informe_Sql(False)
         Sb_Llenar_Grilla()
 
@@ -83,6 +86,8 @@ Public Class Frm_SeleccionarListaPrecios
             Consulta_sql += "And KOLT In (Select SUBSTRING(CodPermiso,4,6) From " & _Global_BaseBk & "ZW_PermisosVsUsuarios" & Space(1) &
                             "Where CodUsuario = '" & FUNCIONARIO & "' And CodPermiso LIKE 'Lp-%')"
         End If
+
+        Consulta_sql += vbCrLf & FiltroAdicional
 
         _Tbl_Listas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
