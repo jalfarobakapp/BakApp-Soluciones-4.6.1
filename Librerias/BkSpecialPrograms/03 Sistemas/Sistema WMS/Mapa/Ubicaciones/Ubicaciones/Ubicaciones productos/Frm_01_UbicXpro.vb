@@ -32,14 +32,16 @@ Public Class Frm_01_UbicXpro
 
         _Codigo = Codigo
 
-        If Global_Thema = 2 Then
+        'If Global_Thema = 2 Then
 
-            BtnAgregarUbicXProdBuscar.ForeColor = Color.White
-            BtnAgregarUbicXProdDirecto.ForeColor = Color.White
-            Btn_Mnu_Pr_Estadistica_Producto.ForeColor = Color.White
-            TxtDescripcion.FocusHighlightEnabled = False
+        '    BtnAgregarUbicXProdBuscar.ForeColor = Color.White
+        '    BtnAgregarUbicXProdDirecto.ForeColor = Color.White
+        '    Btn_Mnu_Pr_Estadistica_Producto2.ForeColor = Color.White
+        '    TxtDescripcion.FocusHighlightEnabled = False
 
-        End If
+        'End If
+
+        Sb_Color_Botones_Barra(Bar1)
 
     End Sub
 
@@ -209,6 +211,7 @@ Public Class Frm_01_UbicXpro
             Dim _Sucursal = _Fila.Cells("Sucursal").Value
             Dim _Bodega = _Fila.Cells("Bodega").Value
             Dim _Codigo_Ubic = _Fila.Cells("Codigo_Ubic").Value
+            Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
 
             If Grilla.Rows.Count > 1 And _Primaria Then
 
@@ -225,26 +228,51 @@ Public Class Frm_01_UbicXpro
 
             If dlg = System.Windows.Forms.DialogResult.Yes Then
 
-                Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Prod_Ubicacion" & vbCrLf &
-                               "Where Semilla = " & _Semilla
+                Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_Ubicacion_IngSal", "Semilla = " & _Semilla)
 
-                If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+                Consulta_sql = String.Empty
 
-                    If _Primaria Then
+                If CBool(_Reg) Then
+                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal Set " & vbCrLf &
+                               "Empresa = '" & _Empresa & "'" &
+                               ",Sucursal = '" & _Sucursal & "'" &
+                               ",Bodega = '" & _Bodega & "'" &
+                               ",Id_Mapa = " & _Id_Mapa &
+                               ",Codigo_Sector = '" & _Codigo_Sector & "'" &
+                               ",Codigo_Ubic = '" & _Codigo_Ubic & "'" &
+                               ",Codigo = '" & _Codigo & "'" &
+                               ",CodFuncionario_Sal = '" & FUNCIONARIO & "'" &
+                               ",NombreEquipo = '" & _NombreEquipo & "'" &
+                               ",Salida = 1" &
+                               ",FechaSalida = GetDate()" & vbCrLf &
+                               "Where Semilla = " & _Semilla & vbCrLf
+                Else
+                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal (Semilla,Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector,Codigo_Ubic,Codigo," &
+                                   "CodFuncionario_Sal,NombreEquipo,Salida,FechaSalida) Values " & vbCrLf &
+                                   "(" & _Semilla & ",'" & _Empresa & "','" & _Sucursal & "','" & _Bodega & "'," & _Id_Mapa & ",'" & _Codigo_Sector & "','" & _Codigo_Ubic & "'" &
+                                   ",'" & _Codigo & "','" & FUNCIONARIO & "','" & _NombreEquipo & "',1,Getdate())" & vbCrLf
+                End If
 
-                        If _Global_Row_Configuracion_General.Item("Utilizar_Ubicaciones_WCM") Then
+                Consulta_sql += "Delete " & _Global_BaseBk & "Zw_Prod_Ubicacion Where Semilla = " & _Semilla
 
-                            Consulta_sql = "Update TABBOPR Set DATOSUBIC = ''" & vbCrLf &
-                                           "Where EMPRESA = '" & _Empresa & "' AND KOSU = '" & _Sucursal & "' AND KOBO = '" & _Bodega & "' AND KOPR = '" & _Codigo & "'"
-                            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+                If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+                    MessageBoxEx.Show(Me, _Sql.Pro_Error, "Problema", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Return
+                End If
 
-                        End If
+                If _Primaria Then
+
+                    If _Global_Row_Configuracion_General.Item("Utilizar_Ubicaciones_WCM") Then
+
+                        Consulta_sql = "Update TABBOPR Set DATOSUBIC = ''" & vbCrLf &
+                                       "Where EMPRESA = '" & _Empresa & "' AND KOSU = '" & _Sucursal & "' AND KOBO = '" & _Bodega & "' AND KOPR = '" & _Codigo & "'"
+                        _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
                     End If
 
-                    Grilla.Rows.RemoveAt(_Fila.Index)
-
                 End If
+
+                Grilla.Rows.RemoveAt(_Fila.Index)
 
             End If
 
@@ -386,10 +414,6 @@ Public Class Frm_01_UbicXpro
     End Sub
 #End Region
 
-    Private Sub Btn_Mnu_Pr_Estadistica_Producto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Pr_Estadistica_Producto.Click
-        _Producto_Op.Sb_Ver_Informacion_Adicional_producto(Me, _Codigo)
-    End Sub
-
     Private Sub Grilla_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs)
 
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
@@ -508,6 +532,10 @@ Public Class Frm_01_UbicXpro
 
         End If
 
+    End Sub
+
+    Private Sub Btn_Mnu_Pr_Estadistica_Producto_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_Pr_Estadistica_Producto.Click
+        _Producto_Op.Sb_Ver_Informacion_Adicional_producto(Me, _Codigo)
     End Sub
 
     Private Sub Btn_Mnu_Ver_Sector_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Ver_Sector.Click

@@ -3529,6 +3529,29 @@ Namespace My.Resources
         '''<summary>
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
+        '''CREATE TABLE [dbo].[Zw_Prod_Ubicacion_IngSal](
+        '''	[Id]					[int]			IDENTITY(1,1) NOT NULL,
+        '''	[Semilla]				[int]			NOT NULL,
+        '''	[Empresa]				[varchar](2)	NOT NULL,
+        '''	[Sucursal]				[varchar](3)	NOT NULL,
+        '''	[Bodega]				[varchar](3)	NOT NULL,
+        '''	[Id_Mapa]				[int]			NOT NULL,
+        '''	[Codigo_Sector]			[varchar](20)	NOT NULL,
+        '''	[Codigo_Ubic]			[varchar](20)	NOT NULL,
+        '''	[Codigo]				[char](13)		NOT NULL,
+        '''	[NombreEquipo]			[varchar](50)	NOT NULL,
+        '''	[CodFuncionario_Ing]	[char](3)		NOT NULL,
+        '''	[Ingreso]				[b [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Prod_Ubicacion_IngSal() As String
+            Get
+                Return ResourceManager.GetString("Zw_Prod_Ubicacion_IngSal", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
         '''CREATE TABLE [dbo].[Zw_Prod_Usuario_Validador](
         '''	[Empresa]			[varchar](2) NOT NULL DEFAULT (&apos;&apos;),
         '''	[CodFuncionario]	[char](3) NOT NULL DEFAULT (&apos;&apos;),
@@ -5445,6 +5468,26 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Zw_WMS_Ubicaciones_Mapa_Enc() As String
             Get
                 Return ResourceManager.GetString("Zw_WMS_Ubicaciones_Mapa_Enc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_WMS_Ubicaciones_Sectores](
+        '''	[Id_Sector]			[int] IDENTITY(1,1) NOT NULL,
+        '''	[Id_Mapa]			[int]				NOT NULL DEFAULT (0),
+        '''	[Empresa]			[char](2)			NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Sucursal]			[char](3)			NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Bodega]			[char](3)			NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Codigo_Sector]		[varchar](20)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Nombre_Sector]		[varchar](50)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Es_SubSector]		[bit]				NOT NULL DEFAULT (0),
+        '''	[EsCabecera]		[bit]				NOT NULL DEFAULT (0) [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_WMS_Ubicaciones_Sectores() As String
+            Get
+                Return ResourceManager.GetString("Zw_WMS_Ubicaciones_Sectores", resourceCulture)
             End Get
         End Property
         

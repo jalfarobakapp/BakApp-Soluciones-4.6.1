@@ -43,7 +43,7 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
             Btn_Imprimir_Etiquetas.ForeColor = Color.White
         End If
 
-        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
+        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
 
         Sb_Color_Botones_Barra(Bar1)
 
@@ -82,39 +82,21 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
             _Ud = 2
         End If
 
-        Dim _Condicion_Maest = "Where EMPRESA = '" & _Empresa & "'" & vbCrLf &
-                               "AND KOSU = '" & _Sucursal & "'" & vbCrLf &
-                               "AND KOBO = '" & _Bodega & "'" & vbCrLf &
-                               "AND KOPR = Codigo"
-
-        Consulta_sql = "Select Semilla,Id_Mapa,Empresa,Sucursal,Bodega,Codigo,Codigo_Sector,Codigo_Ubic," &
-                       "Isnull((Select Top 1 KOPRAL From TABCODAL Td Where Td.KOPR = Codigo And KOEN = ''),'') As CodBarra," &
-                       "NOKOPR As Descripcion,Primaria," &
-                       "Isnull((Select Sum(STFI1) From MAEST " & _Condicion_Maest & "),0) As STFI1," &
-                       "Isnull((Select Sum(STFI2) From MAEST " & _Condicion_Maest & "),0) As STFI2," & vbCrLf &
-                       "Isnull((Select Top 1 Stock_Ud1 From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Stock_X_Producto Zsu " & vbCrLf &
-                       "Where Zsu.Empresa = Zu.Empresa And " & vbCrLf &
-                       "Zsu.Sucursal = Zu.Sucursal And " & vbCrLf &
-                       "Zsu.Bodega= Zu.Bodega and Zsu.Codigo_Ubic = Zu.Codigo_Ubic And Zsu.Codigo = Zu.Codigo),0) As Stock_Ubic_Ud1," & vbCrLf &
-                       "Isnull((Select Top 1 Stock_Ud2 From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Stock_X_Producto Zsu " & vbCrLf &
-                       "Where Zsu.Empresa = Zu.Empresa And " & vbCrLf &
-                       "Zsu.Sucursal = Zu.Sucursal And " & vbCrLf &
-                       "Zsu.Bodega= Zu.Bodega and Zsu.Codigo_Ubic = Zu.Codigo_Ubic And Zsu.Codigo = Zu.Codigo),0) As Stock_Ubic_Ud2" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Prod_Ubicacion Zu LEFT OUTER JOIN" & vbCrLf &
-                       "MAEPR On Codigo = KOPR" & vbCrLf &
-                       "Where Empresa = '" & _Empresa & "' and Sucursal = '" & _Sucursal & "' 
-                        And Bodega = '" & _Bodega & "' --And Id_Mapa = " & _Id_Mapa & "
-                        And Codigo_Sector = '" & _Codigo_Sector & "' And Codigo_Ubic = '" & _Codigo_Ubic & "'"
-
-        Consulta_sql = "Select Semilla,Id_Mapa,Empresa,Sucursal,Bodega,Codigo,Codigo_Sector,Codigo_Ubic," & vbCrLf &
-                       "Isnull((Select Top 1 KOPRAL From TABCODAL Td Where Td.KOPR = Codigo And KOEN = ''),'') As CodBarra," & vbCrLf &
-                       "NOKOPR As Descripcion,Primaria,Isnull(Mt.STFI1,0) As 'STFI1',Isnull(Mt.STFI2,0) As 'STFI2',Stock_Ubic_Ud1,Stock_Ubic_Ud2" & vbCrLf &
+        Consulta_sql = "Select Cast(0 As Bit) As Chk,Zu.Semilla,Zu.Id_Mapa,Zu.Empresa,Zu.Sucursal,Zu.Bodega,Zu.Codigo,Zu.Codigo_Sector,Zu.Codigo_Ubic," & vbCrLf &
+                       "Isnull((Select Top 1 KOPRAL From TABCODAL Td Where Td.KOPR = Zu.Codigo And KOEN = ''),'') As CodBarra," & vbCrLf &
+                       "NOKOPR As Descripcion,Primaria,Isnull(Mt.STFI1,0) As 'STFI1',Isnull(Mt.STFI2,0) As 'STFI2',Stock_Ubic_Ud1,Stock_Ubic_Ud2," & vbCrLf &
+                       "Isnull(InSa.CodFuncionario_Ing,'') As 'CodFuncionario_Ing',Isnull(Tis.NOKOFU,'') As 'NomFuncionario_Ing',InSa.FechaIngreso" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Prod_Ubicacion Zu" & vbCrLf &
                        "Left Join MAEPR Mp On Codigo = KOPR" & vbCrLf &
                        "Left Join MAEST Mt On Mt.EMPRESA = Zu.Empresa And Mt.KOSU = Zu.Sucursal And Mt.KOBO = Zu.Bodega And Mt.KOPR = Zu.Codigo" & vbCrLf &
-                       "Where Empresa = '" & _Empresa & "' and Sucursal = '" & _Sucursal & "' 
-                        And Bodega = '" & _Bodega & "' And Id_Mapa = " & _Id_Mapa & "
-                        And Codigo_Sector = '" & _Codigo_Sector & "' And Codigo_Ubic = '" & _Codigo_Ubic & "'"
+                       "Left Join " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal InSa On InSa.Id_Mapa = Zu.Id_Mapa And Zu.Semilla = InSa.Semilla" & vbCrLf &
+                       "Left Join TABFU Tis On Tis.KOFU = InSa.CodFuncionario_Ing" & vbCrLf &
+                       "Where Zu.Empresa = '" & _Empresa & "' " & vbCrLf &
+                       "And Zu.Sucursal = '" & _Sucursal & "' " & vbCrLf &
+                       "And Zu.Bodega = '" & _Bodega & "' " & vbCrLf &
+                       "And Zu.Id_Mapa = " & _Id_Mapa & vbCrLf &
+                       "And Zu.Codigo_Sector = '" & _Codigo_Sector & "' " & vbCrLf &
+                       "And Zu.Codigo_Ubic = '" & _Codigo_Ubic & "'"
 
         _Tbl_UbicXpro = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -123,38 +105,43 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
             .DataSource = _Tbl_UbicXpro
             OcultarEncabezadoGrilla(Grilla)
 
+            Dim _DisplayIndex As Integer = 0
+
+            '.Columns("Chk").Width = 30
+            '.Columns("Chk").HeaderText = "Sel."
+            '.Columns("Chk").Visible = True
+            '.Columns("Chk").ReadOnly = False
+            '.Columns("Chk").Visible = True
+            '.Columns("Chk").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
+
             .Columns("Codigo").Width = 90
             .Columns("Codigo").HeaderText = "Código"
             .Columns("Codigo").Visible = True
-            .Columns("Codigo").DisplayIndex = 0
+            .Columns("Codigo").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("CodBarra").Width = 130
             .Columns("CodBarra").HeaderText = "Código de Barras"
             .Columns("CodBarra").Visible = True
-            .Columns("CodBarra").DisplayIndex = 1
+            .Columns("CodBarra").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            .Columns("Descripcion").Width = 310
+            .Columns("Descripcion").Width = 330
             .Columns("Descripcion").HeaderText = "Descripción"
             .Columns("Descripcion").Visible = True
-            .Columns("Descripcion").DisplayIndex = 2
+            .Columns("Descripcion").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            .Columns("Stock_Ubic_Ud" & _Ud).Width = 140
+            .Columns("Stock_Ubic_Ud" & _Ud).Width = 120
             .Columns("Stock_Ubic_Ud" & _Ud).HeaderText = "Stock en ubicación Ud" & _Ud
             .Columns("Stock_Ubic_Ud" & _Ud).Visible = True
             .Columns("Stock_Ubic_Ud" & _Ud).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Stock_Ubic_Ud" & _Ud).DefaultCellStyle.Format = "###,##.##"
-            .Columns("Stock_Ubic_Ud" & _Ud).DisplayIndex = 3
-
-            '.Columns("STFI" & _Ud).Width = 80
-            '.Columns("STFI" & _Ud).HeaderText = "Stock en bodega Ud" & _Ud
-            '.Columns("STFI" & _Ud).Visible = True
-            '.Columns("STFI" & _Ud).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("STFI" & _Ud).DefaultCellStyle.Format = "###,##.##"
-            '.Columns("STFI" & _Ud).DisplayIndex = 4
+            .Columns("Stock_Ubic_Ud" & _Ud).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
         End With
-
-
 
     End Sub
 
@@ -162,8 +149,6 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
                                                    _Codigo As String,
                                                   Optional _Ver_Mensaje As Boolean = True,
                                                   Optional _EsPrimaria As Boolean = False) As Boolean
-
-
 
         Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_Ubicacion",
                                                    "Empresa = '" & _Empresa & "' and Sucursal = '" & _Sucursal &
@@ -241,9 +226,6 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
         Dim _Nombre = _Codigo_Sector
         ExportarTabla_JetExcel_Tabla(_Tbl_UbicXpro, Me, _Nombre)
     End Sub
-
-
-
 
     Private Sub Frm_05_UbicXpro_UbicacionConProductos_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.F2 Then
@@ -406,45 +388,57 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
 
     Sub Sb_Asociar_Productos_Masivamente()
 
-        Dim _Sql_Filtro_Condicion_Extra = "And TIPR = 'FPN'"
-        Dim _Filtrar As New Clas_Filtros_Random(Me)
-        Dim _Tbl_Productos As DataTable
-        Dim _Filtrar_Pr As Boolean
+        Try
 
-        If _Filtrar.Fx_Filtrar(Nothing,
-                               Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra,
-                               False, False) Then
+            Me.Enabled = False
 
-            _Tbl_Productos = _Filtrar.Pro_Tbl_Filtro
-            If _Filtrar.Pro_Filtro_Todas Then
-                _Tbl_Productos = Nothing
-            End If
-            _Filtrar_Pr = True
-        End If
+            Dim _Sql_Filtro_Condicion_Extra = "And TIPR = 'FPN'"
+            Dim _Filtrar As New Clas_Filtros_Random(Me)
+            Dim _Tbl_Productos As DataTable
+            Dim _Filtrar_Pr As Boolean
 
-        Dim _Contador = 0
+            If _Filtrar.Fx_Filtrar(Nothing,
+                                   Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra,
+                                   False, False) Then
 
-        If _Filtrar_Pr Then
-
-            For Each _Fila As DataRow In _Tbl_Productos.Rows
-
-                Dim _Codigo As String = _Fila.Item("Codigo")
-
-                If Fx_Agregar_producto_ubicacion(Me, _Codigo, False) Then
-                    _Contador += 1
+                _Tbl_Productos = _Filtrar.Pro_Tbl_Filtro
+                If _Filtrar.Pro_Filtro_Todas Then
+                    _Tbl_Productos = Nothing
                 End If
-            Next
-        End If
+                _Filtrar_Pr = True
+            End If
 
-        If CBool(_Contador) Then
+            Dim _Contador = 0
 
-            Beep()
-            ToastNotification.Show(Me, "DATOS GUARDADOS CORRECTAMENTE (" & _Contador & ")",
-                                   My.Resources.ok_button,
-                                   1 * 1000, eToastGlowColor.Red, eToastPosition.MiddleCenter)
+            If _Filtrar_Pr Then
 
-            Sb_Actualizar_Grilla_Ubic()
-        End If
+                For Each _Fila As DataRow In _Tbl_Productos.Rows
+
+                    Dim _Codigo As String = _Fila.Item("Codigo")
+
+                    If Fx_Agregar_producto_ubicacion(Me, _Codigo, False) Then
+                        _Contador += 1
+                    End If
+
+                Next
+
+            End If
+
+            If CBool(_Contador) Then
+
+                Beep()
+                ToastNotification.Show(Me, "DATOS GUARDADOS CORRECTAMENTE (" & _Contador & ")",
+                                       My.Resources.ok_button,
+                                       1 * 1000, eToastGlowColor.Red, eToastPosition.MiddleCenter)
+
+                Sb_Actualizar_Grilla_Ubic()
+            End If
+
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        Finally
+            Me.Enabled = True
+        End Try
 
     End Sub
 
@@ -520,11 +514,6 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
         End If
     End Sub
 
-    Private Sub Btn_Mnu_Estadisticas_Producto_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Estadisticas_Producto.Click
-        Dim _Codigo As String = Grilla.Rows(Grilla.CurrentRow.Index).Cells("Codigo").Value
-        _Producto_Op.Sb_Ver_Informacion_Adicional_producto(Me, _Codigo)
-    End Sub
-
     Private Sub Grilla_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
         Call Btn_Mnu_Ver_Ubicaciones_Del_Producto_Click(Nothing, Nothing)
     End Sub
@@ -564,7 +553,6 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
             Dim _Sucursal As String = _Fila.Cells("Sucursal").Value
             Dim _Bodega As String = _Fila.Cells("Bodega").Value
             Dim _Codigo As String = _Fila.Cells("Codigo").Value
-            Dim _TipoMov As String = "Salida"
             Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
 
             'If Grilla.Rows.Count > 1 Then
@@ -594,7 +582,6 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
                                ",Codigo_Sector = '" & _Codigo_Sector & "'" &
                                ",Codigo_Ubic = '" & _Codigo_Ubic & "'" &
                                ",Codigo = '" & _Codigo & "'" &
-                               ",TipoMov = '" & _TipoMov & "'" &
                                ",CodFuncionario_Sal = '" & FUNCIONARIO & "'" &
                                ",NombreEquipo = '" & _NombreEquipo & "'" &
                                ",Salida = 1" &
@@ -602,9 +589,9 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
                                "Where Semilla = " & _Semilla & vbCrLf
             Else
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal (Semilla,Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector,Codigo_Ubic,Codigo," &
-                               "TipoMov,CodFuncionario_Sal,NombreEquipo,Salida,FechaSalida) Values " & vbCrLf &
+                               "CodFuncionario_Sal,NombreEquipo,Salida,FechaSalida) Values " & vbCrLf &
                                "(" & _Semilla & ",'" & _Empresa & "','" & _Sucursal & "','" & _Bodega & "'," & _Id_Mapa & ",'" & _Codigo_Sector & "','" & _Codigo_Ubic & "'" &
-                               ",'" & _Codigo & "','" & _TipoMov & "','" & FUNCIONARIO & "','" & _NombreEquipo & "',1,Getdate())" & vbCrLf
+                               ",'" & _Codigo & "','" & FUNCIONARIO & "','" & _NombreEquipo & "',1,Getdate())" & vbCrLf
             End If
 
             Consulta_sql += "Delete " & _Global_BaseBk & "Zw_Prod_Ubicacion Where Semilla = " & _Semilla
@@ -628,4 +615,20 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
 
     End Sub
 
+    Private Sub Mnu_Btn_Ver_Informacion_de_producto_Click(sender As Object, e As EventArgs) Handles Mnu_Btn_Ver_Informacion_de_producto.Click
+        Dim _Codigo As String = Grilla.Rows(Grilla.CurrentRow.Index).Cells("Codigo").Value
+        _Producto_Op.Sb_Ver_Informacion_Adicional_producto(Me, _Codigo)
+    End Sub
+
+    Private Sub Grilla_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellEnter
+        Try
+            Dim _Fila As DataGridViewRow = Grilla.Rows(e.RowIndex)
+            Dim _FechaIng As Date = _Fila.Cells("FechaIngreso").Value
+            Lbl_InfoFechaIngUbic.Text = "Fecha de ingreso: " & FormatDateTime(_FechaIng, DateFormat.ShortDate)
+            Lbl_InfoFechaIngUbic.Visible = True
+        Catch ex As Exception
+            Lbl_InfoFechaIngUbic.Visible = False
+        End Try
+        Me.Refresh()
+    End Sub
 End Class
