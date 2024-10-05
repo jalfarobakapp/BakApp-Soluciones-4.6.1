@@ -52,8 +52,10 @@ Partial Class Frm_Configuracion_Gral
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.SuperTabControl1 = New DevComponents.DotNetBar.SuperTabControl()
         Me.SuperTabControlPanel4 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.Input_MesesVenListaPrecios = New DevComponents.Editors.IntegerInput()
+        Me.Panel_MayoristaMinorista = New System.Windows.Forms.Panel()
         Me.LabelX18 = New DevComponents.DotNetBar.LabelX()
+        Me.Btn_MayMinInfo = New DevComponents.DotNetBar.ButtonX()
+        Me.Input_MesesVenListaPrecios = New DevComponents.Editors.IntegerInput()
         Me.Chk_UsarVencListaPrecios = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Chk_SoloprodEnDoc_CLALIBPR = New DevComponents.DotNetBar.Controls.CheckBoxX()
@@ -174,8 +176,6 @@ Partial Class Frm_Configuracion_Gral
         Me.Btn_DocConceptosVsPagos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_ConfPuntosVta = New DevComponents.DotNetBar.ButtonItem()
         Me.CheckBoxX2 = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Btn_MayMinInfo = New DevComponents.DotNetBar.ButtonX()
-        Me.Panel_MayoristaMinorista = New System.Windows.Forms.Panel()
         Me.TableLayoutPanel3.SuspendLayout()
         CType(Me.Input_Monto_Max_CRV_FacMasiva, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel4.SuspendLayout()
@@ -183,6 +183,7 @@ Partial Class Frm_Configuracion_Gral
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControl1.SuspendLayout()
         Me.SuperTabControlPanel4.SuspendLayout()
+        Me.Panel_MayoristaMinorista.SuspendLayout()
         CType(Me.Input_MesesVenListaPrecios, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel2.SuspendLayout()
         Me.SuperTabControlPanel1.SuspendLayout()
@@ -201,7 +202,6 @@ Partial Class Frm_Configuracion_Gral
         Me.GroupPanel1.SuspendLayout()
         Me.SuperTabControlPanel3.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.Panel_MayoristaMinorista.SuspendLayout()
         Me.SuspendLayout()
         '
         'TableLayoutPanel3
@@ -752,21 +752,17 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControlPanel4.TabIndex = 0
         Me.SuperTabControlPanel4.TabItem = Me.SpTab_Ventas2
         '
-        'Input_MesesVenListaPrecios
+        'Panel_MayoristaMinorista
         '
-        Me.Input_MesesVenListaPrecios.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Input_MesesVenListaPrecios.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Input_MesesVenListaPrecios.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Input_MesesVenListaPrecios.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
-        Me.Input_MesesVenListaPrecios.ForeColor = System.Drawing.Color.Black
-        Me.Input_MesesVenListaPrecios.Location = New System.Drawing.Point(480, 3)
-        Me.Input_MesesVenListaPrecios.Name = "Input_MesesVenListaPrecios"
-        Me.Input_MesesVenListaPrecios.ShowUpDown = True
-        Me.Input_MesesVenListaPrecios.Size = New System.Drawing.Size(58, 22)
-        Me.Input_MesesVenListaPrecios.TabIndex = 130
+        Me.Panel_MayoristaMinorista.BackColor = System.Drawing.Color.Transparent
+        Me.Panel_MayoristaMinorista.Controls.Add(Me.LabelX18)
+        Me.Panel_MayoristaMinorista.Controls.Add(Me.Btn_MayMinInfo)
+        Me.Panel_MayoristaMinorista.Controls.Add(Me.Input_MesesVenListaPrecios)
+        Me.Panel_MayoristaMinorista.ForeColor = System.Drawing.Color.Black
+        Me.Panel_MayoristaMinorista.Location = New System.Drawing.Point(6, 353)
+        Me.Panel_MayoristaMinorista.Name = "Panel_MayoristaMinorista"
+        Me.Panel_MayoristaMinorista.Size = New System.Drawing.Size(651, 31)
+        Me.Panel_MayoristaMinorista.TabIndex = 133
         '
         'LabelX18
         '
@@ -782,6 +778,33 @@ Partial Class Frm_Configuracion_Gral
         Me.LabelX18.TabIndex = 131
         Me.LabelX18.Text = "Meses de estudio de venta para decidir si un cliente tiene lista de precios mayor" &
     "ista o minorista"
+        '
+        'Btn_MayMinInfo
+        '
+        Me.Btn_MayMinInfo.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_MayMinInfo.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_MayMinInfo.Location = New System.Drawing.Point(544, 3)
+        Me.Btn_MayMinInfo.Name = "Btn_MayMinInfo"
+        Me.Btn_MayMinInfo.Size = New System.Drawing.Size(104, 23)
+        Me.Btn_MayMinInfo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_MayMinInfo.TabIndex = 132
+        Me.Btn_MayMinInfo.Text = "mas infomación..."
+        '
+        'Input_MesesVenListaPrecios
+        '
+        Me.Input_MesesVenListaPrecios.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Input_MesesVenListaPrecios.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_MesesVenListaPrecios.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_MesesVenListaPrecios.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_MesesVenListaPrecios.ForeColor = System.Drawing.Color.Black
+        Me.Input_MesesVenListaPrecios.Location = New System.Drawing.Point(480, 3)
+        Me.Input_MesesVenListaPrecios.Name = "Input_MesesVenListaPrecios"
+        Me.Input_MesesVenListaPrecios.ShowUpDown = True
+        Me.Input_MesesVenListaPrecios.Size = New System.Drawing.Size(58, 22)
+        Me.Input_MesesVenListaPrecios.TabIndex = 130
         '
         'Chk_UsarVencListaPrecios
         '
@@ -2724,28 +2747,6 @@ Partial Class Frm_Configuracion_Gral
         Me.CheckBoxX2.TabIndex = 117
         Me.CheckBoxX2.Text = "Ambiente de pruebas y certificación"
         '
-        'Btn_MayMinInfo
-        '
-        Me.Btn_MayMinInfo.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_MayMinInfo.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_MayMinInfo.Location = New System.Drawing.Point(544, 3)
-        Me.Btn_MayMinInfo.Name = "Btn_MayMinInfo"
-        Me.Btn_MayMinInfo.Size = New System.Drawing.Size(104, 23)
-        Me.Btn_MayMinInfo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_MayMinInfo.TabIndex = 132
-        Me.Btn_MayMinInfo.Text = "mas infomación..."
-        '
-        'Panel_MayoristaMinorista
-        '
-        Me.Panel_MayoristaMinorista.BackColor = System.Drawing.Color.Transparent
-        Me.Panel_MayoristaMinorista.Controls.Add(Me.LabelX18)
-        Me.Panel_MayoristaMinorista.Controls.Add(Me.Btn_MayMinInfo)
-        Me.Panel_MayoristaMinorista.Controls.Add(Me.Input_MesesVenListaPrecios)
-        Me.Panel_MayoristaMinorista.Location = New System.Drawing.Point(6, 353)
-        Me.Panel_MayoristaMinorista.Name = "Panel_MayoristaMinorista"
-        Me.Panel_MayoristaMinorista.Size = New System.Drawing.Size(651, 31)
-        Me.Panel_MayoristaMinorista.TabIndex = 133
-        '
         'Frm_Configuracion_Gral
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -2769,6 +2770,7 @@ Partial Class Frm_Configuracion_Gral
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControl1.ResumeLayout(False)
         Me.SuperTabControlPanel4.ResumeLayout(False)
+        Me.Panel_MayoristaMinorista.ResumeLayout(False)
         CType(Me.Input_MesesVenListaPrecios, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel2.ResumeLayout(False)
         Me.SuperTabControlPanel1.ResumeLayout(False)
@@ -2787,7 +2789,6 @@ Partial Class Frm_Configuracion_Gral
         Me.GroupPanel1.ResumeLayout(False)
         Me.SuperTabControlPanel3.ResumeLayout(False)
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.Panel_MayoristaMinorista.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
