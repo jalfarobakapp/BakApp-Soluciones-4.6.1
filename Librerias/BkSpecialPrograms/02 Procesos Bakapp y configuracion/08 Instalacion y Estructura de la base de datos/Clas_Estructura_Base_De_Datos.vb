@@ -940,6 +940,8 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Prod_ImpAdicional
             Case "Zw_Productos"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Productos
+            Case "Zw_Prod_Ubicacion_IngSal"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Prod_Ubicacion_IngSal
 
             Case "Zw_PtsVta_Configuracion"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_PtsVta_Configuracion
@@ -1144,12 +1146,16 @@ Public Class Clas_Estructura_Base_De_Datos
 
             Case "Zw_Version"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Version
+
+                'WMS
             Case "Zw_WMS_Ingreso_Det"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_WMS_Ingreso_Det
             Case "Zw_WMS_Ingreso_Enc"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_WMS_Ingreso_Enc
             Case "Zw_WMS_Ubicaciones_Bodega"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_WMS_Ubicaciones_Bodega
+            Case "Zw_WMS_Ubicaciones_Sectores"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_WMS_Ubicaciones_Sectores
             Case "Zw_WMS_Ubicaciones_Mapa_Det"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_WMS_Ubicaciones_Mapa_Det
             Case "Zw_WMS_Ubicaciones_Mapa_Enc"

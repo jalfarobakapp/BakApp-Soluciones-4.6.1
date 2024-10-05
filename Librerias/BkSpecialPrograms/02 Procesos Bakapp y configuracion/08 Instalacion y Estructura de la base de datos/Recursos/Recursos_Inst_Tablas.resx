@@ -886,4 +886,10 @@
   <data name="Zw_Ftp_Conexiones" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Sql\Tablas\Zw_Ftp_Conexiones.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="Zw_Prod_Ubicacion_IngSal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Sql\Tablas\Zw_Prod_Ubicacion_IngSal.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_WMS_Ubicaciones_Sectores" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Sql\Tablas\Zw_WMS_Ubicaciones_Sectores.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
 </root>

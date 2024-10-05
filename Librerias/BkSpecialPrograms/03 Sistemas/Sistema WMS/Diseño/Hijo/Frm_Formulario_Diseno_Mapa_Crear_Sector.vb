@@ -5,18 +5,18 @@ Public Class Frm_Formulario_Diseno_Mapa_Crear_Sector
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-    Dim _Id_Mapa As Integer
-    Dim _Grabar As Boolean
+    Private _Id_Mapa As Integer
+    Private _Row_Mapa As DataRow
 
-    Dim _Accion As _Enum_Accion
+    Private _Accion As _Enum_Accion
     Enum _Enum_Accion
         Nuevo
         Editar
         Pegar
         Editar_Codigo
     End Enum
-
-    Public Property Pro_Codigo_Sector() As String
+    Public Property Id_Sector As Integer
+    Public Property Codigo_Sector() As String
         Get
             Return Txt_Codigo_Sector.Text
         End Get
@@ -25,7 +25,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Crear_Sector
         End Set
     End Property
 
-    Public Property Pro_Nombre_Sector() As String
+    Public Property Nombre_Sector() As String
         Get
             Return Txt_Nombre_Sector.Text
         End Get
@@ -34,13 +34,21 @@ Public Class Frm_Formulario_Diseno_Mapa_Crear_Sector
         End Set
     End Property
 
-    Public ReadOnly Property Pro_Grabar() As Boolean
+    Public Property EsCabecera() As Boolean
         Get
-            Return _Grabar
+            Return Chk_EsCabecera.Checked
         End Get
+        Set(value As Boolean)
+            Chk_EsCabecera.Checked = value
+        End Set
     End Property
 
+    Public ReadOnly Property Grabar() As Boolean
+
     Public Property Es_SubSector As Boolean
+    Public Property ModoCreacionSector As Boolean
+    Public Property ModoDiseñoMapa As Boolean = True
+
     Public Sub New(Id_Mapa As Integer, Accion As _Enum_Accion)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -53,19 +61,79 @@ Public Class Frm_Formulario_Diseno_Mapa_Crear_Sector
 
     End Sub
 
+    Private _Cl_WMS_Sectores As New Cl_WMS_Sectores
+
+    Public Sub New(Id_Mapa As Integer, Id_Sector As Integer)
+        ' Llamada necesaria para el Diseñador de Windows Forms.
+        InitializeComponent()
+
+        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+
+        Me.Id_Sector = Id_Sector
+
+        If CBool(Id_Sector) Then
+            _Accion = _Enum_Accion.Editar
+        Else
+            _Accion = _Enum_Accion.Nuevo
+        End If
+
+        _Id_Mapa = Id_Mapa
+        ModoCreacionSector = True
+        ModoDiseñoMapa = False
+
+        _Cl_WMS_Sectores = New Cl_WMS_Sectores
+
+    End Sub
+
     Private Sub Frm_Formulario_Diseno_Mapa_Crear_Sector_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
-        If _Accion = _Enum_Accion.Editar Then
-            Txt_Codigo_Sector.Enabled = False
-            Me.ActiveControl = Txt_Nombre_Sector
-        Else
-            Me.ActiveControl = Txt_Codigo_Sector
+        If ModoDiseñoMapa Then
+
+            If _Accion = _Enum_Accion.Editar Then
+                Txt_Codigo_Sector.Enabled = False
+                Me.ActiveControl = Txt_Nombre_Sector
+            Else
+                Me.ActiveControl = Txt_Codigo_Sector
+            End If
+
+            If Es_SubSector Then
+                Txt_Codigo_Sector.Text = Replace(Txt_Codigo_Sector.Text, "...", "")
+                Txt_Nombre_Sector.Enabled = False
+            End If
+
+            Chk_EsCabecera.Visible = Not Es_SubSector
+
         End If
 
-        If Es_SubSector Then
-            Txt_Codigo_Sector.Text = Replace(Txt_Codigo_Sector.Text, "...", "")
-            Txt_Nombre_Sector.Enabled = False
+        If ModoCreacionSector Then
+
+            If _Accion = _Enum_Accion.Editar Then
+
+                Dim _Mensaje As LsValiciones.Mensajes = _Cl_WMS_Sectores.Fx_Llenar_Sector(_Id_Mapa)
+
+                'If Not _Mensaje.EsCorrecto Then
+                '    MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                '    Me.Close()
+                'End If
+
+                With _Cl_WMS_Sectores.Zw_WMS_Ubicaciones_Sectores
+
+                    Txt_Codigo_Sector.Text = .Codigo_Sector
+                    Txt_Nombre_Sector.Text = .Nombre_Sector
+                    Chk_EsCabecera.Checked = .EsCabecera
+
+                End With
+
+                Me.ActiveControl = Txt_Nombre_Sector
+
+            Else
+                Me.ActiveControl = Txt_Codigo_Sector
+            End If
+
         End If
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Enc Where Id_Mapa = " & _Id_Mapa
+        _Row_Mapa = _Sql.Fx_Get_DataRow(Consulta_sql)
 
     End Sub
 
@@ -76,6 +144,52 @@ Public Class Frm_Formulario_Diseno_Mapa_Crear_Sector
     End Sub
 
     Private Sub Btn_Grabar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Grabar.Click
+
+        If ModoDiseñoMapa Then
+            Sb_Grabar_Diseño_Mapa()
+        Else
+            Sb_Grabar_Sector()
+        End If
+
+    End Sub
+
+    Private Sub Sb_Grabar_Sector()
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        With _Cl_WMS_Sectores.Zw_WMS_Ubicaciones_Sectores
+
+            .Id_Mapa = _Id_Mapa
+            .Empresa = _Row_Mapa.Item("Empresa")
+            .Sucursal = _Row_Mapa.Item("Sucursal")
+            .Bodega = _Row_Mapa.Item("Bodega")
+            .Codigo_Sector = Txt_Codigo_Sector.Text.Trim
+            .Nombre_Sector = Txt_Nombre_Sector.Text.Trim
+            .Es_SubSector = False
+            .EsCabecera = Chk_EsCabecera.Checked
+
+        End With
+
+        Select Case _Accion
+            Case _Enum_Accion.Nuevo
+                _Mensaje = _Cl_WMS_Sectores.Fx_Crear_Sector()
+            Case _Enum_Accion.Editar
+                _Mensaje = _Cl_WMS_Sectores.Fx_Editar_Sector()
+        End Select
+
+        If Not _Mensaje.EsCorrecto Then
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
+
+        Id_Sector = _Mensaje.Id
+
+        _Grabar = True
+        Me.Close()
+
+    End Sub
+
+    Sub Sb_Grabar_Diseño_Mapa()
 
         Dim _Codigo_Sector = Txt_Codigo_Sector.Text.Trim
 
@@ -110,4 +224,5 @@ Public Class Frm_Formulario_Diseno_Mapa_Crear_Sector
         Me.Close()
 
     End Sub
+
 End Class

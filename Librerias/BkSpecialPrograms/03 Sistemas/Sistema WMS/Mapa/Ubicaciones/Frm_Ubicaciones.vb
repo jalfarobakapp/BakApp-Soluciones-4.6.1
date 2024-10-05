@@ -31,6 +31,7 @@ Public Class Frm_Ubicaciones
     Dim _Grabar As Boolean
 
     Dim _EsSubSector As Boolean
+    Private _Row_Sector As DataRow
 
     Public ReadOnly Property Pro_Grabar()
         Get
@@ -42,7 +43,7 @@ Public Class Frm_Ubicaciones
         Get
             Return _RowProducto
         End Get
-        Set(ByVal value As DataRow)
+        Set(value As DataRow)
             _RowProducto = value
 
             Dim _Enable As Boolean = (_RowProducto Is Nothing)
@@ -58,15 +59,15 @@ Public Class Frm_Ubicaciones
         Get
             Return Chk_Modificar_Sector.Checked
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             Chk_Modificar_Sector.Checked = value
             Chk_Modificar_Sector.Enabled = False
         End Set
     End Property
 
-    Public Sub New(ByVal RowBodega As DataRow,
-                   ByVal Id_Mapa As Integer,
-                   ByVal Codigo_Sector As String)
+    Public Sub New(RowBodega As DataRow,
+                   Id_Mapa As Integer,
+                   Codigo_Sector As String)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -96,14 +97,15 @@ Public Class Frm_Ubicaciones
             _EsSubSector = _Ds.Tables(1).Rows(0).Item("Es_SubSector")
         End If
 
-        If Global_Thema = 2 Then
-            Btn_Ver_Mapa.ForeColor = Color.White
-            Btn_Imprimir_Toma_Inventario.ForeColor = Color.White
-        End If
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Sectores" & vbCrLf &
+                       "Where Id_Mapa = " & _Id_Mapa & " and Codigo_Sector = '" & _Codigo_Sector & "'"
+        _Row_Sector = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Sb_Color_Botones_Barra(Bar2)
 
     End Sub
 
-    Private Sub Frm_Ubicaciones_01_Filas_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Ubicaciones_01_Filas_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         TxtCodigo_Ubic.Text = _Codigo_Sector
         TxtDescripcion_Ubic.Text = _Nombre_Mapa
@@ -127,8 +129,8 @@ Public Class Frm_Ubicaciones
             Me.Text = "DISEÑO Y MODIFICACION DE UBICACIONES DEL SECTOR"
             AddHandler Btn_Agregar_Columna.Click, AddressOf Sb_Agregar_Columna
             AddHandler Btn_Agregar_Nivel.Click, AddressOf Sb_Agregar_Nivel
-            AddHandler Btn_Grabar.Click, AddressOf Sb_Grabar_Ubicaciones
-            AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_Mouse_Clic_Boton_derecho_Grilla
+            'AddHandler Btn_Grabar.Click, AddressOf Sb_Grabar_Ubicaciones
+            AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
             AddHandler Btn_Imprir.Click, AddressOf Sb_Imprimir_Ubicaciones
             Btn_Imprir.Visible = True
 
@@ -145,7 +147,7 @@ Public Class Frm_Ubicaciones
             Me.Text = "PRODUCTO: " & Trim(_RowProducto.Item("KOPR")) & ", " & _RowProducto.Item("NOKOPR")
 
             AddHandler Grilla.CellDoubleClick, AddressOf Sb_Grilla_Doble_Clic_en_celda_Asocia_Ubicacion_Por_Producto
-            AddHandler Btn_Grabar.Click, AddressOf Sb_Grabar_ProductosXUbic
+            'AddHandler Btn_Grabar.Click, AddressOf Sb_Grabar_ProductosXUbic
 
             Grilla.ContextMenuStrip = Nothing
             Chk_Modificar_Sector.Enabled = False
@@ -169,9 +171,11 @@ Public Class Frm_Ubicaciones
 
         Sb_Autoajustar_Ancho_Columnas(Grilla)
 
+        Wbox_Cabecera.Visible = _Row_Sector.Item("EsCabecera")
+
     End Sub
 
-    Private Sub Sb_Grilla_MouseMove(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Sb_Grilla_MouseMove(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
 
         Dim Hitest As DataGridView.HitTestInfo = Grilla.HitTest(e.X, e.Y)
 
@@ -225,7 +229,6 @@ Public Class Frm_Ubicaciones
                       "Where Id_Mapa = @Id_Mapa And Codigo_Sector = @Codigo_Sector" & vbCrLf &
                       "Order by Columna,Fila Desc"
 
-
         _DsEstante = _Sql.Fx_Get_DataSet(Consulta_sql)
 
         _TblUbicacion = _DsEstante.Tables(0)
@@ -269,11 +272,7 @@ Public Class Frm_Ubicaciones
                 dt.Columns.Add(_Columna & "." & dt.Columns.Count + 1, System.Type.[GetType]("System.String"))
             End Try
 
-            '
-            'dt.Columns.Add(_Col)
-            ' _Contador += 1
         Next
-
 
         If CBool(_TblFilas.Rows.Count) Then
             For Each _Fila As DataRow In _TblFilas.Rows
@@ -293,7 +292,6 @@ Public Class Frm_Ubicaciones
         'cerramos el datareader y la conexión
         'añadimos la tabla al dataset
         rs.Tables.Add(dt)
-
 
         With Grilla
             .DataSource = Nothing
@@ -565,12 +563,16 @@ Public Class Frm_Ubicaciones
 
             Consulta_sql = "Delete " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega " & vbCrLf &
                            "Where Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega &
-                           "' And Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector & "'" & vbCrLf
+                           "' And Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector & "'" & vbCrLf & vbCrLf
 
             With Grilla
+
                 Dim NCol As Integer = .ColumnCount
+
                 For i As Integer = 0 To NCol - 1
+
                     Dim _Columna = .Columns(i).Name.ToString()
+
                     For Each _Fila As DataGridViewRow In Grilla.Rows
 
                         Dim _Nivel = _Fila.Cells("Fila").Value
@@ -613,7 +615,6 @@ Public Class Frm_Ubicaciones
                             End If
                         End If
 
-
                         If _Fila.Visible Then
 
                             If _Columna <> "Fila" And
@@ -652,6 +653,11 @@ Public Class Frm_Ubicaciones
 
             _Grabo = _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
+            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                MessageBoxEx.Show(Me, _Sql.Pro_Error, "Error al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
         End If
 
         Sb_Marcar_Celdas_Sin_Productos_Asignados()
@@ -661,7 +667,6 @@ Public Class Frm_Ubicaciones
         End If
 
     End Sub
-
 
 
 #End Region
@@ -738,7 +743,6 @@ Public Class Frm_Ubicaciones
                                                                                 _Id_Mapa, _Codigo_Sector, _CodUbicacion)
                             Fm.Fx_Agregar_producto_ubicacion(Me, _Codigo, False)
 
-
                         End If
                     Next
 
@@ -778,16 +782,16 @@ Public Class Frm_Ubicaciones
 
             End With
 
-            'If Ej_consulta_IDU(Consulta_sql, cn1) Then
             _Grabar = True
             Me.Close()
-            'End If
+
         Catch ex As Exception
             MessageBoxEx.Show(ex.Message)
         End Try
+
     End Sub
 
-    Private Function PosicionEnArray(ByVal Matriz() As String, ByVal Buscamos As String) As Single
+    Private Function PosicionEnArray(Matriz() As String, Buscamos As String) As Single
         Dim Elemento As Single
         For Elemento = LBound(Matriz) To UBound(Matriz)
             If Matriz(Elemento) = Buscamos Then
@@ -803,7 +807,7 @@ Public Class Frm_Ubicaciones
 
 #Region "CLIC DERECHO EN GRILLA"
 
-    Sub Sb_Grilla_Mouse_Clic_Boton_derecho_Grilla(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Sub Sb_Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
 
         'Menu_Contextual.Enabled = False
 
@@ -847,7 +851,9 @@ Public Class Frm_Ubicaciones
                         Dim _Es_SubSector As Boolean = Fx_Es_SubSector(_Codigo_Ubic, _Codigo_Ubic)
 
                         If _Es_SubSector Then
+
                             ShowContextMenu(Menu_Contextual_Sub_Sector)
+
                         Else
                             If _Codigo_Ubic = "." Then
                                 If Chk_Modificar_Sector.Checked Then
@@ -1005,13 +1011,13 @@ Public Class Frm_Ubicaciones
 
 #End Region
 
-    Private Sub Frm_Ubicaciones_01_Filas_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_Ubicaciones_01_Filas_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
-    Private Sub Grilla_CellBeginEdit(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellCancelEventArgs) Handles Grilla.CellBeginEdit
+    Private Sub Grilla_CellBeginEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellCancelEventArgs) Handles Grilla.CellBeginEdit
 
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
@@ -1033,7 +1039,7 @@ Public Class Frm_Ubicaciones
     End Sub
 
 
-    Private Sub Mnu_CambiarNombreDeLaColumnaToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Mnu_CambiarNombreDeLaColumnaToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs)
 
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).HeaderText
 
@@ -1071,7 +1077,7 @@ Public Class Frm_Ubicaciones
     End Sub
 
 
-    Sub Sb_Ver_Productos_En_La_Ubicacion(ByVal _FilaR As DataGridViewRow)
+    Sub Sb_Ver_Productos_En_La_Ubicacion(_FilaR As DataGridViewRow)
 
         Dim _Columna = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
         Dim _Descripcion_Ubic = NuloPorNro(_FilaR.Cells(_Columna).Value, "")
@@ -1124,7 +1130,7 @@ Public Class Frm_Ubicaciones
 
     End Sub
 
-    Sub Sb_Chk_Modificar_Sector_ValueChanging(ByVal sender As System.Object, ByVal e As DevComponents.DotNetBar.Controls.CheckBoxXChangeEventArgs)
+    Sub Sb_Chk_Modificar_Sector_ValueChanging(sender As System.Object, e As DevComponents.DotNetBar.Controls.CheckBoxXChangeEventArgs)
 
         If Not Fx_Tiene_Permiso(Me, "Ubic0018") Then
             Chk_Modificar_Sector.Checked = False
@@ -1178,7 +1184,7 @@ Public Class Frm_Ubicaciones
     End Sub
 
 
-    Private Sub Btn_Ver_Mapa_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Ver_Mapa.Click
+    Private Sub Btn_Ver_Mapa_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ver_Mapa.Click
 
         Consulta_sql = "SELECT Id_Mapa,Empresa,Sucursal,Bodega,Nombre_Mapa" & vbCrLf &
                       "FROM " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Enc" & vbCrLf &
@@ -1298,9 +1304,9 @@ Public Class Frm_Ubicaciones
         Desmarcar
     End Enum
 
-    Sub Sb_Marcar_Celdas_Sub_Sector(ByVal _Accion As _Enum_Marcar_Sub_Sector,
-                                    ByVal _Valor_Celda As String,
-                                    ByVal _Nombre_SubSector As String)
+    Sub Sb_Marcar_Celdas_Sub_Sector(_Accion As _Enum_Marcar_Sub_Sector,
+                                    _Valor_Celda As String,
+                                    _Nombre_SubSector As String)
 
 
         With Grilla
@@ -1348,7 +1354,7 @@ Public Class Frm_Ubicaciones
 
     End Sub
 
-    Private Sub Sb_Grilla_CellEnter(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub Sb_Grilla_CellEnter(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
 
         Try
 
@@ -1402,16 +1408,16 @@ Public Class Frm_Ubicaciones
 
     End Sub
 
-    Private Sub Btn_Ver_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Ver.Click
+    Private Sub Btn_Ver_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ver.Click
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Sb_Ver_Productos_En_La_Ubicacion(_Fila)
     End Sub
 
-    Private Sub Grilla_MouseLeave(ByVal sender As Object, ByVal e As System.EventArgs) Handles Grilla.MouseLeave
+    Private Sub Grilla_MouseLeave(sender As Object, e As System.EventArgs) Handles Grilla.MouseLeave
         Me.Cursor = Cursors.Arrow
     End Sub
 
-    Private Sub Btn_Imprimir_Toma_Inventario_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Imprimir_Toma_Inventario.Click
+    Private Sub Btn_Imprimir_Toma_Inventario_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Imprimir_Toma_Inventario.Click
 
         Dim _Tiene_SubSectores As Boolean
 
@@ -1458,7 +1464,7 @@ Public Class Frm_Ubicaciones
     End Sub
 
 
-    Private Sub Btn_Mnu_Eliminar_Columnas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Eliminar_Columnas.Click
+    Private Sub Btn_Mnu_Eliminar_Columnas_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Eliminar_Columnas.Click
 
         If Fx_Tiene_Permiso(Me, "Ubic0015") Then
 
@@ -1494,7 +1500,7 @@ Public Class Frm_Ubicaciones
 
     End Sub
 
-    Private Sub Btn_Mnu_Eliminar_Fila_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Eliminar_Fila.Click
+    Private Sub Btn_Mnu_Eliminar_Fila_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Eliminar_Fila.Click
 
         If Fx_Tiene_Permiso(Me, "Ubic0015") Then
 
@@ -1539,7 +1545,7 @@ Public Class Frm_Ubicaciones
 
     End Sub
 
-    Private Sub Btn_Mnu_Cambiar_Nombre_Columna_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Cambiar_Nombre_Columna.Click
+    Private Sub Btn_Mnu_Cambiar_Nombre_Columna_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Cambiar_Nombre_Columna.Click
 
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
         Dim _Hay_Producto As Boolean
@@ -1611,7 +1617,7 @@ Public Class Frm_Ubicaciones
 
     End Sub
 
-    Private Sub Btn_Mnu_Objeto_Propiedades_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Objeto_Propiedades.Click
+    Private Sub Btn_Mnu_Objeto_Propiedades_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Objeto_Propiedades.Click
 
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).HeaderText
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
@@ -1627,12 +1633,12 @@ Public Class Frm_Ubicaciones
 
     End Sub
 
-    Private Sub Btn_Mnu_Ver_Productos_Ubicacion_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Ver_Productos_Ubicacion.Click
+    Private Sub Btn_Mnu_Ver_Productos_Ubicacion_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Ver_Productos_Ubicacion.Click
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Sb_Ver_Productos_En_La_Ubicacion(_Fila)
     End Sub
 
-    Private Sub Btn_Mnu_Dejar_Ubacion_Sub_Sector_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Dejar_Ubacion_Sub_Sector.Click
+    Private Sub Btn_Mnu_Dejar_Ubacion_Sub_Sector_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Dejar_Ubacion_Sub_Sector.Click
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
@@ -1640,10 +1646,18 @@ Public Class Frm_Ubicaciones
         Dim _Codigo_Ubic = NuloPorNro(_Fila.Cells(_Cabeza).Value, "")
         Dim _Codigo_Sector = _Codigo_Ubic
         Dim _Nombre_SubSector As String = _Fila.Cells(_Cabeza).ToolTipText
+        Dim _EsCabecera As Boolean
 
         Dim _Row_Ubicacion As DataRow = Fx_Row_Ubicacion(_Codigo_Ubic)
 
-        _Codigo_Ubic = _Row_Ubicacion.Item("Codigo_Ubic")
+        If Not IsNothing(_Row_Ubicacion) Then
+            _Codigo_Ubic = _Row_Ubicacion.Item("Codigo_Ubic")
+        End If
+
+        If _EsCabecera Then
+            MessageBoxEx.Show(Me, "No se puede dejar este sector como Sub-Sector, ya que está ubicación es CABECERA", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
         Dim _Cant_Producto_Asignados As Double = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_Ubicacion", "Codigo_Ubic = '" & _Codigo_Ubic & "'")
 
@@ -1657,10 +1671,10 @@ Public Class Frm_Ubicaciones
         End If
 
         Dim Fm As New Frm_Formulario_Diseno_Mapa_Crear_Sector(_Id_Mapa, Frm_Formulario_Diseno_Mapa_Crear_Sector._Enum_Accion.Editar)
-        Fm.Pro_Codigo_Sector = _Codigo_Sector
-        Fm.Pro_Nombre_Sector = _Nombre_SubSector
+        Fm.Codigo_Sector = _Codigo_Sector
+        Fm.Nombre_Sector = _Nombre_SubSector
         Fm.ShowDialog(Me)
-        _Grabar = Fm.Pro_Grabar
+        _Grabar = Fm.Grabar
         Fm.Dispose()
 
         If _Grabar Then
@@ -1687,11 +1701,11 @@ Public Class Frm_Ubicaciones
 
     End Sub
 
-    Private Sub Btn_Mnu_Ver_Sub_Sector_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Ver_Sub_Sector.Click
+    Private Sub Btn_Mnu_Ver_Sub_Sector_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Ver_Sub_Sector.Click
         Sb_Grilla_Doble_Clic_en_celda_Ver_Productos_en_ubicacion()
     End Sub
 
-    Private Sub Btn_Mnu_Quitar_Sub_Sector_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Quitar_Sub_Sector.Click
+    Private Sub Btn_Mnu_Quitar_Sub_Sector_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Quitar_Sub_Sector.Click
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
@@ -1725,7 +1739,7 @@ Public Class Frm_Ubicaciones
 
     End Sub
 
-    Public Function Fx_Tiene_Productos_La_Ubicacion(ByVal _Id_Mapa As Integer, ByVal _Codigo_Ubic As String) As Boolean
+    Public Function Fx_Tiene_Productos_La_Ubicacion(_Id_Mapa As Integer, _Codigo_Ubic As String) As Boolean
 
         Consulta_sql = "Select top 1 * From " & _Global_BaseBk & "Zw_Prod_Ubicacion" & vbCrLf &
                        "Where Id_Mapa = " & _Id_Mapa & " And Codigo_Ubic = '" & _Codigo_Ubic & "'"
@@ -1736,7 +1750,7 @@ Public Class Frm_Ubicaciones
 
     End Function
 
-    Public Function Fx_Tiene_Productos_El_Sector(ByVal _Id_Mapa As Integer, ByVal _Cod_Sector As String) As Boolean
+    Public Function Fx_Tiene_Productos_El_Sector(_Id_Mapa As Integer, _Cod_Sector As String) As Boolean
 
         Consulta_sql = "Select top 1 * From " & _Global_BaseBk & "Zw_Prod_Ubicacion" & vbCrLf &
                        "Where Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Cod_Sector & "'"
@@ -1747,7 +1761,7 @@ Public Class Frm_Ubicaciones
 
     End Function
 
-    Private Sub Grilla_EditingControlShowing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs)
+    Private Sub Grilla_EditingControlShowing(sender As System.Object, e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs)
         Dim Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
 
         'If Cabeza = "CantComprar" Then
@@ -1758,7 +1772,7 @@ Public Class Frm_Ubicaciones
         'End If
     End Sub
 
-    Public Sub Validar_Keypress_Punto_En_Grilla(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs)
+    Public Sub Validar_Keypress_Punto_En_Grilla(sender As Object, e As System.Windows.Forms.KeyPressEventArgs)
 
         ' evento Keypress  
         Dim caracter As Char = e.KeyChar
@@ -1797,7 +1811,7 @@ Public Class Frm_Ubicaciones
     End Sub
 
 
-    Private Sub Grilla_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs)
+    Private Sub Grilla_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs)
 
         If Chk_Modificar_Sector.Checked Then
 
@@ -1824,7 +1838,7 @@ Public Class Frm_Ubicaciones
 
     End Sub
 
-    Private Sub Grilla_CellEndEdit(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub Grilla_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
 
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
@@ -1870,14 +1884,14 @@ Public Class Frm_Ubicaciones
         '                           "Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector_Old & "'")
 
         Dim Fm As New Frm_Formulario_Diseno_Mapa_Crear_Sector(_Id_Mapa, Frm_Formulario_Diseno_Mapa_Crear_Sector._Enum_Accion.Editar_Codigo)
-        Fm.Pro_Codigo_Sector = _Codigo_Ubic
-        Fm.Pro_Nombre_Sector = _Nombre_Sector
+        Fm.Codigo_Sector = _Codigo_Ubic
+        Fm.Nombre_Sector = _Nombre_Sector
         Fm.Es_SubSector = True
         Fm.ShowDialog(Me)
 
-        Dim _Grabar = Fm.Pro_Grabar
-        _Codigo_Sector = Fm.Pro_Codigo_Sector
-        _Nombre_Sector = Fm.Pro_Nombre_Sector
+        Dim _Grabar = Fm.Grabar
+        _Codigo_Sector = Fm.Codigo_Sector
+        _Nombre_Sector = Fm.Nombre_Sector
         Fm.Dispose()
 
         If _Grabar Then
@@ -1924,7 +1938,7 @@ Public Class Frm_Ubicaciones
 
     End Sub
 
-    Private Sub Btn_Mnu_Bloquear_Ubicacion_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Bloquear_Ubicacion.Click
+    Private Sub Btn_Mnu_Bloquear_Ubicacion_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Bloquear_Ubicacion.Click
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
@@ -1946,7 +1960,7 @@ Public Class Frm_Ubicaciones
 
     End Sub
 
-    Private Sub Btn_Mnu_Desbloquear_Ubicacion_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Desbloquear_Ubicacion.Click
+    Private Sub Btn_Mnu_Desbloquear_Ubicacion_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Desbloquear_Ubicacion.Click
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
@@ -1959,7 +1973,7 @@ Public Class Frm_Ubicaciones
 
     End Sub
 
-    Sub Sb_Autoajustar_Ancho_Columnas(ByVal Grilla As DataGridView)
+    Sub Sb_Autoajustar_Ancho_Columnas(Grilla As DataGridView)
 
         ' Resize the master DataGridView columns to fit the newly loaded data.
         Grilla.AutoResizeColumns()
@@ -1970,6 +1984,23 @@ Public Class Frm_Ubicaciones
 
     End Sub
 
+    Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
+
+        If (_RowProducto Is Nothing) Then
+            Sb_Grabar_Ubicaciones()
+        Else
+            Sb_Grabar_ProductosXUbic()
+        End If
+
+    End Sub
+
+    Private Sub Wbox_Cabecera_OptionsClick(sender As Object, e As EventArgs) Handles Wbox_Cabecera.OptionsClick
+
+        Dim _Msj As String = "Esto significa que es una ubicación especial que actúa como cabecera de una estantería."
+        _Msj = Fx_AjustarTexto(_Msj, 50)
+        MessageBoxEx.Show(Me, _Msj, "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+    End Sub
 
     Function Fx_Es_SubSector(Descripcion_Ubic As String, ByRef _Codigo_Ubic As String) As Boolean
 
@@ -1991,7 +2022,28 @@ Public Class Frm_Ubicaciones
 
     Function Fx_Row_Ubicacion(_Descripcion_Ubic As String) As DataRow
 
-        Dim _RowFlPer As DataRow() = _TblEstante.Select("Descripcion_Ubic = '" & _Descripcion_Ubic & "'")
+        Dim _Condicion As String
+
+        If String.IsNullOrWhiteSpace(_Descripcion_Ubic) Then
+            _Condicion = "Descripcion_Ubic = '" & _Descripcion_Ubic & "' OR Descripcion_Ubic IS NULL"
+        Else
+            _Condicion = "Descripcion_Ubic = '" & _Descripcion_Ubic & "'"
+        End If
+
+        Dim _RowFlPer As DataRow() = _TblEstante.Select(_Condicion)
+        Dim _FlPer2 As DataRow
+
+        If Convert.ToBoolean(_RowFlPer.Count) Then
+            _FlPer2 = _RowFlPer(0)
+        End If
+
+        Return _FlPer2
+
+    End Function
+
+    Function Fx_Row_Ubicacion(_Codigo_Ubic As String, _Descripcion_Ubic As String) As DataRow
+
+        Dim _RowFlPer As DataRow() = _TblEstante.Select("Codigo_Ubic = '" & _Codigo_Ubic & "' And Descripcion_Ubic = '" & _Descripcion_Ubic & "'")
         Dim _FlPer2 As DataRow
 
         If Convert.ToBoolean(_RowFlPer.Count) Then

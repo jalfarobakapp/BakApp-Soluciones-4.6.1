@@ -1,10 +1,5 @@
-﻿Imports System.Drawing.Color
-Imports DevComponents.DotNetBar
+﻿Imports DevComponents.DotNetBar
 Imports Microsoft.VisualBasic.PowerPacks
-Imports System.Windows.Forms
-Imports System.Linq
-'Imports Lib_Bakapp_VarClassFunc
-
 
 Public Class Frm_Diseno_Doc_y_Ubic
 
@@ -81,7 +76,7 @@ Public Class Frm_Diseno_Doc_y_Ubic
         Get
             Return _Imprimir_Cod_Barras_Ubicaciones
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Imprimir_Cod_Barras_Ubicaciones = value
         End Set
     End Property
@@ -153,16 +148,16 @@ Public Class Frm_Diseno_Doc_y_Ubic
 
 #End Region
 
-    Private Sub AgregarTextoLibreToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub AgregarTextoLibreToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs)
         '    Fx_Crear_Txt(PosicionX, PosicionY)
     End Sub
 
-    Private Sub TabPage2_MouseMove(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub TabPage2_MouseMove(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
         PosicionX = e.X.ToString
         PosicionY = e.Y.ToString
     End Sub
 
-    Private Sub TabPage3_MouseMove(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub TabPage3_MouseMove(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
         PosicionX = e.X.ToString
         PosicionY = e.Y.ToString
     End Sub
@@ -171,15 +166,15 @@ Public Class Frm_Diseno_Doc_y_Ubic
         MyBase.Finalize()
     End Sub
 
-    Private Sub Control_Encima_Slp(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Control_Encima_Slp(sender As System.Object, e As System.EventArgs)
         sender.Tooltip = sender.value
     End Sub
 
-    Private Sub LineaToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub LineaToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs)
         'Fx_Crear_Linea(PosicionX, 200, PosicionY)
     End Sub
 
-    Private Sub Frm_Diseno_Doc_y_Ubic_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Diseno_Doc_y_Ubic_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         Dim _Condicion As String
 
@@ -222,10 +217,10 @@ Public Class Frm_Diseno_Doc_y_Ubic
 
     End Sub
 
-    Sub Sb_Crear_Form_Mapa(ByVal _Nombre_Mapa As String,
-                           ByVal _Largo As Integer,
-                           ByVal _Ancho As Integer,
-                           ByVal _Escala As Integer)
+    Sub Sb_Crear_Form_Mapa(_Nombre_Mapa As String,
+                            _Largo As Integer,
+                            _Ancho As Integer,
+                            _Escala As Integer)
 
         'Dim Fm As New Frm_Formulario_Diseno_Mapa_Documentos
         'Fm.Text = _Nombre_Mapa
@@ -248,7 +243,7 @@ Public Class Frm_Diseno_Doc_y_Ubic
     End Sub
 
 
-    Sub Sb_Crear_Form_Mapa(ByVal _RowMapa As DataRow)
+    Sub Sb_Crear_Form_Mapa(_RowMapa As DataRow)
 
         Dim Fm As New Frm_Formulario_Diseno_Mapa_Documentos(_RowMapa, _Configuracion_Diseno)
         'Fm.Text = _Nombre_Mapa
@@ -271,8 +266,8 @@ Public Class Frm_Diseno_Doc_y_Ubic
     End Sub
 
     Private Sub Control_Tamano_Obj_Alto_ValueChanged(
-                                             ByVal sender As Object,
-                                             ByVal e As System.EventArgs)
+                                              sender As Object,
+                                              e As System.EventArgs)
 
         Try
 
@@ -304,8 +299,8 @@ Public Class Frm_Diseno_Doc_y_Ubic
     End Sub
 
     Private Sub Control_Tamano_Obj_Ancho_ValueChanged(
-                                               ByVal sender As System.Object,
-                                               ByVal e As System.EventArgs)
+                                                sender As System.Object,
+                                                e As System.EventArgs)
         Try
 
             Dim _FrmActivo As Frm_Formulario_Diseno_Mapa_Documentos =
@@ -339,8 +334,8 @@ Public Class Frm_Diseno_Doc_y_Ubic
     End Sub
 
     Private Sub Control_Ubicacion_Obj_X_ValueChanged(
-                                              ByVal sender As Object,
-                                              ByVal e As System.EventArgs)
+                                               sender As Object,
+                                               e As System.EventArgs)
 
         Dim _FrmActivo As Frm_Formulario_Diseno_Mapa_Documentos =
                    TryCast(Me.ActiveMdiChild, Frm_Formulario_Diseno_Mapa_Documentos)
@@ -391,8 +386,8 @@ Public Class Frm_Diseno_Doc_y_Ubic
     End Sub
 
     Private Sub Control_Ubicacion_Obj_Y_ValueChanged(
-                                              ByVal sender As Object,
-                                              ByVal e As System.EventArgs)
+                                               sender As Object,
+                                               e As System.EventArgs)
 
         Try
 
@@ -491,16 +486,14 @@ Public Class Frm_Diseno_Doc_y_Ubic
             Dim _FrmActivo As Frm_Formulario_Diseno_Mapa_Documentos =
                   TryCast(Me.ActiveMdiChild, Frm_Formulario_Diseno_Mapa_Documentos)
 
-            '_Nombre_Mapa = _FrmActivo.Text
             Dim _Id_Mapa As Integer = _FrmActivo.Pro_Id_Mapa
             Dim _Documento = _FrmActivo.Documento
-            Dim _Sectores(,) = _FrmActivo.Pro_Sectores
 
             Dim _i = 1
             For Each Ctrl In _Documento.Controls
                 'Insertamos las Etiquetas y Sectores
                 If Mid(Ctrl.Name, 1, 3) = "Lbl" Then ' <> "ShapeContainer1" And Ctrl.Name <> "LblVersion" Then
-                    Sql1 += "-- " & _i & vbCrLf & Fx_Sql_Crear_Detalle_X_Objeto_Mapa(Ctrl, _Id_Mapa, _Sectores)
+                    Sql1 += "-- " & _i & vbCrLf & Fx_Sql_Crear_Detalle_X_Objeto_Mapa(Ctrl, _Id_Mapa)
                     _i += 1
                 End If
 
@@ -511,7 +504,7 @@ Public Class Frm_Diseno_Doc_y_Ubic
             For Each _Ctrl In _Contenedor_Figuras.Shapes
                 'Insertamos objetos de diseño, muros, puertas, etc...
                 If Mid(_Ctrl.Name, 1, 3) = "Box" Then
-                    Sql1 += "-- " & _i & vbCrLf & Fx_Sql_Crear_Detalle_X_Objeto_Mapa(_Ctrl, _Id_Mapa, Nothing)
+                    Sql1 += "-- " & _i & vbCrLf & Fx_Sql_Crear_Detalle_X_Objeto_Mapa(_Ctrl, _Id_Mapa)
                     _i += 1
                 End If
             Next
@@ -522,12 +515,12 @@ Public Class Frm_Diseno_Doc_y_Ubic
 
             If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
 
-                Consulta_sql = "SELECT  DISTINCT Empresa, Sucursal, Bodega, Id_Mapa, Tipo_Objeto, Codigo_Sector" & vbCrLf &
-                               "FROM " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Det" & vbCrLf &
-                               "WHERE Tipo_Objeto = 'SECTOR'" & vbCrLf &
+                Consulta_sql = "Select Distinct Empresa, Sucursal, Bodega, Id_Mapa, Tipo_Objeto, Codigo_Sector" & vbCrLf &
+                               "From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Det" & vbCrLf &
+                               "Where Tipo_Objeto = 'SECTOR'" & vbCrLf &
                                "And Codigo_Sector Not in (Select Codigo_Sector From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega)" & vbCrLf &
                                "And Id_Mapa = " & _Id_Mapa & vbCrLf &
-                               "ORDER BY Id_Mapa,Codigo_Sector"
+                               "Order By Id_Mapa,Codigo_Sector"
 
                 Dim _TblSectores As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -572,12 +565,10 @@ Public Class Frm_Diseno_Doc_y_Ubic
 
 #Region "FUNCION CREA LINEA DE DETALLE POR OBJETO"
 
-    Function Fx_Sql_Crear_Detalle_X_Objeto_Mapa(ByVal _Ctrl As Object,
-                                                ByVal _Id_Mapa As Integer,
-                                                ByVal _Sectores(,) As String) As String
+    Function Fx_Sql_Crear_Detalle_X_Objeto_Mapa(_Ctrl As Object,
+                                                _Id_Mapa As Integer) As String
 
         Dim SQl_Query = String.Empty
-
 
         Dim _Tipo_Objeto
         Dim _Nombre_Objeto As String
@@ -605,7 +596,7 @@ Public Class Frm_Diseno_Doc_y_Ubic
         Dim _X_Columna
 
         Dim _Orientacion = 0
-
+        Dim _EsCabecera As Boolean
 
         Dim Tipo = Mid(_Ctrl.Name, 1, 3)
 
@@ -616,18 +607,12 @@ Public Class Frm_Diseno_Doc_y_Ubic
                 _Nombre_Objeto = .Name
 
                 If Mid(.Name, 1, 5) = "LblFx" Then
+
                     _Tipo_Objeto = "SECTOR"
                     _Codigo_Sector = .Text
                     _Texto = .Text
-
-                    For i = 0 To 1000
-                        Dim _N = _Sectores(i, 1)
-                        If _Codigo_Sector = _N Then
-                            _Nombre_Sector = _Sectores(i, 2)
-                            Exit For
-                        End If
-                    Next
-
+                    _Nombre_Sector = CType(_Ctrl.Tag, Zw_WMS_Ubicaciones_Mapa_Det).Nombre_Sector
+                    _EsCabecera = CType(_Ctrl.Tag, Zw_WMS_Ubicaciones_Mapa_Det).EsCabecera
 
                 Else
                     _Tipo_Objeto = "ETIQUETA"
@@ -698,21 +683,18 @@ Public Class Frm_Diseno_Doc_y_Ubic
             Return SQl_Query
         End If
 
-
-
         SQl_Query = "Insert Into " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Det(Empresa,Sucursal,Bodega,Id_Mapa,Tipo_Objeto,Nombre_Objeto," &
                     "Codigo_Sector,Nombre_Sector,Texto," &
                     "Font_Nombre,Font_Tamano,Font_Estilo,Font_Negrita,Font_Italic,Font_Tachado,Font_Subrayado," &
-                    "Alto_H,Ancho_W,BackColor,ForeColor,Relleno,Y_Fila,X_Columna,Orientacion) Values " & vbCrLf &
+                    "Alto_H,Ancho_W,BackColor,ForeColor,Relleno,Y_Fila,X_Columna,Orientacion,EsCabecera) Values " & vbCrLf &
                     "('" & _Empresa & "','" & _Sucursal & "','" & _Bodega & "'," & _Id_Mapa & ",'" & _Tipo_Objeto & "'," &
                     "'" & _Nombre_Objeto & "','" & _Codigo_Sector & "','" & _Nombre_Sector & "','" & _Texto & "','" & _Font_Nombre & "'," &
                     De_Num_a_Tx_01(_Font_Tamano, , 5) & "," & _Font_Estilo & "," & _Font_Negrita & "," & _Font_Italic & "," &
                     _Font_Tachado & "," & _Font_Subrayado & "," & _Alto_H & "," & _Ancho_W & "," &
-                    _BackColor & "," & _ForeColor & "," & _Relleno & "," & _Y_Fila & "," & _X_Columna & "," & _Orientacion & ")"
-
+                    _BackColor & "," & _ForeColor & "," & _Relleno & "," & _Y_Fila & "," & _X_Columna & "," &
+                    _Orientacion & "," & Convert.ToInt32(_EsCabecera) & ")"
 
         Return SQl_Query
-
 
     End Function
 
@@ -725,7 +707,7 @@ Public Class Frm_Diseno_Doc_y_Ubic
 
 #End Region
 
-    Private Sub Btn_NuevoMapa_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_NuevoMapa.Click
+    Private Sub Btn_NuevoMapa_Click(sender As System.Object, e As System.EventArgs) Handles Btn_NuevoMapa.Click
 
         Dim Fm As New Frm_Mapa_Encabezado(_RowBodega)
         Fm.ShowDialog(Me)
@@ -740,13 +722,13 @@ Public Class Frm_Diseno_Doc_y_Ubic
 
     End Sub
 
-    Private Sub tabStrip1_MouseDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles tabStrip1.MouseDoubleClick
+    Private Sub tabStrip1_MouseDoubleClick(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles tabStrip1.MouseDoubleClick
         If e.Button = Windows.Forms.MouseButtons.Right Then
             ShowContextMenu(Menu_Contextual_Opciones_Mapa)
         End If
     End Sub
 
-    Private Sub Btn_Mnu_Editar_Mapa_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Editar_Mapa.Click
+    Private Sub Btn_Mnu_Editar_Mapa_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Editar_Mapa.Click
 
         If Fx_Tiene_Permiso(Me, "Ubic0019") Then
 
@@ -802,7 +784,7 @@ Public Class Frm_Diseno_Doc_y_Ubic
 
     End Sub
 
-    Private Sub Btn_Eliminar_Mapa_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Eliminar_Mapa.Click
+    Private Sub Btn_Eliminar_Mapa_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Eliminar_Mapa.Click
 
         If Fx_Tiene_Permiso(Me, "Ubic0020") Then
             Dim _FrmActivo As Frm_Formulario_Diseno_Mapa_Documentos =
@@ -848,7 +830,7 @@ Public Class Frm_Diseno_Doc_y_Ubic
     End Sub
 
 
-    Private Sub Btn_Exportar_Excel_Sectores_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Exportar_Excel_Sectores.Click
+    Private Sub Btn_Exportar_Excel_Sectores_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Exportar_Excel_Sectores.Click
 
 
         Dim _FrmActivo As Frm_Formulario_Diseno_Mapa_Documentos =
@@ -866,7 +848,7 @@ Public Class Frm_Diseno_Doc_y_Ubic
 
     End Sub
 
-    Private Sub Btn_Exportar_Excel_Ubicaciones_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Exportar_Excel_Ubicaciones.Click
+    Private Sub Btn_Exportar_Excel_Ubicaciones_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Exportar_Excel_Ubicaciones.Click
 
         Dim _FrmActivo As Frm_Formulario_Diseno_Mapa_Documentos =
                  TryCast(Me.ActiveMdiChild, Frm_Formulario_Diseno_Mapa_Documentos)
@@ -883,7 +865,7 @@ Public Class Frm_Diseno_Doc_y_Ubic
 
     End Sub
 
-    Private Sub Btn_Exportar_Excel_Productos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Exportar_Excel_Productos.Click
+    Private Sub Btn_Exportar_Excel_Productos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Exportar_Excel_Productos.Click
         'Zw_Prod_Ubicacion
 
         Dim _FrmActivo As Frm_Formulario_Diseno_Mapa_Documentos =
