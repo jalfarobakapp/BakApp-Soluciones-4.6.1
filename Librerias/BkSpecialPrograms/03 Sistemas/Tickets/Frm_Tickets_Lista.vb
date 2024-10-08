@@ -575,7 +575,7 @@ Public Class Frm_Tickets_Lista
                        "Left Join " & _Global_BaseBk & "Zw_Stk_Tickets_Producto TkPrd On Tks.Id_Raiz = TkPrd.Id_Raiz" & vbCrLf &
                        "Left Join TABFU Fu On Fu.KOFU = CodFuncionario_Crea" & vbCrLf &
                        "Where 1 > 0" & vbCrLf & _Condicion & vbCrLf &
-                       "Order By Numero Desc"
+                       "Order By Tks.Numero Desc"
 
         _Tbl_Tickets = _Sql.Fx_Get_DataTable(Consulta_sql)
 

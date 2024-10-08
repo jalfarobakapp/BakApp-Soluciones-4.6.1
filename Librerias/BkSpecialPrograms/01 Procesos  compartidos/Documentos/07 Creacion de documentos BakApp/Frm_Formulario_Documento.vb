@@ -2595,6 +2595,7 @@ Public Class Frm_Formulario_Documento
             .Item("Espuntosvta") = False
             .Item("ModFechVto") = False
             .Item("Condicionado") = False
+            .Item("EsPallet") = False
 
             _TblDetalle.Rows.Add(NewFila)
 
@@ -15247,6 +15248,10 @@ Public Class Frm_Formulario_Documento
 
                 Sb_AgregarDsctoXPuntos()
 
+                If Not Fx_AgregarPallet() Then
+                    Return
+                End If
+
                 Sb_Actualizar_Permisos_Necesarios_Del_Documento_New()
 
                 Dim _No_Permitir_Grabar_Con_Dscto_Superado As Boolean = _Global_Row_Configuracion_General.Item("No_Permitir_Grabar_Con_Dscto_Superado")
@@ -15500,6 +15505,7 @@ Public Class Frm_Formulario_Documento
                         End If
 
                         Sb_EliminarFilaPuntos()
+                        Sb_EliminarFilaPallet()
 
                         Return
 
@@ -16000,6 +16006,28 @@ Public Class Frm_Formulario_Documento
 
         For Each _Fila As DataGridViewRow In Grilla_Detalle.Rows
             If _Fila.Cells("Espuntosvta").Value Then
+                _FilaElimina = _Fila
+                Exit For
+            End If
+        Next
+
+        If Not IsNothing(_FilaElimina) Then
+            Sb_Eliminar_Fila(_FilaElimina, True)
+        End If
+
+    End Sub
+
+    Private Sub Sb_EliminarFilaPallet()
+
+        If _Tido <> "NVV" Then
+            Return
+        End If
+
+        'Throw New NotImplementedException()
+        Dim _FilaElimina As DataGridViewRow
+
+        For Each _Fila As DataGridViewRow In Grilla_Detalle.Rows
+            If _Fila.Cells("EsPallet").Value Then
                 _FilaElimina = _Fila
                 Exit For
             End If
@@ -27726,6 +27754,118 @@ Public Class Frm_Formulario_Documento
         End If
 
     End Sub
+
+
+    Function Fx_AgregarPallet()
+
+        If _Revision_Remota Then
+            Return True
+        End If
+
+        If _Tido <> "NVV" Then
+            Return True
+        End If
+
+        'Sumar las cantidades de la unidad 1 y si es mas de lo que se requiere para preguntar por la cantidad de Pallet hacerlo
+        'si la cantidad es insuficiente salir y continuar
+
+        If MessageBoxEx.Show(Me, "¿Desea agregar los PALLETS?", "Ingresar Pallet",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return True
+        End If
+
+        Dim _Codigo As String
+
+        _Codigo = "03OTV35000000"
+
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        _Mensaje = Fx_AgregarPallet(_Codigo)
+
+        If _Mensaje.Cancelado Then
+            Return False
+        End If
+
+        If Not _Mensaje.EsCorrecto Then
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        End If
+
+        Return True
+
+    End Function
+
+    Function Fx_AgregarPallet(_Codigo As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+            Dim _Cantidad As Integer
+            Dim _Cancelado As Boolean
+            Dim _Aceptar As Boolean = InputBox_Bk(Me, "Ingrese la cantidad de Pallet", "Ingresar Pallet",
+                                                  _Cantidad, False,,, True, _Tipo_Imagen.Product,,
+                                                  _Tipo_Caracter.Solo_Numeros_Enteros, False,,,,, , _Cancelado)
+
+            If Not _Aceptar Then
+                _Mensaje.Detalle = "Validación"
+                _Mensaje.Cancelado = _Cancelado
+                Throw New ArgumentException("Debe ingresar una cantidad de Pallet")
+            End If
+
+            'If Not _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_PtsVta_Configuracion") Then
+            '    _Mensaje.Detalle = "Validación"
+            '    Throw New ArgumentException("No existe tabla Zw_PtsVta_Configuracion en base de datos de Bakapp")
+            'End If
+
+            'Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_PtsVta_Configuracion Where Empresa = '" & ModEmpresa & "'"
+            'Dim _Row_ConfPuntos As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+            'If Not String.IsNullOrWhiteSpace(_Sql.Pro_Error) Then
+            '    _Mensaje.Detalle = "Error Sql"
+            '    _Mensaje.Resultado = Consulta_sql
+            '    Throw New ArgumentException(_Sql.Pro_Error)
+            'End If
+
+            'If IsNothing(_Row_ConfPuntos) Then
+            '    _Mensaje.Detalle = "Validación"
+            '    Throw New ArgumentException("No existe configuración en tabla Zw_PtsVta_Configuracion")
+            'End If
+
+            'Dim _Koct As String = _Row_ConfPuntos.Item("Concepto")
+
+            'Consulta_sql = "Select * From TABCT Where KOCT = '" & _Koct & "'"
+            'Dim _RowConcepto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Sb_Nueva_Linea(_TblEncabezado.Rows(0).Item("ListaPrecios"))
+
+            Dim _New_Fila As DataGridViewRow = Grilla_Detalle.Rows(Grilla_Detalle.RowCount - 1)
+
+            Dim _Indice As Integer = _New_Fila.Index ' Grilla_Detalle.CurrentRow.Index
+
+            Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
+            Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Sb_Traer_Producto_A_La_Nueva_Fila(_New_Fila, _RowProducto, _Indice)
+
+            _New_Fila.Cells("Cantidad").Value = _Cantidad
+            _New_Fila.Cells("EsPallet").Value = True
+
+            Sb_Procesar_Datos_De_Grilla(_New_Fila, "Cantidad", False, False, True)
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Detalle = "Agregar Pallet"
+            _Mensaje.Mensaje = "Pallet agregado con exito al final del detalle del documento"
+            _Mensaje.Icono = MessageBoxIcon.Information
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Detalle = "Pallet no agregado"
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
+        End Try
+
+        Return _Mensaje
+
+    End Function
 
 End Class
 

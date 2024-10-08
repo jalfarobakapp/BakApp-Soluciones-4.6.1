@@ -4015,6 +4015,8 @@ Partial Public Class Ds_Matriz_Documentos
         
         Private columnCondicionado As Global.System.Data.DataColumn
         
+        Private columnEsPallet As Global.System.Data.DataColumn
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Sub New()
@@ -5099,6 +5101,14 @@ Partial Public Class Ds_Matriz_Documentos
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property EsPalletColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnEsPallet
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -5265,9 +5275,10 @@ Partial Public Class Ds_Matriz_Documentos
                     ByVal RtuVariable As Boolean,  _
                     ByVal Espuntosvta As Boolean,  _
                     ByVal ModFechVto As Boolean,  _
-                    ByVal Condicionado As Boolean) As Detalle_DocRow
+                    ByVal Condicionado As Boolean,  _
+                    ByVal EsPallet As Boolean) As Detalle_DocRow
             Dim rowDetalle_DocRow As Detalle_DocRow = CType(Me.NewRow,Detalle_DocRow)
-            Dim columnValuesArray() As Object = New Object() {Nothing, Id_DocDet, Id_Det, Empresa, Sucursal, Bodega, CodFuncionario, UnTrans, Lincondest, Codigo, CodigoProv, UdTrans, Cantidad, TipoValor, Precio, DescuentoPorc, DescuentoValor, DescuentoValor_Anterior, RecargoValor, Descripcion, Descripcion_Ori, PrecioNetoUd, PrecioNetoUdLista, PrecioBrutoUd, PrecioBrutoUdLista, Rtu, Ud01PR, CantUd1, CodVendedor, Prct, Tipr, Tict, DsctoNeto, DsctoBruto, CDespUd1, Ud02PR, CantUd2, CDespUd2, ValVtaDescMax, ValVtaStockInf, CodLista, Melt, PrecioListaUd1, PrecioListaUd2, DescMaximo, NroDscto, NroImpuestos, PorIva, PorIla, ValIvaLinea, ValIlaLinea, ValSubNetoLinea, ValNetoLinea, ValBrutoLinea, PmLinea, PmSucLinea, PmIFRS, PrecioNetoRealUd1, PrecioNetoRealUd2, Idmaeedo_Dori, Idmaeddo_Dori, CantUd1_Dori, CantUd2_Dori, Estado, Emprepa, Tidopa, NudoPa, Endopa, Nulidopa, FechaEmision, FechaRecepcion, SubTotal, StockBodega, UbicacionBod, DsctoRealPorc, DsctoRealValor, DsctoGlobalSuperado, Tiene_Dscto, CantidadCalculo, Operacion, Potencia, PrecioCalculo, OCCGenerada, Bloqueapr, Observa, CodFunAutoriza, CodPermiso, Nuevo_Producto, Solicitado_bodega, Moneda, Tipo_Moneda, Tipo_Cambio, Ecuacion, Stock_desde_WMS, Total_Costo, Margen_Valor, Margen_Porc, Visado_Dscto, Visado_Stock, Crear_CPr, Id_CPr, Proyecto, Centro_Costo, Consolidar_Stock, No_Aplica_Redondeo, Id_Oferta, Es_Padre_Oferta, Oferta, Padre_Oferta, Aplica_Oferta, Hijo_Oferta, Cantidad_Oferta, Porcdesc_Oferta, Tasadorig, FunValida_Compra, Recargo_Campo, Recargo_Valor, Recargo_Distribuido, TieneOccPdte, PrecioListaUd1_Prov, PrecioListaUd2_Prov, Pesoubic, SumaKilos, CostoLista, Id_OtSvr, Semilla_Svr, Nmarca, RtuVariable, Espuntosvta, ModFechVto, Condicionado}
+            Dim columnValuesArray() As Object = New Object() {Nothing, Id_DocDet, Id_Det, Empresa, Sucursal, Bodega, CodFuncionario, UnTrans, Lincondest, Codigo, CodigoProv, UdTrans, Cantidad, TipoValor, Precio, DescuentoPorc, DescuentoValor, DescuentoValor_Anterior, RecargoValor, Descripcion, Descripcion_Ori, PrecioNetoUd, PrecioNetoUdLista, PrecioBrutoUd, PrecioBrutoUdLista, Rtu, Ud01PR, CantUd1, CodVendedor, Prct, Tipr, Tict, DsctoNeto, DsctoBruto, CDespUd1, Ud02PR, CantUd2, CDespUd2, ValVtaDescMax, ValVtaStockInf, CodLista, Melt, PrecioListaUd1, PrecioListaUd2, DescMaximo, NroDscto, NroImpuestos, PorIva, PorIla, ValIvaLinea, ValIlaLinea, ValSubNetoLinea, ValNetoLinea, ValBrutoLinea, PmLinea, PmSucLinea, PmIFRS, PrecioNetoRealUd1, PrecioNetoRealUd2, Idmaeedo_Dori, Idmaeddo_Dori, CantUd1_Dori, CantUd2_Dori, Estado, Emprepa, Tidopa, NudoPa, Endopa, Nulidopa, FechaEmision, FechaRecepcion, SubTotal, StockBodega, UbicacionBod, DsctoRealPorc, DsctoRealValor, DsctoGlobalSuperado, Tiene_Dscto, CantidadCalculo, Operacion, Potencia, PrecioCalculo, OCCGenerada, Bloqueapr, Observa, CodFunAutoriza, CodPermiso, Nuevo_Producto, Solicitado_bodega, Moneda, Tipo_Moneda, Tipo_Cambio, Ecuacion, Stock_desde_WMS, Total_Costo, Margen_Valor, Margen_Porc, Visado_Dscto, Visado_Stock, Crear_CPr, Id_CPr, Proyecto, Centro_Costo, Consolidar_Stock, No_Aplica_Redondeo, Id_Oferta, Es_Padre_Oferta, Oferta, Padre_Oferta, Aplica_Oferta, Hijo_Oferta, Cantidad_Oferta, Porcdesc_Oferta, Tasadorig, FunValida_Compra, Recargo_Campo, Recargo_Valor, Recargo_Distribuido, TieneOccPdte, PrecioListaUd1_Prov, PrecioListaUd2_Prov, Pesoubic, SumaKilos, CostoLista, Id_OtSvr, Semilla_Svr, Nmarca, RtuVariable, Espuntosvta, ModFechVto, Condicionado, EsPallet}
             rowDetalle_DocRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowDetalle_DocRow)
             Return rowDetalle_DocRow
@@ -5421,6 +5432,7 @@ Partial Public Class Ds_Matriz_Documentos
             Me.columnEspuntosvta = MyBase.Columns("Espuntosvta")
             Me.columnModFechVto = MyBase.Columns("ModFechVto")
             Me.columnCondicionado = MyBase.Columns("Condicionado")
+            Me.columnEsPallet = MyBase.Columns("EsPallet")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -5688,6 +5700,8 @@ Partial Public Class Ds_Matriz_Documentos
             MyBase.Columns.Add(Me.columnModFechVto)
             Me.columnCondicionado = New Global.System.Data.DataColumn("Condicionado", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnCondicionado)
+            Me.columnEsPallet = New Global.System.Data.DataColumn("EsPallet", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnEsPallet)
             Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnId}, false))
             Me.columnId.AutoIncrement = true
             Me.columnId.AutoIncrementSeed = 1
@@ -12798,6 +12812,21 @@ Partial Public Class Ds_Matriz_Documentos
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property EsPallet() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableDetalle_Doc.EsPalletColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'EsPallet' de la tabla 'Detalle_Doc' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableDetalle_Doc.EsPalletColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Function IsIdNull() As Boolean
             Return Me.IsNull(Me.tableDetalle_Doc.IdColumn)
         End Function
@@ -14294,6 +14323,18 @@ Partial Public Class Ds_Matriz_Documentos
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Sub SetCondicionadoNull()
             Me(Me.tableDetalle_Doc.CondicionadoColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsEsPalletNull() As Boolean
+            Return Me.IsNull(Me.tableDetalle_Doc.EsPalletColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetEsPalletNull()
+            Me(Me.tableDetalle_Doc.EsPalletColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     
