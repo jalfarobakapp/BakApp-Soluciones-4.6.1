@@ -15805,187 +15805,208 @@ Public Class Frm_Formulario_Documento
 
                     End If
 
+
+                    If _Global_Row_Configuracion_Estacion.Item("InsertarPalletAuto") Then
+
+                        For Each _Fila As DataRow In _TblDetalle.Rows
+
+                            If _Fila.Item("EsPallet") Then
+
+                                Dim _Horagrab As String = Hora_Grab_fx(False)
+                                Consulta_sql = "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC,HORAGRAB) Values " &
+                                               "('MAEEDO'," & _Idmaeedo & ",'" & _Row_NeDocEnc.Item("KOFUDO") & "'" &
+                                               ",Getdate(),'PALLETS','01'," & _Fila.Item("Cantidad") & "," & _Horagrab & ")"
+                                _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                                Exit For
+
+                            End If
+
+                        Next
+
+                    End If
+
                     'Crear Orden de Despacho
 
                     Try
 
-                        If Not IsNothing(_Cl_Despacho) Then
+                            If Not IsNothing(_Cl_Despacho) Then
 
-                            Dim _Id_Despacho = _Cl_Despacho.Id_Despacho
+                                Dim _Id_Despacho = _Cl_Despacho.Id_Despacho
 
-                            _Cl_Despacho = New Clas_Despacho(False)
-                            _Cl_Despacho.Sb_Cargar_Despacho(_Id_Despacho)
-                            _Cl_Despacho.Sb_Crear_Desdespacho_Desde_Permiso_Remoto_Aprobado(_New_Idmaeedo, _Obliga_Despacho_BodDistintas)
+                                _Cl_Despacho = New Clas_Despacho(False)
+                                _Cl_Despacho.Sb_Cargar_Despacho(_Id_Despacho)
+                                _Cl_Despacho.Sb_Crear_Desdespacho_Desde_Permiso_Remoto_Aprobado(_New_Idmaeedo, _Obliga_Despacho_BodDistintas)
 
-                            If _Grabar_Y_Pagar_Vale Then
-                                _Cl_Despacho.Id_Despacho = _Cl_Despacho.Id_Despacho_Padre
-                                _Cl_Despacho.Row_Despacho.Item("Id_Despacho_Padre") = _Cl_Despacho.Id_Despacho_Padre
-                                _Cl_Despacho.Fx_Accion_Confirmacion("")
+                                If _Grabar_Y_Pagar_Vale Then
+                                    _Cl_Despacho.Id_Despacho = _Cl_Despacho.Id_Despacho_Padre
+                                    _Cl_Despacho.Row_Despacho.Item("Id_Despacho_Padre") = _Cl_Despacho.Id_Despacho_Padre
+                                    _Cl_Despacho.Fx_Accion_Confirmacion("")
+                                End If
+
+                                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Chilexpress_Env Set IdDespacho = " & _Cl_Despacho.Id_Despacho_Padre & " Where IdDespacho = " & _Id_Despacho
+                                _Sql.Fx_Ejecutar_Consulta(Consulta_sql)
+
                             End If
 
-                            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Chilexpress_Env Set IdDespacho = " & _Cl_Despacho.Id_Despacho_Padre & " Where IdDespacho = " & _Id_Despacho
-                            _Sql.Fx_Ejecutar_Consulta(Consulta_sql)
+                            If _Tido = "GDV" Then
+
+                                Dim _Kofudo = _Row_NeDocEnc.Item("KOFUDO")
+
+                                Sb_Accion_Preparacion_Orden_Despacho(_Idmaeedo, _Kofudo)
+
+                            End If
+
+                            ' Activacion de Orden de Despacho
+
+                            Sb_Activar_Orden_De_Despacho(_Idmaeedo)
+
+                            '---------------------------------------
+
+                        Catch ex As Exception
+                            MessageBoxEx.Show(Me, ex.Message, "Error en gestión despacho", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        End Try
+
+                        _Grabar = True
+
+                        Sb_Reservar_Movimientos_WMS(_Idmaeedo)
+
+                        If _Tipo_de_Grabacion = csGlobales.Enum_Tipo_de_Grabacion.Nuevo_documento Then
+
+                            Dim _Ruta_Ultimo_Documento_Bkp As String = AppPath() & "\Data\" & RutEmpresa & "\BkPost\Ult_" & _Tido & "_Bkp.xml"
+                            _Ds_Matriz_Documentos.WriteXml(_Ruta_Ultimo_Documento_Bkp)
 
                         End If
 
-                        If _Tido = "GDV" Then
+                        Dim _Error_PDF As String
 
-                            Dim _Kofudo = _Row_NeDocEnc.Item("KOFUDO")
+                        _Error_PDF = Fx_Guargar_PDF_Automaticamente_Por_Doc_Modalidad(_Idmaeedo)
 
-                            Sb_Accion_Preparacion_Orden_Despacho(_Idmaeedo, _Kofudo)
-
+                        If Not String.IsNullOrEmpty(_Error_PDF) Then
+                            MessageBoxEx.Show(Me, _Error_PDF, "Error al querer grabar PDF automático", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                         End If
 
-                        ' Activacion de Orden de Despacho
+                        If _Cerrar_Al_Grabar Then
 
-                        Sb_Activar_Orden_De_Despacho(_Idmaeedo)
+                            Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito
+                            _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Modalidad, _Idmaeedo)
 
-                        '---------------------------------------
+                            If _Imprimir Then
 
-                    Catch ex As Exception
-                        MessageBoxEx.Show(Me, ex.Message, "Error en gestión despacho", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                    End Try
+                                If _Grabar_e_Imprimir Then
+                                    Sb_Imprimir_Documento(Me, _Idmaeedo, _Post_Venta, Modalidad)
+                                Else
 
-                    _Grabar = True
+                                    Dim _Tido = _Row_NeDocEnc.Item("TIDO")
+                                    Dim _Nudo = _Row_NeDocEnc.Item("NUDO")
 
-                    Sb_Reservar_Movimientos_WMS(_Idmaeedo)
-
-                    If _Tipo_de_Grabacion = csGlobales.Enum_Tipo_de_Grabacion.Nuevo_documento Then
-
-                        Dim _Ruta_Ultimo_Documento_Bkp As String = AppPath() & "\Data\" & RutEmpresa & "\BkPost\Ult_" & _Tido & "_Bkp.xml"
-                        _Ds_Matriz_Documentos.WriteXml(_Ruta_Ultimo_Documento_Bkp)
-
-                    End If
-
-                    Dim _Error_PDF As String
-
-                    _Error_PDF = Fx_Guargar_PDF_Automaticamente_Por_Doc_Modalidad(_Idmaeedo)
-
-                    If Not String.IsNullOrEmpty(_Error_PDF) Then
-                        MessageBoxEx.Show(Me, _Error_PDF, "Error al querer grabar PDF automático", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                    End If
-
-                    If _Cerrar_Al_Grabar Then
-
-                        Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito
-                        _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Modalidad, _Idmaeedo)
-
-                        If _Imprimir Then
-
-                            If _Grabar_e_Imprimir Then
-                                Sb_Imprimir_Documento(Me, _Idmaeedo, _Post_Venta, Modalidad)
-                            Else
-
-                                Dim _Tido = _Row_NeDocEnc.Item("TIDO")
-                                Dim _Nudo = _Row_NeDocEnc.Item("NUDO")
-
-                                MessageBoxEx.Show(Me, _Tido & " - " & _Nudo & vbCrLf & vbCrLf &
+                                    MessageBoxEx.Show(Me, _Tido & " - " & _Nudo & vbCrLf & vbCrLf &
                                               "Grabada correctamente", "Grabar documento", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-                            End If
-
-                        End If
-
-                        If Me.Visible Then
-                            Me.Close()
-                        End If
-
-                    Else
-
-                        If _Post_Venta Or _Editar_documento Then
-
-                            Dim _CAE_Doc As New Clas_Cerrar_Anular_Eliminar_Documento_Origen
-
-                            If (_Tido = "COV" Or _Tido = "OCC") Or (_Editar_documento And _Tido = "NVV") Then
-
-                                _CAE_Doc.Sb_Cerrar_Documentos_De_Origen(Me,
-                                                                        Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion.Anular,
-                                                                        _TblDocumentos_Dori,
-                                                                        _Idmaeedo)
-
-                            Else
-
-                                _CAE_Doc.Sb_Cerrar_Documentos_De_Origen(Me,
-                                                                        Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion.Cerrar,
-                                                                        _TblDocumentos_Dori,
-                                                                        _Idmaeedo)
+                                End If
 
                             End If
 
-                            If Not IsNothing(_TblDocumentos_Dori) Then
-
-                                For Each _Fila As DataRow In _TblDocumentos_Dori.Rows
-
-                                    Dim _Id_Despacho = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Despachos_Doc",
-                                                                          "Id_Despacho",
-                                                                          "Archidrst = 'MAEEDO' And Idrst = " & _Fila.Item("IDMAEEDO"), True)
-
-                                    Dim _Cl_Despacho As New Clas_Despacho(False)
-                                    _Cl_Despacho.Id_Despacho = _Id_Despacho
-                                    _Cl_Despacho.Fx_Anular_Documento()
-
-                                Next
-
-                            End If
-
-                            _Idmaeedo_Origen = 0
-                            _TblEncabezado.Rows(0).Item("Idmaeedo_Origen") = 0
-
-                        End If
-
-                        Dim _Modalidad_Formato = Modalidad
-
-                        If _Grabar_e_Imprimir Then
-
-                            Dim _Vali As Boolean = (Not _Grabar_Y_Pagar_Vale And _Post_Venta)
-
-                            If _Grabar_Y_Pagar_Vale Then
-                                Try
-                                    _Modalidad_Formato = _Global_Row_EstacionBk.Item("Modalidad_Caja")
-                                    _Grabar_e_Imprimir = _Global_Row_EstacionBk.Item("ImprDespGrabarCaja")
-                                Catch ex As Exception
-                                    _Modalidad_Formato = Modalidad
-                                    _Grabar_e_Imprimir = True
-                                End Try
-                            End If
-
-                            If _Grabar_e_Imprimir Then
-                                Sb_Imprimir_Documento(Me, _Idmaeedo, _Vali, _Modalidad_Formato)
+                            If Me.Visible Then
+                                Me.Close()
                             End If
 
                         Else
 
-                            Dim _Tido = _Row_NeDocEnc.Item("TIDO")
-                            Dim _Nudo = _Row_NeDocEnc.Item("NUDO")
-                            Dim _SubTido = _Row_NeDocEnc.Item("SUBTIDO")
+                            If _Post_Venta Or _Editar_documento Then
 
-                            If Not _Post_Venta Or _Grabar_Y_Pagar_Vale Then
+                                Dim _CAE_Doc As New Clas_Cerrar_Anular_Eliminar_Documento_Origen
 
-                                Dim _TidoNudoSubTido As String
+                                If (_Tido = "COV" Or _Tido = "OCC") Or (_Editar_documento And _Tido = "NVV") Then
 
-                                If String.IsNullOrWhiteSpace(_SubTido) Then
-                                    _TidoNudoSubTido = _Tido & " - " & _Nudo
+                                    _CAE_Doc.Sb_Cerrar_Documentos_De_Origen(Me,
+                                                                        Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion.Anular,
+                                                                        _TblDocumentos_Dori,
+                                                                        _Idmaeedo)
+
                                 Else
-                                    _TidoNudoSubTido = _Tido & " - " & _Nudo & " (" & _SubTido & ")"
+
+                                    _CAE_Doc.Sb_Cerrar_Documentos_De_Origen(Me,
+                                                                        Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion.Cerrar,
+                                                                        _TblDocumentos_Dori,
+                                                                        _Idmaeedo)
+
                                 End If
 
-                                MessageBoxEx.Show(Me, _TidoNudoSubTido & vbCrLf & vbCrLf &
-                                "Grabada correctamente", "Grabar documento", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                                If Not IsNothing(_TblDocumentos_Dori) Then
+
+                                    For Each _Fila As DataRow In _TblDocumentos_Dori.Rows
+
+                                        Dim _Id_Despacho = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Despachos_Doc",
+                                                                          "Id_Despacho",
+                                                                          "Archidrst = 'MAEEDO' And Idrst = " & _Fila.Item("IDMAEEDO"), True)
+
+                                        Dim _Cl_Despacho As New Clas_Despacho(False)
+                                        _Cl_Despacho.Id_Despacho = _Id_Despacho
+                                        _Cl_Despacho.Fx_Anular_Documento()
+
+                                    Next
+
+                                End If
+
+                                _Idmaeedo_Origen = 0
+                                _TblEncabezado.Rows(0).Item("Idmaeedo_Origen") = 0
 
                             End If
 
+                            Dim _Modalidad_Formato = Modalidad
+
+                            If _Grabar_e_Imprimir Then
+
+                                Dim _Vali As Boolean = (Not _Grabar_Y_Pagar_Vale And _Post_Venta)
+
+                                If _Grabar_Y_Pagar_Vale Then
+                                    Try
+                                        _Modalidad_Formato = _Global_Row_EstacionBk.Item("Modalidad_Caja")
+                                        _Grabar_e_Imprimir = _Global_Row_EstacionBk.Item("ImprDespGrabarCaja")
+                                    Catch ex As Exception
+                                        _Modalidad_Formato = Modalidad
+                                        _Grabar_e_Imprimir = True
+                                    End Try
+                                End If
+
+                                If _Grabar_e_Imprimir Then
+                                    Sb_Imprimir_Documento(Me, _Idmaeedo, _Vali, _Modalidad_Formato)
+                                End If
+
+                            Else
+
+                                Dim _Tido = _Row_NeDocEnc.Item("TIDO")
+                                Dim _Nudo = _Row_NeDocEnc.Item("NUDO")
+                                Dim _SubTido = _Row_NeDocEnc.Item("SUBTIDO")
+
+                                If Not _Post_Venta Or _Grabar_Y_Pagar_Vale Then
+
+                                    Dim _TidoNudoSubTido As String
+
+                                    If String.IsNullOrWhiteSpace(_SubTido) Then
+                                        _TidoNudoSubTido = _Tido & " - " & _Nudo
+                                    Else
+                                        _TidoNudoSubTido = _Tido & " - " & _Nudo & " (" & _SubTido & ")"
+                                    End If
+
+                                    MessageBoxEx.Show(Me, _TidoNudoSubTido & vbCrLf & vbCrLf &
+                                "Grabada correctamente", "Grabar documento", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                                End If
+
+                            End If
+
+                            Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito
+                            _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(_Modalidad_Formato, _Idmaeedo)
+
+                            Sb_Limpiar(Modalidad)
+
                         End If
-
-                        Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito
-                        _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(_Modalidad_Formato, _Idmaeedo)
-
-                        Sb_Limpiar(Modalidad)
 
                     End If
 
                 End If
-
-            End If
 
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -16019,7 +16040,13 @@ Public Class Frm_Formulario_Documento
 
     Private Sub Sb_EliminarFilaPallet()
 
-        If _Tido <> "NVV" Then
+        If Not _Global_Row_Configuracion_Estacion.Item("InsertarPalletAuto") Then
+            Return
+        End If
+
+        Dim _TidoPalletAuto As String = _Global_Row_Configuracion_Estacion.Item("TidoPalletAuto")
+
+        If Not _TidoPalletAuto.Contains(_Tido) Then '_Tido <> "FCV" And _Tido <> "GDV" And _Tido <> "BLV" Then
             Return
         End If
 
@@ -27762,9 +27789,34 @@ Public Class Frm_Formulario_Documento
             Return True
         End If
 
-        If _Tido <> "NVV" Then
+        If Not _Global_Row_Configuracion_Estacion.Item("InsertarPalletAuto") Then
             Return True
         End If
+
+        Dim _TidoPalletAuto As String = _Global_Row_Configuracion_Estacion.Item("TidoPalletAuto")
+
+        If Not _TidoPalletAuto.Contains(_Tido) Then '_Tido <> "FCV" And _Tido <> "GDV" And _Tido <> "BLV" Then
+            Return True
+        End If
+
+        Dim _Ud = _Global_Row_Configuracion_Estacion.Item("UdRevCantIngrePallet")
+        Dim _Cantidad As Double = 0
+
+        For Each _Fila As DataRow In _TblDetalle.Rows
+
+            If Not CBool(_Fila.Item("Prct")) Then
+                _Cantidad += _Fila.Item("CantUd" & _Ud)
+            End If
+
+        Next
+
+        Dim _CantPregIngrePallet As Double = _Global_Row_Configuracion_Estacion.Item("CantPregIngrePallet")
+
+        If _Cantidad < _CantPregIngrePallet Then
+            Return True
+        End If
+
+        Dim _Codigo As String = _Global_Row_Configuracion_Estacion.Item("CodigoPrPallet")
 
         'Sumar las cantidades de la unidad 1 y si es mas de lo que se requiere para preguntar por la cantidad de Pallet hacerlo
         'si la cantidad es insuficiente salir y continuar
@@ -27773,10 +27825,6 @@ Public Class Frm_Formulario_Documento
                              MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
             Return True
         End If
-
-        Dim _Codigo As String
-
-        _Codigo = "03OTV35000000"
 
         Dim _Mensaje As LsValiciones.Mensajes
 
@@ -27799,6 +27847,16 @@ Public Class Frm_Formulario_Documento
         Dim _Mensaje As New LsValiciones.Mensajes
 
         Try
+
+            Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
+            Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_RowProducto) Then
+                _Mensaje.Detalle = "Validación"
+                Throw New ArgumentException("No existe el producto: " & _Codigo & vbCrLf &
+                                            "Informe de esto al administrador del sistema")
+            End If
+
             Dim _Cantidad As Integer
             Dim _Cancelado As Boolean
             Dim _Aceptar As Boolean = InputBox_Bk(Me, "Ingrese la cantidad de Pallet", "Ingresar Pallet",
@@ -27811,38 +27869,11 @@ Public Class Frm_Formulario_Documento
                 Throw New ArgumentException("Debe ingresar una cantidad de Pallet")
             End If
 
-            'If Not _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_PtsVta_Configuracion") Then
-            '    _Mensaje.Detalle = "Validación"
-            '    Throw New ArgumentException("No existe tabla Zw_PtsVta_Configuracion en base de datos de Bakapp")
-            'End If
-
-            'Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_PtsVta_Configuracion Where Empresa = '" & ModEmpresa & "'"
-            'Dim _Row_ConfPuntos As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
-
-            'If Not String.IsNullOrWhiteSpace(_Sql.Pro_Error) Then
-            '    _Mensaje.Detalle = "Error Sql"
-            '    _Mensaje.Resultado = Consulta_sql
-            '    Throw New ArgumentException(_Sql.Pro_Error)
-            'End If
-
-            'If IsNothing(_Row_ConfPuntos) Then
-            '    _Mensaje.Detalle = "Validación"
-            '    Throw New ArgumentException("No existe configuración en tabla Zw_PtsVta_Configuracion")
-            'End If
-
-            'Dim _Koct As String = _Row_ConfPuntos.Item("Concepto")
-
-            'Consulta_sql = "Select * From TABCT Where KOCT = '" & _Koct & "'"
-            'Dim _RowConcepto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
             Sb_Nueva_Linea(_TblEncabezado.Rows(0).Item("ListaPrecios"))
 
             Dim _New_Fila As DataGridViewRow = Grilla_Detalle.Rows(Grilla_Detalle.RowCount - 1)
 
             Dim _Indice As Integer = _New_Fila.Index ' Grilla_Detalle.CurrentRow.Index
-
-            Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
-            Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             Sb_Traer_Producto_A_La_Nueva_Fila(_New_Fila, _RowProducto, _Indice)
 

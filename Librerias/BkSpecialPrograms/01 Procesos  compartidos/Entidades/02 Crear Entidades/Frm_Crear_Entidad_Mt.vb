@@ -2424,7 +2424,24 @@ Public Class Frm_Crear_Entidad_Mt
     End Sub
 
     Private Sub Txt_CodHolding_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_CodHolding.ButtonCustomClick
+        ShowContextMenu(Menu_Contextual_Holding)
+    End Sub
 
+    Private Sub Txt_CodHolding_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_CodHolding.ButtonCustom2Click
+        Txt_CodHolding.Text = String.Empty
+        Txt_CodHolding.Tag = String.Empty
+    End Sub
+
+    Private Sub Txt_CodPagador_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_CodPagador.ButtonCustomClick
+        ShowContextMenu(Menu_Contextual_Pagador)
+    End Sub
+
+    Private Sub Txt_CodPagador_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_CodPagador.ButtonCustom2Click
+        Txt_CodPagador.Text = String.Empty
+        Txt_CodPagador.Tag = String.Empty
+    End Sub
+
+    Private Sub Btn_Mnu_HoldingAgregar_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_HoldingAgregar.Click
         Dim _FilaSeleccionada_Zw As New Zw_TablaDeCaracterizaciones
         Dim _Seleccionar As Boolean
 
@@ -2440,16 +2457,9 @@ Public Class Frm_Crear_Entidad_Mt
             Txt_CodHolding.Tag = _FilaSeleccionada_Zw.CodigoTabla
             Txt_CodHolding.Text = _FilaSeleccionada_Zw.CodigoTabla.ToString.Trim & " - " & _FilaSeleccionada_Zw.NombreTabla.ToString.Trim
         End If
-
     End Sub
 
-    Private Sub Txt_CodHolding_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_CodHolding.ButtonCustom2Click
-        Txt_CodHolding.Text = String.Empty
-        Txt_CodHolding.Tag = String.Empty
-    End Sub
-
-    Private Sub Txt_CodPagador_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_CodPagador.ButtonCustomClick
-
+    Private Sub Btn_Mnu_PagadorAgregar_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_PagadorAgregar.Click
         Dim _FilaSeleccionada_Zw As New Zw_TablaDeCaracterizaciones
         Dim _Seleccionar As Boolean
 
@@ -2465,12 +2475,52 @@ Public Class Frm_Crear_Entidad_Mt
             Txt_CodPagador.Tag = _FilaSeleccionada_Zw.CodigoTabla
             Txt_CodPagador.Text = _FilaSeleccionada_Zw.CodigoTabla.ToString.Trim & " - " & _FilaSeleccionada_Zw.NombreTabla.ToString.Trim
         End If
+    End Sub
+
+    Private Sub Btn_Mnu_HoldingVerEntidades_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_HoldingVerEntidades.Click
+
+        If String.IsNullOrWhiteSpace(Txt_CodHolding.Tag) Then
+            MessageBoxEx.Show(Me, "Falta el Holding", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Entidades", "CodHolding = '" & Txt_CodHolding.Tag & "')")
+
+        If Not CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "No existen entidades asociadas al Holding", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Sql_Filtro_Condicion_Extra = "And KOEN+SUEN In " &
+                                          "(Select Distinct CodEntidad+CodSucEntidad From " & _Global_BaseBk & "Zw_Entidades " &
+                                          "Where CodHolding = '" & Txt_CodHolding.Tag & "')"
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+        _Filtrar.Fx_Filtrar(Nothing, Clas_Filtros_Random.Enum_Tabla_Fl._Entidades, _Sql_Filtro_Condicion_Extra, False, False,, False)
 
     End Sub
 
-    Private Sub Txt_CodPagador_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_CodPagador.ButtonCustom2Click
-        Txt_CodPagador.Text = String.Empty
-        Txt_CodPagador.Tag = String.Empty
+    Private Sub Btn_Mnu_PagadorVerEntidades_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_PagadorVerEntidades.Click
+
+        If String.IsNullOrWhiteSpace(Txt_CodPagador.Tag) Then
+            MessageBoxEx.Show(Me, "Falta el Pagador", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Entidades", "CodPagador = '" & Txt_CodPagador.Tag & "'")
+
+        If Not CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "No existen entidades asociadas al Pagador", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Sql_Filtro_Condicion_Extra = "And KOEN+SUEN In " &
+                                          "(Select Distinct CodEntidad+CodSucEntidad From " & _Global_BaseBk & "Zw_Entidades " &
+                                          "Where CodPagador = '" & Txt_CodPagador.Tag & "')"
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+        _Filtrar.Fx_Filtrar(Nothing, Clas_Filtros_Random.Enum_Tabla_Fl._Entidades, _Sql_Filtro_Condicion_Extra, False, False,, False)
+
     End Sub
 
     Private Sub Sb_Grilla_Maennmail_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)

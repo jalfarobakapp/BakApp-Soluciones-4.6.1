@@ -6215,16 +6215,22 @@ Public Module Crear_Documentos_Desde_Otro
 
     Function Fx_TblFromJson(Respuesta As String, Objeto As String) As DataTable
 
-        Dim result As Object
-        result = JsonConvert.DeserializeObject(Of Object)(Respuesta)
+        Dim _Tbl As DataTable
 
-        Dim _Json = "{'" & Objeto & "':" & result(Objeto).ToString & "}"
+        Try
+            Dim result As Object
+            result = JsonConvert.DeserializeObject(Of Object)(Respuesta)
 
-        Dim dataSet As DataSet
+            Dim _Json = "{'" & Objeto & "':" & result(Objeto).ToString & "}"
 
-        dataSet = JsonConvert.DeserializeObject(Of DataSet)(_Json)
+            Dim dataSet As DataSet
 
-        Dim _Tbl As DataTable = dataSet.Tables(0)
+            dataSet = JsonConvert.DeserializeObject(Of DataSet)(_Json)
+
+            _Tbl = dataSet.Tables(0)
+        Catch ex As Exception
+            Return Nothing
+        End Try
 
         Return _Tbl
 
