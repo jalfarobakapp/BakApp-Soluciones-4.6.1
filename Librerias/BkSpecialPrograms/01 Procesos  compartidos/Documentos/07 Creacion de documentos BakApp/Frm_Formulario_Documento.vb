@@ -5360,7 +5360,8 @@ Public Class Frm_Formulario_Documento
         Dim _TipoValor As String
 
         Dim _DescripcionProductoLinea = _RowProducto.Item("NOKOPR")
-        Dim _Nuevo_Producto = _Fila.Cells("Nuevo_Producto").Value
+        Dim _Nuevo_Producto As Boolean = _Fila.Cells("Nuevo_Producto").Value
+        Dim _EsPallet As Boolean = _Fila.Cells("EsPallet").Value
 
         Dim _Pesoubic As Double = NuloPorNro(_RowProducto.Item("PESOUBIC"), 0)
 
@@ -5394,6 +5395,10 @@ Public Class Frm_Formulario_Documento
 
                     End If
 
+                End If
+
+                If _EsPallet Then
+                    _Editar_Descripcion = False
                 End If
 
                 If _Editar_Descripcion Then
@@ -15805,24 +15810,27 @@ Public Class Frm_Formulario_Documento
 
                     End If
 
+                    If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Configuracion", "InsertarPalletAuto") Then
 
-                    If _Global_Row_Configuracion_Estacion.Item("InsertarPalletAuto") Then
+                        If _Global_Row_Configuracion_Estacion.Item("InsertarPalletAuto") Then
 
-                        For Each _Fila As DataRow In _TblDetalle.Rows
+                            For Each _Fila As DataRow In _TblDetalle.Rows
 
-                            If _Fila.Item("EsPallet") Then
+                                If _Fila.Item("EsPallet") Then
 
-                                Dim _Horagrab As String = Hora_Grab_fx(False)
-                                Consulta_sql = "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC,HORAGRAB) Values " &
-                                               "('MAEEDO'," & _Idmaeedo & ",'" & _Row_NeDocEnc.Item("KOFUDO") & "'" &
-                                               ",Getdate(),'PALLETS','01'," & _Fila.Item("Cantidad") & "," & _Horagrab & ")"
-                                _Sql.Ej_consulta_IDU(Consulta_sql)
+                                    Dim _Horagrab As String = Hora_Grab_fx(False)
+                                    Consulta_sql = "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC,HORAGRAB) Values " &
+                                                   "('MAEEDO'," & _Idmaeedo & ",'" & _Row_NeDocEnc.Item("KOFUDO") & "'" &
+                                                   ",Getdate(),'PALLETS','01'," & _Fila.Item("Cantidad") & "," & _Horagrab & ")"
+                                    _Sql.Ej_consulta_IDU(Consulta_sql)
 
-                                Exit For
+                                    Exit For
 
-                            End If
+                                End If
 
-                        Next
+                            Next
+
+                        End If
 
                     End If
 
@@ -16039,6 +16047,10 @@ Public Class Frm_Formulario_Documento
     End Sub
 
     Private Sub Sb_EliminarFilaPallet()
+
+        If Not _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Configuracion", "InsertarPalletAuto") Then
+            Return
+        End If
 
         If Not _Global_Row_Configuracion_Estacion.Item("InsertarPalletAuto") Then
             Return
@@ -27708,7 +27720,7 @@ Public Class Frm_Formulario_Documento
                     Return
                 End If
 
-                MessageBoxEx.Show(Me, "Puede pasar a una lista con mejor precio." & vbCrLf &
+                MessageBoxEx.Show(Me, "Puede pasar a una lista con mejor precio." & vbCrLf & vbCrLf &
                                   "Venta de mes en curso : " & FormatCurrency(_Msj.Tag, 0) & vbCrLf &
                                   "Venta lista superior seria de " & FormatCurrency(_TotalNetoListaSuperior, 0) & vbCrLf &
                                   "Total de eventual venta mensual: " & FormatCurrency(_Msj.Tag + _TotalNetoListaSuperior, 0),
@@ -27786,6 +27798,10 @@ Public Class Frm_Formulario_Documento
     Function Fx_AgregarPallet()
 
         If _Revision_Remota Then
+            Return True
+        End If
+
+        If Not _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Configuracion", "InsertarPalletAuto") Then
             Return True
         End If
 
@@ -27872,13 +27888,13 @@ Public Class Frm_Formulario_Documento
             Sb_Nueva_Linea(_TblEncabezado.Rows(0).Item("ListaPrecios"))
 
             Dim _New_Fila As DataGridViewRow = Grilla_Detalle.Rows(Grilla_Detalle.RowCount - 1)
-
             Dim _Indice As Integer = _New_Fila.Index ' Grilla_Detalle.CurrentRow.Index
+
+            _New_Fila.Cells("EsPallet").Value = True
 
             Sb_Traer_Producto_A_La_Nueva_Fila(_New_Fila, _RowProducto, _Indice)
 
             _New_Fila.Cells("Cantidad").Value = _Cantidad
-            _New_Fila.Cells("EsPallet").Value = True
 
             Sb_Procesar_Datos_De_Grilla(_New_Fila, "Cantidad", False, False, True)
 

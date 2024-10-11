@@ -64,7 +64,7 @@ Public Class Frm_CodAlternativo_Ver
                        "Left Join " & _Global_BaseBk & "Zw_Prod_CodQR Qr On Td.KOPRAL = Qr.Kopral" & vbCrLf &
                        "Left Join MAEPR Mp On Td.KOPR = Mp.KOPR" & vbCrLf &
                        "Where Td.KOPR = '" & TxtCodigo.Text & "'" & vbCrLf &
-                       "Order By KOEN"
+                       "Order By KOEN,KOPRAL"
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -75,7 +75,7 @@ Public Class Frm_CodAlternativo_Ver
 
             Dim _DisplayIndex = 0
 
-            .Columns("KOPRAL").Width = 120
+            .Columns("KOPRAL").Width = 130
             .Columns("KOPRAL").HeaderText = "Código alternativo"
             .Columns("KOPRAL").Visible = True
             .Columns("KOPRAL").DisplayIndex = _DisplayIndex
@@ -87,7 +87,7 @@ Public Class Frm_CodAlternativo_Ver
             .Columns("KOEN").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("PROVEEDOR").Width = 360
+            .Columns("PROVEEDOR").Width = 350
             .Columns("PROVEEDOR").HeaderText = "Razón social"
             .Columns("PROVEEDOR").Visible = True
             .Columns("PROVEEDOR").DisplayIndex = _DisplayIndex

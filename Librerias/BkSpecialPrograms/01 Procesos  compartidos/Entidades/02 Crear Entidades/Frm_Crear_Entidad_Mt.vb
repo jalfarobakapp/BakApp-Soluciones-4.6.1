@@ -1223,8 +1223,9 @@ Public Class Frm_Crear_Entidad_Mt
         If Rt = Trim(Txt_Koen.Text) Then
             BtnxGrabar.Enabled = True
         Else
-            Dim Nro As String = "CfEnt005"
-            If Not Fx_Tiene_Permiso(Me, Nro) Then
+
+            If Not Fx_Tiene_Permiso(Me, "CfEnt005") Then
+
                 MessageBoxEx.Show(Me, "El código de la entidad es distinto al Rut" & vbCrLf &
                                   "Recuerde que los Rut de menos de 10.000.000 debe anteponer un 0 para rellenar",
                                   "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)

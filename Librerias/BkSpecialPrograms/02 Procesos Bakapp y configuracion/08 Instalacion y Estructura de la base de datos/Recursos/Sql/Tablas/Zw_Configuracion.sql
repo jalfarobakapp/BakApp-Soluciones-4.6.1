@@ -123,6 +123,12 @@ CREATE TABLE [dbo].[Zw_Configuracion](
 [Pickear_SinoEstaEnWMSIgualPickear]                     [bit]           NOT NULL DEFAULT (0), 
 [UsarVencListaPrecios]                                  [bit]           NOT NULL DEFAULT (0),
 [MesesVenListaPrecios]                                  [int]           NOT NULL DEFAULT (0),
+[InsertarPalletAuto]                                    [bit]           NOT NULL DEFAULT (0),
+[CodigoPrPallet]                                        [varchar](13)   NOT NULL DEFAULT (''),
+[UdRevCantIngrePallet]                                  [int]           NOT NULL DEFAULT (0),
+[CantPregIngrePallet]                                   [float]         NOT NULL DEFAULT (0),
+[AgregaMeventoPallet]                                   [bit]           NOT NULL DEFAULT (0),
+[TidoPalletAuto]                                        [varchar](100)  NOT NULL DEFAULT (''),
 CONSTRAINT [PK_Zw_Configuracion] PRIMARY KEY CLUSTERED 
 (
 	[Modalidad] ASC
