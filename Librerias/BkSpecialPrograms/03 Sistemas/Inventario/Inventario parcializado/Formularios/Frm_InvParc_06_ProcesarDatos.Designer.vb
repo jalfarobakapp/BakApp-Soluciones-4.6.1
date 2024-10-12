@@ -122,7 +122,7 @@ Partial Class Frm_InvParc_06_ProcesarDatos
         Me.LblEstado.ForeColor = System.Drawing.Color.Black
         Me.LblEstado.Location = New System.Drawing.Point(12, 155)
         Me.LblEstado.Name = "LblEstado"
-        Me.LblEstado.Size = New System.Drawing.Size(677, 23)
+        Me.LblEstado.Size = New System.Drawing.Size(471, 23)
         Me.LblEstado.TabIndex = 31
         Me.LblEstado.Text = "Presione Porocesar...."
         '

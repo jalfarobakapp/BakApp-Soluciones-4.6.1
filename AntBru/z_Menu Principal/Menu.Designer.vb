@@ -798,7 +798,7 @@ Partial Class Menu
         Me.ButtonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.ButtonX1.Image = CType(resources.GetObject("ButtonX1.Image"), System.Drawing.Image)
         Me.ButtonX1.ImageAlt = CType(resources.GetObject("ButtonX1.ImageAlt"), System.Drawing.Image)
-        Me.ButtonX1.Location = New System.Drawing.Point(175, 518)
+        Me.ButtonX1.Location = New System.Drawing.Point(150, 518)
         Me.ButtonX1.Name = "ButtonX1"
         Me.ButtonX1.Size = New System.Drawing.Size(134, 32)
         Me.ButtonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled

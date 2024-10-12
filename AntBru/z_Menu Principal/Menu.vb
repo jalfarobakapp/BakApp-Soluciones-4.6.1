@@ -918,64 +918,9 @@ Public Class Menu
         'Fm.ShowDialog(Me)
         'Fm.Dispose()
 
-        Dim _FechaServidor As Date = FechaDelServidor()
-
-        Consulta_sql = "Select Distinct ENDO,SUENDO,NOKOEN,CodHolding,Substring(LVEN,6,3) As Lista,Lp.EsListaSuperior," & vbCrLf &
-                       "Cast(Case When Lp.ListaSuperior <> '' Then 1 Else 0 End As bit) As 'EsListaInferior',Lp.ListaSuperior," & vbCrLf &
-                       "Lp.ListaInferior,Cast(Case When Lp.ListaSuperior <> '' Then Lp2.VentaMinVencLP Else Lp.VentaMinVencLP End As Float) As 'VentaMinVencLP'," & vbCrLf &
-                       "CAST(0 As Bit) As 'Cumple',CAST(0 As Bit) As 'CambiarLista',CAST('' As varchar(3)) As NewLista " & vbCrLf &
-                       "From MAEEDO" & vbCrLf &
-                       "Inner Join MAEEN On KOEN = ENDO And SUEN = SUENDO" & vbCrLf &
-                       "Inner Join " & _Global_BaseBk & "Zw_ListaPreGlobal Lp On Lp.Lista = Substring(LVEN,6,3)" & vbCrLf &
-                       "Left Join " & _Global_BaseBk & "Zw_ListaPreGlobal Lp2 On Lp2.Lista = Lp.ListaSuperior" & vbCrLf &
-                       "Left Join " & _Global_BaseBk & "Zw_Entidades Ent On Ent.CodEntidad = ENDO And Ent.CodSucEntidad = SUENDO" & vbCrLf &
-                       "Where TIDO = 'FCV' And FEEMDO = '" & Format(_FechaServidor, "yyyyMMdd") & "'"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
-
-        Dim _Cl_DocListaSuperior As New Cl_DocListaSuperior
-
-        For Each _Fila As DataRow In _Tbl.Rows
-
-            Dim _Lista As String = _Fila.Item("Lista")
-            Dim _ListaSuperior As String = _Fila.Item("ListaSuperior")
-            Dim _ListaInferior As String = _Fila.Item("ListaInferior")
-            Dim _EsListaSuperior As Boolean = _Fila.Item("EsListaSuperior")
-            Dim _EsListaInferior As Boolean = _Fila.Item("EsListaInferior")
-            Dim _CodHolding As String = _Fila.Item("CodHolding")
-            Dim _NOKOEN As String = _Fila.Item("NOKOEN")
-            Dim _KOEN As String = _Fila.Item("ENDO")
-            Dim _SUEN As String = _Fila.Item("SUENDO")
-            Dim _VentaMinVencLP As Integer = _Fila.Item("VentaMinVencLP")
-
-            If _EsListaSuperior Or _EsListaInferior Then
-
-                Dim _Mensaje As New LsValiciones.Mensajes
-
-                If _KOEN.Trim = "76694946" Then
-                    Dim a = 1
-                End If
-
-                _Mensaje = _Cl_DocListaSuperior.Fx_RevisarSiMantieneLista(_Fila.Item("ENDO"), _Fila.Item("Lista"), _VentaMinVencLP)
-
-                Dim _Cumple As Boolean = _Mensaje.EsCorrecto
-
-                _Fila.Item("Cumple") = _Cumple
-
-                If _Cumple And _EsListaInferior Then
-                    _Fila.Item("CambiarLista") = True
-                    _Fila.Item("NewLista") = _ListaSuperior
-                End If
-
-                If Not _Cumple And _EsListaSuperior Then
-                    _Fila.Item("CambiarLista") = True
-                    _Fila.Item("NewLista") = _ListaInferior
-                End If
-
-            End If
-
-        Next
-
-        ExportarTabla_JetExcel_Tabla(_Tbl, _Fm_Menu_Padre, "Minoristas Mayoristas")
+        Dim Fm As New Frm_RevMayMin
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 

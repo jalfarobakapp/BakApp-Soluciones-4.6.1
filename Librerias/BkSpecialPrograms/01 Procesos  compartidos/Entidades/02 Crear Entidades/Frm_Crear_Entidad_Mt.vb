@@ -2425,7 +2425,11 @@ Public Class Frm_Crear_Entidad_Mt
     End Sub
 
     Private Sub Txt_CodHolding_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_CodHolding.ButtonCustomClick
-        ShowContextMenu(Menu_Contextual_Holding)
+        If String.IsNullOrEmpty(Txt_CodHolding.Tag) Then
+            Call Btn_Mnu_HoldingAgregar_Click(Nothing, Nothing)
+        Else
+            ShowContextMenu(Menu_Contextual_Holding)
+        End If
     End Sub
 
     Private Sub Txt_CodHolding_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_CodHolding.ButtonCustom2Click
@@ -2434,7 +2438,11 @@ Public Class Frm_Crear_Entidad_Mt
     End Sub
 
     Private Sub Txt_CodPagador_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_CodPagador.ButtonCustomClick
-        ShowContextMenu(Menu_Contextual_Pagador)
+        If String.IsNullOrEmpty(Txt_CodPagador.Tag) Then
+            Call Btn_Mnu_PagadorAgregar_Click(Nothing, Nothing)
+        Else
+            ShowContextMenu(Menu_Contextual_Pagador)
+        End If
     End Sub
 
     Private Sub Txt_CodPagador_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_CodPagador.ButtonCustom2Click
@@ -2485,7 +2493,7 @@ Public Class Frm_Crear_Entidad_Mt
             Return
         End If
 
-        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Entidades", "CodHolding = '" & Txt_CodHolding.Tag & "')")
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Entidades", "CodHolding = '" & Txt_CodHolding.Tag & "'")
 
         If Not CBool(_Reg) Then
             MessageBoxEx.Show(Me, "No existen entidades asociadas al Holding", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)

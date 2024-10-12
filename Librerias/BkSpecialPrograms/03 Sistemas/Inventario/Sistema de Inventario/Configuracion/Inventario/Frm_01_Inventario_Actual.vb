@@ -108,11 +108,11 @@ Public Class Frm_01_Inventario_Actual
                        "Inner Join #PasoC On #PasoC.Codigo = Foto.Codigo" & vbCrLf &
                        "Where IdInventario = " & _IdInventario & "" & vbCrLf &
                        vbCrLf &
-                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Dif_Inv_Cantidad = ROUND(ABS(Cant_Inventariada) - ABS(StFisicoUd1), 5)" & vbCrLf &
+                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Dif_Inv_Cantidad = ROUND(Cant_Inventariada - (StFisicoUd1), 5) --ROUND(ABS(Cant_Inventariada) - ABS(StFisicoUd1), 5)" & vbCrLf &
                        "Where IdInventario = " & _IdInventario & vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Total_Costo_Foto = StFisicoUd1*Costo,Total_Costo_Inv = Cant_Inventariada*Costo" & vbCrLf &
                        "Where IdInventario = " & _IdInventario & vbCrLf &
-                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Dif_Inv_Costo = ABS(Total_Costo_Inv)-ABS(Total_Costo_Foto)" & vbCrLf &
+                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Dif_Inv_Costo = Total_Costo_Inv-(Total_Costo_Foto) --ABS(Total_Costo_Inv)-ABS(Total_Costo_Foto)" & vbCrLf &
                        "Where IdInventario = " & _IdInventario & vbCrLf &
                        vbCrLf &
                        "Drop Table #PasoR" & vbCrLf &
@@ -252,7 +252,7 @@ Public Class Frm_01_Inventario_Actual
             _Total_Inventario += CDbl(row.Cells("Total_Costo_Inv").Value)
         Next
 
-        Dim _Total_Diferencia As Double = _Total_Inventario - _Total_Foto
+        Dim _Total_Diferencia As Double = _Total_Inventario - (_Total_Foto)
 
         LblTotal_FotoStock.Text = FormatCurrency(_Total_Foto, 0)
         LblTotal_Inventario.Text = FormatCurrency(_Total_Inventario, 0)

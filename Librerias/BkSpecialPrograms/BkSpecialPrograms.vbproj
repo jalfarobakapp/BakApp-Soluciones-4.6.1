@@ -939,6 +939,12 @@
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_Productos.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\MayoristaMinoristas\Frm_RevMayMin.Designer.vb">
+      <DependentUpon>Frm_RevMayMin.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\MayoristaMinoristas\Frm_RevMayMin.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Puntos Venta\Cl_Puntos.vb" />
     <Compile Include="03 Sistemas\Puntos Venta\Frm_ConfPuntosVta.Designer.vb">
       <DependentUpon>Frm_ConfPuntosVta.vb</DependentUpon>
@@ -4788,6 +4794,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_Productos.resx">
       <DependentUpon>Frm_Inv_Sector_Productos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\MayoristaMinoristas\Frm_RevMayMin.resx">
+      <DependentUpon>Frm_RevMayMin.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Puntos Venta\Frm_ConfPuntosVta.resx">
       <DependentUpon>Frm_ConfPuntosVta.vb</DependentUpon>
