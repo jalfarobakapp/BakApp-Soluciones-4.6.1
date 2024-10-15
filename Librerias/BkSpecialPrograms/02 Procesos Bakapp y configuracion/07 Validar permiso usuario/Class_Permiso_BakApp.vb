@@ -986,6 +986,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Pdc00009", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Pdc00010", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Pdc00011", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Pdc00012", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Rcl00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Rcl00002", _Objeto, _Formulario)
@@ -4337,7 +4338,7 @@ Public Class Class_Permiso_BakApp
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCCION, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCCION.ToString
             Case "Pdc00009"
-                _DescripcionPermiso = "CAMBIAR FECHA DE INGRESO DE FABRICACION EN TARJA"
+                _DescripcionPermiso = "CAMBIAR FECHA DE EMISION DE LA OT"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCCION, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCCION.ToString
             Case "Pdc00010"
@@ -4346,6 +4347,10 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.PRODUCCION.ToString
             Case "Pdc00011"
                 _DescripcionPermiso = "CAMBIAR NOMENCLATURA/RECETA EN PRODUCTOS DE ORDEN DE FABRICACION DE MEZCLA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCCION, 6)
+                _NombreFamiliaPermiso = _Fml.PRODUCCION.ToString
+            Case "Pdc00012"
+                _DescripcionPermiso = "CAMBIAR FECHA DE INGRESO DE FABRICACION EN TARJA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCCION, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCCION.ToString
         End Select

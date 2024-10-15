@@ -55,6 +55,8 @@ Public Class Frm_GRI_FabXProducto
         Chk_FechaEmiFiot.Checked = Not Fx_Tiene_Permiso(Me, "Pdc00009",, False)
         Dtp_Fiot.Enabled = Not Chk_FechaEmiFiot.Checked
 
+        AddHandler Chk_FechaEmiFiot.CheckedChanged, AddressOf Chk_FechaEmiFiot_CheckedChanged
+
     End Sub
 
     Private Sub Txt_Numot_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Numot.KeyDown
@@ -118,6 +120,12 @@ Public Class Frm_GRI_FabXProducto
             Lbl_ReferenciaOT.Text = "REFERENCIA: " & _Row_Pote.Item("REFERENCIA")
 
             Dtp_Fiot.Value = _Row_Pote.Item("FIOT")
+
+            If Chk_FechaEmiFiot.Checked Then
+                Dtp_Fecha_Ingreso.Value = _Row_Pote.Item("FIOT")
+            Else
+                Dtp_Fecha_Ingreso.Value = _FechaDelServidor
+            End If
 
             Sb_BuscarProductos(_Numot)
 
@@ -188,6 +196,7 @@ Public Class Frm_GRI_FabXProducto
         Txt_Codigo.ButtonCustom.Enabled = True
         Txt_Codigo.Text = _Row_Potl.Item("CODIGO")
         Txt_Descripcion.Text = _Row_Potl.Item("GLOSA")
+        Btn_EditFechaGRI.Enabled = True
 
         Lbl_Fabricar.Text = FormatNumber(_Row_Potl.Item("FABRICAR"), 0)
         Lbl_Realizado.Text = FormatNumber(_Row_Potl.Item("REALIZADO"), 0)
@@ -409,6 +418,8 @@ Public Class Frm_GRI_FabXProducto
     Sub Sb_Limpiar()
 
         Dtp_Fecha_Ingreso.Value = _FechaDelServidor
+        Dtp_Fecha_Ingreso.Enabled = False
+        Btn_EditFechaGRI.Enabled = False
         Dtp_Fiot.Value = Nothing
         Txt_Numot.ReadOnly = False
         Txt_Numot.Text = String.Empty
@@ -1043,13 +1054,13 @@ Public Class Frm_GRI_FabXProducto
         Fm_Espera.BarraCircular.IsRunning = True
         Fm_Espera.Show()
 
-        Dim _FechaEmision As DateTime
+        Dim _FechaEmision As DateTime = Dtp_Fecha_Ingreso.Value
 
-        If Chk_FechaEmiFiot.Checked Then
-            _FechaEmision = Dtp_Fiot.Value
-        Else
-            _FechaEmision = Dtp_Fecha_Ingreso.Value
-        End If
+        'If Chk_FechaEmiFiot.Checked Then
+        '    _FechaEmision = Dtp_Fiot.Value
+        'Else
+        '    _FechaEmision = Dtp_Fecha_Ingreso.Value
+        'End If
 
         Dim Fm As New Frm_Formulario_Documento("GRI", csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Recepcion_Interna,
                                                False, False, False, False, False, False)
@@ -1152,9 +1163,12 @@ Public Class Frm_GRI_FabXProducto
 
     End Sub
 
-    Private Sub Chk_FechaEmiFiot_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_FechaEmiFiot.CheckedChanged
+    Private Sub Chk_FechaEmiFiot_CheckedChanged(sender As Object, e As EventArgs)
 
-        If Not Chk_FechaEmiFiot.Checked Then
+        If Chk_FechaEmiFiot.Checked Then
+            Dtp_Fiot.Value = _Row_Pote.Item("FIOT")
+            Dtp_Fecha_Ingreso.Value = _Row_Pote.Item("FIOT")
+        Else
             If Not Fx_Tiene_Permiso(Me, "Pdc00009") Then
                 Chk_FechaEmiFiot.Checked = True
             End If
@@ -1226,11 +1240,22 @@ Public Class Frm_GRI_FabXProducto
         If IsNothing(_RowBodegaGRI) Then
             Lbl_BodegaGRI.Text = "NO SE ENCONTRO Bodega: " & _Bodega & " en Empresa: " & _Empresa & ", Sucursal: " & _Sucursal
             _RowBodegaGRI = Nothing
-            End If
+        End If
 
-            Lbl_BodegaGRI.Text = "BODEGA DE LA GRI: " & _RowBodegaGRI.Item("KOBO") & " - " & _RowBodegaGRI.Item("NOKOBO").ToString.Trim
+        Lbl_BodegaGRI.Text = "BODEGA DE LA GRI: " & _RowBodegaGRI.Item("KOBO") & " - " & _RowBodegaGRI.Item("NOKOBO").ToString.Trim
 
     End Sub
 
+    Private Sub Btn_EditFechaGRI_Click(sender As Object, e As EventArgs) Handles Btn_EditFechaGRI.Click
+
+        If Fx_Tiene_Permiso(Me, "Pdc00012") Then
+            Dtp_Fecha_Ingreso.Enabled = True
+        End If
+
+    End Sub
+
+    Private Sub Dtp_Fiot_ValueChanged(sender As Object, e As EventArgs) Handles Dtp_Fiot.ValueChanged
+        Dtp_Fecha_Ingreso.Value = Dtp_Fiot.Value
+    End Sub
 
 End Class
