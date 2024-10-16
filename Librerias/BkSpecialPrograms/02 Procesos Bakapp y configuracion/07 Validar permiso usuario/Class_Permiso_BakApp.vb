@@ -677,6 +677,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Invp0003", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Invp0004", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Invp0005", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Invp0006", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Invg0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Invg0002", _Objeto, _Formulario)
@@ -3029,6 +3030,10 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.INVENTARIO_PARCIALIZADO.ToString
             Case "Invp0005"
                 _DescripcionPermiso = "PODER EDITAR EL NOMBRE DEL AJUSTE DE INVENTARIO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO_PARCIALIZADO, 6)
+                _NombreFamiliaPermiso = _Fml.INVENTARIO_PARCIALIZADO.ToString
+            Case "Invp0006"
+                _DescripcionPermiso = "CAMBIAR FECHA DEL AJUSTE DE INVENTARIO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO_PARCIALIZADO, 6)
                 _NombreFamiliaPermiso = _Fml.INVENTARIO_PARCIALIZADO.ToString
 

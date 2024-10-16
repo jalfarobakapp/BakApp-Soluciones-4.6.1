@@ -1,6 +1,4 @@
 ﻿Imports DevComponents.DotNetBar
-'Imports Lib_Bakapp_VarClassFunc
-
 
 Public Class Frm_Mt_InvParc_SelecionFechas
 
@@ -12,7 +10,7 @@ Public Class Frm_Mt_InvParc_SelecionFechas
 
     Private _dv As New DataView
 
-    Public Sub New(ByVal RowBodega As DataRow)
+    Public Sub New(RowBodega As DataRow)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -21,16 +19,11 @@ Public Class Frm_Mt_InvParc_SelecionFechas
         Sb_Formato_Generico_Grilla(Grilla, 20, New Font("Tahoma", 9), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
         _RowBodega = RowBodega
 
-        If Global_Thema = Enum_Themas.Oscuro Then
-            BtnCrearNuevoInventario.ForeColor = Color.White
-            Btn_Actualizar_Foto_Stock.ForeColor = Color.White
-            Btn_Exportar_Excel.ForeColor = Color.White
-            Btn_VerInventario.ForeColor = Color.White
-        End If
+        Sb_Color_Botones_Barra(Bar1)
 
     End Sub
 
-    Private Sub Frm_Mt_InvParc_SelecionFechas_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Mt_InvParc_SelecionFechas_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         _Empresa = _RowBodega.Item("EMPRESA")
         _Sucursal = _RowBodega.Item("KOSU")
@@ -148,7 +141,7 @@ Public Class Frm_Mt_InvParc_SelecionFechas
 
     End Sub
 
-    Private Sub Grilla_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
 
         If e.Button = Windows.Forms.MouseButtons.Right Then
             With sender
@@ -166,7 +159,7 @@ Public Class Frm_Mt_InvParc_SelecionFechas
 
     End Sub
 
-    Private Sub CrearNuevoInventarioToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub CrearNuevoInventarioToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs)
         Dim Fm As New Frm_Mt_InvParc_NuevoAjuste(_RowBodega)
         Fm.ShowInTaskbar = False
         Fm.ShowDialog(Me)
@@ -174,7 +167,7 @@ Public Class Frm_Mt_InvParc_SelecionFechas
     End Sub
 
 
-    Private Sub BtnCrearNuevoInventario_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnCrearNuevoInventario.Click
+    Private Sub BtnCrearNuevoInventario_Click(sender As System.Object, e As System.EventArgs) Handles BtnCrearNuevoInventario.Click
         Dim Fm As New Frm_Mt_InvParc_NuevoAjuste(_RowBodega)
         Fm.ShowDialog(Me)
 
@@ -185,22 +178,22 @@ Public Class Frm_Mt_InvParc_SelecionFechas
         Fm.Dispose()
     End Sub
 
-    Private Sub Frm_Mt_InvParc_SelecionFechas_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_Mt_InvParc_SelecionFechas_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
-    Private Sub Btn_VerInventario_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_VerInventario.Click
+    Private Sub Btn_VerInventario_Click(sender As System.Object, e As System.EventArgs) Handles Btn_VerInventario.Click
         Sb_Seleccionar_Inventario()
     End Sub
 
 
-    Private Sub Btn_Mnu_Ver_Ajuste_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Ver_Ajuste.Click
+    Private Sub Btn_Mnu_Ver_Ajuste_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Ver_Ajuste.Click
         Sb_Seleccionar_Inventario()
     End Sub
 
-    Private Sub Btn_Mnu_Editar_Nombre_De_Ajuste_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Editar_Nombre_De_Ajuste.Click
+    Private Sub Btn_Mnu_Editar_Nombre_De_Ajuste_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Editar_Nombre_De_Ajuste.Click
 
         If Not Fx_Tiene_Permiso(Me, "Invp0005") Then
             Return
@@ -233,7 +226,7 @@ Public Class Frm_Mt_InvParc_SelecionFechas
 
     End Sub
 
-    Private Sub Btn_Mnu_Eliminar_Ajuste_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Eliminar_Ajuste.Click
+    Private Sub Btn_Mnu_Eliminar_Ajuste_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Eliminar_Ajuste.Click
 
         Dim Fecha = Format(Grilla.Rows(Grilla.CurrentRow.Index).Cells("Fecha").Value, "yyyyMMdd")
 
@@ -271,11 +264,11 @@ Public Class Frm_Mt_InvParc_SelecionFechas
 
     End Sub
 
-    Private Sub TxtDescripcion_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TxtDescripcion.TextChanged
+    Private Sub TxtDescripcion_TextChanged(sender As System.Object, e As System.EventArgs) Handles TxtDescripcion.TextChanged
         _dv.RowFilter = String.Format("Fecha+Nombre_Ajuste Like '%{0}%'", TxtDescripcion.Text)
     End Sub
 
-    Private Sub Btn_Actualizar_Foto_Stock_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Actualizar_Foto_Stock.Click
+    Private Sub Btn_Actualizar_Foto_Stock_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Actualizar_Foto_Stock.Click
         If Fx_Tiene_Permiso(Me, "In0030") Then
             Dim Fm As New Frm_Mt_InvParc_Actualizar_Foto_Stock(_Empresa, _Sucursal, _Bodega)
             If CBool(Fm.Pro_Tbl_Inventarios.Rows.Count) Then
@@ -287,7 +280,7 @@ Public Class Frm_Mt_InvParc_SelecionFechas
         End If
     End Sub
 
-    Private Sub Btn_Exportar_Inventarios_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Exportar_Inventarios.Click
+    Private Sub Btn_Exportar_Inventarios_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Exportar_Inventarios.Click
         Consulta_sql = "Select Ano,Mes,Dia,Fecha,Empresa,Sucursal,Bodega,Nombre_Ajuste,Funcionario,Estado" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_TmpInv_InvParcial_Inventarios" & vbCrLf &
                        "Where Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal &
@@ -299,7 +292,7 @@ Public Class Frm_Mt_InvParc_SelecionFechas
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Inventarios")
     End Sub
 
-    Private Sub Btn_Exportar_Todo_Los_Productos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Exportar_Todo_Los_Productos.Click
+    Private Sub Btn_Exportar_Todo_Los_Productos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Exportar_Todo_Los_Productos.Click
         Consulta_sql = "Select *," &
                        "Isnull((Select Top 1 DATOSUBIC From TABBOPR" & Space(1) &
                        "Where EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR = CodigoPr),'') As UBICACION," &
@@ -326,7 +319,7 @@ Public Class Frm_Mt_InvParc_SelecionFechas
 
     End Sub
 
-    Private Sub Btn_Exportar_Productos_No_Inventariados_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Exportar_Productos_No_Inventariados.Click
+    Private Sub Btn_Exportar_Productos_No_Inventariados_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Exportar_Productos_No_Inventariados.Click
 
         Consulta_sql = "Select KOPR As CODIGO,NOKOPR As DESCRIPCION,RLUD As RTU,UD01PR As UN1," &
                        "Cast(0 As Float) StockUd1,UD02PR As UN2,Cast(0 As Float) StockUd2,MRPR AS MARCA" & vbCrLf &
@@ -345,7 +338,7 @@ Public Class Frm_Mt_InvParc_SelecionFechas
 
     End Sub
 
-    Private Sub Btn_Exportar_Excel_Detalle_Inv_Seleccionado_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Exportar_Excel_Detalle_Inv_Seleccionado.Click
+    Private Sub Btn_Exportar_Excel_Detalle_Inv_Seleccionado_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Exportar_Excel_Detalle_Inv_Seleccionado.Click
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
