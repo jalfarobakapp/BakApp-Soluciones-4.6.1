@@ -6313,6 +6313,57 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Function
 
+    Function Fx_Confirmar_LecturaSINO(_Mensaje1 As String,
+                                      _Mensaje2 As String,
+                                      _eTaskDialogIcon As eTaskDialogIcon) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Dim Chk_Confirmar_Lectura As New Command
+        Chk_Confirmar_Lectura.Checked = False
+        Chk_Confirmar_Lectura.Name = "Chk_Confirmar_Lectura"
+        Chk_Confirmar_Lectura.Text = "CONFIRMAR LECTURA DE LA ALERTA"
+
+        Dim _Opciones As Command = Chk_Confirmar_Lectura
+
+        Dim _Info As New TaskDialogInfo("Alerta",
+                  _eTaskDialogIcon,
+                  _Mensaje1, _Mensaje2,
+                  eTaskDialogButton.Yes + eTaskDialogButton.No, eTaskDialogBackgroundColor.Red, Nothing, Nothing,
+                  _Opciones, Nothing, Nothing)
+
+        Dim _Resultado As eTaskDialogResult = TaskDialog.Show(_Info)
+
+        If _Resultado = eTaskDialogResult.Yes Or _Resultado = eTaskDialogResult.No Or _Resultado = eTaskDialogResult.Cancel Then
+
+            If Not Chk_Confirmar_Lectura.Checked Then
+                'MessageBoxEx.Show(Me, "Debe confirmar la lectura", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Beep()
+                _Mensaje = Fx_Confirmar_LecturaSINO(_Mensaje1, _Mensaje2, _eTaskDialogIcon)
+            Else
+
+                _Mensaje.Resultado = _Resultado.ToString
+                _Mensaje.EsCorrecto = True
+
+                If _Resultado = eTaskDialogResult.Yes Then
+                    _Mensaje.Icono = eTaskDialogIcon.Information
+                ElseIf _Resultado = eTaskDialogResult.No Then
+                    _Mensaje.Cerrar = False
+                    _Mensaje.Icono = eTaskDialogIcon.Stop
+                Else
+                    _Mensaje.Icono = eTaskDialogIcon.Exclamation
+                End If
+
+            End If
+
+        Else
+            _Mensaje.Cerrar = True
+        End If
+
+        Return _Mensaje
+
+    End Function
+
     Function Fx_Vaidar_Fincred(_Idmaeedo As Integer,
                                _Tido As String,
                                _Nudo As String,

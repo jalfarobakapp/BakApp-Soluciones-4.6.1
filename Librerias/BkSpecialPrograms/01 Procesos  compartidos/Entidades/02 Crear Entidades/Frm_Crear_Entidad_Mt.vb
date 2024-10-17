@@ -1001,6 +1001,7 @@ Public Class Frm_Crear_Entidad_Mt
                     .CodHolding = Txt_CodHolding.Tag
                     .CodPagador = Txt_CodPagador.Tag
                     .PreMayMinXHolding = Chk_PreMayMinXHolding.Checked
+                    .NoCobrarPallet = Chk_NoCobrarPallet.Checked
 
                     If _CreaNuevaEntidad Then
 
@@ -1028,6 +1029,7 @@ Public Class Frm_Crear_Entidad_Mt
                                    ",CodHolding = '" & .CodHolding & "'" & vbCrLf &
                                    ",PreMayMinXHolding = " & Convert.ToInt32(.PreMayMinXHolding) & vbCrLf &
                                    ",CodPagador = '" & .CodPagador & "'" & vbCrLf &
+                                   ",NoCobrarPallet = " & Convert.ToInt32(.NoCobrarPallet) & vbCrLf &
                                    "Where CodEntidad = '" & .CodEntidad & "' And CodSucEntidad = '" & .CodSucEntidad & "'"
 
                     Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
@@ -1533,6 +1535,7 @@ Public Class Frm_Crear_Entidad_Mt
                     Txt_CodPagador.Tag = .CodPagador
                     Txt_CodPagador.Text = .CodPagador
                     Chk_PreMayMinXHolding.Checked = .PreMayMinXHolding
+                    Chk_NoCobrarPallet.Checked = .NoCobrarPallet
 
                     Dim _Cl_TablaCaracterizaciones As New Cl_TablaCaractierizaciones
                     Dim _Mensaje As LsValiciones.Mensajes

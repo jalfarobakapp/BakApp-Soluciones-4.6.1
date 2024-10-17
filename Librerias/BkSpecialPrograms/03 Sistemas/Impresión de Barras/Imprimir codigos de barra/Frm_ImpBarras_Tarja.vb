@@ -275,7 +275,7 @@ Public Class Frm_ImpBarras_Tarja
             Dim _Nro_CPT = _Row_Tarja.Item("Nro_CPT")
             Dim _Tbl_Tarja_Det As DataTable
 
-            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja_Det Where Id_CPT = " & _Id_CPT ' --Nro_CPT = '" & _Nro_CPT & "' And Lote = '" & _Lote & "'"
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja_Det Where Id_CPT = " & _Id_CPT & " And Tipo = 'PALLET'"
             _Tbl_Tarja_Det = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Veces2 As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones",

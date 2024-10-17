@@ -27,6 +27,13 @@ Public Class Frm_GRI_FabXProducto
     Private _Ult_Tolva_Str As String
     Private _Ult_Lote As String
 
+    Enum Enum_TipoFab
+        Ninguno
+        Saco
+        Pallet
+        Maxi
+    End Enum
+
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -216,14 +223,20 @@ Public Class Frm_GRI_FabXProducto
         Sb_Llenar_Combos(_Arr, Cmb_Formato)
         Cmb_Formato.SelectedValue = ""
 
-        Sb_TipoIngreso(_Row_Maepr.Item("KOPR"), _Row_Maepr.Item("RLUD"))
+        Dim _TipoFab As Enum_TipoFab = Enum_TipoFab.Ninguno
+
+        If _Ult_Tipo = "MAXI-SACO" Then
+            _TipoFab = Enum_TipoFab.Maxi
+        End If
+
+        Sb_TipoIngreso(_Row_Maepr.Item("KOPR"), _Row_Maepr.Item("RLUD"), _TipoFab)
 
         Txt_Cantidad.Enabled = True
         Txt_Cantidad.Focus()
 
     End Sub
 
-    Sub Sb_TipoIngreso(_Codigo As String, _Rtu As Double)
+    Sub Sb_TipoIngreso(_Codigo As String, _Rtu As Double, _TipoFab As Enum_TipoFab)
 
         Dim _Row_Tabcodal As DataRow
 
@@ -241,6 +254,17 @@ Public Class Frm_GRI_FabXProducto
         Rdb_Maxi.Checked = False
         Rdb_Maxi.Name = "Rdb_Maxi"
         Rdb_Maxi.Text = "SACO (MAXI)"
+
+        If Not IsNothing(_TipoFab) Then
+            Select Case _TipoFab
+                Case Enum_TipoFab.Saco
+                    Rdb_Sacos.Checked = True
+                Case Enum_TipoFab.Pallet
+                    Rdb_Pallets.Checked = True
+                Case Enum_TipoFab.Maxi
+                    Rdb_Maxi.Checked = True
+            End Select
+        End If
 
         Dim _Opciones() As Command = {Rdb_Sacos, Rdb_Pallets, Rdb_Maxi}
 
@@ -260,9 +284,9 @@ Public Class Frm_GRI_FabXProducto
         End If
 
         If Not Rdb_Sacos.Checked AndAlso Not Rdb_Pallets.Checked AndAlso Not Rdb_Maxi.Checked Then
-            MessageBoxEx.Show(Me, "Debe seleccionar un tipo de ingreso SACOS o PALLETS",
+            MessageBoxEx.Show(Me, "Debe seleccionar un tipo de ingreso SACOS, PALLETS o  MAXI-SACO",
                               "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Sb_TipoIngreso(_Codigo, _Rtu)
+            Sb_TipoIngreso(_Codigo, _Rtu, Nothing)
             Return
         End If
 
@@ -294,7 +318,7 @@ Public Class Frm_GRI_FabXProducto
             If IsNothing(_Row_Tabcodal) Then
                 MessageBoxEx.Show(Me, "No existe código alternativo para " & _Tipo & " para este producto",
                                   "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Sb_TipoIngreso(_Codigo, _Rtu)
+                Sb_TipoIngreso(_Codigo, _Rtu, Nothing)
                 Return
             End If
 
@@ -310,7 +334,7 @@ Public Class Frm_GRI_FabXProducto
                                               _Tipo_Imagen.Product,, _Tipo_Caracter.Solo_Numeros_Enteros, False)
 
         If Not _Aceptar Then
-            Sb_TipoIngreso(_Codigo, _Rtu)
+            Sb_TipoIngreso(_Codigo, _Rtu, Nothing)
             Return
         End If
 
@@ -321,8 +345,9 @@ Public Class Frm_GRI_FabXProducto
         End If
 
         If (_Cantidad_Fab + _Row_Potl.Item("REALIZADO")) > _Row_Potl.Item("FABRICAR") Then
-            MessageBoxEx.Show(Me, "Usted no puede recepcionar más que el SALDO indicado en la orden", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Sb_TipoIngreso(_Codigo, _Rtu)
+            MessageBoxEx.Show(Me, "Usted no puede recepcionar más que el SALDO indicado en la orden", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Sb_TipoIngreso(_Codigo, _Rtu, Nothing)
             Return
         End If
 
@@ -339,6 +364,17 @@ Public Class Frm_GRI_FabXProducto
         Dim _Udad As String
 
         If Rdb_Maxi.Checked Then
+
+            If _Cantidad < 400 Or _Cantidad > 1500 Then
+
+                MessageBoxEx.Show(Me, "La cantidad del MAXI-SACO debe estan entre un rango de 400 y 1500 kilos", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                Sb_TipoIngreso(_Codigo, _Rtu, Enum_TipoFab.Maxi)
+                Return
+
+            End If
+
 
             _Kopral = _Row_Maepr.Item("KOPR")
             _Nokopral = _Row_Maepr.Item("KOPR").ToString.Trim & " - " & _Row_Maepr.Item("NOKOPR").ToString.Trim
@@ -834,7 +870,7 @@ Public Class Frm_GRI_FabXProducto
     End Sub
 
     Private Sub Txt_Cantidad_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Cantidad.ButtonCustomClick
-        Sb_TipoIngreso(_Row_Maepr.Item("KOPR"), _Row_Maepr.Item("RLUD"))
+        Sb_TipoIngreso(_Row_Maepr.Item("KOPR"), _Row_Maepr.Item("RLUD"), Nothing)
     End Sub
 
     Private Sub Btn_BuscarOT_Click(sender As Object, e As EventArgs) Handles Btn_BuscarOT.Click
@@ -1006,7 +1042,7 @@ Public Class Frm_GRI_FabXProducto
             _Cl_Tarja.Zw_Pdp_CPT_Tarja.Formato = _Row_Maepr.Item("RLUD")
         End If
 
-        If _Cl_Tarja.Zw_Pdp_CPT_Tarja.Tipo = "PALLET" Then
+        If _Cl_Tarja.Zw_Pdp_CPT_Tarja.Tipo = "PALLET" Or _Cl_Tarja.Zw_Pdp_CPT_Tarja.Tipo = "MAXI-SACO" Then
 
             _Cl_Tarja.Zw_Pdp_CPT_Tarja_Det_Ls.Clear()
 

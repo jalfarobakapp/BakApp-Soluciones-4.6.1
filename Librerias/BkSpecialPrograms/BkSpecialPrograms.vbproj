@@ -159,10 +159,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.ACUSE.RECIBO.FACTURA\bin\Debug\Hefesto.Acuse.Recibo.Factura.dll</HintPath>
     </Reference>
-    <Reference Include="HEFSIIREGCOMPRAVENTAS, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\RunDteBK\Factura Electronica DTE Efesto\HEFSIIREGCOMPRAVENTAS\HEFESTO.SII.V2020.BG.QUERY.LIB\bin\Debug\HEFSIIREGCOMPRAVENTAS.dll</HintPath>
-    </Reference>
     <Reference Include="Interop.ZKFPEngXControl, Version=4.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -8484,6 +8480,12 @@
   <ItemGroup>
     <Folder Include="01 Procesos  compartidos\Productos\01 Buscar productos\New ProdFind\" />
     <Folder Include="03 Sistemas\Comisiones\Recursos\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\RunDteBK\Factura Electronica DTE Efesto\HEFSIIREGCOMPRAVENTAS\HEFESTO.SII.V2020.BG.QUERY.LIB\HEFSIIREGCOMPRAVENTAS.LIB.csproj">
+      <Project>{965eb04b-532a-4d19-b2c2-a3f5495cde87}</Project>
+      <Name>HEFSIIREGCOMPRAVENTAS.LIB</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -252,7 +252,7 @@ Partial Class Frm_CrearContador
         Me.Btn_Grabar.Image = CType(resources.GetObject("Btn_Grabar.Image"), System.Drawing.Image)
         Me.Btn_Grabar.ImageAlt = CType(resources.GetObject("Btn_Grabar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Grabar.Name = "Btn_Grabar"
-        Me.Btn_Grabar.Tooltip = "Crear Inventario"
+        Me.Btn_Grabar.Tooltip = "Grabar"
         '
         'Btn_Eliminar
         '

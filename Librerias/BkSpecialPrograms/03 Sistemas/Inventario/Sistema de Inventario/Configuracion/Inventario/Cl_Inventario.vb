@@ -225,7 +225,7 @@ Public Class Cl_Inventario
                                "NombreInventario = '" & .NombreInventario & "'" & vbCrLf &
                                ",FuncionarioCargo = '" & .FuncionarioCargo & "'" & vbCrLf &
                                ",NombreFuncionario = '" & .NombreFuncionario & "'" & vbCrLf &
-                               "Where IdInventario = " & .Id
+                               "Where Id = " & .Id
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                 Comando.Transaction = myTrans
