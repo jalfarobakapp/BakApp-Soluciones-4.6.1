@@ -25,6 +25,8 @@ Partial Class Frm_Diseno_Doc_y_Ubic
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Diseno_Doc_y_Ubic))
         Me.RibbonControl1 = New DevComponents.DotNetBar.RibbonControl()
         Me.RibbonPanel1 = New DevComponents.DotNetBar.RibbonPanel()
+        Me.RibbonBar3 = New DevComponents.DotNetBar.RibbonBar()
+        Me.Btn_Sectores = New DevComponents.DotNetBar.ButtonItem()
         Me.RibbonBar1 = New DevComponents.DotNetBar.RibbonBar()
         Me.Btn_NuevoMapa = New DevComponents.DotNetBar.ButtonItem()
         Me.RibbonBar8 = New DevComponents.DotNetBar.RibbonBar()
@@ -59,8 +61,6 @@ Partial Class Frm_Diseno_Doc_y_Ubic
         Me.Btn_Exportar_Excel_Sectores = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Exportar_Excel_Ubicaciones = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Exportar_Excel_Productos = New DevComponents.DotNetBar.ButtonItem()
-        Me.RibbonBar3 = New DevComponents.DotNetBar.RibbonBar()
-        Me.Btn_Zonas = New DevComponents.DotNetBar.ButtonItem()
         Me.RibbonControl1.SuspendLayout()
         Me.RibbonPanel1.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -129,6 +129,44 @@ Partial Class Frm_Diseno_Doc_y_Ubic
         '
         Me.RibbonPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.RibbonPanel1.TabIndex = 1
+        '
+        'RibbonBar3
+        '
+        Me.RibbonBar3.AutoOverflowEnabled = True
+        '
+        '
+        '
+        Me.RibbonBar3.BackgroundMouseOverStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.RibbonBar3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.RibbonBar3.ContainerControlProcessDialogKey = True
+        Me.RibbonBar3.Dock = System.Windows.Forms.DockStyle.Left
+        Me.RibbonBar3.DragDropSupport = True
+        Me.RibbonBar3.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Sectores})
+        Me.RibbonBar3.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
+        Me.RibbonBar3.Location = New System.Drawing.Point(571, 0)
+        Me.RibbonBar3.Name = "RibbonBar3"
+        Me.RibbonBar3.Size = New System.Drawing.Size(154, 98)
+        Me.RibbonBar3.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.RibbonBar3.TabIndex = 9
+        '
+        '
+        '
+        Me.RibbonBar3.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.RibbonBar3.TitleStyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        'Btn_Sectores
+        '
+        Me.Btn_Sectores.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Sectores.Image = CType(resources.GetObject("Btn_Sectores.Image"), System.Drawing.Image)
+        Me.Btn_Sectores.Name = "Btn_Sectores"
+        Me.Btn_Sectores.SubItemsExpandWidth = 14
+        Me.Btn_Sectores.Text = "Ver lista de sectores"
         '
         'RibbonBar1
         '
@@ -519,48 +557,10 @@ Partial Class Frm_Diseno_Doc_y_Ubic
         Me.Btn_Exportar_Excel_Productos.Name = "Btn_Exportar_Excel_Productos"
         Me.Btn_Exportar_Excel_Productos.Text = "Exportar Productos dentro del mapa"
         '
-        'RibbonBar3
-        '
-        Me.RibbonBar3.AutoOverflowEnabled = True
-        '
-        '
-        '
-        Me.RibbonBar3.BackgroundMouseOverStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.RibbonBar3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.RibbonBar3.ContainerControlProcessDialogKey = True
-        Me.RibbonBar3.Dock = System.Windows.Forms.DockStyle.Left
-        Me.RibbonBar3.DragDropSupport = True
-        Me.RibbonBar3.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Zonas})
-        Me.RibbonBar3.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.RibbonBar3.Location = New System.Drawing.Point(571, 0)
-        Me.RibbonBar3.Name = "RibbonBar3"
-        Me.RibbonBar3.Size = New System.Drawing.Size(154, 98)
-        Me.RibbonBar3.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.RibbonBar3.TabIndex = 9
-        '
-        '
-        '
-        Me.RibbonBar3.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.RibbonBar3.TitleStyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        'Btn_Zonas
-        '
-        Me.Btn_Zonas.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Zonas.Image = CType(resources.GetObject("Btn_Zonas.Image"), System.Drawing.Image)
-        Me.Btn_Zonas.Name = "Btn_Zonas"
-        Me.Btn_Zonas.SubItemsExpandWidth = 14
-        Me.Btn_Zonas.Text = "Crear nuevo mapa"
-        '
         'Frm_Diseno_Doc_y_Ubic
         '
         Me.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.ClientSize = New System.Drawing.Size(931, 481)
+        Me.ClientSize = New System.Drawing.Size(931, 479)
         Me.Controls.Add(Me.ContextMenuBar1)
         Me.Controls.Add(Me.tabStrip1)
         Me.Controls.Add(Me.RibbonControl1)
@@ -616,5 +616,5 @@ Partial Class Frm_Diseno_Doc_y_Ubic
     Friend WithEvents RibbonBar1 As DevComponents.DotNetBar.RibbonBar
     Friend WithEvents Btn_NuevoMapa As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents RibbonBar3 As DevComponents.DotNetBar.RibbonBar
-    Friend WithEvents Btn_Zonas As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Sectores As DevComponents.DotNetBar.ButtonItem
 End Class

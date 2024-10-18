@@ -225,7 +225,7 @@ Public Class Frm_GRI_FabXProducto
 
         Dim _TipoFab As Enum_TipoFab = Enum_TipoFab.Ninguno
 
-        If _Ult_Tipo = "MAXI-SACO" Then
+        If _Ult_Tipo = "MAXI-SACO" Or _Row_Maepr.Item("RLUD") = 1 Then
             _TipoFab = Enum_TipoFab.Maxi
         End If
 
@@ -264,6 +264,12 @@ Public Class Frm_GRI_FabXProducto
                 Case Enum_TipoFab.Maxi
                     Rdb_Maxi.Checked = True
             End Select
+        End If
+
+        If _Row_Maepr.Item("RLUD") = 1 Then
+            Rdb_Sacos.Enabled = False
+            Rdb_Pallets.Enabled = False
+            Rdb_Maxi.Checked = True
         End If
 
         Dim _Opciones() As Command = {Rdb_Sacos, Rdb_Pallets, Rdb_Maxi}
@@ -367,11 +373,18 @@ Public Class Frm_GRI_FabXProducto
 
             If _Cantidad < 400 Or _Cantidad > 1500 Then
 
-                MessageBoxEx.Show(Me, "La cantidad del MAXI-SACO debe estan entre un rango de 400 y 1500 kilos", "Validación",
-                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Dim _Seguir = False
 
-                Sb_TipoIngreso(_Codigo, _Rtu, Enum_TipoFab.Maxi)
-                Return
+                If MessageBoxEx.Show(Me, "La cantidad del MAXI-SACO debe estan entre un rango de 400 y 1500 kilos" & vbCrLf &
+                                     "¿Confirma igualmente ingresar la cantidad de " & _Cantidad & " kilos?", "Validación",
+                                  MessageBoxButtons.YesNo, MessageBoxIcon.Stop) = DialogResult.Yes Then
+                    _Seguir = Fx_Tiene_Permiso(Me, "Pdc00013")
+                End If
+
+                If Not _Seguir Then
+                    Sb_TipoIngreso(_Codigo, _Rtu, Enum_TipoFab.Maxi)
+                    Return
+                End If
 
             End If
 
@@ -435,6 +448,8 @@ Public Class Frm_GRI_FabXProducto
                 _Cl_Tarja.Zw_Pdp_CPT_Tarja.Lote = _Ult_Lote
                 Txt_NroLote.Text = _Ult_Lote
                 Cmb_Formato.SelectedValue = 1
+
+                Btn_Grabar.Focus()
 
             End If
 
@@ -1153,8 +1168,8 @@ Public Class Frm_GRI_FabXProducto
 
         Sb_Actualizar_Parametros_SQL(True)
 
-        MessageBoxEx.Show(Me, "Datos de fabricación ingresados correctamente con el Nro de GRI: " & _Nudo & vbCrLf &
-                          "Tarja ingresada Nro: " & _Cl_Tarja.Zw_Pdp_CPT_Tarja.Nro_CPT, "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        'MessageBoxEx.Show(Me, "Datos de fabricación ingresados correctamente con el Nro de GRI: " & _Nudo & vbCrLf &
+        '                  "Tarja ingresada Nro: " & _Cl_Tarja.Zw_Pdp_CPT_Tarja.Nro_CPT, "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Me.Enabled = True
         Me.Refresh()
 
@@ -1162,6 +1177,7 @@ Public Class Frm_GRI_FabXProducto
 
         Dim Fmt As New Frm_ImpBarras_Tarja
         Fmt.Txt_Nro_CPT.Text = _Cl_Tarja.Zw_Pdp_CPT_Tarja.Nro_CPT
+        Fmt.CerrarDespuesDeImprimir = True
         Fmt.ShowDialog(Me)
 
         Dim _Numot = String.Empty

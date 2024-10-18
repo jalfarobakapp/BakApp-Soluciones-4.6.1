@@ -10,6 +10,8 @@ Public Class Frm_ImpBarras_Tarja
 
     Dim _Veces As Integer
 
+    Public Property CerrarDespuesDeImprimir As Boolean
+
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -351,6 +353,10 @@ Public Class Frm_ImpBarras_Tarja
         Finally
             _Veces = _Veces_Origen
         End Try
+
+        If CerrarDespuesDeImprimir Then
+            Me.Close()
+        End If
 
     End Sub
 
