@@ -23,21 +23,20 @@ Partial Class Frm_Sectores_Lista_UbicOblig
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Sectores_Lista_UbicOblig))
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_VerInventario = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_AgregarProductosUbic = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
-        Me.Btn_EditarInventario = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_EliminarInventario = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem3 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
+        Me.Btn_ConfProdUbic = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Dtp_FechaRevision = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
@@ -50,7 +49,8 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
         Me.Imagenes_16x16_Dark = New System.Windows.Forms.ImageList(Me.components)
-        Me.Btn_ConfProdUbic = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_QuitarProductosUbic = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_VerProdUbicacion = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -119,15 +119,15 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         '
         Me.Menu_Contextual_01.AutoExpandOnClick = True
         Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
-        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_VerInventario, Me.LabelItem1, Me.Btn_EditarInventario, Me.Btn_EliminarInventario, Me.LabelItem3, Me.Btn_Copiar})
-        Me.Menu_Contextual_01.Text = "Opciones documento"
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_VerProdUbicacion, Me.Btn_AgregarProductosUbic, Me.Btn_QuitarProductosUbic, Me.LabelItem3, Me.Btn_Copiar})
+        Me.Menu_Contextual_01.Text = "Opciones "
         '
-        'Btn_VerInventario
+        'Btn_AgregarProductosUbic
         '
-        Me.Btn_VerInventario.Image = CType(resources.GetObject("Btn_VerInventario.Image"), System.Drawing.Image)
-        Me.Btn_VerInventario.ImageAlt = CType(resources.GetObject("Btn_VerInventario.ImageAlt"), System.Drawing.Image)
-        Me.Btn_VerInventario.Name = "Btn_VerInventario"
-        Me.Btn_VerInventario.Text = "Ingresar al inventario"
+        Me.Btn_AgregarProductosUbic.Image = CType(resources.GetObject("Btn_AgregarProductosUbic.Image"), System.Drawing.Image)
+        Me.Btn_AgregarProductosUbic.ImageAlt = CType(resources.GetObject("Btn_AgregarProductosUbic.ImageAlt"), System.Drawing.Image)
+        Me.Btn_AgregarProductosUbic.Name = "Btn_AgregarProductosUbic"
+        Me.Btn_AgregarProductosUbic.Text = "Ingresar productos a la ubicacion "
         '
         'LabelItem1
         '
@@ -141,20 +141,6 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.LabelItem1.PaddingTop = 1
         Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
         Me.LabelItem1.Text = "Opciones"
-        '
-        'Btn_EditarInventario
-        '
-        Me.Btn_EditarInventario.Image = CType(resources.GetObject("Btn_EditarInventario.Image"), System.Drawing.Image)
-        Me.Btn_EditarInventario.ImageAlt = CType(resources.GetObject("Btn_EditarInventario.ImageAlt"), System.Drawing.Image)
-        Me.Btn_EditarInventario.Name = "Btn_EditarInventario"
-        Me.Btn_EditarInventario.Text = "Editar"
-        '
-        'Btn_EliminarInventario
-        '
-        Me.Btn_EliminarInventario.Image = CType(resources.GetObject("Btn_EliminarInventario.Image"), System.Drawing.Image)
-        Me.Btn_EliminarInventario.ImageAlt = CType(resources.GetObject("Btn_EliminarInventario.ImageAlt"), System.Drawing.Image)
-        Me.Btn_EliminarInventario.Name = "Btn_EliminarInventario"
-        Me.Btn_EliminarInventario.Text = "Eliminar"
         '
         'LabelItem3
         '
@@ -180,36 +166,36 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         '
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla.Size = New System.Drawing.Size(710, 421)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 30
@@ -228,6 +214,15 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.Bar1.TabIndex = 33
         Me.Bar1.TabStop = False
         Me.Bar1.Text = "Bar1"
+        '
+        'Btn_ConfProdUbic
+        '
+        Me.Btn_ConfProdUbic.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_ConfProdUbic.ForeColor = System.Drawing.Color.Black
+        Me.Btn_ConfProdUbic.Image = CType(resources.GetObject("Btn_ConfProdUbic.Image"), System.Drawing.Image)
+        Me.Btn_ConfProdUbic.ImageAlt = CType(resources.GetObject("Btn_ConfProdUbic.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ConfProdUbic.Name = "Btn_ConfProdUbic"
+        Me.Btn_ConfProdUbic.Tooltip = "Confirmar productos en todos las ubicaciones de estos sectores"
         '
         'GroupPanel2
         '
@@ -500,14 +495,20 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.Imagenes_16x16_Dark.Images.SetKeyName(22, "symbol-ok-warning.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(23, "symbol-remove.png")
         '
-        'Btn_ConfProdUbic
+        'Btn_QuitarProductosUbic
         '
-        Me.Btn_ConfProdUbic.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_ConfProdUbic.ForeColor = System.Drawing.Color.Black
-        Me.Btn_ConfProdUbic.Image = CType(resources.GetObject("Btn_ConfProdUbic.Image"), System.Drawing.Image)
-        Me.Btn_ConfProdUbic.ImageAlt = CType(resources.GetObject("Btn_ConfProdUbic.ImageAlt"), System.Drawing.Image)
-        Me.Btn_ConfProdUbic.Name = "Btn_ConfProdUbic"
-        Me.Btn_ConfProdUbic.Tooltip = "Confirmar productos en todos las ubicaciones de estos sectores"
+        Me.Btn_QuitarProductosUbic.ForeColor = System.Drawing.Color.Red
+        Me.Btn_QuitarProductosUbic.Image = CType(resources.GetObject("Btn_QuitarProductosUbic.Image"), System.Drawing.Image)
+        Me.Btn_QuitarProductosUbic.ImageAlt = CType(resources.GetObject("Btn_QuitarProductosUbic.ImageAlt"), System.Drawing.Image)
+        Me.Btn_QuitarProductosUbic.Name = "Btn_QuitarProductosUbic"
+        Me.Btn_QuitarProductosUbic.Text = "Quitar producto de esta ubicación"
+        '
+        'Btn_VerProdUbicacion
+        '
+        Me.Btn_VerProdUbicacion.Image = CType(resources.GetObject("Btn_VerProdUbicacion.Image"), System.Drawing.Image)
+        Me.Btn_VerProdUbicacion.ImageAlt = CType(resources.GetObject("Btn_VerProdUbicacion.ImageAlt"), System.Drawing.Image)
+        Me.Btn_VerProdUbicacion.Name = "Btn_VerProdUbicacion"
+        Me.Btn_VerProdUbicacion.Text = "Ver productos en esta ubicación"
         '
         'Frm_Sectores_Lista_UbicOblig
         '
@@ -540,10 +541,8 @@ Partial Class Frm_Sectores_Lista_UbicOblig
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Menu_Contextual As DevComponents.DotNetBar.ContextMenuBar
     Friend WithEvents Menu_Contextual_01 As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_VerInventario As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_AgregarProductosUbic As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LabelItem1 As DevComponents.DotNetBar.LabelItem
-    Friend WithEvents Btn_EditarInventario As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_EliminarInventario As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LabelItem3 As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Btn_Copiar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX
@@ -561,4 +560,6 @@ Partial Class Frm_Sectores_Lista_UbicOblig
     Friend WithEvents Imagenes_16x16 As ImageList
     Friend WithEvents Imagenes_16x16_Dark As ImageList
     Friend WithEvents Btn_ConfProdUbic As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_QuitarProductosUbic As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_VerProdUbicacion As DevComponents.DotNetBar.ButtonItem
 End Class

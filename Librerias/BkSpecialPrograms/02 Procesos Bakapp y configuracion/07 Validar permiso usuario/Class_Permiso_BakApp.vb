@@ -377,6 +377,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("CfEnt028", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("CfEnt029", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("CfEnt030", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("CfEnt031", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Crv0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Crv0002", _Objeto, _Formulario)
@@ -579,6 +580,8 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Doc00093", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00094", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00095", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00096", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00097", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Ope00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ope00002", _Objeto, _Formulario)
@@ -1677,6 +1680,10 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "CREAR/EDITAR/ELIMINAR PRODUCTOS BLOQUEADOS POR PROVEEDORES"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.CONFIGURACION_ENTIDAD, 6)
                 _NombreFamiliaPermiso = _Fml.CONFIGURACION_ENTIDAD.ToString
+            Case "CfEnt031"
+                _DescripcionPermiso = "VER TODOS LOS CLIENTES CUANDO DEBERIA MOSTRAR SOLO LOS CLIENTES DEL VENDEDOR ACTIVO."
+                _CodFamilia = Fx_Rellena_ceros(_Fml.CONFIGURACION_ENTIDAD, 6)
+                _NombreFamiliaPermiso = _Fml.CONFIGURACION_ENTIDAD.ToString
 
         End Select
 
@@ -2565,6 +2572,16 @@ Public Class Class_Permiso_BakApp
 
             Case "Doc00095"
                 _DescripcionPermiso = "PERMITIR CREAR (GDI) GUIAS DE DESPACHO INTERNA EN MODO DE TRASPASO INTERNO, PERO SIN ASIGNAR UNA BODEGA DE DESTINO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+
+            Case "Doc00096"
+                _DescripcionPermiso = "PERMITIR VENDER A CLIENTES QUE ESTAN ASOCIADOS A OTRO VENDEDOR"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+
+            Case "Doc00097"
+                _DescripcionPermiso = "PERMITIR VER DOCUEMTOS DE OTROS VENDEDORES"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
 

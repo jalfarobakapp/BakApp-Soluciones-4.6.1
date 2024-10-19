@@ -186,6 +186,8 @@ Public Class Frm_Ver_Documento
         End Set
     End Property
 
+    Public Property VerSoloEntidadesDelVendedor As Boolean
+
     Public Sub New(Id As Integer,
                    Tipo_Apertura As Enum_Tipo_Apertura)
 
@@ -491,6 +493,31 @@ Public Class Frm_Ver_Documento
         Sb_Color_Botones_Barra(Bar2)
 
         Me.Cursor = Cursors.Default
+
+        If VerSoloEntidadesDelVendedor Then
+
+            Dim _PedirPermiso As Boolean = False
+
+            If _RowEntidad.Item("KOFUEN").ToString.Trim <> FUNCIONARIO Then
+                _PedirPermiso = True
+            Else
+                _PedirPermiso = True
+                For Each _Fila As DataRow In _TblDetalle.Rows
+                    If _Fila.Item("KOFULIDO") = FUNCIONARIO Then
+                        _PedirPermiso = False
+                        Exit For
+                    End If
+                Next
+            End If
+
+            If _PedirPermiso Then
+                If Not Fx_Tiene_Permiso(Me, "Doc00097") Then
+                    Me.Hide()
+                    Me.Close()
+                End If
+            End If
+
+        End If
 
     End Sub
 

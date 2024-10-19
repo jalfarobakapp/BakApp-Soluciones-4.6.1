@@ -726,7 +726,6 @@ Public Class Frm_Diseno_Doc_y_Ubic
 
     Private Sub Btn_Sectores_Click(sender As Object, e As EventArgs) Handles Btn_Sectores.Click
 
-        Dim _Nombre_Mapa As String
         Dim _FrmActivo As Frm_Formulario_Diseno_Mapa_Documentos =
                       TryCast(Me.ActiveMdiChild, Frm_Formulario_Diseno_Mapa_Documentos)
 

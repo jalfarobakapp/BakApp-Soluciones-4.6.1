@@ -420,6 +420,7 @@ Public Class Frm_Formulario_Documento
     End Property
 
     Public Property SoloprodEnDoc_CLALIBPR As Boolean
+    Public Property VerSoloEntidadesDelVendedor As Boolean
 
 #End Region
 
@@ -8219,6 +8220,14 @@ Public Class Frm_Formulario_Documento
             Dim _Bloqueada As Boolean
 
             If _Tipo_Documento = csGlobales.Enum_Tipo_Documento.Venta Then
+
+                If VerSoloEntidadesDelVendedor Then
+                    If _RowEntidad.Item("KOFUEN").ToString.Trim <> FUNCIONARIO Then
+                        If Not Fx_Tiene_Permiso(Me, "Doc00096") Then
+                            Return Nothing
+                        End If
+                    End If
+                End If
 
                 If _Mostrar_Mensaje_Deuda Then
 

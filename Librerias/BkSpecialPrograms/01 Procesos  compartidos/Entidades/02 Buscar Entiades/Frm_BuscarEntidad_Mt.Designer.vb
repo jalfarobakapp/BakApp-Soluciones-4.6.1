@@ -57,6 +57,7 @@ Partial Class Frm_BuscarEntidad_Mt
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.TouchKeyboard1 = New DevComponents.DotNetBar.Keyboard.TouchKeyboard()
         Me.Chk_Solo_Clientes_Del_Vendedor = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Btn_ActivarSolo_Clientes_Del_Vendedor = New DevComponents.DotNetBar.ButtonX()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Mnu_Contextual.SuspendLayout()
         Me.GroupPanel1.SuspendLayout()
@@ -430,11 +431,24 @@ Partial Class Frm_BuscarEntidad_Mt
         Me.Chk_Solo_Clientes_Del_Vendedor.TabIndex = 12
         Me.Chk_Solo_Clientes_Del_Vendedor.Text = "Ver solo clientes del usuario activo"
         '
+        'Btn_ActivarSolo_Clientes_Del_Vendedor
+        '
+        Me.Btn_ActivarSolo_Clientes_Del_Vendedor.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_ActivarSolo_Clientes_Del_Vendedor.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_ActivarSolo_Clientes_Del_Vendedor.Location = New System.Drawing.Point(200, 487)
+        Me.Btn_ActivarSolo_Clientes_Del_Vendedor.Name = "Btn_ActivarSolo_Clientes_Del_Vendedor"
+        Me.Btn_ActivarSolo_Clientes_Del_Vendedor.Size = New System.Drawing.Size(73, 23)
+        Me.Btn_ActivarSolo_Clientes_Del_Vendedor.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_ActivarSolo_Clientes_Del_Vendedor.TabIndex = 13
+        Me.Btn_ActivarSolo_Clientes_Del_Vendedor.Text = "<-- Activar"
+        Me.Btn_ActivarSolo_Clientes_Del_Vendedor.Visible = False
+        '
         'Frm_BuscarEntidad_Mt
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(902, 561)
+        Me.Controls.Add(Me.Btn_ActivarSolo_Clientes_Del_Vendedor)
         Me.Controls.Add(Me.Chk_Solo_Clientes_Del_Vendedor)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.GroupPanel1)
@@ -489,4 +503,5 @@ Partial Class Frm_BuscarEntidad_Mt
     Friend WithEvents Btn_Contactos_Entidad As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Direcciones_Despacho As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LabelItem1 As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Btn_ActivarSolo_Clientes_Del_Vendedor As DevComponents.DotNetBar.ButtonX
 End Class
