@@ -842,6 +842,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("NO00018", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("NO00019", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("NO00020", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("NO00021", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("RSii00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("RSii00002", _Objeto, _Formulario)
@@ -2581,7 +2582,7 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
 
             Case "Doc00097"
-                _DescripcionPermiso = "PERMITIR VER DOCUEMTOS DE OTROS VENDEDORES"
+                _DescripcionPermiso = "PERMITIR VER DOCUMENTOS DE CLIENTES DE OTROS VENDEDORES"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
 
@@ -3749,6 +3750,11 @@ Public Class Class_Permiso_BakApp
 
             Case "NO00020"
                 _DescripcionPermiso = "NO PERMITIR CREAR GRD SIN RELACIONAR A NCV"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.RESTRICCIONES, 6)
+                _NombreFamiliaPermiso = _Fml.RESTRICCIONES.ToString
+
+            Case "NO00021"
+                _DescripcionPermiso = "NO PERMITIR VER DOCUMENTOS DE CLIENTES DE OTROS VENDEDORES"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.RESTRICCIONES, 6)
                 _NombreFamiliaPermiso = _Fml.RESTRICCIONES.ToString
 

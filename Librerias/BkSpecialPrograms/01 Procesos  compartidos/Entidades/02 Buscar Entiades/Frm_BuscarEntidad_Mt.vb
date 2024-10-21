@@ -84,9 +84,10 @@ Public Class Frm_BuscarEntidad_Mt
 
         Fx_Activar_Deactivar_Teclado()
 
+        VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00021",, False)
+
         If VerSoloEntidadesDelVendedor Then
-            VerSoloEntidadesDelVendedor = True
-            'Chk_Solo_Clientes_Del_Vendedor.Checked = True
+            Chk_Solo_Clientes_Del_Vendedor.Checked = True
             Rdb_Ambos.Enabled = False
             Rdb_Proveedores.Enabled = False
         End If
@@ -107,7 +108,7 @@ Public Class Frm_BuscarEntidad_Mt
         Grilla_Entidades.DataSource = _Tbl_Entidades
 
 
-        Chk_Solo_Clientes_Del_Vendedor.Checked = True
+        'Chk_Solo_Clientes_Del_Vendedor.Checked = True
 
         Sb_Actualizar_Grilla(Txtdescripcion.Text, False)
 
@@ -124,6 +125,7 @@ Public Class Frm_BuscarEntidad_Mt
         AddHandler Rdb_Ambos.CheckedChanged, AddressOf Rdb_CheckedChanged
 
         AddHandler Chk_Solo_Clientes_Del_Vendedor.CheckedChanged, AddressOf Chk_Solo_Clientes_Del_Vendedor_CheckedChanged
+
 
     End Sub
 

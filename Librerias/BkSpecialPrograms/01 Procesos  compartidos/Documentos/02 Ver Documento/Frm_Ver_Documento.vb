@@ -104,6 +104,18 @@ Public Class Frm_Ver_Documento
         End Get
     End Property
 
+    Public ReadOnly Property Pro_TblDetalle() As DataTable
+        Get
+            Return _TblDetalle
+        End Get
+    End Property
+
+    Public ReadOnly Property Pro_RowEntidad() As DataRow
+        Get
+            Return _RowEntidad
+        End Get
+    End Property
+
     Public Property Datos_Documento As DataSet
         Get
             Return _Datos_Documento
@@ -214,6 +226,9 @@ Public Class Frm_Ver_Documento
 
             Case Enum_Tipo_Apertura.Desde_Random_SQL
 
+                _Campo_Koen = "ENDO"
+                _Campo_Suen = "SUENDO"
+
                 Dim _Reg As Boolean = Convert.ToBoolean(_Sql.Fx_Cuenta_Registros("MAEEDO", "IDMAEEDO = " & _Idmaeedo))
 
                 If Not _Reg Then
@@ -260,6 +275,9 @@ Public Class Frm_Ver_Documento
 
                 'Sb_Abrir_Documento_Desde_Archivador_XML()
 
+                _Campo_Koen = "CodEntidad"
+                _Campo_Suen = "CodSucEntidad"
+
                 Btn_Anotaciones_al_documento.Visible = False
                 Btn_Enviar_documento_por_correo.Visible = False
                 Btn_Traza_Documento.Visible = False
@@ -279,15 +297,20 @@ Public Class Frm_Ver_Documento
 
         Me.Cursor = Cursors.WaitCursor
 
+        Dim _Koen As String
+        Dim _Suen As String
+
+        _Koen = _TblEncabezado.Rows(0).Item(_Campo_Koen)
+        _Suen = _TblEncabezado.Rows(0).Item(_Campo_Suen)
+
+        _RowEntidad = Fx_Traer_Datos_Entidad(_Koen, _Suen)
+
     End Sub
 
     Private Sub Frm_Documento_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         Btn_CopiarDocOtrEmpresa.Visible = (RutEmpresa = "77458040-9" Or RutEmpresa = "07251245-6" Or RutEmpresa = "77634877-5" Or RutEmpresa = "77634879-1")
         Btn_CrearNVVdesdeOCCOtraEmpresa.Visible = (RutEmpresa = "79514800-0")
-
-        _Campo_Koen = "ENDO"
-        _Campo_Suen = "SUENDO"
 
         Select Case _Tipo_Apertura
 
@@ -342,9 +365,6 @@ Public Class Frm_Ver_Documento
                 Btn_Revisar_Situacion_Comercial.Visible = False
                 Btn_Grabar_Documentos.Visible = False
                 Btn_Ver_Orden_de_despacho.Visible = False
-
-                _Campo_Koen = "CodEntidad"
-                _Campo_Suen = "CodSucEntidad"
 
         End Select
 
@@ -476,13 +496,7 @@ Public Class Frm_Ver_Documento
 
         If Btn_Archivos_Adjuntos.Visible Then Sb_Revisar_Si_Hay_Archivos_Adjuntos()
 
-        Dim _Koen As String
-        Dim _Suen As String
 
-        _Koen = _TblEncabezado.Rows(0).Item(_Campo_Koen)
-        _Suen = _TblEncabezado.Rows(0).Item(_Campo_Suen)
-
-        _RowEntidad = Fx_Traer_Datos_Entidad(_Koen, _Suen)
 
         Me.Refresh()
 
@@ -493,31 +507,6 @@ Public Class Frm_Ver_Documento
         Sb_Color_Botones_Barra(Bar2)
 
         Me.Cursor = Cursors.Default
-
-        If VerSoloEntidadesDelVendedor Then
-
-            Dim _PedirPermiso As Boolean = False
-
-            If _RowEntidad.Item("KOFUEN").ToString.Trim <> FUNCIONARIO Then
-                _PedirPermiso = True
-            Else
-                _PedirPermiso = True
-                For Each _Fila As DataRow In _TblDetalle.Rows
-                    If _Fila.Item("KOFULIDO") = FUNCIONARIO Then
-                        _PedirPermiso = False
-                        Exit For
-                    End If
-                Next
-            End If
-
-            If _PedirPermiso Then
-                If Not Fx_Tiene_Permiso(Me, "Doc00097") Then
-                    Me.Hide()
-                    Me.Close()
-                End If
-            End If
-
-        End If
 
     End Sub
 
@@ -2329,8 +2318,19 @@ Public Class Frm_Ver_Documento
             _Codigo = GrillaDetalleDoc.Rows(GrillaDetalleDoc.CurrentRow.Index).Cells("Codigo").Value
         End If
 
+        Dim _Tipo_Doc As Frm_BkpPostBusquedaEspecial_Mt.Tipo_Doc = Frm_BkpPostBusquedaEspecial_Mt.Tipo_Doc.Ninguno
+        Dim _Endo As String = String.Empty
+        Dim _Tido As String = _TblEncabezado.Rows(0).Item("TIDO")
+
+        If _Global_Row_Configuracion_Estacion.Item("VerSoloEntidadesDelVendedor") Then
+            If _Tido = "COV" Or _Tido = "NVV" Or _Tido = "FCV" Or _Tido = "GDV" Or _Tido = "GDP" Or _Tido = "NCV" Then
+                _Tipo_Doc = Frm_BkpPostBusquedaEspecial_Mt.Tipo_Doc.Venta
+                _Endo = _RowEntidad.Item("KOEN")
+            End If
+        End If
+
         Dim Fm_Producto As New Frm_BkpPostBusquedaEspecial_Mt()
-        Fm_Producto.Sb_Ver_Informacion_Adicional_producto(Me, _Codigo)
+        Fm_Producto.Sb_Ver_Informacion_Adicional_producto(Me, _Codigo, _Endo, _Tipo_Doc)
 
     End Sub
 

@@ -739,12 +739,18 @@ Buscar:
                     If _Mensaje = Windows.Forms.DialogResult.Yes Then
 
                         Dim _Idmaeedo_ = _Tbl_Paso.Rows(0).Item("IDMAEEDO")
-                        Dim _Fm As New Frm_Ver_Documento(_Idmaeedo_, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
+                        Dim _CodigoMarcar = String.Empty
+                        'Dim _Fm As New Frm_Ver_Documento(_Idmaeedo_, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
 
-                        If Rdb_Producto_Uno.Checked And Not IsNothing(_Row_Producto) Then _Fm.Codigo_Marcar = _Row_Producto.Item("KOPR")
+                        If Rdb_Producto_Uno.Checked And Not IsNothing(_Row_Producto) Then
+                            _CodigoMarcar = _Row_Producto.Item("KOPR")
+                            '_Fm.Codigo_Marcar = _Row_Producto.Item("KOPR")
+                        End If
 
-                        _Fm.ShowDialog(Me)
-                        _Fm.Dispose()
+                        '_Fm.ShowDialog(Me)
+                        '_Fm.Dispose()
+
+                        Fx_VerDocumento(Me, _Idmaeedo, _CodigoMarcar)
 
                         Return
 

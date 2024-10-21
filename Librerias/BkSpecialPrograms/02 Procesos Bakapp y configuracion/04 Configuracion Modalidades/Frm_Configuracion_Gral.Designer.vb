@@ -176,6 +176,7 @@ Partial Class Frm_Configuracion_Gral
         Me.Btn_DocConceptosVsPagos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_ConfPuntosVta = New DevComponents.DotNetBar.ButtonItem()
         Me.CheckBoxX2 = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_VerSoloEntidadesDelVendedor = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.TableLayoutPanel3.SuspendLayout()
         CType(Me.Input_Monto_Max_CRV_FacMasiva, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel4.SuspendLayout()
@@ -209,6 +210,7 @@ Partial Class Frm_Configuracion_Gral
         Me.TableLayoutPanel3.BackColor = System.Drawing.Color.Transparent
         Me.TableLayoutPanel3.ColumnCount = 1
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel3.Controls.Add(Me.Chk_VerSoloEntidadesDelVendedor, 0, 20)
         Me.TableLayoutPanel3.Controls.Add(Me.Chk_No_Permitir_Grabar_Con_Dscto_Superado, 0, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.Chk_Utilizar_NVV_En_Credito_X_Cliente, 0, 1)
         Me.TableLayoutPanel3.Controls.Add(Me.Chk_Preguntar_Documento, 0, 2)
@@ -709,9 +711,9 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControl1.ControlBox.MenuBox.Name = ""
         Me.SuperTabControl1.ControlBox.Name = ""
         Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel6)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel4)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel6)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel7)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel9)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel5)
@@ -2747,6 +2749,23 @@ Partial Class Frm_Configuracion_Gral
         Me.CheckBoxX2.TabIndex = 117
         Me.CheckBoxX2.Text = "Ambiente de pruebas y certificación"
         '
+        'Chk_VerSoloEntidadesDelVendedor
+        '
+        '
+        '
+        '
+        Me.Chk_VerSoloEntidadesDelVendedor.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_VerSoloEntidadesDelVendedor.CheckBoxImageChecked = CType(resources.GetObject("Chk_VerSoloEntidadesDelVendedor.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_VerSoloEntidadesDelVendedor.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_VerSoloEntidadesDelVendedor.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_VerSoloEntidadesDelVendedor.FocusCuesEnabled = False
+        Me.Chk_VerSoloEntidadesDelVendedor.ForeColor = System.Drawing.Color.Black
+        Me.Chk_VerSoloEntidadesDelVendedor.Location = New System.Drawing.Point(3, 309)
+        Me.Chk_VerSoloEntidadesDelVendedor.Name = "Chk_VerSoloEntidadesDelVendedor"
+        Me.Chk_VerSoloEntidadesDelVendedor.Size = New System.Drawing.Size(635, 16)
+        Me.Chk_VerSoloEntidadesDelVendedor.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_VerSoloEntidadesDelVendedor.TabIndex = 126
+        Me.Chk_VerSoloEntidadesDelVendedor.Text = "Ver solo entidades del vendedor activo"
+        '
         'Frm_Configuracion_Gral
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -2756,6 +2775,7 @@ Partial Class Frm_Configuracion_Gral
         Me.Controls.Add(Me.Bar1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
@@ -2945,4 +2965,5 @@ Partial Class Frm_Configuracion_Gral
     Friend WithEvents Chk_UsarVencListaPrecios As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Btn_MayMinInfo As DevComponents.DotNetBar.ButtonX
     Friend WithEvents Panel_MayoristaMinorista As Panel
+    Friend WithEvents Chk_VerSoloEntidadesDelVendedor As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

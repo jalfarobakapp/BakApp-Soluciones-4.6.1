@@ -394,6 +394,15 @@ Public Class Frm_EstadisticaProducto
 
         Btn_Mnu_Pr_Editar_Producto.Visible = VerEdicionProducto
 
+        'Dim _VerSoloEntidadesDelVendedor As Boolean = Fx_Tiene_Permiso(Me, "Doc00097",, False) '_Global_Row_Configuracion_Estacion.Item("VerSoloEntidadesDelVendedor")
+
+        'If _VerSoloEntidadesDelVendedor Then
+        GrillaVentas.Visible = Not Fx_Tiene_Permiso(Me, "NO00021",, False)
+        If Not GrillaVentas.Visible Then
+            Tabs.SelectedTabIndex = 2
+        End If
+        'End If
+
     End Sub
 
     Sub Sb_Actualizar_Tbl_Productos_Hermanos()
@@ -460,6 +469,7 @@ Public Class Frm_EstadisticaProducto
         Else
             _Filtro_Entidad = "And MAEDDO.ENDO = '" & _Endo & "'"
         End If
+
 
         If Not _Rotacion_Con_Ent_Excluidas Then
             _Filtro_Entidades_Excluidas = "And LTRIM(RTRIM(MAEDDO.ENDO))+RTRIM(LTRIM(MAEDDO.SUENDO))" & vbCrLf &
@@ -1265,9 +1275,11 @@ Public Class Frm_EstadisticaProducto
 
         Dim _Idmaeedo As Integer = sender.Rows(sender.CurrentRow.Index).Cells("IDMAEEDO").Value
 
-        Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
+        Fx_VerDocumento(Me, _Idmaeedo, "")
+
+        'Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
+        'Fm.ShowDialog(Me)
+        'Fm.Dispose()
 
         Me.Enabled = True
 
@@ -2904,5 +2916,9 @@ Public Class Frm_EstadisticaProducto
 
         Fm.Dispose()
 
+    End Sub
+
+    Private Sub Btn_Ver_Info_Ult_VentasTodos_Click(sender As Object, e As EventArgs) Handles Btn_Ver_Info_Ult_VentasTodos.Click
+        GrillaVentas.Visible = Fx_Tiene_Permiso(Me, "Doc00097")
     End Sub
 End Class

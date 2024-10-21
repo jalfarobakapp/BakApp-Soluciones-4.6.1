@@ -6490,5 +6490,58 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Sub
 
+    Function Fx_VerDocumento(_Formulario As Form,
+                             _Idmaeedo As Integer,
+                             _CodigoMarcar As String) As Boolean
+
+        Dim _VerSoloEntidadesDelVendedor As Boolean = Fx_Tiene_Permiso(_Formulario, "NO00021",, False) '_Global_Row_Configuracion_Estacion.Item("VerSoloEntidadesDelVendedor")
+        Dim _VerDocumento As Boolean = True
+
+        Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
+
+        If _VerSoloEntidadesDelVendedor Then
+
+            Dim _PedirPermiso As Boolean = False
+
+            If Fm.Pro_RowEntidad.Item("KOFUEN").ToString.Trim <> FUNCIONARIO Then
+                _PedirPermiso = True
+            Else
+                _PedirPermiso = True
+                For Each _Fila As DataRow In Fm.Pro_TblDetalle.Rows
+                    If _Fila.Item("KOFULIDO") = FUNCIONARIO Then
+                        _PedirPermiso = False
+                        Exit For
+                    End If
+                Next
+            End If
+
+            If _PedirPermiso Then
+
+                MessageBoxEx.Show(_Formulario, "Usted tiene restricción para ver documentos de clientes de otros vendedores." & vbCrLf &
+                                  "Tienes el permiso (restricción) NO00021 asignado.",
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                'If Not Fx_Tiene_Permiso(_Formulario, "Doc00097") Then
+                _VerDocumento = False
+                'End If
+
+            End If
+
+        End If
+
+        If _VerDocumento Then
+            Fm.ShowDialog(_Formulario)
+        End If
+
+        Fm.Dispose()
+
+        If _VerDocumento Then
+            Return True
+        Else
+            Return False
+        End If
+
+    End Function
+
 End Module
 

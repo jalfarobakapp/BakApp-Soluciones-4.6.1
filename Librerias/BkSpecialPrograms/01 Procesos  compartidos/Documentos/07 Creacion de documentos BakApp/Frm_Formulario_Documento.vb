@@ -8221,12 +8221,22 @@ Public Class Frm_Formulario_Documento
 
             If _Tipo_Documento = csGlobales.Enum_Tipo_Documento.Venta Then
 
+                VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00021",, False)
+
                 If VerSoloEntidadesDelVendedor Then
+
                     If _RowEntidad.Item("KOFUEN").ToString.Trim <> FUNCIONARIO Then
-                        If Not Fx_Tiene_Permiso(Me, "Doc00096") Then
-                            Return Nothing
-                        End If
+
+                        MessageBoxEx.Show(_Formulario, "Usted tiene restricción para ver documentos de clientes de otros vendedores." & vbCrLf &
+                                  "Tienes el permiso (restricción) NO00021 asignado.",
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                        'If Not Fx_Tiene_Permiso(Me, "Doc00096") Then
+                        Return Nothing
+                        'End If
+
                     End If
+
                 End If
 
                 If _Mostrar_Mensaje_Deuda Then
@@ -14239,14 +14249,16 @@ Public Class Frm_Formulario_Documento
                                               "¿Desea ver el documento?", "Validación",
                                               MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
 
-                                Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
-                                Fm.ShowDialog(Me)
+                                'Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
+                                'Fm.ShowDialog(Me)
 
-                                If Fm.Eliminado Or Fm.Anulado Then
-                                    Call BtnLimpiar_Click(Nothing, Nothing)
-                                End If
+                                'If Fm.Eliminado Or Fm.Anulado Then
+                                '    Call BtnLimpiar_Click(Nothing, Nothing)
+                                'End If
 
-                                Fm.Dispose()
+                                'Fm.Dispose()
+
+                                Fx_VerDocumento(Me, _Idmaeedo, "")
 
                             End If
 
