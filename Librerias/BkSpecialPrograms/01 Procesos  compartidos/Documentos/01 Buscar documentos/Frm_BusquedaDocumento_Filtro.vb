@@ -44,6 +44,8 @@ Public Class Frm_BusquedaDocumento_Filtro
     Dim _Abrir_Cerrar_Documentos_Compromiso As Boolean
     Dim _Mostrar_Vales_Transitorios As Boolean
 
+    Private VerSoloEntidadesDelVendedor As Boolean
+
 #Region "PROPIEDADES"
 
     Public Property Pro_TipoDoc_Seleccionado() As _TipoDoc_Sel
@@ -300,6 +302,14 @@ Public Class Frm_BusquedaDocumento_Filtro
 
         Me.ActiveControl = TxtNroDocumento
 
+        VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00021",, False)
+
+        Chk_MostrarSoloDocClientesDelVendedor.Visible = VerSoloEntidadesDelVendedor
+        Chk_MostrarSoloDocClientesDelVendedor.Checked = VerSoloEntidadesDelVendedor
+        Wrn_MostrarSoloDocClientesDelVendedor.Visible = VerSoloEntidadesDelVendedor
+
+        AddHandler Chk_MostrarSoloDocClientesDelVendedor.CheckedChanged, AddressOf Chk_MostrarSoloDocClientesDelVendedor_CheckedChanged
+
     End Sub
 
     Private Sub Btn_Documentos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Documentos.Click
@@ -524,8 +534,6 @@ Public Class Frm_BusquedaDocumento_Filtro
 
         If Rdb_Entidad_Una.Checked Then
 
-            'Dim _Todas_Sucursales As Boolean
-
             If Not IsNothing(_CodEntidad) OrElse Not String.IsNullOrEmpty(_CodEntidad.Trim) Then
 
                 If Chk_Todas_Sucursales.Checked Then
@@ -658,11 +666,14 @@ Public Class Frm_BusquedaDocumento_Filtro
 
         _Filtro_Observaciones = _Sql_Occ & _Sql_Placa & _Sql_RetMerca
 
+
 Buscar:
 
+        If Chk_MostrarSoloDocClientesDelVendedor.Checked Then
 
-        '--Left Join MAEEN Mae2 On Edo.ENDOFI = Mae2.KOEN 
-        '#Inner_Join_MAEEN_ENDOFI_SUENDOFI#
+            _Sql_Filtro_Entidades += vbCrLf & " And Mae1.KOFUEN = '" & FUNCIONARIO & "'"
+
+        End If
 
         Dim _Left_Join_MAEEN_ENDOFI_SUENDOFI As String
         Dim _Campo_SUENDOFI As String
@@ -987,6 +998,33 @@ Buscar:
         If e.KeyValue = Keys.Enter Then
             Sb_Buscar_documentos()
         End If
+    End Sub
+
+    Private Sub Chk_MostrarSoloDocClientesDelVendedor_CheckedChanged(sender As Object, e As EventArgs)
+        If VerSoloEntidadesDelVendedor Then
+            If Not Chk_MostrarSoloDocClientesDelVendedor.Checked Then
+                Dim _Row As DataRow
+                If Fx_Tiene_Permiso(Me, "CfEnt031",,,,,,,,, _Row) Then
+                    If _Row.Item("KOFU") = FUNCIONARIO Then
+                        MessageBoxEx.Show(Me, "Usted ahora puede ver todos los documentos de todos los vendedores" & vbCrLf &
+                                          "tiene el permiso: CfEnt031", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    End If
+                Else
+                    Chk_MostrarSoloDocClientesDelVendedor.Checked = True
+                    Return
+                End If
+            End If
+        End If
+    End Sub
+
+    Private Sub Wrn_MostrarSoloDocClientesDelVendedor_OptionsClick(sender As Object, e As EventArgs) Handles Wrn_MostrarSoloDocClientesDelVendedor.OptionsClick
+
+        Dim _Msj As String = "Tiene una restricción que le impide ver documentos de clientes de otros vendedores." & vbCrLf &
+                             "Esto significa que solo puede acceder a los documentos de su propia cartera de clientes." & vbCrLf & vbCrLf &
+                             "Actualmente, tiene asignado el permiso (restricción) NO00021."
+
+        MessageBoxEx.Show(Me, _Msj, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
     End Sub
 
     Private Sub Frm_BusquedaDocumento_Filtro_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown

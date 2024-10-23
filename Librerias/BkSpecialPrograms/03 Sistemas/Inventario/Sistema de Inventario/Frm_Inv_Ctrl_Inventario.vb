@@ -36,6 +36,8 @@ Public Class Frm_Inv_Ctrl_Inventario
 
         SuperTabControl1.SelectedTabIndex = 0
 
+        Me.Text = "MANTENCION DE INVENTARIO ACTIVO (ID del inventario: " & _IdInventario & ")"
+
     End Sub
 
 

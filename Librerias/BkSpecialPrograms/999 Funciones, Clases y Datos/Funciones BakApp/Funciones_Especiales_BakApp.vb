@@ -6517,13 +6517,13 @@ Public Module Crear_Documentos_Desde_Otro
 
             If _PedirPermiso Then
 
-                MessageBoxEx.Show(_Formulario, "Usted tiene restricción para ver documentos de clientes de otros vendedores." & vbCrLf &
-                                  "Tienes el permiso (restricción) NO00021 asignado.",
-                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Dim _Msj As String = "Tiene una restricción que le impide ver documentos de clientes de otros vendedores." & vbCrLf &
+                             "Esto significa que solo puede acceder a los documentos de su propia cartera de clientes." & vbCrLf & vbCrLf &
+                             "Actualmente, tiene asignado el permiso (restricción) NO00021."
 
-                'If Not Fx_Tiene_Permiso(_Formulario, "Doc00097") Then
+                MessageBoxEx.Show(_Formulario, _Msj, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
                 _VerDocumento = False
-                'End If
 
             End If
 
