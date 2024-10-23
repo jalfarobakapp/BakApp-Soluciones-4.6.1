@@ -277,7 +277,7 @@ Public Class Frm_ImpBarras_Tarja
             Dim _Nro_CPT = _Row_Tarja.Item("Nro_CPT")
             Dim _Tbl_Tarja_Det As DataTable
 
-            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja_Det Where Id_CPT = " & _Id_CPT & " And Tipo = 'PALLET'"
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja_Det Where Id_CPT = " & _Id_CPT & " And Tipo In ('PALLET','MAXI-SACO')"
             _Tbl_Tarja_Det = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Veces2 As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones",
@@ -289,22 +289,27 @@ Public Class Frm_ImpBarras_Tarja
                 Dim _Pri_Nro = _Nro
                 Dim _Ult_Nro = _Tbl_Tarja_Det.Rows(_Tbl_Tarja_Det.Rows.Count - 1).Item("Nro")
                 Dim _Contar = 1
+                Dim _Tipo = _Tbl_Tarja_Det.Rows(0).Item("Tipo").ToString.Trim
 
-                If _Veces = _CantPorLinea Then
+                If _Tipo = "PALLET" Then
 
-                    _Aceptar = InputBox_Bk(Me, "Ingrese el numero del PALLET a imprimir" & vbCrLf &
-                                           "El número de Pallet va del " & _Nro & " al " & _Ult_Nro,
-                                           "Imprimir Etiquetas", _Nro, False,, 2, True, _Tipo_Imagen.Barra,,
-                                           _Tipo_Caracter.Solo_Numeros_Enteros, False)
+                    If _Veces = _CantPorLinea Then
 
-                    If Not _Aceptar Then
-                        Return
-                    End If
+                        _Aceptar = InputBox_Bk(Me, "Ingrese el numero de PALLET a imprimir" & vbCrLf &
+                                               "El número de Pallet va del " & _Nro & " al " & _Ult_Nro,
+                                               "Imprimir Etiquetas", _Nro, False,, 2, True, _Tipo_Imagen.Barra,,
+                                               _Tipo_Caracter.Solo_Numeros_Enteros, False)
 
-                    If _Nro < _Pri_Nro Or _Nro > _Ult_Nro Then
-                        MessageBoxEx.Show(Me, "No existe el Pallet número [" & _Nro & "] en esta Tarja",
-                                          "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                        Return
+                        If Not _Aceptar Then
+                            Return
+                        End If
+
+                        If _Nro < _Pri_Nro Or _Nro > _Ult_Nro Then
+                            MessageBoxEx.Show(Me, "No existe el Pallet número [" & _Nro & "] en esta Tarja",
+                                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                            Return
+                        End If
+
                     End If
 
                 End If

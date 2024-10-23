@@ -448,6 +448,7 @@ Public Class Frm_IngresarHoja
                         End If
                         _Fila.Cells("Sector").Value = _Sector
 
+                        _Mensaje = _Cl_InvUbicacion.Fx_Llenar_Zw_Inv_Sector(_IdInventario, _Sector)
                         'If Not _Fila.IsNewRow Then
                         '    Grilla_Detalle.Rows.RemoveAt(_Index)
                         'End If

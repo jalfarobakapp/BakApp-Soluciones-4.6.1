@@ -49,6 +49,8 @@ Public Class Frm_Inv_Sector_Lista
 
         Btn_Crear_Ubicacion.Visible = (Not ModoRevisionInventario And Not ModoSeleccionSector)
         Btn_Importar_Desde_Excel.Visible = Not ModoRevisionInventario And Not ModoSeleccionSector
+        Btn_ImprimirMasivamente.Visible = Not (ModoRevisionInventario Or ModoSeleccionSector)
+        Btn_ImprimirSector.Visible = Not (ModoRevisionInventario Or ModoSeleccionSector)
 
     End Sub
 

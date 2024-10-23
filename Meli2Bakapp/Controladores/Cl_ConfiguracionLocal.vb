@@ -6,15 +6,12 @@ Public Class Cl_ConfiguracionLocal
 
     Public Property DirectorioActual As String
     Public Property NombreArchivo_Configuracion As String
-    Public Property Ls_ImpFormatos As List(Of ImpFormatos)
     Public Property Configuracion As New Configuracion
-
 
     Public Sub New()
 
         DirectorioActual = Application.StartupPath & "\Data"
-        'NombreArchivo_Conexion = "ConexionBkWms.json"
-        NombreArchivo_Configuracion = "ConfLocal.json"
+        NombreArchivo_Configuracion = "ConfLocal_Meli2Bakapp.json"
 
     End Sub
 
@@ -45,25 +42,14 @@ Public Class Cl_ConfiguracionLocal
             If Not File.Exists(DirectorioActual & "\" & NombreArchivo_Configuracion) Then
 
                 Dim _Conexion1 As New Conexion With {.NombreConexion = "RandomBakapp", .Host = "", .Puerto = "", .Usuario = "", .Password = "", .Basededatos = ""}
-                Dim _Conexion2 As New Conexion With {.NombreConexion = "WMS", .Host = "", .Puerto = "", .Usuario = "", .Password = "", .Basededatos = ""}
+                Dim _Conexion2 As New Conexion With {.NombreConexion = "Meli", .Host = "", .Puerto = "", .Usuario = "", .Password = "", .Basededatos = ""}
 
                 Configuracion.Ls_Conexiones = New List(Of Conexion)
 
                 Configuracion.Ls_Conexiones.Add(_Conexion1)
                 Configuracion.Ls_Conexiones.Add(_Conexion2)
 
-                Dim _ImpFormatos_Reti As New ImpFormatos With {.Tipo = "Retiro", .Impresora = "", .Imprimir = False, .NombreFormato = "", .NombreEquipoImprime = ""}
-                Dim _ImpFormatos_Desp As New ImpFormatos With {.Tipo = "Despacho", .Impresora = "", .Imprimir = False, .NombreFormato = "", .NombreEquipoImprime = ""}
-                Dim _ImpFormatos_Tick As New ImpFormatos With {.Tipo = "Ticket", .Impresora = "", .Imprimir = False, .NombreFormato = "", .NombreEquipoImprime = ""}
-
-                Configuracion.Ls_ImpFormatos = New List(Of ImpFormatos)
-
-                Configuracion.Ls_ImpFormatos.Add(_ImpFormatos_Reti)
-                Configuracion.Ls_ImpFormatos.Add(_ImpFormatos_Desp)
-                Configuracion.Ls_ImpFormatos.Add(_ImpFormatos_Tick)
-
-                Configuracion.DiasRevNVV = 7
-                'Configuracion.NombreEquipoImprime = ""
+                Configuracion.Global_BaseBk = String.Empty
 
                 json = Newtonsoft.Json.JsonConvert.SerializeObject(Configuracion)
 
@@ -79,14 +65,14 @@ Public Class Cl_ConfiguracionLocal
             json = File.ReadAllText(DirectorioActual & "\" & NombreArchivo_Configuracion)
             Configuracion = JsonConvert.DeserializeObject(Of Configuracion)(json)
 
-            Dim Ls_FunFcvGdvAuto As List(Of FunFcvGdvAuto) = Configuracion.Ls_FunFcvGdvAuto
+            Dim Ls_Conexiones As List(Of Conexion) = Configuracion.Ls_Conexiones
 
-            If IsNothing(Ls_FunFcvGdvAuto) OrElse Not CBool(Ls_FunFcvGdvAuto.Count) Then
-                Ls_FunFcvGdvAuto = New List(Of FunFcvGdvAuto)
-                Throw New System.Exception("Debe ingresar la configuración de conexión a las bases de datos.")
+            If String.IsNullOrEmpty(Configuracion.Global_BaseBk) Then
+                _Mensaje.Detalle = "Falta datos en la configuración"
+                Throw New System.Exception("Debe ingresar el nombre de la base de datos de BAKAPP")
             End If
 
-            Dim Ls_Conexiones As List(Of Conexion) = Configuracion.Ls_Conexiones
+            _Global_BaseBk = Configuracion.Global_BaseBk & ".dbo."
 
             If _Mensaje.Id = 1 Then
 
@@ -154,9 +140,6 @@ Public Class Cl_ConfiguracionLocal
             json = JsonConvert.SerializeObject(Configuracion, Formatting.Indented)
             File.WriteAllText(DirectorioActual & "\" & NombreArchivo_Configuracion, json)
 
-            'json = JsonConvert.SerializeObject(Ls_Conexiones, Formatting.Indented)
-            'File.WriteAllText(DirectorioActual & "\" & NombreArchivo_Conexion, json)
-
             _Mensaje.EsCorrecto = True
             _Mensaje.Detalle = "Archivo grabado correctamente"
             _Mensaje.Mensaje = "Ruta de archivo: " & DirectorioActual & "\" & NombreArchivo_Configuracion
@@ -223,3 +206,4 @@ Public Class Cl_ConfiguracionLocal
 
 
 End Class
+

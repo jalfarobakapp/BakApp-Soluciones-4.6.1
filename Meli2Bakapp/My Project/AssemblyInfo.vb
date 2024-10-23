@@ -8,17 +8,17 @@ Imports System.Runtime.InteropServices
 
 ' Revisar los valores de los atributos del ensamblado
 
-<Assembly: AssemblyTitle("Sincroniza.wms.Villar")>
+<Assembly: AssemblyTitle("Meli2Bakapp")>
 <Assembly: AssemblyDescription("")>
 <Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("Sincroniza.wms.Villar")>
+<Assembly: AssemblyProduct("Meli2Bakapp")>
 <Assembly: AssemblyCopyright("Copyright ©  2024")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
 
 'El siguiente GUID sirve como id. de typelib si este proyecto se expone a COM.
-<Assembly: Guid("714cb3f7-d50b-4089-91c6-e404e31e347e")>
+<Assembly: Guid("342e497f-30bf-42c4-b4b0-1872814e7661")>
 
 ' La información de versión de un ensamblado consta de los cuatro valores siguientes:
 '
@@ -27,9 +27,6 @@ Imports System.Runtime.InteropServices
 '      Número de compilación
 '      Revisión
 '
-' Puede especificar todos los valores o usar los valores predeterminados de número de compilación y de revisión
-' utilizando el carácter "*", como se muestra a continuación:
-' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("1.0.5.1")>
-<Assembly: AssemblyFileVersion("1.0.5.1")>
+<Assembly: AssemblyVersion("1.0.0.1")>
+<Assembly: AssemblyFileVersion("1.0.0.1")>
