@@ -159,10 +159,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\RunDteBK\Factura Electronica DTE Efesto\HEFESTO.ACUSE.RECIBO.FACTURA\bin\Debug\Hefesto.Acuse.Recibo.Factura.dll</HintPath>
     </Reference>
-    <Reference Include="HEFSIIREGCOMPRAVENTAS, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\RunDteBK\Factura Electronica DTE Efesto\HEFSIIREGCOMPRAVENTAS\HEFESTO.SII.V2020.BG.QUERY.LIB\bin\Debug\HEFSIIREGCOMPRAVENTAS.dll</HintPath>
-    </Reference>
     <Reference Include="Interop.ZKFPEngXControl, Version=4.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -344,8 +340,8 @@
     <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Text.Encodings.Web.8.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
-    <Reference Include="System.Text.Json, Version=8.0.0.4, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Text.Json.8.0.4\lib\net462\System.Text.Json.dll</HintPath>
+    <Reference Include="System.Text.Json, Version=8.0.0.5, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Text.Json.8.0.5\lib\net462\System.Text.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
@@ -937,6 +933,12 @@
       <DependentUpon>Frm_Inv_Sector_Productos.vb</DependentUpon>
     </Compile>
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_Productos.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\MayoristaMinoristas\Frm_RevMayMin.Designer.vb">
+      <DependentUpon>Frm_RevMayMin.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\MayoristaMinoristas\Frm_RevMayMin.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Puntos Venta\Cl_Puntos.vb" />
@@ -2423,6 +2425,12 @@
       <DependentUpon>Frm_Sectores.vb</DependentUpon>
     </Compile>
     <Compile Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Sectores\Frm_Sectores.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Sectores\Frm_Sectores_Lista_UbicOblig.Designer.vb">
+      <DependentUpon>Frm_Sectores_Lista_UbicOblig.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Sectores\Frm_Sectores_Lista_UbicOblig.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Sistema WMS\Gestión WMS\Clases\Cl_Documento_Wms.vb" />
@@ -4789,6 +4797,9 @@
     <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_Productos.resx">
       <DependentUpon>Frm_Inv_Sector_Productos.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\MayoristaMinoristas\Frm_RevMayMin.resx">
+      <DependentUpon>Frm_RevMayMin.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Puntos Venta\Frm_ConfPuntosVta.resx">
       <DependentUpon>Frm_ConfPuntosVta.vb</DependentUpon>
     </EmbeddedResource>
@@ -5592,6 +5603,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Sectores\Frm_Sectores.resx">
       <DependentUpon>Frm_Sectores.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Sectores\Frm_Sectores_Lista_UbicOblig.resx">
+      <DependentUpon>Frm_Sectores_Lista_UbicOblig.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Sistema WMS\Diseño\Padre\Frm_Diseno_Doc_y_Ubic.resx">
       <DependentUpon>Frm_Diseno_Doc_y_Ubic.vb</DependentUpon>
@@ -8475,6 +8489,12 @@
   <ItemGroup>
     <Folder Include="01 Procesos  compartidos\Productos\01 Buscar productos\New ProdFind\" />
     <Folder Include="03 Sistemas\Comisiones\Recursos\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\RunDteBK\Factura Electronica DTE Efesto\HEFSIIREGCOMPRAVENTAS\HEFESTO.SII.V2020.BG.QUERY.LIB\HEFSIIREGCOMPRAVENTAS.LIB.csproj">
+      <Project>{965eb04b-532a-4d19-b2c2-a3f5495cde87}</Project>
+      <Name>HEFSIIREGCOMPRAVENTAS.LIB</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

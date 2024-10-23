@@ -28,7 +28,11 @@
 
             End If
 
-            .Id = _Row.Item("Id")
+            Try
+                .Id = _Row.Item("Id")
+            Catch ex As Exception
+                .Id = 0
+            End Try
             .Tabla = _Row.Item("Tabla")
             .DescripcionTabla = _Row.Item("DescripcionTabla")
             .CodigoTabla = _Row.Item("CodigoTabla")

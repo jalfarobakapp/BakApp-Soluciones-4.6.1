@@ -25,11 +25,6 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
     Dim TipoDos As String
     Dim NombreFormato As String
 
-    'Public _TipoDoc, _NombreFormato As String
-    'Public _Editar_Documento As Boolean
-    'Public _Nuevo_Formato As Boolean
-
-
     Dim _Line_Aj_1, _Line_Aj_2 As Object
     Dim _Alto_Caja, _Ancho_Caja As Integer
 
@@ -39,8 +34,6 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
     Dim _Nombre_Mapa As String
     Dim _Codigo_Sector_Activo As String
     Dim _Configuracion_Diseno As _TipoDiseno
-    'Dim _Ancho_Mapa, _Largo_Mapa As Integer
-    'Dim _Escala_Mapa As Integer
 
     Public _RowBodega As DataRow
     Dim _Empresa
@@ -64,7 +57,8 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
     '    End Get
     'End Property
 
-    Dim _Cl_DisWMS As New Cl_DisWMS
+    Private _Cl_DisWMS As New Cl_DisWMS
+    Private _Cl_WMS_Sectores As New Cl_WMS_Sectores
 
     Enum _TipoDiseno
         Documento
@@ -976,15 +970,13 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
 
         _Cl_DisWMS.Fx_Llenar_Lista_Sector(_Id_Mapa, _Empresa, _Sucursal, _Bodega)
 
-        Consulta_sql = "SELECT Tipo_Objeto,Nombre_Objeto,Codigo_Sector,Nombre_Sector,Texto," &
+        Consulta_sql = "Select Tipo_Objeto,Nombre_Objeto,Codigo_Sector,Nombre_Sector,Texto," &
                        "Font_Nombre,Font_Tamano,Font_Estilo,Font_Negrita,Font_Italic,Font_Tachado,Font_Subrayado," &
                        "Alto_H,Ancho_W,BackColor,ForeColor,Relleno,Y_Fila,X_Columna,Orientacion" & vbCrLf &
-                       "FROM   " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Det" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Det" & vbCrLf &
                        "Where Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega &
                        "' And Id_Mapa= " & _Id_Mapa & vbCrLf &
                        "Order by Nombre_Objeto"
-
-        'Dim _TblDetalle_Mapa = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Cl_DisWMS.Ls_Zw_WMS_Ubicaciones_Mapa_Det.Count) Then
 

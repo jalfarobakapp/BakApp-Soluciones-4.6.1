@@ -2,12 +2,10 @@
 Imports System.IO
 Imports BkSpecialPrograms
 Imports Newtonsoft.Json
-Imports Newtonsoft.Json.Linq
 Public Class Cl_ConfiguracionLocal
 
     Public Property DirectorioActual As String
     Public Property NombreArchivo_Configuracion As String
-    'Public Property Ls_Conexiones As List(Of Conexion)
     Public Property Ls_ImpFormatos As List(Of ImpFormatos)
     Public Property Configuracion As New Configuracion
 

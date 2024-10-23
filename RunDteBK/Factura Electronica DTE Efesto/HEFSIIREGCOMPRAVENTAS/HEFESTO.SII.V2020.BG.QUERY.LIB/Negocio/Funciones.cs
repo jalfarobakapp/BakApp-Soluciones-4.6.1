@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
 using HEFSIIREGCOMPRAVENTAS.Negocio;
@@ -85,7 +84,7 @@ namespace HEFSIIREGCOMPRAVENTAS.LIB.Negocio
                     validacion = false;
                 }
                 validacion = true;
-                
+
             }
             catch (Exception)
             {
@@ -138,7 +137,7 @@ namespace HEFSIIREGCOMPRAVENTAS.LIB.Negocio
                 ////
                 //// Valide fecha
                 DateTime dt;
-                if ( !DateTime.TryParse(periodo+"-01", out dt ))
+                if (!DateTime.TryParse(periodo + "-01", out dt))
                     throw new Exception("Periodo ingresado no es valido.");
 
                 r.EsCorrecto = true;
@@ -151,13 +150,13 @@ namespace HEFSIIREGCOMPRAVENTAS.LIB.Negocio
                 r.EsCorrecto = false;
                 r.Mensaje = "No fue posible interpretar el periodo.";
                 r.Detalle = ex.Message;
-                
+
             }
 
             ////
             //// Regrese el valor de retorno
             return r;
-        
+
         }
 
         // <summary>
@@ -193,7 +192,7 @@ namespace HEFSIIREGCOMPRAVENTAS.LIB.Negocio
             return r;
 
         }
-        
+
         /// <summary>
         /// Recupera un determinado certificado para poder firmar un documento
         /// </summary>
@@ -252,7 +251,7 @@ namespace HEFSIIREGCOMPRAVENTAS.LIB.Negocio
         /// </summary>
         /// <param name="data"></param>
         internal static HefRespuesta AnalizarRespuesta(string data)
-        { 
+        {
             ////
             //// respuesta
             HefRespuesta r = new HefRespuesta();
@@ -271,7 +270,7 @@ namespace HEFSIIREGCOMPRAVENTAS.LIB.Negocio
                     throw new Exception("El SII no regreso ningun dato.");
                 ////
                 //// Validar los errores
-                Match mRespuesta=   Regex.Match(
+                Match mRespuesta = Regex.Match(
                     data,
                         "{\"codRespuesta\":(.*?),\"msgeRespuesta\":(.*?),",
                             RegexOptions.Singleline);
@@ -283,25 +282,25 @@ namespace HEFSIIREGCOMPRAVENTAS.LIB.Negocio
 
                 ////
                 //// Cual es la respuesta?
-                if ( !mRespuesta.Groups[1].Value.Equals("0")  )
+                if (!mRespuesta.Groups[1].Value.Equals("0"))
                     throw new Exception("El SII indica un error en la consulta: " + mRespuesta.Groups[2].Value);
-                
+
                 ////
                 //// Recupere la data de respuesta
                 Match mdata = Regex.Match(data, "\"data\":\\[(.*?)\\]", RegexOptions.Singleline);
-                if ( !mdata.Success )
+                if (!mdata.Success)
                     throw new Exception("El SII no regreso ningun resultado (data).");
 
                 ////
                 //// parseo de datos para limpiar error de caracter
                 //// separador 
                 data = mdata.Groups[1].Value.Replace("\",\"", "\"|\"");
-               
-                
+
+
                 ////
                 //// Evaluar los datos
                 string[] registros = data.Split('|');
-                if ( registros.Count() == 0 )
+                if (registros.Count() == 0)
                     throw new Exception("El SII no regreso ningun registro.");
                 if (registros.Count() == 1)
                     throw new Exception("El SII no regreso ningun registro.");
@@ -309,7 +308,7 @@ namespace HEFSIIREGCOMPRAVENTAS.LIB.Negocio
                 ////
                 //// Recupere la cadena de headers y limpiela para generar los archivos xml
                 string first_row = Regex.Replace(registros[0], "\"|\\s|\\(|\\)|\\.", "", RegexOptions.Singleline);
-                
+
                 ////
                 //// recupere los encabezados de los registros
                 string[] headers = first_row.Split(';');
@@ -325,8 +324,8 @@ namespace HEFSIIREGCOMPRAVENTAS.LIB.Negocio
 
                 ////
                 //// Recorra todos los registros y exctraiga los campos
-                for (int row = 0; row <= registros.Count()-1; row++)
-                { 
+                for (int row = 0; row <= registros.Count() - 1; row++)
+                {
 
                     ////
                     //// Limpie la fila
@@ -337,20 +336,20 @@ namespace HEFSIIREGCOMPRAVENTAS.LIB.Negocio
                     ////
                     //// Inicie la construccón del documento Xml
                     for (int i = 0; i <= campos.Count() - 2; i++)
-                    { 
+                    {
 
                         ////
                         //// Cree el registro
                         string item = string.Format("\t<{0}>{1}</{2}>\r\n", headers[i], campos[i], headers[i]);
                         xdoc += item;
-                    
+
                     }
 
                     ////
                     //// Cierre el registro
                     xdoc += "</Reg>\r\n";
                 }
-    
+
                 ////
                 //// Cierre el documento
                 xdoc += "</Hefesto_Resultado>";
@@ -369,13 +368,13 @@ namespace HEFSIIREGCOMPRAVENTAS.LIB.Negocio
                 r.EsCorrecto = false;
                 r.Mensaje = "No fue posible contruir el documento xml de respuesta.";
                 r.Detalle = ex.Message;
-                
+
             }
 
             ////
             //// regrese la respuesta del proceso
             return r;
-            
+
         }
 
         /// <summary>
@@ -426,14 +425,14 @@ namespace HEFSIIREGCOMPRAVENTAS.LIB.Negocio
                 ////
                 //// Recuperar los elementos que representan los resumenes
                 MatchCollection mResumenes = Regex.Matches(mdata.Value, @"\{(.*?)\}", RegexOptions.Singleline);
-                if ( mResumenes.Count == 0 )
+                if (mResumenes.Count == 0)
                     throw new Exception("El SII no regreso ningun resumen.");
-                
+
                 ////
                 //// Interpretar los elementos
                 string sxml = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\r\n<Hefesto_Resultado>\r\n";
                 foreach (Match mResumen in mResumenes)
-                { 
+                {
                     ////
                     //// Construya el registro.
                     string[] Elementos = Regex.Replace(
@@ -449,14 +448,14 @@ namespace HEFSIIREGCOMPRAVENTAS.LIB.Negocio
                     {
                         string tagname = Elemento.Split(':')[0];
                         string tagvalu = Elemento.Split(':')[1];
-                        sxml += string.Format("<{0}>{1}</{2}>\r\n", tagname,tagvalu,tagname);
-                    
+                        sxml += string.Format("<{0}>{1}</{2}>\r\n", tagname, tagvalu, tagname);
+
                     }
                     sxml += "</Res>\r\n";
-                
+
                 }
                 sxml += "</Hefesto_Resultado>";
-                
+
                 ////
                 //// Construir la respuesta
                 r.EsCorrecto = true;
@@ -485,7 +484,7 @@ namespace HEFSIIREGCOMPRAVENTAS.LIB.Negocio
         /// Genera reporte de registros de ventas en formato json
         /// </summary>
         /// <returns></returns>
-        internal static HefRespuesta GenerarResumenVentasJson(Dictionary<string,string> elementos)
+        internal static HefRespuesta GenerarResumenVentasJson(Dictionary<string, string> elementos)
         {
             ////
             //// Inicie la respuesta
@@ -507,7 +506,7 @@ namespace HEFSIIREGCOMPRAVENTAS.LIB.Negocio
                 string[] stringSeparators = new string[] { "\r\n" };
                 foreach (KeyValuePair<string, string> elemento in elementos)
                 {
-                    
+
                     ////
                     //// cual es el key
                     string key = elemento.Key;
@@ -515,18 +514,21 @@ namespace HEFSIIREGCOMPRAVENTAS.LIB.Negocio
 
                     ////
                     //// Inicie el proceso de lectura del valor del objeto
-                    val = val.Remove(0,1);
-                    val = val.Remove(val.Length-1, 1);
+                    val = val.Remove(0, 1);
+                    val = val.Remove(val.Length - 1, 1);
 
                     ////
                     //// Recupere todas las filas del registro
                     string[] filas = val.Split(stringSeparators, StringSplitOptions.None);
-                    
+
                     ////
                     //// Recupere la primera fila 
                     string[] _headers = filas[0].Split(';');
-                    _headers = _headers.Select(p => { p = 
-                        Regex.Replace(p, "[\\s.,\\(\\)]+", "",RegexOptions.Singleline)  ; return p; })
+                    _headers = _headers.Select(p =>
+                    {
+                        p =
+                        Regex.Replace(p, "[\\s.,\\(\\)]+", "", RegexOptions.Singleline); return p;
+                    })
                             .ToArray();
 
 
@@ -548,7 +550,7 @@ namespace HEFSIIREGCOMPRAVENTAS.LIB.Negocio
                             else
                                 _registro += $"  \"{_headers[i]}\":\"{_datos[i]}\",\r\n";
                         }
-                        
+
                         _registro += "}";
 
                         ////
@@ -584,7 +586,7 @@ namespace HEFSIIREGCOMPRAVENTAS.LIB.Negocio
 
                 ////
                 //// ordene el resultado
-                _documento = Regex.Replace(_documento,"\r\n","",RegexOptions.Singleline);
+                _documento = Regex.Replace(_documento, "\r\n", "", RegexOptions.Singleline);
                 _documento = JsonHelper.FormatJson(_documento);
 
                 ////
@@ -639,8 +641,11 @@ namespace HEFSIIREGCOMPRAVENTAS.LIB.Negocio
 
                     ////
                     //// Inicie el proceso de lectura del valor del objeto
-                    val = val.Remove(0, 1);
-                    val = val.Remove(val.Length - 1, 1);
+                    if (!string.IsNullOrEmpty(val))
+                    {
+                        val = val.Remove(0, 1);
+                        val = val.Remove(val.Length - 1, 1);
+                    }
 
                     ////
                     //// Recupere todas las filas del registro
@@ -649,7 +654,8 @@ namespace HEFSIIREGCOMPRAVENTAS.LIB.Negocio
                     ////
                     //// Recupere la primera fila 
                     string[] _headers = filas[0].Split(';');
-                    _headers = _headers.Select(p => {
+                    _headers = _headers.Select(p =>
+                    {
                         p =
                         Regex.Replace(p, "[\\s.,\\(\\)]+", "", RegexOptions.Singleline); return p;
                     })
@@ -698,7 +704,7 @@ namespace HEFSIIREGCOMPRAVENTAS.LIB.Negocio
                 ////
                 //// Cree el resultado
                 string _documento = "{\r\n";
-                _documento += "\""+ rootName + "\":\r\n";
+                _documento += "\"" + rootName + "\":\r\n";
                 _documento += "[\r\n";
                 _documento += _salida;
                 _documento += "]\r\n";

@@ -26,6 +26,7 @@ CREATE TABLE [dbo].[Zw_Entidades](
     [CodHolding]                    [varchar](10)   NOT NULL DEFAULT(''),
     [PreMayMinXHolding]             [bit]           NOT NULL DEFAULT(0),
     [CodPagador]                    [varchar](10)   NOT NULL DEFAULT(''),
+    [NoCobrarPallet]                [bit]           NOT NULL DEFAULT(0),
  CONSTRAINT [PK_Zw_Entidades] PRIMARY KEY CLUSTERED 
 (
 	[CodEntidad] ASC,

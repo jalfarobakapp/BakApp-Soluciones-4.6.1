@@ -294,6 +294,18 @@
         Gdm7J4/+Ng4h/wCVYcSkeYLJPwAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="Btn_EditFechaGRI.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAV9JREFUOE9j
+        8PL2ZfAGYR8/4rG3H1ifoaERA0N2Tv61nNyCv6RikL7QsAgGBhAHCP6QikH6wsIiEQY8e/4cBQPFfl+4
+        ePFPSmr6n/7+iX/i4hL+gPgoBoQjGXD+4qW/yBgIfoPEb9+58yc8Iurvixcv4JpBmGgDQBhkADIfhCky
+        4NOXr0vr+uaJ+qTWkW7Aj1+/V60+cofTsXrzCZvyjSEkGfDtx6/lc3Zdl3Cp3VIF1JwCxOeJDsRbd+6t
+        mL3zmgTQ5gu2FZv+ATXXWZdtYIMbgC8aq+saV8bXzgZpPg/VfMumbKO0rDURCenj5y+rmhfuk7Cv2Iis
+        WUbNu5CBgZERf1IuKCpdVztzqzjQ5nNQzbeBWEbNB6oZBEDpGZQkQXGKjCOiExiCCydw2JetdQJqeg3V
+        LAu3mRCQNPJmAGpIBOILQOwC1oxsMyGgGVwDMmAJEOcCQ5tX3jYWi2YGBgDVmWJ88y1sJgAAAABJRU5E
+        rkJggg==
+</value>
+  </data>
   <data name="Chk_FechaEmiFiot.CheckBoxImageChecked" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAABGdBTUEAALGPC/xhBQAAAXFJREFUKFNj
@@ -304,6 +316,18 @@
         btmz9NfP37/+gkwF4S8/vv0p3TIL5AzkwNjOAA17sLs796/49ev3779ff3z/U751DlgxCMM0eM+tjmYw
         K4oAByvM2q79K39Vbp/7C8aHYZAa69okJgZQDLr05ROMOLfJRYLcksKQ2OYU5mewKI/BmTSs6xKZIIoZ
         GAB7vEbGWNC69gAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="Dtp_Fecha_Ingreso.ButtonCustom.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAV9JREFUOE9j
+        8PL2ZfAGYR8/4rG3H1ifoaERA0N2Tv61nNyCv6RikL7QsAgGBhAHCP6QikH6wsIiEQY8e/4cBQPFfl+4
+        ePFPSmr6n/7+iX/i4hL+gPgoBoQjGXD+4qW/yBgIfoPEb9+58yc8Iurvixcv4JpBmGgDQBhkADIfhCky
+        4NOXr0vr+uaJ+qTWkW7Aj1+/V60+cofTsXrzCZvyjSEkGfDtx6/lc3Zdl3Cp3VIF1JwCxOeJDsRbd+6t
+        mL3zmgTQ5gu2FZv+ATXXWZdtYIMbgC8aq+saV8bXzgZpPg/VfMumbKO0rDURCenj5y+rmhfuk7Cv2Iis
+        WUbNu5CBgZERf1IuKCpdVztzqzjQ5nNQzbeBWEbNB6oZBEDpGZQkQXGKjCOiExiCCydw2JetdQJqeg3V
+        LAu3mRCQNPJmAGpIBOILQOwC1oxsMyGgGVwDMmAJEOcCQ5tX3jYWi2YGBgDVmWJ88y1sJgAAAABJRU5E
+        rkJggg==
 </value>
   </data>
   <data name="Txt_Numot.ButtonCustom.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

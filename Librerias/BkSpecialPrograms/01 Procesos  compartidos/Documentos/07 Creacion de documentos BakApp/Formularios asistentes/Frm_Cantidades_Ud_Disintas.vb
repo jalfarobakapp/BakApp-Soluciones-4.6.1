@@ -241,7 +241,7 @@ Public Class Frm_Cantidades_Ud_Disintas
                 _Cantidad_Ud1 = _C1
 
                 Try
-                    TxtRTU.Text = _Cantidad_Ud1 / _Cantidad_Ud2
+                    TxtRTU.Text = Math.Round(_Cantidad_Ud1 / _Cantidad_Ud2, 5)
                 Catch ex As Exception
                     TxtRTU.Text = 0
                 End Try

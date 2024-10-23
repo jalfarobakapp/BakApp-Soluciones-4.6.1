@@ -22,7 +22,7 @@ Public Class Frm_BuscarEntidad_Mt
         Get
             Return _Filtro_Extra
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             _Filtro_Extra = value
         End Set
     End Property
@@ -49,7 +49,7 @@ Public Class Frm_BuscarEntidad_Mt
         Get
             Return BtnCrearUser.Enabled
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             BtnCrearUser.Enabled = value
             _Crear_Editar_Entidad = value
         End Set
@@ -58,14 +58,15 @@ Public Class Frm_BuscarEntidad_Mt
         Get
             Return Txtdescripcion.Text
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             Txtdescripcion.Text = value
         End Set
     End Property
 
     Public Property PreguntaClientePuntos As Boolean
+    Public Property VerSoloEntidadesDelVendedor As Boolean
 
-    Public Sub New(ByVal _Preguntar_Despues_de_seleccionar As Boolean)
+    Public Sub New(_Preguntar_Despues_de_seleccionar As Boolean)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -79,9 +80,17 @@ Public Class Frm_BuscarEntidad_Mt
 
     End Sub
 
-    Private Sub Frm_BuscarEntidad_Mt_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_BuscarEntidad_Mt_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         Fx_Activar_Deactivar_Teclado()
+
+        VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00021",, False)
+
+        If VerSoloEntidadesDelVendedor Then
+            Chk_Solo_Clientes_Del_Vendedor.Checked = True
+            Rdb_Ambos.Enabled = False
+            Rdb_Proveedores.Enabled = False
+        End If
 
         BtnEditarUser.Enabled = False
         BtnEliminarUser.Enabled = False
@@ -98,7 +107,9 @@ Public Class Frm_BuscarEntidad_Mt
 
         Grilla_Entidades.DataSource = _Tbl_Entidades
 
-        ' Sb_Formato_Grilla()
+
+        'Chk_Solo_Clientes_Del_Vendedor.Checked = True
+
         Sb_Actualizar_Grilla(Txtdescripcion.Text, False)
 
 
@@ -113,11 +124,12 @@ Public Class Frm_BuscarEntidad_Mt
         AddHandler Rdb_Proveedores.CheckedChanged, AddressOf Rdb_CheckedChanged
         AddHandler Rdb_Ambos.CheckedChanged, AddressOf Rdb_CheckedChanged
 
-        AddHandler Chk_Solo_Clientes_Del_Vendedor.CheckedChanged, AddressOf Sb_Bucar_Entidades
+        AddHandler Chk_Solo_Clientes_Del_Vendedor.CheckedChanged, AddressOf Chk_Solo_Clientes_Del_Vendedor_CheckedChanged
+
 
     End Sub
 
-    Private Sub BtnCrearUser_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnCrearUser.Click
+    Private Sub BtnCrearUser_Click(sender As System.Object, e As System.EventArgs) Handles BtnCrearUser.Click
 
         If Not Fx_Tiene_Permiso(Me, "CfEnt002") Then
             Return
@@ -149,7 +161,7 @@ Public Class Frm_BuscarEntidad_Mt
 
     End Sub
 
-    Sub Sb_Seleccionar_Fila(ByVal _Crear_Editar_Entidad As Boolean)
+    Sub Sb_Seleccionar_Fila(_Crear_Editar_Entidad As Boolean)
 
         Dim _Fila As DataGridViewRow = Grilla_Entidades.Rows(Grilla_Entidades.CurrentRow.Index)
 
@@ -287,7 +299,7 @@ Public Class Frm_BuscarEntidad_Mt
 
     End Sub
 
-    Function Sb_Actualizar_Grilla(ByVal _Texto_Busqueda As String, _Limpiar As Boolean)
+    Function Sb_Actualizar_Grilla(_Texto_Busqueda As String, _Limpiar As Boolean)
 
         Dim _Condicion_Entidad = String.Empty
 
@@ -368,7 +380,7 @@ Public Class Frm_BuscarEntidad_Mt
 
     End Sub
 
-    Function Sb_Actualizar_Grilla_Old(ByVal _Texto_Busqueda As String)
+    Function Sb_Actualizar_Grilla_Old(_Texto_Busqueda As String)
 
         Dim _Condicion_Entidad As String
 
@@ -442,16 +454,16 @@ Public Class Frm_BuscarEntidad_Mt
 
     End Function
 
-    Private Sub BtnEditarUser_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnEditarUser.Click
+    Private Sub BtnEditarUser_Click(sender As System.Object, e As System.EventArgs) Handles BtnEditarUser.Click
         Sb_Seleccionar_Fila(True)
     End Sub
 
-    Private Sub Frm_BuscarEntidad_Mt_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_BuscarEntidad_Mt_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
     End Sub
-    Private Sub AsociarMarcaToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AsociarMarcaToolStripMenuItem.Click
+    Private Sub AsociarMarcaToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles AsociarMarcaToolStripMenuItem.Click
         With Grilla_Entidades
             Dim _CodEntidad As String = Trim(.Rows(.CurrentRow.Index).Cells("KOEN").Value)
             Dim _CodSucursal As String = Trim(.Rows(.CurrentRow.Index).Cells("SUEN").Value)
@@ -465,10 +477,10 @@ Public Class Frm_BuscarEntidad_Mt
         End With
     End Sub
 
-    Private Sub Grilla_Entidades_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla_Entidades.CellDoubleClick
+    Private Sub Grilla_Entidades_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla_Entidades.CellDoubleClick
         Sb_Seleccionar_Fila(_Crear_Editar_Entidad)
     End Sub
-    Private Sub Grilla_Entidades_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Grilla_Entidades.KeyDown
+    Private Sub Grilla_Entidades_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles Grilla_Entidades.KeyDown
 
         If CBool(Grilla_Entidades.RowCount) Then
 
@@ -496,22 +508,22 @@ Public Class Frm_BuscarEntidad_Mt
         End If
 
     End Sub
-    Private Sub BtnEliminarUser_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnEliminarUser.Click
+    Private Sub BtnEliminarUser_Click(sender As System.Object, e As System.EventArgs) Handles BtnEliminarUser.Click
         Call Btn_Mnu_Eliminar_Entidad_Click(Nothing, Nothing)
     End Sub
-    Private Sub Grilla_Entidades_Enter(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Grilla_Entidades.Enter
+    Private Sub Grilla_Entidades_Enter(sender As System.Object, e As System.EventArgs) Handles Grilla_Entidades.Enter
         If CBool(Grilla_Entidades.RowCount) Then
             Grilla_Entidades.CurrentCell = Grilla_Entidades.Rows(0).Cells("KOEN")
             BtnEditarUser.Enabled = True
             BtnEliminarUser.Enabled = True
         End If
     End Sub
-    Private Sub Grilla_Entidades_Leave(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Grilla_Entidades.Leave
+    Private Sub Grilla_Entidades_Leave(sender As System.Object, e As System.EventArgs) Handles Grilla_Entidades.Leave
         BtnEditarUser.Enabled = False
         BtnEliminarUser.Enabled = False
     End Sub
 
-    Private Sub Sb_Txtdescripcion_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs)
+    Private Sub Sb_Txtdescripcion_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs)
 
         If e.KeyValue = Keys.Down Then
 
@@ -538,7 +550,7 @@ Public Class Frm_BuscarEntidad_Mt
 
     End Sub
 
-    Private Sub Sb_Txtdescripcion_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Sb_Txtdescripcion_TextChanged(sender As System.Object, e As System.EventArgs)
 
         If Txtdescripcion.Text = "" Then
             Sb_Actualizar_Grilla("", True)
@@ -546,17 +558,17 @@ Public Class Frm_BuscarEntidad_Mt
 
     End Sub
 
-    Private Sub Btn_Subir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Subir.Click
+    Private Sub Btn_Subir_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Subir.Click
         SendKeys.Send("{UP}")
     End Sub
-    Private Sub Btn_Bajar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Bajar.Click
+    Private Sub Btn_Bajar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Bajar.Click
         SendKeys.Send("{DOWN}")
     End Sub
-    Private Sub Btn_Seleccionar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Seleccionar.Click
+    Private Sub Btn_Seleccionar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Seleccionar.Click
         Sb_Seleccionar_Fila(_Crear_Editar_Entidad)
     End Sub
 
-    'Private Sub Grilla_Detalle_RowPostPaint(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewRowPostPaintEventArgs)
+    'Private Sub Grilla_Detalle_RowPostPaint( sender As Object,  e As System.Windows.Forms.DataGridViewRowPostPaintEventArgs)
     '    Try
     '        'Captura el numero de filas del datagridview
     '        Dim RowsNumber As String = (e.RowIndex + 1).ToString
@@ -669,7 +681,7 @@ Public Class Frm_BuscarEntidad_Mt
 
     End Sub
 
-    Private Sub Sb_Grilla_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Sb_Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
         If e.Button = Windows.Forms.MouseButtons.Right Then
             With sender
                 Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
@@ -750,4 +762,20 @@ Public Class Frm_BuscarEntidad_Mt
         End If
 
     End Sub
+
+    Private Sub Chk_Solo_Clientes_Del_Vendedor_CheckedChanged(sender As Object, e As EventArgs)
+
+        If VerSoloEntidadesDelVendedor Then
+            If Not Chk_Solo_Clientes_Del_Vendedor.Checked Then
+                If Not Fx_Tiene_Permiso(Me, "CfEnt031") Then
+                    Chk_Solo_Clientes_Del_Vendedor.Checked = True
+                    Return
+                End If
+            End If
+        End If
+
+        Sb_Bucar_Entidades()
+
+    End Sub
+
 End Class

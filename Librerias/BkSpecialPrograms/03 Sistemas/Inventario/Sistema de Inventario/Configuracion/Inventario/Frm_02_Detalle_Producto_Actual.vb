@@ -187,9 +187,9 @@ Public Class Frm_02_Detalle_Producto_Actual
 
         With Zw_Inv_FotoInventario
 
-            Lbl_StFisicoUd1.Text = FormatNumber(.StFisicoUd1, 2)
-            Lbl_Cant_Inventariada.Text = FormatNumber(.Cant_Inventariada, 2)
-            Lbl_Dif_Inv_Cantidad.Text = FormatNumber(.Dif_Inv_Cantidad, 0)
+            Lbl_StFisicoUd1.Text = Format(.StFisicoUd1, "###,#0.#####")
+            Lbl_Cant_Inventariada.Text = Format(.Cant_Inventariada, "###,#0.#####")
+            Lbl_Dif_Inv_Cantidad.Text = Format(.Dif_Inv_Cantidad, "###,#0.#####")
 
             ChkCerrado.Checked = .Cerrado
             ChkLevantado.Checked = .Levantado

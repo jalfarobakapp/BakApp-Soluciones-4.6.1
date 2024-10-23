@@ -179,6 +179,7 @@ Public Class Cl_Entidades
             .CodHolding = _Row.Item("CodHolding")
             .PreMayMinXHolding = _Row.Item("PreMayMinXHolding")
             .CodPagador = _Row.Item("CodPagador")
+            .NoCobrarPallet = _Row.Item("NoCobrarPallet")
 
         End With
 

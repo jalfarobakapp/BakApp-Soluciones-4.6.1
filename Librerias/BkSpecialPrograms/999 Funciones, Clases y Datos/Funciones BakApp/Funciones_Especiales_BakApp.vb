@@ -6215,16 +6215,22 @@ Public Module Crear_Documentos_Desde_Otro
 
     Function Fx_TblFromJson(Respuesta As String, Objeto As String) As DataTable
 
-        Dim result As Object
-        result = JsonConvert.DeserializeObject(Of Object)(Respuesta)
+        Dim _Tbl As DataTable
 
-        Dim _Json = "{'" & Objeto & "':" & result(Objeto).ToString & "}"
+        Try
+            Dim result As Object
+            result = JsonConvert.DeserializeObject(Of Object)(Respuesta)
 
-        Dim dataSet As DataSet
+            Dim _Json = "{'" & Objeto & "':" & result(Objeto).ToString & "}"
 
-        dataSet = JsonConvert.DeserializeObject(Of DataSet)(_Json)
+            Dim dataSet As DataSet
 
-        Dim _Tbl As DataTable = dataSet.Tables(0)
+            dataSet = JsonConvert.DeserializeObject(Of DataSet)(_Json)
+
+            _Tbl = dataSet.Tables(0)
+        Catch ex As Exception
+            Return Nothing
+        End Try
 
         Return _Tbl
 
@@ -6304,6 +6310,57 @@ Public Module Crear_Documentos_Desde_Otro
         Else
             Return False
         End If
+
+    End Function
+
+    Function Fx_Confirmar_LecturaSINO(_Mensaje1 As String,
+                                      _Mensaje2 As String,
+                                      _eTaskDialogIcon As eTaskDialogIcon) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Dim Chk_Confirmar_Lectura As New Command
+        Chk_Confirmar_Lectura.Checked = False
+        Chk_Confirmar_Lectura.Name = "Chk_Confirmar_Lectura"
+        Chk_Confirmar_Lectura.Text = "CONFIRMAR LECTURA DE LA ALERTA"
+
+        Dim _Opciones As Command = Chk_Confirmar_Lectura
+
+        Dim _Info As New TaskDialogInfo("Alerta",
+                  _eTaskDialogIcon,
+                  _Mensaje1, _Mensaje2,
+                  eTaskDialogButton.Yes + eTaskDialogButton.No, eTaskDialogBackgroundColor.Red, Nothing, Nothing,
+                  _Opciones, Nothing, Nothing)
+
+        Dim _Resultado As eTaskDialogResult = TaskDialog.Show(_Info)
+
+        If _Resultado = eTaskDialogResult.Yes Or _Resultado = eTaskDialogResult.No Or _Resultado = eTaskDialogResult.Cancel Then
+
+            If Not Chk_Confirmar_Lectura.Checked Then
+                'MessageBoxEx.Show(Me, "Debe confirmar la lectura", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Beep()
+                _Mensaje = Fx_Confirmar_LecturaSINO(_Mensaje1, _Mensaje2, _eTaskDialogIcon)
+            Else
+
+                _Mensaje.Resultado = _Resultado.ToString
+                _Mensaje.EsCorrecto = True
+
+                If _Resultado = eTaskDialogResult.Yes Then
+                    _Mensaje.Icono = eTaskDialogIcon.Information
+                ElseIf _Resultado = eTaskDialogResult.No Then
+                    _Mensaje.Cerrar = False
+                    _Mensaje.Icono = eTaskDialogIcon.Stop
+                Else
+                    _Mensaje.Icono = eTaskDialogIcon.Exclamation
+                End If
+
+            End If
+
+        Else
+            _Mensaje.Cerrar = True
+        End If
+
+        Return _Mensaje
 
     End Function
 
@@ -6432,6 +6489,59 @@ Public Module Crear_Documentos_Desde_Otro
         End If
 
     End Sub
+
+    Function Fx_VerDocumento(_Formulario As Form,
+                             _Idmaeedo As Integer,
+                             _CodigoMarcar As String) As Boolean
+
+        Dim _VerSoloEntidadesDelVendedor As Boolean = Fx_Tiene_Permiso(_Formulario, "NO00021",, False) '_Global_Row_Configuracion_Estacion.Item("VerSoloEntidadesDelVendedor")
+        Dim _VerDocumento As Boolean = True
+
+        Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
+
+        If _VerSoloEntidadesDelVendedor Then
+
+            Dim _PedirPermiso As Boolean = False
+
+            If Fm.Pro_RowEntidad.Item("KOFUEN").ToString.Trim <> FUNCIONARIO Then
+                _PedirPermiso = True
+            Else
+                _PedirPermiso = True
+                For Each _Fila As DataRow In Fm.Pro_TblDetalle.Rows
+                    If _Fila.Item("KOFULIDO") = FUNCIONARIO Then
+                        _PedirPermiso = False
+                        Exit For
+                    End If
+                Next
+            End If
+
+            If _PedirPermiso Then
+
+                Dim _Msj As String = "Tiene una restricción que le impide ver documentos de clientes de otros vendedores." & vbCrLf &
+                             "Esto significa que solo puede acceder a los documentos de su propia cartera de clientes." & vbCrLf & vbCrLf &
+                             "Actualmente, tiene asignado el permiso (restricción) NO00021."
+
+                MessageBoxEx.Show(_Formulario, _Msj, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                _VerDocumento = False
+
+            End If
+
+        End If
+
+        If _VerDocumento Then
+            Fm.ShowDialog(_Formulario)
+        End If
+
+        Fm.Dispose()
+
+        If _VerDocumento Then
+            Return True
+        Else
+            Return False
+        End If
+
+    End Function
 
 End Module
 

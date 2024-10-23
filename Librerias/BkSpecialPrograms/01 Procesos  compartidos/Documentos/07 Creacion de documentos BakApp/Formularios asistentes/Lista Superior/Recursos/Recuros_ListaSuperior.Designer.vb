@@ -73,7 +73,7 @@ Namespace My.Resources
         '''DECLARE @Meses INT = -{Meses};                  -- Puedes cambiar este valor segun sea necesario
         '''DECLARE @VentaEnCurso FLOAT = {VentaEnCurso};   -- Puedes cambiar este valor segun sea necesario
         '''
-        '''Set @FechaMesEnCurso = DATEADD(DAY, 1-DAY(GETDATE()), CAST(GETDATE() AS DAT [resto de la cadena truncado]&quot;;.
+        '''Set @FechaMesEnCurso = DATEADD(DAY, 1-DAY(GETDATE()), CAST(GETDATE( [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property RevisarSumpliminetoDeMinoristaMayorista() As String
             Get

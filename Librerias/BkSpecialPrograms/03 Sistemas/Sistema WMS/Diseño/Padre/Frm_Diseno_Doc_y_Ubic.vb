@@ -138,42 +138,6 @@ Public Class Frm_Diseno_Doc_y_Ubic
 
     End Sub
 
-#Region "ABRIR FORMULARIOS"
-
-
-
-
-
-
-
-#End Region
-
-    Private Sub AgregarTextoLibreToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs)
-        '    Fx_Crear_Txt(PosicionX, PosicionY)
-    End Sub
-
-    Private Sub TabPage2_MouseMove(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
-        PosicionX = e.X.ToString
-        PosicionY = e.Y.ToString
-    End Sub
-
-    Private Sub TabPage3_MouseMove(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
-        PosicionX = e.X.ToString
-        PosicionY = e.Y.ToString
-    End Sub
-
-    Protected Overrides Sub Finalize()
-        MyBase.Finalize()
-    End Sub
-
-    Private Sub Control_Encima_Slp(sender As System.Object, e As System.EventArgs)
-        sender.Tooltip = sender.value
-    End Sub
-
-    Private Sub LineaToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs)
-        'Fx_Crear_Linea(PosicionX, 200, PosicionY)
-    End Sub
-
     Private Sub Frm_Diseno_Doc_y_Ubic_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         Dim _Condicion As String
@@ -187,7 +151,11 @@ Public Class Frm_Diseno_Doc_y_Ubic
             If _Configuracion_Diseno = _TipoDiseno.Mapa_Bodega_Diseño Then
                 RibbonControl1.Expanded = True
             ElseIf _Configuracion_Diseno = _TipoDiseno.Mapa_Bodega_Asignar_Ubicaciones Or _Configuracion_Diseno = _TipoDiseno.Mapa_Bodega_Crear_Ubicaciones Then
-                RibbonTabItem1.Enabled = False
+                RibbonTabItem1.Enabled = True
+                RibbonBar2.Visible = False
+                RibbonBar7.Visible = False
+                RibbonBar8.Visible = False
+                RibbonBar1.Visible = False
                 _Condicion = "And Es_Sub_Mapa = 0"
             End If
 
@@ -215,6 +183,34 @@ Public Class Frm_Diseno_Doc_y_Ubic
 
         AddHandler Btn_Grabar.Click, AddressOf Sb_Btn_Grabar_Click
 
+        Me.Refresh()
+
+    End Sub
+
+    Private Sub AgregarTextoLibreToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs)
+        '    Fx_Crear_Txt(PosicionX, PosicionY)
+    End Sub
+
+    Private Sub TabPage2_MouseMove(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
+        PosicionX = e.X.ToString
+        PosicionY = e.Y.ToString
+    End Sub
+
+    Private Sub TabPage3_MouseMove(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
+        PosicionX = e.X.ToString
+        PosicionY = e.Y.ToString
+    End Sub
+
+    Protected Overrides Sub Finalize()
+        MyBase.Finalize()
+    End Sub
+
+    Private Sub Control_Encima_Slp(sender As System.Object, e As System.EventArgs)
+        sender.Tooltip = sender.value
+    End Sub
+
+    Private Sub LineaToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs)
+        'Fx_Crear_Linea(PosicionX, 200, PosicionY)
     End Sub
 
     Sub Sb_Crear_Form_Mapa(_Nombre_Mapa As String,
@@ -726,6 +722,26 @@ Public Class Frm_Diseno_Doc_y_Ubic
         If e.Button = Windows.Forms.MouseButtons.Right Then
             ShowContextMenu(Menu_Contextual_Opciones_Mapa)
         End If
+    End Sub
+
+    Private Sub Btn_Sectores_Click(sender As Object, e As EventArgs) Handles Btn_Sectores.Click
+
+        Dim _FrmActivo As Frm_Formulario_Diseno_Mapa_Documentos =
+                      TryCast(Me.ActiveMdiChild, Frm_Formulario_Diseno_Mapa_Documentos)
+
+        Dim _Id_Mapa As Integer = _FrmActivo.Pro_Id_Mapa
+        Dim _RowMapa As DataRow = _FrmActivo.Pro_Row_Mapa
+
+        Dim _RowBodega As DataRow = Fx_Trar_Datos_De_Bodega_Seleccionada(_RowMapa.Item("Empresa"), _RowMapa.Item("Sucursal"), _RowMapa.Item("Bodega"))
+
+        Dim Fm As New Frm_Sectores_Lista_UbicOblig(_Id_Mapa)
+        Fm.Text = "SECTORES DEL MAPA: " & _RowMapa.Item("Nombre_Mapa")
+        Fm.LblEmpresa.Text = _RowBodega.Item("RAZON")
+        Fm.LblSucursal.Text = _RowBodega.Item("NOKOSU")
+        Fm.LblBodega.Text = _RowBodega.Item("NOKOBO")
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
     End Sub
 
     Private Sub Btn_Mnu_Editar_Mapa_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Editar_Mapa.Click

@@ -357,7 +357,7 @@ Public Class Class_Prestashop
 
                 _Codigo = _Fila.Item("Codigo")
 
-                If _Codigo = "96403099K00" Then
+                If _Codigo = "1210082810CH0" Then
                     Dim _aca = 0
                 End If
 
@@ -409,7 +409,7 @@ Public Class Class_Prestashop
                 Progress_Porcent.Value = ((Contador * 100) / _Tbl_Productos.Rows.Count) 'Mas
                 Progress_Canti.Value += 1
 
-                _Etiqueta2.Text = "Productos encontrador: " & FormatNumber(Contador, 0) & " de " & FormatNumber(_Tbl_Productos.Rows.Count, 0)
+                _Etiqueta2.Text = "Productos encontrados en " & _Sitio.ToString.Trim & ": " & FormatNumber(Contador, 0) & " de " & FormatNumber(_Tbl_Productos.Rows.Count, 0)
 
                 Application.DoEvents()
 
@@ -566,6 +566,10 @@ Public Class Class_Prestashop
             Dim _Error As String = String.Empty
 
             ' ACTUALIZAR PRECIOS
+
+            If _Codigo = "1210082810CH0" Then
+                Dim A = 100
+            End If
 
             Application.DoEvents()
 

@@ -98,6 +98,20 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
                        "And Zu.Codigo_Sector = '" & _Codigo_Sector & "' " & vbCrLf &
                        "And Zu.Codigo_Ubic = '" & _Codigo_Ubic & "'"
 
+
+        Consulta_sql = "Select Cast(0 As Bit) As Chk,Zu.Semilla,Zu.Id_Mapa,Zu.Empresa,Zu.Sucursal,Zu.Bodega,Zu.Codigo,Zu.Codigo_Sector,Zu.Codigo_Ubic," & vbCrLf &
+                       "Isnull((Select Top 1 KOPRAL From TABCODAL Td Where Td.KOPR = Zu.Codigo And KOEN = ''),'') As CodBarra," & vbCrLf &
+                       "NOKOPR As Descripcion,Primaria,Isnull(Mt.STFI1,0) As 'STFI1',Isnull(Mt.STFI2,0) As 'STFI2',Stock_Ubic_Ud1,Stock_Ubic_Ud2" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Prod_Ubicacion Zu" & vbCrLf &
+                       "Left Join MAEPR Mp On Codigo = KOPR" & vbCrLf &
+                       "Left Join MAEST Mt On Mt.EMPRESA = Zu.Empresa And Mt.KOSU = Zu.Sucursal And Mt.KOBO = Zu.Bodega And Mt.KOPR = Zu.Codigo" & vbCrLf &
+                       "Where Zu.Empresa = '" & _Empresa & "' " & vbCrLf &
+                       "And Zu.Sucursal = '" & _Sucursal & "' " & vbCrLf &
+                       "And Zu.Bodega = '" & _Bodega & "' " & vbCrLf &
+                       "And Zu.Id_Mapa = " & _Id_Mapa & vbCrLf &
+                       "And Zu.Codigo_Sector = '" & _Codigo_Sector & "' " & vbCrLf &
+                       "And Zu.Codigo_Ubic = '" & _Codigo_Ubic & "'"
+
         _Tbl_UbicXpro = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
@@ -182,9 +196,9 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
                 Dim _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal (Semilla,Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector,Codigo_Ubic,Codigo," &
-                               "TipoMov,CodFuncionario_Ing,NombreEquipo,Ingreso,FechaIngreso) Values " & vbCrLf &
+                               "CodFuncionario_Ing,NombreEquipo,Ingreso,FechaIngreso) Values " & vbCrLf &
                                "(" & _Semilla & ",'" & _Empresa & "','" & _Sucursal & "','" & _Bodega & "'," & _Id_Mapa & ",'" & _Codigo_Sector & "','" & _Codigo_Ubic & "'" &
-                               ",'" & _Codigo & "','" & _TipoMov & "','" & FUNCIONARIO & "','" & _NombreEquipo & "',1,Getdate())"
+                               ",'" & _Codigo & "','" & FUNCIONARIO & "','" & _NombreEquipo & "',1,Getdate())"
                 _Sql.Ej_consulta_IDU(Consulta_sql)
 
                 If _Global_Row_Configuracion_General.Item("Utilizar_Ubicaciones_WCM") Then
@@ -446,6 +460,107 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
         Sb_Asociar_Productos_Masivamente()
     End Sub
 
+    Sub Sb_Quitar_Productos_Masivamente()
+
+        If Not Fx_Tiene_Permiso(Me, "Ubic0006") Then
+            Return
+        End If
+
+        Try
+
+            Me.Enabled = False
+
+            Dim _Sql_Filtro_Condicion_Extra = "And TIPR = 'FPN' And KOPR In " &
+                                              "(Select Codigo From " & _Global_BaseBk & "Zw_Prod_Ubicacion Where " &
+                                              "Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector & "' And Codigo_Ubic = '" & _Codigo_Ubic & "')"
+            Dim _Filtrar As New Clas_Filtros_Random(Me)
+            Dim _Tbl_Productos As DataTable
+            Dim _Filtrar_Pr As Boolean
+
+            If _Filtrar.Fx_Filtrar(Nothing,
+                                   Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra,
+                                   False, False) Then
+
+                _Tbl_Productos = _Filtrar.Pro_Tbl_Filtro
+                If _Filtrar.Pro_Filtro_Todas Then
+                    _Tbl_Productos = Nothing
+                End If
+                _Filtrar_Pr = True
+            End If
+
+            Dim _Contador = 0
+            Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+
+            Consulta_sql = String.Empty
+
+            If _Filtrar_Pr Then
+
+                For Each _Fila As DataRow In _Tbl_Productos.Rows
+
+                    Dim _Codigo As String = _Fila.Item("Codigo")
+
+                    Dim _Semilla = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Prod_Ubicacion", "Semilla",
+                                                      "Id_Mapa = " & _Id_Mapa &
+                                                      " And Codigo_Sector = '" & _Codigo_Sector &
+                                                      "' And Codigo_Ubic = '" & _Codigo_Ubic &
+                                                      "' And Codigo = '" & _Codigo & "'")
+
+
+                    Consulta_sql += "Update " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal Set " & vbCrLf &
+                                    "Empresa = '" & _Empresa & "'" &
+                                    ",Sucursal = '" & _Sucursal & "'" &
+                                    ",Bodega = '" & _Bodega & "'" &
+                                    ",Id_Mapa = " & _Id_Mapa &
+                                    ",Codigo_Sector = '" & _Codigo_Sector & "'" &
+                                    ",Codigo_Ubic = '" & _Codigo_Ubic & "'" &
+                                    ",Codigo = '" & _Codigo & "'" &
+                                    ",CodFuncionario_Sal = '" & FUNCIONARIO & "'" &
+                                    ",NombreEquipo = '" & _NombreEquipo & "'" &
+                                    ",Salida = 1" &
+                                    ",FechaSalida = GetDate()" & vbCrLf &
+                                    "Where Semilla = " & _Semilla & vbCrLf
+
+                    Consulta_sql += "Delete " & _Global_BaseBk & "Zw_Prod_Ubicacion Where Semilla = " & _Semilla & vbCrLf
+
+                    If _Global_Row_Configuracion_General.Item("Utilizar_Ubicaciones_WCM") Then
+
+                        Consulta_sql += "Update TABBOPR Set DATOSUBIC = ''" & vbCrLf &
+                                       "Where EMPRESA = '" & _Empresa & "' AND KOSU = '" & _Sucursal & "' AND KOBO = '" & _Bodega & "' AND KOPR = '" & _Codigo & "'" & vbCrLf
+
+                    End If
+
+                    _Contador += 1
+
+                Next
+
+
+            End If
+
+            If CBool(_Contador) Then
+
+                If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+                    MessageBoxEx.Show(Me, _Sql.Pro_Error, "Problema", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Return
+                End If
+
+                Beep()
+                ToastNotification.Show(Me, "Productos quitados correctamente (" & _Contador & ")",
+                                       My.Resources.ok_button,
+                                       1 * 1000, eToastGlowColor.Red, eToastPosition.MiddleCenter)
+
+                Sb_Actualizar_Grilla_Ubic()
+
+            End If
+
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        Finally
+            Me.Enabled = True
+        End Try
+
+    End Sub
+
+
 #Region "ENUMERAR FILAS"
 
     Private Sub Btn_Imprimir_Etiquetas_Click(sender As Object, e As EventArgs) Handles Btn_Imprimir_Etiquetas.Click
@@ -541,9 +656,11 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
 
     Private Sub Btn_Mnu_Eliminar_Ubicacion_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_Eliminar_Ubicacion.Click
 
-        If Fx_Tiene_Permiso(Me, "Ubic0006") Then
+        If Not Fx_Tiene_Permiso(Me, "Ubic0006") Then
+            Return
+        End If
 
-            Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
             Dim _Semilla = _Fila.Cells("Semilla").Value
             Dim _Id_Mapa As Integer = _Fila.Cells("Id_Mapa").Value
@@ -611,7 +728,6 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
 
             Grilla.Rows.RemoveAt(_Fila.Index)
 
-        End If
 
     End Sub
 
@@ -630,5 +746,13 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
             Lbl_InfoFechaIngUbic.Visible = False
         End Try
         Me.Refresh()
+    End Sub
+
+    Private Sub Grilla_DataError(sender As Object, e As DataGridViewDataErrorEventArgs) Handles Grilla.DataError
+
+    End Sub
+
+    Private Sub Btn_Seleccion_MultipleQuitar_Click(sender As Object, e As EventArgs) Handles Btn_Seleccion_MultipleQuitar.Click
+        Sb_Quitar_Productos_Masivamente()
     End Sub
 End Class

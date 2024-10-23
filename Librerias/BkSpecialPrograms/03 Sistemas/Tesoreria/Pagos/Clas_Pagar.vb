@@ -1776,9 +1776,9 @@ Public Class Clas_Pagar
                      "CJASDP,HORAGRAB,LAHORA) VALUES " &
                      "(" & _Idmaedpce & "," & _Abono & ",'" & _Feasdp & "'," & _Idmaeedo & ",'" & _Tidopa &
                      "','MAEEDO',0.00000," & _Referencia & ",'" & _Kofudp & "','" & _Suemdp & "','" & _Cjredp & "'," & _Horagrab &
-                     ",'" & _Lahora & "')" & vbCrLf & vbCrLf
-
-            'UPDATE MAEVEN SET VAABVE=ROUND( VAABVE+28940.000000,0),ESPGVE=CASE WHEN ROUND( VAVE-VAABVE-28940.000000,0) <= 0.0 THEN 'C'  ELSE ESPGVE  END  WHERE IDMAEVEN=246276
+                     ",'" & _Lahora & "')" & vbCrLf & vbCrLf &
+                     "UPDATE MAEDPCE SET VAASDP = ROUND(" & _Abono & "+VAASDP,0)," &
+                     "ESASDP=CASE WHEN ROUND( VADP-VAVUDP-(" & _Abono & "+VAASDP),0) <= 0 THEN 'A' ELSE 'P' END WHERE IDMAEDPCE = " & _Idmaedpce
 
         Catch ex As Exception
             Return 0

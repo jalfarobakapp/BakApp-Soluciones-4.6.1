@@ -79,6 +79,8 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Ocdo = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_MostrarSoloDocClientesDelVendedor = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Wrn_MostrarSoloDocClientesDelVendedor = New DevComponents.DotNetBar.Controls.WarningBox()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Grupo_documento.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
@@ -203,7 +205,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnAceptar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 557)
+        Me.Bar1.Location = New System.Drawing.Point(0, 559)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(700, 41)
         Me.Bar1.Stretch = True
@@ -568,7 +570,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.TableLayoutPanel3.ColumnCount = 3
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 91.0!))
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 126.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 129.0!))
         Me.TableLayoutPanel3.Controls.Add(Me.Rdb_Sucursal_Doc_Algunas, 2, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.Rdb_Sucursal_Doc_Todas, 1, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.LabelX2, 0, 0)
@@ -590,7 +592,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Rdb_Sucursal_Doc_Algunas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Sucursal_Doc_Algunas.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Sucursal_Doc_Algunas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Sucursal_Doc_Algunas.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Sucursal_Doc_Algunas.Location = New System.Drawing.Point(258, 4)
+        Me.Rdb_Sucursal_Doc_Algunas.Location = New System.Drawing.Point(255, 4)
         Me.Rdb_Sucursal_Doc_Algunas.Name = "Rdb_Sucursal_Doc_Algunas"
         Me.Rdb_Sucursal_Doc_Algunas.Size = New System.Drawing.Size(94, 17)
         Me.Rdb_Sucursal_Doc_Algunas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -610,7 +612,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Rdb_Sucursal_Doc_Todas.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Sucursal_Doc_Todas.CheckValue = "Y"
         Me.Rdb_Sucursal_Doc_Todas.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Sucursal_Doc_Todas.Location = New System.Drawing.Point(166, 4)
+        Me.Rdb_Sucursal_Doc_Todas.Location = New System.Drawing.Point(163, 4)
         Me.Rdb_Sucursal_Doc_Todas.Name = "Rdb_Sucursal_Doc_Todas"
         Me.Rdb_Sucursal_Doc_Todas.Size = New System.Drawing.Size(85, 17)
         Me.Rdb_Sucursal_Doc_Todas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1138,9 +1140,9 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Chk_Mostrar_Vales_Transitorios.CheckValue = "Y"
         Me.Chk_Mostrar_Vales_Transitorios.FocusCuesEnabled = False
         Me.Chk_Mostrar_Vales_Transitorios.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Mostrar_Vales_Transitorios.Location = New System.Drawing.Point(12, 532)
+        Me.Chk_Mostrar_Vales_Transitorios.Location = New System.Drawing.Point(12, 527)
         Me.Chk_Mostrar_Vales_Transitorios.Name = "Chk_Mostrar_Vales_Transitorios"
-        Me.Chk_Mostrar_Vales_Transitorios.Size = New System.Drawing.Size(183, 19)
+        Me.Chk_Mostrar_Vales_Transitorios.Size = New System.Drawing.Size(148, 21)
         Me.Chk_Mostrar_Vales_Transitorios.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Mostrar_Vales_Transitorios.TabIndex = 35
         Me.Chk_Mostrar_Vales_Transitorios.Text = "Mostrar vales transitorios"
@@ -1293,11 +1295,47 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.LabelX3.TabIndex = 2
         Me.LabelX3.Text = "Orden de compra"
         '
+        'Chk_MostrarSoloDocClientesDelVendedor
+        '
+        Me.Chk_MostrarSoloDocClientesDelVendedor.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Chk_MostrarSoloDocClientesDelVendedor.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_MostrarSoloDocClientesDelVendedor.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_MostrarSoloDocClientesDelVendedor.CheckBoxImageChecked = CType(resources.GetObject("Chk_MostrarSoloDocClientesDelVendedor.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_MostrarSoloDocClientesDelVendedor.Checked = True
+        Me.Chk_MostrarSoloDocClientesDelVendedor.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Chk_MostrarSoloDocClientesDelVendedor.CheckValue = "Y"
+        Me.Chk_MostrarSoloDocClientesDelVendedor.FocusCuesEnabled = False
+        Me.Chk_MostrarSoloDocClientesDelVendedor.ForeColor = System.Drawing.Color.Black
+        Me.Chk_MostrarSoloDocClientesDelVendedor.Location = New System.Drawing.Point(532, 527)
+        Me.Chk_MostrarSoloDocClientesDelVendedor.Name = "Chk_MostrarSoloDocClientesDelVendedor"
+        Me.Chk_MostrarSoloDocClientesDelVendedor.Size = New System.Drawing.Size(160, 33)
+        Me.Chk_MostrarSoloDocClientesDelVendedor.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_MostrarSoloDocClientesDelVendedor.TabIndex = 37
+        Me.Chk_MostrarSoloDocClientesDelVendedor.Text = "Mostrar solo documentos de clientes del vendedor activo"
+        '
+        'Wrn_MostrarSoloDocClientesDelVendedor
+        '
+        Me.Wrn_MostrarSoloDocClientesDelVendedor.BackColor = System.Drawing.Color.White
+        Me.Wrn_MostrarSoloDocClientesDelVendedor.CloseButtonVisible = False
+        Me.Wrn_MostrarSoloDocClientesDelVendedor.ForeColor = System.Drawing.Color.Black
+        Me.Wrn_MostrarSoloDocClientesDelVendedor.Image = CType(resources.GetObject("Wrn_MostrarSoloDocClientesDelVendedor.Image"), System.Drawing.Image)
+        Me.Wrn_MostrarSoloDocClientesDelVendedor.Location = New System.Drawing.Point(250, 527)
+        Me.Wrn_MostrarSoloDocClientesDelVendedor.Name = "Wrn_MostrarSoloDocClientesDelVendedor"
+        Me.Wrn_MostrarSoloDocClientesDelVendedor.OptionsText = "¿Que es esto?"
+        Me.Wrn_MostrarSoloDocClientesDelVendedor.Size = New System.Drawing.Size(276, 33)
+        Me.Wrn_MostrarSoloDocClientesDelVendedor.TabIndex = 38
+        Me.Wrn_MostrarSoloDocClientesDelVendedor.Text = "<b>Alerta</b> Restricción de sistema"
+        '
         'Frm_BusquedaDocumento_Filtro
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(700, 598)
+        Me.ClientSize = New System.Drawing.Size(700, 600)
+        Me.Controls.Add(Me.Wrn_MostrarSoloDocClientesDelVendedor)
+        Me.Controls.Add(Me.Chk_MostrarSoloDocClientesDelVendedor)
         Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.Chk_Mostrar_Vales_Transitorios)
         Me.Controls.Add(Me.Grupo_Producto)
@@ -1392,4 +1430,6 @@ Partial Class Frm_BusquedaDocumento_Filtro
     Friend WithEvents Txt_CodRetirador As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
     Public WithEvents Chk_Mostrar_Vales_Transitorios As DevComponents.DotNetBar.Controls.CheckBoxX
+    Public WithEvents Chk_MostrarSoloDocClientesDelVendedor As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Wrn_MostrarSoloDocClientesDelVendedor As DevComponents.DotNetBar.Controls.WarningBox
 End Class

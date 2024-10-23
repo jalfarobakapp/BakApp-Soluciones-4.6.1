@@ -24,5 +24,6 @@
     Public Property CodHolding As String
     Public Property PreMayMinXHolding As Boolean
     Public Property CodPagador As String
+    Public Property NoCobrarPallet As Boolean
 
 End Class

@@ -8,4 +8,10 @@
     Public Property Nombre_Sector As String
     Public Property Es_SubSector As Boolean
     Public Property EsCabecera As Boolean
+    Public Property SoloUnaUbicacion As Boolean
+
+End Class
+
+Partial Public Class Zw_WMS_Ubicaciones_Sectores
+    Public Property RevisarUbicXFechas As Boolean
 End Class

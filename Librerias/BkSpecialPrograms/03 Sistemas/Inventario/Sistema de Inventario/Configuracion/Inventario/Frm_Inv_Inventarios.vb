@@ -80,7 +80,7 @@ Public Class Frm_Inv_Inventarios
             .Columns("Bodega").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("NombreInventario").Width = 250
+            .Columns("NombreInventario").Width = 350
             .Columns("NombreInventario").HeaderText = "Nombre inventario"
             .Columns("NombreInventario").Visible = True
             .Columns("NombreInventario").DisplayIndex = _DisplayIndex

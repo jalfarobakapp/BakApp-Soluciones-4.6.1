@@ -942,7 +942,7 @@
                        ",Isnull(Plt.NombreTabla,'') As 'Planta_Str'" &
                        ",Isnull(Trn.NombreTabla,'') As 'Turno_Str'" & vbCrLf &
                        ",Isnull(Tol.NombreTabla,'') As 'Tolva_Str'" & vbCrLf &
-                       ",Substring(Lote,1,3) As Lote3,Substring(Lote,1,4) As Lote4,Substring(Lote,1,5) As Lote5" & vbCrLf &
+                       ",Substring(Lote,1,3) As Lote3,Substring(Lote,1,4) As Lote4,Substring(Lote,1,5) As Lote5,Substring(Trj.Lote,1,6) As Lote6,Substring(Trj.Lote,1,7) As Lote7" & vbCrLf &
                        ",'' As 'Nro_Tipo','' As 'Nro','' As 'Nro_Pallet','' As 'Max_Nro_Tipo'" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja Trj" & vbCrLf &
                        "Left Join TABFU Tf On Tf.KOFU = Analista" & vbCrLf &
@@ -1029,7 +1029,7 @@
                        ",Isnull(Plt.NombreTabla,'') As 'Planta_Str'" & vbCrLf &
                        ",Isnull(Trn.NombreTabla,'') As 'Turno_Str'" & vbCrLf &
                        ",Isnull(Tol.NombreTabla,'') As 'Tolva_Str'" & vbCrLf &
-                       ",Substring(Trj.Lote,1,3) As Lote3,Substring(Trj.Lote,1,4) As Lote4,Substring(Trj.Lote,1,5) As Lote5," & vbCrLf &
+                       ",Substring(Trj.Lote,1,3) As Lote3,Substring(Trj.Lote,1,4) As Lote4,Substring(Trj.Lote,1,5) As Lote5,Substring(Trj.Lote,1,6) As Lote6,Substring(Trj.Lote,1,7) As Lote7," & vbCrLf &
                        "Det.Nro_Tipo,Det.Nro,Det.Nro As 'Nro_Pallet',(Select MAX(Nro) From " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja_Det Dt Where Dt.Lote = Trj.Lote) As 'Max_Nro_Tipo'" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja Trj" & vbCrLf &
                        "Inner Join " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja_Det Det On Trj.Id = Det.Id_CPT And Nro = " & _Nro & vbCrLf &

@@ -154,6 +154,7 @@ Public Class Frm_Formulario_Documento
     Public Property MensajeRevFolio As LsValiciones.Mensajes
 
     Dim _Cl_DocListaSuperior As New Cl_DocListaSuperior
+    Dim _Cl_Pallet As New Pallet.Cl_Pallet
 
 #Region "PROPIEDADES"
 
@@ -419,6 +420,7 @@ Public Class Frm_Formulario_Documento
     End Property
 
     Public Property SoloprodEnDoc_CLALIBPR As Boolean
+    Public Property VerSoloEntidadesDelVendedor As Boolean
 
 #End Region
 
@@ -1116,6 +1118,7 @@ Public Class Frm_Formulario_Documento
         _Patente_rvm = String.Empty
 
         _Cl_DocListaSuperior = New Cl_DocListaSuperior
+        _Cl_Pallet = New Pallet.Cl_Pallet
         Lbl_InfoVtaAcumMes.Visible = False
 
         Lbl_NroDecimales.Text = FormatNumber(0, _DecimalesGl)
@@ -2595,6 +2598,7 @@ Public Class Frm_Formulario_Documento
             .Item("Espuntosvta") = False
             .Item("ModFechVto") = False
             .Item("Condicionado") = False
+            .Item("EsPallet") = False
 
             _TblDetalle.Rows.Add(NewFila)
 
@@ -5359,7 +5363,8 @@ Public Class Frm_Formulario_Documento
         Dim _TipoValor As String
 
         Dim _DescripcionProductoLinea = _RowProducto.Item("NOKOPR")
-        Dim _Nuevo_Producto = _Fila.Cells("Nuevo_Producto").Value
+        Dim _Nuevo_Producto As Boolean = _Fila.Cells("Nuevo_Producto").Value
+        Dim _EsPallet As Boolean = _Fila.Cells("EsPallet").Value
 
         Dim _Pesoubic As Double = NuloPorNro(_RowProducto.Item("PESOUBIC"), 0)
 
@@ -5393,6 +5398,10 @@ Public Class Frm_Formulario_Documento
 
                     End If
 
+                End If
+
+                If _EsPallet Then
+                    _Editar_Descripcion = False
                 End If
 
                 If _Editar_Descripcion Then
@@ -8211,6 +8220,24 @@ Public Class Frm_Formulario_Documento
             Dim _Bloqueada As Boolean
 
             If _Tipo_Documento = csGlobales.Enum_Tipo_Documento.Venta Then
+
+                VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00021",, False)
+
+                If VerSoloEntidadesDelVendedor Then
+
+                    If _RowEntidad.Item("KOFUEN").ToString.Trim <> FUNCIONARIO Then
+
+                        MessageBoxEx.Show(_Formulario, "Usted tiene restricción para ver documentos de clientes de otros vendedores." & vbCrLf &
+                                  "Tienes el permiso (restricción) NO00021 asignado.",
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                        'If Not Fx_Tiene_Permiso(Me, "Doc00096") Then
+                        Return Nothing
+                        'End If
+
+                    End If
+
+                End If
 
                 If _Mostrar_Mensaje_Deuda Then
 
@@ -14222,14 +14249,16 @@ Public Class Frm_Formulario_Documento
                                               "¿Desea ver el documento?", "Validación",
                                               MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
 
-                                Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
-                                Fm.ShowDialog(Me)
+                                'Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
+                                'Fm.ShowDialog(Me)
 
-                                If Fm.Eliminado Or Fm.Anulado Then
-                                    Call BtnLimpiar_Click(Nothing, Nothing)
-                                End If
+                                'If Fm.Eliminado Or Fm.Anulado Then
+                                '    Call BtnLimpiar_Click(Nothing, Nothing)
+                                'End If
 
-                                Fm.Dispose()
+                                'Fm.Dispose()
+
+                                Fx_VerDocumento(Me, _Idmaeedo, "")
 
                             End If
 
@@ -15247,6 +15276,10 @@ Public Class Frm_Formulario_Documento
 
                 Sb_AgregarDsctoXPuntos()
 
+                If Not Fx_AgregarPallet() Then
+                    Return
+                End If
+
                 Sb_Actualizar_Permisos_Necesarios_Del_Documento_New()
 
                 Dim _No_Permitir_Grabar_Con_Dscto_Superado As Boolean = _Global_Row_Configuracion_General.Item("No_Permitir_Grabar_Con_Dscto_Superado")
@@ -15500,6 +15533,7 @@ Public Class Frm_Formulario_Documento
                         End If
 
                         Sb_EliminarFilaPuntos()
+                        Sb_EliminarFilaPallet()
 
                         Return
 
@@ -15799,6 +15833,24 @@ Public Class Frm_Formulario_Documento
 
                     End If
 
+                    If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Configuracion", "InsertarPalletAuto") Then
+
+                        If _Global_Row_Configuracion_Estacion.Item("InsertarPalletAuto") Then
+
+                            If Not IsNothing(_Cl_Pallet) AndAlso _Cl_Pallet.Pallet Then
+
+                                Dim _Horagrab As String = Hora_Grab_fx(False)
+                                Consulta_sql = "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC,HORAGRAB) Values " &
+                                               "('MAEEDO'," & _Idmaeedo & ",'" & _Row_NeDocEnc.Item("KOFUDO") & "'" &
+                                               ",Getdate(),'PALLETS','01'," & _Cl_Pallet.Cantidad & "," & _Horagrab & ")"
+                                _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                            End If
+
+                        End If
+
+                    End If
+
                     'Crear Orden de Despacho
 
                     Try
@@ -16000,6 +16052,40 @@ Public Class Frm_Formulario_Documento
 
         For Each _Fila As DataGridViewRow In Grilla_Detalle.Rows
             If _Fila.Cells("Espuntosvta").Value Then
+                _FilaElimina = _Fila
+                Exit For
+            End If
+        Next
+
+        If Not IsNothing(_FilaElimina) Then
+            Sb_Eliminar_Fila(_FilaElimina, True)
+        End If
+
+    End Sub
+
+    Private Sub Sb_EliminarFilaPallet()
+
+        If Not _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Configuracion", "InsertarPalletAuto") Then
+            Return
+        End If
+
+        If Not _Global_Row_Configuracion_Estacion.Item("InsertarPalletAuto") Then
+            Return
+        End If
+
+        Dim _TidoPalletAuto As String = _Global_Row_Configuracion_Estacion.Item("TidoPalletAuto")
+
+        If Not _TidoPalletAuto.Contains(_Tido) Then '_Tido <> "FCV" And _Tido <> "GDV" And _Tido <> "BLV" Then
+            Return
+        End If
+
+        _Cl_Pallet = New Pallet.Cl_Pallet
+
+        'Throw New NotImplementedException()
+        Dim _FilaElimina As DataGridViewRow
+
+        For Each _Fila As DataGridViewRow In Grilla_Detalle.Rows
+            If _Fila.Cells("EsPallet").Value Then
                 _FilaElimina = _Fila
                 Exit For
             End If
@@ -27653,7 +27739,7 @@ Public Class Frm_Formulario_Documento
                     Return
                 End If
 
-                MessageBoxEx.Show(Me, "Puede pasar a una lista con mejor precio." & vbCrLf &
+                MessageBoxEx.Show(Me, "Puede pasar a una lista con mejor precio." & vbCrLf & vbCrLf &
                                   "Venta de mes en curso : " & FormatCurrency(_Msj.Tag, 0) & vbCrLf &
                                   "Venta lista superior seria de " & FormatCurrency(_TotalNetoListaSuperior, 0) & vbCrLf &
                                   "Total de eventual venta mensual: " & FormatCurrency(_Msj.Tag + _TotalNetoListaSuperior, 0),
@@ -27727,6 +27813,180 @@ Public Class Frm_Formulario_Documento
 
     End Sub
 
+
+    Function Fx_AgregarPallet()
+
+        If _Revision_Remota Then
+            Return True
+        End If
+
+        If Not _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Configuracion", "InsertarPalletAuto") Then
+            Return True
+        End If
+
+        If Not _Global_Row_Configuracion_Estacion.Item("InsertarPalletAuto") Then
+            Return True
+        End If
+
+        Dim _TidoPalletAuto As String = _Global_Row_Configuracion_Estacion.Item("TidoPalletAuto")
+
+        If Not _TidoPalletAuto.Contains(_Tido) Then '_Tido <> "FCV" And _Tido <> "GDV" And _Tido <> "BLV" Then
+            Return True
+        End If
+
+        Dim _Ud = _Global_Row_Configuracion_Estacion.Item("UdRevCantIngrePallet")
+        Dim _Cantidad As Double = 0
+
+        For Each _Fila As DataRow In _TblDetalle.Rows
+
+            If Not CBool(_Fila.Item("Prct")) Then
+                _Cantidad += _Fila.Item("CantUd" & _Ud)
+            End If
+
+        Next
+
+        Dim _CantPregIngrePallet As Double = _Global_Row_Configuracion_Estacion.Item("CantPregIngrePallet")
+
+        If _Cantidad < _CantPregIngrePallet Then
+            Return True
+        End If
+
+        Dim _Codigo As String = _Global_Row_Configuracion_Estacion.Item("CodigoPrPallet")
+
+        'Sumar las cantidades de la unidad 1 y si es mas de lo que se requiere para preguntar por la cantidad de Pallet hacerlo
+        'si la cantidad es insuficiente salir y continuar
+
+        Dim _Msg1 = "¿Cliente retira PALLETS?"
+        Dim _Msg2 = vbCrLf & "Elija su opción."
+
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        _Mensaje = Fx_Confirmar_LecturaSINO(_Msg1, _Msg2, eTaskDialogIcon.Flag)
+
+        If _Mensaje.Resultado <> "Yes" Then
+            If _Mensaje.Cerrar Then
+                Return False
+            Else
+                Return True
+            End If
+        End If
+
+        'If Not Fx_Confirmar_Lectura(_Msg1, _Msg2, eTaskDialogIcon.Exclamation) Then
+        '    Return False
+        'End If
+
+
+        'If MessageBoxEx.Show(Me, "¿Desea agregar los PALLETS?", "Ingresar Pallet",
+        '                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+        '    Return True
+        'End If
+
+        _Mensaje = Fx_AgregarPallet(_Codigo)
+
+        If _Mensaje.Cancelado Then
+            Return False
+        End If
+
+        'If Not _Mensaje.EsCorrecto Then
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        'End If
+
+        Return True
+
+    End Function
+
+    Function Fx_AgregarPallet(_Codigo As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
+            Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_RowProducto) Then
+                _Mensaje.Detalle = "Validación"
+                Throw New ArgumentException("No existe el producto: " & _Codigo & vbCrLf &
+                                            "Informe de esto al administrador del sistema")
+            End If
+
+            Dim _Cantidad As Integer
+            Dim _Cancelado As Boolean
+            Dim _Aceptar As Boolean = InputBox_Bk(Me, "Ingrese la cantidad de Pallet", "Ingresar Pallet",
+                                                  _Cantidad, False,, 2, True, _Tipo_Imagen.Product,,
+                                                  _Tipo_Caracter.Solo_Numeros_Enteros, False,,,,, , _Cancelado)
+
+            If Not _Aceptar Then
+                _Mensaje.Detalle = "Validación"
+                _Mensaje.Cancelado = _Cancelado
+                Throw New ArgumentException("Debe ingresar una cantidad de Pallet")
+            End If
+
+            _Cl_Pallet.Codigo = _Codigo
+            _Cl_Pallet.Cantidad = _Cantidad
+            _Cl_Pallet.Pallet = True
+
+            If _RowEntidadBakapp.Item("NoCobrarPallet") Then
+
+                'MessageBoxEx.Show(Me, "Los pallets se añadirán en la anotaciones tabuldas, pero no se cobrarán a este cliente.",
+                '                  "Cliente con exclusión para cobrar Pallet",
+                '                  MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                _Mensaje.Detalle = "Cliente con exclusión para cobrar Pallet"
+                _Mensaje.Mensaje = "Los pallets se añadirán en la anotaciones tabuldas, pero no se cobrarán a este cliente."
+
+            Else
+
+                Sb_Nueva_Linea(_TblEncabezado.Rows(0).Item("ListaPrecios"))
+
+                Dim _New_Fila As DataGridViewRow = Grilla_Detalle.Rows(Grilla_Detalle.RowCount - 1)
+                Dim _Indice As Integer = _New_Fila.Index ' Grilla_Detalle.CurrentRow.Index
+
+                _New_Fila.Cells("EsPallet").Value = True
+
+                Sb_Traer_Producto_A_La_Nueva_Fila(_New_Fila, _RowProducto, _Indice)
+
+                _New_Fila.Cells("Cantidad").Value = _Cantidad
+
+                Sb_Procesar_Datos_De_Grilla(_New_Fila, "Cantidad", False, False, True)
+
+                _Mensaje.Detalle = "Agregar Pallet"
+                _Mensaje.Mensaje = "Pallet agregado con exito al final del detalle del documento"
+
+            End If
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Icono = MessageBoxIcon.Information
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Detalle = "Pallet no agregado"
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
 End Class
+
+Namespace Pallet
+
+    Public Class Cl_Pallet
+
+        Public Property Pallet As Boolean
+        Public Property Codigo As String
+        Public Property Cantidad As Double
+
+        Public Sub New()
+            Pallet = False
+            Codigo = String.Empty
+            Cantidad = 0
+        End Sub
+
+    End Class
+
+End Namespace
 
 

@@ -173,6 +173,12 @@ Public Class Frm_Ubicaciones
 
         Wbox_Cabecera.Visible = _Row_Sector.Item("EsCabecera")
 
+        If _Row_Sector.Item("EsCabecera") Then
+            Grilla.Focus()
+            Grilla.CurrentCell = Grilla.Rows(0).Cells(6)
+            Sb_Grilla_Doble_Clic_en_celda_Ver_Productos_en_ubicacion()
+        End If
+
     End Sub
 
     Private Sub Sb_Grilla_MouseMove(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
@@ -933,7 +939,6 @@ Public Class Frm_Ubicaciones
                 Sb_Ver_Productos_En_La_Ubicacion(_Fila)
             End If
         End If
-
 
     End Sub
 

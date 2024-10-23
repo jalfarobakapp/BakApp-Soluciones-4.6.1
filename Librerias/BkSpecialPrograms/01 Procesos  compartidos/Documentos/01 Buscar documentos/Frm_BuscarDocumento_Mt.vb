@@ -479,28 +479,42 @@ Public Class Frm_BuscarDocumento_Mt
             Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
             Dim _Idmaeedo = _Fila.Cells("IDMAEEDO").Value
 
-            Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
-            Fm.ShowDialog(Me)
+            Fx_VerDocumento(Me, _Idmaeedo, "")
 
-            Dim _Row As DataRow = Fm.Pro_Row_Maeedo
+            Dim _Row As DataRow = _Sql.Fx_Get_DataRow("Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo)
 
-            Dim _Estado As String = _Row.Item("ESTADO")
+            Dim _Eliminado As Boolean
+            Dim _Anulado As Boolean
+            Dim _Estado As String
 
-            If _Estado = "Cerrado" Then
-                _Fila.Cells("ESTADO").Style.ForeColor = Rojo
-            ElseIf _Estado = "Vigente" Then
-                _Fila.Cells("ESTADO").Style.ForeColor = Verde
+            If IsNothing(_Row) Then
+                _Eliminado = True
+            ElseIf (_Row.Item("ESDO") = "N") Then
+                _Anulado = True
+            Else
+                _Estado = _Row.Item("ESDO")
             End If
 
-            _Fila.Cells("ESTADO").Value = _Estado
+            'Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
+            'Fm.ShowDialog(Me)
 
-            _Actualizar = (Fm.Anulado Or Fm.Eliminado)
+            'Dim _Row As DataRow = Fm.Pro_Row_Maeedo
 
-            Fm.Dispose()
+            'If _Estado = "C" Then
+            '    _Fila.Cells("ESTADO").Style.ForeColor = Rojo
+            '    _Fila.Cells("ESTADO").Value = "Cerrado"
+            'ElseIf _Estado = "" Then
+            '    _Fila.Cells("ESTADO").Style.ForeColor = Verde
+            '    _Fila.Cells("ESTADO").Value = "Vigente"
+            'End If
+
+            _Actualizar = (_Anulado Or _Eliminado) '(Fm.Anulado Or Fm.Eliminado)
+
+            'Fm.Dispose()
 
             If HabilitarNVVParaFacturar Then
                 _Actualizar = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "HabilitadaFac", "Idmaeedo = " & _Idmaeedo,,,, True)
-                If _Estado = "Cerrado" Then _Actualizar = True
+                If _Estado = "C" Then _Actualizar = True
             End If
 
             If _Actualizar Then Sb_Actualizar()

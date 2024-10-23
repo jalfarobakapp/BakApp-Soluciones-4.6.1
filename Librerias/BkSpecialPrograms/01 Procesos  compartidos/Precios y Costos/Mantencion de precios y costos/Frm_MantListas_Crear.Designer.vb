@@ -71,7 +71,7 @@ Partial Class Frm_MantListas_Crear
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnGrabar})
-        Me.Bar2.Location = New System.Drawing.Point(0, 366)
+        Me.Bar2.Location = New System.Drawing.Point(0, 342)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(623, 41)
         Me.Bar2.Stretch = True
@@ -502,13 +502,14 @@ Partial Class Frm_MantListas_Crear
         '
         Me.GroupPanel2.BackColor = System.Drawing.Color.White
         Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.GroupPanel2.Controls.Add(Me.Wb_ListaMinorista)
         Me.GroupPanel2.Controls.Add(Me.Chk_EsListaSuperior)
+        Me.GroupPanel2.Controls.Add(Me.Input_VentaMinVencLP)
         Me.GroupPanel2.Controls.Add(Me.Panel_Mayorista)
+        Me.GroupPanel2.Controls.Add(Me.LabelX5)
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel2.Location = New System.Drawing.Point(6, 226)
+        Me.GroupPanel2.Location = New System.Drawing.Point(6, 229)
         Me.GroupPanel2.Name = "GroupPanel2"
-        Me.GroupPanel2.Size = New System.Drawing.Size(608, 132)
+        Me.GroupPanel2.Size = New System.Drawing.Size(608, 105)
         '
         '
         '
@@ -546,10 +547,10 @@ Partial Class Frm_MantListas_Crear
         Me.Wb_ListaMinorista.CloseButtonVisible = False
         Me.Wb_ListaMinorista.ForeColor = System.Drawing.Color.Black
         Me.Wb_ListaMinorista.Image = CType(resources.GetObject("Wb_ListaMinorista.Image"), System.Drawing.Image)
-        Me.Wb_ListaMinorista.Location = New System.Drawing.Point(117, 3)
+        Me.Wb_ListaMinorista.Location = New System.Drawing.Point(168, 190)
         Me.Wb_ListaMinorista.Name = "Wb_ListaMinorista"
         Me.Wb_ListaMinorista.OptionsText = "¿Que es esto?"
-        Me.Wb_ListaMinorista.Size = New System.Drawing.Size(482, 33)
+        Me.Wb_ListaMinorista.Size = New System.Drawing.Size(446, 33)
         Me.Wb_ListaMinorista.TabIndex = 47
         Me.Wb_ListaMinorista.Text = "<b>Es lista minorista</b> La lista mayorista es: <i>01P - PRECIOS GENERAL</i>"
         Me.Wb_ListaMinorista.Visible = False
@@ -566,9 +567,9 @@ Partial Class Frm_MantListas_Crear
         Me.Chk_EsListaSuperior.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Chk_EsListaSuperior.CheckValue = "Y"
         Me.Chk_EsListaSuperior.ForeColor = System.Drawing.Color.Black
-        Me.Chk_EsListaSuperior.Location = New System.Drawing.Point(3, 3)
+        Me.Chk_EsListaSuperior.Location = New System.Drawing.Point(3, 17)
         Me.Chk_EsListaSuperior.Name = "Chk_EsListaSuperior"
-        Me.Chk_EsListaSuperior.Size = New System.Drawing.Size(114, 20)
+        Me.Chk_EsListaSuperior.Size = New System.Drawing.Size(103, 23)
         Me.Chk_EsListaSuperior.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_EsListaSuperior.TabIndex = 41
         Me.Chk_EsListaSuperior.Text = "Es lista mayorista"
@@ -579,12 +580,10 @@ Partial Class Frm_MantListas_Crear
         Me.Panel_Mayorista.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel_Mayorista.Controls.Add(Me.Txt_ListaInferior)
         Me.Panel_Mayorista.Controls.Add(Me.LabelX4)
-        Me.Panel_Mayorista.Controls.Add(Me.Input_VentaMinVencLP)
-        Me.Panel_Mayorista.Controls.Add(Me.LabelX5)
         Me.Panel_Mayorista.ForeColor = System.Drawing.Color.Black
-        Me.Panel_Mayorista.Location = New System.Drawing.Point(3, 42)
+        Me.Panel_Mayorista.Location = New System.Drawing.Point(3, 46)
         Me.Panel_Mayorista.Name = "Panel_Mayorista"
-        Me.Panel_Mayorista.Size = New System.Drawing.Size(596, 61)
+        Me.Panel_Mayorista.Size = New System.Drawing.Size(596, 31)
         Me.Panel_Mayorista.TabIndex = 46
         '
         'Txt_ListaInferior
@@ -603,7 +602,7 @@ Partial Class Frm_MantListas_Crear
         Me.Txt_ListaInferior.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_ListaInferior.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Txt_ListaInferior.ForeColor = System.Drawing.Color.Black
-        Me.Txt_ListaInferior.Location = New System.Drawing.Point(81, 32)
+        Me.Txt_ListaInferior.Location = New System.Drawing.Point(91, 3)
         Me.Txt_ListaInferior.Name = "Txt_ListaInferior"
         Me.Txt_ListaInferior.Size = New System.Drawing.Size(504, 22)
         Me.Txt_ListaInferior.TabIndex = 47
@@ -617,7 +616,7 @@ Partial Class Frm_MantListas_Crear
         '
         Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(3, 32)
+        Me.LabelX4.Location = New System.Drawing.Point(8, 3)
         Me.LabelX4.Name = "LabelX4"
         Me.LabelX4.Size = New System.Drawing.Size(77, 23)
         Me.LabelX4.TabIndex = 44
@@ -634,7 +633,7 @@ Partial Class Frm_MantListas_Crear
         Me.Input_VentaMinVencLP.DisplayFormat = "N0"
         Me.Input_VentaMinVencLP.ForeColor = System.Drawing.Color.Black
         Me.Input_VentaMinVencLP.Increment = 1.0R
-        Me.Input_VentaMinVencLP.Location = New System.Drawing.Point(201, 4)
+        Me.Input_VentaMinVencLP.Location = New System.Drawing.Point(318, 16)
         Me.Input_VentaMinVencLP.MinValue = 0R
         Me.Input_VentaMinVencLP.Name = "Input_VentaMinVencLP"
         Me.Input_VentaMinVencLP.ShowUpDown = True
@@ -650,9 +649,9 @@ Partial Class Frm_MantListas_Crear
         '
         Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX5.ForeColor = System.Drawing.Color.Black
-        Me.LabelX5.Location = New System.Drawing.Point(3, 3)
+        Me.LabelX5.Location = New System.Drawing.Point(112, 16)
         Me.LabelX5.Name = "LabelX5"
-        Me.LabelX5.Size = New System.Drawing.Size(200, 23)
+        Me.LabelX5.Size = New System.Drawing.Size(200, 24)
         Me.LabelX5.TabIndex = 42
         Me.LabelX5.Text = "Venta mínima para pertener a esta lista"
         '
@@ -694,7 +693,8 @@ Partial Class Frm_MantListas_Crear
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(623, 407)
+        Me.ClientSize = New System.Drawing.Size(623, 383)
+        Me.Controls.Add(Me.Wb_ListaMinorista)
         Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.GroupPanel5)
         Me.Controls.Add(Me.GroupPanel4)

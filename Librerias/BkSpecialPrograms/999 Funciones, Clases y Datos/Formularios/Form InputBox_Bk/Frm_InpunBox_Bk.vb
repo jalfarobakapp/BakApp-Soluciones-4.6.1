@@ -12,7 +12,7 @@ Public Class Frm_InpunBox_Bk
 
     Public Property Chk As Controls.CheckBoxX
     Public Property CerradoPorX As Boolean
-
+    Public Property Cancelado As Boolean
     Private _TiempoInicial As DateTime
     Private _TiempoFinal As DateTime
     Private _Evaluando As Boolean = False
@@ -251,6 +251,7 @@ Public Class Frm_InpunBox_Bk
 
     Private Sub BtnCancelar_Click(sender As System.Object, e As System.EventArgs) Handles BtnCancelar.Click
         CerradoPorX = True
+        Cancelado = True
         Me.Close()
     End Sub
 

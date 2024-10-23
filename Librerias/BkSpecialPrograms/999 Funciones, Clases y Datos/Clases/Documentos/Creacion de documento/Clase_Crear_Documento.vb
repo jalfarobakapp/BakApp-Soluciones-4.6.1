@@ -753,6 +753,10 @@ Public Class Clase_Crear_Documento
                                 _Ppprpmifrs = De_Num_a_Tx_01(_Pmifrs, False, 5)
                                 _Ppprmsuc = De_Num_a_Tx_01(_Pmsuc, False, 5)
 
+                                If _Ppprmsuc.Contains("∞") Then
+                                    _Ppprmsuc = 0
+                                End If
+
                                 'If _Koprct = "1756173000T00" Then
                                 '    Dim A = 0
                                 'End If

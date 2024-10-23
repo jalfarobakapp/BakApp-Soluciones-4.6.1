@@ -914,9 +914,14 @@ Public Class Menu
 
     Private Sub ButtonItem6_Click(sender As Object, e As EventArgs) Handles ButtonItem6.Click
 
-        Dim Fm As New Frm_FTP_Fichero(1, Cl_Ftp.eTipo_Ftp.Producto)
+        'Dim Fm As New Frm_FTP_Fichero(1, Cl_Ftp.eTipo_Ftp.Producto)
+        'Fm.ShowDialog(Me)
+        'Fm.Dispose()
+
+        Dim Fm As New Frm_RevMayMin
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
     End Sub
+
 End Class

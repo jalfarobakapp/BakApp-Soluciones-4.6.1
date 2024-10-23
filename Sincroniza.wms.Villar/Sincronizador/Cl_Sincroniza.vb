@@ -297,6 +297,7 @@ Public Class Cl_Sincroniza
                 'Dim _CodFuncionario_Factura2 As String
 
                 If _DocEmitir = "BLV" Or _DocEmitir = "FCV" Then
+
                     If _Cl_Stmp.Zw_Stmp_Enc.TipoPago = "Contado" Then
                         _CodFuncionario_Factura = ConfiguracionLocal.Ls_FunFcvGdvAuto.Item(0).CodFuncionario
                     End If
@@ -304,6 +305,14 @@ Public Class Cl_Sincroniza
                     If _Cl_Stmp.Zw_Stmp_Enc.TipoPago = "Credito" Then
                         _CodFuncionario_Factura = ConfiguracionLocal.Ls_FunFcvGdvAuto.Item(1).CodFuncionario
                     End If
+
+                    'Si es un pedido de B2B se redirecciona directamente hacia la impresora de creditos mediante la caja facturadora
+                    Dim _Reg As Integer = _SqlRandom.Fx_Cuenta_Registros("[@MGT_2_PEDIDOS]", "ID_ERP=" & _Idmaeedo, False)
+
+                    If CBool(_Reg) Then
+                        _CodFuncionario_Factura = ConfiguracionLocal.Ls_FunFcvGdvAuto.Item(1).CodFuncionario
+                    End If
+
                 End If
 
                 If _DocEmitir = "GDV" Then
@@ -580,7 +589,7 @@ Public Class Cl_Sincroniza
         For Each _Fila As DataRow In _Tbl.Rows
 
             Dim _Id As Integer = _Fila.Item("Id")
-            Dim _Idmaeedoo As Integer = _Fila.Item("Idmaeedo")
+            Dim _Idmaeedo As Integer = _Fila.Item("Idmaeedo")
             Dim _DocEmitir As String = _Fila.Item("DocEmitir")
             Dim _TipoPago As String = _Fila.Item("TipoPago")
             Dim _Nudo As String = _Fila.Item("Nudo")
@@ -595,6 +604,14 @@ Public Class Cl_Sincroniza
                 If _TipoPago = "Credito" Then
                     _CodFuncionario_Factura = ConfiguracionLocal.Ls_FunFcvGdvAuto.Item(1).CodFuncionario
                 End If
+
+                'Si es un pedido de B2B se redirecciona directamente hacia la impresora de creditos mediante la caja facturadora
+                Dim _Reg As Integer = _SqlRandom.Fx_Cuenta_Registros("[@MGT_2_PEDIDOS]", "ID_ERP=" & _Idmaeedo, False)
+
+                If CBool(_Reg) Then
+                    _CodFuncionario_Factura = ConfiguracionLocal.Ls_FunFcvGdvAuto.Item(1).CodFuncionario
+                End If
+
             End If
 
             If _DocEmitir = "GDV" Then
@@ -615,7 +632,7 @@ Public Class Cl_Sincroniza
 
                         Dim _Mensaje As New LsValiciones.Mensajes
 
-                        _Mensaje = Fx_EnviarAImprimirListaDeVerificacion(_Idmaeedoo, "NVV", _Nudo, True,
+                        _Mensaje = Fx_EnviarAImprimirListaDeVerificacion(_Idmaeedo, "NVV", _Nudo, True,
                                                                           .NombreEquipoImprime, .Impresora, .NombreFormato)
                         Sb_AddToLog(_Mensaje.Detalle, _Mensaje.Detalle, Txt_Log)
 

@@ -1,4 +1,4 @@
-Imports DevComponents.DotNetBar
+ï»¿Imports DevComponents.DotNetBar
 'Imports Lib_Bakapp_VarClassFunc
 
 
@@ -17,18 +17,18 @@ Public Class Frm_Mt_InvParc_NuevoAjuste
         End Get
     End Property
 
-    Public Sub New(ByVal RowBodega As DataRow)
+    Public Sub New(RowBodega As DataRow)
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
         DtFechaInv.Value = Date.Now
         _RowBodega = RowBodega
 
     End Sub
 
-    Private Sub Frm_Mt_InvParc_NuevoAjuste_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Mt_InvParc_NuevoAjuste_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         _Empresa = _RowBodega.Item("EMPRESA")
         _Sucursal = _RowBodega.Item("KOSU")
@@ -44,10 +44,10 @@ Public Class Frm_Mt_InvParc_NuevoAjuste
 
     End Sub
 
-    Private Sub BtnLimpiarCodigo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnLimpiarCodigo.Click
+    Private Sub BtnLimpiarCodigo_Click(sender As System.Object, e As System.EventArgs) Handles BtnLimpiarCodigo.Click
 
         If String.IsNullOrEmpty(Trim(TxtNombreAjuste.Text)) Then
-            MessageBoxEx.Show(Me, "Debe ingresar un nombre para los ajustes", "Validación", MessageBoxButtons.OK,
+            MessageBoxEx.Show(Me, "Debe ingresar un nombre para los ajustes", "ValidaciÃ³n", MessageBoxButtons.OK,
             MessageBoxIcon.Stop)
             TxtNombreAjuste.Focus()
             Return
@@ -64,7 +64,7 @@ Public Class Frm_Mt_InvParc_NuevoAjuste
 
         If CBool(Registros) Then
             MessageBoxEx.Show(Me, "Ya existe archivo de ajuste con la fecha indicada",
-                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                              "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
 
@@ -88,29 +88,29 @@ Public Class Frm_Mt_InvParc_NuevoAjuste
 
     End Sub
 
-    Private Sub Frm_Mt_InvParc_NuevoAjuste_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_Mt_InvParc_NuevoAjuste_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
-    Private Sub Btn_Cambiar_Fecha_Ajuste_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cambiar_Fecha_Ajuste.Click
-        If Fx_Tiene_Permiso(Me, "In0016") Then
+    Private Sub Btn_Cambiar_Fecha_Ajuste_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cambiar_Fecha_Ajuste.Click
+        If Fx_Tiene_Permiso(Me, "Invp0006") Then
             DtFechaInv.Enabled = True
             Btn_Cambiar_Fecha_Ajuste.Enabled = False
         End If
     End Sub
 
-    Private Sub Btn_Cambiar_Nombre_Ajuste_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cambiar_Nombre_Ajuste.Click
-        If Fx_Tiene_Permiso(Me, "In0017") Then
+    Private Sub Btn_Cambiar_Nombre_Ajuste_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cambiar_Nombre_Ajuste.Click
+        If Fx_Tiene_Permiso(Me, "Invp0005") Then
             TxtNombreAjuste.Enabled = True
             Btn_Cambiar_Nombre_Ajuste.Enabled = False
             TxtNombreAjuste.Focus()
         End If
     End Sub
 
-    
-    Private Sub DtFechaInv_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+
+    Private Sub DtFechaInv_ValueChanged(sender As System.Object, e As System.EventArgs)
         TxtNombreAjuste.Text = "AJUSTE PARCIALIZADO (" & FormatDateTime(DtFechaInv.Value, DateFormat.LongDate) & ")"
     End Sub
 

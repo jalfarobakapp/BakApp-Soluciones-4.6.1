@@ -72,6 +72,7 @@ Partial Class Menu
         Me.Btn_PruebasFacturaElectronica = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Stem = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_RevPesoVariable = New DevComponents.DotNetBar.ButtonItem()
+        Me.ButtonItem6 = New DevComponents.DotNetBar.ButtonItem()
         Me.Tiempo_Actualizar_BakApp = New System.Windows.Forms.Timer(Me.components)
         Me.Menu_BakApp = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_Menu_Extra = New DevComponents.DotNetBar.ButtonItem()
@@ -93,7 +94,6 @@ Partial Class Menu
         Me.Metro_Bar_Color = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
         Me.StyleManager1 = New DevComponents.DotNetBar.StyleManager(Me.components)
-        Me.ButtonItem6 = New DevComponents.DotNetBar.ButtonItem()
         MetroTileFrame1 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame2 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame3 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
@@ -798,7 +798,7 @@ Partial Class Menu
         Me.ButtonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.ButtonX1.Image = CType(resources.GetObject("ButtonX1.Image"), System.Drawing.Image)
         Me.ButtonX1.ImageAlt = CType(resources.GetObject("ButtonX1.ImageAlt"), System.Drawing.Image)
-        Me.ButtonX1.Location = New System.Drawing.Point(175, 518)
+        Me.ButtonX1.Location = New System.Drawing.Point(150, 518)
         Me.ButtonX1.Name = "ButtonX1"
         Me.ButtonX1.Size = New System.Drawing.Size(134, 32)
         Me.ButtonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -873,6 +873,12 @@ Partial Class Menu
         Me.Btn_RevPesoVariable.GlobalItem = False
         Me.Btn_RevPesoVariable.Name = "Btn_RevPesoVariable"
         Me.Btn_RevPesoVariable.Text = "Revisar la diferencia en peso variable"
+        '
+        'ButtonItem6
+        '
+        Me.ButtonItem6.GlobalItem = False
+        Me.ButtonItem6.Name = "ButtonItem6"
+        Me.ButtonItem6.Text = "Revisar Mayoristas/Minoristas"
         '
         'Tiempo_Actualizar_BakApp
         '
@@ -1098,12 +1104,6 @@ Partial Class Menu
         '
         Me.StyleManager1.ManagerStyle = DevComponents.DotNetBar.eStyle.Metro
         Me.StyleManager1.MetroColorParameters = New DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(System.Drawing.Color.White, System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(154, Byte), Integer)))
-        '
-        'ButtonItem6
-        '
-        Me.ButtonItem6.GlobalItem = False
-        Me.ButtonItem6.Name = "ButtonItem6"
-        Me.ButtonItem6.Text = "FTP"
         '
         'Menu
         '

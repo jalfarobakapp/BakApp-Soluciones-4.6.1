@@ -74,6 +74,8 @@ namespace HEFSIIREGCOMPRAVENTAS.LIB.RegistroCV
                 string rutEmisor = RutEmpresa.Split('-')[0];
                 string dvEmisor = RutEmpresa.Split('-')[1].ToUpper();
                 string ptributario = Periodo.Replace("-", "");
+                string accionRecaptcha = "RCV_DDETC";
+                string tokenRecaptcha = "03AFcWeA5o4PmQ_J4qg9E6MgRSgL1CkuQYA6moaBhJrgRcxLIG69jNLA4KWofHfrcFQhzbKPHPMm8Mf2DnJ9gD2WgKvWFSXP-RnTzvJEpH3Kj_uB4vMshwHotpPCTgm_JBCqnn_5Qz6XmMAmalFtvjC-DSANJ-iQ8O5nXiq2xFH0fDFzkqUqedrbce-tRvLmhC_1ia0FO4wz4W2qsz2I9ffiC8HhcyUN-yVWUzGfcSKOC25RRCD5Tlhg7mpWAAjtawUwaid4kbsPUsnwCGwvPH6xfSYfdmVpduojPoolje0xQjSbf2MSK3H7ooj0xs0gDTeesW7kjN_g6WoL0cZp5xgSxdUK6AHykDwQ9u1az_RjVDYT-GLftgOc_NQEvsgHca8mbz5m1rQaAkuTnVrKQPviYmr-Z4TmwP3qTNTNhyhgySpaQsOtsGkLVTq7XV5CYtDivD8VnEUX4ImvnUxZS7Tqj6B5Ekalr36fdjW2qB7zRwhoopaDivQ0xYY2QbvhoKhjfn5A67PlXdt852sgAMGUBcfCgxhZpGjFwRj9I0pQfJ2kM_3CEV9rb2Iha4JOGjttmH-Teq9rL45NbdzDH2E0b026aMoAav0ZTA2eYwYNBSA_ixXUxwpjb6AXRcU-LvctQye2uhwBzZTDKp8DqtFnRzK-_OnwNhYz5e8MSoUhnWZFh5nRRLRfdPRan7krwB29rT1vEKcfhxj5oigfk02sensBtDccZrSd6QuDWZVHjAQ3rCqs3BCc3BY8T9s4txlrCKbjbLrw8GjOBOy8RARiw7iGDSJGkvtQVLIclkg-H2dMisawL0qyXzQ5rLKsWfVsIpKyFZGZUDsj2hqDFm68t5HVL0ISgqtIAkvDaLA6I3khIBywAjll7s-bXI2KCzPwibmBRrtDBIrluANEthoptBmYHJ0ZMTT5hIcfFbQqRQ9-eHSYgQ2X0eyRo6_ASsPm7nCd77JU9RSv3ODXFv1qNvaSi1oq7aoytuM6xFLiz2QNpYTZ6GmPDDSQRy8kjlwhDh3YoMw1ewvNosRCw-DjqOPmPN2dWkAQxw29Kh-rKTPJddRRxEsJyoGGV6nJycU3bGyic_r5svZvkI0gCfSJkeQN5JA24NV_8Vd5SElBVmIuZlwysNGD0ofdR9KgNi4hoSNyVhnsGXPPF9OE0ZRXGEI6tkL8e4LilEZuTaLxJBtqyf4FItSU6wOdmQjfTjjhY7wQefr-FktvYU1DCIPoUxJa-f7TX1eGxafl1Cl3oJBONhEJquo55NEnACkaSRInYfEOfgvj1P-sxM_H2-gn6WRIbz5hAohDWhXNJ5NkbZApfy0sEY9MBfbA1O2Ff3MlVu3BpDcEYMpJ5kdf_M5w7fZEffcHJ9fHIldjEPIELXL2n8TpPFEJpX8l7u_LGl4NMLU7bi5n1mIv5oLiQdiQdMPc8G-jYUemMYznDMrgT_POgpLkfjlviefzptQR-_mA5ipnlGOk-cjq-1XICm1xT2gy4tUr5-GAXUUMwvsP4TanBP13hTb6RW6jXodvo55k5E2CcqM__xuRAn_MFVDPxSRwWEJjYPs5543JqYA_6iq5jYkKwRUQsnV3YoZwcTkz38zEzv0Gi41kmJBUhhsOTpuftLHu2QHxy7mSB9EHsehFkpj31x-SRpDuhMluYHc69ds3875SccidCVzZVGDbJx-uj2e0s18fVWleelU_byVCMoEoByk-qFJ1K3IyG247k1usqGA_TswwnIVrMBRqluVH7S9-3g1iO68dbiDzkdC6q4Nl-sRQvZuCvHNZXHQhjyFRSo1neFQiwYB36dHHHsb26kBN__S0tZ2I_ucYWMCYFe3wOoZC3wLfC08NlaUrqI1hgnkJkiwKYHjAZIMRqH6owMoUX5WXhY1Q8-6XtAwJvDa154io_4DImsXfFfLiDEqLvegN2E";
 
                 ////
                 //// Construya el post
@@ -86,6 +88,8 @@ namespace HEFSIIREGCOMPRAVENTAS.LIB.RegistroCV
                 reqString += "\"page\":null";
                 reqString += "},";
                 reqString += "\"data\":{";
+                reqString += "\"accionRecaptcha\":\"" + accionRecaptcha + "\",";
+                reqString += "\"tokenRecaptcha\":\"" + tokenRecaptcha + "\",";
                 reqString += "\"rutEmisor\":\"" + rutEmisor + "\",";
                 reqString += "\"dvEmisor\":\"" + dvEmisor + "\",";
                 reqString += "\"ptributario\":\"" + ptributario + "\",";
@@ -224,6 +228,8 @@ namespace HEFSIIREGCOMPRAVENTAS.LIB.RegistroCV
                 string rutEmisor = RutEmpresa.Split('-')[0];
                 string dvEmisor = RutEmpresa.Split('-')[1];
                 string ptributario = Periodo.Replace("-", "");
+                string accionRecaptcha = "RCV_DDETC";
+                string tokenRecaptcha = "03AFcWeA5o4PmQ_J4qg9E6MgRSgL1CkuQYA6moaBhJrgRcxLIG69jNLA4KWofHfrcFQhzbKPHPMm8Mf2DnJ9gD2WgKvWFSXP-RnTzvJEpH3Kj_uB4vMshwHotpPCTgm_JBCqnn_5Qz6XmMAmalFtvjC-DSANJ-iQ8O5nXiq2xFH0fDFzkqUqedrbce-tRvLmhC_1ia0FO4wz4W2qsz2I9ffiC8HhcyUN-yVWUzGfcSKOC25RRCD5Tlhg7mpWAAjtawUwaid4kbsPUsnwCGwvPH6xfSYfdmVpduojPoolje0xQjSbf2MSK3H7ooj0xs0gDTeesW7kjN_g6WoL0cZp5xgSxdUK6AHykDwQ9u1az_RjVDYT-GLftgOc_NQEvsgHca8mbz5m1rQaAkuTnVrKQPviYmr-Z4TmwP3qTNTNhyhgySpaQsOtsGkLVTq7XV5CYtDivD8VnEUX4ImvnUxZS7Tqj6B5Ekalr36fdjW2qB7zRwhoopaDivQ0xYY2QbvhoKhjfn5A67PlXdt852sgAMGUBcfCgxhZpGjFwRj9I0pQfJ2kM_3CEV9rb2Iha4JOGjttmH-Teq9rL45NbdzDH2E0b026aMoAav0ZTA2eYwYNBSA_ixXUxwpjb6AXRcU-LvctQye2uhwBzZTDKp8DqtFnRzK-_OnwNhYz5e8MSoUhnWZFh5nRRLRfdPRan7krwB29rT1vEKcfhxj5oigfk02sensBtDccZrSd6QuDWZVHjAQ3rCqs3BCc3BY8T9s4txlrCKbjbLrw8GjOBOy8RARiw7iGDSJGkvtQVLIclkg-H2dMisawL0qyXzQ5rLKsWfVsIpKyFZGZUDsj2hqDFm68t5HVL0ISgqtIAkvDaLA6I3khIBywAjll7s-bXI2KCzPwibmBRrtDBIrluANEthoptBmYHJ0ZMTT5hIcfFbQqRQ9-eHSYgQ2X0eyRo6_ASsPm7nCd77JU9RSv3ODXFv1qNvaSi1oq7aoytuM6xFLiz2QNpYTZ6GmPDDSQRy8kjlwhDh3YoMw1ewvNosRCw-DjqOPmPN2dWkAQxw29Kh-rKTPJddRRxEsJyoGGV6nJycU3bGyic_r5svZvkI0gCfSJkeQN5JA24NV_8Vd5SElBVmIuZlwysNGD0ofdR9KgNi4hoSNyVhnsGXPPF9OE0ZRXGEI6tkL8e4LilEZuTaLxJBtqyf4FItSU6wOdmQjfTjjhY7wQefr-FktvYU1DCIPoUxJa-f7TX1eGxafl1Cl3oJBONhEJquo55NEnACkaSRInYfEOfgvj1P-sxM_H2-gn6WRIbz5hAohDWhXNJ5NkbZApfy0sEY9MBfbA1O2Ff3MlVu3BpDcEYMpJ5kdf_M5w7fZEffcHJ9fHIldjEPIELXL2n8TpPFEJpX8l7u_LGl4NMLU7bi5n1mIv5oLiQdiQdMPc8G-jYUemMYznDMrgT_POgpLkfjlviefzptQR-_mA5ipnlGOk-cjq-1XICm1xT2gy4tUr5-GAXUUMwvsP4TanBP13hTb6RW6jXodvo55k5E2CcqM__xuRAn_MFVDPxSRwWEJjYPs5543JqYA_6iq5jYkKwRUQsnV3YoZwcTkz38zEzv0Gi41kmJBUhhsOTpuftLHu2QHxy7mSB9EHsehFkpj31x-SRpDuhMluYHc69ds3875SccidCVzZVGDbJx-uj2e0s18fVWleelU_byVCMoEoByk-qFJ1K3IyG247k1usqGA_TswwnIVrMBRqluVH7S9-3g1iO68dbiDzkdC6q4Nl-sRQvZuCvHNZXHQhjyFRSo1neFQiwYB36dHHHsb26kBN__S0tZ2I_ucYWMCYFe3wOoZC3wLfC08NlaUrqI1hgnkJkiwKYHjAZIMRqH6owMoUX5WXhY1Q8-6XtAwJvDa154io_4DImsXfFfLiDEqLvegN2E";
                 string reqString = "";
                 reqString += "{";
                 reqString += "\"metaData\":{  ";
@@ -233,6 +239,8 @@ namespace HEFSIIREGCOMPRAVENTAS.LIB.RegistroCV
                 reqString += "\"page\":null";
                 reqString += "},";
                 reqString += "\"data\":{  ";
+                reqString += "\"accionRecaptcha\":\"" + accionRecaptcha + "\",";
+                reqString += "\"tokenRecaptcha\":\"" + tokenRecaptcha +"\",";
                 reqString += "\"rutEmisor\":\"" + rutEmisor + "\",";
                 reqString += "\"dvEmisor\":\"" + dvEmisor + "\",";
                 reqString += "\"ptributario\":\"" + ptributario + "\",";

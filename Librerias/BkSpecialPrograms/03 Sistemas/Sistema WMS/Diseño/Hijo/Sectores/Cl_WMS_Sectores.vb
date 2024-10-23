@@ -39,8 +39,58 @@ Public Class Cl_WMS_Sectores
             .Nombre_Sector = _Row.Item("Nombre_Sector")
             .Es_SubSector = _Row.Item("Es_SubSector")
             .EsCabecera = _Row.Item("EsCabecera")
+            .SoloUnaUbicacion = _Row.Item("SoloUnaUbicacion")
 
         End With
+
+        _Mensaje.EsCorrecto = True
+        _Mensaje.Mensaje = "Registros cargados correctamente"
+        _Mensaje.Tag = Zw_WMS_Ubicaciones_Sectores
+
+        Return _Mensaje
+
+    End Function
+
+    Function Fx_Llenar_Sectores(_Id_Mapa As Integer)
+
+        Ls_Zw_WMS_Ubicaciones_Sectores = New List(Of Zw_WMS_Ubicaciones_Sectores)
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        _Mensaje.EsCorrecto = False
+        _Mensaje.Detalle = "Cargar Sector de Inventario"
+        _Mensaje.Mensaje = String.Empty
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Sectores Where Id_Mapa = " & _Id_Mapa
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+        If _Tbl.Rows.Count = 0 Then
+            _Mensaje.Mensaje = "No se encontraron el registros en la tabla Zw_WMS_Ubicaciones_Sectores con el Id " & _Id_Mapa
+            Return _Mensaje
+        End If
+
+        For Each _Fila As DataRow In _Tbl.Rows
+
+            Dim _Zw_WMS_Ubicaciones_Sectores As New Zw_WMS_Ubicaciones_Sectores
+
+            With _Zw_WMS_Ubicaciones_Sectores
+
+                .Id_Sector = _Fila.Item("Id_Sector")
+                .Id_Mapa = _Fila.Item("Id_Mapa")
+                .Empresa = _Fila.Item("Empresa")
+                .Sucursal = _Fila.Item("Sucursal")
+                .Bodega = _Fila.Item("Bodega")
+                .Codigo_Sector = _Fila.Item("Codigo_Sector")
+                .Nombre_Sector = _Fila.Item("Nombre_Sector")
+                .Es_SubSector = _Fila.Item("Es_SubSector")
+                .EsCabecera = _Fila.Item("EsCabecera")
+                .SoloUnaUbicacion = _Fila.Item("SoloUnaUbicacion")
+
+            End With
+
+            Ls_Zw_WMS_Ubicaciones_Sectores.Add(_Zw_WMS_Ubicaciones_Sectores)
+
+        Next
 
         _Mensaje.EsCorrecto = True
         _Mensaje.Mensaje = "Registros cargados correctamente"
@@ -83,9 +133,11 @@ Public Class Cl_WMS_Sectores
 
             With Zw_WMS_Ubicaciones_Sectores
 
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Sectores (Id_Mapa, Empresa, Sucursal, Bodega, Codigo_Sector, Nombre_Sector, Es_SubSector, EsCabecera) " &
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Sectores (Id_Mapa,Empresa,Sucursal,Bodega,Codigo_Sector," &
+                               "Nombre_Sector,Es_SubSector,EsCabecera,SoloUnaUbicacion) " &
                                "Values (" & .Id_Mapa & ",'" & .Empresa & "','" & .Sucursal & "'" & ",'" & .Bodega & "'," &
-                               "'" & .Codigo_Sector & "', '" & .Nombre_Sector & "', " & Convert.ToInt32(.Es_SubSector) & ", " & Convert.ToInt32(.EsCabecera) & ")"
+                               "'" & .Codigo_Sector & "', '" & .Nombre_Sector & "'," &
+                               Convert.ToInt32(.Es_SubSector) & "," & Convert.ToInt32(.EsCabecera) & "," & Convert.ToInt32(.SoloUnaUbicacion) & ")"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                 Comando.Transaction = myTrans

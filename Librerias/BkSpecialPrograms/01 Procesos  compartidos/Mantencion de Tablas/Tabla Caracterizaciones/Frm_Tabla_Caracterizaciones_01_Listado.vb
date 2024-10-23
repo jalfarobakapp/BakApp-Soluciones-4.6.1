@@ -167,7 +167,7 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
 
         If Not String.IsNullOrEmpty(TxtDescripcion.Text) Then
             If _Accion = Accion.Seleccionar Then
-                _dv.RowFilter = String.Format("NombreTabla Like '%{0}%'", TxtDescripcion.Text)
+                _dv.RowFilter = String.Format("CodigoTabla+NombreTabla Like '%{0}%'", TxtDescripcion.Text)
             Else
                 BuscarDatoEnGrilla(TxtDescripcion.Text, "NombreTabla", Grilla)
             End If
@@ -516,7 +516,7 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
     Private Sub TxtDescripcion_TextChanged(sender As System.Object, e As System.EventArgs) Handles TxtDescripcion.TextChanged
 
         If _Accion = Accion.Seleccionar Then
-            _dv.RowFilter = String.Format("NombreTabla Like '%{0}%'", TxtDescripcion.Text)
+            _dv.RowFilter = String.Format("CodigoTabla+NombreTabla Like '%{0}%'", TxtDescripcion.Text)
         ElseIf _Accion = Accion.Mantencion_Tabla Then
             BuscarDatoEnGrilla(TxtDescripcion.Text, "DescripcionTabla", Grilla)
         End If
@@ -878,10 +878,10 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
     End Sub
 
     Private Sub TxtDescripcion_KeyDown_Filtro_Seleccion(sender As System.Object, e As System.Windows.Forms.KeyEventArgs)
-        'If e.KeyValue = Keys.Enter Then
-        _dv.RowFilter = "NombreTabla Like '%" & TxtDescripcion.Text & "%'"
-        'BuscarDatoEnGrilla(TxtDescripcion.Text, "NombreTabla", Grilla)
-        'End If
+        If e.KeyValue = Keys.Enter Then
+            _dv.RowFilter = "CodigoTabla+NombreTabla Like '%" & TxtDescripcion.Text & "%'"
+            'BuscarDatoEnGrilla(TxtDescripcion.Text, "NombreTabla", Grilla)
+        End If
     End Sub
 
     Private Sub Sb_Nueva_Linea()

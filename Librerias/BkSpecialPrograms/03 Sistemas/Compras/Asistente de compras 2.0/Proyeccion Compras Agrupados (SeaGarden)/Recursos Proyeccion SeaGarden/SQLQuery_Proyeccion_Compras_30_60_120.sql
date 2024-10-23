@@ -293,6 +293,16 @@ Where Idmaeedo_ProxRC > 0 And Dias_ProxRC <> 0
 Update #Tbl_Paso_Proyecto_01 Set SugCmbPrecio = 1
 Where RotDiaria_NoQuiebra < RotCalculo And RotDiaria_NoQuiebra > 0
 
+-- Nuevo estudio
+Update #Tbl_Paso_Proyecto_01 Set 
+SugCmbPrecio = 1
+,RotDiaria_NoQuiebra = Round((StockUd#Ud#/@Dias_Abastecer),0)
+,RotMensual_NoQuiebra = Round((StockUd#Ud#/@Dias_Abastecer) * @Dias_Proyeccion,0)
+Where StockPedidoUd#Ud# = 0 
+And StockFacSinRecepUd#Ud# = 0 
+And Stock_Asegurado_Dias < @Dias_Abastecer 
+And StockUd#Ud# > 0 And Duracion_Proyeccion > 0
+
 Select * From #Tbl_Paso_Proyecto Order by Producto
 Select * From #Tbl_Paso_Proyecto_01
 Select * From #PasoUltComp

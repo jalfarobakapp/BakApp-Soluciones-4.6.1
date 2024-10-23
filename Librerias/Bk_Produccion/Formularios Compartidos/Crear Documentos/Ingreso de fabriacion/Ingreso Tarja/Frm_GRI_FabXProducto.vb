@@ -1,4 +1,5 @@
-﻿Imports BkSpecialPrograms
+﻿Imports System.Runtime.InteropServices
+Imports BkSpecialPrograms
 Imports DevComponents.DotNetBar
 
 Public Class Frm_GRI_FabXProducto
@@ -17,6 +18,21 @@ Public Class Frm_GRI_FabXProducto
 
     Dim _LotePlantaTurno As Boolean
     Dim _RowBodegaGRI As DataRow
+    Private _Ult_Tipo As String
+    Private _Ult_Turno As String
+    Private _Ult_Turno_Str As String
+    Private _Ult_Planta As String
+    Private _Ult_Planta_Str As String
+    Private _Ult_Tolva As String
+    Private _Ult_Tolva_Str As String
+    Private _Ult_Lote As String
+
+    Enum Enum_TipoFab
+        Ninguno
+        Saco
+        Pallet
+        Maxi
+    End Enum
 
     Public Sub New()
 
@@ -39,11 +55,14 @@ Public Class Frm_GRI_FabXProducto
 
         ActiveControl = Txt_Numot
         Sb_Limpiar()
+        Sb_LimpiarMaxi()
 
         _LotePlantaTurno = True
 
         Chk_FechaEmiFiot.Checked = Not Fx_Tiene_Permiso(Me, "Pdc00009",, False)
         Dtp_Fiot.Enabled = Not Chk_FechaEmiFiot.Checked
+
+        AddHandler Chk_FechaEmiFiot.CheckedChanged, AddressOf Chk_FechaEmiFiot_CheckedChanged
 
     End Sub
 
@@ -109,6 +128,12 @@ Public Class Frm_GRI_FabXProducto
 
             Dtp_Fiot.Value = _Row_Pote.Item("FIOT")
 
+            If Chk_FechaEmiFiot.Checked Then
+                Dtp_Fecha_Ingreso.Value = _Row_Pote.Item("FIOT")
+            Else
+                Dtp_Fecha_Ingreso.Value = _FechaDelServidor
+            End If
+
             Sb_BuscarProductos(_Numot)
 
             Txt_Numot.Text = _Numot
@@ -146,6 +171,7 @@ Public Class Frm_GRI_FabXProducto
 
         If _CreaNuevaOTExtra Then
             Sb_Limpiar()
+            Sb_LimpiarMaxi()
             Txt_Numot.Text = _Numot_Extra
             Dtp_Fiot.Value = _Sql.Fx_Trae_Dato("POTE", "FIOT", "NUMOT = '" & _Numot_Extra & "'")
             Sb_BuscarProductos(_Numot_Extra)
@@ -177,6 +203,7 @@ Public Class Frm_GRI_FabXProducto
         Txt_Codigo.ButtonCustom.Enabled = True
         Txt_Codigo.Text = _Row_Potl.Item("CODIGO")
         Txt_Descripcion.Text = _Row_Potl.Item("GLOSA")
+        Btn_EditFechaGRI.Enabled = True
 
         Lbl_Fabricar.Text = FormatNumber(_Row_Potl.Item("FABRICAR"), 0)
         Lbl_Realizado.Text = FormatNumber(_Row_Potl.Item("REALIZADO"), 0)
@@ -196,14 +223,20 @@ Public Class Frm_GRI_FabXProducto
         Sb_Llenar_Combos(_Arr, Cmb_Formato)
         Cmb_Formato.SelectedValue = ""
 
-        Sb_TipoIngreso(_Row_Maepr.Item("KOPR"), _Row_Maepr.Item("RLUD"))
+        Dim _TipoFab As Enum_TipoFab = Enum_TipoFab.Ninguno
+
+        If _Ult_Tipo = "MAXI-SACO" Or _Row_Maepr.Item("RLUD") = 1 Then
+            _TipoFab = Enum_TipoFab.Maxi
+        End If
+
+        Sb_TipoIngreso(_Row_Maepr.Item("KOPR"), _Row_Maepr.Item("RLUD"), _TipoFab)
 
         Txt_Cantidad.Enabled = True
         Txt_Cantidad.Focus()
 
     End Sub
 
-    Sub Sb_TipoIngreso(_Codigo As String, _Rtu As Double)
+    Sub Sb_TipoIngreso(_Codigo As String, _Rtu As Double, _TipoFab As Enum_TipoFab)
 
         Dim _Row_Tabcodal As DataRow
 
@@ -222,6 +255,23 @@ Public Class Frm_GRI_FabXProducto
         Rdb_Maxi.Name = "Rdb_Maxi"
         Rdb_Maxi.Text = "SACO (MAXI)"
 
+        If Not IsNothing(_TipoFab) Then
+            Select Case _TipoFab
+                Case Enum_TipoFab.Saco
+                    Rdb_Sacos.Checked = True
+                Case Enum_TipoFab.Pallet
+                    Rdb_Pallets.Checked = True
+                Case Enum_TipoFab.Maxi
+                    Rdb_Maxi.Checked = True
+            End Select
+        End If
+
+        If _Row_Maepr.Item("RLUD") = 1 Then
+            Rdb_Sacos.Enabled = False
+            Rdb_Pallets.Enabled = False
+            Rdb_Maxi.Checked = True
+        End If
+
         Dim _Opciones() As Command = {Rdb_Sacos, Rdb_Pallets, Rdb_Maxi}
 
         Dim _Info As New TaskDialogInfo("Ingreso de fabricación",
@@ -235,13 +285,14 @@ Public Class Frm_GRI_FabXProducto
 
         If _Resultado <> eTaskDialogResult.Ok Then
             Sb_Limpiar()
+            Sb_LimpiarMaxi()
             Return
         End If
 
         If Not Rdb_Sacos.Checked AndAlso Not Rdb_Pallets.Checked AndAlso Not Rdb_Maxi.Checked Then
-            MessageBoxEx.Show(Me, "Debe seleccionar un tipo de ingreso SACOS o PALLETS",
+            MessageBoxEx.Show(Me, "Debe seleccionar un tipo de ingreso SACOS, PALLETS o  MAXI-SACO",
                               "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Sb_TipoIngreso(_Codigo, _Rtu)
+            Sb_TipoIngreso(_Codigo, _Rtu, Nothing)
             Return
         End If
 
@@ -260,6 +311,8 @@ Public Class Frm_GRI_FabXProducto
 
         Else
 
+            Sb_LimpiarMaxi()
+
             If Rdb_Sacos.Checked Then _Tipo = "SACO"
             If Rdb_Pallets.Checked Then _Tipo = "PALLET"
 
@@ -271,7 +324,7 @@ Public Class Frm_GRI_FabXProducto
             If IsNothing(_Row_Tabcodal) Then
                 MessageBoxEx.Show(Me, "No existe código alternativo para " & _Tipo & " para este producto",
                                   "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Sb_TipoIngreso(_Codigo, _Rtu)
+                Sb_TipoIngreso(_Codigo, _Rtu, Nothing)
                 Return
             End If
 
@@ -287,7 +340,7 @@ Public Class Frm_GRI_FabXProducto
                                               _Tipo_Imagen.Product,, _Tipo_Caracter.Solo_Numeros_Enteros, False)
 
         If Not _Aceptar Then
-            Sb_TipoIngreso(_Codigo, _Rtu)
+            Sb_TipoIngreso(_Codigo, _Rtu, Nothing)
             Return
         End If
 
@@ -298,8 +351,9 @@ Public Class Frm_GRI_FabXProducto
         End If
 
         If (_Cantidad_Fab + _Row_Potl.Item("REALIZADO")) > _Row_Potl.Item("FABRICAR") Then
-            MessageBoxEx.Show(Me, "Usted no puede recepcionar más que el SALDO indicado en la orden", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Sb_TipoIngreso(_Codigo, _Rtu)
+            MessageBoxEx.Show(Me, "Usted no puede recepcionar más que el SALDO indicado en la orden", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Sb_TipoIngreso(_Codigo, _Rtu, Nothing)
             Return
         End If
 
@@ -317,8 +371,27 @@ Public Class Frm_GRI_FabXProducto
 
         If Rdb_Maxi.Checked Then
 
+            If _Cantidad < 400 Or _Cantidad > 1500 Then
+
+                Dim _Seguir = False
+
+                If MessageBoxEx.Show(Me, "La cantidad del MAXI-SACO debe estan entre un rango de 400 y 1500 kilos" & vbCrLf &
+                                     "¿Confirma igualmente ingresar la cantidad de " & _Cantidad & " kilos?", "Validación",
+                                  MessageBoxButtons.YesNo, MessageBoxIcon.Stop) = DialogResult.Yes Then
+                    _Seguir = Fx_Tiene_Permiso(Me, "Pdc00013")
+                End If
+
+                If Not _Seguir Then
+                    Sb_TipoIngreso(_Codigo, _Rtu, Enum_TipoFab.Maxi)
+                    Return
+                End If
+
+            End If
+
+
             _Kopral = _Row_Maepr.Item("KOPR")
             _Nokopral = _Row_Maepr.Item("KOPR").ToString.Trim & " - " & _Row_Maepr.Item("NOKOPR").ToString.Trim
+
             _Sacos = Txt_Cantidad.Tag / _Rtu
             _SacosXPallet = 1
             _Ud01Pr = _Row_Maepr.Item("UD01PR")
@@ -356,17 +429,48 @@ Public Class Frm_GRI_FabXProducto
         Txt_Descripcion_Kopral.Text = _Kopral.ToString.Trim & ", Udad: " & _Udad & " x " & _Sacos & ", Formato: " & _Txtmulti & " X " & FormatNumber(_Cantidad, 0)
         _Cl_Tarja.Zw_Pdp_CPT_Tarja.Descripcion_Kopral = _Nokopral.ToString.Trim & ", Udad: " & _Udad & " x " & _Sacos & ", Formato: " & _Txtmulti & " X " & FormatNumber(_Cantidad, 0)
 
-        Call Txt_NroLote_ButtonCustomClick(Nothing, Nothing)
+        If _Ult_Tipo = "MAXI-SACO" Then
+
+            If MessageBoxEx.Show(Me, "¿Quiere seguir utilizando los datos de MAXI fabricado anteriormente?" & vbCrLf & vbCrLf &
+                                 "Turno: " & _Ult_Turno_Str.Trim & vbCrLf &
+                                 "Planta: " & _Ult_Planta_Str.Trim & vbCrLf &
+                                 "Tolva: " & _Ult_Tolva_Str.Trim & vbCrLf &
+                                 "Lote: " & _Ult_Lote,
+                                 "Fabricar MAXI-SACO", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+
+                _Cl_Tarja.Zw_Pdp_CPT_Tarja.Tipo = _Ult_Tipo
+                _Cl_Tarja.Zw_Pdp_CPT_Tarja.Turno = _Ult_Turno
+                Txt_Turno.Text = _Ult_Turno_Str
+                _Cl_Tarja.Zw_Pdp_CPT_Tarja.Planta = _Ult_Planta
+                Txt_Planta.Text = _Ult_Planta_Str
+                _Cl_Tarja.Zw_Pdp_CPT_Tarja.Tolva = _Ult_Tolva
+                Txt_Tolva.Text = _Ult_Tolva_Str
+                _Cl_Tarja.Zw_Pdp_CPT_Tarja.Lote = _Ult_Lote
+                Txt_NroLote.Text = _Ult_Lote
+                Cmb_Formato.SelectedValue = 1
+
+                Btn_Grabar.Focus()
+
+            End If
+
+        Else
+
+            Call Txt_NroLote_ButtonCustomClick(Nothing, Nothing)
+
+        End If
 
     End Sub
 
     Private Sub Btn_Limpiar_Click(sender As Object, e As EventArgs) Handles Btn_Limpiar.Click
         Sb_Limpiar()
+        Sb_LimpiarMaxi()
     End Sub
 
     Sub Sb_Limpiar()
 
         Dtp_Fecha_Ingreso.Value = _FechaDelServidor
+        Dtp_Fecha_Ingreso.Enabled = False
+        Btn_EditFechaGRI.Enabled = False
         Dtp_Fiot.Value = Nothing
         Txt_Numot.ReadOnly = False
         Txt_Numot.Text = String.Empty
@@ -411,11 +515,22 @@ Public Class Frm_GRI_FabXProducto
         Txt_Observaciones.ReadOnly = False
         Cmb_Formato.DataSource = Nothing
 
-
         Panel_SC.Visible = False
 
         Me.Refresh()
 
+    End Sub
+
+    Sub Sb_LimpiarMaxi()
+        _Ult_Tipo = String.Empty
+        _Ult_Lote = String.Empty
+        _Ult_Tipo = String.Empty
+        _Ult_Turno = String.Empty
+        _Ult_Turno_Str = String.Empty
+        _Ult_Planta = String.Empty
+        _Ult_Planta_Str = String.Empty
+        _Ult_Tolva = String.Empty
+        _Ult_Tolva_Str = String.Empty
     End Sub
 
     Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
@@ -770,7 +885,7 @@ Public Class Frm_GRI_FabXProducto
     End Sub
 
     Private Sub Txt_Cantidad_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Cantidad.ButtonCustomClick
-        Sb_TipoIngreso(_Row_Maepr.Item("KOPR"), _Row_Maepr.Item("RLUD"))
+        Sb_TipoIngreso(_Row_Maepr.Item("KOPR"), _Row_Maepr.Item("RLUD"), Nothing)
     End Sub
 
     Private Sub Btn_BuscarOT_Click(sender As Object, e As EventArgs) Handles Btn_BuscarOT.Click
@@ -786,6 +901,7 @@ Public Class Frm_GRI_FabXProducto
 
         If _Seleccionada Then
             Sb_Limpiar()
+            Sb_LimpiarMaxi()
             Txt_Numot.Text = _Numot
             Sb_BuscarOt(_Numot)
         End If
@@ -832,7 +948,7 @@ Public Class Frm_GRI_FabXProducto
             Return
         End If
 
-        If Not (_Resultado Mod 1 = 0) Then
+        If Not (_Resultado Mod 1 = 0) And _Cl_Tarja.Zw_Pdp_CPT_Tarja.Tipo <> "MAXI-SACO" Then
             MessageBoxEx.Show(Me, "La cantidad ingresada no es divisible por la unidad 2 " & _Ud2 & "-" & _Rtu, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Txt_Cantidad.Focus()
             Return
@@ -885,6 +1001,43 @@ Public Class Frm_GRI_FabXProducto
         _Cl_Tarja.Zw_Pdp_CPT_Tarja.Idpote = _Row_Potl.Item("IDPOTE")
         _Cl_Tarja.Zw_Pdp_CPT_Tarja.Idpotl = _Row_Potl.Item("IDPOTL")
 
+        If _Cl_Tarja.Zw_Pdp_CPT_Tarja.Tipo = "MAXI-SACO" Then
+
+            Consulta_sql = "Select Top 1 * From TABCODAL" & vbCrLf &
+                           "Where KOPR = '" & _Cl_Tarja.Zw_Pdp_CPT_Tarja.Codigo & "' " &
+                           "And TXTMULTI = '" & _Cl_Tarja.Zw_Pdp_CPT_Tarja.Tipo & "' " &
+                           "And MULTIPLO = " & _Cl_Tarja.Zw_Pdp_CPT_Tarja.CantidadFab
+            _Row_Tabcodal = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Dim _Kopral As String
+            Dim _Nokopral As String
+
+            If IsNothing(_Row_Tabcodal) Then
+
+                _Kopral = _Row_Maepr.Item("KOPR").ToString.Trim & "-M" & _Cl_Tarja.Zw_Pdp_CPT_Tarja.CantidadFab
+                _Nokopral = _Row_Maepr.Item("NOKOPR").ToString.Trim
+
+                Consulta_sql = "Insert Into TABCODAL (KOPRAL,KOPR,NOKOPRAL,CONMULTI,UNIMULTI,MULTIPLO,TXTMULTI) Values " &
+                               "('" & _Kopral & "','" & _Cl_Tarja.Zw_Pdp_CPT_Tarja.Codigo & "','" & _Nokopral & "',1,1," &
+                               De_Txt_a_Num_01(_Cl_Tarja.Zw_Pdp_CPT_Tarja.CantidadFab, 5) & ",'" & _Cl_Tarja.Zw_Pdp_CPT_Tarja.Tipo & "')"
+                If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+
+                    Consulta_sql = "Select Top 1 * From TABCODAL Where KOPRAL = '" & _Kopral & "'"
+                    _Row_Tabcodal = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                End If
+
+            End If
+
+            _Kopral = _Row_Tabcodal.Item("KOPRAL")
+            _Nokopral = _Row_Tabcodal.Item("KOPRAL").ToString.Trim & " - " & _Row_Tabcodal.Item("NOKOPRAL").ToString.Trim
+
+            _Cl_Tarja.Zw_Pdp_CPT_Tarja.CodAlternativo = _Kopral
+
+        End If
+
+
+
         ' Obtener la fecha actual
         Dim fechaActual As Date = Dtp_Fecha_Ingreso.Value.Date
         ' Obtener la hora actual
@@ -904,7 +1057,7 @@ Public Class Frm_GRI_FabXProducto
             _Cl_Tarja.Zw_Pdp_CPT_Tarja.Formato = _Row_Maepr.Item("RLUD")
         End If
 
-        If _Cl_Tarja.Zw_Pdp_CPT_Tarja.Tipo = "PALLET" Then
+        If _Cl_Tarja.Zw_Pdp_CPT_Tarja.Tipo = "PALLET" Or _Cl_Tarja.Zw_Pdp_CPT_Tarja.Tipo = "MAXI-SACO" Then
 
             _Cl_Tarja.Zw_Pdp_CPT_Tarja_Det_Ls.Clear()
 
@@ -952,13 +1105,13 @@ Public Class Frm_GRI_FabXProducto
         Fm_Espera.BarraCircular.IsRunning = True
         Fm_Espera.Show()
 
-        Dim _FechaEmision As DateTime
+        Dim _FechaEmision As DateTime = Dtp_Fecha_Ingreso.Value
 
-        If Chk_FechaEmiFiot.Checked Then
-            _FechaEmision = Dtp_Fiot.Value
-        Else
-            _FechaEmision = Dtp_Fecha_Ingreso.Value
-        End If
+        'If Chk_FechaEmiFiot.Checked Then
+        '    _FechaEmision = Dtp_Fiot.Value
+        'Else
+        '    _FechaEmision = Dtp_Fecha_Ingreso.Value
+        'End If
 
         Dim Fm As New Frm_Formulario_Documento("GRI", csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Recepcion_Interna,
                                                False, False, False, False, False, False)
@@ -1015,8 +1168,8 @@ Public Class Frm_GRI_FabXProducto
 
         Sb_Actualizar_Parametros_SQL(True)
 
-        MessageBoxEx.Show(Me, "Datos de fabricación ingresados correctamente con el Nro de GRI: " & _Nudo & vbCrLf &
-                          "Tarja ingresada Nro: " & _Cl_Tarja.Zw_Pdp_CPT_Tarja.Nro_CPT, "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        'MessageBoxEx.Show(Me, "Datos de fabricación ingresados correctamente con el Nro de GRI: " & _Nudo & vbCrLf &
+        '                  "Tarja ingresada Nro: " & _Cl_Tarja.Zw_Pdp_CPT_Tarja.Nro_CPT, "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Me.Enabled = True
         Me.Refresh()
 
@@ -1024,12 +1177,28 @@ Public Class Frm_GRI_FabXProducto
 
         Dim Fmt As New Frm_ImpBarras_Tarja
         Fmt.Txt_Nro_CPT.Text = _Cl_Tarja.Zw_Pdp_CPT_Tarja.Nro_CPT
+        Fmt.CerrarDespuesDeImprimir = True
         Fmt.ShowDialog(Me)
 
         Dim _Numot = String.Empty
 
         If _Cl_Tarja.Zw_Pdp_CPT_Tarja.Tipo = "MAXI-SACO" Then
+
             _Numot = Txt_Numot.Text
+
+            _Ult_Tipo = _Cl_Tarja.Zw_Pdp_CPT_Tarja.Tipo
+            _Ult_Turno = _Cl_Tarja.Zw_Pdp_CPT_Tarja.Turno
+            _Ult_Turno_Str = Txt_Turno.Text
+            _Ult_Planta = _Cl_Tarja.Zw_Pdp_CPT_Tarja.Planta
+            _Ult_Planta_Str = Txt_Planta.Text
+            _Ult_Tolva = _Cl_Tarja.Zw_Pdp_CPT_Tarja.Tolva
+            _Ult_Tolva_Str = Txt_Tolva.Text
+            _Ult_Lote = _Cl_Tarja.Zw_Pdp_CPT_Tarja.Lote
+
+        Else
+
+            Sb_LimpiarMaxi()
+
         End If
 
         Sb_Limpiar()
@@ -1046,9 +1215,12 @@ Public Class Frm_GRI_FabXProducto
 
     End Sub
 
-    Private Sub Chk_FechaEmiFiot_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_FechaEmiFiot.CheckedChanged
+    Private Sub Chk_FechaEmiFiot_CheckedChanged(sender As Object, e As EventArgs)
 
-        If Not Chk_FechaEmiFiot.Checked Then
+        If Chk_FechaEmiFiot.Checked Then
+            Dtp_Fiot.Value = _Row_Pote.Item("FIOT")
+            Dtp_Fecha_Ingreso.Value = _Row_Pote.Item("FIOT")
+        Else
             If Not Fx_Tiene_Permiso(Me, "Pdc00009") Then
                 Chk_FechaEmiFiot.Checked = True
             End If
@@ -1116,16 +1288,26 @@ Public Class Frm_GRI_FabXProducto
         Consulta_sql = "Select EMPRESA,KOSU,KOBO,NOKOBO" & vbCrLf &
                        "From TABBO" & vbCrLf &
                        "Where EMPRESA = '" & _Empresa & "' And KOSU = '" & _Sucursal & "' And KOBO = '" & _Bodega & "'"
-            _RowBodegaGRI = _Sql.Fx_Get_DataRow(Consulta_sql)
+        _RowBodegaGRI = _Sql.Fx_Get_DataRow(Consulta_sql)
+        If IsNothing(_RowBodegaGRI) Then
+            Lbl_BodegaGRI.Text = "NO SE ENCONTRO Bodega: " & _Bodega & " en Empresa: " & _Empresa & ", Sucursal: " & _Sucursal
+            _RowBodegaGRI = Nothing
+        End If
 
-            If IsNothing(_RowBodegaGRI) Then
-                Lbl_BodegaGRI.Text = "NO SE ENCONTRO Bodega: " & _Bodega & " en Empresa: " & _Empresa & ", Sucursal: " & _Sucursal
-                _RowBodegaGRI = Nothing
-            End If
-
-            Lbl_BodegaGRI.Text = "BODEGA DE LA GRI: " & _RowBodegaGRI.Item("KOBO") & " - " & _RowBodegaGRI.Item("NOKOBO").ToString.Trim
+        Lbl_BodegaGRI.Text = "BODEGA DE LA GRI: " & _RowBodegaGRI.Item("KOBO") & " - " & _RowBodegaGRI.Item("NOKOBO").ToString.Trim
 
     End Sub
 
+    Private Sub Btn_EditFechaGRI_Click(sender As Object, e As EventArgs) Handles Btn_EditFechaGRI.Click
+
+        If Fx_Tiene_Permiso(Me, "Pdc00012") Then
+            Dtp_Fecha_Ingreso.Enabled = True
+        End If
+
+    End Sub
+
+    Private Sub Dtp_Fiot_ValueChanged(sender As Object, e As EventArgs) Handles Dtp_Fiot.ValueChanged
+        Dtp_Fecha_Ingreso.Value = Dtp_Fiot.Value
+    End Sub
 
 End Class

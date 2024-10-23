@@ -39,7 +39,7 @@ WITH Totales AS (
     SELECT 
         YEAR(FEEMLI) AS Year,
         MONTH(FEEMLI) AS Mes,
-        ENDO,
+        --ENDO,
         SUM(CASE 
             WHEN TIDO = 'NVV' THEN PPPRNE * (CAPRCO1 - (CAPREX1 + CAPRAD1))
             WHEN TIDO = 'NCV' THEN VANELI * -1
@@ -49,13 +49,13 @@ WITH Totales AS (
     WHERE ENDO In #FiltroEntidades# --= @Endo 
       AND FEEMLI >= @Fecha
       AND TIDO IN ('FCV', 'NCV')
-    GROUP BY YEAR(FEEMLI), MONTH(FEEMLI), ENDO
+    GROUP BY YEAR(FEEMLI), MONTH(FEEMLI)--, ENDO
 ),
 Cumplimiento AS (
     SELECT 
         Year,
         Mes,
-        ENDO,
+        --ENDO,
         CASE 
             WHEN ROW_NUMBER() OVER (ORDER BY Year, Mes) = (SELECT COUNT(*) FROM Totales) THEN TotalNeto + @VentaEnCurso
             ELSE TotalNeto
@@ -80,7 +80,7 @@ Cumplimiento AS (
 SELECT 
     Year,
     Mes,
-    ENDO,
+    --ENDO,
     TotalNeto,
     CumpleVentaMinima,
     Cumple
@@ -100,7 +100,7 @@ SELECT
     END AS 'Str_Cumple',
 	CAST((CASE WHEN SUM(Cumple) > 0 THEN 1 ELSE 0 END) AS Bit) AS 'Cumple'
 FROM #Cumpli
-Left Join MAEEN On KOEN = ENDO
+--Left Join MAEEN On KOEN = ENDO
 --GROUP BY ENDO,NOKOEN,LVEN
 
 Drop table #Cumpli

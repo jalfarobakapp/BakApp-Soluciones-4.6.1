@@ -377,6 +377,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("CfEnt028", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("CfEnt029", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("CfEnt030", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("CfEnt031", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Crv0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Crv0002", _Objeto, _Formulario)
@@ -579,6 +580,8 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Doc00093", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00094", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00095", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00096", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00097", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Ope00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ope00002", _Objeto, _Formulario)
@@ -677,6 +680,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Invp0003", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Invp0004", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Invp0005", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Invp0006", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Invg0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Invg0002", _Objeto, _Formulario)
@@ -838,6 +842,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("NO00018", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("NO00019", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("NO00020", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("NO00021", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("RSii00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("RSii00002", _Objeto, _Formulario)
@@ -986,6 +991,8 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Pdc00009", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Pdc00010", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Pdc00011", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Pdc00012", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Pdc00013", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Rcl00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Rcl00002", _Objeto, _Formulario)
@@ -1672,6 +1679,10 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.CONFIGURACION_ENTIDAD.ToString
             Case "CfEnt030"
                 _DescripcionPermiso = "CREAR/EDITAR/ELIMINAR PRODUCTOS BLOQUEADOS POR PROVEEDORES"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.CONFIGURACION_ENTIDAD, 6)
+                _NombreFamiliaPermiso = _Fml.CONFIGURACION_ENTIDAD.ToString
+            Case "CfEnt031"
+                _DescripcionPermiso = "VER TODOS LOS CLIENTES CUANDO DEBERIA MOSTRAR SOLO LOS CLIENTES DEL VENDEDOR ACTIVO."
                 _CodFamilia = Fx_Rellena_ceros(_Fml.CONFIGURACION_ENTIDAD, 6)
                 _NombreFamiliaPermiso = _Fml.CONFIGURACION_ENTIDAD.ToString
 
@@ -2565,6 +2576,16 @@ Public Class Class_Permiso_BakApp
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
 
+            Case "Doc00096"
+                _DescripcionPermiso = "PERMITIR VENDER A CLIENTES QUE ESTAN ASOCIADOS A OTRO VENDEDOR"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+
+            Case "Doc00097"
+                _DescripcionPermiso = "PERMITIR VER DOCUMENTOS DE CLIENTES DE OTROS VENDEDORES"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+
         End Select
 
 #End Region
@@ -3028,6 +3049,10 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.INVENTARIO_PARCIALIZADO.ToString
             Case "Invp0005"
                 _DescripcionPermiso = "PODER EDITAR EL NOMBRE DEL AJUSTE DE INVENTARIO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO_PARCIALIZADO, 6)
+                _NombreFamiliaPermiso = _Fml.INVENTARIO_PARCIALIZADO.ToString
+            Case "Invp0006"
+                _DescripcionPermiso = "CAMBIAR FECHA DEL AJUSTE DE INVENTARIO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO_PARCIALIZADO, 6)
                 _NombreFamiliaPermiso = _Fml.INVENTARIO_PARCIALIZADO.ToString
 
@@ -3728,6 +3753,11 @@ Public Class Class_Permiso_BakApp
                 _CodFamilia = Fx_Rellena_ceros(_Fml.RESTRICCIONES, 6)
                 _NombreFamiliaPermiso = _Fml.RESTRICCIONES.ToString
 
+            Case "NO00021"
+                _DescripcionPermiso = "NO PERMITIR VER DOCUMENTOS DE CLIENTES DE OTROS VENDEDORES"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.RESTRICCIONES, 6)
+                _NombreFamiliaPermiso = _Fml.RESTRICCIONES.ToString
+
         End Select
 
 #End Region
@@ -4337,7 +4367,7 @@ Public Class Class_Permiso_BakApp
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCCION, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCCION.ToString
             Case "Pdc00009"
-                _DescripcionPermiso = "CAMBIAR FECHA DE INGRESO DE FABRICACION EN TARJA"
+                _DescripcionPermiso = "CAMBIAR FECHA DE EMISION DE LA OT"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCCION, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCCION.ToString
             Case "Pdc00010"
@@ -4346,6 +4376,14 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.PRODUCCION.ToString
             Case "Pdc00011"
                 _DescripcionPermiso = "CAMBIAR NOMENCLATURA/RECETA EN PRODUCTOS DE ORDEN DE FABRICACION DE MEZCLA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCCION, 6)
+                _NombreFamiliaPermiso = _Fml.PRODUCCION.ToString
+            Case "Pdc00012"
+                _DescripcionPermiso = "CAMBIAR FECHA DE INGRESO DE FABRICACION EN TARJA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCCION, 6)
+                _NombreFamiliaPermiso = _Fml.PRODUCCION.ToString
+            Case "Pdc00013"
+                _DescripcionPermiso = "INGRESAR MAXI-SACO CON UNA CANTIDAD FUERA DEL RANGO DE 400 A 1500 KILOS."
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCCION, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCCION.ToString
         End Select
