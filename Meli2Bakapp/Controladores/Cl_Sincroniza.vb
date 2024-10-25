@@ -130,9 +130,9 @@ Public Class Cl_Sincroniza
                     .Cantidad = _PEDIDOS_DETALLE.CANTIDAD
                     .Untrans = 1
                     .Descripcion = _Row_Producto.Item("NOKOPR")
-                    .Empresa = "01"
-                    .Sucursal = "CM"
-                    .Bodega = "PR"
+                    .Empresa = ConfiguracionLocal.BodegaFacturacion.Empresa
+                    .Sucursal = ConfiguracionLocal.BodegaFacturacion.Kosu
+                    .Bodega = ConfiguracionLocal.BodegaFacturacion.Kobo
                     '.Stfi1 = _Row.Item("Stfi1")
                     '.Stfi2 = _Row.Item("Stfi2")
                     .CantidadDefinitiva = _PEDIDOS_DETALLE.CANTIDAD

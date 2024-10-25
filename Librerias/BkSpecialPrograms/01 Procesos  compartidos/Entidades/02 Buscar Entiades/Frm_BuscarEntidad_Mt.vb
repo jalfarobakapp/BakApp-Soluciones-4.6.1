@@ -84,7 +84,7 @@ Public Class Frm_BuscarEntidad_Mt
 
         Fx_Activar_Deactivar_Teclado()
 
-        VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00021",, False)
+        VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00021",, False) And Rdb_Clientes.Checked
 
         If VerSoloEntidadesDelVendedor Then
             Chk_Solo_Clientes_Del_Vendedor.Checked = True

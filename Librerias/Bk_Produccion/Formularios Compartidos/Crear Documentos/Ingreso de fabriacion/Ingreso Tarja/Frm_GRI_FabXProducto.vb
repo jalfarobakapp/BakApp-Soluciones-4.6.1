@@ -178,7 +178,6 @@ Public Class Frm_GRI_FabXProducto
             Return
         End If
 
-
         If IsNothing(_Row_Potl) Then
             If String.IsNullOrEmpty(Txt_Codigo.Text) Then
                 Grupo_Producto.Text = "DETALLE DE DATOS DE FABRICACION"

@@ -50,6 +50,7 @@ Public Class Cl_ConfiguracionLocal
                 Configuracion.Ls_Conexiones.Add(_Conexion2)
 
                 Configuracion.Global_BaseBk = String.Empty
+                Configuracion.BodegaFacturacion = New BodegaFacturacion With {.Empresa = "", .Razon = "", .Kosu = "", .Nokosu = "", .Kobo = "", .Nokobo = ""}
 
                 json = Newtonsoft.Json.JsonConvert.SerializeObject(Configuracion)
 
@@ -66,13 +67,6 @@ Public Class Cl_ConfiguracionLocal
             Configuracion = JsonConvert.DeserializeObject(Of Configuracion)(json)
 
             Dim Ls_Conexiones As List(Of Conexion) = Configuracion.Ls_Conexiones
-
-            If String.IsNullOrEmpty(Configuracion.Global_BaseBk) Then
-                _Mensaje.Detalle = "Falta datos en la configuración"
-                Throw New System.Exception("Debe ingresar el nombre de la base de datos de BAKAPP")
-            End If
-
-            _Global_BaseBk = Configuracion.Global_BaseBk & ".dbo."
 
             If _Mensaje.Id = 1 Then
 
@@ -109,10 +103,36 @@ Public Class Cl_ConfiguracionLocal
 
                 End If
 
-                _Mensaje.Detalle = "Archivo leido correctamente"
-                _Mensaje.Mensaje = "El archivo contiene las conexiones a las bases de datos"
-
             End If
+
+            If String.IsNullOrEmpty(Configuracion.Global_BaseBk) Then
+                _Mensaje.Detalle = "Falta datos en la configuración"
+                Throw New System.Exception("Debe ingresar el nombre de la base de datos de BAKAPP")
+            End If
+
+            _Global_BaseBk = Configuracion.Global_BaseBk & ".dbo."
+
+            If IsNothing(Configuracion.BodegaFacturacion) Then
+                _Mensaje.Detalle = "Falta datos en la configuración"
+                Throw New System.Exception("Debe ingresar los datos de la bodega de facturación")
+            End If
+
+            With Configuracion.BodegaFacturacion
+
+                If String.IsNullOrEmpty(.Empresa) Or
+                   String.IsNullOrEmpty(.Razon) Or
+                   String.IsNullOrEmpty(.Kosu) Or
+                   String.IsNullOrEmpty(.Nokosu) Or
+                   String.IsNullOrEmpty(.Kobo) Or
+                   String.IsNullOrEmpty(.Nokobo) Then
+                    _Mensaje.Detalle = "Falta datos en la configuración"
+                    Throw New System.Exception("Debe ingresar los datos de la bodega de facturación")
+                End If
+
+            End With
+
+            _Mensaje.Detalle = "Archivo leido correctamente"
+            _Mensaje.Mensaje = "El archivo contiene las conexiones a las bases de datos"
 
             _Mensaje.EsCorrecto = True
             _Mensaje.Resultado = json

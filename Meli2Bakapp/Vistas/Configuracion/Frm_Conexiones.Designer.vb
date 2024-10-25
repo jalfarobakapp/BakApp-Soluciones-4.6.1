@@ -89,8 +89,12 @@ Partial Class Frm_Conexiones
         Me.Label10 = New System.Windows.Forms.Label()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
-        Me.Txt_Global_BaseBk = New System.Windows.Forms.TextBox()
-        Me.Label11 = New System.Windows.Forms.Label()
+        Me.Txt_Bodega = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX12 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_Global_BaseBk = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX15 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_Empresa = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX16 = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Input_DiasRevNVV, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControlPanel2.SuspendLayout()
@@ -227,7 +231,7 @@ Partial Class Frm_Conexiones
         Me.Input_DiasRevNVV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_DiasRevNVV.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_DiasRevNVV.ForeColor = System.Drawing.Color.Black
-        Me.Input_DiasRevNVV.Location = New System.Drawing.Point(186, 483)
+        Me.Input_DiasRevNVV.Location = New System.Drawing.Point(944, 224)
         Me.Input_DiasRevNVV.MaxValue = 30
         Me.Input_DiasRevNVV.Name = "Input_DiasRevNVV"
         Me.Input_DiasRevNVV.ShowUpDown = True
@@ -243,7 +247,7 @@ Partial Class Frm_Conexiones
         '
         Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(12, 483)
+        Me.LabelX4.Location = New System.Drawing.Point(770, 224)
         Me.LabelX4.Name = "LabelX4"
         Me.LabelX4.Size = New System.Drawing.Size(168, 19)
         Me.LabelX4.TabIndex = 108
@@ -282,9 +286,9 @@ Partial Class Frm_Conexiones
         Me.SuperTabControlPanel2.Controls.Add(Me.GroupPanel1)
         Me.SuperTabControlPanel2.Controls.Add(Me.GroupPanel2)
         Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
-        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(708, 190)
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(708, 163)
         Me.SuperTabControlPanel2.TabIndex = 0
         Me.SuperTabControlPanel2.TabItem = Me.SuperTabItem2
         '
@@ -670,9 +674,9 @@ Partial Class Frm_Conexiones
         '
         Me.SuperTabControlPanel3.Controls.Add(Me.GroupPanel3)
         Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
-        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(708, 190)
+        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(708, 163)
         Me.SuperTabControlPanel3.TabIndex = 0
         Me.SuperTabControlPanel3.TabItem = Me.SuperTabItem3
         '
@@ -691,7 +695,7 @@ Partial Class Frm_Conexiones
         Me.GroupPanel3.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupPanel3.Location = New System.Drawing.Point(0, 0)
         Me.GroupPanel3.Name = "GroupPanel3"
-        Me.GroupPanel3.Size = New System.Drawing.Size(708, 190)
+        Me.GroupPanel3.Size = New System.Drawing.Size(708, 163)
         '
         '
         '
@@ -865,7 +869,7 @@ Partial Class Frm_Conexiones
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel3)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
         Me.SuperTabControl1.ForeColor = System.Drawing.Color.Black
-        Me.SuperTabControl1.Location = New System.Drawing.Point(12, 287)
+        Me.SuperTabControl1.Location = New System.Drawing.Point(759, 14)
         Me.SuperTabControl1.Name = "SuperTabControl1"
         Me.SuperTabControl1.ReorderTabsEnabled = True
         Me.SuperTabControl1.SelectedTabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
@@ -1148,9 +1152,9 @@ Partial Class Frm_Conexiones
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 258)
+        Me.Bar1.Location = New System.Drawing.Point(0, 341)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(739, 41)
+        Me.Bar1.Size = New System.Drawing.Size(727, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 107
@@ -1166,33 +1170,120 @@ Partial Class Frm_Conexiones
         Me.Btn_Grabar.Name = "Btn_Grabar"
         Me.Btn_Grabar.Tooltip = "Grabar conexiones"
         '
+        'Txt_Bodega
+        '
+        Me.Txt_Bodega.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Bodega.Border.Class = "TextBoxBorder"
+        Me.Txt_Bodega.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Bodega.ButtonCustom.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Bodega.ButtonCustom.Visible = True
+        Me.Txt_Bodega.ButtonCustom2.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Bodega.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Bodega.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Bodega.Location = New System.Drawing.Point(145, 280)
+        Me.Txt_Bodega.Name = "Txt_Bodega"
+        Me.Txt_Bodega.PreventEnterBeep = True
+        Me.Txt_Bodega.ReadOnly = True
+        Me.Txt_Bodega.Size = New System.Drawing.Size(302, 22)
+        Me.Txt_Bodega.TabIndex = 114
+        Me.Txt_Bodega.WatermarkText = "Bodega desde donde se sacan los productos"
+        '
+        'LabelX12
+        '
+        Me.LabelX12.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX12.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX12.ForeColor = System.Drawing.Color.Black
+        Me.LabelX12.Location = New System.Drawing.Point(12, 282)
+        Me.LabelX12.Name = "LabelX12"
+        Me.LabelX12.Size = New System.Drawing.Size(112, 20)
+        Me.LabelX12.TabIndex = 113
+        Me.LabelX12.Text = "Bodega de facturación"
+        '
         'Txt_Global_BaseBk
         '
         Me.Txt_Global_BaseBk.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Global_BaseBk.Border.Class = "TextBoxBorder"
+        Me.Txt_Global_BaseBk.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Global_BaseBk.ButtonCustom.Image = CType(resources.GetObject("TextBoxX2.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Global_BaseBk.ButtonCustom2.Image = CType(resources.GetObject("TextBoxX2.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Global_BaseBk.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Global_BaseBk.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Global_BaseBk.Location = New System.Drawing.Point(156, 224)
+        Me.Txt_Global_BaseBk.Location = New System.Drawing.Point(145, 224)
         Me.Txt_Global_BaseBk.Name = "Txt_Global_BaseBk"
-        Me.Txt_Global_BaseBk.Size = New System.Drawing.Size(207, 22)
-        Me.Txt_Global_BaseBk.TabIndex = 111
+        Me.Txt_Global_BaseBk.PreventEnterBeep = True
+        Me.Txt_Global_BaseBk.Size = New System.Drawing.Size(302, 22)
+        Me.Txt_Global_BaseBk.TabIndex = 115
+        Me.Txt_Global_BaseBk.WatermarkText = "Nombre de base de datos de Bakapp"
         '
-        'Label11
+        'LabelX15
         '
-        Me.Label11.AutoSize = True
-        Me.Label11.BackColor = System.Drawing.Color.White
-        Me.Label11.ForeColor = System.Drawing.Color.Black
-        Me.Label11.Location = New System.Drawing.Point(34, 227)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(115, 13)
-        Me.Label11.TabIndex = 112
-        Me.Label11.Text = "Nombre Base Bakapp"
+        Me.LabelX15.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX15.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX15.ForeColor = System.Drawing.Color.Black
+        Me.LabelX15.Location = New System.Drawing.Point(12, 224)
+        Me.LabelX15.Name = "LabelX15"
+        Me.LabelX15.Size = New System.Drawing.Size(112, 20)
+        Me.LabelX15.TabIndex = 116
+        Me.LabelX15.Text = "Nombre Base Bakapp"
+        '
+        'Txt_Empresa
+        '
+        Me.Txt_Empresa.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Empresa.Border.Class = "TextBoxBorder"
+        Me.Txt_Empresa.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Empresa.ButtonCustom.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom.Image1"), System.Drawing.Image)
+        Me.Txt_Empresa.ButtonCustom.Visible = True
+        Me.Txt_Empresa.ButtonCustom2.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom2.Image1"), System.Drawing.Image)
+        Me.Txt_Empresa.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Empresa.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Empresa.Location = New System.Drawing.Point(145, 252)
+        Me.Txt_Empresa.Name = "Txt_Empresa"
+        Me.Txt_Empresa.PreventEnterBeep = True
+        Me.Txt_Empresa.ReadOnly = True
+        Me.Txt_Empresa.Size = New System.Drawing.Size(302, 22)
+        Me.Txt_Empresa.TabIndex = 118
+        Me.Txt_Empresa.WatermarkText = "Empresa a conectar"
+        '
+        'LabelX16
+        '
+        Me.LabelX16.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX16.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX16.ForeColor = System.Drawing.Color.Black
+        Me.LabelX16.Location = New System.Drawing.Point(12, 256)
+        Me.LabelX16.Name = "LabelX16"
+        Me.LabelX16.Size = New System.Drawing.Size(112, 20)
+        Me.LabelX16.TabIndex = 117
+        Me.LabelX16.Text = "Empresa"
         '
         'Frm_Conexiones
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(739, 299)
+        Me.ClientSize = New System.Drawing.Size(727, 382)
+        Me.Controls.Add(Me.Txt_Empresa)
+        Me.Controls.Add(Me.LabelX16)
+        Me.Controls.Add(Me.LabelX15)
         Me.Controls.Add(Me.Txt_Global_BaseBk)
-        Me.Controls.Add(Me.Label11)
+        Me.Controls.Add(Me.Txt_Bodega)
+        Me.Controls.Add(Me.LabelX12)
         Me.Controls.Add(Me.Bar1)
         Me.Controls.Add(Me.Input_DiasRevNVV)
         Me.Controls.Add(Me.LabelX4)
@@ -1201,13 +1292,15 @@ Partial Class Frm_Conexiones
         Me.Controls.Add(Me.GroupBox2)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Frm_Conexiones"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "MetroForm"
+        Me.Text = "CONFIGURACION DE SISTEMA DE SINCRONIZACION MELI VS BAKAPP"
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.Input_DiasRevNVV, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControlPanel2.ResumeLayout(False)
@@ -1224,7 +1317,6 @@ Partial Class Frm_Conexiones
         Me.GroupBox2.PerformLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
     Friend WithEvents Txt_CodFunFCVAutoContado As DevComponents.DotNetBar.Controls.TextBoxX
@@ -1293,6 +1385,10 @@ Partial Class Frm_Conexiones
     Friend WithEvents Txt_NombreFormato_Retiros As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Txt_Impresora_Retiros As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Txt_Impresora_Despachos As DevComponents.DotNetBar.Controls.TextBoxX
-    Friend WithEvents Txt_Global_BaseBk As TextBox
-    Friend WithEvents Label11 As Label
+    Friend WithEvents Txt_Bodega As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX12 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_Global_BaseBk As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX15 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_Empresa As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX16 As DevComponents.DotNetBar.LabelX
 End Class

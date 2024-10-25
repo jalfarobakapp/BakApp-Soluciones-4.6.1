@@ -5253,6 +5253,8 @@ Public Class Frm_Formulario_Documento
                 If _Tido = "BLV" Then
                     _Noaplica_Imp = " And NOAPLICEN Not like '%BSV,BLV%'"
                 End If
+            ElseIf _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Compra Then
+                _Noaplica_Imp = " And NOAPLICEN Not like '%compras%'"
             End If
         End If
 
@@ -7218,6 +7220,8 @@ Public Class Frm_Formulario_Documento
                         If _Tido = "BLV" Then
                             _Noaplica_Imp = " And NOAPLICEN Not like '%BSV,BLV%'"
                         End If
+                    ElseIf _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Compra Then
+                        _Noaplica_Imp = " And NOAPLICEN Not like '%compras%'"
                     End If
                 End If
 
