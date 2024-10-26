@@ -78,6 +78,7 @@ Partial Class Frm_GRI_FabXProducto
         Me.Txt_Turno = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_Analista = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX17 = New DevComponents.DotNetBar.LabelX()
+        Me.ButtonItem1 = New DevComponents.DotNetBar.ButtonItem()
         Me.Grupo_Producto.SuspendLayout()
         Me.Panel_SC.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -893,7 +894,7 @@ Partial Class Frm_GRI_FabXProducto
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Limpiar})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Limpiar, Me.ButtonItem1})
         Me.Bar1.Location = New System.Drawing.Point(0, 527)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(855, 41)
@@ -1203,6 +1204,16 @@ Partial Class Frm_GRI_FabXProducto
         Me.LabelX17.TabIndex = 101
         Me.LabelX17.Text = "ANALISTA"
         '
+        'ButtonItem1
+        '
+        Me.ButtonItem1.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.ButtonItem1.ForeColor = System.Drawing.Color.Black
+        Me.ButtonItem1.Image = CType(resources.GetObject("ButtonItem1.Image"), System.Drawing.Image)
+        Me.ButtonItem1.ImageAlt = CType(resources.GetObject("ButtonItem1.ImageAlt"), System.Drawing.Image)
+        Me.ButtonItem1.Name = "ButtonItem1"
+        Me.ButtonItem1.Text = "Prueba GDI"
+        Me.ButtonItem1.Tooltip = "Seleccionar registro marcado"
+        '
         'Frm_GRI_FabXProducto
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1289,4 +1300,5 @@ Partial Class Frm_GRI_FabXProducto
     Friend WithEvents Rdb_BodegaDesdeModalidad As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Rdb_BodegaDesdeOT As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Btn_EditFechaGRI As DevComponents.DotNetBar.ButtonX
+    Public WithEvents ButtonItem1 As DevComponents.DotNetBar.ButtonItem
 End Class

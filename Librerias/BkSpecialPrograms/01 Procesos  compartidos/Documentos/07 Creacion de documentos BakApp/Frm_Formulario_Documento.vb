@@ -20187,6 +20187,108 @@ Public Class Frm_Formulario_Documento
                                                          _Observaciones As String,
                                                          _Aplica_Descuentos As Boolean,
                                                          _Aplicar_Precio_De_Listas As Boolean,
+                                                         _UnTrans As Integer,
+                                                         Optional _CodLista As String = "01C",
+                                                         Optional _Campo_Idmaeddo_Dori As String = "IDPOTL")
+
+        _TblObservaciones.Rows(0).Item("Observaciones") = String.Empty '_Observaciones
+
+        Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, False, False)
+
+
+        _TblEncabezado.Rows(0).Item("ListaPrecios") = _CodLista
+        _TblDetalle.Rows(0).Item("CodLista") = _CodLista
+
+        _TblEncabezado.Rows(0).Item("FechaEmision") = _FechaEmision
+        _TblEncabezado.Rows(0).Item("Fecha_1er_Vencimiento") = _FechaEmision
+        _TblEncabezado.Rows(0).Item("FechaUltVencimiento") = _FechaEmision
+        _TblEncabezado.Rows(0).Item("Cuotas") = 0
+        _TblEncabezado.Rows(0).Item("Dias_1er_Vencimiento") = 0
+        _TblEncabezado.Rows(0).Item("Dias_Vencimiento") = 0
+        _TblObservaciones.Rows(0).Item("Forma_pago") = String.Empty
+
+        Dim _Contador = 0
+
+        For Each Fila As DataRow In _Tbl_Detalle_Externo.Rows
+
+            Dim _Sucursal As String = Fila.Item("Sucursal")
+            Dim _Bodega As String = Fila.Item("Bodega")
+            Dim _Codigo As String = Fila.Item(_Campo_Codigo)
+            Dim _Idmaeddo_Dori As Integer = Fila.Item(_Campo_Idmaeddo_Dori)
+            Dim _Tidopa As String = "OTL"
+            Dim _Nudopa As String = Fila.Item("NUMOT")
+
+            Dim _Descripcion As String = Fila.Item("GLOSA")
+            Dim _Observa As String = String.Empty
+
+            Consulta_sql = "Select Top 1 * From MAEPR Where KOPR = '" & _Codigo & "'"
+            Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Dim _Cantidad As Double = Fila.Item(_Campo_Cantidad)
+
+            If CBool(_Cantidad) Then
+
+                Dim _DescuentoPorc As Double = 0
+
+                Dim _New_Fila As DataGridViewRow = Grilla_Detalle.Rows(_Contador)
+
+                Sb_Traer_Producto_Grilla(_New_Fila, _RowProducto, True)
+
+                _New_Fila.Cells("Sucursal").Value = _Sucursal
+                _New_Fila.Cells("Bodega").Value = _Bodega
+                _New_Fila.Cells("Codigo").Value = _Codigo
+                _New_Fila.Cells("Cantidad").Value = _Cantidad
+                _New_Fila.Cells("FechaEmision").Value = _FechaEmision
+
+                If Not String.IsNullOrEmpty(_Descripcion) Then
+                    _New_Fila.Cells("Descripcion").Value = _Descripcion
+                End If
+
+                Dim _Precio_Old As Double = _New_Fila.Cells("Precio").Value
+
+                If Not _Aplicar_Precio_De_Listas Then
+                    _New_Fila.Cells("Precio").Value = Fila.Item(_Campo_Precio)
+                End If
+
+                If _New_Fila.Cells("Precio").Value = 0 Then
+                    _New_Fila.Cells("Precio").Value = 1
+                End If
+
+                _New_Fila.Cells("Idmaeddo_Dori").Value = _Idmaeddo_Dori
+                _New_Fila.Cells("Tidopa").Value = _Tidopa
+                _New_Fila.Cells("Observa").Value = _Observa
+                _New_Fila.Cells("Potencia").Value = 0
+                _New_Fila.Cells("Operacion").Value = String.Empty
+
+
+                If _New_Fila.Cells("Precio").Value > 0 Then
+                    Sb_Procesar_Datos_De_Grilla(_New_Fila, "Cantidad", True, True)
+                    If _DescuentoPorc > 0 Then
+                        _New_Fila.Cells("DescuentoPorc").Value = Math.Round(_DescuentoPorc, 2)
+                        Sb_Procesar_Datos_De_Grilla(_New_Fila, "DescuentoPorc", True, True)
+                    End If
+                End If
+
+                _Contador += 1
+                Sb_Nueva_Linea(_CodLista)
+
+            End If
+
+        Next
+
+        Sb_Marcar_Grilla()
+
+    End Sub
+
+    Public Sub Sb_Crear_Documento_Interno_Con_Tabla4Potl(_Formulario As Form,
+                                                         _Tbl_Detalle_Externo As DataTable,
+                                                         _FechaEmision As Date,
+                                                         _Campo_Codigo As String,
+                                                         _Campo_Cantidad As String,
+                                                         _Campo_Precio As String,
+                                                         _Observaciones As String,
+                                                         _Aplica_Descuentos As Boolean,
+                                                         _Aplicar_Precio_De_Listas As Boolean,
                                                          _UnTrans As Integer)
 
         _TblObservaciones.Rows(0).Item("Observaciones") = String.Empty '_Observaciones

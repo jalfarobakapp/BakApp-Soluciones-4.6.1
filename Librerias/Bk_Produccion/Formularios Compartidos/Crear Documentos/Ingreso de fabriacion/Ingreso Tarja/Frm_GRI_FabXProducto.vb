@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.InteropServices
 Imports BkSpecialPrograms
+Imports BkSpecialPrograms.LsValiciones
 Imports DevComponents.DotNetBar
 
 Public Class Frm_GRI_FabXProducto
@@ -1129,6 +1130,13 @@ Public Class Frm_GRI_FabXProducto
             Return
         End If
 
+        Dim Cl_ArmaGDI As New Cl_ArmaGDIConsumo
+        _Mensaje = Cl_ArmaGDI.Fx_CrearGDI(Me, _Row_Potl.Item("IDPOTL"), _Cantidad, _Row_Entidad, _FechaEmision, "")
+
+        If Not _Mensaje.EsCorrecto Then
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono, MessageBoxDefaultButton.Button1, True)
+        End If
+
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Lotes_Enc Where NroLote = '" & Txt_NroLote.Text & "'"
         Dim _Row_Lote As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -1309,4 +1317,27 @@ Public Class Frm_GRI_FabXProducto
         Dtp_Fecha_Ingreso.Value = Dtp_Fiot.Value
     End Sub
 
+    Private Sub ButtonItem1_Click(sender As Object, e As EventArgs) Handles ButtonItem1.Click
+
+        Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+        Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _Koen As String = _Row_Configp.Item("RUT").ToString.Trim
+        Dim _Observaciones As String
+
+        Consulta_sql = "Select Top 1 * From MAEEN Where KOEN = '" & _Koen & "'"
+        Dim _Row_Entidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+        Dim _Cantidad As Double = Txt_Cantidad.Tag
+
+        Dim _FechaEmision As DateTime = Dtp_Fecha_Ingreso.Value
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Dim Cl_ArmaGDI As New Cl_ArmaGDIConsumo
+        _Mensaje = Cl_ArmaGDI.Fx_CrearGDI(Me, _Row_Potl.Item("IDPOTL"), _Cantidad, _Row_Entidad, _FechaEmision, "")
+        If _Mensaje.EsCorrecto Then
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono, MessageBoxDefaultButton.Button1, True)
+        End If
+
+    End Sub
 End Class

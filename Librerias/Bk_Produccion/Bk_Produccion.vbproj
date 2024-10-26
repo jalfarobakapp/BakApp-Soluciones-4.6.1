@@ -263,6 +263,7 @@
       <DependentUpon>Dfa_Cr.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Cl_ArmaGDIConsumo.vb" />
     <Compile Include="Formularios Compartidos\Crear Documentos\Ingreso de fabriacion\Ingreso Mezcla\Frm_Fabricaciones.Designer.vb">
       <DependentUpon>Frm_Fabricaciones.vb</DependentUpon>
     </Compile>

@@ -164,6 +164,9 @@ Public Class Clase_Crear_Documento
 
     Dim _RtuVariable As Boolean
 
+    Dim _Codmaq As String
+    Dim _Nuliprod As String
+
 #End Region
 
 #Region "VARIABLES PIE DEL DOCUMENTO,OBSERVACIONES"
@@ -852,9 +855,20 @@ Public Class Clase_Crear_Documento
 
                             If _Tidopa = "OTL" Then
 
-                                Consulta_sql = "Select *,'" & _Endo & "' As ENDO,'OTL' As TIDO,NUMOT As NUDO,NREG As NULIDO,'' As SUBTIDO," &
+                                If _Tido = "GRI" Then
+
+                                    Consulta_sql = "Select *,'" & _Endo & "' As ENDO,'OTL' As TIDO,NUMOT As NUDO,NREG As NULIDO,'' As SUBTIDO," &
                                                "Isnull((Select Top 1 OPERACION From POTPR Where POTPR.IDPOTL = POTL.IDPOTL Order By ORDEN Desc),'') As OPERACION" & vbCrLf &
                                                "From POTL Where IDPOTL = " & _Idrst
+                                End If
+
+                                If _Tido = "GDI" Then
+
+                                    Consulta_sql = "Select *,'" & _Endo & "' As ENDO,'OTL' As TIDO,NUMOT As NUDO,NREG As NULIDO,'' As SUBTIDO" & vbCrLf &
+                                                   "From POTD Where IDPOTD = " & _Idrst
+
+                                End If
+
                                 .Item("CantUd1_Dori") = .Item("CantUd1")
                                 .Item("CantUd2_Dori") = .Item("CantUd2")
 
@@ -877,13 +891,13 @@ Public Class Clase_Crear_Documento
                             Dim _Caprex1_Ori As Double
                             Dim _Caprex2_Ori As Double
 
-                            If _Tidopa = "OTL" Then
-                                _Operacion = _Row_Doc_Origen.Item("OPERACION")
-                            Else
+                            If _Tidopa <> "OTL" Then
+
                                 _Caprnc1_Ori = _Row_Doc_Origen.Item("CAPRNC1")
                                 _Caprnc2_Ori = _Row_Doc_Origen.Item("CAPRNC2")
                                 _Caprex1_Ori = _Row_Doc_Origen.Item("CAPREX1")
                                 _Caprex2_Ori = _Row_Doc_Origen.Item("CAPREX2")
+
                             End If
 
                             Dim _CantUd1_Dori As Double = .Item("CantUd1_Dori")
@@ -905,7 +919,7 @@ Public Class Clase_Crear_Documento
                             Else
 
                                 If (_Tido = "NCV" And Not _Tidopa.Contains("G")) Or (_Tido = "GDD" And _Subtido = String.Empty) Or
-                               (_Tido = "GRD" And _Tidopa = "FCV") Or (_Tido = "GRD" And _Tidopa = "BLV") Then
+                                   (_Tido = "GRD" And _Tidopa = "FCV") Or (_Tido = "GRD" And _Tidopa = "BLV") Then
 
                                     _Caprnc1 = De_Num_a_Tx_01(_CantUd1, False, 5)
                                     _Caprnc2 = De_Num_a_Tx_01(_CantUd2, False, 5)
@@ -932,17 +946,33 @@ Public Class Clase_Crear_Documento
 
                             If _Tidopa = "OTL" Then
 
-                                Consulta_sql = "Update POTL Set REALIZADO=REALIZADO+(" & _Caprex1 & "),PORENTRAR=PORENTRAR-(" & _Caprex1 & ") WHERE IDPOTL=" & _Idrst
-                                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
-                                Comando.Transaction = myTrans
-                                Comando.ExecuteNonQuery()
+                                _Operacion = _Row_Doc_Origen.Item("OPERACION")
 
-                                Consulta_sql = "Update POTL Set INFORABODE=CASE WHEN PORENTRAR-(" & _Caprex1 & ")<0 THEN 'I' WHEN PORENTRAR-(" & _Caprex1 & ")>0 THEN 'P'  ELSE ' ' END  WHERE IDPOTL=" & _Idrst
-                                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
-                                Comando.Transaction = myTrans
-                                Comando.ExecuteNonQuery()
+                                If _Tido = "GRI" Then
 
-                                _Archirst = "POTL"
+                                    Consulta_sql = "Update POTL Set REALIZADO=REALIZADO+(" & _Caprex1 & "),PORENTRAR=PORENTRAR-(" & _Caprex1 & ") WHERE IDPOTL=" & _Idrst
+                                    Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                                    Comando.Transaction = myTrans
+                                    Comando.ExecuteNonQuery()
+
+                                    Consulta_sql = "Update POTL Set INFORABODE=CASE WHEN PORENTRAR-(" & _Caprex1 & ")<0 THEN 'I' WHEN PORENTRAR-(" & _Caprex1 & ")>0 THEN 'P'  ELSE ' ' END  WHERE IDPOTL=" & _Idrst
+                                    Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                                    Comando.Transaction = myTrans
+                                    Comando.ExecuteNonQuery()
+
+                                    _Archirst = "POTL"
+
+                                End If
+
+                                If _Tido = "GDI" Then
+
+                                    _Archirst = "POTD"
+                                    _Tidopa = "OTD"
+
+                                    _Codmaq = _Sql.Fx_Trae_Dato("POPER", "CODMAQ", "OPERACION = '" & _Operacion & "'")
+                                    _Nuliprod = _Row_Doc_Origen.Item("SUBNREG")
+
+                                End If
 
                             End If
 
@@ -1169,7 +1199,8 @@ Public Class Clase_Crear_Documento
                               "PODTGLLI,POIMGLLI,VAIMLI,VADTNELI,VADTBRLI,POIVLI,VAIVLI,VANELI,VABRLI,TIGELI," & vbCrLf &
                               "EMPREPA,TIDOPA,NUDOPA,ENDOPA,NULIDOPA," & vbCrLf &
                               "FEEMLI,FEERLI,PPPRNELT,PPPRNE,PPPRBRLT,PPPRBR,PPPRPM,PPPRNERE1,PPPRNERE2,CAFACO," & vbCrLf &
-                              "FVENLOTE,FCRELOTE,NOKOPR,ALTERNAT,TASADORIG,CUOGASDIF,LINCONDESP,OPERACION,POTENCIA,ESLIDO,OBSERVA,KOFUAULIDO,HUMEDAD,PPOPPR,MGLTPR)" & vbCrLf &
+                              "FVENLOTE,FCRELOTE,NOKOPR,ALTERNAT,TASADORIG,CUOGASDIF,LINCONDESP,OPERACION,POTENCIA," & vbCrLf &
+                              "ESLIDO,OBSERVA,KOFUAULIDO,HUMEDAD,PPOPPR,MGLTPR,CODMAQ,NULIPROD)" & vbCrLf &
                        "VALUES (" & _Idmaeedo & ",'" & _Archirst & "'," & _Idrst & ",'" & _Empresa & "','" & _Tido & "','" & _Nudo & "','" & _Endo &
                               "','" & _Suendo & "','SI','" & _Nulido & "','" & _Sulido & "','" & _Bosulido &
                               "','" & _Luvtlido & "','" & _Proyecto & "','" & _Kofulido & "','" & _Tipr & "','" & _Tict & "'," & CInt(_Prct) & ",'" & _Koprct &
@@ -1184,7 +1215,8 @@ Public Class Clase_Crear_Documento
                               "'" & _Feemli & "','" & _Feerli & "'," & _Ppprnelt & "," & _Ppprne &
                               "," & _Ppprbrlt & "," & _Ppprbr & "," & _Ppprpm & "," & _Ppprnere1 & "," & _Ppprnere2 &
                               "," & _Cafaco & ",NULL,NULL,'" & _Nokopr & "','" & _Alternat & "'," & _Tasadorig & ",0," & CInt(_Lincondesp) * -1 &
-                              ",'" & _Operacion & "'," & _Potencia & ",'" & _Eslido & "','" & _Observa & "','" & _Kofuaulido & "',0," & _Ppoppr & "," & _Mgltpr & ")"
+                              ",'" & _Operacion & "'," & _Potencia & ",'" & _Eslido & "','" & _Observa & "'," &
+                              "'" & _Kofuaulido & "',0," & _Ppoppr & "," & _Mgltpr & ",'" & _Codmaq & "','" & _Nuliprod & "')"
 
                         Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                         Comando.Transaction = myTrans
@@ -1519,14 +1551,6 @@ Public Class Clase_Crear_Documento
             Comando.Transaction = myTrans
             Comando.ExecuteNonQuery()
 
-            If _DesdeProduccion Then
-
-                Consulta_sql = "Update MAEEDO Set NUVEDO = 0,ESFADO = '',DESPACHO = 0 Where IDMAEEDO = " & _Idmaeedo
-                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
-                Comando.Transaction = myTrans
-                Comando.ExecuteNonQuery()
-
-            End If
 
             Consulta_sql = "UPDATE MAEEDO SET ESDO = CASE WHEN ROUND(CAPRCO-CAPRAD-CAPREX,5)=0 THEN 'C' ELSE '' END WHERE IDMAEEDO = " & _Idmaeedo
 
@@ -1746,6 +1770,16 @@ Public Class Clase_Crear_Documento
             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
             Comando.Transaction = myTrans
             Comando.ExecuteNonQuery()
+
+
+            If _DesdeProduccion Then
+
+                Consulta_sql = "Update MAEEDO Set NUVEDO = 0,ESFADO = '',DESPACHO = 0 Where IDMAEEDO = " & _Idmaeedo
+                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+            End If
 
             '=========================================== OBSERVACIONES ==================================================================
 
