@@ -950,12 +950,12 @@ Public Class Clase_Crear_Documento
 
                                 If _Tido = "GRI" Then
 
-                                    Consulta_sql = "Update POTL Set REALIZADO=REALIZADO+(" & _Caprex1 & "),PORENTRAR=PORENTRAR-(" & _Caprex1 & ") WHERE IDPOTL=" & _Idrst
+                                    Consulta_sql = "Update POTL Set REALIZADO = REALIZADO + (" & _Caprex1 & "),PORENTRAR = PORENTRAR - (" & _Caprex1 & ") WHERE IDPOTL = " & _Idrst
                                     Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                                     Comando.Transaction = myTrans
                                     Comando.ExecuteNonQuery()
 
-                                    Consulta_sql = "Update POTL Set INFORABODE=CASE WHEN PORENTRAR-(" & _Caprex1 & ")<0 THEN 'I' WHEN PORENTRAR-(" & _Caprex1 & ")>0 THEN 'P'  ELSE ' ' END  WHERE IDPOTL=" & _Idrst
+                                    Consulta_sql = "Update POTL Set INFORABODE = CASE WHEN PORENTRAR - (" & _Caprex1 & ") < 0 THEN 'I' WHEN PORENTRAR-(" & _Caprex1 & ") > 0 THEN 'P'  ELSE ' ' END WHERE IDPOTL=" & _Idrst
                                     Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                                     Comando.Transaction = myTrans
                                     Comando.ExecuteNonQuery()
@@ -971,6 +971,11 @@ Public Class Clase_Crear_Documento
 
                                     _Codmaq = _Sql.Fx_Trae_Dato("POPER", "CODMAQ", "OPERACION = '" & _Operacion & "'")
                                     _Nuliprod = _Row_Doc_Origen.Item("SUBNREG")
+
+                                    Consulta_sql = "Update POTD SET CANTIDADR = CANTIDADR + (" & De_Num_a_Tx_01(_Caprex1, False, 5) & ") Where IDPOTD = " & _Idrst
+                                    Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                                    Comando.Transaction = myTrans
+                                    Comando.ExecuteNonQuery()
 
                                 End If
 

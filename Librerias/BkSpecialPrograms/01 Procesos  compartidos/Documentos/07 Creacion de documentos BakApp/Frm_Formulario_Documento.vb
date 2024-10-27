@@ -20191,7 +20191,7 @@ Public Class Frm_Formulario_Documento
                                                          Optional _CodLista As String = "01C",
                                                          Optional _Campo_Idmaeddo_Dori As String = "IDPOTL")
 
-        _TblObservaciones.Rows(0).Item("Observaciones") = String.Empty '_Observaciones
+        _TblObservaciones.Rows(0).Item("Observaciones") = _Observaciones
 
         Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, False, False)
 

@@ -32,8 +32,8 @@ Public Class Cl_ArmaGDIConsumo
                        "Set @aFabricar = @CantFabricar/@CantMomencla" & vbCrLf &
                        "Set @Fabricado = " & De_Num_a_Tx_01(_Fabricado, False, 5) & vbCrLf &
                        "" & vbCrLf &
-                       "Select POTD.*,POTD.CANTIDADF/@aFabricar As 'FF',((POTD.CANTIDADF/@aFabricar)/25) As 'RESUL'," &
-                       "((POTD.CANTIDADF/@aFabricar)/25)*@Fabricado As 'Cantidad',POTD.SULIOTD As 'Sucursal',POTD.BOLIOTD As 'Bodega'," & vbCrLf &
+                       "Select POTD.*,POTD.CANTIDADF/@aFabricar As 'FF',((POTD.CANTIDADF/@aFabricar)/@CantMomencla) As 'RESUL'," &
+                       "((POTD.CANTIDADF/@aFabricar)/@CantMomencla)*@Fabricado As 'Cantidad',POTD.SULIOTD As 'Sucursal',POTD.BOLIOTD As 'Bodega'," & vbCrLf &
                        "MAEPR.TIPR,MAEPR.POIVPR,MAEPR.RLUD,MAEPR.UD01PR,MAEPR.UD02PR,MAEPR.NUIMPR,MAEPR.NMARCA,Op.CODMAQ" & vbCrLf &
                        "From POTD WITH ( NOLOCK )" & vbCrLf &
                        "Left Outer Join MAEPR On POTD.CODIGO = MAEPR.KOPR" & vbCrLf &
