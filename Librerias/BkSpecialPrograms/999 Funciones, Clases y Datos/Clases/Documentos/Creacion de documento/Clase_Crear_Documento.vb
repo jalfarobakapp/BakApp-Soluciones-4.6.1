@@ -972,7 +972,7 @@ Public Class Clase_Crear_Documento
                                     _Codmaq = _Sql.Fx_Trae_Dato("POPER", "CODMAQ", "OPERACION = '" & _Operacion & "'")
                                     _Nuliprod = _Row_Doc_Origen.Item("SUBNREG")
 
-                                    Consulta_sql = "Update POTD SET CANTIDADR = CANTIDADR + (" & De_Num_a_Tx_01(_Caprex1, False, 5) & ") Where IDPOTD = " & _Idrst
+                                    Consulta_sql = "Update POTD SET CANTIDADR = CANTIDADR + (" & _Caprex1 & ") Where IDPOTD = " & _Idrst
                                     Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                                     Comando.Transaction = myTrans
                                     Comando.ExecuteNonQuery()

@@ -421,6 +421,7 @@ Public Class Frm_Formulario_Documento
 
     Public Property SoloprodEnDoc_CLALIBPR As Boolean
     Public Property VerSoloEntidadesDelVendedor As Boolean
+    Public Property NoConsolidarNuncaStock As Boolean
 
 #End Region
 
@@ -17570,7 +17571,7 @@ Public Class Frm_Formulario_Documento
             Dim _FechaEmi As DateTime = FormatDateTime(_TblEncabezado.Rows(0).Item("FechaEmision"), DateFormat.ShortDate)
             Dim _FechaHoy As DateTime = FormatDateTime(FechaDelServidor, DateFormat.ShortDate)
 
-            If _FechaEmi < _FechaHoy Then
+            If _FechaEmi < _FechaHoy And Not NoConsolidarNuncaStock Then
                 For Each _Fila As DataRow In _TblDetalle.Rows
                     _Fila.Item("Consolidar_Stock") = True
                 Next
@@ -19824,6 +19825,8 @@ Public Class Frm_Formulario_Documento
         _TblEncabezado.Rows(0).Item("FechaEmision") = _FechaEmision
         _TblEncabezado.Rows(0).Item("Fecha_1er_Vencimiento") = _FechaEmision
         _TblEncabezado.Rows(0).Item("FechaUltVencimiento") = _FechaEmision
+        _TblEncabezado.Rows(0).Item("FechaRecepcion") = _FechaEmision
+        _TblEncabezado.Rows(0).Item("FechaMaxRecepcion") = _FechaEmision
         _TblEncabezado.Rows(0).Item("Cuotas") = 0
         _TblEncabezado.Rows(0).Item("Dias_1er_Vencimiento") = 0
         _TblEncabezado.Rows(0).Item("Dias_Vencimiento") = 0
@@ -19871,6 +19874,8 @@ Public Class Frm_Formulario_Documento
                 End If
 
                 Dim _New_Fila As DataGridViewRow = Grilla_Detalle.Rows(_Contador)
+
+                _New_Fila.Cells("FechaEmision").Value = _FechaEmision
 
                 Sb_Traer_Producto_Grilla(_New_Fila, _RowProducto, True)
 

@@ -40,6 +40,14 @@ Public Class Frm_01_Inventario_Actual
 
     Private Sub Frm_Inventario_Actual_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
+        Dim _Arr_MostrarProductos(,) As String = {{0, "Todos los productos"},
+                                                 {1, "Solo productos inventariados"},
+                                                 {2, "Solo productos con Stock, pero que no han sido inventariados"},
+                                                 {3, "Solo productos inventariados en negativo"},
+                                                 {4, "Solo productos marcados como [NO INVENTARIAR]"}}
+        Sb_Llenar_Combos(_Arr_MostrarProductos, Cmb_FiltroMostrarProductos)
+        Cmb_FiltroMostrarProductos.SelectedValue = 0
+
         With _Cl_Inventario.Zw_Inv_Inventario
 
             _Fecha_Inventario = _Cl_Inventario.Zw_Inv_Inventario.Fecha_Inventario
@@ -51,10 +59,7 @@ Public Class Frm_01_Inventario_Actual
 
         AddHandler Grilla.MouseDown, AddressOf Grilla_MouseDown
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
-        AddHandler Rdb_MostrarSoloInventariados.CheckedChanged, AddressOf Rdb_CheckedChanged
-        AddHandler Rdb_MostrarSoloConStockSinInventariar.CheckedChanged, AddressOf Rdb_CheckedChanged
-        AddHandler Rdb_MostrarTodosLosProductos.CheckedChanged, AddressOf Rdb_CheckedChanged
-        AddHandler Rdb_MostrarSoloInventariadosNegativos.CheckedChanged, AddressOf Rdb_CheckedChanged
+        AddHandler Cmb_FiltroMostrarProductos.TextChanged, AddressOf Cmb_FiltroMostrarProductos_TextChanged
 
         Sb_Actualizar_Grilla()
 
@@ -363,18 +368,19 @@ Public Class Frm_01_Inventario_Actual
 
             If IsNothing(_Dv) Then Return
 
-            If Rdb_MostrarTodosLosProductos.Checked Then
-                _Dv.RowFilter = String.Format("Codigo+CodigoRap+CodigoTec+Descripcion Like '%{0}%'", Txt_Filtrar.Text.Trim)
-            End If
-            If Rdb_MostrarSoloInventariados.Checked Then
-                _Dv.RowFilter = String.Format("Codigo+CodigoRap+CodigoTec+Descripcion Like '%{0}%' And Cant_Inventariada <> 0", Txt_Filtrar.Text.Trim)
-            End If
-            If Rdb_MostrarSoloConStockSinInventariar.Checked Then
-                _Dv.RowFilter = String.Format("Codigo+CodigoRap+CodigoTec+Descripcion Like '%{0}%' And Cant_Inventariada = 0 And StFisicoUd1 <> 0", Txt_Filtrar.Text.Trim)
-            End If
-            If Rdb_MostrarSoloInventariadosNegativos.Checked Then
-                _Dv.RowFilter = String.Format("Codigo+CodigoRap+CodigoTec+Descripcion Like '%{0}%' And Cant_Inventariada < 0", Txt_Filtrar.Text.Trim)
-            End If
+            Select Case Cmb_FiltroMostrarProductos.SelectedValue
+                Case 0
+                    _Dv.RowFilter = String.Format("Codigo+CodigoRap+CodigoTec+Descripcion Like '%{0}%'", Txt_Filtrar.Text.Trim)
+                Case 1
+                    _Dv.RowFilter = String.Format("Codigo+CodigoRap+CodigoTec+Descripcion Like '%{0}%' And Cant_Inventariada <> 0", Txt_Filtrar.Text.Trim)
+                Case 2
+                    _Dv.RowFilter = String.Format("Codigo+CodigoRap+CodigoTec+Descripcion Like '%{0}%' And Cant_Inventariada = 0 And StFisicoUd1 <> 0", Txt_Filtrar.Text.Trim)
+                Case 3
+                    _Dv.RowFilter = String.Format("Codigo+CodigoRap+CodigoTec+Descripcion Like '%{0}%' And Cant_Inventariada < 0", Txt_Filtrar.Text.Trim)
+                Case 4
+                    _Dv.RowFilter = String.Format("Codigo+CodigoRap+CodigoTec+Descripcion Like '%{0}%' And NoInventariar = 1", Txt_Filtrar.Text.Trim)
+            End Select
+
             Sb_SumarTotales()
         Catch ex As Exception
             MessageBoxEx.Show(Me, ex.Message, "Cuek!", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -492,7 +498,7 @@ Drop table #PasoR"
 
         Consulta_sql = "Select Codigo,Cant_Inventariada As Cantidad,Costo" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Inv_FotoInventario" & vbCrLf &
-                       "Where IdInventario = " & _IdInventario & " And Cant_Inventariada > 0"
+                       "Where IdInventario = " & _IdInventario & " And Cant_Inventariada > 0 And NoInventariar = 0"
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -630,5 +636,9 @@ Drop table #PasoR"
 
     Private Sub Btn_Filtrar_Click(sender As Object, e As EventArgs) Handles Btn_Filtrar.Click
         ShowContextMenu(Menu_Contextual_Filtrar)
+    End Sub
+
+    Private Sub Cmb_FiltroMostrarProductos_TextChanged(sender As Object, e As EventArgs)
+        Sb_Filtrar()
     End Sub
 End Class

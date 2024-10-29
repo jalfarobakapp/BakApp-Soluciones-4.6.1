@@ -270,7 +270,7 @@ Public Class Frm_EstadisticaProducto
         AddHandler Rdb_Ud1.CheckedChanged, AddressOf Sb_Rdb_Ud_CheckedChanged
         AddHandler Rdb_Ud2.CheckedChanged, AddressOf Sb_Rdb_Ud_CheckedChanged
 
-        Sb_Parametros_Informe_Sql(False)
+        'Sb_Parametros_Informe_Sql(False)
         Me.ControlBox = True
         Me.ShowInTaskbar = False
 
@@ -293,6 +293,8 @@ Public Class Frm_EstadisticaProducto
         Chk_Agrupar_Asociados.Enabled = CBool(_Tbl_Productos_Hermanos.Rows.Count)
 
         Me.Text = "Código: " & _Codigo & ", " & _Descripcion & "       (Empresa: " & RazonEmpresa & ")"
+
+        Sb_Parametros_Informe_Sql(False)
 
         If _Correr_a_la_derecha Then
             Me.Top += 30
@@ -2819,8 +2821,12 @@ Public Class Frm_EstadisticaProducto
         _Sql.Sb_Parametro_Informe_Sql(Chk_Mostrar_Solo_BLV_FCV_NCV, _Informe, Chk_Mostrar_Solo_BLV_FCV_NCV.Name,
                                                  Class_SQLite.Enum_Type._Boolean, Chk_Mostrar_Solo_BLV_FCV_NCV.Checked, _Actualizar, "Grafico")
 
-        _Sql.Sb_Parametro_Informe_Sql(Chk_Agrupar_Asociados, _Informe, Chk_Agrupar_Asociados.Name,
+        If Chk_Agrupar_Asociados.Enabled Then
+
+            _Sql.Sb_Parametro_Informe_Sql(Chk_Agrupar_Asociados, _Informe, Chk_Agrupar_Asociados.Name,
                                                  Class_SQLite.Enum_Type._Boolean, Chk_Agrupar_Asociados.Checked, _Actualizar, "Grafico")
+
+        End If
 
         _Sql.Sb_Parametro_Informe_Sql(Dtp_Fecha_Moviminetos_Stock_Desde, _Informe, Dtp_Fecha_Moviminetos_Stock_Desde.Name,
                                                  Class_SQLite.Enum_Type._Date, Dtp_Fecha_Moviminetos_Stock_Desde.Value, _Actualizar, "Grafico")

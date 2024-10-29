@@ -508,6 +508,12 @@ Public Class Frm_Ver_Documento
 
         Me.Cursor = Cursors.Default
 
+        VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00021",, False)
+
+        If Not String.IsNullOrEmpty(_Codigo_Marcar) Then
+            BuscarDatoEnGrilla(_Codigo_Marcar, "KOPRCT", GrillaDetalleDoc)
+        End If
+
     End Sub
 
     Sub Sb_Abrir_Documento_Desde_Random_SQL()
@@ -1693,6 +1699,9 @@ Public Class Frm_Ver_Documento
 
             End If
 
+            If IsNothing(_Codigo_Marcar) Then
+                _Codigo_Marcar = String.Empty
+            End If
 
             ' MARCAR DETALLE DE ORIGEN
 
@@ -1701,9 +1710,10 @@ Public Class Frm_Ver_Documento
                 Dim _Idmaeddo = _Fila.Cells("IDMAEDDO").Value
                 Dim _Koprct = _Fila.Cells("KOPRCT").Value
 
-                If _Idrst = _Idmaeddo Or _Codigo_Marcar = _Koprct Then
+                If _Idrst = _Idmaeddo Or _Codigo_Marcar.ToString.Trim = _Koprct.ToString.Trim Then
                     _Fila.DefaultCellStyle.ForeColor = Color.Black
                     _Fila.DefaultCellStyle.BackColor = Color.LightGreen
+                    _Codigo_Marcar = _Koprct
                 End If
 
             Next
@@ -2322,7 +2332,7 @@ Public Class Frm_Ver_Documento
         Dim _Endo As String = String.Empty
         Dim _Tido As String = _TblEncabezado.Rows(0).Item("TIDO")
 
-        If _Global_Row_Configuracion_Estacion.Item("VerSoloEntidadesDelVendedor") Then
+        If VerSoloEntidadesDelVendedor Then
             If _Tido = "COV" Or _Tido = "NVV" Or _Tido = "FCV" Or _Tido = "GDV" Or _Tido = "GDP" Or _Tido = "NCV" Then
                 _Tipo_Doc = Frm_BkpPostBusquedaEspecial_Mt.Tipo_Doc.Venta
                 _Endo = _RowEntidad.Item("KOEN")

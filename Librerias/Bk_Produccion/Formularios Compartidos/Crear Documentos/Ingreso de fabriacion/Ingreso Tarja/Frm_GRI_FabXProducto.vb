@@ -1112,6 +1112,7 @@ Public Class Frm_GRI_FabXProducto
         'Else
         '    _FechaEmision = Dtp_Fecha_Ingreso.Value
         'End If
+        _Observaciones = String.Empty
 
         Dim Fm As New Frm_Formulario_Documento("GRI", csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Recepcion_Interna,
                                                False, False, False, False, False, False)
@@ -1135,7 +1136,7 @@ Public Class Frm_GRI_FabXProducto
             Dim _Observaciones_GDI = "Documento creado automáticamente desde Bakapp al crear GRI de ingreso de producción"
 
             Dim Cl_ArmaGDI As New Cl_ArmaGDIConsumo
-            _Mensaje = Cl_ArmaGDI.Fx_CrearGDI(Me, _Row_Potl.Item("IDPOTL"), _Cantidad, _Row_Entidad, _FechaEmision, _Observaciones_GDI)
+            _Mensaje = Cl_ArmaGDI.Fx_CrearGDI(Me, _Row_Potl.Item("IDPOTL"), _Cantidadv, _Row_Entidad, _FechaEmision, _Observaciones_GDI)
 
             If Not _Mensaje.EsCorrecto Then
                 MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono, MessageBoxDefaultButton.Button1, True)

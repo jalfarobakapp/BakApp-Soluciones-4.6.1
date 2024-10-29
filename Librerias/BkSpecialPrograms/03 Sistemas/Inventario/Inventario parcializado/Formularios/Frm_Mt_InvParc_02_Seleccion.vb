@@ -1040,6 +1040,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
                 Dim _TblNewDetalle As DataTable = Fx_Crear_Detalle_para_PM(_TblProductos)
 
                 _TblProductos = _TblNewDetalle
+
             End If
 
             If CBool(_TblProductos.Rows.Count) Then
@@ -1057,9 +1058,12 @@ Public Class Frm_Mt_InvParc_02_Seleccion
                     Sb_Cargar_Grilla_Inv_Parcial(Fecha)
                     Sb_Cargar_Grilla_Inv_Parcial_Levantados(Fecha)
                 End If
+
             Else
+
                 MessageBoxEx.Show(Me, "Producto sin stock o stock negativo" & vbCrLf &
                                      "No se puede ajustar PM", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
 
             End If
 
@@ -1271,6 +1275,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
                     e.SuppressKeyPress = False
                     e.Handled = True
+
                 End If
 
             ElseIf e.KeyValue = Keys.Delete Then 'Keys.Up Then
@@ -1662,8 +1667,10 @@ Public Class Frm_Mt_InvParc_02_Seleccion
         Dim _Idmaeedo As Integer = _Fila.Cells("GDI_Idmaeedo_Aj").Value
         Dim _Tido_Nudo = _Fila.Cells("Nro_GDI_Stock_Cero").Value
         Dim _Nulo = _Fila.Cells("GDI_Cero_Nula").Value
+        Dim _Codigo = _Fila.Cells("CodigoPr").Value
 
-        Sb_Ver_Documento(_Idmaeedo, _Nulo, _Tido_Nudo)
+        Sb_Ver_Documento(_Idmaeedo, _Nulo, _Tido_Nudo, _Codigo)
+
     End Sub
 
     Private Sub Btn_Mnu_Ver_GRI_Deja_Stock_En_Cero_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Ver_GRI_Deja_Stock_En_Cero.Click
@@ -1673,8 +1680,10 @@ Public Class Frm_Mt_InvParc_02_Seleccion
         Dim _Idmaeedo As Integer = _Fila.Cells("GRI_Idmaeedo_Aj").Value
         Dim _Tido_Nudo = _Fila.Cells("Nro_GRI_Stock_Cero").Value
         Dim _Nulo = _Fila.Cells("GRI_Cero_Nula").Value
+        Dim _Codigo = _Fila.Cells("CodigoPr").Value
 
-        Sb_Ver_Documento(_Idmaeedo, _Nulo, _Tido_Nudo)
+        Sb_Ver_Documento(_Idmaeedo, _Nulo, _Tido_Nudo, _Codigo)
+
     End Sub
 
     Private Sub Btn_Mnu_Ver_GRI_Definitiva_Ajuste_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Ver_GRI_Definitiva_Ajuste.Click
@@ -1684,13 +1693,16 @@ Public Class Frm_Mt_InvParc_02_Seleccion
         Dim _Idmaeedo As Integer = _Fila.Cells("IDMAEEDO_Aj").Value
         Dim _Tido_Nudo = _Fila.Cells("Nro_GRI_Ajuste_Stock").Value
         Dim _Nulo = _Fila.Cells("GRI_Ajuste_Nula").Value
+        Dim _Codigo = _Fila.Cells("CodigoPr").Value
 
-        Sb_Ver_Documento(_Idmaeedo, _Nulo, _Tido_Nudo)
+        Sb_Ver_Documento(_Idmaeedo, _Nulo, _Tido_Nudo, _Codigo)
+
     End Sub
 
     Sub Sb_Ver_Documento(_Idmaeedo As Integer,
                          _Nulo As Boolean,
-                         Optional _Tido_Nudo As String = "")
+                         _Tido_Nudo As String,
+                         _Codigo_Marcar As String)
 
         Dim _TdNdo = Split(_Tido_Nudo, "-", 2)
         Dim _Tido, _Nudo As String
@@ -1717,6 +1729,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
         End Try
 
         Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
+        Fm.Codigo_Marcar = _Codigo_Marcar
         If Fm.Pro_Existe_Documento Then
             Fm.ShowDialog(Me)
         Else
@@ -1961,7 +1974,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
     End Sub
 
-    Private Sub Chk_Dejar_Doc_Final_Del_Dia_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles Chk_Dejar_Doc_Final_Del_Dia.CheckedChanged
+    Private Sub Chk_Dejar_Doc_Final_Del_Dia_CheckedChanged(sender As System.Object, e As System.EventArgs)
 
         If Chk_Dejar_Doc_Final_Del_Dia.Checked Then
 

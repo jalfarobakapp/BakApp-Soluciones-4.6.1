@@ -23,9 +23,6 @@ Partial Class Frm_Crear_Guias_De_Ajuste_De_Stock
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Crear_Guias_De_Ajuste_De_Stock))
-        Me.Chk_Dejar_Doc_Final_Del_Dia = New System.Windows.Forms.CheckBox()
-        Me.Chk_CambiarCostoEnLCProducto = New System.Windows.Forms.CheckBox()
-        Me.ChkDejaStockCero = New System.Windows.Forms.CheckBox()
         Me.DtFechaInv = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.LblEstado = New DevComponents.DotNetBar.LabelX()
@@ -34,50 +31,13 @@ Partial Class Frm_Crear_Guias_De_Ajuste_De_Stock
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Procesar = New DevComponents.DotNetBar.ButtonItem()
         Me.TxtLog = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Chk_ConsolidarStockAlFinalizar = New System.Windows.Forms.CheckBox()
+        Me.Chk_Dejar_Doc_Final_Del_Dia = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_ConsolidarStockAlFinalizar = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_CambiarCostoEnLCProducto = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.ChkDejaStockCero = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.DtFechaInv, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
-        '
-        'Chk_Dejar_Doc_Final_Del_Dia
-        '
-        Me.Chk_Dejar_Doc_Final_Del_Dia.AutoSize = True
-        Me.Chk_Dejar_Doc_Final_Del_Dia.BackColor = System.Drawing.Color.White
-        Me.Chk_Dejar_Doc_Final_Del_Dia.Enabled = False
-        Me.Chk_Dejar_Doc_Final_Del_Dia.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Dejar_Doc_Final_Del_Dia.Location = New System.Drawing.Point(489, 157)
-        Me.Chk_Dejar_Doc_Final_Del_Dia.Name = "Chk_Dejar_Doc_Final_Del_Dia"
-        Me.Chk_Dejar_Doc_Final_Del_Dia.Size = New System.Drawing.Size(198, 17)
-        Me.Chk_Dejar_Doc_Final_Del_Dia.TabIndex = 46
-        Me.Chk_Dejar_Doc_Final_Del_Dia.Text = "Hora de grabación al final del día"
-        Me.Chk_Dejar_Doc_Final_Del_Dia.UseVisualStyleBackColor = False
-        '
-        'Chk_CambiarCostoEnLCProducto
-        '
-        Me.Chk_CambiarCostoEnLCProducto.AutoSize = True
-        Me.Chk_CambiarCostoEnLCProducto.BackColor = System.Drawing.Color.White
-        Me.Chk_CambiarCostoEnLCProducto.Checked = True
-        Me.Chk_CambiarCostoEnLCProducto.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.Chk_CambiarCostoEnLCProducto.Enabled = False
-        Me.Chk_CambiarCostoEnLCProducto.ForeColor = System.Drawing.Color.Black
-        Me.Chk_CambiarCostoEnLCProducto.Location = New System.Drawing.Point(12, 180)
-        Me.Chk_CambiarCostoEnLCProducto.Name = "Chk_CambiarCostoEnLCProducto"
-        Me.Chk_CambiarCostoEnLCProducto.Size = New System.Drawing.Size(233, 17)
-        Me.Chk_CambiarCostoEnLCProducto.TabIndex = 45
-        Me.Chk_CambiarCostoEnLCProducto.Text = "Cambiar el costo de la lista del producto"
-        Me.Chk_CambiarCostoEnLCProducto.UseVisualStyleBackColor = False
-        '
-        'ChkDejaStockCero
-        '
-        Me.ChkDejaStockCero.AutoSize = True
-        Me.ChkDejaStockCero.BackColor = System.Drawing.Color.White
-        Me.ChkDejaStockCero.ForeColor = System.Drawing.Color.Black
-        Me.ChkDejaStockCero.Location = New System.Drawing.Point(12, 203)
-        Me.ChkDejaStockCero.Name = "ChkDejaStockCero"
-        Me.ChkDejaStockCero.Size = New System.Drawing.Size(120, 17)
-        Me.ChkDejaStockCero.TabIndex = 44
-        Me.ChkDejaStockCero.Text = "Deja stock en cero"
-        Me.ChkDejaStockCero.UseVisualStyleBackColor = False
         '
         'DtFechaInv
         '
@@ -165,6 +125,7 @@ Partial Class Frm_Crear_Guias_De_Ajuste_De_Stock
         '
         '
         Me.Progreso_Porc.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Progreso_Porc.FocusCuesEnabled = False
         Me.Progreso_Porc.Location = New System.Drawing.Point(12, 95)
         Me.Progreso_Porc.Name = "Progreso_Porc"
         Me.Progreso_Porc.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Donut
@@ -181,6 +142,7 @@ Partial Class Frm_Crear_Guias_De_Ajuste_De_Stock
         '
         '
         Me.Progreso_Cont.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Progreso_Cont.FocusCuesEnabled = False
         Me.Progreso_Cont.Location = New System.Drawing.Point(12, 43)
         Me.Progreso_Cont.Name = "Progreso_Cont"
         Me.Progreso_Cont.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Donut
@@ -211,6 +173,7 @@ Partial Class Frm_Crear_Guias_De_Ajuste_De_Stock
         Me.Btn_Procesar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Procesar.ForeColor = System.Drawing.Color.Black
         Me.Btn_Procesar.Image = CType(resources.GetObject("Btn_Procesar.Image"), System.Drawing.Image)
+        Me.Btn_Procesar.ImageAlt = CType(resources.GetObject("Btn_Procesar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Procesar.Name = "Btn_Procesar"
         Me.Btn_Procesar.Text = "Procesar"
         Me.Btn_Procesar.Tooltip = "Grabar"
@@ -232,28 +195,83 @@ Partial Class Frm_Crear_Guias_De_Ajuste_De_Stock
         Me.TxtLog.Size = New System.Drawing.Size(615, 98)
         Me.TxtLog.TabIndex = 37
         '
+        'Chk_Dejar_Doc_Final_Del_Dia
+        '
+        Me.Chk_Dejar_Doc_Final_Del_Dia.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Dejar_Doc_Final_Del_Dia.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Dejar_Doc_Final_Del_Dia.CheckBoxImageChecked = CType(resources.GetObject("Chk_Dejar_Doc_Final_Del_Dia.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Dejar_Doc_Final_Del_Dia.FocusCuesEnabled = False
+        Me.Chk_Dejar_Doc_Final_Del_Dia.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Dejar_Doc_Final_Del_Dia.Location = New System.Drawing.Point(489, 180)
+        Me.Chk_Dejar_Doc_Final_Del_Dia.Name = "Chk_Dejar_Doc_Final_Del_Dia"
+        Me.Chk_Dejar_Doc_Final_Del_Dia.Size = New System.Drawing.Size(198, 17)
+        Me.Chk_Dejar_Doc_Final_Del_Dia.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Dejar_Doc_Final_Del_Dia.TabIndex = 48
+        Me.Chk_Dejar_Doc_Final_Del_Dia.Text = "Hora de grabación al final del día"
+        '
         'Chk_ConsolidarStockAlFinalizar
         '
-        Me.Chk_ConsolidarStockAlFinalizar.AutoSize = True
-        Me.Chk_ConsolidarStockAlFinalizar.BackColor = System.Drawing.Color.White
+        Me.Chk_ConsolidarStockAlFinalizar.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_ConsolidarStockAlFinalizar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_ConsolidarStockAlFinalizar.CheckBoxImageChecked = CType(resources.GetObject("Chk_ConsolidarStockAlFinalizar.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_ConsolidarStockAlFinalizar.FocusCuesEnabled = False
         Me.Chk_ConsolidarStockAlFinalizar.ForeColor = System.Drawing.Color.Black
-        Me.Chk_ConsolidarStockAlFinalizar.Location = New System.Drawing.Point(251, 180)
+        Me.Chk_ConsolidarStockAlFinalizar.Location = New System.Drawing.Point(266, 180)
         Me.Chk_ConsolidarStockAlFinalizar.Name = "Chk_ConsolidarStockAlFinalizar"
-        Me.Chk_ConsolidarStockAlFinalizar.Size = New System.Drawing.Size(168, 17)
-        Me.Chk_ConsolidarStockAlFinalizar.TabIndex = 47
+        Me.Chk_ConsolidarStockAlFinalizar.Size = New System.Drawing.Size(198, 17)
+        Me.Chk_ConsolidarStockAlFinalizar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_ConsolidarStockAlFinalizar.TabIndex = 49
         Me.Chk_ConsolidarStockAlFinalizar.Text = "Consolidar stock al finalizar"
-        Me.Chk_ConsolidarStockAlFinalizar.UseVisualStyleBackColor = False
-        Me.Chk_ConsolidarStockAlFinalizar.Visible = False
+        '
+        'Chk_CambiarCostoEnLCProducto
+        '
+        Me.Chk_CambiarCostoEnLCProducto.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_CambiarCostoEnLCProducto.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_CambiarCostoEnLCProducto.CheckBoxImageChecked = CType(resources.GetObject("Chk_CambiarCostoEnLCProducto.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_CambiarCostoEnLCProducto.FocusCuesEnabled = False
+        Me.Chk_CambiarCostoEnLCProducto.ForeColor = System.Drawing.Color.Black
+        Me.Chk_CambiarCostoEnLCProducto.Location = New System.Drawing.Point(12, 179)
+        Me.Chk_CambiarCostoEnLCProducto.Name = "Chk_CambiarCostoEnLCProducto"
+        Me.Chk_CambiarCostoEnLCProducto.Size = New System.Drawing.Size(226, 18)
+        Me.Chk_CambiarCostoEnLCProducto.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_CambiarCostoEnLCProducto.TabIndex = 50
+        Me.Chk_CambiarCostoEnLCProducto.Text = "Cambiar el costo de la lista del producto"
+        '
+        'ChkDejaStockCero
+        '
+        Me.ChkDejaStockCero.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.ChkDejaStockCero.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.ChkDejaStockCero.CheckBoxImageChecked = CType(resources.GetObject("ChkDejaStockCero.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.ChkDejaStockCero.FocusCuesEnabled = False
+        Me.ChkDejaStockCero.ForeColor = System.Drawing.Color.Black
+        Me.ChkDejaStockCero.Location = New System.Drawing.Point(12, 205)
+        Me.ChkDejaStockCero.Name = "ChkDejaStockCero"
+        Me.ChkDejaStockCero.Size = New System.Drawing.Size(247, 18)
+        Me.ChkDejaStockCero.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.ChkDejaStockCero.TabIndex = 51
+        Me.ChkDejaStockCero.Text = "Deja stock en cero"
         '
         'Frm_Crear_Guias_De_Ajuste_De_Stock
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(705, 270)
+        Me.Controls.Add(Me.ChkDejaStockCero)
+        Me.Controls.Add(Me.Chk_CambiarCostoEnLCProducto)
         Me.Controls.Add(Me.Chk_ConsolidarStockAlFinalizar)
         Me.Controls.Add(Me.Chk_Dejar_Doc_Final_Del_Dia)
-        Me.Controls.Add(Me.Chk_CambiarCostoEnLCProducto)
-        Me.Controls.Add(Me.ChkDejaStockCero)
         Me.Controls.Add(Me.DtFechaInv)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.LblEstado)
@@ -278,10 +296,6 @@ Partial Class Frm_Crear_Guias_De_Ajuste_De_Stock
         Me.PerformLayout()
 
     End Sub
-
-    Public WithEvents Chk_Dejar_Doc_Final_Del_Dia As CheckBox
-    Public WithEvents Chk_CambiarCostoEnLCProducto As CheckBox
-    Public WithEvents ChkDejaStockCero As CheckBox
     Public WithEvents DtFechaInv As DevComponents.Editors.DateTimeAdv.DateTimeInput
     Friend WithEvents Label1 As Label
     Friend WithEvents LblEstado As DevComponents.DotNetBar.LabelX
@@ -290,5 +304,8 @@ Partial Class Frm_Crear_Guias_De_Ajuste_De_Stock
     Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
     Friend WithEvents Btn_Procesar As DevComponents.DotNetBar.ButtonItem
     Private WithEvents TxtLog As DevComponents.DotNetBar.Controls.TextBoxX
-    Public WithEvents Chk_ConsolidarStockAlFinalizar As CheckBox
+    Friend WithEvents Chk_Dejar_Doc_Final_Del_Dia As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_ConsolidarStockAlFinalizar As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_CambiarCostoEnLCProducto As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents ChkDejaStockCero As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

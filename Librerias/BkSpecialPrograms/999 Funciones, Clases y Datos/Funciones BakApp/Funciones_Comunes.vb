@@ -1226,7 +1226,7 @@ Error_Numero:
                     Return False
                 End Try
 
-                If BuscarTextoGrilla(Descripcion, TextoABuscar) Then
+                If BuscarTextoGrilla(Descripcion.ToString.Trim, TextoABuscar.ToString.Trim) Then
                     grid.ClearSelection()
                     grid.FirstDisplayedScrollingRowIndex = row.Index.ToString
                     grid.CurrentCell = grid.Rows(row.Index.ToString).Cells(Columna)

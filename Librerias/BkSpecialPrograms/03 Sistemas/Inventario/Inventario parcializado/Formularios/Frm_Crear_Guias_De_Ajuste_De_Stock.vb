@@ -64,9 +64,7 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
 
         Chk_Dejar_Doc_Final_Del_Dia.Checked = Dejar_Doc_Final_Del_Dia
 
-        If Global_Thema = Enum_Themas.Oscuro Then
-            Btn_Procesar.ForeColor = Color.White
-        End If
+        Sb_Color_Botones_Barra(Bar2)
 
     End Sub
 
@@ -170,15 +168,20 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
             Fm.Pro_Ejecutar_Automaticamente = True
             Fm.ShowDialog(Me)
             Fm.Dispose()
+
         Else
+
             If Chk_Confirmar_Lectura.Checked Then
+
                 If MessageBoxEx.Show(Me, "Confirmo la consolidación del stock, pero se indicó que NO." & vbCrLf &
                                      "Debe desmarcar la opción ""CONFIRMO CONSOLIDAR EL STOCK""." & vbCrLf &
                                      "Si NO desea consolidar el stock y luego seleccionar NO", "Validación",
                                      MessageBoxButtons.OK, MessageBoxIcon.Stop) Then
                     Sb_ConsolidarStock()
                 End If
+
             End If
+
         End If
 
     End Sub
@@ -830,6 +833,7 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
         Fm.Pro_RowEntidad = _Row_Entidad
         Fm.Sb_Crear_Documento_Interno_Con_Tabla(Me, _Tbl_Productos, DtFechaInv.Value,
                                                 "CodigoPr", _Campo_Cantidad, "CostoUnitUd1", _Observaciones, False, False)
+        Fm.NoConsolidarNuncaStock = Not Chk_ConsolidarStockAlFinalizar.Checked
         Dim _Mensaje As LsValiciones.Mensajes = Fm.Fx_Grabar_Documento(False)
         Fm.Dispose()
 
