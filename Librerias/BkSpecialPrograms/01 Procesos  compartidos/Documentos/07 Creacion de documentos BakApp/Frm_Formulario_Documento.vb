@@ -14445,6 +14445,10 @@ Public Class Frm_Formulario_Documento
 
     Private Sub Sb_RevListaSuperiosEntidad_VtaCurso()
 
+        If _Tido <> "COV" And _Tido <> "NVV" Then
+            Return
+        End If
+
         Try
 
             If _Cl_DocListaSuperior.UsarVencListaPrecios Then
@@ -14506,6 +14510,10 @@ Public Class Frm_Formulario_Documento
     End Sub
 
     Private Sub Sb_RevListaSuperiosEntidad()
+
+        If _Tido <> "COV" And _Tido <> "NVV" Then
+            Return
+        End If
 
         Try
 

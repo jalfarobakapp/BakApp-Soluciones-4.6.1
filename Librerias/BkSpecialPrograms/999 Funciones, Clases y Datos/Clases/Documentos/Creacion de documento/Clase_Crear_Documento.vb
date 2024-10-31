@@ -44,6 +44,7 @@ Public Class Clase_Crear_Documento
     Dim _Feer As String         ' Fecha esperada de recepcion --
     Dim _Subtido As String      ' AJU si es ajuste
     Dim _Marca As String        ' 1 si es ajuste
+    Dim _Esdoimp As String      ' I si es importaciones, SUBTIDO = 'IMP'
     Dim _Lisactiva As String    ' Lista de precios del documento
 
     Dim _Libro As String        ' Numero de libro de compra
@@ -1490,12 +1491,18 @@ Public Class Clase_Crear_Documento
             '_MM = _HH_sistem.Minute
             '_SS = _HH_sistem.Second
 
+            _Esdoimp = String.Empty
+
             If EsAjuste Then
                 _Marca = "I" '1 ' Generalmente se marcan las GRI o GDI que son por ajuste
                 _Subtido = "AJU" ' Generalmente se Marcan las Guias de despacho o recibo
                 _Suendo = String.Empty
             Else
                 _Marca = String.Empty
+                If _Subtido = "IMP" Then
+                    _Marca = "I"
+                    _Esdoimp = "I"
+                End If
             End If
 
             If _Tido = "GDV" And Not _Es_Documento_Electronico Then
@@ -1547,7 +1554,7 @@ Public Class Clase_Crear_Documento
                            "',FEULVEDO = '" & _Feulvedo & "',NUVEDO = " & _Nuvedo & ",FEER = '" & _Feer &
                            "',KOTU = '1',LCLV = NULL,LAHORA = GETDATE(), DESPACHO = " & _Despacho & ",HORAGRAB = " & _HoraGrab &
                            "," & _Fecha_Tributaria & ",NUMOPERVEN = 0,FLIQUIFCV = '" & _Feemdo & "',SUBTIDO = '" & _Subtido &
-                           "',MARCA = '" & _Marca & "',ESDO = '',NUDONODEFI = " & CInt(_Es_ValeTransitorio) &
+                           "',MARCA = '" & _Marca & "',ESDOIMP = '" & _Esdoimp & "',ESDO = '',NUDONODEFI = " & CInt(_Es_ValeTransitorio) &
                            ",TIDOELEC = " & CInt(_Es_Documento_Electronico) & ",LUVTDO = '" & _Luvtdo &
                            "',LIBRO = '" & _Libro & "',BODESTI = '" & _Bodesti & "',CUOGASDIF = 0" & vbCrLf &
                            "WHERE IDMAEEDO=" & _Idmaeedo

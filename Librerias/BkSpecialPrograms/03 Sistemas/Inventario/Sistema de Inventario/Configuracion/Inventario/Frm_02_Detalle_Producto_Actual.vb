@@ -81,7 +81,7 @@ Public Class Frm_02_Detalle_Producto_Actual
                        "Item_Hoja,FechaHoraToma,FechaHoraToma AS Hora,Cantidad as 'Cantidad',Responsable,ISNULL(Resp.NOKOFU,'') As Digitador," & vbCrLf &
                        "HEnc.IdContador1,ISNULL(C1.Nombre,'') As Contador1,HEnc.IdContador2,ISNULL(C2.Nombre,'') As Contador2," & vbCrLf &
                        "Observaciones,Actualizado_por,Obs_Actualizacion" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle HDet" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle HDet With (Nolock)" & vbCrLf &
                        "Inner Join " & _Global_BaseBk & "Zw_Inv_Hoja HEnc On HEnc.Id = HDet.IdHoja" & vbCrLf &
                        "Left Join TABFU Resp On KOFU = HEnc.CodResponsable" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Inv_Contador C1 On C1.Id = HEnc.IdContador1" & vbCrLf &
@@ -148,25 +148,25 @@ Public Class Frm_02_Detalle_Producto_Actual
 
         Consulta_sql = "Select Codigo,Recontado, SUM(Cantidad) As Cantidad" & vbCrLf &
                        "Into #PasoR" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle With (Nolock)" & vbCrLf &
                        "Where IdInventario = " & _IdInventario & " And Recontado = 1 And Codigo = '" & _Codigo & "'" & vbCrLf &
                        "Group By Codigo,Recontado" & vbCrLf &
                        vbCrLf &
                        "Select Codigo,Recontado, SUM(Cantidad) As Cantidad" & vbCrLf &
                        "Into #PasoC" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle With (Nolock)" & vbCrLf &
                        "Where IdInventario = " & _IdInventario & " And Codigo = ' " & _Codigo & "' And Codigo Not In (Select Codigo From #PasoR)" & vbCrLf &
                        "Group By Codigo,Recontado" & vbCrLf &
                        vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 0 Where IdInventario = " & _IdInventario & " And Codigo = '" & _Codigo & "'" & vbCrLf &
                        vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 1,Cant_Inventariada = Cantidad" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Inv_FotoInventario Foto" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Inv_FotoInventario Foto With (Nolock)" & vbCrLf &
                        "Inner Join #PasoR On #PasoR.Codigo = Foto.Codigo" & vbCrLf &
                        "Where IdInventario = " & _IdInventario & " And Foto.Codigo = '" & _Codigo & "'" & vbCrLf &
                        vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Cant_Inventariada = Cantidad" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Inv_FotoInventario Foto" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Inv_FotoInventario Foto With (Nolock)" & vbCrLf &
                        "Inner Join #PasoC On #PasoC.Codigo = Foto.Codigo" & vbCrLf &
                        "Where IdInventario = " & _IdInventario & " And Foto.Codigo = '" & _Codigo & "'" & vbCrLf &
                        vbCrLf &

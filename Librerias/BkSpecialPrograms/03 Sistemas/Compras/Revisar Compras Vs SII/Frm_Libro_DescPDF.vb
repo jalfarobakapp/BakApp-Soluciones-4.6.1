@@ -155,10 +155,10 @@ Public Class Frm_Libro_DescPDF
         ' leyenda  
         _FolderBrowserDialog.Description = "Seleccionar una carpeta "
 
-        _Directorio = "...\Data\" & RutEmpresa & "\DTE2PDF"
+        _Directorio = AppPath() & "\Data\" & RutEmpresa & "\DTE2PDF"
 
         If Not Directory.Exists(_Directorio) Then
-            System.IO.Directory.CreateDirectory(_Directorio) 'AppPath() & "\Data\" & RutEmpresa & "\DTE2PDF")
+            System.IO.Directory.CreateDirectory(_Directorio)
         End If
 
         ' Path " Mis documentos "  

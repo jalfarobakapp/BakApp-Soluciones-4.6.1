@@ -78,26 +78,26 @@ Public Class Frm_01_Inventario_Actual
 
         If Not _Filtrar_Todos_Sectores Then
             Dim _Fl As String = Generar_Filtro_IN(_Tbl_Filtro_Sectores, "Chk", "Codigo", False, True, "'")
-            _Filtros += "And Codigo In (Select Codigo From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle " &
+            _Filtros += "And Codigo In (Select Codigo From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle With (Nolock)" &
                         "Where Sector In " & _Fl & ")" & vbCrLf
         End If
 
         If Not _Filtrar_Todos_Encargados Then
             Dim _Fl As String = Generar_Filtro_IN(_Tbl_Filtro_Encargados, "Chk", "Codigo", False, True, "'")
-            _Filtros += "And Codigo In (Select Codigo From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle " &
+            _Filtros += "And Codigo In (Select Codigo From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle With (Nolock)" &
                         "Where IdSector In (Select Id From " & _Global_BaseBk & "Zw_Inv_Sector Where CodFuncionario In " & _Fl & ") " &
                         "And IdInventario = " & _IdInventario & ")" & vbCrLf
         End If
 
         Consulta_sql = "Select Codigo,Recontado, SUM(Cantidad) As Cantidad" & vbCrLf &
                        "Into #PasoR" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle With (Nolock)" & vbCrLf &
                        "Where IdInventario = " & _IdInventario & " And Recontado = 1" & vbCrLf &
                        "Group By Codigo,Recontado" & vbCrLf &
                        vbCrLf &
                        "Select Codigo,Recontado, SUM(Cantidad) As Cantidad" & vbCrLf &
                        "Into #PasoC" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle With (Nolock)" & vbCrLf &
                        "Where IdInventario = " & _IdInventario & " And Codigo Not In (Select Codigo From #PasoR)" & vbCrLf &
                        "Group By Codigo,Recontado" & vbCrLf &
                        vbCrLf &
@@ -128,7 +128,7 @@ Public Class Frm_01_Inventario_Actual
         Consulta_sql = "Select Codigo,CodigoRap,CodigoTec,Descripcion,StFisicoUd1,Cant_Inventariada,Costo,Dif_Inv_Cantidad," &
                        "Total_Costo_Foto,Total_Costo_Inv,Dif_Inv_Costo,Recontado,NoInventariar," & vbCrLf &
                        "SuperFamilia,Nom_SuperFamilia,Familia,Nom_Familia,SubFamilia,Nom_SubFamilia,Marca,Nom_Marca,Rubro,Nom_Rubro,ClasLibre,Nom_ClasLibre,Zona,Nom_Zona" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Inv_FotoInventario" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Inv_FotoInventario With (Nolock)" & vbCrLf &
                        "Where IdInventario = " & _IdInventario & vbCrLf & _Filtros
 
         Dim _New_Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)

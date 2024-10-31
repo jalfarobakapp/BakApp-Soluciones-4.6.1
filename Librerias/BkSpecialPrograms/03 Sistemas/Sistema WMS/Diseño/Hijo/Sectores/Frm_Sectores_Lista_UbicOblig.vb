@@ -24,6 +24,8 @@ Public Class Frm_Sectores_Lista_UbicOblig
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Enc Where Id_Mapa = " & _Id_Mapa
         _Row_Mapa = _Sql.Fx_Get_DataRow(Consulta_sql)
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
 
     Private Sub Frm_Sectores_Lista_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -237,11 +239,11 @@ Public Class Frm_Sectores_Lista_UbicOblig
                     Dim _Fila As DataGridViewRow = CType(sender, DataGridView).Rows(CType(sender, DataGridView).CurrentRow.Index)
                     Dim _Cabeza = sender.Columns(CType(sender, DataGridView).CurrentCell.ColumnIndex).Name
 
-                    Dim _Hoy As Boolean = (FechaDelServidor.Date = Dtp_FechaRevision.Value.Date)
+                    'Dim _Hoy As Boolean = (FechaDelServidor.Date = Dtp_FechaRevision.Value.Date)
 
-                    Btn_VerProdUbicacion.Visible = _Hoy
-                    Btn_AgregarProductosUbic.Visible = Not _Hoy
-                    Btn_QuitarProductosUbic.Visible = Not _Hoy
+                    Btn_VerProdUbicacion.Visible = True
+                    Btn_AgregarProductosUbic.Visible = False
+                    Btn_QuitarProductosUbic.Visible = False
 
                     ShowContextMenu(Menu_Contextual_01)
 
@@ -444,6 +446,9 @@ Public Class Frm_Sectores_Lista_UbicOblig
 
     Private Sub Grilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
 
+        Call Btn_VerProdUbicacion_Click(Nothing, Nothing)
+        Return
+
         Dim _Hoy As Boolean = (FechaDelServidor.Date = Dtp_FechaRevision.Value.Date)
 
         If Not _Hoy Then
@@ -482,6 +487,35 @@ Public Class Frm_Sectores_Lista_UbicOblig
         Fm.Dispose()
 
         Sb_Actualizar_Grilla()
+
+    End Sub
+
+    Private Sub Btn_ExportarExcelProductos_Click(sender As Object, e As EventArgs) Handles Btn_ExportarExcelProductos.Click
+
+        Consulta_sql = "Select PrUbic.Codigo_Sector,Mp.KOPR,Mp.NOKOPR" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal PrUbic" & vbCrLf &
+                       "Left Join MAEPR Mp On Mp.KOPR = PrUbic.Codigo" & vbCrLf &
+                       "Where FechaIngreso = '" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "'"
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+        ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Productos en ubicaciones")
+
+    End Sub
+
+    Private Sub Btn_VerProdUbicacion_Click(sender As Object, e As EventArgs) Handles Btn_VerProdUbicacion.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+
+        Dim _Empresa As String = _Fila.Cells("Empresa").Value
+        Dim _Sucursal As String = _Fila.Cells("Sucursal").Value
+        Dim _Bodega As String = _Fila.Cells("Bodega").Value
+        Dim _Codigo_Sector As String = _Fila.Cells("Codigo_Sector").Value
+        Dim _Codigo_Ubic As String = _Codigo_Sector
+        Dim _FechaIngreso As Date = Dtp_FechaRevision.Value
+
+        Dim Fm As New Frm_Sectores_ProductosEnSector(_Id_Mapa, _Codigo_Sector, _Codigo_Ubic)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 

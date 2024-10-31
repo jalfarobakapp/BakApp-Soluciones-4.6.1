@@ -2433,6 +2433,12 @@
     <Compile Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Sectores\Frm_Sectores_Lista_UbicOblig.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Sectores\Frm_Sectores_ProductosEnSector.Designer.vb">
+      <DependentUpon>Frm_Sectores_ProductosEnSector.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Sectores\Frm_Sectores_ProductosEnSector.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Sistema WMS\Gestión WMS\Clases\Cl_Documento_Wms.vb" />
     <Compile Include="03 Sistemas\Sistema WMS\Gestión WMS\Formularios\Frm_WMS_Documento.Designer.vb">
       <DependentUpon>Frm_WMS_Documento.vb</DependentUpon>
@@ -5606,6 +5612,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Sectores\Frm_Sectores_Lista_UbicOblig.resx">
       <DependentUpon>Frm_Sectores_Lista_UbicOblig.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Sectores\Frm_Sectores_ProductosEnSector.resx">
+      <DependentUpon>Frm_Sectores_ProductosEnSector.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Sistema WMS\Diseño\Padre\Frm_Diseno_Doc_y_Ubic.resx">
       <DependentUpon>Frm_Diseno_Doc_y_Ubic.vb</DependentUpon>
