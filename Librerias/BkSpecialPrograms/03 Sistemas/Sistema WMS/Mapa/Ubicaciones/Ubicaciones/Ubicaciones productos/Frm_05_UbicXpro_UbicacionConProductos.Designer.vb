@@ -22,9 +22,9 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_05_UbicXpro_UbicacionConProductos))
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.LblBodega = New DevComponents.DotNetBar.LabelX()
@@ -37,6 +37,7 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Buscar_Producto = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Seleccion_Multiple = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Seleccion_MultipleQuitar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Imprimir_Etiquetas = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnExportarExcel = New DevComponents.DotNetBar.ButtonItem()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -51,7 +52,6 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
         Me.Rdb_Ud2 = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.TxtUbicacion = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Lbl_InfoFechaIngUbic = New DevComponents.DotNetBar.LabelX()
-        Me.Btn_Seleccion_MultipleQuitar = New DevComponents.DotNetBar.ButtonItem()
         Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -168,38 +168,38 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
         Me.Grilla.ReadOnly = True
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
-        Me.Grilla.Size = New System.Drawing.Size(736, 239)
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        Me.Grilla.Size = New System.Drawing.Size(736, 390)
         Me.Grilla.TabIndex = 10
         '
         'Bar1
@@ -208,7 +208,7 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Buscar_Producto, Me.Btn_Seleccion_Multiple, Me.Btn_Seleccion_MultipleQuitar, Me.Btn_Imprimir_Etiquetas, Me.BtnExportarExcel})
-        Me.Bar1.Location = New System.Drawing.Point(0, 427)
+        Me.Bar1.Location = New System.Drawing.Point(0, 575)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(760, 41)
         Me.Bar1.Stretch = True
@@ -234,6 +234,15 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
         Me.Btn_Seleccion_Multiple.ImageAlt = CType(resources.GetObject("Btn_Seleccion_Multiple.ImageAlt"), System.Drawing.Image)
         Me.Btn_Seleccion_Multiple.Name = "Btn_Seleccion_Multiple"
         Me.Btn_Seleccion_Multiple.Tooltip = "Agregar productos con selección múltiple (F3)"
+        '
+        'Btn_Seleccion_MultipleQuitar
+        '
+        Me.Btn_Seleccion_MultipleQuitar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Seleccion_MultipleQuitar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Seleccion_MultipleQuitar.Image = CType(resources.GetObject("Btn_Seleccion_MultipleQuitar.Image"), System.Drawing.Image)
+        Me.Btn_Seleccion_MultipleQuitar.ImageAlt = CType(resources.GetObject("Btn_Seleccion_MultipleQuitar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Seleccion_MultipleQuitar.Name = "Btn_Seleccion_MultipleQuitar"
+        Me.Btn_Seleccion_MultipleQuitar.Tooltip = "Quitar productos con selección múltiple (F4)"
         '
         'Btn_Imprimir_Etiquetas
         '
@@ -272,7 +281,7 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 127)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(742, 262)
+        Me.GroupPanel1.Size = New System.Drawing.Size(742, 413)
         '
         '
         '
@@ -370,7 +379,7 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
         Me.Rdb_Ud1.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Ud1.CheckValue = "Y"
         Me.Rdb_Ud1.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Ud1.Location = New System.Drawing.Point(12, 395)
+        Me.Rdb_Ud1.Location = New System.Drawing.Point(12, 546)
         Me.Rdb_Ud1.Name = "Rdb_Ud1"
         Me.Rdb_Ud1.Size = New System.Drawing.Size(69, 23)
         Me.Rdb_Ud1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -386,7 +395,7 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
         Me.Rdb_Ud2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Rdb_Ud2.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Ud2.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Ud2.Location = New System.Drawing.Point(87, 395)
+        Me.Rdb_Ud2.Location = New System.Drawing.Point(78, 546)
         Me.Rdb_Ud2.Name = "Rdb_Ud2"
         Me.Rdb_Ud2.Size = New System.Drawing.Size(72, 23)
         Me.Rdb_Ud2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -419,26 +428,17 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
         Me.Lbl_InfoFechaIngUbic.ForeColor = System.Drawing.Color.Black
         Me.Lbl_InfoFechaIngUbic.Image = CType(resources.GetObject("Lbl_InfoFechaIngUbic.Image"), System.Drawing.Image)
         Me.Lbl_InfoFechaIngUbic.ImageTextSpacing = 5
-        Me.Lbl_InfoFechaIngUbic.Location = New System.Drawing.Point(165, 395)
+        Me.Lbl_InfoFechaIngUbic.Location = New System.Drawing.Point(165, 546)
         Me.Lbl_InfoFechaIngUbic.Name = "Lbl_InfoFechaIngUbic"
         Me.Lbl_InfoFechaIngUbic.Size = New System.Drawing.Size(589, 23)
         Me.Lbl_InfoFechaIngUbic.TabIndex = 48
         Me.Lbl_InfoFechaIngUbic.Text = "Fecha de ingreso en la ubicación: 05-10-2024"
         '
-        'Btn_Seleccion_MultipleQuitar
-        '
-        Me.Btn_Seleccion_MultipleQuitar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Seleccion_MultipleQuitar.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Seleccion_MultipleQuitar.Image = CType(resources.GetObject("Btn_Seleccion_MultipleQuitar.Image"), System.Drawing.Image)
-        Me.Btn_Seleccion_MultipleQuitar.ImageAlt = CType(resources.GetObject("Btn_Seleccion_MultipleQuitar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Seleccion_MultipleQuitar.Name = "Btn_Seleccion_MultipleQuitar"
-        Me.Btn_Seleccion_MultipleQuitar.Tooltip = "Quitar productos con selección múltiple (F4)"
-        '
         'Frm_05_UbicXpro_UbicacionConProductos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(760, 468)
+        Me.ClientSize = New System.Drawing.Size(760, 616)
         Me.Controls.Add(Me.Lbl_InfoFechaIngUbic)
         Me.Controls.Add(Me.TxtUbicacion)
         Me.Controls.Add(Me.Rdb_Ud2)

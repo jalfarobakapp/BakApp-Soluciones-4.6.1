@@ -239,11 +239,12 @@ Public Class Frm_Sectores_Lista_UbicOblig
                     Dim _Fila As DataGridViewRow = CType(sender, DataGridView).Rows(CType(sender, DataGridView).CurrentRow.Index)
                     Dim _Cabeza = sender.Columns(CType(sender, DataGridView).CurrentCell.ColumnIndex).Name
 
-                    'Dim _Hoy As Boolean = (FechaDelServidor.Date = Dtp_FechaRevision.Value.Date)
+                    Dim _Hoy As Boolean = (FechaDelServidor.Date = Dtp_FechaRevision.Value.Date)
 
                     Btn_VerProdUbicacion.Visible = True
-                    Btn_AgregarProductosUbic.Visible = False
-                    Btn_QuitarProductosUbic.Visible = False
+                    Btn_AgregarProductosUbic.Visible = Not _Hoy
+                    Btn_QuitarProductosUbic.Visible = Not _Hoy
+                    LabelItem2.Visible = Not _Hoy
 
                     ShowContextMenu(Menu_Contextual_01)
 
@@ -359,9 +360,9 @@ Public Class Frm_Sectores_Lista_UbicOblig
                                    False, False) Then
 
                 _Tbl_Productos = _Filtrar.Pro_Tbl_Filtro
-                If _Filtrar.Pro_Filtro_Todas Then
-                    _Tbl_Productos = Nothing
-                End If
+                'If _Filtrar.Pro_Filtro_Todas Then
+                '    _Tbl_Productos = Nothing
+                'End If
                 _Filtrar_Pr = True
             End If
 
@@ -376,11 +377,13 @@ Public Class Frm_Sectores_Lista_UbicOblig
 
                     Dim _Codigo As String = _Fl.Item("Codigo")
 
-                    Dim _Semilla = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Prod_Ubicacion", "Semilla",
+                    Dim _Id = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Prod_Ubicacion_IngSal", "Id",
                                                       "Id_Mapa = " & _Id_Mapa &
                                                       " And Codigo_Sector = '" & _Codigo_Sector &
                                                       "' And Codigo_Ubic = '" & _Codigo_Ubic &
-                                                      "' And Codigo = '" & _Codigo & "'")
+                                                      "' And Codigo = '" & _Codigo &
+                                                      "' And FechaIngreso = '" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") &
+                                                      "' And Ingreso = 1 And Salida = 0")
 
                     Consulta_sql += "Update " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal Set " & vbCrLf &
                                     "Empresa = '" & _Empresa & "'" &
@@ -394,7 +397,7 @@ Public Class Frm_Sectores_Lista_UbicOblig
                                     ",NombreEquipo = '" & _NombreEquipo & "'" &
                                     ",Salida = 1" &
                                     ",FechaSalida = '" & Format(_FechaIngreso, "yyyyMMdd") & "'" & vbCrLf &
-                                    "Where Semilla = " & _Semilla & vbCrLf
+                                    "Where Id = " & _Id & vbCrLf
 
                     _Contador += 1
 
@@ -495,7 +498,7 @@ Public Class Frm_Sectores_Lista_UbicOblig
         Consulta_sql = "Select PrUbic.Codigo_Sector,Mp.KOPR,Mp.NOKOPR" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal PrUbic" & vbCrLf &
                        "Left Join MAEPR Mp On Mp.KOPR = PrUbic.Codigo" & vbCrLf &
-                       "Where FechaIngreso = '" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "'"
+                       "Where FechaIngreso = '" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "' And Ingreso = 1 And Salida = 0"
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Productos en ubicaciones")
@@ -503,6 +506,67 @@ Public Class Frm_Sectores_Lista_UbicOblig
     End Sub
 
     Private Sub Btn_VerProdUbicacion_Click(sender As Object, e As EventArgs) Handles Btn_VerProdUbicacion.Click
+
+        Try
+            Me.Enabled = False
+
+            Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+
+            Dim _Empresa As String = _Fila.Cells("Empresa").Value
+            Dim _Sucursal As String = _Fila.Cells("Sucursal").Value
+            Dim _Bodega As String = _Fila.Cells("Bodega").Value
+            Dim _Codigo_Sector As String = _Fila.Cells("Codigo_Sector").Value
+            Dim _Nombre_Sector As String = _Fila.Cells("Nombre_Sector").Value
+            Dim _Codigo_Ubic As String = _Codigo_Sector
+            Dim _FechaIngreso As Date = Dtp_FechaRevision.Value
+
+            Dim _Hoy As Boolean = (FechaDelServidor.Date = Dtp_FechaRevision.Value.Date)
+
+            If Not _Hoy Then
+
+                Dim _Sql_Filtro_Condicion_Extra = "And TIPR = 'FPN' And KOPR In " &
+                                                      "(Select Codigo From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal Where " &
+                                                      "Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector & "' " &
+                                                      "And Codigo_Ubic = '" & _Codigo_Ubic & "' And Ingreso = 1 And Salida = 0 " &
+                                                      "And CONVERT(varchar, FechaIngreso, 112) = '" & Format(_FechaIngreso, "yyyyMMdd") & "')"
+                Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+                _Filtrar.Fx_Filtrar(Nothing, Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra, False, False,, False,, False)
+
+                Return
+
+            End If
+
+            Dim _Row_Bodega As DataRow = Fx_Trar_Datos_De_Bodega_Seleccionada(_Empresa, _Sucursal, _Bodega)
+            Dim _Row_Ubicacion As DataRow
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega" & vbCrLf &
+                           "Where Id_Mapa = " & _Id_Mapa & " And Empresa = '" & _Empresa & "' " &
+                           "And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega & "' " &
+                           "And Codigo_Sector = '" & _Codigo_Sector & "' And Codigo_Ubic = '" & _Codigo_Ubic & "'"
+            _Row_Ubicacion = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Dim Fm As New Frm_05_UbicXpro_UbicacionConProductos(_Row_Bodega, _Id_Mapa, _Codigo_Sector, _Codigo_Ubic)
+            Fm.TxtUbicacion.Text = _Codigo_Ubic.Trim & ": " & _Nombre_Sector
+            Fm.Text = "Productos en la ubicación -> " & _Codigo_Ubic
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
+
+            Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_Ubicacion",
+                                                "Id_Mapa = " & _Id_Mapa & " And " &
+                                                "Codigo_Sector = '" & _Codigo_Sector & "' And " &
+                                                "Codigo_Ubic = '" & _Codigo_Ubic & "'")
+
+            _Fila.Cells("Productos2").Value = _Reg
+
+        Catch ex As Exception
+        Finally
+            Me.Enabled = True
+        End Try
+
+    End Sub
+
+    Private Sub Btn_VerProdUbicacionMensual_Click(sender As Object, e As EventArgs) Handles Btn_VerProdUbicacionMensual.Click
 
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
 
@@ -513,7 +577,7 @@ Public Class Frm_Sectores_Lista_UbicOblig
         Dim _Codigo_Ubic As String = _Codigo_Sector
         Dim _FechaIngreso As Date = Dtp_FechaRevision.Value
 
-        Dim Fm As New Frm_Sectores_ProductosEnSector(_Id_Mapa, _Codigo_Sector, _Codigo_Ubic)
+        Dim Fm As New Frm_Sectores_ProductosEnSector(_Id_Mapa, _Codigo_Sector, _Codigo_Ubic, Dtp_FechaRevision.Value)
         Fm.ShowDialog(Me)
         Fm.Dispose()
 

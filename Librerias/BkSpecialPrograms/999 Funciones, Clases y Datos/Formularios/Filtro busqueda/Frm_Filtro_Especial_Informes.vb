@@ -254,6 +254,9 @@ Public Class Frm_Filtro_Especial_Informes
         Btn_Editar.Visible = Activar_Crear_Editar_Eliminar
         Btn_Eliminar.Visible = Activar_Crear_Editar_Eliminar
 
+        Rdb_Mostrar_Solo_Tickeados.Visible = _Requiere_Seleccion
+        Rdb_Mostrar_Todos.Visible = _Requiere_Seleccion
+
         Sb_Cargar_Datos()
 
         With Grilla
@@ -264,7 +267,7 @@ Public Class Frm_Filtro_Especial_Informes
 
             .Columns("Chk").Width = 30
             .Columns("Chk").HeaderText = "Sel."
-            .Columns("Chk").Visible = True
+            .Columns("Chk").Visible = _Requiere_Seleccion
 
             If _Seleccionar_Solo_Uno Then
                 .Columns("Chk").ReadOnly = _Seleccionar_Solo_Uno

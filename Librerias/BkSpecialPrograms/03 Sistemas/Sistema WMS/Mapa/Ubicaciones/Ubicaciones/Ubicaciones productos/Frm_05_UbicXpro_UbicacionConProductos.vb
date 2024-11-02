@@ -482,10 +482,8 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
                                    False, False) Then
 
                 _Tbl_Productos = _Filtrar.Pro_Tbl_Filtro
-                If _Filtrar.Pro_Filtro_Todas Then
-                    _Tbl_Productos = Nothing
-                End If
                 _Filtrar_Pr = True
+
             End If
 
             Dim _Contador = 0
