@@ -508,16 +508,24 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
                 Dim _Dif_GRI_Ud1 As Double = 0
 
 
-                LblEstado.Text = "Consolidando Stock, " & Contador + 1 & " de " &
-                                 Tbl_Detalle_Aj.Rows.Count & ",Producto: " & _Descripcion & ""
-
                 Dim _Stock_Fi(1) As Double
                 Dim _Fecha As String = Format(DtFechaInv.Value, "yyyyMMdd")
                 Dim _Dif As Double
 
-                _Stock_Fi = Stock_Fi_A_Una_Fecha_X_Producto(_Codigo, _Empresa, _Sucursal, _Bodega, DtFechaInv.Value)
+                If Chk_ConsolidarStockAlFinalizar.Checked Then
 
-                _Dif = _Stock_Fi(0) '- _CantidadUd1
+                    LblEstado.Text = "Consolidando Stock, " & Contador + 1 & " de " &
+                                 Tbl_Detalle_Aj.Rows.Count & ",Producto: " & _Descripcion & ""
+
+                    _Stock_Fi = Stock_Fi_A_Una_Fecha_X_Producto(_Codigo, _Empresa, _Sucursal, _Bodega, DtFechaInv.Value)
+
+                    _Dif = _Stock_Fi(0) '- _CantidadUd1
+
+                Else
+
+                    _Dif = Fila.Item("Stock_Ud1")
+
+                End If
 
                 If _Dif > 0 Then
                     _Dif_GDI_Ud1 = _Dif
@@ -564,12 +572,15 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
 
             Next
 
-            'Exit Function
-            LblEstado.Text = "Productos consolidados correctamente, Stock físico"
-            AddToLog("Consolidación de Stock...", "Stock consolidaddo correctamente")
+            If Chk_ConsolidarStockAlFinalizar.Checked Then
+                'Exit Function
+                LblEstado.Text = "Productos consolidados correctamente, Stock físico"
+                AddToLog("Consolidación de Stock...", "Stock consolidaddo correctamente")
+            End If
+
             System.Windows.Forms.Application.DoEvents()
 
-            Progreso_Cont.Value = 0
+                Progreso_Cont.Value = 0
             Progreso_Porc.Value = 0
 
 

@@ -94,8 +94,12 @@ Public Class Frm_Mt_InvParc_Importar
                 Dim _Rtu As Double = 0
                 Dim _StockUd1 As Double = 0
 
+                If _Codigo = "BAJA30263" Then
+                    Dim a = 0
+                End If
 
-                Consulta_sql = "Select Top 1 * From MAEPR Where KOPR = '" & _Codigo & "'" & vbCrLf &
+
+                Consulta_sql = "Select Top 1 KOPR,NOKOPR,RLUD From MAEPR Where KOPR = '" & _Codigo & "'" & vbCrLf &
                                "Select Top 1 KOPRAL From TABCODAL Where KOPR = '" & _Codigo & "' And KOEN = ''" & vbCrLf &
                                "Select Top 1 Isnull(STFI1,0) As STFI1 From MAEST" & Space(1) &
                                "Where KOPR = '" & _Codigo & "' AND EMPRESA = '" & _Empresa &
@@ -127,7 +131,7 @@ Public Class Frm_Mt_InvParc_Importar
 
                     _CantidadUd2 = _CantidadUd1 * _Rtu
 
-                    If CBool(_Tbl_Maeprem.Rows.Count) Then
+                    If Not CBool(_CostoUd1) AndAlso CBool(_Tbl_Maeprem.Rows.Count) Then
                         _CostoUd1 = _Tbl_Maeprem.Rows(0).Item("PM")
                     End If
 

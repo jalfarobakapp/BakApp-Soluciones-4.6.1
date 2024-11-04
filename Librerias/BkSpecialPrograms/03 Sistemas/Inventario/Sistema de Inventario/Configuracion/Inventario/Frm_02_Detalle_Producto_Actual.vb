@@ -155,10 +155,11 @@ Public Class Frm_02_Detalle_Producto_Actual
                        "Select Codigo,Recontado, SUM(Cantidad) As Cantidad" & vbCrLf &
                        "Into #PasoC" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle With (Nolock)" & vbCrLf &
-                       "Where IdInventario = " & _IdInventario & " And Codigo = ' " & _Codigo & "' And Codigo Not In (Select Codigo From #PasoR)" & vbCrLf &
+                       "Where IdInventario = " & _IdInventario & " And Codigo = '" & _Codigo & "' And Codigo Not In (Select Codigo From #PasoR)" & vbCrLf &
                        "Group By Codigo,Recontado" & vbCrLf &
                        vbCrLf &
-                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 0 Where IdInventario = " & _IdInventario & " And Codigo = '" & _Codigo & "'" & vbCrLf &
+                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 0,Cant_Inventariada = 0" & vbCrLf &
+                       "Where IdInventario = " & _IdInventario & " And Codigo = '" & _Codigo & "'" & vbCrLf &
                        vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 1,Cant_Inventariada = Cantidad" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Inv_FotoInventario Foto With (Nolock)" & vbCrLf &
@@ -172,6 +173,8 @@ Public Class Frm_02_Detalle_Producto_Actual
                        vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set " &
                        "Dif_Inv_Cantidad = ROUND(Cant_Inventariada - ABS(StFisicoUd1), 5),Total_Costo_Foto = StFisicoUd1*Costo,Total_Costo_Inv = Cant_Inventariada*Costo" & vbCrLf &
+                       "Where IdInventario = " & _IdInventario & " And Codigo = '" & _Codigo & "'" & vbCrLf &
+                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Dif_Inv_Costo = Total_Costo_Inv-(Total_Costo_Foto) --ABS(Total_Costo_Inv)-ABS(Total_Costo_Foto)" & vbCrLf &
                        "Where IdInventario = " & _IdInventario & " And Codigo = '" & _Codigo & "'" & vbCrLf &
                        vbCrLf &
                        "Drop Table #PasoR" & vbCrLf &

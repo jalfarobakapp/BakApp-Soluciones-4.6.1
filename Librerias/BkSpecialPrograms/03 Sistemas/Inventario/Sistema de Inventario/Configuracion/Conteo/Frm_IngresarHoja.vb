@@ -699,12 +699,12 @@ Public Class Frm_IngresarHoja
 
         For Each _Fila As DataGridViewRow In Grilla_Detalle.Rows
 
-            If Not _Fila.IsNewRow AndAlso _Fila.Cells("Cantidad").Value <= 0 Then
-                MessageBoxEx.Show(Me, "La cantidad debe ser mayor a cero", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Grilla_Detalle.Focus()
-                Grilla_Detalle.CurrentCell = Grilla_Detalle.Rows(_Fila.Index).Cells("Cantidad")
-                Return
-            End If
+            'If Not _Fila.IsNewRow AndAlso _Fila.Cells("Cantidad").Value <= 0 Then
+            '    MessageBoxEx.Show(Me, "La cantidad debe ser mayor a cero", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            '    Grilla_Detalle.Focus()
+            '    Grilla_Detalle.CurrentCell = Grilla_Detalle.Rows(_Fila.Index).Cells("Cantidad")
+            '    Return
+            'End If
 
             _Fila.Cells("Item_Hoja").Value = numero_(_Item, 5)
             _Item += 1

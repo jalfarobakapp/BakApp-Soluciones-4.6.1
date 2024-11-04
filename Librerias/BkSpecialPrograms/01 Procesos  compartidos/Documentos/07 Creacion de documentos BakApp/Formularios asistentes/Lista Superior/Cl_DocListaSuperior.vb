@@ -447,7 +447,7 @@ Public Class Cl_DocListaSuperior
             Return _Mensaje
         End If
 
-        Dim _PreMayMinXHolding As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "PreMayMinXHolding", "CodEntidad = '" & _Endo & "'",,,, True)
+        Dim _PreMayMinXHolding As Boolean = True ' _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "PreMayMinXHolding", "CodEntidad = '" & _Endo & "'",,,, True)
         Dim _CodHolding As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "CodHolding", "CodEntidad = '" & _Endo & "'")
         Dim _FiltroEntidades As String
 

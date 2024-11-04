@@ -14519,10 +14519,10 @@ Public Class Frm_Formulario_Documento
 
             If _Cl_DocListaSuperior.UsarVencListaPrecios Then
 
-                _Cl_DocListaSuperior.ListaEntidad = _TblEncabezado.Rows(0).Item("ListaPrecios")
+                _Cl_DocListaSuperior.ListaEntidad = Mid(_RowEntidad.Item("LVEN"), 6, 3) ' _TblEncabezado.Rows(0).Item("ListaPrecios")
 
                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_ListaPreGlobal Where Lista = '" & _Cl_DocListaSuperior.ListaEntidad & "'"
-                Dim _Row_ListaInferior As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                Dim _Row_ListaSuperior As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                 Dim _CodEntidad As String = _RowEntidad.Item("KOEN")
                 Dim _CodSucEntidad As String = _RowEntidad.Item("SUEN")
@@ -14530,29 +14530,27 @@ Public Class Frm_Formulario_Documento
                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Entidades Where CodEntidad = '" & _CodEntidad & "' And CodSucEntidad = '" & _CodSucEntidad & "'"
                 Dim _Row_EntidadBakapp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-                'Dim _FechaVencLista As Date? = NuloPorNro(_Row_EntidadBakapp.Item("FechaVencLista"), #01-01-0001#)
-
-                'If (_Row_EntidadBakapp.Item("FechaVencLista") Is DBNull.Value) Then
-                '    _FechaVencLista = DateAdd(DateInterval.Day, -1, FechaDelServidor)
-                '    'Return
-                'End If
-
-                'If _FechaVencLista < FechaDelServidor() Then
-
-                If IsNothing(_Row_ListaInferior) Then
+                If Not _Row_ListaSuperior.Item("EsListaSuperior") Then
                     Return
                 End If
 
-                Dim _ListaInferior As String = _Row_ListaInferior.Item("ListaInferior").ToString.Trim
+                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_ListaPreGlobal Where Lista = '" & _Row_ListaSuperior.Item("ListaInferior") & "'"
+                Dim _Row_ListaInferior As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                Dim _ListaInferior As String = _Row_ListaSuperior.Item("ListaInferior").ToString.Trim
 
                 If String.IsNullOrWhiteSpace(_ListaInferior) Then
+                    Return
+                End If
+
+                If IsNothing(_Row_ListaInferior) Then
                     Return
                 End If
 
                 Dim _Msj As LsValiciones.Mensajes
 
                 _Msj = _Cl_DocListaSuperior.Fx_RevisarSiCumpleConTenerListaSuperior(_TblEncabezado.Rows(0).Item("CodEntidad"),
-                                                                                    _TblEncabezado.Rows(0).Item("ListaPrecios"))
+                                                                                _Cl_DocListaSuperior.ListaEntidad)
 
                 If _Msj.EsCorrecto Then
                     Return

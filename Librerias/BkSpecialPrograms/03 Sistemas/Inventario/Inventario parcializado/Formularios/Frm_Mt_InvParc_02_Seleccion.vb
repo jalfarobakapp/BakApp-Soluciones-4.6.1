@@ -1150,6 +1150,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
         If _Preguntar Then
 
             If _Nuevo_Producto Then
+                Grilla.Rows.RemoveAt(_Nro_Fila)
                 Beep()
                 Return
             End If
@@ -2112,7 +2113,8 @@ Public Class Frm_Mt_InvParc_02_Seleccion
                     _Tbl = _Tbl_Productos_A_Contar
                 End If
             Else
-                _Tbl = _Tbl_Productos_A_Contar
+                _Tbl_Productos_Contados = Ds_Invent.Tables("Inv_InvParcial")
+                _Tbl = _Tbl_Productos_Contados
             End If
 
             ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Prod_A_Levantar")
