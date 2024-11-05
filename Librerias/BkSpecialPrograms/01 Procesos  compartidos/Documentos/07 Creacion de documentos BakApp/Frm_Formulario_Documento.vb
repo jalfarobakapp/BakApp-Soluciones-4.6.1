@@ -14530,12 +14530,14 @@ Public Class Frm_Formulario_Documento
                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Entidades Where CodEntidad = '" & _CodEntidad & "' And CodSucEntidad = '" & _CodSucEntidad & "'"
                 Dim _Row_EntidadBakapp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
+                Dim _Row_ListaInferior As DataRow
+
                 If Not _Row_ListaSuperior.Item("EsListaSuperior") Then
                     Return
                 End If
 
                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_ListaPreGlobal Where Lista = '" & _Row_ListaSuperior.Item("ListaInferior") & "'"
-                Dim _Row_ListaInferior As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                _Row_ListaInferior = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                 Dim _ListaInferior As String = _Row_ListaSuperior.Item("ListaInferior").ToString.Trim
 
@@ -14549,8 +14551,7 @@ Public Class Frm_Formulario_Documento
 
                 Dim _Msj As LsValiciones.Mensajes
 
-                _Msj = _Cl_DocListaSuperior.Fx_RevisarSiCumpleConTenerListaSuperior(_TblEncabezado.Rows(0).Item("CodEntidad"),
-                                                                                _Cl_DocListaSuperior.ListaEntidad)
+                _Msj = _Cl_DocListaSuperior.Fx_RevisarSiCumpleConTenerListaSuperior(_CodEntidad, _Cl_DocListaSuperior.ListaEntidad)
 
                 If _Msj.EsCorrecto Then
                     Return
@@ -18339,9 +18340,16 @@ Public Class Frm_Formulario_Documento
 
                 End If
 
+                Sb_RevListaSuperiosEntidad()
+
                 Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, _Revisar_Permiso_Lista_Precio, _Aplicar_Vencimientos, False)
+
+                Sb_RevListaSuperiosEntidad_VtaCurso()
+
             Else
+
                 Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, False)
+
             End If
 
             Dim _CodEntidadFisica As String
@@ -19489,6 +19497,17 @@ Public Class Frm_Formulario_Documento
                                   "Concepto especial", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
 
             End If
+
+            If _Tido = "NVV" And _Cl_DocListaSuperior.UsarVencListaPrecios Then
+
+                If CBool(_Cl_DocListaSuperior.LsDetalleLpSuperior.Count) Then
+                    If _TblDetalle.Rows(0).Item("CodLista").ToString.Trim = _Cl_DocListaSuperior.LsDetalleLpSuperior.Item(0).Lista.ToString.Trim Then
+                        _Cl_DocListaSuperior.ListaSuperiorUtilizada = True
+                    End If
+                End If
+
+            End If
+
 
             Sb_Marcar_Grilla()
             Sb_Revisar_Si_Hay_Archivos_Adjuntos()

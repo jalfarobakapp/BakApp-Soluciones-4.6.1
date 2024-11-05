@@ -749,35 +749,6 @@ Public Class Frm_Ver_Documento
 
         Btn_Ver_Orden_de_despacho.Visible = (_Tido = "FCV" Or _Tido = "BLV" Or _Tido = "GTI" Or _Tido = "NVI" Or _Tido = "NVV" Or _Tido = "GDV")
 
-        If _Esdo = "N" Then
-
-            Btn_Imprimir_Documento.Visible = False
-            Btn_Cierre_Reactivacion_Documento.Visible = False
-            Btn_Traza_Documento.Visible = False
-            Btn_Enviar_documento_por_correo.Visible = False
-            Btn_Firmar_Documento_DTE.Visible = False
-            Btn_Marcar_Baja_Rotacion.Visible = False
-            Btn_Archivos_Adjuntos.Visible = False
-            Btn_Ver_Orden_de_despacho.Visible = False
-            Btn_Consolidar_Stock.Visible = False
-            Btn_Revisar_Situacion_Comercial.Visible = False
-
-            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Docu_Archivos 
-                            Where Idmaeedo Not In (Select IDMAEEDO From MAEEDO Where IDMAEEDO In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Docu_Archivos))"
-            _Sql.Ej_consulta_IDU(Consulta_sql)
-
-            Me.Text += Space(1) & "NULO."
-
-        Else
-
-            Btn_Eliminar_Anular.Visible = (_Tido = "COV" Or _Tido = "OCC" Or _Nudonodefi)
-
-            If _Nudonodefi Then
-                Btn_Mnu_Eliminar_Reciclar.Text = "Eliminar y reciclar"
-            End If
-
-        End If
-
         Btn_HabilitarFacturacion.Visible = False
 
         If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Docu_Ent") Then
@@ -787,7 +758,7 @@ Public Class Frm_Ver_Documento
             _Row_Docu_Ent = _Sql.Fx_Get_DataRow(Consulta_sql)
         End If
 
-        If Not IsNothing(_Row_Docu_Ent) And _Tido = "NVV" Then
+        If Not IsNothing(_Row_Docu_Ent) AndAlso _Tido = "NVV" Then
             If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
                 Btn_HabilitarFacturacion.Visible = True
                 If _Row_Docu_Ent.Item("HabilitadaFac") Then
@@ -815,6 +786,36 @@ Public Class Frm_Ver_Documento
 
         If Not String.IsNullOrEmpty(_Ruta_PDF) Then
             Btn_GuardarRutaPDFAutomatica.Tooltip = _Ruta_PDF
+        End If
+
+        If _Esdo = "N" Then
+
+            Btn_Imprimir_Documento.Visible = False
+            Btn_Cierre_Reactivacion_Documento.Visible = False
+            Btn_Traza_Documento.Visible = False
+            Btn_Enviar_documento_por_correo.Visible = False
+            Btn_Firmar_Documento_DTE.Visible = False
+            Btn_Marcar_Baja_Rotacion.Visible = False
+            Btn_Archivos_Adjuntos.Visible = False
+            Btn_Ver_Orden_de_despacho.Visible = False
+            Btn_Consolidar_Stock.Visible = False
+            Btn_Revisar_Situacion_Comercial.Visible = False
+            Btn_HabilitarFacturacion.Visible = False
+
+            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Docu_Archivos 
+                            Where Idmaeedo Not In (Select IDMAEEDO From MAEEDO Where IDMAEEDO In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Docu_Archivos))"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+
+            Me.Text += Space(1) & "NULO."
+
+        Else
+
+            Btn_Eliminar_Anular.Visible = (_Tido = "COV" Or _Tido = "OCC" Or _Nudonodefi)
+
+            If _Nudonodefi Then
+                Btn_Mnu_Eliminar_Reciclar.Text = "Eliminar y reciclar"
+            End If
+
         End If
 
         Me.Refresh()
