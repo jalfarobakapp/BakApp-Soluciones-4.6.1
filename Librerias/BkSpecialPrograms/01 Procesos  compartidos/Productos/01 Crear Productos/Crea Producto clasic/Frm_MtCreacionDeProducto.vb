@@ -1903,14 +1903,14 @@ Sigue_Loop_01:
         Chk_Tratvmedia.Checked = NuloPorNro(_RowProducto.Item("TRATVMEDIA"), False)
         Chk_Exento.Checked = NuloPorNro(_RowProducto.Item("EXENTO"), False)
 
-        Dim _Divisible As String = NuloPorNro(_RowProducto.Item("DIVISIBLE"), "0")
-        Dim _Divisible2 As String = NuloPorNro(_RowProducto.Item("DIVISIBLE2"), "0")
+        Dim _Divisible As String = NuloPorNro(_RowProducto.Item("DIVISIBLE"), "")
+        Dim _Divisible2 As String = NuloPorNro(_RowProducto.Item("DIVISIBLE2"), "")
 
-        If _Divisible = "N" Or _Divisible = "1" Then
+        If _Divisible = "N" Then
             Chk_Divisible.Checked = True
         End If
 
-        If _Divisible2 = "N" Or _Divisible2 = "1" Then
+        If _Divisible2 = "N" Then
             Chk_Divisible2.Checked = True
         End If
 

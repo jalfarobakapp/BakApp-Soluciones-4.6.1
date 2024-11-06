@@ -12,4 +12,5 @@
     Public Property Feemdo_NVV As DateTime?
     Public Property Observaciones As String
     Public Property TipoOri As String
+    Public Property Ocdo As String
 End Class

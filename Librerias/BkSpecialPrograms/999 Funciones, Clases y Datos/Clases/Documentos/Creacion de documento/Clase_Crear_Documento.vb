@@ -229,16 +229,19 @@ Public Class Clase_Crear_Documento
 
         Dim _Empresa = _Row_Encabezado.Item("EMPRESA")
 
-        For Each _Row As DataRow In _Tbl_Detalle.Rows
 
-            _Sulido = _Row.Item("Sucursal")
-            _Koprct = _Row.Item("Codigo")
+        ' Se quita esto porque se repite el proceso mas abajo por producto
 
-            _Row.Item("PmLinea") = _Sql.Fx_Trae_Dato("MAEPREM", "PM", "KOPR = '" & _Koprct & "' And EMPRESA = '" & _Empresa & "'", True)
-            _Row.Item("PmSucLinea") = _Sql.Fx_Trae_Dato("MAEPMSUC", "PMSUC", "KOPR = '" & _Koprct & "' AND EMPRESA = '" & _Empresa & "' AND KOSU = '" & _Sulido & "'", True)
-            _Row.Item("PmIFRS") = _Sql.Fx_Trae_Dato("MAEPREM", "PMIFRS", "EMPRESA = '" & _Empresa & "' And KOPR = '" & _Koprct & "'", True)
+        'For Each _Row As DataRow In _Tbl_Detalle.Rows
 
-        Next
+        '    _Sulido = _Row.Item("Sucursal")
+        '    _Koprct = _Row.Item("Codigo")
+
+        '    _Row.Item("PmLinea") = _Sql.Fx_Trae_Dato("MAEPREM", "PM", "KOPR = '" & _Koprct & "' And EMPRESA = '" & _Empresa & "'", True)
+        '    _Row.Item("PmSucLinea") = _Sql.Fx_Trae_Dato("MAEPMSUC", "PMSUC", "KOPR = '" & _Koprct & "' AND EMPRESA = '" & _Empresa & "' AND KOSU = '" & _Sulido & "'", True)
+        '    _Row.Item("PmIFRS") = _Sql.Fx_Trae_Dato("MAEPREM", "PMIFRS", "EMPRESA = '" & _Empresa & "' And KOPR = '" & _Koprct & "'", True)
+
+        'Next
 
         Dim _DesdeProduccion As Boolean
         Dim _Filtro_Idmaeddo_Dori As String = Generar_Filtro_IN(_Tbl_Detalle, "", "Idmaeddo_Dori", 1, False, "")
@@ -487,6 +490,10 @@ Public Class Clase_Crear_Documento
                         _Lincondesp = .Item("Lincondest")
 
                         'If _Prct Then _Lincondesp = True
+
+                        If _Koprct = "CORT56816" Then
+                            Dim AA = 0
+                        End If
 
                         _Tidopa = .Item("Tidopa")
 
@@ -757,13 +764,13 @@ Public Class Clase_Crear_Documento
                                 _Ppprpmifrs = De_Num_a_Tx_01(_Pmifrs, False, 5)
                                 _Ppprmsuc = De_Num_a_Tx_01(_Pmsuc, False, 5)
 
-                                If _Ppprmsuc.Contains("∞") Then
+                                If _Ppprmsuc.Contains("∞") Or _Ppprmsuc.Contains("NaN") Then
                                     _Ppprmsuc = 0
                                 End If
 
-                                'If _Koprct = "1756173000T00" Then
-                                '    Dim A = 0
-                                'End If
+                                If _Koprct = "CORT56816" Then
+                                    Dim A = 0
+                                End If
 
                                 Consulta_sql = "UPDATE MAEPREM SET PM = " & _Ppprpm & ",PMIFRS = " & _Ppprpmifrs & vbCrLf & Space(1) &
                                                "WHERE EMPRESA='" & _Empresa & "' AND KOPR='" & _Koprct & "'" & vbCrLf &
@@ -2968,6 +2975,9 @@ Public Class Clase_Crear_Documento
         Dim _ModFechVto As Integer
         Dim _Condicionado As Integer
 
+        Dim _TblTipoVenta As String
+        Dim _CodTipoVenta As String
+
         Dim myTrans As SqlClient.SqlTransaction
         Dim Comando As SqlClient.SqlCommand
 
@@ -3072,6 +3082,9 @@ Public Class Clase_Crear_Documento
                 _RevFincred = Convert.ToInt32(.Item("RevFincred"))
                 _IdFincred = .Item("IdFincred")
                 _MontoFincred = De_Num_a_Tx_01(.Item("MontoFincred"), False, 5)
+
+                _TblTipoVenta = .Item("TblTipoVenta").ToString
+                _CodTipoVenta = .Item("CodTipoVenta").ToString
 
             End With
 
@@ -3545,6 +3558,8 @@ Public Class Clase_Crear_Documento
                            ",RevFincred = " & _RevFincred & Environment.NewLine &
                            ",IdFincred = " & _IdFincred & Environment.NewLine &
                            ",MontoFincred = " & _MontoFincred & Environment.NewLine &
+                           ",TblTipoVenta = '" & _TblTipoVenta & "'" & Environment.NewLine &
+                           ",CodTipoVenta = '" & _CodTipoVenta & "'" & Environment.NewLine &
                            "Where Id_DocEnc = " & _Id_DocEnc
 
             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)

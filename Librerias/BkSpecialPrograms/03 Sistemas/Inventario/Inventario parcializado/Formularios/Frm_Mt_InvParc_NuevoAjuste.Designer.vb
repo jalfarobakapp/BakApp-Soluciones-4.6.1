@@ -145,7 +145,7 @@ Partial Class Frm_Mt_InvParc_NuevoAjuste
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnLimpiarCodigo})
-        Me.Bar1.Location = New System.Drawing.Point(0, 154)
+        Me.Bar1.Location = New System.Drawing.Point(0, 153)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(589, 41)
         Me.Bar1.Stretch = True
@@ -295,7 +295,7 @@ Partial Class Frm_Mt_InvParc_NuevoAjuste
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(589, 195)
+        Me.ClientSize = New System.Drawing.Size(589, 194)
         Me.Controls.Add(Me.Btn_Cambiar_Nombre_Ajuste)
         Me.Controls.Add(Me.Btn_Cambiar_Fecha_Ajuste)
         Me.Controls.Add(Me.TableLayoutPanel1)

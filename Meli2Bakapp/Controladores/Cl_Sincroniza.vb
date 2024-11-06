@@ -97,6 +97,8 @@ Public Class Cl_Sincroniza
             Dim _Zw_Demonio_NVVAuto As New Zw_Demonio_NVVAuto
             Dim _Ls_Zw_Demonio_NVVAuto_Detalle As New List(Of Zw_Demonio_NVVAutoDet)
 
+            Dim _Observaciones As String
+
             With _Zw_Demonio_NVVAuto
                 .IdmaeedoOCC_Ori = _PEDIDO.ID
                 .NudoOCC_Ori = _PEDIDO.ID_MELI
@@ -104,7 +106,11 @@ Public Class Cl_Sincroniza
                 .Suendo_Ori = String.Empty
                 .FechaGrab = _FechaGrab
                 .GenerarNVV = True
-                .Observaciones = _PEDIDO.ID_PAGO
+
+                _Observaciones = _PEDIDO.NICK_NAME.ToString.Trim & ", " & _PEDIDO.FIRST_NAME.ToString.Trim & ", " & _PEDIDO.LAST_NAME.ToString.Trim & ", " & _PEDIDO.DIRECCION.ToString.Trim & ", " & _PEDIDO.COMUNA.ToString.Trim
+
+                .Observaciones = Mid(_Observaciones, 1, 250)
+                .Ocdo = _PEDIDO.ID_PAGO
                 .TipoOri = "MLIBRE"
             End With
 
@@ -226,8 +232,7 @@ Public Class Cl_Sincroniza
 
         Try
 
-            Consulta_sql = "Select Top " & _Top & " ID, ID_MELI, IDMAEEDO, ID_PAGO, ESTADO, FECHA, IMPRESO, PAGADO, IDMAEEDO_F, KOEN, SUEN, REVBAKAPP" & vbCrLf &
-                           "From PEDIDOS" & vbCrLf &
+            Consulta_sql = "Select Top " & _Top & " * From PEDIDOS" & vbCrLf &
                            "Where REVBAKAPP = 0 And CONVERT(varchar, FECHA, 112) = '" & Format(_Fecha, "yyyyMMdd") & "'"
 
             Dim _Tbl As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
@@ -295,9 +300,7 @@ Public Class Cl_Sincroniza
 
         Try
 
-            Consulta_sql = "Select  ID,ID_MELI,IDMAEEDO,ID_PAGO,ESTADO,FECHA,IMPRESO," &
-                           "PAGADO,IDMAEEDO_F,KOEN,SUEN,REVBAKAPP,OBSERVACIONES,FECHAREVBAKAPP" & vbCrLf &
-                           "From PEDIDOS" & vbCrLf &
+            Consulta_sql = "Select * From PEDIDOS" & vbCrLf &
                            "Where ID_MELI = " & _ID_MELI
             Dim _Row As DataRow = _SqlMeli.Fx_Get_DataRow(Consulta_sql)
 
@@ -324,6 +327,11 @@ Public Class Cl_Sincroniza
                 .REVBAKAPP = _Row.Item("REVBAKAPP")
                 .OBSERVACIONES = _Row.Item("OBSERVACIONES")
                 .FECHAREVBAKAPP = NuloPorNro(_Row.Item("FECHAREVBAKAPP"), Nothing)
+                .NICK_NAME = NuloPorNro(_Row.Item("NICK_NAME"), "")
+                .FIRST_NAME = NuloPorNro(_Row.Item("FIRST_NAME"), "")
+                .LAST_NAME = NuloPorNro(_Row.Item("LAST_NAME"), "")
+                .DIRECCION = NuloPorNro(_Row.Item("DIRECCION"), "")
+                .COMUNA = NuloPorNro(_Row.Item("COMUNA"), "")
 
             End With
 

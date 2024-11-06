@@ -29,6 +29,8 @@ Public Class Frm_Mt_InvParc_02_Seleccion
     Dim _Tbl_Productos_Contados As DataTable
     Dim _Autorizado_Ajustar As Boolean
 
+    Public Property IdInventario As Integer
+
     Public ReadOnly Property Pro_Cant_Productos() As Integer
         Get
             Dim _Cantidad As Integer
@@ -435,7 +437,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
             .Columns("CantidadUd2").Width = 50 ' columna 9
             .Columns("CantidadUd2").HeaderText = "Cant. Ud2"
-            .Columns("CantidadUd2").DefaultCellStyle.Format = "###,##"
+            .Columns("CantidadUd2").DefaultCellStyle.Format = "###,##.###"
             .Columns("CantidadUd2").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("CantidadUd2").Visible = _Mostrar_Campo
 
@@ -447,7 +449,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
             .Columns("CostoUnitUd1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("CostoUnitUd1").Visible = True
 
-            .Columns("TotalCostoUd1").Width = 60
+            .Columns("TotalCostoUd1").Width = 80
             .Columns("TotalCostoUd1").HeaderText = "Total"
             .Columns("TotalCostoUd1").DefaultCellStyle.Format = "$ ###,##"
             .Columns("TotalCostoUd1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
@@ -1009,9 +1011,15 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
         Dim _CostoPMCero = _TblProductos.Compute("Count(CantidadUd1)", "CostoUnitUd1 <= 0 And Nuevo_Producto = 0")
 
+        Dim _Rows() As DataRow = _TblProductos.Select("CostoUnitUd1 <= 0 And Nuevo_Producto = 0")
+
         If CBool(_CostoPMCero) Then
 
-            MessageBoxEx.Show(Me, "No pueden haber productos con costo <= 0", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show(Me, "No pueden haber productos con costo menor o iguala cero", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+            Dim _Codigo As String = _Rows(0).Item("CodigoPr")
+
+            BuscarDatoEnGrilla(_Codigo, "CodigoPr", Grilla)
             Return
 
         End If
@@ -1049,7 +1057,8 @@ Public Class Frm_Mt_InvParc_02_Seleccion
                                                            _TblProductos,
                                                            DtFechaInv.Value,
                                                            _Ajuste_PM,
-                                                           Chk_Dejar_Doc_Final_Del_Dia.Checked)
+                                                           Chk_Dejar_Doc_Final_Del_Dia.Checked,
+                                                           IdInventario)
                 Fm.ChkDejaStockCero.Checked = False
                 Fm.ShowDialog(Me)
 
@@ -1294,7 +1303,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
     Private Sub Grilla_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
 
-        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
 
         Dim _Codigo = NuloPorNro(_Fila.Cells("CodigoPr").Value, "")
@@ -1311,25 +1320,64 @@ Public Class Frm_Mt_InvParc_02_Seleccion
                 _Fila.Cells("CodigoPr").Value = String.Empty
             End If
 
+            _Fila.Tag = _RowProducto
+
         ElseIf _Cabeza = "CantidadUd1" Then
 
             Dim Cant1, Cant2, CostoUd1, CostoUd2, TotalUd1, TotalUd2, Rtu As Double
-            With Grilla
-                Rtu = .Rows.Item(e.RowIndex).Cells("Rtu").Value
-                Cant1 = .Rows.Item(e.RowIndex).Cells("CantidadUd1").Value
-                Cant2 = Math.Round(Cant1 / Rtu, 5)
 
-                CostoUd1 = NuloPorNro(.Rows.Item(e.RowIndex).Cells("CostoUnitUd1").Value, 0)
-                CostoUd2 = NuloPorNro(.Rows.Item(e.RowIndex).Cells("CostoUnitUd2").Value, 0)
+            Rtu = _Fila.Cells("Rtu").Value
+            Cant1 = _Fila.Cells("CantidadUd1").Value
 
-                TotalUd1 = CostoUd1 * Cant1
-                TotalUd2 = CostoUd2 * Cant2
+            Dim _RowProducto As DataRow = _Fila.Tag
 
-                .Rows.Item(e.RowIndex).Cells("CantidadUd2").Value = Cant2
+            Dim _Divisible = String.Empty
+            Dim _Divisible2 = String.Empty
 
-                .Rows.Item(e.RowIndex).Cells("TotalCostoUd1").Value = TotalUd1
+            If IsNothing(_RowProducto) Then
 
-            End With
+                Consulta_sql = "Select DIVISIBLE,DIVISIBLE2 From MAEPR Where KOPR = '" & _Codigo & "'"
+                _RowProducto = _Sql.Fx_Get_DataRow(Consulta_sql)
+                _Fila.Tag = _RowProducto
+
+            End If
+
+            If Not IsNothing(_RowProducto) Then
+
+                _Divisible = Trim(NuloPorNro(_RowProducto.Item("DIVISIBLE"), ""))
+                _Divisible2 = Trim(NuloPorNro(_RowProducto.Item("DIVISIBLE2"), ""))
+
+            End If
+
+            If Fx_Solo_Enteros(Cant1, _Divisible) Then
+                If Cant1 <> 0 Then
+                    MessageBoxEx.Show(Me, "El producto esta definido como indivisible en la primera unidad", "Validación",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
+                End If
+                _Fila.Cells("CantidadUd1").Value = 0
+                Cant1 = 0
+            End If
+
+            Cant2 = Math.Round(Cant1 / Rtu, 5)
+
+            If Fx_Solo_Enteros(Cant2, _Divisible2) Then
+                If Cant2 <> 0 Then
+                    MessageBoxEx.Show(Me, "El producto esta definido como indivisible en la segunda unidad", "Validación",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
+                End If
+                _Fila.Cells("CantidadUd1").Value = 0
+                Cant1 = 0
+                Cant2 = 0
+            End If
+
+            CostoUd1 = NuloPorNro(_Fila.Cells("CostoUnitUd1").Value, 0)
+            CostoUd2 = NuloPorNro(_Fila.Cells("CostoUnitUd2").Value, 0)
+
+            TotalUd1 = CostoUd1 * Cant1
+            TotalUd2 = CostoUd2 * Cant2
+
+            _Fila.Cells("CantidadUd2").Value = Cant2
+            _Fila.Cells("TotalCostoUd1").Value = TotalUd1
 
         End If
 
@@ -1850,13 +1898,8 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
     Private Sub Btn_Importar_Productos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Importar_Productos.Click
 
-        'If Not _Autorizado_Ajustar Then
-        '    _Autorizado_Ajustar = Fx_Tiene_Permiso(Me, "In0018")
-        'End If
-
-        'If _Autorizado_Ajustar Then
-
         Dim Fm As New Frm_Mt_InvParc_Importar(Ds_Invent, _Empresa, _Sucursal, _Bodega)
+        Fm.IdInventario = IdInventario
         Fm.ShowDialog(Me)
 
         If Fm.Pro_Archivo_Importado_correctamente Then
@@ -1874,8 +1917,6 @@ Public Class Frm_Mt_InvParc_02_Seleccion
             Sb_Formato_Grilla(Grilla)
         End If
         Fm.Dispose()
-
-        'End If
 
     End Sub
 

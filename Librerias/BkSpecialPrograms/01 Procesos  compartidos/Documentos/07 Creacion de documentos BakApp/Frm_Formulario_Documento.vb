@@ -422,6 +422,7 @@ Public Class Frm_Formulario_Documento
     Public Property SoloprodEnDoc_CLALIBPR As Boolean
     Public Property VerSoloEntidadesDelVendedor As Boolean
     Public Property NoConsolidarNuncaStock As Boolean
+    Public Property Cancelar As Boolean
 
 #End Region
 
@@ -11572,7 +11573,13 @@ Public Class Frm_Formulario_Documento
             Grilla_Encabezado.Rows(0).Cells("Vizado").Value = _Vizado
 
             If Not (_RowEntidad Is Nothing) Then
+
+                Sb_RevListaSuperiosEntidad(False)
+
                 Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, False, False, False)
+
+                Sb_RevListaSuperiosEntidad_VtaCurso()
+
             End If
 
             .Item("Id_DocEnc") = _Id_DocEnc
@@ -11658,6 +11665,9 @@ Public Class Frm_Formulario_Documento
             .Item("RevFincred") = _TblEncabezado_StBy.Rows(0).Item("RevFincred")
             .Item("IdFincred") = _TblEncabezado_StBy.Rows(0).Item("IdFincred")
             .Item("MontoFincred") = _TblEncabezado_StBy.Rows(0).Item("MontoFincred")
+
+            _TblEncabezado.Rows(0).Item("TblTipoVenta") = _TblEncabezado_StBy.Rows(0).Item("TblTipoVenta")
+            _TblEncabezado.Rows(0).Item("CodTipoVenta") = _TblEncabezado_StBy.Rows(0).Item("CodTipoVenta")
 
         End With
 
@@ -12150,6 +12160,16 @@ Public Class Frm_Formulario_Documento
         End If
 
         Barra_Herramientas_Producto.Enabled = True
+
+        If _Tido = "NVV" And _Cl_DocListaSuperior.UsarVencListaPrecios Then
+
+            If CBool(_Cl_DocListaSuperior.LsDetalleLpSuperior.Count) Then
+                If _TblDetalle.Rows(0).Item("CodLista").ToString.Trim = _Cl_DocListaSuperior.LsDetalleLpSuperior.Item(0).Lista.ToString.Trim Then
+                    _Cl_DocListaSuperior.ListaSuperiorUtilizada = True
+                End If
+            End If
+
+        End If
 
         Sb_Marcar_Grilla()
         Sb_Mostrar_Datos_Producto_Activo(False)
@@ -13802,7 +13822,7 @@ Public Class Frm_Formulario_Documento
 
                     If Not _Documento_Interno Then
 
-                        Sb_RevListaSuperiosEntidad()
+                        Sb_RevListaSuperiosEntidad(True)
 
                         Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, True,, _Cambiar_Vendedor, _No_Puede_Acceder)
 
@@ -14509,7 +14529,7 @@ Public Class Frm_Formulario_Documento
         End Try
     End Sub
 
-    Private Sub Sb_RevListaSuperiosEntidad()
+    Private Sub Sb_RevListaSuperiosEntidad(_MostrarMensaje As Boolean)
 
         If _Tido <> "COV" And _Tido <> "NVV" Then
             Return
@@ -14557,9 +14577,13 @@ Public Class Frm_Formulario_Documento
                     Return
                 End If
 
-                Dim _Menje As String = Fx_AjustarTexto(_Msj.Mensaje, 100)
+                If _MostrarMensaje Then
 
-                MessageBoxEx.Show(Me, _Menje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                    Dim _Menje As String = Fx_AjustarTexto(_Msj.Mensaje, 100)
+
+                    MessageBoxEx.Show(Me, _Menje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+
+                End If
 
                 _TblEncabezado.Rows(0).Item("ListaPrecios") = _ListaInferior
                 _Cl_DocListaSuperior.ListaEntidad = _ListaInferior
@@ -18340,7 +18364,7 @@ Public Class Frm_Formulario_Documento
 
                 End If
 
-                Sb_RevListaSuperiosEntidad()
+                Sb_RevListaSuperiosEntidad(True)
 
                 Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, _Revisar_Permiso_Lista_Precio, _Aplicar_Vencimientos, False)
 
@@ -19837,7 +19861,12 @@ Public Class Frm_Formulario_Documento
                                                     _Aplica_Descuentos As Boolean,
                                                     _Aplicar_Precio_De_Listas As Boolean,
                                                     Optional _NroDocumento As String = "",
-                                                    Optional _AgregarDscotSeteados As Boolean = False)
+                                                    Optional _AgregarDscotSeteados As Boolean = False,
+                                                    Optional _Progreso_Porc As Object = Nothing,
+                                                    Optional _Progreso_Cont As Object = Nothing,
+                                                    Optional _CantLineas As Integer = 0,
+                                                    Optional _LblEstatus As Object = Nothing,
+                                                    Optional _MarcarGrilla As Boolean = True)
 
         _TblObservaciones.Rows(0).Item("Observaciones") = _Observaciones
 
@@ -19860,6 +19889,9 @@ Public Class Frm_Formulario_Documento
         Dim _CodLista = _TblEncabezado.Rows(0).Item("ListaPrecios")
 
         Dim _Contador = 0
+        Dim _Cont_Filas = 0
+
+        Dim tiempoPorProducto As Double
 
         For Each Fila As DataRow In _Tbl_Detalle_Externo.Rows
 
@@ -19868,9 +19900,18 @@ Public Class Frm_Formulario_Documento
             Consulta_sql = "Select Top 1 * From MAEPR Where KOPR = '" & _Codigo & "'"
             Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
+            Dim _Descripcion As String = _RowProducto.Item("NOKOPR").ToString.Trim
             Dim _Cantidad As Double = Fila.Item(_Campo_Cantidad)
 
+
+            If _Codigo = "SET060257" Then
+                Dim a = 0
+            End If
+
             If CBool(_Cantidad) Then
+
+                ' Iniciar el cronómetro
+                Dim stopwatch As Stopwatch = System.Diagnostics.Stopwatch.StartNew()
 
                 Dim _UnTrans As Integer = 1
                 Dim _Precio As Double = Fila.Item(_Campo_Precio)
@@ -19898,7 +19939,7 @@ Public Class Frm_Formulario_Documento
                     _DescuentoPorc = 0
                 End If
 
-                Dim _New_Fila As DataGridViewRow = Grilla_Detalle.Rows(_Contador)
+                Dim _New_Fila As DataGridViewRow = Grilla_Detalle.Rows(_Cont_Filas)
 
                 _New_Fila.Cells("FechaEmision").Value = _FechaEmision
 
@@ -19920,6 +19961,12 @@ Public Class Frm_Formulario_Documento
                 Catch ex As Exception
 
                 End Try
+
+                'If Not IsNothing(_LblEstatus) Then
+                '    System.Windows.Forms.Application.DoEvents()
+                '    _LblEstatus.Text = "Producto: " & _Codigo.ToString.Trim & ", " & _New_Fila.Cells("Descripcion").Value
+                'End If
+
 
                 _New_Fila.Cells("Codigo").Value = _Codigo
                 _New_Fila.Cells("Cantidad").Value = _Cantidad
@@ -19958,14 +20005,63 @@ Public Class Frm_Formulario_Documento
 
                 End If
 
-                _Contador += 1
                 Sb_Nueva_Linea(_CodLista)
 
+                _Cont_Filas += 1
+
+                stopwatch.Stop()
+                Dim aa = stopwatch.ElapsedMilliseconds
+
+                tiempoPorProducto = aa / 1000.0
+
+            End If
+
+            ' Define el tiempo estimado por producto en segundos
+            tiempoPorProducto = 0.333
+
+            ' Calcula el número de productos restantes
+            Dim productosRestantes As Integer = _CantLineas - _Contador
+
+            ' Calcula el tiempo restante en segundos
+            Dim tiempoRestante As Integer = productosRestantes * tiempoPorProducto
+
+            '' Muestra el tiempo restante en una etiqueta (Label)
+            'If Not IsNothing(_LblTiempoRestante) Then
+            '    _LblTiempoRestante.Text = "Tiempo restante: " & tiempoRestante.ToString() & " segundos"
+            'End If
+            ' Crear un TimeSpan a partir del tiempo en segundos
+            Dim tiempo As TimeSpan = TimeSpan.FromSeconds(tiempoRestante)
+
+            ' Obtener horas, minutos y segundos
+            Dim horas As Integer = tiempo.Hours
+            Dim minutos As Integer = tiempo.Minutes
+            Dim segundos As Integer = tiempo.Seconds
+
+
+            If Not IsNothing(_LblEstatus) Then
+                System.Windows.Forms.Application.DoEvents()
+                _LblEstatus.Text = "Tiempo restante: " & tiempo.ToString() & ", Producto: " & _Codigo.ToString.Trim & ", " & _Descripcion
+            End If
+
+            If Not IsNothing(_Progreso_Porc) AndAlso Not IsNothing(_Progreso_Cont) AndAlso CBool(_CantLineas) Then
+
+                System.Windows.Forms.Application.DoEvents()
+                _Progreso_Porc.Value = ((_Contador * 100) / _CantLineas)
+                _Progreso_Cont.Value += 1
+
+            End If
+
+            _Contador += 1
+
+            If Cancelar Then
+                Return
             End If
 
         Next
 
-        Sb_Marcar_Grilla()
+        If _MarcarGrilla Then
+            Sb_Marcar_Grilla()
+        End If
 
     End Sub
 

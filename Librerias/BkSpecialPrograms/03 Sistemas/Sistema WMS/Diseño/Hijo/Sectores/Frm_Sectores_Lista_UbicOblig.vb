@@ -529,6 +529,15 @@ Public Class Frm_Sectores_Lista_UbicOblig
                                                       "Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector & "' " &
                                                       "And Codigo_Ubic = '" & _Codigo_Ubic & "' And Ingreso = 1 And Salida = 0 " &
                                                       "And CONVERT(varchar, FechaIngreso, 112) = '" & Format(_FechaIngreso, "yyyyMMdd") & "')"
+
+                Consulta_sql = "Select Top 1 KOPR From MAEPR Where 1> 0 " & _Sql_Filtro_Condicion_Extra
+                Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+                If Not CBool(_Tbl.Rows.Count) Then
+                    MessageBoxEx.Show(Me, "No existen datos que mostrar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Return
+                End If
+
                 Dim _Filtrar As New Clas_Filtros_Random(Me)
 
                 _Filtrar.Fx_Filtrar(Nothing, Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra, False, False,, False,, False)

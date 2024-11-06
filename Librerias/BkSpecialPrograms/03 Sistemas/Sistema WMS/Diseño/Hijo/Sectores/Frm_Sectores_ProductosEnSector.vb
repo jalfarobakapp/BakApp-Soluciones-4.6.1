@@ -81,9 +81,9 @@ Public Class Frm_Sectores_ProductosEnSector
                 Dim _Dia = numero_(i, 2)
 
                 If i = _FechaHasta.Day Then
-                    _CampoDias += "MAX(CASE WHEN d.Day = '" & _Año & "-" & _Mes & "-" & _Dia & "' AND z.Codigo IS NOT NULL THEN 'X' ELSE '' END) AS [" & _Dia & "]"
+                    _CampoDias += "MAX(CASE WHEN d.Day = '" & _Año & "-" & _Mes & "-" & _Dia & "' AND z.Codigo IS NOT NULL And Salida = 0 THEN 'X' ELSE '' END) AS [" & _Dia & "]"
                 Else
-                    _CampoDias += "MAX(CASE WHEN d.Day = '" & _Año & "-" & _Mes & "-" & _Dia & "' AND z.Codigo IS NOT NULL THEN 'X' ELSE '' END) AS [" & _Dia & "]," & vbCrLf
+                    _CampoDias += "MAX(CASE WHEN d.Day = '" & _Año & "-" & _Mes & "-" & _Dia & "' AND z.Codigo IS NOT NULL And Salida = 0 THEN 'X' ELSE '' END) AS [" & _Dia & "]," & vbCrLf
                 End If
 
             Next

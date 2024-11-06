@@ -1,10 +1,15 @@
 ﻿Imports DevComponents.DotNetBar
-Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 
 Public Class Frm_Inv_Inventarios
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
+
+    Public Property ModoSeleccion As Boolean
+    Public Property Empresa As String
+    Public Property Sucursal As String
+    Public Property Bodega As String
+    Public Property IdInventario_Selecionado As Integer
 
     Public Sub New()
 
@@ -17,13 +22,23 @@ Public Class Frm_Inv_Inventarios
 
         Sb_Color_Botones_Barra(Bar1)
 
+        Empresa = ModEmpresa
+        Sucursal = ModSucursal
+        Bodega = ModBodega
+
+        IdInventario_Selecionado = 0
+
     End Sub
 
     Private Sub Frm_Inventarios_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        AddHandler Grilla_Inventarios.MouseDown, AddressOf Sb_Grilla_MouseDown
+        If Not ModoSeleccion Then
+            AddHandler Grilla_Inventarios.MouseDown, AddressOf Sb_Grilla_MouseDown
+        End If
 
         Sb_Actualizar_Grilla()
+
+        Btn_Crear_Inventario.Enabled = Not ModoSeleccion
 
     End Sub
 
@@ -38,7 +53,16 @@ Public Class Frm_Inv_Inventarios
         Consulta_sql = "Select *," &
                        "Case When Activo = 1 Then 'Abierto' Else 'Cerrado' End as Estado_Str" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Inv_Inventario" & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'" & _Condicion
+                       "Where Empresa = '" & Empresa & "' And Sucursal = '" & Sucursal & "'" & _Condicion
+
+        If ModoSeleccion Then
+
+            Consulta_sql = "Select *," &
+                       "Case When Activo = 1 Then 'Abierto' Else 'Cerrado' End as Estado_Str" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Inv_Inventario" & vbCrLf &
+                       "Where Empresa = '" & Empresa & "' And Sucursal = '" & Sucursal & "' And Bodega = '" & Bodega & "'" & _Condicion
+
+        End If
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -152,7 +176,18 @@ Public Class Frm_Inv_Inventarios
     End Sub
 
     Private Sub Grilla_Inventarios_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Inventarios.CellDoubleClick
+
+        If ModoSeleccion Then
+
+            Dim _Fila As DataGridViewRow = Grilla_Inventarios.CurrentRow
+            IdInventario_Selecionado = _Fila.Cells("Id").Value
+            Me.Close()
+            Return
+
+        End If
+
         Call Btn_VerInventario_Click(Nothing, Nothing)
+
     End Sub
 
     Private Sub Sb_Grilla_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)

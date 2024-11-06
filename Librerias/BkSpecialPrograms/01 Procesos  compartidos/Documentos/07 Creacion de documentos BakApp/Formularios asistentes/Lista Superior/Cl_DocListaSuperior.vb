@@ -73,7 +73,7 @@ Public Class Cl_DocListaSuperior
         'End If
 
         Consulta_sql = "Select Top 1 Lp.KOPR,Lp.DTMA01UD,Lp.MG01UD,Lp.DTMA02UD,Lp.MG02UD,Lp.KOLT,Lp.PP01UD,Lp.PP02UD," &
-                       "Lp.ECUACION,Lp.ECUACIONU2,Lpp.MELT As MELT,Pgl.ListaSuperior" & vbCrLf &
+                       "Lp.ECUACION,Lp.ECUACIONU2,Lp.RLUD,Lpp.MELT As MELT,Pgl.ListaSuperior" & vbCrLf &
                        "From TABPRE Lp" & vbCrLf &
                        "Inner Join " & _Global_BaseBk & "Zw_ListaPreGlobal Pgl On Pgl.Lista = KOLT" & vbCrLf &
                        "Inner Join TABPP Lpp On Lp.KOLT = Lpp.KOLT" & vbCrLf &

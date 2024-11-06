@@ -33,6 +33,9 @@ Partial Class Frm_Mt_InvParc_SelecionFechas
         Me.Btn_Mnu_Editar_Nombre_De_Ajuste = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_Eliminar_Ajuste = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Exportar_Excel_Detalle_Inv_Seleccionado = New DevComponents.DotNetBar.ButtonItem()
+        Me.Menu_Contextual_Crea_Inventarios = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_CrearAjusteSimple = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_CrearAjusteDesdeInvGral = New DevComponents.DotNetBar.ButtonItem()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.BtnCrearNuevoInventario = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_VerInventario = New DevComponents.DotNetBar.ButtonItem()
@@ -65,10 +68,10 @@ Partial Class Frm_Mt_InvParc_SelecionFechas
         '
         Me.ContextMenuBar1.AntiAlias = True
         Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_Ajustes})
+        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_Ajustes, Me.Menu_Contextual_Crea_Inventarios})
         Me.ContextMenuBar1.Location = New System.Drawing.Point(137, 60)
         Me.ContextMenuBar1.Name = "ContextMenuBar1"
-        Me.ContextMenuBar1.Size = New System.Drawing.Size(222, 25)
+        Me.ContextMenuBar1.Size = New System.Drawing.Size(354, 25)
         Me.ContextMenuBar1.Stretch = True
         Me.ContextMenuBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.ContextMenuBar1.TabIndex = 51
@@ -119,6 +122,27 @@ Partial Class Frm_Mt_InvParc_SelecionFechas
         Me.Btn_Exportar_Excel_Detalle_Inv_Seleccionado.Name = "Btn_Exportar_Excel_Detalle_Inv_Seleccionado"
         Me.Btn_Exportar_Excel_Detalle_Inv_Seleccionado.Text = "Exportara a Excel productos inventariados de este inventario"
         '
+        'Menu_Contextual_Crea_Inventarios
+        '
+        Me.Menu_Contextual_Crea_Inventarios.AutoExpandOnClick = True
+        Me.Menu_Contextual_Crea_Inventarios.Name = "Menu_Contextual_Crea_Inventarios"
+        Me.Menu_Contextual_Crea_Inventarios.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_CrearAjusteSimple, Me.Btn_CrearAjusteDesdeInvGral})
+        Me.Menu_Contextual_Crea_Inventarios.Text = "Opciones Ubicacion"
+        '
+        'Btn_CrearAjusteSimple
+        '
+        Me.Btn_CrearAjusteSimple.Image = CType(resources.GetObject("Btn_CrearAjusteSimple.Image"), System.Drawing.Image)
+        Me.Btn_CrearAjusteSimple.ImageAlt = CType(resources.GetObject("Btn_CrearAjusteSimple.ImageAlt"), System.Drawing.Image)
+        Me.Btn_CrearAjusteSimple.Name = "Btn_CrearAjusteSimple"
+        Me.Btn_CrearAjusteSimple.Text = "Crear ajuste simple"
+        '
+        'Btn_CrearAjusteDesdeInvGral
+        '
+        Me.Btn_CrearAjusteDesdeInvGral.Image = CType(resources.GetObject("Btn_CrearAjusteDesdeInvGral.Image"), System.Drawing.Image)
+        Me.Btn_CrearAjusteDesdeInvGral.ImageAlt = CType(resources.GetObject("Btn_CrearAjusteDesdeInvGral.ImageAlt"), System.Drawing.Image)
+        Me.Btn_CrearAjusteDesdeInvGral.Name = "Btn_CrearAjusteDesdeInvGral"
+        Me.Btn_CrearAjusteDesdeInvGral.Text = "Crear ajuste desde inventario en sistema de inventario general"
+        '
         'Bar1
         '
         Me.Bar1.AntiAlias = True
@@ -151,6 +175,7 @@ Partial Class Frm_Mt_InvParc_SelecionFechas
         Me.Btn_VerInventario.Name = "Btn_VerInventario"
         Me.Btn_VerInventario.Text = "Ver"
         Me.Btn_VerInventario.Tooltip = "Ver inventaro seleccionado"
+        Me.Btn_VerInventario.Visible = False
         '
         'Btn_Exportar_Excel
         '
@@ -199,6 +224,7 @@ Partial Class Frm_Mt_InvParc_SelecionFechas
         Me.Btn_Actualizar_Foto_Stock.Image = CType(resources.GetObject("Btn_Actualizar_Foto_Stock.Image"), System.Drawing.Image)
         Me.Btn_Actualizar_Foto_Stock.Name = "Btn_Actualizar_Foto_Stock"
         Me.Btn_Actualizar_Foto_Stock.Tooltip = "Actualizar foto stock"
+        Me.Btn_Actualizar_Foto_Stock.Visible = False
         '
         'TableLayoutPanel1
         '
@@ -499,4 +525,7 @@ Partial Class Frm_Mt_InvParc_SelecionFechas
     Friend WithEvents Btn_Exportar_Productos_No_Inventariados As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Exportar_Excel_Detalle_Inv_Seleccionado As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX
+    Friend WithEvents Menu_Contextual_Crea_Inventarios As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_CrearAjusteSimple As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_CrearAjusteDesdeInvGral As DevComponents.DotNetBar.ButtonItem
 End Class

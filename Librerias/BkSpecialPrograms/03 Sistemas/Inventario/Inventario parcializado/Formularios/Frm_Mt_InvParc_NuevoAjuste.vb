@@ -11,6 +11,8 @@ Public Class Frm_Mt_InvParc_NuevoAjuste
     Dim _Empresa, _Sucursal, _Bodega As String
     Dim _Nuevo_Inventario_Creado As Boolean
 
+    Public Property IdInventario As Integer
+
     Public ReadOnly Property Pro_Inventario_Creado() As Boolean
         Get
             Return _Nuevo_Inventario_Creado
@@ -70,11 +72,11 @@ Public Class Frm_Mt_InvParc_NuevoAjuste
 
         Dim _NombreAJ As String = UCase(TxtNombreAjuste.Text)
 
-        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_TmpInv_InvParcial_Inventarios (Ano, Mes, Dia, Fecha, Empresa, Sucursal," &
-                       "Bodega, Nombre_Ajuste, Funcionario, Estado) Values" & vbCrLf &
+        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_TmpInv_InvParcial_Inventarios (Ano,Mes,Dia,Fecha,Empresa,Sucursal," &
+                       "Bodega,Nombre_Ajuste,Funcionario,Estado,IdInventario) Values" & vbCrLf &
                        "('" & Ano & "','" & Mes & "','" & Dia & "','" & Format(DtFechaInv.Value, "yyyyMMdd") &
                        "','" & _Empresa & "','" & _Sucursal & "','" & _Bodega & "','" & _NombreAJ &
-                       "','" & FUNCIONARIO & "',1)"
+                       "','" & FUNCIONARIO & "',1," & IdInventario & ")"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
 
@@ -93,14 +95,12 @@ Public Class Frm_Mt_InvParc_NuevoAjuste
             Me.Close()
         End If
     End Sub
-
     Private Sub Btn_Cambiar_Fecha_Ajuste_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cambiar_Fecha_Ajuste.Click
         If Fx_Tiene_Permiso(Me, "Invp0006") Then
             DtFechaInv.Enabled = True
             Btn_Cambiar_Fecha_Ajuste.Enabled = False
         End If
     End Sub
-
     Private Sub Btn_Cambiar_Nombre_Ajuste_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cambiar_Nombre_Ajuste.Click
         If Fx_Tiene_Permiso(Me, "Invp0005") Then
             TxtNombreAjuste.Enabled = True
@@ -108,8 +108,6 @@ Public Class Frm_Mt_InvParc_NuevoAjuste
             TxtNombreAjuste.Focus()
         End If
     End Sub
-
-
     Private Sub DtFechaInv_ValueChanged(sender As System.Object, e As System.EventArgs)
         TxtNombreAjuste.Text = "AJUSTE PARCIALIZADO (" & FormatDateTime(DtFechaInv.Value, DateFormat.LongDate) & ")"
     End Sub

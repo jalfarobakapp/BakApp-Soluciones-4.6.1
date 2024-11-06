@@ -88,45 +88,11 @@ Public Class Frm_01_Inventario_Actual
             If Not _Filtrar_Todos_Encargados Then
                 Dim _Fl As String = Generar_Filtro_IN(_Tbl_Filtro_Encargados, "Chk", "Codigo", False, True, "'")
                 _Filtros += "And Codigo In (Select Codigo From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle With (Nolock)" &
-                            "Where IdSector In (Select Id From " & _Global_BaseBk & "Zw_Inv_Sector Where CodFuncionario In " & _Fl & ") " &
+                            "Where IdSector In (Select Id From " & _Global_BaseBk & "Zw_Inv_Sector With (Nolock) Where CodFuncionario In " & _Fl & ") " &
                             "And IdInventario = " & _IdInventario & ")" & vbCrLf
             End If
 
-            'Consulta_sql = "Select Codigo,Recontado, SUM(Cantidad) As Cantidad" & vbCrLf &
-            '               "Into #PasoR" & vbCrLf &
-            '               "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle With (Nolock)" & vbCrLf &
-            '               "Where IdInventario = " & _IdInventario & " And Recontado = 1" & vbCrLf &
-            '               "Group By Codigo,Recontado" & vbCrLf &
-            '               vbCrLf &
-            '               "Select Codigo,Recontado, SUM(Cantidad) As Cantidad" & vbCrLf &
-            '               "Into #PasoC" & vbCrLf &
-            '               "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle With (Nolock)" & vbCrLf &
-            '               "Where IdInventario = " & _IdInventario & " And Codigo Not In (Select Codigo From #PasoR)" & vbCrLf &
-            '               "Group By Codigo,Recontado" & vbCrLf &
-            '               vbCrLf &
-            '               "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 0 Where IdInventario = " & _IdInventario & vbCrLf &
-            '               vbCrLf &
-            '               "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 1,Cant_Inventariada = Cantidad" & vbCrLf &
-            '               "From " & _Global_BaseBk & "Zw_Inv_FotoInventario Foto" & vbCrLf &
-            '               "Inner Join #PasoR On #PasoR.Codigo = Foto.Codigo" & vbCrLf &
-            '               "Where IdInventario = " & _IdInventario & vbCrLf &
-            '               vbCrLf &
-            '               "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Cant_Inventariada = Cantidad" & vbCrLf &
-            '               "From " & _Global_BaseBk & "Zw_Inv_FotoInventario Foto" & vbCrLf &
-            '               "Inner Join #PasoC On #PasoC.Codigo = Foto.Codigo" & vbCrLf &
-            '               "Where IdInventario = " & _IdInventario & "" & vbCrLf &
-            '               vbCrLf &
-            '               "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Dif_Inv_Cantidad = ROUND(Cant_Inventariada - (StFisicoUd1), 5) --ROUND(ABS(Cant_Inventariada) - ABS(StFisicoUd1), 5)" & vbCrLf &
-            '               "Where IdInventario = " & _IdInventario & vbCrLf &
-            '               "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Total_Costo_Foto = StFisicoUd1*Costo,Total_Costo_Inv = Cant_Inventariada*Costo" & vbCrLf &
-            '               "Where IdInventario = " & _IdInventario & vbCrLf &
-            '               "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Dif_Inv_Costo = Total_Costo_Inv-(Total_Costo_Foto) --ABS(Total_Costo_Inv)-ABS(Total_Costo_Foto)" & vbCrLf &
-            '               "Where IdInventario = " & _IdInventario & vbCrLf &
-            '               vbCrLf &
-            '               "Drop Table #PasoR" & vbCrLf &
-            '               "Drop Table #PasoC"
 
-            '_Sql.Ej_consulta_IDU(Consulta_sql)
 
             Consulta_sql = "Select Codigo,CodigoRap,CodigoTec,Descripcion,StFisicoUd1,Cant_Inventariada,Costo,Dif_Inv_Cantidad," &
                            "Total_Costo_Foto,Total_Costo_Inv,Dif_Inv_Costo,Recontado,NoInventariar," & vbCrLf &
@@ -652,4 +618,50 @@ Drop table #PasoR"
     Private Sub Cmb_FiltroMostrarProductos_TextChanged(sender As Object, e As EventArgs)
         Sb_Filtrar()
     End Sub
+
+    Private Sub Btn_ActualizarConteo_Click(sender As Object, e As EventArgs) Handles Btn_ActualizarConteo.Click
+
+        Dim _Random As New Random()
+        Dim _Rd As Integer = _Random.Next(1, 1000) ' Genera un número al azar entre 1 y 100
+
+        Consulta_sql = "Select Codigo,Recontado, SUM(Cantidad) As Cantidad" & vbCrLf &
+               "Into #PasoR" & _Rd & vbCrLf &
+               "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle With (Nolock)" & vbCrLf &
+               "Where IdInventario = " & _IdInventario & " And Recontado = 1" & vbCrLf &
+               "Group By Codigo,Recontado" & vbCrLf &
+               vbCrLf &
+               "Select Codigo,Recontado, SUM(Cantidad) As Cantidad" & vbCrLf &
+               "Into #PasoC" & _Rd & vbCrLf &
+               "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle With (Nolock)" & vbCrLf &
+               "Where IdInventario = " & _IdInventario & " And Codigo Not In (Select Codigo From #PasoR" & _Rd & ")" & vbCrLf &
+               "Group By Codigo,Recontado" & vbCrLf &
+               vbCrLf &
+               "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 0 Where IdInventario = " & _IdInventario & vbCrLf &
+               vbCrLf &
+               "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Recontado = 1,Cant_Inventariada = Cantidad" & vbCrLf &
+               "From " & _Global_BaseBk & "Zw_Inv_FotoInventario Foto With (Nolock)" & vbCrLf &
+               "Inner Join #PasoR" & _Rd & " On #PasoR" & _Rd & ".Codigo = Foto.Codigo" & vbCrLf &
+               "Where IdInventario = " & _IdInventario & vbCrLf &
+               vbCrLf &
+               "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Cant_Inventariada = Cantidad" & vbCrLf &
+               "From " & _Global_BaseBk & "Zw_Inv_FotoInventario Foto With (Nolock)" & vbCrLf &
+               "Inner Join #PasoC" & _Rd & " On #PasoC" & _Rd & ".Codigo = Foto.Codigo" & vbCrLf &
+               "Where IdInventario = " & _IdInventario & "" & vbCrLf &
+               vbCrLf &
+               "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Dif_Inv_Cantidad = ROUND(Cant_Inventariada - (StFisicoUd1), 5) --ROUND(ABS(Cant_Inventariada) - ABS(StFisicoUd1), 5)" & vbCrLf &
+               "Where IdInventario = " & _IdInventario & vbCrLf &
+               "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Total_Costo_Foto = StFisicoUd1*Costo,Total_Costo_Inv = Cant_Inventariada*Costo" & vbCrLf &
+               "Where IdInventario = " & _IdInventario & vbCrLf &
+               "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Dif_Inv_Costo = Total_Costo_Inv-(Total_Costo_Foto) --ABS(Total_Costo_Inv)-ABS(Total_Costo_Foto)" & vbCrLf &
+               "Where IdInventario = " & _IdInventario & vbCrLf &
+               vbCrLf &
+               "Drop Table #PasoR" & _Rd & vbCrLf &
+               "Drop Table #PasoC" & _Rd
+
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        Call Btn_Actualizar_Click(Nothing, Nothing)
+
+    End Sub
+
 End Class

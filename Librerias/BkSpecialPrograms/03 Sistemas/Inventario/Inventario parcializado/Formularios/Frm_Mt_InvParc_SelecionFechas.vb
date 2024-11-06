@@ -44,9 +44,9 @@ Public Class Frm_Mt_InvParc_SelecionFechas
 
     Sub Sb_Actualizar_Grilla_Inventario()
 
-        Consulta_sql = "Select Id,Ano,Mes,Dia,Fecha,Empresa,Sucursal,Bodega,Nombre_Ajuste,Funcionario,Estado," & vbCrLf &
+        Consulta_sql = "Select Id,Ano,Mes,Dia,Fecha,Empresa,Sucursal,Bodega,Nombre_Ajuste,Funcionario,Estado,IdInventario," & vbCrLf &
                        "(Select COUNT(Distinct CodigoPr) From " & _Global_BaseBk & "Zw_TmpInv_InvParcial " &
-                       "Where FechaInv = Fecha And DejaStockCero = 0) as 'Productos'" & vbCrLf &
+                       "Where FechaInv = Fecha And DejaStockCero = 0) As 'Productos'" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_TmpInv_InvParcial_Inventarios" & vbCrLf &
                        "Where Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal &
                        "' And Bodega = '" & _Bodega & "'" & vbCrLf &
@@ -103,7 +103,7 @@ Public Class Frm_Mt_InvParc_SelecionFechas
             Return
         End If
 
-        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
 
         Dim _Fecha = Convert.ToDateTime(Convert.ToString(_Fila.Cells("Fecha").Value))
         Dim _Empresa As String = _Fila.Cells("Empresa").Value
@@ -111,6 +111,7 @@ Public Class Frm_Mt_InvParc_SelecionFechas
         Dim _Bodega As String = _Fila.Cells("Bodega").Value
         Dim _Estado As Boolean = _Fila.Cells("Estado").Value
         Dim _Nombre_Ajuste As String = _Fila.Cells("Nombre_Ajuste").Value
+        Dim _IdInventario As Integer = _Fila.Cells("IdInventario").Value
 
         If _Estado Then
 
@@ -127,6 +128,7 @@ Public Class Frm_Mt_InvParc_SelecionFechas
             End If
 
             Dim Fm As New Frm_Mt_InvParc_02_Seleccion(_Empresa, _Sucursal, _Bodega, _Fecha, False)
+            Fm.IdInventario = _IdInventario
             Fm.Text = "AJUSTE DE INVENTARIO (" & _Nombre_Ajuste & ". Sucursal " & _Sucursal & ", Bodega " & _Bodega & ")"
             Fm.ShowDialog(Me)
 
@@ -168,14 +170,9 @@ Public Class Frm_Mt_InvParc_SelecionFechas
 
 
     Private Sub BtnCrearNuevoInventario_Click(sender As System.Object, e As System.EventArgs) Handles BtnCrearNuevoInventario.Click
-        Dim Fm As New Frm_Mt_InvParc_NuevoAjuste(_RowBodega)
-        Fm.ShowDialog(Me)
 
-        If Fm.Pro_Inventario_Creado Then
-            Sb_Actualizar_Grilla_Inventario()
-        End If
+        ShowContextMenu(Menu_Contextual_Crea_Inventarios)
 
-        Fm.Dispose()
     End Sub
 
     Private Sub Frm_Mt_InvParc_SelecionFechas_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
@@ -316,6 +313,52 @@ Public Class Frm_Mt_InvParc_SelecionFechas
         Dim _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Inventario_Detalle")
+
+    End Sub
+
+    Private Sub Btn_CrearAjusteSimple_Click(sender As Object, e As EventArgs) Handles Btn_CrearAjusteSimple.Click
+
+        Dim Fm As New Frm_Mt_InvParc_NuevoAjuste(_RowBodega)
+        Fm.IdInventario = 0
+        Fm.ShowDialog(Me)
+        If Fm.Pro_Inventario_Creado Then
+            Sb_Actualizar_Grilla_Inventario()
+        End If
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_CrearAjusteDesdeInvGral_Click(sender As Object, e As EventArgs) Handles Btn_CrearAjusteDesdeInvGral.Click
+
+        Dim _IdInvenatario As Integer
+
+        Dim FmI As New Frm_Inv_Inventarios
+        FmI.ModoSeleccion = True
+        FmI.Empresa = _Empresa
+        FmI.Sucursal = _Sucursal
+        FmI.Bodega = _Bodega
+        FmI.ShowDialog(Me)
+        _IdInvenatario = FmI.IdInventario_Selecionado
+        FmI.Dispose()
+
+        If Not CBool(_IdInvenatario) Then
+            Return
+        End If
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_TmpInv_InvParcial_Inventarios", "IdInventario = " & _IdInvenatario)
+
+        If CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "Ya existe un ajuste para esta inventario general", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim Fm As New Frm_Mt_InvParc_NuevoAjuste(_RowBodega)
+        Fm.IdInventario = _IdInvenatario
+        Fm.ShowDialog(Me)
+        If Fm.Pro_Inventario_Creado Then
+            Sb_Actualizar_Grilla_Inventario()
+        End If
+        Fm.Dispose()
 
     End Sub
 

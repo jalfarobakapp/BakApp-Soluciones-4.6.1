@@ -35,6 +35,7 @@ Partial Class Frm_Crear_Guias_De_Ajuste_De_Stock
         Me.Chk_ConsolidarStockAlFinalizar = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_CambiarCostoEnLCProducto = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.ChkDejaStockCero = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Btn_Cancelar = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.DtFechaInv, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -158,7 +159,7 @@ Partial Class Frm_Crear_Guias_De_Ajuste_De_Stock
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Procesar})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Procesar, Me.Btn_Cancelar})
         Me.Bar2.Location = New System.Drawing.Point(0, 229)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(705, 41)
@@ -263,6 +264,15 @@ Partial Class Frm_Crear_Guias_De_Ajuste_De_Stock
         Me.ChkDejaStockCero.TabIndex = 51
         Me.ChkDejaStockCero.Text = "Deja stock en cero"
         '
+        'Btn_Cancelar
+        '
+        Me.Btn_Cancelar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Cancelar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Cancelar.Image = CType(resources.GetObject("Btn_Cancelar.Image"), System.Drawing.Image)
+        Me.Btn_Cancelar.ImageAlt = CType(resources.GetObject("Btn_Cancelar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Cancelar.Name = "Btn_Cancelar"
+        Me.Btn_Cancelar.Text = "Cancelar"
+        '
         'Frm_Crear_Guias_De_Ajuste_De_Stock
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -308,4 +318,5 @@ Partial Class Frm_Crear_Guias_De_Ajuste_De_Stock
     Friend WithEvents Chk_ConsolidarStockAlFinalizar As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_CambiarCostoEnLCProducto As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents ChkDejaStockCero As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Btn_Cancelar As DevComponents.DotNetBar.ButtonItem
 End Class
