@@ -13,6 +13,7 @@ Public Class Frm_Usuarios_Random_Ficha
     Dim _Comuna As String
 
     Dim _Row_Tabfu As DataRow
+    Dim _Row_Usuario As DataRow
 
     Public Property Grabar As Boolean
 
@@ -28,8 +29,13 @@ Public Class Frm_Usuarios_Random_Ficha
         Consulta_sql = "Select * From TABFU Where KOFU = '" & _Kofu & "'"
         _Row_Tabfu = _Sql.Fx_Get_DataRow(Consulta_sql)
 
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Usuarios Where CodFuncionario = '" & _Kofu & "'"
+        _Row_Usuario = _Sql.Fx_Get_DataRow(Consulta_sql)
+
     End Sub
     Private Sub Frm_Usuarios_Ficha_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
+
+        Txt_Kogru_Ventas.Tag = Nothing
 
         If Not IsNothing(_Row_Tabfu) Then
 
@@ -76,6 +82,14 @@ Public Class Frm_Usuarios_Random_Ficha
             If _Row_Tabfu.Item("PARAFIRMA") = "N" Then Chk_Parafirma.Checked = True
 
             Me.ActiveControl = Txt_Nombre
+
+            Consulta_sql = "Select * From TABFUGE Where KOGRU = '" & _Row_Usuario.Item("Kogru_Ventas") & "'"
+            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If Not IsNothing(_Row) Then
+                Txt_Kogru_Ventas.Tag = _Row
+                Txt_Kogru_Ventas.Text = _Row.Item("KOGRU").ToString.Trim & " - " & _Row.Item("NOKOGRU").ToString.Trim
+            End If
 
         Else
 
@@ -124,19 +138,6 @@ Public Class Frm_Usuarios_Random_Ficha
     End Sub
 
     Private Function Fx_CrearFuncionario(_Kofu As String) As String
-
-        'Dim _Rut As String = Txt_Rut.Text
-        'Dim _Codigo As String = Txt_Codigo.Text
-        'Dim _Nombre As String = Txt_Nombre.Text
-        'Dim _Direccion As String = Txt_Direccion.Text
-        'Dim _Ciudad As String = Me._Ciudad
-        'Dim _Comuna As String = Me._Comuna
-        'Dim _Telefono As String = Txt_Telefono.Text
-        'Dim _Email As String = Txt_Email.Text
-        'Dim _EmailSup As String = Txt_EmailSup.Text
-        'Dim _Modalidad As String = Txt_Modalidad.Text
-        'Dim _CodigoExt As String = Txt_Cod_Ext.Text
-        'Dim _Password As String = TraeClaveRD(Txt_Password.Text)
 
         Dim Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros("TABFU", "KOFU = '" & _Kofu & "'"))
 
@@ -213,25 +214,32 @@ Public Class Frm_Usuarios_Random_Ficha
         End If
 
         Consulta_sql = "Update TABFU Set " & vbCrLf &
-                                 "NOKOFU = '" & _Nokofu & "'" &
-                                 ",RTFU = '" & _Rut & "'" &
-                                 ",DIFU = '" & _Difu & "'" &
-                                 ",CIFU = '" & _Cifu & "'" &
-                                 ",CMFU = '" & _Cmfu & "'" &
-                                 ",PLANO = 'SINFOTOF'" &
-                                 ",MODALIDAD = '" & _Modalidad & "'" &
-                                 ",INACTIVO = " & Convert.ToInt32(Chk_Inactivo.Checked) &
-                                 ",PARAFIRMA = '" & _Parafirma & "'" &
-                                 ",EMAIL = '" & _Email & "'" &
-                                 ",EMAILSUP = '" & _EmailSup & "'" &
-                                 ",CODEXTERN = '" & _Codextern & "'" &
-                                 ",FOFU = '" & _Fofu & "'" &
-                                 ",PWFU = '" & _Pwfu & "'" & vbCrLf &
-                                 "Where KOFU='" & _Kofu & "'" & vbCrLf
+                       "NOKOFU = '" & _Nokofu & "'" &
+                       ",RTFU = '" & _Rut & "'" &
+                       ",DIFU = '" & _Difu & "'" &
+                       ",CIFU = '" & _Cifu & "'" &
+                       ",CMFU = '" & _Cmfu & "'" &
+                       ",PLANO = 'SINFOTOF'" &
+                       ",MODALIDAD = '" & _Modalidad & "'" &
+                       ",INACTIVO = " & Convert.ToInt32(Chk_Inactivo.Checked) &
+                       ",PARAFIRMA = '" & _Parafirma & "'" &
+                       ",EMAIL = '" & _Email & "'" &
+                       ",EMAILSUP = '" & _EmailSup & "'" &
+                       ",CODEXTERN = '" & _Codextern & "'" &
+                       ",FOFU = '" & _Fofu & "'" &
+                       ",PWFU = '" & _Pwfu & "'" & vbCrLf &
+                       "Where KOFU='" & _Kofu & "'" & vbCrLf
 
         If Chk_Inactivo.Checked Then
             Consulta_sql += "Delete MAEUS Where KOUS='" & _Kofu & "'" & vbCrLf &
-                            "Delete " & _Global_BaseBk & "ZW_PermisosVsUsuarios Where CodUsuario = '" & _Kofu & "'"
+                            "Delete " & _Global_BaseBk & "ZW_PermisosVsUsuarios Where CodUsuario = '" & _Kofu & "'" & vbCrLf
+        End If
+
+        Dim _Kogru_Ventas As String = String.Empty
+
+        If Not IsNothing(Txt_Kogru_Ventas.Tag) Then
+            _Kogru_Ventas = Txt_Kogru_Ventas.Tag.Item("KOGRU")
+            Consulta_sql += "Update " & _Global_BaseBk & "Zw_Usuarios Set Kogru_Ventas = '" & _Kogru_Ventas & "' Where CodFuncionario = '" & _Kofu & "'"
         End If
 
         If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
@@ -303,4 +311,32 @@ Public Class Frm_Usuarios_Random_Ficha
 
     End Sub
 
+    Private Sub Txt_Kogru_Ventas_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Kogru_Ventas.ButtonCustomClick
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Tabla = "TABFUGE"
+        _Filtrar.Campo = "KOGRU"
+        _Filtrar.Descripcion = "NOKOGRU"
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "", False, False, True) Then
+
+            Dim _Codigo As String = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
+            Dim _Descripcion As String = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion")
+
+            Consulta_sql = "Select * From TABFUGE Where KOGRU = '" & _Codigo & "'"
+            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Txt_Kogru_Ventas.Tag = _Row
+            Txt_Kogru_Ventas.Text = _Codigo.ToString.Trim & " - " & _Descripcion.ToString.Trim
+
+        End If
+
+    End Sub
+
+    Private Sub Txt_Kogru_Ventas_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Kogru_Ventas.ButtonCustom2Click
+        Txt_Kogru_Ventas.Text = String.Empty
+        Txt_Kogru_Ventas.Tag = Nothing
+    End Sub
 End Class

@@ -356,8 +356,7 @@ Public Class Frm_Sectores_Lista_UbicOblig
             Dim _Filtrar_Pr As Boolean
 
             If _Filtrar.Fx_Filtrar(Nothing,
-                                   Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra,
-                                   False, False) Then
+                                   Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra, False, False) Then
 
                 _Tbl_Productos = _Filtrar.Pro_Tbl_Filtro
                 'If _Filtrar.Pro_Filtro_Todas Then
@@ -377,32 +376,35 @@ Public Class Frm_Sectores_Lista_UbicOblig
 
                     Dim _Codigo As String = _Fl.Item("Codigo")
 
-                    Dim _Id = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Prod_Ubicacion_IngSal", "Id",
-                                                      "Id_Mapa = " & _Id_Mapa &
-                                                      " And Codigo_Sector = '" & _Codigo_Sector &
-                                                      "' And Codigo_Ubic = '" & _Codigo_Ubic &
-                                                      "' And Codigo = '" & _Codigo &
-                                                      "' And FechaIngreso = '" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") &
-                                                      "' And Ingreso = 1 And Salida = 0")
+                    If Not String.IsNullOrEmpty(_Codigo) Then
 
-                    Consulta_sql += "Update " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal Set " & vbCrLf &
-                                    "Empresa = '" & _Empresa & "'" &
-                                    ",Sucursal = '" & _Sucursal & "'" &
-                                    ",Bodega = '" & _Bodega & "'" &
-                                    ",Id_Mapa = " & _Id_Mapa &
-                                    ",Codigo_Sector = '" & _Codigo_Sector & "'" &
-                                    ",Codigo_Ubic = '" & _Codigo_Ubic & "'" &
-                                    ",Codigo = '" & _Codigo & "'" &
-                                    ",CodFuncionario_Sal = '" & FUNCIONARIO & "'" &
-                                    ",NombreEquipo = '" & _NombreEquipo & "'" &
-                                    ",Salida = 1" &
-                                    ",FechaSalida = '" & Format(_FechaIngreso, "yyyyMMdd") & "'" & vbCrLf &
-                                    "Where Id = " & _Id & vbCrLf
+                        Dim _Id = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Prod_Ubicacion_IngSal", "Id",
+                                  "Id_Mapa = " & _Id_Mapa &
+                                  " And Codigo_Sector = '" & _Codigo_Sector &
+                                  "' And Codigo_Ubic = '" & _Codigo_Ubic &
+                                  "' And Codigo = '" & _Codigo &
+                                  "' And FechaIngreso = '" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") &
+                                  "' And Ingreso = 1 And Salida = 0")
 
-                    _Contador += 1
+                        Consulta_sql += "Update " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal Set " & vbCrLf &
+                                        "Empresa = '" & _Empresa & "'" &
+                                        ",Sucursal = '" & _Sucursal & "'" &
+                                        ",Bodega = '" & _Bodega & "'" &
+                                        ",Id_Mapa = " & _Id_Mapa &
+                                        ",Codigo_Sector = '" & _Codigo_Sector & "'" &
+                                        ",Codigo_Ubic = '" & _Codigo_Ubic & "'" &
+                                        ",Codigo = '" & _Codigo & "'" &
+                                        ",CodFuncionario_Sal = '" & FUNCIONARIO & "'" &
+                                        ",NombreEquipo = '" & _NombreEquipo & "'" &
+                                        ",Salida = 1" &
+                                        ",FechaSalida = '" & Format(_FechaIngreso, "yyyyMMdd") & "'" & vbCrLf &
+                                        "Where Id = " & _Id & vbCrLf
+
+                        _Contador += 1
+
+                    End If
 
                 Next
-
 
             End If
 

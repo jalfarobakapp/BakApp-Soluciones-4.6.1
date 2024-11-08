@@ -290,6 +290,7 @@ Public Class Frm_Ver_Documento
                 Btn_Permisos_Asociados.Visible = False
                 Btn_Ver_Pagos.Visible = False
                 Btn_Ver_Orden_de_despacho.Visible = False
+                Btn_HabilitarFacturacion.Visible = False
 
         End Select
 
@@ -297,13 +298,13 @@ Public Class Frm_Ver_Documento
 
         Me.Cursor = Cursors.WaitCursor
 
-        Dim _Koen As String
-        Dim _Suen As String
+        'Dim _Koen As String
+        'Dim _Suen As String
 
-        _Koen = _TblEncabezado.Rows(0).Item(_Campo_Koen)
-        _Suen = _TblEncabezado.Rows(0).Item(_Campo_Suen)
+        '_Koen = _TblEncabezado.Rows(0).Item(_Campo_Koen)
+        '_Suen = _TblEncabezado.Rows(0).Item(_Campo_Suen)
 
-        _RowEntidad = Fx_Traer_Datos_Entidad(_Koen, _Suen)
+        '_RowEntidad = Fx_Traer_Datos_Entidad(_Koen, _Suen)
 
     End Sub
 
@@ -367,6 +368,15 @@ Public Class Frm_Ver_Documento
                 Btn_Ver_Orden_de_despacho.Visible = False
 
         End Select
+
+        Dim _Koen As String
+        Dim _Suen As String
+
+        _Koen = _TblEncabezado.Rows(0).Item(_Campo_Koen)
+        _Suen = _TblEncabezado.Rows(0).Item(_Campo_Suen)
+
+        _RowEntidad = Fx_Traer_Datos_Entidad(_Koen, _Suen)
+
 
         Sb_Formato_Generico_Grilla(GrillaEncabezado, 17, New Font("Tahoma", 8), Color.LightYellow, ScrollBars.None, False, False, False)
 

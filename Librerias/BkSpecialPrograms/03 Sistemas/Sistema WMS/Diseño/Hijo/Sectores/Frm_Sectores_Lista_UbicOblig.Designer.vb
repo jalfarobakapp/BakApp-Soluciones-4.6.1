@@ -54,6 +54,8 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
         Me.Imagenes_16x16_Dark = New System.Windows.Forms.ImageList(Me.components)
+        Me.Btn_ConfProdUbicSoloUna = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem4 = New DevComponents.DotNetBar.LabelItem()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -122,7 +124,7 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         '
         Me.Menu_Contextual_01.AutoExpandOnClick = True
         Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
-        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_VerProdUbicacion, Me.Btn_VerProdUbicacionMensual, Me.LabelItem2, Me.Btn_AgregarProductosUbic, Me.Btn_QuitarProductosUbic, Me.LabelItem3, Me.Btn_Copiar})
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_VerProdUbicacion, Me.Btn_VerProdUbicacionMensual, Me.LabelItem2, Me.Btn_AgregarProductosUbic, Me.Btn_QuitarProductosUbic, Me.LabelItem4, Me.Btn_ConfProdUbicSoloUna, Me.LabelItem3, Me.Btn_Copiar})
         Me.Menu_Contextual_01.Text = "Opciones "
         '
         'LabelItem1
@@ -542,6 +544,26 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.Imagenes_16x16_Dark.Images.SetKeyName(22, "symbol-ok-warning.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(23, "symbol-remove.png")
         '
+        'Btn_ConfProdUbicSoloUna
+        '
+        Me.Btn_ConfProdUbicSoloUna.Image = CType(resources.GetObject("Btn_ConfProdUbicSoloUna.Image"), System.Drawing.Image)
+        Me.Btn_ConfProdUbicSoloUna.ImageAlt = CType(resources.GetObject("Btn_ConfProdUbicSoloUna.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ConfProdUbicSoloUna.Name = "Btn_ConfProdUbicSoloUna"
+        Me.Btn_ConfProdUbicSoloUna.Text = "Confirmar nuevamente los productos de este sector con ubicaciones actuales"
+        '
+        'LabelItem4
+        '
+        Me.LabelItem4.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem4.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem4.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem4.Name = "LabelItem4"
+        Me.LabelItem4.PaddingBottom = 1
+        Me.LabelItem4.PaddingLeft = 10
+        Me.LabelItem4.PaddingTop = 1
+        Me.LabelItem4.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem4.Text = "-----------------------------------------"
+        '
         'Frm_Sectores_Lista_UbicOblig
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -598,4 +620,6 @@ Partial Class Frm_Sectores_Lista_UbicOblig
     Friend WithEvents Btn_ExportarExcelProductos As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_VerProdUbicacionMensual As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LabelItem2 As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents LabelItem4 As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Btn_ConfProdUbicSoloUna As DevComponents.DotNetBar.ButtonItem
 End Class

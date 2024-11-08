@@ -55,8 +55,10 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Lbl_111 = New DevComponents.DotNetBar.LabelX()
         Me.Highlighter1 = New DevComponents.DotNetBar.Validator.Highlighter()
         Me.Txt_Modalidad = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_Kogru_Ventas = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Chk_Parafirma = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Inactivo = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.LabelX8 = New DevComponents.DotNetBar.LabelX()
         Me.TableLayoutPanel2.SuspendLayout()
         Me.TableLayoutPanel4.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -295,7 +297,7 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Txt_Telefono.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Txt_Telefono.ForeColor = System.Drawing.Color.Black
         Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Telefono, True)
-        Me.Txt_Telefono.Location = New System.Drawing.Point(120, 153)
+        Me.Txt_Telefono.Location = New System.Drawing.Point(133, 154)
         Me.Txt_Telefono.Name = "Txt_Telefono"
         Me.Txt_Telefono.Size = New System.Drawing.Size(170, 22)
         Me.Txt_Telefono.TabIndex = 6
@@ -306,7 +308,7 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 323)
+        Me.Bar1.Location = New System.Drawing.Point(0, 354)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(649, 41)
         Me.Bar1.Stretch = True
@@ -476,7 +478,7 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Txt_Cod_Ext.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Txt_Cod_Ext.ForeColor = System.Drawing.Color.Black
         Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Cod_Ext, True)
-        Me.Txt_Cod_Ext.Location = New System.Drawing.Point(120, 209)
+        Me.Txt_Cod_Ext.Location = New System.Drawing.Point(133, 209)
         Me.Txt_Cod_Ext.Name = "Txt_Cod_Ext"
         Me.Txt_Cod_Ext.Size = New System.Drawing.Size(261, 22)
         Me.Txt_Cod_Ext.TabIndex = 10
@@ -541,7 +543,7 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Txt_Password.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Txt_Password.ForeColor = System.Drawing.Color.Black
         Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Password, True)
-        Me.Txt_Password.Location = New System.Drawing.Point(120, 237)
+        Me.Txt_Password.Location = New System.Drawing.Point(133, 237)
         Me.Txt_Password.Name = "Txt_Password"
         Me.Txt_Password.Size = New System.Drawing.Size(170, 22)
         Me.Txt_Password.TabIndex = 11
@@ -584,11 +586,34 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Txt_Modalidad.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Txt_Modalidad.ForeColor = System.Drawing.Color.Black
         Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Modalidad, True)
-        Me.Txt_Modalidad.Location = New System.Drawing.Point(120, 181)
+        Me.Txt_Modalidad.Location = New System.Drawing.Point(133, 180)
         Me.Txt_Modalidad.Name = "Txt_Modalidad"
         Me.Txt_Modalidad.ReadOnly = True
         Me.Txt_Modalidad.Size = New System.Drawing.Size(101, 22)
         Me.Txt_Modalidad.TabIndex = 8
+        '
+        'Txt_Kogru_Ventas
+        '
+        Me.Txt_Kogru_Ventas.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Kogru_Ventas.Border.Class = "TextBoxBorder"
+        Me.Txt_Kogru_Ventas.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Kogru_Ventas.ButtonCustom.Image = CType(resources.GetObject("Txt_Kogru_Ventas.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Kogru_Ventas.ButtonCustom.Visible = True
+        Me.Txt_Kogru_Ventas.ButtonCustom2.Image = CType(resources.GetObject("Txt_Kogru_Ventas.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Kogru_Ventas.ButtonCustom2.Visible = True
+        Me.Txt_Kogru_Ventas.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.Txt_Kogru_Ventas.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Kogru_Ventas.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Txt_Kogru_Ventas.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Kogru_Ventas, True)
+        Me.Txt_Kogru_Ventas.Location = New System.Drawing.Point(133, 326)
+        Me.Txt_Kogru_Ventas.Name = "Txt_Kogru_Ventas"
+        Me.Txt_Kogru_Ventas.ReadOnly = True
+        Me.Txt_Kogru_Ventas.Size = New System.Drawing.Size(505, 22)
+        Me.Txt_Kogru_Ventas.TabIndex = 153
         '
         'Chk_Parafirma
         '
@@ -626,11 +651,30 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Chk_Inactivo.TabStop = False
         Me.Chk_Inactivo.Text = "Bloquear funcionario"
         '
+        'LabelX8
+        '
+        Me.LabelX8.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX8.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX8.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX8.ForeColor = System.Drawing.Color.Black
+        Me.LabelX8.Location = New System.Drawing.Point(12, 327)
+        Me.LabelX8.Name = "LabelX8"
+        Me.LabelX8.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.LabelX8.Size = New System.Drawing.Size(109, 23)
+        Me.LabelX8.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.LabelX8.TabIndex = 154
+        Me.LabelX8.Text = "Grupo vendedores"
+        '
         'Frm_Usuarios_Random_Ficha
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(649, 364)
+        Me.ClientSize = New System.Drawing.Size(649, 395)
+        Me.Controls.Add(Me.Txt_Kogru_Ventas)
+        Me.Controls.Add(Me.LabelX8)
         Me.Controls.Add(Me.Chk_Inactivo)
         Me.Controls.Add(Me.Chk_Parafirma)
         Me.Controls.Add(Me.Txt_Modalidad)
@@ -708,4 +752,6 @@ Partial Class Frm_Usuarios_Random_Ficha
     Friend WithEvents Txt_Modalidad As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Chk_Parafirma As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_Inactivo As DevComponents.DotNetBar.Controls.CheckBoxX
+    Public WithEvents Txt_Kogru_Ventas As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX8 As DevComponents.DotNetBar.LabelX
 End Class
