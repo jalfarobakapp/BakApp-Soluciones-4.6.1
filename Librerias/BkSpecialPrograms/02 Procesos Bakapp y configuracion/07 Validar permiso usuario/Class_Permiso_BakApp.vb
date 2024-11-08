@@ -843,6 +843,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("NO00019", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("NO00020", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("NO00021", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("NO00022", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("RSii00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("RSii00002", _Objeto, _Formulario)
@@ -3755,6 +3756,11 @@ Public Class Class_Permiso_BakApp
 
             Case "NO00021"
                 _DescripcionPermiso = "NO PERMITIR VER DOCUMENTOS DE CLIENTES DE OTROS VENDEDORES"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.RESTRICCIONES, 6)
+                _NombreFamiliaPermiso = _Fml.RESTRICCIONES.ToString
+
+            Case "NO00022"
+                _DescripcionPermiso = "NO PERMITIR EL ACCESO A DOCUMENTOS DE CLIENTES QUE PERTENEZCAN A OTROS VENDEDORES QUE NO FORMEN PARTE DEL GRUPO DE VENDEDORES ASIGNADOS."
                 _CodFamilia = Fx_Rellena_ceros(_Fml.RESTRICCIONES, 6)
                 _NombreFamiliaPermiso = _Fml.RESTRICCIONES.ToString
 

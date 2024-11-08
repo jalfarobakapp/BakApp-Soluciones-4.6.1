@@ -479,7 +479,16 @@ Public Class Frm_BuscarDocumento_Mt
             Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
             Dim _Idmaeedo = _Fila.Cells("IDMAEEDO").Value
 
-            Fx_VerDocumento(Me, _Idmaeedo, "")
+            Dim _Msj As LsValiciones.Mensajes = Fx_FuncionarioPuedeVerDocumentoGrupo(_Idmaeedo, FUNCIONARIO)
+
+            If Not _Msj.EsCorrecto Then
+                MessageBoxEx.Show(Me, _Msj.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+            Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
 
             Dim _Row As DataRow = _Sql.Fx_Get_DataRow("Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo)
 

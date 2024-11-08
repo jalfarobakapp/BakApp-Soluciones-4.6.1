@@ -425,6 +425,18 @@ Public Class Clase_Crear_Documento
 
             myTrans = cn2.BeginTransaction()
 
+
+            If Not _Cambiar_NroDocumento And _Tido = "COV" Then
+
+                Consulta_sql = "UPDATE MAEEDO Set NUDO = 'xxxxxxxxxx' WHERE EMPRESA = '" & _Empresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'"
+
+                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+            End If
+
+
             Consulta_sql = "INSERT INTO MAEEDO ( EMPRESA,TIDO,NUDO,ENDO,SUENDO )" & vbCrLf &
                            "VALUES ( '" & _Empresa & "','" & _Tido & "','" & _Nudo &
                            "','" & _Endo & "','" & _Suendo & "')"

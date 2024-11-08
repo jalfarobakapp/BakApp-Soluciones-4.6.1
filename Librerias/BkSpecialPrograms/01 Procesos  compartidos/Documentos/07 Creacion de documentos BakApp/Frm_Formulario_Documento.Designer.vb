@@ -138,6 +138,7 @@ Partial Class Frm_Formulario_Documento
         Me.Btn_Dejar_Doc_Stand_By = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Informe_Ventas_X_Vendedor = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Editar_Nota_de_venta = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Editar_Cotizacion = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Aceptar_Documento = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Rechazar_Documento = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Ver_Costos = New DevComponents.DotNetBar.ButtonItem()
@@ -1197,7 +1198,7 @@ Partial Class Frm_Formulario_Documento
         Me.Barra.AntiAlias = True
         Me.Barra.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Barra.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Barra.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnGrabar, Me.Btn_Limpiar, Me.Btn_Desde_COV_OCC, Me.Btn_Productos_Solicitados_Bodega, Me.Btn_Revisar_Situacion_Comercial, Me.Btn_Cambiar_Tipo_Documento, Me.Btn_Cadena_Remota, Me.Btn_Dejar_Doc_Stand_By, Me.Btn_Informe_Ventas_X_Vendedor, Me.Btn_Editar_Nota_de_venta, Me.Btn_Aceptar_Documento, Me.Btn_Rechazar_Documento, Me.Btn_Ver_Costos, Me.Btn_Mostrar_Margenes, Me.Btn_Observaciones, Me.Btn_Anotaciones_al_documento, Me.Btn_Archivos_Adjuntos, Me.Btn_Opciones_Especiales, Me.Btn_Imprimir, Me.ButtonItem1, Me.Btn_Huella})
+        Me.Barra.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnGrabar, Me.Btn_Limpiar, Me.Btn_Desde_COV_OCC, Me.Btn_Productos_Solicitados_Bodega, Me.Btn_Revisar_Situacion_Comercial, Me.Btn_Cambiar_Tipo_Documento, Me.Btn_Cadena_Remota, Me.Btn_Dejar_Doc_Stand_By, Me.Btn_Informe_Ventas_X_Vendedor, Me.Btn_Editar_Nota_de_venta, Me.Btn_Editar_Cotizacion, Me.Btn_Aceptar_Documento, Me.Btn_Rechazar_Documento, Me.Btn_Ver_Costos, Me.Btn_Mostrar_Margenes, Me.Btn_Observaciones, Me.Btn_Anotaciones_al_documento, Me.Btn_Archivos_Adjuntos, Me.Btn_Opciones_Especiales, Me.Btn_Imprimir, Me.ButtonItem1, Me.Btn_Huella})
         Me.Barra.Location = New System.Drawing.Point(0, 536)
         Me.Barra.Name = "Barra"
         Me.Barra.Size = New System.Drawing.Size(934, 41)
@@ -1307,6 +1308,16 @@ Partial Class Frm_Formulario_Documento
         Me.Btn_Editar_Nota_de_venta.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.Btn_Editar_Nota_de_venta.Name = "Btn_Editar_Nota_de_venta"
         Me.Btn_Editar_Nota_de_venta.Tooltip = "Editar nota de venta"
+        '
+        'Btn_Editar_Cotizacion
+        '
+        Me.Btn_Editar_Cotizacion.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Editar_Cotizacion.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Editar_Cotizacion.Image = CType(resources.GetObject("Btn_Editar_Cotizacion.Image"), System.Drawing.Image)
+        Me.Btn_Editar_Cotizacion.ImageAlt = CType(resources.GetObject("Btn_Editar_Cotizacion.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Editar_Cotizacion.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_Editar_Cotizacion.Name = "Btn_Editar_Cotizacion"
+        Me.Btn_Editar_Cotizacion.Tooltip = "Editar cotización"
         '
         'Btn_Aceptar_Documento
         '
@@ -2920,4 +2931,5 @@ Partial Class Frm_Formulario_Documento
     Friend WithEvents Btn_CambiarTipoVenta As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Lbl_TipoVenta As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Lbl_DocActual As DevComponents.DotNetBar.LabelItem
+    Public WithEvents Btn_Editar_Cotizacion As DevComponents.DotNetBar.ButtonItem
 End Class

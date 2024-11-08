@@ -396,14 +396,17 @@ Public Class Frm_EstadisticaProducto
 
         Btn_Mnu_Pr_Editar_Producto.Visible = VerEdicionProducto
 
-        'Dim _VerSoloEntidadesDelVendedor As Boolean = Fx_Tiene_Permiso(Me, "Doc00097",, False) '_Global_Row_Configuracion_Estacion.Item("VerSoloEntidadesDelVendedor")
 
-        'If _VerSoloEntidadesDelVendedor Then
         GrillaVentas.Visible = Not Fx_Tiene_Permiso(Me, "NO00021",, False)
+
+        If GrillaVentas.Visible Then
+            GrillaVentas.Visible = Not Fx_Tiene_Permiso(Me, "NO00022",, False)
+        End If
+
         If Not GrillaVentas.Visible Then
             Tabs.SelectedTabIndex = 2
         End If
-        'End If
+
 
     End Sub
 
@@ -1273,17 +1276,27 @@ Public Class Frm_EstadisticaProducto
     Private Sub Sb_Grilla_CellDoubleClick(sender As System.Object,
                                           e As System.Windows.Forms.DataGridViewCellEventArgs)
 
-        Me.Enabled = False
+        Try
 
-        Dim _Idmaeedo As Integer = sender.Rows(sender.CurrentRow.Index).Cells("IDMAEEDO").Value
+            Me.Enabled = False
 
-        Fx_VerDocumento(Me, _Idmaeedo, "")
+            Dim _Idmaeedo As Integer = sender.Rows(sender.CurrentRow.Index).Cells("IDMAEEDO").Value
 
-        'Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
-        'Fm.ShowDialog(Me)
-        'Fm.Dispose()
+            Dim _Msj As LsValiciones.Mensajes = Fx_FuncionarioPuedeVerDocumentoGrupo(_Idmaeedo, FUNCIONARIO)
 
-        Me.Enabled = True
+            If Not _Msj.EsCorrecto Then
+                MessageBoxEx.Show(Me, _Msj.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+            Dim Fm2 As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
+            Fm2.ShowDialog(Me)
+            Fm2.Dispose()
+
+        Catch ex As Exception
+        Finally
+            Me.Enabled = True
+        End Try
 
     End Sub
 

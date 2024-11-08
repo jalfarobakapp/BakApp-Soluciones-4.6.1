@@ -878,6 +878,7 @@ Public Class Frm_Formulario_Documento
         Btn_Dejar_Doc_Stand_By.Visible = False
         Btn_Observaciones.Visible = False
         Btn_Informe_Ventas_X_Vendedor.Visible = False
+        Btn_Editar_Cotizacion.Visible = False
         Btn_Editar_Nota_de_venta.Visible = False
         Btn_Aceptar_Documento.Visible = False
         Btn_Rechazar_Documento.Visible = False
@@ -974,6 +975,8 @@ Public Class Frm_Formulario_Documento
 
                     Btn_Despacho.Enabled = True
 
+                    Btn_Editar_Cotizacion.Visible = (_Tido = "COV")
+
                 Case "COV", "NVV"
 
                     BtnGrabar.Visible = True
@@ -981,7 +984,9 @@ Public Class Frm_Formulario_Documento
                     Btn_Revisar_Situacion_Comercial.Visible = True
                     Btn_Dejar_Doc_Stand_By.Visible = True
                     Btn_Observaciones.Visible = True
-                    Btn_Editar_Nota_de_venta.Visible = True
+
+                    Btn_Editar_Nota_de_venta.Visible = (_Tido = "NVV")
+
                     Btn_Informe_Ventas_X_Vendedor.Visible = True
                     Btn_Cadena_Remota.Visible = True
                     Btn_Anotaciones_al_documento.Visible = True
@@ -14260,6 +14265,8 @@ Public Class Frm_Formulario_Documento
                         Return
                     End If
 
+                    Dim _Editar_COV As Boolean
+
                     If _Existe_Campo And _Tido <> "GRC" Then
 
                         _Idmaeedo = _Sql.Fx_Trae_Dato("MAEEDO",
@@ -14270,21 +14277,69 @@ Public Class Frm_Formulario_Documento
 
                             _TblEncabezado.Rows(0).Item("NroDocumento") = _NroDocumento_Antes_De_Editar
 
-                            If MessageBoxEx.Show(Me, "El documento Nro: " & _Tido & "-" & _NroDocumento_New & " ya existe." & vbCrLf & vbCrLf &
-                                              "¿Desea ver el documento?", "Validación",
-                                              MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
+                            If _Tido = "COV" Or _Tido = "NVV" Or _Tido = "FCV" Or _Tido = "GDV" Or _Tido = "GDP" Then
 
-                                'Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
-                                'Fm.ShowDialog(Me)
+                                Dim _Msj As LsValiciones.Mensajes = Fx_FuncionarioPuedeVerDocumentoGrupo(_Idmaeedo, FUNCIONARIO)
 
-                                'If Fm.Eliminado Or Fm.Anulado Then
-                                '    Call BtnLimpiar_Click(Nothing, Nothing)
-                                'End If
+                                If Not _Msj.EsCorrecto Then
+                                    MessageBoxEx.Show(Me, _Msj.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                    Return
+                                End If
 
-                                'Fm.Dispose()
+                                If _Tido = "COV" Then
 
-                                Fx_VerDocumento(Me, _Idmaeedo, "")
+                                    Dim Rdb_VerDocumento As New Command
+                                    Rdb_VerDocumento.Checked = True
+                                    Rdb_VerDocumento.Name = "Rdb_VerDocumento"
+                                    Rdb_VerDocumento.Text = "Ver documento"
 
+                                    Dim Rdb_EditarDocumento As New Command
+                                    Rdb_EditarDocumento.Checked = False
+                                    Rdb_EditarDocumento.Name = "Rdb_EditarDocumento"
+                                    Rdb_EditarDocumento.Text = "Editar documento"
+
+                                    Dim _Opciones2() As Command = {Rdb_VerDocumento, Rdb_EditarDocumento}
+
+                                    Dim _Info As New TaskDialogInfo("Buscar Cotización",
+                                                      eTaskDialogIcon.Information2,
+                                                      "El documento Nro: " & _Tido & "-" & _NroDocumento_New & " ya existe.",
+                                                      "Eliga su opción",
+                                                      eTaskDialogButton.Ok + eTaskDialogButton.Cancel _
+                                                      , eTaskDialogBackgroundColor.Red, _Opciones2, Nothing, Nothing, Nothing, Nothing)
+
+                                    Dim _Resultado As eTaskDialogResult = TaskDialog.Show(_Info)
+
+                                    If _Resultado <> eTaskDialogResult.Ok Then
+                                        Return
+                                    End If
+
+                                    If Rdb_EditarDocumento.Checked Then
+                                        _Editar_COV = True
+                                    End If
+
+                                End If
+
+                            Else
+
+                                Dim _Pregunta = DialogResult
+
+                                _Pregunta = MessageBoxEx.Show(Me, "El documento Nro: " & _Tido & "-" & _NroDocumento_New & " ya existe." & vbCrLf & vbCrLf &
+                                            "¿Desea ver el documento?", "Validación",
+                                            MessageBoxButtons.YesNo, MessageBoxIcon.Information)
+
+                                If _Pregunta <> DialogResult.Yes Then
+                                    Return
+                                End If
+
+
+                            End If
+
+                            If _Editar_COV Then
+                                Sb_Buscar_Documento("COV", _Editar_documento, _Idmaeedo)
+                            Else
+                                Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
+                                Fm.ShowDialog(Me)
+                                Fm.Dispose()
                             End If
 
                         Else
@@ -15838,6 +15893,10 @@ Public Class Frm_Formulario_Documento
                     _Cambiar_NroDocumento = False
                 End If
 
+                If _Editar_documento And _Tido = "COV" Then
+                    _Cambiar_NroDocumento = False
+                End If
+
                 Dim _Mensaje As New LsValiciones.Mensajes
 
                 '_Idmaeedo = 
@@ -15978,12 +16037,25 @@ Public Class Frm_Formulario_Documento
 
                             Dim _CAE_Doc As New Clas_Cerrar_Anular_Eliminar_Documento_Origen
 
-                            If (_Tido = "COV" Or _Tido = "OCC") Or (_Editar_documento And _Tido = "NVV") Then
+                            If (_Tido = "COV" Or _Tido = "OCC") Or
+                                (_Editar_documento And _Tido = "NVV") Or
+                                (_Editar_documento And _Tido = "COV") Then
 
-                                _CAE_Doc.Sb_Cerrar_Documentos_De_Origen(Me,
+                                If _Editar_documento And _Tido = "COV" Then
+
+                                    _CAE_Doc.Sb_Cerrar_Documentos_De_Origen(Me,
+                                                                        Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion.Eliminar,
+                                                                        _TblDocumentos_Dori,
+                                                                        _Idmaeedo)
+
+                                Else
+
+                                    _CAE_Doc.Sb_Cerrar_Documentos_De_Origen(Me,
                                                                         Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion.Anular,
                                                                         _TblDocumentos_Dori,
                                                                         _Idmaeedo)
+
+                                End If
 
                             Else
 
@@ -17727,59 +17799,63 @@ Public Class Frm_Formulario_Documento
                 If _Post_Venta Then
 
                     If Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Bkp00010", Nothing, "", "") Then
-                        Sb_Buscar_Documento("COV", _Editar_documento)
+                        Sb_Buscar_Documento("COV", _Editar_documento, "")
                     End If
 
                 End If
 
             Case "OCC"
 
-                Sb_Buscar_Documento("OCC", _Editar_documento)
+                Sb_Buscar_Documento("OCC", _Editar_documento, "")
 
         End Select
 
     End Sub
 
     Sub Sb_Buscar_Documento(_Tido_Buscar As String,
-                            _Editar As Boolean)
+                            _Editar As Boolean,
+                            _IdMaeedo As String)
 
         Try
 
             Sb_Grilla_Detalle_Eventos(False)
 
-            Dim _IdMaeedo As String
+            'Dim _IdMaeedo As String
 
-            Dim _Fm As New Frm_BusquedaDocumento_Filtro(False)
-            With _Fm
+            If String.IsNullOrEmpty(_IdMaeedo) Then
 
-                .Grupo_Funcionario.Enabled = False
-                .Pro_Sql_Filtro_Documentos_Extra = "And TIDO IN ('" & _Tido_Buscar & "')"
-                .Pro_TipoDoc_Seleccionado = Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado
-                .Rdb_Tipo_Documento_Uno.Checked = True
-                .Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado, _Tido_Buscar,
-                                      "Where TIDO IN ('" & _Tido_Buscar & "')")
-                .Rdb_Estado_Vigente.Checked = True
+                Dim _Fm As New Frm_BusquedaDocumento_Filtro(False)
 
-                If _Editar Then
-                    .Pro_Mostrar_Solo_Datos_Usuario_Activo = _Editar
-                Else
-                    .Rdb_Funcionarios_Todos.Checked = True
-                End If
+                With _Fm
 
-                .Grupo_Funcionario.Enabled = True
-                .Rdb_Fecha_Emision_Desde_Hasta.Checked = True
+                    .Grupo_Funcionario.Enabled = False
+                    .Pro_Sql_Filtro_Documentos_Extra = "And TIDO IN ('" & _Tido_Buscar & "')"
+                    .Pro_TipoDoc_Seleccionado = Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado
+                    .Rdb_Tipo_Documento_Uno.Checked = True
+                    .Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado, _Tido_Buscar,
+                                          "Where TIDO IN ('" & _Tido_Buscar & "')")
+                    .Rdb_Estado_Vigente.Checked = True
 
-                .ShowDialog(Me)
+                    If _Editar Then
+                        .Pro_Mostrar_Solo_Datos_Usuario_Activo = _Editar
+                    Else
+                        .Rdb_Funcionarios_Todos.Checked = True
+                    End If
 
+                    .Grupo_Funcionario.Enabled = True
+                    .Rdb_Fecha_Emision_Desde_Hasta.Checked = True
 
-                If Not (.Pro_Row_Documento_Seleccionado Is Nothing) Then
-                    _IdMaeedo = .Pro_Row_Documento_Seleccionado.Item("IDMAEEDO")
-                End If
+                    .ShowDialog(Me)
 
-                .Dispose()
+                    If Not (.Pro_Row_Documento_Seleccionado Is Nothing) Then
+                        _IdMaeedo = .Pro_Row_Documento_Seleccionado.Item("IDMAEEDO")
+                    End If
 
-            End With
+                    .Dispose()
 
+                End With
+
+            End If
 
             Dim _CampoPrecio As String
 
@@ -17902,6 +17978,9 @@ Public Class Frm_Formulario_Documento
 
                         End If
 
+                        Dim _Mantener_Bodega_Origen As Boolean
+                        Dim _Conservar_Nudo As Boolean
+
                         If (_Tido = "NVV" And _Tido_Buscar = "NVV") Or
                            (_Tido = "COV" And _Tido_Buscar = "COV") Or
                            (_Tido = "OCC" And _Tido_Buscar = "OCC") Then
@@ -17913,9 +17992,15 @@ Public Class Frm_Formulario_Documento
                             Dim _Tbl_Origen As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
                             Cerrar_Doc.Fx_Cerrar_Documento(_Idmaeedo_Origen, _Tbl_Origen)
 
+                            If _Tido = "COV" And _Tido_Buscar = "COV" Then
+                                _Mantener_Bodega_Origen = True
+                                _Conservar_Nudo = True
+                            End If
+
                         End If
 
-                        Sb_Crear_Documento_Desde_Otros_Documentos(Me, _Ds_Maeedo_Origen, _Doc_Rescatado, True, Nothing, False, False)
+                        Sb_Crear_Documento_Desde_Otros_Documentos(Me, _Ds_Maeedo_Origen, _Doc_Rescatado, True, Nothing, False,
+                                                                  _Mantener_Bodega_Origen, _Conservar_Nudo)
 
                         If Not _Doc_Rescatado And _Editar Then
 
@@ -17925,6 +18010,11 @@ Public Class Frm_Formulario_Documento
                             _Editar_documento = False
                         Else
                             _Editar_documento = True
+
+                            If (_Tido = "COV" And _Tido_Buscar = "COV") Then
+                                _TblEncabezado.Rows(0).Item("NroDocumento") = _Ds_Maeedo_Origen.Tables(0).Rows(0).Item("NUDO")
+                            End If
+
                         End If
 
                         Sb_Marcar_Grilla()
@@ -20862,7 +20952,7 @@ Public Class Frm_Formulario_Documento
 
             If Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Bkp00058", Nothing, _Koen, _Suen) Then
 
-                Sb_Buscar_Documento("NVV", True)
+                Sb_Buscar_Documento("NVV", True, "")
 
                 If _Editar_documento And SoloprodEnDoc_CLALIBPR Then
 
@@ -28126,6 +28216,38 @@ Public Class Frm_Formulario_Documento
         Return True
 
     End Function
+
+    Private Sub Btn_Editar_Cotizacion_Click(sender As Object, e As EventArgs) Handles Btn_Editar_Cotizacion.Click
+
+        Dim _Vizado = _TblEncabezado.Rows(0).Item("Vizado")
+        Dim _Koen = _TblEncabezado.Rows(0).Item("CodEntidad")
+        Dim _Suen = _TblEncabezado.Rows(0).Item("CodSucEntidad")
+
+        If Not _Vizado Then
+
+            'If Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Bkp00058", Nothing, _Koen, _Suen) Then
+
+            Sb_Buscar_Documento("COV", True, "")
+
+            If _Editar_documento And SoloprodEnDoc_CLALIBPR Then
+
+                Dim _Codigo As String = _TblDetalle.Rows(0).Item("Codigo")
+                Dim _Clalibpr As String = _Sql.Fx_Trae_Dato("MAEPR", "CLALIBPR", "KOPR = '" & _Codigo & "'")
+                Dim _Descripcion As String = _Sql.Fx_Trae_Dato("TABCARAC", "NOKOCARAC", "KOTABLA = 'CLALIBPR' And KOCARAC = '" & _Clalibpr & "'")
+
+                _TblEncabezado.Rows(0).Item("TblTipoVenta") = "CLALIBPR"
+                _TblEncabezado.Rows(0).Item("CodTipoVenta") = _Clalibpr
+                Lbl_TipoVenta.Text = "Tipo de venta: " & _Descripcion
+
+            End If
+
+            'End If
+
+        Else
+            MessageBoxEx.Show(Me, "DOCUMENTO VISADO", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, Me.TopMost)
+        End If
+
+    End Sub
 
     Function Fx_AgregarPallet(_Codigo As String) As LsValiciones.Mensajes
 

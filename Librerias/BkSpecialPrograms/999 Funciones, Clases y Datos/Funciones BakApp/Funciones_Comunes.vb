@@ -8,6 +8,7 @@ Imports System.Net
 Imports System.Text.RegularExpressions
 
 
+
 Public Module Funciones_Comunes
 
     Public Function De_Num_a_Tx_01(lNumero As Double,
@@ -2570,6 +2571,41 @@ Error_Numero:
         Return _Impresora
 
     End Function
+
+    Function Fx_ReemplazarCaracteresRaros(texto As String) As String
+
+        Dim caracteresExtraños As String = "Ã¡Ã©Ã­Ã³ÃºÃ±Ã¿Ã¼"  ' Añade aquí los caracteres extraños que necesitas reemplazar
+        Dim caracteresNormales As String = "áéíóúñÿü"         ' Añade aquí los caracteres normales correspondientes
+        Dim resultado As String = texto
+
+        For i As Integer = 1 To Len(caracteresExtraños)
+            resultado = Replace(resultado, Mid(caracteresExtraños, i, 1), Mid(caracteresNormales, i, 1))
+        Next i
+
+        Return resultado
+
+    End Function
+
+    Function Fx_ReemplazarCaracteresRaros2(texto As String) As String
+
+        Dim caracteresExtraños() As String
+        Dim caracteresNormales() As String
+        Dim resultado As String = texto
+        Dim i As Integer
+
+        ' Definir los caracteres extraños y sus reemplazos correspondientes
+        caracteresExtraños = Split("Ã¡,Ã©,Ã­,Ã³,Ãº,Ã±,Ã¼,Ã‰", ",")
+        caracteresNormales = Split("á,é,í,ó,ú,ñ,ü,E", ",")
+
+        ' Reemplazar los caracteres extraños por los caracteres normales
+        For i = LBound(caracteresExtraños) To UBound(caracteresExtraños)
+            resultado = Replace(resultado, caracteresExtraños(i), caracteresNormales(i))
+        Next i
+
+        Return resultado
+
+    End Function
+
 
 End Module
 

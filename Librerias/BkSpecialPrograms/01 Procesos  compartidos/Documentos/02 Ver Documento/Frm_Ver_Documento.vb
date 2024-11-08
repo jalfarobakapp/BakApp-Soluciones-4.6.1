@@ -510,6 +510,10 @@ Public Class Frm_Ver_Documento
 
         VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00021",, False)
 
+        If Not VerSoloEntidadesDelVendedor Then
+            VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00022",, False)
+        End If
+
         If Not String.IsNullOrEmpty(_Codigo_Marcar) Then
             BuscarDatoEnGrilla(_Codigo_Marcar, "KOPRCT", GrillaDetalleDoc)
         End If

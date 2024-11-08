@@ -45,9 +45,11 @@ Public Class Cl_Sincroniza
 
                     If _Mensaje2.EsCorrecto Then
 
+                        _OBSERVACIONES = _Mensaje2.Mensaje
+
                         Sb_AddToLog("Sincronizando MELI", "Reisando documento: " & _Doc_MELI.PEDIDO.ID_MELI, Txt_Log)
 
-                        Consulta_sql = "Update PEDIDOS Set REVBAKAPP = 1,FECHAREVBAKAPP = Getdate() Where ID = " & _ID
+                        Consulta_sql = "Update PEDIDOS Set REVBAKAPP = 1,FECHAREVBAKAPP = Getdate(),OBSERVACIONES = '" & _OBSERVACIONES & "' Where ID = " & _ID
                         _SqlMeli.Ej_consulta_IDU(Consulta_sql, False)
 
                     Else
@@ -107,7 +109,22 @@ Public Class Cl_Sincroniza
                 .FechaGrab = _FechaGrab
                 .GenerarNVV = True
 
-                _Observaciones = _PEDIDO.NICK_NAME.ToString.Trim & ", " & _PEDIDO.FIRST_NAME.ToString.Trim & ", " & _PEDIDO.LAST_NAME.ToString.Trim & ", " & _PEDIDO.DIRECCION.ToString.Trim & ", " & _PEDIDO.COMUNA.ToString.Trim
+                _Observaciones = "Pedido: " & _PEDIDO.ID_MELI
+
+                Dim _Nombre As String = _PEDIDO.FIRST_NAME.ToString.Trim
+
+                If Not String.IsNullOrEmpty(_PEDIDO.LAST_NAME.ToString.Trim) Then
+                    _Nombre += " " & _PEDIDO.LAST_NAME.ToString.Trim
+                End If
+
+                'If Not String.IsNullOrEmpty(_PEDIDO.NICK_NAME.ToString.Trim) Then _Observaciones += ", " & _PEDIDO.NICK_NAME.ToString.Trim
+                If Not String.IsNullOrEmpty(_Nombre) Then _Observaciones += ", " & _Nombre
+                'If Not String.IsNullOrEmpty(_FirstName.ToString.Trim) Then _Observaciones += ", " & _PEDIDO.FIRST_NAME.ToString.Trim
+                'If Not String.IsNullOrEmpty(_LastName.ToString.Trim) Then _Observaciones += ", " & _PEDIDO.LAST_NAME.ToString.Trim
+                If Not String.IsNullOrEmpty(_PEDIDO.DIRECCION.ToString.Trim) Then _Observaciones += ", " & _PEDIDO.DIRECCION.ToString.Trim
+                If Not String.IsNullOrEmpty(_PEDIDO.COMUNA.ToString.Trim) Then _Observaciones += ", " & _PEDIDO.COMUNA.ToString.Trim
+
+                _Observaciones = Fx_ReemplazarCaracteresRaros2(_Observaciones)
 
                 .Observaciones = Mid(_Observaciones, 1, 250)
                 .Ocdo = _PEDIDO.ID_PAGO
@@ -164,8 +181,8 @@ Public Class Cl_Sincroniza
 
             With _Zw_Demonio_NVVAuto
 
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_NVVAuto (IdmaeedoOCC_Ori,NudoOCC_Ori,Endo_Ori,Suendo_Ori,FechaGrab,GenerarNVV,Observaciones,TipoOri) Values " &
-                               "(" & .IdmaeedoOCC_Ori & ",'" & .NudoOCC_Ori & "','" & .Endo_Ori & "','" & .Suendo_Ori & "','" & Format(.FechaGrab, "yyyyMMdd HH:mm:ss") & "'," & Convert.ToInt32(.GenerarNVV) & ",'" & .Observaciones & "','" & .TipoOri & "')"
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_NVVAuto (IdmaeedoOCC_Ori,NudoOCC_Ori,Endo_Ori,Suendo_Ori,FechaGrab,GenerarNVV,Observaciones,TipoOri,Ocdo) Values " &
+                               "(" & .IdmaeedoOCC_Ori & ",'" & .NudoOCC_Ori & "','" & .Endo_Ori & "','" & .Suendo_Ori & "','" & Format(.FechaGrab, "yyyyMMdd HH:mm:ss") & "'," & Convert.ToInt32(.GenerarNVV) & ",'" & .Observaciones & "','" & .TipoOri & "','" & .Ocdo & "')"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                 Comando.Transaction = myTrans
@@ -205,8 +222,8 @@ Public Class Cl_Sincroniza
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Detalle = "Documento grabado correctamente"
-            _Mensaje.Mensaje = "Se inserta documento desde MELI correctamente)"
+            _Mensaje.Detalle = "Se inserta documento desde MELI correctamente en Bakapp"
+            _Mensaje.Mensaje = "OK."
 
 
         Catch ex As Exception
@@ -327,7 +344,7 @@ Public Class Cl_Sincroniza
                 .REVBAKAPP = _Row.Item("REVBAKAPP")
                 .OBSERVACIONES = _Row.Item("OBSERVACIONES")
                 .FECHAREVBAKAPP = NuloPorNro(_Row.Item("FECHAREVBAKAPP"), Nothing)
-                .NICK_NAME = NuloPorNro(_Row.Item("NICK_NAME"), "")
+                .NICK_NAME =  NuloPorNro(_Row.Item("NICK_NAME"), "")
                 .FIRST_NAME = NuloPorNro(_Row.Item("FIRST_NAME"), "")
                 .LAST_NAME = NuloPorNro(_Row.Item("LAST_NAME"), "")
                 .DIRECCION = NuloPorNro(_Row.Item("DIRECCION"), "")

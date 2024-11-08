@@ -6543,5 +6543,97 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Function
 
+    Function Fx_FuncionarioPuedeVerDocumentoGrupo(_Idmaeedo As Integer, _CodFuncionario As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+        Dim _Msj As String = String.Empty
+
+        _Mensaje.Detalle = "Revisión de permiso de visualización de documentos de otros usuarios"
+
+        Dim _Autorizado As Boolean = False
+        Dim _Permiso As String
+
+        _Mensaje.EsCorrecto = True
+
+        Try
+
+            Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
+            Dim _Kogru As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & _CodFuncionario & "'")
+
+            Dim _VerDocumento As Boolean = False
+
+            Consulta_sql = "Select IDMAEEDO,TIDO,NUDO,ENDO,SUENDO,NOKOEN,KOFUEN" & vbCrLf &
+                           "From MAEEDO Edo Inner Join MAEEN e On e.KOEN = Edo.ENDO And e.SUEN = Edo.SUENDO" & vbCrLf &
+                           "Where IDMAEEDO = " & _Idmaeedo
+
+            Dim _Row_Edo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+            If String.IsNullOrEmpty(_Kogru) Then
+
+                If _CodFuncionario <> _Row_Edo.Item("KOFUEN") Then
+
+                    _Permiso = "NO00021"
+
+                    _Msj = "No puede ver el documento " & _Row_Edo.Item("TIDO") & "-" & _Row_Edo.Item("NUDO") & vbCrLf & vbCrLf &
+                           "Tiene una restricción que le impide ver documentos de clientes de otros vendedores." & vbCrLf &
+                           "Esto significa que solo puede acceder a los documentos de su propia cartera de clientes." & vbCrLf & vbCrLf &
+                           "Actualmente, tiene asignado el permiso (restricción) NO00021."
+
+                    _Mensaje.EsCorrecto = False
+
+                End If
+
+            Else
+
+                _Mensaje.EsCorrecto = False
+                _Permiso = "NO00022"
+
+                Consulta_sql = "Select d.*,NOKOGRU From TABFUGD d Left Join TABFUGE e On e.KOGRU = d.KOGRU Where d.KOGRU = '" & _Kogru & "'"
+                Dim _Tbl_Grupo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+                For Each _Fila As DataRow In _Tbl_Grupo.Rows
+                    If _Fila.Item("KOFU") = _Row_Edo.Item("KOFUEN") Then
+                        _Mensaje.EsCorrecto = True
+                        Exit For
+                    End If
+                Next
+
+                Dim _Grupo As String = _Kogru.Trim & " - " & _Tbl_Grupo.Rows(0).Item("NOKOGRU").trim
+
+                _Msj = "No puede ver el documento " & _Row_Edo.Item("TIDO") & "-" & _Row_Edo.Item("NUDO") & vbCrLf & vbCrLf &
+                       "Tiene una restricción que le impide ver documentos de clientes de otros vendedores que" & vbCrLf &
+                       "no están en su grupo asignado. Esto significa que solo puede acceder a los documentos" & vbCrLf &
+                       "de los clientes de los vendedores asociados a su grupo." & vbCrLf & vbCrLf &
+                       "Actualmente, tiene asignado el permiso (restricción) NO00022" & vbCrLf &
+                       "y el grupo " & _Grupo
+
+            End If
+
+            If Not _Mensaje.EsCorrecto Then
+
+                If Not Fx_Tiene_Permiso(Nothing, _Permiso,, False) Then
+                    _Mensaje.EsCorrecto = True
+                End If
+
+            End If
+
+            _Mensaje.Mensaje = _Msj
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+        End Try
+
+        If _Mensaje.EsCorrecto Then
+            _Mensaje.Icono = eTaskDialogIcon.Information
+        Else
+            _Mensaje.Icono = eTaskDialogIcon.Stop
+        End If
+
+        Return _Mensaje
+
+    End Function
+
 End Module
 

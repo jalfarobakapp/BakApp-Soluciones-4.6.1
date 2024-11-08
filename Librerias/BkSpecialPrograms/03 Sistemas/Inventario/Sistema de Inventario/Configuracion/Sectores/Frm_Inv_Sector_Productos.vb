@@ -253,8 +253,6 @@ Public Class Frm_Inv_Sector_Productos
 
             Dim Cuenta As Integer = 0
 
-
-            ''For Each _Filas As DataRow In _Tbl.Rows
             While Cuenta < _LineasPorPagina AndAlso _Pagina < _Tbl.Rows.Count
 
                 Dim _Filas As DataRow = _Tbl.Rows(_Pagina)
@@ -296,7 +294,6 @@ Public Class Frm_Inv_Sector_Productos
                 _Pagina += 1
 
             End While
-            'Next
 
 
             ' Una vez fuera del bucle comprobamos si nos quedan más filas
