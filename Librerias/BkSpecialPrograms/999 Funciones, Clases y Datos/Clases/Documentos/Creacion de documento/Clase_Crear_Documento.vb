@@ -168,6 +168,8 @@ Public Class Clase_Crear_Documento
     Dim _Codmaq As String
     Dim _Nuliprod As String
 
+    Dim _Customizable As Boolean
+
 #End Region
 
 #Region "VARIABLES PIE DEL DOCUMENTO,OBSERVACIONES"
@@ -389,7 +391,10 @@ Public Class Clase_Crear_Documento
                 Else
                     _Fecha_Tributaria = "FECHATRIB = '" & _Fecha_Tributaria & "'"
                 End If
+
                 '------------------------------------------------------------------------------------------------------------
+
+                _Customizable = .Item("Customizable")
 
             End With
 
@@ -1950,9 +1955,9 @@ Public Class Clase_Crear_Documento
                 End If
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Ent (Idmaeedo,NombreEquipo,TipoEstacion,Empresa,Modalidad,Tido,Nudo,FechaHoraGrab," &
-                               "HabilitadaFac,FunAutorizaFac,Pickear) Values " &
+                               "HabilitadaFac,FunAutorizaFac,Pickear,Customizable) Values " &
                                "(" & _Idmaeedo & ",'" & _NombreEquipo & "','" & _TipoEstacion & "','" & _Empresa & "','" & _Modalidad & "'" &
-                               ",'" & _Tido & "','" & _Nudo & "',Getdate(),0,''," & _Pickear & ")"
+                               ",'" & _Tido & "','" & _Nudo & "',Getdate(),0,''," & _Pickear & "," & Convert.ToInt32(_Customizable) & ")"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                 Comando.Transaction = myTrans

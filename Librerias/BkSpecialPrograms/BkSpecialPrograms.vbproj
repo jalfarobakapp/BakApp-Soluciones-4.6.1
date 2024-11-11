@@ -410,6 +410,13 @@
     <Compile Include="01 Procesos  compartidos\Documentos\02 Ver Documento\Frm_Ver_Documentos_Recargos_Asociados.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\02 Ver Documento\NVV Customizable\Cl_NVVCustomizable.vb" />
+    <Compile Include="01 Procesos  compartidos\Documentos\02 Ver Documento\NVV Customizable\Frm_Ver_Documento_CustomizarDet.Designer.vb">
+      <DependentUpon>Frm_Ver_Documento_CustomizarDet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\02 Ver Documento\NVV Customizable\Frm_Ver_Documento_CustomizarDet.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\02 Ver Documento\Recursos\Recursos_Ver_Documento.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -4554,6 +4561,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\02 Ver Documento\Frm_Ver_Documentos_Recargos_Asociados.resx">
       <DependentUpon>Frm_Ver_Documentos_Recargos_Asociados.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Documentos\02 Ver Documento\NVV Customizable\Frm_Ver_Documento_CustomizarDet.resx">
+      <DependentUpon>Frm_Ver_Documento_CustomizarDet.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\02 Ver Documento\Recursos\Recursos_Ver_Documento.resx">
       <CustomToolNamespace>My.Resources</CustomToolNamespace>

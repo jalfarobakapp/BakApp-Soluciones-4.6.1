@@ -110,6 +110,9 @@ Partial Class Frm_Formulario_Documento
         Me.Menu_Contextual_Imp_Doc_Construccion = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_ImpConstCarta = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_ImpConstVale = New DevComponents.DotNetBar.ButtonItem()
+        Me.Menu_Contextual_NVVCustomizable = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_GrabarNVVNormal = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_GrabarNVVCustomizable = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel5 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.LblNetoLinea = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel7 = New DevComponents.DotNetBar.Controls.GroupPanel()
@@ -261,7 +264,7 @@ Partial Class Frm_Formulario_Documento
         '
         Me.ContextMenuBar1.AntiAlias = True
         Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_SOL, Me.Menu_Contextual_Producto, Me.Menu_Contextual_Stand_By, Me.Menu_Contextual_Info_Entidad, Me.Menu_Contextual_Crear_Producto, Me.Menu_Contextual_Solicitud_de_Compra, Me.Menu_Contextual_Anotaciones, Me.Menu_Contextual_Opciones_Especiales, Me.Menu_Contextual_Opciones_Recargar_Costos, Me.Menu_Contextual_Imp_Doc_Construccion})
+        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_SOL, Me.Menu_Contextual_Producto, Me.Menu_Contextual_Stand_By, Me.Menu_Contextual_Info_Entidad, Me.Menu_Contextual_Crear_Producto, Me.Menu_Contextual_Solicitud_de_Compra, Me.Menu_Contextual_Anotaciones, Me.Menu_Contextual_Opciones_Especiales, Me.Menu_Contextual_Opciones_Recargar_Costos, Me.Menu_Contextual_Imp_Doc_Construccion, Me.Menu_Contextual_NVVCustomizable})
         Me.ContextMenuBar1.Location = New System.Drawing.Point(29, 37)
         Me.ContextMenuBar1.Name = "ContextMenuBar1"
         Me.ContextMenuBar1.Size = New System.Drawing.Size(788, 47)
@@ -809,6 +812,27 @@ Partial Class Frm_Formulario_Documento
         Me.Btn_ImpConstVale.ImageAlt = CType(resources.GetObject("Btn_ImpConstVale.ImageAlt"), System.Drawing.Image)
         Me.Btn_ImpConstVale.Name = "Btn_ImpConstVale"
         Me.Btn_ImpConstVale.Text = "Imprimir en formato Vale"
+        '
+        'Menu_Contextual_NVVCustomizable
+        '
+        Me.Menu_Contextual_NVVCustomizable.AutoExpandOnClick = True
+        Me.Menu_Contextual_NVVCustomizable.Name = "Menu_Contextual_NVVCustomizable"
+        Me.Menu_Contextual_NVVCustomizable.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_GrabarNVVNormal, Me.Btn_GrabarNVVCustomizable})
+        Me.Menu_Contextual_NVVCustomizable.Text = "Opciones Grabar"
+        '
+        'Btn_GrabarNVVNormal
+        '
+        Me.Btn_GrabarNVVNormal.Image = CType(resources.GetObject("Btn_GrabarNVVNormal.Image"), System.Drawing.Image)
+        Me.Btn_GrabarNVVNormal.ImageAlt = CType(resources.GetObject("Btn_GrabarNVVNormal.ImageAlt"), System.Drawing.Image)
+        Me.Btn_GrabarNVVNormal.Name = "Btn_GrabarNVVNormal"
+        Me.Btn_GrabarNVVNormal.Text = "Grabar Nota de venta normal"
+        '
+        'Btn_GrabarNVVCustomizable
+        '
+        Me.Btn_GrabarNVVCustomizable.Image = CType(resources.GetObject("Btn_GrabarNVVCustomizable.Image"), System.Drawing.Image)
+        Me.Btn_GrabarNVVCustomizable.ImageAlt = CType(resources.GetObject("Btn_GrabarNVVCustomizable.ImageAlt"), System.Drawing.Image)
+        Me.Btn_GrabarNVVCustomizable.Name = "Btn_GrabarNVVCustomizable"
+        Me.Btn_GrabarNVVCustomizable.Text = "Grabar Nota de Venta CUSTOMIZABLE"
         '
         'GroupPanel5
         '
@@ -2932,4 +2956,7 @@ Partial Class Frm_Formulario_Documento
     Friend WithEvents Lbl_TipoVenta As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Lbl_DocActual As DevComponents.DotNetBar.LabelItem
     Public WithEvents Btn_Editar_Cotizacion As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Menu_Contextual_NVVCustomizable As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_GrabarNVVNormal As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_GrabarNVVCustomizable As DevComponents.DotNetBar.ButtonItem
 End Class

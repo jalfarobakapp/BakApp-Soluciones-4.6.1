@@ -1,6 +1,7 @@
 ﻿Imports System.Drawing.Printing
 Imports System.IO
 Imports DevComponents.DotNetBar
+Imports MySql.Data.Authentication
 Imports PdfSharp
 Imports PdfSharp.Drawing
 Imports PdfSharp.Drawing.Layout
@@ -59,6 +60,8 @@ Public Class Frm_Ver_Documento
     Dim _Anulado As Boolean
 
     Dim _Row_Docu_Ent As DataRow
+
+    Dim _Customizable As Boolean
 
     Enum _Sector
         Encabezado
@@ -526,6 +529,19 @@ Public Class Frm_Ver_Documento
 
         If Not String.IsNullOrEmpty(_Codigo_Marcar) Then
             BuscarDatoEnGrilla(_Codigo_Marcar, "KOPRCT", GrillaDetalleDoc)
+        End If
+
+        Dim _Tido = Trim(_TblEncabezado.Rows(0).Item("TIDO"))
+
+        If _Tido = "NVV" AndAlso
+            _Global_Row_Configuracion_General.Item("HabilitarNVVConProdCustomizables") AndAlso
+            _Tipo_Apertura = Enum_Tipo_Apertura.Desde_Random_SQL Then
+
+            _Customizable = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "Customizable", "Idmaeedo = " & _Idmaeedo)
+
+            Lbl_CusNVV.Visible = _Customizable
+            Btn_CusNVV.Visible = _Customizable
+
         End If
 
     End Sub
@@ -4910,6 +4926,17 @@ Public Class Frm_Ver_Documento
                        "Delete " & _Global_BaseBk & "Zw_Despachos_Doc_Det Where Id_Despacho In " & _Filtro_Id_Despacho & vbCrLf &
                        "Delete " & _Global_BaseBk & "Zw_Despachos_Estados Where Id_Despacho In " & _Filtro_Id_Despacho
         _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+    End Sub
+
+    Private Sub Btn_CusNVV_Click(sender As Object, e As EventArgs) Handles Btn_CusNVV.Click
+
+        Dim _Fila As DataGridViewRow = GrillaDetalleDoc.CurrentRow
+        Dim _Codigo As String = _Fila.Cells("KOPRCT").Value
+
+        Dim Fm As New Frm_Ver_Documento_CustomizarDet(_Codigo)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 

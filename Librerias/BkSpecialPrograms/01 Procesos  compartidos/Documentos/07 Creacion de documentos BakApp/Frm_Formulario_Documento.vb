@@ -1557,8 +1557,10 @@ Public Class Frm_Formulario_Documento
 
             .Item("TblTipoVenta") = String.Empty
             .Item("CodTipoVenta") = String.Empty
+            .Item("Customizable") = False
 
             _TblEncabezado.Rows.Add(NewFila)
+
         End With
 
         Lbl_TipoVenta.Text = "..."
@@ -15037,7 +15039,13 @@ Public Class Frm_Formulario_Documento
     End Sub
 
     Private Sub BtnGrabar_Click(sender As System.Object, e As System.EventArgs) Handles BtnGrabar.Click
-        Sb_Grabar_Documento(_New_Idmaeedo, True)
+
+        If _Tido = "NVV" AndAlso _Global_Row_Configuracion_General.Item("HabilitarNVVConProdCustomizables") Then
+            ShowContextMenu(Menu_Contextual_NVVCustomizable)
+        Else
+            Sb_Grabar_Documento(_New_Idmaeedo, True)
+        End If
+
     End Sub
 
     Sub Sb_Grabar_Documento(ByRef _Idmaeedo As Integer,
@@ -28246,6 +28254,20 @@ Public Class Frm_Formulario_Documento
         Else
             MessageBoxEx.Show(Me, "DOCUMENTO VISADO", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, Me.TopMost)
         End If
+
+    End Sub
+
+    Private Sub Btn_GrabarNVVNormal_Click(sender As Object, e As EventArgs) Handles Btn_GrabarNVVNormal.Click
+
+        _TblEncabezado.Rows(0).Item("Customizable") = False
+        Sb_Grabar_Documento(_New_Idmaeedo, True)
+
+    End Sub
+
+    Private Sub Btn_GrabarNVVCustomizable_Click(sender As Object, e As EventArgs) Handles Btn_GrabarNVVCustomizable.Click
+
+        _TblEncabezado.Rows(0).Item("Customizable") = True
+        Sb_Grabar_Documento(_New_Idmaeedo, True)
 
     End Sub
 

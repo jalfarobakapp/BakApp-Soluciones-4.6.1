@@ -30,8 +30,8 @@ Public Class Frm_Inf_Vencimientos_Procesar_Informe
     Dim _Monto_Max As Double
     Dim _Id_Correo As Integer
 
-    Public Sub New(ByVal New_Nombre_Archivo_XML As String,
-                   ByVal Permiso_Informe As String)
+    Public Sub New(New_Nombre_Archivo_XML As String,
+                    Permiso_Informe As String)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -48,7 +48,7 @@ Public Class Frm_Inf_Vencimientos_Procesar_Informe
 
     End Sub
 
-    Private Sub Frm_Inf_Vencimientos_Procesar_Informe_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Inf_Vencimientos_Procesar_Informe_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         If _Informe = Tipo_Informe.Ventas Then
             Me.Text = "Informe de vencimientos de venta"
@@ -109,8 +109,7 @@ Public Class Frm_Inf_Vencimientos_Procesar_Informe
 
     End Sub
 
-    Private Sub Btn_Procesar_Informe_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Procesar_Informe.Click
-
+    Private Sub Btn_Procesar_Informe_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Procesar_Informe.Click
 
         Dim _Filtro_SQl As String
 
@@ -196,6 +195,13 @@ Public Class Frm_Inf_Vencimientos_Procesar_Informe
 
         End If
 
+        If Rdb_ClientesConCredito.Checked Then
+            _Sql_Entidad_Maeedo += vbCrLf & "And (EDO.ENDO+EDO.SUENDO IN (Select KOEN+SUEN From MAEEN Where DIPRVE > 0))" & vbCrLf
+        End If
+
+        If Rdb_ClientesSinCredito.Checked Then
+            _Sql_Entidad_Maeedo += vbCrLf & "And (EDO.ENDO+EDO.SUENDO IN (Select KOEN+SUEN From MAEEN Where DIPRVE = 0))" & vbCrLf
+        End If
 
         _SqlFiltro_Maeedo = _Sql_Entidad_Maeedo & vbCrLf &
                             _Sql_Sucursal_Maeedo & vbCrLf &
@@ -230,19 +236,17 @@ Public Class Frm_Inf_Vencimientos_Procesar_Informe
                                   MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End If
 
-        '--#Filtro_Adicional_Maeedo#
-        '--#Filtro_Adicional_Maedpce#
-
         Fm.Dispose()
+
     End Sub
 
-    Private Sub Frm_Inf_Vencimientos_Procesar_Informe_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_Inf_Vencimientos_Procesar_Informe_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
-    Private Sub Btn_Configuracion_Local_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Configuracion_Local.Click
+    Private Sub Btn_Configuracion_Local_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Configuracion_Local.Click
 
         Dim Fm As New Frm_Inf_Vencimientos_Configuracion(_Nombre_Archivo_XML,
                                                          Dtp_Fecha_Desde.Value,
@@ -254,7 +258,7 @@ Public Class Frm_Inf_Vencimientos_Procesar_Informe
     End Sub
 
 
-    Private Sub Frm_Inf_Vencimientos_Procesar_Informe_FormClosed(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles MyBase.FormClosed
+    Private Sub Frm_Inf_Vencimientos_Procesar_Informe_FormClosed(sender As System.Object, e As System.Windows.Forms.FormClosedEventArgs) Handles MyBase.FormClosed
 
         Dim Fm As New Frm_Inf_Vencimientos_Configuracion(_Nombre_Archivo_XML,
                                                          Dtp_Fecha_Desde.Value,
@@ -268,7 +272,7 @@ Public Class Frm_Inf_Vencimientos_Procesar_Informe
 
     End Sub
 
-    Private Sub Rdb_Entidades_Algunas_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Rdb_Entidades_Algunas.CheckedChanged
+    Private Sub Rdb_Entidades_Algunas_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles Rdb_Entidades_Algunas.CheckedChanged
 
         'If Rdb_Entidades_Algunas.Checked Then
 
@@ -342,7 +346,7 @@ Public Class Frm_Inf_Vencimientos_Procesar_Informe
 
     End Sub
 
-    Private Sub Rdb_Sucursales_Algunas_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Rdb_Sucursales_Algunas.CheckedChanged
+    Private Sub Rdb_Sucursales_Algunas_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles Rdb_Sucursales_Algunas.CheckedChanged
 
         If Rdb_Sucursales_Algunas.Checked Then
 
@@ -364,7 +368,7 @@ Public Class Frm_Inf_Vencimientos_Procesar_Informe
 
     End Sub
 
-    Private Sub Rdb_Vendedores_Algunos_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Rdb_Vendedores_Algunos.CheckedChanged
+    Private Sub Rdb_Vendedores_Algunos_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles Rdb_Vendedores_Algunos.CheckedChanged
 
         If Rdb_Vendedores_Algunos.Checked Then
 
@@ -386,7 +390,7 @@ Public Class Frm_Inf_Vencimientos_Procesar_Informe
 
     End Sub
 
-    Private Sub Rdb_Anotaciones_Algunas_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Rdb_Anotaciones_Algunas.CheckedChanged
+    Private Sub Rdb_Anotaciones_Algunas_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles Rdb_Anotaciones_Algunas.CheckedChanged
 
         If Rdb_Anotaciones_Algunas.Checked Then
 
@@ -409,7 +413,7 @@ Public Class Frm_Inf_Vencimientos_Procesar_Informe
 
 
 
-    Private Sub Btn_Entidades_Excluidas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Entidades_Excluidas.Click
+    Private Sub Btn_Entidades_Excluidas_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Entidades_Excluidas.Click
         If Fx_Tiene_Permiso(Me, "CfEnt016") Then
             Dim Fm As New Frm_EntExcluidas
             Fm.ShowDialog(Me)
@@ -417,7 +421,7 @@ Public Class Frm_Inf_Vencimientos_Procesar_Informe
         End If
     End Sub
 
-    Private Sub Chk_Excluir_Documentos_Autorizados_Pago_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Chk_Excluir_Documentos_Autorizados_Pago.CheckedChanged
+    Private Sub Chk_Excluir_Documentos_Autorizados_Pago_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles Chk_Excluir_Documentos_Autorizados_Pago.CheckedChanged
         If Chk_Excluir_Documentos_Autorizados_Pago.Checked Then
             Chk_Excluir_Documentos_Autorizados_Pago.Checked = Fx_Tiene_Permiso(Me, "Ppro0003")
         End If
