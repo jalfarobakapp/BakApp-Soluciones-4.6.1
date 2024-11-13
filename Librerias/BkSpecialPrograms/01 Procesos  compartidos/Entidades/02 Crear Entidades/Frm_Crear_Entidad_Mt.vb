@@ -2428,37 +2428,43 @@ Public Class Frm_Crear_Entidad_Mt
     End Sub
 
     Private Sub Txt_CodHolding_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_CodHolding.ButtonCustomClick
-        If String.IsNullOrEmpty(Txt_CodHolding.Tag) Then
-            Call Btn_Mnu_HoldingAgregar_Click(Nothing, Nothing)
-        Else
-            ShowContextMenu(Menu_Contextual_Holding)
-        End If
+        'If String.IsNullOrEmpty(Txt_CodHolding.Tag) Then
+        'Call Btn_Mnu_HoldingAgregar_Click(Nothing, Nothing)
+        'Else
+        ShowContextMenu(Menu_Contextual_Holding)
+        'End If
     End Sub
 
     Private Sub Txt_CodHolding_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_CodHolding.ButtonCustom2Click
+
         Txt_CodHolding.Text = String.Empty
         Txt_CodHolding.Tag = String.Empty
+
     End Sub
 
     Private Sub Txt_CodPagador_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_CodPagador.ButtonCustomClick
-        If String.IsNullOrEmpty(Txt_CodPagador.Tag) Then
-            Call Btn_Mnu_PagadorAgregar_Click(Nothing, Nothing)
-        Else
-            ShowContextMenu(Menu_Contextual_Pagador)
-        End If
+        'If String.IsNullOrEmpty(Txt_CodPagador.Tag) Then
+        'Call Btn_Mnu_PagadorAgregar_Click(Nothing, Nothing)
+        'Else
+        ShowContextMenu(Menu_Contextual_Pagador)
+        'End If
     End Sub
 
     Private Sub Txt_CodPagador_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_CodPagador.ButtonCustom2Click
+
         Txt_CodPagador.Text = String.Empty
         Txt_CodPagador.Tag = String.Empty
+
     End Sub
 
     Private Sub Btn_Mnu_HoldingAgregar_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_HoldingAgregar.Click
+
         Dim _FilaSeleccionada_Zw As New Zw_TablaDeCaracterizaciones
         Dim _Seleccionar As Boolean
 
         Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.Holding,
                                                              Frm_Tabla_Caracterizaciones_01_Listado.Accion.Seleccionar)
+        Fm.Permiso = "CfEnt033"
         Fm.Text = "HOLDING"
         Fm.ShowDialog(Me)
         _Seleccionar = Fm.Pro_Seleccion_Realizada
@@ -2469,15 +2475,22 @@ Public Class Frm_Crear_Entidad_Mt
             Txt_CodHolding.Tag = _FilaSeleccionada_Zw.CodigoTabla
             Txt_CodHolding.Text = _FilaSeleccionada_Zw.CodigoTabla.ToString.Trim & " - " & _FilaSeleccionada_Zw.NombreTabla.ToString.Trim
         End If
+
     End Sub
 
     Private Sub Btn_Mnu_PagadorAgregar_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_PagadorAgregar.Click
+
+        If Not Fx_Tiene_Permiso(Me, "CfEnt035") Then
+            Return
+        End If
+
         Dim _FilaSeleccionada_Zw As New Zw_TablaDeCaracterizaciones
         Dim _Seleccionar As Boolean
 
         Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.PagadorEntidad,
                                                      Frm_Tabla_Caracterizaciones_01_Listado.Accion.Seleccionar)
         Fm.Text = "PAGADOR ENTIDAD"
+        Fm.Permiso = "CfEnt034"
         Fm.ShowDialog(Me)
         _Seleccionar = Fm.Pro_Seleccion_Realizada
         _FilaSeleccionada_Zw = Fm.FilaSeleccionada_Zw
@@ -2532,6 +2545,33 @@ Public Class Frm_Crear_Entidad_Mt
 
         Dim _Filtrar As New Clas_Filtros_Random(Me)
         _Filtrar.Fx_Filtrar(Nothing, Clas_Filtros_Random.Enum_Tabla_Fl._Entidades, _Sql_Filtro_Condicion_Extra, False, False,, False)
+
+    End Sub
+
+    Private Sub Btn_Modificar_Holding_Click(sender As Object, e As EventArgs) Handles Btn_Modificar_Holding.Click
+
+        If Not Fx_Tiene_Permiso(Me, "CfEnt032") Then
+            Return
+        End If
+
+        Lbl_Holding.Enabled = True
+        Txt_CodHolding.ButtonCustom2.Enabled = True
+        Btn_Mnu_HoldingAgregar.Enabled = True
+        Btn_Modificar_Holding.Enabled = False
+        Chk_PreMayMinXHolding.Enabled = True
+
+    End Sub
+
+    Private Sub Btn_Modificar_Pagador_Click(sender As Object, e As EventArgs) Handles Btn_Modificar_Pagador.Click
+
+        If Not Fx_Tiene_Permiso(Me, "CfEnt035") Then
+            Return
+        End If
+
+        Lbl_Pagador.Enabled = True
+        Txt_CodPagador.ButtonCustom2.Enabled = True
+        Btn_Mnu_PagadorAgregar.Enabled = True
+        Btn_Modificar_Pagador.Enabled = False
 
     End Sub
 

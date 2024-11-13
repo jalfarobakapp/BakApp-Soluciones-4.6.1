@@ -1,5 +1,4 @@
 ﻿Imports DevComponents.DotNetBar
-'Imports Lib_Bakapp_VarClassFunc
 
 
 Public Class Frm_CodAlternativo_Ver
@@ -9,6 +8,8 @@ Public Class Frm_CodAlternativo_Ver
 
     Public Property ModoSeleccion As Boolean
     Public Property RowTabcodalSeleccionado As DataRow
+    Public Property MostrarSoloDeEntidad As Boolean
+    Public Property Koen As String
 
     Public Sub New()
 
@@ -56,6 +57,12 @@ Public Class Frm_CodAlternativo_Ver
 
     Sub Sb_ActualizarGrilla()
 
+        Dim _Condicion = String.Empty
+
+        If MostrarSoloDeEntidad Then
+            _Condicion = " And KOEN = '" & Koen & "'" & vbCrLf
+        End If
+
         Consulta_sql = "Select Td.KOPRAL,Td.KOPR,Td.NOKOPRAL,Td.KOEN,Td.CONMULTI,case When Td.UNIMULTI = 2 Then Mp.UD02PR Else Mp.UD01PR End As UD,Td.MULTIPLO,Td.TXTMULTI," & vbCrLf &
                        "ISNULL((SELECT TOP 1 NOKOEN FROM MAEEN" & vbCrLf &
                        "WHERE KOEN = Td.KOEN),'Código de barras asociado') AS PROVEEDOR,Isnull(Qr.CodigoQR,'') As CodigoQR," & vbCrLf &
@@ -64,6 +71,7 @@ Public Class Frm_CodAlternativo_Ver
                        "Left Join " & _Global_BaseBk & "Zw_Prod_CodQR Qr On Td.KOPRAL = Qr.Kopral" & vbCrLf &
                        "Left Join MAEPR Mp On Td.KOPR = Mp.KOPR" & vbCrLf &
                        "Where Td.KOPR = '" & TxtCodigo.Text & "'" & vbCrLf &
+                       _Condicion &
                        "Order By KOEN,KOPRAL"
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)

@@ -378,6 +378,10 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("CfEnt029", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("CfEnt030", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("CfEnt031", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("CfEnt032", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("CfEnt033", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("CfEnt034", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("CfEnt035", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Crv0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Crv0002", _Objeto, _Formulario)
@@ -1684,6 +1688,22 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.CONFIGURACION_ENTIDAD.ToString
             Case "CfEnt031"
                 _DescripcionPermiso = "VER TODOS LOS CLIENTES CUANDO DEBERIA MOSTRAR SOLO LOS CLIENTES DEL VENDEDOR ACTIVO."
+                _CodFamilia = Fx_Rellena_ceros(_Fml.CONFIGURACION_ENTIDAD, 6)
+                _NombreFamiliaPermiso = _Fml.CONFIGURACION_ENTIDAD.ToString
+            Case "CfEnt032"
+                _DescripcionPermiso = "VINCULAR/DESVINCULAR HOLDING A LA ENTIDAD"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.CONFIGURACION_ENTIDAD, 6)
+                _NombreFamiliaPermiso = _Fml.CONFIGURACION_ENTIDAD.ToString
+            Case "CfEnt033"
+                _DescripcionPermiso = "MANTENCION DE HOLDING DE ENTIDADES"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.CONFIGURACION_ENTIDAD, 6)
+                _NombreFamiliaPermiso = _Fml.CONFIGURACION_ENTIDAD.ToString
+            Case "CfEnt034"
+                _DescripcionPermiso = "MANTENCION DE PAGADORES DE ENTIDADES"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.CONFIGURACION_ENTIDAD, 6)
+                _NombreFamiliaPermiso = _Fml.CONFIGURACION_ENTIDAD.ToString
+            Case "CfEnt035"
+                _DescripcionPermiso = "VINCULAR/DESVINCULAR PAGADORES DE ENTIDADES"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.CONFIGURACION_ENTIDAD, 6)
                 _NombreFamiliaPermiso = _Fml.CONFIGURACION_ENTIDAD.ToString
 
@@ -4153,12 +4173,10 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "MANTENCION DE TABLA MODELOS DE MARCAS DE VEHICULOS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.TABLAS_SISTEMA, 6)
                 _NombreFamiliaPermiso = _Fml.TABLAS_SISTEMA.ToString
-
             Case "Tbl00030"
                 _DescripcionPermiso = "EDITAR TABLA DE CLASIFICACIONES BAKAPP"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.TABLAS_SISTEMA, 6)
                 _NombreFamiliaPermiso = _Fml.TABLAS_SISTEMA.ToString
-
             Case "Tbl00035"
                 _DescripcionPermiso = "AGREGAR O QUITAR PRODUCTOS A LAS CLASIFICACIONES MASIVAMENTE"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.TABLAS_SISTEMA, 6)
@@ -4195,7 +4213,6 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "MANTENCIÓN DE TABLA SUB-FAMILIA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.TABLAS_SISTEMA, 6)
                 _NombreFamiliaPermiso = _Fml.TABLAS_SISTEMA.ToString
-
             Case "Tbl00044"
                 _DescripcionPermiso = "MANTENCION DE RETIRADORES DE MERCADERIA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.TABLAS_SISTEMA, 6)
@@ -4208,7 +4225,6 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "ELIMINAR RETIRADORES DE MERCADERIA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.TABLAS_SISTEMA, 6)
                 _NombreFamiliaPermiso = _Fml.TABLAS_SISTEMA.ToString
-
             Case "Tbl00047"
                 _DescripcionPermiso = "CREAR-EDITAR PAISES, CIUDADES Y COMUNAS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.TABLAS_SISTEMA, 6)

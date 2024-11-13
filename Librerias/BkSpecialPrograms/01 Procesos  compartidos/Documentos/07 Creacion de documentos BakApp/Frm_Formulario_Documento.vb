@@ -156,6 +156,8 @@ Public Class Frm_Formulario_Documento
     Dim _Cl_DocListaSuperior As New Cl_DocListaSuperior
     Dim _Cl_Pallet As New Pallet.Cl_Pallet
 
+    Public Property ForzarDecimalesEnUnidadesEnteras As Boolean
+
 #Region "PROPIEDADES"
 
     Public ReadOnly Property Pro_Idmaeedo() As Integer
@@ -6473,7 +6475,7 @@ Public Class Frm_Formulario_Documento
 
             If _UnTrans = 1 Then
 
-                If Fx_Solo_Enteros(_Cantidad, _Divisible) Then
+                If Not ForzarDecimalesEnUnidadesEnteras And Fx_Solo_Enteros(_Cantidad, _Divisible) Then
                     If _Cantidad <> 0 Then
                         MessageBoxEx.Show(Me, "El producto solo permite cantidades enteras", "Validación",
                                           MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
@@ -6501,7 +6503,7 @@ Public Class Frm_Formulario_Documento
 
             ElseIf _UnTrans = 2 Then
 
-                If Fx_Solo_Enteros(_Cantidad, _Divisible2) Then
+                If Not ForzarDecimalesEnUnidadesEnteras And Fx_Solo_Enteros(_Cantidad, _Divisible2) Then
                     MessageBoxEx.Show(Me, "El producto solo permite cantidades enteras", "Validación",
                                       MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
                     .Cells("Cantidad").Value = 0
@@ -14601,6 +14603,11 @@ Public Class Frm_Formulario_Documento
                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_ListaPreGlobal Where Lista = '" & _Cl_DocListaSuperior.ListaEntidad & "'"
                 Dim _Row_ListaSuperior As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
+                If Not IsNothing(_Row_ListaSuperior) AndAlso Not _Row_ListaSuperior.Item("EsListaSuperior") Then
+                    Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_ListaPreGlobal Where Lista = '" & _Row_ListaSuperior.Item("ListaSuperior") & "'"
+                    _Row_ListaSuperior = _Sql.Fx_Get_DataRow(Consulta_sql)
+                End If
+
                 Dim _CodEntidad As String = _RowEntidad.Item("KOEN")
                 Dim _CodSucEntidad As String = _RowEntidad.Item("SUEN")
 
@@ -14617,6 +14624,7 @@ Public Class Frm_Formulario_Documento
                 _Row_ListaInferior = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                 Dim _ListaInferior As String = _Row_ListaSuperior.Item("ListaInferior").ToString.Trim
+                Dim _ListaSuperior As String = _Row_ListaSuperior.Item("Lista").ToString.Trim
 
                 If String.IsNullOrWhiteSpace(_ListaInferior) Then
                     Return
@@ -14631,25 +14639,43 @@ Public Class Frm_Formulario_Documento
                 _Msj = _Cl_DocListaSuperior.Fx_RevisarSiCumpleConTenerListaSuperior(_CodEntidad, _Cl_DocListaSuperior.ListaEntidad)
 
                 If _Msj.EsCorrecto Then
-                    Return
+
+                    If _Cl_DocListaSuperior.ListaEntidad = _ListaInferior Then
+
+                        _TblEncabezado.Rows(0).Item("ListaPrecios") = _ListaSuperior
+                        _Cl_DocListaSuperior.ListaEntidad = _ListaSuperior
+                        _RowEntidad.Item("LVEN") = "TABPP" & _ListaSuperior
+                        _TblDetalle.Rows(0).Item("CodLista") = _ListaSuperior
+
+                        If _MostrarMensaje Then
+
+                            Dim _Menje As String = Fx_AjustarTexto("Cliente cumple con la condición para usar la lista superior: " & _ListaSuperior, 100)
+
+                            MessageBoxEx.Show(Me, _Menje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                        End If
+
+                    End If
+
+                Else
+
+                    If _MostrarMensaje Then
+
+                        Dim _Menje As String = Fx_AjustarTexto(_Msj.Mensaje, 100)
+
+                        MessageBoxEx.Show(Me, _Menje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+
+                    End If
+
+                    _TblEncabezado.Rows(0).Item("ListaPrecios") = _ListaInferior
+                    _Cl_DocListaSuperior.ListaEntidad = _ListaInferior
+                    _RowEntidad.Item("LVEN") = "TABPP" & _ListaInferior
+                    _TblDetalle.Rows(0).Item("CodLista") = _ListaInferior
+
                 End If
-
-                If _MostrarMensaje Then
-
-                    Dim _Menje As String = Fx_AjustarTexto(_Msj.Mensaje, 100)
-
-                    MessageBoxEx.Show(Me, _Menje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-
-                End If
-
-                _TblEncabezado.Rows(0).Item("ListaPrecios") = _ListaInferior
-                _Cl_DocListaSuperior.ListaEntidad = _ListaInferior
-                _RowEntidad.Item("LVEN") = "TABPP" & _ListaInferior
-                _TblDetalle.Rows(0).Item("CodLista") = _ListaInferior
-
-                'End If
 
             End If
+
         Catch ex As Exception
             MessageBoxEx.Show(Me, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try

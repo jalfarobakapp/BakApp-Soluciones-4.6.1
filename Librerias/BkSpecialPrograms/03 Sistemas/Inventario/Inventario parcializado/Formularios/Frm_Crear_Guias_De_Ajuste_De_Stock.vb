@@ -920,7 +920,7 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
 
             Frm_Doc = New Frm_Formulario_Documento(_Tido, _Doc, False, False, False,
                                                    True, Chk_Dejar_Doc_Final_Del_Dia.Checked)
-
+            Frm_Doc.ForzarDecimalesEnUnidadesEnteras = True
             Frm_Doc.Pro_RowEntidad = _Row_Entidad
             Frm_Doc.Sb_Crear_Documento_Interno_Con_Tabla(Me, _Tbl_Productos, DtFechaInv.Value,
                                                     "CodigoPr", _Campo_Cantidad, "CostoUnitUd1",

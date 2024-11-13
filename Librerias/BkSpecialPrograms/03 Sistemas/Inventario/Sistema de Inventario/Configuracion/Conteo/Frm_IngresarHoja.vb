@@ -617,7 +617,6 @@ Public Class Frm_IngresarHoja
 
     End Sub
 
-
     Private Sub Grilla_Detalle_DataError(sender As Object, e As DataGridViewDataErrorEventArgs) Handles Grilla_Detalle.DataError
         ' Manejar los errores de datos
         ' Por ejemplo, mostrar un mensaje de error al usuario

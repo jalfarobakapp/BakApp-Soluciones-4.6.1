@@ -173,39 +173,39 @@ Public Class Frm_Mt_InvParc_Importar
                         _CostoUd1 = _Tbl_Maeprem.Rows(0).Item("PM")
                     End If
 
-                    Dim _Divisible = String.Empty
-                    Dim _Divisible2 = String.Empty
+                    'Dim _Divisible = String.Empty
+                    'Dim _Divisible2 = String.Empty
 
-                    If Not IsNothing(_RowProducto) Then
+                    'If Not IsNothing(_RowProducto) Then
 
-                        _Divisible = Trim(NuloPorNro(_RowProducto.Item("DIVISIBLE"), ""))
-                        _Divisible2 = Trim(NuloPorNro(_RowProducto.Item("DIVISIBLE2"), ""))
+                    '    _Divisible = Trim(NuloPorNro(_RowProducto.Item("DIVISIBLE"), ""))
+                    '    _Divisible2 = Trim(NuloPorNro(_RowProducto.Item("DIVISIBLE2"), ""))
 
-                    End If
+                    'End If
 
-                    If Fx_Solo_Enteros(_CantidadUd1, _Divisible) Then
+                    'If Fx_Solo_Enteros(_CantidadUd1, _Divisible) Then
 
-                        If _CantidadUd1 <> 0 Then
+                    '    If _CantidadUd1 <> 0 Then
 
-                            _Mensaje.EsCorrecto = False
-                            _Mensaje.Detalle = "Fila: " & i + 1 & ", Código: " & _Codigo
-                            _Mensaje.Mensaje = "El producto esta definido como indivisible en la primera unidad, cantidad ingresada UD1: " & _CantidadUd1
+                    '        _Mensaje.EsCorrecto = False
+                    '        _Mensaje.Detalle = "Fila: " & i + 1 & ", Código: " & _Codigo
+                    '        _Mensaje.Mensaje = "El producto esta definido como indivisible en la primera unidad, cantidad ingresada UD1: " & _CantidadUd1
 
-                        End If
+                    '    End If
 
-                    End If
+                    'End If
 
-                    If Fx_Solo_Enteros(_CantidadUd2, _Divisible2) Then
+                    'If Fx_Solo_Enteros(_CantidadUd2, _Divisible2) Then
 
-                        If _CantidadUd2 <> 0 Then
+                    '    If _CantidadUd2 <> 0 Then
 
-                            _Mensaje.EsCorrecto = False
-                            _Mensaje.Detalle = "Fila: " & i + 1 & ", Código: " & _Codigo
-                            _Mensaje.Mensaje = "El producto esta definido como indivisible en la segunda unidad, cantidad ingresada UD2: " & _CantidadUd2
+                    '        _Mensaje.EsCorrecto = False
+                    '        _Mensaje.Detalle = "Fila: " & i + 1 & ", Código: " & _Codigo
+                    '        _Mensaje.Mensaje = "El producto esta definido como indivisible en la segunda unidad, cantidad ingresada UD2: " & _CantidadUd2
 
-                        End If
+                    '    End If
 
-                    End If
+                    'End If
 
                 Else
 

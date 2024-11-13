@@ -57,6 +57,7 @@ CREATE TABLE [dbo].[Zw_Casi_DocEnc](
     [MontoFincred]	        [float]			NOT NULL DEFAULT (0),
     [TblTipoVenta]          [varchar](20)	NOT NULL DEFAULT (''),
     [CodTipoVenta]          [varchar](20)	NOT NULL DEFAULT (''),
+    [Customizable]	        [bit]			NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_Casi_DocEnc] PRIMARY KEY CLUSTERED 
 (
 	[Id_DocEnc] ASC

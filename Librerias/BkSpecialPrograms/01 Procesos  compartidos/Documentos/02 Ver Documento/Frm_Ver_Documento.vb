@@ -1,7 +1,7 @@
 ﻿Imports System.Drawing.Printing
 Imports System.IO
 Imports DevComponents.DotNetBar
-Imports MySql.Data.Authentication
+Imports OfficeOpenXml.FormulaParsing.LexicalAnalysis
 Imports PdfSharp
 Imports PdfSharp.Drawing
 Imports PdfSharp.Drawing.Layout
@@ -62,6 +62,7 @@ Public Class Frm_Ver_Documento
     Dim _Row_Docu_Ent As DataRow
 
     Dim _Customizable As Boolean
+    Dim _Cl_NVVCustomizable As New Cl_NVVCustomizable
 
     Enum _Sector
         Encabezado
@@ -4614,7 +4615,7 @@ Public Class Frm_Ver_Documento
             Return
         End If
 
-        Sb_Eliminar_Despachos
+        Sb_Eliminar_Despachos()
 
 
         Consulta_sql = "Select Top 1 *,KOEN AS ENDO, SUEN AS SUENDO From MAEEN" & vbCrLf &
@@ -4932,9 +4933,11 @@ Public Class Frm_Ver_Documento
     Private Sub Btn_CusNVV_Click(sender As Object, e As EventArgs) Handles Btn_CusNVV.Click
 
         Dim _Fila As DataGridViewRow = GrillaDetalleDoc.CurrentRow
-        Dim _Codigo As String = _Fila.Cells("KOPRCT").Value
+        Dim _Idmaeddo As Integer = _Fila.Cells("IDMAEDDO").Value
+        Dim _Koprct As String = _Fila.Cells("KOPRCT").Value
+        Dim _Koen = _TblEncabezado.Rows(0).Item("ENDO")
 
-        Dim Fm As New Frm_Ver_Documento_CustomizarDet(_Codigo)
+        Dim Fm As New Frm_Ver_Documento_CustomizarDet(_Idmaeddo, _Koen, _Koprct)
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
