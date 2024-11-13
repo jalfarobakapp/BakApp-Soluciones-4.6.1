@@ -755,6 +755,8 @@ Buscar:
                     Dim _TipoDoc As String = Trim(_Tbl_Paso.Rows(0).Item("TipoDoc"))
                     Dim _Tido As String = _Tbl_Paso.Rows(0).Item("TIDO")
                     Dim _Nudo As String = _Tbl_Paso.Rows(0).Item("NUDO")
+                    Dim _Endo As String = _Tbl_Paso.Rows(0).Item("ENDO")
+                    Dim _Suendo As String = _Tbl_Paso.Rows(0).Item("SUENDO")
 
                     Dim _Mensaje = MessageBoxEx.Show(Me, "Se encontro solo un registro, eliga su opción" & Environment.NewLine & Environment.NewLine &
                                                      "(Yes) Ver el documento inmediatamente" & Environment.NewLine &
@@ -1039,6 +1041,8 @@ Buscar:
     End Sub
 
     Private Sub Wrn_MostrarSoloDocClientesDelVendedor_OptionsClick(sender As Object, e As EventArgs) Handles Wrn_MostrarSoloDocClientesDelVendedor.OptionsClick
+
+
 
         Dim _Msj As String = "Tiene una restricción que le impide ver documentos de clientes de otros vendedores." & vbCrLf &
                              "Esto significa que solo puede acceder a los documentos de su propia cartera de clientes." & vbCrLf & vbCrLf &

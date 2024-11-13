@@ -1,5 +1,4 @@
 ﻿Imports System.Data.SqlClient
-Imports BkSpecialPrograms.Pallet
 
 Public Class Cl_NVVCustomizable
 
@@ -20,19 +19,44 @@ Public Class Cl_NVVCustomizable
 
     End Sub
 
-    'Public Sub Fx_EliminarDetalle(_Detalle As Nvv_Customizable.Detalle)
+    Function Fx_Llenar_Detalle(_Idmaeddo As Integer) As LsValiciones.Mensajes
 
-    '    Ls_Detalle.Remove(_Detalle)
+        Dim _Mensaje_Stem As New LsValiciones.Mensajes
 
-    'End Sub
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Docu_Det_Cust Where Idmaeddo = " & _Idmaeddo
+        Dim _Tbl_Det As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
-    'Public Sub Fx_ModificarDetalle(_Detalle As Nvv_Customizable.Detalle)
+        If Not CBool(_Tbl_Det.Rows.Count) Then
 
-    '    Dim _DetalleModificar As Nvv_Customizable.Detalle = Ls_Detalle.Find(Function(x) x.Idmaeddo = _Detalle.Idmaeddo)
+            _Mensaje_Stem.EsCorrecto = False
+            _Mensaje_Stem.Mensaje = "No se encontraron registros en la tabla Zw_Docu_Det_Cust con el Id_Enc " & _Idmaeddo
 
-    '    _DetalleModificar = _Detalle
+            Return _Mensaje_Stem
 
-    'End Sub
+        End If
+
+        For Each _Row As DataRow In _Tbl_Det.Rows
+
+            Dim _Det As New Zw_Docu_Det_Cust
+
+            With _Det
+                .Id = _Row("Id")
+                .Idmaeddo = _Row("Idmaeddo")
+                .CodigoAlt = _Row("CodigoAlt")
+                .Descripcion = _Row("Descripcion")
+                .Cantidad = _Row("Cantidad")
+            End With
+
+            Ls_Detalle.Add(_Det)
+
+        Next
+
+        _Mensaje_Stem.EsCorrecto = True
+        _Mensaje_Stem.Mensaje = "Registros cargados correctamente"
+
+        Return _Mensaje_Stem
+
+    End Function
 
     Function Fx_Grabar_Detalle_Customizados() As LsValiciones.Mensajes
 
@@ -58,20 +82,20 @@ Public Class Cl_NVVCustomizable
 
                     If Not String.IsNullOrEmpty(.CodigoAlt) Then
 
-                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Det_Cust (Idmaeddo,CodigoAlt,Descripcion,Cantidad) Values " &
-                                       "('" & .Idmaeddo & "','" & .CodigoAlt & "','" & .Descripcion & "','" & .Cantidad & "')"
+                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Det_Cust (Idmaeedo,Idmaeddo,CodigoAlt,Descripcion,Cantidad) Values " &
+                                       "(" & .Idmaeedo & "," & .Idmaeddo & ",'" & .CodigoAlt & "','" & .Descripcion & "','" & .Cantidad & "')"
                         Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                         Comando.Transaction = myTrans
                         Comando.ExecuteNonQuery()
 
-                        Dim _Horagrab = Hora_Grab_fx(False)
+                        'Dim _Horagrab = Hora_Grab_fx(False)
 
-                        Consulta_sql = "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC,HORAGRAB) Values " &
-                                       "('MAEDDO'," & .Idmaeddo & ",'" & FUNCIONARIO & "'" &
-                                       ",Getdate(),'CUSTNVV','" & .CodigoAlt.ToString.Trim & "'," & .Cantidad & "," & _Horagrab & ")"
-                        Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
-                        Comando.Transaction = myTrans
-                        Comando.ExecuteNonQuery()
+                        'Consulta_sql = "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC,HORAGRAB) Values " &
+                        '               "('MAEDDO'," & .Idmaeddo & ",'" & FUNCIONARIO & "'" &
+                        '               ",Getdate(),'CUSTNVV','" & .CodigoAlt.ToString.Trim & "'," & .Cantidad & "," & _Horagrab & ")"
+                        'Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                        'Comando.Transaction = myTrans
+                        'Comando.ExecuteNonQuery()
 
                     End If
 

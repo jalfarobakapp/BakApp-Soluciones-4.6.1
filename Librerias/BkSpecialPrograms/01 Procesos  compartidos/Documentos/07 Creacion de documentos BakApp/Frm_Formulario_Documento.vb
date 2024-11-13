@@ -2,6 +2,7 @@
 Imports System.Threading
 Imports BkSpecialPrograms.Bk_Comporamiento_UdMedidas
 Imports BkSpecialPrograms.DocumentoListaSuperior
+Imports BkSpecialPrograms.LsValiciones
 Imports DevComponents.DotNetBar
 
 Public Class Frm_Formulario_Documento
@@ -8240,19 +8241,53 @@ Public Class Frm_Formulario_Documento
 
                 If VerSoloEntidadesDelVendedor Then
 
-                    If _RowEntidad.Item("KOFUEN").ToString.Trim <> FUNCIONARIO Then
+                    If _RowEntidad.Item("KOFUEN").ToString.Trim <> FUNCIONARIO.ToString.Trim Then
 
                         MessageBoxEx.Show(_Formulario, "Usted tiene restricción para ver documentos de clientes de otros vendedores." & vbCrLf &
                                   "Tienes el permiso (restricción) NO00021 asignado.",
                                   "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
-                        'If Not Fx_Tiene_Permiso(Me, "Doc00096") Then
                         Return Nothing
-                        'End If
+
+                    End If
+
+                Else
+
+                    If Fx_Tiene_Permiso(Me, "NO00022",, False) Then
+
+                        Dim _Kogru As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & FUNCIONARIO & "'")
+                        Dim _TienePermiso As Boolean
+
+                        Consulta_sql = "Select d.*,NOKOGRU From TABFUGD d Left Join TABFUGE e On e.KOGRU = d.KOGRU Where d.KOGRU = '" & _Kogru & "'"
+                        Dim _Tbl_Grupo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+                        For Each _Fila As DataRow In _Tbl_Grupo.Rows
+                            If _Fila.Item("KOFU").ToString.Trim = _RowEntidad.Item("KOFUEN").ToString.Trim Then
+                                _TienePermiso = True
+                                Exit For
+                            End If
+                        Next
+
+                        If Not _TienePermiso Then
+
+                            Dim _Grupo As String = _Kogru.Trim & " - " & _Tbl_Grupo.Rows(0).Item("NOKOGRU").trim
+
+                            Dim _Msj = "Tiene una restricción que le impide gestionar o ver documentos de clientes asignados a" & vbCrLf &
+                                       "otros vendedores fuera de su grupo. Esto significa que solo puede acceder y gestionar" & vbCrLf &
+                                       "documentos de los clientes de los vendedores asociados a su grupo." & vbCrLf & vbCrLf &
+                                       "Actualmente, tiene asignado el permiso (restricción) NO00022" & vbCrLf &
+                                       "y pertenece al grupo " & _Grupo
+
+                            MessageBoxEx.Show(_Formulario, _Msj, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                            Return Nothing
+
+                        End If
 
                     End If
 
                 End If
+
 
                 If _Mostrar_Mensaje_Deuda Then
 
@@ -13701,11 +13736,14 @@ Public Class Frm_Formulario_Documento
             'Dim _CodFuncionario_Autoriza As String
             'Dim _NomFuncionario_Autoriza As String
 
+            Dim _CodEntidad As String = NuloPorNro(_Fila.Cells("CodEntidad").Value, "")
+            Dim _CodSucEntidad As String = NuloPorNro(_Fila.Cells("CodSucEntidad").Value, "").ToString.Trim
+
 
             If _Cabeza = "CodEntidad" Or (_Cabeza = "CodSucEntidad" And _Tido = "GTI") Then
 
-                Dim _CodEntidad As String = NuloPorNro(_Fila.Cells("CodEntidad").Value, "")
-                Dim _CodSucEntidad As String = NuloPorNro(_Fila.Cells("CodSucEntidad").Value, "").ToString.Trim
+                'Dim _CodEntidad As String = NuloPorNro(_Fila.Cells("CodEntidad").Value, "")
+                'Dim _CodSucEntidad As String = NuloPorNro(_Fila.Cells("CodSucEntidad").Value, "").ToString.Trim
 
                 If Not IsNothing(_RowEntidad) And _Cabeza = "CodEntidad" Then
 
@@ -13769,29 +13807,47 @@ Public Class Frm_Formulario_Documento
 
                     If Not IsNothing(_Row_Doc_Relacionado) Then
 
-                        If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") And _Tido_Relacionado = "NVV" Then
+                        _Idmaeedo_Relacionado = _Row_Doc_Relacionado.Item("IDMAEEDO")
 
-                            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Docu_Ent WITH (NOLOCK) Where Idmaeedo = " & _Row_Doc_Relacionado.Item("IDMAEEDO")
-                            Dim _Row_Docu_Ent As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                        If Not Fx_NvvHabilitada_Fac(Me, _Idmaeedo_Relacionado, "NVV") Then
 
-                            Dim _HabilitadaFac = False
-
-                            If Not IsNothing(_Row_Docu_Ent) Then
-                                _HabilitadaFac = _Row_Docu_Ent.Item("HabilitadaFac")
+                            _Fila.Cells("CodEntidad").Value = String.Empty
+                            If _Cerrar_Al_Grabar Then
+                                Me.Close()
                             End If
-
-                            If Not _HabilitadaFac Then
-                                _Fila.Cells("CodEntidad").Value = String.Empty
-                                MessageBoxEx.Show(Me, "Esta nota de venta no esta habilitada para ser facturada." & vbCrLf &
-                                      "Según la configuración General las notas de venta deben ser habilitadas para que se puedan facturar",
-                                      "Validación NVV: " & _Nudo_Relacionado, MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                                If _Cerrar_Al_Grabar Then
-                                    Me.Close()
-                                End If
-                                Return
-                            End If
+                            Return
 
                         End If
+
+                        'If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") And _Tido_Relacionado = "NVV" Then
+
+                        '    Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Docu_Ent WITH (NOLOCK) Where Idmaeedo = " & _Row_Doc_Relacionado.Item("IDMAEEDO")
+                        '    Dim _Row_Docu_Ent As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                        '    Dim _HabilitadaFac = False
+
+                        '    If Not IsNothing(_Row_Docu_Ent) Then
+                        '        _HabilitadaFac = _Row_Docu_Ent.Item("HabilitadaFac")
+                        '    End If
+
+                        '    If Not _HabilitadaFac Then
+                        '        If _Global_Row_Configuracion_General.Item("HabilitarNVVConProdCustomizables") And Not _Row_Docu_Ent.Item("Customizable") Then
+                        '            _HabilitadaFac = True
+                        '        End If
+                        '    End If
+
+                        '    If Not _HabilitadaFac Then
+                        '        _Fila.Cells("CodEntidad").Value = String.Empty
+                        '        MessageBoxEx.Show(Me, "Esta nota de venta no esta habilitada para ser facturada." & vbCrLf &
+                        '              "Según la configuración General las notas de venta deben ser habilitadas para que se puedan facturar",
+                        '              "Validación NVV: " & _Nudo_Relacionado, MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        '        If _Cerrar_Al_Grabar Then
+                        '            Me.Close()
+                        '        End If
+                        '        Return
+                        '    End If
+
+                        'End If
 
                         _CodEntidad = _Row_Doc_Relacionado.Item("ENDO")
                         _CodSucEntidad = _Row_Doc_Relacionado.Item("SUENDO")
@@ -14636,7 +14692,7 @@ Public Class Frm_Formulario_Documento
 
                 Dim _Msj As LsValiciones.Mensajes
 
-                _Msj = _Cl_DocListaSuperior.Fx_RevisarSiCumpleConTenerListaSuperior(_CodEntidad, _Cl_DocListaSuperior.ListaEntidad)
+                _Msj = _Cl_DocListaSuperior.Fx_RevisarSiCumpleConTenerListaSuperior(_CodEntidad, _ListaSuperior)
 
                 If _Msj.EsCorrecto Then
 
@@ -14659,11 +14715,15 @@ Public Class Frm_Formulario_Documento
 
                 Else
 
-                    If _MostrarMensaje Then
+                    If _Cl_DocListaSuperior.ListaEntidad <> _ListaInferior Then
 
-                        Dim _Menje As String = Fx_AjustarTexto(_Msj.Mensaje, 100)
+                        If _MostrarMensaje Then
 
-                        MessageBoxEx.Show(Me, _Menje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                            Dim _Menje As String = Fx_AjustarTexto(_Msj.Mensaje, 100)
+
+                            MessageBoxEx.Show(Me, _Menje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+
+                        End If
 
                     End If
 

@@ -543,6 +543,12 @@ Public Class Frm_Ver_Documento
             Lbl_CusNVV.Visible = _Customizable
             Btn_CusNVV.Visible = _Customizable
 
+            If _Customizable Then
+                Btn_CusNVV.Text = "Ver información del producto Customizado"
+            End If
+
+            Me.Text += " *** CUSTOMIZABLE ***"
+
         End If
 
     End Sub
@@ -790,9 +796,19 @@ Public Class Frm_Ver_Documento
         End If
 
         If Not IsNothing(_Row_Docu_Ent) AndAlso _Tido = "NVV" Then
-            If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+
+            Dim _Revisar_HbilitarNVVFAc As Boolean = _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar")
+
+            If _Global_Row_Configuracion_General.Item("HabilitarNVVConProdCustomizables") And Not _Row_Docu_Ent.Item("Customizable") Then
+                _Revisar_HbilitarNVVFAc = False
+            End If
+
+            If _Revisar_HbilitarNVVFAc Then
+
                 Btn_HabilitarFacturacion.Visible = True
+
                 If _Row_Docu_Ent.Item("HabilitadaFac") Then
+
                     If Global_Thema = Enum_Themas.Oscuro Then
                         Btn_HabilitarFacturacion.ImageAlt = My.Resources.Recursos_Documento.invoice_ok___copia
                     Else
@@ -800,7 +816,9 @@ Public Class Frm_Ver_Documento
                     End If
                     Btn_HabilitarFacturacion.Tooltip = "Nota de venta habilitada para ser facturada"
                     Me.Text += " (*** HABILITADA PARA SER FACTURADA ***)"
+
                 Else
+
                     If Global_Thema = Enum_Themas.Oscuro Then
                         Btn_HabilitarFacturacion.ImageAlt = My.Resources.Recursos_Documento.invoice_forbidden___copia
                     Else
@@ -808,8 +826,11 @@ Public Class Frm_Ver_Documento
                     End If
                     Btn_HabilitarFacturacion.Tooltip = "Habilitar nota de venta para ser facturada"
                     Me.Text += " (*** NO ESTA HABILITADA PARA SER FACTURADA ***)"
+
                 End If
+
             End If
+
         End If
 
         Dim _Ruta_PDF = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Estaciones_Ruta_PDF", "Ruta_PDF",
@@ -4899,10 +4920,39 @@ Public Class Frm_Ver_Documento
                              MessageBoxButtons.OK, MessageBoxIcon.Information)
         Else
 
-            MessageBoxEx.Show(Me, "Esta Nota de venta NO esta habilitada para ser facturada." & vbCrLf &
+            If _Row_Docu_Ent.Item("Customizable") Then
+
+                If MessageBoxEx.Show(Me, "Esta Nota de venta NO esta habilitada para ser facturada." & vbCrLf &
+                              "¿Confirma habilitar la noata de venta para su facturación?", "Validación",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Stop) <> DialogResult.Yes Then
+                    Return
+                End If
+
+                Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros("MAEDDO",
+                                                               "IDMAEDDO Not In " &
+                                                               "(Select Idmaeddo From " & _Global_BaseBk & "Zw_Docu_Det_Cust " &
+                                                               "Where Idmaeedo = " & _Idmaeedo & ") And IDMAEEDO = " & _Idmaeedo)
+
+                If CBool(_Reg) Then
+                    MessageBoxEx.Show(Me, "Faltan productos customizados que confirmar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Return
+                End If
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Ent Set HabilitadaFac = 1,FunAutorizaFac = '" & FUNCIONARIO & "'" & vbCrLf &
+                               "Where Idmaeedo = " & _Idmaeedo
+                If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+                    MessageBoxEx.Show(Me, "Nota de venta habilitada para ser facturada", "Validación",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Me.Close()
+                End If
+
+            Else
+
+                MessageBoxEx.Show(Me, "Esta Nota de venta NO esta habilitada para ser facturada." & vbCrLf &
                               "Para habilitar esta nota de ventas debe ir al asistente de habilitación de notas de venta para facturar", "Validación",
                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
+            End If
 
         End If
 
@@ -4937,7 +4987,7 @@ Public Class Frm_Ver_Documento
         Dim _Koprct As String = _Fila.Cells("KOPRCT").Value
         Dim _Koen = _TblEncabezado.Rows(0).Item("ENDO")
 
-        Dim Fm As New Frm_Ver_Documento_CustomizarDet(_Idmaeddo, _Koen, _Koprct)
+        Dim Fm As New Frm_Ver_Documento_CustomizarDet(_Idmaeedo, _Idmaeddo, _Koen, _Koprct)
         Fm.ShowDialog(Me)
         Fm.Dispose()
 

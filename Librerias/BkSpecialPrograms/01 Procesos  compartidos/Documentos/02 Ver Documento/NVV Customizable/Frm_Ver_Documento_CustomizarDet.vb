@@ -10,24 +10,30 @@ Public Class Frm_Ver_Documento_CustomizarDet
 
     Private _Source As BindingSource
     Private _Row_Producto As DataRow
+    Private _Idmaeedo As Integer
     Private _Idmaeddo As Integer
     Private _Koen As String
     Public Property Cl_NVVCustomizable As Cl_NVVCustomizable
 
     Dim listaProductos As New BindingList(Of Zw_Docu_Det_Cust)
 
-    Public Sub New(_Idmaeddo As Integer, _Koen As String, _Codigo As String)
+    Public Sub New(_Idmaeedo As Integer, _Idmaeddo As Integer, _Koen As String, _Codigo As String)
 
         ' Esta llamada es exigida por el diseñador.
         InitializeComponent()
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
+        Me._Idmaeedo = _Idmaeedo
         Me._Idmaeddo = _Idmaeddo
         Me._Koen = _Koen
 
         Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
         _Row_Producto = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Sb_Formato_Generico_Grilla(Grilla_Detalle, 18, New Font("Tahoma", 8), Color.LightYellow, ScrollBars.None, True, False, False)
+
+        Sb_Color_Botones_Barra(Bar1)
 
     End Sub
 
@@ -54,6 +60,22 @@ Public Class Frm_Ver_Documento_CustomizarDet
 
         Me.Text = "Producto: " & _Row_Producto.Item("KOPR").ToString.Trim & " - " & _Row_Producto.Item("NOKOPR").ToString.Trim
 
+        Cl_NVVCustomizable.Fx_Llenar_Detalle(_Idmaeddo)
+
+        If Cl_NVVCustomizable.Ls_Detalle.Count > 0 Then
+
+            Grilla_Detalle.Rows.Clear()
+
+            For Each _Fila As Zw_Docu_Det_Cust In Cl_NVVCustomizable.Ls_Detalle
+
+                listaProductos.Add(_Fila)
+
+            Next
+
+            Btn_Grabar.Enabled = False
+
+        End If
+
     End Sub
 
     Sub Sb_Agregar_Nueva_Linea()
@@ -63,7 +85,8 @@ Public Class Frm_Ver_Documento_CustomizarDet
         With _Detalle
 
             .Id = 0
-            .Idmaeddo = 0
+            .Idmaeedo = _Idmaeedo
+            .Idmaeddo = _Idmaeddo
             .CodigoAlt = String.Empty
             .Descripcion = String.Empty
             .Cantidad = 0
@@ -115,13 +138,15 @@ Public Class Frm_Ver_Documento_CustomizarDet
 
             .Columns("Descripcion").Visible = True
             .Columns("Descripcion").HeaderText = "Descripción"
-            .Columns("Descripcion").Width = 300
+            .Columns("Descripcion").Width = 420
             .Columns("Descripcion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Cantidad").Visible = True
             .Columns("Cantidad").HeaderText = "Cantidad"
             .Columns("Cantidad").Width = 100
+            .Columns("Cantidad").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Cantidad").DefaultCellStyle.Format = "###,##0.##"
             .Columns("Cantidad").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -132,6 +157,10 @@ Public Class Frm_Ver_Documento_CustomizarDet
     Private Sub Grilla_Detalle_KeyDown(sender As Object, e As KeyEventArgs) Handles Grilla_Detalle.KeyDown
 
         If IsNothing(Grilla_Detalle.CurrentCell) Then
+            Return
+        End If
+
+        If Not Btn_Grabar.Enabled Then
             Return
         End If
 

@@ -538,7 +538,6 @@ Partial Class Frm_Usuarios_Random_Ficha
         '
         Me.Txt_Password.Border.Class = "TextBoxBorder"
         Me.Txt_Password.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Password.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.Txt_Password.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Password.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Txt_Password.ForeColor = System.Drawing.Color.Black
