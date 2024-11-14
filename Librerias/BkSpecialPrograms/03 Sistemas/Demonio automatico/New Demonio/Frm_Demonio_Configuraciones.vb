@@ -928,7 +928,7 @@ Public Class Frm_Demonio_Configuraciones
 
         _Filtrar.Tabla = "CONFIEST"
         _Filtrar.Campo = "MODALIDAD"
-        _Filtrar.Descripcion = "MODALIDAD"
+        _Filtrar.Descripcion = "MODALIDAD+': Empresa:'+EMPRESA+', Suc: '+ESUCURSAL+', Bod: '+EBODEGA"
 
         If _Filtrar.Fx_Filtrar(Nothing,
                                Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And MODALIDAD <> '  '",

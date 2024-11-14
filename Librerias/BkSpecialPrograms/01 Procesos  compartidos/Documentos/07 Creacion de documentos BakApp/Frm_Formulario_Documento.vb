@@ -20172,11 +20172,11 @@ Public Class Frm_Formulario_Documento
 
                 If _New_Fila.Cells("Precio").Value > 0 Then
 
-                    Sb_Procesar_Datos_De_Grilla(_New_Fila, "Cantidad", True, True)
+                    Sb_Procesar_Datos_De_Grilla(_New_Fila, "Cantidad", False, False)
 
                     If _DescuentoPorc > 0 Then
                         _New_Fila.Cells("DescuentoPorc").Value = Math.Round(_DescuentoPorc, 2)
-                        Sb_Procesar_Datos_De_Grilla(_New_Fila, "DescuentoPorc", True, True)
+                        Sb_Procesar_Datos_De_Grilla(_New_Fila, "DescuentoPorc", False, False)
                     Else
 
                         If _AgregarDscotSeteados Then

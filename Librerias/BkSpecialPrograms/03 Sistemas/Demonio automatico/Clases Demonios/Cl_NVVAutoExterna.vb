@@ -335,61 +335,6 @@ Drop table #Paso"
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then Throw New System.Exception(_Sql.Pro_Error)
 
-            'Dim _Empresa As String = String.Empty
-            'Dim _Sucursal As String = _Row_Modalidad.Item("ESUCURSAL")
-            'Dim _Bodega As String = _Row_Modalidad.Item("EBODEGA")
-
-            ''Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet Set " &
-            ''               "Empresa = '" & ModEmpresa & "',Sucursal = '" & _Sucursal & "',Bodega = '" & _Bodega & "' Where Id_Enc = " & _Id_Enc
-            ''_Sql.Ej_consulta_IDU(Consulta_Sql, False)
-
-            'Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet Where Id_Enc = " & _Id_Enc
-            'Dim _Tbl_NVVAutoDet As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
-
-            'Consulta_Sql = "Select * From TABBO Where EMPRESA = '" & ModEmpresa & "' And KOSU = '" & _Sucursal & "'"
-            'Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
-
-            'For Each _FlDet As DataRow In _Tbl_NVVAutoDet.Rows
-
-            '    Dim _Id_Det As Integer = _FlDet.Item("Id_Det")
-            '    Dim _Codigo As String = _FlDet.Item("Codigo")
-            '    Dim _Suc_Mayor As String = String.Empty
-            '    Dim _Bod_Mayor As String = String.Empty
-
-            '    Dim _Stfi1_Mayor As Double = 0
-
-            '    For Each _FlBod As DataRow In _Tbl_Bodegas.Rows
-
-            '        Dim _Suc As String = _FlBod.Item("KOSU")
-            '        Dim _Bod As String = _FlBod.Item("KOBO")
-
-            '        Dim _Stfi1 As Double = _Sql.Fx_Trae_Dato("MAEST", "STFI1",
-            '                                   "EMPRESA = '" & ModEmpresa & "' " &
-            '                                   "And KOSU = '" & _Suc & "' " &
-            '                                   "And KOBO = '" & _Bod & "' " &
-            '                                   "And KOPR = '" & _Codigo & "'", True)
-
-            '        If _Stfi1_Mayor < _Stfi1 Then
-            '            _Suc_Mayor = _Suc
-            '            _Bod_Mayor = _Bod
-            '            _Stfi1_Mayor = _Stfi1
-            '        End If
-
-            '    Next
-
-            '    If Not String.IsNullOrEmpty(_Bod_Mayor.Trim) Then
-
-            '        Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet Set " &
-            '               "Empresa = '" & ModEmpresa & "',Sucursal = '" & _Suc_Mayor & "',Bodega = '" & _Bod_Mayor & "' Where Id_Det = " & _Id_Det
-            '        _Sql.Ej_consulta_IDU(Consulta_Sql, False)
-
-            '    End If
-
-            'Next
-
-
-            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then Throw New System.Exception(_Sql.Pro_Error)
-
             Consulta_Sql = "Select Nvd.Id_Det As Id,Nvd.Codigo,Cantidad,STFI1,STFI2,STOCNV1,STOCNV2,STDV1,STDV2,ISNULL(Pst.StComp1,0) As StComp1,ISNULL(Pst.StComp2,0) As StComp2,
     (STFI1-STOCNV1-STDV1-ISNULL(Pst.StComp1,0)) As 'StDisp1',(STFI2-STOCNV2-STDV2-ISNULL(Pst.StComp2,0)) As 'StDisp2',
 	Case 
@@ -429,7 +374,7 @@ Drop table #Paso"
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then Throw New System.Exception(_Sql.Pro_Error)
 
-            Consulta_Sql = "Select *,1 As Precio From " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet Where Id_Enc = " & _Id_Enc & " And CantidadDefinitiva > 0"
+            Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet Where Id_Enc = " & _Id_Enc & " And CantidadDefinitiva > 0"
             _Tbl_Productos = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then Throw New System.Exception(_Sql.Pro_Error)
@@ -443,7 +388,7 @@ Drop table #Paso"
 
             ' OJO OJO ACA HAY QUE ARREGALR ESTO SOLAMENTE...
             ' ACA HAY QUE PONER LA BODEGA QUE VIENE DESDE LA TABLA Zw_Demonio_NVVAutoDet
-            ' EL SISTEMA GRABA LA BODEGA WCM Y NO LA VIRTUAL
+            ' EL SISTEMA GRABA LA BODEGA WCM Y NO LA VIRTUALD
 
             Modalidad = Modalidad_NVV
 
@@ -453,7 +398,7 @@ Drop table #Paso"
             Fm.Sb_Limpiar(Modalidad_NVV)
             Fm.Pro_RowEntidad = _Row_Entidad
             Fm.Sb_Crear_Documento_Interno_Con_Tabla(_Formulario, _Tbl_Productos, _Fecha_Emision,
-                                                    "Codigo", "CantidadDefinitiva", "Precio", "Observacion", False, True,, True)
+                                                    "Codigo", "CantidadDefinitiva", "Precio", "Observacion", False, False,, True)
 
             Dim _Mensaje2 As LsValiciones.Mensajes = Fm.Fx_Grabar_Documento(False)
 
@@ -475,8 +420,39 @@ Drop table #Paso"
                                 "Where Id_Enc = " & _Id_Enc
                 _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
-                Consulta_Sql = "Update MAEEDOOB Set OCDO = '" & _Id_Pago & "',OBDO = 'Documento generado desde diablito automático desde MELI Nro: " & _Id_Meli & "'" & vbCrLf &
+                Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_NVVAuto Where Id_Enc = " & _Id_Enc
+                _Row = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+                Dim _Ocdo As String = _Row.Item("Ocdo")
+                Dim _Observaciones As String = _Row.Item("Observaciones")
+                Dim _Texto1 As String = _Row.Item("Texto1")
+                Dim _Texto2 As String = _Row.Item("Texto2")
+                Dim _Texto3 As String = _Row.Item("Texto3")
+                Dim _Texto4 As String = _Row.Item("Texto4")
+                Dim _Texto5 As String = _Row.Item("Texto5")
+                Dim _Texto6 As String = _Row.Item("Texto6")
+                Dim _Texto7 As String = _Row.Item("Texto7")
+                Dim _Texto8 As String = _Row.Item("Texto8")
+                Dim _Texto9 As String = _Row.Item("Texto9")
+                Dim _Texto10 As String = _Row.Item("Texto10")
+
+                Consulta_Sql = "Update MAEEDOOB Set" & vbCrLf &
+                               "OCDO = '" & _Ocdo & "'" &
+                               ",OBDO = '" & _Observaciones & "'" & vbCrLf &
+                               ",TEXTO1 = '" & _Texto1 & "'" &
+                               ",TEXTO2 = '" & _Texto2 & "'" &
+                               ",TEXTO3 = '" & _Texto3 & "'" &
+                               ",TEXTO4 = '" & _Texto4 & "'" &
+                               ",TEXTO5 = '" & _Texto5 & "'" &
+                               ",TEXTO6 = '" & _Texto6 & "'" &
+                               ",TEXTO7 = '" & _Texto7 & "'" &
+                               ",TEXTO8 = '" & _Texto8 & "'" &
+                               ",TEXTO9 = '" & _Texto9 & "'" &
+                               ",TEXTO10 = '" & _Texto10 & "'" & vbCrLf &
                                "Where IDMAEEDO = " & _Mensaje2.Id
+
+                'Consulta_Sql = "Update MAEEDOOB Set OCDO = '" & _Id_Pago & "',OBDO = 'Documento generado desde diablito automático desde MELI Nro: " & _Id_Meli & "'" & vbCrLf &
+                '               "Where IDMAEEDO = " & _Mensaje2.Id
                 _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
             End If

@@ -504,22 +504,15 @@ Public Class Frm_BuscarDocumento_Mt
                 _Estado = _Row.Item("ESDO")
             End If
 
-            'Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
-            'Fm.ShowDialog(Me)
+            If _Estado = "C" Then
+                _Fila.Cells("ESTADO").Style.ForeColor = Rojo
+                _Fila.Cells("ESTADO").Value = "Cerrado"
+            ElseIf _Estado = "" Then
+                _Fila.Cells("ESTADO").Style.ForeColor = Verde
+                _Fila.Cells("ESTADO").Value = "Vigente"
+            End If
 
-            'Dim _Row As DataRow = Fm.Pro_Row_Maeedo
-
-            'If _Estado = "C" Then
-            '    _Fila.Cells("ESTADO").Style.ForeColor = Rojo
-            '    _Fila.Cells("ESTADO").Value = "Cerrado"
-            'ElseIf _Estado = "" Then
-            '    _Fila.Cells("ESTADO").Style.ForeColor = Verde
-            '    _Fila.Cells("ESTADO").Value = "Vigente"
-            'End If
-
-            _Actualizar = (_Anulado Or _Eliminado) '(Fm.Anulado Or Fm.Eliminado)
-
-            'Fm.Dispose()
+            _Actualizar = (_Anulado Or _Eliminado)
 
             If HabilitarNVVParaFacturar Then
                 _Actualizar = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "HabilitadaFac", "Idmaeedo = " & _Idmaeedo,,,, True)

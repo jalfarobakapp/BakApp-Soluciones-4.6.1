@@ -102,6 +102,7 @@ Public Class Cl_Sincroniza
             Dim _Observaciones As String
 
             With _Zw_Demonio_NVVAuto
+
                 .IdmaeedoOCC_Ori = _PEDIDO.ID
                 .NudoOCC_Ori = _PEDIDO.ID_MELI
                 .Endo_Ori = _PEDIDO.KOEN
@@ -111,16 +112,19 @@ Public Class Cl_Sincroniza
 
                 _Observaciones = "Pedido: " & _PEDIDO.ID_MELI
 
+                _PEDIDO.NICK_NAME = Fx_ReemplazarCaracteresRaros2(_PEDIDO.NICK_NAME)
+                _PEDIDO.FIRST_NAME = Fx_ReemplazarCaracteresRaros2(_PEDIDO.FIRST_NAME)
+                _PEDIDO.LAST_NAME = Fx_ReemplazarCaracteresRaros2(_PEDIDO.LAST_NAME)
+                _PEDIDO.DIRECCION = Fx_ReemplazarCaracteresRaros2(_PEDIDO.DIRECCION)
+                _PEDIDO.COMUNA = Fx_ReemplazarCaracteresRaros2(_PEDIDO.COMUNA)
+
                 Dim _Nombre As String = _PEDIDO.FIRST_NAME.ToString.Trim
 
                 If Not String.IsNullOrEmpty(_PEDIDO.LAST_NAME.ToString.Trim) Then
                     _Nombre += " " & _PEDIDO.LAST_NAME.ToString.Trim
                 End If
 
-                'If Not String.IsNullOrEmpty(_PEDIDO.NICK_NAME.ToString.Trim) Then _Observaciones += ", " & _PEDIDO.NICK_NAME.ToString.Trim
                 If Not String.IsNullOrEmpty(_Nombre) Then _Observaciones += ", " & _Nombre
-                'If Not String.IsNullOrEmpty(_FirstName.ToString.Trim) Then _Observaciones += ", " & _PEDIDO.FIRST_NAME.ToString.Trim
-                'If Not String.IsNullOrEmpty(_LastName.ToString.Trim) Then _Observaciones += ", " & _PEDIDO.LAST_NAME.ToString.Trim
                 If Not String.IsNullOrEmpty(_PEDIDO.DIRECCION.ToString.Trim) Then _Observaciones += ", " & _PEDIDO.DIRECCION.ToString.Trim
                 If Not String.IsNullOrEmpty(_PEDIDO.COMUNA.ToString.Trim) Then _Observaciones += ", " & _PEDIDO.COMUNA.ToString.Trim
 
@@ -129,6 +133,18 @@ Public Class Cl_Sincroniza
                 .Observaciones = Mid(_Observaciones, 1, 250)
                 .Ocdo = _PEDIDO.ID_PAGO
                 .TipoOri = "MLIBRE"
+
+                .Texto1 = _PEDIDO.ID_MELI
+                .Texto2 = _PEDIDO.ID_PAGO
+                .Texto3 = _PEDIDO.NICK_NAME
+                .Texto4 = _PEDIDO.FIRST_NAME
+                .Texto5 = _PEDIDO.LAST_NAME
+                .Texto6 = _PEDIDO.DIRECCION
+                .Texto7 = _PEDIDO.COMUNA
+                .Texto8 = String.Empty
+                .Texto9 = String.Empty
+                .Texto10 = String.Empty
+
             End With
 
             For Each _PEDIDOS_DETALLE As PEDIDOS_DETALLE In _Ls_PEDIDOS_DETALLE
@@ -165,7 +181,7 @@ Public Class Cl_Sincroniza
                     '.StComp2 = _Row.Item("StComp2")
                     '.Stdv1 = _Row.Item("Stdv1")
                     '.Stdv2 = _Row.Item("Stdv2")
-                    .Precio = _PEDIDOS_DETALLE.NETO_UNITARIO
+                    .Precio = Math.Round(_PEDIDOS_DETALLE.NETO_UNITARIO * 1.19, 0)
                 End With
 
                 _Ls_Zw_Demonio_NVVAuto_Detalle.Add(_Zw_Demonio_NVVAutoDet)
@@ -181,8 +197,14 @@ Public Class Cl_Sincroniza
 
             With _Zw_Demonio_NVVAuto
 
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_NVVAuto (IdmaeedoOCC_Ori,NudoOCC_Ori,Endo_Ori,Suendo_Ori,FechaGrab,GenerarNVV,Observaciones,TipoOri,Ocdo) Values " &
-                               "(" & .IdmaeedoOCC_Ori & ",'" & .NudoOCC_Ori & "','" & .Endo_Ori & "','" & .Suendo_Ori & "','" & Format(.FechaGrab, "yyyyMMdd HH:mm:ss") & "'," & Convert.ToInt32(.GenerarNVV) & ",'" & .Observaciones & "','" & .TipoOri & "','" & .Ocdo & "')"
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_NVVAuto (IdmaeedoOCC_Ori,NudoOCC_Ori,Endo_Ori,Suendo_Ori," &
+                               "FechaGrab,GenerarNVV,Observaciones,TipoOri,Ocdo," &
+                               "Texto1,Texto2,Texto3,Texto4,Texto5,Texto6,Texto7,Texto8,Texto9,Texto10) Values " &
+                               "(" & .IdmaeedoOCC_Ori & ",'" & .NudoOCC_Ori & "','" & .Endo_Ori & "','" & .Suendo_Ori &
+                               "','" & Format(.FechaGrab, "yyyyMMdd HH:mm:ss") & "'," & Convert.ToInt32(.GenerarNVV) &
+                               ",'" & .Observaciones & "','" & .TipoOri & "','" & .Ocdo &
+                               "','" & .Texto1 & "','" & .Texto2 & "','" & .Texto3 & "','" & .Texto4 & "','" & .Texto5 & "','" & .Texto6 &
+                               "','" & .Texto7 & "','" & .Texto8 & "','" & .Texto9 & "','" & .Texto10 & "')"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                 Comando.Transaction = myTrans
