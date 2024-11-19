@@ -15,6 +15,16 @@ CREATE TABLE [dbo].[Zw_Demonio_NVVAuto](
 	[Observaciones]		[varchar](max)  NOT NULL DEFAULT (''),
     [TipoOri]			[varchar](10)   NOT NULL DEFAULT (''),
     [Ocdo]              [varchar](40)   NOT NULL DEFAULT (''),
+    [Texto1]            [varchar](80)   NOT NULL DEFAULT (''),
+    [Texto2]            [varchar](80)   NOT NULL DEFAULT (''),
+    [Texto3]            [varchar](80)   NOT NULL DEFAULT (''),
+    [Texto4]            [varchar](80)   NOT NULL DEFAULT (''),
+    [Texto5]            [varchar](80)   NOT NULL DEFAULT (''),
+    [Texto6]            [varchar](80)   NOT NULL DEFAULT (''),
+    [Texto7]            [varchar](80)   NOT NULL DEFAULT (''),
+    [Texto8]            [varchar](80)   NOT NULL DEFAULT (''),
+    [Texto9]            [varchar](80)   NOT NULL DEFAULT (''),
+    [Texto10]           [varchar](80)   NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_Demonio_NVVAuto] PRIMARY KEY CLUSTERED 
 (
 	[Id_Enc] ASC

@@ -28,8 +28,8 @@ Public Class Frm_Sincronizador
         Txt_Log.ReadOnly = True
         CircularPgrs.IsRunning = False
 
-        'Timer_Limpiar.Interval = (1000 * 60) * 5
-        'Timer_AjustarFecha.Interval = (1000 * 60) * 30
+        Timer_Limpiar.Interval = (1000 * 60) * 5
+        Timer_AjustarFecha.Interval = (1000 * 60) * 30
         'Timer_CerrarConfirmadas.Interval = (1000 * 60) * 15
 
         Sb_Ejecutar_diablito()
@@ -84,6 +84,8 @@ Public Class Frm_Sincronizador
             CircularPgrs.IsRunning = True
             Timer_Ejecutar.Interval = 1000 * 20
             Timer_Ejecutar.Start()
+            Timer_Limpiar.Start()
+            Timer_AjustarFecha.Start()
             Sb_AddToLog("Sincronizar", "Sincronización en ejecución.", Txt_Log)
 
         Catch ex As Exception
@@ -106,5 +108,17 @@ Public Class Frm_Sincronizador
         Timer_Ejecutar.Stop()
         _Cl_Sincroniza.Sb_Revisar_Pedidos(Txt_Log, Dtp_FechaRevision.Value, 10)
         Timer_Ejecutar.Start()
+    End Sub
+
+    Private Sub Timer_Limpiar_Tick(sender As Object, e As EventArgs) Handles Timer_Limpiar.Tick
+        Timer_Limpiar.Stop()
+        'Sb_AddToLog("Conexión", "Revisando completadas para ver si hay alguna cancelada en WMS...", Txt_Log)
+        Timer_Limpiar.Start()
+    End Sub
+
+    Private Sub Timer_AjustarFecha_Tick(sender As Object, e As EventArgs) Handles Timer_AjustarFecha.Tick
+        Txt_Log.Text = String.Empty
+        Dtp_FechaRevision.Value = Now.Date
+        Sb_AddToLog("Sincronizar", "Se actualiza la fecha: " & Dtp_FechaRevision.Value, Txt_Log)
     End Sub
 End Class

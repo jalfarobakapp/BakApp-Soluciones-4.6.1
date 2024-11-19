@@ -296,9 +296,9 @@ Public Class Frm_Ver_Documento_CustomizarDet
 
                         _Fila.Cells("CodigoAlt").Value = String.Empty
 
-                        If Not _Fila.IsNewRow Then
-                            Grilla_Detalle.Rows.RemoveAt(_Index)
-                        End If
+                        'If Not _Fila.IsNewRow Then
+                        '    Grilla_Detalle.Rows.RemoveAt(_Index)
+                        'End If
 
                         Return
 

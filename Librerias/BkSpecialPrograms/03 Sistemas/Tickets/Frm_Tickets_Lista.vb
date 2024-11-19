@@ -167,8 +167,9 @@ Public Class Frm_Tickets_Lista
                                "Where CodAgente = '" & FUNCIONARIO & "') " & _Condicion2 & ")"
             End If
 
-            If _NodoHijo.Tag = "Aceptados" Then _Accion = "And Aceptado = 1 And Rechazado = 0 And Estado <> 'CERR'"
-            If _NodoHijo.Tag = "Rechazados" Then _Accion = "And Aceptado = 0 And Rechazado = 1 And Estado <> 'CERR'"
+            If _NodoHijo.Tag = "EnProceso" Then _Accion = "And Estado = 'PROC'"
+            If _NodoHijo.Tag = "Aceptados" Then _Accion = "And Aceptado = 1 And Rechazado = 0 And Estado <> 'PROC'"
+            If _NodoHijo.Tag = "Rechazados" Then _Accion = "And Aceptado = 0 And Rechazado = 1 And Estado <> 'PROC'"
             If _NodoHijo.Tag = "Pendientes" Then _Accion = "And Estado = 'ABIE' And Aceptado = 0 And Rechazado = 0"
             If _NodoHijo.Tag = "Cerradas" Then _Accion = "And Estado = 'CERR'"
 
@@ -527,12 +528,16 @@ Public Class Frm_Tickets_Lista
                 _Condicion += vbCrLf & "And Estado = 'ABIE' And Rechazado = 0 And Aceptado = 0"
             End If
 
+            If _Carpeta.Tag = "EnProceso" Then
+                _Condicion += vbCrLf & "And Estado = 'PROC'"
+            End If
+
             If _Carpeta.Tag = "Aceptados" Then
-                _Condicion += vbCrLf & "And Aceptado = 1 And Rechazado = 0 And Estado <> 'CERR'"
+                _Condicion += vbCrLf & "And Aceptado = 1 And Rechazado = 0 And Estado <> 'PROC'"
             End If
 
             If _Carpeta.Tag = "Rechazados" Then
-                _Condicion += vbCrLf & "And Rechazado = 1 And Aceptado = 0 And Estado <> 'CERR'"
+                _Condicion += vbCrLf & "And Rechazado = 1 And Aceptado = 0 And Estado <> 'PROC'"
             End If
 
             If _Carpeta.Tag = "Cerradas" Then
@@ -996,12 +1001,14 @@ Public Class Frm_Tickets_Lista
 
         Dim _BandejaEntrada As TreeNode
         Dim _Rec_Pendientes As TreeNode
+        Dim _Rec_EnProceso As TreeNode
         Dim _Rec_Aceptados As TreeNode
         Dim _Rec_Rechazados As TreeNode
         Dim _Rec_Cerradas As TreeNode
 
         Dim _Enviados As TreeNode
         Dim _Env_Pendientes As TreeNode
+        Dim _Env_EnProceso As TreeNode
         Dim _Env_Aceptados As TreeNode
         Dim _Env_Rechazados As TreeNode
         Dim _Env_Cerradas As TreeNode
@@ -1011,6 +1018,7 @@ Public Class Frm_Tickets_Lista
         ' Crear los nodos de la Asignados
         _BandejaEntrada = Fx_CrearNodo("ASIGNADOS", "ASIGNADOS", 12, 12)
         _Rec_Pendientes = Fx_CrearNodo("Pendientes", "Pendientes", 0, 1)
+        _Rec_EnProceso = Fx_CrearNodo("EnProceso", "En proceso", 0, 1)
         _Rec_Aceptados = Fx_CrearNodo("Aceptados", "Aceptados", 0, 1)
         _Rec_Rechazados = Fx_CrearNodo("Rechazados", "Rechazados", 0, 1)
         _Rec_Cerradas = Fx_CrearNodo("Cerradas", "Cerradas", 0, 1)
@@ -1018,6 +1026,7 @@ Public Class Frm_Tickets_Lista
         With _BandejaEntrada
             .NodeFont = fuenteNegrita
             .Nodes.Add(_Rec_Pendientes)
+            .Nodes.Add(_Rec_EnProceso)
             .Nodes.Add(_Rec_Aceptados)
             .Nodes.Add(_Rec_Rechazados)
             .Nodes.Add(_Rec_Cerradas)
@@ -1025,18 +1034,19 @@ Public Class Frm_Tickets_Lista
 
         ' Crear los nodos de la bandeja de enviados
         _Enviados = Fx_CrearNodo("ENVIADOS", "ENVIADOS", 13, 13)
-
         _Env_Pendientes = Fx_CrearNodo("Pendientes", "Pendientes", 0, 1)
+        _Env_EnProceso = Fx_CrearNodo("EnProceso", "En proceso", 0, 1)
         _Env_Aceptados = Fx_CrearNodo("Aceptados", "Aceptados", 0, 1)
         _Env_Rechazados = Fx_CrearNodo("Rechazados", "Rechazados", 0, 1)
         _Env_Cerradas = Fx_CrearNodo("Cerradas", "Cerradas", 0, 1)
 
         With _Enviados
             .NodeFont = fuenteNegrita
-            .Nodes.Add(Fx_CrearNodo("Pendientes", "Pendientes", 0, 1))
-            .Nodes.Add(Fx_CrearNodo("Aceptados", "Aceptados", 0, 1))
-            .Nodes.Add(Fx_CrearNodo("Rechazados", "Rechazados", 0, 1))
-            .Nodes.Add(Fx_CrearNodo("Cerradas", "Cerradas", 0, 1))
+            .Nodes.Add(_Env_Pendientes) '(Fx_CrearNodo("Pendientes", "Pendientes", 0, 1))
+            .Nodes.Add(_Env_EnProceso)
+            .Nodes.Add(_Env_Aceptados) '(Fx_CrearNodo("Aceptados", "Aceptados", 0, 1))
+            .Nodes.Add(_Env_Rechazados) '(Fx_CrearNodo("Rechazados", "Rechazados", 0, 1))
+            .Nodes.Add(_Env_Cerradas) '(Fx_CrearNodo("Cerradas", "Cerradas", 0, 1))
         End With
 
         ' Agregar los nodos principales al TreeView

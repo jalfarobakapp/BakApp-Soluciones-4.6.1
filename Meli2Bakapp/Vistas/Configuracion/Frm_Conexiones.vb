@@ -73,6 +73,9 @@ Public Class Frm_Conexiones
 
         End If
 
+        Txt_Vendedor.Tag = _Cl_ConfiguracionLocal.Configuracion.Vendedor
+        Txt_Vendedor.Text = _Cl_ConfiguracionLocal.Configuracion.NoVendedor
+
     End Sub
 
     Private Sub Btn_ProbarConexionRd_Click(sender As Object, e As EventArgs) Handles Btn_ProbarConexionRd.Click
@@ -198,11 +201,20 @@ Public Class Frm_Conexiones
             Return
         End If
 
+        If String.IsNullOrEmpty(Txt_Vendedor.Text) Then
+            MessageBoxEx.Show(Me, "Falta el vendedor", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Vendedor.Focus()
+            Return
+        End If
+
         If Not Fx_ProbarConexionRd() Then Return
         If Not Fx_ProbarConexionMeli() Then Return
 
         _Cl_ConfiguracionLocal.Configuracion.Global_BaseBk = Txt_Global_BaseBk.Text
         _Cl_ConfiguracionLocal.Configuracion.BodegaFacturacion = Txt_Bodega.Tag
+        _Cl_ConfiguracionLocal.Configuracion.Vendedor = Txt_Vendedor.Tag
+        _Cl_ConfiguracionLocal.Configuracion.NoVendedor = Txt_Vendedor.Text
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -270,6 +282,22 @@ Public Class Frm_Conexiones
 
             Txt_Bodega.Text = String.Empty
             Txt_Bodega.Tag = New BodegaFacturacion
+
+        End If
+
+    End Sub
+
+    Private Sub Txt_Vendedor_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Vendedor.ButtonCustomClick
+
+        Dim _Sql_Filtro_Condicion_Extra = String.Empty
+        Dim _Tbl As DataTable
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(_Tbl, Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random, _Sql_Filtro_Condicion_Extra, False, False, True) Then
+
+            Txt_Vendedor.Tag = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
+            Txt_Vendedor.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion").ToString.Trim
 
         End If
 

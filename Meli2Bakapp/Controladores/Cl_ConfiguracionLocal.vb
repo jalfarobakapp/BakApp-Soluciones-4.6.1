@@ -131,6 +131,11 @@ Public Class Cl_ConfiguracionLocal
 
             End With
 
+            If IsNothing(Configuracion.Vendedor) OrElse String.IsNullOrEmpty(Configuracion.Vendedor) Then
+                _Mensaje.Detalle = "Falta datos en la configuración"
+                Throw New System.Exception("Debe ingresar los datos del vendedor")
+            End If
+
             _Mensaje.Detalle = "Archivo leido correctamente"
             _Mensaje.Mensaje = "El archivo contiene las conexiones a las bases de datos"
 

@@ -180,6 +180,8 @@ Public Class Cl_Entidades
             .PreMayMinXHolding = _Row.Item("PreMayMinXHolding")
             .CodPagador = _Row.Item("CodPagador")
             .NoCobrarPallet = _Row.Item("NoCobrarPallet")
+            .ImpNoCobraVta = _Row.Item("ImpNoCobraVta")
+            .ImpNoCobraVtaStr = _Row.Item("ImpNoCobraVtaStr")
 
         End With
 

@@ -28,11 +28,11 @@ Public Class InformesStock
     End Sub
 
     Private Sub Btn_Proyeccion_Stock_Click(sender As Object, e As EventArgs) Handles Btn_Proyeccion_Stock.Click
-
-        Dim Fm As New Frm_InfProyStXVnta_Estudio
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
-
+        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Infst006") Then
+            Dim Fm As New Frm_InfProyStXVnta_Estudio
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
+        End If
     End Sub
 
 End Class

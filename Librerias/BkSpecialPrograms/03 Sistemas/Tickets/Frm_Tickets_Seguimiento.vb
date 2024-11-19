@@ -547,7 +547,7 @@ Public Class Frm_Tickets_Seguimiento
     Private Sub Grilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
 
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
-        Dim _Id_TicketAc As Integer = _Fila.Cells("Id").Value
+        Dim _Id_TicketAc As Integer = _Fila.Cells("Id_Accion").Value
         Dim _Num_Attach As Integer = _Fila.Cells("Num_Attach").Value
 
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name

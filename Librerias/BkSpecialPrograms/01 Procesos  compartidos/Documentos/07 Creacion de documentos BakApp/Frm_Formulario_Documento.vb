@@ -2,7 +2,6 @@
 Imports System.Threading
 Imports BkSpecialPrograms.Bk_Comporamiento_UdMedidas
 Imports BkSpecialPrograms.DocumentoListaSuperior
-Imports BkSpecialPrograms.LsValiciones
 Imports DevComponents.DotNetBar
 
 Public Class Frm_Formulario_Documento
@@ -5260,14 +5259,31 @@ Public Class Frm_Formulario_Documento
         Dim _Noaplica_Imp As String = String.Empty
 
         If _Sql.Fx_Exite_Campo("TABIMPR", "NOAPLICEN") Then
+
             If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta Then
+
                 _Noaplica_Imp = " And NOAPLICEN Not like '%ventas%'"
+
                 If _Tido = "BLV" Then
                     _Noaplica_Imp = " And NOAPLICEN Not like '%BSV,BLV%'"
                 End If
+
+                If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Entidades", "ImpNoCobraVta") AndAlso
+                    _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Entidades", "ImpNoCobraVtaStr") Then
+
+                    Dim _ImpNoCobraVta As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "ImpNoCobraVta", "CodEntidad = '" & _CodEntidad & "'")
+                    Dim _ImpNoCobraVtaStr As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "ImpNoCobraVtaStr", "CodEntidad = '" & _CodEntidad & "'")
+
+                    If _ImpNoCobraVta Then
+                        _Noaplica_Imp += " And KOIM <> '" & _ImpNoCobraVtaStr & "'"
+                    End If
+
+                End If
+
             ElseIf _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Compra Then
                 _Noaplica_Imp = " And NOAPLICEN Not like '%compras%'"
             End If
+
         End If
 
         Consulta_sql = "Select Isnull(Sum(POIM),0) As Impuesto From TABIM" & Space(1) &
@@ -6366,7 +6382,8 @@ Public Class Frm_Formulario_Documento
                                     _Cabeza As String,
                                     _Mostrar_Mensaje As Boolean,
                                     _Mostrar_Mensaje_Dscto_Global As Boolean,
-                                    Optional _Procesando_Concepto As Boolean = False)
+                                    Optional _Procesando_Concepto As Boolean = False,
+                                    Optional _Revisar_Descuentos As Boolean = True)
 
         With _Fila
 
@@ -6954,14 +6971,13 @@ Public Class Frm_Formulario_Documento
                 Dim _CodFunAutoriza As String = .Cells("CodFunAutoriza").Value
 
 
-                If _Tipo_Documento = csGlobales.Enum_Tipo_Documento.Venta Then
+                If _Tipo_Documento = csGlobales.Enum_Tipo_Documento.Venta And _Revisar_Descuentos Then
 
                     If _Global_Row_Configuracion_General.Item("Permisos_Descuentos_Por_Responzable") Then
                         If _CodFunAutoriza = "xyz" Then _CodFunAutoriza = FUNCIONARIO
                     Else
                         If _CodFunAutoriza = "xyz" Then _CodFunAutoriza = _CodVendedor
                     End If
-
 
                     If _Precio_Cn_Dscto < _Precio_NetoLista Then
 
@@ -20050,7 +20066,8 @@ Public Class Frm_Formulario_Documento
                                                     Optional _Progreso_Cont As Object = Nothing,
                                                     Optional _CantLineas As Integer = 0,
                                                     Optional _LblEstatus As Object = Nothing,
-                                                    Optional _MarcarGrilla As Boolean = True)
+                                                    Optional _MarcarGrilla As Boolean = True,
+                                                    Optional _Revisar_Descuentos As Boolean = True)
 
         _TblObservaciones.Rows(0).Item("Observaciones") = _Observaciones
 
@@ -20170,19 +20187,23 @@ Public Class Frm_Formulario_Documento
                 _New_Fila.Cells("Potencia").Value = 0
                 _New_Fila.Cells("Operacion").Value = String.Empty
 
+                Try
+                    _New_Fila.Cells("CodFuncionario").Value = Fila.Item("Kofulido")
+                Catch ex As Exception
+
+                End Try
+
                 If _New_Fila.Cells("Precio").Value > 0 Then
 
-                    Sb_Procesar_Datos_De_Grilla(_New_Fila, "Cantidad", False, False)
+                    Sb_Procesar_Datos_De_Grilla(_New_Fila, "Cantidad", False, False, , _Revisar_Descuentos)
 
                     If _DescuentoPorc > 0 Then
                         _New_Fila.Cells("DescuentoPorc").Value = Math.Round(_DescuentoPorc, 2)
-                        Sb_Procesar_Datos_De_Grilla(_New_Fila, "DescuentoPorc", False, False)
+                        Sb_Procesar_Datos_De_Grilla(_New_Fila, "DescuentoPorc", False, False, , _Revisar_Descuentos)
                     Else
 
                         If _AgregarDscotSeteados Then
-
                             Sb_Agregar_DsctoSeteadoPorLinea(_New_Fila)
-
                         End If
 
                     End If

@@ -239,8 +239,9 @@ Public Class Frm_Usuarios_Random_Ficha
 
         If Not IsNothing(Txt_Kogru_Ventas.Tag) Then
             _Kogru_Ventas = Txt_Kogru_Ventas.Tag.Item("KOGRU")
-            Consulta_sql += "Update " & _Global_BaseBk & "Zw_Usuarios Set Kogru_Ventas = '" & _Kogru_Ventas & "' Where CodFuncionario = '" & _Kofu & "'"
         End If
+
+        Consulta_sql += "Update " & _Global_BaseBk & "Zw_Usuarios Set Kogru_Ventas = '" & _Kogru_Ventas & "' Where CodFuncionario = '" & _Kofu & "'"
 
         If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
             MessageBoxEx.Show(Me, _Sql.Pro_Error, "Problema al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)

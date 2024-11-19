@@ -227,10 +227,10 @@ Public Class Cl_Sincroniza
                     .Id_Enc = _Zw_Demonio_NVVAuto.Id_Enc
 
                     Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet (Id_Enc,Idmaeddo_Ori,Codigo,Cantidad," &
-                                   "Untrans,Descripcion,Empresa,Sucursal,Bodega,CantidadDefinitiva,Precio) Values " &
+                                   "Untrans,Descripcion,Empresa,Sucursal,Bodega,CantidadDefinitiva,Precio,Kofulido) Values " &
                                    "(" & .Id_Enc & "," & .Idmaeddo_Ori & ",'" & .Codigo & "'," & .Cantidad & "," & .Untrans &
                                    ",'" & .Descripcion & "','" & .Empresa & "','" & .Sucursal & "','" & .Bodega & "'," &
-                                   .CantidadDefinitiva & "," & .Precio & ")"
+                                   .CantidadDefinitiva & "," & .Precio & ",'" & ConfiguracionLocal.Vendedor & "')"
 
                     Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                     Comando.Transaction = myTrans

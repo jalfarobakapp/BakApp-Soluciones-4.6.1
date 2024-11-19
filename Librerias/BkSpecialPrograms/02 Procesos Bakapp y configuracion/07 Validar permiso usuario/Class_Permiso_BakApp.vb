@@ -382,6 +382,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("CfEnt033", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("CfEnt034", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("CfEnt035", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("CfEnt036", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Crv0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Crv0002", _Objeto, _Formulario)
@@ -642,7 +643,9 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Inc00003", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Infst005", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Infst006", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Infst010", _Objeto, _Formulario)
+
         _SqlQuery += Fx_Insertar_Permiso("Inf00002", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Inf00003", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Inf00004", _Objeto, _Formulario)
@@ -678,6 +681,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Inf00046", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Inf00047", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Inf00048", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Inf00049", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Invp0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Invp0002", _Objeto, _Formulario)
@@ -1704,6 +1708,10 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.CONFIGURACION_ENTIDAD.ToString
             Case "CfEnt035"
                 _DescripcionPermiso = "VINCULAR/DESVINCULAR PAGADORES DE ENTIDADES"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.CONFIGURACION_ENTIDAD, 6)
+                _NombreFamiliaPermiso = _Fml.CONFIGURACION_ENTIDAD.ToString
+            Case "CfEnt036"
+                _DescripcionPermiso = "PERMITIR LA EDICION DE DATOS PARA LA EXENCION DE IMPUESTOS ESPECÍFICOS EN DOCUMENTOS DE VENTA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.CONFIGURACION_ENTIDAD, 6)
                 _NombreFamiliaPermiso = _Fml.CONFIGURACION_ENTIDAD.ToString
 
@@ -2849,6 +2857,10 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "INFORME DE STOCK VALORIZADOS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INFORMES_DE_STOCK, 6)
                 _NombreFamiliaPermiso = _Fml.INFORMES_DE_STOCK.ToString
+            Case "Infst006"
+                _DescripcionPermiso = "INFORME DE PROYECCION DE STOCK"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.INFORMES_DE_STOCK, 6)
+                _NombreFamiliaPermiso = _Fml.INFORMES_DE_STOCK.ToString
             Case "Infst010"
                 _DescripcionPermiso = "MOSTRAR VALORES EN INFORME DE STOCK"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INFORMES_DE_STOCK, 6)
@@ -2999,6 +3011,10 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.INFORMES_DE_VENTA.ToString
             Case "Inf00048"
                 _DescripcionPermiso = "EXPORTAR A EXCEL INFORME CLIENTES VS VENTAS POR PERIODO (NIVEL DETALLE)"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.INFORMES_DE_VENTA, 6)
+                _NombreFamiliaPermiso = _Fml.INFORMES_DE_VENTA.ToString
+            Case "Inf00049"
+                _DescripcionPermiso = "INFORME DE MARGENES Y PROYECCION"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INFORMES_DE_VENTA, 6)
                 _NombreFamiliaPermiso = _Fml.INFORMES_DE_VENTA.ToString
 

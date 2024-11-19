@@ -665,6 +665,16 @@ Public Class Frm_Crear_Entidad_Mt
 
         End If
 
+        If Chk_ImpNoCobraVta.Checked AndAlso String.IsNullOrEmpty(Txt_ImpNoCobraVtaStr.Text) Then
+
+            MessageBoxEx.Show(Me, "Debe indicar el impuesto que no cobra en ventas", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            TabControl1.SelectedTabIndex = 1
+            Txt_ImpNoCobraVtaStr.Focus()
+            Return
+
+        End If
+
         TabControl1.Tabs(2).Visible = False
 
         Txt_Rten.Text = Replace(Txt_Rten.Text, ".", "")
@@ -1002,6 +1012,8 @@ Public Class Frm_Crear_Entidad_Mt
                     .CodPagador = Txt_CodPagador.Tag
                     .PreMayMinXHolding = Chk_PreMayMinXHolding.Checked
                     .NoCobrarPallet = Chk_NoCobrarPallet.Checked
+                    .ImpNoCobraVta = Chk_ImpNoCobraVta.Checked
+                    .ImpNoCobraVtaStr = Txt_ImpNoCobraVtaStr.Tag
 
                     If _CreaNuevaEntidad Then
 
@@ -1030,6 +1042,8 @@ Public Class Frm_Crear_Entidad_Mt
                                    ",PreMayMinXHolding = " & Convert.ToInt32(.PreMayMinXHolding) & vbCrLf &
                                    ",CodPagador = '" & .CodPagador & "'" & vbCrLf &
                                    ",NoCobrarPallet = " & Convert.ToInt32(.NoCobrarPallet) & vbCrLf &
+                                   ",ImpNoCobraVta = " & Convert.ToInt32(.ImpNoCobraVta) & vbCrLf &
+                                   ",ImpNoCobraVtaStr = '" & .ImpNoCobraVtaStr & "'" & vbCrLf &
                                    "Where CodEntidad = '" & .CodEntidad & "' And CodSucEntidad = '" & .CodSucEntidad & "'"
 
                     Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
@@ -1536,6 +1550,12 @@ Public Class Frm_Crear_Entidad_Mt
                     Txt_CodPagador.Text = .CodPagador
                     Chk_PreMayMinXHolding.Checked = .PreMayMinXHolding
                     Chk_NoCobrarPallet.Checked = .NoCobrarPallet
+                    Chk_ImpNoCobraVta.Checked = .ImpNoCobraVta
+                    Txt_ImpNoCobraVtaStr.Tag = .ImpNoCobraVtaStr
+
+                    If .ImpNoCobraVta Then
+                        Txt_ImpNoCobraVtaStr.Text = .ImpNoCobraVtaStr & " - " & _Sql.Fx_Trae_Dato("TABIM", "NOKOIM", "KOIM = '" & Txt_ImpNoCobraVtaStr.Tag & "'")
+                    End If
 
                     Dim _Cl_TablaCaracterizaciones As New Cl_TablaCaractierizaciones
                     Dim _Mensaje As LsValiciones.Mensajes
@@ -2480,10 +2500,6 @@ Public Class Frm_Crear_Entidad_Mt
 
     Private Sub Btn_Mnu_PagadorAgregar_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_PagadorAgregar.Click
 
-        If Not Fx_Tiene_Permiso(Me, "CfEnt035") Then
-            Return
-        End If
-
         Dim _FilaSeleccionada_Zw As New Zw_TablaDeCaracterizaciones
         Dim _Seleccionar As Boolean
 
@@ -2573,6 +2589,57 @@ Public Class Frm_Crear_Entidad_Mt
         Btn_Mnu_PagadorAgregar.Enabled = True
         Btn_Modificar_Pagador.Enabled = False
 
+    End Sub
+
+    Private Sub Txt_ImpNoCobraVtaStr_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_ImpNoCobraVtaStr.ButtonCustomClick
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Pro_Nombre_Encabezado_Informe = "IMPUESTOS ESPECIFICOS"
+
+        _Filtrar.Tabla = "TABIM"
+        _Filtrar.Campo = "KOIM"
+        _Filtrar.Descripcion = "NOKOIM"
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "",
+                               Nothing, False, True) Then
+
+            Dim _Row As DataRow = _Filtrar.Pro_Tbl_Filtro.Rows(0)
+
+            Dim _Codigo As String = _Row.Item("Codigo").ToString.Trim
+            Dim _Descripcion As String = _Row.Item("Descripcion").ToString.Trim
+
+            Txt_ImpNoCobraVtaStr.Tag = _Codigo
+            Txt_ImpNoCobraVtaStr.Text = _Codigo & " - " & _Descripcion
+
+        End If
+
+    End Sub
+
+    Private Sub Txt_ImpNoCobraVtaStr_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_ImpNoCobraVtaStr.ButtonCustom2Click
+        Txt_ImpNoCobraVtaStr.Text = String.Empty
+        Txt_ImpNoCobraVtaStr.Tag = String.Empty
+    End Sub
+
+    Private Sub Btn_Modificar_RetieneImp_Click(sender As Object, e As EventArgs) Handles Btn_Modificar_RetieneImp.Click
+
+        If Not Fx_Tiene_Permiso(Me, "CfEnt036") Then
+            Return
+        End If
+
+        Btn_Modificar_RetieneImp.Enabled = False
+        Chk_ImpNoCobraVta.Enabled = True
+        Txt_ImpNoCobraVtaStr.ButtonCustom.Enabled = True
+        Txt_ImpNoCobraVtaStr.ButtonCustom2.Enabled = True
+
+    End Sub
+
+    Private Sub Chk_ImpNoCobraVta_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_ImpNoCobraVta.CheckedChanged
+        If Not Chk_ImpNoCobraVta.Checked Then
+            Txt_ImpNoCobraVtaStr.Text = String.Empty
+            Txt_ImpNoCobraVtaStr.Tag = String.Empty
+        End If
     End Sub
 
     Private Sub Sb_Grilla_Maennmail_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)

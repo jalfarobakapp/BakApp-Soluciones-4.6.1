@@ -398,7 +398,7 @@ Drop table #Paso"
             Fm.Sb_Limpiar(Modalidad_NVV)
             Fm.Pro_RowEntidad = _Row_Entidad
             Fm.Sb_Crear_Documento_Interno_Con_Tabla(_Formulario, _Tbl_Productos, _Fecha_Emision,
-                                                    "Codigo", "CantidadDefinitiva", "Precio", "Observacion", False, False,, True)
+                                                    "Codigo", "CantidadDefinitiva", "Precio", "Observacion", False, False,,,,,,,, False)
 
             Dim _Mensaje2 As LsValiciones.Mensajes = Fm.Fx_Grabar_Documento(False)
 
