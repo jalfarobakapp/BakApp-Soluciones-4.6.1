@@ -488,7 +488,7 @@ Public Class Menu
                     Dim _Idmaeedo = _Fila.Item("Idrst")
 
                     Dim Fm As New Frm_Adjuntar_Archivos("Zw_Docu_Archivos", "Idmaeedo", _Idmaeedo)
-                    Fm.Fx_Grabar_Observacion_Adjunta(_Ruta_Etiqueta & "\" & _Nombre_Etiqueta, _Nombre_Etiqueta, False)
+                    Fm.Fx_Grabar_Observacion_Adjunta(_Ruta_Etiqueta & "\" & _Nombre_Etiqueta, _Nombre_Etiqueta, False, FUNCIONARIO)
                     'MessageBoxEx.Show(Me, "Etiqueta adjunta al documento correctamente", "Chilexpress", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
                 Next

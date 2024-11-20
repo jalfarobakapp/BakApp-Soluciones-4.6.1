@@ -97,6 +97,8 @@ Partial Class Frm_Conexiones
         Me.LabelX16 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Vendedor = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX17 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_RutaEtiquetas = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX18 = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Input_DiasRevNVV, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControlPanel2.SuspendLayout()
@@ -1154,7 +1156,7 @@ Partial Class Frm_Conexiones
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 345)
+        Me.Bar1.Location = New System.Drawing.Point(0, 375)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(727, 41)
         Me.Bar1.Stretch = True
@@ -1283,9 +1285,9 @@ Partial Class Frm_Conexiones
         '
         Me.Txt_Vendedor.Border.Class = "TextBoxBorder"
         Me.Txt_Vendedor.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Vendedor.ButtonCustom.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Vendedor.ButtonCustom.Image = CType(resources.GetObject("Txt_Vendedor.ButtonCustom.Image"), System.Drawing.Image)
         Me.Txt_Vendedor.ButtonCustom.Visible = True
-        Me.Txt_Vendedor.ButtonCustom2.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Vendedor.ButtonCustom2.Image = CType(resources.GetObject("Txt_Vendedor.ButtonCustom2.Image"), System.Drawing.Image)
         Me.Txt_Vendedor.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Vendedor.ForeColor = System.Drawing.Color.Black
         Me.Txt_Vendedor.Location = New System.Drawing.Point(145, 308)
@@ -1310,11 +1312,48 @@ Partial Class Frm_Conexiones
         Me.LabelX17.TabIndex = 119
         Me.LabelX17.Text = "Vendedor"
         '
+        'Txt_RutaEtiquetas
+        '
+        Me.Txt_RutaEtiquetas.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_RutaEtiquetas.Border.Class = "TextBoxBorder"
+        Me.Txt_RutaEtiquetas.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_RutaEtiquetas.ButtonCustom.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_RutaEtiquetas.ButtonCustom.Visible = True
+        Me.Txt_RutaEtiquetas.ButtonCustom2.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_RutaEtiquetas.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_RutaEtiquetas.ForeColor = System.Drawing.Color.Black
+        Me.Txt_RutaEtiquetas.Location = New System.Drawing.Point(145, 336)
+        Me.Txt_RutaEtiquetas.Name = "Txt_RutaEtiquetas"
+        Me.Txt_RutaEtiquetas.PreventEnterBeep = True
+        Me.Txt_RutaEtiquetas.ReadOnly = True
+        Me.Txt_RutaEtiquetas.Size = New System.Drawing.Size(575, 22)
+        Me.Txt_RutaEtiquetas.TabIndex = 122
+        Me.Txt_RutaEtiquetas.WatermarkText = "Ruta de PDF"
+        '
+        'LabelX18
+        '
+        Me.LabelX18.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX18.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX18.ForeColor = System.Drawing.Color.Black
+        Me.LabelX18.Location = New System.Drawing.Point(12, 338)
+        Me.LabelX18.Name = "LabelX18"
+        Me.LabelX18.Size = New System.Drawing.Size(112, 20)
+        Me.LabelX18.TabIndex = 121
+        Me.LabelX18.Text = "Ruta PDF"
+        '
         'Frm_Conexiones
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(727, 386)
+        Me.ClientSize = New System.Drawing.Size(727, 416)
+        Me.Controls.Add(Me.Txt_RutaEtiquetas)
+        Me.Controls.Add(Me.LabelX18)
         Me.Controls.Add(Me.Txt_Vendedor)
         Me.Controls.Add(Me.LabelX17)
         Me.Controls.Add(Me.Txt_Empresa)
@@ -1331,7 +1370,6 @@ Partial Class Frm_Conexiones
         Me.Controls.Add(Me.GroupBox2)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
@@ -1432,4 +1470,6 @@ Partial Class Frm_Conexiones
     Friend WithEvents LabelX16 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Txt_Vendedor As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX17 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_RutaEtiquetas As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX18 As DevComponents.DotNetBar.LabelX
 End Class

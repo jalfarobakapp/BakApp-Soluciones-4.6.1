@@ -264,7 +264,6 @@ Public Class Cl_Sincroniza
         Return _Mensaje
 
     End Function
-
     Function Fx_Llenar_Doc_MELI(_Top As Integer, _Fecha As Date) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
@@ -332,7 +331,6 @@ Public Class Cl_Sincroniza
         Return _Mensaje
 
     End Function
-
     Function Fx_Llenar_PEDIDO(_ID_MELI As String) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
@@ -396,7 +394,8 @@ Public Class Cl_Sincroniza
 
             Consulta_sql = "SELECT ID,ID_MELI, KOPR, REFERENCIA_MELI, CANTIDAD, NETO_UNITARIO, SUB_TOTAL" & vbCrLf &
                            "FROM PEDIDOS_DETALLE" & vbCrLf &
-                           "Where ID_MELI = " & _ID_MELI
+                           "Where ID_MELI = " & _ID_MELI & vbCrLf &
+                           "And ES_KIT = 0"
             Dim _Tbl As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
 
             If Not CBool(_Tbl.Rows.Count) Then
@@ -439,4 +438,180 @@ Public Class Cl_Sincroniza
 
     End Function
 
+    Sub Sb_Adjuntar_Etiquetas(Txt_Log As Object, _Fecha As Date, _Top As Integer)
+
+        _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
+
+        If _Top = 0 Then
+            _Top = 1000
+        End If
+
+        Consulta_sql = "Select NudoOCC_Ori As Id_Meli,Idmaeedo_NVV As Idmaeedo" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Demonio_NVVAuto" & vbCrLf &
+                       "Where NudoOCC_Ori+'.pdf' Not in (Select Nombre_Archivo From " & _Global_BaseBk & "Zw_Docu_Archivos) " &
+                       "And CONVERT(varchar, Feemdo_NVV, 112) = '" & Format(_Fecha, "yyyyMMdd") & "'"
+
+        Dim _Tbl As DataTable = _SqlRandom.Fx_Get_DataTable(Consulta_sql)
+
+        If Not CBool(_Tbl.Rows.Count) Then
+            Sb_AddToLog("Adjuntar etiquetas", "Sin registros", Txt_Log)
+            Return
+        End If
+
+        For Each _Row As DataRow In _Tbl.Rows
+
+            Dim _Idmaeedo As Integer = _Row.Item("Idmaeedo")
+            Dim _Id_Meli As String = _Row.Item("Id_Meli")
+            Dim _Ruta_Etiqueta As String = ConfiguracionLocal.RutaEtiquetas
+            Dim _Nombre_Etiqueta As String = _Id_Meli & ".pdf"
+
+            Dim _Mensaje As LsValiciones.Mensajes = Fx_AdjuntarEtiqueta(_Idmaeedo, _Ruta_Etiqueta, _Nombre_Etiqueta)
+
+            If _Mensaje.EsCorrecto Then
+                Sb_AddToLog("Adjuntar etiquetas", "Etiqueta adjuntada correctamente, ID MELI: " & _Id_Meli, Txt_Log)
+            Else
+                Sb_AddToLog("Adjuntar etiquetas", "Error al adjuntar etiqueta, ID MELI: " & _Id_Meli, Txt_Log)
+                Sb_AddToLog("Adjuntar etiquetas", _Mensaje.Mensaje, Txt_Log)
+            End If
+
+        Next
+
+    End Sub
+    Function Fx_AdjuntarEtiqueta(_Idmaeedo As Integer, _Ruta_Etiqueta As String, _Nombre_Etiqueta As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        _Mensaje.Detalle = "Adjuntar etiqueta"
+
+        Dim _Ruta As String = _Ruta_Etiqueta & "\" & _Nombre_Etiqueta
+
+        Try
+            ' Verificar si el archivo existe en la ruta especificada
+            If Not System.IO.File.Exists(_Ruta) Then
+                _Mensaje.Cancelado = True
+                Throw New System.Exception("El archivo no existe en la ruta especificada, " & _Ruta)
+            End If
+
+            Dim Fm As New Frm_Adjuntar_Archivos("Zw_Docu_Archivos", "Idmaeedo", _Idmaeedo)
+
+            If Not Fm.Fx_Grabar_Observacion_Adjunta(_Ruta, _Nombre_Etiqueta, False, ConfiguracionLocal.Vendedor) Then
+                Throw New System.Exception("Error al adjuntar etiqueta")
+            End If
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Etiqueta adjuntada correctamente, ID MELI: " & _Nombre_Etiqueta
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
+    Function Fx_Revisar_Kit()
+
+        Consulta_sql = "SELECT ID,ID_MELI,KOPR,REFERENCIA_MELI,CANTIDAD,NETO_UNITARIO,SUB_TOTAL" & vbCrLf &
+                       "FROM PEDIDOS_DETALLE" & vbCrLf &
+                       "Where KOPR Like 'KT-%'"
+        Dim _Tbl As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
+
+        For Each _Fila As DataRow In _Tbl.Rows
+
+            Dim _ID As Integer = _Fila.Item("ID")
+            Dim _ID_MELI As String = _Fila.Item("ID_MELI")
+            Dim _KOPR As String = _Fila.Item("KOPR")
+            Dim _REFERENCIA_MELI As String = _Fila.Item("REFERENCIA_MELI")
+            Dim _CANTIDAD As Integer = _Fila.Item("CANTIDAD")
+            Dim _NETO_UNITARIO As Integer = _Fila.Item("NETO_UNITARIO")
+            Dim _SUB_TOTAL As Integer = _Fila.Item("SUB_TOTAL")
+
+            Dim _Mensaje As LsValiciones.Mensajes = Fx_Llenar_PEDIDOS_DETALLE_KIT(_ID_MELI)
+
+            If _Mensaje.EsCorrecto Then
+
+                Dim _Ls_PEDIDOS_DETALLE As List(Of PEDIDOS_DETALLE) = _Mensaje.Tag
+                Dim _Mensaje2 As LsValiciones.Mensajes = Fx_Grabar_Pedido_Kit(_ID, _ID_MELI, _KOPR, _REFERENCIA_MELI, _CANTIDAD, _NETO_UNITARIO, _SUB_TOTAL, _Ls_PEDIDOS_DETALLE)
+                If _Mensaje2.EsCorrecto Then
+                    Consulta_sql = "Update PEDIDOS_DETALLE Set ES_KIT = 1 Where ID = " & _ID
+                    _SqlMeli.Ej_consulta_IDU(Consulta_sql, False)
+                End If
+            End If
+
+        Next
+
+    End Function
+
+    Private Function Fx_Grabar_Pedido_Kit(iD As Integer, iD_MELI As String, kOPR As String, rEFERENCIA_MELI As String, cANTIDAD As Integer, nETO_UNITARIO As Integer, sUB_TOTAL As Integer, ls_PEDIDOS_DETALLE As List(Of PEDIDOS_DETALLE)) As Mensajes
+        Throw New NotImplementedException()
+    End Function
+
+    Private Function Fx_Llenar_PEDIDOS_DETALLE_KIT(_ID_MELI As String) As Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            Dim Ls_PEDIDOS_DETALLE As New List(Of PEDIDOS_DETALLE)
+
+            Dim _Mjs As LsValiciones.Mensajes = Fx_Llenar_PEDIDOS_DETALLE_KIT(_ID_MELI)
+
+            If _Mjs.EsCorrecto Then
+                Ls_PEDIDOS_DETALLE = _Mjs.Tag
+                _Mensaje.EsCorrecto = True
+                _Mensaje.Id = 1
+                _Mensaje.Mensaje = "Registros encontrados"
+                _Mensaje.Tag = Ls_PEDIDOS_DETALLE
+            Else
+                _Mensaje.EsCorrecto = False
+                _Mensaje.Id = 0
+                _Mensaje.Mensaje = _Mjs.Mensaje
+            End If
+
+            Consulta_sql = "SELECT ID,ID_MELI,KOPR,REFERENCIA_MELI,CANTIDAD,NETO_UNITARIO,SUB_TOTAL,ES_KIT,ID_PADREKIT" & vbCrLf &
+                           "FROM PEDIDOS_DETALLE" & vbCrLf &
+                           "Where ID_MELI = " & _ID_MELI & vbCrLf &
+                           "And ES_KIT = 0"
+            Dim _Tbl As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
+
+            If Not CBool(_Tbl.Rows.Count) Then
+                _Mensaje.Detalle = "Sin registros"
+                Throw New System.Exception("No se encontraron registros en PEDIDOS_DETALLE, ID_MELI = " & _ID_MELI)
+            End If
+
+            Dim _Ls_PEDIDOS_DETALLE As New List(Of PEDIDOS_DETALLE)
+
+            For Each _Row As DataRow In _Tbl.Rows
+
+                Dim _DETALLE_MELI As New PEDIDOS_DETALLE
+
+                With _DETALLE_MELI
+                    .ID = _Row.Item("ID")
+                    .ID_MELI = _Row.Item("ID_MELI")
+                    .KOPR = _Row.Item("KOPR")
+                    .REFERENCIA_MELI = _Row.Item("REFERENCIA_MELI")
+                    .CANTIDAD = _Row.Item("CANTIDAD")
+                    .NETO_UNITARIO = _Row.Item("NETO_UNITARIO")
+                    .SUB_TOTAL = _Row.Item("SUB_TOTAL")
+                End With
+
+                _Ls_PEDIDOS_DETALLE.Add(_DETALLE_MELI)
+
+            Next
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Id = 1
+            _Mensaje.Mensaje = "Registros encontrados"
+            _Mensaje.Tag = _Ls_PEDIDOS_DETALLE
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Id = 0
+            _Mensaje.Mensaje = ex.Message
+        End Try
+
+        Return _Mensaje
+
+    End Function
 End Class

@@ -1,4 +1,5 @@
-﻿Imports BkSpecialPrograms
+﻿Imports System.IO
+Imports BkSpecialPrograms
 Imports DevComponents.DotNetBar
 Public Class Frm_Conexiones
 
@@ -208,13 +209,30 @@ Public Class Frm_Conexiones
             Return
         End If
 
+        If String.IsNullOrEmpty(Txt_RutaEtiquetas.Text) Then
+            MessageBoxEx.Show(Me, "Falta la ruta de las etiquetas", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_RutaEtiquetas.Focus()
+            Return
+        End If
+
+        If Not Directory.Exists(Txt_RutaEtiquetas.Text) Then
+            MessageBoxEx.Show(Me, "La ruta de las etiquetas no existe", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_RutaEtiquetas.Focus()
+            Return
+        End If
+
         If Not Fx_ProbarConexionRd() Then Return
         If Not Fx_ProbarConexionMeli() Then Return
 
-        _Cl_ConfiguracionLocal.Configuracion.Global_BaseBk = Txt_Global_BaseBk.Text
-        _Cl_ConfiguracionLocal.Configuracion.BodegaFacturacion = Txt_Bodega.Tag
-        _Cl_ConfiguracionLocal.Configuracion.Vendedor = Txt_Vendedor.Tag
-        _Cl_ConfiguracionLocal.Configuracion.NoVendedor = Txt_Vendedor.Text
+        With _Cl_ConfiguracionLocal.Configuracion
+            .Global_BaseBk = Txt_Global_BaseBk.Text
+            .BodegaFacturacion = Txt_Bodega.Tag
+            .Vendedor = Txt_Vendedor.Tag
+            .NoVendedor = Txt_Vendedor.Text
+            .RutaEtiquetas = Txt_RutaEtiquetas.Tag
+        End With
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -301,5 +319,14 @@ Public Class Frm_Conexiones
 
         End If
 
+    End Sub
+
+    Private Sub Txt_RutaEtiquetas_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_RutaEtiquetas.ButtonCustomClick
+        Using folderBrowser As New FolderBrowserDialog()
+            If folderBrowser.ShowDialog() = DialogResult.OK Then
+                Txt_RutaEtiquetas.Tag = folderBrowser.SelectedPath
+                Txt_RutaEtiquetas.Text = folderBrowser.SelectedPath
+            End If
+        End Using
     End Sub
 End Class

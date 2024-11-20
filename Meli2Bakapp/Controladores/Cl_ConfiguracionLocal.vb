@@ -117,6 +117,16 @@ Public Class Cl_ConfiguracionLocal
                 Throw New System.Exception("Debe ingresar los datos de la bodega de facturación")
             End If
 
+            If Not Directory.Exists(Configuracion.RutaEtiquetas) Then
+                _Mensaje.Detalle = "Falta datos en la configuración"
+                Throw New System.Exception("Debe ingresar la ruta de las etiquetas")
+            End If
+
+            If Not Directory.Exists(Configuracion.RutaEtiquetas) Then
+                _Mensaje.Detalle = "Falta datos en la configuración"
+                Throw New System.Exception("Debe ingresar la ruta de las etiquetas")
+            End If
+
             With Configuracion.BodegaFacturacion
 
                 If String.IsNullOrEmpty(.Empresa) Or

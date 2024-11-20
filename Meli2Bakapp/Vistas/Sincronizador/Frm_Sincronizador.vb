@@ -107,6 +107,7 @@ Public Class Frm_Sincronizador
     Private Sub Timer_Ejecutar_Tick(sender As Object, e As EventArgs) Handles Timer_Ejecutar.Tick
         Timer_Ejecutar.Stop()
         _Cl_Sincroniza.Sb_Revisar_Pedidos(Txt_Log, Dtp_FechaRevision.Value, 10)
+        _Cl_Sincroniza.Sb_Adjuntar_Etiquetas(Txt_Log, Dtp_FechaRevision.Value, 10)
         Timer_Ejecutar.Start()
     End Sub
 

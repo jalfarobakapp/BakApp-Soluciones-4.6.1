@@ -4,6 +4,7 @@
     Public Property BodegaFacturacion As BodegaFacturacion
     Public Property Vendedor As String
     Public Property NoVendedor As String
+    Public Property RutaEtiquetas As String
 End Class
 
 Public Class BodegaFacturacion
