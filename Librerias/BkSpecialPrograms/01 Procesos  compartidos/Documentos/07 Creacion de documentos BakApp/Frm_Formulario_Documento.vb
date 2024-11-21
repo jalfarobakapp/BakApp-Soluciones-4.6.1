@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Threading
 Imports BkSpecialPrograms.Bk_Comporamiento_UdMedidas
+Imports BkSpecialPrograms.Cl_Fincred_Bakapp.Cl_Fincred_SQL
 Imports BkSpecialPrograms.DocumentoListaSuperior
 Imports DevComponents.DotNetBar
 
@@ -2502,13 +2503,22 @@ Public Class Frm_Formulario_Documento
             .Item("CodVendedor") = _CodVendedor
             .Item("Codigo") = String.Empty
             .Item("Descripcion") = String.Empty
+            .Item("Rtu") = 0
+
             .Item("Descripcion_Ori") = String.Empty
             .Item("PrecioNetoUd") = 0
+            .Item("Precio") = 0
 
             .Item("Cantidad") = 0
             .Item("CantUd1") = 0
             .Item("CantUd2") = 0
             .Item("Potencia") = 0
+
+            .Item("UnTrans") = 0
+            .Item("UdTrans") = String.Empty
+
+            .Item("Ud01PR") = String.Empty
+            .Item("Ud02PR") = String.Empty
 
             .Item("DescMaximo") = 0
             .Item("DescuentoPorc") = 0
@@ -2518,6 +2528,11 @@ Public Class Frm_Formulario_Documento
             .Item("ValIlaLinea") = 0
             .Item("ValNetoLinea") = 0
             .Item("ValBrutoLinea") = 0
+            .Item("PorIla") = 0
+
+            .Item("Operacion") = String.Empty
+            .Item("Potencia") = 0
+
             .Item("CodLista") = _CodLista
             .Item("Idmaeedo_Dori") = 0
             .Item("Idmaeddo_Dori") = 0
@@ -2547,6 +2562,29 @@ Public Class Frm_Formulario_Documento
 
             .Item("ValVtaStockInf") = False
             .Item("ValVtaDescMax") = False
+            .Item("Lincondest") = False
+
+            .Item("PrecioBrutoUd") = 0
+            .Item("PrecioNetoUdLista") = 0
+            .Item("PrecioBrutoUdLista") = 0
+
+            .Item("PorIva") = 0
+            .Item("NroDscto") = 0
+            .Item("NroImpuestos") = 0
+
+            .Item("DsctoRealPorc") = 0
+            .Item("DsctoRealValor") = 0
+            .Item("DsctoNeto") = 0
+            .Item("DsctoBruto") = 0
+
+            .Item("StockBodega") = 0
+            .Item("UbicacionBod") = String.Empty
+
+            .Item("SubTotal") = 0
+            .Item("ValNetoLinea") = 0
+            .Item("ValIlaLinea") = 0
+            .Item("ValIvaLinea") = 0
+            .Item("ValBrutoLinea") = 0
 
             .Item("DsctoRealPorc") = 0
             .Item("DsctoRealValor") = 0
@@ -9117,7 +9155,7 @@ Public Class Frm_Formulario_Documento
                                 Dim _Koen = _RowEntidad.Item("KOEN")
                                 Dim _Suen = _RowEntidad.Item("SUEN")
 
-                                If Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00040", _Ds_Matriz_Documentos, _Koen, _Suen) Then
+                                If Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Bkp00040", _Ds_Matriz_Documentos, _Koen, _Suen) Then
 
                                     Dim _Kofuen As String = LTrim(_RowEntidad.Item("KOFUEN"))
 
@@ -18432,7 +18470,7 @@ Public Class Frm_Formulario_Documento
             Dim _FechaEmision As Date = _Fecha_Emision
             Dim _Fecha_1er_Vencimiento As Date = _Fecha_Emision
             Dim _FechaUltVencimiento As Date = _Fecha_Emision
-            Dim _Forma_pago As String
+            Dim _Forma_pago As String = String.Empty
             Dim _Fecha_Recepcion As Date = NuloPorNro(_RowMaeedo_Origen.Item("FEER"), _Fecha_Emision)
 
             Dim _ModFechVto As Boolean
@@ -18482,7 +18520,7 @@ Public Class Frm_Formulario_Documento
                     _RowEntidad = _RowEntidad_X_Defecto
                 End If
 
-                _TblObservaciones.Rows(0).Item("Forma_pago") = _RowMaeedoOb_Origen.Item("CPDO")
+                _TblObservaciones.Rows(0).Item("Forma_pago") = _Forma_pago
                 _TblObservaciones.Rows(0).Item("Orden_compra") = _RowMaeedoOb_Origen.Item("OCDO")
                 _TblObservaciones.Rows(0).Item("Placa") = _RowMaeedoOb_Origen.Item("PLACAPAT")
                 _TblObservaciones.Rows(0).Item("CodRetirador") = _RowMaeedoOb_Origen.Item("DIENDESP")
@@ -18510,6 +18548,10 @@ Public Class Frm_Formulario_Documento
 
             If _Fecha_Recepcion < _Fecha_Actual Then
                 _TblEncabezado.Rows(0).Item("FechaRecepcion") = _Fecha_Actual
+            End If
+
+            If _Editar_documento Then
+                _TblEncabezado.Rows(0).Item("FechaRecepcion") = _Fecha_Recepcion
             End If
 
             If _RowEntidad Is Nothing Then
@@ -18575,6 +18617,9 @@ Public Class Frm_Formulario_Documento
                 Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, False)
 
             End If
+
+
+            _TblObservaciones.Rows(0).Item("Forma_pago") = _Forma_pago
 
             Dim _CodEntidadFisica As String
             Dim _CodSucEntidadFisica = String.Empty
@@ -19108,6 +19153,10 @@ Public Class Frm_Formulario_Documento
                     _New_Fila.Cells("FechaEmision").Value = _FechaEmision
                     _New_Fila.Cells("FechaRecepcion").Value = _Fecha_Recepcion
 
+                End If
+
+                If _Editar_documento Then
+                    _New_Fila.Cells("FechaRecepcion").Value = _Fecha_Recepcion
                 End If
 
                 Dim _Suc_Bod_Ori As String = Trim(_Sucursal) & Trim(_Bodega)

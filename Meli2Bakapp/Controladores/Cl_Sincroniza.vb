@@ -1,4 +1,5 @@
 ﻿Imports System.Data.SqlClient
+Imports System.Security.Cryptography
 Imports BkSpecialPrograms
 Imports BkSpecialPrograms.LsValiciones
 
@@ -364,7 +365,7 @@ Public Class Cl_Sincroniza
                 .REVBAKAPP = _Row.Item("REVBAKAPP")
                 .OBSERVACIONES = _Row.Item("OBSERVACIONES")
                 .FECHAREVBAKAPP = NuloPorNro(_Row.Item("FECHAREVBAKAPP"), Nothing)
-                .NICK_NAME =  NuloPorNro(_Row.Item("NICK_NAME"), "")
+                .NICK_NAME = NuloPorNro(_Row.Item("NICK_NAME"), "")
                 .FIRST_NAME = NuloPorNro(_Row.Item("FIRST_NAME"), "")
                 .LAST_NAME = NuloPorNro(_Row.Item("LAST_NAME"), "")
                 .DIRECCION = NuloPorNro(_Row.Item("DIRECCION"), "")
@@ -392,7 +393,7 @@ Public Class Cl_Sincroniza
 
         Try
 
-            Consulta_sql = "SELECT ID,ID_MELI, KOPR, REFERENCIA_MELI, CANTIDAD, NETO_UNITARIO, SUB_TOTAL" & vbCrLf &
+            Consulta_sql = "SELECT ID,ID_MELI,KOPR,REFERENCIA_MELI,CANTIDAD,NETO_UNITARIO,SUB_TOTAL,ES_KIT,ID_PADREKIT" & vbCrLf &
                            "FROM PEDIDOS_DETALLE" & vbCrLf &
                            "Where ID_MELI = " & _ID_MELI & vbCrLf &
                            "And ES_KIT = 0"
@@ -417,6 +418,8 @@ Public Class Cl_Sincroniza
                     .CANTIDAD = _Row.Item("CANTIDAD")
                     .NETO_UNITARIO = _Row.Item("NETO_UNITARIO")
                     .SUB_TOTAL = _Row.Item("SUB_TOTAL")
+                    .ES_KIT = _Row.Item("ES_KIT")
+                    .ID_PADREKIT = _Row.Item("ID_PADREKIT")
                 End With
 
                 _Ls_PEDIDOS_DETALLE.Add(_DETALLE_MELI)
@@ -510,11 +513,15 @@ Public Class Cl_Sincroniza
 
     End Function
 
-    Function Fx_Revisar_Kit()
+    Sub Sb_Revisar_Kit(Txt_Log As Object, _Fecha As Date, _Top As Integer)
 
-        Consulta_sql = "SELECT ID,ID_MELI,KOPR,REFERENCIA_MELI,CANTIDAD,NETO_UNITARIO,SUB_TOTAL" & vbCrLf &
-                       "FROM PEDIDOS_DETALLE" & vbCrLf &
-                       "Where KOPR Like 'KT-%'"
+        _SqlMeli = New Class_SQL(Cadena_ConexionSQL_Server_Meli)
+
+        Consulta_sql = "SELECT d.ID,d.ID_MELI,KOPR,REFERENCIA_MELI,CANTIDAD,NETO_UNITARIO,SUB_TOTAL" & vbCrLf &
+                       "FROM PEDIDOS_DETALLE d" & vbCrLf &
+                       "Inner Join PEDIDOS p On d.ID_MELI = p.ID_MELI" & vbCrLf &
+                       "Where KOPR Like 'KT-%' And d.ES_KIT = 0 And CONVERT(varchar, FECHA, 112) = '" & Format(_Fecha, "yyyyMMdd") & "'"
+
         Dim _Tbl As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Fila As DataRow In _Tbl.Rows
@@ -527,83 +534,148 @@ Public Class Cl_Sincroniza
             Dim _NETO_UNITARIO As Integer = _Fila.Item("NETO_UNITARIO")
             Dim _SUB_TOTAL As Integer = _Fila.Item("SUB_TOTAL")
 
-            Dim _Mensaje As LsValiciones.Mensajes = Fx_Llenar_PEDIDOS_DETALLE_KIT(_ID_MELI)
+            Dim _Mensaje As LsValiciones.Mensajes = Fx_Llenar_PEDIDOS_DETALLE_KIT(_ID_MELI, _SUB_TOTAL)
 
             If _Mensaje.EsCorrecto Then
 
                 Dim _Ls_PEDIDOS_DETALLE As List(Of PEDIDOS_DETALLE) = _Mensaje.Tag
-                Dim _Mensaje2 As LsValiciones.Mensajes = Fx_Grabar_Pedido_Kit(_ID, _ID_MELI, _KOPR, _REFERENCIA_MELI, _CANTIDAD, _NETO_UNITARIO, _SUB_TOTAL, _Ls_PEDIDOS_DETALLE)
+                Dim _Mensaje2 As LsValiciones.Mensajes = Fx_Grabar_Pedido_Kit(_ID, _ID_MELI, _Ls_PEDIDOS_DETALLE)
+
                 If _Mensaje2.EsCorrecto Then
-                    Consulta_sql = "Update PEDIDOS_DETALLE Set ES_KIT = 1 Where ID = " & _ID
-                    _SqlMeli.Ej_consulta_IDU(Consulta_sql, False)
+                    Sb_AddToLog("Sincronizando MELI", "Creación de pedido por KIT: " & _KOPR, Txt_Log)
+                Else
+                    Sb_AddToLog("Sincronizando MELI", "Problema al crear KIT: " & _KOPR, Txt_Log)
+                    Sb_AddToLog("Sincronizando MELI", _Mensaje2.Mensaje, Txt_Log)
                 End If
+
             End If
 
         Next
 
+    End Sub
+
+    Private Function Fx_Grabar_Pedido_Kit(_Id_Detalle As Integer,
+                                          _Id_meli As String,
+                                          _Ls_NewPedido_Detalle As List(Of PEDIDOS_DETALLE)) As Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Dim _FechaGrab As Date = FechaDelServidor()
+
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+        Dim Cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server_Meli)
+
+        Try
+
+            Consulta_sql = String.Empty
+
+            SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
+            myTrans = Cn2.BeginTransaction()
+
+
+            For Each _Fila As PEDIDOS_DETALLE In _Ls_NewPedido_Detalle
+
+                With _Fila
+
+                    Consulta_sql = "Update PEDIDOS Set REVBAKAPP = 0,FECHAREVBAKAPP = Null, OBSERVACIONES = '' Where ID_MELI = " & _Id_meli
+
+                    Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                    Comando.Transaction = myTrans
+                    Comando.ExecuteNonQuery()
+
+                    Consulta_sql = "Update PEDIDOS_DETALLE Set ES_KIT = 1 Where ID = " & _Id_Detalle
+
+                    Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                    Comando.Transaction = myTrans
+                    Comando.ExecuteNonQuery()
+
+                    Consulta_sql = "Insert Into PEDIDOS_DETALLE (ID_MELI,KOPR,REFERENCIA_MELI," &
+                                   "CANTIDAD,NETO_UNITARIO,SUB_TOTAL,ES_KIT,ID_PADREKIT) Values " & vbCrLf &
+                                   "('" & .ID_MELI & "','" & .KOPR & "','" & .REFERENCIA_MELI & "'," &
+                                   De_Num_a_Tx_01(.CANTIDAD, False, 5) & "," &
+                                   De_Num_a_Tx_01(.NETO_UNITARIO, False, 5) & "," &
+                                   De_Num_a_Tx_01(.SUB_TOTAL, False, 5) & ",0," & _Id_Detalle & ")"
+
+                    Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                    Comando.Transaction = myTrans
+                    Comando.ExecuteNonQuery()
+
+                End With
+
+            Next
+
+
+            myTrans.Commit()
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Detalle = "Se inserta documento desde MELI correctamente en Bakapp"
+            _Mensaje.Mensaje = "OK."
+
+
+        Catch ex As Exception
+
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Detalle = "Error al grabar"
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Id = 0
+
+            If Not IsNothing(myTrans) Then myTrans.Rollback()
+
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+        End Try
+
+        Return _Mensaje
+
     End Function
 
-    Private Function Fx_Grabar_Pedido_Kit(iD As Integer, iD_MELI As String, kOPR As String, rEFERENCIA_MELI As String, cANTIDAD As Integer, nETO_UNITARIO As Integer, sUB_TOTAL As Integer, ls_PEDIDOS_DETALLE As List(Of PEDIDOS_DETALLE)) As Mensajes
-        Throw New NotImplementedException()
-    End Function
-
-    Private Function Fx_Llenar_PEDIDOS_DETALLE_KIT(_ID_MELI As String) As Mensajes
+    Private Function Fx_Llenar_PEDIDOS_DETALLE_KIT(_ID_MELI As String, _Sub_Total As Double) As Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
         Try
 
-            Dim Ls_PEDIDOS_DETALLE As New List(Of PEDIDOS_DETALLE)
+            Dim _Ls_PEDIDOS_DETALLE As New List(Of PEDIDOS_DETALLE)
 
-            Dim _Mjs As LsValiciones.Mensajes = Fx_Llenar_PEDIDOS_DETALLE_KIT(_ID_MELI)
+            Dim _Mjs As LsValiciones.Mensajes = Fx_Llenar_PEDIDOS_DETALLE(_ID_MELI)
 
             If _Mjs.EsCorrecto Then
-                Ls_PEDIDOS_DETALLE = _Mjs.Tag
+                _Ls_PEDIDOS_DETALLE = _Mjs.Tag
                 _Mensaje.EsCorrecto = True
                 _Mensaje.Id = 1
                 _Mensaje.Mensaje = "Registros encontrados"
-                _Mensaje.Tag = Ls_PEDIDOS_DETALLE
+                '_Ls_PEDIDOS_DETALLE = _Mensaje.Tag
             Else
-                _Mensaje.EsCorrecto = False
                 _Mensaje.Id = 0
-                _Mensaje.Mensaje = _Mjs.Mensaje
-            End If
-
-            Consulta_sql = "SELECT ID,ID_MELI,KOPR,REFERENCIA_MELI,CANTIDAD,NETO_UNITARIO,SUB_TOTAL,ES_KIT,ID_PADREKIT" & vbCrLf &
-                           "FROM PEDIDOS_DETALLE" & vbCrLf &
-                           "Where ID_MELI = " & _ID_MELI & vbCrLf &
-                           "And ES_KIT = 0"
-            Dim _Tbl As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
-
-            If Not CBool(_Tbl.Rows.Count) Then
-                _Mensaje.Detalle = "Sin registros"
                 Throw New System.Exception("No se encontraron registros en PEDIDOS_DETALLE, ID_MELI = " & _ID_MELI)
             End If
 
-            Dim _Ls_PEDIDOS_DETALLE As New List(Of PEDIDOS_DETALLE)
+            'If Not CBool(_Tbl.Rows.Count) Then
+            '    _Mensaje.Detalle = "Sin registros"
+            '    Throw New System.Exception("No se encontraron registros en PEDIDOS_DETALLE, ID_MELI = " & _ID_MELI)
+            'End If
 
-            For Each _Row As DataRow In _Tbl.Rows
+            Dim _Ls_Pedidos As New List(Of PEDIDOS_DETALLE)
 
-                Dim _DETALLE_MELI As New PEDIDOS_DETALLE
+            For Each _Fila As PEDIDOS_DETALLE In _Ls_PEDIDOS_DETALLE
 
-                With _DETALLE_MELI
-                    .ID = _Row.Item("ID")
-                    .ID_MELI = _Row.Item("ID_MELI")
-                    .KOPR = _Row.Item("KOPR")
-                    .REFERENCIA_MELI = _Row.Item("REFERENCIA_MELI")
-                    .CANTIDAD = _Row.Item("CANTIDAD")
-                    .NETO_UNITARIO = _Row.Item("NETO_UNITARIO")
-                    .SUB_TOTAL = _Row.Item("SUB_TOTAL")
-                End With
+                Dim _Sku As String = _Fila.KOPR
+                Dim _Id_padrekit As Integer = _Fila.ID
 
-                _Ls_PEDIDOS_DETALLE.Add(_DETALLE_MELI)
+                Dim _Mensaje2 As LsValiciones.Mensajes = Fx_CrearDetalleKit(_ID_MELI, _Fila, _Sub_Total)
+
+                _Ls_Pedidos.AddRange(_Mensaje2.Tag)
 
             Next
 
             _Mensaje.EsCorrecto = True
             _Mensaje.Id = 1
             _Mensaje.Mensaje = "Registros encontrados"
-            _Mensaje.Tag = _Ls_PEDIDOS_DETALLE
+            _Mensaje.Tag = _Ls_Pedidos
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
@@ -614,4 +686,104 @@ Public Class Cl_Sincroniza
         Return _Mensaje
 
     End Function
+
+    Function Fx_CrearDetalleKit(_Id_meli As String,
+                                _Fila_Pedidos_detalle As PEDIDOS_DETALLE,
+                                _Sub_Total As Double) As LsValiciones.Mensajes
+
+        Dim _Sku As String = _Fila_Pedidos_detalle.KOPR
+        Dim _Id_padrekit As Integer = _Fila_Pedidos_detalle.ID
+
+        Dim _Mensaje As New Mensajes
+        Dim _Ls_PEDIDOS_DETALLE As New List(Of PEDIDOS_DETALLE)
+
+        _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
+        _SqlMeli = New Class_SQL(Cadena_ConexionSQL_Server_Meli)
+
+        Try
+
+            Consulta_sql = "SELECT ID,ID_EMPRESA,CODIGO_KIT,GLOSA,PRECIO,ESTADO,INTEGRADO_MELI,ID_MELI" & vbCrLf &
+                           "FROM [@KT_KITS]" & vbCrLf &
+                           "WHERE (CODIGO_KIT = '" & _Sku & "')"
+            Dim _Row As DataRow = _SqlRandom.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_Row) Then
+                Throw New System.Exception("No se encontraron registros en [@KT_KITS], SKU = '" & _Sku & "'")
+            End If
+
+            Dim _Id_kit As Integer = _Row.Item("ID")
+
+            Consulta_sql = "SELECT ID,ID_KIT,SKU,CANTIDAD,ROUND(t.PP01UD*1.19,0) As PP01UD" & vbCrLf &
+                           "FROM [@KT_KIT_DETALLE] k" & vbCrLf &
+                           "Inner Join TABPRE t On k.SKU = t.KOPR And KOLT = '01P'" & vbCrLf &
+                           "WHERE (ID_KIT = " & _Id_kit & ")"
+            Dim _Tbl As DataTable = _SqlRandom.Fx_Get_DataTable(Consulta_sql)
+
+            For Each _Fila As DataRow In _Tbl.Rows
+
+                Dim _Id As Integer = _Fila.Item("ID")
+                Dim _Kopr As String = _Fila.Item("SKU")
+                Dim _Cantidad As Integer = _Fila.Item("CANTIDAD")
+                Dim _Precio As Double = _Fila.Item("PP01UD")
+
+                Dim _PEDIDOS_DETALLE As New PEDIDOS_DETALLE
+
+                With _PEDIDOS_DETALLE
+                    .ID = _Id
+                    .ID_MELI = _Id_meli
+                    .KOPR = _Kopr
+                    .CANTIDAD = _Cantidad
+                    .NETO_UNITARIO = _Precio
+                    .REFERENCIA_MELI = ""
+                    .SUB_TOTAL = _Cantidad * _Precio
+                    .ES_KIT = True
+                    .ID_PADREKIT = _Id_padrekit
+                End With
+
+                _Ls_PEDIDOS_DETALLE.Add(_PEDIDOS_DETALLE)
+
+            Next
+
+            Dim _Sub_Total_Calculado As Double = _Ls_PEDIDOS_DETALLE.Sum(Function(x) x.SUB_TOTAL)
+            Dim _Diferencia As Double = _Sub_Total_Calculado - _Sub_Total
+
+            ' Calcular el descuento necesario
+            Dim _Descuento As Double = Math.Round(_Diferencia / _Sub_Total_Calculado, 5)
+
+            Dim _Suma_Total2 As Double = 0
+
+            For Each _Fl As PEDIDOS_DETALLE In _Ls_PEDIDOS_DETALLE
+
+                Dim _Precio As Double = _Fl.NETO_UNITARIO
+                Dim _PrecioCd As Double = Math.Round(_Precio * _Descuento, 0)
+                _Precio = _Precio - _PrecioCd
+
+                Dim _Total As Double = _Precio * _Fl.CANTIDAD
+                _Suma_Total2 += _Total
+
+                _Fl.NETO_UNITARIO = _Precio
+                _Fl.SUB_TOTAL = _Precio * _Fl.CANTIDAD
+
+            Next
+
+            _Diferencia = _Sub_Total - _Suma_Total2
+
+            If CBool(_Diferencia) Then
+                _Ls_PEDIDOS_DETALLE.Item(0).NETO_UNITARIO += _Diferencia
+                _Ls_PEDIDOS_DETALLE.Item(0).SUB_TOTAL = _Ls_PEDIDOS_DETALLE.Item(0).NETO_UNITARIO * _Ls_PEDIDOS_DETALLE.Item(0).CANTIDAD
+            End If
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Kits encontrados y armados"
+            _Mensaje.Tag = _Ls_PEDIDOS_DETALLE
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
 End Class

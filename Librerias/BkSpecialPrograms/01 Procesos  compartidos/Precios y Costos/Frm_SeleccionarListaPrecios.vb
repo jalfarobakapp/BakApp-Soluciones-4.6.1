@@ -75,12 +75,12 @@ Public Class Frm_SeleccionarListaPrecios
                        "From TABPP" & vbCrLf &
                        "Where 1 > 0" & vbCrLf
 
-        Select Case _Tipo_Lista
-            Case Enum_Tipo_Lista.Costo
-                Consulta_sql += "And TILT = 'C'"
-            Case Enum_Tipo_Lista.Precio
-                Consulta_sql += "And TILT = 'P'"
-        End Select
+        'Select Case _Tipo_Lista
+        '    Case Enum_Tipo_Lista.Costo
+        '        Consulta_sql += "And TILT = 'C'"
+        '    Case Enum_Tipo_Lista.Precio
+        '        Consulta_sql += "And TILT = 'P'"
+        'End Select
 
         If Rdb_Ver_Mis_Listas.Checked Then
             Consulta_sql += "And KOLT In (Select SUBSTRING(CodPermiso,4,6) From " & _Global_BaseBk & "ZW_PermisosVsUsuarios" & Space(1) &

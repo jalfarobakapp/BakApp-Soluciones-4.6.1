@@ -3213,9 +3213,9 @@ Public Class Clase_Crear_Documento
                         Dim Campo = "Precio"
 
                         _PrecioNetoUd = De_Num_a_Tx_01(.Item("PrecioNetoUd"), False, 5)
-                        _PrecioBrutoUd = De_Num_a_Tx_01(.Item("PrecioBrutoUd"), False, 5)
+                        _PrecioBrutoUd = De_Num_a_Tx_01(NuloPorNro(Of Double)(.Item("PrecioBrutoUd"), 0), False, 5)
                         _PrecioNetoUdLista = De_Num_a_Tx_01(NuloPorNro(Of Double)(.Item("PrecioNetoUdLista"), 0), False, 5)
-                        _PrecioBrutoUdLista = De_Num_a_Tx_01(.Item("PrecioBrutoUdLista"), False, 0) ' PRECIO BRUTO DE LA LISTA
+                        _PrecioBrutoUdLista = De_Num_a_Tx_01(NuloPorNro(Of Double)(.Item("PrecioBrutoUdLista"), 0), False, 0) ' PRECIO BRUTO DE LA LISTA
 
                         _PorIva = De_Num_a_Tx_01(.Item("PorIva"), True)
                         _NroDscto = De_Num_a_Tx_01(.Item("NroDscto"), True)
