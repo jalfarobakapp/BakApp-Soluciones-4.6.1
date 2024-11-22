@@ -22,5 +22,6 @@
     Public Property AjusInventario As Boolean
     Public Property SobreStock As Boolean
     Public Property Ubicacion As String
+    Public Property Id_TicketAc As Integer
 
 End Class

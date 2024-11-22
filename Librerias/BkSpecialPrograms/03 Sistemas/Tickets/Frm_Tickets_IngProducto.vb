@@ -7,10 +7,12 @@ Public Class Frm_Tickets_IngProducto
 
     Dim _Id_Tipo As Integer
 
-    Public Property _Cl_Tickets As New Cl_Tickets
-    'Public Property Tickets_Producto As New Zw_Stk_Tickets_Producto
+    'Public Property _Cl_Tickets As New Cl_Tickets
+    Public Property Zw_Stk_Tickets_Producto As New Zw_Stk_Tickets_Producto
     Public Property Grabar As Boolean
     Public Property SoloLectura As Boolean
+    Public Property NuevoIngreso As Boolean
+    Public Property ConfirmaCantidades As Boolean
 
     Dim _Row_Producto As DataRow
     Dim _Row_Tipo As DataRow
@@ -31,7 +33,7 @@ Public Class Frm_Tickets_IngProducto
         AddHandler Txt_Cantidad.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros
         AddHandler Txt_StfiEnBodega.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros
 
-        With _Cl_Tickets.Zw_Stk_Tickets_Producto ' Tickets_Producto
+        With Zw_Stk_Tickets_Producto ' Tickets_Producto
 
             Dim _Sucursal As String = _Sql.Fx_Trae_Dato("TABSU", "NOKOSU",
                                       "EMPRESA = '" & .Empresa & "' And KOSU = '" & .Sucursal & "'")
@@ -85,7 +87,6 @@ Public Class Frm_Tickets_IngProducto
         Txt_Bodega.ReadOnly = SoloLectura
         Txt_Cantidad.ReadOnly = SoloLectura
         Txt_Diferencia.ReadOnly = SoloLectura
-        Txt_Producto.ReadOnly = SoloLectura
         Txt_StfiEnBodega.ReadOnly = SoloLectura
         Txt_Ubicacion.ReadOnly = SoloLectura
         Txt_Producto.ButtonCustom.Visible = Not SoloLectura
@@ -96,9 +97,31 @@ Public Class Frm_Tickets_IngProducto
         LabelX1.Visible = SoloLectura
         Txt_Diferencia.Visible = SoloLectura
 
+        If NuevoIngreso Then
+            Txt_Bodega.ReadOnly = True
+            Txt_Cantidad.ReadOnly = False
+            Txt_Diferencia.ReadOnly = True
+            Txt_Producto.ReadOnly = True
+            Txt_StfiEnBodega.ReadOnly = False
+            Txt_Ubicacion.ReadOnly = True
+            Txt_Producto.ButtonCustom.Visible = False
+            Txt_Producto.ButtonCustom2.Visible = False
+            Txt_Bodega.ButtonCustom.Visible = False
+            Cmb_UdMedida.Enabled = False
+            Dtp_FechaRev.Value = FechaDelServidor()
+            Dtp_HoraRev.Value = Dtp_FechaRev.Value
+            'Txt_Cantidad.Text = 0
+            'Txt_StfiEnBodega.Text = 0
+
+            Me.ActiveControl = Txt_StfiEnBodega
+
+        End If
+
         If SoloLectura Then
             Me.Text += Space(1) & "(Solo lectura)"
         End If
+
+        Me.Refresh()
 
     End Sub
 
@@ -136,11 +159,27 @@ Public Class Frm_Tickets_IngProducto
             Return
         End If
 
+        If Not SoloLectura AndAlso NuevoIngreso Then
+
+            Dim _Msg1 = "CONFIRMAR CANTIDADES"
+            Dim _Msg2 = vbCrLf &
+                        "Cantidad Stock físico: " & Txt_StfiEnBodega.Text & vbCrLf &
+                        "Cantidad inventariada: " & Txt_Cantidad.Text.Trim & vbCrLf &
+                        "Diferencia: " & Txt_Cantidad.Text - Txt_StfiEnBodega.Text & vbCrLf
+
+            If Not Fx_Confirmar_Lectura(_Msg1, _Msg2, eTaskDialogIcon.Exclamation) Then
+                Return
+            End If
+
+            ConfirmaCantidades = True
+
+        End If
+
         Dim _CantidadesStr = String.Empty
         Dim _FechaRevStr = String.Empty
         Dim _HoraStr = String.Empty
 
-        With _Cl_Tickets.Zw_Stk_Tickets_Producto
+        With Zw_Stk_Tickets_Producto
 
             .Cantidad = Txt_Cantidad.Text
             .StfiEnBodega = Txt_StfiEnBodega.Text
@@ -148,26 +187,6 @@ Public Class Frm_Tickets_IngProducto
             .UdMedida = Cmb_UdMedida.SelectedValue
             .FechaRev = _FechaRev
             .Ubicacion = Txt_Ubicacion.Text
-
-            'If _Row_Tipo.Item("Inc_Cantidades") Then
-            '    _CantidadesStr = "BODEGA : " & Txt_Bodega.Text & vbCrLf &
-            '                     "UNIDAD :" & Cmb_UdMedida.Text & vbCrLf &
-            '                     "UBICACION :" & .Ubicacion & vbCrLf &
-            '                     "CANTIDAD INVENTARIADA : " & .Cantidad & vbCrLf &
-            '                     "CANTIDAD EN BODEGA SEGUN SISTEMA : " & .StfiEnBodega & vbCrLf &
-            '                     "DIFERENCIA : " & .Diferencia & vbCrLf
-            'End If
-
-            'If _Row_Tipo.Item("Inc_Fecha") Then _FechaRevStr = "FECHA : " & _FechaRev.ToShortDateString
-            'If _Row_Tipo.Item("Inc_Hora") Then _HoraStr = "HORA : " & _FechaRev.ToShortTimeString
-
-            'If _Row_Tipo.Item("Inc_Fecha") AndAlso _Row_Tipo.Item("Inc_Hora") Then
-            '    _FechaRevStr = "FECHA Y HORA : " & _FechaRev.ToShortDateString & " - " & _FechaRev.ToShortTimeString
-            '    _HoraStr = String.Empty
-            'End If
-
-            'Descripcion = "PRODUCTO : " & .Codigo.Trim & " - " & .Descripcion.Trim & vbCrLf &
-            '              _CantidadesStr & _FechaRevStr & _HoraStr
 
         End With
 
@@ -222,7 +241,7 @@ Public Class Frm_Tickets_IngProducto
 
                 If Not String.IsNullOrEmpty(Trim(Codigo_abuscar)) Then
 
-                    With _Cl_Tickets.Zw_Stk_Tickets_Producto ' Tickets_Producto
+                    With Zw_Stk_Tickets_Producto
 
                         .Codigo = _RowProducto.Item("KOPR")
                         .Descripcion = _RowProducto.Item("NOKOPR").ToString.Trim
@@ -271,7 +290,7 @@ Public Class Frm_Tickets_IngProducto
 
     Private Sub Txt_Bodega_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Bodega.ButtonCustomClick
 
-        With _Cl_Tickets.Zw_Stk_Tickets_Producto
+        With Zw_Stk_Tickets_Producto
 
             If String.IsNullOrEmpty(.Codigo) Then
                 MessageBoxEx.Show(Me, "Falta el producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)

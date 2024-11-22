@@ -15,6 +15,8 @@ Public Class Frm_Tickets_Mant
     Public Property Aceptado As Boolean
     Public Property Rechazado As Boolean
 
+    Private _ConfirmaCantidades As Boolean
+
     Public Sub New(_Id_Ticket As Integer)
 
         ' Esta llamada es exigida por el diseñador.
@@ -49,7 +51,7 @@ Public Class Frm_Tickets_Mant
             Dim _Mensaje As LsValiciones.Mensajes
 
             _Mensaje = _Cl_Tickets_Padre.Fx_Llenar_Ticket(Id_Padre)
-            _Mensaje = _Cl_Tickets.FX_Llenar_Producto(_Cl_Tickets_Padre.Zw_Stk_Tickets.Id_Raiz)
+            _Mensaje = _Cl_Tickets.FX_Llenar_Producto(_Cl_Tickets_Padre.Zw_Stk_Tickets.Id)
 
             _Cl_Tickets.Zw_Stk_Tipos = _Cl_Tickets.Fx_Llenar_Tipo(_Cl_Tickets.Zw_Stk_Tickets.Id_Tipo)
 
@@ -139,6 +141,13 @@ Public Class Frm_Tickets_Mant
         If Chk_ExigeProducto.Checked AndAlso _TkProducto.Codigo = String.Empty Then
             MessageBoxEx.Show(Me, "Falta el producto asociado al tipo de requerimiento." & vbCrLf &
                               "El tipo de requerimiento exige un producto asociado.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If CBool(Id_Padre) And Chk_ExigeProducto.Checked And Not _ConfirmaCantidades Then
+            MessageBoxEx.Show(Me, "Debe ingresar las cantidades para confirmar la grabación del Ticket",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Call Btn_VerProducto_Click(Nothing, Nothing)
             Return
         End If
 
@@ -693,12 +702,28 @@ Public Class Frm_Tickets_Mant
     Private Sub Btn_VerProducto_Click(sender As Object, e As EventArgs) Handles Btn_VerProducto.Click
 
         Dim Fm As New Frm_Tickets_IngProducto(_Cl_Tickets.Zw_Stk_Tickets.Id_Tipo)
-        Fm._Cl_Tickets = _Cl_Tickets
-        Fm.SoloLectura = CBool(Id_Padre)
+        Fm.Zw_Stk_Tickets_Producto = _Cl_Tickets.Zw_Stk_Tickets_Producto
+        Fm.NuevoIngreso = CBool(Id_Padre)
         Fm.ShowDialog(Me)
 
         If Fm.Grabar Then
-            Txt_Descripcion.Text = _Cl_Tickets.Fx_Crear_Descripcion(_Cl_Tickets.Zw_Stk_Tickets.Id_Tipo)
+
+            If CBool(Id_Padre) Then
+
+                _ConfirmaCantidades = Fm.ConfirmaCantidades
+
+                If _ConfirmaCantidades Then
+                    Txt_Descripcion.Text = _Cl_Tickets_Padre.Zw_Stk_Tipos.RespuestaXDefecto & vbCrLf & vbCrLf &
+                                           _Cl_Tickets.Fx_Crear_Descripcion(_Cl_Tickets.Zw_Stk_Tickets.Id_Tipo)
+                Else
+                    MessageBoxEx.Show(Me, "El productos y sus cantidades no han sido confirmadas" & vbCrLf &
+                                  "Esto tambien se validara al grabar el Ticket", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                End If
+
+            Else
+                Txt_Descripcion.Text = _Cl_Tickets.Fx_Crear_Descripcion(_Cl_Tickets.Zw_Stk_Tickets.Id_Tipo)
+            End If
+
         End If
 
         Fm.Dispose()

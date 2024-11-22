@@ -1,4 +1,6 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports BkSpecialPrograms.Class_FTP
+Imports BkSpecialPrograms.LsValiciones
+Imports DevComponents.DotNetBar
 
 Public Class Frm_Tickets_Seguimiento
 
@@ -42,7 +44,7 @@ Public Class Frm_Tickets_Seguimiento
                        "Order By Id Desc"
         _Row_UltMensaje = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        Sb_Formato_Generico_Grilla(Grilla, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
+        Sb_Formato_Generico_Grilla(Grilla, 22, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
 
         Sb_Color_Botones_Barra(Bar2)
 
@@ -88,6 +90,8 @@ Public Class Frm_Tickets_Seguimiento
                 Lbl_Estado.Text = "Cerrado"
             Case "NULO"
                 Lbl_Estado.Text = "Nulo"
+            Case "PROC"
+                Lbl_Estado.Text = "En proceso"
             Case Else
                 Lbl_Estado.Text = "???"
         End Select
@@ -124,6 +128,7 @@ Public Class Frm_Tickets_Seguimiento
         End If
 
         Sb_InsertarBotonenGrilla(Grilla, "Btn_ImagenAttach", "Est.", "ImagenAttach", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla, "Btn_ProductoInfo", "P.I.", "ProductoInfo", 0, _Tipo_Boton.Imagen)
         Sb_InsertarBotonenGrilla(Grilla, "Btn_ImagenUser", "Est.", "ImagenUser", 0, _Tipo_Boton.Imagen)
 
         Sb_Actualizar_Grilla()
@@ -165,6 +170,7 @@ Public Class Frm_Tickets_Seguimiento
                        "When 'RECH' Then 'Rechazado' Else '???' End As 'StrAccion'," & vbCrLf &
                        "Cf.NOKOFU As 'NombreFunAge'," & vbCrLf &
                        "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Archivos Where Id_TicketAc = Acc.Id) As 'Num_Attach'," & vbCrLf &
+                       "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Producto Where Id_TicketAc = Acc.Id) As 'Producto_Attach'," & vbCrLf &
                        "Acc.Descripcion," & vbCrLf &
                        "Case CreaNewTicket When 1 Then Tk.SubNro Else '' End As 'Ticket Crea'," & vbCrLf &
                        "ISNULL(Tkc.SubNro,'') As 'Ticket Cierra'" & vbCrLf &
@@ -194,7 +200,7 @@ Public Class Frm_Tickets_Seguimiento
 
             .Columns("StrAccion").Visible = True
             .Columns("StrAccion").HeaderText = "Acción"
-            .Columns("StrAccion").Width = 70
+            .Columns("StrAccion").Width = 150
             .Columns("StrAccion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -210,14 +216,22 @@ Public Class Frm_Tickets_Seguimiento
             .Columns("NombreFunAge").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Descripcion").Visible = True
-            .Columns("Descripcion").HeaderText = "Descripción"
-            .Columns("Descripcion").Width = 240
-            .Columns("Descripcion").DisplayIndex = _DisplayIndex
+            .Columns("Asunto").Visible = True
+            .Columns("Asunto").HeaderText = "Asunto"
+            .Columns("Asunto").Width = 240
+            .Columns("Asunto").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Btn_ProductoInfo").Width = 40
+            .Columns("Btn_ProductoInfo").HeaderText = "P.I."
+            .Columns("Btn_ProductoInfo").ToolTipText = "Información del producto"
+            .Columns("Btn_ProductoInfo").Visible = True
+            .Columns("Btn_ProductoInfo").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Btn_ImagenAttach").Width = 40
             .Columns("Btn_ImagenAttach").HeaderText = "Att."
+            .Columns("Btn_ImagenAttach").ToolTipText = "Archivos adjuntos"
             .Columns("Btn_ImagenAttach").Visible = True
             .Columns("Btn_ImagenAttach").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
@@ -242,6 +256,8 @@ Public Class Frm_Tickets_Seguimiento
             Dim _Aceptado As Boolean = _Fila.Cells("Aceptado").Value
             Dim _Rechazado As Boolean = _Fila.Cells("Rechazado").Value
             Dim _Num_Attach As Integer = _Fila.Cells("Num_Attach").Value
+            Dim _Producto_Attach As Integer = _Fila.Cells("Producto_Attach").Value
+
             Dim _CodFuncionario As String = _Fila.Cells("CodFuncionario").Value.ToString.Trim
             Dim _CodFunGestiona As String = _Fila.Cells("CodFunGestiona").Value.ToString.Trim
 
@@ -261,9 +277,8 @@ Public Class Frm_Tickets_Seguimiento
                 _Icono = _Imagenes_List.Images.Item(_Nombre_Image)
                 _Fila.DefaultCellStyle.BackColor = Color.LightYellow
             Else
-                _Icono = _Imagenes_List.Images.Item("menu-more.png")
+                _Icono = _Imagenes_List.Images.Item("attach.png")
             End If
-
             _Fila.Cells("Btn_ImagenAttach").Value = _Icono
 
             If _CodFunGestiona = _CodFunInicia Then
@@ -273,18 +288,14 @@ Public Class Frm_Tickets_Seguimiento
                 If _Aceptado Then _Icono = _Imagenes_List.Images.Item("people-vendor-ok.png")
                 If _Rechazado Then _Icono = _Imagenes_List.Images.Item("people-vendor-error.png")
             End If
-
-            'If Not String.IsNullOrEmpty(_CodFuncionario) Then
-            '    _Icono = _Imagenes_List.Images.Item("people-customer-man.png")
-            'Else
-            '    _Icono = _Imagenes_List.Images.Item("people-vendor.png")
-            '    If _Accion = "RECH" Then
-            '        _Icono = _Imagenes_List.Images.Item("people-vendor-error.png")
-            '        _Fila.Cells("Accion").Style.ForeColor = Rojo
-            '    End If
-            'End If
-
             _Fila.Cells("Btn_ImagenUser").Value = _Icono
+
+            If CBool(_Producto_Attach) Then
+                _Icono = _Imagenes_List.Images.Item("product-info.png")
+            Else
+                _Icono = _Imagenes_List.Images.Item("menu-more.png")
+            End If
+            _Fila.Cells("Btn_ProductoInfo").Value = _Icono
 
         Next
 
@@ -405,23 +416,19 @@ Public Class Frm_Tickets_Seguimiento
                         "Fecha = Getdate(),Descripcion = '" & _Descripcion & "',En_Construccion = 0,Visto = 0,Rechazado = " & Convert.ToInt32(_RechazarTicket) & vbCrLf &
                         "Where Id = " & _Zw_Stk_Tickets_Acciones.Id
         _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
-
         If _RechazarTicket Then
-
             MessageBoxEx.Show(Me, "Ticket Rechazado, se ha enviado la confirmación al remitente",
-                              "Rechazar Ticket", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+"Rechazar Ticket", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             Me.Close()
 
         Else
-
             If MessageBoxEx.Show(Me, "Mensaje enviado correctamente" & vbCrLf & vbCrLf & "¿Desea cerrar el formulario?",
-                                 "Información",
-                                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+"Información",
+MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
                 Me.Close()
             Else
                 Sb_Actualizar_Grilla()
             End If
-
         End If
 
     End Sub
@@ -547,47 +554,12 @@ Public Class Frm_Tickets_Seguimiento
     Private Sub Grilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
 
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Id_Ticket As Integer = _Fila.Cells("Id_Ticket").Value
         Dim _Id_TicketAc As Integer = _Fila.Cells("Id_Accion").Value
         Dim _Num_Attach As Integer = _Fila.Cells("Num_Attach").Value
 
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
 
-        If _Cabeza = "Btn_ImagenAttach" Then
-
-            If Not CBool(_Num_Attach) Then
-                DevComponents.DotNetBar.MessageBoxEx.Show(Me, "No hay archivos adjuntos que mostrar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Return
-            End If
-
-            Dim Fm As New Frm_Adjuntar_Archivos("Zw_Stk_Tickets_Archivos", "Id_TicketAc", _Id_TicketAc)
-            'Fm.Text = "Archivos adjuntos documento en construcción: " & _Tido.Trim & " Nro: " & _Nudo
-            Fm.Pedir_Permiso = False
-            Fm.SoloLectura = True
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
-
-            _Fila.Cells("Num_Attach").Value = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets_Archivos", "Id_TicketAc = " & _Id_TicketAc)
-
-            Dim _Icono As Image
-            Dim _Nombre_Image As String
-            _Num_Attach = _Fila.Cells("Num_Attach").Value
-
-            If CBool(_Num_Attach) Then
-                _Nombre_Image = "attach-number-" & _Num_Attach & ".png"
-                If _Num_Attach > 9 Then
-                    _Nombre_Image = "attach-number-9-plus.png"
-                End If
-                _Icono = Imagenes_16x16.Images.Item(_Nombre_Image)
-                _Fila.DefaultCellStyle.BackColor = Color.LightYellow
-            Else
-                _Icono = Imagenes_16x16.Images.Item("menu-more.png")
-            End If
-
-            _Fila.Cells("Btn_ImagenAttach").Value = _Icono
-
-            Grilla.CurrentCell = Grilla.Rows(_Fila.Index).Cells("StrAccion")
-
-        End If
 
     End Sub
 
@@ -626,12 +598,12 @@ Public Class Frm_Tickets_Seguimiento
 
         End If
 
-        Sb_Cerrar_Ticket(True, False, False, False, 0)
+        Sb_Cerrar_Ticket(True, False, False, False, 0, False, True)
 
     End Sub
 
     Private Sub Btn_Mnu_SolicitarCierre_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_SolicitarCierre.Click
-        Sb_Cerrar_Ticket(False, True, False, False, 0)
+        Sb_Cerrar_Ticket(False, True, False, False, 0, False, False)
     End Sub
 
     Private Sub Btn_Mnu_CerrarTicketCrearNuevo_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_CerrarTicketCrearNuevo.Click
@@ -662,7 +634,7 @@ Public Class Frm_Tickets_Seguimiento
         Fm.Dispose()
 
         If _Grabar Then
-            Sb_Cerrar_Ticket(True, False, True, False, _Id_Hijo)
+            Sb_Cerrar_Ticket(True, False, True, False, _Id_Hijo, False, False)
         End If
 
         GestionRealizada = True
@@ -676,7 +648,7 @@ Public Class Frm_Tickets_Seguimiento
             Return
         End If
 
-        Sb_Cerrar_Ticket(False, False, False, True, 0)
+        Sb_Cerrar_Ticket(False, False, False, True, 0, False, True)
 
     End Sub
 
@@ -684,7 +656,9 @@ Public Class Frm_Tickets_Seguimiento
                          _Solicita_Cierre As Boolean,
                          _CreaNewTicket As Boolean,
                          _AnulaTicket As Boolean,
-                         _Id_Hijo As Integer)
+                         _Id_Hijo As Integer,
+                         _Aceptado As Boolean,
+                         _CierraTicektPadre As Boolean)
 
         Dim _Aceptar As Boolean
         Dim _Descripcion As String
@@ -738,7 +712,9 @@ Public Class Frm_Tickets_Seguimiento
                                                        _Cierra_Ticket,
                                                        _Solicita_Cierre,
                                                        _CreaNewTicket,
-                                                       _AnulaTicket)
+                                                       _AnulaTicket,
+                                                       _Aceptado,
+                                                       _CierraTicektPadre)
 
         If Not _Mensaje_Ticket.EsCorrecto Then
             Return
@@ -1045,14 +1021,81 @@ Public Class Frm_Tickets_Seguimiento
 
     End Function
 
-    Private Sub Btn_TicketProducto_Click(sender As Object, e As EventArgs) Handles Btn_TicketProducto.Click
+    Private Sub Grilla_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellClick
 
-        Dim Fm As New Frm_Tickets_IngProducto(_Cl_Tickets.Zw_Stk_Tickets.Id_Tipo)
-        Fm._Cl_Tickets = _Cl_Tickets
-        Fm.SoloLectura = True
-        Fm.ShowDialog(Me)
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Id_Ticket As Integer = _Fila.Cells("Id_Ticket").Value
+        Dim _Id_TicketAc As Integer = _Fila.Cells("Id_Accion").Value
+        Dim _Num_Attach As Integer = _Fila.Cells("Num_Attach").Value
+        Dim _Producto_Attach As Integer = _Fila.Cells("Producto_Attach").Value
+
+
+        Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
+
+        If _Cabeza = "Btn_ImagenAttach" Then
+
+            If Not CBool(_Num_Attach) Then
+                MessageBoxEx.Show(Me, "No hay archivos adjuntos que mostrar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+            Dim Fm As New Frm_Adjuntar_Archivos("Zw_Stk_Tickets_Archivos", "Id_TicketAc", _Id_TicketAc)
+            'Fm.Text = "Archivos adjuntos documento en construcción: " & _Tido.Trim & " Nro: " & _Nudo
+            Fm.Pedir_Permiso = False
+            Fm.SoloLectura = True
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
+
+            _Fila.Cells("Num_Attach").Value = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets_Archivos", "Id_TicketAc = " & _Id_TicketAc)
+
+            Dim _Icono As Image
+            Dim _Nombre_Image As String
+            _Num_Attach = _Fila.Cells("Num_Attach").Value
+
+            If CBool(_Num_Attach) Then
+                _Nombre_Image = "attach-number-" & _Num_Attach & ".png"
+                If _Num_Attach > 9 Then
+                    _Nombre_Image = "attach-number-9-plus.png"
+                End If
+                _Icono = Imagenes_16x16.Images.Item(_Nombre_Image)
+                _Fila.DefaultCellStyle.BackColor = Color.LightYellow
+            Else
+                _Icono = Imagenes_16x16.Images.Item("menu-more.png")
+            End If
+
+            _Fila.Cells("Btn_ImagenAttach").Value = _Icono
+
+            Grilla.CurrentCell = Grilla.Rows(_Fila.Index).Cells("StrAccion")
+
+        End If
+
+        If _Cabeza = "Btn_ProductoInfo" Then
+
+            If Not CBool(_Producto_Attach) Then
+                MessageBoxEx.Show(Me, "No hay archivos adjuntos que mostrar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+            Dim _Cl_Tickets2 As New Cl_Tickets
+
+            Dim _Mensaje As LsValiciones.Mensajes = _Cl_Tickets2.FX_Llenar_Producto(_Id_Ticket)
+
+            If Not _Mensaje.EsCorrecto Then
+                MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+            Dim Fm As New Frm_Tickets_IngProducto(_Cl_Tickets.Zw_Stk_Tickets.Id_Tipo)
+            Fm.Zw_Stk_Tickets_Producto = _Cl_Tickets2.Zw_Stk_Tickets_Producto
+            Fm.SoloLectura = True
+            Fm.ShowDialog(Me)
+
+        End If
 
     End Sub
 
+    Private Sub Btn_Mnu_AceptarCerrarTicket_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_AceptarCerrarTicket.Click
+        Sb_Cerrar_Ticket(True, False, False, False, 0, True, True)
+    End Sub
 End Class
 

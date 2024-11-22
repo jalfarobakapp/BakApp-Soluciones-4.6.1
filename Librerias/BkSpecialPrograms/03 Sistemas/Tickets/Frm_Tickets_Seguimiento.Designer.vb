@@ -1,9 +1,9 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Frm_Tickets_Seguimiento
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,18 +20,17 @@ Partial Class Frm_Tickets_Seguimiento
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Tickets_Seguimiento))
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Tickets_Seguimiento))
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_Productos = New DevComponents.DotNetBar.ButtonItem()
         Me.Lbl_OpcProducto = New DevComponents.DotNetBar.LabelItem()
-        Me.Btn_TicketProducto = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Estadisticas_Producto = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Consolidar_Stock_X_Producto = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
@@ -74,6 +73,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
         Me.Imagenes_16x16_Dark = New System.Windows.Forms.ImageList(Me.components)
         Me.Btn_MensajeRespuesta = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_AceptarCerrarTicket = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -91,7 +91,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 151)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(667, 196)
+        Me.GroupPanel1.Size = New System.Drawing.Size(775, 196)
         '
         '
         '
@@ -141,7 +141,7 @@ Partial Class Frm_Tickets_Seguimiento
         '
         Me.Menu_Contextual_Productos.AutoExpandOnClick = True
         Me.Menu_Contextual_Productos.Name = "Menu_Contextual_Productos"
-        Me.Menu_Contextual_Productos.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_OpcProducto, Me.Btn_TicketProducto, Me.Btn_Estadisticas_Producto, Me.Btn_Consolidar_Stock_X_Producto, Me.Btn_Copiar})
+        Me.Menu_Contextual_Productos.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_OpcProducto, Me.Btn_Estadisticas_Producto, Me.Btn_Consolidar_Stock_X_Producto, Me.Btn_Copiar})
         Me.Menu_Contextual_Productos.Text = "Opciones productos"
         '
         'Lbl_OpcProducto
@@ -156,13 +156,6 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Lbl_OpcProducto.PaddingTop = 1
         Me.Lbl_OpcProducto.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
         Me.Lbl_OpcProducto.Text = "Opciones del producto"
-        '
-        'Btn_TicketProducto
-        '
-        Me.Btn_TicketProducto.Image = CType(resources.GetObject("Btn_TicketProducto.Image"), System.Drawing.Image)
-        Me.Btn_TicketProducto.ImageAlt = CType(resources.GetObject("Btn_TicketProducto.ImageAlt"), System.Drawing.Image)
-        Me.Btn_TicketProducto.Name = "Btn_TicketProducto"
-        Me.Btn_TicketProducto.Text = "Ver información del ticket del producto"
         '
         'Btn_Estadisticas_Producto
         '
@@ -190,7 +183,7 @@ Partial Class Frm_Tickets_Seguimiento
         '
         Me.Menu_Contextual_Cambio_Estado.AutoExpandOnClick = True
         Me.Menu_Contextual_Cambio_Estado.Name = "Menu_Contextual_Cambio_Estado"
-        Me.Menu_Contextual_Cambio_Estado.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_Mnu_EnviarMensajeRespuesta, Me.Btn_Mnu_RechazarTicket, Me.Btn_Mnu_CerrarTicket, Me.Btn_Mnu_CerrarTicketCrearNuevo, Me.Btn_Mnu_SolicitarCierre, Me.Btn_Anular})
+        Me.Menu_Contextual_Cambio_Estado.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_Mnu_EnviarMensajeRespuesta, Me.Btn_Mnu_RechazarTicket, Me.Btn_Mnu_CerrarTicket, Me.Btn_Mnu_AceptarCerrarTicket, Me.Btn_Mnu_CerrarTicketCrearNuevo, Me.Btn_Mnu_SolicitarCierre, Me.Btn_Anular})
         Me.Menu_Contextual_Cambio_Estado.Text = "Opciones cambio de estado"
         '
         'LabelItem1
@@ -329,7 +322,7 @@ Partial Class Frm_Tickets_Seguimiento
         DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
-        Me.Grilla.Size = New System.Drawing.Size(661, 173)
+        Me.Grilla.Size = New System.Drawing.Size(769, 173)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 27
         '
@@ -354,7 +347,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.GrupoTicket.DisabledBackColor = System.Drawing.Color.Empty
         Me.GrupoTicket.Location = New System.Drawing.Point(12, 5)
         Me.GrupoTicket.Name = "GrupoTicket"
-        Me.GrupoTicket.Size = New System.Drawing.Size(667, 140)
+        Me.GrupoTicket.Size = New System.Drawing.Size(775, 140)
         '
         '
         '
@@ -404,7 +397,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Txt_Producto.Name = "Txt_Producto"
         Me.Txt_Producto.PreventEnterBeep = True
         Me.Txt_Producto.ReadOnly = True
-        Me.Txt_Producto.Size = New System.Drawing.Size(541, 22)
+        Me.Txt_Producto.Size = New System.Drawing.Size(649, 22)
         Me.Txt_Producto.TabIndex = 14
         '
         'LabelX7
@@ -605,7 +598,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_GestionarAcciones, Me.Btn_VerTicketOrigen, Me.Btn_AgentesAsignados, Me.Btn_Cerrar})
         Me.Bar2.Location = New System.Drawing.Point(0, 536)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(689, 41)
+        Me.Bar2.Size = New System.Drawing.Size(797, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 165
@@ -666,7 +659,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Txt_Descripcion.Name = "Txt_Descripcion"
         Me.Txt_Descripcion.PreventEnterBeep = True
         Me.Txt_Descripcion.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.Txt_Descripcion.Size = New System.Drawing.Size(655, 133)
+        Me.Txt_Descripcion.Size = New System.Drawing.Size(786, 133)
         Me.Txt_Descripcion.TabIndex = 166
         '
         'GroupPanel3
@@ -677,7 +670,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel3.Location = New System.Drawing.Point(12, 353)
         Me.GroupPanel3.Name = "GroupPanel3"
-        Me.GroupPanel3.Size = New System.Drawing.Size(667, 162)
+        Me.GroupPanel3.Size = New System.Drawing.Size(775, 162)
         '
         '
         '
@@ -734,31 +727,33 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Imagenes_16x16.Images.SetKeyName(18, "comment-number-9.png")
         Me.Imagenes_16x16.Images.SetKeyName(19, "comment-number-9-plus.png")
         Me.Imagenes_16x16.Images.SetKeyName(20, "menu-more.png")
-        Me.Imagenes_16x16.Images.SetKeyName(21, "attach-number-1.png")
-        Me.Imagenes_16x16.Images.SetKeyName(22, "attach-number-2.png")
-        Me.Imagenes_16x16.Images.SetKeyName(23, "attach-number-3.png")
-        Me.Imagenes_16x16.Images.SetKeyName(24, "attach-number-4.png")
-        Me.Imagenes_16x16.Images.SetKeyName(25, "attach-number-5.png")
-        Me.Imagenes_16x16.Images.SetKeyName(26, "attach-number-6.png")
-        Me.Imagenes_16x16.Images.SetKeyName(27, "attach-number-7.png")
-        Me.Imagenes_16x16.Images.SetKeyName(28, "attach-number-8.png")
-        Me.Imagenes_16x16.Images.SetKeyName(29, "attach-number-9.png")
-        Me.Imagenes_16x16.Images.SetKeyName(30, "attach-number-9-plus.png")
-        Me.Imagenes_16x16.Images.SetKeyName(31, "user.png")
-        Me.Imagenes_16x16.Images.SetKeyName(32, "people-employee.png")
-        Me.Imagenes_16x16.Images.SetKeyName(33, "people-vendor.png")
-        Me.Imagenes_16x16.Images.SetKeyName(34, "people-customer-man.png")
-        Me.Imagenes_16x16.Images.SetKeyName(35, "people-vendor-error.png")
-        Me.Imagenes_16x16.Images.SetKeyName(36, "ticket-new.png")
-        Me.Imagenes_16x16.Images.SetKeyName(37, "ticket-cancel.png")
-        Me.Imagenes_16x16.Images.SetKeyName(38, "ticket-link.png")
-        Me.Imagenes_16x16.Images.SetKeyName(39, "ticket-refresh.png")
-        Me.Imagenes_16x16.Images.SetKeyName(40, "ticket-padlock.png")
-        Me.Imagenes_16x16.Images.SetKeyName(41, "ticket-select.png")
-        Me.Imagenes_16x16.Images.SetKeyName(42, "ticket-ok.png")
-        Me.Imagenes_16x16.Images.SetKeyName(43, "ticket.png")
-        Me.Imagenes_16x16.Images.SetKeyName(44, "ticket-add.png")
-        Me.Imagenes_16x16.Images.SetKeyName(45, "people-vendor-ok.png")
+        Me.Imagenes_16x16.Images.SetKeyName(21, "attach.png")
+        Me.Imagenes_16x16.Images.SetKeyName(22, "attach-number-1.png")
+        Me.Imagenes_16x16.Images.SetKeyName(23, "attach-number-2.png")
+        Me.Imagenes_16x16.Images.SetKeyName(24, "attach-number-3.png")
+        Me.Imagenes_16x16.Images.SetKeyName(25, "attach-number-4.png")
+        Me.Imagenes_16x16.Images.SetKeyName(26, "attach-number-5.png")
+        Me.Imagenes_16x16.Images.SetKeyName(27, "attach-number-6.png")
+        Me.Imagenes_16x16.Images.SetKeyName(28, "attach-number-7.png")
+        Me.Imagenes_16x16.Images.SetKeyName(29, "attach-number-8.png")
+        Me.Imagenes_16x16.Images.SetKeyName(30, "attach-number-9.png")
+        Me.Imagenes_16x16.Images.SetKeyName(31, "attach-number-9-plus.png")
+        Me.Imagenes_16x16.Images.SetKeyName(32, "user.png")
+        Me.Imagenes_16x16.Images.SetKeyName(33, "people-employee.png")
+        Me.Imagenes_16x16.Images.SetKeyName(34, "people-vendor.png")
+        Me.Imagenes_16x16.Images.SetKeyName(35, "people-customer-man.png")
+        Me.Imagenes_16x16.Images.SetKeyName(36, "people-vendor-error.png")
+        Me.Imagenes_16x16.Images.SetKeyName(37, "ticket-new.png")
+        Me.Imagenes_16x16.Images.SetKeyName(38, "ticket-cancel.png")
+        Me.Imagenes_16x16.Images.SetKeyName(39, "ticket-link.png")
+        Me.Imagenes_16x16.Images.SetKeyName(40, "ticket-refresh.png")
+        Me.Imagenes_16x16.Images.SetKeyName(41, "ticket-padlock.png")
+        Me.Imagenes_16x16.Images.SetKeyName(42, "ticket-select.png")
+        Me.Imagenes_16x16.Images.SetKeyName(43, "ticket-ok.png")
+        Me.Imagenes_16x16.Images.SetKeyName(44, "ticket.png")
+        Me.Imagenes_16x16.Images.SetKeyName(45, "ticket-add.png")
+        Me.Imagenes_16x16.Images.SetKeyName(46, "people-vendor-ok.png")
+        Me.Imagenes_16x16.Images.SetKeyName(47, "product-info.png")
         '
         'Imagenes_16x16_Dark
         '
@@ -785,30 +780,32 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Imagenes_16x16_Dark.Images.SetKeyName(18, "comment-number-9.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(19, "comment-number-9-plus.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(20, "menu-more.png")
-        Me.Imagenes_16x16_Dark.Images.SetKeyName(21, "attach-number-1.png")
-        Me.Imagenes_16x16_Dark.Images.SetKeyName(22, "attach-number-2.png")
-        Me.Imagenes_16x16_Dark.Images.SetKeyName(23, "attach-number-3.png")
-        Me.Imagenes_16x16_Dark.Images.SetKeyName(24, "attach-number-4.png")
-        Me.Imagenes_16x16_Dark.Images.SetKeyName(25, "attach-number-5.png")
-        Me.Imagenes_16x16_Dark.Images.SetKeyName(26, "attach-number-6.png")
-        Me.Imagenes_16x16_Dark.Images.SetKeyName(27, "attach-number-7.png")
-        Me.Imagenes_16x16_Dark.Images.SetKeyName(28, "attach-number-8.png")
-        Me.Imagenes_16x16_Dark.Images.SetKeyName(29, "attach-number-9.png")
-        Me.Imagenes_16x16_Dark.Images.SetKeyName(30, "attach-number-9-plus.png")
-        Me.Imagenes_16x16_Dark.Images.SetKeyName(31, "people-vendor.png")
-        Me.Imagenes_16x16_Dark.Images.SetKeyName(32, "people-vendor-error.png")
-        Me.Imagenes_16x16_Dark.Images.SetKeyName(33, "people-employee.png")
-        Me.Imagenes_16x16_Dark.Images.SetKeyName(34, "people-customer-man.png")
-        Me.Imagenes_16x16_Dark.Images.SetKeyName(35, "user.png")
-        Me.Imagenes_16x16_Dark.Images.SetKeyName(36, "ticket-new.png")
-        Me.Imagenes_16x16_Dark.Images.SetKeyName(37, "ticket-cancel.png")
-        Me.Imagenes_16x16_Dark.Images.SetKeyName(38, "ticket-link.png")
-        Me.Imagenes_16x16_Dark.Images.SetKeyName(39, "ticket-refresh.png")
-        Me.Imagenes_16x16_Dark.Images.SetKeyName(40, "ticket-padlock.png")
-        Me.Imagenes_16x16_Dark.Images.SetKeyName(41, "ticket-select.png")
-        Me.Imagenes_16x16_Dark.Images.SetKeyName(42, "ticket-ok.png")
-        Me.Imagenes_16x16_Dark.Images.SetKeyName(43, "ticket-add.png")
-        Me.Imagenes_16x16_Dark.Images.SetKeyName(44, "people-vendor-ok.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(21, "attach.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(22, "attach-number-1.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(23, "attach-number-2.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(24, "attach-number-3.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(25, "attach-number-4.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(26, "attach-number-5.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(27, "attach-number-6.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(28, "attach-number-7.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(29, "attach-number-8.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(30, "attach-number-9.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(31, "attach-number-9-plus.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(32, "people-vendor.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(33, "people-vendor-error.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(34, "people-employee.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(35, "people-customer-man.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(36, "user.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(37, "ticket-new.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(38, "ticket-cancel.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(39, "ticket-link.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(40, "ticket-refresh.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(41, "ticket-padlock.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(42, "ticket-select.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(43, "ticket-ok.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(44, "ticket-add.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(45, "people-vendor-ok.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(46, "product-info.png")
         '
         'Btn_MensajeRespuesta
         '
@@ -819,11 +816,18 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Btn_MensajeRespuesta.Name = "Btn_MensajeRespuesta"
         Me.Btn_MensajeRespuesta.Text = "Agregar mensaje"
         '
+        'Btn_Mnu_AceptarCerrarTicket
+        '
+        Me.Btn_Mnu_AceptarCerrarTicket.Image = CType(resources.GetObject("Btn_Mnu_AceptarCerrarTicket.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_AceptarCerrarTicket.ImageAlt = CType(resources.GetObject("Btn_Mnu_AceptarCerrarTicket.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_AceptarCerrarTicket.Name = "Btn_Mnu_AceptarCerrarTicket"
+        Me.Btn_Mnu_AceptarCerrarTicket.Text = "Aceptar y cerrar Ticket."
+        '
         'Frm_Tickets_Seguimiento
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(689, 577)
+        Me.ClientSize = New System.Drawing.Size(797, 577)
         Me.Controls.Add(Me.GroupPanel3)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.GrupoTicket)
@@ -894,5 +898,5 @@ Partial Class Frm_Tickets_Seguimiento
     Friend WithEvents Btn_Mnu_TkAntecesor As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mnu_TkSucesor As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mnu_TkHistoria As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_TicketProducto As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Mnu_AceptarCerrarTicket As DevComponents.DotNetBar.ButtonItem
 End Class
