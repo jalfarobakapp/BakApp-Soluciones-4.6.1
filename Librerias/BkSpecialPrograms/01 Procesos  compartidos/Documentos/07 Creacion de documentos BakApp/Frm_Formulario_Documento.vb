@@ -2514,7 +2514,7 @@ Public Class Frm_Formulario_Documento
             .Item("CantUd2") = 0
             .Item("Potencia") = 0
 
-            .Item("UnTrans") = 0
+            .Item("UnTrans") = 1
             .Item("UdTrans") = String.Empty
 
             .Item("Ud01PR") = String.Empty
@@ -18719,6 +18719,12 @@ Public Class Frm_Formulario_Documento
                 _Mantener_Bodega_Origen = False
             End If
 
+            If _Editar_documento Then
+                _CodLista = Mid(_RowMaeedo_Origen.Item("LISACTIVA").ToString, 6, 3)
+                _TblEncabezado.Rows(0).Item("ListaPrecios") = _CodLista
+            End If
+
+
             _CodLista = _TblEncabezado.Rows(0).Item("ListaPrecios")
 
             Dim _Contador = 0
@@ -19156,7 +19162,7 @@ Public Class Frm_Formulario_Documento
                 End If
 
                 If _Editar_documento Then
-                    _New_Fila.Cells("FechaRecepcion").Value = _Fecha_Recepcion
+                    _Fecha_Recepcion = _Fila.Item("FEERLI")
                 End If
 
                 Dim _Suc_Bod_Ori As String = Trim(_Sucursal) & Trim(_Bodega)

@@ -133,6 +133,32 @@ Public Class Frm_SelecProdMezclaFab
         Dim _Codnomen As String = _Fila.Cells("Codnomen").Value
         Dim _Descriptor As String = _Fila.Cells("Descriptor").Value
 
+        Dim _CantFabricada As Double = _Fila.Cells("CantFabricada").Value
+
+        If Not CBool(_CantFabricada) Then
+
+            Dim _Msg1 = "RECETA: " & _Descriptor
+            Dim _Msg2 = "¿ESTA SEGURO DE QUERER UTILIZAR ESTA RECETA PARA LA FABRICACION?" & vbCrLf & vbCrLf &
+                        "[Yes] Confirmar receta - [No] Seleccionar otra receta - [Cancel] Salir"
+
+            Dim _Mensaje As LsValiciones.Mensajes = Fx_Confirmar_LecturaSINO(_Msg1, _Msg2, eTaskDialogIcon.Exclamation, "CONFIRMACION DE RECETA", True, , False)
+
+            If CType(_Mensaje.Tag, eTaskDialogResult) = eTaskDialogResult.No Then
+
+                If Not Fx_Cambiar_Nomenclatura(_Fila) Then
+                    Return
+                End If
+
+            End If
+
+            If CType(_Mensaje.Tag, eTaskDialogResult) = eTaskDialogResult.Cancel Then
+                Return
+            End If
+
+            Sb_Actualizar_Grilla()
+
+        End If
+
         Dim Fm As New Frm_Fabricaciones(_Id_Det)
         Fm.MaxCantidadFabricar = _MaxCantFabricar
         Fm.ShowDialog(Me)
@@ -148,11 +174,16 @@ Public Class Frm_SelecProdMezclaFab
 
     Private Sub Btn_EditarNomenclatura_Click(sender As Object, e As EventArgs) Handles Btn_EditarNomenclatura.Click
 
-        If Not Fx_Tiene_Permiso(Me, "Pdc00011") Then
-            Return
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+
+        If Fx_Cambiar_Nomenclatura(_Fila) Then
+            Sb_Actualizar_Grilla()
         End If
 
-        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+    End Sub
+
+    Function Fx_Cambiar_Nomenclatura(_Fila As DataGridViewRow) As Boolean
+
         Dim _Id As Integer = _Fila.Cells("Id").Value
         Dim _Codigomz As String = _Fila.Cells("Codigo").Value
         Dim _Formularmz_Old As String = _Fila.Cells("Codnomen").Value
@@ -160,21 +191,26 @@ Public Class Frm_SelecProdMezclaFab
         Dim _Idpotl_Otm As Integer = _Fila.Cells("Idpotl_Otm").Value
         Dim _CantFabricada As Double = _Fila.Cells("CantFabricada").Value
 
+        If Not Fx_Tiene_Permiso(Me, "Pdc00011") Then
+            Return False
+        End If
+
         If CBool(_CantFabricada) Then
             MessageBoxEx.Show(Me, "No se puede cambiar la nomenclatura de un producto que ya ha sido fabricado.",
                               "Validación", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Return
+            Return False
         End If
 
         Dim _RowNomenclatura As DataRow
 
         Dim Fm As New Frm_Select_Nomenclatura(_Codigomz)
+        Fm.OrdenDesc = True
         Fm.ShowDialog(Me)
         _RowNomenclatura = Fm.RowNomenclatura
         Fm.Dispose()
 
         If IsNothing(_RowNomenclatura) Then
-            Return
+            Return False
         End If
 
         Dim _Formularmz As String = _RowNomenclatura.Item("CODIGO")
@@ -182,15 +218,15 @@ Public Class Frm_SelecProdMezclaFab
         If _Formularmz_Old = _Formularmz Then
             MessageBoxEx.Show(Me, "La receta seleccionada es la misma que la actual.",
                               "Validación", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Call Btn_EditarNomenclatura_Click(Nothing, Nothing)
-            Return
+            'Call Btn_EditarNomenclatura_Click(Nothing, Nothing)
+            Return False
         End If
 
         If MessageBoxEx.Show(Me, "¿Está seguro de cambiar la receta por la nomenclatura seleccionada?" & vbCrLf &
                              "Receta seleccionada: " & _RowNomenclatura.Item("CODIGO") & " - " & _RowNomenclatura.Item("DESCRIPTOR"),
                              "Cambiar receta", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> Windows.Forms.DialogResult.Yes Then
-            Call Btn_EditarNomenclatura_Click(Nothing, Nothing)
-            Return
+            'Call Btn_EditarNomenclatura_Click(Nothing, Nothing)
+            Return False
         End If
 
         Dim Cl_Mezcla As New Cl_Mezcla
@@ -201,11 +237,9 @@ Public Class Frm_SelecProdMezclaFab
 
         MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
-        If _Mensaje.EsCorrecto Then
-            Sb_Actualizar_Grilla()
-        End If
+        Return _Mensaje.EsCorrecto
 
-    End Sub
+    End Function
 
     Private Sub Sb_Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
         If e.Button = Windows.Forms.MouseButtons.Right Then

@@ -23,14 +23,15 @@ Partial Class Frm_Fabricaciones
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Fabricaciones))
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_IngresarNuevaFabricacion = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_VerReceta = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Chk_GDI_Consumo = New DevComponents.DotNetBar.CheckBoxItem()
         Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
@@ -49,7 +50,6 @@ Partial Class Frm_Fabricaciones
         Me.Dtp_Fecha_Ingreso = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Receta = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Chk_GDI_Consumo = New DevComponents.DotNetBar.CheckBoxItem()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel4.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -65,7 +65,7 @@ Partial Class Frm_Fabricaciones
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_IngresarNuevaFabricacion, Me.Btn_VerReceta, Me.Btn_Actualizar, Me.Btn_Grabar, Me.Chk_GDI_Consumo})
-        Me.Bar1.Location = New System.Drawing.Point(0, 488)
+        Me.Bar1.Location = New System.Drawing.Point(0, 522)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(748, 41)
         Me.Bar1.Stretch = True
@@ -111,6 +111,14 @@ Partial Class Frm_Fabricaciones
         Me.Btn_Grabar.Name = "Btn_Grabar"
         Me.Btn_Grabar.Tooltip = "Grabar OT y GRI (F8)"
         '
+        'Chk_GDI_Consumo
+        '
+        Me.Chk_GDI_Consumo.CheckBoxImageChecked = CType(resources.GetObject("Chk_GDI_Consumo.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_GDI_Consumo.Checked = True
+        Me.Chk_GDI_Consumo.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Chk_GDI_Consumo.Name = "Chk_GDI_Consumo"
+        Me.Chk_GDI_Consumo.Text = "Crear GDI de consumo"
+        '
         'GroupPanel4
         '
         Me.GroupPanel4.BackColor = System.Drawing.Color.White
@@ -118,9 +126,9 @@ Partial Class Frm_Fabricaciones
         Me.GroupPanel4.Controls.Add(Me.Menu_Contextual)
         Me.GroupPanel4.Controls.Add(Me.Grilla)
         Me.GroupPanel4.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel4.Location = New System.Drawing.Point(12, 41)
+        Me.GroupPanel4.Location = New System.Drawing.Point(12, 60)
         Me.GroupPanel4.Name = "GroupPanel4"
-        Me.GroupPanel4.Size = New System.Drawing.Size(727, 372)
+        Me.GroupPanel4.Size = New System.Drawing.Size(727, 392)
         '
         '
         '
@@ -220,39 +228,39 @@ Partial Class Frm_Fabricaciones
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.MultiSelect = False
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.Grilla.Size = New System.Drawing.Size(721, 349)
+        Me.Grilla.Size = New System.Drawing.Size(721, 369)
         Me.Grilla.TabIndex = 1
         '
         'GroupPanel7
@@ -263,7 +271,7 @@ Partial Class Frm_Fabricaciones
         Me.GroupPanel7.Controls.Add(Me.Lbl_Fabricar)
         Me.GroupPanel7.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupPanel7.Location = New System.Drawing.Point(424, 424)
+        Me.GroupPanel7.Location = New System.Drawing.Point(424, 458)
         Me.GroupPanel7.Name = "GroupPanel7"
         Me.GroupPanel7.Size = New System.Drawing.Size(153, 58)
         '
@@ -321,7 +329,7 @@ Partial Class Frm_Fabricaciones
         Me.GroupPanel1.Controls.Add(Me.Lbl_Fabricado)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupPanel1.Location = New System.Drawing.Point(583, 424)
+        Me.GroupPanel1.Location = New System.Drawing.Point(583, 458)
         Me.GroupPanel1.Name = "GroupPanel1"
         Me.GroupPanel1.Size = New System.Drawing.Size(153, 58)
         '
@@ -380,7 +388,7 @@ Partial Class Frm_Fabricaciones
         Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX4.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(12, 419)
+        Me.LabelX4.Location = New System.Drawing.Point(15, 458)
         Me.LabelX4.Name = "LabelX4"
         Me.LabelX4.Size = New System.Drawing.Size(208, 23)
         Me.LabelX4.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
@@ -400,7 +408,7 @@ Partial Class Frm_Fabricaciones
         Me.Dtp_Fecha_Ingreso.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Dtp_Fecha_Ingreso.ForeColor = System.Drawing.Color.Black
         Me.Dtp_Fecha_Ingreso.IsPopupCalendarOpen = False
-        Me.Dtp_Fecha_Ingreso.Location = New System.Drawing.Point(217, 419)
+        Me.Dtp_Fecha_Ingreso.Location = New System.Drawing.Point(220, 458)
         '
         '
         '
@@ -449,7 +457,7 @@ Partial Class Frm_Fabricaciones
         '
         Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX1.ForeColor = System.Drawing.Color.Black
-        Me.LabelX1.Location = New System.Drawing.Point(12, 12)
+        Me.LabelX1.Location = New System.Drawing.Point(12, 3)
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.Size = New System.Drawing.Size(48, 23)
         Me.LabelX1.TabIndex = 170
@@ -465,29 +473,21 @@ Partial Class Frm_Fabricaciones
         Me.Txt_Receta.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Receta.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.Txt_Receta.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_Receta.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Txt_Receta.Font = New System.Drawing.Font("Courier New", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Txt_Receta.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Receta.Location = New System.Drawing.Point(66, 13)
+        Me.Txt_Receta.Location = New System.Drawing.Point(12, 23)
         Me.Txt_Receta.Name = "Txt_Receta"
         Me.Txt_Receta.PreventEnterBeep = True
         Me.Txt_Receta.ReadOnly = True
-        Me.Txt_Receta.Size = New System.Drawing.Size(673, 22)
+        Me.Txt_Receta.Size = New System.Drawing.Size(727, 31)
         Me.Txt_Receta.TabIndex = 171
         Me.Txt_Receta.Text = "DSDSD SDS DSD - SD SDSDFSAFSFSDF A DSAF SDF SDF SDFSD"
-        '
-        'Chk_GDI_Consumo
-        '
-        Me.Chk_GDI_Consumo.CheckBoxImageChecked = CType(resources.GetObject("Chk_GDI_Consumo.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_GDI_Consumo.Checked = True
-        Me.Chk_GDI_Consumo.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.Chk_GDI_Consumo.Name = "Chk_GDI_Consumo"
-        Me.Chk_GDI_Consumo.Text = "Crear GDI de consumo"
         '
         'Frm_Fabricaciones
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(748, 529)
+        Me.ClientSize = New System.Drawing.Size(748, 563)
         Me.Controls.Add(Me.Txt_Receta)
         Me.Controls.Add(Me.LabelX1)
         Me.Controls.Add(Me.Dtp_Fecha_Ingreso)

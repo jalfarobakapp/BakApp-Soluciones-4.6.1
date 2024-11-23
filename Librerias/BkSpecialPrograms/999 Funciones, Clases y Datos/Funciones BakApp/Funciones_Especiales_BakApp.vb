@@ -6282,7 +6282,9 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Sub
 
-    Function Fx_Confirmar_Lectura(_Mensaje1 As String, _Mensaje2 As String, _eTaskDialogIcon As eTaskDialogIcon) As Boolean
+    Function Fx_Confirmar_Lectura(_Mensaje1 As String,
+                                  _Mensaje2 As String,
+                                  _eTaskDialogIcon As eTaskDialogIcon) As Boolean
 
         Dim Chk_Confirmar_Lectura As New Command
         Chk_Confirmar_Lectura.Checked = False
@@ -6315,31 +6317,62 @@ Public Module Crear_Documentos_Desde_Otro
 
     Function Fx_Confirmar_LecturaSINO(_Mensaje1 As String,
                                       _Mensaje2 As String,
-                                      _eTaskDialogIcon As eTaskDialogIcon) As LsValiciones.Mensajes
+                                      _eTaskDialogIcon As eTaskDialogIcon,
+                                      Optional _TextoAlerta As String = "Alerta",
+                                      Optional _MostrarCancelar As Boolean = False,
+                                      Optional _TextoCheck As String = "CONFIRMAR LECTURA DE LA ALERTA",
+                                      Optional _ConfCheckNO As Boolean = True) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
         Dim Chk_Confirmar_Lectura As New Command
         Chk_Confirmar_Lectura.Checked = False
         Chk_Confirmar_Lectura.Name = "Chk_Confirmar_Lectura"
-        Chk_Confirmar_Lectura.Text = "CONFIRMAR LECTURA DE LA ALERTA"
+        Chk_Confirmar_Lectura.Text = _TextoCheck
 
         Dim _Opciones As Command = Chk_Confirmar_Lectura
 
-        Dim _Info As New TaskDialogInfo("Alerta",
+        Dim _Info As TaskDialogInfo
+
+        If _MostrarCancelar Then
+            _Info = New TaskDialogInfo(_TextoAlerta,
+                  _eTaskDialogIcon,
+                  _Mensaje1, _Mensaje2,
+                  eTaskDialogButton.Yes + eTaskDialogButton.No + eTaskDialogButton.Cancel, eTaskDialogBackgroundColor.Red, Nothing, Nothing,
+                  _Opciones, Nothing, Nothing)
+        Else
+            _Info = New TaskDialogInfo(_TextoAlerta,
                   _eTaskDialogIcon,
                   _Mensaje1, _Mensaje2,
                   eTaskDialogButton.Yes + eTaskDialogButton.No, eTaskDialogBackgroundColor.Red, Nothing, Nothing,
                   _Opciones, Nothing, Nothing)
+        End If
+
 
         Dim _Resultado As eTaskDialogResult = TaskDialog.Show(_Info)
 
+        _Mensaje.Tag = _Resultado
+
         If _Resultado = eTaskDialogResult.Yes Or _Resultado = eTaskDialogResult.No Or _Resultado = eTaskDialogResult.Cancel Then
 
+            If _Resultado = eTaskDialogResult.Cancel Then
+                _Mensaje.EsCorrecto = False
+                _Mensaje.Cancelado = True
+                Return _Mensaje
+            End If
+
             If Not Chk_Confirmar_Lectura.Checked Then
-                'MessageBoxEx.Show(Me, "Debe confirmar la lectura", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                If _Resultado = eTaskDialogResult.No Then
+                    If Not _ConfCheckNO Then
+                        _Mensaje.EsCorrecto = False
+                        Return _Mensaje
+                    End If
+                End If
+
                 Beep()
-                _Mensaje = Fx_Confirmar_LecturaSINO(_Mensaje1, _Mensaje2, _eTaskDialogIcon)
+                _Mensaje = Fx_Confirmar_LecturaSINO(_Mensaje1, _Mensaje2, _eTaskDialogIcon, _TextoAlerta, _MostrarCancelar, _TextoCheck, _ConfCheckNO)
+
             Else
 
                 _Mensaje.Resultado = _Resultado.ToString
@@ -6357,6 +6390,7 @@ Public Module Crear_Documentos_Desde_Otro
             End If
 
         Else
+            _Mensaje.Tag = eTaskDialogResult.Cancel
             _Mensaje.Cerrar = True
         End If
 

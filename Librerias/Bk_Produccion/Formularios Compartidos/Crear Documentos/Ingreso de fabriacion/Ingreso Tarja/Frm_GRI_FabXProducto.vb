@@ -1,6 +1,4 @@
-﻿Imports System.Runtime.InteropServices
-Imports BkSpecialPrograms
-Imports BkSpecialPrograms.LsValiciones
+﻿Imports BkSpecialPrograms
 Imports DevComponents.DotNetBar
 
 Public Class Frm_GRI_FabXProducto
@@ -431,11 +429,19 @@ Public Class Frm_GRI_FabXProducto
 
         If _Ult_Tipo = "MAXI-SACO" Then
 
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Lotes_Enc Where NroLote = '" & _Ult_Lote & "'"
+            Dim _Row_Lote As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Dim _Lote As String = vbCrLf & "Lote: " & _Ult_Lote
+
+            If _Row_Lote.Item("Codigo").ToString.Trim <> Txt_Codigo.Text.Trim Then
+                _Lote = String.Empty
+            End If
+
             If MessageBoxEx.Show(Me, "¿Quiere seguir utilizando los datos de MAXI fabricado anteriormente?" & vbCrLf & vbCrLf &
                                  "Turno: " & _Ult_Turno_Str.Trim & vbCrLf &
                                  "Planta: " & _Ult_Planta_Str.Trim & vbCrLf &
-                                 "Tolva: " & _Ult_Tolva_Str.Trim & vbCrLf &
-                                 "Lote: " & _Ult_Lote,
+                                 "Tolva: " & _Ult_Tolva_Str.Trim & _Lote,
                                  "Fabricar MAXI-SACO", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
                 _Cl_Tarja.Zw_Pdp_CPT_Tarja.Tipo = _Ult_Tipo
@@ -446,8 +452,13 @@ Public Class Frm_GRI_FabXProducto
                 _Cl_Tarja.Zw_Pdp_CPT_Tarja.Tolva = _Ult_Tolva
                 Txt_Tolva.Text = _Ult_Tolva_Str
                 _Cl_Tarja.Zw_Pdp_CPT_Tarja.Lote = _Ult_Lote
-                Txt_NroLote.Text = _Ult_Lote
                 Cmb_Formato.SelectedValue = 1
+
+                If Not String.IsNullOrEmpty(_Lote) Then
+                    Txt_NroLote.Text = _Ult_Lote
+                Else
+                    Call Txt_NroLote_ButtonCustomClick(Nothing, Nothing)
+                End If
 
                 Btn_Grabar.Focus()
 
@@ -647,13 +658,11 @@ Public Class Frm_GRI_FabXProducto
 
         If _Row_Lote.Item("Codigo").ToString.Trim <> Txt_Codigo.Text.Trim Then
 
-            'MessageBoxEx.Show(Me, "El número de lote " & _NroLote & " no pertence al producto " & Txt_Codigo.Text.Trim & vbCrLf & vbCrLf &
-            '                  "El lote " & _NroLote & " es del producto " & _Row_Lote.Item("Codigo").ToString.Trim, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-
             MessageBoxEx.Show(Me, "El número de lote " & _NroLote & " pertence al producto " & _Row_Lote.Item("Codigo").ToString.Trim & vbCrLf & vbCrLf &
                               "No puede grabar el mismo numero de lote para otro producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-
+            Call Txt_NroLote_ButtonCustomClick(Nothing, Nothing)
             Return
+
         End If
 
         MessageBoxEx.Show(Me, "Lote aceptado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
