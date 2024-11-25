@@ -241,6 +241,7 @@ Public Class Frm_Configuracion_Gral
             Input_MesesVenListaPrecios.Value = .Item("MesesVenListaPrecios")
 
             Chk_HabilitarNVVConProdCustomizables.Checked = .Item("HabilitarNVVConProdCustomizables")
+            Chk_RestringirFechaVencimientoClientes.Checked = .Item("RestringirFechaVencimientoClientes")
 
         End With
 
@@ -339,6 +340,7 @@ Public Class Frm_Configuracion_Gral
         Input_MesesVenListaPrecios.Enabled = _Modalidad_General
 
         Chk_HabilitarNVVConProdCustomizables.Enabled = _Modalidad_General
+        Chk_RestringirFechaVencimientoClientes.Enabled = _Modalidad_General
 
         AddHandler Txt_Dias_Venci_Coti.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
         AddHandler Txt_ValorMinimoNVV.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
@@ -542,6 +544,7 @@ Public Class Frm_Configuracion_Gral
                        ",UsarVencListaPrecios = " & Convert.ToInt32(Chk_UsarVencListaPrecios.Checked) & vbCrLf &
                        ",MesesVenListaPrecios = " & Input_MesesVenListaPrecios.Value & vbCrLf &
                        ",HabilitarNVVConProdCustomizables = " & Convert.ToInt32(Chk_HabilitarNVVConProdCustomizables.Checked) & vbCrLf &
+                       ",RestringirFechaVencimientoClientes = " & Convert.ToInt32(Chk_RestringirFechaVencimientoClientes.Checked) & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then

@@ -114,8 +114,6 @@ Partial Class Frm_Fabricaciones
         'Chk_GDI_Consumo
         '
         Me.Chk_GDI_Consumo.CheckBoxImageChecked = CType(resources.GetObject("Chk_GDI_Consumo.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_GDI_Consumo.Checked = True
-        Me.Chk_GDI_Consumo.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Chk_GDI_Consumo.Name = "Chk_GDI_Consumo"
         Me.Chk_GDI_Consumo.Text = "Crear GDI de consumo"
         '

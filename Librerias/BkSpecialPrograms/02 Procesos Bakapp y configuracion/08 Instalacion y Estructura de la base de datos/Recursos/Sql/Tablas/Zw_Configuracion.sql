@@ -130,6 +130,7 @@ CREATE TABLE [dbo].[Zw_Configuracion](
 [AgregaMeventoPallet]                                   [bit]           NOT NULL DEFAULT (0),
 [TidoPalletAuto]                                        [varchar](100)  NOT NULL DEFAULT (''),
 [HabilitarNVVConProdCustomizables]                      [bit]           NOT NULL DEFAULT (0),
+[RestringirFechaVencimientoClientes]                    [bit]           NOT NULL DEFAULT (0),
 CONSTRAINT [PK_Zw_Configuracion] PRIMARY KEY CLUSTERED 
 (
 	[Modalidad] ASC

@@ -1635,6 +1635,14 @@ Public Class Frm_Formulario_Documento
         _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Bkp00062", False, False, "", "", False, False, False) ' Minimo de venta por documento
         _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "ODp00017", False, False, "", "", False, False, False) ' Despacho mínimo en Kg o Total Neto
 
+        If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Configuracion", "RestringirFechaVencimientoClientes") Then
+            If _Global_Row_Configuracion_General.Item("RestringirFechaVencimientoClientes") Then
+                _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos,
+                                                                          "Doc00098", False, False, "", "", False, False, False)
+            End If
+        End If
+
+
         _TblPermisos = _Ds_Matriz_Documentos.Tables("Permisos_Doc")
 
         Consulta_sql = "Select IDEVENTO,ARCHIRVE,IDRVE,KOFU," &
@@ -8361,6 +8369,15 @@ Public Class Frm_Formulario_Documento
                     If Not Fx_Entidad_Tiene_Deudas_CtaCte(_Formulario, _RowEntidad, False, False, _Bloqueada) Then
 
                         MessageBoxEx.Show(Me, "La entidad presenta morosidad" & Environment.NewLine &
+                                          "Está situación será evaluada nuevamente al grabar el documento",
+                                           "Validación",
+                                            MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
+
+                    End If
+
+                    If Fx_CreditoVigenteVencido(_RowEntidad) Then
+
+                        MessageBoxEx.Show(Me, "La entidad presenta fecha de crédito vigente vencida" & Environment.NewLine &
                                           "Está situación será evaluada nuevamente al grabar el documento",
                                            "Validación",
                                             MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
@@ -21426,7 +21443,7 @@ Public Class Frm_Formulario_Documento
                     Fx_Autorizar_X_Descuentos(False)
                 End If
 
-            Case "Bkp00015", "Bkp00019", "Bkp00033", "Bkp00057", "ODp00017", "Bkp00062"
+            Case "Bkp00015", "Bkp00019", "Bkp00033", "Bkp00057", "ODp00017", "Bkp00062", "Doc00098"
 
                 If _Crear_Doc_Def_Al_Grabar Then
 
@@ -22621,6 +22638,10 @@ Public Class Frm_Formulario_Documento
         Dim _Autorizado As Boolean
         Dim _Revisar_Stock_FcvBlv As Boolean = False
 
+        If _Revision_Remota Then
+            Return
+        End If
+
         If _Tido = "GDI" Or _Tido = "GTI" Then
             _Autorizado = False : _Necesita_Permiso = False
             _Autorizado = Fx_Validar_Stock(False, _Necesita_Permiso)
@@ -22939,6 +22960,54 @@ Public Class Frm_Formulario_Documento
                         _Autorizado = Fx_Validad_Cupo_Excedido(_Necesita_Permiso)
                         Sb_Revisar_Permiso("Bkp00033", _Autorizado, _Necesita_Permiso)
                     End If
+
+                    If Fx_CreditoVigenteVencido(_RowEntidad) Then
+                        If Not Fx_Tiene_Permiso(Me, "Doc00098",, False) Then
+                            Sb_Revisar_Permiso("Doc00098", False, True)
+                        End If
+                    End If
+
+                    'If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Configuracion", "RestringirFechaVencimientoClientes") Then
+
+                    '    If _Global_Row_Configuracion_General.Item("RestringirFechaVencimientoClientes") Then
+
+                    '        Dim _FechaEmision As Date = _TblEncabezado.Rows(0).Item("FechaEmision")
+                    '        Dim _Koen As String = _RowEntidad.Item("KOEN")
+                    '        Dim _Suen As String = _RowEntidad.Item("SUEN")
+
+                    '        Dim _CRSD = _RowEntidad.Item("CRSD")
+                    '        Dim _CRCH = _RowEntidad.Item("CRCH")
+                    '        Dim _CRPA = _RowEntidad.Item("CRPA")
+                    '        Dim _CRTO = _RowEntidad.Item("CRTO")
+                    '        Dim _NUVECR = _RowEntidad.Item("NUVECR")
+                    '        Dim _DIASVENCI = _RowEntidad.Item("DIASVENCI")
+                    '        Dim _DIPRVE = _RowEntidad.Item("DIPRVE")
+
+                    '        Dim _Dd = _CRSD + _CRCH + _CRPA + _CRTO + _NUVECR + _DIASVENCI
+
+                    '        If CType(_RowEntidad.Item("FEVECREN"), Date).Date < _FechaEmision.Date Then
+
+                    '            If CBool(_Dd) Then
+
+                    '                Dim _Fl As DataRow() = _TblPermisos.Select("CodPermiso = 'Doc00098'")
+
+                    '                If Not CBool(_Fl.Length) Then
+
+                    '                    If Fx_Tiene_Permiso(Me, "Doc00098",, False) Then
+                    '                        Fx_Incorporar_Permiso_Al_Documento(_TblPermisos, "Doc00098", True, True, FUNCIONARIO, Nombre_funcionario_activo, "", True, True, False)
+                    '                    Else
+                    '                        Fx_Incorporar_Permiso_Al_Documento(_TblPermisos, "Doc00098", True, False, "", "", "", False, True, True)
+                    '                    End If
+
+                    '                End If
+
+                    '            End If
+
+                    '        End If
+
+                    '    End If
+
+                    'End If
 
                     'Else
 
@@ -28504,6 +28573,40 @@ Public Class Frm_Formulario_Documento
         End Try
 
         Return _Mensaje
+
+    End Function
+
+    Function Fx_CreditoVigenteVencido(_RowEntidad As DataRow) As Boolean
+
+        If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Configuracion", "RestringirFechaVencimientoClientes") Then
+
+            If _Global_Row_Configuracion_General.Item("RestringirFechaVencimientoClientes") Then
+
+                Dim _FechaEmision As Date = _TblEncabezado.Rows(0).Item("FechaEmision")
+                Dim _Koen As String = _RowEntidad.Item("KOEN")
+                Dim _Suen As String = _RowEntidad.Item("SUEN")
+
+                Dim _CRSD = _RowEntidad.Item("CRSD")
+                Dim _CRCH = _RowEntidad.Item("CRCH")
+                Dim _CRPA = _RowEntidad.Item("CRPA")
+                Dim _CRTO = _RowEntidad.Item("CRTO")
+                Dim _NUVECR = _RowEntidad.Item("NUVECR")
+                Dim _DIASVENCI = _RowEntidad.Item("DIASVENCI")
+                Dim _DIPRVE = _RowEntidad.Item("DIPRVE")
+
+                Dim _Dd = _CRSD + _CRCH + _CRPA + _CRTO + _NUVECR + _DIASVENCI
+
+                If CType(_RowEntidad.Item("FEVECREN"), Date).Date < _FechaEmision.Date And CBool(_Dd) Then
+
+                    Return True
+
+                End If
+
+            End If
+
+        End If
+
+        Return False
 
     End Function
 

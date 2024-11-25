@@ -24,6 +24,7 @@ Partial Class Frm_Configuracion_Gral
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Configuracion_Gral))
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Chk_HabilitarNVVConProdCustomizables = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_No_Permitir_Grabar_Con_Dscto_Superado = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Utilizar_NVV_En_Credito_X_Cliente = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Preguntar_Documento = New DevComponents.DotNetBar.Controls.CheckBoxX()
@@ -176,7 +177,7 @@ Partial Class Frm_Configuracion_Gral
         Me.Btn_DocConceptosVsPagos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_ConfPuntosVta = New DevComponents.DotNetBar.ButtonItem()
         Me.CheckBoxX2 = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_HabilitarNVVConProdCustomizables = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_RestringirFechaVencimientoClientes = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.TableLayoutPanel3.SuspendLayout()
         CType(Me.Input_Monto_Max_CRV_FacMasiva, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel4.SuspendLayout()
@@ -210,6 +211,7 @@ Partial Class Frm_Configuracion_Gral
         Me.TableLayoutPanel3.BackColor = System.Drawing.Color.Transparent
         Me.TableLayoutPanel3.ColumnCount = 1
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel3.Controls.Add(Me.Chk_RestringirFechaVencimientoClientes, 0, 21)
         Me.TableLayoutPanel3.Controls.Add(Me.Chk_HabilitarNVVConProdCustomizables, 0, 20)
         Me.TableLayoutPanel3.Controls.Add(Me.Chk_No_Permitir_Grabar_Con_Dscto_Superado, 0, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.Chk_Utilizar_NVV_En_Credito_X_Cliente, 0, 1)
@@ -256,6 +258,25 @@ Partial Class Frm_Configuracion_Gral
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel3.Size = New System.Drawing.Size(657, 354)
         Me.TableLayoutPanel3.TabIndex = 85
+        '
+        'Chk_HabilitarNVVConProdCustomizables
+        '
+        Me.Chk_HabilitarNVVConProdCustomizables.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_HabilitarNVVConProdCustomizables.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_HabilitarNVVConProdCustomizables.CheckBoxImageChecked = CType(resources.GetObject("Chk_HabilitarNVVConProdCustomizables.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_HabilitarNVVConProdCustomizables.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_HabilitarNVVConProdCustomizables.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_HabilitarNVVConProdCustomizables.FocusCuesEnabled = False
+        Me.Chk_HabilitarNVVConProdCustomizables.ForeColor = System.Drawing.Color.Black
+        Me.Chk_HabilitarNVVConProdCustomizables.Location = New System.Drawing.Point(3, 309)
+        Me.Chk_HabilitarNVVConProdCustomizables.Name = "Chk_HabilitarNVVConProdCustomizables"
+        Me.Chk_HabilitarNVVConProdCustomizables.Size = New System.Drawing.Size(635, 12)
+        Me.Chk_HabilitarNVVConProdCustomizables.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_HabilitarNVVConProdCustomizables.TabIndex = 126
+        Me.Chk_HabilitarNVVConProdCustomizables.Text = "Habilitar NVV CUSTOMIZABLES (deben ser habilitadas para poder ser Facturadas/Bole" &
+    "teadas)"
         '
         'Chk_No_Permitir_Grabar_Con_Dscto_Superado
         '
@@ -2750,24 +2771,22 @@ Partial Class Frm_Configuracion_Gral
         Me.CheckBoxX2.TabIndex = 117
         Me.CheckBoxX2.Text = "Ambiente de pruebas y certificación"
         '
-        'Chk_HabilitarNVVConProdCustomizables
-        '
-        Me.Chk_HabilitarNVVConProdCustomizables.BackColor = System.Drawing.Color.Transparent
+        'Chk_RestringirFechaVencimientoClientes
         '
         '
         '
-        Me.Chk_HabilitarNVVConProdCustomizables.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_HabilitarNVVConProdCustomizables.CheckBoxImageChecked = CType(resources.GetObject("Chk_HabilitarNVVConProdCustomizables.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_HabilitarNVVConProdCustomizables.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_HabilitarNVVConProdCustomizables.CheckBoxImageIndeterminate"), System.Drawing.Image)
-        Me.Chk_HabilitarNVVConProdCustomizables.FocusCuesEnabled = False
-        Me.Chk_HabilitarNVVConProdCustomizables.ForeColor = System.Drawing.Color.Black
-        Me.Chk_HabilitarNVVConProdCustomizables.Location = New System.Drawing.Point(3, 309)
-        Me.Chk_HabilitarNVVConProdCustomizables.Name = "Chk_HabilitarNVVConProdCustomizables"
-        Me.Chk_HabilitarNVVConProdCustomizables.Size = New System.Drawing.Size(635, 12)
-        Me.Chk_HabilitarNVVConProdCustomizables.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_HabilitarNVVConProdCustomizables.TabIndex = 126
-        Me.Chk_HabilitarNVVConProdCustomizables.Text = "Habilitar NVV CUSTOMIZABLES (deben ser habilitadas para poder ser Facturadas/Bole" &
-    "teadas)"
+        '
+        Me.Chk_RestringirFechaVencimientoClientes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_RestringirFechaVencimientoClientes.CheckBoxImageChecked = CType(resources.GetObject("Chk_RestringirFechaVencimientoClientes.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_RestringirFechaVencimientoClientes.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_RestringirFechaVencimientoClientes.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_RestringirFechaVencimientoClientes.FocusCuesEnabled = False
+        Me.Chk_RestringirFechaVencimientoClientes.ForeColor = System.Drawing.Color.Black
+        Me.Chk_RestringirFechaVencimientoClientes.Location = New System.Drawing.Point(3, 329)
+        Me.Chk_RestringirFechaVencimientoClientes.Name = "Chk_RestringirFechaVencimientoClientes"
+        Me.Chk_RestringirFechaVencimientoClientes.Size = New System.Drawing.Size(635, 12)
+        Me.Chk_RestringirFechaVencimientoClientes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_RestringirFechaVencimientoClientes.TabIndex = 126
+        Me.Chk_RestringirFechaVencimientoClientes.Text = "Verificar la Fecha de Vigencia del Crédito del Cliente al Realizar la Venta"
         '
         'Frm_Configuracion_Gral
         '
@@ -2968,4 +2987,5 @@ Partial Class Frm_Configuracion_Gral
     Friend WithEvents Btn_MayMinInfo As DevComponents.DotNetBar.ButtonX
     Friend WithEvents Panel_MayoristaMinorista As Panel
     Friend WithEvents Chk_HabilitarNVVConProdCustomizables As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_RestringirFechaVencimientoClientes As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

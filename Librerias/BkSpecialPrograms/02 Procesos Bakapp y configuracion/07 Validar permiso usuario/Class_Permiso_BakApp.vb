@@ -587,6 +587,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Doc00095", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00096", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00097", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00098", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Ope00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ope00002", _Objeto, _Formulario)
@@ -2264,12 +2265,10 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "CREAR NOTAS DE CREDITO CON DOC. RELACIONADOS FUERA DE PLAZO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00027"
                 _DescripcionPermiso = "INGRESAR/EDITAR/ELIMINAR REFERENCIAS DTE XML"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00028"
                 _DescripcionPermiso = "AUTORIZA DOC. DE VENTA CON PRECIO IGUAL A CERO (0)"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
@@ -2314,306 +2313,251 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "IMPRIMIR DOCUMENTO EN UN FORMATO DISTINTO AL DE LA MODALIDAD"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00039"
                 _DescripcionPermiso = "PERMITIR HACER FACTURAS CON GUIA DE MESES ANTERIORES"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00040"
                 _DescripcionPermiso = "PERMITIR CAMBIAR CONDICION DE MOVER O NO STOCK EN LA LINEA DEL DOCUMENTO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00041"
                 _DescripcionPermiso = "PERMITIR GRABAR BOLETA NOMINATIVA DE VENTA SIN EXIGIR EL PAGO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00042"
                 _DescripcionPermiso = "PERMITIR INCORPORAR CONCEPTOS DE DESCUENTO O RECARGO SIN VALOR EN DOCUMENTOS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00043"
                 _DescripcionPermiso = "MODIFICAR CONCEPTOS DE DESCUENTO EN LA LINEA DEL DOCUMENTO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00044"
                 _DescripcionPermiso = "MODIFICAR CONCEPTOS DE RECARGO EN LA LINEA DEL DOCUMENTO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00045"
                 _DescripcionPermiso = "CERRAR RESERVA DE ORDEN DE COMPRA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00046"
                 _DescripcionPermiso = "RE-IMPRIMIR RESERVA DE ORDEN DE COMPRA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00047"
                 _DescripcionPermiso = "UTILIZAR RESERVA DE ORDEN DE COMPRA DE OTROS USUARIOS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00048"
                 _DescripcionPermiso = "MOSTRAR COLUMNA DE DESCUENTO MAXIMO DE LA ENTIDAD POR PRODUCTO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00049"
                 _DescripcionPermiso = "PODER GRABAR O VER DOCUMENTOS EN STAND-BY"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00050"
                 _DescripcionPermiso = "GRABAR DOCUMENTO SIN EXIGIR HUELLA DIGITAL"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00051"
                 _DescripcionPermiso = "PERMITIR INGRESAR CODIGOS CON EL TECLADO EN VALIDADOR POR CODIGOS DE BARRAS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00052"
                 _DescripcionPermiso = "PERMITIR CAMBIAR LA FECHA DE EMISION EN DOCUMENTOS VISADOS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00053"
                 _DescripcionPermiso = "PERMITIR GRABAR DOCUMENTOS QUE NECESITAN CONCEPTOS OBLIGATORIOS SEGUN TIPO DE PAGO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00054"
                 _DescripcionPermiso = "PERMITIR CREAR GUIAS MANTENIENDO LAS BODEGAS ORIGINALES DE LOS DOCUMENTOS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00055"
                 _DescripcionPermiso = "REACTIVACION DE DOCUMENTOS DE COMPROMISO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00056"
                 _DescripcionPermiso = "CAMBIAR LAS BODEGAS A LA BODEGA DE LA MODALIDAD DESDE UN DOC. CON OTRAS BODEGAS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00057"
                 _DescripcionPermiso = "CONFIGURAR SALIDA DE IMPRESION DE DOCUMENTOS HACIA UN DIABLITO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00058"
                 _DescripcionPermiso = "CONFIGURAR SALIDA DE IMPRESORA LOCAL/RED"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00059"
                 _DescripcionPermiso = "ANULAR/ELIMINAR DOCUMENTOS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00060"
                 _DescripcionPermiso = "PERMITIR GRABAR OCC CON PRODUCTOS QUE TIENEN ORDENES DE COMPRA PRENDIENTES"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00061"
                 _DescripcionPermiso = "PERMITIR GRABAR OCC CON PRODUCTOS QUE TIENEN DISTINTO COSTO EN LISTA DEL DOCUMENTO VS LISTA DE COSTOS DEL PROVEEDOR"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00062"
                 _DescripcionPermiso = "PERMITIR GRABAR OCC CON CONCEPTOS SIN DISTRIBUCION DE RECARGOS A DOCUMENTOS OBLIGATORIO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00063"
                 _DescripcionPermiso = "CREAR (NVI) ORDEN DE SOLICITUD INTERNA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00064"
                 _DescripcionPermiso = "CAMBIAR CARPETA DE SALIDAD PARA CREACION DE PDF AUTOMATICO POR MODALIDAD, DOCUMENTO Y ESTACION DE TRABAJO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00065"
                 _DescripcionPermiso = "CAMBIAR NUMERO DEL LIBRO DE COMPRAS EN FCC"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00066"
                 _DescripcionPermiso = "PERMITIR GRABAR DOCUMENTOS SIN TRANSPORTISTA EN DOC. QUE LO OBLIGAN A LLEVAR (Retirador de mercadería/Placa patente)"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00067"
                 _DescripcionPermiso = "PERMITIR VIZUALIZAR EL COSTO DEL PRODUCTO DE SU LISTA OFICIAL"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00068"
                 _DescripcionPermiso = "CAMBIAR CARPETAS PARA CONFIGURACION DE GRI DESDE TXT (ESPECIAL)"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00069"
                 _DescripcionPermiso = "CREAR (GRD) GUIA DE RECEPCION DE DEVOLUCION"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00070"
                 _DescripcionPermiso = "ELIMINAR Y ANULAR MIS VALES TRANSITORIOS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00071"
                 _DescripcionPermiso = "ELIMINAR Y ANULAR VALES TRANSITORIOS DE OTROS FUNCIONARIOS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00072"
                 _DescripcionPermiso = "IMPRIMIR DOCUMENTO EN CONSTRUCCION"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00073"
                 _DescripcionPermiso = "EDITAR NVV CON PERMISO DE EXTENEDER FECHA DE DESPACHO EN DOCUMENTOS DE VENTA YA ASIGNADO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00074"
                 _DescripcionPermiso = "GRABAR (NCV) NOTA DE CREDITO DE VENTA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00075"
                 _DescripcionPermiso = "MODIFICAR PRECIO DE VENTA DEL PRODUCTO EN COTIZACION"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00076"
                 _DescripcionPermiso = "MODIFICAR DESCUENTO EN LA LÍNEA DEL PRODUCTOS EN COTIZACION"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00077"
                 _DescripcionPermiso = "MODIFICAR OPCION DE FECHAS AL GRABAR GDV PROCEDIENTE DESDE OTRO DOCUMENTO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00078"
                 _DescripcionPermiso = "CAMBIAR EL PERMISO PARA PODER LEER CODIGOS DE BARRA/QR UNICOS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00079"
                 _DescripcionPermiso = "PERMITIR CAMBIAR LA DESCRIPCION DE UN CONCEPTO EN UN DOCUMENTO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00080"
                 _DescripcionPermiso = "PERMITIR GRABAR UN DOCUMENTO QUE NO TENGA RELACION CON OTRO, CUANDO NO TENGO PERMISO PARA REALIZAR ESA ACCION."
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00081"
                 _DescripcionPermiso = "CREAR DOCUMENTOS DESDE DTE XML ENVIADO POR PROVEEDORES."
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00082"
                 _DescripcionPermiso = "HABILITAR NOTAS DE VENTA PARA SER FACTURADAS DE OTROS USUARIOS/VENDEDORES"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00083"
                 _DescripcionPermiso = "PERMITIR EDITAR NOTAS DE VENTA HABILITADAS PARA SER FACTURADAS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00084"
                 _DescripcionPermiso = "PERMITIR INGRESAR A REVISAR EN SITUACIÓN COMERCIAL DE DOCUMENTOS DE VENTA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00085"
                 _DescripcionPermiso = "PERMITIR GENERAR ORDEN DE COMPRA BAJO EL MINIMO ESTABLECIDO POR PROVEEDOR"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00085"
                 _DescripcionPermiso = "PERMITIR GENERAR ORDEN DE COMPRA BAJO EL MINIMO ESTABLECIDO POR PROVEEDOR"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00086"
                 _DescripcionPermiso = "CREAR (GRI) GUIAS DE RECEPCION INTERNA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00087"
                 _DescripcionPermiso = "CREAR (GRI) GUIAS DE RECEPCION INTERNA - AJUSTE"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00088"
                 _DescripcionPermiso = "CREAR (GDI) GUIAS DE DESPACHO INTERNA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00089"
                 _DescripcionPermiso = "CREAR (GDI) GUIAS DE DESPACHO INTERNA - AJUSTE"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00090"
                 _DescripcionPermiso = "PERMITIR CAMBIAR LA FECHA DE EMISION EN DOCUMENTOS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00091"
                 _DescripcionPermiso = "PERMITIR DESMARCAR EL CHECK ""NO VOLVER A PREGUNTAR"". EN INGRESO DE PRODUCTO DUPLICADO EN DOCUMENTO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00092"
                 _DescripcionPermiso = "PERMITIR INGRESAR PRODUCTOS DUPLICADOS EN DOCUMENTOS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00093"
                 _DescripcionPermiso = "CAMBIAR A ELECTRONICO UNA FACTURA DE COMPRA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00094"
                 _DescripcionPermiso = "PERMITIR CREAR (GDI) GUIAS DE DESPACHO INTERNA SIN MODO DE TRASPASO INTERNO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00095"
                 _DescripcionPermiso = "PERMITIR CREAR (GDI) GUIAS DE DESPACHO INTERNA EN MODO DE TRASPASO INTERNO, PERO SIN ASIGNAR UNA BODEGA DE DESTINO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00096"
                 _DescripcionPermiso = "PERMITIR VENDER A CLIENTES QUE ESTAN ASOCIADOS A OTRO VENDEDOR"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Doc00097"
                 _DescripcionPermiso = "PERMITIR VER DOCUMENTOS DE CLIENTES DE OTROS VENDEDORES"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00098"
+                _DescripcionPermiso = "PERMITIR OBVIAR CONDICION DE CREDITO NO VIGENTE"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+
 
         End Select
 
