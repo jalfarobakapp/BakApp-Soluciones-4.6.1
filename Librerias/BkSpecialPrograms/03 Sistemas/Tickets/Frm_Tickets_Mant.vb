@@ -52,10 +52,11 @@ Public Class Frm_Tickets_Mant
 
             _Mensaje = _Cl_Tickets_Padre.Fx_Llenar_Ticket(Id_Padre)
             _Mensaje = _Cl_Tickets.FX_Llenar_Producto(_Cl_Tickets_Padre.Zw_Stk_Tickets.Id)
+            _Cl_Tickets_Padre.Zw_Stk_Tipos = _Cl_Tickets_Padre.Fx_Llenar_Tipo(_Cl_Tickets_Padre.Zw_Stk_Tickets.Id_Tipo)
 
-            _Cl_Tickets.Zw_Stk_Tipos = _Cl_Tickets.Fx_Llenar_Tipo(_Cl_Tickets.Zw_Stk_Tickets.Id_Tipo)
+            _Cl_Tickets.Zw_Stk_Tipos = _Cl_Tickets.Fx_Llenar_Tipo(_Cl_Tickets_Padre.Zw_Stk_Tipos.CieTk_Id_Tipo)
 
-            _Cl_Tickets_Padre.Zw_Stk_Tipos = _Cl_Tickets.Fx_Llenar_Tipo(_Cl_Tickets_Padre.Zw_Stk_Tickets.Id_Tipo)
+            '_Cl_Tickets_Padre.Zw_Stk_Tipos = _Cl_Tickets.Fx_Llenar_Tipo(_Cl_Tickets_Padre.Zw_Stk_Tickets.Id_Tipo)
 
             _Cl_Tickets.Zw_Stk_Tickets.Prioridad = _Cl_Tickets_Padre.Zw_Stk_Tickets.Prioridad
             _Cl_Tickets.Zw_Stk_Tickets.Id_Raiz = _Cl_Tickets_Padre.Zw_Stk_Tickets.Id_Raiz
@@ -144,7 +145,7 @@ Public Class Frm_Tickets_Mant
             Return
         End If
 
-        If CBool(Id_Padre) And Chk_ExigeProducto.Checked And Not _ConfirmaCantidades Then
+        If CBool(Id_Padre) And Chk_ExigeProducto.Checked And Not _ConfirmaCantidades And CBool(_Cl_Tickets.Zw_Stk_Tipos.Inc_Cantidades) Then
             MessageBoxEx.Show(Me, "Debe ingresar las cantidades para confirmar la grabación del Ticket",
                               "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Call Btn_VerProducto_Click(Nothing, Nothing)
@@ -226,6 +227,7 @@ Public Class Frm_Tickets_Mant
                 .Aceptado = Aceptado
                 .Rechazado = Rechazado
                 .Id_Raiz = _Cl_Tickets.Zw_Stk_Tickets.Id_Raiz
+                .Asunto = Txt_Asunto.Text
 
             End With
 
@@ -704,6 +706,11 @@ Public Class Frm_Tickets_Mant
         Dim Fm As New Frm_Tickets_IngProducto(_Cl_Tickets.Zw_Stk_Tickets.Id_Tipo)
         Fm.Zw_Stk_Tickets_Producto = _Cl_Tickets.Zw_Stk_Tickets_Producto
         Fm.NuevoIngreso = CBool(Id_Padre)
+
+        If Not _Cl_Tickets.Zw_Stk_Tipos.Inc_Cantidades Then
+            Fm.SoloLectura = True
+        End If
+
         Fm.ShowDialog(Me)
 
         If Fm.Grabar Then
@@ -827,33 +834,34 @@ Public Class Frm_Tickets_Mant
             _LlenarElTipo = True
         Else
             If CBool(_Cl_Tickets_Padre.Zw_Stk_Tickets.Id_Area) AndAlso CBool(_Cl_Tickets_Padre.Zw_Stk_Tickets.Id_Tipo) Then
-                _New_Id_Area = _Cl_Tickets_Padre.Zw_Stk_Tickets.Id_Area
-                _New_Id_Tipo = _Cl_Tickets_Padre.Zw_Stk_Tickets.Id_Tipo
+                _New_Id_Area = _Cl_Tickets_Padre.Zw_Stk_Tipos.CieTk_Id_Area
+                _New_Id_Tipo = _Cl_Tickets_Padre.Zw_Stk_Tipos.CieTk_Id_Tipo
                 _LlenarElTipo = True
             End If
         End If
 
         If _LlenarElTipo Then
 
-            Dim _Zw_Stk_Tipos As New Zw_Stk_Tipos
+            'Dim _Zw_Stk_Tipos As New Zw_Stk_Tipos
 
-            _Zw_Stk_Tipos = _Cl_Tickets_Padre.Fx_Llenar_Tipo(_New_Id_Tipo)
+            '_Zw_Stk_Tipos = _Cl_Tickets_Padre.Fx_Llenar_Tipo(_New_Id_Tipo)
 
             Consulta_sql = "Select Tp.*,Ar.Area From " & _Global_BaseBk & "Zw_Stk_Tipos Tp" & vbCrLf &
                            "Inner Join " & _Global_BaseBk & "Zw_Stk_Areas Ar On Ar.Id = Tp.Id_Area" & vbCrLf &
-                           "Where Tp.Id = " & _Zw_Stk_Tipos.CieTk_Id_Tipo
+                           "Where Tp.Id = " & _New_Id_Tipo
             Dim _Row_AreaTipo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             _Cl_Tickets.Zw_Stk_Tickets.Id_Area = _Row_AreaTipo.Item("Id_Area")
             _Cl_Tickets.Zw_Stk_Tickets.Id_Tipo = _Row_AreaTipo.Item("Id")
 
+            'Txt_Asunto.Text = _Cl_Tickets.Zw_Stk_Tipos.Tipo
             Txt_AreaTipo.Text = _Row_AreaTipo.Item("Area").ToString.Trim & " - " & _Row_AreaTipo.Item("Tipo").ToString.Trim
 
-            Sb_Llenar_Tipo(_Zw_Stk_Tipos.CieTk_Id_Tipo)
+            Sb_Llenar_Tipo(_Cl_Tickets.Zw_Stk_Tickets.Id_Tipo)
 
-            'Txt_Descripcion.Text = _Cl_Tickets.Fx_Crear_Descripcion(_Cl_Tickets.Zw_Stk_Tickets.Id_Tipo)
-
-            Call Btn_VerProducto_Click(Nothing, Nothing)
+            If _Cl_Tickets.Zw_Stk_Tipos.Inc_Cantidades Then
+                Call Btn_VerProducto_Click(Nothing, Nothing)
+            End If
 
         End If
 

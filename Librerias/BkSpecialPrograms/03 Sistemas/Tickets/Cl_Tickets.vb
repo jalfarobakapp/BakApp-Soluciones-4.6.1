@@ -332,19 +332,13 @@ Public Class Cl_Tickets
                                ",CodFunGestiona = '" & .CodFunGestiona & "'" & vbCrLf &
                                ",Id_Raiz = '" & Zw_Stk_Tickets.Id_Raiz & "'" & vbCrLf &
                                ",Id_Ticket_Cierra = '" & .Id_Ticket_Cierra & "'" & vbCrLf &
+                               ",Id_Ticket_Crea = '" & .Id_Ticket_Crea & "'" & vbCrLf &
+                               ",Asunto = '" & .Asunto & "'" & vbCrLf &
                                "Where Id = " & .Id
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                 Comando.Transaction = myTrans
                 Comando.ExecuteNonQuery()
-
-                'Comando = New System.Data.SqlClient.SqlCommand("SELECT @@IDENTITY AS 'Identity'", Cn2)
-                'Comando.Transaction = myTrans
-                'dfd1 = Comando.ExecuteReader()
-                'While dfd1.Read()
-                '    .Id = dfd1("Identity")
-                'End While
-                'dfd1.Close()
 
             End With
 
@@ -492,7 +486,7 @@ Public Class Cl_Tickets
 
     End Function
 
-    Function Fx_Grabar_Nueva_Accion2(_Zw_Stk_Tickets_Acciones As Zw_Stk_Tickets_Acciones) As LsValiciones.Mensajes
+    Function Fx_Grabar_Nueva_Accion2(_Zw_Stk_Tickets_Acciones As Zw_Stk_Tickets_Acciones, _Enconstruccion As Boolean) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -512,8 +506,11 @@ Public Class Cl_Tickets
 
             With _Zw_Stk_Tickets_Acciones
 
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones (Id_Ticket,Accion,Descripcion,Fecha,CodAgente,CodFuncionario,En_Construccion,CodFunGestiona) Values " &
-                       "(" & .Id_Ticket & ",'" & .Accion & "','',Getdate(),'" & .CodAgente & "','" & .CodFuncionario & "',1,'" & .CodFunGestiona & "')"
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones (Id_Ticket,Accion,Descripcion,Fecha,CodAgente," &
+                               "CodFuncionario,En_Construccion,CodFunGestiona,Rechazado,Aceptado,Id_Raiz,Id_Ticket_Cierra,Id_Ticket_Crea,Asunto) Values " &
+                               "(" & .Id_Ticket & ",'" & .Accion & "','" & .Descripcion & "',Getdate(),'" & .CodAgente & "','" & .CodFuncionario & "'," &
+                               Convert.ToInt32(_Enconstruccion) & ",'" & .CodFunGestiona & "'," & Convert.ToInt32(.Rechazado) & "," &
+                               Convert.ToInt32(.Aceptado) & "," & .Id_Raiz & "," & .Id_Ticket_Cierra & "," & .Id_Ticket_Crea & ",'" & .Asunto & "')"
 
             End With
 
@@ -557,14 +554,14 @@ Public Class Cl_Tickets
                               _CreaNewTicket As Boolean,
                               _AnulaTicket As Boolean,
                               _Aceptado As Boolean,
-                              _CierraTicektPadre As Boolean) As LsValiciones.Mensajes
+                              _CierraTicketPadre As Boolean,
+                              _CierraTicektRaiz As Boolean) As LsValiciones.Mensajes
 
         Dim _Mensaje_Ticket As New LsValiciones.Mensajes
-        Dim _Zw_Stk_Tickets_Acciones As New Zw_Stk_Tickets_Acciones
 
         Dim _Estado As String
 
-        With _Zw_Stk_Tickets_Acciones
+        With Zw_Stk_Tickets_Acciones
 
             .Descripcion = _Descripcion
             .CodFuncionario = _CodFuncionario
@@ -642,9 +639,21 @@ Public Class Cl_Tickets
 
             End If
 
-            _Zw_Stk_Tickets_Acciones.Id = Zw_Stk_Tickets.Id
+            '_Zw_Stk_Tickets_Acciones.Id = Zw_Stk_Tickets.Id
 
-            If _CierraTicektPadre Then
+            If _CierraTicketPadre Then
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets Set " &
+                               "Estado = '" & _Estado & "'" & _FechaCierre & ",Aceptado = " & Convert.ToInt32(_Zw_Stk_Tickets_Acciones.Aceptado) & vbCrLf &
+                               "Where Id = " & Zw_Stk_Tickets.Id_Padre
+
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+            End If
+
+            If _CierraTicektRaiz Then
 
                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets Set " &
                                "Estado = '" & _Estado & "'" & _FechaCierre & ",Aceptado = " & Convert.ToInt32(_Zw_Stk_Tickets_Acciones.Aceptado) & vbCrLf &
@@ -655,6 +664,32 @@ Public Class Cl_Tickets
                 Comando.ExecuteNonQuery()
 
             End If
+
+            'With _Zw_Stk_Tickets_Acciones
+
+            '    .Id_Ticket = Zw_Stk_Tickets.Id
+
+            '    Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Set " & vbCrLf &
+            '                   "Id_Ticket = " & .Id_Ticket & vbCrLf &
+            '                   ",Accion = '" & .Accion & "'" & vbCrLf &
+            '                   ",Descripcion = '" & .Descripcion & "'" & vbCrLf &
+            '                   ",Fecha = Getdate()" & vbCrLf &
+            '                   ",En_Construccion = 0" & vbCrLf &
+            '                   ",Aceptado = " & Convert.ToInt32(.Aceptado) & vbCrLf &
+            '                   ",CreaNewTicket = " & Convert.ToInt32(.CreaNewTicket) & vbCrLf &
+            '                   ",Cierra_Ticket = " & Convert.ToInt32(.Cierra_Ticket) & vbCrLf &
+            '                   ",CodFunGestiona = '" & .CodFunGestiona & "'" & vbCrLf &
+            '                   ",Id_Raiz = '" & Zw_Stk_Tickets.Id_Raiz & "'" & vbCrLf &
+            '                   ",Id_Ticket_Cierra = '" & .Id_Ticket_Cierra & "'" & vbCrLf &
+            '                   ",Id_Ticket_Crea = '" & .Id_Ticket_Crea & "'" & vbCrLf &
+            '                   ",Asunto = '" & .Asunto & "'" & vbCrLf &
+            '                   "Where Id = " & .Id
+
+            '    Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+            '    Comando.Transaction = myTrans
+            '    Comando.ExecuteNonQuery()
+
+            'End With
 
 
             myTrans.Commit()
