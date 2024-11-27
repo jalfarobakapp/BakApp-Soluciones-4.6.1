@@ -1039,7 +1039,7 @@ Public Class Frm_Tickets_Lista
         '_Asig_EnProceso = Fx_CrearNodo("EnProceso", "En proceso", 0, 1)
         _Asig_Aceptados = Fx_CrearNodo("Aceptados", "Aceptados", 0, 1)
         _Asig_Rechazados = Fx_CrearNodo("Rechazados", "Rechazados", 0, 1)
-        _Asig_Cerradas = Fx_CrearNodo("Cerradas", "Cerradas", 0, 1)
+        '_Asig_Cerradas = Fx_CrearNodo("Cerradas", "Cerradas", 0, 1)
 
         With _BandejaEntrada
             .NodeFont = fuenteNegrita
@@ -1047,7 +1047,7 @@ Public Class Frm_Tickets_Lista
             '.Nodes.Add(_Asig_EnProceso)
             .Nodes.Add(_Asig_Aceptados)
             .Nodes.Add(_Asig_Rechazados)
-            .Nodes.Add(_Asig_Cerradas)
+            '   .Nodes.Add(_Asig_Cerradas)
         End With
 
         ' Crear los nodos de la bandeja de enviados
@@ -1056,7 +1056,7 @@ Public Class Frm_Tickets_Lista
         _Env_EnProceso = Fx_CrearNodo("EnProceso", "En proceso", 0, 1)
         _Env_Aceptados = Fx_CrearNodo("Aceptados", "Aceptados", 0, 1)
         _Env_Rechazados = Fx_CrearNodo("Rechazados", "Rechazados", 0, 1)
-        _Env_Cerradas = Fx_CrearNodo("Cerradas", "Cerradas", 0, 1)
+        '_Env_Cerradas = Fx_CrearNodo("Cerradas", "Cerradas", 0, 1)
 
         With _Enviados
             .NodeFont = fuenteNegrita
@@ -1064,7 +1064,7 @@ Public Class Frm_Tickets_Lista
             .Nodes.Add(_Env_EnProceso)
             .Nodes.Add(_Env_Aceptados) '(Fx_CrearNodo("Aceptados", "Aceptados", 0, 1))
             .Nodes.Add(_Env_Rechazados) '(Fx_CrearNodo("Rechazados", "Rechazados", 0, 1))
-            .Nodes.Add(_Env_Cerradas) '(Fx_CrearNodo("Cerradas", "Cerradas", 0, 1))
+            '   .Nodes.Add(_Env_Cerradas) '(Fx_CrearNodo("Cerradas", "Cerradas", 0, 1))
         End With
 
         ' Agregar los nodos principales al TreeView

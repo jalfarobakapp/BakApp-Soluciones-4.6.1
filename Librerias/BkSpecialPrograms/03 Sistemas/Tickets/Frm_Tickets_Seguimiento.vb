@@ -127,6 +127,7 @@ Public Class Frm_Tickets_Seguimiento
 
         Sb_InsertarBotonenGrilla(Grilla, "Btn_ImagenAttach", "Est.", "ImagenAttach", 0, _Tipo_Boton.Imagen)
         Sb_InsertarBotonenGrilla(Grilla, "Btn_ProductoInfo", "P.I.", "ProductoInfo", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla, "Btn_DocCierra", "Doc.", "DocCierra", 0, _Tipo_Boton.Imagen)
         Sb_InsertarBotonenGrilla(Grilla, "Btn_ImagenUser", "Est.", "ImagenUser", 0, _Tipo_Boton.Imagen)
 
         Sb_Actualizar_Grilla()
@@ -164,6 +165,7 @@ Public Class Frm_Tickets_Seguimiento
                        "When 'NULO' Then 'Anula' " & vbCrLf &
                        "When 'SOLC' Then 'Sol. Cierre' " & vbCrLf &
                        "When 'ACCI' Then 'Acepta y cierra ticket' " & vbCrLf &
+                       "When 'RECI' Then 'Rechaza y cierra ticket' " & vbCrLf &
                        "When 'CERR' Then 'Cierra ticket' " & vbCrLf &
                        "When 'CECR' Then 'Acepta y crea nuevo ticket' " & vbCrLf &
                        "When 'RECH' Then 'Rechazado' Else '???' End As 'StrAccion'," & vbCrLf &
@@ -172,7 +174,8 @@ Public Class Frm_Tickets_Seguimiento
                        "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Producto Where Id_TicketAc = Acc.Id) As 'Producto_Attach'," & vbCrLf &
                        "Acc.Descripcion," & vbCrLf &
                        "Case CreaNewTicket When 1 Then Tk.SubNro Else '' End As 'Ticket Crea'," & vbCrLf &
-                       "ISNULL(Tkc.SubNro,'') As 'Ticket Cierra'" & vbCrLf &
+                       "ISNULL(Tkc.SubNro,'') As 'Ticket Cierra'," & vbCrLf &
+                       "Acc.Tido_Cierra,Acc.Nudo_Cierra,Acc.Idmaeedo_Cierra" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Acc" & vbCrLf &
                        "Left Join TABFU Cf On Cf.KOFU = CodFunGestiona" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Stk_Tickets Tk On Tk.Id = Acc.Id_Ticket" & vbCrLf &
@@ -235,6 +238,13 @@ Public Class Frm_Tickets_Seguimiento
             .Columns("Btn_ImagenAttach").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
+            .Columns("Btn_DocCierra").Width = 40
+            .Columns("Btn_DocCierra").HeaderText = "Doc."
+            .Columns("Btn_DocCierra").ToolTipText = "Documento de ajuste"
+            .Columns("Btn_DocCierra").Visible = True
+            .Columns("Btn_DocCierra").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
             .Columns("Fecha").Visible = True
             .Columns("Fecha").HeaderText = "Fecha creación"
             '.Columns("Fecha").ToolTipText = "de tope de la oferta"
@@ -256,6 +266,7 @@ Public Class Frm_Tickets_Seguimiento
             Dim _Rechazado As Boolean = _Fila.Cells("Rechazado").Value
             Dim _Num_Attach As Integer = _Fila.Cells("Num_Attach").Value
             Dim _Producto_Attach As Integer = _Fila.Cells("Producto_Attach").Value
+            Dim _Idmaeedo_Cierra As Integer = _Fila.Cells("Idmaeedo_Cierra").Value
 
             Dim _CodFuncionario As String = _Fila.Cells("CodFuncionario").Value.ToString.Trim
             Dim _CodFunGestiona As String = _Fila.Cells("CodFunGestiona").Value.ToString.Trim
@@ -295,6 +306,13 @@ Public Class Frm_Tickets_Seguimiento
                 _Icono = _Imagenes_List.Images.Item("menu-more.png")
             End If
             _Fila.Cells("Btn_ProductoInfo").Value = _Icono
+
+            If CBool(_Idmaeedo_Cierra) Then
+                _Icono = _Imagenes_List.Images.Item("document-browse.png")
+            Else
+                _Icono = _Imagenes_List.Images.Item("menu-more.png")
+            End If
+            _Fila.Cells("Btn_DocCierra").Value = _Icono
 
         Next
 
@@ -442,8 +460,6 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
             Dim _Descripcion As String
 
             Dim _Cl_Tickets2 As New Cl_Tickets
-            '_Cl_Tickets.Sb_Llenar_Ticket(_Id_Ticket)
-
             Dim _Zw_Stk_Tickets_Acciones As New Zw_Stk_Tickets_Acciones
 
             With _Zw_Stk_Tickets_Acciones
@@ -518,8 +534,6 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
             If _RechazarTicket Then
 
-                'MessageBoxEx.Show(Me, "Ticket Rechazado, se ha enviado la confirmación al remitente",
-                '                  "Rechazar Ticket", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                 _Mensaje.EsCorrecto = True
                 _Mensaje.Detalle = "Rechazar Ticket"
                 _Mensaje.Mensaje = "Ticket Rechazado, se ha enviado la confirmación al remitente"
@@ -786,7 +800,6 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
     End Sub
 
     Private Sub Btn_Mnu_RechazarTicket_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_RechazarTicket.Click
-        'Sb_Agregar_Mensaje_Respuesta(True)
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -795,7 +808,11 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
         GestionRealizada = _Mensaje.EsCorrecto
 
         If _Mensaje.MostrarMensaje Then
+
+            _Mensaje = Fx_Cerrar_Ticket(True, False, False, False, 0, True, True, True)
+
             MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+
         End If
 
         If GestionRealizada And Not _Mensaje.MostrarMensaje Then
@@ -847,7 +864,7 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
         End If
 
         Btn_Mnu_CerrarTicket.Visible = (_Zw_Stk_Tipos.EsTicketUnico And Not Mis_Ticket)
-        Btn_Mnu_AceptarCerrarTicket.Visible = _Zw_Stk_Tipos.EsTicketUnico
+        Btn_Mnu_AceptarCerrarTicket.Visible = _Zw_Stk_Tipos.CierraRaiz
 
         Btn_Anular.Visible = (Grilla.RowCount = 1)
 
@@ -981,6 +998,7 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
                        "When 'NULO' Then 'Anula' " & vbCrLf &
                        "When 'SOLC' Then 'Sol. Cierre' " & vbCrLf &
                        "When 'ACCI' Then 'Acepta y cierra ticket' " & vbCrLf &
+                       "When 'RECI' Then 'Rechaza y cierra ticket' " & vbCrLf &
                        "When 'CERR' Then 'Cierra ticket' " & vbCrLf &
                        "When 'CECR' Then 'Cierra y crea nuevo ticket' " & vbCrLf &
                        "When 'RECH' Then 'Rechazado' Else '???' End As 'StrAccion'," & vbCrLf &
@@ -1052,7 +1070,7 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
         Dim _Id_TicketAc As Integer = _Fila.Cells("Id_Accion").Value
         Dim _Num_Attach As Integer = _Fila.Cells("Num_Attach").Value
         Dim _Producto_Attach As Integer = _Fila.Cells("Producto_Attach").Value
-
+        Dim _Idmaeedo_Cierra As Integer = _Fila.Cells("Idmaeedo_Cierra").Value
 
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
 
@@ -1116,60 +1134,105 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
         End If
 
+        If _Cabeza = "Btn_DocCierra" Then
+
+            If CBool(_Idmaeedo_Cierra) Then
+
+                Dim Fm As New Frm_Ver_Documento(_Idmaeedo_Cierra, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
+                Fm.ShowDialog(Me)
+                Fm.Dispose()
+
+            End If
+
+        End If
+
     End Sub
 
     Private Sub Btn_Mnu_AceptarCerrarTicket_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_AceptarCerrarTicket.Click
 
-        Dim _Mensaje As New LsValiciones.Mensajes
+        'If Not Mis_Ticket Then
 
-        Dim _Zw_Stk_Tickets_Acciones As New Zw_Stk_Tickets_Acciones
+        '    If _Cl_Tickets.Zw_Stk_Tickets.Rechazado Then
+        '        If MessageBoxEx.Show(Me, "Este ticket fue rechazado." & vbCrLf &
+        '                          "¿Confirma crear un nuevo Ticket a partir de este, esto revertira el rechazo?",
+        '                             "Ticket Rechazado", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+        '            Return
+        '        End If
+        '    End If
 
-        With _Zw_Stk_Tickets_Acciones
+        'End If
 
-            .Id_Ticket = _Id_Ticket
-            .Id_Raiz = _Cl_Tickets.Zw_Stk_Tickets.Id_Raiz
-            .Id_Ticket_Cierra = _Cl_Tickets.Zw_Stk_Tickets.Id_Padre
-            .CodFuncionario = FUNCIONARIO
-            .CodAgente = String.Empty
-            .Accion = "ACCI"
-            .CodFunGestiona = FUNCIONARIO
-            .Descripcion = Txt_Descripcion.Text.Trim
-            .Asunto = _Cl_Tickets.Zw_Stk_Tickets.Asunto
-            .Aceptado = True
+        Dim _Grabar As Boolean
+        Dim _Id_Hijo As Integer
 
-        End With
-
-        _Cl_Tickets.Zw_Stk_Tickets_Acciones = _Zw_Stk_Tickets_Acciones
-
-        _Mensaje = _Cl_Tickets.Fx_Grabar_Nueva_Accion2(_Zw_Stk_Tickets_Acciones, False)
-
-        _Cl_Tickets.Zw_Stk_Tickets_Acciones.Id = _Mensaje.Id
-
-        Dim _Eliminar_Accion As Boolean
-
-        If _Mensaje.EsCorrecto Then
-
-            _Mensaje = Fx_Cerrar_Ticket(True, False, False, False, 0, True, True, True)
-
-            If _Mensaje.EsCorrecto Then
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Set Asunto = 'ACEPTA Y CIERRA HILO DE TICKET',Descripcion  = '" & _Mensaje.Detalle & "'" & vbCrLf &
-                               "Where Id = " & _Cl_Tickets.Zw_Stk_Tickets_Acciones.Id
-                _Sql.Ej_consulta_IDU(Consulta_sql)
-            Else
-                MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                _Eliminar_Accion = True
-            End If
-
-        Else
-            MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Error al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            _Eliminar_Accion = True
+        Dim Fm As New Frm_Tickets_Mant(0)
+        Fm.Id_Padre = _Id_Ticket
+        Fm.Aceptado = True
+        Fm.ShowDialog(Me)
+        _Grabar = Fm.Grabar
+        If _Grabar Then
+            _Id_Hijo = Fm.New_Ticket.Zw_Stk_Tickets.Id
         End If
+        Fm.Dispose()
 
-        If _Eliminar_Accion Then
-            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Where Id = " & _Cl_Tickets.Zw_Stk_Tickets_Acciones.Id & vbCrLf &
-                           "Delete " & _Global_BaseBk & "Zw_Stk_Tickets_Archivos Where Id_TicketAc = " & _Cl_Tickets.Zw_Stk_Tickets_Acciones.Id
-            _Sql.Ej_consulta_IDU(Consulta_sql)
-        End If
+        'If _Grabar Then
+        '    Fx_Cerrar_Ticket(True, False, True, False, _Id_Hijo, False, False, False)
+        'End If
+
+        GestionRealizada = True
+        Me.Close()
+
+
+        'Dim _Mensaje As New LsValiciones.Mensajes
+
+        'Dim _Zw_Stk_Tickets_Acciones As New Zw_Stk_Tickets_Acciones
+
+        'With _Zw_Stk_Tickets_Acciones
+
+        '    .Id_Ticket = _Id_Ticket
+        '    .Id_Raiz = _Cl_Tickets.Zw_Stk_Tickets.Id_Raiz
+        '    .Id_Ticket_Cierra = _Cl_Tickets.Zw_Stk_Tickets.Id_Padre
+        '    .CodFuncionario = FUNCIONARIO
+        '    .CodAgente = String.Empty
+        '    .Accion = "ACCI"
+        '    .CodFunGestiona = FUNCIONARIO
+        '    .Descripcion = Txt_Descripcion.Text.Trim
+        '    .Asunto = _Cl_Tickets.Zw_Stk_Tickets.Asunto
+        '    .Aceptado = True
+
+        'End With
+
+        '_Cl_Tickets.Zw_Stk_Tickets_Acciones = _Zw_Stk_Tickets_Acciones
+
+        '_Mensaje = _Cl_Tickets.Fx_Grabar_Nueva_Accion2(_Zw_Stk_Tickets_Acciones, False)
+
+        '_Cl_Tickets.Zw_Stk_Tickets_Acciones.Id = _Mensaje.Id
+
+        'Dim _Eliminar_Accion As Boolean
+
+        'If _Mensaje.EsCorrecto Then
+
+        '    _Mensaje = Fx_Cerrar_Ticket(True, False, False, False, 0, True, True, True)
+
+        '    If _Mensaje.EsCorrecto Then
+        '        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Set Asunto = 'ACEPTA Y CIERRA HILO DE TICKET',Descripcion  = '" & _Mensaje.Detalle & "'" & vbCrLf &
+        '                       "Where Id = " & _Cl_Tickets.Zw_Stk_Tickets_Acciones.Id
+        '        _Sql.Ej_consulta_IDU(Consulta_sql)
+        '    Else
+        '        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        '        _Eliminar_Accion = True
+        '    End If
+
+        'Else
+        '    MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Error al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        '    _Eliminar_Accion = True
+        'End If
+
+        'If _Eliminar_Accion Then
+        '    Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Where Id = " & _Cl_Tickets.Zw_Stk_Tickets_Acciones.Id & vbCrLf &
+        '                   "Delete " & _Global_BaseBk & "Zw_Stk_Tickets_Archivos Where Id_TicketAc = " & _Cl_Tickets.Zw_Stk_Tickets_Acciones.Id
+        '    _Sql.Ej_consulta_IDU(Consulta_sql)
+        'End If
 
     End Sub
 End Class

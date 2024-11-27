@@ -23,10 +23,10 @@ Partial Class Frm_Tickets_Seguimiento
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Tickets_Seguimiento))
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Tickets_Seguimiento))
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_Productos = New DevComponents.DotNetBar.ButtonItem()
@@ -39,6 +39,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Btn_Mnu_EnviarMensajeRespuesta = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_RechazarTicket = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_CerrarTicket = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_AceptarCerrarTicket = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_CerrarTicketCrearNuevo = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_SolicitarCierre = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Anular = New DevComponents.DotNetBar.ButtonItem()
@@ -73,7 +74,6 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
         Me.Imagenes_16x16_Dark = New System.Windows.Forms.ImageList(Me.components)
         Me.Btn_MensajeRespuesta = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Mnu_AceptarCerrarTicket = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -91,7 +91,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 151)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(775, 196)
+        Me.GroupPanel1.Size = New System.Drawing.Size(814, 196)
         '
         '
         '
@@ -219,6 +219,13 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Btn_Mnu_CerrarTicket.Name = "Btn_Mnu_CerrarTicket"
         Me.Btn_Mnu_CerrarTicket.Text = "Cerrar Ticket"
         '
+        'Btn_Mnu_AceptarCerrarTicket
+        '
+        Me.Btn_Mnu_AceptarCerrarTicket.Image = CType(resources.GetObject("Btn_Mnu_AceptarCerrarTicket.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_AceptarCerrarTicket.ImageAlt = CType(resources.GetObject("Btn_Mnu_AceptarCerrarTicket.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_AceptarCerrarTicket.Name = "Btn_Mnu_AceptarCerrarTicket"
+        Me.Btn_Mnu_AceptarCerrarTicket.Text = "Aceptar y cerrar Ticket."
+        '
         'Btn_Mnu_CerrarTicketCrearNuevo
         '
         Me.Btn_Mnu_CerrarTicketCrearNuevo.Image = CType(resources.GetObject("Btn_Mnu_CerrarTicketCrearNuevo.Image"), System.Drawing.Image)
@@ -322,7 +329,7 @@ Partial Class Frm_Tickets_Seguimiento
         DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
-        Me.Grilla.Size = New System.Drawing.Size(769, 173)
+        Me.Grilla.Size = New System.Drawing.Size(808, 173)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 27
         '
@@ -347,7 +354,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.GrupoTicket.DisabledBackColor = System.Drawing.Color.Empty
         Me.GrupoTicket.Location = New System.Drawing.Point(12, 5)
         Me.GrupoTicket.Name = "GrupoTicket"
-        Me.GrupoTicket.Size = New System.Drawing.Size(775, 140)
+        Me.GrupoTicket.Size = New System.Drawing.Size(814, 140)
         '
         '
         '
@@ -397,7 +404,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Txt_Producto.Name = "Txt_Producto"
         Me.Txt_Producto.PreventEnterBeep = True
         Me.Txt_Producto.ReadOnly = True
-        Me.Txt_Producto.Size = New System.Drawing.Size(649, 22)
+        Me.Txt_Producto.Size = New System.Drawing.Size(688, 22)
         Me.Txt_Producto.TabIndex = 14
         '
         'LabelX7
@@ -598,7 +605,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_GestionarAcciones, Me.Btn_VerTicketOrigen, Me.Btn_AgentesAsignados, Me.Btn_Cerrar})
         Me.Bar2.Location = New System.Drawing.Point(0, 536)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(797, 41)
+        Me.Bar2.Size = New System.Drawing.Size(838, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 165
@@ -659,7 +666,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Txt_Descripcion.Name = "Txt_Descripcion"
         Me.Txt_Descripcion.PreventEnterBeep = True
         Me.Txt_Descripcion.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.Txt_Descripcion.Size = New System.Drawing.Size(786, 133)
+        Me.Txt_Descripcion.Size = New System.Drawing.Size(802, 133)
         Me.Txt_Descripcion.TabIndex = 166
         '
         'GroupPanel3
@@ -670,7 +677,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel3.Location = New System.Drawing.Point(12, 353)
         Me.GroupPanel3.Name = "GroupPanel3"
-        Me.GroupPanel3.Size = New System.Drawing.Size(775, 162)
+        Me.GroupPanel3.Size = New System.Drawing.Size(814, 162)
         '
         '
         '
@@ -754,6 +761,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Imagenes_16x16.Images.SetKeyName(45, "ticket-add.png")
         Me.Imagenes_16x16.Images.SetKeyName(46, "people-vendor-ok.png")
         Me.Imagenes_16x16.Images.SetKeyName(47, "product-info.png")
+        Me.Imagenes_16x16.Images.SetKeyName(48, "document-browse.png")
         '
         'Imagenes_16x16_Dark
         '
@@ -806,6 +814,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Imagenes_16x16_Dark.Images.SetKeyName(44, "ticket-add.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(45, "people-vendor-ok.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(46, "product-info.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(47, "document-browse.png")
         '
         'Btn_MensajeRespuesta
         '
@@ -816,18 +825,11 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Btn_MensajeRespuesta.Name = "Btn_MensajeRespuesta"
         Me.Btn_MensajeRespuesta.Text = "Agregar mensaje"
         '
-        'Btn_Mnu_AceptarCerrarTicket
-        '
-        Me.Btn_Mnu_AceptarCerrarTicket.Image = CType(resources.GetObject("Btn_Mnu_AceptarCerrarTicket.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_AceptarCerrarTicket.ImageAlt = CType(resources.GetObject("Btn_Mnu_AceptarCerrarTicket.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_AceptarCerrarTicket.Name = "Btn_Mnu_AceptarCerrarTicket"
-        Me.Btn_Mnu_AceptarCerrarTicket.Text = "Aceptar y cerrar Ticket."
-        '
         'Frm_Tickets_Seguimiento
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(797, 577)
+        Me.ClientSize = New System.Drawing.Size(838, 577)
         Me.Controls.Add(Me.GroupPanel3)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.GrupoTicket)

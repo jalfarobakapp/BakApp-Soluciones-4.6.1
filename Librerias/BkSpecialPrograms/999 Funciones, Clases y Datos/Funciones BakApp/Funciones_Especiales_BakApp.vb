@@ -6685,9 +6685,17 @@ Public Module Crear_Documentos_Desde_Otro
 
             Dim _VerDocumento As Boolean = False
 
-            Consulta_sql = "Select IDMAEEDO,TIDO,NUDO,ENDO,SUENDO,NOKOEN,KOFUEN" & vbCrLf &
-                           "From MAEEDO Edo Inner Join MAEEN e On e.KOEN = Edo.ENDO And e.SUEN = Edo.SUENDO" & vbCrLf &
-                           "Where IDMAEEDO = " & _Idmaeedo
+            Dim _Tido As String = _Sql.Fx_Trae_Dato("MAEEDO", "TIDO", "IDMAEEDO = " & _Idmaeedo)
+
+            If _Tido = "GRI" Or _Tido = "GDI" Or _Tido = "GTI" Then
+                Consulta_sql = "Select IDMAEEDO,TIDO,NUDO,ENDO,SUENDO,NOKOEN,KOFUEN" & vbCrLf &
+                               "From MAEEDO Edo Inner Join MAEEN e On e.KOEN = Edo.ENDO" & vbCrLf &
+                               "Where IDMAEEDO = " & _Idmaeedo
+            Else
+                Consulta_sql = $"Select IDMAEEDO,TIDO,NUDO,ENDO,SUENDO,NOKOEN,KOFUEN" & vbCrLf &
+                               "From MAEEDO Edo Inner Join MAEEN e On e.KOEN = Edo.ENDO And e.SUEN = Edo.SUENDO" & vbCrLf &
+                               "Where IDMAEEDO = " & _Idmaeedo
+            End If
 
             Dim _Row_Edo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 

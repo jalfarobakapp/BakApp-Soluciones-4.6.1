@@ -165,6 +165,9 @@ Public Class Cl_Tickets
                 .RespuestaXDefecto = _Row_Tipo.Item("RespuestaXDefecto")
                 .RespuestaXDefectoCerrar = _Row_Tipo.Item("RespuestaXDefectoCerrar")
                 .EsTicketUnico = _Row_Tipo.Item("EsTicketUnico")
+                .CierraRaiz = _Row_Tipo.Item("CierraRaiz")
+                .ExigeDocCerrar = _Row_Tipo.Item("ExigeDocCerrar")
+                .TidoDocCerrar = _Row_Tipo.Item("TidoDocCerrar")
 
             End If
 
@@ -867,6 +870,9 @@ Public Class Cl_Tickets
                                 ",RespuestaXDefecto = '" & .RespuestaXDefecto & "'" & vbCrLf &
                                 ",RespuestaXDefectoCerrar = '" & .RespuestaXDefectoCerrar & "'" & vbCrLf &
                                 ",EsTicketUnico = '" & Convert.ToInt32(.EsTicketUnico) & "'" & vbCrLf &
+                                ",CierraRaiz = '" & Convert.ToInt32(.CierraRaiz) & "'" & vbCrLf &
+                                ",ExigeDocCerrar = '" & Convert.ToInt32(.ExigeDocCerrar) & "'" & vbCrLf &
+                                ",TidoDocCerrar = '" & .TidoDocCerrar & "'" & vbCrLf &
                                 "Where Id = " & .Id
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)

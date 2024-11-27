@@ -67,6 +67,10 @@ Public Class Frm_Tickets_TiposCrear
             Rdb_EsTicketUnico.Checked = .EsTicketUnico
             Rdb_NoEsTicketUnico.Checked = Not .EsTicketUnico
 
+            Chk_CierraRaiz.Checked = .CierraRaiz
+            Chk_ExigeDocCerrar.Checked = .ExigeDocCerrar
+            Txt_TidoDocCierra.Text = .TidoDocCerrar
+
         End With
 
         Txt_Agente.Enabled = Rdb_AsignadoAgente.Checked
@@ -173,6 +177,12 @@ Public Class Frm_Tickets_TiposCrear
             Return
         End If
 
+        If Chk_ExigeDocCerrar.Checked And String.IsNullOrEmpty(Txt_TidoDocCierra.Text) Then
+            MessageBoxEx.Show(Me, "Debe seleccionar el o los documentos asociados para poder cerrar el Ticket",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
         If Rdb_EsTicketUnico.Checked Then
             Txt_Area_Cie.Tag = 0
             Txt_Area_Cie.Text = String.Empty
@@ -202,6 +212,9 @@ Public Class Frm_Tickets_TiposCrear
             .RespuestaXDefectoCerrar = Txt_RespuestaXDefectoCerrar.Text
 
             .EsTicketUnico = Rdb_EsTicketUnico.Checked
+            .CierraRaiz = Chk_CierraRaiz.Checked
+            .ExigeDocCerrar = Chk_ExigeDocCerrar.Checked
+            .TidoDocCerrar = Txt_TidoDocCierra.Text
 
             Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tipos", "Tipo = '" & .Tipo & "' And Id <> " & .Id)
 
@@ -463,4 +476,35 @@ Public Class Frm_Tickets_TiposCrear
         End With
 
     End Sub
+
+    Private Sub Txt_TidoDocCierra_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_TidoDocCierra.ButtonCustomClick
+
+        Dim _Nombre_Control = CType(sender, Control).Name
+        Dim _Tbl_Filtro As DataTable
+        Dim _Sql_Filtro_Condicion_Extra = String.Empty
+
+        Dim _Tidos As String = Txt_TidoDocCierra.Text
+        Dim _TidosArray() As String = _Tidos.Split(","c)
+        Dim _TidosFormatted As String = String.Join(",", _TidosArray.Select(Function(t) $"'{t}'"))
+
+        If Not String.IsNullOrEmpty(Txt_TidoDocCierra.Text) Then
+            Consulta_sql = "Select TIDO As Codigo,NOTIDO As Descripcion From TABTIDO Where TIDO In (" & _TidosFormatted & ")"
+            _Tbl_Filtro = _Sql.Fx_Get_DataTable(Consulta_sql)
+        End If
+
+        '_Sql_Filtro_Condicion_Extra = "And TIDO In ('BLV','FCL','FCT','FCV','FDE','FDV','FDX','FEV','FVX','FXV','FYV','GDD','GDP','GDV','GTI','NCV','NCX','NEV','GRI','GTI','GDI')"
+
+        Dim Fm As New Frm_Filtro_Especial_Informes(Frm_Filtro_Especial_Informes._Tabla_Fl._Documentos, False)
+        Fm.Pro_Tbl_Filtro = _Tbl_Filtro
+        ' Fm.Pro_Sql_Filtro_Condicion_Extra = _Sql_Filtro_Condicion_Extra
+        Fm.ShowDialog(Me)
+
+        If Fm.Pro_Filtrar Then
+            _Tbl_Filtro = Fm.Pro_Tbl_Filtro
+            Txt_TidoDocCierra.Text = Generar_Filtro_IN(_Tbl_Filtro, "", "Codigo", False, False, "", False)
+        End If
+        Fm.Dispose()
+
+    End Sub
+
 End Class
