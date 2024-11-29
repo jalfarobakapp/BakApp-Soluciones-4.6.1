@@ -211,7 +211,7 @@ Public Class Frm_Tickets_Mant
         End With
 
         If _Cl_Tickets.Zw_Stk_Tipos.CierraRaiz Then
-            Sb_CerrarTickets(True)
+            Sb_CerrarTickets(True, False)
         Else
             Sb_CrearNuevoTicket()
         End If
@@ -304,18 +304,9 @@ Public Class Frm_Tickets_Mant
         Me.Close()
 
     End Sub
-    Sub Sb_CerrarTickets(_Aceptado As Boolean)
+    Sub Sb_CerrarTickets(_Aceptado As Boolean, _Rechazado As Boolean)
 
         With _Cl_Tickets.Zw_Stk_Tickets_Acciones
-
-            Dim _Mensaje_Ticket As New LsValiciones.Mensajes
-
-            _Mensaje_Ticket = _Cl_Tickets.Fx_Cerrar_Ticket(FUNCIONARIO, Txt_Descripcion.Text, True, False, False, False, _Aceptado, True, True)
-
-            If Not _Mensaje_Ticket.EsCorrecto Then
-                MessageBoxEx.Show(Me, _Mensaje_Ticket.Mensaje, "Error al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Return
-            End If
 
             .Id_Ticket = _Cl_Tickets_Padre.Zw_Stk_Tickets.Id
             .Id_Raiz = _Cl_Tickets_Padre.Zw_Stk_Tickets.Id_Raiz
@@ -328,31 +319,21 @@ Public Class Frm_Tickets_Mant
             .Asunto = _Cl_Tickets.Zw_Stk_Tickets.Asunto
             .Aceptado = True
 
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Set " & vbCrLf &
-                           "Id_Ticket = " & .Id_Ticket & vbCrLf &
-                           ",Accion = '" & .Accion & "'" & vbCrLf &
-                           ",Descripcion = '" & .Descripcion & "'" & vbCrLf &
-                           ",Fecha = Getdate()" & vbCrLf &
-                           ",En_Construccion = 0" & vbCrLf &
-                           ",Aceptado = " & Convert.ToInt32(.Aceptado) & vbCrLf &
-                           ",CreaNewTicket = " & Convert.ToInt32(.CreaNewTicket) & vbCrLf &
-                           ",Cierra_Ticket = " & Convert.ToInt32(.Cierra_Ticket) & vbCrLf &
-                           ",CodFunGestiona = '" & .CodFunGestiona & "'" & vbCrLf &
-                           ",Id_Raiz = '" & .Id_Raiz & "'" & vbCrLf &
-                           ",Id_Ticket_Cierra = '" & .Id_Ticket_Cierra & "'" & vbCrLf &
-                           ",Id_Ticket_Crea = '" & .Id_Ticket_Crea & "'" & vbCrLf &
-                           ",Asunto = '" & .Asunto & "'" & vbCrLf &
-                           ",Tido_Cierra = '" & .Tido_Cierra & "'" & vbCrLf &
-                           ",Nudo_Cierra = '" & .Nudo_Cierra & "'" & vbCrLf &
-                           ",Idmaeedo_Cierra = " & .Idmaeedo_Cierra & vbCrLf &
-                           "Where Id = " & .Id
-            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-                MessageBoxEx.Show(Me, "El ticket se ha cerrado correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                Grabar = True
-                Me.Close()
-            End If
-
         End With
+
+        Dim _Mensaje_Ticket As New LsValiciones.Mensajes
+
+        _Mensaje_Ticket = _Cl_Tickets.Fx_Cerrar_Ticket(FUNCIONARIO, Txt_Descripcion.Text,
+                                                       True, False, False, False, _Aceptado, _Rechazado, True, True, _Cl_Tickets.Zw_Stk_Tickets_Acciones)
+
+        If Not _Mensaje_Ticket.EsCorrecto Then
+            MessageBoxEx.Show(Me, _Mensaje_Ticket.Mensaje, "Error al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        MessageBoxEx.Show(Me, "El ticket se ha cerrado correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Grabar = True
+        Me.Close()
 
     End Sub
 
@@ -967,6 +948,19 @@ Public Class Frm_Tickets_Mant
             End With
 
         End If
+
+    End Sub
+
+    Private Sub Txt_TidoNudoCierra_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_TidoNudoCierra.ButtonCustom2Click
+
+        If Not CBool(_Cl_Tickets.Zw_Stk_Tickets_Acciones.Idmaeedo_Cierra) Then
+            MessageBoxEx.Show(Me, "No hay documento para ver", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim Fm As New Frm_Ver_Documento(_Cl_Tickets.Zw_Stk_Tickets_Acciones.Idmaeedo_Cierra, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 End Class

@@ -1074,6 +1074,8 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
             Dim _Sql_Query = String.Empty
             Dim _Sql_Stock_Dipnible = String.Empty
+            Dim _StockMayorCero As String = String.Empty
+            Dim _Ls_StockMayorCero As List(Of String) = New List(Of String)
 
             For Each _Fila As DataRow In _Tbl_Bodegas.Rows
 
@@ -1088,10 +1090,20 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                             "WHERE Mt.EMPRESA = '" & _Emp & "' AND Mt.KOSU = '" & _Suc & "' AND " & vbCrLf &
                             "Mt.KOBO = '" & _Bod & "' AND Mt.KOPR = Mp.KOPR),0) AS [STOCK_Ud1_" & _Sigla & "]," & vbCrLf
 
+                _StockMayorCero = "'" & _Emp & _Suc & _Bod & "'"
+                _Ls_StockMayorCero.Add(_StockMayorCero)
+
             Next
+
+            If Chk_StockFisicoMayorCero.Checked Then
+                _StockMayorCero = "And Mp.KOPR In (Select KOPR From MAEST Where EMPRESA+KOSU+KOBO In (" & String.Join(",", _Ls_StockMayorCero) & ") And STFI1 > 0)"
+            Else
+                _StockMayorCero = String.Empty
+            End If
 
             Consulta_sql = Replace(Consulta_sql, "#Stock#", _Sql_Query)
             Consulta_sql = Replace(Consulta_sql, "#Stock_Disponible#", _Sql_Stock_Dipnible)
+            Consulta_sql = Replace(Consulta_sql, "#StockMayorCero#", _StockMayorCero)
 
             _Filtro_Productos = String.Empty
 
@@ -3170,6 +3182,10 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
     End Sub
 
     Private Sub Chk_MostrarVendidosUlt3Meses_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_MostrarVendidosUlt3Meses.CheckedChanged
+        Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
+    End Sub
+
+    Private Sub Chk_StockFisicoMayorCero_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_StockFisicoMayorCero.CheckedChanged
         Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
     End Sub
 

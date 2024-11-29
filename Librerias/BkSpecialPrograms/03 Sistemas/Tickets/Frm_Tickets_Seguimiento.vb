@@ -19,6 +19,8 @@ Public Class Frm_Tickets_Seguimiento
     Public Property TicketSucesor As Boolean
     Public Property TicketAntecesor As Boolean
     Public Property GestionRealizada As Boolean
+    Public Property Aprobado As Boolean
+    Public Property Rechazado As Boolean
     Public Property vTop As Integer
     Public Property vLeft As Integer
 
@@ -298,6 +300,11 @@ Public Class Frm_Tickets_Seguimiento
                 If _Aceptado Then _Icono = _Imagenes_List.Images.Item("people-vendor-ok.png")
                 If _Rechazado Then _Icono = _Imagenes_List.Images.Item("people-vendor-error.png")
             End If
+
+            If _Accion = "NULO" Then
+                _Icono = _Imagenes_List.Images.Item("delete_button_error.png")
+            End If
+
             _Fila.Cells("Btn_ImagenUser").Value = _Icono
 
             If CBool(_Producto_Attach) Then
@@ -502,6 +509,7 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
                 Fm.Text = "RESPONDER"
             End If
 
+            Fm.Btn_Archivos_Adjuntos.Enabled = Not _RechazarTicket
             Fm.ShowDialog(Me)
             _Grabar = Fm.Grabar
             _Descripcion = Fm.Txt_Descripcion.Text.Trim
@@ -521,7 +529,7 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
             Consulta_sql = String.Empty
 
             If _RechazarTicket Then
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets Set Rechazado = " & Convert.ToInt32(_RechazarTicket) & vbCrLf &
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets Set Estado = 'CERR' Rechazado = " & Convert.ToInt32(_RechazarTicket) & vbCrLf &
                                "Where Id_Raiz = " & _Cl_Tickets.Zw_Stk_Tickets.Id_Raiz & vbCrLf
             End If
 
@@ -611,12 +619,12 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
         End If
 
-        Fx_Cerrar_Ticket(True, False, False, False, 0, False, True, True)
+        Fx_Cerrar_Ticket(True, False, False, False, 0, False, False, True, True)
 
     End Sub
 
     Private Sub Btn_Mnu_SolicitarCierre_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_SolicitarCierre.Click
-        Fx_Cerrar_Ticket(False, True, False, False, 0, False, False, False)
+        Fx_Cerrar_Ticket(False, True, False, False, 0, False, False, False, False)
     End Sub
 
     Private Sub Btn_Mnu_CerrarTicketCrearNuevo_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_CerrarTicketCrearNuevo.Click
@@ -647,11 +655,10 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
         Fm.Dispose()
 
         If _Grabar Then
-            Fx_Cerrar_Ticket(True, False, True, False, _Id_Hijo, False, False, False)
+            Fx_Cerrar_Ticket(True, False, True, False, _Id_Hijo, False, False, False, False)
+            GestionRealizada = True
+            Me.Close()
         End If
-
-        GestionRealizada = True
-        Me.Close()
 
     End Sub
 
@@ -662,18 +669,21 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
             Return
         End If
 
-        Fx_Cerrar_Ticket(False, False, False, True, 0, False, True, True)
+        Fx_Cerrar_Ticket(False, False, False, True, 0, False, False, True, True)
+
+        Me.Close()
 
     End Sub
 
     Function Fx_Cerrar_Ticket(_Cierra_Ticket As Boolean,
-                             _Solicita_Cierre As Boolean,
-                             _CreaNewTicket As Boolean,
-                             _AnulaTicket As Boolean,
-                             _Id_Hijo As Integer,
-                             _Aceptado As Boolean,
-                             _CierraTicketPadre As Boolean,
-                             _CierraTicektRaiz As Boolean) As LsValiciones.Mensajes
+                              _Solicita_Cierre As Boolean,
+                              _CreaNewTicket As Boolean,
+                              _AnulaTicket As Boolean,
+                              _Id_Hijo As Integer,
+                              _Aceptado As Boolean,
+                              _Rechazado As Boolean,
+                              _CierraTicketPadre As Boolean,
+                              _CierraTicektRaiz As Boolean) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -722,10 +732,31 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
             End If
 
-            'Dim _Cl_Tickets As New Cl_Tickets
+            Dim _Zw_Stk_Tickets_Acciones As Zw_Stk_Tickets_Acciones
 
-            'Dim _Mensaje As LsValiciones.Mensajes = _Cl_Tickets.Fx_Llenar_Ticket(_Id_Ticket)
+            If _AnulaTicket Then
 
+                Dim _MsjAnula As New LsValiciones.Mensajes
+
+                _Zw_Stk_Tickets_Acciones = New Zw_Stk_Tickets_Acciones
+
+                With _Zw_Stk_Tickets_Acciones
+
+                    .Id_Ticket = _Id_Ticket
+                    .Id_Raiz = _Cl_Tickets.Zw_Stk_Tickets.Id_Raiz
+                    .Id_Ticket_Cierra = _Cl_Tickets.Zw_Stk_Tickets.Id_Padre
+                    .CodFuncionario = FUNCIONARIO
+                    .CodAgente = String.Empty
+                    .Accion = "NULO"
+                    .CodFunGestiona = FUNCIONARIO
+                    .Descripcion = _Descripcion
+                    .Asunto = "TICKET ANULADO"
+                    .Aceptado = False
+                    .Rechazado = False
+
+                End With
+
+            End If
 
             Dim _Mensaje_Ticket As New LsValiciones.Mensajes
 
@@ -736,8 +767,10 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
                                                            _CreaNewTicket,
                                                            _AnulaTicket,
                                                            _Aceptado,
+                                                           _Rechazado,
                                                            _CierraTicketPadre,
-                                                           _CierraTicektRaiz)
+                                                           _CierraTicektRaiz,
+                                                           _Zw_Stk_Tickets_Acciones)
 
             If Not _Mensaje_Ticket.EsCorrecto Then
                 Throw New System.Exception(_Mensaje_Ticket.Mensaje)
@@ -753,6 +786,81 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
             _Mensaje.Mensaje = ex.Message
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
+    Function Fx_Rechazar_Ticket() As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            Dim _Aceptar As Boolean
+            Dim _Descripcion As String
+
+            _Aceptar = InputBox_Bk(Me, "Ingrese un comentario (obligatorio)", "Rechazar Ticket",
+                   _Descripcion, True, _Tipo_Mayus_Minus.Mayusculas, 200, True,
+                   _Tipo_Imagen.Texto, False,,,, Nothing)
+
+            If Not _Aceptar Then
+                _Mensaje.Cancelado = True
+                Throw New System.Exception("Acción cancelada por el usuario")
+            End If
+
+            _Mensaje.Detalle = _Descripcion
+
+            Dim _Zw_Stk_Tickets_Acciones As Zw_Stk_Tickets_Acciones
+
+            Dim _MsjAnula As New LsValiciones.Mensajes
+
+            _Zw_Stk_Tickets_Acciones = New Zw_Stk_Tickets_Acciones
+
+            With _Zw_Stk_Tickets_Acciones
+
+                .Id_Ticket = _Id_Ticket
+                .Id_Raiz = _Cl_Tickets.Zw_Stk_Tickets.Id_Raiz
+                .Id_Ticket_Cierra = _Cl_Tickets.Zw_Stk_Tickets.Id_Padre
+                .CodFuncionario = FUNCIONARIO
+                .CodAgente = String.Empty
+                .Accion = "RECH"
+                .CodFunGestiona = FUNCIONARIO
+                .Descripcion = _Descripcion
+                .Asunto = "RECHAZA TICKET"
+                .Aceptado = False
+                .Rechazado = True
+
+            End With
+
+            Dim _Mensaje_Ticket As New LsValiciones.Mensajes
+
+            _Mensaje_Ticket = _Cl_Tickets.Fx_Cerrar_Ticket(FUNCIONARIO,
+                                                           _Descripcion,
+                                                           True,
+                                                           False,
+                                                           False,
+                                                           False,
+                                                           False,
+                                                           True,
+                                                           True,
+                                                           True,
+                                                           _Zw_Stk_Tickets_Acciones)
+
+            If Not _Mensaje_Ticket.EsCorrecto Then
+                Throw New System.Exception(_Mensaje_Ticket.Mensaje)
+            End If
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = _Mensaje_Ticket.Mensaje
+            _Mensaje.Icono = MessageBoxIcon.Information
+            _Mensaje.Detalle = "Rechazar Ticket"
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
 
         Return _Mensaje
@@ -803,23 +911,21 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
-        _Mensaje = Fx_Agregar_Mensaje_Respuesta(True)
+        _Mensaje = Fx_Rechazar_Ticket() 'Fx_Agregar_Mensaje_Respuesta(True)
 
-        GestionRealizada = _Mensaje.EsCorrecto
-
-        If _Mensaje.MostrarMensaje Then
-
-            _Mensaje = Fx_Cerrar_Ticket(True, False, False, False, 0, True, True, True)
-
-            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
-
+        If _Mensaje.Cancelado Then
+            Return
         End If
 
-        If GestionRealizada And Not _Mensaje.MostrarMensaje Then
-            Me.Close()
-        Else
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+
+        If Not _Mensaje.EsCorrecto Then
             Sb_Actualizar_Grilla()
+            Return
         End If
+
+        GestionRealizada = True
+        Me.Close()
 
     End Sub
 

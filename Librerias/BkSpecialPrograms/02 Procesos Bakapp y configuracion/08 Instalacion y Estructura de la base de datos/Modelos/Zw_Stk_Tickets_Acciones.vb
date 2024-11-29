@@ -21,5 +21,5 @@
     Public Property Asunto As String
     Public Property Tido_Cierra As String
     Public Property Nudo_Cierra As String
-    Public Property Idmaeedo_Cierra As String
+    Public Property Idmaeedo_Cierra As Integer
 End Class

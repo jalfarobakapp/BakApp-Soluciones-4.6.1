@@ -172,6 +172,7 @@ Public Class Frm_Tickets_Lista
             If _NodoHijo.Tag = "Rechazados" Then _Accion = "And Aceptado = 0 And Rechazado = 1 And Estado <> 'PROC'"
             If _NodoHijo.Tag = "Pendientes" Then _Accion = "And Estado = 'ABIE' And Aceptado = 0 And Rechazado = 0"
             If _NodoHijo.Tag = "Cerradas" Then _Accion = "And Estado = 'CERR'"
+            If _NodoHijo.Tag = "Nulos" Then _Accion = "And Estado = 'NULO'"
 
         End If
 
@@ -544,6 +545,10 @@ Public Class Frm_Tickets_Lista
                 _Condicion += vbCrLf & "And Estado = 'CERR'"
             End If
 
+            If _Carpeta.Tag = "Nulos" Then
+                _Condicion += vbCrLf & "And Estado = 'NULO'"
+            End If
+
             _NodoSeleccionado = _Carpeta
 
         Else
@@ -563,24 +568,6 @@ Public Class Frm_Tickets_Lista
             End Try
 
         End If
-
-        Consulta_sql = "Select Tks.*,NOKOFU As 'NomFuncCrea',TkPrd.Empresa,TkPrd.Sucursal,TkPrd.Bodega,TkPrd.Codigo,TkPrd.Descripcion As DescripcionPr," & vbCrLf &
-                       "Case UdMedida When 1 Then Ud1 Else Ud2 End As 'Udm',StfiEnBodega,Cantidad,Diferencia" & vbCrLf &
-                       ",Case Prioridad When 'AL' Then 'Alta' When 'NR' Then 'Normal' When 'BJ' Then 'Baja' When 'UR' Then 'Urgente' Else '??' End As NomPrioridad" & vbCrLf &
-                       ",Case UltAccion When 'INGR' then 'Ingresada' When 'MENS' then 'Mensaje' When 'RESP' then 'Respondido' When 'CERR' then 'Cerrada' End As UltimaAccion" & vbCrLf &
-                       ",Case Estado 
-                       When 'ABIE' Then 
-                            Case When Rechazado = 1 Then 'Abierto (Rechazado)' Else 'Abierto' End 
-                       When 'CERR' Then 
-                            Case When Rechazado = 1 Then 'Cerrado (Rechazado)' When Aceptado = 1 Then 'Cerrado (Aceptado)' Else 'Cerrado' End 
-                       When 'NULO' then 'Nulo' When 'SOLC' then 'Sol. Cierre' End As NomEstado," & vbCrLf &
-                       "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones AcMs Where AcMs.Id_Raiz = Tks.Id_Raiz And AcMs.Accion In ('MENS','CREA') And AcMs.Visto = 0) As Mesn_Pdte_Ver," & vbCrLf &
-                       "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones AcRs Where AcRs.Id_Raiz = Tks.Id_Raiz And AcRs.Accion In ('RESP','CREA') And AcRs.Visto = 0) As Resp_Pdte_Ver" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Stk_Tickets Tks" & vbCrLf &
-                       "Left Join " & _Global_BaseBk & "Zw_Stk_Tickets_Producto TkPrd On Tks.Id_Raiz = TkPrd.Id_Raiz" & vbCrLf &
-                       "Left Join TABFU Fu On Fu.KOFU = CodFuncionario_Crea" & vbCrLf &
-                       "Where 1 > 0" & vbCrLf & _Condicion & vbCrLf &
-                       "Order By Tks.Numero Desc"
 
         Consulta_sql = "Select Distinct Tks.*,NOKOFU As 'NomFuncCrea',TkPrd.Empresa,TkPrd.Sucursal,TkPrd.Bodega,TkPrd.Codigo,TkPrd.Descripcion As DescripcionPr," & vbCrLf &
                        "Case UdMedida When 1 Then Ud1 Else Ud2 End As 'Udm'--,StfiEnBodega,Cantidad,Diferencia" & vbCrLf &
@@ -884,15 +871,19 @@ Public Class Frm_Tickets_Lista
 
     Private Sub Btn_Crear_Ticket_Click(sender As Object, e As EventArgs) Handles Btn_Crear_Ticket.Click
 
-        'RemoveHandler Grilla.CellFormatting, AddressOf Grilla_CellFormatting
-
         Dim Fm As New Frm_Tickets_Mant(0)
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
-        'AddHandler Grilla.CellFormatting, AddressOf Grilla_CellFormatting
+        ' Obtén el nodo seleccionado (con foco):
+        Dim nodoSeleccionado As TreeNode = Tree_Bandeja.SelectedNode
 
-        Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(0))
+        If nodoSeleccionado Is Nothing AndAlso Tree_Bandeja.Nodes.Count > 0 Then
+            nodoSeleccionado = Tree_Bandeja.Nodes(0)
+            Tree_Bandeja.SelectedNode = nodoSeleccionado
+        End If
+
+        Call Btn_Actualizar_Click(Nothing, Nothing)
 
     End Sub
 
@@ -1023,6 +1014,7 @@ Public Class Frm_Tickets_Lista
         Dim _Asig_Aceptados As TreeNode
         Dim _Asig_Rechazados As TreeNode
         Dim _Asig_Cerradas As TreeNode
+        Dim _Asig_Nulos As TreeNode
 
         Dim _Enviados As TreeNode
         Dim _Env_Pendientes As TreeNode
@@ -1030,6 +1022,7 @@ Public Class Frm_Tickets_Lista
         Dim _Env_Aceptados As TreeNode
         Dim _Env_Rechazados As TreeNode
         Dim _Env_Cerradas As TreeNode
+        Dim _Env_Nulos As TreeNode
 
         Dim fuenteNegrita As New Font(Tree_Bandeja.Font.Name, 10, FontStyle.Bold)
 
@@ -1040,6 +1033,7 @@ Public Class Frm_Tickets_Lista
         _Asig_Aceptados = Fx_CrearNodo("Aceptados", "Aceptados", 0, 1)
         _Asig_Rechazados = Fx_CrearNodo("Rechazados", "Rechazados", 0, 1)
         '_Asig_Cerradas = Fx_CrearNodo("Cerradas", "Cerradas", 0, 1)
+        _Asig_Nulos = Fx_CrearNodo("Nulos", "Nulos", 0, 1)
 
         With _BandejaEntrada
             .NodeFont = fuenteNegrita
@@ -1048,6 +1042,7 @@ Public Class Frm_Tickets_Lista
             .Nodes.Add(_Asig_Aceptados)
             .Nodes.Add(_Asig_Rechazados)
             '   .Nodes.Add(_Asig_Cerradas)
+            .Nodes.Add(_Asig_Nulos)
         End With
 
         ' Crear los nodos de la bandeja de enviados
@@ -1057,6 +1052,7 @@ Public Class Frm_Tickets_Lista
         _Env_Aceptados = Fx_CrearNodo("Aceptados", "Aceptados", 0, 1)
         _Env_Rechazados = Fx_CrearNodo("Rechazados", "Rechazados", 0, 1)
         '_Env_Cerradas = Fx_CrearNodo("Cerradas", "Cerradas", 0, 1)
+        _Env_Nulos = Fx_CrearNodo("Nulos", "Nulos", 0, 1)
 
         With _Enviados
             .NodeFont = fuenteNegrita
@@ -1065,6 +1061,7 @@ Public Class Frm_Tickets_Lista
             .Nodes.Add(_Env_Aceptados) '(Fx_CrearNodo("Aceptados", "Aceptados", 0, 1))
             .Nodes.Add(_Env_Rechazados) '(Fx_CrearNodo("Rechazados", "Rechazados", 0, 1))
             '   .Nodes.Add(_Env_Cerradas) '(Fx_CrearNodo("Cerradas", "Cerradas", 0, 1))
+            .Nodes.Add(_Env_Nulos) '(Fx_CrearNodo("Rechazados", "Rechazados", 0, 1))
         End With
 
         ' Agregar los nodos principales al TreeView

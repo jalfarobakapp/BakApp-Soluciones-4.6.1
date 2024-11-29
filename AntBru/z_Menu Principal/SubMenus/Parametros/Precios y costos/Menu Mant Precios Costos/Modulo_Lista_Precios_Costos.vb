@@ -58,6 +58,7 @@ Public Class Modulo_Lista_Precios_Costos
             Dim _Tbl_Lista_Seleccionada As DataTable
 
             Dim Fm As New Frm_SeleccionarListaPrecios(_Lista, True, False)
+            Fm.MostraTodasLasListas = False
             Fm.ShowDialog(Me)
             _Tbl_Lista_Seleccionada = Fm.Pro_Tbl_Listas_Seleccionadas
             Fm.Dispose()

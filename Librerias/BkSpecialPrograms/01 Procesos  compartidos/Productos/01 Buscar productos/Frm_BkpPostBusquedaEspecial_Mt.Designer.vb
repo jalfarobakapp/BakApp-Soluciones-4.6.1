@@ -100,6 +100,7 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Chk_MostrarVendidosUlt3Meses = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_StockFisicoMayorCero = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Grupo_BusquedaProducto.SuspendLayout()
         CType(Me.Context_Menu_Solicitud_Compra, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -880,22 +881,39 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         '
         Me.Chk_MostrarVendidosUlt3Meses.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_MostrarVendidosUlt3Meses.CheckBoxImageChecked = CType(resources.GetObject("Chk_MostrarVendidosUlt3Meses.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_MostrarVendidosUlt3Meses.CheckBoxImageUnChecked = CType(resources.GetObject("Chk_MostrarVendidosUlt3Meses.CheckBoxImageUnChecked"), System.Drawing.Image)
         Me.Chk_MostrarVendidosUlt3Meses.FocusCuesEnabled = False
         Me.Chk_MostrarVendidosUlt3Meses.ForeColor = System.Drawing.Color.Black
         Me.Chk_MostrarVendidosUlt3Meses.Location = New System.Drawing.Point(5, 559)
         Me.Chk_MostrarVendidosUlt3Meses.Name = "Chk_MostrarVendidosUlt3Meses"
-        Me.Chk_MostrarVendidosUlt3Meses.Size = New System.Drawing.Size(292, 25)
+        Me.Chk_MostrarVendidosUlt3Meses.Size = New System.Drawing.Size(281, 25)
         Me.Chk_MostrarVendidosUlt3Meses.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_MostrarVendidosUlt3Meses.TabIndex = 59
         Me.Chk_MostrarVendidosUlt3Meses.Text = "Mostrar solo productos vendidos los últimos 3 meses"
         Me.Chk_MostrarVendidosUlt3Meses.Visible = False
+        '
+        'Chk_StockFisicoMayorCero
+        '
+        Me.Chk_StockFisicoMayorCero.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_StockFisicoMayorCero.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_StockFisicoMayorCero.CheckBoxImageChecked = CType(resources.GetObject("Chk_StockFisicoMayorCero.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_StockFisicoMayorCero.FocusCuesEnabled = False
+        Me.Chk_StockFisicoMayorCero.ForeColor = System.Drawing.Color.Black
+        Me.Chk_StockFisicoMayorCero.Location = New System.Drawing.Point(292, 559)
+        Me.Chk_StockFisicoMayorCero.Name = "Chk_StockFisicoMayorCero"
+        Me.Chk_StockFisicoMayorCero.Size = New System.Drawing.Size(114, 25)
+        Me.Chk_StockFisicoMayorCero.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_StockFisicoMayorCero.TabIndex = 60
+        Me.Chk_StockFisicoMayorCero.Text = "Stock físico > 0"
         '
         'Frm_BkpPostBusquedaEspecial_Mt
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(860, 631)
+        Me.Controls.Add(Me.Chk_StockFisicoMayorCero)
         Me.Controls.Add(Me.Chk_MostrarVendidosUlt3Meses)
         Me.Controls.Add(Me.Context_Menu_Solicitud_Compra)
         Me.Controls.Add(Me.Lbl_Patente)
@@ -1004,4 +1022,5 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
     Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
     Public WithEvents Txt_CodAlternativo As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Chk_MostrarVendidosUlt3Meses As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_StockFisicoMayorCero As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

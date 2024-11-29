@@ -160,6 +160,12 @@ Public Class Frm_Tickets_IngProducto
             Return
         End If
 
+        If String.IsNullOrEmpty(Cmb_UdMedida.Text.Trim) Then
+            MessageBoxEx.Show(Me, "Falta la unidad de medida", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Ubicacion.Focus()
+            Return
+        End If
+
         If Not SoloLectura AndAlso NuevoIngreso Then
 
             Dim _Msg1 = "CONFIRMAR CANTIDADES"

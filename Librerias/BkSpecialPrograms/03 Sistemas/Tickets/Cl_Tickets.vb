@@ -557,51 +557,36 @@ Public Class Cl_Tickets
                               _CreaNewTicket As Boolean,
                               _AnulaTicket As Boolean,
                               _Aceptado As Boolean,
+                              _Rechazado As Boolean,
                               _CierraTicketPadre As Boolean,
-                              _CierraTicektRaiz As Boolean) As LsValiciones.Mensajes
+                              _CierraTicektRaiz As Boolean,
+                               ByRef _Zw_Stk_Tickets_Acciones As Zw_Stk_Tickets_Acciones) As LsValiciones.Mensajes
 
         Dim _Mensaje_Ticket As New LsValiciones.Mensajes
 
         Dim _Estado As String
 
-        With Zw_Stk_Tickets_Acciones
-
-            .Descripcion = _Descripcion
-            .CodFuncionario = _CodFuncionario
-            .Aceptado = _Aceptado
-
-            If _Cierra_Ticket Then
-                _Estado = "CERR"
-                .Accion = "CERR"
-                If _CreaNewTicket Then
-                    _Estado = "PROC"
-                    .Accion = "CECR"
-                End If
+        If _Cierra_Ticket Then
+            _Estado = "CERR"
+            If _CreaNewTicket Then
+                _Estado = "PROC"
             End If
+        End If
 
-            If _Solicita_Cierre Then
-                _Estado = "SOLC"
-                .Accion = "SOLC"
-            End If
+        If _Solicita_Cierre Then
+            _Estado = "SOLC"
+        End If
 
-            If _AnulaTicket Then
-                _Estado = "NULO"
-                .Accion = "NULO"
-            End If
+        If _AnulaTicket Then
+            _Estado = "NULO"
+        End If
 
-            .Cierra_Ticket = _Cierra_Ticket
-            .Solicita_Cierre = _Solicita_Cierre
-            .AnulaTicket = _AnulaTicket
-
-            ' Acciones y Estados
-            'CERR = Cierra ticket
-            'CECR = Cierra ticket y crea nuevo ticket a partir de este
-            'SOLC = Solicita cierre de ticket
-            'NULO = Anula ticket
-            'PROC = TickeT en proceso
-
-        End With
-
+        '    ' Acciones y Estados
+        '    'CERR = Cierra ticket
+        '    'CECR = Cierra ticket y crea nuevo ticket a partir de este
+        '    'SOLC = Solicita cierre de ticket
+        '    'NULO = Anula ticket
+        '    'PROC = TickeT en proceso
 
         Dim _Id_TicketAc As Integer
 
@@ -625,7 +610,9 @@ Public Class Cl_Tickets
             End If
 
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets Set " &
-                           "Estado = '" & _Estado & "'" & _FechaCierre & ",Aceptado = " & Convert.ToInt32(_Zw_Stk_Tickets_Acciones.Aceptado) & vbCrLf &
+                           "Estado = '" & _Estado & "'" & _FechaCierre & vbCrLf &
+                           ",Aceptado = " & Convert.ToInt32(_Aceptado) & vbCrLf &
+                           ",Rechazado = " & Convert.ToInt32(_Rechazado) & vbCrLf &
                            "Where Id = " & Zw_Stk_Tickets.Id
 
             Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
@@ -647,7 +634,7 @@ Public Class Cl_Tickets
             If _CierraTicketPadre Then
 
                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets Set " &
-                               "Estado = '" & _Estado & "'" & _FechaCierre & ",Aceptado = " & Convert.ToInt32(_Zw_Stk_Tickets_Acciones.Aceptado) & vbCrLf &
+                               "Estado = '" & _Estado & "'" & _FechaCierre & ",Aceptado = " & Convert.ToInt32(_Aceptado) & vbCrLf &
                                "Where Id = " & Zw_Stk_Tickets.Id_Padre
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
@@ -659,7 +646,7 @@ Public Class Cl_Tickets
             If _CierraTicektRaiz Then
 
                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets Set " &
-                               "Estado = '" & _Estado & "'" & _FechaCierre & ",Aceptado = " & Convert.ToInt32(_Zw_Stk_Tickets_Acciones.Aceptado) & vbCrLf &
+                               "Estado = '" & _Estado & "'" & _FechaCierre & ",Aceptado = " & Convert.ToInt32(_Aceptado) & vbCrLf &
                                "Where Id = " & Zw_Stk_Tickets.Id_Raiz
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
@@ -668,32 +655,63 @@ Public Class Cl_Tickets
 
             End If
 
-            'With _Zw_Stk_Tickets_Acciones
+            If Not IsNothing(_Zw_Stk_Tickets_Acciones) Then
 
-            '    .Id_Ticket = Zw_Stk_Tickets.Id
+                With _Zw_Stk_Tickets_Acciones
 
-            '    Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Set " & vbCrLf &
-            '                   "Id_Ticket = " & .Id_Ticket & vbCrLf &
-            '                   ",Accion = '" & .Accion & "'" & vbCrLf &
-            '                   ",Descripcion = '" & .Descripcion & "'" & vbCrLf &
-            '                   ",Fecha = Getdate()" & vbCrLf &
-            '                   ",En_Construccion = 0" & vbCrLf &
-            '                   ",Aceptado = " & Convert.ToInt32(.Aceptado) & vbCrLf &
-            '                   ",CreaNewTicket = " & Convert.ToInt32(.CreaNewTicket) & vbCrLf &
-            '                   ",Cierra_Ticket = " & Convert.ToInt32(.Cierra_Ticket) & vbCrLf &
-            '                   ",CodFunGestiona = '" & .CodFunGestiona & "'" & vbCrLf &
-            '                   ",Id_Raiz = '" & Zw_Stk_Tickets.Id_Raiz & "'" & vbCrLf &
-            '                   ",Id_Ticket_Cierra = '" & .Id_Ticket_Cierra & "'" & vbCrLf &
-            '                   ",Id_Ticket_Crea = '" & .Id_Ticket_Crea & "'" & vbCrLf &
-            '                   ",Asunto = '" & .Asunto & "'" & vbCrLf &
-            '                   "Where Id = " & .Id
+                    '.Id_Ticket = Zw_Stk_Tickets.Id
 
-            '    Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
-            '    Comando.Transaction = myTrans
-            '    Comando.ExecuteNonQuery()
+                    If CBool(.Id) Then
 
-            'End With
+                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Set " & vbCrLf &
+                                       "Id_Ticket = " & .Id_Ticket & vbCrLf &
+                                       ",Accion = '" & .Accion & "'" & vbCrLf &
+                                       ",Descripcion = '" & .Descripcion & "'" & vbCrLf &
+                                       ",Fecha = Getdate()" & vbCrLf &
+                                       ",En_Construccion = 0" & vbCrLf &
+                                       ",Aceptado = " & Convert.ToInt32(.Aceptado) & vbCrLf &
+                                       ",CreaNewTicket = " & Convert.ToInt32(.CreaNewTicket) & vbCrLf &
+                                       ",Cierra_Ticket = " & Convert.ToInt32(.Cierra_Ticket) & vbCrLf &
+                                       ",CodFunGestiona = '" & .CodFunGestiona & "'" & vbCrLf &
+                                       ",Id_Raiz = '" & Zw_Stk_Tickets.Id_Raiz & "'" & vbCrLf &
+                                       ",Id_Ticket_Cierra = '" & .Id_Ticket_Cierra & "'" & vbCrLf &
+                                       ",Id_Ticket_Crea = '" & .Id_Ticket_Crea & "'" & vbCrLf &
+                                       ",Asunto = '" & .Asunto & "'" & vbCrLf &
+                                       ",Tido_Cierra = '" & .Tido_Cierra & "'" & vbCrLf &
+                                       ",Nudo_Cierra = '" & .Nudo_Cierra & "'" & vbCrLf &
+                                       ",Idmaeedo_Cierra = " & .Idmaeedo_Cierra & vbCrLf &
+                                       "Where Id = " & .Id
+                        Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                        Comando.Transaction = myTrans
+                        Comando.ExecuteNonQuery()
 
+                    Else
+
+                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones (Id_Ticket,Accion,Descripcion,Fecha,CodAgente," &
+                                   "CodFuncionario,En_Construccion,CodFunGestiona,Rechazado,Aceptado,Id_Raiz,Id_Ticket_Cierra,Id_Ticket_Crea," &
+                                   "Asunto,Tido_Cierra,Nudo_Cierra,Idmaeedo_Cierra) Values " &
+                                   "(" & .Id_Ticket & ",'" & .Accion & "','" & .Descripcion & "',Getdate(),'" & .CodAgente & "','" & .CodFuncionario & "'," &
+                                   Convert.ToInt32(.En_Construccion) & ",'" & .CodFunGestiona & "'," & Convert.ToInt32(.Rechazado) & "," &
+                                   Convert.ToInt32(.Aceptado) & "," & .Id_Raiz & "," & .Id_Ticket_Cierra & "," & .Id_Ticket_Crea &
+                                   ",'" & .Asunto & "','" & .Tido_Cierra & "','" & .Nudo_Cierra & "'," & .Idmaeedo_Cierra & ")"
+
+                        Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                        Comando.Transaction = myTrans
+                        Comando.ExecuteNonQuery()
+
+                        Comando = New System.Data.SqlClient.SqlCommand("Select @@IDENTITY AS 'Identity'", Cn2)
+                        Comando.Transaction = myTrans
+                        Dim dfd1 As System.Data.SqlClient.SqlDataReader = Comando.ExecuteReader()
+                        While dfd1.Read()
+                            .Id = dfd1("Identity")
+                        End While
+                        dfd1.Close()
+
+                    End If
+
+                End With
+
+            End If
 
             myTrans.Commit()
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
