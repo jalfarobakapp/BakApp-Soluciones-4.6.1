@@ -149,6 +149,7 @@ Partial Class Frm_Tickets_Mant
         '
         Me.Chk_ExigeDocCerrar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_ExigeDocCerrar.CheckBoxImageChecked = CType(resources.GetObject("Chk_ExigeDocCerrar.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_ExigeDocCerrar.Enabled = False
         Me.Chk_ExigeDocCerrar.FocusCuesEnabled = False
         Me.Chk_ExigeDocCerrar.ForeColor = System.Drawing.Color.Black
         Me.Chk_ExigeDocCerrar.Location = New System.Drawing.Point(305, 33)

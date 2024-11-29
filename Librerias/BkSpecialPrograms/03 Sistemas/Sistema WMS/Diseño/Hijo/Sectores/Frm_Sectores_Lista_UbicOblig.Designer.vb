@@ -36,6 +36,8 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.LabelItem2 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_AgregarProductosUbic = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_QuitarProductosUbic = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem4 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_ConfProdUbicSoloUna = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem3 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
@@ -54,8 +56,6 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
         Me.Imagenes_16x16_Dark = New System.Windows.Forms.ImageList(Me.components)
-        Me.Btn_ConfProdUbicSoloUna = New DevComponents.DotNetBar.ButtonItem()
-        Me.LabelItem4 = New DevComponents.DotNetBar.LabelItem()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -181,6 +181,26 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.Btn_QuitarProductosUbic.ImageAlt = CType(resources.GetObject("Btn_QuitarProductosUbic.ImageAlt"), System.Drawing.Image)
         Me.Btn_QuitarProductosUbic.Name = "Btn_QuitarProductosUbic"
         Me.Btn_QuitarProductosUbic.Text = "Quitar producto de esta ubicación"
+        '
+        'LabelItem4
+        '
+        Me.LabelItem4.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem4.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem4.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem4.Name = "LabelItem4"
+        Me.LabelItem4.PaddingBottom = 1
+        Me.LabelItem4.PaddingLeft = 10
+        Me.LabelItem4.PaddingTop = 1
+        Me.LabelItem4.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem4.Text = "-----------------------------------------"
+        '
+        'Btn_ConfProdUbicSoloUna
+        '
+        Me.Btn_ConfProdUbicSoloUna.Image = CType(resources.GetObject("Btn_ConfProdUbicSoloUna.Image"), System.Drawing.Image)
+        Me.Btn_ConfProdUbicSoloUna.ImageAlt = CType(resources.GetObject("Btn_ConfProdUbicSoloUna.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ConfProdUbicSoloUna.Name = "Btn_ConfProdUbicSoloUna"
+        Me.Btn_ConfProdUbicSoloUna.Text = "Confirmar nuevamente los productos de este sector con ubicaciones actuales"
         '
         'LabelItem3
         '
@@ -543,26 +563,6 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.Imagenes_16x16_Dark.Images.SetKeyName(21, "symbol-delete.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(22, "symbol-ok-warning.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(23, "symbol-remove.png")
-        '
-        'Btn_ConfProdUbicSoloUna
-        '
-        Me.Btn_ConfProdUbicSoloUna.Image = CType(resources.GetObject("Btn_ConfProdUbicSoloUna.Image"), System.Drawing.Image)
-        Me.Btn_ConfProdUbicSoloUna.ImageAlt = CType(resources.GetObject("Btn_ConfProdUbicSoloUna.ImageAlt"), System.Drawing.Image)
-        Me.Btn_ConfProdUbicSoloUna.Name = "Btn_ConfProdUbicSoloUna"
-        Me.Btn_ConfProdUbicSoloUna.Text = "Confirmar nuevamente los productos de este sector con ubicaciones actuales"
-        '
-        'LabelItem4
-        '
-        Me.LabelItem4.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
-        Me.LabelItem4.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
-        Me.LabelItem4.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
-        Me.LabelItem4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.LabelItem4.Name = "LabelItem4"
-        Me.LabelItem4.PaddingBottom = 1
-        Me.LabelItem4.PaddingLeft = 10
-        Me.LabelItem4.PaddingTop = 1
-        Me.LabelItem4.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.LabelItem4.Text = "-----------------------------------------"
         '
         'Frm_Sectores_Lista_UbicOblig
         '

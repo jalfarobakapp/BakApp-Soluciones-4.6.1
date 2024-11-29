@@ -176,7 +176,7 @@ Public Class Frm_Ubicaciones
         If _Row_Sector.Item("EsCabecera") Then
             Grilla.Focus()
             Grilla.CurrentCell = Grilla.Rows(0).Cells(6)
-            Sb_Grilla_Doble_Clic_en_celda_Ver_Productos_en_ubicacion()
+            'Sb_Grilla_Doble_Clic_en_celda_Ver_Productos_en_ubicacion()
         End If
 
     End Sub

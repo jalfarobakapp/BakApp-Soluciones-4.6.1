@@ -24,6 +24,7 @@ Public Class Frm_Tickets_Seguimiento
     Public Property vTop As Integer
     Public Property vLeft As Integer
 
+
     Public Sub New(_Id_Ticket As Integer)
 
         ' Esta llamada es exigida por el diseñador.
@@ -642,6 +643,7 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
         End If
 
         Dim _Grabar As Boolean
+        Dim _Cerrar As Boolean
         Dim _Id_Hijo As Integer
 
         Dim Fm As New Frm_Tickets_Mant(0)
@@ -650,12 +652,17 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
         Fm.ShowDialog(Me)
         _Grabar = Fm.Grabar
         If _Grabar Then
-            _Id_Hijo = Fm.New_Ticket.Zw_Stk_Tickets.Id
+            _Cerrar = Fm.CerrarTicketAlFinalizar
+            If _Cerrar Then
+                _Id_Hijo = Fm.New_Ticket.Zw_Stk_Tickets.Id
+            End If
         End If
         Fm.Dispose()
 
         If _Grabar Then
-            Fx_Cerrar_Ticket(True, False, True, False, _Id_Hijo, False, False, False, False)
+            If _Cerrar Then
+                Fx_Cerrar_Ticket(True, False, True, False, _Id_Hijo, False, False, False, False)
+            End If
             GestionRealizada = True
             Me.Close()
         End If
@@ -1245,6 +1252,7 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
             If CBool(_Idmaeedo_Cierra) Then
 
                 Dim Fm As New Frm_Ver_Documento(_Idmaeedo_Cierra, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
+                Fm.Codigo_Marcar = _Cl_Tickets.Zw_Stk_Tickets_Producto.Codigo
                 Fm.ShowDialog(Me)
                 Fm.Dispose()
 

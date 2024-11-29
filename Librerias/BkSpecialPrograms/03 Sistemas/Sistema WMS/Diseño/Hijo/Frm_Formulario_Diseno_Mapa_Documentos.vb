@@ -2191,6 +2191,8 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
         Dim _Codigo_Sector_Old = _Codigo_Sector
         Dim _Nombre_Sector
         Dim _EsCabecera As Boolean
+        Dim _OblConfimarUbic As Boolean
+        Dim _SoloUnaUbicacion As Boolean
 
         Dim _Tiene_Prod As Boolean
         Dim Fm_ As New Frm_Ubicaciones(_RowBodega, _Id_Mapa, _Codigo_Sector)
@@ -2224,6 +2226,8 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
         _Codigo_Sector = Fm.Codigo_Sector
         _Nombre_Sector = Fm.Nombre_Sector
         _EsCabecera = Fm.EsCabecera
+        _OblConfimarUbic = Fm.OblConfimarUbic
+        _SoloUnaUbicacion = Fm.SoloUnaUbicacion
 
         Fm.Dispose()
 
@@ -2271,6 +2275,8 @@ Public Class Frm_Formulario_Diseno_Mapa_Documentos
                                "Codigo_Sector = '" & _Codigo_Sector & "'" & vbCrLf &
                                ",Nombre_Sector = '" & _Nombre_Sector & "'" & vbCrLf &
                                ",EsCabecera = " & Convert.ToInt32(_EsCabecera) & vbCrLf &
+                               ",OblConfimarUbic = " & Convert.ToInt32(_OblConfimarUbic) & vbCrLf &
+                               ",SoloUnaUbicacion = " & Convert.ToInt32(_SoloUnaUbicacion) & vbCrLf &
                                "Where Codigo_Sector = '" & _Codigo_Sector_Old & "'"
                 _Sql.Ej_consulta_IDU(Consulta_sql)
 

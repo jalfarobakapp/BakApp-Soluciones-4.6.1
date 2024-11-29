@@ -140,6 +140,7 @@ Public Class Frm_Sectores
         Dim _EsCabecera As Boolean = _Fila.Cells("EsCabecera").Value
 
         Dim Fm As New Frm_Formulario_Diseno_Mapa_Crear_Sector(_Id_Mapa, _Id_Sector)
+        Fm.Chk_EsCabecera.Enabled = False
         Fm.ShowDialog(Me)
         _Grabar = Fm.Grabar
         _Codigo_Sector = Fm.Codigo_Sector

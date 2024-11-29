@@ -594,4 +594,52 @@ Public Class Frm_Sectores_Lista_UbicOblig
 
     End Sub
 
+    Private Sub Btn_ConfProdUbicSoloUna_Click(sender As Object, e As EventArgs) Handles Btn_ConfProdUbicSoloUna.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+
+        Dim _Empresa As String = _Fila.Cells("Empresa").Value
+        Dim _Sucursal As String = _Fila.Cells("Sucursal").Value
+        Dim _Bodega As String = _Fila.Cells("Bodega").Value
+        Dim _Codigo_Sector As String = _Fila.Cells("Codigo_Sector").Value
+        Dim _Codigo_Ubic As String = _Codigo_Sector
+        Dim _FechaIngreso As Date = Dtp_FechaRevision.Value
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_Ubicacion",
+                                                       "Id_Mapa = " & _Id_Mapa &
+                                                       " And Empresa = '" & _Empresa & "' " &
+                                                       "And Sucursal = '" & _Sucursal & "' " &
+                                                       "And Bodega = '" & _Bodega & "' " &
+                                                       "And Codigo_Sector = '" & _Codigo_Sector & "'")
+
+        If _Reg = 0 Then
+
+            MessageBoxEx.Show(Me, "No hay productos registros que cargar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+            Return
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Confirma dejar nuevamente los productos " & vbCrLf &
+                     "en las mismas ubicaciones el día " & Dtp_FechaRevision.Value.ToLongDateString & "?",
+                     "Confirmar productos en la ubicaciones", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
+
+        Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+
+        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal (Semilla,Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector," &
+                       "Codigo_Ubic,Codigo,NombreEquipo,CodFuncionario_Ing,Ingreso,FechaIngreso)" & vbCrLf &
+                       "Select Semilla,Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector,Codigo_Ubic,Codigo,'" & _NombreEquipo & "','" & FUNCIONARIO & "',1,'" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "'" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Prod_Ubicacion" & vbCrLf &
+                       "Where Id_Mapa = " & _Id_Mapa & " And Codigo Not In " &
+                       "(Select Codigo From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal " &
+                       "Where Id_Mapa = " & _Id_Mapa &
+                       " And CONVERT(varchar, FechaIngreso, 112) = '" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "')" & vbCrLf &
+                       "And Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega & "' And Codigo_Sector = '" & _Codigo_Sector & "'"
+        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+            MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Sb_Actualizar_Grilla()
+        End If
+
+    End Sub
 End Class

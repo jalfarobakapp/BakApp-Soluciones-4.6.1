@@ -7,14 +7,18 @@ Public Class Frm_Tickets_Mant
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-    Dim _Cl_Tickets As New Cl_Tickets
-    Dim _Cl_Tickets_Padre As New Cl_Tickets
+    'Dim _Cl_Tickets As New Cl_Tickets
+    'Dim _Cl_Tickets_Padre As New Cl_Tickets
+
+    Public Property Cl_Tickets As New Cl_Tickets
+    Public Property Cl_Tickets_Padre As New Cl_Tickets
 
     Public Property Grabar As Boolean
     Public Property Id_Padre As Integer
     Public Property New_Ticket As Cl_Tickets
     Public Property Aceptado As Boolean
     Public Property Rechazado As Boolean
+    Public Property CerrarTicketAlFinalizar As Boolean
 
     Private _ConfirmaCantidades As Boolean
 
@@ -301,6 +305,7 @@ Public Class Frm_Tickets_Mant
                           "Guárdelo para fururas referencias", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
         New_Ticket = _Cl_Tickets
         Grabar = True
+        CerrarTicketAlFinalizar = True
         Me.Close()
 
     End Sub
@@ -656,7 +661,7 @@ Public Class Frm_Tickets_Mant
 
     Private Sub Btn_Archivos_Adjuntos_Click(sender As Object, e As EventArgs) Handles Btn_Archivos_Adjuntos.Click
 
-        Dim Fm As New Frm_Adjuntar_Archivos("Zw_Stk_Tickets_Archivos", "Id_TicketAc", _Cl_Tickets.Zw_Stk_Tickets.New_Id_TicketAc)
+        Dim Fm As New Frm_Adjuntar_Archivos("Zw_Stk_Tickets_Archivos", "Id_TicketAc", _Cl_Tickets.Zw_Stk_Tickets_Acciones.Id)
         Fm.Pedir_Permiso = False
         Fm.ShowDialog(Me)
         Fm.Dispose()
@@ -919,10 +924,13 @@ Public Class Frm_Tickets_Mant
         Dim _TidosArray() As String = _Tidos.Split(","c)
         Dim _TidosFormatted As String = String.Join(",", _TidosArray.Select(Function(t) $"'{t}'"))
 
+        Consulta_sql = "Select KOPR,NOKOPR From MAEPR Where KOPR = '" & Cl_Tickets.Zw_Stk_Tickets_Producto.Codigo & "'"
+        Dim _Row_Producto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
         Dim _Fm As New Frm_BusquedaDocumento_Filtro(False)
         _Fm.Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado, "",
                                  $"Where TIDO In({_TidosFormatted})")
-        '_Fm.Rdb_Estado_Todos.Enabled = False
+        _Fm.Pro_Row_Producto = _Row_Producto
         _Fm.Rdb_Estado_Todos.Checked = True
         _Fm.ShowDialog(Me)
         Dim _Row_Documento As DataRow = _Fm.Pro_Row_Documento_Seleccionado
@@ -959,6 +967,7 @@ Public Class Frm_Tickets_Mant
         End If
 
         Dim Fm As New Frm_Ver_Documento(_Cl_Tickets.Zw_Stk_Tickets_Acciones.Idmaeedo_Cierra, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
+        Fm.Codigo_Marcar = Cl_Tickets.Zw_Stk_Tickets_Producto.Codigo
         Fm.ShowDialog(Me)
         Fm.Dispose()
 

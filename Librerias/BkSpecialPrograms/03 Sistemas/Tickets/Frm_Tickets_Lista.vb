@@ -906,7 +906,7 @@ Public Class Frm_Tickets_Lista
                            _Global_BaseBk & "Zw_Stk_Tickets_Toma Tm " & vbCrLf &
                            "Inner Join TABFU On KOFU = CodFuncionario" & vbCrLf &
                            "Left Join " & _Global_BaseBk & "Zw_EstacionesBkp EstB On EstB.NombreEquipo = Tm.NombreEquipo" & vbCrLf &
-                           "Where Id_Ticket = " & _Id_Ticket & " And CodFuncionario = '" & FUNCIONARIO & "'"
+                           "Where Id_Ticket = " & _Id_Ticket & " --And CodFuncionario = '" & FUNCIONARIO & "'"
             Dim _Row_Tomado As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             Dim _SoloLectura = False
