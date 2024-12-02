@@ -2602,6 +2602,10 @@ Error_Numero:
             resultado = Replace(resultado, caracteresExtraños(i), caracteresNormales(i))
         Next i
 
+        If IsNothing(resultado) Then
+            resultado = String.Empty
+        End If
+
         Return resultado
 
     End Function

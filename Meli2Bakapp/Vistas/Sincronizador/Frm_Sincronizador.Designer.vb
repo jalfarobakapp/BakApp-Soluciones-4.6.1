@@ -288,12 +288,13 @@ Partial Class Frm_Sincronizador
         Me.Controls.Add(Me.LabelX2)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.Name = "Frm_Sincronizador"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "MetroForm"
+        Me.Text = "SINCRONIZA MLIBRE2BAKAPP"
         CType(Me.Dtp_FechaRevision, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)

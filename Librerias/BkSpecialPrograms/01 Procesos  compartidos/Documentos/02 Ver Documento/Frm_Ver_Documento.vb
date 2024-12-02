@@ -545,9 +545,8 @@ Public Class Frm_Ver_Documento
 
             If _Customizable Then
                 Btn_CusNVV.Text = "Ver información del producto Customizado"
+                Me.Text += " *** CUSTOMIZABLE ***"
             End If
-
-            Me.Text += " *** CUSTOMIZABLE ***"
 
         End If
 

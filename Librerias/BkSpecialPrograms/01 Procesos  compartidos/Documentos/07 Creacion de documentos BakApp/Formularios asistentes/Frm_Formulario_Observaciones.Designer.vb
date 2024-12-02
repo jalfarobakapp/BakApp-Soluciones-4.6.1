@@ -62,6 +62,7 @@ Partial Class Frm_Formulario_Observaciones
         Me.Warning_Visado = New DevComponents.DotNetBar.Controls.WarningBox()
         Me.Imagenes_32x32 = New System.Windows.Forms.ImageList(Me.components)
         Me.Btn_GDI_GTI = New DevComponents.DotNetBar.ButtonX()
+        Me.Chk_GrabaNVVCustomizable = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.DtpFechaEntrega, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
@@ -241,7 +242,7 @@ Partial Class Frm_Formulario_Observaciones
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar_e_Imprimir, Me.Btn_Solo_Grabar, Me.Btn_Grabar_Observaciones, Me.Btn_Referencias_DTE, Me.Btn_Grabar_Pagar})
-        Me.Bar2.Location = New System.Drawing.Point(0, 383)
+        Me.Bar2.Location = New System.Drawing.Point(0, 400)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(684, 41)
         Me.Bar2.Stretch = True
@@ -656,10 +657,10 @@ Partial Class Frm_Formulario_Observaciones
         Me.Warning_Visado.CloseButtonVisible = False
         Me.Warning_Visado.ForeColor = System.Drawing.Color.Black
         Me.Warning_Visado.Image = CType(resources.GetObject("Warning_Visado.Image"), System.Drawing.Image)
-        Me.Warning_Visado.Location = New System.Drawing.Point(12, 331)
+        Me.Warning_Visado.Location = New System.Drawing.Point(10, 331)
         Me.Warning_Visado.Name = "Warning_Visado"
         Me.Warning_Visado.OptionsText = "Ver permisos"
-        Me.Warning_Visado.Size = New System.Drawing.Size(443, 34)
+        Me.Warning_Visado.Size = New System.Drawing.Size(445, 34)
         Me.Warning_Visado.TabIndex = 135
         Me.Warning_Visado.Text = "<b>  Documento Visado</b> Existen permisos asociados <i>...</i>"
         Me.Warning_Visado.Visible = False
@@ -688,11 +689,29 @@ Partial Class Frm_Formulario_Observaciones
         Me.Btn_GDI_GTI.TabIndex = 136
         Me.Btn_GDI_GTI.Text = "Se grabara GDI modo traspaso interno" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
+        'Chk_GrabaNVVCustomizable
+        '
+        Me.Chk_GrabaNVVCustomizable.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_GrabaNVVCustomizable.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_GrabaNVVCustomizable.CheckBoxImageChecked = CType(resources.GetObject("Chk_GrabaNVVCustomizable.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_GrabaNVVCustomizable.FocusCuesEnabled = False
+        Me.Chk_GrabaNVVCustomizable.ForeColor = System.Drawing.Color.Black
+        Me.Chk_GrabaNVVCustomizable.Location = New System.Drawing.Point(10, 371)
+        Me.Chk_GrabaNVVCustomizable.Name = "Chk_GrabaNVVCustomizable"
+        Me.Chk_GrabaNVVCustomizable.Size = New System.Drawing.Size(314, 17)
+        Me.Chk_GrabaNVVCustomizable.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_GrabaNVVCustomizable.TabIndex = 145
+        Me.Chk_GrabaNVVCustomizable.Text = "Grabar nota de venta como CUSTOMIZABLE"
+        '
         'Frm_Formulario_Observaciones
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(684, 424)
+        Me.ClientSize = New System.Drawing.Size(684, 441)
+        Me.Controls.Add(Me.Chk_GrabaNVVCustomizable)
         Me.Controls.Add(Me.Btn_GDI_GTI)
         Me.Controls.Add(Me.Warning_Visado)
         Me.Controls.Add(Me.SuperTabControl1)
@@ -757,4 +776,5 @@ Partial Class Frm_Formulario_Observaciones
     Friend WithEvents Btn_GDI_GTI As DevComponents.DotNetBar.ButtonX
     Friend WithEvents Txt_MotivoNCV As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX6 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Chk_GrabaNVVCustomizable As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

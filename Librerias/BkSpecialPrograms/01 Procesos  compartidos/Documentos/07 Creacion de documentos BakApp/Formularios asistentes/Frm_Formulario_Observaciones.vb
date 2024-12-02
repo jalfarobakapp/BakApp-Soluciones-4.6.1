@@ -22,6 +22,8 @@ Public Class Frm_Formulario_Observaciones
 
     Dim _Class_Referencias_DTE As Class_Referencias_DTE
 
+    'Public Property GrabaNVVCustomizable As Boolean
+
     Public ReadOnly Property Pro_Grabar() As Boolean
         Get
             Return _Grabar
@@ -71,6 +73,17 @@ Public Class Frm_Formulario_Observaciones
             _Grabar_Y_Pagar_Vale = value
         End Set
     End Property
+
+    Public Property GrabaNVVCustomizable As Boolean
+        Get
+            Return Chk_GrabaNVVCustomizable.Checked
+        End Get
+        Set(value As Boolean)
+            Chk_GrabaNVVCustomizable.Checked = value
+        End Set
+    End Property
+
+
 
     Public Property TieneOrdenDeDespacho As Boolean
     Public Property CambiarFechaEnDetalle As Boolean
@@ -800,6 +813,8 @@ Public Class Frm_Formulario_Observaciones
             _Grabar_Y_Pagar_Vale = _Grabar_Y_Pagar
             _Solo_Grabar = Not _Grabar_e_Imprimir
 
+            GrabaNVVCustomizable = Chk_GrabaNVVCustomizable.checked
+
             If _Grabar Then Me.Close()
 
         End If
@@ -969,4 +984,5 @@ Public Class Frm_Formulario_Observaciones
         Txt_MotivoNCV.Tag = String.Empty
         Txt_MotivoNCV.Text = String.Empty
     End Sub
+
 End Class

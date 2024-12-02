@@ -1,7 +1,6 @@
 ﻿Imports System.IO
 Imports System.Threading
 Imports BkSpecialPrograms.Bk_Comporamiento_UdMedidas
-Imports BkSpecialPrograms.Cl_Fincred_Bakapp.Cl_Fincred_SQL
 Imports BkSpecialPrograms.DocumentoListaSuperior
 Imports DevComponents.DotNetBar
 
@@ -11737,6 +11736,7 @@ Public Class Frm_Formulario_Documento
             .Item("TipoMoneda") = _TblEncabezado_StBy.Rows(0).Item("TipoMoneda")
             .Item("Valor_Dolar") = _TblEncabezado_StBy.Rows(0).Item("Valor_Dolar")
 
+
             LblMoneda.Tag = .Item("Moneda_Doc")
             LblMoneda.Text = .Item("Moneda_Doc")
 
@@ -11783,6 +11783,8 @@ Public Class Frm_Formulario_Documento
 
             _TblEncabezado.Rows(0).Item("TblTipoVenta") = _TblEncabezado_StBy.Rows(0).Item("TblTipoVenta")
             _TblEncabezado.Rows(0).Item("CodTipoVenta") = _TblEncabezado_StBy.Rows(0).Item("CodTipoVenta")
+
+            _TblEncabezado.Rows(0).Item("Customizable") = _TblEncabezado_StBy.Rows(0).Item("Customizable")
 
         End With
 
@@ -15198,11 +15200,7 @@ Public Class Frm_Formulario_Documento
 
     Private Sub BtnGrabar_Click(sender As System.Object, e As System.EventArgs) Handles BtnGrabar.Click
 
-        If _Tido = "NVV" AndAlso _Global_Row_Configuracion_General.Item("HabilitarNVVConProdCustomizables") Then
-            ShowContextMenu(Menu_Contextual_NVVCustomizable)
-        Else
-            Sb_Grabar_Documento(_New_Idmaeedo, True)
-        End If
+        Sb_Grabar_Documento(_New_Idmaeedo, True)
 
     End Sub
 
@@ -15753,12 +15751,16 @@ Public Class Frm_Formulario_Documento
                     Fm_Obs.Pro_Class_Referencias_DTE = _Class_Referencias_DTE
                     Fm_Obs.Btn_Grabar_Pagar.Visible = (_Caja_Habilitada And _Post_Venta And (_Tido = "BLV" Or _Tido = "FCV"))
                     Fm_Obs.TieneOrdenDeDespacho = Not (IsNothing(_Cl_Despacho))
+                    Fm_Obs.Chk_GrabaNVVCustomizable.Visible = (_Tido = "NVV" AndAlso _Global_Row_Configuracion_General.Item("HabilitarNVVConProdCustomizables"))
+                    Fm_Obs.GrabaNVVCustomizable = _TblEncabezado.Rows(0).Item("Customizable")
                     Fm_Obs.ShowDialog(Me)
 
                     _Grabar_Obs = Fm_Obs.Pro_Grabar
                     _Class_Referencias_DTE = Fm_Obs.Pro_Class_Referencias_DTE
                     _Grabar_e_Imprimir = Not Fm_Obs.Solo_Grabar
                     _Grabar_Y_Pagar_Vale = Fm_Obs.Grabar_Y_Pagar_Vale
+
+                    _TblEncabezado.Rows(0).Item("Customizable") = Fm_Obs.GrabaNVVCustomizable
 
                     Fm_Obs.Dispose()
 
@@ -28499,20 +28501,6 @@ Public Class Frm_Formulario_Documento
 
     End Sub
 
-    Private Sub Btn_GrabarNVVNormal_Click(sender As Object, e As EventArgs) Handles Btn_GrabarNVVNormal.Click
-
-        _TblEncabezado.Rows(0).Item("Customizable") = False
-        Sb_Grabar_Documento(_New_Idmaeedo, True)
-
-    End Sub
-
-    Private Sub Btn_GrabarNVVCustomizable_Click(sender As Object, e As EventArgs) Handles Btn_GrabarNVVCustomizable.Click
-
-        _TblEncabezado.Rows(0).Item("Customizable") = True
-        Sb_Grabar_Documento(_New_Idmaeedo, True)
-
-    End Sub
-
     Function Fx_AgregarPallet(_Codigo As String) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
@@ -28601,11 +28589,13 @@ Public Class Frm_Formulario_Documento
                 Dim _CRCH = _RowEntidad.Item("CRCH")
                 Dim _CRPA = _RowEntidad.Item("CRPA")
                 Dim _CRTO = _RowEntidad.Item("CRTO")
+                Dim _CRLT = _RowEntidad.Item("CRLT")
                 Dim _NUVECR = _RowEntidad.Item("NUVECR")
                 Dim _DIASVENCI = _RowEntidad.Item("DIASVENCI")
                 Dim _DIPRVE = _RowEntidad.Item("DIPRVE")
+                Dim _DIMOPER = _RowEntidad.Item("DIMOPER")
 
-                Dim _Dd = _CRSD + _CRCH + _CRPA + _CRTO + _NUVECR + _DIASVENCI
+                Dim _Dd = _CRSD + _CRCH + _CRPA + _CRTO + _CRLT + _NUVECR + _DIASVENCI + _DIPRVE + _DIMOPER
 
                 If CType(_RowEntidad.Item("FEVECREN"), Date).Date < _FechaEmision.Date And CBool(_Dd) Then
 

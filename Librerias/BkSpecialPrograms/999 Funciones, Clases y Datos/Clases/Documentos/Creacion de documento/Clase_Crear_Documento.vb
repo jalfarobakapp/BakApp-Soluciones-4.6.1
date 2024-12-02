@@ -2995,6 +2995,8 @@ Public Class Clase_Crear_Documento
         Dim _TblTipoVenta As String
         Dim _CodTipoVenta As String
 
+        Dim _Customizable As Integer
+
         Dim myTrans As SqlClient.SqlTransaction
         Dim Comando As SqlClient.SqlCommand
 
@@ -3102,6 +3104,8 @@ Public Class Clase_Crear_Documento
 
                 _TblTipoVenta = .Item("TblTipoVenta").ToString
                 _CodTipoVenta = .Item("CodTipoVenta").ToString
+
+                _Customizable = Convert.ToInt32(.Item("Customizable"))
 
             End With
 
@@ -3577,6 +3581,7 @@ Public Class Clase_Crear_Documento
                            ",MontoFincred = " & _MontoFincred & Environment.NewLine &
                            ",TblTipoVenta = '" & _TblTipoVenta & "'" & Environment.NewLine &
                            ",CodTipoVenta = '" & _CodTipoVenta & "'" & Environment.NewLine &
+                           ",Customizable = '" & _Customizable & "'" & Environment.NewLine &
                            "Where Id_DocEnc = " & _Id_DocEnc
 
             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
