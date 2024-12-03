@@ -645,7 +645,7 @@ Public Class Frm_BuscarDocumento_Mt
             .Columns("CAPRCO").Width = 70
             .Columns("CAPRCO").HeaderText = "Cantidad"
             .Columns("CAPRCO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("CAPRCO").DefaultCellStyle.Format = "###,##"
+            .Columns("CAPRCO").DefaultCellStyle.Format = "###,#0.#####"
             .Columns("CAPRCO").DisplayIndex = _DisplayIndex
             .Columns("CAPRCO").Visible = True
             _DisplayIndex += 1
@@ -653,7 +653,7 @@ Public Class Frm_BuscarDocumento_Mt
             .Columns("SALDO").Width = 70
             .Columns("SALDO").HeaderText = "Saldo"
             .Columns("SALDO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("SALDO").DefaultCellStyle.Format = "###,##.##"
+            .Columns("SALDO").DefaultCellStyle.Format = "###,#0.#####"
             .Columns("SALDO").DisplayIndex = _DisplayIndex
             .Columns("SALDO").Visible = True
             _DisplayIndex += 1

@@ -77,6 +77,8 @@ Public Class Frm_Conexiones
         Txt_Vendedor.Tag = _Cl_ConfiguracionLocal.Configuracion.Vendedor
         Txt_Vendedor.Text = _Cl_ConfiguracionLocal.Configuracion.NoVendedor
 
+        Txt_RutaEtiquetas.Text = _Cl_ConfiguracionLocal.Configuracion.RutaEtiquetas
+
     End Sub
 
     Private Sub Btn_ProbarConexionRd_Click(sender As Object, e As EventArgs) Handles Btn_ProbarConexionRd.Click
@@ -186,6 +188,35 @@ Public Class Frm_Conexiones
 
     End Function
 
+    Function Fx_ProbarConexionBaseBakapp() As Boolean
+
+        Try
+
+            Me.Cursor = Cursors.WaitCursor
+            Me.Enabled = False
+
+            Dim _Cadena As String = _Cl_ConfiguracionLocal.Fx_CadenaConexion(Txt_Rd_Host.Text, Txt_Rd_Puerto.Text, Txt_Rd_Basededatos.Text, Txt_Rd_Usuario.Text, Txt_Rd_Password.Text)
+
+            Dim _Mensaje As New LsValiciones.Mensajes
+
+            _Mensaje = _Cl_ConfiguracionLocal.Fx_ConfirmardbBakapp(Txt_Global_BaseBk.Text, Txt_Rd_Usuario.Text, _Cadena)
+
+            If Not _Mensaje.EsCorrecto Then
+                MessageBoxEx.Show(Me, Fx_AjustarTexto(_Mensaje.Mensaje, 100), _Mensaje.Detalle & " (Nombre de base de datos de BAKAPP)", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Txt_Global_BaseBk.Focus()
+                Return False
+            End If
+
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle & "Base de datos " & Txt_Rd_Basededatos.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        Catch ex As Exception
+        Finally
+            Me.Cursor = Cursors.Default
+            Me.Enabled = True
+        End Try
+
+        Return True
+    End Function
     Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
 
         If String.IsNullOrEmpty(Txt_Global_BaseBk.Text) Then
@@ -224,7 +255,12 @@ Public Class Frm_Conexiones
         End If
 
         If Not Fx_ProbarConexionRd() Then Return
+        If Not Fx_ProbarConexionBaseBakapp() Then Return
+
         If Not Fx_ProbarConexionMeli() Then Return
+
+
+
 
         With _Cl_ConfiguracionLocal.Configuracion
             .Global_BaseBk = Txt_Global_BaseBk.Text

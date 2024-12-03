@@ -239,6 +239,52 @@ Public Class Cl_ConfiguracionLocal
 
     End Function
 
+    Function Fx_ConfirmardbBakapp(_BaseDatosBakapp As String, _Usuario As String,_CadenaDeConexion As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+        Dim Consulta_Sql As String
+
+        Try
+
+            Dim _Sql As New Class_SQL(_CadenaDeConexion)
+
+            Consulta_Sql = "USE [" & _BaseDatosBakapp & "];
+Declare @Usuario As Varchar(20) = '" & _Usuario & "';
+
+SELECT 
+    dp.name AS Usuario,
+    dp.type_desc AS Tipo,
+    dp.create_date AS FechaCreacion,
+    dp.modify_date AS FechaModificacion,
+    p.permission_name AS Permiso,
+    p.state_desc AS Estado
+FROM 
+    sys.database_principals dp
+LEFT JOIN 
+    sys.database_permissions p ON dp.principal_id = p.grantee_principal_id
+WHERE 
+    dp.name = @Usuario;
+"
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
+
+            If Not String.IsNullOrWhiteSpace(_Sql.Pro_Error) Then
+                Throw New System.Exception(_Sql.Pro_Error)
+            End If
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Base de datos aceptada"
+            _Mensaje.Icono = MessageBoxIcon.Information
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message & vbCrLf & vbCrLf & "Revise el nombre de la base de datos de Bakapp"
+            _Mensaje.Icono = MessageBoxIcon.Stop
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
 
 End Class
 

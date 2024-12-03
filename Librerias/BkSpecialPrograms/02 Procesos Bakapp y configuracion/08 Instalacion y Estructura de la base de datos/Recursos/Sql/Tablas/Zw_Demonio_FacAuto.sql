@@ -19,7 +19,9 @@ CREATE TABLE [dbo].[Zw_Demonio_FacAuto](
 	[Id_Pickeo]		            [int]				NOT NULL DEFAULT (0),
 	[DocEmitir]		            [varchar](3)		NOT NULL DEFAULT (''),
 	[CerrarDespFact]	        [bit]				NOT NULL DEFAULT (0),
-    [CodFuncionario_Factura]    [char](3)		NOT NULL DEFAULT (0),
+    [CodFuncionario_Factura]    [char](3)		    NOT NULL DEFAULT (0),
+    [FechaHoraFacturado]        [datetime]			NULL,
+    [DesdeNVVAuto]		        [bit]				NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_Demonio_FacAuto] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

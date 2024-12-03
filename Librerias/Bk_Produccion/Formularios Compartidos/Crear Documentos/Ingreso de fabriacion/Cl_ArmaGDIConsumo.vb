@@ -64,6 +64,7 @@ Public Class Cl_ArmaGDIConsumo
                                                False, False, False, False, False, False)
 
         Fm.Pro_RowEntidad = _Row_Entidad
+        Fm.ForzarDecimalesEnUnidadesEnteras = True
         Fm.Sb_Crear_Documento_Interno_Con_Tabla3Potl(_Formulario,
                                                      _Tbl_Productos,
                                                      _FechaEmision,
