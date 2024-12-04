@@ -1082,12 +1082,13 @@ Public Class Cl_Correos
             Consulta_Sql = "Select TIDO,NUDO,ENDO,SUENDO From MAEEDO Where IDMAEEDO = " & _IdMaeedo
             Dim _Row_Maeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
-            Dim _Koen = _Row_Maeedo.Item("ENDO")
-            Dim _Suen = _Row_Maeedo.Item("SUENDO")
+            Dim _Koen As String = String.Empty
+            Dim _Suen As String = String.Empty
 
-            'If _IdMaeedo = 2995828 Then
-            '    Dim _aca = 0
-            'End If
+            If Not IsNothing(_Row_Maeedo) Then
+                _Koen = _Row_Maeedo.Item("ENDO")
+                _Suen = _Row_Maeedo.Item("SUENDO")
+            End If
 
             Consulta_Sql = "Select Distinct Rtrim(Ltrim(MAILTO)) As MAILTO,Rtrim(Ltrim(MAILCC)) As MAILCC,Rtrim(Ltrim(MAILCC2)) As MAILCC2,Rtrim(Ltrim(MAILBCC)) As MAILBCC" & vbCrLf &
                            "From MAEENMAIL Where KOEN = '" & _Koen & "' And KOMAIL = '001'"

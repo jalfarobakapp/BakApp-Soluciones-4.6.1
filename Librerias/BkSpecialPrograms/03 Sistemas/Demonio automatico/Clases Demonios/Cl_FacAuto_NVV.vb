@@ -121,7 +121,7 @@
         Consulta_Sql = "Select TOP 20 Idmaeedo_NVV As Idmaeedo,DocEmitir,Cast('" & Format(_Fecha_Revision, "yyyyMMdd") & "' As datetime) As Fecha_Facturar,CodFuncionario_Factura" & vbCrLf &
                        "Into #Paso" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Demonio_NVVAuto" & vbCrLf &
-                       "Where Facturar = 1 And DocEmitir <> '' And EnvFacAutoBk = 0" & _CondicionSuc & vbCrLf &
+                       "Where NVVGenerada = 1 And Facturar = 1 And DocEmitir <> '' And EnvFacAutoBk = 0" & _CondicionSuc & vbCrLf &
                        vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Demonio_NVVAuto Set EnvFacAutoBk = 1" & vbCrLf &
                        "Where Idmaeedo_NVV In (Select Idmaeedo From #Paso)" & vbCrLf &

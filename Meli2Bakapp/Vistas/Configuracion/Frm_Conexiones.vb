@@ -77,6 +77,9 @@ Public Class Frm_Conexiones
         Txt_Vendedor.Tag = _Cl_ConfiguracionLocal.Configuracion.Vendedor
         Txt_Vendedor.Text = _Cl_ConfiguracionLocal.Configuracion.NoVendedor
 
+        Txt_Responsable.Tag = _Cl_ConfiguracionLocal.Configuracion.Responsable
+        Txt_Responsable.Text = _Cl_ConfiguracionLocal.Configuracion.NoResponsable
+
         Txt_RutaEtiquetas.Text = _Cl_ConfiguracionLocal.Configuracion.RutaEtiquetas
 
     End Sub
@@ -267,7 +270,9 @@ Public Class Frm_Conexiones
             .BodegaFacturacion = Txt_Bodega.Tag
             .Vendedor = Txt_Vendedor.Tag
             .NoVendedor = Txt_Vendedor.Text
-            .RutaEtiquetas = Txt_RutaEtiquetas.Tag
+            .Responsable = Txt_Responsable.Tag
+            .NoResponsable = Txt_Responsable.Text
+            .RutaEtiquetas = Txt_RutaEtiquetas.Text
         End With
 
         Dim _Mensaje As New LsValiciones.Mensajes
@@ -364,5 +369,22 @@ Public Class Frm_Conexiones
                 Txt_RutaEtiquetas.Text = folderBrowser.SelectedPath
             End If
         End Using
+    End Sub
+
+    Private Sub Txt_Responsable_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Responsable.ButtonCustomClick
+
+        Dim _Sql_Filtro_Condicion_Extra = String.Empty
+        Dim _Tbl As DataTable
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(_Tbl, Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random, _Sql_Filtro_Condicion_Extra, False, False, True) Then
+
+            Txt_Responsable.Tag = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
+            Txt_Responsable.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion").ToString.Trim
+
+        End If
+
+
     End Sub
 End Class

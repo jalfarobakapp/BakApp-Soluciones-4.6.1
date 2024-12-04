@@ -1042,8 +1042,6 @@ Buscar:
 
     Private Sub Wrn_MostrarSoloDocClientesDelVendedor_OptionsClick(sender As Object, e As EventArgs) Handles Wrn_MostrarSoloDocClientesDelVendedor.OptionsClick
 
-
-
         Dim _Msj As String = "Tiene una restricción que le impide ver documentos de clientes de otros vendedores." & vbCrLf &
                              "Esto significa que solo puede acceder a los documentos de su propia cartera de clientes." & vbCrLf & vbCrLf &
                              "Actualmente, tiene asignado el permiso (restricción) NO00021."

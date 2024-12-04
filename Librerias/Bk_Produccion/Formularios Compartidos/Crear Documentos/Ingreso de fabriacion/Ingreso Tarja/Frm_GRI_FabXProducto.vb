@@ -1140,19 +1140,6 @@ Public Class Frm_GRI_FabXProducto
             Return
         End If
 
-        If Chk_GDI_Consumo.Checked Then
-
-            Dim _Observaciones_GDI = "Documento creado automáticamente desde Bakapp al crear GRI de ingreso de producción"
-
-            Dim Cl_ArmaGDI As New Cl_ArmaGDIConsumo
-            _Mensaje = Cl_ArmaGDI.Fx_CrearGDI(Me, _Row_Potl.Item("IDPOTL"), _Cantidadv, _Row_Entidad, _FechaEmision, _Observaciones_GDI)
-
-            If Not _Mensaje.EsCorrecto Then
-                MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono, MessageBoxDefaultButton.Button1, True)
-            End If
-
-        End If
-
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Lotes_Enc Where NroLote = '" & Txt_NroLote.Text & "'"
         Dim _Row_Lote As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -1184,6 +1171,21 @@ Public Class Frm_GRI_FabXProducto
                        "Where Id_CPT = " & _Cl_Tarja.Zw_Pdp_CPT_Tarja.Id
 
         _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+        If Chk_GDI_Consumo.Checked Then
+
+            Dim _Observaciones_GDI = "Documento creado automáticamente desde Bakapp al crear GRI de ingreso de producción"
+            Dim _Msj_GDI As New LsValiciones.Mensajes
+
+            Dim Cl_ArmaGDI As New Cl_ArmaGDIConsumo
+            _Msj_GDI = Cl_ArmaGDI.Fx_CrearGDI(Me, _Row_Potl.Item("IDPOTL"), _Cantidadv, _Row_Entidad, _FechaEmision, _Observaciones_GDI)
+
+            If Not _Msj_GDI.EsCorrecto Then
+                MessageBoxEx.Show(Me, _Msj_GDI.Mensaje, _Msj_GDI.Detalle, MessageBoxButtons.OK, _Msj_GDI.Icono, MessageBoxDefaultButton.Button1, True)
+            End If
+
+        End If
+
 
         Fm_Espera.Close()
         Fm_Espera.Dispose()

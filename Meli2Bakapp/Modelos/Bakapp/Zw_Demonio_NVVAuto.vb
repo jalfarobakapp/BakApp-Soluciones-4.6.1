@@ -23,4 +23,9 @@
     Public Property Texto8 As String
     Public Property Texto9 As String
     Public Property Texto10 As String
+    Public Property Facturar As Boolean
+    Public Property DocEmitir As String
+    Public Property CodFuncionario_Factura As String
+    Public Property EnvFacAutoBk As Boolean
+
 End Class

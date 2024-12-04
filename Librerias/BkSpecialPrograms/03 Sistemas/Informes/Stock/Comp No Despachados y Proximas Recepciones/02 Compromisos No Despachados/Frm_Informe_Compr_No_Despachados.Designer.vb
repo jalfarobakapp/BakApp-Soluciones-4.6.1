@@ -62,6 +62,8 @@ Partial Class Frm_Informe_Compr_No_Despachados
         Me.Btn_Filtros_Bodega = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Clasificacion_Productos = New DevComponents.DotNetBar.ButtonItem()
         Me.Chk_NVVHabilitadasFacturar = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Wrn_MostrarSoloDocClientesDelVendedor = New DevComponents.DotNetBar.Controls.WarningBox()
+        Me.Chk_MostrarSoloDocClientesDelVendedor = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.GroupPanel5.SuspendLayout()
         Me.TableLayoutPanel6.SuspendLayout()
         CType(Me.Dtp_Fecha_Recepcion_Hasta, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -107,7 +109,7 @@ Partial Class Frm_Informe_Compr_No_Despachados
         Me.GroupPanel5.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel5.Location = New System.Drawing.Point(12, 336)
         Me.GroupPanel5.Name = "GroupPanel5"
-        Me.GroupPanel5.Size = New System.Drawing.Size(398, 59)
+        Me.GroupPanel5.Size = New System.Drawing.Size(430, 59)
         '
         '
         '
@@ -659,7 +661,7 @@ Partial Class Frm_Informe_Compr_No_Despachados
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel2.Location = New System.Drawing.Point(243, 112)
         Me.GroupPanel2.Name = "GroupPanel2"
-        Me.GroupPanel2.Size = New System.Drawing.Size(167, 89)
+        Me.GroupPanel2.Size = New System.Drawing.Size(199, 89)
         '
         '
         '
@@ -812,9 +814,9 @@ Partial Class Frm_Informe_Compr_No_Despachados
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Ejecutar_Informe})
-        Me.Bar1.Location = New System.Drawing.Point(0, 422)
+        Me.Bar1.Location = New System.Drawing.Point(0, 462)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(422, 41)
+        Me.Bar1.Size = New System.Drawing.Size(455, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 115
@@ -838,7 +840,7 @@ Partial Class Frm_Informe_Compr_No_Despachados
         Me.GroupPanel4.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel4.Location = New System.Drawing.Point(243, 207)
         Me.GroupPanel4.Name = "GroupPanel4"
-        Me.GroupPanel4.Size = New System.Drawing.Size(167, 112)
+        Me.GroupPanel4.Size = New System.Drawing.Size(199, 112)
         '
         '
         '
@@ -931,7 +933,7 @@ Partial Class Frm_Informe_Compr_No_Despachados
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ButtonItem1})
         Me.Bar2.Location = New System.Drawing.Point(0, 0)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(422, 33)
+        Me.Bar2.Size = New System.Drawing.Size(455, 33)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar2.TabIndex = 120
@@ -980,11 +982,47 @@ Partial Class Frm_Informe_Compr_No_Despachados
         Me.Chk_NVVHabilitadasFacturar.TabIndex = 123
         Me.Chk_NVVHabilitadasFacturar.Text = "Solo Notas de Venta Habilitadas para facturar"
         '
+        'Wrn_MostrarSoloDocClientesDelVendedor
+        '
+        Me.Wrn_MostrarSoloDocClientesDelVendedor.BackColor = System.Drawing.Color.White
+        Me.Wrn_MostrarSoloDocClientesDelVendedor.CloseButtonVisible = False
+        Me.Wrn_MostrarSoloDocClientesDelVendedor.ForeColor = System.Drawing.Color.Black
+        Me.Wrn_MostrarSoloDocClientesDelVendedor.Image = CType(resources.GetObject("Wrn_MostrarSoloDocClientesDelVendedor.Image"), System.Drawing.Image)
+        Me.Wrn_MostrarSoloDocClientesDelVendedor.Location = New System.Drawing.Point(12, 422)
+        Me.Wrn_MostrarSoloDocClientesDelVendedor.Name = "Wrn_MostrarSoloDocClientesDelVendedor"
+        Me.Wrn_MostrarSoloDocClientesDelVendedor.OptionsText = "¿Que es esto?"
+        Me.Wrn_MostrarSoloDocClientesDelVendedor.Size = New System.Drawing.Size(276, 33)
+        Me.Wrn_MostrarSoloDocClientesDelVendedor.TabIndex = 125
+        Me.Wrn_MostrarSoloDocClientesDelVendedor.Text = "<b>Alerta</b> Restricción de sistema"
+        '
+        'Chk_MostrarSoloDocClientesDelVendedor
+        '
+        Me.Chk_MostrarSoloDocClientesDelVendedor.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Chk_MostrarSoloDocClientesDelVendedor.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_MostrarSoloDocClientesDelVendedor.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_MostrarSoloDocClientesDelVendedor.CheckBoxImageChecked = CType(resources.GetObject("Chk_MostrarSoloDocClientesDelVendedor.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_MostrarSoloDocClientesDelVendedor.Checked = True
+        Me.Chk_MostrarSoloDocClientesDelVendedor.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Chk_MostrarSoloDocClientesDelVendedor.CheckValue = "Y"
+        Me.Chk_MostrarSoloDocClientesDelVendedor.FocusCuesEnabled = False
+        Me.Chk_MostrarSoloDocClientesDelVendedor.ForeColor = System.Drawing.Color.Black
+        Me.Chk_MostrarSoloDocClientesDelVendedor.Location = New System.Drawing.Point(295, 422)
+        Me.Chk_MostrarSoloDocClientesDelVendedor.Name = "Chk_MostrarSoloDocClientesDelVendedor"
+        Me.Chk_MostrarSoloDocClientesDelVendedor.Size = New System.Drawing.Size(160, 33)
+        Me.Chk_MostrarSoloDocClientesDelVendedor.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_MostrarSoloDocClientesDelVendedor.TabIndex = 124
+        Me.Chk_MostrarSoloDocClientesDelVendedor.Text = "Mostrar solo documentos de clientes del vendedor activo"
+        '
         'Frm_Informe_Compr_No_Despachados
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(422, 463)
+        Me.ClientSize = New System.Drawing.Size(455, 503)
+        Me.Controls.Add(Me.Wrn_MostrarSoloDocClientesDelVendedor)
+        Me.Controls.Add(Me.Chk_MostrarSoloDocClientesDelVendedor)
         Me.Controls.Add(Me.Chk_NVVHabilitadasFacturar)
         Me.Controls.Add(Me.GroupPanel5)
         Me.Controls.Add(Me.GroupPanel3)
@@ -1064,4 +1102,6 @@ Partial Class Frm_Informe_Compr_No_Despachados
     Friend WithEvents Rdb_COV As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_Incluir_COV As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_NVVHabilitadasFacturar As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Wrn_MostrarSoloDocClientesDelVendedor As DevComponents.DotNetBar.Controls.WarningBox
+    Public WithEvents Chk_MostrarSoloDocClientesDelVendedor As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

@@ -140,8 +140,8 @@ Public Class Frm_Referencia_DTE_Enc
                     Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Referencias_Dte " &
                                    "(Id_Doc,Tido,Nudo,NroLinRef,TpoDocRef,FolioRef,RUTOt,IdAdicOtr,FchRef,CodRef,RazonRef, Kasi)
                                Values
-                               (" & _Idmaeedo & ",'" & _Tido & "','" & _Nudo & "'," & _NroLinRef & "," & _TpoDocRef &
-                                   ",'" & _FolioRef & "','" & _RUTOt & "','" & _IdAdicOtr & "','" & _FchRef & "'," & _CodRef & ",'" & _RazonRef & "',0)"
+                               (" & _Idmaeedo & ",'" & _Tido & "','" & _Nudo & "'," & _NroLinRef & ",'" & _TpoDocRef &
+                                   "','" & _FolioRef & "','" & _RUTOt & "','" & _IdAdicOtr & "','" & _FchRef & "'," & _CodRef & ",'" & _RazonRef & "',0)"
                     _Sql.Ej_consulta_IDU(Consulta_sql)
 
                 End If
