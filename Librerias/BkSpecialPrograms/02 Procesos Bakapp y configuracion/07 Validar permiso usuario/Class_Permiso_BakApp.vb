@@ -588,6 +588,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Doc00096", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00097", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00098", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00099", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Ope00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ope00002", _Objeto, _Formulario)
@@ -2557,7 +2558,14 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "PERMITIR OBVIAR CONDICION DE CREDITO NO VIGENTE"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
+            Case "Doc00099"
+                _DescripcionPermiso = "PERMITIR GRABAR NOTAS DE VENTA COMO CUSTOMIZABLES"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00099"
+                _DescripcionPermiso = "PERMITIR GRABAR NOTAS DE VENTA COMO CUSTOMIZABLES"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
 
         End Select
 

@@ -30,6 +30,7 @@ and ob_oid = @nv
 
 Cabecera:
 select ord_date, ob_oid, ob_type, shipment, wave, bill_name,whse_id,ob_ord_stt
+--,ord_date,request_date,ord_date,sched_date,ship_date,dtimecre,dtimemod,dtime_frlogic,latest_delv_date,dtimeorig -- Campos de tipo Fecha Hora
 from om_f
 where ob_oid = @nv
 and om_f.whse_id = 'ALAMEDA'
@@ -48,3 +49,8 @@ where ob_oid = @nv
 and cm_f.whse_id = 'ALAMEDA'
 GROUP by ob_oid, ob_type, ob_lno, cont, sku 
 
+FPickeo:
+Select Top 1 dt_start
+From history_master
+Where (oid = @nv) AND (trans_class = 'CONT') AND (trans_obj = 'OBO') AND (trans_act = 'PICK') AND (trans_act_mod = 'FINAL') 
+Order By trans_seq_num Desc

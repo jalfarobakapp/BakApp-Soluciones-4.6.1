@@ -231,6 +231,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.ButtonItem9 = New DevComponents.DotNetBar.ButtonItem()
         Me.Sw_BlocConfiguracion = New DevComponents.DotNetBar.Controls.SwitchButton()
         Me.LabelX33 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_Restar_Stock_Devengado = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.Bar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel6.SuspendLayout()
         CType(Me.Dtp_Fecha_Movimientos_Hasta, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -806,11 +807,11 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.STabConfiguracion.ControlBox.MenuBox.Name = ""
         Me.STabConfiguracion.ControlBox.Name = ""
         Me.STabConfiguracion.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.STabConfiguracion.ControlBox.MenuBox, Me.STabConfiguracion.ControlBox.CloseBox})
+        Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel4)
+        Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel6)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel3)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel1)
-        Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel4)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel2)
-        Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel6)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel8)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel5)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel7)
@@ -1634,6 +1635,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         'SuperTabControlPanel4
         '
         Me.SuperTabControlPanel4.CanvasColor = System.Drawing.Color.Empty
+        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_Restar_Stock_Devengado)
         Me.SuperTabControlPanel4.Controls.Add(Me.Chk_Restar_Stock_TransitoGti)
         Me.SuperTabControlPanel4.Controls.Add(Me.Chk_Restar_Stock_PedidoOcc)
         Me.SuperTabControlPanel4.Controls.Add(Me.Chk_Restar_Stock_PedidoNvi)
@@ -1646,9 +1648,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.SuperTabControlPanel4.Controls.Add(Me.Chk_Restar_Stok_Bodega)
         Me.SuperTabControlPanel4.Controls.Add(Me.Chk_Quitar_Bloqueados_Compra)
         Me.SuperTabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel4.Name = "SuperTabControlPanel4"
-        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(802, 251)
+        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(802, 224)
         Me.SuperTabControlPanel4.TabIndex = 0
         Me.SuperTabControlPanel4.TabItem = Me.Tab_Excluir_Incluir
         '
@@ -2257,9 +2259,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.SuperTabControlPanel6.Controls.Add(Me.LabelX4)
         Me.SuperTabControlPanel6.Controls.Add(Me.LabelX3)
         Me.SuperTabControlPanel6.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel6.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel6.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel6.Name = "SuperTabControlPanel6"
-        Me.SuperTabControlPanel6.Size = New System.Drawing.Size(802, 251)
+        Me.SuperTabControlPanel6.Size = New System.Drawing.Size(802, 224)
         Me.SuperTabControlPanel6.TabIndex = 0
         Me.SuperTabControlPanel6.TabItem = Me.Tab_Costos_OCC
         '
@@ -3808,6 +3810,23 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.LabelX33.TabIndex = 117
         Me.LabelX33.Text = "Configuración"
         '
+        'Chk_Restar_Stock_Devengado
+        '
+        Me.Chk_Restar_Stock_Devengado.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Restar_Stock_Devengado.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Restar_Stock_Devengado.CheckBoxImageChecked = CType(resources.GetObject("Chk_Restar_Stock_Devengado.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Restar_Stock_Devengado.FocusCuesEnabled = False
+        Me.Chk_Restar_Stock_Devengado.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Restar_Stock_Devengado.Location = New System.Drawing.Point(15, 121)
+        Me.Chk_Restar_Stock_Devengado.Name = "Chk_Restar_Stock_Devengado"
+        Me.Chk_Restar_Stock_Devengado.Size = New System.Drawing.Size(274, 19)
+        Me.Chk_Restar_Stock_Devengado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Restar_Stock_Devengado.TabIndex = 121
+        Me.Chk_Restar_Stock_Devengado.Text = "Restar Stock devengado (Facturado sin despachar)"
+        '
         'Frm_00_Asis_Compra_Menu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -4095,4 +4114,5 @@ Partial Class Frm_00_Asis_Compra_Menu
     Friend WithEvents LabelX33 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Chk_InformeDeComprasAgrupadoporAsociacion As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_CompMinXProveedores As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_Restar_Stock_Devengado As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

@@ -297,6 +297,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         Dim _Arr_Tipo_Compra(,) As String = {{"Nacional", "Nacional 1"},
                                              {"Nacional2", "Nacional 2"},
+                                             {"Nacional3", "Nacional 3"},
                                              {"Exterior", "Comercio exterior"}}
         Sb_Llenar_Combos(_Arr_Tipo_Compra, Fm_Hijo.Cmb_Tipo_de_compra)
         Fm_Hijo.Cmb_Tipo_de_compra.SelectedValue = "Nacional"
@@ -1045,7 +1046,298 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
+    Sub Sb_Formato_Grilla_Compras_Nacionales3(Grilla As DataGridView)
 
+        With Grilla
+
+            Dim _DisplayIndex = 0
+
+            OcultarEncabezadoGrilla(Grilla)
+
+            .Columns("Comprar").Frozen = True
+            .Columns("Comprar").Width = 25
+            .Columns("Comprar").HeaderText = "C?"
+            .Columns("Comprar").ToolTipText = "¿Comprar?"
+            .Columns("Comprar").Visible = True
+            .Columns("Comprar").ReadOnly = False
+            .Columns("Comprar").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Codigo").Frozen = True
+            .Columns("Codigo").Width = 100
+            .Columns("Codigo").HeaderText = "Código"
+            .Columns("Codigo").ReadOnly = True
+            .Columns("Codigo").Visible = True
+            .Columns("Codigo").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("CodAlternativo").Frozen = True
+            .Columns("CodAlternativo").Width = 110
+            'If (_RowProveedor Is Nothing) Then
+            .Columns("CodAlternativo").HeaderText = "Cód. Alternativo"
+            'Else
+            '.Columns("CodAlternativo").HeaderText = "Cód. Proveedor"
+            'End If
+            .Columns("CodAlternativo").ReadOnly = True
+            '.Columns("CodAlternativo").Visible = Not (_RowProveedor Is Nothing)
+            .Columns("CodAlternativo").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Descripcion").Frozen = True
+            .Columns("Descripcion").Width = 300
+            .Columns("Descripcion").HeaderText = "Descripción"
+            .Columns("Descripcion").ReadOnly = True
+            .Columns("Descripcion").Visible = True
+            .Columns("Descripcion").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("UD" & Ud).Width = 30
+            .Columns("UD" & Ud).HeaderText = "Ud" & Ud
+            .Columns("UD" & Ud).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("UD" & Ud).ToolTipText = "Unidad " & Ud
+            .Columns("UD" & Ud).ReadOnly = True
+            .Columns("UD" & Ud).Visible = True
+            .Columns("UD" & Ud).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Rtu").Width = 30
+            .Columns("Rtu").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Rtu").ReadOnly = True
+            .Columns("Rtu").Visible = True
+            .Columns("Rtu").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("StockUd" & Ud).Width = 45
+            .Columns("StockUd" & Ud).HeaderText = "Stock actual"
+            .Columns("StockUd" & Ud).DefaultCellStyle.Format = "##,###0.##"
+            .Columns("StockUd" & Ud).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("StockUd" & Ud).ToolTipText = "Stock físico disponible consolidado según bodegas seleccionadas"
+            .Columns("StockUd" & Ud).ReadOnly = True
+            .Columns("StockUd" & Ud).Visible = True
+            .Columns("StockUd" & Ud).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Stock_Devengado_Ud" & Ud).Width = 45
+            .Columns("Stock_Devengado_Ud" & Ud).HeaderText = "Stock dev."
+            .Columns("Stock_Devengado_Ud" & Ud).DefaultCellStyle.Format = "##,###0.##"
+            .Columns("Stock_Devengado_Ud" & Ud).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Stock_Devengado_Ud" & Ud).ToolTipText = "Stock devengado (facturado sin despachar)"
+            .Columns("Stock_Devengado_Ud" & Ud).ReadOnly = True
+            .Columns("Stock_Devengado_Ud" & Ud).Visible = True
+            .Columns("Stock_Devengado_Ud" & Ud).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("StockPedidoUd" & Ud).Width = 45
+            .Columns("StockPedidoUd" & Ud).HeaderText = "Stock pedido OCC"
+            .Columns("StockPedidoUd" & Ud).DefaultCellStyle.Format = "##,###0.##"
+            .Columns("StockPedidoUd" & Ud).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("StockPedidoUd" & Ud).ToolTipText = "Stock pedido pendiente en Ordenes de compra"
+            .Columns("StockPedidoUd" & Ud).ReadOnly = True
+            .Columns("StockPedidoUd" & Ud).Visible = True
+            .Columns("StockPedidoUd" & Ud).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("StockPedidoNVIUd" & Ud).Width = 45
+            .Columns("StockPedidoNVIUd" & Ud).HeaderText = "Stock pedido NVI"
+            .Columns("StockPedidoNVIUd" & Ud).DefaultCellStyle.Format = "##,###0.##"
+            .Columns("StockPedidoNVIUd" & Ud).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("StockPedidoNVIUd" & Ud).ToolTipText = "Stock pedido pendiente en Notas de venta internas (NVI)"
+            .Columns("StockPedidoNVIUd" & Ud).ReadOnly = True
+            .Columns("StockPedidoNVIUd" & Ud).Visible = True
+            .Columns("StockPedidoNVIUd" & Ud).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            '.Columns("StockTransitoUd" & Ud).Width = 45
+            '.Columns("StockTransitoUd" & Ud).HeaderText = "Stock trans. GTI"
+            '.Columns("StockTransitoUd" & Ud).DefaultCellStyle.Format = "##,###0.##"
+            '.Columns("StockTransitoUd" & Ud).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            '.Columns("StockTransitoUd" & Ud).ToolTipText = "Stock en entransito hacia las bodegas de reposición"
+            '.Columns("StockTransitoUd" & Ud).ReadOnly = True
+            '.Columns("StockTransitoUd" & Ud).Visible = True
+            '.Columns("StockTransitoUd" & Ud).DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
+
+            .Columns("Stock_CriticoUd" & Ud & "_Rd").Width = 45
+            .Columns("Stock_CriticoUd" & Ud & "_Rd").HeaderText = "Stock Critico"
+            .Columns("Stock_CriticoUd" & Ud & "_Rd").DefaultCellStyle.Format = "##,###0.##"
+            .Columns("Stock_CriticoUd" & Ud & "_Rd").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Stock_CriticoUd" & Ud & "_Rd").ToolTipText = "Cantidad mínima de productos para sostener el tiempo de reposición EC = (TS*RT)"
+            .Columns("Stock_CriticoUd" & Ud & "_Rd").ReadOnly = True
+            .Columns("Stock_CriticoUd" & Ud & "_Rd").Visible = True
+            .Columns("Stock_CriticoUd" & Ud & "_Rd").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            Dim _Tex As String = Cmb_Metodo_Abastecer_Dias_Meses.Text
+            Dim _L As String = Mid(_Tex, 1, 1)
+            _Tex = UCase(_L) & Mid(_Tex, 2, _Tex.Length - 1)
+
+            .Columns("TStock").Width = 40
+            .Columns("TStock").HeaderText = _Tex & " S.A"
+            .Columns("TStock").DefaultCellStyle.Format = "##,###0.##"
+            .Columns("TStock").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("TStock").ToolTipText = _Tex & " de stock asegurado. Días que restan para que se termine el stock Diario"
+            .Columns("TStock").ReadOnly = True
+            .Columns("TStock").Visible = True
+            .Columns("TStock").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("CantComprar").Width = 50
+            .Columns("CantComprar").HeaderText = "Cant."
+            .Columns("CantComprar").ToolTipText = "Cantidad a comprar"
+            .Columns("CantComprar").DefaultCellStyle.Format = "##,###0.##"
+            .Columns("CantComprar").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("CantComprar").Visible = True
+            .Columns("CantComprar").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            Dim _Br_Nt = "Neto"
+
+            If Rdb_Valores_Brutos.Checked Then
+                _Br_Nt = "Bruto"
+            End If
+
+            Dim _Formato_Costo = "##,###0.##"
+
+            _Formato_Costo = "##,###0"
+
+            .Columns("Costo_Ud1Lista_" & _Br_Nt).Width = 50
+            .Columns("Costo_Ud1Lista_" & _Br_Nt).HeaderText = "Costo Ud1"
+            .Columns("Costo_Ud1Lista_" & _Br_Nt).ToolTipText = "Costo " & _Br_Nt & " Unidad 1"
+            .Columns("Costo_Ud1Lista_" & _Br_Nt).DefaultCellStyle.Format = _Formato_Costo
+            .Columns("Costo_Ud1Lista_" & _Br_Nt).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Costo_Ud1Lista_" & _Br_Nt).Visible = True
+            .Columns("Costo_Ud1Lista_" & _Br_Nt).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("DiasdeAvas_Rd").Width = 40
+            .Columns("DiasdeAvas_Rd").HeaderText = "Alc."
+            .Columns("DiasdeAvas_Rd").ToolTipText = "Alcanza para " & Cmb_Metodo_Abastecer_Dias_Meses.Text & ". " & vbCrLf &
+                                                    "Días que cubre la compra según rotación diaria (una vez que hayan llegado los productos a bodega)"
+            .Columns("DiasdeAvas_Rd").DefaultCellStyle.Format = "##,###0.##"
+            .Columns("DiasdeAvas_Rd").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("DiasdeAvas_Rd").Visible = True
+            .Columns("DiasdeAvas_Rd").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("CantSugeridaTot").Width = 40
+            .Columns("CantSugeridaTot").HeaderText = "C.Sug"
+            .Columns("CantSugeridaTot").DefaultCellStyle.Format = "##,###0.##"
+            .Columns("CantSugeridaTot").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("CantSugeridaTot").ToolTipText = "Cantidad sugeridad a comprar según velocidad de venta (Rotación)"
+            .Columns("CantSugeridaTot").Visible = True
+            .Columns("CantSugeridaTot").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            Dim _Campo_CalUd_Diario As String
+            Dim _Campo_CalUd_Mensual As String
+
+            If Rdb_Rot_Mediana.Checked Then
+                '_Campo_CalUd_Diario = "RotDiariaUd"
+                _Campo_CalUd_Mensual = "RotMensualUd"
+            End If
+
+            If Rdb_Rot_Promedio.Checked Then
+                '_Campo_CalUd_Diario = "Promedio_Ud"
+                _Campo_CalUd_Mensual = "Promedio_MensualUd"
+            End If
+
+            'If Cmb_Metodo_Abastecer_Dias_Meses.SelectedValue = 1 Then
+
+            '    .Columns(_Campo_CalUd_Diario & Ud).Width = 50
+            '    .Columns(_Campo_CalUd_Diario & Ud).HeaderText = "R.V.D"
+            '    .Columns(_Campo_CalUd_Diario & Ud).DefaultCellStyle.Format = "##,###0.###"
+            '    .Columns(_Campo_CalUd_Diario & Ud).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            '    .Columns(_Campo_CalUd_Diario & Ud).ToolTipText = "Velocidad de venta media diaria (Rotación)"
+            '    .Columns(_Campo_CalUd_Diario & Ud).Visible = True
+            '    .Columns(_Campo_CalUd_Diario & Ud).DisplayIndex = _DisplayIndex
+            '    _DisplayIndex += 1
+
+            'Else
+
+            .Columns(_Campo_CalUd_Mensual & Ud).Width = 50
+            .Columns(_Campo_CalUd_Mensual & Ud).HeaderText = "R.V.M"
+            .Columns(_Campo_CalUd_Mensual & Ud).DefaultCellStyle.Format = "##,###0.##"
+            .Columns(_Campo_CalUd_Mensual & Ud).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns(_Campo_CalUd_Mensual & Ud).ToolTipText = "Velocidad de venta media mensual (Rotación)"
+            .Columns(_Campo_CalUd_Mensual & Ud).Visible = True
+            .Columns(_Campo_CalUd_Mensual & Ud).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            'End If
+
+            .Columns("OccGenerada").Width = 35
+            .Columns("OccGenerada").HeaderText = "OCC Gen"
+            .Columns("OccGenerada").ToolTipText = "Tiene orden de compra generada desde este tratamiento"
+            .Columns("OccGenerada").Visible = True
+            .Columns("OccGenerada").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Fecha_Ult_Venta").HeaderText = "F.Ult.Venta"
+            .Columns("Fecha_Ult_Venta").Width = 70
+            .Columns("Fecha_Ult_Venta").DefaultCellStyle.Format = "dd/MM/yyyy"
+            .Columns("Fecha_Ult_Venta").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("Fecha_Ult_Venta").Visible = True
+            .Columns("Fecha_Ult_Venta").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            '.Columns("StockUd" & Ud).Width = 70
+            '.Columns("StockUd" & Ud).HeaderText = "Stock en " &
+            '                                       Input_Tiempo_Reposicion.Value & " " &
+            '                                       Cmb_Tiempo_Reposicion_Dias_Meses.Text '& " Ud. " & Ud
+            '.Columns("StockUd" & Ud).DefaultCellStyle.Format = "##,###0.##"
+            '.Columns("StockUd" & Ud).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            '.Columns("StockUd" & Ud).ToolTipText = "Stock consolidado según bodegas seleccionadas"
+            '.Columns("StockUd" & Ud).ReadOnly = True
+            '.Columns("StockUd" & Ud).Visible = Chk_Trabajando_Con_Proyeccion.Checked
+            '.Columns("StockUd" & Ud).DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
+
+            .Columns("Clasificacion_Rk").Width = 100
+            .Columns("Clasificacion_Rk").HeaderText = "Clas. Ranking"
+            .Columns("Clasificacion_Rk").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+            .Columns("Clasificacion_Rk").ToolTipText = "Campo denominado para la clasificación se mejores productos de la empresa según Ranking"
+            .Columns("Clasificacion_Rk").ReadOnly = True
+            .Columns("Clasificacion_Rk").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Ranking_Top").Width = 50
+            .Columns("Ranking_Top").HeaderText = "Ranking"
+            .Columns("Ranking_Top").ToolTipText = "Posición del producto en el Ranking"
+            .Columns("Ranking_Top").DefaultCellStyle.Format = "##,###"
+            .Columns("Ranking_Top").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Ranking_Top").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            If False Then
+                If Not _Proceso_Automatico_Ejecutado Then
+                    .Columns("Ranking_Top").Visible = True
+                    .Columns("Clasificacion_Rk").Visible = True
+                Else
+                    .Columns("Ranking_Top").Visible = False
+                    .Columns("Clasificacion_Rk").Visible = False
+                End If
+            End If
+
+            .Columns("ProductoExcluido").Frozen = True
+            .Columns("ProductoExcluido").Width = 25
+            .Columns("ProductoExcluido").HeaderText = "E!"
+            .Columns("ProductoExcluido").ToolTipText = "Producto excluido"
+            .Columns("ProductoExcluido").Visible = True
+            .Columns("ProductoExcluido").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            '' Creamos un nuevo estilo de celda
+            ''
+            'Dim cellStyle As New DataGridViewCellStyle
+
+            'cellStyle.Font = New Font(Grilla.Font.Name, Grilla.Font.Size, FontStyle.Bold)
+            'Grilla.Columns("CantSugeridaTot").DefaultCellStyle = cellStyle
+
+            .Refresh()
+
+        End With
+
+    End Sub
     Sub Sb_Formato_Grilla_Detalle_Ult_Registros(Grilla As DataGridView, _Tbl As DataTable)
 
         Dim _DisplayIndex = 0
@@ -1760,6 +2052,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         If Fm_Hijo.Cmb_Tipo_de_compra.SelectedValue = "Nacional" Then Sb_Formato_Grilla_Compras_Nacionales(Grilla)
         If Fm_Hijo.Cmb_Tipo_de_compra.SelectedValue = "Nacional2" Then Sb_Formato_Grilla_Compras_Nacionales2(Grilla)
+        If Fm_Hijo.Cmb_Tipo_de_compra.SelectedValue = "Nacional3" Then Sb_Formato_Grilla_Compras_Nacionales3(Grilla)
         If Fm_Hijo.Cmb_Tipo_de_compra.SelectedValue = "Exterior" Then Sb_Formato_Grilla_Compras_Extranjero(Grilla)
 
         Dim _Bodegas_Stock = Generar_Filtro_IN(_TblBodCompra, "Chk", "Codigo", False, True, "")
@@ -3532,6 +3825,7 @@ Public Class Frm_01_Asis_Compra_Resultados
             .Chk_Restar_Stok_PedidoNvi = Chk_Restar_Stock_PedidoNvi.Checked
             .Chk_Restar_Stok_TransitoGti = Chk_Restar_Stock_TransitoGti.Checked
             .Chk_Restar_Stok_PedidoOcc = Chk_Restar_Stock_PedidoOcc.Checked
+            .Chk_Restar_Stock_Devengado = Chk_Restar_Stock_Devengado.Checked
 
             .Pro_Chk_Rotacion_Con_Ent_Excluidas = Chk_Rotacion_Con_Ent_Excluidas.Checked
             .Pro_Chk_Trabajando_Con_Proyeccion = Chk_Trabajando_Con_Proyeccion.Checked
@@ -4879,6 +5173,11 @@ Public Class Frm_01_Asis_Compra_Resultados
         '   Ticket Restar Stock pedido OCC
         _Sql.Sb_Parametro_Informe_Sql(Chk_Restar_Stock_PedidoOcc, "Compras_Asistente",
                                              Chk_Restar_Stock_PedidoOcc.Name, Class_SQLite.Enum_Type._Boolean, Chk_Restar_Stock_PedidoOcc.Checked, _Actualizar)
+
+        '   Ticket Restar Stock Devengado (Despachado din facturar)
+        _Sql.Sb_Parametro_Informe_Sql(Chk_Restar_Stock_Devengado, "Compras_Asistente",
+                                             Chk_Restar_Stock_Devengado.Name, Class_SQLite.Enum_Type._Boolean, Chk_Restar_Stock_Devengado.Checked, _Actualizar)
+
 
         '   Ticket Quitar bloqueados compra
         _Sql.Sb_Parametro_Informe_Sql(Chk_Quitar_Bloqueados_Compra, "Compras_Asistente",
@@ -7918,7 +8217,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         Consulta_sql = "Insert Into " & _Nombre_TblPaso_PrBd & " (Codigo,Codigo_Nodo_Madre,Descripcion,UD1,UD2,Rtu,ClasificacionLibre,Rubro,Marca,Zona,SuperFamilia,Familia,SubFamilia,Bloqueapr,Oculto)" & vbCrLf &
                                "SELECT KOPR,'',NOKOPR,UD01PR,UD02PR,RLUD,CLALIBPR,RUPR,MRPR,ZONAPR,FMPR,PFPR,HFPR,BLOQUEAPR,ATPR" & vbCrLf &
-                               "FROM MAEPR Mp WHERE KOPR IN " & _Filtro_Productos
+                               "FROM MAEPR Mp WITH (NOLOCK) WHERE KOPR IN " & _Filtro_Productos
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
 

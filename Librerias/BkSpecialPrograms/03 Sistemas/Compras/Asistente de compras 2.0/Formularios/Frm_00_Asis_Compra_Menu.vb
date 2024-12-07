@@ -200,6 +200,7 @@ Public Class Frm_00_Asis_Compra_Menu
 
         Dim _Arr_Tipo_Compra(,) As String = {{"Nacional", "Nacional 1"},
                                              {"Nacional2", "Nacional 2"},
+                                             {"Nacional3", "Nacional 3"},
                                              {"Exterior", "Comercio exterior"}}
         Sb_Llenar_Combos(_Arr_Tipo_Compra, Cmb_Tipo_de_compra)
         Cmb_Tipo_de_compra.SelectedValue = "Nacional"
@@ -695,10 +696,14 @@ Public Class Frm_00_Asis_Compra_Menu
         _Sql.Sb_Parametro_Informe_Sql(Chk_Restar_Stock_TransitoGti, "Compras_Asistente",
                                              Chk_Restar_Stock_TransitoGti.Name, Class_SQLite.Enum_Type._Boolean, Chk_Restar_Stock_TransitoGti.Checked, _Actualizar)
 
-
         '   Ticket Restar Stock pedido OCC
         _Sql.Sb_Parametro_Informe_Sql(Chk_Restar_Stock_PedidoOcc, "Compras_Asistente",
                                              Chk_Restar_Stock_PedidoOcc.Name, Class_SQLite.Enum_Type._Boolean, Chk_Restar_Stock_PedidoOcc.Checked, _Actualizar)
+
+        '   Ticket Restar Stock Devengado (Despachado din facturar)
+        _Sql.Sb_Parametro_Informe_Sql(Chk_Restar_Stock_Devengado, "Compras_Asistente",
+                                             Chk_Restar_Stock_Devengado.Name, Class_SQLite.Enum_Type._Boolean, Chk_Restar_Stock_Devengado.Checked, _Actualizar)
+
 
         '   Ticket Quitar bloqueados compra
         _Sql.Sb_Parametro_Informe_Sql(Chk_Quitar_Bloqueados_Compra, "Compras_Asistente",
@@ -1731,7 +1736,7 @@ Public Class Frm_00_Asis_Compra_Menu
 
                 Consulta_sql = "Insert Into " & _TblPasoInforme & " (Codigo,Codigo_Nodo_Madre,Descripcion,UD1,UD2,Rtu,ClasificacionLibre,Rubro,Marca,Zona,SuperFamilia,Familia,SubFamilia,Bloqueapr,Oculto)" & vbCrLf &
                                "SELECT KOPR,'',NOKOPR,UD01PR,UD02PR,RLUD,CLALIBPR,RUPR,MRPR,ZONAPR,FMPR,PFPR,HFPR,BLOQUEAPR,ATPR" & vbCrLf &
-                               "FROM MAEPR Mp WHERE KOPR IN " & _Filtro_Productos
+                               "FROM MAEPR Mp WITH (NOLOCK) WHERE KOPR IN " & _Filtro_Productos
                 _Sql.Ej_consulta_IDU(Consulta_sql)
 
                 If Chk_Sumar_Rotacion_Hermanos.Checked Then
@@ -2397,7 +2402,7 @@ Public Class Frm_00_Asis_Compra_Menu
 
         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Log_Compras (NombreEquipo, CodFuncionario, Codigo)" & vbCrLf &
                        "Select '" & _NombreEquipo & "','" & FUNCIONARIO & "',KOPR" & vbCrLf &
-                       "From MAEPR Where KOPR Not In (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Log_Compras" & Space(1) &
+                       "From MAEPR WITH (NOLOCK) Where KOPR Not In (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Log_Compras" & Space(1) &
                        "Where NombreEquipo = '" & _NombreEquipo & "' And CodFuncionario = '" & FUNCIONARIO & "')" & vbCrLf &
                        "And KOPR In (Select Codigo From " & _TblPasoInforme & ")"
         _Sql.Ej_consulta_IDU(Consulta_sql)
@@ -2829,16 +2834,28 @@ Public Class Frm_00_Asis_Compra_Menu
                     '_Filtro_Zonas_Todas = Fm.Pro_Filtro_Zonas_Todas
                     If Not _Filtro_Productos_Todos Then
                         _Algunos_Productos = Generar_Filtro_IN(_TblFiltroProductos_Proveedor, "Chk", "Codigo", False, True, "'")
-                        _Algunos_Productos = "And KOPR In " & _Algunos_Productos
+                        '_Algunos_Productos = "And KOPR In " & _Algunos_Productos
                     End If
 
                 End If
 
                 If Chk_Ent_Fisica.Checked Then
-                    Consulta_sql = "Select Distinct KOPR From MAEPR" & Space(1) &
+                    If String.IsNullOrEmpty(_Algunos_Productos) Then
+                        Consulta_sql = "Select Distinct KOPR From MAEPR" & Space(1) &
                                     "Where KOPR In (Select Distinct KOPRCT From MAEDDO Where ENDOFI = '" & _Endo & "') Or " & Space(1) &
-                                    "KOPR In (Select distinct KOPR From TABCODAL Where KOEN = '" & _Endo & "')" & vbCrLf & _Algunos_Productos & vbCrLf
+                                    "KOPR In (Select distinct KOPR From TABCODAL Where KOEN = '" & _Endo & "' " & _Algunos_Productos & ")" & vbCrLf & vbCrLf
+                    Else
+                        Consulta_sql = "Select Distinct KOPR From MAEPR" & Space(1) &
+                                    "Where KOPR In (Select Distinct KOPRCT From MAEDDO Where ENDOFI = '" & _Endo & "' And KOPRCT In " & _Algunos_Productos & ") Or " & Space(1) &
+                                    "KOPR In (Select distinct KOPR From TABCODAL Where KOEN = '" & _Endo & "' And KOPR In " & _Algunos_Productos & ")" & vbCrLf & vbCrLf
+
+                    End If
                 Else
+
+                    If Not String.IsNullOrEmpty(_Algunos_Productos) Then
+                        _Algunos_Productos = "And KOPR In " & _Algunos_Productos
+                    End If
+
                     Consulta_sql = "Select Distinct KOPR From MAEPR" & Space(1) &
                                     "Where KOPR In (Select distinct KOPR From TABCODAL Where KOEN = '" & _Endo & "')" & vbCrLf & _Algunos_Productos & vbCrLf
 

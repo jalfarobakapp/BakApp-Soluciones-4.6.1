@@ -546,6 +546,8 @@ Public Class Frm_Ver_Documento
             If _Customizable Then
                 Btn_CusNVV.Text = "Ver información del producto Customizado"
                 Me.Text += " *** CUSTOMIZABLE ***"
+            Else
+                Btn_MarcarNVVCustomizable.Visible = True
             End If
 
         End If
@@ -4921,10 +4923,10 @@ Public Class Frm_Ver_Documento
 
             If _Row_Docu_Ent.Item("Customizable") Then
 
-                If MessageBoxEx.Show(Me, "Esta Nota de venta NO esta habilitada para ser facturada." & vbCrLf &
-                              "¿Confirma habilitar la noata de venta para su facturación?", "Validación",
-                             MessageBoxButtons.YesNo, MessageBoxIcon.Stop) <> DialogResult.Yes Then
-                    Return
+                If FUNCIONARIO <> _TblEncabezado.Rows(0).Item("KOFUDO") Then
+                    If Not Fx_Tiene_Permiso(Me, "Doc00082") Then
+                        Return
+                    End If
                 End If
 
                 Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros("MAEDDO",
@@ -4934,6 +4936,12 @@ Public Class Frm_Ver_Documento
 
                 If CBool(_Reg) Then
                     MessageBoxEx.Show(Me, "Faltan productos customizados que confirmar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Return
+                End If
+
+                If MessageBoxEx.Show(Me, "Esta Nota de venta NO esta habilitada para ser facturada." & vbCrLf &
+                              "¿Confirma habilitar la nota de venta para su facturación?", "Validación",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Stop) <> DialogResult.Yes Then
                     Return
                 End If
 
@@ -4985,10 +4993,54 @@ Public Class Frm_Ver_Documento
         Dim _Idmaeddo As Integer = _Fila.Cells("IDMAEDDO").Value
         Dim _Koprct As String = _Fila.Cells("KOPRCT").Value
         Dim _Koen = _TblEncabezado.Rows(0).Item("ENDO")
+        Dim _Cantidad = _Fila.Cells("CANTIDAD").Value
 
-        Dim Fm As New Frm_Ver_Documento_CustomizarDet(_Idmaeedo, _Idmaeddo, _Koen, _Koprct)
+        'If Not CBool((_Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "HabilitadaFac", "Idmaeedo = " & _Idmaeedo,,,, True))) Then
+        '    If Not Fx_Tiene_Permiso(Me, "Doc00099") Then
+        '        Return
+        '    End If
+        'End If
+
+        Dim Fm As New Frm_Ver_Documento_CustomizarDet(_Idmaeedo, _Idmaeddo, _Koen, _Koprct, _Cantidad)
         Fm.ShowDialog(Me)
         Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_MarcarNVVCustomizable_Click(sender As Object, e As EventArgs) Handles Btn_MarcarNVVCustomizable.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Doc00099") Then
+            Return
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Confirma marcar esta nota de venta como CUSTOMIZABLE?",
+                             "Customizable", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
+
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Ent Set Customizable = 1 Where Idmaeedo = " & _Idmaeedo
+        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+
+            MessageBoxEx.Show(Me, "Nota de venta marcada como CUSTOMIZABLE", "Customizable",
+                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            _Customizable = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "Customizable", "Idmaeedo = " & _Idmaeedo)
+
+            Lbl_CusNVV.Visible = _Customizable
+            Btn_CusNVV.Visible = _Customizable
+
+            If _Customizable Then
+                Btn_CusNVV.Text = "Ver información del producto Customizado"
+                Me.Text += " *** CUSTOMIZABLE ***"
+                Btn_MarcarNVVCustomizable.Visible = False
+                Btn_HabilitarFacturacion.Visible = True
+            Else
+                Btn_MarcarNVVCustomizable.Visible = True
+            End If
+
+        End If
+
+        Me.Refresh()
 
     End Sub
 

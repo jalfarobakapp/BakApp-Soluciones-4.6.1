@@ -465,7 +465,7 @@ Public Class Cl_Stmp
                                ",Fecha_Facturar = '" & Format(.Fecha_Facturar, "yyyyMMdd") & "'" &
                                ",DocEmitir = '" & .DocEmitir & "'" &
                                ",TipoPago = '" & .TipoPago & "'" &
-                               ",FechaPickeado = Getdate()" &
+                               ",FechaPickeado = '" & Format(.FechaPickeado, "yyyyMMdd hh:mm") & "'" &
                                ",Reasignada = " & Convert.ToInt32(.Reasignada) & vbCrLf &
                                "Where Id = " & .Id
 
@@ -727,12 +727,14 @@ Public Class Cl_Stmp
             _Ds.Tables(2).TableName = "Cabecera"
             _Ds.Tables(3).TableName = "Lineas"
             _Ds.Tables(4).TableName = "Comandos"
+            _Ds.Tables(5).TableName = "FPickeo"
 
             Dim _ticket_verde As DataTable = _Ds.Tables("ticket_verde")
             Dim _Detalle As DataTable = _Ds.Tables("Detalle")
             Dim _Cabecera As DataTable = _Ds.Tables("Cabecera")
             Dim _Lineas As DataTable = _Ds.Tables("Lineas")
             Dim _Comandos As DataTable = _Ds.Tables("Comandos")
+            Dim _FPickeo As DataTable = _Ds.Tables("FPickeo")
 
             If _ticket_verde.Rows(0).Item("ticket_verde") <> "Y" Then
                 _Mensaje.EsCorrecto = False
@@ -761,6 +763,12 @@ Public Class Cl_Stmp
             Dim _Entrega As String = Mid(_ob_type, 3, 1)
             Dim _DocEmitir As String = Mid(_ob_type, 4, 1)
 
+            Dim _FechaPickeo As DateTime = FechaDelServidor.Date
+
+            If CBool(_FPickeo.Rows.Count) Then
+                _FechaPickeo = _FPickeo.Rows(0).Item("dt_start")
+            End If
+
             With Zw_Stmp_Enc
 
                 Select Case _DocEmitir
@@ -782,22 +790,7 @@ Public Class Cl_Stmp
                 .Estado = "COMPL"
                 .Accion = _ob_type
                 .Reasignada = False
-
-                'Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set " & vbCrLf &
-                '               "Estado = '" & .Estado & "',Accion = '" & .Accion & "'" &
-                '               ",Fecha_Facturar = '" & Format(.Fecha_Facturar, "yyyyMMdd") & "'" &
-                '               ",DocEmitir = '" & .DocEmitir & "'" &
-                '               ",TipoPago = '" & .TipoPago & "'" &
-                '               ",FechaPickeado = Getdate()" & vbCrLf &
-                '               ",Reasignada = 0" & vbCrLf &
-                '               "Where Id = " & .Id
-
-                'If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
-
-                '    _Mensaje.Detalle = "Error al actualizar el documento en la tabla Zw_Stmp_Enc"
-                '    Throw New System.Exception(_Sql.Pro_Error)
-
-                'End If
+                .FechaPickeado = _FechaPickeo
 
                 Dim _QuerySql = String.Empty
 

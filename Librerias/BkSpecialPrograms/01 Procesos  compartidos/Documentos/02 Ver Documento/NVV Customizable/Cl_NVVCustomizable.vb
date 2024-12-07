@@ -41,10 +41,12 @@ Public Class Cl_NVVCustomizable
 
             With _Det
                 .Id = _Row("Id")
+                .Idmaeedo = _Row("Idmaeedo")
                 .Idmaeddo = _Row("Idmaeddo")
                 .CodigoAlt = _Row("CodigoAlt")
                 .Descripcion = _Row("Descripcion")
                 .Cantidad = _Row("Cantidad")
+                .Codigo = _Row("Codigo")
             End With
 
             Ls_Detalle.Add(_Det)
@@ -80,22 +82,27 @@ Public Class Cl_NVVCustomizable
 
                 With _Fila
 
+                    Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Docu_Det_Cust Where Idmaeedo = " & .Idmaeedo & " And Codigo = '" & .Codigo & "'"
+                    Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                    Comando.Transaction = myTrans
+                    Comando.ExecuteNonQuery()
+
+                End With
+
+            Next
+
+
+            For Each _Fila As Zw_Docu_Det_Cust In Ls_Detalle
+
+                With _Fila
+
                     If Not String.IsNullOrEmpty(.CodigoAlt) Then
 
-                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Det_Cust (Idmaeedo,Idmaeddo,CodigoAlt,Descripcion,Cantidad) Values " &
-                                       "(" & .Idmaeedo & "," & .Idmaeddo & ",'" & .CodigoAlt & "','" & .Descripcion & "','" & .Cantidad & "')"
+                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Det_Cust (Idmaeedo,Idmaeddo,CodigoAlt,Descripcion,Cantidad,Codigo) Values " &
+                                       "(" & .Idmaeedo & "," & .Idmaeddo & ",'" & .CodigoAlt & "','" & .Descripcion & "','" & .Cantidad & "','" & .Codigo & "')"
                         Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                         Comando.Transaction = myTrans
                         Comando.ExecuteNonQuery()
-
-                        'Dim _Horagrab = Hora_Grab_fx(False)
-
-                        'Consulta_sql = "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC,HORAGRAB) Values " &
-                        '               "('MAEDDO'," & .Idmaeddo & ",'" & FUNCIONARIO & "'" &
-                        '               ",Getdate(),'CUSTNVV','" & .CodigoAlt.ToString.Trim & "'," & .Cantidad & "," & _Horagrab & ")"
-                        'Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
-                        'Comando.Transaction = myTrans
-                        'Comando.ExecuteNonQuery()
 
                     End If
 

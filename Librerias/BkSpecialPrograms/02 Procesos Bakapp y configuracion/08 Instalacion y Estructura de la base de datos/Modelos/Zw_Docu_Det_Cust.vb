@@ -5,4 +5,5 @@
     Public Property CodigoAlt As String
     Public Property Descripcion As String
     Public Property Cantidad As Double
+    Public Property Codigo As String
 End Class

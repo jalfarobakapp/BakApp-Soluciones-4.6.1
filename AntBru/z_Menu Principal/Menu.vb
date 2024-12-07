@@ -918,7 +918,7 @@ Public Class Menu
         Dim _Koen = "15463484"
         Dim _Koprct = "2316158002"
 
-        Dim Fm As New Frm_Ver_Documento_CustomizarDet(0, _Idmaeddo, _Koen, _Koprct)
+        Dim Fm As New Frm_Ver_Documento_CustomizarDet(0, _Idmaeddo, _Koen, _Koprct, 0)
         Fm.ShowDialog(Me)
         Fm.Dispose()
 

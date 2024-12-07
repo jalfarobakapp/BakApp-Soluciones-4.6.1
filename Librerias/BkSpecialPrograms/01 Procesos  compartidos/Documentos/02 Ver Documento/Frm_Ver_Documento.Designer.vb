@@ -51,6 +51,7 @@ Partial Class Frm_Ver_Documento
         Me.Btn_InfFincred = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_HabilitarFacturacion = New DevComponents.DotNetBar.ButtonItem()
         Me.CircularProgressItem1 = New DevComponents.DotNetBar.CircularProgressItem()
+        Me.Btn_MarcarNVVCustomizable = New DevComponents.DotNetBar.ButtonItem()
         Me.GrillaDetalleDoc = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Lbl_Totaliza_Cantidades = New DevComponents.DotNetBar.LabelX()
@@ -168,7 +169,7 @@ Partial Class Frm_Ver_Documento
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar_Documentos, Me.Btn_Observaciones, Me.Btn_Anotaciones_al_documento, Me.Btn_Enviar_documento_por_correo, Me.Btn_Traza_Documento, Me.Btn_Archivos_Adjuntos, Me.Btn_Marcar_Baja_Rotacion, Me.Btn_Imprimir_Documento, Me.Btn_Cierre_Reactivacion_Documento, Me.Btn_Firmar_Documento_DTE, Me.Btn_Revisar_Situacion_Comercial, Me.Btn_Permisos_Asociados, Me.Btn_Ver_Orden_de_despacho, Me.Btn_Consolidar_Stock, Me.Btn_Eliminar_Anular, Me.Btn_CopiarDocOtrEmpresa, Me.Btn_CrearNVVdesdeOCCOtraEmpresa, Me.Btn_InfFincred, Me.Btn_HabilitarFacturacion, Me.CircularProgressItem1})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar_Documentos, Me.Btn_Observaciones, Me.Btn_Anotaciones_al_documento, Me.Btn_Enviar_documento_por_correo, Me.Btn_Traza_Documento, Me.Btn_Archivos_Adjuntos, Me.Btn_Marcar_Baja_Rotacion, Me.Btn_Imprimir_Documento, Me.Btn_Cierre_Reactivacion_Documento, Me.Btn_Firmar_Documento_DTE, Me.Btn_Revisar_Situacion_Comercial, Me.Btn_Permisos_Asociados, Me.Btn_Ver_Orden_de_despacho, Me.Btn_Consolidar_Stock, Me.Btn_Eliminar_Anular, Me.Btn_CopiarDocOtrEmpresa, Me.Btn_CrearNVVdesdeOCCOtraEmpresa, Me.Btn_InfFincred, Me.Btn_HabilitarFacturacion, Me.Btn_MarcarNVVCustomizable, Me.CircularProgressItem1})
         Me.Bar2.Location = New System.Drawing.Point(0, 492)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(873, 41)
@@ -354,6 +355,16 @@ Partial Class Frm_Ver_Documento
         'CircularProgressItem1
         '
         Me.CircularProgressItem1.Name = "CircularProgressItem1"
+        '
+        'Btn_MarcarNVVCustomizable
+        '
+        Me.Btn_MarcarNVVCustomizable.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_MarcarNVVCustomizable.ForeColor = System.Drawing.Color.Black
+        Me.Btn_MarcarNVVCustomizable.Image = CType(resources.GetObject("Btn_MarcarNVVCustomizable.Image"), System.Drawing.Image)
+        Me.Btn_MarcarNVVCustomizable.ImageAlt = CType(resources.GetObject("Btn_MarcarNVVCustomizable.ImageAlt"), System.Drawing.Image)
+        Me.Btn_MarcarNVVCustomizable.Name = "Btn_MarcarNVVCustomizable"
+        Me.Btn_MarcarNVVCustomizable.Tooltip = "Marcar nota de venta como CUSTOMIZABLE"
+        Me.Btn_MarcarNVVCustomizable.Visible = False
         '
         'GrillaDetalleDoc
         '
@@ -1632,7 +1643,6 @@ Partial Class Frm_Ver_Documento
         Me.Controls.Add(Me.MStb_Barra)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
@@ -1776,4 +1786,5 @@ Partial Class Frm_Ver_Documento
     Public WithEvents Btn_CrearNVVdesdeOCCOtraEmpresa As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Lbl_CusNVV As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Btn_CusNVV As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_MarcarNVVCustomizable As DevComponents.DotNetBar.ButtonItem
 End Class

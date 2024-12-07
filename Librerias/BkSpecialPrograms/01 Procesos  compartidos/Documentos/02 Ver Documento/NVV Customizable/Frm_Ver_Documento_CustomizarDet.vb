@@ -1,5 +1,4 @@
 ﻿Imports System.ComponentModel
-Imports BkSpecialPrograms.Bk_GenDoc2DTE
 Imports BkSpecialPrograms.Cl_Fincred_Bakapp.Cl_Fincred_SQL
 Imports DevComponents.DotNetBar
 
@@ -13,11 +12,13 @@ Public Class Frm_Ver_Documento_CustomizarDet
     Private _Idmaeedo As Integer
     Private _Idmaeddo As Integer
     Private _Koen As String
+    Private _Codigo As String
+    Private _Cantidad As Double
     Public Property Cl_NVVCustomizable As Cl_NVVCustomizable
 
     Dim listaProductos As New BindingList(Of Zw_Docu_Det_Cust)
 
-    Public Sub New(_Idmaeedo As Integer, _Idmaeddo As Integer, _Koen As String, _Codigo As String)
+    Public Sub New(_Idmaeedo As Integer, _Idmaeddo As Integer, _Koen As String, _Codigo As String, _Cantidad As Double)
 
         ' Esta llamada es exigida por el diseñador.
         InitializeComponent()
@@ -27,6 +28,8 @@ Public Class Frm_Ver_Documento_CustomizarDet
         Me._Idmaeedo = _Idmaeedo
         Me._Idmaeddo = _Idmaeddo
         Me._Koen = _Koen
+        Me._Codigo = _Codigo
+        Me._Cantidad = _Cantidad
 
         Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
         _Row_Producto = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -58,7 +61,7 @@ Public Class Frm_Ver_Documento_CustomizarDet
 
         Sb_ActualizarGrilla()
 
-        Me.Text = "Producto: " & _Row_Producto.Item("KOPR").ToString.Trim & " - " & _Row_Producto.Item("NOKOPR").ToString.Trim
+        Me.Text = "Producto: " & _Row_Producto.Item("KOPR").ToString.Trim & " - " & _Row_Producto.Item("NOKOPR").ToString.Trim & ", Cantidad: " & _Cantidad
 
         Cl_NVVCustomizable.Fx_Llenar_Detalle(_Idmaeddo)
 
@@ -72,7 +75,7 @@ Public Class Frm_Ver_Documento_CustomizarDet
 
             Next
 
-            Btn_Grabar.Enabled = False
+            Btn_Grabar.Enabled = Not CBool((_Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "HabilitadaFac", "Idmaeedo = " & _Idmaeedo,,,, True)))
 
         End If
 
@@ -90,6 +93,7 @@ Public Class Frm_Ver_Documento_CustomizarDet
             .CodigoAlt = String.Empty
             .Descripcion = String.Empty
             .Cantidad = 0
+            .Codigo = _Row_Producto.Item("KOPR")
 
         End With
 
@@ -97,7 +101,11 @@ Public Class Frm_Ver_Documento_CustomizarDet
         listaProductos.Add(_Detalle)
         Grilla_Detalle.Refresh()
 
-        'Grilla_Detalle.CurrentCell = Grilla_Detalle.Rows(Grilla_Detalle.RowCount).Cells("CodigoAlt")
+        Try
+            Grilla_Detalle.CurrentCell = Grilla_Detalle.Rows(Grilla_Detalle.RowCount - 1).Cells("CodigoAlt")
+        Catch ex As Exception
+
+        End Try
 
     End Sub
 
@@ -132,13 +140,13 @@ Public Class Frm_Ver_Documento_CustomizarDet
 
             .Columns("CodigoAlt").Visible = True
             .Columns("CodigoAlt").HeaderText = "Código"
-            .Columns("CodigoAlt").Width = 110
+            .Columns("CodigoAlt").Width = 120
             .Columns("CodigoAlt").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Descripcion").Visible = True
             .Columns("Descripcion").HeaderText = "Descripción"
-            .Columns("Descripcion").Width = 420
+            .Columns("Descripcion").Width = 410
             .Columns("Descripcion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -249,6 +257,11 @@ Public Class Frm_Ver_Documento_CustomizarDet
 
                         End If
                     End If
+
+                    If Grilla_Detalle.Rows.Count = 0 Then
+                        Sb_Agregar_Nueva_Linea()
+                    End If
+
                 Catch ex As Exception
                     MessageBoxEx.Show(Me, "Error al eliminar la fila: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
@@ -586,7 +599,9 @@ Public Class Frm_Ver_Documento_CustomizarDet
 
     End Sub
 
-    Private Sub Grilla_Detalle_RowEnter(sender As Object, e As DataGridViewCellEventArgs)
-
+    Private Sub Frm_Ver_Documento_CustomizarDet_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+        If e.KeyValue = Keys.Escape Then
+            Me.Close()
+        End If
     End Sub
 End Class

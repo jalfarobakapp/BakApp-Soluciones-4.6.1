@@ -185,6 +185,28 @@ Public Class Frm_CodAlternativo_Ver
             Sb_Eliminar_Linea()
         End If
 
+        If ModoSeleccion Then
+
+            If e.KeyValue = Keys.Enter Then
+
+                SendKeys.Send("{RIGHT}")
+                e.Handled = True
+
+                Dim _Fila As DataGridViewRow = GrillAlternativos.CurrentRow
+
+                Dim _Kopral As String = _Fila.Cells("KOPRAL").Value
+                Dim _Kopr As String = _Fila.Cells("KOPR").Value
+                Dim _Koen As String = _Fila.Cells("KOEN").Value
+
+                Consulta_sql = "Select * From TABCODAL Where KOPRAL = '" & _Kopral & "' And KOPR = '" & _Kopr & "' And KOEN = '" & _Koen & "'"
+                RowTabcodalSeleccionado = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                Me.Close()
+
+            End If
+
+        End If
+
     End Sub
 
     Private Sub GrillAlternativos_CellEnter(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GrillAlternativos.CellEnter

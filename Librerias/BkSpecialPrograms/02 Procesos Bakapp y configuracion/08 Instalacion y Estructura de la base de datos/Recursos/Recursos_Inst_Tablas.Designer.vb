@@ -951,16 +951,14 @@ Namespace My.Resources
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
         '''CREATE TABLE [dbo].[Zw_Demonio_NVVAuto](
-        '''	[Id_Enc]			[int] IDENTITY(1,1) NOT NULL,
-        '''	[IdmaeedoOCC_Ori]	[int] NOT NULL DEFAULT (0),
-        '''	[NudoOCC_Ori]		[varchar](10) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Endo_Ori]			[varchar](13) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Suendo_Ori]		[varchar](10) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[FechaGrab]			[datetime] NULL,
-        '''	[GenerarNVV]		[bit] NOT NULL DEFAULT (0),
-        '''	[NVVGenerada]		[bit] NOT NULL DEFAULT (0),
-        '''	[Idmaeedo_NVV]		[int] NOT NULL DEFAULT (0),
-        '''	[Nudo_NVV]			[varchar](10) NOT NULL [resto de la cadena truncado]&quot;;.
+        '''	[Id_Enc]			        [int]           IDENTITY(1,1) NOT NULL,
+        '''	[IdmaeedoOCC_Ori]	        [int]           NOT NULL DEFAULT (0),
+        '''	[NudoOCC_Ori]		        [varchar](20)   NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Endo_Ori]			        [varchar](13)   NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Suendo_Ori]		        [varchar](10)   NOT NULL DEFAULT (&apos;&apos;),
+        '''	[FechaGrab]			        [datetime]      NULL,
+        '''	[GenerarNVV]		        [bit]           NOT NULL DEFAULT (0),
+        '''	[NVVGenerada]		        [bit]  [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Demonio_NVVAuto() As String
             Get
@@ -1288,11 +1286,11 @@ Namespace My.Resources
         '''	[Nombre_Archivo]	[varchar](200)	Not Null DEFAULT (&apos;&apos;),
         '''	[Archivo]			[image]			Null,
         '''	[Fecha]				[datetime]		Not Null DEFAULT (&apos;&apos;),
-        '''	[CodFuncionario]	[char](3)			Not Null DEFAULT (&apos;&apos;),
+        '''	[CodFuncionario]	[char](3)       Not Null DEFAULT (&apos;&apos;),
         ''' CONSTRAINT [PK_Zw_Docu_Archivos] PRIMARY KEY CLUSTERED 
         '''(
         '''	[Id] ASC
-        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE [resto de la cadena truncado]&quot;;.
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_ [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Docu_Archivos() As String
             Get
@@ -1319,6 +1317,30 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Zw_Docu_Det() As String
             Get
                 Return ResourceManager.GetString("Zw_Docu_Det", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_Docu_Det_Cust](
+        '''	[Id]			[int] IDENTITY(1,1) NOT NULL,
+        '''	[Idmaeedo]		[int]			NOT NULL DEFAULT (0),
+        '''	[Idmaeddo]		[int]			NOT NULL DEFAULT (0),
+        '''	[CodigoAlt]		[varchar](20)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Descripcion]	[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Cantidad]		[float]			NOT NULL DEFAULT (0),
+        '''	[Codigo]		[varchar](13)	NOT NULL DEFAULT (&apos;&apos;),
+        ''' CONSTRAINT [PK_Zw_Docu_Det_Cust] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[Idmaeedo] ASC,
+        '''	[Idmaeddo] ASC,
+        '''	[CodigoAlt] ASC
+        ''')WITH (PAD_IND [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Docu_Det_Cust() As String
+            Get
+                Return ResourceManager.GetString("Zw_Docu_Det_Cust", resourceCulture)
             End Get
         End Property
         
@@ -4481,15 +4503,14 @@ Namespace My.Resources
         '''
         '''CREATE TABLE [dbo].[Zw_Stk_Tickets_Acciones](
         '''	[Id]				[int] IDENTITY(1,1) NOT NULL,
-        '''	[Id_Ticket]			[int] NOT NULL DEFAULT (0),
-        '''	[Accion]			[varchar](4) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Descripcion]		[varchar](max) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Fecha]				[datetime] NULL,
-        '''	[CodFuncionario]	[varchar](3) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[CodAgente]			[varchar](3) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[En_Construccion]	[bit] NOT NULL DEFAULT (0),
-        '''	[Visto]				[bit] NOT NULL DEFAULT (0),
-        '''	[Cierra_Ticket]		[bit] NOT NULL  [resto de la cadena truncado]&quot;;.
+        '''	[Id_Ticket]			[int]               NOT NULL DEFAULT (0),
+        '''	[Accion]			[varchar](4)        NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Descripcion]		[varchar](max)      NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Fecha]				[datetime]          NULL,
+        '''	[CodFuncionario]	[varchar](3)        NOT NULL DEFAULT (&apos;&apos;),
+        '''	[CodAgente]			[varchar](3)        NOT NULL DEFAULT (&apos;&apos;),
+        '''	[En_Construccion]	[bit]               NOT NULL DEFAULT (0),
+        '''	[Visto]			 [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Stk_Tickets_Acciones() As String
             Get
@@ -5093,16 +5114,15 @@ Namespace My.Resources
         '''
         '''
         '''CREATE TABLE [dbo].[Zw_TmpInv_InvParcial_Inventarios](
-        '''	[Id] [int] IDENTITY(1,1) NOT NULL,
-        '''	[Ano]				[char](4) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Mes]				[char](2) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Dia]				[char](2) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Fecha]				[datetime] NOT NULL,
-        '''	[Empresa]			[char](2) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Sucursal]			[char](3) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Bodega]			[char](3) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Nombre_Ajuste]		[varchar](100) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Funcionario]		[char](3) NOT NULL DE [resto de la cadena truncado]&quot;;.
+        '''	[Id]                [int] IDENTITY(1,1) NOT NULL,
+        '''	[Ano]				[char](4)           NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Mes]				[char](2)           NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Dia]				[char](2)           NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Fecha]				[datetime]          NOT NULL,
+        '''	[Empresa]			[char](2)           NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Sucursal]			[char](3)           NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Bodega]			[char](3)           NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Nombre_A [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_TmpInv_InvParcial_Inventarios() As String
             Get

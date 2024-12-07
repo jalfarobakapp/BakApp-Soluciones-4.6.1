@@ -2131,8 +2131,8 @@ Public Class Clase_Crear_Documento
                     _SqlQuery += "Insert Into " & _Global_BaseBk & "Zw_Referencias_Dte " &
                                  "(Id_Doc,Tido,Nudo,NroLinRef,TpoDocRef,FolioRef,RUTOt,IdAdicOtr,FchRef,CodRef,RazonRef, Kasi)
                               Values
-                              (" & _Id_Doc & ",'" & _Tido & "','" & _Nudo & "'," & _NroLinRef & "," & _TpoDocRef &
-                                  ",'" & _FolioRef & "','" & _RUTOt & "','" & _IdAdicOtr & "','" & _FchRef & "'," & _CodRef & ",'" & _RazonRef & "'," & Convert.ToInt32(_Kasi) & ")" & Environment.NewLine
+                              (" & _Id_Doc & ",'" & _Tido & "','" & _Nudo & "'," & _NroLinRef & ",'" & _TpoDocRef &
+                                  "','" & _FolioRef & "','" & _RUTOt & "','" & _IdAdicOtr & "','" & _FchRef & "'," & _CodRef & ",'" & _RazonRef & "'," & Convert.ToInt32(_Kasi) & ")" & Environment.NewLine
 
                 End If
 

@@ -204,7 +204,7 @@ Public Class Frm_Formulario_Observaciones
 
         If Not IsNothing(_Class_Referencias_DTE) Then
 
-            Dim _Row() = _Class_Referencias_DTE.Tbl_Referencias.Select("TpoDocRef = 801")
+            Dim _Row() = _Class_Referencias_DTE.Tbl_Referencias.Select("TpoDocRef = '801'")
 
             TxtOrdendecompra.Enabled = Not Convert.ToBoolean(_Row.Count)
 
@@ -380,7 +380,7 @@ Public Class Frm_Formulario_Observaciones
                                 End If
                             End If
 
-                            Dim _Row = _Class_Referencias_DTE.Tbl_Referencias.Select("TpoDocRef = 801 And FolioRef = '" & TxtOrdendecompra.Text & "'")
+                            Dim _Row = _Class_Referencias_DTE.Tbl_Referencias.Select("TpoDocRef = '801' And FolioRef = '" & TxtOrdendecompra.Text & "'")
 
                             If False Then
 
@@ -429,7 +429,7 @@ Public Class Frm_Formulario_Observaciones
                                             _Class_Referencias_DTE = Fmr.Class_Referencias_DTE
                                             Fmr.Dispose()
 
-                                            _Row = _Class_Referencias_DTE.Tbl_Referencias.Select("TpoDocRef = 801")
+                                            _Row = _Class_Referencias_DTE.Tbl_Referencias.Select("TpoDocRef = '801'")
 
                                             If Convert.ToBoolean(_Row.Count) Then
 
@@ -790,6 +790,12 @@ Public Class Frm_Formulario_Observaciones
         Sb_Grabar(False, False)
     End Sub
     Sub Sb_Grabar(_Grabar_e_Imprimir As Boolean, _Grabar_Y_Pagar As Boolean)
+
+        If Chk_GrabaNVVCustomizable.Checked Then
+            If Not Fx_Tiene_Permiso(Me, "Doc00099") Then
+                Return
+            End If
+        End If
 
         If Fx_Grabar_Observaciones() Then
 
