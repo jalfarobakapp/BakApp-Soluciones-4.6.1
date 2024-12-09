@@ -180,10 +180,6 @@ Partial Class Frm_Crear_Entidad_Mt
         Me.Cmb_Tien = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.Cmb_Transpoen = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.TabItem4 = New DevComponents.DotNetBar.TabItem(Me.components)
-        Me.TabControlPanel3 = New DevComponents.DotNetBar.TabControlPanel()
-        Me.TabItem3 = New DevComponents.DotNetBar.TabItem(Me.components)
-        Me.TabControlPanel2 = New DevComponents.DotNetBar.TabControlPanel()
-        Me.TabItem2 = New DevComponents.DotNetBar.TabItem(Me.components)
         Me.TabControlPanel1 = New DevComponents.DotNetBar.TabControlPanel()
         Me.GroupPanel9 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Txt_Comuna = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -191,6 +187,10 @@ Partial Class Frm_Crear_Entidad_Mt
         Me.Btn_Buscar_Comuna = New DevComponents.DotNetBar.ButtonX()
         Me.LabelX40 = New DevComponents.DotNetBar.LabelX()
         Me.TabItem1 = New DevComponents.DotNetBar.TabItem(Me.components)
+        Me.TabControlPanel3 = New DevComponents.DotNetBar.TabControlPanel()
+        Me.TabItem3 = New DevComponents.DotNetBar.TabItem(Me.components)
+        Me.TabControlPanel2 = New DevComponents.DotNetBar.TabControlPanel()
+        Me.TabItem2 = New DevComponents.DotNetBar.TabItem(Me.components)
         Me.TabControlPanel6 = New DevComponents.DotNetBar.TabControlPanel()
         Me.GroupPanel12 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Input_Rutadom = New DevComponents.Editors.IntegerInput()
@@ -304,10 +304,10 @@ Partial Class Frm_Crear_Entidad_Mt
         Me.GroupPanel14.SuspendLayout()
         CType(Me.ContextMenuBar3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel7.SuspendLayout()
-        Me.TabControlPanel3.SuspendLayout()
-        Me.TabControlPanel2.SuspendLayout()
         Me.TabControlPanel1.SuspendLayout()
         Me.GroupPanel9.SuspendLayout()
+        Me.TabControlPanel3.SuspendLayout()
+        Me.TabControlPanel2.SuspendLayout()
         Me.TabControlPanel6.SuspendLayout()
         Me.GroupPanel12.SuspendLayout()
         CType(Me.Input_Rutadom, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -1870,6 +1870,7 @@ Partial Class Frm_Crear_Entidad_Mt
         Me.Dtp_Fevecren.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Dtp_Fevecren.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
         Me.Dtp_Fevecren.ButtonDropDown.Visible = True
+        Me.Dtp_Fevecren.Enabled = False
         Me.Dtp_Fevecren.ForeColor = System.Drawing.Color.Black
         Me.Highlighter1.SetHighlightOnFocus(Me.Dtp_Fevecren, True)
         Me.Dtp_Fevecren.IsPopupCalendarOpen = False
@@ -2343,9 +2344,9 @@ Partial Class Frm_Crear_Entidad_Mt
         '
         Me.TabControl1.BackColor = System.Drawing.Color.White
         Me.TabControl1.CanReorderTabs = True
-        Me.TabControl1.Controls.Add(Me.TabControlPanel4)
-        Me.TabControl1.Controls.Add(Me.TabControlPanel1)
         Me.TabControl1.Controls.Add(Me.TabControlPanel3)
+        Me.TabControl1.Controls.Add(Me.TabControlPanel1)
+        Me.TabControl1.Controls.Add(Me.TabControlPanel4)
         Me.TabControl1.Controls.Add(Me.TabControlPanel2)
         Me.TabControl1.Controls.Add(Me.TabControlPanel6)
         Me.TabControl1.Controls.Add(Me.TabControlPanel7)
@@ -2777,7 +2778,7 @@ Partial Class Frm_Crear_Entidad_Mt
         Me.Label10.ForeColor = System.Drawing.Color.Black
         Me.Label10.Location = New System.Drawing.Point(3, 10)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(73, 13)
+        Me.Label10.Size = New System.Drawing.Size(72, 13)
         Me.Label10.TabIndex = 66
         Me.Label10.Text = "Tipo entidad"
         '
@@ -2920,7 +2921,7 @@ Partial Class Frm_Crear_Entidad_Mt
         Me.Label3.ForeColor = System.Drawing.Color.Black
         Me.Label3.Location = New System.Drawing.Point(303, 56)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(74, 13)
+        Me.Label3.Size = New System.Drawing.Size(73, 13)
         Me.Label3.TabIndex = 76
         Me.Label3.Text = "Transportista"
         '
@@ -2947,7 +2948,7 @@ Partial Class Frm_Crear_Entidad_Mt
         Me.Label1.ForeColor = System.Drawing.Color.Black
         Me.Label1.Location = New System.Drawing.Point(3, 56)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(93, 13)
+        Me.Label1.Size = New System.Drawing.Size(92, 13)
         Me.Label1.TabIndex = 70
         Me.Label1.Text = "Tamaño empresa"
         '
@@ -2982,59 +2983,6 @@ Partial Class Frm_Crear_Entidad_Mt
         Me.TabItem4.AttachedControl = Me.TabControlPanel4
         Me.TabItem4.Name = "TabItem4"
         Me.TabItem4.Text = "Categorización"
-        '
-        'TabControlPanel3
-        '
-        Me.TabControlPanel3.Controls.Add(Me.Dtp_Fecreen)
-        Me.TabControlPanel3.Controls.Add(Me.GroupPanel2)
-        Me.TabControlPanel3.Controls.Add(Me.LabelX7)
-        Me.TabControlPanel3.Controls.Add(Me.GroupPanel4)
-        Me.TabControlPanel3.Controls.Add(Me.GroupPanel3)
-        Me.TabControlPanel3.DisabledBackColor = System.Drawing.Color.Empty
-        Me.TabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TabControlPanel3.Location = New System.Drawing.Point(0, 27)
-        Me.TabControlPanel3.Name = "TabControlPanel3"
-        Me.TabControlPanel3.Padding = New System.Windows.Forms.Padding(1)
-        Me.TabControlPanel3.Size = New System.Drawing.Size(604, 497)
-        Me.TabControlPanel3.Style.BackColor1.Color = System.Drawing.Color.White
-        Me.TabControlPanel3.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine
-        Me.TabControlPanel3.Style.BorderColor.Color = System.Drawing.Color.FromArgb(CType(CType(211, Byte), Integer), CType(CType(211, Byte), Integer), CType(CType(211, Byte), Integer))
-        Me.TabControlPanel3.Style.BorderSide = CType(((DevComponents.DotNetBar.eBorderSide.Left Or DevComponents.DotNetBar.eBorderSide.Right) _
-            Or DevComponents.DotNetBar.eBorderSide.Bottom), DevComponents.DotNetBar.eBorderSide)
-        Me.TabControlPanel3.Style.GradientAngle = 90
-        Me.TabControlPanel3.TabIndex = 3
-        Me.TabControlPanel3.TabItem = Me.TabItem3
-        '
-        'TabItem3
-        '
-        Me.TabItem3.AttachedControl = Me.TabControlPanel3
-        Me.TabItem3.Name = "TabItem3"
-        Me.TabItem3.Text = "Crédito"
-        '
-        'TabControlPanel2
-        '
-        Me.TabControlPanel2.Controls.Add(Me.GroupPanel6)
-        Me.TabControlPanel2.Controls.Add(Me.GroupPanel5)
-        Me.TabControlPanel2.DisabledBackColor = System.Drawing.Color.Empty
-        Me.TabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TabControlPanel2.Location = New System.Drawing.Point(0, 27)
-        Me.TabControlPanel2.Name = "TabControlPanel2"
-        Me.TabControlPanel2.Padding = New System.Windows.Forms.Padding(1)
-        Me.TabControlPanel2.Size = New System.Drawing.Size(604, 497)
-        Me.TabControlPanel2.Style.BackColor1.Color = System.Drawing.Color.White
-        Me.TabControlPanel2.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine
-        Me.TabControlPanel2.Style.BorderColor.Color = System.Drawing.Color.FromArgb(CType(CType(211, Byte), Integer), CType(CType(211, Byte), Integer), CType(CType(211, Byte), Integer))
-        Me.TabControlPanel2.Style.BorderSide = CType(((DevComponents.DotNetBar.eBorderSide.Left Or DevComponents.DotNetBar.eBorderSide.Right) _
-            Or DevComponents.DotNetBar.eBorderSide.Bottom), DevComponents.DotNetBar.eBorderSide)
-        Me.TabControlPanel2.Style.GradientAngle = 90
-        Me.TabControlPanel2.TabIndex = 2
-        Me.TabControlPanel2.TabItem = Me.TabItem2
-        '
-        'TabItem2
-        '
-        Me.TabItem2.AttachedControl = Me.TabControlPanel2
-        Me.TabItem2.Name = "TabItem2"
-        Me.TabItem2.Text = "Asignaciones"
         '
         'TabControlPanel1
         '
@@ -3194,6 +3142,59 @@ Partial Class Frm_Crear_Entidad_Mt
         Me.TabItem1.Name = "TabItem1"
         Me.TabItem1.Text = "Datos de identificación"
         '
+        'TabControlPanel3
+        '
+        Me.TabControlPanel3.Controls.Add(Me.Dtp_Fecreen)
+        Me.TabControlPanel3.Controls.Add(Me.GroupPanel2)
+        Me.TabControlPanel3.Controls.Add(Me.LabelX7)
+        Me.TabControlPanel3.Controls.Add(Me.GroupPanel4)
+        Me.TabControlPanel3.Controls.Add(Me.GroupPanel3)
+        Me.TabControlPanel3.DisabledBackColor = System.Drawing.Color.Empty
+        Me.TabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TabControlPanel3.Location = New System.Drawing.Point(0, 27)
+        Me.TabControlPanel3.Name = "TabControlPanel3"
+        Me.TabControlPanel3.Padding = New System.Windows.Forms.Padding(1)
+        Me.TabControlPanel3.Size = New System.Drawing.Size(604, 497)
+        Me.TabControlPanel3.Style.BackColor1.Color = System.Drawing.Color.White
+        Me.TabControlPanel3.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.TabControlPanel3.Style.BorderColor.Color = System.Drawing.Color.FromArgb(CType(CType(211, Byte), Integer), CType(CType(211, Byte), Integer), CType(CType(211, Byte), Integer))
+        Me.TabControlPanel3.Style.BorderSide = CType(((DevComponents.DotNetBar.eBorderSide.Left Or DevComponents.DotNetBar.eBorderSide.Right) _
+            Or DevComponents.DotNetBar.eBorderSide.Bottom), DevComponents.DotNetBar.eBorderSide)
+        Me.TabControlPanel3.Style.GradientAngle = 90
+        Me.TabControlPanel3.TabIndex = 3
+        Me.TabControlPanel3.TabItem = Me.TabItem3
+        '
+        'TabItem3
+        '
+        Me.TabItem3.AttachedControl = Me.TabControlPanel3
+        Me.TabItem3.Name = "TabItem3"
+        Me.TabItem3.Text = "Crédito"
+        '
+        'TabControlPanel2
+        '
+        Me.TabControlPanel2.Controls.Add(Me.GroupPanel6)
+        Me.TabControlPanel2.Controls.Add(Me.GroupPanel5)
+        Me.TabControlPanel2.DisabledBackColor = System.Drawing.Color.Empty
+        Me.TabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TabControlPanel2.Location = New System.Drawing.Point(0, 27)
+        Me.TabControlPanel2.Name = "TabControlPanel2"
+        Me.TabControlPanel2.Padding = New System.Windows.Forms.Padding(1)
+        Me.TabControlPanel2.Size = New System.Drawing.Size(604, 497)
+        Me.TabControlPanel2.Style.BackColor1.Color = System.Drawing.Color.White
+        Me.TabControlPanel2.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.TabControlPanel2.Style.BorderColor.Color = System.Drawing.Color.FromArgb(CType(CType(211, Byte), Integer), CType(CType(211, Byte), Integer), CType(CType(211, Byte), Integer))
+        Me.TabControlPanel2.Style.BorderSide = CType(((DevComponents.DotNetBar.eBorderSide.Left Or DevComponents.DotNetBar.eBorderSide.Right) _
+            Or DevComponents.DotNetBar.eBorderSide.Bottom), DevComponents.DotNetBar.eBorderSide)
+        Me.TabControlPanel2.Style.GradientAngle = 90
+        Me.TabControlPanel2.TabIndex = 2
+        Me.TabControlPanel2.TabItem = Me.TabItem2
+        '
+        'TabItem2
+        '
+        Me.TabItem2.AttachedControl = Me.TabControlPanel2
+        Me.TabItem2.Name = "TabItem2"
+        Me.TabItem2.Text = "Asignaciones"
+        '
         'TabControlPanel6
         '
         Me.TabControlPanel6.Controls.Add(Me.GroupPanel12)
@@ -3321,7 +3322,7 @@ Partial Class Frm_Crear_Entidad_Mt
         Me.Label29.ForeColor = System.Drawing.Color.Black
         Me.Label29.Location = New System.Drawing.Point(411, 14)
         Me.Label29.Name = "Label29"
-        Me.Label29.Size = New System.Drawing.Size(26, 13)
+        Me.Label29.Size = New System.Drawing.Size(27, 13)
         Me.Label29.TabIndex = 85
         Me.Label29.Text = "SAB"
         '
@@ -3833,7 +3834,7 @@ Partial Class Frm_Crear_Entidad_Mt
         Me.Label22.ForeColor = System.Drawing.Color.Black
         Me.Label22.Location = New System.Drawing.Point(0, 158)
         Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(78, 13)
+        Me.Label22.Size = New System.Drawing.Size(77, 13)
         Me.Label22.TabIndex = 86
         Me.Label22.Text = "RUT Sociedad"
         '
@@ -3863,7 +3864,7 @@ Partial Class Frm_Crear_Entidad_Mt
         Me.Label21.ForeColor = System.Drawing.Color.Black
         Me.Label21.Location = New System.Drawing.Point(0, 130)
         Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(77, 13)
+        Me.Label21.Size = New System.Drawing.Size(76, 13)
         Me.Label21.TabIndex = 84
         Me.Label21.Text = "RUT Conyuge"
         '
@@ -4810,10 +4811,10 @@ Partial Class Frm_Crear_Entidad_Mt
         CType(Me.ContextMenuBar3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel7.ResumeLayout(False)
         Me.GroupPanel7.PerformLayout()
-        Me.TabControlPanel3.ResumeLayout(False)
-        Me.TabControlPanel2.ResumeLayout(False)
         Me.TabControlPanel1.ResumeLayout(False)
         Me.GroupPanel9.ResumeLayout(False)
+        Me.TabControlPanel3.ResumeLayout(False)
+        Me.TabControlPanel2.ResumeLayout(False)
         Me.TabControlPanel6.ResumeLayout(False)
         Me.GroupPanel12.ResumeLayout(False)
         Me.GroupPanel12.PerformLayout()

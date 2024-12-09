@@ -37,5 +37,6 @@ Public Class Zw_Stmp_Enc
     Public Property CodFuncionario_Factura As String
     Public Property CodFuncionario_MarcaFacturar As String
     Public Property Reasignada As Boolean
+    Public Property FechaPickeoAct As Boolean
 
 End Class

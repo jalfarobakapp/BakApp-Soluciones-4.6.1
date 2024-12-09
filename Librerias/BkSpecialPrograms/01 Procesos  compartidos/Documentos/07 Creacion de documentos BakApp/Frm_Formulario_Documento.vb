@@ -5075,7 +5075,8 @@ Public Class Frm_Formulario_Documento
 
                 Else
 
-                    MessageBoxEx.Show(Me, "Este producto no esta asignado a la bodega " & _Bodega & vbCrLf &
+                    MessageBoxEx.Show(Me, "Código: " & _Codigo.ToString.Trim & " - " & _Descripcion.ToString.Trim & vbCrLf & vbCrLf &
+                                      "Este producto no esta asignado a la bodega " & _Bodega & vbCrLf &
                                       "Debe seleccionar una bodega para la línea del documento", "Validación",
                                       MessageBoxButtons.OK, MessageBoxIcon.Warning)
 
@@ -8032,7 +8033,8 @@ Public Class Frm_Formulario_Documento
     Function Fx_Buscar_Producto(ByRef _Codigo As String,
                                 ByRef _Es_Concepto As Boolean,
                                 _Seleccion_Multiple As Boolean,
-                                ByRef _Tbl_Productos_Seleccionados_Multiple As DataTable) As DataRow
+                                ByRef _Tbl_Productos_Seleccionados_Multiple As DataTable,
+                                ByRef _EsKit As Boolean) As DataRow
 
         _Codigo = _Codigo.Trim
         Dim _RowProducto As DataRow
@@ -8057,6 +8059,24 @@ Public Class Frm_Formulario_Documento
         End If
 
         If (_RowProducto Is Nothing) Then
+
+            Consulta_sql = "Select De.*,Mp.*" & vbCrLf &
+                           "From MAEDRES De" & vbCrLf &
+                           "Inner Join MAEPR Mp On De.ELEMENTO = Mp.KOPR" & vbCrLf &
+                           "Inner Join MAEERES Me On Me.CODIGO = De.CODIGO" & vbCrLf &
+                           "Where Me.CODIGO = '" & _Codigo & "' And TIPORESE = 'COM'"
+            _Tbl_Productos_Seleccionados_Multiple = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+            If CBool(_Tbl_Productos_Seleccionados_Multiple.Rows.Count) Then
+                _Seleccion_Multiple = True
+                _EsKit = True
+            Else
+                _Tbl_Productos_Seleccionados_Multiple = Nothing
+            End If
+
+        End If
+
+        If (_RowProducto Is Nothing) And Not _EsKit Then
 
             Dim _RowTabcodal As DataRow
 
@@ -8181,11 +8201,14 @@ Public Class Frm_Formulario_Documento
 
         End If
 
-        Sb_Revisar_Bloqueo_Producto(_RowProducto)
+        If Not _EsKit Then
+            Sb_Revisar_Bloqueo_Producto(_RowProducto)
+        End If
 
         Return _RowProducto
 
     End Function
+
 
     Sub Sb_Revisar_Bloqueo_Producto(ByRef _RowProducto As DataRow)
 
@@ -9836,7 +9859,7 @@ Public Class Frm_Formulario_Documento
 
                     _New_Fila = Grilla_Detalle.Rows(Grilla_Detalle.Rows.Count - 1)
 
-                    Dim _RowProducto As DataRow = Fx_Buscar_Producto(_Elemento, False, False, Nothing)
+                    Dim _RowProducto As DataRow = Fx_Buscar_Producto(_Elemento, False, False, Nothing, False)
 
                     Sb_Traer_Producto_Grilla(_New_Fila, _RowProducto, False, _UnTrans, False)
 
@@ -10272,14 +10295,32 @@ Public Class Frm_Formulario_Documento
                         Dim _CodLista = _Fila.Cells("CodLista").Value
 
                         Dim _Tbl_Productos_Seleccionados_Multiple As DataTable
+                        Dim _EsKit As Boolean = False
 
-                        Dim _RowProducto As DataRow = Fx_Buscar_Producto(_Codigo, _Es_Concepto, True, _Tbl_Productos_Seleccionados_Multiple)
+                        Dim _RowProducto As DataRow = Fx_Buscar_Producto(_Codigo, _Es_Concepto, True, _Tbl_Productos_Seleccionados_Multiple, _EsKit)
 
                         If Not (_RowProducto Is Nothing) Then
 
                             Sb_Traer_Producto_A_La_Nueva_Fila(_Fila, _RowProducto, _Indice)
 
                         ElseIf Not IsNothing(_Tbl_Productos_Seleccionados_Multiple) Then
+
+                            Dim _CantKit = 1
+
+                            If _EsKit Then
+
+                                Dim _Aceptar As Boolean = InputBox_Bk(Me, "Registre cantidad para la receta",
+                                                                      "Incorporación de productos según receta",
+                                                                      _CantKit,
+                                                                      False,,, True,
+                                                                      _Tipo_Imagen.Product,, _Tipo_Caracter.Solo_Numeros_Enteros, False)
+
+                                If Not _Aceptar Then
+                                    _Fila.Cells("Codigo").Value = String.Empty
+                                    Return
+                                End If
+
+                            End If
 
                             Fm_Espera = New Frm_Form_Esperar
                             Fm_Espera.BarraCircular.IsRunning = True
@@ -10309,6 +10350,13 @@ Public Class Frm_Formulario_Documento
 
                                 _Nuevo_Producto = _Fila.Cells("Nuevo_Producto").Value
                                 Sb_Marcar_Fila_Grilla(_Fila)
+
+                                If _EsKit Then
+
+                                    _Fila.Cells("Cantidad").Value = _Fila_Npr.Item("CANTIDAD") * _CantKit
+                                    Sb_Procesar_Datos_De_Grilla(_Fila, "Cantidad", True, True)
+
+                                End If
 
                             Next
 
@@ -14735,6 +14783,10 @@ Public Class Frm_Formulario_Documento
                 If Not IsNothing(_Row_ListaSuperior) AndAlso Not _Row_ListaSuperior.Item("EsListaSuperior") Then
                     Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_ListaPreGlobal Where Lista = '" & _Row_ListaSuperior.Item("ListaSuperior") & "'"
                     _Row_ListaSuperior = _Sql.Fx_Get_DataRow(Consulta_sql)
+                End If
+
+                If IsNothing(_Row_ListaSuperior) Then
+                    Return
                 End If
 
                 Dim _CodEntidad As String = _RowEntidad.Item("KOEN")
@@ -24319,7 +24371,7 @@ Public Class Frm_Formulario_Documento
 
         If _Existe Then
 
-            _RowProducto = Fx_Buscar_Producto("", False, False, Nothing)
+            _RowProducto = Fx_Buscar_Producto("", False, False, Nothing, False)
 
             If IsNothing(_RowProducto) Then
                 Return
@@ -24359,7 +24411,7 @@ Public Class Frm_Formulario_Documento
 
             Dim _RowProducto As DataRow
 
-            _RowProducto = Fx_Buscar_Producto(_Codigo, False, False, Nothing)
+            _RowProducto = Fx_Buscar_Producto(_Codigo, False, False, Nothing, False)
 
             If IsNothing(_RowProducto) Then
                 Return
@@ -25398,7 +25450,7 @@ Public Class Frm_Formulario_Documento
                         Dim _NewFila As DataGridViewRow = Grilla_Detalle.Rows(Grilla_Detalle.RowCount - 1)
 
                         '_Codigo = "CHILEXPRESBK"
-                        Dim _RowProducto As DataRow = Fx_Buscar_Producto(_Codigo, False, False, Nothing)
+                        Dim _RowProducto As DataRow = Fx_Buscar_Producto(_Codigo, False, False, Nothing, False)
 
                         Sb_Traer_Producto_Grilla(_NewFila, _RowProducto, True, 1, False)
                         _NewFila.Cells("Cantidad").Value = 1
@@ -25955,7 +26007,7 @@ Public Class Frm_Formulario_Documento
             Return
         End If
 
-        Dim _RowProducto As DataRow = Fx_Buscar_Producto(_Codigo, False, False, Nothing)
+        Dim _RowProducto As DataRow = Fx_Buscar_Producto(_Codigo, False, False, Nothing, False)
 
         Dim _TblMaedtli As DataTable
 
@@ -26626,7 +26678,7 @@ Public Class Frm_Formulario_Documento
 
             Dim _NewFila As DataGridViewRow = Grilla_Detalle.Rows(Grilla_Detalle.Rows.Count - 1)
 
-            Dim _RowProducto As DataRow = Fx_Buscar_Producto(_Codigo, False, False, Nothing)
+            Dim _RowProducto As DataRow = Fx_Buscar_Producto(_Codigo, False, False, Nothing, False)
 
             Sb_Traer_Producto_Grilla(_NewFila, _RowProducto, True, 1, False)
 

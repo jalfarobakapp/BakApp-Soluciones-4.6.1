@@ -52,5 +52,8 @@ GROUP by ob_oid, ob_type, ob_lno, cont, sku
 FPickeo:
 Select Top 1 dt_start
 From history_master
-Where (oid = @nv) AND (trans_class = 'CONT') AND (trans_obj = 'OBO') AND (trans_act = 'PICK') AND (trans_act_mod = 'FINAL') 
+Where oid = @nv AND (
+                     (trans_class = 'CONT' AND trans_obj = 'OBO' AND trans_act = 'PICK' AND trans_act_mod = 'FINAL') or 
+                     (trans_class = 'INVE' AND trans_obj = 'OBO' AND trans_act = 'PICK')
+                    )
 Order By trans_seq_num Desc

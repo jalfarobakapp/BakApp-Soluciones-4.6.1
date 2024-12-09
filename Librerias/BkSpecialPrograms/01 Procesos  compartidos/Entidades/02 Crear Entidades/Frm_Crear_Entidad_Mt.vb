@@ -1338,6 +1338,7 @@ Public Class Frm_Crear_Entidad_Mt
         Txt_Dimoper.Enabled = _Enable
 
         Chk_Libera_NVV.Enabled = _Enable
+        Dtp_Fevecren.Enabled = _Enable
 
         If _Enable Then Txt_Crto.Focus()
 
