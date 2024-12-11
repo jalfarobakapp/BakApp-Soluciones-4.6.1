@@ -84,23 +84,6 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
 
         Consulta_sql = "Select Cast(0 As Bit) As Chk,Zu.Semilla,Zu.Id_Mapa,Zu.Empresa,Zu.Sucursal,Zu.Bodega,Zu.Codigo,Zu.Codigo_Sector,Zu.Codigo_Ubic," & vbCrLf &
                        "Isnull((Select Top 1 KOPRAL From TABCODAL Td Where Td.KOPR = Zu.Codigo And KOEN = ''),'') As CodBarra," & vbCrLf &
-                       "NOKOPR As Descripcion,Primaria,Isnull(Mt.STFI1,0) As 'STFI1',Isnull(Mt.STFI2,0) As 'STFI2',Stock_Ubic_Ud1,Stock_Ubic_Ud2," & vbCrLf &
-                       "Isnull(InSa.CodFuncionario_Ing,'') As 'CodFuncionario_Ing',Isnull(Tis.NOKOFU,'') As 'NomFuncionario_Ing',InSa.FechaIngreso" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Prod_Ubicacion Zu" & vbCrLf &
-                       "Left Join MAEPR Mp On Codigo = KOPR" & vbCrLf &
-                       "Left Join MAEST Mt On Mt.EMPRESA = Zu.Empresa And Mt.KOSU = Zu.Sucursal And Mt.KOBO = Zu.Bodega And Mt.KOPR = Zu.Codigo" & vbCrLf &
-                       "Left Join " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal InSa On InSa.Id_Mapa = Zu.Id_Mapa And Zu.Semilla = InSa.Semilla" & vbCrLf &
-                       "Left Join TABFU Tis On Tis.KOFU = InSa.CodFuncionario_Ing" & vbCrLf &
-                       "Where Zu.Empresa = '" & _Empresa & "' " & vbCrLf &
-                       "And Zu.Sucursal = '" & _Sucursal & "' " & vbCrLf &
-                       "And Zu.Bodega = '" & _Bodega & "' " & vbCrLf &
-                       "And Zu.Id_Mapa = " & _Id_Mapa & vbCrLf &
-                       "And Zu.Codigo_Sector = '" & _Codigo_Sector & "' " & vbCrLf &
-                       "And Zu.Codigo_Ubic = '" & _Codigo_Ubic & "'"
-
-
-        Consulta_sql = "Select Cast(0 As Bit) As Chk,Zu.Semilla,Zu.Id_Mapa,Zu.Empresa,Zu.Sucursal,Zu.Bodega,Zu.Codigo,Zu.Codigo_Sector,Zu.Codigo_Ubic," & vbCrLf &
-                       "Isnull((Select Top 1 KOPRAL From TABCODAL Td Where Td.KOPR = Zu.Codigo And KOEN = ''),'') As CodBarra," & vbCrLf &
                        "NOKOPR As Descripcion,Primaria,Isnull(Mt.STFI1,0) As 'STFI1',Isnull(Mt.STFI2,0) As 'STFI2',Stock_Ubic_Ud1,Stock_Ubic_Ud2" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Prod_Ubicacion Zu" & vbCrLf &
                        "Left Join MAEPR Mp On Codigo = KOPR" & vbCrLf &
@@ -195,11 +178,11 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
                 Dim _TipoMov = "Ingreso"
                 Dim _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
 
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal (Semilla,Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector,Codigo_Ubic,Codigo," &
-                               "CodFuncionario_Ing,NombreEquipo,Ingreso,FechaIngreso) Values " & vbCrLf &
-                               "(" & _Semilla & ",'" & _Empresa & "','" & _Sucursal & "','" & _Bodega & "'," & _Id_Mapa & ",'" & _Codigo_Sector & "','" & _Codigo_Ubic & "'" &
-                               ",'" & _Codigo & "','" & FUNCIONARIO & "','" & _NombreEquipo & "',1,Getdate())"
-                _Sql.Ej_consulta_IDU(Consulta_sql)
+                'Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal (Semilla,Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector,Codigo_Ubic,Codigo," &
+                '               "CodFuncionario_Ing,NombreEquipo,Ingreso,FechaIngreso) Values " & vbCrLf &
+                '               "(" & _Semilla & ",'" & _Empresa & "','" & _Sucursal & "','" & _Bodega & "'," & _Id_Mapa & ",'" & _Codigo_Sector & "','" & _Codigo_Ubic & "'" &
+                '               ",'" & _Codigo & "','" & FUNCIONARIO & "','" & _NombreEquipo & "',1,Getdate())"
+                '_Sql.Ej_consulta_IDU(Consulta_sql)
 
                 If _Global_Row_Configuracion_General.Item("Utilizar_Ubicaciones_WCM") Then
 
@@ -479,7 +462,7 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
 
             If _Filtrar.Fx_Filtrar(Nothing,
                                    Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra,
-                                   False, False) Then
+                                   False, False,,,,,, True) Then
 
                 _Tbl_Productos = _Filtrar.Pro_Tbl_Filtro
                 _Filtrar_Pr = True
@@ -503,20 +486,19 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
                                                       "' And Codigo_Ubic = '" & _Codigo_Ubic &
                                                       "' And Codigo = '" & _Codigo & "'")
 
-
-                    Consulta_sql += "Update " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal Set " & vbCrLf &
-                                    "Empresa = '" & _Empresa & "'" &
-                                    ",Sucursal = '" & _Sucursal & "'" &
-                                    ",Bodega = '" & _Bodega & "'" &
-                                    ",Id_Mapa = " & _Id_Mapa &
-                                    ",Codigo_Sector = '" & _Codigo_Sector & "'" &
-                                    ",Codigo_Ubic = '" & _Codigo_Ubic & "'" &
-                                    ",Codigo = '" & _Codigo & "'" &
-                                    ",CodFuncionario_Sal = '" & FUNCIONARIO & "'" &
-                                    ",NombreEquipo = '" & _NombreEquipo & "'" &
-                                    ",Salida = 1" &
-                                    ",FechaSalida = GetDate()" & vbCrLf &
-                                    "Where Semilla = " & _Semilla & vbCrLf
+                    'Consulta_sql += "Update " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal Set " & vbCrLf &
+                    '                "Empresa = '" & _Empresa & "'" &
+                    '                ",Sucursal = '" & _Sucursal & "'" &
+                    '                ",Bodega = '" & _Bodega & "'" &
+                    '                ",Id_Mapa = " & _Id_Mapa &
+                    '                ",Codigo_Sector = '" & _Codigo_Sector & "'" &
+                    '                ",Codigo_Ubic = '" & _Codigo_Ubic & "'" &
+                    '                ",Codigo = '" & _Codigo & "'" &
+                    '                ",CodFuncionario_Sal = '" & FUNCIONARIO & "'" &
+                    '                ",NombreEquipo = '" & _NombreEquipo & "'" &
+                    '                ",Salida = 1" &
+                    '                ",FechaSalida = GetDate()" & vbCrLf &
+                    '                "Where Semilla = " & _Semilla & vbCrLf
 
                     Consulta_sql += "Delete " & _Global_BaseBk & "Zw_Prod_Ubicacion Where Semilla = " & _Semilla & vbCrLf
 
@@ -530,7 +512,6 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
                     _Contador += 1
 
                 Next
-
 
             End If
 
@@ -660,71 +641,71 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
-            Dim _Semilla = _Fila.Cells("Semilla").Value
-            Dim _Id_Mapa As Integer = _Fila.Cells("Id_Mapa").Value
-            Dim _Codigo_Sector As String = _Fila.Cells("Codigo_Sector").Value
-            Dim _Codigo_Ubic As String = _Fila.Cells("Codigo_Ubic").Value
-            Dim _Empresa As String = _Fila.Cells("Empresa").Value
-            Dim _Sucursal As String = _Fila.Cells("Sucursal").Value
-            Dim _Bodega As String = _Fila.Cells("Bodega").Value
-            Dim _Codigo As String = _Fila.Cells("Codigo").Value
-            Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+        Dim _Semilla = _Fila.Cells("Semilla").Value
+        Dim _Id_Mapa As Integer = _Fila.Cells("Id_Mapa").Value
+        Dim _Codigo_Sector As String = _Fila.Cells("Codigo_Sector").Value
+        Dim _Codigo_Ubic As String = _Fila.Cells("Codigo_Ubic").Value
+        Dim _Empresa As String = _Fila.Cells("Empresa").Value
+        Dim _Sucursal As String = _Fila.Cells("Sucursal").Value
+        Dim _Bodega As String = _Fila.Cells("Bodega").Value
+        Dim _Codigo As String = _Fila.Cells("Codigo").Value
+        Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
 
-            'If Grilla.Rows.Count > 1 Then
+        'If Grilla.Rows.Count > 1 Then
 
-            '    MessageBoxEx.Show(Me, "¡Esta es la ubicación por defecto del producto" & vbCrLf &
-            '                      "no se puede eliminar antes que las demás!", "Validación",
-            '                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            '    Return
+        '    MessageBoxEx.Show(Me, "¡Esta es la ubicación por defecto del producto" & vbCrLf &
+        '                      "no se puede eliminar antes que las demás!", "Validación",
+        '                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        '    Return
 
-            'End If
+        'End If
 
-            If MessageBoxEx.Show(Me, "¿Esta seguro de eliminar la(s) fila(s) seleccionada(s)?",
-                                 "Eliminar fila", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
-                Return
-            End If
+        If MessageBoxEx.Show(Me, "¿Esta seguro de eliminar la(s) fila(s) seleccionada(s)?",
+                             "Eliminar fila", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
 
-            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_Ubicacion_IngSal", "Semilla = " & _Semilla)
+        'Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_Ubicacion_IngSal", "Semilla = " & _Semilla)
 
-            Consulta_sql = String.Empty
+        'Consulta_sql = String.Empty
 
-            If CBool(_Reg) Then
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal Set " & vbCrLf &
-                               "Empresa = '" & _Empresa & "'" &
-                               ",Sucursal = '" & _Sucursal & "'" &
-                               ",Bodega = '" & _Bodega & "'" &
-                               ",Id_Mapa = " & _Id_Mapa &
-                               ",Codigo_Sector = '" & _Codigo_Sector & "'" &
-                               ",Codigo_Ubic = '" & _Codigo_Ubic & "'" &
-                               ",Codigo = '" & _Codigo & "'" &
-                               ",CodFuncionario_Sal = '" & FUNCIONARIO & "'" &
-                               ",NombreEquipo = '" & _NombreEquipo & "'" &
-                               ",Salida = 1" &
-                               ",FechaSalida = GetDate()" & vbCrLf &
-                               "Where Semilla = " & _Semilla & vbCrLf
-            Else
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal (Semilla,Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector,Codigo_Ubic,Codigo," &
-                               "CodFuncionario_Sal,NombreEquipo,Salida,FechaSalida) Values " & vbCrLf &
-                               "(" & _Semilla & ",'" & _Empresa & "','" & _Sucursal & "','" & _Bodega & "'," & _Id_Mapa & ",'" & _Codigo_Sector & "','" & _Codigo_Ubic & "'" &
-                               ",'" & _Codigo & "','" & FUNCIONARIO & "','" & _NombreEquipo & "',1,Getdate())" & vbCrLf
-            End If
+        'If CBool(_Reg) Then
+        '    Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal Set " & vbCrLf &
+        '                   "Empresa = '" & _Empresa & "'" &
+        '                   ",Sucursal = '" & _Sucursal & "'" &
+        '                   ",Bodega = '" & _Bodega & "'" &
+        '                   ",Id_Mapa = " & _Id_Mapa &
+        '                   ",Codigo_Sector = '" & _Codigo_Sector & "'" &
+        '                   ",Codigo_Ubic = '" & _Codigo_Ubic & "'" &
+        '                   ",Codigo = '" & _Codigo & "'" &
+        '                   ",CodFuncionario_Sal = '" & FUNCIONARIO & "'" &
+        '                   ",NombreEquipo = '" & _NombreEquipo & "'" &
+        '                   ",Salida = 1" &
+        '                   ",FechaSalida = GetDate()" & vbCrLf &
+        '                   "Where Semilla = " & _Semilla & vbCrLf
+        'Else
+        '    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal (Semilla,Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector,Codigo_Ubic,Codigo," &
+        '                   "CodFuncionario_Sal,NombreEquipo,Salida,FechaSalida) Values " & vbCrLf &
+        '                   "(" & _Semilla & ",'" & _Empresa & "','" & _Sucursal & "','" & _Bodega & "'," & _Id_Mapa & ",'" & _Codigo_Sector & "','" & _Codigo_Ubic & "'" &
+        '                   ",'" & _Codigo & "','" & FUNCIONARIO & "','" & _NombreEquipo & "',1,Getdate())" & vbCrLf
+        'End If
 
-            Consulta_sql += "Delete " & _Global_BaseBk & "Zw_Prod_Ubicacion Where Semilla = " & _Semilla
+        Consulta_sql += "Delete " & _Global_BaseBk & "Zw_Prod_Ubicacion Where Semilla = " & _Semilla
 
-            If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
-                MessageBoxEx.Show(Me, _Sql.Pro_Error, "Problema", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Return
-            End If
+        If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+            MessageBoxEx.Show(Me, _Sql.Pro_Error, "Problema", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
-            If _Global_Row_Configuracion_General.Item("Utilizar_Ubicaciones_WCM") Then
+        If _Global_Row_Configuracion_General.Item("Utilizar_Ubicaciones_WCM") Then
 
-                Consulta_sql = "Update TABBOPR Set DATOSUBIC = ''" & vbCrLf &
-                               "Where EMPRESA = '" & _Empresa & "' AND KOSU = '" & _Sucursal & "' AND KOBO = '" & _Bodega & "' AND KOPR = '" & _Codigo & "'"
-                _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+            Consulta_sql = "Update TABBOPR Set DATOSUBIC = ''" & vbCrLf &
+                           "Where EMPRESA = '" & _Empresa & "' AND KOSU = '" & _Sucursal & "' AND KOBO = '" & _Bodega & "' AND KOPR = '" & _Codigo & "'"
+            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
-            End If
+        End If
 
-            Grilla.Rows.RemoveAt(_Fila.Index)
+        Grilla.Rows.RemoveAt(_Fila.Index)
 
 
     End Sub

@@ -501,7 +501,7 @@ Public Class Frm_Filtro_Especial_Informes
 
         Dim _Tbl_p2 As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
-        If _Tbl_p2.Rows.Count > 0 Then
+        If _Tbl_p2.Rows.Count > 0 Or Not _Incorporar_Campo_Vacias Then
             _Union_Campo_Vacias = String.Empty
         End If
 

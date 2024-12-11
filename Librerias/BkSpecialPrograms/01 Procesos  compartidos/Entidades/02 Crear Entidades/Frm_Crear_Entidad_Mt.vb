@@ -806,7 +806,11 @@ Public Class Frm_Crear_Entidad_Mt
             Dim _Fevecren As String
 
             If FormatDateTime(Dtp_Fevecren.Value, DateFormat.ShortDate) = #01-01-0001# Or IsNothing(Dtp_Fevecren.Value) Or IsDBNull(Dtp_Fevecren.Value) Then
-                _Fevecren = "Null"
+                If _Global_Row_Configuracion_General.Item("RestringirFechaVencimientoClientes") Then
+                    _Fevecren = "'" & Format(FechaDelServidor, "yyyyMMdd") & "'"
+                Else
+                    _Fevecren = "Null"
+                End If
             Else
                 _Fevecren = "'" & Format(Dtp_Fevecren.Value, "yyyyMMdd") & "'"
             End If

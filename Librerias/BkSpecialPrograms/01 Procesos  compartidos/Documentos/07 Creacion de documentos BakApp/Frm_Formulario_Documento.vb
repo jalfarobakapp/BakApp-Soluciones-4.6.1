@@ -28647,7 +28647,15 @@ Public Class Frm_Formulario_Documento
                 Dim _DIPRVE = _RowEntidad.Item("DIPRVE")
                 Dim _DIMOPER = _RowEntidad.Item("DIMOPER")
 
-                Dim _Dd = _CRSD + _CRCH + _CRPA + _CRTO + _CRLT + _NUVECR + _DIASVENCI + _DIPRVE + _DIMOPER
+                Dim _Dd As Double = _CRSD + _CRCH + _CRPA + _CRTO + _CRLT + _NUVECR + _DIASVENCI + _DIPRVE + _DIMOPER
+
+                If IsNothing(_RowEntidad.Item("FEVECREN")) Or IsDBNull(_RowEntidad.Item("FEVECREN")) Then
+                    Try
+                        _RowEntidad.Item("FEVECREN") = _RowEntidad.Item("FECREEN")
+                    Catch ex As Exception
+                        _RowEntidad.Item("FEVECREN") = DateAdd(_FechaEmision.Date, DateInterval.Day, -1)
+                    End Try
+                End If
 
                 If CType(_RowEntidad.Item("FEVECREN"), Date).Date < _FechaEmision.Date And CBool(_Dd) Then
 

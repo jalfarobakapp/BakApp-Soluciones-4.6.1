@@ -11,7 +11,7 @@ Public Class Mnu_Ubic_Prod
 
     Dim _Fm_Menu_Padre As Metro.MetroAppForm
 
-    Public Sub New(ByVal Fm_Menu_Padre As Metro.MetroAppForm)
+    Public Sub New(Fm_Menu_Padre As Metro.MetroAppForm)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -20,12 +20,12 @@ Public Class Mnu_Ubic_Prod
         _Fm_Menu_Padre = Fm_Menu_Padre
     End Sub
 
-    Private Sub BtnSalir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnSalir.Click
+    Private Sub BtnSalir_Click(sender As System.Object, e As System.EventArgs) Handles BtnSalir.Click
         _Fm_Menu_Padre.CloseModalPanel(Me, DevComponents.DotNetBar.Controls.eSlideSide.Left)
 
     End Sub
 
-    Private Sub BtnUbicxProductos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnUbicxProductos.Click
+    Private Sub BtnUbicxProductos_Click(sender As System.Object, e As System.EventArgs) Handles BtnUbicxProductos.Click
 
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Ubic0002") Then
 
@@ -56,7 +56,7 @@ Public Class Mnu_Ubic_Prod
 
     End Sub
 
-    Private Sub BtnVerUbicaciones_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnVerUbicaciones.Click
+    Private Sub BtnVerUbicaciones_Click(sender As System.Object, e As System.EventArgs) Handles BtnVerUbicaciones.Click
 
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Ubic0003") Then 'Mantención de ubicaciones
 
@@ -71,28 +71,30 @@ Public Class Mnu_Ubic_Prod
 
     End Sub
 
-    Private Sub BtnMantUbicaciones_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnMantUbicaciones.Click
+    Private Sub BtnMantUbicaciones_Click(sender As System.Object, e As System.EventArgs) Handles BtnMantUbicaciones.Click
 
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Ubic0003") Then 'Mantención de ubicaciones
 
-            Dim Fm_b As New Frm_SeleccionarBodega(Frm_SeleccionarBodega.Accion.Bodega)
-            Fm_b.Pro_Empresa = ModEmpresa
-            Fm_b.Pro_Sucursal = ModSucursal
-            Fm_b.Pro_Bodega = ModBodega
-            Fm_b.ShowDialog(Me)
+            'Dim Fm_b As New Frm_SeleccionarBodega(Frm_SeleccionarBodega.Accion.Bodega)
+            'Fm_b.Pro_Empresa = ModEmpresa
+            'Fm_b.Pro_Sucursal = ModSucursal
+            'Fm_b.Pro_Bodega = ModBodega
+            'Fm_b.ShowDialog(Me)
 
-            If Fm_b.Pro_Seleccionado Then
-                Dim Fm As New Frm_Diseno_Doc_y_Ubic
-                Fm.Pro_RowBodega = Fm_b.Pro_RowBodega
-                Fm.Pro_Configuracion_Diseno = Frm_Diseno_Doc_y_Ubic._TipoDiseno.Mapa_Bodega_Diseño
-                Fm.ShowDialog(Me)
-                Fm.Dispose()
-            End If
-            Fm_b.Dispose()
+            'If Fm_b.Pro_Seleccionado Then
+
+            Dim Fm As New Frm_Diseno_Doc_y_Ubic
+            Fm.Pro_RowBodega = _RowBodega 'Fm_b.Pro_RowBodega
+            Fm.Pro_Configuracion_Diseno = Frm_Diseno_Doc_y_Ubic._TipoDiseno.Mapa_Bodega_Diseño
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
+
+            'End If
+            'Fm_b.Dispose()
 
         End If
 
     End Sub
 
-  
+
 End Class

@@ -40,12 +40,20 @@ Public Class Frm_Sectores_Lista_UbicOblig
         Sb_Actualizar_Grilla()
 
         AddHandler Dtp_FechaRevision.ValueChanged, AddressOf Dtp_FechaRevision_ValueChanged
+        AddHandler Rdb_MostrarSesctoresEnMapa.CheckedChanged, AddressOf Rdb_MostrarSesctoresEnMapa_CheckedChanged
+        AddHandler Rdb_MostrarTodosSectores.CheckedChanged, AddressOf Rdb_MostrarTodosSectores_CheckedChanged
 
     End Sub
 
     Sub Sb_Actualizar_Grilla()
 
-        Consulta_sql = "Select Id_Sector,Id_Mapa,Empresa,Sucursal,Bodega,Codigo_Sector,Nombre_Sector,Es_SubSector,EsCabecera,SoloUnaUbicacion,OblConfimarUbic," & vbCrLf &
+        Dim _CondicionSectores = String.Empty
+
+        If Rdb_MostrarSesctoresEnMapa.Checked Then
+            _CondicionSectores = "Where EstaEnMapa = 1" & vbCrLf
+        End If
+
+        Consulta_sql = "Select Cast(0 As Bit) As Chk,Id_Sector,Id_Mapa,Empresa,Sucursal,Bodega,Codigo_Sector,Nombre_Sector,Es_SubSector,EsCabecera,SoloUnaUbicacion,OblConfimarUbic," & vbCrLf &
                        "(Select COUNT(*) From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega Where Id_Mapa = Sect.Id_Mapa And Codigo_Sector = Sect.Codigo_Sector) As Ubicaciones," & vbCrLf &
                        "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Prod_Ubicacion Where Id_Mapa = Sect.Id_Mapa And Codigo_Sector = Sect.Codigo_Sector) As Productos," & vbCrLf &
                        "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal Where Id_Mapa = Sect.Id_Mapa And Codigo_Sector = Sect.Codigo_Sector" & vbCrLf &
@@ -53,9 +61,10 @@ Public Class Frm_Sectores_Lista_UbicOblig
                        "CAST(0 As Bit) As 'ProdConfimadaUbic'" & vbCrLf &
                        "Into #Paso" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Sectores Sect" & vbCrLf &
-                       "Where Id_Mapa = " & _Id_Mapa & " And OblConfimarUbic = 1" & vbCrLf &
+                       "Where Id_Mapa = " & _Id_Mapa & " And OblConfimarUbic = 1" & vbCrLf & vbCrLf &
+                       "Update #Paso Set EstaEnMapa = 1 Where Codigo_Sector In (Select Codigo_Sector From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Det Where Id_Mapa = " & _Id_Mapa & ")" & vbCrLf &
                        "Update #Paso Set ProdConfimadaUbic = 1 Where (Productos = 0 And Productos = 0) Or (Productos2 > 0)" & vbCrLf &
-                       "Select * From #Paso" & vbCrLf &
+                       "Select * From #Paso" & vbCrLf & _CondicionSectores &
                        "Drop Table #Paso"
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
@@ -67,6 +76,20 @@ Public Class Frm_Sectores_Lista_UbicOblig
             .DataSource = _Tbl
 
             OcultarEncabezadoGrilla(Grilla, True)
+
+            .Columns("Chk").Width = 30
+            .Columns("Chk").HeaderText = "Sel."
+            .Columns("Chk").Visible = True
+            .Columns("Chk").ReadOnly = False
+            .Columns("Chk").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("EstaEnMapa").Width = 30
+            .Columns("EstaEnMapa").HeaderText = "CBRA"
+            .Columns("EstaEnMapa").ToolTipText = "Es un sector tipo cabecera"
+            .Columns("EstaEnMapa").Visible = True
+            .Columns("EstaEnMapa").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("BtnImagen_Estado").Width = 30
             .Columns("BtnImagen_Estado").HeaderText = "Est."
@@ -176,6 +199,33 @@ Public Class Frm_Sectores_Lista_UbicOblig
 
     Private Sub Btn_ConfProdUbic_Click(sender As Object, e As EventArgs) Handles Btn_ConfProdUbic.Click
 
+        If Not Fx_RevisarProductosSeleccionados() Then
+            Return
+        End If
+
+        For Each _Fila As DataGridViewRow In Grilla.Rows
+
+            Dim _Lista As List(Of LsValiciones.Mensajes) = New List(Of LsValiciones.Mensajes)
+
+            If _Fila.Cells("Chk").Value Then
+
+                Dim _Mensaje As LsValiciones.Mensajes = Fx_ConfirmarProdUltimaUbicacion(_Fila, False)
+
+                _Lista.Add(_Mensaje)
+
+                If _Mensaje.EsCorrecto Then
+                    Sb_ActualizarDatosFila(_Fila)
+                End If
+
+            End If
+
+        Next
+
+        MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        'Sb_Actualizar_Grilla()
+
+        Return
+
         Consulta_sql = "Select Id_Sector,Id_Mapa,Empresa,Sucursal,Bodega,Codigo_Sector,Nombre_Sector,Es_SubSector,EsCabecera,SoloUnaUbicacion,OblConfimarUbic," & vbCrLf &
                        "(Select COUNT(*) From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega Where Id_Mapa = Sect.Id_Mapa And Codigo_Sector = Sect.Codigo_Sector) As Ubicaciones," & vbCrLf &
                        "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Prod_Ubicacion Where Id_Mapa = Sect.Id_Mapa And Codigo_Sector = Sect.Codigo_Sector) As Productos," & vbCrLf &
@@ -239,12 +289,12 @@ Public Class Frm_Sectores_Lista_UbicOblig
                     Dim _Fila As DataGridViewRow = CType(sender, DataGridView).Rows(CType(sender, DataGridView).CurrentRow.Index)
                     Dim _Cabeza = sender.Columns(CType(sender, DataGridView).CurrentCell.ColumnIndex).Name
 
-                    Dim _Hoy As Boolean = (FechaDelServidor.Date = Dtp_FechaRevision.Value.Date)
+                    'Dim _Hoy As Boolean = (FechaDelServidor.Date = Dtp_FechaRevision.Value.Date)
 
-                    Btn_VerProdUbicacion.Visible = True
-                    Btn_AgregarProductosUbic.Visible = Not _Hoy
-                    Btn_QuitarProductosUbic.Visible = Not _Hoy
-                    LabelItem2.Visible = Not _Hoy
+                    'Btn_VerProdUbicacion.Visible = True
+                    'Btn_AgregarProductosUbic.Visible = _Fila.Cells("EstaEnMapa").Value
+                    'Btn_QuitarProductosUbic.Visible = _Fila.Cells("EstaEnMapa").Value
+                    'LabelItem2.Visible = Not _Hoy
 
                     ShowContextMenu(Menu_Contextual_01)
 
@@ -262,6 +312,10 @@ Public Class Frm_Sectores_Lista_UbicOblig
 
             Dim _Fila As DataGridViewRow = Grilla.CurrentRow
 
+            If Not Fx_EstaEnMapa(_Fila) Then
+                Return
+            End If
+
             Dim _Empresa As String = _Fila.Cells("Empresa").Value
             Dim _Sucursal As String = _Fila.Cells("Sucursal").Value
             Dim _Bodega As String = _Fila.Cells("Bodega").Value
@@ -271,10 +325,15 @@ Public Class Frm_Sectores_Lista_UbicOblig
 
             Me.Enabled = False
 
-            Dim _Sql_Filtro_Condicion_Extra = "And TIPR = 'FPN'"
             Dim _Filtrar As New Clas_Filtros_Random(Me)
             Dim _Tbl_Productos As DataTable
             Dim _Filtrar_Pr As Boolean
+
+            Dim _Sql_Filtro_Condicion_Extra = "And TIPR = 'FPN' And KOPR Not In " &
+                                              "(Select Codigo From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal Where " &
+                                              "Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector & "' " &
+                                              "And Codigo_Ubic = '" & _Codigo_Ubic & "' And Ingreso = 1 And Salida = 0 " &
+                                              "And CONVERT(varchar, FechaIngreso, 112) = '" & Format(_FechaIngreso, "yyyyMMdd") & "')"
 
             If _Filtrar.Fx_Filtrar(Nothing,
                                    Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra,
@@ -310,7 +369,7 @@ Public Class Frm_Sectores_Lista_UbicOblig
 
             If CBool(_Contador) Then
 
-                Sb_Actualizar_Grilla()
+                Sb_ActualizarDatosFila(_Fila)
 
                 Beep()
                 ToastNotification.Show(Me, "DATOS GUARDADOS CORRECTAMENTE (" & _Contador & ")",
@@ -337,6 +396,10 @@ Public Class Frm_Sectores_Lista_UbicOblig
 
             Dim _Fila As DataGridViewRow = Grilla.CurrentRow
 
+            If Not Fx_EstaEnMapa(_Fila) Then
+                Return
+            End If
+
             Dim _Empresa As String = _Fila.Cells("Empresa").Value
             Dim _Sucursal As String = _Fila.Cells("Sucursal").Value
             Dim _Bodega As String = _Fila.Cells("Bodega").Value
@@ -356,7 +419,7 @@ Public Class Frm_Sectores_Lista_UbicOblig
             Dim _Filtrar_Pr As Boolean
 
             If _Filtrar.Fx_Filtrar(Nothing,
-                                   Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra, False, False) Then
+                                   Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra, False, False,,,,,, True) Then
 
                 _Tbl_Productos = _Filtrar.Pro_Tbl_Filtro
                 'If _Filtrar.Pro_Filtro_Todas Then
@@ -383,7 +446,7 @@ Public Class Frm_Sectores_Lista_UbicOblig
                                   " And Codigo_Sector = '" & _Codigo_Sector &
                                   "' And Codigo_Ubic = '" & _Codigo_Ubic &
                                   "' And Codigo = '" & _Codigo &
-                                  "' And FechaIngreso = '" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") &
+                                  "' And CONVERT(varchar, FechaIngreso, 112) = '" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") &
                                   "' And Ingreso = 1 And Salida = 0")
 
                         Consulta_sql += "Update " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal Set " & vbCrLf &
@@ -415,7 +478,7 @@ Public Class Frm_Sectores_Lista_UbicOblig
                     Return
                 End If
 
-                Sb_Actualizar_Grilla()
+                Sb_ActualizarDatosFila(_Fila)
 
                 Beep()
                 ToastNotification.Show(Me, "Productos quitados correctamente (" & _Contador & ")",
@@ -524,7 +587,7 @@ Public Class Frm_Sectores_Lista_UbicOblig
 
             Dim _Hoy As Boolean = (FechaDelServidor.Date = Dtp_FechaRevision.Value.Date)
 
-            If Not _Hoy Then
+            If True Then 'Not _Hoy Then
 
                 Dim _Sql_Filtro_Condicion_Extra = "And TIPR = 'FPN' And KOPR In " &
                                                       "(Select Codigo From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal Where " &
@@ -542,7 +605,7 @@ Public Class Frm_Sectores_Lista_UbicOblig
 
                 Dim _Filtrar As New Clas_Filtros_Random(Me)
 
-                _Filtrar.Fx_Filtrar(Nothing, Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra, False, False,, False,, False)
+                _Filtrar.Fx_Filtrar(Nothing, Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra, False, False,, False,, False,, True)
 
                 Return
 
@@ -598,6 +661,10 @@ Public Class Frm_Sectores_Lista_UbicOblig
 
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
 
+        If Not Fx_EstaEnMapa(_Fila) Then
+            Return
+        End If
+
         Dim _Empresa As String = _Fila.Cells("Empresa").Value
         Dim _Sucursal As String = _Fila.Cells("Sucursal").Value
         Dim _Bodega As String = _Fila.Cells("Bodega").Value
@@ -615,12 +682,12 @@ Public Class Frm_Sectores_Lista_UbicOblig
         If _Reg = 0 Then
 
             MessageBoxEx.Show(Me, "No hay productos registros que cargar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-
             Return
+
         End If
 
-        If MessageBoxEx.Show(Me, "¿Confirma dejar nuevamente los productos " & vbCrLf &
-                     "en las mismas ubicaciones el día " & Dtp_FechaRevision.Value.ToLongDateString & "?",
+        If MessageBoxEx.Show(Me, "¿Confirma importar los productos desde la ubicación en el mapa" & vbCrLf &
+                             "para el día " & Dtp_FechaRevision.Value.ToLongDateString & "?",
                      "Confirmar productos en la ubicaciones", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
             Return
         End If
@@ -634,12 +701,213 @@ Public Class Frm_Sectores_Lista_UbicOblig
                        "Where Id_Mapa = " & _Id_Mapa & " And Codigo Not In " &
                        "(Select Codigo From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal " &
                        "Where Id_Mapa = " & _Id_Mapa &
-                       " And CONVERT(varchar, FechaIngreso, 112) = '" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "')" & vbCrLf &
+                       " And CONVERT(varchar, FechaIngreso, 112) = '" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "' And Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega & "' And Codigo_Sector = '" & _Codigo_Sector & "')" & vbCrLf &
                        "And Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega & "' And Codigo_Sector = '" & _Codigo_Sector & "'"
+
         If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+
+            Sb_ActualizarDatosFila(_Fila)
             MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Sb_Actualizar_Grilla()
+
         End If
 
     End Sub
+
+    Private Sub Btn_ConfProdUltUbic_Click(sender As Object, e As EventArgs) Handles Btn_ConfProdUltUbic.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+
+        If Not Fx_EstaEnMapa(_Fila) Then
+            Return
+        End If
+
+        Dim _Mensaje As LsValiciones.Mensajes = Fx_ConfirmarProdUltimaUbicacion(_Fila, True)
+
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK, _Mensaje.Icono)
+
+        If Not _Mensaje.EsCorrecto Then
+            Return
+        End If
+
+        Sb_ActualizarDatosFila(_Fila)
+
+    End Sub
+
+    Function Fx_ConfirmarProdUltimaUbicacion(_Fila As DataGridViewRow, _Preguntar As Boolean) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        _Mensaje.Detalle = "Confirmar productos"
+
+        Try
+
+            Dim _Empresa As String = _Fila.Cells("Empresa").Value
+            Dim _Sucursal As String = _Fila.Cells("Sucursal").Value
+            Dim _Bodega As String = _Fila.Cells("Bodega").Value
+            Dim _Codigo_Sector As String = _Fila.Cells("Codigo_Sector").Value
+            Dim _Codigo_Ubic As String = _Codigo_Sector
+            Dim _FechaIngreso As Date = Dtp_FechaRevision.Value
+
+            Dim _FechaUltUbic As DateTime?
+
+            Try
+                _FechaUltUbic = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Prod_Ubicacion_IngSal", "MAX(FechaIngreso)",
+                                                          "Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector &
+                                                          "' And Codigo_Ubic = '" & _Codigo_Ubic & "' And Ingreso = 1 And Salida = 0 " &
+                                                          "And FechaIngreso < '" & Format(_FechaIngreso, "yyyyMMdd") & "'",, False)
+            Catch ex As Exception
+
+            End Try
+
+            If IsNothing(_FechaUltUbic) Then
+                Throw New System.Exception("No hay productos registros que cargar")
+            End If
+
+            If _Preguntar Then
+
+                If MessageBoxEx.Show(Me, "¿Confirma dejar nuevamente los productos " & vbCrLf &
+                         "en las mismas ubicaciones del día " & _FechaUltUbic.Value.ToLongDateString & " en el día " & Dtp_FechaRevision.Value.ToLongDateString & "?",
+                         "Confirmar productos en la ubicaciones", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                    Throw New System.Exception("Acción cancelada por el usuario")
+                    _Mensaje.Cancelado = True
+                End If
+
+            End If
+
+            Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal (Semilla,Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector,Codigo_Ubic,Codigo,NombreEquipo,CodFuncionario_Ing,Ingreso,FechaIngreso)" & vbCrLf &
+                           "Select Semilla,Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector,Codigo_Ubic,Codigo,'" & _NombreEquipo & "','" & FUNCIONARIO & "',1,'" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "'" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal" & vbCrLf &
+                           "Where Id_Mapa = " & _Id_Mapa & " And CONVERT(varchar, FechaIngreso, 112) = '" & Format(_FechaUltUbic, "yyyyMMdd") & "'" & vbCrLf &
+                           "And Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega & "' And Codigo_Sector = '" & _Codigo_Sector & "'"
+            If Not _Sql.Ej_consulta_IDU(Consulta_sql) Then
+                Throw New System.Exception(_Sql.Pro_Error)
+            End If
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Datos actualizados correctamente"
+            _Mensaje.Icono = MessageBoxIcon.Information
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
+
+    Private Sub Chk_Seleccionar_Todos_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Seleccionar_Todos.CheckedChanged
+        For Each _Fila As DataGridViewRow In Grilla.Rows
+            _Fila.Cells("Chk").Value = Chk_Seleccionar_Todos.Checked
+        Next
+    End Sub
+
+    Private Sub Grilla_MouseUp(sender As Object, e As MouseEventArgs) Handles Grilla.MouseUp
+        Grilla.EndEdit()
+    End Sub
+
+    Function Fx_RevisarProductosSeleccionados() As Boolean
+
+        For Each _Fila As DataGridViewRow In Grilla.Rows
+            If _Fila.Cells("Chk").Value Then
+                Return True
+            End If
+        Next
+
+        MessageBoxEx.Show(Me, "No hay sectores seleccionados", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+        Return False
+
+    End Function
+
+    Sub Sb_ActualizarDatosFila(_Fila As DataGridViewRow)
+
+        Dim _Empresa As String = _Fila.Cells("Empresa").Value
+        Dim _Sucursal As String = _Fila.Cells("Sucursal").Value
+        Dim _Bodega As String = _Fila.Cells("Bodega").Value
+        Dim _Codigo_Sector As String = _Fila.Cells("Codigo_Sector").Value
+        Dim _Codigo_Ubic As String = _Codigo_Sector
+
+        Consulta_sql = "Select Cast(0 As Bit) As Chk,Id_Sector,Id_Mapa,Empresa,Sucursal,Bodega,Codigo_Sector,Nombre_Sector,Es_SubSector,EsCabecera,SoloUnaUbicacion,OblConfimarUbic," & vbCrLf &
+                       "(Select COUNT(*) From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega Where Id_Mapa = Sect.Id_Mapa And Codigo_Sector = Sect.Codigo_Sector) As Ubicaciones," & vbCrLf &
+                       "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Prod_Ubicacion Where Id_Mapa = Sect.Id_Mapa And Codigo_Sector = Sect.Codigo_Sector) As Productos," & vbCrLf &
+                       "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal Where Id_Mapa = Sect.Id_Mapa And Codigo_Sector = Sect.Codigo_Sector" & vbCrLf &
+                       "And CONVERT(varchar, FechaIngreso, 112) = CONVERT(varchar,'" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "', 112) And Salida = 0) As Productos2," & vbCrLf &
+                       "CAST(0 As Bit) As 'ProdConfimadaUbic'" & vbCrLf &
+                       "Into #Paso" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Sectores Sect" & vbCrLf &
+                       "Where Id_Mapa = " & _Id_Mapa & " And OblConfimarUbic = 1" & vbCrLf &
+                       "And Codigo_Sector = '" & _Codigo_Sector & "'" & vbCrLf &
+                       "Update #Paso Set ProdConfimadaUbic = 1 Where (Productos = 0 And Productos = 0) Or (Productos2 > 0)" & vbCrLf &
+                       "Select * From #Paso" & vbCrLf &
+                       "Drop Table #Paso"
+
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+        _Fila.Cells("Ubicaciones").Value = _Tbl.Rows(0).Item("Ubicaciones")
+        _Fila.Cells("Productos").Value = _Tbl.Rows(0).Item("Productos")
+        _Fila.Cells("Productos2").Value = _Tbl.Rows(0).Item("Productos2")
+        _Fila.Cells("ProdConfimadaUbic").Value = _Tbl.Rows(0).Item("ProdConfimadaUbic")
+
+        Dim _ProdConfimadaUbic As Boolean = _Fila.Cells("ProdConfimadaUbic").Value
+
+        'warning.png
+        Dim _Icono As Image
+
+        Dim _Imagenes_List As ImageList
+        If Global_Thema = Enum_Themas.Oscuro Then
+            _Imagenes_List = Imagenes_16x16_Dark
+        Else
+            _Imagenes_List = Imagenes_16x16
+        End If
+
+        _Icono = Nothing
+
+        If _ProdConfimadaUbic Then
+            _Icono = _Imagenes_List.Images.Item("ok.png")
+        Else
+            _Icono = _Imagenes_List.Images.Item("cancel.png")
+        End If
+
+        _Fila.Cells("BtnImagen_Estado").Value = _Icono
+
+    End Sub
+
+    Private Sub Rdb_MostrarSesctoresEnMapa_CheckedChanged(sender As Object, e As EventArgs)
+        If Rdb_MostrarSesctoresEnMapa.Checked Then
+            Sb_Actualizar_Grilla()
+        End If
+    End Sub
+
+    Private Sub Rdb_MostrarTodosSectores_CheckedChanged(sender As Object, e As EventArgs)
+        If Rdb_MostrarTodosSectores.Checked Then
+            Sb_Actualizar_Grilla()
+        End If
+    End Sub
+
+    Private Sub Grilla_CellBeginEdit(sender As Object, e As DataGridViewCellCancelEventArgs) Handles Grilla.CellBeginEdit
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+
+        If Not Fx_EstaEnMapa(_Fila) Then
+            e.Cancel = True
+        End If
+
+    End Sub
+
+    Function Fx_EstaEnMapa(_Fila As DataGridViewRow)
+
+        If Not _Fila.Cells("EstaEnMapa").Value Then
+            MessageBoxEx.Show(Me, "El sector no esta en el mapa no se pueden cargar datos", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return False
+        End If
+
+        Return True
+
+    End Function
+
 End Class

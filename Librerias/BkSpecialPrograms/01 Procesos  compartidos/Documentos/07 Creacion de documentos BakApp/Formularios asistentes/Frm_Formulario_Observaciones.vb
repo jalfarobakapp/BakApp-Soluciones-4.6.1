@@ -684,7 +684,7 @@ Public Class Frm_Formulario_Observaciones
                     End If
                 Next
             Else
-                TxtOrdendecompra.Text = String.Empty
+                'TxtOrdendecompra.Text = String.Empty
                 TxtOrdendecompra.Enabled = True
             End If
 

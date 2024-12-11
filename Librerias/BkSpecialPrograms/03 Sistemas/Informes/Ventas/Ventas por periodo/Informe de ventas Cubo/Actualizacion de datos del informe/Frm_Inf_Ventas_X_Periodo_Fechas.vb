@@ -311,12 +311,12 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
                     _Sql.Ej_consulta_IDU(Consulta_Sql)
 
                     Consulta_Sql = "Select Distinct Edo.IDMAEEDO,Edo.TIDO,Edo.NUDO,Edo.NUDONODEFI
-                                From MAEDDO Ddo
+                                From MAEDDO Ddo With (Nolock)
                                 Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO
                                 Where Ddo.FEEMLI = '" & Format(_Fecha, "yyyyMMdd") & "'
                                 And Ddo.TIDO IN ('BLV','BLX','BSV','ESC','FCV','FDB','FDV','FDX','FDZ','FEE',
                                 'FEV','FVL','FVT','FVX','FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV') 
-                                And Ddo.IDMAEDDO Not IN (Select IDMAEDDO From " & _Nombre_Tabla_Paso & " Where FEEMLI = '" & Format(_Fecha, "yyyyMMdd") & "')
+                                And Ddo.IDMAEDDO Not IN (Select IDMAEDDO From " & _Nombre_Tabla_Paso & " With (Nolock) Where FEEMLI = '" & Format(_Fecha, "yyyyMMdd") & "')
                                 --And Edo.NUDONODEFI = 0"
 
 
@@ -364,47 +364,47 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
 
                     End If
 
-                    If False Then
-                        For Each _Filas_Edo As DataRow In _Tbl_Idmaeedo.Rows
+                    'If False Then
+                    '    For Each _Filas_Edo As DataRow In _Tbl_Idmaeedo.Rows
 
-                            Dim _Idmaeedo = _Filas_Edo.Item("IDMAEEDO")
-                            Dim _Tido_Nudo = _Filas_Edo.Item("TIDO") & "-" & _Filas_Edo.Item("NUDO")
-                            Dim _Nudonodefi = _Filas_Edo.Item("NUDONODEFI")
-                            'Lbl_Estado.Text = "Procesando informe, días con diferencias " & _Contador + 1 & " de " & _TblFechas.Rows.Count & vbCrLf &
-                            '                  "Ventas del: " & FormatDateTime(_Fecha, DateFormat.ShortDate) & vbCrLf &
-                            '                  "Documento: " & _Tido_Nudo
-                            Lbl_Doc_Insert.Text = "Insertando documentos " & FormatNumber(Progreso_Cont_Productos.Value + 1, 0) & " de " &
-                                           FormatNumber(Progreso_Cont_Productos.Maximum, 0)
+                    '        Dim _Idmaeedo = _Filas_Edo.Item("IDMAEEDO")
+                    '        Dim _Tido_Nudo = _Filas_Edo.Item("TIDO") & "-" & _Filas_Edo.Item("NUDO")
+                    '        Dim _Nudonodefi = _Filas_Edo.Item("NUDONODEFI")
+                    '        'Lbl_Estado.Text = "Procesando informe, días con diferencias " & _Contador + 1 & " de " & _TblFechas.Rows.Count & vbCrLf &
+                    '        '                  "Ventas del: " & FormatDateTime(_Fecha, DateFormat.ShortDate) & vbCrLf &
+                    '        '                  "Documento: " & _Tido_Nudo
+                    '        Lbl_Doc_Insert.Text = "Insertando documentos " & FormatNumber(Progreso_Cont_Productos.Value + 1, 0) & " de " &
+                    '                       FormatNumber(Progreso_Cont_Productos.Maximum, 0)
 
-                            If Not _Nudonodefi Then
+                    '        If Not _Nudonodefi Then
 
-                                System.Windows.Forms.Application.DoEvents()
+                    '            System.Windows.Forms.Application.DoEvents()
 
-                                Consulta_Sql = My.Resources.Recursos_Inf_Ventas.Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion2
-                                Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", ModEmpresa)
-                                Consulta_Sql = Replace(Consulta_Sql, "#Tabla_Paso#", _Nombre_Tabla_Paso)
-                                Consulta_Sql = Replace(Consulta_Sql, "#Fecha_Inicio#", Format(_Fecha, "yyyyMMdd"))
-                                Consulta_Sql = Replace(Consulta_Sql, "#Fecha_Fin#", Format(_Fecha, "yyyyMMdd"))
-                                Consulta_Sql = Replace(Consulta_Sql, "#Filtro_Externo#", "")
-                                Consulta_Sql = Replace(Consulta_Sql, "#Idmaeedo#", _Idmaeedo)
-                                _Sql.Ej_consulta_IDU(Consulta_Sql)
+                    '            Consulta_Sql = My.Resources.Recursos_Inf_Ventas.Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion2
+                    '            Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", ModEmpresa)
+                    '            Consulta_Sql = Replace(Consulta_Sql, "#Tabla_Paso#", _Nombre_Tabla_Paso)
+                    '            Consulta_Sql = Replace(Consulta_Sql, "#Fecha_Inicio#", Format(_Fecha, "yyyyMMdd"))
+                    '            Consulta_Sql = Replace(Consulta_Sql, "#Fecha_Fin#", Format(_Fecha, "yyyyMMdd"))
+                    '            Consulta_Sql = Replace(Consulta_Sql, "#Filtro_Externo#", "")
+                    '            Consulta_Sql = Replace(Consulta_Sql, "#Idmaeedo#", _Idmaeedo)
+                    '            _Sql.Ej_consulta_IDU(Consulta_Sql)
 
-                                Consulta_Sql = My.Resources.Recursos_Inf_Ventas.Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion3_Clasificaciones
-                                Consulta_Sql = Replace(Consulta_Sql, "#Tabla_Paso#", _Nombre_Tabla_Paso)
-                                Consulta_Sql = Replace(Consulta_Sql, "#Idmaeedo#", _Idmaeedo)
-                                _Sql.Ej_consulta_IDU(Consulta_Sql)
+                    '            Consulta_Sql = My.Resources.Recursos_Inf_Ventas.Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion3_Clasificaciones
+                    '            Consulta_Sql = Replace(Consulta_Sql, "#Tabla_Paso#", _Nombre_Tabla_Paso)
+                    '            Consulta_Sql = Replace(Consulta_Sql, "#Idmaeedo#", _Idmaeedo)
+                    '            _Sql.Ej_consulta_IDU(Consulta_Sql)
 
-                            End If
+                    '        End If
 
-                            '_Contador += 1
-                            Progreso_Cont_Productos.Value += 1 '_Contador ' ((_Contador * 100) / _TblFechas.Rows.Count) 'Mas
+                    '        '_Contador += 1
+                    '        Progreso_Cont_Productos.Value += 1 '_Contador ' ((_Contador * 100) / _TblFechas.Rows.Count) 'Mas
 
-                            If _Cancelar Then
-                                Exit For
-                            End If
+                    '        If _Cancelar Then
+                    '            Exit For
+                    '        End If
 
-                        Next
-                    End If
+                    '    Next
+                    'End If
 
 
                     'Progreso_Cont_Productos.Value = 0

@@ -149,7 +149,7 @@ Public Class InformesVenta
     End Sub
 
     Private Sub Btn_Margenes_y_Proyeccion_Click(sender As Object, e As EventArgs) Handles Btn_Margenes_y_Proyeccion.Click
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Inf00048") Then
+        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Inf00049") Then
             Dim Fm As New Frm_Inf_Mg_Vta_Proyec_Listado
             Fm.ShowDialog(Me)
             Fm.Dispose()
