@@ -76,7 +76,7 @@ Public Class Cl_Sincroniza
 
                     If _trans_act_mod = "RDY" Or _trans_act_mod = "RELEASE" Then
 
-                        Dim _FechaPlanificacion As String = Format(_RowPlanificada.Item("dt_start"), "yyyyMMdd HH:mm")
+                        Dim _FechaPlanificacion As String = Format(_RowPlanificada.Item("dt_start"), "yyyyMMdd HH:mm:ss")
 
                         Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Planificada = 1, FechaPlanificacion = '" & _FechaPlanificacion & "'" & vbCrLf &
                                        "Where Id = " & _Id_Enc
