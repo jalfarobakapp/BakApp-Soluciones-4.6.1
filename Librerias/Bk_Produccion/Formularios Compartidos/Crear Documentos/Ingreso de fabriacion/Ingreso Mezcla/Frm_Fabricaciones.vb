@@ -122,8 +122,22 @@ Public Class Frm_Fabricaciones
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Pdp_CPT_MzDet Where Id = " & _Id_Det
         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        Lbl_Fabricado.Text = FormatNumber(_Row.Item("CantFabricada"), 0)
-        Lbl_Fabricar.Text = FormatNumber(_Row.Item("CantFabricar"), 0)
+        Dim cantFabricada As Double = Convert.ToDouble(_Row.Item("CantFabricada"))
+        Dim _DeCf = 0
+
+        If cantFabricada <> Math.Floor(cantFabricada) Then
+            _DeCf = 3
+        End If
+
+        Dim cantFabricar As Double = Convert.ToDouble(_Row.Item("CantFabricar"))
+        Dim _DeCfr = 0
+
+        If cantFabricar <> Math.Floor(cantFabricar) Then
+            _DeCfr = 3
+        End If
+
+        Lbl_Fabricado.Text = FormatNumber(_Row.Item("CantFabricada"), _DeCf)
+        Lbl_Fabricar.Text = FormatNumber(_Row.Item("CantFabricar"), _DeCfr)
 
         If _Row.Item("CantFabricada") > _Row.Item("CantFabricar") Then
 
@@ -337,7 +351,7 @@ Public Class Frm_Fabricaciones
 
         If MessageBoxEx.Show(Me, "¿Confirma la creación de OT?" & vbCrLf & vbCrLf &
                                  "Fecha: " & Dtp_Fecha_Ingreso.Value.ToShortDateString & vbCrLf &
-                                 "Cantidad fabricada:" & FormatNumber(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.CantFabricada, 0),
+                                 "Cantidad fabricada:" & FormatNumber(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.CantFabricada, 3),
                                  "Validación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
             Return
         End If
@@ -453,7 +467,7 @@ Public Class Frm_Fabricaciones
             _Observaciones = "Datos de fabricación ingresados directamente desde Bakapp en sistema de ingreso de mezclas"
             _FechaEmision = Dtp_Fecha_Ingreso.Value
 
-            Dim _Cantidad As String = De_Num_a_Tx_01(Math.Round(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.CantFabricada, 0), False, 5)
+            Dim _Cantidad As String = De_Num_a_Tx_01(Math.Round(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.CantFabricada, 5), False, 5)
 
             Consulta_sql = "Select *," & _Cantidad & " As Cantidad,'" & ModSucursal & "' As Sucursal,'" & ModBodega & "' As Bodega" & vbCrLf &
                            "From POTL Where IDPOTL = " & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpotl_New
@@ -463,6 +477,7 @@ Public Class Frm_Fabricaciones
                                                    False, False, False, False, False, False)
 
             Fm.Pro_RowEntidad = _Row_Entidad
+            Fm.ForzarDecimalesEnUnidadesEnteras = True
             Fm.Sb_Crear_Documento_Interno_Con_Tabla3Potl(Me, _Tbl_Productos, _FechaEmision, "CODIGO", "Cantidad", "C_FABRIC", _Observaciones, False, False, 1)
             _Mensaje = Fm.Fx_Grabar_Documento(False)
             Fm.Dispose()
