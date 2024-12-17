@@ -27,7 +27,6 @@ Partial Class Frm_Sectores_ProductosEnSector
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_EmpSucBod = New DevComponents.DotNetBar.LabelX()
@@ -43,12 +42,13 @@ Partial Class Frm_Sectores_ProductosEnSector
         Me.Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
-        Me.Btn_AgregarProdcutos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_ExportarExcelProductos = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_AgregarProdcutos = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Btn_MesSiguiente = New DevComponents.DotNetBar.ButtonX()
         Me.Btn_MesAnterior = New DevComponents.DotNetBar.ButtonX()
         Me.Lbl_YearMonth = New DevComponents.DotNetBar.LabelX()
+        Me.Cmb_Sector = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.GroupPanel2.SuspendLayout()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -61,7 +61,7 @@ Partial Class Frm_Sectores_ProductosEnSector
         '
         Me.GroupPanel2.BackColor = System.Drawing.Color.White
         Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.GroupPanel2.Controls.Add(Me.LabelX4)
+        Me.GroupPanel2.Controls.Add(Me.Cmb_Sector)
         Me.GroupPanel2.Controls.Add(Me.LabelX3)
         Me.GroupPanel2.Controls.Add(Me.LabelX2)
         Me.GroupPanel2.Controls.Add(Me.Lbl_EmpSucBod)
@@ -100,21 +100,6 @@ Partial Class Frm_Sectores_ProductosEnSector
         Me.GroupPanel2.TabIndex = 96
         Me.GroupPanel2.Text = "Datos del Sector"
         '
-        'LabelX4
-        '
-        Me.LabelX4.AutoSize = True
-        Me.LabelX4.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(839, 3)
-        Me.LabelX4.Name = "LabelX4"
-        Me.LabelX4.Size = New System.Drawing.Size(41, 17)
-        Me.LabelX4.TabIndex = 95
-        Me.LabelX4.Text = "LabelX3"
-        '
         'LabelX3
         '
         Me.LabelX3.BackColor = System.Drawing.Color.Transparent
@@ -123,11 +108,11 @@ Partial Class Frm_Sectores_ProductosEnSector
         '
         Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX3.ForeColor = System.Drawing.Color.Black
-        Me.LabelX3.Location = New System.Drawing.Point(790, 3)
+        Me.LabelX3.Location = New System.Drawing.Point(713, 3)
         Me.LabelX3.Name = "LabelX3"
-        Me.LabelX3.Size = New System.Drawing.Size(43, 17)
+        Me.LabelX3.Size = New System.Drawing.Size(90, 20)
         Me.LabelX3.TabIndex = 94
-        Me.LabelX3.Text = "Sector:"
+        Me.LabelX3.Text = "Sector/Cabecera:"
         '
         'LabelX2
         '
@@ -341,6 +326,15 @@ Partial Class Frm_Sectores_ProductosEnSector
         Me.Bar1.TabStop = False
         Me.Bar1.Text = "Bar1"
         '
+        'Btn_ExportarExcelProductos
+        '
+        Me.Btn_ExportarExcelProductos.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_ExportarExcelProductos.ForeColor = System.Drawing.Color.Black
+        Me.Btn_ExportarExcelProductos.Image = CType(resources.GetObject("Btn_ExportarExcelProductos.Image"), System.Drawing.Image)
+        Me.Btn_ExportarExcelProductos.ImageAlt = CType(resources.GetObject("Btn_ExportarExcelProductos.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ExportarExcelProductos.Name = "Btn_ExportarExcelProductos"
+        Me.Btn_ExportarExcelProductos.Tooltip = "Exportar a Excel los productos asociados a estas ubicaciones"
+        '
         'Btn_AgregarProdcutos
         '
         Me.Btn_AgregarProdcutos.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
@@ -350,15 +344,6 @@ Partial Class Frm_Sectores_ProductosEnSector
         Me.Btn_AgregarProdcutos.Name = "Btn_AgregarProdcutos"
         Me.Btn_AgregarProdcutos.Tooltip = "Confirmar productos en todos las ubicaciones de estos sectores"
         Me.Btn_AgregarProdcutos.Visible = False
-        '
-        'Btn_ExportarExcelProductos
-        '
-        Me.Btn_ExportarExcelProductos.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_ExportarExcelProductos.ForeColor = System.Drawing.Color.Black
-        Me.Btn_ExportarExcelProductos.Image = CType(resources.GetObject("Btn_ExportarExcelProductos.Image"), System.Drawing.Image)
-        Me.Btn_ExportarExcelProductos.ImageAlt = CType(resources.GetObject("Btn_ExportarExcelProductos.ImageAlt"), System.Drawing.Image)
-        Me.Btn_ExportarExcelProductos.Name = "Btn_ExportarExcelProductos"
-        Me.Btn_ExportarExcelProductos.Tooltip = "Exportar a Excel los productos asociados a estas ubicaciones"
         '
         'GroupPanel3
         '
@@ -438,6 +423,19 @@ Partial Class Frm_Sectores_ProductosEnSector
         Me.Lbl_YearMonth.TabIndex = 0
         Me.Lbl_YearMonth.Text = "2024, Octubre"
         '
+        'Cmb_Sector
+        '
+        Me.Cmb_Sector.DisplayMember = "Text"
+        Me.Cmb_Sector.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.Cmb_Sector.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Cmb_Sector.ForeColor = System.Drawing.Color.Black
+        Me.Cmb_Sector.ItemHeight = 16
+        Me.Cmb_Sector.Location = New System.Drawing.Point(802, 1)
+        Me.Cmb_Sector.Name = "Cmb_Sector"
+        Me.Cmb_Sector.Size = New System.Drawing.Size(246, 22)
+        Me.Cmb_Sector.TabIndex = 95
+        Me.Cmb_Sector.WatermarkText = "Sector"
+        '
         'Frm_Sectores_ProductosEnSector
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -483,7 +481,6 @@ Partial Class Frm_Sectores_ProductosEnSector
     Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
     Friend WithEvents Btn_AgregarProdcutos As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_ExportarExcelProductos As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
     Friend WithEvents GroupPanel3 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Btn_MesSiguiente As DevComponents.DotNetBar.ButtonX
@@ -491,4 +488,5 @@ Partial Class Frm_Sectores_ProductosEnSector
     Friend WithEvents Lbl_YearMonth As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelItem2 As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Btn_MarcarTodos As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Cmb_Sector As DevComponents.DotNetBar.Controls.ComboBoxEx
 End Class

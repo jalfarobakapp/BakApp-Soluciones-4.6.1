@@ -10,6 +10,8 @@ CREATE TABLE [dbo].[Zw_WMS_Ubicaciones_Sectores](
 	[Nombre_Sector]		[varchar](50)		NOT NULL DEFAULT (''),
 	[Es_SubSector]		[bit]				NOT NULL DEFAULT (0),
 	[EsCabecera]		[bit]				NOT NULL DEFAULT (0),
+	[SoloUnaUbicacion]  [bit]				NOT NULL DEFAULT (0),
+	[OblConfimarUbic]   [bit]				NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_WMS_Ubicaciones_Sectores] PRIMARY KEY CLUSTERED 
 (
 	[Id_Sector] ASC

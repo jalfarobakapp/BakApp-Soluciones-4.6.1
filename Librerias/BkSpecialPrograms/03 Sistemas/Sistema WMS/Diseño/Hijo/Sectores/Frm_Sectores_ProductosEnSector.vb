@@ -10,14 +10,13 @@ Public Class Frm_Sectores_ProductosEnSector
 
     Private _Id_Mapa As Integer
     Private _Codigo_Sector As String
-    Private _Codigo_Ubic As String
 
     Private _MesActual As Date
     Private _Row_Sector As DataRow
     Private _Cabeza As String
     Private _FechaVista As Date
 
-    Public Sub New(_Id_Mapa As Integer, _Codigo_Sector As String, _Codigo_Ubic As String, _FechaVista As Date)
+    Public Sub New(_Id_Mapa As Integer, _Codigo_Sector As String, _FechaVista As Date)
 
         ' Esta llamada es exigida por el diseñador.
         InitializeComponent()
@@ -26,7 +25,6 @@ Public Class Frm_Sectores_ProductosEnSector
 
         Me._Id_Mapa = _Id_Mapa
         Me._Codigo_Sector = _Codigo_Sector
-        Me._Codigo_Ubic = _Codigo_Ubic
         Me._FechaVista = _FechaVista
 
         _MesActual = _FechaVista
@@ -49,8 +47,15 @@ Public Class Frm_Sectores_ProductosEnSector
         Lbl_EmpSucBod.Text = _Row_Sector.Item("RAZON").ToString.Trim & " - " &
                              _Row_Sector.Item("NOKOSU").ToString.Trim & " - " &
                              _Row_Sector.Item("NOKOBO").ToString.Trim
-        LabelX4.Text = _Row_Sector.Item("Codigo_Sector")
+        'LabelX4.Text = _Row_Sector.Item("Codigo_Sector")
 
+        caract_combo(Cmb_Sector)
+        Consulta_sql = "Select Codigo_Sector AS Padre,Codigo_Sector+' - '+Nombre_Sector AS Hijo" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Sectores" & vbCrLf &
+                       "Where EsCabecera = 1 and OblConfimarUbic = 1" & vbCrLf &
+                       "Order by Hijo"
+        Cmb_Sector.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
+        Cmb_Sector.SelectedValue = _Row_Sector.Item("Codigo_Sector")
 
         Lbl_YearMonth.Text = _MesActual.ToString("MMMM yyyy")
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
@@ -59,9 +64,13 @@ Public Class Frm_Sectores_ProductosEnSector
 
         Btn_MesSiguiente.Enabled = Not (Date.Today.Month = _MesActual.Month)
 
+        AddHandler Cmb_Sector.SelectedIndexChanged, AddressOf Sb_Actualizar_Grilla
+
     End Sub
 
     Sub Sb_Actualizar_Grilla()
+
+        _Codigo_Sector = Cmb_Sector.SelectedValue
 
         Try
 
@@ -81,9 +90,9 @@ Public Class Frm_Sectores_ProductosEnSector
                 Dim _Dia = numero_(i, 2)
 
                 If i = _FechaHasta.Day Then
-                    _CampoDias += "MAX(CASE WHEN d.Day = '" & _Año & "-" & _Mes & "-" & _Dia & "' AND z.Codigo IS NOT NULL And Salida = 0 THEN 'X' ELSE '' END) AS [" & _Dia & "]"
+                    _CampoDias += "MAX(CASE WHEN d.Day = '" & _Año & "-" & _Mes & "-" & _Dia & "' AND z.Codigo IS NOT NULL THEN 'X' ELSE '' END) AS [" & _Dia & "]"
                 Else
-                    _CampoDias += "MAX(CASE WHEN d.Day = '" & _Año & "-" & _Mes & "-" & _Dia & "' AND z.Codigo IS NOT NULL And Salida = 0 THEN 'X' ELSE '' END) AS [" & _Dia & "]," & vbCrLf
+                    _CampoDias += "MAX(CASE WHEN d.Day = '" & _Año & "-" & _Mes & "-" & _Dia & "' AND z.Codigo IS NOT NULL THEN 'X' ELSE '' END) AS [" & _Dia & "]," & vbCrLf
                 End If
 
             Next
@@ -106,11 +115,12 @@ Public Class Frm_Sectores_ProductosEnSector
         (SELECT DISTINCT Codigo 
          FROM " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal 
          WHERE Codigo_Sector = '" & _Codigo_Sector & "' 
-         AND Codigo_Ubic = '" & _Codigo_Ubic & "' And FechaIngreso between @FechaDesde And @FechaHasta And Salida = 0) AS p
+         --And Codigo_Ubic = '_Codigo_Ubic' 
+         And FechaIngreso between @FechaDesde And @FechaHasta) AS p
     Cross Join
         DaysOfMonth AS d
     Left Join
-        " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal AS z ON p.Codigo = z.Codigo AND z.Codigo_Sector = '" & _Codigo_Sector & "' AND z.Codigo_Ubic = '" & _Codigo_Ubic & "' AND 
+        " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal AS z ON p.Codigo = z.Codigo AND z.Codigo_Sector = '" & _Codigo_Sector & "' AND --z.Codigo_Ubic = '_Codigo_Ubic' AND 
         CASE 
             WHEN ISDATE(z.FechaIngreso) = 1 THEN CONVERT(DATE, z.FechaIngreso, 120) 
             ELSE NULL 
@@ -303,7 +313,7 @@ Public Class Frm_Sectores_ProductosEnSector
 
     Private Sub Btn_ExportarExcelProductos_Click(sender As Object, e As EventArgs) Handles Btn_ExportarExcelProductos.Click
 
-        Dim _NombreArchivo As String = "Productos en " & LabelX4.Text & "-" & Lbl_YearMonth.Text
+        Dim _NombreArchivo As String = "Productos en " & Cmb_Sector.SelectedValue & "-" & Lbl_YearMonth.Text
 
         ExportarTabla_JetExcel_Tabla(_Tbl_Productos, Me, _NombreArchivo)
 

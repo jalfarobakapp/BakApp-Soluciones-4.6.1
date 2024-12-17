@@ -841,7 +841,21 @@ Public Class Frm_Correos_Conf
         _Cuerpo = Txt_Cuerpo.Text
 
         For i = 1 To 32
-            _Cuerpo = Replace(_Cuerpo, "cid:IMG" & i, "Correo\Imagenes\IMG" & i & ".jpg")
+
+            Dim _Dir_Imagenes = _Dir_Correo_Imagenes & "\" & "IMG" & i
+
+            If _Cuerpo.Contains("cid:IMG" & i) Then
+                If System.IO.File.Exists(_Dir_Imagenes & ".jpg") Then
+                    _Cuerpo = Replace(_Cuerpo, "cid:IMG" & i, _Dir_Imagenes & ".jpg")
+                End If
+                If System.IO.File.Exists(_Dir_Imagenes & ".jpeg") Then
+                    _Cuerpo = Replace(_Cuerpo, "cid:IMG" & i, _Dir_Imagenes & ".jpeg")
+                End If
+                If System.IO.File.Exists(_Dir_Imagenes & ".png") Then
+                    _Cuerpo = Replace(_Cuerpo, "cid:IMG" & i, _Dir_Imagenes & ".png")
+                End If
+            End If
+
         Next
 
         _Cuerpo = Replace(_Cuerpo, a, "")
@@ -1142,6 +1156,11 @@ Public Class Frm_Correos_Conf
                     End If
                     If System.IO.File.Exists(_Dir_Imagenes & "IMG" & i & ".jpeg") Then
                         Dim visual As MimeData = builder.AddVisual(_Dir_Imagenes & "IMG" & i & ".jpeg")
+                        visual.ContentId = "IMG" & i
+                        _UlImg = i
+                    End If
+                    If System.IO.File.Exists(_Dir_Imagenes & "IMG" & i & ".png") Then
+                        Dim visual As MimeData = builder.AddVisual(_Dir_Imagenes & "IMG" & i & ".png")
                         visual.ContentId = "IMG" & i
                         _UlImg = i
                     End If

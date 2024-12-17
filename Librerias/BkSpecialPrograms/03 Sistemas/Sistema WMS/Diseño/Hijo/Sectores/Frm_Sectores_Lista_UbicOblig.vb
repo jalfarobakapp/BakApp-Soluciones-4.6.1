@@ -1,4 +1,5 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports System.Security.Cryptography
+Imports DevComponents.DotNetBar
 
 Public Class Frm_Sectores_Lista_UbicOblig
 
@@ -55,15 +56,15 @@ Public Class Frm_Sectores_Lista_UbicOblig
 
         Consulta_sql = "Select Cast(0 As Bit) As Chk,Id_Sector,Id_Mapa,Empresa,Sucursal,Bodega,Codigo_Sector,Nombre_Sector,Es_SubSector,EsCabecera,SoloUnaUbicacion,OblConfimarUbic," & vbCrLf &
                        "(Select COUNT(*) From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega Where Id_Mapa = Sect.Id_Mapa And Codigo_Sector = Sect.Codigo_Sector) As Ubicaciones," & vbCrLf &
-                       "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Prod_Ubicacion Where Id_Mapa = Sect.Id_Mapa And Codigo_Sector = Sect.Codigo_Sector) As Productos," & vbCrLf &
                        "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal Where Id_Mapa = Sect.Id_Mapa And Codigo_Sector = Sect.Codigo_Sector" & vbCrLf &
-                       "And CONVERT(varchar, FechaIngreso, 112) = CONVERT(varchar,'" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "', 112) And Salida = 0) As Productos2," & vbCrLf &
-                       "CAST(0 As Bit) As 'ProdConfimadaUbic'" & vbCrLf &
+                       "And CONVERT(varchar, FechaIngreso, 112) = CONVERT(varchar,'" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "', 112)) As Productos," & vbCrLf &
+                       "CAST(0 As Bit) As 'ProdConfimadaUbic'," & vbCrLf &
+                       "CAST(0 As Bit) As 'EstaEnMapa'" & vbCrLf &
                        "Into #Paso" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Sectores Sect" & vbCrLf &
                        "Where Id_Mapa = " & _Id_Mapa & " And OblConfimarUbic = 1" & vbCrLf & vbCrLf &
                        "Update #Paso Set EstaEnMapa = 1 Where Codigo_Sector In (Select Codigo_Sector From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Det Where Id_Mapa = " & _Id_Mapa & ")" & vbCrLf &
-                       "Update #Paso Set ProdConfimadaUbic = 1 Where (Productos = 0 And Productos = 0) Or (Productos2 > 0)" & vbCrLf &
+                       "Update #Paso Set ProdConfimadaUbic = 1 Where Productos > 0" & vbCrLf &
                        "Select * From #Paso" & vbCrLf & _CondicionSectores &
                        "Drop Table #Paso"
 
@@ -84,9 +85,9 @@ Public Class Frm_Sectores_Lista_UbicOblig
             .Columns("Chk").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("EstaEnMapa").Width = 30
-            .Columns("EstaEnMapa").HeaderText = "CBRA"
-            .Columns("EstaEnMapa").ToolTipText = "Es un sector tipo cabecera"
+            .Columns("EstaEnMapa").Width = 60
+            .Columns("EstaEnMapa").HeaderText = "En Mapa"
+            .Columns("EstaEnMapa").ToolTipText = "Indica si el sector se encuantra visible en el mapa actualmente"
             .Columns("EstaEnMapa").Visible = True
             .Columns("EstaEnMapa").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
@@ -103,7 +104,7 @@ Public Class Frm_Sectores_Lista_UbicOblig
             .Columns("Codigo_Sector").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Nombre_Sector").Width = 250
+            .Columns("Nombre_Sector").Width = 230
             .Columns("Nombre_Sector").HeaderText = "Nombre Sector"
             .Columns("Nombre_Sector").Visible = True
             .Columns("Nombre_Sector").DisplayIndex = _DisplayIndex
@@ -144,11 +145,11 @@ Public Class Frm_Sectores_Lista_UbicOblig
             '.Columns("Productos").DisplayIndex = _DisplayIndex
             '_DisplayIndex += 1
 
-            .Columns("Productos2").Width = 80
-            .Columns("Productos2").HeaderText = "P.Asignados"
-            .Columns("Productos2").ToolTipText = "Productos asignados en las ubicaciones el día " & Dtp_FechaRevision.Value.ToLongDateString & " en este sector"
-            .Columns("Productos2").Visible = True
-            .Columns("Productos2").DisplayIndex = _DisplayIndex
+            .Columns("Productos").Width = 80
+            .Columns("Productos").HeaderText = "P.Asignados"
+            .Columns("Productos").ToolTipText = "Productos asignados en las ubicaciones el día " & Dtp_FechaRevision.Value.ToLongDateString & " en este sector"
+            .Columns("Productos").Visible = True
+            .Columns("Productos").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
         End With
@@ -158,6 +159,7 @@ Public Class Frm_Sectores_Lista_UbicOblig
         For Each _Fila As DataGridViewRow In Grilla.Rows
 
             Dim _ProdConfimadaUbic As Boolean = _Fila.Cells("ProdConfimadaUbic").Value
+            Dim _EstaEnMapa As Boolean = _Fila.Cells("EstaEnMapa").Value
 
             'warning.png
             Dim _Icono As Image
@@ -174,11 +176,15 @@ Public Class Frm_Sectores_Lista_UbicOblig
             If _ProdConfimadaUbic Then
                 _Icono = _Imagenes_List.Images.Item("ok.png")
             Else
-                _Icono = _Imagenes_List.Images.Item("cancel.png")
+                _Icono = _Imagenes_List.Images.Item("symbol-remove.png")
                 _ProdSinConfirmar += 1
             End If
 
             _Fila.Cells("BtnImagen_Estado").Value = _Icono
+
+            If Not _EstaEnMapa Then
+                _Fila.DefaultCellStyle.ForeColor = Color.Gray
+            End If
 
         Next
 
@@ -195,11 +201,17 @@ Public Class Frm_Sectores_Lista_UbicOblig
             Dtp_FechaRevision.Value = FechaDelServidor()
         End If
         Sb_Actualizar_Grilla()
+        Chk_Seleccionar_Todos.Checked = False
     End Sub
 
     Private Sub Btn_ConfProdUbic_Click(sender As Object, e As EventArgs) Handles Btn_ConfProdUbic.Click
 
         If Not Fx_RevisarProductosSeleccionados() Then
+            Return
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Confirma nuevamente los productos de la ultima fecha de ingreso el día " & Dtp_FechaRevision.Value.ToLongDateString & "?", "Confirmación mavisa",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
             Return
         End If
 
@@ -230,7 +242,7 @@ Public Class Frm_Sectores_Lista_UbicOblig
                        "(Select COUNT(*) From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega Where Id_Mapa = Sect.Id_Mapa And Codigo_Sector = Sect.Codigo_Sector) As Ubicaciones," & vbCrLf &
                        "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Prod_Ubicacion Where Id_Mapa = Sect.Id_Mapa And Codigo_Sector = Sect.Codigo_Sector) As Productos," & vbCrLf &
                        "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal Where Id_Mapa = Sect.Id_Mapa And Codigo_Sector = Sect.Codigo_Sector" & vbCrLf &
-                       "And CONVERT(varchar, FechaIngreso, 112) = CONVERT(varchar,'" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "', 112) And Salida = 0) As Productos2," & vbCrLf &
+                       "And CONVERT(varchar, FechaIngreso, 112) = CONVERT(varchar,'" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "', 112)) As Productos2," & vbCrLf &
                        "CAST(0 As Bit) As 'ProdConfimadaUbic'" & vbCrLf &
                        "Into #Paso" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Sectores Sect" & vbCrLf &
@@ -263,9 +275,9 @@ Public Class Frm_Sectores_Lista_UbicOblig
 
         Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
 
-        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal (Semilla,Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector," &
-                       "Codigo_Ubic,Codigo,NombreEquipo,CodFuncionario_Ing,Ingreso,FechaIngreso)" & vbCrLf &
-                       "Select Semilla,Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector,Codigo_Ubic,Codigo,'" & _NombreEquipo & "','" & FUNCIONARIO & "',1,'" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "'" & vbCrLf &
+        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal (Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector," &
+                       "Codigo_Ubic,Codigo,NombreEquipo,CodFuncionario_Ing,FechaIngreso)" & vbCrLf &
+                       "Select Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector,Codigo_Ubic,Codigo,'" & _NombreEquipo & "','" & FUNCIONARIO & "',1,'" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "'" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Prod_Ubicacion" & vbCrLf &
                        "Where Id_Mapa = " & _Id_Mapa & " And Codigo Not In " &
                        "(Select Codigo From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal " &
@@ -332,7 +344,7 @@ Public Class Frm_Sectores_Lista_UbicOblig
             Dim _Sql_Filtro_Condicion_Extra = "And TIPR = 'FPN' And KOPR Not In " &
                                               "(Select Codigo From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal Where " &
                                               "Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector & "' " &
-                                              "And Codigo_Ubic = '" & _Codigo_Ubic & "' And Ingreso = 1 And Salida = 0 " &
+                                              "And Codigo_Ubic = '" & _Codigo_Ubic & "' " &
                                               "And CONVERT(varchar, FechaIngreso, 112) = '" & Format(_FechaIngreso, "yyyyMMdd") & "')"
 
             If _Filtrar.Fx_Filtrar(Nothing,
@@ -355,10 +367,10 @@ Public Class Frm_Sectores_Lista_UbicOblig
 
                     Dim _Codigo As String = _Fl.Item("Codigo")
 
-                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal (Semilla,Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector,Codigo_Ubic,Codigo," &
-                       "CodFuncionario_Ing,NombreEquipo,Ingreso,FechaIngreso) Values " & vbCrLf &
-                       "(0,'" & _Empresa & "','" & _Sucursal & "','" & _Bodega & "'," & _Id_Mapa & ",'" & _Codigo_Sector & "','" & _Codigo_Ubic & "'" &
-                       ",'" & _Codigo & "','" & FUNCIONARIO & "','" & _NombreEquipo & "',1,'" & Format(_FechaIngreso, "yyyyMMdd") & "')"
+                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal (Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector,Codigo_Ubic,Codigo," &
+                       "CodFuncionario_Ing,NombreEquipo,FechaIngreso) Values " & vbCrLf &
+                       "('" & _Empresa & "','" & _Sucursal & "','" & _Bodega & "'," & _Id_Mapa & ",'" & _Codigo_Sector & "','" & _Codigo_Ubic & "'" &
+                       ",'" & _Codigo & "','" & FUNCIONARIO & "','" & _NombreEquipo & "','" & Format(_FechaIngreso, "yyyyMMdd") & "')"
                     _Sql.Ej_consulta_IDU(Consulta_sql)
 
                     _Contador += 1
@@ -412,7 +424,7 @@ Public Class Frm_Sectores_Lista_UbicOblig
             Dim _Sql_Filtro_Condicion_Extra = "And TIPR = 'FPN' And KOPR In " &
                                               "(Select Codigo From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal Where " &
                                               "Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector & "' " &
-                                              "And Codigo_Ubic = '" & _Codigo_Ubic & "' And Ingreso = 1 And Salida = 0 " &
+                                              "And Codigo_Ubic = '" & _Codigo_Ubic & "' " &
                                               "And CONVERT(varchar, FechaIngreso, 112) = '" & Format(_FechaIngreso, "yyyyMMdd") & "')"
             Dim _Filtrar As New Clas_Filtros_Random(Me)
             Dim _Tbl_Productos As DataTable
@@ -441,27 +453,14 @@ Public Class Frm_Sectores_Lista_UbicOblig
 
                     If Not String.IsNullOrEmpty(_Codigo) Then
 
-                        Dim _Id = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Prod_Ubicacion_IngSal", "Id",
-                                  "Id_Mapa = " & _Id_Mapa &
-                                  " And Codigo_Sector = '" & _Codigo_Sector &
-                                  "' And Codigo_Ubic = '" & _Codigo_Ubic &
-                                  "' And Codigo = '" & _Codigo &
-                                  "' And CONVERT(varchar, FechaIngreso, 112) = '" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") &
-                                  "' And Ingreso = 1 And Salida = 0")
-
-                        Consulta_sql += "Update " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal Set " & vbCrLf &
-                                        "Empresa = '" & _Empresa & "'" &
-                                        ",Sucursal = '" & _Sucursal & "'" &
-                                        ",Bodega = '" & _Bodega & "'" &
-                                        ",Id_Mapa = " & _Id_Mapa &
-                                        ",Codigo_Sector = '" & _Codigo_Sector & "'" &
-                                        ",Codigo_Ubic = '" & _Codigo_Ubic & "'" &
-                                        ",Codigo = '" & _Codigo & "'" &
-                                        ",CodFuncionario_Sal = '" & FUNCIONARIO & "'" &
-                                        ",NombreEquipo = '" & _NombreEquipo & "'" &
-                                        ",Salida = 1" &
-                                        ",FechaSalida = '" & Format(_FechaIngreso, "yyyyMMdd") & "'" & vbCrLf &
-                                        "Where Id = " & _Id & vbCrLf
+                        Consulta_sql += "Delete " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal " &
+                                        "Where Empresa = '" & _Empresa &
+                                        "' And Sucursal = '" & _Sucursal &
+                                        "' And Bodega = '" & _Bodega &
+                                        "' And Codigo_Sector = '" & _Codigo_Sector &
+                                        "' And Codigo_Ubic = '" & _Codigo_Ubic &
+                                        "' And Codigo = '" & _Codigo &
+                                        "' And CONVERT(varchar, FechaIngreso, 112) = '" & Format(_FechaIngreso, "yyyyMMdd") & "'" & vbCrLf
 
                         _Contador += 1
 
@@ -563,7 +562,7 @@ Public Class Frm_Sectores_Lista_UbicOblig
         Consulta_sql = "Select PrUbic.Codigo_Sector,Mp.KOPR,Mp.NOKOPR" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal PrUbic" & vbCrLf &
                        "Left Join MAEPR Mp On Mp.KOPR = PrUbic.Codigo" & vbCrLf &
-                       "Where FechaIngreso = '" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "' And Ingreso = 1 And Salida = 0"
+                       "Where FechaIngreso = '" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "'"
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Productos en ubicaciones")
@@ -592,7 +591,7 @@ Public Class Frm_Sectores_Lista_UbicOblig
                 Dim _Sql_Filtro_Condicion_Extra = "And TIPR = 'FPN' And KOPR In " &
                                                       "(Select Codigo From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal Where " &
                                                       "Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector & "' " &
-                                                      "And Codigo_Ubic = '" & _Codigo_Ubic & "' And Ingreso = 1 And Salida = 0 " &
+                                                      "And Codigo_Ubic = '" & _Codigo_Ubic & "' " &
                                                       "And CONVERT(varchar, FechaIngreso, 112) = '" & Format(_FechaIngreso, "yyyyMMdd") & "')"
 
                 Consulta_sql = "Select Top 1 KOPR From MAEPR Where 1> 0 " & _Sql_Filtro_Condicion_Extra
@@ -651,7 +650,7 @@ Public Class Frm_Sectores_Lista_UbicOblig
         Dim _Codigo_Ubic As String = _Codigo_Sector
         Dim _FechaIngreso As Date = Dtp_FechaRevision.Value
 
-        Dim Fm As New Frm_Sectores_ProductosEnSector(_Id_Mapa, _Codigo_Sector, _Codigo_Ubic, Dtp_FechaRevision.Value)
+        Dim Fm As New Frm_Sectores_ProductosEnSector(_Id_Mapa, _Codigo_Sector, Dtp_FechaRevision.Value)
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
@@ -687,16 +686,21 @@ Public Class Frm_Sectores_Lista_UbicOblig
         End If
 
         If MessageBoxEx.Show(Me, "¿Confirma importar los productos desde la ubicación en el mapa" & vbCrLf &
-                             "para el día " & Dtp_FechaRevision.Value.ToLongDateString & "?",
-                     "Confirmar productos en la ubicaciones", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                             "para el día " & Dtp_FechaRevision.Value.ToLongDateString & "?" & vbCrLf &
+                             "Esto borrara los productos que actualmente se encuentran en el sector",
+                     "Confirmar productos en la ubicaciones", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) <> DialogResult.Yes Then
             Return
         End If
 
         Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
 
-        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal (Semilla,Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector," &
-                       "Codigo_Ubic,Codigo,NombreEquipo,CodFuncionario_Ing,Ingreso,FechaIngreso)" & vbCrLf &
-                       "Select Semilla,Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector,Codigo_Ubic,Codigo,'" & _NombreEquipo & "','" & FUNCIONARIO & "',1,'" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "'" & vbCrLf &
+        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal " &
+                       "Where Id_Mapa = " & _Id_Mapa &
+                       " And CONVERT(varchar, FechaIngreso, 112) = '" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") &
+                       "' And Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega & "' And Codigo_Sector = '" & _Codigo_Sector & "'" & vbCrLf & vbCrLf &
+                       "Insert Into " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal (Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector," &
+                       "Codigo_Ubic,Codigo,NombreEquipo,CodFuncionario_Ing,FechaIngreso)" & vbCrLf &
+                       "Select Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector,Codigo_Ubic,Codigo,'" & _NombreEquipo & "','" & FUNCIONARIO & "',1,'" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "'" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Prod_Ubicacion" & vbCrLf &
                        "Where Id_Mapa = " & _Id_Mapa & " And Codigo Not In " &
                        "(Select Codigo From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal " &
@@ -753,7 +757,7 @@ Public Class Frm_Sectores_Lista_UbicOblig
             Try
                 _FechaUltUbic = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Prod_Ubicacion_IngSal", "MAX(FechaIngreso)",
                                                           "Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector &
-                                                          "' And Codigo_Ubic = '" & _Codigo_Ubic & "' And Ingreso = 1 And Salida = 0 " &
+                                                          "' And Codigo_Ubic = '" & _Codigo_Ubic & "' " &
                                                           "And FechaIngreso < '" & Format(_FechaIngreso, "yyyyMMdd") & "'",, False)
             Catch ex As Exception
 
@@ -776,11 +780,15 @@ Public Class Frm_Sectores_Lista_UbicOblig
 
             Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
 
-            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal (Semilla,Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector,Codigo_Ubic,Codigo,NombreEquipo,CodFuncionario_Ing,Ingreso,FechaIngreso)" & vbCrLf &
-                           "Select Semilla,Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector,Codigo_Ubic,Codigo,'" & _NombreEquipo & "','" & FUNCIONARIO & "',1,'" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "'" & vbCrLf &
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal (Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector,Codigo_Ubic,Codigo,NombreEquipo,CodFuncionario_Ing,FechaIngreso)" & vbCrLf &
+                           "Select Distinct Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector,Codigo_Ubic,Codigo,'" & _NombreEquipo & "','" & FUNCIONARIO & "','" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "'" & vbCrLf &
                            "From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal" & vbCrLf &
                            "Where Id_Mapa = " & _Id_Mapa & " And CONVERT(varchar, FechaIngreso, 112) = '" & Format(_FechaUltUbic, "yyyyMMdd") & "'" & vbCrLf &
-                           "And Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega & "' And Codigo_Sector = '" & _Codigo_Sector & "'"
+                           "And Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega & "' And Codigo_Sector = '" & _Codigo_Sector & "'" & vbCrLf &
+                           "And Codigo Not In (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal " &
+                           "Where Id_Mapa = " & _Id_Mapa & " And CONVERT(varchar, FechaIngreso, 112) = '" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") &
+                           "' And Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega & "' And Codigo_Sector = '" & _Codigo_Sector & "')"
+
             If Not _Sql.Ej_consulta_IDU(Consulta_sql) Then
                 Throw New System.Exception(_Sql.Pro_Error)
             End If
@@ -802,7 +810,9 @@ Public Class Frm_Sectores_Lista_UbicOblig
 
     Private Sub Chk_Seleccionar_Todos_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Seleccionar_Todos.CheckedChanged
         For Each _Fila As DataGridViewRow In Grilla.Rows
-            _Fila.Cells("Chk").Value = Chk_Seleccionar_Todos.Checked
+            If _Fila.Cells("EstaEnMapa").Value Then
+                _Fila.Cells("Chk").Value = Chk_Seleccionar_Todos.Checked
+            End If
         Next
     End Sub
 
@@ -834,15 +844,14 @@ Public Class Frm_Sectores_Lista_UbicOblig
 
         Consulta_sql = "Select Cast(0 As Bit) As Chk,Id_Sector,Id_Mapa,Empresa,Sucursal,Bodega,Codigo_Sector,Nombre_Sector,Es_SubSector,EsCabecera,SoloUnaUbicacion,OblConfimarUbic," & vbCrLf &
                        "(Select COUNT(*) From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega Where Id_Mapa = Sect.Id_Mapa And Codigo_Sector = Sect.Codigo_Sector) As Ubicaciones," & vbCrLf &
-                       "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Prod_Ubicacion Where Id_Mapa = Sect.Id_Mapa And Codigo_Sector = Sect.Codigo_Sector) As Productos," & vbCrLf &
                        "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal Where Id_Mapa = Sect.Id_Mapa And Codigo_Sector = Sect.Codigo_Sector" & vbCrLf &
-                       "And CONVERT(varchar, FechaIngreso, 112) = CONVERT(varchar,'" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "', 112) And Salida = 0) As Productos2," & vbCrLf &
+                       "And CONVERT(varchar, FechaIngreso, 112) = CONVERT(varchar,'" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "', 112)) As Productos," & vbCrLf &
                        "CAST(0 As Bit) As 'ProdConfimadaUbic'" & vbCrLf &
                        "Into #Paso" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Sectores Sect" & vbCrLf &
                        "Where Id_Mapa = " & _Id_Mapa & " And OblConfimarUbic = 1" & vbCrLf &
                        "And Codigo_Sector = '" & _Codigo_Sector & "'" & vbCrLf &
-                       "Update #Paso Set ProdConfimadaUbic = 1 Where (Productos = 0 And Productos = 0) Or (Productos2 > 0)" & vbCrLf &
+                       "Update #Paso Set ProdConfimadaUbic = 1 Where Productos > 0" & vbCrLf &
                        "Select * From #Paso" & vbCrLf &
                        "Drop Table #Paso"
 
@@ -850,7 +859,6 @@ Public Class Frm_Sectores_Lista_UbicOblig
 
         _Fila.Cells("Ubicaciones").Value = _Tbl.Rows(0).Item("Ubicaciones")
         _Fila.Cells("Productos").Value = _Tbl.Rows(0).Item("Productos")
-        _Fila.Cells("Productos2").Value = _Tbl.Rows(0).Item("Productos2")
         _Fila.Cells("ProdConfimadaUbic").Value = _Tbl.Rows(0).Item("ProdConfimadaUbic")
 
         Dim _ProdConfimadaUbic As Boolean = _Fila.Cells("ProdConfimadaUbic").Value

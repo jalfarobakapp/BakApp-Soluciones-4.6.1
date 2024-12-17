@@ -34,7 +34,7 @@ Public Class Frm_Sincronizador
         Timer_Limpiar.Interval = (1000 * 60) * 5
         Timer_AjustarFecha.Interval = (1000 * 60) * 30
         Timer_CerrarConfirmadas.Interval = (1000 * 60) * 15
-        Timer_ActualizarFechaPickeo.Interval = (1000 * 60) * 5
+        'Timer_ActualizarFechaPickeo.Interval = (1000 * 60) * 5
 
         Sb_Ejecutar_diablito()
 
@@ -201,12 +201,12 @@ Public Class Frm_Sincronizador
         Timer_Ejecutar.Start()
     End Sub
 
-    Private Sub Timer_ActualizarFechaPickeo_Tick(sender As Object, e As EventArgs) Handles Timer_ActualizarFechaPickeo.Tick
-        Timer_Ejecutar.Stop()
-        Sb_AddToLog("Sincronizar", "Actualizando Fecha de Pickeos", Txt_Log)
-        _Cl_Sincroniza.Sb_ActualizarFechaPickeo(Txt_Log, Dtp_FechaRevision.Value)
-        Timer_Ejecutar.Start()
-    End Sub
+    'Private Sub Timer_ActualizarFechaPickeo_Tick(sender As Object, e As EventArgs) Handles Timer_ActualizarFechaPickeo.Tick
+    '    Timer_Ejecutar.Stop()
+    '    Sb_AddToLog("Sincronizar", "Actualizando Fecha de Pickeos", Txt_Log)
+    '    _Cl_Sincroniza.Sb_ActualizarFechaPickeo(Txt_Log, Dtp_FechaRevision.Value)
+    '    Timer_Ejecutar.Start()
+    'End Sub
 
     Private Sub ButtonItem1_Click(sender As Object, e As EventArgs) Handles ButtonItem1.Click
         Timer_Ejecutar.Stop()

@@ -914,14 +914,128 @@ Public Class Menu
 
     Private Sub ButtonItem6_Click(sender As Object, e As EventArgs) Handles ButtonItem6.Click
 
-        Dim _Idmaeddo = "3260712"
-        Dim _Koen = "15463484"
-        Dim _Koprct = "2316158002"
+        Dim _Cl_ListaMayoristaMinorista As New Cl_ListaMayoristaMinorista
 
-        Dim Fm As New Frm_Ver_Documento_CustomizarDet(0, _Idmaeddo, _Koen, _Koprct, 0)
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
+        _Cl_ListaMayoristaMinorista.Sb_LlenarCorreosNuevosMayoristas()
+
+        Return
+
+        Dim _Fecha As Date = FechaDelServidor()
+        Dim _PrimerDiaMes As Date = DateSerial(Year(_Fecha), Month(_Fecha), 1)
+        Dim _UltimoDiaMes As Date = DateSerial(Year(_Fecha), Month(_Fecha) + 1, 0)
+
+        _PrimerDiaMes = Primerdiadelmes(_Fecha)
+        _UltimoDiaMes = ultimodiadelmes(_Fecha)
+
+        Consulta_sql = "Select Distinct ENDO,SUENDO,NOKOEN,LCEN,SUBSTRING(LVEN,6,3) As LVEN,Lista As ListaSuperior" & vbCrLf &
+                       "From MAEEDO" & vbCrLf &
+                       "Inner Join MAEEN On KOEN = ENDO And SUEN = SUENDO" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_ListaPreGlobal On ListaInferior = SUBSTRING(LVEN,6,3)" & vbCrLf &
+                       "Where TIDO = 'FCV' And FEEMDO Between '" & Format(_PrimerDiaMes, "yyyyMMdd") &
+                       "' And '" & Format(_UltimoDiaMes, "yyyyMMdd") &
+                       "' And LVEN In (SELECT 'TABPP'+ListaInferior FROM " & _Global_BaseBk & "Zw_ListaPreGlobal Where ListaInferior <> '')"
+
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+        Dim _Lista As New List(Of LsValiciones.Mensajes)
+
+        For Each _Fila As DataRow In _Tbl.Rows
+
+            Dim _CodEntidad = _Fila.Item("ENDO")
+            Dim _ListaSuperior = _Fila.Item("ListaSuperior")
+
+            Dim _Msj As LsValiciones.Mensajes
+
+            Dim _Cl_DocListaSuperior As New Cl_DocListaSuperior
+            _Msj = _Cl_DocListaSuperior.Fx_RevisarSiCumpleConTenerListaSuperior(_CodEntidad, _ListaSuperior)
+
+            If _Msj.EsCorrecto Then
+
+                Dim _CodHolding As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "CodHolding", "CodEntidad = '" & _CodEntidad & "'")
+                Dim _FiltroEntidades As String
+
+                If String.IsNullOrWhiteSpace(_CodHolding) Then
+                    _FiltroEntidades = "('" & _CodEntidad & "')"
+                Else
+                    Consulta_sql = "Select CodEntidad From " & _Global_BaseBk & "Zw_Entidades Where CodHolding = '" & _CodHolding & "'"
+                    Dim _TblHolding As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+                    _FiltroEntidades = Generar_Filtro_IN(_TblHolding, "", "CodEntidad", False, False, "'")
+                End If
+
+                _Lista.Add(_CodEntidad)
+
+            End If
+
+        Next
+
+        Dim _ListaCorreos As New List(Of LsValiciones.Mensajes)
+
+        For Each _Msj As LsValiciones.Mensajes In _Lista
+
+            Dim _CorreoMsj As LsValiciones.Mensajes = Fx_EnviarCorreosMayoristaMinorista(2, "jalfaro@bakapp.cl", "")
+
+            _ListaCorreos.Add(_CorreoMsj)
+
+            If _CorreoMsj.EsCorrecto Then
+
+            End If
+
+        Next
 
     End Sub
+
+    Function Fx_EnviarCorreosMayoristaMinorista(_Id_Correo As Integer, _Para As String, _Cc As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Correos Where Id = " & _Id_Correo
+        Dim _Row_Correo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_Row_Correo) Then
+            Throw New System.Exception("No existe configuración para el envio de correos")
+        End If
+
+        Dim _Nombre_Correo As String = _Row_Correo.Item("Nombre_Correo")
+        Dim _Asunto As String = _Row_Correo.Item("Asunto")
+        Dim _CuerpoMensaje As String = _Row_Correo.Item("CuerpoMensaje")
+
+        If String.IsNullOrEmpty(_Asunto) Then
+            _Asunto = "Correo de notificación de pedido " & RazonEmpresa
+        End If
+
+        _CuerpoMensaje = Replace(_CuerpoMensaje, "&lt;", "<")
+        _CuerpoMensaje = Replace(_CuerpoMensaje, "&gt;", ">")
+        _CuerpoMensaje = Replace(_CuerpoMensaje, "&quot;", """")
+
+        _CuerpoMensaje = Replace(_CuerpoMensaje, "'", "''")
+
+        If Not String.IsNullOrEmpty(_Nombre_Correo) Then
+
+            Dim _Fecha = "Getdate()"
+            Dim _Adjuntar_Documento As Boolean = False
+
+            'If _Enviar_al_otro_dia Then
+            '    _Fecha = "DATEADD(D,1,Getdate())"
+            'End If
+
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo (Id_Correo,Nombre_Correo,CodFuncionario,Asunto," &
+                            "Para,Cc,Idmaeedo,Tido,Nudo,NombreFormato,Enviar,Mensaje,Fecha,Adjuntar_Documento,Doc_Adjuntos,Adjuntar_DTE,Id_Dte,Id_Trackid)" &
+                            vbCrLf &
+                            "Values (" & _Id_Correo & ",'" & _Nombre_Correo & "','','" & _Asunto & "','" & _Para & "','" & _Cc &
+                            "',0,'','','',1,'" & _CuerpoMensaje & "'," & _Fecha &
+                            "," & Convert.ToInt32(_Adjuntar_Documento) & ",'',1,0,0)"
+
+            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                Throw New System.Exception(_Sql.Pro_Error)
+            End If
+
+        End If
+
+        Return _Mensaje
+
+    End Function
 
 End Class
