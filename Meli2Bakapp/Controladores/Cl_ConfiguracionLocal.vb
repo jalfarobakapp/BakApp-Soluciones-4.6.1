@@ -127,6 +127,11 @@ Public Class Cl_ConfiguracionLocal
                 Throw New System.Exception("Debe ingresar la ruta de las etiquetas")
             End If
 
+            If String.IsNullOrEmpty(Configuracion.DocEmitir) Then
+                Configuracion.DocEmitir = String.Empty
+                Configuracion.Facturar = False
+            End If
+
             With Configuracion.BodegaFacturacion
 
                 If String.IsNullOrEmpty(.Empresa) Or

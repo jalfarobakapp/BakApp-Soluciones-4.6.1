@@ -21,8 +21,14 @@ Public Class Frm_Conexiones
 
         If Not _Mensaje.EsCorrecto OrElse _Mensaje.Id = 0 Then
             MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            'Return
         End If
+
+        Dim _Arr_Relacionado(,) As String = {{"", ""},
+                                     {"BLV", "BOLETA"},
+                                     {"FCV", "FACTURA"}}
+        Sb_Llenar_Combos(_Arr_Relacionado, Cmb_DocEmitir)
+        Cmb_DocEmitir.SelectedValue = ""
+
 
         Txt_Global_BaseBk.Text = _Cl_ConfiguracionLocal.Configuracion.Global_BaseBk
 
@@ -81,6 +87,8 @@ Public Class Frm_Conexiones
         Txt_Responsable.Text = _Cl_ConfiguracionLocal.Configuracion.NoResponsable
 
         Txt_RutaEtiquetas.Text = _Cl_ConfiguracionLocal.Configuracion.RutaEtiquetas
+        Cmb_DocEmitir.SelectedValue = _Cl_ConfiguracionLocal.Configuracion.DocEmitir
+        Chk_Facturar.Checked = _Cl_ConfiguracionLocal.Configuracion.Facturar
 
     End Sub
 
@@ -257,12 +265,17 @@ Public Class Frm_Conexiones
             Return
         End If
 
+        If Chk_Facturar.Checked And String.IsNullOrEmpty(Cmb_DocEmitir.SelectedValue) Then
+            MessageBoxEx.Show(Me, "Debe seleccionar el tipo de documento a emitir", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Cmb_DocEmitir.Focus()
+            Return
+        End If
+
         If Not Fx_ProbarConexionRd() Then Return
         If Not Fx_ProbarConexionBaseBakapp() Then Return
 
         If Not Fx_ProbarConexionMeli() Then Return
-
-
 
 
         With _Cl_ConfiguracionLocal.Configuracion
@@ -273,6 +286,8 @@ Public Class Frm_Conexiones
             .Responsable = Txt_Responsable.Tag
             .NoResponsable = Txt_Responsable.Text
             .RutaEtiquetas = Txt_RutaEtiquetas.Text
+            .Facturar = Chk_Facturar.Checked
+            .DocEmitir = Cmb_DocEmitir.SelectedValue
         End With
 
         Dim _Mensaje As New LsValiciones.Mensajes

@@ -145,8 +145,8 @@ Public Class Cl_Sincroniza
                 .Texto8 = String.Empty
                 .Texto9 = String.Empty
                 .Texto10 = String.Empty
-                .Facturar = True
-                .DocEmitir = "BLV"
+                .Facturar = ConfiguracionLocal.Facturar
+                .DocEmitir = ConfiguracionLocal.DocEmitir
                 .CodFuncionario_Factura = ConfiguracionLocal.Responsable
                 .EnvFacAutoBk = 0
 

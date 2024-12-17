@@ -61,6 +61,9 @@ Partial Class Frm_Conexiones
         Me.LabelX18 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Responsable = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_Facturar = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
+        Me.Cmb_DocEmitir = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -115,7 +118,7 @@ Partial Class Frm_Conexiones
         Me.Label5.ForeColor = System.Drawing.Color.Black
         Me.Label5.Location = New System.Drawing.Point(22, 144)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(78, 13)
+        Me.Label5.Size = New System.Drawing.Size(79, 13)
         Me.Label5.TabIndex = 10
         Me.Label5.Text = "Base de datos"
         '
@@ -248,7 +251,7 @@ Partial Class Frm_Conexiones
         Me.Label6.ForeColor = System.Drawing.Color.Black
         Me.Label6.Location = New System.Drawing.Point(22, 144)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(78, 13)
+        Me.Label6.Size = New System.Drawing.Size(79, 13)
         Me.Label6.TabIndex = 10
         Me.Label6.Text = "Base de datos"
         '
@@ -537,9 +540,9 @@ Partial Class Frm_Conexiones
         '
         Me.Txt_Responsable.Border.Class = "TextBoxBorder"
         Me.Txt_Responsable.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Responsable.ButtonCustom.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Responsable.ButtonCustom.Image = CType(resources.GetObject("Txt_Responsable.ButtonCustom.Image"), System.Drawing.Image)
         Me.Txt_Responsable.ButtonCustom.Visible = True
-        Me.Txt_Responsable.ButtonCustom2.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Responsable.ButtonCustom2.Image = CType(resources.GetObject("Txt_Responsable.ButtonCustom2.Image"), System.Drawing.Image)
         Me.Txt_Responsable.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Responsable.ForeColor = System.Drawing.Color.Black
         Me.Txt_Responsable.Location = New System.Drawing.Point(145, 336)
@@ -564,11 +567,55 @@ Partial Class Frm_Conexiones
         Me.LabelX1.TabIndex = 123
         Me.LabelX1.Text = "Facturador/Responsable"
         '
+        'Chk_Facturar
+        '
+        '
+        '
+        '
+        Me.Chk_Facturar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Facturar.CheckBoxImageChecked = CType(resources.GetObject("Chk_Facturar.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Facturar.Location = New System.Drawing.Point(404, 338)
+        Me.Chk_Facturar.Name = "Chk_Facturar"
+        Me.Chk_Facturar.Size = New System.Drawing.Size(100, 21)
+        Me.Chk_Facturar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Facturar.TabIndex = 125
+        Me.Chk_Facturar.Text = "Facturar/Boletear"
+        '
+        'LabelX2
+        '
+        Me.LabelX2.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX2.ForeColor = System.Drawing.Color.Black
+        Me.LabelX2.Location = New System.Drawing.Point(528, 336)
+        Me.LabelX2.Name = "LabelX2"
+        Me.LabelX2.Size = New System.Drawing.Size(106, 24)
+        Me.LabelX2.TabIndex = 127
+        Me.LabelX2.Text = "Documento a emitir"
+        '
+        'Cmb_DocEmitir
+        '
+        Me.Cmb_DocEmitir.DisplayMember = "Text"
+        Me.Cmb_DocEmitir.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.Cmb_DocEmitir.FormattingEnabled = True
+        Me.Cmb_DocEmitir.ItemHeight = 16
+        Me.Cmb_DocEmitir.Location = New System.Drawing.Point(640, 338)
+        Me.Cmb_DocEmitir.Name = "Cmb_DocEmitir"
+        Me.Cmb_DocEmitir.Size = New System.Drawing.Size(79, 22)
+        Me.Cmb_DocEmitir.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Cmb_DocEmitir.TabIndex = 128
+        Me.Cmb_DocEmitir.Text = "FACTURA"
+        '
         'Frm_Conexiones
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(731, 448)
+        Me.Controls.Add(Me.Cmb_DocEmitir)
+        Me.Controls.Add(Me.LabelX2)
+        Me.Controls.Add(Me.Chk_Facturar)
         Me.Controls.Add(Me.Txt_Responsable)
         Me.Controls.Add(Me.LabelX1)
         Me.Controls.Add(Me.Txt_RutaEtiquetas)
@@ -640,4 +687,7 @@ Partial Class Frm_Conexiones
     Friend WithEvents LabelX18 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Txt_Responsable As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Chk_Facturar As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Cmb_DocEmitir As DevComponents.DotNetBar.Controls.ComboBoxEx
 End Class

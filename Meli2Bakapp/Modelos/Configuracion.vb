@@ -7,6 +7,8 @@
     Public Property Responsable As String
     Public Property NoResponsable As String
     Public Property RutaEtiquetas As String
+    Public Property Facturar As Boolean
+    Public Property DocEmitir As String
 End Class
 
 Public Class BodegaFacturacion

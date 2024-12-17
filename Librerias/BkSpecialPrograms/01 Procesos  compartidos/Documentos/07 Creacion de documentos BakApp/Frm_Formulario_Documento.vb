@@ -2244,8 +2244,10 @@ Public Class Frm_Formulario_Documento
 
                 .Item("TblTipoVenta") = String.Empty
                 .Item("CodTipoVenta") = String.Empty
+                .Item("Customizable") = False
 
                 _TblEncabezado.Rows.Add(NewFila)
+
             End With
 
             Lbl_TipoVenta.Text = "..."
