@@ -304,8 +304,8 @@ Public Class Frm_CreaProductos_04_CodAlternativo
         Dim _Koen As String = Txt_Koen.Text.Trim
         Dim _Nmarca As String = _Cl_CompUdMedidas.Fx_Trae_NMARCA(CInt(Cmb_Nmarca_Comportamiento.SelectedValue), CInt(Cmb_Nmarca_Tratamiento.SelectedValue))
 
-        Dim _Cantmincom As String = Txt_Cantmincom.Text
-        Dim _Multdecom As String = Txt_Multdecom.Text
+        Dim _Cantmincom As String = De_Num_a_Tx_01(Txt_Cantmincom.Text, False, 5)
+        Dim _Multdecom As String = De_Num_a_Tx_01(Txt_Multdecom.Text, False, 5)
 
         Dim _Kopral2 As String = Txt_Kopral2.Text.Trim
         Dim _Kopral3 As String = Txt_Kopral3.Text.Trim
@@ -322,7 +322,7 @@ Public Class Frm_CreaProductos_04_CodAlternativo
         Dim _Conmulti As Integer = Convert.ToInt32(Chk_Conmulti.Checked)
 
         Dim _Unimulti As Integer = Cmb_Unimulti.SelectedValue
-        Dim _Multiplo As String = Txt_Multiplo.Text
+        Dim _Multiplo As String = De_Num_a_Tx_01(Txt_Multiplo.Text, False, 5)
         Dim _Txtmulti As String = Txt_Txtmulti.Text.Trim
 
         Dim _CodigoQR As String = Txt_CodigoQR.Text

@@ -22,6 +22,9 @@
     Public Property RespuestaXDefecto As String
     Public Property RespuestaXDefectoCerrar As String
     Public Property EsTicketUnico As Boolean
+    Public Property CierraRaiz As Boolean
+    Public Property ExigeDocCerrar As Boolean
+    Public Property TidoDocCerrar As String
 End Class
 
 Partial Public Class Zw_Stk_Tipos

@@ -12,4 +12,20 @@
     Public Property Feemdo_NVV As DateTime?
     Public Property Observaciones As String
     Public Property TipoOri As String
+    Public Property Ocdo As String
+    Public Property Texto1 As String
+    Public Property Texto2 As String
+    Public Property Texto3 As String
+    Public Property Texto4 As String
+    Public Property Texto5 As String
+    Public Property Texto6 As String
+    Public Property Texto7 As String
+    Public Property Texto8 As String
+    Public Property Texto9 As String
+    Public Property Texto10 As String
+    Public Property Facturar As Boolean
+    Public Property DocEmitir As String
+    Public Property CodFuncionario_Factura As String
+    Public Property EnvFacAutoBk As Boolean
+
 End Class

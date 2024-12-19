@@ -1,7 +1,5 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
-Imports DevComponents.DotNetBar
-Imports DevComponents.DotNetBar.Controls
 
 Public Class Cl_Archivador
 

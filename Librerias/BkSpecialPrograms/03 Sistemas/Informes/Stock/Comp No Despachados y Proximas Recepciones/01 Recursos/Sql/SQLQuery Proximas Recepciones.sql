@@ -128,6 +128,7 @@ SELECT ED.IDMAEEDO,
 		AND ED.FEEMDO BETWEEN '#Fecha_Emision_Desde#' AND '#Fecha_Emision_Hasta#' 
 		#Filtro_Fecha_Recepcion# --AND DD.FEERLI BETWEEN {d '2017-05-31'} AND {d '2017-06-30'} 
 		#Filtro_Productos#
+        #Filtro_FunEntidad#
 	
 	ORDER BY  ED.ENDO, ED.FEEMDO, ED.NUDO, DD.NULIDO
 

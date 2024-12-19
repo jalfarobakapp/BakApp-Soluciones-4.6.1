@@ -18,6 +18,7 @@ Public Class Frm_Formulario_Permisos_Asociados_New
     Dim _Tbl_Funcionarios_X_06_Solcitud_Compra As DataTable
     Dim _Tbl_Funcionarios_X_07_Min_Despacho As DataTable
     Dim _Tbl_Funcionarios_X_08_Min_Venta_NVV As DataTable
+    Dim _Tbl_Funcionarios_X_09_FVigenciaCrVencida As DataTable
 
     Dim _Id_Enc As Integer
     Dim _Id_DocEnc As Integer
@@ -271,6 +272,8 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                     _Tbl = _Tbl_Funcionarios_X_07_Min_Despacho
                 Case "Bkp00062"
                     _Tbl = _Tbl_Funcionarios_X_08_Min_Venta_NVV
+                Case "Doc00098"
+                    _Tbl = _Tbl_Funcionarios_X_09_FVigenciaCrVencida
             End Select
 
             If _Revisar Then
@@ -437,6 +440,8 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                         _Tbl = _Tbl_Funcionarios_X_07_Min_Despacho
                     Case "Bkp00062"
                         _Tbl = _Tbl_Funcionarios_X_08_Min_Venta_NVV
+                    Case "Doc00098"
+                        _Tbl = _Tbl_Funcionarios_X_09_FVigenciaCrVencida
                 End Select
 
                 If _Solicitado_Por_Cadena Then
@@ -572,6 +577,7 @@ Public Class Frm_Formulario_Permisos_Asociados_New
         'Bkp00057 - Fecha de despacho
         'ODp00017 - Min Kilos y Ventas para despachar
         'Comp0092 -> AUTORIZAR COMPRA (SOC) -> Depende del monto asignado en Campo Valor_Max_Compra de la tabla ZW_PermisosVsUsuarios
+        'Doc00098 - Autoriza a vender con fecha de credito vigente vencida  
 
         Dim _Tbl As DataTable
 
@@ -592,6 +598,8 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                 _Tbl = _Tbl_Funcionarios_X_07_Min_Despacho
             Case "Bkp00062"
                 _Tbl = _Tbl_Funcionarios_X_08_Min_Venta_NVV
+            Case "Doc00098"
+                _Tbl = _Tbl_Funcionarios_X_09_FVigenciaCrVencida
         End Select
 
         Sb_Llenar_Funcionarios_Destino(_CodPermiso, _Tbl)
@@ -615,6 +623,8 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                     _Tbl_Funcionarios_X_07_Min_Despacho = _Tbl
                 Case "Bkp00062"
                     _Tbl_Funcionarios_X_08_Min_Venta_NVV = _Tbl
+                Case "Doc00098"
+                    _Tbl_Funcionarios_X_09_FVigenciaCrVencida = _Tbl
             End Select
 
             _Fila.Cells("Btn_Estado").Value = Imagenes_16x16.Images.Item("secure-user.png")
@@ -740,6 +750,8 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                     _Tbl_Funcionarios_X_06_Solcitud_Compra = Nothing
                 Case "Bkp00062"
                     _Tbl_Funcionarios_X_08_Min_Venta_NVV = Nothing
+                Case "Doc00098"
+                    _Tbl_Funcionarios_X_09_FVigenciaCrVencida = Nothing
             End Select
 
 

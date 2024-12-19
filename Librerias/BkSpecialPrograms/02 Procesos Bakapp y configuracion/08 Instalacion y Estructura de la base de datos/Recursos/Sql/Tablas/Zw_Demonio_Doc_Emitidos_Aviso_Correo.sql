@@ -28,6 +28,8 @@ CREATE TABLE [dbo].[Zw_Demonio_Doc_Emitidos_Aviso_Correo](
 	[Id_Dte]				[int]               NOT NULL DEFAULT (0),
 	[Id_Trackid]			[int]               NOT NULL DEFAULT (0),
 	[Id_Acp]    			[int]               NOT NULL DEFAULT (0),
+    [CodEntidad]            [varchar](13)       NOT NULL DEFAULT (''),
+    [CodSucEntidad]         [varchar](20)       NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_Demonio_Doc_Emitidos_Aviso_Correo] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

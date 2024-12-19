@@ -44,7 +44,8 @@ Public Class Frm_Inv_Sector_Productos
                        "Cantidad,Ud1,CantidadUd1,Ud2,CantidadUd2,Observaciones,Recontado,Actualizado_por,Obs_Actualizacion" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Inv_Hoja_Detalle" & vbCrLf &
                        "Left Join MAEPR On KOPR = Codigo" & vbCrLf &
-                       "Where IdSector = " & _IdSector
+                       "Where IdSector = " & _IdSector & vbCrLf &
+                       "Order By IdHoja,Id"
 
         _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -252,8 +253,6 @@ Public Class Frm_Inv_Sector_Productos
 
             Dim Cuenta As Integer = 0
 
-
-            ''For Each _Filas As DataRow In _Tbl.Rows
             While Cuenta < _LineasPorPagina AndAlso _Pagina < _Tbl.Rows.Count
 
                 Dim _Filas As DataRow = _Tbl.Rows(_Pagina)
@@ -267,8 +266,8 @@ Public Class Frm_Inv_Sector_Productos
                 _Ubicacion = _Filas.Item("Ubicacion")
 
                 _Cant = Rellenar(_Hoja, 3, " ", False)
-                e.Graphics.DrawString(_Hoja, FteCourier_New_N_8, Brushes.Black, xPos + 15, yPos)
-                xPos += 50
+                e.Graphics.DrawString(_Hoja, FteCourier_New_N_8, Brushes.Black, xPos + 5, yPos)
+                xPos += 55
                 _Cant = Rellenar(_Item, 2, " ", False)
                 e.Graphics.DrawString(_Item, FteCourier_New_N_8, Brushes.Black, xPos, yPos)
                 xPos += 50
@@ -295,7 +294,6 @@ Public Class Frm_Inv_Sector_Productos
                 _Pagina += 1
 
             End While
-            'Next
 
 
             ' Una vez fuera del bucle comprobamos si nos quedan más filas

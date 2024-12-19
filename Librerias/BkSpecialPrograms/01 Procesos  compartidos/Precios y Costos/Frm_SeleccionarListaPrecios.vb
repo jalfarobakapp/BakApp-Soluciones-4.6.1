@@ -27,6 +27,7 @@ Public Class Frm_SeleccionarListaPrecios
     Public Property NoPedirPermiso As Boolean
     Public Property Permiso As String
     Public Property FiltroAdicional As String
+    Public Property MostraTodasLasListas As Boolean
 
     Public Sub New(Tipo_Listas As Enum_Tipo_Lista,
                    Multiseleccion As Boolean,
@@ -75,12 +76,16 @@ Public Class Frm_SeleccionarListaPrecios
                        "From TABPP" & vbCrLf &
                        "Where 1 > 0" & vbCrLf
 
-        Select Case _Tipo_Lista
-            Case Enum_Tipo_Lista.Costo
-                Consulta_sql += "And TILT = 'C'"
-            Case Enum_Tipo_Lista.Precio
-                Consulta_sql += "And TILT = 'P'"
-        End Select
+        If Not MostraTodasLasListas Then
+
+            Select Case _Tipo_Lista
+                Case Enum_Tipo_Lista.Costo
+                    Consulta_sql += "And TILT = 'C'"
+                Case Enum_Tipo_Lista.Precio
+                    Consulta_sql += "And TILT = 'P'"
+            End Select
+
+        End If
 
         If Rdb_Ver_Mis_Listas.Checked Then
             Consulta_sql += "And KOLT In (Select SUBSTRING(CodPermiso,4,6) From " & _Global_BaseBk & "ZW_PermisosVsUsuarios" & Space(1) &

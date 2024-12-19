@@ -9,7 +9,7 @@ CREATE TABLE [dbo].[Zw_Stmp_Enc](
 	[Idmaeedo]				        [int]			NOT NULL DEFAULT (0),
 	[Tido]					        [char](3)		NOT NULL DEFAULT (''),
 	[Nudo]					        [varchar](10)	NOT NULL DEFAULT (''),
-	[Endo]					        [varchar](10)	NULL,
+	[Endo]					        [varchar](13)	NOT NULL DEFAULT (''),
 	[Suendo]				        [varchar](20)	NOT NULL DEFAULT (''),
 	[FechaCreacion]			        [datetime]		NULL,
 	[Estado]				        [varchar](5)	NOT NULL DEFAULT (''),

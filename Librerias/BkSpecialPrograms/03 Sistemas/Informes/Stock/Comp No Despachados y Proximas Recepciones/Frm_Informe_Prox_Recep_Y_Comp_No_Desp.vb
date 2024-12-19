@@ -552,7 +552,7 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp
             Case Enum_Informe.Super_Familia
                 Fl_Super_Familias = Fx_Traer_Filtro("FMPR") 'Fx_Traer_Filtro_Familias()
             Case Enum_Informe.Entidades
-                Fl_Entidades = Fx_Traer_Filtro("ENDO+SUENDO")
+                Fl_Entidades = Fx_Traer_Filtro("Ps.ENDO+Ps.SUENDO")
             Case Enum_Informe.Ciudades
                 Fl_Ciudades = Fx_Traer_Filtro("CIEN")
             Case Enum_Informe.Comunas
@@ -606,7 +606,7 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp
             Case Enum_Informe.Super_Familia
                 Fl_Super_Familias = Fx_Traer_Filtro("FMPR") 'Fx_Traer_Filtro_Familias()
             Case Enum_Informe.Entidades
-                Fl_Entidades = Fx_Traer_Filtro("ENDO+SUENDO")
+                Fl_Entidades = Fx_Traer_Filtro("Edo.ENDO+Edo.SUENDO")
             Case Enum_Informe.Ciudades
                 Fl_Ciudades = Fx_Traer_Filtro("CIEN")
             Case Enum_Informe.Comunas
@@ -633,6 +633,28 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp
         Fm.Sb_Actualizar_Grillas()
         Fm.ShowDialog(Me)
         Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_Imprimir_Click(sender As Object, e As EventArgs) Handles Btn_Imprimir.Click
+
+        Consulta_sql = "Select Distinct IDMAEEDO From " & _Tabla_Paso
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+        Dim _Lista As New List(Of String)
+
+        For Each _Fila As DataRow In _Tbl.Rows
+
+            _Lista.Add(_Fila.Item("IDMAEEDO"))
+
+        Next
+
+        If _Lista.Count Then
+
+            Dim _Cl_Imprimir_CompNoDesp As New Cl_Imprimir_CompNoDesp(_Lista)
+            _Cl_Imprimir_CompNoDesp.Fx_Imprimir_Archivo(Me, "")
+
+        End If
 
     End Sub
 

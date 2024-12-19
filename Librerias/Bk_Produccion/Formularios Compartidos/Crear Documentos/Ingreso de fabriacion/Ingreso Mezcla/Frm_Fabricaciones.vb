@@ -44,6 +44,7 @@ Public Class Frm_Fabricaciones
         Btn_Grabar.Enabled = Not _Fabricada
         Btn_IngresarNuevaFabricacion.Enabled = Not _Fabricada
         Dtp_Fecha_Ingreso.Enabled = Not _Fabricada
+        Chk_GDI_Consumo.Visible = Btn_Grabar.Enabled
 
         If Not _Fabricada Then
             Dtp_Fecha_Ingreso.Value = _Cl_Mezcla.Zw_Pdp_CPT_MzDet.FechaCreacion
@@ -121,8 +122,22 @@ Public Class Frm_Fabricaciones
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Pdp_CPT_MzDet Where Id = " & _Id_Det
         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        Lbl_Fabricado.Text = FormatNumber(_Row.Item("CantFabricada"), 0)
-        Lbl_Fabricar.Text = FormatNumber(_Row.Item("CantFabricar"), 0)
+        Dim cantFabricada As Double = Convert.ToDouble(_Row.Item("CantFabricada"))
+        Dim _DeCf = 0
+
+        If cantFabricada <> Math.Floor(cantFabricada) Then
+            _DeCf = 3
+        End If
+
+        Dim cantFabricar As Double = Convert.ToDouble(_Row.Item("CantFabricar"))
+        Dim _DeCfr = 0
+
+        If cantFabricar <> Math.Floor(cantFabricar) Then
+            _DeCfr = 3
+        End If
+
+        Lbl_Fabricado.Text = FormatNumber(_Row.Item("CantFabricada"), _DeCf)
+        Lbl_Fabricar.Text = FormatNumber(_Row.Item("CantFabricar"), _DeCfr)
 
         If _Row.Item("CantFabricada") > _Row.Item("CantFabricar") Then
 
@@ -135,7 +150,7 @@ Public Class Frm_Fabricaciones
 
         Else
             Lbl_Fabricado.Font = Lbl_Fabricar.Font
-            Lbl_Fabricado.ForeColor = Lbl_Fabricado.ForeColor
+            Lbl_Fabricado.ForeColor = Lbl_Fabricar.ForeColor
         End If
 
     End Sub
@@ -327,7 +342,6 @@ Public Class Frm_Fabricaciones
 
     Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
 
-
         If _Cl_Mezcla.Zw_Pdp_CPT_MzDet.CantFabricada = 0 Then
             MessageBoxEx.Show(Me, "No existen datos de fabricación", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
@@ -337,7 +351,7 @@ Public Class Frm_Fabricaciones
 
         If MessageBoxEx.Show(Me, "¿Confirma la creación de OT?" & vbCrLf & vbCrLf &
                                  "Fecha: " & Dtp_Fecha_Ingreso.Value.ToShortDateString & vbCrLf &
-                                 "Cantidad fabricada:" & FormatNumber(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.CantFabricada, 0),
+                                 "Cantidad fabricada:" & FormatNumber(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.CantFabricada, 3),
                                  "Validación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
             Return
         End If
@@ -369,6 +383,16 @@ Public Class Frm_Fabricaciones
         End If
 
         MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        If Chk_GDI_Consumo.Checked Then
+
+            Me.Enabled = False
+            _Mensaje = Fx_GrabarGDI(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpotl_New)
+            Me.Enabled = True
+
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+
+        End If
 
         Me.Close()
 
@@ -443,7 +467,10 @@ Public Class Frm_Fabricaciones
             _Observaciones = "Datos de fabricación ingresados directamente desde Bakapp en sistema de ingreso de mezclas"
             _FechaEmision = Dtp_Fecha_Ingreso.Value
 
-            Dim _Cantidad As String = De_Num_a_Tx_01(Math.Round(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.CantFabricada, 0), False, 5)
+            Dim _Cantidad_Round As Double = Math.Round(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.CantFabricada, 5)
+            Dim _Cantidad_Floor As Double = Math.Floor(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.CantFabricada)
+
+            Dim _Cantidad As String = De_Num_a_Tx_01(_Cantidad_Floor, False, 5)
 
             Consulta_sql = "Select *," & _Cantidad & " As Cantidad,'" & ModSucursal & "' As Sucursal,'" & ModBodega & "' As Bodega" & vbCrLf &
                            "From POTL Where IDPOTL = " & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpotl_New
@@ -453,6 +480,7 @@ Public Class Frm_Fabricaciones
                                                    False, False, False, False, False, False)
 
             Fm.Pro_RowEntidad = _Row_Entidad
+            Fm.ForzarDecimalesEnUnidadesEnteras = True
             Fm.Sb_Crear_Documento_Interno_Con_Tabla3Potl(Me, _Tbl_Productos, _FechaEmision, "CODIGO", "Cantidad", "C_FABRIC", _Observaciones, False, False, 1)
             _Mensaje = Fm.Fx_Grabar_Documento(False)
             Fm.Dispose()
@@ -483,6 +511,54 @@ Public Class Frm_Fabricaciones
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
             _Mensaje.Detalle = "Problema al crear la GRI"
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Resultado = Consulta_sql
+            _Mensaje.Icono = MessageBoxIcon.Error
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
+    Function Fx_GrabarGDI(_Idpotl As Integer) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+            Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Dim _Koen As String = _Row_Configp.Item("RUT").ToString.Trim
+            Dim _Observaciones As String
+
+            Consulta_sql = "Select Top 1 * From MAEEN Where KOEN = '" & _Koen & "'"
+            Dim _Row_Entidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Dim _FechaEmision As DateTime
+
+            _Observaciones = "Datos de fabricación ingresados directamente desde Bakapp en sistema de ingreso de mezclas"
+            _FechaEmision = Dtp_Fecha_Ingreso.Value
+
+            Dim _Cantidad As Double = Math.Round(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.CantFabricada, 0)
+
+            Dim _Observaciones_GDI = "Documento creado automáticamente desde Bakapp al crear GRI de ingreso de producción"
+
+            Dim Cl_ArmaGDI As New Cl_ArmaGDIConsumo
+            _Mensaje = Cl_ArmaGDI.Fx_CrearGDI(Me, _Idpotl, _Cantidad, _Row_Entidad, _FechaEmision, _Observaciones_GDI)
+
+            If Not _Mensaje.EsCorrecto Then
+                Throw New System.Exception(_Mensaje.Mensaje)
+            End If
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Detalle = "Crear GDI de consumo"
+            _Mensaje.Mensaje = "Grabación Exitosa. GDI de consumo Creada correctamente"
+            _Mensaje.Icono = MessageBoxIcon.Information
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Detalle = "Problema al crear la GDI consumo"
             _Mensaje.Mensaje = ex.Message
             _Mensaje.Resultado = Consulta_sql
             _Mensaje.Icono = MessageBoxIcon.Error

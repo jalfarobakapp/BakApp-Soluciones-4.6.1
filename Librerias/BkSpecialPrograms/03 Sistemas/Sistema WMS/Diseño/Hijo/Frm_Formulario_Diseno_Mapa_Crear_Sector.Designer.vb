@@ -32,6 +32,8 @@ Partial Class Frm_Formulario_Diseno_Mapa_Crear_Sector
         Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Chk_SoloUnaUbicacion = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_OblConfimarUbic = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.GroupPanel1.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -41,6 +43,8 @@ Partial Class Frm_Formulario_Diseno_Mapa_Crear_Sector
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.Controls.Add(Me.Chk_OblConfimarUbic)
+        Me.GroupPanel1.Controls.Add(Me.Chk_SoloUnaUbicacion)
         Me.GroupPanel1.Controls.Add(Me.Chk_EsCabecera)
         Me.GroupPanel1.Controls.Add(Me.TableLayoutPanel2)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
@@ -178,7 +182,7 @@ Partial Class Frm_Formulario_Diseno_Mapa_Crear_Sector
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 145)
+        Me.Bar1.Location = New System.Drawing.Point(0, 138)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(610, 41)
         Me.Bar1.Stretch = True
@@ -196,11 +200,45 @@ Partial Class Frm_Formulario_Diseno_Mapa_Crear_Sector
         Me.Btn_Grabar.Name = "Btn_Grabar"
         Me.Btn_Grabar.Tooltip = "Grabar"
         '
+        'Chk_SoloUnaUbicacion
+        '
+        Me.Chk_SoloUnaUbicacion.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_SoloUnaUbicacion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_SoloUnaUbicacion.CheckBoxImageChecked = CType(resources.GetObject("Chk_SoloUnaUbicacion.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SoloUnaUbicacion.FocusCuesEnabled = False
+        Me.Chk_SoloUnaUbicacion.ForeColor = System.Drawing.Color.Black
+        Me.Chk_SoloUnaUbicacion.Location = New System.Drawing.Point(89, 79)
+        Me.Chk_SoloUnaUbicacion.Name = "Chk_SoloUnaUbicacion"
+        Me.Chk_SoloUnaUbicacion.Size = New System.Drawing.Size(158, 18)
+        Me.Chk_SoloUnaUbicacion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_SoloUnaUbicacion.TabIndex = 97
+        Me.Chk_SoloUnaUbicacion.Text = "Permite solo una ubicación"
+        '
+        'Chk_OblConfimarUbic
+        '
+        Me.Chk_OblConfimarUbic.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_OblConfimarUbic.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_OblConfimarUbic.CheckBoxImageChecked = CType(resources.GetObject("Chk_OblConfimarUbic.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_OblConfimarUbic.FocusCuesEnabled = False
+        Me.Chk_OblConfimarUbic.ForeColor = System.Drawing.Color.Black
+        Me.Chk_OblConfimarUbic.Location = New System.Drawing.Point(248, 79)
+        Me.Chk_OblConfimarUbic.Name = "Chk_OblConfimarUbic"
+        Me.Chk_OblConfimarUbic.Size = New System.Drawing.Size(257, 18)
+        Me.Chk_OblConfimarUbic.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_OblConfimarUbic.TabIndex = 98
+        Me.Chk_OblConfimarUbic.Text = "Obliga a confirmar ubicación diariamente"
+        '
         'Frm_Formulario_Diseno_Mapa_Crear_Sector
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(610, 186)
+        Me.ClientSize = New System.Drawing.Size(610, 179)
         Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.Bar1)
         Me.DoubleBuffered = True
@@ -229,4 +267,6 @@ Partial Class Frm_Formulario_Diseno_Mapa_Crear_Sector
     Public WithEvents Txt_Codigo_Sector As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Chk_EsCabecera As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_OblConfimarUbic As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_SoloUnaUbicacion As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

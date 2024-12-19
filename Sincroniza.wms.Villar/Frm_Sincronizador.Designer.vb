@@ -28,6 +28,7 @@ Partial Class Frm_Sincronizador
         Me.CircularPgrs = New DevComponents.DotNetBar.Controls.CircularProgress()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Limpiar = New DevComponents.DotNetBar.ButtonItem()
+        Me.ButtonItem1 = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Conexion = New DevComponents.DotNetBar.ButtonItem()
         Me.Metro_Bar_Color = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
@@ -41,6 +42,7 @@ Partial Class Frm_Sincronizador
         Me.Lbl_DiasRevNVV = New DevComponents.DotNetBar.LabelX()
         Me.Timer_AjustarFecha = New System.Windows.Forms.Timer(Me.components)
         Me.Timer_CerrarConfirmadas = New System.Windows.Forms.Timer(Me.components)
+        Me.Timer_ActualizarFechaPickeo = New System.Windows.Forms.Timer(Me.components)
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dtp_FechaRevision, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -89,7 +91,7 @@ Partial Class Frm_Sincronizador
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Limpiar, Me.Btn_Conexion})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Limpiar, Me.ButtonItem1, Me.Btn_Conexion})
         Me.Bar1.Location = New System.Drawing.Point(0, 422)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(705, 41)
@@ -107,6 +109,16 @@ Partial Class Frm_Sincronizador
         Me.Btn_Limpiar.ImageAlt = CType(resources.GetObject("Btn_Limpiar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Limpiar.Name = "Btn_Limpiar"
         Me.Btn_Limpiar.Tooltip = "Limpiar log..."
+        '
+        'ButtonItem1
+        '
+        Me.ButtonItem1.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.ButtonItem1.ForeColor = System.Drawing.Color.Black
+        Me.ButtonItem1.Image = CType(resources.GetObject("ButtonItem1.Image"), System.Drawing.Image)
+        Me.ButtonItem1.ImageAlt = CType(resources.GetObject("ButtonItem1.ImageAlt"), System.Drawing.Image)
+        Me.ButtonItem1.Name = "ButtonItem1"
+        Me.ButtonItem1.Text = "Probar"
+        Me.ButtonItem1.Visible = False
         '
         'Btn_Conexion
         '
@@ -286,6 +298,10 @@ Partial Class Frm_Sincronizador
         '
         Me.Timer_CerrarConfirmadas.Interval = 2000
         '
+        'Timer_ActualizarFechaPickeo
+        '
+        Me.Timer_ActualizarFechaPickeo.Interval = 2000
+        '
         'Frm_Sincronizador
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -332,4 +348,6 @@ Partial Class Frm_Sincronizador
     Friend WithEvents Lbl_DiasRevNVV As DevComponents.DotNetBar.LabelX
     Friend WithEvents Timer_AjustarFecha As Timer
     Friend WithEvents Timer_CerrarConfirmadas As Timer
+    Friend WithEvents Timer_ActualizarFechaPickeo As Timer
+    Friend WithEvents ButtonItem1 As DevComponents.DotNetBar.ButtonItem
 End Class

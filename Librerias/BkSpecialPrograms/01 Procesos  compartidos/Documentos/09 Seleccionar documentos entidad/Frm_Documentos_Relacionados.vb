@@ -585,7 +585,10 @@ Public Class Frm_Documentos_Relacionados
 
             Dim _Fila As DataGridViewRow = Grilla.CurrentRow
 
-            If Not Fx_NvvHabilitada(_Fila) Then
+            Dim _Idmaeedo = _Fila.Cells("IDMAEEDO").Value
+            Dim _Tido = _Fila.Cells("TIDO").Value
+
+            If Not Fx_NvvHabilitada_Fac(Me, _Idmaeedo, _Tido) Then
                 _Fila.Cells("Chk").Value = False
             Else
                 _Fila.Cells("Chk").Value = Not _Fila.Cells("Chk").Value
@@ -601,39 +604,15 @@ Public Class Frm_Documentos_Relacionados
 
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
 
-        If Not Fx_NvvHabilitada(_Fila) Then
+        Dim _Idmaeedo = _Fila.Cells("IDMAEEDO").Value
+        Dim _Tido = _Fila.Cells("TIDO").Value
+
+        If Not Fx_NvvHabilitada_Fac(Me, _Idmaeedo, _Tido) Then
             e.Cancel = True
         End If
 
     End Sub
 
-    Function Fx_NvvHabilitada(_Fila As DataGridViewRow) As Boolean
 
-        Dim _Idmaeedo = _Fila.Cells("IDMAEEDO").Value
-        Dim _Tido = _Fila.Cells("TIDO").Value
-
-        If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") And _Tido = "NVV" Then
-
-            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Docu_Ent Where Idmaeedo = " & _Idmaeedo
-            Dim _Row_Docu_Ent As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-            Dim _HabilitadaFac = False
-
-            If Not IsNothing(_Row_Docu_Ent) Then
-                _HabilitadaFac = _Row_Docu_Ent.Item("HabilitadaFac")
-            End If
-
-            If Not _HabilitadaFac Then
-                MessageBoxEx.Show(Me, "Esta nota de venta no esta habilitada para ser facturada." & vbCrLf &
-                                      "Según la configuración General las notas de venta deben ser habilitadas para que se puedan facturar",
-                                      "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Return False
-            End If
-
-        End If
-
-        Return True
-
-    End Function
 
 End Class

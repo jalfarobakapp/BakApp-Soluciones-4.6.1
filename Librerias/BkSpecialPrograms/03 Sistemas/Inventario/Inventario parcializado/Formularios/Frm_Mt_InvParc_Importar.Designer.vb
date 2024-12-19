@@ -33,6 +33,7 @@ Partial Class Frm_Mt_InvParc_Importar
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TxtNombreArchivo = New System.Windows.Forms.TextBox()
         Me.OFile_BuscarArchivo = New System.Windows.Forms.OpenFileDialog()
+        Me.Btn_Cancelar = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
@@ -42,7 +43,7 @@ Partial Class Frm_Mt_InvParc_Importar
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Archivo_Ayuda, Me.BtnImportarDatos})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnImportarDatos, Me.Btn_Archivo_Ayuda, Me.Btn_Cancelar})
         Me.Bar1.Location = New System.Drawing.Point(0, 93)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(580, 41)
@@ -58,7 +59,6 @@ Partial Class Frm_Mt_InvParc_Importar
         Me.Btn_Archivo_Ayuda.ForeColor = System.Drawing.Color.Black
         Me.Btn_Archivo_Ayuda.Image = CType(resources.GetObject("Btn_Archivo_Ayuda.Image"), System.Drawing.Image)
         Me.Btn_Archivo_Ayuda.Name = "Btn_Archivo_Ayuda"
-        Me.Btn_Archivo_Ayuda.Text = "Ayuda"
         Me.Btn_Archivo_Ayuda.Tooltip = "Descargar ejemplo de archivo de levantamiento"
         '
         'BtnImportarDatos
@@ -150,6 +150,16 @@ Partial Class Frm_Mt_InvParc_Importar
         '
         Me.OFile_BuscarArchivo.FileName = "OpenFileDialog1"
         '
+        'Btn_Cancelar
+        '
+        Me.Btn_Cancelar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Cancelar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Cancelar.Image = CType(resources.GetObject("Btn_Cancelar.Image"), System.Drawing.Image)
+        Me.Btn_Cancelar.ImageAlt = CType(resources.GetObject("Btn_Cancelar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Cancelar.Name = "Btn_Cancelar"
+        Me.Btn_Cancelar.Text = "Cancelar"
+        Me.Btn_Cancelar.Visible = False
+        '
         'Frm_Mt_InvParc_Importar
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -184,4 +194,5 @@ Partial Class Frm_Mt_InvParc_Importar
     Friend WithEvents OFile_BuscarArchivo As System.Windows.Forms.OpenFileDialog
     Friend WithEvents Btn_Archivo_Ayuda As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents BtnImportarDatos As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Cancelar As DevComponents.DotNetBar.ButtonItem
 End Class

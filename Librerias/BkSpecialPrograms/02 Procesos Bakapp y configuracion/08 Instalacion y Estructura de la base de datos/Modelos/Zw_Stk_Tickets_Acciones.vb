@@ -1,5 +1,4 @@
 ﻿Public Class Zw_Stk_Tickets_Acciones
-
     Public Property Id As Integer
     Public Property Id_Ticket As Integer
     Public Property Accion As String
@@ -18,5 +17,9 @@
     Public Property Aceptado As Boolean
     Public Property Id_Raiz As Integer
     Public Property Id_Ticket_Cierra As Integer
-
+    Public Property Id_Ticket_Crea As Integer
+    Public Property Asunto As String
+    Public Property Tido_Cierra As String
+    Public Property Nudo_Cierra As String
+    Public Property Idmaeedo_Cierra As Integer
 End Class

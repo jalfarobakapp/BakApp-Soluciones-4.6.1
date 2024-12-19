@@ -36,6 +36,7 @@ Public Class Frm_Sectores
     Private Sub Frm_Sectores_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
+        AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
         Sb_Actualizar_Grilla()
 
@@ -43,9 +44,10 @@ Public Class Frm_Sectores
 
     Sub Sb_Actualizar_Grilla()
 
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Sectores" & vbCrLf &
-                       "Where Id_Mapa = " & _Id_Mapa & " And Es_SubSector = 0" & vbCrLf &
-                       "Order By Codigo_Sector"
+        Consulta_sql = "Select *,Cast((Select COUNT(1) From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Det Sh Where Sh.Id_Mapa = Sc.Id_Mapa And Sh.Codigo_Sector = Sc.Codigo_Sector) As bit) As EstaEnMapa" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Sectores Sc" & vbCrLf &
+                       "Where Sc.Id_Mapa = " & _Id_Mapa & " And Sc.Es_SubSector = 0" & vbCrLf &
+                       "Order By Sc.Codigo_Sector"
 
         Dim _New_Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
         _Dv = New DataView
@@ -59,6 +61,13 @@ Public Class Frm_Sectores
             OcultarEncabezadoGrilla(Grilla, True)
 
             Dim _DisplayIndex = 0
+
+            .Columns("EstaEnMapa").Width = 60
+            .Columns("EstaEnMapa").HeaderText = "En Mapa"
+            .Columns("EstaEnMapa").ToolTipText = "Muestra si la ubicación esta actualmente en el Mapa"
+            .Columns("EstaEnMapa").Visible = True
+            .Columns("EstaEnMapa").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Empresa").Visible = True
             .Columns("Empresa").HeaderText = "Emp."
@@ -93,7 +102,7 @@ Public Class Frm_Sectores
 
             .Columns("Nombre_Sector").Visible = True
             .Columns("Nombre_Sector").HeaderText = "Nombre Sector"
-            .Columns("Nombre_Sector").Width = 200
+            .Columns("Nombre_Sector").Width = 300
             .Columns("Nombre_Sector").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -103,10 +112,38 @@ Public Class Frm_Sectores
             '.Columns("Es_SubSector").DisplayIndex = _DisplayIndex
             '_DisplayIndex += 1
 
+            '.Columns("EsCabecera").Visible = True
+            '.Columns("EsCabecera").HeaderText = "Cabecera"
+            '.Columns("EsCabecera").Width = 60
+            '.Columns("EsCabecera").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
+
+            '.Columns("Es_SubSector").Width = 30
+            '.Columns("Es_SubSector").HeaderText = "S.S."
+            '.Columns("Es_SubSector").ToolTipText = "Es Sub-Sector"
+            '.Columns("Es_SubSector").Visible = True
+            '.Columns("Es_SubSector").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
+
+            .Columns("EsCabecera").Width = 30
+            .Columns("EsCabecera").HeaderText = "CBRA"
+            .Columns("EsCabecera").ToolTipText = "Es un sector tipo cabecera"
             .Columns("EsCabecera").Visible = True
-            .Columns("EsCabecera").HeaderText = "Cabecera"
-            .Columns("EsCabecera").Width = 60
             .Columns("EsCabecera").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("SoloUnaUbicacion").Width = 30
+            .Columns("SoloUnaUbicacion").HeaderText = "U.U."
+            .Columns("SoloUnaUbicacion").ToolTipText = "Solo acepta una ubicación"
+            .Columns("SoloUnaUbicacion").Visible = True
+            .Columns("SoloUnaUbicacion").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("OblConfimarUbic").Width = 30
+            .Columns("OblConfimarUbic").HeaderText = "C.U."
+            .Columns("OblConfimarUbic").ToolTipText = "Obliga a confirmar ubicaciones diariamente"
+            .Columns("OblConfimarUbic").Visible = True
+            .Columns("OblConfimarUbic").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
         End With
@@ -138,19 +175,26 @@ Public Class Frm_Sectores
         Dim _Codigo_Sector As String = _Fila.Cells("Codigo_Sector").Value
         Dim _Nombre_Sector As String = _Fila.Cells("Nombre_Sector").Value
         Dim _EsCabecera As Boolean = _Fila.Cells("EsCabecera").Value
+        Dim _SoloUnaUbicacion As Boolean = _Fila.Cells("SoloUnaUbicacion").Value
+        Dim _OblConfimarUbic As Boolean = _Fila.Cells("OblConfimarUbic").Value
 
         Dim Fm As New Frm_Formulario_Diseno_Mapa_Crear_Sector(_Id_Mapa, _Id_Sector)
+        Fm.Chk_EsCabecera.Enabled = False
         Fm.ShowDialog(Me)
         _Grabar = Fm.Grabar
         _Codigo_Sector = Fm.Codigo_Sector
         _Nombre_Sector = Fm.Nombre_Sector
         _EsCabecera = Fm.EsCabecera
+        _SoloUnaUbicacion = Fm.SoloUnaUbicacion
+        _OblConfimarUbic = Fm.OblConfimarUbic
         Fm.Dispose()
 
         If _Grabar Then
             _Fila.Cells("Codigo_Sector").Value = _Codigo_Sector
             _Fila.Cells("Nombre_Sector").Value = _Nombre_Sector
             _Fila.Cells("EsCabecera").Value = _EsCabecera
+            _Fila.Cells("SoloUnaUbicacion").Value = _SoloUnaUbicacion
+            _Fila.Cells("OblConfimarUbic").Value = _OblConfimarUbic
         End If
 
     End Sub

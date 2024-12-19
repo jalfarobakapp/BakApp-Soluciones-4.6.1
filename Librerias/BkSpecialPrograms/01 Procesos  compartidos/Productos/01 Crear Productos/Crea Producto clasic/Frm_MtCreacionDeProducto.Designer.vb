@@ -22,7 +22,6 @@ Partial Class Frm_MtCreacionDeProducto
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_MtCreacionDeProducto))
         Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -32,6 +31,7 @@ Partial Class Frm_MtCreacionDeProducto
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_MtCreacionDeProducto))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -131,6 +131,7 @@ Partial Class Frm_MtCreacionDeProducto
         Me.GrillaBodegas = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.GrillaListaDePrecios = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.GroupPanel14 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Chk_RtuXWms = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Txt_Ud02pr = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_Ud01pr = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX35 = New DevComponents.DotNetBar.LabelX()
@@ -163,6 +164,8 @@ Partial Class Frm_MtCreacionDeProducto
         Me.Lbl_Ancho = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_Alto = New DevComponents.DotNetBar.LabelX()
         Me.SuperTabControl1 = New DevComponents.DotNetBar.SuperTabControl()
+        Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel4 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.GroupPanel9 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.SuperTabItem4 = New DevComponents.DotNetBar.SuperTabItem()
@@ -211,9 +214,6 @@ Partial Class Frm_MtCreacionDeProducto
         Me.SuperTabItem2 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel3 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.SuperTabItem3 = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
-        Me.Chk_RtuXWms = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.Input_Podeivpr, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Input_Poivpr, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -235,6 +235,7 @@ Partial Class Frm_MtCreacionDeProducto
         Me.GroupPanel1.SuspendLayout()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControl1.SuspendLayout()
+        Me.SuperTabControlPanel1.SuspendLayout()
         Me.SuperTabControlPanel4.SuspendLayout()
         Me.GroupPanel9.SuspendLayout()
         Me.SuperTabControlPanel6.SuspendLayout()
@@ -242,7 +243,6 @@ Partial Class Frm_MtCreacionDeProducto
         Me.SuperTabControlPanel5.SuspendLayout()
         Me.SuperTabControlPanel2.SuspendLayout()
         Me.SuperTabControlPanel3.SuspendLayout()
-        Me.SuperTabControlPanel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'Txt_Rlud
@@ -1877,6 +1877,24 @@ Partial Class Frm_MtCreacionDeProducto
         Me.GroupPanel14.TabIndex = 7
         Me.GroupPanel14.Text = "Antecedentes de identificación"
         '
+        'Chk_RtuXWms
+        '
+        Me.Chk_RtuXWms.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_RtuXWms.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_RtuXWms.CheckBoxImageChecked = CType(resources.GetObject("Chk_RtuXWms.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_RtuXWms.FocusCuesEnabled = False
+        Me.Chk_RtuXWms.Font = New System.Drawing.Font("Segoe UI", 9.75!)
+        Me.Chk_RtuXWms.ForeColor = System.Drawing.Color.Black
+        Me.Chk_RtuXWms.Location = New System.Drawing.Point(369, 262)
+        Me.Chk_RtuXWms.Name = "Chk_RtuXWms"
+        Me.Chk_RtuXWms.Size = New System.Drawing.Size(231, 25)
+        Me.Chk_RtuXWms.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_RtuXWms.TabIndex = 91
+        Me.Chk_RtuXWms.Text = "R.T.U. Automática por WMS"
+        '
         'Txt_Ud02pr
         '
         Me.Txt_Ud02pr.BackColor = System.Drawing.Color.White
@@ -2706,8 +2724,8 @@ Partial Class Frm_MtCreacionDeProducto
         Me.SuperTabControl1.ControlBox.MenuBox.Name = ""
         Me.SuperTabControl1.ControlBox.Name = ""
         Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel4)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel6)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel5)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
@@ -2724,14 +2742,33 @@ Partial Class Frm_MtCreacionDeProducto
         Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem1, Me.SuperTabItem2, Me.SuperTabItem3, Me.SuperTabItem4, Me.STab_Dimensiones, Me.SuperTabItem5})
         Me.SuperTabControl1.Text = "SuperTabControl1"
         '
+        'SuperTabControlPanel1
+        '
+        Me.SuperTabControlPanel1.Controls.Add(Me.GroupPanel5)
+        Me.SuperTabControlPanel1.Controls.Add(Me.GroupPanel15)
+        Me.SuperTabControlPanel1.Controls.Add(Me.GroupPanel14)
+        Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 27)
+        Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
+        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(977, 467)
+        Me.SuperTabControlPanel1.TabIndex = 1
+        Me.SuperTabControlPanel1.TabItem = Me.SuperTabItem1
+        '
+        'SuperTabItem1
+        '
+        Me.SuperTabItem1.AttachedControl = Me.SuperTabControlPanel1
+        Me.SuperTabItem1.GlobalItem = False
+        Me.SuperTabItem1.Name = "SuperTabItem1"
+        Me.SuperTabItem1.Text = "PRODUCTO"
+        '
         'SuperTabControlPanel4
         '
         Me.SuperTabControlPanel4.Controls.Add(Me.GroupPanel9)
         Me.SuperTabControlPanel4.Controls.Add(Me.GroupPanel16)
         Me.SuperTabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel4.Name = "SuperTabControlPanel4"
-        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(977, 494)
+        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(977, 467)
         Me.SuperTabControlPanel4.TabIndex = 0
         Me.SuperTabControlPanel4.TabItem = Me.SuperTabItem4
         '
@@ -3393,43 +3430,6 @@ Partial Class Frm_MtCreacionDeProducto
         Me.SuperTabItem3.Name = "SuperTabItem3"
         Me.SuperTabItem3.Text = "CLASIFICACIONES"
         '
-        'SuperTabControlPanel1
-        '
-        Me.SuperTabControlPanel1.Controls.Add(Me.GroupPanel5)
-        Me.SuperTabControlPanel1.Controls.Add(Me.GroupPanel15)
-        Me.SuperTabControlPanel1.Controls.Add(Me.GroupPanel14)
-        Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 27)
-        Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
-        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(977, 467)
-        Me.SuperTabControlPanel1.TabIndex = 1
-        Me.SuperTabControlPanel1.TabItem = Me.SuperTabItem1
-        '
-        'SuperTabItem1
-        '
-        Me.SuperTabItem1.AttachedControl = Me.SuperTabControlPanel1
-        Me.SuperTabItem1.GlobalItem = False
-        Me.SuperTabItem1.Name = "SuperTabItem1"
-        Me.SuperTabItem1.Text = "PRODUCTO"
-        '
-        'Chk_RtuXWms
-        '
-        Me.Chk_RtuXWms.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_RtuXWms.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_RtuXWms.CheckBoxImageChecked = CType(resources.GetObject("Chk_RtuXWms.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_RtuXWms.FocusCuesEnabled = False
-        Me.Chk_RtuXWms.Font = New System.Drawing.Font("Segoe UI", 9.75!)
-        Me.Chk_RtuXWms.ForeColor = System.Drawing.Color.Black
-        Me.Chk_RtuXWms.Location = New System.Drawing.Point(369, 262)
-        Me.Chk_RtuXWms.Name = "Chk_RtuXWms"
-        Me.Chk_RtuXWms.Size = New System.Drawing.Size(231, 25)
-        Me.Chk_RtuXWms.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_RtuXWms.TabIndex = 91
-        Me.Chk_RtuXWms.Text = "R.T.U. Automática por WMS"
-        '
         'Frm_MtCreacionDeProducto
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -3439,6 +3439,7 @@ Partial Class Frm_MtCreacionDeProducto
         Me.Controls.Add(Me.Bar1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
@@ -3472,6 +3473,7 @@ Partial Class Frm_MtCreacionDeProducto
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControl1.ResumeLayout(False)
+        Me.SuperTabControlPanel1.ResumeLayout(False)
         Me.SuperTabControlPanel4.ResumeLayout(False)
         Me.GroupPanel9.ResumeLayout(False)
         Me.SuperTabControlPanel6.ResumeLayout(False)
@@ -3480,7 +3482,6 @@ Partial Class Frm_MtCreacionDeProducto
         Me.SuperTabControlPanel2.ResumeLayout(False)
         Me.SuperTabControlPanel3.ResumeLayout(False)
         Me.SuperTabControlPanel3.PerformLayout()
-        Me.SuperTabControlPanel1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub

@@ -8,6 +8,7 @@ Imports System.Net
 Imports System.Text.RegularExpressions
 
 
+
 Public Module Funciones_Comunes
 
     Public Function De_Num_a_Tx_01(lNumero As Double,
@@ -488,10 +489,7 @@ Error_Numero:
     End Function
 
     Function Generar_Filtro_IN_Lista(_Lista As Object,
-                                     _CodChk As String,
-                                     _CodCampo As String,
                                      _EsNumero As Boolean,
-                                     _TieneChk As Boolean,
                                      _Separador As String)
 
         Dim Cadena As String = String.Empty
@@ -512,8 +510,7 @@ Error_Numero:
 
         For Each _Fila In _Lista
 
-            'Dim _Cadena As String = Rd.Item(_CodCampo).ToString().Trim
-            Vcampo = _Fila.Codigo 'Rd.Item(_CodCampo).ToString() '.Trim
+            Vcampo = _Fila.Codigo
 
             If String.IsNullOrEmpty(Vcampo) Then
                 Vcampo = "%%"
@@ -521,13 +518,7 @@ Error_Numero:
 
             Dim _Encadenar As Boolean = False
 
-            If _TieneChk Then
-                'If Rd.Item(_CodChk) Then
-                '    _Encadenar = True
-                'End If
-            Else
-                If Not String.IsNullOrEmpty(Trim(Vcampo)) Then _Encadenar = True
-            End If
+            If Not String.IsNullOrEmpty(Trim(Vcampo)) Then _Encadenar = True
 
             If Vcampo.Contains(Separador) Then
                 Vcampo = Replace(Vcampo, Separador, "|")
@@ -556,6 +547,67 @@ Error_Numero:
         Return Cadena
 
     End Function
+
+    Function Generar_Filtro_IN_Lista2(_Lista As List(Of String),
+                                     _EsNumero As Boolean,
+                                     _Separador As String)
+
+        Dim Cadena As String = String.Empty
+        Dim Vcampo As String = String.Empty
+        Dim Separador As String = ""
+
+        If _EsNumero Then
+            Separador = "#"
+        Else
+            Separador = "@"
+        End If
+
+        If (_Lista Is Nothing) Then
+            Return "()"
+        End If
+
+        Dim i = 0
+
+        For Each _Fila In _Lista
+
+            Vcampo = _Fila
+
+            If String.IsNullOrEmpty(Vcampo) Then
+                Vcampo = "%%"
+            End If
+
+            Dim _Encadenar As Boolean = False
+
+            If Not String.IsNullOrEmpty(Trim(Vcampo)) Then _Encadenar = True
+
+            If Vcampo.Contains(Separador) Then
+                Vcampo = Replace(Vcampo, Separador, "|")
+            End If
+
+            If _Encadenar Then
+                Cadena = Cadena & Separador & Vcampo & Separador '& Coma
+            End If
+
+            i += 1
+        Next
+
+        If _EsNumero Then
+            Cadena = Replace(Cadena, "##", ",")
+            Cadena = Replace(Cadena, "#", "")
+        Else
+            Cadena = Replace(Cadena, "@@", "@,@")
+            Cadena = Replace(Cadena, "@", _Separador)
+            Cadena = Replace(Cadena, "%%", "")
+        End If
+
+        Cadena = Replace(Cadena, "|", Separador)
+
+        Cadena = "(" & Cadena & ")"
+
+        Return Cadena
+
+    End Function
+
     Public Function Primerdiadelmes(fecha As Date) As Date
         Dim rtn As New Date
         rtn = fecha 'Date.Now
@@ -1226,7 +1278,7 @@ Error_Numero:
                     Return False
                 End Try
 
-                If BuscarTextoGrilla(Descripcion, TextoABuscar) Then
+                If BuscarTextoGrilla(Descripcion.ToString.Trim, TextoABuscar.ToString.Trim) Then
                     grid.ClearSelection()
                     grid.FirstDisplayedScrollingRowIndex = row.Index.ToString
                     grid.CurrentCell = grid.Rows(row.Index.ToString).Cells(Columna)
@@ -2570,6 +2622,45 @@ Error_Numero:
         Return _Impresora
 
     End Function
+
+    Function Fx_ReemplazarCaracteresRaros(texto As String) As String
+
+        Dim caracteresExtraños As String = "Ã¡Ã©Ã­Ã³ÃºÃ±Ã¿Ã¼"  ' Añade aquí los caracteres extraños que necesitas reemplazar
+        Dim caracteresNormales As String = "áéíóúñÿü"         ' Añade aquí los caracteres normales correspondientes
+        Dim resultado As String = texto
+
+        For i As Integer = 1 To Len(caracteresExtraños)
+            resultado = Replace(resultado, Mid(caracteresExtraños, i, 1), Mid(caracteresNormales, i, 1))
+        Next i
+
+        Return resultado
+
+    End Function
+
+    Function Fx_ReemplazarCaracteresRaros2(texto As String) As String
+
+        Dim caracteresExtraños() As String
+        Dim caracteresNormales() As String
+        Dim resultado As String = texto
+        Dim i As Integer
+
+        ' Definir los caracteres extraños y sus reemplazos correspondientes
+        caracteresExtraños = Split("Ã¡,Ã©,Ã­,Ã³,Ãº,Ã±,Ã¼,Ã‰", ",")
+        caracteresNormales = Split("á,é,í,ó,ú,ñ,ü,E", ",")
+
+        ' Reemplazar los caracteres extraños por los caracteres normales
+        For i = LBound(caracteresExtraños) To UBound(caracteresExtraños)
+            resultado = Replace(resultado, caracteresExtraños(i), caracteresNormales(i))
+        Next i
+
+        If IsNothing(resultado) Then
+            resultado = String.Empty
+        End If
+
+        Return resultado
+
+    End Function
+
 
 End Module
 

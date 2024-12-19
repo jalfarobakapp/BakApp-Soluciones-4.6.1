@@ -10,6 +10,7 @@ Public Class Frm_Select_Nomenclatura
 
     Public Property Seleccionada As Boolean
     Public Property RowNomenclatura As DataRow
+    Public Property OrdenDesc As Boolean
 
     Public Sub New(_Codigo As String)
 
@@ -34,10 +35,16 @@ Public Class Frm_Select_Nomenclatura
 
     Sub Sb_Actualizar_Grilla()
 
+        Dim _Orden As String = String.Empty
+
+        If OrdenDesc Then
+            _Orden = "Order By PRELA.CODNOMEN Desc"
+        End If
+
         Consulta_sql = "Select PRELA.*,PNPE.DESCRIPTOR" & vbCrLf &
                        "From PRELA" & vbCrLf &
                        "Inner Join PNPE On PRELA.CODNOMEN=PNPE.CODIGO And PNPE.ESODD <> 'S' And PNPE.EMPRESA = '" & ModEmpresa & "'" & vbCrLf &
-                       "Where PRELA.CODIGO = '" & _Codigo & "'"
+                       "Where PRELA.CODIGO = '" & _Codigo & "'" & vbCrLf & _Orden
         _TblNomenclaturas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla

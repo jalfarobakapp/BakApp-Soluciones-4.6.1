@@ -7,7 +7,7 @@ CREATE TABLE [dbo].[Zw_Docu_Archivos](
 	[Nombre_Archivo]	[varchar](200)	Not Null DEFAULT (''),
 	[Archivo]			[image]			Null,
 	[Fecha]				[datetime]		Not Null DEFAULT (''),
-	[CodFuncionario]	[char](3)			Not Null DEFAULT (''),
+	[CodFuncionario]	[char](3)       Not Null DEFAULT (''),
  CONSTRAINT [PK_Zw_Docu_Archivos] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

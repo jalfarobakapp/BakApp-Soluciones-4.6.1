@@ -28,6 +28,7 @@ CREATE TABLE [dbo].[Zw_WMS_Ubicaciones_Mapa_Det](
 	[X_Columna]         [float]             NOT NULL DEFAULT (0),
 	[Orientacion]       [int]               NOT NULL DEFAULT (0),
 	[Habilitado]        [bit]               NOT NULL DEFAULT (1),
+	[EsCabecera]		[bit]				NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_WMS_Ubicaciones_Mapa_Det] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

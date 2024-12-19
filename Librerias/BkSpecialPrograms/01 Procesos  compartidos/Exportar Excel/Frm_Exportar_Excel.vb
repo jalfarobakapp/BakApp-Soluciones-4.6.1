@@ -853,7 +853,7 @@ Public Class Frm_Exportar_Excel
 
         If Not String.IsNullOrEmpty(_Archivo) Then
 
-            If MessageBoxEx.Show(Me, "¿Desea Abrir el archivo " & Txt_Nombre_Archivo.Text & "?", "Abrir documento Excel",
+            If MessageBoxEx.Show(Me, "¿Desea abrir el archivo " & Txt_Nombre_Archivo.Text & "?", "Abrir documento Excel",
                                  MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
                 Try
                     System.Diagnostics.Process.Start(_Archivo)

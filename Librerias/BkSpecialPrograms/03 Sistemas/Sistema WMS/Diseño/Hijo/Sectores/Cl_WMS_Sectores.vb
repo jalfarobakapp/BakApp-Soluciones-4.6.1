@@ -40,6 +40,7 @@ Public Class Cl_WMS_Sectores
             .Es_SubSector = _Row.Item("Es_SubSector")
             .EsCabecera = _Row.Item("EsCabecera")
             .SoloUnaUbicacion = _Row.Item("SoloUnaUbicacion")
+            .OblConfimarUbic = _Row.Item("OblConfimarUbic")
 
         End With
 
@@ -85,6 +86,7 @@ Public Class Cl_WMS_Sectores
                 .Es_SubSector = _Fila.Item("Es_SubSector")
                 .EsCabecera = _Fila.Item("EsCabecera")
                 .SoloUnaUbicacion = _Fila.Item("SoloUnaUbicacion")
+                .OblConfimarUbic = _Fila.Item("OblConfimarUbic")
 
             End With
 
@@ -134,10 +136,11 @@ Public Class Cl_WMS_Sectores
             With Zw_WMS_Ubicaciones_Sectores
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Sectores (Id_Mapa,Empresa,Sucursal,Bodega,Codigo_Sector," &
-                               "Nombre_Sector,Es_SubSector,EsCabecera,SoloUnaUbicacion) " &
+                               "Nombre_Sector,Es_SubSector,EsCabecera,SoloUnaUbicacion,OblConfimarUbic) " &
                                "Values (" & .Id_Mapa & ",'" & .Empresa & "','" & .Sucursal & "'" & ",'" & .Bodega & "'," &
                                "'" & .Codigo_Sector & "', '" & .Nombre_Sector & "'," &
-                               Convert.ToInt32(.Es_SubSector) & "," & Convert.ToInt32(.EsCabecera) & "," & Convert.ToInt32(.SoloUnaUbicacion) & ")"
+                               Convert.ToInt32(.Es_SubSector) & "," & Convert.ToInt32(.EsCabecera) &
+                               "," & Convert.ToInt32(.SoloUnaUbicacion) & "," & Convert.ToInt32(.OblConfimarUbic) & ")"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                 Comando.Transaction = myTrans
@@ -208,16 +211,17 @@ Public Class Cl_WMS_Sectores
             With Zw_WMS_Ubicaciones_Sectores
 
                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Sectores Set " &
-                               "Id_Mapa = " & .Id_Mapa & ", " &
-                               "Empresa = '" & .Empresa & "', " &
-                               "Sucursal = '" & .Sucursal & "', " &
-                               "Bodega = '" & .Bodega & "', " &
-                               "Codigo_Sector = '" & .Codigo_Sector & "', " &
-                               "Nombre_Sector = '" & .Nombre_Sector & "', " &
-                               "Es_SubSector = " & .Es_SubSector & ", " &
-                               "EsCabecera = " & .EsCabecera & " " &
+                               "Id_Mapa = " & .Id_Mapa & "," &
+                               "Empresa = '" & .Empresa & "'," &
+                               "Sucursal = '" & .Sucursal & "'," &
+                               "Bodega = '" & .Bodega & "'," &
+                               "Codigo_Sector = '" & .Codigo_Sector & "'," &
+                               "Nombre_Sector = '" & .Nombre_Sector & "'," &
+                               "Es_SubSector = " & Convert.ToInt32(.Es_SubSector) & "," &
+                               "EsCabecera = " & Convert.ToInt32(.EsCabecera) & "," &
+                               "SoloUnaUbicacion = " & Convert.ToInt32(.SoloUnaUbicacion) & "," &
+                               "OblConfimarUbic = " & Convert.ToInt32(.OblConfimarUbic) & vbCrLf &
                                "Where Id_Sector = " & .Id_Sector
-
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                 Comando.Transaction = myTrans

@@ -201,8 +201,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Dll especiales\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Mail, Version=3.0.24129.1605, Culture=neutral, PublicKeyToken=6dc438ab78a525b3, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Mail.dll.3.0.24129.1605\lib\net45\Mail.dll</HintPath>
+    <Reference Include="Mail, Version=3.0.24303.1333, Culture=neutral, PublicKeyToken=6dc438ab78a525b3, processorArchitecture=MSIL">
+      <HintPath>..\..\Demonio\AntBru\packages\Mail.dll.3.0.24303.1333\lib\net45\Mail.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
@@ -408,6 +408,13 @@
       <DependentUpon>Frm_Ver_Documentos_Recargos_Asociados.vb</DependentUpon>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\02 Ver Documento\Frm_Ver_Documentos_Recargos_Asociados.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\02 Ver Documento\NVV Customizable\Cl_NVVCustomizable.vb" />
+    <Compile Include="01 Procesos  compartidos\Documentos\02 Ver Documento\NVV Customizable\Frm_Ver_Documento_CustomizarDet.Designer.vb">
+      <DependentUpon>Frm_Ver_Documento_CustomizarDet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\02 Ver Documento\NVV Customizable\Frm_Ver_Documento_CustomizarDet.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\02 Ver Documento\Recursos\Recursos_Ver_Documento.Designer.vb">
@@ -850,6 +857,7 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Conceptos.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Demonio_FacAuto.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Despachos_Configuracion.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Docu_Det_Cust.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Entidades.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Contador.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_FotoInventario.vb" />
@@ -893,6 +901,7 @@
     <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Cambio precio\Frm_AsisCompra_CambioPrecioDet.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_ListaMayoristaMinorista.vb" />
     <Compile Include="03 Sistemas\Despachos\Clases\Cl_Despachos.vb" />
     <Compile Include="03 Sistemas\FTP\Cl_Ftp.vb" />
     <Compile Include="03 Sistemas\FTP\Frm_FTP_Conexion.Designer.vb">
@@ -901,6 +910,7 @@
     <Compile Include="03 Sistemas\FTP\Frm_FTP_Conexion.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Informes\Stock\Comp No Despachados y Proximas Recepciones\Cl_Imprimir_CompNoDesp.vb" />
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Cl_Inventario.vb" />
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Frm_Inv_Inventarios.Designer.vb">
       <DependentUpon>Frm_Inv_Inventarios.vb</DependentUpon>
@@ -2431,6 +2441,12 @@
       <DependentUpon>Frm_Sectores_Lista_UbicOblig.vb</DependentUpon>
     </Compile>
     <Compile Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Sectores\Frm_Sectores_Lista_UbicOblig.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Sectores\Frm_Sectores_ProductosEnSector.Designer.vb">
+      <DependentUpon>Frm_Sectores_ProductosEnSector.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Sectores\Frm_Sectores_ProductosEnSector.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Sistema WMS\Gestión WMS\Clases\Cl_Documento_Wms.vb" />
@@ -4549,6 +4565,9 @@
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\02 Ver Documento\Frm_Ver_Documentos_Recargos_Asociados.resx">
       <DependentUpon>Frm_Ver_Documentos_Recargos_Asociados.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Documentos\02 Ver Documento\NVV Customizable\Frm_Ver_Documento_CustomizarDet.resx">
+      <DependentUpon>Frm_Ver_Documento_CustomizarDet.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\02 Ver Documento\Recursos\Recursos_Ver_Documento.resx">
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
@@ -5606,6 +5625,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Sectores\Frm_Sectores_Lista_UbicOblig.resx">
       <DependentUpon>Frm_Sectores_Lista_UbicOblig.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Sectores\Frm_Sectores_ProductosEnSector.resx">
+      <DependentUpon>Frm_Sectores_ProductosEnSector.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Sistema WMS\Diseño\Padre\Frm_Diseno_Doc_y_Ubic.resx">
       <DependentUpon>Frm_Diseno_Doc_y_Ubic.vb</DependentUpon>
@@ -8071,6 +8093,7 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Despacho_Simple.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Docu_Archivos.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Docu_Det.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Docu_Det_Cust.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Docu_Ent.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Docu_ObligPg.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_DTE_Aec.sql" />

@@ -37,6 +37,8 @@ Partial Class Frm_Sincronizador
         Me.Txt_Log = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Timer_Ejecutar = New System.Windows.Forms.Timer(Me.components)
+        Me.Timer_Limpiar = New System.Windows.Forms.Timer(Me.components)
+        Me.Timer_AjustarFecha = New System.Windows.Forms.Timer(Me.components)
         CType(Me.Dtp_FechaRevision, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -262,6 +264,14 @@ Partial Class Frm_Sincronizador
         '
         Me.Timer_Ejecutar.Interval = 2000
         '
+        'Timer_Limpiar
+        '
+        Me.Timer_Limpiar.Interval = 2000
+        '
+        'Timer_AjustarFecha
+        '
+        Me.Timer_AjustarFecha.Interval = 2000
+        '
         'Frm_Sincronizador
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -278,11 +288,13 @@ Partial Class Frm_Sincronizador
         Me.Controls.Add(Me.LabelX2)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.Name = "Frm_Sincronizador"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "MetroForm"
+        Me.Text = "SINCRONIZA MLIBRE2BAKAPP"
         CType(Me.Dtp_FechaRevision, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -301,4 +313,6 @@ Partial Class Frm_Sincronizador
     Friend WithEvents Txt_Log As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Timer_Ejecutar As Timer
+    Friend WithEvents Timer_Limpiar As Timer
+    Friend WithEvents Timer_AjustarFecha As Timer
 End Class

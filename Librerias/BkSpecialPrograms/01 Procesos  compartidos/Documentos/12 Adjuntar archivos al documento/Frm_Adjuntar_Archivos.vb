@@ -224,7 +224,7 @@ Public Class Frm_Adjuntar_Archivos
                         End If
 
                         If _Subir_Archivo Then
-                            Fx_Grabar_Observacion_Adjunta(_Ruta, _Nombre_Archivo, True)
+                            Fx_Grabar_Observacion_Adjunta(_Ruta, _Nombre_Archivo, True, FUNCIONARIO)
                         End If
 
                         _i += 1
@@ -245,7 +245,8 @@ Public Class Frm_Adjuntar_Archivos
 
     Function Fx_Grabar_Observacion_Adjunta(_Ruta As String,
                                            _Nombre_Archivo As String,
-                                           _En_Construccion As Boolean) As Boolean
+                                           _En_Construccion As Boolean,
+                                           _CodFuncionario As String) As Boolean
 
         Dim blob As Byte()
 
@@ -277,7 +278,7 @@ Public Class Frm_Adjuntar_Archivos
             ' Añadir el único parámetro de entrada existente.
             cmd.Parameters.AddWithValue("@" & _Campo, _Codigo_Id)
             cmd.Parameters.AddWithValue("@Nombre_Archivo", _Nombre_Archivo)
-            cmd.Parameters.AddWithValue("@CodFuncionario", FUNCIONARIO)
+            cmd.Parameters.AddWithValue("@CodFuncionario", _CodFuncionario)
 
             If _En_Construccion Then cmd.Parameters.AddWithValue("@En_Construccion", _En_Construccion)
 
@@ -685,7 +686,7 @@ Public Class Frm_Adjuntar_Archivos
 
         If _Grabar Then
 
-            Fx_Grabar_Observacion_Adjunta(_Ruta_y_Archivo, _Nombre_Archivo_Ext, True)
+            Fx_Grabar_Observacion_Adjunta(_Ruta_y_Archivo, _Nombre_Archivo_Ext, True, FUNCIONARIO)
 
             Sb_Eliminar_Archivos_Temporales()
 
@@ -777,7 +778,7 @@ Public Class Frm_Adjuntar_Archivos
 
             _Nombre_Archivo += ".jpg"
 
-            Fx_Grabar_Observacion_Adjunta(_Ruta_y_Archivo, _Nombre_Archivo, True)
+            Fx_Grabar_Observacion_Adjunta(_Ruta_y_Archivo, _Nombre_Archivo, True, FUNCIONARIO)
 
             Sb_Eliminar_Archivos_Temporales()
 

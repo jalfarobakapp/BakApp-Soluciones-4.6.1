@@ -11,6 +11,10 @@ Public Class Frm_Mt_InvParc_Importar
 
     Dim _Ds_Invent As New Ds_Invent_parcial
 
+    Public Property IdInventario As Integer
+
+    Private _Cancelar As Boolean
+
     Public ReadOnly Property Pro_Archivo_Importado_correctamente() As Boolean
         Get
             Return _Archivo_Importado_correctamente
@@ -23,10 +27,12 @@ Public Class Frm_Mt_InvParc_Importar
         End Get
     End Property
 
-    Public Sub New(ByVal Ds_Invent As Object,
-                   ByVal Empresa As String,
-                   ByVal Sucursal As String,
-                   ByVal Bodega As String)
+    Public Property Ls_Mensajes As List(Of LsValiciones.Mensajes)
+
+    Public Sub New(Ds_Invent As Object,
+                    Empresa As String,
+                    Sucursal As String,
+                    Bodega As String)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -42,11 +48,11 @@ Public Class Frm_Mt_InvParc_Importar
 
     End Sub
 
-    Private Sub Frm_Mt_InvParc_Importar_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+    Private Sub Frm_Mt_InvParc_Importar_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
     End Sub
 
-    Private Sub BtnAbrir_Archivo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnAbrir_Archivo.Click
+    Private Sub BtnAbrir_Archivo_Click(sender As System.Object, e As System.EventArgs) Handles BtnAbrir_Archivo.Click
         Dim oFD As New OpenFileDialog
 
         With oFD
@@ -63,11 +69,22 @@ Public Class Frm_Mt_InvParc_Importar
         End With
     End Sub
 
-    Private Function Fx_Importar_Inventario(ByVal _Ubic_Archivo As String,
-                                             ByVal _Nro_Hoja As Integer) As Boolean
+    Private Function Fx_Importar_Inventario(_Ubic_Archivo As String,
+                                              _Nro_Hoja As Integer) As Boolean
         Try
 
             _Ds_Invent.Clear()
+
+            Ls_Mensajes = New List(Of LsValiciones.Mensajes)
+
+            _Cancelar = False
+
+            Btn_Cancelar.Visible = True
+            BtnAbrir_Archivo.Enabled = False
+            Btn_Archivo_Ayuda.Enabled = False
+            BtnImportarDatos.Enabled = False
+
+            Me.Refresh()
 
             Dim _ImpEx As New Class_Importar_Excel
             Dim _Extencion As String = Replace(System.IO.Path.GetExtension(_Nombre_Archivo), ".", "")
@@ -93,13 +110,17 @@ Public Class Frm_Mt_InvParc_Importar
                 Dim _Descripcion As String = String.Empty
                 Dim _Rtu As Double = 0
                 Dim _StockUd1 As Double = 0
+                Dim _Stock_Ud1 As Double = 0
+                Dim _Stock_Ud2 As Double = 0
 
+                If _Codigo = "BAJA30263" Then
+                    Dim a = 0
+                End If
 
-                Consulta_sql = "Select Top 1 * From MAEPR Where KOPR = '" & _Codigo & "'" & vbCrLf &
+                Consulta_sql = "Select Top 1 KOPR,NOKOPR,RLUD,DIVISIBLE,DIVISIBLE2 From MAEPR Where KOPR = '" & _Codigo & "'" & vbCrLf &
                                "Select Top 1 KOPRAL From TABCODAL Where KOPR = '" & _Codigo & "' And KOEN = ''" & vbCrLf &
                                "Select Top 1 Isnull(STFI1,0) As STFI1 From MAEST" & Space(1) &
-                               "Where KOPR = '" & _Codigo & "' AND EMPRESA = '" & _Empresa &
-                               "' AND KOSU = '" & _Sucursal & "' AND KOBO = '" & _Bodega & "'" & vbCrLf &
+                               "Where KOPR = '" & _Codigo & "' AND EMPRESA = '" & _Empresa & "' AND KOSU = '" & _Sucursal & "' AND KOBO = '" & _Bodega & "'" & vbCrLf &
                                "Select Top 1 * From MAEPREM" & vbCrLf &
                                "Where KOPR = '" & _Codigo & "' AND EMPRESA = '" & _Empresa & "'"
 
@@ -109,6 +130,10 @@ Public Class Frm_Mt_InvParc_Importar
                 Dim _Tbl_Tabcodal As DataTable = _Ds_Producto.Tables(1)
                 Dim _Tbl_Maest As DataTable = _Ds_Producto.Tables(2)
                 Dim _Tbl_Maeprem As DataTable = _Ds_Producto.Tables(3)
+
+                Dim _Mensaje As New LsValiciones.Mensajes
+
+                _Mensaje.EsCorrecto = True
 
                 If CBool(_Tbl_Maepr.Rows.Count) Then
 
@@ -121,18 +146,74 @@ Public Class Frm_Mt_InvParc_Importar
                         _Cod_Barras = _Tbl_Tabcodal.Rows(0).Item("KOPRAL")
                     End If
 
-                    If CBool(_Tbl_Maest.Rows.Count) Then
-                        _StockUd1 = _Tbl_Maest.Rows(0).Item("STFI1")
+                    If CBool(IdInventario) Then
+
+                        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Inv_FotoInventario Where IdInventario = " & IdInventario & " And Codigo = '" & _Codigo & "'"
+                        Dim _Row_FotoInv As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                        _StockUd1 = _Row_FotoInv.Item("StFisicoUd1")
+                        _Stock_Ud1 = _Row_FotoInv.Item("StFisicoUd1")
+                        _Stock_Ud2 = _Row_FotoInv.Item("StFisicoUd2")
+
+                    Else
+
+                        If CBool(_Tbl_Maest.Rows.Count) Then
+                            _StockUd1 = _Tbl_Maest.Rows(0).Item("STFI1")
+                        End If
+
                     End If
 
-                    _CantidadUd2 = _CantidadUd1 * _Rtu
+                    If _Rtu <> 1 Then
+                        Dim AAA = 0
+                    End If
 
-                    If CBool(_Tbl_Maeprem.Rows.Count) Then
+                    _CantidadUd2 = Math.Round(_CantidadUd1 / _Rtu, 5)
+
+                    If Not CBool(_CostoUd1) AndAlso CBool(_Tbl_Maeprem.Rows.Count) Then
                         _CostoUd1 = _Tbl_Maeprem.Rows(0).Item("PM")
                     End If
 
+                    'Dim _Divisible = String.Empty
+                    'Dim _Divisible2 = String.Empty
+
+                    'If Not IsNothing(_RowProducto) Then
+
+                    '    _Divisible = Trim(NuloPorNro(_RowProducto.Item("DIVISIBLE"), ""))
+                    '    _Divisible2 = Trim(NuloPorNro(_RowProducto.Item("DIVISIBLE2"), ""))
+
+                    'End If
+
+                    'If Fx_Solo_Enteros(_CantidadUd1, _Divisible) Then
+
+                    '    If _CantidadUd1 <> 0 Then
+
+                    '        _Mensaje.EsCorrecto = False
+                    '        _Mensaje.Detalle = "Fila: " & i + 1 & ", Código: " & _Codigo
+                    '        _Mensaje.Mensaje = "El producto esta definido como indivisible en la primera unidad, cantidad ingresada UD1: " & _CantidadUd1
+
+                    '    End If
+
+                    'End If
+
+                    'If Fx_Solo_Enteros(_CantidadUd2, _Divisible2) Then
+
+                    '    If _CantidadUd2 <> 0 Then
+
+                    '        _Mensaje.EsCorrecto = False
+                    '        _Mensaje.Detalle = "Fila: " & i + 1 & ", Código: " & _Codigo
+                    '        _Mensaje.Mensaje = "El producto esta definido como indivisible en la segunda unidad, cantidad ingresada UD2: " & _CantidadUd2
+
+                    '    End If
+
+                    'End If
+
                 Else
+
+                    _Mensaje.EsCorrecto = False
+                    _Mensaje.Detalle = "Fila: " & i + 1 & ", Código: " & _Codigo
+                    _Mensaje.Mensaje = "Producto no existe"
                     _Descripcion = "#NO EXISTE#"
+
                 End If
 
                 Dim rows As DataRow()
@@ -140,7 +221,16 @@ Public Class Frm_Mt_InvParc_Importar
                 rows = _Ds_Invent.Tables("Inv_InvParcial").Select("CodigoPr = '" & _Codigo & "'", "CodigoPr")
 
                 If CBool(rows.Length) Then
+
+                    _Mensaje.EsCorrecto = False
+                    _Mensaje.Detalle = "Fila: " & i + 1 & ", Código: " & _Codigo
+                    _Mensaje.Mensaje = "Producto repetido"
                     _Descripcion = "#REPETIDO#"
+
+                End If
+
+                If Not _Mensaje.EsCorrecto Then
+                    Ls_Mensajes.Add(_Mensaje)
                 End If
 
                 Dim _Inventariado_Antes = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_TmpInv_InvParcial",
@@ -186,6 +276,11 @@ Public Class Frm_Mt_InvParc_Importar
                     .Item("Oculto") = "OCU"
                     .Item("Nuevo_Producto") = False
 
+                    If CBool(IdInventario) Then
+                        .Item("Stock_Ud1") = _Stock_Ud1
+                        .Item("Stock_Ud2") = _Stock_Ud2
+                    End If
+
                     _Ds_Invent.Tables("Inv_InvParcial").Rows.Add(NewFila)
 
                 End With
@@ -195,67 +290,83 @@ Public Class Frm_Mt_InvParc_Importar
                 Progreso_Porc.Value = ((_Contador * 100) / _Filas)
                 Progreso_Cont.Value += 1
 
+                If _Cancelar Then
+                    Return False
+                End If
+
             Next
 
-            Return True
+            Return Not CBool(Ls_Mensajes.Count)
 
         Catch ex As Exception
             Return False
         Finally
             Progreso_Porc.Value = 0
             Progreso_Cont.Value = 0
+            Btn_Cancelar.Visible = False
+            BtnAbrir_Archivo.Enabled = True
+            BtnImportarDatos.Enabled = True
+            Btn_Archivo_Ayuda.Enabled = True
         End Try
 
     End Function
 
-    Private Sub BtnImportarDatos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnImportarDatos.Click
+    Private Sub BtnImportarDatos_Click(sender As System.Object, e As System.EventArgs) Handles BtnImportarDatos.Click
 
-        If Not String.IsNullOrEmpty(TxtNombreArchivo.Text) Then
+        If String.IsNullOrEmpty(TxtNombreArchivo.Text) Then
+            MessageBoxEx.Show(Me, "Debe seleccionar un archivo", "Importar datos", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End If
 
-            _Archivo_Importado_correctamente = Fx_Importar_Inventario(TxtNombreArchivo.Text, 0)
+        _Archivo_Importado_correctamente = Fx_Importar_Inventario(TxtNombreArchivo.Text, 0)
 
-            If _Archivo_Importado_correctamente Then
+        If _Cancelar Then
+            MessageBoxEx.Show(Me, "Acción cancelada por el usuario", "Cancelare", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
-                Dim _Tb As DataTable = _Ds_Invent.Tables("Inv_InvParcial")
-                Dim _Tbl = Fx_Crea_Tabla_Con_Filtro(_Tb, "Descripcion = '#NO EXISTE#' Or Descripcion = '#REPETIDO#'", "CodigoPr")
+        If Not _Archivo_Importado_correctamente Then
 
-                If CBool(_Tbl.Rows.Count) Then
-                    MessageBoxEx.Show(Me, "Existen productos que no han sido validados por el sistema", "Validación",
-                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                    ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Prod_Problemas")
-                    _Archivo_Importado_correctamente = False
-                Else
-                    Me.Close()
-                End If
-
-
-            Else
-                MessageBoxEx.Show(Me, "Problemas de lectura de archivo de origen" & vbCrLf &
+            MessageBoxEx.Show(Me, "Problemas de lectura de archivo de origen" & vbCrLf &
                                   "No fue posible crear archivo de paso", "Validación",
                                   MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            End If
-        Else
 
-            MessageBoxEx.Show(Me, "Debe seleccionar un archivo", "Importar datos", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Dim Fmv As New Frm_Validaciones
+            Fmv.ListaMensajes = _Ls_Mensajes
+            Fmv.ShowDialog(Me)
+            Fmv.Dispose()
+
+            Return
+
+        End If
+
+        Dim _Tb As DataTable = _Ds_Invent.Tables("Inv_InvParcial")
+        Dim _Tbl = Fx_Crea_Tabla_Con_Filtro(_Tb, "Descripcion = '#NO EXISTE#' Or Descripcion = '#REPETIDO#'", "CodigoPr")
+
+        If CBool(_Tbl.Rows.Count) Then
+            MessageBoxEx.Show(Me, "Existen productos que no han sido validados por el sistema", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Prod_Problemas")
+            _Archivo_Importado_correctamente = False
+        Else
+            Me.Close()
         End If
 
     End Sub
 
-    Private Sub Frm_Mt_InvParc_Importar_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Btn_Cancelar_Click(sender As Object, e As EventArgs) Handles Btn_Cancelar.Click
+        _Cancelar = True
+    End Sub
+    Private Sub Frm_Mt_InvParc_Importar_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
-    Private Sub Btn_Archivo_Ayuda_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Archivo_Ayuda.Click
+    Private Sub Btn_Archivo_Ayuda_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Archivo_Ayuda.Click
 
         Consulta_sql = "Select '' As Codigo,'' As CantidadUd1,'' As CostoUd1"
         ExportarTabla_JetExcel(Consulta_sql, Me, "Archivo_Lev_Inventario")
 
     End Sub
-
-
-
-
 
 End Class

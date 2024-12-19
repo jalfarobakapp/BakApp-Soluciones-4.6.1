@@ -665,6 +665,16 @@ Public Class Frm_Crear_Entidad_Mt
 
         End If
 
+        If Chk_ImpNoCobraVta.Checked AndAlso String.IsNullOrEmpty(Txt_ImpNoCobraVtaStr.Text) Then
+
+            MessageBoxEx.Show(Me, "Debe indicar el impuesto que no cobra en ventas", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            TabControl1.SelectedTabIndex = 1
+            Txt_ImpNoCobraVtaStr.Focus()
+            Return
+
+        End If
+
         TabControl1.Tabs(2).Visible = False
 
         Txt_Rten.Text = Replace(Txt_Rten.Text, ".", "")
@@ -796,7 +806,11 @@ Public Class Frm_Crear_Entidad_Mt
             Dim _Fevecren As String
 
             If FormatDateTime(Dtp_Fevecren.Value, DateFormat.ShortDate) = #01-01-0001# Or IsNothing(Dtp_Fevecren.Value) Or IsDBNull(Dtp_Fevecren.Value) Then
-                _Fevecren = "Null"
+                If _Global_Row_Configuracion_General.Item("RestringirFechaVencimientoClientes") Then
+                    _Fevecren = "'" & Format(FechaDelServidor, "yyyyMMdd") & "'"
+                Else
+                    _Fevecren = "Null"
+                End If
             Else
                 _Fevecren = "'" & Format(Dtp_Fevecren.Value, "yyyyMMdd") & "'"
             End If
@@ -1002,6 +1016,8 @@ Public Class Frm_Crear_Entidad_Mt
                     .CodPagador = Txt_CodPagador.Tag
                     .PreMayMinXHolding = Chk_PreMayMinXHolding.Checked
                     .NoCobrarPallet = Chk_NoCobrarPallet.Checked
+                    .ImpNoCobraVta = Chk_ImpNoCobraVta.Checked
+                    .ImpNoCobraVtaStr = Txt_ImpNoCobraVtaStr.Tag
 
                     If _CreaNuevaEntidad Then
 
@@ -1030,6 +1046,8 @@ Public Class Frm_Crear_Entidad_Mt
                                    ",PreMayMinXHolding = " & Convert.ToInt32(.PreMayMinXHolding) & vbCrLf &
                                    ",CodPagador = '" & .CodPagador & "'" & vbCrLf &
                                    ",NoCobrarPallet = " & Convert.ToInt32(.NoCobrarPallet) & vbCrLf &
+                                   ",ImpNoCobraVta = " & Convert.ToInt32(.ImpNoCobraVta) & vbCrLf &
+                                   ",ImpNoCobraVtaStr = '" & .ImpNoCobraVtaStr & "'" & vbCrLf &
                                    "Where CodEntidad = '" & .CodEntidad & "' And CodSucEntidad = '" & .CodSucEntidad & "'"
 
                     Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
@@ -1324,6 +1342,7 @@ Public Class Frm_Crear_Entidad_Mt
         Txt_Dimoper.Enabled = _Enable
 
         Chk_Libera_NVV.Enabled = _Enable
+        Dtp_Fevecren.Enabled = _Enable
 
         If _Enable Then Txt_Crto.Focus()
 
@@ -1536,6 +1555,12 @@ Public Class Frm_Crear_Entidad_Mt
                     Txt_CodPagador.Text = .CodPagador
                     Chk_PreMayMinXHolding.Checked = .PreMayMinXHolding
                     Chk_NoCobrarPallet.Checked = .NoCobrarPallet
+                    Chk_ImpNoCobraVta.Checked = .ImpNoCobraVta
+                    Txt_ImpNoCobraVtaStr.Tag = .ImpNoCobraVtaStr
+
+                    If .ImpNoCobraVta Then
+                        Txt_ImpNoCobraVtaStr.Text = .ImpNoCobraVtaStr & " - " & _Sql.Fx_Trae_Dato("TABIM", "NOKOIM", "KOIM = '" & Txt_ImpNoCobraVtaStr.Tag & "'")
+                    End If
 
                     Dim _Cl_TablaCaracterizaciones As New Cl_TablaCaractierizaciones
                     Dim _Mensaje As LsValiciones.Mensajes
@@ -2428,37 +2453,43 @@ Public Class Frm_Crear_Entidad_Mt
     End Sub
 
     Private Sub Txt_CodHolding_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_CodHolding.ButtonCustomClick
-        If String.IsNullOrEmpty(Txt_CodHolding.Tag) Then
-            Call Btn_Mnu_HoldingAgregar_Click(Nothing, Nothing)
-        Else
-            ShowContextMenu(Menu_Contextual_Holding)
-        End If
+        'If String.IsNullOrEmpty(Txt_CodHolding.Tag) Then
+        'Call Btn_Mnu_HoldingAgregar_Click(Nothing, Nothing)
+        'Else
+        ShowContextMenu(Menu_Contextual_Holding)
+        'End If
     End Sub
 
     Private Sub Txt_CodHolding_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_CodHolding.ButtonCustom2Click
+
         Txt_CodHolding.Text = String.Empty
         Txt_CodHolding.Tag = String.Empty
+
     End Sub
 
     Private Sub Txt_CodPagador_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_CodPagador.ButtonCustomClick
-        If String.IsNullOrEmpty(Txt_CodPagador.Tag) Then
-            Call Btn_Mnu_PagadorAgregar_Click(Nothing, Nothing)
-        Else
-            ShowContextMenu(Menu_Contextual_Pagador)
-        End If
+        'If String.IsNullOrEmpty(Txt_CodPagador.Tag) Then
+        'Call Btn_Mnu_PagadorAgregar_Click(Nothing, Nothing)
+        'Else
+        ShowContextMenu(Menu_Contextual_Pagador)
+        'End If
     End Sub
 
     Private Sub Txt_CodPagador_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_CodPagador.ButtonCustom2Click
+
         Txt_CodPagador.Text = String.Empty
         Txt_CodPagador.Tag = String.Empty
+
     End Sub
 
     Private Sub Btn_Mnu_HoldingAgregar_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_HoldingAgregar.Click
+
         Dim _FilaSeleccionada_Zw As New Zw_TablaDeCaracterizaciones
         Dim _Seleccionar As Boolean
 
         Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.Holding,
                                                              Frm_Tabla_Caracterizaciones_01_Listado.Accion.Seleccionar)
+        Fm.Permiso = "CfEnt033"
         Fm.Text = "HOLDING"
         Fm.ShowDialog(Me)
         _Seleccionar = Fm.Pro_Seleccion_Realizada
@@ -2469,15 +2500,18 @@ Public Class Frm_Crear_Entidad_Mt
             Txt_CodHolding.Tag = _FilaSeleccionada_Zw.CodigoTabla
             Txt_CodHolding.Text = _FilaSeleccionada_Zw.CodigoTabla.ToString.Trim & " - " & _FilaSeleccionada_Zw.NombreTabla.ToString.Trim
         End If
+
     End Sub
 
     Private Sub Btn_Mnu_PagadorAgregar_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_PagadorAgregar.Click
+
         Dim _FilaSeleccionada_Zw As New Zw_TablaDeCaracterizaciones
         Dim _Seleccionar As Boolean
 
         Dim Fm As New Frm_Tabla_Caracterizaciones_01_Listado(Frm_Tabla_Caracterizaciones_01_Listado.Enum_Tablas_Random.PagadorEntidad,
                                                      Frm_Tabla_Caracterizaciones_01_Listado.Accion.Seleccionar)
         Fm.Text = "PAGADOR ENTIDAD"
+        Fm.Permiso = "CfEnt034"
         Fm.ShowDialog(Me)
         _Seleccionar = Fm.Pro_Seleccion_Realizada
         _FilaSeleccionada_Zw = Fm.FilaSeleccionada_Zw
@@ -2533,6 +2567,84 @@ Public Class Frm_Crear_Entidad_Mt
         Dim _Filtrar As New Clas_Filtros_Random(Me)
         _Filtrar.Fx_Filtrar(Nothing, Clas_Filtros_Random.Enum_Tabla_Fl._Entidades, _Sql_Filtro_Condicion_Extra, False, False,, False)
 
+    End Sub
+
+    Private Sub Btn_Modificar_Holding_Click(sender As Object, e As EventArgs) Handles Btn_Modificar_Holding.Click
+
+        If Not Fx_Tiene_Permiso(Me, "CfEnt032") Then
+            Return
+        End If
+
+        Lbl_Holding.Enabled = True
+        Txt_CodHolding.ButtonCustom2.Enabled = True
+        Btn_Mnu_HoldingAgregar.Enabled = True
+        Btn_Modificar_Holding.Enabled = False
+        Chk_PreMayMinXHolding.Enabled = True
+
+    End Sub
+
+    Private Sub Btn_Modificar_Pagador_Click(sender As Object, e As EventArgs) Handles Btn_Modificar_Pagador.Click
+
+        If Not Fx_Tiene_Permiso(Me, "CfEnt035") Then
+            Return
+        End If
+
+        Lbl_Pagador.Enabled = True
+        Txt_CodPagador.ButtonCustom2.Enabled = True
+        Btn_Mnu_PagadorAgregar.Enabled = True
+        Btn_Modificar_Pagador.Enabled = False
+
+    End Sub
+
+    Private Sub Txt_ImpNoCobraVtaStr_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_ImpNoCobraVtaStr.ButtonCustomClick
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Pro_Nombre_Encabezado_Informe = "IMPUESTOS ESPECIFICOS"
+
+        _Filtrar.Tabla = "TABIM"
+        _Filtrar.Campo = "KOIM"
+        _Filtrar.Descripcion = "NOKOIM"
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "",
+                               Nothing, False, True) Then
+
+            Dim _Row As DataRow = _Filtrar.Pro_Tbl_Filtro.Rows(0)
+
+            Dim _Codigo As String = _Row.Item("Codigo").ToString.Trim
+            Dim _Descripcion As String = _Row.Item("Descripcion").ToString.Trim
+
+            Txt_ImpNoCobraVtaStr.Tag = _Codigo
+            Txt_ImpNoCobraVtaStr.Text = _Codigo & " - " & _Descripcion
+
+        End If
+
+    End Sub
+
+    Private Sub Txt_ImpNoCobraVtaStr_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_ImpNoCobraVtaStr.ButtonCustom2Click
+        Txt_ImpNoCobraVtaStr.Text = String.Empty
+        Txt_ImpNoCobraVtaStr.Tag = String.Empty
+    End Sub
+
+    Private Sub Btn_Modificar_RetieneImp_Click(sender As Object, e As EventArgs) Handles Btn_Modificar_RetieneImp.Click
+
+        If Not Fx_Tiene_Permiso(Me, "CfEnt036") Then
+            Return
+        End If
+
+        Btn_Modificar_RetieneImp.Enabled = False
+        Chk_ImpNoCobraVta.Enabled = True
+        Txt_ImpNoCobraVtaStr.ButtonCustom.Enabled = True
+        Txt_ImpNoCobraVtaStr.ButtonCustom2.Enabled = True
+
+    End Sub
+
+    Private Sub Chk_ImpNoCobraVta_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_ImpNoCobraVta.CheckedChanged
+        If Not Chk_ImpNoCobraVta.Checked Then
+            Txt_ImpNoCobraVtaStr.Text = String.Empty
+            Txt_ImpNoCobraVtaStr.Tag = String.Empty
+        End If
     End Sub
 
     Private Sub Sb_Grilla_Maennmail_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)

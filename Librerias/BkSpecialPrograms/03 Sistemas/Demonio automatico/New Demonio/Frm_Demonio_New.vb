@@ -1153,11 +1153,12 @@ Public Class Frm_Demonio_New
                 _Cl_FacturacionAuto.Nombre_Equipo = _NombreEquipo
                 _Cl_FacturacionAuto.Log_Registro = String.Empty
 
+                _Cl_FacturacionAuto.Sb_Traer_NVV_De_NVVAuto_A_Facturar()
                 _Cl_FacturacionAuto.Sb_Traer_NVV_A_Facturar()
                 _Cl_FacturacionAuto.Sb_Traer_NVV_De_Picking_A_Facturar()
 
-                '_Cl_FacturacionAuto.Sb_Facturar_Automaticamente_NVV(Me, Nothing)
-                _Cl_FacturacionAuto.Sb_Facturar_Automaticamente_NVV2(Me, Nothing)
+
+                _Cl_FacturacionAuto.Sb_Facturar_Automaticamente_NVV_New(Me, Nothing)
 
                 Dim registro As String = "Tarea ejecutada (Facturación automática) a las: " & DateTime.Now.ToString()
 

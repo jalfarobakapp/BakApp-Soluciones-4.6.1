@@ -27,6 +27,7 @@ Public Class Clas_Asistente_Compras
     Dim _Chk_Restar_Stok_PedidoNvi As Boolean
     Dim _Chk_Restar_Stok_PedidoOcc As Boolean
     Dim _Chk_Restar_Stok_TransitoGti As Boolean
+    Dim _Chk_Restar_Stock_Devengado As Boolean
 
     Dim _Chk_Advertir_Rotacion As Boolean
     Dim _Input_Dias_Advertencia_Rotacion As Integer
@@ -273,10 +274,22 @@ Public Class Clas_Asistente_Compras
         End Set
     End Property
 
+    Public Property Chk_Restar_Stock_Devengado As Boolean
+        Get
+            Return _Chk_Restar_Stock_Devengado
+        End Get
+        Set(value As Boolean)
+            _Chk_Restar_Stock_Devengado = value
+        End Set
+    End Property
+
     Public Sub New(ByVal Nombre_Tbl_Paso_Informe As String)
         _Nombre_Tbl_Paso_Informe = Nombre_Tbl_Paso_Informe
         _Rdb_RotMeses = True
     End Sub
+
+
+
 
     Sub Sb_Actualizar_Rotacion(_Codigo As String, _Actualizar_Dias_Stock_En_Bodega As Boolean)
 
@@ -480,6 +493,7 @@ Public Class Clas_Asistente_Compras
             Dim _StockPedidoNvi = String.Empty
             Dim _StockTransitoGti = String.Empty
             Dim _StockPedidoOcc = String.Empty
+            Dim _StockDevengado = String.Empty
             Dim _StockFisico = String.Empty
 
             If _Chk_Restar_Stok_PedidoNvi Then
@@ -494,23 +508,16 @@ Public Class Clas_Asistente_Compras
                 _StockPedidoOcc = "+StockPedidoUd" & _Ud
             End If
 
+            If _Chk_Restar_Stock_Devengado Then
+                _StockDevengado = "-Stock_Devengado_Ud" & _Ud
+            End If
+
             If _Chk_Restar_Stok_Bodega Then
                 _StockFisico = "+Stock_Fisico_Ud" & _Ud
             End If
 
-
-            'If _Proyeccion_Tiempo_Reposicion = Enum_Proyeccion.Dias Then
-            '    Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set" & Space(1) &
-            '                   "StockUd" & _Ud & " = (Stock_Fisico_Ud" & _Ud & "+StockPedidoUd" & _Ud & _StockPedidoNvi & ")---(" & _Tiempo_Reposicion & " * RotCalculo)" & vbCrLf &
-            '                   "Where (Stock_Fisico_Ud" & _Ud & "+StockPedidoUd" & _Ud & ") > 0"
-            'Else
-            '    Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set" & Space(1) &
-            '                   "StockUd" & _Ud & " = (Stock_Fisico_Ud" & _Ud & "+StockPedidoUd" & _Ud & _StockPedidoNvi &")---(" & _Tiempo_Reposicion_Mensual & " * RotCalculo)" & vbCrLf &
-            '                   "Where (Stock_Fisico_Ud" & _Ud & "+StockPedidoUd" & _Ud & ") > 0"
-            'End If
-
             Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set" & Space(1) &
-                           "StockUd" & _Ud & " = 0" & _StockPedidoNvi & _StockTransitoGti & _StockPedidoOcc & _StockFisico & vbCrLf &
+                           "StockUd" & _Ud & " = 0" & _StockPedidoNvi & _StockTransitoGti & _StockPedidoOcc & _StockFisico & _StockDevengado & vbCrLf &
                            "Where (Stock_Fisico_Ud" & _Ud & "+StockPedidoUd" & _Ud & "+StockPedidoNVIUd" & _Ud & "+StockTransitoUd" & _Ud & ") > 0"
             _Sql.Ej_consulta_IDU(Consulta_sql)
 

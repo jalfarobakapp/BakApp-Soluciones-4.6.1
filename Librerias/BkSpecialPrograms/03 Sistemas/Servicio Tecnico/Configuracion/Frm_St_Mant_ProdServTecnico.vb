@@ -41,8 +41,7 @@ Public Class Frm_St_Mant_ProdServTecnico
         Dim _Filtrar As New Clas_Filtros_Random(Me)
 
         If _Filtrar.Fx_Filtrar(_TblProdIngreso,
-                               Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra,
-                               False, False,, False) Then
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra, False, False,, True) Then
 
             _TblProdIngreso = _Filtrar.Pro_Tbl_Filtro
             If _Filtrar.Pro_Filtro_Todas Then
@@ -63,7 +62,7 @@ Public Class Frm_St_Mant_ProdServTecnico
 
         If _Filtrar.Fx_Filtrar(_TblProdServicio,
                                Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra,
-                               False, False,, False) Then
+                               False, False,, True) Then
 
             _TblProdServicio = _Filtrar.Pro_Tbl_Filtro
             If _Filtrar.Pro_Filtro_Todas Then

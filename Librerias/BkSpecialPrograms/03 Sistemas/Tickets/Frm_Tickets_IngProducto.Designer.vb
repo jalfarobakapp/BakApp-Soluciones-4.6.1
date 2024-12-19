@@ -27,9 +27,7 @@ Partial Class Frm_Tickets_IngProducto
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Archivos_Adjuntos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
-        Me.Txt_Cantidad = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Lbl_Cantidad = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_StfiEnBodega = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Lbl_StfiEnBodega = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Bodega = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
@@ -45,9 +43,13 @@ Partial Class Frm_Tickets_IngProducto
         Me.Dtp_HoraRev = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.Txt_Ubicacion = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
+        Me.Input_StfiEnBodega = New DevComponents.Editors.IntegerInput()
+        Me.Input_Cantidad = New DevComponents.Editors.IntegerInput()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dtp_FechaRev, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dtp_HoraRev, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Input_StfiEnBodega, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Input_Cantidad, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Bar2
@@ -94,25 +96,6 @@ Partial Class Frm_Tickets_IngProducto
         Me.Btn_Eliminar.Tooltip = "Anular Ticket"
         Me.Btn_Eliminar.Visible = False
         '
-        'Txt_Cantidad
-        '
-        Me.Txt_Cantidad.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_Cantidad.Border.Class = "TextBoxBorder"
-        Me.Txt_Cantidad.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Cantidad.ButtonCustom.Image = CType(resources.GetObject("Txt_Cantidad.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_Cantidad.ButtonCustom2.Image = CType(resources.GetObject("Txt_Cantidad.ButtonCustom2.Image"), System.Drawing.Image)
-        Me.Txt_Cantidad.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_Cantidad.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Cantidad.Location = New System.Drawing.Point(106, 152)
-        Me.Txt_Cantidad.Name = "Txt_Cantidad"
-        Me.Txt_Cantidad.PreventEnterBeep = True
-        Me.Txt_Cantidad.Size = New System.Drawing.Size(86, 22)
-        Me.Txt_Cantidad.TabIndex = 5
-        Me.Txt_Cantidad.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
         'Lbl_Cantidad
         '
         Me.Lbl_Cantidad.BackColor = System.Drawing.Color.Transparent
@@ -126,25 +109,6 @@ Partial Class Frm_Tickets_IngProducto
         Me.Lbl_Cantidad.Size = New System.Drawing.Size(89, 23)
         Me.Lbl_Cantidad.TabIndex = 173
         Me.Lbl_Cantidad.Text = "Stock físico"
-        '
-        'Txt_StfiEnBodega
-        '
-        Me.Txt_StfiEnBodega.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_StfiEnBodega.Border.Class = "TextBoxBorder"
-        Me.Txt_StfiEnBodega.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_StfiEnBodega.ButtonCustom.Image = CType(resources.GetObject("Txt_StfiEnBodega.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_StfiEnBodega.ButtonCustom2.Image = CType(resources.GetObject("Txt_StfiEnBodega.ButtonCustom2.Image"), System.Drawing.Image)
-        Me.Txt_StfiEnBodega.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_StfiEnBodega.ForeColor = System.Drawing.Color.Black
-        Me.Txt_StfiEnBodega.Location = New System.Drawing.Point(106, 124)
-        Me.Txt_StfiEnBodega.Name = "Txt_StfiEnBodega"
-        Me.Txt_StfiEnBodega.PreventEnterBeep = True
-        Me.Txt_StfiEnBodega.Size = New System.Drawing.Size(86, 22)
-        Me.Txt_StfiEnBodega.TabIndex = 4
-        Me.Txt_StfiEnBodega.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Lbl_StfiEnBodega
         '
@@ -462,20 +426,48 @@ Partial Class Frm_Tickets_IngProducto
         Me.LabelX2.TabIndex = 183
         Me.LabelX2.Text = "Ubicación"
         '
+        'Input_StfiEnBodega
+        '
+        '
+        '
+        '
+        Me.Input_StfiEnBodega.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_StfiEnBodega.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_StfiEnBodega.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_StfiEnBodega.Location = New System.Drawing.Point(106, 124)
+        Me.Input_StfiEnBodega.Name = "Input_StfiEnBodega"
+        Me.Input_StfiEnBodega.ShowUpDown = True
+        Me.Input_StfiEnBodega.Size = New System.Drawing.Size(80, 22)
+        Me.Input_StfiEnBodega.TabIndex = 184
+        '
+        'Input_Cantidad
+        '
+        '
+        '
+        '
+        Me.Input_Cantidad.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_Cantidad.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_Cantidad.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_Cantidad.Location = New System.Drawing.Point(106, 152)
+        Me.Input_Cantidad.Name = "Input_Cantidad"
+        Me.Input_Cantidad.ShowUpDown = True
+        Me.Input_Cantidad.Size = New System.Drawing.Size(80, 22)
+        Me.Input_Cantidad.TabIndex = 185
+        '
         'Frm_Tickets_IngProducto
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(536, 285)
+        Me.Controls.Add(Me.Input_Cantidad)
+        Me.Controls.Add(Me.Input_StfiEnBodega)
         Me.Controls.Add(Me.Txt_Ubicacion)
         Me.Controls.Add(Me.LabelX2)
         Me.Controls.Add(Me.Lbl_HoraRev)
         Me.Controls.Add(Me.Dtp_HoraRev)
         Me.Controls.Add(Me.Txt_Diferencia)
         Me.Controls.Add(Me.LabelX1)
-        Me.Controls.Add(Me.Txt_Cantidad)
         Me.Controls.Add(Me.Lbl_Cantidad)
-        Me.Controls.Add(Me.Txt_StfiEnBodega)
         Me.Controls.Add(Me.Lbl_StfiEnBodega)
         Me.Controls.Add(Me.Txt_Bodega)
         Me.Controls.Add(Me.LabelX7)
@@ -499,6 +491,8 @@ Partial Class Frm_Tickets_IngProducto
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Dtp_FechaRev, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Dtp_HoraRev, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Input_StfiEnBodega, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Input_Cantidad, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -507,9 +501,7 @@ Partial Class Frm_Tickets_IngProducto
     Friend WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_Archivos_Adjuntos As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Eliminar As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Txt_Cantidad As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Lbl_Cantidad As DevComponents.DotNetBar.LabelX
-    Friend WithEvents Txt_StfiEnBodega As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Lbl_StfiEnBodega As DevComponents.DotNetBar.LabelX
     Friend WithEvents Txt_Bodega As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
@@ -525,4 +517,6 @@ Partial Class Frm_Tickets_IngProducto
     Friend WithEvents Dtp_HoraRev As DevComponents.Editors.DateTimeAdv.DateTimeInput
     Friend WithEvents Txt_Ubicacion As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Input_StfiEnBodega As DevComponents.Editors.IntegerInput
+    Friend WithEvents Input_Cantidad As DevComponents.Editors.IntegerInput
 End Class

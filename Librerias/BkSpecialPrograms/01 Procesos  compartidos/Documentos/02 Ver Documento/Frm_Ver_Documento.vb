@@ -1,6 +1,7 @@
 ﻿Imports System.Drawing.Printing
 Imports System.IO
 Imports DevComponents.DotNetBar
+Imports OfficeOpenXml.FormulaParsing.LexicalAnalysis
 Imports PdfSharp
 Imports PdfSharp.Drawing
 Imports PdfSharp.Drawing.Layout
@@ -59,6 +60,9 @@ Public Class Frm_Ver_Documento
     Dim _Anulado As Boolean
 
     Dim _Row_Docu_Ent As DataRow
+
+    Dim _Customizable As Boolean
+    Dim _Cl_NVVCustomizable As New Cl_NVVCustomizable
 
     Enum _Sector
         Encabezado
@@ -290,6 +294,7 @@ Public Class Frm_Ver_Documento
                 Btn_Permisos_Asociados.Visible = False
                 Btn_Ver_Pagos.Visible = False
                 Btn_Ver_Orden_de_despacho.Visible = False
+                Btn_HabilitarFacturacion.Visible = False
 
         End Select
 
@@ -297,13 +302,13 @@ Public Class Frm_Ver_Documento
 
         Me.Cursor = Cursors.WaitCursor
 
-        Dim _Koen As String
-        Dim _Suen As String
+        'Dim _Koen As String
+        'Dim _Suen As String
 
-        _Koen = _TblEncabezado.Rows(0).Item(_Campo_Koen)
-        _Suen = _TblEncabezado.Rows(0).Item(_Campo_Suen)
+        '_Koen = _TblEncabezado.Rows(0).Item(_Campo_Koen)
+        '_Suen = _TblEncabezado.Rows(0).Item(_Campo_Suen)
 
-        _RowEntidad = Fx_Traer_Datos_Entidad(_Koen, _Suen)
+        '_RowEntidad = Fx_Traer_Datos_Entidad(_Koen, _Suen)
 
     End Sub
 
@@ -367,6 +372,15 @@ Public Class Frm_Ver_Documento
                 Btn_Ver_Orden_de_despacho.Visible = False
 
         End Select
+
+        Dim _Koen As String
+        Dim _Suen As String
+
+        _Koen = _TblEncabezado.Rows(0).Item(_Campo_Koen)
+        _Suen = _TblEncabezado.Rows(0).Item(_Campo_Suen)
+
+        _RowEntidad = Fx_Traer_Datos_Entidad(_Koen, _Suen)
+
 
         Sb_Formato_Generico_Grilla(GrillaEncabezado, 17, New Font("Tahoma", 8), Color.LightYellow, ScrollBars.None, False, False, False)
 
@@ -507,6 +521,36 @@ Public Class Frm_Ver_Documento
         Sb_Color_Botones_Barra(Bar2)
 
         Me.Cursor = Cursors.Default
+
+        VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00021",, False)
+
+        If Not VerSoloEntidadesDelVendedor Then
+            VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00022",, False)
+        End If
+
+        If Not String.IsNullOrEmpty(_Codigo_Marcar) Then
+            BuscarDatoEnGrilla(_Codigo_Marcar, "KOPRCT", GrillaDetalleDoc)
+        End If
+
+        Dim _Tido = Trim(_TblEncabezado.Rows(0).Item("TIDO"))
+
+        If _Tido = "NVV" AndAlso
+            _Global_Row_Configuracion_General.Item("HabilitarNVVConProdCustomizables") AndAlso
+            _Tipo_Apertura = Enum_Tipo_Apertura.Desde_Random_SQL Then
+
+            _Customizable = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "Customizable", "Idmaeedo = " & _Idmaeedo)
+
+            Lbl_CusNVV.Visible = _Customizable
+            Btn_CusNVV.Visible = _Customizable
+
+            If _Customizable Then
+                Btn_CusNVV.Text = "Ver información del producto Customizado"
+                Me.Text += " *** CUSTOMIZABLE ***"
+            Else
+                Btn_MarcarNVVCustomizable.Visible = True
+            End If
+
+        End If
 
     End Sub
 
@@ -743,6 +787,60 @@ Public Class Frm_Ver_Documento
 
         Btn_Ver_Orden_de_despacho.Visible = (_Tido = "FCV" Or _Tido = "BLV" Or _Tido = "GTI" Or _Tido = "NVI" Or _Tido = "NVV" Or _Tido = "GDV")
 
+        Btn_HabilitarFacturacion.Visible = False
+
+        If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Docu_Ent") Then
+            Consulta_sql = "Select Dce.*,Isnull(NOKOFU,'') As NomFunHabilita From " & _Global_BaseBk & "Zw_Docu_Ent Dce WITH (NOLOCK)" & vbCrLf &
+                           "Left Join TABFU On Dce.FunAutorizaFac = KOFU" & vbCrLf &
+                           "Where Idmaeedo = " & _Idmaeedo
+            _Row_Docu_Ent = _Sql.Fx_Get_DataRow(Consulta_sql)
+        End If
+
+        If Not IsNothing(_Row_Docu_Ent) AndAlso _Tido = "NVV" Then
+
+            Dim _Revisar_HbilitarNVVFAc As Boolean = _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar")
+
+            If _Global_Row_Configuracion_General.Item("HabilitarNVVConProdCustomizables") And Not _Row_Docu_Ent.Item("Customizable") Then
+                _Revisar_HbilitarNVVFAc = False
+            End If
+
+            If _Revisar_HbilitarNVVFAc Then
+
+                Btn_HabilitarFacturacion.Visible = True
+
+                If _Row_Docu_Ent.Item("HabilitadaFac") Then
+
+                    If Global_Thema = Enum_Themas.Oscuro Then
+                        Btn_HabilitarFacturacion.ImageAlt = My.Resources.Recursos_Documento.invoice_ok___copia
+                    Else
+                        Btn_HabilitarFacturacion.Image = My.Resources.Recursos_Documento.invoice_ok
+                    End If
+                    Btn_HabilitarFacturacion.Tooltip = "Nota de venta habilitada para ser facturada"
+                    Me.Text += " (*** HABILITADA PARA SER FACTURADA ***)"
+
+                Else
+
+                    If Global_Thema = Enum_Themas.Oscuro Then
+                        Btn_HabilitarFacturacion.ImageAlt = My.Resources.Recursos_Documento.invoice_forbidden___copia
+                    Else
+                        Btn_HabilitarFacturacion.Image = My.Resources.Recursos_Documento.invoice_forbidden
+                    End If
+                    Btn_HabilitarFacturacion.Tooltip = "Habilitar nota de venta para ser facturada"
+                    Me.Text += " (*** NO ESTA HABILITADA PARA SER FACTURADA ***)"
+
+                End If
+
+            End If
+
+        End If
+
+        Dim _Ruta_PDF = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Estaciones_Ruta_PDF", "Ruta_PDF",
+                                              "NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "' And Tido = '" & _Tido & "'")
+
+        If Not String.IsNullOrEmpty(_Ruta_PDF) Then
+            Btn_GuardarRutaPDFAutomatica.Tooltip = _Ruta_PDF
+        End If
+
         If _Esdo = "N" Then
 
             Btn_Imprimir_Documento.Visible = False
@@ -755,6 +853,7 @@ Public Class Frm_Ver_Documento
             Btn_Ver_Orden_de_despacho.Visible = False
             Btn_Consolidar_Stock.Visible = False
             Btn_Revisar_Situacion_Comercial.Visible = False
+            Btn_HabilitarFacturacion.Visible = False
 
             Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Docu_Archivos 
                             Where Idmaeedo Not In (Select IDMAEEDO From MAEEDO Where IDMAEEDO In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Docu_Archivos))"
@@ -770,45 +869,6 @@ Public Class Frm_Ver_Documento
                 Btn_Mnu_Eliminar_Reciclar.Text = "Eliminar y reciclar"
             End If
 
-        End If
-
-        Btn_HabilitarFacturacion.Visible = False
-
-        If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Docu_Ent") Then
-            Consulta_sql = "Select Dce.*,Isnull(NOKOFU,'') As NomFunHabilita From " & _Global_BaseBk & "Zw_Docu_Ent Dce WITH (NOLOCK)" & vbCrLf &
-                           "Left Join TABFU On Dce.FunAutorizaFac = KOFU" & vbCrLf &
-                           "Where Idmaeedo = " & _Idmaeedo
-            _Row_Docu_Ent = _Sql.Fx_Get_DataRow(Consulta_sql)
-        End If
-
-        If Not IsNothing(_Row_Docu_Ent) And _Tido = "NVV" Then
-            If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
-                Btn_HabilitarFacturacion.Visible = True
-                If _Row_Docu_Ent.Item("HabilitadaFac") Then
-                    If Global_Thema = Enum_Themas.Oscuro Then
-                        Btn_HabilitarFacturacion.ImageAlt = My.Resources.Recursos_Documento.invoice_ok___copia
-                    Else
-                        Btn_HabilitarFacturacion.Image = My.Resources.Recursos_Documento.invoice_ok
-                    End If
-                    Btn_HabilitarFacturacion.Tooltip = "Nota de venta habilitada para ser facturada"
-                    Me.Text += " (*** HABILITADA PARA SER FACTURADA ***)"
-                Else
-                    If Global_Thema = Enum_Themas.Oscuro Then
-                        Btn_HabilitarFacturacion.ImageAlt = My.Resources.Recursos_Documento.invoice_forbidden___copia
-                    Else
-                        Btn_HabilitarFacturacion.Image = My.Resources.Recursos_Documento.invoice_forbidden
-                    End If
-                    Btn_HabilitarFacturacion.Tooltip = "Habilitar nota de venta para ser facturada"
-                    Me.Text += " (*** NO ESTA HABILITADA PARA SER FACTURADA ***)"
-                End If
-            End If
-        End If
-
-        Dim _Ruta_PDF = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Estaciones_Ruta_PDF", "Ruta_PDF",
-                                              "NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "' And Tido = '" & _Tido & "'")
-
-        If Not String.IsNullOrEmpty(_Ruta_PDF) Then
-            Btn_GuardarRutaPDFAutomatica.Tooltip = _Ruta_PDF
         End If
 
         Me.Refresh()
@@ -1693,6 +1753,9 @@ Public Class Frm_Ver_Documento
 
             End If
 
+            If IsNothing(_Codigo_Marcar) Then
+                _Codigo_Marcar = String.Empty
+            End If
 
             ' MARCAR DETALLE DE ORIGEN
 
@@ -1701,9 +1764,10 @@ Public Class Frm_Ver_Documento
                 Dim _Idmaeddo = _Fila.Cells("IDMAEDDO").Value
                 Dim _Koprct = _Fila.Cells("KOPRCT").Value
 
-                If _Idrst = _Idmaeddo Or _Codigo_Marcar = _Koprct Then
+                If _Idrst = _Idmaeddo Or _Codigo_Marcar.ToString.Trim = _Koprct.ToString.Trim Then
                     _Fila.DefaultCellStyle.ForeColor = Color.Black
                     _Fila.DefaultCellStyle.BackColor = Color.LightGreen
+                    _Codigo_Marcar = _Koprct
                 End If
 
             Next
@@ -2322,7 +2386,7 @@ Public Class Frm_Ver_Documento
         Dim _Endo As String = String.Empty
         Dim _Tido As String = _TblEncabezado.Rows(0).Item("TIDO")
 
-        If _Global_Row_Configuracion_Estacion.Item("VerSoloEntidadesDelVendedor") Then
+        If VerSoloEntidadesDelVendedor Then
             If _Tido = "COV" Or _Tido = "NVV" Or _Tido = "FCV" Or _Tido = "GDV" Or _Tido = "GDP" Or _Tido = "NCV" Then
                 _Tipo_Doc = Frm_BkpPostBusquedaEspecial_Mt.Tipo_Doc.Venta
                 _Endo = _RowEntidad.Item("KOEN")
@@ -4573,7 +4637,7 @@ Public Class Frm_Ver_Documento
             Return
         End If
 
-        Sb_Eliminar_Despachos
+        Sb_Eliminar_Despachos()
 
 
         Consulta_sql = "Select Top 1 *,KOEN AS ENDO, SUEN AS SUENDO From MAEEN" & vbCrLf &
@@ -4857,10 +4921,45 @@ Public Class Frm_Ver_Documento
                              MessageBoxButtons.OK, MessageBoxIcon.Information)
         Else
 
-            MessageBoxEx.Show(Me, "Esta Nota de venta NO esta habilitada para ser facturada." & vbCrLf &
+            If _Row_Docu_Ent.Item("Customizable") Then
+
+                If FUNCIONARIO <> _TblEncabezado.Rows(0).Item("KOFUDO") Then
+                    If Not Fx_Tiene_Permiso(Me, "Doc00082") Then
+                        Return
+                    End If
+                End If
+
+                Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros("MAEDDO",
+                                                               "IDMAEDDO Not In " &
+                                                               "(Select Idmaeddo From " & _Global_BaseBk & "Zw_Docu_Det_Cust " &
+                                                               "Where Idmaeedo = " & _Idmaeedo & ") And IDMAEEDO = " & _Idmaeedo)
+
+                If CBool(_Reg) Then
+                    MessageBoxEx.Show(Me, "Faltan productos customizados que confirmar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Return
+                End If
+
+                If MessageBoxEx.Show(Me, "Esta Nota de venta NO esta habilitada para ser facturada." & vbCrLf &
+                              "¿Confirma habilitar la nota de venta para su facturación?", "Validación",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Stop) <> DialogResult.Yes Then
+                    Return
+                End If
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Ent Set HabilitadaFac = 1,FunAutorizaFac = '" & FUNCIONARIO & "'" & vbCrLf &
+                               "Where Idmaeedo = " & _Idmaeedo
+                If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+                    MessageBoxEx.Show(Me, "Nota de venta habilitada para ser facturada", "Validación",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Me.Close()
+                End If
+
+            Else
+
+                MessageBoxEx.Show(Me, "Esta Nota de venta NO esta habilitada para ser facturada." & vbCrLf &
                               "Para habilitar esta nota de ventas debe ir al asistente de habilitación de notas de venta para facturar", "Validación",
                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
+            End If
 
         End If
 
@@ -4885,6 +4984,63 @@ Public Class Frm_Ver_Documento
                        "Delete " & _Global_BaseBk & "Zw_Despachos_Doc_Det Where Id_Despacho In " & _Filtro_Id_Despacho & vbCrLf &
                        "Delete " & _Global_BaseBk & "Zw_Despachos_Estados Where Id_Despacho In " & _Filtro_Id_Despacho
         _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+    End Sub
+
+    Private Sub Btn_CusNVV_Click(sender As Object, e As EventArgs) Handles Btn_CusNVV.Click
+
+        Dim _Fila As DataGridViewRow = GrillaDetalleDoc.CurrentRow
+        Dim _Idmaeddo As Integer = _Fila.Cells("IDMAEDDO").Value
+        Dim _Koprct As String = _Fila.Cells("KOPRCT").Value
+        Dim _Koen = _TblEncabezado.Rows(0).Item("ENDO")
+        Dim _Cantidad = _Fila.Cells("CANTIDAD").Value
+
+        'If Not CBool((_Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "HabilitadaFac", "Idmaeedo = " & _Idmaeedo,,,, True))) Then
+        '    If Not Fx_Tiene_Permiso(Me, "Doc00099") Then
+        '        Return
+        '    End If
+        'End If
+
+        Dim Fm As New Frm_Ver_Documento_CustomizarDet(_Idmaeedo, _Idmaeddo, _Koen, _Koprct, _Cantidad)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_MarcarNVVCustomizable_Click(sender As Object, e As EventArgs) Handles Btn_MarcarNVVCustomizable.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Doc00099") Then
+            Return
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Confirma marcar esta nota de venta como CUSTOMIZABLE?",
+                             "Customizable", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
+
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Ent Set Customizable = 1 Where Idmaeedo = " & _Idmaeedo
+        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+
+            MessageBoxEx.Show(Me, "Nota de venta marcada como CUSTOMIZABLE", "Customizable",
+                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            _Customizable = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "Customizable", "Idmaeedo = " & _Idmaeedo)
+
+            Lbl_CusNVV.Visible = _Customizable
+            Btn_CusNVV.Visible = _Customizable
+
+            If _Customizable Then
+                Btn_CusNVV.Text = "Ver información del producto Customizado"
+                Me.Text += " *** CUSTOMIZABLE ***"
+                Btn_MarcarNVVCustomizable.Visible = False
+                Btn_HabilitarFacturacion.Visible = True
+            Else
+                Btn_MarcarNVVCustomizable.Visible = True
+            End If
+
+        End If
+
+        Me.Refresh()
 
     End Sub
 

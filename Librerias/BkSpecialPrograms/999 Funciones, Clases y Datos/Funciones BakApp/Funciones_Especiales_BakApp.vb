@@ -6282,7 +6282,9 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Sub
 
-    Function Fx_Confirmar_Lectura(_Mensaje1 As String, _Mensaje2 As String, _eTaskDialogIcon As eTaskDialogIcon) As Boolean
+    Function Fx_Confirmar_Lectura(_Mensaje1 As String,
+                                  _Mensaje2 As String,
+                                  _eTaskDialogIcon As eTaskDialogIcon) As Boolean
 
         Dim Chk_Confirmar_Lectura As New Command
         Chk_Confirmar_Lectura.Checked = False
@@ -6315,31 +6317,62 @@ Public Module Crear_Documentos_Desde_Otro
 
     Function Fx_Confirmar_LecturaSINO(_Mensaje1 As String,
                                       _Mensaje2 As String,
-                                      _eTaskDialogIcon As eTaskDialogIcon) As LsValiciones.Mensajes
+                                      _eTaskDialogIcon As eTaskDialogIcon,
+                                      Optional _TextoAlerta As String = "Alerta",
+                                      Optional _MostrarCancelar As Boolean = False,
+                                      Optional _TextoCheck As String = "CONFIRMAR LECTURA DE LA ALERTA",
+                                      Optional _ConfCheckNO As Boolean = True) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
         Dim Chk_Confirmar_Lectura As New Command
         Chk_Confirmar_Lectura.Checked = False
         Chk_Confirmar_Lectura.Name = "Chk_Confirmar_Lectura"
-        Chk_Confirmar_Lectura.Text = "CONFIRMAR LECTURA DE LA ALERTA"
+        Chk_Confirmar_Lectura.Text = _TextoCheck
 
         Dim _Opciones As Command = Chk_Confirmar_Lectura
 
-        Dim _Info As New TaskDialogInfo("Alerta",
+        Dim _Info As TaskDialogInfo
+
+        If _MostrarCancelar Then
+            _Info = New TaskDialogInfo(_TextoAlerta,
+                  _eTaskDialogIcon,
+                  _Mensaje1, _Mensaje2,
+                  eTaskDialogButton.Yes + eTaskDialogButton.No + eTaskDialogButton.Cancel, eTaskDialogBackgroundColor.Red, Nothing, Nothing,
+                  _Opciones, Nothing, Nothing)
+        Else
+            _Info = New TaskDialogInfo(_TextoAlerta,
                   _eTaskDialogIcon,
                   _Mensaje1, _Mensaje2,
                   eTaskDialogButton.Yes + eTaskDialogButton.No, eTaskDialogBackgroundColor.Red, Nothing, Nothing,
                   _Opciones, Nothing, Nothing)
+        End If
+
 
         Dim _Resultado As eTaskDialogResult = TaskDialog.Show(_Info)
 
+        _Mensaje.Tag = _Resultado
+
         If _Resultado = eTaskDialogResult.Yes Or _Resultado = eTaskDialogResult.No Or _Resultado = eTaskDialogResult.Cancel Then
 
+            If _Resultado = eTaskDialogResult.Cancel Then
+                _Mensaje.EsCorrecto = False
+                _Mensaje.Cancelado = True
+                Return _Mensaje
+            End If
+
             If Not Chk_Confirmar_Lectura.Checked Then
-                'MessageBoxEx.Show(Me, "Debe confirmar la lectura", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                If _Resultado = eTaskDialogResult.No Then
+                    If Not _ConfCheckNO Then
+                        _Mensaje.EsCorrecto = False
+                        Return _Mensaje
+                    End If
+                End If
+
                 Beep()
-                _Mensaje = Fx_Confirmar_LecturaSINO(_Mensaje1, _Mensaje2, _eTaskDialogIcon)
+                _Mensaje = Fx_Confirmar_LecturaSINO(_Mensaje1, _Mensaje2, _eTaskDialogIcon, _TextoAlerta, _MostrarCancelar, _TextoCheck, _ConfCheckNO)
+
             Else
 
                 _Mensaje.Resultado = _Resultado.ToString
@@ -6357,6 +6390,7 @@ Public Module Crear_Documentos_Desde_Otro
             End If
 
         Else
+            _Mensaje.Tag = eTaskDialogResult.Cancel
             _Mensaje.Cerrar = True
         End If
 
@@ -6540,6 +6574,242 @@ Public Module Crear_Documentos_Desde_Otro
         Else
             Return False
         End If
+
+    End Function
+
+    Function Fx_FuncionarioPuedeVerDocumentoGrupo2(_Koen As String, _Suen As String, _CodFuncionario As String) As LsValiciones.Mensajes
+
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+        Dim _Msj As String = String.Empty
+        Dim _Rpta As String = String.Empty
+
+        _Mensaje.Detalle = "Revisión de permiso de visualización de documentos de otros usuarios"
+
+        Dim _Autorizado As Boolean = False
+        Dim _Permiso As String
+
+        _Mensaje.EsCorrecto = True
+
+        Try
+
+            Dim _Kofuen As String = _Sql.Fx_Trae_Dato("MAEEN", "KOFUEN", "KOEN = '" & _Koen & "' And SUEN = '" & _Suen & "'")
+            Dim _Kogru As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & _CodFuncionario & "'")
+
+            Dim _VerDocumento As Boolean = False
+
+            If String.IsNullOrEmpty(_Kogru) Then
+
+                If _CodFuncionario <> _Kofuen Then
+
+                    _Permiso = "NO00021"
+
+                    _Msj = "No puede ver el documento " & vbCrLf & vbCrLf &
+                           "Tiene una restricción que le impide hacer gestión o ver documentos sobre clientes de otros vendedores." & vbCrLf &
+                           "Esto significa que solo puede acceder a los documentos de su propia cartera de clientes." & vbCrLf & vbCrLf &
+                           "Actualmente, tiene asignado el permiso (restricción) NO00021."
+
+                    _Mensaje.EsCorrecto = False
+
+                End If
+
+            Else
+
+                _Mensaje.EsCorrecto = False
+                _Permiso = "NO00022"
+
+                Consulta_sql = "Select d.*,NOKOGRU From TABFUGD d Left Join TABFUGE e On e.KOGRU = d.KOGRU Where d.KOGRU = '" & _Kogru & "'"
+                Dim _Tbl_Grupo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+                For Each _Fila As DataRow In _Tbl_Grupo.Rows
+                    If _Fila.Item("KOFU") = _Kofuen Then
+                        _Mensaje.EsCorrecto = True
+                        Exit For
+                    End If
+                Next
+
+                Dim _Grupo As String = _Kogru.Trim & " - " & _Tbl_Grupo.Rows(0).Item("NOKOGRU").trim
+
+                _Msj = "No puede ver el documento" & vbCrLf & vbCrLf &
+                       "Tiene una restricción que le impide hacer gestión o ver documentos de clientes de otros vendedores que" & vbCrLf &
+                       "no están en su grupo asignado. Esto significa que solo puede acceder a los documentos o hacer gestión" & vbCrLf &
+                       "sobre los clientes de los vendedores asociados a su grupo." & vbCrLf & vbCrLf &
+                       "Actualmente, tiene asignado el permiso (restricción) NO00022" & vbCrLf &
+                       "y el grupo " & _Grupo
+
+            End If
+
+            If Not _Mensaje.EsCorrecto Then
+
+                If Not Fx_Tiene_Permiso(Nothing, _Permiso,, False) Then
+                    _Mensaje.EsCorrecto = True
+                End If
+
+            End If
+
+            _Mensaje.Mensaje = _Msj
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+        End Try
+
+        If _Mensaje.EsCorrecto Then
+            _Mensaje.Icono = eTaskDialogIcon.Information
+        Else
+            _Mensaje.Icono = eTaskDialogIcon.Stop
+        End If
+
+        Return _Mensaje
+
+    End Function
+
+    Function Fx_FuncionarioPuedeVerDocumentoGrupo(_Idmaeedo As Integer, _CodFuncionario As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+        Dim _Msj As String = String.Empty
+
+        _Mensaje.Detalle = "Revisión de permiso de visualización de documentos de otros usuarios"
+
+        Dim _Autorizado As Boolean = False
+        Dim _Permiso As String
+
+        _Mensaje.EsCorrecto = True
+
+        Try
+
+            Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
+            Dim _Kogru As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & _CodFuncionario & "'")
+
+            Dim _VerDocumento As Boolean = False
+
+            Dim _Tido As String = _Sql.Fx_Trae_Dato("MAEEDO", "TIDO", "IDMAEEDO = " & _Idmaeedo)
+
+            If _Tido = "GRI" Or _Tido = "GDI" Or _Tido = "GTI" Then
+                Consulta_sql = "Select IDMAEEDO,TIDO,NUDO,ENDO,SUENDO,NOKOEN,KOFUEN" & vbCrLf &
+                               "From MAEEDO Edo Inner Join MAEEN e On e.KOEN = Edo.ENDO" & vbCrLf &
+                               "Where IDMAEEDO = " & _Idmaeedo
+            Else
+                Consulta_sql = $"Select IDMAEEDO,TIDO,NUDO,ENDO,SUENDO,NOKOEN,KOFUEN" & vbCrLf &
+                               "From MAEEDO Edo Inner Join MAEEN e On e.KOEN = Edo.ENDO And e.SUEN = Edo.SUENDO" & vbCrLf &
+                               "Where IDMAEEDO = " & _Idmaeedo
+            End If
+
+            Dim _Row_Edo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+            If String.IsNullOrEmpty(_Kogru) Then
+
+                If _CodFuncionario <> _Row_Edo.Item("KOFUEN") Then
+
+                    _Permiso = "NO00021"
+
+                    _Msj = "No puede ver el documento " & _Row_Edo.Item("TIDO") & "-" & _Row_Edo.Item("NUDO") & vbCrLf & vbCrLf &
+                           "Tiene una restricción que le impide ver documentos de clientes de otros vendedores." & vbCrLf &
+                           "Esto significa que solo puede acceder a los documentos de su propia cartera de clientes." & vbCrLf & vbCrLf &
+                           "Actualmente, tiene asignado el permiso (restricción) NO00021."
+
+                    _Mensaje.EsCorrecto = False
+
+                End If
+
+            Else
+
+                _Mensaje.EsCorrecto = False
+                _Permiso = "NO00022"
+
+                Consulta_sql = "Select d.*,NOKOGRU From TABFUGD d Left Join TABFUGE e On e.KOGRU = d.KOGRU Where d.KOGRU = '" & _Kogru & "'"
+                Dim _Tbl_Grupo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+                For Each _Fila As DataRow In _Tbl_Grupo.Rows
+                    If _Fila.Item("KOFU") = _Row_Edo.Item("KOFUEN") Then
+                        _Mensaje.EsCorrecto = True
+                        Exit For
+                    End If
+                Next
+
+                Dim _Grupo As String = _Kogru.Trim & " - " & _Tbl_Grupo.Rows(0).Item("NOKOGRU").trim
+
+                _Msj = "No puede ver el documento " & _Row_Edo.Item("TIDO") & "-" & _Row_Edo.Item("NUDO") & vbCrLf & vbCrLf &
+                       "Tiene una restricción que le impide ver documentos de clientes de otros vendedores que" & vbCrLf &
+                       "no están en su grupo asignado. Esto significa que solo puede acceder a los documentos" & vbCrLf &
+                       "de los clientes de los vendedores asociados a su grupo." & vbCrLf & vbCrLf &
+                       "Actualmente, tiene asignado el permiso (restricción) NO00022" & vbCrLf &
+                       "y el grupo " & _Grupo
+
+            End If
+
+            If Not _Mensaje.EsCorrecto Then
+
+                If Not Fx_Tiene_Permiso(Nothing, _Permiso,, False) Then
+                    _Mensaje.EsCorrecto = True
+                End If
+
+            End If
+
+            _Mensaje.Mensaje = _Msj
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+        End Try
+
+        If _Mensaje.EsCorrecto Then
+            _Mensaje.Icono = eTaskDialogIcon.Information
+        Else
+            _Mensaje.Icono = eTaskDialogIcon.Stop
+        End If
+
+        Return _Mensaje
+
+    End Function
+
+    Function Fx_NvvHabilitada_Fac(_Me As Form, _Idmaeedo As Integer, _Tido As String) As Boolean
+
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        Dim _Msj As String
+
+        If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") And _Tido = "NVV" Then
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Docu_Ent Where Idmaeedo = " & _Idmaeedo
+            Dim _Row_Docu_Ent As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Dim _HabilitadaFac = False
+
+            _Msj = "Esta nota de venta no esta habilitada para ser facturada." & vbCrLf &
+                   "Según la configuración General las notas de venta deben ser habilitadas para que se puedan facturar"
+
+            If Not IsNothing(_Row_Docu_Ent) Then
+                _HabilitadaFac = _Row_Docu_Ent.Item("HabilitadaFac")
+            End If
+
+            If Not _HabilitadaFac Then
+
+                If _Global_Row_Configuracion_General.Item("HabilitarNVVConProdCustomizables") Then
+
+                    If _Row_Docu_Ent.Item("Customizable") Then
+                        _Msj = "Esta nota de venta no esta habilitada para ser facturada." & vbCrLf &
+                               "Según la configuración General las notas de venta CUSTOMIZABLES" & vbCrLf &
+                               "deben ser habilitadas para que se puedan facturar"
+                    Else
+                        _HabilitadaFac = True
+                    End If
+
+                End If
+
+            End If
+
+            If Not _HabilitadaFac Then
+                MessageBoxEx.Show(_Me, _Msj,
+                                      "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return False
+            End If
+
+        End If
+
+        Return True
 
     End Function
 

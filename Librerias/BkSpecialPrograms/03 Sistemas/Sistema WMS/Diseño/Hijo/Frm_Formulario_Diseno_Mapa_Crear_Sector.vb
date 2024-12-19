@@ -24,7 +24,6 @@ Public Class Frm_Formulario_Diseno_Mapa_Crear_Sector
             Txt_Codigo_Sector.Text = value
         End Set
     End Property
-
     Public Property Nombre_Sector() As String
         Get
             Return Txt_Nombre_Sector.Text
@@ -33,13 +32,28 @@ Public Class Frm_Formulario_Diseno_Mapa_Crear_Sector
             Txt_Nombre_Sector.Text = value
         End Set
     End Property
-
     Public Property EsCabecera() As Boolean
         Get
             Return Chk_EsCabecera.Checked
         End Get
         Set(value As Boolean)
             Chk_EsCabecera.Checked = value
+        End Set
+    End Property
+    Public Property OblConfimarUbic() As Boolean
+        Get
+            Return Chk_OblConfimarUbic.Checked
+        End Get
+        Set(value As Boolean)
+            Chk_OblConfimarUbic.Checked = value
+        End Set
+    End Property
+    Public Property SoloUnaUbicacion() As Boolean
+        Get
+            Return Chk_SoloUnaUbicacion.Checked
+        End Get
+        Set(value As Boolean)
+            Chk_SoloUnaUbicacion.Checked = value
         End Set
     End Property
 
@@ -103,13 +117,16 @@ Public Class Frm_Formulario_Diseno_Mapa_Crear_Sector
 
             Chk_EsCabecera.Visible = Not Es_SubSector
 
+            Chk_OblConfimarUbic.Visible = False
+            Chk_SoloUnaUbicacion.Visible = False
+
         End If
 
         If ModoCreacionSector Then
 
             If _Accion = _Enum_Accion.Editar Then
 
-                Dim _Mensaje As LsValiciones.Mensajes = _Cl_WMS_Sectores.Fx_Llenar_Sector(_Id_Mapa)
+                Dim _Mensaje As LsValiciones.Mensajes = _Cl_WMS_Sectores.Fx_Llenar_Sector(Id_Sector)
 
                 'If Not _Mensaje.EsCorrecto Then
                 '    MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -121,6 +138,8 @@ Public Class Frm_Formulario_Diseno_Mapa_Crear_Sector
                     Txt_Codigo_Sector.Text = .Codigo_Sector
                     Txt_Nombre_Sector.Text = .Nombre_Sector
                     Chk_EsCabecera.Checked = .EsCabecera
+                    Chk_OblConfimarUbic.Checked = .OblConfimarUbic
+                    Chk_SoloUnaUbicacion.Checked = .SoloUnaUbicacion
 
                 End With
 
@@ -167,6 +186,8 @@ Public Class Frm_Formulario_Diseno_Mapa_Crear_Sector
             .Nombre_Sector = Txt_Nombre_Sector.Text.Trim
             .Es_SubSector = False
             .EsCabecera = Chk_EsCabecera.Checked
+            .OblConfimarUbic = Chk_OblConfimarUbic.Checked
+            .SoloUnaUbicacion = Chk_SoloUnaUbicacion.Checked
 
         End With
 
@@ -212,12 +233,25 @@ Public Class Frm_Formulario_Diseno_Mapa_Crear_Sector
             Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If _Accion = _Enum_Accion.Nuevo Then
+
                 If CBool(_Tbl.Rows.Count) Then
                     MessageBoxEx.Show(Me, "Este sector ya existe, debe copiar y pegar el sector para poder crear otro igual",
                                       "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     Return
                 End If
+
             End If
+
+        End If
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_WMS_Ubicaciones_Mapa_Det",
+                                                       "Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector & "'")
+
+        If _Reg > 1 Then
+            MessageBoxEx.Show(Me, "Existen mas de una ubicación asociada a este sector." & vbCrLf &
+                              "Este sector no puede tener solo una ubicación",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
         End If
 
         _Grabar = True

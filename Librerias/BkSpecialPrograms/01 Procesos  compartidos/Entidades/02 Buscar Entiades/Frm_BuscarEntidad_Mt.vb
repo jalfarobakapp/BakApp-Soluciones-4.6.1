@@ -84,7 +84,7 @@ Public Class Frm_BuscarEntidad_Mt
 
         Fx_Activar_Deactivar_Teclado()
 
-        VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00021",, False)
+        VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00021",, False) And Rdb_Clientes.Checked
 
         If VerSoloEntidadesDelVendedor Then
             Chk_Solo_Clientes_Del_Vendedor.Checked = True
@@ -324,7 +324,22 @@ Public Class Frm_BuscarEntidad_Mt
 
         If Not Rdb_Proveedores.Checked Then
             If Chk_Solo_Clientes_Del_Vendedor.Checked Then
-                _Filtro_Vendedores = "And KOFUEN = '" & FUNCIONARIO & "'"
+
+                Dim _Kogru = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & FUNCIONARIO & "'")
+
+                If String.IsNullOrEmpty(_Kogru) Then
+                    _Filtro_Vendedores = "And KOFUEN = '" & FUNCIONARIO & "'"
+                Else
+
+                    Consulta_sql = "Select KOFU From TABFUGD Where KOGRU = '" & _Kogru & "'"
+                    Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+                    _Filtro_Vendedores = Generar_Filtro_IN(_Tbl, "", "KOFU", False, False, "'")
+
+                    _Filtro_Vendedores = "And KOFUEN In " & _Filtro_Vendedores
+
+                End If
+
             End If
         End If
 

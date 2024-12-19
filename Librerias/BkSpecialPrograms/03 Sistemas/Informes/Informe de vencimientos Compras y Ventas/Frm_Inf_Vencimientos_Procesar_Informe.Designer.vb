@@ -38,6 +38,7 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         Me.Lbl_Nombre_Empresa = New DevComponents.DotNetBar.LabelX()
         Me.Chk_Deuda_Efectiva = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Chk_SoloClientesFincred = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Excluir_Documentos_Autorizados_Pago = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
         Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
@@ -55,7 +56,11 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Rdb_Entidades_Algunas = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_Entidades_Todas = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_SoloClientesFincred = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.TableLayoutPanel6 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Rdb_ClientesSinCredito = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_ClientesConCredito = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_ClientesTodos = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -66,6 +71,7 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         Me.TableLayoutPanel4.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
+        Me.TableLayoutPanel6.SuspendLayout()
         Me.SuspendLayout()
         '
         'Bar1
@@ -74,7 +80,7 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Procesar_Informe, Me.Btn_Entidades_Excluidas, Me.Btn_Configuracion_Local})
-        Me.Bar1.Location = New System.Drawing.Point(0, 412)
+        Me.Bar1.Location = New System.Drawing.Point(0, 409)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(385, 41)
         Me.Bar1.Stretch = True
@@ -88,6 +94,7 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         Me.Btn_Procesar_Informe.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Procesar_Informe.ForeColor = System.Drawing.Color.Black
         Me.Btn_Procesar_Informe.Image = CType(resources.GetObject("Btn_Procesar_Informe.Image"), System.Drawing.Image)
+        Me.Btn_Procesar_Informe.ImageAlt = CType(resources.GetObject("Btn_Procesar_Informe.ImageAlt"), System.Drawing.Image)
         Me.Btn_Procesar_Informe.Name = "Btn_Procesar_Informe"
         Me.Btn_Procesar_Informe.Text = "Procesar informe"
         '
@@ -298,13 +305,14 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         '
         'Progreso_Porc
         '
+        Me.Progreso_Porc.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Progreso_Porc.BackColor = System.Drawing.Color.White
         '
         '
         '
         Me.Progreso_Porc.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Progreso_Porc.FocusCuesEnabled = False
-        Me.Progreso_Porc.Location = New System.Drawing.Point(74, 353)
+        Me.Progreso_Porc.Location = New System.Drawing.Point(74, 360)
         Me.Progreso_Porc.Name = "Progreso_Porc"
         Me.Progreso_Porc.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Donut
         Me.Progreso_Porc.ProgressColor = System.Drawing.Color.SteelBlue
@@ -315,13 +323,14 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         '
         'Progreso_Cont
         '
+        Me.Progreso_Cont.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Progreso_Cont.BackColor = System.Drawing.Color.White
         '
         '
         '
         Me.Progreso_Cont.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Progreso_Cont.FocusCuesEnabled = False
-        Me.Progreso_Cont.Location = New System.Drawing.Point(12, 353)
+        Me.Progreso_Cont.Location = New System.Drawing.Point(12, 360)
         Me.Progreso_Cont.Name = "Progreso_Cont"
         Me.Progreso_Cont.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Donut
         Me.Progreso_Cont.ProgressColor = System.Drawing.Color.SteelBlue
@@ -356,7 +365,7 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         Me.Chk_Deuda_Efectiva.CheckBoxImageChecked = CType(resources.GetObject("Chk_Deuda_Efectiva.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Deuda_Efectiva.FocusCuesEnabled = False
         Me.Chk_Deuda_Efectiva.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Deuda_Efectiva.Location = New System.Drawing.Point(8, 135)
+        Me.Chk_Deuda_Efectiva.Location = New System.Drawing.Point(14, 166)
         Me.Chk_Deuda_Efectiva.Name = "Chk_Deuda_Efectiva"
         Me.Chk_Deuda_Efectiva.Size = New System.Drawing.Size(206, 23)
         Me.Chk_Deuda_Efectiva.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -367,6 +376,8 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         '
         Me.GroupPanel4.BackColor = System.Drawing.Color.White
         Me.GroupPanel4.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel4.Controls.Add(Me.LabelX7)
+        Me.GroupPanel4.Controls.Add(Me.TableLayoutPanel6)
         Me.GroupPanel4.Controls.Add(Me.Chk_SoloClientesFincred)
         Me.GroupPanel4.Controls.Add(Me.Chk_Excluir_Documentos_Autorizados_Pago)
         Me.GroupPanel4.Controls.Add(Me.TableLayoutPanel5)
@@ -375,9 +386,9 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         Me.GroupPanel4.Controls.Add(Me.TableLayoutPanel3)
         Me.GroupPanel4.Controls.Add(Me.TableLayoutPanel2)
         Me.GroupPanel4.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel4.Location = New System.Drawing.Point(12, 107)
+        Me.GroupPanel4.Location = New System.Drawing.Point(12, 97)
         Me.GroupPanel4.Name = "GroupPanel4"
-        Me.GroupPanel4.Size = New System.Drawing.Size(361, 240)
+        Me.GroupPanel4.Size = New System.Drawing.Size(361, 255)
         '
         '
         '
@@ -409,6 +420,23 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         Me.GroupPanel4.TabIndex = 36
         Me.GroupPanel4.Text = "Filtros"
         '
+        'Chk_SoloClientesFincred
+        '
+        Me.Chk_SoloClientesFincred.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_SoloClientesFincred.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_SoloClientesFincred.CheckBoxImageChecked = CType(resources.GetObject("Chk_SoloClientesFincred.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SoloClientesFincred.FocusCuesEnabled = False
+        Me.Chk_SoloClientesFincred.ForeColor = System.Drawing.Color.Black
+        Me.Chk_SoloClientesFincred.Location = New System.Drawing.Point(14, 210)
+        Me.Chk_SoloClientesFincred.Name = "Chk_SoloClientesFincred"
+        Me.Chk_SoloClientesFincred.Size = New System.Drawing.Size(206, 23)
+        Me.Chk_SoloClientesFincred.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_SoloClientesFincred.TabIndex = 7
+        Me.Chk_SoloClientesFincred.Text = "Mostrar solo clientes FINCRED"
+        '
         'Chk_Excluir_Documentos_Autorizados_Pago
         '
         Me.Chk_Excluir_Documentos_Autorizados_Pago.BackColor = System.Drawing.Color.Transparent
@@ -419,7 +447,7 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         Me.Chk_Excluir_Documentos_Autorizados_Pago.CheckBoxImageChecked = CType(resources.GetObject("Chk_Excluir_Documentos_Autorizados_Pago.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Excluir_Documentos_Autorizados_Pago.FocusCuesEnabled = False
         Me.Chk_Excluir_Documentos_Autorizados_Pago.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Excluir_Documentos_Autorizados_Pago.Location = New System.Drawing.Point(8, 164)
+        Me.Chk_Excluir_Documentos_Autorizados_Pago.Location = New System.Drawing.Point(14, 189)
         Me.Chk_Excluir_Documentos_Autorizados_Pago.Name = "Chk_Excluir_Documentos_Autorizados_Pago"
         Me.Chk_Excluir_Documentos_Autorizados_Pago.Size = New System.Drawing.Size(269, 20)
         Me.Chk_Excluir_Documentos_Autorizados_Pago.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -437,7 +465,7 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         Me.TableLayoutPanel5.Controls.Add(Me.Rdb_Anotaciones_Algunas, 2, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.Rdb_Anotaciones_Todas, 1, 0)
         Me.TableLayoutPanel5.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel5.Location = New System.Drawing.Point(8, 104)
+        Me.TableLayoutPanel5.Location = New System.Drawing.Point(11, 135)
         Me.TableLayoutPanel5.Name = "TableLayoutPanel5"
         Me.TableLayoutPanel5.RowCount = 1
         Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
@@ -505,7 +533,7 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         Me.TableLayoutPanel4.Controls.Add(Me.Rdb_Vendedores_Algunos, 2, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.Rdb_Vendedores_Todos, 1, 0)
         Me.TableLayoutPanel4.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel4.Location = New System.Drawing.Point(8, 73)
+        Me.TableLayoutPanel4.Location = New System.Drawing.Point(11, 104)
         Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
         Me.TableLayoutPanel4.RowCount = 1
         Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
@@ -573,7 +601,7 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         Me.TableLayoutPanel3.Controls.Add(Me.Rdb_Sucursales_Algunas, 2, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.Rdb_Sucursales_Todas, 1, 0)
         Me.TableLayoutPanel3.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel3.Location = New System.Drawing.Point(8, 45)
+        Me.TableLayoutPanel3.Location = New System.Drawing.Point(11, 76)
         Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
         Me.TableLayoutPanel3.RowCount = 1
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
@@ -698,28 +726,97 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         Me.Rdb_Entidades_Todas.TabIndex = 1
         Me.Rdb_Entidades_Todas.Text = "Todas "
         '
-        'Chk_SoloClientesFincred
+        'TableLayoutPanel6
         '
-        Me.Chk_SoloClientesFincred.BackColor = System.Drawing.Color.Transparent
+        Me.TableLayoutPanel6.BackColor = System.Drawing.Color.Transparent
+        Me.TableLayoutPanel6.ColumnCount = 3
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 91.0!))
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 111.0!))
+        Me.TableLayoutPanel6.Controls.Add(Me.Rdb_ClientesTodos, 0, 0)
+        Me.TableLayoutPanel6.Controls.Add(Me.Rdb_ClientesSinCredito, 2, 0)
+        Me.TableLayoutPanel6.Controls.Add(Me.Rdb_ClientesConCredito, 1, 0)
+        Me.TableLayoutPanel6.ForeColor = System.Drawing.Color.Black
+        Me.TableLayoutPanel6.Location = New System.Drawing.Point(72, 45)
+        Me.TableLayoutPanel6.Name = "TableLayoutPanel6"
+        Me.TableLayoutPanel6.RowCount = 1
+        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel6.Size = New System.Drawing.Size(275, 25)
+        Me.TableLayoutPanel6.TabIndex = 8
+        '
+        'Rdb_ClientesSinCredito
+        '
+        Me.Rdb_ClientesSinCredito.BackColor = System.Drawing.Color.Transparent
         '
         '
         '
-        Me.Chk_SoloClientesFincred.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_SoloClientesFincred.CheckBoxImageChecked = CType(resources.GetObject("Chk_SoloClientesFincred.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_SoloClientesFincred.FocusCuesEnabled = False
-        Me.Chk_SoloClientesFincred.ForeColor = System.Drawing.Color.Black
-        Me.Chk_SoloClientesFincred.Location = New System.Drawing.Point(8, 190)
-        Me.Chk_SoloClientesFincred.Name = "Chk_SoloClientesFincred"
-        Me.Chk_SoloClientesFincred.Size = New System.Drawing.Size(206, 23)
-        Me.Chk_SoloClientesFincred.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_SoloClientesFincred.TabIndex = 7
-        Me.Chk_SoloClientesFincred.Text = "Mostrar solo clientes FINCRED"
+        Me.Rdb_ClientesSinCredito.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_ClientesSinCredito.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_ClientesSinCredito.FocusCuesEnabled = False
+        Me.Rdb_ClientesSinCredito.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_ClientesSinCredito.Location = New System.Drawing.Point(167, 3)
+        Me.Rdb_ClientesSinCredito.Name = "Rdb_ClientesSinCredito"
+        Me.Rdb_ClientesSinCredito.Size = New System.Drawing.Size(94, 19)
+        Me.Rdb_ClientesSinCredito.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_ClientesSinCredito.TabIndex = 3
+        Me.Rdb_ClientesSinCredito.Text = "Sin crédito"
+        '
+        'Rdb_ClientesConCredito
+        '
+        Me.Rdb_ClientesConCredito.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_ClientesConCredito.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_ClientesConCredito.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_ClientesConCredito.FocusCuesEnabled = False
+        Me.Rdb_ClientesConCredito.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_ClientesConCredito.Location = New System.Drawing.Point(76, 3)
+        Me.Rdb_ClientesConCredito.Name = "Rdb_ClientesConCredito"
+        Me.Rdb_ClientesConCredito.Size = New System.Drawing.Size(85, 19)
+        Me.Rdb_ClientesConCredito.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_ClientesConCredito.TabIndex = 1
+        Me.Rdb_ClientesConCredito.Text = "Con crédito"
+        '
+        'Rdb_ClientesTodos
+        '
+        Me.Rdb_ClientesTodos.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_ClientesTodos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_ClientesTodos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_ClientesTodos.Checked = True
+        Me.Rdb_ClientesTodos.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Rdb_ClientesTodos.CheckValue = "Y"
+        Me.Rdb_ClientesTodos.FocusCuesEnabled = False
+        Me.Rdb_ClientesTodos.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_ClientesTodos.Location = New System.Drawing.Point(3, 3)
+        Me.Rdb_ClientesTodos.Name = "Rdb_ClientesTodos"
+        Me.Rdb_ClientesTodos.Size = New System.Drawing.Size(67, 19)
+        Me.Rdb_ClientesTodos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_ClientesTodos.TabIndex = 9
+        Me.Rdb_ClientesTodos.Text = "Todas "
+        '
+        'LabelX7
+        '
+        Me.LabelX7.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX7.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX7.ForeColor = System.Drawing.Color.Black
+        Me.LabelX7.Location = New System.Drawing.Point(11, 48)
+        Me.LabelX7.Name = "LabelX7"
+        Me.LabelX7.Size = New System.Drawing.Size(58, 19)
+        Me.LabelX7.TabIndex = 9
+        Me.LabelX7.Text = "Ver clientes"
         '
         'Frm_Inf_Vencimientos_Procesar_Informe
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(385, 453)
+        Me.ClientSize = New System.Drawing.Size(385, 450)
         Me.Controls.Add(Me.GroupPanel4)
         Me.Controls.Add(Me.Lbl_Nombre_Empresa)
         Me.Controls.Add(Me.Progreso_Porc)
@@ -747,6 +844,7 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         Me.TableLayoutPanel4.ResumeLayout(False)
         Me.TableLayoutPanel3.ResumeLayout(False)
         Me.TableLayoutPanel2.ResumeLayout(False)
+        Me.TableLayoutPanel6.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -783,4 +881,9 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
     Friend WithEvents Btn_Entidades_Excluidas As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Chk_Excluir_Documentos_Autorizados_Pago As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_SoloClientesFincred As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents TableLayoutPanel6 As TableLayoutPanel
+    Friend WithEvents Rdb_ClientesTodos As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Rdb_ClientesSinCredito As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Rdb_ClientesConCredito As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

@@ -147,10 +147,12 @@ Partial Class Frm_SeleccionarListaPrecios
         '
         '
         Me.Rdb_Ver_Todas_Las_Listas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Ver_Todas_Las_Listas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Ver_Todas_Las_Listas.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Ver_Todas_Las_Listas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Ver_Todas_Las_Listas.Checked = True
         Me.Rdb_Ver_Todas_Las_Listas.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Ver_Todas_Las_Listas.CheckValue = "Y"
+        Me.Rdb_Ver_Todas_Las_Listas.FocusCuesEnabled = False
         Me.Rdb_Ver_Todas_Las_Listas.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Ver_Todas_Las_Listas.Location = New System.Drawing.Point(12, 256)
         Me.Rdb_Ver_Todas_Las_Listas.Name = "Rdb_Ver_Todas_Las_Listas"
@@ -166,7 +168,9 @@ Partial Class Frm_SeleccionarListaPrecios
         '
         '
         Me.Rdb_Ver_Mis_Listas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Ver_Mis_Listas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Ver_Mis_Listas.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Ver_Mis_Listas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Ver_Mis_Listas.FocusCuesEnabled = False
         Me.Rdb_Ver_Mis_Listas.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Ver_Mis_Listas.Location = New System.Drawing.Point(128, 256)
         Me.Rdb_Ver_Mis_Listas.Name = "Rdb_Ver_Mis_Listas"

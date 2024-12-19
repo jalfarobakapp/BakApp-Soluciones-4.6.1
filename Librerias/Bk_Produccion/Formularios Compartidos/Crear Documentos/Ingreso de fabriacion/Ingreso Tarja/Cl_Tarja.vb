@@ -1,7 +1,5 @@
 ﻿Imports System.Data.SqlClient
-Imports Bk_Produccion.Cl_Tarja_Ent
 Imports BkSpecialPrograms
-Imports DevComponents.DotNetBar
 
 Public Class Cl_Tarja
 
@@ -16,42 +14,6 @@ Public Class Cl_Tarja
         Zw_Pdp_CPT_Tarja.Empresa = ModEmpresa
 
     End Sub
-
-    'Function Fx_Grabar_Tarja() As Cl_Tarja_Ent.Mensaje_Tarja
-
-    '    Dim _Mensaje_Tarja As New Cl_Tarja_Ent.Mensaje_Tarja
-
-    '    Try
-
-    '        With _Cl_Tarja_Ent
-
-    '            .Nro_CPT = Fx_NvoNro_CPT()
-
-    '            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja (Empresa,Idmaeddo,Nro_CPT,Codigo,CodAlternativo,CodAlternativo_Pallet,Turno,Planta," &
-    '                           "Udm,Formato,Lote,FechaElab,SacosXPallet,Analista,Observaciones,Tipo,CantidadTipo,CantidadFab,Descripcion_Kopral)" & vbCrLf &
-    '                           "Values ('" & .Empresa & "'," & .Idmaeddo & ",'" & .Nro_CPT & "','" & .Codigo & "','" & .CodAlternativo & "','" & .CodAlternativo_Pallet & "','" & .Turno &
-    '                           "','" & .Planta & "','" & .Udm & "','" & .Formato & "','" & .Lote & "','" & .FechaElab &
-    '                           "'," & .SacosXPallet & ",'" & .Analista & "','" & .Observaciones.Replace("'", "''") &
-    '                           "','" & .Tipo &
-    '                           "'," & De_Num_a_Tx_01(.CantidadTipo, False, 5) &
-    '                           "," & De_Num_a_Tx_01(.CantidadFab, False, 5) &
-    '                           ",'" & .Descripcion_Kopral & "')"
-
-    '        End With
-
-    '        If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
-    '            _Mensaje_Tarja.EsCorrecto = True
-    '        Else
-    '            Throw New System.Exception(_Sql.Pro_Error)
-    '        End If
-
-    '    Catch ex As Exception
-    '        _Mensaje_Tarja.Mensaje = ex.Message
-    '    End Try
-
-    '    Return _Mensaje_Tarja
-
-    'End Function
 
     Function Fx_Grabar_Tarja2() As LsValiciones.Mensajes ' Cl_Tarja_Ent.Mensaje_Tarja
 
@@ -203,47 +165,5 @@ Public Class Cl_Tarja
 
 End Class
 
-Namespace Cl_Tarja_Ent
 
-    'Public Class CPT_Tarja
-    '    Public Property Id As Integer
-    '    Public Property Empresa As String
-    '    Public Property Idmaeddo As Integer
-    '    Public Property Nro_CPT As String
-    '    Public Property Lote As String
-    '    Public Property Codigo As String
-    '    Public Property CodAlternativo As String
-    '    Public Property CodAlternativo_Pallet As String
-    '    Public Property Turno As String
-    '    Public Property Planta As String
-    '    Public Property Udm As String
-    '    Public Property Formato As Integer
-    '    Public Property FechaElab As DateTime
-    '    Public Property SacosXPallet As Integer
-    '    Public Property Analista As String
-    '    Public Property Observaciones As String
-    '    Public Property Tipo As String
-    '    Public Property CantidadTipo As Double
-    '    Public Property CantidadFab As Double
-    '    Public Property Descripcion_Kopral As String
-    '    Public Property Tolva As String
-    'End Class
-
-    'Public Class CPT_Tarja_Det
-
-    '    Public Property Id As Integer
-    '    Public Property Id_CPT As Integer
-    '    Public Property Nro_Tipo As String
-    '    Public Property Idmaeddo As Integer
-    '    Public Property Nro_CPT As String
-    '    Public Property Lote As String
-    '    Public Property Tipo As String
-    '    Public Property Nro As Integer
-    '    Public Property Codigo As String
-    '    Public Property CodAlternativo As String
-    '    Public Property CodAlternativo_Pallet As String
-
-    'End Class
-
-End Namespace
 

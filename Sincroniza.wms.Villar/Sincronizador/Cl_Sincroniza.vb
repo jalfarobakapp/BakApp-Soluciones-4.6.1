@@ -76,7 +76,7 @@ Public Class Cl_Sincroniza
 
                     If _trans_act_mod = "RDY" Or _trans_act_mod = "RELEASE" Then
 
-                        Dim _FechaPlanificacion As String = Format(_RowPlanificada.Item("dt_start"), "yyyyMMdd HH:mm")
+                        Dim _FechaPlanificacion As String = Format(_RowPlanificada.Item("dt_start"), "yyyyMMdd HH:mm:ss")
 
                         Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Planificada = 1, FechaPlanificacion = '" & _FechaPlanificacion & "'" & vbCrLf &
                                        "Where Id = " & _Id_Enc
@@ -686,6 +686,54 @@ Public Class Cl_Sincroniza
         Next
 
     End Sub
+
+    Sub Sb_ActualizarFechaPickeo(Txt_Log As Object, _FechaRevision As DateTime)
+
+        _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
+        _SqlWms = New Class_SQL(Cadena_ConexionSQL_Server_Wms)
+
+        Consulta_sql = "Select Id,Idmaeedo,Numero,Nudo,Estado From " & _Global_BaseBk & "Zw_Stmp_Enc" & vbCrLf &
+                       "Where Estado In ('FACTU','CERRA','COMPL') And FechaPickeoAct = 0" & vbCrLf &
+                       "And CONVERT(varchar, FechaCreacion, 112) >= '" & Format(_FechaRevision, "yyyyMMdd") & "'"
+        Dim _Tbl As DataTable = _SqlRandom.Fx_Get_DataTable(Consulta_sql)
+
+        Dim _Contador = 1
+
+        For Each _Fila As DataRow In _Tbl.Rows
+
+            Dim _Id_Enc As Integer = _Fila.Item("Id")
+            Dim _Idmaeedoo As Integer = _Fila.Item("Idmaeedo")
+            Dim _Numero As String = _Fila.Item("Numero")
+            Dim _Nudo As String = _Fila.Item("Nudo")
+            Dim _Estado As String = _Fila.Item("Estado")
+
+            Consulta_sql = "Select Top 1 dt_start" & vbCrLf &
+                           "From history_master" & vbCrLf &
+                           "Where oid = '" & _Nudo & "' And ((trans_class = 'CONT' AND trans_obj = 'OBO' AND trans_act = 'PICK' AND trans_act_mod = 'FINAL') or " &
+                           "(trans_class = 'INVE' AND trans_obj = 'OBO' AND trans_act = 'PICK'))" & vbCrLf &
+                           "Order By trans_seq_num Desc"
+            Dim _Row As DataRow = _SqlWms.Fx_Get_DataRow(Consulta_sql)
+
+            Dim _dt_start As String
+
+            If Not IsNothing(_Row) Then
+
+                _dt_start = Format(_Row.Item("dt_start"), "yyyyMMdd HH:mm:ss")
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set FechaPickeoAct = 1,FechaPickeado = '" & _dt_start & "'" & vbCrLf &
+                               "Where Id = " & _Id_Enc
+                _SqlRandom.Ej_consulta_IDU(Consulta_sql)
+
+                Sb_AddToLog("Sincronizando notas", "NVV" & _Nudo & " - Actualiza Fecha de Pickeo", Txt_Log)
+
+            End If
+
+            _Contador += 1
+
+        Next
+
+    End Sub
+
 
     'Sub Sb_RevisarIngresadasRezagadas(Txt_Log As Object)
 

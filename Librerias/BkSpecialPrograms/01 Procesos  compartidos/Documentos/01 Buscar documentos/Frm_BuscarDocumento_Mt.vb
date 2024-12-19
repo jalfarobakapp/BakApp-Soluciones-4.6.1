@@ -479,7 +479,16 @@ Public Class Frm_BuscarDocumento_Mt
             Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
             Dim _Idmaeedo = _Fila.Cells("IDMAEEDO").Value
 
-            Fx_VerDocumento(Me, _Idmaeedo, "")
+            Dim _Msj As LsValiciones.Mensajes = Fx_FuncionarioPuedeVerDocumentoGrupo(_Idmaeedo, FUNCIONARIO)
+
+            If Not _Msj.EsCorrecto Then
+                MessageBoxEx.Show(Me, _Msj.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+            Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
 
             Dim _Row As DataRow = _Sql.Fx_Get_DataRow("Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo)
 
@@ -495,22 +504,15 @@ Public Class Frm_BuscarDocumento_Mt
                 _Estado = _Row.Item("ESDO")
             End If
 
-            'Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
-            'Fm.ShowDialog(Me)
+            If _Estado = "C" Then
+                _Fila.Cells("ESTADO").Style.ForeColor = Rojo
+                _Fila.Cells("ESTADO").Value = "Cerrado"
+            ElseIf _Estado = "" Then
+                _Fila.Cells("ESTADO").Style.ForeColor = Verde
+                _Fila.Cells("ESTADO").Value = "Vigente"
+            End If
 
-            'Dim _Row As DataRow = Fm.Pro_Row_Maeedo
-
-            'If _Estado = "C" Then
-            '    _Fila.Cells("ESTADO").Style.ForeColor = Rojo
-            '    _Fila.Cells("ESTADO").Value = "Cerrado"
-            'ElseIf _Estado = "" Then
-            '    _Fila.Cells("ESTADO").Style.ForeColor = Verde
-            '    _Fila.Cells("ESTADO").Value = "Vigente"
-            'End If
-
-            _Actualizar = (_Anulado Or _Eliminado) '(Fm.Anulado Or Fm.Eliminado)
-
-            'Fm.Dispose()
+            _Actualizar = (_Anulado Or _Eliminado)
 
             If HabilitarNVVParaFacturar Then
                 _Actualizar = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "HabilitadaFac", "Idmaeedo = " & _Idmaeedo,,,, True)
@@ -643,7 +645,7 @@ Public Class Frm_BuscarDocumento_Mt
             .Columns("CAPRCO").Width = 70
             .Columns("CAPRCO").HeaderText = "Cantidad"
             .Columns("CAPRCO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("CAPRCO").DefaultCellStyle.Format = "###,##"
+            .Columns("CAPRCO").DefaultCellStyle.Format = "###,#0.#####"
             .Columns("CAPRCO").DisplayIndex = _DisplayIndex
             .Columns("CAPRCO").Visible = True
             _DisplayIndex += 1
@@ -651,7 +653,7 @@ Public Class Frm_BuscarDocumento_Mt
             .Columns("SALDO").Width = 70
             .Columns("SALDO").HeaderText = "Saldo"
             .Columns("SALDO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("SALDO").DefaultCellStyle.Format = "###,##.##"
+            .Columns("SALDO").DefaultCellStyle.Format = "###,#0.#####"
             .Columns("SALDO").DisplayIndex = _DisplayIndex
             .Columns("SALDO").Visible = True
             _DisplayIndex += 1

@@ -25,6 +25,8 @@ Partial Class Frm_Tickets_Mant
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Tickets_Mant))
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Txt_TidoNudoCierra = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Chk_ExigeDocCerrar = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Txt_AreaTipo = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX10 = New DevComponents.DotNetBar.LabelX()
         Me.Btn_VerProducto = New DevComponents.DotNetBar.ButtonX()
@@ -63,6 +65,8 @@ Partial Class Frm_Tickets_Mant
         '
         Me.GroupPanel2.BackColor = System.Drawing.Color.White
         Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel2.Controls.Add(Me.Txt_TidoNudoCierra)
+        Me.GroupPanel2.Controls.Add(Me.Chk_ExigeDocCerrar)
         Me.GroupPanel2.Controls.Add(Me.Txt_AreaTipo)
         Me.GroupPanel2.Controls.Add(Me.LabelX10)
         Me.GroupPanel2.Controls.Add(Me.Btn_VerProducto)
@@ -113,6 +117,49 @@ Partial Class Frm_Tickets_Mant
         Me.GroupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel2.TabIndex = 165
         Me.GroupPanel2.Text = "Datos del ticket"
+        '
+        'Txt_TidoNudoCierra
+        '
+        Me.Txt_TidoNudoCierra.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_TidoNudoCierra.Border.Class = "TextBoxBorder"
+        Me.Txt_TidoNudoCierra.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_TidoNudoCierra.ButtonCustom.Image = CType(resources.GetObject("Txt_TidoNudoCierra.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_TidoNudoCierra.ButtonCustom.Visible = True
+        Me.Txt_TidoNudoCierra.ButtonCustom2.Image = CType(resources.GetObject("Txt_TidoNudoCierra.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_TidoNudoCierra.ButtonCustom2.Visible = True
+        Me.Txt_TidoNudoCierra.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_TidoNudoCierra.ForeColor = System.Drawing.Color.Black
+        Me.Txt_TidoNudoCierra.Location = New System.Drawing.Point(422, 33)
+        Me.Txt_TidoNudoCierra.Name = "Txt_TidoNudoCierra"
+        Me.Txt_TidoNudoCierra.PreventEnterBeep = True
+        Me.Txt_TidoNudoCierra.ReadOnly = True
+        Me.Txt_TidoNudoCierra.Size = New System.Drawing.Size(200, 22)
+        Me.Txt_TidoNudoCierra.TabIndex = 169
+        Me.Txt_TidoNudoCierra.TabStop = False
+        Me.Txt_TidoNudoCierra.Visible = False
+        '
+        'Chk_ExigeDocCerrar
+        '
+        Me.Chk_ExigeDocCerrar.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_ExigeDocCerrar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_ExigeDocCerrar.CheckBoxImageChecked = CType(resources.GetObject("Chk_ExigeDocCerrar.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_ExigeDocCerrar.Enabled = False
+        Me.Chk_ExigeDocCerrar.FocusCuesEnabled = False
+        Me.Chk_ExigeDocCerrar.ForeColor = System.Drawing.Color.Black
+        Me.Chk_ExigeDocCerrar.Location = New System.Drawing.Point(305, 33)
+        Me.Chk_ExigeDocCerrar.Name = "Chk_ExigeDocCerrar"
+        Me.Chk_ExigeDocCerrar.Size = New System.Drawing.Size(111, 22)
+        Me.Chk_ExigeDocCerrar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_ExigeDocCerrar.TabIndex = 168
+        Me.Chk_ExigeDocCerrar.TabStop = False
+        Me.Chk_ExigeDocCerrar.Text = "Exige documento"
+        Me.Chk_ExigeDocCerrar.Visible = False
         '
         'Txt_AreaTipo
         '
@@ -252,7 +299,7 @@ Partial Class Frm_Tickets_Mant
         Me.Chk_ExigeProducto.ForeColor = System.Drawing.Color.Black
         Me.Chk_ExigeProducto.Location = New System.Drawing.Point(89, 33)
         Me.Chk_ExigeProducto.Name = "Chk_ExigeProducto"
-        Me.Chk_ExigeProducto.Size = New System.Drawing.Size(165, 22)
+        Me.Chk_ExigeProducto.Size = New System.Drawing.Size(93, 22)
         Me.Chk_ExigeProducto.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_ExigeProducto.TabIndex = 57
         Me.Chk_ExigeProducto.TabStop = False
@@ -455,7 +502,7 @@ Partial Class Frm_Tickets_Mant
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Archivos_Adjuntos, Me.Btn_Eliminar})
-        Me.Bar2.Location = New System.Drawing.Point(0, 438)
+        Me.Bar2.Location = New System.Drawing.Point(0, 435)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(655, 41)
         Me.Bar2.Stretch = True
@@ -500,7 +547,7 @@ Partial Class Frm_Tickets_Mant
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(655, 479)
+        Me.ClientSize = New System.Drawing.Size(655, 476)
         Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.Bar2)
         Me.DoubleBuffered = True
@@ -550,4 +597,6 @@ Partial Class Frm_Tickets_Mant
     Friend WithEvents Txt_AreaTipo As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX10 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Timer_CreaDesdeTicket As Timer
+    Friend WithEvents Txt_TidoNudoCierra As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Chk_ExigeDocCerrar As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

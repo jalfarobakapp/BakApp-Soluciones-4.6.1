@@ -32,6 +32,10 @@ Public Class Frm_Informe_Compr_No_Despachados
     Dim _Informe_Analisis As Boolean
     Dim _Informe_Generado As Boolean
 
+    Dim _Filtro_FunEntidad As String = String.Empty
+
+    Private VerSoloEntidadesDelVendedor As Boolean
+
     Public ReadOnly Property Pro_Informe_Generado() As Boolean
         Get
             Return _Informe_Generado
@@ -98,6 +102,18 @@ Public Class Frm_Informe_Compr_No_Despachados
         'If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
         '    Rdb_NVV.Text = "Notas de venta (NVV) Solo Habilitadas"
         'End If
+
+        VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00021",, False)
+
+        If Not VerSoloEntidadesDelVendedor Then
+            VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00022",, False)
+        End If
+
+        Chk_MostrarSoloDocClientesDelVendedor.Visible = VerSoloEntidadesDelVendedor
+        Chk_MostrarSoloDocClientesDelVendedor.Checked = VerSoloEntidadesDelVendedor
+        Wrn_MostrarSoloDocClientesDelVendedor.Visible = VerSoloEntidadesDelVendedor
+
+        AddHandler Chk_MostrarSoloDocClientesDelVendedor.CheckedChanged, AddressOf Chk_MostrarSoloDocClientesDelVendedor_CheckedChanged
 
     End Sub
 
@@ -294,6 +310,25 @@ Public Class Frm_Informe_Compr_No_Despachados
         End If
 
 
+        If Chk_MostrarSoloDocClientesDelVendedor.Checked Then
+
+            Dim _Kogru = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & FUNCIONARIO & "'")
+
+            If String.IsNullOrEmpty(_Kogru) Then
+                _Filtro_FunEntidad += vbCrLf & " And EN.KOFUEN = '" & FUNCIONARIO & "'"
+            Else
+
+                Consulta_sql = "Select KOFU From TABFUGD Where KOGRU = '" & _Kogru & "'"
+                Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+                _Filtro_FunEntidad = Generar_Filtro_IN(_Tbl, "", "KOFU", False, False, "'")
+                _Filtro_FunEntidad = "And EN.KOFUEN In " & _Filtro_FunEntidad
+
+            End If
+
+        End If
+
+
         Consulta_sql = "Drop Table " & _Tabla_Paso
         _Sql.Ej_consulta_IDU(Consulta_sql, False)
 
@@ -315,6 +350,7 @@ Public Class Frm_Informe_Compr_No_Despachados
         End If
 
         Consulta_sql = Replace(Consulta_sql, "#Tabla_Paso#", _Tabla_Paso)
+        Consulta_sql = Replace(Consulta_sql, "#Filtro_FunEntidad#", _Filtro_FunEntidad)
 
         Me.Cursor = Cursors.WaitCursor
         Me.Enabled = False
@@ -370,5 +406,32 @@ Public Class Frm_Informe_Compr_No_Despachados
                 Chk_NVVHabilitadasFacturar.Checked = True
             End If
         End If
+    End Sub
+
+    Private Sub Chk_MostrarSoloDocClientesDelVendedor_CheckedChanged(sender As Object, e As EventArgs)
+        If VerSoloEntidadesDelVendedor Then
+            If Not Chk_MostrarSoloDocClientesDelVendedor.Checked Then
+                Dim _Row As DataRow
+                If Fx_Tiene_Permiso(Me, "CfEnt031",,,,,,,,, _Row) Then
+                    If _Row.Item("KOFU") = FUNCIONARIO Then
+                        MessageBoxEx.Show(Me, "Usted ahora puede ver todos los documentos de todos los vendedores" & vbCrLf &
+                                          "tiene el permiso: CfEnt031", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    End If
+                Else
+                    Chk_MostrarSoloDocClientesDelVendedor.Checked = True
+                    Return
+                End If
+            End If
+        End If
+    End Sub
+
+    Private Sub Wrn_MostrarSoloDocClientesDelVendedor_OptionsClick(sender As Object, e As EventArgs) Handles Wrn_MostrarSoloDocClientesDelVendedor.OptionsClick
+
+        Dim _Msj As String = "Tiene una restricción que le impide ver documentos de clientes de otros vendedores." & vbCrLf &
+                     "Esto significa que solo puede acceder a los documentos de su propia cartera de clientes." & vbCrLf & vbCrLf &
+                     "Actualmente, tiene asignado el permiso (restricción) NO00021."
+
+        MessageBoxEx.Show(Me, _Msj, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
     End Sub
 End Class

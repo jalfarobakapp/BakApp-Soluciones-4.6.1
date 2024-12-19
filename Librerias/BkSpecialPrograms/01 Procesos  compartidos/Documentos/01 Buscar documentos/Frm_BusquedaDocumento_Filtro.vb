@@ -304,6 +304,10 @@ Public Class Frm_BusquedaDocumento_Filtro
 
         VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00021",, False)
 
+        If Not VerSoloEntidadesDelVendedor Then
+            VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00022",, False)
+        End If
+
         Chk_MostrarSoloDocClientesDelVendedor.Visible = VerSoloEntidadesDelVendedor
         Chk_MostrarSoloDocClientesDelVendedor.Checked = VerSoloEntidadesDelVendedor
         Wrn_MostrarSoloDocClientesDelVendedor.Visible = VerSoloEntidadesDelVendedor
@@ -671,7 +675,19 @@ Buscar:
 
         If Chk_MostrarSoloDocClientesDelVendedor.Checked Then
 
-            _Sql_Filtro_Entidades += vbCrLf & " And Mae1.KOFUEN = '" & FUNCIONARIO & "'"
+            Dim _Kogru = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & FUNCIONARIO & "'")
+
+            If String.IsNullOrEmpty(_Kogru) Then
+                _Sql_Filtro_Entidades += vbCrLf & " And Mae1.KOFUEN = '" & FUNCIONARIO & "'"
+            Else
+
+                Consulta_sql = "Select KOFU From TABFUGD Where KOGRU = '" & _Kogru & "'"
+                Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+                _Sql_Filtro_Entidades = Generar_Filtro_IN(_Tbl, "", "KOFU", False, False, "'")
+                _Sql_Filtro_Entidades = "And Mae1.KOFUEN In " & _Sql_Filtro_Entidades
+
+            End If
 
         End If
 
@@ -739,6 +755,8 @@ Buscar:
                     Dim _TipoDoc As String = Trim(_Tbl_Paso.Rows(0).Item("TipoDoc"))
                     Dim _Tido As String = _Tbl_Paso.Rows(0).Item("TIDO")
                     Dim _Nudo As String = _Tbl_Paso.Rows(0).Item("NUDO")
+                    Dim _Endo As String = _Tbl_Paso.Rows(0).Item("ENDO")
+                    Dim _Suendo As String = _Tbl_Paso.Rows(0).Item("SUENDO")
 
                     Dim _Mensaje = MessageBoxEx.Show(Me, "Se encontro solo un registro, eliga su opción" & Environment.NewLine & Environment.NewLine &
                                                      "(Yes) Ver el documento inmediatamente" & Environment.NewLine &
@@ -751,17 +769,22 @@ Buscar:
 
                         Dim _Idmaeedo_ = _Tbl_Paso.Rows(0).Item("IDMAEEDO")
                         Dim _CodigoMarcar = String.Empty
-                        'Dim _Fm As New Frm_Ver_Documento(_Idmaeedo_, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
 
                         If Rdb_Producto_Uno.Checked And Not IsNothing(_Row_Producto) Then
                             _CodigoMarcar = _Row_Producto.Item("KOPR")
-                            '_Fm.Codigo_Marcar = _Row_Producto.Item("KOPR")
                         End If
 
-                        '_Fm.ShowDialog(Me)
-                        '_Fm.Dispose()
+                        Dim _Msj As LsValiciones.Mensajes = Fx_FuncionarioPuedeVerDocumentoGrupo(_Idmaeedo, FUNCIONARIO)
 
-                        Fx_VerDocumento(Me, _Idmaeedo, _CodigoMarcar)
+                        If Not _Msj.EsCorrecto Then
+                            MessageBoxEx.Show(Me, _Msj.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                            Return
+                        End If
+
+                        Dim Fm2 As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
+                        Fm2.Codigo_Marcar = _CodigoMarcar
+                        Fm2.ShowDialog(Me)
+                        Fm2.Dispose()
 
                         Return
 

@@ -271,7 +271,7 @@ Public Class Cl_Conteo
                                        "(" & .IdHoja & ",'" & .Nro_Hoja & "'," & .IdInventario & ",'" & .Empresa & "','" & .Sucursal & "','" & .Bodega & "'" &
                                        ",'" & .Responsable & "'," & .IdContador1 & "," & .IdContador2 & ",'" & .Item_Hoja & "'," & .IdSector &
                                        ",'" & .Sector & "','" & .Ubicacion & "','" & .TipoConteo & "','" & .Codigo & "'," & Convert.ToInt32(.EsSeriado) & ",'" & .NroSerie & "'" &
-                                       ",Getdate(),'" & De_Num_a_Tx_01(.Rtu, False, 5) & ",'" & .RtuVariable & "','" & .Udtrpr & "'" &
+                                       ",Getdate()," & De_Num_a_Tx_01(.Rtu, False, 5) & "," & Convert.ToInt32(.RtuVariable) & ",'" & .Udtrpr & "'" &
                                        "," & De_Num_a_Tx_01(.Cantidad, False, 5) & ",'" & .Ud1 &
                                        "'," & De_Num_a_Tx_01(.CantidadUd1, False, 5) & ",'" & .Ud2 & "'," & De_Num_a_Tx_01(.CantidadUd2, False, 5) &
                                        ",'" & .Observaciones & "'," & Convert.ToInt32(.Recontado) & ",'" & .Actualizado_por & "','" & .Obs_Actualizacion & "')"
@@ -280,26 +280,50 @@ Public Class Cl_Conteo
                         Comando.Transaction = myTrans
                         Comando.ExecuteNonQuery()
 
-                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Cant_Inventariada +=" & .Cantidad & vbCrLf &
-                                       "Where IdInventario = " & .IdInventario & " And Codigo = '" & .Codigo & "'"
-
-                        Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
-                        Comando.Transaction = myTrans
-                        Comando.ExecuteNonQuery()
-
-                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Total_Costo_Inv = Cant_Inventariada*Costo" & vbCrLf &
-                                       "Where IdInventario = " & .IdInventario & " And Codigo = '" & .Codigo & "'"
-
                         If Zw_Inv_Hoja.Reconteo Then
 
-                            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set IdHojaUltReconteo = " & .IdHoja & vbCrLf &
+                            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set " &
+                                           "Cant_Inventariada = " & De_Num_a_Tx_01(.CantidadUd1, False, 5) & ", IdHojaUltReconteo = " & .IdHoja & vbCrLf &
                                            "Where IdInventario = " & .IdInventario & " And Codigo = '" & .Codigo & "'"
 
                             Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                             Comando.Transaction = myTrans
                             Comando.ExecuteNonQuery()
 
+                        Else
+
+                            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set " &
+                                           "Cant_Inventariada +=" & De_Num_a_Tx_01(.CantidadUd1, False, 5) & vbCrLf &
+                                           "Where IdInventario = " & .IdInventario & " And Codigo = '" & .Codigo & "'"
+
+                            Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                            Comando.Transaction = myTrans
+                            Comando.ExecuteNonQuery()
+
+
                         End If
+
+                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set Total_Costo_Inv = Cant_Inventariada*Costo" & vbCrLf &
+                                       "Where IdInventario = " & .IdInventario & " And Codigo = '" & .Codigo & "'" & vbCrLf &
+                                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set " &
+                                       "Dif_Inv_Cantidad = ROUND(Cant_Inventariada - StFisicoUd1, 5)" & vbCrLf &
+                                       "Where IdInventario = " & .IdInventario & " And Codigo = '" & .Codigo & "'" &
+                                       vbCrLf &
+                                       "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set " &
+                                       "Total_Costo_Foto = StFisicoUd1*Costo,Total_Costo_Inv = Cant_Inventariada*Costo" & vbCrLf &
+                                       "Where IdInventario = " & .IdInventario & " And Codigo = '" & .Codigo & "'"
+
+                        Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                        Comando.Transaction = myTrans
+                        Comando.ExecuteNonQuery()
+
+                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Inv_FotoInventario Set " &
+                                       "Dif_Inv_Costo = Total_Costo_Inv-(Total_Costo_Foto)" & vbCrLf &
+                                       "Where IdInventario = " & .IdInventario & " And Codigo = '" & .Codigo & "'"
+
+                        Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                        Comando.Transaction = myTrans
+                        Comando.ExecuteNonQuery()
 
                     End If
 

@@ -1,5 +1,4 @@
-﻿Imports System.Runtime.InteropServices
-Imports BkSpecialPrograms
+﻿Imports BkSpecialPrograms
 Imports DevComponents.DotNetBar
 
 Public Class Frm_GRI_FabXProducto
@@ -177,7 +176,6 @@ Public Class Frm_GRI_FabXProducto
             Sb_BuscarProductos(_Numot_Extra)
             Return
         End If
-
 
         If IsNothing(_Row_Potl) Then
             If String.IsNullOrEmpty(Txt_Codigo.Text) Then
@@ -431,11 +429,19 @@ Public Class Frm_GRI_FabXProducto
 
         If _Ult_Tipo = "MAXI-SACO" Then
 
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Lotes_Enc Where NroLote = '" & _Ult_Lote & "'"
+            Dim _Row_Lote As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Dim _Lote As String = vbCrLf & "Lote: " & _Ult_Lote
+
+            If _Row_Lote.Item("Codigo").ToString.Trim <> Txt_Codigo.Text.Trim Then
+                _Lote = String.Empty
+            End If
+
             If MessageBoxEx.Show(Me, "¿Quiere seguir utilizando los datos de MAXI fabricado anteriormente?" & vbCrLf & vbCrLf &
                                  "Turno: " & _Ult_Turno_Str.Trim & vbCrLf &
                                  "Planta: " & _Ult_Planta_Str.Trim & vbCrLf &
-                                 "Tolva: " & _Ult_Tolva_Str.Trim & vbCrLf &
-                                 "Lote: " & _Ult_Lote,
+                                 "Tolva: " & _Ult_Tolva_Str.Trim & _Lote,
                                  "Fabricar MAXI-SACO", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
                 _Cl_Tarja.Zw_Pdp_CPT_Tarja.Tipo = _Ult_Tipo
@@ -446,8 +452,13 @@ Public Class Frm_GRI_FabXProducto
                 _Cl_Tarja.Zw_Pdp_CPT_Tarja.Tolva = _Ult_Tolva
                 Txt_Tolva.Text = _Ult_Tolva_Str
                 _Cl_Tarja.Zw_Pdp_CPT_Tarja.Lote = _Ult_Lote
-                Txt_NroLote.Text = _Ult_Lote
                 Cmb_Formato.SelectedValue = 1
+
+                If Not String.IsNullOrEmpty(_Lote) Then
+                    Txt_NroLote.Text = _Ult_Lote
+                Else
+                    Call Txt_NroLote_ButtonCustomClick(Nothing, Nothing)
+                End If
 
                 Btn_Grabar.Focus()
 
@@ -647,13 +658,11 @@ Public Class Frm_GRI_FabXProducto
 
         If _Row_Lote.Item("Codigo").ToString.Trim <> Txt_Codigo.Text.Trim Then
 
-            'MessageBoxEx.Show(Me, "El número de lote " & _NroLote & " no pertence al producto " & Txt_Codigo.Text.Trim & vbCrLf & vbCrLf &
-            '                  "El lote " & _NroLote & " es del producto " & _Row_Lote.Item("Codigo").ToString.Trim, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-
             MessageBoxEx.Show(Me, "El número de lote " & _NroLote & " pertence al producto " & _Row_Lote.Item("Codigo").ToString.Trim & vbCrLf & vbCrLf &
                               "No puede grabar el mismo numero de lote para otro producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-
+            Call Txt_NroLote_ButtonCustomClick(Nothing, Nothing)
             Return
+
         End If
 
         MessageBoxEx.Show(Me, "Lote aceptado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -1112,6 +1121,7 @@ Public Class Frm_GRI_FabXProducto
         'Else
         '    _FechaEmision = Dtp_Fecha_Ingreso.Value
         'End If
+        _Observaciones = String.Empty
 
         Dim Fm As New Frm_Formulario_Documento("GRI", csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Recepcion_Interna,
                                                False, False, False, False, False, False)
@@ -1161,6 +1171,21 @@ Public Class Frm_GRI_FabXProducto
                        "Where Id_CPT = " & _Cl_Tarja.Zw_Pdp_CPT_Tarja.Id
 
         _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+        If Chk_GDI_Consumo.Checked Then
+
+            Dim _Observaciones_GDI = "Documento creado automáticamente desde Bakapp al crear GRI de ingreso de producción"
+            Dim _Msj_GDI As New LsValiciones.Mensajes
+
+            Dim Cl_ArmaGDI As New Cl_ArmaGDIConsumo
+            _Msj_GDI = Cl_ArmaGDI.Fx_CrearGDI(Me, _Row_Potl.Item("IDPOTL"), _Cantidadv, _Row_Entidad, _FechaEmision, _Observaciones_GDI)
+
+            If Not _Msj_GDI.EsCorrecto Then
+                MessageBoxEx.Show(Me, _Msj_GDI.Mensaje, _Msj_GDI.Detalle, MessageBoxButtons.OK, _Msj_GDI.Icono, MessageBoxDefaultButton.Button1, True)
+            End If
+
+        End If
+
 
         Fm_Espera.Close()
         Fm_Espera.Dispose()
@@ -1310,4 +1335,27 @@ Public Class Frm_GRI_FabXProducto
         Dtp_Fecha_Ingreso.Value = Dtp_Fiot.Value
     End Sub
 
+    Private Sub ButtonItem1_Click(sender As Object, e As EventArgs) Handles ButtonItem1.Click
+
+        Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+        Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _Koen As String = _Row_Configp.Item("RUT").ToString.Trim
+        Dim _Observaciones As String
+
+        Consulta_sql = "Select Top 1 * From MAEEN Where KOEN = '" & _Koen & "'"
+        Dim _Row_Entidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+        Dim _Cantidad As Double = Txt_Cantidad.Tag
+
+        Dim _FechaEmision As DateTime = Dtp_Fecha_Ingreso.Value
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Dim Cl_ArmaGDI As New Cl_ArmaGDIConsumo
+        _Mensaje = Cl_ArmaGDI.Fx_CrearGDI(Me, _Row_Potl.Item("IDPOTL"), _Cantidad, _Row_Entidad, _FechaEmision, "")
+        If _Mensaje.EsCorrecto Then
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono, MessageBoxDefaultButton.Button1, True)
+        End If
+
+    End Sub
 End Class

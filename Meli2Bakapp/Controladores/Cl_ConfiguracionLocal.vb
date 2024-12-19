@@ -50,6 +50,7 @@ Public Class Cl_ConfiguracionLocal
                 Configuracion.Ls_Conexiones.Add(_Conexion2)
 
                 Configuracion.Global_BaseBk = String.Empty
+                Configuracion.BodegaFacturacion = New BodegaFacturacion With {.Empresa = "", .Razon = "", .Kosu = "", .Nokosu = "", .Kobo = "", .Nokobo = ""}
 
                 json = Newtonsoft.Json.JsonConvert.SerializeObject(Configuracion)
 
@@ -66,13 +67,6 @@ Public Class Cl_ConfiguracionLocal
             Configuracion = JsonConvert.DeserializeObject(Of Configuracion)(json)
 
             Dim Ls_Conexiones As List(Of Conexion) = Configuracion.Ls_Conexiones
-
-            If String.IsNullOrEmpty(Configuracion.Global_BaseBk) Then
-                _Mensaje.Detalle = "Falta datos en la configuración"
-                Throw New System.Exception("Debe ingresar el nombre de la base de datos de BAKAPP")
-            End If
-
-            _Global_BaseBk = Configuracion.Global_BaseBk & ".dbo."
 
             If _Mensaje.Id = 1 Then
 
@@ -109,10 +103,61 @@ Public Class Cl_ConfiguracionLocal
 
                 End If
 
-                _Mensaje.Detalle = "Archivo leido correctamente"
-                _Mensaje.Mensaje = "El archivo contiene las conexiones a las bases de datos"
-
             End If
+
+            If String.IsNullOrEmpty(Configuracion.Global_BaseBk) Then
+                _Mensaje.Detalle = "Falta datos en la configuración"
+                Throw New System.Exception("Debe ingresar el nombre de la base de datos de BAKAPP")
+            End If
+
+            _Global_BaseBk = Configuracion.Global_BaseBk & ".dbo."
+
+            If IsNothing(Configuracion.BodegaFacturacion) Then
+                _Mensaje.Detalle = "Falta datos en la configuración"
+                Throw New System.Exception("Debe ingresar los datos de la bodega de facturación")
+            End If
+
+            If Not Directory.Exists(Configuracion.RutaEtiquetas) Then
+                _Mensaje.Detalle = "Falta datos en la configuración"
+                Throw New System.Exception("Debe ingresar la ruta de las etiquetas")
+            End If
+
+            If Not Directory.Exists(Configuracion.RutaEtiquetas) Then
+                _Mensaje.Detalle = "Falta datos en la configuración"
+                Throw New System.Exception("Debe ingresar la ruta de las etiquetas")
+            End If
+
+            If String.IsNullOrEmpty(Configuracion.DocEmitir) Then
+                Configuracion.DocEmitir = String.Empty
+                Configuracion.Facturar = False
+            End If
+
+            With Configuracion.BodegaFacturacion
+
+                If String.IsNullOrEmpty(.Empresa) Or
+                   String.IsNullOrEmpty(.Razon) Or
+                   String.IsNullOrEmpty(.Kosu) Or
+                   String.IsNullOrEmpty(.Nokosu) Or
+                   String.IsNullOrEmpty(.Kobo) Or
+                   String.IsNullOrEmpty(.Nokobo) Then
+                    _Mensaje.Detalle = "Falta datos en la configuración"
+                    Throw New System.Exception("Debe ingresar los datos de la bodega de facturación")
+                End If
+
+            End With
+
+            If IsNothing(Configuracion.Vendedor) OrElse String.IsNullOrEmpty(Configuracion.Vendedor) Then
+                _Mensaje.Detalle = "Falta datos en la configuración"
+                Throw New System.Exception("Debe ingresar los datos del vendedor")
+            End If
+
+            If IsNothing(Configuracion.Responsable) OrElse String.IsNullOrEmpty(Configuracion.Responsable) Then
+                _Mensaje.Detalle = "Falta datos en la configuración"
+                Throw New System.Exception("Debe ingresar los datos del responsable de la factura/boleta")
+            End If
+
+            _Mensaje.Detalle = "Archivo leido correctamente"
+            _Mensaje.Mensaje = "El archivo contiene las conexiones a las bases de datos"
 
             _Mensaje.EsCorrecto = True
             _Mensaje.Resultado = json
@@ -198,6 +243,52 @@ Public Class Cl_ConfiguracionLocal
         Catch ex As Exception
             _Mensaje.Detalle = "Problema al conectar"
             _Mensaje.Mensaje = ex.Message
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
+    Function Fx_ConfirmardbBakapp(_BaseDatosBakapp As String, _Usuario As String,_CadenaDeConexion As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+        Dim Consulta_Sql As String
+
+        Try
+
+            Dim _Sql As New Class_SQL(_CadenaDeConexion)
+
+            Consulta_Sql = "USE [" & _BaseDatosBakapp & "];
+Declare @Usuario As Varchar(20) = '" & _Usuario & "';
+
+SELECT 
+    dp.name AS Usuario,
+    dp.type_desc AS Tipo,
+    dp.create_date AS FechaCreacion,
+    dp.modify_date AS FechaModificacion,
+    p.permission_name AS Permiso,
+    p.state_desc AS Estado
+FROM 
+    sys.database_principals dp
+LEFT JOIN 
+    sys.database_permissions p ON dp.principal_id = p.grantee_principal_id
+WHERE 
+    dp.name = @Usuario;
+"
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
+
+            If Not String.IsNullOrWhiteSpace(_Sql.Pro_Error) Then
+                Throw New System.Exception(_Sql.Pro_Error)
+            End If
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Base de datos aceptada"
+            _Mensaje.Icono = MessageBoxIcon.Information
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message & vbCrLf & vbCrLf & "Revise el nombre de la base de datos de Bakapp"
+            _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
 
         Return _Mensaje

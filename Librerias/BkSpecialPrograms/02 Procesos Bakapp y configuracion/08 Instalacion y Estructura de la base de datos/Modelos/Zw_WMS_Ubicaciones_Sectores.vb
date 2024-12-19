@@ -9,6 +9,7 @@
     Public Property Es_SubSector As Boolean
     Public Property EsCabecera As Boolean
     Public Property SoloUnaUbicacion As Boolean
+    Public Property OblConfimarUbic As Boolean
 
 End Class
 

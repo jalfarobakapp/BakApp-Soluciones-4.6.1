@@ -65,6 +65,7 @@ Partial Class Frm_GRI_FabXProducto
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Limpiar = New DevComponents.DotNetBar.ButtonItem()
+        Me.ButtonItem1 = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX10 = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_Tipo = New DevComponents.DotNetBar.LabelX()
@@ -78,6 +79,7 @@ Partial Class Frm_GRI_FabXProducto
         Me.Txt_Turno = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_Analista = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX17 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_GDI_Consumo = New DevComponents.DotNetBar.CheckBoxItem()
         Me.Grupo_Producto.SuspendLayout()
         Me.Panel_SC.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -893,7 +895,7 @@ Partial Class Frm_GRI_FabXProducto
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Limpiar})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Limpiar, Me.ButtonItem1, Me.Chk_GDI_Consumo})
         Me.Bar1.Location = New System.Drawing.Point(0, 527)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(855, 41)
@@ -922,6 +924,17 @@ Partial Class Frm_GRI_FabXProducto
         Me.Btn_Limpiar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.Btn_Limpiar.Name = "Btn_Limpiar"
         Me.Btn_Limpiar.Tooltip = "Nuevo, limpiar documento [F5]"
+        '
+        'ButtonItem1
+        '
+        Me.ButtonItem1.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.ButtonItem1.ForeColor = System.Drawing.Color.Black
+        Me.ButtonItem1.Image = CType(resources.GetObject("ButtonItem1.Image"), System.Drawing.Image)
+        Me.ButtonItem1.ImageAlt = CType(resources.GetObject("ButtonItem1.ImageAlt"), System.Drawing.Image)
+        Me.ButtonItem1.Name = "ButtonItem1"
+        Me.ButtonItem1.Text = "Prueba GDI"
+        Me.ButtonItem1.Tooltip = "Seleccionar registro marcado"
+        Me.ButtonItem1.Visible = False
         '
         'LabelX7
         '
@@ -1203,6 +1216,14 @@ Partial Class Frm_GRI_FabXProducto
         Me.LabelX17.TabIndex = 101
         Me.LabelX17.Text = "ANALISTA"
         '
+        'Chk_GDI_Consumo
+        '
+        Me.Chk_GDI_Consumo.CheckBoxImageChecked = CType(resources.GetObject("Chk_GDI_Consumo.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_GDI_Consumo.Checked = True
+        Me.Chk_GDI_Consumo.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Chk_GDI_Consumo.Name = "Chk_GDI_Consumo"
+        Me.Chk_GDI_Consumo.Text = "Crear GDI de consumo"
+        '
         'Frm_GRI_FabXProducto
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1289,4 +1310,6 @@ Partial Class Frm_GRI_FabXProducto
     Friend WithEvents Rdb_BodegaDesdeModalidad As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Rdb_BodegaDesdeOT As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Btn_EditFechaGRI As DevComponents.DotNetBar.ButtonX
+    Public WithEvents ButtonItem1 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Chk_GDI_Consumo As DevComponents.DotNetBar.CheckBoxItem
 End Class

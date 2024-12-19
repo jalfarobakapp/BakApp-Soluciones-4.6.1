@@ -119,7 +119,8 @@
                    Optional _Requiere_Seleccion As Boolean = True,
                    Optional _Activar_Crear_Editar_Eliminar As Boolean = False,
                    Optional _Seleccionar_Todos_Visible As Boolean = True,
-                   Optional _TableName As String = "") As Boolean
+                   Optional _TableName As String = "",
+                   Optional _MostrarNumeracionDeRegistros As Boolean = False) As Boolean
 
         _Tbl_Filtro = Tbl_Filtro
         _Filtro_Todas = Filtro_Todas
@@ -138,6 +139,7 @@
         Fm.Pro_Requiere_Seleccion = _Requiere_Seleccion
         Fm.Ver_Codigo = Ver_Codigo
         Fm.Chk_Seleccionar_Todos.Visible = _Seleccionar_Todos_Visible
+        Fm.MostrarNumeracionDeRegistros = _MostrarNumeracionDeRegistros
         Fm.ShowDialog(_Formulario)
 
         If Fm.Pro_Filtrar Then

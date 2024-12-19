@@ -23,20 +23,28 @@ Partial Class Frm_Sectores_Lista_UbicOblig
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Sectores_Lista_UbicOblig))
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_AgregarProductosUbic = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_VerProdUbicacion = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_VerProdUbicacionMensual = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem2 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_AgregarProductosUbic = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_QuitarProductosUbic = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem4 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_ConfProdUltUbic = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_ConfProdUbicSoloUna = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem3 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_ConfProdUbic = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_ExportarExcelProductos = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Dtp_FechaRevision = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
@@ -49,8 +57,9 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
         Me.Imagenes_16x16_Dark = New System.Windows.Forms.ImageList(Me.components)
-        Me.Btn_QuitarProductosUbic = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_VerProdUbicacion = New DevComponents.DotNetBar.ButtonItem()
+        Me.Chk_Seleccionar_Todos = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_MostrarSesctoresEnMapa = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_MostrarTodosSectores = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -69,7 +78,7 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 133)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(716, 444)
+        Me.GroupPanel1.Size = New System.Drawing.Size(716, 415)
         '
         '
         '
@@ -106,7 +115,7 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.Menu_Contextual.AntiAlias = True
         Me.Menu_Contextual.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
-        Me.Menu_Contextual.Location = New System.Drawing.Point(44, 94)
+        Me.Menu_Contextual.Location = New System.Drawing.Point(46, 37)
         Me.Menu_Contextual.Name = "Menu_Contextual"
         Me.Menu_Contextual.Size = New System.Drawing.Size(412, 25)
         Me.Menu_Contextual.Stretch = True
@@ -119,15 +128,8 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         '
         Me.Menu_Contextual_01.AutoExpandOnClick = True
         Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
-        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_VerProdUbicacion, Me.Btn_AgregarProductosUbic, Me.Btn_QuitarProductosUbic, Me.LabelItem3, Me.Btn_Copiar})
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_VerProdUbicacion, Me.Btn_VerProdUbicacionMensual, Me.LabelItem2, Me.Btn_AgregarProductosUbic, Me.Btn_QuitarProductosUbic, Me.LabelItem4, Me.Btn_ConfProdUltUbic, Me.Btn_ConfProdUbicSoloUna, Me.LabelItem3, Me.Btn_Copiar})
         Me.Menu_Contextual_01.Text = "Opciones "
-        '
-        'Btn_AgregarProductosUbic
-        '
-        Me.Btn_AgregarProductosUbic.Image = CType(resources.GetObject("Btn_AgregarProductosUbic.Image"), System.Drawing.Image)
-        Me.Btn_AgregarProductosUbic.ImageAlt = CType(resources.GetObject("Btn_AgregarProductosUbic.ImageAlt"), System.Drawing.Image)
-        Me.Btn_AgregarProductosUbic.Name = "Btn_AgregarProductosUbic"
-        Me.Btn_AgregarProductosUbic.Text = "Ingresar productos a la ubicacion "
         '
         'LabelItem1
         '
@@ -140,7 +142,76 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.LabelItem1.PaddingLeft = 10
         Me.LabelItem1.PaddingTop = 1
         Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.LabelItem1.Text = "Opciones"
+        Me.LabelItem1.Text = "Ver productos en la ubicacion"
+        '
+        'Btn_VerProdUbicacion
+        '
+        Me.Btn_VerProdUbicacion.Image = CType(resources.GetObject("Btn_VerProdUbicacion.Image"), System.Drawing.Image)
+        Me.Btn_VerProdUbicacion.ImageAlt = CType(resources.GetObject("Btn_VerProdUbicacion.ImageAlt"), System.Drawing.Image)
+        Me.Btn_VerProdUbicacion.Name = "Btn_VerProdUbicacion"
+        Me.Btn_VerProdUbicacion.Text = "Ver productos en la ubicación"
+        '
+        'Btn_VerProdUbicacionMensual
+        '
+        Me.Btn_VerProdUbicacionMensual.Image = CType(resources.GetObject("Btn_VerProdUbicacionMensual.Image"), System.Drawing.Image)
+        Me.Btn_VerProdUbicacionMensual.ImageAlt = CType(resources.GetObject("Btn_VerProdUbicacionMensual.ImageAlt"), System.Drawing.Image)
+        Me.Btn_VerProdUbicacionMensual.Name = "Btn_VerProdUbicacionMensual"
+        Me.Btn_VerProdUbicacionMensual.Text = "Ver productos en esta ubicación mensualmente"
+        '
+        'LabelItem2
+        '
+        Me.LabelItem2.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem2.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem2.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem2.Name = "LabelItem2"
+        Me.LabelItem2.PaddingBottom = 1
+        Me.LabelItem2.PaddingLeft = 10
+        Me.LabelItem2.PaddingTop = 1
+        Me.LabelItem2.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem2.Text = "Agregar/Quitar"
+        '
+        'Btn_AgregarProductosUbic
+        '
+        Me.Btn_AgregarProductosUbic.Image = CType(resources.GetObject("Btn_AgregarProductosUbic.Image"), System.Drawing.Image)
+        Me.Btn_AgregarProductosUbic.ImageAlt = CType(resources.GetObject("Btn_AgregarProductosUbic.ImageAlt"), System.Drawing.Image)
+        Me.Btn_AgregarProductosUbic.Name = "Btn_AgregarProductosUbic"
+        Me.Btn_AgregarProductosUbic.Text = "Ingresar productos a la ubicación "
+        '
+        'Btn_QuitarProductosUbic
+        '
+        Me.Btn_QuitarProductosUbic.ForeColor = System.Drawing.Color.Red
+        Me.Btn_QuitarProductosUbic.Image = CType(resources.GetObject("Btn_QuitarProductosUbic.Image"), System.Drawing.Image)
+        Me.Btn_QuitarProductosUbic.ImageAlt = CType(resources.GetObject("Btn_QuitarProductosUbic.ImageAlt"), System.Drawing.Image)
+        Me.Btn_QuitarProductosUbic.Name = "Btn_QuitarProductosUbic"
+        Me.Btn_QuitarProductosUbic.Text = "Quitar producto de esta ubicación"
+        '
+        'LabelItem4
+        '
+        Me.LabelItem4.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem4.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem4.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem4.Name = "LabelItem4"
+        Me.LabelItem4.PaddingBottom = 1
+        Me.LabelItem4.PaddingLeft = 10
+        Me.LabelItem4.PaddingTop = 1
+        Me.LabelItem4.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem4.Text = "-----------------------------------------"
+        '
+        'Btn_ConfProdUltUbic
+        '
+        Me.Btn_ConfProdUltUbic.Image = CType(resources.GetObject("Btn_ConfProdUltUbic.Image"), System.Drawing.Image)
+        Me.Btn_ConfProdUltUbic.ImageAlt = CType(resources.GetObject("Btn_ConfProdUltUbic.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ConfProdUltUbic.Name = "Btn_ConfProdUltUbic"
+        Me.Btn_ConfProdUltUbic.Text = "Confirmar nuevamente los productos de este sector con la ultima ubicación"
+        '
+        'Btn_ConfProdUbicSoloUna
+        '
+        Me.Btn_ConfProdUbicSoloUna.Image = CType(resources.GetObject("Btn_ConfProdUbicSoloUna.Image"), System.Drawing.Image)
+        Me.Btn_ConfProdUbicSoloUna.ImageAlt = CType(resources.GetObject("Btn_ConfProdUbicSoloUna.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ConfProdUbicSoloUna.Name = "Btn_ConfProdUbicSoloUna"
+        Me.Btn_ConfProdUbicSoloUna.Text = "Confirmar productos cargados en la ubicación"
         '
         'LabelItem3
         '
@@ -166,37 +237,37 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         '
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.Grilla.Size = New System.Drawing.Size(710, 421)
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        Me.Grilla.Size = New System.Drawing.Size(710, 392)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 30
         '
@@ -205,7 +276,7 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_ConfProdUbic})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_ConfProdUbic, Me.Btn_ExportarExcelProductos})
         Me.Bar1.Location = New System.Drawing.Point(0, 583)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(740, 41)
@@ -223,6 +294,15 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.Btn_ConfProdUbic.ImageAlt = CType(resources.GetObject("Btn_ConfProdUbic.ImageAlt"), System.Drawing.Image)
         Me.Btn_ConfProdUbic.Name = "Btn_ConfProdUbic"
         Me.Btn_ConfProdUbic.Tooltip = "Confirmar productos en todos las ubicaciones de estos sectores"
+        '
+        'Btn_ExportarExcelProductos
+        '
+        Me.Btn_ExportarExcelProductos.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_ExportarExcelProductos.ForeColor = System.Drawing.Color.Black
+        Me.Btn_ExportarExcelProductos.Image = CType(resources.GetObject("Btn_ExportarExcelProductos.Image"), System.Drawing.Image)
+        Me.Btn_ExportarExcelProductos.ImageAlt = CType(resources.GetObject("Btn_ExportarExcelProductos.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ExportarExcelProductos.Name = "Btn_ExportarExcelProductos"
+        Me.Btn_ExportarExcelProductos.Tooltip = "Exportar a Excel los productos asociados a estas ubicaciones"
         '
         'GroupPanel2
         '
@@ -495,31 +575,76 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.Imagenes_16x16_Dark.Images.SetKeyName(22, "symbol-ok-warning.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(23, "symbol-remove.png")
         '
-        'Btn_QuitarProductosUbic
+        'Chk_Seleccionar_Todos
         '
-        Me.Btn_QuitarProductosUbic.ForeColor = System.Drawing.Color.Red
-        Me.Btn_QuitarProductosUbic.Image = CType(resources.GetObject("Btn_QuitarProductosUbic.Image"), System.Drawing.Image)
-        Me.Btn_QuitarProductosUbic.ImageAlt = CType(resources.GetObject("Btn_QuitarProductosUbic.ImageAlt"), System.Drawing.Image)
-        Me.Btn_QuitarProductosUbic.Name = "Btn_QuitarProductosUbic"
-        Me.Btn_QuitarProductosUbic.Text = "Quitar producto de esta ubicación"
+        Me.Chk_Seleccionar_Todos.BackColor = System.Drawing.Color.White
         '
-        'Btn_VerProdUbicacion
         '
-        Me.Btn_VerProdUbicacion.Image = CType(resources.GetObject("Btn_VerProdUbicacion.Image"), System.Drawing.Image)
-        Me.Btn_VerProdUbicacion.ImageAlt = CType(resources.GetObject("Btn_VerProdUbicacion.ImageAlt"), System.Drawing.Image)
-        Me.Btn_VerProdUbicacion.Name = "Btn_VerProdUbicacion"
-        Me.Btn_VerProdUbicacion.Text = "Ver productos en esta ubicación"
+        '
+        Me.Chk_Seleccionar_Todos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Seleccionar_Todos.CheckBoxImageChecked = CType(resources.GetObject("Chk_Seleccionar_Todos.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Seleccionar_Todos.FocusCuesEnabled = False
+        Me.Chk_Seleccionar_Todos.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Seleccionar_Todos.Location = New System.Drawing.Point(12, 554)
+        Me.Chk_Seleccionar_Todos.Name = "Chk_Seleccionar_Todos"
+        Me.Chk_Seleccionar_Todos.Size = New System.Drawing.Size(170, 23)
+        Me.Chk_Seleccionar_Todos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Seleccionar_Todos.TabIndex = 94
+        Me.Chk_Seleccionar_Todos.Text = "Seleccionar todos los registros"
+        '
+        'Rdb_MostrarSesctoresEnMapa
+        '
+        Me.Rdb_MostrarSesctoresEnMapa.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Rdb_MostrarSesctoresEnMapa.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_MostrarSesctoresEnMapa.CheckBoxImageChecked = CType(resources.GetObject("Rdb_MostrarSesctoresEnMapa.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_MostrarSesctoresEnMapa.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_MostrarSesctoresEnMapa.Checked = True
+        Me.Rdb_MostrarSesctoresEnMapa.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Rdb_MostrarSesctoresEnMapa.CheckValue = "Y"
+        Me.Rdb_MostrarSesctoresEnMapa.FocusCuesEnabled = False
+        Me.Rdb_MostrarSesctoresEnMapa.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_MostrarSesctoresEnMapa.Location = New System.Drawing.Point(188, 554)
+        Me.Rdb_MostrarSesctoresEnMapa.Name = "Rdb_MostrarSesctoresEnMapa"
+        Me.Rdb_MostrarSesctoresEnMapa.Size = New System.Drawing.Size(232, 23)
+        Me.Rdb_MostrarSesctoresEnMapa.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_MostrarSesctoresEnMapa.TabIndex = 95
+        Me.Rdb_MostrarSesctoresEnMapa.Text = "Mostrar sectores que solo estan en el Mapa"
+        '
+        'Rdb_MostrarTodosSectores
+        '
+        Me.Rdb_MostrarTodosSectores.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Rdb_MostrarTodosSectores.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_MostrarTodosSectores.CheckBoxImageChecked = CType(resources.GetObject("Rdb_MostrarTodosSectores.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_MostrarTodosSectores.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_MostrarTodosSectores.FocusCuesEnabled = False
+        Me.Rdb_MostrarTodosSectores.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_MostrarTodosSectores.Location = New System.Drawing.Point(426, 554)
+        Me.Rdb_MostrarTodosSectores.Name = "Rdb_MostrarTodosSectores"
+        Me.Rdb_MostrarTodosSectores.Size = New System.Drawing.Size(156, 23)
+        Me.Rdb_MostrarTodosSectores.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_MostrarTodosSectores.TabIndex = 96
+        Me.Rdb_MostrarTodosSectores.Text = "Mostrar todos los sectores"
         '
         'Frm_Sectores_Lista_UbicOblig
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(740, 624)
+        Me.Controls.Add(Me.Rdb_MostrarTodosSectores)
+        Me.Controls.Add(Me.Rdb_MostrarSesctoresEnMapa)
+        Me.Controls.Add(Me.Chk_Seleccionar_Todos)
         Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.Bar1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
@@ -562,4 +687,13 @@ Partial Class Frm_Sectores_Lista_UbicOblig
     Friend WithEvents Btn_ConfProdUbic As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_QuitarProductosUbic As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_VerProdUbicacion As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_ExportarExcelProductos As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_VerProdUbicacionMensual As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelItem2 As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents LabelItem4 As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Btn_ConfProdUbicSoloUna As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_ConfProdUltUbic As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Chk_Seleccionar_Todos As DevComponents.DotNetBar.Controls.CheckBoxX
+    Public WithEvents Rdb_MostrarSesctoresEnMapa As DevComponents.DotNetBar.Controls.CheckBoxX
+    Public WithEvents Rdb_MostrarTodosSectores As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class
