@@ -150,7 +150,7 @@ Public Class Frm_Fabricaciones
 
         Else
             Lbl_Fabricado.Font = Lbl_Fabricar.Font
-            Lbl_Fabricado.ForeColor = Lbl_Fabricado.ForeColor
+            Lbl_Fabricado.ForeColor = Lbl_Fabricar.ForeColor
         End If
 
     End Sub
@@ -467,7 +467,10 @@ Public Class Frm_Fabricaciones
             _Observaciones = "Datos de fabricación ingresados directamente desde Bakapp en sistema de ingreso de mezclas"
             _FechaEmision = Dtp_Fecha_Ingreso.Value
 
-            Dim _Cantidad As String = De_Num_a_Tx_01(Math.Round(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.CantFabricada, 5), False, 5)
+            Dim _Cantidad_Round As Double = Math.Round(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.CantFabricada, 5)
+            Dim _Cantidad_Floor As Double = Math.Floor(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.CantFabricada)
+
+            Dim _Cantidad As String = De_Num_a_Tx_01(_Cantidad_Floor, False, 5)
 
             Consulta_sql = "Select *," & _Cantidad & " As Cantidad,'" & ModSucursal & "' As Sucursal,'" & ModBodega & "' As Bodega" & vbCrLf &
                            "From POTL Where IDPOTL = " & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpotl_New

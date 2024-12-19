@@ -1079,9 +1079,9 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
             For Each _Fila As DataRow In _Tbl_Bodegas.Rows
 
-                Dim _Emp = Trim(_Fila.Item("EMPRESA"))
-                Dim _Suc = Trim(_Fila.Item("KOSU"))
-                Dim _Bod = Trim(_Fila.Item("KOBO"))
+                Dim _Emp = _Fila.Item("EMPRESA").ToString.Trim
+                Dim _Suc = _Fila.Item("KOSU").ToString.Trim
+                Dim _Bod = _Fila.Item("KOBO").ToString.Trim
 
                 Dim _Sigla = _Emp & _Suc & _Bod
 
@@ -1089,6 +1089,10 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                             "ISNULL((SELECT TOP 1 Mt.STFI1 FROM MAEST Mt WITH (NOLOCK)" & Space(1) &
                             "WHERE Mt.EMPRESA = '" & _Emp & "' AND Mt.KOSU = '" & _Suc & "' AND " & vbCrLf &
                             "Mt.KOBO = '" & _Bod & "' AND Mt.KOPR = Mp.KOPR),0) AS [STOCK_Ud1_" & _Sigla & "]," & vbCrLf
+
+                _Emp = _Fila.Item("EMPRESA")
+                _Suc = _Fila.Item("KOSU")
+                _Bod = _Fila.Item("KOBO")
 
                 _StockMayorCero = "'" & _Emp & _Suc & _Bod & "'"
                 _Ls_StockMayorCero.Add(_StockMayorCero)

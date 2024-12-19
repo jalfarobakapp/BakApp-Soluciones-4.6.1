@@ -244,7 +244,7 @@
 
     End Sub
 
-    Sub Sb_Facturar_Automaticamente_NVV2(_Formulario As Form, ByRef Lbl_FacAuto As Object)
+    Sub Sb_Facturar_Automaticamente_NVV_New(_Formulario As Form, ByRef Lbl_FacAuto As Object)
 
         Dim _FechaEmision As Date = FechaDelServidor()
 
@@ -295,10 +295,10 @@
 
                 If _DesdePickeo Then
                     _Mensaje = Fx_Crear_Documento_Desde_Otro_Automaticamente_Pickeo(_Formulario, _DocEmitir, _Idmaeedo, _Fecha_Emision, _Modalidad_Fac, _CerrarDespFact, _Id_Pickeo)
-                ElseIf _DesdeNVVAuto Then
-                    _Mensaje = Fx_Crear_Documento_Desde_Otro_Automaticamente_DesdeNvvAuto(_Formulario, _DocEmitir, _Idmaeedo, _Fecha_Emision, _Modalidad_Fac, True)
+                    'ElseIf _DesdeNVVAuto Then
+                    '    _Mensaje = Fx_Crear_Documento_Desde_Otro_Automaticamente_DesdeNvvAuto(_Formulario, _DocEmitir, _Idmaeedo, _Fecha_Emision, _Modalidad_Fac, True)
                 Else
-                    _Mensaje = Fx_Crear_Documento_Desde_Otro_Automaticamente2(_Formulario, _DocEmitir, _Idmaeedo, _Fecha_Emision, _Modalidad_Fac)
+                    _Mensaje = Fx_Crear_Documento_Desde_Otro_Automaticamente2(_Formulario, _DocEmitir, _Idmaeedo, _Fecha_Emision, _Modalidad_Fac, _CerrarDespFact)
                 End If
 
                 If _Mensaje.EsCorrecto Then
@@ -329,8 +329,8 @@
 
                     End If
 
-                    Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Fcv
-                    Dim _Row_Factura As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+                    'Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Fcv
+                    Dim _Row_Factura As DataRow = _Mensaje.Tag '_Sql.Fx_Get_DataRow(Consulta_Sql)
 
                     Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito
 
@@ -498,7 +498,8 @@
                                                            _Tido_Destino As String,
                                                            _Idmaeedo_Origen As Integer,
                                                            _Fecha_Emision As DateTime,
-                                                           _Modalidad As String) As LsValiciones.Mensajes
+                                                           _Modalidad As String,
+                                                           _CerrarDespFact As Boolean) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
         Dim _Modalidad_Old = Modalidad
@@ -548,19 +549,19 @@
                     _CampoPrecio = "PPPRBR"
                 End If
 
-                Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Origen & "
-                                            Select *,CAse When UDTRPR = 1 Then CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 End As 'Cantidad',
-                                            CAPRCO1-CAPREX1 As 'CantUd1_Dori',CAPRCO2-CAPREX2 As 'CantUd2_Dori',
-                                            Case WHEN UDTRPR = 1 Then " & _CampoPrecio & " Else " & _CampoPrecio & "*RLUDPR End AS 'Precio',
-                                            0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta
-                                            From MAEDDO  With ( NOLOCK ) 
-                                            Where IDMAEEDO = " & _Idmaeedo_Origen & "  AND ( ESLIDO<>'C' OR ESFALI='I' ) AND TICT = ''
-                                            Order by IDMAEEDO,IDMAEDDO 
-                                            Select * From MAEIMLI
-                                            Where IDMAEEDO = " & _Idmaeedo_Origen & " 
-                                            Select * From MAEDTLI
-                                            Where IDMAEEDO = " & _Idmaeedo_Origen & " 
-                                            Select TOP 1 * From MAEEDOOB Where IDMAEEDO = " & _Idmaeedo_Origen
+                Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
+                                "Select *,Case When UDTRPR = 1 Then CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 End As 'Cantidad'," & vbCrLf &
+                                "CAPRCO1-CAPREX1 As 'CantUd1_Dori',CAPRCO2-CAPREX2 As 'CantUd2_Dori'," & vbCrLf &
+                                "Case WHEN UDTRPR = 1 Then " & _CampoPrecio & " Else " & _CampoPrecio & "*RLUDPR End AS 'Precio'," & vbCrLf &
+                                "0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta" & vbCrLf &
+                                "From MAEDDO  With ( NOLOCK )" & vbCrLf &
+                                "Where IDMAEEDO = " & _Idmaeedo_Origen & "  AND ( ESLIDO<>'C' OR ESFALI='I' ) AND TICT = ''" & vbCrLf &
+                                "Order by IDMAEEDO,IDMAEDDO" & vbCrLf &
+                                "Select * From MAEIMLI" & vbCrLf &
+                                "Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
+                                "Select * From MAEDTLI" & vbCrLf &
+                                "Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
+                                "Select TOP 1 * From MAEEDOOB Where IDMAEEDO = " & _Idmaeedo_Origen
 
                 'Falta revisar el campo SUBTIDO, ya que al parecer se guardan datos dependiendo del tipo de FCC por ejemplo si tiene derecho a credito fiscal
                 'Falta campo FECHATRIB = Fecha de ingreso
@@ -593,13 +594,35 @@
 
             If _Msj_GrabarDoc.EsCorrecto Then
 
-                Consulta_Sql = "Select TIDO,NUDO From MAEEDO Where IDMAEEDO = " & _Msj_GrabarDoc.Id
+                If _CerrarDespFact Then
+
+                    Dim Cerrar_Doc As New Clas_Cerrar_Documento
+
+                    Consulta_Sql = Replace(My.Resources.Recursos_Ver_Documento.Traer_Documento_Random, "#Idmaeedo#", _Idmaeedo_Origen)
+
+                    Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_Sql, True, False)
+
+                    If String.IsNullOrEmpty(_Sql.Pro_Error) Then
+
+                        Dim _Tbl_Maeddo = _Ds.Tables(1)
+
+                        If Cerrar_Doc.Fx_Cerrar_Documento(_Idmaeedo_Origen, _Tbl_Maeddo) Then
+
+                        End If
+
+                    End If
+
+                End If
+
+                Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO = " & _Msj_GrabarDoc.Id
                 Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
                 _Mensaje.EsCorrecto = True
                 _Mensaje.Detalle = "Documento: " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO") & " grabado con exito"
                 _Mensaje.Mensaje = "Nota de venta gestionada correctamente Ok."
                 _Mensaje.Id = _Msj_GrabarDoc.Id
+                _Mensaje.Tag = _Row
+
             Else
                 Throw New System.Exception("No fue posible generar la factura")
             End If
@@ -832,6 +855,7 @@
                             _Mensaje.Fecha = FechaDelServidor()
                             _Mensaje.Mensaje = "Documento creado correctamente"
                             _Mensaje.Detalle = "Se crea el documento: " & _Tido & "-" & _Nudo
+                            _Mensaje.Tag = _Row_Maeedo
 
                         End If
 
@@ -1035,27 +1059,6 @@
                                 End If
 
                             End If
-
-                            'Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO = " & _Msj_GrabarDoc.Id
-                            'Dim _Row_Maeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
-
-                            '_Tido = String.Empty
-                            '_Nudo = String.Empty
-
-                            'If Not IsNothing(_Row_Maeedo) Then
-
-                            '    _Tido = _Row_Maeedo.Item("TIDO")
-                            '    _Nudo = _Row_Maeedo.Item("NUDO")
-
-                            '    Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set " &
-                            '                   "Estado = 'FACTU'" &
-                            '                   ",IdmaeedoGen = " & _Msj_GrabarDoc.Id &
-                            '                   ",TidoGen = '" & _Tido &
-                            '                   "',NudoGen = '" & _Nudo & "'" & vbCrLf &
-                            '                   "Where Id = " & _Id_Pickeo
-                            '    _Sql.Ej_consulta_IDU(Consulta_Sql, False)
-
-                            'End If
 
                             _Mensaje.EsCorrecto = True
                             _Mensaje.Id = _Msj_GrabarDoc.Id

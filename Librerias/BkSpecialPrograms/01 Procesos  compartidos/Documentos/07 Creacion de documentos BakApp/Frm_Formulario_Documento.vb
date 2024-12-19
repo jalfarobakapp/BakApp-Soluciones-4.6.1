@@ -27690,7 +27690,7 @@ Public Class Frm_Formulario_Documento
 
             Dim _Filtro_Kopral As String
 
-            _Filtro_Kopral = Generar_Filtro_IN_Lista(_Respuesta.Detalle, "", "Codigo", False, False, "'")
+            _Filtro_Kopral = Generar_Filtro_IN_Lista(_Respuesta.Detalle, False, "'")
 
             Dim _Reg = _Sql.Fx_Cuenta_Registros("TABCODAL", "KOEN = '" & _Koen & "' And KOPRAL In " & _Filtro_Kopral)
 
