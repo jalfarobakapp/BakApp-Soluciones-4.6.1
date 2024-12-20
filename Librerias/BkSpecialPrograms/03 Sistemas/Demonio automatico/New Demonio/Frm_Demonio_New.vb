@@ -1480,7 +1480,7 @@ Public Class Frm_Demonio_New
 
                 _Cl_NVVAutoExterna.Sb_Procesar_NVV(Me)
 
-                Dim registro As String = "Tarea ejecutada (Facturación automática) a las: " & DateTime.Now.ToString()
+                Dim registro As String = "Tarea ejecutada (Notas de ventas externas) a las: " & DateTime.Now.ToString()
 
                 If Not String.IsNullOrWhiteSpace(_Cl_NVVAutoExterna.Log_Registro) Then
                     registro += vbCrLf & _Cl_NVVAutoExterna.Log_Registro

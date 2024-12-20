@@ -142,6 +142,9 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp
         End Set
     End Property
 
+    Public Property FechaDesde As Date
+    Public Property FechaHasta As Date
+
     Public Sub New(Informe_Padre As Enum_Informe_Padre,
                    Informe As Enum_Informe,
                    Nombre_Tabla_Paso As String,
@@ -236,6 +239,9 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp
 
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_Detalle_MouseDown
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+
+        Btn_Imprimir.Visible = (_Informe = Enum_Informe.Sucursal)
+        Me.Refresh()
 
     End Sub
 
@@ -383,6 +389,9 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp
         ElseIf _Informe_Padre = Enum_Informe_Padre.Informe_Proximas_Recpciones Then
             Fm.Text = "PROX. RECEPCIONES, " & _Texto_Fm
         End If
+
+        Fm.FechaDesde = FechaDesde
+        Fm.FechaHasta = FechaHasta
 
         Fm.ShowDialog(Me)
         Fm.Dispose()
@@ -638,7 +647,8 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp
 
     Private Sub Btn_Imprimir_Click(sender As Object, e As EventArgs) Handles Btn_Imprimir.Click
 
-        Consulta_sql = "Select Distinct IDMAEEDO From " & _Tabla_Paso
+        Consulta_sql = "Select Distinct IDMAEEDO,ENDO,SUENDO,FEEMDO From " & _Tabla_Paso & vbCrLf &
+                       "Order By ENDO,SUENDO,FEEMDO"
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Lista As New List(Of String)
@@ -651,7 +661,7 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp
 
         If _Lista.Count Then
 
-            Dim _Cl_Imprimir_CompNoDesp As New Cl_Imprimir_CompNoDesp(_Lista)
+            Dim _Cl_Imprimir_CompNoDesp As New Cl_Imprimir_CompNoDesp(_Lista, FechaDesde, FechaHasta)
             _Cl_Imprimir_CompNoDesp.Fx_Imprimir_Archivo(Me, "")
 
         End If

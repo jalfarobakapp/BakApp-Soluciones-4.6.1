@@ -14,6 +14,7 @@ Public Class Frm_Usuarios_Random_Ficha
 
     Dim _Row_Tabfu As DataRow
     Dim _Row_Usuario As DataRow
+    Dim _Tbl_Grupos As DataTable
 
     Public Property Grabar As Boolean
 
@@ -83,12 +84,25 @@ Public Class Frm_Usuarios_Random_Ficha
 
             Me.ActiveControl = Txt_Nombre
 
-            Consulta_sql = "Select * From TABFUGE Where KOGRU = '" & _Row_Usuario.Item("Kogru_Ventas") & "'"
-            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+            Dim _Grupos As String = _Row_Usuario.Item("Kogru_Ventas").ToString.Trim
+            Dim _KogruList As List(Of String) = _Row_Usuario.Item("Kogru_Ventas").ToString.Split(","c).ToList()
 
-            If Not IsNothing(_Row) Then
-                Txt_Kogru_Ventas.Tag = _Row
-                Txt_Kogru_Ventas.Text = _Row.Item("KOGRU").ToString.Trim & " - " & _Row.Item("NOKOGRU").ToString.Trim
+            _Grupos = NuloPorNro(Replace(_Grupos, "''", "'"), "")
+
+            If _KogruList.Count = 1 Then
+                If Not String.IsNullOrWhiteSpace(_Grupos) AndAlso Not _Grupos.Contains("'") Then
+                    _Grupos = "'" & _Grupos & "'"
+                End If
+            End If
+
+            If Not String.IsNullOrWhiteSpace(_Grupos) Then
+
+                Consulta_sql = "Select KOGRU As 'Codigo',NOKOGRU As 'Descripcion' From TABFUGE Where KOGRU In (" & _Grupos & ")"
+                _Tbl_Grupos = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+                Txt_Kogru_Ventas.Tag = _Tbl_Grupos
+                Txt_Kogru_Ventas.Text = _Grupos
+
             End If
 
         Else
@@ -237,9 +251,9 @@ Public Class Frm_Usuarios_Random_Ficha
 
         Dim _Kogru_Ventas As String = String.Empty
 
-        If Not IsNothing(Txt_Kogru_Ventas.Tag) Then
-            _Kogru_Ventas = Txt_Kogru_Ventas.Tag.Item("KOGRU")
-        End If
+        'If Not IsNothing(Txt_Kogru_Ventas.Tag) Then
+        _Kogru_Ventas = Replace(Txt_Kogru_Ventas.Text, "'", "''")
+        'End If
 
         Consulta_sql += "Update " & _Global_BaseBk & "Zw_Usuarios Set Kogru_Ventas = '" & _Kogru_Ventas & "' Where CodFuncionario = '" & _Kofu & "'"
 
@@ -315,22 +329,21 @@ Public Class Frm_Usuarios_Random_Ficha
     Private Sub Txt_Kogru_Ventas_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Kogru_Ventas.ButtonCustomClick
 
         Dim _Filtrar As New Clas_Filtros_Random(Me)
+        Dim _Sql_Filtro_Condicion_Extra As String = "And KOGRU In (Select KOGRU From TABFUGD Where KOFU = '" & Kofu & "')"
 
         _Filtrar.Tabla = "TABFUGE"
         _Filtrar.Campo = "KOGRU"
         _Filtrar.Descripcion = "NOKOGRU"
 
-        If _Filtrar.Fx_Filtrar(Nothing,
-                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "", False, False, True) Then
+        If _Filtrar.Fx_Filtrar(_Tbl_Grupos,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, _Sql_Filtro_Condicion_Extra, False, False, False, True) Then
 
-            Dim _Codigo As String = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
-            Dim _Descripcion As String = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion")
+            _Tbl_Grupos = _Filtrar.Pro_Tbl_Filtro
 
-            Consulta_sql = "Select * From TABFUGE Where KOGRU = '" & _Codigo & "'"
-            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+            Dim _Grupos As String = String.Join(",", _Tbl_Grupos.AsEnumerable().[Select](Function(row) "'" & row.Field(Of String)("Codigo").ToString.Trim & "'"))
 
-            Txt_Kogru_Ventas.Tag = _Row
-            Txt_Kogru_Ventas.Text = _Codigo.ToString.Trim & " - " & _Descripcion.ToString.Trim
+            Txt_Kogru_Ventas.Tag = _Tbl_Grupos
+            Txt_Kogru_Ventas.Text = _Grupos
 
         End If
 

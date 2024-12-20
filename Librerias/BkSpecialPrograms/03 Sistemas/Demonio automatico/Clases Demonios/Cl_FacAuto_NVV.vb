@@ -118,6 +118,15 @@
             _CondicionSuc = "And Empresa = '" & _Empresa & "' And Sucursal = '" & _Esucursal & "'"
         End If
 
+        Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_NVVAuto Set Facturar = 0" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Demonio_NVVAuto Nv" & vbCrLf &
+                       "Inner Join " & _Global_BaseBk & "Zw_Entidades Ent" & vbCrLf &
+                       "On Nv.Endo_Ori = Ent.CodEntidad And Nv.Suendo_Ori = Ent.CodSucEntidad" & vbCrLf &
+                       "Where NVVGenerada = 1 And Facturar = 1 And Ent.FacAuto = 0"
+        If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+            Log_Registro += _Sql.Pro_Error & vbCrLf
+        End If
+
         Consulta_Sql = "Select TOP 20 Idmaeedo_NVV As Idmaeedo,DocEmitir,Cast('" & Format(_Fecha_Revision, "yyyyMMdd") & "' As datetime) As Fecha_Facturar,CodFuncionario_Factura" & vbCrLf &
                        "Into #Paso" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Demonio_NVVAuto Nv" & vbCrLf &
