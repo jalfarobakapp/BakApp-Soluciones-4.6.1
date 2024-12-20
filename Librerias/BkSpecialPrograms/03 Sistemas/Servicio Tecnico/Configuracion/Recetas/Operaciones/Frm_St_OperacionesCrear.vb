@@ -1,5 +1,4 @@
-﻿Imports System.Web.Services
-Imports DevComponents.DotNetBar
+﻿Imports DevComponents.DotNetBar
 Public Class Frm_St_OperacionesCrear
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
@@ -132,8 +131,8 @@ Public Class Frm_St_OperacionesCrear
         End If
 
         If _Nuevo Then
-            If Txt_Operacion.Text.Trim.Length < 5 Then
-                MessageBoxEx.Show(Me, "El código de la operación debe tener 5 caracteres", "Validación",
+            If Txt_Operacion.Text.Trim.Length < 8 Then
+                MessageBoxEx.Show(Me, "El código de la operación debe tener 8 caracteres", "Validación",
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Txt_Operacion.Focus()
                 Return
@@ -146,17 +145,27 @@ Public Class Frm_St_OperacionesCrear
             Return
         End If
 
-        'If Chk_TienePrecio.Checked Then
-        '    If Not CBool(Txt_Costo.Tag) Then
-        '        Dim _NomSucursal As String = _Sql.Fx_Trae_Dato("TABSU", "NOKOSU", "EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "'")
+        Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_St_OT_Operaciones", "Operacion = '" & Txt_Operacion.Text & "'")
 
-        '        If MessageBoxEx.Show(Me, "Falta el precio de la operación para la sucursal: " & ModSucursal & "-" & _NomSucursal & vbCrLf & vbCrLf &
-        '                             "¿Confirma el valor cero?", "Grabar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) <> DialogResult.Yes Then
-        '            Txt_Costo.Focus()
-        '            Return
-        '        End If
-        '    End If
-        'End If
+        If CBool(_Reg) Then
+
+            If _Nuevo Then
+                MessageBoxEx.Show(Me, "Ya existe una operación con el código (" & Txt_Operacion.Text & ")", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Txt_Operacion.Focus()
+                Return
+            End If
+
+            If _Editar Then
+                If _Id_Operacion <> _RowOperacion.Item("Id") Then
+                    MessageBoxEx.Show(Me, "Ya existe una operación con el código (" & Txt_Operacion.Text & ")", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Txt_Operacion.Focus()
+                    Return
+                End If
+            End If
+
+        End If
 
         If Not Chk_TienePrecio.Checked Then
             _Precio = 0

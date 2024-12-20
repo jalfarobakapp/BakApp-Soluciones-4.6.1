@@ -285,7 +285,7 @@ Public Class Cl_Imprimir_CompNoDesp
 
             Dim _Enc_TD = 20
             Dim _Enc_Nudo = 60
-            Dim _Enc_FEntrega = 150
+            Dim _Enc_FEntrega = 140
             Dim _Enc_Vendedor = 220
             Dim _Enc_Sucursal = 260
             Dim _Enc_Bodega = 290

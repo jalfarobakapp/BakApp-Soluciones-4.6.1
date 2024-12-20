@@ -33,10 +33,10 @@ Partial Class Frm_St_OperacionesCrear
         Me.Rdb_Externa = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_Interna = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Txt_Operacion = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Chk_TienePrecio = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Txt_Descripcion = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
-        Me.Chk_TienePrecio = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Txt_Costo = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX32 = New DevComponents.DotNetBar.LabelX()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
@@ -252,12 +252,30 @@ Partial Class Frm_St_OperacionesCrear
         Me.Txt_Operacion.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Txt_Operacion.ForeColor = System.Drawing.Color.Black
         Me.Txt_Operacion.Location = New System.Drawing.Point(82, 3)
-        Me.Txt_Operacion.MaxLength = 5
+        Me.Txt_Operacion.MaxLength = 8
         Me.Txt_Operacion.Name = "Txt_Operacion"
         Me.Txt_Operacion.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.Txt_Operacion.Size = New System.Drawing.Size(51, 22)
+        Me.Txt_Operacion.Size = New System.Drawing.Size(98, 22)
         Me.Txt_Operacion.TabIndex = 0
         Me.Txt_Operacion.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Chk_TienePrecio
+        '
+        Me.Chk_TienePrecio.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_TienePrecio.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_TienePrecio.CheckBoxImageChecked = CType(resources.GetObject("Chk_TienePrecio.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_TienePrecio.FocusCuesEnabled = False
+        Me.Chk_TienePrecio.ForeColor = System.Drawing.Color.Black
+        Me.Chk_TienePrecio.Location = New System.Drawing.Point(3, 120)
+        Me.Chk_TienePrecio.Name = "Chk_TienePrecio"
+        Me.Chk_TienePrecio.Size = New System.Drawing.Size(77, 22)
+        Me.Chk_TienePrecio.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_TienePrecio.TabIndex = 77
+        Me.Chk_TienePrecio.TabStop = False
+        Me.Chk_TienePrecio.Text = "Tiene precio"
         '
         'Txt_Descripcion
         '
@@ -310,24 +328,6 @@ Partial Class Frm_St_OperacionesCrear
         Me.LabelX2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.LabelX2.TabIndex = 64
         Me.LabelX2.Text = "Código"
-        '
-        'Chk_TienePrecio
-        '
-        Me.Chk_TienePrecio.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_TienePrecio.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_TienePrecio.CheckBoxImageChecked = CType(resources.GetObject("Chk_TienePrecio.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_TienePrecio.FocusCuesEnabled = False
-        Me.Chk_TienePrecio.ForeColor = System.Drawing.Color.Black
-        Me.Chk_TienePrecio.Location = New System.Drawing.Point(3, 120)
-        Me.Chk_TienePrecio.Name = "Chk_TienePrecio"
-        Me.Chk_TienePrecio.Size = New System.Drawing.Size(77, 22)
-        Me.Chk_TienePrecio.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_TienePrecio.TabIndex = 77
-        Me.Chk_TienePrecio.TabStop = False
-        Me.Chk_TienePrecio.Text = "Tiene precio"
         '
         'Txt_Costo
         '

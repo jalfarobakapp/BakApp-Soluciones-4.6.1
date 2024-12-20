@@ -5,7 +5,7 @@ CREATE TABLE [dbo].[Zw_St_OT_Recetas_Ope](
 	[Id_Rec]		[int]			NOT NULL DEFAULT (0),
 	[Empresa]		[char](2)		NOT NULL DEFAULT (''),
 	[CodReceta]		[varchar](20)	NOT NULL DEFAULT (''),
-	[Operacion]		[varchar](5)	NOT NULL DEFAULT (''),
+	[Operacion]		[varchar](8)	NOT NULL DEFAULT (''),
 	[Orden]			[int]			NOT NULL DEFAULT (0),
 	[Cantidad]		[int]			NOT NULL DEFAULT (0),
 	[CantMayor1]	[bit]			NOT NULL DEFAULT (0),
