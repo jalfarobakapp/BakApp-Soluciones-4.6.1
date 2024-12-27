@@ -855,6 +855,9 @@
     </Compile>
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Casi_DocDet.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Conceptos.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Contenedor.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Contenedor_DocTom.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Contenedor_StockProd.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Demonio_FacAuto.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Despachos_Configuracion.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Docu_Det_Cust.vb" />
@@ -899,6 +902,19 @@
       <DependentUpon>Frm_AsisCompra_CambioPrecioDet.vb</DependentUpon>
     </Compile>
     <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Cambio precio\Frm_AsisCompra_CambioPrecioDet.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Contenedores\Cl_Contenedor.vb" />
+    <Compile Include="03 Sistemas\Contenedores\Frm_Contenedores.Designer.vb">
+      <DependentUpon>Frm_Contenedores.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Contenedores\Frm_Contenedores.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Contenedores\Frm_CrearContenedor.Designer.vb">
+      <DependentUpon>Frm_CrearContenedor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Contenedores\Frm_CrearContenedor.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_ListaMayoristaMinorista.vb" />
@@ -4797,6 +4813,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Cambio precio\Frm_AsisCompra_CambioPrecioDet.resx">
       <DependentUpon>Frm_AsisCompra_CambioPrecioDet.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Contenedores\Frm_Contenedores.resx">
+      <DependentUpon>Frm_Contenedores.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Contenedores\Frm_CrearContenedor.resx">
+      <DependentUpon>Frm_CrearContenedor.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\FTP\Frm_FTP_Conexion.resx">
       <DependentUpon>Frm_FTP_Conexion.vb</DependentUpon>

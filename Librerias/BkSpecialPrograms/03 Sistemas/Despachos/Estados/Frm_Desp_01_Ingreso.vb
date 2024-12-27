@@ -2106,12 +2106,29 @@ Public Class Frm_Desp_01_Ingreso
 
         Dim _Row_Sucursal As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
-        _Row_Despacho.Item("CodPais") = _Sql.Fx_Trae_Dato("TABPA", "KOPA", "NOKOPA = '" & _Global_Row_Configp.Item("PAIS").ToString.Trim & "'",,, "CHI")
-        _Row_Despacho.Item("CodCiudad") = _Row_Sucursal.Item("CISU").ToString.Trim
-        _Row_Despacho.Item("CodComuna") = _Row_Sucursal.Item("CMSU").ToString.Trim
-        _Row_Despacho.Item("Pais") = _Global_Row_Configp.Item("PAIS").ToString.Trim
-        _Row_Despacho.Item("Ciudad") = _Row_Sucursal.Item("CIUDAD").ToString.Trim
-        _Row_Despacho.Item("Comuna") = _Row_Sucursal.Item("COMUNA").ToString.Trim
+        Dim _CodPais = String.Empty
+        Dim _CodCiudad = String.Empty
+        Dim _CodComuna = String.Empty
+        Dim _Pais = String.Empty
+        Dim _Ciudad = String.Empty
+        Dim _Comuna = String.Empty
+
+        If Not IsNothing(_Row_Sucursal) Then
+
+            _CodPais = _Sql.Fx_Trae_Dato("TABPA", "KOPA", "NOKOPA = '" & _Global_Row_Configp.Item("PAIS").ToString.Trim & "'",,, "CHI")
+            _CodCiudad = _Row_Sucursal.Item("CISU").ToString.Trim
+            _CodComuna = _Row_Sucursal.Item("CMSU").ToString.Trim
+            _Pais = _Global_Row_Configp.Item("PAIS").ToString.Trim
+            _Ciudad = _Row_Sucursal.Item("CIUDAD").ToString.Trim
+            _Comuna = _Row_Sucursal.Item("COMUNA").ToString.Trim
+
+        End If
+
+        _Row_Despacho.Item("CodPais") = _CodPais
+        _Row_Despacho.Item("CodCiudad") = _CodCiudad
+        _Row_Despacho.Item("CodComuna") = _CodComuna
+        _Row_Despacho.Item("Ciudad") = _Pais
+        _Row_Despacho.Item("Comuna") = _Comuna
         _Row_Despacho.Item("Nombre_Contacto") = String.Empty
         _Row_Despacho.Item("Transportista") = String.Empty
         _Row_Despacho.Item("Direccion") = "RETIRA EN SUCURSAL: " & Cmb_Sucursal_Retiro.Text.Trim
@@ -2119,4 +2136,5 @@ Public Class Frm_Desp_01_Ingreso
         Sb_Cargar_Datos_Envio()
 
     End Sub
+
 End Class

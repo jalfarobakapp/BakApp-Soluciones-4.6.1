@@ -169,6 +169,7 @@ Public Class Clase_Crear_Documento
     Dim _Nuliprod As String
 
     Dim _Customizable As Boolean
+    Dim _PreVenta As Boolean
 
 #End Region
 
@@ -395,6 +396,7 @@ Public Class Clase_Crear_Documento
                 '------------------------------------------------------------------------------------------------------------
 
                 _Customizable = .Item("Customizable")
+                _PreVenta = .Item("PreVenta")
 
             End With
 
@@ -1955,9 +1957,9 @@ Public Class Clase_Crear_Documento
                 End If
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Ent (Idmaeedo,NombreEquipo,TipoEstacion,Empresa,Modalidad,Tido,Nudo,FechaHoraGrab," &
-                               "HabilitadaFac,FunAutorizaFac,Pickear,Customizable) Values " &
+                               "HabilitadaFac,FunAutorizaFac,Pickear,Customizable,PreVenta) Values " &
                                "(" & _Idmaeedo & ",'" & _NombreEquipo & "','" & _TipoEstacion & "','" & _Empresa & "','" & _Modalidad & "'" &
-                               ",'" & _Tido & "','" & _Nudo & "',Getdate(),0,''," & _Pickear & "," & Convert.ToInt32(_Customizable) & ")"
+                               ",'" & _Tido & "','" & _Nudo & "',Getdate(),0,''," & _Pickear & "," & Convert.ToInt32(_Customizable) & "," & Convert.ToInt32(_PreVenta) & ")"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                 Comando.Transaction = myTrans

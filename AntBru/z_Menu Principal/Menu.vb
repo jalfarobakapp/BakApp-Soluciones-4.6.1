@@ -1038,4 +1038,33 @@ Public Class Menu
 
     End Function
 
+    Private Sub Btn_OccPreventa_Click(sender As Object, e As EventArgs) Handles Btn_OccPreventa.Click
+
+        Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Fm_Menu_Padre, Modalidad, "OCC", True)
+
+        If (_RowFormato Is Nothing) Then
+
+            MessageBoxEx.Show(_Fm_Menu_Padre, "Debe configurar el formato de salida en la configuración por modalidad de trabajo",
+                              "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Exit Sub
+
+        End If
+
+        Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(_Fm_Menu_Padre)
+
+        If Not _Msj_Tsc.EsCorrecto Then
+            Return
+        End If
+
+        Dim Fm As New Frm_Formulario_Documento("OCC", csGlobales.Enum_Tipo_Documento.Compra, False, False, True)
+        Fm.PreVenta = True
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_NvvPreVenta_Click(sender As Object, e As EventArgs) Handles Btn_NvvPreVenta.Click
+
+    End Sub
 End Class

@@ -238,6 +238,10 @@ Partial Class Frm_Formulario_Documento
         Me.Imagenes_32x32 = New System.Windows.Forms.ImageList(Me.components)
         Me.Btn_Desbloquear_Visado = New DevComponents.DotNetBar.ButtonX()
         Me.Warning_Visado = New DevComponents.DotNetBar.Controls.WarningBox()
+        Me.Btn_Contenedor = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Container_Ver = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Container_Quitar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Container_Asociar = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel5.SuspendLayout()
         Me.GroupPanel7.SuspendLayout()
@@ -619,7 +623,7 @@ Partial Class Frm_Formulario_Documento
         '
         Me.Menu_Contextual_Opciones_Especiales.AutoExpandOnClick = True
         Me.Menu_Contextual_Opciones_Especiales.Name = "Menu_Contextual_Opciones_Especiales"
-        Me.Menu_Contextual_Opciones_Especiales.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Despacho, Me.Btn_Exportar_a_XML, Me.Btn_Config_Tipo_Estacion, Me.Btn_Config_Impresora, Me.Btn_Prestashop, Me.Btn_Lista_Costos_Proveedor, Me.Btn_Levantar_Prod_Masivamente, Me.Btn_Crear_Desde_DTEXMLCompra})
+        Me.Menu_Contextual_Opciones_Especiales.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Despacho, Me.Btn_Exportar_a_XML, Me.Btn_Config_Tipo_Estacion, Me.Btn_Config_Impresora, Me.Btn_Prestashop, Me.Btn_Lista_Costos_Proveedor, Me.Btn_Levantar_Prod_Masivamente, Me.Btn_Crear_Desde_DTEXMLCompra, Me.Btn_Contenedor})
         Me.Menu_Contextual_Opciones_Especiales.Text = "Opciones especiales"
         '
         'Btn_Despacho
@@ -913,6 +917,7 @@ Partial Class Frm_Formulario_Documento
         '
         Me.Btn_Cambiar_ILA.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Cambiar_ILA.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Cambiar_ILA.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.Btn_Cambiar_ILA.Enabled = False
         Me.Btn_Cambiar_ILA.Font = New System.Drawing.Font("Courier New", 6.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Cambiar_ILA.Location = New System.Drawing.Point(3, 3)
@@ -2668,6 +2673,34 @@ Partial Class Frm_Formulario_Documento
         Me.Warning_Visado.Text = "<b>  Doc. Visado</b> Existen permisos asociados"
         Me.Warning_Visado.Visible = False
         '
+        'Btn_Contenedor
+        '
+        Me.Btn_Contenedor.Image = CType(resources.GetObject("Btn_Contenedor.Image"), System.Drawing.Image)
+        Me.Btn_Contenedor.Name = "Btn_Contenedor"
+        Me.Btn_Contenedor.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Container_Asociar, Me.Btn_Container_Ver, Me.Btn_Container_Quitar})
+        Me.Btn_Contenedor.Text = "Contenedor"
+        '
+        'Btn_Container_Ver
+        '
+        Me.Btn_Container_Ver.Image = CType(resources.GetObject("Btn_Container_Ver.Image"), System.Drawing.Image)
+        Me.Btn_Container_Ver.ImageAlt = CType(resources.GetObject("Btn_Container_Ver.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Container_Ver.Name = "Btn_Container_Ver"
+        Me.Btn_Container_Ver.Text = "Ver contenedor asociado"
+        '
+        'Btn_Container_Quitar
+        '
+        Me.Btn_Container_Quitar.Image = CType(resources.GetObject("Btn_Container_Quitar.Image"), System.Drawing.Image)
+        Me.Btn_Container_Quitar.ImageAlt = CType(resources.GetObject("Btn_Container_Quitar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Container_Quitar.Name = "Btn_Container_Quitar"
+        Me.Btn_Container_Quitar.Text = "Quitar contenedor"
+        '
+        'Btn_Container_Asociar
+        '
+        Me.Btn_Container_Asociar.Image = CType(resources.GetObject("Btn_Container_Asociar.Image"), System.Drawing.Image)
+        Me.Btn_Container_Asociar.ImageAlt = CType(resources.GetObject("Btn_Container_Asociar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Container_Asociar.Name = "Btn_Container_Asociar"
+        Me.Btn_Container_Asociar.Text = "Asociar contenedor"
+        '
         'Frm_Formulario_Documento
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -2932,4 +2965,8 @@ Partial Class Frm_Formulario_Documento
     Friend WithEvents Lbl_TipoVenta As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Lbl_DocActual As DevComponents.DotNetBar.LabelItem
     Public WithEvents Btn_Editar_Cotizacion As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Contenedor As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Container_Asociar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Container_Ver As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Container_Quitar As DevComponents.DotNetBar.ButtonItem
 End Class

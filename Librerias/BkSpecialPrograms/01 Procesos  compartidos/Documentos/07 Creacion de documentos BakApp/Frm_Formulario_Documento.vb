@@ -1,5 +1,4 @@
 ﻿Imports System.IO
-Imports System.Runtime.InteropServices
 Imports System.Threading
 Imports BkSpecialPrograms.Bk_Comporamiento_UdMedidas
 Imports BkSpecialPrograms.DocumentoListaSuperior
@@ -158,6 +157,8 @@ Public Class Frm_Formulario_Documento
     Dim _Cl_Pallet As New Pallet.Cl_Pallet
 
     Public Property ForzarDecimalesEnUnidadesEnteras As Boolean
+    Public Property PreVenta As Boolean
+    Dim _Zw_Contenedor As New Zw_Contenedor
 
 #Region "PROPIEDADES"
 
@@ -608,6 +609,12 @@ Public Class Frm_Formulario_Documento
             End If
 
             If _SubTido = "IMP" Then Me.Text += " PROVEEDOR EXTRANJERO"
+
+            If PreVenta Then
+                Me.Text += Space(1) & "(PRE-VENTA)"
+                Lbl_DocActual.Text += Space(1) & "(PRE-VENTA)"
+                Lbl_DocActual.ForeColor = Color.Yellow
+            End If
 
         Else
 
@@ -1143,6 +1150,10 @@ Public Class Frm_Formulario_Documento
             Fm_MPC = Nothing
         End If
 
+        Dim _Cl_Contenedor As New Cl_Contenedor
+        _Cl_Contenedor.Fx_Soltar_Contenedor_Tomado(_Zw_Contenedor)
+        _Zw_Contenedor = New Zw_Contenedor
+
         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Conceptos (Koct)" & vbCrLf &
                        "Select KOCT From TABCT" & vbCrLf &
                        "Where KOCT Not In (Select Koct From " & _Global_BaseBk & "Zw_Conceptos)"
@@ -1232,6 +1243,12 @@ Public Class Frm_Formulario_Documento
             End If
 
             If _SubTido = "IMP" Then Me.Text += " PROVEEDOR EXTRANJERO"
+
+            If PreVenta Then
+                Me.Text += Space(1) & "(PRE-VENTA)"
+                Lbl_DocActual.Text += Space(1) & "(PRE-VENTA)"
+                Lbl_DocActual.ForeColor = Color.Yellow
+            End If
 
         Else
 
@@ -1561,6 +1578,8 @@ Public Class Frm_Formulario_Documento
             .Item("TblTipoVenta") = String.Empty
             .Item("CodTipoVenta") = String.Empty
             .Item("Customizable") = False
+
+            .Item("PreVenta") = PreVenta
 
             _TblEncabezado.Rows.Add(NewFila)
 
@@ -14043,6 +14062,35 @@ Public Class Frm_Formulario_Documento
 
                         End If
 
+                        If PreVenta Then
+
+                            If MessageBoxEx.Show(Me, "¿Desea asociar un Contenedor?", "Asociar Contenedor",
+                                                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+
+                                Dim Fm As New Frm_Contenedores
+                                Fm.ModoSeleccion = True
+                                Fm.ShowDialog(Me)
+                                _Zw_Contenedor = Fm.Zw_Contenedor
+                                Fm.Dispose()
+
+                                If CBool(_Zw_Contenedor.Id) Then
+
+                                    Dim _Cl_Contenedor As New Cl_Contenedor
+
+                                    If _Cl_Contenedor.Fx_Tomar_Contenedor(_Zw_Contenedor).EsCorrecto Then
+
+                                        MessageBoxEx.Show(Me, "Contenedor asociado correctamente" & vbCrLf &
+                                                          "Contenedor: " & _Zw_Contenedor.Contenedor & " - " & _Zw_Contenedor.NombreContenedor,
+                                                          "Asociar contenedor", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                                    End If
+
+                                End If
+
+                            End If
+
+                        End If
+
                     End If
 
                     If _No_Puede_Acceder Then
@@ -16143,7 +16191,8 @@ Public Class Frm_Formulario_Documento
 
                 ' GRABAR PERMISOS AUTORIZADOS PRECENCIALMENTE EN TABAL REMOTAS
 
-                If Convert.ToBoolean(_Idmaeedo) Then
+                If _Mensaje.EsCorrecto Then ' Convert.ToBoolean(_Idmaeedo) Then
+
                     Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo
                     Dim _Row_NeDocEnc As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -16154,9 +16203,9 @@ Public Class Frm_Formulario_Documento
                         ' Traspasamos los archivos adjuntos desde el documento Casi_Bakapp hacia el documento definitivo en Random
 
                         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Archivos (Idmaeedo, Nombre_Archivo, Archivo, Fecha, CodFuncionario)" & vbCrLf &
-"Select " & _Idmaeedo & ",Nombre_Archivo,Archivo,Fecha,CodFuncionario " & vbCrLf &
-"From " & _Global_BaseBk & "Zw_Casi_DocArc Where NombreEquipo = '" & _NombreEquipo & "' And En_Construccion = 1" & vbCrLf &
-"Delete " & _Global_BaseBk & "Zw_Casi_DocArc Where NombreEquipo = '" & _NombreEquipo & "' And En_Construccion = 1"
+                                       "Select " & _Idmaeedo & ",Nombre_Archivo,Archivo,Fecha,CodFuncionario " & vbCrLf &
+                                       "From " & _Global_BaseBk & "Zw_Casi_DocArc Where NombreEquipo = '" & _NombreEquipo & "' And En_Construccion = 1" & vbCrLf &
+                                       "Delete " & _Global_BaseBk & "Zw_Casi_DocArc Where NombreEquipo = '" & _NombreEquipo & "' And En_Construccion = 1"
                         _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
                     End If
@@ -16168,11 +16217,20 @@ Public Class Frm_Formulario_Documento
                             If Not IsNothing(_Cl_Pallet) AndAlso _Cl_Pallet.Pallet Then
                                 Dim _Horagrab As String = Hora_Grab_fx(False)
                                 Consulta_sql = "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC,HORAGRAB) Values " &
-"('MAEEDO'," & _Idmaeedo & ",'" & _Row_NeDocEnc.Item("KOFUDO") & "'" &
-",Getdate(),'PALLETS','01'," & _Cl_Pallet.Cantidad & "," & _Horagrab & ")"
+                                               "('MAEEDO'," & _Idmaeedo & ",'" & _Row_NeDocEnc.Item("KOFUDO") & "'" &
+                                               ",Getdate(),'PALLETS','01'," & _Cl_Pallet.Cantidad & "," & _Horagrab & ")"
                                 _Sql.Ej_consulta_IDU(Consulta_sql)
                             End If
                         End If
+
+                    End If
+
+                    If PreVenta Then
+
+                        Dim _Cl_Contenedor As New Cl_Contenedor
+                        _Cl_Contenedor.Fx_Relacionar_Contenedor_Documento(_Idmaeedo, _Zw_Contenedor.Id)
+                        _Cl_Contenedor.Fx_Soltar_Contenedor_Tomado(_Zw_Contenedor)
+
                     End If
 
                     'Crear Orden de Despacho
@@ -16254,33 +16312,33 @@ Public Class Frm_Formulario_Documento
                             Dim _CAE_Doc As New Clas_Cerrar_Anular_Eliminar_Documento_Origen
                             If (_Tido = "COV" Or _Tido = "OCC") Or
                                     (_Editar_documento And _Tido = "NVV") Or
-(_Editar_documento And _Tido = "COV") Then
+                                    (_Editar_documento And _Tido = "COV") Then
+
                                 If _Editar_documento And _Tido = "COV" Then
 
                                     _CAE_Doc.Sb_Cerrar_Documentos_De_Origen(Me,
                                                                             Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion.Eliminar,
-_TblDocumentos_Dori,
-_Idmaeedo)
+                                                                            _TblDocumentos_Dori,
+                                                                            _Idmaeedo)
                                 Else
 
                                     _CAE_Doc.Sb_Cerrar_Documentos_De_Origen(Me,
                                                                             Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion.Anular,
-_TblDocumentos_Dori,
-_Idmaeedo)
+                                                                            _TblDocumentos_Dori,
+                                                                            _Idmaeedo)
                                 End If
                             Else
                                 _CAE_Doc.Sb_Cerrar_Documentos_De_Origen(Me,
                                                                             Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion.Cerrar,
                                                                             _TblDocumentos_Dori,
-_Idmaeedo)
+                                                                            _Idmaeedo)
                             End If
 
                             If Not IsNothing(_TblDocumentos_Dori) Then
 
                                 For Each _Fila As DataRow In _TblDocumentos_Dori.Rows
 
-                                    Dim _Id_Despacho = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Despachos_Doc",
-"Id_Despacho",
+                                    Dim _Id_Despacho = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Despachos_Doc", "Id_Despacho",
                                                                               "Archidrst = 'MAEEDO' And Idrst = " & _Fila.Item("IDMAEEDO"), True)
 
                                     Dim _Cl_Despacho As New Clas_Despacho(False)
@@ -16334,14 +16392,16 @@ _Idmaeedo)
                                     _TidoNudoSubTido = _Tido & " - " & _Nudo & " (" & _SubTido & ")"
                                 End If
                                 MessageBoxEx.Show(Me, _TidoNudoSubTido & vbCrLf & vbCrLf &
-"Grabada correctamente", "Grabar documento", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                                                  "Grabada correctamente", "Grabar documento", MessageBoxButtons.OK, MessageBoxIcon.Information)
                             End If
 
                             Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito
                             _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(_Modalidad_Formato, _Idmaeedo)
 
-                            Sb_Limpiar(Modalidad)
                         End If
+
+                        Sb_Limpiar(Modalidad)
+
                     End If
 
                 End If
@@ -28646,6 +28706,18 @@ _Idmaeedo)
         Return False
 
     End Function
+
+    Private Sub Btn_Container_Asociar_Click(sender As Object, e As EventArgs) Handles Btn_Container_Asociar.Click
+
+    End Sub
+
+    Private Sub Btn_Container_Ver_Click(sender As Object, e As EventArgs) Handles Btn_Container_Ver.Click
+
+    End Sub
+
+    Private Sub Btn_Container_Quitar_Click(sender As Object, e As EventArgs) Handles Btn_Container_Quitar.Click
+
+    End Sub
 
     Function Fx_ProdConInfo(_Tipr As String) As Boolean
 

@@ -156,6 +156,13 @@
             Log_Registro += _Sql.Pro_Error & vbCrLf
         End If
 
+        Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set Facturar = 1,ErrorGrabar = 0,Informacion = ''" & vbCrLf &
+                       "Where ErrorGrabar = 1 And Informacion = ''"
+
+        If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+            Log_Registro += _Sql.Pro_Error & vbCrLf
+        End If
+
     End Sub
 
     Sub Sb_Facturar_Automaticamente_NVV(_Formulario As Form, ByRef Lbl_FacAuto As Object)
