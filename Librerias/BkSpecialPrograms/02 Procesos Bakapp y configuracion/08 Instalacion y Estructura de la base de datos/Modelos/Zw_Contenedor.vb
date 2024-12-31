@@ -1,5 +1,5 @@
 ﻿Public Class Zw_Contenedor
-    Public Property Id As Integer
+    Public Property IdCont As Integer
     Public Property Empresa As String
     Public Property Contenedor As String
     Public Property NombreContenedor As String
@@ -9,7 +9,7 @@
     Public Property Estado As String
 
     Public Sub New()
-        Id = 0
+        IdCont = 0
         Empresa = ModEmpresa
         Contenedor = String.Empty
         NombreContenedor = String.Empty

@@ -5,4 +5,5 @@
     Public Property CodFuncionario As String
     Public Property Fecha_Hora As DateTime?
     Public Property NombreEquipo As String
+    Public Property Id_DocEnc As Integer
 End Class

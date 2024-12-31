@@ -104,6 +104,10 @@ Partial Class Frm_Formulario_Documento
         Me.Txt_ArchivoSG_Carpeta_Lectura = New DevComponents.DotNetBar.ButtonItem()
         Me.Txt_ArchivoSG_Carpeta_Generados = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Crear_Desde_DTEXMLCompra = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Contenedor = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Container_Asociar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Container_Ver = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Container_Quitar = New DevComponents.DotNetBar.ButtonItem()
         Me.Menu_Contextual_Opciones_Recargar_Costos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Recargar_Producto_Linea_Activa = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Recargar_Producto_Todos = New DevComponents.DotNetBar.ButtonItem()
@@ -238,10 +242,6 @@ Partial Class Frm_Formulario_Documento
         Me.Imagenes_32x32 = New System.Windows.Forms.ImageList(Me.components)
         Me.Btn_Desbloquear_Visado = New DevComponents.DotNetBar.ButtonX()
         Me.Warning_Visado = New DevComponents.DotNetBar.Controls.WarningBox()
-        Me.Btn_Contenedor = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Container_Ver = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Container_Quitar = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Container_Asociar = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel5.SuspendLayout()
         Me.GroupPanel7.SuspendLayout()
@@ -773,6 +773,35 @@ Partial Class Frm_Formulario_Documento
         Me.Btn_Crear_Desde_DTEXMLCompra.Name = "Btn_Crear_Desde_DTEXMLCompra"
         Me.Btn_Crear_Desde_DTEXMLCompra.Text = "Crear OCC desde DTE XML"
         Me.Btn_Crear_Desde_DTEXMLCompra.Visible = False
+        '
+        'Btn_Contenedor
+        '
+        Me.Btn_Contenedor.Image = CType(resources.GetObject("Btn_Contenedor.Image"), System.Drawing.Image)
+        Me.Btn_Contenedor.Name = "Btn_Contenedor"
+        Me.Btn_Contenedor.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Container_Asociar, Me.Btn_Container_Ver, Me.Btn_Container_Quitar})
+        Me.Btn_Contenedor.Text = "Contenedor"
+        Me.Btn_Contenedor.Visible = False
+        '
+        'Btn_Container_Asociar
+        '
+        Me.Btn_Container_Asociar.Image = CType(resources.GetObject("Btn_Container_Asociar.Image"), System.Drawing.Image)
+        Me.Btn_Container_Asociar.ImageAlt = CType(resources.GetObject("Btn_Container_Asociar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Container_Asociar.Name = "Btn_Container_Asociar"
+        Me.Btn_Container_Asociar.Text = "Asociar contenedor"
+        '
+        'Btn_Container_Ver
+        '
+        Me.Btn_Container_Ver.Image = CType(resources.GetObject("Btn_Container_Ver.Image"), System.Drawing.Image)
+        Me.Btn_Container_Ver.ImageAlt = CType(resources.GetObject("Btn_Container_Ver.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Container_Ver.Name = "Btn_Container_Ver"
+        Me.Btn_Container_Ver.Text = "Ver contenedor asociado"
+        '
+        'Btn_Container_Quitar
+        '
+        Me.Btn_Container_Quitar.Image = CType(resources.GetObject("Btn_Container_Quitar.Image"), System.Drawing.Image)
+        Me.Btn_Container_Quitar.ImageAlt = CType(resources.GetObject("Btn_Container_Quitar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Container_Quitar.Name = "Btn_Container_Quitar"
+        Me.Btn_Container_Quitar.Text = "Quitar contenedor"
         '
         'Menu_Contextual_Opciones_Recargar_Costos
         '
@@ -2672,34 +2701,6 @@ Partial Class Frm_Formulario_Documento
         Me.Warning_Visado.TabIndex = 135
         Me.Warning_Visado.Text = "<b>  Doc. Visado</b> Existen permisos asociados"
         Me.Warning_Visado.Visible = False
-        '
-        'Btn_Contenedor
-        '
-        Me.Btn_Contenedor.Image = CType(resources.GetObject("Btn_Contenedor.Image"), System.Drawing.Image)
-        Me.Btn_Contenedor.Name = "Btn_Contenedor"
-        Me.Btn_Contenedor.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Container_Asociar, Me.Btn_Container_Ver, Me.Btn_Container_Quitar})
-        Me.Btn_Contenedor.Text = "Contenedor"
-        '
-        'Btn_Container_Ver
-        '
-        Me.Btn_Container_Ver.Image = CType(resources.GetObject("Btn_Container_Ver.Image"), System.Drawing.Image)
-        Me.Btn_Container_Ver.ImageAlt = CType(resources.GetObject("Btn_Container_Ver.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Container_Ver.Name = "Btn_Container_Ver"
-        Me.Btn_Container_Ver.Text = "Ver contenedor asociado"
-        '
-        'Btn_Container_Quitar
-        '
-        Me.Btn_Container_Quitar.Image = CType(resources.GetObject("Btn_Container_Quitar.Image"), System.Drawing.Image)
-        Me.Btn_Container_Quitar.ImageAlt = CType(resources.GetObject("Btn_Container_Quitar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Container_Quitar.Name = "Btn_Container_Quitar"
-        Me.Btn_Container_Quitar.Text = "Quitar contenedor"
-        '
-        'Btn_Container_Asociar
-        '
-        Me.Btn_Container_Asociar.Image = CType(resources.GetObject("Btn_Container_Asociar.Image"), System.Drawing.Image)
-        Me.Btn_Container_Asociar.ImageAlt = CType(resources.GetObject("Btn_Container_Asociar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Container_Asociar.Name = "Btn_Container_Asociar"
-        Me.Btn_Container_Asociar.Text = "Asociar contenedor"
         '
         'Frm_Formulario_Documento
         '

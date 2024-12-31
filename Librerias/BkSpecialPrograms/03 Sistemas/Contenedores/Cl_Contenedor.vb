@@ -10,21 +10,21 @@ Public Class Cl_Contenedor
     Public Property Ls_Zw_Contenedor_StockProd As New List(Of Zw_Contenedor_StockProd)
 
     Public Sub New()
-
+        Zw_Contenedor = New Zw_Contenedor
     End Sub
 
     Function Fx_Llenar_Contenedor(_IdCont As Integer) As Zw_Contenedor
 
         Dim _Zw_Contenedor As New Zw_Contenedor
 
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Contenedor Where Id = " & _IdCont
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Contenedor Where IdCont = " & _IdCont
         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         With _Zw_Contenedor
 
             If Not IsNothing(_Row) Then
 
-                .Id = _Row.Item("Id")
+                .IdCont = _Row.Item("IdCont")
                 .Empresa = _Row.Item("Empresa")
                 .Contenedor = _Row.Item("Contenedor")
                 .NombreContenedor = _Row.Item("NombreContenedor")
@@ -54,7 +54,7 @@ Public Class Cl_Contenedor
 
         With _Zw_Contenedor
 
-            .Id = _Row.Item("Id")
+            .IdCont = _Row.Item("IdCont")
             .Empresa = _Row.Item("Empresa")
             .Contenedor = _Row.Item("Contenedor")
             .NombreContenedor = _Row.Item("NombreContenedor")
@@ -62,6 +62,35 @@ Public Class Cl_Contenedor
             .Nudo_Rela = _Row.Item("Nudo_Rela")
             .Idmaeedo_Rela = _Row.Item("Idmaeedo_Rela")
             .Estado = _Row.Item("Estado")
+
+        End With
+
+        Return _Zw_Contenedor
+
+    End Function
+
+    Function Fx_Llenar_Contenedor(_Idmaeedo_Rela As Integer, _Tido_Rela As String, _Nudo_Rela As String) As Zw_Contenedor
+
+        Dim _Zw_Contenedor As New Zw_Contenedor
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Contenedor" & vbCrLf &
+                       "Where Idmaeedo_Rela = " & _Idmaeedo_Rela & " And Tido_Rela = '" & _Tido_Rela & "' And Nudo_Rela  = '" & _Nudo_Rela & "'"
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        With _Zw_Contenedor
+
+            If Not IsNothing(_Row) Then
+
+                .IdCont = _Row.Item("IdCont")
+                .Empresa = _Row.Item("Empresa")
+                .Contenedor = _Row.Item("Contenedor")
+                .NombreContenedor = _Row.Item("NombreContenedor")
+                .Tido_Rela = _Row.Item("Tido_Rela")
+                .Nudo_Rela = _Row.Item("Nudo_Rela")
+                .Idmaeedo_Rela = _Row.Item("Idmaeedo_Rela")
+                .Estado = _Row.Item("Estado")
+
+            End If
 
         End With
 
@@ -87,6 +116,7 @@ Public Class Cl_Contenedor
             .CodFuncionario = _Row.Item("CodFuncionario")
             .Fecha_Hora = _Row.Item("Fecha_Hora")
             .NombreEquipo = _Row.Item("NombreEquipo")
+            .Id_DocEnc = _Row.Item("Id_DocEnc")
         End With
 
         Return _Zw_Contenedor_DocTom
@@ -103,7 +133,7 @@ Public Class Cl_Contenedor
 
             With _Zw_Contenedor
 
-                Dim _Zw_Contenedor_DocTom As Zw_Contenedor_DocTom = Fx_Llenar_ContenedorTomado(.Id, .Contenedor)
+                Dim _Zw_Contenedor_DocTom As Zw_Contenedor_DocTom = Fx_Llenar_ContenedorTomado(.IdCont, .Contenedor)
 
                 If _Zw_Contenedor_DocTom.Id <> 0 Then ' Not IsNothing(_Zw_Contenedor_DocTom) Then
 
@@ -116,13 +146,13 @@ Public Class Cl_Contenedor
                 Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Contenedor_DocTom (IdCont,Contenedor,CodFuncionario,Fecha_Hora,NombreEquipo) Values " &
-                               "(" & .Id & ",'" & .Contenedor & "','" & FUNCIONARIO & "',Getdate(),'" & _NombreEquipo & "')"
+                               "(" & .IdCont & ",'" & .Contenedor & "','" & FUNCIONARIO & "',Getdate(),'" & _NombreEquipo & "')"
 
                 If Not _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Mensaje.Id) Then
                     Throw New System.Exception("Error al tomar el contenedor" & vbCrLf & _Sql.Pro_Error)
                 End If
 
-                _Zw_Contenedor_DocTom = Fx_Llenar_ContenedorTomado(.Id, .Contenedor)
+                _Zw_Contenedor_DocTom = Fx_Llenar_ContenedorTomado(.IdCont, .Contenedor)
 
                 _Mensaje.Mensaje = "Contenedor Tomado Correctamente"
                 _Mensaje.EsCorrecto = True
@@ -158,16 +188,16 @@ Public Class Cl_Contenedor
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Contenedor (Empresa,Contenedor,NombreContenedor,Tido_Rela,Idmaeedo_Rela,Estado) Values " &
                                "('" & .Empresa & "','" & .Contenedor & "','" & .NombreContenedor & "','" & .Tido_Rela & "'," & .Idmaeedo_Rela & ",'" & .Estado & "')"
-                If Not _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, .Id) Then
+                If Not _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, .IdCont) Then
                     Throw New System.Exception("Error al crear el contenedor" & vbCrLf & _Sql.Pro_Error)
                 End If
 
-                _Zw_Contenedor = Fx_Llenar_Contenedor(.Id)
+                _Zw_Contenedor = Fx_Llenar_Contenedor(.IdCont)
 
                 _Mensaje.Mensaje = "Contenedor Creado Correctamente"
                 _Mensaje.EsCorrecto = True
                 _Mensaje.Icono = MessageBoxIcon.Information
-                _Mensaje.Id = .Id
+                _Mensaje.Id = .IdCont
                 _Mensaje.Tag = _Zw_Contenedor
 
             End With
@@ -197,7 +227,7 @@ Public Class Cl_Contenedor
                                ",Tido_Rela = '" & .Tido_Rela & "'" &
                                ",Nudo_Rela = '" & .Nudo_Rela & "'" &
                                ",Estado = '" & .Estado & "'" & vbCrLf &
-                               "Where Id = " & .Id
+                               "Where IdCont = " & .IdCont
 
                 If Not _Sql.Ej_consulta_IDU(Consulta_sql) Then
                     Throw New System.Exception("Error al editar el contenedor" & vbCrLf & _Sql.Pro_Error)
@@ -206,7 +236,7 @@ Public Class Cl_Contenedor
                 _Mensaje.Mensaje = "Contenedor Editado Correctamente"
                 _Mensaje.EsCorrecto = True
                 _Mensaje.Icono = MessageBoxIcon.Information
-                _Mensaje.Tag = Fx_Llenar_Contenedor(.Id)
+                _Mensaje.Tag = Fx_Llenar_Contenedor(.IdCont)
 
             End With
 
@@ -227,7 +257,7 @@ Public Class Cl_Contenedor
 
         Try
 
-            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Contenedor Where Id = " & _Zw_Contenedor.Id
+            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Contenedor Where IdCont = " & _Zw_Contenedor.IdCont
             If Not _Sql.Ej_consulta_IDU(Consulta_sql) Then
                 Throw New System.Exception("Error al eliminar el contenedor" & vbCrLf & _Sql.Pro_Error)
             End If
@@ -276,7 +306,7 @@ Public Class Cl_Contenedor
                 Throw New System.Exception("Contenedor no encontrado")
             End If
 
-            If _Contenedor.Tido_Rela <> "" Then
+            If Not String.IsNullOrWhiteSpace(_Contenedor.Tido_Rela) Then
                 Throw New System.Exception("El Contenedor ya tiene un documento relacionado" & vbCrLf &
                                            "Documento: " & _Contenedor.Tido_Rela & "-" & _Contenedor.Nudo_Rela)
             End If
@@ -299,8 +329,8 @@ Public Class Cl_Contenedor
                     .Tido_Rela = _Fila("TIDO")
                     .Nudo_Rela = _Fila("NUDO")
                     .Idmaeddo_Rela = _Fila("IDMAEDDO")
-                    .StcfiUd1 = _Fila("CAPRACO1")
-                    .StcfiUd2 = _Fila("CAPRACO2")
+                    .StcfiUd1 = _Fila("CAPRCO1")
+                    .StcfiUd2 = _Fila("CAPRCO2")
                     .StcCompUd1 = 0
                     .StcCompUd2 = 0
                 End With
@@ -311,11 +341,15 @@ Public Class Cl_Contenedor
 
             myTrans = Cn2.BeginTransaction()
 
+            _Contenedor.Tido_Rela = _Row.Item("TIDO")
+            _Contenedor.Nudo_Rela = _Row.Item("NUDO")
+            _Contenedor.Idmaeedo_Rela = _Row.Item("IDMAEEDO")
+
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_Contenedor Set " &
                            "Tido_Rela = '" & _Contenedor.Tido_Rela & "'" &
                            ",Nudo_Rela = '" & _Contenedor.Nudo_Rela & "'" &
                            ",Idmaeedo_Rela = " & _Contenedor.Idmaeedo_Rela & vbCrLf &
-                           "Where Id = " & _IdCont
+                           "Where IdCont = " & _IdCont
 
             Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
             Comando.Transaction = myTrans
@@ -376,15 +410,107 @@ Public Class Cl_Contenedor
 
         Try
 
-            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Contenedor_DocTom Where IdCont = " & _Zw_Contenedor.Id
+            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Contenedor_DocTom Where IdCont = " & _Zw_Contenedor.IdCont
 
-            If Not _Sql.Ej_consulta_IDU(Consulta_sql) Then
+            If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
                 Throw New System.Exception("Error al soltar el contenedor tomado" & vbCrLf & _Sql.Pro_Error)
             End If
 
             _Mensaje.Mensaje = "Contenedor Soltado Correctamente"
             _Mensaje.EsCorrecto = True
             _Mensaje.Icono = MessageBoxIcon.Information
+
+        Catch ex As Exception
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Icono = MessageBoxIcon.Error
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
+    Function Fx_Soltar_Contenedor_Tomado() As LsValiciones.Mensajes
+
+        Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        _Mensaje.Detalle = "Soltar contenedor tomado"
+
+        Try
+
+            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Contenedor_DocTom Where NombreEquipo = '" & _NombreEquipo & "'"
+
+            If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+                Throw New System.Exception("Error al soltar el contenedor tomado" & vbCrLf & _Sql.Pro_Error)
+            End If
+
+            _Mensaje.Mensaje = "Contenedor Soltado Correctamente"
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Icono = MessageBoxIcon.Information
+
+        Catch ex As Exception
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Icono = MessageBoxIcon.Error
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
+    Function Fx_Quitar_Contenedor_De_Documento(_Idmaeedo As Integer) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+        _Mensaje.Detalle = "Quitar contenedor"
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Contenedor_StockProd",
+                                                       "Idmaeedo_Rela = " & _Idmaeedo & " And StcCompUd1+StcCompUd2 <> 0")
+
+        Consulta_sql = "Select IDMAEDDO,TIDO,NUDO,KOPRCT From MAEDDO" & vbCrLf &
+                       "Where ARCHIRST = 'MAEDDO' And IDRST In " &
+                       "(Select Idmaeddo_Rela From " & _Global_BaseBk & "Zw_Contenedor_StockProd Where Idmaeedo_Rela = " & _Idmaeedo & ")"
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+        Try
+
+            If CBool(_Reg) Or CBool(_Tbl.Rows.Count) Then
+                Throw New System.Exception("No se puede quitar el contenedor de la OCC, ya que existen NVV asociadas")
+            End If
+
+
+            With Zw_Contenedor
+
+                Dim _Zw_Contenedor_DocTom As Zw_Contenedor_DocTom = Fx_Llenar_ContenedorTomado(.IdCont, .Contenedor)
+
+                If _Zw_Contenedor_DocTom.Id <> 0 Then
+
+                    Dim _Funcionario As String = _Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & _Zw_Contenedor_DocTom.CodFuncionario & "'")
+
+                    Throw New System.Exception("No se puede quitar el contenedor de la OCC" & vbCrLf &
+                                               "Esta tomado por : " & _Zw_Contenedor_DocTom.CodFuncionario & " - " & _Funcionario.ToString.Trim & " en el PC " & _Zw_Contenedor_DocTom.NombreEquipo)
+                End If
+
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Contenedor Set " &
+                               "NombreContenedor = '" & .NombreContenedor & "'" &
+                               ",Idmaeedo_Rela = 0" &
+                               ",Tido_Rela = ''" &
+                               ",Nudo_Rela = ''" &
+                               "Where IdCont = " & .IdCont & vbCrLf &
+                               "Delete " & _Global_BaseBk & "Zw_Contenedor_StockProd Where IdCont = " & .IdCont
+
+                If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql, False) Then
+                    Throw New System.Exception("Error al editar el contenedor" & vbCrLf & _Sql.Pro_Error)
+                End If
+
+                _Mensaje.Mensaje = "Contenedor Quitado Correctamente"
+                _Mensaje.EsCorrecto = True
+                _Mensaje.Icono = MessageBoxIcon.Information
+                _Mensaje.Tag = Fx_Llenar_Contenedor(.IdCont)
+
+            End With
 
         Catch ex As Exception
             _Mensaje.Mensaje = ex.Message

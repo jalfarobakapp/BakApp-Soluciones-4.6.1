@@ -395,8 +395,8 @@ Public Class Clase_Crear_Documento
 
                 '------------------------------------------------------------------------------------------------------------
 
-                _Customizable = .Item("Customizable")
-                _PreVenta = .Item("PreVenta")
+                _Customizable = NuloPorNro(.Item("Customizable"), False)
+                _PreVenta = NuloPorNro(.Item("PreVenta"), False)
 
             End With
 
@@ -3715,6 +3715,16 @@ Public Class Clase_Crear_Documento
 
                 Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Casi_DocEnc Where Id_DocEnc = " & _Rs_Id_DocEnc & vbCrLf &
                                "Delete " & _Global_BaseBk & "Zw_Casi_DocObs Where Id_DocEnc = " & _Rs_Id_DocEnc
+                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+            End If
+
+            If Tbl_Encabezado.Rows(0).Item("PreVenta") AndAlso Tbl_Encabezado.Rows(0).Item("IdCont") > 0 Then
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Contenedor_DocTom Set Id_DocEnc = " & _Id_DocEnc & vbCrLf &
+                               "Where IdCont = " & Tbl_Encabezado.Rows(0).Item("IdCont")
                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                 Comando.Transaction = myTrans
                 Comando.ExecuteNonQuery()

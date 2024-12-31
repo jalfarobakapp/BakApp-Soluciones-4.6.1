@@ -157,7 +157,7 @@
         End If
 
         Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set Facturar = 1,ErrorGrabar = 0,Informacion = ''" & vbCrLf &
-                       "Where ErrorGrabar = 1 And Informacion = ''"
+                       "Where ErrorGrabar = 1 And Informacion = '' And DesdeNVVAuto = 1"
 
         If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
             Log_Registro += _Sql.Pro_Error & vbCrLf

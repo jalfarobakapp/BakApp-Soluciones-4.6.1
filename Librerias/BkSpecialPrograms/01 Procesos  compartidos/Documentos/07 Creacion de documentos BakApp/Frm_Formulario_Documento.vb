@@ -668,6 +668,8 @@ Public Class Frm_Formulario_Documento
 
                     End If
 
+                    _TblEncabezado.Rows(0).Item("PreVenta") = PreVenta
+
             End Select
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad" & vbCrLf &
@@ -1090,6 +1092,9 @@ Public Class Frm_Formulario_Documento
         Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Casi_DocTom Where NombreEquipo = '" & _NombreEquipo & "'"
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
+        'Dim _Cl_Contenedor As New Cl_Contenedor
+        '_Cl_Contenedor.Fx_Soltar_Contenedor_Tomado(_Zw_Contenedor)
+
     End Sub
 
     Sub Sb_Grilla_Detalle_Eventos(_Agregar As Boolean)
@@ -1150,9 +1155,9 @@ Public Class Frm_Formulario_Documento
             Fm_MPC = Nothing
         End If
 
-        Dim _Cl_Contenedor As New Cl_Contenedor
-        _Cl_Contenedor.Fx_Soltar_Contenedor_Tomado(_Zw_Contenedor)
-        _Zw_Contenedor = New Zw_Contenedor
+        'Dim _Cl_Contenedor As New Cl_Contenedor
+        '_Cl_Contenedor.Fx_Soltar_Contenedor_Tomado(_Zw_Contenedor)
+        '_Zw_Contenedor = New Zw_Contenedor
 
         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Conceptos (Koct)" & vbCrLf &
                        "Select KOCT From TABCT" & vbCrLf &
@@ -1580,6 +1585,7 @@ Public Class Frm_Formulario_Documento
             .Item("Customizable") = False
 
             .Item("PreVenta") = PreVenta
+            .Item("IdCont") = 0
 
             _TblEncabezado.Rows.Add(NewFila)
 
@@ -11601,6 +11607,16 @@ Public Class Frm_Formulario_Documento
 
         If Fx_Revisar_si_tiene_registros(True) Then
 
+            If PreVenta Then
+
+                MessageBoxEx.Show(Me, "Este documento no se puede guardar en Stand-By" & Environment.NewLine &
+                                  "Documento de tipo PRE-VENTA",
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
+                Return
+
+            End If
+
+
             Dim _Existen_Productos_WMS As Integer
 
             For Each row As DataGridViewRow In Grilla_Detalle.Rows
@@ -11862,8 +11878,26 @@ Public Class Frm_Formulario_Documento
 
             _TblEncabezado.Rows(0).Item("Customizable") = _TblEncabezado_StBy.Rows(0).Item("Customizable")
 
+            PreVenta = _TblEncabezado_StBy.Rows(0).Item("PreVenta")
+            _TblEncabezado_StBy.Rows(0).Item("PreVenta") = PreVenta
+
         End With
 
+        'If PreVenta Then
+
+        '    Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Contenedor_DocTom Where Id_DocEnc = " & _Id_DocEnc
+        '    Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        '    If Not IsNothing(_Row) Then
+
+        '        Dim _Cl_Contenedor As New Cl_Contenedor
+
+        '        _Zw_Contenedor = _Cl_Contenedor.Fx_Llenar_Contenedor(_Row.Item("IdCont"))
+        '        _TblEncabezado.Rows(0).Item("IdCont") = _Zw_Contenedor.Id
+
+        '    End If
+
+        'End If
 
 
         Dim _Contador = 0
@@ -14062,34 +14096,16 @@ Public Class Frm_Formulario_Documento
 
                         End If
 
-                        If PreVenta Then
+                        'If PreVenta Then
 
-                            If MessageBoxEx.Show(Me, "¿Desea asociar un Contenedor?", "Asociar Contenedor",
-                                                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+                        '    If MessageBoxEx.Show(Me, "¿Desea asociar un Contenedor?", "Asociar Contenedor",
+                        '                         MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
-                                Dim Fm As New Frm_Contenedores
-                                Fm.ModoSeleccion = True
-                                Fm.ShowDialog(Me)
-                                _Zw_Contenedor = Fm.Zw_Contenedor
-                                Fm.Dispose()
+                        '        Sb_Asociar_Contenedor()
 
-                                If CBool(_Zw_Contenedor.Id) Then
+                        '    End If
 
-                                    Dim _Cl_Contenedor As New Cl_Contenedor
-
-                                    If _Cl_Contenedor.Fx_Tomar_Contenedor(_Zw_Contenedor).EsCorrecto Then
-
-                                        MessageBoxEx.Show(Me, "Contenedor asociado correctamente" & vbCrLf &
-                                                          "Contenedor: " & _Zw_Contenedor.Contenedor & " - " & _Zw_Contenedor.NombreContenedor,
-                                                          "Asociar contenedor", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-                                    End If
-
-                                End If
-
-                            End If
-
-                        End If
+                        'End If
 
                     End If
 
@@ -14753,6 +14769,32 @@ Public Class Frm_Formulario_Documento
             '    SendKeys.Send("Right")
             'Next
         End Try
+
+    End Sub
+
+    Private Sub Sb_Asociar_Contenedor()
+
+        Dim Fm As New Frm_Contenedores
+        Fm.ModoSeleccion = True
+        Fm.ShowDialog(Me)
+        _Zw_Contenedor = Fm.Zw_Contenedor
+        Fm.Dispose()
+
+        If CBool(_Zw_Contenedor.IdCont) Then
+
+            Dim _Cl_Contenedor As New Cl_Contenedor
+
+            If _Cl_Contenedor.Fx_Tomar_Contenedor(_Zw_Contenedor).EsCorrecto Then
+
+                _TblEncabezado.Rows(0).Item("IdCont") = _Zw_Contenedor.IdCont
+
+                MessageBoxEx.Show(Me, "Contenedor asociado correctamente" & vbCrLf &
+                                  "Contenedor: " & _Zw_Contenedor.Contenedor & " - " & _Zw_Contenedor.NombreContenedor,
+                                  "Asociar contenedor", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            End If
+
+        End If
 
     End Sub
 
@@ -16225,13 +16267,13 @@ Public Class Frm_Formulario_Documento
 
                     End If
 
-                    If PreVenta Then
+                    'If PreVenta Then
 
-                        Dim _Cl_Contenedor As New Cl_Contenedor
-                        _Cl_Contenedor.Fx_Relacionar_Contenedor_Documento(_Idmaeedo, _Zw_Contenedor.Id)
-                        _Cl_Contenedor.Fx_Soltar_Contenedor_Tomado(_Zw_Contenedor)
+                    '    Dim _Cl_Contenedor As New Cl_Contenedor
+                    '    _Cl_Contenedor.Fx_Relacionar_Contenedor_Documento(_Idmaeedo, _Zw_Contenedor.Id)
+                    '    _Cl_Contenedor.Fx_Soltar_Contenedor_Tomado(_Zw_Contenedor)
 
-                    End If
+                    'End If
 
                     'Crear Orden de Despacho
 
@@ -25190,6 +25232,8 @@ Public Class Frm_Formulario_Documento
             Btn_Lista_Costos_Proveedor_Mismo_Proveedor.Text = "Proveedor: " & _RowEntidad.Item("NOKOEN").ToString.Trim
         End If
 
+        'Btn_Contenedor.Visible = (PreVenta And _Tido = "OCC")
+
         ShowContextMenu(Menu_Contextual_Opciones_Especiales)
 
     End Sub
@@ -28709,13 +28753,60 @@ Public Class Frm_Formulario_Documento
 
     Private Sub Btn_Container_Asociar_Click(sender As Object, e As EventArgs) Handles Btn_Container_Asociar.Click
 
+        If Not Fx_Revisar_encabezado() Then
+            Return
+        End If
+
+        Dim _IdCont = _Zw_Contenedor.IdCont
+
+        If CBool(_IdCont) Then
+            MessageBoxEx.Show(Me, "Ya hay un contenedor asociado" & vbCrLf &
+                              "Contenedor: " & _Zw_Contenedor.Contenedor & " - " & _Zw_Contenedor.NombreContenedor,
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Sb_Asociar_Contenedor()
+
     End Sub
 
     Private Sub Btn_Container_Ver_Click(sender As Object, e As EventArgs) Handles Btn_Container_Ver.Click
 
+        Dim _IdCont = _Zw_Contenedor.IdCont
+
+        If Not CBool(_IdCont) Then
+            MessageBoxEx.Show(Me, "No hay un contenedor asociado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim Fm As New Frm_CrearContenedor(_IdCont)
+        Fm.Btn_Eliminar.Enabled = False
+        Fm.ShowDialog(Me)
+        If Fm.Grabar Then
+            _Zw_Contenedor = Fm.Zw_Contenedor
+        End If
+        Fm.Dispose()
+
     End Sub
 
     Private Sub Btn_Container_Quitar_Click(sender As Object, e As EventArgs) Handles Btn_Container_Quitar.Click
+
+        Dim _IdCont = _Zw_Contenedor.IdCont
+
+        If Not CBool(_IdCont) Then
+            MessageBoxEx.Show(Me, "No hay un contenedor asociado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Esta seguro de querer quitar el contenedor?" & vbCrLf &
+                             "Contenedor: " & _Zw_Contenedor.Contenedor & " - " & _Zw_Contenedor.NombreContenedor,
+                             "Quitar contenedor", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
+
+        Dim _Cl_Contenedor As New Cl_Contenedor
+        _Cl_Contenedor.Fx_Soltar_Contenedor_Tomado(_Zw_Contenedor)
+        _Zw_Contenedor = New Zw_Contenedor
 
     End Sub
 

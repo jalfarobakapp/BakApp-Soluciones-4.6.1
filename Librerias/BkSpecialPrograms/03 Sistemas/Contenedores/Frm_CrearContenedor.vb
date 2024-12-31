@@ -33,7 +33,7 @@ Public Class Frm_CrearContenedor
             'Txt_Nudo_Rela.Text = .Nudo_Rela
             'Txt_Idmaeedo_Rela.Text = .Idmaeedo_Rela
 
-            Txt_Contenedor.Enabled = Not CBool(.Id)
+            Txt_Contenedor.Enabled = Not CBool(.IdCont)
 
         End With
 
@@ -60,10 +60,10 @@ Public Class Frm_CrearContenedor
         With Zw_Contenedor
             .Contenedor = Txt_Contenedor.Text
             .NombreContenedor = Txt_NombreContenedor.Text
+            .Estado = "Activo"
         End With
 
-
-        If Zw_Contenedor.Id = 0 Then
+        If Zw_Contenedor.IdCont = 0 Then
             _Mensaje = _Cl_Contenedor.Fx_Crear_Contenedor(Zw_Contenedor)
         Else
             _Mensaje = _Cl_Contenedor.Fx_Editar_Contenedor(Zw_Contenedor)

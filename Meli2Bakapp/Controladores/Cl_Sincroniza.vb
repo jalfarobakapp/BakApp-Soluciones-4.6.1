@@ -538,10 +538,10 @@ Public Class Cl_Sincroniza
             Dim _KOPR As String = _Fila.Item("KOPR")
             Dim _REFERENCIA_MELI As String = _Fila.Item("REFERENCIA_MELI")
             Dim _CANTIDAD As Integer = _Fila.Item("CANTIDAD")
-            Dim _NETO_UNITARIO As Integer = _Fila.Item("NETO_UNITARIO")
-            Dim _SUB_TOTAL As Integer = _Fila.Item("SUB_TOTAL")
+            Dim _NETO_UNITARIO As Double = _Fila.Item("NETO_UNITARIO")
+            Dim _SUB_TOTAL As Double = _Fila.Item("SUB_TOTAL")
 
-            Dim _Mensaje As LsValiciones.Mensajes = Fx_Llenar_PEDIDOS_DETALLE_KIT(_ID_MELI, _SUB_TOTAL)
+            Dim _Mensaje As LsValiciones.Mensajes = Fx_Llenar_PEDIDOS_DETALLE_KIT(_ID_MELI, _SUB_TOTAL, _CANTIDAD)
 
             If _Mensaje.EsCorrecto Then
 
@@ -640,7 +640,7 @@ Public Class Cl_Sincroniza
 
     End Function
 
-    Private Function Fx_Llenar_PEDIDOS_DETALLE_KIT(_ID_MELI As String, _Sub_Total As Double) As Mensajes
+    Private Function Fx_Llenar_PEDIDOS_DETALLE_KIT(_ID_MELI As String, _Sub_Total As Double, _CantidadKit As Integer) As Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -673,7 +673,7 @@ Public Class Cl_Sincroniza
                 Dim _Sku As String = _Fila.KOPR
                 Dim _Id_padrekit As Integer = _Fila.ID
 
-                Dim _Mensaje2 As LsValiciones.Mensajes = Fx_CrearDetalleKit(_ID_MELI, _Fila, _Sub_Total)
+                Dim _Mensaje2 As LsValiciones.Mensajes = Fx_CrearDetalleKit(_ID_MELI, _Fila, _Sub_Total, _CantidadKit)
 
                 _Ls_Pedidos.AddRange(_Mensaje2.Tag)
 
@@ -696,7 +696,8 @@ Public Class Cl_Sincroniza
 
     Function Fx_CrearDetalleKit(_Id_meli As String,
                                 _Fila_Pedidos_detalle As PEDIDOS_DETALLE,
-                                _Sub_Total As Double) As LsValiciones.Mensajes
+                                _Sub_Total As Double,
+                                _CantidadKit As Integer) As LsValiciones.Mensajes
 
         Dim _Sku As String = _Fila_Pedidos_detalle.KOPR
         Dim _Id_padrekit As Integer = _Fila_Pedidos_detalle.ID
@@ -730,7 +731,7 @@ Public Class Cl_Sincroniza
 
                 Dim _Id As Integer = _Fila.Item("ID")
                 Dim _Kopr As String = _Fila.Item("SKU")
-                Dim _Cantidad As Integer = _Fila.Item("CANTIDAD")
+                Dim _Cantidad As Integer = _Fila.Item("CANTIDAD") * _CantidadKit
                 Dim _Precio As Double = _Fila.Item("PP01UD")
 
                 Dim _PEDIDOS_DETALLE As New PEDIDOS_DETALLE
@@ -776,8 +777,12 @@ Public Class Cl_Sincroniza
             _Diferencia = _Sub_Total - _Suma_Total2
 
             If CBool(_Diferencia) Then
-                _Ls_PEDIDOS_DETALLE.Item(0).NETO_UNITARIO += _Diferencia
+
+                Dim _Dif As Double = Math.Floor(_Diferencia / _CantidadKit)
+
+                _Ls_PEDIDOS_DETALLE.Item(0).NETO_UNITARIO += _Dif
                 _Ls_PEDIDOS_DETALLE.Item(0).SUB_TOTAL = _Ls_PEDIDOS_DETALLE.Item(0).NETO_UNITARIO * _Ls_PEDIDOS_DETALLE.Item(0).CANTIDAD
+
             End If
 
             _Mensaje.EsCorrecto = True
