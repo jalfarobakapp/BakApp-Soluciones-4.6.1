@@ -20312,13 +20312,35 @@ Public Class Frm_Formulario_Documento
         For Each Fila As DataRow In _Tbl_Detalle_Externo.Rows
 
             Dim _Codigo As String = Fila.Item(_Campo_Codigo).ToString
+            Dim _Descripcion As String
+            Dim _Prct As Boolean
 
-            Consulta_sql = "Select Top 1 * From MAEPR Where KOPR = '" & _Codigo & "'"
-            Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+            Try
+                _Prct = Fila.Item("Prct")
+            Catch ex As Exception
+                _Prct = False
+            End Try
 
-            Dim _Descripcion As String = _RowProducto.Item("NOKOPR").ToString.Trim
+            Dim _RowProducto As DataRow
+            Dim _RowConcepto As DataRow
+
+            If _Prct Then
+
+                Consulta_sql = "Select Top 1 * From TABCT Where KOCT = '" & _Codigo & "'"
+                _RowConcepto = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                _Descripcion = _RowConcepto.Item("NOKOCT").ToString.Trim
+
+            Else
+
+                Consulta_sql = "Select Top 1 * From MAEPR Where KOPR = '" & _Codigo & "'"
+                _RowProducto = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                _Descripcion = _RowProducto.Item("NOKOPR").ToString.Trim
+
+            End If
+
             Dim _Cantidad As Double = Fila.Item(_Campo_Cantidad)
-
 
             If _Codigo = "SET060257" Then
                 Dim a = 0
@@ -20359,7 +20381,11 @@ Public Class Frm_Formulario_Documento
 
                 _New_Fila.Cells("FechaEmision").Value = _FechaEmision
 
-                Sb_Traer_Producto_Grilla(_New_Fila, _RowProducto, True)
+                If _Prct Then
+                    Sb_Agregar_Concepto(_New_Fila, _RowConcepto)
+                Else
+                    Sb_Traer_Producto_Grilla(_New_Fila, _RowProducto, True)
+                End If
 
                 Dim _Sucursal As String
                 Dim _Bodega As String
@@ -20410,15 +20436,38 @@ Public Class Frm_Formulario_Documento
 
                 If _New_Fila.Cells("Precio").Value > 0 Then
 
-                    Sb_Procesar_Datos_De_Grilla(_New_Fila, "Cantidad", False, False, , _Revisar_Descuentos)
+                    If _Prct Then
 
-                    If _DescuentoPorc > 0 Then
-                        _New_Fila.Cells("DescuentoPorc").Value = Math.Round(_DescuentoPorc, 2)
-                        Sb_Procesar_Datos_De_Grilla(_New_Fila, "DescuentoPorc", False, False, , _Revisar_Descuentos)
+                        Dim _Campo
+                        Dim _Campo_Bk
+
+                        If ChkValores.Checked Then
+                            _Campo = "VADTNELI"
+                            _Campo_Bk = "ValNetoLinea"
+                        Else
+                            _Campo = "VADTBRLI"
+                            _Campo_Bk = "ValBrutoLinea"
+                        End If
+
+                        _New_Fila.Cells("Cantidad").Value = 0
+                        _New_Fila.Cells("Precio").Value = 0
+                        _New_Fila.Cells(_Campo_Bk).Value = _Precio
+
+                        Sb_Procesar_Datos_De_Grilla(_New_Fila, _Campo_Bk, False, False, True)
+
                     Else
 
-                        If _AgregarDscotSeteados Then
-                            Sb_Agregar_DsctoSeteadoPorLinea(_New_Fila)
+                        Sb_Procesar_Datos_De_Grilla(_New_Fila, "Cantidad", False, False, , _Revisar_Descuentos)
+
+                        If _DescuentoPorc > 0 Then
+                            _New_Fila.Cells("DescuentoPorc").Value = Math.Round(_DescuentoPorc, 2)
+                            Sb_Procesar_Datos_De_Grilla(_New_Fila, "DescuentoPorc", False, False, , _Revisar_Descuentos)
+                        Else
+
+                            If _AgregarDscotSeteados Then
+                                Sb_Agregar_DsctoSeteadoPorLinea(_New_Fila)
+                            End If
+
                         End If
 
                     End If

@@ -156,6 +156,16 @@ Public Class Cl_ConfiguracionLocal
                 Throw New System.Exception("Debe ingresar los datos del responsable de la factura/boleta")
             End If
 
+            If IsNothing(Configuracion.Concepto_R) OrElse String.IsNullOrEmpty(Configuracion.Concepto_R) Then
+                _Mensaje.Detalle = "Falta datos en la configuración"
+                Throw New System.Exception("Debe ingresar un concepto de Recargo")
+            End If
+
+            If IsNothing(Configuracion.Concepto_D) OrElse String.IsNullOrEmpty(Configuracion.Concepto_D) Then
+                _Mensaje.Detalle = "Falta datos en la configuración"
+                Throw New System.Exception("Debe ingresar un concepto de Descuento")
+            End If
+
             _Mensaje.Detalle = "Archivo leido correctamente"
             _Mensaje.Mensaje = "El archivo contiene las conexiones a las bases de datos"
 

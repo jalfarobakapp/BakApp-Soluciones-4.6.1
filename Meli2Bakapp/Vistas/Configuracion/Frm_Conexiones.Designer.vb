@@ -64,6 +64,10 @@ Partial Class Frm_Conexiones
         Me.Chk_Facturar = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Cmb_DocEmitir = New DevComponents.DotNetBar.Controls.ComboBoxEx()
+        Me.Txt_Concepto_R = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_Concepto_D = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -341,7 +345,7 @@ Partial Class Frm_Conexiones
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 407)
+        Me.Bar1.Location = New System.Drawing.Point(0, 457)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(731, 41)
         Me.Bar1.Stretch = True
@@ -569,11 +573,13 @@ Partial Class Frm_Conexiones
         '
         'Chk_Facturar
         '
+        Me.Chk_Facturar.BackColor = System.Drawing.Color.White
         '
         '
         '
         Me.Chk_Facturar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Facturar.CheckBoxImageChecked = CType(resources.GetObject("Chk_Facturar.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Facturar.ForeColor = System.Drawing.Color.Black
         Me.Chk_Facturar.Location = New System.Drawing.Point(404, 338)
         Me.Chk_Facturar.Name = "Chk_Facturar"
         Me.Chk_Facturar.Size = New System.Drawing.Size(100, 21)
@@ -599,6 +605,7 @@ Partial Class Frm_Conexiones
         '
         Me.Cmb_DocEmitir.DisplayMember = "Text"
         Me.Cmb_DocEmitir.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.Cmb_DocEmitir.ForeColor = System.Drawing.Color.Black
         Me.Cmb_DocEmitir.FormattingEnabled = True
         Me.Cmb_DocEmitir.ItemHeight = 16
         Me.Cmb_DocEmitir.Location = New System.Drawing.Point(640, 338)
@@ -608,11 +615,85 @@ Partial Class Frm_Conexiones
         Me.Cmb_DocEmitir.TabIndex = 128
         Me.Cmb_DocEmitir.Text = "FACTURA"
         '
+        'Txt_Concepto_R
+        '
+        Me.Txt_Concepto_R.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Concepto_R.Border.Class = "TextBoxBorder"
+        Me.Txt_Concepto_R.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Concepto_R.ButtonCustom.Image = CType(resources.GetObject("Txt_Concepto_R.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Concepto_R.ButtonCustom.Visible = True
+        Me.Txt_Concepto_R.ButtonCustom2.Image = CType(resources.GetObject("Txt_Concepto_R.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Concepto_R.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Concepto_R.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Concepto_R.Location = New System.Drawing.Point(145, 390)
+        Me.Txt_Concepto_R.Name = "Txt_Concepto_R"
+        Me.Txt_Concepto_R.PreventEnterBeep = True
+        Me.Txt_Concepto_R.ReadOnly = True
+        Me.Txt_Concepto_R.Size = New System.Drawing.Size(253, 22)
+        Me.Txt_Concepto_R.TabIndex = 130
+        Me.Txt_Concepto_R.WatermarkText = "Concepto de ajuste de pesos (RECARGO)"
+        '
+        'LabelX3
+        '
+        Me.LabelX3.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX3.ForeColor = System.Drawing.Color.Black
+        Me.LabelX3.Location = New System.Drawing.Point(12, 392)
+        Me.LabelX3.Name = "LabelX3"
+        Me.LabelX3.Size = New System.Drawing.Size(112, 20)
+        Me.LabelX3.TabIndex = 129
+        Me.LabelX3.Text = "Concepto recargo"
+        '
+        'Txt_Concepto_D
+        '
+        Me.Txt_Concepto_D.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Concepto_D.Border.Class = "TextBoxBorder"
+        Me.Txt_Concepto_D.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Concepto_D.ButtonCustom.Image = CType(resources.GetObject("Txt_Concepto_D.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Concepto_D.ButtonCustom.Visible = True
+        Me.Txt_Concepto_D.ButtonCustom2.Image = CType(resources.GetObject("Txt_Concepto_D.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Concepto_D.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Concepto_D.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Concepto_D.Location = New System.Drawing.Point(145, 416)
+        Me.Txt_Concepto_D.Name = "Txt_Concepto_D"
+        Me.Txt_Concepto_D.PreventEnterBeep = True
+        Me.Txt_Concepto_D.ReadOnly = True
+        Me.Txt_Concepto_D.Size = New System.Drawing.Size(253, 22)
+        Me.Txt_Concepto_D.TabIndex = 132
+        Me.Txt_Concepto_D.WatermarkText = "Concepto de ajuste de pesos (DESCUENTO)"
+        '
+        'LabelX4
+        '
+        Me.LabelX4.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX4.ForeColor = System.Drawing.Color.Black
+        Me.LabelX4.Location = New System.Drawing.Point(12, 418)
+        Me.LabelX4.Name = "LabelX4"
+        Me.LabelX4.Size = New System.Drawing.Size(112, 20)
+        Me.LabelX4.TabIndex = 131
+        Me.LabelX4.Text = "Concepto descuento"
+        '
         'Frm_Conexiones
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(731, 448)
+        Me.ClientSize = New System.Drawing.Size(731, 498)
+        Me.Controls.Add(Me.Txt_Concepto_D)
+        Me.Controls.Add(Me.LabelX4)
+        Me.Controls.Add(Me.Txt_Concepto_R)
+        Me.Controls.Add(Me.LabelX3)
         Me.Controls.Add(Me.Cmb_DocEmitir)
         Me.Controls.Add(Me.LabelX2)
         Me.Controls.Add(Me.Chk_Facturar)
@@ -690,4 +771,8 @@ Partial Class Frm_Conexiones
     Friend WithEvents Chk_Facturar As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Cmb_DocEmitir As DevComponents.DotNetBar.Controls.ComboBoxEx
+    Friend WithEvents Txt_Concepto_R As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_Concepto_D As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
 End Class

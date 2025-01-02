@@ -9,6 +9,9 @@
     Public Property RutaEtiquetas As String
     Public Property Facturar As Boolean
     Public Property DocEmitir As String
+    Public Property Concepto_R As String
+    Public Property Concepto_D As String
+
 End Class
 
 Public Class BodegaFacturacion
@@ -18,5 +21,4 @@ Public Class BodegaFacturacion
     Public Property Nokosu As String
     Public Property Kobo As String
     Public Property Nokobo As String
-
 End Class

@@ -8,4 +8,6 @@
     Public Property SUB_TOTAL As Double
     Public Property ES_KIT As Boolean
     Public Property ID_PADREKIT As Integer
+    Public Property PRCT As Boolean
+    Public Property TICT As String
 End Class

@@ -314,7 +314,7 @@ Public Class Frm_Ver_Documento
 
         '_RowEntidad = Fx_Traer_Datos_Entidad(_Koen, _Suen)
 
-        _Cl_Contenedor.Fx_Soltar_Contenedor_Tomado()
+        '_Cl_Contenedor.Fx_Soltar_Contenedor_Tomado()
 
     End Sub
 
@@ -560,6 +560,8 @@ Public Class Frm_Ver_Documento
         End If
 
         _Cl_Contenedor.Zw_Contenedor = _Cl_Contenedor.Fx_Llenar_Contenedor(_Idmaeedo, _Tido, _Nudo)
+
+        Btn_Contenedor.Visible = (_Tido = "OCC")
 
     End Sub
 

@@ -90,6 +90,12 @@ Public Class Frm_Conexiones
         Cmb_DocEmitir.SelectedValue = _Cl_ConfiguracionLocal.Configuracion.DocEmitir
         Chk_Facturar.Checked = _Cl_ConfiguracionLocal.Configuracion.Facturar
 
+        Txt_Concepto_R.Tag = _Cl_ConfiguracionLocal.Configuracion.Concepto_R
+        Txt_Concepto_R.Text = _Cl_ConfiguracionLocal.Configuracion.Concepto_R
+
+        Txt_Concepto_D.Tag = _Cl_ConfiguracionLocal.Configuracion.Concepto_D
+        Txt_Concepto_D.Text = _Cl_ConfiguracionLocal.Configuracion.Concepto_D
+
     End Sub
 
     Private Sub Btn_ProbarConexionRd_Click(sender As Object, e As EventArgs) Handles Btn_ProbarConexionRd.Click
@@ -272,6 +278,20 @@ Public Class Frm_Conexiones
             Return
         End If
 
+        If String.IsNullOrWhiteSpace(Txt_Concepto_R.Text) Then
+            MessageBoxEx.Show(Me, "Debe seleccionar el concepto de Recargo", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Concepto_R.Focus()
+            Return
+        End If
+
+        If String.IsNullOrWhiteSpace(Txt_Concepto_D.Text) Then
+            MessageBoxEx.Show(Me, "Debe seleccionar el concepto de Descuento", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Concepto_D.Focus()
+            Return
+        End If
+
         If Not Fx_ProbarConexionRd() Then Return
         If Not Fx_ProbarConexionBaseBakapp() Then Return
 
@@ -288,6 +308,8 @@ Public Class Frm_Conexiones
             .RutaEtiquetas = Txt_RutaEtiquetas.Text
             .Facturar = Chk_Facturar.Checked
             .DocEmitir = Cmb_DocEmitir.SelectedValue
+            .Concepto_R = Txt_Concepto_R.Tag
+            .Concepto_D = Txt_Concepto_D.Tag
         End With
 
         Dim _Mensaje As New LsValiciones.Mensajes
@@ -400,6 +422,38 @@ Public Class Frm_Conexiones
 
         End If
 
+
+    End Sub
+
+    Private Sub Txt_Concepto_R_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Concepto_R.ButtonCustomClick
+
+        Dim _Sql_Filtro_Condicion_Extra = "And TICT = 'R'"
+        Dim _Tbl As DataTable
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(_Tbl, Clas_Filtros_Random.Enum_Tabla_Fl._Conceptos, _Sql_Filtro_Condicion_Extra, False, False, True) Then
+
+            Txt_Concepto_R.Tag = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
+            Txt_Concepto_R.Text = Txt_Concepto_R.Tag.ToString.Trim & " - " & _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion").ToString.Trim
+
+        End If
+
+    End Sub
+
+    Private Sub Txt_Concepto_D_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Concepto_D.ButtonCustomClick
+
+        Dim _Sql_Filtro_Condicion_Extra = "And TICT = 'D'"
+        Dim _Tbl As DataTable
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(_Tbl, Clas_Filtros_Random.Enum_Tabla_Fl._Conceptos, _Sql_Filtro_Condicion_Extra, False, False, True) Then
+
+            Txt_Concepto_D.Tag = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
+            Txt_Concepto_D.Text = Txt_Concepto_D.Tag.ToString.Trim & " - " & _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion").ToString.Trim
+
+        End If
 
     End Sub
 End Class

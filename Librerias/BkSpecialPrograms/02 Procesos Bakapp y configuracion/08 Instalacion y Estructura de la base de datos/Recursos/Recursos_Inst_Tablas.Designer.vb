@@ -618,6 +618,70 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Busca una cadena traducida similar a 
+        '''
+        '''CREATE TABLE [dbo].[Zw_Contenedor](
+        '''	[IdCont]			[int] IDENTITY(1,1) NOT NULL,
+        '''	[Empresa]			[char](2)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Contenedor]		[varchar](20)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[NombreContenedor]	[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Idmaeedo_Rela]		[int]			NOT NULL DEFAULT (0),
+        '''	[Tido_Rela]			[char](3)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Nudo_Rela]			[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Estado]			[varchar](15)	NOT NULL DEFAULT (&apos;&apos;),
+        ''' CONSTRAINT [PK_Zw_Contenedor] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[Empresa [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Contenedor() As String
+            Get
+                Return ResourceManager.GetString("Zw_Contenedor", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a 
+        '''CREATE TABLE [dbo].[Zw_Contenedor_DocTom](
+        '''	[Id]				[int] IDENTITY(1,1) NOT NULL,
+        '''	[IdCont]			[int]			NOT NULL DEFAULT (0),
+        '''	[Contenedor]		[varchar](20)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[CodFuncionario]	[char](3)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Fecha_Hora]		[datetime]		NULL,
+        '''	[NombreEquipo]		[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        ''') ON [PRIMARY]
+        '''
+        '''
+        '''
+        '''.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Contenedor_DocTom() As String
+            Get
+                Return ResourceManager.GetString("Zw_Contenedor_DocTom", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a 
+        '''
+        '''CREATE TABLE [dbo].[Zw_Contenedor_StockProd](
+        '''	[Empresa]		[char](2)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[IdCont]		[int]			NOT NULL DEFAULT (0),
+        '''	[Contenedor]	[varchar](20)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Idmaeedo_Rela] [int]			NOT NULL DEFAULT (0),
+        '''	[Idmaeddo_Rela] [int]			NOT NULL DEFAULT (0),
+        '''	[Tido_Rela]		[char](3)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Nudo_Rela]		[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Codigo]		[varchar](13)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[StcfiUd1]		[float]			NOT NULL DEFAULT (0),
+        '''	[StcfiUd2]		[float]			NOT N [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Contenedor_StockProd() As String
+            Get
+                Return ResourceManager.GetString("Zw_Contenedor_StockProd", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
         '''
@@ -4217,7 +4281,7 @@ Namespace My.Resources
         '''	[Id]			[int] IDENTITY(1,1) NOT NULL,
         '''	[Empresa]		[char](2)		    NOT NULL DEFAULT (&apos;&apos;),
         '''	[Sucursal]		[varchar](3)	    NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Operacion]		[varchar](5)	    NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Operacion]		[varchar](8)	    NOT NULL DEFAULT (&apos;&apos;),
         '''	[Descripcion]	[varchar](50)	    NOT NULL DEFAULT (&apos;&apos;),
         '''	[Precio]		[float]			    NOT NULL DEFAULT (0),
         '''	[CantMayor1]	[bit]			    NOT NULL DEFAULT (0),
@@ -4262,7 +4326,7 @@ Namespace My.Resources
         '''	[Semilla]				[int]			NOT NULL DEFAULT (0),
         '''	[Codigo]				[varchar](13)	NOT NULL DEFAULT (&apos;&apos;),
         '''	[CodReceta]				[varchar](20)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Operacion]				[varchar](5)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Operacion]				[varchar](8)	NOT NULL DEFAULT (&apos;&apos;),
         '''	[Orden]					[int]			NOT NULL DEFAULT (0),
         '''	[CantMayor1]			[bit]			NOT NULL DEFAULT (0),
         '''	[Cantidad]				[int]			NOT NULL DEFAULT (0),
@@ -4303,7 +4367,7 @@ Namespace My.Resources
         '''	[Id_Rec]		[int]			NOT NULL DEFAULT (0),
         '''	[Empresa]		[char](2)		NOT NULL DEFAULT (&apos;&apos;),
         '''	[CodReceta]		[varchar](20)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Operacion]		[varchar](5)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Operacion]		[varchar](8)	NOT NULL DEFAULT (&apos;&apos;),
         '''	[Orden]			[int]			NOT NULL DEFAULT (0),
         '''	[Cantidad]		[int]			NOT NULL DEFAULT (0),
         '''	[CantMayor1]	[bit]			NOT NULL DEFAULT (0),

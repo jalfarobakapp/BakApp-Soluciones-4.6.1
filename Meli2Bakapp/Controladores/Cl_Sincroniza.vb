@@ -154,15 +154,38 @@ Public Class Cl_Sincroniza
 
             For Each _PEDIDOS_DETALLE As PEDIDOS_DETALLE In _Ls_PEDIDOS_DETALLE
 
-                Consulta_sql = "Select KOPR,NOKOPR From MAEPR Where KOPR = '" & _PEDIDOS_DETALLE.KOPR & "'"
-                Dim _Row_Producto As DataRow = _SqlRandom.Fx_Get_DataRow(Consulta_sql, False)
+                Dim _Descripcion As String
 
-                If IsNothing(_Row_Producto) Then
-                    _Mensaje.EsCorrecto = False
-                    _Mensaje.Detalle = "Producto no encontrado"
-                    _Mensaje.Mensaje = "Producto no encontrado: " & _PEDIDOS_DETALLE.KOPR.ToString.Trim
-                    _Mensaje.Id = 0
-                    Return _Mensaje
+                If _PEDIDOS_DETALLE.PRCT Then
+
+                    Consulta_sql = "Select KOCT,NOKOCT From TABCT Where KOCT = '" & _PEDIDOS_DETALLE.KOPR & "' And TICT = '" & _PEDIDOS_DETALLE.TICT & "'"
+                    Dim _Row_Concepto As DataRow = _SqlRandom.Fx_Get_DataRow(Consulta_sql, False)
+
+                    If IsNothing(_Row_Concepto) Then
+                        _Mensaje.EsCorrecto = False
+                        _Mensaje.Detalle = "Concepto no encontrado"
+                        _Mensaje.Mensaje = "Concepto no encontrado: " & _PEDIDOS_DETALLE.KOPR.ToString.Trim
+                        _Mensaje.Id = 0
+                        Return _Mensaje
+                    End If
+
+                    _Descripcion = _Row_Concepto.Item("NOKOCT")
+
+                Else
+
+                    Consulta_sql = "Select KOPR,NOKOPR From MAEPR Where KOPR = '" & _PEDIDOS_DETALLE.KOPR & "'"
+                    Dim _Row_Producto As DataRow = _SqlRandom.Fx_Get_DataRow(Consulta_sql, False)
+
+                    If IsNothing(_Row_Producto) Then
+                        _Mensaje.EsCorrecto = False
+                        _Mensaje.Detalle = "Producto no encontrado"
+                        _Mensaje.Mensaje = "Producto no encontrado: " & _PEDIDOS_DETALLE.KOPR.ToString.Trim
+                        _Mensaje.Id = 0
+                        Return _Mensaje
+                    End If
+
+                    _Descripcion = _Row_Producto.Item("NOKOPR")
+
                 End If
 
                 Dim _Zw_Demonio_NVVAutoDet As New Zw_Demonio_NVVAutoDet
@@ -173,7 +196,7 @@ Public Class Cl_Sincroniza
                     .Codigo = _PEDIDOS_DETALLE.KOPR
                     .Cantidad = _PEDIDOS_DETALLE.CANTIDAD
                     .Untrans = 1
-                    .Descripcion = _Row_Producto.Item("NOKOPR")
+                    .Descripcion = _Descripcion
                     .Empresa = ConfiguracionLocal.BodegaFacturacion.Empresa
                     .Sucursal = ConfiguracionLocal.BodegaFacturacion.Kosu
                     .Bodega = ConfiguracionLocal.BodegaFacturacion.Kobo
@@ -187,6 +210,8 @@ Public Class Cl_Sincroniza
                     '.Stdv1 = _Row.Item("Stdv1")
                     '.Stdv2 = _Row.Item("Stdv2")
                     .Precio = Math.Round(_PEDIDOS_DETALLE.NETO_UNITARIO * 1.19, 0)
+                    .Prct = _PEDIDOS_DETALLE.PRCT
+                    .Tict = _PEDIDOS_DETALLE.TICT
                 End With
 
                 _Ls_Zw_Demonio_NVVAuto_Detalle.Add(_Zw_Demonio_NVVAutoDet)
@@ -235,10 +260,11 @@ Public Class Cl_Sincroniza
                     .Id_Enc = _Zw_Demonio_NVVAuto.Id_Enc
 
                     Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet (Id_Enc,Idmaeddo_Ori,Codigo,Cantidad," &
-                                   "Untrans,Descripcion,Empresa,Sucursal,Bodega,CantidadDefinitiva,Precio,Kofulido) Values " &
+                                   "Untrans,Descripcion,Empresa,Sucursal,Bodega,CantidadDefinitiva,Precio,Kofulido,Prct,Tict) Values " &
                                    "(" & .Id_Enc & "," & .Idmaeddo_Ori & ",'" & .Codigo & "'," & .Cantidad & "," & .Untrans &
                                    ",'" & .Descripcion & "','" & .Empresa & "','" & .Sucursal & "','" & .Bodega & "'," &
-                                   .CantidadDefinitiva & "," & .Precio & ",'" & ConfiguracionLocal.Vendedor & "')"
+                                   .CantidadDefinitiva & "," & .Precio & ",'" & ConfiguracionLocal.Vendedor & "'," &
+                                   Convert.ToInt32(.Prct) & ",'" & .Tict & "')"
 
                     Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                     Comando.Transaction = myTrans
@@ -400,8 +426,7 @@ Public Class Cl_Sincroniza
 
         Try
 
-            Consulta_sql = "SELECT ID,ID_MELI,KOPR,REFERENCIA_MELI,CANTIDAD,NETO_UNITARIO,SUB_TOTAL,ES_KIT,ID_PADREKIT" & vbCrLf &
-                           "FROM PEDIDOS_DETALLE" & vbCrLf &
+            Consulta_sql = "Select * From PEDIDOS_DETALLE" & vbCrLf &
                            "Where ID_MELI = " & _ID_MELI & vbCrLf &
                            "And ES_KIT = 0"
             Dim _Tbl As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
@@ -427,6 +452,8 @@ Public Class Cl_Sincroniza
                     .SUB_TOTAL = _Row.Item("SUB_TOTAL")
                     .ES_KIT = _Row.Item("ES_KIT")
                     .ID_PADREKIT = _Row.Item("ID_PADREKIT")
+                    .PRCT = _Row.Item("PRCT")
+                    .TICT = _Row.Item("TICT")
                 End With
 
                 _Ls_PEDIDOS_DETALLE.Add(_DETALLE_MELI)
@@ -600,11 +627,11 @@ Public Class Cl_Sincroniza
                     Comando.ExecuteNonQuery()
 
                     Consulta_sql = "Insert Into PEDIDOS_DETALLE (ID_MELI,KOPR,REFERENCIA_MELI," &
-                                   "CANTIDAD,NETO_UNITARIO,SUB_TOTAL,ES_KIT,ID_PADREKIT) Values " & vbCrLf &
+                                   "CANTIDAD,NETO_UNITARIO,SUB_TOTAL,ES_KIT,ID_PADREKIT,PRCT,TICT) Values " & vbCrLf &
                                    "('" & .ID_MELI & "','" & .KOPR & "','" & .REFERENCIA_MELI & "'," &
                                    De_Num_a_Tx_01(.CANTIDAD, False, 5) & "," &
                                    De_Num_a_Tx_01(.NETO_UNITARIO, False, 5) & "," &
-                                   De_Num_a_Tx_01(.SUB_TOTAL, False, 5) & ",0," & _Id_Detalle & ")"
+                                   De_Num_a_Tx_01(.SUB_TOTAL, False, 5) & ",0," & _Id_Detalle & "," & Convert.ToInt32(.PRCT) & ",'" & .TICT & "')"
 
                     Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                     Comando.Transaction = myTrans
@@ -746,6 +773,8 @@ Public Class Cl_Sincroniza
                     .SUB_TOTAL = _Cantidad * _Precio
                     .ES_KIT = True
                     .ID_PADREKIT = _Id_padrekit
+                    .PRCT = False
+                    .TICT = String.Empty
                 End With
 
                 _Ls_PEDIDOS_DETALLE.Add(_PEDIDOS_DETALLE)
@@ -758,30 +787,77 @@ Public Class Cl_Sincroniza
             ' Calcular el descuento necesario
             Dim _Descuento As Double = Math.Round(_Diferencia / _Sub_Total_Calculado, 5)
 
-            Dim _Suma_Total2 As Double = 0
+            Dim _Suma_Total_Neto_Calculado As Double = 0
+            Dim _Suma_Total_Bruto_Calculado As Double = 0
 
             For Each _Fl As PEDIDOS_DETALLE In _Ls_PEDIDOS_DETALLE
 
                 Dim _Precio As Double = _Fl.NETO_UNITARIO
+                Dim _Precio_Bruto As Double
+
                 Dim _PrecioCd As Double = Math.Round(_Precio * _Descuento, 0)
+
                 _Precio = _Precio - _PrecioCd
+                _Precio_Bruto = Math.Round(_Precio * 1.19, 0)
 
                 Dim _Total As Double = _Precio * _Fl.CANTIDAD
-                _Suma_Total2 += _Total
+                Dim _Total_Bruto As Double = _Precio_Bruto * _Fl.CANTIDAD
+
+                _Suma_Total_Neto_Calculado += _Total
+                _Suma_Total_Bruto_Calculado += _Total_Bruto
 
                 _Fl.NETO_UNITARIO = _Precio
                 _Fl.SUB_TOTAL = _Precio * _Fl.CANTIDAD
 
             Next
 
-            _Diferencia = _Sub_Total - _Suma_Total2
+            _Diferencia = _Sub_Total - _Suma_Total_Neto_Calculado
+
+            Dim _TotalBruto_Meli As Double = Math.Round(_Sub_Total * 1.19, 0)
+            Dim _TotalBruto_Calculado As Double = _Suma_Total_Bruto_Calculado
+
+            _Diferencia = _TotalBruto_Meli - _TotalBruto_Calculado
 
             If CBool(_Diferencia) Then
 
-                Dim _Dif As Double = Math.Floor(_Diferencia / _CantidadKit)
+                'Dim _Dif As Double = Math.Round(_Diferencia / _CantidadKit, 0)
 
-                _Ls_PEDIDOS_DETALLE.Item(0).NETO_UNITARIO += _Dif
-                _Ls_PEDIDOS_DETALLE.Item(0).SUB_TOTAL = _Ls_PEDIDOS_DETALLE.Item(0).NETO_UNITARIO * _Ls_PEDIDOS_DETALLE.Item(0).CANTIDAD
+                Dim _Kopr As String
+                Dim _Cantidad As Integer = 1
+                Dim _Precio As Double = _Diferencia
+                Dim _Tict As String
+
+                If _Diferencia > 0 Then
+                    _Kopr = ConfiguracionLocal.Concepto_R
+                    _Tict = "R"
+                Else
+                    _Kopr = ConfiguracionLocal.Concepto_D
+                    _Tict = "D"
+                    _Diferencia = _Diferencia * -1
+                End If
+
+                _Precio = _Diferencia
+
+                Dim _PEDIDOS_DETALLE As New PEDIDOS_DETALLE
+
+                With _PEDIDOS_DETALLE
+                    .ID = 0
+                    .ID_MELI = _Id_meli
+                    .KOPR = _Kopr
+                    .CANTIDAD = _Cantidad
+                    .NETO_UNITARIO = _Precio
+                    .REFERENCIA_MELI = ""
+                    .SUB_TOTAL = _Precio
+                    .ES_KIT = True
+                    .ID_PADREKIT = _Id_padrekit
+                    .PRCT = True
+                    .TICT = _Tict
+                End With
+
+                _Ls_PEDIDOS_DETALLE.Add(_PEDIDOS_DETALLE)
+
+                '_Ls_PEDIDOS_DETALLE.Item(0).NETO_UNITARIO += _Dif
+                '_Ls_PEDIDOS_DETALLE.Item(0).SUB_TOTAL = _Ls_PEDIDOS_DETALLE.Item(0).NETO_UNITARIO * _Ls_PEDIDOS_DETALLE.Item(0).CANTIDAD
 
             End If
 
