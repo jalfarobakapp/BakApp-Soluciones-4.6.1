@@ -700,7 +700,7 @@ Public Class Frm_Sectores_Lista_UbicOblig
                        "' And Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega & "' And Codigo_Sector = '" & _Codigo_Sector & "'" & vbCrLf & vbCrLf &
                        "Insert Into " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal (Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector," &
                        "Codigo_Ubic,Codigo,NombreEquipo,CodFuncionario_Ing,FechaIngreso)" & vbCrLf &
-                       "Select Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector,Codigo_Ubic,Codigo,'" & _NombreEquipo & "','" & FUNCIONARIO & "',1,'" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "'" & vbCrLf &
+                       "Select Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector,Codigo_Ubic,Codigo,'" & _NombreEquipo & "','" & FUNCIONARIO & "','" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "'" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Prod_Ubicacion" & vbCrLf &
                        "Where Id_Mapa = " & _Id_Mapa & " And Codigo Not In " &
                        "(Select Codigo From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal " &
@@ -708,12 +708,15 @@ Public Class Frm_Sectores_Lista_UbicOblig
                        " And CONVERT(varchar, FechaIngreso, 112) = '" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "' And Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega & "' And Codigo_Sector = '" & _Codigo_Sector & "')" & vbCrLf &
                        "And Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega & "' And Codigo_Sector = '" & _Codigo_Sector & "'"
 
-        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+        If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
 
-            Sb_ActualizarDatosFila(_Fila)
-            MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            MessageBoxEx.Show(Me, _Sql.Pro_Error, "Problema", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
 
         End If
+
+        Sb_ActualizarDatosFila(_Fila)
+        MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
     End Sub
 

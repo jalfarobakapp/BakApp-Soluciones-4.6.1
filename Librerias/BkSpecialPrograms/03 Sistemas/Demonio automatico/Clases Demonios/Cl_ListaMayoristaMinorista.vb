@@ -56,6 +56,7 @@
 
                 _NewDatosEntidad.CodEntidad = _CodEntidad
                 _NewDatosEntidad.CodSucEntidad = _CodSucEntidad
+                _NewDatosEntidad.CodHolding = _CodHolding
                 _NewDatosEntidad.Old_Lista = _Fila.Item("LVEN")
                 _NewDatosEntidad.New_Lista = _ListaSuperior
                 _NewDatosEntidad.Para = _Sql.Fx_Trae_Dato("MAEEN", "EMAIL", "KOEN = '" & _CodEntidad & "' And SUEN = '" & _CodSucEntidad & "'")
@@ -68,12 +69,15 @@
 
         Dim _ListaCorreos As New List(Of LsValiciones.Mensajes)
 
+        Dim _SqlQuery = String.Empty
+
         For Each _Msj As NewDatosEntidad In _Lista
 
             Dim _Para As String = _Msj.Para
             Dim _Cc As String = _Msj.Cc
             Dim _CodEntidad As String = _Msj.CodEntidad
             Dim _CodSucEntidad As String = _Msj.CodSucEntidad
+            Dim _CodHolding As String = _Msj.CodHolding
 
             '_Para = "jalfaro@bakapp.cl"
 
@@ -83,10 +87,20 @@
 
             If _CorreoMsj.EsCorrecto Then
 
+                If String.IsNullOrWhiteSpace(_CodHolding) Then
+                    _SqlQuery += "Update MAEEN Set LVEN = 'TABPP" & _Msj.New_Lista & "' Where KOEN = '" & _CodEntidad & "' And SUEN = '" & _CodSucEntidad & "'" & vbCrLf
+                Else
+                    _SqlQuery += "Update MAEEN Set LVEN = 'TABPP" & _Msj.New_Lista & "'" & vbCrLf &
+                               "Where KOEN+SUEN In (Select CodEntidad+CodSucEntidad From " & _Global_BaseBk & "Zw_Entidades Where CodHolding = '" & _CodHolding & "')" & vbCrLf
+                End If
+
             End If
 
         Next
 
+        If Not String.IsNullOrWhiteSpace(_SqlQuery) Then
+            _Sql.Ej_consulta_IDU(_SqlQuery, False)
+        End If
 
     End Sub
 
@@ -94,29 +108,34 @@
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
+        _Mensaje.Detalle = "Envío de correo automático"
 
-        Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Correos Where Id = " & _Id_Correo
-        Dim _Row_Correo As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+        Try
 
-        If IsNothing(_Row_Correo) Then
-            Throw New System.Exception("No existe configuración para el envio de correos")
-        End If
+            Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Correos Where Id = " & _Id_Correo
+            Dim _Row_Correo As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
-        Dim _Nombre_Correo As String = _Row_Correo.Item("Nombre_Correo")
-        Dim _Asunto As String = _Row_Correo.Item("Asunto")
-        Dim _CuerpoMensaje As String = _Row_Correo.Item("CuerpoMensaje")
+            If IsNothing(_Row_Correo) Then
+                Throw New System.Exception("No existe configuración para el envio de correos")
+            End If
 
-        If String.IsNullOrEmpty(_Asunto) Then
-            _Asunto = "Correo de notificación de pedido " & RazonEmpresa
-        End If
+            Dim _Nombre_Correo As String = _Row_Correo.Item("Nombre_Correo")
+            Dim _Asunto As String = _Row_Correo.Item("Asunto")
+            Dim _CuerpoMensaje As String = _Row_Correo.Item("CuerpoMensaje")
 
-        _CuerpoMensaje = Replace(_CuerpoMensaje, "&lt;", "<")
-        _CuerpoMensaje = Replace(_CuerpoMensaje, "&gt;", ">")
-        _CuerpoMensaje = Replace(_CuerpoMensaje, "&quot;", """")
+            If String.IsNullOrEmpty(_Asunto) Then
+                _Asunto = "Correo de notificación de pedido " & RazonEmpresa
+            End If
 
-        _CuerpoMensaje = Replace(_CuerpoMensaje, "'", "''")
+            _CuerpoMensaje = Replace(_CuerpoMensaje, "&lt;", "<")
+            _CuerpoMensaje = Replace(_CuerpoMensaje, "&gt;", ">")
+            _CuerpoMensaje = Replace(_CuerpoMensaje, "&quot;", """")
 
-        If Not String.IsNullOrEmpty(_Nombre_Correo) Then
+            _CuerpoMensaje = Replace(_CuerpoMensaje, "'", "''")
+
+            If String.IsNullOrWhiteSpace(_Nombre_Correo) Then
+                Throw New System.Exception("Faltan los datos del correo saliente")
+            End If
 
             Dim _Fecha = "Getdate()"
             Dim _Adjuntar_Documento As Boolean = False
@@ -126,10 +145,10 @@
             'End If
 
             Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo (Id_Correo,Nombre_Correo,CodFuncionario,Asunto," &
-                            "Para,Cc,Idmaeedo,Tido,Nudo,NombreFormato,Enviar,Mensaje,Fecha,Adjuntar_Documento,Doc_Adjuntos,Adjuntar_DTE,Id_Dte,Id_Trackid,CodEntidad,CodSucEntidad)" &
-                            vbCrLf &
-                            "Values (" & _Id_Correo & ",'" & _Nombre_Correo & "','','" & _Asunto & "','" & _Para & "','" & _Cc &
-                            "',0,'','','',1,'" & _CuerpoMensaje & "'," & _Fecha & "," & Convert.ToInt32(_Adjuntar_Documento) & ",'',0,0,0,'" & _CodEntidad & "','" & _CodSucEntidad & "')"
+                        "Para,Cc,Idmaeedo,Tido,Nudo,NombreFormato,Enviar,Mensaje,Fecha,Adjuntar_Documento,Doc_Adjuntos,Adjuntar_DTE,Id_Dte,Id_Trackid,CodEntidad,CodSucEntidad)" &
+                        vbCrLf &
+                        "Values (" & _Id_Correo & ",'" & _Nombre_Correo & "','','" & _Asunto & "','" & _Para & "','" & _Cc &
+                        "',0,'','','',1,'" & _CuerpoMensaje & "'," & _Fecha & "," & Convert.ToInt32(_Adjuntar_Documento) & ",'',0,0,0,'" & _CodEntidad & "','" & _CodSucEntidad & "')"
 
             _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql)
 
@@ -137,7 +156,15 @@
                 Throw New System.Exception(_Sql.Pro_Error)
             End If
 
-        End If
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Correo insertado correctamente en cola de envio de correos"
+
+
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+        End Try
 
         Return _Mensaje
 
@@ -269,6 +296,7 @@ End Class
 Class NewDatosEntidad
     Public Property CodEntidad As String
     Public Property CodSucEntidad As String
+    Public Property CodHolding As String
     Public Property Old_Lista As String
     Public Property New_Lista As String
     Public Property Para As String

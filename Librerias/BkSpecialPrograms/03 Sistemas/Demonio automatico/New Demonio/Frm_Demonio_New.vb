@@ -330,6 +330,12 @@ Public Class Frm_Demonio_New
                     _Cl_Correos.CantMmail = _CantCorreo
                     _Cl_Correos.EnviarSiempreLosCorreosDTE = _EnviarSiempreLosCorreosDTE
 
+                    _Cl_Correos.ActualizarListaMayoristaMinorista = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
+                                                                   "Valor", "Informe = 'Demonio' And Campo = 'Chk_ActualizarListaMayoristaMinorista' And NombreEquipo = '" & _NombreEquipo & "'", True)
+
+                    _Cl_Correos.CorreoMayoristaMinorista = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
+                                                                   "Valor", "Informe = 'Demonio' And Campo = 'Txt_CorreoMayoristaMinorista_Tag' And NombreEquipo = '" & _NombreEquipo & "'", True)
+
                     _Descripcion = "Se enviaran paquetes de " & _CantCorreo & " correos. " & _CI_Programacion.Resumen
                     _IndexImagen = 0
 

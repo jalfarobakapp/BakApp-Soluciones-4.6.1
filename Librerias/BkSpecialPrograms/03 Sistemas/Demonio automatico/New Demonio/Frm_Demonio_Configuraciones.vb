@@ -647,6 +647,17 @@ Public Class Frm_Demonio_Configuraciones
                                       Chk_EnviarSiempreLosCorreosDTE.Name, Class_SQLite.Enum_Type._Boolean,
                                       Chk_EnviarSiempreLosCorreosDTE.Checked, _Actualizar, "Correo",, False)
 
+        _Sql.Sb_Parametro_Informe_Sql(Chk_ActualizarListaMayoristaMinorista, "Demonio",
+                                      Chk_ActualizarListaMayoristaMinorista.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Chk_ActualizarListaMayoristaMinorista.Checked, _Actualizar, "Correo",, False)
+        _Sql.Sb_Parametro_Informe_Sql(Txt_CorreoMayoristaMinorista, "Demonio",
+                                      Txt_CorreoMayoristaMinorista.Name, Class_SQLite.Enum_Type._String,
+                                      Txt_CorreoMayoristaMinorista.Text, _Actualizar, "Correo",, False)
+        _Sql.Sb_Parametro_Informe_Sql(Txt_CorreoMayoristaMinorista, "Demonio",
+                                      Txt_CorreoMayoristaMinorista.Name, Class_SQLite.Enum_Type._Tag,
+                                      Txt_CorreoMayoristaMinorista.Tag, _Actualizar, "Correo",, False)
+
+
         'Impresiones
         _Sql.Sb_Parametro_Informe_Sql(Chk_ColaImpDoc, "Demonio",
                                       Chk_ColaImpDoc.Name, Class_SQLite.Enum_Type._Boolean,
@@ -952,5 +963,29 @@ Public Class Frm_Demonio_Configuraciones
 
         End If
 
+    End Sub
+
+    Private Sub Txt_CorreoMayoristaMinorista_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_CorreoMayoristaMinorista.ButtonCustomClick
+
+        Dim _Row_Email As DataRow
+
+        Dim Fm As New Frm_Correos_SMTP
+        Fm.Pro_Seleccionar = True
+        Fm.ShowDialog(Me)
+        _Row_Email = Fm.Pro_Row_Fila_Seleccionada
+        Fm.Dispose()
+
+        If Not IsNothing(_Row_Email) Then
+            Txt_CorreoMayoristaMinorista.Tag = _Row_Email.Item("Id")
+            Txt_CorreoMayoristaMinorista.Text = _Row_Email.Item("Nombre_Correo").ToString.Trim
+        End If
+
+    End Sub
+
+    Private Sub Txt_CorreoMayoristaMinorista_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_CorreoMayoristaMinorista.ButtonCustom2Click
+        If MessageBoxEx.Show(Me, "Confirma quitar el correo", "Quitar correo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            Txt_CorreoMayoristaMinorista.Tag = 0
+            Txt_CorreoMayoristaMinorista.Text = String.Empty
+        End If
     End Sub
 End Class

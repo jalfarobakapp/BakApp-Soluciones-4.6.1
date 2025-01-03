@@ -186,6 +186,8 @@ Public Class Clase_Crear_Documento
 
 #Region "FUNCION CREAR DOCUMENTO RANDOM DEFINITIVO"
 
+    Public Property Idmaeedo_Edit As Integer
+
     Function Fx_Crear_Documento(Tipo_de_documento As String,
                                 ByRef Numero_de_documento As String,
                                 _Es_ValeTransitorio As Boolean,
@@ -435,8 +437,16 @@ Public Class Clase_Crear_Documento
 
             If Not _Cambiar_NroDocumento And _Tido = "COV" Then
 
-                Consulta_sql = "UPDATE MAEEDO Set NUDO = 'xxxxxxxxxx' WHERE EMPRESA = '" & _Empresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'"
+                Dim _Idmaeedo_Origen As Integer = _Row_Encabezado.Item("Idmaeedo_Origen")
 
+                'Consulta_sql = "Delete MAEEDO" & vbCrLf &
+                '               "Where IDMAEEDO = " & _Idmaeedo_Origen & " And EMPRESA = '" & _Empresa & "' And TIDO = '" & _Tido & "' And NUDO = 'xxxxxxxxxx'"
+                'Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                'Comando.Transaction = myTrans
+                'Comando.ExecuteNonQuery()
+
+                'Consulta_sql = "Update MAEEDO Set NUDO = 'xxxxxxxxxx' WHERE EMPRESA = '" & _Empresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'"
+                Consulta_sql = "Update MAEEDO Set NUDO = 'xxxxxxxxxx' WHERE IDMAEEDO = " & _Idmaeedo_Origen
                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                 Comando.Transaction = myTrans
                 Comando.ExecuteNonQuery()

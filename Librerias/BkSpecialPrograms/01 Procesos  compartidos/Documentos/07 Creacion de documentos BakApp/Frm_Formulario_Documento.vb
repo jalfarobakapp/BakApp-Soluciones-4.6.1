@@ -17552,7 +17552,7 @@ Public Class Frm_Formulario_Documento
 
         ElseIf _TipoGrab = _Tipo_de_Grabacion.Editar_documento Then
 
-            Dim _Idmaeddo_Dori = _TblEncabezado.Rows(0).Item("Idmaeedo_Dori")
+            Dim _Idmaeddo_Dori = _TblEncabezado.Rows(0).Item("Idmaeedo_Origen")
 
             _Mensaje = _New_Doc.Fx_Editar_Documento(Me, _Idmaeddo_Dori, FUNCIONARIO, _Ds_Matriz_Documentos, _Origen_Modificado_Intertanto)
 
