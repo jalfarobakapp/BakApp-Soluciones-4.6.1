@@ -1,9 +1,11 @@
 ﻿Imports System.Windows.Forms
+Imports BkSpecialPrograms.LsValiciones
 Imports DevComponents.DotNetBar
 Imports DevComponents.DotNetBar.Controls
 
 
 Public Class Frm_Cantidades_Ud_Disintas
+
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
@@ -104,6 +106,19 @@ Public Class Frm_Cantidades_Ud_Disintas
         TxtCantUD2.Tag = _Cantidad_Ud2
 
         Sb_Ver_Alerta_Stock()
+
+        ' Llama a la función para encontrar el producto en las bodegas
+        Dim RtuBodegas As LsValiciones.Mensajes = ConsultarBodegas(_Codigo)
+
+        ' Muestra el resultado final en el textbox e impide la edición de Cantidad 1
+        If RtuBodegas.EsCorrecto Then
+            TxtRTU.Text = RtuBodegas.Resultado
+            TxtCantUD1.Enabled = False
+            Chk_RtuVariable.Checked = False
+            MessageBox.Show(RtuBodegas.Detalle, "Éxito", MessageBoxButtons.OK, RtuBodegas.Icono)
+        Else
+            MessageBox.Show(RtuBodegas.Detalle, "Error", MessageBoxButtons.OK, RtuBodegas.Icono)
+        End If
 
     End Sub
 
@@ -340,5 +355,51 @@ Public Class Frm_Cantidades_Ud_Disintas
         ShowLoadAlert(Fr_Alerta_Stock, Me)
 
     End Sub
+
+    ''' <summary>
+    ''' Itera sobre las bodegas para consultar la API hasta obtener una respuesta válida
+    ''' </summary>
+    ''' <param name="apiUrl">URL de la API</param>
+    ''' <param name="authorizationToken">Token de autorización</param>
+    ''' <param name="sku">SKU del producto</param>
+    ''' <returns>Un objeto de tipo Mensajes con el resultado de la operación</returns>
+    Private Function ConsultarBodegas(sku As String) As LsValiciones.Mensajes
+        Dim apiUrl As String = "http://190.151.101.156:82/BodONEWSR/Api/ConsultarRTU"
+        Dim authorizationToken As String = "Token 06389de2-5ed5-11ed-9b6a-0242ac120002"
+        Dim bodegas As String = "1, 2, 3, 4, 5, 8, 10, 41, 42, 21, 22, 23, 24, 25, 26"
+        Dim apiClient As New ApiClient()
+        Dim mensaje As LsValiciones.Mensajes
+
+        ' Lista de bodegas a iterar obtenida del TextBox
+        Dim bodegasArray As Integer() = bodegas.Split(",").Select(Function(b) Convert.ToInt32(b.Trim())).ToArray()
+
+        ' Itera sobre las bodegas definidas
+        For Each bodega In bodegasArray
+            Dim requestBody As New Dictionary(Of String, Object) From {
+            {"SKU", sku},
+            {"Bodega", bodega}
+        }
+
+            ' Realiza la consulta a la API
+            mensaje = apiClient.Post(Of Decimal)(apiUrl, requestBody, authorizationToken)
+
+            ' Si se obtiene un resultado válido, detiene la iteración
+            If mensaje.EsCorrecto AndAlso mensaje.Resultado IsNot Nothing AndAlso Val(mensaje.Resultado) <> -1 Then
+                mensaje.Detalle = $"Consulta exitosa en la Bodega {bodega} WMS."
+                mensaje.Mensaje = "Se encontró un resultado válido."
+                Return mensaje
+            End If
+        Next
+
+        ' Si no se encontró un resultado válido, retorna un mensaje de error
+        mensaje = New LsValiciones.Mensajes With {
+        .EsCorrecto = False,
+        .Detalle = "No se encontró un resultado válido después de consultar todas las bodegas.",
+        .Mensaje = "Consulta fallida en todas las bodegas.",
+        .Icono = MessageBoxIcon.Warning
+    }
+
+        Return mensaje
+    End Function
 
 End Class
