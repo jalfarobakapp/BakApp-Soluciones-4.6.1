@@ -1,7 +1,9 @@
-﻿Imports System.Windows.Forms
+﻿Imports System.Net.Http
+Imports System.Windows.Forms
 Imports BkSpecialPrograms.LsValiciones
 Imports DevComponents.DotNetBar
 Imports DevComponents.DotNetBar.Controls
+Imports Newtonsoft.Json
 
 
 Public Class Frm_Cantidades_Ud_Disintas

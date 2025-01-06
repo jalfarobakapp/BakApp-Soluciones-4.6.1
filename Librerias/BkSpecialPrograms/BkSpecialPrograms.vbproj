@@ -201,8 +201,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Dll especiales\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Mail, Version=3.0.24303.1333, Culture=neutral, PublicKeyToken=6dc438ab78a525b3, processorArchitecture=MSIL">
-      <HintPath>..\..\Demonio\AntBru\packages\Mail.dll.3.0.24303.1333\lib\net45\Mail.dll</HintPath>
+    <Reference Include="Mail">
+      <HintPath>C:\Users\jovan\OneDrive\Documentos\Clientes\Bakapp\Licencia Mail DLL\Mail\Redistributables\net45\Mail.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
@@ -901,6 +901,7 @@
     <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Cambio precio\Frm_AsisCompra_CambioPrecioDet.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\ConsultasAPIs\ApiClient.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_ListaMayoristaMinorista.vb" />
     <Compile Include="03 Sistemas\Despachos\Clases\Cl_Despachos.vb" />
     <Compile Include="03 Sistemas\FTP\Cl_Ftp.vb" />

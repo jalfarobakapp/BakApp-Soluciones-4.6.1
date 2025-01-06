@@ -362,3 +362,4 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /Librerias/BkSpecialPrograms/03 Sistemas/Informes/Ventas/Ventas por periodo/Informe de ventas Cubo/Formularios/Frm_Inf_Ventas_X_Periodo_Cubo.Designer.vb
+/RunDteBK/Factura Electronica DTE Efesto/HEFSIIREGCOMPRAVENTAS/HEFESTO.SII.V2020.BG.QUERY.LIB/packages.config

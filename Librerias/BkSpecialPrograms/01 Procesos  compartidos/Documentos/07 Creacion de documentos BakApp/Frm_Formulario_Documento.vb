@@ -8797,9 +8797,9 @@ Public Class Frm_Formulario_Documento
 
                                     _Fila.Cells("RtuVariable").Value = _RtuVariable
 
-                                    If _RtuVariable Then
-                                        _Fila.Cells("Rtu").Value = Math.Round(Fm.Cantidad_Ud1 / Fm.Cantidad_Ud2, 5)
-                                    End If
+
+                                    _Fila.Cells("Rtu").Value = Math.Round(Fm.Cantidad_Ud1 / Fm.Cantidad_Ud2, 5)
+
 
                                     Dim _No_Permite_Superar_Cantidad_Original As Boolean
                                     Dim _Tidopa As String = _Fila.Cells("Tidopa").Value
