@@ -115,6 +115,8 @@ Public Class Frm_Cantidades_Ud_Disintas
         ' Muestra el resultado final en el textbox e impide la edición de Cantidad 1
         If RtuBodegas.EsCorrecto Then
             TxtRTU.Text = RtuBodegas.Resultado
+            _Rtu = De_Txt_a_Num_01(RtuBodegas.Resultado, 5)
+            Label3.Text = "R.T.U.  (" & _Rtu & ")"
             TxtCantUD1.Enabled = False
             Chk_RtuVariable.Checked = False
             MessageBox.Show(RtuBodegas.Detalle, "Éxito", MessageBoxButtons.OK, RtuBodegas.Icono)
