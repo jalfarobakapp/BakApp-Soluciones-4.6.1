@@ -56,6 +56,8 @@ Public Class Frm_Cantidades_Ud_Disintas
 
     Private Sub Frm_SolicitudDeCompraCantProductos_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
+        Dim _ValidarApiWMSBosOne = False
+
         TxtRTU.Text = _Rtu
 
         If RevisarRtuVariable Then
@@ -71,6 +73,8 @@ Public Class Frm_Cantidades_Ud_Disintas
 
                     If Not RtuVariable AndAlso Not CBool(Cantidad_Ud1) AndAlso Not CBool(Cantidad_Ud2) Then
                         Chk_RtuVariable.Checked = True
+                        _ValidarApiWMSBosOne = True
+
                     End If
 
                 End If
@@ -109,19 +113,24 @@ Public Class Frm_Cantidades_Ud_Disintas
 
         Sb_Ver_Alerta_Stock()
 
-        ' Llama a la función para encontrar el producto en las bodegas
-        Dim RtuBodegas As LsValiciones.Mensajes = ConsultarBodegas(_Codigo)
+        If _ValidarApiWMSBosOne Then
 
-        ' Muestra el resultado final en el textbox e impide la edición de Cantidad 1
-        If RtuBodegas.EsCorrecto Then
-            TxtRTU.Text = RtuBodegas.Resultado
-            _Rtu = De_Txt_a_Num_01(RtuBodegas.Resultado, 5)
-            Label3.Text = "R.T.U.  (" & _Rtu & ")"
-            TxtCantUD1.Enabled = False
-            Chk_RtuVariable.Checked = False
-            MessageBox.Show(RtuBodegas.Detalle, "Éxito", MessageBoxButtons.OK, RtuBodegas.Icono)
-        Else
-            MessageBox.Show(RtuBodegas.Detalle, "Error", MessageBoxButtons.OK, RtuBodegas.Icono)
+            ' Llama a la función para encontrar el producto en las bodegas
+            Dim RtuBodegas As LsValiciones.Mensajes = ConsultarBodegas(_Codigo)
+
+            ' Muestra el resultado final en el textbox e impide la edición de Cantidad 1
+            If RtuBodegas.EsCorrecto Then
+                TxtRTU.Text = RtuBodegas.Resultado
+                _Rtu = De_Txt_a_Num_01(RtuBodegas.Resultado, 5)
+                Label3.Text = "R.T.U.  (" & _Rtu & ")"
+                TxtCantUD1.Enabled = False
+                Chk_RtuVariable.Checked = False
+                MessageBox.Show(RtuBodegas.Detalle, "Éxito", MessageBoxButtons.OK, RtuBodegas.Icono)
+                Me.ActiveControl = TxtCantUD2
+            Else
+                MessageBox.Show(RtuBodegas.Detalle, "Error", MessageBoxButtons.OK, RtuBodegas.Icono)
+            End If
+
         End If
 
     End Sub
