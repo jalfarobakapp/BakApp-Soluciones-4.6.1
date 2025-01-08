@@ -615,7 +615,13 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp
             Case Enum_Informe.Super_Familia
                 Fl_Super_Familias = Fx_Traer_Filtro("FMPR") 'Fx_Traer_Filtro_Familias()
             Case Enum_Informe.Entidades
+
+                'If _Informe = Enum_Informe.Entidades Then
+                '    Fl_Entidades = Fx_Traer_Filtro("ENDO+SUENDO")
+                'Else
                 Fl_Entidades = Fx_Traer_Filtro("Edo.ENDO+Edo.SUENDO")
+                'End If
+
             Case Enum_Informe.Ciudades
                 Fl_Ciudades = Fx_Traer_Filtro("CIEN")
             Case Enum_Informe.Comunas

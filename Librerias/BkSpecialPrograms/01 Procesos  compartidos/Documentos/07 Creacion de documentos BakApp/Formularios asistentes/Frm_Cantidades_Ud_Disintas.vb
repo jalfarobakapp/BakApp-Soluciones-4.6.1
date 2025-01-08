@@ -1,15 +1,16 @@
-﻿Imports System.Windows.Forms
-Imports DevComponents.DotNetBar
+﻿Imports DevComponents.DotNetBar
 Imports DevComponents.DotNetBar.Controls
 
 
 Public Class Frm_Cantidades_Ud_Disintas
+
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
     Dim Fr_Alerta_Stock As DevComponents.DotNetBar.Balloon
 
+    Dim _Bodega As String
     Dim _Codigo As String
     Dim _Rtu As Double
     Dim _UnTrans As Integer
@@ -34,9 +35,10 @@ Public Class Frm_Cantidades_Ud_Disintas
 
         _Fila = Fila
 
-        _Codigo = _Fila.Cells("Codigo").Value 'Codigo
-        _Rtu = _Fila.Cells("Rtu").Value 'Rtu
-        _UnTrans = _Fila.Cells("UnTrans").Value 'UdTrans
+        _Bodega = _Fila.Cells("Bodega").Value
+        _Codigo = _Fila.Cells("Codigo").Value
+        _Rtu = _Fila.Cells("Rtu").Value
+        _UnTrans = _Fila.Cells("UnTrans").Value
 
         Consulta_sql = "Select Top 1 KOPR,NOKOPR,RLUD,DIVISIBLE,DIVISIBLE2,NMARCA From MAEPR Where KOPR = '" & _Codigo & "'"
         _RowProducto = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -50,7 +52,9 @@ Public Class Frm_Cantidades_Ud_Disintas
 
     End Sub
 
-    Private Sub Frm_SolicitudDeCompraCantProductos_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_SolicitudDeCompraCantProductos_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
+        Dim _ValidarApiWMSBosOne = False
 
         TxtRTU.Text = _Rtu
 
@@ -69,6 +73,15 @@ Public Class Frm_Cantidades_Ud_Disintas
                         Chk_RtuVariable.Checked = True
                     End If
 
+                End If
+
+                _ValidarApiWMSBosOne = True
+
+                Dim _Habpesovariable As Boolean = CBool(_Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones", "Valor",
+                                                                    "Tabla = 'BODONE_CONF' And CodigoTabla = 'Habpesovariable'", True, False, 0))
+
+                If Not _Habpesovariable Then
+                    _ValidarApiWMSBosOne = False
                 End If
 
             End If
@@ -105,9 +118,30 @@ Public Class Frm_Cantidades_Ud_Disintas
 
         Sb_Ver_Alerta_Stock()
 
+        If _ValidarApiWMSBosOne Then
+
+            ' Llama a la función para encontrar el producto en las bodegas
+            Dim RtuBodegas As LsValiciones.Mensajes = Fx_Consultar_RTU_xBodegas(_Bodega, _Codigo)
+
+            ' Muestra el resultado final en el textbox e impide la edición de Cantidad 1
+            If RtuBodegas.EsCorrecto Then
+                TxtRTU.Text = RtuBodegas.Resultado
+                _Rtu = De_Txt_a_Num_01(RtuBodegas.Resultado, 5)
+                Label3.Text = "R.T.U.  (" & _Rtu & ")"
+                'TxtCantUD1.Enabled = False
+                Chk_RtuVariable.Checked = False
+                _Fila.Cells("Rtu").Value = _Rtu
+                'MessageBox.Show(RtuBodegas.Detalle, "Éxito", MessageBoxButtons.OK, RtuBodegas.Icono)
+                Me.ActiveControl = TxtCantUD2
+                '            Else
+                'MessageBox.Show(RtuBodegas.Detalle, "Error", MessageBoxButtons.OK, RtuBodegas.Icono) '
+            End If
+
+        End If
+
     End Sub
 
-    Private Sub BtnAceptar_Click(sender As System.Object, e As System.EventArgs) Handles BtnAceptar.Click
+    Private Sub BtnAceptar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnAceptar.Click
 
         Fr_Alerta_Stock.Close()
 
@@ -201,29 +235,29 @@ Public Class Frm_Cantidades_Ud_Disintas
 
     End Sub
 
-    Private Sub TxtCantUD2_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles TxtCantUD2.KeyDown
+    Private Sub TxtCantUD2_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles TxtCantUD2.KeyDown
         If e.KeyValue = Keys.Up Then
             e.Handled = True
             TxtCantUD1.Focus()
         End If
     End Sub
 
-    Private Sub TxtCantUD2_Leave(sender As System.Object, e As System.EventArgs) Handles TxtCantUD2.Leave
+    Private Sub TxtCantUD2_Leave(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TxtCantUD2.Leave
         TxtCantUD2.Text = Math.Round(_Cantidad_Ud2, 3)
     End Sub
 
-    Private Sub TxtCantUD1_Leave(sender As System.Object, e As System.EventArgs) Handles TxtCantUD1.Leave
+    Private Sub TxtCantUD1_Leave(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TxtCantUD1.Leave
         TxtCantUD1.Text = Math.Round(_Cantidad_Ud1, 3)
     End Sub
 
-    Private Sub TxtCantUD1_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles TxtCantUD1.KeyDown
+    Private Sub TxtCantUD1_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles TxtCantUD1.KeyDown
         If e.KeyValue = Keys.Down Then
             e.Handled = True
             TxtCantUD2.Focus()
         End If
     End Sub
 
-    Private Sub TxtCantUD1_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs) Handles TxtCantUD1.KeyPress
+    Private Sub TxtCantUD1_KeyPress(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles TxtCantUD1.KeyPress
 
         Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
         KeyAscii = CShort(SoloNumeros(KeyAscii, False))
@@ -271,7 +305,7 @@ Public Class Frm_Cantidades_Ud_Disintas
 
     End Sub
 
-    Private Sub TxtCantUD2_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs) Handles TxtCantUD2.KeyPress
+    Private Sub TxtCantUD2_KeyPress(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles TxtCantUD2.KeyPress
 
         Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
         KeyAscii = CShort(SoloNumeros(KeyAscii, False))
@@ -316,17 +350,17 @@ Public Class Frm_Cantidades_Ud_Disintas
 
     End Sub
 
-    Private Sub TxtCantUD1_Enter(sender As System.Object, e As System.EventArgs) Handles TxtCantUD1.Enter
+    Private Sub TxtCantUD1_Enter(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TxtCantUD1.Enter
         _UnTrans = 1
         TxtCantUD1.Text = Math.Round(_Cantidad_Ud1, 5)
     End Sub
 
-    Private Sub TxtCantUD2_Enter(sender As System.Object, e As System.EventArgs) Handles TxtCantUD2.Enter
+    Private Sub TxtCantUD2_Enter(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TxtCantUD2.Enter
         _UnTrans = 2
         TxtCantUD2.Text = Math.Round(_Cantidad_Ud2, 5)
     End Sub
 
-    Private Sub Btn_Ver_Stock_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ver_Stock.Click
+    Private Sub Btn_Ver_Stock_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Ver_Stock.Click
         Sb_Ver_Alerta_Stock()
     End Sub
 
@@ -340,5 +374,71 @@ Public Class Frm_Cantidades_Ud_Disintas
         ShowLoadAlert(Fr_Alerta_Stock, Me)
 
     End Sub
+
+    ''' <summary>
+    ''' Itera sobre las bodegas para consultar la API hasta obtener una respuesta válida
+    ''' </summary>
+    ''' <param name="apiUrl">URL de la API</param>
+    ''' <param name="authorizationToken">Token de autorización</param>
+    ''' <param name="_Codigo">SKU del producto</param>
+    ''' <returns>Un objeto de tipo Mensajes con el resultado de la operación</returns>
+    Private Function Fx_Consultar_RTU_xBodegas(_Bodega As String, _Codigo As String) As LsValiciones.Mensajes
+
+        Dim apiUrl As String = "http://190.151.101.156:82/BodONEWSR/Api/ConsultarRTU"
+        Dim authorizationToken As String = "Token 06389de2-5ed5-11ed-9b6a-0242ac120002"
+        Dim bodegas As String = Fx_Bodegas(_Bodega) '= "1, 2, 3, 4, 5, 8, 10, 41, 42, 21, 22, 23, 24, 25, 26"
+
+        Dim apiClient As New Cl_Api_BodOne()
+        Dim mensaje As LsValiciones.Mensajes
+
+        ' Lista de bodegas a iterar obtenida del TextBox
+        Dim bodegasArray As Integer() = bodegas.Split(",").Select(Function(b) Convert.ToInt32(b.Trim())).ToArray()
+
+        ' Itera sobre las bodegas definidas
+        For Each bodega In bodegasArray
+            Dim requestBody As New Dictionary(Of String, Object) From {
+            {"SKU", _Codigo},
+            {"Bodega", bodega}
+        }
+
+            ' Realiza la consulta a la API
+            mensaje = apiClient.Post(Of Decimal)(apiUrl, requestBody, authorizationToken)
+
+            ' Si se obtiene un resultado válido, detiene la iteración
+            If mensaje.EsCorrecto AndAlso mensaje.Resultado IsNot Nothing AndAlso Val(mensaje.Resultado) <> -1 Then
+                mensaje.Detalle = $"Consulta exitosa en la Bodega {bodega} WMS."
+                mensaje.Mensaje = "Se encontró un resultado válido."
+                Return mensaje
+            End If
+        Next
+
+        ' Si no se encontró un resultado válido, retorna un mensaje de error
+        mensaje = New LsValiciones.Mensajes With {
+        .EsCorrecto = False,
+        .Detalle = "No se encontró un resultado válido después de consultar todas las bodegas.",
+        .Mensaje = "Consulta fallida en todas las bodegas.",
+        .Icono = MessageBoxIcon.Warning
+    }
+
+        Return mensaje
+    End Function
+
+    Function Fx_Bodegas(_Bodega As String) As String
+
+        Dim _Bodegas As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones", "NombreTabla",
+                                                   "Tabla = 'BODONE_BOD' And CodigoTabla = '" & _Bodega & "'")
+
+        Return _Bodegas
+
+        'Select Case _Bodega
+        '    Case "001"
+        '        Return "1, 2, 3, 4, 5, 8, 10"
+        '    Case "004"
+        '        Return "41, 42"
+        '    Case "006"
+        '        Return "21, 22, 23, 24, 25, 26"
+        'End Select
+
+    End Function
 
 End Class
