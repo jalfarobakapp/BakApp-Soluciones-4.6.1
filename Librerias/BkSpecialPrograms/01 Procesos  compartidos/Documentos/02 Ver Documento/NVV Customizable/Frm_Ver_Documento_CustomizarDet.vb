@@ -42,9 +42,6 @@ Public Class Frm_Ver_Documento_CustomizarDet
 
     Private Sub Frm_Ver_Documento_CustomizarDet_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        'Grilla_Detalle.AllowUserToAddRows = Not Grilla_Detalle.AllowUserToAddRows
-
-        ' Inicializar Cl_NVVCustomizable
         Cl_NVVCustomizable = New Cl_NVVCustomizable
 
         ' Asignar la lista de detalles a listaProductos
@@ -52,7 +49,6 @@ Public Class Frm_Ver_Documento_CustomizarDet
 
         AddHandler Grilla_Detalle.RowValidating, AddressOf Grilla_Detalle_RowValidating
         AddHandler Grilla_Detalle.EditingControlShowing, AddressOf Grilla_Detalle_EditingControlShowing
-        'AddHandler Grilla_Detalle.MouseDown, AddressOf Grilla_MouseDown
         AddHandler Grilla_Detalle.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
         Cl_NVVCustomizable = New Cl_NVVCustomizable
@@ -97,7 +93,6 @@ Public Class Frm_Ver_Documento_CustomizarDet
 
         End With
 
-        'Cl_NVVCustomizable.Fx_AgregarDetalle(_Detalle)
         listaProductos.Add(_Detalle)
         Grilla_Detalle.Refresh()
 
@@ -131,12 +126,6 @@ Public Class Frm_Ver_Documento_CustomizarDet
             OcultarEncabezadoGrilla(Grilla_Detalle, True)
 
             Dim _DisplayIndex = 0
-
-            '.Columns("Idmaeddo").Visible = False
-            '.Columns("Idmaeddo").HeaderText = "Id"
-            '.Columns("Idmaeddo").Width = 40
-            '.Columns("Idmaeddo").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
 
             .Columns("CodigoAlt").Visible = True
             .Columns("CodigoAlt").HeaderText = "Código"
@@ -275,8 +264,6 @@ Public Class Frm_Ver_Documento_CustomizarDet
                         Sb_Agregar_Nueva_Linea()
                     End If
 
-                    'Grilla_Detalle.AllowUserToAddRows = True
-                    '    MessageBoxEx.Show(Me, "Estás en la última fila.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 End If
 
         End Select
@@ -308,10 +295,6 @@ Public Class Frm_Ver_Documento_CustomizarDet
                         MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
                         _Fila.Cells("CodigoAlt").Value = String.Empty
-
-                        'If Not _Fila.IsNewRow Then
-                        '    Grilla_Detalle.Rows.RemoveAt(_Index)
-                        'End If
 
                         Return
 

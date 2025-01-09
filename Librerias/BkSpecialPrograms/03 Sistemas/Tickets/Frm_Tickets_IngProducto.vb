@@ -43,7 +43,7 @@ Public Class Frm_Tickets_IngProducto
             Txt_Bodega.Text = _Sucursal.ToString.Trim & " - " & _Bodega.ToString.Trim
             Txt_Producto.Text = .Codigo.Trim & " - " & .Descripcion.Trim
 
-            Dim _Arr_Tipo_Entidad(,) As String = {{"1", .Ud1}, {"2", .Ud2}}
+            Dim _Arr_Tipo_Entidad(,) As String = {{"1", .Um}, {"2", .Um}}
             Sb_Llenar_Combos(_Arr_Tipo_Entidad, Cmb_UdMedida)
             Cmb_UdMedida.SelectedValue = .UdMedida
 
@@ -254,14 +254,14 @@ Public Class Frm_Tickets_IngProducto
                         .Descripcion = _RowProducto.Item("NOKOPR").ToString.Trim
                         .Empresa = ModEmpresa
                         .Rtu = _RowProducto.Item("RLUD")
-                        .Ud1 = _RowProducto.Item("UD01PR")
-                        .Ud2 = _RowProducto.Item("UD02PR")
+                        .Um = _RowProducto.Item("UD01PR")
+                        '.Ud2 = _RowProducto.Item("UD02PR")
 
                         Txt_Producto.Tag = .Codigo
                         Txt_Producto.Text = .Codigo.ToString.Trim & "-" & .Descripcion.ToString.Trim
                         Input_Cantidad.Focus()
 
-                        Dim _Arr_Tipo_Entidad(,) As String = {{"1", .Ud1}, {"2", .Ud2}}
+                        Dim _Arr_Tipo_Entidad(,) As String = {{"1", .Um}, {"2", .Um}}
                         Sb_Llenar_Combos(_Arr_Tipo_Entidad, Cmb_UdMedida)
                         Cmb_UdMedida.SelectedValue = 2
                         .UdMedida = 2

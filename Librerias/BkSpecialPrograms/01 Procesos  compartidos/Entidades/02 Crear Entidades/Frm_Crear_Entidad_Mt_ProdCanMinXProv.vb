@@ -385,7 +385,7 @@ Public Class Frm_Crear_Entidad_Mt_ProdCanMinXProv
 
                 Case "UnCm", "UdCompra"
 
-                    Dim Fm As New Frm_Cantidades_Selec_Ud(_Fila)
+                    Dim Fm As New Frm_Cantidades_Selec_Ud(_Fila.Cells("Ud01PR").Value, _Fila.Cells("Ud02PR").Value)
                     Fm.ShowDialog(Me)
                     _Seleccionada = Fm.Seleccionada
                     _UnTrans = Fm.UnTrans

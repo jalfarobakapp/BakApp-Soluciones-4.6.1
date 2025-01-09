@@ -9,6 +9,7 @@ Public Class Cl_Tickets
     Public Property Zw_Stk_Tickets_Producto As New Zw_Stk_Tickets_Producto
     Public Property Zw_Stk_Tipos As New Zw_Stk_Tipos
     Public Property Zw_Stk_Tickets_Acciones As New Zw_Stk_Tickets_Acciones
+    Public Property Ls_Zw_Stk_Tickets_Producto As New List(Of Zw_Stk_Tickets_Producto)
 
 
     Public Sub New()
@@ -105,8 +106,8 @@ Public Class Cl_Tickets
                 .Descripcion = _Row.Item("Descripcion")
                 .Rtu = _Row.Item("Rtu")
                 .UdMedida = _Row.Item("UdMedida")
-                .Ud1 = _Row.Item("Ud1")
-                .Ud2 = _Row.Item("Ud2")
+                .Um = _Row.Item("Ud1")
+                '.Ud2 = _Row.Item("Ud2")
                 .StfiEnBodega = _Row.Item("StfiEnBodega")
                 .Cantidad = _Row.Item("Cantidad")
                 .Diferencia = _Row.Item("Diferencia")
@@ -159,7 +160,7 @@ Public Class Cl_Tickets
                 .Inc_Cantidades = _Row_Tipo.Item("Inc_Cantidades")
                 .Inc_Fecha = _Row_Tipo.Item("Inc_Fecha")
                 .Inc_Hora = _Row_Tipo.Item("Inc_Hora")
-                .BodModalXDefecto = _Row_Tipo.Item("Inc_Hora")
+                .BodModalXDefecto = _Row_Tipo.Item("BodModalXDefecto")
                 .PreguntaCreaNewTicket = _Row_Tipo.Item("PreguntaCreaNewTicket")
                 .CerrarAgenteSinPerm = _Row_Tipo.Item("CerrarAgenteSinPerm")
                 .RespuestaXDefecto = _Row_Tipo.Item("RespuestaXDefecto")
@@ -368,8 +369,7 @@ Public Class Cl_Tickets
                                "Codigo,Descripcion,Rtu,UdMedida,Ud1,Ud2,StfiEnBodega,Cantidad,Diferencia,FechaRev,Ubicacion,Id_TicketAc) Values " &
                                "(" & .Id_Ticket & "," & .Id_Raiz & ",'" & .Numero & "','" & .Empresa & "','" & .Sucursal & "','" & .Bodega &
                                "','" & .Codigo & "','" & .Descripcion & "'," & De_Num_a_Tx_01(.Rtu, False, 5) &
-                               "," & .UdMedida & ",'" & .Ud1 & "','" & .Ud2 &
-                               "'," & De_Num_a_Tx_01(.StfiEnBodega, False, 5) &
+                               "," & .UdMedida & ",'" & .Um & "'," & De_Num_a_Tx_01(.StfiEnBodega, False, 5) &
                                "," & De_Num_a_Tx_01(.Cantidad, False, 5) &
                                "," & De_Num_a_Tx_01(.Diferencia, False, 5) &
                                ",'" & Format(.FechaRev, "yyyyMMdd HH:mm") &
@@ -943,16 +943,17 @@ Public Class Cl_Tickets
 
             _Bodega = _Sucursal.ToString.Trim & " - " & _Bodega.ToString.Trim
 
-            If .UdMedida = 1 Then _Udad = .Ud1
-            If .UdMedida = 2 Then _Udad = .Ud2
+            _Udad = .Um
+            'If .UdMedida = 1 Then _Udad = .Um
+            'If .UdMedida = 2 Then _Udad = .Ud2
 
             If _Inc_Cantidades Then
                 _CantidadesStr = "BODEGA : " & _Bodega & vbCrLf &
-                             "UNIDAD :" & _Udad & vbCrLf &
-                             "UBICACION :" & .Ubicacion & vbCrLf &
-                             "CANTIDAD INVENTARIADA : " & .Cantidad & vbCrLf &
-                             "CANTIDAD EN BODEGA SEGUN SISTEMA : " & .StfiEnBodega & vbCrLf &
-                             "DIFERENCIA : " & .Diferencia & vbCrLf
+                                 "UNIDAD :" & _Udad & vbCrLf &
+                                 "UBICACION :" & .Ubicacion & vbCrLf &
+                                 "CANTIDAD INVENTARIADA : " & .Cantidad & vbCrLf &
+                                 "CANTIDAD EN BODEGA SEGUN SISTEMA : " & .StfiEnBodega & vbCrLf &
+                                 "DIFERENCIA : " & .Diferencia & vbCrLf
             End If
 
             If _Inc_Fecha Then _FechaRevStr = "FECHA : " & CType(.FechaRev, DateTime).ToShortDateString

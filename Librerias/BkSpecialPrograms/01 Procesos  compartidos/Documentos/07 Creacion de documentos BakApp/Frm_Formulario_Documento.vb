@@ -9410,7 +9410,7 @@ Public Class Frm_Formulario_Documento
 
                                         Dim _Seleccionada As Boolean
 
-                                        Dim Fm As New Frm_Cantidades_Selec_Ud(_Fila)
+                                        Dim Fm As New Frm_Cantidades_Selec_Ud(_Fila.Cells("Ud01PR").Value, _Fila.Cells("Ud02PR").Value)
                                         Fm.ShowDialog(Me)
                                         _Seleccionada = Fm.Seleccionada
                                         _UnTrans = Fm.UnTrans
@@ -18880,8 +18880,21 @@ Public Class Frm_Formulario_Documento
             End If
 
             If _Editar_documento Then
-                _CodLista = Mid(_RowMaeedo_Origen.Item("LISACTIVA").ToString, 6, 3)
+
+                If _Sql.Fx_Exite_Campo("MAEEDO", "LISACTIVA") Then
+                    _CodLista = Mid(_RowMaeedo_Origen.Item("LISACTIVA").ToString, 6, 3)
+                Else
+
+                    _CodLista = _TblMaeddo_Origen.Rows(0).Item("KOLTPR")
+
+                    If _CodLista.ToString.Length > 3 Then
+                        _CodLista = Mid(_CodLista, 6, 3)
+                    End If
+
+                End If
+
                 _TblEncabezado.Rows(0).Item("ListaPrecios") = _CodLista
+
             End If
 
 

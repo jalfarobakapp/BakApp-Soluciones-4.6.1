@@ -101,6 +101,11 @@ Public Class Frm_SeleccionarBodega
 
 #End Region
 
+    Public Property Empresa_NoSeleccionable As String
+    Public Property Sucursal_NoSeleccionable As String
+    Public Property Bodega_NoSeleccionable As String
+
+
     Public Sub New(Accion As Accion)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -208,8 +213,6 @@ Public Class Frm_SeleccionarBodega
 
     Private Sub BtnAceptar_Click(sender As System.Object, e As System.EventArgs) Handles BtnAceptar.Click
 
-        Dim _Campo As String
-
         Select Case _Accion
 
             Case Accion.Empresa
@@ -225,6 +228,10 @@ Public Class Frm_SeleccionarBodega
                 _Bodega = Cmbbodega.SelectedValue.ToString
 
                 If Not String.IsNullOrEmpty(_Bodega) Then
+
+                    If Not Fx_Revisar_BodegaNoSeleccionable() Then
+                        Return
+                    End If
 
                     Dim _Permiso As String
 
@@ -249,6 +256,17 @@ Public Class Frm_SeleccionarBodega
         End If
 
     End Sub
+
+    Function Fx_Revisar_BodegaNoSeleccionable() As Boolean
+
+        If Empresa_NoSeleccionable = _Empresa AndAlso Sucursal_NoSeleccionable = _Sucursal AndAlso Bodega_NoSeleccionable = _Bodega Then
+            MessageBoxEx.Show(Me, "La bodega seleccionada no es seleccionable", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return False
+        End If
+
+        Return True
+
+    End Function
 
     Private Sub Frm_SeleccionarBodega_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then

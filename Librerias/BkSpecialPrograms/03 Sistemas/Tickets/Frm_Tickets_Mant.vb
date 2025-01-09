@@ -283,8 +283,8 @@ Public Class Frm_Tickets_Mant
                     .Codigo = String.Empty
                     .Descripcion = String.Empty
                     .Rtu = 0
-                    .Ud1 = String.Empty
-                    .Ud2 = String.Empty
+                    .Um = String.Empty
+                    '.Ud2 = String.Empty
                     .Empresa = ModEmpresa
                     .Sucursal = String.Empty
                     .Bodega = String.Empty
@@ -488,8 +488,8 @@ Public Class Frm_Tickets_Mant
                             .Codigo = String.Empty
                             .Descripcion = String.Empty
                             .Rtu = 0
-                            .Ud1 = String.Empty
-                            .Ud2 = String.Empty
+                            .Um = String.Empty
+                            '.Ud2 = String.Empty
                             .Empresa = ModEmpresa
                             .Sucursal = String.Empty
                             .Bodega = String.Empty
@@ -504,7 +504,14 @@ Public Class Frm_Tickets_Mant
 
                 End If
 
+                _Cl_Tickets.Ls_Zw_Stk_Tickets_Producto.Add(_Cl_Tickets.Zw_Stk_Tickets_Producto)
+
             End With
+
+            Dim Fm2 As New Frm_Tickets_IngProducto_GesXBod
+            Fm2.Cl_Tickets = _Cl_Tickets
+            Fm2.ShowDialog(Me)
+            Fm2.Dispose()
 
             Call Btn_VerProducto_Click(Nothing, Nothing)
             _MostrarProducto = False
@@ -859,8 +866,8 @@ Public Class Frm_Tickets_Mant
             .Codigo = String.Empty
             .Descripcion = String.Empty
             .Rtu = 0
-            .Ud1 = String.Empty
-            .Ud2 = String.Empty
+            .Um = String.Empty
+            '.Ud2 = String.Empty
             .Empresa = ModEmpresa
             .Sucursal = String.Empty
             .Bodega = String.Empty
