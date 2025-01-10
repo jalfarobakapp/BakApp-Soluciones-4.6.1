@@ -149,9 +149,7 @@ Partial Class Frm_Tickets_IngProducto_GesXBod
         Me.Txt_Producto.Border.Class = "TextBoxBorder"
         Me.Txt_Producto.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Producto.ButtonCustom.Image = CType(resources.GetObject("Txt_Producto.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_Producto.ButtonCustom.Visible = True
         Me.Txt_Producto.ButtonCustom2.Image = CType(resources.GetObject("Txt_Producto.ButtonCustom2.Image"), System.Drawing.Image)
-        Me.Txt_Producto.ButtonCustom2.Visible = True
         Me.Txt_Producto.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Producto.Enabled = False
         Me.Txt_Producto.ForeColor = System.Drawing.Color.Black

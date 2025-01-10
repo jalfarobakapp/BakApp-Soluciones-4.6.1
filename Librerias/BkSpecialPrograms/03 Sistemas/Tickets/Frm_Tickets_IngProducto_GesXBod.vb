@@ -3,9 +3,14 @@ Imports DevComponents.DotNetBar
 
 Public Class Frm_Tickets_IngProducto_GesXBod
 
-    Dim listaProductos As New BindingList(Of Zw_Stk_Tickets_Producto)
+    Private listaProductosOriginal As BindingList(Of Zw_Stk_Tickets_Producto)
+    Private listaProductos As New BindingList(Of Zw_Stk_Tickets_Producto)
 
     Public Property Cl_Tickets As Cl_Tickets
+
+    Public Property SoloUnProducto As Boolean
+    Public Property ModoSoloLectura As Boolean
+    Public Property Grabar As Boolean
 
     Public Sub New()
 
@@ -22,18 +27,78 @@ Public Class Frm_Tickets_IngProducto_GesXBod
 
     Private Sub Frm_Tickets_IngProducto_GesXBod_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        AddHandler Grilla_Detalle.EditingControlShowing, AddressOf Grilla_Detalle_EditingControlShowing
+        AddHandler Grilla_Detalle.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+
         ' Asignar la lista de detalles a listaProductos
-        listaProductos = New BindingList(Of Zw_Stk_Tickets_Producto)(Cl_Tickets.Ls_Zw_Stk_Tickets_Producto)
+        'listaProductos = New BindingList(Of Zw_Stk_Tickets_Producto)(Cl_Tickets.Ls_Zw_Stk_Tickets_Producto)
+
+        listaProductosOriginal = New BindingList(Of Zw_Stk_Tickets_Producto)(Cl_Tickets.Ls_Zw_Stk_Tickets_Producto)
+        listaProductos = New BindingList(Of Zw_Stk_Tickets_Producto)(ClonarLista(listaProductosOriginal))
+
+        Txt_Producto.Text = Cl_Tickets.Zw_Stk_Tickets_Producto.Codigo & " - " & Cl_Tickets.Zw_Stk_Tickets_Producto.Descripcion
 
         Sb_ActualizarGrilla()
 
+        ' Establecer el foco en la primera fila de la grilla en el campo Um
+        If Grilla_Detalle.Rows.Count > 0 Then
+            Grilla_Detalle.CurrentCell = Grilla_Detalle.Rows(0).Cells("Ubicacion")
+            Grilla_Detalle.BeginEdit(True)
+        End If
+
     End Sub
+
+    Private Function ClonarLista(original As BindingList(Of Zw_Stk_Tickets_Producto)) As List(Of Zw_Stk_Tickets_Producto)
+        Dim nuevaLista As New List(Of Zw_Stk_Tickets_Producto)
+        For Each item In original
+            nuevaLista.Add(New Zw_Stk_Tickets_Producto With {
+                    .Id = item.Id,
+                    .Id_Padre = item.Id_Padre,
+                    .Id_Raiz = item.Id_Raiz,
+                    .Id_Ticket = item.Id_Ticket,
+                    .Id_TicketAc = item.Id_TicketAc,
+                    .AjusInventario = item.AjusInventario,
+                    .Empresa = item.Empresa,
+                    .Sucursal = item.Sucursal,
+                    .Bodega = item.Bodega,
+                    .Descripcion_Bodega = item.Descripcion_Bodega,
+                    .Codigo = item.Codigo,
+                    .Descripcion = item.Descripcion,
+                    .Ubicacion = item.Ubicacion,
+                    .UdMedida = item.UdMedida,
+                    .Ud1 = item.Ud1,
+                    .Ud2 = item.Ud2,
+                    .Um = item.Um,
+                    .StfiEnBodega = item.StfiEnBodega,
+                    .Cantidad = item.Cantidad,
+                    .Diferencia = item.Diferencia,
+                    .FechaRev = item.FechaRev,
+                    .Numero = item.Numero,
+                    .RevInventario = item.RevInventario,
+                    .Rtu = item.Rtu,
+                    .SobreStock = item.SobreStock,
+                    .Stfi1 = item.Stfi1,
+                    .Stfi2 = item.Stfi2
+                })
+        Next
+        Return nuevaLista
+    End Function
+
+    Private currentId As Integer = 1
 
     Sub Sb_Agregar_Nueva_Linea()
 
+        Dim _Item1 As Zw_Stk_Tickets_Producto = listaProductos.Item(0)
         Dim _Detalle As New Zw_Stk_Tickets_Producto
 
+        _Detalle.Id = currentId
+        currentId += 1
         _Detalle.Id_Padre = 1
+        _Detalle.Codigo = _Item1.Codigo
+        _Detalle.Descripcion = _Item1.Descripcion
+        _Detalle.Ud1 = _Item1.Ud1
+        _Detalle.Ud2 = _Item1.Ud2
+        _Detalle.Um = _Item1.Um
 
         listaProductos.Add(_Detalle)
         Grilla_Detalle.Refresh()
@@ -57,8 +122,6 @@ Public Class Frm_Tickets_IngProducto_GesXBod
 
         With Grilla_Detalle
 
-            '.DataSource = _Source
-
             OcultarEncabezadoGrilla(Grilla_Detalle, True)
 
             Dim _DisplayIndex = 0
@@ -80,6 +143,19 @@ Public Class Frm_Tickets_IngProducto_GesXBod
             .Columns("Bodega").Width = 30
             .Columns("Bodega").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
+
+            .Columns("Ubicacion").Visible = True
+            .Columns("Ubicacion").HeaderText = "Ubicación"
+            .Columns("Ubicacion").Width = 150
+            .Columns("Ubicacion").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            '.Columns("Descripcion_Bodega").Visible = True
+            '.Columns("Descripcion_Bodega").HeaderText = "Nombre de bodega"
+            '.Columns("Descripcion_Bodega").Width = 250
+            '.Columns("Descripcion_Bodega").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
+
 
             .Columns("Um").Visible = True
             .Columns("Um").HeaderText = "UM"
@@ -104,7 +180,7 @@ Public Class Frm_Tickets_IngProducto_GesXBod
             _DisplayIndex += 1
 
             .Columns("Diferencia").Visible = True
-            .Columns("Diferencia").HeaderText = "Stock Físico"
+            .Columns("Diferencia").HeaderText = "Diferencia"
             .Columns("Diferencia").Width = 100
             .Columns("Diferencia").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Diferencia").DefaultCellStyle.Format = "###,##0.##"
@@ -112,16 +188,9 @@ Public Class Frm_Tickets_IngProducto_GesXBod
             _DisplayIndex += 1
 
             .Columns("FechaRev").Visible = True
-            .Columns("FechaRev").HeaderText = "Fecha Rev."
-            .Columns("FechaRev").DefaultCellStyle.Format = "dd/MM/yyyy"
-            .Columns("FechaRev").Width = 80
-            .Columns("FechaRev").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
-            .Columns("FechaRev").Visible = True
-            .Columns("FechaRev").HeaderText = "Hora Rev."
-            .Columns("FechaRev").DefaultCellStyle.Format = "HH:mm"
-            .Columns("FechaRev").Width = 80
+            .Columns("FechaRev").HeaderText = "Fecha/Hora Rev."
+            .Columns("FechaRev").DefaultCellStyle.Format = "dd/MM/yyyy HH:mm"
+            .Columns("FechaRev").Width = 120
             .Columns("FechaRev").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -156,17 +225,20 @@ Public Class Frm_Tickets_IngProducto_GesXBod
 
             Case Keys.Enter
 
-                If _Cabeza = "Descripcion" Then
-                    e.Handled = True
+                If ModoSoloLectura Then
+                    MessageBoxEx.Show(Me, "El formulario se encuentra en modo de solo lectura", "Validación",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     Return
                 End If
 
-                If _Cabeza = "StfiEnBodega" Or
-                    _Cabeza = "Cantidad" Or
-                    _Cabeza = "Empresa" Or
-                    _Cabeza = "Sucursal" Or
-                    _Cabeza = "Bodega" Or
-                    _Cabeza = "Um" Then
+                If _Cabeza = "Ubicacion" Or
+                   _Cabeza = "StfiEnBodega" Or
+                   _Cabeza = "Cantidad" Or
+                   _Cabeza = "Empresa" Or
+                   _Cabeza = "Sucursal" Or
+                   _Cabeza = "Bodega" Or
+                   _Cabeza = "Um" Or
+                   _Cabeza = "FechaRev" Then
 
                     If _Fila.IsNewRow Then
 
@@ -189,7 +261,14 @@ Public Class Frm_Tickets_IngProducto_GesXBod
 
                     If Not _Fila.IsNewRow Then
 
-                        If _Cabeza = "StfiEnBodega" Or _Cabeza = "Cantidad" Or _Cabeza = "Um" Then
+                        If _Cabeza = "StfiEnBodega" Or _Cabeza = "Cantidad" Then
+
+                            If String.IsNullOrEmpty(_Fila.Cells("Ubicacion").Value) Then
+                                MessageBoxEx.Show(Me, "Debe ingresar la ubicación", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                Grilla_Detalle.CurrentCell = _Fila.Cells("Ubicacion")
+                                e.Handled = True
+                                Return
+                            End If
 
                             If String.IsNullOrEmpty(_Empresa) Or String.IsNullOrEmpty(_Sucursal) Or String.IsNullOrEmpty(_Bodega) Then
                                 MessageBoxEx.Show(Me, "Debe ingresar la bodega", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -228,7 +307,7 @@ Public Class Frm_Tickets_IngProducto_GesXBod
                                 For Each producto As Zw_Stk_Tickets_Producto In listaProductos
                                     If producto.Empresa = Fm_b.Pro_RowBodega.Item("EMPRESA") AndAlso
                                         producto.Sucursal = Fm_b.Pro_RowBodega.Item("KOSU") AndAlso
-                                        producto.Bodega = Fm_b.Pro_RowBodega.Item("KOBO") Then
+                                        producto.Bodega = Fm_b.Pro_RowBodega.Item("KOBO") AndAlso producto.Id <> currentId Then
                                         MessageBoxEx.Show(Me, "Ya existe un registro con la misma empresa, sucursal y bodega", "Validación",
                                                           MessageBoxButtons.OK, MessageBoxIcon.Stop)
                                         Grilla_Detalle.CurrentCell = _Fila.Cells("Bodega")
@@ -244,6 +323,8 @@ Public Class Frm_Tickets_IngProducto_GesXBod
 
                             Fm_b.Dispose()
 
+                            Grilla_Detalle.CurrentCell = _Fila.Cells("Ubicacion")
+
                         End If
 
                         If _Cabeza = "Um" Then
@@ -252,8 +333,49 @@ Public Class Frm_Tickets_IngProducto_GesXBod
                             Fm.ShowDialog(Me)
                             If Fm.Seleccionada Then
                                 _Fila.Cells("Um").Value = Fm.UdTrans
+                                Grilla_Detalle.CurrentCell = _Fila.Cells("StfiEnBodega")
                             End If
                             Fm.Dispose()
+
+                        End If
+
+                        If _Cabeza = "FechaRev" Then
+
+                            Dim _Grabar As Boolean
+                            Dim _FechaSeleccionada As DateTime
+
+                            Dim Fm As New Frm_Seleccionar_Fecha
+
+                            Fm.SolicitarConfirmacionDeFecha = True
+                            Fm.ExigeFechaMaxima = True
+                            Fm.FechaMaxima = Now.Date.AddDays(1)
+
+                            If IsNothing(_Fila.Cells("FechaRev").Value) Then
+                                Fm.FechaDisplay = Now.Date
+                            Else
+                                Fm.FechaDisplay = _Fila.Cells("FechaRev").Value
+                            End If
+
+                            Fm.MostraFormularioAlCentro = True
+                            Fm.SeleccionarHora = True
+                            Fm.ShowDialog(Me)
+
+                            _Grabar = Fm.Grabar
+                            _FechaSeleccionada = Fm.FechaSeleccionada
+                            Fm.Dispose()
+
+                            If _Grabar Then
+                                _Fila.Cells("FechaRev").Value = _FechaSeleccionada
+                            End If
+
+                        End If
+
+                        If _Cabeza = "Ubicacion" Then
+
+                            SendKeys.Send("{F2}")
+                            e.Handled = True
+                            Grilla_Detalle.Columns(_Cabeza).ReadOnly = False
+                            Grilla_Detalle.BeginEdit(True)
 
                         End If
 
@@ -273,7 +395,7 @@ Public Class Frm_Tickets_IngProducto_GesXBod
                         End If
 
                         ' Asegúrate de que el índice sea válido antes de intentar eliminar
-                        If _Index >= 0 AndAlso _Index < Grilla_Detalle.Rows.Count AndAlso _Id_Padre = 0 Then
+                        If _Index >= 0 AndAlso _Index < Grilla_Detalle.Rows.Count AndAlso _Id_Padre = 1 Then
 
                             If MessageBoxEx.Show(Me, "¿Está seguro de eliminar la fila seleccionada?", "Eliminar Fila",
                                                  MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
@@ -310,4 +432,110 @@ Public Class Frm_Tickets_IngProducto_GesXBod
 
     End Sub
 
+    Private Sub Grilla_Detalle_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Detalle.CellEndEdit
+
+        Dim _Cabeza = Grilla_Detalle.Columns(e.ColumnIndex).Name
+        Dim _Fila As DataGridViewRow = Grilla_Detalle.CurrentRow
+
+        Dim _Index As Integer = _Fila.Index
+
+        Try
+
+            Select Case _Cabeza
+
+                Case "Cantidad", "StfiEnBodega"
+
+                    Dim _Cantidad As Double = _Fila.Cells("Cantidad").Value
+                    Dim _StfiEnBodega As Double = _Fila.Cells("StfiEnBodega").Value
+                    Dim _Diferencia As Double = _Cantidad - _StfiEnBodega
+
+                    _Fila.Cells("Diferencia").Value = _Diferencia
+
+                    If _Cabeza = "StfiEnBodega" Then
+                        Grilla_Detalle.CurrentCell = _Fila.Cells("Cantidad")
+                    Else
+                        Grilla_Detalle.CurrentCell = _Fila.Cells("FechaRev")
+                    End If
+
+                Case "Ubicacion"
+
+                    If Not String.IsNullOrWhiteSpace(_Fila.Cells("Ubicacion").Value) Then
+                        Grilla_Detalle.CurrentCell = _Fila.Cells("Um")
+                    End If
+
+            End Select
+
+        Catch ex As Exception
+        Finally
+            If _Cabeza <> "_Cabeza" Then
+                Grilla_Detalle.Columns(_Cabeza).ReadOnly = True
+            End If
+        End Try
+
+    End Sub
+
+    Private Sub Sb_Validar_Keypress(sender As Object, e As System.Windows.Forms.KeyPressEventArgs)
+        ' obtener indice de la columna
+
+        'With sender
+
+        Dim _Columna As Integer = Grilla_Detalle.CurrentCellAddress.X 'Current.ColumnIndex
+        Dim _Fila As Integer = Grilla_Detalle.CurrentCellAddress.Y 'Current.ColumnIndex
+
+        Dim _Cabeza = Grilla_Detalle.Columns(_Columna).Name
+
+        ' comprobar si la celda en edición corresponde a la columna 1 o 2
+
+        If _Cabeza = "Cantidad" Or _Cabeza = "StfiEnBodega" Then
+
+            ' Obtener caracter  
+            Dim _Caracter As Char = e.KeyChar
+
+            ' referencia a la celda  
+            Dim _Txt As TextBox = CType(sender, TextBox)
+
+            If e.KeyChar = "."c Then
+                ' si se pulsa la coma se convertirá en punto
+                'e.Handled = True
+                SendKeys.Send(",")
+                e.KeyChar = ","c
+                _Caracter = ","
+            End If
+
+            Dim _Caracter_Raro = ChrW(Keys.Back)
+            Dim _EsNumero As Boolean = Char.IsNumber(_Caracter)
+
+            ' comprobar si es un número con isNumber, si es el backspace, si el caracter  
+            ' es el separador decimal, y que no contiene ya el separador  
+            If (Char.IsNumber(_Caracter)) Or
+               (_Caracter = ChrW(Keys.Back)) Or
+               ((_Caracter = "-") And (_Txt.Text.Contains("-") = False)) Or
+               (_Caracter = ",") And (_Txt.Text.Contains(",") = False) Then
+                e.Handled = False
+            Else
+                e.Handled = True
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub Grilla_Detalle_EditingControlShowing(sender As System.Object, e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs)
+        Dim validar As TextBox = CType(e.Control, TextBox)
+        AddHandler validar.KeyPress, AddressOf Sb_Validar_Keypress
+    End Sub
+
+    Private Sub Grilla_Detalle_DataError(sender As Object, e As DataGridViewDataErrorEventArgs)
+        ' Manejar los errores de datos
+        ' Por ejemplo, mostrar un mensaje de error al usuario
+        'MessageBoxEx.Show(Me, "Error de datos en la celda " & e.ColumnIndex & ", " & e.RowIndex, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+    End Sub
+
+    Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
+
+        listaProductosOriginal = New BindingList(Of Zw_Stk_Tickets_Producto)(ClonarLista(listaProductos))
+        Grabar = True
+        Me.Close()
+
+    End Sub
 End Class
