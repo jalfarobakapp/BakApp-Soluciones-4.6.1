@@ -10,9 +10,9 @@
 
     End Sub
 
-    Sub Sb_LlenarCorreosNuevosMayoristas()
+    Sub Sb_LlenarCorreosNuevosMayoristas(_Id_Correo As Integer, _Fecha As Date)
 
-        Dim _Fecha As Date = FechaDelServidor()
+        'Dim _Fecha As Date = FechaDelServidor().AddDays(-1)
         Dim _PrimerDiaMes As Date = DateSerial(Year(_Fecha), Month(_Fecha), 1)
         Dim _UltimoDiaMes As Date = DateSerial(Year(_Fecha), Month(_Fecha) + 1, 0)
 
@@ -23,9 +23,13 @@
                        "From MAEEDO" & vbCrLf &
                        "Inner Join MAEEN On KOEN = ENDO And SUEN = SUENDO" & vbCrLf &
                        "Inner Join " & _Global_BaseBk & "Zw_ListaPreGlobal Lp On Lp.ListaInferior = SUBSTRING(LVEN,6,3)" & vbCrLf &
-                       "Where TIDO = 'FCV' And FEEMDO Between '" & Format(_PrimerDiaMes, "yyyyMMdd") & "' And '" & Format(_UltimoDiaMes, "yyyyMMdd") & "'"
+                       "Where TIDO = 'FCV' And FEEMDO Between '" & Format(_PrimerDiaMes, "yyyyMMdd") & "' And '" & Format(_UltimoDiaMes, "yyyyMMdd") & "' And SUBSTRING(LVEN,6,3) In (Select KOLT From TABPP)"
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
+
+        If Not CBool(_Tbl.Rows.Count) Then
+            Return
+        End If
 
         Dim _Lista As New List(Of NewDatosEntidad)
 
@@ -67,6 +71,10 @@
 
         Next
 
+        If Not CBool(_Lista.Count) Then
+            Return
+        End If
+
         Dim _ListaCorreos As New List(Of LsValiciones.Mensajes)
 
         Dim _SqlQuery = String.Empty
@@ -81,17 +89,24 @@
 
             '_Para = "jalfaro@bakapp.cl"
 
-            Dim _CorreoMsj As LsValiciones.Mensajes = Fx_EnviarCorreosMayoristaMinorista(_CodEntidad, _CodSucEntidad, 2, _Para, _Msj.Cc)
+            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo",
+                                                           "Para = '" & _Para & "' And Id_Correo = " & _Id_Correo)
 
-            _ListaCorreos.Add(_CorreoMsj)
+            If _Reg = 0 Then
 
-            If _CorreoMsj.EsCorrecto Then
+                Dim _CorreoMsj As LsValiciones.Mensajes = Fx_EnviarCorreosMayoristaMinorista(_CodEntidad, _CodSucEntidad, _Id_Correo, _Para, _Msj.Cc)
 
-                If String.IsNullOrWhiteSpace(_CodHolding) Then
-                    _SqlQuery += "Update MAEEN Set LVEN = 'TABPP" & _Msj.New_Lista & "' Where KOEN = '" & _CodEntidad & "' And SUEN = '" & _CodSucEntidad & "'" & vbCrLf
-                Else
-                    _SqlQuery += "Update MAEEN Set LVEN = 'TABPP" & _Msj.New_Lista & "'" & vbCrLf &
-                               "Where KOEN+SUEN In (Select CodEntidad+CodSucEntidad From " & _Global_BaseBk & "Zw_Entidades Where CodHolding = '" & _CodHolding & "')" & vbCrLf
+                _ListaCorreos.Add(_CorreoMsj)
+
+                If _CorreoMsj.EsCorrecto Then
+
+                    If String.IsNullOrWhiteSpace(_CodHolding) Then
+                        _SqlQuery += "Update MAEEN Set LVEN = 'TABPP" & _Msj.New_Lista & "' Where KOEN = '" & _CodEntidad & "' And SUEN = '" & _CodSucEntidad & "'" & vbCrLf
+                    Else
+                        _SqlQuery += "Update MAEEN Set LVEN = 'TABPP" & _Msj.New_Lista & "'" & vbCrLf &
+                                   "Where KOEN+SUEN In (Select CodEntidad+CodSucEntidad From " & _Global_BaseBk & "Zw_Entidades Where CodHolding = '" & _CodHolding & "')" & vbCrLf
+                    End If
+
                 End If
 
             End If
@@ -99,7 +114,7 @@
         Next
 
         If Not String.IsNullOrWhiteSpace(_SqlQuery) Then
-            _Sql.Ej_consulta_IDU(_SqlQuery, False)
+            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery, False)
         End If
 
     End Sub

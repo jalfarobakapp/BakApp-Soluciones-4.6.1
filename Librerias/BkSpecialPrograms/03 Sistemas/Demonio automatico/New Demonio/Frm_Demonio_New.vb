@@ -1083,6 +1083,17 @@ Public Class Frm_Demonio_New
 
             If Not _Cl_Correos.Procesando Then
 
+                If _Global_Row_Configuracion_General.Item("UsarVencListaPrecios") Then
+
+                    If _Cl_Correos.ActualizarListaMayoristaMinorista Then
+
+                        Dim _Cl_ListaMayoristaMinorista As New Cl_ListaMayoristaMinorista
+                        _Cl_ListaMayoristaMinorista.Sb_LlenarCorreosNuevosMayoristas(_Cl_Correos.CorreoMayoristaMinorista, DtpFecharevision.Value)
+
+                    End If
+
+                End If
+
                 _Cl_Correos.Procesando = True
                 _Cl_Correos.Fecha_Revision = DtpFecharevision.Value
                 _Cl_Correos.Nombre_Equipo = _NombreEquipo

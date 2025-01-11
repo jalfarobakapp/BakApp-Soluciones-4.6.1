@@ -269,6 +269,7 @@ Public Class Frm_ListaMezclas
         Dim _Referencia As String = _Fila.Cells("Referencia").Value
         Dim _Nro_MZC As String = _Fila.Cells("Nro_MZC").Value
         Dim _Numot_Otm As String = _Fila.Cells("Numot_Otm").Value
+        Dim _Fiot_Otm As DateTime = _Fila.Cells("Fiot_Otm").Value
 
         Dim _RowNomenclatura As DataRow
 

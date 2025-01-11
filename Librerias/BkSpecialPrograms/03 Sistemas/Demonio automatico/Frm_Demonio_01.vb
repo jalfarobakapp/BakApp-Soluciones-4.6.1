@@ -1493,9 +1493,8 @@ Public Class Frm_Demonio_01
 
                     'Sb_Pausar(True)
 
-                    Dim _Cl_ListaMayoristaMinorista As New Cl_ListaMayoristaMinorista
-
-                    _Cl_ListaMayoristaMinorista.Sb_LlenarCorreosNuevosMayoristas()
+                    'Dim _Cl_ListaMayoristaMinorista As New Cl_ListaMayoristaMinorista
+                    '_Cl_ListaMayoristaMinorista.Sb_LlenarCorreosNuevosMayoristas(2)
 
                     _Cl_Correos.Fecha_Revision = DtpFecharevision.Value
                     _Cl_Correos.Nombre_Equipo = _Nombre_Equipo

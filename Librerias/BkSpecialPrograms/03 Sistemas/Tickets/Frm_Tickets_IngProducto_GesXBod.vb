@@ -159,6 +159,7 @@ Public Class Frm_Tickets_IngProducto_GesXBod
 
             .Columns("Um").Visible = True
             .Columns("Um").HeaderText = "UM"
+            .Columns("Um").ToolTipText = "Unidad de medida"
             .Columns("Um").Width = 30
             .Columns("Um").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
@@ -189,6 +190,7 @@ Public Class Frm_Tickets_IngProducto_GesXBod
 
             .Columns("FechaRev").Visible = True
             .Columns("FechaRev").HeaderText = "Fecha/Hora Rev."
+            .Columns("FechaRev").HeaderText = "Fecha y hora de revisión"
             .Columns("FechaRev").DefaultCellStyle.Format = "dd/MM/yyyy HH:mm"
             .Columns("FechaRev").Width = 120
             .Columns("FechaRev").DisplayIndex = _DisplayIndex
@@ -532,6 +534,45 @@ Public Class Frm_Tickets_IngProducto_GesXBod
     End Sub
 
     Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
+
+        Dim _ContFila = 1
+
+        ' Validar que el campo Ubicacion no esté vacío en la lista de productos
+        For Each producto As Zw_Stk_Tickets_Producto In listaProductos
+
+            If String.IsNullOrWhiteSpace(producto.Bodega) Then
+                MessageBoxEx.Show(Me, "Todos los productos deben tener una bodega." & vbCrLf & "Fila: " & _ContFila,
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+            If String.IsNullOrWhiteSpace(producto.Ubicacion) Then
+                MessageBoxEx.Show(Me, "Todos los productos deben tener una ubicación." & vbCrLf & "Fila: " & _ContFila,
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+            If String.IsNullOrWhiteSpace(producto.Um) Then
+                MessageBoxEx.Show(Me, "Todos los productos deben tener una unidad de medida (UM)." & vbCrLf & "Fila: " & _ContFila,
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+            If producto.Cantidad = 0 AndAlso producto.StfiEnBodega = 0 Then
+                MessageBoxEx.Show(Me, "El Stock Físico y Stock Sistema no pueden ser igual a cero" & vbCrLf & "Fila: " & _ContFila,
+                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+            If IsNothing(producto.FechaRev) Then
+                MessageBoxEx.Show(Me, "Todos los productos deben tener una fecha y hora de revisión (Fecha/Hora Rev.)." & vbCrLf & "Fila: " & _ContFila,
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+            _ContFila += 1
+
+        Next
 
         listaProductosOriginal = New BindingList(Of Zw_Stk_Tickets_Producto)(ClonarLista(listaProductos))
         Grabar = True

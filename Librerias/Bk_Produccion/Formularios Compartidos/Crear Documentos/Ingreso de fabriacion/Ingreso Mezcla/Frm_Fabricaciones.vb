@@ -39,7 +39,11 @@ Public Class Frm_Fabricaciones
         Sb_Actualizar_Grilla()
         Dtp_Fecha_Ingreso.Value = FechaDelServidor()
 
+        _Cl_Mezcla.Fx_Llenar_Zw_Pdp_CPT_MzEnc(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.Id_Enc)
+
         Dim _Fabricada As Boolean = CBool(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idmaeddo)
+
+        Dtp_Fecha_Ingreso.Value = _Cl_Mezcla.Zw_Pdp_CPT_MzEnc.Fiot_Otm
 
         Btn_Grabar.Enabled = Not _Fabricada
         Btn_IngresarNuevaFabricacion.Enabled = Not _Fabricada
@@ -47,7 +51,7 @@ Public Class Frm_Fabricaciones
         Chk_GDI_Consumo.Visible = Btn_Grabar.Enabled
 
         If Not _Fabricada Then
-            Dtp_Fecha_Ingreso.Value = _Cl_Mezcla.Zw_Pdp_CPT_MzDet.FechaCreacion
+            Dtp_Fecha_Ingreso.Value = _Cl_Mezcla.Zw_Pdp_CPT_MzEnc.Fiot_Otm '_Cl_Mezcla.Zw_Pdp_CPT_MzDet.FechaCreacion
         End If
 
         Txt_Receta.Text = _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Codnomen & " - " & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Descriptor
@@ -467,7 +471,7 @@ Public Class Frm_Fabricaciones
             _Observaciones = "Datos de fabricación ingresados directamente desde Bakapp en sistema de ingreso de mezclas"
             _FechaEmision = Dtp_Fecha_Ingreso.Value
 
-            Dim _Cantidad_Round As Double = Math.Round(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.CantFabricada, 5)
+            'Dim _Cantidad_Round As Double = Math.Round(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.CantFabricada, 5)
             Dim _Cantidad_Floor As Double = Math.Floor(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.CantFabricada)
 
             Dim _Cantidad As String = De_Num_a_Tx_01(_Cantidad_Floor, False, 5)
@@ -541,6 +545,9 @@ Public Class Frm_Fabricaciones
             _FechaEmision = Dtp_Fecha_Ingreso.Value
 
             Dim _Cantidad As Double = Math.Round(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.CantFabricada, 0)
+            Dim _Cantidad_Floor As Double = Math.Floor(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.CantFabricada)
+
+            _Cantidad = _Cantidad_Floor
 
             Dim _Observaciones_GDI = "Documento creado automáticamente desde Bakapp al crear GRI de ingreso de producción"
 

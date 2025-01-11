@@ -916,7 +916,7 @@ Public Class Menu
 
         Dim _Cl_ListaMayoristaMinorista As New Cl_ListaMayoristaMinorista
 
-        _Cl_ListaMayoristaMinorista.Sb_LlenarCorreosNuevosMayoristas()
+        _Cl_ListaMayoristaMinorista.Sb_LlenarCorreosNuevosMayoristas(2, FechaDelServidor().AddDays(-1))
 
         Return
 
