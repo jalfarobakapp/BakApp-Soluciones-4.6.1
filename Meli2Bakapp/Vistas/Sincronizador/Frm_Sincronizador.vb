@@ -97,7 +97,7 @@ Public Class Frm_Sincronizador
     Private Sub Btn_Configuraciones_Click(sender As Object, e As EventArgs) Handles Btn_Configuraciones.Click
         Timer_Ejecutar.Stop()
 
-        Dim Fm As New Frm_Conexiones
+        Dim Fm As New Frm_Configuracion
         Fm.ShowDialog(Me)
         Fm.Dispose()
 

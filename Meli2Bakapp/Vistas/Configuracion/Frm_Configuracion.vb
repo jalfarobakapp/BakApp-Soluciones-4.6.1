@@ -1,7 +1,7 @@
 ﻿Imports System.IO
 Imports BkSpecialPrograms
 Imports DevComponents.DotNetBar
-Public Class Frm_Conexiones
+Public Class Frm_Configuracion
 
     Private _Cl_ConfiguracionLocal As New Cl_ConfiguracionLocal
 
@@ -84,7 +84,7 @@ Public Class Frm_Conexiones
         Txt_Vendedor.Text = _Cl_ConfiguracionLocal.Configuracion.NoVendedor
 
         Txt_Responsable.Tag = _Cl_ConfiguracionLocal.Configuracion.Responsable
-        Txt_Responsable.Text = _Cl_ConfiguracionLocal.Configuracion.NoResponsable
+        Txt_Responsable.Text = _Cl_ConfiguracionLocal.Configuracion.NomResponsable
 
         Txt_RutaEtiquetas.Text = _Cl_ConfiguracionLocal.Configuracion.RutaEtiquetas
         Cmb_DocEmitir.SelectedValue = _Cl_ConfiguracionLocal.Configuracion.DocEmitir
@@ -95,6 +95,23 @@ Public Class Frm_Conexiones
 
         Txt_Concepto_D.Tag = _Cl_ConfiguracionLocal.Configuracion.Concepto_D
         Txt_Concepto_D.Text = _Cl_ConfiguracionLocal.Configuracion.Concepto_D
+
+        With _Cl_ConfiguracionLocal.Configuracion.Pago
+            Txt_ModalidadPago.Tag = .Modalidad
+            Txt_ModalidadPago.Text = .Modalidad
+            Txt_EmpresaPago.Tag = .Empresa
+            Txt_EmpresaPago.Text = .Razon
+            Txt_SucursalPago.Tag = .Sucursal
+            Txt_SucursalPago.Text = .NomSucursal
+            Txt_CajaPago.Tag = .Caja
+            Txt_CajaPago.Text = .NomCaja
+            Txt_TipoPago.Text = .TipoPago
+            Txt_FuncionarioPaga.Tag = .Funcionario
+            Txt_FuncionarioPaga.Text = .NomFuncionario
+            Txt_BancoPago.Tag = .Banco
+            Txt_BancoPago.Text = .NomBanco
+            Chk_PagarAuto.Checked = .PagarAuto
+        End With
 
     End Sub
 
@@ -292,6 +309,52 @@ Public Class Frm_Conexiones
             Return
         End If
 
+        If Chk_PagarAuto.Checked Then
+
+            If String.IsNullOrWhiteSpace(Txt_ModalidadPago.Text) Then
+                MessageBoxEx.Show(Me, "Falta la modalidad de pago", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Txt_ModalidadPago.Focus()
+                Return
+            End If
+
+            If String.IsNullOrWhiteSpace(Txt_EmpresaPago.Text) Then
+                MessageBoxEx.Show(Me, "Falta la empresa de pago", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Txt_ModalidadPago.Focus()
+                Return
+            End If
+
+            If String.IsNullOrWhiteSpace(Txt_SucursalPago.Text) Then
+                MessageBoxEx.Show(Me, "Falta la sucursal de pago", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Txt_SucursalPago.Focus()
+                Return
+            End If
+
+            If String.IsNullOrWhiteSpace(Txt_CajaPago.Text) Then
+                MessageBoxEx.Show(Me, "Falta la caja de pago", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Txt_SucursalPago.Focus()
+                Return
+            End If
+
+            If String.IsNullOrWhiteSpace(Txt_BancoPago.Text) Then
+                MessageBoxEx.Show(Me, "Falta el banco de pago", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Txt_BancoPago.Focus()
+                Return
+            End If
+
+            If String.IsNullOrWhiteSpace(Txt_FuncionarioPaga.Text) Then
+                MessageBoxEx.Show(Me, "Falta el funcionario que paga", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Txt_FuncionarioPaga.Focus()
+                Return
+            End If
+
+        End If
+
         If Not Fx_ProbarConexionRd() Then Return
         If Not Fx_ProbarConexionBaseBakapp() Then Return
 
@@ -304,12 +367,27 @@ Public Class Frm_Conexiones
             .Vendedor = Txt_Vendedor.Tag
             .NoVendedor = Txt_Vendedor.Text
             .Responsable = Txt_Responsable.Tag
-            .NoResponsable = Txt_Responsable.Text
+            .NomResponsable = Txt_Responsable.Text
             .RutaEtiquetas = Txt_RutaEtiquetas.Text
             .Facturar = Chk_Facturar.Checked
             .DocEmitir = Cmb_DocEmitir.SelectedValue
             .Concepto_R = Txt_Concepto_R.Tag
             .Concepto_D = Txt_Concepto_D.Tag
+        End With
+
+        With _Cl_ConfiguracionLocal.Configuracion.Pago
+            .Modalidad = Txt_ModalidadPago.Tag
+            .Empresa = Txt_Empresa.Tag
+            .Razon = Txt_Empresa.Text
+            .Sucursal = Txt_SucursalPago.Tag
+            .NomSucursal = Txt_SucursalPago.Text
+            .Caja = Txt_CajaPago.Tag
+            .NomCaja = Txt_CajaPago.Text
+            .Banco = Txt_BancoPago.Tag
+            .NomBanco = Txt_BancoPago.Text
+            .Funcionario = Txt_FuncionarioPaga.Tag
+            .NomFuncionario = Txt_FuncionarioPaga.Text
+            .PagarAuto = Chk_PagarAuto.Checked
         End With
 
         Dim _Mensaje As New LsValiciones.Mensajes
@@ -422,7 +500,6 @@ Public Class Frm_Conexiones
 
         End If
 
-
     End Sub
 
     Private Sub Txt_Concepto_R_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Concepto_R.ButtonCustomClick
@@ -456,4 +533,123 @@ Public Class Frm_Conexiones
         End If
 
     End Sub
+
+    Private Sub Txt_ModalidadPago_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_ModalidadPago.ButtonCustomClick
+
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        Dim _Sql_Filtro_Condicion_Extra = String.Empty
+        Dim _Tbl As DataTable
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Tabla = "CONFIEST"
+        _Filtrar.Campo = "MODALIDAD"
+        _Filtrar.Descripcion = "MODALIDAD+', Empresa: '+EMPRESA+', Sucursal:'+ESUCURSAL+', Bodega: '+EBODEGA+', Caja: :'+ECAJA"
+
+        If _Filtrar.Fx_Filtrar(_Tbl, Clas_Filtros_Random.Enum_Tabla_Fl._Otra, _Sql_Filtro_Condicion_Extra, False, False, True) Then
+
+            Txt_ModalidadPago.Tag = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
+            Txt_ModalidadPago.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo").ToString.Trim
+
+            Dim _ConsultaSql As String = "Select Ct.MODALIDAD,Ct.EMPRESA,Cp.RAZON,Ct.ESUCURSAL,Ts.NOKOSU,Ct.EBODEGA,Ct.ECAJA,Cj.NOKOCJ" & vbCrLf &
+                                         "From CONFIEST Ct" & vbCrLf &
+                                         "Left Join CONFIGP Cp On Cp.EMPRESA = Ct.EMPRESA" & vbCrLf &
+                                         "Left Join TABSU Ts On Ct.EMPRESA = Ts.EMPRESA And Ct.ESUCURSAL = Ts.KOSU" & vbCrLf &
+                                         "Left Join TABCJ Cj On Ct.EMPRESA = Cj.EMPRESA And Ct.ESUCURSAL = Cj.KOSU" & vbCrLf &
+                                         "Where MODALIDAD = '" & Txt_ModalidadPago.Tag & "'"
+            Dim _Row_Modalidad As DataRow = _Sql.Fx_Get_DataRow(_ConsultaSql)
+
+            Txt_EmpresaPago.Tag = _Row_Modalidad.Item("EMPRESA")
+            Txt_EmpresaPago.Text = _Row_Modalidad.Item("RAZON").ToString.Trim
+            Txt_SucursalPago.Tag = _Row_Modalidad.Item("ESUCURSAL")
+            Txt_SucursalPago.Text = _Row_Modalidad.Item("NOKOSU").ToString.Trim
+            Txt_CajaPago.Tag = _Row_Modalidad.Item("ECAJA")
+            Txt_CajaPago.Text = _Row_Modalidad.Item("NOKOCJ").ToString.Trim
+
+        End If
+
+    End Sub
+
+    Private Sub Txt_BancoPago_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_BancoPago.ButtonCustomClick
+
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        Dim _Sql_Filtro_Condicion_Extra = "And TIDPEN = 'TJ'"
+        Dim _Tbl As DataTable
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Tabla = "TABENDP"
+        _Filtrar.Campo = "KOENDP"
+        _Filtrar.Descripcion = "NOKOENDP"
+
+        If _Filtrar.Fx_Filtrar(_Tbl, Clas_Filtros_Random.Enum_Tabla_Fl._Otra, _Sql_Filtro_Condicion_Extra, False, False, True) Then
+
+            Txt_BancoPago.Tag = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
+            Txt_BancoPago.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion").ToString.Trim
+
+        End If
+
+    End Sub
+
+    Private Sub Txt_FuncionarioPaga_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_FuncionarioPaga.ButtonCustomClick
+
+        Dim _Sql_Filtro_Condicion_Extra = String.Empty
+        Dim _Tbl As DataTable
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(_Tbl, Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random, _Sql_Filtro_Condicion_Extra, False, False, True) Then
+
+            Txt_FuncionarioPaga.Tag = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
+            Txt_FuncionarioPaga.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion").ToString.Trim
+
+        End If
+
+    End Sub
+
+    Private Sub Txt_SucursalPago_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_SucursalPago.ButtonCustomClick
+
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        Dim _Sql_Filtro_Condicion_Extra = "And EMPRESA = '" & Txt_EmpresaPago.Tag & "'"
+        Dim _Tbl As DataTable
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(_Tbl, Clas_Filtros_Random.Enum_Tabla_Fl._Sucursales, _Sql_Filtro_Condicion_Extra, False, False, True) Then
+
+            Txt_SucursalPago.Tag = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
+            Txt_SucursalPago.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion").ToString.Trim
+
+            Txt_CajaPago.Tag = String.Empty
+            Txt_CajaPago.Text = String.Empty
+
+        End If
+
+    End Sub
+
+    Private Sub Txt_CajaPago_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_CajaPago.ButtonCustomClick
+
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        Dim _Sql_Filtro_Condicion_Extra = "And EMPRESA = '" & Txt_EmpresaPago.Tag & "' And KOSU = '" & Txt_SucursalPago.Tag & "'"
+        Dim _Tbl As DataTable
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Tabla = "TABCJ"
+        _Filtrar.Campo = "KOCJ"
+        _Filtrar.Descripcion = "NOKOCJ"
+
+        If _Filtrar.Fx_Filtrar(_Tbl, Clas_Filtros_Random.Enum_Tabla_Fl._Otra, _Sql_Filtro_Condicion_Extra, False, False, True) Then
+
+            Txt_CajaPago.Tag = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
+            Txt_CajaPago.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion").ToString.Trim
+
+        End If
+
+    End Sub
+
 End Class

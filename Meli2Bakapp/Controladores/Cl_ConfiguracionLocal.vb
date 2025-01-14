@@ -51,6 +51,7 @@ Public Class Cl_ConfiguracionLocal
 
                 Configuracion.Global_BaseBk = String.Empty
                 Configuracion.BodegaFacturacion = New BodegaFacturacion With {.Empresa = "", .Razon = "", .Kosu = "", .Nokosu = "", .Kobo = "", .Nokobo = ""}
+                Configuracion.Pago = New Pago With {.Modalidad = "", .Empresa = "", .Sucursal = "", .Caja = "", .TipoPago = "TJV", .Funcionario = "", .NomFuncionario = "", .Banco = "", .NomBanco = "", .PagarAuto = False}
 
                 json = Newtonsoft.Json.JsonConvert.SerializeObject(Configuracion)
 
@@ -164,6 +165,25 @@ Public Class Cl_ConfiguracionLocal
             If IsNothing(Configuracion.Concepto_D) OrElse String.IsNullOrEmpty(Configuracion.Concepto_D) Then
                 _Mensaje.Detalle = "Falta datos en la configuración"
                 Throw New System.Exception("Debe ingresar un concepto de Descuento")
+            End If
+
+            If IsNothing(Configuracion.Pago) Then
+                Configuracion.Pago = New Pago With {.Modalidad = "", .Empresa = "", .Sucursal = "", .Caja = "", .TipoPago = "TJV", .Funcionario = "", .NomFuncionario = "", .Banco = "", .NomBanco = "", .PagarAuto = False}
+            End If
+
+            If Configuracion.Pago.PagarAuto Then
+                If String.IsNullOrEmpty(Configuracion.Pago.Modalidad) Or
+                    String.IsNullOrEmpty(Configuracion.Pago.Empresa) Or
+                    String.IsNullOrEmpty(Configuracion.Pago.Sucursal) Or
+                    String.IsNullOrEmpty(Configuracion.Pago.Caja) Or
+                    String.IsNullOrEmpty(Configuracion.Pago.TipoPago) Or
+                    String.IsNullOrEmpty(Configuracion.Pago.Funcionario) Or
+                    String.IsNullOrEmpty(Configuracion.Pago.NomFuncionario) Or
+                    String.IsNullOrEmpty(Configuracion.Pago.Banco) Or
+                    String.IsNullOrEmpty(Configuracion.Pago.NomBanco) Then
+                    _Mensaje.Detalle = "Falta datos en la configuración"
+                    Throw New System.Exception("Debe ingresar los datos de pago automático")
+                End If
             End If
 
             _Mensaje.Detalle = "Archivo leido correctamente"
