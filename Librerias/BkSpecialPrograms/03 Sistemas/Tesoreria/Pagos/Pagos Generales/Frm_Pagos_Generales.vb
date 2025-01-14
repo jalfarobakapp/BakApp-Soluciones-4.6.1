@@ -79,6 +79,8 @@ Public Class Frm_Pagos_Generales
         End Set
     End Property
 
+    Public Property ModoLectura As Boolean
+
     Public Sub New(_Tipo_Pago As Enum_Tipo_Pago)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -133,7 +135,7 @@ Public Class Frm_Pagos_Generales
 
     End Sub
 
-    Private Sub Frm_Pagos_Generales_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+    Private Sub Frm_Pagos_Generales_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
         Sb_Traer_Entidad(_Koen, "")
 
@@ -144,9 +146,11 @@ Public Class Frm_Pagos_Generales
         AddHandler Grilla_Pagos.EditingControlShowing, AddressOf Grilla_EditingControlShowing
         AddHandler Grilla_Estado_de_Cuentas.EditingControlShowing, AddressOf Grilla_EditingControlShowing
 
+        Chk_Fecha_Asignacion.Enabled = Not ModoLectura
+
     End Sub
 
-    Sub Sb_Traer_Entidad(ByVal _Koen As String, ByVal _Suen As String)
+    Sub Sb_Traer_Entidad(_Koen As String, _Suen As String)
 
         Chk_Fecha_Asignacion.Checked = True
 
@@ -592,7 +596,7 @@ Public Class Frm_Pagos_Generales
 
     End Function
 
-    Private Sub Grilla_Encabezado_CellEndEdit(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla_Encabezado.CellEndEdit
+    Private Sub Grilla_Encabezado_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla_Encabezado.CellEndEdit
 
         Dim _Fila As DataGridViewRow = Grilla_Encabezado.Rows(0)
         Dim _Cabeza = Grilla_Encabezado.Columns(0).Name
@@ -603,7 +607,7 @@ Public Class Frm_Pagos_Generales
 
     End Sub
 
-    Function Fx_Buscar_Entidad(ByVal _Koen As String)
+    Function Fx_Buscar_Entidad(_Koen As String)
 
         Dim Fm As New Frm_BuscarEntidad_Mt(False)
 
@@ -652,7 +656,9 @@ Public Class Frm_Pagos_Generales
 
     End Function
 
-    Private Sub Grilla_Estado_de_Cuentas_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Grilla_Estado_de_Cuentas.KeyDown
+    Private Sub Grilla_Estado_de_Cuentas_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles Grilla_Estado_de_Cuentas.KeyDown
+
+        If Fx_ModoLectura() Then Return
 
         Try
 
@@ -726,7 +732,7 @@ Public Class Frm_Pagos_Generales
 
     End Sub
 
-    Private Sub Grilla_Encabezado_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Grilla_Encabezado.KeyDown
+    Private Sub Grilla_Encabezado_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles Grilla_Encabezado.KeyDown
 
         Dim _Cabeza = Grilla_Encabezado.Columns(0).Name
 
@@ -744,7 +750,7 @@ Public Class Frm_Pagos_Generales
 
     End Sub
 
-    Private Sub Grilla_Estado_de_Cuentas_CellBeginEdit(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellCancelEventArgs) Handles Grilla_Estado_de_Cuentas.CellBeginEdit
+    Private Sub Grilla_Estado_de_Cuentas_CellBeginEdit(sender As Object, e As System.Windows.Forms.DataGridViewCellCancelEventArgs) Handles Grilla_Estado_de_Cuentas.CellBeginEdit
 
         Try
 
@@ -824,7 +830,7 @@ Public Class Frm_Pagos_Generales
 
     End Sub
 
-    Private Sub Grilla_Estado_de_Cuentas_CellEndEdit(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla_Estado_de_Cuentas.CellEndEdit
+    Private Sub Grilla_Estado_de_Cuentas_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla_Estado_de_Cuentas.CellEndEdit
         Try
 
             Dim _Fila_Pago As DataGridViewRow = Grilla_Pagos.Rows(Grilla_Pagos.CurrentRow.Index)
@@ -1030,7 +1036,7 @@ Public Class Frm_Pagos_Generales
 
     End Sub
 
-    Private Sub BtnActualizarLista_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnActualizarLista.Click
+    Private Sub BtnActualizarLista_Click(sender As System.Object, e As System.EventArgs) Handles BtnActualizarLista.Click
 
         Grilla_Pagos.DataSource = Nothing
         Grilla_Estado_de_Cuentas.DataSource = Nothing
@@ -1054,7 +1060,7 @@ Public Class Frm_Pagos_Generales
 
     End Sub
 
-    Function Fx_Insertar_Linea_De_Pago(ByVal _Tbl As DataTable) As DataRow
+    Function Fx_Insertar_Linea_De_Pago(_Tbl As DataTable) As DataRow
 
         Dim NewFila As DataRow
         NewFila = _Tbl.NewRow
@@ -1206,7 +1212,7 @@ Public Class Frm_Pagos_Generales
 
     End Sub
 
-    Sub Sb_Pago_Efectivo(ByVal _Tidp As String)
+    Sub Sb_Pago_Efectivo(_Tidp As String)
 
         Dim _Fila As DataGridViewRow = Grilla_Pagos.Rows(Grilla_Pagos.CurrentRow.Index)
 
@@ -1218,7 +1224,7 @@ Public Class Frm_Pagos_Generales
 
     End Sub
 
-    Sub Sb_Pago_Cheque_o_Tarjeta(ByVal _Tidp As String)
+    Sub Sb_Pago_Cheque_o_Tarjeta(_Tidp As String)
 
         Dim _Fila As DataGridViewRow = Grilla_Pagos.Rows(Grilla_Pagos.CurrentRow.Index)
         Dim _Tipo_Pago_Fx As Frm_Pagos_Seleccionar_CH_TJ.Enum_Tipo_Pago  ' Enum_Tipo_Pago_Ch_Tj
@@ -1464,6 +1470,8 @@ Public Class Frm_Pagos_Generales
     End Function
 
     Private Sub Grilla_Pagos_KeyDown(sender As Object, e As KeyEventArgs) Handles Grilla_Pagos.KeyDown
+
+        If Fx_ModoLectura() Then Return
 
         Try
 
@@ -1745,6 +1753,8 @@ Public Class Frm_Pagos_Generales
 
     Private Sub Btn_Agregar_Pago_Click(sender As Object, e As EventArgs) Handles Btn_Agregar_Pago.Click
 
+        If Fx_ModoLectura() Then Return
+
         Dim _Insertar_Fila As Boolean
 
         If Grilla_Pagos.Rows.Count = 0 Then
@@ -1792,6 +1802,8 @@ Public Class Frm_Pagos_Generales
     End Sub
 
     Private Sub BtnGrabar_Click(sender As Object, e As EventArgs) Handles BtnGrabar.Click
+
+        If Fx_ModoLectura() Then Return
 
         Dim _Tbl_Estado_Cuenta2 As DataTable = _Tbl_Estado_Cuenta.Copy()
         Dim _Tbl_Maedpce2 As DataTable = _Tbl_Maedpce.Copy()
@@ -2481,13 +2493,13 @@ Public Class Frm_Pagos_Generales
 
     End Sub
 
-    Private Sub Grilla_EditingControlShowing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs)
+    Private Sub Grilla_EditingControlShowing(sender As System.Object, e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs)
         Dim validar As TextBox = CType(e.Control, TextBox)
         _Grilla_Activa = sender
         AddHandler validar.KeyPress, AddressOf Sb_Validar_Keypress
     End Sub
 
-    Private Sub Sb_Validar_Keypress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs)
+    Private Sub Sb_Validar_Keypress(sender As Object, e As System.Windows.Forms.KeyPressEventArgs)
 
         ' obtener indice de la columna
 
@@ -2558,5 +2570,14 @@ Public Class Frm_Pagos_Generales
         End If
 
     End Sub
+
+    Private Function Fx_ModoLectura() As Boolean
+        If ModoLectura Then
+            MessageBoxEx.Show(Me, "Documento en modo de solo lectura. La gestión no está habilitada en este módulo.", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return True
+        End If
+        Return False
+    End Function
 
 End Class

@@ -16328,6 +16328,7 @@ Public Class Frm_Formulario_Documento
                     If Not String.IsNullOrEmpty(_Error_PDF) Then
                         MessageBoxEx.Show(Me, _Error_PDF, "Error al querer grabar PDF automático", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     End If
+
                     If _Cerrar_Al_Grabar Then
                         Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito
                         _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Modalidad, _Idmaeedo)

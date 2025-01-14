@@ -1385,16 +1385,6 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
             Sb_Revisar_Fila(_Fila)
         End If
 
-        'Dim Fm As New Frm_Teneduria_CtaCteEnt(_Koen, "", _Tbl_Maedpce)
-        'Fm.Text = "CTA.CTE. ENTIDAD: " & _Koen.ToString.Trim & " - " & _Razon
-        'Fm.Solo_Ver = True
-        'If CBool(Fm.Tbl_Maedpcde_CtaCte.Rows.Count) Then
-        '    Fm.ShowDialog(Me)
-        'Else
-        '    MessageBoxEx.Show(Me, "No existen datos que mostrar", "Cta.Cte.", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        'End If
-        'Fm.Dispose()
-
     End Sub
 
     Private Sub Btn_Doc_Asociado_Ver_Click(sender As Object, e As EventArgs) Handles Btn_Doc_Asociado_Ver.Click

@@ -233,7 +233,7 @@ Public Class Clase_Crear_Documento
         Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
 
         Dim _Empresa = _Row_Encabezado.Item("EMPRESA")
-
+        Dim _Eliminar_Idmaeedo_Origen As Boolean
 
         ' Se quita esto porque se repite el proceso mas abajo por producto
 
@@ -438,18 +438,17 @@ Public Class Clase_Crear_Documento
             If Not _Cambiar_NroDocumento And _Tido = "COV" Then
 
                 Dim _Idmaeedo_Origen As Integer = _Row_Encabezado.Item("Idmaeedo_Origen")
+                Dim _NudoRandom As String
 
-                'Consulta_sql = "Delete MAEEDO" & vbCrLf &
-                '               "Where IDMAEEDO = " & _Idmaeedo_Origen & " And EMPRESA = '" & _Empresa & "' And TIDO = '" & _Tido & "' And NUDO = 'xxxxxxxxxx'"
-                'Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
-                'Comando.Transaction = myTrans
-                'Comando.ExecuteNonQuery()
+                Dim random As New Random()
+                _NudoRandom = Rellenar(random.Next(1000, 10000), 10, "x", False)
 
-                'Consulta_sql = "Update MAEEDO Set NUDO = 'xxxxxxxxxx' WHERE EMPRESA = '" & _Empresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'"
-                Consulta_sql = "Update MAEEDO Set NUDO = 'xxxxxxxxxx' WHERE IDMAEEDO = " & _Idmaeedo_Origen
+                Consulta_sql = "Update MAEEDO Set NUDO = '" & _NudoRandom & "' WHERE IDMAEEDO = " & _Idmaeedo_Origen
                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                 Comando.Transaction = myTrans
                 Comando.ExecuteNonQuery()
+
+                _Eliminar_Idmaeedo_Origen = True
 
             End If
 
@@ -2004,6 +2003,30 @@ Public Class Clase_Crear_Documento
                 End If
 
             End If
+
+            If _Eliminar_Idmaeedo_Origen Then
+
+                Dim _Idmaeedo_Origen As Integer = _Row_Encabezado.Item("Idmaeedo_Origen")
+
+                Consulta_sql = "Delete From MAEPOSLI" & vbCrLf &
+                               "Where MAEPOSLI.IDMAEDDO IN (Select IDMAEDDO From MAEDDO Where IDMAEEDO=" & _Idmaeedo_Origen & ")" & vbCrLf &
+                               "Delete From MEVENTO Where ARCHIRVE='MAEEDO' And IDRVE=" & _Idmaeedo_Origen & vbCrLf &
+                               "Delete From MAEIMLI Where IDMAEEDO =" & _Idmaeedo_Origen & vbCrLf &
+                               "Delete From MAEDTLI Where IDMAEEDO=" & _Idmaeedo_Origen & vbCrLf &
+                               "Delete From MEVENTO " &
+                               "Where ARCHIRVE='MAEDDO' And IDRVE IN (Select IDMAEDDO From MAEDDO Where IDMAEEDO=" & _Idmaeedo_Origen & ")" & vbCrLf &
+                               "Delete From MAEDDO Where IDMAEEDO=" & _Idmaeedo_Origen & vbCrLf &
+                               "Delete From MAEVEN Where IDMAEEDO=" & _Idmaeedo_Origen & vbCrLf &
+                               "Delete From MAEEDOOB Where IDMAEEDO=" & _Idmaeedo_Origen & vbCrLf &
+                               "Delete From TABPERMISO Where IDRST=" & _Idmaeedo_Origen & " And ARCHIRST='MAEEDO'" & vbCrLf &
+                               "Delete From MAEDCR Where IDMAEEDO=" & _Idmaeedo_Origen
+
+                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+            End If
+
 
             If False Then
                 Throw New System.Exception("An exception has occurred.")

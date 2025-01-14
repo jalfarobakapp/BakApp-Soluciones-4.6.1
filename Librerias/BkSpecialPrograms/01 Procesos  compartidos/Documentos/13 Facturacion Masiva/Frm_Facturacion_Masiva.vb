@@ -1,5 +1,4 @@
 ﻿Imports System.IO
-Imports BkSpecialPrograms.LsValiciones
 Imports DevComponents.DotNetBar
 
 Public Class Frm_Facturacion_Masiva
@@ -166,6 +165,15 @@ Public Class Frm_Facturacion_Masiva
             .Columns("VADP").DefaultCellStyle.Format = "$ ###,##0.##"
             .Columns("VADP").Visible = True
             .Columns("VADP").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("SALDOAFAVOR").Width = 70
+            .Columns("SALDOAFAVOR").HeaderText = "S.Favor"
+            .Columns("SALDOAFAVOR").ToolTipText = "Saldo a favor"
+            .Columns("SALDOAFAVOR").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("SALDOAFAVOR").DefaultCellStyle.Format = "$ ###,##0.##"
+            .Columns("SALDOAFAVOR").Visible = True
+            .Columns("SALDOAFAVOR").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("OBDO").HeaderText = "Observaciones"
@@ -636,8 +644,6 @@ Public Class Frm_Facturacion_Masiva
 
     Private Sub Grilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
 
-        Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
-
         Sb_Ver_Documento()
 
     End Sub
@@ -663,6 +669,10 @@ Public Class Frm_Facturacion_Masiva
                     Return
                 End If
 
+            End If
+
+            If _Cabeza = "SALDOAFAVOR" Then
+                Call Btn_Ver_Cta_Cte_Click(Nothing, Nothing)
             End If
 
             If _Cabeza = "NUDO" Then
@@ -1130,11 +1140,25 @@ Public Class Frm_Facturacion_Masiva
         Call Btn_Buscar_Click(Nothing, Nothing)
     End Sub
 
-    Private Sub Btn_Ver_documento_Click(sender As Object, e As EventArgs) Handles Btn_Ver_documento.Click
+    Private Sub Btn_Ver_Cta_Cte_Click(sender As Object, e As EventArgs) Handles Btn_Ver_Cta_Cte.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+
+        Dim _Koen = _Fila.Cells("ENDO").Value
+        Dim _SALDOAFAVOR As Double = _Fila.Cells("SALDOAFAVOR").Value
+
+        If Not CBool(_SALDOAFAVOR) Then
+            MessageBoxEx.Show(Me, "No hay saldo a favor o no hay entidad seleccionada", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim Fm As New Frm_Pagos_Generales(Frm_Pagos_Generales.Enum_Tipo_Pago.Clientes)
+        Fm.Koen = _Koen
+        Fm.BtnActualizarLista.Visible = False
+        Fm.ModoLectura = True
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 
-    Private Sub Btn_Ver_Anotaciones_Documento_Click(sender As Object, e As EventArgs) Handles Btn_Ver_Anotaciones_Documento.Click
-
-    End Sub
 End Class
