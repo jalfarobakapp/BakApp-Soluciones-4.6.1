@@ -6,6 +6,8 @@ Imports System.Drawing.Printing
 Imports Microsoft.Office.Interop
 Imports System.Net
 Imports System.Text.RegularExpressions
+Imports System.IO
+Imports System.Text
 
 
 
@@ -2661,6 +2663,18 @@ Error_Numero:
 
     End Function
 
+    Public Function Fx_SanitizaNombreArchivo(_NombreArchivo As String) As String
+        Dim invalidChars As Char() = Path.GetInvalidFileNameChars()
+        Dim sanitizedFileName As New StringBuilder()
+
+        For Each ch As Char In _NombreArchivo
+            If Not invalidChars.Contains(ch) Then
+                sanitizedFileName.Append(ch)
+            End If
+        Next
+
+        Return sanitizedFileName.ToString()
+    End Function
 
 End Module
 

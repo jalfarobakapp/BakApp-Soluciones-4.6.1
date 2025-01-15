@@ -1159,7 +1159,7 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
                                     Dim _Idmaeedo As Integer = _Fila.Cells("IDRSD").Value
                                     Dim _Vadp As Double = _Fila.Cells("VADP").Value
 
-                                    _Cl_Pagar.Fx_Crear_Pago_MAEDPCD(Me, _Idmaeedo, _Idmaedpce, _Vadp)
+                                    _Cl_Pagar.Fx_Crear_Pago_MAEDPCD(_Idmaeedo, _Idmaedpce, _Vadp)
 
                                 End If
 

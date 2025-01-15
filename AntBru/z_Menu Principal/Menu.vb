@@ -1064,7 +1064,66 @@ Public Class Menu
 
     End Sub
 
-    Private Sub Btn_NvvPreVenta_Click(sender As Object, e As EventArgs) Handles Btn_NvvPreVenta.Click
+    Private Sub Btn_PagarDocumento_Click(sender As Object, e As EventArgs) Handles Btn_PagarDocumento.Click
+
+        Dim _Idmaeedo As Integer = 1181836
+
+        Dim _Cl_Pagar As New Clas_Pagar
+        Dim _Maedpce As MAEDPCE
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        Dim _Row_Maeedo As DataRow = _Sql.Fx_Get_DataRow("Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo)
+
+        _Maedpce = New MAEDPCE With {
+        .TIDP = "TJV",
+        .EMPRESA = ModEmpresa,
+        .ENDP = _Row_Maeedo.Item("ENDO"),
+        .EMDP = "904",
+        .SUEMDP = "",
+        .CUDP = "2020",
+        .NUCUDP = "123",
+        .FEEMDP = FechaDelServidor(),
+        .FEVEDP = FechaDelServidor(),
+        .MODP = "$",
+        .TIMODP = "N",
+        .TAMODP = 1,
+        .VADP = _Row_Maeedo.Item("VABRDO"),
+        .VAASDP = _Row_Maeedo.Item("VABRDO"),
+        .VAVUDP = 0,
+        .ESASDP = "A",
+        .ESPGDP = "P",
+        .SUREDP = "CM",
+        .CJREDP = "CM",
+        .KOFUDP = "016",
+        .REFANTI = "2000006746848587",
+        .KOTU = 1,
+        .VAABDP = 0,
+        .CUOTAS = 1,
+        .ARCHIRSD = "",
+        .IDRSD = 0,
+        .KOTNDP = RutEmpresa,
+        .SUTNDP = "CM"
+        }
+
+        Dim _Fecha_Asignacion_Pago As Date = FechaDelServidor()
+        Dim _Ls_Maedpce As New List(Of MAEDPCE)
+
+        _Ls_Maedpce.Add(_Maedpce)
+
+        _Mensaje = _Cl_Pagar.Fx_Pagar_Documento(_Idmaeedo, _Ls_Maedpce, _Fecha_Asignacion_Pago)
+        '_Mensaje = _Cl_Pagar.Fx_Crear_Pago_Anticipo(_Maedpce)
+
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+
+        If Not _Mensaje.EsCorrecto Then
+            Return
+        End If
+
+        'Dim _Idmaeedo As Integer
+        'Dim _Vadp As Double
+
+        '_Cl_Pagar.Fx_Crear_Pago_MAEDPCD(_Idmaeedo, _Idmaedpce, _Vadp)
 
     End Sub
+
 End Class

@@ -449,6 +449,8 @@ Public Class Frm_Recibir_Correos_DTE
 
                                         Dim _Nombre_Archivo As String = numero_(_Contador + 1, 5) & "_" & .FileName
 
+                                        _Nombre_Archivo = Fx_SanitizaNombreArchivo(_Nombre_Archivo)
+
                                         _Nombre_Archivo = Replace(_Nombre_Archivo, "/", "_")
                                         .Save(Txt_Directorio.Text & "\" & _Nombre_Archivo)
 
