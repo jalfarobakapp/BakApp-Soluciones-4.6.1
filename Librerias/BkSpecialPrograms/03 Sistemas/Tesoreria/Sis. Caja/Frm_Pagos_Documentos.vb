@@ -1489,10 +1489,30 @@ Public Class Frm_Pagos_Documentos
 
         Dim _Idmaeedo As Integer = _Tbl_Maeedo.Rows(0).Item("IDMAEEDO")
         Dim _Tido As String = _Tbl_Maeedo.Rows(0).Item("TIDO")
+        Dim _Nudo As String = _Tbl_Maeedo.Rows(0).Item("NUDO")
 
         Dim _Permiso_Pagar As Boolean
 
         If CBool(_Idmaeedo) Or Desde_Documento Then
+
+            If _Tido <> "NCV" Then
+
+                Dim _Vaabdo_Ori As Double = _Tbl_Maeedo.Rows(0).Item("VAABDO")
+                Dim _Vaabdo As Double = _Sql.Fx_Trae_Dato("MAEEDO", "VAABDO", "IDMAEEDO = " & _Idmaeedo, True)
+
+                If _Vaabdo_Ori <> _Vaabdo Then
+
+                    Dim _Msj = "El abono no coincide con los vencimientos: " & _Tido & "-" & _Nudo & ", monto: " & _Vaabdo & vbCrLf & vbCrLf &
+                               "Para evitar duplicidades en los pagos, se limpiará el formulario."
+                    MessageBoxEx.Show(Me, _Msj, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                    Call Btn_Limpiar_Click(Nothing, Nothing)
+                    Return
+
+                End If
+
+            End If
+
 
             Dim _Nudonodefi As Boolean = _Tbl_Maeedo.Rows(0).Item("NUDONODEFI")
 

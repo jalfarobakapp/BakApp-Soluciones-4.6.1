@@ -17515,12 +17515,13 @@ Public Class Frm_Formulario_Documento
 
         End If
 
+        If Not String.IsNullOrWhiteSpace(_SubTido) Then
+            _TblEncabezado.Rows(0).Item("SubTido") = _SubTido
+        End If
 
         Dim _New_Doc As New Clase_Crear_Documento()
 
         Dim _Origen_Modificado_Intertanto As Boolean
-
-        'Dim _Mensaje As New LsValiciones.Mensajes
 
         If _TipoGrab = _Tipo_de_Grabacion.Nuevo_documento Then
 
@@ -18528,7 +18529,9 @@ Public Class Frm_Formulario_Documento
                                                          _No_Aplica_Redondeo As Boolean,
                                                          _Mantener_Bodega_Origen As Boolean,
                                                          Optional _Conservar_Nudo As Boolean = False,
-                                                         Optional _Bodega_Recepcion As String = "")
+                                                         Optional _Bodega_Recepcion As String = "",
+                                                         Optional _Sucursal_Recepcion As String = "",
+                                                         Optional _Usar_SucBodRecepcion As Boolean = False)
 
         Try
             Me.Enabled = False
@@ -19322,6 +19325,13 @@ Public Class Frm_Formulario_Documento
 
                     _Empresa = ModEmpresa
                     _Sucursal = ModSucursal
+                    _Bodega = _Bodega_Recepcion
+
+                End If
+
+                If _Usar_SucBodRecepcion Then
+
+                    _Sucursal = _Sucursal_Recepcion
                     _Bodega = _Bodega_Recepcion
 
                 End If
@@ -28351,9 +28361,9 @@ Public Class Frm_Formulario_Documento
             Consulta_sql = "Select * From TABCT Where KOCT = '" & _Koct & "'"
             Dim _RowConcepto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-            If IsNothing(_Row_ConfPuntos) Then
+            If IsNothing(_RowConcepto) Then
                 _Mensaje.Detalle = "Validación"
-                Throw New ArgumentException("No existe el concepto " & _Koct)
+                Throw New ArgumentException("No existe el concepto " & _Koct & vbCrLf & "Informe de esto al administrador del sistema")
             End If
 
             Dim _DescuentoValor As Double = (_Puntos / _Row_ConfPuntos.Item("RCadaPuntos")) * _Row_ConfPuntos.Item("REquivPesos")

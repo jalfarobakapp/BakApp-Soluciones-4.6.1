@@ -50,6 +50,14 @@ Public Class Frm_ConfPuntosVta
 
     Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
 
+        If Chk_Activo.Checked Then
+            If String.IsNullOrWhiteSpace(Txt_Concepto.Text) Then
+                MessageBoxEx.Show(Me, "Falta el concepto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Txt_Concepto.Focus()
+                Return
+            End If
+        End If
+
         With _Cl_Puntos.Zw_PtsVta_Configuracion
 
             .GCadaPesos = Input_GCadaPesos.Value

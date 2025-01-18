@@ -1805,6 +1805,41 @@ Public Class Frm_Pagos_Generales
 
         If Fx_ModoLectura() Then Return
 
+
+        For Each _Doc As DataRow In _Tbl_Estado_Cuenta.Rows
+
+            Dim _Id_Pago As Integer = _Doc.Item("ID_PAGO")
+
+            If CBool(_Id_Pago) Then
+
+                Dim _Idrst As Integer = _Doc.Item("IDRST")
+                Dim _Dp As String = _Doc.Item("DP")
+                Dim _Nudp As String = _Doc.Item("NUDP")
+                Dim _Archirst As String = _Doc.Item("ARCHIRST")
+                Dim _Vaabdp As Double = _Doc.Item("VAABDP")
+
+                If _Archirst = "MAEEDO" Then
+
+                    Dim _Vaabdo As Double = _Sql.Fx_Trae_Dato("MAEEDO", "VAABDO", "IDMAEEDO = " & _Idrst, True)
+
+                    If _Vaabdp <> _Vaabdo Then
+                        Dim _Msj = "El abono no coincide con los vencimientos: " & _Dp & "-" & _Nudp & ", monto: " & _Vaabdo & vbCrLf & vbCrLf &
+                                   "Para evitar duplicidades en los pagos, se limpiará el formulario."
+                        MessageBoxEx.Show(Me, _Msj, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                        Call BtnActualizarLista_Click(Nothing, Nothing)
+                        Return
+
+                    End If
+
+                End If
+
+            End If
+
+        Next
+
+
+
         Dim _Tbl_Estado_Cuenta2 As DataTable = _Tbl_Estado_Cuenta.Copy()
         Dim _Tbl_Maedpce2 As DataTable = _Tbl_Maedpce.Copy()
 
