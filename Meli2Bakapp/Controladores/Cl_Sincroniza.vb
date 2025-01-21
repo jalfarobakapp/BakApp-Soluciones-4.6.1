@@ -874,4 +874,71 @@ Public Class Cl_Sincroniza
 
     End Function
 
+    Sub Sb_ActualizarIDMAEEDO_NVV_DesdeBakappHaciaMLIBRE()
+
+        _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
+        _SqlMeli = New Class_SQL(Cadena_ConexionSQL_Server_Meli)
+
+        Consulta_sql = "SELECT * From PEDIDOS Where IDMAEEDO = 0 And REVBAKAPP = 1"
+        Dim _Tbl_Pedidos As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
+
+        If _Tbl_Pedidos.Rows.Count = 0 Then
+            Return
+        End If
+
+        For Each _Fila As DataRow In _Tbl_Pedidos.Rows
+
+            Dim _ID As Integer = _Fila.Item("ID")
+            Dim _ID_MELI As String = _Fila.Item("ID_MELI")
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_NVVAuto Where NudoOCC_Ori = '" & _ID_MELI & "' And Idmaeedo_NVV <> 0"
+            Dim _Row As DataRow = _SqlRandom.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_Row) Then
+                Continue For
+            End If
+
+            Dim _IDMAEEDO As Integer = _Row.Item("Idmaeedo_NVV")
+
+            Consulta_sql = "Update PEDIDOS Set IDMAEEDO = " & _IDMAEEDO & ",ESTADO = 1 Where ID_MELI = " & _ID_MELI
+            _SqlMeli.Ej_consulta_IDU(Consulta_sql)
+
+        Next
+
+    End Sub
+
+    Sub Sb_ActualizarIDMAEEDO_FCV_DesdeBakappHaciaMLIBRE()
+
+        _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
+        _SqlMeli = New Class_SQL(Cadena_ConexionSQL_Server_Meli)
+
+        Consulta_sql = "SELECT * From PEDIDOS Where IDMAEEDO <> 0 And ESTADO = 1"
+        Dim _Tbl_Pedidos As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
+
+        If _Tbl_Pedidos.Rows.Count = 0 Then
+            Return
+        End If
+
+        For Each _Fila As DataRow In _Tbl_Pedidos.Rows
+
+            Dim _ID As Integer = _Fila.Item("ID")
+            Dim _ID_MELI As String = _Fila.Item("ID_MELI")
+            Dim _IDMAEEDO_NVV As String = _Fila.Item("IDMAEEDO")
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_FacAuto Where Idmaeedo_NVV = '" & _IDMAEEDO_NVV & "' And Facturado = 1"
+            Dim _Row As DataRow = _SqlRandom.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_Row) Then
+                Continue For
+            End If
+
+            Dim _IDMAEEDO_F As Integer = _Row.Item("Idmaeedo_FCV")
+
+            Consulta_sql = "Update PEDIDOS Set IDMAEEDO_F = " & _IDMAEEDO_F & ",ESTADO = 2 Where ID_MELI = " & _ID_MELI
+            _SqlMeli.Ej_consulta_IDU(Consulta_sql)
+
+        Next
+
+    End Sub
+
 End Class

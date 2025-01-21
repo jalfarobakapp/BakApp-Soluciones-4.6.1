@@ -180,7 +180,7 @@ Partial Class Frm_SeleccionarBodega
     Friend WithEvents Label6 As System.Windows.Forms.Label
     Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
     Friend WithEvents BtnAceptar As DevComponents.DotNetBar.ButtonItem
-    Private WithEvents Cmbbodega As DevComponents.DotNetBar.Controls.ComboBoxEx
-    Private WithEvents Cmbsucursal As DevComponents.DotNetBar.Controls.ComboBoxEx
-    Private WithEvents Cmbempresa As DevComponents.DotNetBar.Controls.ComboBoxEx
+    Public WithEvents Cmbbodega As DevComponents.DotNetBar.Controls.ComboBoxEx
+    Public WithEvents Cmbsucursal As DevComponents.DotNetBar.Controls.ComboBoxEx
+    Public WithEvents Cmbempresa As DevComponents.DotNetBar.Controls.ComboBoxEx
 End Class

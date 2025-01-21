@@ -1817,8 +1817,16 @@ Public Class Frm_Pagos_Generales
                 Dim _Nudp As String = _Doc.Item("NUDP")
                 Dim _Archirst As String = _Doc.Item("ARCHIRST")
                 Dim _Vaabdp As Double = _Doc.Item("VAABDP")
+                Dim _Orden As Integer
+                Dim _EsPadre As Boolean = True
 
-                If _Archirst = "MAEEDO" Then
+                Try
+                    _Orden = _Doc.Item("Orden")
+                Catch ex As Exception
+                    _EsPadre = False
+                End Try
+
+                If _Archirst = "MAEEDO" And _EsPadre Then
 
                     Dim _Vaabdo As Double = _Sql.Fx_Trae_Dato("MAEEDO", "VAABDO", "IDMAEEDO = " & _Idrst, True)
 

@@ -105,11 +105,21 @@ Public Class Frm_Sincronizador
     End Sub
 
     Private Sub Timer_Ejecutar_Tick(sender As Object, e As EventArgs) Handles Timer_Ejecutar.Tick
+
         Timer_Ejecutar.Stop()
-        _Cl_Sincroniza.Sb_Revisar_Kit(Txt_Log, Dtp_FechaRevision.Value, 10)
-        _Cl_Sincroniza.Sb_Revisar_Pedidos(Txt_Log, Dtp_FechaRevision.Value, 10)
-        _Cl_Sincroniza.Sb_Adjuntar_Etiquetas(Txt_Log, Dtp_FechaRevision.Value, 10)
+
+        With _Cl_Sincroniza
+
+            .Sb_ActualizarIDMAEEDO_NVV_DesdeBakappHaciaMLIBRE()
+            .Sb_ActualizarIDMAEEDO_FCV_DesdeBakappHaciaMLIBRE()
+            .Sb_Revisar_Kit(Txt_Log, Dtp_FechaRevision.Value, 10)
+            .Sb_Revisar_Pedidos(Txt_Log, Dtp_FechaRevision.Value, 10)
+            .Sb_Adjuntar_Etiquetas(Txt_Log, Dtp_FechaRevision.Value, 10)
+
+        End With
+
         Timer_Ejecutar.Start()
+
     End Sub
 
     Private Sub Timer_Limpiar_Tick(sender As Object, e As EventArgs) Handles Timer_Limpiar.Tick

@@ -1125,6 +1125,12 @@ Public Class Menu
 
     Private Sub Btn_GDI2GRI_Click(sender As Object, e As EventArgs) Handles Btn_GDI2GRI.Click
 
+        Dim Fm As New Frm_GDI2GRI
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+        Return
+
         Dim _Tido As String = "GDI"
         Dim _Modalidad As String = Modalidad
         Dim _Fecha_Emision As Date = FechaDelServidor()

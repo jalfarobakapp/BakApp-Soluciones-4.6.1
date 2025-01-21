@@ -16418,16 +16418,10 @@ Public Class Frm_Formulario_Documento
                             Dim _Tido = _Row_NeDocEnc.Item("TIDO")
                             Dim _Nudo = _Row_NeDocEnc.Item("NUDO")
                             Dim _SubTido = _Row_NeDocEnc.Item("SUBTIDO")
-                            If Not _Post_Venta Or _Grabar_Y_Pagar_Vale Then
-                                Dim _TidoNudoSubTido As String
-                                If String.IsNullOrWhiteSpace(_SubTido) Then
-                                    _TidoNudoSubTido = _Tido & " - " & _Nudo
-                                Else
-                                    _TidoNudoSubTido = _Tido & " - " & _Nudo & " (" & _SubTido & ")"
-                                End If
 
-                                MessageBoxEx.Show(Me, _TidoNudoSubTido & vbCrLf & vbCrLf &
-                                    "Grabada correctamente", "Grabar documento", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                            If Not _Post_Venta Or _Grabar_Y_Pagar_Vale Then
+
+                                Dim _TidoNudoSubTido As String
 
                                 If String.IsNullOrWhiteSpace(_SubTido) Then
                                     _TidoNudoSubTido = _Tido & " - " & _Nudo
