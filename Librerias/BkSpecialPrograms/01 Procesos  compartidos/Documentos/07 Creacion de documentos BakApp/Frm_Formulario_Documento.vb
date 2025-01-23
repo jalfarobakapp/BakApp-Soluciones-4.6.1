@@ -8376,7 +8376,13 @@ Public Class Frm_Formulario_Documento
                         Dim _Kogru As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & FUNCIONARIO & "'")
                         Dim _TienePermiso As Boolean
 
-                        Consulta_sql = "Select d.*,NOKOGRU From TABFUGD d Left Join TABFUGE e On e.KOGRU = d.KOGRU Where d.KOGRU = '" & _Kogru & "'"
+                        If Not _Kogru.Contains("'") Then
+                            _Kogru = "'" & _Kogru & "'"
+                        End If
+
+                        Consulta_sql = "Select d.*,NOKOGRU From TABFUGD d Left Join TABFUGE e On e.KOGRU = d.KOGRU Where d.KOGRU In (" & _Kogru & ")"
+                        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
                         Dim _Tbl_Grupo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                         For Each _Fila As DataRow In _Tbl_Grupo.Rows
