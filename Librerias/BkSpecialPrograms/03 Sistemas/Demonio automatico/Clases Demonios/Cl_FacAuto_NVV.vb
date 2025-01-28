@@ -22,6 +22,7 @@
     Public Property CantDocFacturanXProceso As Integer
     Public Property FcOrden_Llegada As Boolean
     Public Property FcOrden_ItemMenosMas As Boolean
+    Public Property CodFunFactura As String
     Public Property Nombre_Equipo As String
     Public Property Log_Registro As String
     Public Property Procesando As Boolean
@@ -76,15 +77,20 @@
         Dim _Esucursal As String = _Sql.Fx_Trae_Dato("CONFIEST", "ESUCURSAL", "MODALIDAD = '" & Modalidad_Fac & "'",, False)
 
         Dim _CondicionSuc = String.Empty
+        Dim _CondicionFunFac = "CodFuncionario_Factura <> ''"
 
         If SoloDeSucModalidad Then
-            _CondicionSuc = "And Empresa = '" & _Empresa & "' And Sucursal = '" & _Esucursal & "'"
+            _CondicionSuc = "And ((Empresa = '" & _Empresa & "' And Sucursal = '" & _Esucursal & "') Or (ModalidadFactura = '" & Modalidad_Fac & "'))" & vbCrLf
+        End If
+
+        If Not String.IsNullOrWhiteSpace(CodFunFactura) Then
+            _CondicionFunFac = "And CodFuncionario_Factura = '" & CodFunFactura & "'"
         End If
 
         Consulta_Sql = "Select TOP 20 Idmaeedo,Id,DocEmitir,Fecha_Facturar,CodFuncionario_Factura" & vbCrLf &
                        "Into #Paso" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Stmp_Enc" & vbCrLf &
-                       "Where Facturar = 1 And Estado = 'COMPL' And EnvFacAutoBk = 0 And CodFuncionario_Factura <> ''" & _CondicionSuc & vbCrLf &
+                       "Where Facturar = 1 And Estado = 'COMPL' And EnvFacAutoBk = 0" & _CondicionSuc & _CondicionFunFac &
                        vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set EnvFacAutoBk = 1" & vbCrLf &
                        "Where Idmaeedo In (Select Idmaeedo From #Paso)" & vbCrLf &

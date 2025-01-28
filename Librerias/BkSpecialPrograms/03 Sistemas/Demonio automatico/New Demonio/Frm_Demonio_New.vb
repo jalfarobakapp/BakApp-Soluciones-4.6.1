@@ -404,6 +404,8 @@ Public Class Frm_Demonio_New
                     Dim _FcOrden_Llegada As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Rdb_FcOrden_Llegada' And NombreEquipo = '" & _NombreEquipo & "'",,, "True")
                     Dim _FcOrden_ItemMenosMas As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Rdb_FcOrden_ItemMenosMas' And NombreEquipo = '" & _NombreEquipo & "'",,, "False")
 
+                    Dim _CodFunFactura As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Txt_FacAuto_CodFunFactura' And NombreEquipo = '" & _NombreEquipo & "'")
+
                     Boolean.TryParse(_FA_1Dia, _Cl_FacturacionAuto.FA_1Dia)
                     Boolean.TryParse(_FA_1Semana, _Cl_FacturacionAuto.FA_1Semana)
                     Boolean.TryParse(_FA_1Mes, _Cl_FacturacionAuto.FA_1Mes)
@@ -417,6 +419,7 @@ Public Class Frm_Demonio_New
 
                     _Cl_FacturacionAuto.CantDocFacturanXProceso = _CantDocFacturanXProceso
                     _Cl_FacturacionAuto.Modalidad_Fac = _Modalidad_Fac
+                    _Cl_FacturacionAuto.CodFunFactura = _CodFunFactura
 
                     _Descripcion = _CI_Programacion.Resumen ' "Facturación de notas de venta para clientes con condición automática. " & _CI_Programacion.Resumen
                     _IndexImagen = 8

@@ -23,16 +23,16 @@ Partial Class Frm_Demonio_Configuraciones
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Demonio_Configuraciones))
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.SuperTab = New DevComponents.DotNetBar.SuperTabControl()
         Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.LabelX41 = New DevComponents.DotNetBar.LabelX()
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Rdb_FcOrden_ItemMenosMas = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_FcOrden_Llegada = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_FcOrden_ItemMenosMas = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Input_CantDocFacturanXProceso = New DevComponents.Editors.IntegerInput()
         Me.LabelX40 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX23 = New DevComponents.DotNetBar.LabelX()
@@ -214,6 +214,8 @@ Partial Class Frm_Demonio_Configuraciones
         Me.Btn_ConfProgramacion = New DevComponents.DotNetBar.ButtonX()
         Me.Txt_Resumen = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Chk_Ejecutar_Automaticamente = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Txt_FacAuto_CodFunFactura = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX43 = New DevComponents.DotNetBar.LabelX()
         CType(Me.SuperTab, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTab.SuspendLayout()
         Me.SuperTabControlPanel2.SuspendLayout()
@@ -278,22 +280,22 @@ Partial Class Frm_Demonio_Configuraciones
         Me.SuperTab.ControlBox.Name = ""
         Me.SuperTab.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTab.ControlBox.MenuBox, Me.SuperTab.ControlBox.CloseBox})
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel2)
-        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel5)
-        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel4)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel3)
-        Me.SuperTab.Controls.Add(Me.Panel_01)
-        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel13)
-        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel14)
-        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel1)
+        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel4)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel17)
+        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel1)
+        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel14)
+        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel13)
+        Me.SuperTab.Controls.Add(Me.Panel_01)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel16)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel11)
         Me.SuperTab.Controls.Add(Me.Panel_02)
+        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel10)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel8)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel7)
-        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel15)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel9)
-        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel10)
+        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel15)
+        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel5)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel12)
         Me.SuperTab.ForeColor = System.Drawing.Color.Black
         Me.SuperTab.Location = New System.Drawing.Point(12, 12)
@@ -312,6 +314,8 @@ Partial Class Frm_Demonio_Configuraciones
         '
         'SuperTabControlPanel2
         '
+        Me.SuperTabControlPanel2.Controls.Add(Me.LabelX43)
+        Me.SuperTabControlPanel2.Controls.Add(Me.Txt_FacAuto_CodFunFactura)
         Me.SuperTabControlPanel2.Controls.Add(Me.LabelX41)
         Me.SuperTabControlPanel2.Controls.Add(Me.TableLayoutPanel3)
         Me.SuperTabControlPanel2.Controls.Add(Me.Input_CantDocFacturanXProceso)
@@ -341,7 +345,7 @@ Partial Class Frm_Demonio_Configuraciones
         Me.LabelX41.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX41.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelX41.ForeColor = System.Drawing.Color.Black
-        Me.LabelX41.Location = New System.Drawing.Point(15, 333)
+        Me.LabelX41.Location = New System.Drawing.Point(16, 374)
         Me.LabelX41.Name = "LabelX41"
         Me.LabelX41.Size = New System.Drawing.Size(227, 19)
         Me.LabelX41.TabIndex = 193
@@ -355,33 +359,13 @@ Partial Class Frm_Demonio_Configuraciones
         Me.TableLayoutPanel3.Controls.Add(Me.Rdb_FcOrden_Llegada, 0, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.Rdb_FcOrden_ItemMenosMas, 0, 1)
         Me.TableLayoutPanel3.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel3.Location = New System.Drawing.Point(15, 352)
+        Me.TableLayoutPanel3.Location = New System.Drawing.Point(16, 393)
         Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
-        Me.TableLayoutPanel3.RowCount = 3
+        Me.TableLayoutPanel3.RowCount = 2
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
-        Me.TableLayoutPanel3.Size = New System.Drawing.Size(382, 66)
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(382, 42)
         Me.TableLayoutPanel3.TabIndex = 192
-        '
-        'Rdb_FcOrden_ItemMenosMas
-        '
-        Me.Rdb_FcOrden_ItemMenosMas.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Rdb_FcOrden_ItemMenosMas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_FcOrden_ItemMenosMas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_FcOrden_ItemMenosMas.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Rdb_FcOrden_ItemMenosMas.CheckBoxImageUnChecked = CType(resources.GetObject("Rdb_FcOrden_ItemMenosMas.CheckBoxImageUnChecked"), System.Drawing.Image)
-        Me.Rdb_FcOrden_ItemMenosMas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_FcOrden_ItemMenosMas.FocusCuesEnabled = False
-        Me.Rdb_FcOrden_ItemMenosMas.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_FcOrden_ItemMenosMas.Location = New System.Drawing.Point(3, 25)
-        Me.Rdb_FcOrden_ItemMenosMas.Name = "Rdb_FcOrden_ItemMenosMas"
-        Me.Rdb_FcOrden_ItemMenosMas.Size = New System.Drawing.Size(376, 15)
-        Me.Rdb_FcOrden_ItemMenosMas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_FcOrden_ItemMenosMas.TabIndex = 143
-        Me.Rdb_FcOrden_ItemMenosMas.Text = "Ordenar por cantidad de Item, de menos a mas"
         '
         'Rdb_FcOrden_Llegada
         '
@@ -400,10 +384,29 @@ Partial Class Frm_Demonio_Configuraciones
         Me.Rdb_FcOrden_Llegada.ForeColor = System.Drawing.Color.Black
         Me.Rdb_FcOrden_Llegada.Location = New System.Drawing.Point(3, 3)
         Me.Rdb_FcOrden_Llegada.Name = "Rdb_FcOrden_Llegada"
-        Me.Rdb_FcOrden_Llegada.Size = New System.Drawing.Size(224, 16)
+        Me.Rdb_FcOrden_Llegada.Size = New System.Drawing.Size(224, 15)
         Me.Rdb_FcOrden_Llegada.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_FcOrden_Llegada.TabIndex = 141
         Me.Rdb_FcOrden_Llegada.Text = "Orden de llegada de NVV"
+        '
+        'Rdb_FcOrden_ItemMenosMas
+        '
+        Me.Rdb_FcOrden_ItemMenosMas.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_FcOrden_ItemMenosMas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_FcOrden_ItemMenosMas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_FcOrden_ItemMenosMas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_FcOrden_ItemMenosMas.CheckBoxImageUnChecked = CType(resources.GetObject("Rdb_FcOrden_ItemMenosMas.CheckBoxImageUnChecked"), System.Drawing.Image)
+        Me.Rdb_FcOrden_ItemMenosMas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_FcOrden_ItemMenosMas.FocusCuesEnabled = False
+        Me.Rdb_FcOrden_ItemMenosMas.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_FcOrden_ItemMenosMas.Location = New System.Drawing.Point(3, 24)
+        Me.Rdb_FcOrden_ItemMenosMas.Name = "Rdb_FcOrden_ItemMenosMas"
+        Me.Rdb_FcOrden_ItemMenosMas.Size = New System.Drawing.Size(376, 15)
+        Me.Rdb_FcOrden_ItemMenosMas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_FcOrden_ItemMenosMas.TabIndex = 143
+        Me.Rdb_FcOrden_ItemMenosMas.Text = "Ordenar por cantidad de Item, de menos a mas"
         '
         'Input_CantDocFacturanXProceso
         '
@@ -413,7 +416,7 @@ Partial Class Frm_Demonio_Configuraciones
         Me.Input_CantDocFacturanXProceso.BackgroundStyle.Class = "DateTimeInputBackground"
         Me.Input_CantDocFacturanXProceso.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_CantDocFacturanXProceso.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
-        Me.Input_CantDocFacturanXProceso.Location = New System.Drawing.Point(307, 305)
+        Me.Input_CantDocFacturanXProceso.Location = New System.Drawing.Point(308, 346)
         Me.Input_CantDocFacturanXProceso.MaxValue = 20
         Me.Input_CantDocFacturanXProceso.MinValue = 1
         Me.Input_CantDocFacturanXProceso.Name = "Input_CantDocFacturanXProceso"
@@ -430,7 +433,7 @@ Partial Class Frm_Demonio_Configuraciones
         '
         Me.LabelX40.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX40.ForeColor = System.Drawing.Color.Black
-        Me.LabelX40.Location = New System.Drawing.Point(14, 308)
+        Me.LabelX40.Location = New System.Drawing.Point(15, 349)
         Me.LabelX40.Name = "LabelX40"
         Me.LabelX40.Size = New System.Drawing.Size(287, 19)
         Me.LabelX40.TabIndex = 190
@@ -1419,37 +1422,37 @@ Partial Class Frm_Demonio_Configuraciones
         Me.Grilla_AsistenteCompras.AllowUserToAddRows = False
         Me.Grilla_AsistenteCompras.AllowUserToDeleteRows = False
         Me.Grilla_AsistenteCompras.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_AsistenteCompras.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_AsistenteCompras.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.Grilla_AsistenteCompras.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_AsistenteCompras.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_AsistenteCompras.DefaultCellStyle = DataGridViewCellStyle2
         Me.Grilla_AsistenteCompras.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla_AsistenteCompras.EnableHeadersVisualStyles = False
         Me.Grilla_AsistenteCompras.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla_AsistenteCompras.Location = New System.Drawing.Point(0, 0)
         Me.Grilla_AsistenteCompras.Name = "Grilla_AsistenteCompras"
         Me.Grilla_AsistenteCompras.ReadOnly = True
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_AsistenteCompras.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_AsistenteCompras.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla_AsistenteCompras.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.Grilla_AsistenteCompras.Size = New System.Drawing.Size(394, 337)
         Me.Grilla_AsistenteCompras.TabIndex = 85
@@ -2031,9 +2034,9 @@ Partial Class Frm_Demonio_Configuraciones
         Me.SuperTabControlPanel17.Controls.Add(Me.Chk_NVVAuto)
         Me.SuperTabControlPanel17.Controls.Add(Me.Line18)
         Me.SuperTabControlPanel17.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel17.Location = New System.Drawing.Point(205, 0)
+        Me.SuperTabControlPanel17.Location = New System.Drawing.Point(214, 0)
         Me.SuperTabControlPanel17.Name = "SuperTabControlPanel17"
-        Me.SuperTabControlPanel17.Size = New System.Drawing.Size(410, 474)
+        Me.SuperTabControlPanel17.Size = New System.Drawing.Size(401, 474)
         Me.SuperTabControlPanel17.TabIndex = 2
         Me.SuperTabControlPanel17.TabItem = Me.Sp_NVVAuto
         '
@@ -2084,7 +2087,7 @@ Partial Class Frm_Demonio_Configuraciones
         Me.LabelX28.ForeColor = System.Drawing.Color.Black
         Me.LabelX28.Location = New System.Drawing.Point(0, 0)
         Me.LabelX28.Name = "LabelX28"
-        Me.LabelX28.Size = New System.Drawing.Size(410, 19)
+        Me.LabelX28.Size = New System.Drawing.Size(401, 19)
         Me.LabelX28.TabIndex = 180
         Me.LabelX28.Text = "NOTAS DE VENTA AUTOMATICAS"
         '
@@ -3136,6 +3139,42 @@ Partial Class Frm_Demonio_Configuraciones
         Me.Chk_Ejecutar_Automaticamente.TabIndex = 187
         Me.Chk_Ejecutar_Automaticamente.Text = "Ejecutar automáticamente<br/>al abrir el sistema" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
+        'Txt_FacAuto_CodFunFactura
+        '
+        Me.Txt_FacAuto_CodFunFactura.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_FacAuto_CodFunFactura.Border.Class = "TextBoxBorder"
+        Me.Txt_FacAuto_CodFunFactura.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_FacAuto_CodFunFactura.ButtonCustom.Image = CType(resources.GetObject("Txt_Vendedor.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_FacAuto_CodFunFactura.ButtonCustom.Visible = True
+        Me.Txt_FacAuto_CodFunFactura.ButtonCustom2.Image = CType(resources.GetObject("Txt_Vendedor.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_FacAuto_CodFunFactura.ButtonCustom2.Visible = True
+        Me.Txt_FacAuto_CodFunFactura.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_FacAuto_CodFunFactura.ForeColor = System.Drawing.Color.Black
+        Me.Txt_FacAuto_CodFunFactura.Location = New System.Drawing.Point(12, 311)
+        Me.Txt_FacAuto_CodFunFactura.Name = "Txt_FacAuto_CodFunFactura"
+        Me.Txt_FacAuto_CodFunFactura.PreventEnterBeep = True
+        Me.Txt_FacAuto_CodFunFactura.ReadOnly = True
+        Me.Txt_FacAuto_CodFunFactura.Size = New System.Drawing.Size(115, 22)
+        Me.Txt_FacAuto_CodFunFactura.TabIndex = 195
+        Me.Txt_FacAuto_CodFunFactura.WatermarkText = "Funcionario que factura.."
+        '
+        'LabelX43
+        '
+        Me.LabelX43.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX43.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX43.ForeColor = System.Drawing.Color.Black
+        Me.LabelX43.Location = New System.Drawing.Point(12, 291)
+        Me.LabelX43.Name = "LabelX43"
+        Me.LabelX43.Size = New System.Drawing.Size(305, 19)
+        Me.LabelX43.TabIndex = 196
+        Me.LabelX43.Text = "Facturar solo documentos de este funcionario (solo picking)"
+        '
         'Frm_Demonio_Configuraciones
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -3147,6 +3186,7 @@ Partial Class Frm_Demonio_Configuraciones
         Me.Controls.Add(Me.SuperTab)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
@@ -3391,4 +3431,6 @@ Partial Class Frm_Demonio_Configuraciones
     Friend WithEvents TableLayoutPanel3 As TableLayoutPanel
     Friend WithEvents Rdb_FcOrden_ItemMenosMas As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Rdb_FcOrden_Llegada As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Txt_FacAuto_CodFunFactura As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX43 As DevComponents.DotNetBar.LabelX
 End Class
