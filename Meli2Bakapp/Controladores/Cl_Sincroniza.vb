@@ -941,4 +941,13 @@ Public Class Cl_Sincroniza
 
     End Sub
 
+    Sub Sb_SincronizarPagos()
+
+        _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
+        _SqlMeli = New Class_SQL(Cadena_ConexionSQL_Server_Meli)
+
+        Consulta_sql = "Select * From PEDIDOS_PAGOS"
+
+    End Sub
+
 End Class

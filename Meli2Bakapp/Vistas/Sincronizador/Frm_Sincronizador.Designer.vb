@@ -45,13 +45,14 @@ Partial Class Frm_Sincronizador
         '
         'Switch_Sincronizacion
         '
+        Me.Switch_Sincronizacion.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Switch_Sincronizacion.BackColor = System.Drawing.Color.White
         '
         '
         '
         Me.Switch_Sincronizacion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Switch_Sincronizacion.ForeColor = System.Drawing.Color.Black
-        Me.Switch_Sincronizacion.Location = New System.Drawing.Point(296, 365)
+        Me.Switch_Sincronizacion.Location = New System.Drawing.Point(296, 387)
         Me.Switch_Sincronizacion.Name = "Switch_Sincronizacion"
         Me.Switch_Sincronizacion.OffText = "Pausada"
         Me.Switch_Sincronizacion.OnText = "Activa"
@@ -63,6 +64,7 @@ Partial Class Frm_Sincronizador
         '
         'Chk_AmbienteDePruebas
         '
+        Me.Chk_AmbienteDePruebas.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Chk_AmbienteDePruebas.BackColor = System.Drawing.Color.Transparent
         '
         '
@@ -71,7 +73,7 @@ Partial Class Frm_Sincronizador
         Me.Chk_AmbienteDePruebas.CheckBoxImageChecked = CType(resources.GetObject("Chk_AmbienteDePruebas.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_AmbienteDePruebas.FocusCuesEnabled = False
         Me.Chk_AmbienteDePruebas.ForeColor = System.Drawing.Color.Black
-        Me.Chk_AmbienteDePruebas.Location = New System.Drawing.Point(566, 365)
+        Me.Chk_AmbienteDePruebas.Location = New System.Drawing.Point(566, 387)
         Me.Chk_AmbienteDePruebas.Name = "Chk_AmbienteDePruebas"
         Me.Chk_AmbienteDePruebas.Size = New System.Drawing.Size(127, 23)
         Me.Chk_AmbienteDePruebas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -88,7 +90,7 @@ Partial Class Frm_Sincronizador
         '
         Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX1.ForeColor = System.Drawing.Color.Black
-        Me.LabelX1.Location = New System.Drawing.Point(12, 362)
+        Me.LabelX1.Location = New System.Drawing.Point(12, 384)
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.Size = New System.Drawing.Size(95, 23)
         Me.LabelX1.TabIndex = 180
@@ -107,7 +109,7 @@ Partial Class Frm_Sincronizador
         Me.Dtp_FechaRevision.ButtonDropDown.Visible = True
         Me.Dtp_FechaRevision.ForeColor = System.Drawing.Color.Black
         Me.Dtp_FechaRevision.IsPopupCalendarOpen = False
-        Me.Dtp_FechaRevision.Location = New System.Drawing.Point(113, 363)
+        Me.Dtp_FechaRevision.Location = New System.Drawing.Point(113, 385)
         '
         '
         '
@@ -153,7 +155,7 @@ Partial Class Frm_Sincronizador
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Limpiar, Me.Btn_Configuraciones})
-        Me.Bar1.Location = New System.Drawing.Point(0, 391)
+        Me.Bar1.Location = New System.Drawing.Point(0, 413)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(704, 41)
         Me.Bar1.Stretch = True
@@ -195,7 +197,7 @@ Partial Class Frm_Sincronizador
         Me.Metro_Bar_Color.ForeColor = System.Drawing.Color.Black
         Me.Metro_Bar_Color.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Estatus})
         Me.Metro_Bar_Color.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 432)
+        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 454)
         Me.Metro_Bar_Color.Name = "Metro_Bar_Color"
         Me.Metro_Bar_Color.Size = New System.Drawing.Size(704, 22)
         Me.Metro_Bar_Color.TabIndex = 178
@@ -209,6 +211,7 @@ Partial Class Frm_Sincronizador
         '
         'CircularPgrs
         '
+        Me.CircularPgrs.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.CircularPgrs.BackColor = System.Drawing.Color.Transparent
         '
         '
@@ -216,7 +219,7 @@ Partial Class Frm_Sincronizador
         Me.CircularPgrs.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.CircularPgrs.Enabled = False
         Me.CircularPgrs.FocusCuesEnabled = False
-        Me.CircularPgrs.Location = New System.Drawing.Point(393, 365)
+        Me.CircularPgrs.Location = New System.Drawing.Point(393, 387)
         Me.CircularPgrs.Name = "CircularPgrs"
         Me.CircularPgrs.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Dot
         Me.CircularPgrs.ProgressColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
@@ -242,7 +245,7 @@ Partial Class Frm_Sincronizador
         Me.Txt_Log.Name = "Txt_Log"
         Me.Txt_Log.PreventEnterBeep = True
         Me.Txt_Log.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.Txt_Log.Size = New System.Drawing.Size(680, 350)
+        Me.Txt_Log.Size = New System.Drawing.Size(680, 372)
         Me.Txt_Log.TabIndex = 175
         '
         'LabelX2
@@ -254,7 +257,7 @@ Partial Class Frm_Sincronizador
         '
         Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX2.ForeColor = System.Drawing.Color.Black
-        Me.LabelX2.Location = New System.Drawing.Point(220, 363)
+        Me.LabelX2.Location = New System.Drawing.Point(220, 385)
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(83, 23)
         Me.LabelX2.TabIndex = 183
@@ -276,7 +279,7 @@ Partial Class Frm_Sincronizador
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(704, 454)
+        Me.ClientSize = New System.Drawing.Size(704, 476)
         Me.Controls.Add(Me.Switch_Sincronizacion)
         Me.Controls.Add(Me.Chk_AmbienteDePruebas)
         Me.Controls.Add(Me.LabelX1)
@@ -288,7 +291,6 @@ Partial Class Frm_Sincronizador
         Me.Controls.Add(Me.LabelX2)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False

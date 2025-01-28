@@ -729,8 +729,8 @@ Partial Class Frm_Configuracion
         Me.SuperTabControl1.ControlBox.Name = ""
         Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel3)
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
         Me.SuperTabControl1.ForeColor = System.Drawing.Color.Black
         Me.SuperTabControl1.Location = New System.Drawing.Point(12, 12)
         Me.SuperTabControl1.Name = "SuperTabControl1"
@@ -852,9 +852,9 @@ Partial Class Frm_Configuracion
         '
         Me.Txt_FuncionarioPaga.Border.Class = "TextBoxBorder"
         Me.Txt_FuncionarioPaga.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_FuncionarioPaga.ButtonCustom.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_FuncionarioPaga.ButtonCustom.Image = CType(resources.GetObject("Txt_FuncionarioPaga.ButtonCustom.Image"), System.Drawing.Image)
         Me.Txt_FuncionarioPaga.ButtonCustom.Visible = True
-        Me.Txt_FuncionarioPaga.ButtonCustom2.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_FuncionarioPaga.ButtonCustom2.Image = CType(resources.GetObject("Txt_FuncionarioPaga.ButtonCustom2.Image"), System.Drawing.Image)
         Me.Txt_FuncionarioPaga.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_FuncionarioPaga.ForeColor = System.Drawing.Color.Black
         Me.Txt_FuncionarioPaga.Location = New System.Drawing.Point(146, 180)

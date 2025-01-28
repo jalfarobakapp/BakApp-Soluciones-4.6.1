@@ -770,7 +770,16 @@ Public Class Frm_Demonio_Configuraciones
                                       Rdb_FacAuto_SoloDeSucModalidad.Name, Class_SQLite.Enum_Type._Boolean,
                                       Rdb_FacAuto_SoloDeSucModalidad.Checked, _Actualizar, "FacAuto",, False)
 
+        _Sql.Sb_Parametro_Informe_Sql(Input_CantDocFacturanXProceso, "Demonio",
+                                      Input_CantDocFacturanXProceso.Name, Class_SQLite.Enum_Type._Double,
+                                      Input_CantDocFacturanXProceso.Value, _Actualizar, "FacAuto",, False)
 
+        _Sql.Sb_Parametro_Informe_Sql(Rdb_FcOrden_Llegada, "Demonio",
+                                      Rdb_FcOrden_Llegada.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Rdb_FcOrden_Llegada.Checked, _Actualizar, "FacAuto",, False)
+        _Sql.Sb_Parametro_Informe_Sql(Rdb_FcOrden_ItemMenosMas, "Demonio",
+                                      Rdb_FcOrden_ItemMenosMas.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Rdb_FcOrden_ItemMenosMas.Checked, _Actualizar, "FacAuto",, False)
 
         'Solicitud de productos a bodega
         _Sql.Sb_Parametro_Informe_Sql(Chk_SolProdBod, "Demonio",
@@ -988,4 +997,6 @@ Public Class Frm_Demonio_Configuraciones
             Txt_CorreoMayoristaMinorista.Text = String.Empty
         End If
     End Sub
+
+
 End Class

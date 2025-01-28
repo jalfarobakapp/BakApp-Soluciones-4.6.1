@@ -1205,17 +1205,14 @@ Public Class Frm_Correos_Conf
             Dim email As IMail = builder.Create()
 
 
-            Using smtp As New Smtp                          ' Now connect to SMTP server and send it
-                smtp.Connect(_Host_SMT)                     ' Use overloads or ConnectSSL if you need to specify different port or SSL.
-                'Smtp.DefaultPort = _Puerto
-                'smtp.po
+            Using smtp As New Smtp
+
+                smtp.Connect(_Host_SMT)
                 smtp.SSLConfiguration.EnabledSslProtocols = _EnableSsl ' True
-                smtp.UseBestLogin(_Usuario, _Contrasena)         ' You can also use: Login, LoginPLAIN, LoginCRAM, LoginDIGEST, LoginOAUTH methods,
-                ' or use UseBestLogin method if you want Mail.dll to choose for you.
-                'Smtp.DefaultPort = 456
+                smtp.UseBestLogin(_Usuario, _Contrasena)
+
                 Dim result As ISendMessageResult = smtp.SendMessage((email))
 
-                'Console.ReadKey()
                 smtp.Close()
 
                 If xi > 0 Then
@@ -1229,16 +1226,11 @@ Public Class Frm_Correos_Conf
 
                 End If
 
-                'Return result
-
                 If result.Status = SendMessageStatus.Success Then
                     _Mensaje.EsCorrecto = True
                 End If
 
             End Using
-
-            ' For sure you'll need to send complex emails,
-            ' take a look at our templates support in SmtpTemplates sample.
 
         Catch ex As Exception
             _Mensaje.Mensaje = ex.Message

@@ -399,6 +399,11 @@ Public Class Frm_Demonio_New
                     Dim _CualquierNVV As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Rdb_FacAuto_CualquierNVV' And NombreEquipo = '" & _NombreEquipo & "'", True)
                     Dim _SoloDeSucModalidad As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Rdb_FacAuto_SoloDeSucModalidad' And NombreEquipo = '" & _NombreEquipo & "'", True)
 
+                    Dim _CantDocFacturanXProceso As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_CantDocFacturanXProceso' And NombreEquipo = '" & _NombreEquipo & "'",,, 20)
+
+                    Dim _FcOrden_Llegada As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Rdb_FcOrden_Llegada' And NombreEquipo = '" & _NombreEquipo & "'",,, "True")
+                    Dim _FcOrden_ItemMenosMas As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Rdb_FcOrden_ItemMenosMas' And NombreEquipo = '" & _NombreEquipo & "'",,, "False")
+
                     Boolean.TryParse(_FA_1Dia, _Cl_FacturacionAuto.FA_1Dia)
                     Boolean.TryParse(_FA_1Semana, _Cl_FacturacionAuto.FA_1Semana)
                     Boolean.TryParse(_FA_1Mes, _Cl_FacturacionAuto.FA_1Mes)
@@ -407,6 +412,10 @@ Public Class Frm_Demonio_New
                     Boolean.TryParse(_CualquierNVV, _Cl_FacturacionAuto.CualquierNVV)
                     Boolean.TryParse(_SoloDeSucModalidad, _Cl_FacturacionAuto.SoloDeSucModalidad)
 
+                    Boolean.TryParse(_FcOrden_Llegada, _Cl_FacturacionAuto.FcOrden_Llegada)
+                    Boolean.TryParse(_FcOrden_ItemMenosMas, _Cl_FacturacionAuto.FcOrden_ItemMenosMas)
+
+                    _Cl_FacturacionAuto.CantDocFacturanXProceso = _CantDocFacturanXProceso
                     _Cl_FacturacionAuto.Modalidad_Fac = _Modalidad_Fac
 
                     _Descripcion = _CI_Programacion.Resumen ' "Facturación de notas de venta para clientes con condición automática. " & _CI_Programacion.Resumen

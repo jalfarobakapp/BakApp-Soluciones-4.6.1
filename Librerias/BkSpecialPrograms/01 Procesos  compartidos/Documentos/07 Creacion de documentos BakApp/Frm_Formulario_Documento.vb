@@ -28613,6 +28613,9 @@ Public Class Frm_Formulario_Documento
             Return True
         End If
 
+        Dim _CodigoPallet As String = _Global_Row_Configuracion_Estacion.Item("CodigoPrPallet")
+        Dim _ContienePallet As Boolean
+
         Dim _Ud = _Global_Row_Configuracion_Estacion.Item("UdRevCantIngrePallet")
         Dim _Cantidad As Double = 0
 
@@ -28622,15 +28625,19 @@ Public Class Frm_Formulario_Documento
                 _Cantidad += _Fila.Item("CantUd" & _Ud)
             End If
 
+            Dim _Codigo As String = _Fila.Item("Codigo")
+
+            If _Codigo.Trim = _CodigoPallet.Trim Then
+                _ContienePallet = True
+            End If
+
         Next
 
         Dim _CantPregIngrePallet As Double = _Global_Row_Configuracion_Estacion.Item("CantPregIngrePallet")
 
-        If _Cantidad < _CantPregIngrePallet Then
+        If _Cantidad < _CantPregIngrePallet Or _ContienePallet Then
             Return True
         End If
-
-        Dim _Codigo As String = _Global_Row_Configuracion_Estacion.Item("CodigoPrPallet")
 
         'Sumar las cantidades de la unidad 1 y si es mas de lo que se requiere para preguntar por la cantidad de Pallet hacerlo
         'si la cantidad es insuficiente salir y continuar
@@ -28660,7 +28667,7 @@ Public Class Frm_Formulario_Documento
         '    Return True
         'End If
 
-        _Mensaje = Fx_AgregarPallet(_Codigo)
+        _Mensaje = Fx_AgregarPallet(_CodigoPallet)
 
         If _Mensaje.Cancelado Then
             Return False

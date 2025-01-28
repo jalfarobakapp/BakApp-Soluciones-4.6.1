@@ -133,4 +133,5 @@ Public Class Frm_Sincronizador
         Dtp_FechaRevision.Value = Now.Date
         Sb_AddToLog("Sincronizar", "Se actualiza la fecha: " & Dtp_FechaRevision.Value, Txt_Log)
     End Sub
+
 End Class
