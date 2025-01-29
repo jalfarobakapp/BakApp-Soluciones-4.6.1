@@ -12,6 +12,8 @@ Public Class Frm_Configuracion
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
+        Lbl_RutEmpresa.Tag = String.Empty
+
     End Sub
 
     Private Sub Frm_Conexiones_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -101,6 +103,8 @@ Public Class Frm_Configuracion
             Txt_ModalidadPago.Text = .Modalidad
             Txt_EmpresaPago.Tag = .Empresa
             Txt_EmpresaPago.Text = .Razon
+            Lbl_RutEmpresa.Tag = .RutEmpresa
+            Lbl_RutEmpresa.Text = "Rut empresa: " & .RutEmpresa
             Txt_SucursalPago.Tag = .Sucursal
             Txt_SucursalPago.Text = .NomSucursal
             Txt_CajaPago.Tag = .Caja
@@ -318,6 +322,13 @@ Public Class Frm_Configuracion
                 Return
             End If
 
+            If String.IsNullOrWhiteSpace(Lbl_RutEmpresa.Tag) Then
+                MessageBoxEx.Show(Me, "Falta el Rut de la empresa de pago", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Txt_ModalidadPago.Focus()
+                Return
+            End If
+
             If String.IsNullOrWhiteSpace(Txt_EmpresaPago.Text) Then
                 MessageBoxEx.Show(Me, "Falta la empresa de pago", "Validación",
                                   MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -379,6 +390,7 @@ Public Class Frm_Configuracion
             .Modalidad = Txt_ModalidadPago.Tag
             .Empresa = Txt_Empresa.Tag
             .Razon = Txt_Empresa.Text
+            .RutEmpresa = Lbl_RutEmpresa.Tag
             .Sucursal = Txt_SucursalPago.Tag
             .NomSucursal = Txt_SucursalPago.Text
             .Caja = Txt_CajaPago.Tag
@@ -552,16 +564,18 @@ Public Class Frm_Configuracion
             Txt_ModalidadPago.Tag = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
             Txt_ModalidadPago.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo").ToString.Trim
 
-            Dim _ConsultaSql As String = "Select Ct.MODALIDAD,Ct.EMPRESA,Cp.RAZON,Ct.ESUCURSAL,Ts.NOKOSU,Ct.EBODEGA,Ct.ECAJA,Cj.NOKOCJ" & vbCrLf &
+            Dim _ConsultaSql As String = "Select Ct.MODALIDAD,Ct.EMPRESA,Cp.RUT,Cp.RAZON,Ct.ESUCURSAL,Ts.NOKOSU,Ct.EBODEGA,Ct.ECAJA,Cj.NOKOCJ" & vbCrLf &
                                          "From CONFIEST Ct" & vbCrLf &
                                          "Left Join CONFIGP Cp On Cp.EMPRESA = Ct.EMPRESA" & vbCrLf &
                                          "Left Join TABSU Ts On Ct.EMPRESA = Ts.EMPRESA And Ct.ESUCURSAL = Ts.KOSU" & vbCrLf &
-                                         "Left Join TABCJ Cj On Ct.EMPRESA = Cj.EMPRESA And Ct.ESUCURSAL = Cj.KOSU" & vbCrLf &
+                                         "Left Join TABCJ Cj On Ct.EMPRESA = Cj.EMPRESA And Ct.ESUCURSAL = Cj.KOSU And Ct.ECAJA = Cj.KOCJ" & vbCrLf &
                                          "Where MODALIDAD = '" & Txt_ModalidadPago.Tag & "'"
             Dim _Row_Modalidad As DataRow = _Sql.Fx_Get_DataRow(_ConsultaSql)
 
             Txt_EmpresaPago.Tag = _Row_Modalidad.Item("EMPRESA")
             Txt_EmpresaPago.Text = _Row_Modalidad.Item("RAZON").ToString.Trim
+            Lbl_RutEmpresa.Tag = _Row_Modalidad.Item("RUT").ToString.Trim
+            Lbl_RutEmpresa.Text = "Rut empresa: " & _Row_Modalidad.Item("RUT").ToString.Trim
             Txt_SucursalPago.Tag = _Row_Modalidad.Item("ESUCURSAL")
             Txt_SucursalPago.Text = _Row_Modalidad.Item("NOKOSU").ToString.Trim
             Txt_CajaPago.Tag = _Row_Modalidad.Item("ECAJA")

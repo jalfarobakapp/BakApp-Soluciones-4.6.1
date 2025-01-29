@@ -2,6 +2,7 @@
 Imports System.Security.Cryptography
 Imports BkSpecialPrograms
 Imports BkSpecialPrograms.LsValiciones
+Imports DevComponents.DotNetBar
 
 Public Class Cl_Sincroniza
 
@@ -943,11 +944,163 @@ Public Class Cl_Sincroniza
 
     Sub Sb_SincronizarPagos()
 
+        If Not ConfiguracionLocal.Pago.PagarAuto Then
+            Return
+        End If
+
         _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
         _SqlMeli = New Class_SQL(Cadena_ConexionSQL_Server_Meli)
 
-        Consulta_sql = "Select * From PEDIDOS_PAGOS"
+        Consulta_sql = "Select Distinct ID_MELI From PEDIDOS_PAGOS Where IDMAEDPCD = 0"
+        Dim _Tbl As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
+
+        For Each _Fila As DataRow In _Tbl.Rows
+
+            Dim _ID_MELI As String = _Fila.Item("ID_MELI")
+            Dim _Ls_PEDIDOS_PAGOS As List(Of PEDIDOS_PAGOS) = Fx_Llena_PEDIDOS_PAGOS(_ID_MELI)
+
+            For Each _Fl As PEDIDOS_PAGOS In _Ls_PEDIDOS_PAGOS
+
+                Dim _ID As Integer = _Fl.ID
+                Dim _IDMAEEDO_F As Integer = _Fl.IDMAEEDO_F
+                Dim _ID_PAGO As String = _Fl.ID_PAGO
+                Dim _MONTO As Double = _Fl.MONTO
+                Dim _TIPO_PAGO As String = _Fl.TIPO_PAGO
+                Dim _FECHA_PAGO As Date = _Fl.FECHA_PAGO
+                Dim _IDMAEDPCD As Integer = _Fl.IDMAEDPCD
+                Dim _IDMAEDPCE As Integer = _Fl.IDMAEDPCE
+                Dim _LOG_INFO As String = _Fl.LOG_INFO
+
+                Dim _Cudp As String = If(_ID_PAGO.Length >= 16, _ID_PAGO.Substring(_ID_PAGO.Length - 16), _ID_MELI)
+                Dim _Nucudp As String = If(_ID_MELI.Length >= 8, _ID_MELI.Substring(_ID_MELI.Length - 8), _ID_MELI)
+                Dim _Refanti As String = _ID_MELI
+
+                Dim _Mensaje As LsValiciones.Mensajes = Fx_PagarDocumento(_IDMAEEDO_F, _Cudp, _Nucudp, _Refanti)
+
+                If _Mensaje.EsCorrecto Then
+
+                    Dim _Maedpcd As MAEDPCD = _Mensaje.Tag
+
+                    Consulta_sql = "Update PEDIDOS_PAGOS Set IDMAEDPCE = " & _Maedpcd.IDMAEDPCE & ",IDMAEDPCD = " & _Maedpcd.IDMAEDPCD & " Where ID = " & _ID
+                    _SqlMeli.Ej_consulta_IDU(Consulta_sql)
+
+                Else
+
+                    Consulta_sql = "Update PEDIDOS_PAGOS Set LOG_INFO = '" & _Mensaje.Mensaje & "' Where ID = " & _ID
+                    _SqlMeli.Ej_consulta_IDU(Consulta_sql)
+
+                End If
+
+            Next
+
+        Next
 
     End Sub
+
+    Function Fx_Llena_PEDIDOS_PAGOS(_Id_Meli As String) As List(Of PEDIDOS_PAGOS)
+
+        Dim _Ls_PEDIDOS_PAGOS As New List(Of PEDIDOS_PAGOS)
+
+        _SqlMeli = New Class_SQL(Cadena_ConexionSQL_Server_Meli)
+
+        Consulta_sql = "Select * From PEDIDOS_PAGOS Where ID_MELI = '" & _Id_Meli & "'"
+        Dim _Tbl As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
+
+        For Each _Fila As DataRow In _Tbl.Rows
+
+            Dim _Pedidos_Pagos As New PEDIDOS_PAGOS With {
+                .ID = _Fila.Item("ID"),
+                .ID_MELI = _Fila.Item("ID_MELI"),
+                .IDMAEEDO_F = _Fila.Item("IDMAEEDO_F"),
+                .ID_PAGO = _Fila.Item("ID_PAGO"),
+                .MONTO = _Fila.Item("MONTO"),
+                .TIPO_PAGO = _Fila.Item("TIPO_PAGO"),
+                .FECHA_PAGO = _Fila.Item("FECHA_PAGO"),
+                .IDMAEDPCD = _Fila.Item("IDMAEDPCD"),
+                .IDMAEDPCE = _Fila.Item("IDMAEDPCE"),
+                .LOG_INFO = _Fila.Item("LOG_INFO")
+            }
+
+            _Ls_PEDIDOS_PAGOS.Add(_Pedidos_Pagos)
+
+        Next
+
+        Return _Ls_PEDIDOS_PAGOS
+
+    End Function
+
+    Function Fx_PagarDocumento(_Idmaeedo As Integer, _Cudp As String, _Nucudp As String, _Refanti As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
+
+        Try
+
+            Dim _Cl_Pagar As New Clas_Pagar
+            Dim _Maedpce As MAEDPCE
+
+            Dim _Row_Maeedo As DataRow = _SqlRandom.Fx_Get_DataRow("Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo)
+
+            Consulta_sql = "Select TOP 1 * From MAEMO Where KOMO = 'US$' AND FEMO = '" & Format(FechaDelServidor, "yyyyMMdd") & "' Order by IDMAEMO DESC"
+            Dim _Row_MaemoUSD = _SqlRandom.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_Row_MaemoUSD) Then
+                Throw New System.Exception("No se encontraron registros en MAEMO, KOMO = 'US$', FEMO = '" & Format(FechaDelServidor, "yyyyMMdd") & "'")
+            End If
+
+            _Maedpce = New MAEDPCE With {
+            .TIDP = ConfiguracionLocal.Pago.TipoPago,
+            .EMPRESA = ConfiguracionLocal.Pago.Empresa,
+            .ENDP = _Row_Maeedo.Item("ENDO"),
+            .EMDP = ConfiguracionLocal.Pago.Banco,
+            .SUEMDP = "",
+            .CUDP = _Cudp,
+            .NUCUDP = _Nucudp,
+            .FEEMDP = FechaDelServidor(),
+            .FEVEDP = FechaDelServidor(),
+            .MODP = "$",
+            .TIMODP = "N",
+            .TAMODP = _Row_MaemoUSD.Item("VAMO"),
+            .VADP = _Row_Maeedo.Item("VABRDO"),
+            .VAASDP = _Row_Maeedo.Item("VABRDO"),
+            .VAVUDP = 0,
+            .ESASDP = "A",
+            .ESPGDP = "P",
+            .SUREDP = ConfiguracionLocal.Pago.Sucursal,
+            .CJREDP = ConfiguracionLocal.Pago.Caja,
+            .KOFUDP = ConfiguracionLocal.Pago.Funcionario,
+            .REFANTI = _Refanti,
+            .KOTU = 1,
+            .VAABDP = 0,
+            .CUOTAS = 1,
+            .ARCHIRSD = "",
+            .IDRSD = 0,
+            .KOTNDP = ConfiguracionLocal.Pago.RutEmpresa,
+            .SUTNDP = ConfiguracionLocal.Pago.Sucursal
+            }
+
+            Dim _Fecha_Asignacion_Pago As Date = FechaDelServidor()
+            Dim _Ls_Maedpce As New List(Of MAEDPCE)
+
+            _Ls_Maedpce.Add(_Maedpce)
+
+            _Mensaje = _Cl_Pagar.Fx_Pagar_Documento(_Idmaeedo, _Ls_Maedpce, _Fecha_Asignacion_Pago)
+
+            If Not _Mensaje.EsCorrecto Then
+                Throw New System.Exception(_Mensaje.Mensaje)
+            End If
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Documento pagado correctamente"
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+        End Try
+
+        Return _Mensaje
+
+    End Function
 
 End Class

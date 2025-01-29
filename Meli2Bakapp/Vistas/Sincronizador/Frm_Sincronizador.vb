@@ -110,8 +110,10 @@ Public Class Frm_Sincronizador
 
         With _Cl_Sincroniza
 
+            .Sb_SincronizarPagos()
             .Sb_ActualizarIDMAEEDO_NVV_DesdeBakappHaciaMLIBRE()
             .Sb_ActualizarIDMAEEDO_FCV_DesdeBakappHaciaMLIBRE()
+
             .Sb_Revisar_Kit(Txt_Log, Dtp_FechaRevision.Value, 10)
             .Sb_Revisar_Pedidos(Txt_Log, Dtp_FechaRevision.Value, 10)
             .Sb_Adjuntar_Etiquetas(Txt_Log, Dtp_FechaRevision.Value, 10)

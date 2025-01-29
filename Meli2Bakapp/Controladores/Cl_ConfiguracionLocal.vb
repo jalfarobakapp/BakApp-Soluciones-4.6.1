@@ -168,12 +168,13 @@ Public Class Cl_ConfiguracionLocal
             End If
 
             If IsNothing(Configuracion.Pago) Then
-                Configuracion.Pago = New Pago With {.Modalidad = "", .Empresa = "", .Sucursal = "", .Caja = "", .TipoPago = "TJV", .Funcionario = "", .NomFuncionario = "", .Banco = "", .NomBanco = "", .PagarAuto = False}
+                Configuracion.Pago = New Pago With {.Modalidad = "", .Empresa = "", .RutEmpresa = "", .Sucursal = "", .Caja = "", .TipoPago = "TJV", .Funcionario = "", .NomFuncionario = "", .Banco = "", .NomBanco = "", .PagarAuto = False}
             End If
 
             If Configuracion.Pago.PagarAuto Then
                 If String.IsNullOrEmpty(Configuracion.Pago.Modalidad) Or
                     String.IsNullOrEmpty(Configuracion.Pago.Empresa) Or
+                    String.IsNullOrEmpty(Configuracion.Pago.RutEmpresa) Or
                     String.IsNullOrEmpty(Configuracion.Pago.Sucursal) Or
                     String.IsNullOrEmpty(Configuracion.Pago.Caja) Or
                     String.IsNullOrEmpty(Configuracion.Pago.TipoPago) Or

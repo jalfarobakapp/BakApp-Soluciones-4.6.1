@@ -4525,14 +4525,16 @@ Public Class Frm_Ver_Documento
 
         If _Accion = Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion.Eliminar Then
 
+            _Conservar_Nudo = True
+
             If _Tido = "OCC" Then
 
                 Dim _Opciones = MessageBoxEx.Show(Me, "¿Desea conservar el mismo número de documento?" & vbCrLf & "Número: " & _Tido & "-" & _Nudo, "Conservar numeración",
                                  MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)
 
-                If _Opciones = DialogResult.Yes Then
-                    _Conservar_Nudo = True
-                End If
+                'If _Opciones = DialogResult.Yes Then
+                '    _Conservar_Nudo = True
+                'End If
 
                 If _Opciones = DialogResult.Cancel Then
                     Return
@@ -4618,6 +4620,7 @@ Public Class Frm_Ver_Documento
         End If
 
         If Not Fx_Eliminar_Anular(_Accion) Then
+            Me.Enabled = True
             Return
         End If
 

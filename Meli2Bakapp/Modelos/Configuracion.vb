@@ -27,6 +27,7 @@ Public Class Pago
     Public Property Modalidad As String
     Public Property Razon As String
     Public Property Empresa As String
+    Public Property RutEmpresa As String
     Public Property Sucursal As String
     Public Property NomSucursal As String
     Public Property Caja As String

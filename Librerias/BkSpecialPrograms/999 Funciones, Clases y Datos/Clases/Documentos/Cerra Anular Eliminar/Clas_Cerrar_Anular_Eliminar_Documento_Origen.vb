@@ -251,6 +251,10 @@ Public Class Clas_Cerrar_Anular_Eliminar_Documento_Origen
 
         Dim _Sr As String
 
+        If _Tido = "COV" Then
+            Return _Consulta_sql
+        End If
+
         Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Idmaeedo & " Order By IDMAEDDO"
         Dim _Tbl_Detalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 

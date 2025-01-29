@@ -40,6 +40,5 @@ Public Class Zw_Stmp_Enc
     Public Property FechaPickeoAct As Boolean
     Public Property Ruta As String
     Public Property OrdenRuta As Integer
-    Public Property ModalidadFactura As String
 
 End Class

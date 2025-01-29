@@ -1421,6 +1421,8 @@ Public Class Clas_Pagar
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
+        Dim _Maedpcd As New MAEDPCD
+
         Dim myTrans As SqlClient.SqlTransaction
         Dim Comando As SqlClient.SqlCommand
 
@@ -1433,7 +1435,6 @@ Public Class Clas_Pagar
 
         myTrans = cn2.BeginTransaction()
 
-
         Try
 
             Consulta_sql = "Select top 1 TIDO,NUDO,ENDO,SUENDO From MAEEDO Where IDMAEEDO = " & _Idmaeedo
@@ -1444,16 +1445,6 @@ Public Class Clas_Pagar
 
             Dim _Cuotacomer As Boolean = _Row_Confiest.Item("CUOTACOMER")
             Dim _Cuotacanti As Integer = _Row_Confiest.Item("CUOTACANTI")
-
-            'Consulta_sql = "SELECT VAVE,VAABVE,IDMAEVEN FROM MAEVEN WHERE IDMAEEDO = " & _Idmaeedo & " AND ESPGVE<>'C'"
-            'Dim _Tbl_Maeven As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
-
-            'If Convert.ToBoolean(_Tbl_Maeven.Rows.Count) Then
-            '    _Idmaeven = _Tbl_Maeven.Rows(0).Item("IDMAEVEN")
-            'Else
-            '    _Idmaeven = 0
-            'End If
-
 
             Dim _Abono As Double = 0
             Dim _Abono_Cuotas As Double = 0
@@ -1466,6 +1457,8 @@ Public Class Clas_Pagar
             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
             Comando.Transaction = myTrans
             Comando.ExecuteNonQuery()
+
+            'Dim dfd1 As SqlDataReader = Comando.ExecuteReader()
 
             Comando = New SqlCommand("SELECT @@IDENTITY AS 'Identity'", cn2)
             Comando.Transaction = myTrans
@@ -1509,8 +1502,6 @@ Public Class Clas_Pagar
                             Comando.Transaction = myTrans
                             Comando.ExecuteNonQuery()
 
-                            Dim _Maedpcd As New MAEDPCD
-
                             _Maedpcd.IDMAEDPCE = .IDMAEDPCE
                             _Maedpcd.VAASDP = .VAASDP
                             _Maedpcd.FEASDP = _Fecha_Asignacion_Pago
@@ -1537,6 +1528,14 @@ Public Class Clas_Pagar
                                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                                 Comando.Transaction = myTrans
                                 Comando.ExecuteNonQuery()
+
+                                Comando = New SqlCommand("SELECT @@IDENTITY AS 'Identity'", cn2)
+                                Comando.Transaction = myTrans
+                                Dim dfd1 As SqlDataReader = Comando.ExecuteReader()
+                                While dfd1.Read()
+                                    .IDMAEDPCD = dfd1("Identity")
+                                End While
+                                dfd1.Close()
 
                             End With
 
@@ -1675,8 +1674,6 @@ Public Class Clas_Pagar
                                 dfd1.Close()
 
 
-                                Dim _Maedpcd As New MAEDPCD
-
                                 _Maedpcd.IDMAEDPCE = .IDMAEDPCE
                                 _Maedpcd.VAASDP = _Vaasdp '.VAASDP
                                 _Maedpcd.FEASDP = _Fecha_Asignacion_Pago
@@ -1703,6 +1700,14 @@ Public Class Clas_Pagar
                                     Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                                     Comando.Transaction = myTrans
                                     Comando.ExecuteNonQuery()
+
+                                    Comando = New SqlCommand("SELECT @@IDENTITY AS 'Identity'", cn2)
+                                    Comando.Transaction = myTrans
+                                    dfd1 = Comando.ExecuteReader()
+                                    While dfd1.Read()
+                                        .IDMAEDPCD = dfd1("Identity")
+                                    End While
+                                    dfd1.Close()
 
                                 End With
 
@@ -1797,6 +1802,7 @@ Public Class Clas_Pagar
             _Mensaje.EsCorrecto = True
             _Mensaje.Mensaje = "Pagos realizados correctamente"
             _Mensaje.Icono = MessageBoxIcon.Information
+            _Mensaje.Tag = _Maedpcd
 
         Catch ex As Exception
 

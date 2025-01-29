@@ -222,10 +222,10 @@ Public Class Cl_Stmp
                 .Numero = Fx_NvoNro_Stmp()
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stmp_Enc (Empresa,Sucursal,Numero,CodFuncionario_Crea,Idmaeedo,Tido," &
-                               "Nudo,Endo,Suendo,FechaCreacion,Estado,Secueven,Facturar,DocEmitir,Fecha_Facturar,ModalidadFactura) Values " &
+                               "Nudo,Endo,Suendo,FechaCreacion,Estado,Secueven,Facturar,DocEmitir,Fecha_Facturar) Values " &
                        "('" & .Empresa & "','" & .Sucursal & "','" & .Numero & "','" & .CodFuncionario_Crea & "'," & .Idmaeedo &
                        ",'" & .Tido & "','" & .Nudo & "','" & .Endo & "','" & .Suendo & "','" & Format(.FechaCreacion, "yyyyMMdd HH:mm:ss") & "'" &
-                       ",'" & .Estado & "','" & .Secueven & "'," & Convert.ToInt32(.Facturar) & ",'" & .DocEmitir & "','" & Format(.Fecha_Facturar, "yyyyMMdd") & "','" & .ModalidadFactura & "')"
+                       ",'" & .Estado & "','" & .Secueven & "'," & Convert.ToInt32(.Facturar) & ",'" & .DocEmitir & "','" & Format(.Fecha_Facturar, "yyyyMMdd") & "')"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                 Comando.Transaction = myTrans
@@ -657,8 +657,6 @@ Public Class Cl_Stmp
             If .Secueven.Contains("NG") Then .DocEmitir = "GDV"
             If .Secueven.Contains("NB") Then .DocEmitir = "BLV"
             If .Secueven.Contains("NF") Then .DocEmitir = "FCV"
-
-            .ModalidadFactura = Modalidad
 
         End With
 

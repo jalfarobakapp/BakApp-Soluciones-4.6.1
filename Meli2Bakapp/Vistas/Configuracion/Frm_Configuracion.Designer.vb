@@ -69,6 +69,10 @@ Partial Class Frm_Configuracion
         Me.Txt_Concepto_D = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
         Me.SuperTabControl1 = New DevComponents.DotNetBar.SuperTabControl()
+        Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.SuperTabItem2 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel3 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Txt_ModalidadPago = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_EmpresaPago = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -86,18 +90,15 @@ Partial Class Frm_Configuracion
         Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
         Me.SuperTabItem3 = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.SuperTabItem2 = New DevComponents.DotNetBar.SuperTabItem()
+        Me.Lbl_RutEmpresa = New DevComponents.DotNetBar.LabelX()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControl1.SuspendLayout()
-        Me.SuperTabControlPanel3.SuspendLayout()
         Me.SuperTabControlPanel1.SuspendLayout()
         Me.SuperTabControlPanel2.SuspendLayout()
+        Me.SuperTabControlPanel3.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupBox1
@@ -729,8 +730,8 @@ Partial Class Frm_Configuracion
         Me.SuperTabControl1.ControlBox.Name = ""
         Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel3)
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
         Me.SuperTabControl1.ForeColor = System.Drawing.Color.Black
         Me.SuperTabControl1.Location = New System.Drawing.Point(12, 12)
         Me.SuperTabControl1.Name = "SuperTabControl1"
@@ -743,8 +744,62 @@ Partial Class Frm_Configuracion
         Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem2, Me.SuperTabItem1, Me.SuperTabItem3})
         Me.SuperTabControl1.Text = "SuperTabControl1"
         '
+        'SuperTabControlPanel1
+        '
+        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX15)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_Concepto_D)
+        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX12)
+        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX4)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_Bodega)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_Concepto_R)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_Global_BaseBk)
+        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX3)
+        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX16)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Cmb_DocEmitir)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_Empresa)
+        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX2)
+        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX17)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Chk_Facturar)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_Vendedor)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_Responsable)
+        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX18)
+        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX1)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_RutaEtiquetas)
+        Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 27)
+        Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
+        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(737, 243)
+        Me.SuperTabControlPanel1.TabIndex = 1
+        Me.SuperTabControlPanel1.TabItem = Me.SuperTabItem1
+        '
+        'SuperTabItem1
+        '
+        Me.SuperTabItem1.AttachedControl = Me.SuperTabControlPanel1
+        Me.SuperTabItem1.GlobalItem = False
+        Me.SuperTabItem1.Name = "SuperTabItem1"
+        Me.SuperTabItem1.Text = "Facturación/Boletas"
+        '
+        'SuperTabControlPanel2
+        '
+        Me.SuperTabControlPanel2.Controls.Add(Me.GroupBox1)
+        Me.SuperTabControlPanel2.Controls.Add(Me.GroupBox2)
+        Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 27)
+        Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(737, 243)
+        Me.SuperTabControlPanel2.TabIndex = 0
+        Me.SuperTabControlPanel2.TabItem = Me.SuperTabItem2
+        '
+        'SuperTabItem2
+        '
+        Me.SuperTabItem2.AttachedControl = Me.SuperTabControlPanel2
+        Me.SuperTabItem2.GlobalItem = False
+        Me.SuperTabItem2.Name = "SuperTabItem2"
+        Me.SuperTabItem2.Text = "Datos de conexión"
+        '
         'SuperTabControlPanel3
         '
+        Me.SuperTabControlPanel3.Controls.Add(Me.Lbl_RutEmpresa)
         Me.SuperTabControlPanel3.Controls.Add(Me.Txt_ModalidadPago)
         Me.SuperTabControlPanel3.Controls.Add(Me.Txt_EmpresaPago)
         Me.SuperTabControlPanel3.Controls.Add(Me.Txt_SucursalPago)
@@ -1037,58 +1092,19 @@ Partial Class Frm_Configuracion
         Me.SuperTabItem3.Name = "SuperTabItem3"
         Me.SuperTabItem3.Text = "Pagos"
         '
-        'SuperTabControlPanel1
+        'Lbl_RutEmpresa
         '
-        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX15)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_Concepto_D)
-        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX12)
-        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX4)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_Bodega)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_Concepto_R)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_Global_BaseBk)
-        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX3)
-        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX16)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Cmb_DocEmitir)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_Empresa)
-        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX2)
-        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX17)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Chk_Facturar)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_Vendedor)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_Responsable)
-        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX18)
-        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX1)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_RutaEtiquetas)
-        Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 27)
-        Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
-        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(737, 243)
-        Me.SuperTabControlPanel1.TabIndex = 1
-        Me.SuperTabControlPanel1.TabItem = Me.SuperTabItem1
+        Me.Lbl_RutEmpresa.BackColor = System.Drawing.Color.Transparent
         '
-        'SuperTabItem1
         '
-        Me.SuperTabItem1.AttachedControl = Me.SuperTabControlPanel1
-        Me.SuperTabItem1.GlobalItem = False
-        Me.SuperTabItem1.Name = "SuperTabItem1"
-        Me.SuperTabItem1.Text = "Facturación/Boletas"
         '
-        'SuperTabControlPanel2
-        '
-        Me.SuperTabControlPanel2.Controls.Add(Me.GroupBox1)
-        Me.SuperTabControlPanel2.Controls.Add(Me.GroupBox2)
-        Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 27)
-        Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
-        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(737, 243)
-        Me.SuperTabControlPanel2.TabIndex = 0
-        Me.SuperTabControlPanel2.TabItem = Me.SuperTabItem2
-        '
-        'SuperTabItem2
-        '
-        Me.SuperTabItem2.AttachedControl = Me.SuperTabControlPanel2
-        Me.SuperTabItem2.GlobalItem = False
-        Me.SuperTabItem2.Name = "SuperTabItem2"
-        Me.SuperTabItem2.Text = "Datos de conexión"
+        Me.Lbl_RutEmpresa.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_RutEmpresa.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_RutEmpresa.Location = New System.Drawing.Point(416, 40)
+        Me.Lbl_RutEmpresa.Name = "Lbl_RutEmpresa"
+        Me.Lbl_RutEmpresa.Size = New System.Drawing.Size(207, 20)
+        Me.Lbl_RutEmpresa.TabIndex = 136
+        Me.Lbl_RutEmpresa.Text = "Rut empresa:"
         '
         'Frm_Configuracion
         '
@@ -1114,9 +1130,9 @@ Partial Class Frm_Configuracion
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControl1.ResumeLayout(False)
-        Me.SuperTabControlPanel3.ResumeLayout(False)
         Me.SuperTabControlPanel1.ResumeLayout(False)
         Me.SuperTabControlPanel2.ResumeLayout(False)
+        Me.SuperTabControlPanel3.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -1187,4 +1203,5 @@ Partial Class Frm_Configuracion
     Friend WithEvents Chk_PagarAuto As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Txt_EmpresaPago As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Txt_ModalidadPago As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Lbl_RutEmpresa As DevComponents.DotNetBar.LabelX
 End Class
