@@ -53,7 +53,7 @@
 
         _Condicion = vbCrLf & "And Estado = 'FACTU' Or (Estado IN ('PREPA','COMPL') And Planificada = 1 And Facturar = 1)"
 
-        Consulta_sql = My.Resources.Recursos_WmsVillar.SQLQuery_Lista_de_espera_Sgem
+        Consulta_sql = My.Resources.Recursos_WmsSgem.SQLQuery_Lista_de_espera_Sgem
         Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
         Consulta_sql = Replace(Consulta_sql, "#Sucursal#", ModSucursal)
         Consulta_sql = Replace(Consulta_sql, "--#Condicion#", _Condicion)
@@ -120,7 +120,7 @@
                                            "OFFSET (@NúmeroDePágina - 1) * @TamañoDePágina ROWS" & vbCrLf &
                                            "FETCH NEXT @TamañoDePágina ROWS ONLY;"
 
-        Consulta_sql = My.Resources.Recursos_WmsVillar.SQLQuery_Lista_de_espera_Sgem
+        Consulta_sql = My.Resources.Recursos_WmsSgem.SQLQuery_Lista_de_espera_Sgem
         Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
         Consulta_sql = Replace(Consulta_sql, "#Sucursal#", ModSucursal)
         Consulta_sql = Replace(Consulta_sql, "--#Condicion#", _Condicion)

@@ -665,6 +665,10 @@ Public Class Frm_Demonio_Configuraciones
         _Sql.Sb_Parametro_Informe_Sql(Chk_ColaImpPick, "Demonio",
                                       Chk_ColaImpPick.Name, Class_SQLite.Enum_Type._Boolean,
                                       Chk_ColaImpPick.Checked, _Actualizar, "Impresion",, False)
+        _Sql.Sb_Parametro_Informe_Sql(Chk_ColaImpImprmirTodoNodejarCola, "Demonio",
+                                      Chk_ColaImpImprmirTodoNodejarCola.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Chk_ColaImpImprmirTodoNodejarCola.Checked, _Actualizar, "Impresion",, False)
+
 
         'Prestashop
         _Sql.Sb_Parametro_Informe_Sql(Chk_Prestashop_Prod, "Demonio",

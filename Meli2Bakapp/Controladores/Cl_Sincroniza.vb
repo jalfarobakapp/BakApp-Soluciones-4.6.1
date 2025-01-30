@@ -974,8 +974,10 @@ Public Class Cl_Sincroniza
                 Dim _Cudp As String = If(_ID_PAGO.Length >= 16, _ID_PAGO.Substring(_ID_PAGO.Length - 16), _ID_MELI)
                 Dim _Nucudp As String = If(_ID_MELI.Length >= 8, _ID_MELI.Substring(_ID_MELI.Length - 8), _ID_MELI)
                 Dim _Refanti As String = _ID_MELI
+                Dim _Feemdp As Date = _FECHA_PAGO
+                Dim _Fevedp As Date = _FECHA_PAGO
 
-                Dim _Mensaje As LsValiciones.Mensajes = Fx_PagarDocumento(_IDMAEEDO_F, _Cudp, _Nucudp, _Refanti)
+                Dim _Mensaje As LsValiciones.Mensajes = Fx_PagarDocumento(_IDMAEEDO_F, _Cudp, _Nucudp, _Refanti, _Feemdp, _Fevedp)
 
                 If _Mensaje.EsCorrecto Then
 
@@ -1029,7 +1031,12 @@ Public Class Cl_Sincroniza
 
     End Function
 
-    Function Fx_PagarDocumento(_Idmaeedo As Integer, _Cudp As String, _Nucudp As String, _Refanti As String) As LsValiciones.Mensajes
+    Function Fx_PagarDocumento(_Idmaeedo As Integer,
+                               _Cudp As String,
+                               _Nucudp As String,
+                               _Refanti As String,
+                               _Feemdp As Date,
+                               _Fevedp As Date) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -1057,8 +1064,8 @@ Public Class Cl_Sincroniza
             .SUEMDP = "",
             .CUDP = _Cudp,
             .NUCUDP = _Nucudp,
-            .FEEMDP = FechaDelServidor(),
-            .FEVEDP = FechaDelServidor(),
+            .FEEMDP = _Feemdp,
+            .FEVEDP = _Fevedp,
             .MODP = "$",
             .TIMODP = "N",
             .TAMODP = _Row_MaemoUSD.Item("VAMO"),

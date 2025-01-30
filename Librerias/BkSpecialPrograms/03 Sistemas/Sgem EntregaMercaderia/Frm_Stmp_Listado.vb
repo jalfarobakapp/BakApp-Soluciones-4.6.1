@@ -54,7 +54,6 @@ Public Class Frm_Stmp_Listado
     End Sub
     Sub Sb_Actualizar_Grilla()
 
-        'Deja los documentos en Facturadas cuando ya estan listos y el diablito no alcanza a tomarlos.
         Consulta_sql = "Select Distinct Edo.IDMAEEDO,Edo.TIDO,Edo.NUDO,Edo.ENDO,Edo.SUENDO,Edo.FEEMDO," &
                        "DdoFcv.IDMAEEDO As 'IDMAEEDO_Fcv',DdoFcv.TIDO As 'TD',DdoFcv.NUDO As 'NUDO_Fcv'--,DdoFcv.FEEMLI as 'F.Cierre'" & vbCrLf &
                        "Into #PasoFacturadas" & vbCrLf &
@@ -71,7 +70,6 @@ Public Class Frm_Stmp_Listado
                        "Drop Table #PasoFacturadas"
 
         _Sql.Ej_consulta_IDU(Consulta_sql)
-
 
         'Me.Cursor = Cursors.WaitCursor
 
@@ -136,7 +134,7 @@ Public Class Frm_Stmp_Listado
                 _Condicion += vbCrLf & "And Estado = 'NULO'"
         End Select
 
-        Consulta_sql = My.Resources.Recursos_WmsVillar.SQLQuery_Listado_Stmp
+        Consulta_sql = My.Resources.Recursos_WmsSgem.SQLQuery_Listado_Stmp
         Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
         Consulta_sql = Replace(Consulta_sql, "#Sucursal#", ModSucursal)
         Consulta_sql = Replace(Consulta_sql, "--#Condicion#", _Condicion)

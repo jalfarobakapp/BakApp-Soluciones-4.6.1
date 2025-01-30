@@ -1301,4 +1301,11 @@ Public Class Menu
 
     End Function
 
+    Private Sub Btn_Rutas_Click(sender As Object, e As EventArgs) Handles Btn_Rutas.Click
+
+        Dim Fm As New Frm_Stmp_ListadoXRutas
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
 End Class

@@ -341,6 +341,9 @@ Public Class Frm_Demonio_New
 
                 Case "ColaImpDoc"
 
+                    _Cl_Imprimir_Documentos.ColaImpImprmirTodoNodejarCola = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
+                                                                   "Valor", "Informe = 'Demonio' And Campo = 'Chk_ColaImpImprmirTodoNodejarCola' And NombreEquipo = '" & _NombreEquipo & "'", False,, False)
+
                     _Descripcion = _CI_Programacion.Resumen ' "Se imprimiran documentos. " & _CI_Programacion.Resumen
                     _IndexImagen = 1
 

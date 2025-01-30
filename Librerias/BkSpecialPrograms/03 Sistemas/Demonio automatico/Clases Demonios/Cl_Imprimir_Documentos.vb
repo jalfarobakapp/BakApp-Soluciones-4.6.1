@@ -91,6 +91,8 @@ Public Class Cl_Imprimir_Documentos
         End Set
     End Property
 
+    Public Property ColaImpImprmirTodoNodejarCola As Boolean
+
     Public Property Log_Registro As String
     Public Sub New()
 
@@ -352,7 +354,7 @@ Public Class Cl_Imprimir_Documentos
 
         If CBool(_Tbl_Doc_Sin_Imprimir.Rows.Count) Then
 
-            If _Tbl_Doc_Sin_Imprimir.Rows.Count > 10 Then
+            If _Tbl_Doc_Sin_Imprimir.Rows.Count > 10 And Not ColaImpImprmirTodoNodejarCola Then
 
                 Dim _Frm As New Form
 
