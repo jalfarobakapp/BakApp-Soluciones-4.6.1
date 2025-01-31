@@ -1422,6 +1422,8 @@ Public Class Clas_Pagar
         Dim _Mensaje As New LsValiciones.Mensajes
 
         Dim _Maedpcd As New MAEDPCD
+        Dim _Tido As String
+        Dim _Nudo As String
 
         Dim myTrans As SqlClient.SqlTransaction
         Dim Comando As SqlClient.SqlCommand
@@ -1439,6 +1441,9 @@ Public Class Clas_Pagar
 
             Consulta_sql = "Select top 1 TIDO,NUDO,ENDO,SUENDO From MAEEDO Where IDMAEEDO = " & _Idmaeedo
             Dim _Row_Maeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            _Tido = _Row_Maeedo.Item("TIDO")
+            _Nudo = _Row_Maeedo.Item("NUDO")
 
             Consulta_sql = "Select CUOTACOMER,CUOTACANTI From CONFIEST WITH (NOLOCK) Where MODALIDAD = '  '"
             Dim _Row_Confiest As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -1800,7 +1805,7 @@ Public Class Clas_Pagar
             SQL_ServerClass.Sb_Cerrar_Conexion(cn2)
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Mensaje = "Pagos realizados correctamente"
+            _Mensaje.Mensaje = "Pagos realizados correctamente al documento: " & _Tido & "-" & _Nudo
             _Mensaje.Icono = MessageBoxIcon.Information
             _Mensaje.Tag = _Maedpcd
 

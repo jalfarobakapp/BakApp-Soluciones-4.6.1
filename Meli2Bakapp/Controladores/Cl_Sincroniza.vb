@@ -942,7 +942,7 @@ Public Class Cl_Sincroniza
 
     End Sub
 
-    Sub Sb_SincronizarPagos()
+    Sub Sb_SincronizarPagos(Txt_Log As Object)
 
         If Not ConfiguracionLocal.Pago.PagarAuto Then
             Return
@@ -951,7 +951,7 @@ Public Class Cl_Sincroniza
         _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
         _SqlMeli = New Class_SQL(Cadena_ConexionSQL_Server_Meli)
 
-        Consulta_sql = "Select Distinct ID_MELI From PEDIDOS_PAGOS Where IDMAEDPCD = 0"
+        Consulta_sql = "Select Distinct Top 20 ID_MELI From PEDIDOS_PAGOS Where IDMAEDPCD = 0 --And IDMAEEDO_F = 1263840"
         Dim _Tbl As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Fila As DataRow In _Tbl.Rows
@@ -976,20 +976,27 @@ Public Class Cl_Sincroniza
                 Dim _Refanti As String = _ID_MELI
                 Dim _Feemdp As Date = _FECHA_PAGO
                 Dim _Fevedp As Date = _FECHA_PAGO
+                Dim _Vadp As Double = _MONTO
 
-                Dim _Mensaje As LsValiciones.Mensajes = Fx_PagarDocumento(_IDMAEEDO_F, _Cudp, _Nucudp, _Refanti, _Feemdp, _Fevedp)
+                Dim _Mensaje As LsValiciones.Mensajes = Fx_PagarDocumento(_IDMAEEDO_F, _Cudp, _Nucudp, _Refanti, _Feemdp, _Fevedp, _Vadp)
 
                 If _Mensaje.EsCorrecto Then
 
                     Dim _Maedpcd As MAEDPCD = _Mensaje.Tag
 
                     Consulta_sql = "Update PEDIDOS_PAGOS Set IDMAEDPCE = " & _Maedpcd.IDMAEDPCE & ",IDMAEDPCD = " & _Maedpcd.IDMAEDPCD & " Where ID = " & _ID
-                    _SqlMeli.Ej_consulta_IDU(Consulta_sql)
+
+                    If _SqlMeli.Ej_consulta_IDU(Consulta_sql, False) Then
+                        Sb_AddToLog("Pagar documento", _Mensaje.Mensaje, Txt_Log)
+                    End If
 
                 Else
 
                     Consulta_sql = "Update PEDIDOS_PAGOS Set LOG_INFO = '" & _Mensaje.Mensaje & "' Where ID = " & _ID
-                    _SqlMeli.Ej_consulta_IDU(Consulta_sql)
+
+                    If _SqlMeli.Ej_consulta_IDU(Consulta_sql, False) Then
+                        Sb_AddToLog("Pagar documento", _Mensaje.Mensaje, Txt_Log)
+                    End If
 
                 End If
 
@@ -1036,7 +1043,8 @@ Public Class Cl_Sincroniza
                                _Nucudp As String,
                                _Refanti As String,
                                _Feemdp As Date,
-                               _Fevedp As Date) As LsValiciones.Mensajes
+                               _Fevedp As Date,
+                               _Vadp As Double) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -1069,8 +1077,8 @@ Public Class Cl_Sincroniza
             .MODP = "$",
             .TIMODP = "N",
             .TAMODP = _Row_MaemoUSD.Item("VAMO"),
-            .VADP = _Row_Maeedo.Item("VABRDO"),
-            .VAASDP = _Row_Maeedo.Item("VABRDO"),
+            .VADP = _Vadp,
+            .VAASDP = _Vadp,
             .VAVUDP = 0,
             .ESASDP = "A",
             .ESPGDP = "P",

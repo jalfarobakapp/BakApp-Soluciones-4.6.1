@@ -110,7 +110,7 @@ Public Class Frm_Sincronizador
 
         With _Cl_Sincroniza
 
-            .Sb_SincronizarPagos()
+            .Sb_SincronizarPagos(Txt_Log)
             .Sb_ActualizarIDMAEEDO_NVV_DesdeBakappHaciaMLIBRE()
             .Sb_ActualizarIDMAEEDO_FCV_DesdeBakappHaciaMLIBRE()
 
