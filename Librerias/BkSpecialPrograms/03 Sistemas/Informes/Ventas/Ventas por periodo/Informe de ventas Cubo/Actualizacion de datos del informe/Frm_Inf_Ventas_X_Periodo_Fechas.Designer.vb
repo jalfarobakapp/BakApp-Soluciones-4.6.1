@@ -285,6 +285,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Fechas
         '
         '
         Me.Progreso_Porc.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Progreso_Porc.FocusCuesEnabled = False
         Me.Progreso_Porc.Location = New System.Drawing.Point(6, 74)
         Me.Progreso_Porc.Name = "Progreso_Porc"
         Me.Progreso_Porc.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Donut
@@ -315,6 +316,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Fechas
         '
         '
         Me.Progreso_Cont_Productos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Progreso_Cont_Productos.FocusCuesEnabled = False
         Me.Progreso_Cont_Productos.ForeColor = System.Drawing.Color.Black
         Me.Progreso_Cont_Productos.Location = New System.Drawing.Point(6, 151)
         Me.Progreso_Cont_Productos.Name = "Progreso_Cont_Productos"

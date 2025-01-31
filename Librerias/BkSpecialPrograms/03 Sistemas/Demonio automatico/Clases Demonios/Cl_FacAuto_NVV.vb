@@ -19,6 +19,10 @@
     Public Property FA_1Todas As Boolean
     Public Property CualquierNVV As Boolean
     Public Property SoloDeSucModalidad As Boolean
+    Public Property CantDocFacturanXProceso As Integer
+    Public Property FcOrden_Llegada As Boolean
+    Public Property FcOrden_ItemMenosMas As Boolean
+    Public Property CodFunFactura As String
     Public Property Nombre_Equipo As String
     Public Property Log_Registro As String
     Public Property Procesando As Boolean
@@ -59,7 +63,7 @@
         End If
 
         Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set Facturar = 1,ErrorGrabar = 0,Informacion = ''" & vbCrLf &
-                       "Where Fecha_Facturar = '" & Format(_Fecha_Revision, "yyyyMMdd") & "' And Informacion like 'No existe taza de cambio para la fecha%'"
+                       "Where Fecha_Facturar = '" & Format(_Fecha_Revision, "yyyyMMdd") & "' And Informacion like 'No existe tasa de cambio para la fecha%'"
 
         If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
             Log_Registro += _Sql.Pro_Error & vbCrLf
@@ -73,15 +77,20 @@
         Dim _Esucursal As String = _Sql.Fx_Trae_Dato("CONFIEST", "ESUCURSAL", "MODALIDAD = '" & Modalidad_Fac & "'",, False)
 
         Dim _CondicionSuc = String.Empty
+        Dim _CondicionFunFac = "CodFuncionario_Factura <> ''"
 
         If SoloDeSucModalidad Then
-            _CondicionSuc = "And Empresa = '" & _Empresa & "' And Sucursal = '" & _Esucursal & "'"
+            _CondicionSuc = "And ((Empresa = '" & _Empresa & "' And Sucursal = '" & _Esucursal & "') Or (ModalidadFactura = '" & Modalidad_Fac & "'))" & vbCrLf
+        End If
+
+        If Not String.IsNullOrWhiteSpace(CodFunFactura) Then
+            _CondicionFunFac = "And CodFuncionario_Factura = '" & CodFunFactura & "'"
         End If
 
         Consulta_Sql = "Select TOP 20 Idmaeedo,Id,DocEmitir,Fecha_Facturar,CodFuncionario_Factura" & vbCrLf &
                        "Into #Paso" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Stmp_Enc" & vbCrLf &
-                       "Where Facturar = 1 And Estado = 'COMPL' And EnvFacAutoBk = 0 And CodFuncionario_Factura <> ''" & _CondicionSuc & vbCrLf &
+                       "Where Facturar = 1 And Estado = 'COMPL' And EnvFacAutoBk = 0" & _CondicionSuc & _CondicionFunFac &
                        vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set EnvFacAutoBk = 1" & vbCrLf &
                        "Where Idmaeedo In (Select Idmaeedo From #Paso)" & vbCrLf &
@@ -99,7 +108,7 @@
         End If
 
         Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set Facturar = 0,ErrorGrabar = 0,Informacion = ''" & vbCrLf &
-                       "Where Fecha_Facturar = '" & Format(_Fecha_Revision, "yyyyMMdd") & "' And Informacion like 'No existe taza de cambio para la fecha%'"
+                       "Where Fecha_Facturar = '" & Format(_Fecha_Revision, "yyyyMMdd") & "' And Informacion like 'No existe tasa de cambio para la fecha%'"
 
         If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
             Log_Registro += _Sql.Pro_Error & vbCrLf
@@ -116,6 +125,15 @@
 
         If SoloDeSucModalidad Then
             _CondicionSuc = "And Empresa = '" & _Empresa & "' And Sucursal = '" & _Esucursal & "'"
+        End If
+
+        Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_NVVAuto Set Facturar = 0" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Demonio_NVVAuto Nv" & vbCrLf &
+                       "Inner Join " & _Global_BaseBk & "Zw_Entidades Ent" & vbCrLf &
+                       "On Nv.Endo_Ori = Ent.CodEntidad And Nv.Suendo_Ori = Ent.CodSucEntidad" & vbCrLf &
+                       "Where NVVGenerada = 1 And Facturar = 1 And Ent.FacAuto = 0"
+        If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+            Log_Registro += _Sql.Pro_Error & vbCrLf
         End If
 
         Consulta_Sql = "Select TOP 20 Idmaeedo_NVV As Idmaeedo,DocEmitir,Cast('" & Format(_Fecha_Revision, "yyyyMMdd") & "' As datetime) As Fecha_Facturar,CodFuncionario_Factura" & vbCrLf &
@@ -140,8 +158,15 @@
             Log_Registro += _Sql.Pro_Error & vbCrLf
         End If
 
-        Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set Facturar = 0,ErrorGrabar = 0,Informacion = ''" & vbCrLf &
-                       "Where Fecha_Facturar = '" & Format(_Fecha_Revision, "yyyyMMdd") & "' And Informacion like 'No existe taza de cambio para la fecha%'"
+        Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set Facturar = 1,ErrorGrabar = 0,Informacion = ''" & vbCrLf &
+                       "Where Fecha_Facturar = '" & Format(_Fecha_Revision, "yyyyMMdd") & "' And Informacion like 'No existe tasa de cambio para la fecha%'"
+
+        If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+            Log_Registro += _Sql.Pro_Error & vbCrLf
+        End If
+
+        Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set Facturar = 1,ErrorGrabar = 0,Informacion = ''" & vbCrLf &
+                       "Where ErrorGrabar = 1 And Informacion = '' And DesdeNVVAuto = 1"
 
         If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
             Log_Registro += _Sql.Pro_Error & vbCrLf
@@ -248,7 +273,24 @@
 
         Dim _FechaEmision As Date = FechaDelServidor()
 
-        Consulta_Sql = "Select Top 20 * From " & _Global_BaseBk & "Zw_Demonio_FacAuto Where Facturar = 1"
+
+        Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set Facturar = 1, Facturando = 0" & vbCrLf &
+                       "Where NombreEquipo = '" & Nombre_Equipo & "' And Facturando = 1 "
+        If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+            Log_Registro += _Sql.Pro_Error & vbCrLf
+        End If
+
+        Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto  Set CantItem = (Select COUNT(*) From MAEDDO Where IDMAEEDO = Idmaeedo_NVV)" & vbCrLf &
+                       "Where CantItem = 0 And Facturar = 1"
+        _Sql.Ej_consulta_IDU(Consulta_Sql, False)
+
+        Dim _Orden = String.Empty
+
+        If FcOrden_ItemMenosMas Then
+            _Orden = "Order By CantItem"
+        End If
+
+        Consulta_Sql = "Select Top " & CantDocFacturanXProceso & " * From " & _Global_BaseBk & "Zw_Demonio_FacAuto Where Facturar = 1" & vbCrLf & _Orden
         Dim _Tbl_Doc_Facturar As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
 
         If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
@@ -260,7 +302,8 @@
 
             Dim _Filtro As String = Generar_Filtro_IN(_Tbl_Doc_Facturar, "", "Id", True, False, "")
 
-            Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set Facturar = 0, Facturando = 1 Where Id In " & _Filtro
+            Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set Facturar = 0, Facturando = 1,NombreEquipo = '" & Nombre_Equipo & "'" & vbCrLf &
+                           "Where Id In " & _Filtro
 
             If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
                 Log_Registro += _Sql.Pro_Error & vbCrLf
@@ -421,7 +464,6 @@
 
                     _Mensaje.ErrorDeConexionSQL = _Msj_Tsc.ErrorDeConexionSQL
                     Throw New System.Exception(_Mensaje.Mensaje)
-                    'Throw New System.Exception("No existe taza de cambio para la fecha: " & FechaDelServidor.ToShortDateString)
 
                 End If
 
@@ -533,7 +575,6 @@
 
                     _Mensaje.ErrorDeConexionSQL = _Msj_Tsc.ErrorDeConexionSQL
                     Throw New System.Exception(_Mensaje.Mensaje)
-                    'Throw New System.Exception("No existe taza de cambio para la fecha: " & FechaDelServidor.ToShortDateString)
 
                 End If
 
@@ -683,11 +724,9 @@
 
                         _Mensaje.ErrorDeConexionSQL = _Msj_Tsc.ErrorDeConexionSQL
                         Throw New System.Exception(_Msj_Tsc.Mensaje)
-                        'Throw New System.Exception("No existe taza de cambio para la fecha: " & FechaDelServidor.ToShortDateString)
 
                     End If
 
-                    'If Fx_Revisar_Tasa_Cambio(_Formulario) Then
 
                     Consulta_Sql = "SELECT IDMAEEDO FROM MAEDDO WHERE IDMAEEDO = " & _Idmaeedo_Origen & " AND ( ESLIDO<>'C' OR ESFALI='I' ) AND TICT = ''"
 
@@ -928,11 +967,8 @@
 
                         _Mensaje.ErrorDeConexionSQL = _Msj_Tsc.ErrorDeConexionSQL
                         Throw New System.Exception(_Msj_Tsc.Mensaje)
-                        'Throw New System.Exception("No existe taza de cambio para la fecha: " & FechaDelServidor.ToShortDateString)
 
                     End If
-
-                    'If Fx_Revisar_Tasa_Cambio(_Formulario) Then
 
                     Consulta_Sql = "SELECT IDMAEEDO FROM MAEDDO WHERE IDMAEEDO = " & _Idmaeedo_Origen & " AND ( ESLIDO<>'C' OR ESFALI='I' ) AND TICT = ''"
 

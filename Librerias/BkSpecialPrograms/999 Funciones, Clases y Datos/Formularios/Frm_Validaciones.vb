@@ -179,6 +179,7 @@ Namespace LsValiciones
         Public Property Cerrar As Boolean
         Public Property ErrorDeConexionSQL As Boolean
         Public Property HuboOtroError As Boolean
+        Public Property ConsultaSQLEjecutada As String
 
     End Class
 

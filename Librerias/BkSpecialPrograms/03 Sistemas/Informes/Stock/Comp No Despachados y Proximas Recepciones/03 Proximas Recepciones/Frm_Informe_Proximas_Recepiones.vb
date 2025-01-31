@@ -303,6 +303,8 @@ Public Class Frm_Informe_Proximas_Recepiones
                                          Frm_Informe_Prox_Recep_Y_Comp_No_Desp.Enum_Informe.Sucursal,
                                          _Tabla_Paso,
                                          _Ud, False)
+            Fm.FechaDesde = Dtp_Fecha_Emision_Desde.Value
+            Fm.FechaHasta = Dtp_Fecha_Emision_Hasta.Value
             Fm.ShowDialog(Me)
             Fm.Dispose()
 

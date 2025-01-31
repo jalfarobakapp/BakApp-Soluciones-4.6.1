@@ -647,6 +647,17 @@ Public Class Frm_Demonio_Configuraciones
                                       Chk_EnviarSiempreLosCorreosDTE.Name, Class_SQLite.Enum_Type._Boolean,
                                       Chk_EnviarSiempreLosCorreosDTE.Checked, _Actualizar, "Correo",, False)
 
+        _Sql.Sb_Parametro_Informe_Sql(Chk_ActualizarListaMayoristaMinorista, "Demonio",
+                                      Chk_ActualizarListaMayoristaMinorista.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Chk_ActualizarListaMayoristaMinorista.Checked, _Actualizar, "Correo",, False)
+        _Sql.Sb_Parametro_Informe_Sql(Txt_CorreoMayoristaMinorista, "Demonio",
+                                      Txt_CorreoMayoristaMinorista.Name, Class_SQLite.Enum_Type._String,
+                                      Txt_CorreoMayoristaMinorista.Text, _Actualizar, "Correo",, False)
+        _Sql.Sb_Parametro_Informe_Sql(Txt_CorreoMayoristaMinorista, "Demonio",
+                                      Txt_CorreoMayoristaMinorista.Name, Class_SQLite.Enum_Type._Tag,
+                                      Txt_CorreoMayoristaMinorista.Tag, _Actualizar, "Correo",, False)
+
+
         'Impresiones
         _Sql.Sb_Parametro_Informe_Sql(Chk_ColaImpDoc, "Demonio",
                                       Chk_ColaImpDoc.Name, Class_SQLite.Enum_Type._Boolean,
@@ -654,6 +665,10 @@ Public Class Frm_Demonio_Configuraciones
         _Sql.Sb_Parametro_Informe_Sql(Chk_ColaImpPick, "Demonio",
                                       Chk_ColaImpPick.Name, Class_SQLite.Enum_Type._Boolean,
                                       Chk_ColaImpPick.Checked, _Actualizar, "Impresion",, False)
+        _Sql.Sb_Parametro_Informe_Sql(Chk_ColaImpImprmirTodoNodejarCola, "Demonio",
+                                      Chk_ColaImpImprmirTodoNodejarCola.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Chk_ColaImpImprmirTodoNodejarCola.Checked, _Actualizar, "Impresion",, False)
+
 
         'Prestashop
         _Sql.Sb_Parametro_Informe_Sql(Chk_Prestashop_Prod, "Demonio",
@@ -759,7 +774,20 @@ Public Class Frm_Demonio_Configuraciones
                                       Rdb_FacAuto_SoloDeSucModalidad.Name, Class_SQLite.Enum_Type._Boolean,
                                       Rdb_FacAuto_SoloDeSucModalidad.Checked, _Actualizar, "FacAuto",, False)
 
+        _Sql.Sb_Parametro_Informe_Sql(Txt_FacAuto_CodFunFactura, "Demonio",
+                                      Txt_FacAuto_CodFunFactura.Name, Class_SQLite.Enum_Type._String,
+                                      Txt_FacAuto_CodFunFactura.Text, _Actualizar, "FacAuto",, False)
 
+        _Sql.Sb_Parametro_Informe_Sql(Input_CantDocFacturanXProceso, "Demonio",
+                                      Input_CantDocFacturanXProceso.Name, Class_SQLite.Enum_Type._Double,
+                                      Input_CantDocFacturanXProceso.Value, _Actualizar, "FacAuto",, False)
+
+        _Sql.Sb_Parametro_Informe_Sql(Rdb_FcOrden_Llegada, "Demonio",
+                                      Rdb_FcOrden_Llegada.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Rdb_FcOrden_Llegada.Checked, _Actualizar, "FacAuto",, False)
+        _Sql.Sb_Parametro_Informe_Sql(Rdb_FcOrden_ItemMenosMas, "Demonio",
+                                      Rdb_FcOrden_ItemMenosMas.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Rdb_FcOrden_ItemMenosMas.Checked, _Actualizar, "FacAuto",, False)
 
         'Solicitud de productos a bodega
         _Sql.Sb_Parametro_Informe_Sql(Chk_SolProdBod, "Demonio",
@@ -952,5 +980,49 @@ Public Class Frm_Demonio_Configuraciones
 
         End If
 
+    End Sub
+
+    Private Sub Txt_CorreoMayoristaMinorista_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_CorreoMayoristaMinorista.ButtonCustomClick
+
+        Dim _Row_Email As DataRow
+
+        Dim Fm As New Frm_Correos_SMTP
+        Fm.Pro_Seleccionar = True
+        Fm.ShowDialog(Me)
+        _Row_Email = Fm.Pro_Row_Fila_Seleccionada
+        Fm.Dispose()
+
+        If Not IsNothing(_Row_Email) Then
+            Txt_CorreoMayoristaMinorista.Tag = _Row_Email.Item("Id")
+            Txt_CorreoMayoristaMinorista.Text = _Row_Email.Item("Nombre_Correo").ToString.Trim
+        End If
+
+    End Sub
+
+    Private Sub Txt_CorreoMayoristaMinorista_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_CorreoMayoristaMinorista.ButtonCustom2Click
+        If MessageBoxEx.Show(Me, "Confirma quitar el correo", "Quitar correo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            Txt_CorreoMayoristaMinorista.Tag = 0
+            Txt_CorreoMayoristaMinorista.Text = String.Empty
+        End If
+    End Sub
+
+    Private Sub Txt_FacAuto_CodFunFactura_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_FacAuto_CodFunFactura.ButtonCustomClick
+
+        Dim _Tbl As DataTable
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(_Tbl, Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random, "", False, False, True) Then
+
+            Txt_FacAuto_CodFunFactura.Tag = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
+            Txt_FacAuto_CodFunFactura.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo").ToString.Trim
+
+        End If
+
+    End Sub
+
+    Private Sub Txt_FacAuto_CodFunFactura_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_FacAuto_CodFunFactura.ButtonCustom2Click
+        Txt_FacAuto_CodFunFactura.Tag = String.Empty
+        Txt_FacAuto_CodFunFactura.Text = String.Empty
     End Sub
 End Class

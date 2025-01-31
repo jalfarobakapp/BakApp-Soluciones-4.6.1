@@ -2,6 +2,7 @@
 Imports System.Security.Cryptography
 Imports BkSpecialPrograms
 Imports BkSpecialPrograms.LsValiciones
+Imports DevComponents.DotNetBar
 
 Public Class Cl_Sincroniza
 
@@ -154,15 +155,38 @@ Public Class Cl_Sincroniza
 
             For Each _PEDIDOS_DETALLE As PEDIDOS_DETALLE In _Ls_PEDIDOS_DETALLE
 
-                Consulta_sql = "Select KOPR,NOKOPR From MAEPR Where KOPR = '" & _PEDIDOS_DETALLE.KOPR & "'"
-                Dim _Row_Producto As DataRow = _SqlRandom.Fx_Get_DataRow(Consulta_sql, False)
+                Dim _Descripcion As String
 
-                If IsNothing(_Row_Producto) Then
-                    _Mensaje.EsCorrecto = False
-                    _Mensaje.Detalle = "Producto no encontrado"
-                    _Mensaje.Mensaje = "Producto no encontrado: " & _PEDIDOS_DETALLE.KOPR.ToString.Trim
-                    _Mensaje.Id = 0
-                    Return _Mensaje
+                If _PEDIDOS_DETALLE.PRCT Then
+
+                    Consulta_sql = "Select KOCT,NOKOCT From TABCT Where KOCT = '" & _PEDIDOS_DETALLE.KOPR & "' And TICT = '" & _PEDIDOS_DETALLE.TICT & "'"
+                    Dim _Row_Concepto As DataRow = _SqlRandom.Fx_Get_DataRow(Consulta_sql, False)
+
+                    If IsNothing(_Row_Concepto) Then
+                        _Mensaje.EsCorrecto = False
+                        _Mensaje.Detalle = "Concepto no encontrado"
+                        _Mensaje.Mensaje = "Concepto no encontrado: " & _PEDIDOS_DETALLE.KOPR.ToString.Trim
+                        _Mensaje.Id = 0
+                        Return _Mensaje
+                    End If
+
+                    _Descripcion = _Row_Concepto.Item("NOKOCT")
+
+                Else
+
+                    Consulta_sql = "Select KOPR,NOKOPR From MAEPR Where KOPR = '" & _PEDIDOS_DETALLE.KOPR & "'"
+                    Dim _Row_Producto As DataRow = _SqlRandom.Fx_Get_DataRow(Consulta_sql, False)
+
+                    If IsNothing(_Row_Producto) Then
+                        _Mensaje.EsCorrecto = False
+                        _Mensaje.Detalle = "Producto no encontrado"
+                        _Mensaje.Mensaje = "Producto no encontrado: " & _PEDIDOS_DETALLE.KOPR.ToString.Trim
+                        _Mensaje.Id = 0
+                        Return _Mensaje
+                    End If
+
+                    _Descripcion = _Row_Producto.Item("NOKOPR")
+
                 End If
 
                 Dim _Zw_Demonio_NVVAutoDet As New Zw_Demonio_NVVAutoDet
@@ -173,7 +197,7 @@ Public Class Cl_Sincroniza
                     .Codigo = _PEDIDOS_DETALLE.KOPR
                     .Cantidad = _PEDIDOS_DETALLE.CANTIDAD
                     .Untrans = 1
-                    .Descripcion = _Row_Producto.Item("NOKOPR")
+                    .Descripcion = _Descripcion
                     .Empresa = ConfiguracionLocal.BodegaFacturacion.Empresa
                     .Sucursal = ConfiguracionLocal.BodegaFacturacion.Kosu
                     .Bodega = ConfiguracionLocal.BodegaFacturacion.Kobo
@@ -187,6 +211,8 @@ Public Class Cl_Sincroniza
                     '.Stdv1 = _Row.Item("Stdv1")
                     '.Stdv2 = _Row.Item("Stdv2")
                     .Precio = Math.Round(_PEDIDOS_DETALLE.NETO_UNITARIO * 1.19, 0)
+                    .Prct = _PEDIDOS_DETALLE.PRCT
+                    .Tict = _PEDIDOS_DETALLE.TICT
                 End With
 
                 _Ls_Zw_Demonio_NVVAuto_Detalle.Add(_Zw_Demonio_NVVAutoDet)
@@ -235,10 +261,11 @@ Public Class Cl_Sincroniza
                     .Id_Enc = _Zw_Demonio_NVVAuto.Id_Enc
 
                     Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet (Id_Enc,Idmaeddo_Ori,Codigo,Cantidad," &
-                                   "Untrans,Descripcion,Empresa,Sucursal,Bodega,CantidadDefinitiva,Precio,Kofulido) Values " &
+                                   "Untrans,Descripcion,Empresa,Sucursal,Bodega,CantidadDefinitiva,Precio,Kofulido,Prct,Tict) Values " &
                                    "(" & .Id_Enc & "," & .Idmaeddo_Ori & ",'" & .Codigo & "'," & .Cantidad & "," & .Untrans &
                                    ",'" & .Descripcion & "','" & .Empresa & "','" & .Sucursal & "','" & .Bodega & "'," &
-                                   .CantidadDefinitiva & "," & .Precio & ",'" & ConfiguracionLocal.Vendedor & "')"
+                                   .CantidadDefinitiva & "," & .Precio & ",'" & ConfiguracionLocal.Vendedor & "'," &
+                                   Convert.ToInt32(.Prct) & ",'" & .Tict & "')"
 
                     Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                     Comando.Transaction = myTrans
@@ -400,8 +427,7 @@ Public Class Cl_Sincroniza
 
         Try
 
-            Consulta_sql = "SELECT ID,ID_MELI,KOPR,REFERENCIA_MELI,CANTIDAD,NETO_UNITARIO,SUB_TOTAL,ES_KIT,ID_PADREKIT" & vbCrLf &
-                           "FROM PEDIDOS_DETALLE" & vbCrLf &
+            Consulta_sql = "Select * From PEDIDOS_DETALLE" & vbCrLf &
                            "Where ID_MELI = " & _ID_MELI & vbCrLf &
                            "And ES_KIT = 0"
             Dim _Tbl As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
@@ -427,6 +453,8 @@ Public Class Cl_Sincroniza
                     .SUB_TOTAL = _Row.Item("SUB_TOTAL")
                     .ES_KIT = _Row.Item("ES_KIT")
                     .ID_PADREKIT = _Row.Item("ID_PADREKIT")
+                    .PRCT = _Row.Item("PRCT")
+                    .TICT = _Row.Item("TICT")
                 End With
 
                 _Ls_PEDIDOS_DETALLE.Add(_DETALLE_MELI)
@@ -538,10 +566,10 @@ Public Class Cl_Sincroniza
             Dim _KOPR As String = _Fila.Item("KOPR")
             Dim _REFERENCIA_MELI As String = _Fila.Item("REFERENCIA_MELI")
             Dim _CANTIDAD As Integer = _Fila.Item("CANTIDAD")
-            Dim _NETO_UNITARIO As Integer = _Fila.Item("NETO_UNITARIO")
-            Dim _SUB_TOTAL As Integer = _Fila.Item("SUB_TOTAL")
+            Dim _NETO_UNITARIO As Double = _Fila.Item("NETO_UNITARIO")
+            Dim _SUB_TOTAL As Double = _Fila.Item("SUB_TOTAL")
 
-            Dim _Mensaje As LsValiciones.Mensajes = Fx_Llenar_PEDIDOS_DETALLE_KIT(_ID_MELI, _SUB_TOTAL)
+            Dim _Mensaje As LsValiciones.Mensajes = Fx_Llenar_PEDIDOS_DETALLE_KIT(_ID_MELI, _SUB_TOTAL, _CANTIDAD)
 
             If _Mensaje.EsCorrecto Then
 
@@ -600,11 +628,11 @@ Public Class Cl_Sincroniza
                     Comando.ExecuteNonQuery()
 
                     Consulta_sql = "Insert Into PEDIDOS_DETALLE (ID_MELI,KOPR,REFERENCIA_MELI," &
-                                   "CANTIDAD,NETO_UNITARIO,SUB_TOTAL,ES_KIT,ID_PADREKIT) Values " & vbCrLf &
+                                   "CANTIDAD,NETO_UNITARIO,SUB_TOTAL,ES_KIT,ID_PADREKIT,PRCT,TICT) Values " & vbCrLf &
                                    "('" & .ID_MELI & "','" & .KOPR & "','" & .REFERENCIA_MELI & "'," &
                                    De_Num_a_Tx_01(.CANTIDAD, False, 5) & "," &
                                    De_Num_a_Tx_01(.NETO_UNITARIO, False, 5) & "," &
-                                   De_Num_a_Tx_01(.SUB_TOTAL, False, 5) & ",0," & _Id_Detalle & ")"
+                                   De_Num_a_Tx_01(.SUB_TOTAL, False, 5) & ",0," & _Id_Detalle & "," & Convert.ToInt32(.PRCT) & ",'" & .TICT & "')"
 
                     Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                     Comando.Transaction = myTrans
@@ -640,7 +668,7 @@ Public Class Cl_Sincroniza
 
     End Function
 
-    Private Function Fx_Llenar_PEDIDOS_DETALLE_KIT(_ID_MELI As String, _Sub_Total As Double) As Mensajes
+    Private Function Fx_Llenar_PEDIDOS_DETALLE_KIT(_ID_MELI As String, _Sub_Total As Double, _CantidadKit As Integer) As Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -673,7 +701,7 @@ Public Class Cl_Sincroniza
                 Dim _Sku As String = _Fila.KOPR
                 Dim _Id_padrekit As Integer = _Fila.ID
 
-                Dim _Mensaje2 As LsValiciones.Mensajes = Fx_CrearDetalleKit(_ID_MELI, _Fila, _Sub_Total)
+                Dim _Mensaje2 As LsValiciones.Mensajes = Fx_CrearDetalleKit(_ID_MELI, _Fila, _Sub_Total, _CantidadKit)
 
                 _Ls_Pedidos.AddRange(_Mensaje2.Tag)
 
@@ -696,7 +724,8 @@ Public Class Cl_Sincroniza
 
     Function Fx_CrearDetalleKit(_Id_meli As String,
                                 _Fila_Pedidos_detalle As PEDIDOS_DETALLE,
-                                _Sub_Total As Double) As LsValiciones.Mensajes
+                                _Sub_Total As Double,
+                                _CantidadKit As Integer) As LsValiciones.Mensajes
 
         Dim _Sku As String = _Fila_Pedidos_detalle.KOPR
         Dim _Id_padrekit As Integer = _Fila_Pedidos_detalle.ID
@@ -730,7 +759,7 @@ Public Class Cl_Sincroniza
 
                 Dim _Id As Integer = _Fila.Item("ID")
                 Dim _Kopr As String = _Fila.Item("SKU")
-                Dim _Cantidad As Integer = _Fila.Item("CANTIDAD")
+                Dim _Cantidad As Integer = _Fila.Item("CANTIDAD") * _CantidadKit
                 Dim _Precio As Double = _Fila.Item("PP01UD")
 
                 Dim _PEDIDOS_DETALLE As New PEDIDOS_DETALLE
@@ -745,6 +774,8 @@ Public Class Cl_Sincroniza
                     .SUB_TOTAL = _Cantidad * _Precio
                     .ES_KIT = True
                     .ID_PADREKIT = _Id_padrekit
+                    .PRCT = False
+                    .TICT = String.Empty
                 End With
 
                 _Ls_PEDIDOS_DETALLE.Add(_PEDIDOS_DETALLE)
@@ -757,32 +788,326 @@ Public Class Cl_Sincroniza
             ' Calcular el descuento necesario
             Dim _Descuento As Double = Math.Round(_Diferencia / _Sub_Total_Calculado, 5)
 
-            Dim _Suma_Total2 As Double = 0
+            Dim _Suma_Total_Neto_Calculado As Double = 0
+            Dim _Suma_Total_Bruto_Calculado As Double = 0
 
             For Each _Fl As PEDIDOS_DETALLE In _Ls_PEDIDOS_DETALLE
 
                 Dim _Precio As Double = _Fl.NETO_UNITARIO
+                Dim _Precio_Bruto As Double
+
                 Dim _PrecioCd As Double = Math.Round(_Precio * _Descuento, 0)
+
                 _Precio = _Precio - _PrecioCd
+                _Precio_Bruto = Math.Round(_Precio * 1.19, 0)
 
                 Dim _Total As Double = _Precio * _Fl.CANTIDAD
-                _Suma_Total2 += _Total
+                Dim _Total_Bruto As Double = _Precio_Bruto * _Fl.CANTIDAD
+
+                _Suma_Total_Neto_Calculado += _Total
+                _Suma_Total_Bruto_Calculado += _Total_Bruto
 
                 _Fl.NETO_UNITARIO = _Precio
                 _Fl.SUB_TOTAL = _Precio * _Fl.CANTIDAD
 
             Next
 
-            _Diferencia = _Sub_Total - _Suma_Total2
+            _Diferencia = _Sub_Total - _Suma_Total_Neto_Calculado
+
+            Dim _TotalBruto_Meli As Double = Math.Round(_Sub_Total * 1.19, 0)
+            Dim _TotalBruto_Calculado As Double = _Suma_Total_Bruto_Calculado
+
+            _Diferencia = _TotalBruto_Meli - _TotalBruto_Calculado
 
             If CBool(_Diferencia) Then
-                _Ls_PEDIDOS_DETALLE.Item(0).NETO_UNITARIO += _Diferencia
-                _Ls_PEDIDOS_DETALLE.Item(0).SUB_TOTAL = _Ls_PEDIDOS_DETALLE.Item(0).NETO_UNITARIO * _Ls_PEDIDOS_DETALLE.Item(0).CANTIDAD
+
+                'Dim _Dif As Double = Math.Round(_Diferencia / _CantidadKit, 0)
+
+                Dim _Kopr As String
+                Dim _Cantidad As Integer = 1
+                Dim _Precio As Double = _Diferencia
+                Dim _Tict As String
+
+                If _Diferencia > 0 Then
+                    _Kopr = ConfiguracionLocal.Concepto_R
+                    _Tict = "R"
+                Else
+                    _Kopr = ConfiguracionLocal.Concepto_D
+                    _Tict = "D"
+                    _Diferencia = _Diferencia * -1
+                End If
+
+                _Precio = _Diferencia
+
+                Dim _PEDIDOS_DETALLE As New PEDIDOS_DETALLE
+
+                With _PEDIDOS_DETALLE
+                    .ID = 0
+                    .ID_MELI = _Id_meli
+                    .KOPR = _Kopr
+                    .CANTIDAD = _Cantidad
+                    .NETO_UNITARIO = _Precio
+                    .REFERENCIA_MELI = ""
+                    .SUB_TOTAL = _Precio
+                    .ES_KIT = True
+                    .ID_PADREKIT = _Id_padrekit
+                    .PRCT = True
+                    .TICT = _Tict
+                End With
+
+                _Ls_PEDIDOS_DETALLE.Add(_PEDIDOS_DETALLE)
+
+                '_Ls_PEDIDOS_DETALLE.Item(0).NETO_UNITARIO += _Dif
+                '_Ls_PEDIDOS_DETALLE.Item(0).SUB_TOTAL = _Ls_PEDIDOS_DETALLE.Item(0).NETO_UNITARIO * _Ls_PEDIDOS_DETALLE.Item(0).CANTIDAD
+
             End If
 
             _Mensaje.EsCorrecto = True
             _Mensaje.Mensaje = "Kits encontrados y armados"
             _Mensaje.Tag = _Ls_PEDIDOS_DETALLE
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
+    Sub Sb_ActualizarIDMAEEDO_NVV_DesdeBakappHaciaMLIBRE()
+
+        _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
+        _SqlMeli = New Class_SQL(Cadena_ConexionSQL_Server_Meli)
+
+        Consulta_sql = "SELECT * From PEDIDOS Where IDMAEEDO = 0 And REVBAKAPP = 1"
+        Dim _Tbl_Pedidos As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
+
+        If _Tbl_Pedidos.Rows.Count = 0 Then
+            Return
+        End If
+
+        For Each _Fila As DataRow In _Tbl_Pedidos.Rows
+
+            Dim _ID As Integer = _Fila.Item("ID")
+            Dim _ID_MELI As String = _Fila.Item("ID_MELI")
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_NVVAuto Where NudoOCC_Ori = '" & _ID_MELI & "' And Idmaeedo_NVV <> 0"
+            Dim _Row As DataRow = _SqlRandom.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_Row) Then
+                Continue For
+            End If
+
+            Dim _IDMAEEDO As Integer = _Row.Item("Idmaeedo_NVV")
+
+            Consulta_sql = "Update PEDIDOS Set IDMAEEDO = " & _IDMAEEDO & ",ESTADO = 1 Where ID_MELI = " & _ID_MELI
+            _SqlMeli.Ej_consulta_IDU(Consulta_sql)
+
+        Next
+
+    End Sub
+
+    Sub Sb_ActualizarIDMAEEDO_FCV_DesdeBakappHaciaMLIBRE()
+
+        _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
+        _SqlMeli = New Class_SQL(Cadena_ConexionSQL_Server_Meli)
+
+        Consulta_sql = "SELECT * From PEDIDOS Where IDMAEEDO <> 0 And ESTADO = 1"
+        Dim _Tbl_Pedidos As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
+
+        If _Tbl_Pedidos.Rows.Count = 0 Then
+            Return
+        End If
+
+        For Each _Fila As DataRow In _Tbl_Pedidos.Rows
+
+            Dim _ID As Integer = _Fila.Item("ID")
+            Dim _ID_MELI As String = _Fila.Item("ID_MELI")
+            Dim _IDMAEEDO_NVV As String = _Fila.Item("IDMAEEDO")
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_FacAuto Where Idmaeedo_NVV = '" & _IDMAEEDO_NVV & "' And Facturado = 1"
+            Dim _Row As DataRow = _SqlRandom.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_Row) Then
+                Continue For
+            End If
+
+            Dim _IDMAEEDO_F As Integer = _Row.Item("Idmaeedo_FCV")
+
+            Consulta_sql = "Update PEDIDOS Set IDMAEEDO_F = " & _IDMAEEDO_F & ",ESTADO = 2 Where ID_MELI = " & _ID_MELI
+            _SqlMeli.Ej_consulta_IDU(Consulta_sql)
+
+        Next
+
+    End Sub
+
+    Sub Sb_SincronizarPagos(Txt_Log As Object)
+
+        If Not ConfiguracionLocal.Pago.PagarAuto Then
+            Return
+        End If
+
+        _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
+        _SqlMeli = New Class_SQL(Cadena_ConexionSQL_Server_Meli)
+
+        Consulta_sql = "Select Distinct Top 20 ID_MELI From PEDIDOS_PAGOS Where IDMAEDPCD = 0 --And IDMAEEDO_F = 1263840"
+        Dim _Tbl As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
+
+        For Each _Fila As DataRow In _Tbl.Rows
+
+            Dim _ID_MELI As String = _Fila.Item("ID_MELI")
+            Dim _Ls_PEDIDOS_PAGOS As List(Of PEDIDOS_PAGOS) = Fx_Llena_PEDIDOS_PAGOS(_ID_MELI)
+
+            For Each _Fl As PEDIDOS_PAGOS In _Ls_PEDIDOS_PAGOS
+
+                Dim _ID As Integer = _Fl.ID
+                Dim _IDMAEEDO_F As Integer = _Fl.IDMAEEDO_F
+                Dim _ID_PAGO As String = _Fl.ID_PAGO
+                Dim _MONTO As Double = _Fl.MONTO
+                Dim _TIPO_PAGO As String = _Fl.TIPO_PAGO
+                Dim _FECHA_PAGO As Date = _Fl.FECHA_PAGO
+                Dim _IDMAEDPCD As Integer = _Fl.IDMAEDPCD
+                Dim _IDMAEDPCE As Integer = _Fl.IDMAEDPCE
+                Dim _LOG_INFO As String = _Fl.LOG_INFO
+
+                Dim _Cudp As String = If(_ID_PAGO.Length >= 16, _ID_PAGO.Substring(_ID_PAGO.Length - 16), _ID_MELI)
+                Dim _Nucudp As String = If(_ID_MELI.Length >= 8, _ID_MELI.Substring(_ID_MELI.Length - 8), _ID_MELI)
+                Dim _Refanti As String = _ID_MELI
+                Dim _Feemdp As Date = _FECHA_PAGO
+                Dim _Fevedp As Date = _FECHA_PAGO
+                Dim _Vadp As Double = _MONTO
+
+                Dim _Mensaje As LsValiciones.Mensajes = Fx_PagarDocumento(_IDMAEEDO_F, _Cudp, _Nucudp, _Refanti, _Feemdp, _Fevedp, _Vadp)
+
+                If _Mensaje.EsCorrecto Then
+
+                    Dim _Maedpcd As MAEDPCD = _Mensaje.Tag
+
+                    Consulta_sql = "Update PEDIDOS_PAGOS Set IDMAEDPCE = " & _Maedpcd.IDMAEDPCE & ",IDMAEDPCD = " & _Maedpcd.IDMAEDPCD & " Where ID = " & _ID
+
+                    If _SqlMeli.Ej_consulta_IDU(Consulta_sql, False) Then
+                        Sb_AddToLog("Pagar documento", _Mensaje.Mensaje, Txt_Log)
+                    End If
+
+                Else
+
+                    Consulta_sql = "Update PEDIDOS_PAGOS Set LOG_INFO = '" & _Mensaje.Mensaje & "' Where ID = " & _ID
+
+                    If _SqlMeli.Ej_consulta_IDU(Consulta_sql, False) Then
+                        Sb_AddToLog("Pagar documento", _Mensaje.Mensaje, Txt_Log)
+                    End If
+
+                End If
+
+            Next
+
+        Next
+
+    End Sub
+
+    Function Fx_Llena_PEDIDOS_PAGOS(_Id_Meli As String) As List(Of PEDIDOS_PAGOS)
+
+        Dim _Ls_PEDIDOS_PAGOS As New List(Of PEDIDOS_PAGOS)
+
+        _SqlMeli = New Class_SQL(Cadena_ConexionSQL_Server_Meli)
+
+        Consulta_sql = "Select * From PEDIDOS_PAGOS Where ID_MELI = '" & _Id_Meli & "'"
+        Dim _Tbl As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
+
+        For Each _Fila As DataRow In _Tbl.Rows
+
+            Dim _Pedidos_Pagos As New PEDIDOS_PAGOS With {
+                .ID = _Fila.Item("ID"),
+                .ID_MELI = _Fila.Item("ID_MELI"),
+                .IDMAEEDO_F = _Fila.Item("IDMAEEDO_F"),
+                .ID_PAGO = _Fila.Item("ID_PAGO"),
+                .MONTO = _Fila.Item("MONTO"),
+                .TIPO_PAGO = _Fila.Item("TIPO_PAGO"),
+                .FECHA_PAGO = _Fila.Item("FECHA_PAGO"),
+                .IDMAEDPCD = _Fila.Item("IDMAEDPCD"),
+                .IDMAEDPCE = _Fila.Item("IDMAEDPCE"),
+                .LOG_INFO = _Fila.Item("LOG_INFO")
+            }
+
+            _Ls_PEDIDOS_PAGOS.Add(_Pedidos_Pagos)
+
+        Next
+
+        Return _Ls_PEDIDOS_PAGOS
+
+    End Function
+
+    Function Fx_PagarDocumento(_Idmaeedo As Integer,
+                               _Cudp As String,
+                               _Nucudp As String,
+                               _Refanti As String,
+                               _Feemdp As Date,
+                               _Fevedp As Date,
+                               _Vadp As Double) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
+
+        Try
+
+            Dim _Cl_Pagar As New Clas_Pagar
+            Dim _Maedpce As MAEDPCE
+
+            Dim _Row_Maeedo As DataRow = _SqlRandom.Fx_Get_DataRow("Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo)
+
+            Consulta_sql = "Select TOP 1 * From MAEMO Where KOMO = 'US$' AND FEMO = '" & Format(FechaDelServidor, "yyyyMMdd") & "' Order by IDMAEMO DESC"
+            Dim _Row_MaemoUSD = _SqlRandom.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_Row_MaemoUSD) Then
+                Throw New System.Exception("No se encontraron registros en MAEMO, KOMO = 'US$', FEMO = '" & Format(FechaDelServidor, "yyyyMMdd") & "'")
+            End If
+
+            _Maedpce = New MAEDPCE With {
+            .TIDP = ConfiguracionLocal.Pago.TipoPago,
+            .EMPRESA = ConfiguracionLocal.Pago.Empresa,
+            .ENDP = _Row_Maeedo.Item("ENDO"),
+            .EMDP = ConfiguracionLocal.Pago.Banco,
+            .SUEMDP = "",
+            .CUDP = _Cudp,
+            .NUCUDP = _Nucudp,
+            .FEEMDP = _Feemdp,
+            .FEVEDP = _Fevedp,
+            .MODP = "$",
+            .TIMODP = "N",
+            .TAMODP = _Row_MaemoUSD.Item("VAMO"),
+            .VADP = _Vadp,
+            .VAASDP = _Vadp,
+            .VAVUDP = 0,
+            .ESASDP = "A",
+            .ESPGDP = "P",
+            .SUREDP = ConfiguracionLocal.Pago.Sucursal,
+            .CJREDP = ConfiguracionLocal.Pago.Caja,
+            .KOFUDP = ConfiguracionLocal.Pago.Funcionario,
+            .REFANTI = _Refanti,
+            .KOTU = 1,
+            .VAABDP = 0,
+            .CUOTAS = 1,
+            .ARCHIRSD = "",
+            .IDRSD = 0,
+            .KOTNDP = ConfiguracionLocal.Pago.RutEmpresa,
+            .SUTNDP = ConfiguracionLocal.Pago.Sucursal
+            }
+
+            Dim _Fecha_Asignacion_Pago As Date = FechaDelServidor()
+            Dim _Ls_Maedpce As New List(Of MAEDPCE)
+
+            _Ls_Maedpce.Add(_Maedpce)
+
+            _Mensaje = _Cl_Pagar.Fx_Pagar_Documento(_Idmaeedo, _Ls_Maedpce, _Fecha_Asignacion_Pago)
+
+            If Not _Mensaje.EsCorrecto Then
+                Throw New System.Exception(_Mensaje.Mensaje)
+            End If
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Documento pagado correctamente"
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False

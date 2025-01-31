@@ -73,6 +73,11 @@ Partial Class Menu
         Me.Btn_Stem = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_RevPesoVariable = New DevComponents.DotNetBar.ButtonItem()
         Me.ButtonItem6 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_PreVenta = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_OccPreventa = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_NvvPreVenta = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_PagarDocumento = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_GDI2GRI = New DevComponents.DotNetBar.ButtonItem()
         Me.Tiempo_Actualizar_BakApp = New System.Windows.Forms.Timer(Me.components)
         Me.Menu_BakApp = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_Menu_Extra = New DevComponents.DotNetBar.ButtonItem()
@@ -94,6 +99,7 @@ Partial Class Menu
         Me.Metro_Bar_Color = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
         Me.StyleManager1 = New DevComponents.DotNetBar.StyleManager(Me.components)
+        Me.Btn_Rutas = New DevComponents.DotNetBar.ButtonItem()
         MetroTileFrame1 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame2 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame3 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
@@ -798,11 +804,11 @@ Partial Class Menu
         Me.ButtonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.ButtonX1.Image = CType(resources.GetObject("ButtonX1.Image"), System.Drawing.Image)
         Me.ButtonX1.ImageAlt = CType(resources.GetObject("ButtonX1.ImageAlt"), System.Drawing.Image)
-        Me.ButtonX1.Location = New System.Drawing.Point(150, 518)
+        Me.ButtonX1.Location = New System.Drawing.Point(489, 16)
         Me.ButtonX1.Name = "ButtonX1"
         Me.ButtonX1.Size = New System.Drawing.Size(134, 32)
         Me.ButtonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.ButtonX1.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Monisiones, Me.ButtonItem5, Me.Btn_IngresarGRIProduccion, Me.Btn_CrearNVVDesdeOCC, Me.Btn_PruebasFacturaElectronica, Me.Btn_Stem, Me.Btn_RevPesoVariable, Me.ButtonItem6})
+        Me.ButtonX1.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Monisiones, Me.ButtonItem5, Me.Btn_IngresarGRIProduccion, Me.Btn_CrearNVVDesdeOCC, Me.Btn_PruebasFacturaElectronica, Me.Btn_Stem, Me.Btn_RevPesoVariable, Me.ButtonItem6, Me.Btn_PreVenta, Me.Btn_PagarDocumento, Me.Btn_GDI2GRI, Me.Btn_Rutas})
         Me.ButtonX1.TabIndex = 15
         Me.ButtonX1.Text = "Boton de pruebas"
         Me.ButtonX1.Visible = False
@@ -879,6 +885,35 @@ Partial Class Menu
         Me.ButtonItem6.GlobalItem = False
         Me.ButtonItem6.Name = "ButtonItem6"
         Me.ButtonItem6.Text = "Revisar Mayoristas/Minoristas"
+        '
+        'Btn_PreVenta
+        '
+        Me.Btn_PreVenta.GlobalItem = False
+        Me.Btn_PreVenta.Name = "Btn_PreVenta"
+        Me.Btn_PreVenta.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_OccPreventa, Me.Btn_NvvPreVenta})
+        Me.Btn_PreVenta.Text = "Pre-Venta"
+        '
+        'Btn_OccPreventa
+        '
+        Me.Btn_OccPreventa.Name = "Btn_OccPreventa"
+        Me.Btn_OccPreventa.Text = "OCC Pre-Venta"
+        '
+        'Btn_NvvPreVenta
+        '
+        Me.Btn_NvvPreVenta.Name = "Btn_NvvPreVenta"
+        Me.Btn_NvvPreVenta.Text = "NVV Pre-Venta"
+        '
+        'Btn_PagarDocumento
+        '
+        Me.Btn_PagarDocumento.GlobalItem = False
+        Me.Btn_PagarDocumento.Name = "Btn_PagarDocumento"
+        Me.Btn_PagarDocumento.Text = "Pagar documento"
+        '
+        'Btn_GDI2GRI
+        '
+        Me.Btn_GDI2GRI.GlobalItem = False
+        Me.Btn_GDI2GRI.Name = "Btn_GDI2GRI"
+        Me.Btn_GDI2GRI.Text = "Crear GDI y GRI"
         '
         'Tiempo_Actualizar_BakApp
         '
@@ -1105,6 +1140,12 @@ Partial Class Menu
         Me.StyleManager1.ManagerStyle = DevComponents.DotNetBar.eStyle.Metro
         Me.StyleManager1.MetroColorParameters = New DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(System.Drawing.Color.White, System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(154, Byte), Integer)))
         '
+        'Btn_Rutas
+        '
+        Me.Btn_Rutas.GlobalItem = False
+        Me.Btn_Rutas.Name = "Btn_Rutas"
+        Me.Btn_Rutas.Text = "Rutas"
+        '
         'Menu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1193,4 +1234,10 @@ Partial Class Menu
     Friend WithEvents Btn_Stem As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_RevPesoVariable As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents ButtonItem6 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_PreVenta As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_OccPreventa As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_NvvPreVenta As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_PagarDocumento As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_GDI2GRI As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Rutas As DevComponents.DotNetBar.ButtonItem
 End Class

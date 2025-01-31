@@ -853,8 +853,14 @@
     <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Frm_Configuracion_Gral.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos Random\MAEDPCD.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos Random\MAEDPCE.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos Random\MAEVEN.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Casi_DocDet.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Conceptos.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Contenedor.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Contenedor_DocTom.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Contenedor_StockProd.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Demonio_FacAuto.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Despachos_Configuracion.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Docu_Det_Cust.vb" />
@@ -889,6 +895,7 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Sector.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_WMS_Ubicaciones_Mapa_Det.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_WMS_Ubicaciones_Sectores.vb" />
+    <Compile Include="03 Sistemas\BodOne\Cl_Api_BodOne.vb" />
     <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Cambio precio\Frm_AsisCompra_CambioPrecio.Designer.vb">
       <DependentUpon>Frm_AsisCompra_CambioPrecio.vb</DependentUpon>
     </Compile>
@@ -901,6 +908,19 @@
     <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Cambio precio\Frm_AsisCompra_CambioPrecioDet.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Contenedores\Cl_Contenedor.vb" />
+    <Compile Include="03 Sistemas\Contenedores\Frm_Contenedores.Designer.vb">
+      <DependentUpon>Frm_Contenedores.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Contenedores\Frm_Contenedores.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Contenedores\Frm_CrearContenedor.Designer.vb">
+      <DependentUpon>Frm_CrearContenedor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Contenedores\Frm_CrearContenedor.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_ListaMayoristaMinorista.vb" />
     <Compile Include="03 Sistemas\Despachos\Clases\Cl_Despachos.vb" />
     <Compile Include="03 Sistemas\FTP\Cl_Ftp.vb" />
@@ -908,6 +928,13 @@
       <DependentUpon>Frm_FTP_Conexion.vb</DependentUpon>
     </Compile>
     <Compile Include="03 Sistemas\FTP\Frm_FTP_Conexion.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\GDI2GRI\Cl_GDI2GRI.vb" />
+    <Compile Include="03 Sistemas\GDI2GRI\Frm_GDI2GRI.Designer.vb">
+      <DependentUpon>Frm_GDI2GRI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\GDI2GRI\Frm_GDI2GRI.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Informes\Stock\Comp No Despachados y Proximas Recepciones\Cl_Imprimir_CompNoDesp.vb" />
@@ -2388,10 +2415,10 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Clase\Cl_Stmp.vb" />
-    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Clase\Recursos\Recursos_WmsVillar.Designer.vb">
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Clase\Recursos\Recursos_WmsSgem.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Recursos_WmsVillar.resx</DependentUpon>
+      <DependentUpon>Recursos_WmsSgem.resx</DependentUpon>
     </Compile>
     <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Configuracion\Frm_Stmp_ConfLocal.Designer.vb">
       <DependentUpon>Frm_Stmp_ConfLocal.vb</DependentUpon>
@@ -2403,6 +2430,12 @@
       <DependentUpon>Frm_Stmp_IncNVVPicking.vb</DependentUpon>
     </Compile>
     <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_IncNVVPicking.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_ListadoXRutas.Designer.vb">
+      <DependentUpon>Frm_Stmp_ListadoXRutas.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_ListadoXRutas.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_SalaEspera.Designer.vb">
@@ -2606,6 +2639,12 @@
       <DependentUpon>Frm_Tickets_IngProducto.vb</DependentUpon>
     </Compile>
     <Compile Include="03 Sistemas\Tickets\Frm_Tickets_IngProducto.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_IngProducto_GesXBod.Designer.vb">
+      <DependentUpon>Frm_Tickets_IngProducto_GesXBod.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_IngProducto_GesXBod.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Tickets\Frm_Tickets_Lista_Tree.Designer.vb">
@@ -4798,8 +4837,17 @@
     <EmbeddedResource Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Cambio precio\Frm_AsisCompra_CambioPrecioDet.resx">
       <DependentUpon>Frm_AsisCompra_CambioPrecioDet.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Contenedores\Frm_Contenedores.resx">
+      <DependentUpon>Frm_Contenedores.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Contenedores\Frm_CrearContenedor.resx">
+      <DependentUpon>Frm_CrearContenedor.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\FTP\Frm_FTP_Conexion.resx">
       <DependentUpon>Frm_FTP_Conexion.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\GDI2GRI\Frm_GDI2GRI.resx">
+      <DependentUpon>Frm_GDI2GRI.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Frm_Inv_Inventarios.resx">
       <DependentUpon>Frm_Inv_Inventarios.vb</DependentUpon>
@@ -5591,16 +5639,20 @@
     <EmbeddedResource Include="03 Sistemas\Servicio Tecnico\Ingreso Varios\Frm_St_EncIngreso.resx">
       <DependentUpon>Frm_St_EncIngreso.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Sgem EntregaMercaderia\Clase\Recursos\Recursos_WmsVillar.resx">
+    <EmbeddedResource Include="03 Sistemas\Sgem EntregaMercaderia\Clase\Recursos\Recursos_WmsSgem.resx">
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Recursos_WmsVillar.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Recursos_WmsSgem.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Sgem EntregaMercaderia\Configuracion\Frm_Stmp_ConfLocal.resx">
       <DependentUpon>Frm_Stmp_ConfLocal.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_IncNVVPicking.resx">
       <DependentUpon>Frm_Stmp_IncNVVPicking.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_ListadoXRutas.resx">
+      <DependentUpon>Frm_Stmp_ListadoXRutas.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_SalaEspera.resx">
       <DependentUpon>Frm_Stmp_SalaEspera.vb</DependentUpon>
@@ -6193,6 +6245,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_IngProducto.resx">
       <DependentUpon>Frm_Tickets_IngProducto.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_IngProducto_GesXBod.resx">
+      <DependentUpon>Frm_Tickets_IngProducto_GesXBod.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Tickets\Frm_Tickets_Lista.resx">
       <DependentUpon>Frm_Tickets_Lista.vb</DependentUpon>
@@ -8059,6 +8114,9 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Conceptos.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Configuracion.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Configuracion_Formatos_X_Modalidad.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Contenedor.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Contenedor_DocTom.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Contenedor_StockProd.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Correos.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_CorreosEnvioRecepcion.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Correos_Cuentas.sql" />
@@ -8329,9 +8387,10 @@
     <None Include="03 Sistemas\Tesoreria\Pagos\Recursos\Sql\SQLQuery_Revisar_Data_Eliminar_Pago.sql" />
     <None Include="03 Sistemas\Produccion\Recursos\Sql\SQLQuery Informe de OT avance Vs SubOt por Operaciones.sql" />
     <None Include="03 Sistemas\Servicio Tecnico\Recursos\Consultas SQL\SqlQuery_Lista_OT2.sql" />
-    <Content Include="03 Sistemas\Sgem EntregaMercaderia\Clase\Recursos\Sql\SQLQuery Lista de espera Sgem.sql" />
-    <Content Include="03 Sistemas\Sgem EntregaMercaderia\Clase\Recursos\Sql\SQLQuery Listado Stmp.sql" />
-    <Content Include="03 Sistemas\Sgem EntregaMercaderia\Clase\Recursos\Sql\SQLQuery Revisar Nota de venta activa en WMS Villar.sql" />
+    <Content Include="03 Sistemas\Sgem EntregaMercaderia\Clase\Recursos\Sql\SQLQuery_Lista_de_espera_Sgem.sql" />
+    <Content Include="03 Sistemas\Sgem EntregaMercaderia\Clase\Recursos\Sql\SQLQuery_Listado_Stmp_Rutas.sql" />
+    <Content Include="03 Sistemas\Sgem EntregaMercaderia\Clase\Recursos\Sql\SQLQuery_Listado_Stmp.sql" />
+    <Content Include="03 Sistemas\Sgem EntregaMercaderia\Clase\Recursos\Sql\SQLQuery_Revisar_Nota_de_venta_activa_en_WMS_Villar.sql" />
     <Content Include="03 Sistemas\Tesoreria\Contabilidad\Recursos\Sql\Nomina de tarjetas de credito a liquidacion.sql" />
     <Content Include="999 Funciones, Clases y Datos\Clases\Documentos\Creacion de documento\Consultas SQL\Crear Htm document.htm" />
     <Content Include="999 Funciones, Clases y Datos\Clases\Documentos\Creacion de documento\Consultas SQL\Crear Htm document_Sp.htm" />

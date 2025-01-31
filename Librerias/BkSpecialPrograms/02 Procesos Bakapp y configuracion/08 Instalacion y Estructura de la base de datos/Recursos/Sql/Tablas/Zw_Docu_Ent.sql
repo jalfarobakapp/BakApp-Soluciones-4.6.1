@@ -16,6 +16,7 @@ CREATE TABLE [dbo].[Zw_Docu_Ent](
     [Pickear]   		[bit]			NOT NULL DEFAULT (0),
     [Estaenwms]   		[bit]			NOT NULL DEFAULT (0),
     [Customizable]      [bit]			NOT NULL DEFAULT (0),
+    [PreVenta]          [bit]			NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_Docu_Ent] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

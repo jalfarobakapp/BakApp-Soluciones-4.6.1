@@ -1,5 +1,5 @@
-﻿Imports DevComponents.DotNetBar
-Imports System.Data.SqlClient
+﻿Imports System.Data.SqlClient
+Imports DevComponents.DotNetBar
 
 Public Class Clas_Pagar
 
@@ -14,8 +14,6 @@ Public Class Clas_Pagar
     Dim _Timodp = "N"
     Dim _Tamodp = 1
 
-
-
     Public ReadOnly Property Pro_Row_Maedpce() As DataRow
         Get
             Return _Row_Maedpce
@@ -26,7 +24,6 @@ Public Class Clas_Pagar
             Return _DocPagados
         End Get
     End Property
-
     Public Property Modp As Object
         Get
             Return _Modp
@@ -35,7 +32,6 @@ Public Class Clas_Pagar
             _Modp = value
         End Set
     End Property
-
     Public Property Timodp As Object
         Get
             Return _Timodp
@@ -44,7 +40,6 @@ Public Class Clas_Pagar
             _Timodp = value
         End Set
     End Property
-
     Public Property Tamodp As Object
         Get
             Return _Tamodp
@@ -425,13 +420,13 @@ Public Class Clas_Pagar
         Dim _Cuotas As Integer = _Row_Maedpce.Item("CUOTAS")
         Dim _Archirsd As String = _Row_Maedpce.Item("ARCHIRSD")
         Dim _Idrsd As Integer = _Row_Maedpce.Item("IDRSD")
-        Dim _Referencia As Integer '= _Row_Maedpce.Item("REFERENCIA")
+        Dim _Referencia As Integer
 
         Dim _Nudp As String = Fx_Nro_NUDP(ModEmpresa, _Endp, _Cjredp, _Tidp)
 
-        Dim _Kotndp As String = RutEmpresa 'Codigo tenedor documento de pago, por defecto el rut de la empresa 
-        Dim _Sutndp As String = _Cjredp 'Sucursal tenerdo documento de pago, generalmente se pone el código de la caja
-        Dim _Tuvoprotes = 0 'Tuvo protestos True o False
+        Dim _Kotndp As String = RutEmpresa  'Codigo tenedor documento de pago, por defecto el rut de la empresa 
+        Dim _Sutndp As String = _Cjredp     'Sucursal tenerdo documento de pago, generalmente se pone el código de la caja
+        Dim _Tuvoprotes = 0                 'Tuvo protestos True o False
 
         Dim _Horagrab = Hora_Grab_fx(False)
         Dim _Lahora = Format(FechaDelServidor, "yyyyMMdd")
@@ -498,6 +493,93 @@ Public Class Clas_Pagar
 
         End Try
 
+    End Function
+
+    Function Fx_Crear_Pago_Anticipo(_Maedpce As MAEDPCE) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+        Dim _Idmaedpce As Integer
+
+        _Mensaje.Detalle = "Creación de documento de pago"
+
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+        Dim cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        SQL_ServerClass.Sb_Abrir_Conexion(cn2)
+
+        Try
+
+            myTrans = cn2.BeginTransaction()
+
+            With _Maedpce
+
+                Comando = New SqlCommand("Select Max(IDMAEDPCD)+1 As Referencia From MAEDPCD", cn2)
+                Comando.Transaction = myTrans
+
+                Dim dfd As SqlDataReader = Comando.ExecuteReader()
+                While dfd.Read()
+                    .REFERENCIA = dfd("Referencia")
+                End While
+                dfd.Close()
+
+                .NUDP = Fx_Nro_NUDP(.EMPRESA, .ENDP, .CJREDP, .TIDP)
+                .HORAGRAB = Hora_Grab_fx(False)
+                .LAHORA = Format(FechaDelServidor, "yyyyMMdd")
+
+                Consulta_sql = "INSERT INTO MAEDPCE (EMPRESA,TIDP,NUDP,ENDP,NUCUDP,CUDP,EMDP,SUEMDP,FEEMDP,FEVEDP,MODP,TIMODP,TAMODP," &
+                               "REFANTI,SUREDP,CJREDP,KOTU,KOFUDP,KOTNDP,SUTNDP,TUVOPROTES,VADP,VAASDP,VAVUDP,ESASDP,VAABDP,ESPGDP," &
+                               "CUOTAS,HORAGRAB,LAHORA,ARCHIRSD,IDRSD,REFERENCIA,REFANTI) VALUES " &
+                               "('" & .EMPRESA & "','" & .TIDP & "','" & .NUDP & "','" & .ENDP & "','" & .NUCUDP & "','" & .CUDP & "','" & .EMDP &
+                               "','" & .SUEMDP & "','" & Format(.FEEMDP, "yyyyMMdd") & "','" & Format(.FEVEDP, "yyyyMMdd") & "','" & .MODP & "','" & .TIMODP &
+                               "'," & .TAMODP & ",'" & .REFANTI & "','" & .SUREDP & "','" & .CJREDP & "','" & .KOTU & "','" & .KOFUDP &
+                               "','" & .KOTNDP & "','" & .SUTNDP & "'," & .TUVOPROTES &
+                               "," & De_Num_a_Tx_01(.VADP, False, 5) &
+                               "," & De_Num_a_Tx_01(.VAASDP, False, 5) &
+                               "," & De_Num_a_Tx_01(.VAVUDP, False, 5) &
+                               ",'" & .ESASDP & "'," & De_Num_a_Tx_01(.VAABDP, False, 5) &
+                               ",'" & .ESPGDP &
+                               "'," & .CUOTAS & "," & .HORAGRAB & ",'" & .LAHORA & "','" & .ARCHIRSD & "'," & .IDRSD & "," & .REFERENCIA & ",'" & .REFANTI & "')"
+
+            End With
+
+            Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+            Comando.Transaction = myTrans
+            Comando.ExecuteNonQuery()
+
+            Comando = New SqlCommand("SELECT @@IDENTITY AS 'Identity'", cn2)
+            Comando.Transaction = myTrans
+            Dim dfd1 As SqlDataReader = Comando.ExecuteReader()
+            While dfd1.Read()
+                _Idmaedpce = dfd1("Identity")
+            End While
+            dfd1.Close()
+
+            _Maedpce.IDMAEDPCE = _Idmaedpce
+
+            myTrans.Commit()
+            SQL_ServerClass.Sb_Cerrar_Conexion(cn2)
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Transacción realizada correctamente"
+            _Mensaje.Id = _Idmaedpce
+            _Mensaje.Tag = _Maedpce
+            _Mensaje.Icono = MessageBoxIcon.Information
+
+        Catch ex As Exception
+
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.ConsultaSQLEjecutada = Consulta_sql
+            _Mensaje.Icono = MessageBoxIcon.Stop
+
+            If Not IsNothing(myTrans) Then myTrans.Rollback()
+
+        End Try
+
+        Return _Mensaje
 
     End Function
 
@@ -1333,6 +1415,415 @@ Public Class Clas_Pagar
 
     End Function
 
+    Function Fx_Pagar_Documento(_Idmaeedo As Integer,
+                                _Ls_Maedpce As List(Of MAEDPCE),
+                                _Fecha_Asignacion_Pago As Date) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Dim _Maedpcd As New MAEDPCD
+        Dim _Tido As String
+        Dim _Nudo As String
+
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+        Dim cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        Dim _Referencia As String
+
+        SQL_ServerClass.Sb_Abrir_Conexion(cn2)
+
+        myTrans = cn2.BeginTransaction()
+
+        Try
+
+            Consulta_sql = "Select top 1 TIDO,NUDO,ENDO,SUENDO From MAEEDO Where IDMAEEDO = " & _Idmaeedo
+            Dim _Row_Maeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            _Tido = _Row_Maeedo.Item("TIDO")
+            _Nudo = _Row_Maeedo.Item("NUDO")
+
+            Consulta_sql = "Select CUOTACOMER,CUOTACANTI From CONFIEST WITH (NOLOCK) Where MODALIDAD = '  '"
+            Dim _Row_Confiest As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Dim _Cuotacomer As Boolean = _Row_Confiest.Item("CUOTACOMER")
+            Dim _Cuotacanti As Integer = _Row_Confiest.Item("CUOTACANTI")
+
+            Dim _Abono As Double = 0
+            Dim _Abono_Cuotas As Double = 0
+
+            Consulta_sql = "INSERT INTO MAEDPCD (IDMAEDPCE,VAASDP,FEASDP,IDRST,TIDOPA,ARCHIRST,TCASIG,REFERENCIA,KOFUASDP,SUASDP," &
+                           "CJASDP,HORAGRAB,LAHORA) VALUES " &
+                           "(0,0,'19990101'," & _Idmaeedo & ",'','MAEEDO',0,'','','','',0,Null)" & vbCrLf & vbCrLf
+
+            Consulta_sql = Consulta_sql
+            Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+            Comando.Transaction = myTrans
+            Comando.ExecuteNonQuery()
+
+            'Dim dfd1 As SqlDataReader = Comando.ExecuteReader()
+
+            Comando = New SqlCommand("SELECT @@IDENTITY AS 'Identity'", cn2)
+            Comando.Transaction = myTrans
+            Dim dfd As SqlDataReader = Comando.ExecuteReader()
+            While dfd.Read()
+                _Referencia = dfd("Identity")
+            End While
+            dfd.Close()
+
+            Consulta_sql = "Delete MAEDPCD Where IDMAEDPCD = " & _Referencia
+            Consulta_sql = Consulta_sql
+            Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+            Comando.Transaction = myTrans
+            Comando.ExecuteNonQuery()
+
+            Dim _Tidopa As String = _Row_Maeedo.Item("TIDO")
+            Dim _Feasdp As String = Format(_Fecha_Asignacion_Pago, "yyyyMMdd")
+
+            Dim _Vadp As Double
+            Dim _Vaasdp As Double
+            Dim _Cuotas As Integer
+
+            For Each _Fila As MAEDPCE In _Ls_Maedpce
+
+                With _Fila
+
+                    If Not String.IsNullOrEmpty(_Fila.TIDP) Then
+
+                        .TUVOPROTES = False
+                        .HORAGRAB = Hora_Grab_fx(False)
+                        .LAHORA = FechaDelServidor()
+
+                        If CBool(.IDMAEDPCE) Then
+
+                            Consulta_sql = "UPDATE MAEDPCE SET VAASDP = ROUND(" & De_Num_a_Tx_01(.VAASDP, False, 5) & "+VAASDP,0)," & vbCrLf &
+                                           "ESASDP=CASE WHEN ROUND(VADP-VAVUDP-(" & De_Num_a_Tx_01(.VAASDP, False, 5) & "+VAASDP),0) <= 0 THEN 'A' ELSE 'P' END" & vbCrLf &
+                                           "WHERE IDMAEDPCE = " & .IDMAEDPCE
+
+                            Consulta_sql = Consulta_sql
+                            Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                            Comando.Transaction = myTrans
+                            Comando.ExecuteNonQuery()
+
+                            _Maedpcd.IDMAEDPCE = .IDMAEDPCE
+                            _Maedpcd.VAASDP = .VAASDP
+                            _Maedpcd.FEASDP = _Fecha_Asignacion_Pago
+                            _Maedpcd.IDRST = _Idmaeedo
+                            _Maedpcd.TIDOPA = _Tidopa
+                            _Maedpcd.ARCHIRST = "MAEEDO"
+                            _Maedpcd.TCASIG = .TAMODP
+                            _Maedpcd.REFERENCIA = _Referencia
+                            _Maedpcd.KOFUASDP = .KOFUDP
+                            _Maedpcd.SUASDP = .SUREDP
+                            _Maedpcd.CJASDP = .CJREDP
+                            _Maedpcd.HORAGRAB = .HORAGRAB
+                            _Maedpcd.LAHORA = .LAHORA
+
+                            With _Maedpcd
+
+                                Consulta_sql = "INSERT INTO MAEDPCD (IDMAEDPCE,VAASDP,FEASDP,IDRST,TIDOPA,ARCHIRST,TCASIG,REFERENCIA,KOFUASDP,SUASDP," &
+                                               "CJASDP,HORAGRAB,LAHORA) VALUES " &
+                                               "(" & .IDMAEDPCE & "," & .VAASDP & ",'" & Format(.FEASDP, "yyyyMMdd") & "'," & .IDRST &
+                                               ",'" & .TIDOPA & "','MAEEDO'," & .TCASIG & ",'" & .REFERENCIA & "','" & .KOFUASDP & "','" & .SUASDP & "'" &
+                                               ",'" & .CJASDP & "'," & .HORAGRAB & ",'" & Format(.LAHORA, "yyyyMMdd") & "')" & vbCrLf & vbCrLf
+
+                                Consulta_sql = Consulta_sql
+                                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                                Comando.Transaction = myTrans
+                                Comando.ExecuteNonQuery()
+
+                                Comando = New SqlCommand("SELECT @@IDENTITY AS 'Identity'", cn2)
+                                Comando.Transaction = myTrans
+                                Dim dfd1 As SqlDataReader = Comando.ExecuteReader()
+                                While dfd1.Read()
+                                    .IDMAEDPCD = dfd1("Identity")
+                                End While
+                                dfd1.Close()
+
+                            End With
+
+                            _Abono += _Vaasdp
+
+                        Else
+
+                            If .TIDP = "TJV" And .CUOTAS > 1 Then
+
+                                If _Cuotacomer Then
+                                    If _Cuotas > _Cuotacanti Then
+                                        _Cuotas = 1
+                                    End If
+                                End If
+
+                            Else
+
+                                _Cuotas = 1
+
+                            End If
+
+                            .NUDP = Fx_Nro_NUDP(.EMPRESA, .ENDP, .CJREDP, .TIDP)
+
+                            Dim _Valor_Cuota As Double
+                            Dim _Valor_Vadp As Double = _Vadp
+                            Dim _Suma_Valores_Cuotas As Double = 0
+                            Dim _Fecha_Fevedp As Date = FormatDateTime(.FEVEDP, DateFormat.ShortDate)
+
+                            Dim _Cuota As Integer
+
+                            _Vaasdp = .VAASDP
+
+                            For i = 1 To _Cuotas
+
+                                If _Cuotas <> 1 Then
+
+                                    Dim _Decimal As Double = 0
+
+                                    _Valor_Cuota = _Valor_Vadp / _Cuotas
+
+                                    Dim _Decimales = Split(_Valor_Cuota, ",")
+
+                                    If _Decimales.Length > 1 Then
+                                        _Decimal = _Decimales(1)
+                                        _Valor_Cuota = _Decimales(0)
+                                    End If
+
+                                    If i = _Cuotas Then
+                                        _Valor_Cuota = _Valor_Vadp - _Abono_Cuotas
+                                    End If
+
+                                    _Vadp = _Valor_Cuota
+                                    _Vaasdp = _Valor_Cuota
+
+                                    _Suma_Valores_Cuotas += _Vadp
+
+                                    If i <> 1 Then
+
+                                        .NUDP = Fx_Proximo_NroDocumento(.NUDP, 10)
+
+                                        _Fecha_Fevedp = DateAdd(DateInterval.Day, 30, _Fecha_Fevedp)
+                                        .FEVEDP = Format(_Fecha_Fevedp, "yyyyMMdd")
+
+                                    End If
+
+                                    If i = _Cuotas Then
+
+                                        Dim _SaldoPesos As Double = _Valor_Vadp - _Suma_Valores_Cuotas
+
+                                        _Vadp += _SaldoPesos
+                                        _Vaasdp += _SaldoPesos
+
+                                    End If
+
+                                End If
+
+                                If .TIDP = "TJV" Then
+                                    _Cuota = i
+                                Else
+                                    _Cuota = 0
+                                End If
+
+                                If _Sql.Fx_Exite_Campo("MAEDPCE", "LEY20956") Then
+
+                                    Consulta_sql =
+                                                    "INSERT INTO MAEDPCE (EMPRESA,TIDP,NUDP,ENDP,NUCUDP,CUDP,EMDP,SUEMDP,FEEMDP,FEVEDP,MODP,TIMODP,TAMODP," &
+                                                    "REFANTI,SUREDP,CJREDP,KOTU,KOFUDP,KOTNDP,SUTNDP,TUVOPROTES,VADP,VAASDP,VAVUDP,ESASDP,VAABDP,ESPGDP," &
+                                                    "CUOTAS,HORAGRAB,LAHORA,REFERENCIA,DOCUENANTI,NUTRANSMI,LEY20956) VALUES " &
+                                                    "('" & .EMPRESA & "','" & .TIDP & "','" & .NUDP & "','" & .ENDP & "','" & .NUCUDP & "','" & .CUDP &
+                                                    "','" & .EMDP &
+                                                    "','" & .SUEMDP & "','" & Format(.FEEMDP, "yyyyMMdd") & "','" & Format(.FEVEDP, "yyyyMMdd") & "','" & .MODP & "','" & .TIMODP &
+                                                    "'," & .TAMODP & ",'" & .REFANTI & "','" & .SUREDP & "','" & .CJREDP & "','" & .KOTU & "','" & .KOFUDP &
+                                                    "','" & .KOTNDP & "','" & .SUTNDP & "'," & If(.TUVOPROTES, 1, 0) &
+                                                    "," & De_Num_a_Tx_01(.VADP, False, 5) &
+                                                    "," & De_Num_a_Tx_01(.VAASDP, False, 5) &
+                                                    "," & De_Num_a_Tx_01(.VAVUDP, False, 5) &
+                                                    ",'" & .ESASDP &
+                                                    "'," & De_Num_a_Tx_01(.VAABDP, False, 5) &
+                                                    ",'" & .ESPGDP &
+                                                    "'," & .CUOTAS & "," & .HORAGRAB & ",'" & Format(.LAHORA, "yyyyMMdd") & "','" & _Referencia & "','" & .DOCUENANTI &
+                                                    "','" & .NUTRANSMI & "'," & .LEY20956 & ")"
+
+                                Else
+
+                                    Consulta_sql =
+                                                    "INSERT INTO MAEDPCE (EMPRESA,TIDP,NUDP,ENDP,NUCUDP,CUDP,EMDP,SUEMDP,FEEMDP,FEVEDP,MODP,TIMODP,TAMODP," &
+                                                    "REFANTI,SUREDP,CJREDP,KOTU,KOFUDP,KOTNDP,SUTNDP,TUVOPROTES,VADP,VAASDP,VAVUDP,ESASDP,VAABDP,ESPGDP," &
+                                                    "CUOTAS,HORAGRAB,LAHORA,REFERENCIA,DOCUENANTI,NUTRANSMI) VALUES " &
+                                                    "('" & .EMPRESA & "','" & .TIDP & "','" & .NUDP & "','" & .ENDP & "','" & .NUCUDP & "','" & .CUDP &
+                                                    "','" & .EMDP &
+                                                    "','" & .SUEMDP & "','" & Format(.FEEMDP, "yyyyMMdd") & "','" & Format(.FEVEDP, "yyyyMMdd") & "','" & .MODP & "','" & .TIMODP &
+                                                    "'," & De_Num_a_Tx_01(.TAMODP, False, 5) & ",'" & .REFANTI & "','" & .SUREDP & "','" & .CJREDP & "','" & .KOTU & "','" & .KOFUDP &
+                                                    "','" & .KOTNDP & "','" & .SUTNDP & "'," & If(.TUVOPROTES, 1, 0) &
+                                                    "," & De_Num_a_Tx_01(.VADP, False, 5) &
+                                                    "," & De_Num_a_Tx_01(.VAASDP, False, 5) &
+                                                    "," & De_Num_a_Tx_01(.VAVUDP, False, 5) &
+                                                    ",'" & .ESASDP &
+                                                    "'," & De_Num_a_Tx_01(.VAABDP, False, 5) &
+                                                    ",'" & .ESPGDP &
+                                                    "'," & .CUOTAS & "," & .HORAGRAB & ",'" & Format(.LAHORA, "yyyyMMdd") & "','" & _Referencia & "','" & .DOCUENANTI &
+                                                    "','" & .NUTRANSMI & "')"
+
+                                End If
+
+                                Consulta_sql = Consulta_sql
+                                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                                Comando.Transaction = myTrans
+                                Comando.ExecuteNonQuery()
+
+                                Comando = New SqlCommand("SELECT @@IDENTITY AS 'Identity'", cn2)
+                                Comando.Transaction = myTrans
+                                Dim dfd1 As SqlDataReader = Comando.ExecuteReader()
+                                While dfd1.Read()
+                                    .IDMAEDPCE = dfd1("Identity")
+                                End While
+                                dfd1.Close()
+
+
+                                _Maedpcd.IDMAEDPCE = .IDMAEDPCE
+                                _Maedpcd.VAASDP = _Vaasdp '.VAASDP
+                                _Maedpcd.FEASDP = _Fecha_Asignacion_Pago
+                                _Maedpcd.IDRST = _Idmaeedo
+                                _Maedpcd.TIDOPA = _Tidopa
+                                _Maedpcd.ARCHIRST = "MAEEDO"
+                                _Maedpcd.TCASIG = .TAMODP
+                                _Maedpcd.REFERENCIA = _Referencia
+                                _Maedpcd.KOFUASDP = .KOFUDP
+                                _Maedpcd.SUASDP = .SUREDP
+                                _Maedpcd.CJASDP = .CJREDP
+                                _Maedpcd.HORAGRAB = .HORAGRAB
+                                _Maedpcd.LAHORA = .LAHORA
+
+                                With _Maedpcd
+
+                                    Consulta_sql = "INSERT INTO MAEDPCD (IDMAEDPCE,VAASDP,FEASDP,IDRST,TIDOPA,ARCHIRST,TCASIG,REFERENCIA,KOFUASDP,SUASDP," &
+                                                   "CJASDP,HORAGRAB,LAHORA) VALUES " &
+                                                   "(" & .IDMAEDPCE & "," & .VAASDP & ",'" & Format(.FEASDP, "yyyyMMdd") & "'," & .IDRST &
+                                                   ",'" & .TIDOPA & "','MAEEDO'," & De_Num_a_Tx_01(.TCASIG, False, 5) & ",'" & .REFERENCIA & "','" & .KOFUASDP & "','" & .SUASDP & "'" &
+                                                   ",'" & .CJASDP & "'," & .HORAGRAB & ",'" & Format(.LAHORA, "yyyyMMdd") & "')"
+
+                                    Consulta_sql = Consulta_sql
+                                    Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                                    Comando.Transaction = myTrans
+                                    Comando.ExecuteNonQuery()
+
+                                    Comando = New SqlCommand("SELECT @@IDENTITY AS 'Identity'", cn2)
+                                    Comando.Transaction = myTrans
+                                    dfd1 = Comando.ExecuteReader()
+                                    While dfd1.Read()
+                                        .IDMAEDPCD = dfd1("Identity")
+                                    End While
+                                    dfd1.Close()
+
+                                End With
+
+                                _Abono += _Vaasdp
+
+                                If .TIDP = "TJV" Then
+                                    _Abono_Cuotas += _Vaasdp
+                                End If
+
+                            Next
+
+                        End If
+
+                    End If
+
+                End With
+
+            Next
+
+            If _Abono = 0 Then
+                Throw New System.Exception("No se abono ningún documento")
+            End If
+
+            Consulta_sql = "UPDATE MAEEDO SET VAABDO=ROUND( VAABDO+" & _Abono & ",0)," &
+                           "ESPGDO=CASE WHEN ROUND( VABRDO-VAABDO-" & _Abono & ",0) <= 0.0 THEN 'C' ELSE ESPGDO END" & Space(1) &
+                           "WHERE IDMAEEDO=" & _Idmaeedo '&
+
+            Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+            Comando.Transaction = myTrans
+            Comando.ExecuteNonQuery()
+
+            Comando = New SqlCommand("Select * From MAEVEN Where IDMAEEDO = " & _Idmaeedo & " And VAVE <> VAABVE Order By IDMAEVEN", cn2)
+            Comando.Transaction = myTrans
+
+            'Dim _Vave As Double
+            'Dim _Vaabve As Double
+            Dim _Saldo_Abono As Double = _Abono
+
+            Dim dfd2 As SqlDataReader = Comando.ExecuteReader()
+
+            Dim _Ls_Maeven As New List(Of MAEVEN)
+
+            While dfd2.Read()
+
+                Dim _Maeven As New MAEVEN With {
+                    .IDMAEVEN = dfd2("IDMAEVEN"),
+                    .VAVE = dfd2("VAVE"),
+                    .VAABVE = dfd2("VAABVE")
+                }
+
+                Dim _Saldo As Double = _Maeven.VAVE - _Maeven.VAABVE
+
+                If _Saldo > _Saldo_Abono Then
+                    _Saldo = _Saldo_Abono
+                End If
+
+                _Maeven.VAABVE = Math.Round(_Maeven.VAABVE + _Saldo, 0)
+
+                If (_Maeven.VAVE - _Maeven.VAABVE) <= 0 Then
+                    _Maeven.ESPGVE = "C"
+                End If
+
+                If _Saldo >= 0 Then
+                    If _Saldo_Abono > 0 Then
+                        _Ls_Maeven.Add(_Maeven)
+                        _Saldo_Abono -= _Saldo
+                    End If
+                End If
+
+            End While
+
+            dfd2.Close()
+
+            For Each _Maeven As MAEVEN In _Ls_Maeven
+
+                Consulta_sql = "Update MAEVEN Set VAABVE = " & De_Num_a_Tx_01(_Maeven.VAABVE, False, 5) & ",ESPGVE = '" & _Maeven.ESPGVE & "'" & vbCrLf &
+                               "Where IDMAEVEN = " & _Maeven.IDMAEVEN
+                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+                'Consulta_sql = "Update MAEVEN Set ESPGVE = Case When ROUND(VAVE,2)-ROUND(VAABVE,0) <= 0 THEN 'C' Else '' End Where IDMAEVEN = " & _Maeven.IDMAEVEN
+                'Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                'Comando.Transaction = myTrans
+                'Comando.ExecuteNonQuery()
+
+            Next
+
+            myTrans.Commit()
+            SQL_ServerClass.Sb_Cerrar_Conexion(cn2)
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Pagos realizados correctamente al documento: " & _Tido & "-" & _Nudo
+            _Mensaje.Icono = MessageBoxIcon.Information
+            _Mensaje.Tag = _Maedpcd
+
+        Catch ex As Exception
+
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
+            _Mensaje.ConsultaSQLEjecutada = Consulta_sql
+
+            If Not IsNothing(myTrans) Then myTrans.Rollback()
+
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
     Function Fx_Crear_Pago_MAEDPCE_Generales(_Formulario As Form,
                                              ByRef _Tbl_Maedpce As DataTable,
                                              _Tbl_Cta_Entidad As DataTable,
@@ -1414,8 +1905,6 @@ Public Class Clas_Pagar
 
         Try
 
-            'Dim _Abono As Double = 0
-
             Dim _Feasdp As String = Format(_Fecha_Asignacion_Pago, "yyyyMMdd")
 
             Dim _IdPago As Integer
@@ -1424,8 +1913,8 @@ Public Class Clas_Pagar
 #Region "Rescatamos el numero del campo Referencia"
 
             Consulta_sql = "INSERT INTO MAEDPCD (IDMAEDPCE,VAASDP,FEASDP,IDRST,TIDOPA,ARCHIRST,TCASIG,REFERENCIA,KOFUASDP,SUASDP," &
-                               "CJASDP,HORAGRAB,LAHORA) VALUES " &
-                               "(" & _Idmaedpce & "," & _Vaasdp & ",'19990101',0,'','MAEEDO',0,'','','',''," & _Horagrab & ",'" & _Lahora & "')" & vbCrLf & vbCrLf
+                           "CJASDP,HORAGRAB,LAHORA) VALUES " &
+                           "(" & _Idmaedpce & "," & _Vaasdp & ",'19990101',0,'','MAEEDO',0,'','','',''," & _Horagrab & ",'" & _Lahora & "')" & vbCrLf & vbCrLf
 
             Consulta_sql = Consulta_sql
             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
@@ -1678,21 +2167,6 @@ Public Class Clas_Pagar
                                     Comando.Transaction = myTrans
                                     Comando.ExecuteNonQuery()
 
-
-                                    'Consulta_sql = "UPDATE MAEVEN SET VAABVE= COALESCE(VAABVE,0.0)+" & De_Num_a_Tx_01(_Abono, False, 5) & vbCrLf &
-                                    '                "WHERE IDMAEVEN=" & _Idmaeven
-
-                                    'Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
-                                    'Comando.Transaction = myTrans
-                                    'Comando.ExecuteNonQuery()
-
-                                    'Consulta_sql = "UPDATE MAEVEN SET ESPGVE=CASE WHEN ROUND(VAVE,2)-ROUND(VAABVE,2) <= 0 THEN 'C' ELSE ESPGVE END" & vbCrLf &
-                                    '               "WHERE IDMAEVEN=" & _Idmaeven
-
-                                    'Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
-                                    'Comando.Transaction = myTrans
-                                    'Comando.ExecuteNonQuery()
-
                                 End If
 
                             End If
@@ -1730,10 +2204,9 @@ Public Class Clas_Pagar
 
     End Function
 
-    Function Fx_Crear_Pago_MAEDPCD(_Formulario As Form,
-                                           _Idmaeedo As Integer,
-                                           _Idmaedpce As Integer,
-                                           _Vaabdo As Double) As Integer
+    Function Fx_Crear_Pago_MAEDPCD(_Idmaeedo As Integer,
+                                   _Idmaedpce As Integer,
+                                   _Vaabdo As Double) As Integer
 
         Try
 
@@ -1757,8 +2230,6 @@ Public Class Clas_Pagar
 
             Consulta_sql = "SELECT VAVE,VAABVE,IDMAEVEN FROM MAEVEN WHERE IDMAEEDO=" & _Idmaeedo & " AND ESPGVE<>'C'"
             Dim _Tbl_Maeven As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
-
-            'Dim _Idmaeven As Integer = _Tbl_Maeven.Rows(0).Item("IDMAEVEN")
 
             Dim _Abono As String = De_Num_a_Tx_01(_Vaabdo, False, 5)
 
@@ -1802,9 +2273,6 @@ Public Class Clas_Pagar
             Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
             Comando.Transaction = myTrans
             Comando.ExecuteNonQuery()
-
-
-            '_Referencia = _Sql.Fx_Trae_Dato(, "IDMAEDPCD", "MAEDPCD", "IDMAEDPCE = " & _Idmaedpce)
 
             Consulta_sql = "Declare @Referencia Int" & vbCrLf &
                            "Set @Referencia = (Select top 1 IDMAEDPCD From MAEDPCD Where IDMAEDPCE = " & _Idmaedpce & ")" & vbCrLf &

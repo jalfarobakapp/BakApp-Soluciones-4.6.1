@@ -1,6 +1,7 @@
 ﻿Imports DevComponents.DotNetBar
 Imports System.IO
 Imports Docs.Excel
+Imports DevComponents.DotNetBar.SuperGrid.Style
 
 Public Class Frm_Exportar_Excel
 
@@ -116,6 +117,8 @@ Public Class Frm_Exportar_Excel
         Dim fila As Integer = 0
         Dim columna As Integer = 0
 
+        Dim _Nro_Hoja = 0
+
         Try
 
             If String.IsNullOrEmpty(Directorio) Then
@@ -135,7 +138,7 @@ Public Class Frm_Exportar_Excel
             Dim Wbook = New ExcelWorkbook()
 
             'Add new worksheet to workbook.
-            Wbook.Worksheets.Add("Hoja1")
+            'Wbook.Worksheets.Add("Hoja1")
 
 
             ' xls, xlsx
@@ -143,7 +146,20 @@ Public Class Frm_Exportar_Excel
             '// Armamos la linea con los títulos de columnas
             '/////////////////////////////////////////////////
 
+            'Bar = BarraProgreso
 
+            Circular_Progres_Porcentaje.Maximum = 100 ' Bar.Value = ((Contador * 100) / Tabla.Rows.Count)
+            Circular_Progres_Contador.Maximum = _Tbl_Excel.Rows.Count
+
+            columna = 1
+            Circular_Progres_Porcentaje.Value = 0
+            Circular_Progres_Contador.Value = 0
+
+            Dim Contador = 0
+            'AddHandler Wbook.Progress, AddressOf workbook_SavingProgress
+
+            'Add new worksheet to workbook.
+            Wbook.Worksheets.Add("Hoja" & _Nro_Hoja + 1)
 
             For Each dc In _Tbl_Excel.Columns
                 With Wbook.Worksheets(0).Rows(0).Cells(columna)
@@ -159,27 +175,14 @@ Public Class Frm_Exportar_Excel
                     Exit Function
                 End If
             Next
+
             fila += 1
-
-            'Bar = BarraProgreso
-
-            Circular_Progres_Porcentaje.Maximum = 100 ' Bar.Value = ((Contador * 100) / Tabla.Rows.Count)
-            Circular_Progres_Contador.Maximum = _Tbl_Excel.Rows.Count
-
-            columna = 1
-            Circular_Progres_Porcentaje.Value = 0
-            Circular_Progres_Contador.Value = 0
-
-            Dim Contador = 0
-            'AddHandler Wbook.Progress, AddressOf workbook_SavingProgress
 
             For Each dr In _Tbl_Excel.Rows
 
-                'If fila = 70165 Then
-                '    Dim _Stop = True
-                'End If
                 System.Windows.Forms.Application.DoEvents()
                 columna = 0
+
                 For Each dc In _Tbl_Excel.Columns
 
                     Dim Contenido = dr(dc.ColumnName).ToString
@@ -196,13 +199,13 @@ Public Class Frm_Exportar_Excel
 
                     If TipoDeDato = "Double" Or TipoDeDato = "Decimal" Or TipoDeDato = "Int32" Then
                         Dim _Valor_ As Double = De_Txt_a_Num_01(Contenido, 3) 'Gl_Fx_De_Num_a_Tx_01(Contenido, False, 2)
-                        Wbook.Worksheets(0).Cells(fila, columna).Value = _Valor_ ' FormatNumber(_Valor_, 2) 'Gl_Fx_De_Num_a_Tx_01(Contenido, 3)
+                        Wbook.Worksheets(_Nro_Hoja).Cells(fila, columna).Value = _Valor_ ' FormatNumber(_Valor_, 2) 'Gl_Fx_De_Num_a_Tx_01(Contenido, 3)
                     ElseIf TipoDeDato = "DateTime" Then
                         Dim _Fecha As Date = NuloPorNro(dr(dc.ColumnName), "01/01/1900")
-                        Wbook.Worksheets(0).Cells(fila, columna).Value = FormatDateTime(_Fecha, DateFormat.ShortDate) 'dr(dc.ColumnName)
+                        Wbook.Worksheets(_Nro_Hoja).Cells(fila, columna).Value = FormatDateTime(_Fecha, DateFormat.ShortDate) 'dr(dc.ColumnName)
                     ElseIf TipoDeDato = "Boolean" Then
                         _Valor = CInt(NuloPorNro(dr(dc.ColumnName), False)) * -1
-                        Wbook.Worksheets(0).Rows(fila).Cells(columna).Value = _Valor
+                        Wbook.Worksheets(_Nro_Hoja).Rows(fila).Cells(columna).Value = _Valor
                     Else
 
                         _Valor = CStr(dr(dc.ColumnName).ToString)
@@ -215,7 +218,7 @@ Public Class Frm_Exportar_Excel
 
                         If IsNothing(_Valor) Then _Valor = String.Empty
 
-                        Wbook.Worksheets(0).Rows(fila).Cells(columna).Value = _Valor.ToString.Trim
+                        Wbook.Worksheets(_Nro_Hoja).Rows(fila).Cells(columna).Value = _Valor.ToString.Trim
                     End If
 
 
@@ -231,29 +234,70 @@ Public Class Frm_Exportar_Excel
 
                 fila += 1
 
-                '3000 = 100
-                '23 = x
+                ' Liberar memoria periódicamente
+                If fila Mod 1000 = 0 Then
+                    GC.Collect()
+                End If
+
+                'If _Tbl_Excel.Rows.Count > If(_Extension = Enum_Extension.xlsx, 20000, 5000) Then
+                '    If fila Mod 5000 = 0 Then
+                '        Wbook.Worksheets(0).Columns(0).Autofit()
+                '    End If
+                'End If
+
+                If _Tbl_Excel.Rows.Count >= 40000 Then
+
+                    If fila Mod 20000 = 0 Then 'If fila < 20000 Then
+
+                        'For i = 0 To columna - 1
+                        '    Try
+                        '        Wbook.Worksheets(_Nro_Hoja).Columns(i).Autofit()
+                        '    Catch ex As Exception
+
+                        '    End Try
+                        'Next
+
+                        _Nro_Hoja += 1
+
+                        fila = 0
+                        columna = 0
+
+                        Wbook.Worksheets.Add("Hoja" & _Nro_Hoja + 1)
+
+                        For Each dc In _Tbl_Excel.Columns
+
+                            With Wbook.Worksheets(_Nro_Hoja).Rows(0).Cells(columna)
+                                .Style.Font.Bold = True
+                                .Style.Font.Color = ColorPalette.Blue
+                                .Value = dc.ColumnName
+                                columna += 1
+                            End With
+
+                        Next
+
+                        fila += 1
+
+                    End If
+
+                End If
+
                 Contador += 1
                 Circular_Progres_Porcentaje.Value = ((Contador * 100) / _Tbl_Excel.Rows.Count) 'Mas
-                Circular_Progres_Contador.Value += 1 ' Contador
+                Circular_Progres_Contador.Value += 1
 
                 If _Cancelar = True Then
-                    'Circular_Progres_Contador.Value = 0 : Circular_Progres_Porcentaje.Value = 0
-                    'Sb_Procesando(False)
                     Exit Function
                 End If
 
             Next
 
-            For i = 0 To columna - 1
-                Wbook.Worksheets(0).Columns(i).Autofit()
-            Next
-
-            'If _Cancelar = True Then
-            'Circular_Progres_Contador.Value = 0 : Circular_Progres_Porcentaje.Value = 0
-            'Sb_Procesando(False)
-            'Exit Function
-            'End If
+            If _Tbl_Excel.Rows.Count <= 10000 Then
+                For h = 0 To _Nro_Hoja - 1
+                    For i = 0 To columna - 1
+                        Wbook.Worksheets(h).Columns(i).Autofit()
+                    Next
+                Next
+            End If
 
             ' ArchivoGuardado = "..\..\..\DataTableImport.xlsx"
 
@@ -531,19 +575,35 @@ Public Class Frm_Exportar_Excel
             'Nuevo objeto StreamWriter, para acceder al fichero y poder guardar las líneas  
             Using _Archivo As StreamWriter = New StreamWriter(_Archivo_CSV)
 
+                _Columna = 0
+
                 ' variable para almacenar la línea actual del dataview  
                 Dim _Linea As String = String.Empty
 
+                For Each dc In _Tbl_Excel.Columns
+                    _Linea = _Linea & dc.ColumnName & DELIMITADOR
+                Next
+
+                ' Escribir una línea con el método WriteLine  
+                With _Archivo
+                    ' eliminar el último caracter ";" de la cadena  
+                    _Linea = _Linea.Remove(_Linea.Length - 1).ToString
+                    ' escribir la fila  
+                    .WriteLine(_Linea.ToString)
+                End With
+
                 ' Recorrer las filas del dataGridView  
                 For Each _Row As DataRow In _Tbl_Excel.Rows
-                    ' vaciar la línea  
-                    _Linea = String.Empty
+
                     System.Windows.Forms.Application.DoEvents()
                     ' Recorrer la cantidad de columnas que contiene el dataGridView  
 
-                    If _Fila = 21700 Then
-                        Dim Aca = True
-                    End If
+                    'If _Fila = 21700 Then
+                    '    Dim Aca = True
+                    'End If
+
+                    ' vaciar la línea  
+                    _Linea = String.Empty
 
                     _Columna = 0
 
@@ -634,7 +694,7 @@ Public Class Frm_Exportar_Excel
 
             _Nombre_Archivo += ".csv"
 
-            Dim _pFileName = _Directorio_Destino & "\" & _Nombre_Archivo  'Replace(_Archivo_CSV, "tmp", "csv") 'Path.GetTempFileName.Replace("tmp", "xls")
+            Dim _pFileName = _Directorio_Destino & "\" & _Nombre_Archivo
             System.IO.File.Copy(_Archivo_CSV, _pFileName, True)
             File.Delete(_Archivo_CSV)
 

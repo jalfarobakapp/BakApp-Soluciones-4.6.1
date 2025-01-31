@@ -11,6 +11,8 @@ Public Class Frm_Stmp_IncNVVPicking
     Dim _Tbl_Documentos As DataTable
     Dim _RowEntidadBuscar As DataRow
 
+    Public Property FiltroDoc As String
+
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -90,8 +92,8 @@ Public Class Frm_Stmp_IncNVVPicking
             _FiltroNumero = "And Edo.NUDO Like '%" & Txt_BuscaXNudoNVV.Text & "%'" & vbCrLf
         End If
 
-        If Not String.IsNullOrEmpty(Txt_Observaciones.Text) Then
-            _FiltroObservaciones = "And Obs.OBDO Like '%" & Txt_Observaciones.Text & "%'" & vbCrLf
+        If Not String.IsNullOrEmpty(Txt_BuscaXObservaciones.Text) Then
+            _FiltroObservaciones = "And Obs.OBDO Like '%" & Txt_BuscaXObservaciones.Text & "%'" & vbCrLf
         End If
 
         If Not String.IsNullOrEmpty(Txt_Ocdo.Text) Then
@@ -128,6 +130,7 @@ Public Class Frm_Stmp_IncNVVPicking
                         _FiltroNumero &
                         _FiltroObservaciones &
                         _FiltroOrdenDeCompra &
+                        _FiltroDoc & vbCrLf &
                         "And DocE.Pickear = 1" & vbCrLf &
                         "Order By HORAGRAB" & vbCrLf &
                         "Update #Paso Set IDMAEDPCE = Isnull((Select Top 1 IDMAEDPCE From MAEDPCE Where IDRSD = IDMAEEDO),0)" & vbCrLf &

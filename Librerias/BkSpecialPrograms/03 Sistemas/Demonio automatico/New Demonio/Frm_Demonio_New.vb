@@ -330,10 +330,19 @@ Public Class Frm_Demonio_New
                     _Cl_Correos.CantMmail = _CantCorreo
                     _Cl_Correos.EnviarSiempreLosCorreosDTE = _EnviarSiempreLosCorreosDTE
 
+                    _Cl_Correos.ActualizarListaMayoristaMinorista = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
+                                                                   "Valor", "Informe = 'Demonio' And Campo = 'Chk_ActualizarListaMayoristaMinorista' And NombreEquipo = '" & _NombreEquipo & "'", True)
+
+                    _Cl_Correos.CorreoMayoristaMinorista = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
+                                                                   "Valor", "Informe = 'Demonio' And Campo = 'Txt_CorreoMayoristaMinorista_Tag' And NombreEquipo = '" & _NombreEquipo & "'", True)
+
                     _Descripcion = "Se enviaran paquetes de " & _CantCorreo & " correos. " & _CI_Programacion.Resumen
                     _IndexImagen = 0
 
                 Case "ColaImpDoc"
+
+                    _Cl_Imprimir_Documentos.ColaImpImprmirTodoNodejarCola = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
+                                                                   "Valor", "Informe = 'Demonio' And Campo = 'Chk_ColaImpImprmirTodoNodejarCola' And NombreEquipo = '" & _NombreEquipo & "'", False,, False)
 
                     _Descripcion = _CI_Programacion.Resumen ' "Se imprimiran documentos. " & _CI_Programacion.Resumen
                     _IndexImagen = 1
@@ -393,6 +402,13 @@ Public Class Frm_Demonio_New
                     Dim _CualquierNVV As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Rdb_FacAuto_CualquierNVV' And NombreEquipo = '" & _NombreEquipo & "'", True)
                     Dim _SoloDeSucModalidad As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Rdb_FacAuto_SoloDeSucModalidad' And NombreEquipo = '" & _NombreEquipo & "'", True)
 
+                    Dim _CantDocFacturanXProceso As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_CantDocFacturanXProceso' And NombreEquipo = '" & _NombreEquipo & "'",,, 20)
+
+                    Dim _FcOrden_Llegada As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Rdb_FcOrden_Llegada' And NombreEquipo = '" & _NombreEquipo & "'",,, "True")
+                    Dim _FcOrden_ItemMenosMas As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Rdb_FcOrden_ItemMenosMas' And NombreEquipo = '" & _NombreEquipo & "'",,, "False")
+
+                    Dim _CodFunFactura As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Txt_FacAuto_CodFunFactura' And NombreEquipo = '" & _NombreEquipo & "'")
+
                     Boolean.TryParse(_FA_1Dia, _Cl_FacturacionAuto.FA_1Dia)
                     Boolean.TryParse(_FA_1Semana, _Cl_FacturacionAuto.FA_1Semana)
                     Boolean.TryParse(_FA_1Mes, _Cl_FacturacionAuto.FA_1Mes)
@@ -401,7 +417,12 @@ Public Class Frm_Demonio_New
                     Boolean.TryParse(_CualquierNVV, _Cl_FacturacionAuto.CualquierNVV)
                     Boolean.TryParse(_SoloDeSucModalidad, _Cl_FacturacionAuto.SoloDeSucModalidad)
 
+                    Boolean.TryParse(_FcOrden_Llegada, _Cl_FacturacionAuto.FcOrden_Llegada)
+                    Boolean.TryParse(_FcOrden_ItemMenosMas, _Cl_FacturacionAuto.FcOrden_ItemMenosMas)
+
+                    _Cl_FacturacionAuto.CantDocFacturanXProceso = _CantDocFacturanXProceso
                     _Cl_FacturacionAuto.Modalidad_Fac = _Modalidad_Fac
+                    _Cl_FacturacionAuto.CodFunFactura = _CodFunFactura
 
                     _Descripcion = _CI_Programacion.Resumen ' "Facturación de notas de venta para clientes con condición automática. " & _CI_Programacion.Resumen
                     _IndexImagen = 8
@@ -1077,6 +1098,17 @@ Public Class Frm_Demonio_New
 
             If Not _Cl_Correos.Procesando Then
 
+                If _Global_Row_Configuracion_General.Item("UsarVencListaPrecios") Then
+
+                    If _Cl_Correos.ActualizarListaMayoristaMinorista Then
+
+                        Dim _Cl_ListaMayoristaMinorista As New Cl_ListaMayoristaMinorista
+                        _Cl_ListaMayoristaMinorista.Sb_LlenarCorreosNuevosMayoristas(_Cl_Correos.CorreoMayoristaMinorista, DtpFecharevision.Value)
+
+                    End If
+
+                End If
+
                 _Cl_Correos.Procesando = True
                 _Cl_Correos.Fecha_Revision = DtpFecharevision.Value
                 _Cl_Correos.Nombre_Equipo = _NombreEquipo
@@ -1480,7 +1512,7 @@ Public Class Frm_Demonio_New
 
                 _Cl_NVVAutoExterna.Sb_Procesar_NVV(Me)
 
-                Dim registro As String = "Tarea ejecutada (Facturación automática) a las: " & DateTime.Now.ToString()
+                Dim registro As String = "Tarea ejecutada (Notas de ventas externas) a las: " & DateTime.Now.ToString()
 
                 If Not String.IsNullOrWhiteSpace(_Cl_NVVAutoExterna.Log_Registro) Then
                     registro += vbCrLf & _Cl_NVVAutoExterna.Log_Registro

@@ -892,4 +892,13 @@
   <data name="Zw_Docu_Det_Cust" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Sql\Tablas\Zw_Docu_Det_Cust.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="Zw_Contenedor" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Sql\Tablas\Zw_Contenedor.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Contenedor_DocTom" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Sql\Tablas\Zw_Contenedor_DocTom.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Contenedor_StockProd" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Sql\Tablas\Zw_Contenedor_StockProd.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
 </root>

@@ -681,7 +681,11 @@ Buscar:
                 _Sql_Filtro_Entidades += vbCrLf & " And Mae1.KOFUEN = '" & FUNCIONARIO & "'"
             Else
 
-                Consulta_sql = "Select KOFU From TABFUGD Where KOGRU = '" & _Kogru & "'"
+                If Not _Kogru.Contains("'") Then
+                    _Kogru = "'" & _Kogru & "'"
+                End If
+
+                Consulta_sql = "Select KOFU From TABFUGD Where KOGRU In (" & _Kogru & ")"
                 Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 _Sql_Filtro_Entidades = Generar_Filtro_IN(_Tbl, "", "KOFU", False, False, "'")

@@ -148,7 +148,7 @@ Public Class Frm_Kardex_X_Producto_Lista
         Consulta_sql = Replace(Consulta_sql, "#ListaPrecio#", ModListaPrecioVenta)
 
         If ChkMostrarOcultos.Checked Then
-            _Condicion += "MP.ATPR<>'OCU' AND"
+            _Condicion += "And MP.ATPR<>'OCU'"
         End If
 
         Consulta_sql = Replace(Consulta_sql, "#Reemplazos#", String.Empty)

@@ -22,6 +22,9 @@ Public Class Cl_Correos
     Public Property CantMmail As Integer
     Public Property EnviarSiempreLosCorreosDTE As Boolean
 
+    Public Property ActualizarListaMayoristaMinorista As Boolean
+    Public Property CorreoMayoristaMinorista As String
+
     Public Property Lbl_Estado As String
         Get
             Return _Lbl_Estado

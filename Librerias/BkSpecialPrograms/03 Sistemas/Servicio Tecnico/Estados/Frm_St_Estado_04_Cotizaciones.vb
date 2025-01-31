@@ -45,7 +45,6 @@ Public Class Frm_St_Estado_04_Cotizaciones
         _Accion = Accion
 
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
-
         Sb_Color_Botones_Barra(Bar2)
 
     End Sub
@@ -1088,10 +1087,14 @@ Public Class Frm_St_Estado_04_Cotizaciones
         Dim _Id_Ot_Padre As Integer = _Row_Encabezado.Item("Id_Ot_Padre")
 
         If _Reg = 1 Then
+
             Consulta_sql = "Select Det.*,Enc.Nro_Ot,Enc.Sub_Ot,Enc.Empresa,Enc.Sucursal,Enc.Bodega,'ODST OT: '+Enc.Nro_Ot+'-'+Enc.Sub_Ot As 'Observa'" & vbCrLf &
                            "From " & _Global_BaseBk & "Zw_St_OT_DetProd Det" & vbCrLf &
                            "Left Join " & _Global_BaseBk & "Zw_St_OT_Encabezado Enc On Enc.Id_Ot = Det.Id_Ot" & vbCrLf &
                            "Where Det.Id_Ot = " & _Id_Ot
+
+            _COV_Solo_Esta_SubOT = True
+
         Else
 
             Dim Chk_Genarar_COV_Solo_Esta_SubOT As New Command

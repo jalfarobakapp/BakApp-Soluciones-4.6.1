@@ -173,6 +173,7 @@ Public Class Frm_GRI_FabXProducto
             Sb_LimpiarMaxi()
             Txt_Numot.Text = _Numot_Extra
             Dtp_Fiot.Value = _Sql.Fx_Trae_Dato("POTE", "FIOT", "NUMOT = '" & _Numot_Extra & "'")
+            Dtp_Fecha_Ingreso.Value = _FechaDelServidor
             Sb_BuscarProductos(_Numot_Extra)
             Return
         End If
@@ -608,7 +609,7 @@ Public Class Frm_GRI_FabXProducto
         End If
 
         If _LotePlantaTurno Then
-            _NroLote = _Cl_Tarja.Zw_Pdp_CPT_Tarja.Planta & "" & _Cl_Tarja.Zw_Pdp_CPT_Tarja.Turno & _NroLote
+            _NroLote = _Cl_Tarja.Zw_Pdp_CPT_Tarja.Planta & "" & _Cl_Tarja.Zw_Pdp_CPT_Tarja.Turno & _NroLote & "-" & Mid(Now.Year, 3, 2)
         End If
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Lotes_Enc Where NroLote = '" & _NroLote & "'"
@@ -616,7 +617,7 @@ Public Class Frm_GRI_FabXProducto
 
         If IsNothing(_Row_Lote) Then
 
-            If MessageBoxEx.Show(Me, "El Número de Lote no esta registrado en el sistema" & vbCrLf & vbCrLf &
+            If MessageBoxEx.Show(Me, "El Número de Lote [" & _NroLote & "] no esta registrado en el sistema" & vbCrLf & vbCrLf &
                               "¿Confirma la grabación de este nuevo lote?", "Validación",
                               MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
                 Return

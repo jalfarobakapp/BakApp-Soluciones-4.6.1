@@ -169,6 +169,7 @@ Public Class Clase_Crear_Documento
     Dim _Nuliprod As String
 
     Dim _Customizable As Boolean
+    Dim _PreVenta As Boolean
 
 #End Region
 
@@ -184,6 +185,8 @@ Public Class Clase_Crear_Documento
 #End Region
 
 #Region "FUNCION CREAR DOCUMENTO RANDOM DEFINITIVO"
+
+    Public Property Idmaeedo_Edit As Integer
 
     Function Fx_Crear_Documento(Tipo_de_documento As String,
                                 ByRef Numero_de_documento As String,
@@ -230,7 +233,7 @@ Public Class Clase_Crear_Documento
         Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
 
         Dim _Empresa = _Row_Encabezado.Item("EMPRESA")
-
+        Dim _Eliminar_Idmaeedo_Origen As Boolean
 
         ' Se quita esto porque se repite el proceso mas abajo por producto
 
@@ -394,7 +397,8 @@ Public Class Clase_Crear_Documento
 
                 '------------------------------------------------------------------------------------------------------------
 
-                _Customizable = .Item("Customizable")
+                _Customizable = NuloPorNro(.Item("Customizable"), False)
+                _PreVenta = NuloPorNro(.Item("PreVenta"), False)
 
             End With
 
@@ -433,11 +437,18 @@ Public Class Clase_Crear_Documento
 
             If Not _Cambiar_NroDocumento And _Tido = "COV" Then
 
-                Consulta_sql = "UPDATE MAEEDO Set NUDO = 'xxxxxxxxxx' WHERE EMPRESA = '" & _Empresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'"
+                Dim _Idmaeedo_Origen As Integer = _Row_Encabezado.Item("Idmaeedo_Origen")
+                Dim _NudoRandom As String
 
+                Dim random As New Random()
+                _NudoRandom = Rellenar(random.Next(1000, 10000), 10, "x", False)
+
+                Consulta_sql = "Update MAEEDO Set NUDO = '" & _NudoRandom & "' WHERE IDMAEEDO = " & _Idmaeedo_Origen
                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                 Comando.Transaction = myTrans
                 Comando.ExecuteNonQuery()
+
+                _Eliminar_Idmaeedo_Origen = True
 
             End If
 
@@ -1955,9 +1966,9 @@ Public Class Clase_Crear_Documento
                 End If
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Ent (Idmaeedo,NombreEquipo,TipoEstacion,Empresa,Modalidad,Tido,Nudo,FechaHoraGrab," &
-                               "HabilitadaFac,FunAutorizaFac,Pickear,Customizable) Values " &
+                               "HabilitadaFac,FunAutorizaFac,Pickear,Customizable,PreVenta) Values " &
                                "(" & _Idmaeedo & ",'" & _NombreEquipo & "','" & _TipoEstacion & "','" & _Empresa & "','" & _Modalidad & "'" &
-                               ",'" & _Tido & "','" & _Nudo & "',Getdate(),0,''," & _Pickear & "," & Convert.ToInt32(_Customizable) & ")"
+                               ",'" & _Tido & "','" & _Nudo & "',Getdate(),0,''," & _Pickear & "," & Convert.ToInt32(_Customizable) & "," & Convert.ToInt32(_PreVenta) & ")"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                 Comando.Transaction = myTrans
@@ -1992,6 +2003,30 @@ Public Class Clase_Crear_Documento
                 End If
 
             End If
+
+            If _Eliminar_Idmaeedo_Origen Then
+
+                Dim _Idmaeedo_Origen As Integer = _Row_Encabezado.Item("Idmaeedo_Origen")
+
+                Consulta_sql = "Delete From MAEPOSLI" & vbCrLf &
+                               "Where MAEPOSLI.IDMAEDDO IN (Select IDMAEDDO From MAEDDO Where IDMAEEDO=" & _Idmaeedo_Origen & ")" & vbCrLf &
+                               "Delete From MEVENTO Where ARCHIRVE='MAEEDO' And IDRVE=" & _Idmaeedo_Origen & vbCrLf &
+                               "Delete From MAEIMLI Where IDMAEEDO =" & _Idmaeedo_Origen & vbCrLf &
+                               "Delete From MAEDTLI Where IDMAEEDO=" & _Idmaeedo_Origen & vbCrLf &
+                               "Delete From MEVENTO " &
+                               "Where ARCHIRVE='MAEDDO' And IDRVE IN (Select IDMAEDDO From MAEDDO Where IDMAEEDO=" & _Idmaeedo_Origen & ")" & vbCrLf &
+                               "Delete From MAEDDO Where IDMAEEDO=" & _Idmaeedo_Origen & vbCrLf &
+                               "Delete From MAEVEN Where IDMAEEDO=" & _Idmaeedo_Origen & vbCrLf &
+                               "Delete From MAEEDOOB Where IDMAEEDO=" & _Idmaeedo_Origen & vbCrLf &
+                               "Delete From TABPERMISO Where IDRST=" & _Idmaeedo_Origen & " And ARCHIRST='MAEEDO'" & vbCrLf &
+                               "Delete From MAEDCR Where IDMAEEDO=" & _Idmaeedo_Origen
+
+                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+            End If
+
 
             If False Then
                 Throw New System.Exception("An exception has occurred.")
@@ -3713,6 +3748,16 @@ Public Class Clase_Crear_Documento
 
                 Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Casi_DocEnc Where Id_DocEnc = " & _Rs_Id_DocEnc & vbCrLf &
                                "Delete " & _Global_BaseBk & "Zw_Casi_DocObs Where Id_DocEnc = " & _Rs_Id_DocEnc
+                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+            End If
+
+            If Tbl_Encabezado.Rows(0).Item("PreVenta") AndAlso Tbl_Encabezado.Rows(0).Item("IdCont") > 0 Then
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Contenedor_DocTom Set Id_DocEnc = " & _Id_DocEnc & vbCrLf &
+                               "Where IdCont = " & Tbl_Encabezado.Rows(0).Item("IdCont")
                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                 Comando.Transaction = myTrans
                 Comando.ExecuteNonQuery()

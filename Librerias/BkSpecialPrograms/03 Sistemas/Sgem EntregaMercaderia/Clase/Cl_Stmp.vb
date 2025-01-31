@@ -711,7 +711,7 @@ Public Class Cl_Stmp
 
             Dim _Sql_WMS As New Class_SQL(_CadenaConexionWms)
 
-            Consulta_sql = My.Resources.Recursos_WmsVillar.SQLQuery_Revisar_Nota_de_venta_activa_en_WMS_Villar
+            Consulta_sql = My.Resources.Recursos_WmsSgem.SQLQuery_Revisar_Nota_de_venta_activa_en_WMS_Villar
             Consulta_sql = Replace(Consulta_sql, "#Nudo#", _Nudo)
 
             Dim _Ds As DataSet = _Sql_WMS.Fx_Get_DataSet(Consulta_sql, True, False)
@@ -927,7 +927,7 @@ Public Class Cl_Stmp
 
             Dim _Sql_WMS As New Class_SQL(_CadenaConexionWms)
 
-            Consulta_sql = My.Resources.Recursos_WmsVillar.SQLQuery_Revisar_Nota_de_venta_activa_en_WMS_Villar
+            Consulta_sql = My.Resources.Recursos_WmsSgem.SQLQuery_Revisar_Nota_de_venta_activa_en_WMS_Villar
             Consulta_sql = Replace(Consulta_sql, "#Nudo#", _Nudo)
 
             Dim _Ds As DataSet = _Sql_WMS.Fx_Get_DataSet(Consulta_sql, True, False)

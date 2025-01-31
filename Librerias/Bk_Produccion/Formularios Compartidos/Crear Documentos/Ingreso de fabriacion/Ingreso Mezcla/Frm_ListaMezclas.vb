@@ -52,6 +52,15 @@ Public Class Frm_ListaMezclas
                        "Where 1>0" & vbCrLf & _Condicion & vbCrLf &
                        "And Nro_MZC+Numot_Otm+Codigo_Otm+Descripcion_Otm Like '%" & _Filtro & "%'" & vbCrLf &
                        "Order By Nro_MZC"
+
+        Consulta_sql = "Select m.*,p.TIPOOT,p.NOTIPO" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Pdp_CPT_MzEnc m" & vbCrLf &
+                       "Inner Join POTE o On o.IDPOTE = m.Idpote_Otm" & vbCrLf &
+                       "Left Join PTIPOOT p On  o.TIPOOT = p.TIPOOT" & vbCrLf &
+                       "Where 1>0" & vbCrLf & _Condicion & vbCrLf &
+                       "And Nro_MZC+Numot_Otm+Codigo_Otm+Descripcion_Otm Like '%%'" & vbCrLf &
+                       "Order By Nro_MZC"
+
         _Tbl_Mezclas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
@@ -111,9 +120,23 @@ Public Class Frm_ListaMezclas
             .Columns("Descripcion_Otm").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
+            '.Columns("TIPOOT").Visible = True
+            '.Columns("TIPOOT").HeaderText = "Tipo"
+            '.Columns("TIPOOT").Width = 230
+            '.Columns("TIPOOT").Visible = True
+            '.Columns("TIPOOT").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
+
+            .Columns("NOTIPO").Visible = True
+            .Columns("NOTIPO").HeaderText = "Tipo OT"
+            .Columns("NOTIPO").Width = 160
+            .Columns("NOTIPO").Visible = True
+            .Columns("NOTIPO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
             .Columns("Referencia").Visible = True
             .Columns("Referencia").HeaderText = "Saldo SC"
-            .Columns("Referencia").Width = 230
+            .Columns("Referencia").Width = 300
             .Columns("Referencia").Visible = True
             .Columns("Referencia").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
@@ -269,6 +292,7 @@ Public Class Frm_ListaMezclas
         Dim _Referencia As String = _Fila.Cells("Referencia").Value
         Dim _Nro_MZC As String = _Fila.Cells("Nro_MZC").Value
         Dim _Numot_Otm As String = _Fila.Cells("Numot_Otm").Value
+        Dim _Fiot_Otm As DateTime = _Fila.Cells("Fiot_Otm").Value
 
         Dim _RowNomenclatura As DataRow
 

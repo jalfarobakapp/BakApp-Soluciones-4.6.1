@@ -170,6 +170,7 @@ Public Class Frm_Desp_01_Ingreso
         AddHandler Grilla_Documentos.MouseDown, AddressOf Sb_Grilla_MouseDown
         AddHandler Grilla_Documentos.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Cmb_Tipo_Envio.SelectedIndexChanged, AddressOf Sb_Cmb_Tipo_Envio_SelectedIndexChanged
+        AddHandler Cmb_Sucursal_Retiro.SelectedIndexChanged, AddressOf Cmb_Sucursal_Retiro_SelectedIndexChanged
 
         AddHandler Dtp_Fecha_Despacho.ValueChanged, AddressOf Sb_Dtp_Fecha_Despacho_ValueChanged
 
@@ -458,7 +459,7 @@ Public Class Frm_Desp_01_Ingreso
                 Dim _Empresa = _Cl_Despacho.Tbl_Despacho.Rows(0).Item("Empresa")
                 Dim _Sucursal = _Cl_Despacho.Tbl_Despacho.Rows(0).Item("Sucursal")
 
-                Consulta_Sql = "Select Suc.*,Ci.NOKOCI As CIUDAD,Cm.NOKOCM As COMUNA FROM TABSU Suc
+                Consulta_Sql = "Select Top 1 Suc.*,Ci.NOKOCI As CIUDAD,Cm.NOKOCM As COMUNA FROM TABSU Suc
                                     Left Join TABCI Ci On Suc.CISU = Ci.KOCI
                                     Left Join TABCM Cm On Suc.CISU = Cm.KOCI And Suc.CMSU = Cm.KOCM
                                     Where EMPRESA = '" & _Empresa & "' And KOSU = '" & _Sucursal & "'"
@@ -476,7 +477,23 @@ Public Class Frm_Desp_01_Ingreso
                 _Row_Despacho.Item("Email") = _Cl_Despacho.Row_Entidad.Item("EMAILCOMER").ToString.Trim
 
                 If _Cl_Despacho.Row_Conf_Despacho.Item("Pedir_Sucursal_Retiro") Then
+
                     Cmb_Sucursal_Retiro.SelectedValue = Fx_Sucursal_Retiro()
+
+                    'Consulta_Sql = "Select Top 1 Suc.*,Ci.NOKOCI As CIUDAD,Cm.NOKOCM As COMUNA FROM TABSU Suc
+                    '                Left Join TABCI Ci On Suc.CISU = Ci.KOCI
+                    '                Left Join TABCM Cm On Suc.CISU = Cm.KOCI And Suc.CMSU = Cm.KOCM
+                    '                Where EMPRESA+KOSU = '" & Cmb_Sucursal_Retiro.SelectedValue & "'"
+
+                    '_Row_Sucursal = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+                    '_Row_Despacho.Item("CodPais") = _Sql.Fx_Trae_Dato("TABPA", "KOPA", "NOKOPA = '" & _Global_Row_Configp.Item("PAIS").ToString.Trim & "'",,, "CHI")
+                    '_Row_Despacho.Item("CodCiudad") = _Row_Sucursal.Item("CISU").ToString.Trim
+                    '_Row_Despacho.Item("CodComuna") = _Row_Sucursal.Item("CMSU").ToString.Trim
+                    '_Row_Despacho.Item("Pais") = _Global_Row_Configp.Item("PAIS").ToString.Trim
+                    '_Row_Despacho.Item("Ciudad") = _Row_Sucursal.Item("CIUDAD").ToString.Trim
+                    '_Row_Despacho.Item("Comuna") = _Row_Sucursal.Item("COMUNA").ToString.Trim
+
                 Else
                     Cmb_Sucursal_Retiro.SelectedValue = _Empresa & _Sucursal
                 End If
@@ -2077,4 +2094,47 @@ Public Class Frm_Desp_01_Ingreso
         Btn_EditarEntregaPaletizada.Enabled = Not Chk_EntregaPaletizada.Enabled
         Sb_Cargar_Datos_Envio()
     End Sub
+
+    Private Sub Cmb_Sucursal_Retiro_SelectedIndexChanged(sender As Object, e As EventArgs)
+
+        Dim _Row_Despacho As DataRow = _Cl_Despacho.Tbl_Despacho.Rows(0)
+
+        Consulta_Sql = "Select Top 1 Suc.*,Ci.NOKOCI As CIUDAD,Cm.NOKOCM As COMUNA FROM TABSU Suc
+                                    Left Join TABCI Ci On Suc.CISU = Ci.KOCI
+                                    Left Join TABCM Cm On Suc.CISU = Cm.KOCI And Suc.CMSU = Cm.KOCM
+                                    Where EMPRESA+KOSU = '" & Cmb_Sucursal_Retiro.SelectedValue & "'"
+
+        Dim _Row_Sucursal As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+        Dim _CodPais = String.Empty
+        Dim _CodCiudad = String.Empty
+        Dim _CodComuna = String.Empty
+        Dim _Pais = String.Empty
+        Dim _Ciudad = String.Empty
+        Dim _Comuna = String.Empty
+
+        If Not IsNothing(_Row_Sucursal) Then
+
+            _CodPais = _Sql.Fx_Trae_Dato("TABPA", "KOPA", "NOKOPA = '" & _Global_Row_Configp.Item("PAIS").ToString.Trim & "'",,, "CHI")
+            _CodCiudad = _Row_Sucursal.Item("CISU").ToString.Trim
+            _CodComuna = _Row_Sucursal.Item("CMSU").ToString.Trim
+            _Pais = _Global_Row_Configp.Item("PAIS").ToString.Trim
+            _Ciudad = _Row_Sucursal.Item("CIUDAD").ToString.Trim
+            _Comuna = _Row_Sucursal.Item("COMUNA").ToString.Trim
+
+        End If
+
+        _Row_Despacho.Item("CodPais") = _CodPais
+        _Row_Despacho.Item("CodCiudad") = _CodCiudad
+        _Row_Despacho.Item("CodComuna") = _CodComuna
+        _Row_Despacho.Item("Ciudad") = _Pais
+        _Row_Despacho.Item("Comuna") = _Comuna
+        _Row_Despacho.Item("Nombre_Contacto") = String.Empty
+        _Row_Despacho.Item("Transportista") = String.Empty
+        _Row_Despacho.Item("Direccion") = "RETIRA EN SUCURSAL: " & Cmb_Sucursal_Retiro.Text.Trim
+
+        Sb_Cargar_Datos_Envio()
+
+    End Sub
+
 End Class

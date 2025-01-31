@@ -1159,7 +1159,7 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
                                     Dim _Idmaeedo As Integer = _Fila.Cells("IDRSD").Value
                                     Dim _Vadp As Double = _Fila.Cells("VADP").Value
 
-                                    _Cl_Pagar.Fx_Crear_Pago_MAEDPCD(Me, _Idmaeedo, _Idmaedpce, _Vadp)
+                                    _Cl_Pagar.Fx_Crear_Pago_MAEDPCD(_Idmaeedo, _Idmaedpce, _Vadp)
 
                                 End If
 
@@ -1384,16 +1384,6 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
         If _Grabar Then
             Sb_Revisar_Fila(_Fila)
         End If
-
-        'Dim Fm As New Frm_Teneduria_CtaCteEnt(_Koen, "", _Tbl_Maedpce)
-        'Fm.Text = "CTA.CTE. ENTIDAD: " & _Koen.ToString.Trim & " - " & _Razon
-        'Fm.Solo_Ver = True
-        'If CBool(Fm.Tbl_Maedpcde_CtaCte.Rows.Count) Then
-        '    Fm.ShowDialog(Me)
-        'Else
-        '    MessageBoxEx.Show(Me, "No existen datos que mostrar", "Cta.Cte.", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        'End If
-        'Fm.Dispose()
 
     End Sub
 

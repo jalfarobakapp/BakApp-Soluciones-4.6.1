@@ -8,6 +8,7 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
 
     Dim _Nombre_Tabla_Paso As String
     Dim _SqlFiltro As String
+    Dim _SqlFiltro_Edo As String
     Dim _Unidad As Integer
 
     Dim _Tbl_Productos, _Tbl_Detalle As DataTable
@@ -19,20 +20,21 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
 
     Dim _Informe_Padre As Enum_Informe_Padre
 
-    Public Sub New(Informe_Padre As Enum_Informe_Padre,
-                   Nombre_Tabla_Paso As String,
-                   SqlFiltro As String,
-                   Unidad As Integer)
+    Public Sub New(_Informe_Padre As Enum_Informe_Padre,
+                   _Nombre_Tabla_Paso As String,
+                   _SqlFiltro As String,
+                   _Unidad As Integer)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        _Informe_Padre = Informe_Padre
-        _Nombre_Tabla_Paso = Nombre_Tabla_Paso
-        _SqlFiltro = SqlFiltro
-        _Unidad = Unidad
+        Me._Informe_Padre = _Informe_Padre
+        Me._Nombre_Tabla_Paso = _Nombre_Tabla_Paso
+        Me._SqlFiltro = _SqlFiltro
+        Me._Unidad = _Unidad
+        Me._SqlFiltro_Edo = _SqlFiltro_Edo
 
         Sb_Formato_Generico_Grilla(Grilla_Documentos, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
         Sb_Formato_Generico_Grilla(Grilla_Detalle, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
@@ -82,6 +84,7 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
 
         Consulta_sql = My.Resources.Recursos_Proximas_Recepciones.SQLQuery_Sub_Inf_Recep_Desp_Detalle_x_Documentos
         Consulta_sql = Replace(Consulta_sql, "#Filtro#", _SqlFiltro)
+        Consulta_sql = Replace(Consulta_sql, "#Filtro_Edo#", _SqlFiltro_Edo)
         Consulta_sql = Replace(Consulta_sql, "#Ud#", _Unidad)
         Consulta_sql = Replace(Consulta_sql, "#Tabla_Paso#", _Nombre_Tabla_Paso)
 
@@ -416,7 +419,31 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
 
     Private Sub Btn_Mnu_EnviarDocumentosStem_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_EnviarDocumentosStem.Click
 
+
+        Dim _Lista_Idmaeedo As New List(Of String)
+
+        For Each _Fila As DataGridViewRow In Grilla_Documentos.Rows
+            Dim _Idmaeedo = _Fila.Cells("IDMAEEDO").Value
+            If Fx_Se_Puede_Trasladar_Para_Crear_Otro_Documento(_Idmaeedo) Then
+                _Lista_Idmaeedo.Add(_Idmaeedo)
+            End If
+        Next
+
+        If Not CBool(_Lista_Idmaeedo.Count) Then
+
+            MessageBoxEx.Show(Me, "No existen documentos que facturar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Return
+
+        End If
+
+        Dim _Filtro_Doc As String '= Generar_Filtro_IN(_Tbl_Productos, "", "IDMAEEDO", False, False, "")
+
+        _Filtro_Doc = Generar_Filtro_IN_Arreglo(_Lista_Idmaeedo, True)
+        _Filtro_Doc = "And Edo.IDMAEEDO In " & _Filtro_Doc
+
+
         Dim Fm As New Frm_Stmp_IncNVVPicking
+        Fm.FiltroDoc = _Filtro_Doc
         Fm.ShowDialog(Me)
         Fm.Dispose()
 

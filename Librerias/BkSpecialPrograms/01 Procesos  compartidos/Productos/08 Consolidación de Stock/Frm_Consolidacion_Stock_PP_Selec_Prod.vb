@@ -46,16 +46,16 @@ Public Class Frm_Consolidacion_Stock_PP_Selec_Prod
 
         If Rdb_Productos_Todos.Checked Then
 
-            Consulta_sql = "SELECT KOPR AS 'Codigo', NOKOPR AS 'Descripcion' FROM MAEPR WHERE ATPR = '' AND TIPR = 'FPN'"
+            Consulta_sql = "Select KOPR AS 'Codigo', NOKOPR AS 'Descripcion' From MAEPR -- Where ATPR = '' And TIPR = 'FPN'"
             _Tbl_Productos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ElseIf Rdb_Productos_Con_Movimientos.Checked Then
 
-            Consulta_sql = "SELECT KOPR AS 'Codigo', NOKOPR AS 'Descripcion' FROM MAEPR" & vbCrLf &
-                           "WHERE ATPR = '' AND TIPR = 'FPN' AND" & Space(1) &
-                           "KOPR IN (SELECT Distinct KOPRCT FROM MAEDDO" & Space(1) &
-                           "WHERE FEEMLI BETWEEN '" & Format(Dtp_Fecha_Movimientos_Desde.Value, "yyyyMMdd") & "'" & Space(1) &
-                           "AND '" & Format(Dtp_Fecha_Movimientos_Hasta.Value, "yyyyMMdd") & "')"
+            Consulta_sql = "Select KOPR AS 'Codigo', NOKOPR AS 'Descripcion' From MAEPR" & vbCrLf &
+                           "Where ATPR = '' And TIPR = 'FPN' And" & Space(1) &
+                           "KOPR IN (Select Distinct KOPRCT From MAEDDO" & Space(1) &
+                           "Where FEEMLI BETWEEN '" & Format(Dtp_Fecha_Movimientos_Desde.Value, "yyyyMMdd") & "'" & Space(1) &
+                           "And '" & Format(Dtp_Fecha_Movimientos_Hasta.Value, "yyyyMMdd") & "')"
             _Tbl_Productos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         End If

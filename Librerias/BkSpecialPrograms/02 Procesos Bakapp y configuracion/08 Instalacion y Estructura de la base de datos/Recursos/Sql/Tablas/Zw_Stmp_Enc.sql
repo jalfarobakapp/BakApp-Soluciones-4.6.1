@@ -35,6 +35,9 @@ CREATE TABLE [dbo].[Zw_Stmp_Enc](
     [CodFuncionario_Factura]        [char](3)	    NOT NULL DEFAULT (''),
     [CodFuncionario_MarcaFacturar]  [char](3)       NOT NULL DEFAULT (''),
     [Reasignada]                    [bit]			NOT NULL DEFAULT (0),    
+    [FechaPickeoAct]                [bit]			NOT NULL DEFAULT (0),    
+    [Ruta]                          [varchar](10)   NOT NULL DEFAULT (0),    
+    [OrdenRuta]                     [int]           NOT NULL DEFAULT (0),    
  CONSTRAINT [PK_Zw_Stmp_Enc] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

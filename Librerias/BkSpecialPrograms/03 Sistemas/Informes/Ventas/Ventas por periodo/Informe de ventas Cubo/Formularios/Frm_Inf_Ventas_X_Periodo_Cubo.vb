@@ -1098,7 +1098,10 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
                                vbCrLf &
                                "Update #Paso1 Set Porc = CASE WHEN TOTAL > 0 THEN ROUND(CASE WHEN (Select TOTAL From #Paso2) > 0 THEN TOTAL/(Select TOTAL From #Paso2) ELSE 0 END,5) ELSE 0 END" & vbCrLf &
                                "Update #Paso1 Set Porc = CASE WHEN TOTAL > 0 THEN ROUND(CASE WHEN (Select TOTAL From #Paso2) > 0 THEN TOTAL/@Total ELSE 0 END,5) ELSE 0 END" & vbCrLf &
-                               "Update #Paso1 Set VND = Isnull((Select KOFUEN From MAEEN Where CODIGO = KOEN+SUEN),'???')" & vbCrLf &
+                               "--Update #Paso1 Set VND = Isnull((Select KOFUEN From MAEEN Where CODIGO = KOEN+SUEN),'???')" & vbCrLf &
+                               "Update #Paso1 Set VND = ISNULL(Mn.KOFUEN,'???')" & vbCrLf &
+                               "From MAEEN Mn" & vbCrLf &
+                               "Inner Join #Paso1 p On p.CODIGO = Mn.KOEN+Mn.SUEN" & vbCrLf &
                                "Select * From #Paso1 Order By CODIGO" & vbCrLf &
                                "Select * From #Paso2" & vbCrLf &
                                "Drop Table #Paso1" & vbCrLf &

@@ -27,6 +27,7 @@ Partial Class Frm_Tickets_IngProducto
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Archivos_Adjuntos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_GestProductos = New DevComponents.DotNetBar.ButtonItem()
         Me.Lbl_Cantidad = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_StfiEnBodega = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Bodega = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -57,7 +58,7 @@ Partial Class Frm_Tickets_IngProducto
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Archivos_Adjuntos, Me.Btn_Eliminar})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Archivos_Adjuntos, Me.Btn_Eliminar, Me.Btn_GestProductos})
         Me.Bar2.Location = New System.Drawing.Point(0, 244)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(536, 41)
@@ -95,6 +96,16 @@ Partial Class Frm_Tickets_IngProducto
         Me.Btn_Eliminar.Name = "Btn_Eliminar"
         Me.Btn_Eliminar.Tooltip = "Anular Ticket"
         Me.Btn_Eliminar.Visible = False
+        '
+        'Btn_GestProductos
+        '
+        Me.Btn_GestProductos.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_GestProductos.ForeColor = System.Drawing.Color.Black
+        Me.Btn_GestProductos.Image = CType(resources.GetObject("Btn_GestProductos.Image"), System.Drawing.Image)
+        Me.Btn_GestProductos.ImageAlt = CType(resources.GetObject("Btn_GestProductos.ImageAlt"), System.Drawing.Image)
+        Me.Btn_GestProductos.Name = "Btn_GestProductos"
+        Me.Btn_GestProductos.Tooltip = "Adjuntar archivos"
+        Me.Btn_GestProductos.Visible = False
         '
         'Lbl_Cantidad
         '
@@ -336,7 +347,7 @@ Partial Class Frm_Tickets_IngProducto
         Me.Lbl_HoraRev.Name = "Lbl_HoraRev"
         Me.Lbl_HoraRev.Size = New System.Drawing.Size(89, 23)
         Me.Lbl_HoraRev.TabIndex = 182
-        Me.Lbl_HoraRev.Text = "Fecha de revisión"
+        Me.Lbl_HoraRev.Text = "Hora de revisión"
         '
         'Dtp_HoraRev
         '
@@ -428,12 +439,14 @@ Partial Class Frm_Tickets_IngProducto
         '
         'Input_StfiEnBodega
         '
+        Me.Input_StfiEnBodega.BackColor = System.Drawing.Color.White
         '
         '
         '
         Me.Input_StfiEnBodega.BackgroundStyle.Class = "DateTimeInputBackground"
         Me.Input_StfiEnBodega.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_StfiEnBodega.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_StfiEnBodega.ForeColor = System.Drawing.Color.Black
         Me.Input_StfiEnBodega.Location = New System.Drawing.Point(106, 124)
         Me.Input_StfiEnBodega.Name = "Input_StfiEnBodega"
         Me.Input_StfiEnBodega.ShowUpDown = True
@@ -442,12 +455,14 @@ Partial Class Frm_Tickets_IngProducto
         '
         'Input_Cantidad
         '
+        Me.Input_Cantidad.BackColor = System.Drawing.Color.White
         '
         '
         '
         Me.Input_Cantidad.BackgroundStyle.Class = "DateTimeInputBackground"
         Me.Input_Cantidad.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Cantidad.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_Cantidad.ForeColor = System.Drawing.Color.Black
         Me.Input_Cantidad.Location = New System.Drawing.Point(106, 152)
         Me.Input_Cantidad.Name = "Input_Cantidad"
         Me.Input_Cantidad.ShowUpDown = True
@@ -519,4 +534,5 @@ Partial Class Frm_Tickets_IngProducto
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Input_StfiEnBodega As DevComponents.Editors.IntegerInput
     Friend WithEvents Input_Cantidad As DevComponents.Editors.IntegerInput
+    Public WithEvents Btn_GestProductos As DevComponents.DotNetBar.ButtonItem
 End Class

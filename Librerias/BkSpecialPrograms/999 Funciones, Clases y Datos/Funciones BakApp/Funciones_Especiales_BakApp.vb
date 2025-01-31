@@ -6682,6 +6682,7 @@ Public Module Crear_Documentos_Desde_Otro
             Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
             Dim _Kogru As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & _CodFuncionario & "'")
+            Dim _KogruList As List(Of String) = _Kogru.Split(","c).ToList()
 
             Dim _VerDocumento As Boolean = False
 
@@ -6719,7 +6720,7 @@ Public Module Crear_Documentos_Desde_Otro
                 _Mensaje.EsCorrecto = False
                 _Permiso = "NO00022"
 
-                Consulta_sql = "Select d.*,NOKOGRU From TABFUGD d Left Join TABFUGE e On e.KOGRU = d.KOGRU Where d.KOGRU = '" & _Kogru & "'"
+                Consulta_sql = "Select d.*,NOKOGRU From TABFUGD d Left Join TABFUGE e On e.KOGRU = d.KOGRU Where d.KOGRU In (" & _Kogru & ")"
                 Dim _Tbl_Grupo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 For Each _Fila As DataRow In _Tbl_Grupo.Rows
@@ -6729,14 +6730,14 @@ Public Module Crear_Documentos_Desde_Otro
                     End If
                 Next
 
-                Dim _Grupo As String = _Kogru.Trim & " - " & _Tbl_Grupo.Rows(0).Item("NOKOGRU").trim
+                Dim _Grupo As String = _Kogru.Trim '& " - " & _Tbl_Grupo.Rows(0).Item("NOKOGRU").trim
 
                 _Msj = "No puede ver el documento " & _Row_Edo.Item("TIDO") & "-" & _Row_Edo.Item("NUDO") & vbCrLf & vbCrLf &
                        "Tiene una restricción que le impide ver documentos de clientes de otros vendedores que" & vbCrLf &
                        "no están en su grupo asignado. Esto significa que solo puede acceder a los documentos" & vbCrLf &
                        "de los clientes de los vendedores asociados a su grupo." & vbCrLf & vbCrLf &
                        "Actualmente, tiene asignado el permiso (restricción) NO00022" & vbCrLf &
-                       "y el grupo " & _Grupo
+                       "Grupos asignados: " & _Grupo
 
             End If
 

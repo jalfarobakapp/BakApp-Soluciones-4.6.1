@@ -99,7 +99,7 @@ Public Class Frm_MonedasFicha
             Return
         End If
 
-        MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        'MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         Grabar = True
         Me.Close()

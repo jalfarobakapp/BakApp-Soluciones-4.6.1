@@ -16,6 +16,7 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp
     Dim _Fl_Bodegas = String.Empty
     Dim _Fl_Super_Familias = String.Empty
     Dim _Fl_Entidades = String.Empty
+    'Dim _Fl_Entidades_Edo = String.Empty
     Dim _Fl_Ciudades = String.Empty
     Dim _Fl_Comunas = String.Empty
     Dim _Fl_Productos_Consolidados = String.Empty
@@ -142,6 +143,18 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp
         End Set
     End Property
 
+    'Public Property Pro_Fl_Entidades_Edo() As String
+    '    Get
+    '        Return _Fl_Entidades_Edo
+    '    End Get
+    '    Set(ByVal value As String)
+    '        _Fl_Entidades_Edo = value
+    '    End Set
+    'End Property
+
+    Public Property FechaDesde As Date
+    Public Property FechaHasta As Date
+
     Public Sub New(Informe_Padre As Enum_Informe_Padre,
                    Informe As Enum_Informe,
                    Nombre_Tabla_Paso As String,
@@ -237,6 +250,9 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_Detalle_MouseDown
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
+        Btn_Imprimir.Visible = (_Informe = Enum_Informe.Sucursal)
+        Me.Refresh()
+
     End Sub
 
 
@@ -331,7 +347,8 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp
             Case Enum_Informe.Super_Familia
                 Fl_Super_Familias = Fx_Traer_Filtro("FMPR") 'Fx_Traer_Filtro_Familias()
             Case Enum_Informe.Entidades
-                Fl_Entidades = Fx_Traer_Filtro("ENDO+SUENDO")
+                Fl_Entidades = Fx_Traer_Filtro("Ps.ENDO+Ps.SUENDO")
+                'Fl_Entidades = Fx_Traer_Filtro("ENDO+SUENDO")
             Case Enum_Informe.Ciudades
                 Fl_Ciudades = Fx_Traer_Filtro("CIEN")
             Case Enum_Informe.Comunas
@@ -383,6 +400,9 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp
         ElseIf _Informe_Padre = Enum_Informe_Padre.Informe_Proximas_Recpciones Then
             Fm.Text = "PROX. RECEPCIONES, " & _Texto_Fm
         End If
+
+        Fm.FechaDesde = FechaDesde
+        Fm.FechaHasta = FechaHasta
 
         Fm.ShowDialog(Me)
         Fm.Dispose()
@@ -593,6 +613,7 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp
         Dim Fl_Bodegas = _Fl_Bodegas
         Dim Fl_Super_Familias = _Fl_Super_Familias
         Dim Fl_Entidades = _Fl_Entidades
+        'Dim Fl_Entidades_Edo = _Fl_Entidades
         Dim Fl_Ciudades = _Fl_Ciudades
         Dim Fl_Comunas = _Fl_Comunas
         Dim Fl_Productos_Consolidados = _Fl_Productos_Consolidados
@@ -606,7 +627,14 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp
             Case Enum_Informe.Super_Familia
                 Fl_Super_Familias = Fx_Traer_Filtro("FMPR") 'Fx_Traer_Filtro_Familias()
             Case Enum_Informe.Entidades
-                Fl_Entidades = Fx_Traer_Filtro("Edo.ENDO+Edo.SUENDO")
+
+                'If _Informe = Enum_Informe.Entidades Then
+                'Fl_Entidades = Fx_Traer_Filtro("ENDO+SUENDO")
+                'Else
+                'Fl_Entidades_Edo = Fx_Traer_Filtro("Edo.ENDO+Edo.SUENDO")
+                Fl_Entidades = Fx_Traer_Filtro("Ps.ENDO+Ps.SUENDO")
+                'End If
+
             Case Enum_Informe.Ciudades
                 Fl_Ciudades = Fx_Traer_Filtro("CIEN")
             Case Enum_Informe.Comunas
@@ -638,7 +666,8 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp
 
     Private Sub Btn_Imprimir_Click(sender As Object, e As EventArgs) Handles Btn_Imprimir.Click
 
-        Consulta_sql = "Select Distinct IDMAEEDO From " & _Tabla_Paso
+        Consulta_sql = "Select Distinct IDMAEEDO,ENDO,SUENDO,FEEMDO From " & _Tabla_Paso & vbCrLf &
+                       "Order By ENDO,SUENDO,FEEMDO"
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Lista As New List(Of String)
@@ -651,7 +680,7 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp
 
         If _Lista.Count Then
 
-            Dim _Cl_Imprimir_CompNoDesp As New Cl_Imprimir_CompNoDesp(_Lista)
+            Dim _Cl_Imprimir_CompNoDesp As New Cl_Imprimir_CompNoDesp(_Lista, FechaDesde, FechaHasta)
             _Cl_Imprimir_CompNoDesp.Fx_Imprimir_Archivo(Me, "")
 
         End If
@@ -682,7 +711,8 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp
             Case Enum_Informe.Super_Familia
                 Fl_Super_Familias = Fx_Traer_Filtro("FMPR") 'Fx_Traer_Filtro_Familias()
             Case Enum_Informe.Entidades
-                Fl_Entidades = Fx_Traer_Filtro("ENDO+SUENDO")
+                'Fl_Entidades = Fx_Traer_Filtro("ENDO+SUENDO")
+                Fl_Entidades = Fx_Traer_Filtro("Ps.ENDO+Ps.SUENDO")
             Case Enum_Informe.Ciudades
                 Fl_Ciudades = Fx_Traer_Filtro("CIEN")
             Case Enum_Informe.Comunas

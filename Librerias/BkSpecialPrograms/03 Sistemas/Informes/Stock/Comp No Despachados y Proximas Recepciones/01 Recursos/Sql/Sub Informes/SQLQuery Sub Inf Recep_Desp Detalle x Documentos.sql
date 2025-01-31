@@ -21,5 +21,6 @@ From #Tabla_Paso# Ps
 Left Join MAEEDO Edo On Ps.IDMAEEDO = Edo.IDMAEEDO
 Left Join TABFU Tf On Edo.KOFUDO = Tf.KOFU
 Where 1 > 0
-#Filtro#
+#Filtro#  
+--#Filtro_Edo#
 Order by IDMAEDDO

@@ -104,6 +104,10 @@ Partial Class Frm_Formulario_Documento
         Me.Txt_ArchivoSG_Carpeta_Lectura = New DevComponents.DotNetBar.ButtonItem()
         Me.Txt_ArchivoSG_Carpeta_Generados = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Crear_Desde_DTEXMLCompra = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Contenedor = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Container_Asociar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Container_Ver = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Container_Quitar = New DevComponents.DotNetBar.ButtonItem()
         Me.Menu_Contextual_Opciones_Recargar_Costos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Recargar_Producto_Linea_Activa = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Recargar_Producto_Todos = New DevComponents.DotNetBar.ButtonItem()
@@ -619,7 +623,7 @@ Partial Class Frm_Formulario_Documento
         '
         Me.Menu_Contextual_Opciones_Especiales.AutoExpandOnClick = True
         Me.Menu_Contextual_Opciones_Especiales.Name = "Menu_Contextual_Opciones_Especiales"
-        Me.Menu_Contextual_Opciones_Especiales.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Despacho, Me.Btn_Exportar_a_XML, Me.Btn_Config_Tipo_Estacion, Me.Btn_Config_Impresora, Me.Btn_Prestashop, Me.Btn_Lista_Costos_Proveedor, Me.Btn_Levantar_Prod_Masivamente, Me.Btn_Crear_Desde_DTEXMLCompra})
+        Me.Menu_Contextual_Opciones_Especiales.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Despacho, Me.Btn_Exportar_a_XML, Me.Btn_Config_Tipo_Estacion, Me.Btn_Config_Impresora, Me.Btn_Prestashop, Me.Btn_Lista_Costos_Proveedor, Me.Btn_Levantar_Prod_Masivamente, Me.Btn_Crear_Desde_DTEXMLCompra, Me.Btn_Contenedor})
         Me.Menu_Contextual_Opciones_Especiales.Text = "Opciones especiales"
         '
         'Btn_Despacho
@@ -770,6 +774,35 @@ Partial Class Frm_Formulario_Documento
         Me.Btn_Crear_Desde_DTEXMLCompra.Text = "Crear OCC desde DTE XML"
         Me.Btn_Crear_Desde_DTEXMLCompra.Visible = False
         '
+        'Btn_Contenedor
+        '
+        Me.Btn_Contenedor.Image = CType(resources.GetObject("Btn_Contenedor.Image"), System.Drawing.Image)
+        Me.Btn_Contenedor.Name = "Btn_Contenedor"
+        Me.Btn_Contenedor.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Container_Asociar, Me.Btn_Container_Ver, Me.Btn_Container_Quitar})
+        Me.Btn_Contenedor.Text = "Contenedor"
+        Me.Btn_Contenedor.Visible = False
+        '
+        'Btn_Container_Asociar
+        '
+        Me.Btn_Container_Asociar.Image = CType(resources.GetObject("Btn_Container_Asociar.Image"), System.Drawing.Image)
+        Me.Btn_Container_Asociar.ImageAlt = CType(resources.GetObject("Btn_Container_Asociar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Container_Asociar.Name = "Btn_Container_Asociar"
+        Me.Btn_Container_Asociar.Text = "Asociar contenedor"
+        '
+        'Btn_Container_Ver
+        '
+        Me.Btn_Container_Ver.Image = CType(resources.GetObject("Btn_Container_Ver.Image"), System.Drawing.Image)
+        Me.Btn_Container_Ver.ImageAlt = CType(resources.GetObject("Btn_Container_Ver.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Container_Ver.Name = "Btn_Container_Ver"
+        Me.Btn_Container_Ver.Text = "Ver contenedor asociado"
+        '
+        'Btn_Container_Quitar
+        '
+        Me.Btn_Container_Quitar.Image = CType(resources.GetObject("Btn_Container_Quitar.Image"), System.Drawing.Image)
+        Me.Btn_Container_Quitar.ImageAlt = CType(resources.GetObject("Btn_Container_Quitar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Container_Quitar.Name = "Btn_Container_Quitar"
+        Me.Btn_Container_Quitar.Text = "Quitar contenedor"
+        '
         'Menu_Contextual_Opciones_Recargar_Costos
         '
         Me.Menu_Contextual_Opciones_Recargar_Costos.AutoExpandOnClick = True
@@ -913,6 +946,7 @@ Partial Class Frm_Formulario_Documento
         '
         Me.Btn_Cambiar_ILA.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Cambiar_ILA.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Cambiar_ILA.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.Btn_Cambiar_ILA.Enabled = False
         Me.Btn_Cambiar_ILA.Font = New System.Drawing.Font("Courier New", 6.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Cambiar_ILA.Location = New System.Drawing.Point(3, 3)
@@ -1902,9 +1936,9 @@ Partial Class Frm_Formulario_Documento
         Me.Lbl_Totaliza_Cantidades.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Lbl_Totaliza_Cantidades.Font = New System.Drawing.Font("Courier New", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Lbl_Totaliza_Cantidades.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Totaliza_Cantidades.Location = New System.Drawing.Point(1, 235)
+        Me.Lbl_Totaliza_Cantidades.Location = New System.Drawing.Point(3, 235)
         Me.Lbl_Totaliza_Cantidades.Name = "Lbl_Totaliza_Cantidades"
-        Me.Lbl_Totaliza_Cantidades.Size = New System.Drawing.Size(908, 20)
+        Me.Lbl_Totaliza_Cantidades.Size = New System.Drawing.Size(906, 20)
         Me.Lbl_Totaliza_Cantidades.TabIndex = 96
         Me.Lbl_Totaliza_Cantidades.Text = "sakjh skahsk h akhskjahskH KJHASKJDH KASJHDKSHD"
         '
@@ -2702,6 +2736,7 @@ Partial Class Frm_Formulario_Documento
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
         Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "Frm_Formulario_Documento"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
@@ -2932,4 +2967,8 @@ Partial Class Frm_Formulario_Documento
     Friend WithEvents Lbl_TipoVenta As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Lbl_DocActual As DevComponents.DotNetBar.LabelItem
     Public WithEvents Btn_Editar_Cotizacion As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Contenedor As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Container_Asociar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Container_Ver As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Container_Quitar As DevComponents.DotNetBar.ButtonItem
 End Class

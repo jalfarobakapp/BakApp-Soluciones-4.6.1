@@ -81,6 +81,8 @@ Public Class Tesoreria_Clientes
             Return
         End If
 
+        _Percontact = "2025"
+
         Dim Fm As New Frm_LiquidTJVcredito
         Fm.ShowDialog(Me)
         Fm.Dispose()

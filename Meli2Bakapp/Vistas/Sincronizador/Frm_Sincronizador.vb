@@ -97,7 +97,7 @@ Public Class Frm_Sincronizador
     Private Sub Btn_Configuraciones_Click(sender As Object, e As EventArgs) Handles Btn_Configuraciones.Click
         Timer_Ejecutar.Stop()
 
-        Dim Fm As New Frm_Conexiones
+        Dim Fm As New Frm_Configuracion
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
@@ -105,11 +105,23 @@ Public Class Frm_Sincronizador
     End Sub
 
     Private Sub Timer_Ejecutar_Tick(sender As Object, e As EventArgs) Handles Timer_Ejecutar.Tick
+
         Timer_Ejecutar.Stop()
-        _Cl_Sincroniza.Sb_Revisar_Kit(Txt_Log, Dtp_FechaRevision.Value, 10)
-        _Cl_Sincroniza.Sb_Revisar_Pedidos(Txt_Log, Dtp_FechaRevision.Value, 10)
-        _Cl_Sincroniza.Sb_Adjuntar_Etiquetas(Txt_Log, Dtp_FechaRevision.Value, 10)
+
+        With _Cl_Sincroniza
+
+            .Sb_SincronizarPagos(Txt_Log)
+            .Sb_ActualizarIDMAEEDO_NVV_DesdeBakappHaciaMLIBRE()
+            .Sb_ActualizarIDMAEEDO_FCV_DesdeBakappHaciaMLIBRE()
+
+            .Sb_Revisar_Kit(Txt_Log, Dtp_FechaRevision.Value, 10)
+            .Sb_Revisar_Pedidos(Txt_Log, Dtp_FechaRevision.Value, 10)
+            .Sb_Adjuntar_Etiquetas(Txt_Log, Dtp_FechaRevision.Value, 10)
+
+        End With
+
         Timer_Ejecutar.Start()
+
     End Sub
 
     Private Sub Timer_Limpiar_Tick(sender As Object, e As EventArgs) Handles Timer_Limpiar.Tick
@@ -123,4 +135,5 @@ Public Class Frm_Sincronizador
         Dtp_FechaRevision.Value = Now.Date
         Sb_AddToLog("Sincronizar", "Se actualiza la fecha: " & Dtp_FechaRevision.Value, Txt_Log)
     End Sub
+
 End Class

@@ -363,11 +363,12 @@ Into #Paso
 From " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet Nvd
 Inner Join MAEST On EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR = Codigo
 Left Join " & _Global_BaseBk & "Zw_Prod_Stock Pst On EMPRESA = Pst.Empresa And KOSU = Pst.Sucursal And KOBO = Pst.Bodega And KOPR = Pst.Codigo
-Where Id_Enc = " & _Id_Enc & "
+Where Id_Enc = " & _Id_Enc & " And Prct = 0
 
 Update " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet Set Stfi1 = STFI1,Stfi2 = STFI2,Stocnv1 = STOCNV1,Stocnv2 = STOCNV2,Stdv1 = STDV1,Stdv2 = STDV2,
 StComp1 = #Paso.StComp1,StComp2 = #Paso.StComp2--,CantidadDefinitiva = CntPedida
 From #Paso Inner Join " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet On Id = Id_Det
+Where Prct = 0
 
 Drop table #Paso"
             _Sql.Ej_consulta_IDU(Consulta_Sql, False)

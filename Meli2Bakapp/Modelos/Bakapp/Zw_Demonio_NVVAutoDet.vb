@@ -19,4 +19,6 @@
     Public Property Stdv1 As Double
     Public Property Stdv2 As Double
     Public Property Precio As Double
+    Public Property Prct As Boolean
+    Public Property Tict As String
 End Class

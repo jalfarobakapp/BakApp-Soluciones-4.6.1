@@ -45,7 +45,7 @@ Public Class Frm_Correos_Conf
         Get
             Return _Id
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             _Id = value
         End Set
     End Property
@@ -77,7 +77,7 @@ Public Class Frm_Correos_Conf
         End If
 
     End Sub
-    Private Sub Frm_CorreoConf_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_CorreoConf_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         Me.Cmb_Fuente.Items.Clear()
 
@@ -121,17 +121,17 @@ Public Class Frm_Correos_Conf
     '.Host = “smtp.gmail.com” ‘Servidor SMTP de Gmail
     '.Port = 587 ‘Puerto del SMTP de Gmail
 
-    Public Function Fx_Enviar_Mail(ByVal _Host_SMT As String,
-                                   ByVal _Usuario As String,
-                                   ByVal _Contrasena As String,
-                                   ByVal _Para As String,
-                                   ByVal _CC As String,
-                                   ByVal _Asunto As String,
-                                   ByVal _Cuerpo As String,
-                                   ByVal _StrAttach() As String,
-                                   Optional ByVal _Puerto As String = "25",
-                                   Optional ByVal _EnableSsl As Boolean = True,
-                                   Optional ByVal _Mostrar_Error As Boolean = True) As Boolean
+    Public Function Fx_Enviar_Mail(_Host_SMT As String,
+                                   _Usuario As String,
+                                   _Contrasena As String,
+                                   _Para As String,
+                                   _CC As String,
+                                   _Asunto As String,
+                                   _Cuerpo As String,
+                                   _StrAttach() As String,
+                                   Optional _Puerto As String = "25",
+                                   Optional _EnableSsl As Boolean = True,
+                                   Optional _Mostrar_Error As Boolean = True) As Boolean
         Try
 
             'Dim correo As New MailMessage
@@ -426,11 +426,11 @@ Public Class Frm_Correos_Conf
 
     End Function
 
-    Public Sub GMailSender(ByVal _Username As String,
-                            ByVal _Password As String,
-                            ByVal _Asunto As String,
-                            ByVal _Body As String,
-                            ByVal _Addresses As String)
+    Public Sub GMailSender(_Username As String,
+                            _Password As String,
+                            _Asunto As String,
+                            _Body As String,
+                            _Addresses As String)
         Try
 
 
@@ -502,7 +502,7 @@ Public Class Frm_Correos_Conf
         End If
 
     End Function
-    Private Function Fx_Eliminar(ByVal Fm As Form, ByVal _Remitente As String)
+    Private Function Fx_Eliminar(Fm As Form, _Remitente As String)
 
         If MessageBoxEx.Show(Fm, "¿Esta seguro de eliminar este correo de salida SMTP?", "Eliminar correo",
                              MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
@@ -518,17 +518,17 @@ Public Class Frm_Correos_Conf
         End If
 
     End Function
-    Private Function Fx_Test_envio_correo(ByVal Fm As Form,
-                                          ByVal _Host_SMT As String,
-                                          ByVal _Usuario As String,
-                                          ByVal _Contrasena As String,
-                                          ByVal _Para As String,
-                                          ByVal _CC As String,
-                                          ByVal _Asunto As String,
-                                          ByVal _Cuerpo As String,
-                                          ByVal _StrAttach() As String,
-                                          Optional ByVal _Puerto As String = "25",
-                                          Optional ByVal _EnableSsl As Boolean = True)
+    Private Function Fx_Test_envio_correo(Fm As Form,
+                                          _Host_SMT As String,
+                                          _Usuario As String,
+                                          _Contrasena As String,
+                                          _Para As String,
+                                          _CC As String,
+                                          _Asunto As String,
+                                          _Cuerpo As String,
+                                          _StrAttach() As String,
+                                          Optional _Puerto As String = "25",
+                                          Optional _EnableSsl As Boolean = True)
 
         _Asunto = "Mesaje de prueba BakApp"
         If String.IsNullOrEmpty(Trim(_Cuerpo)) Then _Cuerpo = "Mensaje de correo electrónico enviado para comprobar la configuración de su cuenta. "
@@ -683,7 +683,7 @@ Public Class Frm_Correos_Conf
     End Sub
 
 #End Region
-    Private Sub Btn_Grabar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Grabar.Click
+    Private Sub Btn_Grabar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Grabar.Click
 
         Sb_Convertir_Rtf2Html(False)
 
@@ -699,7 +699,7 @@ Public Class Frm_Correos_Conf
         End If
 
     End Sub
-    Private Sub Btn_Probar_Envio_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Probar_Envio.Click
+    Private Sub Btn_Probar_Envio_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Probar_Envio.Click
 
         Sb_Convertir_Rtf2Html(False)
 
@@ -724,7 +724,7 @@ Public Class Frm_Correos_Conf
         End If
 
     End Sub
-    Private Sub Btn_Eliminar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Eliminar.Click
+    Private Sub Btn_Eliminar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Eliminar.Click
         If Fx_Tiene_Permiso(Me, "Mail0004") Then
             If Fx_Eliminar(Me, Txt_Remitente.Text) Then
                 _Grabar = True
@@ -733,25 +733,25 @@ Public Class Frm_Correos_Conf
         End If
     End Sub
 
-    Private Sub Btn_Ver_Contrasena_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Btn_Ver_Contrasena.MouseDown
+    Private Sub Btn_Ver_Contrasena_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles Btn_Ver_Contrasena.MouseDown
         Txt_Contrasena.PasswordChar = ""
     End Sub
 
-    Private Sub Btn_Ver_Contrasena_MouseUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Btn_Ver_Contrasena.MouseUp
+    Private Sub Btn_Ver_Contrasena_MouseUp(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles Btn_Ver_Contrasena.MouseUp
         Txt_Contrasena.PasswordChar = "*"
     End Sub
 
-    Private Sub Frm_CorreoConf_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_CorreoConf_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
-    Private Sub Rdb_Envio_Manual_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Rdb_Envio_Manual.CheckedChanged
+    Private Sub Rdb_Envio_Manual_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles Rdb_Envio_Manual.CheckedChanged
         Grupo_Info_Sesion.Enabled = Rdb_Envio_Automatico.Checked
     End Sub
 
-    Private Sub ButtonItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Probar_GMAIL.Click
+    Private Sub ButtonItem1_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Probar_GMAIL.Click
         'Sb_Enviar_Correo_EASendMail()
         Sb_Enviar_Correo_EASendMail_SSL_TLS()
     End Sub
@@ -1205,17 +1205,14 @@ Public Class Frm_Correos_Conf
             Dim email As IMail = builder.Create()
 
 
-            Using smtp As New Smtp                          ' Now connect to SMTP server and send it
-                smtp.Connect(_Host_SMT)                     ' Use overloads or ConnectSSL if you need to specify different port or SSL.
-                'Smtp.DefaultPort = _Puerto
-                'smtp.po
+            Using smtp As New Smtp
+
+                smtp.Connect(_Host_SMT)
                 smtp.SSLConfiguration.EnabledSslProtocols = _EnableSsl ' True
-                smtp.UseBestLogin(_Usuario, _Contrasena)         ' You can also use: Login, LoginPLAIN, LoginCRAM, LoginDIGEST, LoginOAUTH methods,
-                ' or use UseBestLogin method if you want Mail.dll to choose for you.
-                'Smtp.DefaultPort = 456
+                smtp.UseBestLogin(_Usuario, _Contrasena)
+
                 Dim result As ISendMessageResult = smtp.SendMessage((email))
 
-                'Console.ReadKey()
                 smtp.Close()
 
                 If xi > 0 Then
@@ -1229,16 +1226,11 @@ Public Class Frm_Correos_Conf
 
                 End If
 
-                'Return result
-
                 If result.Status = SendMessageStatus.Success Then
                     _Mensaje.EsCorrecto = True
                 End If
 
             End Using
-
-            ' For sure you'll need to send complex emails,
-            ' take a look at our templates support in SmtpTemplates sample.
 
         Catch ex As Exception
             _Mensaje.Mensaje = ex.Message

@@ -25,7 +25,7 @@ Namespace My.Resources
     <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute()>  _
-    Friend Class Recursos_WmsVillar
+    Friend Class Recursos_WmsSgem
         
         Private Shared resourceMan As Global.System.Resources.ResourceManager
         
@@ -43,7 +43,7 @@ Namespace My.Resources
         Friend Shared ReadOnly Property ResourceManager() As Global.System.Resources.ResourceManager
             Get
                 If Object.ReferenceEquals(resourceMan, Nothing) Then
-                    Dim temp As Global.System.Resources.ResourceManager = New Global.System.Resources.ResourceManager("BkSpecialPrograms.Recursos_WmsVillar", GetType(Recursos_WmsVillar).Assembly)
+                    Dim temp As Global.System.Resources.ResourceManager = New Global.System.Resources.ResourceManager("BkSpecialPrograms.Recursos_WmsSgem", GetType(Recursos_WmsSgem).Assembly)
                     resourceMan = temp
                 End If
                 Return resourceMan
@@ -65,15 +65,16 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Busca una cadena traducida similar a Declare @Empresa as Char(2) = &apos;#Empresa#&apos;
+        '''  Busca una cadena traducida similar a 
+        '''Declare @Empresa as Char(2) = &apos;#Empresa#&apos;
         '''Declare @Sucursal as Char(3) = &apos;#Sucursal#&apos;
         '''
-        '''Select Enc.Numero,Enc.Tido,Enc.Nudo,Enc.TidoGen,Enc.NudoGen,Edo.SUDO,En.NOKOEN,EdoF.VABRDO,EdoF.VAABDO,EdoF.VABRDO-EdoF.VAABDO As Saldo,EdoF.ESPGDO,
+        '''Select Enc.Numero,SUBSTRING(Numero,7,4) As NroTicket,Enc.Tido,Enc.Nudo,Enc.TidoGen,Enc.NudoGen,Enc.Estado,Edo.SUDO,En.NOKOEN,EdoF.VABRDO,EdoF.VAABDO,EdoF.VABRDO-EdoF.VAABDO As Saldo,EdoF.ESPGDO,
         '''Case Estado 
         '''When &apos;PREPA&apos; Then &apos;Preparación&apos;
         '''When &apos;COMPL&apos; Then &apos;Completada&apos;
         '''When &apos;HABIL&apos; Then &apos;Habilitada para ser facturada.&apos;
-        '''When &apos;FACTU&apos; Then Case TidoGen When &apos;FCV&apos; Then &apos;Facturada&apos; When &apos;BLV&apos; Then &apos;Boleteada&apos; When &apos;GDV&apos; Then &apos;Guía generada&apos; When &apos;GDP&apos; Then &apos;Guía  [resto de la cadena truncado]&quot;;.
+        '''When &apos;FACTU&apos; Then Case TidoGen When &apos;FCV&apos; Then &apos;Facturada&apos; When &apos;BLV&apos; Then &apos;Boleteada&apos; When &apos; [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property SQLQuery_Lista_de_espera_Sgem() As String
             Get
@@ -97,6 +98,25 @@ Namespace My.Resources
         Friend Shared ReadOnly Property SQLQuery_Listado_Stmp() As String
             Get
                 Return ResourceManager.GetString("SQLQuery_Listado_Stmp", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a Declare @Empresa as Char(2) = &apos;#Empresa#&apos;
+        '''Declare @Sucursal as Char(3) = &apos;#Sucursal#&apos;
+        '''
+        '''Select Enc.*,Edo.FEEMDO,Edo.SUDO,En.NOKOEN,
+        '''Case Estado 
+        '''When &apos;PREPA&apos; Then &apos;Preparación&apos;
+        '''When &apos;COMPL&apos; Then &apos;Completada&apos;
+        '''When &apos;HABIL&apos; Then &apos;Habilitada para ser facturada.&apos;
+        '''When &apos;FACTU&apos; Then Case TidoGen When &apos;FCV&apos; Then &apos;Facturada&apos; When &apos;BLV&apos; Then &apos;Boleteada&apos; When &apos;GDV&apos; Then &apos;Guía generada&apos; When &apos;GDP&apos; Then &apos;Guía generada&apos; Else &apos;???&apos; End
+        '''When &apos;ENTRE&apos; Then &apos;Entregado por: &apos;+CodFuncionario_Entrega+&apos; - &apos;+FEnt.NOKOFU
+        '''W [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property SQLQuery_Listado_Stmp_Rutas() As String
+            Get
+                Return ResourceManager.GetString("SQLQuery_Listado_Stmp_Rutas", resourceCulture)
             End Get
         End Property
         

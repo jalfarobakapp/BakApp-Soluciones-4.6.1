@@ -331,7 +331,14 @@ Public Class Frm_BuscarEntidad_Mt
                     _Filtro_Vendedores = "And KOFUEN = '" & FUNCIONARIO & "'"
                 Else
 
-                    Consulta_sql = "Select KOFU From TABFUGD Where KOGRU = '" & _Kogru & "'"
+                    'Consulta_sql = "Select KOFU From TABFUGD Where KOGRU = '" & _Kogru & "'"
+                    'Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+                    If Not _Kogru.Contains("'") Then
+                        _Kogru = "'" & _Kogru & "'"
+                    End If
+
+                    Consulta_sql = "Select KOFU From TABFUGD Where KOGRU In (" & _Kogru & ")"
                     Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     _Filtro_Vendedores = Generar_Filtro_IN(_Tbl, "", "KOFU", False, False, "'")

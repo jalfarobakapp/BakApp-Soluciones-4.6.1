@@ -283,8 +283,8 @@ Public Class Frm_Tickets_Mant
                     .Codigo = String.Empty
                     .Descripcion = String.Empty
                     .Rtu = 0
-                    .Ud1 = String.Empty
-                    .Ud2 = String.Empty
+                    .Um = String.Empty
+                    '.Ud2 = String.Empty
                     .Empresa = ModEmpresa
                     .Sucursal = String.Empty
                     .Bodega = String.Empty
@@ -451,6 +451,7 @@ Public Class Frm_Tickets_Mant
                         .Empresa = Fm_b.Pro_RowBodega.Item("EMPRESA")
                         .Sucursal = Fm_b.Pro_RowBodega.Item("KOSU")
                         .Bodega = Fm_b.Pro_RowBodega.Item("KOBO")
+                        .Descripcion_Bodega = Fm_b.Pro_RowBodega.Item("NOKOBO").ToString.Trim
 
                     End With
 
@@ -488,8 +489,8 @@ Public Class Frm_Tickets_Mant
                             .Codigo = String.Empty
                             .Descripcion = String.Empty
                             .Rtu = 0
-                            .Ud1 = String.Empty
-                            .Ud2 = String.Empty
+                            .Um = String.Empty
+                            '.Ud2 = String.Empty
                             .Empresa = ModEmpresa
                             .Sucursal = String.Empty
                             .Bodega = String.Empty
@@ -504,7 +505,14 @@ Public Class Frm_Tickets_Mant
 
                 End If
 
+                _Cl_Tickets.Ls_Zw_Stk_Tickets_Producto.Add(_Cl_Tickets.Zw_Stk_Tickets_Producto)
+
             End With
+
+            Dim Fm2 As New Frm_Tickets_IngProducto_GesXBod
+            Fm2.Cl_Tickets = _Cl_Tickets
+            Fm2.ShowDialog(Me)
+            Fm2.Dispose()
 
             Call Btn_VerProducto_Click(Nothing, Nothing)
             _MostrarProducto = False
@@ -754,6 +762,12 @@ Public Class Frm_Tickets_Mant
 
     Private Sub Btn_VerProducto_Click(sender As Object, e As EventArgs) Handles Btn_VerProducto.Click
 
+        Dim Fm2 As New Frm_Tickets_IngProducto_GesXBod
+        Fm2.Cl_Tickets = _Cl_Tickets
+        Fm2.ShowDialog(Me)
+        Fm2.Dispose()
+
+
         Dim Fm As New Frm_Tickets_IngProducto(_Cl_Tickets.Zw_Stk_Tickets.Id_Tipo)
         Fm.Zw_Stk_Tickets_Producto = _Cl_Tickets.Zw_Stk_Tickets_Producto
         Fm.NuevoIngreso = CBool(Id_Padre)
@@ -859,8 +873,8 @@ Public Class Frm_Tickets_Mant
             .Codigo = String.Empty
             .Descripcion = String.Empty
             .Rtu = 0
-            .Ud1 = String.Empty
-            .Ud2 = String.Empty
+            .Um = String.Empty
+            '.Ud2 = String.Empty
             .Empresa = ModEmpresa
             .Sucursal = String.Empty
             .Bodega = String.Empty

@@ -317,8 +317,11 @@ Public Class Frm_Informe_Compr_No_Despachados
             If String.IsNullOrEmpty(_Kogru) Then
                 _Filtro_FunEntidad += vbCrLf & " And EN.KOFUEN = '" & FUNCIONARIO & "'"
             Else
+                If Not _Kogru.Contains("'") Then
+                    _Kogru = "'" & _Kogru & "'"
+                End If
 
-                Consulta_sql = "Select KOFU From TABFUGD Where KOGRU = '" & _Kogru & "'"
+                Consulta_sql = "Select KOFU From TABFUGD Where KOGRU In (" & _Kogru & ")"
                 Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 _Filtro_FunEntidad = Generar_Filtro_IN(_Tbl, "", "KOFU", False, False, "'")
@@ -381,6 +384,8 @@ Public Class Frm_Informe_Compr_No_Despachados
                                                     Frm_Informe_Prox_Recep_Y_Comp_No_Desp.Enum_Informe.Sucursal,
                                                     _Tabla_Paso,
                                                     _Ud, False)
+            Fm.FechaDesde = Dtp_Fecha_Emision_Desde.Value
+            Fm.FechaHasta = Dtp_Fecha_Emision_Hasta.Value
             Fm.ShowDialog(Me)
             Fm.Dispose()
 

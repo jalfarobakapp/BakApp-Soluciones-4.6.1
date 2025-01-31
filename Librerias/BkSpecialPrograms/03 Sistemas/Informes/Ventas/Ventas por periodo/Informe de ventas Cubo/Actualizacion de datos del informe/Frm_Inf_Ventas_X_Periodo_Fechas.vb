@@ -1,5 +1,4 @@
-﻿'Imports Lib_Bakapp_VarClassFunc
-Imports DevComponents.DotNetBar
+﻿Imports DevComponents.DotNetBar
 
 Public Class Frm_Inf_Ventas_X_Periodo_Fechas
 
@@ -102,6 +101,8 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
 
     Dim _Accion As Enum_Acciones
 
+    Public Property ActualizarDocumentosUnoPorUno As Boolean
+
     Public Sub New(Accion As Enum_Acciones)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -150,10 +151,10 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
         If _Accion = Enum_Acciones.Crear_Informe Then
             Sb_Crear_Nuevo_Informe(Dtp_Fecha_Desde.Value, Dtp_Fecha_Hasta.Value)
         ElseIf _Accion = Enum_Acciones.Actualizar_Filtro Then
-            'Sb_Actualizar_Filtros_Diariamente()
             Sb_Actualizar_Filtros()
         Else
-            Sb_Actualizar_Informe(Dtp_Fecha_Desde.Value, Dtp_Fecha_Hasta.Value)
+            Sb_Actualizar_Informe2(Dtp_Fecha_Desde.Value, Dtp_Fecha_Hasta.Value)
+            ' Sb_Actualizar_Informe(Dtp_Fecha_Desde.Value, Dtp_Fecha_Hasta.Value)
         End If
 
     End Sub
@@ -162,12 +163,11 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
 
         Tiempo.Enabled = False
 
-        'Return
+        'ActualizarDocumentosUnoPorUno = True
 
         If _Accion = Enum_Acciones.Actualizar_Informe_Automatico Then
-            Sb_Actualizar_Informe(Dtp_Fecha_Desde.Value, Dtp_Fecha_Hasta.Value)
-            'ElseIf _Accion = Enum_Acciones.Actualizar_Filtro Then
-            '    Sb_Actualizar_Filtros()
+            Sb_Actualizar_Informe2(Dtp_Fecha_Desde.Value, Dtp_Fecha_Hasta.Value)
+            'Sb_Actualizar_Informe(Dtp_Fecha_Desde.Value, Dtp_Fecha_Hasta.Value)
         End If
 
     End Sub
@@ -208,7 +208,8 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
 
                 'Sb_Actualizar_Indices()
 
-                Sb_Actualizar_Informe(Dtp_Fecha_Desde.Value, Dtp_Fecha_Hasta.Value)
+                Sb_Actualizar_Informe2(Dtp_Fecha_Desde.Value, Dtp_Fecha_Hasta.Value)
+                'Sb_Actualizar_Informe(Dtp_Fecha_Desde.Value, Dtp_Fecha_Hasta.Value)
 
             End If
 
@@ -310,7 +311,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
                                    "Where FEEMLI = '" & Format(_Fecha, "yyyyMMdd") & "'"
                     _Sql.Ej_consulta_IDU(Consulta_Sql)
 
-                    Consulta_Sql = "Select Distinct Edo.IDMAEEDO,Edo.TIDO,Edo.NUDO,Edo.NUDONODEFI
+                    Consulta_Sql = "Select Distinct Top 100 Edo.IDMAEEDO,Edo.TIDO,Edo.NUDO,Edo.NUDONODEFI
                                 From MAEDDO Ddo With (Nolock)
                                 Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO
                                 Where Ddo.FEEMLI = '" & Format(_Fecha, "yyyyMMdd") & "'
@@ -339,83 +340,94 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
                     'If False Then
                     Dim _Filtro_Idmaeedo As String = Generar_Filtro_IN(_Tbl_Idmaeedo, "", "Idmaeedo", False, False, "")
 
+
                     If CBool(_Tbl_Idmaeedo.Rows.Count) Then
 
-                        Lbl_Doc_Insert.Text = "Insertando " & FormatNumber(_Tbl_Idmaeedo.Rows.Count, 0) & " documentos..." ', fecha: " & FormatDateTime(_Fecha, DateFormat.ShortDate)
+                        If Not ActualizarDocumentosUnoPorUno Then
 
-                        Consulta_Sql = "Delete " & _Nombre_Tabla_Paso & " Where IDMAEEDO In " & _Filtro_Idmaeedo
-                        _Sql.Ej_consulta_IDU(Consulta_Sql)
+                            Lbl_Doc_Insert.Text = "Insertando " & FormatNumber(_Tbl_Idmaeedo.Rows.Count, 0) & " documentos..." ', fecha: " & FormatDateTime(_Fecha, DateFormat.ShortDate)
 
-                        Consulta_Sql = My.Resources.Recursos_Inf_Ventas.Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion2
-                        Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", ModEmpresa)
-                        Consulta_Sql = Replace(Consulta_Sql, "#Tabla_Paso#", _Nombre_Tabla_Paso)
-                        Consulta_Sql = Replace(Consulta_Sql, "#Fecha_Inicio#", Format(_Fecha, "yyyyMMdd"))
-                        Consulta_Sql = Replace(Consulta_Sql, "#Fecha_Fin#", Format(_Fecha, "yyyyMMdd"))
-                        Consulta_Sql = Replace(Consulta_Sql, "#Filtro_Externo#", "")
-                        Consulta_Sql = Replace(Consulta_Sql, "(#Idmaeedo#)", _Filtro_Idmaeedo)
+                            Consulta_Sql = "Delete " & _Nombre_Tabla_Paso & " Where IDMAEEDO In " & _Filtro_Idmaeedo
+                            _Sql.Ej_consulta_IDU(Consulta_Sql)
 
-                        _Sql.Ej_consulta_IDU(Consulta_Sql)
+                            Consulta_Sql = My.Resources.Recursos_Inf_Ventas.Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion2
+                            Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", ModEmpresa)
+                            Consulta_Sql = Replace(Consulta_Sql, "#Tabla_Paso#", _Nombre_Tabla_Paso)
+                            Consulta_Sql = Replace(Consulta_Sql, "#Fecha_Inicio#", Format(_Fecha, "yyyyMMdd"))
+                            Consulta_Sql = Replace(Consulta_Sql, "#Fecha_Fin#", Format(_Fecha, "yyyyMMdd"))
+                            Consulta_Sql = Replace(Consulta_Sql, "#Filtro_Externo#", "")
+                            Consulta_Sql = Replace(Consulta_Sql, "(#Idmaeedo#)", _Filtro_Idmaeedo)
+                            _Sql.Ej_consulta_IDU(Consulta_Sql)
 
-                        Lbl_Doc_Insert.Text = "Actualizando filtros..." ', fecha: " & FormatDateTime(_Fecha, DateFormat.ShortDate)
-                        Consulta_Sql = My.Resources.Recursos_Inf_Ventas.Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion3_Clasificaciones
-                        Consulta_Sql = Replace(Consulta_Sql, "#Tabla_Paso#", _Nombre_Tabla_Paso)
-                        Consulta_Sql = Replace(Consulta_Sql, "(#Idmaeedo#)", _Filtro_Idmaeedo)
-                        _Sql.Ej_consulta_IDU(Consulta_Sql)
+                            Lbl_Doc_Insert.Text = "Actualizando filtros..." ', fecha: " & FormatDateTime(_Fecha, DateFormat.ShortDate)
+                            Consulta_Sql = My.Resources.Recursos_Inf_Ventas.Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion3_Clasificaciones
+                            Consulta_Sql = Replace(Consulta_Sql, "#Tabla_Paso#", _Nombre_Tabla_Paso)
+                            Consulta_Sql = Replace(Consulta_Sql, "(#Idmaeedo#)", _Filtro_Idmaeedo)
+                            _Sql.Ej_consulta_IDU(Consulta_Sql)
+
+                        End If
+
+                        If ActualizarDocumentosUnoPorUno Then
+
+                            Progreso_Cont_Productos.Maximum = _Tbl_Idmaeedo.Rows.Count
+                            Progreso_Cont_Productos.Value = 0
+
+                            For Each _Filas_Edo As DataRow In _Tbl_Idmaeedo.Rows
+
+                                Dim _Idmaeedo = _Filas_Edo.Item("IDMAEEDO")
+                                Dim _Tido_Nudo = _Filas_Edo.Item("TIDO") & "-" & _Filas_Edo.Item("NUDO")
+                                Dim _Nudonodefi = _Filas_Edo.Item("NUDONODEFI")
+                                'Lbl_Estado.Text = "Procesando informe, días con diferencias " & _Contador + 1 & " de " & _TblFechas.Rows.Count & vbCrLf &
+                                '                  "Ventas del: " & FormatDateTime(_Fecha, DateFormat.ShortDate) & vbCrLf &
+                                '                  "Documento: " & _Tido_Nudo
+                                Lbl_Doc_Insert.Text = "Insertando documentos " & FormatNumber(Progreso_Cont_Productos.Value + 1, 0) & " de " &
+                                               FormatNumber(Progreso_Cont_Productos.Maximum, 0)
+
+                                If Not _Nudonodefi Then
+
+                                    System.Windows.Forms.Application.DoEvents()
+
+                                    Consulta_Sql = My.Resources.Recursos_Inf_Ventas.Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion2
+                                    Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", ModEmpresa)
+                                    Consulta_Sql = Replace(Consulta_Sql, "#Tabla_Paso#", _Nombre_Tabla_Paso)
+                                    Consulta_Sql = Replace(Consulta_Sql, "#Fecha_Inicio#", Format(_Fecha, "yyyyMMdd"))
+                                    Consulta_Sql = Replace(Consulta_Sql, "#Fecha_Fin#", Format(_Fecha, "yyyyMMdd"))
+                                    Consulta_Sql = Replace(Consulta_Sql, "#Filtro_Externo#", "")
+                                    Consulta_Sql = Replace(Consulta_Sql, "#Idmaeedo#", _Idmaeedo)
+                                    _Sql.Ej_consulta_IDU(Consulta_Sql)
+
+                                    Consulta_Sql = My.Resources.Recursos_Inf_Ventas.Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion3_Clasificaciones
+                                    Consulta_Sql = Replace(Consulta_Sql, "#Tabla_Paso#", _Nombre_Tabla_Paso)
+                                    Consulta_Sql = Replace(Consulta_Sql, "#Idmaeedo#", _Idmaeedo)
+                                    _Sql.Ej_consulta_IDU(Consulta_Sql)
+
+                                End If
+
+                                '_Contador += 1
+                                Progreso_Cont_Productos.Value += 1 '_Contador ' ((_Contador * 100) / _TblFechas.Rows.Count) 'Mas
+
+                                If _Cancelar Then
+                                    Exit For
+                                End If
+
+                            Next
+
+                        End If
+
+                        'Progreso_Cont_Productos.Value = 0
 
                     End If
 
-                    'If False Then
-                    '    For Each _Filas_Edo As DataRow In _Tbl_Idmaeedo.Rows
-
-                    '        Dim _Idmaeedo = _Filas_Edo.Item("IDMAEEDO")
-                    '        Dim _Tido_Nudo = _Filas_Edo.Item("TIDO") & "-" & _Filas_Edo.Item("NUDO")
-                    '        Dim _Nudonodefi = _Filas_Edo.Item("NUDONODEFI")
-                    '        'Lbl_Estado.Text = "Procesando informe, días con diferencias " & _Contador + 1 & " de " & _TblFechas.Rows.Count & vbCrLf &
-                    '        '                  "Ventas del: " & FormatDateTime(_Fecha, DateFormat.ShortDate) & vbCrLf &
-                    '        '                  "Documento: " & _Tido_Nudo
-                    '        Lbl_Doc_Insert.Text = "Insertando documentos " & FormatNumber(Progreso_Cont_Productos.Value + 1, 0) & " de " &
-                    '                       FormatNumber(Progreso_Cont_Productos.Maximum, 0)
-
-                    '        If Not _Nudonodefi Then
-
-                    '            System.Windows.Forms.Application.DoEvents()
-
-                    '            Consulta_Sql = My.Resources.Recursos_Inf_Ventas.Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion2
-                    '            Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", ModEmpresa)
-                    '            Consulta_Sql = Replace(Consulta_Sql, "#Tabla_Paso#", _Nombre_Tabla_Paso)
-                    '            Consulta_Sql = Replace(Consulta_Sql, "#Fecha_Inicio#", Format(_Fecha, "yyyyMMdd"))
-                    '            Consulta_Sql = Replace(Consulta_Sql, "#Fecha_Fin#", Format(_Fecha, "yyyyMMdd"))
-                    '            Consulta_Sql = Replace(Consulta_Sql, "#Filtro_Externo#", "")
-                    '            Consulta_Sql = Replace(Consulta_Sql, "#Idmaeedo#", _Idmaeedo)
-                    '            _Sql.Ej_consulta_IDU(Consulta_Sql)
-
-                    '            Consulta_Sql = My.Resources.Recursos_Inf_Ventas.Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion3_Clasificaciones
-                    '            Consulta_Sql = Replace(Consulta_Sql, "#Tabla_Paso#", _Nombre_Tabla_Paso)
-                    '            Consulta_Sql = Replace(Consulta_Sql, "#Idmaeedo#", _Idmaeedo)
-                    '            _Sql.Ej_consulta_IDU(Consulta_Sql)
-
-                    '        End If
-
-                    '        '_Contador += 1
-                    '        Progreso_Cont_Productos.Value += 1 '_Contador ' ((_Contador * 100) / _TblFechas.Rows.Count) 'Mas
-
-                    '        If _Cancelar Then
-                    '            Exit For
-                    '        End If
-
-                    '    Next
-                    'End If
-
-
-                    'Progreso_Cont_Productos.Value = 0
 
                     _Contador += 1
                     Progreso_Porc.Value = ((_Contador * 100) / _TblFechas.Rows.Count) 'Mas
-                    Progreso_Cont_Productos.Value = _Contador
+                    'Progreso_Cont_Productos.Value = _Contador
                     'Progreso_Cont.Value = _Contador
 
                     If _Cancelar Then
+
                         _Cronometro.Sb_Detener()
+
                         If MessageBoxEx.Show(Me, "¿Desea detener el proceso?", "Detener proceso",
                                              MessageBoxButtons.YesNo,
                                              MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
@@ -426,6 +438,291 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
                             _Cancelar = False
                             _Cronometro.Sb_Iniciar()
                         End If
+
+                    End If
+
+                    If Not Bar2.Enabled Then Bar2.Enabled = True
+
+                Next
+
+            End If
+
+            _Cronometro.Sb_Detener()
+
+
+            If Not _Cancelar Then
+                _Informe_Actualizado = True
+                Me.Close()
+            End If
+
+        Catch ex As Exception
+            MessageBoxEx.Show(ex.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        Finally
+
+            Tiempo.Enabled = False
+            _Cancelar = False
+            Grupo_Fechas.Enabled = True
+            Btn_Cancelar.Enabled = False
+            Btn_Filtrar.Enabled = True
+            Me.ControlBox = True
+
+            Progreso_Porc.Value = 0
+            Progreso_Cont_Productos.Value = 0
+
+            Lbl_Estado.Text = "Estado..."
+            Lbl_Tiempo.Text = String.Empty
+            Lbl_Doc_Insert.Text = String.Empty
+            Me.Refresh()
+
+        End Try
+
+    End Sub
+
+
+    Sub Sb_Actualizar_Informe2(_Fecha_Desde As Date,
+                               _Fecha_Hasta As Date)
+
+        Try
+            _Cancelar = False
+            Grupo_Fechas.Enabled = False
+            Btn_Cancelar.Enabled = True
+            Btn_Filtrar.Enabled = False
+            Me.ControlBox = False
+
+            Dim _Chk_Reingresar_Datos As Boolean
+
+            Dim _Mostrar_Error As Boolean = True
+
+            'Sb_Actualizar_Indices()
+
+            'Consulta_Sql = "Delete " & _Nombre_Tabla_Paso & vbCrLf &
+            '               "Where IDMAEDDO NOT IN (SELECT IDMAEDDO FROM MAEDDO With (Nolock)" & Space(1) &
+            '               "Where FEEMLI = '" & Format(_Fecha_Desde, "yyyyMMdd") & "' " &
+            '               "And TIDO IN ('BLV','BLX','BSV','ESC','FCV','FDB','FDV','FDX','FDZ','FEE','FEV','FVL','FVT','FVX','FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV'))" & vbCrLf &
+            '               "And FEEMLI = '" & Format(_Fecha_Desde, "yyyyMMdd") & "'"
+            '_Sql.Ej_consulta_IDU(Consulta_Sql, False)
+
+            Consulta_Sql = "Delete " & _Nombre_Tabla_Paso & "
+                            Where TIDO = 'BLV' And NUDO Not In " &
+                            "(Select NUDO From MAEEDO With (Nolock)" & Space(1) &
+                                "Where TIDO = 'BLV' And FEEMLI between '" & Format(_Fecha_Desde, "yyyyMMdd") & "' And '" & Format(_Fecha_Hasta, "yyyyMMdd") & "') 
+                            And FEEMLI between '" & Format(_Fecha_Desde, "yyyyMMdd") & "' And '" & Format(_Fecha_Hasta, "yyyyMMdd") & "'
+
+                            Delete " & _Nombre_Tabla_Paso & "
+                            Where TIDO = 'FCV' And NUDO Not In " &
+                            "(Select NUDO From MAEEDO With (Nolock)" & Space(1) &
+                                "Where TIDO = 'FCV' And FEEMLI between '" & Format(_Fecha_Desde, "yyyyMMdd") & "' And '" & Format(_Fecha_Hasta, "yyyyMMdd") & "') 
+                            And FEEMLI between '" & Format(_Fecha_Desde, "yyyyMMdd") & "' And '" & Format(_Fecha_Hasta, "yyyyMMdd") & "'"
+            _Sql.Ej_consulta_IDU(Consulta_Sql, False)
+
+            Consulta_Sql = "Delete " & _Nombre_Tabla_Paso & vbCrLf &
+                           "Where IDMAEEDO Not In (Select IDMAEEDO From MAEEDO With (Nolock)) And FEEMLI between '" & Format(_Fecha_Desde, "yyyyMMdd") & "' And '" & Format(_Fecha_Hasta, "yyyyMMdd") & "'"
+            _Sql.Ej_consulta_IDU(Consulta_Sql, False)
+
+            Consulta_Sql = "Select Distinct FEEMLI From MAEDDO With (Nolock) Where IDMAEDDO Not In (Select IDMAEDDO From " & _Nombre_Tabla_Paso & " With (Nolock))
+                            And FEEMLI between '" & Format(_Fecha_Desde, "yyyyMMdd") & "' And '" & Format(_Fecha_Hasta, "yyyyMMdd") & "' 
+                            And TIDO IN ('BLV','BLX','BSV','ESC','FCV','FDB','FDV','FDX','FDZ','FEE','FEV','FVL','FVT','FVX','FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV')
+						    Order by FEEMLI"
+
+            Dim _TblFechas As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
+
+            Progreso_Porc.Maximum = 100
+            Progreso_Cont_Productos.Maximum = _TblFechas.Rows.Count
+
+            Dim _Contador = 0
+
+            Dim _Cronometro As New Class_Cronometro(Lbl_Tiempo)
+
+            If CBool(_TblFechas.Rows.Count) Then
+
+                _Cronometro.Sb_Iniciar()
+
+                For Each _RowFecha As DataRow In _TblFechas.Rows
+
+                    Dim _Fecha As Date = _RowFecha.Item("FEEMLI")
+
+                    System.Windows.Forms.Application.DoEvents()
+
+                    Consulta_Sql = "Delete " & _Nombre_Tabla_Paso & vbCrLf &
+                                   "Where IDMAEDDO Not In (Select IDMAEDDO FROM MAEDDO With (Nolock)" & vbCrLf &
+                                   "Where FEEMLI = '" & Format(_Fecha, "yyyyMMdd") & Space(1) &
+                                   "'And TIDO IN ('BLV','BLX','BSV','ESC','FCV','FDB','FDV','FDX','FDZ','FEE','FEV','FVL'," &
+                                   "'FVT','FVX','FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV')) And FEEMLI = '" & Format(_Fecha, "yyyyMMdd") & "'"
+                    _Sql.Ej_consulta_IDU(Consulta_Sql)
+
+                    'Consulta_Sql = "Delete " & _Nombre_Tabla_Paso & vbCrLf & "Where FEEMLI = '" & Format(_Fecha, "yyyyMMdd") & "'"
+                    'Consulta_Sql = "Delete " & _Nombre_Tabla_Paso & " Where IDMAEDDO In (Select IDMAEDDO From " & _Nombre_Tabla_Paso & " Where FEEMLI = '" & Format(_Fecha, "yyyyMMdd") & "')"
+
+
+                    ' Elimina registros por lotes de a 1000
+                    Consulta_Sql = "-- Definir el tamaño del lote" & vbCrLf &
+                                   "DECLARE @BatchSize INT = 1000;" & vbCrLf &
+                                   "-- Contar el número total de registros que cumplen con la condición" & vbCrLf &
+                                   "DECLARE @TotalRows INT;" & vbCrLf &
+                                   "SELECT @TotalRows = COUNT(*)" & vbCrLf &
+                                   "FROM " & _Nombre_Tabla_Paso & vbCrLf &
+                                   "WHERE IDMAEDDO In (Select IDMAEDDO From " & _Nombre_Tabla_Paso & " Where FEEMLI = '" & Format(_Fecha, "yyyyMMdd") & "') -- Reemplaza 'Condicion' con la condición que necesitas" & vbCrLf &
+                                   "-- Calcular el número de lotes necesarios" & vbCrLf &
+                                   "DECLARE @TotalBatches INT;" & vbCrLf &
+                                   "SET @TotalBatches = CEILING(@TotalRows / @BatchSize);" & vbCrLf &
+                                   "-- Contador de filas afectadas" & vbCrLf &
+                                   "DECLARE @RowsAffected INT;" & vbCrLf &
+                                   "-- Bucle para eliminar registros en lotes" & vbCrLf &
+                                   "WHILE (1 = 1)" & vbCrLf &
+                                   "BEGIN" & vbCrLf &
+                                   "    -- Eliminar un lote de registros" & vbCrLf &
+                                   "    DELETE TOP (@BatchSize)" & vbCrLf &
+                                   "    FROM " & _Nombre_Tabla_Paso & vbCrLf &
+                                   "    WHERE IDMAEDDO In (Select IDMAEDDO From " & _Nombre_Tabla_Paso & " Where FEEMLI = '" & Format(_Fecha, "yyyyMMdd") & "') -- Reemplaza 'Condicion' con la condición que necesitas" & vbCrLf &
+                                   "    -- Obtener el número de filas afectadas" & vbCrLf &
+                                   "    SET @RowsAffected = @@ROWCOUNT;" & vbCrLf &
+                                   "    -- Si no se eliminaron filas, salir del bucle" & vbCrLf &
+                                   "    IF @RowsAffected = 0" & vbCrLf &
+                                   "       BREAK;" & vbCrLf &
+                                   "END"
+                    '_Sql.Ej_consulta_IDU(Consulta_Sql)
+
+
+                    Consulta_Sql = "Select Distinct Edo.IDMAEEDO,Edo.TIDO,Edo.NUDO,Edo.NUDONODEFI" & vbCrLf &
+                                   "From MAEDDO Ddo With (Nolock)" & vbCrLf &
+                                   "Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO" & vbCrLf &
+                                   "Where Ddo.FEEMLI = '" & Format(_Fecha, "yyyyMMdd") & "'" & vbCrLf &
+                                   "And Ddo.TIDO IN ('BLV','BLX','BSV','ESC','FCV','FDB','FDV','FDX','FDZ','FEE'," &
+                                   "'FEV','FVL','FVT','FVX','FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV')" & vbCrLf &
+                                   "And Ddo.IDMAEDDO Not IN (Select IDMAEDDO From " & _Nombre_Tabla_Paso & " With (Nolock) Where FEEMLI = '" & Format(_Fecha, "yyyyMMdd") & "')"
+
+                    Dim _Tbl_Idmaeedo As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
+
+
+                    Lbl_Estado.Text = "Procesando informe, día " & _Contador + 1 & " de " & _TblFechas.Rows.Count & vbCrLf &
+                                      "Ventas del: " & FormatDateTime(_Fecha, DateFormat.ShortDate)
+
+                    Dim _Filtro_Idmaeedo As String = Generar_Filtro_IN(_Tbl_Idmaeedo, "", "Idmaeedo", False, False, "")
+
+                    Dim _Insertados = 0
+                    Dim _Lotes = 100
+
+                    If CBool(_Tbl_Idmaeedo.Rows.Count) Then
+
+                        Dim _Paquetes = Math.Ceiling(_Tbl_Idmaeedo.Rows.Count / _Lotes)
+                        Dim _ListaPaquetes As New List(Of DataTable)
+
+                        For i As Integer = 0 To _Paquetes - 1
+                            Dim _Paquete As DataTable = _Tbl_Idmaeedo.Clone()
+                            For j As Integer = 0 To _Lotes - 1
+                                Dim _Index As Integer = (i * _Lotes) + j
+                                If _Index >= _Tbl_Idmaeedo.Rows.Count Then Exit For
+                                _Paquete.ImportRow(_Tbl_Idmaeedo.Rows(_Index))
+                            Next
+                            _ListaPaquetes.Add(_Paquete)
+                        Next
+
+                        Progreso_Cont_Productos.Maximum = _Paquetes
+                        Progreso_Cont_Productos.Value = 0
+
+                        Dim _CtaPqte = 1
+
+                        For Each _Paquete As DataTable In _ListaPaquetes
+
+                            Dim _Filtro_Idmaeedo2 As String = Generar_Filtro_IN(_Paquete, "", "Idmaeedo", False, False, "")
+
+                            If Not ActualizarDocumentosUnoPorUno Then
+
+                                _Insertados += _Paquete.Rows.Count
+
+                                Lbl_Doc_Insert.Text = "Documentos insertados: " & FormatNumber(_Insertados, 0) & "... paquete " & _CtaPqte & " de " & _Paquetes
+
+                                System.Windows.Forms.Application.DoEvents()
+
+                                If _Cancelar Then Exit For
+
+                                Consulta_Sql = "Delete " & _Nombre_Tabla_Paso & " Where IDMAEEDO In " & _Filtro_Idmaeedo2
+                                _Sql.Ej_consulta_IDU(Consulta_Sql)
+
+                                System.Windows.Forms.Application.DoEvents()
+
+                                Consulta_Sql = My.Resources.Recursos_Inf_Ventas.Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion2
+                                Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", ModEmpresa)
+                                Consulta_Sql = Replace(Consulta_Sql, "#Tabla_Paso#", _Nombre_Tabla_Paso)
+                                Consulta_Sql = Replace(Consulta_Sql, "#Fecha_Inicio#", Format(_Fecha, "yyyyMMdd"))
+                                Consulta_Sql = Replace(Consulta_Sql, "#Fecha_Fin#", Format(_Fecha, "yyyyMMdd"))
+                                Consulta_Sql = Replace(Consulta_Sql, "#Filtro_Externo#", "")
+                                Consulta_Sql = Replace(Consulta_Sql, "(#Idmaeedo#)", _Filtro_Idmaeedo2)
+                                _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql)
+
+                                System.Windows.Forms.Application.DoEvents()
+
+                                Consulta_Sql = My.Resources.Recursos_Inf_Ventas.Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion3_Clasificaciones
+                                Consulta_Sql = Replace(Consulta_Sql, "#Tabla_Paso#", _Nombre_Tabla_Paso)
+                                Consulta_Sql = Replace(Consulta_Sql, "(#Idmaeedo#)", _Filtro_Idmaeedo2)
+                                _Sql.Ej_consulta_IDU(Consulta_Sql)
+
+                            End If
+
+                            If ActualizarDocumentosUnoPorUno Then
+
+                                Progreso_Cont_Productos.Maximum = _Paquete.Rows.Count
+                                Progreso_Cont_Productos.Value = 0
+
+                                For Each _Filas_Edo As DataRow In _Paquete.Rows
+                                    Dim _Idmaeedo = _Filas_Edo.Item("IDMAEEDO")
+                                    Dim _Tido_Nudo = _Filas_Edo.Item("TIDO") & "-" & _Filas_Edo.Item("NUDO")
+                                    Dim _Nudonodefi = _Filas_Edo.Item("NUDONODEFI")
+
+                                    Lbl_Doc_Insert.Text = "Insertando documentos " & FormatNumber(Progreso_Cont_Productos.Value + 1, 0) & " de " & FormatNumber(Progreso_Cont_Productos.Maximum, 0)
+
+                                    If Not _Nudonodefi Then
+                                        System.Windows.Forms.Application.DoEvents()
+
+                                        Consulta_Sql = My.Resources.Recursos_Inf_Ventas.Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion2
+                                        Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", ModEmpresa)
+                                        Consulta_Sql = Replace(Consulta_Sql, "#Tabla_Paso#", _Nombre_Tabla_Paso)
+                                        Consulta_Sql = Replace(Consulta_Sql, "#Fecha_Inicio#", Format(_Fecha, "yyyyMMdd"))
+                                        Consulta_Sql = Replace(Consulta_Sql, "#Fecha_Fin#", Format(_Fecha, "yyyyMMdd"))
+                                        Consulta_Sql = Replace(Consulta_Sql, "#Filtro_Externo#", "")
+                                        Consulta_Sql = Replace(Consulta_Sql, "#Idmaeedo#", _Idmaeedo)
+                                        _Sql.Ej_consulta_IDU(Consulta_Sql)
+
+                                        Consulta_Sql = My.Resources.Recursos_Inf_Ventas.Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion3_Clasificaciones
+                                        Consulta_Sql = Replace(Consulta_Sql, "#Tabla_Paso#", _Nombre_Tabla_Paso)
+                                        Consulta_Sql = Replace(Consulta_Sql, "#Idmaeedo#", _Idmaeedo)
+                                        _Sql.Ej_consulta_IDU(Consulta_Sql)
+                                    End If
+
+                                    Progreso_Cont_Productos.Value += 1
+
+                                    If _Cancelar Then Exit For
+                                Next
+                            End If
+
+                            Progreso_Cont_Productos.Value += 1
+                            _CtaPqte += 1
+
+                        Next
+
+                    End If
+
+
+                    _Contador += 1
+                    Progreso_Porc.Value = ((_Contador * 100) / _TblFechas.Rows.Count) 'Mas
+                    'Progreso_Cont_Productos.Value = _Contador
+                    'Progreso_Cont.Value = _Contador
+
+                    If _Cancelar Then
+
+                        _Cronometro.Sb_Detener()
+
+                        If MessageBoxEx.Show(Me, "¿Desea detener el proceso?", "Detener proceso",
+                                             MessageBoxButtons.YesNo,
+                                             MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
+                            _Mostrar_Error = False
+                            _Informe_Actualizado = False
+                            Exit For
+                        Else
+                            _Cancelar = False
+                            _Cronometro.Sb_Iniciar()
+                        End If
+
                     End If
 
                     If Not Bar2.Enabled Then Bar2.Enabled = True

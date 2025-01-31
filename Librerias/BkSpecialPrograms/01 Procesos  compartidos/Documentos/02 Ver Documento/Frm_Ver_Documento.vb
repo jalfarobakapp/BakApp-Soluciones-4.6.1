@@ -64,6 +64,10 @@ Public Class Frm_Ver_Documento
     Dim _Customizable As Boolean
     Dim _Cl_NVVCustomizable As New Cl_NVVCustomizable
 
+    Public Property PreVenta As Boolean
+
+    Dim _Cl_Contenedor As New Cl_Contenedor
+
     Enum _Sector
         Encabezado
         Pie
@@ -310,6 +314,8 @@ Public Class Frm_Ver_Documento
 
         '_RowEntidad = Fx_Traer_Datos_Entidad(_Koen, _Suen)
 
+        '_Cl_Contenedor.Fx_Soltar_Contenedor_Tomado()
+
     End Sub
 
     Private Sub Frm_Documento_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
@@ -533,6 +539,7 @@ Public Class Frm_Ver_Documento
         End If
 
         Dim _Tido = Trim(_TblEncabezado.Rows(0).Item("TIDO"))
+        Dim _Nudo = Trim(_TblEncabezado.Rows(0).Item("NUDO"))
 
         If _Tido = "NVV" AndAlso
             _Global_Row_Configuracion_General.Item("HabilitarNVVConProdCustomizables") AndAlso
@@ -551,6 +558,10 @@ Public Class Frm_Ver_Documento
             End If
 
         End If
+
+        _Cl_Contenedor.Zw_Contenedor = _Cl_Contenedor.Fx_Llenar_Contenedor(_Idmaeedo, _Tido, _Nudo)
+
+        Btn_Contenedor.Visible = (_Tido = "OCC")
 
     End Sub
 
@@ -1152,40 +1163,6 @@ Public Class Frm_Ver_Documento
 
         Btn_Firmar_Documento_DTE.Visible = False
 
-        'If _Tidoelec Then
-
-        '    If _Tido = "BLV" Then
-        '        _Tidoelec = False
-        '    ElseIf _Tido = "NCV" Then
-
-        '        '                Select Case Top(200) Id_Tag, Id_DocEnc, Archirve, Idrve, Kofu, Fevento, Kotabla, Kocarac, Nokocarac, Archirse, Idrse, Horagrab, Fecharef, Link, Kofudest, Dessutabla
-        '        'From Zw_Casi_DocTag
-
-        '        Consulta_sql = "SELECT Id_Tag,Archirve,Idrve,Kofu," &
-        '                       "Isnull((Select top 1 NOKOFU From TABFU Tf Where Tf.KOFU = Mv.Kofu),'') As 'Funcionario'," & vbCrLf &
-        '                       "Fevento,Horagrab,Convert(nvarchar, convert(datetime, (Horagrab*1.0/3600)/24), 108) As Hora,Fecharef," & vbCrLf &
-        '                       "Kotabla,Kocarac,(CASE WHEN Link = '' THEN Nokocarac ELSE '(*) '+ Nokocarac END) AS 'Nokocarac'" & vbCrLf &
-        '                       ",ISNULL(Archirse,'') AS Archirse,ISNULL(Idrse,0) AS Idrse,Link,Kofudest" & vbCrLf &
-        '                       "FROM Zw_Casi_DocTag Mv" & vbCrLf &
-        '                       "WHERE Id_DocEnc = " & _Id_DocEnc & vbCrLf &
-        '                       "ORDER BY Fevento,HORAGHoragrabRAB"
-
-        '        _Tbl_Mevento_Edo = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-        '    End If
-
-        'End If
-
-        '_NombreFormato_Modalidad = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad",
-        '                                              "NombreFormato", "Modalidad = '" & Modalidad & "' And TipoDoc = '" & _Tido & "'")
-
-        'If String.IsNullOrEmpty(_NombreFormato_Modalidad) Then
-        '    Btn_Mnu_Imprimir_Formato_Modalidad.Text = "No existe formato para esta modalidad (" & Modalidad & ")"
-        '    Btn_Mnu_Vista_Previa_Formato_Modalidad.Text = "No existe formato para esta modalidad (" & Modalidad & ")"
-        'Else
-        '    Btn_Mnu_Imprimir_Formato_Modalidad.Text = "Imprimir en formato de la modalidad (" & _NombreFormato_Modalidad.Trim & ")"
-        '    Btn_Mnu_Vista_Previa_Formato_Modalidad.Text = "Vista previa en formato de la modalidad (" & _NombreFormato_Modalidad.Trim & ")"
-        'End If
 
         OcultarCamposDeGrillas()
 
@@ -1198,6 +1175,8 @@ Public Class Frm_Ver_Documento
         Btn_Enviar_documento_por_correo.Visible = False
         Btn_Firmar_Documento_DTE.Visible = False
         Btn_Marcar_Baja_Rotacion.Visible = False
+
+        Btn_Contenedor.Visible = (_Tido = "OCC")
 
         Me.Refresh()
 
@@ -2985,7 +2964,12 @@ Public Class Frm_Ver_Documento
     End Sub
 
     Private Sub Frm_Ver_Documento_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+
         _Configuracion_Regional_()
+
+        Dim _Cl_Contenedor As New Cl_Contenedor
+        _Cl_Contenedor.Fx_Soltar_Contenedor_Tomado()
+
     End Sub
 
     Private Sub Btn_Permisos_Asociados_Click(sender As Object, e As EventArgs) Handles Btn_Permisos_Asociados.Click
@@ -4458,8 +4442,8 @@ Public Class Frm_Ver_Documento
 
             Catch ex As Exception
             Finally
-                CircularProgressItem1.IsRunning = False
-                CircularProgressItem1.Visible = False
+                'CircularProgressItem1.IsRunning = False
+                'CircularProgressItem1.Visible = False
                 Me.Cursor = Cursors.Default
             End Try
 
@@ -4541,14 +4525,16 @@ Public Class Frm_Ver_Documento
 
         If _Accion = Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion.Eliminar Then
 
+            _Conservar_Nudo = True
+
             If _Tido = "OCC" Then
 
                 Dim _Opciones = MessageBoxEx.Show(Me, "¿Desea conservar el mismo número de documento?" & vbCrLf & "Número: " & _Tido & "-" & _Nudo, "Conservar numeración",
                                  MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)
 
-                If _Opciones = DialogResult.Yes Then
-                    _Conservar_Nudo = True
-                End If
+                'If _Opciones = DialogResult.Yes Then
+                '    _Conservar_Nudo = True
+                'End If
 
                 If _Opciones = DialogResult.Cancel Then
                     Return
@@ -4634,6 +4620,7 @@ Public Class Frm_Ver_Documento
         End If
 
         If Not Fx_Eliminar_Anular(_Accion) Then
+            Me.Enabled = True
             Return
         End If
 
@@ -5044,8 +5031,79 @@ Public Class Frm_Ver_Documento
 
     End Sub
 
+    Private Sub Btn_Contenedor_Click(sender As Object, e As EventArgs) Handles Btn_Contenedor.Click
+
+        Btn_Contenedor_Asociar.Visible = Not CBool(_Cl_Contenedor.Zw_Contenedor.IdCont)
+        Btn_Contenedor_Quitar.Visible = CBool(_Cl_Contenedor.Zw_Contenedor.IdCont)
+        Btn_Contenedor_Ver.Visible = CBool(_Cl_Contenedor.Zw_Contenedor.IdCont)
+
+        ShowContextMenu(Menu_Contextual_Contenedor)
+
+    End Sub
+
+    Private Sub Btn_Contenedor_Asociar_Click(sender As Object, e As EventArgs) Handles Btn_Contenedor_Asociar.Click
+
+        Dim _IdCont = _Cl_Contenedor.Zw_Contenedor.IdCont
+
+        If CBool(_IdCont) Then
+            MessageBoxEx.Show(Me, "Ya hay un contenedor asociado" & vbCrLf &
+                              "Contenedor: " & _Cl_Contenedor.Zw_Contenedor.Contenedor & " - " & _Cl_Contenedor.Zw_Contenedor.NombreContenedor,
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Sb_Asociar_Contenedor()
+
+    End Sub
+
     Private Sub Btn_CrearNVVdesdeOCCOtraEmpresa_Click(sender As Object, e As EventArgs) Handles Btn_CrearNVVdesdeOCCOtraEmpresa.Click
         Sb_CrearNVVDesdeOCC()
+    End Sub
+
+    Private Sub Btn_Contenedor_Ver_Click(sender As Object, e As EventArgs) Handles Btn_Contenedor_Ver.Click
+
+        Dim _IdCont = _Cl_Contenedor.Zw_Contenedor.IdCont
+
+        If Not CBool(_IdCont) Then
+            MessageBoxEx.Show(Me, "No hay un contenedor asociado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim Fm As New Frm_CrearContenedor(_IdCont)
+        Fm.Btn_Eliminar.Enabled = False
+        Fm.ShowDialog(Me)
+        If Fm.Grabar Then
+            _Cl_Contenedor.Zw_Contenedor = Fm.Zw_Contenedor
+        End If
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_Contenedor_Quitar_Click(sender As Object, e As EventArgs) Handles Btn_Contenedor_Quitar.Click
+
+        Dim _IdCont = _Cl_Contenedor.Zw_Contenedor.IdCont
+
+        If Not CBool(_IdCont) Then
+            MessageBoxEx.Show(Me, "No hay un contenedor asociado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Esta seguro de querer quitar el contenedor?" & vbCrLf &
+                             "Contenedor: " & _Cl_Contenedor.Zw_Contenedor.Contenedor & " - " & _Cl_Contenedor.Zw_Contenedor.NombreContenedor,
+                             "Quitar contenedor", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        _Mensaje = _Cl_Contenedor.Fx_Quitar_Contenedor_De_Documento(_Idmaeedo)
+
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+
+        If _Mensaje.EsCorrecto Then
+            _Cl_Contenedor.Zw_Contenedor = New Zw_Contenedor
+        End If
+
     End Sub
 
     Sub Sb_Eliminar_Anular(_Accion As Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion)
@@ -5103,5 +5161,31 @@ Public Class Frm_Ver_Documento
 
     End Sub
 
+    Private Sub Sb_Asociar_Contenedor()
+
+        Dim Fm As New Frm_Contenedores
+        Fm.ModoSeleccion = True
+        Fm.ShowDialog(Me)
+        _Cl_Contenedor.Zw_Contenedor = Fm.Zw_Contenedor
+        Fm.Dispose()
+
+        If CBool(_Cl_Contenedor.Zw_Contenedor.IdCont) Then
+
+            Dim _Mensaje As New LsValiciones.Mensajes
+
+            _Mensaje = _Cl_Contenedor.Fx_Relacionar_Contenedor_Documento(_Idmaeedo, _Cl_Contenedor.Zw_Contenedor.IdCont)
+
+            If Not _Mensaje.EsCorrecto Then
+                MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                Return
+            End If
+
+            MessageBoxEx.Show(Me, "Contenedor asociado correctamente" & vbCrLf &
+                                  "Contenedor: " & _Cl_Contenedor.Zw_Contenedor.Contenedor & " - " & _Cl_Contenedor.Zw_Contenedor.NombreContenedor,
+                                  "Asociar contenedor", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        End If
+
+    End Sub
 
 End Class
