@@ -668,6 +668,8 @@ Public Class Frm_Formulario_Documento
 
                     End If
 
+                Case "COV"
+
                     _TblEncabezado.Rows(0).Item("PreVenta") = PreVenta
 
             End Select
@@ -928,6 +930,7 @@ Public Class Frm_Formulario_Documento
         Barra_Progreso.Visible = False
 
         Btn_Cambiar_Moneda.Enabled = Not _Revision_Remota
+        Btn_Contenedor.Visible = PreVenta
 
         If _Revisando_Situacion_Comercial Or _Revision_Remota Or _Solo_Revisar_El_Documento Then
 
@@ -988,6 +991,7 @@ Public Class Frm_Formulario_Documento
                     Btn_Despacho.Enabled = True
 
                     Btn_Editar_Cotizacion.Visible = (_Tido = "COV")
+                    Btn_Contenedor.Visible = (_Tido = "COV" And PreVenta)
 
                 Case "COV", "NVV"
 
@@ -1092,8 +1096,10 @@ Public Class Frm_Formulario_Documento
         Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Casi_DocTom Where NombreEquipo = '" & _NombreEquipo & "'"
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
-        'Dim _Cl_Contenedor As New Cl_Contenedor
-        '_Cl_Contenedor.Fx_Soltar_Contenedor_Tomado(_Zw_Contenedor)
+        If PreVenta Then
+            Dim _Cl_Contenedor As New Cl_Contenedor
+            _Cl_Contenedor.Fx_Soltar_Contenedor_Tomado()
+        End If
 
     End Sub
 
@@ -1586,6 +1592,7 @@ Public Class Frm_Formulario_Documento
 
             .Item("PreVenta") = PreVenta
             .Item("IdCont") = 0
+            .Item("Contenedor") = String.Empty
 
             _TblEncabezado.Rows.Add(NewFila)
 
@@ -8639,6 +8646,10 @@ Public Class Frm_Formulario_Documento
 
                                 End If
 
+                                If Not Fx_ValidarSiTieneContenedor() Then
+                                    Return
+                                End If
+
                                 Dim _Validar_Lineas_X_Pagina As Boolean = Fx_Validar_Lineas_Por_Documento_VS_Formato(1)
 
                                 If _Validar_Lineas_X_Pagina Then
@@ -8822,6 +8833,7 @@ Public Class Frm_Formulario_Documento
                                     End If
 
                                     Dim Fm As New Frm_Cantidades_Ud_Disintas(_Fila)
+
                                     Fm.Cantidad_Ud1 = _CantUd1
                                     Fm.Cantidad_Ud2 = _CantUd2
                                     Fm.LblUnidad1.Text = _Ud01PR
@@ -8829,6 +8841,9 @@ Public Class Frm_Formulario_Documento
                                     Fm.TopMost = True
                                     Fm.RtuVariable = _RtuVariable
                                     Fm.RevisarRtuVariable = _RevisarRtuVariable
+                                    Fm.DesdeContenedor = PreVenta
+                                    Fm.IdCont = _TblEncabezado.Rows(0).Item("IdCont")
+
                                     Fm.ShowDialog(Me)
 
                                     _RtuVariable = Fm.RtuVariable
@@ -10337,7 +10352,13 @@ Public Class Frm_Formulario_Documento
                         Dim _Tbl_Productos_Seleccionados_Multiple As DataTable
                         Dim _EsKit As Boolean = False
 
-                        Dim _RowProducto As DataRow = Fx_Buscar_Producto(_Codigo, _Es_Concepto, True, _Tbl_Productos_Seleccionados_Multiple, _EsKit)
+                        Dim _RowProducto As DataRow
+
+                        If PreVenta Then
+                            _RowProducto = Fx_CargarProductoDesdeContenedor()
+                        Else
+                            _RowProducto = Fx_Buscar_Producto(_Codigo, _Es_Concepto, True, _Tbl_Productos_Seleccionados_Multiple, _EsKit)
+                        End If
 
                         If Not (_RowProducto Is Nothing) Then
 
@@ -11603,7 +11624,27 @@ Public Class Frm_Formulario_Documento
             Else
                 Return True
             End If
+
         End If
+
+    End Function
+
+    Function Fx_ValidarSiTieneContenedor() As Boolean
+
+        If Not PreVenta Then
+            Return True
+        End If
+
+        Dim _IdCont As Integer = _TblEncabezado.Rows(0).Item("IdCont")
+        Dim _Contenedor As String = _TblEncabezado.Rows(0).Item("Contenedor")
+
+        If Not CBool(_IdCont) Then
+            MessageBoxEx.Show(Me, "Documento no tiene contenedor" & vbCrLf &
+                              "En una PRE-VENTA es obligatorio asociar un contenedor", "Validación", MessageBoxButtons.OK,
+                              MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
+        End If
+
+        Return CBool(_IdCont)
 
     End Function
 
@@ -28889,6 +28930,120 @@ Public Class Frm_Formulario_Documento
         _Zw_Contenedor = New Zw_Contenedor
 
     End Sub
+
+    Private Sub Btn_Contenedor_Click(sender As Object, e As EventArgs) Handles Btn_Contenedor.Click
+
+        Dim _IdCont As Integer = _TblEncabezado.Rows(0).Item("IdCont")
+
+        Btn_Contenedor_Asociar.Visible = Not CBool(_IdCont)
+        Btn_Contenedor_Quitar.Visible = CBool(_IdCont)
+        Btn_Contenedor_Ver.Visible = CBool(_IdCont)
+
+        ShowContextMenu(Menu_Contextual_Contenedor)
+
+    End Sub
+
+    Private Sub Btn_Contenedor_Asociar_Click(sender As Object, e As EventArgs) Handles Btn_Contenedor_Asociar.Click
+
+        Dim _IdCont As Integer = _TblEncabezado.Rows(0).Item("IdCont")
+
+        Dim _Cl_Contenedor As New Cl_Contenedor
+
+        If CBool(_IdCont) Then
+
+            _Cl_Contenedor.Zw_Contenedor = _Cl_Contenedor.Fx_Llenar_Contenedor(_IdCont)
+
+            MessageBoxEx.Show(Me, "Ya hay un contenedor asociado" & vbCrLf &
+                              "Contenedor: " & _Cl_Contenedor.Zw_Contenedor.Contenedor & " - " & _Cl_Contenedor.Zw_Contenedor.NombreContenedor,
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+
+        End If
+
+        Dim Fm As New Frm_Contenedores
+        Fm.ModoSeleccion = True
+        Fm.ShowDialog(Me)
+        _Cl_Contenedor.Zw_Contenedor = Fm.Zw_Contenedor
+        Fm.Dispose()
+
+        If CBool(_Cl_Contenedor.Zw_Contenedor.IdCont) Then
+
+            _TblEncabezado.Rows(0).Item("IdCont") = _Cl_Contenedor.Zw_Contenedor.IdCont
+            _TblEncabezado.Rows(0).Item("Contenedor") = _Cl_Contenedor.Zw_Contenedor.Contenedor
+
+            _Cl_Contenedor.Fx_Tomar_Contenedor(_Cl_Contenedor.Zw_Contenedor)
+
+            MessageBoxEx.Show(Me, "Contenedor asociado correctamente" & vbCrLf &
+                                  "Contenedor: " & _Cl_Contenedor.Zw_Contenedor.Contenedor & " - " & _Cl_Contenedor.Zw_Contenedor.NombreContenedor,
+                                  "Asociar contenedor", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        End If
+
+    End Sub
+
+    Private Sub Btn_Contenedor_Ver_Click(sender As Object, e As EventArgs) Handles Btn_Contenedor_Ver.Click
+
+        Dim _IdCont As Integer = _TblEncabezado.Rows(0).Item("IdCont")
+
+        If Not CBool(_IdCont) Then
+            MessageBoxEx.Show(Me, "No hay un contenedor asociado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim Fm As New Frm_CrearContenedor(_IdCont)
+        Fm.Btn_Eliminar.Enabled = False
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_Contenedor_Quitar_Click(sender As Object, e As EventArgs) Handles Btn_Contenedor_Quitar.Click
+
+        Dim _IdCont As Integer = _TblEncabezado.Rows(0).Item("IdCont")
+
+        Dim _Cl_Contenedor As New Cl_Contenedor
+
+        If Not CBool(_IdCont) Then
+
+            MessageBoxEx.Show(Me, "No hay un contenedor asociado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+
+        End If
+
+        _Cl_Contenedor.Zw_Contenedor = _Cl_Contenedor.Fx_Llenar_Contenedor(_IdCont)
+
+        If MessageBoxEx.Show(Me, "¿Esta seguro de querer quitar el contenedor?" & vbCrLf &
+                             "Contenedor: " & _Cl_Contenedor.Zw_Contenedor.Contenedor & " - " & _Cl_Contenedor.Zw_Contenedor.NombreContenedor,
+                             "Quitar contenedor", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
+
+        _Cl_Contenedor.Fx_Soltar_Contenedor_Tomado()
+
+        _TblEncabezado.Rows(0).Item("IdCont") = 0
+        _TblEncabezado.Rows(0).Item("Contenedor") = String.Empty
+
+    End Sub
+
+    Function Fx_CargarProductoDesdeContenedor() As DataRow
+
+        Dim _IdCont As Integer = _TblEncabezado.Rows(0).Item("IdCont")
+        Dim _Cl_Contenedor As New Cl_Contenedor
+
+        Dim _RowProducto As DataRow
+
+        _Cl_Contenedor.Zw_Contenedor = _Cl_Contenedor.Fx_Llenar_Contenedor(_IdCont)
+
+        Dim Fm As New Frm_ProdContenedorPreVta(ModEmpresa,
+                                               _Cl_Contenedor.Zw_Contenedor.IdCont,
+                                               _Cl_Contenedor.Zw_Contenedor.Contenedor)
+        Fm.ShowDialog(Me)
+        _RowProducto = Fm.RowProducto
+        Fm.Dispose()
+
+        Return _RowProducto
+
+    End Function
 
     Function Fx_ProdConInfo(_Tipr As String) As Boolean
 

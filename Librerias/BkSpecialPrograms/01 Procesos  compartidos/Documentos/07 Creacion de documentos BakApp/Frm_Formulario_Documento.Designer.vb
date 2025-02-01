@@ -104,16 +104,19 @@ Partial Class Frm_Formulario_Documento
         Me.Txt_ArchivoSG_Carpeta_Lectura = New DevComponents.DotNetBar.ButtonItem()
         Me.Txt_ArchivoSG_Carpeta_Generados = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Crear_Desde_DTEXMLCompra = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Contenedor = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Container_Asociar = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Container_Ver = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Container_Quitar = New DevComponents.DotNetBar.ButtonItem()
         Me.Menu_Contextual_Opciones_Recargar_Costos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Recargar_Producto_Linea_Activa = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Recargar_Producto_Todos = New DevComponents.DotNetBar.ButtonItem()
         Me.Menu_Contextual_Imp_Doc_Construccion = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_ImpConstCarta = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_ImpConstVale = New DevComponents.DotNetBar.ButtonItem()
+        Me.Menu_Contextual_Contenedor = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Contenedor_Asociar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Contenedor_Ver = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Contenedor_Quitar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Container_Asociar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Container_Ver = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Container_Quitar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel5 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.LblNetoLinea = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel7 = New DevComponents.DotNetBar.Controls.GroupPanel()
@@ -152,6 +155,7 @@ Partial Class Frm_Formulario_Documento
         Me.Btn_Archivos_Adjuntos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Opciones_Especiales = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Imprimir = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Contenedor = New DevComponents.DotNetBar.ButtonItem()
         Me.ButtonItem1 = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Huella = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel6 = New DevComponents.DotNetBar.Controls.GroupPanel()
@@ -265,7 +269,7 @@ Partial Class Frm_Formulario_Documento
         '
         Me.ContextMenuBar1.AntiAlias = True
         Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_SOL, Me.Menu_Contextual_Producto, Me.Menu_Contextual_Stand_By, Me.Menu_Contextual_Info_Entidad, Me.Menu_Contextual_Crear_Producto, Me.Menu_Contextual_Solicitud_de_Compra, Me.Menu_Contextual_Anotaciones, Me.Menu_Contextual_Opciones_Especiales, Me.Menu_Contextual_Opciones_Recargar_Costos, Me.Menu_Contextual_Imp_Doc_Construccion})
+        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_SOL, Me.Menu_Contextual_Producto, Me.Menu_Contextual_Stand_By, Me.Menu_Contextual_Info_Entidad, Me.Menu_Contextual_Crear_Producto, Me.Menu_Contextual_Solicitud_de_Compra, Me.Menu_Contextual_Anotaciones, Me.Menu_Contextual_Opciones_Especiales, Me.Menu_Contextual_Opciones_Recargar_Costos, Me.Menu_Contextual_Imp_Doc_Construccion, Me.Menu_Contextual_Contenedor})
         Me.ContextMenuBar1.Location = New System.Drawing.Point(29, 37)
         Me.ContextMenuBar1.Name = "ContextMenuBar1"
         Me.ContextMenuBar1.Size = New System.Drawing.Size(788, 47)
@@ -623,7 +627,7 @@ Partial Class Frm_Formulario_Documento
         '
         Me.Menu_Contextual_Opciones_Especiales.AutoExpandOnClick = True
         Me.Menu_Contextual_Opciones_Especiales.Name = "Menu_Contextual_Opciones_Especiales"
-        Me.Menu_Contextual_Opciones_Especiales.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Despacho, Me.Btn_Exportar_a_XML, Me.Btn_Config_Tipo_Estacion, Me.Btn_Config_Impresora, Me.Btn_Prestashop, Me.Btn_Lista_Costos_Proveedor, Me.Btn_Levantar_Prod_Masivamente, Me.Btn_Crear_Desde_DTEXMLCompra, Me.Btn_Contenedor})
+        Me.Menu_Contextual_Opciones_Especiales.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Despacho, Me.Btn_Exportar_a_XML, Me.Btn_Config_Tipo_Estacion, Me.Btn_Config_Impresora, Me.Btn_Prestashop, Me.Btn_Lista_Costos_Proveedor, Me.Btn_Levantar_Prod_Masivamente, Me.Btn_Crear_Desde_DTEXMLCompra})
         Me.Menu_Contextual_Opciones_Especiales.Text = "Opciones especiales"
         '
         'Btn_Despacho
@@ -774,35 +778,6 @@ Partial Class Frm_Formulario_Documento
         Me.Btn_Crear_Desde_DTEXMLCompra.Text = "Crear OCC desde DTE XML"
         Me.Btn_Crear_Desde_DTEXMLCompra.Visible = False
         '
-        'Btn_Contenedor
-        '
-        Me.Btn_Contenedor.Image = CType(resources.GetObject("Btn_Contenedor.Image"), System.Drawing.Image)
-        Me.Btn_Contenedor.Name = "Btn_Contenedor"
-        Me.Btn_Contenedor.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Container_Asociar, Me.Btn_Container_Ver, Me.Btn_Container_Quitar})
-        Me.Btn_Contenedor.Text = "Contenedor"
-        Me.Btn_Contenedor.Visible = False
-        '
-        'Btn_Container_Asociar
-        '
-        Me.Btn_Container_Asociar.Image = CType(resources.GetObject("Btn_Container_Asociar.Image"), System.Drawing.Image)
-        Me.Btn_Container_Asociar.ImageAlt = CType(resources.GetObject("Btn_Container_Asociar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Container_Asociar.Name = "Btn_Container_Asociar"
-        Me.Btn_Container_Asociar.Text = "Asociar contenedor"
-        '
-        'Btn_Container_Ver
-        '
-        Me.Btn_Container_Ver.Image = CType(resources.GetObject("Btn_Container_Ver.Image"), System.Drawing.Image)
-        Me.Btn_Container_Ver.ImageAlt = CType(resources.GetObject("Btn_Container_Ver.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Container_Ver.Name = "Btn_Container_Ver"
-        Me.Btn_Container_Ver.Text = "Ver contenedor asociado"
-        '
-        'Btn_Container_Quitar
-        '
-        Me.Btn_Container_Quitar.Image = CType(resources.GetObject("Btn_Container_Quitar.Image"), System.Drawing.Image)
-        Me.Btn_Container_Quitar.ImageAlt = CType(resources.GetObject("Btn_Container_Quitar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Container_Quitar.Name = "Btn_Container_Quitar"
-        Me.Btn_Container_Quitar.Text = "Quitar contenedor"
-        '
         'Menu_Contextual_Opciones_Recargar_Costos
         '
         Me.Menu_Contextual_Opciones_Recargar_Costos.AutoExpandOnClick = True
@@ -842,6 +817,55 @@ Partial Class Frm_Formulario_Documento
         Me.Btn_ImpConstVale.ImageAlt = CType(resources.GetObject("Btn_ImpConstVale.ImageAlt"), System.Drawing.Image)
         Me.Btn_ImpConstVale.Name = "Btn_ImpConstVale"
         Me.Btn_ImpConstVale.Text = "Imprimir en formato Vale"
+        '
+        'Menu_Contextual_Contenedor
+        '
+        Me.Menu_Contextual_Contenedor.AutoExpandOnClick = True
+        Me.Menu_Contextual_Contenedor.Name = "Menu_Contextual_Contenedor"
+        Me.Menu_Contextual_Contenedor.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Contenedor_Asociar, Me.Btn_Contenedor_Ver, Me.Btn_Contenedor_Quitar})
+        Me.Menu_Contextual_Contenedor.Text = "Contenedor"
+        '
+        'Btn_Contenedor_Asociar
+        '
+        Me.Btn_Contenedor_Asociar.Image = CType(resources.GetObject("Btn_Contenedor_Asociar.Image"), System.Drawing.Image)
+        Me.Btn_Contenedor_Asociar.ImageAlt = CType(resources.GetObject("Btn_Contenedor_Asociar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Contenedor_Asociar.Name = "Btn_Contenedor_Asociar"
+        Me.Btn_Contenedor_Asociar.Text = "Asociar contenedor"
+        '
+        'Btn_Contenedor_Ver
+        '
+        Me.Btn_Contenedor_Ver.Image = CType(resources.GetObject("Btn_Contenedor_Ver.Image"), System.Drawing.Image)
+        Me.Btn_Contenedor_Ver.ImageAlt = CType(resources.GetObject("Btn_Contenedor_Ver.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Contenedor_Ver.Name = "Btn_Contenedor_Ver"
+        Me.Btn_Contenedor_Ver.Text = "Ver contenedor asociado"
+        '
+        'Btn_Contenedor_Quitar
+        '
+        Me.Btn_Contenedor_Quitar.Image = CType(resources.GetObject("Btn_Contenedor_Quitar.Image"), System.Drawing.Image)
+        Me.Btn_Contenedor_Quitar.ImageAlt = CType(resources.GetObject("Btn_Contenedor_Quitar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Contenedor_Quitar.Name = "Btn_Contenedor_Quitar"
+        Me.Btn_Contenedor_Quitar.Text = "Quitar contenedor"
+        '
+        'Btn_Container_Asociar
+        '
+        Me.Btn_Container_Asociar.Image = CType(resources.GetObject("Btn_Container_Asociar.Image"), System.Drawing.Image)
+        Me.Btn_Container_Asociar.ImageAlt = CType(resources.GetObject("Btn_Container_Asociar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Container_Asociar.Name = "Btn_Container_Asociar"
+        Me.Btn_Container_Asociar.Text = "Asociar contenedor"
+        '
+        'Btn_Container_Ver
+        '
+        Me.Btn_Container_Ver.Image = CType(resources.GetObject("Btn_Container_Ver.Image"), System.Drawing.Image)
+        Me.Btn_Container_Ver.ImageAlt = CType(resources.GetObject("Btn_Container_Ver.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Container_Ver.Name = "Btn_Container_Ver"
+        Me.Btn_Container_Ver.Text = "Ver contenedor asociado"
+        '
+        'Btn_Container_Quitar
+        '
+        Me.Btn_Container_Quitar.Image = CType(resources.GetObject("Btn_Container_Quitar.Image"), System.Drawing.Image)
+        Me.Btn_Container_Quitar.ImageAlt = CType(resources.GetObject("Btn_Container_Quitar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Container_Quitar.Name = "Btn_Container_Quitar"
+        Me.Btn_Container_Quitar.Text = "Quitar contenedor"
         '
         'GroupPanel5
         '
@@ -1232,7 +1256,7 @@ Partial Class Frm_Formulario_Documento
         Me.Barra.AntiAlias = True
         Me.Barra.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Barra.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Barra.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnGrabar, Me.Btn_Limpiar, Me.Btn_Desde_COV_OCC, Me.Btn_Productos_Solicitados_Bodega, Me.Btn_Revisar_Situacion_Comercial, Me.Btn_Cambiar_Tipo_Documento, Me.Btn_Cadena_Remota, Me.Btn_Dejar_Doc_Stand_By, Me.Btn_Informe_Ventas_X_Vendedor, Me.Btn_Editar_Nota_de_venta, Me.Btn_Editar_Cotizacion, Me.Btn_Aceptar_Documento, Me.Btn_Rechazar_Documento, Me.Btn_Ver_Costos, Me.Btn_Mostrar_Margenes, Me.Btn_Observaciones, Me.Btn_Anotaciones_al_documento, Me.Btn_Archivos_Adjuntos, Me.Btn_Opciones_Especiales, Me.Btn_Imprimir, Me.ButtonItem1, Me.Btn_Huella})
+        Me.Barra.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnGrabar, Me.Btn_Limpiar, Me.Btn_Desde_COV_OCC, Me.Btn_Productos_Solicitados_Bodega, Me.Btn_Revisar_Situacion_Comercial, Me.Btn_Cambiar_Tipo_Documento, Me.Btn_Cadena_Remota, Me.Btn_Dejar_Doc_Stand_By, Me.Btn_Informe_Ventas_X_Vendedor, Me.Btn_Editar_Nota_de_venta, Me.Btn_Editar_Cotizacion, Me.Btn_Aceptar_Documento, Me.Btn_Rechazar_Documento, Me.Btn_Ver_Costos, Me.Btn_Mostrar_Margenes, Me.Btn_Observaciones, Me.Btn_Anotaciones_al_documento, Me.Btn_Archivos_Adjuntos, Me.Btn_Opciones_Especiales, Me.Btn_Imprimir, Me.Btn_Contenedor, Me.ButtonItem1, Me.Btn_Huella})
         Me.Barra.Location = New System.Drawing.Point(0, 536)
         Me.Barra.Name = "Barra"
         Me.Barra.Size = New System.Drawing.Size(934, 41)
@@ -1443,6 +1467,16 @@ Partial Class Frm_Formulario_Documento
         Me.Btn_Imprimir.ImageAlt = CType(resources.GetObject("Btn_Imprimir.ImageAlt"), System.Drawing.Image)
         Me.Btn_Imprimir.Name = "Btn_Imprimir"
         Me.Btn_Imprimir.Tooltip = "Imprimir documento en cons"
+        '
+        'Btn_Contenedor
+        '
+        Me.Btn_Contenedor.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Contenedor.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Contenedor.Image = CType(resources.GetObject("Btn_Contenedor.Image"), System.Drawing.Image)
+        Me.Btn_Contenedor.ImageAlt = CType(resources.GetObject("Btn_Contenedor.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Contenedor.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Center
+        Me.Btn_Contenedor.Name = "Btn_Contenedor"
+        Me.Btn_Contenedor.Tooltip = "Opciones especiales"
         '
         'ButtonItem1
         '
@@ -2967,8 +3001,12 @@ Partial Class Frm_Formulario_Documento
     Friend WithEvents Lbl_TipoVenta As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Lbl_DocActual As DevComponents.DotNetBar.LabelItem
     Public WithEvents Btn_Editar_Cotizacion As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_Contenedor As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Container_Asociar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Container_Ver As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Container_Quitar As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_Contenedor As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Menu_Contextual_Contenedor As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Contenedor_Asociar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Contenedor_Ver As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Contenedor_Quitar As DevComponents.DotNetBar.ButtonItem
 End Class

@@ -1,8 +1,8 @@
-﻿'Imports Lib_Bakapp_VarClassFunc
-Imports DevComponents.DotNetBar
+﻿''Imports Lib_Bakapp_VarClassFunc
+'Imports DevComponents.DotNetBar
 
-Imports System.Windows.Forms
-Imports System.Drawing
+'Imports System.Windows.Forms
+'Imports System.Drawing
 
 Public Class AlertCustom
     Inherits DevComponents.DotNetBar.Balloon
@@ -40,7 +40,7 @@ Public Class AlertCustom
         Get
             Return _Agrupar_Asociados
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Agrupar_Asociados = value
             Chk_Agrupar_Asociados.Checked = value
         End Set
@@ -109,7 +109,11 @@ Public Class AlertCustom
         End Set
     End Property
 
-    Public Sub New(ByVal Codigo As String, ByVal Unidad As Integer)
+    Public Property DesdeContenedor As Boolean
+    Public Property IdCont As Integer
+
+    Public Sub New(Codigo As String, Unidad As Integer)
+
         MyBase.New()
 
         'This call is required by the Windows Form Designer.
@@ -135,7 +139,7 @@ Public Class AlertCustom
     End Sub
 
     'Form overrides dispose to clean up the component list.
-    Protected Overloads Overrides Sub Dispose(ByVal disposing As Boolean)
+    Protected Overloads Overrides Sub Dispose(disposing As Boolean)
         If disposing Then
             If Not (components Is Nothing) Then
                 components.Dispose()
@@ -340,7 +344,7 @@ Public Class AlertCustom
 
 #End Region
 
-    Private Sub AlertCustom_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+    Private Sub AlertCustom_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
         Dim _Nokopr As String = _RowProducto.Item("NOKOPR")
         Dim _Rtu As String = _RowProducto.Item("RLUD")
@@ -384,7 +388,11 @@ Public Class AlertCustom
         AddHandler Rdb_Unidad_2.CheckedChanged, AddressOf Sb_Rdb_Unidad_CheckedChanged
         AddHandler Chk_Agrupar_Asociados.CheckedChanged, AddressOf Sb_Chk_Agrupar_Asociados_CheckedChanged
 
-        Sb_Actualizar_Grilla()
+        If DesdeContenedor Then
+            Sb_Actualizar_Grilla_Contenedor()
+        Else
+            Sb_Actualizar_Grilla()
+        End If
 
     End Sub
 
@@ -583,20 +591,199 @@ Public Class AlertCustom
 
     End Sub
 
-    Private Sub Sb_Rdb_Unidad_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Public Sub Sb_Actualizar_Grilla_Contenedor()
+
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+        Dim _Filtro_Productos As String
+
+        If Chk_Agrupar_Asociados.Checked And Not IsNothing(_Row_Nodo_Clasificaciones) Then
+            Lbl_Producto.Text = "Stock Producto: " & _Row_Nodo_Clasificaciones.Item("Descripcion")
+            _Filtro_Productos = Generar_Filtro_IN(_TblProductos, "", "KOPR", False, False, "'")
+        Else
+            Lbl_Producto.Text = "Stock Producto: " & _RowProducto.Item("KOPR") & " - " & _RowProducto.Item("NOKOPR")
+            _Filtro_Productos = "('" & _Codigo & "')"
+        End If
+
+        Dim _Ud As Integer
+
+        If Rdb_Unidad_1.Checked Then
+            _Ud = 1
+        Else
+            _Ud = 2
+        End If
+
+        Consulta_sql = "Select p.Empresa,p.IdCont,c.Contenedor,c.NombreContenedor,p.Codigo,NOKOPR," &
+                       "StcfiUd" & _Ud & " As ST_FISICO,StcCompUd" & _Ud & " As ST_COMPROMETIDO,StcfiUd" & _Ud & "-StcCompUd" & _Ud & " As ST_DISPONIBLE,e.FEER" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Contenedor_StockProd p" & vbCrLf &
+                       "Inner Join MAEPR m On m.KOPR = p.Codigo" & vbCrLf &
+                       "Inner Join " & _Global_BaseBk & "Zw_Contenedor c On c.IdCont = p.IdCont" & vbCrLf &
+                       "Inner Join MAEEDO e On c.Idmaeedo_Rela = e.IDMAEEDO" & vbCrLf &
+                       "Where p.Empresa = '" & ModEmpresa & "' And p.Codigo = '" & _Codigo & "'"
+
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+        With Grilla
+
+            .DataSource = _Tbl
+
+            OcultarEncabezadoGrilla(Grilla, True)
+
+            Dim _DisplayIndex = 0
+
+            .Columns("Contenedor").Visible = True
+            .Columns("Contenedor").HeaderText = "Contenedor"
+            .Columns("Contenedor").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("Contenedor").Width = 100
+            .Columns("Contenedor").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("NombreContenedor").Visible = True
+            .Columns("NombreContenedor").HeaderText = "Nombre contenedor"
+            .Columns("NombreContenedor").Width = 280
+            .Columns("NombreContenedor").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("FEER").Visible = Mostrar_Stock_Disponible
+            .Columns("FEER").HeaderText = "F.Llegada"
+            .Columns("FEER").Width = 65
+            .Columns("FEER").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("FEER").DefaultCellStyle.Format = "dd/MM/yyyy"
+            .Columns("FEER").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("ST_FISICO").Visible = Mostrar_Stock_Fisico
+            .Columns("ST_FISICO").HeaderText = "Físico"
+            .Columns("ST_FISICO").Width = 85
+            .Columns("ST_FISICO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("ST_FISICO").DefaultCellStyle.Format = "##,###0.##"
+            .Columns("ST_FISICO").ToolTipText = "Stock Ud" & _Unidad
+            .Columns("ST_FISICO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("ST_COMPROMETIDO").Visible = Mostrar_Stock_Comprometido
+            .Columns("ST_COMPROMETIDO").HeaderText = "Comprometido COV"
+            .Columns("ST_COMPROMETIDO").Width = 85
+            .Columns("ST_COMPROMETIDO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("ST_COMPROMETIDO").DefaultCellStyle.Format = "##,###0.##"
+            .Columns("ST_COMPROMETIDO").ToolTipText = "Stock comprometido Ud" & _Unidad & " (Cotizaciones PRE-VENTA)"
+            .Columns("ST_COMPROMETIDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            '.Columns("ST_COMPROMETIDO_BK").Visible = Mostrar_Stock_Comprometido
+            '.Columns("ST_COMPROMETIDO_BK").HeaderText = "Comp.BK"
+            '.Columns("ST_COMPROMETIDO_BK").Width = 65
+            '.Columns("ST_COMPROMETIDO_BK").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            '.Columns("ST_COMPROMETIDO_BK").DefaultCellStyle.Format = "##,###0.##"
+            '.Columns("ST_COMPROMETIDO_BK").ToolTipText = "Stock comprometido Ud" & _Unidad & " (NVV - Pendientes de permisos remotos)"
+
+            '.Columns("ST_DEVENGADO").Visible = Mostrar_Stock_Devengado
+            '.Columns("ST_DEVENGADO").HeaderText = "Ven.N/Entr."
+            '.Columns("ST_DEVENGADO").Width = 65
+            '.Columns("ST_DEVENGADO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            '.Columns("ST_DEVENGADO").DefaultCellStyle.Format = "##,###0.##"
+            '.Columns("ST_DEVENGADO").ToolTipText = "Ventas no despachadas (Devengados)"
+
+            Dim _NomCampo As String
+            Dim _ToolCampo As String
+
+            'If String.IsNullOrEmpty(_Tido) Then
+            '    _NomCampo = "Teorico"
+            '    _ToolCampo = "Stock teórico = (Stock físico - Stock devengado- Stock comprometido)"
+            'Else
+            _NomCampo = "Disponible"
+            _ToolCampo = "Stock disponible teóricamente Ud" & _Unidad & " (según configuración de calculo de stock)"
+            'End If
+
+            .Columns("ST_DISPONIBLE").Visible = Mostrar_Stock_Disponible
+            .Columns("ST_DISPONIBLE").HeaderText = _NomCampo
+            .Columns("ST_DISPONIBLE").Width = 65
+            .Columns("ST_DISPONIBLE").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("ST_DISPONIBLE").DefaultCellStyle.Format = "##,###0.##"
+            .Columns("ST_DISPONIBLE").ToolTipText = _ToolCampo
+            .Columns("ST_DISPONIBLE").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            '.Columns("ST_PEDIDO").Visible = Mostrar_Stock_Pedido
+            '.Columns("ST_PEDIDO").HeaderText = "Pedido"
+            '.Columns("ST_PEDIDO").Width = 65
+            '.Columns("ST_PEDIDO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            '.Columns("ST_PEDIDO").DefaultCellStyle.Format = "##,###0.##"
+            '.Columns("ST_PEDIDO").ToolTipText = "Stock Pedido OCC"
+
+        End With
+
+        For Each _Fila As DataGridViewRow In Grilla.Rows
+
+            Dim _Contenedor = Trim(_Fila.Cells("Contenedor").Value)
+            Dim _St_Disponible = _Fila.Cells("ST_DISPONIBLE").Value
+
+            If String.IsNullOrEmpty(_Contenedor) Then
+                If Global_Thema = Enum_Themas.Oscuro Then
+                    _Fila.DefaultCellStyle.BackColor = Color.Black
+                    _Fila.DefaultCellStyle.ForeColor = Color.Gold
+                Else
+                    _Fila.DefaultCellStyle.BackColor = Color.Gold
+                End If
+            Else
+                If Global_Thema = Enum_Themas.Oscuro Then
+                    _Fila.DefaultCellStyle.BackColor = Color.Black
+                Else
+                    _Fila.DefaultCellStyle.BackColor = Color.White
+                End If
+            End If
+
+            For Each Columna As DataGridViewColumn In Grilla.Columns
+                Dim _Columna As String = Columna.Name
+                If _Columna.Contains("ST_") Then
+
+                    Dim _Valor As Double = _Fila.Cells(_Columna).Value
+
+                    Dim _Color_Cero As Color = Color.LightGray
+                    Dim _Color_Positivo As Color = Azul
+                    Dim _Color_Negativo As Color = Rojo
+
+                    If Global_Thema = Enum_Themas.Oscuro Then
+                        _Color_Cero = Color.FromArgb(60, 60, 60)
+                        _Color_Positivo = Verde
+                    End If
+
+                    If _Valor = 0 Then
+                        _Fila.Cells(_Columna).Style.ForeColor = _Color_Cero
+                    ElseIf _Valor < 0 Then
+                        _Fila.Cells(_Columna).Style.ForeColor = Rojo
+                    ElseIf _Valor > 0 Then
+                        _Fila.Cells(_Columna).Style.ForeColor = _Color_Positivo
+                    End If
+
+                End If
+            Next
+
+        Next
+
+    End Sub
+
+    Private Sub Sb_Rdb_Unidad_CheckedChanged(sender As System.Object, e As System.EventArgs)
         If CType(sender, DevComponents.DotNetBar.Controls.CheckBoxX).Checked Then
-            Sb_Actualizar_Grilla()
+            If DesdeContenedor Then
+                Sb_Actualizar_Grilla_Contenedor()
+            Else
+                Sb_Actualizar_Grilla()
+            End If
         End If
     End Sub
 
-    Private Sub AlertCustom_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub AlertCustom_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
-    Private Sub Sb_Chk_Agrupar_Asociados_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Sb_Actualizar_Grilla()
+    Private Sub Sb_Chk_Agrupar_Asociados_CheckedChanged(sender As System.Object, e As System.EventArgs)
+        If DesdeContenedor Then
+            Sb_Actualizar_Grilla_Contenedor()
+        Else
+            Sb_Actualizar_Grilla()
+        End If
     End Sub
 
 End Class

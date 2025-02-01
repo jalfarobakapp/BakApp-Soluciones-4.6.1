@@ -1,7 +1,9 @@
 ﻿Imports System.Drawing.Printing
 Imports System.IO
 Imports DevComponents.DotNetBar
+Imports MySql.Data.Authentication
 Imports OfficeOpenXml.FormulaParsing.LexicalAnalysis
+Imports Org.BouncyCastle.Math.EC
 Imports PdfSharp
 Imports PdfSharp.Drawing
 Imports PdfSharp.Drawing.Layout
@@ -5052,7 +5054,34 @@ Public Class Frm_Ver_Documento
             Return
         End If
 
-        Sb_Asociar_Contenedor()
+        Dim Fm As New Frm_Contenedores
+        Fm.ModoSeleccion = True
+        Fm.ShowDialog(Me)
+        _Cl_Contenedor.Zw_Contenedor = Fm.Zw_Contenedor
+        Fm.Dispose()
+
+        If CBool(_Cl_Contenedor.Zw_Contenedor.IdCont) Then
+
+            Dim _Mensaje As New LsValiciones.Mensajes
+
+            _Mensaje = _Cl_Contenedor.Fx_Relacionar_Contenedor_Documento(_Idmaeedo, _Cl_Contenedor.Zw_Contenedor.IdCont)
+
+            If Not _Mensaje.EsCorrecto Then
+
+                Dim _Tido = Trim(_TblEncabezado.Rows(0).Item("TIDO"))
+                Dim _Nudo = Trim(_TblEncabezado.Rows(0).Item("NUDO"))
+
+                _Cl_Contenedor.Zw_Contenedor = _Cl_Contenedor.Fx_Llenar_Contenedor(_Idmaeedo, _Tido, _Nudo)
+                MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                Return
+
+            End If
+
+            MessageBoxEx.Show(Me, "Contenedor asociado correctamente" & vbCrLf &
+                                  "Contenedor: " & _Cl_Contenedor.Zw_Contenedor.Contenedor & " - " & _Cl_Contenedor.Zw_Contenedor.NombreContenedor,
+                                  "Asociar contenedor", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        End If
 
     End Sub
 
@@ -5082,6 +5111,8 @@ Public Class Frm_Ver_Documento
     Private Sub Btn_Contenedor_Quitar_Click(sender As Object, e As EventArgs) Handles Btn_Contenedor_Quitar.Click
 
         Dim _IdCont = _Cl_Contenedor.Zw_Contenedor.IdCont
+        Dim _Empresa = _Cl_Contenedor.Zw_Contenedor.Empresa
+        Dim _Contenedor = _Cl_Contenedor.Zw_Contenedor.Contenedor
 
         If Not CBool(_IdCont) Then
             MessageBoxEx.Show(Me, "No hay un contenedor asociado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -5096,7 +5127,7 @@ Public Class Frm_Ver_Documento
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
-        _Mensaje = _Cl_Contenedor.Fx_Quitar_Contenedor_De_Documento(_Idmaeedo)
+        _Mensaje = _Cl_Contenedor.Fx_Quitar_Contenedor_De_Documento(_Empresa, _Contenedor, _Idmaeedo)
 
         MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
@@ -5156,33 +5187,6 @@ Public Class Frm_Ver_Documento
             End If
 
             Me.Close()
-
-        End If
-
-    End Sub
-
-    Private Sub Sb_Asociar_Contenedor()
-
-        Dim Fm As New Frm_Contenedores
-        Fm.ModoSeleccion = True
-        Fm.ShowDialog(Me)
-        _Cl_Contenedor.Zw_Contenedor = Fm.Zw_Contenedor
-        Fm.Dispose()
-
-        If CBool(_Cl_Contenedor.Zw_Contenedor.IdCont) Then
-
-            Dim _Mensaje As New LsValiciones.Mensajes
-
-            _Mensaje = _Cl_Contenedor.Fx_Relacionar_Contenedor_Documento(_Idmaeedo, _Cl_Contenedor.Zw_Contenedor.IdCont)
-
-            If Not _Mensaje.EsCorrecto Then
-                MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
-                Return
-            End If
-
-            MessageBoxEx.Show(Me, "Contenedor asociado correctamente" & vbCrLf &
-                                  "Contenedor: " & _Cl_Contenedor.Zw_Contenedor.Contenedor & " - " & _Cl_Contenedor.Zw_Contenedor.NombreContenedor,
-                                  "Asociar contenedor", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         End If
 

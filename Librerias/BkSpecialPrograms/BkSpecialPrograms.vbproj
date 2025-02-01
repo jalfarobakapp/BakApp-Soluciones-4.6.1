@@ -921,6 +921,12 @@
     <Compile Include="03 Sistemas\Contenedores\Frm_CrearContenedor.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Contenedores\Frm_ProdContenedorPreVta.Designer.vb">
+      <DependentUpon>Frm_ProdContenedorPreVta.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Contenedores\Frm_ProdContenedorPreVta.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_ListaMayoristaMinorista.vb" />
     <Compile Include="03 Sistemas\Despachos\Clases\Cl_Despachos.vb" />
     <Compile Include="03 Sistemas\FTP\Cl_Ftp.vb" />
@@ -4842,6 +4848,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Contenedores\Frm_CrearContenedor.resx">
       <DependentUpon>Frm_CrearContenedor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Contenedores\Frm_ProdContenedorPreVta.resx">
+      <DependentUpon>Frm_ProdContenedorPreVta.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\FTP\Frm_FTP_Conexion.resx">
       <DependentUpon>Frm_FTP_Conexion.vb</DependentUpon>

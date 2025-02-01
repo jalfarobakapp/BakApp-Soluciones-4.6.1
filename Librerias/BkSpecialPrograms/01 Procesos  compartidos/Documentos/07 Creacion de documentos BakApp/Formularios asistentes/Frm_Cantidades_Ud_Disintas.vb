@@ -1,7 +1,6 @@
 ﻿Imports DevComponents.DotNetBar
 Imports DevComponents.DotNetBar.Controls
 
-
 Public Class Frm_Cantidades_Ud_Disintas
 
 
@@ -24,7 +23,8 @@ Public Class Frm_Cantidades_Ud_Disintas
     Public Property Cantidad_Ud1 As Double
     Public Property Cantidad_Ud2 As Double
     Public Property Aceptado As Boolean
-
+    Public Property DesdeContenedor As Boolean
+    Public Property IdCont As Integer
 
     Public Sub New(Fila As DataGridViewRow)
 
@@ -52,7 +52,7 @@ Public Class Frm_Cantidades_Ud_Disintas
 
     End Sub
 
-    Private Sub Frm_SolicitudDeCompraCantProductos_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_SolicitudDeCompraCantProductos_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         Dim _ValidarApiWMSBosOne = False
 
@@ -141,7 +141,7 @@ Public Class Frm_Cantidades_Ud_Disintas
 
     End Sub
 
-    Private Sub BtnAceptar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnAceptar.Click
+    Private Sub BtnAceptar_Click(sender As System.Object, e As System.EventArgs) Handles BtnAceptar.Click
 
         Fr_Alerta_Stock.Close()
 
@@ -235,29 +235,29 @@ Public Class Frm_Cantidades_Ud_Disintas
 
     End Sub
 
-    Private Sub TxtCantUD2_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles TxtCantUD2.KeyDown
+    Private Sub TxtCantUD2_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles TxtCantUD2.KeyDown
         If e.KeyValue = Keys.Up Then
             e.Handled = True
             TxtCantUD1.Focus()
         End If
     End Sub
 
-    Private Sub TxtCantUD2_Leave(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TxtCantUD2.Leave
+    Private Sub TxtCantUD2_Leave(sender As System.Object, e As System.EventArgs) Handles TxtCantUD2.Leave
         TxtCantUD2.Text = Math.Round(_Cantidad_Ud2, 3)
     End Sub
 
-    Private Sub TxtCantUD1_Leave(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TxtCantUD1.Leave
+    Private Sub TxtCantUD1_Leave(sender As System.Object, e As System.EventArgs) Handles TxtCantUD1.Leave
         TxtCantUD1.Text = Math.Round(_Cantidad_Ud1, 3)
     End Sub
 
-    Private Sub TxtCantUD1_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles TxtCantUD1.KeyDown
+    Private Sub TxtCantUD1_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles TxtCantUD1.KeyDown
         If e.KeyValue = Keys.Down Then
             e.Handled = True
             TxtCantUD2.Focus()
         End If
     End Sub
 
-    Private Sub TxtCantUD1_KeyPress(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles TxtCantUD1.KeyPress
+    Private Sub TxtCantUD1_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs) Handles TxtCantUD1.KeyPress
 
         Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
         KeyAscii = CShort(SoloNumeros(KeyAscii, False))
@@ -305,7 +305,7 @@ Public Class Frm_Cantidades_Ud_Disintas
 
     End Sub
 
-    Private Sub TxtCantUD2_KeyPress(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles TxtCantUD2.KeyPress
+    Private Sub TxtCantUD2_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs) Handles TxtCantUD2.KeyPress
 
         Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
         KeyAscii = CShort(SoloNumeros(KeyAscii, False))
@@ -350,17 +350,17 @@ Public Class Frm_Cantidades_Ud_Disintas
 
     End Sub
 
-    Private Sub TxtCantUD1_Enter(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TxtCantUD1.Enter
+    Private Sub TxtCantUD1_Enter(sender As System.Object, e As System.EventArgs) Handles TxtCantUD1.Enter
         _UnTrans = 1
         TxtCantUD1.Text = Math.Round(_Cantidad_Ud1, 5)
     End Sub
 
-    Private Sub TxtCantUD2_Enter(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TxtCantUD2.Enter
+    Private Sub TxtCantUD2_Enter(sender As System.Object, e As System.EventArgs) Handles TxtCantUD2.Enter
         _UnTrans = 2
         TxtCantUD2.Text = Math.Round(_Cantidad_Ud2, 5)
     End Sub
 
-    Private Sub Btn_Ver_Stock_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Ver_Stock.Click
+    Private Sub Btn_Ver_Stock_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ver_Stock.Click
         Sb_Ver_Alerta_Stock()
     End Sub
 
@@ -371,7 +371,7 @@ Public Class Frm_Cantidades_Ud_Disintas
         End If
 
         Fr_Alerta_Stock = New AlertCustom(_Codigo, _UnTrans)
-        ShowLoadAlert(Fr_Alerta_Stock, Me)
+        ShowLoadAlert(Fr_Alerta_Stock, Me,,,, DesdeContenedor, IdCont)
 
     End Sub
 

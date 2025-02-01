@@ -63,13 +63,20 @@ Module Modulo_Documentos
                 If Fx_Tiene_Permiso_Generar_Documento(_Fm_Menu_Padre, _Tido, _SubTido) Then
 
                     Dim _Es_Ajuste As Boolean
+                    Dim _PreVenta As Boolean
 
                     If _SubTido = "AJU" Then _Es_Ajuste = True
+
+                    If _Tido = "COV" And _SubTido = "PRE" Then
+                        _SubTido = String.Empty
+                        _PreVenta = True
+                    End If
 
                     Dim Fm_Post As New Frm_Formulario_Documento(_Tido, _Tipo_Documento, False,,, _Es_Ajuste)
                     If _Fm_Menu_Padre.Name <> "Frm_Menu_Extra" Then Fm_Post.MinimizeBox = True
                     Fm_Post.MinimizeBox = _Minimizar
                     Fm_Post.Pro_SubTido = _SubTido
+                    Fm_Post.PreVenta = _PreVenta
                     Fm_Post.ShowDialog(_Fm_Menu_Padre)
                     Fm_Post.Dispose()
 
