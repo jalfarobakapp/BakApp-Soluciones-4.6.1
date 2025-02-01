@@ -1308,4 +1308,14 @@ Public Class Menu
         Fm.Dispose()
 
     End Sub
+
+    Private Sub Btn_CovPreVenta_Click(sender As Object, e As EventArgs) Handles Btn_CovPreVenta.Click
+
+        Modulo_Documentos.Sb_Generar_Documento(_Fm_Menu_Padre,
+                                               "COV",
+                                               True,
+                                               csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta, "PRE")
+
+    End Sub
+
 End Class

@@ -172,8 +172,9 @@
               <xs:element name="TblTipoVenta" msprop:Generator_ColumnPropNameInTable="TblTipoVentaColumn" msprop:Generator_ColumnPropNameInRow="TblTipoVenta" msprop:Generator_UserColumnName="TblTipoVenta" msprop:Generator_ColumnVarNameInTable="columnTblTipoVenta" type="xs:string" minOccurs="0" />
               <xs:element name="CodTipoVenta" msprop:Generator_ColumnPropNameInTable="CodTipoVentaColumn" msprop:Generator_ColumnPropNameInRow="CodTipoVenta" msprop:Generator_UserColumnName="CodTipoVenta" msprop:Generator_ColumnVarNameInTable="columnCodTipoVenta" type="xs:string" minOccurs="0" />
               <xs:element name="Customizable" msprop:Generator_ColumnPropNameInTable="CustomizableColumn" msprop:Generator_ColumnPropNameInRow="Customizable" msprop:Generator_UserColumnName="Customizable" msprop:Generator_ColumnVarNameInTable="columnCustomizable" type="xs:boolean" minOccurs="0" />
-              <xs:element name="PreVenta" msprop:Generator_UserColumnName="PreVenta" msprop:Generator_ColumnPropNameInTable="PreVentaColumn" msprop:Generator_ColumnPropNameInRow="PreVenta" msprop:Generator_ColumnVarNameInTable="columnPreVenta" type="xs:boolean" minOccurs="0" />
-              <xs:element name="IdCont" msprop:Generator_ColumnPropNameInRow="IdCont" msprop:Generator_ColumnPropNameInTable="IdContColumn" msprop:Generator_ColumnVarNameInTable="columnIdCont" msprop:Generator_UserColumnName="IdCont" type="xs:int" minOccurs="0" />
+              <xs:element name="PreVenta" msprop:Generator_ColumnPropNameInTable="PreVentaColumn" msprop:Generator_ColumnPropNameInRow="PreVenta" msprop:Generator_UserColumnName="PreVenta" msprop:Generator_ColumnVarNameInTable="columnPreVenta" type="xs:boolean" minOccurs="0" />
+              <xs:element name="IdCont" msprop:Generator_UserColumnName="IdCont" msprop:Generator_ColumnPropNameInTable="IdContColumn" msprop:Generator_ColumnPropNameInRow="IdCont" msprop:Generator_ColumnVarNameInTable="columnIdCont" type="xs:int" minOccurs="0" />
+              <xs:element name="Contenedor" msprop:Generator_ColumnPropNameInRow="Contenedor" msprop:Generator_ColumnPropNameInTable="ContenedorColumn" msprop:Generator_ColumnVarNameInTable="columnContenedor" msprop:Generator_UserColumnName="Contenedor" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

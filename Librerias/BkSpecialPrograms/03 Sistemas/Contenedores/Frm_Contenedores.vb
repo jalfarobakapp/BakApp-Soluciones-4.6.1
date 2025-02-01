@@ -15,6 +15,7 @@ Public Class Frm_Contenedores
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
         Sb_Formato_Generico_Grilla(Grilla_Contenedores, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
+        Sb_Color_Botones_Barra(Bar1)
 
     End Sub
 
@@ -122,14 +123,20 @@ Public Class Frm_Contenedores
             '               "Inner Join BAKAPP_SG.dbo.Zw_Remotas Rm On Dt.Id_DocEnc = Rm.Id_Casi_DocEnc" & vbCrLf &
             '               "Left Join TABFU Tf On Tf.KOFU = Rm.CodFuncionario_Solicita" & vbCrLf &
             '               "Where IdCont = " & _IdCont
-            'Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-            'If Not IsNothing(_Row) Then
-            '    MessageBoxEx.Show(Me, "Este contenedor se encuentra tomado por un documento en construcción." & vbCrLf &
-            '                      "Pertenece al permiso remoto " & _Row.Item("NroRemota") & " - " & _Row.Item("Descripcion_Adicional").ToString.Trim & vbCrLf &
-            '                      "Funcionario: " & _Row.Item("CodFuncionario") & " - " & _Row.Item("NOKOFU"), "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            '    Return
-            'End If
+            Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+
+            Consulta_sql = "Select t.*,f.NOKOFU From " & _Global_BaseBk & "Zw_Contenedor_DocTom t" & vbCrLf &
+                           "Inner Join TABFU f On f.KOFU = t.CodFuncionario" & vbCrLf &
+                           "Where NombreEquipo <> '" & _NombreEquipo & "'"
+            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If Not IsNothing(_Row) Then
+                MessageBoxEx.Show(Me, "Este contenedor se encuentra tomado por un documento en construcción." & vbCrLf &
+                                  "Pertenece al funcionario: " & _Row.Item("CodFuncionario") & " - " & _Row.Item("NOKOFU"), "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
 
             Dim _Cl_Contenedor As New Cl_Contenedor
             Zw_Contenedor = _Cl_Contenedor.Fx_Llenar_Contenedor(_IdCont)
