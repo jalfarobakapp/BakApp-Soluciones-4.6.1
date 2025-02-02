@@ -11631,7 +11631,7 @@ Public Class Frm_Formulario_Documento
 
         End If
 
-        Return CBool(_IdCont)
+        'Return CBool(_IdCont)
 
     End Function
 
