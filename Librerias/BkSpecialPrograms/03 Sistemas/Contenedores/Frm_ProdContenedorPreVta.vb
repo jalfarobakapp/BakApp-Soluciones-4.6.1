@@ -24,7 +24,6 @@ Public Class Frm_ProdContenedorPreVta
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        Sb_Formato_Generico_Grilla(Grilla_Contenedores, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
         Sb_Color_Botones_Barra(Bar1)
 
         _Cl_Contenedor.Zw_Contenedor = _Cl_Contenedor.Fx_Llenar_Contenedor(_IdCont)
@@ -120,6 +119,7 @@ Public Class Frm_ProdContenedorPreVta
     Private Sub Grilla_Contenedores_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Contenedores.CellDoubleClick
 
         Dim _Fila As DataGridViewRow = Grilla_Contenedores.CurrentRow
+
         Dim _Codigo As String = _Fila.Cells("Codigo").Value
 
         Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"

@@ -8650,6 +8650,10 @@ Public Class Frm_Formulario_Documento
                                     Return
                                 End If
 
+                                If Not Fx_ValidarSiTieneContenedor() Then
+                                    Return
+                                End If
+
                                 Dim _Validar_Lineas_X_Pagina As Boolean = Fx_Validar_Lineas_Por_Documento_VS_Formato(1)
 
                                 If _Validar_Lineas_X_Pagina Then
@@ -11626,6 +11630,8 @@ Public Class Frm_Formulario_Documento
             End If
 
         End If
+
+        Return CBool(_IdCont)
 
     End Function
 
