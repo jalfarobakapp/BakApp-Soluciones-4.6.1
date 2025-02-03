@@ -426,6 +426,39 @@ Public Class Frm_Stmp_ListadoXRutas
 
     Private Sub Btn_ImpFacMasiva_Click(sender As Object, e As EventArgs) Handles Btn_ImpFacMasiva.Click
 
+        If Not Fx_Tiene_Permiso(Me, "Doc00012") Then
+            Return
+        End If
+
+        Dim _Ls_Idmaeedo As New List(Of String)
+
+        For Each _Row As DataRowView In _Dv
+
+            Dim _Estado As String = _Row.Item("Estado")
+
+            If _Estado = "FACTU" Then
+
+                If CBool(_Row.Item("IdmaeedoGen")) Then
+                    _Ls_Idmaeedo.Add(_Row.Item("IdmaeedoGen"))
+                End If
+
+            End If
+
+        Next
+
+        ' Ordenar la lista por OrdenRuta
+        _Ls_Idmaeedo = _Ls_Idmaeedo.OrderBy(Function(id) _Tbl_Tickets_Stem.Select("IdmaeedoGen = " & id)(0).Item("OrdenRuta")).ToList()
+
+        If Not CBool(_Ls_Idmaeedo.Count) Then
+            MessageBoxEx.Show(Me, "No hay documentos facturados para imprimir", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim Fm As New Frm_ImpMasiva("FCV", _Ls_Idmaeedo)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
     End Sub
 
     Private Sub Btn_Exportar_Excel_Click(sender As Object, e As EventArgs) Handles Btn_Exportar_Excel.Click

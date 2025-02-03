@@ -172,7 +172,7 @@ Module Mod_Imprimir
     End Function
 
     Function Fx_Imprimir_Documento(_Id As Integer,
-                                   _TipoDoc As String,
+                                   _Tido As String,
                                    _Nudo As String,
                                    _NombreFormato As String,
                                    _Imprimir_Cedible As Boolean,
@@ -184,9 +184,9 @@ Module Mod_Imprimir
         '_Imprimir_Cedible
 
         Dim _Imprimir As New Clas_Imprimir_Documento(_Id,
-                                                     _TipoDoc,
+                                                     _Tido,
                                                      _NombreFormato,
-                                                     _TipoDoc & "-" & _Nudo, _Imprimir_Cedible, "", _Subtido)
+                                                     _Tido & "-" & _Nudo, _Imprimir_Cedible, "", _Subtido)
         Dim _Documento_Impreso As Boolean
 
 
@@ -219,6 +219,69 @@ Module Mod_Imprimir
         Else
             Return _LogError
         End If
+
+    End Function
+
+    Function Fx_Imprimir_Documento2(_Id As Integer,
+                                    _Tido As String,
+                                    _Nudo As String,
+                                    _NombreFormato As String,
+                                    _Imprimir_Cedible As Boolean,
+                                    _Seleccionar_Impresora As Boolean,
+                                    _Vista_Previa As Boolean,
+                                    _Impresora As String,
+                                    _Subtido As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        _Mensaje.Detalle = "Imprimir documento: " & _Tido & "-" & _Nudo
+
+        Try
+
+            Dim _Imprimir As New Clas_Imprimir_Documento(_Id,
+                                                         _Tido,
+                                                         _NombreFormato,
+                                                         _Tido & "-" & _Nudo, _Imprimir_Cedible, "", _Subtido)
+            Dim _Documento_Impreso As Boolean
+
+
+            If Not String.IsNullOrEmpty(_Impresora) Then
+                _Imprimir.Pro_Impresora = _Impresora
+            End If
+
+            If _Seleccionar_Impresora Then
+                If _Imprimir.Fx_seleccionar_Impresora(_Seleccionar_Impresora) Then
+                    _Impresora_Seleccionada = _Imprimir.Pro_Impresora
+                Else
+                    Throw New System.Exception("No se selecciono impresora")
+                End If
+            End If
+
+            _Imprimir.Fx_Imprimir_Documento(Nothing, _Vista_Previa, False)
+
+            Dim _LogError = _Imprimir.Pro_Ultimo_Error
+
+            _Documento_Impreso = _Imprimir.Pro_Documento_Impreso
+
+            _Imprimir.PrintDoc1 = Nothing
+
+            _Imprimir = Nothing
+
+            If Not _Documento_Impreso Then
+                Throw New System.Exception(_LogError)
+            End If
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Documento impreso correctamente"
+            _Mensaje.Icono = MessageBoxIcon.Information
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
+        End Try
+
+        Return _Mensaje
 
     End Function
 

@@ -35,7 +35,6 @@ Public Class Frm_Ver_Documento_CustomizarDet
         _Row_Producto = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Sb_Formato_Generico_Grilla(Grilla_Detalle, 18, New Font("Tahoma", 8), Color.LightYellow, ScrollBars.None, True, False, False)
-
         Sb_Color_Botones_Barra(Bar1)
 
     End Sub
