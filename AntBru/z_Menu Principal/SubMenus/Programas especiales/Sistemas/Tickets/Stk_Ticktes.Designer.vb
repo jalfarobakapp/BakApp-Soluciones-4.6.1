@@ -218,7 +218,6 @@ Partial Class Stk_Ticktes
         Me.Btn_VerTodosTickets.TileStyle.PaddingTop = 4
         Me.Btn_VerTodosTickets.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_VerTodosTickets.TitleText = "BakApp"
-        Me.Btn_VerTodosTickets.Visible = False
         '
         'Stk_Ticktes
         '

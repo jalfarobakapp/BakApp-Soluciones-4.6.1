@@ -48,4 +48,12 @@ Public Class Documentos_GDI_GRI
         Dim _Tido = "GDI"
         Sb_Generar_Documento(_Fm_Menu_Padre, _Tido, True, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Despacho_Interna, "AJU")
     End Sub
+
+    Private Sub Btn_GDI_GRI_Click(sender As Object, e As EventArgs) Handles Btn_GDI_GRI.Click
+
+        Dim Fm As New Frm_GDI2GRI
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
 End Class

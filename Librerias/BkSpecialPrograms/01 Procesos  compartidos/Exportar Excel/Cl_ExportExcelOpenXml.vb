@@ -175,7 +175,7 @@ Public Class Cl_ExportExcelOpenXml
             _Mensaje.Icono = MessageBoxIcon.Error
 
         Finally
-            Circular_Progres_Contador.Minimum = 0
+            Circular_Progres_Contador.Value = 0
             Circular_Progres_Porcentaje.Value = 0
         End Try
 

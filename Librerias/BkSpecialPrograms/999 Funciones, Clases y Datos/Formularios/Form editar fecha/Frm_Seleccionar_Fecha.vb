@@ -83,7 +83,8 @@ Public Class Frm_Seleccionar_Fecha
 
         If SeleccionarHora Then
             If HoraSeleccionada.Hour = 0 And HoraSeleccionada.Minute = 0 Then
-                MessageBoxEx.Show(Me, "Debe seleccionar una hora válida", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                MessageBoxEx.Show(Me, "Debe seleccionar una hora válida", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop,
+                                  MessageBoxDefaultButton.Button1, True)
                 Dtp_Hora.Focus()
                 Return
             End If
@@ -92,7 +93,8 @@ Public Class Frm_Seleccionar_Fecha
         If ExigeFechaMinima Then
             If _FechaSeleccionada.Date <= _FechaMinima.Date Then
                 MessageBoxEx.Show(Me, "La fecha no puede ser menor o igual a la fecha: " & FechaMinima.ToShortDateString,
-                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop,
+                                  MessageBoxDefaultButton.Button1, True)
                 Dtp_Fecha.Focus()
                 Return
             End If
@@ -101,7 +103,8 @@ Public Class Frm_Seleccionar_Fecha
         If ExigeFechaMaxima Then
             If _FechaSeleccionada.Date >= _FechaMaxima.Date Then
                 MessageBoxEx.Show(Me, "La fecha no puede ser mayor o igual a la fecha: " & FechaMaxima.ToShortDateString,
-                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop,
+                                  MessageBoxDefaultButton.Button1, True)
                 Dtp_Fecha.Focus()
                 Return
             End If

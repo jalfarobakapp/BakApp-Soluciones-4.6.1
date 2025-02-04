@@ -905,11 +905,21 @@ Public Class Frm_Exportar_Excel
         _Cl_ExportOpenXml.Circular_Progres_Contador = Circular_Progres_Contador
         _Cl_ExportOpenXml.Circular_Progres_Porcentaje = Circular_Progres_Porcentaje
 
+        _Configuracion_Regional_()
+
         If Not IsNothing(Ds_Excel) Then
 
             Dim _Mensaje As LsValiciones.Mensajes '= Fx_Exportar_ExcelJetXHoja(Txt_Nombre_Archivo.Text, _Directorio_Destino, Ds_Excel, _Extension)
 
+            Sb_Procesando(True)
+
             _Mensaje = _Cl_ExportOpenXml.Fx_CrearDocumentoExcel_Ds(_Archivo, Ds_Excel)
+
+            Sb_Procesando(False)
+
+            If _Mensaje.Cancelado Then
+                Return
+            End If
 
             If Not _Mensaje.EsCorrecto Then
                 If _Mensaje.Mensaje.Contains("System.OutOfMemoryException") Then
@@ -935,8 +945,15 @@ Public Class Frm_Exportar_Excel
 
             Dim _Mensaje As LsValiciones.Mensajes '= Fx_Exportar_ExcelJet(Txt_Nombre_Archivo.Text, _Directorio_Destino, _Extension)
 
-            _Mensaje = _Cl_ExportOpenXml.Fx_CrearDocumentoExcel_Tbl(_Directorio_Destino & "\" & Txt_Nombre_Archivo.Text & "." & _Extension.ToString,
-                                                                _Tbl_Excel)
+            Sb_Procesando(True)
+
+            _Mensaje = _Cl_ExportOpenXml.Fx_CrearDocumentoExcel_Tbl(_Directorio_Destino & "\" & Txt_Nombre_Archivo.Text & "." & _Extension.ToString, _Tbl_Excel)
+
+            Sb_Procesando(False)
+
+            If _Mensaje.Cancelado Then
+                Return
+            End If
 
             If Not _Mensaje.EsCorrecto Then
                 If _Mensaje.Mensaje.Contains("System.OutOfMemoryException") Then

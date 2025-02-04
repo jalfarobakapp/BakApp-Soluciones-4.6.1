@@ -231,6 +231,7 @@ Public Class Class_Permiso_BakApp
         OFERTAS
         CONTABILIDAD
         STEM
+        TICKET
     End Enum
 
     Sub Sb_Actualizar_Base_De_Permisos(_Formulario As Form, ByRef _Objeto As Object)
@@ -4655,6 +4656,44 @@ Public Class Class_Permiso_BakApp
 
 #End Region
 
+#Region "SISTEMA DE TICKET"
+
+        Select Case _CodPermiso
+
+            Case "Tkts0001"
+
+                _DescripcionPermiso = "INGRESAR AL SISTEMA DE TICKET"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.TICKET, 6)
+                _NombreFamiliaPermiso = _Fml.TICKET.ToString
+
+            Case "Tkts0002"
+
+                _DescripcionPermiso = "INGRESAR A CONFIGURACION DE TICKET"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.TICKET, 6)
+                _NombreFamiliaPermiso = _Fml.TICKET.ToString
+
+            Case "Tkts0003"
+
+                _DescripcionPermiso = "MANTENCION DE AGENTES"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.TICKET, 6)
+                _NombreFamiliaPermiso = _Fml.TICKET.ToString
+
+            Case "Tkts0004"
+
+                _DescripcionPermiso = "MANTENCION DE GRUPOS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.TICKET, 6)
+                _NombreFamiliaPermiso = _Fml.TICKET.ToString
+
+            Case "Tkts0005"
+
+                _DescripcionPermiso = "MANTENCION DE AREAS/TIPOS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.TICKET, 6)
+                _NombreFamiliaPermiso = _Fml.TICKET.ToString
+
+        End Select
+
+#End Region
+
 #End Region
 
         If Not String.IsNullOrEmpty(_DescripcionPermiso) Then
@@ -4687,11 +4726,12 @@ Public Class Class_Permiso_BakApp
                _CodPermiso.Contains("Bo") Or
                _CodPermiso.Contains("RclRes") Or
                _CodPermiso.Contains("RclVal") Or
-                _CodPermiso.Contains("Ps_") Or
-                _CodPermiso.Contains("BNVI") Then
+               _CodPermiso.Contains("Ps_") Or
+               _CodPermiso.Contains("BNVI") Or
+               _CodPermiso.Contains("Tkt") Then
 
-                Consulta_sql = "Select CodPermiso, DescripcionPermiso, CodFamilia, NombreFamiliaPermiso,Descuento,Max_Compra
-                                From " & _Global_BaseBk & "ZW_Permisos Where CodPermiso = '" & _CodPermiso & "'"
+                Consulta_sql = "Select CodPermiso, DescripcionPermiso, CodFamilia, NombreFamiliaPermiso,Descuento,Max_Compra" & vbCrLf &
+                               "From " & _Global_BaseBk & "ZW_Permisos Where CodPermiso = '" & _CodPermiso & "'"
                 Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                 If Not IsNothing(_Row) Then

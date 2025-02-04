@@ -8,6 +8,7 @@ Public Class Frm_Tickets_BuscarTipo
     Public Property Id_Area As Integer
     Public Property Id_Tipo As Integer
 
+    Public ModoSeleccion As Boolean
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -86,6 +87,18 @@ Public Class Frm_Tickets_BuscarTipo
 
         Id_Area = _Fila.Cells("Id_Area").Value
         Id_Tipo = _Fila.Cells("Id_Tipo").Value
+
+        If ModoSeleccion Then
+
+            Dim _CodPermiso As String = "Tkt" & numero_(Id_Area & Id_Tipo, 6)
+
+            If Not Fx_Tiene_Permiso(Me, _CodPermiso) Then
+                Id_Area = 0
+                Id_Tipo = 0
+                Return
+            End If
+
+        End If
 
         If MessageBoxEx.Show(Me, "¿Confirma " & _AreaTipo & "?", "Seleccionar Tipo de Ticket",
                                  MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then

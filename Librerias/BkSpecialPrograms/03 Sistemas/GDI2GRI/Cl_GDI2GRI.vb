@@ -40,7 +40,7 @@
             Fm.Sb_Limpiar(_Modalidad)
             Fm.Pro_RowEntidad = _Row_Entidad
             Fm.Sb_Crear_Documento_Interno_Con_Tabla(_Formulario, _Tbl_Productos, _Fecha_Emision,
-                                                    "Codigo", "Cantidad", "Precio", "Observacion", False, True,, True)
+                                                    "Codigo", "Cantidad", "Precio", "", False, True,, True)
             Fm.Pro_SubTido = "GTI"
             _Mensaje = Fm.Fx_Grabar_Documento(False)
             Fm.Dispose()

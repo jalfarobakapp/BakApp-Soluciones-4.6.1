@@ -3786,7 +3786,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Filtro_Nodos = String.Empty
         Else
 
-            _Filtro_Nodos = Generar_Filtro_IN(_Tbl_Filtro_Clas_BakApp, "", "CODIGO", False, False, "")
+            _Filtro_Nodos = Generar_Filtro_IN(_Tbl_Filtro_Clas_BakApp, "", "Codigo_Nodo", False, False, "")
             _Filtro_Nodos = vbCrLf & "And KOPRCT In (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
                             "Where Codigo_Nodo In " & _Filtro_Nodos & ")" & vbCrLf
 

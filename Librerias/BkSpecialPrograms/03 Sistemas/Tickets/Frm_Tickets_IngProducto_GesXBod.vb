@@ -3,14 +3,15 @@ Imports DevComponents.DotNetBar
 
 Public Class Frm_Tickets_IngProducto_GesXBod
 
-    Private listaProductosOriginal As BindingList(Of Zw_Stk_Tickets_Producto)
-    Private listaProductos As New BindingList(Of Zw_Stk_Tickets_Producto)
+    Public listaProductosOriginal As BindingList(Of Zw_Stk_Tickets_Producto)
+    Public listaProductos As New BindingList(Of Zw_Stk_Tickets_Producto)
 
     Public Property Cl_Tickets As Cl_Tickets
 
     Public Property SoloUnProducto As Boolean
     Public Property ModoSoloLectura As Boolean
     Public Property Grabar As Boolean
+    Public Property ConfirmaCantidades As Boolean
 
     Public Sub New()
 
@@ -422,6 +423,10 @@ Public Class Frm_Tickets_IngProducto_GesXBod
                 ' Verificar si la fila actual es la última fila visible
                 If Grilla_Detalle.CurrentRow.Index = Grilla_Detalle.Rows.Count - 1 Then
 
+                    If SoloUnProducto Then
+                        Return
+                    End If
+
                     If Not String.IsNullOrEmpty(_Bodega) Then
                         Sb_Agregar_Nueva_Linea()
                     End If
@@ -574,7 +579,58 @@ Public Class Frm_Tickets_IngProducto_GesXBod
 
         Next
 
+
+        If Not ModoSoloLectura AndAlso SoloUnProducto Then
+
+            Dim _Msg1 = "CONFIRMAR CANTIDADES"
+            Dim _Msg2 = vbCrLf &
+                        "Cantidad Stock físico: " & listaProductos.Item(0).StfiEnBodega & vbCrLf &
+                        "Cantidad inventariada: " & listaProductos.Item(0).Cantidad & vbCrLf &
+                        "Diferencia: " & listaProductos.Item(0).Diferencia & vbCrLf
+
+            If Not Fx_Confirmar_Lectura(_Msg1, _Msg2, eTaskDialogIcon.Exclamation) Then
+                Return
+            End If
+
+            ConfirmaCantidades = True
+
+        End If
+
         listaProductosOriginal = New BindingList(Of Zw_Stk_Tickets_Producto)(ClonarLista(listaProductos))
+
+        For Each productoOriginal In listaProductosOriginal
+            For Each producto In Cl_Tickets.Ls_Zw_Stk_Tickets_Producto
+                If producto.Id = productoOriginal.Id Then
+                    producto.Id_Padre = productoOriginal.Id_Padre
+                    producto.Id_Raiz = productoOriginal.Id_Raiz
+                    producto.Id_Ticket = productoOriginal.Id_Ticket
+                    producto.Id_TicketAc = productoOriginal.Id_TicketAc
+                    producto.AjusInventario = productoOriginal.AjusInventario
+                    producto.Empresa = productoOriginal.Empresa
+                    producto.Sucursal = productoOriginal.Sucursal
+                    producto.Bodega = productoOriginal.Bodega
+                    producto.Descripcion_Bodega = productoOriginal.Descripcion_Bodega
+                    producto.Codigo = productoOriginal.Codigo
+                    producto.Descripcion = productoOriginal.Descripcion
+                    producto.Ubicacion = productoOriginal.Ubicacion
+                    producto.UdMedida = productoOriginal.UdMedida
+                    producto.Ud1 = productoOriginal.Ud1
+                    producto.Ud2 = productoOriginal.Ud2
+                    producto.Um = productoOriginal.Um
+                    producto.StfiEnBodega = productoOriginal.StfiEnBodega
+                    producto.Cantidad = productoOriginal.Cantidad
+                    producto.Diferencia = productoOriginal.Diferencia
+                    producto.FechaRev = productoOriginal.FechaRev
+                    producto.Numero = productoOriginal.Numero
+                    producto.RevInventario = productoOriginal.RevInventario
+                    producto.Rtu = productoOriginal.Rtu
+                    producto.SobreStock = productoOriginal.SobreStock
+                    producto.Stfi1 = productoOriginal.Stfi1
+                    producto.Stfi2 = productoOriginal.Stfi2
+                End If
+            Next
+        Next
+
         Grabar = True
         Me.Close()
 
