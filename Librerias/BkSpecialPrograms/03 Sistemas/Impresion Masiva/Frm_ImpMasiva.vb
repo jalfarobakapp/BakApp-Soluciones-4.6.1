@@ -195,6 +195,12 @@ Public Class Frm_ImpMasiva
         Fmv.ShowDialog(Me)
         Fmv.Dispose()
 
+        For Each _Row As ImpMasiva.ImpDocumentos In ListaDocumentos
+            _Row.Chk = False
+        Next
+
+        Me.Refresh()
+
     End Sub
 
     Private Sub Txt_NombreFormato_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_NombreFormato.ButtonCustomClick

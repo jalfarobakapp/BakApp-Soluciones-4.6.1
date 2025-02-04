@@ -1,7 +1,6 @@
 ﻿Imports DevComponents.DotNetBar
 Imports System.IO
 Imports Docs.Excel
-Imports DevComponents.DotNetBar.SuperGrid.Style
 
 Public Class Frm_Exportar_Excel
 
@@ -62,6 +61,8 @@ Public Class Frm_Exportar_Excel
         xlsx
         xls
     End Enum
+
+    Dim _Cl_ExportOpenXml As New Cl_ExportExcelOpenXml
 
     Public Sub New(Tbl_Excel As DataTable)
 
@@ -896,21 +897,19 @@ Public Class Frm_Exportar_Excel
             _Extension = Enum_Extension.xlsx
         End If
 
-        _Archivo = String.Empty
+        '_Archivo = String.Empty
+        _Archivo = _Directorio_Destino & "\" & Txt_Nombre_Archivo.Text & "." & _Extension.ToString
+
+        _Cl_ExportOpenXml = New Cl_ExportExcelOpenXml
+
+        _Cl_ExportOpenXml.Circular_Progres_Contador = Circular_Progres_Contador
+        _Cl_ExportOpenXml.Circular_Progres_Porcentaje = Circular_Progres_Porcentaje
 
         If Not IsNothing(Ds_Excel) Then
 
-            Dim _Mensaje As LsValiciones.Mensajes = Fx_Exportar_ExcelJetXHoja(Txt_Nombre_Archivo.Text, _Directorio_Destino, Ds_Excel, _Extension)
+            Dim _Mensaje As LsValiciones.Mensajes '= Fx_Exportar_ExcelJetXHoja(Txt_Nombre_Archivo.Text, _Directorio_Destino, Ds_Excel, _Extension)
 
-            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, Windows.Forms.MessageBoxButtons.OK, _Mensaje.Icono)
-
-            If _Mensaje.EsCorrecto Then
-                _Archivo = _Mensaje.Tag
-            End If
-
-        Else
-
-            Dim _Mensaje As LsValiciones.Mensajes = Fx_Exportar_ExcelJet(Txt_Nombre_Archivo.Text, _Directorio_Destino, _Extension)
+            _Mensaje = _Cl_ExportOpenXml.Fx_CrearDocumentoExcel_Ds(_Archivo, Ds_Excel)
 
             If Not _Mensaje.EsCorrecto Then
                 If _Mensaje.Mensaje.Contains("System.OutOfMemoryException") Then
@@ -922,6 +921,35 @@ Public Class Frm_Exportar_Excel
 
             If _Mensaje.EsCorrecto Then
                 _Archivo = _Mensaje.Tag
+            Else
+                _Archivo = String.Empty
+            End If
+
+        Else
+
+            If _Tbl_Excel.Rows.Count >= 75000 Then
+                MessageBoxEx.Show(Me, "Los reistros a exportan superan los 75.000 registros" & vbCrLf &
+                                 "Debe exportar el archivo en formato CSV luego trabajar esos datos en Excel.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+            Dim _Mensaje As LsValiciones.Mensajes '= Fx_Exportar_ExcelJet(Txt_Nombre_Archivo.Text, _Directorio_Destino, _Extension)
+
+            _Mensaje = _Cl_ExportOpenXml.Fx_CrearDocumentoExcel_Tbl(_Directorio_Destino & "\" & Txt_Nombre_Archivo.Text & "." & _Extension.ToString,
+                                                                _Tbl_Excel)
+
+            If Not _Mensaje.EsCorrecto Then
+                If _Mensaje.Mensaje.Contains("System.OutOfMemoryException") Then
+                    _Mensaje.Mensaje += vbCrLf & vbCrLf & "Se recomienda exportar los datos en formato .csv y luego ese archivo abrirlo con Excel"
+                End If
+            End If
+
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, Windows.Forms.MessageBoxButtons.OK, _Mensaje.Icono)
+
+            If _Mensaje.EsCorrecto Then
+                _Archivo = _Mensaje.Tag
+            Else
+                _Archivo = String.Empty
             End If
 
         End If
@@ -996,7 +1024,7 @@ Public Class Frm_Exportar_Excel
     End Sub
 
     Private Sub Btn_Cancelar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cancelar.Click
-        _Cancelar = True
+        _Cl_ExportOpenXml.Cancelar = True
     End Sub
 
     Private Sub Frm_Exportar_Excel_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown

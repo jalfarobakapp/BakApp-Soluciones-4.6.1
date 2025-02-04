@@ -412,7 +412,7 @@ Public Class Frm_Stmp_ListadoXRutas
 
                 Dim _Filtro As String() = Txt_Filtrar.Text.Split(":"c)
 
-                _Dv.RowFilter = String.Format("Ruta Like '%{0}%'", _Filtro(1))
+                _Dv.RowFilter = String.Format("Ruta = '{0}'", _Filtro(1))
             Else
                 _Dv.RowFilter = String.Format("Numero+Nudo+Endo+NOKOEN+Ruta Like '%{0}%'", Txt_Filtrar.Text.Trim)
             End If
