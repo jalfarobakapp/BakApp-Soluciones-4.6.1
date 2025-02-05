@@ -47,6 +47,8 @@ Public Class Frm_Tickets_IngProducto_GesXBod
             Grilla_Detalle.BeginEdit(True)
         End If
 
+        Btn_Grabar.Enabled = Not ModoSoloLectura
+
     End Sub
 
     Private Function ClonarLista(original As BindingList(Of Zw_Stk_Tickets_Producto)) As List(Of Zw_Stk_Tickets_Producto)
@@ -89,12 +91,19 @@ Public Class Frm_Tickets_IngProducto_GesXBod
 
     Sub Sb_Agregar_Nueva_Linea()
 
+        ' Obtener el valor del campo Id del último registro en la lista y asignarlo a currentId + 1
+        If listaProductos.Count > 0 Then
+            currentId = listaProductos(listaProductos.Count - 1).Id + 1
+        Else
+            currentId = 1
+        End If
+
         Dim _Item1 As Zw_Stk_Tickets_Producto = listaProductos.Item(0)
         Dim _Detalle As New Zw_Stk_Tickets_Producto
 
         _Detalle.Id = currentId
-        currentId += 1
-        _Detalle.Id_Padre = 1
+        _Detalle.Id_Padre = _Item1.Id
+        _Detalle.Id_Raiz = _Item1.Id_Raiz
         _Detalle.Codigo = _Item1.Codigo
         _Detalle.Descripcion = _Item1.Descripcion
         _Detalle.Ud1 = _Item1.Ud1
@@ -264,6 +273,12 @@ Public Class Frm_Tickets_IngProducto_GesXBod
 
                     If Not _Fila.IsNewRow Then
 
+                        If _Id_Padre = 0 And Not SoloUnProducto Then
+                            MessageBoxEx.Show(Me, "Esta línea no puede ser editada, pues es la línea de origen del producto", "Validación",
+                                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                            Return
+                        End If
+
                         If _Cabeza = "StfiEnBodega" Or _Cabeza = "Cantidad" Then
 
                             If String.IsNullOrEmpty(_Fila.Cells("Ubicacion").Value) Then
@@ -331,6 +346,11 @@ Public Class Frm_Tickets_IngProducto_GesXBod
                         End If
 
                         If _Cabeza = "Um" Then
+
+                            If CBool(_Id_Padre) Then
+                                Beep()
+                                Return
+                            End If
 
                             Dim Fm As New Frm_Cantidades_Selec_Ud(_Fila.Cells("Ud1").Value, _Fila.Cells("Ud2").Value)
                             Fm.ShowDialog(Me)
@@ -422,6 +442,12 @@ Public Class Frm_Tickets_IngProducto_GesXBod
 
                 ' Verificar si la fila actual es la última fila visible
                 If Grilla_Detalle.CurrentRow.Index = Grilla_Detalle.Rows.Count - 1 Then
+
+                    If ModoSoloLectura Then
+                        MessageBoxEx.Show(Me, "El formulario se encuentra en modo de solo lectura", "Validación",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        Return
+                    End If
 
                     If SoloUnProducto Then
                         Return
@@ -598,38 +624,75 @@ Public Class Frm_Tickets_IngProducto_GesXBod
 
         listaProductosOriginal = New BindingList(Of Zw_Stk_Tickets_Producto)(ClonarLista(listaProductos))
 
+
         For Each productoOriginal In listaProductosOriginal
-            For Each producto In Cl_Tickets.Ls_Zw_Stk_Tickets_Producto
-                If producto.Id = productoOriginal.Id Then
-                    producto.Id_Padre = productoOriginal.Id_Padre
-                    producto.Id_Raiz = productoOriginal.Id_Raiz
-                    producto.Id_Ticket = productoOriginal.Id_Ticket
-                    producto.Id_TicketAc = productoOriginal.Id_TicketAc
-                    producto.AjusInventario = productoOriginal.AjusInventario
-                    producto.Empresa = productoOriginal.Empresa
-                    producto.Sucursal = productoOriginal.Sucursal
-                    producto.Bodega = productoOriginal.Bodega
-                    producto.Descripcion_Bodega = productoOriginal.Descripcion_Bodega
-                    producto.Codigo = productoOriginal.Codigo
-                    producto.Descripcion = productoOriginal.Descripcion
-                    producto.Ubicacion = productoOriginal.Ubicacion
-                    producto.UdMedida = productoOriginal.UdMedida
-                    producto.Ud1 = productoOriginal.Ud1
-                    producto.Ud2 = productoOriginal.Ud2
-                    producto.Um = productoOriginal.Um
-                    producto.StfiEnBodega = productoOriginal.StfiEnBodega
-                    producto.Cantidad = productoOriginal.Cantidad
-                    producto.Diferencia = productoOriginal.Diferencia
-                    producto.FechaRev = productoOriginal.FechaRev
-                    producto.Numero = productoOriginal.Numero
-                    producto.RevInventario = productoOriginal.RevInventario
-                    producto.Rtu = productoOriginal.Rtu
-                    producto.SobreStock = productoOriginal.SobreStock
-                    producto.Stfi1 = productoOriginal.Stfi1
-                    producto.Stfi2 = productoOriginal.Stfi2
-                End If
-            Next
+            Dim productoExistente = Cl_Tickets.Ls_Zw_Stk_Tickets_Producto.FirstOrDefault(Function(p) p.Id = productoOriginal.Id)
+            If productoExistente IsNot Nothing Then
+                productoExistente.Id_Padre = productoOriginal.Id_Padre
+                productoExistente.Id_Raiz = productoOriginal.Id_Raiz
+                productoExistente.Id_Ticket = productoOriginal.Id_Ticket
+                productoExistente.Id_TicketAc = productoOriginal.Id_TicketAc
+                productoExistente.AjusInventario = productoOriginal.AjusInventario
+                productoExistente.Empresa = productoOriginal.Empresa
+                productoExistente.Sucursal = productoOriginal.Sucursal
+                productoExistente.Bodega = productoOriginal.Bodega
+                productoExistente.Descripcion_Bodega = productoOriginal.Descripcion_Bodega
+                productoExistente.Codigo = productoOriginal.Codigo
+                productoExistente.Descripcion = productoOriginal.Descripcion
+                productoExistente.Ubicacion = productoOriginal.Ubicacion
+                productoExistente.UdMedida = productoOriginal.UdMedida
+                productoExistente.Ud1 = productoOriginal.Ud1
+                productoExistente.Ud2 = productoOriginal.Ud2
+                productoExistente.Um = productoOriginal.Um
+                productoExistente.StfiEnBodega = productoOriginal.StfiEnBodega
+                productoExistente.Cantidad = productoOriginal.Cantidad
+                productoExistente.Diferencia = productoOriginal.Diferencia
+                productoExistente.FechaRev = productoOriginal.FechaRev
+                productoExistente.Numero = productoOriginal.Numero
+                productoExistente.RevInventario = productoOriginal.RevInventario
+                productoExistente.Rtu = productoOriginal.Rtu
+                productoExistente.SobreStock = productoOriginal.SobreStock
+                productoExistente.Stfi1 = productoOriginal.Stfi1
+                productoExistente.Stfi2 = productoOriginal.Stfi2
+            Else
+                Cl_Tickets.Ls_Zw_Stk_Tickets_Producto.Add(productoOriginal)
+            End If
         Next
+
+        'If SoloUnProducto AndAlso Not CBool(Cl_Tickets.Zw_Stk_Tickets.Id_Padre) Then
+        '    For Each productoOriginal In listaProductosOriginal
+        '        For Each producto In Cl_Tickets.Ls_Zw_Stk_Tickets_Producto
+        '            If producto.Id = productoOriginal.Id Then
+        '                producto.Id_Padre = productoOriginal.Id_Padre
+        '                producto.Id_Raiz = productoOriginal.Id_Raiz
+        '                producto.Id_Ticket = productoOriginal.Id_Ticket
+        '                producto.Id_TicketAc = productoOriginal.Id_TicketAc
+        '                producto.AjusInventario = productoOriginal.AjusInventario
+        '                producto.Empresa = productoOriginal.Empresa
+        '                producto.Sucursal = productoOriginal.Sucursal
+        '                producto.Bodega = productoOriginal.Bodega
+        '                producto.Descripcion_Bodega = productoOriginal.Descripcion_Bodega
+        '                producto.Codigo = productoOriginal.Codigo
+        '                producto.Descripcion = productoOriginal.Descripcion
+        '                producto.Ubicacion = productoOriginal.Ubicacion
+        '                producto.UdMedida = productoOriginal.UdMedida
+        '                producto.Ud1 = productoOriginal.Ud1
+        '                producto.Ud2 = productoOriginal.Ud2
+        '                producto.Um = productoOriginal.Um
+        '                producto.StfiEnBodega = productoOriginal.StfiEnBodega
+        '                producto.Cantidad = productoOriginal.Cantidad
+        '                producto.Diferencia = productoOriginal.Diferencia
+        '                producto.FechaRev = productoOriginal.FechaRev
+        '                producto.Numero = productoOriginal.Numero
+        '                producto.RevInventario = productoOriginal.RevInventario
+        '                producto.Rtu = productoOriginal.Rtu
+        '                producto.SobreStock = productoOriginal.SobreStock
+        '                producto.Stfi1 = productoOriginal.Stfi1
+        '                producto.Stfi2 = productoOriginal.Stfi2
+        '            End If
+        '        Next
+        '    Next
+        'End If
 
         Grabar = True
         Me.Close()

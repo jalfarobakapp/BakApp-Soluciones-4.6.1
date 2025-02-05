@@ -86,6 +86,7 @@ Public Class Cl_Tickets
     Function FX_Llenar_Producto(_Id_Ticket As Integer) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
+        Dim _Zw_Stk_Tickets_Producto As New Zw_Stk_Tickets_Producto
 
         Try
 
@@ -97,8 +98,13 @@ Public Class Cl_Tickets
                 Throw New System.Exception("No se encontro el registro en la tabla de Zw_Stk_Tickets con el Id = " & _Id_Ticket)
             End If
 
-            With Zw_Stk_Tickets_Producto
+            With _Zw_Stk_Tickets_Producto
 
+                .Id = _Row.Item("Id")
+                .Id_Ticket = _Row.Item("Id_Ticket")
+                .Id_Raiz = _Row.Item("Id_Raiz")
+                .Id_Padre = _Row.Item("Id_Padre")
+                .Id_TicketAc = _Row.Item("Id_TicketAc")
                 .Empresa = _Row.Item("Empresa")
                 .Sucursal = _Row.Item("Sucursal")
                 .Bodega = _Row.Item("Bodega")
@@ -106,8 +112,9 @@ Public Class Cl_Tickets
                 .Descripcion = _Row.Item("Descripcion")
                 .Rtu = _Row.Item("Rtu")
                 .UdMedida = _Row.Item("UdMedida")
-                .Um = _Row.Item("Ud1")
-                '.Ud2 = _Row.Item("Ud2")
+                .Um = _Row.Item("Ud" & .UdMedida)
+                .Ud1 = _Row.Item("Ud1")
+                .Ud2 = _Row.Item("Ud2")
                 .StfiEnBodega = _Row.Item("StfiEnBodega")
                 .Cantidad = _Row.Item("Cantidad")
                 .Diferencia = _Row.Item("Diferencia")
@@ -117,6 +124,7 @@ Public Class Cl_Tickets
             End With
 
             _Mensaje.EsCorrecto = True
+            _Mensaje.Tag = _Zw_Stk_Tickets_Producto
 
         Catch ex As Exception
             _Mensaje.Mensaje = ex.Message
@@ -354,34 +362,43 @@ Public Class Cl_Tickets
             Comando.ExecuteNonQuery()
 
             'If Not CBool(Zw_Stk_Tickets.Id_Padre) Then
+            Dim _Id_Producto As Integer = Zw_Stk_Tickets_Producto.Id
 
-            With Zw_Stk_Tickets_Producto
+            For Each _Prod As Zw_Stk_Tickets_Producto In Ls_Zw_Stk_Tickets_Producto
 
-                .Id_Ticket = Zw_Stk_Tickets.Id
-                .Id_Raiz = Zw_Stk_Tickets.Id_Raiz
-                .Numero = Zw_Stk_Tickets.Numero
+                With _Prod
 
-                .Id_TicketAc = Zw_Stk_Tickets_Acciones.Id
+                    If .Id_Ticket = 0 Then
 
-                If Not String.IsNullOrEmpty(.Codigo) Then
+                        .Id_Ticket = Zw_Stk_Tickets.Id
+                        .Id_Raiz = Zw_Stk_Tickets.Id_Raiz
+                        .Numero = Zw_Stk_Tickets.Numero
 
-                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Producto (Id_Ticket,Id_Raiz,Numero,Empresa,Sucursal,Bodega," &
-                               "Codigo,Descripcion,Rtu,UdMedida,Ud1,Ud2,StfiEnBodega,Cantidad,Diferencia,FechaRev,Ubicacion,Id_TicketAc) Values " &
-                               "(" & .Id_Ticket & "," & .Id_Raiz & ",'" & .Numero & "','" & .Empresa & "','" & .Sucursal & "','" & .Bodega &
-                               "','" & .Codigo & "','" & .Descripcion & "'," & De_Num_a_Tx_01(.Rtu, False, 5) &
-                               "," & .UdMedida & ",'" & .Ud1 & "','" & .Ud2 & "'," & De_Num_a_Tx_01(.StfiEnBodega, False, 5) &
-                               "," & De_Num_a_Tx_01(.Cantidad, False, 5) &
-                               "," & De_Num_a_Tx_01(.Diferencia, False, 5) &
-                               ",'" & Format(.FechaRev, "yyyyMMdd HH:mm") &
-                               "','" & .Ubicacion & "'," & .Id_TicketAc & ")"
+                        .Id_TicketAc = Zw_Stk_Tickets_Acciones.Id
 
-                    Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
-                    Comando.Transaction = myTrans
-                    Comando.ExecuteNonQuery()
+                        If Not String.IsNullOrEmpty(.Codigo) Then
 
-                End If
+                            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Producto (Id_Ticket,Id_Raiz,Numero,Empresa,Sucursal,Bodega," &
+                                       "Codigo,Descripcion,Rtu,UdMedida,Ud1,Ud2,StfiEnBodega,Cantidad,Diferencia,FechaRev,Ubicacion,Id_TicketAc, Id_Padre) Values " &
+                                       "(" & .Id_Ticket & "," & .Id_Raiz & ",'" & .Numero & "','" & .Empresa & "','" & .Sucursal & "','" & .Bodega &
+                                       "','" & .Codigo & "','" & .Descripcion & "'," & De_Num_a_Tx_01(.Rtu, False, 5) &
+                                       "," & .UdMedida & ",'" & .Ud1 & "','" & .Ud2 & "'," & De_Num_a_Tx_01(.StfiEnBodega, False, 5) &
+                                       "," & De_Num_a_Tx_01(.Cantidad, False, 5) &
+                                       "," & De_Num_a_Tx_01(.Diferencia, False, 5) &
+                                       ",'" & Format(.FechaRev, "yyyyMMdd HH:mm") &
+                                       "','" & .Ubicacion & "'," & .Id_TicketAc & "," & .Id_Padre & ")"
 
-            End With
+                            Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                            Comando.Transaction = myTrans
+                            Comando.ExecuteNonQuery()
+
+                        End If
+
+                    End If
+
+                End With
+
+            Next
 
             'End If
 

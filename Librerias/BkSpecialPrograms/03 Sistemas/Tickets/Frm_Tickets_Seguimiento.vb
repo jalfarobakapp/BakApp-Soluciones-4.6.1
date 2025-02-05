@@ -40,6 +40,8 @@ Public Class Frm_Tickets_Seguimiento
         _Mensaje = _Cl_Tickets.Fx_Llenar_Ticket(_Id_Ticket)
         _Mensaje = _Cl_Tickets.FX_Llenar_Producto(_Cl_Tickets.Zw_Stk_Tickets.Id_Raiz)
 
+        _Cl_Tickets.Zw_Stk_Tickets_Producto = _Mensaje.Tag
+
         Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones" & vbCrLf &
                        "Where Id_Ticket = " & _Id_Ticket & " And Accion = 'MENS'" & vbCrLf &
                        "Order By Id Desc"
@@ -1240,10 +1242,30 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
                 Return
             End If
 
-            Dim Fm As New Frm_Tickets_IngProducto(_Cl_Tickets.Zw_Stk_Tickets.Id_Tipo)
-            Fm.Zw_Stk_Tickets_Producto = _Cl_Tickets2.Zw_Stk_Tickets_Producto
-            Fm.SoloLectura = True
-            Fm.ShowDialog(Me)
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tickets_Producto Where Id_Ticket = " & _Id_Ticket & " Or Id_Padre = 0 Order By Id"
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+            For Each _Fl As DataRow In _Tbl.Rows
+
+                _Mensaje = _Cl_Tickets.FX_Llenar_Producto(_Fl.Item("Id"))
+                _Cl_Tickets2.Ls_Zw_Stk_Tickets_Producto.Add(_Mensaje.Tag)
+
+            Next
+
+            _Cl_Tickets.Zw_Stk_Tickets_Producto = _Mensaje.Tag
+
+            Dim Fm2 As New Frm_Tickets_IngProducto_GesXBod
+            'Fm2.SoloUnProducto = Not CBool(Id_Padre)
+            Fm2.ModoSoloLectura = True
+            Fm2.Cl_Tickets = _Cl_Tickets2
+            Fm2.ShowDialog(Me)
+            '_Grabar = Fm2.Grabar
+            Fm2.Dispose()
+
+            'Dim Fm As New Frm_Tickets_IngProducto(_Cl_Tickets.Zw_Stk_Tickets.Id_Tipo)
+            'Fm.Zw_Stk_Tickets_Producto = _Cl_Tickets2.Zw_Stk_Tickets_Producto
+            'Fm.SoloLectura = True
+            'Fm.ShowDialog(Me)
 
         End If
 

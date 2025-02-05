@@ -569,7 +569,8 @@ Public Class Frm_Tickets_Lista
 
         End If
 
-        Consulta_sql = "Select Distinct Tks.*,NOKOFU As 'NomFuncCrea',TkPrd.Empresa,TkPrd.Sucursal,TkPrd.Bodega,TkPrd.Codigo,TkPrd.Descripcion As DescripcionPr," & vbCrLf &
+        Consulta_sql = "Select Distinct Tks.*,NOKOFU As 'NomFuncCrea',--TkPrd.Empresa,TkPrd.Sucursal,TkPrd.Bodega," & vbCrLf &
+                       "TkPrd.Codigo,TkPrd.Descripcion As DescripcionPr," & vbCrLf &
                        "Case UdMedida When 1 Then Ud1 Else Ud2 End As 'Udm'--,StfiEnBodega,Cantidad,Diferencia" & vbCrLf &
                        ",Case Prioridad When 'AL' Then 'Alta' When 'NR' Then 'Normal' When 'BJ' Then 'Baja' When 'UR' Then 'Urgente' Else '??' End As NomPrioridad" & vbCrLf &
                        ",Case UltAccion When 'INGR' then 'Ingresada' When 'MENS' then 'Mensaje' When 'RESP' then 'Respondido' When 'CERR' then 'Cerrada' End As UltimaAccion" & vbCrLf &
@@ -1332,6 +1333,13 @@ Public Class Frm_Tickets_Lista
 
             _Mensaje = _Cl_Tickets.Fx_Llenar_Ticket(_Id_Ticket)
             _Mensaje = _Cl_Tickets.FX_Llenar_Producto(_Cl_Tickets.Zw_Stk_Tickets.Id_Raiz)
+
+            If Not _Mensaje.EsCorrecto Then
+                MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Return
+            End If
+
+            _Cl_Tickets.Zw_Stk_Tickets_Producto = _Mensaje.Tag
 
             Dim Fm As New Frm_Tickets_IngProducto(_Cl_Tickets.Zw_Stk_Tickets.Id_Tipo)
             Fm.Zw_Stk_Tickets_Producto = _Cl_Tickets.Zw_Stk_Tickets_Producto

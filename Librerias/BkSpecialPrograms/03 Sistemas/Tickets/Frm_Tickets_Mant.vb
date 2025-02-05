@@ -57,15 +57,27 @@ Public Class Frm_Tickets_Mant
 
             _Mensaje = _Cl_Tickets_Padre.Fx_Llenar_Ticket(Id_Padre)
             _Mensaje = _Cl_Tickets.FX_Llenar_Producto(_Cl_Tickets_Padre.Zw_Stk_Tickets.Id)
+
+            _Cl_Tickets.Zw_Stk_Tickets_Producto = _Mensaje.Tag
+
             _Cl_Tickets_Padre.Zw_Stk_Tipos = _Cl_Tickets_Padre.Fx_Llenar_Tipo(_Cl_Tickets_Padre.Zw_Stk_Tickets.Id_Tipo)
 
             _Cl_Tickets.Zw_Stk_Tipos = _Cl_Tickets.Fx_Llenar_Tipo(_Cl_Tickets_Padre.Zw_Stk_Tipos.CieTk_Id_Tipo)
 
-            '_Cl_Tickets_Padre.Zw_Stk_Tipos = _Cl_Tickets.Fx_Llenar_Tipo(_Cl_Tickets_Padre.Zw_Stk_Tickets.Id_Tipo)
-
             _Cl_Tickets.Zw_Stk_Tickets.Prioridad = _Cl_Tickets_Padre.Zw_Stk_Tickets.Prioridad
             _Cl_Tickets.Zw_Stk_Tickets.Id_Raiz = _Cl_Tickets_Padre.Zw_Stk_Tickets.Id_Raiz
             _Cl_Tickets.Zw_Stk_Tickets.Numero = _Cl_Tickets_Padre.Zw_Stk_Tickets.Numero
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tickets_Producto Where Id_Ticket = " & Id_Padre
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+            For Each _Fila As DataRow In _Tbl.Rows
+
+                _Mensaje = _Cl_Tickets.FX_Llenar_Producto(_Cl_Tickets_Padre.Zw_Stk_Tickets.Id)
+                _Cl_Tickets.Ls_Zw_Stk_Tickets_Producto.Add(_Mensaje.Tag)
+
+            Next
+
 
             If Aceptado Then
                 Txt_Descripcion.Text = _Cl_Tickets_Padre.Zw_Stk_Tipos.RespuestaXDefecto
@@ -150,12 +162,12 @@ Public Class Frm_Tickets_Mant
             Return
         End If
 
-        If CBool(Id_Padre) And Chk_ExigeProducto.Checked And Not _ConfirmaCantidades And CBool(_Cl_Tickets.Zw_Stk_Tipos.Inc_Cantidades) Then
-            MessageBoxEx.Show(Me, "Debe ingresar las cantidades para confirmar la grabación del Ticket",
-                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Call Btn_VerProducto_Click(Nothing, Nothing)
-            Return
-        End If
+        'If CBool(Id_Padre) And Chk_ExigeProducto.Checked And Not _ConfirmaCantidades And CBool(_Cl_Tickets.Zw_Stk_Tipos.Inc_Cantidades) Then
+        '    MessageBoxEx.Show(Me, "Debe ingresar las cantidades para confirmar la grabación del Ticket",
+        '                      "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        '    Call Btn_VerProducto_Click(Nothing, Nothing)
+        '    Return
+        'End If
 
         If Chk_Asignado.Checked Then
 
@@ -766,7 +778,7 @@ Public Class Frm_Tickets_Mant
         Dim _Grabar As Boolean
 
         Dim Fm2 As New Frm_Tickets_IngProducto_GesXBod
-        Fm2.SoloUnProducto = True
+        Fm2.SoloUnProducto = Not CBool(Id_Padre)
         Fm2.Cl_Tickets = _Cl_Tickets
         Fm2.ShowDialog(Me)
         _Grabar = Fm2.Grabar
