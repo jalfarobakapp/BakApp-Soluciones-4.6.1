@@ -112,7 +112,7 @@ Public Class Cl_Tickets
                 .Descripcion = _Row.Item("Descripcion")
                 .Rtu = _Row.Item("Rtu")
                 .UdMedida = _Row.Item("UdMedida")
-                .Um = _Row.Item("Ud" & .UdMedida)
+                .Um = _Row.Item("Um")
                 .Ud1 = _Row.Item("Ud1")
                 .Ud2 = _Row.Item("Ud2")
                 .StfiEnBodega = _Row.Item("StfiEnBodega")
@@ -278,9 +278,6 @@ Public Class Cl_Tickets
                 Comando.Transaction = myTrans
                 Comando.ExecuteNonQuery()
 
-                'Imports System.Data
-                'Imports System.Data.SqlClient
-
                 Comando = New System.Data.SqlClient.SqlCommand("SELECT @@IDENTITY AS 'Identity'", Cn2)
                 Comando.Transaction = myTrans
                 dfd1 = Comando.ExecuteReader()
@@ -291,15 +288,7 @@ Public Class Cl_Tickets
 
 
                 If .Id_Raiz = 0 Then
-
                     .Id_Raiz = .Id
-
-                    'Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones (Id_Ticket,Accion,Descripcion,Fecha,CodFuncionario,En_Construccion,CodFunGestiona) Values " &
-                    '               "(" & .Id & ",'CREA','SE CREA NUEVO TICKET Nro " & .Numero & " Asunto: " & .Asunto & "',Getdate(),'" & .CodFuncionario_Crea & "',0,'" & .CodFuncionario_Crea & "')"
-                    'Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
-                    'Comando.Transaction = myTrans
-                    'Comando.ExecuteNonQuery()
-
                 End If
 
                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets Set " & vbCrLf &
@@ -320,13 +309,6 @@ Public Class Cl_Tickets
                 Comando.ExecuteNonQuery()
 
             End With
-            'Dim _Accion As String
-
-            'If .Id = .Id_Raiz Then
-            '    _Accion = "CREA"
-            'Else
-            '    _Accion = "MENS"
-            'End If
 
             With Zw_Stk_Tickets_Acciones
 
@@ -361,7 +343,6 @@ Public Class Cl_Tickets
             Comando.Transaction = myTrans
             Comando.ExecuteNonQuery()
 
-            'If Not CBool(Zw_Stk_Tickets.Id_Padre) Then
             Dim _Id_Producto As Integer = Zw_Stk_Tickets_Producto.Id
 
             For Each _Prod As Zw_Stk_Tickets_Producto In Ls_Zw_Stk_Tickets_Producto
@@ -379,14 +360,14 @@ Public Class Cl_Tickets
                         If Not String.IsNullOrEmpty(.Codigo) Then
 
                             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Producto (Id_Ticket,Id_Raiz,Numero,Empresa,Sucursal,Bodega," &
-                                       "Codigo,Descripcion,Rtu,UdMedida,Ud1,Ud2,StfiEnBodega,Cantidad,Diferencia,FechaRev,Ubicacion,Id_TicketAc, Id_Padre) Values " &
-                                       "(" & .Id_Ticket & "," & .Id_Raiz & ",'" & .Numero & "','" & .Empresa & "','" & .Sucursal & "','" & .Bodega &
-                                       "','" & .Codigo & "','" & .Descripcion & "'," & De_Num_a_Tx_01(.Rtu, False, 5) &
-                                       "," & .UdMedida & ",'" & .Ud1 & "','" & .Ud2 & "'," & De_Num_a_Tx_01(.StfiEnBodega, False, 5) &
-                                       "," & De_Num_a_Tx_01(.Cantidad, False, 5) &
-                                       "," & De_Num_a_Tx_01(.Diferencia, False, 5) &
-                                       ",'" & Format(.FechaRev, "yyyyMMdd HH:mm") &
-                                       "','" & .Ubicacion & "'," & .Id_TicketAc & "," & .Id_Padre & ")"
+                                           "Codigo,Descripcion,Rtu,UdMedida,Ud1,Ud2,Um,StfiEnBodega,Cantidad,Diferencia,FechaRev,Ubicacion,Id_TicketAc, Id_Padre) Values " &
+                                           "(" & .Id_Ticket & "," & .Id_Raiz & ",'" & .Numero & "','" & .Empresa & "','" & .Sucursal & "','" & .Bodega &
+                                           "','" & .Codigo & "','" & .Descripcion & "'," & De_Num_a_Tx_01(.Rtu, False, 5) &
+                                           "," & .UdMedida & ",'" & .Ud1 & "','" & .Ud2 & "','" & .Um & "'," & De_Num_a_Tx_01(.StfiEnBodega, False, 5) &
+                                           "," & De_Num_a_Tx_01(.Cantidad, False, 5) &
+                                           "," & De_Num_a_Tx_01(.Diferencia, False, 5) &
+                                           ",'" & Format(.FechaRev, "yyyyMMdd HH:mm") &
+                                           "','" & .Ubicacion & "'," & .Id_TicketAc & "," & .Id_Padre & ")"
 
                             Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                             Comando.Transaction = myTrans
@@ -399,8 +380,6 @@ Public Class Cl_Tickets
                 End With
 
             Next
-
-            'End If
 
             If Not IsNothing(_Tbl_Agentes) Then
 
@@ -421,10 +400,6 @@ Public Class Cl_Tickets
             _Mensaje.Id = Zw_Stk_Tickets.Id
             _Mensaje.Detalle = "Grabación correcta"
             _Mensaje.Mensaje = "Se graba correctamente el Ticket " & Zw_Stk_Tickets.Numero & "-" & Zw_Stk_Tickets.SubNro
-
-
-
-            'Consulta_sql = "Delete Zw_Stk_Tickets_Acciones Where Id_Ticket = 0"
 
             myTrans.Commit()
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)

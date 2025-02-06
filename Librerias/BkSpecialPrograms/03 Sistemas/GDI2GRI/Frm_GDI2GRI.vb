@@ -51,6 +51,13 @@ Public Class Frm_GDI2GRI
             Return
         End If
 
+        If Dtp_FechaEmision.Value.Date > FechaDelServidor().Date Then
+            MessageBoxEx.Show(Me, "La fecha de emisión no puede ser mayor a la fecha actual", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Dtp_FechaEmision.Focus()
+            Return
+        End If
+
         Dim _Codigo As String = _RowProducto.Item("KOPR")
 
         Dim _Stock_Disponible = Fx_Stock_Disponible("GDI", ModEmpresa,
@@ -90,7 +97,7 @@ Public Class Frm_GDI2GRI
 
         _Row_GDI = _Sql.Fx_Get_DataRow("Select * From MAEEDO Where IDMAEEDO = " & _Mensaje.Id)
 
-        _Mensaje = _Cl_GDI2GRI.Fx_Crear_GRIDesdeGDI(Me, _Mensaje.Id, _Sucursal, _Bodega_GRI)
+        _Mensaje = _Cl_GDI2GRI.Fx_Crear_GRIDesdeGDI(Me, _Mensaje.Id, _Sucursal, _Bodega_GRI, Dtp_FechaEmision.Value)
 
         If Not _Mensaje.EsCorrecto Then
             Fm_Espera.Close()

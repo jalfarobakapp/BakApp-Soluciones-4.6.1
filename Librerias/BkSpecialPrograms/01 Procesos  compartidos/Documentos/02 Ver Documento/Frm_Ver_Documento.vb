@@ -565,6 +565,8 @@ Public Class Frm_Ver_Documento
 
         Btn_Contenedor.Visible = (_Tido = "OCC")
 
+        Me.Cursor = Cursors.Default
+
     End Sub
 
     Sub Sb_Abrir_Documento_Desde_Random_SQL()

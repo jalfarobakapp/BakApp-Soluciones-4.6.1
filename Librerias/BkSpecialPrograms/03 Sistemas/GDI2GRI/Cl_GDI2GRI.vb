@@ -63,12 +63,12 @@
     Function Fx_Crear_GRIDesdeGDI(_Formulario As Form,
                                   _Idmaeedo_Ori As Integer,
                                   _Sucursal_Recepcion As String,
-                                  _Bodega_Recepcion As String) As LsValiciones.Mensajes
+                                  _Bodega_Recepcion As String,
+                                  _Fecha_Emision As Date) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
         Dim _New_Idmaeedo As Integer
-        Dim _Fecha_Emision As Date = FechaDelServidor()
 
         Try
 

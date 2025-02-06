@@ -8173,7 +8173,7 @@ Public Class Frm_Formulario_Documento
 
                     _Tipo_Lista = "P"
                     _Actualizar_Precios = True
-                    Fm.Bloqueados = Frm_BkpPostBusquedaEspecial_Mt.Enum_Bloquear.Compras_y_Ventas
+                    Fm.Bloqueados = Frm_BkpPostBusquedaEspecial_Mt.Enum_Bloquear.Ventas
                     Fm.Top20 = Frm_BkpPostBusquedaEspecial_Mt.Enum_Top20.Top_Ventas
 
                 End If
@@ -21258,11 +21258,15 @@ Public Class Frm_Formulario_Documento
 
             If Fm.Grabar Then
 
-                Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, False, False, False, True)
+                If Not _Revision_Remota Then
 
-                Beep()
-                ToastNotification.Show(Me, "DATOS ACTUALIZADOS CORRECTAMENTE", My.Resources.ok_button,
+                    Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, False, False, False, True)
+
+                    Beep()
+                    ToastNotification.Show(Me, "DATOS ACTUALIZADOS CORRECTAMENTE", My.Resources.ok_button,
                                        1 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
+                End If
+
             End If
 
             Fm.Dispose()

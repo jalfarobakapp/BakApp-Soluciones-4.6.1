@@ -1097,11 +1097,6 @@ Public Class Frm_Tickets_Lista
     Private Sub Tree_Bandeja_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles Tree_Bandeja.AfterSelect
 
         Dim nodoSeleccionado As TreeNode = e.Node
-        'Dim textoNodo As String = nodoSeleccionado.Text
-        'Dim configuracionNodo As String = nodoSeleccionado.Tag ' Puedes asignar una configuración personalizada al nodo usando la propiedad Tag
-        '' Realiza acciones según el nodo seleccionado
-        'MessageBox.Show($"Nodo seleccionado: {textoNodo}, Configuración: {configuracionNodo}")
-
         Sb_Actualizar_Grilla_Treeview(nodoSeleccionado)
 
         'For Each nodoRaiz As TreeNode In _BandejaEntrada.Nodes

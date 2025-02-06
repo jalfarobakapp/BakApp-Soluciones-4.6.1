@@ -68,12 +68,12 @@ Public Class Frm_Tickets_Mant
             _Cl_Tickets.Zw_Stk_Tickets.Id_Raiz = _Cl_Tickets_Padre.Zw_Stk_Tickets.Id_Raiz
             _Cl_Tickets.Zw_Stk_Tickets.Numero = _Cl_Tickets_Padre.Zw_Stk_Tickets.Numero
 
-            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tickets_Producto Where Id_Ticket = " & Id_Padre
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tickets_Producto Where Id_Raiz = " & _Cl_Tickets_Padre.Zw_Stk_Tickets.Id_Raiz
             Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _Fila As DataRow In _Tbl.Rows
 
-                _Mensaje = _Cl_Tickets.FX_Llenar_Producto(_Cl_Tickets_Padre.Zw_Stk_Tickets.Id)
+                _Mensaje = _Cl_Tickets.FX_Llenar_Producto(_Fila.Item("Id_Ticket"))
                 _Cl_Tickets.Ls_Zw_Stk_Tickets_Producto.Add(_Mensaje.Tag)
 
             Next
@@ -288,7 +288,6 @@ Public Class Frm_Tickets_Mant
                 _Cl_Tickets.Zw_Stk_Tickets.Id = 0
                 _Cl_Tickets.Zw_Stk_Tickets.Id_Raiz = 0
                 _Cl_Tickets.Zw_Stk_Tickets_Acciones.Id = _Cl_Tickets.Fx_Grabar_Nueva_Accion(_Cl_Tickets.Zw_Stk_Tickets.CodFuncionario_Crea, True, False)
-                '_Cl_Tickets.Zw_Stk_Tickets.New_Id_TicketAc = _Cl_Tickets.Fx_Grabar_Nueva_Accion(_Cl_Tickets.Zw_Stk_Tickets.CodFuncionario_Crea, True, False)
 
                 With _Cl_Tickets.Zw_Stk_Tickets_Producto
 
@@ -296,7 +295,6 @@ Public Class Frm_Tickets_Mant
                     .Descripcion = String.Empty
                     .Rtu = 0
                     .Um = String.Empty
-                    '.Ud2 = String.Empty
                     .Empresa = ModEmpresa
                     .Sucursal = String.Empty
                     .Bodega = String.Empty
@@ -369,7 +367,6 @@ Public Class Frm_Tickets_Mant
             Rdb_AsignadoAgente.Checked = .AsignadoAgente
             Rdb_AsignadoGrupo.Checked = .AsignadoGrupo
 
-            'Txt_Descripcion.Text = .RespuestaXDefecto
             Chk_ExigeDocCerrar.Checked = .ExigeDocCerrar
             Txt_TidoNudoCierra.Visible = .ExigeDocCerrar
             Chk_ExigeDocCerrar.Visible = .ExigeDocCerrar
@@ -968,6 +965,8 @@ Public Class Frm_Tickets_Mant
 
     Private Sub Txt_TidoNudoCierra_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_TidoNudoCierra.ButtonCustomClick
 
+        Txt_TidoNudoCierra.ButtonCustom.Enabled = False
+
         Dim _Tidos As String = _Cl_Tickets.Zw_Stk_Tipos.TidoDocCerrar ' "GTI,GDI,GRI"
         Dim _TidosArray() As String = _Tidos.Split(","c)
         Dim _TidosFormatted As String = String.Join(",", _TidosArray.Select(Function(t) $"'{t}'"))
@@ -983,6 +982,8 @@ Public Class Frm_Tickets_Mant
         _Fm.ShowDialog(Me)
         Dim _Row_Documento As DataRow = _Fm.Pro_Row_Documento_Seleccionado
         _Fm.Dispose()
+
+        Txt_TidoNudoCierra.ButtonCustom.Enabled = True
 
         If Not IsNothing(_Row_Documento) Then
 
@@ -1009,6 +1010,9 @@ Public Class Frm_Tickets_Mant
 
     Private Sub Txt_TidoNudoCierra_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_TidoNudoCierra.ButtonCustom2Click
 
+        Txt_TidoNudoCierra.ButtonCustom2.Enabled = False
+        Me.Cursor = Cursors.WaitCursor
+
         If Not CBool(_Cl_Tickets.Zw_Stk_Tickets_Acciones.Idmaeedo_Cierra) Then
             MessageBoxEx.Show(Me, "No hay documento para ver", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
@@ -1018,6 +1022,9 @@ Public Class Frm_Tickets_Mant
         Fm.Codigo_Marcar = Cl_Tickets.Zw_Stk_Tickets_Producto.Codigo
         Fm.ShowDialog(Me)
         Fm.Dispose()
+
+        Txt_TidoNudoCierra.ButtonCustom2.Enabled = True
+        Me.Cursor = Cursors.Default
 
     End Sub
 End Class
