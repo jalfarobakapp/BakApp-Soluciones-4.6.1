@@ -8173,6 +8173,7 @@ Public Class Frm_Formulario_Documento
 
                     _Tipo_Lista = "P"
                     _Actualizar_Precios = True
+                    Fm.Bloqueados = Frm_BkpPostBusquedaEspecial_Mt.Enum_Bloquear.Compras_y_Ventas
                     Fm.Top20 = Frm_BkpPostBusquedaEspecial_Mt.Enum_Top20.Top_Ventas
 
                 End If

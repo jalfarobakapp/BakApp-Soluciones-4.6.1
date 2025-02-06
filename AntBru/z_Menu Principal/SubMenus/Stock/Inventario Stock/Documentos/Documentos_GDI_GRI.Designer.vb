@@ -30,9 +30,9 @@ Partial Class Documentos_GDI_GRI
         Me.MnuEspecialOtros = New DevComponents.DotNetBar.ItemContainer()
         Me.Btn_GRI = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_GDI = New DevComponents.DotNetBar.Metro.MetroTileItem()
-        Me.Btn_GDI_Ajuste = New DevComponents.DotNetBar.Metro.MetroTileItem()
-        Me.Btn_GRI_Ajuste = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_GDI_GRI = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_GRI_Ajuste = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_GDI_Ajuste = New DevComponents.DotNetBar.Metro.MetroTileItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -101,7 +101,7 @@ Partial Class Documentos_GDI_GRI
         Me.MnuEspecialOtros.FixedSize = New System.Drawing.Size(700, 250)
         Me.MnuEspecialOtros.MultiLine = True
         Me.MnuEspecialOtros.Name = "MnuEspecialOtros"
-        Me.MnuEspecialOtros.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_GRI, Me.Btn_GDI, Me.Btn_GDI_GRI, Me.Btn_GRI_Ajuste, Me.Btn_GDI_Ajuste})
+        Me.MnuEspecialOtros.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_GDI_GRI, Me.Btn_GRI, Me.Btn_GDI, Me.Btn_GRI_Ajuste, Me.Btn_GDI_Ajuste})
         '
         '
         '
@@ -162,33 +162,33 @@ Partial Class Documentos_GDI_GRI
         Me.Btn_GDI.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_GDI.TitleText = "Documento"
         '
-        'Btn_GDI_Ajuste
+        'Btn_GDI_GRI
         '
-        Me.Btn_GDI_Ajuste.Image = CType(resources.GetObject("Btn_GDI_Ajuste.Image"), System.Drawing.Image)
-        Me.Btn_GDI_Ajuste.ImageIndent = New System.Drawing.Point(8, -10)
-        Me.Btn_GDI_Ajuste.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
-        Me.Btn_GDI_Ajuste.Name = "Btn_GDI_Ajuste"
-        Me.Btn_GDI_Ajuste.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_GDI_Ajuste.Tag = "GDV"
-        Me.Btn_GDI_Ajuste.Text = "<font size=""+4""><b><font color=""#FFC20E"">GDI - Ajuste</font></b><br/></font>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Guí" &
-    "a de despacho interna, especial para ajustes." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
-        Me.Btn_GDI_Ajuste.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Blueish
-        Me.Btn_GDI_Ajuste.TileSize = New System.Drawing.Size(200, 100)
-        '
+        Me.Btn_GDI_GRI.Image = CType(resources.GetObject("Btn_GDI_GRI.Image"), System.Drawing.Image)
+        Me.Btn_GDI_GRI.ImageIndent = New System.Drawing.Point(8, -10)
+        Me.Btn_GDI_GRI.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_GDI_GRI.Name = "Btn_GDI_GRI"
+        Me.Btn_GDI_GRI.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_GDI_GRI.Tag = "GDV"
+        Me.Btn_GDI_GRI.Text = "<font size=""+4""><b>Especial GDI-GRI</b><br/></font>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.Btn_GDI_GRI.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Blueish
+        Me.Btn_GDI_GRI.TileSize = New System.Drawing.Size(200, 100)
         '
         '
-        Me.Btn_GDI_Ajuste.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(76, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(126, Byte), Integer))
-        Me.Btn_GDI_Ajuste.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(76, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(126, Byte), Integer))
-        Me.Btn_GDI_Ajuste.TileStyle.BackColorGradientAngle = 45
-        Me.Btn_GDI_Ajuste.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(76, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(126, Byte), Integer))
-        Me.Btn_GDI_Ajuste.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(76, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(126, Byte), Integer))
-        Me.Btn_GDI_Ajuste.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.Btn_GDI_Ajuste.TileStyle.PaddingBottom = 4
-        Me.Btn_GDI_Ajuste.TileStyle.PaddingLeft = 4
-        Me.Btn_GDI_Ajuste.TileStyle.PaddingRight = 4
-        Me.Btn_GDI_Ajuste.TileStyle.PaddingTop = 4
-        Me.Btn_GDI_Ajuste.TileStyle.TextColor = System.Drawing.Color.White
-        Me.Btn_GDI_Ajuste.TitleText = "Documento"
+        '
+        Me.Btn_GDI_GRI.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(148, Byte), Integer))
+        Me.Btn_GDI_GRI.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(148, Byte), Integer))
+        Me.Btn_GDI_GRI.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_GDI_GRI.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(148, Byte), Integer))
+        Me.Btn_GDI_GRI.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(148, Byte), Integer))
+        Me.Btn_GDI_GRI.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_GDI_GRI.TileStyle.PaddingBottom = 4
+        Me.Btn_GDI_GRI.TileStyle.PaddingLeft = 4
+        Me.Btn_GDI_GRI.TileStyle.PaddingRight = 4
+        Me.Btn_GDI_GRI.TileStyle.PaddingTop = 4
+        Me.Btn_GDI_GRI.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_GDI_GRI.TitleText = "Documento"
+        Me.Btn_GDI_GRI.Visible = False
         '
         'Btn_GRI_Ajuste
         '
@@ -218,32 +218,33 @@ Partial Class Documentos_GDI_GRI
         Me.Btn_GRI_Ajuste.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_GRI_Ajuste.TitleText = "Documento"
         '
-        'Btn_GDI_GRI
+        'Btn_GDI_Ajuste
         '
-        Me.Btn_GDI_GRI.Image = CType(resources.GetObject("Btn_GDI_GRI.Image"), System.Drawing.Image)
-        Me.Btn_GDI_GRI.ImageIndent = New System.Drawing.Point(8, -10)
-        Me.Btn_GDI_GRI.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
-        Me.Btn_GDI_GRI.Name = "Btn_GDI_GRI"
-        Me.Btn_GDI_GRI.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_GDI_GRI.Tag = "GDV"
-        Me.Btn_GDI_GRI.Text = "<font size=""+4""><b>Especial GDI-GRI</b><br/></font>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
-        Me.Btn_GDI_GRI.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Blueish
-        Me.Btn_GDI_GRI.TileSize = New System.Drawing.Size(200, 100)
+        Me.Btn_GDI_Ajuste.Image = CType(resources.GetObject("Btn_GDI_Ajuste.Image"), System.Drawing.Image)
+        Me.Btn_GDI_Ajuste.ImageIndent = New System.Drawing.Point(8, -10)
+        Me.Btn_GDI_Ajuste.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_GDI_Ajuste.Name = "Btn_GDI_Ajuste"
+        Me.Btn_GDI_Ajuste.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_GDI_Ajuste.Tag = "GDV"
+        Me.Btn_GDI_Ajuste.Text = "<font size=""+4""><b><font color=""#FFC20E"">GDI - Ajuste</font></b><br/></font>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Guí" &
+    "a de despacho interna, especial para ajustes." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.Btn_GDI_Ajuste.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Blueish
+        Me.Btn_GDI_Ajuste.TileSize = New System.Drawing.Size(200, 100)
         '
         '
         '
-        Me.Btn_GDI_GRI.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(148, Byte), Integer))
-        Me.Btn_GDI_GRI.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(148, Byte), Integer))
-        Me.Btn_GDI_GRI.TileStyle.BackColorGradientAngle = 45
-        Me.Btn_GDI_GRI.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(148, Byte), Integer))
-        Me.Btn_GDI_GRI.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(148, Byte), Integer))
-        Me.Btn_GDI_GRI.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.Btn_GDI_GRI.TileStyle.PaddingBottom = 4
-        Me.Btn_GDI_GRI.TileStyle.PaddingLeft = 4
-        Me.Btn_GDI_GRI.TileStyle.PaddingRight = 4
-        Me.Btn_GDI_GRI.TileStyle.PaddingTop = 4
-        Me.Btn_GDI_GRI.TileStyle.TextColor = System.Drawing.Color.White
-        Me.Btn_GDI_GRI.TitleText = "Documento"
+        Me.Btn_GDI_Ajuste.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(76, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(126, Byte), Integer))
+        Me.Btn_GDI_Ajuste.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(76, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(126, Byte), Integer))
+        Me.Btn_GDI_Ajuste.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_GDI_Ajuste.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(76, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(126, Byte), Integer))
+        Me.Btn_GDI_Ajuste.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(76, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(126, Byte), Integer))
+        Me.Btn_GDI_Ajuste.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_GDI_Ajuste.TileStyle.PaddingBottom = 4
+        Me.Btn_GDI_Ajuste.TileStyle.PaddingLeft = 4
+        Me.Btn_GDI_Ajuste.TileStyle.PaddingRight = 4
+        Me.Btn_GDI_Ajuste.TileStyle.PaddingTop = 4
+        Me.Btn_GDI_Ajuste.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_GDI_Ajuste.TitleText = "Documento"
         '
         'Documentos_GDI_GRI
         '

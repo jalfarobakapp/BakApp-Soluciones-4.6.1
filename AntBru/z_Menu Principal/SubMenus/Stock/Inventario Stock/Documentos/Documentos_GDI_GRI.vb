@@ -24,7 +24,13 @@ Public Class Documentos_GDI_GRI
         _Fm_Menu_Padre = Fm_Menu_Padre
 
     End Sub
-
+    Private Sub Documentos_GDI_GRI_Load(sender As Object, e As EventArgs) Handles Me.Load
+        If RutEmpresa = "85904700-9" Then
+            'Me.Width = 634
+            Btn_GDI_GRI.Visible = True
+            'Documentos_GDI_GRI 634
+        End If
+    End Sub
     Private Sub BtnSalir_Click(sender As Object, e As EventArgs) Handles BtnSalir.Click
         _Fm_Menu_Padre.CloseModalPanel(Me, DevComponents.DotNetBar.Controls.eSlideSide.Left)
     End Sub
@@ -56,4 +62,6 @@ Public Class Documentos_GDI_GRI
         Fm.Dispose()
 
     End Sub
+
+
 End Class

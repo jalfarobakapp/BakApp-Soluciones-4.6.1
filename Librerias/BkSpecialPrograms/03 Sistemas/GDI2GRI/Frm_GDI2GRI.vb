@@ -145,6 +145,8 @@ Public Class Frm_GDI2GRI
             Fm.BtnExportaExcel.Visible = False
             Fm.Pro_Actualizar_Precios = False
 
+            Fm.Pro_Filtro_Sql_Extra = "And FMPR = '06'"
+
             Fm.ShowDialog(Me)
 
             Dim _ProductoSeleccionado As Boolean = Fm.Pro_Seleccionado
