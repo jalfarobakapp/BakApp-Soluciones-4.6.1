@@ -660,6 +660,8 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
         '
         'Txt_Filtro_Abanzado
         '
+        Me.Txt_Filtro_Abanzado.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Txt_Filtro_Abanzado.BackColor = System.Drawing.Color.White
         '
         '

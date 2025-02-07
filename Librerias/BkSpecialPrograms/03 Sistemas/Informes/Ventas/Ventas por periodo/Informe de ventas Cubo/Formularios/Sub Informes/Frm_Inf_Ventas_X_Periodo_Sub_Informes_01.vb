@@ -13,6 +13,8 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
     Dim _SqlExcel As String
     Dim _SqlExcelVistaAltual As String
 
+    Dim _Dv As New DataView
+
     Enum Enum_Tipo_Informe
         Inf_Clientes
         Inf_Documentos
@@ -28,7 +30,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
         Get
             Return Me.Top
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             _Top = value
         End Set
     End Property
@@ -37,15 +39,15 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
         Get
             Return Me.Left
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             _Left = value
         End Set
     End Property
 
-    Public Sub New(ByVal Nombre_Tabla_Paso As String, _
-                   ByVal SqlFiltro As String, _
-                   ByVal Tipo_Informe As Enum_Tipo_Informe, _
-                   Optional ByVal Correr_a_la_derecha As Boolean = False)
+    Public Sub New(Nombre_Tabla_Paso As String,
+                   SqlFiltro As String,
+                   Tipo_Informe As Enum_Tipo_Informe,
+                   Optional Correr_a_la_derecha As Boolean = False)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -66,7 +68,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
 
     End Sub
 
-    Private Sub Frm_Inf_Ventas_X_Periodo_02_Detalle_Productos_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Inf_Ventas_X_Periodo_02_Detalle_Productos_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         If _Correr_a_la_derecha Then
             Me.Top = _Top + 15
@@ -125,7 +127,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
 
     End Sub
 
-    Private Sub Sb_Grilla_Detalle_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Sb_Grilla_Detalle_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
         If e.Button = Windows.Forms.MouseButtons.Right Then
             With sender
                 Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
@@ -140,16 +142,16 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
 
     Sub Sb_Actualizar_Grilla_Informe_X_Clientes()
 
-        Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(Txt_Filtro_Abanzado.Text), _
-                                                "ENDO+SUENDO+RAZON+VENDEDOR+RUBRO_EN+ZONA_EN+CIUDAD+COMUNA LIKE '%")
+        Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(Txt_Filtro_Abanzado.Text),
+                                                "ENDO+SUENDO+RAZON+KOFULIDO+VENDEDOR+RUBRO_EN+ZONA_EN+CIUDAD+COMUNA LIKE '%")
 
 
-        Consulta_sql = "Select RTEN,RUT,ENDO,SUENDO,RAZON,KOFULIDO,VENDEDOR,RUEN,RUBRO_EN,ZOEN,ZONA_EN,DIEN,CIEN,CIUDAD,CMEN,COMUNA,SUDO,SUCURSAL," & _
-                       "SUM(VANELI) AS VANEDO,SUM(VAIVLI) AS VAIVDO, SUM(VABRLI) AS VABRDO" & vbCrLf & _
-                       "From " & _Nombre_Tabla_Paso & vbCrLf & _
-                       "Where 1 > 0" & vbCrLf & _
-                       _SqlFiltro & vbCrLf & _
-                       "And ENDO+SUENDO+RAZON+VENDEDOR+RUBRO_EN+ZONA_EN+CIUDAD+COMUNA Like '%" & _Cadena & "%'" & vbCrLf & _
+        Consulta_sql = "Select RTEN,RUT,ENDO,SUENDO,RAZON,KOFULIDO,VENDEDOR,RUEN,RUBRO_EN,ZOEN,ZONA_EN,DIEN,CIEN,CIUDAD,CMEN,COMUNA,SUDO,SUCURSAL," &
+                       "SUM(VANELI) AS VANEDO,SUM(VAIVLI) AS VAIVDO, SUM(VABRLI) AS VABRDO" & vbCrLf &
+                       "From " & _Nombre_Tabla_Paso & vbCrLf &
+                       "Where 1 > 0" & vbCrLf &
+                       _SqlFiltro & vbCrLf &
+                       "And ENDO+SUENDO+RAZON+VENDEDOR+RUBRO_EN+ZONA_EN+CIUDAD+COMUNA Like '%" & _Cadena & "%'" & vbCrLf &
                        "Group By RTEN,RUT,ENDO,SUENDO,RAZON,KOFULIDO,VENDEDOR,RUEN,RUBRO_EN,ZOEN,ZONA_EN,DIEN,CIEN,CIUDAD,CMEN,COMUNA,SUDO,SUCURSAL"
         _SqlExcel = Consulta_sql
 
@@ -161,52 +163,73 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
                                "And ENDO+SUENDO+RAZON+VENDEDOR+RUBRO_EN+ZONA_EN+CIUDAD+COMUNA Like '%" & _Cadena & "%'" & vbCrLf &
                                "Group By RTEN,RUT,ENDO,SUENDO,RAZON,KOFULIDO,VENDEDOR,RUEN,RUBRO_EN,ZOEN,ZONA_EN,DIEN,CIEN,CIUDAD,CMEN,COMUNA,SUDO,SUCURSAL"
 
-        _Tbl_Informe = _Sql.Fx_Get_DataTable(Consulta_sql)
+        '_Tbl_Informe = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+        Dim _New_Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
+        _Dv = New DataView
+        _Dv.Table = _New_Ds.Tables("Table")
+        _Tbl_Informe = _Dv.Table
 
         With Grilla
 
-            .DataSource = _Tbl_Informe
+            .DataSource = _Dv
 
             OcultarEncabezadoGrilla(Grilla, False)
+
+            Dim _DisplayIndex = 0
 
             .Columns("ENDO").HeaderText = "Entidad"
             .Columns("ENDO").Width = 75
             .Columns("ENDO").Visible = True
+            .Columns("ENDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("SUENDO").HeaderText = "Suc."
             .Columns("SUENDO").Width = 50
             .Columns("SUENDO").Visible = True
+            .Columns("SUENDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("RAZON").HeaderText = "Razón Social"
-            .Columns("RAZON").Width = 290
+            .Columns("RAZON").Width = 350
             .Columns("RAZON").Visible = True
+            .Columns("RAZON").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("KOFULIDO").HeaderText = "Cod."
             .Columns("KOFULIDO").Width = 35
             .Columns("KOFULIDO").Visible = True
+            .Columns("KOFULIDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("VENDEDOR").HeaderText = "Vendedor"
-            .Columns("VENDEDOR").Width = 130
+            .Columns("VENDEDOR").Width = 200
             .Columns("VENDEDOR").Visible = True
+            .Columns("VENDEDOR").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("VANEDO").HeaderText = "Neto"
             .Columns("VANEDO").Width = 80
             .Columns("VANEDO").Visible = True
             .Columns("VANEDO").DefaultCellStyle.Format = "$ ###,##"
             .Columns("VANEDO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("VANEDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("VABRDO").HeaderText = "Bruto"
             .Columns("VABRDO").Width = 80
             .Columns("VABRDO").Visible = True
             .Columns("VABRDO").DefaultCellStyle.Format = "$ ###,##"
             .Columns("VABRDO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("VABRDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
         End With
 
-        Consulta_sql = "Select Isnull(SUM(CAPRCO1),0) AS CANTIDAD,Isnull(SUM(VANELI),0) AS VANELI,Isnull(SUM(VAIVLI),0) AS VAIVLI, Isnull(SUM(VABRLI),0) AS VABRLI" & vbCrLf & _
-                      "From " & _Nombre_Tabla_Paso & vbCrLf & _
-                      "Where 1 > 0" & vbCrLf & _
-                      _SqlFiltro & vbCrLf & _
+        Consulta_sql = "Select Isnull(SUM(CAPRCO1),0) AS CANTIDAD,Isnull(SUM(VANELI),0) AS VANELI,Isnull(SUM(VAIVLI),0) AS VAIVLI, Isnull(SUM(VABRLI),0) AS VABRLI" & vbCrLf &
+                      "From " & _Nombre_Tabla_Paso & vbCrLf &
+                      "Where 1 > 0" & vbCrLf &
+                      _SqlFiltro & vbCrLf &
                       "And ENDO+SUENDO+RAZON+VENDEDOR+RUBRO_EN+ZONA_EN+CIUDAD+COMUNA Like '%" & _Cadena & "%'"
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
@@ -229,7 +252,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
 
     Sub Sb_Actualizar_Grilla_Informe_X_Documentos_Entidades()
 
-        Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(Txt_Filtro_Abanzado.Text), _
+        Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(Txt_Filtro_Abanzado.Text),
                                                 "TIDO+NUDO+ENDO+SUENDO+RAZON+VENDEDOR+RUBRO_EN+ZONA_EN+CIUDAD+COMUNA LIKE '%")
 
         Consulta_sql = "Select IDMAEEDO,TIDO,NUDO,RTEN,RUT,ENDO,SUENDO,RAZON,FEEMDO,KOFULIDO,VENDEDOR,RUEN,RUBRO_EN,ZOEN,ZONA_EN,DIEN,CIEN,CIUDAD,CMEN,COMUNA,SUDO,SUCURSAL," &
@@ -250,64 +273,91 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
                                "And TIDO+NUDO+ENDO+SUENDO+RAZON+VENDEDOR+RUBRO_EN+ZONA_EN+CIUDAD+COMUNA Like '%" & _Cadena & "%'" & vbCrLf &
                                "Group By IDMAEEDO,TIDO,NUDO,RTEN,RUT,ENDO,SUENDO,RAZON,FEEMDO,KOFULIDO,VENDEDOR,RUEN,RUBRO_EN,ZOEN,ZONA_EN,DIEN,CIEN,CIUDAD,CMEN,COMUNA,SUDO,SUCURSAL"
 
-        _Tbl_Informe = _Sql.Fx_Get_DataTable(Consulta_sql)
+        '_Tbl_Informe = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+        Dim _New_Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
+        _Dv = New DataView
+        _Dv.Table = _New_Ds.Tables("Table")
+        _Tbl_Informe = _Dv.Table
 
         With Grilla
 
-            .DataSource = _Tbl_Informe
+            .DataSource = _Dv
 
             OcultarEncabezadoGrilla(Grilla, False)
+
+            Dim _DisplayIndex = 0
 
             .Columns("TIDO").HeaderText = "TD"
             .Columns("TIDO").Width = 30
             .Columns("TIDO").Visible = True
+            .Columns("TIDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("NUDO").HeaderText = "Número"
             .Columns("NUDO").Width = 70
             .Columns("NUDO").Visible = True
+            .Columns("NUDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("ENDO").HeaderText = "Entidad"
             .Columns("ENDO").Width = 75
             .Columns("ENDO").Visible = True
+            .Columns("ENDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("SUENDO").HeaderText = "Suc."
             .Columns("SUENDO").Width = 50
             .Columns("SUENDO").Visible = True
+            .Columns("SUENDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("RAZON").HeaderText = "Razón Social"
             .Columns("RAZON").Width = 280
             .Columns("RAZON").Visible = True
+            .Columns("RAZON").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("FEEMDO").HeaderText = "Fecha"
             .Columns("FEEMDO").Width = 70
             .Columns("FEEMDO").Visible = True
+            .Columns("FEEMDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("KOFULIDO").HeaderText = "Cod."
             .Columns("KOFULIDO").Width = 30
             .Columns("KOFULIDO").Visible = True
+            .Columns("KOFULIDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("VENDEDOR").HeaderText = "Vendedor"
             .Columns("VENDEDOR").Width = 130
             .Columns("VENDEDOR").Visible = True
+            .Columns("VENDEDOR").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("VANEDO").HeaderText = "Neto"
             .Columns("VANEDO").Width = 80
             .Columns("VANEDO").Visible = True
             .Columns("VANEDO").DefaultCellStyle.Format = "$ ###,##"
             .Columns("VANEDO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("VANEDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("VABRDO").HeaderText = "Bruto"
             .Columns("VABRDO").Width = 80
             .Columns("VABRDO").Visible = True
             .Columns("VABRDO").DefaultCellStyle.Format = "$ ###,##"
             .Columns("VABRDO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("VABRDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
         End With
 
-        Consulta_sql = "Select Isnull(SUM(CAPRCO1),0) AS CANTIDAD,Isnull(SUM(VANELI),0) AS VANELI,Isnull(SUM(VAIVLI),0) AS VAIVLI, Isnull(SUM(VABRLI),0) AS VABRLI" & vbCrLf & _
-                       "From " & _Nombre_Tabla_Paso & vbCrLf & _
-                       "Where 1 > 0" & vbCrLf & _
-                       _SqlFiltro & vbCrLf & _
+        Consulta_sql = "Select Isnull(SUM(CAPRCO1),0) AS CANTIDAD,Isnull(SUM(VANELI),0) AS VANELI,Isnull(SUM(VAIVLI),0) AS VAIVLI, Isnull(SUM(VABRLI),0) AS VABRLI" & vbCrLf &
+                       "From " & _Nombre_Tabla_Paso & vbCrLf &
+                       "Where 1 > 0" & vbCrLf &
+                       _SqlFiltro & vbCrLf &
                        "And TIDO+NUDO+ENDO+SUENDO+RAZON+VENDEDOR+RUBRO_EN+ZONA_EN+CIUDAD+COMUNA Like '%" & _Cadena & "%'"
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
@@ -330,7 +380,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
 
     Sub Sb_Actualizar_Grilla_Informe_X_Detalle()
 
-        Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(Txt_Filtro_Abanzado.Text), _
+        Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(Txt_Filtro_Abanzado.Text),
         "KOPRCT+NOKOPR+TIDO+NUDO+VENDEDOR+SUPER_FAMILIA+FAMILIA+SUB_FAMILIA+MARCA+RUBRO_PR+CLAS_LIBRE+ZONA_PR LIKE '%")
 
         Consulta_sql = "Select IDMAEDDO,IDMAEEDO,KOPRCT,NOKOPR,TIDO,NUDO,SULIDO,BOSULIDO,FEEMDO,KOFULIDO,UD," &
@@ -351,37 +401,56 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
                                _SqlFiltro & vbCrLf &
                                "Group By IDMAEDDO,IDMAEEDO,KOPRCT,NOKOPR,TIDO,NUDO,SULIDO,BOSULIDO,FEEMDO,KOFULIDO,UD,PPPRNE,FMPR,SUPER_FAMILIA,PFPR,FAMILIA,HFPR,SUB_FAMILIA,MRPR,MARCA,RUPR,RUBRO_PR,CLALIBPR,CLAS_LIBRE,ZOPR,ZONA_PR"
 
-        _Tbl_Informe = _Sql.Fx_Get_DataTable(Consulta_sql)
+        '_Tbl_Informe = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+        Dim _New_Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
+        _Dv = New DataView
+        _Dv.Table = _New_Ds.Tables("Table")
+        _Tbl_Informe = _Dv.Table
 
         With Grilla
 
-            .DataSource = _Tbl_Informe
+            .DataSource = _Dv
 
             OcultarEncabezadoGrilla(Grilla, False)
+
+            Dim _DisplayIndex = 0
 
             .Columns("KOPRCT").HeaderText = "Código"
             .Columns("KOPRCT").Width = 100
             .Columns("KOPRCT").Visible = True
+            .Columns("KOPRCT").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("NOKOPR").HeaderText = "Descripción"
             .Columns("NOKOPR").Width = 250
             .Columns("NOKOPR").Visible = True
+            .Columns("NOKOPR").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("TIDO").HeaderText = "Td"
             .Columns("TIDO").Width = 30
             .Columns("TIDO").Visible = True
+            .Columns("TIDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("NUDO").HeaderText = "Número"
             .Columns("NUDO").Width = 80
             .Columns("NUDO").Visible = True
+            .Columns("NUDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("FEEMDO").HeaderText = "Fecha"
-            .Columns("FEEMDO").Width = 80
+            .Columns("FEEMDO").Width = 70
             .Columns("FEEMDO").Visible = True
+            .Columns("FEEMDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("KOFULIDO").HeaderText = "Cod."
-            .Columns("KOFULIDO").Width = 30
+            .Columns("KOFULIDO").Width = 40
             .Columns("KOFULIDO").Visible = True
+            .Columns("KOFULIDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             '.Columns("VENDEDOR").HeaderText = "Vendedor"
             '.Columns("VENDEDOR").Width = 30
@@ -390,36 +459,46 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
             .Columns("UD").HeaderText = "UD"
             .Columns("UD").Width = 30
             .Columns("UD").Visible = True
+            .Columns("UD").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("CANTIDAD").HeaderText = "Cantidad"
             .Columns("CANTIDAD").Width = 60
             .Columns("CANTIDAD").Visible = True
             .Columns("CANTIDAD").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("CANTIDAD").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("PPPRNE").HeaderText = "Precio Neto"
             .Columns("PPPRNE").Width = 70
             .Columns("PPPRNE").Visible = True
             .Columns("PPPRNE").DefaultCellStyle.Format = "$ ###,##"
             .Columns("PPPRNE").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("PPPRNE").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("VANELI").HeaderText = "Neto"
             .Columns("VANELI").Width = 80
             .Columns("VANELI").Visible = True
             .Columns("VANELI").DefaultCellStyle.Format = "$ ###,##"
             .Columns("VANELI").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("VANELI").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("VABRLI").HeaderText = "Bruto"
             .Columns("VABRLI").Width = 80
             .Columns("VABRLI").Visible = True
             .Columns("VABRLI").DefaultCellStyle.Format = "$ ###,##"
             .Columns("VABRLI").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("VABRLI").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
         End With
 
-        Consulta_sql = "Select Isnull(SUM(CAPRCO1),0) AS CANTIDAD,Isnull(SUM(VANELI),0) AS VANELI,Isnull(SUM(VAIVLI),0) AS VAIVLI, Isnull(SUM(VABRLI),0) AS VABRLI" & vbCrLf & _
-                       "From " & _Nombre_Tabla_Paso & vbCrLf & _
-                       "Where 1 > 0" & vbCrLf & _
-                       _SqlFiltro & vbCrLf & _
+        Consulta_sql = "Select Isnull(SUM(CAPRCO1),0) AS CANTIDAD,Isnull(SUM(VANELI),0) AS VANELI,Isnull(SUM(VAIVLI),0) AS VAIVLI, Isnull(SUM(VABRLI),0) AS VABRLI" & vbCrLf &
+                       "From " & _Nombre_Tabla_Paso & vbCrLf &
+                       "Where 1 > 0" & vbCrLf &
+                       _SqlFiltro & vbCrLf &
                        "And KOPRCT+NOKOPR+TIDO+NUDO+VENDEDOR+SUPER_FAMILIA+FAMILIA+SUB_FAMILIA+MARCA+RUBRO_PR+CLAS_LIBRE+ZONA_PR Like '%" & _Cadena & "%'"
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
@@ -440,7 +519,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
 
     End Sub
 
-    Sub Sb_RowsPostPaint(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewRowPostPaintEventArgs)
+    Sub Sb_RowsPostPaint(sender As System.Object, e As System.Windows.Forms.DataGridViewRowPostPaintEventArgs)
         Try
             'Captura el numero de filas del datagridview
             Dim RowsNumber As String = (e.RowIndex + 1).ToString
@@ -454,12 +533,12 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
             Dim ob As Brush = SystemBrushes.ControlText
             e.Graphics.DrawString(RowsNumber, Me.Font, ob, e.RowBounds.Location.X + 15, e.RowBounds.Location.Y + ((e.RowBounds.Height - size.Height) / 2))
         Catch ex As Exception
-            MessageBox.Show(ex.Message, "vb.net", _
+            MessageBox.Show(ex.Message, "vb.net",
          MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
-    Private Sub Btn_Excel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Excel.Click
+    Private Sub Btn_Excel_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Excel.Click
 
         Dim _Permiso As String
 
@@ -478,7 +557,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
 
     End Sub
 
-    Private Sub Btn_Mnu_Ficha_Entidad_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Btn_Mnu_Ficha_Entidad_Click(sender As System.Object, e As System.EventArgs)
         If Fx_Tiene_Permiso(Me, "CfEnt001") Then
             Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
@@ -493,7 +572,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
 
             If Fm.Grabar Then
                 Beep()
-                ToastNotification.Show(Me, "DATOS ACTUALIZADOS CORRECTAMENTE", My.Resources.ok_button, _
+                ToastNotification.Show(Me, "DATOS ACTUALIZADOS CORRECTAMENTE", My.Resources.ok_button,
                                        1 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
             End If
 
@@ -501,7 +580,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
         End If
     End Sub
 
-    Private Sub Btn_Ver_Situacion_Cliente_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Btn_Ver_Situacion_Cliente_Click(sender As System.Object, e As System.EventArgs)
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
@@ -519,7 +598,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
 
     End Sub
 
-    Private Sub Btn_Ver_Comportamiento_De_Pago_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Btn_Ver_Comportamiento_De_Pago_Click(sender As System.Object, e As System.EventArgs)
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
         Dim _Koen As String = _Fila.Cells("KOEN").Value
@@ -539,7 +618,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
         End If
     End Sub
 
-    Private Sub Btn_Informeacion_Credito_Cliente_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Informeacion_Credito_Cliente.Click
+    Private Sub Btn_Informeacion_Credito_Cliente_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Informeacion_Credito_Cliente.Click
         If Fx_Tiene_Permiso(Me, "Inf00018") Then
 
             Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
@@ -555,24 +634,27 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
         End If
     End Sub
 
-    Private Sub Txt_Filtro_Abanzado_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Txt_Filtro_Abanzado.KeyDown
+    Private Sub Txt_Filtro_Abanzado_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles Txt_Filtro_Abanzado.KeyDown
+        'If e.KeyValue = Keys.Enter Then
+        '    Sb_Actualizar_Grilla()
+        'End If
         If e.KeyValue = Keys.Enter Then
-            Sb_Actualizar_Grilla
+            Sb_Filtrar()
         End If
     End Sub
 
-    Private Sub Btn_Informe_Documentos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Informe_Documentos.Click
+    Private Sub Btn_Informe_Documentos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Informe_Documentos.Click
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
         Dim _Koen As String = _Fila.Cells("ENDO").Value
         Dim _Suen As String = _Fila.Cells("SUENDO").Value
 
-        Dim _Filtro = _SqlFiltro + vbCrLf & _
+        Dim _Filtro = _SqlFiltro + vbCrLf &
                       "And ENDO+SUENDO = '" & _Koen & _Suen & "'"
 
-        Dim Fm As New Frm_Inf_Ventas_X_Periodo_Sub_Informes_01(_Nombre_Tabla_Paso, _
-                                                               _Filtro, _
+        Dim Fm As New Frm_Inf_Ventas_X_Periodo_Sub_Informes_01(_Nombre_Tabla_Paso,
+                                                               _Filtro,
                                                                Frm_Inf_Ventas_X_Periodo_Sub_Informes_01.Enum_Tipo_Informe.Inf_Documentos, True)
 
         Fm.Pro_Top = Me.Top
@@ -581,7 +663,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
         Fm.Dispose()
     End Sub
 
-    Private Sub Btn_Informe_Productos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Informe_Productos.Click
+    Private Sub Btn_Informe_Productos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Informe_Productos.Click
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Filtro
@@ -603,8 +685,8 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
         End Select
 
 
-        Dim Fm As New Frm_Inf_Ventas_X_Periodo_Sub_Informes_01(_Nombre_Tabla_Paso, _
-                                                               _Filtro, _
+        Dim Fm As New Frm_Inf_Ventas_X_Periodo_Sub_Informes_01(_Nombre_Tabla_Paso,
+                                                               _Filtro,
                                                                Frm_Inf_Ventas_X_Periodo_Sub_Informes_01.Enum_Tipo_Informe.Inf_Detalle, True)
 
         Fm.Pro_Top = Me.Top
@@ -613,11 +695,11 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
         Fm.Dispose()
     End Sub
 
-    Private Sub Grilla_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
+    Private Sub Grilla_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
         ShowContextMenu(Menu_Contextual)
     End Sub
 
-    Private Sub Sb_Grilla_ColumnHeaderMouseClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellMouseEventArgs)
+    Private Sub Sb_Grilla_ColumnHeaderMouseClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs)
         Sb_Marcar_Grillas()
     End Sub
 
@@ -641,7 +723,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
 
 
         Select Case _Tipo_Informe
-            
+
             Case Enum_Tipo_Informe.Inf_Documentos
                 For Each _Fila As DataGridViewRow In Grilla.Rows
 
@@ -671,7 +753,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
 
     End Sub
 
-    Private Sub Btn_Mnu_Estadisticas_Producto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Estadisticas_Producto.Click
+    Private Sub Btn_Mnu_Estadisticas_Producto_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Estadisticas_Producto.Click
 
         Dim Fm_Producto As New Frm_BkpPostBusquedaEspecial_Mt
 
@@ -703,14 +785,14 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
 
     End Sub
 
-    Private Sub Btn_Mnu_Ver_Documento_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Ver_Documento.Click
+    Private Sub Btn_Mnu_Ver_Documento_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Ver_Documento.Click
         Dim _Idmaeedo = Grilla.Rows(Grilla.CurrentRow.Index).Cells("IDMAEEDO").Value
         Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
         Fm.ShowDialog(Me)
         Fm.Dispose()
     End Sub
 
-    Private Sub Btn_Informe_Clientes_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Informe_Clientes.Click
+    Private Sub Btn_Informe_Clientes_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Informe_Clientes.Click
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
@@ -718,8 +800,8 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
 
         Dim _Filtro = _SqlFiltro & vbCrLf & "And KOPRCT = '" & _Koprct & "'"
 
-        Dim Fm As New Frm_Inf_Ventas_X_Periodo_Sub_Informes_01(_Nombre_Tabla_Paso, _
-                                                               _Filtro, _
+        Dim Fm As New Frm_Inf_Ventas_X_Periodo_Sub_Informes_01(_Nombre_Tabla_Paso,
+                                                               _Filtro,
                                                                Frm_Inf_Ventas_X_Periodo_Sub_Informes_01.Enum_Tipo_Informe.Inf_Clientes, True)
 
         Fm.Pro_Top = Me.Top
@@ -728,7 +810,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
         Fm.Dispose()
     End Sub
 
-    Private Sub Btn_Nota_de_venta_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Nota_de_venta.Click
+    Private Sub Btn_Nota_de_venta_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Nota_de_venta.Click
 
         If Fx_Tiene_Permiso(Me, "Bkp00040") Then
 
@@ -742,7 +824,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
 
     End Sub
 
-    Private Sub Btn_Crear_Venta_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Crear_Venta.Click
+    Private Sub Btn_Crear_Venta_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Crear_Venta.Click
         ShowContextMenu(Menu_Contextual_Ventas)
     End Sub
 
@@ -787,7 +869,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
 
     End Sub
 
-    Private Sub Btn_Copiar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Copiar.Click
+    Private Sub Btn_Copiar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Copiar.Click
         With Grilla
 
             Dim _Cabeza = .Columns(.CurrentCell.ColumnIndex).Name
@@ -801,4 +883,26 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
 
         End With
     End Sub
+
+    Sub Sb_Filtrar()
+        Try
+            If IsNothing(_Dv) Then Return
+
+            Select Case _Tipo_Informe
+                Case Enum_Tipo_Informe.Inf_Clientes
+                    Me.Text = "Informe de ventas por Clientes"
+                    _Dv.RowFilter = String.Format("ENDO+SUENDO+RAZON+KOFULIDO+VENDEDOR+RUBRO_EN+ZONA_EN+CIUDAD+COMUNA Like '%{0}%'", Txt_Filtro_Abanzado.Text.Trim)
+                Case Enum_Tipo_Informe.Inf_Documentos
+                    Me.Text = "Informe de ventas por Documentos"
+                    _Dv.RowFilter = String.Format("TIDO+NUDO+ENDO+SUENDO+RAZON+VENDEDOR+RUBRO_EN+ZONA_EN+CIUDAD+COMUNA  Like '%{0}%'", Txt_Filtro_Abanzado.Text.Trim)
+                Case Enum_Tipo_Informe.Inf_Detalle
+                    Me.Text = "Informe de ventas por Productos"
+                    _Dv.RowFilter = String.Format("KOPRCT+NOKOPR+TIDO+NUDO+VENDEDOR+SUPER_FAMILIA+FAMILIA+SUB_FAMILIA+MARCA+RUBRO_PR+CLAS_LIBRE+ZONA_PR Like '%{0}%'", Txt_Filtro_Abanzado.Text.Trim)
+            End Select
+
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, "Cuek!", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End Try
+    End Sub
+
 End Class

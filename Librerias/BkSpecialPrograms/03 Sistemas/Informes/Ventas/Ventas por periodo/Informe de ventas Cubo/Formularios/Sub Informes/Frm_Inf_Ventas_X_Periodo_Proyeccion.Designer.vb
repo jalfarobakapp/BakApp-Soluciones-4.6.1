@@ -571,12 +571,12 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Proyeccion
         Me.Input_Total_Dias.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Total_Dias.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Total_Dias.ForeColor = System.Drawing.Color.Black
-        Me.Input_Total_Dias.Location = New System.Drawing.Point(122, 51)
+        Me.Input_Total_Dias.Location = New System.Drawing.Point(123, 51)
         Me.Input_Total_Dias.MaxValue = 365
         Me.Input_Total_Dias.MinValue = 1
         Me.Input_Total_Dias.Name = "Input_Total_Dias"
         Me.Input_Total_Dias.ShowUpDown = True
-        Me.Input_Total_Dias.Size = New System.Drawing.Size(73, 22)
+        Me.Input_Total_Dias.Size = New System.Drawing.Size(72, 22)
         Me.Input_Total_Dias.TabIndex = 162
         Me.Input_Total_Dias.Value = 1
         '
@@ -615,12 +615,12 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Proyeccion
         Me.Input_Dias_Transcurridos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Dias_Transcurridos.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Dias_Transcurridos.ForeColor = System.Drawing.Color.Black
-        Me.Input_Dias_Transcurridos.Location = New System.Drawing.Point(122, 3)
+        Me.Input_Dias_Transcurridos.Location = New System.Drawing.Point(123, 3)
         Me.Input_Dias_Transcurridos.MaxValue = 365
         Me.Input_Dias_Transcurridos.MinValue = 0
         Me.Input_Dias_Transcurridos.Name = "Input_Dias_Transcurridos"
         Me.Input_Dias_Transcurridos.ShowUpDown = True
-        Me.Input_Dias_Transcurridos.Size = New System.Drawing.Size(73, 22)
+        Me.Input_Dias_Transcurridos.Size = New System.Drawing.Size(72, 22)
         Me.Input_Dias_Transcurridos.TabIndex = 164
         '
         'LabelX3

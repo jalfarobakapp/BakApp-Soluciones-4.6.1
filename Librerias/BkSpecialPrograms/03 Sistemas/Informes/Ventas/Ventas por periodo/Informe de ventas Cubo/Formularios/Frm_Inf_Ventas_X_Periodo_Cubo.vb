@@ -3794,17 +3794,24 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
         _Filtro += _Filtro_Nodos
 
-        Dim _Texto = "Informe de ventas desde: " & FormatDateTime(Dtp_Fecha_Desde.Value, DateFormat.ShortDate) & Space(1) &
-                     "Hasta: " & FormatDateTime(Dtp_Fecha_Hasta.Value, DateFormat.ShortDate)
+        Dim Fm As New Frm_Inf_Ventas_X_Periodo_Sub_Informes_01(_Nombre_Tabla_Paso,
+                                                       _Filtro,
+                                                       Frm_Inf_Ventas_X_Periodo_Sub_Informes_01.Enum_Tipo_Informe.Inf_Clientes)
 
-        Dim Fm As New Frm_Inf_Ventas_X_Periodo_Sub_Informe_SuperGrid(_Nombre_Tabla_Paso, _Filtro, True, "")
-        If CBool(Fm.Pro_Ds_Informe.Tables(0).Rows.Count) Then
-            Fm.Text = _Texto
-            Fm.ShowDialog(Me)
-        Else
-            MessageBoxEx.Show(Me, "No existe información", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        End If
+        Fm.ShowDialog(Me)
         Fm.Dispose()
+
+        'Dim _Texto = "Informe de ventas desde: " & FormatDateTime(Dtp_Fecha_Desde.Value, DateFormat.ShortDate) & Space(1) &
+        '             "Hasta: " & FormatDateTime(Dtp_Fecha_Hasta.Value, DateFormat.ShortDate)
+
+        'Dim Fm2 As New Frm_Inf_Ventas_X_Periodo_Sub_Informe_SuperGrid(_Nombre_Tabla_Paso, _Filtro, True, "")
+        'If CBool(Fm2.Pro_Ds_Informe.Tables(0).Rows.Count) Then
+        '    Fm2.Text = _Texto
+        '    Fm2.ShowDialog(Me)
+        'Else
+        '    MessageBoxEx.Show(Me, "No existe información", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        'End If
+        'Fm2.Dispose()
 
     End Sub
 
