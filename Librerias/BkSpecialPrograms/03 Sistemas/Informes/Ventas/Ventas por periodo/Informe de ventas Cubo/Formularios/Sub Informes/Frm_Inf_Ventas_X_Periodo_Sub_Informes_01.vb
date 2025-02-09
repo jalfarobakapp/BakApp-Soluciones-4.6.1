@@ -519,25 +519,6 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
 
     End Sub
 
-    Sub Sb_RowsPostPaint(sender As System.Object, e As System.Windows.Forms.DataGridViewRowPostPaintEventArgs)
-        Try
-            'Captura el numero de filas del datagridview
-            Dim RowsNumber As String = (e.RowIndex + 1).ToString
-            While RowsNumber.Length < sender.RowCount.ToString.Length
-                RowsNumber = "0" & RowsNumber
-            End While
-            Dim size As SizeF = e.Graphics.MeasureString(RowsNumber, Me.Font)
-            If sender.RowHeadersWidth < CInt(size.Width + 20) Then
-                sender.RowHeadersWidth = CInt(size.Width + 20)
-            End If
-            Dim ob As Brush = SystemBrushes.ControlText
-            e.Graphics.DrawString(RowsNumber, Me.Font, ob, e.RowBounds.Location.X + 15, e.RowBounds.Location.Y + ((e.RowBounds.Height - size.Height) / 2))
-        Catch ex As Exception
-            MessageBox.Show(ex.Message, "vb.net",
-         MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-    End Sub
-
     Private Sub Btn_Excel_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Excel.Click
 
         Dim _Permiso As String
@@ -551,8 +532,14 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
                 _Permiso = "Inf00037"
         End Select
 
-        If Fx_Tiene_Permiso(Me, _Permiso) Then
+        If Not Fx_Tiene_Permiso(Me, _Permiso) Then
+            Return
+        End If
+
+        If Not String.IsNullOrEmpty(_Dv.RowFilter) Then
             ShowContextMenu(Menu_contextual_Exportar_Excel)
+        Else
+            Call Btn_Exportar_Detalle_Click(Nothing, Nothing)
         End If
 
     End Sub
@@ -635,10 +622,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
     End Sub
 
     Private Sub Txt_Filtro_Abanzado_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles Txt_Filtro_Abanzado.KeyDown
-        'If e.KeyValue = Keys.Enter Then
-        '    Sb_Actualizar_Grilla()
-        'End If
-        If e.KeyValue = Keys.Enter Then
+        If e.KeyValue = Keys.Enter Or String.IsNullOrWhiteSpace(Txt_Filtro_Abanzado.Text) Then
             Sb_Filtrar()
         End If
     End Sub
@@ -843,7 +827,8 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
 
         'If Fx_Tiene_Permiso(Me, _Permiso) Then ExportarTabla_JetExcel_Tabla(_Tbl_Informe, Me, _Nombre_Excel)
 
-        ExportarTabla_JetExcel_Tabla(_Tbl_Informe, Me, _Nombre_Excel)
+        Dim _Tbl As DataTable = _Dv.Table
+        ExportarTabla_JetExcel_Tabla(_Tbl, Me, _Nombre_Excel)
 
     End Sub
 
@@ -864,7 +849,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
 
         'End If
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(_SqlExcelVistaAltual)
+        Dim _Tbl As DataTable = _Dv.ToTable() ' Obtener solo los elementos filtrados
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, _Nombre_Excel)
 
     End Sub
@@ -884,6 +869,11 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
         End With
     End Sub
 
+    Private Sub Txt_Filtro_Abanzado_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Filtro_Abanzado.ButtonCustom2Click
+        Txt_Filtro_Abanzado.Text = String.Empty
+        Sb_Filtrar()
+    End Sub
+
     Sub Sb_Filtrar()
         Try
             If IsNothing(_Dv) Then Return
@@ -894,10 +884,10 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
                     _Dv.RowFilter = String.Format("ENDO+SUENDO+RAZON+KOFULIDO+VENDEDOR+RUBRO_EN+ZONA_EN+CIUDAD+COMUNA Like '%{0}%'", Txt_Filtro_Abanzado.Text.Trim)
                 Case Enum_Tipo_Informe.Inf_Documentos
                     Me.Text = "Informe de ventas por Documentos"
-                    _Dv.RowFilter = String.Format("TIDO+NUDO+ENDO+SUENDO+RAZON+VENDEDOR+RUBRO_EN+ZONA_EN+CIUDAD+COMUNA  Like '%{0}%'", Txt_Filtro_Abanzado.Text.Trim)
+                    _Dv.RowFilter = String.Format("TIDO+NUDO+ENDO+SUENDO+RAZON+KOFULIDO+VENDEDOR+RUBRO_EN+ZONA_EN+CIUDAD+COMUNA  Like '%{0}%'", Txt_Filtro_Abanzado.Text.Trim)
                 Case Enum_Tipo_Informe.Inf_Detalle
                     Me.Text = "Informe de ventas por Productos"
-                    _Dv.RowFilter = String.Format("KOPRCT+NOKOPR+TIDO+NUDO+VENDEDOR+SUPER_FAMILIA+FAMILIA+SUB_FAMILIA+MARCA+RUBRO_PR+CLAS_LIBRE+ZONA_PR Like '%{0}%'", Txt_Filtro_Abanzado.Text.Trim)
+                    _Dv.RowFilter = String.Format("KOPRCT+NOKOPR+TIDO+NUDO+KOFULIDO+VENDEDOR+SUPER_FAMILIA+FAMILIA+SUB_FAMILIA+MARCA+RUBRO_PR+CLAS_LIBRE+ZONA_PR Like '%{0}%'", Txt_Filtro_Abanzado.Text.Trim)
             End Select
 
         Catch ex As Exception

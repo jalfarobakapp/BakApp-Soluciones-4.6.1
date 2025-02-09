@@ -69,6 +69,7 @@ Public Class Frm_GDI2GRI
 
         If DInput_Cantidad.Value > _Stock_Disponible Then
             MessageBoxEx.Show(Me, "Stock insuficiente", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
         End If
 
         Dim _Cl_GDI2GRI As New Cl_GDI2GRI
@@ -121,6 +122,8 @@ Public Class Frm_GDI2GRI
     End Sub
     Private Sub Txt_Producto_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Producto.ButtonCustomClick
 
+        Dim _ProductoSeleccionado As Boolean
+
         Try
 
             Txt_Producto.Enabled = False
@@ -156,7 +159,7 @@ Public Class Frm_GDI2GRI
 
             Fm.ShowDialog(Me)
 
-            Dim _ProductoSeleccionado As Boolean = Fm.Pro_Seleccionado
+            _ProductoSeleccionado = Fm.Pro_Seleccionado
 
             If _ProductoSeleccionado Then
 
@@ -175,6 +178,8 @@ Public Class Frm_GDI2GRI
 
                 End If
 
+                'Txt_Producto.Enabled = False
+
             End If
 
             Fm.Dispose()
@@ -191,8 +196,10 @@ Public Class Frm_GDI2GRI
             Txt_Producto.Tag = Nothing
             Txt_Producto.Text = String.Empty
         Finally
-            Txt_Producto.Enabled = True
+            Txt_Producto.Enabled = Not _ProductoSeleccionado
         End Try
+
+        Me.Refresh()
 
     End Sub
 
@@ -211,6 +218,9 @@ Public Class Frm_GDI2GRI
         Fm_b.Pro_Bodega = NuloPorNro(_Bodega_GDI, ModBodega)
         Fm_b.RevisarPermisosBodega = False
         Fm_b.Pedir_Permiso = False
+        Fm_b.Empresa_NoSeleccionable = _Empresa
+        Fm_b.Sucursal_NoSeleccionable = _Sucursal
+        Fm_b.Bodega_NoSeleccionable = _Bodega_GRI
         Fm_b.ShowDialog(Me)
 
         If Fm_b.Pro_Seleccionado Then
@@ -219,6 +229,7 @@ Public Class Frm_GDI2GRI
             _Sucursal = Fm_b.Pro_RowBodega.Item("KOSU")
             _Bodega_GDI = Fm_b.Pro_RowBodega.Item("KOBO")
             Txt_BodegaGDI.Text = Fm_b.Pro_RowBodega.Item("NOKOSU").ToString.Trim & " - " & Fm_b.Pro_RowBodega.Item("NOKOBO").ToString.Trim
+            Txt_BodegaGDI.Tag = Fm_b.Pro_RowBodega
 
         End If
 
@@ -256,6 +267,7 @@ Public Class Frm_GDI2GRI
 
             _Bodega_GRI = Fm_b.Pro_RowBodega.Item("KOBO")
             Txt_BodegaGRI.Text = Fm_b.Pro_RowBodega.Item("NOKOSU").ToString.Trim & " - " & Fm_b.Pro_RowBodega.Item("NOKOBO").ToString.Trim
+            Txt_BodegaGRI.Tag = Fm_b.Pro_RowBodega
 
         End If
 
@@ -267,15 +279,63 @@ Public Class Frm_GDI2GRI
 
         _Empresa = ModEmpresa
         _Sucursal = ModSucursal
+        Txt_Producto.Enabled = True
         Txt_Producto.Text = String.Empty
         Txt_Producto.Tag = Nothing
         Txt_BodegaGDI.Text = String.Empty
+        Txt_BodegaGDI.Tag = Nothing
         Txt_BodegaGRI.Text = String.Empty
+        Txt_BodegaGRI.Tag = Nothing
         _Bodega_GDI = String.Empty
         _Bodega_GRI = String.Empty
         _RowProducto = Nothing
         DInput_Cantidad.Value = 0
         Cmb_UdMedida.DataSource = Nothing
+        Dtp_FechaEmision.Value = FechaDelServidor()
+
+        Dim _Bod_GDI As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones",
+                                    "NombreTabla", "Tabla = 'GDI2GRI' And CodigoTabla = 'BodGDI'")
+
+        If Not String.IsNullOrEmpty(_Bod_GDI) Then
+
+            Dim _Reg As Boolean = _Sql.Fx_Cuenta_Registros("TABBO", "EMPRESA+KOSU+KOBO = '" & _Bod_GDI & "'")
+
+            If CBool(_Reg) Then
+
+                _Empresa = _Bod_GDI.Substring(0, 2)
+                _Sucursal = _Bod_GDI.Substring(2, 3)
+                _Bodega_GDI = _Bod_GDI.Substring(5, 3)
+
+                Dim _Row_GDI As DataRow = Fx_Trar_Datos_De_Bodega_Seleccionada(_Empresa, _Sucursal, _Bodega_GDI)
+
+                Txt_BodegaGDI.Text = _Row_GDI.Item("NOKOSU").ToString.Trim & " - " & _Row_GDI.Item("NOKOBO").ToString.Trim
+                Txt_BodegaGDI.Tag = _Row_GDI
+
+            End If
+
+        End If
+
+        Dim _Bod_GRI As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones",
+                            "NombreTabla", "Tabla = 'GDI2GRI' And CodigoTabla = 'BodGRI'")
+
+        If Not String.IsNullOrEmpty(_Bod_GRI) Then
+
+            Dim _Reg As Boolean = _Sql.Fx_Cuenta_Registros("TABBO", "EMPRESA+KOSU+KOBO = '" & _Bod_GDI & "'")
+
+            If CBool(_Reg) Then
+
+                _Empresa = _Bod_GRI.Substring(0, 2)
+                _Sucursal = _Bod_GRI.Substring(2, 3)
+                _Bodega_GRI = _Bod_GRI.Substring(5, 3)
+
+                Dim _Row_GRI As DataRow = Fx_Trar_Datos_De_Bodega_Seleccionada(_Empresa, _Sucursal, _Bodega_GRI)
+
+                Txt_BodegaGRI.Text = _Row_GRI.Item("NOKOSU").ToString.Trim & " - " & _Row_GRI.Item("NOKOBO").ToString.Trim
+                Txt_BodegaGRI.Tag = _Row_GRI
+
+            End If
+
+        End If
 
     End Sub
 

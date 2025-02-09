@@ -29,6 +29,8 @@ Partial Class Frm_GDI2GRI
         Me.Txt_Producto = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Dtp_FechaEmision = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
+        Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_BodegaGRI = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.DInput_Cantidad = New DevComponents.Editors.DoubleInput()
         Me.Lbl_StfiEnBodega = New DevComponents.DotNetBar.LabelX()
@@ -37,12 +39,10 @@ Partial Class Frm_GDI2GRI
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_BodegaGDI = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
-        Me.Dtp_FechaEmision = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
-        CType(Me.DInput_Cantidad, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dtp_FechaEmision, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DInput_Cantidad, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Bar1
@@ -164,6 +164,72 @@ Partial Class Frm_GDI2GRI
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 68
         Me.GroupPanel1.Text = "Datos del producto"
+        '
+        'Dtp_FechaEmision
+        '
+        Me.Dtp_FechaEmision.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Dtp_FechaEmision.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Dtp_FechaEmision.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaEmision.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
+        Me.Dtp_FechaEmision.ButtonDropDown.Visible = True
+        Me.Dtp_FechaEmision.ForeColor = System.Drawing.Color.Black
+        Me.Dtp_FechaEmision.IsPopupCalendarOpen = False
+        Me.Dtp_FechaEmision.Location = New System.Drawing.Point(532, 108)
+        '
+        '
+        '
+        Me.Dtp_FechaEmision.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_FechaEmision.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaEmision.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
+        Me.Dtp_FechaEmision.MonthCalendar.ClearButtonVisible = True
+        '
+        '
+        '
+        Me.Dtp_FechaEmision.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
+        Me.Dtp_FechaEmision.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_FechaEmision.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
+        Me.Dtp_FechaEmision.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Dtp_FechaEmision.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
+        Me.Dtp_FechaEmision.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
+        Me.Dtp_FechaEmision.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaEmision.MonthCalendar.DisplayMonth = New Date(2025, 2, 1, 0, 0, 0, 0)
+        Me.Dtp_FechaEmision.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
+        Me.Dtp_FechaEmision.MonthCalendar.MarkedDates = New Date(-1) {}
+        Me.Dtp_FechaEmision.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_FechaEmision.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Dtp_FechaEmision.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_FechaEmision.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Dtp_FechaEmision.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaEmision.MonthCalendar.TodayButtonVisible = True
+        Me.Dtp_FechaEmision.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
+        Me.Dtp_FechaEmision.Name = "Dtp_FechaEmision"
+        Me.Dtp_FechaEmision.Size = New System.Drawing.Size(88, 22)
+        Me.Dtp_FechaEmision.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Dtp_FechaEmision.TabIndex = 190
+        Me.Dtp_FechaEmision.Value = New Date(2025, 2, 6, 16, 38, 38, 0)
+        '
+        'LabelX4
+        '
+        Me.LabelX4.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX4.ForeColor = System.Drawing.Color.Black
+        Me.LabelX4.Location = New System.Drawing.Point(455, 108)
+        Me.LabelX4.Name = "LabelX4"
+        Me.LabelX4.Size = New System.Drawing.Size(71, 23)
+        Me.LabelX4.TabIndex = 189
+        Me.LabelX4.Text = "Fecha emisón"
         '
         'Txt_BodegaGRI
         '
@@ -292,70 +358,6 @@ Partial Class Frm_GDI2GRI
         Me.Txt_BodegaGDI.Size = New System.Drawing.Size(536, 22)
         Me.Txt_BodegaGDI.TabIndex = 68
         '
-        'LabelX4
-        '
-        Me.LabelX4.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(455, 108)
-        Me.LabelX4.Name = "LabelX4"
-        Me.LabelX4.Size = New System.Drawing.Size(71, 23)
-        Me.LabelX4.TabIndex = 189
-        Me.LabelX4.Text = "Fecha emisón"
-        '
-        'Dtp_FechaEmision
-        '
-        '
-        '
-        '
-        Me.Dtp_FechaEmision.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Dtp_FechaEmision.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_FechaEmision.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
-        Me.Dtp_FechaEmision.ButtonDropDown.Visible = True
-        Me.Dtp_FechaEmision.IsPopupCalendarOpen = False
-        Me.Dtp_FechaEmision.Location = New System.Drawing.Point(532, 108)
-        '
-        '
-        '
-        Me.Dtp_FechaEmision.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
-        '
-        '
-        '
-        Me.Dtp_FechaEmision.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_FechaEmision.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
-        Me.Dtp_FechaEmision.MonthCalendar.ClearButtonVisible = True
-        '
-        '
-        '
-        Me.Dtp_FechaEmision.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
-        Me.Dtp_FechaEmision.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
-        Me.Dtp_FechaEmision.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
-        Me.Dtp_FechaEmision.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.Dtp_FechaEmision.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
-        Me.Dtp_FechaEmision.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
-        Me.Dtp_FechaEmision.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_FechaEmision.MonthCalendar.DisplayMonth = New Date(2025, 2, 1, 0, 0, 0, 0)
-        Me.Dtp_FechaEmision.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
-        Me.Dtp_FechaEmision.MonthCalendar.MarkedDates = New Date(-1) {}
-        Me.Dtp_FechaEmision.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
-        '
-        '
-        '
-        Me.Dtp_FechaEmision.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.Dtp_FechaEmision.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
-        Me.Dtp_FechaEmision.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.Dtp_FechaEmision.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_FechaEmision.MonthCalendar.TodayButtonVisible = True
-        Me.Dtp_FechaEmision.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
-        Me.Dtp_FechaEmision.Name = "Dtp_FechaEmision"
-        Me.Dtp_FechaEmision.Size = New System.Drawing.Size(88, 22)
-        Me.Dtp_FechaEmision.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Dtp_FechaEmision.TabIndex = 190
-        Me.Dtp_FechaEmision.Value = New Date(2025, 2, 6, 16, 38, 38, 0)
-        '
         'Frm_GDI2GRI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -374,8 +376,8 @@ Partial Class Frm_GDI2GRI
         Me.Text = "INGRESO DE GDI Y GRI INMEDIATAMENTE LIGADAS"
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel1.ResumeLayout(False)
-        CType(Me.DInput_Cantidad, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Dtp_FechaEmision, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DInput_Cantidad, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
