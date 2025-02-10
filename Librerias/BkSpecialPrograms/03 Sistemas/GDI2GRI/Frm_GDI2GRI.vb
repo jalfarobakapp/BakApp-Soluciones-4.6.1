@@ -72,6 +72,26 @@ Public Class Frm_GDI2GRI
             Return
         End If
 
+        Dim _Reg As Integer
+
+        _Reg = _Sql.Fx_Cuenta_Registros("TABBOPR",
+                                        "KOPR = '" & _Codigo & "' And EMPRESA = '" & _Empresa & "' And KOSU = '" & _Sucursal & "' And KOBO = '" & _Bodega_GDI & "'")
+
+        If _Reg = 0 Then
+            MessageBoxEx.Show(Me, "El producto no esta asociado a la bodega " & _Bodega_GDI & " - " & Txt_BodegaGDI.Text & vbCrLf &
+                              "Informe de esta situación al administrador del sistema", "Validación GDI", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        _Reg = _Sql.Fx_Cuenta_Registros("TABBOPR",
+                                        "KOPR = '" & _Codigo & "' And EMPRESA = '" & _Empresa & "' And KOSU = '" & _Sucursal & "' And KOBO = '" & _Bodega_GRI & "'")
+
+        If _Reg = 0 Then
+            MessageBoxEx.Show(Me, "El producto no esta asociado a la bodega " & _Bodega_GRI & " - " & Txt_BodegaGRI.Text & vbCrLf &
+                              "Informe de esta situación al administrador del sistema", "Validación GDI", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
         Dim _Cl_GDI2GRI As New Cl_GDI2GRI
         Dim _FechaEmision As Date = FechaDelServidor()
 

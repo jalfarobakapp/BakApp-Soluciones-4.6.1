@@ -21260,11 +21260,15 @@ Public Class Frm_Formulario_Documento
 
                 If Not _Revision_Remota Then
 
-                    Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, False, False, False, True)
+                    MessageBoxEx.Show(Me, "Los datos de la entidad se han actualizado. Sin embargo, para que los cambios se reflejen" & vbCrLf &
+                                      "en el documento, debe limpiar y recargar la entidad.", "Información",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, True)
 
-                    Beep()
-                    ToastNotification.Show(Me, "DATOS ACTUALIZADOS CORRECTAMENTE", My.Resources.ok_button,
-                                       1 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
+                    'Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, False, False, False, True)
+
+                    'Beep()
+                    'ToastNotification.Show(Me, "DATOS ACTUALIZADOS CORRECTAMENTE", My.Resources.ok_button,
+                    '                   1 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
                 End If
 
             End If
