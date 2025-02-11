@@ -19402,7 +19402,7 @@ Public Class Frm_Formulario_Documento
 
                 Dim _Insertar_Producto As Boolean = Convert.ToBoolean(_Cantidad)
 
-                If _Suc_Bod_Ori <> _Suc_Bod_Act Then
+                If _Suc_Bod_Ori <> _Suc_Bod_Act And Not _Usar_SucBodRecepcion Then
 
                     Dim _Permiso = "Bo" & _Empresa & _Sucursal & _Bodega
 
@@ -19433,9 +19433,7 @@ Public Class Frm_Formulario_Documento
                     End If
 
                     If Chk_Traer_Solo_Produtos_Bod_Suc.Checked Then
-
                         _Insertar_Producto = False
-
                     End If
 
                 End If

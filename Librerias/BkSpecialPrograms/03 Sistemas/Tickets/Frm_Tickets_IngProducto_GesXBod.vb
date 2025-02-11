@@ -327,7 +327,7 @@ Public Class Frm_Tickets_IngProducto_GesXBod
                                 For Each producto As Zw_Stk_Tickets_Producto In listaProductos
                                     If producto.Empresa = Fm_b.Pro_RowBodega.Item("EMPRESA") AndAlso
                                         producto.Sucursal = Fm_b.Pro_RowBodega.Item("KOSU") AndAlso
-                                        producto.Bodega = Fm_b.Pro_RowBodega.Item("KOBO") AndAlso producto.Id <> currentId Then
+                                        producto.Bodega = Fm_b.Pro_RowBodega.Item("KOBO") AndAlso producto.Id <> currentId AndAlso producto.Id_TicketAc = 0 Then
                                         MessageBoxEx.Show(Me, "Ya existe un registro con la misma empresa, sucursal y bodega", "Validación",
                                                           MessageBoxButtons.OK, MessageBoxIcon.Stop)
                                         Grilla_Detalle.CurrentCell = _Fila.Cells("Bodega")

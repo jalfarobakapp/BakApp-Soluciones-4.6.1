@@ -60,18 +60,6 @@ Public Class Frm_GDI2GRI
 
         Dim _Codigo As String = _RowProducto.Item("KOPR")
 
-        Dim _Stock_Disponible = Fx_Stock_Disponible("GDI", ModEmpresa,
-                                                    _Sucursal,
-                                                    _Bodega_GDI,
-                                                    _Codigo,
-                                                    Cmb_UdMedida.SelectedValue,
-                                                    "STFI" & Cmb_UdMedida.SelectedValue)
-
-        If DInput_Cantidad.Value > _Stock_Disponible Then
-            MessageBoxEx.Show(Me, "Stock insuficiente", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Return
-        End If
-
         Dim _Reg As Integer
 
         _Reg = _Sql.Fx_Cuenta_Registros("TABBOPR",
@@ -89,6 +77,18 @@ Public Class Frm_GDI2GRI
         If _Reg = 0 Then
             MessageBoxEx.Show(Me, "El producto no esta asociado a la bodega " & _Bodega_GRI & " - " & Txt_BodegaGRI.Text & vbCrLf &
                               "Informe de esta situación al administrador del sistema", "Validación GDI", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Stock_Disponible = Fx_Stock_Disponible("GDI", ModEmpresa,
+                                                    _Sucursal,
+                                                    _Bodega_GDI,
+                                                    _Codigo,
+                                                    Cmb_UdMedida.SelectedValue,
+                                                    "STFI" & Cmb_UdMedida.SelectedValue)
+
+        If DInput_Cantidad.Value > _Stock_Disponible Then
+            MessageBoxEx.Show(Me, "Stock insuficiente", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
 

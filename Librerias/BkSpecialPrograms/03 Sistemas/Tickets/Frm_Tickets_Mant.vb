@@ -289,20 +289,8 @@ Public Class Frm_Tickets_Mant
                 _Cl_Tickets.Zw_Stk_Tickets.Id_Raiz = 0
                 _Cl_Tickets.Zw_Stk_Tickets_Acciones.Id = _Cl_Tickets.Fx_Grabar_Nueva_Accion(_Cl_Tickets.Zw_Stk_Tickets.CodFuncionario_Crea, True, False)
 
-                With _Cl_Tickets.Zw_Stk_Tickets_Producto
-
-                    .Codigo = String.Empty
-                    .Descripcion = String.Empty
-                    .Rtu = 0
-                    .Um = String.Empty
-                    .Empresa = ModEmpresa
-                    .Sucursal = String.Empty
-                    .Bodega = String.Empty
-                    .Cantidad = 0
-                    .Diferencia = 0
-                    .StfiEnBodega = 0
-
-                End With
+                _Cl_Tickets.Zw_Stk_Tickets_Producto = New Zw_Stk_Tickets_Producto
+                _Cl_Tickets.Ls_Zw_Stk_Tickets_Producto = New List(Of Zw_Stk_Tickets_Producto)
 
                 Sb_Llenar_Tipo(_Cl_Tickets.Zw_Stk_Tickets.Id_Tipo)
                 Return
@@ -374,6 +362,8 @@ Public Class Frm_Tickets_Mant
             If String.IsNullOrWhiteSpace(Txt_Asunto.Text) Then
                 Txt_Asunto.Text = .Tipo.ToString.Trim
             End If
+
+            Txt_Descripcion.Text = .RespuestaXDefecto
 
         End With
 
@@ -783,52 +773,18 @@ Public Class Frm_Tickets_Mant
 
         If _Grabar Then
 
-            If IsNothing(_Cl_Tickets_Padre.Zw_Stk_Tipos.RespuestaXDefecto) Then
-                _Cl_Tickets_Padre.Zw_Stk_Tipos.RespuestaXDefecto = String.Empty
-            End If
+            'If IsNothing(_Cl_Tickets_Padre.Zw_Stk_Tipos.RespuestaXDefecto) Then
+            '    _Cl_Tickets_Padre.Zw_Stk_Tipos.RespuestaXDefecto = String.Empty
+            'End If
 
-            If Not String.IsNullOrEmpty(_Cl_Tickets_Padre.Zw_Stk_Tipos.RespuestaXDefecto) Then
-                Txt_Descripcion.Text = _Cl_Tickets_Padre.Zw_Stk_Tipos.RespuestaXDefecto & vbCrLf & vbCrLf &
-                                       _Cl_Tickets.Fx_Crear_Descripcion(_Cl_Tickets.Zw_Stk_Tickets.Id_Tipo)
-            Else
-                Txt_Descripcion.Text = _Cl_Tickets.Fx_Crear_Descripcion(_Cl_Tickets.Zw_Stk_Tickets.Id_Tipo)
-            End If
+            'If Not String.IsNullOrEmpty(_Cl_Tickets_Padre.Zw_Stk_Tipos.RespuestaXDefecto) Then
+            '    Txt_Descripcion.Text = _Cl_Tickets_Padre.Zw_Stk_Tipos.RespuestaXDefecto & vbCrLf & vbCrLf &
+            '                           _Cl_Tickets.Fx_Crear_Descripcion(_Cl_Tickets.Zw_Stk_Tickets.Id_Tipo)
+            'Else
+            '    Txt_Descripcion.Text = _Cl_Tickets.Fx_Crear_Descripcion(_Cl_Tickets.Zw_Stk_Tickets.Id_Tipo)
+            'End If
 
         End If
-
-        'Return
-
-        'Dim Fm As New Frm_Tickets_IngProducto(_Cl_Tickets.Zw_Stk_Tickets.Id_Tipo)
-        'Fm.Zw_Stk_Tickets_Producto = _Cl_Tickets.Zw_Stk_Tickets_Producto
-        'Fm.NuevoIngreso = CBool(Id_Padre)
-
-        'If Not _Cl_Tickets.Zw_Stk_Tipos.Inc_Cantidades Then
-        '    Fm.SoloLectura = True
-        'End If
-
-        'Fm.ShowDialog(Me)
-
-        'If Fm.Grabar Then
-
-        '    If CBool(Id_Padre) Then
-
-        '        _ConfirmaCantidades = Fm.ConfirmaCantidades
-
-        '        If _ConfirmaCantidades Then
-        '            Txt_Descripcion.Text = _Cl_Tickets_Padre.Zw_Stk_Tipos.RespuestaXDefecto & vbCrLf & vbCrLf &
-        '                                   _Cl_Tickets.Fx_Crear_Descripcion(_Cl_Tickets.Zw_Stk_Tickets.Id_Tipo)
-        '        Else
-        '            MessageBoxEx.Show(Me, "El productos y sus cantidades no han sido confirmadas" & vbCrLf &
-        '                          "Esto tambien se validara al grabar el Ticket", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        '        End If
-
-        '    Else
-        '        Txt_Descripcion.Text = _Cl_Tickets.Fx_Crear_Descripcion(_Cl_Tickets.Zw_Stk_Tickets.Id_Tipo)
-        '    End If
-
-        'End If
-
-        'Fm.Dispose()
 
     End Sub
 
@@ -887,6 +843,7 @@ Public Class Frm_Tickets_Mant
         _Cl_Tickets.Zw_Stk_Tickets_Producto.Codigo = String.Empty
         _Cl_Tickets.Zw_Stk_Tickets_Producto.Descripcion = String.Empty
         _Cl_Tickets.Zw_Stk_Tipos = New Zw_Stk_Tipos
+        _Cl_Tickets.Ls_Zw_Stk_Tickets_Producto = New List(Of Zw_Stk_Tickets_Producto)
 
         Txt_Descripcion.Text = String.Empty
 
