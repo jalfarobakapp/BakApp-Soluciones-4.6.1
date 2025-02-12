@@ -150,6 +150,7 @@ Public Class Cl_Sincroniza
                 .DocEmitir = ConfiguracionLocal.DocEmitir
                 .CodFuncionario_Factura = ConfiguracionLocal.Responsable
                 .EnvFacAutoBk = 0
+                .Modalidad_Fac = ConfiguracionLocal.ModalidadFac
 
             End With
 
@@ -231,14 +232,14 @@ Public Class Cl_Sincroniza
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_NVVAuto (IdmaeedoOCC_Ori,NudoOCC_Ori,Endo_Ori,Suendo_Ori," &
                                "FechaGrab,GenerarNVV,Observaciones,TipoOri,Ocdo," &
                                "Texto1,Texto2,Texto3,Texto4,Texto5,Texto6,Texto7,Texto8,Texto9,Texto10," &
-                               "Facturar,DocEmitir,CodFuncionario_Factura,EnvFacAutoBk) Values " &
+                               "Facturar,DocEmitir,CodFuncionario_Factura,EnvFacAutoBk,Modalidad_Fac) Values " &
                                "(" & .IdmaeedoOCC_Ori & ",'" & .NudoOCC_Ori & "','" & .Endo_Ori & "','" & .Suendo_Ori &
                                "','" & Format(.FechaGrab, "yyyyMMdd HH:mm:ss") & "'," & Convert.ToInt32(.GenerarNVV) &
                                ",'" & .Observaciones & "','" & .TipoOri & "','" & .Ocdo &
                                "','" & .Texto1 & "','" & .Texto2 & "','" & .Texto3 & "','" & .Texto4 & "','" & .Texto5 & "','" & .Texto6 &
                                "','" & .Texto7 & "','" & .Texto8 & "','" & .Texto9 & "','" & .Texto10 &
                                "'," & Convert.ToInt32(.Facturar) & ",'" & .DocEmitir &
-                               "','" & .CodFuncionario_Factura & "'," & Convert.ToInt32(.EnvFacAutoBk) & ")"
+                               "','" & .CodFuncionario_Factura & "'," & Convert.ToInt32(.EnvFacAutoBk) & ",'" & .Modalidad_Fac & "')"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                 Comando.Transaction = myTrans

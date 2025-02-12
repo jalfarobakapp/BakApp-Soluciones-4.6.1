@@ -136,7 +136,7 @@
             Log_Registro += _Sql.Pro_Error & vbCrLf
         End If
 
-        Consulta_Sql = "Select TOP 20 Idmaeedo_NVV As Idmaeedo,DocEmitir,Cast('" & Format(_Fecha_Revision, "yyyyMMdd") & "' As datetime) As Fecha_Facturar,CodFuncionario_Factura" & vbCrLf &
+        Consulta_Sql = "Select TOP 20 Idmaeedo_NVV As Idmaeedo,DocEmitir,Cast('" & Format(_Fecha_Revision, "yyyyMMdd") & "' As datetime) As Fecha_Facturar,CodFuncionario_Factura,Modalidad_Fac" & vbCrLf &
                        "Into #Paso" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Demonio_NVVAuto Nv" & vbCrLf &
                        "Inner Join " & _Global_BaseBk & "Zw_Entidades Ent" & vbCrLf &
@@ -147,7 +147,7 @@
                        "Where Idmaeedo_NVV In (Select Idmaeedo From #Paso)" & vbCrLf &
                        vbCrLf &
                        "Insert Into " & _Global_BaseBk & "Zw_Demonio_FacAuto (Idmaeedo_NVV,Nudo_NVV,Modalidad_Fac,Fecha_Facturar,Facturar,DesdeNVVAuto,DocEmitir,CerrarDespFact,CodFuncionario_Factura)" & vbCrLf &
-                       "Select Edo.IDMAEEDO As 'Idmaeedo_NVV',Edo.NUDO As 'Nudo_NVV','" & Modalidad_Fac & "' As 'Modalidad_Fac',Fecha_Facturar,1 As 'Facturar'," & vbCrLf &
+                       "Select Edo.IDMAEEDO As 'Idmaeedo_NVV',Edo.NUDO As 'Nudo_NVV',Case When #Paso.Modalidad_Fac <> '' Then #Paso.Modalidad_Fac Else '" & Modalidad_Fac & "' End As 'Modalidad_Fac',Fecha_Facturar,1 As 'Facturar'," & vbCrLf &
                        "1 As 'DesdeNVVAuto',#Paso.DocEmitir As 'DocEmitir',1 As 'CerrarDespFact',CodFuncionario_Factura" & vbCrLf &
                        "From MAEEDO Edo" & vbCrLf &
                        "Inner Join #Paso On #Paso.Idmaeedo = Edo.IDMAEEDO" & vbCrLf &
@@ -321,11 +321,16 @@
                 Dim _Id_Pickeo As Integer = _Fila.Item("Id_Pickeo")
                 Dim _CodFuncionario_Factura As String = _Fila.Item("CodFuncionario_Factura").ToString.Trim
                 Dim _DesdeNVVAuto As Boolean = _Fila.Item("DesdeNVVAuto")
+                Dim _Modalidad_Fac As String = _Fila.Item("Modalidad_Fac")
 
                 Dim _Nudo_Nvv As String = _Fila.Item("Nudo_Nvv")
 
                 If Not IsNothing(Lbl_FacAuto) Then
                     Lbl_FacAuto.Text = "Facturando Nota de venta Nro: " & _Nudo_Nvv
+                End If
+
+                If String.IsNullOrWhiteSpace(_Modalidad_Fac) Then
+                    _Modalidad_Fac = Modalidad_Fac
                 End If
 
                 System.Windows.Forms.Application.DoEvents()
@@ -338,8 +343,6 @@
 
                 If _DesdePickeo Then
                     _Mensaje = Fx_Crear_Documento_Desde_Otro_Automaticamente_Pickeo(_Formulario, _DocEmitir, _Idmaeedo, _Fecha_Emision, _Modalidad_Fac, _CerrarDespFact, _Id_Pickeo)
-                    'ElseIf _DesdeNVVAuto Then
-                    '    _Mensaje = Fx_Crear_Documento_Desde_Otro_Automaticamente_DesdeNvvAuto(_Formulario, _DocEmitir, _Idmaeedo, _Fecha_Emision, _Modalidad_Fac, True)
                 Else
                     _Mensaje = Fx_Crear_Documento_Desde_Otro_Automaticamente2(_Formulario, _DocEmitir, _Idmaeedo, _Fecha_Emision, _Modalidad_Fac, _CerrarDespFact)
                 End If
@@ -550,6 +553,12 @@
 
             Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
+            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros("CONFIEST", "MODALIDAD = '" & _Modalidad & "'")
+
+            If _Reg = 0 Then
+                Throw New System.Exception("No existe la modalidad " & _Modalidad)
+            End If
+
             Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Formulario, _Modalidad, _Tido_Destino, False)
 
             If IsNothing(_RowFormato) Then
@@ -697,6 +706,12 @@
             End If
 
             Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
+            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros("CONFIEST", "MODALIDAD = '" & _Modalidad & "'")
+
+            If _Reg = 0 Then
+                Throw New System.Exception("No existe la modalidad " & _Modalidad)
+            End If
 
             Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Formulario, _Modalidad, _TidoDocEmitir, False)
 

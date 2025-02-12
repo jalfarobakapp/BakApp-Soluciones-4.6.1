@@ -29,6 +29,7 @@ CREATE TABLE [dbo].[Zw_Demonio_NVVAuto](
     [DocEmitir]                 [varchar](3)    NOT NULL DEFAULT (''),
     [CodFuncionario_Factura]    [varchar](3)    NOT NULL DEFAULT (''),
     [EnvFacAutoBk]              [bit]           NOT NULL DEFAULT (0),
+    [Modalidad_Fac]             [varchar](5)    NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_Demonio_NVVAuto] PRIMARY KEY CLUSTERED 
 (
 	[Id_Enc] ASC
