@@ -19436,6 +19436,11 @@ Public Class Frm_Formulario_Documento
                         _Insertar_Producto = False
                     End If
 
+                ElseIf _Usar_SucBodRecepcion Then
+
+                    _New_Fila.Cells("Sucursal").Value = _Sucursal
+                    _New_Fila.Cells("Bodega").Value = _Bodega
+
                 End If
 
                 If _Insertar_Producto Then

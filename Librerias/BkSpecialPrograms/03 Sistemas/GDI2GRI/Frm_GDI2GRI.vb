@@ -133,7 +133,7 @@ Public Class Frm_GDI2GRI
         Fm_Espera.Dispose()
         Fm_Espera = Nothing
 
-        _Mensaje.Mensaje = "¡Perfecto! Las guías de ingreso (GDI-" & _Row_GDI.Item("NUDO") & ") y salida (GRI-" & _Row_GRI.Item("NUDO") & ") se han creado exitosamente."
+        _Mensaje.Mensaje = "¡Perfecto! Las guías de salida (GDI-" & _Row_GDI.Item("NUDO") & ") e ingreso (GRI-" & _Row_GRI.Item("NUDO") & ") se han creado exitosamente."
         MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         Me.Enabled = True
@@ -248,7 +248,8 @@ Public Class Frm_GDI2GRI
             _Empresa = Fm_b.Pro_RowBodega.Item("EMPRESA")
             _Sucursal = Fm_b.Pro_RowBodega.Item("KOSU")
             _Bodega_GDI = Fm_b.Pro_RowBodega.Item("KOBO")
-            Txt_BodegaGDI.Text = Fm_b.Pro_RowBodega.Item("NOKOSU").ToString.Trim & " - " & Fm_b.Pro_RowBodega.Item("NOKOBO").ToString.Trim
+
+            Txt_BodegaGDI.Text = _Bodega_GDI & " - " & Fm_b.Pro_RowBodega.Item("NOKOSU").ToString.Trim & " - " & Fm_b.Pro_RowBodega.Item("NOKOBO").ToString.Trim
             Txt_BodegaGDI.Tag = Fm_b.Pro_RowBodega
 
         End If
@@ -286,7 +287,8 @@ Public Class Frm_GDI2GRI
         If Fm_b.Pro_Seleccionado Then
 
             _Bodega_GRI = Fm_b.Pro_RowBodega.Item("KOBO")
-            Txt_BodegaGRI.Text = Fm_b.Pro_RowBodega.Item("NOKOSU").ToString.Trim & " - " & Fm_b.Pro_RowBodega.Item("NOKOBO").ToString.Trim
+
+            Txt_BodegaGRI.Text = _Bodega_GRI & " - " & Fm_b.Pro_RowBodega.Item("NOKOSU").ToString.Trim & " - " & Fm_b.Pro_RowBodega.Item("NOKOBO").ToString.Trim
             Txt_BodegaGRI.Tag = Fm_b.Pro_RowBodega
 
         End If
@@ -328,7 +330,7 @@ Public Class Frm_GDI2GRI
 
                 Dim _Row_GDI As DataRow = Fx_Trar_Datos_De_Bodega_Seleccionada(_Empresa, _Sucursal, _Bodega_GDI)
 
-                Txt_BodegaGDI.Text = _Row_GDI.Item("NOKOSU").ToString.Trim & " - " & _Row_GDI.Item("NOKOBO").ToString.Trim
+                Txt_BodegaGDI.Text = _Bodega_GDI & " - " & _Row_GDI.Item("NOKOSU").ToString.Trim & " - " & _Row_GDI.Item("NOKOBO").ToString.Trim
                 Txt_BodegaGDI.Tag = _Row_GDI
 
             End If
@@ -350,7 +352,7 @@ Public Class Frm_GDI2GRI
 
                 Dim _Row_GRI As DataRow = Fx_Trar_Datos_De_Bodega_Seleccionada(_Empresa, _Sucursal, _Bodega_GRI)
 
-                Txt_BodegaGRI.Text = _Row_GRI.Item("NOKOSU").ToString.Trim & " - " & _Row_GRI.Item("NOKOBO").ToString.Trim
+                Txt_BodegaGRI.Text = _Bodega_GRI & " - " & _Row_GRI.Item("NOKOSU").ToString.Trim & " - " & _Row_GRI.Item("NOKOBO").ToString.Trim
                 Txt_BodegaGRI.Tag = _Row_GRI
 
             End If
