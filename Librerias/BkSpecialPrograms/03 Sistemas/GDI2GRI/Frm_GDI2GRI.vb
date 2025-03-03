@@ -93,7 +93,7 @@ Public Class Frm_GDI2GRI
         End If
 
         Dim _Cl_GDI2GRI As New Cl_GDI2GRI
-        Dim _FechaEmision As Date = FechaDelServidor()
+        Dim _FechaEmision As Date = Dtp_FechaEmision.Value
 
         Dim _Row_GDI As DataRow
         Dim _Row_GRI As DataRow
@@ -118,7 +118,7 @@ Public Class Frm_GDI2GRI
 
         _Row_GDI = _Sql.Fx_Get_DataRow("Select * From MAEEDO Where IDMAEEDO = " & _Mensaje.Id)
 
-        _Mensaje = _Cl_GDI2GRI.Fx_Crear_GRIDesdeGDI(Me, _Mensaje.Id, _Sucursal, _Bodega_GRI, Dtp_FechaEmision.Value)
+        _Mensaje = _Cl_GDI2GRI.Fx_Crear_GRIDesdeGDI(Me, _Mensaje.Id, _Sucursal, _Bodega_GRI, _FechaEmision)
 
         If Not _Mensaje.EsCorrecto Then
             Fm_Espera.Close()
