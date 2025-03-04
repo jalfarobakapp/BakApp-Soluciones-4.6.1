@@ -770,13 +770,16 @@ Public Class Frm_Demonio_Configuraciones
         _Sql.Sb_Parametro_Informe_Sql(Rdb_FacAuto_CualquierNVV, "Demonio",
                                       Rdb_FacAuto_CualquierNVV.Name, Class_SQLite.Enum_Type._Boolean,
                                       Rdb_FacAuto_CualquierNVV.Checked, _Actualizar, "FacAuto",, False)
+
         _Sql.Sb_Parametro_Informe_Sql(Rdb_FacAuto_SoloDeSucModalidad, "Demonio",
                                       Rdb_FacAuto_SoloDeSucModalidad.Name, Class_SQLite.Enum_Type._Boolean,
                                       Rdb_FacAuto_SoloDeSucModalidad.Checked, _Actualizar, "FacAuto",, False)
 
         _Sql.Sb_Parametro_Informe_Sql(Txt_FacAuto_CodFunFactura, "Demonio",
                                       Txt_FacAuto_CodFunFactura.Name, Class_SQLite.Enum_Type._String,
-                                      Txt_FacAuto_CodFunFactura.Text, _Actualizar, "FacAuto",, False)
+                                      Txt_FacAuto_CodFunFactura.Tag, _Actualizar, "FacAuto",, False)
+
+        Txt_FacAuto_CodFunFactura.Text = Replace(Txt_FacAuto_CodFunFactura.Tag, "''", "'")
 
         _Sql.Sb_Parametro_Informe_Sql(Input_CantDocFacturanXProceso, "Demonio",
                                       Input_CantDocFacturanXProceso.Name, Class_SQLite.Enum_Type._Double,
@@ -1010,12 +1013,23 @@ Public Class Frm_Demonio_Configuraciones
 
         Dim _Tbl As DataTable
 
+        If Not String.IsNullOrWhiteSpace(Txt_FacAuto_CodFunFactura.Text.Trim) Then
+
+            Consulta_sql = "Select KOFU As 'Codigo',NOKOFU As 'Descripcion' From TABFU Where KOFU In " & Txt_FacAuto_CodFunFactura.Text
+            _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+        End If
+
         Dim _Filtrar As New Clas_Filtros_Random(Me)
 
-        If _Filtrar.Fx_Filtrar(_Tbl, Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random, "", False, False, True) Then
+        If _Filtrar.Fx_Filtrar(_Tbl, Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random, "", False, False, False) Then
 
-            Txt_FacAuto_CodFunFactura.Tag = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
-            Txt_FacAuto_CodFunFactura.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo").ToString.Trim
+            _Tbl = _Filtrar.Pro_Tbl_Filtro
+
+            Dim _Filtro As String = Generar_Filtro_IN(_Tbl, "", "Codigo", False, False, "'")
+
+            Txt_FacAuto_CodFunFactura.Tag = Replace(_Filtro, "'", "''")
+            Txt_FacAuto_CodFunFactura.Text = _Filtro '_Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo").ToString.Trim
 
         End If
 

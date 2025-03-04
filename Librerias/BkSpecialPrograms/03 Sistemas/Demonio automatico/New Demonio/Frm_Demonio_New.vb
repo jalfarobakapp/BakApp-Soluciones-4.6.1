@@ -422,7 +422,7 @@ Public Class Frm_Demonio_New
 
                     _Cl_FacturacionAuto.CantDocFacturanXProceso = _CantDocFacturanXProceso
                     _Cl_FacturacionAuto.Modalidad_Fac = _Modalidad_Fac
-                    _Cl_FacturacionAuto.CodFunFactura = _CodFunFactura
+                    _Cl_FacturacionAuto.CodFunFactura = Replace(_CodFunFactura, "''", "'")
 
                     _Descripcion = _CI_Programacion.Resumen ' "Facturación de notas de venta para clientes con condición automática. " & _CI_Programacion.Resumen
                     _IndexImagen = 8

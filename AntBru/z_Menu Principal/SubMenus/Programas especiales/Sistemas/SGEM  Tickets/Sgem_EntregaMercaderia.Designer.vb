@@ -31,6 +31,7 @@ Partial Class Sgem_EntregaMercaderia
         Me.Btn_MisTicket = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_TicketListaEspera = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Sgem_EntregarMercaderia = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_Sgem_Rutas = New DevComponents.DotNetBar.Metro.MetroTileItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -55,7 +56,7 @@ Partial Class Sgem_EntregaMercaderia
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnSalir})
-        Me.Bar2.Location = New System.Drawing.Point(0, 184)
+        Me.Bar2.Location = New System.Drawing.Point(0, 286)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(707, 41)
         Me.Bar2.Stretch = True
@@ -101,7 +102,7 @@ Partial Class Sgem_EntregaMercaderia
         Me.ConsultaPreciosContenedor.FixedSize = New System.Drawing.Size(700, 400)
         Me.ConsultaPreciosContenedor.MultiLine = True
         Me.ConsultaPreciosContenedor.Name = "ConsultaPreciosContenedor"
-        Me.ConsultaPreciosContenedor.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_MisTicket, Me.Btn_TicketListaEspera, Me.Btn_Sgem_EntregarMercaderia})
+        Me.ConsultaPreciosContenedor.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_MisTicket, Me.Btn_TicketListaEspera, Me.Btn_Sgem_EntregarMercaderia, Me.Btn_Sgem_Rutas})
         '
         '
         '
@@ -180,6 +181,28 @@ Partial Class Sgem_EntregaMercaderia
         Me.Btn_Sgem_EntregarMercaderia.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_Sgem_EntregarMercaderia.TitleText = "BakApp"
         '
+        'Btn_Sgem_Rutas
+        '
+        Me.Btn_Sgem_Rutas.Image = CType(resources.GetObject("Btn_Sgem_Rutas.Image"), System.Drawing.Image)
+        Me.Btn_Sgem_Rutas.ImageIndent = New System.Drawing.Point(8, -6)
+        Me.Btn_Sgem_Rutas.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_Sgem_Rutas.Name = "Btn_Sgem_Rutas"
+        Me.Btn_Sgem_Rutas.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_Sgem_Rutas.Text = "<font size=""+4""><b>RUTAS</b></font><br/><font size=""-1"">Tickes en lista de espera" &
+    " para mostrar a clientes</font>"
+        Me.Btn_Sgem_Rutas.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Yellow
+        Me.Btn_Sgem_Rutas.TileSize = New System.Drawing.Size(200, 100)
+        '
+        '
+        '
+        Me.Btn_Sgem_Rutas.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(101, Byte), Integer), CType(CType(195, Byte), Integer), CType(CType(139, Byte), Integer))
+        Me.Btn_Sgem_Rutas.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(101, Byte), Integer), CType(CType(195, Byte), Integer), CType(CType(139, Byte), Integer))
+        Me.Btn_Sgem_Rutas.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(101, Byte), Integer), CType(CType(195, Byte), Integer), CType(CType(139, Byte), Integer))
+        Me.Btn_Sgem_Rutas.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(101, Byte), Integer), CType(CType(195, Byte), Integer), CType(CType(139, Byte), Integer))
+        Me.Btn_Sgem_Rutas.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_Sgem_Rutas.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_Sgem_Rutas.TitleText = "BakApp"
+        '
         'Sgem_EntregaMercaderia
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -188,7 +211,7 @@ Partial Class Sgem_EntregaMercaderia
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.MetroTilePanel1)
         Me.Name = "Sgem_EntregaMercaderia"
-        Me.Size = New System.Drawing.Size(707, 225)
+        Me.Size = New System.Drawing.Size(707, 327)
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -202,4 +225,5 @@ Partial Class Sgem_EntregaMercaderia
     Private WithEvents Btn_MisTicket As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_TicketListaEspera As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Sgem_EntregarMercaderia As DevComponents.DotNetBar.Metro.MetroTileItem
+    Private WithEvents Btn_Sgem_Rutas As DevComponents.DotNetBar.Metro.MetroTileItem
 End Class

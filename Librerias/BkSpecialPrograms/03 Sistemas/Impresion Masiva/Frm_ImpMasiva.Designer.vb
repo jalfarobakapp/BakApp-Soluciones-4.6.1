@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_ImpMasiva
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -197,7 +197,7 @@ Partial Class Frm_ImpMasiva
         Me.Btn_Firmar_Documento.Image = CType(resources.GetObject("Btn_Firmar_Documento.Image"), System.Drawing.Image)
         Me.Btn_Firmar_Documento.ImageAlt = CType(resources.GetObject("Btn_Firmar_Documento.ImageAlt"), System.Drawing.Image)
         Me.Btn_Firmar_Documento.Name = "Btn_Firmar_Documento"
-        Me.Btn_Firmar_Documento.Text = "Firmar documento Electr�nicamente"
+        Me.Btn_Firmar_Documento.Text = "Firmar documento Electrónicamente"
         '
         'Btn_Facturar
         '

@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Frm_Stmp_Listado
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -131,7 +131,7 @@ Partial Class Frm_Stmp_Listado
         '
         Me.Tab_Preparacion.GlobalItem = False
         Me.Tab_Preparacion.Name = "Tab_Preparacion"
-        Me.Tab_Preparacion.Text = "En preparación"
+        Me.Tab_Preparacion.Text = "En preparaciÃ³n"
         '
         'Tab_Completadas
         '
@@ -198,8 +198,8 @@ Partial Class Frm_Stmp_Listado
         Me.Btn_EntregarMercaderia.Image = CType(resources.GetObject("Btn_EntregarMercaderia.Image"), System.Drawing.Image)
         Me.Btn_EntregarMercaderia.ImageAlt = CType(resources.GetObject("Btn_EntregarMercaderia.ImageAlt"), System.Drawing.Image)
         Me.Btn_EntregarMercaderia.Name = "Btn_EntregarMercaderia"
-        Me.Btn_EntregarMercaderia.Text = "Entregar mercadería"
-        Me.Btn_EntregarMercaderia.Tooltip = "Entregar mercadería"
+        Me.Btn_EntregarMercaderia.Text = "Entregar mercaderÃ­a"
+        Me.Btn_EntregarMercaderia.Tooltip = "Entregar mercaderÃ­a"
         '
         'Btn_Exportar_Excel
         '
@@ -238,7 +238,7 @@ Partial Class Frm_Stmp_Listado
         Me.BtnIrAlFin.ImageAlt = CType(resources.GetObject("BtnIrAlFin.ImageAlt"), System.Drawing.Image)
         Me.BtnIrAlFin.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.BtnIrAlFin.Name = "BtnIrAlFin"
-        Me.BtnIrAlFin.Tooltip = "Ir al último registro"
+        Me.BtnIrAlFin.Tooltip = "Ir al Ãºltimo registro"
         '
         'Btn_ConfLocal
         '
@@ -290,7 +290,7 @@ Partial Class Frm_Stmp_Listado
         '
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 165
-        Me.GroupPanel1.Text = "Detalle de Tickets por entrega de mercadería"
+        Me.GroupPanel1.Text = "Detalle de Tickets por entrega de mercaderÃ­a"
         '
         'Menu_Contextual
         '
@@ -345,14 +345,14 @@ Partial Class Frm_Stmp_Listado
         Me.Btn_Mnu_Preparacion.Image = CType(resources.GetObject("Btn_Mnu_Preparacion.Image"), System.Drawing.Image)
         Me.Btn_Mnu_Preparacion.ImageAlt = CType(resources.GetObject("Btn_Mnu_Preparacion.ImageAlt"), System.Drawing.Image)
         Me.Btn_Mnu_Preparacion.Name = "Btn_Mnu_Preparacion"
-        Me.Btn_Mnu_Preparacion.Text = "Enviar a preparación "
+        Me.Btn_Mnu_Preparacion.Text = "Enviar a preparaciÃ³n "
         '
         'Btn_Mnu_EntregarMercaderia
         '
         Me.Btn_Mnu_EntregarMercaderia.Image = CType(resources.GetObject("Btn_Mnu_EntregarMercaderia.Image"), System.Drawing.Image)
         Me.Btn_Mnu_EntregarMercaderia.ImageAlt = CType(resources.GetObject("Btn_Mnu_EntregarMercaderia.ImageAlt"), System.Drawing.Image)
         Me.Btn_Mnu_EntregarMercaderia.Name = "Btn_Mnu_EntregarMercaderia"
-        Me.Btn_Mnu_EntregarMercaderia.Text = "Entregar mercadería"
+        Me.Btn_Mnu_EntregarMercaderia.Text = "Entregar mercaderÃ­a"
         '
         'Btn_CerrarTicket
         '
@@ -366,7 +366,7 @@ Partial Class Frm_Stmp_Listado
         Me.Btn_ReenviaFacturar.Image = CType(resources.GetObject("Btn_ReenviaFacturar.Image"), System.Drawing.Image)
         Me.Btn_ReenviaFacturar.ImageAlt = CType(resources.GetObject("Btn_ReenviaFacturar.ImageAlt"), System.Drawing.Image)
         Me.Btn_ReenviaFacturar.Name = "Btn_ReenviaFacturar"
-        Me.Btn_ReenviaFacturar.Text = "Volver a enviar a facturar automáticamente"
+        Me.Btn_ReenviaFacturar.Text = "Volver a enviar a facturar automÃ¡ticamente"
         Me.Btn_ReenviaFacturar.Visible = False
         '
         'LabelItem3
@@ -536,7 +536,7 @@ Partial Class Frm_Stmp_Listado
         Me.Chk_Monitorear.Size = New System.Drawing.Size(169, 23)
         Me.Chk_Monitorear.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Monitorear.TabIndex = 170
-        Me.Chk_Monitorear.Text = "Monitorear automáticamente"
+        Me.Chk_Monitorear.Text = "Monitorear automÃ¡ticamente"
         '
         'Timer_Monitoreo
         '
@@ -649,7 +649,7 @@ Partial Class Frm_Stmp_Listado
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(75, 23)
         Me.LabelX2.TabIndex = 176
-        Me.LabelX2.Text = "Información:"
+        Me.LabelX2.Text = "InformaciÃ³n:"
         '
         'Lbl_Informacion
         '
@@ -683,6 +683,7 @@ Partial Class Frm_Stmp_Listado
         Me.Controls.Add(Me.Metro_Bar_Color)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True

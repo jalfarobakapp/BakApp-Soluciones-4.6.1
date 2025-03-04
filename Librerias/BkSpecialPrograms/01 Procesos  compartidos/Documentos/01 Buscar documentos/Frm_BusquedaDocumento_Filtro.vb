@@ -538,7 +538,7 @@ Public Class Frm_BusquedaDocumento_Filtro
 
         If Rdb_Entidad_Una.Checked Then
 
-            If Not IsNothing(_CodEntidad) OrElse Not String.IsNullOrEmpty(_CodEntidad.Trim) Then
+            If Not IsNothing(_CodEntidad) OrElse Not String.IsNullOrEmpty(_CodEntidad) Then
 
                 If Chk_Todas_Sucursales.Checked Then
                     _Sql_Filtro_Entidades = "Edo.ENDO = '" & _CodEntidad & "'"
@@ -579,17 +579,28 @@ Public Class Frm_BusquedaDocumento_Filtro
             Dim _FlFun As Boolean
 
             _FlFun = (_Tbl_Filtro_Funcionarios Is Nothing)
+
+            If _FlFun Then
+                MessageBoxEx.Show(Me, "No se seleccionó ningún funcionario", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
             _FlFun = CBool(_Tbl_Filtro_Funcionarios.Rows.Count)
+
+            If Not _FlFun Then
+                MessageBoxEx.Show(Me, "No se seleccionó ningún funcionario", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
 
             Dim _Fl = Generar_Filtro_IN(_Tbl_Filtro_Funcionarios, "", "Codigo", False, False, "'")
             If _Fl = "()" Then _FlFun = True
 
-            If _FlFun Then
-                _Sql_Filtro_Fucnionarios = "And Edo.KOFUDO In " & _Fl
-            Else
-                MessageBoxEx.Show(Me, "No se seleccionó ningún funcionario", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Return
-            End If
+            'If _FlFun Then
+            _Sql_Filtro_Fucnionarios = "And Edo.KOFUDO In " & _Fl
+            'Else
+            'MessageBoxEx.Show(Me, "No se seleccionó ningún funcionario", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            'Return
+            'End If
 
         ElseIf Rdb_Funcionarios_Uno.Checked Then
             _Sql_Filtro_Fucnionarios = "And Edo.KOFUDO = '" & CmbFuncionarios.SelectedValue & "'"

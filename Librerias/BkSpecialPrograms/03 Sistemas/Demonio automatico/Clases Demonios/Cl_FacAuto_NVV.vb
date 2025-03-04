@@ -84,7 +84,7 @@
         End If
 
         If Not String.IsNullOrWhiteSpace(CodFunFactura) Then
-            _CondicionFunFac = "And CodFuncionario_Factura = '" & CodFunFactura & "'"
+            _CondicionFunFac = "And CodFuncionario_Factura In " & CodFunFactura
         End If
 
         Consulta_Sql = "Select TOP 20 Idmaeedo,Id,DocEmitir,Fecha_Facturar,CodFuncionario_Factura" & vbCrLf &

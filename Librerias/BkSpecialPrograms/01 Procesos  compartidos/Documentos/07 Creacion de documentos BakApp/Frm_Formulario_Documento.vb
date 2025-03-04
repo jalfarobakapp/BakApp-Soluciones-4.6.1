@@ -8425,6 +8425,20 @@ Public Class Frm_Formulario_Documento
 
                     _Bloqueada = _RowEntidad.Item("BLOQUEADO")
 
+                    If _Tido = "COV" Then
+
+                        If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Configuracion", "Las_Cotizaciones_No_Revisan_Permisos") Then
+
+                            Dim _Las_Cotizaciones_No_Revisan_Permisos As Boolean = _Global_Row_Configuracion_General.Item("Las_Cotizaciones_No_Revisan_Permisos")
+
+                            If _Las_Cotizaciones_No_Revisan_Permisos Then
+                                _Bloqueada = False
+                            End If
+
+                        End If
+
+                    End If
+
                     If _Bloqueada Then
 
                         Dim _Koen = _RowEntidad.Item("Koen")

@@ -27,6 +27,8 @@ Public Class Frm_Stmp_ListadoXRutas
 
         _FechaServidor = FechaDelServidor()
 
+        Dtp_FechaCreacion.Value = _FechaServidor
+
         Sb_InsertarBotonenGrilla(Grilla, "BtnImagen_Estado", "Est.", "Img_Estado", 0, _Tipo_Boton.Imagen)
 
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint

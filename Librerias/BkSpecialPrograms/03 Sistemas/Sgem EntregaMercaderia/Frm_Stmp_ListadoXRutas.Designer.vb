@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_Stmp_ListadoXRutas
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -82,7 +82,7 @@ Partial Class Frm_Stmp_ListadoXRutas
         Me.Btn_Mnu_Preparacion.Image = CType(resources.GetObject("Btn_Mnu_Preparacion.Image"), System.Drawing.Image)
         Me.Btn_Mnu_Preparacion.ImageAlt = CType(resources.GetObject("Btn_Mnu_Preparacion.ImageAlt"), System.Drawing.Image)
         Me.Btn_Mnu_Preparacion.Name = "Btn_Mnu_Preparacion"
-        Me.Btn_Mnu_Preparacion.Text = "Enviar a preparación "
+        Me.Btn_Mnu_Preparacion.Text = "Enviar a preparaciÃ³n "
         '
         'Btn_CerrarTicket
         '
@@ -96,7 +96,7 @@ Partial Class Frm_Stmp_ListadoXRutas
         Me.Btn_ReenviaFacturar.Image = CType(resources.GetObject("Btn_ReenviaFacturar.Image"), System.Drawing.Image)
         Me.Btn_ReenviaFacturar.ImageAlt = CType(resources.GetObject("Btn_ReenviaFacturar.ImageAlt"), System.Drawing.Image)
         Me.Btn_ReenviaFacturar.Name = "Btn_ReenviaFacturar"
-        Me.Btn_ReenviaFacturar.Text = "Volver a enviar a facturar automáticamente"
+        Me.Btn_ReenviaFacturar.Text = "Volver a enviar a facturar automÃ¡ticamente"
         Me.Btn_ReenviaFacturar.Visible = False
         '
         'LabelItem3
@@ -335,7 +335,7 @@ Partial Class Frm_Stmp_ListadoXRutas
         Me.Btn_Mnu_EntregarMercaderia.Image = CType(resources.GetObject("Btn_Mnu_EntregarMercaderia.Image"), System.Drawing.Image)
         Me.Btn_Mnu_EntregarMercaderia.ImageAlt = CType(resources.GetObject("Btn_Mnu_EntregarMercaderia.ImageAlt"), System.Drawing.Image)
         Me.Btn_Mnu_EntregarMercaderia.Name = "Btn_Mnu_EntregarMercaderia"
-        Me.Btn_Mnu_EntregarMercaderia.Text = "Entregar mercadería"
+        Me.Btn_Mnu_EntregarMercaderia.Text = "Entregar mercaderÃ­a"
         '
         'Lbl_Informacion
         '
@@ -409,7 +409,7 @@ Partial Class Frm_Stmp_ListadoXRutas
         '
         Me.Tab_Preparacion.GlobalItem = False
         Me.Tab_Preparacion.Name = "Tab_Preparacion"
-        Me.Tab_Preparacion.Text = "En preparación"
+        Me.Tab_Preparacion.Text = "En preparaciÃ³n"
         '
         'Tab_Completadas
         '
@@ -484,7 +484,7 @@ Partial Class Frm_Stmp_ListadoXRutas
         Me.BtnIrAlFin.ImageAlt = CType(resources.GetObject("BtnIrAlFin.ImageAlt"), System.Drawing.Image)
         Me.BtnIrAlFin.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.BtnIrAlFin.Name = "BtnIrAlFin"
-        Me.BtnIrAlFin.Tooltip = "Ir al último registro"
+        Me.BtnIrAlFin.Tooltip = "Ir al Ãºltimo registro"
         '
         'Btn_ConfLocal
         '
@@ -509,7 +509,7 @@ Partial Class Frm_Stmp_ListadoXRutas
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(75, 23)
         Me.LabelX2.TabIndex = 187
-        Me.LabelX2.Text = "Información:"
+        Me.LabelX2.Text = "InformaciÃ³n:"
         '
         'GroupPanel1
         '
@@ -550,7 +550,7 @@ Partial Class Frm_Stmp_ListadoXRutas
         '
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 178
-        Me.GroupPanel1.Text = "Detalle de Tickets por entrega de mercadería"
+        Me.GroupPanel1.Text = "Detalle de Tickets por entrega de mercaderÃ­a"
         '
         'Menu_Contextual
         '
@@ -605,7 +605,7 @@ Partial Class Frm_Stmp_ListadoXRutas
         Me.LabelX3.Name = "LabelX3"
         Me.LabelX3.Size = New System.Drawing.Size(78, 23)
         Me.LabelX3.TabIndex = 189
-        Me.LabelX3.Text = "Fecha creación"
+        Me.LabelX3.Text = "Fecha creaciÃ³n"
         '
         'Dtp_FechaCreacion
         '
@@ -683,7 +683,7 @@ Partial Class Frm_Stmp_ListadoXRutas
         Me.Name = "Frm_Stmp_ListadoXRutas"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "MetroForm"
+        Me.Text = "SISTEMA DE ENTREGA DE MERCADERIA POR TICKET (RUTAS)"
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Super_TabS, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()

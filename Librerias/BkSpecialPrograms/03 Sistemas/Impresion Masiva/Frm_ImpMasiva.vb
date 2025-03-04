@@ -217,4 +217,13 @@ Public Class Frm_ImpMasiva
         Fm.Dispose()
 
     End Sub
+
+    Private Sub Chk_Marcar_Todas_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Marcar_Todas.CheckedChanged
+
+        For Each _Row As ImpMasiva.ImpDocumentos In ListaDocumentos
+            _Row.Chk = Chk_Marcar_Todas.Checked
+        Next
+
+    End Sub
+
 End Class

@@ -1053,6 +1053,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Stem0002", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Stem0003", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Stem0004", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Stem0005", _Objeto, _Formulario)
 
         _SqlQuery += vbCrLf
 
@@ -4649,6 +4650,12 @@ Public Class Class_Permiso_BakApp
             Case "Stem0004"
 
                 _DescripcionPermiso = "MARCAR DOCUMENTO FACTURAR AL COMPLETAR"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.STEM, 6)
+                _NombreFamiliaPermiso = _Fml.STEM.ToString
+
+            Case "Stem0005"
+
+                _DescripcionPermiso = "INGRESAR AL SISTEMA DE TICKET DE ENTREGA DE MERCADERIA (RUTAS)"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.STEM, 6)
                 _NombreFamiliaPermiso = _Fml.STEM.ToString
 
