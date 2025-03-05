@@ -1291,7 +1291,7 @@ Public Class Frm_Pagos_Documentos
             ' *********************************************************************
             Dim _Error_PDF As String
 
-            _Error_PDF = Fx_Guargar_PDF_Automaticamente_Por_Doc_Modalidad(_Idmaeedo)
+            _Error_PDF = Fx_Guargar_PDF_Automaticamente_Por_Doc_Modalidad(_Idmaeedo, ModEmpresa, Modalidad)
 
             If Not String.IsNullOrEmpty(_Error_PDF) Then
                 MessageBoxEx.Show(Me, _Error_PDF, "Error al querer grabar PDF automático", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -3888,10 +3888,10 @@ Public Class Frm_Pagos_Documentos
     End Sub
 
     Private Sub Btn_PDF_BLV_Click(sender As Object, e As EventArgs) Handles Btn_PDF_BLV.Click
-        Sb_Configuracion_Salida_PDF(Me, "BLV")
+        Sb_Configuracion_Salida_PDF(Me, ModEmpresa, Modalidad, "BLV")
     End Sub
 
     Private Sub Btn_PDF_FCV_Click(sender As Object, e As EventArgs) Handles Btn_PDF_FCV.Click
-        Sb_Configuracion_Salida_PDF(Me, "FCV")
+        Sb_Configuracion_Salida_PDF(Me, ModEmpresa, Modalidad, "FCV")
     End Sub
 End Class

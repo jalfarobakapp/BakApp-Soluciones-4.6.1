@@ -29,17 +29,19 @@ Public Class Frm_ImpMasiva
 
     Private Sub Frm_ImpMasiva_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        Dim _Filtro As String = Generar_Filtro_IN_Lista2(_Ls_Idmaeedo, False, "")
+        'Dim _Filtro As String = Generar_Filtro_IN_Lista2(_Ls_Idmaeedo, False, "")
 
-        Consulta_sql = "Select IDMAEEDO,TIDO,NUDO From MAEEDO Where IDMAEEDO In " & _Filtro
-        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+        'Consulta_sql = "Select IDMAEEDO,TIDO,NUDO From MAEEDO Where IDMAEEDO In " & _Filtro
+        'Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
-        For Each _Row As DataRow In _Tbl.Rows
-
-            ListaDocumentos.Add(Cl_ImpMasiva.Fx_llenar_ImpDocumento(_Row.Item("IDMAEEDO")))
-
+        'For Each _Row As DataRow In _Tbl.Rows
+        For Each _Idmaeedo As String In _Ls_Idmaeedo
+            ListaDocumentos.Add(Cl_ImpMasiva.Fx_llenar_ImpDocumento(_Idmaeedo))
         Next
 
+        'Next
+
+        Sb_Parametros_Informe_Sql(False)
         Sb_ActualizarGrilla()
 
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
@@ -96,7 +98,7 @@ Public Class Frm_ImpMasiva
 
             .Columns("Nokoen").Visible = True
             .Columns("Nokoen").HeaderText = "Razon social"
-            .Columns("Nokoen").Width = 300
+            .Columns("Nokoen").Width = 350
             .Columns("Nokoen").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -220,10 +222,69 @@ Public Class Frm_ImpMasiva
 
     Private Sub Chk_Marcar_Todas_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Marcar_Todas.CheckedChanged
 
-        For Each _Row As ImpMasiva.ImpDocumentos In ListaDocumentos
-            _Row.Chk = Chk_Marcar_Todas.Checked
+        For Each row As DataGridViewRow In Grilla.Rows
+            Dim documento As ImpMasiva.ImpDocumentos = CType(row.DataBoundItem, ImpMasiva.ImpDocumentos)
+            documento.Chk = Chk_Marcar_Todas.Checked
         Next
 
+        Grilla.Refresh()
+
+    End Sub
+
+    Sub Sb_Parametros_Informe_Sql(_Actualizar As Boolean)
+
+        Dim _Informe = "Impresion_Masiva"
+
+        Dim _FechaHoy As Date = FormatDateTime(FechaDelServidor, DateFormat.ShortDate)
+        Dim _Fecha_Hoy = Format(_FechaHoy, "dd-MM-yyyy")
+
+        _Sql.Sb_Parametro_Informe_Sql(Txt_Impresora, _Informe, Txt_Impresora.Name,
+                                                 Class_SQL.Enum_Type._Text, Txt_Impresora.Text, _Actualizar, "Imprimir")
+
+        Dim _Tido As String
+        Dim _Subtido As String
+        Dim _NombreFormato As String
+
+        If _Actualizar Then
+
+            If Not IsNothing(Txt_NombreFormato.Tag) Then
+
+                _Tido = CType(Txt_NombreFormato.Tag, DataRow).Item("TipoDoc")
+                _Subtido = CType(Txt_NombreFormato.Tag, DataRow).Item("Subtido")
+                _NombreFormato = CType(Txt_NombreFormato.Tag, DataRow).Item("NombreFormato")
+
+                _Sql.Sb_Parametro_Informe_Sql(_Tido, _Informe, "Tido",
+                                         Class_SQL.Enum_Type._Text, _Tido, _Actualizar, "Imprimir", True)
+                _Sql.Sb_Parametro_Informe_Sql(_Subtido, _Informe, "Subtido",
+                                        Class_SQL.Enum_Type._Text, _Subtido, _Actualizar, "Imprimir", True)
+                _Sql.Sb_Parametro_Informe_Sql(_NombreFormato, _Informe, "NombreFormato",
+                                        Class_SQL.Enum_Type._Text, _NombreFormato, _Actualizar, "Imprimir", True)
+            End If
+
+        Else
+
+            _Sql.Sb_Parametro_Informe_Sql(_Tido, _Informe, "Tido",
+                                         Class_SQL.Enum_Type._Text, _Tido, _Actualizar, "Imprimir", True)
+            _Sql.Sb_Parametro_Informe_Sql(_Subtido, _Informe, "Subtido",
+                                        Class_SQL.Enum_Type._Text, "", _Actualizar, "Imprimir", True)
+            _Sql.Sb_Parametro_Informe_Sql(_NombreFormato, _Informe, "NombreFormato",
+                                        Class_SQL.Enum_Type._Text, "", _Actualizar, "Imprimir", True)
+
+            Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Format_01" & Space(1) &
+                           "Where TipoDoc = '" & _Tido & "' And Subtido = '" & _Subtido & "' And NombreFormato = '" & _NombreFormato & "'"
+            Dim _Row_Formato_Seleccionado = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If Not IsNothing(_Row_Formato_Seleccionado) Then
+                Txt_NombreFormato.Tag = _Row_Formato_Seleccionado
+                Txt_NombreFormato.Text = _Row_Formato_Seleccionado.Item("NombreFormato")
+                Chk_ImprimirCedible.Checked = _Row_Formato_Seleccionado.Item("Doc_Electronico")
+            End If
+
+        End If
+
+    End Sub
+    Private Sub Frm_ImpMasiva_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+        Sb_Parametros_Informe_Sql(True)
     End Sub
 
 End Class

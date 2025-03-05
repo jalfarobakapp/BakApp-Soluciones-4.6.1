@@ -462,7 +462,7 @@ Public Class Frm_Facturacion_Masiva
 
                             Dim _Error_PDF As String
 
-                            _Error_PDF = Fx_Guargar_PDF_Automaticamente_Por_Doc_Modalidad(_Idmaeedo_Fcv)
+                            _Error_PDF = Fx_Guargar_PDF_Automaticamente_Por_Doc_Modalidad(_Idmaeedo_Fcv, ModEmpresa, Modalidad)
 
                         End If
 
@@ -557,34 +557,34 @@ Public Class Frm_Facturacion_Masiva
 
                 If Fx_Se_Puede_Trasladar_Para_Crear_Otro_Documento(_Idmaeedo_Origen) Then
 
-                        Dim _Empresa As String = ModEmpresa
-                        Dim _Sucursal As String = ModSucursal
-                        Dim _Bodega As String = ModBodega
+                    Dim _Empresa As String = ModEmpresa
+                    Dim _Sucursal As String = ModSucursal
+                    Dim _Bodega As String = ModBodega
 
-                        Dim _Permiso = "Bo" & _Empresa & _Sucursal & _Bodega
+                    Dim _Permiso = "Bo" & _Empresa & _Sucursal & _Bodega
 
-                        If Not Fx_Tiene_Permiso(_Formulario, _Permiso, , True) Then
+                    If Not Fx_Tiene_Permiso(_Formulario, _Permiso, , True) Then
 
-                            Dim _Bod = _Global_Row_Configuracion_Estacion.Item("NOKOBO")
-                            MessageBoxEx.Show(_Formulario, "NO ESTA AUTORIZADO PARA EFECTUAR DOCUMENTOS DESDE LA BODEGA DE ESTA MODALIDAD" & vbCrLf & vbCrLf &
+                        Dim _Bod = _Global_Row_Configuracion_Estacion.Item("NOKOBO")
+                        MessageBoxEx.Show(_Formulario, "NO ESTA AUTORIZADO PARA EFECTUAR DOCUMENTOS DESDE LA BODEGA DE ESTA MODALIDAD" & vbCrLf & vbCrLf &
                                               "BODEGA: " & _Bodega & " - " & _Bod,
                                               "VALIDACION",
                                               MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, _Formulario.TopMost)
-                            Return 0
+                        Return 0
 
+                    End If
+
+                    If Fx_Tiene_Permiso(_Formulario, _Permiso) Then
+
+                        Dim _CampoPrecio As String
+
+                        If _Meardo = "N" Then ' Neto
+                            _CampoPrecio = "PPPRNE"
+                        Else ' Bruto
+                            _CampoPrecio = "PPPRBR"
                         End If
 
-                        If Fx_Tiene_Permiso(_Formulario, _Permiso) Then
-
-                            Dim _CampoPrecio As String
-
-                            If _Meardo = "N" Then ' Neto
-                                _CampoPrecio = "PPPRNE"
-                            Else ' Bruto
-                                _CampoPrecio = "PPPRBR"
-                            End If
-
-                            Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Origen & "
+                        Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Origen & "
                                             Select *,Case When UDTRPR = 1 Then CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 End As 'Cantidad',
                                             CAPRCO1-CAPREX1 As 'CantUd1_Dori',CAPRCO2-CAPREX2 As 'CantUd2_Dori',
                                             Case WHEN UDTRPR = 1 Then " & _CampoPrecio & " Else " & _CampoPrecio & "*RLUDPR End AS 'Precio',
@@ -598,34 +598,34 @@ Public Class Frm_Facturacion_Masiva
                                             Where IDMAEEDO = " & _Idmaeedo_Origen & " 
                                             Select TOP 1 * From MAEEDOOB Where IDMAEEDO = " & _Idmaeedo_Origen
 
-                            'Falta revisar el campo SUBTIDO, ya que al parecer se guardan datos dependiendo del tipo de FCC por ejemplo si tiene derecho a credito fiscal
-                            'Falta campo FECHATRIB = Fecha de ingreso
+                        'Falta revisar el campo SUBTIDO, ya que al parecer se guardan datos dependiendo del tipo de FCC por ejemplo si tiene derecho a credito fiscal
+                        'Falta campo FECHATRIB = Fecha de ingreso
 
-                            ' SUBTIDO
-                            '-- 001 Sin derecho a credito fiscal y Sin documento contiene activo fijo
-                            '-- 000 Documento contiene activo fijo y Sin derecho a credito fiscal
-                            '-- 101 Conderecho a credito fiscal y documento contiene activo fijo
-                            '-- 100 Con derecho a credito fiscal y sin documento contiene activo fijo
-                            '-- '' -- No incluye este documento en el libro de compras 
+                        ' SUBTIDO
+                        '-- 001 Sin derecho a credito fiscal y Sin documento contiene activo fijo
+                        '-- 000 Documento contiene activo fijo y Sin derecho a credito fiscal
+                        '-- 101 Conderecho a credito fiscal y documento contiene activo fijo
+                        '-- 100 Con derecho a credito fiscal y sin documento contiene activo fijo
+                        '-- '' -- No incluye este documento en el libro de compras 
 
-                            Dim _Ds_Maeedo_Origen As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
+                        Dim _Ds_Maeedo_Origen As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
 
-                            Dim Fm_Post As New Frm_Formulario_Documento("FCV", csGlobales.Enum_Tipo_Documento.Venta, False)
-                            Fm_Post.Sb_Limpiar(Modalidad)
-                            Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(Me, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True)
-                            Fm_Post.Fx_Grabar_Documento(False, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento, True, False)
-                            _New_Idmaeedo = Fm_Post.Pro_Idmaeedo
-                            Fm_Post.Sb_Activar_Orden_De_Despacho(_New_Idmaeedo)
-                            Fm_Post.Dispose()
-
-                        End If
-
-                    Else
-
-                        MessageBoxEx.Show(_Formulario, "Nota de venta Nro: " & _Nudo & " se encuentra cerrado completamente", "Documento cerrado",
-                                  MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, _Formulario.TopMost)
+                        Dim Fm_Post As New Frm_Formulario_Documento("FCV", csGlobales.Enum_Tipo_Documento.Venta, False)
+                        Fm_Post.Sb_Limpiar(Modalidad)
+                        Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(Me, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True)
+                        Fm_Post.Fx_Grabar_Documento(False, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento, True, False)
+                        _New_Idmaeedo = Fm_Post.Pro_Idmaeedo
+                        Fm_Post.Sb_Activar_Orden_De_Despacho(_New_Idmaeedo)
+                        Fm_Post.Dispose()
 
                     End If
+
+                Else
+
+                    MessageBoxEx.Show(_Formulario, "Nota de venta Nro: " & _Nudo & " se encuentra cerrado completamente", "Documento cerrado",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, _Formulario.TopMost)
+
+                End If
 
                 'End If
 
@@ -989,7 +989,7 @@ Public Class Frm_Facturacion_Masiva
     End Sub
 
     Private Sub Btn_Impresion_PDF_Click(sender As Object, e As EventArgs) Handles Btn_Impresion_PDF.Click
-        Sb_Configuracion_Salida_PDF(Me, _Tido)
+        Sb_Configuracion_Salida_PDF(Me, ModEmpresa, Modalidad, _Tido)
     End Sub
 
     Private Sub Btn_Opciones_Especiales_Click(sender As Object, e As EventArgs) Handles Btn_Opciones_Especiales.Click

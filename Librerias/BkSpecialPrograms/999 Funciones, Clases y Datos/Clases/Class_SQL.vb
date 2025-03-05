@@ -645,7 +645,7 @@ Public Class Class_SQL
     End Sub
 
     Enum Enum_Type
-        _String
+        _Text
         _Double
         _Boolean
         _Date
@@ -699,7 +699,7 @@ Public Class Class_SQL
             If (_Row_Fila Is Nothing) Then
 
                 Select Case _Tipo
-                    Case Enum_Type._String, Enum_Type._ComboBox, Enum_Type._Tag
+                    Case Enum_Type._Text, Enum_Type._ComboBox, Enum_Type._Tag
                         _Valor = _Valor_x_defecto
                     Case Enum_Type._Double
                         _Valor = De_Txt_a_Num_01(_Valor_x_defecto)
@@ -732,7 +732,7 @@ Public Class Class_SQL
                             _Valor = _Objeto
                         Else
                             Select Case _Tipo
-                                Case Enum_Type._String
+                                Case Enum_Type._Text
                                     _Valor = _Objeto.Text
                                 Case Enum_Type._Tag
                                     _Valor = _Objeto.Tag
@@ -752,14 +752,14 @@ Public Class Class_SQL
                     End If
 
                     Consulta_sql = "Update " & _Global_BaseBk & "Zw_Tmp_Prm_Informes Set Valor = '" & _Valor & "'" & vbCrLf &
-                               "Where Funcionario = '" & _Funcionario & "' And Informe = '" & _Informe & "' " &
-                               "And Campo = '" & _Campo & "' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & _Modalidad & "'"
+                                   "Where Funcionario = '" & _Funcionario & "' And Informe = '" & _Informe & "' " &
+                                   "And Campo = '" & _Campo & "' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & _Modalidad & "'"
                     Ej_consulta_IDU(Consulta_sql, False)
 
                 Else
 
                     Select Case _Tipo
-                        Case Enum_Type._String, Enum_Type._ComboBox, Enum_Type._Tag
+                        Case Enum_Type._Text, Enum_Type._ComboBox, Enum_Type._Tag
                             _Valor = _Row_Fila.Item("Valor")
                         Case Enum_Type._Double
                             _Valor = De_Txt_a_Num_01(_Row_Fila.Item("Valor"))
@@ -780,7 +780,7 @@ Public Class Class_SQL
                     _Objeto = _Valor
                 Else
                     Select Case _Tipo
-                        Case Enum_Type._String
+                        Case Enum_Type._Text
                             _Objeto.Text = _Valor
                         Case Enum_Type._Tag
                             _Objeto.Tag = _Valor

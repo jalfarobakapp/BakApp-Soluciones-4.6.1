@@ -860,9 +860,9 @@ Public Class Frm_GRI_FabXProducto
         'Dim _Analista = _Cl_Tarja._Cl_Tarja_Ent.Analista
 
         _Sql.Sb_Parametro_Informe_Sql(_Turno, "Produccion_Tarja",
-                                      "Tarja_Turno", Class_SQL.Enum_Type._String, _Turno, _Actualizar,, True)
+                                      "Tarja_Turno", Class_SQL.Enum_Type._Text, _Turno, _Actualizar,, True)
         _Sql.Sb_Parametro_Informe_Sql(_Planta, "Produccion_Tarja",
-                                      "Tarja_Planta", Class_SQL.Enum_Type._String, _Planta, _Actualizar,, True)
+                                      "Tarja_Planta", Class_SQL.Enum_Type._Text, _Planta, _Actualizar,, True)
         '_Sql.Sb_Parametro_Informe_Sql(_Analista, "Produccion_Tarja",
         '                              "Tarja_Analista", Class_SQL.Enum_Type._String, _Analista, _Actualizar,, True)
 

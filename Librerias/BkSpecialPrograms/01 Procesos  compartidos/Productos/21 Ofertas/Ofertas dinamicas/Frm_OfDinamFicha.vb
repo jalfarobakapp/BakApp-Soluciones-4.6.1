@@ -386,7 +386,7 @@ Where CODIGO = '" & _Codigo & "'" & vbCrLf
     Sub Sb_Grabar_Parametros_SQL(_Actualizar As Boolean)
 
         _Sql.Sb_Parametro_Informe_Sql(Txt_Listas, "Ofertas_Dinamincas",
-                              Txt_Listas.Name, Class_SQLite.Enum_Type._String, Txt_Listas.Text, _Actualizar,, False)
+                              Txt_Listas.Name, Class_SQLite.Enum_Type._Text, Txt_Listas.Text, _Actualizar,, False)
 
         _Sql.Sb_Parametro_Informe_Sql(Chk_Desc_Lun, "Ofertas_Dinamincas",
                               Chk_Desc_Lun.Name, Class_SQLite.Enum_Type._Boolean, Chk_Desc_Lun.Checked, _Actualizar,, False)
@@ -410,7 +410,7 @@ Where CODIGO = '" & _Codigo & "'" & vbCrLf
                       Chk_Desc_Dom.Name, Class_SQLite.Enum_Type._Boolean, Chk_Desc_Dom.Checked, _Actualizar,, False)
 
         _Sql.Sb_Parametro_Informe_Sql(Txt_Udad, "Ofertas_Dinamincas",
-                              Txt_Udad.Name, Class_SQLite.Enum_Type._String, Txt_Udad.Text, _Actualizar,, False)
+                              Txt_Udad.Name, Class_SQLite.Enum_Type._Text, Txt_Udad.Text, _Actualizar,, False)
 
     End Sub
 

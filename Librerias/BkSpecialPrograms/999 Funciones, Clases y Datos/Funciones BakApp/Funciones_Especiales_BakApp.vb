@@ -4824,7 +4824,7 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Function
 
-    Function Fx_Guargar_PDF_Automaticamente_Por_Doc_Modalidad(_Idmaeedo As Integer) As String
+    Function Fx_Guargar_PDF_Automaticamente_Por_Doc_Modalidad(_Idmaeedo As Integer, _Empresa As String, _Modalidad As String) As String
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
         Dim _Error = String.Empty
@@ -4839,7 +4839,7 @@ Public Module Crear_Documentos_Desde_Otro
                 Return ""
             End If
 
-            Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo & "-- And NUDONODEFI = 0"
+            Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo
             Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If IsNothing(_Row_Documento) Then
@@ -4851,14 +4851,12 @@ Public Module Crear_Documentos_Desde_Otro
             Dim _Nudonodefi As String = _Row_Documento.Item("NUDONODEFI")
             Dim _Tidoelec As Boolean = _Row_Documento.Item("TIDOELEC")
 
-            'Dim _Subtido As String = _Sql.Fx_Trae_Dato("MAEEDO", "SUBTIDO", "IDMAEEDO = " & _Idmaeedo)
-
             If _Nudonodefi Then
                 Return ""
             End If
 
-            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad 
-                            Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & Modalidad & "' And TipoDoc = '" & _Tido & "'"
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad" & vbCrLf &
+                           "Where Empresa = '" & _Empresa & "' And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'"
             Dim _RowFormato_Mod As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             Dim _Guardar_PDF_Auto As Boolean = _RowFormato_Mod.Item("Guardar_PDF_Auto")
@@ -4870,7 +4868,7 @@ Public Module Crear_Documentos_Desde_Otro
                 Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
 
                 _Ruta_PDF = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Estaciones_Ruta_PDF", "Ruta_PDF",
-                                              "Empresa = '" & ModEmpresa & "' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "' And Tido = '" & _Tido & "'")
+                                              "Empresa = '" & _Empresa & "' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & _Modalidad & "' And Tido = '" & _Tido & "'")
 
                 If Not Directory.Exists(_Ruta_PDF) Then
                     Return "No se puede guardar el PDF. No existe Ruta (Carpeta de destino de los archivos)"
@@ -5297,7 +5295,7 @@ Public Module Crear_Documentos_Desde_Otro
         GRI_Gen
     End Enum
 
-    Sub Sb_Configuracion_Salida_PDF(_Formulario As Form, _Tido As String)
+    Sub Sb_Configuracion_Salida_PDF(_Formulario As Form, _Empresa As String, _Modalidad As String, _Tido As String)
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
@@ -5307,9 +5305,8 @@ Public Module Crear_Documentos_Desde_Otro
 
         Dim _Ruta_PDF = String.Empty
 
-        Consulta_sql = "Select *
-                        From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad" & vbCrLf &
-                        "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & Modalidad & "' And TipoDoc = '" & _Tido & "'"
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad" & vbCrLf &
+                       "Where Empresa = '" & _Empresa & "' And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'"
         Dim _RowFormato_Mod As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Dim _Guardar_PDF_Auto As Boolean = _RowFormato_Mod.Item("Guardar_PDF_Auto")
@@ -5333,7 +5330,7 @@ Public Module Crear_Documentos_Desde_Otro
         End If
 
         _Ruta_PDF = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Estaciones_Ruta_PDF", "Ruta_PDF",
-                                      "NombreEquipo = '" & _NombreEquipo & "' And Empresa = '" & ModEmpresa & "' And Modalidad = '" & Modalidad & "' And Tido = '" & _Tido & "' And Tipo_Ruta = 'PDF'")
+                                      "NombreEquipo = '" & _NombreEquipo & "' And Empresa = '" & _Empresa & "' And Modalidad = '" & _Modalidad & "' And Tido = '" & _Tido & "' And Tipo_Ruta = 'PDF'")
 
         If Directory.Exists(_Ruta_PDF) Then
 
@@ -5378,15 +5375,15 @@ Public Module Crear_Documentos_Desde_Otro
 
         End If
 
-
         If String.IsNullOrEmpty(_Ruta_PDF) Then
             Return
         End If
 
         Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Estaciones_Ruta_PDF" & vbCrLf &
-                           "Where NombreEquipo = '" & _NombreEquipo & "' And Empresa = '" & ModEmpresa & "' And Modalidad = '" & Modalidad & "' And Tido = '" & _Tido & "' And Tipo_Ruta = 'PDF'" & vbCrLf &
-                           "Insert Into " & _Global_BaseBk & "Zw_Estaciones_Ruta_PDF (NombreEquipo,Modalidad,Tido,Ruta_PDF,Empresa,Tipo_Ruta) " &
-                            "Values ('" & _NombreEquipo & "','" & Modalidad & "','" & _Tido & "','" & _Ruta_PDF & "','" & ModEmpresa & "','PDF')"
+                       "Where NombreEquipo = '" & _NombreEquipo & "' And Empresa = '" & _Empresa & "' And Modalidad = '" & _Modalidad & "' And Tido = '" & _Tido & "' And Tipo_Ruta = 'PDF'" & vbCrLf &
+                       "Insert Into " & _Global_BaseBk & "Zw_Estaciones_Ruta_PDF (NombreEquipo,Modalidad,Tido,Ruta_PDF,Empresa,Tipo_Ruta) " &
+                       "Values ('" & _NombreEquipo & "','" & _Modalidad & "','" & _Tido & "','" & _Ruta_PDF & "','" & ModEmpresa & "','PDF')"
+
         If _Sql.Ej_consulta_IDU(Consulta_sql) Then
 
             MessageBoxEx.Show(_Formulario, "La carpeta de salida quedo guardada exitosamente", "Validación",

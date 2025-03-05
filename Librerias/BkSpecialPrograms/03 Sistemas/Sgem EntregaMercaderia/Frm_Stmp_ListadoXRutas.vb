@@ -53,22 +53,31 @@ Public Class Frm_Stmp_ListadoXRutas
 
     Sub Sb_Actualizar_Grilla()
 
-        'Consulta_sql = "Select Distinct Edo.IDMAEEDO,Edo.TIDO,Edo.NUDO,Edo.ENDO,Edo.SUENDO,Edo.FEEMDO," &
-        '               "DdoFcv.IDMAEEDO As 'IDMAEEDO_Fcv',DdoFcv.TIDO As 'TD',DdoFcv.NUDO As 'NUDO_Fcv'--,DdoFcv.FEEMLI as 'F.Cierre'" & vbCrLf &
-        '               "Into #PasoFacturadas" & vbCrLf &
-        '               "From MAEDDO Ddo" & vbCrLf &
-        '               "Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO" & vbCrLf &
-        '               "Inner Join MAEDDO DdoFcv on Ddo.IDMAEDDO = DdoFcv.IDRST And DdoFcv.ARCHIRST = 'MAEDDO'" & vbCrLf &
-        '               "Where Edo.IDMAEEDO In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Stmp_Enc " &
-        '               "Where Estado In ('PREPA','COMPL'))" & vbCrLf &
-        '               "Order By Edo.TIDO,Edo.NUDO" & vbCrLf &
-        '                vbCrLf &
-        '               "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Estado = 'FACTU',Facturar = 1,IdmaeedoGen = Ps.IDMAEEDO_Fcv,TidoGen = Ps.TD,NudoGen = Ps.NUDO_Fcv" & vbCrLf &
-        '               "From " & _Global_BaseBk & "Zw_Stmp_Enc Enc" & vbCrLf &
-        '               "Inner Join #PasoFacturadas Ps On Enc.Idmaeedo = Ps.IDMAEEDO" & vbCrLf &
-        '               "Drop Table #PasoFacturadas"
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Estado = 'COMPL' And Facturar = 1 And ProblemaFac = 0"
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
-        '_Sql.Ej_consulta_IDU(Consulta_sql)
+        For Each _Fl As DataRow In _Tbl.Rows
+
+            Dim _Id As Integer = _Fl.Item("Id")
+            Dim _Idmaeedo As Integer = _Fl.Item("Idmaeedo")
+
+            Consulta_sql = "Select Top 1 e.IDMAEEDO,e.TIDO,e.NUDO" & vbCrLf &
+                           "From MAEEDO e" & vbCrLf &
+                           "Inner Join MAEDDO d on e.IDMAEEDO = d.IDMAEEDO" & vbCrLf &
+                           "Where d.IDRST In (Select IDMAEDDO From MAEDDO Where IDMAEEDO = " & _Idmaeedo & ")"
+            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If Not IsNothing(_Row) Then
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set " &
+                               "Estado = 'FACTU'" &
+                               ",IdmaeedoGen = " & _Row.Item("IDMAEEDO") &
+                               ",TidoGen = '" & _Row.Item("TIDO") & "'" &
+                               ",NudoGen = '" & _Row.Item("NUDO") & "'" & vbCrLf &
+                               "Where Id = " & _Id
+                _Sql.Ej_consulta_IDU(Consulta_sql)
+            End If
+
+        Next
 
         'Me.Cursor = Cursors.WaitCursor
 

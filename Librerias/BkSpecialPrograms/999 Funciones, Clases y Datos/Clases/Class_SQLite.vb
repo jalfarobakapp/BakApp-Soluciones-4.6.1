@@ -187,7 +187,7 @@ Public Class Class_SQLite
     End Sub
 
     Enum Enum_Type
-        _String
+        _Text
         _Double
         _Boolean
         _Date
@@ -196,11 +196,11 @@ Public Class Class_SQLite
         _Switch
     End Enum
 
-    Function Fx_Trae_Dato(ByVal _Tabla As String, _
-                         ByVal _Campo As String, _
-                         Optional ByVal _Condicion As String = "", _
-                         Optional ByVal _DevNumero As Boolean = False, _
-                         Optional ByVal _MostrarError As Boolean = True, _
+    Function Fx_Trae_Dato(ByVal _Tabla As String,
+                         ByVal _Campo As String,
+                         Optional ByVal _Condicion As String = "",
+                         Optional ByVal _DevNumero As Boolean = False,
+                         Optional ByVal _MostrarError As Boolean = True,
                          Optional ByVal _Dato_Default As String = "") As String
         Try
             _Error = String.Empty
@@ -216,7 +216,7 @@ Public Class Class_SQLite
             End If
             'Then Valor_Si_No_Encuentra = 0
 
-            Dim _Sql As String = "SELECT " & _Campo & " AS CAMPO FROM " & _Tabla & vbCrLf & _
+            Dim _Sql As String = "SELECT " & _Campo & " AS CAMPO FROM " & _Tabla & vbCrLf &
                                  "Where 1 > 0" & _Condicion
 
 
@@ -255,10 +255,10 @@ Public Class Class_SQLite
 
     End Function
 
-    Sub Sb_Parametro_Informe_Sqlite(ByRef _Objeto As Object, _
-                                    ByVal _Informe As String, _
-                                    ByVal _Campo As String, _
-                                    ByVal _Tipo As Enum_Type, _
+    Sub Sb_Parametro_Informe_Sqlite(ByRef _Objeto As Object,
+                                    ByVal _Informe As String,
+                                    ByVal _Campo As String,
+                                    ByVal _Tipo As Enum_Type,
                                     ByRef _Valor_x_defecto As String)
         Dim Consulta_sql As String
         Dim _Row_Fila As DataRow
@@ -285,7 +285,7 @@ Public Class Class_SQLite
         If (_Row_Fila Is Nothing) Then
 
             Select Case _Tipo
-                Case Enum_Type._String, Enum_Type._ComboBox
+                Case Enum_Type._Text, Enum_Type._ComboBox
                     _Valor = _Valor_x_defecto
                 Case Enum_Type._Double
                     _Valor = De_Txt_a_Num_01(_Valor_x_defecto)
@@ -296,7 +296,7 @@ Public Class Class_SQLite
             End Select
 
             If _Insertar_dato Then
-                Consulta_sql = "INSERT INTO Tbl_Prm_Informes (Informe,Campo,Tipo,Valor) VALUES" & Space(1) & _
+                Consulta_sql = "INSERT INTO Tbl_Prm_Informes (Informe,Campo,Tipo,Valor) VALUES" & Space(1) &
                           "('" & _Informe & "','" & _Campo & "','" & Replace(_Tipo.ToString, "_", "") & "','" & _Valor & "')"
                 Ej_consulta_IDU(Consulta_sql)
             End If
@@ -304,7 +304,7 @@ Public Class Class_SQLite
         Else
 
             Select Case _Tipo
-                Case Enum_Type._String, Enum_Type._ComboBox
+                Case Enum_Type._Text, Enum_Type._ComboBox
                     _Valor = _Row_Fila.Item("Valor")
                 Case Enum_Type._Double
                     _Valor = De_Txt_a_Num_01(_Row_Fila.Item("Valor"))
@@ -318,7 +318,7 @@ Public Class Class_SQLite
 
         If Not (_Objeto Is Nothing) Then
             Select Case _Tipo
-                Case Enum_Type._String
+                Case Enum_Type._Text
                     _Objeto.Text = _Valor
                 Case Enum_Type._Double
                     _Objeto.Value = De_Txt_a_Num_01(_Valor)

@@ -1,4 +1,6 @@
-﻿Public Class Cl_FacAuto_NVV
+﻿Imports DevComponents.DotNetBar
+
+Public Class Cl_FacAuto_NVV
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_Sql As String
@@ -402,6 +404,13 @@
                         Log_Registro += _Sql.Pro_Error
                     End If
 
+                    Dim _Error_PDF = Fx_Guargar_PDF_Automaticamente_Por_Doc_Modalidad(_Row_Factura.Item("IDMAEEDO"), ModEmpresa, Modalidad_Fac)
+
+                    If Not String.IsNullOrEmpty(_Error_PDF) Then
+                        Log_Registro += _Error_PDF
+                        'MessageBoxEx.Show(Me, _Error_PDF, "Error al querer grabar PDF automático", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    End If
+
                 Else
 
                     _Mensaje.Mensaje = Replace(_Mensaje.Mensaje, "'", "''")
@@ -707,10 +716,10 @@
 
             Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros("CONFIEST", "MODALIDAD = '" & _Modalidad & "'")
+            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros("CONFIEST", "MODALIDAD = '" & _Modalidad & "'", False)
 
             If _Reg = 0 Then
-                Throw New System.Exception("No existe la modalidad " & _Modalidad)
+                Throw New System.Exception(_Sql.Pro_Error)
             End If
 
             Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Formulario, _Modalidad, _TidoDocEmitir, False)

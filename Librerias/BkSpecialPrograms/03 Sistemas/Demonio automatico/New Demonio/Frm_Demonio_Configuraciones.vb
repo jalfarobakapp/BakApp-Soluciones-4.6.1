@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports DevComponents.DotNetBar
+Imports MySql.Data.Authentication
 
 Public Class Frm_Demonio_Configuraciones
 
@@ -182,6 +183,26 @@ Public Class Frm_Demonio_Configuraciones
         If Chk_NVVAuto.Checked AndAlso String.IsNullOrWhiteSpace(Txt_NvvAuto_Modalidad.Text) Then
             MessageBoxEx.Show(Me, "Falta la modalidad para las notas de venta automáticas externas", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
+        End If
+
+        If Chk_FacAuto.Checked Then
+
+            If Not _Global_Row_Configuracion_General.Item("FacElec_Bakapp_Hefesto") Then
+
+                Dim _Directorio_GenDTE As String = _Global_Row_EstacionBk.Item("Directorio_GenDTE")
+
+                If Not Directory.Exists(_Directorio_GenDTE) Then
+
+                    MessageBoxEx.Show(Me, "El directorio GenDTE no existe o no esta registrado." & vbCrLf &
+                                      "Debe configurar esta carpeta en la configuración local del equipo", "Validación",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                    Chk_FacAuto.Checked = False
+                    Return
+                End If
+
+            End If
+
         End If
 
         Sb_Parametros_Informe_Sql(True)
@@ -651,7 +672,7 @@ Public Class Frm_Demonio_Configuraciones
                                       Chk_ActualizarListaMayoristaMinorista.Name, Class_SQLite.Enum_Type._Boolean,
                                       Chk_ActualizarListaMayoristaMinorista.Checked, _Actualizar, "Correo",, False)
         _Sql.Sb_Parametro_Informe_Sql(Txt_CorreoMayoristaMinorista, "Demonio",
-                                      Txt_CorreoMayoristaMinorista.Name, Class_SQLite.Enum_Type._String,
+                                      Txt_CorreoMayoristaMinorista.Name, Class_SQLite.Enum_Type._Text,
                                       Txt_CorreoMayoristaMinorista.Text, _Actualizar, "Correo",, False)
         _Sql.Sb_Parametro_Informe_Sql(Txt_CorreoMayoristaMinorista, "Demonio",
                                       Txt_CorreoMayoristaMinorista.Name, Class_SQLite.Enum_Type._Tag,
@@ -690,7 +711,7 @@ Public Class Frm_Demonio_Configuraciones
                                       Chk_ArchivarDoc.Name, Class_SQLite.Enum_Type._Boolean,
                                       Chk_ArchivarDoc.Checked, _Actualizar, "ArchivarDoc",, False)
         _Sql.Sb_Parametro_Informe_Sql(Txt_DirArchivarDoc, "Demonio",
-                                      Txt_DirArchivarDoc.Name, Class_SQLite.Enum_Type._String,
+                                      Txt_DirArchivarDoc.Name, Class_SQLite.Enum_Type._Text,
                                       Txt_DirArchivarDoc.Text, _Actualizar, "ArchivarDoc",, False)
 
         'Consolidar stock
@@ -752,7 +773,7 @@ Public Class Frm_Demonio_Configuraciones
                                       Chk_FacAuto.Name, Class_SQLite.Enum_Type._Boolean,
                                       Chk_FacAuto.Checked, _Actualizar, "FacAuto",, False)
         _Sql.Sb_Parametro_Informe_Sql(Txt_FacAuto_Modalidad, "Demonio",
-                                      Txt_FacAuto_Modalidad.Name, Class_SQLite.Enum_Type._String,
+                                      Txt_FacAuto_Modalidad.Name, Class_SQLite.Enum_Type._Text,
                                       Txt_FacAuto_Modalidad.Text, _Actualizar, "FacAuto",, False)
         _Sql.Sb_Parametro_Informe_Sql(Rdb_FacAuto_Dia, "Demonio",
                                       Rdb_FacAuto_Dia.Name, Class_SQLite.Enum_Type._Boolean,
@@ -776,7 +797,7 @@ Public Class Frm_Demonio_Configuraciones
                                       Rdb_FacAuto_SoloDeSucModalidad.Checked, _Actualizar, "FacAuto",, False)
 
         _Sql.Sb_Parametro_Informe_Sql(Txt_FacAuto_CodFunFactura, "Demonio",
-                                      Txt_FacAuto_CodFunFactura.Name, Class_SQLite.Enum_Type._String,
+                                      Txt_FacAuto_CodFunFactura.Name, Class_SQLite.Enum_Type._Text,
                                       Txt_FacAuto_CodFunFactura.Tag, _Actualizar, "FacAuto",, False)
 
         Txt_FacAuto_CodFunFactura.Text = Replace(Txt_FacAuto_CodFunFactura.Tag, "''", "'")
@@ -797,7 +818,7 @@ Public Class Frm_Demonio_Configuraciones
                                       Chk_SolProdBod.Name, Class_SQLite.Enum_Type._Boolean,
                                       Chk_SolProdBod.Checked, _Actualizar, "SolProdBod",, False)
         _Sql.Sb_Parametro_Informe_Sql(Txt_ImpSolProdBod, "Demonio",
-                                      Txt_ImpSolProdBod.Name, Class_SQLite.Enum_Type._String,
+                                      Txt_ImpSolProdBod.Name, Class_SQLite.Enum_Type._Text,
                                       Txt_ImpSolProdBod.Text, _Actualizar, "SolProdBod",, False)
 
         'Asistente de compras
@@ -858,10 +879,10 @@ Public Class Frm_Demonio_Configuraciones
                                       Input_EnvDocSinRecep_DiasOCI.Name, Class_SQLite.Enum_Type._Double,
                                       Input_EnvDocSinRecep_DiasOCI.Value, _Actualizar, "EnvDocSinRecep",, False)
         _Sql.Sb_Parametro_Informe_Sql(Txt_ParaEnvDocSinRecep, "Demonio",
-                                      Txt_ParaEnvDocSinRecep.Name, Class_SQLite.Enum_Type._String,
+                                      Txt_ParaEnvDocSinRecep.Name, Class_SQLite.Enum_Type._Text,
                                       Txt_ParaEnvDocSinRecep.Text, _Actualizar, "EnvDocSinRecep",, False)
         _Sql.Sb_Parametro_Informe_Sql(Txt_CtaCorreoEnvDocSinRecep, "Demonio",
-                                      Txt_CtaCorreoEnvDocSinRecep.Name, Class_SQLite.Enum_Type._String,
+                                      Txt_CtaCorreoEnvDocSinRecep.Name, Class_SQLite.Enum_Type._Text,
                                       Txt_CtaCorreoEnvDocSinRecep.Text, _Actualizar, "EnvDocSinRecep",, False)
         _Sql.Sb_Parametro_Informe_Sql(Txt_CtaCorreoEnvDocSinRecep, "Demonio",
                                       Txt_CtaCorreoEnvDocSinRecep.Name, Class_SQLite.Enum_Type._Tag,
@@ -872,7 +893,7 @@ Public Class Frm_Demonio_Configuraciones
                                       Chk_NVVAuto.Name, Class_SQLite.Enum_Type._Boolean,
                                       Chk_NVVAuto.Checked, _Actualizar, "NVVAuto",, False)
         _Sql.Sb_Parametro_Informe_Sql(Txt_NvvAuto_Modalidad, "Demonio",
-                                      Txt_NvvAuto_Modalidad.Name, Class_SQLite.Enum_Type._String,
+                                      Txt_NvvAuto_Modalidad.Name, Class_SQLite.Enum_Type._Text,
                                       Txt_NvvAuto_Modalidad.Text, _Actualizar, "NVVAuto",, False)
 
     End Sub
@@ -1038,5 +1059,17 @@ Public Class Frm_Demonio_Configuraciones
     Private Sub Txt_FacAuto_CodFunFactura_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_FacAuto_CodFunFactura.ButtonCustom2Click
         Txt_FacAuto_CodFunFactura.Tag = String.Empty
         Txt_FacAuto_CodFunFactura.Text = String.Empty
+    End Sub
+
+    Private Sub Btn_Rutas_PDF_Facturas_Click(sender As Object, e As EventArgs) Handles Btn_Rutas_PDF_Facturas.Click
+        Sb_Configuracion_Salida_PDF(Me, ModEmpresa, Txt_FacAuto_Modalidad.Text, "FCV")
+    End Sub
+
+    Private Sub Btn_Rutas_PDF_Boletas_Click(sender As Object, e As EventArgs) Handles Btn_Rutas_PDF_Boletas.Click
+        Sb_Configuracion_Salida_PDF(Me, ModEmpresa, Txt_FacAuto_Modalidad.Text, "BLV")
+    End Sub
+
+    Private Sub Btn_Rutas_PDF_Guias_Click(sender As Object, e As EventArgs) Handles Btn_Rutas_PDF_Guias.Click
+        Sb_Configuracion_Salida_PDF(Me, ModEmpresa, Txt_FacAuto_Modalidad.Text, "GDV")
     End Sub
 End Class

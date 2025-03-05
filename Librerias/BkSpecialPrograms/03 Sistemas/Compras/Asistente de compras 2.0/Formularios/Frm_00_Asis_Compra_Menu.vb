@@ -562,8 +562,8 @@ Public Class Frm_00_Asis_Compra_Menu
 
                 Txt_Proveedor.Text = Trim(_RowProveedor.Item("KOEN")) & " - " & Trim(_RowProveedor.Item("NOKOEN"))
 
-                _Sql.Sb_Parametro_Informe_Sql(Nothing, "Compras_Asistente", "Koen", Class_SQLite.Enum_Type._String, _Koen, _Actualizar, "Seleccion_Productos")
-                _Sql.Sb_Parametro_Informe_Sql(Nothing, "Compras_Asistente", "Suen", Class_SQLite.Enum_Type._String, _Suen, _Actualizar, "Seleccion_Productos")
+                _Sql.Sb_Parametro_Informe_Sql(Nothing, "Compras_Asistente", "Koen", Class_SQLite.Enum_Type._Text, _Koen, _Actualizar, "Seleccion_Productos")
+                _Sql.Sb_Parametro_Informe_Sql(Nothing, "Compras_Asistente", "Suen", Class_SQLite.Enum_Type._Text, _Suen, _Actualizar, "Seleccion_Productos")
 
                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Entidades" & vbCrLf &
                                 "Where CodEntidad = '" & _Koen & "' And CodSucEntidad = '" & _Suen & "'"
@@ -847,7 +847,7 @@ Public Class Frm_00_Asis_Compra_Menu
         End If
         '
         _Sql.Sb_Parametro_Informe_Sql(Txt_DbExt_Nombre_Conexion, "Compras_Asistente",
-                                                 Txt_DbExt_Nombre_Conexion.Name, Class_SQLite.Enum_Type._String, Txt_DbExt_Nombre_Conexion.Tag, _Actualizar)
+                                                 Txt_DbExt_Nombre_Conexion.Name, Class_SQLite.Enum_Type._Text, Txt_DbExt_Nombre_Conexion.Tag, _Actualizar)
 
         If Not _Actualizar Then
             Txt_DbExt_Nombre_Conexion.Tag = Txt_DbExt_Nombre_Conexion.Text
@@ -886,8 +886,8 @@ Public Class Frm_00_Asis_Compra_Menu
 
             Txt_ProvEspecial.Text = _RowProveedor_Especial.Item("KOEN").ToString.Trim & " - " & _RowProveedor_Especial.Item("NOKOEN").ToString.Trim
 
-            _Sql.Sb_Parametro_Informe_Sql(Nothing, "Compras_Asistente", "Koen_Especial", Class_SQLite.Enum_Type._String, _Koen_Especial, _Actualizar, "Seleccion_Productos")
-            _Sql.Sb_Parametro_Informe_Sql(Nothing, "Compras_Asistente", "Suen_Especial", Class_SQLite.Enum_Type._String, _Suen_Especial, _Actualizar, "Seleccion_Productos")
+            _Sql.Sb_Parametro_Informe_Sql(Nothing, "Compras_Asistente", "Koen_Especial", Class_SQLite.Enum_Type._Text, _Koen_Especial, _Actualizar, "Seleccion_Productos")
+            _Sql.Sb_Parametro_Informe_Sql(Nothing, "Compras_Asistente", "Suen_Especial", Class_SQLite.Enum_Type._Text, _Suen_Especial, _Actualizar, "Seleccion_Productos")
 
         End If
 
@@ -907,24 +907,24 @@ Public Class Frm_00_Asis_Compra_Menu
         ' AUTOMATIZACION
         '   Id Correo envio OCC Automaticas
         _Sql.Sb_Parametro_Informe_Sql(Txt_CtaCorreoEnvioAutomatizado_OCC, "Compras_Asistente",
-                                      Txt_CtaCorreoEnvioAutomatizado_OCC.Name, Class_SQLite.Enum_Type._String, Txt_CtaCorreoEnvioAutomatizado_OCC.Text, _Actualizar)
+                                      Txt_CtaCorreoEnvioAutomatizado_OCC.Name, Class_SQLite.Enum_Type._Text, Txt_CtaCorreoEnvioAutomatizado_OCC.Text, _Actualizar)
         '   Nombre formato PDF adjunto OCC Automaticas
         _Sql.Sb_Parametro_Informe_Sql(Txt_NombreFormato_PDF_OCC, "Compras_Asistente",
-                                      Txt_NombreFormato_PDF_OCC.Name, Class_SQLite.Enum_Type._String, Txt_NombreFormato_PDF_OCC.Text, _Actualizar)
+                                      Txt_NombreFormato_PDF_OCC.Name, Class_SQLite.Enum_Type._Text, Txt_NombreFormato_PDF_OCC.Text, _Actualizar)
         ' Destinatarios CC para envio de OCC automatizada
         _Sql.Sb_Parametro_Informe_Sql(Txt_CorreoCc_OCC, "Compras_Asistente",
-                                      Txt_CorreoCc_OCC.Name, Class_SQLite.Enum_Type._String, Txt_CorreoCc_OCC.Text, _Actualizar)
+                                      Txt_CorreoCc_OCC.Name, Class_SQLite.Enum_Type._Text, Txt_CorreoCc_OCC.Text, _Actualizar)
 
 
         '   Id Correo envio NVI Automaticas
         _Sql.Sb_Parametro_Informe_Sql(Txt_CtaCorreoEnvioAutomatizado_NVI, "Compras_Asistente",
-                                      Txt_CtaCorreoEnvioAutomatizado_NVI.Name, Class_SQLite.Enum_Type._String, Txt_CtaCorreoEnvioAutomatizado_NVI.Text, _Actualizar)
+                                      Txt_CtaCorreoEnvioAutomatizado_NVI.Name, Class_SQLite.Enum_Type._Text, Txt_CtaCorreoEnvioAutomatizado_NVI.Text, _Actualizar)
         '   Nombre formato PDF adjunto NVI Automaticas
         _Sql.Sb_Parametro_Informe_Sql(Txt_NombreFormato_PDF_NVI, "Compras_Asistente",
-                                      Txt_NombreFormato_PDF_NVI.Name, Class_SQLite.Enum_Type._String, Txt_NombreFormato_PDF_NVI.Text, _Actualizar)
+                                      Txt_NombreFormato_PDF_NVI.Name, Class_SQLite.Enum_Type._Text, Txt_NombreFormato_PDF_NVI.Text, _Actualizar)
         ' Destinatarios CC para envio de NVI automatizada
         _Sql.Sb_Parametro_Informe_Sql(Txt_CorreoCc_NVI, "Compras_Asistente",
-                                      Txt_CorreoCc_NVI.Name, Class_SQLite.Enum_Type._String, Txt_CorreoCc_NVI.Text, _Actualizar)
+                                      Txt_CorreoCc_NVI.Name, Class_SQLite.Enum_Type._Text, Txt_CorreoCc_NVI.Text, _Actualizar)
 
         ' Sumar Stock Externo al Stock Fisico
         _Sql.Sb_Parametro_Informe_Sql(Chk_SumerStockExternoAlFisico, "Compras_Asistente",
@@ -951,7 +951,7 @@ Public Class Frm_00_Asis_Compra_Menu
 
         ' Correo para envio de ordenes con bajo el minimo de compras
         _Sql.Sb_Parametro_Informe_Sql(Txt_CtaCorreoAvisoOCCMinCompra, "Compras_Asistente",
-                                      Txt_CtaCorreoAvisoOCCMinCompra.Name, Class_SQLite.Enum_Type._String, Txt_CtaCorreoAvisoOCCMinCompra.Text, _Actualizar)
+                                      Txt_CtaCorreoAvisoOCCMinCompra.Name, Class_SQLite.Enum_Type._Text, Txt_CtaCorreoAvisoOCCMinCompra.Text, _Actualizar)
 
         ' Check para envia listado minnimo de compra
         _Sql.Sb_Parametro_Informe_Sql(Chk_EnviarListadoOCCConMinimoCompraXCorreo, "Compras_Asistente",
@@ -960,7 +960,7 @@ Public Class Frm_00_Asis_Compra_Menu
 
         ' Correo para envio de proveedores sin stock
         _Sql.Sb_Parametro_Informe_Sql(Txt_CtaCorreoAvisoProveedoresSinStock, "Compras_Asistente",
-                                      Txt_CtaCorreoAvisoProveedoresSinStock.Name, Class_SQLite.Enum_Type._String, Txt_CtaCorreoAvisoProveedoresSinStock.Text, _Actualizar)
+                                      Txt_CtaCorreoAvisoProveedoresSinStock.Name, Class_SQLite.Enum_Type._Text, Txt_CtaCorreoAvisoProveedoresSinStock.Text, _Actualizar)
 
         ' Check para envia listado proveedores sin stock
         _Sql.Sb_Parametro_Informe_Sql(Chk_EnviarListadoProveedoresSinStock, "Compras_Asistente",
@@ -972,7 +972,7 @@ Public Class Frm_00_Asis_Compra_Menu
 
         ' Observaciones para despachar
         _Sql.Sb_Parametro_Informe_Sql(Txt_DespacharA_OCC, "Compras_Asistente",
-                                      Txt_DespacharA_OCC.Name, Class_SQLite.Enum_Type._String, Txt_DespacharA_OCC.Text, _Actualizar)
+                                      Txt_DespacharA_OCC.Name, Class_SQLite.Enum_Type._Text, Txt_DespacharA_OCC.Text, _Actualizar)
 
 
         ' Check para incluir productos excluidos
@@ -1019,8 +1019,8 @@ Public Class Frm_00_Asis_Compra_Menu
             Txt_ProvParaNVVExterna.Text = _RowProveedor_NVVExterna.Item("KOEN").ToString.Trim &
                                     " (" & _RowProveedor_NVVExterna.Item("SUEN").ToString.Trim & ") " & " - " & _RowProveedor_NVVExterna.Item("NOKOEN").ToString.Trim
 
-            _Sql.Sb_Parametro_Informe_Sql(Nothing, "Compras_Asistente", "Koen_NVVExterna", Class_SQLite.Enum_Type._String, _Koen_NVVExterna, _Actualizar, "Seleccion_Productos")
-            _Sql.Sb_Parametro_Informe_Sql(Nothing, "Compras_Asistente", "Suen_NVVExterna", Class_SQLite.Enum_Type._String, _Suen_NVVExterna, _Actualizar, "Seleccion_Productos")
+            _Sql.Sb_Parametro_Informe_Sql(Nothing, "Compras_Asistente", "Koen_NVVExterna", Class_SQLite.Enum_Type._Text, _Koen_NVVExterna, _Actualizar, "Seleccion_Productos")
+            _Sql.Sb_Parametro_Informe_Sql(Nothing, "Compras_Asistente", "Suen_NVVExterna", Class_SQLite.Enum_Type._Text, _Suen_NVVExterna, _Actualizar, "Seleccion_Productos")
 
         End If
 

@@ -5078,8 +5078,8 @@ Public Class Frm_01_Asis_Compra_Resultados
 
             Fm_Hijo.Txt_Proveedor.Text = Trim(_RowProveedor.Item("KOEN")) & " - " & Trim(_RowProveedor.Item("NOKOEN"))
 
-            _Sql.Sb_Parametro_Informe_Sql(Nothing, "Compras_Asistente", "Koen", Class_SQLite.Enum_Type._String, _Koen, _Actualizar, "Seleccion_Productos")
-            _Sql.Sb_Parametro_Informe_Sql(Nothing, "Compras_Asistente", "Suen", Class_SQLite.Enum_Type._String, _Suen, _Actualizar, "Seleccion_Productos")
+            _Sql.Sb_Parametro_Informe_Sql(Nothing, "Compras_Asistente", "Koen", Class_SQLite.Enum_Type._Text, _Koen, _Actualizar, "Seleccion_Productos")
+            _Sql.Sb_Parametro_Informe_Sql(Nothing, "Compras_Asistente", "Suen", Class_SQLite.Enum_Type._Text, _Suen, _Actualizar, "Seleccion_Productos")
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Entidades" & vbCrLf &
                 "Where CodEntidad = '" & _Koen & "' And CodSucEntidad = '" & _Suen & "'"

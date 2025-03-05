@@ -16391,7 +16391,7 @@ Public Class Frm_Formulario_Documento
 
                     Dim _Error_PDF As String
 
-                    _Error_PDF = Fx_Guargar_PDF_Automaticamente_Por_Doc_Modalidad(_Idmaeedo)
+                    _Error_PDF = Fx_Guargar_PDF_Automaticamente_Por_Doc_Modalidad(_Idmaeedo, ModEmpresa, Modalidad)
 
                     If Not String.IsNullOrEmpty(_Error_PDF) Then
                         MessageBoxEx.Show(Me, _Error_PDF, "Error al querer grabar PDF automático", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -27198,7 +27198,7 @@ Public Class Frm_Formulario_Documento
     End Sub
 
     Private Sub Btn_Impresion_PDF_Click(sender As Object, e As EventArgs) Handles Btn_Impresion_PDF.Click
-        Sb_Configuracion_Salida_PDF(Me, _Tido)
+        Sb_Configuracion_Salida_PDF(Me, ModEmpresa, Modalidad, _Tido)
     End Sub
 
     Function Fx_Validar_Detalle_Asociado_Conceptos_DRA() As Boolean

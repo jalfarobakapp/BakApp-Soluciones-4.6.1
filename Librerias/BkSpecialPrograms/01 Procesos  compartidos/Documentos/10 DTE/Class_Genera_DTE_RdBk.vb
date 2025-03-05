@@ -188,7 +188,7 @@ Public Class Class_Genera_DTE_RdBk
         _Iddte = 0
 
         _Idmaeedo = Idmaeedo
-        _Directorio_GenDTE = _Global_Row_EstacionBk.Item("Directorio_GenDTE") 'Directorio_GenDTE
+        _Directorio_GenDTE = _Global_Row_EstacionBk.Item("Directorio_GenDTE")
 
         Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo & Environment.NewLine &
                        "Select * From MAEDDO Where IDMAEEDO = " & _Idmaeedo & " Order by IDMAEDDO" & Environment.NewLine &
