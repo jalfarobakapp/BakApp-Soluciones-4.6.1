@@ -440,7 +440,7 @@ Public Class Frm_Direc_Cli
             If Chk_Por_Defecto.Checked Then
 
                 Consulta_sql += vbCrLf & vbCrLf & "Update " & _Global_BaseBk & "Zw_Despachos_Direcc_Cli Set " & vbCrLf &
-                                "Por_Defecto = 0 Where CodEntidad = '" & _Row_Entidad.Item("KOEN") & "' And Id <> " & _Id
+                                "Por_Defecto = 0 Where CodEntidad = '" & _Row_Entidad.Item("KOEN") & "' And CodSucEntidad = '" & _Row_Entidad.Item("SUEN") & "' And Id <> " & _Id
 
             End If
 

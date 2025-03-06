@@ -850,6 +850,7 @@ Public Class Cl_FacAuto_NVV
                                     Fm_Post.Sb_Activar_Orden_De_Despacho(_Msj_GrabarDoc.Id)
                                 End If
                                 Fm_Post.Dispose()
+
                             Else
 
                                 Throw New System.Exception(_Msj_Limpiar.Mensaje)

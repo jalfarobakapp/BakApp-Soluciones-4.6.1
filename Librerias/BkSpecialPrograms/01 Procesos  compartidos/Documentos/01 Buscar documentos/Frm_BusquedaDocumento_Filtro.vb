@@ -511,26 +511,28 @@ Public Class Frm_BusquedaDocumento_Filtro
             If Not String.IsNullOrEmpty(TxtNroDocumento.Text) Then
 
                 Dim _Nudo As String = Fx_Rellena_ceros(TxtNroDocumento.Text, 10)
-                Dim _Nro As String
+                'Dim _Nro As String
 
-                _Nro = Replace(_Nudo, "-", ",")
+                _Sql_Nro_Documento = "And Edo.NUDO = '" & _Nudo & "'"
 
-                Dim _Cadena = Split(_Nro, ",")
+                '_Nro = Replace(_Nudo, "-", ",")
 
-                If _Cadena.Length = 2 Then
+                'Dim _Cadena = Split(_Nro, ",")
 
-                    Dim _Tido = _Cadena(0)
-                    _Nudo = Fx_Rellena_ceros(_Cadena(1), 10)
+                'If _Cadena.Length = 2 Then
 
-                    _Sql_Filtro_Documentos = String.Empty
-                    _Sql_Nro_Documento = "And Edo.TIDO = '" & _Tido & "' And Edo.NUDO = '" & _Nudo & "'"
-                    _Usar_Otro_Filtros = False
+                '    Dim _Tido = _Cadena(0)
+                '    _Nudo = Fx_Rellena_ceros(_Cadena(1), 10)
 
-                    GoTo Buscar
-                Else
-                    TxtNroDocumento.Text = _Nudo
-                    _Sql_Nro_Documento = "And Edo.NUDO = '" & _Nudo & "'"
-                End If
+                '    _Sql_Filtro_Documentos = String.Empty
+                '    _Sql_Nro_Documento = "And Edo.TIDO = '" & _Tido & "' And Edo.NUDO = '" & _Nudo & "'"
+                '    _Usar_Otro_Filtros = False
+
+                '    GoTo Buscar
+                'Else
+                '    TxtNroDocumento.Text = _Nudo
+                '    _Sql_Nro_Documento = "And Edo.NUDO = '" & _Nudo & "'"
+                'End If
 
             End If
 

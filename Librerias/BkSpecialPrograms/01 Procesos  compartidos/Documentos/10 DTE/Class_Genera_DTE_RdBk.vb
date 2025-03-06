@@ -166,6 +166,8 @@ Public Class Class_Genera_DTE_RdBk
         End Set
     End Property
 
+    Public Property _Mostrar_Mensaje As Boolean = True
+
     Public Sub New(Idmaeedo As Integer)
 
         _Errores = New List(Of String)
@@ -196,7 +198,7 @@ Public Class Class_Genera_DTE_RdBk
                        "--Select Distinct 0 As Id_Ref,0 As NroLinRef,Id_Doc,Tido,Nudo,TpoDocRef,FolioRef,RUTOt,IdAdicOtr,FchRef,CodRef,RazonRef From " & _Global_BaseBk & "Zw_Referencias_Dte Where Id_Doc = " & _Idmaeedo & " And Kasi = 0" & vbCrLf &
                        "--Select Top 1 * From " & _Global_BaseBk & "Zw_Referencias_Dte Where 1<0"
 
-        _Ds_Documento = _Sql.Fx_Get_DataSet(Consulta_sql)
+        _Ds_Documento = _Sql.Fx_Get_DataSet(Consulta_sql, _Mostrar_Mensaje)
 
         _Maeedo = _Ds_Documento.Tables(0)
         _Maeddo = _Ds_Documento.Tables(1)
@@ -230,16 +232,16 @@ Public Class Class_Genera_DTE_RdBk
                 Dim _RowEntidad As DataRow
 
                 Consulta_sql = "Select Top 1 * From MAEEN Where KOEN = '" & _RutEmpresa & "' And TIPOSUC = 'P'"
-                _RowEntidad = _Sql.Fx_Get_DataRow(Consulta_sql)
+                _RowEntidad = _Sql.Fx_Get_DataRow(Consulta_sql, _Mostrar_Mensaje)
 
                 If IsNothing(_RowEntidad) Then
                     Consulta_sql = "Select Top 1 * From MAEEN Where KOEN LIKE '" & _Rten(0) & "%' AND RTEN = '" & _Rten(0) & "' And TIPOSUC = 'P'"
-                    _RowEntidad = _Sql.Fx_Get_DataRow(Consulta_sql)
+                    _RowEntidad = _Sql.Fx_Get_DataRow(Consulta_sql, _Mostrar_Mensaje)
                 End If
 
                 If IsNothing(_RowEntidad) Then
                     Consulta_sql = "Select Top 1 * From MAEEN Where KOEN LIKE '" & _Rten(0) & "%' And TIPOSUC = 'P'"
-                    _RowEntidad = _Sql.Fx_Get_DataRow(Consulta_sql)
+                    _RowEntidad = _Sql.Fx_Get_DataRow(Consulta_sql, _Mostrar_Mensaje)
                 End If
 
                 If Not IsNothing(_RowEntidad) Then
@@ -258,16 +260,16 @@ Public Class Class_Genera_DTE_RdBk
             _Rten = Split(_RutEmpresa, "-")
 
             Consulta_sql = "Select Top 1 * From MAEEN Where KOEN = '" & _RutEmpresa & "' And TIPOSUC = 'P'"
-            _RowMaeenEmisor = _Sql.Fx_Get_DataRow(Consulta_sql)
+            _RowMaeenEmisor = _Sql.Fx_Get_DataRow(Consulta_sql, _Mostrar_Mensaje)
 
             If IsNothing(_RowMaeenEmisor) Then
                 Consulta_sql = "Select Top 1 * From MAEEN Where KOEN LIKE '" & _Rten(0) & "%' AND RTEN = '" & _Rten(0) & "' And TIPOSUC = 'P'"
-                _RowMaeenEmisor = _Sql.Fx_Get_DataRow(Consulta_sql)
+                _RowMaeenEmisor = _Sql.Fx_Get_DataRow(Consulta_sql, _Mostrar_Mensaje)
             End If
 
             If IsNothing(_RowMaeenEmisor) Then
                 Consulta_sql = "Select Top 1 * From MAEEN Where KOEN LIKE '" & _Rten(0) & "%' And TIPOSUC = 'P'"
-                _RowMaeenEmisor = _Sql.Fx_Get_DataRow(Consulta_sql)
+                _RowMaeenEmisor = _Sql.Fx_Get_DataRow(Consulta_sql, _Mostrar_Mensaje)
             End If
 
             If Not IsNothing(_RowMaeenEmisor) Then
@@ -355,7 +357,7 @@ Public Class Class_Genera_DTE_RdBk
         Try
 
             Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Referencias_Dte Where 1<0"
-            _Referencias_DTE = _Sql.Fx_Get_DataTable(Consulta_sql)
+            _Referencias_DTE = _Sql.Fx_Get_DataTable(Consulta_sql, _Mostrar_Mensaje)
 
             Dim _Referencias As New Class_Referencias_DTE(_Idmaeedo)
             _Referencias.Tbl_Referencias = _Referencias_DTE
@@ -374,7 +376,7 @@ Public Class Class_Genera_DTE_RdBk
                                 From MEVENTO Mv
                                 Left Join MAEEDO Edo On Edo.IDMAEEDO = ISNULL(IDRSE,0)
                                 Where ARCHIRVE='MAEEDO' And IDRVE= " & _Idmaeedo
-                Dim _TblRefNCV As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+                Dim _TblRefNCV As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, _Mostrar_Mensaje)
 
                 For Each _Fila As DataRow In _TblRefNCV.Rows
 
@@ -416,7 +418,7 @@ Public Class Class_Genera_DTE_RdBk
                             From MAEEDO 
                             Where IDMAEEDO In (Select IDMAEEDO From MAEDDO Where IDMAEDDO In (Select IDRST From MAEDDO Where IDMAEEDO = " & _Idmaeedo & "))
                             And TIDO In (" & _In & ") And TIDOELEC = 1"
-                Dim _FRef As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+                Dim _FRef As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, _Mostrar_Mensaje)
 
                 For Each _Fila As DataRow In _FRef.Rows
 
@@ -458,7 +460,7 @@ Public Class Class_Genera_DTE_RdBk
             End If
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Referencias_Dte Where Id_Doc = " & _Idmaeedo
-            Dim _Tbl_Referencias As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+            Dim _Tbl_Referencias As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, _Mostrar_Mensaje)
 
             For Each _Fl As DataRow In _Tbl_Referencias.Rows
 
@@ -502,7 +504,9 @@ Public Class Class_Genera_DTE_RdBk
             _Mensaje = Fx_Revisar_Expiracion_Folio_SII(_Formulario, _Tido, _Nudo, False)
 
             If Not _Mensaje.EsCorrecto Then 'Not Fx_Revisar_Expiracion_Folio_SII(_Formulario, _Tido, _Nudo, True) Then
-                MessageBoxEx.Show(_Formulario, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                If _Mostrar_Mensaje Then
+                    MessageBoxEx.Show(_Formulario, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                End If
                 Return 0
             End If
 
@@ -582,7 +586,7 @@ Public Class Class_Genera_DTE_RdBk
         Dim _Koen As String = _Maeen.Rows(0).Item("KOEN")
 
         Consulta_sql = "Select Top 1 * From MAEEN Where KOEN = '" & _Koen & "' And TIPOSUC = 'P'"
-        Dim _RowMaeen As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+        Dim _RowMaeen As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, _Mostrar_Mensaje)
 
         Dim _Idmaeen As Integer
         Dim _Recepelect As Boolean
@@ -616,7 +620,7 @@ Public Class Class_Genera_DTE_RdBk
         '_Iddt = 301706
 
         Consulta_sql = "Select Top 1 * From FMAEDTE Where IDDT = " & _Iddt
-        Dim _RowFaedte As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+        Dim _RowFaedte As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, _Mostrar_Mensaje)
 
         If (_RowFaedte Is Nothing) Then
             Return 0
@@ -634,7 +638,7 @@ Public Class Class_Genera_DTE_RdBk
 
 
         Consulta_sql = "Select top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
-        _Row_Configp = _Sql.Fx_Get_DataTable(Consulta_sql).Rows(0)
+        _Row_Configp = _Sql.Fx_Get_DataTable(Consulta_sql, _Mostrar_Mensaje).Rows(0)
 
         Dim _Empresa = _Row_Configp.Item("EMPRESA")
         Dim _Nroresol = _Row_Configp.Item("NRORESOL")
@@ -851,7 +855,7 @@ Public Class Class_Genera_DTE_RdBk
             Dim _Koen As String = _Maeen.Rows(0).Item("KOEN")
 
             Consulta_sql = "Select Top 1 * From MAEEN Where KOEN = '" & _Koen & "' And TIPOSUC = 'P'"
-            Dim _RowMaeen As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+            Dim _RowMaeen As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, _Mostrar_Mensaje)
             Dim _Idmaeen As Integer
             Dim _Recepelect As Boolean
             Dim _Email As String
@@ -863,7 +867,7 @@ Public Class Class_Genera_DTE_RdBk
             End If
 
             Consulta_sql = "Select Top 1 * From FMAEDTE Where IDDT = " & _Iddt
-            Dim _RowFaedte As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+            Dim _RowFaedte As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, _Mostrar_Mensaje)
 
             If (_RowFaedte Is Nothing) Then
                 Return 0
@@ -879,7 +883,7 @@ Public Class Class_Genera_DTE_RdBk
             Dim _Tido = _Maeedo.Rows.Item(0).Item("TIDO")
 
             Consulta_sql = "Select top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
-            _Row_Configp = _Sql.Fx_Get_DataTable(Consulta_sql).Rows(0)
+            _Row_Configp = _Sql.Fx_Get_DataTable(Consulta_sql, _Mostrar_Mensaje).Rows(0)
 
             _Empresa = _Row_Configp.Item("EMPRESA")
             _Nroresol = _Row_Configp.Item("NRORESOL")
@@ -1172,7 +1176,7 @@ Public Class Class_Genera_DTE_RdBk
                                "Inner Join TABIM Im On Imp.KOIM = Im.KOIM" & vbCrLf &
                                "Where IDMAEEDO = " & _Idmaeedo & vbCrLf &
                                "Group By KOIMSII,Im.NOKOIM,Im.POIM"
-                Dim _Tbl_Impuestos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+                Dim _Tbl_Impuestos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
                 For Each _Fl As DataRow In _Tbl_Impuestos.Rows
 
@@ -1256,8 +1260,8 @@ Public Class Class_Genera_DTE_RdBk
 
             ' Retirador de mercaderia
             Dim _Koreti As String = NuloPorNro(_Row_Maeedoob.Item("DIENDESP").ToString.Trim, "")
-            Dim _Rureti As String = _Sql.Fx_Trae_Dato("TABRETI", "RURETI", "KORETI = '" & _Koreti & "'").ToString.Trim
-            Dim _Nokoreti As String = _Sql.Fx_Trae_Dato("TABRETI", "NORETI", "KORETI = '" & _Koreti & "'").ToString.Trim
+            Dim _Rureti As String = _Sql.Fx_Trae_Dato("TABRETI", "RURETI", "KORETI = '" & _Koreti & "'",, False).ToString.Trim
+            Dim _Nokoreti As String = _Sql.Fx_Trae_Dato("TABRETI", "NORETI", "KORETI = '" & _Koreti & "'",, False).ToString.Trim
             Dim _Placapat As String = NuloPorNro(_Row_Maeedoob.Item("PLACAPAT"), "").ToString.Trim
 
             Dim _Patente = String.Empty
@@ -1390,7 +1394,7 @@ Public Class Class_Genera_DTE_RdBk
                                        "Inner Join TABIMPR Imp On KOPR = KOPRCT" & vbCrLf &
                                        "Inner Join TABIM Im On Imp.KOIM = Im.KOIM" & vbCrLf &
                                        "Where IDMAEDDO = " & _Idmaeddo
-                        Dim _RowImp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                        Dim _RowImp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 
                         If Not IsNothing(_RowImp) Then
 
@@ -1611,7 +1615,7 @@ Public Class Class_Genera_DTE_RdBk
 
         Dim _Consulta_sql = "Select top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
 
-        Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(_Consulta_sql)
+        Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(_Consulta_sql, False)
         Dim _Row_Ffolios = Fx_Trae_Ffolio(Nothing, _Nro_Documento, _TipoDTE, False)
 
 
@@ -1734,7 +1738,7 @@ Public Class Class_Genera_DTE_RdBk
         _Nro_Documento = _Maeedo.Rows(0).Item("NUDO")
 
         Consulta_sql = "Select top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
-        _Row_Configp = _Sql.Fx_Get_DataTable(Consulta_sql).Rows(0)
+        _Row_Configp = _Sql.Fx_Get_DataTable(Consulta_sql, False).Rows(0)
 
         If _Tido <> "FCC" And _Tido <> "GRC" And _Tido <> "NCC" Then
 
@@ -1871,7 +1875,7 @@ Public Class Class_Genera_DTE_RdBk
                         Consulta_sql = "Update " & _Global_BaseBk & "Zw_EstacionesBkp Set Directorio_GenDTE = '" & _Directorio_Seleccionado & "'" & vbCrLf &
                                        "Where NombreEquipo = '" & _NombreEquipo & "'"
 
-                        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+                        If _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
                             _Directorio_GenDTE = _Directorio_Seleccionado
                             _Directorio = _Directorio_GenDTE
                         Else
@@ -1912,12 +1916,14 @@ Public Class Class_Genera_DTE_RdBk
 
         Else
 
-            MessageBoxEx.Show(_Formulario,
+            If _Mostrar_Mensaje Then
+                MessageBoxEx.Show(_Formulario,
                         "No se encontro el archivo GenDTE.BAT en el directorio (" & _Directorio & ")",
                         "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            End If
 
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_EstacionesBkp Set Directorio_GenDTE = '' Where NombreEquipo = '" & _NombreEquipo & "'"
-            _Sql.Ej_consulta_IDU(Consulta_sql)
+            _Sql.Ej_consulta_IDU(Consulta_sql, False)
 
         End If
 
@@ -1931,8 +1937,13 @@ Public Class Class_Genera_DTE_RdBk
         Dim _FolderBrowserDialog As New FolderBrowserDialog
 
         If Not Directory.Exists(_Directorio_GenDTE) Then
-            MessageBoxEx.Show(_Formulario, "El directorio GenDTE no existe o no esta registrado", "Validación",
-                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+            If _Mostrar_Mensaje Then
+
+                MessageBoxEx.Show(_Formulario, "El directorio GenDTE no existe o no esta registrado", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+            End If
 
             'System.IO.Directory.CreateDirectory(_Path)
 
@@ -1967,17 +1978,18 @@ Public Class Class_Genera_DTE_RdBk
                         Consulta_sql = "Update " & _Global_BaseBk & "Zw_EstacionesBkp Set Directorio_GenDTE = '" & _Directorio_Seleccionado & "'" & vbCrLf &
                                        "Where NombreEquipo = '" & _NombreEquipo & "'"
 
-                        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+                        If _Sql.Ej_consulta_IDU(Consulta_sql, _Mostrar_Mensaje) Then
                             _Directorio_GenDTE = _Directorio_Seleccionado
                             _Directorio = _Directorio_GenDTE
                         Else
                             Return False
                         End If
                     Else
-                        MessageBoxEx.Show(_Formulario,
-                        "No se encontro el archivo GenDTE.BAT en el directorio (" & _Directorio_Seleccionado & ")",
-                        "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-
+                        If _Mostrar_Mensaje Then
+                            MessageBoxEx.Show(_Formulario,
+                                              "No se encontro el archivo GenDTE.BAT en el directorio (" & _Directorio_Seleccionado & ")",
+                                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        End If
                         'GenDTE.BAT
                     End If
                 End If
@@ -1999,12 +2011,16 @@ Public Class Class_Genera_DTE_RdBk
                 Shell(_Ejecutar, AppWinStyle.Hide, True)
                 Return True
             Catch ex As Exception
-                MessageBoxEx.Show(ex.Message)
+                If _Mostrar_Mensaje Then
+                    MessageBoxEx.Show(ex.Message)
+                End If
             End Try
         Else
-            MessageBoxEx.Show(_Formulario,
+            If _Mostrar_Mensaje Then
+                MessageBoxEx.Show(_Formulario,
                         "No se encontro el archivo GenDTE.BAT en el directorio (" & _Directorio & ")",
                         "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            End If
         End If
 
     End Function

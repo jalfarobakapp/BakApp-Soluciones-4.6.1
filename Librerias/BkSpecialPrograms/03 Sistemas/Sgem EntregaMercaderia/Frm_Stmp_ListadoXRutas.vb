@@ -32,14 +32,13 @@ Public Class Frm_Stmp_ListadoXRutas
         Sb_InsertarBotonenGrilla(Grilla, "BtnImagen_Estado", "Est.", "Img_Estado", 0, _Tipo_Boton.Imagen)
 
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
-        'AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
-        'AddHandler Tab_Preparacion.Click, AddressOf Sb_Actualizar_Grilla
-        'AddHandler Tab_Ingresadas.Click, AddressOf Sb_Actualizar_Grilla
-        'AddHandler Tab_Completadas.Click, AddressOf Sb_Actualizar_Grilla
-        'AddHandler Tab_Facturadas.Click, AddressOf Sb_Actualizar_Grilla
-        'AddHandler Tab_Entregadas.Click, AddressOf Sb_Actualizar_Grilla
-        'AddHandler Tab_Cerradas.Click, AddressOf Sb_Actualizar_Grilla
-        'AddHandler Tab_Pendientes.Click, AddressOf Sb_Actualizar_Grilla
+        AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
+
+        AddHandler Tab_Preparacion.Click, AddressOf Sb_Actualizar_Grilla
+        AddHandler Tab_Ingresadas.Click, AddressOf Sb_Actualizar_Grilla
+        AddHandler Tab_Completadas.Click, AddressOf Sb_Actualizar_Grilla
+        AddHandler Tab_Facturadas.Click, AddressOf Sb_Actualizar_Grilla
+        AddHandler Tab_Todas.Click, AddressOf Sb_Actualizar_Grilla
 
         'AddHandler Grilla.ColumnHeaderMouseClick, AddressOf Grilla_ColumnHeaderMouseClick
 
@@ -47,13 +46,13 @@ Public Class Frm_Stmp_ListadoXRutas
 
         Sb_Actualizar_Grilla()
 
-        Timer_Monitoreo.Interval = 1000 * 5
+        'Timer_Monitoreo.Interval = 1000 * 5
 
     End Sub
 
     Sub Sb_Actualizar_Grilla()
 
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Estado = 'COMPL' And Facturar = 1 And ProblemaFac = 0"
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Estado = 'COMPL' And Facturar = 1 --And ProblemaFac = 0"
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Fl As DataRow In _Tbl.Rows
@@ -61,7 +60,7 @@ Public Class Frm_Stmp_ListadoXRutas
             Dim _Id As Integer = _Fl.Item("Id")
             Dim _Idmaeedo As Integer = _Fl.Item("Idmaeedo")
 
-            Consulta_sql = "Select Top 1 e.IDMAEEDO,e.TIDO,e.NUDO" & vbCrLf &
+            Consulta_sql = "Select Top 1 e.IDMAEEDO,e.TIDO,e.NUDO,e.FEEMDO,e.LAHORA" & vbCrLf &
                            "From MAEEDO e" & vbCrLf &
                            "Inner Join MAEDDO d on e.IDMAEEDO = d.IDMAEEDO" & vbCrLf &
                            "Where d.IDRST In (Select IDMAEDDO From MAEDDO Where IDMAEEDO = " & _Idmaeedo & ")"
@@ -73,7 +72,16 @@ Public Class Frm_Stmp_ListadoXRutas
                                ",IdmaeedoGen = " & _Row.Item("IDMAEEDO") &
                                ",TidoGen = '" & _Row.Item("TIDO") & "'" &
                                ",NudoGen = '" & _Row.Item("NUDO") & "'" & vbCrLf &
-                               "Where Id = " & _Id
+                               "Where Id = " & _Id & vbCrLf &
+                               "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set " &
+                               "Facturado = 1" &
+                               ",Idmaeedo_FCV = '" & _Row.Item("IDMAEEDO") & "'" &
+                               ",Nudo_Fcv = '" & _Row.Item("NUDO") & "'" &
+                               ",Fecha_Facturado = '" & Format(_Row.Item("FEEMDO"), "yyyyMMdd") & "'" &
+                               ",FechaHoraFacturado= '" & Format(_Row.Item("LAHORA"), "yyyyMMdd HH:mm:ss") & "'" &
+                               ",Informacion = 'Documento creado correctamente'" &
+                               ",ErrorGrabar = 0" & vbCrLf &
+                               "Where Id_Pickeo = " & _Id
                 _Sql.Ej_consulta_IDU(Consulta_sql)
             End If
 
@@ -562,6 +570,177 @@ Public Class Frm_Stmp_ListadoXRutas
             _Fila.Cells("BtnImagen_Estado").Value = _Icono
 
         Next
+
+    End Sub
+
+    Private Sub Grilla_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellEnter
+
+        Try
+            Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+            Dim _Info_FacAuto As String = _Fila.Cells("Info_FacAuto").Value.ToString.Trim
+            Lbl_Informacion.Text = _Info_FacAuto
+        Catch ex As Exception
+            Lbl_Informacion.Text = String.Empty
+        End Try
+
+    End Sub
+
+    Private Sub Sb_Grilla_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+
+        If e.Button = Windows.Forms.MouseButtons.Right Then
+
+            With sender
+
+                Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
+
+                If Hitest.Type = DataGridViewHitTestType.Cell Then
+
+                    .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
+
+                    Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+                    Dim _Idmaeedo As Integer = _Fila.Cells("IDMAEEDO").Value
+                    Dim _Estado As String = _Fila.Cells("Estado").Value
+                    Dim _Error_FacAuto As Boolean = _Fila.Cells("Error_FacAuto").Value
+
+                    LabelItem1.Text = "Opciones (Id: " & _Idmaeedo & ")"
+
+                    Btn_Mnu_EntregarMercaderia.Visible = (Super_TabS.SelectedTab.Name = "Tab_Facturadas")
+                    Btn_CerrarTicket.Visible = (Super_TabS.SelectedTab.Name = "Tab_Entregadas")
+                    Btn_Mnu_Preparacion.Visible = (Super_TabS.SelectedTab.Name = "Tab_Ingresadas")
+                    Btn_ReenviaFacturar.Visible = (Super_TabS.SelectedTab.Name = "Tab_Completadas")
+                    Btn_ReenviaFacturar.Enabled = _Error_FacAuto
+
+                    ShowContextMenu(Menu_Contextual_01_Opciones_Documento)
+
+                End If
+
+            End With
+
+        End If
+
+    End Sub
+
+    Private Sub Btn_ReenviaFacturar_Click(sender As Object, e As EventArgs) Handles Btn_ReenviaFacturar.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+
+        Dim _Id As Integer = _Fila.Cells("Id").Value
+        Dim _Idmaeedo As Integer = _Fila.Cells("Idmaeedo").Value
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_FacAuto Where Idmaeedo_NVV = " & _Idmaeedo
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_Row) Then
+
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Facturar = 1,EnvFacAutoBk = 0 Where Id = " & _Id
+
+            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+                MessageBoxEx.Show(Me, "La nota de venta se envio nuevamente a facturar al diablito", "Información",
+                  MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                Dim _Imagenes_List As ImageList
+                If Global_Thema = Enum_Themas.Oscuro Then
+                    _Imagenes_List = Imagenes_16x16_Dark
+                Else
+                    _Imagenes_List = Imagenes_16x16
+                End If
+
+                _Fila.Cells("BtnImagen_Estado").Value = _Imagenes_List.Images.Item("ok.png")
+            End If
+
+            Return
+
+        End If
+
+        If _Row.Item("Facturado") Then
+
+            MessageBoxEx.Show(Me, "Este documento ya se encuentra facturado" & vbCrLf &
+                              _Row.Item("DocEmitir") & "-" & _Row.Item("Nudo_Fcv"), "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+
+        End If
+
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto " & vbCrLf &
+                       "Set NombreEquipo = '',Facturar = 1,ErrorGrabar = 0,Informacion = ''" & vbCrLf &
+                       "Where Id = " & _Row.Item("Id")
+
+        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+
+            MessageBoxEx.Show(Me, "La nota de venta se envio nuevamente a facturar al diablito", "Información",
+                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Dim _Imagenes_List As ImageList
+            If Global_Thema = Enum_Themas.Oscuro Then
+                _Imagenes_List = Imagenes_16x16_Dark
+            Else
+                _Imagenes_List = Imagenes_16x16
+            End If
+
+            _Fila.Cells("BtnImagen_Estado").Value = _Imagenes_List.Images.Item("ok.png")
+
+        End If
+
+    End Sub
+
+    Private Sub Btn_VerDocumento_Click(sender As Object, e As EventArgs) Handles Btn_VerDocumento.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+        Dim _Idmaeedo = _Fila.Cells("IDMAEEDO").Value
+
+        Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+
+    End Sub
+
+    Private Sub Btn_Imprimir_Click(sender As Object, e As EventArgs) Handles Btn_Imprimir.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Doc00012") Then Return
+
+        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+
+        Dim _IdMaeedo As Integer = _Fila.Cells("IDMAEEDO").Value
+        Dim _Tido = _Fila.Cells("TIDO").Value
+        Dim _Subtido = String.Empty
+
+        If _Tido = "GDD" Or _Tido = "GDP" Then
+            _Subtido = _Fila.Cells("SUBTIDO").Value
+        End If
+
+        Consulta_sql = "Select top 1 * From MAEEDO Where IDMAEEDO = " & _IdMaeedo
+        Dim _RowEncabezado As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _NombreFormato As String
+
+        Dim Fm As New Frm_Seleccionar_Formato(_Tido)
+        If CBool(Fm.Tbl_Formatos.Rows.Count) Then
+            Fm.ShowDialog(Me)
+
+            If Fm.Formato_Seleccionado Then
+                _Subtido = Fm.Row_Formato_Seleccionado.Item("Subtido")
+                _NombreFormato = Fm.Row_Formato_Seleccionado.Item("NombreFormato")
+                If _NombreFormato = "" Then
+                    _NombreFormato = String.Empty
+                End If
+
+                Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _IdMaeedo,
+                                                         False, True, "", False, 0, False, _Subtido)
+
+                If Not String.IsNullOrEmpty(Trim(_Imprime)) Then
+                    MessageBox.Show(Me, _Imprime, "Problemas al Imprimir",
+                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                End If
+
+            End If
+
+        Else
+            MessageBoxEx.Show(Me, "No existen formatos adicionales para este documento", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End If
+
+        Fm.Dispose()
 
     End Sub
 

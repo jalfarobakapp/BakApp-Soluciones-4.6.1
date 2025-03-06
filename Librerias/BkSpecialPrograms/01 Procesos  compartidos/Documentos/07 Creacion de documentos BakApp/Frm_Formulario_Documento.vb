@@ -448,6 +448,8 @@ Public Class Frm_Formulario_Documento
 
         _DecimalesGl = 2
 
+        Me._Facturacion_Automatica = _Facturacion_Automatica
+
         Consulta_sql = "Delete " & _Global_BaseBk & "ZW_Permisos Where CodFamilia = 'Lp'
                         Insert Into " & _Global_BaseBk & "ZW_Permisos 
                         (CodPermiso,DescripcionPermiso,CodFamilia,NombreFamiliaPermiso)
@@ -17374,7 +17376,7 @@ Public Class Frm_Formulario_Documento
         _Modalidad = _TblEncabezado.Rows(0).Item("Modalidad")
 
         If _Cambiar_NroDocumento Then
-            _Nudo = Traer_Numero_Documento(_Tido, , _Modalidad,,, Me)
+            _Nudo = Traer_Numero_Documento(_Tido, , _Modalidad, _Mostrar_Mensaje,, Me)
             _TblEncabezado.Rows(0).Item("NroDocumento") = _Nudo
         Else
             _Nudo = _TblEncabezado.Rows(0).Item("NroDocumento")
@@ -17490,8 +17492,8 @@ Public Class Frm_Formulario_Documento
 
                     Modalidad = _Modalidad_Origen
 
-                    _Mod.Sb_Actualiza_Formatos_X_Modalidad()
-                    _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+                    _Mod.Sb_Actualiza_Formatos_X_Modalidad(_Mostrar_Mensaje)
+                    _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad, _Mostrar_Mensaje)
 
                     _Nudo = Traer_Numero_Documento(_Tido, , _Modalidad_Origen,,, Me)
                     _TblEncabezado.Rows(0).Item("Modalidad") = _Modalidad_Origen
@@ -17525,10 +17527,10 @@ Public Class Frm_Formulario_Documento
 
                         Modalidad = _Modalidad_Origen
 
-                        _Mod.Sb_Actualiza_Formatos_X_Modalidad()
-                        _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+                        _Mod.Sb_Actualiza_Formatos_X_Modalidad(_Mostrar_Mensaje)
+                        _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad, _Mostrar_Mensaje)
 
-                        _Nudo = Traer_Numero_Documento(_Tido, , _Modalidad_Origen,,, Me)
+                        _Nudo = Traer_Numero_Documento(_Tido, , _Modalidad_Origen, _Mostrar_Mensaje,, Me)
                         _TblEncabezado.Rows(0).Item("Modalidad") = _Modalidad_Origen
                         _TblEncabezado.Rows(0).Item("NroDocumento") = _Nudo
                         _TblEncabezado.Rows(0).Item("Es_ValeTransitorio") = 1
@@ -17627,7 +17629,7 @@ Public Class Frm_Formulario_Documento
         If CBool(_Idmaeedo) Then
 
             Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo
-            Dim _Row_Maeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+            Dim _Row_Maeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, Not _Facturacion_Automatica)
 
             _New_Idmaeedo = _Idmaeedo
 
@@ -18596,7 +18598,10 @@ Public Class Frm_Formulario_Documento
                                                          Optional _Usar_SucBodRecepcion As Boolean = False)
 
         Try
+
             Me.Enabled = False
+
+            Dim _Mostrar_Error As Boolean = Not _Facturacion_Automatica
 
             Dim _RowMaeedo_Origen As DataRow = _Ds_Documento_de_Origen.Tables(0).Rows(0)
             Dim _TblMaeddo_Origen As DataTable = _Ds_Documento_de_Origen.Tables(1)          'ENCABEZADO DEL PRIMER DOCUMENTO 
@@ -18614,7 +18619,7 @@ Public Class Frm_Formulario_Documento
                 Consulta_sql = "Insert Into MAEEDOOB (IDMAEEDO) Values (0) 
                                 Select * From MAEEDOOB Where IDMAEEDO = 0
                                 Delete MAEEDOOB Where IDMAEEDO = 0"
-                _RowMaeedoOb_Origen = _Sql.Fx_Get_DataRow(Consulta_sql)
+                _RowMaeedoOb_Origen = _Sql.Fx_Get_DataRow(Consulta_sql, _Mostrar_Error)
 
             End If
 
@@ -18623,7 +18628,7 @@ Public Class Frm_Formulario_Documento
                 Dim _Id_DocEnc = _RowMaeedo_Origen.Item("IDMAEEDO")
                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Referencias_Dte Where Id_Doc = " & _Id_DocEnc & " And Kasi = 0"
 
-                Dim _TblReferencias_Dte_Stby = _Sql.Fx_Get_DataTable(Consulta_sql)
+                Dim _TblReferencias_Dte_Stby = _Sql.Fx_Get_DataTable(Consulta_sql, _Mostrar_Error)
 
                 For Each _Fila As DataRow In _TblReferencias_Dte_Stby.Rows
 
@@ -18669,7 +18674,7 @@ Public Class Frm_Formulario_Documento
 
             If Fl <> "()" Then
                 Consulta_sql = "Select IDMAEEDO From MAEEDO Where IDMAEEDO IN " & Fl
-                _TblDocumentos_Dori = _Sql.Fx_Get_DataTable(Consulta_sql)
+                _TblDocumentos_Dori = _Sql.Fx_Get_DataTable(Consulta_sql, _Mostrar_Error)
             End If
 
             Dim _Tido_Origen As String = _Tido
@@ -18816,7 +18821,7 @@ Public Class Frm_Formulario_Documento
                                "From " & _Global_BaseBk & "Zw_Fincred_TramaRespuesta FResp" & vbCrLf &
                                "Left Join " & _Global_BaseBk & "Zw_Fincred_Documentos FDoc On FResp.Id = FDoc.Id_TR" & vbCrLf &
                                "Where (Idmaeedo = " & _Idmaeedo_Origen2 & ")"
-                Dim _RowFincred As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                Dim _RowFincred As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, _Mostrar_Error)
 
                 Dim _Aplicar_Vencimientos As Boolean = True
 
@@ -18902,7 +18907,7 @@ Public Class Frm_Formulario_Documento
 
                     If _Preguntar_Si_Cambia_Responsable_Doc_Relacionado Then
 
-                        Dim _Nokofu = _Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & _CodResponsable & "'")
+                        Dim _Nokofu = _Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & _CodResponsable & "'", _Mostrar_Error)
 
                         If MessageBoxEx.Show(Me, "¿Desea conservar al usuario responsable del documento?" & Environment.NewLine & Environment.NewLine &
                                          "Responsable: " & _CodResponsable & " - " & Trim(_Nokofu), "Responsable distinto al usuario activo",
@@ -19022,7 +19027,7 @@ Public Class Frm_Formulario_Documento
                             If _Tido <> "NCV" And _Tido <> "NVV" Then
 
                                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Remotas Where Idmaeedo = " & _IdDorigen
-                                Dim _TblRemotas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+                                Dim _TblRemotas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, _Mostrar_Error)
 
                                 If CBool(_TblRemotas.Rows.Count) Then
                                     Chk_Cambiar_Bodegas.Enabled = False
@@ -19464,7 +19469,7 @@ Public Class Frm_Formulario_Documento
                         Consulta_sql = "Select * From TABCT" & vbCrLf &
                                        "Left Join " & _Global_BaseBk & "Zw_Conceptos On KOCT = Koct" & vbCrLf &
                                        "Where KOCT = '" & _Codigo & "'"
-                        Dim _RowConcepto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                        Dim _RowConcepto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, _Mostrar_Error)
 
                         Sb_Agregar_Concepto(_New_Fila, _RowConcepto)
 
@@ -19488,7 +19493,7 @@ Public Class Frm_Formulario_Documento
                     Else
 
                         Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
-                        Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                        Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, _Mostrar_Error)
 
                         Sb_Traer_Producto_Grilla(_New_Fila, _RowProducto, True, _UnTrans, False)
 
@@ -19910,13 +19915,13 @@ Public Class Frm_Formulario_Documento
 
                     If CBool(_Idmaeedo_Dorigen) Then
 
-                        _Tbl_Remotas = _Sql.Fx_Get_DataTable(Consulta_sql)
+                        _Tbl_Remotas = _Sql.Fx_Get_DataTable(Consulta_sql, _Mostrar_Error)
 
                         For Each _FilaR As DataRow In _Tbl_Remotas.Rows
 
                             Dim _CodPermiso = _FilaR.Item("CodPermiso")
                             Dim _CodFuncionario_Autoriza = _FilaR.Item("CodFuncionario_Autoriza")
-                            Dim _NomFuncionario_Autoriza = Trim(_Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & _CodFuncionario_Autoriza & "'"))
+                            Dim _NomFuncionario_Autoriza = Trim(_Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & _CodFuncionario_Autoriza & "'", _Mostrar_Error))
                             Dim _NroRemota = _FilaR.Item("NroRemota")
 
                             If _CodPermiso = "Bkp00019" And _Volver_A_Solicitar_Permiso_FCV_desde_NVV Then
@@ -19998,7 +20003,7 @@ Public Class Frm_Formulario_Documento
             Dim _Filad = Grilla_Detalle.Rows(0)
 
 
-            If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Configuracion", "ListaDesdeSustentatorio") Then
+            If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Configuracion", "ListaDesdeSustentatorio", _Mostrar_Error) Then
                 If _Global_Row_Configuracion_General.Item("ListaDesdeSustentatorio") Then
                     If _Tido = "GDV" Or _Tido = "FCV" Or _Tido = "BLV" Then
                         _TblEncabezado.Rows(0).Item("ListaPrecios") = _CodLista
@@ -20042,7 +20047,9 @@ Public Class Frm_Formulario_Documento
 
         Catch ex As Exception
             _Doc_Rescatado = False
-            MsgBox(ex.Message)
+            If Not _Facturacion_Automatica Then
+                MsgBox(ex.Message)
+            End If
         Finally
             Me.Enabled = True
         End Try

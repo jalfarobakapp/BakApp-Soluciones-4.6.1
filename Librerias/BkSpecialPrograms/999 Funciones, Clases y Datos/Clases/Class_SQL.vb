@@ -1068,7 +1068,7 @@ Public Class Class_SQL
 
         End If
 
-        Dim _Tbl As DataTable = Fx_Get_DataTable(_ConsultaSql)
+        Dim _Tbl As DataTable = Fx_Get_DataTable(_ConsultaSql, False)
 
         Return CBool(_Tbl.Rows.Count)
 
