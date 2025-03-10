@@ -22,7 +22,7 @@ Public Class Frm_ImpMasiva
         Me._Ls_Idmaeedo = _Ls_Idmaeedo
         Me._Tido = _Tido
 
-        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.None, True, False, False)
+        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
         Sb_Color_Botones_Barra(Bar1)
 
     End Sub

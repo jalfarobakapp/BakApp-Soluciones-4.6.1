@@ -107,7 +107,7 @@ Partial Class Frm_Stmp_Listado
         Me.Super_TabS.Name = "Super_TabS"
         Me.Super_TabS.ReorderTabsEnabled = True
         Me.Super_TabS.SelectedTabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
-        Me.Super_TabS.SelectedTabIndex = 0
+        Me.Super_TabS.SelectedTabIndex = 2
         Me.Super_TabS.Size = New System.Drawing.Size(592, 27)
         Me.Super_TabS.TabCloseButtonHot = Nothing
         Me.Super_TabS.TabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))

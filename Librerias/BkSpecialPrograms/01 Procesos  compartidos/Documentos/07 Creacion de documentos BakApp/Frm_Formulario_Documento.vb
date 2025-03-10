@@ -2699,6 +2699,8 @@ Public Class Frm_Formulario_Documento
 
         Sb_Limpiar_Lista_CodBarras()
 
+        Me.Refresh()
+
     End Sub
 
     Private Sub Sb_Sumar_Totales()
@@ -3653,7 +3655,15 @@ Public Class Frm_Formulario_Documento
 
                         Dim _ValVtaDescMax = .Cells("ValVtaDescMax").Value
                         Dim _ValVtaStockInf = .Cells("ValVtaStockInf").Value
-                        Dim _Cantidad As Double '= _TblDetalle.Compute("Sum(CantUd1)", "Codigo = '" & _Codigo & "' And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega & "'")
+                        Dim _Cantidad As Double
+
+                        Dim _UnTrans = NuloPorNro(_Fila.Cells("UnTrans").Value, 1)
+                        Dim _RtuVariable As Boolean = _Fila.Cells("RtuVariable").Value
+                        Dim _Nmarca As String = _Fila.Cells("Nmarca").Value
+
+                        If _RtuVariable And _Nmarca = "¡" Then
+                            _UnTrans = 2
+                        End If
 
 
                         For Each _Row As DataRow In _TblDetalle.Rows
@@ -3663,13 +3673,13 @@ Public Class Frm_Formulario_Documento
                             Dim _Bod = _Row.Item("Bodega")
 
                             If _Cod = _Codigo And _Suc = _Sucursal And _Bod = _Bodega Then
-                                _Cantidad += _Row.Item("Cantidad")
+                                _Cantidad += _Row.Item("CantUd" & _UnTrans)
                             End If
 
                         Next
 
                         Dim _UdTrans = .Cells("UdTrans").Value
-                        Dim _UnTrans = .Cells("UnTrans").Value
+                        'Dim _UnTrans = .Cells("UnTrans").Value
 
                         Dim _Solicitado_bodega As Boolean = .Cells("Solicitado_bodega").Value
 
@@ -8899,7 +8909,7 @@ Public Class Frm_Formulario_Documento
                                             End If
 
                                             MessageBoxEx.Show(Me, "No puede sobrepasar la cantidad indicada en el documento relacionado", "Validación",
-                                                              MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
+                                                          MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
 
                                             Return
 
@@ -16891,6 +16901,12 @@ Public Class Frm_Formulario_Documento
         Dim _Codigo = _Fila.Cells("Codigo").Value
         Dim _Tidopa = _Fila.Cells("Tidopa").Value
         Dim _Cantidad As Double
+        Dim _RtuVariable As Boolean = _Fila.Cells("RtuVariable").Value
+        Dim _Nmarca As String = _Fila.Cells("Nmarca").Value
+
+        If _RtuVariable And _Nmarca = "¡" Then
+            _UnTrans = 2
+        End If
 
         For Each _Row As DataRow In _TblDetalle.Rows
 
@@ -16900,7 +16916,7 @@ Public Class Frm_Formulario_Documento
             Dim _I = _Row.Item("Id")
 
             If _Cod = _Codigo And _Suc = _Sucursal And _Bod = _Bodega Then
-                _Cantidad += _Row.Item("Cantidad")
+                _Cantidad += _Row.Item("CantUd" & _UnTrans) '_Row.Item("Cantidad")
             End If
 
         Next
@@ -21235,6 +21251,8 @@ Public Class Frm_Formulario_Documento
         '                                3 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
 
         Clipboard.SetText(Ruta_Documento_Bkp)
+
+        ExportarTabla_JetExcel_Tabla(_TblDetalle, Me, "Detalle")
 
     End Sub
 

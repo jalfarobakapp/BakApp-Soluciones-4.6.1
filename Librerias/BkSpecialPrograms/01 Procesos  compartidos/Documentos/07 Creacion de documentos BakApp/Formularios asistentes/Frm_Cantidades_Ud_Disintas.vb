@@ -1,4 +1,5 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports BkSpecialPrograms.Frm_SolCredito_Ingreso
+Imports DevComponents.DotNetBar
 Imports DevComponents.DotNetBar.Controls
 
 Public Class Frm_Cantidades_Ud_Disintas
@@ -65,15 +66,17 @@ Public Class Frm_Cantidades_Ud_Disintas
                 Dim _Cl_Producto As Cl_Producto = New Cl_Producto()
                 _Cl_Producto.Fx_Llenar_Zw_Producto(_Codigo)
 
-                If Not _Cl_Producto.Zw_Producto.RtuXWms Then
+                RtuVariable = True
 
-                    Chk_RtuVariable.Checked = RtuVariable
+                'If Not _Cl_Producto.Zw_Producto.RtuXWms Then
 
-                    If Not RtuVariable AndAlso Not CBool(Cantidad_Ud1) AndAlso Not CBool(Cantidad_Ud2) Then
-                        Chk_RtuVariable.Checked = True
-                    End If
+                '    Chk_RtuVariable.Checked = RtuVariable
 
-                End If
+                '    If Not RtuVariable AndAlso Not CBool(Cantidad_Ud1) AndAlso Not CBool(Cantidad_Ud2) Then
+                '        Chk_RtuVariable.Checked = True
+                '    End If
+
+                'End If
 
                 _ValidarApiWMSBosOne = True
 
@@ -84,9 +87,13 @@ Public Class Frm_Cantidades_Ud_Disintas
                     _ValidarApiWMSBosOne = False
                 End If
 
+                TxtCantUD1.Enabled = False
+
             End If
 
         End If
+
+        Img_RtuAPI.Visible = _ValidarApiWMSBosOne
 
         Chk_RtuVariable.Enabled = (_Fila.Cells("Nmarca").Value = "¡")
 
@@ -106,6 +113,12 @@ Public Class Frm_Cantidades_Ud_Disintas
             Me.ActiveControl = TxtCantUD2
         End If
 
+        If Not TxtCantUD1.Enabled Then
+            TxtCantUD2.Text = Cantidad_Ud2
+            TxtCantUD1.Text = Math.Round(Cantidad_Ud2 * _Rtu, 3)
+            Me.ActiveControl = TxtCantUD2
+        End If
+
         If RtuVariable Then
             TxtCantUD1.Text = Math.Round(Cantidad_Ud1, 3)
             TxtCantUD2.Text = Math.Round(Cantidad_Ud2, 3)
@@ -120,24 +133,46 @@ Public Class Frm_Cantidades_Ud_Disintas
 
         If _ValidarApiWMSBosOne Then
 
+            'warning.png
+            Dim _Icono As Image
+
+            Dim _Imagenes_List As ImageList
+            If Global_Thema = Enum_Themas.Oscuro Then
+                _Imagenes_List = Imagenes_16x16_Dark
+            Else
+                _Imagenes_List = Imagenes_16x16
+            End If
+
+            _Icono = Nothing
+
+            Chk_RtuVariable.Enabled = False
+
             ' Llama a la función para encontrar el producto en las bodegas
             Dim RtuBodegas As LsValiciones.Mensajes = Fx_Consultar_RTU_xBodegas(_Bodega, _Codigo)
 
             ' Muestra el resultado final en el textbox e impide la edición de Cantidad 1
             If RtuBodegas.EsCorrecto Then
+
                 TxtRTU.Text = RtuBodegas.Resultado
                 _Rtu = De_Txt_a_Num_01(RtuBodegas.Resultado, 5)
                 Label3.Text = "R.T.U.  (" & _Rtu & ")"
-                'TxtCantUD1.Enabled = False
                 Chk_RtuVariable.Checked = False
                 _Fila.Cells("Rtu").Value = _Rtu
-                'MessageBox.Show(RtuBodegas.Detalle, "Éxito", MessageBoxButtons.OK, RtuBodegas.Icono)
                 Me.ActiveControl = TxtCantUD2
-                '            Else
-                'MessageBox.Show(RtuBodegas.Detalle, "Error", MessageBoxButtons.OK, RtuBodegas.Icono) '
+
+                _Icono = _Imagenes_List.Images.Item("ok.png")
+
+            Else
+
+                _Icono = _Imagenes_List.Images.Item("warning.png")
+
             End If
 
+            Img_RtuAPI.Image = _Icono
+
         End If
+
+        Me.Refresh()
 
     End Sub
 
@@ -229,7 +264,7 @@ Public Class Frm_Cantidades_Ud_Disintas
         End If
 
         _Aceptado = True
-        RtuVariable = Chk_RtuVariable.Checked
+        'RtuVariable = Chk_RtuVariable.Checked
 
         Me.Close()
 

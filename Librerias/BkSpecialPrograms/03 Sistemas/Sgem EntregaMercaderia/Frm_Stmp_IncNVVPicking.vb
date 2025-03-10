@@ -75,6 +75,7 @@ Public Class Frm_Stmp_IncNVVPicking
         Dim _FiltroEntidad = String.Empty
         Dim _FiltroObservaciones = String.Empty
         Dim _FiltroOrdenDeCompra = String.Empty
+        Dim _FiltroTipoVenta = String.Empty
 
         If Dtp_BuscaXFechaEmision.Value <> #1/1/0001 12:00:00 AM# Then
             _FiltroFechaEmision = "And  Edo.FEEMDO = '" & Format(Dtp_BuscaXFechaEmision.Value, "yyyyMMdd") & "'" & vbCrLf
@@ -98,6 +99,10 @@ Public Class Frm_Stmp_IncNVVPicking
 
         If Not String.IsNullOrEmpty(Txt_Ocdo.Text) Then
             _FiltroOrdenDeCompra = "And Obs.OCDO Like '%" & Txt_Ocdo.Text & "%'" & vbCrLf
+        End If
+
+        If Not String.IsNullOrEmpty(Cmb_TipoVenta.SelectedValue) Then
+            _FiltroTipoVenta = vbCrLf & "Where TipoVenta = '" & Cmb_TipoVenta.SelectedValue & "'" & vbCrLf
         End If
 
         ' DEBO ENLAZAR LA TABLA Zw_Docu_Det a esta consulta para poner la RtuVariale por productos para las CARNES...
@@ -137,8 +142,8 @@ Public Class Frm_Stmp_IncNVVPicking
                         "Update #Paso Set VADP = Isnull((Select VADP From MAEDPCE Mp Where Mp.IDMAEDPCE = #Paso.IDMAEDPCE),0)" & vbCrLf &
                         "Update #Paso Set HORA = SUBSTRING(HORA,1,5),ENDO = Ltrim(Rtrim(ENDO)),SUENDO = Ltrim(Rtrim(SUENDO))" & vbCrLf &
                         "Update #Paso Set SALDO_CRV = VABRDO-VADP Where VADP > 0" & vbCrLf &
-                        "Select * From #Paso" & vbCrLf &
-                        "Order By IDMAEEDO --ENDO,SUENDO,NUDO" & vbCrLf &
+                        "Select * From #Paso" & _FiltroTipoVenta & vbCrLf &
+                        "Order By IDMAEEDO" & vbCrLf &
                         "Drop Table #Paso"
 
         _Tbl_Documentos = _Sql.Fx_Get_DataTable(Consulta_sql)
@@ -555,4 +560,89 @@ Public Class Frm_Stmp_IncNVVPicking
     Private Sub Dtp_BuscaXFechaDespacho_ButtonClearClick(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles Dtp_BuscaXFechaDespacho.ButtonClearClick
         Sb_Actualizar_Grilla()
     End Sub
+
+    Private Sub Btn_Buscar_Click(sender As Object, e As EventArgs) Handles Btn_Buscar.Click
+        Sb_Actualizar_Grilla()
+    End Sub
+
+    Sub Sb_Ver_Documento()
+
+        Me.Enabled = False
+
+        Try
+
+            Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+            Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
+
+            Dim _Idmaeedo As Integer
+            Dim _Idmaedpce As Integer = _Fila.Cells("IDMAEDPCE").Value
+
+            If _Cabeza = "VADP" Then
+
+                If CBool(_Idmaedpce) Then
+                    Dim Fm_P As New Frm_Pagos_Documentos_Pagados(_Idmaedpce)
+                    Fm_P.ShowDialog(Me)
+                    Fm_P.Dispose()
+                    Return
+                End If
+
+            End If
+
+            If _Cabeza = "SALDOAFAVOR" Then
+                Call Btn_Ver_Cta_Cte_Click(Nothing, Nothing)
+            End If
+
+            If _Cabeza = "NUDO" Then
+                _Idmaeedo = _Fila.Cells("IDMAEEDO").Value
+            End If
+
+            If _Cabeza = "NUDO_FCV" Then
+                _Idmaeedo = _Fila.Cells("IDMAEEDO_FCV").Value
+            End If
+
+            If CBool(_Idmaeedo) Then
+
+                Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
+                Fm.ShowDialog(Me)
+                Fm.Dispose()
+
+            End If
+
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, "Error inesperado!", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        Finally
+            Me.Enabled = True
+        End Try
+
+    End Sub
+
+    Private Sub Btn_Ver_Cta_Cte_Click(sender As Object, e As EventArgs) Handles Btn_Ver_Cta_Cte.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+
+        Dim _Koen = _Fila.Cells("ENDO").Value
+        Dim _SALDOAFAVOR As Double = _Fila.Cells("SALDOAFAVOR").Value
+
+        If Not CBool(_SALDOAFAVOR) Then
+            MessageBoxEx.Show(Me, "No hay saldo a favor o no hay entidad seleccionada", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim Fm As New Frm_Pagos_Generales(Frm_Pagos_Generales.Enum_Tipo_Pago.Clientes)
+        Fm.Koen = _Koen
+        Fm.BtnActualizarLista.Visible = False
+        Fm.ModoLectura = True
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_Ver_documento_Click(sender As Object, e As EventArgs) Handles Btn_Ver_documento.Click
+        Sb_Ver_Documento()
+    End Sub
+
+    Private Sub Grilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
+        Sb_Ver_Documento()
+    End Sub
+
 End Class

@@ -643,9 +643,7 @@ Public Class Frm_Facturacion_Masiva
     End Function
 
     Private Sub Grilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
-
         Sb_Ver_Documento()
-
     End Sub
 
     Sub Sb_Ver_Documento()

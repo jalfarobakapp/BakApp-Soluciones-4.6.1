@@ -48,8 +48,8 @@ Update #Paso Set
 			ST_RECEP_SIN_FACTURAR = Isnull((Select Sum(RECENOFAC#Ud#) From MAEST Where EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR In #Codigos#),0),
 			ST_PEDIDO = Isnull((Select Sum(STOCNV#Ud#C) From MAEST Where EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR In #Codigos#),0),
 
-            ST_COMPROMETIDO_BK = Isnull((Select Sum(StComp1) From #Global_BaseBk#Zw_Prod_Stock Stk Where Stk.Empresa = #Paso.Empresa And Stk.Sucursal = #Paso.Sucursal And Stk.Bodega = #Paso.Bodega And Stk.Codigo In #Codigos#),0), --
-			ST_PEDIDO_BK = Isnull((Select Sum(StPedi1) From #Global_BaseBk#Zw_Prod_Stock Stk Where Stk.Empresa = #Paso.Empresa And Stk.Sucursal = #Paso.Sucursal And Stk.Bodega = #Paso.Bodega And Stk.Codigo In #Codigos#),0) --
+            ST_COMPROMETIDO_BK = Isnull((Select Sum(StComp#Ud#) From #Global_BaseBk#Zw_Prod_Stock Stk Where Stk.Empresa = #Paso.Empresa And Stk.Sucursal = #Paso.Sucursal And Stk.Bodega = #Paso.Bodega And Stk.Codigo In #Codigos#),0), --
+			ST_PEDIDO_BK = Isnull((Select Sum(StPedi#Ud#) From #Global_BaseBk#Zw_Prod_Stock Stk Where Stk.Empresa = #Paso.Empresa And Stk.Sucursal = #Paso.Sucursal And Stk.Bodega = #Paso.Bodega And Stk.Codigo In #Codigos#),0) --
 
 Update #Paso Set ST_DISPONIBLE = Case When ST_FISICO < 0 Then 0 Else ST_FISICO End -
 								 Case When ST_COMPROMETIDO < 0 Then 0 Else ST_COMPROMETIDO End - 

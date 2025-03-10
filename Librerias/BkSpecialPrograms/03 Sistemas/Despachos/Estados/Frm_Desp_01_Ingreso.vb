@@ -240,7 +240,7 @@ Public Class Frm_Desp_01_Ingreso
 
         Txt_Observaciones.Text = _Row_Despacho.Item("Observaciones")
 
-        Chk_EntregaPaletizada.Checked = _Row_Despacho.Item("EntregaPaletizada") ' _Cl_Despacho.Row_Conf_Despacho.Item("EntregaPaletizada")
+        Chk_EntregaPaletizada.Checked = _Row_Despacho.Item("EntregaPaletizada")
 
         Me.Text = "ORDEN DE DESPACHO NRO: " & _Cl_Despacho.Nro_Despacho.Trim & ", Responsable: " & _Row_Despacho.Item("Responsable")
 

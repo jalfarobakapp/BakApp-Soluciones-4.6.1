@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_Cantidades_Ud_Disintas
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -22,6 +22,7 @@ Partial Class Frm_Cantidades_Ud_Disintas
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Cantidades_Ud_Disintas))
         Me.LblUnidad2 = New System.Windows.Forms.Label()
         Me.LblUnidad1 = New System.Windows.Forms.Label()
@@ -34,6 +35,9 @@ Partial Class Frm_Cantidades_Ud_Disintas
         Me.TxtCantUD1 = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.TxtCantUD2 = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Chk_RtuVariable = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Img_RtuAPI = New DevComponents.DotNetBar.Controls.ReflectionImage()
+        Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
+        Me.Imagenes_16x16_Dark = New System.Windows.Forms.ImageList(Me.components)
         Me.SuspendLayout()
         '
         'LblUnidad2
@@ -77,7 +81,7 @@ Partial Class Frm_Cantidades_Ud_Disintas
         Me.Label3.ForeColor = System.Drawing.Color.Black
         Me.Label3.Location = New System.Drawing.Point(12, 35)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(40, 13)
+        Me.Label3.Size = New System.Drawing.Size(39, 13)
         Me.Label3.TabIndex = 11
         Me.Label3.Text = "R.T.U. "
         '
@@ -179,7 +183,76 @@ Partial Class Frm_Cantidades_Ud_Disintas
         Me.Chk_RtuVariable.Size = New System.Drawing.Size(247, 25)
         Me.Chk_RtuVariable.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_RtuVariable.TabIndex = 119
-        Me.Chk_RtuVariable.Text = "Desactivar razón de transformación"
+        Me.Chk_RtuVariable.Text = "Desactivar razÃ³n de transformaciÃ³n"
+        '
+        'Img_RtuAPI
+        '
+        '
+        '
+        '
+        Me.Img_RtuAPI.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Img_RtuAPI.Location = New System.Drawing.Point(86, 32)
+        Me.Img_RtuAPI.Name = "Img_RtuAPI"
+        Me.Img_RtuAPI.Size = New System.Drawing.Size(30, 22)
+        Me.Img_RtuAPI.TabIndex = 120
+        '
+        'Imagenes_16x16
+        '
+        Me.Imagenes_16x16.ImageStream = CType(resources.GetObject("Imagenes_16x16.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.Imagenes_16x16.TransparentColor = System.Drawing.Color.Transparent
+        Me.Imagenes_16x16.Images.SetKeyName(0, "warning.png")
+        Me.Imagenes_16x16.Images.SetKeyName(1, "ok.png")
+        Me.Imagenes_16x16.Images.SetKeyName(2, "cancel.png")
+        Me.Imagenes_16x16.Images.SetKeyName(3, "delete_button_error.png")
+        Me.Imagenes_16x16.Images.SetKeyName(4, "clock.png")
+        Me.Imagenes_16x16.Images.SetKeyName(5, "clock-import.png")
+        Me.Imagenes_16x16.Images.SetKeyName(6, "clock-info.png")
+        Me.Imagenes_16x16.Images.SetKeyName(7, "tag_green.png")
+        Me.Imagenes_16x16.Images.SetKeyName(8, "note_text.png")
+        Me.Imagenes_16x16.Images.SetKeyName(9, "note.png")
+        Me.Imagenes_16x16.Images.SetKeyName(10, "comment-number-1.png")
+        Me.Imagenes_16x16.Images.SetKeyName(11, "comment-number-2.png")
+        Me.Imagenes_16x16.Images.SetKeyName(12, "comment-number-3.png")
+        Me.Imagenes_16x16.Images.SetKeyName(13, "comment-number-4.png")
+        Me.Imagenes_16x16.Images.SetKeyName(14, "comment-number-5.png")
+        Me.Imagenes_16x16.Images.SetKeyName(15, "comment-number-6.png")
+        Me.Imagenes_16x16.Images.SetKeyName(16, "comment-number-7.png")
+        Me.Imagenes_16x16.Images.SetKeyName(17, "comment-number-8.png")
+        Me.Imagenes_16x16.Images.SetKeyName(18, "comment-number-9.png")
+        Me.Imagenes_16x16.Images.SetKeyName(19, "comment-number-9-plus.png")
+        Me.Imagenes_16x16.Images.SetKeyName(20, "menu-more.png")
+        Me.Imagenes_16x16.Images.SetKeyName(21, "symbol-delete.png")
+        Me.Imagenes_16x16.Images.SetKeyName(22, "symbol-ok-warning.png")
+        Me.Imagenes_16x16.Images.SetKeyName(23, "symbol-remove.png")
+        '
+        'Imagenes_16x16_Dark
+        '
+        Me.Imagenes_16x16_Dark.ImageStream = CType(resources.GetObject("Imagenes_16x16_Dark.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.Imagenes_16x16_Dark.TransparentColor = System.Drawing.Color.Transparent
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(0, "warning.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(1, "ok.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(2, "cancel.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(3, "delete_button_error.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(4, "clock.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(5, "clock-import.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(6, "clock-info.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(7, "tag_green.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(8, "note_text.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(9, "note.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(10, "menu-more.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(11, "comment-number-9.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(12, "comment-number-9-plus.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(13, "comment-number-8.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(14, "comment-number-7.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(15, "comment-number-6.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(16, "comment-number-5.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(17, "comment-number-4.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(18, "comment-number-3.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(19, "comment-number-2.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(20, "comment-number-1.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(21, "symbol-delete.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(22, "symbol-ok-warning.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(23, "symbol-remove.png")
         '
         'Frm_Cantidades_Ud_Disintas
         '
@@ -187,6 +260,7 @@ Partial Class Frm_Cantidades_Ud_Disintas
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(263, 142)
         Me.ControlBox = False
+        Me.Controls.Add(Me.Img_RtuAPI)
         Me.Controls.Add(Me.Chk_RtuVariable)
         Me.Controls.Add(Me.TxtCantUD2)
         Me.Controls.Add(Me.TxtCantUD1)
@@ -223,4 +297,7 @@ Partial Class Frm_Cantidades_Ud_Disintas
     Friend WithEvents TxtCantUD1 As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents TxtCantUD2 As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Chk_RtuVariable As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Img_RtuAPI As DevComponents.DotNetBar.Controls.ReflectionImage
+    Friend WithEvents Imagenes_16x16 As ImageList
+    Friend WithEvents Imagenes_16x16_Dark As ImageList
 End Class
