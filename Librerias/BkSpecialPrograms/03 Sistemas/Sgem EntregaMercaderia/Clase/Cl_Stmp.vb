@@ -660,8 +660,10 @@ Public Class Cl_Stmp
 
         End With
 
-        Consulta_sql = "Select Ddo.*,Isnull(RtuVariable,0) As RtuVariable From MAEDDO Ddo" & vbCrLf &
+        Consulta_sql = "Select Ddo.*,Cast((Case When mp.NMARCA = '¡' Then 1 Else 0 End) As Bit) As RtuVariable" & vbCrLf &
+                       "From MAEDDO Ddo" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Docu_Det ZDet On Ddo.IDMAEDDO = ZDet.Idmaeddo" & vbCrLf &
+                       "Left Join MAEPR mp On mp.KOPR = Ddo.KOPRCT " & vbCrLf &
                        "Where IDMAEEDO = " & _Row_Documento.Item("IDMAEEDO")
         Dim _Tbl_Detalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 

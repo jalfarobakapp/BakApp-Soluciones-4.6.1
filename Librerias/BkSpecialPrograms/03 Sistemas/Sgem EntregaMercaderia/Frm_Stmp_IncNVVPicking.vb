@@ -440,6 +440,14 @@ Public Class Frm_Stmp_IncNVVPicking
             Return
         End If
 
+        Dim _Msj_Tsc As LsValiciones.Mensajes
+
+        _Msj_Tsc = Fx_Revisar_Tasa_Cambio(Me, Dtp_FechaParaFacturacion.Value)
+
+        If Not _Msj_Tsc.EsCorrecto Then
+            Return
+        End If
+
         Dim _Lista As List(Of LsValiciones.Mensajes) = Fx_Cargar_NVV_FechaDespachoHoy()
 
         Dim ListaQr As LsValiciones.Mensajes = _Lista.FirstOrDefault(Function(p) p.EsCorrecto = False)

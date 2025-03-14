@@ -5006,7 +5006,7 @@ Public Class Frm_Formulario_Documento
 
         Dim _Mensaje As LsValiciones.Mensajes
 
-        If SoloprodEnDoc_CLALIBPR Then
+        If SoloprodEnDoc_CLALIBPR And _Tipr <> "SSN" Then
 
             Dim _Clalibpr = _RowProducto.Item("CLALIBPR").ToString.Trim
 
@@ -5649,10 +5649,13 @@ Public Class Frm_Formulario_Documento
         Dim _Koen = _TblEncabezado.Rows(0).Item("CodEntidad")
 
         _DescMaximo = Fx_Precio_Formula_Random(_RowPrecios, "DTMA0" & _UnTrans & "UD", "EDTMA0" & _UnTrans & "UD", Nothing, True, _Koen, 0, 0)
-        _PrecioListaUd1 = Fx_Funcion_Ecuacion_Random(Me, _Koen, _Ecuacion, _Codigo, 1, _RowPrecios, 0, 0, 0)
-        _PrecioListaUd2 = Fx_Funcion_Ecuacion_Random(Me, _Koen, _Ecuacionu2, _Codigo, 2, _RowPrecios, 0, 0, 0)
 
-        If Not IsNothing(_RowCostos) Then _CostoLista = Fx_Funcion_Ecuacion_Random(Me, _Koen, _EcuacionCosto, _Codigo, _UnTrans, _RowCostos, 0, 0, 0)
+        Dim _MostrarError As Boolean = Not _Facturacion_Automatica
+
+        _PrecioListaUd1 = Fx_Funcion_Ecuacion_Random(Me, _Koen, _Ecuacion, _Codigo, 1, _RowPrecios, 0, 0, 0, _MostrarError)
+        _PrecioListaUd2 = Fx_Funcion_Ecuacion_Random(Me, _Koen, _Ecuacionu2, _Codigo, 2, _RowPrecios, 0, 0, 0, _MostrarError)
+
+        If Not IsNothing(_RowCostos) Then _CostoLista = Fx_Funcion_Ecuacion_Random(Me, _Koen, _EcuacionCosto, _Codigo, _UnTrans, _RowCostos, 1, 1, 1, _MostrarError)
 
         Dim _PrecioListaUd1_Prov As Double
         Dim _PrecioListaUd2_Prov As Double
@@ -18335,6 +18338,22 @@ Public Class Frm_Formulario_Documento
                                     If Not Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00073", Nothing, "", "") Then
                                         Return
                                     End If
+                                End If
+
+                            End If
+
+                            _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stmp_Enc", "Idmaeedo = " & _IdMaeedo)
+
+                            Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Idmaeedo = " & _IdMaeedo & " And Estado Not In ('NULO','NULA','NULL')"
+                            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                            If Not IsNothing(_Row) Then
+
+                                If _Row.Item("Facturar") Then
+                                    MessageBoxEx.Show(Me, "No se puede reactivar o cerrar esta nota de venta ya que esta en proceso de Picking", "Validación",
+                                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                    Sb_Limpiar(Modalidad)
+                                    Return
                                 End If
 
                             End If

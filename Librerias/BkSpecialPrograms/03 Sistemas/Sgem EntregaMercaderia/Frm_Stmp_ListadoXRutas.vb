@@ -433,7 +433,7 @@ Public Class Frm_Stmp_ListadoXRutas
 
                 _Dv.RowFilter = String.Format("Ruta = '{0}'", _Filtro(1))
             Else
-                _Dv.RowFilter = String.Format("Numero+Nudo+Endo+NOKOEN+Ruta Like '%{0}%'", Txt_Filtrar.Text.Trim)
+                _Dv.RowFilter = String.Format("Numero+Nudo+NudoGen+Endo+NOKOEN+Ruta Like '%{0}%'", Txt_Filtrar.Text.Trim)
             End If
 
             Sb_MarcarPendientes()

@@ -1931,7 +1931,8 @@ Public Module Modulo_Precios_Costos
                                         _RowPrecios As DataRow,
                                         _Cantidad As Double,
                                         _Caprco1 As Double,
-                                        _Caprco2 As Double) As Double
+                                        _Caprco2 As Double,
+                                        Optional _MostrarError As Boolean = True) As Double
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
@@ -2063,7 +2064,8 @@ Public Module Modulo_Precios_Costos
                                                  True,
                                                  _Koen,
                                                  _Caprco1,
-                                                 _Caprco2)
+                                                 _Caprco2,
+                                                 _MostrarError)
                         Return _PrecioLinea
 
                     End If
@@ -2080,7 +2082,7 @@ Public Module Modulo_Precios_Costos
 
         Catch ex As Exception
 
-            If Not IsNothing(_Formulario) Then
+            If Not IsNothing(_Formulario) And _MostrarError Then
                 MessageBoxEx.Show(_Formulario, "La función que viene desde la lista " & _Kolt & " tiene errores" & vbCrLf & vbCrLf & _Fx & " " & ex.Message, "Validación",
                       MessageBoxButtons.OK, MessageBoxIcon.Stop)
             End If
@@ -2270,7 +2272,8 @@ Public Module Modulo_Precios_Costos
                                                _Aplicar_Formula_Dinamica As Boolean,
                                                _Koen As String,
                                                _vCantUd1 As Double,
-                                               _vCantUd2 As Double)
+                                               _vCantUd2 As Double,
+                                               Optional _MostrarError As Boolean = True)
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
@@ -2398,7 +2401,7 @@ Public Module Modulo_Precios_Costos
                 Sb_Buscar_Valor_En_Dimensiones(_Fx1, _Codigo, _Koen)
 
                 Consulta_sql = "Select " & _Fx1 & " As Valor"
-                Dim _RowPr As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                Dim _RowPr As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, _MostrarError)
 
                 _Precio = _RowPr.Item("Valor")
 
