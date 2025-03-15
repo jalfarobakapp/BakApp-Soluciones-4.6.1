@@ -173,8 +173,9 @@
               <xs:element name="CodTipoVenta" msprop:Generator_ColumnPropNameInTable="CodTipoVentaColumn" msprop:Generator_ColumnPropNameInRow="CodTipoVenta" msprop:Generator_UserColumnName="CodTipoVenta" msprop:Generator_ColumnVarNameInTable="columnCodTipoVenta" type="xs:string" minOccurs="0" />
               <xs:element name="Customizable" msprop:Generator_ColumnPropNameInTable="CustomizableColumn" msprop:Generator_ColumnPropNameInRow="Customizable" msprop:Generator_UserColumnName="Customizable" msprop:Generator_ColumnVarNameInTable="columnCustomizable" type="xs:boolean" minOccurs="0" />
               <xs:element name="PreVenta" msprop:Generator_ColumnPropNameInTable="PreVentaColumn" msprop:Generator_ColumnPropNameInRow="PreVenta" msprop:Generator_UserColumnName="PreVenta" msprop:Generator_ColumnVarNameInTable="columnPreVenta" type="xs:boolean" minOccurs="0" />
-              <xs:element name="IdCont" msprop:Generator_UserColumnName="IdCont" msprop:Generator_ColumnPropNameInTable="IdContColumn" msprop:Generator_ColumnPropNameInRow="IdCont" msprop:Generator_ColumnVarNameInTable="columnIdCont" type="xs:int" minOccurs="0" />
-              <xs:element name="Contenedor" msprop:Generator_ColumnPropNameInRow="Contenedor" msprop:Generator_ColumnPropNameInTable="ContenedorColumn" msprop:Generator_ColumnVarNameInTable="columnContenedor" msprop:Generator_UserColumnName="Contenedor" type="xs:string" minOccurs="0" />
+              <xs:element name="IdCont" msprop:Generator_ColumnPropNameInTable="IdContColumn" msprop:Generator_ColumnPropNameInRow="IdCont" msprop:Generator_UserColumnName="IdCont" msprop:Generator_ColumnVarNameInTable="columnIdCont" type="xs:int" minOccurs="0" />
+              <xs:element name="Contenedor" msprop:Generator_UserColumnName="Contenedor" msprop:Generator_ColumnPropNameInTable="ContenedorColumn" msprop:Generator_ColumnPropNameInRow="Contenedor" msprop:Generator_ColumnVarNameInTable="columnContenedor" type="xs:string" minOccurs="0" />
+              <xs:element name="Pickear" msprop:Generator_ColumnPropNameInRow="Pickear" msprop:Generator_ColumnPropNameInTable="PickearColumn" msprop:Generator_ColumnVarNameInTable="columnPickear" msprop:Generator_UserColumnName="Pickear" type="xs:boolean" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

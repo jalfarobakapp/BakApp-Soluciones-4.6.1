@@ -3311,21 +3311,6 @@ Public Class Frm_Ver_Documento
 
         Dim _Idmaeedo = _TblEncabezado.Rows(0).Item("IDMAEEDO")
 
-        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stmp_Enc", "Idmaeedo = " & _Idmaeedo)
-
-        Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Idmaeedo = " & _Idmaeedo & " And Estado Not In ('NULO','NULA','NULL')"
-        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-        If Not IsNothing(_Row) Then
-
-            If _Row.Item("Facturar") Then
-                MessageBoxEx.Show(Me, "No se puede reactivar o cerrar esta nota de venta ya que esta en proceso de Picking", "Validación",
-                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Return
-            End If
-
-        End If
-
         Dim Fm As New Frm_Cerrar_Abrir_Documentos(_Idmaeedo)
         Fm.ShowDialog(Me)
         Fm.Dispose()

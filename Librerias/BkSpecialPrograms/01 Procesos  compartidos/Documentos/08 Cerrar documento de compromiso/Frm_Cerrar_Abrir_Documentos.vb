@@ -1,5 +1,4 @@
 ﻿Imports DevComponents.DotNetBar
-'Imports Lib_Bakapp_VarClassFunc
 
 Public Class Frm_Cerrar_Abrir_Documentos
 
@@ -26,7 +25,7 @@ Public Class Frm_Cerrar_Abrir_Documentos
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
         _Idmaeedo = Idmaeedo
 
-       Sb_Formato_Generico_Grilla(Grilla_Encabezado, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
+        Sb_Formato_Generico_Grilla(Grilla_Encabezado, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
         Sb_Formato_Generico_Grilla(Grilla_Detalle, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 
         Sb_Actualizar_Grillas()
@@ -237,9 +236,10 @@ Public Class Frm_Cerrar_Abrir_Documentos
         For Each _Row In Grilla_Detalle.Rows
 
             Dim _Eslido = Trim(_Row.Cells("ESLIDO").Value)
+            Dim _Estado = Trim(_Row.Cells("Estado").Value)
             Dim _Saldo As Double = _Row.Cells("Saldo").Value
 
-            If CBool(_Saldo) Then
+            If _Estado = "Vigente" Then ' CBool(_Saldo) Then
                 _Row.Cells("BtnImagen").Value = Imagenes_16x16.Images.Item("padlock-open.png")
                 If Global_Thema = Enum_Themas.Oscuro Then
                     _Row.DefaultCellStyle.ForeColor = Color.White
@@ -329,14 +329,14 @@ Public Class Frm_Cerrar_Abrir_Documentos
             If _Abrir Then
                 If String.IsNullOrEmpty(_Esdo) Then
                     If _Caprad = 0 Then
-                        MessageBoxEx.Show(Me, "Documento reactivado completamente", "Abrir documento", _
+                        MessageBoxEx.Show(Me, "Documento reactivado completamente", "Abrir documento",
                                           MessageBoxButtons.OK, MessageBoxIcon.Information)
                         Me.Close()
                     End If
                 End If
             Else
                 If _Esdo = "C" Then
-                    MessageBoxEx.Show(Me, "Documento cerrado completamente", "Cerrar documento", _
+                    MessageBoxEx.Show(Me, "Documento cerrado completamente", "Cerrar documento",
                                       MessageBoxButtons.OK, MessageBoxIcon.Information)
                     Me.Close()
                 End If
@@ -344,7 +344,7 @@ Public Class Frm_Cerrar_Abrir_Documentos
 
         Else
 
-            MessageBoxEx.Show(Me, "Esta línea está ligada externamente", "Validación", _
+            MessageBoxEx.Show(Me, "Esta línea está ligada externamente", "Validación",
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
         End If
@@ -363,8 +363,8 @@ Public Class Frm_Cerrar_Abrir_Documentos
         Dim _Cant_por_relacion_externa As Double = _Fila.Cells("CANT_POR_RELACION").Value
 
 
-        Lbl_Informacion_Linea.Text = "Cantidad original del documento: " & FormatNumber(_Cantidad, 2) & vbCrLf & _
-                                     "Cantidad auto justificada      : " & FormatNumber(_Cant_auto_justificada, 2) & vbCrLf & _
+        Lbl_Informacion_Linea.Text = "Cantidad original del documento: " & FormatNumber(_Cantidad, 2) & vbCrLf &
+                                     "Cantidad auto justificada      : " & FormatNumber(_Cant_auto_justificada, 2) & vbCrLf &
                                      "Cantidad por relación externa  : " & FormatNumber(_Cant_por_relacion_externa, 2)
 
 
@@ -374,29 +374,33 @@ Public Class Frm_Cerrar_Abrir_Documentos
 
         Dim _Idmaeedo = _Row_Maeedo.Item("IDMAEEDO")
 
-        If Fx_Revisar_Documento_Cerrado(_Idmaeedo, False) Then
+        If Not Fx_Revisar_Documento_Cerrado(_Idmaeedo, False) Then
+            Return
+        End If
 
-            Dim _Tbl = _Tbl_Maeddo.Select("IDMAEEDO = " & _Idmaeedo)
+        If Not Fx_RevisarDocumentoEnPickeo() Then
+            Return
+        End If
 
-            Dim Cerrar_Doc As New Clas_Cerrar_Documento
-            Dim _Rows_Usuario_Autoriza As DataRow
+        Dim _Tbl = _Tbl_Maeddo.Select("IDMAEEDO = " & _Idmaeedo)
 
-            If Not Fx_Tiene_Permiso(Me, "Doc00011",,,,,,,,, _Rows_Usuario_Autoriza,,,,,,,, _Idmaeedo) Then
-                Return
-            End If
+        Dim Cerrar_Doc As New Clas_Cerrar_Documento
+        Dim _Rows_Usuario_Autoriza As DataRow
 
-            If Cerrar_Doc.Fx_Cerrar_Documento(_Idmaeedo, _Tbl_Maeddo) Then
+        If Not Fx_Tiene_Permiso(Me, "Doc00011",,,,,,,,, _Rows_Usuario_Autoriza,,,,,,,, _Idmaeedo) Then
+            Return
+        End If
 
-                Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "MAEEDO", _Idmaeedo, "", "", "Doc00011", "", "", "", False, _Rows_Usuario_Autoriza.Item("KOFU"))
+        If Cerrar_Doc.Fx_Cerrar_Documento(_Idmaeedo, _Tbl_Maeddo) Then
 
-                Sb_Actualizar_Grillas()
-                Sb_Formato_Grillas()
+            Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "MAEEDO", _Idmaeedo, "", "", "Doc00011", "", "", "", False, _Rows_Usuario_Autoriza.Item("KOFU"))
 
-                MessageBoxEx.Show(Me, "Documento cerrado completamente", "Cerrar documento",
-                                  MessageBoxButtons.OK, MessageBoxIcon.Information)
-                Me.Close()
+            Sb_Actualizar_Grillas()
+            Sb_Formato_Grillas()
 
-            End If
+            MessageBoxEx.Show(Me, "Documento cerrado completamente", "Cerrar documento",
+                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Me.Close()
 
         End If
 
@@ -406,33 +410,36 @@ Public Class Frm_Cerrar_Abrir_Documentos
 
         Dim _Idmaeedo = _Row_Maeedo.Item("IDMAEEDO")
 
-        If Fx_Revisar_Documento_Cerrado(_Idmaeedo, True) Then
+        If Not Fx_Revisar_Documento_Cerrado(_Idmaeedo, True) Then
 
-            'If Not Fx_Tiene_Permiso(Me, "Doc00055") Then
-            '    Return
-            'End If
+            Return
+        End If
 
-            Dim Cerrar_Doc As New Clas_Cerrar_Documento
-            Dim _Rows_Usuario_Autoriza As DataRow
+        If Not Fx_RevisarDocumentoEnPickeo() Then
+            Return
+        End If
 
-            If Not Fx_Tiene_Permiso(Me, "Doc00055",,,,,,,,, _Rows_Usuario_Autoriza,,,,,,,, _Idmaeedo) Then
-                Return
-            End If
+        Dim Cerrar_Doc As New Clas_Cerrar_Documento
+        Dim _Rows_Usuario_Autoriza As DataRow
 
-            If Cerrar_Doc.Fx_Abrir_Documento(_Idmaeedo, _Tbl_Maeddo) Then
+        If Not Fx_Tiene_Permiso(Me, "Doc00055",,,,,,,,, _Rows_Usuario_Autoriza,,,,,,,, _Idmaeedo) Then
+            Return
+        End If
 
-                Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "MAEEDO", _Idmaeedo, "", "", "Doc00055", "", "", "", False, _Rows_Usuario_Autoriza.Item("KOFU"))
+        If Cerrar_Doc.Fx_Abrir_Documento(_Idmaeedo, _Tbl_Maeddo) Then
 
-                Sb_Actualizar_Grillas()
-                Sb_Formato_Grillas()
+            Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "MAEEDO", _Idmaeedo, "", "", "Doc00055", "", "", "", False, _Rows_Usuario_Autoriza.Item("KOFU"))
 
-                MessageBoxEx.Show(Me, "Documento reactivado completamente", "Abrir documento",
-                                         MessageBoxButtons.OK, MessageBoxIcon.Information)
-                Me.Close()
+            Sb_Actualizar_Grillas()
+            Sb_Formato_Grillas()
 
-            End If
+            MessageBoxEx.Show(Me, "Documento reactivado completamente", "Abrir documento",
+                                     MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Me.Close()
 
         End If
+
+
 
     End Sub
 
@@ -500,7 +507,25 @@ Public Class Frm_Cerrar_Abrir_Documentos
 
     End Function
 
-    Private Sub GroupPanel1_Click(sender As Object, e As EventArgs) Handles GroupPanel1.Click
+    Function Fx_RevisarDocumentoEnPickeo() As Boolean
 
-    End Sub
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stmp_Enc", "Idmaeedo = " & _Idmaeedo)
+
+        Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Idmaeedo = " & _Idmaeedo & " And Estado Not In ('NULO','NULA','NULL')"
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If Not IsNothing(_Row) Then
+
+            If _Row.Item("Facturar") Then
+                MessageBoxEx.Show(Me, "No se puede reactivar o cerrar esta nota de venta ya que esta en proceso de Picking", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return False
+            End If
+
+        End If
+
+        Return True
+
+    End Function
+
 End Class

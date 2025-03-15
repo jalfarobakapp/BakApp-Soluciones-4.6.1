@@ -180,17 +180,19 @@ Partial Class Frm_Cantidades_Ud_Disintas
         Me.Chk_RtuVariable.ForeColor = System.Drawing.Color.Black
         Me.Chk_RtuVariable.Location = New System.Drawing.Point(12, 113)
         Me.Chk_RtuVariable.Name = "Chk_RtuVariable"
-        Me.Chk_RtuVariable.Size = New System.Drawing.Size(247, 25)
+        Me.Chk_RtuVariable.Size = New System.Drawing.Size(194, 25)
         Me.Chk_RtuVariable.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_RtuVariable.TabIndex = 119
         Me.Chk_RtuVariable.Text = "Desactivar razón de transformación"
         '
         'Img_RtuAPI
         '
+        Me.Img_RtuAPI.BackColor = System.Drawing.Color.White
         '
         '
         '
         Me.Img_RtuAPI.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Img_RtuAPI.ForeColor = System.Drawing.Color.Black
         Me.Img_RtuAPI.Location = New System.Drawing.Point(86, 32)
         Me.Img_RtuAPI.Name = "Img_RtuAPI"
         Me.Img_RtuAPI.Size = New System.Drawing.Size(30, 22)

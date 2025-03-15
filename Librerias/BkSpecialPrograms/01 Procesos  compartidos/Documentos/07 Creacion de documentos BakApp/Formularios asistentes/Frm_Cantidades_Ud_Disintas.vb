@@ -1,5 +1,4 @@
-﻿Imports BkSpecialPrograms.Frm_SolCredito_Ingreso
-Imports DevComponents.DotNetBar
+﻿Imports DevComponents.DotNetBar
 Imports DevComponents.DotNetBar.Controls
 
 Public Class Frm_Cantidades_Ud_Disintas
@@ -15,6 +14,8 @@ Public Class Frm_Cantidades_Ud_Disintas
     Dim _Rtu As Double
     Dim _UnTrans As Integer
     Dim _Cantidad_Original As Double
+
+    Private _NecesitaPermisoCambiarRTU As Boolean = False
 
     Dim _Fila As DataGridViewRow
     Dim _RowProducto As DataRow
@@ -145,6 +146,7 @@ Public Class Frm_Cantidades_Ud_Disintas
 
             _Icono = Nothing
 
+            '_NecesitaPermisoCambiarRTU = True
             Chk_RtuVariable.Enabled = False
 
             ' Llama a la función para encontrar el producto en las bodegas
@@ -475,5 +477,24 @@ Public Class Frm_Cantidades_Ud_Disintas
         'End Select
 
     End Function
+
+    Private Sub Chk_RtuVariable_CheckedChanged(sender As Object, e As EventArgs) 'Handles Chk_RtuVariable.CheckedChanged
+
+        If _NecesitaPermisoCambiarRTU Then
+            If Chk_RtuVariable.Checked Then
+                If Not Fx_Tiene_Permiso(Me, "") Then
+                    Chk_RtuVariable.Checked = False
+                Else
+                    Label3.Text = "R.T.U.  (" & _Rtu & ")"
+                End If
+            End If
+            TxtCantUD1.Enabled = Chk_RtuVariable.Checked
+        End If
+
+        If Chk_RtuVariable.Checked Then
+            TxtCantUD1.Focus()
+        End If
+
+    End Sub
 
 End Class

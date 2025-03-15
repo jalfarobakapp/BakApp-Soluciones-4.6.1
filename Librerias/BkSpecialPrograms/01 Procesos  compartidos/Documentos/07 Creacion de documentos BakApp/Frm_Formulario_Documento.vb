@@ -6598,7 +6598,7 @@ Public Class Frm_Formulario_Documento
                     _Cantidad = 0
                 End If
 
-                If NuloPorNro(_Fila.Cells("RtuVariable").Value, False) Then
+                If NuloPorNro(_Fila.Cells("RtuVariable").Value, False) Or _Facturacion_Automatica Then
 
                     _CantUd1 = _Fila.Cells("CantUd1").Value
                     _CantUd2 = _Fila.Cells("CantUd2").Value
