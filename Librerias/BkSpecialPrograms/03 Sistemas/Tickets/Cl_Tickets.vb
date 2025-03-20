@@ -90,12 +90,12 @@ Public Class Cl_Tickets
 
         Try
 
-            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tickets_Producto Where Id = " & _Id_Ticket
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tickets_Producto Where Id_Ticket = " & _Id_Ticket
             Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If IsNothing(_Row) Then
                 _Mensaje.Detalle = "No se encontro registro"
-                Throw New System.Exception("No se encontro el registro en la tabla de Zw_Stk_Tickets con el Id = " & _Id_Ticket)
+                Throw New System.Exception("No se encontro el registro en la tabla de Zw_Stk_Tickets con el Id_Ticket = " & _Id_Ticket)
             End If
 
             With _Zw_Stk_Tickets_Producto

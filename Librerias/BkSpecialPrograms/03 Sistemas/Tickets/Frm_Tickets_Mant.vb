@@ -71,10 +71,18 @@ Public Class Frm_Tickets_Mant
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tickets_Producto Where Id_Raiz = " & _Cl_Tickets_Padre.Zw_Stk_Tickets.Id_Raiz
             Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
+            'Dim _ContPr = 1
+
             For Each _Fila As DataRow In _Tbl.Rows
 
                 _Mensaje = _Cl_Tickets.FX_Llenar_Producto(_Fila.Item("Id_Ticket"))
                 _Cl_Tickets.Ls_Zw_Stk_Tickets_Producto.Add(_Mensaje.Tag)
+
+                'If _ContPr = 1 Then
+                '    _Cl_Tickets.Zw_Stk_Tickets_Producto = _Mensaje.Tag
+                'End If
+
+                '_ContPr += 1
 
             Next
 

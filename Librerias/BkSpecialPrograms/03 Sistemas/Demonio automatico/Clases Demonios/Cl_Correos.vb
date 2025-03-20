@@ -304,6 +304,11 @@ Public Class Cl_Correos
         '               "Where Enviar = 1 And Enviado = 0 And NombreEquipo = '" & _Nombre_Equipo & "'" & _Filtro_Fecha_Enviar & vbCrLf &
         '               "Order By Intentos, Id"
 
+        'Consulta_Sql = "Select Top " & CantMmail & " *,Isnull(NOKOFU,'Funcionario?????') As 'Nombre_Funcionario'" & vbCrLf &
+        '               "From " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo" & vbCrLf &
+        '               "Left Join TABFU On KOFU = CodFuncionario" & vbCrLf &
+        '               "Where Id = 41510212"
+
         _Tbl_Correos = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         'Dim fic As String = AppPath(True) & "Log_Bk.txt"
@@ -367,7 +372,7 @@ Public Class Cl_Correos
                 Consulta_Sql = "Select TIDO,NUDO,KOEN,SUEN,NOKOEN,ESDO 
                                 From MAEEDO Inner Join MAEEN On KOEN = ENDO And SUEN = SUENDO 
                                 Where IDMAEEDO = " & _IdMaeedo
-                Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+                Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
 
                 Dim _Koen, _Suen As String
 
@@ -603,7 +608,7 @@ Public Class Cl_Correos
 
                     Consulta_Sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Correos" & vbCrLf &
                                    "Where Nombre_Correo = '" & _Nombre_Correo & "'"
-                    Dim _Row_Correo As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+                    Dim _Row_Correo As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
 
                     If _Row_Correo IsNot Nothing Then
 

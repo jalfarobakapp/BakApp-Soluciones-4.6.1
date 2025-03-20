@@ -511,7 +511,7 @@ Public Class Frm_Cerrar_Abrir_Documentos
 
         Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stmp_Enc", "Idmaeedo = " & _Idmaeedo)
 
-        Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Idmaeedo = " & _Idmaeedo & " And Estado Not In ('NULO','NULA','NULL')"
+        Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Idmaeedo = " & _Idmaeedo & " And Estado Not In ('NULO','NULA','CERRA')"
         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If Not IsNothing(_Row) Then

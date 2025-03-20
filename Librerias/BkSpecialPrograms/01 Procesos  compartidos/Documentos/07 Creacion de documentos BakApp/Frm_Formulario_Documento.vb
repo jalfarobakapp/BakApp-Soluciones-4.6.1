@@ -6589,7 +6589,7 @@ Public Class Frm_Formulario_Documento
 
             If _UnTrans = 1 Then
 
-                If Not ForzarDecimalesEnUnidadesEnteras And Fx_Solo_Enteros(_Cantidad, _Divisible) Then
+                If Not ForzarDecimalesEnUnidadesEnteras And Fx_Solo_Enteros(_Cantidad, _Divisible) And Not _Facturacion_Automatica Then
                     If _Cantidad <> 0 Then
                         MessageBoxEx.Show(Me, "El producto solo permite cantidades enteras", "Validación",
                                           MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
@@ -10388,7 +10388,7 @@ Public Class Frm_Formulario_Documento
 
                         Dim _RowProducto As DataRow
 
-                        If PreVenta Then
+                        If PreVenta And _Tido = "COV" Then
                             _RowProducto = Fx_CargarProductoDesdeContenedor()
                         Else
                             _RowProducto = Fx_Buscar_Producto(_Codigo, _Es_Concepto, True, _Tbl_Productos_Seleccionados_Multiple, _EsKit)
@@ -19670,9 +19670,16 @@ Public Class Frm_Formulario_Documento
                     If Not _Prct Then
 
                         If _DesdePickeo Then
+
                             _New_Fila.Cells("Cantidad").Value = _Cantidad
                             _New_Fila.Cells("CantUd1").Value = _Fila.Item("CantUd1_Pickea")
                             _New_Fila.Cells("CantUd2").Value = _Fila.Item("CantUd2_Pickea")
+
+                            If _Fila.Item("TIPR") = "SSN" Then
+                                _New_Fila.Cells("CantUd1").Value = _Cantidad
+                                _New_Fila.Cells("CantUd2").Value = _Cantidad
+                            End If
+
                         End If
 
                     End If
