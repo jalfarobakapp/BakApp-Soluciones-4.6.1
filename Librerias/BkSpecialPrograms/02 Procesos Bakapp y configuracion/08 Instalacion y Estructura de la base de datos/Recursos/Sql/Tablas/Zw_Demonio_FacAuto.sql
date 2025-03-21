@@ -23,6 +23,7 @@ CREATE TABLE [dbo].[Zw_Demonio_FacAuto](
     [FechaHoraFacturado]        [datetime]			NULL,
     [DesdeNVVAuto]		        [bit]				NOT NULL DEFAULT (0),
     [CantItem]                  [int]				NOT NULL DEFAULT (0),
+    [IpEquipo]		            [varchar](20)		NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_Demonio_FacAuto] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

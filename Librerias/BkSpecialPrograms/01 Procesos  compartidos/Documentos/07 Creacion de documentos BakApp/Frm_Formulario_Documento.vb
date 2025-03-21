@@ -26168,7 +26168,7 @@ Public Class Frm_Formulario_Documento
 
             End If
 
-            Dim _Mi_Ip = getIp()
+            Dim _Mi_Ip = Fx_Get_Ip()
 
             Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Casi_DocTom Where Id_DocEnc = " & _Id_DocEnc & " And NombreEquipo = '" & _NombreEquipo & "'"
             _Sql.Ej_consulta_IDU(Consulta_sql)

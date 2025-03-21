@@ -727,7 +727,7 @@ Public Class Frm_PreciosLC_Mt01
 
             If _Sql.Ej_consulta_IDU(Consulta_sql) Then
 
-                Dim _Ippide As String = getIp()
+                Dim _Ippide As String = Fx_Get_Ip()
                 Dim _Horagrab As String = Hora_Grab_fx(False)
 
                 Consulta_sql = "Insert Into TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,KOOP,ACCION)" & vbCrLf &

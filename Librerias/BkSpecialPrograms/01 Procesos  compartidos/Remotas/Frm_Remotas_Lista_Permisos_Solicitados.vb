@@ -400,6 +400,10 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 
                     _DsDocumento = Fx_Revisar_Documento_Trae_Ds(_Fila)
 
+                    If IsNothing(_DsDocumento) Then
+                        Return
+                    End If
+
                 End If
 
                 'Select Case _CodPermiso

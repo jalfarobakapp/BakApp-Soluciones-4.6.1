@@ -69,7 +69,7 @@ Public Class Frm_Remotas_Analisi_Dscto_X_Documento_Rd
         _Sql = New Class_SQL(_Cadena_ConexionSQL_Server_Remotas)
 
         _Tabla = Tabla
-        _Ipotorga = Mid(getIp(), 1, 15)
+        _Ipotorga = Mid(Fx_Get_Ip(), 1, 15)
 
         If _Tabla = Enum_Tabla.Kasiedo Then
 

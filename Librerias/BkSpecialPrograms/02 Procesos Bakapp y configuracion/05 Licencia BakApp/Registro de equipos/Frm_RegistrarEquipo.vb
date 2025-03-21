@@ -56,7 +56,7 @@ Public Class Frm_RegistrarEquipo
 
         Sb_Actualizar_Combos_Box()
 
-        Dim MiIp = getIp()
+        Dim MiIp = Fx_Get_Ip()
 
         Dim _Ds As New DatosBakApp
 

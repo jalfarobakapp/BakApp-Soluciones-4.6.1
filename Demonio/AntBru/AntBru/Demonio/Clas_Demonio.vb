@@ -81,7 +81,7 @@ Public Module Clas_Demonio
             End
         End If
 
-        Dim _Mi_IP = getIp()
+        Dim _Mi_IP = Fx_Get_Ip()
         _Nombre_Equipo = _Row_Nom_Equipo.Item("Nombre_Equipo")
 
         Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_EstacionesBkp Where NombreEquipo = '" & _Nombre_Equipo & "'"

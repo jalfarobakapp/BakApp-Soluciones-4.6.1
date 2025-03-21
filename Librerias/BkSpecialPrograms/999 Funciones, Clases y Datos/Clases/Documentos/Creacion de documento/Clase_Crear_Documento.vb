@@ -3056,7 +3056,35 @@ Public Class Clase_Crear_Documento
 
                 _TipoDoc = .Item("TipoDoc")
                 _SubTido = .Item("Subtido")
-                _NroDocumento = Traer_Numero_Documento(_Tido, .Item("NroDocumento"), _Modalidad)
+
+                If _TipoDoc = "NVV" Then
+
+                    Dim letras As String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                    Dim numeros As String = "0123456789"
+                    Dim random As New Random()
+                    Dim resultado As New System.Text.StringBuilder()
+
+                    ' Generar 3 letras al azar
+                    For i As Integer = 1 To 3
+                        Dim indiceLetra As Integer = random.Next(0, letras.Length)
+                        resultado.Append(letras(indiceLetra))
+                    Next
+
+                    ' Generar 7 números al azar
+                    For i As Integer = 1 To 7
+                        Dim indiceNumero As Integer = random.Next(0, numeros.Length)
+                        resultado.Append(numeros(indiceNumero))
+                    Next
+
+                    _NroDocumento = resultado.ToString()
+
+                Else
+
+                    _NroDocumento = Traer_Numero_Documento(_Tido, .Item("NroDocumento"), _Modalidad)
+
+                End If
+
+
 
                 If String.IsNullOrEmpty(_NroDocumento) Then
                     Return 0

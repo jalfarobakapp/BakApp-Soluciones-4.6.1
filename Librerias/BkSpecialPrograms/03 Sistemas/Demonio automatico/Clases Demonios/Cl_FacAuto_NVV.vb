@@ -273,9 +273,10 @@
 
         Dim _FechaEmision As Date = FechaDelServidor()
 
+        Dim _IpEquipo As String = Fx_GetLocalIPAddress() 'Fx_Get_Ip()
 
         Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set Facturar = 1, Facturando = 0" & vbCrLf &
-                       "Where NombreEquipo = '" & Nombre_Equipo & "' And Facturando = 1 "
+                       "Where NombreEquipo = '" & Nombre_Equipo & "' And Facturando = 1 And IpEquipo = '" & _IpEquipo & "'"
         If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
             Log_Registro += _Sql.Pro_Error & vbCrLf
         End If
@@ -302,7 +303,8 @@
 
             Dim _Filtro As String = Generar_Filtro_IN(_Tbl_Doc_Facturar, "", "Id", True, False, "")
 
-            Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set Facturar = 0, Facturando = 1,NombreEquipo = '" & Nombre_Equipo & "'" & vbCrLf &
+            Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set " &
+                           "Facturar = 0, Facturando = 1,NombreEquipo = '" & Nombre_Equipo & "',IpEquipo = '" & _IpEquipo & "'" & vbCrLf &
                            "Where Id In " & _Filtro
 
             If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then

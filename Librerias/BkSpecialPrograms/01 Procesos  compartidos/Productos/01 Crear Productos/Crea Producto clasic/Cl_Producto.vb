@@ -821,7 +821,7 @@ Drop Table #Paso_Tabim"
 
             End With
 
-            Dim _Ippide As String = getIp()
+            Dim _Ippide As String = Fx_Get_Ip()
             Dim _Horagrab As String = Hora_Grab_fx(False)
 
             Dim _SqlTabactus As String
@@ -1060,7 +1060,7 @@ Drop Table #Paso_Tabim"
 
             'Insertar datos en TABACTUS
 
-            Dim _Ippide As String = getIp()
+            Dim _Ippide As String = Fx_Get_Ip()
             Dim _Horagrab As String = Hora_Grab_fx(False)
 
             Dim _SqlTabactus As String
@@ -1237,7 +1237,7 @@ Drop Table #Paso_Tabim"
 
             'Insertar datos en TABACTUS
 
-            Dim _Ippide As String = getIp()
+            Dim _Ippide As String = Fx_Get_Ip()
             Dim _Horagrab As String = Hora_Grab_fx(False)
 
             Dim _SqlTabactus As String

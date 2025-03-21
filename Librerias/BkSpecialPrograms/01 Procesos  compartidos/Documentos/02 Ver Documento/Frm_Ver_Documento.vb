@@ -540,30 +540,34 @@ Public Class Frm_Ver_Documento
             BuscarDatoEnGrilla(_Codigo_Marcar, "KOPRCT", GrillaDetalleDoc)
         End If
 
-        Dim _Tido = Trim(_TblEncabezado.Rows(0).Item("TIDO"))
-        Dim _Nudo = Trim(_TblEncabezado.Rows(0).Item("NUDO"))
+        If _Tipo_Apertura = Enum_Tipo_Apertura.Desde_Random_SQL Then
 
-        If _Tido = "NVV" AndAlso
-            _Global_Row_Configuracion_General.Item("HabilitarNVVConProdCustomizables") AndAlso
-            _Tipo_Apertura = Enum_Tipo_Apertura.Desde_Random_SQL Then
+            Dim _Tido = Trim(_TblEncabezado.Rows(0).Item("TIDO"))
+            Dim _Nudo = Trim(_TblEncabezado.Rows(0).Item("NUDO"))
 
-            _Customizable = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "Customizable", "Idmaeedo = " & _Idmaeedo)
+            If _Tido = "NVV" AndAlso
+                _Global_Row_Configuracion_General.Item("HabilitarNVVConProdCustomizables") AndAlso
+                _Tipo_Apertura = Enum_Tipo_Apertura.Desde_Random_SQL Then
 
-            Lbl_CusNVV.Visible = _Customizable
-            Btn_CusNVV.Visible = _Customizable
+                _Customizable = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "Customizable", "Idmaeedo = " & _Idmaeedo)
 
-            If _Customizable Then
-                Btn_CusNVV.Text = "Ver información del producto Customizado"
-                Me.Text += " *** CUSTOMIZABLE ***"
-            Else
-                Btn_MarcarNVVCustomizable.Visible = True
+                Lbl_CusNVV.Visible = _Customizable
+                Btn_CusNVV.Visible = _Customizable
+
+                If _Customizable Then
+                    Btn_CusNVV.Text = "Ver información del producto Customizado"
+                    Me.Text += " *** CUSTOMIZABLE ***"
+                Else
+                    Btn_MarcarNVVCustomizable.Visible = True
+                End If
+
             End If
 
+            _Cl_Contenedor.Zw_Contenedor = _Cl_Contenedor.Fx_Llenar_Contenedor(_Idmaeedo, _Tido, _Nudo)
+
+            Btn_Contenedor.Visible = (_Tido = "OCC")
+
         End If
-
-        _Cl_Contenedor.Zw_Contenedor = _Cl_Contenedor.Fx_Llenar_Contenedor(_Idmaeedo, _Tido, _Nudo)
-
-        Btn_Contenedor.Visible = (_Tido = "OCC")
 
         Me.Cursor = Cursors.Default
 

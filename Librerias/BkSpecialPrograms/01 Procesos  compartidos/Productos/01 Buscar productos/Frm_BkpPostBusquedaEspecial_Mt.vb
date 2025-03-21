@@ -2023,7 +2023,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
                 If _Eliminado Then
 
-                    Dim _Ippide As String = getIp()
+                    Dim _Ippide As String = Fx_Get_Ip()
                     Dim _Horagrab As String = Hora_Grab_fx(False)
 
                     Consulta_sql = "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ") ','Eliminacion de Productos : " & _Codigo_a_eliminar & "')"
@@ -2096,7 +2096,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                        "DELETE " & _Global_BaseBk_Externa & "Zw_Productos Where Codigo = '" & _Codigo_a_eliminar & "'"
 
 
-        Dim _Ippide As String = getIp()
+        Dim _Ippide As String = Fx_Get_Ip()
         Dim _Horagrab As String = Hora_Grab_fx(False)
 
         Consulta_sql += vbCrLf & "INSERT INTO TABACTUS ( IPPIDE,IPOTORGA,KOFU,HORAGRAB,VERSION,ACCION) VALUES ( '" & _Ippide & "','','" & FUNCIONARIO & "'," & _Horagrab & ",'(" & _Version_BakApp & ") ','Eliminacion de Productos : " & _Codigo_a_eliminar & "')" & vbCrLf &
