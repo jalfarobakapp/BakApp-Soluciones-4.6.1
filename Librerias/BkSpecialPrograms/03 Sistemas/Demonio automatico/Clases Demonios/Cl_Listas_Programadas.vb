@@ -59,7 +59,7 @@
 
             End If
 
-            Dim _Ippide As String = Fx_Get_Ip()
+            Dim _Ippide As String = getIp()
             Dim _Horagrab As String = Hora_Grab_fx(False)
 
             For Each _FilaDet As DataRow In _Tbl_ListasProgramadas_Detalle.Rows

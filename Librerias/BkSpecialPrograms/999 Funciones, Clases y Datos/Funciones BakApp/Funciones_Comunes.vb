@@ -1201,7 +1201,7 @@ Error_Numero:
         cm.Popup(pt)
     End Sub
 
-    Public Function Fx_Get_Ip() As String
+    Public Function getIp() As String
 
         Dim valorIp As String
 

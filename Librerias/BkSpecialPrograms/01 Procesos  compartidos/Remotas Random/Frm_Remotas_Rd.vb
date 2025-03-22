@@ -9,7 +9,7 @@ Public Class Frm_Remotas_Rd
     Dim _TblRemotas As DataTable
     Dim _Cadena_ConexionSQL_Server_Remotas = Cadena_ConexionSQL_Server
     Dim _Row_Funcionario As DataRow
-    Dim _Ipotorga As String = Mid(Fx_Get_Ip(), 15)
+    Dim _Ipotorga As String = Mid(getIp(), 15)
 
     Public Sub New()
 
@@ -322,7 +322,7 @@ Public Class Frm_Remotas_Rd
         Dim _Kofuauto = _Row_Funcionario.Item("KOFU")
         Dim _Nuremot = _Fila.Cells("NUREMOT").Value
 
-        _Ipotorga = Mid(Fx_Get_Ip(), 1, 15)
+        _Ipotorga = Mid(getIp(), 1, 15)
 
         If Fx_Tiene_Permiso() Then
             If Fx_Existe_Remota(_Nuremot, _Kofu) Then
@@ -398,7 +398,7 @@ Public Class Frm_Remotas_Rd
         Dim _Kofuauto = _Row_Funcionario.Item("KOFU")
         Dim _Horagrab = Hora_Grab_fx(False)
 
-        _Ipotorga = Mid(Fx_Get_Ip(), 1, 15)
+        _Ipotorga = Mid(getIp(), 1, 15)
 
         Consulta_sql = "INSERT INTO TABACTUS (KOFU,KOFUAUTO,KOOP,FECHA,HORAGRAB,ACCION,IPPIDE,IPOTORGA,VERSION) VALUES " & vbCrLf & _
                        "('" & _Kofu & "','" & _Kofuauto & "','" & _Koop & "',GetDate()," & _Horagrab & _

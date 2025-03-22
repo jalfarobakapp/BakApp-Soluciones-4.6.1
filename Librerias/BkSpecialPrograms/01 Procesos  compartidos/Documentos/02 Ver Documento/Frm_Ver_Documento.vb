@@ -757,11 +757,13 @@ Public Class Frm_Ver_Documento
                             _Class_Referencias_DTE.Fx_Row_Nueva_Referencia(0, _Idmaeedo, "", "",
                                                              _NroLinRef, _TpoDocRef, _FolioRef, _RUTOt, _IdAdicOtr, _FchRef, _CodRef, _RazonRef)
 
+                            Dim _FchRef_Str = Format(_FlRef.Item("FEEMDO"), "yyyyMMdd")
+
                             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Referencias_Dte " &
                                            "(Id_Doc,Tido,Nudo,NroLinRef,TpoDocRef,FolioRef,RUTOt,IdAdicOtr,FchRef,CodRef,RazonRef, Kasi)
                                Values
                                (" & _Idmaeedo & ",'" & _Tido & "','" & _Nudo & "'," & _NroLinRef & "," & _TpoDocRef &
-                                           ",'" & _FolioRef & "','" & _RUTOt & "','" & _IdAdicOtr & "','" & _FchRef & "'," & _CodRef & ",'" & _RazonRef & "',0)"
+                                           ",'" & _FolioRef & "','" & _RUTOt & "','" & _IdAdicOtr & "','" & _FchRef_Str & "'," & _CodRef & ",'" & _RazonRef & "',0)"
                             _Sql.Ej_consulta_IDU(Consulta_sql)
 
                         End If
