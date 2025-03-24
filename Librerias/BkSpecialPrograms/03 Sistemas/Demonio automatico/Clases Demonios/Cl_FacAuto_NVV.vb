@@ -397,6 +397,7 @@
                                    ",Fecha_Facturado = '" & Format(_Fecha_Emision, "yyyyMMdd") & "'" &
                                    ",Informacion = '" & _Mensaje.Mensaje & "'" & vbCrLf &
                                    ",FechaHoraFacturado = Getdate()" & vbCrLf &
+                                   ",IpEquipo = '" & _IpEquipo & "'" & vbCrLf &
                                    "Where Id = " & _Id
                     If _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
                         Log_Registro += "NVV: " & _Nudo_Nvv & " facturada correctamente. " & _Row_Factura.Item("TIDO") & "-" & _Row_Factura.Item("NUDO") & vbCrLf

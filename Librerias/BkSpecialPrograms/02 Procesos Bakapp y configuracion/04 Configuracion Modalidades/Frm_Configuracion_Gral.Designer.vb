@@ -24,6 +24,7 @@ Partial Class Frm_Configuracion_Gral
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Configuracion_Gral))
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Chk_RestringirFechaVencimientoClientes = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_HabilitarNVVConProdCustomizables = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_No_Permitir_Grabar_Con_Dscto_Superado = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Utilizar_NVV_En_Credito_X_Cliente = New DevComponents.DotNetBar.Controls.CheckBoxX()
@@ -177,7 +178,6 @@ Partial Class Frm_Configuracion_Gral
         Me.Btn_DocConceptosVsPagos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_ConfPuntosVta = New DevComponents.DotNetBar.ButtonItem()
         Me.CheckBoxX2 = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_RestringirFechaVencimientoClientes = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.TableLayoutPanel3.SuspendLayout()
         CType(Me.Input_Monto_Max_CRV_FacMasiva, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel4.SuspendLayout()
@@ -258,6 +258,23 @@ Partial Class Frm_Configuracion_Gral
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel3.Size = New System.Drawing.Size(657, 354)
         Me.TableLayoutPanel3.TabIndex = 85
+        '
+        'Chk_RestringirFechaVencimientoClientes
+        '
+        '
+        '
+        '
+        Me.Chk_RestringirFechaVencimientoClientes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_RestringirFechaVencimientoClientes.CheckBoxImageChecked = CType(resources.GetObject("Chk_RestringirFechaVencimientoClientes.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_RestringirFechaVencimientoClientes.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_RestringirFechaVencimientoClientes.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_RestringirFechaVencimientoClientes.FocusCuesEnabled = False
+        Me.Chk_RestringirFechaVencimientoClientes.ForeColor = System.Drawing.Color.Black
+        Me.Chk_RestringirFechaVencimientoClientes.Location = New System.Drawing.Point(3, 329)
+        Me.Chk_RestringirFechaVencimientoClientes.Name = "Chk_RestringirFechaVencimientoClientes"
+        Me.Chk_RestringirFechaVencimientoClientes.Size = New System.Drawing.Size(635, 12)
+        Me.Chk_RestringirFechaVencimientoClientes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_RestringirFechaVencimientoClientes.TabIndex = 126
+        Me.Chk_RestringirFechaVencimientoClientes.Text = "Verificar la Fecha de Vigencia del Crédito del Cliente al Realizar la Venta"
         '
         'Chk_HabilitarNVVConProdCustomizables
         '
@@ -733,15 +750,15 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControl1.ControlBox.MenuBox.Name = ""
         Me.SuperTabControl1.ControlBox.Name = ""
         Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel5)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel6)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel4)
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel7)
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel9)
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel5)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel8)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel3)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel9)
         Me.SuperTabControl1.ForeColor = System.Drawing.Color.Black
         Me.SuperTabControl1.Location = New System.Drawing.Point(12, 12)
         Me.SuperTabControl1.Name = "SuperTabControl1"
@@ -1316,9 +1333,9 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControlPanel7.Controls.Add(Me.Cmb_Nodo_Raiz_Asociados)
         Me.SuperTabControlPanel7.Controls.Add(Me.LabelX15)
         Me.SuperTabControlPanel7.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel7.Location = New System.Drawing.Point(125, 0)
+        Me.SuperTabControlPanel7.Location = New System.Drawing.Point(132, 0)
         Me.SuperTabControlPanel7.Name = "SuperTabControlPanel7"
-        Me.SuperTabControlPanel7.Size = New System.Drawing.Size(667, 539)
+        Me.SuperTabControlPanel7.Size = New System.Drawing.Size(660, 539)
         Me.SuperTabControlPanel7.TabIndex = 0
         Me.SuperTabControlPanel7.TabItem = Me.SpTab_Productos
         '
@@ -2770,23 +2787,6 @@ Partial Class Frm_Configuracion_Gral
         Me.CheckBoxX2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.CheckBoxX2.TabIndex = 117
         Me.CheckBoxX2.Text = "Ambiente de pruebas y certificación"
-        '
-        'Chk_RestringirFechaVencimientoClientes
-        '
-        '
-        '
-        '
-        Me.Chk_RestringirFechaVencimientoClientes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_RestringirFechaVencimientoClientes.CheckBoxImageChecked = CType(resources.GetObject("Chk_RestringirFechaVencimientoClientes.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_RestringirFechaVencimientoClientes.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_RestringirFechaVencimientoClientes.CheckBoxImageIndeterminate"), System.Drawing.Image)
-        Me.Chk_RestringirFechaVencimientoClientes.FocusCuesEnabled = False
-        Me.Chk_RestringirFechaVencimientoClientes.ForeColor = System.Drawing.Color.Black
-        Me.Chk_RestringirFechaVencimientoClientes.Location = New System.Drawing.Point(3, 329)
-        Me.Chk_RestringirFechaVencimientoClientes.Name = "Chk_RestringirFechaVencimientoClientes"
-        Me.Chk_RestringirFechaVencimientoClientes.Size = New System.Drawing.Size(635, 12)
-        Me.Chk_RestringirFechaVencimientoClientes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_RestringirFechaVencimientoClientes.TabIndex = 126
-        Me.Chk_RestringirFechaVencimientoClientes.Text = "Verificar la Fecha de Vigencia del Crédito del Cliente al Realizar la Venta"
         '
         'Frm_Configuracion_Gral
         '

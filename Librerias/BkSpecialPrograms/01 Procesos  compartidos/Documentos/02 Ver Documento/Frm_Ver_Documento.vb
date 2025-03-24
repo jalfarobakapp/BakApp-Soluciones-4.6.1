@@ -1,9 +1,6 @@
 ﻿Imports System.Drawing.Printing
 Imports System.IO
 Imports DevComponents.DotNetBar
-Imports MySql.Data.Authentication
-Imports OfficeOpenXml.FormulaParsing.LexicalAnalysis
-Imports Org.BouncyCastle.Math.EC
 Imports PdfSharp
 Imports PdfSharp.Drawing
 Imports PdfSharp.Drawing.Layout
@@ -2270,6 +2267,10 @@ Public Class Frm_Ver_Documento
 
     Sub Sb_Ver_Entidad()
 
+        If Not Fx_Tiene_Permiso(Me, "CfEnt001") Then
+            Return
+        End If
+
         Dim Fm As New Frm_Crear_Entidad_Mt
         Fm.Fx_Llenar_Entidad(_TblEncabezado.Rows(0).Item("ENDO"), _TblEncabezado.Rows(0).Item("SUENDO"))
         Fm.CrearEntidad = False
@@ -4028,26 +4029,28 @@ Public Class Frm_Ver_Documento
 
     Private Sub Btn_Mnu_Ficha_Entidad_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_Ficha_Entidad.Click
 
-        If Fx_Tiene_Permiso(Me, "CfEnt001") Then
+        'If Not Fx_Tiene_Permiso(Me, "CfEnt001") Then
+        '    Return
+        'End If
 
-            Dim _Koen = _RowEntidad.Item("KOEN")
-            Dim _Suen = _RowEntidad.Item("SUEN")
+        Sb_Ver_Entidad()
 
-            Dim Fm As New Frm_Crear_Entidad_Mt
-            Fm.Fx_Llenar_Entidad(_Koen, _Suen)
-            Fm.CrearEntidad = False
-            Fm.EditarEntidad = True
-            Fm.ShowDialog(Me)
+        'Dim _Koen = _RowEntidad.Item("KOEN")
+        'Dim _Suen = _RowEntidad.Item("SUEN")
 
-            If Fm.Grabar Then
-                Beep()
-                ToastNotification.Show(Me, "DATOS ACTUALIZADOS CORRECTAMENTE", My.Resources.ok_button,
-                                       1 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
-            End If
+        'Dim Fm As New Frm_Crear_Entidad_Mt
+        'Fm.Fx_Llenar_Entidad(_Koen, _Suen)
+        'Fm.CrearEntidad = False
+        'Fm.EditarEntidad = True
+        'Fm.ShowDialog(Me)
 
-            Fm.Dispose()
+        'If Fm.Grabar Then
+        '    Beep()
+        '    ToastNotification.Show(Me, "DATOS ACTUALIZADOS CORRECTAMENTE", My.Resources.ok_button,
+        '                           1 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
+        'End If
 
-        End If
+        'Fm.Dispose()
 
     End Sub
 

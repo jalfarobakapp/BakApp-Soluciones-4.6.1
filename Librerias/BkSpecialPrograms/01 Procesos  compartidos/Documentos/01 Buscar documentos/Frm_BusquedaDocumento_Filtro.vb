@@ -701,8 +701,10 @@ Buscar:
                 Consulta_sql = "Select KOFU From TABFUGD Where KOGRU In (" & _Kogru & ")"
                 Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
-                _Sql_Filtro_Entidades = Generar_Filtro_IN(_Tbl, "", "KOFU", False, False, "'")
-                _Sql_Filtro_Entidades = "And Mae1.KOFUEN In " & _Sql_Filtro_Entidades
+                Dim _Fl_Entidades = Generar_Filtro_IN(_Tbl, "", "KOFU", False, False, "'")
+                _Fl_Entidades = "And Mae1.KOFUEN In " & _Fl_Entidades
+
+                _Sql_Filtro_Entidades += vbCrLf & _Fl_Entidades
 
             End If
 

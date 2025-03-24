@@ -15068,6 +15068,10 @@ Public Class Frm_Formulario_Documento
             '    Return False
             'End If
 
+            If _Tido = "NVI" Then
+                _TblEncabezado.Rows(0).Item("Sucursal") = _Row_Bodega_Destino.Item("KOSU")
+            End If
+
             _RowEntidad.Item("SUEN") = _Row_Bodega_Destino.Item("KOSU")
             _TblEncabezado.Rows(0).Item("CodSucEntidad") = _Row_Bodega_Destino.Item("KOSU")
             _TblEncabezado.Rows(0).Item("Bodega_Destino") = _Row_Bodega_Destino.Item("KOBO")
