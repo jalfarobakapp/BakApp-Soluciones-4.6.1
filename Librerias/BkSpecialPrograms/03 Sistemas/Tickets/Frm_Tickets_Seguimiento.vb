@@ -1240,7 +1240,7 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
             For Each _Fl As DataRow In _Tbl.Rows
 
-                _Mensaje = _Cl_Tickets.FX_Llenar_Producto(_Fl.Item("Id"))
+                _Mensaje = _Cl_Tickets.FX_Llenar_Producto_Id(_Fl.Item("Id"))
                 _Cl_Tickets2.Ls_Zw_Stk_Tickets_Producto.Add(_Mensaje.Tag)
 
             Next

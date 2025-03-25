@@ -66,6 +66,8 @@ Public Class Frm_Seleccionar_Fecha
         Me.StartPosition = FormStartPosition.Manual
         Me.Location = New Point(Me.Width + Cursor.Position.X - 200, Cursor.Position.Y - 200)
 
+        Dtp_Fecha.Value = Now.Date
+
     End Sub
 
     Private Sub Frm_Seleccionar_Fecha_Load(sender As Object, e As EventArgs) Handles MyBase.Load

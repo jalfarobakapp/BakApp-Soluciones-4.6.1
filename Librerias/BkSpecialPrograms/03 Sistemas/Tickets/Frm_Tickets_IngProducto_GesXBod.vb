@@ -83,7 +83,8 @@ Public Class Frm_Tickets_IngProducto_GesXBod
                     .Rtu = item.Rtu,
                     .SobreStock = item.SobreStock,
                     .Stfi1 = item.Stfi1,
-                    .Stfi2 = item.Stfi2
+                    .Stfi2 = item.Stfi2,
+                    .ConfCantCero = item.ConfCantCero
                 })
         Next
         Return nuevaLista
@@ -206,6 +207,14 @@ Public Class Frm_Tickets_IngProducto_GesXBod
             .Columns("FechaRev").DefaultCellStyle.Format = "dd/MM/yyyy HH:mm"
             .Columns("FechaRev").Width = 120
             .Columns("FechaRev").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("ConfCantCero").Visible = True
+            .Columns("ConfCantCero").HeaderText = "CCC"
+            .Columns("ConfCantCero").ToolTipText = "Confirmar cantidad cero"
+            .Columns("ConfCantCero").Width = 30
+            .Columns("ConfCantCero").DisplayIndex = _DisplayIndex
+            .Columns("ConfCantCero").ReadOnly = ModoSoloLectura
             _DisplayIndex += 1
 
         End With
@@ -492,6 +501,10 @@ Public Class Frm_Tickets_IngProducto_GesXBod
                         Grilla_Detalle.CurrentCell = _Fila.Cells("FechaRev")
                     End If
 
+                    If CBool(_Cantidad + _StfiEnBodega) Then
+                        _Fila.Cells("ConfCantCero").Value = False
+                    End If
+
                 Case "Ubicacion"
 
                     If Not String.IsNullOrWhiteSpace(_Fila.Cells("Ubicacion").Value) Then
@@ -502,7 +515,7 @@ Public Class Frm_Tickets_IngProducto_GesXBod
 
         Catch ex As Exception
         Finally
-            If _Cabeza <> "_Cabeza" Then
+            If _Cabeza <> "_Cabeza" And _Cabeza <> "ConfCantCero" Then
                 Grilla_Detalle.Columns(_Cabeza).ReadOnly = True
             End If
         End Try
@@ -591,10 +604,19 @@ Public Class Frm_Tickets_IngProducto_GesXBod
                 Return
             End If
 
-            If producto.Cantidad = 0 AndAlso producto.StfiEnBodega = 0 Then
-                MessageBoxEx.Show(Me, "El Stock Físico y Stock Sistema no pueden ser igual a cero" & vbCrLf & "Fila: " & _ContFila,
+            If producto.Id_Ticket = 0 AndAlso producto.Cantidad = 0 AndAlso producto.StfiEnBodega = 0 AndAlso Not producto.ConfCantCero Then
+
+                MessageBoxEx.Show(Me, "El Stock Físico y el Stock del Sistema no pueden ser ambos iguales a cero, a menos que se" & vbCrLf &
+                                  "confirme explícitamente la cantidad en cero en el campo CCC." & vbCrLf & "Fila: " & _ContFila,
                   "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return
+
+                'ElseIf producto.Id_Ticket = 0 AndAlso producto.Cantidad = 0 AndAlso producto.StfiEnBodega = 0 Then
+
+                '    MessageBoxEx.Show(Me, "El Stock Físico y Stock Sistema no pueden ser igual a cero" & vbCrLf & "Fila: " & _ContFila,
+                '          "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                '    Return
+
             End If
 
             If IsNothing(producto.FechaRev) Then
@@ -656,6 +678,7 @@ Public Class Frm_Tickets_IngProducto_GesXBod
                 productoExistente.SobreStock = productoOriginal.SobreStock
                 productoExistente.Stfi1 = productoOriginal.Stfi1
                 productoExistente.Stfi2 = productoOriginal.Stfi2
+                productoExistente.ConfCantCero = productoOriginal.ConfCantCero
             Else
                 Cl_Tickets.Ls_Zw_Stk_Tickets_Producto.Add(productoOriginal)
             End If
@@ -665,4 +688,28 @@ Public Class Frm_Tickets_IngProducto_GesXBod
         Me.Close()
 
     End Sub
+
+    Private Sub Grilla_Detalle_CellBeginEdit(sender As Object, e As DataGridViewCellCancelEventArgs) Handles Grilla_Detalle.CellBeginEdit
+
+        Dim _Fila As DataGridViewRow = Grilla_Detalle.CurrentRow
+        Dim _Cabeza = Grilla_Detalle.Columns(e.ColumnIndex).Name
+
+        If CBool(_Fila.Cells("Id_Ticket").Value) Then
+            Beep()
+            e.Cancel = True
+        End If
+
+        If _Cabeza = "ConfCantCero" Then
+            If _Fila.Cells("Cantidad").Value <> 0 Or
+            _Fila.Cells("StfiEnBodega").Value <> 0 Or
+            String.IsNullOrWhiteSpace(_Fila.Cells("Sucursal").Value) Or
+            String.IsNullOrWhiteSpace(_Fila.Cells("Bodega").Value) Or
+            String.IsNullOrWhiteSpace(_Fila.Cells("Ubicacion").Value) Then
+                Beep()
+                e.Cancel = True
+            End If
+        End If
+
+    End Sub
+
 End Class

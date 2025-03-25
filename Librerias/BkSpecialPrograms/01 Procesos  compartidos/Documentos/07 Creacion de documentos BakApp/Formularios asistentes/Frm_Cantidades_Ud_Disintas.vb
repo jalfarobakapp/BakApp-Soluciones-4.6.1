@@ -421,41 +421,53 @@ Public Class Frm_Cantidades_Ud_Disintas
     ''' <returns>Un objeto de tipo Mensajes con el resultado de la operación</returns>
     Private Function Fx_Consultar_RTU_xBodegas(_Bodega As String, _Codigo As String) As LsValiciones.Mensajes
 
-        Dim apiUrl As String = "http://190.151.101.156:82/BodONEWSR/Api/ConsultarRTU"
-        Dim authorizationToken As String = "Token 06389de2-5ed5-11ed-9b6a-0242ac120002"
-        Dim bodegas As String = Fx_Bodegas(_Bodega) '= "1, 2, 3, 4, 5, 8, 10, 41, 42, 21, 22, 23, 24, 25, 26"
-
-        Dim apiClient As New Cl_Api_BodOne()
         Dim mensaje As LsValiciones.Mensajes
 
-        ' Lista de bodegas a iterar obtenida del TextBox
-        Dim bodegasArray As Integer() = bodegas.Split(",").Select(Function(b) Convert.ToInt32(b.Trim())).ToArray()
+        Try
 
-        ' Itera sobre las bodegas definidas
-        For Each bodega In bodegasArray
-            Dim requestBody As New Dictionary(Of String, Object) From {
-            {"SKU", _Codigo},
-            {"Bodega", bodega}
+            Dim apiUrl As String = "http://190.151.101.156:82/BodONEWSR/Api/ConsultarRTU"
+            Dim authorizationToken As String = "Token 06389de2-5ed5-11ed-9b6a-0242ac120002"
+            Dim bodegas As String = Fx_Bodegas(_Bodega) '= "1, 2, 3, 4, 5, 8, 10, 41, 42, 21, 22, 23, 24, 25, 26"
+
+            Dim apiClient As New Cl_Api_BodOne()
+
+
+            ' Lista de bodegas a iterar obtenida del TextBox
+            Dim bodegasArray As Integer() = bodegas.Split(",").Select(Function(b) Convert.ToInt32(b.Trim())).ToArray()
+
+            ' Itera sobre las bodegas definidas
+            For Each bodega In bodegasArray
+                Dim requestBody As New Dictionary(Of String, Object) From {
+                {"SKU", _Codigo},
+                {"Bodega", bodega}
+            }
+
+                ' Realiza la consulta a la API
+                mensaje = apiClient.Post(Of Decimal)(apiUrl, requestBody, authorizationToken)
+
+                ' Si se obtiene un resultado válido, detiene la iteración
+                If mensaje.EsCorrecto AndAlso mensaje.Resultado IsNot Nothing AndAlso Val(mensaje.Resultado) <> -1 Then
+                    mensaje.Detalle = $"Consulta exitosa en la Bodega {bodega} WMS."
+                    mensaje.Mensaje = "Se encontró un resultado válido."
+                    Return mensaje
+                End If
+            Next
+
+            ' Si no se encontró un resultado válido, retorna un mensaje de error
+            mensaje = New LsValiciones.Mensajes With {
+            .EsCorrecto = False,
+            .Detalle = "No se encontró un resultado válido después de consultar todas las bodegas.",
+            .Mensaje = "Consulta fallida en todas las bodegas.",
+            .Icono = MessageBoxIcon.Warning
         }
 
-            ' Realiza la consulta a la API
-            mensaje = apiClient.Post(Of Decimal)(apiUrl, requestBody, authorizationToken)
-
-            ' Si se obtiene un resultado válido, detiene la iteración
-            If mensaje.EsCorrecto AndAlso mensaje.Resultado IsNot Nothing AndAlso Val(mensaje.Resultado) <> -1 Then
-                mensaje.Detalle = $"Consulta exitosa en la Bodega {bodega} WMS."
-                mensaje.Mensaje = "Se encontró un resultado válido."
-                Return mensaje
-            End If
-        Next
-
-        ' Si no se encontró un resultado válido, retorna un mensaje de error
-        mensaje = New LsValiciones.Mensajes With {
-        .EsCorrecto = False,
-        .Detalle = "No se encontró un resultado válido después de consultar todas las bodegas.",
-        .Mensaje = "Consulta fallida en todas las bodegas.",
-        .Icono = MessageBoxIcon.Warning
-    }
+        Catch ex As Exception
+            mensaje = New LsValiciones.Mensajes With {
+            .EsCorrecto = False,
+            .Detalle = "Error inesperado",
+            .Mensaje = ex.Message,
+            .Icono = MessageBoxIcon.Stop}
+        End Try
 
         Return mensaje
     End Function

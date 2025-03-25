@@ -71,18 +71,11 @@ Public Class Frm_Tickets_Mant
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tickets_Producto Where Id_Raiz = " & _Cl_Tickets_Padre.Zw_Stk_Tickets.Id_Raiz
             Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
-            'Dim _ContPr = 1
-
             For Each _Fila As DataRow In _Tbl.Rows
 
-                _Mensaje = _Cl_Tickets.FX_Llenar_Producto(_Fila.Item("Id_Ticket"))
+                _Mensaje = _Cl_Tickets.FX_Llenar_Producto_Id(_Fila.Item("Id"))
                 _Cl_Tickets.Ls_Zw_Stk_Tickets_Producto.Add(_Mensaje.Tag)
-
-                'If _ContPr = 1 Then
-                '    _Cl_Tickets.Zw_Stk_Tickets_Producto = _Mensaje.Tag
-                'End If
-
-                '_ContPr += 1
+                _Cl_Tickets_Padre.Ls_Zw_Stk_Tickets_Producto.Add(_Mensaje.Tag)
 
             Next
 
@@ -164,18 +157,43 @@ Public Class Frm_Tickets_Mant
 
         Dim _TkProducto As Zw_Stk_Tickets_Producto = _Cl_Tickets.Zw_Stk_Tickets_Producto
 
+        'If _Cl_Tickets.Zw_Stk_Tipos.ExigeProducto AndAlso
+        '    _Cl_Tickets.Zw_Stk_Tipos.Inc_Cantidades AndAlso
+        '    _Cl_Tickets_Padre.Ls_Zw_Stk_Tickets_Producto.Count <> _Cl_Tickets.Ls_Zw_Stk_Tickets_Producto.Count Then
+
+        '    MessageBoxEx.Show(Me, "Falta ingresar cantidades en el detalle del producto.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        '    Return
+
+        'End If
+
         If Chk_ExigeProducto.Checked AndAlso _TkProducto.Codigo = String.Empty Then
             MessageBoxEx.Show(Me, "Falta el producto asociado al tipo de requerimiento." & vbCrLf &
                               "El tipo de requerimiento exige un producto asociado.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
 
-        'If CBool(Id_Padre) And Chk_ExigeProducto.Checked And Not _ConfirmaCantidades And CBool(_Cl_Tickets.Zw_Stk_Tipos.Inc_Cantidades) Then
-        '    MessageBoxEx.Show(Me, "Debe ingresar las cantidades para confirmar la grabación del Ticket",
-        '                      "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        '    Call Btn_VerProducto_Click(Nothing, Nothing)
-        '    Return
-        'End If
+        If CBool(Id_Padre) AndAlso
+            _Cl_Tickets.Zw_Stk_Tipos.ExigeProducto AndAlso
+            _Cl_Tickets.Zw_Stk_Tipos.Inc_Cantidades AndAlso
+            _Cl_Tickets_Padre.Ls_Zw_Stk_Tickets_Producto.Count = _Cl_Tickets.Ls_Zw_Stk_Tickets_Producto.Count Then
+            MessageBoxEx.Show(Me, "Debe ingresar las cantidades para confirmar la grabación del Ticket",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Call Btn_VerProducto_Click(Nothing, Nothing)
+            Return
+
+        Else
+
+            If _Cl_Tickets.Zw_Stk_Tipos.ExigeProducto AndAlso
+            _Cl_Tickets.Zw_Stk_Tipos.Inc_Cantidades AndAlso
+            (_Cl_Tickets.Ls_Zw_Stk_Tickets_Producto.Item(0).Cantidad + _Cl_Tickets.Ls_Zw_Stk_Tickets_Producto.Item(0).StfiEnBodega) = 0 Then
+                MessageBoxEx.Show(Me, "Debe ingresar las cantidades para confirmar la grabación del Ticket",
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Call Btn_VerProducto_Click(Nothing, Nothing)
+                Return
+            End If
+
+        End If
+
 
         If Chk_Asignado.Checked Then
 

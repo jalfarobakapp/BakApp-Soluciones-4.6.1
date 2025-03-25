@@ -120,6 +120,59 @@ Public Class Cl_Tickets
                 .Diferencia = _Row.Item("Diferencia")
                 .FechaRev = _Row.Item("FechaRev")
                 .Ubicacion = _Row.Item("Ubicacion")
+                .ConfCantCero = _Row.Item("ConfCantCero")
+
+            End With
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Tag = _Zw_Stk_Tickets_Producto
+
+        Catch ex As Exception
+            _Mensaje.Mensaje = ex.Message
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
+    Function FX_Llenar_Producto_Id(_Id As Integer) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+        Dim _Zw_Stk_Tickets_Producto As New Zw_Stk_Tickets_Producto
+
+        Try
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tickets_Producto Where Id = " & _Id
+            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_Row) Then
+                _Mensaje.Detalle = "No se encontro registro"
+                Throw New System.Exception("No se encontro el registro en la tabla de Zw_Stk_Tickets con el Id = " & _Id)
+            End If
+
+            With _Zw_Stk_Tickets_Producto
+
+                .Id = _Row.Item("Id")
+                .Id_Ticket = _Row.Item("Id_Ticket")
+                .Id_Raiz = _Row.Item("Id_Raiz")
+                .Id_Padre = _Row.Item("Id_Padre")
+                .Id_TicketAc = _Row.Item("Id_TicketAc")
+                .Empresa = _Row.Item("Empresa")
+                .Sucursal = _Row.Item("Sucursal")
+                .Bodega = _Row.Item("Bodega")
+                .Codigo = _Row.Item("Codigo")
+                .Descripcion = _Row.Item("Descripcion")
+                .Rtu = _Row.Item("Rtu")
+                .UdMedida = _Row.Item("UdMedida")
+                .Um = _Row.Item("Um")
+                .Ud1 = _Row.Item("Ud1")
+                .Ud2 = _Row.Item("Ud2")
+                .StfiEnBodega = _Row.Item("StfiEnBodega")
+                .Cantidad = _Row.Item("Cantidad")
+                .Diferencia = _Row.Item("Diferencia")
+                .FechaRev = _Row.Item("FechaRev")
+                .Ubicacion = _Row.Item("Ubicacion")
+                .ConfCantCero = _Row.Item("ConfCantCero")
 
             End With
 
@@ -360,14 +413,15 @@ Public Class Cl_Tickets
                         If Not String.IsNullOrEmpty(.Codigo) Then
 
                             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Producto (Id_Ticket,Id_Raiz,Numero,Empresa,Sucursal,Bodega," &
-                                           "Codigo,Descripcion,Rtu,UdMedida,Ud1,Ud2,Um,StfiEnBodega,Cantidad,Diferencia,FechaRev,Ubicacion,Id_TicketAc, Id_Padre) Values " &
+                                           "Codigo,Descripcion,Rtu,UdMedida,Ud1,Ud2,Um,StfiEnBodega,Cantidad,Diferencia,FechaRev,Ubicacion,Id_TicketAc," &
+                                           "Id_Padre,ConfCantCero) Values " &
                                            "(" & .Id_Ticket & "," & .Id_Raiz & ",'" & .Numero & "','" & .Empresa & "','" & .Sucursal & "','" & .Bodega &
                                            "','" & .Codigo & "','" & .Descripcion & "'," & De_Num_a_Tx_01(.Rtu, False, 5) &
                                            "," & .UdMedida & ",'" & .Ud1 & "','" & .Ud2 & "','" & .Um & "'," & De_Num_a_Tx_01(.StfiEnBodega, False, 5) &
                                            "," & De_Num_a_Tx_01(.Cantidad, False, 5) &
                                            "," & De_Num_a_Tx_01(.Diferencia, False, 5) &
                                            ",'" & Format(.FechaRev, "yyyyMMdd HH:mm") &
-                                           "','" & .Ubicacion & "'," & .Id_TicketAc & "," & .Id_Padre & ")"
+                                           "','" & .Ubicacion & "'," & .Id_TicketAc & "," & .Id_Padre & "," & Convert.ToInt32(.ConfCantCero) & ")"
 
                             Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                             Comando.Transaction = myTrans
