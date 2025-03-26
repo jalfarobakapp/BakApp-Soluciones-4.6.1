@@ -67,6 +67,7 @@ Public Class Frm_Seleccionar_Fecha
         Me.Location = New Point(Me.Width + Cursor.Position.X - 200, Cursor.Position.Y - 200)
 
         Dtp_Fecha.Value = Now.Date
+        Dtp_Hora.Value = Now
 
     End Sub
 

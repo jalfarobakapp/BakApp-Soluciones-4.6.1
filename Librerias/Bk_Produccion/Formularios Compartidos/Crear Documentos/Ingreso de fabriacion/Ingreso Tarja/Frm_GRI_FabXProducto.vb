@@ -175,7 +175,7 @@ Public Class Frm_GRI_FabXProducto
             Sb_LimpiarMaxi()
             Txt_Numot.Text = _Numot_Extra
             Dtp_Fiot.Value = _Sql.Fx_Trae_Dato("POTE", "FIOT", "NUMOT = '" & _Numot_Extra & "'")
-            Dtp_Fecha_Ingreso.Value = _FechaDelServidor
+            Dtp_Fecha_Ingreso.Value = Dtp_Fiot.Value '_FechaDelServidor
             Sb_BuscarProductos(_Numot_Extra)
             Return
         End If

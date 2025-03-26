@@ -667,7 +667,6 @@ Public Class Frm_Demonio_Configuraciones
         _Sql.Sb_Parametro_Informe_Sql(Chk_EnviarSiempreLosCorreosDTE, "Demonio",
                                       Chk_EnviarSiempreLosCorreosDTE.Name, Class_SQLite.Enum_Type._Boolean,
                                       Chk_EnviarSiempreLosCorreosDTE.Checked, _Actualizar, "Correo",, False)
-
         _Sql.Sb_Parametro_Informe_Sql(Chk_ActualizarListaMayoristaMinorista, "Demonio",
                                       Chk_ActualizarListaMayoristaMinorista.Name, Class_SQLite.Enum_Type._Boolean,
                                       Chk_ActualizarListaMayoristaMinorista.Checked, _Actualizar, "Correo",, False)

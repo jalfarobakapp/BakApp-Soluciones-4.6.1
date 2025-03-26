@@ -389,7 +389,8 @@ Public Class Frm_Tickets_IngProducto_GesXBod
                             Else
                                 Fm.FechaDisplay = _Fila.Cells("FechaRev").Value
                             End If
-
+                            Fm.Dtp_Fecha.Value = Now.Date
+                            Fm.Dtp_Hora.Value = Now
                             Fm.MostraFormularioAlCentro = True
                             Fm.SeleccionarHora = True
                             Fm.ShowDialog(Me)
@@ -429,16 +430,16 @@ Public Class Frm_Tickets_IngProducto_GesXBod
                         End If
 
                         ' Asegúrate de que el índice sea válido antes de intentar eliminar
-                        If _Index >= 0 AndAlso _Index < Grilla_Detalle.Rows.Count AndAlso _Id_Padre = 1 Then
+                        'If _Index >= 0 AndAlso _Index < Grilla_Detalle.Rows.Count AndAlso _Id_Padre = 1 Then
 
-                            If MessageBoxEx.Show(Me, "¿Está seguro de eliminar la fila seleccionada?", "Eliminar Fila",
+                        If MessageBoxEx.Show(Me, "¿Está seguro de eliminar la fila seleccionada?", "Eliminar Fila",
                                                  MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
-                                Return
-                            End If
-
-                            Grilla_Detalle.Rows.RemoveAt(_Index)
-
+                            Return
                         End If
+
+                        Grilla_Detalle.Rows.RemoveAt(_Index)
+
+                        'End If
                     End If
 
                     If Grilla_Detalle.Rows.Count = 0 Then
@@ -648,6 +649,11 @@ Public Class Frm_Tickets_IngProducto_GesXBod
 
         listaProductosOriginal = New BindingList(Of Zw_Stk_Tickets_Producto)(ClonarLista(listaProductos))
 
+        ' Eliminar los productos que no están en listaProductos
+        Dim productosAEliminar = Cl_Tickets.Ls_Zw_Stk_Tickets_Producto.Where(Function(p) Not listaProductosOriginal.Any(Function(lp) lp.Id = p.Id)).ToList()
+        For Each productoAEliminar In productosAEliminar
+            Cl_Tickets.Ls_Zw_Stk_Tickets_Producto.Remove(productoAEliminar)
+        Next
 
         For Each productoOriginal In listaProductosOriginal
             Dim productoExistente = Cl_Tickets.Ls_Zw_Stk_Tickets_Producto.FirstOrDefault(Function(p) p.Id = productoOriginal.Id)
@@ -712,4 +718,13 @@ Public Class Frm_Tickets_IngProducto_GesXBod
 
     End Sub
 
+    Private Sub Grilla_Detalle_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Detalle.CellDoubleClick
+        ' Simular la presión de la tecla Enter
+        Dim args As New KeyEventArgs(Keys.Enter)
+        Grilla_Detalle_KeyDown(sender, args)
+    End Sub
+
+    Private Sub Grilla_Detalle_MouseUp(sender As Object, e As MouseEventArgs) Handles Grilla_Detalle.MouseUp
+        Grilla_Detalle.EndEdit()
+    End Sub
 End Class

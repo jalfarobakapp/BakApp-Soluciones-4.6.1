@@ -1,6 +1,7 @@
 ﻿Imports BkSpecialPrograms.LsValiciones
 Imports BkSpecialPrograms.Tickets_Db
 Imports DevComponents.DotNetBar
+Imports Google.Protobuf.Reflection
 
 Public Class Frm_Tickets_Mant
 
@@ -83,6 +84,9 @@ Public Class Frm_Tickets_Mant
             If Aceptado Then
                 Txt_Descripcion.Text = _Cl_Tickets_Padre.Zw_Stk_Tipos.RespuestaXDefecto
             End If
+
+            Txt_AreaTipo.ButtonCustom.Enabled = False
+            Txt_AreaTipo.ButtonCustom2.Enabled = False
 
         End If
 
@@ -209,11 +213,23 @@ Public Class Frm_Tickets_Mant
 
         End If
 
+
         If Chk_ExigeDocCerrar.Checked And String.IsNullOrEmpty(Txt_TidoNudoCierra.Text) Then
 
-            MessageBoxEx.Show(Me, "Falta el documento relacionado con el producto para poder grabar esta acción",
-                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Return
+            Dim _Msg1 = "TICKET EXIJE DOCUMENTO"
+            Dim _Msg2 = "¿ESTA SEGURO DE CONFIRMAR EL TICKET SIN ADJUNTAR DOCUMENTO?" & vbCrLf & vbCrLf &
+                        "[Yes] Confirmar cierre - [No] Cancelar"
+
+            Dim _Mensaje As LsValiciones.Mensajes = Fx_Confirmar_LecturaSINO(_Msg1, _Msg2, eTaskDialogIcon.Exclamation, "CONFIRMACION DE RECETA", False, , False)
+
+            If CType(_Mensaje.Tag, eTaskDialogResult) = eTaskDialogResult.No Or CType(_Mensaje.Tag, eTaskDialogResult) = eTaskDialogResult.Cancel Then
+                Return
+            End If
+
+            'MessageBoxEx.Show(Me, "Falta el documento relacionado con el producto para poder grabar esta acción",
+            '                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+            _Cl_Tickets.Zw_Stk_Tickets_Acciones.ConfSinDoc_Cierra = True
 
         End If
 
@@ -246,13 +262,14 @@ Public Class Frm_Tickets_Mant
                                       "Ya hay un ticket abierto por esta misma solución", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
                 Return
+
             End If
 
             .Descripcion = Txt_Descripcion.Text.Trim
 
         End With
 
-        If _Cl_Tickets.Zw_Stk_Tipos.CierraRaiz Then
+        If CBool(_Cl_Tickets.Zw_Stk_Tickets.Id_Raiz) And _Cl_Tickets.Zw_Stk_Tipos.CierraRaiz Then
             Sb_CerrarTickets(True, False)
         Else
             Sb_CrearNuevoTicket()
@@ -793,6 +810,7 @@ Public Class Frm_Tickets_Mant
         Dim Fm2 As New Frm_Tickets_IngProducto_GesXBod
         Fm2.SoloUnProducto = Not CBool(Id_Padre)
         Fm2.Cl_Tickets = _Cl_Tickets
+        Fm2.ModoSoloLectura = Not _Cl_Tickets.Zw_Stk_Tipos.Inc_Cantidades
         Fm2.ShowDialog(Me)
         _Grabar = Fm2.Grabar
         Fm2.Dispose()

@@ -13784,6 +13784,10 @@ Public Class Frm_Formulario_Documento
                                         Dim _Sucursal_Sel = _Row_Bodega_Destino.Item("KOSU")
                                         Dim _Bodega_Sel = _Row_Bodega_Destino.Item("KOBO")
 
+                                        If _Global_Row_Configuracion_Estacion.Item("NVIQuedaSUDOSucEnvia") Then
+                                            _TblEncabezado.Rows(0).Item("Sucursal") = _Row_Bodega_Destino.Item("KOSU")
+                                        End If
+
                                         Dim _Permiso = "BNVI" & _Empresa_Sel & _Sucursal_Sel & _Bodega_Sel
 
                                         If Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, _Permiso, Nothing) Then
@@ -15068,7 +15072,7 @@ Public Class Frm_Formulario_Documento
             '    Return False
             'End If
 
-            If _Tido = "NVI" Then
+            If _Global_Row_Configuracion_Estacion.Item("NVIQuedaSUDOSucRecibe") Then
                 _TblEncabezado.Rows(0).Item("Sucursal") = _Row_Bodega_Destino.Item("KOSU")
             End If
 

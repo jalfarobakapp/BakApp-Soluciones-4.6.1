@@ -41,6 +41,7 @@ Public Class Frm_Tickets_BuscarTipo
                        "From " & _Global_BaseBk & "Zw_Stk_Areas Ar" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Stk_Tipos Tp On Tp.Id_Area = Ar.Id" & vbCrLf &
                        "Where Area+Tipo Like '%" & _Condicion & "%'" & vbCrLf &
+                       "And Tp.CierraRaiz = 0" & vbCrLf & vbCrLf &
                        "Order By Area,Tipo"
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -89,6 +90,17 @@ Public Class Frm_Tickets_BuscarTipo
         Id_Tipo = _Fila.Cells("Id_Tipo").Value
 
         If ModoSeleccion Then
+
+            Dim _Cl_Tickets As New Cl_Tickets
+            Dim _Zw_Stk_Tipos As New Zw_Stk_Tipos
+
+            _Zw_Stk_Tipos = _Cl_Tickets.Fx_Llenar_Tipo(Id_Tipo)
+
+            If _Zw_Stk_Tipos.CierraRaiz Then
+                MessageBoxEx.Show(Me, "Este Tipo de Ticket no permite generar un Ticket desde cero, es solo para hacer gestión en cadena de Tickets",
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
 
             Dim _CodPermiso As String = "Tkt" & numero_(Id_Area & Id_Tipo, 6)
 

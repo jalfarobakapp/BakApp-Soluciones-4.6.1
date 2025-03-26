@@ -163,6 +163,7 @@ Public Class Frm_Tickets_Seguimiento
                        "When 'CREA' Then 'Crea Ticket' " & vbCrLf &
                        "When 'MENS' Then 'Mensaje' " & vbCrLf &
                        "When 'RESP' Then 'Mensaje' " & vbCrLf &
+                       "When 'OBS'  Then 'Observación' " & vbCrLf &
                        "When 'NULO' Then 'Anula' " & vbCrLf &
                        "When 'SOLC' Then 'Sol. Cierre' " & vbCrLf &
                        "When 'ACCI' Then 'Acepta y cierra ticket' " & vbCrLf &
@@ -294,10 +295,12 @@ Public Class Frm_Tickets_Seguimiento
 
             If _CodFunGestiona = _CodFunInicia Then
                 _Icono = _Imagenes_List.Images.Item("people-customer-man.png")
+                If _Accion = "OBS" Then _Icono = _Imagenes_List.Images.Item("people-customer-man-note.png")
             Else
                 _Icono = _Imagenes_List.Images.Item("people-vendor.png")
                 If _Aceptado Then _Icono = _Imagenes_List.Images.Item("people-vendor-ok.png")
                 If _Rechazado Then _Icono = _Imagenes_List.Images.Item("people-vendor-error.png")
+                If _Accion = "OBS" Then _Icono = _Imagenes_List.Images.Item("people-vendor-note.png")
             End If
 
             If _Accion = "NULO" Then
@@ -453,7 +456,8 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
     End Sub
 
-    Function Fx_Agregar_Mensaje_Respuesta(_RechazarTicket As Boolean) As LsValiciones.Mensajes
+    Function Fx_Agregar_Mensaje_Respuesta(_RechazarTicket As Boolean,
+                                          _Observacion As Boolean) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -481,6 +485,12 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
                     .Accion = "RECH"
                 End If
 
+                If _Observacion Then
+                    .CodFuncionario = FUNCIONARIO
+                    .CodAgente = FUNCIONARIO
+                    .Accion = "OBS"
+                End If
+
                 .CodFunGestiona = FUNCIONARIO
                 .Descripcion = ""
 
@@ -503,6 +513,10 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
                 Fm.Text = "NUEVO MENSAJE"
             Else
                 Fm.Text = "RESPONDER"
+            End If
+
+            If _Observacion Then
+                Fm.Text = "OBSERCACIONES"
             End If
 
             Fm.Btn_Archivos_Adjuntos.Enabled = Not _RechazarTicket
@@ -935,7 +949,7 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
-        _Mensaje = Fx_Agregar_Mensaje_Respuesta(False)
+        _Mensaje = Fx_Agregar_Mensaje_Respuesta(False, False)
 
         GestionRealizada = _Mensaje.EsCorrecto
 
@@ -1287,6 +1301,26 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
         GestionRealizada = True
         Me.Close()
+
+    End Sub
+
+    Private Sub Btn_Mnu_IngresarObservaciones_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_IngresarObservaciones.Click
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        _Mensaje = Fx_Agregar_Mensaje_Respuesta(False, True)
+
+        GestionRealizada = _Mensaje.EsCorrecto
+
+        If _Mensaje.MostrarMensaje Then
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        End If
+
+        If GestionRealizada And Not _Mensaje.MostrarMensaje Then
+            Me.Close()
+        Else
+            Sb_Actualizar_Grilla()
+        End If
 
     End Sub
 
