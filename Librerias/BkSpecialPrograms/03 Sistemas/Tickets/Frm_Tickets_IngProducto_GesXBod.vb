@@ -407,10 +407,38 @@ Public Class Frm_Tickets_IngProducto_GesXBod
 
                         If _Cabeza = "Ubicacion" Then
 
-                            SendKeys.Send("{F2}")
-                            e.Handled = True
-                            Grilla_Detalle.Columns(_Cabeza).ReadOnly = False
-                            Grilla_Detalle.BeginEdit(True)
+                            'SendKeys.Send("{F2}")
+                            'e.Handled = True
+                            'Grilla_Detalle.Columns(_Cabeza).ReadOnly = False
+                            'Grilla_Detalle.BeginEdit(True)
+
+                            'Dim _SqlFiltro_Fechas As String
+
+                            '_SqlFiltro_Fechas = "Where FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
+                            '                     Format(Dtp_Fecha_Hasta.Value, "yyyyMMdd") & "'" & vbCrLf
+
+                            If String.IsNullOrEmpty(_Sucursal) Or String.IsNullOrEmpty(_Sucursal) Then
+                                MessageBoxEx.Show(Me, "Falta la bodega", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                Return
+                            End If
+
+                            Dim _Sql_Filtro_Condicion_Extra = "And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega & "'"
+
+                            Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+                            _Filtrar.Tabla = _Global_BaseBk & "Zw_Bodega_Ubic"
+                            _Filtrar.Campo = "Ubicacion"
+                            _Filtrar.Descripcion = "Ubicacion"
+
+                            If _Filtrar.Fx_Filtrar(Nothing,
+                                                   Clas_Filtros_Random.Enum_Tabla_Fl._Otra, _Sql_Filtro_Condicion_Extra, Nothing, False, True) Then
+
+                                Dim _Row As DataRow = _Filtrar.Pro_Tbl_Filtro.Rows(0)
+
+                                _Fila.Cells("Ubicacion").Value = _Row.Item("Codigo")
+                                Grilla_Detalle.CurrentCell = _Fila.Cells("Um")
+
+                            End If
 
                         End If
 

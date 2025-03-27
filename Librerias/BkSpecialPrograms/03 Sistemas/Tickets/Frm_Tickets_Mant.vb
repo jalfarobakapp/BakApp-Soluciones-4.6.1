@@ -999,11 +999,38 @@ Public Class Frm_Tickets_Mant
             Txt_TidoNudoCierra.Text = _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
             Txt_TidoNudoCierra.Tag = _Row_Documento.Item("IDMAEEDO")
 
+            Consulta_sql = "Select * From MAEEDOOB Where IDMAEEDO = " & _Row_Documento.Item("IDMAEEDO")
+            Dim _Row_Observaciones As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Dim _Motivo_Cierra As String = String.Empty
+            Dim _Obdo As String = String.Empty
+            Dim _Observaciones As String = String.Empty
+
+            If Not IsNothing(_Row_Observaciones) Then
+
+                _Obdo = _Row_Observaciones.Item("OBDO").ToString.Trim
+                _Motivo_Cierra = _Row_Observaciones.Item("MOTIVO").ToString.Trim
+                _Observaciones = _Obdo
+
+                If Not String.IsNullOrEmpty(_Motivo_Cierra) Then
+                    _Observaciones += vbCrLf & "MOTIVO: " & _Motivo_Cierra & " - " & _Sql.Fx_Trae_Dato("TABCARAC",
+                                     "NOKOCARAC", "KOTABLA = 'MOTIVOS" & _Row_Documento.Item("TIDO") & "' And KOCARAC = '" & _Motivo_Cierra & "'").ToString.Trim
+                End If
+
+            End If
+
+            _Observaciones = _Cl_Tickets.Zw_Stk_Tipos.Tipo & vbCrLf & vbCrLf & _Observaciones
+
             With _Cl_Tickets.Zw_Stk_Tickets_Acciones
                 .Idmaeedo_Cierra = _Row_Documento.Item("IDMAEEDO")
                 .Tido_Cierra = _Row_Documento.Item("TIDO")
                 .Nudo_Cierra = _Row_Documento.Item("NUDO")
+                .Motivo_Cierra = _Motivo_Cierra
             End With
+
+            If Not String.IsNullOrWhiteSpace(_Observaciones) Then
+                Txt_Descripcion.Text = _Observaciones
+            End If
 
         End If
 

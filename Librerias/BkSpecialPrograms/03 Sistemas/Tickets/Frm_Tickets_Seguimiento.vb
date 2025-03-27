@@ -621,11 +621,11 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
         If Not Mis_Ticket Then
 
-            If Not _Zw_Stk_Tipos.CerrarAgenteSinPerm Then
-                If Not Fx_Tiene_Permiso(Me, "") Then
-                    Return
-                End If
+            'If Not _Zw_Stk_Tipos.CerrarAgenteSinPerm Then
+            If Not Fx_Tiene_Permiso(Me, "Tkts0001") Then
+                Return
             End If
+            'End If
 
         End If
 

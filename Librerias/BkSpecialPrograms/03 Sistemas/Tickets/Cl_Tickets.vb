@@ -70,6 +70,8 @@ Public Class Cl_Tickets
                 .Aceptado = _Row.Item("Rechazado")
                 .Id_Raiz = _Row.Item("Id_Raiz")
                 .SubNro = _Row.Item("SubNro")
+                .Cerraddo = _Row.Item("SubNro")
+                .FechaCerrado = _Row.Item("SubNro")
 
             End With
 
@@ -381,6 +383,8 @@ Public Class Cl_Tickets
                                ",Id_Ticket_Cierra = '" & .Id_Ticket_Cierra & "'" & vbCrLf &
                                ",Id_Ticket_Crea = '" & .Id_Ticket_Crea & "'" & vbCrLf &
                                ",Asunto = '" & .Asunto & "'" & vbCrLf &
+                               ",ConfSinDoc_Cierra = " & Convert.ToInt32(.ConfSinDoc_Cierra) & vbCrLf &
+                               ",Motivo_Cierra = '" & .Motivo_Cierra & "'" & vbCrLf &
                                "Where Id = " & .Id
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
@@ -726,6 +730,8 @@ Public Class Cl_Tickets
                                        ",Tido_Cierra = '" & .Tido_Cierra & "'" & vbCrLf &
                                        ",Nudo_Cierra = '" & .Nudo_Cierra & "'" & vbCrLf &
                                        ",Idmaeedo_Cierra = " & .Idmaeedo_Cierra & vbCrLf &
+                                       ",ConfSinDoc_Cierra = " & Convert.ToInt32(.ConfSinDoc_Cierra) & vbCrLf &
+                                       ",Motivo_Cierra = '" & .Motivo_Cierra & "'" & vbCrLf &
                                        "Where Id = " & .Id
                         Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                         Comando.Transaction = myTrans
@@ -735,11 +741,12 @@ Public Class Cl_Tickets
 
                         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones (Id_Ticket,Accion,Descripcion,Fecha,CodAgente," &
                                    "CodFuncionario,En_Construccion,CodFunGestiona,Rechazado,Aceptado,Id_Raiz,Id_Ticket_Cierra,Id_Ticket_Crea," &
-                                   "Asunto,Tido_Cierra,Nudo_Cierra,Idmaeedo_Cierra) Values " &
+                                   "Asunto,Tido_Cierra,Nudo_Cierra,Idmaeedo_Cierra,ConfSinDoc_Cierra,Motivo_Cierra) Values " &
                                    "(" & .Id_Ticket & ",'" & .Accion & "','" & .Descripcion & "',Getdate(),'" & .CodAgente & "','" & .CodFuncionario & "'," &
                                    Convert.ToInt32(.En_Construccion) & ",'" & .CodFunGestiona & "'," & Convert.ToInt32(.Rechazado) & "," &
                                    Convert.ToInt32(.Aceptado) & "," & .Id_Raiz & "," & .Id_Ticket_Cierra & "," & .Id_Ticket_Crea &
-                                   ",'" & .Asunto & "','" & .Tido_Cierra & "','" & .Nudo_Cierra & "'," & .Idmaeedo_Cierra & ")"
+                                   ",'" & .Asunto & "','" & .Tido_Cierra & "','" & .Nudo_Cierra & "'," & .Idmaeedo_Cierra &
+                                   "," & Convert.ToInt32(.ConfSinDoc_Cierra) & ",'" & .Motivo_Cierra & "')"
 
                         Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                         Comando.Transaction = myTrans

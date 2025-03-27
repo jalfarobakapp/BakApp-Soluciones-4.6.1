@@ -23,4 +23,6 @@
     Public Property Nudo_Cierra As String
     Public Property Idmaeedo_Cierra As Integer
     Public Property ConfSinDoc_Cierra As Boolean
+    Public Property Motivo_Cierra As String
+
 End Class

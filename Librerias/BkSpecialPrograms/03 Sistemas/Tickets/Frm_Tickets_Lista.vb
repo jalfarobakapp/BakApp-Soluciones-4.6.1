@@ -59,7 +59,7 @@ Public Class Frm_Tickets_Lista
         'AddHandler Grilla.CellFormatting, AddressOf Grilla_CellFormatting
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
 
-        Me.Text += ", Usuario : " & FUNCIONARIO & " - " & Nombre_funcionario_activo
+        Me.Text = "MANTENCION DE TICKET, Usuario : " & FUNCIONARIO & " - " & Nombre_funcionario_activo
 
         Sb_CargarTreeView()
 
@@ -587,6 +587,19 @@ Public Class Frm_Tickets_Lista
 
         'Next
 
+        'Sb_Actualizar_Grilla_Acciones(0)
+
+        ' Posicionarse en la primera fila de la grilla si tiene datos
+        If Grilla.Rows.Count > 0 Then
+            Grilla.CurrentCell = Grilla.Rows(0).Cells("Numero")
+            Dim _Id_Raiz As Integer = Grilla.Rows(0).Cells("Id_Raiz").Value
+            Sb_Actualizar_Grilla_Acciones(_Id_Raiz)
+        Else
+            Grilla_Acciones.DataSource = Nothing
+        End If
+
+        Txt_Descripcion.Text = String.Empty
+
         Grilla.Refresh()
 
     End Sub
@@ -734,10 +747,8 @@ Public Class Frm_Tickets_Lista
 
         Dim _BandejaEntrada As TreeNode
         Dim _Asig_Pendientes As TreeNode
-        'Dim _Asig_EnProceso As TreeNode
         Dim _Asig_Aceptados As TreeNode
         Dim _Asig_Rechazados As TreeNode
-        Dim _Asig_Cerradas As TreeNode
         Dim _Asig_Nulos As TreeNode
 
         Dim _Enviados As TreeNode
@@ -745,7 +756,6 @@ Public Class Frm_Tickets_Lista
         Dim _Env_EnProceso As TreeNode
         Dim _Env_Aceptados As TreeNode
         Dim _Env_Rechazados As TreeNode
-        Dim _Env_Cerradas As TreeNode
         Dim _Env_Nulos As TreeNode
 
         Dim fuenteNegrita As New Font(Tree_Bandeja.Font.Name, 10, FontStyle.Bold)
@@ -753,19 +763,15 @@ Public Class Frm_Tickets_Lista
         ' Crear los nodos de la Asignados
         _BandejaEntrada = Fx_CrearNodo("ASIGNADOS", "ASIGNADOS", 12, 12)
         _Asig_Pendientes = Fx_CrearNodo("Pendientes", "Pendientes", 0, 1)
-        '_Asig_EnProceso = Fx_CrearNodo("EnProceso", "En proceso", 0, 1)
         _Asig_Aceptados = Fx_CrearNodo("Aceptados", "Aceptados", 0, 1)
         _Asig_Rechazados = Fx_CrearNodo("Rechazados", "Rechazados", 0, 1)
-        '_Asig_Cerradas = Fx_CrearNodo("Cerradas", "Cerradas", 0, 1)
         _Asig_Nulos = Fx_CrearNodo("Nulos", "Nulos", 0, 1)
 
         With _BandejaEntrada
             .NodeFont = fuenteNegrita
             .Nodes.Add(_Asig_Pendientes)
-            '.Nodes.Add(_Asig_EnProceso)
             .Nodes.Add(_Asig_Aceptados)
             .Nodes.Add(_Asig_Rechazados)
-            '   .Nodes.Add(_Asig_Cerradas)
             .Nodes.Add(_Asig_Nulos)
         End With
 
@@ -775,17 +781,15 @@ Public Class Frm_Tickets_Lista
         _Env_EnProceso = Fx_CrearNodo("EnProceso", "En proceso", 0, 1)
         _Env_Aceptados = Fx_CrearNodo("Aceptados", "Aceptados", 0, 1)
         _Env_Rechazados = Fx_CrearNodo("Rechazados", "Rechazados", 0, 1)
-        '_Env_Cerradas = Fx_CrearNodo("Cerradas", "Cerradas", 0, 1)
         _Env_Nulos = Fx_CrearNodo("Nulos", "Nulos", 0, 1)
 
         With _Enviados
             .NodeFont = fuenteNegrita
-            .Nodes.Add(_Env_Pendientes) '(Fx_CrearNodo("Pendientes", "Pendientes", 0, 1))
+            .Nodes.Add(_Env_Pendientes)
             .Nodes.Add(_Env_EnProceso)
-            .Nodes.Add(_Env_Aceptados) '(Fx_CrearNodo("Aceptados", "Aceptados", 0, 1))
-            .Nodes.Add(_Env_Rechazados) '(Fx_CrearNodo("Rechazados", "Rechazados", 0, 1))
-            '   .Nodes.Add(_Env_Cerradas) '(Fx_CrearNodo("Cerradas", "Cerradas", 0, 1))
-            .Nodes.Add(_Env_Nulos) '(Fx_CrearNodo("Rechazados", "Rechazados", 0, 1))
+            .Nodes.Add(_Env_Aceptados)
+            .Nodes.Add(_Env_Rechazados)
+            .Nodes.Add(_Env_Nulos)
         End With
 
         ' Agregar los nodos principales al TreeView
@@ -793,17 +797,6 @@ Public Class Frm_Tickets_Lista
         Tree_Bandeja.Nodes.Add(_Enviados)
 
         Tree_Bandeja.ExpandAll()
-
-        'If Not (_EsAgente) Then
-
-        '    ' Obtén el nodo que deseas eliminar (por ejemplo, el primer nodo hijo del nodo raíz):
-        '    Dim nodoAEliminar As TreeNode = Tree_Bandeja.Nodes(0)
-
-        '    ' Elimina el nodo:
-        '    Tree_Bandeja.Nodes(0).Nodes.Remove(nodoAEliminar)
-
-        'End If
-
         Tree_Bandeja.Update()
 
     End Sub
@@ -993,18 +986,54 @@ Public Class Frm_Tickets_Lista
         Try
             If IsNothing(_Dv) Then Return
 
-            Dim _Buscar As String
+            Sb_Actualizar_Grilla_Acciones(0)
+            Txt_Descripcion.Text = String.Empty
 
             If Txt_Filtrar.Text.Contains("#") Then
                 Txt_Filtrar.Text = Replace(Txt_Filtrar.Text, "#", "")
                 Txt_Filtrar.Text = "#Tk" & numero_(Txt_Filtrar.Text, 7)
             End If
 
-            'If Chk_MostrarSoloIncluidos.Checked Then
-            _Dv.RowFilter = String.Format("Numero+Asunto+FechaCreacion+NomFuncCrea+Codigo+DescripcionPr+Sucursal+Bodega+NomPrioridad Like '%{0}%'", Txt_Filtrar.Text.Trim)
-            'Else
-            '_Dv.RowFilter = String.Format("CUDP+NUCUDP+NUDP+ENDP+VADP+FEEMDP+FEVEDP Like '%{0}%'", Txt_Filtrar.Text.Trim)
-            'End If
+            If Chk_Filtro_Fcreacion.Checked Then
+
+                If Txt_Filtrar.Text.ToLower = "dif-" Or Txt_Filtrar.Text = "-" Then
+                    _Dv.RowFilter = String.Format("Diferencia < 0 And (CONVERT(FechaCreacion, 'System.String') Like '{1}%' Or CONVERT(FechaCreacion, " &
+                                                  "'System.String') Like '{2}%')",
+                                                  Txt_Filtrar.Text.Trim,
+                                                  Dtp_Filtro_Fcreacion.Value.ToString("dd/MM/yyyy"),
+                                                  Dtp_Filtro_Fcreacion.Value.ToString("dd-MM-yyyy"))
+                ElseIf Txt_Filtrar.Text.ToLower = "dif+" Or Txt_Filtrar.Text = "+" Then
+                    _Dv.RowFilter = String.Format("Diferencia > 0 And (CONVERT(FechaCreacion, 'System.String') Like '{1}%' Or CONVERT(FechaCreacion, " &
+                                                  "'System.String') Like '{2}%')",
+                                                  Txt_Filtrar.Text.Trim,
+                                                  Dtp_Filtro_Fcreacion.Value.ToString("dd/MM/yyyy"),
+                                                  Dtp_Filtro_Fcreacion.Value.ToString("dd-MM-yyyy"))
+                Else
+                    _Dv.RowFilter = String.Format("Numero+Asunto+CONVERT(FechaCreacion, 'System.String')+NomFuncCrea+Codigo+DescripcionPr+Sucursal+Bodega+NomPrioridad " &
+                                                  "Like '%{0}%' And (CONVERT(FechaCreacion, 'System.String') Like '{1}%' Or CONVERT(FechaCreacion, 'System.String') Like '{2}%')",
+                                                  Txt_Filtrar.Text.Trim, Dtp_Filtro_Fcreacion.Value.ToString("dd/MM/yyyy"), Dtp_Filtro_Fcreacion.Value.ToString("dd-MM-yyyy"))
+                End If
+
+            Else
+
+                If Txt_Filtrar.Text.ToLower = "dif-" Or Txt_Filtrar.Text = "-" Then
+                    _Dv.RowFilter = String.Format("Diferencia < 0", Txt_Filtrar.Text.Trim)
+                ElseIf Txt_Filtrar.Text.ToLower = "dif+" Or Txt_Filtrar.Text = "+" Then
+                    _Dv.RowFilter = String.Format("Diferencia > 0", Txt_Filtrar.Text.Trim)
+                Else
+                    _Dv.RowFilter = String.Format("Numero+Asunto+FechaCreacion+NomFuncCrea+Codigo+DescripcionPr+Sucursal+Bodega+NomPrioridad " &
+                                                  "Like '%{0}%'", Txt_Filtrar.Text.Trim)
+                End If
+
+            End If
+
+            If Grilla.RowCount = 0 Then
+
+                ToastNotification.Show(Me, "NO SE ENCONTRARON REGISTROS", My.Resources.delete,
+                          2 * 1000, eToastGlowColor.Red, eToastPosition.MiddleCenter)
+
+            End If
+
         Catch ex As Exception
             MessageBoxEx.Show(Me, ex.Message, "Cuek!", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End Try
@@ -1017,6 +1046,7 @@ Public Class Frm_Tickets_Lista
     End Sub
 
     Private Sub Txt_Filtrar_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Filtrar.ButtonCustom2Click
+        Chk_Filtro_Fcreacion.Checked = False
         If String.IsNullOrWhiteSpace(Txt_Filtrar.Text) Then
             Return
         End If
@@ -1301,6 +1331,26 @@ Public Class Frm_Tickets_Lista
             MessageBoxEx.Show(Me, "Para ver esta información debe ingregar al Ticket", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
         End If
+
+    End Sub
+
+    Private Sub Btn_Filtrar_Click(sender As Object, e As EventArgs) Handles Btn_Filtrar.Click
+        Sb_Filtrar()
+    End Sub
+
+    Private Sub Grilla_Acciones_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Acciones.CellEnter
+
+        Try
+
+            Dim _Fila As DataGridViewRow = Grilla_Acciones.CurrentRow
+            Dim _NombreFunGestiona As String = _Fila.Cells("NombreFunGestiona").Value
+            Dim _StrAccion As String = _Fila.Cells("StrAccion").Value
+            Dim _Asunto As String = _Fila.Cells("Asunto").Value
+            Txt_Descripcion.Text = _NombreFunGestiona & " " & _StrAccion.ToUpper & vbCrLf & "Asunto: " & _Asunto & vbCrLf & "Detalle: " & _Fila.Cells("Descripcion").Value
+            Txt_Descripcion.Text = _Fila.Cells("Descripcion").Value
+        Catch ex As Exception
+            Txt_Descripcion.Text = String.Empty
+        End Try
 
     End Sub
 End Class

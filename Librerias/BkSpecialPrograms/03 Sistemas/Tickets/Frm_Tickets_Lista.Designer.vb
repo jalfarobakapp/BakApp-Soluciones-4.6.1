@@ -24,12 +24,12 @@ Partial Class Frm_Tickets_Lista
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Tickets_Lista))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle21 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle22 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle23 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle24 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Crear_Ticket = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_RevisarTicket = New DevComponents.DotNetBar.ButtonItem()
@@ -67,12 +67,18 @@ Partial Class Frm_Tickets_Lista
         Me.Grilla_Acciones = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
         Me.Imagenes_16x16_Dark = New System.Windows.Forms.ImageList(Me.components)
+        Me.Txt_Descripcion = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_Filtro_Fcreacion = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Dtp_Filtro_Fcreacion = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
+        Me.Btn_Filtrar = New DevComponents.DotNetBar.ButtonX()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.Grilla_Acciones, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Dtp_Filtro_Fcreacion, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Bar2
@@ -81,7 +87,7 @@ Partial Class Frm_Tickets_Lista
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Crear_Ticket, Me.Btn_RevisarTicket, Me.Btn_Exportar_Excel, Me.Btn_Actualizar})
-        Me.Bar2.Location = New System.Drawing.Point(0, 545)
+        Me.Bar2.Location = New System.Drawing.Point(0, 579)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(1264, 41)
         Me.Bar2.Stretch = True
@@ -141,7 +147,7 @@ Partial Class Frm_Tickets_Lista
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(213, 50)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(1039, 276)
+        Me.GroupPanel1.Size = New System.Drawing.Size(1039, 267)
         '
         '
         '
@@ -240,38 +246,38 @@ Partial Class Frm_Tickets_Lista
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle19.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle19.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle19.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle19.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle19.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle19
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle20.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle20.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle20.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle20.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle20.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle20
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
         Me.Grilla.ReadOnly = True
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.Grilla.Size = New System.Drawing.Size(1033, 253)
+        DataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle21.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle21.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle21.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle21.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle21.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle21.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle21
+        Me.Grilla.Size = New System.Drawing.Size(1033, 244)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 27
         '
@@ -290,7 +296,7 @@ Partial Class Frm_Tickets_Lista
         Me.Chk_TickesAsigMi.Enabled = False
         Me.Chk_TickesAsigMi.FocusCuesEnabled = False
         Me.Chk_TickesAsigMi.ForeColor = System.Drawing.Color.Black
-        Me.Chk_TickesAsigMi.Location = New System.Drawing.Point(12, 522)
+        Me.Chk_TickesAsigMi.Location = New System.Drawing.Point(12, 556)
         Me.Chk_TickesAsigMi.Name = "Chk_TickesAsigMi"
         Me.Chk_TickesAsigMi.Size = New System.Drawing.Size(169, 17)
         Me.Chk_TickesAsigMi.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -312,7 +318,7 @@ Partial Class Frm_Tickets_Lista
         Me.Chk_TickesMiGrupo.Enabled = False
         Me.Chk_TickesMiGrupo.FocusCuesEnabled = False
         Me.Chk_TickesMiGrupo.ForeColor = System.Drawing.Color.Black
-        Me.Chk_TickesMiGrupo.Location = New System.Drawing.Point(187, 522)
+        Me.Chk_TickesMiGrupo.Location = New System.Drawing.Point(187, 556)
         Me.Chk_TickesMiGrupo.Name = "Chk_TickesMiGrupo"
         Me.Chk_TickesMiGrupo.Size = New System.Drawing.Size(251, 17)
         Me.Chk_TickesMiGrupo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -433,7 +439,7 @@ Partial Class Frm_Tickets_Lista
         Me.Tree_Bandeja.Location = New System.Drawing.Point(12, 22)
         Me.Tree_Bandeja.Name = "Tree_Bandeja"
         Me.Tree_Bandeja.SelectedImageIndex = 0
-        Me.Tree_Bandeja.Size = New System.Drawing.Size(195, 494)
+        Me.Tree_Bandeja.Size = New System.Drawing.Size(195, 528)
         Me.Tree_Bandeja.TabIndex = 165
         '
         'Imagenes_24x24
@@ -475,11 +481,13 @@ Partial Class Frm_Tickets_Lista
         Me.Txt_Filtrar.ButtonCustom2.Visible = True
         Me.Txt_Filtrar.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Filtrar.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Filtrar.Location = New System.Drawing.Point(276, 22)
+        Me.Txt_Filtrar.Location = New System.Drawing.Point(286, 22)
         Me.Txt_Filtrar.Name = "Txt_Filtrar"
         Me.Txt_Filtrar.PreventEnterBeep = True
-        Me.Txt_Filtrar.Size = New System.Drawing.Size(976, 22)
+        Me.Txt_Filtrar.Size = New System.Drawing.Size(701, 22)
         Me.Txt_Filtrar.TabIndex = 9
+        Me.Txt_Filtrar.WatermarkText = "Ingrese una descripción de cualquier campo para filtrar. Para diferenciar por can" &
+    "tidades, use Dif- o Dif+."
         '
         'LabelX1
         '
@@ -494,9 +502,9 @@ Partial Class Frm_Tickets_Lista
         Me.LabelX1.ImageTextSpacing = 3
         Me.LabelX1.Location = New System.Drawing.Point(213, 22)
         Me.LabelX1.Name = "LabelX1"
-        Me.LabelX1.Size = New System.Drawing.Size(57, 23)
+        Me.LabelX1.Size = New System.Drawing.Size(67, 23)
         Me.LabelX1.TabIndex = 166
-        Me.LabelX1.Text = "Buscar"
+        Me.LabelX1.Text = "BUSCAR"
         '
         'Metro_Bar_Color
         '
@@ -512,7 +520,7 @@ Partial Class Frm_Tickets_Lista
         Me.Metro_Bar_Color.ForeColor = System.Drawing.Color.Black
         Me.Metro_Bar_Color.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Estatus})
         Me.Metro_Bar_Color.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 586)
+        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 620)
         Me.Metro_Bar_Color.Name = "Metro_Bar_Color"
         Me.Metro_Bar_Color.Size = New System.Drawing.Size(1264, 22)
         Me.Metro_Bar_Color.TabIndex = 173
@@ -532,9 +540,9 @@ Partial Class Frm_Tickets_Lista
         Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel2.Controls.Add(Me.Grilla_Acciones)
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel2.Location = New System.Drawing.Point(213, 331)
+        Me.GroupPanel2.Location = New System.Drawing.Point(213, 323)
         Me.GroupPanel2.Name = "GroupPanel2"
-        Me.GroupPanel2.Size = New System.Drawing.Size(1039, 184)
+        Me.GroupPanel2.Size = New System.Drawing.Size(1039, 160)
         '
         '
         '
@@ -571,38 +579,38 @@ Partial Class Frm_Tickets_Lista
         Me.Grilla_Acciones.AllowUserToAddRows = False
         Me.Grilla_Acciones.AllowUserToDeleteRows = False
         Me.Grilla_Acciones.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Acciones.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle22.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle22.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle22.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle22.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle22.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Acciones.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle22
         Me.Grilla_Acciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Acciones.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle23.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle23.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle23.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle23.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle23.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle23.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_Acciones.DefaultCellStyle = DataGridViewCellStyle23
         Me.Grilla_Acciones.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla_Acciones.EnableHeadersVisualStyles = False
         Me.Grilla_Acciones.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla_Acciones.Location = New System.Drawing.Point(0, 0)
         Me.Grilla_Acciones.Name = "Grilla_Acciones"
         Me.Grilla_Acciones.ReadOnly = True
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Acciones.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
-        Me.Grilla_Acciones.Size = New System.Drawing.Size(1033, 161)
+        DataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle24.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle24.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle24.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle24.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle24.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Acciones.RowHeadersDefaultCellStyle = DataGridViewCellStyle24
+        Me.Grilla_Acciones.Size = New System.Drawing.Size(1033, 137)
         Me.Grilla_Acciones.StandardTab = True
         Me.Grilla_Acciones.TabIndex = 27
         '
@@ -717,11 +725,134 @@ Partial Class Frm_Tickets_Lista
         Me.Imagenes_16x16_Dark.Images.SetKeyName(48, "people-customer-man-note.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(49, "people-vendor-note.png")
         '
+        'Txt_Descripcion
+        '
+        Me.Txt_Descripcion.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Txt_Descripcion.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Descripcion.Border.Class = "TextBoxBorder"
+        Me.Txt_Descripcion.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Descripcion.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.Txt_Descripcion.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Descripcion.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Descripcion.Location = New System.Drawing.Point(316, 489)
+        Me.Txt_Descripcion.MaxLength = 5000
+        Me.Txt_Descripcion.Multiline = True
+        Me.Txt_Descripcion.Name = "Txt_Descripcion"
+        Me.Txt_Descripcion.PreventEnterBeep = True
+        Me.Txt_Descripcion.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.Txt_Descripcion.Size = New System.Drawing.Size(936, 61)
+        Me.Txt_Descripcion.TabIndex = 175
+        '
+        'LabelX2
+        '
+        Me.LabelX2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.LabelX2.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX2.ForeColor = System.Drawing.Color.Black
+        Me.LabelX2.ImagePosition = DevComponents.DotNetBar.eImagePosition.Right
+        Me.LabelX2.ImageTextSpacing = 3
+        Me.LabelX2.Location = New System.Drawing.Point(213, 489)
+        Me.LabelX2.Name = "LabelX2"
+        Me.LabelX2.Size = New System.Drawing.Size(97, 23)
+        Me.LabelX2.TabIndex = 176
+        Me.LabelX2.Text = "OBSERVACIONES"
+        '
+        'Chk_Filtro_Fcreacion
+        '
+        Me.Chk_Filtro_Fcreacion.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Chk_Filtro_Fcreacion.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Filtro_Fcreacion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Filtro_Fcreacion.CheckBoxImageChecked = CType(resources.GetObject("Chk_Filtro_Fcreacion.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Filtro_Fcreacion.FocusCuesEnabled = False
+        Me.Chk_Filtro_Fcreacion.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Filtro_Fcreacion.Location = New System.Drawing.Point(1007, 21)
+        Me.Chk_Filtro_Fcreacion.Name = "Chk_Filtro_Fcreacion"
+        Me.Chk_Filtro_Fcreacion.Size = New System.Drawing.Size(105, 22)
+        Me.Chk_Filtro_Fcreacion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Filtro_Fcreacion.TabIndex = 177
+        Me.Chk_Filtro_Fcreacion.Text = "Filtra F.Creación"
+        '
+        'Dtp_Filtro_Fcreacion
+        '
+        '
+        '
+        '
+        Me.Dtp_Filtro_Fcreacion.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Dtp_Filtro_Fcreacion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Filtro_Fcreacion.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
+        Me.Dtp_Filtro_Fcreacion.ButtonDropDown.Visible = True
+        Me.Dtp_Filtro_Fcreacion.IsPopupCalendarOpen = False
+        Me.Dtp_Filtro_Fcreacion.Location = New System.Drawing.Point(1107, 21)
+        '
+        '
+        '
+        Me.Dtp_Filtro_Fcreacion.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_Filtro_Fcreacion.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Filtro_Fcreacion.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
+        Me.Dtp_Filtro_Fcreacion.MonthCalendar.ClearButtonVisible = True
+        '
+        '
+        '
+        Me.Dtp_Filtro_Fcreacion.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
+        Me.Dtp_Filtro_Fcreacion.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_Filtro_Fcreacion.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
+        Me.Dtp_Filtro_Fcreacion.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Dtp_Filtro_Fcreacion.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
+        Me.Dtp_Filtro_Fcreacion.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
+        Me.Dtp_Filtro_Fcreacion.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Filtro_Fcreacion.MonthCalendar.DisplayMonth = New Date(2025, 3, 1, 0, 0, 0, 0)
+        Me.Dtp_Filtro_Fcreacion.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
+        Me.Dtp_Filtro_Fcreacion.MonthCalendar.MarkedDates = New Date(-1) {}
+        Me.Dtp_Filtro_Fcreacion.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_Filtro_Fcreacion.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Dtp_Filtro_Fcreacion.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_Filtro_Fcreacion.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Dtp_Filtro_Fcreacion.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Filtro_Fcreacion.MonthCalendar.TodayButtonVisible = True
+        Me.Dtp_Filtro_Fcreacion.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
+        Me.Dtp_Filtro_Fcreacion.Name = "Dtp_Filtro_Fcreacion"
+        Me.Dtp_Filtro_Fcreacion.Size = New System.Drawing.Size(90, 22)
+        Me.Dtp_Filtro_Fcreacion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Dtp_Filtro_Fcreacion.TabIndex = 178
+        Me.Dtp_Filtro_Fcreacion.Value = New Date(2025, 3, 27, 13, 14, 32, 0)
+        '
+        'Btn_Filtrar
+        '
+        Me.Btn_Filtrar.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Filtrar.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Filtrar.Location = New System.Drawing.Point(1205, 21)
+        Me.Btn_Filtrar.Name = "Btn_Filtrar"
+        Me.Btn_Filtrar.Size = New System.Drawing.Size(47, 23)
+        Me.Btn_Filtrar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Filtrar.TabIndex = 179
+        Me.Btn_Filtrar.Text = "Filtrar..."
+        Me.Btn_Filtrar.Tooltip = "Aplicar filtro"
+        '
         'Frm_Tickets_Lista
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1264, 608)
+        Me.ClientSize = New System.Drawing.Size(1264, 642)
+        Me.Controls.Add(Me.Btn_Filtrar)
+        Me.Controls.Add(Me.Dtp_Filtro_Fcreacion)
+        Me.Controls.Add(Me.LabelX2)
+        Me.Controls.Add(Me.Txt_Descripcion)
         Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.LabelX1)
         Me.Controls.Add(Me.Txt_Filtrar)
@@ -731,6 +862,7 @@ Partial Class Frm_Tickets_Lista
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.Metro_Bar_Color)
+        Me.Controls.Add(Me.Chk_Filtro_Fcreacion)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -748,6 +880,7 @@ Partial Class Frm_Tickets_Lista
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel2.ResumeLayout(False)
         CType(Me.Grilla_Acciones, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Dtp_Filtro_Fcreacion, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -788,4 +921,9 @@ Partial Class Frm_Tickets_Lista
     Friend WithEvents Grilla_Acciones As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents Imagenes_16x16 As ImageList
     Friend WithEvents Imagenes_16x16_Dark As ImageList
+    Friend WithEvents Txt_Descripcion As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
+    Public WithEvents Chk_Filtro_Fcreacion As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Dtp_Filtro_Fcreacion As DevComponents.Editors.DateTimeAdv.DateTimeInput
+    Friend WithEvents Btn_Filtrar As DevComponents.DotNetBar.ButtonX
 End Class

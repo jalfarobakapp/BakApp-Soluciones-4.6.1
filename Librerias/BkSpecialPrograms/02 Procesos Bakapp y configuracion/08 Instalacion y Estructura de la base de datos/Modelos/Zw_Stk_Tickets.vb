@@ -25,6 +25,8 @@
     Public Property Id_Padre As Integer
     Public Property Rechazado As Boolean
     Public Property Aceptado As Boolean
+    Public Property Cerraddo As Boolean
+    Public Property FechaCerrado As DateTime?
 
 End Class
 

@@ -24,6 +24,8 @@ CREATE TABLE [dbo].[Zw_Stk_Tickets_Acciones](
     [Tido_Cierra]		[varchar](3)        NOT NULL DEFAULT (''),
     [Nudo_Cierra]		[varchar](10)       NOT NULL DEFAULT (''),
     [Idmaeedo_Cierra]   [int]               NOT NULL DEFAULT (0),
+    [ConfSinDoc_Cierra] [bit]               NOT NULL DEFAULT (0),
+    [Motivo_Cierra]     [varchar](20)       NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_Stk_Tickets_Acciones] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

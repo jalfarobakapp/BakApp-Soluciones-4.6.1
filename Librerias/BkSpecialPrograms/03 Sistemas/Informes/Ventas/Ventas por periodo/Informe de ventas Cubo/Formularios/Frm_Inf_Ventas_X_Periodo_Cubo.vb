@@ -3130,6 +3130,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             End If
 
         End If
+
     End Sub
 
     Private Sub Btn_Filtro_Pro_Familias_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Pro_Familias.Click

@@ -75,7 +75,7 @@ Public Class Frm_Ver_Documento_Observaciones
         Dim _Motivo As String = Trim(NuloPorNro(_Row_Maeedoob.Item("MOTIVO"), ""))
 
         If Not String.IsNullOrWhiteSpace(_Motivo) Then
-            _Motivo = _Motivo & " - " & _Sql.Fx_Trae_Dato("TABCARAC", "NOKOCARAC", "KOTABLA = 'MOTIVOSNCV' And KOCARAC = '" & _Motivo & "'")
+            _Motivo = _Motivo & " - " & _Sql.Fx_Trae_Dato("TABCARAC", "NOKOCARAC", "KOTABLA = 'MOTIVOS" & _Row_Maeedo.Item("TIDO") & "' And KOCARAC = '" & _Motivo & "'")
         End If
 
         Dtp_Fecha_Entrega_Recepcion.Value = _Feer
