@@ -435,6 +435,38 @@ Public Class Frm_Tickets_IngProducto_GesXBod
 
                                 Dim _Row As DataRow = _Filtrar.Pro_Tbl_Filtro.Rows(0)
 
+                                If SoloUnProducto Then
+
+                                    Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+                                    Dim Consulta_sql As String
+
+                                    Consulta_sql = "Select Top 1 Prod.Codigo,Prod.Descripcion,Prod.Numero,Prod.Ubicacion,Tks.CodFuncionario_Crea,NOKOFU" & vbCrLf &
+                                               "From " & _Global_BaseBk & "Zw_Stk_Tickets_Producto Prod" & vbCrLf &
+                                               "Inner Join " & _Global_BaseBk & "Zw_Stk_Tickets Tks On Tks.Id_Raiz = Prod.Id_Raiz" & vbCrLf &
+                                               "Inner Join TABFU On KOFU = Tks.CodFuncionario_Crea" & vbCrLf &
+                                               "Where 1>0 --Id_Tipo = " & Cl_Tickets.Zw_Stk_Tipos.Id &
+                                               " And Prod.Empresa = '" & _Empresa & "' And Prod.Sucursal = '" & _Sucursal & "'" &
+                                               " And Prod.Bodega = '" & _Bodega & "' And Prod.Codigo = '" & Cl_Tickets.Zw_Stk_Tickets_Producto.Codigo & "'" &
+                                               " And Prod.Ubicacion = '" & _Row.Item("Codigo") & "' And Estado In ('ABIE','PROC')"
+
+                                    Dim _Row2 As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                                    If Not IsNothing(_Row2) Then
+
+                                        Dim _Msj = "Ya hay un ticket abierto por esta misma solución. " & "Ticket " & _Row2.Item("Numero") & vbCrLf & vbCrLf &
+                                               "De: " & _Row2.Item("CodFuncionario_Crea") & "-" & _Row2.Item("NOKOFU").ToString.Trim() & vbCrLf &
+                                               "Producto: " & Cl_Tickets.Zw_Stk_Tickets_Producto.Codigo.Trim & " - " & _Row2.Item("Descripcion") & vbCrLf &
+                                               "Ubicación: " & _Row2.Item("Ubicacion") & vbCrLf & vbCrLf &
+                                               "No es posible crear 2 Ticket iguales para la misma bodega, ubicación y producto."
+
+                                        MessageBoxEx.Show(Me, _Msj, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                        _Fila.Cells("Ubicacion").Value = String.Empty
+                                        Return
+
+                                    End If
+
+                                End If
+
                                 _Fila.Cells("Ubicacion").Value = _Row.Item("Codigo")
                                 Grilla_Detalle.CurrentCell = _Fila.Cells("Um")
 

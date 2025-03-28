@@ -242,20 +242,23 @@ Public Class Frm_Tickets_Lista
                 _Condicion += vbCrLf & "And Estado = 'PROC' And Aceptado = 0 And Rechazado = 0"
             End If
 
+            Dim _FechaLimite As DateTime = DateAdd(DateInterval.Day, -5, Now.Date)
+            Dim _FechaLimiteStr As String = Format(_FechaLimite, "yyyyMMdd")
+
             If _Carpeta.Tag = "Aceptados" Then
-                _Condicion += vbCrLf & "And Aceptado = 1 And Rechazado = 0 And Estado <> 'PROC'"
+                _Condicion += vbCrLf & "And Aceptado = 1 And Rechazado = 0 And Estado <> 'PROC' And CONVERT(varchar, FechaCreacion, 112) > '" & _FechaLimiteStr & "'"
             End If
 
             If _Carpeta.Tag = "Rechazados" Then
-                _Condicion += vbCrLf & "And Rechazado = 1 And Aceptado = 0 And Estado <> 'PROC'"
+                _Condicion += vbCrLf & "And Rechazado = 1 And Aceptado = 0 And Estado <> 'PROC' And CONVERT(varchar, FechaCreacion, 112) > '" & _FechaLimiteStr & "'"
             End If
 
             If _Carpeta.Tag = "Cerradas" Then
-                _Condicion += vbCrLf & "And Estado = 'CERR'"
+                _Condicion += vbCrLf & "And Estado = 'CERR' And CONVERT(varchar, FechaCreacion, 112) > '" & _FechaLimiteStr & "'"
             End If
 
             If _Carpeta.Tag = "Nulos" Then
-                _Condicion += vbCrLf & "And Estado = 'NULO'"
+                _Condicion += vbCrLf & "And Estado = 'NULO' And CONVERT(varchar, FechaCreacion, 112) > '" & _FechaLimiteStr & "'"
             End If
 
             _NodoSeleccionado = _Carpeta
@@ -295,7 +298,7 @@ Public Class Frm_Tickets_Lista
                        "Left Join " & _Global_BaseBk & "Zw_Stk_Tickets_Producto TkPrd On Tks.Id_Raiz = TkPrd.Id_Raiz And TkPrd.Id_Raiz = TkPrd.Id_Ticket" & vbCrLf &
                        "Left Join TABFU Fu On Fu.KOFU = CodFuncionario_Crea" & vbCrLf &
                        "Where 1 > 0" & vbCrLf & _Condicion & vbCrLf &
-                       "Order By Tks.Numero Desc"
+                       "Order By Tks.FechaCreacion"
 
         _Tbl_Tickets = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -460,8 +463,30 @@ Public Class Frm_Tickets_Lista
             .Columns("Diferencia").HeaderText = "Dif"
             .Columns("Diferencia").ToolTipText = "Diferencia entre el stock en bodega y la cantidad inventariada"
             .Columns("Diferencia").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("Diferencia").Width = 40
+            .Columns("Diferencia").Width = 45
             .Columns("Diferencia").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+
+            .Columns("Id").Visible = True
+            .Columns("Id").HeaderText = "Id_Ticket"
+            .Columns("Id").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Id").Width = 50
+            .Columns("Id").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Id_Raiz").Visible = True
+            .Columns("Id_Raiz").HeaderText = "Id_Raiz"
+            .Columns("Id_Raiz").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Id_Raiz").Width = 50
+            .Columns("Id_Raiz").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Id_Padre").Visible = True
+            .Columns("Id_Padre").HeaderText = "Id_Padre"
+            .Columns("Id_Padre").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Id_Padre").Width = 50
+            .Columns("Id_Padre").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
         End With
@@ -983,11 +1008,20 @@ Public Class Frm_Tickets_Lista
     End Sub
 
     Sub Sb_Filtrar()
+
+        Sb_Filtrar2()
+        Return
+
         Try
             If IsNothing(_Dv) Then Return
 
             Sb_Actualizar_Grilla_Acciones(0)
             Txt_Descripcion.Text = String.Empty
+
+            If Txt_Filtrar.Text.Contains(" ") Then
+                Sb_Filtrar2()
+                Return
+            End If
 
             If Txt_Filtrar.Text.Contains("#") Then
                 Txt_Filtrar.Text = Replace(Txt_Filtrar.Text, "#", "")
@@ -1032,6 +1066,54 @@ Public Class Frm_Tickets_Lista
                 ToastNotification.Show(Me, "NO SE ENCONTRARON REGISTROS", My.Resources.delete,
                           2 * 1000, eToastGlowColor.Red, eToastPosition.MiddleCenter)
 
+            End If
+
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, "Cuek!", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End Try
+    End Sub
+
+    Sub Sb_Filtrar2()
+        Try
+            If IsNothing(_Dv) Then Return
+
+            Sb_Actualizar_Grilla_Acciones(0)
+            Txt_Descripcion.Text = String.Empty
+
+            Dim filtros As String() = Txt_Filtrar.Text.Trim().Split(" "c)
+            Dim filtroFinal As String = String.Empty
+
+            For Each filtro As String In filtros
+                If Not String.IsNullOrWhiteSpace(filtro) Then
+                    If Not String.IsNullOrEmpty(filtroFinal) Then
+                        filtroFinal &= " AND "
+                    End If
+
+                    If filtro.ToLower = "dif-" Then
+                        filtroFinal &= String.Format("Diferencia <0")
+                    ElseIf filtro.ToLower = "dif+" Then
+                        filtroFinal &= String.Format("Diferencia >0")
+                    Else
+                        filtroFinal &= String.Format("(Numero+Asunto+CONVERT(FechaCreacion, 
+                        'System.String')+NomFuncCrea+Codigo+DescripcionPr+Sucursal+Bodega+NomPrioridad Like '%{0}%')", filtro)
+                    End If
+
+                End If
+            Next
+
+            If Chk_Filtro_Fcreacion.Checked Then
+                If Not String.IsNullOrEmpty(filtroFinal) Then
+                    filtroFinal &= " AND "
+                End If
+                filtroFinal &= String.Format("(CONVERT(FechaCreacion, 'System.String') Like '{0}%' Or CONVERT(FechaCreacion, 'System.String') Like '{1}%')",
+                                                             Dtp_Filtro_Fcreacion.Value.ToString("dd/MM/yyyy"), Dtp_Filtro_Fcreacion.Value.ToString("dd-MM-yyyy"))
+            End If
+
+            _Dv.RowFilter = filtroFinal
+
+            If Grilla.RowCount = 0 Then
+                ToastNotification.Show(Me, "NO SE ENCONTRARON REGISTROS", My.Resources.delete,
+                                          2 * 1000, eToastGlowColor.Red, eToastPosition.MiddleCenter)
             End If
 
         Catch ex As Exception
@@ -1135,7 +1217,7 @@ Public Class Frm_Tickets_Lista
                        "Acc.Descripcion," & vbCrLf &
                        "Case CreaNewTicket When 1 Then Tk.SubNro Else '' End As 'Ticket Crea'," & vbCrLf &
                        "ISNULL(Tkc.SubNro,'') As 'Ticket Cierra'," & vbCrLf &
-                       "Acc.Tido_Cierra,Acc.Nudo_Cierra,Acc.Idmaeedo_Cierra" & vbCrLf &
+                       "Acc.Tido_Cierra,Acc.Nudo_Cierra,Acc.Idmaeedo_Cierra,Acc.ConfSinDoc_Cierra" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Acc" & vbCrLf &
                        "Left Join TABFU Cf On Cf.KOFU = CodFunGestiona" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Stk_Tickets Tk On Tk.Id = Acc.Id_Ticket" & vbCrLf &
@@ -1208,6 +1290,13 @@ Public Class Frm_Tickets_Lista
             .Columns("Btn_DocCierra").ToolTipText = "Documento de ajuste"
             .Columns("Btn_DocCierra").Visible = True
             .Columns("Btn_DocCierra").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("ConfSinDoc_Cierra").Width = 40
+            .Columns("ConfSinDoc_Cierra").HeaderText = "C.S.D."
+            .Columns("ConfSinDoc_Cierra").ToolTipText = "Confirma cierre sin documento adjunto"
+            .Columns("ConfSinDoc_Cierra").Visible = True
+            .Columns("ConfSinDoc_Cierra").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Fecha").Visible = True

@@ -177,7 +177,7 @@ Public Class Frm_Tickets_Seguimiento
                        "Acc.Descripcion," & vbCrLf &
                        "Case CreaNewTicket When 1 Then Tk.SubNro Else '' End As 'Ticket Crea'," & vbCrLf &
                        "ISNULL(Tkc.SubNro,'') As 'Ticket Cierra'," & vbCrLf &
-                       "Acc.Tido_Cierra,Acc.Nudo_Cierra,Acc.Idmaeedo_Cierra" & vbCrLf &
+                       "Acc.Tido_Cierra,Acc.Nudo_Cierra,Acc.Idmaeedo_Cierra,Acc.ConfSinDoc_Cierra" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Acc" & vbCrLf &
                        "Left Join TABFU Cf On Cf.KOFU = CodFunGestiona" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Stk_Tickets Tk On Tk.Id = Acc.Id_Ticket" & vbCrLf &
@@ -245,6 +245,13 @@ Public Class Frm_Tickets_Seguimiento
             .Columns("Btn_DocCierra").ToolTipText = "Documento de ajuste"
             .Columns("Btn_DocCierra").Visible = True
             .Columns("Btn_DocCierra").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("ConfSinDoc_Cierra").Width = 40
+            .Columns("ConfSinDoc_Cierra").HeaderText = "C.S.D."
+            .Columns("ConfSinDoc_Cierra").ToolTipText = "Confirma cierre sin documento adjunto"
+            .Columns("ConfSinDoc_Cierra").Visible = True
+            .Columns("ConfSinDoc_Cierra").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Fecha").Visible = True
@@ -1271,14 +1278,15 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
         If _Cabeza = "Btn_DocCierra" Then
 
-            If CBool(_Idmaeedo_Cierra) Then
-
-                Dim Fm As New Frm_Ver_Documento(_Idmaeedo_Cierra, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
-                Fm.Codigo_Marcar = _Cl_Tickets.Zw_Stk_Tickets_Producto.Codigo
-                Fm.ShowDialog(Me)
-                Fm.Dispose()
-
+            If Not CBool(_Idmaeedo_Cierra) Then
+                MessageBoxEx.Show(Me, "No hay documentos adjuntos que mostrar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
             End If
+
+            Dim Fm As New Frm_Ver_Documento(_Idmaeedo_Cierra, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
+            Fm.Codigo_Marcar = _Cl_Tickets.Zw_Stk_Tickets_Producto.Codigo
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
 
         End If
 

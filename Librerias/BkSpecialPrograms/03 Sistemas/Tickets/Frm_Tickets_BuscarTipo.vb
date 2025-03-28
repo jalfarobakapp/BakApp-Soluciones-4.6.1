@@ -85,6 +85,9 @@ Public Class Frm_Tickets_BuscarTipo
         Dim _Fila As DataGridViewRow = Grilla_Tipos.CurrentRow
 
         Dim _AreaTipo As String = _Fila.Cells("AreaTipo").Value
+        Dim _Area As String = _Fila.Cells("Area").Value
+        Dim _Tipo As String = _Fila.Cells("Tipo").Value
+
 
         Id_Area = _Fila.Cells("Id_Area").Value
         Id_Tipo = _Fila.Cells("Id_Tipo").Value
@@ -112,7 +115,8 @@ Public Class Frm_Tickets_BuscarTipo
 
         End If
 
-        If MessageBoxEx.Show(Me, "¿Confirma " & _AreaTipo & "?", "Seleccionar Tipo de Ticket",
+        If MessageBoxEx.Show(Me, "¿Confirma la selección de esta Area/Tipo? " & vbCrLf & vbCrLf &
+                             "Area: " & _Area & vbCrLf & "Tipo: " & _Tipo, "Seleccionar Tipo de Ticket",
                                  MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
             Id_Area = 0
             Id_Tipo = 0
