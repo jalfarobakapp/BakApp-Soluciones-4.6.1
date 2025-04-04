@@ -444,7 +444,7 @@ Public Class Frm_Tickets_IngProducto_GesXBod
                                                "From " & _Global_BaseBk & "Zw_Stk_Tickets_Producto Prod" & vbCrLf &
                                                "Inner Join " & _Global_BaseBk & "Zw_Stk_Tickets Tks On Tks.Id_Raiz = Prod.Id_Raiz" & vbCrLf &
                                                "Inner Join TABFU On KOFU = Tks.CodFuncionario_Crea" & vbCrLf &
-                                               "Where 1>0 --Id_Tipo = " & Cl_Tickets.Zw_Stk_Tipos.Id &
+                                               "Where 1>0 --Id_Tipo = " & Cl_Tickets.Zw_Stk_Tipos.Id & vbCrLf &
                                                " And Prod.Empresa = '" & _Empresa & "' And Prod.Sucursal = '" & _Sucursal & "'" &
                                                " And Prod.Bodega = '" & _Bodega & "' And Prod.Codigo = '" & Cl_Tickets.Zw_Stk_Tickets_Producto.Codigo & "'" &
                                                " And Prod.Ubicacion = '" & _Row.Item("Codigo") & "' And Estado In ('ABIE','PROC')"

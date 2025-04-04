@@ -991,10 +991,10 @@ Public Class Cl_Dte2XmlPDF
                         _Giro_Receptor = String.Empty
                     End Try
 
-                    Dim _direccion_Receptor As String = Trim(.Rows(_Encabezado_Id).Item("DirRecep"))
-                    Dim _Ciudad_Receptor As String = Valor_Columna(.Rows(_Encabezado_Id), 0, "CiudadRecep") 'Trim(.Rows(0).Item("CiudadRecep"))
-                    Dim _Comuna_Receptor As String = Valor_Columna(.Rows(_Encabezado_Id), 0, "CmnaRecep") 'Trim(.Rows(0).Item("CmnaRecep"))
-                    Dim _Telefono_Receptor As String = Valor_Columna(.Rows(_Encabezado_Id), 0, "Contacto") 'Trim(.Rows(0).Item("RznSocRecep"))
+                    Dim _direccion_Receptor As String = Valor_Columna(Tbl_Receptor.Rows(_Encabezado_Id), 0, "DirRecep")
+                    Dim _Ciudad_Receptor As String = Valor_Columna(Tbl_Receptor.Rows(_Encabezado_Id), 0, "CiudadRecep") 'Trim(.Rows(0).Item("CiudadRecep"))
+                    Dim _Comuna_Receptor As String = Valor_Columna(Tbl_Receptor.Rows(_Encabezado_Id), 0, "CmnaRecep") 'Trim(.Rows(0).Item("CmnaRecep"))
+                    Dim _Telefono_Receptor As String = Valor_Columna(Tbl_Receptor.Rows(_Encabezado_Id), 0, "Contacto") 'Trim(.Rows(0).Item("RznSocRecep"))
                     '
                     Ypos = 140
                     pgfx.DrawString("RUT", FteNegrita_8, XBrushes.Black, 35, Ypos)

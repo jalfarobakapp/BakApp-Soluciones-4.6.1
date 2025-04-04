@@ -1,4 +1,6 @@
-﻿Public Class Cl_FacAuto_NVV
+﻿Imports DevComponents.DotNetBar
+
+Public Class Cl_FacAuto_NVV
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_Sql As String
@@ -87,7 +89,7 @@
             _CondicionFunFac = "And CodFuncionario_Factura In " & CodFunFactura
         End If
 
-        Consulta_Sql = "Select TOP 20 Idmaeedo,Id,DocEmitir,Fecha_Facturar,CodFuncionario_Factura" & vbCrLf &
+        Consulta_Sql = "Select TOP 20 Idmaeedo,Id,DocEmitir,Fecha_Facturar,CodFuncionario_Factura,PagarAuto,Idmaedpce_Paga,CodFuncionario_Paga" & vbCrLf &
                        "Into #Paso" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Stmp_Enc" & vbCrLf &
                        "Where Facturar = 1 And Estado = 'COMPL' And EnvFacAutoBk = 0" & _CondicionSuc & _CondicionFunFac &
@@ -95,9 +97,9 @@
                        "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set EnvFacAutoBk = 1" & vbCrLf &
                        "Where Idmaeedo In (Select Idmaeedo From #Paso)" & vbCrLf &
                        vbCrLf &
-                       "Insert Into " & _Global_BaseBk & "Zw_Demonio_FacAuto (Idmaeedo_NVV,Nudo_NVV,Modalidad_Fac,Fecha_Facturar,Facturar,DesdePickeo,Id_Pickeo,DocEmitir,CerrarDespFact,CodFuncionario_Factura)" & vbCrLf &
+                       "Insert Into " & _Global_BaseBk & "Zw_Demonio_FacAuto (Idmaeedo_NVV,Nudo_NVV,Modalidad_Fac,Fecha_Facturar,Facturar,DesdePickeo,Id_Pickeo,DocEmitir,CerrarDespFact,CodFuncionario_Factura,PagarAuto,Idmaedpce_Paga,CodFuncionario_Paga)" & vbCrLf &
                        "Select Edo.IDMAEEDO As 'Idmaeedo_NVV',Edo.NUDO As 'Nudo_NVV','" & Modalidad_Fac & "' As 'Modalidad_Fac',Fecha_Facturar As Fecha_Facturar,1 As 'Facturar'," & vbCrLf &
-                       "1 As 'DesdePickeo',#Paso.Id As 'Id_Pickeo',#Paso.DocEmitir As 'DocEmitir',1 As 'CerrarDespFact',CodFuncionario_Factura" & vbCrLf &
+                       "1 As 'DesdePickeo',#Paso.Id As 'Id_Pickeo',#Paso.DocEmitir As 'DocEmitir',1 As 'CerrarDespFact',CodFuncionario_Factura,PagarAuto,Idmaedpce_Paga,CodFuncionario_Paga" & vbCrLf &
                        "From MAEEDO Edo" & vbCrLf &
                        "Inner Join #Paso On #Paso.Idmaeedo = Edo.IDMAEEDO" & vbCrLf &
                        vbCrLf &
@@ -436,6 +438,161 @@
             Next
 
         End If
+
+    End Sub
+
+    Sub Sb_Pagar_Documentos()
+
+        Dim _IpEquipo As String = Fx_GetLocalIPAddress()
+
+        Consulta_Sql = "Select Fa.Id,Edo.TIDO,Td.NOTIDO,Fa.Idmaeedo_FCV,Edo.NUDO,Fa.Idmaedpce_Paga,Fa.CodFuncionario_Paga" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Demonio_FacAuto Fa" & vbCrLf &
+                       "Inner Join MAEEDO Edo On Edo.IDMAEEDO = Fa.Idmaeedo_FCV" & vbCrLf &
+                       "Left Join TABTIDO Td On Td.TIDO = Edo.TIDO" & vbCrLf &
+                       "Where NombreEquipo = '" & Nombre_Equipo & "' And IpEquipo = '" & _IpEquipo & "' And PagarAuto = 1 And Facturado = 1 And Edo.TIDO In ('FCV','BLV')"
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
+
+        If Not CBool(_Tbl.Rows.Count) Then
+            Return
+        End If
+
+        Dim _Filtro_Pagar As String = Generar_Filtro_IN(_Tbl, "", "Id", True, False, "")
+
+        Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set PagarAuto = 0 Where Id In " & _Filtro_Pagar
+        If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+            Log_Registro += _Sql.Pro_Error & vbCrLf
+        End If
+
+        For Each _Fila As DataRow In _Tbl.Rows
+
+            Dim _Id As Integer = _Fila.Item("Id")
+            Dim _Notido As String = _Fila.Item("NOTIDO").ToString.Trim.ToLower
+            Dim _Tido As String = _Fila.Item("TIDO").ToString.Trim
+            Dim _Idmaeedo As Integer = _Fila.Item("Idmaeedo_FCV")
+            Dim _Idmaedpce_Paga As Integer = _Fila.Item("Idmaedpce_Paga")
+            Dim _CodFuncionario_Paga As String = _Fila.Item("CodFuncionario_Paga").ToString.Trim
+
+            If _Tido <> "BLV" And _Tido <> "FCV" Then
+
+                Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set " &
+                               "Error_Paga = 1,PagarAuto = 0,Pagada = 0,Informacion_Paga = 'El documento no es una boleta o factura'" & vbCrLf &
+                               "Where Id = " & _Id
+                If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+                    Log_Registro += _Sql.Pro_Error
+                End If
+                Continue For
+
+            End If
+
+
+            Dim _Cl_Pagar As New Clas_Pagar
+            Dim _Maedpce As MAEDPCE
+            Dim _Mensaje As LsValiciones.Mensajes
+
+            Consulta_Sql = "Select *,VABRDO-VAABDO As 'TOTSALDO' From MAEEDO Where IDMAEEDO = " & _Idmaeedo
+            Dim _Row_Maeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
+
+            Dim _Saldo As Double = _Row_Maeedo.Item("TOTSALDO")
+
+            If _Saldo <= 0 Then
+
+                Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set " &
+                               "Error_Paga = 1,PagarAuto = 0,Pagada = 0,Informacion_Paga = 'La " & _Notido & " no tiene saldo a pagar'" & vbCrLf &
+                               "Where Id = " & _Id
+                If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+                    Log_Registro += _Sql.Pro_Error
+                End If
+                Continue For
+
+            End If
+
+            Consulta_Sql = "Select TOP 1 * From MAEDPCE Where IDMAEDPCE = " & _Idmaedpce_Paga
+            Dim _Row_Maedpce As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
+
+            Dim _Vadp As Double = _Row_Maedpce.Item("VADP")
+            Dim _Vaasdpce As Double = _Row_Maedpce.Item("VAASDP")
+
+            Dim _SaldoPago As Double = _Row_Maedpce.Item("VADP") - _Row_Maedpce.Item("VAASDP")
+
+            If _SaldoPago <= 0 Then
+                Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set " &
+                               "Error_Paga = 1,PagarAuto = 0,Pagada = 0,Informacion_Paga = 'El documento de pago no tiene saldo para pagar'" & vbCrLf &
+                               "Where Id = " & _Id
+                If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+                    Log_Registro += _Sql.Pro_Error
+                End If
+                Continue For
+            End If
+
+            If _Saldo > _SaldoPago Then
+                _Saldo = _SaldoPago
+            End If
+
+            _Maedpce = New MAEDPCE With {
+            .IDMAEDPCE = _Row_Maedpce.Item("IDMAEDPCE"),
+            .TIDP = _Row_Maedpce.Item("TIDP"),
+            .EMPRESA = _Row_Maedpce.Item("EMPRESA"),
+            .ENDP = _Row_Maedpce.Item("ENDP"),
+            .EMDP = _Row_Maedpce.Item("EMDP"),
+            .SUEMDP = _Row_Maedpce.Item("SUEMDP"),
+            .CUDP = _Row_Maedpce.Item("CUDP"),
+            .NUCUDP = _Row_Maedpce.Item("NUCUDP"),
+            .FEEMDP = _Row_Maedpce.Item("FEEMDP"),
+            .FEVEDP = _Row_Maedpce.Item("FEVEDP"),
+            .MODP = _Row_Maedpce.Item("MODP"),
+            .TIMODP = _Row_Maedpce.Item("TIMODP"),
+            .TAMODP = _Row_Maedpce.Item("TAMODP"),
+            .VADP = _Row_Maedpce.Item("VADP"),
+            .VAASDP = _Saldo,
+            .VAVUDP = 0,
+            .ESASDP = _Row_Maedpce.Item("ESASDP"),
+            .ESPGDP = _Row_Maedpce.Item("ESPGDP"),
+            .SUREDP = _Row_Maedpce.Item("SUREDP"),
+            .CJREDP = _Row_Maedpce.Item("CJREDP"),
+            .KOFUDP = _Row_Maedpce.Item("KOFUDP"),
+            .REFANTI = _Row_Maedpce.Item("REFANTI"),
+            .KOTU = _Row_Maedpce.Item("KOTU"),
+            .VAABDP = _Row_Maedpce.Item("VAABDP"),
+            .CUOTAS = _Row_Maedpce.Item("CUOTAS"),
+            .ARCHIRSD = _Row_Maedpce.Item("ARCHIRSD"),
+            .IDRSD = _Row_Maedpce.Item("IDRSD"),
+            .KOTNDP = _Row_Maedpce.Item("KOTNDP"),
+            .SUTNDP = _Row_Maedpce.Item("SUTNDP")
+            }
+
+            Dim _Fecha_Asignacion_Pago As Date = FechaDelServidor()
+            Dim _Ls_Maedpce As New List(Of MAEDPCE)
+
+            _Ls_Maedpce.Add(_Maedpce)
+
+            _Mensaje = _Cl_Pagar.Fx_Pagar_Documento(_Idmaeedo, _Ls_Maedpce, _Fecha_Asignacion_Pago)
+
+            If _Mensaje.EsCorrecto Then
+
+                Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set Pagada = 1"
+                _Sql.Ej_consulta_IDU(Consulta_Sql, False)
+
+                If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+                    Log_Registro += _Sql.Pro_Error
+                End If
+
+            Else
+
+                _Mensaje.Mensaje = Replace(_Mensaje.Mensaje, "'", "''")
+                Log_Registro += _Mensaje.Mensaje & vbCrLf
+                Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set " &
+                               ",PagarAuto = 0" &
+                               ",Pagada = 0" &
+                               ",Error_Paga = 1" &
+                               ",Informacion_Paga = '" & _Mensaje.Mensaje & "'" & vbCrLf &
+                               "Where Id = " & _Id
+                If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+                    Log_Registro += _Sql.Pro_Error
+                End If
+
+            End If
+
+        Next
 
     End Sub
 

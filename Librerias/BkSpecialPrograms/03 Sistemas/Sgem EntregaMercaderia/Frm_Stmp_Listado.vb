@@ -389,7 +389,10 @@ Public Class Frm_Stmp_Listado
                                      True,
                                      ModEmpresa,
                                      ModSucursal,
-                                     FUNCIONARIO)
+                                     FUNCIONARIO,
+                                     False,
+                                     0,
+                                     "")
 
             Dim _Icon As MessageBoxIcon
 

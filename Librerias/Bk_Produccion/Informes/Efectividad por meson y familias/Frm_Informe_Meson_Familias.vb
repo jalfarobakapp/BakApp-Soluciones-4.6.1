@@ -54,6 +54,9 @@ Public Class Frm_Informe_Meson_Familias
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
+        Dtp_Fecha_Desde.Value = Primerdiadelmes(Now.Date)
+        Dtp_Fecha_Hasta.Value = ultimodiadelmes(Now.Date)
+
         If IsNothing(_Cl_Informe) Then
             _Cl_Informe = New Cl_Informe_Meson_Familia()
             _Cl_Informe.Tipo_Informe = Cl_Informe_Meson_Familia.Enum_Tipo_Informe.Mesones
@@ -113,7 +116,7 @@ Public Class Frm_Informe_Meson_Familias
         Dim _Condicion As String
         Dim _Agrupar As String
 
-        _Condicion = Fx_Filtro_Detalle(False)
+        _Condicion = Fx_Filtro_Detalle(True)
 
         If Cmb_Vista_Informe.SelectedValue = "Codmeson" Then
             _Agrupar = "Group By " & _Campo_Codigo & "," & _Campo_Descripcion & ",[Prom.Carga SubOt],[Prom.Carga xPiezas]"
@@ -165,8 +168,8 @@ Public Class Frm_Informe_Meson_Familias
 
             If Cmb_Vista_Informe.SelectedValue = "Codmeson" Then
 
-                .Columns("CODIGO").Width = 90 - 20
-                .Columns("DESCRIPCION").Width = 300 - 80
+                .Columns("CODIGO").Width = 90
+                .Columns("DESCRIPCION").Width = 280
 
                 .Columns("Prom.Carga SubOt").Width = 60
                 .Columns("Prom.Carga SubOt").HeaderText = "P. SOT"
@@ -1048,14 +1051,14 @@ Public Class Frm_Informe_Meson_Familias
 
         '---------------------------
 
-        Dim _SqlFiltro_Fechas As String
+        Dim _SqlFiltro_Fechas As String = String.Empty
 
-        'If _Incluye_Fechas Then
+        If _Incluye_Fechas Then
 
-        '    _SqlFiltro_Fechas = "And FEEMDO BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
-        '                         Format(Dtp_Fecha_Hasta.Value, "yyyyMMdd") & "'" & vbCrLf
+            _SqlFiltro_Fechas = "And FIOT BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
+                                 Format(Dtp_Fecha_Hasta.Value, "yyyyMMdd") & "'" & vbCrLf
 
-        'End If
+        End If
 
         'Dim _Filtro_Tipr As String
 

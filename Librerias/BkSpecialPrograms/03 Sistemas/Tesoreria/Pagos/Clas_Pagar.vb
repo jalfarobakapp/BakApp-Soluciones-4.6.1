@@ -1526,7 +1526,7 @@ Public Class Clas_Pagar
                                 Consulta_sql = "INSERT INTO MAEDPCD (IDMAEDPCE,VAASDP,FEASDP,IDRST,TIDOPA,ARCHIRST,TCASIG,REFERENCIA,KOFUASDP,SUASDP," &
                                                "CJASDP,HORAGRAB,LAHORA) VALUES " &
                                                "(" & .IDMAEDPCE & "," & .VAASDP & ",'" & Format(.FEASDP, "yyyyMMdd") & "'," & .IDRST &
-                                               ",'" & .TIDOPA & "','MAEEDO'," & .TCASIG & ",'" & .REFERENCIA & "','" & .KOFUASDP & "','" & .SUASDP & "'" &
+                                               ",'" & .TIDOPA & "','" & .ARCHIRST & "'," & De_Num_a_Tx_01(.TCASIG, False, 5) & ",'" & .REFERENCIA & "','" & .KOFUASDP & "','" & .SUASDP & "'" &
                                                ",'" & .CJASDP & "'," & .HORAGRAB & ",'" & Format(.LAHORA, "yyyyMMdd") & "')" & vbCrLf & vbCrLf
 
                                 Consulta_sql = Consulta_sql
@@ -1542,9 +1542,9 @@ Public Class Clas_Pagar
                                 End While
                                 dfd1.Close()
 
-                            End With
+                                _Abono += .VAASDP
 
-                            _Abono += _Vaasdp
+                            End With
 
                         Else
 

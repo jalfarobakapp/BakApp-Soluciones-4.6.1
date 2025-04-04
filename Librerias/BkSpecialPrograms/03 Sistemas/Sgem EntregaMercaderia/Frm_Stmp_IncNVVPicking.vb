@@ -485,6 +485,17 @@ Public Class Frm_Stmp_IncNVVPicking
             Dim _Pickear As Boolean = _Fila.Item("Pickear")
             Dim _Facturar As Boolean = _Fila.Item("Facturar")
 
+            Dim _PagarAuto As Boolean = Chk_Pagar_Documentos.Checked
+            Dim _Idmaedpce_Paga As Integer
+            Dim _CodFuncionario_Paga As String
+
+            If _PagarAuto Then
+
+                _Idmaedpce_Paga = _Fila.Item("IDMAEDPCE")
+                _CodFuncionario_Paga = FUNCIONARIO
+
+            End If
+
             If _Pickear Then
 
                 _Mensaje_Stem = _Cl_Stmp.Fx_Crear_Ticket(_Idmaeedo,
@@ -496,7 +507,10 @@ Public Class Frm_Stmp_IncNVVPicking
                                                          False,
                                                          ModEmpresa,
                                                          ModSucursal,
-                                                         FUNCIONARIO)
+                                                         FUNCIONARIO,
+                                                         _PagarAuto,
+                                                         _Idmaedpce_Paga,
+                                                         _CodFuncionario_Paga)
                 _Lista.Add(_Mensaje_Stem)
 
             End If

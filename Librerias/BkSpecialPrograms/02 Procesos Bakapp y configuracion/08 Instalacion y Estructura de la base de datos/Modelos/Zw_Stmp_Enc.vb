@@ -42,4 +42,8 @@ Public Class Zw_Stmp_Enc
     Public Property Ruta As String
     Public Property OrdenRuta As Integer
     Public Property Observacion As String
+    Public Property PagarAuto As Boolean
+    Public Property Idmaedpce_Paga As Integer
+    Public Property CodFuncionario_Paga As String
+
 End Class

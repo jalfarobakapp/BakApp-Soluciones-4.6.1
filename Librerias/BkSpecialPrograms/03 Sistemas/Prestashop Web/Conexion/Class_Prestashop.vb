@@ -160,32 +160,40 @@ Public Class Class_Prestashop
     Function Fx_Tbl_Productos_Prestashop(_Sitio As String, _Tbl_Prod_Algunos As DataTable, _Campo_Codigo As String) As DataTable
 
         Dim _Filtro_Algunos As String = String.Empty
+        Dim _Filtro_id_product As String = String.Empty
 
         If Not IsNothing(_Tbl_Prod_Algunos) Then
+
             If Convert.ToBoolean(_Tbl_Prod_Algunos.Rows.Count) Then
                 _Filtro_Algunos = Generar_Filtro_IN(_Tbl_Prod_Algunos, "", _Campo_Codigo, False, False, "'")
                 _Filtro_Algunos = "And Codigo In " & _Filtro_Algunos
             End If
+
+            Consulta_sql = "Select Id_product From " & _Global_BaseBk & "Zw_Prod_PrestaShop Where Sitio = '" & _Sitio & "'" & Space(1) & _Filtro_Algunos
+
+            Dim _Tbl_Prod_PrestaShop As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+            _Filtro_id_product = Generar_Filtro_IN(_Tbl_Prod_PrestaShop, "", "id_product", True, False, "")
+
+            If Convert.ToBoolean(_Tbl_Prod_PrestaShop.Rows.Count) Then
+                _Filtro_id_product = "Where P1.id_product In " & _Filtro_id_product
+                'Else
+                '    _Filtro_id_product = String.Empty
+            End If
+
         End If
 
-        Consulta_sql = "Select Id_product From " & _Global_BaseBk & "Zw_Prod_PrestaShop Where Sitio = '" & _Sitio & "'" & Space(1) & _Filtro_Algunos
+        'Consulta_sql = "Select Id_product From " & _Global_BaseBk & "Zw_Prod_PrestaShop Where Sitio = '" & _Sitio & "'" & Space(1) & _Filtro_Algunos
 
-        Dim _Tbl_Prod_PrestaShop As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+        'Dim _Tbl_Prod_PrestaShop As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
-        Dim _Filtro_id_product As String = Generar_Filtro_IN(_Tbl_Prod_PrestaShop, "", "id_product", True, False, "")
+        'Dim _Filtro_id_product As String = Generar_Filtro_IN(_Tbl_Prod_PrestaShop, "", "id_product", True, False, "")
 
-        If Convert.ToBoolean(_Tbl_Prod_PrestaShop.Rows.Count) Then
-            _Filtro_id_product = "Where P1.id_product In " & _Filtro_id_product
-        Else
-            _Filtro_id_product = String.Empty
-        End If
-
-        'Consulta_sql = "Select '" & Sitio & "' As Nombre_Pagina,P1.id_product,reference As Codigo,P4.name as Descripcion,P2.price As Precio,P3.quantity As Cantidad,P1.active 
-        '                From ps_product P1 
-        '                inner Join ps_product_shop P2 On P1.id_product = P2.id_product
-        '                inner Join ps_stock_available P3 On P1.id_product = P3.id_product
-        '                inner join ps_product_lang P4 On P1.id_product = P4.id_product" & vbCrLf &
-        '                _Filtro_id_product
+        'If Convert.ToBoolean(_Tbl_Prod_PrestaShop.Rows.Count) Then
+        '    _Filtro_id_product = "Where P1.id_product In " & _Filtro_id_product
+        'Else
+        '    _Filtro_id_product = String.Empty
+        'End If
 
         Consulta_sql = "Select '" & Sitio & "' As Nombre_Pagina,P1.id_product,reference As Codigo,ifnull(P4.name,'S/D') as Descripcion,ifnull(P2.price,0) As Precio,ifnull(P3.quantity,0) As Cantidad,P1.active 
                         From ps_product P1 
@@ -250,6 +258,10 @@ Public Class Class_Prestashop
                 Dim _Active As Boolean = _Fila.Item("active")
 
                 'If Not String.IsNullOrEmpty(_Codigo) Then
+
+                If _Codigo = "1291573004TWN" Then
+                    Dim _Aca = True
+                End If
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_PrestaShop (Sitio,Id_product,Codigo,Descripcion,Stock,Precio,Active,Usar_Padre,Stock_Rd,Precio_Rd) Values" & Space(1) &
                                "('" & _Sitio & "'," & _Id_product & ",'" & _Codigo & "','" & _Descripcion &
@@ -357,7 +369,7 @@ Public Class Class_Prestashop
 
                 _Codigo = _Fila.Item("Codigo")
 
-                If _Codigo = "1210082810CH0" Then
+                If _Codigo = "1291573004TWN" Then
                     Dim _aca = 0
                 End If
 
@@ -567,7 +579,7 @@ Public Class Class_Prestashop
 
             ' ACTUALIZAR PRECIOS
 
-            If _Codigo = "1210082810CH0" Then
+            If _Codigo = "1291573004TWN" Then
                 Dim A = 100
             End If
 

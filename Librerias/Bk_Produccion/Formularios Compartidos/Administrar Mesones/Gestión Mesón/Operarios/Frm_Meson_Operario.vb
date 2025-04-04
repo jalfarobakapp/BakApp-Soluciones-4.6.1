@@ -3110,8 +3110,16 @@ Public Class Frm_Meson_Operario
         Sb_Actualizar_Grilla_Mesones_Espera(_CodMeson)
         Sb_Actualizar_Grilla_Maquinas(_CodMeson)
 
-        Dim _Prod_Meson As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Pdp_MesonVsProductos Inner Join POTE On IDPOTE = Idpote",
-                                                           "Estado In ('MQ','PD') And Codmeson = '" & _CodMeson & "' And POTE.ESTADO = 'V'")
+        Dim _Prod_Meson As Integer
+        '= _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Pdp_MesonVsProductos Inner Join POTE On IDPOTE = Idpote",
+        '                                                   "Estado In ('MQ','PD') And Codmeson = '" & _CodMeson & "' And POTE.ESTADO = 'V'")
+
+        Consulta_sql = "Select Count(*) As Cuenta From " & _Global_BaseBk & "Zw_Pdp_MesonVsProductos WITH (NOLOCK) Inner Join POTE WITH (NOLOCK) On IDPOTE = Idpote" & vbCrLf &
+                       "Where Estado In ('MQ','PD') And Codmeson = '" & _CodMeson & "' And POTE.ESTADO = 'V'"
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        _Prod_Meson = _Row.Item("Cuenta")
+
         Lbl_Productos_En_Meson.Text = "Productos en mesón: " & _Prod_Meson
 
         Sb_Ingresar_Al_Meson_Abrir()

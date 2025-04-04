@@ -72,6 +72,8 @@ Public Class Frm_Tickets_Lista
         Sb_InsertarBotonenGrilla(Grilla_Acciones, "Btn_DocCierra", "Doc.", "DocCierra", 0, _Tipo_Boton.Imagen)
         Sb_InsertarBotonenGrilla(Grilla_Acciones, "Btn_ImagenUser", "Est.", "ImagenUser", 0, _Tipo_Boton.Imagen)
 
+        Txt_Descripcion.ReadOnly = True
+
     End Sub
 
     Function ImagenLista(_Num As Integer) As Image
@@ -171,12 +173,23 @@ Public Class Frm_Tickets_Lista
                                 "And CodFuncionario_Crea <> '" & FUNCIONARIO & "'"
             End If
 
+            Dim _FechaLimite As DateTime = DateAdd(DateInterval.Day, -5, Now.Date)
+            Dim _FechaLimiteStr As String = Format(_FechaLimite, "yyyyMMdd")
+
             If _NodoHijo.Tag = "EnProceso" Then _Accion = "And Estado = 'PROC' And Aceptado = 0 And Rechazado = 0"
-            If _NodoHijo.Tag = "Aceptados" Then _Accion = "And Aceptado = 1 And Rechazado = 0 And Estado <> 'PROC'"
-            If _NodoHijo.Tag = "Rechazados" Then _Accion = "And Aceptado = 0 And Rechazado = 1 And Estado <> 'PROC'"
+            If _NodoHijo.Tag = "Aceptados" Then _Accion = "And Aceptado = 1 And Rechazado = 0 And Estado <> 'PROC' And CONVERT(varchar, FechaCierre, 112) > '" & _FechaLimiteStr & "'"
+            If _NodoHijo.Tag = "Rechazados" Then _Accion = "And Aceptado = 0 And Rechazado = 1 And Estado <> 'PROC' And CONVERT(varchar, FechaCierre, 112) > '" & _FechaLimiteStr & "'"
             If _NodoHijo.Tag = "Pendientes" Then _Accion = "And Estado = 'ABIE' And Aceptado = 0 And Rechazado = 0"
-            If _NodoHijo.Tag = "Cerradas" Then _Accion = "And Estado = 'CERR'"
+            If _NodoHijo.Tag = "Cerradas" Then _Accion = "And Estado = 'CERR' And CONVERT(varchar, FechaCierre, 112) > '" & _FechaLimiteStr & "'"
             If _NodoHijo.Tag = "Nulos" Then _Accion = "And Estado = 'NULO'"
+
+            'If _Carpeta.Tag = "Cerradas" Then
+            '    _Condicion += vbCrLf & "And Estado = 'CERR' And CONVERT(varchar, FechaCierre, 112) > '" & _FechaLimiteStr & "'"
+            'End If
+
+            'If _Carpeta.Tag = "Nulos" Then
+            '    _Condicion += vbCrLf & "And Estado = 'NULO' And CONVERT(varchar, FechaCierre, 112) > '" & _FechaLimiteStr & "'"
+            'End If
 
         End If
 
@@ -246,19 +259,19 @@ Public Class Frm_Tickets_Lista
             Dim _FechaLimiteStr As String = Format(_FechaLimite, "yyyyMMdd")
 
             If _Carpeta.Tag = "Aceptados" Then
-                _Condicion += vbCrLf & "And Aceptado = 1 And Rechazado = 0 And Estado <> 'PROC' And CONVERT(varchar, FechaCreacion, 112) > '" & _FechaLimiteStr & "'"
+                _Condicion += vbCrLf & "And Aceptado = 1 And Rechazado = 0 And Estado <> 'PROC' And CONVERT(varchar, FechaCierre, 112) > '" & _FechaLimiteStr & "'"
             End If
 
             If _Carpeta.Tag = "Rechazados" Then
-                _Condicion += vbCrLf & "And Rechazado = 1 And Aceptado = 0 And Estado <> 'PROC' And CONVERT(varchar, FechaCreacion, 112) > '" & _FechaLimiteStr & "'"
+                _Condicion += vbCrLf & "And Rechazado = 1 And Aceptado = 0 And Estado <> 'PROC' And CONVERT(varchar, FechaCierre, 112) > '" & _FechaLimiteStr & "'"
             End If
 
             If _Carpeta.Tag = "Cerradas" Then
-                _Condicion += vbCrLf & "And Estado = 'CERR' And CONVERT(varchar, FechaCreacion, 112) > '" & _FechaLimiteStr & "'"
+                _Condicion += vbCrLf & "And Estado = 'CERR' And CONVERT(varchar, FechaCierre, 112) > '" & _FechaLimiteStr & "'"
             End If
 
             If _Carpeta.Tag = "Nulos" Then
-                _Condicion += vbCrLf & "And Estado = 'NULO' And CONVERT(varchar, FechaCreacion, 112) > '" & _FechaLimiteStr & "'"
+                _Condicion += vbCrLf & "And Estado = 'NULO' And CONVERT(varchar, FechaCierre, 112) > '" & _FechaLimiteStr & "'"
             End If
 
             _NodoSeleccionado = _Carpeta
