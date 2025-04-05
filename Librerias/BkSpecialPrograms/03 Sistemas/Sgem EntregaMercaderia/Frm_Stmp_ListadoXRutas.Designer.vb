@@ -24,9 +24,9 @@ Partial Class Frm_Stmp_ListadoXRutas
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Stmp_ListadoXRutas))
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Btn_Mnu_Preparacion = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_CerrarTicket = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_ReenviaFacturar = New DevComponents.DotNetBar.ButtonItem()
@@ -65,14 +65,18 @@ Partial Class Frm_Stmp_ListadoXRutas
         Me.Menu_Contextual_01_Opciones_Documento = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_VerDocumento = New DevComponents.DotNetBar.ButtonItem()
+        Me.Dtp_FechaDesde = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
+        Me.Cmb_FiltroFecha = New DevComponents.DotNetBar.Controls.ComboBoxEx()
+        Me.Dtp_FechaHasta = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
-        Me.Dtp_FechaCreacion = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
+        Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Super_TabS, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Dtp_FechaCreacion, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Dtp_FechaDesde, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Dtp_FechaHasta, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Btn_Mnu_Preparacion
@@ -156,37 +160,37 @@ Partial Class Frm_Stmp_ListadoXRutas
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle10.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle10.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle10
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle11.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle11.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle11.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle11
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
         Me.Grilla.ReadOnly = True
-        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle12.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle12
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.Grilla.Size = New System.Drawing.Size(1176, 433)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 27
@@ -286,7 +290,7 @@ Partial Class Frm_Stmp_ListadoXRutas
         Me.LabelX1.Image = CType(resources.GetObject("LabelX1.Image"), System.Drawing.Image)
         Me.LabelX1.ImagePosition = DevComponents.DotNetBar.eImagePosition.Right
         Me.LabelX1.ImageTextSpacing = 3
-        Me.LabelX1.Location = New System.Drawing.Point(769, 10)
+        Me.LabelX1.Location = New System.Drawing.Point(887, 11)
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.Size = New System.Drawing.Size(57, 23)
         Me.LabelX1.TabIndex = 185
@@ -304,10 +308,10 @@ Partial Class Frm_Stmp_ListadoXRutas
         Me.Txt_Filtrar.ButtonCustom2.Visible = True
         Me.Txt_Filtrar.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Filtrar.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Filtrar.Location = New System.Drawing.Point(832, 11)
+        Me.Txt_Filtrar.Location = New System.Drawing.Point(950, 11)
         Me.Txt_Filtrar.Name = "Txt_Filtrar"
         Me.Txt_Filtrar.PreventEnterBeep = True
-        Me.Txt_Filtrar.Size = New System.Drawing.Size(362, 22)
+        Me.Txt_Filtrar.Size = New System.Drawing.Size(244, 22)
         Me.Txt_Filtrar.TabIndex = 184
         '
         'Btn_Mnu_EntregarMercaderia
@@ -372,7 +376,7 @@ Partial Class Frm_Stmp_ListadoXRutas
         Me.Super_TabS.ReorderTabsEnabled = True
         Me.Super_TabS.SelectedTabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
         Me.Super_TabS.SelectedTabIndex = 0
-        Me.Super_TabS.Size = New System.Drawing.Size(441, 27)
+        Me.Super_TabS.Size = New System.Drawing.Size(395, 27)
         Me.Super_TabS.TabCloseButtonHot = Nothing
         Me.Super_TabS.TabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Super_TabS.TabIndex = 180
@@ -573,79 +577,157 @@ Partial Class Frm_Stmp_ListadoXRutas
         Me.Btn_VerDocumento.Name = "Btn_VerDocumento"
         Me.Btn_VerDocumento.Text = "Ver documento"
         '
+        'Dtp_FechaDesde
+        '
+        Me.Dtp_FechaDesde.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Dtp_FechaDesde.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Dtp_FechaDesde.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaDesde.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
+        Me.Dtp_FechaDesde.ButtonDropDown.Visible = True
+        Me.Dtp_FechaDesde.ForeColor = System.Drawing.Color.Black
+        Me.Dtp_FechaDesde.IsPopupCalendarOpen = False
+        Me.Dtp_FechaDesde.Location = New System.Drawing.Point(679, 10)
+        '
+        '
+        '
+        Me.Dtp_FechaDesde.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_FechaDesde.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaDesde.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
+        Me.Dtp_FechaDesde.MonthCalendar.ClearButtonVisible = True
+        '
+        '
+        '
+        Me.Dtp_FechaDesde.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
+        Me.Dtp_FechaDesde.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_FechaDesde.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
+        Me.Dtp_FechaDesde.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Dtp_FechaDesde.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
+        Me.Dtp_FechaDesde.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
+        Me.Dtp_FechaDesde.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaDesde.MonthCalendar.DisplayMonth = New Date(2025, 1, 1, 0, 0, 0, 0)
+        Me.Dtp_FechaDesde.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
+        Me.Dtp_FechaDesde.MonthCalendar.MarkedDates = New Date(-1) {}
+        Me.Dtp_FechaDesde.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_FechaDesde.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Dtp_FechaDesde.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_FechaDesde.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Dtp_FechaDesde.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaDesde.MonthCalendar.TodayButtonVisible = True
+        Me.Dtp_FechaDesde.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
+        Me.Dtp_FechaDesde.Name = "Dtp_FechaDesde"
+        Me.Dtp_FechaDesde.Size = New System.Drawing.Size(79, 22)
+        Me.Dtp_FechaDesde.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Dtp_FechaDesde.TabIndex = 190
+        Me.Dtp_FechaDesde.Value = New Date(2025, 1, 30, 12, 12, 50, 0)
+        '
+        'Cmb_FiltroFecha
+        '
+        Me.Cmb_FiltroFecha.DisplayMember = "Text"
+        Me.Cmb_FiltroFecha.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.Cmb_FiltroFecha.ForeColor = System.Drawing.Color.Black
+        Me.Cmb_FiltroFecha.FormattingEnabled = True
+        Me.Cmb_FiltroFecha.ItemHeight = 16
+        Me.Cmb_FiltroFecha.Location = New System.Drawing.Point(493, 10)
+        Me.Cmb_FiltroFecha.Name = "Cmb_FiltroFecha"
+        Me.Cmb_FiltroFecha.Size = New System.Drawing.Size(140, 22)
+        Me.Cmb_FiltroFecha.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Cmb_FiltroFecha.TabIndex = 191
+        '
+        'Dtp_FechaHasta
+        '
+        Me.Dtp_FechaHasta.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Dtp_FechaHasta.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Dtp_FechaHasta.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaHasta.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
+        Me.Dtp_FechaHasta.ButtonDropDown.Visible = True
+        Me.Dtp_FechaHasta.ForeColor = System.Drawing.Color.Black
+        Me.Dtp_FechaHasta.IsPopupCalendarOpen = False
+        Me.Dtp_FechaHasta.Location = New System.Drawing.Point(796, 11)
+        '
+        '
+        '
+        Me.Dtp_FechaHasta.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_FechaHasta.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaHasta.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
+        Me.Dtp_FechaHasta.MonthCalendar.ClearButtonVisible = True
+        '
+        '
+        '
+        Me.Dtp_FechaHasta.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
+        Me.Dtp_FechaHasta.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_FechaHasta.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
+        Me.Dtp_FechaHasta.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Dtp_FechaHasta.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
+        Me.Dtp_FechaHasta.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
+        Me.Dtp_FechaHasta.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaHasta.MonthCalendar.DisplayMonth = New Date(2025, 1, 1, 0, 0, 0, 0)
+        Me.Dtp_FechaHasta.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
+        Me.Dtp_FechaHasta.MonthCalendar.MarkedDates = New Date(-1) {}
+        Me.Dtp_FechaHasta.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_FechaHasta.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Dtp_FechaHasta.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_FechaHasta.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Dtp_FechaHasta.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaHasta.MonthCalendar.TodayButtonVisible = True
+        Me.Dtp_FechaHasta.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
+        Me.Dtp_FechaHasta.Name = "Dtp_FechaHasta"
+        Me.Dtp_FechaHasta.Size = New System.Drawing.Size(80, 22)
+        Me.Dtp_FechaHasta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Dtp_FechaHasta.TabIndex = 192
+        Me.Dtp_FechaHasta.Value = New Date(2025, 1, 30, 12, 12, 50, 0)
+        '
         'LabelX3
         '
-        Me.LabelX3.BackColor = System.Drawing.Color.White
         '
         '
         '
         Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX3.ForeColor = System.Drawing.Color.Black
-        Me.LabelX3.Location = New System.Drawing.Point(581, 9)
+        Me.LabelX3.Location = New System.Drawing.Point(642, 8)
         Me.LabelX3.Name = "LabelX3"
-        Me.LabelX3.Size = New System.Drawing.Size(78, 23)
-        Me.LabelX3.TabIndex = 189
-        Me.LabelX3.Text = "Fecha creación"
+        Me.LabelX3.Size = New System.Drawing.Size(34, 23)
+        Me.LabelX3.TabIndex = 193
+        Me.LabelX3.Text = "desde"
         '
-        'Dtp_FechaCreacion
-        '
-        Me.Dtp_FechaCreacion.BackColor = System.Drawing.Color.White
+        'LabelX4
         '
         '
         '
-        Me.Dtp_FechaCreacion.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Dtp_FechaCreacion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_FechaCreacion.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
-        Me.Dtp_FechaCreacion.ButtonDropDown.Visible = True
-        Me.Dtp_FechaCreacion.ForeColor = System.Drawing.Color.Black
-        Me.Dtp_FechaCreacion.IsPopupCalendarOpen = False
-        Me.Dtp_FechaCreacion.Location = New System.Drawing.Point(665, 10)
         '
-        '
-        '
-        Me.Dtp_FechaCreacion.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
-        '
-        '
-        '
-        Me.Dtp_FechaCreacion.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_FechaCreacion.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
-        Me.Dtp_FechaCreacion.MonthCalendar.ClearButtonVisible = True
-        '
-        '
-        '
-        Me.Dtp_FechaCreacion.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
-        Me.Dtp_FechaCreacion.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
-        Me.Dtp_FechaCreacion.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
-        Me.Dtp_FechaCreacion.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.Dtp_FechaCreacion.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
-        Me.Dtp_FechaCreacion.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
-        Me.Dtp_FechaCreacion.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_FechaCreacion.MonthCalendar.DisplayMonth = New Date(2025, 1, 1, 0, 0, 0, 0)
-        Me.Dtp_FechaCreacion.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
-        Me.Dtp_FechaCreacion.MonthCalendar.MarkedDates = New Date(-1) {}
-        Me.Dtp_FechaCreacion.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
-        '
-        '
-        '
-        Me.Dtp_FechaCreacion.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.Dtp_FechaCreacion.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
-        Me.Dtp_FechaCreacion.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.Dtp_FechaCreacion.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_FechaCreacion.MonthCalendar.TodayButtonVisible = True
-        Me.Dtp_FechaCreacion.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
-        Me.Dtp_FechaCreacion.Name = "Dtp_FechaCreacion"
-        Me.Dtp_FechaCreacion.Size = New System.Drawing.Size(85, 22)
-        Me.Dtp_FechaCreacion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Dtp_FechaCreacion.TabIndex = 190
-        Me.Dtp_FechaCreacion.Value = New Date(2025, 1, 30, 12, 12, 50, 0)
+        Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX4.Location = New System.Drawing.Point(764, 10)
+        Me.LabelX4.Name = "LabelX4"
+        Me.LabelX4.Size = New System.Drawing.Size(34, 23)
+        Me.LabelX4.TabIndex = 194
+        Me.LabelX4.Text = "hasta"
         '
         'Frm_Stmp_ListadoXRutas
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1201, 596)
-        Me.Controls.Add(Me.Dtp_FechaCreacion)
+        Me.Controls.Add(Me.Dtp_FechaHasta)
+        Me.Controls.Add(Me.LabelX4)
         Me.Controls.Add(Me.LabelX3)
+        Me.Controls.Add(Me.Cmb_FiltroFecha)
+        Me.Controls.Add(Me.Dtp_FechaDesde)
         Me.Controls.Add(Me.Metro_Bar_Color)
         Me.Controls.Add(Me.LabelX1)
         Me.Controls.Add(Me.Txt_Filtrar)
@@ -668,7 +750,8 @@ Partial Class Frm_Stmp_ListadoXRutas
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Dtp_FechaCreacion, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Dtp_FechaDesde, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Dtp_FechaHasta, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -711,6 +794,9 @@ Partial Class Frm_Stmp_ListadoXRutas
     Friend WithEvents Menu_Contextual_01_Opciones_Documento As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LabelItem1 As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Btn_VerDocumento As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Dtp_FechaDesde As DevComponents.Editors.DateTimeAdv.DateTimeInput
+    Friend WithEvents Cmb_FiltroFecha As DevComponents.DotNetBar.Controls.ComboBoxEx
+    Friend WithEvents Dtp_FechaHasta As DevComponents.Editors.DateTimeAdv.DateTimeInput
     Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
-    Friend WithEvents Dtp_FechaCreacion As DevComponents.Editors.DateTimeAdv.DateTimeInput
+    Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
 End Class

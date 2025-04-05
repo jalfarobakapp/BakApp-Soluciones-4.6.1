@@ -27,7 +27,13 @@ Public Class Frm_Stmp_ListadoXRutas
 
         _FechaServidor = FechaDelServidor()
 
-        Dtp_FechaCreacion.Value = _FechaServidor
+        Dtp_FechaDesde.Value = Now.Date
+        Dtp_FechaHasta.Value = Now.Date
+
+        Dim _Arr_Tipo_Entidad(,) As String = {{"Fecha_Facturar", "F.Despacho/Facturar"},
+                                             {"FechaCreacion", "F.Creación"}}
+        Sb_Llenar_Combos(_Arr_Tipo_Entidad, Cmb_FiltroFecha)
+        Cmb_FiltroFecha.SelectedValue = "Fecha_Facturar"
 
         Sb_InsertarBotonenGrilla(Grilla, "BtnImagen_Estado", "Est.", "Img_Estado", 0, _Tipo_Boton.Imagen)
 
@@ -98,7 +104,7 @@ Public Class Frm_Stmp_ListadoXRutas
         Dim _MostrarImagenes As Boolean
         Dim _FechaPlanificacion As Boolean
 
-        Dim _VerPlanificadas As String = "And Planificada = 1"
+        Dim _VerPlanificadas As String = "--And Planificada = 1"
 
         'If Chk_VerIngresadas.Checked Then
         '    _VerPlanificadas = String.Empty
@@ -150,14 +156,19 @@ Public Class Frm_Stmp_ListadoXRutas
                 _Condicion += vbCrLf & "And Estado = 'NULO'"
         End Select
 
-        _Condicion += vbCrLf & "And CONVERT(varchar, FechaCreacion, 112) = '" & Format(Dtp_FechaCreacion.Value, "yyyyMMdd") & "'"
+        '_Condicion += vbCrLf & "And CONVERT(varchar, Enc." & Cmb_FiltroFecha.SelectedValue & ", 112) = '" & Format(Dtp_FechaDesde.Value, "yyyyMMdd") & "'"
+        _Condicion += vbCrLf & "And CONVERT(varchar, Enc." & Cmb_FiltroFecha.SelectedValue & ", 112) Between '" & Format(Dtp_FechaDesde.Value, "yyyyMMdd") & "' And '" & Format(Dtp_FechaHasta.Value, "yyyyMMdd") & "'"
 
         Consulta_sql = My.Resources.Recursos_WmsSgem.SQLQuery_Listado_Stmp_Rutas
         Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
         Consulta_sql = Replace(Consulta_sql, "#Sucursal#", ModSucursal)
         Consulta_sql = Replace(Consulta_sql, "--#Condicion#", _Condicion)
-        Consulta_sql = Replace(Consulta_sql, "Zw_Stmp_Enc", _Global_BaseBk & "Zw_Stmp_Enc")
-        Consulta_sql = Replace(Consulta_sql, "Zw_Demonio_FacAuto", _Global_BaseBk & "Zw_Demonio_FacAuto")
+        'Consulta_sql = Replace(Consulta_sql, "Zw_Stmp_Enc", _Global_BaseBk & "Zw_Stmp_Enc")
+        'Consulta_sql = Replace(Consulta_sql, "Zw_Demonio_FacAuto", _Global_BaseBk & "Zw_Demonio_FacAuto")
+        'Consulta_sql = Replace(Consulta_sql, "Zw_Despachos_Doc", _Global_BaseBk & "Zw_Despachos_Doc")
+        'Consulta_sql = Replace(Consulta_sql, "Zw_Despachos", _Global_BaseBk & "Zw_Despachos")
+        Consulta_sql = Replace(Consulta_sql, "Global_BaseBk.", _Global_BaseBk)
+
 
         Dim _New_Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
         _Dv = New DataView
@@ -221,11 +232,11 @@ Public Class Frm_Stmp_ListadoXRutas
             .Columns("Estado").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            '.Columns("Accion").Visible = True
-            '.Columns("Accion").HeaderText = "Acción"
-            '.Columns("Accion").Width = 50
-            '.Columns("Accion").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
+            .Columns("Accion").Visible = True
+            .Columns("Accion").HeaderText = "Acción"
+            .Columns("Accion").Width = 50
+            .Columns("Accion").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("SUDO").Visible = True
             .Columns("SUDO").HeaderText = "Suc."
@@ -255,12 +266,13 @@ Public Class Frm_Stmp_ListadoXRutas
             .Columns("NOKOEN").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("FechaCreacion").Visible = True '(_Tbas.Name = "Tab_Completadas")
-            .Columns("FechaCreacion").HeaderText = "F.Creación"
-            .Columns("FechaCreacion").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("FechaCreacion").DefaultCellStyle.Format = "dd/MM/yyyy"
-            .Columns("FechaCreacion").Width = 70
-            .Columns("FechaCreacion").DisplayIndex = _DisplayIndex
+
+            .Columns(Cmb_FiltroFecha.SelectedValue).Visible = True
+            .Columns(Cmb_FiltroFecha.SelectedValue).HeaderText = Cmb_FiltroFecha.Text '"F.Creación"
+            .Columns(Cmb_FiltroFecha.SelectedValue).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns(Cmb_FiltroFecha.SelectedValue).DefaultCellStyle.Format = "dd/MM/yyyy"
+            .Columns(Cmb_FiltroFecha.SelectedValue).Width = 70
+            .Columns(Cmb_FiltroFecha.SelectedValue).DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("HoraCreacion").Visible = (_Tbas.Name = "Tab_Completadas")
@@ -416,16 +428,6 @@ Public Class Frm_Stmp_ListadoXRutas
     Sub Sb_Filtrar()
         Try
             If IsNothing(_Dv) Then Return
-
-            'If Txt_Filtrar.Text.Contains("#") Then
-            '    Txt_Filtrar.Text = Replace(Txt_Filtrar.Text, "#", "")
-            '    Txt_Filtrar.Text = "#Tk" & numero_(Txt_Filtrar.Text, 7)
-            'End If
-
-            '_Dv.RowFilter = String.Format("Numero+Nudo+Endo+NOKOEN+Ruta Like '%{0}%' " &
-            '                              "And FechaCreacion = '{1}'",
-            '                              Txt_Filtrar.Text.Trim,
-            '                              Format(Dtp_FechaCreacion.Value, "yyyyMMdd"))
 
             If Txt_Filtrar.Text.ToUpper.Contains("RUTA:") Then
 

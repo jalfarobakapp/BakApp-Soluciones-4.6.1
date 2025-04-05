@@ -925,20 +925,6 @@ Public Class Cl_FacAuto_NVV
                         Dim _Sucursal As String = ModSucursal
                         Dim _Bodega As String = ModBodega
 
-                        'Dim _Permiso = "Bo" & _Empresa & _Sucursal & _Bodega
-
-                        'If Not Fx_Tiene_Permiso(_Permiso, FUNCIONARIO) Then
-
-                        '    Dim _Bod = _Global_Row_Configuracion_Estacion.Item("NOKOBO")
-
-                        '    _Mensaje.Mensaje = "VALIDACION"
-                        '    Throw New System.Exception("NO ESTA AUTORIZADO PARA EFECTUAR DOCUMENTOS DESDE LA BODEGA DE ESTA MODALIDAD" & vbCrLf & vbCrLf &
-                        '                      "BODEGA: " & _Bodega & " - " & _Bod)
-
-                        'End If
-
-                        'If Fx_Tiene_Permiso(_Permiso, FUNCIONARIO) Then
-
                         Dim _CampoPrecio As String
 
                         If _Meardo = "N" Then ' Neto
@@ -951,12 +937,13 @@ Public Class Cl_FacAuto_NVV
                                        vbCrLf &
                                        "Select Ddo.*," & vbCrLf &
                                        "Case TIPR When 'SSN' Then Case When UDTRPR = 1 Then CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 End Else " & vbCrLf &
-                                       "Case PRCT When 0 Then Det.Cantidad Else Case When UDTRPR = 1 Then CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 End End End As 'Cantidad'," & vbCrLf &
+                                       "Case PRCT When 0 Then Case When UDTRPR = 1 Then Det.Caprco1_Real Else Det.Caprco2_Real End End End As 'Cantidad'," & vbCrLf &
                                        "Case PRCT When 0 Then Det.Caprco1_Real Else CAPRCO1-CAPREX1 End As 'CantUd1_Pickea'," & vbCrLf &
                                        "Case PRCT When 0 Then Det.Caprco2_Real Else CAPRCO1-CAPREX1 End As 'CantUd2_Pickea'," & vbCrLf &
                                        "Cast(1 As Bit) As DesdePickeo," & vbCrLf &
                                        "CAPRCO1-CAPREX1 As 'CantUd1_Dori',CAPRCO2-CAPREX2 As 'CantUd2_Dori'," & vbCrLf &
-                                       "Case WHEN UDTRPR = 1 Then PPPRNE Else PPPRNE*RLUDPR End AS 'Precio'," & vbCrLf &
+                                       "--Case WHEN UDTRPR = 1 Then PPPRNE Else PPPRNE*RLUDPR End AS 'Precio'," & vbCrLf &
+                                       "PPPRNE AS 'Precio'," & vbCrLf &
                                        "0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta," & vbCrLf &
                                        "Isnull(Det.RtuVariable,0) As 'RtuVariable'" & vbCrLf &
                                        "From MAEDDO Ddo With ( NOLOCK )" & vbCrLf &

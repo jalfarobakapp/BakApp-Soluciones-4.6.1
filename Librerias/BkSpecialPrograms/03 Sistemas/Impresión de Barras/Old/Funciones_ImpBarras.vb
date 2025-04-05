@@ -1242,7 +1242,6 @@
 
         End If
 
-
         'If _Texto.Contains("PBRUTOUD1X6") Then
         '    _PrecioBrutoXRtu = 6 * _PU01_Bruto
         '    _vPrecioBrutoXRtu = Fx_Formato_Numerico(_PrecioBrutoXRtu, "9", False)

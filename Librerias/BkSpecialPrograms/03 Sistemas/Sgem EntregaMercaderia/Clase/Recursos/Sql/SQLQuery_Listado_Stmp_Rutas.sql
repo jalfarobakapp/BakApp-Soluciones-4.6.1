@@ -27,12 +27,12 @@ CAST('' As varchar(300)) As 'Informacion',
 Cast(Isnull(FA.ErrorGrabar,0) As bit) As 'Error_FacAuto',Isnull(FA.Informacion,'') As 'Info_FacAuto',
 CAST(CONVERT(date, FechaCreacion) AS datetime) AS FechaCreacionSH
 Into #Paso
-From Zw_Stmp_Enc Enc
+From Global_BaseBk.Zw_Stmp_Enc Enc
 Inner Join MAEEDO Edo On Edo.IDMAEEDO = Enc.Idmaeedo
 Left Join MAEEN En On En.KOEN = Enc.Endo And En.SUEN = Enc.Suendo
 Left Join TABFU FEnt On FEnt.KOFU = CodFuncionario_Entrega
 Left Join MAEEDO EdoF on EdoF.IDMAEEDO = Enc.IdmaeedoGen
-Left Join Zw_Demonio_FacAuto FA On FA.Idmaeedo_NVV = Enc.Idmaeedo
+Left Join Global_BaseBk.Zw_Demonio_FacAuto FA On FA.Idmaeedo_NVV = Enc.Idmaeedo
 Where 1 > 0
 --#Condicion#
 Update #Paso Set ItemxDoc = (Select Count(*) From MAEDDO Ddo Where Ddo.IDMAEEDO = #Paso.Idmaeedo And PRCT = 0)
@@ -126,6 +126,12 @@ Where Estado = 'FACTU'
 
 
 Update #Paso Set Informacion = Estado_Str+', hace '+Duracion Where Estado In ('INGRE','PREPA','COMPL','FACTU') 
+
+Update #Paso Set Accion = Dch.Tipo_Envio
+From #Paso
+Inner Join Global_BaseBk.Zw_Despachos_Doc Ddp On Ddp.Idrst = #Paso.Idmaeedo
+Inner Join Global_BaseBk.Zw_Despachos Dch On Dch.Id_Despacho = Ddp.Id_Despacho
+Where Accion = ''
 
 Select * From #Paso Order by Ruta,OrdenRuta
 

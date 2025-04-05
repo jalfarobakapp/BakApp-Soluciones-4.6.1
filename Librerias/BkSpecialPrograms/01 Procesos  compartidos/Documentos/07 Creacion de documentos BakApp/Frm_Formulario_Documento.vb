@@ -9451,15 +9451,15 @@ Public Class Frm_Formulario_Documento
 
                                     If _Rtu <> 1 Then
 
-                                        Dim _TipoDoc As String = String.Empty
+                                        'Dim _TipoDoc As String = String.Empty
 
-                                        If _Tipo_Documento = csGlobales.Enum_Tipo_Documento.Compra Then
-                                            _TipoDoc = "Comprar"
-                                        ElseIf _Tipo_Documento = csGlobales.Enum_Tipo_Documento.Venta Then
-                                            _TipoDoc = "Vender"
-                                        Else
-                                            _TipoDoc = "Cant."
-                                        End If
+                                        'If _Tipo_Documento = csGlobales.Enum_Tipo_Documento.Compra Then
+                                        '    _TipoDoc = "Comprar"
+                                        'ElseIf _Tipo_Documento = csGlobales.Enum_Tipo_Documento.Venta Then
+                                        '    _TipoDoc = "Vender"
+                                        'Else
+                                        '    _TipoDoc = "Cant."
+                                        'End If
 
                                         Grilla_Detalle.Focus()
 
