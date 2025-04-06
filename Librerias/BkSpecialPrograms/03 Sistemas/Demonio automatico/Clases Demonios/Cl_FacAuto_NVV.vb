@@ -1,6 +1,4 @@
-﻿Imports DevComponents.DotNetBar
-
-Public Class Cl_FacAuto_NVV
+﻿Public Class Cl_FacAuto_NVV
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_Sql As String

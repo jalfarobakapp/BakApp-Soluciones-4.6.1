@@ -40,7 +40,7 @@ CREATE TABLE [dbo].[Zw_Stmp_Enc](
     [Ruta]                          [varchar](10)   NOT NULL DEFAULT (0),    
     [OrdenRuta]                     [int]           NOT NULL DEFAULT (0),
     [Observacion]                   [varchar](200)  NOT NULL DEFAULT (''),
-    [PagarAuto]                     [bit])          NOT NULL DEFAULT (0),
+    [PagarAuto]                     [bit]           NOT NULL DEFAULT (0),
     [Idmaedpce_Paga]                [int]           NOT NULL DEFAULT (0),
     [CodFuncionario_Paga]           [char](3)       NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_Stmp_Enc] PRIMARY KEY CLUSTERED 

@@ -23246,9 +23246,13 @@ Public Class Frm_Formulario_Documento
 
             If _Tido <> "COV" Then
 
-                _Autorizado = False : _Necesita_Permiso = False
-                _Autorizado = Fx_Validar_Stock(False, _Necesita_Permiso)
-                Sb_Revisar_Permiso("Bkp00015", _Autorizado, _Necesita_Permiso)
+                If (_Tido = "BLV" Or _Tido = "FCV") And Not _Revisar_Stock_FcvBlv Then
+                    Sb_Revisar_Permiso("Bkp00015", False, False)
+                Else
+                    _Autorizado = False : _Necesita_Permiso = False
+                    _Autorizado = Fx_Validar_Stock(False, _Necesita_Permiso)
+                    Sb_Revisar_Permiso("Bkp00015", _Autorizado, _Necesita_Permiso)
+                End If
 
                 _Autorizado = False : _Necesita_Permiso = False
                 _Autorizado = Fx_Validad_Morosidad(_Necesita_Permiso)
