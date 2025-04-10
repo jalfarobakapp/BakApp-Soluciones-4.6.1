@@ -1,5 +1,6 @@
 ﻿Imports DevComponents.DotNetBar
 
+
 Public Module ExportarJetExcel
 
     Dim Consulta_sql As String
@@ -102,10 +103,21 @@ Public Module ExportarJetExcel
                                                                         _Nombre_Archivo As String,
                                                                         ByRef _Ruta_Archivo As String)
 
-        Dim Fm As New Frm_Exportar_Excel(_Tabla) 'Frm_ExportarJetExcel
+        Dim _Mensaje As LsValiciones.Mensajes '= Fx_Exportar_ExcelJet(Txt_Nombre_Archivo.Text, _Directorio_Destino, _Extension)
+
+        'MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, Windows.Forms.MessageBoxButtons.OK, _Mensaje.Icono)
+
+        'If _Mensaje.EsCorrecto Then
+        '_Archivo = _Mensaje.Tag
+        'End If
+
+        Dim Fm As New Frm_Exportar_Excel(_Tabla)
         Fm.Pro_Nombre_Archivo = _Nombre_Archivo
-        _Ruta_Archivo = Fm.Fx_Exportar_ExcelJet(_Nombre_Archivo, "", Frm_Exportar_Excel.Enum_Extension.xlsx)
+        '_Ruta_Archivo = Fm.Fx_Exportar_ExcelJet(_Nombre_Archivo, "", Frm_Exportar_Excel.Enum_Extension.xlsx)
+        _Mensaje = Fm.Fx_Exportar_ExcelJet(_Nombre_Archivo, "", Frm_Exportar_Excel.Enum_Extension.xlsx)
         Fm.Dispose()
+
+        _Ruta_Archivo = _Mensaje.Tag
 
     End Sub
 

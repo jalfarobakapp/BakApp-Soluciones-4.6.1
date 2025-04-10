@@ -422,7 +422,7 @@ Public Class Frm_Demonio_New
 
                     _Cl_FacturacionAuto.CantDocFacturanXProceso = _CantDocFacturanXProceso
                     _Cl_FacturacionAuto.Modalidad_Fac = _Modalidad_Fac
-                    _Cl_FacturacionAuto.CodFunFactura = _CodFunFactura
+                    _Cl_FacturacionAuto.CodFunFactura = Replace(_CodFunFactura, "''", "'")
 
                     _Descripcion = _CI_Programacion.Resumen ' "Facturación de notas de venta para clientes con condición automática. " & _CI_Programacion.Resumen
                     _IndexImagen = 8
@@ -1189,8 +1189,8 @@ Public Class Frm_Demonio_New
                 _Cl_FacturacionAuto.Sb_Traer_NVV_A_Facturar()
                 _Cl_FacturacionAuto.Sb_Traer_NVV_De_Picking_A_Facturar()
 
-
                 _Cl_FacturacionAuto.Sb_Facturar_Automaticamente_NVV_New(Me, Nothing)
+                _Cl_FacturacionAuto.Sb_Pagar_Documentos()
 
                 Dim registro As String = "Tarea ejecutada (Facturación automática) a las: " & DateTime.Now.ToString()
 

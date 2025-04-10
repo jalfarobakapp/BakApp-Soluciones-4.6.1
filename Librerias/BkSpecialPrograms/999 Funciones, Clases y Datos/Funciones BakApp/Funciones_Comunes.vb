@@ -8,6 +8,7 @@ Imports System.Net
 Imports System.Text.RegularExpressions
 Imports System.IO
 Imports System.Text
+Imports System.Net.Sockets
 
 
 
@@ -1204,11 +1205,29 @@ Error_Numero:
 
         Dim valorIp As String
 
+        'Dim host As String = Dns.GetHostName()
+        'Dim ip As String = Dns.GetHostEntry(host).AddressList _
+        '    .FirstOrDefault(Function(addr) addr.AddressFamily = Net.Sockets.AddressFamily.InterNetwork).ToString()
+        ''Return ip
+
         valorIp = Dns.GetHostEntry(My.Computer.Name).AddressList.FirstOrDefault(Function(i) _
                     i.AddressFamily = Sockets.AddressFamily.InterNetwork).ToString()
 
         Return valorIp
 
+    End Function
+
+    Function Fx_GetLocalIPAddress() As String
+        Dim host As String = Dns.GetHostName()
+        Dim ipAddresses = Dns.GetHostAddresses(host)
+
+        For Each ip As IPAddress In ipAddresses
+            If ip.AddressFamily = AddressFamily.InterNetwork Then
+                Return ip.ToString()
+            End If
+        Next
+
+        Throw New Exception("No se encontró una dirección IPv4 válida.")
     End Function
 
     Public Function CADENA_A_BUSCAR(cadena As String,

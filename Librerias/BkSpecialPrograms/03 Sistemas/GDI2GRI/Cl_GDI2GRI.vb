@@ -40,7 +40,7 @@
             Fm.Sb_Limpiar(_Modalidad)
             Fm.Pro_RowEntidad = _Row_Entidad
             Fm.Sb_Crear_Documento_Interno_Con_Tabla(_Formulario, _Tbl_Productos, _Fecha_Emision,
-                                                    "Codigo", "Cantidad", "Precio", "Observacion", False, True,, True)
+                                                    "Codigo", "Cantidad", "Precio", "", False, True,, True)
             Fm.Pro_SubTido = "GTI"
             _Mensaje = Fm.Fx_Grabar_Documento(False)
             Fm.Dispose()
@@ -63,12 +63,12 @@
     Function Fx_Crear_GRIDesdeGDI(_Formulario As Form,
                                   _Idmaeedo_Ori As Integer,
                                   _Sucursal_Recepcion As String,
-                                  _Bodega_Recepcion As String) As LsValiciones.Mensajes
+                                  _Bodega_Recepcion As String,
+                                  _Fecha_Emision As Date) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
         Dim _New_Idmaeedo As Integer
-        Dim _Fecha_Emision As Date = FechaDelServidor()
 
         Try
 

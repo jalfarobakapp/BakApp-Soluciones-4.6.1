@@ -44,9 +44,13 @@ Public Class Stk_Ticktes
     End Sub
 
     Private Sub Btn_Configuracion_Click(sender As Object, e As EventArgs) Handles Btn_Configuracion.Click
+
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Tkts0002") Then Return
+
         Dim NewPanel As Stk_Configuracion = Nothing
         NewPanel = New Stk_Configuracion(_Fm_Menu_Padre)
         _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
+
     End Sub
 
     Private Sub BtnCambiarDeUsuario_Click(sender As Object, e As EventArgs) Handles BtnCambiarDeUsuario.Click
@@ -56,6 +60,9 @@ Public Class Stk_Ticktes
     End Sub
 
     Private Sub Btn_VerTodosTickets_Click(sender As Object, e As EventArgs) Handles Btn_VerTodosTickets.Click
+
+        MessageBoxEx.Show(Me, "En Construcción", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Return
 
         Dim Fm As New Frm_Tickets_Lista(FUNCIONARIO, Frm_Tickets_Lista.Enum_Tickets.TodosLosTickets, 0)
         Fm.ShowDialog(Me)

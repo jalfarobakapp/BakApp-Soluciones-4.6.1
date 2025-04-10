@@ -43,6 +43,13 @@ Public Class Frm_Stmp_IncNVVPicking
         Sb_Llenar_Combos(_Arr_Tipo_Entidad, Cmb_TipoVenta)
         Cmb_TipoVenta.SelectedValue = ""
 
+        Dim _Arr_Tipo_Entrega(,) As String = {{"", "Todas"},
+                                             {"RT", "Retira cliente"},
+                                             {"RR", "Retira transporte"},
+                                             {"DD", "Despacho a domicilio"}}
+        Sb_Llenar_Combos(_Arr_Tipo_Entrega, Cmb_TipoEnvio)
+        Cmb_TipoEnvio.SelectedValue = ""
+
         Dtp_BuscaXFechaEmision.Value = #1/1/0001 12:00:00 AM#
         Dtp_BuscaXFechaDespacho.Value = #1/1/0001 12:00:00 AM#
 
@@ -75,6 +82,8 @@ Public Class Frm_Stmp_IncNVVPicking
         Dim _FiltroEntidad = String.Empty
         Dim _FiltroObservaciones = String.Empty
         Dim _FiltroOrdenDeCompra = String.Empty
+        Dim _FiltroTipoVenta = String.Empty
+        Dim _FiltroDespacho = String.Empty
 
         If Dtp_BuscaXFechaEmision.Value <> #1/1/0001 12:00:00 AM# Then
             _FiltroFechaEmision = "And  Edo.FEEMDO = '" & Format(Dtp_BuscaXFechaEmision.Value, "yyyyMMdd") & "'" & vbCrLf
@@ -100,6 +109,14 @@ Public Class Frm_Stmp_IncNVVPicking
             _FiltroOrdenDeCompra = "And Obs.OCDO Like '%" & Txt_Ocdo.Text & "%'" & vbCrLf
         End If
 
+        If Not String.IsNullOrEmpty(Cmb_TipoVenta.SelectedValue) Then
+            _FiltroTipoVenta = vbCrLf & "Where TipoVenta = '" & Cmb_TipoVenta.SelectedValue & "'" & vbCrLf
+        End If
+
+        If Not String.IsNullOrEmpty(Cmb_TipoEnvio.SelectedValue) Then
+            _FiltroTipoVenta = vbCrLf & "Where TipoEnvio = '" & Cmb_TipoEnvio.SelectedValue & "'" & vbCrLf
+        End If
+
         ' DEBO ENLAZAR LA TABLA Zw_Docu_Det a esta consulta para poner la RtuVariale por productos para las CARNES...
 
         Dim _Pickear_FacturarAutoCompletas As Integer = Convert.ToInt32(_Global_Row_Configuracion_General.Item("Pickear_FacturarAutoCompletas"))
@@ -115,13 +132,15 @@ Public Class Frm_Stmp_IncNVVPicking
                        "Cast(0 As Bit) As FCV_PAGADA,Cast(0 As Bit) As FCV_IMPRESA," & vbCrLf &
                        "Cast(0 As Int) As IDMAEDPCE,Cast(0 As Float) As VADP,Cast(0 As Float) As VAASDP," & vbCrLf &
                        "Cast(0 As Float) As SALDO,Cast(0 As Bit) As CRV, Cast(0 as Float) SALDO_CRV,Isnull(OBDO,'') As OBDO," & vbCrLf &
-                       "Isnull(DocE.HabilitadaFac,1) As HabilitadaFac" & vbCrLf &
+                       "Isnull(DocE.HabilitadaFac,1) As HabilitadaFac,Isnull(Den.Tipo_Envio,'') As 'TipoEnvio',CAST('' As varchar(25)) As 'TipoDeEnvio'" & vbCrLf &
                        "Into #Paso" & vbCrLf &
                         "From MAEEDO Edo" & vbCrLf &
                         "Left Join MAEEDOOB Obs On Obs.IDMAEEDO = Edo.IDMAEEDO" & vbCrLf &
                         "Left Join MAEEN On KOEN = ENDO And SUENDO = SUEN" & vbCrLf &
                         "Left Join TABFU On KOFU = KOFUEN" & vbCrLf &
                         "Left Join " & _Global_BaseBk & "Zw_Docu_Ent DocE On DocE.Idmaeedo = Edo.IDMAEEDO" & vbCrLf &
+                        "Left Join " & _Global_BaseBk & "Zw_Despachos_Doc Ddd On Ddd.Idrst = Edo.IDMAEEDO And Ddd.Archidrst = 'MAEEDO'" & vbCrLf &
+                        "Left Join " & _Global_BaseBk & "Zw_Despachos Den On Den.Id_Despacho = Ddd.Id_Despacho" & vbCrLf &
                         "Where 1 > 0" & vbCrLf &
                         "And Edo.IDMAEEDO Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Stmp_Enc Where Estado <> 'NULO' And Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "')" & vbCrLf &
                         _FiltroFechaEmision &
@@ -137,11 +156,23 @@ Public Class Frm_Stmp_IncNVVPicking
                         "Update #Paso Set VADP = Isnull((Select VADP From MAEDPCE Mp Where Mp.IDMAEDPCE = #Paso.IDMAEDPCE),0)" & vbCrLf &
                         "Update #Paso Set HORA = SUBSTRING(HORA,1,5),ENDO = Ltrim(Rtrim(ENDO)),SUENDO = Ltrim(Rtrim(SUENDO))" & vbCrLf &
                         "Update #Paso Set SALDO_CRV = VABRDO-VADP Where VADP > 0" & vbCrLf &
-                        "Select * From #Paso" & vbCrLf &
-                        "Order By IDMAEEDO --ENDO,SUENDO,NUDO" & vbCrLf &
+                        "Update #Paso Set TipoDeEnvio = 'Retira cliente' Where TipoEnvio = 'RT'" & vbCrLf &
+                        "Update #Paso Set TipoDeEnvio = 'Despacho domicilio' Where TipoEnvio = 'DD'" & vbCrLf &
+                        "Update #Paso Set TipoDeEnvio = 'Retira transporte' Where TipoEnvio = 'RR'" & vbCrLf &
+                        "Select * From #Paso" & _FiltroTipoVenta & _FiltroDespacho & vbCrLf &
+                        "Order By IDMAEEDO" & vbCrLf &
                         "Drop Table #Paso"
 
+        Dim Fm_Espera As New Frm_Form_Esperar
+        Fm_Espera.BarraCircular.IsRunning = True
+        Fm_Espera.Show()
+
+        Me.Cursor = Cursors.WaitCursor
+
         _Tbl_Documentos = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+        Fm_Espera.Dispose()
+        Me.Cursor = Cursors.Default
 
         With Grilla
 
@@ -176,17 +207,17 @@ Public Class Frm_Stmp_IncNVVPicking
             .Columns("NUDO").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Facturar").HeaderText = "Facturar al completar"
+            .Columns("Facturar").HeaderText = "F.C."
             .Columns("Facturar").ToolTipText = "Facturar automáticamente una vez completado el picking"
-            .Columns("Facturar").Width = 70
+            .Columns("Facturar").Width = 30
             .Columns("Facturar").Visible = _Global_Row_Configuracion_General.Item("Pickear_FacturarAutoCompletas")
             .Columns("Facturar").ReadOnly = False
             .Columns("Facturar").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("HabilitadaFac").HeaderText = "Habilitada Facturar"
+            .Columns("HabilitadaFac").HeaderText = "H.F."
             .Columns("HabilitadaFac").ToolTipText = "Habilitada ser facturada"
-            .Columns("HabilitadaFac").Width = 70
+            .Columns("HabilitadaFac").Width = 30
             .Columns("HabilitadaFac").Visible = _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar")
             .Columns("HabilitadaFac").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
@@ -238,9 +269,17 @@ Public Class Frm_Stmp_IncNVVPicking
             _DisplayIndex += 1
 
             .Columns("TipoVenta").HeaderText = "T.Venta"
+            .Columns("TipoVenta").ToolTipText = "Tipo de venta: Contado o Crédito"
             .Columns("TipoVenta").Width = 60
             .Columns("TipoVenta").Visible = True
             .Columns("TipoVenta").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("TipoEnvio").HeaderText = "T.E."
+            .Columns("TipoEnvio").ToolTipText = "Tipo de envío: RT (Retira cliente), RR (Retira transporte), DD (Despacho domicilio)"
+            .Columns("TipoEnvio").Width = 30
+            .Columns("TipoEnvio").Visible = True
+            .Columns("TipoEnvio").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("FEEMDO").HeaderText = "F.Emisión"
@@ -248,6 +287,12 @@ Public Class Frm_Stmp_IncNVVPicking
             .Columns("FEEMDO").DefaultCellStyle.Format = "dd/MM/yyyy"
             .Columns("FEEMDO").Visible = True
             .Columns("FEEMDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("HORA").HeaderText = "Hora"
+            .Columns("HORA").Width = 50
+            .Columns("HORA").Visible = True
+            .Columns("HORA").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("FEER").HeaderText = "F.Despacho"
@@ -264,11 +309,7 @@ Public Class Frm_Stmp_IncNVVPicking
             '.Columns("FEULVEDO").DisplayIndex = _DisplayIndex
             '_DisplayIndex += 1
 
-            '.Columns("HORA").HeaderText = "Hora"
-            '.Columns("HORA").Width = 50
-            '.Columns("HORA").Visible = True
-            '.Columns("HORA").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
+
 
 
         End With
@@ -298,11 +339,26 @@ Public Class Frm_Stmp_IncNVVPicking
 
         End If
 
+        Lbl_Total_Facturar.Tag = 0
+
+        For Each _Fl As DataRow In _Tbl_Documentos.Rows
+
+            If _Fl.Item("Pickear") Then
+                Lbl_Total_Facturar.Tag += _Fl.Item("VABRDO")
+            End If
+
+        Next
+
+        Lbl_Total_Facturar.Text = FormatCurrency(Lbl_Total_Facturar.Tag, 0)
+
     End Sub
 
     Private Sub Chk_PickearTodo_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_PickearTodo.CheckedChanged
 
         Try
+
+            Lbl_Total_Facturar.Tag = 0
+            Lbl_Total_Facturar.Text = FormatCurrency(0, 0)
 
             If Not Chk_PickearTodo.Checked Then
 
@@ -335,6 +391,9 @@ Public Class Frm_Stmp_IncNVVPicking
                     End If
 
                     _Fila.Cells("Pickear").Value = _Marcar
+
+                    Lbl_Total_Facturar.Tag += _Fila.Cells("VABRDO").Value
+                    Lbl_Total_Facturar.Text = FormatCurrency(Lbl_Total_Facturar.Tag, 0)
 
                 End If
 
@@ -435,6 +494,14 @@ Public Class Frm_Stmp_IncNVVPicking
             Return
         End If
 
+        Dim _Msj_Tsc As LsValiciones.Mensajes
+
+        _Msj_Tsc = Fx_Revisar_Tasa_Cambio(Me, Dtp_FechaParaFacturacion.Value)
+
+        If Not _Msj_Tsc.EsCorrecto Then
+            Return
+        End If
+
         Dim _Lista As List(Of LsValiciones.Mensajes) = Fx_Cargar_NVV_FechaDespachoHoy()
 
         Dim ListaQr As LsValiciones.Mensajes = _Lista.FirstOrDefault(Function(p) p.EsCorrecto = False)
@@ -472,6 +539,22 @@ Public Class Frm_Stmp_IncNVVPicking
             Dim _Pickear As Boolean = _Fila.Item("Pickear")
             Dim _Facturar As Boolean = _Fila.Item("Facturar")
 
+            Dim _PagarAuto As Boolean = Chk_Pagar_Documentos.Checked
+            Dim _Idmaedpce_Paga As Integer
+            Dim _CodFuncionario_Paga As String
+
+            If _PagarAuto Then
+
+                _Idmaedpce_Paga = _Fila.Item("IDMAEDPCE")
+                _CodFuncionario_Paga = FUNCIONARIO
+
+                If Not CBool(_Idmaedpce_Paga) Then
+                    _PagarAuto = False
+                    _CodFuncionario_Paga = String.Empty
+                End If
+
+            End If
+
             If _Pickear Then
 
                 _Mensaje_Stem = _Cl_Stmp.Fx_Crear_Ticket(_Idmaeedo,
@@ -483,7 +566,10 @@ Public Class Frm_Stmp_IncNVVPicking
                                                          False,
                                                          ModEmpresa,
                                                          ModSucursal,
-                                                         FUNCIONARIO)
+                                                         FUNCIONARIO,
+                                                         _PagarAuto,
+                                                         _Idmaedpce_Paga,
+                                                         _CodFuncionario_Paga)
                 _Lista.Add(_Mensaje_Stem)
 
             End If
@@ -554,5 +640,138 @@ Public Class Frm_Stmp_IncNVVPicking
 
     Private Sub Dtp_BuscaXFechaDespacho_ButtonClearClick(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles Dtp_BuscaXFechaDespacho.ButtonClearClick
         Sb_Actualizar_Grilla()
+    End Sub
+
+    Private Sub Btn_Buscar_Click(sender As Object, e As EventArgs) Handles Btn_Buscar.Click
+        Sb_Actualizar_Grilla()
+    End Sub
+
+    Sub Sb_Ver_Documento()
+
+        Me.Enabled = False
+
+        Try
+
+            Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+            Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
+
+            Dim _Idmaeedo As Integer
+            Dim _Idmaedpce As Integer = _Fila.Cells("IDMAEDPCE").Value
+
+            If _Cabeza = "VADP" Then
+
+                If CBool(_Idmaedpce) Then
+                    Dim Fm_P As New Frm_Pagos_Documentos_Pagados(_Idmaedpce)
+                    Fm_P.ShowDialog(Me)
+                    Fm_P.Dispose()
+                    Return
+                End If
+
+            End If
+
+            If _Cabeza = "SALDOAFAVOR" Then
+                Call Btn_Ver_Cta_Cte_Click(Nothing, Nothing)
+            End If
+
+            If _Cabeza = "NUDO" Then
+                _Idmaeedo = _Fila.Cells("IDMAEEDO").Value
+            End If
+
+            If _Cabeza = "NUDO_FCV" Then
+                _Idmaeedo = _Fila.Cells("IDMAEEDO_FCV").Value
+            End If
+
+            If CBool(_Idmaeedo) Then
+
+                Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
+                Fm.ShowDialog(Me)
+                Fm.Dispose()
+
+            End If
+
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, "Error inesperado!", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        Finally
+            Me.Enabled = True
+        End Try
+
+    End Sub
+
+    Private Sub Btn_Ver_Cta_Cte_Click(sender As Object, e As EventArgs) Handles Btn_Ver_Cta_Cte.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+
+        Dim _Koen = _Fila.Cells("ENDO").Value
+        Dim _SALDOAFAVOR As Double = _Fila.Cells("SALDOAFAVOR").Value
+
+        If Not CBool(_SALDOAFAVOR) Then
+            MessageBoxEx.Show(Me, "No hay saldo a favor o no hay entidad seleccionada", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim Fm As New Frm_Pagos_Generales(Frm_Pagos_Generales.Enum_Tipo_Pago.Clientes)
+        Fm.Koen = _Koen
+        Fm.BtnActualizarLista.Visible = False
+        Fm.ModoLectura = True
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_Ver_documento_Click(sender As Object, e As EventArgs) Handles Btn_Ver_documento.Click
+        Sb_Ver_Documento()
+    End Sub
+
+    Private Sub Grilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
+
+        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+        Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
+
+        Select Case _Cabeza
+            Case "VADP", "SALDOAFAVOR", "NUDO", "NUDO_FCV"
+                Sb_Ver_Documento()
+            Case Else
+                Return
+        End Select
+
+    End Sub
+
+    Private Sub Grilla_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellEnter
+        Try
+
+            Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+            Dim _Nokoen As String = _Fila.Cells("NOKOEN").Value.ToString.Trim
+            Dim _Obdo As String = Replace(_Fila.Cells("OBDO").Value.ToString.Trim, vbCrLf, " ")
+            Dim _TipoDeEnvio As String = _Fila.Cells("TipoDeEnvio").Value.ToString.Trim
+
+            If Not String.IsNullOrWhiteSpace(_Obdo) Then
+                _Obdo = "Observaciones: " & _Obdo & ", Tipo de entrega: " & _TipoDeEnvio
+            ElseIf Not String.IsNullOrWhiteSpace(_TipoDeEnvio) Then
+                _Obdo = "Tipo de entrega: " & _TipoDeEnvio
+            End If
+
+            Txt_Observaciones.Text = "Razón social: " & _Nokoen & _Obdo
+
+        Catch ex As Exception
+            Txt_Observaciones.Text = String.Empty
+        End Try
+    End Sub
+
+    Private Sub Txt_Ocdo_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Ocdo.KeyDown
+        If e.KeyValue = Keys.Enter Then
+            Sb_Actualizar_Grilla()
+        End If
+    End Sub
+
+    Private Sub Txt_BuscaXObservaciones_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_BuscaXObservaciones.KeyDown
+        If e.KeyValue = Keys.Enter Then
+            Sb_Actualizar_Grilla()
+        End If
+    End Sub
+
+    Private Sub Txt_BuscaXNudoNVV_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_BuscaXNudoNVV.KeyDown
+        If e.KeyValue = Keys.Enter Then
+            Sb_Actualizar_Grilla()
+        End If
     End Sub
 End Class

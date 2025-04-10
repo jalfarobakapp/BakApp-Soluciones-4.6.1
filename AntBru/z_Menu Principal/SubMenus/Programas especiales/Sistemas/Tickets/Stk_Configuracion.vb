@@ -30,6 +30,10 @@ Public Class Stk_Configuracion
 
     Private Sub Btn_Agentes_Click(sender As Object, e As EventArgs) Handles Btn_Agentes.Click
 
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Tkts0003") Then
+            Return
+        End If
+
         Dim Fm As New Frm_Tickets_Agentes
         Fm.ShowDialog(_Fm_Menu_Padre)
         Fm.Dispose()
@@ -38,6 +42,10 @@ Public Class Stk_Configuracion
 
     Private Sub Btn_Grupos_Click(sender As Object, e As EventArgs) Handles Btn_Grupos.Click
 
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Tkts0004") Then
+            Return
+        End If
+
         Dim Fm As New Frm_Tickets_Grupos
         Fm.ShowDialog(_Fm_Menu_Padre)
         Fm.Dispose()
@@ -45,6 +53,10 @@ Public Class Stk_Configuracion
     End Sub
 
     Private Sub Btn_Areas_Click(sender As Object, e As EventArgs) Handles Btn_Areas.Click
+
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Tkts0005") Then
+            Return
+        End If
 
         Dim Fm As New Frm_Tickets_Areas
         Fm.ShowDialog(_Fm_Menu_Padre)

@@ -1,4 +1,4 @@
-Imports DevComponents.DotNetBar
+锘縄mports DevComponents.DotNetBar
 
 Imports BkSpecialPrograms
 
@@ -12,15 +12,15 @@ Public Class Frm_Maquinas_vs_Carga_De_Trabajo
 
     Public Sub New()
 
-        ' Llamada necesaria para el Dise馻dor de Windows Forms.
+        ' Llamada necesaria para el Dise帽ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicializaci髇 despu閟 de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaci贸n despu茅s de la llamada a InitializeComponent().
         Sb_Formato_Generico_Grilla(Grilla_Maquinas, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
         Sb_Formato_Generico_Grilla(Grilla_Carga_Trabajo, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
     End Sub
 
-    Private Sub Frm_Maquinas_vs_Carga_De_Trabajo_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Maquinas_vs_Carga_De_Trabajo_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         Sb_Actualizar_Grilla()
 
@@ -39,14 +39,14 @@ Public Class Frm_Maquinas_vs_Carga_De_Trabajo
             _Table = "Table1"
         End If
 
-        Consulta_sql = My.Resources.Recursos_Informes_Produccion.SQLQuery_Informe_estado_de_Maquinas_Vs_Avence_y_cola_en_proceso
+        Consulta_sql = My.Resources.Recursos_Informe_Produccion.SQLQuery_Informe_estado_de_Maquinas_Vs_Avence_y_cola_en_proceso
 
         Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
 
-        ' Agregar la relaci髇 ( campo en com鷑 : campo_Relacionado = idCliente )  
+        ' Agregar la relaci贸n ( campo en com煤n : campo_Relacionado = idCliente )  
         ' ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''  
-        _Ds.Relations.Add("Rel_Detalle_Productos", _
-                          _Ds.Tables(_Table).Columns("CODMAQOT"), _
+        _Ds.Relations.Add("Rel_Detalle_Productos",
+                          _Ds.Tables(_Table).Columns("CODMAQOT"),
                           _Ds.Tables("Table2").Columns("CODMAQOT"), False)
 
         _Tbl_Carga_Trabajo = _Ds.Tables(2)
@@ -64,12 +64,12 @@ Public Class Frm_Maquinas_vs_Carga_De_Trabajo
         With Grilla_Maquinas
 
             .Columns("CODMAQOT").Width = 100
-            .Columns("CODMAQOT").HeaderText = "M醧uina"
+            .Columns("CODMAQOT").HeaderText = "M谩quina"
             .Columns("CODMAQOT").Visible = True
             .Columns("CODMAQOT").DisplayIndex = 0
 
             .Columns("MAQUINA").Width = 360
-            .Columns("MAQUINA").HeaderText = "Nombre m醧uina"
+            .Columns("MAQUINA").HeaderText = "Nombre m谩quina"
             .Columns("MAQUINA").Visible = True
             .Columns("MAQUINA").DisplayIndex = 1
 
@@ -120,7 +120,7 @@ Public Class Frm_Maquinas_vs_Carga_De_Trabajo
             .Columns("REFERENCIA").DisplayIndex = 2
 
             '.Columns("CODIGO").Width = 70
-            '.Columns("CODIGO").HeaderText = "C骴igo"
+            '.Columns("CODIGO").HeaderText = "C贸digo"
             '.Columns("CODIGO").Visible = True
             '.Columns("CODIGO").DisplayIndex = 3
 
@@ -130,12 +130,12 @@ Public Class Frm_Maquinas_vs_Carga_De_Trabajo
             .Columns("DESCRIPCION_PR").DisplayIndex = 3
 
             '.Columns("OPERACION").Width = 70
-            '.Columns("OPERACION").HeaderText = "Operaci髇"
+            '.Columns("OPERACION").HeaderText = "Operaci贸n"
             '.Columns("OPERACION").Visible = True
             '.Columns("OPERACION").DisplayIndex = 4
 
             '.Columns("NOMBREOP").Width = 240
-            '.Columns("NOMBREOP").HeaderText = "Nombre operaci髇"
+            '.Columns("NOMBREOP").HeaderText = "Nombre operaci贸n"
             '.Columns("NOMBREOP").Visible = True
             '.Columns("NOMBREOP").DisplayIndex = 2
 
@@ -168,11 +168,11 @@ Public Class Frm_Maquinas_vs_Carga_De_Trabajo
 
     End Sub
 
-    Private Sub Btn_Actualizar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Actualizar.Click
+    Private Sub Btn_Actualizar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Actualizar.Click
         Sb_Actualizar_Grilla()
     End Sub
 
-    Sub Sb_Grilla_RowsPostPaint(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewRowPostPaintEventArgs)
+    Sub Sb_Grilla_RowsPostPaint(sender As System.Object, e As System.Windows.Forms.DataGridViewRowPostPaintEventArgs)
         Try
             'Captura el numero de filas del datagridview
             Dim RowsNumber As String = (e.RowIndex + 1).ToString
@@ -186,7 +186,7 @@ Public Class Frm_Maquinas_vs_Carga_De_Trabajo
             Dim ob As Brush = SystemBrushes.ControlText
             e.Graphics.DrawString(RowsNumber, Me.Font, ob, e.RowBounds.Location.X + 15, e.RowBounds.Location.Y + ((e.RowBounds.Height - size.Height) / 2))
         Catch ex As Exception
-            MessageBox.Show(ex.Message, "vb.net", _
+            MessageBox.Show(ex.Message, "vb.net",
          MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub

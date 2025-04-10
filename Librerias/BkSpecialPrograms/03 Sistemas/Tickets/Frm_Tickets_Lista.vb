@@ -33,7 +33,8 @@ Public Class Frm_Tickets_Lista
         Me._Tipo_Tickets = _Tipo
         Me._Id_Grupo = _Id_Grupo
 
-        Sb_Formato_Generico_Grilla(Grilla, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Both, True, False, False)
+        Sb_Formato_Generico_Grilla(Grilla, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Both, True, True, False)
+        Sb_Formato_Generico_Grilla(Grilla_Acciones, 22, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Both, True, False, False)
 
         Sb_Color_Botones_Barra(Bar2)
 
@@ -49,7 +50,7 @@ Public Class Frm_Tickets_Lista
         Sb_InsertarBotonenGrilla(Grilla, "BtnImagen_Estado2", "Est.", "Img_Estado2", 0, _Tipo_Boton.Imagen)
         Sb_InsertarBotonenGrilla(Grilla, "BtnImagen_Estado3", "Est.", "Img_Estado3", 0, _Tipo_Boton.Imagen)
 
-        'AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+        AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
         Btn_Crear_Ticket.Visible = (_Tipo_Tickets = Enum_Tickets.MisTicket)
         Btn_RevisarTicket.Visible = Not (_Tipo_Tickets = Enum_Tickets.MisTicket)
@@ -58,16 +59,20 @@ Public Class Frm_Tickets_Lista
         'AddHandler Grilla.CellFormatting, AddressOf Grilla_CellFormatting
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
 
-        Me.Text += ", Usuario : " & FUNCIONARIO & " - " & Nombre_funcionario_activo
+        Me.Text = "MANTENCION DE TICKET, Usuario : " & FUNCIONARIO & " - " & Nombre_funcionario_activo
 
         Sb_CargarTreeView()
 
         Sb_Actualizar_Grilla_Treeview(Nothing)
         Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(0))
         Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(1))
-        'If _EsAgente Then
-        '    Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(1))
-        'End If
+
+        Sb_InsertarBotonenGrilla(Grilla_Acciones, "Btn_ImagenAttach", "Est.", "ImagenAttach", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla_Acciones, "Btn_ProductoInfo", "P.I.", "ProductoInfo", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla_Acciones, "Btn_DocCierra", "Doc.", "DocCierra", 0, _Tipo_Boton.Imagen)
+        Sb_InsertarBotonenGrilla(Grilla_Acciones, "Btn_ImagenUser", "Est.", "ImagenUser", 0, _Tipo_Boton.Imagen)
+
+        Txt_Descripcion.ReadOnly = True
 
     End Sub
 
@@ -164,15 +169,32 @@ Public Class Frm_Tickets_Lista
 
             If _NodoPadre.Text = "ASIGNADOS" Then
                 _CondicionFun = "(Id In (Select Id_Ticket From " & _Global_BaseBk & "Zw_Stk_Tickets_Asignado " &
-                               "Where CodAgente = '" & FUNCIONARIO & "') " & _Condicion2 & ")"
+                                "Where CodAgente = '" & FUNCIONARIO & "') " & _Condicion2 & ")" & vbCrLf &
+                                "And CodFuncionario_Crea <> '" & FUNCIONARIO & "'"
             End If
 
+            If _NodoPadre.Text = "TODOS" Then
+                _CondicionFun = "1>0"
+            End If
+
+
+            Dim _FechaLimite As DateTime = DateAdd(DateInterval.Month, -1, Now.Date)
+            Dim _FechaLimiteStr As String = Format(_FechaLimite, "yyyyMMdd")
+
             If _NodoHijo.Tag = "EnProceso" Then _Accion = "And Estado = 'PROC' And Aceptado = 0 And Rechazado = 0"
-            If _NodoHijo.Tag = "Aceptados" Then _Accion = "And Aceptado = 1 And Rechazado = 0 And Estado <> 'PROC'"
-            If _NodoHijo.Tag = "Rechazados" Then _Accion = "And Aceptado = 0 And Rechazado = 1 And Estado <> 'PROC'"
+            If _NodoHijo.Tag = "Aceptados" Then _Accion = "And Aceptado = 1 And Rechazado = 0 And Estado <> 'PROC' And CONVERT(varchar, FechaCierre, 112) > '" & _FechaLimiteStr & "'"
+            If _NodoHijo.Tag = "Rechazados" Then _Accion = "And Aceptado = 0 And Rechazado = 1 And Estado <> 'PROC' And CONVERT(varchar, FechaCierre, 112) > '" & _FechaLimiteStr & "'"
             If _NodoHijo.Tag = "Pendientes" Then _Accion = "And Estado = 'ABIE' And Aceptado = 0 And Rechazado = 0"
-            If _NodoHijo.Tag = "Cerradas" Then _Accion = "And Estado = 'CERR'"
+            If _NodoHijo.Tag = "Cerradas" Then _Accion = "And Estado = 'CERR' And CONVERT(varchar, FechaCierre, 112) > '" & _FechaLimiteStr & "'"
             If _NodoHijo.Tag = "Nulos" Then _Accion = "And Estado = 'NULO'"
+
+            'If _Carpeta.Tag = "Cerradas" Then
+            '    _Condicion += vbCrLf & "And Estado = 'CERR' And CONVERT(varchar, FechaCierre, 112) > '" & _FechaLimiteStr & "'"
+            'End If
+
+            'If _Carpeta.Tag = "Nulos" Then
+            '    _Condicion += vbCrLf & "And Estado = 'NULO' And CONVERT(varchar, FechaCierre, 112) > '" & _FechaLimiteStr & "'"
+            'End If
 
         End If
 
@@ -196,302 +218,6 @@ Public Class Frm_Tickets_Lista
 
     End Sub
 
-    Sub Sb_Actualizar_Grilla()
-
-        Sb_ActualizarImagenesTabListados()
-
-        Dim _Condicion As String = String.Empty
-        Dim _Condicion2 As String = String.Empty
-
-        'Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(_Texto_Busqueda), "CODIGO+DESCRIPTOR Like '%")
-
-        'If Not String.IsNullOrWhiteSpace(Txt_BuscaXProducto.Text) Then
-        '_Condicion = "And CODIGO In (Select CODIGO From MAEDRES Where ELEMENTO = '" & Txt_BuscaXProducto.Text & "')"
-        'End If
-
-        If Chk_TickesMiGrupo.Visible And Chk_TickesMiGrupo.Checked Then
-            _Condicion2 = "Or (Tks.Id In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tickets " &
-                          "Where Id_Grupo In (Select Id_Grupo From " & _Global_BaseBk & "Zw_Stk_GrupoVsAgente " &
-                          "Where CodAgente = '" & FUNCIONARIO & "')))"
-        End If
-
-        Select Case _Tipo_Tickets
-            Case Enum_Tickets.MisTicket
-                _Condicion = "And CodFuncionario_Crea = '" & _Funcionario & "'"
-            Case Enum_Tickets.TicketAsignadoGrupo
-                _Condicion = "And Id_Grupo = " & _Id_Grupo
-                _Condicion += vbCrLf & "And Estado <> 'NULO'"
-            Case Enum_Tickets.TicketAsignadosAgente
-                _Condicion = "And (Tks.Id In (Select Id_Ticket From " & _Global_BaseBk & "Zw_Stk_Tickets_Asignado " &
-                             "Where CodAgente = '" & FUNCIONARIO & "') " & _Condicion2 & ")"
-                _Condicion += vbCrLf & "And Estado <> 'NULO'"
-            Case Enum_Tickets.TodosLosTickets
-                _Condicion = String.Empty
-        End Select
-
-
-        'Dim _Tbas = Super_TabS.SelectedTab
-
-        'Select Case _Tbas.Name
-        '    Case "Tab_TodasActivas"
-        '        _Condicion += vbCrLf & "And Estado = 'ABIE' And Rechazado = 0"
-        '    Case "Tab_ActivasRechazadas"
-        '        _Condicion += vbCrLf & "And Estado = 'ABIE' And Rechazado = 1"
-        '    Case "Tab_Cerradas"
-        '        _Condicion += vbCrLf & "And Estado = 'CERR' And Rechazado = 0 And Aceptado = 0"
-        '    Case "Tab_CerradasAceptadas"
-        '        _Condicion += vbCrLf & "And Estado = 'CERR' And Aceptado = 1"
-        '    Case "Tab_CerradasRechazadas"
-        '        _Condicion += vbCrLf & "And Estado = 'CERR' And Rechazado = 1"
-        '    Case "Tab_Nulas"
-        '        _Condicion += vbCrLf & "And Estado = 'NULO'"
-        'End Select
-
-        Consulta_sql = "Select Tks.*,TkPrd.Empresa,TkPrd.Sucursal,TkPrd.Bodega,TkPrd.Codigo,TkPrd.Descripcion As DescripcionPr," & vbCrLf &
-                       "Case UdMedida When 1 Then Ud1 Else Ud2 End As 'Udm',StfiEnBodega,Cantidad,Diferencia" & vbCrLf &
-                       ",Case Prioridad When 'AL' Then 'Alta' When 'NR' Then 'Normal' When 'BJ' Then 'Baja' When 'UR' Then 'Urgente' Else '??' End As NomPrioridad" & vbCrLf &
-                       ",Case UltAccion When 'INGR' then 'Ingresada' When 'MENS' then 'Mensaje' When 'RESP' then 'Respondido' When 'CERR' then 'Cerrada' End As UltimaAccion" & vbCrLf &
-                       ",Case Estado 
-                       When 'ABIE' Then 
-                            Case When Rechazado = 1 Then 'Abierto (Rechazado)' Else 'Abierto' End 
-                       When 'CERR' Then 
-                            Case When Rechazado = 1 Then 'Cerrado (Rechazado)' When Aceptado = 1 Then 'Cerrado (Aceptado)' Else 'Cerrado' End 
-                       When 'NULO' then 'Nulo' When 'SOLC' then 'Sol. Cierre' End As NomEstado," & vbCrLf &
-                       "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones AcMs Where AcMs.Id_Ticket = Tks.Id And AcMs.Accion = 'MENS' And AcMs.Visto = 0) As Mesn_Pdte_Ver," & vbCrLf &
-                       "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones AcRs Where AcRs.Id_Ticket = Tks.Id And AcRs.Accion = 'RESP' And AcRs.Visto = 0) As Resp_Pdte_Ver" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Stk_Tickets Tks" & vbCrLf &
-                       "Left Join " & _Global_BaseBk & "Zw_Stk_Tickets_Producto TkPrd On Tks.Id_Raiz = TkPrd.Id_Raiz" & vbCrLf &
-                       "Where 1 > 0" & vbCrLf & _Condicion
-
-        _Tbl_Tickets = _Sql.Fx_Get_DataTable(Consulta_sql)
-
-        With Grilla
-
-            .DataSource = _Tbl_Tickets
-
-            OcultarEncabezadoGrilla(Grilla, True)
-
-            Dim _DisplayIndex = 0
-
-            '.Columns("BtnImagen_Estado").Width = 30
-            '.Columns("BtnImagen_Estado").HeaderText = "E."
-            '.Columns("BtnImagen_Estado").Visible = True
-            '.Columns("BtnImagen_Estado").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
-
-            ''.Columns("BtnImagen_Estado2").Width = 30
-            ''.Columns("BtnImagen_Estado2").HeaderText = "2"
-            ''.Columns("BtnImagen_Estado2").Visible = True
-            ''.Columns("BtnImagen_Estado2").DisplayIndex = _DisplayIndex
-            ''_DisplayIndex += 1
-
-            '.Columns("BtnImagen_Estado3").Width = 30
-            '.Columns("BtnImagen_Estado3").HeaderText = "3"
-            '.Columns("BtnImagen_Estado3").Visible = True
-            '.Columns("BtnImagen_Estado3").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
-
-            ''.Columns("BtnImagen_Tag").Width = 50
-            ''.Columns("BtnImagen_Tag").HeaderText = "Tag"
-            ''.Columns("BtnImagen_Tag").Visible = True
-            ''.Columns("BtnImagen_Tag").DisplayIndex = _DisplayIndex
-            ''_DisplayIndex += 1
-
-            '.Columns("Numero").Visible = True
-            '.Columns("Numero").HeaderText = "Número"
-            '.Columns("Numero").Width = 80
-            '.Columns("Numero").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
-
-            .Columns("SubNro").Visible = True
-            .Columns("SubNro").HeaderText = "Sub"
-            .Columns("SubNro").Width = 30
-            .Columns("SubNro").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
-            .Columns("Asunto").Visible = True
-            .Columns("Asunto").HeaderText = "Asunto"
-            .Columns("Asunto").Width = 230
-            .Columns("Asunto").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
-            .Columns("NomEstado").Visible = True
-            .Columns("NomEstado").HeaderText = "Estado"
-            .Columns("NomEstado").ToolTipText = "Estado del Ticket"
-            '.Columns("NomEstado").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("NomEstado").Width = 110
-            .Columns("NomEstado").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
-            .Columns("NomPrioridad").Visible = True
-            .Columns("NomPrioridad").HeaderText = "Prioridad"
-            '.Columns("NomPrioridad").ToolTipText = "Estado del Ticket"
-            .Columns("NomPrioridad").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("NomPrioridad").Width = 70
-            .Columns("NomPrioridad").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
-            '.Columns("UltimaAccion").Visible = True
-            '.Columns("UltimaAccion").HeaderText = "Ult. Estado"
-            '.Columns("UltimaAccion").ToolTipText = "Ultimo Estado"
-            ''.Columns("UltimaAccion").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            '.Columns("UltimaAccion").Width = 80
-            '.Columns("UltimaAccion").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
-
-            .Columns("FechaCreacion").Visible = True
-            .Columns("FechaCreacion").HeaderText = "Fecha creación"
-            '.Columns("FechaCreacion").ToolTipText = "de tope de la oferta"
-            .Columns("FechaCreacion").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("FechaCreacion").Width = 100
-            .Columns("FechaCreacion").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
-            'If _Tbas.Name.Contains("Cerradas") Then
-
-            '    .Columns("FechaCierre").Visible = True
-            '    .Columns("FechaCierre").HeaderText = "Fecha cierre"
-            '    '.Columns("FechaCreacion").ToolTipText = "de tope de la oferta"
-            '    .Columns("FechaCierre").DefaultCellStyle.Format = "dd/MM/yyyy"
-            '    .Columns("FechaCierre").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            '    .Columns("FechaCierre").Width = 70
-            '    .Columns("FechaCierre").DisplayIndex = _DisplayIndex
-            '    _DisplayIndex += 1
-
-            'End If
-
-            .Columns("Codigo").Visible = True
-            .Columns("Codigo").HeaderText = "Código"
-            '.Columns("UltimaAccion").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("Codigo").Width = 100
-            .Columns("Codigo").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
-            .Columns("DescripcionPr").Visible = True
-            .Columns("DescripcionPr").HeaderText = "Descripción"
-            '.Columns("UltimaAccion").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("DescripcionPr").Width = 150
-            .Columns("DescripcionPr").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
-            .Columns("Udm").Visible = True
-            .Columns("Udm").HeaderText = "UM"
-            .Columns("Udm").ToolTipText = "Unidad de medida de la operación"
-            '.Columns("UltimaAccion").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("Udm").Width = 30
-            .Columns("Udm").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
-            .Columns("StfiEnBodega").Visible = True
-            .Columns("StfiEnBodega").HeaderText = "Stock Bod."
-            .Columns("StfiEnBodega").ToolTipText = "Stock físico en bodega del producto al momento de la gestión"
-            .Columns("StfiEnBodega").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("StfiEnBodega").Width = 60
-            .Columns("StfiEnBodega").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
-            .Columns("Cantidad").Visible = True
-            .Columns("Cantidad").HeaderText = "Cantidad"
-            .Columns("Cantidad").ToolTipText = "Cantidad inventariada al momento de la operación"
-            .Columns("Cantidad").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("Cantidad").Width = 60
-            .Columns("Cantidad").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
-            .Columns("Diferencia").Visible = True
-            .Columns("Diferencia").HeaderText = "Diferencia"
-            .Columns("Diferencia").ToolTipText = "Diferencia entre el stock en bodega y la cantidad inventariada"
-            .Columns("Diferencia").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("Diferencia").Width = 60
-            .Columns("Diferencia").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
-        End With
-
-
-        'For Each _Fila As DataGridViewRow In Grilla.Rows
-
-        '    Dim _Mesn_Pdte_Ver = _Fila.Cells("Mesn_Pdte_Ver").Value
-        '    Dim _Resp_Pdte_Ver = _Fila.Cells("Resp_Pdte_Ver").Value
-        '    Dim _Estado As String = _Fila.Cells("Estado").Value
-        '    Dim _Aceptado As Boolean = _Fila.Cells("Aceptado").Value
-        '    Dim _Rechazado As Boolean = _Fila.Cells("Rechazado").Value
-        '    Dim _Prioridad As String = _Fila.Cells("Prioridad").Value
-
-        '    Dim _Icono As Image
-        '    Dim _Nombre_Image As String
-        '    Dim _Num
-
-        '    If _Tipo_Tickets = Enum_Tickets.MisTicket Then
-        '        _Num = _Resp_Pdte_Ver
-        '    Else
-        '        _Num = _Mesn_Pdte_Ver
-        '    End If
-
-        '    Dim _Imagenes_List As ImageList
-
-        '    If Global_Thema = Enum_Themas.Oscuro Then
-        '        _Imagenes_List = Imagenes_16x16_Dark
-        '    Else
-        '        _Imagenes_List = Imagenes_16x16
-        '    End If
-
-        '    If _Estado = "NULO" Then
-        '        _Icono = _Imagenes_List.Images.Item("cancel.png")
-        '    Else
-
-        '        If CBool(_Num) Then
-        '            _Nombre_Image = "comment-number-" & _Num & ".png"
-        '            If _Mesn_Pdte_Ver > 9 Then
-        '                _Nombre_Image = "comment-number-9-plus.png"
-        '            End If
-        '            _Icono = _Imagenes_List.Images.Item(_Nombre_Image)
-
-        '            If Global_Thema = Enum_Themas.Oscuro Then
-        '                _Fila.DefaultCellStyle.ForeColor = Amarillo
-        '            Else
-        '                _Fila.DefaultCellStyle.BackColor = Color.LightYellow
-        '            End If
-
-        '        Else
-        '            _Icono = _Imagenes_List.Images.Item("menu-more.png")
-        '        End If
-
-        '    End If
-
-        '    _Fila.Cells("BtnImagen_Estado").Value = _Icono
-
-        '    If _Aceptado Then _Fila.Cells("NomEstado").Style.ForeColor = Verde
-        '    If _Rechazado Then _Fila.Cells("NomEstado").Style.ForeColor = Rojo
-
-        '    _Fila.Cells("NomPrioridad").Style.ForeColor = Color.White
-
-        '    If _Prioridad = "AL" Then
-        '        _Fila.Cells("NomPrioridad").Style.BackColor = Color.Orange
-        '    End If
-
-        '    If _Prioridad = "BJ" Then
-        '        _Fila.Cells("NomPrioridad").Style.ForeColor = Color.Black
-        '        _Fila.Cells("NomPrioridad").Style.BackColor = Amarillo
-        '    End If
-
-        '    If _Prioridad = "NR" Then
-        '        _Fila.Cells("NomPrioridad").Style.BackColor = Verde
-        '    End If
-
-        '    If _Prioridad = "UR" Then
-        '        _Fila.Cells("NomPrioridad").Style.BackColor = Rojo
-        '    End If
-
-        'Next
-
-        Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
-
-        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_Tickets_Toma" & vbCrLf &
-                       "Where CodFuncionario = '" & FUNCIONARIO & "' And NombreEquipo = '" & _NombreEquipo & "'"
-        _Sql.Ej_consulta_IDU(Consulta_sql)
-
-    End Sub
 
     Sub Sb_Actualizar_Grilla_Treeview(_Carpeta As TreeNode)
 
@@ -518,7 +244,8 @@ Public Class Frm_Tickets_Lista
 
             If nodoPadre.Tag = "ASIGNADOS" Then
                 _Condicion = "And (Tks.Id In (Select Id_Ticket From " & _Global_BaseBk & "Zw_Stk_Tickets_Asignado " &
-                                 "Where CodAgente = '" & FUNCIONARIO & "') " & _Condicion2 & ")"
+                                 "Where CodAgente = '" & FUNCIONARIO & "') " & _Condicion2 & ")" & vbCrLf &
+                                 "And CodFuncionario_Crea <> '" & FUNCIONARIO & "'"
             End If
 
             If nodoPadre.Tag = "ENVIADOS" Then
@@ -533,20 +260,23 @@ Public Class Frm_Tickets_Lista
                 _Condicion += vbCrLf & "And Estado = 'PROC' And Aceptado = 0 And Rechazado = 0"
             End If
 
+            Dim _FechaLimite As DateTime = DateAdd(DateInterval.Month, -1, Now.Date)
+            Dim _FechaLimiteStr As String = Format(_FechaLimite, "yyyyMMdd")
+
             If _Carpeta.Tag = "Aceptados" Then
-                _Condicion += vbCrLf & "And Aceptado = 1 And Rechazado = 0 And Estado <> 'PROC'"
+                _Condicion += vbCrLf & "And Aceptado = 1 And Rechazado = 0 And Estado <> 'PROC' And CONVERT(varchar, FechaCierre, 112) > '" & _FechaLimiteStr & "'"
             End If
 
             If _Carpeta.Tag = "Rechazados" Then
-                _Condicion += vbCrLf & "And Rechazado = 1 And Aceptado = 0 And Estado <> 'PROC'"
+                _Condicion += vbCrLf & "And Rechazado = 1 And Aceptado = 0 And Estado <> 'PROC' And CONVERT(varchar, FechaCierre, 112) > '" & _FechaLimiteStr & "'"
             End If
 
             If _Carpeta.Tag = "Cerradas" Then
-                _Condicion += vbCrLf & "And Estado = 'CERR'"
+                _Condicion += vbCrLf & "And Estado = 'CERR' And CONVERT(varchar, FechaCierre, 112) > '" & _FechaLimiteStr & "'"
             End If
 
             If _Carpeta.Tag = "Nulos" Then
-                _Condicion += vbCrLf & "And Estado = 'NULO'"
+                _Condicion += vbCrLf & "And Estado = 'NULO' And CONVERT(varchar, FechaCierre, 112) > '" & _FechaLimiteStr & "'"
             End If
 
             _NodoSeleccionado = _Carpeta
@@ -569,8 +299,9 @@ Public Class Frm_Tickets_Lista
 
         End If
 
-        Consulta_sql = "Select Distinct Tks.*,NOKOFU As 'NomFuncCrea',TkPrd.Empresa,TkPrd.Sucursal,TkPrd.Bodega,TkPrd.Codigo,TkPrd.Descripcion As DescripcionPr," & vbCrLf &
-                       "Case UdMedida When 1 Then Ud1 Else Ud2 End As 'Udm'--,StfiEnBodega,Cantidad,Diferencia" & vbCrLf &
+        Consulta_sql = "Select Distinct Tks.*,NOKOFU As 'NomFuncCrea',TkPrd.Empresa,TkPrd.Sucursal,TkPrd.Bodega," & vbCrLf &
+                       "TkPrd.Codigo,TkPrd.Descripcion As DescripcionPr," & vbCrLf &
+                       "Case UdMedida When 1 Then Ud1 Else Ud2 End As 'Udm',StfiEnBodega,Cantidad,Diferencia" & vbCrLf &
                        ",Case Prioridad When 'AL' Then 'Alta' When 'NR' Then 'Normal' When 'BJ' Then 'Baja' When 'UR' Then 'Urgente' Else '??' End As NomPrioridad" & vbCrLf &
                        ",Case UltAccion When 'INGR' then 'Ingresada' When 'MENS' then 'Mensaje' When 'RESP' then 'Respondido' When 'CERR' then 'Cerrada' End As UltimaAccion" & vbCrLf &
                        ",Case Estado 
@@ -582,10 +313,10 @@ Public Class Frm_Tickets_Lista
                        "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones AcMs Where AcMs.Id_Raiz = Tks.Id_Raiz And AcMs.Accion In ('MENS','CREA') And AcMs.Visto = 0) As Mesn_Pdte_Ver," & vbCrLf &
                        "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones AcRs Where AcRs.Id_Raiz = Tks.Id_Raiz And AcRs.Accion In ('RESP','CREA') And AcRs.Visto = 0) As Resp_Pdte_Ver" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Stk_Tickets Tks" & vbCrLf &
-                       "Left Join " & _Global_BaseBk & "Zw_Stk_Tickets_Producto TkPrd On Tks.Id_Raiz = TkPrd.Id_Raiz" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Stk_Tickets_Producto TkPrd On Tks.Id_Raiz = TkPrd.Id_Raiz And TkPrd.Id_Raiz = TkPrd.Id_Ticket" & vbCrLf &
                        "Left Join TABFU Fu On Fu.KOFU = CodFuncionario_Crea" & vbCrLf &
                        "Where 1 > 0" & vbCrLf & _Condicion & vbCrLf &
-                       "Order By Tks.Numero Desc"
+                       "Order By Tks.FechaCreacion"
 
         _Tbl_Tickets = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -641,13 +372,13 @@ Public Class Frm_Tickets_Lista
 
             .Columns("NomFuncCrea").Visible = True
             .Columns("NomFuncCrea").HeaderText = "De"
-            .Columns("NomFuncCrea").Width = 100
+            .Columns("NomFuncCrea").Width = 150
             .Columns("NomFuncCrea").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Asunto").Visible = True
             .Columns("Asunto").HeaderText = "Asunto"
-            .Columns("Asunto").Width = 230
+            .Columns("Asunto").Width = 200
             .Columns("Asunto").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -696,6 +427,18 @@ Public Class Frm_Tickets_Lista
 
             End If
 
+            .Columns("Sucursal").Visible = True
+            .Columns("Sucursal").HeaderText = "Suc"
+            .Columns("Sucursal").Width = 30
+            .Columns("Sucursal").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Bodega").Visible = True
+            .Columns("Bodega").HeaderText = "Bod"
+            .Columns("Bodega").Width = 30
+            .Columns("Bodega").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
             .Columns("Codigo").Visible = True
             .Columns("Codigo").HeaderText = "Código"
             '.Columns("UltimaAccion").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
@@ -734,13 +477,35 @@ Public Class Frm_Tickets_Lista
             '.Columns("Cantidad").DisplayIndex = _DisplayIndex
             '_DisplayIndex += 1
 
-            '.Columns("Diferencia").Visible = True
-            '.Columns("Diferencia").HeaderText = "Dif"
-            '.Columns("Diferencia").ToolTipText = "Diferencia entre el stock en bodega y la cantidad inventariada"
-            '.Columns("Diferencia").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("Diferencia").Width = 40
-            '.Columns("Diferencia").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
+            .Columns("Diferencia").Visible = True
+            .Columns("Diferencia").HeaderText = "Dif"
+            .Columns("Diferencia").ToolTipText = "Diferencia entre el stock en bodega y la cantidad inventariada"
+            .Columns("Diferencia").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Diferencia").Width = 45
+            .Columns("Diferencia").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+
+            .Columns("Id").Visible = True
+            .Columns("Id").HeaderText = "Id_Ticket"
+            .Columns("Id").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Id").Width = 50
+            .Columns("Id").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Id_Raiz").Visible = True
+            .Columns("Id_Raiz").HeaderText = "Id_Raiz"
+            .Columns("Id_Raiz").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Id_Raiz").Width = 50
+            .Columns("Id_Raiz").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Id_Padre").Visible = True
+            .Columns("Id_Padre").HeaderText = "Id_Padre"
+            .Columns("Id_Padre").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Id_Padre").Width = 50
+            .Columns("Id_Padre").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
         End With
 
@@ -865,6 +630,19 @@ Public Class Frm_Tickets_Lista
 
         'Next
 
+        'Sb_Actualizar_Grilla_Acciones(0)
+
+        ' Posicionarse en la primera fila de la grilla si tiene datos
+        If Grilla.Rows.Count > 0 Then
+            Grilla.CurrentCell = Grilla.Rows(0).Cells("Numero")
+            Dim _Id_Raiz As Integer = Grilla.Rows(0).Cells("Id_Raiz").Value
+            Sb_Actualizar_Grilla_Acciones(_Id_Raiz)
+        Else
+            Grilla_Acciones.DataSource = Nothing
+        End If
+
+        Txt_Descripcion.Text = String.Empty
+
         Grilla.Refresh()
 
     End Sub
@@ -895,6 +673,7 @@ Public Class Frm_Tickets_Lista
             Dim _Fila As DataGridViewRow = Grilla.CurrentRow
             Dim _Id_Ticket As Integer = _Fila.Cells("Id").Value
             Dim _Numero As String = _Fila.Cells("Numero").Value
+            Dim _SubNro As String = _Fila.Cells("SubNro").Value
 
             Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
 
@@ -916,13 +695,13 @@ Public Class Frm_Tickets_Lista
                 Dim _UsuarioToma As String = _Row_Tomado.Item("KOFU") & " - " & _Row_Tomado.Item("NOKOFU").ToString.Trim
 
                 If Not String.IsNullOrEmpty(_Row_Tomado.Item("Alias").ToString.Trim) Then
-                    _NombreEquipo = _NombreEquipo.ToString.Trim & " (" & _Row_Tomado.Item("Alias") & ")"
+                    _NombreEquipo = _Row_Tomado.Item("Alias")
                 End If
 
                 If MessageBoxEx.Show(Me, "El Ticket se encuentra tomado por el usuario: " & _UsuarioToma & vbCrLf &
                                   "En el equipo: " & _NombreEquipo & vbCrLf & vbCrLf &
                                   "Solo podrá ver el Ticket en modo de lectura" & vbCrLf & vbCrLf &
-                                  "¿Desea abrirlo de todas maneras?", "Ticket tomado",
+                                  "¿Desea abrirlo de todas maneras?", "Ticket " & _Numero & " - " & _SubNro & " tomado",
                                   MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) <> DialogResult.Yes Then
                     Return
                 End If
@@ -976,6 +755,7 @@ Public Class Frm_Tickets_Lista
 
             Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(0))
             Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(1))
+            Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(2))
 
             'If _EsAgente Then
             '    Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(1))
@@ -988,7 +768,8 @@ Public Class Frm_Tickets_Lista
     End Sub
 
     Private Sub Chk_TickesTiposMi_CheckedChanged(sender As Object, e As EventArgs)
-        Sb_Actualizar_Grilla()
+        Dim nodoSeleccionado As TreeNode = Tree_Bandeja.SelectedNode
+        Sb_Actualizar_Grilla_Treeview(nodoSeleccionado)
     End Sub
 
     Private Sub Frm_Tickets_Lista_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
@@ -1010,10 +791,8 @@ Public Class Frm_Tickets_Lista
 
         Dim _BandejaEntrada As TreeNode
         Dim _Asig_Pendientes As TreeNode
-        'Dim _Asig_EnProceso As TreeNode
         Dim _Asig_Aceptados As TreeNode
         Dim _Asig_Rechazados As TreeNode
-        Dim _Asig_Cerradas As TreeNode
         Dim _Asig_Nulos As TreeNode
 
         Dim _Enviados As TreeNode
@@ -1021,7 +800,6 @@ Public Class Frm_Tickets_Lista
         Dim _Env_EnProceso As TreeNode
         Dim _Env_Aceptados As TreeNode
         Dim _Env_Rechazados As TreeNode
-        Dim _Env_Cerradas As TreeNode
         Dim _Env_Nulos As TreeNode
 
         Dim fuenteNegrita As New Font(Tree_Bandeja.Font.Name, 10, FontStyle.Bold)
@@ -1029,19 +807,15 @@ Public Class Frm_Tickets_Lista
         ' Crear los nodos de la Asignados
         _BandejaEntrada = Fx_CrearNodo("ASIGNADOS", "ASIGNADOS", 12, 12)
         _Asig_Pendientes = Fx_CrearNodo("Pendientes", "Pendientes", 0, 1)
-        '_Asig_EnProceso = Fx_CrearNodo("EnProceso", "En proceso", 0, 1)
         _Asig_Aceptados = Fx_CrearNodo("Aceptados", "Aceptados", 0, 1)
         _Asig_Rechazados = Fx_CrearNodo("Rechazados", "Rechazados", 0, 1)
-        '_Asig_Cerradas = Fx_CrearNodo("Cerradas", "Cerradas", 0, 1)
         _Asig_Nulos = Fx_CrearNodo("Nulos", "Nulos", 0, 1)
 
         With _BandejaEntrada
             .NodeFont = fuenteNegrita
             .Nodes.Add(_Asig_Pendientes)
-            '.Nodes.Add(_Asig_EnProceso)
             .Nodes.Add(_Asig_Aceptados)
             .Nodes.Add(_Asig_Rechazados)
-            '   .Nodes.Add(_Asig_Cerradas)
             .Nodes.Add(_Asig_Nulos)
         End With
 
@@ -1051,17 +825,15 @@ Public Class Frm_Tickets_Lista
         _Env_EnProceso = Fx_CrearNodo("EnProceso", "En proceso", 0, 1)
         _Env_Aceptados = Fx_CrearNodo("Aceptados", "Aceptados", 0, 1)
         _Env_Rechazados = Fx_CrearNodo("Rechazados", "Rechazados", 0, 1)
-        '_Env_Cerradas = Fx_CrearNodo("Cerradas", "Cerradas", 0, 1)
         _Env_Nulos = Fx_CrearNodo("Nulos", "Nulos", 0, 1)
 
         With _Enviados
             .NodeFont = fuenteNegrita
-            .Nodes.Add(_Env_Pendientes) '(Fx_CrearNodo("Pendientes", "Pendientes", 0, 1))
+            .Nodes.Add(_Env_Pendientes)
             .Nodes.Add(_Env_EnProceso)
-            .Nodes.Add(_Env_Aceptados) '(Fx_CrearNodo("Aceptados", "Aceptados", 0, 1))
-            .Nodes.Add(_Env_Rechazados) '(Fx_CrearNodo("Rechazados", "Rechazados", 0, 1))
-            '   .Nodes.Add(_Env_Cerradas) '(Fx_CrearNodo("Cerradas", "Cerradas", 0, 1))
-            .Nodes.Add(_Env_Nulos) '(Fx_CrearNodo("Rechazados", "Rechazados", 0, 1))
+            .Nodes.Add(_Env_Aceptados)
+            .Nodes.Add(_Env_Rechazados)
+            .Nodes.Add(_Env_Nulos)
         End With
 
         ' Agregar los nodos principales al TreeView
@@ -1069,17 +841,24 @@ Public Class Frm_Tickets_Lista
         Tree_Bandeja.Nodes.Add(_Enviados)
 
         Tree_Bandeja.ExpandAll()
+        Tree_Bandeja.Update()
 
-        'If Not (_EsAgente) Then
+        ' Crear los nodos de la Asignados
+        _BandejaEntrada = Fx_CrearNodo("TODOS", "TODOS", 12, 12)
+        _Asig_Pendientes = Fx_CrearNodo("Pendientes", "Pendientes", 0, 1)
+        _Asig_Aceptados = Fx_CrearNodo("Aceptados", "Aceptados", 0, 1)
+        _Asig_Rechazados = Fx_CrearNodo("Rechazados", "Rechazados", 0, 1)
+        _Asig_Nulos = Fx_CrearNodo("Nulos", "Nulos", 0, 1)
 
-        '    ' Obtén el nodo que deseas eliminar (por ejemplo, el primer nodo hijo del nodo raíz):
-        '    Dim nodoAEliminar As TreeNode = Tree_Bandeja.Nodes(0)
+        With _BandejaEntrada
+            .NodeFont = fuenteNegrita
+            .Nodes.Add(_Asig_Pendientes)
+            .Nodes.Add(_Asig_Aceptados)
+            .Nodes.Add(_Asig_Rechazados)
+            .Nodes.Add(_Asig_Nulos)
+        End With
 
-        '    ' Elimina el nodo:
-        '    Tree_Bandeja.Nodes(0).Nodes.Remove(nodoAEliminar)
-
-        'End If
-
+        Tree_Bandeja.Nodes.Add(_BandejaEntrada)
         Tree_Bandeja.Update()
 
     End Sub
@@ -1096,22 +875,7 @@ Public Class Frm_Tickets_Lista
     Private Sub Tree_Bandeja_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles Tree_Bandeja.AfterSelect
 
         Dim nodoSeleccionado As TreeNode = e.Node
-        'Dim textoNodo As String = nodoSeleccionado.Text
-        'Dim configuracionNodo As String = nodoSeleccionado.Tag ' Puedes asignar una configuración personalizada al nodo usando la propiedad Tag
-        '' Realiza acciones según el nodo seleccionado
-        'MessageBox.Show($"Nodo seleccionado: {textoNodo}, Configuración: {configuracionNodo}")
-
         Sb_Actualizar_Grilla_Treeview(nodoSeleccionado)
-
-        'For Each nodoRaiz As TreeNode In _BandejaEntrada.Nodes
-        '    Sb_Actualizar_Totales_Nodos(_BandejaEntrada, nodoRaiz)
-        'Next
-
-        'For Each nodoRaiz As TreeNode In _Enviados.Nodes
-        '    Sb_Actualizar_Totales_Nodos(_Enviados, nodoRaiz)
-        'Next
-
-        'Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(0))
 
         Me.Refresh()
 
@@ -1271,21 +1035,114 @@ Public Class Frm_Tickets_Lista
     End Sub
 
     Sub Sb_Filtrar()
+
+        Sb_Filtrar2()
+        Return
+
         Try
             If IsNothing(_Dv) Then Return
 
-            Dim _Buscar As String
+            Sb_Actualizar_Grilla_Acciones(0)
+            Txt_Descripcion.Text = String.Empty
+
+            If Txt_Filtrar.Text.Contains(" ") Then
+                Sb_Filtrar2()
+                Return
+            End If
 
             If Txt_Filtrar.Text.Contains("#") Then
                 Txt_Filtrar.Text = Replace(Txt_Filtrar.Text, "#", "")
                 Txt_Filtrar.Text = "#Tk" & numero_(Txt_Filtrar.Text, 7)
             End If
 
-            'If Chk_MostrarSoloIncluidos.Checked Then
-            _Dv.RowFilter = String.Format("Numero+Asunto+FechaCreacion+NomFuncCrea+Codigo+DescripcionPr Like '%{0}%'", Txt_Filtrar.Text.Trim)
-            'Else
-            '_Dv.RowFilter = String.Format("CUDP+NUCUDP+NUDP+ENDP+VADP+FEEMDP+FEVEDP Like '%{0}%'", Txt_Filtrar.Text.Trim)
-            'End If
+            If Chk_Filtro_Fcreacion.Checked Then
+
+                If Txt_Filtrar.Text.ToLower = "dif-" Or Txt_Filtrar.Text = "-" Then
+                    _Dv.RowFilter = String.Format("Diferencia < 0 And (CONVERT(FechaCreacion, 'System.String') Like '{1}%' Or CONVERT(FechaCreacion, " &
+                                                  "'System.String') Like '{2}%')",
+                                                  Txt_Filtrar.Text.Trim,
+                                                  Dtp_Filtro_Fcreacion.Value.ToString("dd/MM/yyyy"),
+                                                  Dtp_Filtro_Fcreacion.Value.ToString("dd-MM-yyyy"))
+                ElseIf Txt_Filtrar.Text.ToLower = "dif+" Or Txt_Filtrar.Text = "+" Then
+                    _Dv.RowFilter = String.Format("Diferencia > 0 And (CONVERT(FechaCreacion, 'System.String') Like '{1}%' Or CONVERT(FechaCreacion, " &
+                                                  "'System.String') Like '{2}%')",
+                                                  Txt_Filtrar.Text.Trim,
+                                                  Dtp_Filtro_Fcreacion.Value.ToString("dd/MM/yyyy"),
+                                                  Dtp_Filtro_Fcreacion.Value.ToString("dd-MM-yyyy"))
+                Else
+                    _Dv.RowFilter = String.Format("Numero+Asunto+CONVERT(FechaCreacion, 'System.String')+NomFuncCrea+Codigo+DescripcionPr+Sucursal+Bodega+NomPrioridad " &
+                                                  "Like '%{0}%' And (CONVERT(FechaCreacion, 'System.String') Like '{1}%' Or CONVERT(FechaCreacion, 'System.String') Like '{2}%')",
+                                                  Txt_Filtrar.Text.Trim, Dtp_Filtro_Fcreacion.Value.ToString("dd/MM/yyyy"), Dtp_Filtro_Fcreacion.Value.ToString("dd-MM-yyyy"))
+                End If
+
+            Else
+
+                If Txt_Filtrar.Text.ToLower = "dif-" Or Txt_Filtrar.Text = "-" Then
+                    _Dv.RowFilter = String.Format("Diferencia < 0", Txt_Filtrar.Text.Trim)
+                ElseIf Txt_Filtrar.Text.ToLower = "dif+" Or Txt_Filtrar.Text = "+" Then
+                    _Dv.RowFilter = String.Format("Diferencia > 0", Txt_Filtrar.Text.Trim)
+                Else
+                    _Dv.RowFilter = String.Format("Numero+Asunto+FechaCreacion+NomFuncCrea+Codigo+DescripcionPr+Sucursal+Bodega+NomPrioridad " &
+                                                  "Like '%{0}%'", Txt_Filtrar.Text.Trim)
+                End If
+
+            End If
+
+            If Grilla.RowCount = 0 Then
+
+                ToastNotification.Show(Me, "NO SE ENCONTRARON REGISTROS", My.Resources.delete,
+                          2 * 1000, eToastGlowColor.Red, eToastPosition.MiddleCenter)
+
+            End If
+
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, "Cuek!", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End Try
+    End Sub
+
+    Sub Sb_Filtrar2()
+        Try
+            If IsNothing(_Dv) Then Return
+
+            Sb_Actualizar_Grilla_Acciones(0)
+            Txt_Descripcion.Text = String.Empty
+
+            Dim filtros As String() = Txt_Filtrar.Text.Trim().Split(" "c)
+            Dim filtroFinal As String = String.Empty
+
+            For Each filtro As String In filtros
+                If Not String.IsNullOrWhiteSpace(filtro) Then
+                    If Not String.IsNullOrEmpty(filtroFinal) Then
+                        filtroFinal &= " AND "
+                    End If
+
+                    If filtro.ToLower = "dif-" Then
+                        filtroFinal &= String.Format("Diferencia <0")
+                    ElseIf filtro.ToLower = "dif+" Then
+                        filtroFinal &= String.Format("Diferencia >0")
+                    Else
+                        filtroFinal &= String.Format("(Numero+Asunto+CONVERT(FechaCreacion, 
+                        'System.String')+NomFuncCrea+Codigo+DescripcionPr+Sucursal+Bodega+NomPrioridad Like '%{0}%')", filtro)
+                    End If
+
+                End If
+            Next
+
+            If Chk_Filtro_Fcreacion.Checked Then
+                If Not String.IsNullOrEmpty(filtroFinal) Then
+                    filtroFinal &= " AND "
+                End If
+                filtroFinal &= String.Format("(CONVERT(FechaCreacion, 'System.String') Like '{0}%' Or CONVERT(FechaCreacion, 'System.String') Like '{1}%')",
+                                                             Dtp_Filtro_Fcreacion.Value.ToString("dd/MM/yyyy"), Dtp_Filtro_Fcreacion.Value.ToString("dd-MM-yyyy"))
+            End If
+
+            _Dv.RowFilter = filtroFinal
+
+            If Grilla.RowCount = 0 Then
+                ToastNotification.Show(Me, "NO SE ENCONTRARON REGISTROS", My.Resources.delete,
+                                          2 * 1000, eToastGlowColor.Red, eToastPosition.MiddleCenter)
+            End If
+
         Catch ex As Exception
             MessageBoxEx.Show(Me, ex.Message, "Cuek!", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End Try
@@ -1298,6 +1155,7 @@ Public Class Frm_Tickets_Lista
     End Sub
 
     Private Sub Txt_Filtrar_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Filtrar.ButtonCustom2Click
+        Chk_Filtro_Fcreacion.Checked = False
         If String.IsNullOrWhiteSpace(Txt_Filtrar.Text) Then
             Return
         End If
@@ -1317,34 +1175,6 @@ Public Class Frm_Tickets_Lista
         Call Grilla_CellDoubleClick(Nothing, Nothing)
     End Sub
 
-    Private Sub Btn_TicketProducto_Click(sender As Object, e As EventArgs) Handles Btn_TicketProducto.Click
-
-        Try
-
-            'RemoveHandler Grilla.CellFormatting, AddressOf Grilla_CellFormatting
-
-            Dim _Fila As DataGridViewRow = Grilla.CurrentRow
-            Dim _Id_Ticket As Integer = _Fila.Cells("Id").Value
-
-            Dim _Cl_Tickets As New Cl_Tickets
-
-            Dim _Mensaje As LsValiciones.Mensajes
-
-            _Mensaje = _Cl_Tickets.Fx_Llenar_Ticket(_Id_Ticket)
-            _Mensaje = _Cl_Tickets.FX_Llenar_Producto(_Cl_Tickets.Zw_Stk_Tickets.Id_Raiz)
-
-            Dim Fm As New Frm_Tickets_IngProducto(_Cl_Tickets.Zw_Stk_Tickets.Id_Tipo)
-            Fm.Zw_Stk_Tickets_Producto = _Cl_Tickets.Zw_Stk_Tickets_Producto
-            Fm.SoloLectura = True
-            Fm.ShowDialog(Me)
-
-        Catch ex As Exception
-        Finally
-            'AddHandler Grilla.CellFormatting, AddressOf Grilla_CellFormatting
-        End Try
-
-    End Sub
-
     Private Sub Btn_Mnu_Copiar_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_Copiar.Click
 
         With Grilla
@@ -1354,8 +1184,6 @@ Public Class Frm_Tickets_Lista
 
             Dim Copiar = .Rows(.CurrentRow.Index).Cells(_Cabeza).Value
             Clipboard.SetText(Copiar)
-
-            'MessageBoxEx.Show(Me, _Texto_Cabeza & " esta en el portapapeles", "Copiar", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         End With
 
@@ -1391,4 +1219,268 @@ Public Class Frm_Tickets_Lista
             Return
         End If
     End Sub
+
+    Sub Sb_Actualizar_Grilla_Acciones(_Id_Raiz As Integer)
+
+        Consulta_sql = "Select Tk.Id As 'Id_Ticket',Tk.Id_Padre,Tk.Id_Raiz,Acc.Id As 'Id_Accion'," & vbCrLf &
+                       "(Select Numero From " & _Global_BaseBk & "Zw_Stk_Tickets Where Id = Tk.Id_Raiz) As 'Ticket_Origen'," & vbCrLf &
+                       "Tk.Numero,Acc.Asunto,Acc.CodFunGestiona,Cf.NOKOFU As 'NombreFunGestiona',Acc.Accion,Acc.Fecha,Acc.CodFuncionario," & vbCrLf &
+                       "Case Acc.CodFunGestiona When Acc.CodFuncionario Then 'FunCrea' When Acc.CodAgente Then 'FunAge' End As 'FunAccion',Acc.Aceptado,Acc.Rechazado," & vbCrLf &
+                       "Case Acc.Accion " & vbCrLf &
+                       "When 'CREA' Then 'Crea Ticket' " & vbCrLf &
+                       "When 'MENS' Then 'Mensaje' " & vbCrLf &
+                       "When 'RESP' Then 'Mensaje' " & vbCrLf &
+                       "When 'OBS'  Then 'Observación' " & vbCrLf &
+                       "When 'NULO' Then 'Anula' " & vbCrLf &
+                       "When 'SOLC' Then 'Sol. Cierre' " & vbCrLf &
+                       "When 'ACCI' Then 'Acepta y cierra ticket' " & vbCrLf &
+                       "When 'RECI' Then 'Rechaza y cierra ticket' " & vbCrLf &
+                       "When 'CERR' Then 'Cierra ticket' " & vbCrLf &
+                       "When 'CECR' Then 'Acepta y crea nuevo ticket' " & vbCrLf &
+                       "When 'RECH' Then 'Rechazado' Else '???' End As 'StrAccion'," & vbCrLf &
+                       "Cf.NOKOFU As 'NombreFunAge'," & vbCrLf &
+                       "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Archivos Where Id_TicketAc = Acc.Id) As 'Num_Attach'," & vbCrLf &
+                       "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Producto Where Id_TicketAc = Acc.Id) As 'Producto_Attach'," & vbCrLf &
+                       "Acc.Descripcion," & vbCrLf &
+                       "Case CreaNewTicket When 1 Then Tk.SubNro Else '' End As 'Ticket Crea'," & vbCrLf &
+                       "ISNULL(Tkc.SubNro,'') As 'Ticket Cierra'," & vbCrLf &
+                       "Acc.Tido_Cierra,Acc.Nudo_Cierra,Acc.Idmaeedo_Cierra,Acc.ConfSinDoc_Cierra" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones Acc" & vbCrLf &
+                       "Left Join TABFU Cf On Cf.KOFU = CodFunGestiona" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Stk_Tickets Tk On Tk.Id = Acc.Id_Ticket" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Stk_Tickets Tkc On Tkc.Id = Acc.Id_Ticket_Cierra " & vbCrLf &
+                       "Where" & vbCrLf &
+                       "Id_Ticket In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tickets Where Id_Raiz = " & _Id_Raiz & ")" & vbCrLf &
+                       "Order By Id_Ticket,Fecha"
+
+        Dim _Tbl_Acciones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+        With Grilla_Acciones
+
+            .DataSource = _Tbl_Acciones
+
+            OcultarEncabezadoGrilla(Grilla_Acciones, True)
+
+            Dim _DisplayIndex = 0
+
+            .Columns("Btn_ImagenUser").Width = 40
+            .Columns("Btn_ImagenUser").HeaderText = "User"
+            .Columns("Btn_ImagenUser").Visible = True
+            '.Columns("Btn_ImagenUser").Frozen = True
+            .Columns("Btn_ImagenUser").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("StrAccion").Visible = True
+            .Columns("StrAccion").HeaderText = "Acción"
+            .Columns("StrAccion").Width = 150
+            .Columns("StrAccion").Frozen = True
+            .Columns("StrAccion").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("CodFunGestiona").Visible = True
+            .Columns("CodFunGestiona").HeaderText = "CF"
+            .Columns("CodFunGestiona").Width = 30
+            '.Columns("CodFunGestiona").Frozen = True
+            .Columns("CodFunGestiona").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("NombreFunAge").Visible = True
+            .Columns("NombreFunAge").HeaderText = "De"
+            .Columns("NombreFunAge").Width = 150
+            '.Columns("NombreFunAge").Frozen = True
+            .Columns("NombreFunAge").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Asunto").Visible = True
+            .Columns("Asunto").HeaderText = "Asunto"
+            .Columns("Asunto").Width = 240
+            '.Columns("Asunto").Frozen = True
+            .Columns("Asunto").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Btn_ProductoInfo").Width = 40
+            .Columns("Btn_ProductoInfo").HeaderText = "P.I."
+            .Columns("Btn_ProductoInfo").ToolTipText = "Información del producto"
+            .Columns("Btn_ProductoInfo").Visible = True
+            .Columns("Btn_ProductoInfo").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Btn_ImagenAttach").Width = 40
+            .Columns("Btn_ImagenAttach").HeaderText = "Att."
+            .Columns("Btn_ImagenAttach").ToolTipText = "Archivos adjuntos"
+            .Columns("Btn_ImagenAttach").Visible = True
+            .Columns("Btn_ImagenAttach").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Btn_DocCierra").Width = 40
+            .Columns("Btn_DocCierra").HeaderText = "Doc."
+            .Columns("Btn_DocCierra").ToolTipText = "Documento de ajuste"
+            .Columns("Btn_DocCierra").Visible = True
+            .Columns("Btn_DocCierra").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("ConfSinDoc_Cierra").Width = 40
+            .Columns("ConfSinDoc_Cierra").HeaderText = "C.S.D."
+            .Columns("ConfSinDoc_Cierra").ToolTipText = "Confirma cierre sin documento adjunto"
+            .Columns("ConfSinDoc_Cierra").Visible = True
+            .Columns("ConfSinDoc_Cierra").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Fecha").Visible = True
+            .Columns("Fecha").HeaderText = "Fecha creación"
+            '.Columns("Fecha").ToolTipText = "de tope de la oferta"
+            '.Columns("Fecha").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("Fecha").Width = 110
+            .Columns("Fecha").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Descripcion").Width = 1500
+            .Columns("Descripcion").HeaderText = "Descripción"
+            '.Columns("Descripcion").ToolTipText = "Descripción"
+            .Columns("Descripcion").Visible = True
+            .Columns("Descripcion").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+        End With
+
+        Dim _CodFunInicia As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Stk_Tickets", "CodFuncionario_Crea", "Id = " & _Id_Raiz)
+
+        For Each _Fila As DataGridViewRow In Grilla_Acciones.Rows
+
+            Dim _Icono As Image
+            Dim _Nombre_Image As String
+            Dim _Accion As String = _Fila.Cells("Accion").Value
+            Dim _Aceptado As Boolean = _Fila.Cells("Aceptado").Value
+            Dim _Rechazado As Boolean = _Fila.Cells("Rechazado").Value
+            Dim _Num_Attach As Integer = _Fila.Cells("Num_Attach").Value
+            Dim _Producto_Attach As Integer = _Fila.Cells("Producto_Attach").Value
+            Dim _Idmaeedo_Cierra As Integer = _Fila.Cells("Idmaeedo_Cierra").Value
+
+            Dim _CodFuncionario As String = _Fila.Cells("CodFuncionario").Value.ToString.Trim
+            Dim _CodFunGestiona As String = _Fila.Cells("CodFunGestiona").Value.ToString.Trim
+
+            Dim _Imagenes_List As ImageList
+
+            If Global_Thema = Enum_Themas.Oscuro Then
+                _Imagenes_List = Imagenes_16x16_Dark
+            Else
+                _Imagenes_List = Imagenes_16x16
+            End If
+
+            If CBool(_Num_Attach) Then
+                _Nombre_Image = "attach-number-" & _Num_Attach & ".png"
+                If _Num_Attach > 9 Then
+                    _Nombre_Image = "attach-number-9-plus.png"
+                End If
+                _Icono = _Imagenes_List.Images.Item(_Nombre_Image)
+                _Fila.DefaultCellStyle.BackColor = Color.LightYellow
+            Else
+                _Icono = _Imagenes_List.Images.Item("menu-more.png")
+            End If
+            _Fila.Cells("Btn_ImagenAttach").Value = _Icono
+
+            If _CodFunGestiona = _CodFunInicia Then
+                _Icono = _Imagenes_List.Images.Item("people-customer-man.png")
+                If _Accion = "OBS" Then _Icono = _Imagenes_List.Images.Item("people-customer-man-note.png")
+            Else
+                _Icono = _Imagenes_List.Images.Item("people-vendor.png")
+                If _Aceptado Then _Icono = _Imagenes_List.Images.Item("people-vendor-ok.png")
+                If _Rechazado Then _Icono = _Imagenes_List.Images.Item("people-vendor-error.png")
+                If _Accion = "OBS" Then _Icono = _Imagenes_List.Images.Item("people-vendor-note.png")
+            End If
+
+            If _Accion = "NULO" Then
+                _Icono = _Imagenes_List.Images.Item("delete_button_error.png")
+            End If
+
+            _Fila.Cells("Btn_ImagenUser").Value = _Icono
+
+            If CBool(_Producto_Attach) Then
+                _Icono = _Imagenes_List.Images.Item("product-info.png")
+            Else
+                _Icono = _Imagenes_List.Images.Item("menu-more.png")
+            End If
+            _Fila.Cells("Btn_ProductoInfo").Value = _Icono
+
+            If CBool(_Idmaeedo_Cierra) Then
+                _Icono = _Imagenes_List.Images.Item("document-browse.png")
+            Else
+                _Icono = _Imagenes_List.Images.Item("menu-more.png")
+            End If
+            _Fila.Cells("Btn_DocCierra").Value = _Icono
+
+        Next
+
+        Try
+            Grilla_Acciones.CurrentCell = Grilla_Acciones.Rows(Grilla_Acciones.RowCount - 1).Cells("StrAccion")
+        Catch ex As Exception
+
+        End Try
+
+        Grilla_Acciones.Refresh()
+
+    End Sub
+
+    Private Sub Grilla_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellEnter
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Id_Raiz As Integer = _Fila.Cells("Id_Raiz").Value
+
+        Sb_Actualizar_Grilla_Acciones(_Id_Raiz)
+
+    End Sub
+
+    Private Sub Grilla_Acciones_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Acciones.CellClick
+
+        Dim _Fila As DataGridViewRow = Grilla_Acciones.CurrentRow
+
+        Dim _Id_Ticket As Integer = _Fila.Cells("Id_Ticket").Value
+        Dim _Id_TicketAc As Integer = _Fila.Cells("Id_Accion").Value
+        Dim _Num_Attach As Integer = _Fila.Cells("Num_Attach").Value
+        Dim _Producto_Attach As Integer = _Fila.Cells("Producto_Attach").Value
+        Dim _Idmaeedo_Cierra As Integer = _Fila.Cells("Idmaeedo_Cierra").Value
+
+        Dim _Cabeza = Grilla_Acciones.Columns(Grilla_Acciones.CurrentCell.ColumnIndex).Name
+
+        If _Cabeza = "Btn_ImagenAttach" Or _Cabeza = "Btn_ProductoInfo" Or _Cabeza = "Btn_DocCierra" Then
+
+            MessageBoxEx.Show(Me, "Para ver esta información debe ingregar al Ticket", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+        End If
+
+    End Sub
+
+    Private Sub Btn_Filtrar_Click(sender As Object, e As EventArgs) Handles Btn_Filtrar.Click
+        Sb_Filtrar()
+    End Sub
+
+    Private Sub Grilla_Acciones_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Acciones.CellEnter
+
+        Try
+
+            Dim _Fila As DataGridViewRow = Grilla_Acciones.CurrentRow
+            Dim _NombreFunGestiona As String = _Fila.Cells("NombreFunGestiona").Value
+            Dim _StrAccion As String = _Fila.Cells("StrAccion").Value
+            Dim _Asunto As String = _Fila.Cells("Asunto").Value
+            Txt_Descripcion.Text = _NombreFunGestiona & " " & _StrAccion.ToUpper & vbCrLf & "Asunto: " & _Asunto & vbCrLf & "Detalle: " & _Fila.Cells("Descripcion").Value
+            Txt_Descripcion.Text = _Fila.Cells("Descripcion").Value
+        Catch ex As Exception
+            Txt_Descripcion.Text = String.Empty
+        End Try
+
+    End Sub
+
+    Private Sub Tree_Bandeja_BeforeExpand(sender As Object, e As TreeViewCancelEventArgs) Handles Tree_Bandeja.BeforeExpand
+
+        Dim nodoSeleccionado As TreeNode = e.Node
+
+        If e.Node.Tag = "TODOS" Then
+
+            If Fx_Tiene_Permiso(Me, "Tkts0007") Then Return
+            e.Cancel = True
+
+        End If
+
+    End Sub
+
 End Class

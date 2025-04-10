@@ -307,7 +307,7 @@ Public Class Frm_Inf_Vencimientos_Detalle_Documentos
                                     "Select * From #INFVEN" & vbCrLf &
                                     "Where 1 > 0 And" & vbCrLf &
                                     "ENDO = '" & _CodEntidad & "'" & vbCrLf &
-                                    "AND TIDO IN ('FCV','BLV','FVX')" & vbCrLf &
+                                    "AND TIDO IN ('FCV','BLV','FVX','FDV')" & vbCrLf &
                                     _Sql_Filtro_Extra & vbCrLf &
                                     "Order By FEVE,FEEMDO" & vbCrLf &
                                     "Drop Table #INFVEN"

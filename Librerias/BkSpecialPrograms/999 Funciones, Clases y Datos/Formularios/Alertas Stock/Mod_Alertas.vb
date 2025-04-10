@@ -1,14 +1,16 @@
-﻿Imports System.Windows.Forms
+﻿'Imports System.Windows.Forms
 Imports DevComponents.DotNetBar
-Imports System.Drawing
+'Imports System.Drawing
 
 Public Module Mod_Alertas
 
-    Public Sub ShowLoadAlert(ByVal m_AlertOnLoad As DevComponents.DotNetBar.Balloon,
-                             ByVal _Formulario As Form,
-                             Optional ByVal _AutoClose As Boolean = False,
-                             Optional ByVal _AutoClose_TiempoOut As Integer = 7,
-                             Optional ByVal _Agrupar_por_asociados As Boolean = False)
+    Public Sub ShowLoadAlert(m_AlertOnLoad As DevComponents.DotNetBar.Balloon,
+                              _Formulario As Form,
+                             Optional _AutoClose As Boolean = False,
+                             Optional _AutoClose_TiempoOut As Integer = 7,
+                             Optional _Agrupar_por_asociados As Boolean = False,
+                             Optional _DesdeContenedor As Boolean = False,
+                             Optional _IdCont As Integer = 0)
 
 
         ' Dim _m_AlertOnLoad = New AlertCustom() = m_AlertOnLoad 'As DevComponents.DotNetBar.Balloon
@@ -46,6 +48,9 @@ Public Module Mod_Alertas
             .AlertAnimation = eAlertAnimation.BottomToTop
             .AlertAnimationDuration = 300
             .Pro_Agrupar_Asociados = _Agrupar_por_asociados
+
+            .DesdeContenedor = _DesdeContenedor
+            .IdCont = _IdCont
 
             If Not IsNothing(.Pro_RowProducto) Then
                 .Show()

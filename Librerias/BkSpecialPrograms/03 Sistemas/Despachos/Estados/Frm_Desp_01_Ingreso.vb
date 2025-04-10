@@ -240,7 +240,7 @@ Public Class Frm_Desp_01_Ingreso
 
         Txt_Observaciones.Text = _Row_Despacho.Item("Observaciones")
 
-        Chk_EntregaPaletizada.Checked = _Row_Despacho.Item("EntregaPaletizada") ' _Cl_Despacho.Row_Conf_Despacho.Item("EntregaPaletizada")
+        Chk_EntregaPaletizada.Checked = _Row_Despacho.Item("EntregaPaletizada")
 
         Me.Text = "ORDEN DE DESPACHO NRO: " & _Cl_Despacho.Nro_Despacho.Trim & ", Responsable: " & _Row_Despacho.Item("Responsable")
 
@@ -673,7 +673,18 @@ Public Class Frm_Desp_01_Ingreso
 
                     If _Reg > 0 Then
 
-                        If Not IsNothing(_Row_Direccion_Despacho) Then
+                        If IsNothing(_Row_Direccion_Despacho) Then
+
+                            Sb_Modificar_Direccion_2(_CodEntidad_Dir, _CodSucEntidad_Dir)
+
+                            If IsNothing(_Row_Direccion_Despacho) Then
+
+                                Sb_Limpiar()
+                                Return
+
+                            End If
+
+                        Else
 
                             Dim _Msg = MessageBoxEx.Show(Me, "¿Confirma la dirección de despacho?" & vbCrLf & vbCrLf &
                                                  "Dirección: " & _Cl_Despacho.Row_Despacho.Item("Direccion").ToString.Trim & vbCrLf & vbCrLf &

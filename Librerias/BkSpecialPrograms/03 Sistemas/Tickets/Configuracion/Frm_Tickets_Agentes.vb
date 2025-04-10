@@ -54,13 +54,13 @@ Public Class Frm_Tickets_Agentes
 
             .Columns("CodAgente").Visible = True
             .Columns("CodAgente").HeaderText = "Código"
-            .Columns("CodAgente").Width = 50
+            .Columns("CodAgente").Width = 70
             .Columns("CodAgente").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("NOKOFU").Visible = True
             .Columns("NOKOFU").HeaderText = "Nombre de agente"
-            .Columns("NOKOFU").Width = 390
+            .Columns("NOKOFU").Width = 410
             .Columns("NOKOFU").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -107,7 +107,7 @@ Public Class Frm_Tickets_Agentes
 
             .Columns("Tipo").Visible = True
             .Columns("Tipo").HeaderText = "Tipo"
-            .Columns("Tipo").Width = 200
+            .Columns("Tipo").Width = 190
             .Columns("Tipo").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -210,7 +210,8 @@ Public Class Frm_Tickets_Agentes
             Return
         End If
 
-        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_Agentes Where CodAgente = '" & _CodAgente & "'"
+        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_Agentes Where CodAgente = '" & _CodAgente & "'" & vbCrLf &
+                       "Delete " & _Global_BaseBk & "Zw_Stk_Tickets_Asignado Where CodAgente = '" & _CodAgente & "'"
         If _Sql.Ej_consulta_IDU(Consulta_sql) Then
             MessageBoxEx.Show(Me, "El Agente se elimino correctamente", "Eliminar", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Sb_Actualizar_Grilla()

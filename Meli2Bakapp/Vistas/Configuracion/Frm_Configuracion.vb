@@ -63,6 +63,8 @@ Public Class Frm_Configuracion
         Txt_Empresa.Tag = String.Empty
         Txt_Empresa.Text = String.Empty
 
+        Txt_ModalidadFac.Text = _Cl_ConfiguracionLocal.Configuracion.ModalidadFac
+
         Txt_Bodega.Tag = New BodegaFacturacion
 
         If Not IsNothing(_Cl_ConfiguracionLocal.Configuracion.BodegaFacturacion) Then
@@ -116,6 +118,8 @@ Public Class Frm_Configuracion
             Txt_BancoPago.Text = .NomBanco
             Chk_PagarAuto.Checked = .PagarAuto
         End With
+
+        Txt_ModalidadFac.Text = _Cl_ConfiguracionLocal.Configuracion.ModalidadFac
 
     End Sub
 
@@ -264,6 +268,13 @@ Public Class Frm_Configuracion
             Return
         End If
 
+        If String.IsNullOrWhiteSpace(Txt_ModalidadFac.Text) Then
+            MessageBoxEx.Show(Me, "Falta la modalidad de facturación", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_ModalidadFac.Focus()
+            Return
+        End If
+
         If String.IsNullOrEmpty(Txt_Bodega.Text) Then
             MessageBoxEx.Show(Me, "Debe ingresar los datos de la bodega de facturación", "Validación",
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -384,6 +395,7 @@ Public Class Frm_Configuracion
             .DocEmitir = Cmb_DocEmitir.SelectedValue
             .Concepto_R = Txt_Concepto_R.Tag
             .Concepto_D = Txt_Concepto_D.Tag
+            .ModalidadFac = Txt_ModalidadFac.Text
         End With
 
         With _Cl_ConfiguracionLocal.Configuracion.Pago
@@ -661,6 +673,41 @@ Public Class Frm_Configuracion
 
             Txt_CajaPago.Tag = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
             Txt_CajaPago.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion").ToString.Trim
+
+        End If
+
+    End Sub
+
+    Private Sub Txt_ModalidadFac_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_ModalidadFac.ButtonCustomClick
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Pro_Nombre_Encabezado_Informe = "MODALIDADES DE LA EMPRESA"
+
+        _Filtrar.Tabla = "CONFIEST"
+        _Filtrar.Campo = "MODALIDAD"
+        _Filtrar.Descripcion = "MODALIDAD"
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra,
+                               "And MODALIDAD <> '  ' And EMPRESA = '" & Txt_Empresa.Tag & "'",
+                               Nothing, False, True) Then
+
+            Dim _Tbl_Transportista As DataTable = _Filtrar.Pro_Tbl_Filtro
+
+            Dim _Row As DataRow = _Tbl_Transportista.Rows(0)
+
+            Dim _Modalidad = _Row.Item("Codigo").ToString.Trim
+
+            'Dim _RowFormato As DataRow = Fx_Formato_Modalidad(Me, _Modalidad, "FCV", True)
+
+            'If IsNothing(_RowFormato) Then
+            '    _Modalidad = String.Empty
+            '    'Throw New System.Exception("No existe formato de documento para la modalidad")
+            'End If
+
+            Txt_ModalidadFac.Tag = _Modalidad
+            Txt_ModalidadFac.Text = _Modalidad
 
         End If
 

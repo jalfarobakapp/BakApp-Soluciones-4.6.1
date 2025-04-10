@@ -27,5 +27,6 @@
     Public Property DocEmitir As String
     Public Property CodFuncionario_Factura As String
     Public Property EnvFacAutoBk As Boolean
+    Public Property Modalidad_Fac As String
 
 End Class

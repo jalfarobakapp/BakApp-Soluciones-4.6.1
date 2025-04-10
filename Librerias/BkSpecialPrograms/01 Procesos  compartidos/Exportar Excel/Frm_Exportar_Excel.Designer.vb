@@ -52,7 +52,7 @@ Partial Class Frm_Exportar_Excel
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Exportar_a_Excel, Me.Btn_Exportar_Csv, Me.Btn_Exportar_Txt, Me.Btn_Ver_Detalle, Me.Btn_Carpeta_Informes, Me.Btn_Cancelar})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Exportar_a_Excel, Me.Btn_Exportar_Csv, Me.Btn_Ver_Detalle, Me.Btn_Carpeta_Informes, Me.Btn_Cancelar, Me.Btn_Exportar_Txt})
         Me.Bar1.Location = New System.Drawing.Point(0, 159)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(635, 41)
@@ -88,6 +88,7 @@ Partial Class Frm_Exportar_Excel
         Me.Btn_Exportar_Txt.ImageAlt = CType(resources.GetObject("Btn_Exportar_Txt.ImageAlt"), System.Drawing.Image)
         Me.Btn_Exportar_Txt.Name = "Btn_Exportar_Txt"
         Me.Btn_Exportar_Txt.Tooltip = "Exportar a .txt"
+        Me.Btn_Exportar_Txt.Visible = False
         '
         'Btn_Ver_Detalle
         '

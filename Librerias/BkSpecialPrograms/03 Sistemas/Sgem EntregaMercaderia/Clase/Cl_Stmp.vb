@@ -222,10 +222,11 @@ Public Class Cl_Stmp
                 .Numero = Fx_NvoNro_Stmp()
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stmp_Enc (Empresa,Sucursal,Numero,CodFuncionario_Crea,Idmaeedo,Tido," &
-                               "Nudo,Endo,Suendo,FechaCreacion,Estado,Secueven,Facturar,DocEmitir,Fecha_Facturar) Values " &
-                       "('" & .Empresa & "','" & .Sucursal & "','" & .Numero & "','" & .CodFuncionario_Crea & "'," & .Idmaeedo &
-                       ",'" & .Tido & "','" & .Nudo & "','" & .Endo & "','" & .Suendo & "','" & Format(.FechaCreacion, "yyyyMMdd HH:mm:ss") & "'" &
-                       ",'" & .Estado & "','" & .Secueven & "'," & Convert.ToInt32(.Facturar) & ",'" & .DocEmitir & "','" & Format(.Fecha_Facturar, "yyyyMMdd") & "')"
+                               "Nudo,Endo,Suendo,FechaCreacion,Estado,Secueven,Facturar,DocEmitir,Fecha_Facturar,PagarAuto,Idmaedpce_Paga,CodFuncionario_Paga) Values " &
+                               "('" & .Empresa & "','" & .Sucursal & "','" & .Numero & "','" & .CodFuncionario_Crea & "'," & .Idmaeedo &
+                               ",'" & .Tido & "','" & .Nudo & "','" & .Endo & "','" & .Suendo & "','" & Format(.FechaCreacion, "yyyyMMdd HH:mm:ss") & "'" &
+                               ",'" & .Estado & "','" & .Secueven & "'," & Convert.ToInt32(.Facturar) & ",'" & .DocEmitir & "','" & Format(.Fecha_Facturar, "yyyyMMdd") & "'" &
+                               "," & Convert.ToInt32(.PagarAuto) & "," & .Idmaedpce_Paga & ",'" & .CodFuncionario_Paga & "')"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                 Comando.Transaction = myTrans
@@ -545,7 +546,10 @@ Public Class Cl_Stmp
                              _Picker As Boolean,
                              _Empresa As String,
                              _Sucursal As String,
-                             _CodFuncionario_Crea As String) As LsValiciones.Mensajes
+                             _CodFuncionario_Crea As String,
+                             _PagarAuto As Boolean,
+                             _Idmaedpce_Paga As Integer,
+                             _CodFuncionario_Paga As String) As LsValiciones.Mensajes
 
         Dim _FechaServidor As DateTime = FechaDelServidor()
 
@@ -658,10 +662,16 @@ Public Class Cl_Stmp
             If .Secueven.Contains("NB") Then .DocEmitir = "BLV"
             If .Secueven.Contains("NF") Then .DocEmitir = "FCV"
 
+            .PagarAuto = _PagarAuto
+            .Idmaedpce_Paga = _Idmaedpce_Paga
+            .CodFuncionario_Paga = _CodFuncionario_Paga
+
         End With
 
-        Consulta_sql = "Select Ddo.*,Isnull(RtuVariable,0) As RtuVariable From MAEDDO Ddo" & vbCrLf &
+        Consulta_sql = "Select Ddo.*,Cast((Case When mp.NMARCA = '¡' Then 1 Else 0 End) As Bit) As RtuVariable" & vbCrLf &
+                       "From MAEDDO Ddo" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Docu_Det ZDet On Ddo.IDMAEDDO = ZDet.Idmaeddo" & vbCrLf &
+                       "Left Join MAEPR mp On mp.KOPR = Ddo.KOPRCT " & vbCrLf &
                        "Where IDMAEEDO = " & _Row_Documento.Item("IDMAEEDO")
         Dim _Tbl_Detalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 

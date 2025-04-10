@@ -25,20 +25,23 @@ Partial Class Frm_GDI2GRI
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_GDI2GRI))
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Limpiar = New DevComponents.DotNetBar.ButtonItem()
         Me.Txt_Producto = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_BodegaGDI = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
+        Me.Dtp_FechaEmision = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
+        Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_BodegaGRI = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.DInput_Cantidad = New DevComponents.Editors.DoubleInput()
         Me.Lbl_StfiEnBodega = New DevComponents.DotNetBar.LabelX()
         Me.Cmb_UdMedida = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.Lbl_UdMedida = New DevComponents.DotNetBar.LabelX()
-        Me.DInput_Cantidad = New DevComponents.Editors.DoubleInput()
-        Me.Btn_Limpiar = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_BodegaGDI = New DevComponents.DotNetBar.Controls.TextBoxX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
+        CType(Me.Dtp_FechaEmision, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DInput_Cantidad, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -67,6 +70,16 @@ Partial Class Frm_GDI2GRI
         Me.Btn_Grabar.Name = "Btn_Grabar"
         Me.Btn_Grabar.Tooltip = "Grabar"
         '
+        'Btn_Limpiar
+        '
+        Me.Btn_Limpiar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Limpiar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Limpiar.Image = CType(resources.GetObject("Btn_Limpiar.Image"), System.Drawing.Image)
+        Me.Btn_Limpiar.ImageAlt = CType(resources.GetObject("Btn_Limpiar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Limpiar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_Limpiar.Name = "Btn_Limpiar"
+        Me.Btn_Limpiar.Tooltip = "Nuevo, limpiar documento [F5]"
+        '
         'Txt_Producto
         '
         Me.Txt_Producto.BackColor = System.Drawing.Color.White
@@ -75,9 +88,9 @@ Partial Class Frm_GDI2GRI
         '
         Me.Txt_Producto.Border.Class = "TextBoxBorder"
         Me.Txt_Producto.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Producto.ButtonCustom.Image = CType(resources.GetObject("Txt_BuscaXEntidad.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Producto.ButtonCustom.Image = CType(resources.GetObject("Txt_Producto.ButtonCustom.Image"), System.Drawing.Image)
         Me.Txt_Producto.ButtonCustom.Visible = True
-        Me.Txt_Producto.ButtonCustom2.Image = CType(resources.GetObject("Txt_BuscaXEntidad.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Producto.ButtonCustom2.Image = CType(resources.GetObject("Txt_Producto.ButtonCustom2.Image"), System.Drawing.Image)
         Me.Txt_Producto.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Producto.ForeColor = System.Drawing.Color.Black
         Me.Txt_Producto.Location = New System.Drawing.Point(84, 23)
@@ -105,6 +118,8 @@ Partial Class Frm_GDI2GRI
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.Controls.Add(Me.Dtp_FechaEmision)
+        Me.GroupPanel1.Controls.Add(Me.LabelX4)
         Me.GroupPanel1.Controls.Add(Me.Txt_BodegaGRI)
         Me.GroupPanel1.Controls.Add(Me.DInput_Cantidad)
         Me.GroupPanel1.Controls.Add(Me.Lbl_StfiEnBodega)
@@ -150,53 +165,71 @@ Partial Class Frm_GDI2GRI
         Me.GroupPanel1.TabIndex = 68
         Me.GroupPanel1.Text = "Datos del producto"
         '
-        'LabelX1
+        'Dtp_FechaEmision
         '
-        Me.LabelX1.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX1.ForeColor = System.Drawing.Color.Black
-        Me.LabelX1.Location = New System.Drawing.Point(3, 51)
-        Me.LabelX1.Name = "LabelX1"
-        Me.LabelX1.Size = New System.Drawing.Size(75, 23)
-        Me.LabelX1.TabIndex = 69
-        Me.LabelX1.Text = "Bodega salida"
-        '
-        'Txt_BodegaGDI
-        '
-        Me.Txt_BodegaGDI.BackColor = System.Drawing.Color.White
+        Me.Dtp_FechaEmision.BackColor = System.Drawing.Color.White
         '
         '
         '
-        Me.Txt_BodegaGDI.Border.Class = "TextBoxBorder"
-        Me.Txt_BodegaGDI.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_BodegaGDI.ButtonCustom.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_BodegaGDI.ButtonCustom.Visible = True
-        Me.Txt_BodegaGDI.ButtonCustom2.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom2.Image"), System.Drawing.Image)
-        Me.Txt_BodegaGDI.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_BodegaGDI.ForeColor = System.Drawing.Color.Black
-        Me.Txt_BodegaGDI.Location = New System.Drawing.Point(84, 51)
-        Me.Txt_BodegaGDI.Name = "Txt_BodegaGDI"
-        Me.Txt_BodegaGDI.PreventEnterBeep = True
-        Me.Txt_BodegaGDI.ReadOnly = True
-        Me.Txt_BodegaGDI.Size = New System.Drawing.Size(536, 22)
-        Me.Txt_BodegaGDI.TabIndex = 68
-        '
-        'LabelX3
-        '
-        Me.LabelX3.BackColor = System.Drawing.Color.Transparent
+        Me.Dtp_FechaEmision.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Dtp_FechaEmision.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaEmision.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
+        Me.Dtp_FechaEmision.ButtonDropDown.Visible = True
+        Me.Dtp_FechaEmision.ForeColor = System.Drawing.Color.Black
+        Me.Dtp_FechaEmision.IsPopupCalendarOpen = False
+        Me.Dtp_FechaEmision.Location = New System.Drawing.Point(532, 108)
         '
         '
         '
-        Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX3.ForeColor = System.Drawing.Color.Black
-        Me.LabelX3.Location = New System.Drawing.Point(3, 79)
-        Me.LabelX3.Name = "LabelX3"
-        Me.LabelX3.Size = New System.Drawing.Size(87, 23)
-        Me.LabelX3.TabIndex = 71
-        Me.LabelX3.Text = "Bodega entrada"
+        Me.Dtp_FechaEmision.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_FechaEmision.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaEmision.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
+        Me.Dtp_FechaEmision.MonthCalendar.ClearButtonVisible = True
+        '
+        '
+        '
+        Me.Dtp_FechaEmision.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
+        Me.Dtp_FechaEmision.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_FechaEmision.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
+        Me.Dtp_FechaEmision.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Dtp_FechaEmision.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
+        Me.Dtp_FechaEmision.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
+        Me.Dtp_FechaEmision.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaEmision.MonthCalendar.DisplayMonth = New Date(2025, 2, 1, 0, 0, 0, 0)
+        Me.Dtp_FechaEmision.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
+        Me.Dtp_FechaEmision.MonthCalendar.MarkedDates = New Date(-1) {}
+        Me.Dtp_FechaEmision.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_FechaEmision.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Dtp_FechaEmision.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_FechaEmision.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Dtp_FechaEmision.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaEmision.MonthCalendar.TodayButtonVisible = True
+        Me.Dtp_FechaEmision.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
+        Me.Dtp_FechaEmision.Name = "Dtp_FechaEmision"
+        Me.Dtp_FechaEmision.Size = New System.Drawing.Size(88, 22)
+        Me.Dtp_FechaEmision.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Dtp_FechaEmision.TabIndex = 190
+        Me.Dtp_FechaEmision.Value = New Date(2025, 2, 6, 16, 38, 38, 0)
+        '
+        'LabelX4
+        '
+        Me.LabelX4.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX4.ForeColor = System.Drawing.Color.Black
+        Me.LabelX4.Location = New System.Drawing.Point(455, 108)
+        Me.LabelX4.Name = "LabelX4"
+        Me.LabelX4.Size = New System.Drawing.Size(71, 23)
+        Me.LabelX4.TabIndex = 189
+        Me.LabelX4.Text = "Fecha emisón"
         '
         'Txt_BodegaGRI
         '
@@ -206,9 +239,9 @@ Partial Class Frm_GDI2GRI
         '
         Me.Txt_BodegaGRI.Border.Class = "TextBoxBorder"
         Me.Txt_BodegaGRI.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_BodegaGRI.ButtonCustom.Image = CType(resources.GetObject("TextBoxX2.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_BodegaGRI.ButtonCustom.Image = CType(resources.GetObject("Txt_BodegaGRI.ButtonCustom.Image"), System.Drawing.Image)
         Me.Txt_BodegaGRI.ButtonCustom.Visible = True
-        Me.Txt_BodegaGRI.ButtonCustom2.Image = CType(resources.GetObject("TextBoxX2.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_BodegaGRI.ButtonCustom2.Image = CType(resources.GetObject("Txt_BodegaGRI.ButtonCustom2.Image"), System.Drawing.Image)
         Me.Txt_BodegaGRI.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_BodegaGRI.ForeColor = System.Drawing.Color.Black
         Me.Txt_BodegaGRI.Location = New System.Drawing.Point(84, 79)
@@ -217,6 +250,24 @@ Partial Class Frm_GDI2GRI
         Me.Txt_BodegaGRI.ReadOnly = True
         Me.Txt_BodegaGRI.Size = New System.Drawing.Size(536, 22)
         Me.Txt_BodegaGRI.TabIndex = 70
+        '
+        'DInput_Cantidad
+        '
+        Me.DInput_Cantidad.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.DInput_Cantidad.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.DInput_Cantidad.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.DInput_Cantidad.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.DInput_Cantidad.ForeColor = System.Drawing.Color.Black
+        Me.DInput_Cantidad.Increment = 1.0R
+        Me.DInput_Cantidad.Location = New System.Drawing.Point(84, 135)
+        Me.DInput_Cantidad.MinValue = 0R
+        Me.DInput_Cantidad.Name = "DInput_Cantidad"
+        Me.DInput_Cantidad.ShowUpDown = True
+        Me.DInput_Cantidad.Size = New System.Drawing.Size(111, 22)
+        Me.DInput_Cantidad.TabIndex = 188
         '
         'Lbl_StfiEnBodega
         '
@@ -259,33 +310,53 @@ Partial Class Frm_GDI2GRI
         Me.Lbl_UdMedida.TabIndex = 187
         Me.Lbl_UdMedida.Text = "Unidad"
         '
-        'DInput_Cantidad
+        'LabelX3
         '
-        Me.DInput_Cantidad.BackColor = System.Drawing.Color.White
+        Me.LabelX3.BackColor = System.Drawing.Color.Transparent
         '
         '
         '
-        Me.DInput_Cantidad.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.DInput_Cantidad.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.DInput_Cantidad.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
-        Me.DInput_Cantidad.ForeColor = System.Drawing.Color.Black
-        Me.DInput_Cantidad.Increment = 1.0R
-        Me.DInput_Cantidad.Location = New System.Drawing.Point(84, 135)
-        Me.DInput_Cantidad.MinValue = 0R
-        Me.DInput_Cantidad.Name = "DInput_Cantidad"
-        Me.DInput_Cantidad.ShowUpDown = True
-        Me.DInput_Cantidad.Size = New System.Drawing.Size(111, 22)
-        Me.DInput_Cantidad.TabIndex = 188
+        Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX3.ForeColor = System.Drawing.Color.Black
+        Me.LabelX3.Location = New System.Drawing.Point(3, 79)
+        Me.LabelX3.Name = "LabelX3"
+        Me.LabelX3.Size = New System.Drawing.Size(87, 23)
+        Me.LabelX3.TabIndex = 71
+        Me.LabelX3.Text = "Bodega destino"
         '
-        'Btn_Limpiar
+        'LabelX1
         '
-        Me.Btn_Limpiar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Limpiar.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Limpiar.Image = CType(resources.GetObject("Btn_Limpiar.Image"), System.Drawing.Image)
-        Me.Btn_Limpiar.ImageAlt = CType(resources.GetObject("Btn_Limpiar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Limpiar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_Limpiar.Name = "Btn_Limpiar"
-        Me.Btn_Limpiar.Tooltip = "Nuevo, limpiar documento [F5]"
+        Me.LabelX1.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX1.ForeColor = System.Drawing.Color.Black
+        Me.LabelX1.Location = New System.Drawing.Point(3, 51)
+        Me.LabelX1.Name = "LabelX1"
+        Me.LabelX1.Size = New System.Drawing.Size(75, 23)
+        Me.LabelX1.TabIndex = 69
+        Me.LabelX1.Text = "Bodega origen"
+        '
+        'Txt_BodegaGDI
+        '
+        Me.Txt_BodegaGDI.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_BodegaGDI.Border.Class = "TextBoxBorder"
+        Me.Txt_BodegaGDI.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_BodegaGDI.ButtonCustom.Image = CType(resources.GetObject("Txt_BodegaGDI.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_BodegaGDI.ButtonCustom.Visible = True
+        Me.Txt_BodegaGDI.ButtonCustom2.Image = CType(resources.GetObject("Txt_BodegaGDI.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_BodegaGDI.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_BodegaGDI.ForeColor = System.Drawing.Color.Black
+        Me.Txt_BodegaGDI.Location = New System.Drawing.Point(84, 51)
+        Me.Txt_BodegaGDI.Name = "Txt_BodegaGDI"
+        Me.Txt_BodegaGDI.PreventEnterBeep = True
+        Me.Txt_BodegaGDI.ReadOnly = True
+        Me.Txt_BodegaGDI.Size = New System.Drawing.Size(536, 22)
+        Me.Txt_BodegaGDI.TabIndex = 68
         '
         'Frm_GDI2GRI
         '
@@ -305,6 +376,7 @@ Partial Class Frm_GDI2GRI
         Me.Text = "INGRESO DE GDI Y GRI INMEDIATAMENTE LIGADAS"
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel1.ResumeLayout(False)
+        CType(Me.Dtp_FechaEmision, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DInput_Cantidad, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -324,4 +396,6 @@ Partial Class Frm_GDI2GRI
     Public WithEvents Cmb_UdMedida As DevComponents.DotNetBar.Controls.ComboBoxEx
     Friend WithEvents Lbl_UdMedida As DevComponents.DotNetBar.LabelX
     Public WithEvents Btn_Limpiar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Dtp_FechaEmision As DevComponents.Editors.DateTimeAdv.DateTimeInput
+    Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
 End Class

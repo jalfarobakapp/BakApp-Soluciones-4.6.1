@@ -511,26 +511,28 @@ Public Class Frm_BusquedaDocumento_Filtro
             If Not String.IsNullOrEmpty(TxtNroDocumento.Text) Then
 
                 Dim _Nudo As String = Fx_Rellena_ceros(TxtNroDocumento.Text, 10)
-                Dim _Nro As String
+                'Dim _Nro As String
 
-                _Nro = Replace(_Nudo, "-", ",")
+                _Sql_Nro_Documento = "And Edo.NUDO = '" & _Nudo & "'"
 
-                Dim _Cadena = Split(_Nro, ",")
+                '_Nro = Replace(_Nudo, "-", ",")
 
-                If _Cadena.Length = 2 Then
+                'Dim _Cadena = Split(_Nro, ",")
 
-                    Dim _Tido = _Cadena(0)
-                    _Nudo = Fx_Rellena_ceros(_Cadena(1), 10)
+                'If _Cadena.Length = 2 Then
 
-                    _Sql_Filtro_Documentos = String.Empty
-                    _Sql_Nro_Documento = "And Edo.TIDO = '" & _Tido & "' And Edo.NUDO = '" & _Nudo & "'"
-                    _Usar_Otro_Filtros = False
+                '    Dim _Tido = _Cadena(0)
+                '    _Nudo = Fx_Rellena_ceros(_Cadena(1), 10)
 
-                    GoTo Buscar
-                Else
-                    TxtNroDocumento.Text = _Nudo
-                    _Sql_Nro_Documento = "And Edo.NUDO = '" & _Nudo & "'"
-                End If
+                '    _Sql_Filtro_Documentos = String.Empty
+                '    _Sql_Nro_Documento = "And Edo.TIDO = '" & _Tido & "' And Edo.NUDO = '" & _Nudo & "'"
+                '    _Usar_Otro_Filtros = False
+
+                '    GoTo Buscar
+                'Else
+                '    TxtNroDocumento.Text = _Nudo
+                '    _Sql_Nro_Documento = "And Edo.NUDO = '" & _Nudo & "'"
+                'End If
 
             End If
 
@@ -538,7 +540,7 @@ Public Class Frm_BusquedaDocumento_Filtro
 
         If Rdb_Entidad_Una.Checked Then
 
-            If Not IsNothing(_CodEntidad) OrElse Not String.IsNullOrEmpty(_CodEntidad.Trim) Then
+            If Not IsNothing(_CodEntidad) OrElse Not String.IsNullOrEmpty(_CodEntidad) Then
 
                 If Chk_Todas_Sucursales.Checked Then
                     _Sql_Filtro_Entidades = "Edo.ENDO = '" & _CodEntidad & "'"
@@ -579,17 +581,28 @@ Public Class Frm_BusquedaDocumento_Filtro
             Dim _FlFun As Boolean
 
             _FlFun = (_Tbl_Filtro_Funcionarios Is Nothing)
+
+            If _FlFun Then
+                MessageBoxEx.Show(Me, "No se seleccionó ningún funcionario", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
             _FlFun = CBool(_Tbl_Filtro_Funcionarios.Rows.Count)
+
+            If Not _FlFun Then
+                MessageBoxEx.Show(Me, "No se seleccionó ningún funcionario", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
 
             Dim _Fl = Generar_Filtro_IN(_Tbl_Filtro_Funcionarios, "", "Codigo", False, False, "'")
             If _Fl = "()" Then _FlFun = True
 
-            If _FlFun Then
-                _Sql_Filtro_Fucnionarios = "And Edo.KOFUDO In " & _Fl
-            Else
-                MessageBoxEx.Show(Me, "No se seleccionó ningún funcionario", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Return
-            End If
+            'If _FlFun Then
+            _Sql_Filtro_Fucnionarios = "And Edo.KOFUDO In " & _Fl
+            'Else
+            'MessageBoxEx.Show(Me, "No se seleccionó ningún funcionario", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            'Return
+            'End If
 
         ElseIf Rdb_Funcionarios_Uno.Checked Then
             _Sql_Filtro_Fucnionarios = "And Edo.KOFUDO = '" & CmbFuncionarios.SelectedValue & "'"
@@ -688,8 +701,10 @@ Buscar:
                 Consulta_sql = "Select KOFU From TABFUGD Where KOGRU In (" & _Kogru & ")"
                 Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
-                _Sql_Filtro_Entidades = Generar_Filtro_IN(_Tbl, "", "KOFU", False, False, "'")
-                _Sql_Filtro_Entidades = "And Mae1.KOFUEN In " & _Sql_Filtro_Entidades
+                Dim _Fl_Entidades = Generar_Filtro_IN(_Tbl, "", "KOFU", False, False, "'")
+                _Fl_Entidades = "And Mae1.KOFUEN In " & _Fl_Entidades
+
+                _Sql_Filtro_Entidades += vbCrLf & _Fl_Entidades
 
             End If
 

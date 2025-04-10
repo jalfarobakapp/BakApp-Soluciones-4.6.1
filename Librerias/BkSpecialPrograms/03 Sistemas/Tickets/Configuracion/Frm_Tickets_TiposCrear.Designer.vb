@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Frm_Tickets_TiposCrear
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -24,6 +24,9 @@ Partial Class Frm_Tickets_TiposCrear
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Tickets_TiposCrear))
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Txt_TidoDocCierra = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Chk_ExigeDocCerrar = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_CierraRaiz = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.Rdb_EsTicketUnico = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_NoEsTicketUnico = New DevComponents.DotNetBar.Controls.CheckBoxX()
@@ -38,8 +41,8 @@ Partial Class Frm_Tickets_TiposCrear
         Me.Rdb_AsignadoAgente = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Panel_Productos = New System.Windows.Forms.TableLayoutPanel()
         Me.Chk_Inc_Cantidades = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_Inc_Hora = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Inc_Fecha = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_Inc_Hora = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Txt_Tipo_Cie = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_Area_Cie = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Lbl_Tipo_Cie = New DevComponents.DotNetBar.LabelX()
@@ -57,9 +60,6 @@ Partial Class Frm_Tickets_TiposCrear
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Crear_Tipo = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
-        Me.Chk_CierraRaiz = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_ExigeDocCerrar = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Txt_TidoDocCierra = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.GroupPanel1.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -132,6 +132,64 @@ Partial Class Frm_Tickets_TiposCrear
         Me.GroupPanel1.TabIndex = 0
         Me.GroupPanel1.Text = "Ficha tipo"
         '
+        'Txt_TidoDocCierra
+        '
+        Me.Txt_TidoDocCierra.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_TidoDocCierra.Border.Class = "TextBoxBorder"
+        Me.Txt_TidoDocCierra.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_TidoDocCierra.ButtonCustom.Image = CType(resources.GetObject("Txt_TidoDocCierra.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_TidoDocCierra.ButtonCustom.Visible = True
+        Me.Txt_TidoDocCierra.ButtonCustom2.Image = CType(resources.GetObject("Txt_TidoDocCierra.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_TidoDocCierra.ButtonCustom2.Visible = True
+        Me.Txt_TidoDocCierra.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_TidoDocCierra.ForeColor = System.Drawing.Color.Black
+        Me.Txt_TidoDocCierra.Location = New System.Drawing.Point(257, 391)
+        Me.Txt_TidoDocCierra.Name = "Txt_TidoDocCierra"
+        Me.Txt_TidoDocCierra.PreventEnterBeep = True
+        Me.Txt_TidoDocCierra.ReadOnly = True
+        Me.Txt_TidoDocCierra.Size = New System.Drawing.Size(289, 22)
+        Me.Txt_TidoDocCierra.TabIndex = 151
+        Me.Txt_TidoDocCierra.TabStop = False
+        '
+        'Chk_ExigeDocCerrar
+        '
+        Me.Chk_ExigeDocCerrar.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_ExigeDocCerrar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_ExigeDocCerrar.CheckBoxImageChecked = CType(resources.GetObject("Chk_ExigeDocCerrar.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_ExigeDocCerrar.FocusCuesEnabled = False
+        Me.Chk_ExigeDocCerrar.ForeColor = System.Drawing.Color.Black
+        Me.Chk_ExigeDocCerrar.Location = New System.Drawing.Point(19, 391)
+        Me.Chk_ExigeDocCerrar.Name = "Chk_ExigeDocCerrar"
+        Me.Chk_ExigeDocCerrar.Size = New System.Drawing.Size(259, 22)
+        Me.Chk_ExigeDocCerrar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_ExigeDocCerrar.TabIndex = 150
+        Me.Chk_ExigeDocCerrar.TabStop = False
+        Me.Chk_ExigeDocCerrar.Text = "Exige adjuntar documento para cerrar Ticket"
+        '
+        'Chk_CierraRaiz
+        '
+        Me.Chk_CierraRaiz.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_CierraRaiz.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_CierraRaiz.CheckBoxImageChecked = CType(resources.GetObject("Chk_CierraRaiz.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_CierraRaiz.FocusCuesEnabled = False
+        Me.Chk_CierraRaiz.ForeColor = System.Drawing.Color.Black
+        Me.Chk_CierraRaiz.Location = New System.Drawing.Point(19, 372)
+        Me.Chk_CierraRaiz.Name = "Chk_CierraRaiz"
+        Me.Chk_CierraRaiz.Size = New System.Drawing.Size(277, 22)
+        Me.Chk_CierraRaiz.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_CierraRaiz.TabIndex = 149
+        Me.Chk_CierraRaiz.TabStop = False
+        Me.Chk_CierraRaiz.Text = "Aceptar Ticket cierra Raiz"
+        '
         'TableLayoutPanel2
         '
         Me.TableLayoutPanel2.BackColor = System.Drawing.Color.Transparent
@@ -145,7 +203,7 @@ Partial Class Frm_Tickets_TiposCrear
         Me.TableLayoutPanel2.RowCount = 2
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(527, 51)
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(527, 46)
         Me.TableLayoutPanel2.TabIndex = 146
         '
         'Rdb_EsTicketUnico
@@ -161,11 +219,11 @@ Partial Class Frm_Tickets_TiposCrear
         Me.Rdb_EsTicketUnico.ForeColor = System.Drawing.Color.Black
         Me.Rdb_EsTicketUnico.Location = New System.Drawing.Point(3, 3)
         Me.Rdb_EsTicketUnico.Name = "Rdb_EsTicketUnico"
-        Me.Rdb_EsTicketUnico.Size = New System.Drawing.Size(521, 19)
+        Me.Rdb_EsTicketUnico.Size = New System.Drawing.Size(521, 17)
         Me.Rdb_EsTicketUnico.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_EsTicketUnico.TabIndex = 11
         Me.Rdb_EsTicketUnico.TabStop = False
-        Me.Rdb_EsTicketUnico.Text = "<b>Es Ticket único</b>: No permite crear otro ticket a partir de este, si permite" &
+        Me.Rdb_EsTicketUnico.Text = "<b>Es Ticket Ãºnico</b>: No permite crear otro ticket a partir de este, si permite" &
     " tener ticket anteriores"
         '
         'Rdb_NoEsTicketUnico
@@ -179,13 +237,13 @@ Partial Class Frm_Tickets_TiposCrear
         Me.Rdb_NoEsTicketUnico.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_NoEsTicketUnico.FocusCuesEnabled = False
         Me.Rdb_NoEsTicketUnico.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_NoEsTicketUnico.Location = New System.Drawing.Point(3, 28)
+        Me.Rdb_NoEsTicketUnico.Location = New System.Drawing.Point(3, 26)
         Me.Rdb_NoEsTicketUnico.Name = "Rdb_NoEsTicketUnico"
-        Me.Rdb_NoEsTicketUnico.Size = New System.Drawing.Size(521, 20)
+        Me.Rdb_NoEsTicketUnico.Size = New System.Drawing.Size(521, 17)
         Me.Rdb_NoEsTicketUnico.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_NoEsTicketUnico.TabIndex = 12
         Me.Rdb_NoEsTicketUnico.TabStop = False
-        Me.Rdb_NoEsTicketUnico.Text = "<b>No es Ticket único</b>: Se abrirá un ticket inmediatamente al aceptar este tip" &
+        Me.Rdb_NoEsTicketUnico.Text = "<b>No es Ticket Ãºnico</b>: Se abrirÃ¡ un ticket inmediatamente al aceptar este tip" &
     "o de requerimiento."
         '
         'Txt_RespuestaXDefectoCerrar
@@ -220,7 +278,7 @@ Partial Class Frm_Tickets_TiposCrear
         Me.LabelX6.Name = "LabelX6"
         Me.LabelX6.Size = New System.Drawing.Size(216, 17)
         Me.LabelX6.TabIndex = 145
-        Me.LabelX6.Text = "Respuesta automática al cerrar Ticket"
+        Me.LabelX6.Text = "Respuesta automÃ¡tica al cerrar Ticket"
         '
         'Chk_PreguntaCreaNewTicket
         '
@@ -238,7 +296,7 @@ Partial Class Frm_Tickets_TiposCrear
         Me.Chk_PreguntaCreaNewTicket.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_PreguntaCreaNewTicket.TabIndex = 15
         Me.Chk_PreguntaCreaNewTicket.TabStop = False
-        Me.Chk_PreguntaCreaNewTicket.Text = "Preguntar si el usuario quiere crear otro ticket igual a este después de grabar"
+        Me.Chk_PreguntaCreaNewTicket.Text = "Preguntar si el usuario quiere crear otro ticket igual a este despuÃ©s de grabar"
         '
         'Chk_CerrarAgenteSinPerm
         '
@@ -274,7 +332,7 @@ Partial Class Frm_Tickets_TiposCrear
         Me.Chk_BodModalXDefecto.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_BodModalXDefecto.TabIndex = 2
         Me.Chk_BodModalXDefecto.TabStop = False
-        Me.Chk_BodModalXDefecto.Text = "Bodega por defecto será la bodega de la modalidad, de lo contrario elegir bodega"
+        Me.Chk_BodModalXDefecto.Text = "Bodega por defecto serÃ¡ la bodega de la modalidad, de lo contrario elegir bodega"
         '
         'Txt_RespuestaXDefecto
         '
@@ -357,7 +415,7 @@ Partial Class Frm_Tickets_TiposCrear
         Me.Panel_Productos.ColumnCount = 3
         Me.Panel_Productos.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.Panel_Productos.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 96.0!))
-        Me.Panel_Productos.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 112.0!))
+        Me.Panel_Productos.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 113.0!))
         Me.Panel_Productos.Controls.Add(Me.Chk_Inc_Cantidades, 0, 0)
         Me.Panel_Productos.Controls.Add(Me.Chk_Inc_Fecha, 1, 0)
         Me.Panel_Productos.Controls.Add(Me.Chk_Inc_Hora, 2, 0)
@@ -381,29 +439,11 @@ Partial Class Frm_Tickets_TiposCrear
         Me.Chk_Inc_Cantidades.ForeColor = System.Drawing.Color.Black
         Me.Chk_Inc_Cantidades.Location = New System.Drawing.Point(4, 4)
         Me.Chk_Inc_Cantidades.Name = "Chk_Inc_Cantidades"
-        Me.Chk_Inc_Cantidades.Size = New System.Drawing.Size(111, 13)
+        Me.Chk_Inc_Cantidades.Size = New System.Drawing.Size(110, 13)
         Me.Chk_Inc_Cantidades.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Inc_Cantidades.TabIndex = 3
         Me.Chk_Inc_Cantidades.TabStop = False
         Me.Chk_Inc_Cantidades.Text = "Incluye cantidades"
-        '
-        'Chk_Inc_Hora
-        '
-        Me.Chk_Inc_Hora.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_Inc_Hora.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Inc_Hora.CheckBoxImageChecked = CType(resources.GetObject("Chk_Inc_Hora.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Inc_Hora.FocusCuesEnabled = False
-        Me.Chk_Inc_Hora.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Inc_Hora.Location = New System.Drawing.Point(219, 4)
-        Me.Chk_Inc_Hora.Name = "Chk_Inc_Hora"
-        Me.Chk_Inc_Hora.Size = New System.Drawing.Size(106, 14)
-        Me.Chk_Inc_Hora.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Inc_Hora.TabIndex = 5
-        Me.Chk_Inc_Hora.TabStop = False
-        Me.Chk_Inc_Hora.Text = "Incluye hora"
         '
         'Chk_Inc_Fecha
         '
@@ -415,13 +455,31 @@ Partial Class Frm_Tickets_TiposCrear
         Me.Chk_Inc_Fecha.CheckBoxImageChecked = CType(resources.GetObject("Chk_Inc_Fecha.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Inc_Fecha.FocusCuesEnabled = False
         Me.Chk_Inc_Fecha.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Inc_Fecha.Location = New System.Drawing.Point(122, 4)
+        Me.Chk_Inc_Fecha.Location = New System.Drawing.Point(121, 4)
         Me.Chk_Inc_Fecha.Name = "Chk_Inc_Fecha"
         Me.Chk_Inc_Fecha.Size = New System.Drawing.Size(90, 13)
         Me.Chk_Inc_Fecha.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Inc_Fecha.TabIndex = 4
         Me.Chk_Inc_Fecha.TabStop = False
         Me.Chk_Inc_Fecha.Text = "Incluye fecha"
+        '
+        'Chk_Inc_Hora
+        '
+        Me.Chk_Inc_Hora.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Inc_Hora.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Inc_Hora.CheckBoxImageChecked = CType(resources.GetObject("Chk_Inc_Hora.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Inc_Hora.FocusCuesEnabled = False
+        Me.Chk_Inc_Hora.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Inc_Hora.Location = New System.Drawing.Point(218, 4)
+        Me.Chk_Inc_Hora.Name = "Chk_Inc_Hora"
+        Me.Chk_Inc_Hora.Size = New System.Drawing.Size(106, 14)
+        Me.Chk_Inc_Hora.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Inc_Hora.TabIndex = 5
+        Me.Chk_Inc_Hora.TabStop = False
+        Me.Chk_Inc_Hora.Text = "Incluye hora"
         '
         'Txt_Tipo_Cie
         '
@@ -632,7 +690,7 @@ Partial Class Frm_Tickets_TiposCrear
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(216, 23)
         Me.LabelX2.TabIndex = 140
-        Me.LabelX2.Text = "Respuesta automática al aceptar Ticket"
+        Me.LabelX2.Text = "Respuesta automÃ¡tica al aceptar Ticket"
         '
         'Line1
         '
@@ -686,64 +744,6 @@ Partial Class Frm_Tickets_TiposCrear
         Me.Btn_Eliminar.ImageAlt = CType(resources.GetObject("Btn_Eliminar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Eliminar.Name = "Btn_Eliminar"
         Me.Btn_Eliminar.Tooltip = "Grabar"
-        '
-        'Chk_CierraRaiz
-        '
-        Me.Chk_CierraRaiz.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_CierraRaiz.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_CierraRaiz.CheckBoxImageChecked = CType(resources.GetObject("Chk_CierraRaiz.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_CierraRaiz.FocusCuesEnabled = False
-        Me.Chk_CierraRaiz.ForeColor = System.Drawing.Color.Black
-        Me.Chk_CierraRaiz.Location = New System.Drawing.Point(19, 372)
-        Me.Chk_CierraRaiz.Name = "Chk_CierraRaiz"
-        Me.Chk_CierraRaiz.Size = New System.Drawing.Size(277, 22)
-        Me.Chk_CierraRaiz.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_CierraRaiz.TabIndex = 149
-        Me.Chk_CierraRaiz.TabStop = False
-        Me.Chk_CierraRaiz.Text = "Aceptar Ticket cierra Raiz"
-        '
-        'Chk_ExigeDocCerrar
-        '
-        Me.Chk_ExigeDocCerrar.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_ExigeDocCerrar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_ExigeDocCerrar.CheckBoxImageChecked = CType(resources.GetObject("Chk_ExigeDocCerrar.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_ExigeDocCerrar.FocusCuesEnabled = False
-        Me.Chk_ExigeDocCerrar.ForeColor = System.Drawing.Color.Black
-        Me.Chk_ExigeDocCerrar.Location = New System.Drawing.Point(19, 391)
-        Me.Chk_ExigeDocCerrar.Name = "Chk_ExigeDocCerrar"
-        Me.Chk_ExigeDocCerrar.Size = New System.Drawing.Size(259, 22)
-        Me.Chk_ExigeDocCerrar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_ExigeDocCerrar.TabIndex = 150
-        Me.Chk_ExigeDocCerrar.TabStop = False
-        Me.Chk_ExigeDocCerrar.Text = "Exige adjuntar documento para cerrar Ticket"
-        '
-        'Txt_TidoDocCierra
-        '
-        Me.Txt_TidoDocCierra.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_TidoDocCierra.Border.Class = "TextBoxBorder"
-        Me.Txt_TidoDocCierra.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_TidoDocCierra.ButtonCustom.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_TidoDocCierra.ButtonCustom.Visible = True
-        Me.Txt_TidoDocCierra.ButtonCustom2.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom2.Image"), System.Drawing.Image)
-        Me.Txt_TidoDocCierra.ButtonCustom2.Visible = True
-        Me.Txt_TidoDocCierra.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_TidoDocCierra.ForeColor = System.Drawing.Color.Black
-        Me.Txt_TidoDocCierra.Location = New System.Drawing.Point(257, 391)
-        Me.Txt_TidoDocCierra.Name = "Txt_TidoDocCierra"
-        Me.Txt_TidoDocCierra.PreventEnterBeep = True
-        Me.Txt_TidoDocCierra.ReadOnly = True
-        Me.Txt_TidoDocCierra.Size = New System.Drawing.Size(289, 22)
-        Me.Txt_TidoDocCierra.TabIndex = 151
-        Me.Txt_TidoDocCierra.TabStop = False
         '
         'Frm_Tickets_TiposCrear
         '

@@ -223,7 +223,7 @@ Select Distinct
        --Isnull(Tcd.NOKOPRAL,'...') As NOKOPRAL_PROV,
 	   CAST('' As varchar(21)) As 'KOPRAL_PROV',
 	   CAST('' As varchar(50)) As 'NOKOPRAL_PROV',
-	   CAST('' As varchar(20)) As 'KOPRAL',
+	   CAST('' As varchar(21)) As 'KOPRAL',
 	   CAST('' As varchar(50)) As 'NOKOPRAL',
        ISNULL(Mpo.MENSAJE01,'') As 'MENSAJE01',
 	   ISNULL(Mpo.MENSAJE02,'') As 'MENSAJE02',

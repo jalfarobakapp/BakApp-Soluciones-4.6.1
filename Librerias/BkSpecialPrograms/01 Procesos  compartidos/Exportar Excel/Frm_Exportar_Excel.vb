@@ -1,7 +1,6 @@
 ﻿Imports DevComponents.DotNetBar
 Imports System.IO
 Imports Docs.Excel
-Imports DevComponents.DotNetBar.SuperGrid.Style
 
 Public Class Frm_Exportar_Excel
 
@@ -63,6 +62,8 @@ Public Class Frm_Exportar_Excel
         xls
     End Enum
 
+    Dim _Cl_ExportOpenXml As New Cl_ExportExcelOpenXml
+
     Public Sub New(Tbl_Excel As DataTable)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -112,12 +113,15 @@ Public Class Frm_Exportar_Excel
     Function Fx_Exportar_ExcelJet(NombreArchivo As String,
                                   Directorio As String,
                                   Optional Extencion As Enum_Extension = Enum_Extension.xlsx,
-                                  Optional ByRef _Error As String = "") As String
+                                  Optional ByRef _Error As String = "") As LsValiciones.Mensajes
 
-        Dim fila As Integer = 0
-        Dim columna As Integer = 0
-
+        Dim _Fila As Integer = 0
+        Dim _Columna As Integer = 0
         Dim _Nro_Hoja = 0
+
+        Dim _VariasHojas As Boolean = False
+
+        Dim _Mensaje As New LsValiciones.Mensajes
 
         Try
 
@@ -151,7 +155,7 @@ Public Class Frm_Exportar_Excel
             Circular_Progres_Porcentaje.Maximum = 100 ' Bar.Value = ((Contador * 100) / Tabla.Rows.Count)
             Circular_Progres_Contador.Maximum = _Tbl_Excel.Rows.Count
 
-            columna = 1
+            _Columna = 0
             Circular_Progres_Porcentaje.Value = 0
             Circular_Progres_Contador.Value = 0
 
@@ -162,11 +166,11 @@ Public Class Frm_Exportar_Excel
             Wbook.Worksheets.Add("Hoja" & _Nro_Hoja + 1)
 
             For Each dc In _Tbl_Excel.Columns
-                With Wbook.Worksheets(0).Rows(0).Cells(columna)
+                With Wbook.Worksheets(0).Rows(0).Cells(_Columna)
                     .Style.Font.Bold = True
                     .Style.Font.Color = ColorPalette.Blue
                     .Value = dc.ColumnName
-                    columna += 1
+                    _Columna += 1
                 End With
 
                 If _Cancelar = True Then
@@ -176,12 +180,12 @@ Public Class Frm_Exportar_Excel
                 End If
             Next
 
-            fila += 1
+            _Fila += 1
 
             For Each dr In _Tbl_Excel.Rows
 
                 System.Windows.Forms.Application.DoEvents()
-                columna = 0
+                _Columna = 0
 
                 For Each dc In _Tbl_Excel.Columns
 
@@ -199,13 +203,13 @@ Public Class Frm_Exportar_Excel
 
                     If TipoDeDato = "Double" Or TipoDeDato = "Decimal" Or TipoDeDato = "Int32" Then
                         Dim _Valor_ As Double = De_Txt_a_Num_01(Contenido, 3) 'Gl_Fx_De_Num_a_Tx_01(Contenido, False, 2)
-                        Wbook.Worksheets(_Nro_Hoja).Cells(fila, columna).Value = _Valor_ ' FormatNumber(_Valor_, 2) 'Gl_Fx_De_Num_a_Tx_01(Contenido, 3)
+                        Wbook.Worksheets(_Nro_Hoja).Cells(_Fila, _Columna).Value = _Valor_ ' FormatNumber(_Valor_, 2) 'Gl_Fx_De_Num_a_Tx_01(Contenido, 3)
                     ElseIf TipoDeDato = "DateTime" Then
                         Dim _Fecha As Date = NuloPorNro(dr(dc.ColumnName), "01/01/1900")
-                        Wbook.Worksheets(_Nro_Hoja).Cells(fila, columna).Value = FormatDateTime(_Fecha, DateFormat.ShortDate) 'dr(dc.ColumnName)
+                        Wbook.Worksheets(_Nro_Hoja).Cells(_Fila, _Columna).Value = FormatDateTime(_Fecha, DateFormat.ShortDate) 'dr(dc.ColumnName)
                     ElseIf TipoDeDato = "Boolean" Then
                         _Valor = CInt(NuloPorNro(dr(dc.ColumnName), False)) * -1
-                        Wbook.Worksheets(_Nro_Hoja).Rows(fila).Cells(columna).Value = _Valor
+                        Wbook.Worksheets(_Nro_Hoja).Rows(_Fila).Cells(_Columna).Value = _Valor
                     Else
 
                         _Valor = CStr(dr(dc.ColumnName).ToString)
@@ -218,24 +222,23 @@ Public Class Frm_Exportar_Excel
 
                         If IsNothing(_Valor) Then _Valor = String.Empty
 
-                        Wbook.Worksheets(_Nro_Hoja).Rows(fila).Cells(columna).Value = _Valor.ToString.Trim
+                        Wbook.Worksheets(_Nro_Hoja).Rows(_Fila).Cells(_Columna).Value = _Valor.ToString.Trim
                     End If
 
 
-                    If _Cancelar = True Then
-                        'Circular_Progres_Contador.Value = 0 : Circular_Progres_Porcentaje.Value = 0
-                        'Sb_Procesando(False)
-                        Exit Function
+                    If _Cancelar Then
+                        _Mensaje.Cancelado = True
+                        Throw New Exception("Proceso cancelado por el usuario")
                     End If
 
                     'objHojaExcel.Range(nombreColumna(columna) & fila).Value = "'" & dr(dc.ColumnName).ToString
-                    columna += 1
+                    _Columna += 1
                 Next
 
-                fila += 1
+                _Fila += 1
 
                 ' Liberar memoria periódicamente
-                If fila Mod 1000 = 0 Then
+                If _Fila Mod 1000 = 0 Then
                     GC.Collect()
                 End If
 
@@ -245,41 +248,33 @@ Public Class Frm_Exportar_Excel
                 '    End If
                 'End If
 
-                If _Tbl_Excel.Rows.Count >= 40000 Then
+                'If _Tbl_Excel.Rows.Count >= 40000 Then
 
-                    If fila Mod 20000 = 0 Then 'If fila < 20000 Then
+                '    If _Fila Mod 20000 = 0 Then
 
-                        'For i = 0 To columna - 1
-                        '    Try
-                        '        Wbook.Worksheets(_Nro_Hoja).Columns(i).Autofit()
-                        '    Catch ex As Exception
+                '        _Nro_Hoja += 1
 
-                        '    End Try
-                        'Next
+                '        _Fila = 0
+                '        _Columna = 0
 
-                        _Nro_Hoja += 1
+                '        Wbook.Worksheets.Add("Hoja" & _Nro_Hoja + 1)
 
-                        fila = 0
-                        columna = 0
+                '        For Each dc In _Tbl_Excel.Columns
 
-                        Wbook.Worksheets.Add("Hoja" & _Nro_Hoja + 1)
+                '            With Wbook.Worksheets(_Nro_Hoja).Rows(0).Cells(_Columna)
+                '                .Style.Font.Bold = True
+                '                .Style.Font.Color = ColorPalette.Blue
+                '                .Value = dc.ColumnName
+                '                _Columna += 1
+                '            End With
 
-                        For Each dc In _Tbl_Excel.Columns
+                '        Next
 
-                            With Wbook.Worksheets(_Nro_Hoja).Rows(0).Cells(columna)
-                                .Style.Font.Bold = True
-                                .Style.Font.Color = ColorPalette.Blue
-                                .Value = dc.ColumnName
-                                columna += 1
-                            End With
+                '        _Fila += 1
 
-                        Next
+                '    End If
 
-                        fila += 1
-
-                    End If
-
-                End If
+                'End If
 
                 Contador += 1
                 Circular_Progres_Porcentaje.Value = ((Contador * 100) / _Tbl_Excel.Rows.Count) 'Mas
@@ -293,7 +288,7 @@ Public Class Frm_Exportar_Excel
 
             If _Tbl_Excel.Rows.Count <= 10000 Then
                 For h = 0 To _Nro_Hoja - 1
-                    For i = 0 To columna - 1
+                    For i = 0 To _Columna - 1
                         Wbook.Worksheets(h).Columns(i).Autofit()
                     Next
                 Next
@@ -333,17 +328,26 @@ Public Class Frm_Exportar_Excel
             '       ArchivoGuardado, MsgBoxStyle.Information, "Exportar a Excel")
             _Error = ""
             Txt_Nombre_Archivo.Text = NombreArchivo & "." & Extencion.ToString
-            Return _Archivo
 
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "El archivo fue guardado con exito en la carpeta:" & vbCrLf & _Archivo
+            _Mensaje.Detalle = "Exportar a Excel"
+            _Mensaje.Icono = MessageBoxIcon.Information
+            _Mensaje.Tag = _Archivo
 
         Catch ex As Exception
-            _Error = "Fila: " & fila & ", Columna: " & columna & vbCrLf & ex.Message
-            Return ""
-            'MsgBox(ex.Message)
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = "Hoja: Hoja" & _Nro_Hoja + 1 & ", Fila: " & _Fila & ", Columna: " & _Columna & vbCrLf & ex.Message
+            _Mensaje.Detalle = "Exportar a Excel"
+            _Mensaje.Tag = String.Empty
+            _Mensaje.Icono = MessageBoxIcon.Error
         Finally
             Circular_Progres_Contador.Value = 0 : Circular_Progres_Porcentaje.Value = 0
             Sb_Procesando(False)
         End Try
+
+        Return _Mensaje
+
     End Function
 
     Function Fx_Exportar_ExcelJetXHoja(NombreArchivo As String,
@@ -893,21 +897,77 @@ Public Class Frm_Exportar_Excel
             _Extension = Enum_Extension.xlsx
         End If
 
-        _Archivo = String.Empty
+        '_Archivo = String.Empty
+        _Archivo = _Directorio_Destino & "\" & Txt_Nombre_Archivo.Text & "." & _Extension.ToString
+
+        _Cl_ExportOpenXml = New Cl_ExportExcelOpenXml
+
+        _Cl_ExportOpenXml.Circular_Progres_Contador = Circular_Progres_Contador
+        _Cl_ExportOpenXml.Circular_Progres_Porcentaje = Circular_Progres_Porcentaje
+
+        _Configuracion_Regional_()
 
         If Not IsNothing(Ds_Excel) Then
 
-            Dim _Mensaje As LsValiciones.Mensajes = Fx_Exportar_ExcelJetXHoja(Txt_Nombre_Archivo.Text, _Directorio_Destino, Ds_Excel, _Extension)
+            Dim _Mensaje As LsValiciones.Mensajes '= Fx_Exportar_ExcelJetXHoja(Txt_Nombre_Archivo.Text, _Directorio_Destino, Ds_Excel, _Extension)
+
+            Sb_Procesando(True)
+
+            _Mensaje = _Cl_ExportOpenXml.Fx_CrearDocumentoExcel_Ds(_Archivo, Ds_Excel)
+
+            Sb_Procesando(False)
+
+            If _Mensaje.Cancelado Then
+                Return
+            End If
+
+            If Not _Mensaje.EsCorrecto Then
+                If _Mensaje.Mensaje.Contains("System.OutOfMemoryException") Then
+                    _Mensaje.Mensaje += vbCrLf & vbCrLf & "Se recomienda exportar los datos en formato .csv y luego ese archivo abrirlo con Excel"
+                End If
+            End If
 
             MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, Windows.Forms.MessageBoxButtons.OK, _Mensaje.Icono)
 
             If _Mensaje.EsCorrecto Then
                 _Archivo = _Mensaje.Tag
+            Else
+                _Archivo = String.Empty
             End If
 
         Else
 
-            _Archivo = Fx_Exportar_ExcelJet(Txt_Nombre_Archivo.Text, _Directorio_Destino, _Extension)
+            If _Tbl_Excel.Rows.Count >= 75000 Then
+                MessageBoxEx.Show(Me, "Los reistros a exportan superan los 75.000 registros" & vbCrLf &
+                                 "Debe exportar el archivo en formato CSV luego trabajar esos datos en Excel.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+            Dim _Mensaje As LsValiciones.Mensajes '= Fx_Exportar_ExcelJet(Txt_Nombre_Archivo.Text, _Directorio_Destino, _Extension)
+
+            Sb_Procesando(True)
+
+            _Mensaje = _Cl_ExportOpenXml.Fx_CrearDocumentoExcel_Tbl(_Directorio_Destino & "\" & Txt_Nombre_Archivo.Text & "." & _Extension.ToString, _Tbl_Excel)
+
+            Sb_Procesando(False)
+
+            If _Mensaje.Cancelado Then
+                Return
+            End If
+
+            If Not _Mensaje.EsCorrecto Then
+                If _Mensaje.Mensaje.Contains("System.OutOfMemoryException") Then
+                    _Mensaje.Mensaje += vbCrLf & vbCrLf & "Se recomienda exportar los datos en formato .csv y luego ese archivo abrirlo con Excel"
+                End If
+            End If
+
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, Windows.Forms.MessageBoxButtons.OK, _Mensaje.Icono)
+
+            If _Mensaje.EsCorrecto Then
+                _Archivo = _Mensaje.Tag
+            Else
+                _Archivo = String.Empty
+            End If
 
         End If
 
@@ -981,7 +1041,7 @@ Public Class Frm_Exportar_Excel
     End Sub
 
     Private Sub Btn_Cancelar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cancelar.Click
-        _Cancelar = True
+        _Cl_ExportOpenXml.Cancelar = True
     End Sub
 
     Private Sub Frm_Exportar_Excel_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown

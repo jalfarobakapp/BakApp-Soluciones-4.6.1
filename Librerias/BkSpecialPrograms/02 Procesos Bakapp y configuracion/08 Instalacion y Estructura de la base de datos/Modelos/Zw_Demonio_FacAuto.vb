@@ -19,5 +19,16 @@ Public Class Zw_Demonio_FacAuto
     Public Property Id_Pickeo As Integer
     Public Property DocEmitir As String
     Public Property CerrarDespFact As Boolean
+    Public Property CodFuncionario_Factura As String
+    Public Property FechaHoraFacturado As DateTime?
+    Public Property DesdeNVVAuto As Boolean
+    Public Property CantItem As Integer
+    Public Property IpEquipo As String
+    Public Property PagarAuto As Boolean
+    Public Property Idmaedpce_Paga As Integer
+    Public Property CodFuncionario_Paga As String
+    Public Property Pagada As Boolean
+    Public Property Error_Paga As Boolean
+    Public Property Informacion_Paga As String
 
 End Class

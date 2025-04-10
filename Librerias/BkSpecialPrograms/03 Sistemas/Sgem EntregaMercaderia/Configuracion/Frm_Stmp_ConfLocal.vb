@@ -28,13 +28,13 @@ Public Class Frm_Stmp_ConfLocal
                                       Chk_ImprimirTicket.Name, Class_SQLite.Enum_Type._Boolean, Chk_ImprimirTicket.Checked, _Actualizar)
 
         _Sql.Sb_Parametro_Informe_Sql(Txt_NombreEquipoImprime_Ticket, "ConfLocal_Sgem",
-                                      Txt_NombreEquipoImprime_Ticket.Name, Class_SQLite.Enum_Type._String, Txt_NombreEquipoImprime_Ticket.Text, _Actualizar)
+                                      Txt_NombreEquipoImprime_Ticket.Name, Class_SQLite.Enum_Type._Text, Txt_NombreEquipoImprime_Ticket.Text, _Actualizar)
 
         _Sql.Sb_Parametro_Informe_Sql(Txt_Impresora_Ticket, "ConfLocal_Sgem",
-                                      Txt_Impresora_Ticket.Name, Class_SQLite.Enum_Type._String, Txt_Impresora_Ticket.Text, _Actualizar)
+                                      Txt_Impresora_Ticket.Name, Class_SQLite.Enum_Type._Text, Txt_Impresora_Ticket.Text, _Actualizar)
 
         _Sql.Sb_Parametro_Informe_Sql(Txt_NombreFormato_Ticket, "ConfLocal_Sgem",
-                                      Txt_NombreFormato_Ticket.Name, Class_SQLite.Enum_Type._String, Txt_NombreFormato_Ticket.Text, _Actualizar)
+                                      Txt_NombreFormato_Ticket.Name, Class_SQLite.Enum_Type._Text, Txt_NombreFormato_Ticket.Text, _Actualizar)
 
 
     End Sub

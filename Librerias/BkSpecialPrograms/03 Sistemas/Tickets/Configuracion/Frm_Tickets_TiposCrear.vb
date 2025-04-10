@@ -55,7 +55,7 @@ Public Class Frm_Tickets_TiposCrear
             Txt_Area_Cie.Tag = .CieTk_Id_Area
             Txt_Area_Cie.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Stk_Areas", "Area", "Id = " & .CieTk_Id_Area)
 
-            Txt_Tipo_Cie.Tag = .CieTk_Id_Area
+            Txt_Tipo_Cie.Tag = .CieTk_Id_Tipo
             Txt_Tipo_Cie.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Stk_Tipos", "Tipo", "Id = " & .CieTk_Id_Tipo)
 
             Chk_BodModalXDefecto.Checked = .BodModalXDefecto
@@ -115,21 +115,6 @@ Public Class Frm_Tickets_TiposCrear
 
         Dim _Editar As Boolean = CBool(_Zw_Stk_Tipos.Id)
 
-        'If _Editar Then
-
-        '    Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stk_Tickets", "Estado = 'ABIE' And Id_Tipo = " & _Id_Tipo)
-
-        '    If CBool(_Reg) Then
-        '        MessageBoxEx.Show(Me, "Existen Tickets que están abierto y usan este tipo de requerimiento." & vbCrLf &
-        '                      "No es posible editar el tipo de requerimiento hasta que todos los Tickets que lo usan estén cerrados" & vbCrLf & vbCrLf &
-        '                      "Los dato no han sido modificados",
-        '                      "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        '        Me.Close()
-        '        Return
-        '    End If
-
-        'End If
-
         If String.IsNullOrEmpty(Txt_Tipo.Text) Then
             MessageBoxEx.Show(Me, "Debe ingresar el tipo de requerimiento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Txt_Tipo.Focus()
@@ -141,14 +126,6 @@ Public Class Frm_Tickets_TiposCrear
             Txt_Tipo.Focus()
             Return
         End If
-
-        'If Chk_ExigeProducto.Checked Then
-        '    If Not Rdb_AjusInventario.Checked AndAlso Not Rdb_RevInventario.Checked AndAlso Not Rdb_SobreStock.Checked Then
-        '        MessageBoxEx.Show(Me, "Debe marcar alguna de las opciones para la gestión con productos",
-        '                          "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        '        Return
-        '    End If
-        'End If
 
         If Chk_Asignado.Checked Then
 
@@ -467,11 +444,19 @@ Public Class Frm_Tickets_TiposCrear
                 Return
             End If
 
-            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_Tipos Where Id = " & .Id
-            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-                Grabar = True
-                Me.Close()
+            Dim _CodPermiso As String = "Tkt" & numero_(_Zw_Stk_Tipos.Id_Area & _Zw_Stk_Tipos.Id, 6)
+
+            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_Tipos Where Id = " & .Id & vbCrLf &
+                           "Delete " & _Global_BaseBk & "ZW_Permisos Where CodPermiso = '" & _CodPermiso & "'" & vbCrLf &
+                           "Delete " & _Global_BaseBk & "ZW_PermisosVsUsuarios Where CodPermiso = '" & _CodPermiso & "'"
+
+            If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+                MessageBoxEx.Show(Me, _Sql.Pro_Error, "Problema", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
             End If
+
+            Grabar = True
+            Me.Close()
 
         End With
 

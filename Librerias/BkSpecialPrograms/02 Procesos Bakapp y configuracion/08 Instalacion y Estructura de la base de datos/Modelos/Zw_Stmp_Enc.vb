@@ -27,6 +27,7 @@ Public Class Zw_Stmp_Enc
     Public Property TidoGen As String
     Public Property NudoGen As String
     Public Property CodFuncionario_Entrega As String
+    Public Property ConfirmadoWMS As Boolean
     Public Property Planificada As Boolean
     Public Property FechaPlanificacion As DateTime?
     Public Property FechaEntrega As DateTime?
@@ -40,5 +41,9 @@ Public Class Zw_Stmp_Enc
     Public Property FechaPickeoAct As Boolean
     Public Property Ruta As String
     Public Property OrdenRuta As Integer
+    Public Property Observacion As String
+    Public Property PagarAuto As Boolean
+    Public Property Idmaedpce_Paga As Integer
+    Public Property CodFuncionario_Paga As String
 
 End Class

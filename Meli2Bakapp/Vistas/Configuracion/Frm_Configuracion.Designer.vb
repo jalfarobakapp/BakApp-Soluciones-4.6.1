@@ -69,11 +69,8 @@ Partial Class Frm_Configuracion
         Me.Txt_Concepto_D = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
         Me.SuperTabControl1 = New DevComponents.DotNetBar.SuperTabControl()
-        Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.SuperTabItem2 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel3 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.Lbl_RutEmpresa = New DevComponents.DotNetBar.LabelX()
         Me.Txt_ModalidadPago = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_EmpresaPago = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_SucursalPago = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -90,15 +87,20 @@ Partial Class Frm_Configuracion
         Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
         Me.SuperTabItem3 = New DevComponents.DotNetBar.SuperTabItem()
-        Me.Lbl_RutEmpresa = New DevComponents.DotNetBar.LabelX()
+        Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.SuperTabItem2 = New DevComponents.DotNetBar.SuperTabItem()
+        Me.LabelX13 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_ModalidadFac = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControl1.SuspendLayout()
+        Me.SuperTabControlPanel3.SuspendLayout()
         Me.SuperTabControlPanel1.SuspendLayout()
         Me.SuperTabControlPanel2.SuspendLayout()
-        Me.SuperTabControlPanel3.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupBox1
@@ -373,7 +375,7 @@ Partial Class Frm_Configuracion
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 296)
+        Me.Bar1.Location = New System.Drawing.Point(0, 319)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(759, 41)
         Me.Bar1.Stretch = True
@@ -404,7 +406,7 @@ Partial Class Frm_Configuracion
         Me.Txt_Bodega.ButtonCustom2.Image = CType(resources.GetObject("Txt_Bodega.ButtonCustom2.Image"), System.Drawing.Image)
         Me.Txt_Bodega.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Bodega.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Bodega.Location = New System.Drawing.Point(146, 68)
+        Me.Txt_Bodega.Location = New System.Drawing.Point(146, 97)
         Me.Txt_Bodega.Name = "Txt_Bodega"
         Me.Txt_Bodega.PreventEnterBeep = True
         Me.Txt_Bodega.ReadOnly = True
@@ -420,7 +422,7 @@ Partial Class Frm_Configuracion
         '
         Me.LabelX12.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX12.ForeColor = System.Drawing.Color.Black
-        Me.LabelX12.Location = New System.Drawing.Point(13, 70)
+        Me.LabelX12.Location = New System.Drawing.Point(13, 99)
         Me.LabelX12.Name = "LabelX12"
         Me.LabelX12.Size = New System.Drawing.Size(112, 20)
         Me.LabelX12.TabIndex = 113
@@ -507,7 +509,7 @@ Partial Class Frm_Configuracion
         Me.Txt_Vendedor.ButtonCustom2.Image = CType(resources.GetObject("Txt_Vendedor.ButtonCustom2.Image"), System.Drawing.Image)
         Me.Txt_Vendedor.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Vendedor.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Vendedor.Location = New System.Drawing.Point(146, 96)
+        Me.Txt_Vendedor.Location = New System.Drawing.Point(146, 125)
         Me.Txt_Vendedor.Name = "Txt_Vendedor"
         Me.Txt_Vendedor.PreventEnterBeep = True
         Me.Txt_Vendedor.ReadOnly = True
@@ -523,7 +525,7 @@ Partial Class Frm_Configuracion
         '
         Me.LabelX17.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX17.ForeColor = System.Drawing.Color.Black
-        Me.LabelX17.Location = New System.Drawing.Point(13, 98)
+        Me.LabelX17.Location = New System.Drawing.Point(13, 127)
         Me.LabelX17.Name = "LabelX17"
         Me.LabelX17.Size = New System.Drawing.Size(112, 20)
         Me.LabelX17.TabIndex = 119
@@ -542,7 +544,7 @@ Partial Class Frm_Configuracion
         Me.Txt_RutaEtiquetas.ButtonCustom2.Image = CType(resources.GetObject("Txt_RutaEtiquetas.ButtonCustom2.Image"), System.Drawing.Image)
         Me.Txt_RutaEtiquetas.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_RutaEtiquetas.ForeColor = System.Drawing.Color.Black
-        Me.Txt_RutaEtiquetas.Location = New System.Drawing.Point(146, 152)
+        Me.Txt_RutaEtiquetas.Location = New System.Drawing.Point(146, 181)
         Me.Txt_RutaEtiquetas.Name = "Txt_RutaEtiquetas"
         Me.Txt_RutaEtiquetas.PreventEnterBeep = True
         Me.Txt_RutaEtiquetas.ReadOnly = True
@@ -558,7 +560,7 @@ Partial Class Frm_Configuracion
         '
         Me.LabelX18.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX18.ForeColor = System.Drawing.Color.Black
-        Me.LabelX18.Location = New System.Drawing.Point(13, 154)
+        Me.LabelX18.Location = New System.Drawing.Point(13, 183)
         Me.LabelX18.Name = "LabelX18"
         Me.LabelX18.Size = New System.Drawing.Size(112, 20)
         Me.LabelX18.TabIndex = 121
@@ -577,7 +579,7 @@ Partial Class Frm_Configuracion
         Me.Txt_Responsable.ButtonCustom2.Image = CType(resources.GetObject("Txt_Responsable.ButtonCustom2.Image"), System.Drawing.Image)
         Me.Txt_Responsable.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Responsable.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Responsable.Location = New System.Drawing.Point(146, 124)
+        Me.Txt_Responsable.Location = New System.Drawing.Point(146, 153)
         Me.Txt_Responsable.Name = "Txt_Responsable"
         Me.Txt_Responsable.PreventEnterBeep = True
         Me.Txt_Responsable.ReadOnly = True
@@ -593,7 +595,7 @@ Partial Class Frm_Configuracion
         '
         Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX1.ForeColor = System.Drawing.Color.Black
-        Me.LabelX1.Location = New System.Drawing.Point(13, 126)
+        Me.LabelX1.Location = New System.Drawing.Point(13, 155)
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.Size = New System.Drawing.Size(127, 20)
         Me.LabelX1.TabIndex = 123
@@ -608,7 +610,7 @@ Partial Class Frm_Configuracion
         Me.Chk_Facturar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Facturar.CheckBoxImageChecked = CType(resources.GetObject("Chk_Facturar.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Facturar.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Facturar.Location = New System.Drawing.Point(405, 126)
+        Me.Chk_Facturar.Location = New System.Drawing.Point(405, 155)
         Me.Chk_Facturar.Name = "Chk_Facturar"
         Me.Chk_Facturar.Size = New System.Drawing.Size(100, 21)
         Me.Chk_Facturar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -623,7 +625,7 @@ Partial Class Frm_Configuracion
         '
         Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX2.ForeColor = System.Drawing.Color.Black
-        Me.LabelX2.Location = New System.Drawing.Point(529, 124)
+        Me.LabelX2.Location = New System.Drawing.Point(529, 153)
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(106, 24)
         Me.LabelX2.TabIndex = 127
@@ -636,7 +638,7 @@ Partial Class Frm_Configuracion
         Me.Cmb_DocEmitir.ForeColor = System.Drawing.Color.Black
         Me.Cmb_DocEmitir.FormattingEnabled = True
         Me.Cmb_DocEmitir.ItemHeight = 16
-        Me.Cmb_DocEmitir.Location = New System.Drawing.Point(641, 126)
+        Me.Cmb_DocEmitir.Location = New System.Drawing.Point(641, 155)
         Me.Cmb_DocEmitir.Name = "Cmb_DocEmitir"
         Me.Cmb_DocEmitir.Size = New System.Drawing.Size(79, 22)
         Me.Cmb_DocEmitir.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -656,7 +658,7 @@ Partial Class Frm_Configuracion
         Me.Txt_Concepto_R.ButtonCustom2.Image = CType(resources.GetObject("Txt_Concepto_R.ButtonCustom2.Image"), System.Drawing.Image)
         Me.Txt_Concepto_R.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Concepto_R.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Concepto_R.Location = New System.Drawing.Point(146, 178)
+        Me.Txt_Concepto_R.Location = New System.Drawing.Point(146, 207)
         Me.Txt_Concepto_R.Name = "Txt_Concepto_R"
         Me.Txt_Concepto_R.PreventEnterBeep = True
         Me.Txt_Concepto_R.ReadOnly = True
@@ -672,7 +674,7 @@ Partial Class Frm_Configuracion
         '
         Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX3.ForeColor = System.Drawing.Color.Black
-        Me.LabelX3.Location = New System.Drawing.Point(13, 180)
+        Me.LabelX3.Location = New System.Drawing.Point(13, 209)
         Me.LabelX3.Name = "LabelX3"
         Me.LabelX3.Size = New System.Drawing.Size(112, 20)
         Me.LabelX3.TabIndex = 129
@@ -691,7 +693,7 @@ Partial Class Frm_Configuracion
         Me.Txt_Concepto_D.ButtonCustom2.Image = CType(resources.GetObject("Txt_Concepto_D.ButtonCustom2.Image"), System.Drawing.Image)
         Me.Txt_Concepto_D.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Concepto_D.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Concepto_D.Location = New System.Drawing.Point(146, 204)
+        Me.Txt_Concepto_D.Location = New System.Drawing.Point(146, 233)
         Me.Txt_Concepto_D.Name = "Txt_Concepto_D"
         Me.Txt_Concepto_D.PreventEnterBeep = True
         Me.Txt_Concepto_D.ReadOnly = True
@@ -707,7 +709,7 @@ Partial Class Frm_Configuracion
         '
         Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(13, 206)
+        Me.LabelX4.Location = New System.Drawing.Point(13, 235)
         Me.LabelX4.Name = "LabelX4"
         Me.LabelX4.Size = New System.Drawing.Size(112, 20)
         Me.LabelX4.TabIndex = 131
@@ -729,8 +731,8 @@ Partial Class Frm_Configuracion
         Me.SuperTabControl1.ControlBox.MenuBox.Name = ""
         Me.SuperTabControl1.ControlBox.Name = ""
         Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel3)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel3)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
         Me.SuperTabControl1.ForeColor = System.Drawing.Color.Black
         Me.SuperTabControl1.Location = New System.Drawing.Point(12, 12)
@@ -738,64 +740,11 @@ Partial Class Frm_Configuracion
         Me.SuperTabControl1.ReorderTabsEnabled = True
         Me.SuperTabControl1.SelectedTabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
         Me.SuperTabControl1.SelectedTabIndex = 2
-        Me.SuperTabControl1.Size = New System.Drawing.Size(737, 270)
+        Me.SuperTabControl1.Size = New System.Drawing.Size(737, 292)
         Me.SuperTabControl1.TabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SuperTabControl1.TabIndex = 133
         Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem2, Me.SuperTabItem1, Me.SuperTabItem3})
         Me.SuperTabControl1.Text = "SuperTabControl1"
-        '
-        'SuperTabControlPanel1
-        '
-        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX15)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_Concepto_D)
-        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX12)
-        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX4)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_Bodega)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_Concepto_R)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_Global_BaseBk)
-        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX3)
-        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX16)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Cmb_DocEmitir)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_Empresa)
-        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX2)
-        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX17)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Chk_Facturar)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_Vendedor)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_Responsable)
-        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX18)
-        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX1)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_RutaEtiquetas)
-        Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 27)
-        Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
-        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(737, 243)
-        Me.SuperTabControlPanel1.TabIndex = 1
-        Me.SuperTabControlPanel1.TabItem = Me.SuperTabItem1
-        '
-        'SuperTabItem1
-        '
-        Me.SuperTabItem1.AttachedControl = Me.SuperTabControlPanel1
-        Me.SuperTabItem1.GlobalItem = False
-        Me.SuperTabItem1.Name = "SuperTabItem1"
-        Me.SuperTabItem1.Text = "Facturación/Boletas"
-        '
-        'SuperTabControlPanel2
-        '
-        Me.SuperTabControlPanel2.Controls.Add(Me.GroupBox1)
-        Me.SuperTabControlPanel2.Controls.Add(Me.GroupBox2)
-        Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 27)
-        Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
-        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(737, 243)
-        Me.SuperTabControlPanel2.TabIndex = 0
-        Me.SuperTabControlPanel2.TabItem = Me.SuperTabItem2
-        '
-        'SuperTabItem2
-        '
-        Me.SuperTabItem2.AttachedControl = Me.SuperTabControlPanel2
-        Me.SuperTabItem2.GlobalItem = False
-        Me.SuperTabItem2.Name = "SuperTabItem2"
-        Me.SuperTabItem2.Text = "Datos de conexión"
         '
         'SuperTabControlPanel3
         '
@@ -818,9 +767,23 @@ Partial Class Frm_Configuracion
         Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
-        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(737, 243)
+        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(737, 265)
         Me.SuperTabControlPanel3.TabIndex = 0
         Me.SuperTabControlPanel3.TabItem = Me.SuperTabItem3
+        '
+        'Lbl_RutEmpresa
+        '
+        Me.Lbl_RutEmpresa.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Lbl_RutEmpresa.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_RutEmpresa.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_RutEmpresa.Location = New System.Drawing.Point(416, 40)
+        Me.Lbl_RutEmpresa.Name = "Lbl_RutEmpresa"
+        Me.Lbl_RutEmpresa.Size = New System.Drawing.Size(207, 20)
+        Me.Lbl_RutEmpresa.TabIndex = 136
+        Me.Lbl_RutEmpresa.Text = "Rut empresa:"
         '
         'Txt_ModalidadPago
         '
@@ -1092,29 +1055,106 @@ Partial Class Frm_Configuracion
         Me.SuperTabItem3.Name = "SuperTabItem3"
         Me.SuperTabItem3.Text = "Pagos"
         '
-        'Lbl_RutEmpresa
+        'SuperTabControlPanel1
         '
-        Me.Lbl_RutEmpresa.BackColor = System.Drawing.Color.Transparent
+        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX13)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_ModalidadFac)
+        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX15)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_Concepto_D)
+        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX12)
+        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX4)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_Bodega)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_Concepto_R)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_Global_BaseBk)
+        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX3)
+        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX16)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Cmb_DocEmitir)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_Empresa)
+        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX2)
+        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX17)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Chk_Facturar)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_Vendedor)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_Responsable)
+        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX18)
+        Me.SuperTabControlPanel1.Controls.Add(Me.LabelX1)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Txt_RutaEtiquetas)
+        Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 27)
+        Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
+        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(737, 265)
+        Me.SuperTabControlPanel1.TabIndex = 1
+        Me.SuperTabControlPanel1.TabItem = Me.SuperTabItem1
+        '
+        'SuperTabItem1
+        '
+        Me.SuperTabItem1.AttachedControl = Me.SuperTabControlPanel1
+        Me.SuperTabItem1.GlobalItem = False
+        Me.SuperTabItem1.Name = "SuperTabItem1"
+        Me.SuperTabItem1.Text = "Facturación/Boletas"
+        '
+        'SuperTabControlPanel2
+        '
+        Me.SuperTabControlPanel2.Controls.Add(Me.GroupBox1)
+        Me.SuperTabControlPanel2.Controls.Add(Me.GroupBox2)
+        Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 27)
+        Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(737, 265)
+        Me.SuperTabControlPanel2.TabIndex = 0
+        Me.SuperTabControlPanel2.TabItem = Me.SuperTabItem2
+        '
+        'SuperTabItem2
+        '
+        Me.SuperTabItem2.AttachedControl = Me.SuperTabControlPanel2
+        Me.SuperTabItem2.GlobalItem = False
+        Me.SuperTabItem2.Name = "SuperTabItem2"
+        Me.SuperTabItem2.Text = "Datos de conexión"
+        '
+        'LabelX13
+        '
+        Me.LabelX13.BackColor = System.Drawing.Color.Transparent
         '
         '
         '
-        Me.Lbl_RutEmpresa.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Lbl_RutEmpresa.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_RutEmpresa.Location = New System.Drawing.Point(416, 40)
-        Me.Lbl_RutEmpresa.Name = "Lbl_RutEmpresa"
-        Me.Lbl_RutEmpresa.Size = New System.Drawing.Size(207, 20)
-        Me.Lbl_RutEmpresa.TabIndex = 136
-        Me.Lbl_RutEmpresa.Text = "Rut empresa:"
+        Me.LabelX13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX13.ForeColor = System.Drawing.Color.Black
+        Me.LabelX13.Location = New System.Drawing.Point(13, 68)
+        Me.LabelX13.Name = "LabelX13"
+        Me.LabelX13.Size = New System.Drawing.Size(112, 20)
+        Me.LabelX13.TabIndex = 133
+        Me.LabelX13.Text = "Modalidad"
+        '
+        'Txt_ModalidadFac
+        '
+        Me.Txt_ModalidadFac.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_ModalidadFac.Border.Class = "TextBoxBorder"
+        Me.Txt_ModalidadFac.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_ModalidadFac.ButtonCustom.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_ModalidadFac.ButtonCustom.Visible = True
+        Me.Txt_ModalidadFac.ButtonCustom2.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_ModalidadFac.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_ModalidadFac.ForeColor = System.Drawing.Color.Black
+        Me.Txt_ModalidadFac.Location = New System.Drawing.Point(146, 69)
+        Me.Txt_ModalidadFac.Name = "Txt_ModalidadFac"
+        Me.Txt_ModalidadFac.PreventEnterBeep = True
+        Me.Txt_ModalidadFac.ReadOnly = True
+        Me.Txt_ModalidadFac.Size = New System.Drawing.Size(253, 22)
+        Me.Txt_ModalidadFac.TabIndex = 134
+        Me.Txt_ModalidadFac.WatermarkText = "Modalidad que factura"
         '
         'Frm_Configuracion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(759, 337)
+        Me.ClientSize = New System.Drawing.Size(759, 360)
         Me.Controls.Add(Me.SuperTabControl1)
         Me.Controls.Add(Me.Bar1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
@@ -1130,9 +1170,9 @@ Partial Class Frm_Configuracion
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControl1.ResumeLayout(False)
+        Me.SuperTabControlPanel3.ResumeLayout(False)
         Me.SuperTabControlPanel1.ResumeLayout(False)
         Me.SuperTabControlPanel2.ResumeLayout(False)
-        Me.SuperTabControlPanel3.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -1204,4 +1244,6 @@ Partial Class Frm_Configuracion
     Friend WithEvents Txt_EmpresaPago As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Txt_ModalidadPago As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Lbl_RutEmpresa As DevComponents.DotNetBar.LabelX
+    Friend WithEvents LabelX13 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_ModalidadFac As DevComponents.DotNetBar.Controls.TextBoxX
 End Class

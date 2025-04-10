@@ -108,6 +108,12 @@
       <HintPath>..\..\..\..\..\..\Program Files (x86)\DotNetBar for Windows Forms\DevComponents.SuperGrid.Design.dll</HintPath>
     </Reference>
     <Reference Include="DevComponents.TreeGX, Version=11.7.0.0, Culture=neutral, PublicKeyToken=055db68f670cfeab" />
+    <Reference Include="DocumentFormat.OpenXml, Version=3.2.0.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DocumentFormat.OpenXml.3.2.0\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml.Framework, Version=3.2.0.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DocumentFormat.OpenXml.Framework.3.2.0\lib\net46\DocumentFormat.OpenXml.Framework.dll</HintPath>
+    </Reference>
     <Reference Include="DotNetZip, Version=1.16.0.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
       <HintPath>..\..\packages\DotNetZip.1.16.0\lib\net40\DotNetZip.dll</HintPath>
     </Reference>
@@ -201,8 +207,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Dll especiales\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Mail, Version=3.0.24303.1333, Culture=neutral, PublicKeyToken=6dc438ab78a525b3, processorArchitecture=MSIL">
-      <HintPath>..\..\Demonio\AntBru\packages\Mail.dll.3.0.24303.1333\lib\net45\Mail.dll</HintPath>
+    <Reference Include="Mail, Version=3.0.25027.1333, Culture=neutral, PublicKeyToken=6dc438ab78a525b3, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Mail.dll.3.0.25027.1333\lib\net45\Mail.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
@@ -635,6 +641,7 @@
     <Compile Include="01 Procesos  compartidos\Envio y Recepcion de Mail\Configuracion de recepcion de correos POP3\Frm_RecepXML_Cmp_ConfGral.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="01 Procesos  compartidos\Exportar Excel\Cl_ExportExcelOpenXml.vb" />
     <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Familias\Frm_Crear_SpfmFmSbfm.Designer.vb">
       <DependentUpon>Frm_Crear_SpfmFmSbfm.vb</DependentUpon>
     </Compile>
@@ -921,6 +928,12 @@
     <Compile Include="03 Sistemas\Contenedores\Frm_CrearContenedor.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Contenedores\Frm_ProdContenedorPreVta.Designer.vb">
+      <DependentUpon>Frm_ProdContenedorPreVta.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Contenedores\Frm_ProdContenedorPreVta.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_ListaMayoristaMinorista.vb" />
     <Compile Include="03 Sistemas\Despachos\Clases\Cl_Despachos.vb" />
     <Compile Include="03 Sistemas\FTP\Cl_Ftp.vb" />
@@ -935,6 +948,13 @@
       <DependentUpon>Frm_GDI2GRI.vb</DependentUpon>
     </Compile>
     <Compile Include="03 Sistemas\GDI2GRI\Frm_GDI2GRI.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Impresion Masiva\Cl_ImpMasiva.vb" />
+    <Compile Include="03 Sistemas\Impresion Masiva\Frm_ImpMasiva.Designer.vb">
+      <DependentUpon>Frm_ImpMasiva.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Impresion Masiva\Frm_ImpMasiva.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Informes\Stock\Comp No Despachados y Proximas Recepciones\Cl_Imprimir_CompNoDesp.vb" />
@@ -4843,11 +4863,17 @@
     <EmbeddedResource Include="03 Sistemas\Contenedores\Frm_CrearContenedor.resx">
       <DependentUpon>Frm_CrearContenedor.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Contenedores\Frm_ProdContenedorPreVta.resx">
+      <DependentUpon>Frm_ProdContenedorPreVta.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\FTP\Frm_FTP_Conexion.resx">
       <DependentUpon>Frm_FTP_Conexion.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\GDI2GRI\Frm_GDI2GRI.resx">
       <DependentUpon>Frm_GDI2GRI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Impresion Masiva\Frm_ImpMasiva.resx">
+      <DependentUpon>Frm_ImpMasiva.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Frm_Inv_Inventarios.resx">
       <DependentUpon>Frm_Inv_Inventarios.vb</DependentUpon>

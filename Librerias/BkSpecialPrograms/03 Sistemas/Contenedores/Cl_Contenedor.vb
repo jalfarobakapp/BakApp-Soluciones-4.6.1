@@ -311,7 +311,9 @@ Public Class Cl_Contenedor
                                            "Documento: " & _Contenedor.Tido_Rela & "-" & _Contenedor.Nudo_Rela)
             End If
 
-            Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Idmaeedo
+            Consulta_sql = "Select EMPRESA,KOPRCT,Sum(CAPRCO1) As CAPRCO1,Sum(CAPRCO2) As CAPRCO2" & vbCrLf &
+                           "From MAEDDO Where IDMAEEDO = " & _Idmaeedo & vbCrLf &
+                           "Group By EMPRESA,KOPRCT"
             Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim _Ls_Zw_Contenedor_StockProd As New List(Of Zw_Contenedor_StockProd)
@@ -321,14 +323,11 @@ Public Class Cl_Contenedor
                 Dim _ZwCntd As New Zw_Contenedor_StockProd
 
                 With _ZwCntd
+                    .IdCont = 0
                     .Empresa = _Fila("EMPRESA")
                     .IdCont = _IdCont
                     .Contenedor = _Contenedor.Contenedor
                     .Codigo = _Fila("KOPRCT")
-                    .Idmaeedo_Rela = _Fila("IDMAEEDO")
-                    .Tido_Rela = _Fila("TIDO")
-                    .Nudo_Rela = _Fila("NUDO")
-                    .Idmaeddo_Rela = _Fila("IDMAEDDO")
                     .StcfiUd1 = _Fila("CAPRCO1")
                     .StcfiUd2 = _Fila("CAPRCO2")
                     .StcCompUd1 = 0
@@ -365,11 +364,9 @@ Public Class Cl_Contenedor
 
             For Each _Producto As Zw_Contenedor_StockProd In _Ls_Zw_Contenedor_StockProd
 
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Contenedor_StockProd (Empresa,IdCont,Contenedor,Codigo,Idmaeedo_Rela," &
-                               "Tido_Rela,Nudo_Rela,Idmaeddo_Rela,StcfiUd1,StcfiUd2,StcCompUd1,StcCompUd2) Values " &
-                               "('" & _Producto.Empresa & "'," & _Producto.IdCont & ",'" & _Producto.Contenedor & "','" & _Producto.Codigo &
-                               "'," & _Producto.Idmaeedo_Rela & ",'" & _Producto.Tido_Rela & "','" & _Producto.Nudo_Rela &
-                               "'," & _Producto.Idmaeddo_Rela &
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Contenedor_StockProd (Empresa,IdCont,Contenedor,Codigo," &
+                               "StcfiUd1,StcfiUd2,StcCompUd1,StcCompUd2) Values " &
+                               "('" & _Producto.Empresa & "'," & _Producto.IdCont & ",'" & _Producto.Contenedor & "','" & _Producto.Codigo & "'" &
                                "," & De_Num_a_Tx_01(_Producto.StcfiUd1, False, 5) &
                                "," & De_Num_a_Tx_01(_Producto.StcfiUd2, False, 5) &
                                "," & _Producto.StcCompUd1 & "," & _Producto.StcCompUd2 & ")"
@@ -460,23 +457,21 @@ Public Class Cl_Contenedor
 
     End Function
 
-    Function Fx_Quitar_Contenedor_De_Documento(_Idmaeedo As Integer) As LsValiciones.Mensajes
+    Function Fx_Quitar_Contenedor_De_Documento(_Empresa As String, _IdCont As Integer, _Contenedor As String) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
         _Mensaje.Detalle = "Quitar contenedor"
 
         Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Contenedor_StockProd",
-                                                       "Idmaeedo_Rela = " & _Idmaeedo & " And StcCompUd1+StcCompUd2 <> 0")
+                                                       "Empresa = '" & _Empresa & "' And IdCont = " & _IdCont & " And Contenedor = '" & _Contenedor & "' And StcCompUd1+StcCompUd2 <> 0")
 
-        Consulta_sql = "Select IDMAEDDO,TIDO,NUDO,KOPRCT From MAEDDO" & vbCrLf &
-                       "Where ARCHIRST = 'MAEDDO' And IDRST In " &
-                       "(Select Idmaeddo_Rela From " & _Global_BaseBk & "Zw_Contenedor_StockProd Where Idmaeedo_Rela = " & _Idmaeedo & ")"
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Docu_Det Where IdCont = " & _IdCont & " And Contenedor = '" & _Contenedor & "'"
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Try
 
             If CBool(_Reg) Or CBool(_Tbl.Rows.Count) Then
-                Throw New System.Exception("No se puede quitar el contenedor de la OCC, ya que existen NVV asociadas")
+                Throw New System.Exception("No se puede quitar el contenedor de la OCC, ya que existen COV asociadas")
             End If
 
 
@@ -499,7 +494,7 @@ Public Class Cl_Contenedor
                                ",Tido_Rela = ''" &
                                ",Nudo_Rela = ''" &
                                "Where IdCont = " & .IdCont & vbCrLf &
-                               "Delete " & _Global_BaseBk & "Zw_Contenedor_StockProd Where IdCont = " & .IdCont
+                               "Delete " & _Global_BaseBk & "Zw_Contenedor_StockProd Where Empresa = '" & _Empresa & "' And IdCont = " & .IdCont & " And Contenedor ='" & _Contenedor & "'"
 
                 If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql, False) Then
                     Throw New System.Exception("Error al editar el contenedor" & vbCrLf & _Sql.Pro_Error)

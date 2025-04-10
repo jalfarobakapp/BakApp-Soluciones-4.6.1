@@ -388,10 +388,10 @@
     <Compile Include="Informes\Maquinas\Frm_Maquinas_vs_Carga_De_Trabajo.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Informes\Recursos\Recursos_Informes_Produccion.Designer.vb">
+    <Compile Include="Informes\Recursos\Recursos_Informe_Produccion.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Recursos_Informes_Produccion.resx</DependentUpon>
+      <DependentUpon>Recursos_Informe_Produccion.resx</DependentUpon>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -578,10 +578,10 @@
     <EmbeddedResource Include="Informes\Maquinas\Frm_Maquinas_vs_Carga_De_Trabajo.resx">
       <DependentUpon>Frm_Maquinas_vs_Carga_De_Trabajo.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Informes\Recursos\Recursos_Informes_Produccion.resx">
+    <EmbeddedResource Include="Informes\Recursos\Recursos_Informe_Produccion.resx">
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Recursos_Informes_Produccion.Designer.vb</LastGenOutput>
+      <LastGenOutput>Recursos_Informe_Produccion.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -604,10 +604,10 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Formularios Compartidos\Administrar Mesones\Recursos\Sql\SQLQuery Informe DFA en ejecucion x Meson.sql" />
-    <None Include="Informes\Recursos\Sql\SQLQuery Informe de OT avance Vs SubOt por Operaciones.sql" />
-    <None Include="Informes\Recursos\Sql\SQLQuery Informe de OT avance.sql" />
-    <None Include="Informes\Recursos\Sql\SQLQuery Informe DFA en ejecucion.sql" />
-    <None Include="Informes\Recursos\Sql\SQLQuery Informe estado de Maquinas Vs Avence y cola en proceso.sql" />
+    <None Include="Informes\Recursos\Sql\SQLQuery_Informe_de_OT_avance_Vs_SubOt_por_Operaciones.sql" />
+    <None Include="Informes\Recursos\Sql\SQLQuery_Informe_de_OT_avance.sql" />
+    <None Include="Informes\Recursos\Sql\SQLQuery_Informe_DFA_en_ejecucion.sql" />
+    <None Include="Informes\Recursos\Sql\SQLQuery_Informe_estado_de_Maquinas_Vs_Avence_y_cola_en_proceso.sql" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

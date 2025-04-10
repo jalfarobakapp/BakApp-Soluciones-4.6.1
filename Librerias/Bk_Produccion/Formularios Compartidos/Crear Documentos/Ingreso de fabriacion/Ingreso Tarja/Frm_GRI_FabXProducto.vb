@@ -52,6 +52,8 @@ Public Class Frm_GRI_FabXProducto
         'AddHandler Txt_Cantidad.Validated, AddressOf Sb_Txt_Nros_Validated
         'AddHandler Txt_Cantidad.Enter, AddressOf Sb_Txt_Nros_Enter
 
+        Sb_Parametros_Informe_Sql(False)
+
         ActiveControl = Txt_Numot
         Sb_Limpiar()
         Sb_LimpiarMaxi()
@@ -127,11 +129,11 @@ Public Class Frm_GRI_FabXProducto
 
             Dtp_Fiot.Value = _Row_Pote.Item("FIOT")
 
-            If Chk_FechaEmiFiot.Checked Then
-                Dtp_Fecha_Ingreso.Value = _Row_Pote.Item("FIOT")
-            Else
-                Dtp_Fecha_Ingreso.Value = _FechaDelServidor
-            End If
+            'If Chk_FechaEmiFiot.Checked Then
+            Dtp_Fecha_Ingreso.Value = _Row_Pote.Item("FIOT")
+            'Else
+            'Dtp_Fecha_Ingreso.Value = _FechaDelServidor
+            'End If
 
             Sb_BuscarProductos(_Numot)
 
@@ -173,7 +175,7 @@ Public Class Frm_GRI_FabXProducto
             Sb_LimpiarMaxi()
             Txt_Numot.Text = _Numot_Extra
             Dtp_Fiot.Value = _Sql.Fx_Trae_Dato("POTE", "FIOT", "NUMOT = '" & _Numot_Extra & "'")
-            Dtp_Fecha_Ingreso.Value = _FechaDelServidor
+            Dtp_Fecha_Ingreso.Value = Dtp_Fiot.Value '_FechaDelServidor
             Sb_BuscarProductos(_Numot_Extra)
             Return
         End If
@@ -860,9 +862,9 @@ Public Class Frm_GRI_FabXProducto
         'Dim _Analista = _Cl_Tarja._Cl_Tarja_Ent.Analista
 
         _Sql.Sb_Parametro_Informe_Sql(_Turno, "Produccion_Tarja",
-                                      "Tarja_Turno", Class_SQL.Enum_Type._String, _Turno, _Actualizar,, True)
+                                      "Tarja_Turno", Class_SQL.Enum_Type._Text, _Turno, _Actualizar,, True)
         _Sql.Sb_Parametro_Informe_Sql(_Planta, "Produccion_Tarja",
-                                      "Tarja_Planta", Class_SQL.Enum_Type._String, _Planta, _Actualizar,, True)
+                                      "Tarja_Planta", Class_SQL.Enum_Type._Text, _Planta, _Actualizar,, True)
         '_Sql.Sb_Parametro_Informe_Sql(_Analista, "Produccion_Tarja",
         '                              "Tarja_Analista", Class_SQL.Enum_Type._String, _Analista, _Actualizar,, True)
 
@@ -884,6 +886,7 @@ Public Class Frm_GRI_FabXProducto
 
     Private Sub Frm_GRI_FabXProducto_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
         Sb_Actualizar_Parametros_SQL(True)
+        Sb_Parametros_Informe_Sql(True)
     End Sub
 
     Private Sub Txt_Cantidad_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Cantidad.KeyDown
@@ -1359,4 +1362,12 @@ Public Class Frm_GRI_FabXProducto
         End If
 
     End Sub
+
+    Sub Sb_Parametros_Informe_Sql(_Actualizar As Boolean)
+
+        _Sql.Sb_Parametro_Informe_Sql(Chk_GDI_Consumo, "Produccion_Tarja", Chk_GDI_Consumo.Name,
+                                      Class_SQLite.Enum_Type._Boolean, Chk_GDI_Consumo.Checked, _Actualizar, "Tarja")
+
+    End Sub
+
 End Class

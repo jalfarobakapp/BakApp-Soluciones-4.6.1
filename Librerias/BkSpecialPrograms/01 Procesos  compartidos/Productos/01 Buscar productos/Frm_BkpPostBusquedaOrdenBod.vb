@@ -156,7 +156,7 @@ Public Class Frm_BkpPostBusquedaOrdenBod
                     _Tbl_Bodegas.Rows.RemoveAt(_Fila_de_Arriba.Index)
                     _Tbl_Bodegas.Rows.InsertAt(_Fila_Arriba, _RowIndex)
 
-                    Dim _Orden_Index = _Fila_Actual.Item("Orden")
+                    Dim _Orden_Index = _RowIndex '_Fila_Actual.Item("Orden")
                     Sb_Marcar_Fila_Seleccionada(_Orden_Index)
 
                 Else

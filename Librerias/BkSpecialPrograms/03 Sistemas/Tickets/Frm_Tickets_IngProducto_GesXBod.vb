@@ -3,14 +3,15 @@ Imports DevComponents.DotNetBar
 
 Public Class Frm_Tickets_IngProducto_GesXBod
 
-    Private listaProductosOriginal As BindingList(Of Zw_Stk_Tickets_Producto)
-    Private listaProductos As New BindingList(Of Zw_Stk_Tickets_Producto)
+    Public listaProductosOriginal As BindingList(Of Zw_Stk_Tickets_Producto)
+    Public listaProductos As New BindingList(Of Zw_Stk_Tickets_Producto)
 
     Public Property Cl_Tickets As Cl_Tickets
 
     Public Property SoloUnProducto As Boolean
     Public Property ModoSoloLectura As Boolean
     Public Property Grabar As Boolean
+    Public Property ConfirmaCantidades As Boolean
 
     Public Sub New()
 
@@ -37,6 +38,8 @@ Public Class Frm_Tickets_IngProducto_GesXBod
         listaProductos = New BindingList(Of Zw_Stk_Tickets_Producto)(ClonarLista(listaProductosOriginal))
 
         Txt_Producto.Text = Cl_Tickets.Zw_Stk_Tickets_Producto.Codigo & " - " & Cl_Tickets.Zw_Stk_Tickets_Producto.Descripcion
+        Txt_Producto.Enabled = True
+        Txt_Producto.ReadOnly = True
 
         Sb_ActualizarGrilla()
 
@@ -45,6 +48,8 @@ Public Class Frm_Tickets_IngProducto_GesXBod
             Grilla_Detalle.CurrentCell = Grilla_Detalle.Rows(0).Cells("Ubicacion")
             Grilla_Detalle.BeginEdit(True)
         End If
+
+        Btn_Grabar.Enabled = Not ModoSoloLectura
 
     End Sub
 
@@ -78,7 +83,8 @@ Public Class Frm_Tickets_IngProducto_GesXBod
                     .Rtu = item.Rtu,
                     .SobreStock = item.SobreStock,
                     .Stfi1 = item.Stfi1,
-                    .Stfi2 = item.Stfi2
+                    .Stfi2 = item.Stfi2,
+                    .ConfCantCero = item.ConfCantCero
                 })
         Next
         Return nuevaLista
@@ -88,12 +94,19 @@ Public Class Frm_Tickets_IngProducto_GesXBod
 
     Sub Sb_Agregar_Nueva_Linea()
 
+        ' Obtener el valor del campo Id del último registro en la lista y asignarlo a currentId + 1
+        If listaProductos.Count > 0 Then
+            currentId = listaProductos(listaProductos.Count - 1).Id + 1
+        Else
+            currentId = 1
+        End If
+
         Dim _Item1 As Zw_Stk_Tickets_Producto = listaProductos.Item(0)
         Dim _Detalle As New Zw_Stk_Tickets_Producto
 
         _Detalle.Id = currentId
-        currentId += 1
-        _Detalle.Id_Padre = 1
+        _Detalle.Id_Padre = _Item1.Id
+        _Detalle.Id_Raiz = _Item1.Id_Raiz
         _Detalle.Codigo = _Item1.Codigo
         _Detalle.Descripcion = _Item1.Descripcion
         _Detalle.Ud1 = _Item1.Ud1
@@ -196,6 +209,14 @@ Public Class Frm_Tickets_IngProducto_GesXBod
             .Columns("FechaRev").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
+            .Columns("ConfCantCero").Visible = True
+            .Columns("ConfCantCero").HeaderText = "CCC"
+            .Columns("ConfCantCero").ToolTipText = "Confirmar cantidad cero"
+            .Columns("ConfCantCero").Width = 30
+            .Columns("ConfCantCero").DisplayIndex = _DisplayIndex
+            .Columns("ConfCantCero").ReadOnly = ModoSoloLectura
+            _DisplayIndex += 1
+
         End With
 
     End Sub
@@ -263,6 +284,12 @@ Public Class Frm_Tickets_IngProducto_GesXBod
 
                     If Not _Fila.IsNewRow Then
 
+                        If _Id_Padre = 0 And Not SoloUnProducto Then
+                            MessageBoxEx.Show(Me, "Esta línea no puede ser editada, pues es la línea de origen del producto", "Validación",
+                                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                            Return
+                        End If
+
                         If _Cabeza = "StfiEnBodega" Or _Cabeza = "Cantidad" Then
 
                             If String.IsNullOrEmpty(_Fila.Cells("Ubicacion").Value) Then
@@ -309,7 +336,7 @@ Public Class Frm_Tickets_IngProducto_GesXBod
                                 For Each producto As Zw_Stk_Tickets_Producto In listaProductos
                                     If producto.Empresa = Fm_b.Pro_RowBodega.Item("EMPRESA") AndAlso
                                         producto.Sucursal = Fm_b.Pro_RowBodega.Item("KOSU") AndAlso
-                                        producto.Bodega = Fm_b.Pro_RowBodega.Item("KOBO") AndAlso producto.Id <> currentId Then
+                                        producto.Bodega = Fm_b.Pro_RowBodega.Item("KOBO") AndAlso producto.Id <> currentId AndAlso producto.Id_TicketAc = 0 Then
                                         MessageBoxEx.Show(Me, "Ya existe un registro con la misma empresa, sucursal y bodega", "Validación",
                                                           MessageBoxButtons.OK, MessageBoxIcon.Stop)
                                         Grilla_Detalle.CurrentCell = _Fila.Cells("Bodega")
@@ -330,6 +357,11 @@ Public Class Frm_Tickets_IngProducto_GesXBod
                         End If
 
                         If _Cabeza = "Um" Then
+
+                            If CBool(_Id_Padre) Then
+                                Beep()
+                                Return
+                            End If
 
                             Dim Fm As New Frm_Cantidades_Selec_Ud(_Fila.Cells("Ud1").Value, _Fila.Cells("Ud2").Value)
                             Fm.ShowDialog(Me)
@@ -357,7 +389,8 @@ Public Class Frm_Tickets_IngProducto_GesXBod
                             Else
                                 Fm.FechaDisplay = _Fila.Cells("FechaRev").Value
                             End If
-
+                            Fm.Dtp_Fecha.Value = Now.Date
+                            Fm.Dtp_Hora.Value = Now
                             Fm.MostraFormularioAlCentro = True
                             Fm.SeleccionarHora = True
                             Fm.ShowDialog(Me)
@@ -374,10 +407,70 @@ Public Class Frm_Tickets_IngProducto_GesXBod
 
                         If _Cabeza = "Ubicacion" Then
 
-                            SendKeys.Send("{F2}")
-                            e.Handled = True
-                            Grilla_Detalle.Columns(_Cabeza).ReadOnly = False
-                            Grilla_Detalle.BeginEdit(True)
+                            'SendKeys.Send("{F2}")
+                            'e.Handled = True
+                            'Grilla_Detalle.Columns(_Cabeza).ReadOnly = False
+                            'Grilla_Detalle.BeginEdit(True)
+
+                            'Dim _SqlFiltro_Fechas As String
+
+                            '_SqlFiltro_Fechas = "Where FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
+                            '                     Format(Dtp_Fecha_Hasta.Value, "yyyyMMdd") & "'" & vbCrLf
+
+                            If String.IsNullOrEmpty(_Sucursal) Or String.IsNullOrEmpty(_Sucursal) Then
+                                MessageBoxEx.Show(Me, "Falta la bodega", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                Return
+                            End If
+
+                            Dim _Sql_Filtro_Condicion_Extra = "And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega & "'"
+
+                            Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+                            _Filtrar.Tabla = _Global_BaseBk & "Zw_Bodega_Ubic"
+                            _Filtrar.Campo = "Ubicacion"
+                            _Filtrar.Descripcion = "Ubicacion"
+
+                            If _Filtrar.Fx_Filtrar(Nothing,
+                                                   Clas_Filtros_Random.Enum_Tabla_Fl._Otra, _Sql_Filtro_Condicion_Extra, Nothing, False, True) Then
+
+                                Dim _Row As DataRow = _Filtrar.Pro_Tbl_Filtro.Rows(0)
+
+                                If SoloUnProducto Then
+
+                                    Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+                                    Dim Consulta_sql As String
+
+                                    Consulta_sql = "Select Top 1 Prod.Codigo,Prod.Descripcion,Prod.Numero,Prod.Ubicacion,Tks.CodFuncionario_Crea,NOKOFU" & vbCrLf &
+                                               "From " & _Global_BaseBk & "Zw_Stk_Tickets_Producto Prod" & vbCrLf &
+                                               "Inner Join " & _Global_BaseBk & "Zw_Stk_Tickets Tks On Tks.Id_Raiz = Prod.Id_Raiz" & vbCrLf &
+                                               "Inner Join TABFU On KOFU = Tks.CodFuncionario_Crea" & vbCrLf &
+                                               "Where 1>0 --Id_Tipo = " & Cl_Tickets.Zw_Stk_Tipos.Id & vbCrLf &
+                                               " And Prod.Empresa = '" & _Empresa & "' And Prod.Sucursal = '" & _Sucursal & "'" &
+                                               " And Prod.Bodega = '" & _Bodega & "' And Prod.Codigo = '" & Cl_Tickets.Zw_Stk_Tickets_Producto.Codigo & "'" &
+                                               " And Prod.Ubicacion = '" & _Row.Item("Codigo") & "' And Estado In ('ABIE','PROC')"
+
+                                    Dim _Row2 As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                                    If Not IsNothing(_Row2) Then
+
+                                        Dim _Msj = "Ya hay un ticket abierto por esta misma solución. " & "Ticket " & _Row2.Item("Numero") & vbCrLf & vbCrLf &
+                                               "De: " & _Row2.Item("CodFuncionario_Crea") & "-" & _Row2.Item("NOKOFU").ToString.Trim() & vbCrLf &
+                                               "Producto: " & Cl_Tickets.Zw_Stk_Tickets_Producto.Codigo.Trim & " - " & _Row2.Item("Descripcion") & vbCrLf &
+                                               "Ubicación: " & _Row2.Item("Ubicacion") & vbCrLf & vbCrLf &
+                                               "No es posible crear 2 Ticket iguales para la misma bodega, ubicación y producto."
+
+                                        MessageBoxEx.Show(Me, _Msj, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                        _Fila.Cells("Ubicacion").Value = String.Empty
+                                        Return
+
+                                    End If
+
+                                End If
+
+                                _Fila.Cells("Ubicacion").Value = _Row.Item("Codigo")
+                                Grilla_Detalle.CurrentCell = _Fila.Cells("Um")
+
+                            End If
 
                         End If
 
@@ -397,16 +490,16 @@ Public Class Frm_Tickets_IngProducto_GesXBod
                         End If
 
                         ' Asegúrate de que el índice sea válido antes de intentar eliminar
-                        If _Index >= 0 AndAlso _Index < Grilla_Detalle.Rows.Count AndAlso _Id_Padre = 1 Then
+                        'If _Index >= 0 AndAlso _Index < Grilla_Detalle.Rows.Count AndAlso _Id_Padre = 1 Then
 
-                            If MessageBoxEx.Show(Me, "¿Está seguro de eliminar la fila seleccionada?", "Eliminar Fila",
+                        If MessageBoxEx.Show(Me, "¿Está seguro de eliminar la fila seleccionada?", "Eliminar Fila",
                                                  MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
-                                Return
-                            End If
-
-                            Grilla_Detalle.Rows.RemoveAt(_Index)
-
+                            Return
                         End If
+
+                        Grilla_Detalle.Rows.RemoveAt(_Index)
+
+                        'End If
                     End If
 
                     If Grilla_Detalle.Rows.Count = 0 Then
@@ -421,6 +514,16 @@ Public Class Frm_Tickets_IngProducto_GesXBod
 
                 ' Verificar si la fila actual es la última fila visible
                 If Grilla_Detalle.CurrentRow.Index = Grilla_Detalle.Rows.Count - 1 Then
+
+                    If ModoSoloLectura Then
+                        MessageBoxEx.Show(Me, "El formulario se encuentra en modo de solo lectura", "Validación",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        Return
+                    End If
+
+                    If SoloUnProducto Then
+                        Return
+                    End If
 
                     If Not String.IsNullOrEmpty(_Bodega) Then
                         Sb_Agregar_Nueva_Linea()
@@ -459,6 +562,10 @@ Public Class Frm_Tickets_IngProducto_GesXBod
                         Grilla_Detalle.CurrentCell = _Fila.Cells("FechaRev")
                     End If
 
+                    If CBool(_Cantidad + _StfiEnBodega) Then
+                        _Fila.Cells("ConfCantCero").Value = False
+                    End If
+
                 Case "Ubicacion"
 
                     If Not String.IsNullOrWhiteSpace(_Fila.Cells("Ubicacion").Value) Then
@@ -469,7 +576,7 @@ Public Class Frm_Tickets_IngProducto_GesXBod
 
         Catch ex As Exception
         Finally
-            If _Cabeza <> "_Cabeza" Then
+            If _Cabeza <> "_Cabeza" And _Cabeza <> "ConfCantCero" Then
                 Grilla_Detalle.Columns(_Cabeza).ReadOnly = True
             End If
         End Try
@@ -558,10 +665,19 @@ Public Class Frm_Tickets_IngProducto_GesXBod
                 Return
             End If
 
-            If producto.Cantidad = 0 AndAlso producto.StfiEnBodega = 0 Then
-                MessageBoxEx.Show(Me, "El Stock Físico y Stock Sistema no pueden ser igual a cero" & vbCrLf & "Fila: " & _ContFila,
+            If producto.Id_Ticket = 0 AndAlso producto.Cantidad = 0 AndAlso producto.StfiEnBodega = 0 AndAlso Not producto.ConfCantCero Then
+
+                MessageBoxEx.Show(Me, "El Stock Físico y el Stock del Sistema no pueden ser ambos iguales a cero, a menos que se" & vbCrLf &
+                                  "confirme explícitamente la cantidad en cero en el campo CCC." & vbCrLf & "Fila: " & _ContFila,
                   "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return
+
+                'ElseIf producto.Id_Ticket = 0 AndAlso producto.Cantidad = 0 AndAlso producto.StfiEnBodega = 0 Then
+
+                '    MessageBoxEx.Show(Me, "El Stock Físico y Stock Sistema no pueden ser igual a cero" & vbCrLf & "Fila: " & _ContFila,
+                '          "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                '    Return
+
             End If
 
             If IsNothing(producto.FechaRev) Then
@@ -574,9 +690,101 @@ Public Class Frm_Tickets_IngProducto_GesXBod
 
         Next
 
+
+        If Not ModoSoloLectura AndAlso SoloUnProducto Then
+
+            Dim _Msg1 = "CONFIRMAR CANTIDADES"
+            Dim _Msg2 = vbCrLf &
+                        "Cantidad Stock físico: " & listaProductos.Item(0).StfiEnBodega & vbCrLf &
+                        "Cantidad inventariada: " & listaProductos.Item(0).Cantidad & vbCrLf &
+                        "Diferencia: " & listaProductos.Item(0).Diferencia & vbCrLf
+
+            If Not Fx_Confirmar_Lectura(_Msg1, _Msg2, eTaskDialogIcon.Exclamation) Then
+                Return
+            End If
+
+            ConfirmaCantidades = True
+
+        End If
+
         listaProductosOriginal = New BindingList(Of Zw_Stk_Tickets_Producto)(ClonarLista(listaProductos))
+
+        ' Eliminar los productos que no están en listaProductos
+        Dim productosAEliminar = Cl_Tickets.Ls_Zw_Stk_Tickets_Producto.Where(Function(p) Not listaProductosOriginal.Any(Function(lp) lp.Id = p.Id)).ToList()
+        For Each productoAEliminar In productosAEliminar
+            Cl_Tickets.Ls_Zw_Stk_Tickets_Producto.Remove(productoAEliminar)
+        Next
+
+        For Each productoOriginal In listaProductosOriginal
+            Dim productoExistente = Cl_Tickets.Ls_Zw_Stk_Tickets_Producto.FirstOrDefault(Function(p) p.Id = productoOriginal.Id)
+            If productoExistente IsNot Nothing Then
+                productoExistente.Id_Padre = productoOriginal.Id_Padre
+                productoExistente.Id_Raiz = productoOriginal.Id_Raiz
+                productoExistente.Id_Ticket = productoOriginal.Id_Ticket
+                productoExistente.Id_TicketAc = productoOriginal.Id_TicketAc
+                productoExistente.AjusInventario = productoOriginal.AjusInventario
+                productoExistente.Empresa = productoOriginal.Empresa
+                productoExistente.Sucursal = productoOriginal.Sucursal
+                productoExistente.Bodega = productoOriginal.Bodega
+                productoExistente.Descripcion_Bodega = productoOriginal.Descripcion_Bodega
+                productoExistente.Codigo = productoOriginal.Codigo
+                productoExistente.Descripcion = productoOriginal.Descripcion
+                productoExistente.Ubicacion = productoOriginal.Ubicacion
+                productoExistente.UdMedida = productoOriginal.UdMedida
+                productoExistente.Ud1 = productoOriginal.Ud1
+                productoExistente.Ud2 = productoOriginal.Ud2
+                productoExistente.Um = productoOriginal.Um
+                productoExistente.StfiEnBodega = productoOriginal.StfiEnBodega
+                productoExistente.Cantidad = productoOriginal.Cantidad
+                productoExistente.Diferencia = productoOriginal.Diferencia
+                productoExistente.FechaRev = productoOriginal.FechaRev
+                productoExistente.Numero = productoOriginal.Numero
+                productoExistente.RevInventario = productoOriginal.RevInventario
+                productoExistente.Rtu = productoOriginal.Rtu
+                productoExistente.SobreStock = productoOriginal.SobreStock
+                productoExistente.Stfi1 = productoOriginal.Stfi1
+                productoExistente.Stfi2 = productoOriginal.Stfi2
+                productoExistente.ConfCantCero = productoOriginal.ConfCantCero
+            Else
+                Cl_Tickets.Ls_Zw_Stk_Tickets_Producto.Add(productoOriginal)
+            End If
+        Next
+
         Grabar = True
         Me.Close()
 
+    End Sub
+
+    Private Sub Grilla_Detalle_CellBeginEdit(sender As Object, e As DataGridViewCellCancelEventArgs) Handles Grilla_Detalle.CellBeginEdit
+
+        Dim _Fila As DataGridViewRow = Grilla_Detalle.CurrentRow
+        Dim _Cabeza = Grilla_Detalle.Columns(e.ColumnIndex).Name
+
+        If CBool(_Fila.Cells("Id_Ticket").Value) Then
+            Beep()
+            e.Cancel = True
+        End If
+
+        If _Cabeza = "ConfCantCero" Then
+            If _Fila.Cells("Cantidad").Value <> 0 Or
+            _Fila.Cells("StfiEnBodega").Value <> 0 Or
+            String.IsNullOrWhiteSpace(_Fila.Cells("Sucursal").Value) Or
+            String.IsNullOrWhiteSpace(_Fila.Cells("Bodega").Value) Or
+            String.IsNullOrWhiteSpace(_Fila.Cells("Ubicacion").Value) Then
+                Beep()
+                e.Cancel = True
+            End If
+        End If
+
+    End Sub
+
+    Private Sub Grilla_Detalle_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Detalle.CellDoubleClick
+        ' Simular la presión de la tecla Enter
+        Dim args As New KeyEventArgs(Keys.Enter)
+        Grilla_Detalle_KeyDown(sender, args)
+    End Sub
+
+    Private Sub Grilla_Detalle_MouseUp(sender As Object, e As MouseEventArgs) Handles Grilla_Detalle.MouseUp
+        Grilla_Detalle.EndEdit()
     End Sub
 End Class

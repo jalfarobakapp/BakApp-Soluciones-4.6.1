@@ -66,6 +66,9 @@ Public Class Frm_Seleccionar_Fecha
         Me.StartPosition = FormStartPosition.Manual
         Me.Location = New Point(Me.Width + Cursor.Position.X - 200, Cursor.Position.Y - 200)
 
+        Dtp_Fecha.Value = Now.Date
+        Dtp_Hora.Value = Now
+
     End Sub
 
     Private Sub Frm_Seleccionar_Fecha_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -83,7 +86,8 @@ Public Class Frm_Seleccionar_Fecha
 
         If SeleccionarHora Then
             If HoraSeleccionada.Hour = 0 And HoraSeleccionada.Minute = 0 Then
-                MessageBoxEx.Show(Me, "Debe seleccionar una hora válida", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                MessageBoxEx.Show(Me, "Debe seleccionar una hora válida", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop,
+                                  MessageBoxDefaultButton.Button1, True)
                 Dtp_Hora.Focus()
                 Return
             End If
@@ -92,7 +96,8 @@ Public Class Frm_Seleccionar_Fecha
         If ExigeFechaMinima Then
             If _FechaSeleccionada.Date <= _FechaMinima.Date Then
                 MessageBoxEx.Show(Me, "La fecha no puede ser menor o igual a la fecha: " & FechaMinima.ToShortDateString,
-                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop,
+                                  MessageBoxDefaultButton.Button1, True)
                 Dtp_Fecha.Focus()
                 Return
             End If
@@ -101,7 +106,8 @@ Public Class Frm_Seleccionar_Fecha
         If ExigeFechaMaxima Then
             If _FechaSeleccionada.Date >= _FechaMaxima.Date Then
                 MessageBoxEx.Show(Me, "La fecha no puede ser mayor o igual a la fecha: " & FechaMaxima.ToShortDateString,
-                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop,
+                                  MessageBoxDefaultButton.Button1, True)
                 Dtp_Fecha.Focus()
                 Return
             End If

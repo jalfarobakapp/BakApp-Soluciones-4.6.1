@@ -44,7 +44,7 @@ Public Class Frm_Inf_Prod_Avance_OT
 
     End Sub
 
-    Private Sub Frm_Inf_Prod_Avance_OT_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Inf_Prod_Avance_OT_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         Sb_Initialize_Grid()
         Sb_Actualizar_Grilla()
@@ -54,6 +54,7 @@ Public Class Frm_Inf_Prod_Avance_OT
     Sub Sb_Actualizar_Grilla()
 
         Consulta_sql = My.Resources.Recursos_Produccion.SQLQuery_Informe_de_OT_avance_Vs_SubOt_por_Operaciones
+
         Consulta_sql = Replace(Consulta_sql, "--And NUMOT = ''", _Numot)
         Consulta_sql = Replace(Consulta_sql, "#Base_Bakapp#", _Global_BaseBk)
 
@@ -133,7 +134,7 @@ Public Class Frm_Inf_Prod_Avance_OT
         'AddHandler Super_Grilla.SelectionChanged, AddressOf SuperGridControl1SelectionChanged
     End Sub
 
-    Private Sub SuperGridControl1DataBindingComplete(ByVal sender As Object, ByVal e As GridDataBindingCompleteEventArgs)
+    Private Sub SuperGridControl1DataBindingComplete(sender As Object, e As GridDataBindingCompleteEventArgs)
 
         Dim panel As GridPanel = e.GridPanel
 
@@ -158,7 +159,7 @@ Public Class Frm_Inf_Prod_Avance_OT
         End Select
     End Sub
 
-    Sub Sb_Formato_Grilla_OT(ByVal _Grilla As GridPanel)
+    Sub Sb_Formato_Grilla_OT(_Grilla As GridPanel)
 
         With _Grilla
 
@@ -289,7 +290,7 @@ Public Class Frm_Inf_Prod_Avance_OT
 
     End Sub
 
-    Sub Sb_Formato_Grilla_OT2(ByVal _Grilla As GridPanel)
+    Sub Sb_Formato_Grilla_OT2(_Grilla As GridPanel)
 
         With _Grilla
 
@@ -366,7 +367,7 @@ Public Class Frm_Inf_Prod_Avance_OT
 
     End Sub
 
-    Sub Sb_Formato_Grilla_OT3(ByVal _Grilla As GridPanel)
+    Sub Sb_Formato_Grilla_OT3(_Grilla As GridPanel)
 
         With _Grilla
 
@@ -428,7 +429,7 @@ Public Class Frm_Inf_Prod_Avance_OT
 
     End Sub
 
-    Sub Sb_Formato_Grilla_OT4(ByVal _Grilla As GridPanel)
+    Sub Sb_Formato_Grilla_OT4(_Grilla As GridPanel)
 
         With _Grilla
 
@@ -491,7 +492,7 @@ Public Class Frm_Inf_Prod_Avance_OT
 
     End Sub
 
-    Sub Sb_Formato_Grilla_OT5(ByVal _Grilla As GridPanel)
+    Sub Sb_Formato_Grilla_OT5(_Grilla As GridPanel)
 
         With _Grilla
 
@@ -613,7 +614,7 @@ Public Class Frm_Inf_Prod_Avance_OT
 
     End Sub
 
-    Sub Sb_Formato_Grilla_OT6(ByVal _Grilla As GridPanel)
+    Sub Sb_Formato_Grilla_OT6(_Grilla As GridPanel)
 
         With _Grilla
 
@@ -660,11 +661,11 @@ Public Class Frm_Inf_Prod_Avance_OT
         End With
 
     End Sub
-    Private Sub Btn_Actualizar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Actualizar.Click
+    Private Sub Btn_Actualizar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Actualizar.Click
         Sb_Actualizar_Grilla()
     End Sub
 
-    Private Sub Frm_Inf_Prod_Avance_OT_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_Inf_Prod_Avance_OT_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.F5 Then
             Sb_Actualizar_Grilla()
         ElseIf e.KeyValue = Keys.Escape Then
@@ -672,7 +673,7 @@ Public Class Frm_Inf_Prod_Avance_OT
         End If
     End Sub
 
-    Private Sub Grilla_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub Grilla_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
 
         'Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
         'Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
@@ -688,7 +689,7 @@ Public Class Frm_Inf_Prod_Avance_OT
 
     End Sub
 
-    Sub Sb_Ocultar_encabezados_Super_Grilla(ByVal _Grilla As GridPanel)
+    Sub Sb_Ocultar_encabezados_Super_Grilla(_Grilla As GridPanel)
 
         With _Grilla
 
@@ -728,7 +729,7 @@ Public Class Frm_Inf_Prod_Avance_OT
 
     End Sub
 
-    Private Sub SuperGridControl1GetCellStyle(ByVal sender As Object, ByVal e As GridGetCellStyleEventArgs)
+    Private Sub SuperGridControl1GetCellStyle(sender As Object, e As GridGetCellStyleEventArgs)
 
         Dim _Grilla As GridPanel = e.GridPanel
 

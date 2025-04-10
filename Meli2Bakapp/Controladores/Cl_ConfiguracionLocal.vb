@@ -113,6 +113,11 @@ Public Class Cl_ConfiguracionLocal
 
             _Global_BaseBk = Configuracion.Global_BaseBk & ".dbo."
 
+            If IsNothing(Configuracion.ModalidadFac) Then
+                _Mensaje.Detalle = "Falta datos en la configuración"
+                Throw New System.Exception("Debe ingresar los datos de la modalidad de facturación")
+            End If
+
             If IsNothing(Configuracion.BodegaFacturacion) Then
                 _Mensaje.Detalle = "Falta datos en la configuración"
                 Throw New System.Exception("Debe ingresar los datos de la bodega de facturación")

@@ -243,6 +243,9 @@ Public Class Frm_Configuracion_Gral
             Chk_HabilitarNVVConProdCustomizables.Checked = .Item("HabilitarNVVConProdCustomizables")
             Chk_RestringirFechaVencimientoClientes.Checked = .Item("RestringirFechaVencimientoClientes")
 
+            Chk_NVIQuedaSUDOSucEnvia.Checked = .Item("NVIQuedaSUDOSucEnvia")
+            Chk_NVIQuedaSUDOSucRecibe.Checked = .Item("NVIQuedaSUDOSucRecibe")
+
         End With
 
         Input_Dias_Para_Hacer_NCV.Enabled = Not _Modalidad_General
@@ -342,8 +345,14 @@ Public Class Frm_Configuracion_Gral
         Chk_HabilitarNVVConProdCustomizables.Enabled = _Modalidad_General
         Chk_RestringirFechaVencimientoClientes.Enabled = _Modalidad_General
 
+        Chk_NVIQuedaSUDOSucEnvia.Enabled = Not _Modalidad_General
+        Chk_NVIQuedaSUDOSucRecibe.Enabled = Not _Modalidad_General
+
         AddHandler Txt_Dias_Venci_Coti.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
         AddHandler Txt_ValorMinimoNVV.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
+
+        AddHandler Chk_NVIQuedaSUDOSucEnvia.CheckedChanged, AddressOf Chk_NVIQuedaSUDOSucEnvia_CheckedChanged
+        AddHandler Chk_NVIQuedaSUDOSucRecibe.CheckedChanged, AddressOf Chk_NVIQuedaSUDOSucRecibe_CheckedChanged
 
         If _Modalidad_General Then
             Me.Text = "CONFIGURACION DE MODALIDAD GENERAL"
@@ -545,6 +554,8 @@ Public Class Frm_Configuracion_Gral
                        ",MesesVenListaPrecios = " & Input_MesesVenListaPrecios.Value & vbCrLf &
                        ",HabilitarNVVConProdCustomizables = " & Convert.ToInt32(Chk_HabilitarNVVConProdCustomizables.Checked) & vbCrLf &
                        ",RestringirFechaVencimientoClientes = " & Convert.ToInt32(Chk_RestringirFechaVencimientoClientes.Checked) & vbCrLf &
+                       ",NVIQuedaSUDOSucEnvia = " & Convert.ToInt32(Chk_NVIQuedaSUDOSucEnvia.Checked) & vbCrLf &
+                       ",NVIQuedaSUDOSucRecibe = " & Convert.ToInt32(Chk_NVIQuedaSUDOSucRecibe.Checked) & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
@@ -746,6 +757,22 @@ Public Class Frm_Configuracion_Gral
 
     Private Sub Chk_UsarVencListaPrecios_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_UsarVencListaPrecios.CheckedChanged
         Panel_MayoristaMinorista.Enabled = Chk_UsarVencListaPrecios.Checked
+    End Sub
+
+    Private Sub Chk_NVIQuedaSUDOSucEnvia_CheckedChanged(sender As Object, e As EventArgs)
+
+        If Chk_NVIQuedaSUDOSucEnvia.Checked Then
+            Chk_NVIQuedaSUDOSucRecibe.Checked = False
+        End If
+
+    End Sub
+
+    Private Sub Chk_NVIQuedaSUDOSucRecibe_CheckedChanged(sender As Object, e As EventArgs)
+
+        If Chk_NVIQuedaSUDOSucRecibe.Checked Then
+            Chk_NVIQuedaSUDOSucEnvia.Checked = False
+        End If
+
     End Sub
 
     Sub Sb_Cargar_Combo()

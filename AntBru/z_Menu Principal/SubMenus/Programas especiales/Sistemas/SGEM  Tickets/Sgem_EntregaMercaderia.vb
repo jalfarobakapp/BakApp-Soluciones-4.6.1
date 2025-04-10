@@ -172,4 +172,15 @@ Public Class Sgem_EntregaMercaderia
     Private Sub BtnSalir_Click(sender As Object, e As EventArgs) Handles BtnSalir.Click
         _Fm_Menu_Padre.CloseModalPanel(Me, DevComponents.DotNetBar.Controls.eSlideSide.Left)
     End Sub
+
+    Private Sub Btn_Sgem_Rutas_Click(sender As Object, e As EventArgs) Handles Btn_Sgem_Rutas.Click
+
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Stem0005") Then Return
+
+        Dim Fm As New Frm_Stmp_ListadoXRutas
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
 End Class

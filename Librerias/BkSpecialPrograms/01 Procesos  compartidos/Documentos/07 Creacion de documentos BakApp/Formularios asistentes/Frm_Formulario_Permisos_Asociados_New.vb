@@ -1,4 +1,6 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports BkSpecialPrograms.Bk_Comporamiento_UdMedidas
+Imports DevComponents.DotNetBar
+Imports Microsoft.Office.Interop.Outlook
 
 Public Class Frm_Formulario_Permisos_Asociados_New
 
@@ -333,6 +335,12 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                     Dim _UnTrans = _Fila.Item("UnTrans")
                     Dim _Codigo = _Fila.Item("Codigo")
                     Dim _Cantidad = NuloPorNro(_Fila.Item("Cantidad"), 0)
+                    Dim _RtuVariable = _Fila.Item("RtuVariable")
+                    Dim _Nmarca = _Fila.Item("Nmarca")
+
+                    If _RtuVariable And _Nmarca = "¡" Then
+                        _UnTrans = 2
+                    End If
 
                     If Not _Prct Then
 
@@ -343,7 +351,8 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                             For Each _Fl As DataRow In _TblDetalle.Rows
 
                                 If _Codigo = _Fl.Item("Codigo") And _Sucursal = _Fl.Item("Sucursal") And _Bodega = _Fl.Item("Bodega") Then
-                                    _Cantidad += _Fl.Item("Cantidad")
+                                    '_Cantidad += _Fl.Item("Cantidad")
+                                    _Cantidad += _Fl.Item("CantUd" & _UnTrans)
                                 End If
 
                             Next

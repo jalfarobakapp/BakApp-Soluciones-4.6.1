@@ -1713,7 +1713,7 @@ Public Class Frm_MantLista_Precios_Random
 
         For Each _Fila As DataRow In _Tbl_Precios.Rows
             Dim _Codigo = _Fila.Item("KOPR")
-            Dim _Pm As Double = _Fila.Item("PM01")
+            Dim _Pm As Double = NuloPorNro(_Fila.Item("PM01"), 0)
             If Not CBool(_Pm) Then
                 _Pm = Trae_PM(_Codigo)
                 _Fila.Item("PM01") = _Pm

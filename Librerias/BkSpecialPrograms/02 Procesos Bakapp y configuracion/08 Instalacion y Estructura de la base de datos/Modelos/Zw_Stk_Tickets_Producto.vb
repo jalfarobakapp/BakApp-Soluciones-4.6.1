@@ -25,6 +25,8 @@
     Public Property Ubicacion As String
     Public Property Id_TicketAc As Integer
     Public Property Id_Padre As Integer
+    Public Property ConfCantCero As Boolean
+
 
     Public Sub New()
         Me.Id = 0
@@ -54,6 +56,7 @@
         Me.Ubicacion = String.Empty
         Me.Id_TicketAc = 0
         Me.Id_Padre = 0
+        Me.ConfCantCero = False
     End Sub
 
 End Class

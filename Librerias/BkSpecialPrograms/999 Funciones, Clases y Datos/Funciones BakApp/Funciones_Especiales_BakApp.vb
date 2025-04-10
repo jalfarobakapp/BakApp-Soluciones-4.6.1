@@ -610,19 +610,19 @@ Public Module Funciones_Especiales_BakApp
                                 Union
                                 Select GDD As NrNumeroDoco From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
                                 Order By NrNumeroDoco Desc"
-                Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+                Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, _Mostrar_Mensaje)
                 _NrNumeroDoco = _Tbl.Rows(0).Item("NrNumeroDoco")
             Else
-                _NrNumeroDoco = _Sql.Fx_Trae_Dato("CONFIEST", _Tido, "EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'")
+                _NrNumeroDoco = _Sql.Fx_Trae_Dato("CONFIEST", _Tido, "EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'",, _Mostrar_Mensaje)
             End If
         Else
             _NrNumeroDoco = _NumeroDoc
         End If
 
         If _Tido = "GDV" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "GDD" Then
-            _Existe_Doc = _Sql.Fx_Cuenta_Registros("MAEEDO", "EMPRESA = '" & ModEmpresa & "' And TIDO In ('GDV','GTI','GDP','GDD') And NUDO = '" & _NrNumeroDoco & "'")
+            _Existe_Doc = _Sql.Fx_Cuenta_Registros("MAEEDO", "EMPRESA = '" & ModEmpresa & "' And TIDO In ('GDV','GTI','GDP','GDD') And NUDO = '" & _NrNumeroDoco & "'", _Mostrar_Mensaje)
         Else
-            _Existe_Doc = _Sql.Fx_Cuenta_Registros("MAEEDO", "EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _NrNumeroDoco & "'")
+            _Existe_Doc = _Sql.Fx_Cuenta_Registros("MAEEDO", "EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _NrNumeroDoco & "'", _Mostrar_Mensaje)
         End If
 
         _TipGrab = Fx_Tipo_Grab_Modalidad(_Tido, _NrNumeroDoco)
@@ -634,7 +634,7 @@ Public Module Funciones_Especiales_BakApp
 
         If _TipGrab = "EnBlanco" Then
 
-            _RowModalidad = _ClModalidad.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, _Modalidad_Seleccionada)
+            _RowModalidad = _ClModalidad.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, _Modalidad_Seleccionada, _Mostrar_Mensaje)
             _NrNumeroDoco = _RowModalidad.Item(_Tido)
 
             If _Tido = "GDV" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "GDD" Then
@@ -646,18 +646,18 @@ Public Module Funciones_Especiales_BakApp
                                 Union
                                 Select GDD As NrNumeroDoco From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
                                 Order By NrNumeroDoco Desc"
-                Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+                Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, _Mostrar_Mensaje)
                 _NrNumeroDoco = _Tbl.Rows(0).Item("NrNumeroDoco")
             Else
-                _NrNumeroDoco = _Sql.Fx_Trae_Dato("CONFIEST", _Tido, "EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '")
+                _NrNumeroDoco = _Sql.Fx_Trae_Dato("CONFIEST", _Tido, "EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '",, _Mostrar_Mensaje)
             End If
 
             If _Cambiar_Numeracion Then
 
                 If _Tido = "GDV" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "GDD" Then
-                    _Existe_Doc = _Sql.Fx_Cuenta_Registros("MAEEDO", "EMPRESA = '" & ModEmpresa & "' And TIDO In ('GDV','GTI','GDP','GDD') And NUDO = '" & _NrNumeroDoco & "'")
+                    _Existe_Doc = _Sql.Fx_Cuenta_Registros("MAEEDO", "EMPRESA = '" & ModEmpresa & "' And TIDO In ('GDV','GTI','GDP','GDD') And NUDO = '" & _NrNumeroDoco & "'", _Mostrar_Mensaje)
                 Else
-                    _Existe_Doc = _Sql.Fx_Cuenta_Registros("MAEEDO", "EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _NrNumeroDoco & "'")
+                    _Existe_Doc = _Sql.Fx_Cuenta_Registros("MAEEDO", "EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _NrNumeroDoco & "'", _Mostrar_Mensaje)
                 End If
 
                 Do While CBool(_Existe_Doc)
@@ -667,7 +667,7 @@ Public Module Funciones_Especiales_BakApp
                     If _Tido = "GDV" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "GDD" Then
                         Consulta_sql = "UPDATE CONFIEST SET GDV = '" & _Proximo_Nro & "',GTI = '" & _Proximo_Nro & "',GDP = '" & _Proximo_Nro & "',GDD = '" & _Proximo_Nro & "'" & vbCrLf &
                                        "WHERE EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '"
-                        _Sql.Ej_consulta_IDU(Consulta_sql)
+                        _Sql.Ej_consulta_IDU(Consulta_sql, _Mostrar_Mensaje)
 
                         Consulta_sql = "Select GDV As NrNumeroDoco From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
                                         Union
@@ -677,15 +677,20 @@ Public Module Funciones_Especiales_BakApp
                                         Union
                                         Select GDD As NrNumeroDoco From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '
                                         Order By NrNumeroDoco Desc"
-                        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+                        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, _Mostrar_Mensaje)
+
                         _NrNumeroDoco = _Tbl.Rows(0).Item("NrNumeroDoco")
-                        _Existe_Doc = _Sql.Fx_Cuenta_Registros("MAEEDO", "EMPRESA = '" & ModEmpresa & "' And TIDO In ('GDV','GTI','GDP','GDD') And NUDO = '" & _NrNumeroDoco & "'")
+                        _Existe_Doc = _Sql.Fx_Cuenta_Registros("MAEEDO", "EMPRESA = '" & ModEmpresa & "' And TIDO In ('GDV','GTI','GDP','GDD') And NUDO = '" & _NrNumeroDoco & "'", _Mostrar_Mensaje)
+
                     Else
+
                         Consulta_sql = "UPDATE CONFIEST SET " & _Tido & " = '" & _Proximo_Nro & "'" & vbCrLf &
                                        "WHERE EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '"
-                        _Sql.Ej_consulta_IDU(Consulta_sql)
-                        _NrNumeroDoco = _Sql.Fx_Trae_Dato("CONFIEST", _Tido, "EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '")
-                        _Existe_Doc = _Sql.Fx_Cuenta_Registros("MAEEDO", "EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _NrNumeroDoco & "'")
+                        _Sql.Ej_consulta_IDU(Consulta_sql, _Mostrar_Mensaje)
+
+                        _NrNumeroDoco = _Sql.Fx_Trae_Dato("CONFIEST", _Tido, "EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '",, _Mostrar_Mensaje)
+                        _Existe_Doc = _Sql.Fx_Cuenta_Registros("MAEEDO", "EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _NrNumeroDoco & "'", _Mostrar_Mensaje)
+
                     End If
 
                 Loop
@@ -695,9 +700,9 @@ Public Module Funciones_Especiales_BakApp
         ElseIf _TipGrab = "Puros_Ceros" Then
 
             If _Tido = "GDV" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "GDD" Then
-                _NrNumeroDoco = _Sql.Fx_Trae_Dato("MAEEDO", "COALESCE(MAX(NUDO),'0000000000')", "EMPRESA = '" & ModEmpresa & "' And TIDO In ('GDV','GTI','GDP','GDD')")
+                _NrNumeroDoco = _Sql.Fx_Trae_Dato("MAEEDO", "COALESCE(MAX(NUDO),'0000000000')", "EMPRESA = '" & ModEmpresa & "' And TIDO In ('GDV','GTI','GDP','GDD')",, _Mostrar_Mensaje)
             Else
-                _NrNumeroDoco = _Sql.Fx_Trae_Dato("MAEEDO", "COALESCE(MAX(NUDO),'0000000000')", "EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "'")
+                _NrNumeroDoco = _Sql.Fx_Trae_Dato("MAEEDO", "COALESCE(MAX(NUDO),'0000000000')", "EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "'",, _Mostrar_Mensaje)
             End If
 
             _NrNumeroDoco = Fx_Rellena_ceros(_NrNumeroDoco, 10, True)
@@ -722,7 +727,7 @@ Public Module Funciones_Especiales_BakApp
 
                         Consulta_sql = "UPDATE CONFIEST SET GDV = '" & _Proximo_Nro & "',GTI = '" & _Proximo_Nro & "',GDP = '" & _Proximo_Nro & "',GDD = '" & _Proximo_Nro & "'" & vbCrLf &
                                        "WHERE EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'"
-                        _Sql.Ej_consulta_IDU(Consulta_sql)
+                        _Sql.Ej_consulta_IDU(Consulta_sql, _Mostrar_Mensaje)
 
                         Consulta_sql = "Select GDV As Tido From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
                                         Union
@@ -732,10 +737,10 @@ Public Module Funciones_Especiales_BakApp
                                         Union
                                         Select GDD As Tido From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'
                                         Order By Tido Desc"
-                        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+                        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, _Mostrar_Mensaje)
                         _NrNumeroDoco = _Tbl.Rows(0).Item("Tido")
 
-                        _Existe_Doc = _Sql.Fx_Cuenta_Registros("MAEEDO", "EMPRESA = '" & ModEmpresa & "' And TIDO In ('GDV','GTI','GDP','GDD') And NUDO = '" & _NrNumeroDoco & "'")
+                        _Existe_Doc = _Sql.Fx_Cuenta_Registros("MAEEDO", "EMPRESA = '" & ModEmpresa & "' And TIDO In ('GDV','GTI','GDP','GDD') And NUDO = '" & _NrNumeroDoco & "'", _Mostrar_Mensaje)
                         _Contador += 1
                         _dteFinal = DateTime.Now
                         _ngTiempoTranscurrido = DateDiff(DateInterval.Second, _dteInicio, _dteFinal)
@@ -749,10 +754,11 @@ Public Module Funciones_Especiales_BakApp
                     Else
 
                         Consulta_sql = "UPDATE CONFIEST SET " & _Tido & " = '" & _Proximo_Nro & "' WHERE EMPRESA = '" & ModEmpresa & "' AND  MODALIDAD = '" & _Modalidad_Seleccionada & "'"
-                        _Sql.Ej_consulta_IDU(Consulta_sql)
+                        _Sql.Ej_consulta_IDU(Consulta_sql, _Mostrar_Mensaje)
 
-                        _NrNumeroDoco = _Sql.Fx_Trae_Dato("CONFIEST", _Tido, "EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'")
-                        _Existe_Doc = _Sql.Fx_Cuenta_Registros("MAEEDO", "EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _NrNumeroDoco & "'")
+                        _NrNumeroDoco = _Sql.Fx_Trae_Dato("CONFIEST", _Tido, "EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '" & _Modalidad_Seleccionada & "'",, _Mostrar_Mensaje)
+                        _Existe_Doc = _Sql.Fx_Cuenta_Registros("MAEEDO", "EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _NrNumeroDoco & "'", _Mostrar_Mensaje)
+
                         _Contador += 1
                         _dteFinal = DateTime.Now
                         _ngTiempoTranscurrido = DateDiff(DateInterval.Second, _dteInicio, _dteFinal)
@@ -940,7 +946,7 @@ Public Module Funciones_Especiales_BakApp
             Consulta_sql = Replace(Consulta_sql, "And SUEN = @SucEntidad", "")
         End If
 
-        _Tbl_Entidad = _Sql.Fx_Get_DataTable(Consulta_sql)
+        _Tbl_Entidad = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
         For Each _Row_entidad As DataRow In _Tbl_Entidad.Rows
 
@@ -1925,7 +1931,8 @@ Public Module Modulo_Precios_Costos
                                         _RowPrecios As DataRow,
                                         _Cantidad As Double,
                                         _Caprco1 As Double,
-                                        _Caprco2 As Double) As Double
+                                        _Caprco2 As Double,
+                                        Optional _MostrarError As Boolean = True) As Double
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
@@ -2057,7 +2064,8 @@ Public Module Modulo_Precios_Costos
                                                  True,
                                                  _Koen,
                                                  _Caprco1,
-                                                 _Caprco2)
+                                                 _Caprco2,
+                                                 _MostrarError)
                         Return _PrecioLinea
 
                     End If
@@ -2074,7 +2082,7 @@ Public Module Modulo_Precios_Costos
 
         Catch ex As Exception
 
-            If Not IsNothing(_Formulario) Then
+            If Not IsNothing(_Formulario) And _MostrarError Then
                 MessageBoxEx.Show(_Formulario, "La función que viene desde la lista " & _Kolt & " tiene errores" & vbCrLf & vbCrLf & _Fx & " " & ex.Message, "Validación",
                       MessageBoxButtons.OK, MessageBoxIcon.Stop)
             End If
@@ -2264,7 +2272,8 @@ Public Module Modulo_Precios_Costos
                                                _Aplicar_Formula_Dinamica As Boolean,
                                                _Koen As String,
                                                _vCantUd1 As Double,
-                                               _vCantUd2 As Double)
+                                               _vCantUd2 As Double,
+                                               Optional _MostrarError As Boolean = True)
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
@@ -2392,7 +2401,7 @@ Public Module Modulo_Precios_Costos
                 Sb_Buscar_Valor_En_Dimensiones(_Fx1, _Codigo, _Koen)
 
                 Consulta_sql = "Select " & _Fx1 & " As Valor"
-                Dim _RowPr As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                Dim _RowPr As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, _MostrarError)
 
                 _Precio = _RowPr.Item("Valor")
 
@@ -3559,7 +3568,7 @@ Public Module Crear_Documentos_Desde_Otro
                                "  And TD='" & _Td & "'  AND EMPRESA='" & ModEmpresa & "' "
             End If
 
-            Dim _Row_Folios As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+            Dim _Row_Folios As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, _MostrarMensajeExpiracion)
 
             If IsNothing(_Row_Folios) Then
 
@@ -3589,7 +3598,7 @@ Public Module Crear_Documentos_Desde_Otro
                 If _Sql.Fx_Existe_Tabla("FDTECONF") Then
 
                     Try
-                        _Meses = _Sql.Fx_Trae_Dato("FDTECONF", "VALOR", "CAMPO = 'sii.meses.expiran.folios' And ACTIVO=1 And EMPRESA = '" & ModEmpresa & "'")
+                        _Meses = _Sql.Fx_Trae_Dato("FDTECONF", "VALOR", "CAMPO = 'sii.meses.expiran.folios' And ACTIVO=1 And EMPRESA = '" & ModEmpresa & "'",, _MostrarMensajeExpiracion)
                     Catch ex As Exception
                         If _Tido = "BLV" Then
                             _Meses = 24
@@ -4824,7 +4833,7 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Function
 
-    Function Fx_Guargar_PDF_Automaticamente_Por_Doc_Modalidad(_Idmaeedo As Integer) As String
+    Function Fx_Guargar_PDF_Automaticamente_Por_Doc_Modalidad(_Idmaeedo As Integer, _Empresa As String, _Modalidad As String) As String
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
         Dim _Error = String.Empty
@@ -4839,7 +4848,7 @@ Public Module Crear_Documentos_Desde_Otro
                 Return ""
             End If
 
-            Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo & "-- And NUDONODEFI = 0"
+            Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo
             Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If IsNothing(_Row_Documento) Then
@@ -4851,14 +4860,12 @@ Public Module Crear_Documentos_Desde_Otro
             Dim _Nudonodefi As String = _Row_Documento.Item("NUDONODEFI")
             Dim _Tidoelec As Boolean = _Row_Documento.Item("TIDOELEC")
 
-            'Dim _Subtido As String = _Sql.Fx_Trae_Dato("MAEEDO", "SUBTIDO", "IDMAEEDO = " & _Idmaeedo)
-
             If _Nudonodefi Then
                 Return ""
             End If
 
-            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad 
-                            Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & Modalidad & "' And TipoDoc = '" & _Tido & "'"
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad" & vbCrLf &
+                           "Where Empresa = '" & _Empresa & "' And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'"
             Dim _RowFormato_Mod As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             Dim _Guardar_PDF_Auto As Boolean = _RowFormato_Mod.Item("Guardar_PDF_Auto")
@@ -4870,7 +4877,7 @@ Public Module Crear_Documentos_Desde_Otro
                 Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
 
                 _Ruta_PDF = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Estaciones_Ruta_PDF", "Ruta_PDF",
-                                              "Empresa = '" & ModEmpresa & "' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "' And Tido = '" & _Tido & "'")
+                                              "Empresa = '" & _Empresa & "' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & _Modalidad & "' And Tido = '" & _Tido & "'")
 
                 If Not Directory.Exists(_Ruta_PDF) Then
                     Return "No se puede guardar el PDF. No existe Ruta (Carpeta de destino de los archivos)"
@@ -5297,7 +5304,7 @@ Public Module Crear_Documentos_Desde_Otro
         GRI_Gen
     End Enum
 
-    Sub Sb_Configuracion_Salida_PDF(_Formulario As Form, _Tido As String)
+    Sub Sb_Configuracion_Salida_PDF(_Formulario As Form, _Empresa As String, _Modalidad As String, _Tido As String)
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
@@ -5307,9 +5314,8 @@ Public Module Crear_Documentos_Desde_Otro
 
         Dim _Ruta_PDF = String.Empty
 
-        Consulta_sql = "Select *
-                        From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad" & vbCrLf &
-                        "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & Modalidad & "' And TipoDoc = '" & _Tido & "'"
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad" & vbCrLf &
+                       "Where Empresa = '" & _Empresa & "' And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'"
         Dim _RowFormato_Mod As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Dim _Guardar_PDF_Auto As Boolean = _RowFormato_Mod.Item("Guardar_PDF_Auto")
@@ -5333,7 +5339,7 @@ Public Module Crear_Documentos_Desde_Otro
         End If
 
         _Ruta_PDF = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Estaciones_Ruta_PDF", "Ruta_PDF",
-                                      "NombreEquipo = '" & _NombreEquipo & "' And Empresa = '" & ModEmpresa & "' And Modalidad = '" & Modalidad & "' And Tido = '" & _Tido & "' And Tipo_Ruta = 'PDF'")
+                                      "NombreEquipo = '" & _NombreEquipo & "' And Empresa = '" & _Empresa & "' And Modalidad = '" & _Modalidad & "' And Tido = '" & _Tido & "' And Tipo_Ruta = 'PDF'")
 
         If Directory.Exists(_Ruta_PDF) Then
 
@@ -5378,15 +5384,15 @@ Public Module Crear_Documentos_Desde_Otro
 
         End If
 
-
         If String.IsNullOrEmpty(_Ruta_PDF) Then
             Return
         End If
 
         Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Estaciones_Ruta_PDF" & vbCrLf &
-                           "Where NombreEquipo = '" & _NombreEquipo & "' And Empresa = '" & ModEmpresa & "' And Modalidad = '" & Modalidad & "' And Tido = '" & _Tido & "' And Tipo_Ruta = 'PDF'" & vbCrLf &
-                           "Insert Into " & _Global_BaseBk & "Zw_Estaciones_Ruta_PDF (NombreEquipo,Modalidad,Tido,Ruta_PDF,Empresa,Tipo_Ruta) " &
-                            "Values ('" & _NombreEquipo & "','" & Modalidad & "','" & _Tido & "','" & _Ruta_PDF & "','" & ModEmpresa & "','PDF')"
+                       "Where NombreEquipo = '" & _NombreEquipo & "' And Empresa = '" & _Empresa & "' And Modalidad = '" & _Modalidad & "' And Tido = '" & _Tido & "' And Tipo_Ruta = 'PDF'" & vbCrLf &
+                       "Insert Into " & _Global_BaseBk & "Zw_Estaciones_Ruta_PDF (NombreEquipo,Modalidad,Tido,Ruta_PDF,Empresa,Tipo_Ruta) " &
+                       "Values ('" & _NombreEquipo & "','" & _Modalidad & "','" & _Tido & "','" & _Ruta_PDF & "','" & ModEmpresa & "','PDF')"
+
         If _Sql.Ej_consulta_IDU(Consulta_sql) Then
 
             MessageBoxEx.Show(_Formulario, "La carpeta de salida quedo guardada exitosamente", "Validación",
@@ -6060,6 +6066,8 @@ Public Module Crear_Documentos_Desde_Otro
         'End Try
 
         If _Firma_RunMonitor Then
+
+            _Class_DTE._Mostrar_Mensaje = False
 
             Dim _Iddt As Integer = _Class_DTE.Fx_Dte_Genera_Documento(_Formulario, False)
             If CBool(_Iddt) Then

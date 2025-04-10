@@ -25,6 +25,7 @@ CREATE TABLE [dbo].[Zw_Stmp_Enc](
 	[TidoGen]				        [varchar](3)	NOT NULL DEFAULT (''),
 	[NudoGen]				        [varchar](10)	NOT NULL DEFAULT (''),
     [CodFuncionario_Entrega]	    [char](3)		NOT NULL DEFAULT (''),
+    [ConfirmadoWMS]                 [bit]			NOT NULL DEFAULT (0),
     [Planificada]                   [bit]			NOT NULL DEFAULT (0),
     [FechaPlanificacion]            [datetime]		NULL,
     [FechaEntrega]                  [datetime]		NULL,
@@ -37,7 +38,11 @@ CREATE TABLE [dbo].[Zw_Stmp_Enc](
     [Reasignada]                    [bit]			NOT NULL DEFAULT (0),    
     [FechaPickeoAct]                [bit]			NOT NULL DEFAULT (0),    
     [Ruta]                          [varchar](10)   NOT NULL DEFAULT (0),    
-    [OrdenRuta]                     [int]           NOT NULL DEFAULT (0),    
+    [OrdenRuta]                     [int]           NOT NULL DEFAULT (0),
+    [Observacion]                   [varchar](200)  NOT NULL DEFAULT (''),
+    [PagarAuto]                     [bit]           NOT NULL DEFAULT (0),
+    [Idmaedpce_Paga]                [int]           NOT NULL DEFAULT (0),
+    [CodFuncionario_Paga]           [char](3)       NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_Stmp_Enc] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

@@ -24,6 +24,9 @@ CREATE TABLE [dbo].[Zw_Stk_Tickets_Producto](
 	[AjusInventario]	[bit]			NOT NULL DEFAULT (0),
 	[SobreStock]		[bit]			NOT NULL DEFAULT (0),
     [Ubicacion]			[varchar](30)	NOT NULL DEFAULT (''),
+    [Id_TicketAc]       [int]           NOT NULL DEFAULT (''),
+    [Id_Padre]          [int]           NOT NULL DEFAULT (''),
+    [ConfCantCero]      [bit]           NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_Stk_Tickets_Producto] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

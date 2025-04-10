@@ -70,6 +70,8 @@ Public Class Cl_Tickets
                 .Aceptado = _Row.Item("Rechazado")
                 .Id_Raiz = _Row.Item("Id_Raiz")
                 .SubNro = _Row.Item("SubNro")
+                .Cerraddo = _Row.Item("SubNro")
+                .FechaCerrado = _Row.Item("SubNro")
 
             End With
 
@@ -86,6 +88,7 @@ Public Class Cl_Tickets
     Function FX_Llenar_Producto(_Id_Ticket As Integer) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
+        Dim _Zw_Stk_Tickets_Producto As New Zw_Stk_Tickets_Producto
 
         Try
 
@@ -94,11 +97,16 @@ Public Class Cl_Tickets
 
             If IsNothing(_Row) Then
                 _Mensaje.Detalle = "No se encontro registro"
-                Throw New System.Exception("No se encontro el registro en la tabla de Zw_Stk_Tickets con el Id = " & _Id_Ticket)
+                Throw New System.Exception("No se encontro el registro en la tabla de Zw_Stk_Tickets con el Id_Ticket = " & _Id_Ticket)
             End If
 
-            With Zw_Stk_Tickets_Producto
+            With _Zw_Stk_Tickets_Producto
 
+                .Id = _Row.Item("Id")
+                .Id_Ticket = _Row.Item("Id_Ticket")
+                .Id_Raiz = _Row.Item("Id_Raiz")
+                .Id_Padre = _Row.Item("Id_Padre")
+                .Id_TicketAc = _Row.Item("Id_TicketAc")
                 .Empresa = _Row.Item("Empresa")
                 .Sucursal = _Row.Item("Sucursal")
                 .Bodega = _Row.Item("Bodega")
@@ -106,17 +114,72 @@ Public Class Cl_Tickets
                 .Descripcion = _Row.Item("Descripcion")
                 .Rtu = _Row.Item("Rtu")
                 .UdMedida = _Row.Item("UdMedida")
-                .Um = _Row.Item("Ud1")
-                '.Ud2 = _Row.Item("Ud2")
+                .Um = _Row.Item("Um")
+                .Ud1 = _Row.Item("Ud1")
+                .Ud2 = _Row.Item("Ud2")
                 .StfiEnBodega = _Row.Item("StfiEnBodega")
                 .Cantidad = _Row.Item("Cantidad")
                 .Diferencia = _Row.Item("Diferencia")
                 .FechaRev = _Row.Item("FechaRev")
                 .Ubicacion = _Row.Item("Ubicacion")
+                .ConfCantCero = _Row.Item("ConfCantCero")
 
             End With
 
             _Mensaje.EsCorrecto = True
+            _Mensaje.Tag = _Zw_Stk_Tickets_Producto
+
+        Catch ex As Exception
+            _Mensaje.Mensaje = ex.Message
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
+    Function FX_Llenar_Producto_Id(_Id As Integer) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+        Dim _Zw_Stk_Tickets_Producto As New Zw_Stk_Tickets_Producto
+
+        Try
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_Tickets_Producto Where Id = " & _Id
+            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_Row) Then
+                _Mensaje.Detalle = "No se encontro registro"
+                Throw New System.Exception("No se encontro el registro en la tabla de Zw_Stk_Tickets con el Id = " & _Id)
+            End If
+
+            With _Zw_Stk_Tickets_Producto
+
+                .Id = _Row.Item("Id")
+                .Id_Ticket = _Row.Item("Id_Ticket")
+                .Id_Raiz = _Row.Item("Id_Raiz")
+                .Id_Padre = _Row.Item("Id_Padre")
+                .Id_TicketAc = _Row.Item("Id_TicketAc")
+                .Empresa = _Row.Item("Empresa")
+                .Sucursal = _Row.Item("Sucursal")
+                .Bodega = _Row.Item("Bodega")
+                .Codigo = _Row.Item("Codigo")
+                .Descripcion = _Row.Item("Descripcion")
+                .Rtu = _Row.Item("Rtu")
+                .UdMedida = _Row.Item("UdMedida")
+                .Um = _Row.Item("Um")
+                .Ud1 = _Row.Item("Ud1")
+                .Ud2 = _Row.Item("Ud2")
+                .StfiEnBodega = _Row.Item("StfiEnBodega")
+                .Cantidad = _Row.Item("Cantidad")
+                .Diferencia = _Row.Item("Diferencia")
+                .FechaRev = _Row.Item("FechaRev")
+                .Ubicacion = _Row.Item("Ubicacion")
+                .ConfCantCero = _Row.Item("ConfCantCero")
+
+            End With
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Tag = _Zw_Stk_Tickets_Producto
 
         Catch ex As Exception
             _Mensaje.Mensaje = ex.Message
@@ -270,9 +333,6 @@ Public Class Cl_Tickets
                 Comando.Transaction = myTrans
                 Comando.ExecuteNonQuery()
 
-                'Imports System.Data
-                'Imports System.Data.SqlClient
-
                 Comando = New System.Data.SqlClient.SqlCommand("SELECT @@IDENTITY AS 'Identity'", Cn2)
                 Comando.Transaction = myTrans
                 dfd1 = Comando.ExecuteReader()
@@ -283,15 +343,7 @@ Public Class Cl_Tickets
 
 
                 If .Id_Raiz = 0 Then
-
                     .Id_Raiz = .Id
-
-                    'Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones (Id_Ticket,Accion,Descripcion,Fecha,CodFuncionario,En_Construccion,CodFunGestiona) Values " &
-                    '               "(" & .Id & ",'CREA','SE CREA NUEVO TICKET Nro " & .Numero & " Asunto: " & .Asunto & "',Getdate(),'" & .CodFuncionario_Crea & "',0,'" & .CodFuncionario_Crea & "')"
-                    'Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
-                    'Comando.Transaction = myTrans
-                    'Comando.ExecuteNonQuery()
-
                 End If
 
                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stk_Tickets Set " & vbCrLf &
@@ -312,13 +364,6 @@ Public Class Cl_Tickets
                 Comando.ExecuteNonQuery()
 
             End With
-            'Dim _Accion As String
-
-            'If .Id = .Id_Raiz Then
-            '    _Accion = "CREA"
-            'Else
-            '    _Accion = "MENS"
-            'End If
 
             With Zw_Stk_Tickets_Acciones
 
@@ -338,6 +383,8 @@ Public Class Cl_Tickets
                                ",Id_Ticket_Cierra = '" & .Id_Ticket_Cierra & "'" & vbCrLf &
                                ",Id_Ticket_Crea = '" & .Id_Ticket_Crea & "'" & vbCrLf &
                                ",Asunto = '" & .Asunto & "'" & vbCrLf &
+                               ",ConfSinDoc_Cierra = " & Convert.ToInt32(.ConfSinDoc_Cierra) & vbCrLf &
+                               ",Motivo_Cierra = '" & .Motivo_Cierra & "'" & vbCrLf &
                                "Where Id = " & .Id
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
@@ -353,37 +400,44 @@ Public Class Cl_Tickets
             Comando.Transaction = myTrans
             Comando.ExecuteNonQuery()
 
-            'If Not CBool(Zw_Stk_Tickets.Id_Padre) Then
+            Dim _Id_Producto As Integer = Zw_Stk_Tickets_Producto.Id
 
-            With Zw_Stk_Tickets_Producto
+            For Each _Prod As Zw_Stk_Tickets_Producto In Ls_Zw_Stk_Tickets_Producto
 
-                .Id_Ticket = Zw_Stk_Tickets.Id
-                .Id_Raiz = Zw_Stk_Tickets.Id_Raiz
-                .Numero = Zw_Stk_Tickets.Numero
+                With _Prod
 
-                .Id_TicketAc = Zw_Stk_Tickets_Acciones.Id
+                    If .Id_Ticket = 0 Then
 
-                If Not String.IsNullOrEmpty(.Codigo) Then
+                        .Id_Ticket = Zw_Stk_Tickets.Id
+                        .Id_Raiz = Zw_Stk_Tickets.Id_Raiz
+                        .Numero = Zw_Stk_Tickets.Numero
 
-                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Producto (Id_Ticket,Id_Raiz,Numero,Empresa,Sucursal,Bodega," &
-                               "Codigo,Descripcion,Rtu,UdMedida,Ud1,Ud2,StfiEnBodega,Cantidad,Diferencia,FechaRev,Ubicacion,Id_TicketAc) Values " &
-                               "(" & .Id_Ticket & "," & .Id_Raiz & ",'" & .Numero & "','" & .Empresa & "','" & .Sucursal & "','" & .Bodega &
-                               "','" & .Codigo & "','" & .Descripcion & "'," & De_Num_a_Tx_01(.Rtu, False, 5) &
-                               "," & .UdMedida & ",'" & .Um & "'," & De_Num_a_Tx_01(.StfiEnBodega, False, 5) &
-                               "," & De_Num_a_Tx_01(.Cantidad, False, 5) &
-                               "," & De_Num_a_Tx_01(.Diferencia, False, 5) &
-                               ",'" & Format(.FechaRev, "yyyyMMdd HH:mm") &
-                               "','" & .Ubicacion & "'," & .Id_TicketAc & ")"
+                        .Id_TicketAc = Zw_Stk_Tickets_Acciones.Id
 
-                    Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
-                    Comando.Transaction = myTrans
-                    Comando.ExecuteNonQuery()
+                        If Not String.IsNullOrEmpty(.Codigo) Then
 
-                End If
+                            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Producto (Id_Ticket,Id_Raiz,Numero,Empresa,Sucursal,Bodega," &
+                                           "Codigo,Descripcion,Rtu,UdMedida,Ud1,Ud2,Um,StfiEnBodega,Cantidad,Diferencia,FechaRev,Ubicacion,Id_TicketAc," &
+                                           "Id_Padre,ConfCantCero) Values " &
+                                           "(" & .Id_Ticket & "," & .Id_Raiz & ",'" & .Numero & "','" & .Empresa & "','" & .Sucursal & "','" & .Bodega &
+                                           "','" & .Codigo & "','" & .Descripcion & "'," & De_Num_a_Tx_01(.Rtu, False, 5) &
+                                           "," & .UdMedida & ",'" & .Ud1 & "','" & .Ud2 & "','" & .Um & "'," & De_Num_a_Tx_01(.StfiEnBodega, False, 5) &
+                                           "," & De_Num_a_Tx_01(.Cantidad, False, 5) &
+                                           "," & De_Num_a_Tx_01(.Diferencia, False, 5) &
+                                           ",'" & Format(.FechaRev, "yyyyMMdd HH:mm") &
+                                           "','" & .Ubicacion & "'," & .Id_TicketAc & "," & .Id_Padre & "," & Convert.ToInt32(.ConfCantCero) & ")"
 
-            End With
+                            Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                            Comando.Transaction = myTrans
+                            Comando.ExecuteNonQuery()
 
-            'End If
+                        End If
+
+                    End If
+
+                End With
+
+            Next
 
             If Not IsNothing(_Tbl_Agentes) Then
 
@@ -404,10 +458,6 @@ Public Class Cl_Tickets
             _Mensaje.Id = Zw_Stk_Tickets.Id
             _Mensaje.Detalle = "Grabación correcta"
             _Mensaje.Mensaje = "Se graba correctamente el Ticket " & Zw_Stk_Tickets.Numero & "-" & Zw_Stk_Tickets.SubNro
-
-
-
-            'Consulta_sql = "Delete Zw_Stk_Tickets_Acciones Where Id_Ticket = 0"
 
             myTrans.Commit()
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
@@ -680,6 +730,8 @@ Public Class Cl_Tickets
                                        ",Tido_Cierra = '" & .Tido_Cierra & "'" & vbCrLf &
                                        ",Nudo_Cierra = '" & .Nudo_Cierra & "'" & vbCrLf &
                                        ",Idmaeedo_Cierra = " & .Idmaeedo_Cierra & vbCrLf &
+                                       ",ConfSinDoc_Cierra = " & Convert.ToInt32(.ConfSinDoc_Cierra) & vbCrLf &
+                                       ",Motivo_Cierra = '" & .Motivo_Cierra & "'" & vbCrLf &
                                        "Where Id = " & .Id
                         Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                         Comando.Transaction = myTrans
@@ -689,11 +741,12 @@ Public Class Cl_Tickets
 
                         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones (Id_Ticket,Accion,Descripcion,Fecha,CodAgente," &
                                    "CodFuncionario,En_Construccion,CodFunGestiona,Rechazado,Aceptado,Id_Raiz,Id_Ticket_Cierra,Id_Ticket_Crea," &
-                                   "Asunto,Tido_Cierra,Nudo_Cierra,Idmaeedo_Cierra) Values " &
+                                   "Asunto,Tido_Cierra,Nudo_Cierra,Idmaeedo_Cierra,ConfSinDoc_Cierra,Motivo_Cierra) Values " &
                                    "(" & .Id_Ticket & ",'" & .Accion & "','" & .Descripcion & "',Getdate(),'" & .CodAgente & "','" & .CodFuncionario & "'," &
                                    Convert.ToInt32(.En_Construccion) & ",'" & .CodFunGestiona & "'," & Convert.ToInt32(.Rechazado) & "," &
                                    Convert.ToInt32(.Aceptado) & "," & .Id_Raiz & "," & .Id_Ticket_Cierra & "," & .Id_Ticket_Crea &
-                                   ",'" & .Asunto & "','" & .Tido_Cierra & "','" & .Nudo_Cierra & "'," & .Idmaeedo_Cierra & ")"
+                                   ",'" & .Asunto & "','" & .Tido_Cierra & "','" & .Nudo_Cierra & "'," & .Idmaeedo_Cierra &
+                                   "," & Convert.ToInt32(.ConfSinDoc_Cierra) & ",'" & .Motivo_Cierra & "')"
 
                         Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                         Comando.Transaction = myTrans
@@ -806,6 +859,8 @@ Public Class Cl_Tickets
         If _Zw_Stk_Tipos.AsignadoAgente Then Consulta_sql = "Select '" & _Zw_Stk_Tipos.CodAgente & "' As CodAgente"
         If _Zw_Stk_Tipos.AsignadoGrupo Then Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stk_GrupoVsAgente Where Id_Grupo = " & _Zw_Stk_Tipos.Id_Grupo
 
+        Dim _Area As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Stk_Areas", "Area", "Id = " & _Zw_Stk_Tipos.Id_Area)
+
         Dim _Tbl_Grupo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim myTrans As SqlClient.SqlTransaction
@@ -845,7 +900,7 @@ Public Class Cl_Tickets
             For Each _Fl As DataRow In _Tbl_Grupo.Rows
 
                 Consulta_sql = "Select Count(*) As Cuenta From " & _Global_BaseBk & "Zw_Stk_AgentesVsTipos" & vbCrLf &
-                           "Where Id_Area = " & _Zw_Stk_Tipos.Id_Area & " And Id_Tipo = " & _Zw_Stk_Tipos.Id & " And CodAgente = '" & _Fl.Item("CodAgente") & "'"
+                               "Where Id_Area = " & _Zw_Stk_Tipos.Id_Area & " And Id_Tipo = " & _Zw_Stk_Tipos.Id & " And CodAgente = '" & _Fl.Item("CodAgente") & "'"
 
                 Comando = New System.Data.SqlClient.SqlCommand(Consulta_sql, Cn2)
                 Comando.Transaction = myTrans
@@ -898,6 +953,34 @@ Public Class Cl_Tickets
                 Comando.ExecuteNonQuery()
 
             End With
+
+            Dim _CodPermiso As String = "Tkt" & numero_(_Zw_Stk_Tipos.Id_Area & _Zw_Stk_Tipos.Id, 6)
+            Dim _DescripcionPermiso As String = "CREAR TICKET: " & _Area.Trim & ", " & _Zw_Stk_Tipos.Tipo.Trim
+
+            _DescripcionPermiso = Mid(_DescripcionPermiso, 1, 200)
+
+            Consulta_sql = "Select  Count(*) As Cuenta From " & _Global_BaseBk & "ZW_Permisos" & vbCrLf &
+                           "Where CodPermiso = '" & _CodPermiso & "'"
+
+            Comando = New System.Data.SqlClient.SqlCommand(Consulta_sql, Cn2)
+            Comando.Transaction = myTrans
+            Dim dfd2 As System.Data.SqlClient.SqlDataReader = Comando.ExecuteReader()
+            While dfd2.Read()
+                _Cuenta = dfd2("Cuenta")
+            End While
+            dfd2.Close()
+
+            If CBool(_Cuenta) Then
+                Consulta_sql = "Update " & _Global_BaseBk & "ZW_Permisos Set DescripcionPermiso = '" & _DescripcionPermiso & "' Where CodPermiso = '" & _CodPermiso & "'"
+            Else
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "ZW_Permisos (CodPermiso,DescripcionPermiso,CodFamilia,NombreFamiliaPermiso) Values " &
+                               "('" & _CodPermiso & "','" & _DescripcionPermiso & "','Ticket','Sistema de Ticket')"
+            End If
+
+            Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+            Comando.Transaction = myTrans
+            Comando.ExecuteNonQuery()
+
 
             myTrans.Commit()
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
@@ -970,6 +1053,35 @@ Public Class Cl_Tickets
         End With
 
         Return _Descripcion
+
+    End Function
+
+    Function Fx_CrearCodPermiso(_Id_Area As Integer, _Id_Tipo As Integer, _DescripcionPermiso As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        Try
+
+        Catch ex As Exception
+
+        End Try
+
+        Dim _Row As DataRow
+
+        Dim _CodPermiso As String = String.Empty
+        Dim _CodFamilia As String = "Ticket"
+
+        _CodPermiso = "Tkt" & numero_(_Id_Area & _Id_Tipo, 6)
+
+        Consulta_sql = "Select Left((Replace(a.Area + ', ' + t.Tipo, ' ', ''), 200) AS DescripcionPermiso" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Stk_Tipos t" & vbCrLf &
+                       "Inner Join " & _Global_BaseBk & "Zw_Stk_Areas a ON t.Id_Area = a.Id" & vbCrLf &
+                       "Where t.Id = " & _Id_Tipo & " AND t.Id_Area = " & _Id_Area
+
+        Dim _Reg = _Sql.Fx_Cuenta_Registros("", "", False)
+
+        Consulta_sql = "Select Semilla,CodPermiso,DescripcionPermiso,CodFamilia,NombreFamiliaPermiso,Descuento,Max_Compra
+From ZW_Permisos"
 
     End Function
 

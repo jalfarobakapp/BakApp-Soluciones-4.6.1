@@ -12,6 +12,7 @@
     Public Property Concepto_R As String
     Public Property Concepto_D As String
     Public Property Pago As Pago
+    Public Property ModalidadFac As String
 End Class
 
 Public Class BodegaFacturacion

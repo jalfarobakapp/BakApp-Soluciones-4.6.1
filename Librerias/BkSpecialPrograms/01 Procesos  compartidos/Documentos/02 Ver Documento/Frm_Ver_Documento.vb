@@ -1,7 +1,6 @@
 ﻿Imports System.Drawing.Printing
 Imports System.IO
 Imports DevComponents.DotNetBar
-Imports OfficeOpenXml.FormulaParsing.LexicalAnalysis
 Imports PdfSharp
 Imports PdfSharp.Drawing
 Imports PdfSharp.Drawing.Layout
@@ -538,30 +537,36 @@ Public Class Frm_Ver_Documento
             BuscarDatoEnGrilla(_Codigo_Marcar, "KOPRCT", GrillaDetalleDoc)
         End If
 
-        Dim _Tido = Trim(_TblEncabezado.Rows(0).Item("TIDO"))
-        Dim _Nudo = Trim(_TblEncabezado.Rows(0).Item("NUDO"))
+        If _Tipo_Apertura = Enum_Tipo_Apertura.Desde_Random_SQL Then
 
-        If _Tido = "NVV" AndAlso
-            _Global_Row_Configuracion_General.Item("HabilitarNVVConProdCustomizables") AndAlso
-            _Tipo_Apertura = Enum_Tipo_Apertura.Desde_Random_SQL Then
+            Dim _Tido = Trim(_TblEncabezado.Rows(0).Item("TIDO"))
+            Dim _Nudo = Trim(_TblEncabezado.Rows(0).Item("NUDO"))
 
-            _Customizable = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "Customizable", "Idmaeedo = " & _Idmaeedo)
+            If _Tido = "NVV" AndAlso
+                _Global_Row_Configuracion_General.Item("HabilitarNVVConProdCustomizables") AndAlso
+                _Tipo_Apertura = Enum_Tipo_Apertura.Desde_Random_SQL Then
 
-            Lbl_CusNVV.Visible = _Customizable
-            Btn_CusNVV.Visible = _Customizable
+                _Customizable = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "Customizable", "Idmaeedo = " & _Idmaeedo)
 
-            If _Customizable Then
-                Btn_CusNVV.Text = "Ver información del producto Customizado"
-                Me.Text += " *** CUSTOMIZABLE ***"
-            Else
-                Btn_MarcarNVVCustomizable.Visible = True
+                Lbl_CusNVV.Visible = _Customizable
+                Btn_CusNVV.Visible = _Customizable
+
+                If _Customizable Then
+                    Btn_CusNVV.Text = "Ver información del producto Customizado"
+                    Me.Text += " *** CUSTOMIZABLE ***"
+                Else
+                    Btn_MarcarNVVCustomizable.Visible = True
+                End If
+
             End If
+
+            _Cl_Contenedor.Zw_Contenedor = _Cl_Contenedor.Fx_Llenar_Contenedor(_Idmaeedo, _Tido, _Nudo)
+
+            Btn_Contenedor.Visible = (_Tido = "OCC")
 
         End If
 
-        _Cl_Contenedor.Zw_Contenedor = _Cl_Contenedor.Fx_Llenar_Contenedor(_Idmaeedo, _Tido, _Nudo)
-
-        Btn_Contenedor.Visible = (_Tido = "OCC")
+        Me.Cursor = Cursors.Default
 
     End Sub
 
@@ -749,11 +754,13 @@ Public Class Frm_Ver_Documento
                             _Class_Referencias_DTE.Fx_Row_Nueva_Referencia(0, _Idmaeedo, "", "",
                                                              _NroLinRef, _TpoDocRef, _FolioRef, _RUTOt, _IdAdicOtr, _FchRef, _CodRef, _RazonRef)
 
+                            Dim _FchRef_Str = Format(_FlRef.Item("FEEMDO"), "yyyyMMdd")
+
                             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Referencias_Dte " &
                                            "(Id_Doc,Tido,Nudo,NroLinRef,TpoDocRef,FolioRef,RUTOt,IdAdicOtr,FchRef,CodRef,RazonRef, Kasi)
                                Values
                                (" & _Idmaeedo & ",'" & _Tido & "','" & _Nudo & "'," & _NroLinRef & "," & _TpoDocRef &
-                                           ",'" & _FolioRef & "','" & _RUTOt & "','" & _IdAdicOtr & "','" & _FchRef & "'," & _CodRef & ",'" & _RazonRef & "',0)"
+                                           ",'" & _FolioRef & "','" & _RUTOt & "','" & _IdAdicOtr & "','" & _FchRef_Str & "'," & _CodRef & ",'" & _RazonRef & "',0)"
                             _Sql.Ej_consulta_IDU(Consulta_sql)
 
                         End If
@@ -2259,6 +2266,10 @@ Public Class Frm_Ver_Documento
     End Sub
 
     Sub Sb_Ver_Entidad()
+
+        If Not Fx_Tiene_Permiso(Me, "CfEnt001") Then
+            Return
+        End If
 
         Dim Fm As New Frm_Crear_Entidad_Mt
         Fm.Fx_Llenar_Entidad(_TblEncabezado.Rows(0).Item("ENDO"), _TblEncabezado.Rows(0).Item("SUENDO"))
@@ -4018,26 +4029,28 @@ Public Class Frm_Ver_Documento
 
     Private Sub Btn_Mnu_Ficha_Entidad_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_Ficha_Entidad.Click
 
-        If Fx_Tiene_Permiso(Me, "CfEnt001") Then
+        'If Not Fx_Tiene_Permiso(Me, "CfEnt001") Then
+        '    Return
+        'End If
 
-            Dim _Koen = _RowEntidad.Item("KOEN")
-            Dim _Suen = _RowEntidad.Item("SUEN")
+        Sb_Ver_Entidad()
 
-            Dim Fm As New Frm_Crear_Entidad_Mt
-            Fm.Fx_Llenar_Entidad(_Koen, _Suen)
-            Fm.CrearEntidad = False
-            Fm.EditarEntidad = True
-            Fm.ShowDialog(Me)
+        'Dim _Koen = _RowEntidad.Item("KOEN")
+        'Dim _Suen = _RowEntidad.Item("SUEN")
 
-            If Fm.Grabar Then
-                Beep()
-                ToastNotification.Show(Me, "DATOS ACTUALIZADOS CORRECTAMENTE", My.Resources.ok_button,
-                                       1 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
-            End If
+        'Dim Fm As New Frm_Crear_Entidad_Mt
+        'Fm.Fx_Llenar_Entidad(_Koen, _Suen)
+        'Fm.CrearEntidad = False
+        'Fm.EditarEntidad = True
+        'Fm.ShowDialog(Me)
 
-            Fm.Dispose()
+        'If Fm.Grabar Then
+        '    Beep()
+        '    ToastNotification.Show(Me, "DATOS ACTUALIZADOS CORRECTAMENTE", My.Resources.ok_button,
+        '                           1 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
+        'End If
 
-        End If
+        'Fm.Dispose()
 
     End Sub
 
@@ -5052,7 +5065,34 @@ Public Class Frm_Ver_Documento
             Return
         End If
 
-        Sb_Asociar_Contenedor()
+        Dim Fm As New Frm_Contenedores
+        Fm.ModoSeleccion = True
+        Fm.ShowDialog(Me)
+        _Cl_Contenedor.Zw_Contenedor = Fm.Zw_Contenedor
+        Fm.Dispose()
+
+        If CBool(_Cl_Contenedor.Zw_Contenedor.IdCont) Then
+
+            Dim _Mensaje As New LsValiciones.Mensajes
+
+            _Mensaje = _Cl_Contenedor.Fx_Relacionar_Contenedor_Documento(_Idmaeedo, _Cl_Contenedor.Zw_Contenedor.IdCont)
+
+            If Not _Mensaje.EsCorrecto Then
+
+                Dim _Tido = Trim(_TblEncabezado.Rows(0).Item("TIDO"))
+                Dim _Nudo = Trim(_TblEncabezado.Rows(0).Item("NUDO"))
+
+                _Cl_Contenedor.Zw_Contenedor = _Cl_Contenedor.Fx_Llenar_Contenedor(_Idmaeedo, _Tido, _Nudo)
+                MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                Return
+
+            End If
+
+            MessageBoxEx.Show(Me, "Contenedor asociado correctamente" & vbCrLf &
+                                  "Contenedor: " & _Cl_Contenedor.Zw_Contenedor.Contenedor & " - " & _Cl_Contenedor.Zw_Contenedor.NombreContenedor,
+                                  "Asociar contenedor", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        End If
 
     End Sub
 
@@ -5082,6 +5122,8 @@ Public Class Frm_Ver_Documento
     Private Sub Btn_Contenedor_Quitar_Click(sender As Object, e As EventArgs) Handles Btn_Contenedor_Quitar.Click
 
         Dim _IdCont = _Cl_Contenedor.Zw_Contenedor.IdCont
+        Dim _Empresa = _Cl_Contenedor.Zw_Contenedor.Empresa
+        Dim _Contenedor = _Cl_Contenedor.Zw_Contenedor.Contenedor
 
         If Not CBool(_IdCont) Then
             MessageBoxEx.Show(Me, "No hay un contenedor asociado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -5096,7 +5138,7 @@ Public Class Frm_Ver_Documento
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
-        _Mensaje = _Cl_Contenedor.Fx_Quitar_Contenedor_De_Documento(_Idmaeedo)
+        _Mensaje = _Cl_Contenedor.Fx_Quitar_Contenedor_De_Documento(_Empresa, _Contenedor, _Idmaeedo)
 
         MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
@@ -5156,33 +5198,6 @@ Public Class Frm_Ver_Documento
             End If
 
             Me.Close()
-
-        End If
-
-    End Sub
-
-    Private Sub Sb_Asociar_Contenedor()
-
-        Dim Fm As New Frm_Contenedores
-        Fm.ModoSeleccion = True
-        Fm.ShowDialog(Me)
-        _Cl_Contenedor.Zw_Contenedor = Fm.Zw_Contenedor
-        Fm.Dispose()
-
-        If CBool(_Cl_Contenedor.Zw_Contenedor.IdCont) Then
-
-            Dim _Mensaje As New LsValiciones.Mensajes
-
-            _Mensaje = _Cl_Contenedor.Fx_Relacionar_Contenedor_Documento(_Idmaeedo, _Cl_Contenedor.Zw_Contenedor.IdCont)
-
-            If Not _Mensaje.EsCorrecto Then
-                MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
-                Return
-            End If
-
-            MessageBoxEx.Show(Me, "Contenedor asociado correctamente" & vbCrLf &
-                                  "Contenedor: " & _Cl_Contenedor.Zw_Contenedor.Contenedor & " - " & _Cl_Contenedor.Zw_Contenedor.NombreContenedor,
-                                  "Asociar contenedor", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         End If
 

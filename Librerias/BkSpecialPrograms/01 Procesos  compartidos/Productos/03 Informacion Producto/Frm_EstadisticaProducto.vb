@@ -138,6 +138,8 @@ Public Class Frm_EstadisticaProducto
         End Set
     End Property
 
+    Public Property VerSoloEntidadesDelVendedor As Boolean
+
     Public Sub New(Codigo As String,
                    Optional Endo As String = "",
                    Optional Tipo_D As Tipo_Doc = Tipo_Doc.Ninguno)
@@ -314,8 +316,13 @@ Public Class Frm_EstadisticaProducto
         Sb_Formato_Generico_Grilla(Grilla_Alternativos, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
         Sb_Formato_Generico_Grilla(Grilla_DetalleDocAlternativos, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
 
-        Sb_Llenar_Grillas(Chk_Mostrar_Solo_BLV_FCV_NCV.Checked, True)
+        VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00021",, False)
 
+        If Not VerSoloEntidadesDelVendedor Then
+            VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00022",, False)
+        End If
+
+        Sb_Llenar_Grillas(Chk_Mostrar_Solo_BLV_FCV_NCV.Checked, True)
         Sb_ActualizarGrilla_Alternativos()
 
         If Not IsNothing(_Row_Producto) Then
@@ -396,17 +403,9 @@ Public Class Frm_EstadisticaProducto
 
         Btn_Mnu_Pr_Editar_Producto.Visible = VerEdicionProducto
 
-
-        GrillaVentas.Visible = Not Fx_Tiene_Permiso(Me, "NO00021",, False)
-
-        If GrillaVentas.Visible Then
-            GrillaVentas.Visible = Not Fx_Tiene_Permiso(Me, "NO00022",, False)
-        End If
-
         If Not GrillaVentas.Visible Then
             Tabs.SelectedTabIndex = 2
         End If
-
 
     End Sub
 
@@ -473,6 +472,29 @@ Public Class Frm_EstadisticaProducto
             _Filtro_Entidad = String.Empty
         Else
             _Filtro_Entidad = "And MAEDDO.ENDO = '" & _Endo & "'"
+        End If
+
+        If VerSoloEntidadesDelVendedor Then
+
+            Dim _Kogru = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & FUNCIONARIO & "'")
+
+            If String.IsNullOrEmpty(_Kogru) Then
+                _Filtro_Entidad += vbCrLf & " And MAEEN.KOFUEN = '" & FUNCIONARIO & "'"
+            Else
+
+                If Not _Kogru.Contains("'") Then
+                    _Kogru = "'" & _Kogru & "'"
+                End If
+
+                Dim _SqlQuery = "Select KOFU From TABFUGD Where KOGRU In (" & _Kogru & ")"
+                Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(_SqlQuery)
+
+                Dim _Fl_Entidad = Generar_Filtro_IN(_Tbl, "", "KOFU", False, False, "'")
+                _Fl_Entidad = "And MAEEN.KOFUEN In " & _Fl_Entidad
+                _Filtro_Entidad += vbCrLf & _Fl_Entidad
+
+            End If
+
         End If
 
 

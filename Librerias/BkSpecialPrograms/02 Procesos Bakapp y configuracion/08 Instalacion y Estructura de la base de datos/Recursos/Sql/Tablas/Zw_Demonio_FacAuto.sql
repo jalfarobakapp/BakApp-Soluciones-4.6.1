@@ -23,6 +23,13 @@ CREATE TABLE [dbo].[Zw_Demonio_FacAuto](
     [FechaHoraFacturado]        [datetime]			NULL,
     [DesdeNVVAuto]		        [bit]				NOT NULL DEFAULT (0),
     [CantItem]                  [int]				NOT NULL DEFAULT (0),
+    [IpEquipo]		            [varchar](20)		NOT NULL DEFAULT (''),
+    [PagarAuto]		            [bit]		        NOT NULL DEFAULT (0),
+    [Idmaedpce_Paga]            [int]		        NOT NULL DEFAULT (0),
+    [CodFuncionario_Paga]       [char](3)		    NOT NULL DEFAULT (''),
+    [Pagada]                    [bit]		        NOT NULL DEFAULT (0),
+    [Error_Paga]                [bit]		        NOT NULL DEFAULT (0),
+    [Informacion_Paga]          [varchar](max)		NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_Demonio_FacAuto] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

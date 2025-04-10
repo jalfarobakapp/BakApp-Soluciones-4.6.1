@@ -30,6 +30,7 @@ Partial Class Documentos_GDI_GRI
         Me.MnuEspecialOtros = New DevComponents.DotNetBar.ItemContainer()
         Me.Btn_GRI = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_GDI = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_GDI_GRI = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_GRI_Ajuste = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_GDI_Ajuste = New DevComponents.DotNetBar.Metro.MetroTileItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -57,7 +58,7 @@ Partial Class Documentos_GDI_GRI
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnSalir})
         Me.Bar2.Location = New System.Drawing.Point(0, 288)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(428, 41)
+        Me.Bar2.Size = New System.Drawing.Size(634, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 51
@@ -97,10 +98,10 @@ Partial Class Documentos_GDI_GRI
         '
         '
         Me.MnuEspecialOtros.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.MnuEspecialOtros.FixedSize = New System.Drawing.Size(600, 250)
+        Me.MnuEspecialOtros.FixedSize = New System.Drawing.Size(700, 250)
         Me.MnuEspecialOtros.MultiLine = True
         Me.MnuEspecialOtros.Name = "MnuEspecialOtros"
-        Me.MnuEspecialOtros.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_GRI, Me.Btn_GDI, Me.Btn_GRI_Ajuste, Me.Btn_GDI_Ajuste})
+        Me.MnuEspecialOtros.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_GDI_GRI, Me.Btn_GRI, Me.Btn_GDI, Me.Btn_GRI_Ajuste, Me.Btn_GDI_Ajuste})
         '
         '
         '
@@ -160,6 +161,34 @@ Partial Class Documentos_GDI_GRI
         Me.Btn_GDI.TileStyle.PaddingTop = 4
         Me.Btn_GDI.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_GDI.TitleText = "Documento"
+        '
+        'Btn_GDI_GRI
+        '
+        Me.Btn_GDI_GRI.Image = CType(resources.GetObject("Btn_GDI_GRI.Image"), System.Drawing.Image)
+        Me.Btn_GDI_GRI.ImageIndent = New System.Drawing.Point(8, -10)
+        Me.Btn_GDI_GRI.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_GDI_GRI.Name = "Btn_GDI_GRI"
+        Me.Btn_GDI_GRI.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_GDI_GRI.Tag = "GDV"
+        Me.Btn_GDI_GRI.Text = "<font size=""+4""><b>Especial GDI-GRI</b><br/></font>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.Btn_GDI_GRI.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Blueish
+        Me.Btn_GDI_GRI.TileSize = New System.Drawing.Size(200, 100)
+        '
+        '
+        '
+        Me.Btn_GDI_GRI.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(148, Byte), Integer))
+        Me.Btn_GDI_GRI.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(148, Byte), Integer))
+        Me.Btn_GDI_GRI.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_GDI_GRI.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(148, Byte), Integer))
+        Me.Btn_GDI_GRI.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(148, Byte), Integer))
+        Me.Btn_GDI_GRI.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_GDI_GRI.TileStyle.PaddingBottom = 4
+        Me.Btn_GDI_GRI.TileStyle.PaddingLeft = 4
+        Me.Btn_GDI_GRI.TileStyle.PaddingRight = 4
+        Me.Btn_GDI_GRI.TileStyle.PaddingTop = 4
+        Me.Btn_GDI_GRI.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_GDI_GRI.TitleText = "Documento"
+        Me.Btn_GDI_GRI.Visible = False
         '
         'Btn_GRI_Ajuste
         '
@@ -225,7 +254,7 @@ Partial Class Documentos_GDI_GRI
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.MetroTilePanel1)
         Me.Name = "Documentos_GDI_GRI"
-        Me.Size = New System.Drawing.Size(428, 329)
+        Me.Size = New System.Drawing.Size(634, 329)
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -238,6 +267,7 @@ Partial Class Documentos_GDI_GRI
     Friend WithEvents MnuEspecialOtros As DevComponents.DotNetBar.ItemContainer
     Public WithEvents Btn_GRI As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_GDI As DevComponents.DotNetBar.Metro.MetroTileItem
-    Private WithEvents Btn_GRI_Ajuste As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_GDI_Ajuste As DevComponents.DotNetBar.Metro.MetroTileItem
+    Private WithEvents Btn_GDI_GRI As DevComponents.DotNetBar.Metro.MetroTileItem
+    Private WithEvents Btn_GRI_Ajuste As DevComponents.DotNetBar.Metro.MetroTileItem
 End Class

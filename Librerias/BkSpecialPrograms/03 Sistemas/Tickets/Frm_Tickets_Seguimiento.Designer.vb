@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Ôªø<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Frm_Tickets_Seguimiento
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -37,6 +37,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Menu_Contextual_Cambio_Estado = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Mnu_EnviarMensajeRespuesta = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_IngresarObservaciones = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_RechazarTicket = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_CerrarTicket = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_AceptarCerrarTicket = New DevComponents.DotNetBar.ButtonItem()
@@ -91,7 +92,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 151)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(814, 196)
+        Me.GroupPanel1.Size = New System.Drawing.Size(895, 196)
         '
         '
         '
@@ -121,7 +122,7 @@ Partial Class Frm_Tickets_Seguimiento
         '
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 161
-        Me.GroupPanel1.Text = "Historia"
+        Me.GroupPanel1.Text = "Acciones"
         '
         'Menu_Contextual
         '
@@ -162,7 +163,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Btn_Estadisticas_Producto.Image = CType(resources.GetObject("Btn_Estadisticas_Producto.Image"), System.Drawing.Image)
         Me.Btn_Estadisticas_Producto.ImageAlt = CType(resources.GetObject("Btn_Estadisticas_Producto.ImageAlt"), System.Drawing.Image)
         Me.Btn_Estadisticas_Producto.Name = "Btn_Estadisticas_Producto"
-        Me.Btn_Estadisticas_Producto.Text = "Ver estadÌsticas del producto/informaciÛn adicional"
+        Me.Btn_Estadisticas_Producto.Text = "Ver estad√≠sticas del producto/informaci√≥n adicional"
         '
         'Btn_Consolidar_Stock_X_Producto
         '
@@ -183,7 +184,7 @@ Partial Class Frm_Tickets_Seguimiento
         '
         Me.Menu_Contextual_Cambio_Estado.AutoExpandOnClick = True
         Me.Menu_Contextual_Cambio_Estado.Name = "Menu_Contextual_Cambio_Estado"
-        Me.Menu_Contextual_Cambio_Estado.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_Mnu_EnviarMensajeRespuesta, Me.Btn_Mnu_RechazarTicket, Me.Btn_Mnu_CerrarTicket, Me.Btn_Mnu_AceptarCerrarTicket, Me.Btn_Mnu_CerrarTicketCrearNuevo, Me.Btn_Mnu_SolicitarCierre, Me.Btn_Anular})
+        Me.Menu_Contextual_Cambio_Estado.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_Mnu_EnviarMensajeRespuesta, Me.Btn_Mnu_IngresarObservaciones, Me.Btn_Mnu_RechazarTicket, Me.Btn_Mnu_CerrarTicket, Me.Btn_Mnu_AceptarCerrarTicket, Me.Btn_Mnu_CerrarTicketCrearNuevo, Me.Btn_Mnu_SolicitarCierre, Me.Btn_Anular})
         Me.Menu_Contextual_Cambio_Estado.Text = "Opciones cambio de estado"
         '
         'LabelItem1
@@ -205,6 +206,13 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Btn_Mnu_EnviarMensajeRespuesta.ImageAlt = CType(resources.GetObject("Btn_Mnu_EnviarMensajeRespuesta.ImageAlt"), System.Drawing.Image)
         Me.Btn_Mnu_EnviarMensajeRespuesta.Name = "Btn_Mnu_EnviarMensajeRespuesta"
         Me.Btn_Mnu_EnviarMensajeRespuesta.Text = "Enviar mensaje"
+        '
+        'Btn_Mnu_IngresarObservaciones
+        '
+        Me.Btn_Mnu_IngresarObservaciones.Image = CType(resources.GetObject("Btn_Mnu_IngresarObservaciones.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_IngresarObservaciones.ImageAlt = CType(resources.GetObject("Btn_Mnu_IngresarObservaciones.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_IngresarObservaciones.Name = "Btn_Mnu_IngresarObservaciones"
+        Me.Btn_Mnu_IngresarObservaciones.Text = "Ingresar Observaci√≥n"
         '
         'Btn_Mnu_RechazarTicket
         '
@@ -281,7 +289,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Btn_Mnu_TkAntecesor.ImageAlt = CType(resources.GetObject("Btn_Mnu_TkAntecesor.ImageAlt"), System.Drawing.Image)
         Me.Btn_Mnu_TkAntecesor.Name = "Btn_Mnu_TkAntecesor"
         Me.Btn_Mnu_TkAntecesor.Text = "Ticket de origen (Antecesor)"
-        Me.Btn_Mnu_TkAntecesor.Tooltip = "Ticket que se crea como resultado de una acciÛn o una demanda."
+        Me.Btn_Mnu_TkAntecesor.Tooltip = "Ticket que se crea como resultado de una acci√≥n o una demanda."
         '
         'Btn_Mnu_TkSucesor
         '
@@ -289,7 +297,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Btn_Mnu_TkSucesor.ImageAlt = CType(resources.GetObject("Btn_Mnu_TkSucesor.ImageAlt"), System.Drawing.Image)
         Me.Btn_Mnu_TkSucesor.Name = "Btn_Mnu_TkSucesor"
         Me.Btn_Mnu_TkSucesor.Text = "Ticket de cierre (Sucesor)"
-        Me.Btn_Mnu_TkSucesor.Tooltip = "Ticket que se crea como confirmaciÛn de que se ha solucionado el problema o se ha" &
+        Me.Btn_Mnu_TkSucesor.Tooltip = "Ticket que se crea como confirmaci√≥n de que se ha solucionado el problema o se ha" &
     " cumplido la demanda."
         Me.Btn_Mnu_TkSucesor.Visible = False
         '
@@ -329,7 +337,7 @@ Partial Class Frm_Tickets_Seguimiento
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.Grilla.Size = New System.Drawing.Size(808, 173)
+        Me.Grilla.Size = New System.Drawing.Size(889, 173)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 27
         '
@@ -354,7 +362,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.GrupoTicket.DisabledBackColor = System.Drawing.Color.Empty
         Me.GrupoTicket.Location = New System.Drawing.Point(12, 5)
         Me.GrupoTicket.Name = "GrupoTicket"
-        Me.GrupoTicket.Size = New System.Drawing.Size(814, 140)
+        Me.GrupoTicket.Size = New System.Drawing.Size(895, 140)
         '
         '
         '
@@ -404,7 +412,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Txt_Producto.Name = "Txt_Producto"
         Me.Txt_Producto.PreventEnterBeep = True
         Me.Txt_Producto.ReadOnly = True
-        Me.Txt_Producto.Size = New System.Drawing.Size(688, 22)
+        Me.Txt_Producto.Size = New System.Drawing.Size(769, 22)
         Me.Txt_Producto.TabIndex = 14
         '
         'LabelX7
@@ -565,7 +573,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.LabelX3.Name = "LabelX3"
         Me.LabelX3.Size = New System.Drawing.Size(114, 23)
         Me.LabelX3.TabIndex = 2
-        Me.LabelX3.Text = "Fecha de creaciÛn"
+        Me.LabelX3.Text = "Fecha de creaci√≥n"
         '
         'LabelX2
         '
@@ -605,7 +613,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_GestionarAcciones, Me.Btn_VerTicketOrigen, Me.Btn_AgentesAsignados, Me.Btn_Cerrar})
         Me.Bar2.Location = New System.Drawing.Point(0, 536)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(838, 41)
+        Me.Bar2.Size = New System.Drawing.Size(919, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 165
@@ -667,7 +675,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Txt_Descripcion.Name = "Txt_Descripcion"
         Me.Txt_Descripcion.PreventEnterBeep = True
         Me.Txt_Descripcion.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.Txt_Descripcion.Size = New System.Drawing.Size(802, 133)
+        Me.Txt_Descripcion.Size = New System.Drawing.Size(883, 133)
         Me.Txt_Descripcion.TabIndex = 166
         '
         'GroupPanel3
@@ -678,7 +686,7 @@ Partial Class Frm_Tickets_Seguimiento
         Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel3.Location = New System.Drawing.Point(12, 353)
         Me.GroupPanel3.Name = "GroupPanel3"
-        Me.GroupPanel3.Size = New System.Drawing.Size(814, 162)
+        Me.GroupPanel3.Size = New System.Drawing.Size(895, 162)
         '
         '
         '
@@ -708,7 +716,7 @@ Partial Class Frm_Tickets_Seguimiento
         '
         Me.GroupPanel3.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel3.TabIndex = 168
-        Me.GroupPanel3.Text = "DescripciÛn..."
+        Me.GroupPanel3.Text = "Descripci√≥n..."
         '
         'Imagenes_16x16
         '
@@ -763,6 +771,8 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Imagenes_16x16.Images.SetKeyName(46, "people-vendor-ok.png")
         Me.Imagenes_16x16.Images.SetKeyName(47, "product-info.png")
         Me.Imagenes_16x16.Images.SetKeyName(48, "document-browse.png")
+        Me.Imagenes_16x16.Images.SetKeyName(49, "people-customer-man-note.png")
+        Me.Imagenes_16x16.Images.SetKeyName(50, "people-vendor-note.png")
         '
         'Imagenes_16x16_Dark
         '
@@ -816,6 +826,8 @@ Partial Class Frm_Tickets_Seguimiento
         Me.Imagenes_16x16_Dark.Images.SetKeyName(45, "people-vendor-ok.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(46, "product-info.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(47, "document-browse.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(48, "people-customer-man-note.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(49, "people-vendor-note.png")
         '
         'Btn_MensajeRespuesta
         '
@@ -830,7 +842,7 @@ Partial Class Frm_Tickets_Seguimiento
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(838, 577)
+        Me.ClientSize = New System.Drawing.Size(919, 577)
         Me.Controls.Add(Me.GroupPanel3)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.GrupoTicket)
@@ -902,4 +914,5 @@ Partial Class Frm_Tickets_Seguimiento
     Friend WithEvents Btn_Mnu_TkSucesor As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mnu_TkHistoria As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mnu_AceptarCerrarTicket As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Mnu_IngresarObservaciones As DevComponents.DotNetBar.ButtonItem
 End Class
