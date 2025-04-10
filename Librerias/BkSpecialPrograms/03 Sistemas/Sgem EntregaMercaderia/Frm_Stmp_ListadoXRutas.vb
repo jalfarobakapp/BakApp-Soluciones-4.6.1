@@ -169,11 +169,19 @@ Public Class Frm_Stmp_ListadoXRutas
         'Consulta_sql = Replace(Consulta_sql, "Zw_Despachos", _Global_BaseBk & "Zw_Despachos")
         Consulta_sql = Replace(Consulta_sql, "Global_BaseBk.", _Global_BaseBk)
 
+        Dim Fm_Espera As New Frm_Form_Esperar
+        Fm_Espera.BarraCircular.IsRunning = True
+        Fm_Espera.Show()
+
+        Me.Cursor = Cursors.WaitCursor
 
         Dim _New_Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
         _Dv = New DataView
         _Dv.Table = _New_Ds.Tables("Table")
         _Tbl_Tickets_Stem = _Dv.Table
+
+        Fm_Espera.Dispose()
+        Me.Cursor = Cursors.Default
 
         With Grilla
 
@@ -435,7 +443,7 @@ Public Class Frm_Stmp_ListadoXRutas
 
                 _Dv.RowFilter = String.Format("Ruta = '{0}'", _Filtro(1))
             Else
-                _Dv.RowFilter = String.Format("Numero+Nudo+NudoGen+Endo+NOKOEN+Ruta Like '%{0}%'", Txt_Filtrar.Text.Trim)
+                _Dv.RowFilter = String.Format("Numero+Accion+Nudo+NudoGen+Endo+NOKOEN+Ruta Like '%{0}%'", Txt_Filtrar.Text.Trim)
             End If
 
             Sb_MarcarPendientes()

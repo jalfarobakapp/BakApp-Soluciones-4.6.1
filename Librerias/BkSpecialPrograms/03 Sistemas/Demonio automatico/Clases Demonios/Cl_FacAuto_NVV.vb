@@ -490,6 +490,18 @@
             Consulta_Sql = "Select *,VABRDO-VAABDO As 'TOTSALDO' From MAEEDO Where IDMAEEDO = " & _Idmaeedo
             Dim _Row_Maeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
 
+            If IsNothing(_Row_Maeedo) Then
+
+                Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set " &
+               "Error_Paga = 1,PagarAuto = 0,Pagada = 0,Informacion_Paga = 'No se encontro el documentos en la tabla MAEEDO, IDMAEEDO =  " & _Idmaeedo & "'" & vbCrLf &
+               "Where Id = " & _Id
+                If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+                    Log_Registro += _Sql.Pro_Error
+                End If
+                Continue For
+
+            End If
+
             Dim _Saldo As Double = _Row_Maeedo.Item("TOTSALDO")
 
             If _Saldo <= 0 Then
@@ -506,6 +518,19 @@
 
             Consulta_Sql = "Select TOP 1 * From MAEDPCE Where IDMAEDPCE = " & _Idmaedpce_Paga
             Dim _Row_Maedpce As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
+
+            If IsNothing(_Row_Maedpce) Then
+
+                Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set " &
+               "Error_Paga = 1,PagarAuto = 0,Pagada = 0,Informacion_Paga = 'No se encontro el documentos en la tabla MAEDPCE, IDMAEDPCE =  " & _Idmaedpce_Paga & "'" & vbCrLf &
+               "Where Id = " & _Id
+                If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+                    Log_Registro += _Sql.Pro_Error
+                End If
+                Continue For
+
+            End If
+
 
             Dim _Vadp As Double = _Row_Maedpce.Item("VADP")
             Dim _Vaasdpce As Double = _Row_Maedpce.Item("VAASDP")

@@ -127,7 +127,7 @@ Where Estado = 'FACTU'
 
 Update #Paso Set Informacion = Estado_Str+', hace '+Duracion Where Estado In ('INGRE','PREPA','COMPL','FACTU') 
 
-Update #Paso Set Accion = Dch.Tipo_Envio
+Update #Paso Set Accion = Dch.Tipo_Envio+'.'
 From #Paso
 Inner Join Global_BaseBk.Zw_Despachos_Doc Ddp On Ddp.Idrst = #Paso.Idmaeedo
 Inner Join Global_BaseBk.Zw_Despachos Dch On Dch.Id_Despacho = Ddp.Id_Despacho

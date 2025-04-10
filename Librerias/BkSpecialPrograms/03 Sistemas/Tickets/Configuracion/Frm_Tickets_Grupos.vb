@@ -165,7 +165,7 @@ Public Class Frm_Tickets_Grupos
         Dim _Aceptar As Boolean
 
         _Aceptar = InputBox_Bk(Me, "Ingrese el nombre del Grupo de trabajo", "Editar nombre del Grupo", _Grupo, False,
-                               _Tipo_Mayus_Minus.Mayusculas, 50, True)
+                               _Tipo_Mayus_Minus.Mayusculas, 80, True)
 
         If Not _Aceptar Then
             Return
@@ -252,7 +252,7 @@ Public Class Frm_Tickets_Grupos
         Dim _FilaArea As DataGridViewRow = Grilla_Grupos.CurrentRow
         Dim _Id_Grupo As Integer = _FilaArea.Cells("Id").Value
 
-        Consulta_sql = "Select Gr.*,Tf.NOKOFU From " & _Global_BaseBk & "Zw_Stk_GrupoVsAgente Gr" & vbCrLf &
+        Consulta_sql = "Select Gr.*,Rtrim(Ltrim(Gr.CodAgente))+' - '+Tf.NOKOFU As 'NOKOFU' From " & _Global_BaseBk & "Zw_Stk_GrupoVsAgente Gr" & vbCrLf &
                        "Left Join TABFU Tf On Tf.KOFU = Gr.CodAgente" & vbCrLf &
                        "Where Id_Grupo = " & _Id_Grupo & vbCrLf &
                        "Order by Tf.NOKOFU"

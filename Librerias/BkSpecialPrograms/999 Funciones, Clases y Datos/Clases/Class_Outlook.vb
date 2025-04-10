@@ -1,13 +1,12 @@
-﻿Imports Outlook = Microsoft.Office.Interop.Outlook
-Imports System.Reflection
+﻿Imports Microsoft.Office.Interop
 
 Public Class Class_Outlook
 
-    Public Sub Sb_Crear_Correo_Outlook(ByVal _Mail_Destino As String, _
-                                       ByVal _Archivo_Adjunto As String, _
-                                       ByVal _Asunto As String, _
-                                       ByVal _Cuerpo As String, _
-                                       ByVal _Es_Html As Boolean)
+    Public Sub Sb_Crear_Correo_Outlook(_Mail_Destino As String,
+                                        _Archivo_Adjunto As String,
+                                        _Asunto As String,
+                                        _Cuerpo As String,
+                                        _Es_Html As Boolean)
 
         Try
 
@@ -49,7 +48,5 @@ Public Class Class_Outlook
         End Try
 
     End Sub
-
-
 
 End Class

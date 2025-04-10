@@ -1061,6 +1061,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Tkts0004", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Tkts0005", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Tkts0006", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Tkts0007", _Objeto, _Formulario)
 
 
         _SqlQuery += vbCrLf
@@ -4697,6 +4698,11 @@ Public Class Class_Permiso_BakApp
 
             Case "Tkts0006"
                 _DescripcionPermiso = "CERRAR TICKETS DE OTROS USUARIOS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.TICKET, 6)
+                _NombreFamiliaPermiso = _Fml.TICKET.ToString
+
+            Case "Tkts0007"
+                _DescripcionPermiso = "PODER VER TODOS LOS TICKETS (MODO ADMINISTRADOR)"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.TICKET, 6)
                 _NombreFamiliaPermiso = _Fml.TICKET.ToString
 

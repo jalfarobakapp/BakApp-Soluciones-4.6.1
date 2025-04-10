@@ -1440,13 +1440,13 @@ Public Class Clas_Pagar
         Try
 
             Consulta_sql = "Select top 1 TIDO,NUDO,ENDO,SUENDO From MAEEDO Where IDMAEEDO = " & _Idmaeedo
-            Dim _Row_Maeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+            Dim _Row_Maeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 
             _Tido = _Row_Maeedo.Item("TIDO")
             _Nudo = _Row_Maeedo.Item("NUDO")
 
             Consulta_sql = "Select CUOTACOMER,CUOTACANTI From CONFIEST WITH (NOLOCK) Where MODALIDAD = '  '"
-            Dim _Row_Confiest As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+            Dim _Row_Confiest As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 
             Dim _Cuotacomer As Boolean = _Row_Confiest.Item("CUOTACOMER")
             Dim _Cuotacanti As Integer = _Row_Confiest.Item("CUOTACANTI")

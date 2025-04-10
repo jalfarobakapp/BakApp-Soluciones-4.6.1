@@ -173,7 +173,12 @@ Public Class Frm_Tickets_Lista
                                 "And CodFuncionario_Crea <> '" & FUNCIONARIO & "'"
             End If
 
-            Dim _FechaLimite As DateTime = DateAdd(DateInterval.Day, -5, Now.Date)
+            If _NodoPadre.Text = "TODOS" Then
+                _CondicionFun = "1>0"
+            End If
+
+
+            Dim _FechaLimite As DateTime = DateAdd(DateInterval.Month, -1, Now.Date)
             Dim _FechaLimiteStr As String = Format(_FechaLimite, "yyyyMMdd")
 
             If _NodoHijo.Tag = "EnProceso" Then _Accion = "And Estado = 'PROC' And Aceptado = 0 And Rechazado = 0"
@@ -255,7 +260,7 @@ Public Class Frm_Tickets_Lista
                 _Condicion += vbCrLf & "And Estado = 'PROC' And Aceptado = 0 And Rechazado = 0"
             End If
 
-            Dim _FechaLimite As DateTime = DateAdd(DateInterval.Day, -5, Now.Date)
+            Dim _FechaLimite As DateTime = DateAdd(DateInterval.Month, -1, Now.Date)
             Dim _FechaLimiteStr As String = Format(_FechaLimite, "yyyyMMdd")
 
             If _Carpeta.Tag = "Aceptados" Then
@@ -750,6 +755,7 @@ Public Class Frm_Tickets_Lista
 
             Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(0))
             Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(1))
+            Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(2))
 
             'If _EsAgente Then
             '    Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(1))
@@ -837,6 +843,24 @@ Public Class Frm_Tickets_Lista
         Tree_Bandeja.ExpandAll()
         Tree_Bandeja.Update()
 
+        ' Crear los nodos de la Asignados
+        _BandejaEntrada = Fx_CrearNodo("TODOS", "TODOS", 12, 12)
+        _Asig_Pendientes = Fx_CrearNodo("Pendientes", "Pendientes", 0, 1)
+        _Asig_Aceptados = Fx_CrearNodo("Aceptados", "Aceptados", 0, 1)
+        _Asig_Rechazados = Fx_CrearNodo("Rechazados", "Rechazados", 0, 1)
+        _Asig_Nulos = Fx_CrearNodo("Nulos", "Nulos", 0, 1)
+
+        With _BandejaEntrada
+            .NodeFont = fuenteNegrita
+            .Nodes.Add(_Asig_Pendientes)
+            .Nodes.Add(_Asig_Aceptados)
+            .Nodes.Add(_Asig_Rechazados)
+            .Nodes.Add(_Asig_Nulos)
+        End With
+
+        Tree_Bandeja.Nodes.Add(_BandejaEntrada)
+        Tree_Bandeja.Update()
+
     End Sub
 
     Function Fx_CrearNodo(_Tag As String, _Text As String, _ImageIndex As Integer, _SelectedImageIndex As Integer) As TreeNode
@@ -852,16 +876,6 @@ Public Class Frm_Tickets_Lista
 
         Dim nodoSeleccionado As TreeNode = e.Node
         Sb_Actualizar_Grilla_Treeview(nodoSeleccionado)
-
-        'For Each nodoRaiz As TreeNode In _BandejaEntrada.Nodes
-        '    Sb_Actualizar_Totales_Nodos(_BandejaEntrada, nodoRaiz)
-        'Next
-
-        'For Each nodoRaiz As TreeNode In _Enviados.Nodes
-        '    Sb_Actualizar_Totales_Nodos(_Enviados, nodoRaiz)
-        'Next
-
-        'Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(0))
 
         Me.Refresh()
 
@@ -1455,4 +1469,18 @@ Public Class Frm_Tickets_Lista
         End Try
 
     End Sub
+
+    Private Sub Tree_Bandeja_BeforeExpand(sender As Object, e As TreeViewCancelEventArgs) Handles Tree_Bandeja.BeforeExpand
+
+        Dim nodoSeleccionado As TreeNode = e.Node
+
+        If e.Node.Tag = "TODOS" Then
+
+            If Fx_Tiene_Permiso(Me, "Tkts0007") Then Return
+            e.Cancel = True
+
+        End If
+
+    End Sub
+
 End Class
