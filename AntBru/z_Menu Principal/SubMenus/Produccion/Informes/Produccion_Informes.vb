@@ -1,5 +1,4 @@
-﻿Imports DevComponents.DotNetBar
-Imports Bk_Produccion
+﻿Imports Bk_Produccion
 Imports BkSpecialPrograms
 
 Public Class Produccion_Informes

@@ -515,7 +515,6 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Doc00025", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00026", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00027", _Objeto, _Formulario)
-
         _SqlQuery += Fx_Insertar_Permiso("Doc00028", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00029", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00030", _Objeto, _Formulario)
@@ -523,11 +522,9 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Doc00032", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00033", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00034", _Objeto, _Formulario)
-
         _SqlQuery += Fx_Insertar_Permiso("Doc00035", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00036", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00037", _Objeto, _Formulario)
-
         _SqlQuery += Fx_Insertar_Permiso("Doc00038", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00039", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00040", _Objeto, _Formulario)
@@ -590,6 +587,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Doc00097", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00098", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00099", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00100", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Ope00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ope00002", _Objeto, _Formulario)
@@ -2575,6 +2573,10 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
             Case "Doc00099"
                 _DescripcionPermiso = "PERMITIR GRABAR NOTAS DE VENTA COMO CUSTOMIZABLES"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00100"
+                _DescripcionPermiso = "CIERRE DE DOCUMENTOS DE COMPROMISO - EN PROCESO DE PICKING"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
 

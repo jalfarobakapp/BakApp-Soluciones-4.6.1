@@ -16384,9 +16384,11 @@ Public Class Frm_Formulario_Documento
                                 _Cl_Despacho.Fx_Accion_Confirmacion("")
                             End If
 
-                            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Chilexpress_Env Set IdDespacho = " & _Cl_Despacho.Id_Despacho_Padre & " Where IdDespacho = " & _Id_Despacho
+                            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Chilexpress_Env Set IdDespacho = " & _Cl_Despacho.Id_Despacho_Padre & vbCrLf &
+                                           "Where IdDespacho = " & _Id_Despacho
                             _Sql.Fx_Ejecutar_Consulta(Consulta_sql)
                         End If
+
                         If _Tido = "GDV" Then
 
                             Dim _Kofudo = _Row_NeDocEnc.Item("KOFUDO")
@@ -16404,6 +16406,7 @@ Public Class Frm_Formulario_Documento
                     Catch ex As Exception
                         MessageBoxEx.Show(Me, ex.Message, "Error en gestión despacho", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     End Try
+
                     _Grabar = True
                     Sb_Reservar_Movimientos_WMS(_Idmaeedo)
                     If _Tipo_de_Grabacion = csGlobales.Enum_Tipo_de_Grabacion.Nuevo_documento Then

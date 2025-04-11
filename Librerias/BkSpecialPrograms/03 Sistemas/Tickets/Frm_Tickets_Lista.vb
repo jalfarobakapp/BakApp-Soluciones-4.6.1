@@ -66,6 +66,7 @@ Public Class Frm_Tickets_Lista
         Sb_Actualizar_Grilla_Treeview(Nothing)
         Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(0))
         Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(1))
+        Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(2))
 
         Sb_InsertarBotonenGrilla(Grilla_Acciones, "Btn_ImagenAttach", "Est.", "ImagenAttach", 0, _Tipo_Boton.Imagen)
         Sb_InsertarBotonenGrilla(Grilla_Acciones, "Btn_ProductoInfo", "P.I.", "ProductoInfo", 0, _Tipo_Boton.Imagen)
@@ -186,7 +187,7 @@ Public Class Frm_Tickets_Lista
             If _NodoHijo.Tag = "Rechazados" Then _Accion = "And Aceptado = 0 And Rechazado = 1 And Estado <> 'PROC' And CONVERT(varchar, FechaCierre, 112) > '" & _FechaLimiteStr & "'"
             If _NodoHijo.Tag = "Pendientes" Then _Accion = "And Estado = 'ABIE' And Aceptado = 0 And Rechazado = 0"
             If _NodoHijo.Tag = "Cerradas" Then _Accion = "And Estado = 'CERR' And CONVERT(varchar, FechaCierre, 112) > '" & _FechaLimiteStr & "'"
-            If _NodoHijo.Tag = "Nulos" Then _Accion = "And Estado = 'NULO'"
+            If _NodoHijo.Tag = "Nulos" Then _Accion = "And Estado = 'NULO' And CONVERT(varchar, FechaCierre, 112) > '" & _FechaLimiteStr & "'"
 
             'If _Carpeta.Tag = "Cerradas" Then
             '    _Condicion += vbCrLf & "And Estado = 'CERR' And CONVERT(varchar, FechaCierre, 112) > '" & _FechaLimiteStr & "'"
@@ -705,8 +706,14 @@ Public Class Frm_Tickets_Lista
                                   MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) <> DialogResult.Yes Then
                     Return
                 End If
+
                 _SoloLectura = True
 
+            End If
+
+
+            If _NodoSeleccionado.Parent.Text = "TODOS" Then
+                _SoloLectura = True
             End If
 
             Dim _GestinRealizada As Boolean
@@ -756,10 +763,6 @@ Public Class Frm_Tickets_Lista
             Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(0))
             Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(1))
             Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(2))
-
-            'If _EsAgente Then
-            '    Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(1))
-            'End If
 
             Sb_Actualizar_Grilla_Treeview(nodoSeleccionado)
 

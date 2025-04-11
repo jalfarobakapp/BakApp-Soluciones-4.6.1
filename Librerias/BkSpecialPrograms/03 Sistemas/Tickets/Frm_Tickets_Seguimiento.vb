@@ -65,6 +65,10 @@ Public Class Frm_Tickets_Seguimiento
             Me.Left = vLeft
         End If
 
+        If SoloLectura Then
+            Me.Text += " (SOLO LECTURA)"
+        End If
+
         Btn_MensajeRespuesta.Visible = Not SoloLectura
         Btn_GestionarAcciones.Visible = Not SoloLectura
 
