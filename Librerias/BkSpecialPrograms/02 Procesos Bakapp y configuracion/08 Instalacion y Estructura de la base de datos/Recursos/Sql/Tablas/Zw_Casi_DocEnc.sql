@@ -59,6 +59,7 @@ CREATE TABLE [dbo].[Zw_Casi_DocEnc](
     [CodTipoVenta]          [varchar](20)	NOT NULL DEFAULT (''),
     [Customizable]	        [bit]			NOT NULL DEFAULT (0),
     [PreVenta]              [bit]			NOT NULL DEFAULT (0),
+    [Pickear]               [bit]			NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_Casi_DocEnc] PRIMARY KEY CLUSTERED 
 (
 	[Id_DocEnc] ASC

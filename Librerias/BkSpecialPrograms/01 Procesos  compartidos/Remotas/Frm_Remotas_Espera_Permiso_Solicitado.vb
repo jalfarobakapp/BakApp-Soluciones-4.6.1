@@ -119,7 +119,7 @@ Public Class Frm_Remotas_Espera_Permiso_Solicitado
 
     Private Sub Timer_Revisando_Respuesta_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer_Revisando_Respuesta.Tick
 
-        Consulta_sql = "Select top 1 * From " & _Global_BaseBk & "Zw_Remotas Where NroRemota = '" & _NroRemota & "' and CodFuncionario_Autoriza <> ''"
+        Consulta_sql = "Select top 1 * From " & _Global_BaseBk & "Zw_Remotas Where NroRemota = '" & _NroRemota & "' And CodFuncionario_Autoriza <> ''"
         Dim _Tbl_Remota As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_Tbl_Remota.Rows.Count) Then

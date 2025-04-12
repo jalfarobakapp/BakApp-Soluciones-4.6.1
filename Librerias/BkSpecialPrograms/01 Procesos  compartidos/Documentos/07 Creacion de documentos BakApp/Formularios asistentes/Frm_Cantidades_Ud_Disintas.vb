@@ -3,7 +3,6 @@ Imports DevComponents.DotNetBar.Controls
 
 Public Class Frm_Cantidades_Ud_Disintas
 
-
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
@@ -12,6 +11,7 @@ Public Class Frm_Cantidades_Ud_Disintas
     Dim _Bodega As String
     Dim _Codigo As String
     Dim _Rtu As Double
+    Dim _Rtu_Ori As Double
     Dim _UnTrans As Integer
     Dim _Cantidad_Original As Double
 
@@ -20,6 +20,7 @@ Public Class Frm_Cantidades_Ud_Disintas
     Dim _Fila As DataGridViewRow
     Dim _RowProducto As DataRow
 
+    Dim _ValidarApiWMSBosOne = False
     Public Property RevisarRtuVariable As Boolean
     Public Property RtuVariable As Boolean
     Public Property Cantidad_Ud1 As Double
@@ -40,6 +41,7 @@ Public Class Frm_Cantidades_Ud_Disintas
         _Bodega = _Fila.Cells("Bodega").Value
         _Codigo = _Fila.Cells("Codigo").Value
         _Rtu = _Fila.Cells("Rtu").Value
+        _Rtu_Ori = _Fila.Cells("Rtu").Value
         _UnTrans = _Fila.Cells("UnTrans").Value
 
         Consulta_sql = "Select Top 1 KOPR,NOKOPR,RLUD,DIVISIBLE,DIVISIBLE2,NMARCA From MAEPR Where KOPR = '" & _Codigo & "'"
@@ -56,7 +58,7 @@ Public Class Frm_Cantidades_Ud_Disintas
 
     Private Sub Frm_SolicitudDeCompraCantProductos_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
-        Dim _ValidarApiWMSBosOne = False
+        AddHandler Chk_DesacRazTransf.CheckedChanged, AddressOf Chk_DesacRazTransf_CheckedChanged
 
         TxtRTU.Text = _Rtu
 
@@ -88,7 +90,11 @@ Public Class Frm_Cantidades_Ud_Disintas
                     _ValidarApiWMSBosOne = False
                 End If
 
-                TxtCantUD1.Enabled = False
+                TxtCantUD1.Enabled = Chk_DesacRazTransf.Checked
+
+                'If RtuVariable And Chk_DesacRazTransf.Checked Then
+                '    Chk_DesacRazTransf.Enabled = False
+                'End If
 
             End If
 
@@ -96,9 +102,9 @@ Public Class Frm_Cantidades_Ud_Disintas
 
         Img_RtuAPI.Visible = _ValidarApiWMSBosOne
 
-        Chk_RtuVariable.Enabled = (_Fila.Cells("Nmarca").Value = "¡")
+        'Chk_RtuVariable.Enabled = (_Fila.Cells("Nmarca").Value = "¡")
 
-        If Chk_RtuVariable.Checked Then
+        If Chk_DesacRazTransf.Checked Then
             Label3.Text = "R.T.U.  (" & _Rtu & ")"
         End If
 
@@ -132,49 +138,54 @@ Public Class Frm_Cantidades_Ud_Disintas
 
         Sb_Ver_Alerta_Stock()
 
-        If _ValidarApiWMSBosOne Then
-
-            'warning.png
-            Dim _Icono As Image
-
-            Dim _Imagenes_List As ImageList
-            If Global_Thema = Enum_Themas.Oscuro Then
-                _Imagenes_List = Imagenes_16x16_Dark
-            Else
-                _Imagenes_List = Imagenes_16x16
-            End If
-
-            _Icono = Nothing
-
-            '_NecesitaPermisoCambiarRTU = True
-            Chk_RtuVariable.Enabled = False
-
-            ' Llama a la función para encontrar el producto en las bodegas
-            Dim RtuBodegas As LsValiciones.Mensajes = Fx_Consultar_RTU_xBodegas(_Bodega, _Codigo)
-
-            ' Muestra el resultado final en el textbox e impide la edición de Cantidad 1
-            If RtuBodegas.EsCorrecto Then
-
-                TxtRTU.Text = RtuBodegas.Resultado
-                _Rtu = De_Txt_a_Num_01(RtuBodegas.Resultado, 5)
-                Label3.Text = "R.T.U.  (" & _Rtu & ")"
-                Chk_RtuVariable.Checked = False
-                _Fila.Cells("Rtu").Value = _Rtu
-                Me.ActiveControl = TxtCantUD2
-
-                _Icono = _Imagenes_List.Images.Item("ok.png")
-
-            Else
-
-                _Icono = _Imagenes_List.Images.Item("warning.png")
-
-            End If
-
-            Img_RtuAPI.Image = _Icono
-
+        If _ValidarApiWMSBosOne And Not Chk_DesacRazTransf.Checked Then
+            Sb_Rtu_WMSBodOne()
         End If
 
         Me.Refresh()
+
+    End Sub
+
+    Sub Sb_Rtu_WMSBodOne()
+
+        'warning.png
+        Dim _Icono As Image
+
+        Dim _Imagenes_List As ImageList
+        If Global_Thema = Enum_Themas.Oscuro Then
+            _Imagenes_List = Imagenes_16x16_Dark
+        Else
+            _Imagenes_List = Imagenes_16x16
+        End If
+
+        _Icono = Nothing
+
+        '_NecesitaPermisoCambiarRTU = True
+        'Chk_RtuVariable.Enabled = False
+
+        ' Llama a la función para encontrar el producto en las bodegas
+        Dim RtuBodegas As LsValiciones.Mensajes = Fx_Consultar_RTU_xBodegas(_Bodega, _Codigo)
+
+        ' Muestra el resultado final en el textbox e impide la edición de Cantidad 1
+        If RtuBodegas.EsCorrecto Then
+
+            TxtRTU.Text = RtuBodegas.Resultado
+            _Rtu = De_Txt_a_Num_01(RtuBodegas.Resultado, 5)
+            _Rtu_Ori = _Rtu
+            Label3.Text = "R.T.U.  (" & _Rtu & ")"
+            Chk_DesacRazTransf.Checked = False
+            _Fila.Cells("Rtu").Value = _Rtu
+            Me.ActiveControl = TxtCantUD2
+
+            _Icono = _Imagenes_List.Images.Item("ok.png")
+
+        Else
+
+            _Icono = _Imagenes_List.Images.Item("warning.png")
+
+        End If
+
+        Img_RtuAPI.Image = _Icono
 
     End Sub
 
@@ -307,7 +318,7 @@ Public Class Frm_Cantidades_Ud_Disintas
 
             Dim _C1 As Double = Math.Round(De_Txt_a_Num_01(TxtCantUD1.Text, 5), 5)
 
-            If Chk_RtuVariable.Checked Then
+            If Chk_DesacRazTransf.Checked Then
 
                 _Cantidad_Ud1 = _C1
 
@@ -355,12 +366,12 @@ Public Class Frm_Cantidades_Ud_Disintas
 
             Dim _C2 As Double = De_Txt_a_Num_01(TxtCantUD2.Text, 5)
 
-            If Chk_RtuVariable.Checked Then
+            If Chk_DesacRazTransf.Checked Then
 
                 _Cantidad_Ud2 = _C2
 
                 Try
-                    TxtRTU.Text = _Cantidad_Ud1 / _Cantidad_Ud2
+                    TxtRTU.Text = Math.Round(_Cantidad_Ud1 / _Cantidad_Ud2, 5)
                 Catch ex As Exception
                     TxtRTU.Text = 0
                 End Try
@@ -490,21 +501,19 @@ Public Class Frm_Cantidades_Ud_Disintas
 
     End Function
 
-    Private Sub Chk_RtuVariable_CheckedChanged(sender As Object, e As EventArgs) 'Handles Chk_RtuVariable.CheckedChanged
+    Private Sub Chk_DesacRazTransf_CheckedChanged(sender As Object, e As EventArgs) 'Handles Chk_RtuVariable.CheckedChanged
 
-        If _NecesitaPermisoCambiarRTU Then
-            If Chk_RtuVariable.Checked Then
-                If Not Fx_Tiene_Permiso(Me, "") Then
-                    Chk_RtuVariable.Checked = False
-                Else
-                    Label3.Text = "R.T.U.  (" & _Rtu & ")"
-                End If
-            End If
-            TxtCantUD1.Enabled = Chk_RtuVariable.Checked
-        End If
+        TxtCantUD1.Enabled = Chk_DesacRazTransf.Checked
 
-        If Chk_RtuVariable.Checked Then
+        If Chk_DesacRazTransf.Checked Then
             TxtCantUD1.Focus()
+        Else
+            TxtCantUD2.Focus()
+            _Rtu = _Rtu_Ori
+            TxtRTU.Text = _Rtu
+            TxtCantUD2.Text = 0
+            Dim eKeyPress As New KeyPressEventArgs(Convert.ToChar(Keys.Return))
+            TxtCantUD2_KeyPress(TxtCantUD2, eKeyPress)
         End If
 
     End Sub

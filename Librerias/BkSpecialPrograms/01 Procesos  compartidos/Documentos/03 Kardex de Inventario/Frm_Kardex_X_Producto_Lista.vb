@@ -809,7 +809,7 @@ Public Class Frm_Kardex_X_Producto_Lista
                                            "CAMBIO DE UBICACION DEL PRODUCTO," & Space(1) &
                                            "NUEVA UBICACION (" & _Empresa & "-" & _Sucursal & "-" & _Bodega & " -> " & _Ubicacion & ")" & Space(1) &
                                            "UBICACION ANTERIOR " & _OldUbicacion,
-                                           "Prod058", _Codigo, "", "", False, "")
+                                           "Prod058", _Codigo, "", "", False, "", False, 0, "")
 
                         _Fila.Cells("DATOSUBIC").Value = _Ubicacion
                         MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Cambiar Ubicación",

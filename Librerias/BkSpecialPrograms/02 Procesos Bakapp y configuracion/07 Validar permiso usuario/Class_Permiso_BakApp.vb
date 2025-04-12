@@ -588,6 +588,8 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Doc00098", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00099", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00100", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00101", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00102", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Ope00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ope00002", _Objeto, _Formulario)
@@ -2161,38 +2163,30 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "CREAR (GDV) GUIA DE DESPACHO DE VENTA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Bkp00057"
                 _DescripcionPermiso = "EXTENDER FECHA DE DESPACHO EN DOCUMENTOS DE VENTA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Bkp00058"
                 _DescripcionPermiso = "EDITAR NOTAS DE VENTA YA GENERADAS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Bkp00059"
                 _DescripcionPermiso = "CAMBIAR LA BODEGA EN LA LINEA DEL DOCUMENTO, EN DOC. VISADO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Bkp00060"
                 _DescripcionPermiso = "MODIFICAR EL VALOR DEL IVA EN LA LINEA DEL DOCUMENTO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Bkp00061"
                 _DescripcionPermiso = "EDITAR NUMERO DE DOCUMENTO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
             Case "Bkp00062"
                 _DescripcionPermiso = "PERMITIR GENERAR NOTA DE VENTA BAJO EL VALOR MINIMO ASIGNADO AL DOCUMENTO POR MODALIDAD"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
-
 
 
             Case "Doc00001"
@@ -2576,7 +2570,15 @@ Public Class Class_Permiso_BakApp
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
             Case "Doc00100"
-                _DescripcionPermiso = "CIERRE DE DOCUMENTOS DE COMPROMISO - EN PROCESO DE PICKING"
+                _DescripcionPermiso = "PERMITIR CERRAR DE DOCUMENTOS DE COMPROMISO - EN PROCESO DE PICKING"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00101"
+                _DescripcionPermiso = "PERMITIR GRABAR DOCUMENTO - SIN PICKING"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00102"
+                _DescripcionPermiso = "PERMITIR GRABAR DOCUMENTO CON PRODUCTOS DE PESO VARIABLE Y RAZON DE TRANSFORMACION DASACTIVADA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
 

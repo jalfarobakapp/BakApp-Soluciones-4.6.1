@@ -5,9 +5,6 @@ Public Class Frm_Stmp_IncNVVPicking
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-    'Dim _Ds As DataSet
-    'Dim _Dv As New DataView
-
     Dim _Tbl_Documentos As DataTable
     Dim _RowEntidadBuscar As DataRow
 
@@ -21,7 +18,6 @@ Public Class Frm_Stmp_IncNVVPicking
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Both, True, True, False)
-
         Sb_Color_Botones_Barra(Bar1)
 
     End Sub
@@ -35,7 +31,6 @@ Public Class Frm_Stmp_IncNVVPicking
         Chk_Pagar_Saldos_CRV.Visible = False
 
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
-
 
         Dim _Arr_Tipo_Entidad(,) As String = {{"", "Todas"},
                                              {"Contado", "Contado"},
@@ -53,12 +48,7 @@ Public Class Frm_Stmp_IncNVVPicking
         Dtp_BuscaXFechaEmision.Value = #1/1/0001 12:00:00 AM#
         Dtp_BuscaXFechaDespacho.Value = #1/1/0001 12:00:00 AM#
 
-        'Dtp_BuscaXFechaEmision.Value = FechaDelServidor()
-
         Sb_Actualizar_Grilla()
-
-        'Circular_Progres_Run.IsRunning = True
-
         Sb_Color_Botones_Barra(Bar1)
 
         Dim _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
@@ -142,7 +132,7 @@ Public Class Frm_Stmp_IncNVVPicking
                         "Left Join " & _Global_BaseBk & "Zw_Despachos_Doc Ddd On Ddd.Idrst = Edo.IDMAEEDO And Ddd.Archidrst = 'MAEEDO'" & vbCrLf &
                         "Left Join " & _Global_BaseBk & "Zw_Despachos Den On Den.Id_Despacho = Ddd.Id_Despacho" & vbCrLf &
                         "Where 1 > 0" & vbCrLf &
-                        "And Edo.IDMAEEDO Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Stmp_Enc Where Estado <> 'NULO' And Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "')" & vbCrLf &
+                        "And Edo.IDMAEEDO Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Stmp_Enc Where Estado Not In ('NULO','NULA') And Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "')" & vbCrLf &
                         _FiltroFechaEmision &
                         _FiltroFechaDespacho &
                         _FiltroEntidad &

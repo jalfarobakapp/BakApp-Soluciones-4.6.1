@@ -330,7 +330,8 @@ Public Class Cl_Permisos_Asociados
 
         Try
 
-            Dim _DescripcionPermiso = _Sql.Fx_Trae_Dato(_Global_BaseBk & "ZW_Permisos", "DescripcionPermiso", "CodPermiso = '" & _CodPermiso & "'")
+            Dim _DescripcionPermiso = _Sql.Fx_Trae_Dato(_Global_BaseBk & "ZW_Permisos",
+                                                        "DescripcionPermiso", "CodPermiso = '" & _CodPermiso & "'")
 
             Dim _Tbl_Permisos_Doc As DataTable = _Ds.Tables("Permisos_Doc")
 

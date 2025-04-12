@@ -3,6 +3,7 @@ USE [#Base#]
 
 CREATE TABLE [dbo].[Zw_Log_Gestiones](
 	[Id]                    [int] IDENTITY(1,1) NOT NULL,
+	[Empresa]               [char](2)           NOT NULL DEFAULT (''),
 	[NombreEquipo]          [varchar](50)       NOT NULL DEFAULT (''),
 	[Funcionario]           [char](3)           NOT NULL DEFAULT (''),
 	[Modalidad]             [char](5)           NOT NULL DEFAULT (''),
@@ -17,6 +18,11 @@ CREATE TABLE [dbo].[Zw_Log_Gestiones](
 	[Suen]                  [varchar](10)       NOT NULL DEFAULT (''),
 	[Solicitud_Permiso]     [bit]               NOT NULL DEFAULT (0),
 	[Funcionario_Autoriza]  [char](3)           NOT NULL DEFAULT (''),
+    [PermisoRemoto]         [bit]               NOT NULL DEFAULT (0),
+    [Id_Rem]                [int]               NOT NULL DEFAULT (0),
+    [NroRemota]             [varchar](10)       NOT NULL DEFAULT (''),
+    [Tido]                  [varchar](3)        NOT NULL DEFAULT (''),
+    [Nudo]                  [varchar](10)       NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_Log_Gestiones] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

@@ -374,13 +374,8 @@ Public Class Frm_Cerrar_Abrir_Documentos
 
         Dim _Idmaeedo = _Row_Maeedo.Item("IDMAEEDO")
         Dim _Tbl = _Tbl_Maeddo.Select("IDMAEEDO = " & _Idmaeedo)
-        Dim _Rows_Usuario_Autoriza As DataRow
 
         If Not Fx_Revisar_Documento_Cerrado(_Idmaeedo, False) Then
-            Return
-        End If
-
-        If Not Fx_Tiene_Permiso(Me, "Doc00011",,,,,,,,, _Rows_Usuario_Autoriza,,,,,,,, _Idmaeedo) Then
             Return
         End If
 
@@ -390,20 +385,21 @@ Public Class Frm_Cerrar_Abrir_Documentos
             Return
         End If
 
+        If Not Fx_TienePermiso_EnDoc(Me, "Doc00011", _Idmaeedo) Then
+            Return
+        End If
+
         Dim Cerrar_Doc As New Clas_Cerrar_Documento
 
         If Cerrar_Doc.Fx_Cerrar_Documento(_Idmaeedo, _Tbl_Maeddo) Then
 
             If Not IsNothing(_Msj.Tag) Then
 
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Estado = 'NULA',Observacion = 'Usuario " & FUNCIONARIO & " - " & Nombre_funcionario_activo.ToLower.Trim & " solicita cerrar documento'" & vbCrLf &
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Estado = 'NULA',Idmaeedo = 0,Observacion = 'Usuario " & FUNCIONARIO & " - " & Nombre_funcionario_activo.ToLower.Trim & " solicita cerrar documento'" & vbCrLf &
                                "Where Id = " & _Msj.Id
                 _Sql.Ej_consulta_IDU(Consulta_sql)
-                Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "MAEEDO", _Idmaeedo, "", "", "Doc00100", "", "", "", False, _Msj.Tag.Item("KOFU"))
 
             End If
-
-            Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "MAEEDO", _Idmaeedo, "", "", "Doc00011", "", "", "", False, _Rows_Usuario_Autoriza.Item("KOFU"))
 
             Sb_Actualizar_Grillas()
             Sb_Formato_Grillas()
@@ -424,20 +420,13 @@ Public Class Frm_Cerrar_Abrir_Documentos
             Return
         End If
 
-        'If Not Fx_RevisarDocumentoEnPickeo() Then
-        '    Return
-        'End If
-
         Dim Cerrar_Doc As New Clas_Cerrar_Documento
-        Dim _Rows_Usuario_Autoriza As DataRow
 
-        If Not Fx_Tiene_Permiso(Me, "Doc00055",,,,,,,,, _Rows_Usuario_Autoriza,,,,,,,, _Idmaeedo) Then
+        If Not Fx_TienePermiso_EnDoc(Me, "Doc00055", _Idmaeedo) Then
             Return
         End If
 
         If Cerrar_Doc.Fx_Abrir_Documento(_Idmaeedo, _Tbl_Maeddo) Then
-
-            Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "MAEEDO", _Idmaeedo, "", "", "Doc00055", "", "", "", False, _Rows_Usuario_Autoriza.Item("KOFU"))
 
             Sb_Actualizar_Grillas()
             Sb_Formato_Grillas()
@@ -447,8 +436,6 @@ Public Class Frm_Cerrar_Abrir_Documentos
             Me.Close()
 
         End If
-
-
 
     End Sub
 

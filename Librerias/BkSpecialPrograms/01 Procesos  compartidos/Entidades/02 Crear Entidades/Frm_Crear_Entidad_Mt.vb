@@ -1171,17 +1171,13 @@ Public Class Frm_Crear_Entidad_Mt
             SQL_ServerClass.Sb_Cerrar_Conexion(cn2)
 
             If CrearEntidad Then
-                Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "", 0, "CreaEntidad", "Codigo: " & Txt_Koen.Text, "", "", Txt_Koen.Text.Trim, Txt_Suen.Text.Trim, False, FUNCIONARIO)
-                Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "", 0, "CreaEntidad", "Sucursal: " & Txt_Suen.Text, "", "", Txt_Koen.Text.Trim, Txt_Suen.Text.Trim, False, FUNCIONARIO)
-                Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "", 0, "CreaEntidad", "Rut: " & Txt_Rten.Text, "", "", Txt_Koen.Text.Trim, Txt_Suen.Text.Trim, False, FUNCIONARIO)
-                Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "", 0, "CreaEntidad", "Nombre: " & Txt_Nokoen.Text, "", "", Txt_Koen.Text.Trim, Txt_Suen.Text.Trim, False, FUNCIONARIO)
-                Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "", 0, "CreaEntidad", "Direccion: " & Txt_Dien.Text, "", "", Txt_Koen.Text.Trim, Txt_Suen.Text.Trim, False, FUNCIONARIO)
+                Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "", 0, "CreaEntidad", "Codigo: " & Txt_Koen.Text, "", "", Txt_Koen.Text.Trim, Txt_Suen.Text.Trim, False, FUNCIONARIO, False, 0, "")
+                Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "", 0, "CreaEntidad", "Sucursal: " & Txt_Suen.Text, "", "", Txt_Koen.Text.Trim, Txt_Suen.Text.Trim, False, FUNCIONARIO, False, 0, "")
+                Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "", 0, "CreaEntidad", "Rut: " & Txt_Rten.Text, "", "", Txt_Koen.Text.Trim, Txt_Suen.Text.Trim, False, FUNCIONARIO, False, 0, "")
             Else
-
                 For Each _Log As String In _ListCamposModificados
-                    Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "", 0, "ModEntidad", _Log, "", "", Txt_Koen.Text.Trim, Txt_Suen.Text.Trim, False, FUNCIONARIO)
+                    Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "", 0, "ModEntidad", _Log, "", "", Txt_Koen.Text.Trim, Txt_Suen.Text.Trim, False, FUNCIONARIO, False, 0, "")
                 Next
-
             End If
 
             _Grabar = True
