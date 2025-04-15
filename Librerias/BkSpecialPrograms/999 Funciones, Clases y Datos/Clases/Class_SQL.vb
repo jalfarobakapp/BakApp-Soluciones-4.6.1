@@ -20,11 +20,14 @@ Public Class Class_SQL
     Public Property ModalidadAct As String
 
     Function Ej_consulta_IDU(ConsultaSql As String,
-                            Optional MostrarError As Boolean = True) As Boolean
+                            Optional _Mostrar_Error As Boolean = True) As Boolean
+
+        If _Global_EsDiablito Then _Mostrar_Error = False
+
         Try
             'Abrimos la conexión con la base de datos
             _Error = String.Empty
-            Sb_Abrir_Conexion(_Cn, MostrarError)
+            Sb_Abrir_Conexion(_Cn, _Mostrar_Error)
             'System.Windows.Forms.Application.DoEvents()
             Dim cmd As System.Data.SqlClient.SqlCommand
             cmd = New System.Data.SqlClient.SqlCommand()
@@ -42,7 +45,7 @@ Public Class Class_SQL
             Return True
         Catch ex As Exception
             _Error = ex.Message
-            If MostrarError = True Then
+            If _Mostrar_Error = True Then
                 MsgBox("No se realizo la operación: Insert, Update o Delete..." _
                        , MsgBoxStyle.Critical, "Modificar tabla")
                 MsgBox(ex.Message)
@@ -54,7 +57,10 @@ Public Class Class_SQL
 
     Function Ej_Insertar_Trae_Identity(ConsultaSql As String,
                                        ByRef _Identity As Integer,
-                                       Optional MostrarError As Boolean = True) As Boolean
+                                       Optional _Mostrar_Error As Boolean = True) As Boolean
+
+        If _Global_EsDiablito Then _Mostrar_Error = False
+
         Try
             'Abrimos la conexión con la base de datos
 
@@ -84,7 +90,7 @@ Public Class Class_SQL
             Return True
         Catch ex As Exception
             _Error = ex.Message
-            If MostrarError = True Then
+            If _Mostrar_Error = True Then
                 MsgBox("No se realizo la operación: Insert, Update o Delete..." _
                        , MsgBoxStyle.Critical, "Modificar tabla")
                 MsgBox(ex.Message)
@@ -97,6 +103,11 @@ Public Class Class_SQL
     Function Ej_Insertar_Trae_Identity_Str(ConsultaSql As String,
                                            ByRef _Identity As String,
                                            Optional MostrarError As Boolean = True) As Boolean
+
+        If _Global_EsDiablito Then
+            MostrarError = False
+        End If
+
         Try
             'Abrimos la conexión con la base de datos
 
@@ -139,6 +150,8 @@ Public Class Class_SQL
     Function Fx_Get_DataTable(_Consulta_sql As String,
                            Optional _Mostrar_Error As Boolean = True) As DataTable
 
+        If _Global_EsDiablito Then _Mostrar_Error = False
+
         Dim _Tbl As New DataTable
 
         Try
@@ -180,6 +193,8 @@ Public Class Class_SQL
 
     Function Fx_Get_DataRow(_Consulta_sql As String,
                             Optional _Mostrar_Error As Boolean = True) As DataRow
+
+        If _Global_EsDiablito Then _Mostrar_Error = False
 
         Try
 
@@ -224,7 +239,7 @@ Public Class Class_SQL
             ' errores
         Catch ex As Exception
             _Error = String.Empty
-            MsgBox(ex.Message.ToString)
+            If Not _Global_EsDiablito Then MsgBox(ex.Message.ToString)
         End Try
         Return Nothing
 
@@ -261,7 +276,9 @@ Public Class Class_SQL
             ' errores
         Catch ex As Exception
             _Error = ex.Message.ToString
-            MsgBox(ex.Message.ToString)
+            If Not _Global_EsDiablito Then
+                MsgBox(ex.Message.ToString)
+            End If
         End Try
         Return Nothing
 
@@ -269,11 +286,13 @@ Public Class Class_SQL
 
     Function Fx_Get_DataSet(Consulta_sql As String,
                             _Traer_Schema As Boolean,
-                            _MostrarError As Boolean) As DataSet
+                            _Mostrar_Error As Boolean) As DataSet
+
+        If _Global_EsDiablito Then _Mostrar_Error = False
 
         Try
 
-            Sb_Abrir_Conexion(_Cn, _MostrarError)
+            Sb_Abrir_Conexion(_Cn, _Mostrar_Error)
 
             _Error = String.Empty
 
@@ -299,7 +318,7 @@ Public Class Class_SQL
             ' errores
         Catch ex As Exception
             _Error = ex.Message.ToString
-            If _MostrarError Then
+            If _Mostrar_Error Then
                 MsgBox(ex.Message.ToString)
             End If
         End Try
@@ -380,7 +399,9 @@ Public Class Class_SQL
             Return True
         Catch ex As Exception
             _Error = String.Empty
-            MessageBox.Show(ex.Message)
+            If Not _Global_EsDiablito Then
+                MsgBox(ex.Message.ToString)
+            End If
         End Try
 
     End Function
@@ -389,6 +410,7 @@ Public Class Class_SQL
     Sub Sb_Abrir_Conexion(_Cn As SqlConnection, Optional _Mostrar_Error As Boolean = True)
 
         _Error = String.Empty
+        If _Global_EsDiablito Then _Mostrar_Error = False
 
         Try
             If _Cn.State = ConnectionState.Open Then
@@ -417,7 +439,9 @@ Public Class Class_SQL
             End If
         Catch ex As Exception
             _Error = String.Empty
-            MsgBox(ex.Message)
+            If Not _Global_EsDiablito Then
+                MsgBox(ex.Message)
+            End If
         End Try
     End Sub
 
@@ -429,7 +453,9 @@ Public Class Class_SQL
             End If
         Catch ex As Exception
             _Error = String.Empty
-            MsgBox(ex.Message)
+            If Not _Global_EsDiablito Then
+                MsgBox(ex.Message)
+            End If
         End Try
     End Sub
 
@@ -480,7 +506,7 @@ Public Class Class_SQL
     ''' <param name="_Campo">Nombre del campo a traer</param>
     ''' <param name="_Condicion"></param>
     ''' <param name="_DevNumero">Si devuelve un numero True/False</param>
-    ''' <param name="_MostrarError">Si muestra o no el mensaje de error True/False</param>
+    ''' <param name="_Mostrar_Error">Si muestra o no el mensaje de error True/False</param>
     ''' <param name="_Dato_Default">Dato que se enviara por defecto si no se encuentra el valor o es nulo</param>
     ''' <param name="_Es_Boolean">Si el campo que devuelve es verdadero o falso... True/False</param>
     ''' <returns></returns>
@@ -488,9 +514,12 @@ Public Class Class_SQL
                          _Campo As String,
                          Optional _Condicion As String = "",
                          Optional _DevNumero As Boolean = False,
-                         Optional _MostrarError As Boolean = True,
+                         Optional _Mostrar_Error As Boolean = True,
                          Optional _Dato_Default As String = "",
                          Optional _Es_Boolean As Boolean = False) As String
+
+        If _Global_EsDiablito Then _Mostrar_Error = False
+
         Try
 
             Dim _Valor
@@ -508,7 +537,7 @@ Public Class Class_SQL
                                  "Where 1 > 0" & _Condicion
 
 
-            Dim _Tbl As DataTable = Fx_Get_DataTable(_Sql, _MostrarError)
+            Dim _Tbl As DataTable = Fx_Get_DataTable(_Sql, _Mostrar_Error)
 
             Dim cuenta As Long = _Tbl.Rows.Count
 
@@ -548,11 +577,11 @@ Public Class Class_SQL
 
             _Error = ex.Message
 
-            If _MostrarError Then
+            If _Mostrar_Error Then
                 MsgBox(ex.Message, MsgBoxStyle.Critical, "Error!!")
             Else
 
-                If _MostrarError Then
+                If _Mostrar_Error Then
                     Return ex.Message
                 Else
                     If _DevNumero Then
@@ -570,7 +599,9 @@ Public Class Class_SQL
 
     Function Fx_Cuenta_Registros(_Tabla As String,
                                  Optional _Condicion As String = "",
-                                 Optional _Mostrar_Mensaje As Boolean = True) As Double
+                                 Optional _Mostrar_Error As Boolean = True) As Double
+
+        If _Global_EsDiablito Then _Mostrar_Error = False
 
         If Not String.IsNullOrEmpty(_Condicion) Then
             _Condicion = vbCrLf & "And " & _Condicion
@@ -578,7 +609,7 @@ Public Class Class_SQL
 
         Dim _Sql As String = "Select Count(*) As Cuenta From " & _Tabla & " WITH (NOLOCK) Where 1 > 0 " & _Condicion
 
-        Dim _RowTabpre As DataRow = Fx_Get_DataRow(_Sql, _Mostrar_Mensaje)
+        Dim _RowTabpre As DataRow = Fx_Get_DataRow(_Sql, _Mostrar_Error)
 
         Dim _Cuenta As Double
 

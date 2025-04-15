@@ -63,30 +63,30 @@ Partial Class Demonio
         'DemonioBakappToolStripMenuItem
         '
         Me.DemonioBakappToolStripMenuItem.Name = "DemonioBakappToolStripMenuItem"
-        Me.DemonioBakappToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.DemonioBakappToolStripMenuItem.Size = New System.Drawing.Size(165, 22)
         Me.DemonioBakappToolStripMenuItem.Text = "Demonio Bakapp"
         '
         'ToolStripSeparator1
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(177, 6)
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(162, 6)
         '
         'AbrirDemonioToolStripMenuItem
         '
         Me.AbrirDemonioToolStripMenuItem.Name = "AbrirDemonioToolStripMenuItem"
-        Me.AbrirDemonioToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.AbrirDemonioToolStripMenuItem.Size = New System.Drawing.Size(165, 22)
         Me.AbrirDemonioToolStripMenuItem.Text = "Abrir"
         '
         'ConfigurarDemonioToolStripMenuItem
         '
         Me.ConfigurarDemonioToolStripMenuItem.Name = "ConfigurarDemonioToolStripMenuItem"
-        Me.ConfigurarDemonioToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ConfigurarDemonioToolStripMenuItem.Size = New System.Drawing.Size(165, 22)
         Me.ConfigurarDemonioToolStripMenuItem.Text = "Configurar"
         '
         'CerrarToolStripMenuItem
         '
         Me.CerrarToolStripMenuItem.Name = "CerrarToolStripMenuItem"
-        Me.CerrarToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.CerrarToolStripMenuItem.Size = New System.Drawing.Size(165, 22)
         Me.CerrarToolStripMenuItem.Text = "Cerrar"
         '
         'Menu_BakApp

@@ -88,7 +88,7 @@ Public Class Frm_Demonio_New
         Lbl_Nombre_Equipo.Text = "Nombre equipo: " & _NombreEquipo
         Lbl_Modalidad.Text = "Modalidad: " & Modalidad & ", Sucursal: " & ModSucursal & ", Bodega: " & ModBodega
 
-        Lbl_Estatus.Text = "Empresa: " & ModEmpresa & ", Modalidad: " & Modalidad & ", Usuario: " & FUNCIONARIO & ", Equipo: " & _NombreEquipo
+        Lbl_Estatus.Text = "Empresa: " & ModEmpresa & ", Modalidad: " & Modalidad & ", Usuario: " & FUNCIONARIO & ", Equipo: " & _NombreEquipo & ", diablito = " & _Global_EsDiablito.ToString
 
 
         Dim _Grb_Programacion As New Grb_Programacion

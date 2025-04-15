@@ -419,7 +419,6 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
 
     Private Sub Btn_Mnu_EnviarDocumentosStem_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_EnviarDocumentosStem.Click
 
-
         Dim _Lista_Idmaeedo As New List(Of String)
 
         For Each _Fila As DataGridViewRow In Grilla_Documentos.Rows

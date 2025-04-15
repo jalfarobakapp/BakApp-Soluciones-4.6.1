@@ -649,9 +649,9 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                 Case "Doc00098"
                     _Tbl_Funcionarios_X_09_FVigenciaCrVencida = _Tbl
                 Case "Doc00101"
-                    _Tbl = _Tbl_Funcionarios_X_10_DocSinPickear
+                    _Tbl_Funcionarios_X_10_DocSinPickear = _Tbl
                 Case "Doc00102"
-                    _Tbl = _Tbl_Funcionarios_X_11_RazonTransfomDescativada
+                    _Tbl_Funcionarios_X_11_RazonTransfomDescativada = _Tbl
             End Select
 
             _Fila.Cells("Btn_Estado").Value = Imagenes_16x16.Images.Item("secure-user.png")

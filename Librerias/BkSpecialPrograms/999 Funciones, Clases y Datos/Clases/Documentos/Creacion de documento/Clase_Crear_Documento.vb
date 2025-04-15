@@ -1951,19 +1951,19 @@ Public Class Clase_Crear_Documento
                 Dim _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
                 Dim _TipoEstacion = _Global_Row_EstacionBk.Item("TipoEstacion")
                 Dim _Modalidad As String = _Row_Encabezado.Item("Modalidad")
-                Dim _Pickear As Integer = Convert.ToInt32(_Row_Encabezado.Item("Pickear"))
+                Dim _Pickear As Integer
 
-                'If _Tido = "NVV" Then
+                If _Tido = "NVV" Then
 
-                '    _Pickear = _Row_Encabezado.Item("Pickear") 'Convert.ToInt32(_Global_Row_Configuracion_General.Item("Pickear_NVVTodas"))
+                    _Pickear = Convert.ToInt32(_Row_Encabezado.Item("Pickear")) 'Convert.ToInt32(_Global_Row_Configuracion_General.Item("Pickear_NVVTodas"))
 
-                '    'If CBool(_Pickear) AndAlso
-                '    '    Convert.ToInt32(_Global_Row_Configuracion_General.Item("Pickear_ProdPesoVariable")) AndAlso
-                '    '    Not CBool(_Items_RtuVariable) Then
-                '    '    _Pickear = 0
-                '    'End If
+                    'If CBool(_Pickear) AndAlso
+                    '    Convert.ToInt32(_Global_Row_Configuracion_General.Item("Pickear_ProdPesoVariable")) AndAlso
+                    '    Not CBool(_Items_RtuVariable) Then
+                    '    _Pickear = 0
+                    'End If
 
-                'End If
+                End If
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Ent (Idmaeedo,NombreEquipo,TipoEstacion,Empresa,Modalidad,Tido,Nudo,FechaHoraGrab," &
                                "HabilitadaFac,FunAutorizaFac,Pickear,Customizable,PreVenta) Values " &

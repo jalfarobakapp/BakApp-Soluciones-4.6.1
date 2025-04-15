@@ -362,7 +362,7 @@
                     If _Sql.Fx_Existe_Tabla("[@WMS_GATEWAY_TRANSFERENCIA]") Then
 
                         Consulta_Sql = "Select Top 1 * From [@WMS_GATEWAY_TRANSFERENCIA] Where IDMAEEDO = " & _Idmaeedo
-                        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+                        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
 
                         If Not IsNothing(_Row) Then
                             Consulta_Sql = "Update [@WMS_GATEWAY_TRANSFERENCIA] Set UPLOAD = 3 Where IDMAEEDO = " & _Idmaeedo

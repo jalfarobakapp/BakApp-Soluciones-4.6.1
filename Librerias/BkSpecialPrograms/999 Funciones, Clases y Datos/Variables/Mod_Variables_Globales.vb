@@ -90,6 +90,7 @@ Public Module Mod_Variables_Globales
     Public _Global_Frm_Menu As Form
 
     Public _Global_Version_BakApp As String
+    Public _Global_EsDiablito As Boolean
 
     Public EditFrConsultaPre As Boolean
     Public _Global_BaseBk As String

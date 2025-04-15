@@ -161,6 +161,7 @@ Public Class Frm_Formulario_Documento
     Dim _Zw_Contenedor As New Zw_Contenedor
 
     Private _RevisandoBotonesActivos As Boolean
+    Private _AvisoCambioRTUVariable As Boolean
 
 #Region "PROPIEDADES"
 
@@ -781,7 +782,7 @@ Public Class Frm_Formulario_Documento
 
         Barra.Visible = True
 
-        Sb_Botones_Activos(False)
+        Sb_Botones_Activos(False, True)
 
         Btn_Archivos_Adjuntos.Visible = _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Casi_DocArc")
 
@@ -884,7 +885,7 @@ Public Class Frm_Formulario_Documento
 
     End Sub
 
-    Sub Sb_Botones_Activos(_Revisando_Situacion_Comercial As Boolean)
+    Sub Sb_Botones_Activos(_Revisando_Situacion_Comercial As Boolean, _DemarcarPickeo As Boolean)
 
         _RevisandoBotonesActivos = True
 
@@ -938,8 +939,10 @@ Public Class Frm_Formulario_Documento
         Btn_Cambiar_Moneda.Enabled = Not _Revision_Remota
         Btn_Contenedor.Visible = PreVenta
 
-        Chk_Pickear.Checked = False
-        Chk_Pickear.Visible = False
+        If _DemarcarPickeo Then
+            Chk_Pickear.Checked = False
+            Chk_Pickear.Visible = False
+        End If
 
         If _Revisando_Situacion_Comercial Or _Revision_Remota Or _Solo_Revisar_El_Documento Then
 
@@ -1168,6 +1171,7 @@ Public Class Frm_Formulario_Documento
         Lbl_NroDecimales.Text = FormatNumber(0, _DecimalesGl)
 
         Chk_Redondear_Cero.Enabled = False
+        _AvisoCambioRTUVariable = False
 
         _Cl_Despacho = Nothing
 
@@ -8906,6 +8910,23 @@ Public Class Frm_Formulario_Documento
 
                                     Dim _DesacRazTransf As Boolean = Fm.Chk_DesacRazTransf.Checked
 
+                                    If _DesacRazTransf Then
+
+                                        If Chk_Pickear.Checked Then Chk_Pickear.Checked = False
+
+                                        If Not _AvisoCambioRTUVariable Then
+                                            Dim _Msj As String = "Si no cuenta con el permiso para grabar un documento con pesos variables y " &
+                                                         "cambiando la condición de desactivar la razón de transformación, " &
+                                                         "este será solicitado al finalizar el documento para completar la acción."
+                                            _Msj = Fx_AjustarTexto(_Msj, 80)
+
+                                            MessageBoxEx.Show(Me, _Msj, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                        End If
+
+                                        _AvisoCambioRTUVariable = True
+
+                                    End If
+
                                     _Fila.Cells("RtuVariable").Value = _RtuVariable
                                     _Fila.Cells("DesacRazTransf").Value = _DesacRazTransf
 
@@ -9732,7 +9753,7 @@ Public Class Frm_Formulario_Documento
                                                     Next
 
                                                     Sb_Marcar_Grilla()
-                                                    Sb_Botones_Activos(False)
+                                                    Sb_Botones_Activos(False, False)
 
                                                 End If
 
@@ -11989,7 +12010,14 @@ Public Class Frm_Formulario_Documento
             PreVenta = _TblEncabezado_StBy.Rows(0).Item("PreVenta")
             _TblEncabezado_StBy.Rows(0).Item("PreVenta") = PreVenta
 
+            .Item("Pickear") = _TblEncabezado_StBy.Rows(0).Item("Pickear")
+
         End With
+
+        Chk_Pickear.Visible = True
+        Chk_Pickear.Enabled = False
+
+        Chk_Pickear.Checked = _TblEncabezado_StBy.Rows(0).Item("Pickear")
 
         'If PreVenta Then
 
@@ -12711,7 +12739,7 @@ Public Class Frm_Formulario_Documento
 
         _Revisando_Situacion_Comercial = _Abrir_Revisar_Situacion_Comercial
 
-        Sb_Botones_Activos(_Revisando_Situacion_Comercial)
+        Sb_Botones_Activos(_Revisando_Situacion_Comercial, False)
 
         If _Revisando_Situacion_Comercial Then
 
@@ -13415,6 +13443,7 @@ Public Class Frm_Formulario_Documento
             End If
 
             If Not IsNothing(_TblPermisos) Then
+
                 For Each _Fl As DataRow In _TblPermisos.Rows
 
                     Dim _PermisoIndependiente As Boolean = _Fl.Item("PermisoIndependiente")
@@ -13427,6 +13456,7 @@ Public Class Frm_Formulario_Documento
                     End If
 
                 Next
+
             End If
 
             _Idmaeedo_Origen = 0
@@ -13446,7 +13476,7 @@ Public Class Frm_Formulario_Documento
             If Not IsNothing(_Global_Frm_Menu) Then _Global_Frm_Menu.Refresh()
 
             Sb_Nuevo_Doc(_Cambiar_Tido)
-            Sb_Botones_Activos(False)
+            Sb_Botones_Activos(False, True)
             Sb_Revisar_Si_Hay_Archivos_Adjuntos()
 
             Grilla_Encabezado.Focus()
@@ -16236,7 +16266,7 @@ Public Class Frm_Formulario_Documento
                         End If
 
                         Sb_Marcar_Grilla()
-                        Sb_Botones_Activos(False)
+                        Sb_Botones_Activos(False, False)
 
                     End If
 
@@ -18827,6 +18857,12 @@ Public Class Frm_Formulario_Documento
                 Next
 
             End If
+
+            Try
+                _TblEncabezado.Rows(0).Item("Pickear") = _RowMaeedo_Origen.Item("Pickear")
+            Catch ex As Exception
+                _TblEncabezado.Rows(0).Item("Pickear") = False
+            End Try
 
             If _Conservar_Nudo Then
                 _TblEncabezado.Rows(0).Item("NroDocumento") = _RowMaeedo_Origen.Item("NUDO")
@@ -21637,7 +21673,7 @@ Public Class Frm_Formulario_Documento
 
         'Sb_Actualizar_Permisos_Necesarios_Del_Documento()
         Sb_Marcar_Grilla()
-        Sb_Botones_Activos(False)
+        Sb_Botones_Activos(False, False)
 
     End Sub
 
@@ -24610,7 +24646,7 @@ Public Class Frm_Formulario_Documento
             Me.Text += Space(2) & ",SOLICITUD DE COMPRA NRO: " & _Numero
             _TblEncabezado.Rows(0).Item("Vizado") = True
 
-            Sb_Botones_Activos(False)
+            Sb_Botones_Activos(False, False)
 
         Else
 
@@ -24636,7 +24672,7 @@ Public Class Frm_Formulario_Documento
         _TblEncabezado.Rows(0).Item("Vizado") = False
 
         Sb_Marcar_Grilla()
-        Sb_Botones_Activos(False)
+        Sb_Botones_Activos(False, False)
 
         MessageBoxEx.Show(Me, "Ahora es posible editar el documento", "Editar Solicitud", MessageBoxButtons.OK,
                           MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, Me.TopMost)
@@ -24820,7 +24856,7 @@ Public Class Frm_Formulario_Documento
         Sb_EliminarFilaPuntos()
 
         Sb_Marcar_Grilla()
-        Sb_Botones_Activos(False)
+        Sb_Botones_Activos(False, False)
 
     End Sub
 
