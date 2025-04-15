@@ -35,7 +35,7 @@ Public Class Stk_Ticktes
 
     End Sub
 
-    Private Sub Btn_TicketAsignados_Click(sender As Object, e As EventArgs) Handles Btn_TicketAsignados.Click
+    Private Sub Btn_TicketAsignados_Click(sender As Object, e As EventArgs)
 
         Dim Fm As New Frm_Tickets_Lista(FUNCIONARIO, Frm_Tickets_Lista.Enum_Tickets.TicketAsignadosAgente, 0)
         Fm.ShowDialog(Me)
@@ -53,13 +53,13 @@ Public Class Stk_Ticktes
 
     End Sub
 
-    Private Sub BtnCambiarDeUsuario_Click(sender As Object, e As EventArgs) Handles BtnCambiarDeUsuario.Click
+    Private Sub BtnCambiarDeUsuario_Click(sender As Object, e As EventArgs)
         Dim NewPanel As Login = Nothing
         NewPanel = New Login(_Fm_Menu_Padre)
         _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Right)
     End Sub
 
-    Private Sub Btn_VerTodosTickets_Click(sender As Object, e As EventArgs) Handles Btn_VerTodosTickets.Click
+    Private Sub Btn_VerTodosTickets_Click(sender As Object, e As EventArgs)
 
         MessageBoxEx.Show(Me, "En Construcción", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Return

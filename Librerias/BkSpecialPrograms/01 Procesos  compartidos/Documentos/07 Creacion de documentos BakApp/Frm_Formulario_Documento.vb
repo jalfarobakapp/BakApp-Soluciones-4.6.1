@@ -160,6 +160,9 @@ Public Class Frm_Formulario_Documento
     Public Property PreVenta As Boolean
     Dim _Zw_Contenedor As New Zw_Contenedor
 
+    Private _RevisandoBotonesActivos As Boolean
+    Private _AvisoCambioRTUVariable As Boolean
+
 #Region "PROPIEDADES"
 
     Public ReadOnly Property Pro_Idmaeedo() As Integer
@@ -779,7 +782,7 @@ Public Class Frm_Formulario_Documento
 
         Barra.Visible = True
 
-        Sb_Botones_Activos(False)
+        Sb_Botones_Activos(False, True)
 
         Btn_Archivos_Adjuntos.Visible = _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Casi_DocArc")
 
@@ -882,7 +885,9 @@ Public Class Frm_Formulario_Documento
 
     End Sub
 
-    Sub Sb_Botones_Activos(_Revisando_Situacion_Comercial As Boolean)
+    Sub Sb_Botones_Activos(_Revisando_Situacion_Comercial As Boolean, _DemarcarPickeo As Boolean)
+
+        _RevisandoBotonesActivos = True
 
         BtnGrabar.Visible = False
         Btn_Limpiar.Visible = False
@@ -933,6 +938,11 @@ Public Class Frm_Formulario_Documento
 
         Btn_Cambiar_Moneda.Enabled = Not _Revision_Remota
         Btn_Contenedor.Visible = PreVenta
+
+        If _DemarcarPickeo Then
+            Chk_Pickear.Checked = False
+            Chk_Pickear.Visible = False
+        End If
 
         If _Revisando_Situacion_Comercial Or _Revision_Remota Or _Solo_Revisar_El_Documento Then
 
@@ -1048,6 +1058,11 @@ Public Class Frm_Formulario_Documento
                 Me.MinimizeBox = Not _Cerrar_Al_Grabar
             End If
 
+            If _Tido = "NVV" And _DemarcarPickeo Then
+                Chk_Pickear.Checked = _Global_Row_Configuracion_General.Item("Pickear_NVVTodas")
+                Chk_Pickear.Visible = _Global_Row_Configuracion_General.Item("Pickear_NVVTodas")
+            End If
+
         End If
 
         Me.ControlBox = True
@@ -1073,6 +1088,8 @@ Public Class Frm_Formulario_Documento
         If _Tido = "NVV" Or _Tido = "OCC" Then
             Btn_Cadena_Remota.Enabled = Not Warning_Visado.Visible
         End If
+
+        _RevisandoBotonesActivos = False
 
         Me.Refresh()
 
@@ -1154,6 +1171,7 @@ Public Class Frm_Formulario_Documento
         Lbl_NroDecimales.Text = FormatNumber(0, _DecimalesGl)
 
         Chk_Redondear_Cero.Enabled = False
+        _AvisoCambioRTUVariable = False
 
         _Cl_Despacho = Nothing
 
@@ -1669,12 +1687,16 @@ Public Class Frm_Formulario_Documento
         _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Bkp00062", False, False, "", "", False, False, False) ' Minimo de venta por documento
         _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "ODp00017", False, False, "", "", False, False, False) ' Despacho mínimo en Kg o Total Neto
 
-        If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Configuracion", "RestringirFechaVencimientoClientes") Then
-            If _Global_Row_Configuracion_General.Item("RestringirFechaVencimientoClientes") Then
-                _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos,
-                                                                          "Doc00098", False, False, "", "", False, False, False)
-            End If
-        End If
+        _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00098", False, False, "", "", False, False, False)
+
+        _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00101", False, False, "", "", False, False, False) ' Crear documento sin Picking
+        _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00102", False, False, "", "", False, False, False) ' Cambiar RTU de pesos variables
+
+        'If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Configuracion", "RestringirFechaVencimientoClientes") Then
+        'If _Global_Row_Configuracion_General.Item("RestringirFechaVencimientoClientes") Then
+        '_Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00098", False, False, "", "", False, False, False)
+        'End If
+        'End If
 
 
         _TblPermisos = _Ds_Matriz_Documentos.Tables("Permisos_Doc")
@@ -2353,6 +2375,8 @@ Public Class Frm_Formulario_Documento
             _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Comp0095", False, False, "", "", False, False, False) ' Solicitud de compra Validar producto a comprar
             _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Bkp00062", False, False, "", "", False, False, False) ' Minimo de venta por documento
             _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "ODp00017", False, False, "", "", False, False, False) ' Despacho mínimo en Kg o Total Neto
+            _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00101", False, False, "", "", False, False, False) ' Crear documento sin Picking
+            _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00102", False, False, "", "", False, False, False) ' Crear documento sin Picking
 
             _TblPermisos = _Ds_Matriz_Documentos.Tables("Permisos_Doc")
 
@@ -2692,6 +2716,7 @@ Public Class Frm_Formulario_Documento
             .Item("ModFechVto") = False
             .Item("Condicionado") = False
             .Item("EsPallet") = False
+            .Item("DesacRazTransf") = False
 
             _TblDetalle.Rows.Add(NewFila)
 
@@ -4635,14 +4660,14 @@ Public Class Frm_Formulario_Documento
                         Btn_Mini_Refrescar_Stock_X_Linea.Enabled = Not String.IsNullOrEmpty(_Codigo)
                     End If
 
-                    Btn_Mini_Info_Producto_Grilla.Enabled = Not String.IsNullOrEmpty(_Codigo)
-                    Btn_Mini_Kardex_Producto_Grilla.Enabled = Not String.IsNullOrEmpty(_Codigo)
+                    'Btn_Mini_Info_Producto_Grilla.Enabled = Not String.IsNullOrEmpty(_Codigo)
+                    'Btn_Mini_Kardex_Producto_Grilla.Enabled = Not String.IsNullOrEmpty(_Codigo)
                     Btn_Mini_Cambiar_Bodega.Enabled = Not String.IsNullOrEmpty(_Codigo)
                     Btn_Mini_Bodega_Para_Todos.Enabled = Not String.IsNullOrEmpty(_Codigo)
-                    Btn_Mini_Observaciones_Linea.Enabled = Not String.IsNullOrEmpty(_Codigo)
-                    Btn_Mini_Imagen_Sol_Bodega.Enabled = Not String.IsNullOrEmpty(_Codigo)
+                    'Btn_Mini_Observaciones_Linea.Enabled = Not String.IsNullOrEmpty(_Codigo)
+                    'Btn_Mini_Imagen_Sol_Bodega.Enabled = Not String.IsNullOrEmpty(_Codigo)
                     Btn_Mini_Sol_Crear_Producto.Enabled = Not String.IsNullOrEmpty(_Codigo)
-                    Btn_Mini_Anotaciones_a_la_linea.Enabled = Not String.IsNullOrEmpty(_Codigo)
+                    'Btn_Mini_Anotaciones_a_la_linea.Enabled = Not String.IsNullOrEmpty(_Codigo)
                     Btn_Mini_Consolidar_Stock.Enabled = Not String.IsNullOrEmpty(_Codigo)
 
                     Btn_Mini_Recargar_Producto.Enabled = (Not String.IsNullOrEmpty(_Codigo) And _Tido = "OCC")
@@ -4650,10 +4675,10 @@ Public Class Frm_Formulario_Documento
                     Btn_Mini_Clonar_Producto.Enabled = Not String.IsNullOrEmpty(_Codigo)
 
                     If _Prct Then
-                        Btn_Mini_Kardex_Producto_Grilla.Enabled = False
+                        'Btn_Mini_Kardex_Producto_Grilla.Enabled = False
                         Btn_Mini_Consolidar_Stock.Enabled = False
                         Btn_Mini_Recargar_Producto.Enabled = False
-                        Btn_Mini_Imagen_Sol_Bodega.Enabled = False
+                        'Btn_Mini_Imagen_Sol_Bodega.Enabled = False
                         Btn_Mini_Clonar_Producto.Enabled = False
                     End If
 
@@ -8877,14 +8902,35 @@ Public Class Frm_Formulario_Documento
                                     Fm.RevisarRtuVariable = _RevisarRtuVariable
                                     Fm.DesdeContenedor = PreVenta
                                     Fm.IdCont = _TblEncabezado.Rows(0).Item("IdCont")
+                                    Fm.Chk_DesacRazTransf.Checked = _Fila.Cells("DesacRazTransf").Value
 
                                     Fm.ShowDialog(Me)
 
                                     _RtuVariable = Fm.RtuVariable
 
-                                    _Fila.Cells("RtuVariable").Value = _RtuVariable
+                                    Dim _DesacRazTransf As Boolean = Fm.Chk_DesacRazTransf.Checked
 
-                                    If _RtuVariable Then
+                                    If _DesacRazTransf Then
+
+                                        If Chk_Pickear.Checked Then Chk_Pickear.Checked = False
+
+                                        If Not _AvisoCambioRTUVariable Then
+                                            Dim _Msj As String = "Si no cuenta con el permiso para grabar un documento con pesos variables y " &
+                                                         "cambiando la condición de desactivar la razón de transformación, " &
+                                                         "este será solicitado al finalizar el documento para completar la acción."
+                                            _Msj = Fx_AjustarTexto(_Msj, 80)
+
+                                            MessageBoxEx.Show(Me, _Msj, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                        End If
+
+                                        _AvisoCambioRTUVariable = True
+
+                                    End If
+
+                                    _Fila.Cells("RtuVariable").Value = _RtuVariable
+                                    _Fila.Cells("DesacRazTransf").Value = _DesacRazTransf
+
+                                    If _RtuVariable And CBool(Fm.Cantidad_Ud1 + Fm.Cantidad_Ud2) Then
                                         _Fila.Cells("Rtu").Value = Math.Round(Fm.Cantidad_Ud1 / Fm.Cantidad_Ud2, 5)
                                     End If
 
@@ -9707,7 +9753,7 @@ Public Class Frm_Formulario_Documento
                                                     Next
 
                                                     Sb_Marcar_Grilla()
-                                                    Sb_Botones_Activos(False)
+                                                    Sb_Botones_Activos(False, False)
 
                                                 End If
 
@@ -11964,7 +12010,14 @@ Public Class Frm_Formulario_Documento
             PreVenta = _TblEncabezado_StBy.Rows(0).Item("PreVenta")
             _TblEncabezado_StBy.Rows(0).Item("PreVenta") = PreVenta
 
+            .Item("Pickear") = _TblEncabezado_StBy.Rows(0).Item("Pickear")
+
         End With
+
+        Chk_Pickear.Visible = True
+        Chk_Pickear.Enabled = False
+
+        Chk_Pickear.Checked = _TblEncabezado_StBy.Rows(0).Item("Pickear")
 
         'If PreVenta Then
 
@@ -12686,7 +12739,7 @@ Public Class Frm_Formulario_Documento
 
         _Revisando_Situacion_Comercial = _Abrir_Revisar_Situacion_Comercial
 
-        Sb_Botones_Activos(_Revisando_Situacion_Comercial)
+        Sb_Botones_Activos(_Revisando_Situacion_Comercial, False)
 
         If _Revisando_Situacion_Comercial Then
 
@@ -13390,6 +13443,7 @@ Public Class Frm_Formulario_Documento
             End If
 
             If Not IsNothing(_TblPermisos) Then
+
                 For Each _Fl As DataRow In _TblPermisos.Rows
 
                     Dim _PermisoIndependiente As Boolean = _Fl.Item("PermisoIndependiente")
@@ -13402,6 +13456,7 @@ Public Class Frm_Formulario_Documento
                     End If
 
                 Next
+
             End If
 
             _Idmaeedo_Origen = 0
@@ -13421,7 +13476,7 @@ Public Class Frm_Formulario_Documento
             If Not IsNothing(_Global_Frm_Menu) Then _Global_Frm_Menu.Refresh()
 
             Sb_Nuevo_Doc(_Cambiar_Tido)
-            Sb_Botones_Activos(False)
+            Sb_Botones_Activos(False, True)
             Sb_Revisar_Si_Hay_Archivos_Adjuntos()
 
             Grilla_Encabezado.Focus()
@@ -15441,9 +15496,7 @@ Public Class Frm_Formulario_Documento
     End Sub
 
     Private Sub BtnGrabar_Click(sender As System.Object, e As System.EventArgs) Handles BtnGrabar.Click
-
         Sb_Grabar_Documento(_New_Idmaeedo, True)
-
     End Sub
 
     Sub Sb_Grabar_Documento(ByRef _Idmaeedo As Integer,
@@ -15521,10 +15574,11 @@ Public Class Frm_Formulario_Documento
                 Return
             End If
 
-
             If Not Fx_Revisar_MinimoCompra() Then
                 Return
             End If
+
+            _TblEncabezado.Rows(0).Item("Pickear") = Chk_Pickear.Checked
 
             If String.IsNullOrEmpty(_TblEncabezado.Rows(0).Item("NroDocumento").ToString.Trim) Then
                 MessageBoxEx.Show(Me, "Debe indicar un número de documento", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -16212,7 +16266,7 @@ Public Class Frm_Formulario_Documento
                         End If
 
                         Sb_Marcar_Grilla()
-                        Sb_Botones_Activos(False)
+                        Sb_Botones_Activos(False, False)
 
                     End If
 
@@ -16309,8 +16363,6 @@ Public Class Frm_Formulario_Documento
 
                 Dim _Mensaje As New LsValiciones.Mensajes
 
-                '_Idmaeedo = 
-
                 _Mensaje = Fx_Grabar_Documento(_Solicitar_Observaciones_Al_Grabar,
                                                csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento,
                                                _Cambiar_NroDocumento,, _Grabar_e_Imprimir, _Grabar_Y_Pagar_Vale)
@@ -16384,9 +16436,11 @@ Public Class Frm_Formulario_Documento
                                 _Cl_Despacho.Fx_Accion_Confirmacion("")
                             End If
 
-                            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Chilexpress_Env Set IdDespacho = " & _Cl_Despacho.Id_Despacho_Padre & " Where IdDespacho = " & _Id_Despacho
+                            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Chilexpress_Env Set IdDespacho = " & _Cl_Despacho.Id_Despacho_Padre & vbCrLf &
+                                           "Where IdDespacho = " & _Id_Despacho
                             _Sql.Fx_Ejecutar_Consulta(Consulta_sql)
                         End If
+
                         If _Tido = "GDV" Then
 
                             Dim _Kofudo = _Row_NeDocEnc.Item("KOFUDO")
@@ -16404,6 +16458,7 @@ Public Class Frm_Formulario_Documento
                     Catch ex As Exception
                         MessageBoxEx.Show(Me, ex.Message, "Error en gestión despacho", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     End Try
+
                     _Grabar = True
                     Sb_Reservar_Movimientos_WMS(_Idmaeedo)
                     If _Tipo_de_Grabacion = csGlobales.Enum_Tipo_de_Grabacion.Nuevo_documento Then
@@ -18801,6 +18856,12 @@ Public Class Frm_Formulario_Documento
 
             End If
 
+            Try
+                _TblEncabezado.Rows(0).Item("Pickear") = _RowMaeedo_Origen.Item("Pickear")
+            Catch ex As Exception
+                _TblEncabezado.Rows(0).Item("Pickear") = False
+            End Try
+
             If _Conservar_Nudo Then
                 _TblEncabezado.Rows(0).Item("NroDocumento") = _RowMaeedo_Origen.Item("NUDO")
                 _TblEncabezado.Rows(0).Item("Reserva_NroOCC") = True
@@ -21166,14 +21227,6 @@ Public Class Frm_Formulario_Documento
 
     End Sub
 
-    Private Sub Btn_Mini_Info_Producto_Grilla_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mini_Info_Producto_Grilla.Click
-        Sb_Ver_Informacion_Producto()
-    End Sub
-
-    Private Sub Btn_Mini_Kardex_Producto_Grilla_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mini_Kardex_Producto_Grilla.Click
-        Call Btn_Ver_Cardex_De_Inventario_Click(Nothing, Nothing)
-    End Sub
-
     Private Sub Btn_Mini_Buscar_CodPrincipal_Grilla_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mini_Buscar_CodPrincipal_Grilla.Click
         Sb_Busca_Producto_En_Grilla(Buscar_Codigo.Principal)
     End Sub
@@ -21618,7 +21671,7 @@ Public Class Frm_Formulario_Documento
 
         'Sb_Actualizar_Permisos_Necesarios_Del_Documento()
         Sb_Marcar_Grilla()
-        Sb_Botones_Activos(False)
+        Sb_Botones_Activos(False, False)
 
     End Sub
 
@@ -21791,7 +21844,7 @@ Public Class Frm_Formulario_Documento
                     Fx_Autorizar_X_Descuentos(False)
                 End If
 
-            Case "Bkp00015", "Bkp00019", "Bkp00033", "Bkp00057", "ODp00017", "Bkp00062", "Doc00098"
+            Case "Bkp00015", "Bkp00019", "Bkp00033", "Bkp00057", "ODp00017", "Bkp00062", "Doc00098", "Doc00101", "Doc00102"
 
                 If _Crear_Doc_Def_Al_Grabar Then
 
@@ -22481,7 +22534,7 @@ Public Class Frm_Formulario_Documento
 
             Dim _Row_Permiso As DataRow = _Row(0)
 
-            Dim _Fun_Auto_Deuda_Ven = _Row_Permiso.Item("CodFuncionario_Autoriza") 'NuloPorNro(_TblEncabezado.Rows(0).Item("Fun_Auto_Deuda_Ven"), "")
+            Dim _Fun_Auto_Deuda_Ven = _Row_Permiso.Item("CodFuncionario_Autoriza")
 
             If Fx_Tiene_Permiso(Me, "Bkp00019", _Fun_Auto_Deuda_Ven, False) Then
                 Fx_Validad_Morosidad = True
@@ -22615,10 +22668,6 @@ Public Class Frm_Formulario_Documento
 
                     Return "Existen productos con cantidad cero, debe corregir"
 
-                    'MessageBoxEx.Show(Me, "Existen productos con cantidad cero, debe corregir", "Validación",
-                    '                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                    'Return False
-
                 End If
 
             End If
@@ -22641,7 +22690,6 @@ Public Class Frm_Formulario_Documento
                 If Not CBool(_ValBrutoLinea) Then
 
                     Return Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00042", Nothing, "", "")
-                    'Return Fx_Tiene_Permiso(Me, "Doc00042")
 
                 End If
 
@@ -23319,55 +23367,32 @@ Public Class Frm_Formulario_Documento
                         End If
                     End If
 
-                    'If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Configuracion", "RestringirFechaVencimientoClientes") Then
+                End If
 
-                    '    If _Global_Row_Configuracion_General.Item("RestringirFechaVencimientoClientes") Then
+                If _Tido = "NVV" Then
 
-                    '        Dim _FechaEmision As Date = _TblEncabezado.Rows(0).Item("FechaEmision")
-                    '        Dim _Koen As String = _RowEntidad.Item("KOEN")
-                    '        Dim _Suen As String = _RowEntidad.Item("SUEN")
+                    If Chk_Pickear.Visible And Not Chk_Pickear.Checked Then
 
-                    '        Dim _CRSD = _RowEntidad.Item("CRSD")
-                    '        Dim _CRCH = _RowEntidad.Item("CRCH")
-                    '        Dim _CRPA = _RowEntidad.Item("CRPA")
-                    '        Dim _CRTO = _RowEntidad.Item("CRTO")
-                    '        Dim _NUVECR = _RowEntidad.Item("NUVECR")
-                    '        Dim _DIASVENCI = _RowEntidad.Item("DIASVENCI")
-                    '        Dim _DIPRVE = _RowEntidad.Item("DIPRVE")
+                        If Not Fx_Tiene_Permiso(Me, "Doc00101", FUNCIONARIO, False) Then
+                            Sb_Revisar_Permiso("Doc00101", False, True)
+                        End If
 
-                    '        Dim _Dd = _CRSD + _CRCH + _CRPA + _CRTO + _NUVECR + _DIASVENCI
+                    End If
 
-                    '        If CType(_RowEntidad.Item("FEVECREN"), Date).Date < _FechaEmision.Date Then
+                    Dim _PidePermiso As Boolean = False
 
-                    '            If CBool(_Dd) Then
+                    For Each _Fl As DataRow In _TblDetalle.Rows
+                        If _Fl.Item("DesacRazTransf") And _Fl.Item("RtuVariable") Then
+                            _PidePermiso = True
+                            Exit For
+                        End If
+                    Next
 
-                    '                Dim _Fl As DataRow() = _TblPermisos.Select("CodPermiso = 'Doc00098'")
-
-                    '                If Not CBool(_Fl.Length) Then
-
-                    '                    If Fx_Tiene_Permiso(Me, "Doc00098",, False) Then
-                    '                        Fx_Incorporar_Permiso_Al_Documento(_TblPermisos, "Doc00098", True, True, FUNCIONARIO, Nombre_funcionario_activo, "", True, True, False)
-                    '                    Else
-                    '                        Fx_Incorporar_Permiso_Al_Documento(_TblPermisos, "Doc00098", True, False, "", "", "", False, True, True)
-                    '                    End If
-
-                    '                End If
-
-                    '            End If
-
-                    '        End If
-
-                    '    End If
-
-                    'End If
-
-                    'Else
-
-                    '    If _Tido = "BLV" Or _Tido = "FCV" Then
-                    '        _Autorizado = False : _Necesita_Permiso = False
-                    '        _Autorizado = Fx_Validad_Cupo_Excedido(_Necesita_Permiso)
-                    '        Sb_Revisar_Permiso("Bkp00033", _Autorizado, _Necesita_Permiso)
-                    '    End If
+                    If _PidePermiso Then
+                        If Not Fx_Tiene_Permiso(Me, "Doc00102", FUNCIONARIO, False) Then
+                            Sb_Revisar_Permiso("Doc00102", False, True)
+                        End If
+                    End If
 
                 End If
 
@@ -24619,7 +24644,7 @@ Public Class Frm_Formulario_Documento
             Me.Text += Space(2) & ",SOLICITUD DE COMPRA NRO: " & _Numero
             _TblEncabezado.Rows(0).Item("Vizado") = True
 
-            Sb_Botones_Activos(False)
+            Sb_Botones_Activos(False, False)
 
         Else
 
@@ -24645,7 +24670,7 @@ Public Class Frm_Formulario_Documento
         _TblEncabezado.Rows(0).Item("Vizado") = False
 
         Sb_Marcar_Grilla()
-        Sb_Botones_Activos(False)
+        Sb_Botones_Activos(False, False)
 
         MessageBoxEx.Show(Me, "Ahora es posible editar el documento", "Editar Solicitud", MessageBoxButtons.OK,
                           MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, Me.TopMost)
@@ -24829,12 +24854,8 @@ Public Class Frm_Formulario_Documento
         Sb_EliminarFilaPuntos()
 
         Sb_Marcar_Grilla()
-        Sb_Botones_Activos(False)
+        Sb_Botones_Activos(False, False)
 
-    End Sub
-
-    Private Sub Btn_Mini_Observaciones_Linea_Click(sender As Object, e As EventArgs) Handles Btn_Mini_Observaciones_Linea.Click
-        Sb_Observacion_linea()
     End Sub
 
     Private Sub Timer_Crear_Doc_Desde_Otro_Tick(sender As Object, e As EventArgs) Handles Timer_Crear_Doc_Desde_Otro.Tick
@@ -26719,14 +26740,6 @@ Public Class Frm_Formulario_Documento
 
     Private Sub Btn_Mini_Bodega_Para_Todos_Click(sender As Object, e As EventArgs) Handles Btn_Mini_Bodega_Para_Todos.Click
         Call Btn_Bodega_Para_Todos_Click(Nothing, Nothing)
-    End Sub
-
-    Private Sub Btn_Mini_Imagen_Sol_Bodega_Click(sender As Object, e As EventArgs) Handles Btn_Mini_Imagen_Sol_Bodega.Click
-        Call Btn_Imagen_Sol_Bodega_Click(Nothing, Nothing)
-    End Sub
-
-    Private Sub Btn_Mini_Anotaciones_a_la_linea_Click(sender As Object, e As EventArgs) Handles Btn_Mini_Anotaciones_a_la_linea.Click
-        Call Btn_Anotaciones_a_la_linea_Click(Nothing, Nothing)
     End Sub
 
     Private Sub Btn_Mini_Consolidar_Stock_Click(sender As Object, e As EventArgs) Handles Btn_Mini_Consolidar_Stock.Click
@@ -29139,6 +29152,22 @@ Public Class Frm_Formulario_Documento
         Return _RowProducto
 
     End Function
+
+    Private Sub Chk_Pickear_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Pickear.CheckedChanged
+
+        If Not _RevisandoBotonesActivos AndAlso
+            Not Chk_Pickear.Checked AndAlso
+            _Global_Row_Configuracion_General.Item("Pickear_NVVTodas") Then
+
+            Dim _Msj As String = "Si no cuenta con el permiso para grabar un documento sin Pickear, " &
+                                 "este será solicitado al finalizar el documento para completar la acción."
+            _Msj = Fx_AjustarTexto(_Msj, 80)
+
+            MessageBoxEx.Show(Me, _Msj, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+        End If
+
+    End Sub
 
     Function Fx_ProdConInfo(_Tipr As String) As Boolean
 

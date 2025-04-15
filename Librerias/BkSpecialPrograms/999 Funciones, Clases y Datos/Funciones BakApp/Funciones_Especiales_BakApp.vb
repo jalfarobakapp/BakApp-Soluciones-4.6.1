@@ -2856,9 +2856,14 @@ Public Module Modulo_Precios_Costos
                                 _Koen As String,
                                 _Suen As String,
                                 _Es_Solicitud_Permiso As Boolean,
-                                _Funcionario_Autoriza As String) As Integer
+                                _Funcionario_Autoriza As String,
+                                Optional _PermisoRemoto As Boolean = False,
+                                Optional _Id_Rem As Integer = 0,
+                                Optional _NroRemota As String = "") As Integer
 
         Dim _Id As Integer
+        Dim _Tido As String
+        Dim _Nudo As String
 
         Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
@@ -2866,11 +2871,24 @@ Public Module Modulo_Precios_Costos
 
         _Accion = Replace(_Accion, "'", "''")
 
-        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Log_Gestiones (NombreEquipo,Funcionario,Modalidad,Archirst,Idrst," &
-                       "CodAccion,Accion,CodPermiso,Kopr,Koen,Suen,Solicitud_Permiso,Funcionario_Autoriza) Values " & vbCrLf &
-                       "('" & _NombreEquipo & "','" & _Funcionario & "','" & Modalidad & "','" & _Archirst & "'," & _Idrst & "," &
+        If CBool(_Idrst) And _Archirst = "MAEEDO" Then
+
+            Consulta_sql = "Select TIDO,NUDO From MAEEDO Where IDMAEEDO = " & _Idrst
+            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If Not IsNothing(_Row) Then
+                _Tido = _Row.Item("TIDO")
+                _Nudo = _Row.Item("NUDO")
+            End If
+
+        End If
+
+        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Log_Gestiones (Empresa,NombreEquipo,Funcionario,Modalidad,Archirst,Idrst," &
+                       "CodAccion,Accion,CodPermiso,Kopr,Koen,Suen,Solicitud_Permiso,Funcionario_Autoriza,PermisoRemoto,Id_Rem,NroRemota,Tido,Nudo) Values " & vbCrLf &
+                       "('" & ModEmpresa & "','" & _NombreEquipo & "','" & _Funcionario & "','" & Modalidad & "','" & _Archirst & "'," & _Idrst & "," &
                        "'" & _CodAccion & "','" & _Accion & "','" & _CodPermiso & "','" & _Kopr & "','" & _Koen & "','" & _Suen &
-                       "'," & CInt(_Es_Solicitud_Permiso) * -1 & ",'" & _Funcionario_Autoriza & "')"
+                       "'," & CInt(_Es_Solicitud_Permiso) * -1 & ",'" & _Funcionario_Autoriza &
+                       "'," & Convert.ToInt32(_PermisoRemoto) & "," & _Id_Rem & ",'" & _NroRemota & "','" & _Tido & "','" & _Nudo & "')"
 
         _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id, False)
 
@@ -5571,7 +5589,7 @@ Public Module Crear_Documentos_Desde_Otro
         Next
 
         If Fx_Tiene_Permiso(_Formulario, _CodPermiso,,,, , _CodEntidad, _CodSucEntidad,,,
-                                                         _Row_Usuario_Autoriza,,, _Permiso_Presencial, _Ds_Matriz_Documentos, False) Then
+                            _Row_Usuario_Autoriza,,, _Permiso_Presencial, _Ds_Matriz_Documentos, False) Then
 
             For Each _Fl As DataRow In _TblPermisos.Rows
                 If _Fl.Item("CodPermiso") = _CodPermiso Then

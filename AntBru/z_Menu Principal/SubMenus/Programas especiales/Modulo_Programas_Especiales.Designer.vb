@@ -602,6 +602,7 @@ Partial Class Modulo_Programas_Especiales
         Me.BtnCambiarDeUsuario.ImageAlt = CType(resources.GetObject("BtnCambiarDeUsuario.ImageAlt"), System.Drawing.Image)
         Me.BtnCambiarDeUsuario.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.BtnCambiarDeUsuario.Name = "BtnCambiarDeUsuario"
+        Me.BtnCambiarDeUsuario.Visible = False
         '
         'LabelX1
         '

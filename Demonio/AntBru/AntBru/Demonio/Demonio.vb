@@ -201,6 +201,8 @@ Public Class Demonio
 
             Dim _CambioDeConfiguracion As Boolean
 
+            _Global_EsDiablito = True
+
             Dim Fm As New Frm_Demonio_New
             Fm.ShowDialog(Me)
             _CambioDeConfiguracion = Fm.CambioDeConfiguracion

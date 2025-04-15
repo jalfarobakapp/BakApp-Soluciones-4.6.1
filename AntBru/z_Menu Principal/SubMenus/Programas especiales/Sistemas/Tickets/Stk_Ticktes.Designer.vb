@@ -26,13 +26,10 @@ Partial Class Stk_Ticktes
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.BtnSalir = New DevComponents.DotNetBar.ButtonItem()
-        Me.BtnCambiarDeUsuario = New DevComponents.DotNetBar.ButtonItem()
         Me.MetroTilePanel1 = New DevComponents.DotNetBar.Metro.MetroTilePanel()
         Me.ConsultaPreciosContenedor = New DevComponents.DotNetBar.ItemContainer()
         Me.Btn_MisTicket = New DevComponents.DotNetBar.Metro.MetroTileItem()
-        Me.Btn_TicketAsignados = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Configuracion = New DevComponents.DotNetBar.Metro.MetroTileItem()
-        Me.Btn_VerTodosTickets = New DevComponents.DotNetBar.Metro.MetroTileItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -55,10 +52,10 @@ Partial Class Stk_Ticktes
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnSalir, Me.BtnCambiarDeUsuario})
-        Me.Bar2.Location = New System.Drawing.Point(0, 289)
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnSalir})
+        Me.Bar2.Location = New System.Drawing.Point(0, 187)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(639, 41)
+        Me.Bar2.Size = New System.Drawing.Size(448, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 62
@@ -73,16 +70,6 @@ Partial Class Stk_Ticktes
         Me.BtnSalir.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.BtnSalir.Name = "BtnSalir"
         Me.BtnSalir.Tooltip = "Volver..."
-        '
-        'BtnCambiarDeUsuario
-        '
-        Me.BtnCambiarDeUsuario.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.BtnCambiarDeUsuario.ForeColor = System.Drawing.Color.Black
-        Me.BtnCambiarDeUsuario.Image = CType(resources.GetObject("BtnCambiarDeUsuario.Image"), System.Drawing.Image)
-        Me.BtnCambiarDeUsuario.ImageAlt = CType(resources.GetObject("BtnCambiarDeUsuario.ImageAlt"), System.Drawing.Image)
-        Me.BtnCambiarDeUsuario.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.BtnCambiarDeUsuario.Name = "BtnCambiarDeUsuario"
-        Me.BtnCambiarDeUsuario.Tooltip = "Cambiar de usuario"
         '
         'MetroTilePanel1
         '
@@ -112,7 +99,7 @@ Partial Class Stk_Ticktes
         Me.ConsultaPreciosContenedor.FixedSize = New System.Drawing.Size(700, 400)
         Me.ConsultaPreciosContenedor.MultiLine = True
         Me.ConsultaPreciosContenedor.Name = "ConsultaPreciosContenedor"
-        Me.ConsultaPreciosContenedor.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_MisTicket, Me.Btn_TicketAsignados, Me.Btn_Configuracion, Me.Btn_VerTodosTickets})
+        Me.ConsultaPreciosContenedor.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_MisTicket, Me.Btn_Configuracion})
         '
         '
         '
@@ -142,29 +129,6 @@ Partial Class Stk_Ticktes
         Me.Btn_MisTicket.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_MisTicket.TitleText = "BakApp"
         '
-        'Btn_TicketAsignados
-        '
-        Me.Btn_TicketAsignados.Image = CType(resources.GetObject("Btn_TicketAsignados.Image"), System.Drawing.Image)
-        Me.Btn_TicketAsignados.ImageIndent = New System.Drawing.Point(8, -6)
-        Me.Btn_TicketAsignados.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
-        Me.Btn_TicketAsignados.Name = "Btn_TicketAsignados"
-        Me.Btn_TicketAsignados.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_TicketAsignados.Text = "<font size=""+4""><b>TICKETS ASIGNADOS</b></font><br/><font size=""-1"">Tickets que e" &
-    "stan asignados a mi nombre</font>"
-        Me.Btn_TicketAsignados.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Yellow
-        Me.Btn_TicketAsignados.TileSize = New System.Drawing.Size(200, 100)
-        '
-        '
-        '
-        Me.Btn_TicketAsignados.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(137, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(163, Byte), Integer))
-        Me.Btn_TicketAsignados.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(137, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(163, Byte), Integer))
-        Me.Btn_TicketAsignados.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(137, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(163, Byte), Integer))
-        Me.Btn_TicketAsignados.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(137, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(163, Byte), Integer))
-        Me.Btn_TicketAsignados.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.Btn_TicketAsignados.TileStyle.TextColor = System.Drawing.Color.White
-        Me.Btn_TicketAsignados.TitleText = "BakApp"
-        Me.Btn_TicketAsignados.Visible = False
-        '
         'Btn_Configuracion
         '
         Me.Btn_Configuracion.Image = CType(resources.GetObject("Btn_Configuracion.Image"), System.Drawing.Image)
@@ -192,33 +156,6 @@ Partial Class Stk_Ticktes
         Me.Btn_Configuracion.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_Configuracion.TitleText = "BakApp"
         '
-        'Btn_VerTodosTickets
-        '
-        Me.Btn_VerTodosTickets.Image = CType(resources.GetObject("Btn_VerTodosTickets.Image"), System.Drawing.Image)
-        Me.Btn_VerTodosTickets.ImageIndent = New System.Drawing.Point(8, -6)
-        Me.Btn_VerTodosTickets.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
-        Me.Btn_VerTodosTickets.Name = "Btn_VerTodosTickets"
-        Me.Btn_VerTodosTickets.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_VerTodosTickets.Text = "<font size=""+4""><b>VER TODOS LOS TICKETS</b></font><br/><font size=""-1"">Mostrar t" &
-    "odos los tickets que hay en el sistema.</font>"
-        Me.Btn_VerTodosTickets.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Teal
-        Me.Btn_VerTodosTickets.TileSize = New System.Drawing.Size(200, 100)
-        '
-        '
-        '
-        Me.Btn_VerTodosTickets.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(200, Byte), Integer), CType(CType(58, Byte), Integer), CType(CType(10, Byte), Integer))
-        Me.Btn_VerTodosTickets.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(200, Byte), Integer), CType(CType(58, Byte), Integer), CType(CType(10, Byte), Integer))
-        Me.Btn_VerTodosTickets.TileStyle.BackColorGradientAngle = 45
-        Me.Btn_VerTodosTickets.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(200, Byte), Integer), CType(CType(58, Byte), Integer), CType(CType(10, Byte), Integer))
-        Me.Btn_VerTodosTickets.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(200, Byte), Integer), CType(CType(58, Byte), Integer), CType(CType(10, Byte), Integer))
-        Me.Btn_VerTodosTickets.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.Btn_VerTodosTickets.TileStyle.PaddingBottom = 4
-        Me.Btn_VerTodosTickets.TileStyle.PaddingLeft = 4
-        Me.Btn_VerTodosTickets.TileStyle.PaddingRight = 4
-        Me.Btn_VerTodosTickets.TileStyle.PaddingTop = 4
-        Me.Btn_VerTodosTickets.TileStyle.TextColor = System.Drawing.Color.White
-        Me.Btn_VerTodosTickets.TitleText = "BakApp"
-        '
         'Stk_Ticktes
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -227,7 +164,7 @@ Partial Class Stk_Ticktes
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.MetroTilePanel1)
         Me.Name = "Stk_Ticktes"
-        Me.Size = New System.Drawing.Size(639, 330)
+        Me.Size = New System.Drawing.Size(448, 228)
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -240,7 +177,4 @@ Partial Class Stk_Ticktes
     Friend WithEvents ConsultaPreciosContenedor As DevComponents.DotNetBar.ItemContainer
     Private WithEvents Btn_MisTicket As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Configuracion As DevComponents.DotNetBar.Metro.MetroTileItem
-    Private WithEvents Btn_TicketAsignados As DevComponents.DotNetBar.Metro.MetroTileItem
-    Friend WithEvents BtnCambiarDeUsuario As DevComponents.DotNetBar.ButtonItem
-    Private WithEvents Btn_VerTodosTickets As DevComponents.DotNetBar.Metro.MetroTileItem
 End Class

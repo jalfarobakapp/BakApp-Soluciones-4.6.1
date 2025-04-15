@@ -584,19 +584,21 @@ Public Class Frm_Facturacion_Masiva
                             _CampoPrecio = "PPPRBR"
                         End If
 
-                        Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Origen & "
-                                            Select *,Case When UDTRPR = 1 Then CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 End As 'Cantidad',
-                                            CAPRCO1-CAPREX1 As 'CantUd1_Dori',CAPRCO2-CAPREX2 As 'CantUd2_Dori',
-                                            Case WHEN UDTRPR = 1 Then " & _CampoPrecio & " Else " & _CampoPrecio & "*RLUDPR End AS 'Precio',
-                                            0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta
-                                            From MAEDDO  With ( NOLOCK ) 
-                                            Where IDMAEEDO = " & _Idmaeedo_Origen & "  AND ( ESLIDO<>'C' OR ESFALI='I' ) AND TICT = ''
-                                            Order by IDMAEEDO,IDMAEDDO 
-                                            Select * From MAEIMLI
-                                            Where IDMAEEDO = " & _Idmaeedo_Origen & " 
-                                            Select * From MAEDTLI
-                                            Where IDMAEEDO = " & _Idmaeedo_Origen & " 
-                                            Select TOP 1 * From MAEEDOOB Where IDMAEEDO = " & _Idmaeedo_Origen
+                        Consulta_sql = "Select Edo.*,Isnull(HabilitadaFac,0) As 'HabilitadaFac',Isnull(Pickear,0) As 'Pickear' From MAEEDO Edo" & vbCrLf &
+                                       "Left Join " & _Global_BaseBk & "Zw_Docu_Ent De On De.Idmaeedo = Edo.IDMAEEDO" & vbCrLf &
+                                       "Where Edo.IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
+                                       "Select *,Case When UDTRPR = 1 Then CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 End As 'Cantidad'," & vbCrLf &
+                                       "CAPRCO1-CAPREX1 As 'CantUd1_Dori',CAPRCO2-CAPREX2 As 'CantUd2_Dori'," & vbCrLf &
+                                       "Case WHEN UDTRPR = 1 Then " & _CampoPrecio & " Else " & _CampoPrecio & "*RLUDPR End AS 'Precio'," & vbCrLf &
+                                       "0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta" & vbCrLf &
+                                       "From MAEDDO  With ( NOLOCK )" & vbCrLf &
+                                       "Where IDMAEEDO = " & _Idmaeedo_Origen & "  AND ( ESLIDO<>'C' OR ESFALI='I' ) AND TICT = ''" & vbCrLf &
+                                       "Order by IDMAEEDO,IDMAEDDO" & vbCrLf &
+                                       "Select * From MAEIMLI" & vbCrLf &
+                                       "Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
+                                       "Select * From MAEDTLI" & vbCrLf &
+                                       "Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
+                                       "Select TOP 1 * From MAEEDOOB Where IDMAEEDO = " & _Idmaeedo_Origen
 
                         'Falta revisar el campo SUBTIDO, ya que al parecer se guardan datos dependiendo del tipo de FCC por ejemplo si tiene derecho a credito fiscal
                         'Falta campo FECHATRIB = Fecha de ingreso

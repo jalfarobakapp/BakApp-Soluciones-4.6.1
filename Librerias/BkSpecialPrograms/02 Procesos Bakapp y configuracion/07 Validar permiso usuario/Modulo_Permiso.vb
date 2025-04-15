@@ -1,6 +1,5 @@
 ﻿Imports DevComponents.DotNetBar
 
-
 Public Module Modulo_Permiso
 
     Public _Rows_Info_Remota As DataRow
@@ -36,8 +35,6 @@ Public Module Modulo_Permiso
 
         If String.IsNullOrEmpty(_Func) Then _Func = FUNCIONARIO
 
-        '_Func = _Func.Trim()
-
         Consulta_Sql = "Select Top 1 * From " & _Global_BaseBk & "ZW_PermisosVsUsuarios Where CodUsuario = '" & _Func & "' AND CodPermiso = '" & _Codpermiso & "'"
         Dim _Row_PermisosVsUsuarios As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
@@ -63,20 +60,11 @@ Public Module Modulo_Permiso
                 End If
             Else
 
-                '_Llave_Scrip = UCase(_Codpermiso & "@" & _Func)
-                '_Llave_Scrip = Encripta_md5(_Llave_Scrip)
-
-                '_Permiso = (_Llave = _Llave_Scrip)
-
-                'If Not _Permiso Then
-
                 MessageBoxEx.Show(_Formulario, "El permiso ha sido manipulado externamente por base de datos." & vbCrLf &
                                   "Informe al administrador del sistema.", "PERMISO DENEGADO",
                                   MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
                 Return False
-
-                'End If
 
             End If
 
@@ -91,6 +79,7 @@ Public Module Modulo_Permiso
             _NombrePermiso = _Row_Permiso.Item("DescripcionPermiso")
 
             If String.IsNullOrEmpty(_Descripcion_Permiso) Then
+
                 Dim _SqlQ As String = Cl_Permiso.Fx_Insertar_Permiso(_Codpermiso, Nothing, Nothing)
                 _Descripcion_Permiso = _NombrePermiso
 
@@ -102,6 +91,7 @@ Public Module Modulo_Permiso
                         _Sql.Ej_consulta_IDU(_SqlQ)
                     End If
                 End If
+
             End If
 
         Else
@@ -122,6 +112,23 @@ Public Module Modulo_Permiso
 
                 Consulta_Sql = "Select top 1 *  From TABFU Where KOFU = '" & _Func & "'"
                 _Rows_Usuario_Autoriza = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+                Dim _Archirst = String.Empty
+                _Grabar_Log = False
+
+                If CBool(_Idmaeedo) Then
+                    _Archirst = "MAEEDO"
+                End If
+
+                If CBool(_Idmaeedo) Or Not String.IsNullOrWhiteSpace(_CodEntidad) Then
+                    _Grabar_Log = True
+                End If
+
+                If _Grabar_Log Then
+                    _Id_Log_Gestion = Fx_Add_Log_Gestion(_Func, Modalidad, _Archirst, _Idmaeedo, "", _NombrePermiso,
+                                                         _Codpermiso, "", _CodEntidad, _CodSucEntidad,
+                                                         True, _Rows_Usuario_Autoriza.Item("KOFU"))
+                End If
 
             Else
 
@@ -215,11 +222,35 @@ Public Module Modulo_Permiso
 
                         _Rows_Usuario_Autoriza = Fm.Pro_Rows_Usuario_Autoriza
 
+                    End If
+
+                    If Not IsNothing(_Rows_Usuario_Autoriza) Then
+
+                        Dim _Archirst = String.Empty
+
+                        If CBool(_Idmaeedo) Then
+                            _Archirst = "MAEEDO"
+                        End If
+
+                        Dim _Id_Rem = 0
+                        Dim _NroRemota = String.Empty
+                        Dim _PermisoRemoto = False
+
+                        If Not IsNothing(_Rows_Info_Remota) Then
+                            _PermisoRemoto = True
+                            _Id_Rem = _Rows_Info_Remota.Item("Id_Rem")
+                            _NroRemota = _Rows_Info_Remota.Item("NroRemota")
+                        End If
+
                         If _Grabar_Log Then
-                            _Id_Log_Gestion = Fx_Add_Log_Gestion(_Func, Modalidad, "", 0, "", _NombrePermiso, _Codpermiso, "", "", "", True, _Rows_Usuario_Autoriza.Item("KOFU"))
+                            _Id_Log_Gestion = Fx_Add_Log_Gestion(_Func, Modalidad, _Archirst, _Idmaeedo, "", _NombrePermiso,
+                                                                 _Codpermiso, "", _CodEntidad, _CodSucEntidad,
+                                                                 True, _Rows_Usuario_Autoriza.Item("KOFU"),
+                                                                 _PermisoRemoto, _Id_Rem, _NroRemota)
                         End If
 
                     End If
+
 
                 End If
 
@@ -237,198 +268,17 @@ Public Module Modulo_Permiso
 
     End Function
 
+    Public Function Fx_TienePermiso_EnDoc(_Formulario As Form,
+                                          _Codpermiso As String,
+                                          _Idmaeedo As Integer,
+                                          Optional _MostraPermiso As Boolean = True,
+                                          Optional _Grabar_Log As Boolean = True) As Boolean
+        Return Fx_Tiene_Permiso(_Formulario, _Codpermiso,, _MostraPermiso,,,,,,,,,,,, _Grabar_Log,,, _Idmaeedo)
+    End Function
     Enum Enum_Archirst
         Maeedo
         Maeddo
     End Enum
-
-    Public Function Fx_Tiene_Permiso2(_Formulario As Form,
-                                      _Codpermiso As String,
-                                      _Archirst As Enum_Archirst,
-                                      _Idrst As Integer,
-                                      _Permiso_Presencial As Boolean,
-                                      Optional _Func As String = "",
-                                      Optional ByRef _Rows_Usuario_Autoriza As DataRow = Nothing,
-                                      Optional _Grabar_Log As Boolean = True) As Boolean
-
-        Dim _Permiso As Boolean = False
-        _Rows_Info_Remota = Nothing
-
-        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
-        Dim Consulta_Sql As String
-
-        If String.IsNullOrEmpty(_Func) Then _Func = FUNCIONARIO
-
-        _Func = _Func.Trim()
-
-        Consulta_Sql = "Select Top 1 * From " & _Global_BaseBk & "ZW_PermisosVsUsuarios Where CodUsuario = '" & _Func & "' AND CodPermiso = '" & _Codpermiso & "'"
-        Dim _Row_PermisosVsUsuarios As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
-
-        If Not IsNothing(_Row_PermisosVsUsuarios) Then
-
-            Dim _Llave = _Row_PermisosVsUsuarios.Item("Llave")
-
-            Dim _Llave_Scrip1 As String = UCase(_Codpermiso.Trim & "@" & _Func.Trim)
-            Dim _Llave_Scrip2 As String = UCase(_Codpermiso & "@" & _Func)
-            Dim _Llave_Scrip3 As String = UCase(_Codpermiso.Trim & "@" & _Func)
-            Dim _Llave_Scrip4 As String = UCase(_Codpermiso & "@" & _Func.Trim)
-
-            _Llave_Scrip1 = Encripta_md5(_Llave_Scrip1)
-            _Llave_Scrip2 = Encripta_md5(_Llave_Scrip2)
-            _Llave_Scrip3 = Encripta_md5(_Llave_Scrip3)
-            _Llave_Scrip4 = Encripta_md5(_Llave_Scrip4)
-
-            _Permiso = (_Llave = _Llave_Scrip1 Or _Llave = _Llave_Scrip2 Or _Llave = _Llave_Scrip3 Or _Llave = _Llave_Scrip4)
-
-            If Not _Permiso Then
-
-                '_Llave_Scrip = UCase(_Codpermiso & "@" & _Func)
-                '_Llave_Scrip = Encripta_md5(_Llave_Scrip)
-
-                '_Permiso = (_Llave = _Llave_Scrip)
-
-                'If Not _Permiso Then
-
-                MessageBoxEx.Show(_Formulario, "El permiso ha sido manipulado externamente por base de datos." & vbCrLf &
-                                  "Informe al administrador del sistema.", "PERMISO DENEGADO",
-                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
-
-                Return False
-
-                'End If
-
-            End If
-
-        End If
-
-        Dim Cl_Permiso As New Class_Permiso_BakApp
-        Dim _Row_Permiso As DataRow = Cl_Permiso.Fx_Row_Traer_Permiso_Sistema(_Codpermiso)
-        Dim _NombrePermiso As String
-        Dim _Descripcion_Permiso As String
-
-        If Not IsNothing(_Row_Permiso) Then
-
-            _NombrePermiso = _Row_Permiso.Item("DescripcionPermiso")
-
-            If String.IsNullOrEmpty(_Descripcion_Permiso) Then
-                Dim _SqlQ As String = Cl_Permiso.Fx_Insertar_Permiso(_Codpermiso, Nothing, Nothing)
-                _Descripcion_Permiso = _NombrePermiso
-
-                If Not String.IsNullOrEmpty(_SqlQ) Then
-
-                    Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "ZW_Permisos", "CodPermiso = '" & _Codpermiso & "'"))
-
-                    If IsNothing(_Row_Permiso) Or Not _Reg Then
-                        _Sql.Ej_consulta_IDU(_SqlQ)
-                    End If
-                End If
-            End If
-
-        Else
-
-            MessageBoxEx.Show(_Formulario, "No existe este permiso Código: " & _Codpermiso, "Falta este permiso en Bakapp",
-                              MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, _Formulario.TopMost)
-            _Permiso = False
-            Return _Permiso
-
-        End If
-
-        Dim _Crear_Doc As New Clase_Crear_Documento
-        Dim _Id_DocEnc As Integer
-
-        If _Permiso Then
-
-            Consulta_Sql = "Select top 1 *  From TABFU Where KOFU = '" & _Func & "'"
-            _Rows_Usuario_Autoriza = _Sql.Fx_Get_DataRow(Consulta_Sql)
-
-        Else
-
-            'If Not _Solicitar_permiso_y_no_esperar Then Beep()
-
-            Cl_Permiso.Sb_Existe_Permiso_En_BakApp(_Codpermiso)
-
-
-            If String.IsNullOrEmpty(_Descripcion_Permiso) Then
-                _Descripcion_Permiso = _NombrePermiso
-            End If
-
-            Dim _CodEntidad = String.Empty
-            Dim _CodSucEntidad = String.Empty
-
-            Dim _Tabla As String
-            Dim _Campo As String
-
-            Select Case _Archirst
-                Case Enum_Archirst.Maeedo
-                    _Tabla = "MAEEDO" : _Campo = "IDMAEEDO"
-                Case Enum_Archirst.Maeddo
-                    _Tabla = "MAEDDO" : _Campo = "IDMAEDDO"
-                Case Else
-                    _Tabla = String.Empty : _Campo = String.Empty
-            End Select
-
-            If Not String.IsNullOrEmpty(_Tabla) Then
-                _CodEntidad = _Sql.Fx_Trae_Dato(_Tabla, "ENDO", _Campo = _Idrst)
-                _CodSucEntidad = _Sql.Fx_Trae_Dato(_Tabla, "SUENDO", _Campo = _Idrst)
-            End If
-
-            Dim _NombreUsuario As String = _Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & _Func & "'")
-
-            Dim Fm As New Frm_ValidarPermisoUsuario(_CodEntidad, _CodSucEntidad)
-
-            Fm.ShowInTaskbar = False
-            Fm.Pro_Cod_Permiso = _Codpermiso
-            Fm.Pro_Nombre_Permiso = _Descripcion_Permiso
-            Fm.Text = "Permiso de usuario: " & _NombreUsuario
-            Fm.Pro_Funcionario = _Func
-            Fm.Btn_Autorizar_Permiso.Visible = True
-            Fm.Btn_Permiso_Remoto.Visible = True
-            Fm.BtnOtorgarPermisoPermanente.Visible = True
-            Fm.Pro_Solicitar_permiso_y_esperar = True
-            Fm.Pro_Solicitar_permiso_y_no_esperar = True
-            Fm.TopMost = _Formulario.TopMost
-            Fm.Id_DocEnc = _Id_DocEnc
-            Fm.ShowDialog(_Formulario)
-
-            _Permiso_Presencial = Fm.Pro_Permiso_Presencial
-
-            _Permiso = Fm.Pro_Permiso_Aceptado
-
-            '_Solicitar_permiso_y_esperar = Fm.Pro_Solicitar_permiso_y_esperar
-            '_Solicitar_permiso_y_no_esperar = Fm.Pro_Solicitar_permiso_y_no_esperar
-
-            _Rows_Info_Remota = Fm.Pro_Rows_Info_Remota
-
-            If _Permiso Then
-
-                If (Fm.Pro_Rows_Usuario_Autoriza Is Nothing) Then
-
-                    Consulta_Sql = "Select top 1 *  From TABFU Where KOFU = '" & _Func & "'"
-                    _Rows_Usuario_Autoriza = _Sql.Fx_Get_DataRow(Consulta_Sql)
-
-                Else
-
-                    _Rows_Usuario_Autoriza = Fm.Pro_Rows_Usuario_Autoriza
-
-                    If _Grabar_Log Then
-                        Fx_Add_Log_Gestion(_Func, Modalidad, "", 0, "", _NombrePermiso, _Codpermiso, "", "", "", True, _Rows_Usuario_Autoriza.Item("KOFU"))
-                    End If
-
-                End If
-
-            End If
-
-            Fm.Dispose()
-
-            If CBool(_Id_DocEnc) Then
-                Fx_Eliminar_Kasidoc_BakApp(_Id_DocEnc, "", False)
-            End If
-
-        End If
-
-        Return _Permiso
-
-    End Function
 
     Public Function Fx_Tiene_Permiso(_CodPermiso As String, _Kofu As String) As Boolean
 

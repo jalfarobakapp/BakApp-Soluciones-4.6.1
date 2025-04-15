@@ -320,8 +320,8 @@ Public Class Class_Fabricar
 
                         _Orden_Potpr = _Row_Potpr.Item("ORDEN")
 
-                        Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Pdp_MesonVsProductos 
-                                                Where Codmeson = '" & _Codmeson & "' And Idpotpr = " & _Idpotpr & " And Estado <> 'RP'"
+                        Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Pdp_MesonVsProductos" & vbCrLf &
+                                       "Where Codmeson = '" & _Codmeson & "' And Idpotpr = " & _Idpotpr & " And Estado <> 'RP'"
                         _Row_Next_Operacion = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
                     End If

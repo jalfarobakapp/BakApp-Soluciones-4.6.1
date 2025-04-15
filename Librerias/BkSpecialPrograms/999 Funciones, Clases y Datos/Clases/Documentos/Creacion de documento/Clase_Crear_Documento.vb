@@ -1955,13 +1955,13 @@ Public Class Clase_Crear_Documento
 
                 If _Tido = "NVV" Then
 
-                    _Pickear = Convert.ToInt32(_Global_Row_Configuracion_General.Item("Pickear_NVVTodas"))
+                    _Pickear = Convert.ToInt32(_Row_Encabezado.Item("Pickear")) 'Convert.ToInt32(_Global_Row_Configuracion_General.Item("Pickear_NVVTodas"))
 
-                    If CBool(_Pickear) AndAlso
-                        Convert.ToInt32(_Global_Row_Configuracion_General.Item("Pickear_ProdPesoVariable")) AndAlso
-                        Not CBool(_Items_RtuVariable) Then
-                        _Pickear = 0
-                    End If
+                    'If CBool(_Pickear) AndAlso
+                    '    Convert.ToInt32(_Global_Row_Configuracion_General.Item("Pickear_ProdPesoVariable")) AndAlso
+                    '    Not CBool(_Items_RtuVariable) Then
+                    '    _Pickear = 0
+                    'End If
 
                 End If
 
@@ -2040,6 +2040,8 @@ Public Class Clase_Crear_Documento
             _Mensaje.Mensaje = "Ok"
             _Mensaje.EsCorrecto = True
             _Mensaje.Icono = MessageBoxIcon.Information
+
+            'Fx_Add_Log_Gestion(_Kofudo, Modalidad, "MAEEDO", _Idmaeedo, "", "CreaDocumento", "", "", "", "", False, "")
 
             'Return _Idmaeedo
 
@@ -3031,6 +3033,7 @@ Public Class Clase_Crear_Documento
         Dim _CodTipoVenta As String
 
         Dim _Customizable As Integer
+        Dim _Pickear As Integer
 
         Dim myTrans As SqlClient.SqlTransaction
         Dim Comando As SqlClient.SqlCommand
@@ -3169,6 +3172,7 @@ Public Class Clase_Crear_Documento
                 _CodTipoVenta = .Item("CodTipoVenta").ToString
 
                 _Customizable = Convert.ToInt32(.Item("Customizable"))
+                _Pickear = Convert.ToInt32(.Item("Pickear"))
 
             End With
 
@@ -3645,6 +3649,7 @@ Public Class Clase_Crear_Documento
                            ",TblTipoVenta = '" & _TblTipoVenta & "'" & Environment.NewLine &
                            ",CodTipoVenta = '" & _CodTipoVenta & "'" & Environment.NewLine &
                            ",Customizable = '" & _Customizable & "'" & Environment.NewLine &
+                           ",Pickear = '" & _Pickear & "'" & Environment.NewLine &
                            "Where Id_DocEnc = " & _Id_DocEnc
 
             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)

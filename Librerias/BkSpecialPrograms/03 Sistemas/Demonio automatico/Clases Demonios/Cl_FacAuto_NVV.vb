@@ -362,7 +362,7 @@
                     If _Sql.Fx_Existe_Tabla("[@WMS_GATEWAY_TRANSFERENCIA]") Then
 
                         Consulta_Sql = "Select Top 1 * From [@WMS_GATEWAY_TRANSFERENCIA] Where IDMAEEDO = " & _Idmaeedo
-                        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+                        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
 
                         If Not IsNothing(_Row) Then
                             Consulta_Sql = "Update [@WMS_GATEWAY_TRANSFERENCIA] Set UPLOAD = 3 Where IDMAEEDO = " & _Idmaeedo
@@ -592,7 +592,7 @@
 
             If _Mensaje.EsCorrecto Then
 
-                Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set Pagada = 1"
+                Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set Pagada = 1 Where Id = " & _Id
                 _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
                 If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
@@ -601,7 +601,7 @@
 
             Else
 
-                _Mensaje.Mensaje = Replace(_Mensaje.Mensaje, "'", "''")
+                _Mensaje.Mensaje = Replace(_Mensaje.Mensaje, " '", "''")
                 Log_Registro += _Mensaje.Mensaje & vbCrLf
                 Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set " &
                                ",PagarAuto = 0" &

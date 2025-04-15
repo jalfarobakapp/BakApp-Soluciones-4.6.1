@@ -26,7 +26,8 @@ Public Class Frm_Crear_Entidad_Mt
 
     Dim _Existe_Tbl_Entidades_Bakapp As Boolean
 
-    Public Property Cl_Maeen As New Tablas_Entidades.Maeen
+    Public Property Cl_Maeen_Ori As New Tablas_Entidades.Maeen
+    Public Property Cl_Maeen_Edit As New Tablas_Entidades.Maeen
     Public Property Zw_Entidades As New Zw_Entidades
 
 
@@ -214,7 +215,6 @@ Public Class Frm_Crear_Entidad_Mt
 
         Chk_RevFincred.Visible = _Global_Row_Configuracion_General.Item("Fincred_Usar")
         Btn_Modificar_RevCredFincred.Visible = _Global_Row_Configuracion_General.Item("Fincred_Usar")
-
 
     End Sub
 
@@ -571,17 +571,17 @@ Public Class Frm_Crear_Entidad_Mt
                 Return
             End If
 
-            If IsNothing(Cl_Maeen.PAEN) Then Cl_Maeen.PAEN = String.Empty
-            If IsNothing(Cl_Maeen.CIEN) Then Cl_Maeen.CIEN = String.Empty
-            If IsNothing(Cl_Maeen.CMEN) Then Cl_Maeen.CMEN = String.Empty
+            If IsNothing(Cl_Maeen_Edit.PAEN) Then Cl_Maeen_Edit.PAEN = String.Empty
+            If IsNothing(Cl_Maeen_Edit.CIEN) Then Cl_Maeen_Edit.CIEN = String.Empty
+            If IsNothing(Cl_Maeen_Edit.CMEN) Then Cl_Maeen_Edit.CMEN = String.Empty
 
-            If String.IsNullOrEmpty(Cl_Maeen.PAEN.Trim) Or String.IsNullOrEmpty(Cl_Maeen.CIEN) Or String.IsNullOrEmpty(Cl_Maeen.CMEN.Trim) Then
+            If String.IsNullOrEmpty(Cl_Maeen_Edit.PAEN.Trim) Or String.IsNullOrEmpty(Cl_Maeen_Edit.CIEN) Or String.IsNullOrEmpty(Cl_Maeen_Edit.CMEN.Trim) Then
                 MessageBoxEx.Show("Faltan pais, ciudad o comuna", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 TabControl1.SelectedTabIndex = 0
                 Call Btn_Buscar_Comuna_Click(Nothing, Nothing)
             End If
 
-            If String.IsNullOrEmpty(Cl_Maeen.PAEN.Trim) Or String.IsNullOrEmpty(Cl_Maeen.CIEN.Trim) Or String.IsNullOrEmpty(Cl_Maeen.CMEN.Trim) Then Return
+            If String.IsNullOrEmpty(Cl_Maeen_Edit.PAEN.Trim) Or String.IsNullOrEmpty(Cl_Maeen_Edit.CIEN.Trim) Or String.IsNullOrEmpty(Cl_Maeen_Edit.CMEN.Trim) Then Return
 
         End If
 
@@ -754,7 +754,101 @@ Public Class Frm_Crear_Entidad_Mt
 
             End If
 
-            Dim Zona = Cmb_Zoen.SelectedValue
+            'Dim Zona = Cmb_Zoen.SelectedValue
+
+            With Cl_Maeen_Edit
+                .KOEN = Txt_Koen.Text
+                .TIEN = UCase(Trim(Cmb_Tiposuc.SelectedValue))
+                .RTEN = UCase(Trim(numero_(Rut(0), 8)))
+                .SUEN = Txt_Suen.Text
+                .TIPOSUC = TipoSuc
+                .NOKOEN = UCase(Trim(Txt_Nokoen.Text))
+                .SIEN = UCase(Trim(Txt_Sien.Text))
+                .GIEN = UCase(Trim(Txt_Gien.Text))
+                .EMAIL = Txt_Email.Text.Trim
+                .EMAILCOMER = Txt_Emailcomer.Text.Trim
+                .DIEN = UCase(Trim(Txt_Dien.Text)).Trim
+                .ZOEN = Cmb_Zoen.SelectedValue
+                .FOEN = UCase(Trim(Txt_Foen.Text)).Trim
+                .FAEN = UCase(Trim(Txt_Faen.Text)).Trim
+                .CPOSTAL = Txt_Cpostal.Text.Trim
+                .NOKOENAMP = Txt_Nokoenamp.Text
+                .KOFUEN = Cmb_Kofuen.SelectedValue
+                .COBRADOR = Cmb_Cobrador.SelectedValue
+                .LCEN = "TABPP" & Cmb_Lcen.SelectedValue
+                .LVEN = "TABPP" & Cmb_Lven.SelectedValue
+                .RUEN = Cmb_Ruen.SelectedValue
+                .TIPOEN = Cmb_Tien.SelectedValue
+                .TAMAEN = Cmb_Tamaen.SelectedValue
+                .TRANSPOEN = Cmb_Transpoen.SelectedValue
+                .OBEN = UCase(Trim(TxtxObservacionesDoc.Text))
+                .CRTO = Txt_Crto.Tag
+                .CRSD = Txt_Crsd.Tag
+                .CRCH = Txt_Crch.Tag
+                .CRLT = Txt_Crlt.Tag
+                .CRPA = Txt_Crpa.Tag
+                .NUVECR = Txt_Nuvecre.Tag
+                .DIPRVE = Txt_Dipreve.Tag
+                .DIASVENCI = Txt_Diasvenci.Tag
+                .DIMOPER = Txt_Dimoper.Tag
+
+                .FEULTR = Now.Date
+
+                If Dtp_Fecreen.Value = #1/1/0001 12:00:00 AM# Then
+                    .FECREEN = Nothing
+                Else
+                    .FECREEN = Dtp_Fecreen.Value
+                End If
+
+                If Dtp_Fevecren.Value = #1/1/0001 12:00:00 AM# Then
+                    .FEVECREN = Nothing
+                Else
+                    .FEVECREN = Dtp_Fevecren.Value
+                End If
+
+                .CPEN = Txt_Cpen.Text.ToUpper.Trim
+                .NVVPIDEPIE = Chk_Nvvpidepie.Checked
+                .POPICR = Txt_Popicr.Tag
+                .BLOQUEADO = Chk_Bloqueado.Checked
+                .BLOQENCOM = Chk_Bloqencom.Checked
+                .PREFEN = Chk_Prefen.Checked
+                .NOTRAEDEUD = Chk_Notraedeud.Checked
+                .OCCOBLI = Chk_Occobli.Checked
+                .FEREFAUTO = Chk_Ferefauto.Checked
+                .MOCTAEN = CmbxMoneda.SelectedValue
+                .DIACOBRA = Fx_DiaCobra()
+                .CUENTABCO = Txt_Cuentabco.Text
+                .KOENDPEN = Txt_Koendpen.Text
+                .SUENDPEN = Txt_Suendpen.Text
+                .ACTECOBCO = Txt_Actecobco.Text
+                .RUTALUN = Input_Rutalun.Value
+                .RUTAMAR = Input_Rutamar.Value
+                .RUTAMIE = Input_Rutamie.Value
+                .RUTAJUE = Input_Rutajue.Value
+                .RUTAVIE = Input_Rutavie.Value
+                .RUTASAB = Input_Rutasab.Value
+                .RUTADOM = Input_Rutadom.Value
+                .RECEPELECT = Chk_Recepelect.Checked
+
+                If Dtp_Fecnacen.Value = #1/1/0001 12:00:00 AM# Then
+                    .FECNACEN = Nothing
+                Else
+                    .FECNACEN = Dtp_Fecnacen.Value
+                End If
+
+                .ESTCIVEN = Cmb_Estciven.SelectedValue
+                .SEXOEN = Cmb_Sexoen.SelectedValue
+                .RELACIEN = Cmb_Relacien.SelectedValue
+                .RUTCONEN = Txt_Rutconen.Text
+                .RUTSOCEN = Rutsocen.Text
+                .ANEXEN1 = Txt_Anexen1.Text
+                .ANEXEN2 = Txt_Anexen2.Text
+                .ANEXEN3 = Txt_Anexen3.Text
+            End With
+
+            Dim _ListCamposModificados As New List(Of String)
+
+            _ListCamposModificados = Fx_ObtenerCamposModificados_Maeen()
 
             Consulta_sql = BkSpecialPrograms.RecursosEnt.Actualiza_Entidad_MAEEN
 
@@ -768,14 +862,13 @@ Public Class Frm_Crear_Entidad_Mt
             Consulta_sql = Replace(Consulta_sql, "#GIEN#", UCase(Trim(Txt_Gien.Text)))
             Consulta_sql = Replace(Consulta_sql, "#EMAIL#", Txt_Email.Text)
             Consulta_sql = Replace(Consulta_sql, "#EMAILCOMER#", Txt_Emailcomer.Text)
-            Consulta_sql = Replace(Consulta_sql, "#PAEN#", Cl_Maeen.PAEN)
-            Consulta_sql = Replace(Consulta_sql, "#CIEN#", Cl_Maeen.CIEN)
-            Consulta_sql = Replace(Consulta_sql, "#CMEN#", Cl_Maeen.CMEN)
+            Consulta_sql = Replace(Consulta_sql, "#PAEN#", Cl_Maeen_Edit.PAEN)
+            Consulta_sql = Replace(Consulta_sql, "#CIEN#", Cl_Maeen_Edit.CIEN)
+            Consulta_sql = Replace(Consulta_sql, "#CMEN#", Cl_Maeen_Edit.CMEN)
             Consulta_sql = Replace(Consulta_sql, "#DIEN#", UCase(Trim(Txt_Dien.Text)))
-            Consulta_sql = Replace(Consulta_sql, "#ZOEN#", Zona)
+            Consulta_sql = Replace(Consulta_sql, "#ZOEN#", Cl_Maeen_Edit.ZOEN)
             Consulta_sql = Replace(Consulta_sql, "#FOEN#", UCase(Trim(Txt_Foen.Text)))
             Consulta_sql = Replace(Consulta_sql, "#FAEN#", UCase(Trim(Txt_Faen.Text)))
-            Consulta_sql = Replace(Consulta_sql, "#FOEN#", UCase(Trim(Txt_Foen.Text)))
             Consulta_sql = Replace(Consulta_sql, "#CPOSTAL#", Txt_Cpostal.Text)
             Consulta_sql = Replace(Consulta_sql, "#NOKOENAMP#", Txt_Nokoenamp.Text)
             Consulta_sql = Replace(Consulta_sql, "#KOFUEN#", Cmb_Kofuen.SelectedValue)
@@ -815,6 +908,7 @@ Public Class Frm_Crear_Entidad_Mt
                 _Fevecren = "'" & Format(Dtp_Fevecren.Value, "yyyyMMdd") & "'"
             End If
 
+
             Consulta_sql = Replace(Consulta_sql, "'#FEVECREN#'", _Fevecren)
 
             Consulta_sql = Replace(Consulta_sql, "#CPEN#", UCase(Trim(Txt_Cpen.Text)))
@@ -834,7 +928,7 @@ Public Class Frm_Crear_Entidad_Mt
             Consulta_sql = Replace(Consulta_sql, "#MOCTAEN#", CmbxMoneda.SelectedValue)
 
             Dim _Dia_Cobra As String = Fx_DiaCobra()
-            'Cl_Maeen.Diacobra = Fx_DiaCobra()
+
             Consulta_sql = Replace(Consulta_sql, "#DIACOBRA#", _Dia_Cobra)
 
             '--CUENTABCO =  Nro Cta Cte  (20)
@@ -1075,6 +1169,16 @@ Public Class Frm_Crear_Entidad_Mt
             myTrans.Commit()
             SQL_ServerClass.Sb_Cerrar_Conexion(cn2)
 
+            If CrearEntidad Then
+                Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "", 0, "CreaEntidad", "Codigo: " & Txt_Koen.Text, "", "", Txt_Koen.Text.Trim, Txt_Suen.Text.Trim, False, FUNCIONARIO, False, 0, "")
+                Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "", 0, "CreaEntidad", "Sucursal: " & Txt_Suen.Text, "", "", Txt_Koen.Text.Trim, Txt_Suen.Text.Trim, False, FUNCIONARIO, False, 0, "")
+                Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "", 0, "CreaEntidad", "Rut: " & Txt_Rten.Text, "", "", Txt_Koen.Text.Trim, Txt_Suen.Text.Trim, False, FUNCIONARIO, False, 0, "")
+            Else
+                For Each _Log As String In _ListCamposModificados
+                    Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "", 0, "ModEntidad", _Log, "", "", Txt_Koen.Text.Trim, Txt_Suen.Text.Trim, False, FUNCIONARIO, False, 0, "")
+                Next
+            End If
+
             _Grabar = True
             Me.Close()
 
@@ -1086,6 +1190,51 @@ Public Class Frm_Crear_Entidad_Mt
         End Try
 
     End Sub
+
+
+    Private Function Fx_ObtenerCamposModificados_Maeen() As List(Of String)
+
+        Dim _CamposModificados As New List(Of String)
+
+        Dim _Propiedades = GetType(Tablas_Entidades.Maeen).GetProperties()
+
+        For Each _Propiedad In _Propiedades
+
+            Dim _ValorOriginal = _Propiedad.GetValue(Cl_Maeen_Ori)
+            Dim _ValorEditado = _Propiedad.GetValue(Cl_Maeen_Edit)
+
+            ' Si la propiedad es de tipo String, aplicar Trim() para eliminar espacios al final
+            If TypeOf _ValorOriginal Is String Then
+                _ValorOriginal = _ValorOriginal.ToString().Trim()
+            End If
+
+            If TypeOf _ValorEditado Is String Then
+                _ValorEditado = _ValorEditado.ToString().Trim()
+            End If
+
+            ' Si la propiedad es de tipo Date, asignar #1/1/0001 12:00:00 AM# si es Nothing o nulo
+            If TypeOf _ValorOriginal Is Date Then
+                _ValorOriginal = If(_ValorOriginal Is Nothing, #1/1/0001 12:00:00 AM#, _ValorOriginal)
+            End If
+
+            If TypeOf _ValorEditado Is Date Then
+                _ValorEditado = If(_ValorEditado Is Nothing, #1/1/0001 12:00:00 AM#, _ValorEditado)
+            End If
+
+            ' Si ambos valores son #1/1/0001 12:00:00 AM#, se consideran iguales y no se agregan como modificados
+            If TypeOf _ValorOriginal Is Date AndAlso TypeOf _ValorEditado Is Date Then
+                If _ValorOriginal = #1/1/0001 12:00:00 AM# AndAlso _ValorEditado = #1/1/0001 12:00:00 AM# Then
+                    Continue For
+                End If
+            End If
+
+            If Not Object.Equals(_ValorOriginal, _ValorEditado) Then
+                _CamposModificados.Add($"Campo: {_Propiedad.Name}, Original: {_ValorOriginal}, Modificado: {_ValorEditado}")
+            End If
+        Next
+
+        Return _CamposModificados
+    End Function
 
     Function Fx_DiaCobra() As String
 
@@ -1209,7 +1358,7 @@ Public Class Frm_Crear_Entidad_Mt
 
         If EditarEntidad Then
 
-            _Rut = Cl_Maeen.RTEN.Trim & "-" & RutDigito(Cl_Maeen.RTEN.Trim) '_RowEntidad.Item("RTEN").ToString.Trim & "-" & RutDigito(_RowEntidad.Item("RTEN").ToString.Trim)
+            _Rut = Cl_Maeen_Ori.RTEN.Trim & "-" & RutDigito(Cl_Maeen_Ori.RTEN.Trim) '_RowEntidad.Item("RTEN").ToString.Trim & "-" & RutDigito(_RowEntidad.Item("RTEN").ToString.Trim)
 
             If _Rut = Txt_Rten.Text Then
                 Return
@@ -1354,23 +1503,25 @@ Public Class Frm_Crear_Entidad_Mt
 
             Dim _Cl_Entidad As New Cl_Entidades
 
-            Cl_Maeen = _Cl_Entidad.Fx_Llenar_Maeen(_Koen, _Suen)
+            Cl_Maeen_Ori = _Cl_Entidad.Fx_Llenar_Maeen(_Koen, _Suen)
 
-            If IsNothing(Cl_Maeen) Then
+            If IsNothing(Cl_Maeen_Ori) Then
                 MessageBoxEx.Show(Me, "Entidad no existe", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return False
             End If
 
-            With Cl_Maeen
+            Cl_Maeen_Edit = _Cl_Entidad.Fx_Llenar_Maeen(_Koen, _Suen)
+
+            With Cl_Maeen_Ori
 
                 Txt_Koen.Text = _Koen
                 Txt_Suen.Text = _Suen
-                TipoSuc = .TIPOSUC ' _RowEntidad.Item("TIPOSUC")
+                TipoSuc = .TIPOSUC
 
                 Try
-                    Txt_Rten.Text = .RTEN.ToString.Trim & "-" & RutDigito(.RTEN).ToString.Trim ' Trim(_RowEntidad.Item("RTEN")) & "-" & Trim(RutDigito(_RowEntidad.Item("RTEN")))
+                    Txt_Rten.Text = .RTEN.ToString.Trim & "-" & RutDigito(.RTEN).ToString.Trim
                 Catch ex As Exception
-                    Txt_Rten.Text = .RTEN.ToString.Trim 'Trim(_RowEntidad.Item("RTEN")) '& "-" & Trim(RutDigito(_RowEntidad.Item("RTEN")))
+                    Txt_Rten.Text = .RTEN.ToString.Trim
                 End Try
 
                 Cmb_Tiposuc.SelectedValue = .TIEN
@@ -1413,30 +1564,30 @@ Public Class Frm_Crear_Entidad_Mt
 
                 Btn_Buscar_Comuna.Text = "Cambiar comuna..."
 
-                Cmb_Zoen.SelectedValue = .ZOEN.Trim ' Trim(_RowEntidad.Item("ZOEN"))
-                Txt_Nokoenamp.Text = .NOKOENAMP.Trim ' Trim(_RowEntidad.Item("NOKOENAMP"))
-                Cmb_Kofuen.SelectedValue = .KOFUEN.Trim ' Trim(_RowEntidad.Item("KOFUEN"))
-                Cmb_Cobrador.SelectedValue = .COBRADOR.Trim ' Trim(_RowEntidad.Item("COBRADOR"))
+                Cmb_Zoen.SelectedValue = .ZOEN.Trim
+                Txt_Nokoenamp.Text = .NOKOENAMP.Trim
+                Cmb_Kofuen.SelectedValue = .KOFUEN.Trim
+                Cmb_Cobrador.SelectedValue = .COBRADOR.Trim
 
-                Dim _Lcen As String = .LCEN.Replace("TABPP", "") 'Replace(Trim(_RowEntidad.Item("LCEN")), "TABPP", "")
-                Dim _Lven As String = .LVEN.Replace("TABPP", "") 'Replace(Trim(_RowEntidad.Item("LVEN")), "TABPP", "")
+                Dim _Lcen As String = .LCEN.Replace("TABPP", "")
+                Dim _Lven As String = .LVEN.Replace("TABPP", "")
 
                 Cmb_Lcen.SelectedValue = Trim(_Lcen)
                 Cmb_Lven.SelectedValue = Trim(_Lven)
 
 
-                Cmb_Ruen.SelectedValue = .RUEN.Trim ' Trim(_RowEntidad.Item("RUEN"))
-                Cmb_Tien.SelectedValue = .TIPOEN.Trim ' Trim(_RowEntidad.Item("TIPOEN"))
-                Cmb_Actien.SelectedValue = .ACTIEN.Trim ' Trim(_RowEntidad.Item("ACTIEN"))
-                Cmb_Tamaen.SelectedValue = .TAMAEN.Trim ' Trim(_RowEntidad.Item("TAMAEN"))
-                Cmb_Transpoen.SelectedValue = .TRANSPOEN.Trim ' Trim(_RowEntidad.Item("TRANSPOEN"))
-                TxtxObservacionesDoc.Text = .OBEN.Trim ' Trim(_RowEntidad.Item("OBEN"))
+                Cmb_Ruen.SelectedValue = .RUEN.Trim
+                Cmb_Tien.SelectedValue = .TIPOEN.Trim
+                Cmb_Actien.SelectedValue = .ACTIEN.Trim
+                Cmb_Tamaen.SelectedValue = .TAMAEN.Trim
+                Cmb_Transpoen.SelectedValue = .TRANSPOEN.Trim
+                TxtxObservacionesDoc.Text = .OBEN.Trim
 
-                Txt_Crto.Tag = .CRTO ' _RowEntidad.Item("CRTO")
-                Txt_Crsd.Tag = .CRSD ' _RowEntidad.Item("CRSD")
-                Txt_Crch.Tag = .CRCH ' _RowEntidad.Item("CRCH")
-                Txt_Crlt.Tag = .CRLT ' _RowEntidad.Item("CRLT")
-                Txt_Crpa.Tag = .CRPA ' _RowEntidad.Item("CRPA")
+                Txt_Crto.Tag = .CRTO
+                Txt_Crsd.Tag = .CRSD
+                Txt_Crch.Tag = .CRCH
+                Txt_Crlt.Tag = .CRLT
+                Txt_Crpa.Tag = .CRPA
 
                 Txt_Crto.Text = FormatNumber(Txt_Crto.Tag, 0)
                 Txt_Crsd.Text = FormatNumber(Txt_Crsd.Tag, 0)
@@ -1444,39 +1595,39 @@ Public Class Frm_Crear_Entidad_Mt
                 Txt_Crlt.Text = FormatNumber(Txt_Crlt.Tag, 0)
                 Txt_Crpa.Text = FormatNumber(Txt_Crpa.Tag, 0)
 
-                Txt_Nuvecre.Tag = .NUVECR '_RowEntidad.Item("NUVECR")
-                Txt_Dipreve.Tag = .DIPRVE ' _RowEntidad.Item("DIPRVE")
-                Txt_Diasvenci.Tag = .DIASVENCI ' NuloPorNro(_RowEntidad.Item("DIASVENCI"), 0) 'NuloPorNro(_RowEntidad.Item("DIASVENCI"), 0)
-                Txt_Dimoper.Tag = .DIMOPER ' _RowEntidad.Item("DIMOPER")
+                Txt_Nuvecre.Tag = .NUVECR
+                Txt_Dipreve.Tag = .DIPRVE
+                Txt_Diasvenci.Tag = .DIASVENCI
+                Txt_Dimoper.Tag = .DIMOPER
 
                 Txt_Nuvecre.Text = FormatNumber(Txt_Nuvecre.Tag, 0)
                 Txt_Dipreve.Text = FormatNumber(Txt_Dipreve.Tag, 0)
                 Txt_Diasvenci.Text = FormatNumber(Txt_Diasvenci.Tag, 0)
                 Txt_Dimoper.Text = FormatNumber(Txt_Dimoper.Tag, 0)
 
-                Dtp_Fecreen.Value = NuloPorNro(.FECREEN, Now.Date) 'NuloPorNro(_RowEntidad.Item("FECREEN"), Now.Date)
-                Dtp_Fevecren.Value = NuloPorNro(.FEVECREN, #01-01-0001#) 'NuloPorNro(_RowEntidad.Item("FEVECREN"), Nothing)
+                Dtp_Fecreen.Value = NuloPorNro(.FECREEN, Now.Date)
+                Dtp_Fevecren.Value = NuloPorNro(.FEVECREN, #01-01-0001#)
 
-                Txt_Cpen.Text = .CPEN.Trim 'Trim(_RowEntidad.Item("CPEN"))
+                Txt_Cpen.Text = .CPEN.Trim
 
-                Chk_Bloqueado.Checked = .BLOQUEADO ' _RowEntidad.Item("BLOQUEADO")
-                Chk_Bloqencom.Checked = .BLOQENCOM ' _RowEntidad.Item("BLOQENCOM")
-                CmbxMoneda.SelectedValue = .MOCTAEN ' _RowEntidad.Item("MOCTAEN")
+                Chk_Bloqueado.Checked = .BLOQUEADO
+                Chk_Bloqencom.Checked = .BLOQENCOM
+                CmbxMoneda.SelectedValue = .MOCTAEN
 
-                Chk_Recepelect.Checked = .RECEPELECT ' _RowEntidad.Item("RECEPELECT")
-                Chk_Ferefauto.Checked = .FEREFAUTO ' _RowEntidad.Item("FEREFAUTO")
-                Chk_Notraedeud.Checked = .NOTRAEDEUD ' _RowEntidad.Item("NOTRAEDEUD")
-                Chk_Prefen.Checked = .PREFEN ' _RowEntidad.Item("PREFEN")
-                Chk_Occobli.Checked = .OCCOBLI ' _RowEntidad.Item("OCCOBLI")
+                Chk_Recepelect.Checked = .RECEPELECT
+                Chk_Ferefauto.Checked = .FEREFAUTO
+                Chk_Notraedeud.Checked = .NOTRAEDEUD
+                Chk_Prefen.Checked = .PREFEN
+                Chk_Occobli.Checked = .OCCOBLI
 
-                Chk_Nvvpidepie.Checked = .NVVPIDEPIE ' _RowEntidad.Item("NVVPIDEPIE")
+                Chk_Nvvpidepie.Checked = .NVVPIDEPIE
 
-                Txt_Popicr.Tag = .POPICR ' _RowEntidad.Item("POPICR")
+                Txt_Popicr.Tag = .POPICR
                 Txt_Popicr.Text = FormatNumber(Txt_Popicr.Tag, 0)
 
                 '-- DIACOBRA CON EXISTE EN LA TABLA MAEEN
 
-                Dim _DiaCobra As String = .DIACOBRA ' 'NuloPorNro(_RowEntidad.Item("DIACOBRA"), "")
+                Dim _DiaCobra As String = .DIACOBRA ' 
 
                 If Mid(_DiaCobra, 1, 1) = "X" Then Chk_Lunes.Checked = True
                 If Mid(_DiaCobra, 2, 1) = "X" Then Chk_Martes.Checked = True
@@ -1486,39 +1637,36 @@ Public Class Frm_Crear_Entidad_Mt
                 If Mid(_DiaCobra, 6, 1) = "X" Then Chk_Sabado.Checked = True
                 If Mid(_DiaCobra, 7, 1) = "X" Then Chk_Domingo.Checked = True
 
-                Txt_Cuentabco.Text = .CUENTABCO.Trim ' _RowEntidad.Item("CUENTABCO").ToString.Trim             '--CUENTABCO =  Nro Cta Cte  (20)
-                Txt_Koendpen.Text = .KOENDPEN.Trim ' _RowEntidad.Item("KOENDPEN").ToString.Trim           '--KOENDPEN  =  Código del banco (13)
-                Txt_Suendpen.Text = .SUENDPEN.Trim ' _RowEntidad.Item("SUENDPEN").ToString.Trim         '--SUENDPEN  =  Plaza o sucursal bancaria (3)
-                Txt_Actecobco.Text = .ACTECOBCO.Trim ' _RowEntidad.Item("ACTECOBCO").ToString.Trim  '--ACTECOBCO =  Código de actividad economica   (10)
+                Txt_Cuentabco.Text = .CUENTABCO.Trim
+                Txt_Koendpen.Text = .KOENDPEN.Trim
+                Txt_Suendpen.Text = .SUENDPEN.Trim
+                Txt_Actecobco.Text = .ACTECOBCO.Trim
 
-                Txt_Nacionen.Text = .NACIONEN.Trim ' _RowEntidad.Item("NACIONEN").ToString.Trim
-                Txt_Profecen.Text = .PROFECEN.Trim ' _RowEntidad.Item("PROFECEN").ToString.Trim
-                Txt_Dirparen.Text = .DIRPAREN.Trim ' _RowEntidad.Item("DIRPAREN").ToString.Trim
-                Dtp_Fecnacen.Value = NuloPorNro(Cl_Maeen.FECNACEN, #01-01-0001#) ' NuloPorNro(_RowEntidad.Item("FECNACEN"), Nothing)
-                Cmb_Estciven.SelectedValue = .ESTCIVEN ' _RowEntidad.Item("ESTCIVEN")
-                Cmb_Sexoen.SelectedValue = .SEXOEN ' _RowEntidad.Item("SEXOEN")
-                Cmb_Relacien.SelectedValue = .RELACIEN ' _RowEntidad.Item("RELACIEN")
-                Txt_Conyugen.Text = .CONYUGEN ' _RowEntidad.Item("CONYUGEN").ToString.Trim
-                Txt_Rutconen.Text = .RUTCONEN.Trim ' _RowEntidad.Item("RUTCONEN").ToString.Trim
-                Rutsocen.Text = .RUTSOCEN.Trim ' _RowEntidad.Item("RUTSOCEN").ToString.Trim
-                Txt_Anexen1.Text = .ANEXEN1.Trim ' _RowEntidad.Item("ANEXEN1").ToString.Trim
-                Txt_Anexen2.Text = .ANEXEN2.Trim ' _RowEntidad.Item("ANEXEN2").ToString.Trim
-                Txt_Anexen3.Text = .ANEXEN3.Trim ' _RowEntidad.Item("ANEXEN3").ToString.Trim
+                Txt_Nacionen.Text = .NACIONEN.Trim
+                Txt_Profecen.Text = .PROFECEN.Trim
+                Txt_Dirparen.Text = .DIRPAREN.Trim
+                Dtp_Fecnacen.Value = NuloPorNro(Cl_Maeen_Ori.FECNACEN, #01-01-0001#)
+                Cmb_Estciven.SelectedValue = .ESTCIVEN
+                Cmb_Sexoen.SelectedValue = .SEXOEN
+                Cmb_Relacien.SelectedValue = .RELACIEN
+                Txt_Conyugen.Text = .CONYUGEN
+                Txt_Rutconen.Text = .RUTCONEN.Trim
+                Rutsocen.Text = .RUTSOCEN.Trim
+                Txt_Anexen1.Text = .ANEXEN1.Trim
+                Txt_Anexen2.Text = .ANEXEN2.Trim
+                Txt_Anexen3.Text = .ANEXEN3.Trim
 
-                Input_Rutalun.Value = .RUTALUN ' NuloPorNro(_RowEntidad.Item("RUTALUN"), 0)
-                Input_Rutamar.Value = .RUTAMAR ' NuloPorNro(_RowEntidad.Item("RUTAMAR"), 0)
-                Input_Rutamie.Value = .RUTAMIE ' NuloPorNro(_RowEntidad.Item("RUTAMIE"), 0)
-                Input_Rutajue.Value = .RUTAJUE ' NuloPorNro(_RowEntidad.Item("RUTAJUE"), 0)
-                Input_Rutavie.Value = .RUTAVIE ' NuloPorNro(_RowEntidad.Item("RUTAVIE"), 0)
-                Input_Rutasab.Value = .RUTASAB ' NuloPorNro(_RowEntidad.Item("RUTASAB"), 0)
-                Input_Rutadom.Value = .RUTADOM ' NuloPorNro(_RowEntidad.Item("RUTADOM"), 0)
+                Input_Rutalun.Value = .RUTALUN
+                Input_Rutamar.Value = .RUTAMAR
+                Input_Rutamie.Value = .RUTAMIE
+                Input_Rutajue.Value = .RUTAJUE
+                Input_Rutavie.Value = .RUTAVIE
+                Input_Rutasab.Value = .RUTASAB
+                Input_Rutadom.Value = .RUTADOM
 
             End With
 
             If _Existe_Tbl_Entidades_Bakapp Then
-
-                'Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Entidades where CodEntidad = '" & _Koen & "' And CodSucEntidad = '" & _Suen & "'"
-                'Dim _Row_Entidades As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                 Zw_Entidades = _Cl_Entidad.Fx_Llenar_Zw_Entidades(_Koen, _Suen)
 
@@ -1533,21 +1681,21 @@ Public Class Frm_Crear_Entidad_Mt
 
                 With Zw_Entidades
 
-                    Chk_Libera_NVV.Checked = .Libera_NVV ' _Row_Entidades.Item("Libera_NVV")
-                    Chk_FacAuto.Checked = .FacAuto ' _Row_Entidades.Item("FacAuto")
-                    Chk_RevFincred.Checked = .RevFincred ' _Row_Entidades.Item("RevFincred")
+                    Chk_Libera_NVV.Checked = .Libera_NVV
+                    Chk_FacAuto.Checked = .FacAuto
+                    Chk_RevFincred.Checked = .RevFincred
 
                     If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Entidades", "EmailCompras") Then
-                        Txt_EmailCompras.Text = .EmailCompras ' _Row_Entidades.Item("EmailCompras")
+                        Txt_EmailCompras.Text = .EmailCompras
                     Else
                         Label31.Visible = False
                         Txt_EmailCompras.Visible = False
                     End If
 
-                    Txt_MontoMinCompra.Tag = .MontoMinCompra ' _Row_Entidades.Item("MontoMinCompra")
+                    Txt_MontoMinCompra.Tag = .MontoMinCompra
                     Txt_MontoMinCompra.Text = FormatNumber(Txt_MontoMinCompra.Tag, 0)
 
-                    Chk_NoResMtoMinComAsCompraAuto.Checked = .NoResMtoMinComAsCompraAuto ' _Row_Entidades.Item("NoResMtoMinComAsCompraAuto")
+                    Chk_NoResMtoMinComAsCompraAuto.Checked = .NoResMtoMinComAsCompraAuto
 
                     Txt_CodHolding.Tag = .CodHolding
                     Txt_CodHolding.Text = .CodHolding
@@ -1900,7 +2048,7 @@ Public Class Frm_Crear_Entidad_Mt
 
     Private Sub Btn_Anotaciones_a_la_entidad_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Anotaciones_a_la_entidad.Click
 
-        Dim _Idmaeen As Integer = Cl_Maeen.IDMAEEN ' _RowEntidad.Item("IDMAEEN")
+        Dim _Idmaeen As Integer = Cl_Maeen_Ori.IDMAEEN ' _RowEntidad.Item("IDMAEEN")
 
         Dim Fm As New Frm_Anotaciones_Ver_Anotaciones(_Idmaeen, Frm_Anotaciones_Ver_Anotaciones.Tipo_Tabla.MAEEN)
         Fm.ShowDialog(Me)
@@ -2226,9 +2374,9 @@ Public Class Frm_Crear_Entidad_Mt
 
         If Not IsNothing(Fm.Row_Localidad) Then
 
-            Cl_Maeen.PAEN = Fm.Row_Localidad.Item("KOPA")
-            Cl_Maeen.CIEN = Fm.Row_Localidad.Item("KOCI")
-            Cl_Maeen.CMEN = Fm.Row_Localidad.Item("KOCM")
+            Cl_Maeen_Edit.PAEN = Fm.Row_Localidad.Item("KOPA")
+            Cl_Maeen_Edit.CIEN = Fm.Row_Localidad.Item("KOCI")
+            Cl_Maeen_Edit.CMEN = Fm.Row_Localidad.Item("KOCM")
 
             Dim _NPais = Fm.Row_Localidad.Item("NOKOPA")
             Dim _NCiudad = Fm.Row_Localidad.Item("NOKOCI")

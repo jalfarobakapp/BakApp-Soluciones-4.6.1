@@ -174,14 +174,9 @@ Partial Class Frm_Formulario_Documento
         Me.Btn_Mini_Buscar_CodAlternativo_Grilla = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mini_Sol_Compra = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mini_Refrescar_Stock_X_Linea = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Mini_Info_Producto_Grilla = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Mini_Kardex_Producto_Grilla = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mini_Cambiar_Bodega = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mini_Bodega_Para_Todos = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Mini_Observaciones_Linea = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Mini_Imagen_Sol_Bodega = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mini_Sol_Crear_Producto = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Mini_Anotaciones_a_la_linea = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mini_Consolidar_Stock = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mini_Recargar_Producto = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mini_Clonar_Producto = New DevComponents.DotNetBar.ButtonItem()
@@ -246,6 +241,7 @@ Partial Class Frm_Formulario_Documento
         Me.Imagenes_32x32 = New System.Windows.Forms.ImageList(Me.components)
         Me.Btn_Desbloquear_Visado = New DevComponents.DotNetBar.ButtonX()
         Me.Warning_Visado = New DevComponents.DotNetBar.Controls.WarningBox()
+        Me.Chk_Pickear = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel5.SuspendLayout()
         Me.GroupPanel7.SuspendLayout()
@@ -1780,7 +1776,7 @@ Partial Class Frm_Formulario_Documento
         Me.Barra_Herramientas_Producto.AntiAlias = True
         Me.Barra_Herramientas_Producto.BackColor = System.Drawing.Color.Transparent
         Me.Barra_Herramientas_Producto.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Barra_Herramientas_Producto.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mini_Buscar_Producto_Grilla, Me.Btn_Mini_Sol_Compra, Me.Btn_Mini_Refrescar_Stock_X_Linea, Me.Btn_Mini_Info_Producto_Grilla, Me.Btn_Mini_Kardex_Producto_Grilla, Me.Btn_Mini_Cambiar_Bodega, Me.Btn_Mini_Bodega_Para_Todos, Me.Btn_Mini_Observaciones_Linea, Me.Btn_Mini_Imagen_Sol_Bodega, Me.Btn_Mini_Sol_Crear_Producto, Me.Btn_Mini_Anotaciones_a_la_linea, Me.Btn_Mini_Consolidar_Stock, Me.Btn_Mini_Recargar_Producto, Me.Btn_Mini_Clonar_Producto, Me.Btn_DecimalAgregar, Me.Btn_DecimalRestar, Me.Lbl_NroDecimales, Me.Btn_Mini_Ver_Costo_Lista, Me.Lbl_Costo_Lista, Me.Lbl_TipoVenta, Me.Btn_CambiarTipoVenta})
+        Me.Barra_Herramientas_Producto.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mini_Buscar_Producto_Grilla, Me.Btn_Mini_Sol_Compra, Me.Btn_Mini_Refrescar_Stock_X_Linea, Me.Btn_Mini_Cambiar_Bodega, Me.Btn_Mini_Bodega_Para_Todos, Me.Btn_Mini_Sol_Crear_Producto, Me.Btn_Mini_Consolidar_Stock, Me.Btn_Mini_Recargar_Producto, Me.Btn_Mini_Clonar_Producto, Me.Btn_DecimalAgregar, Me.Btn_DecimalRestar, Me.Lbl_NroDecimales, Me.Btn_Mini_Ver_Costo_Lista, Me.Lbl_Costo_Lista, Me.Lbl_TipoVenta, Me.Btn_CambiarTipoVenta})
         Me.Barra_Herramientas_Producto.Location = New System.Drawing.Point(0, 210)
         Me.Barra_Herramientas_Producto.Name = "Barra_Herramientas_Producto"
         Me.Barra_Herramientas_Producto.Size = New System.Drawing.Size(909, 25)
@@ -1826,20 +1822,6 @@ Partial Class Frm_Formulario_Documento
         Me.Btn_Mini_Refrescar_Stock_X_Linea.Name = "Btn_Mini_Refrescar_Stock_X_Linea"
         Me.Btn_Mini_Refrescar_Stock_X_Linea.Tooltip = "Actualizar stock x línea"
         '
-        'Btn_Mini_Info_Producto_Grilla
-        '
-        Me.Btn_Mini_Info_Producto_Grilla.Image = CType(resources.GetObject("Btn_Mini_Info_Producto_Grilla.Image"), System.Drawing.Image)
-        Me.Btn_Mini_Info_Producto_Grilla.ImageAlt = CType(resources.GetObject("Btn_Mini_Info_Producto_Grilla.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mini_Info_Producto_Grilla.Name = "Btn_Mini_Info_Producto_Grilla"
-        Me.Btn_Mini_Info_Producto_Grilla.Tooltip = "Ver estadísticas del producto (Información adicional)"
-        '
-        'Btn_Mini_Kardex_Producto_Grilla
-        '
-        Me.Btn_Mini_Kardex_Producto_Grilla.Image = CType(resources.GetObject("Btn_Mini_Kardex_Producto_Grilla.Image"), System.Drawing.Image)
-        Me.Btn_Mini_Kardex_Producto_Grilla.ImageAlt = CType(resources.GetObject("Btn_Mini_Kardex_Producto_Grilla.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mini_Kardex_Producto_Grilla.Name = "Btn_Mini_Kardex_Producto_Grilla"
-        Me.Btn_Mini_Kardex_Producto_Grilla.Tooltip = "Ver Stock del producto"
-        '
         'Btn_Mini_Cambiar_Bodega
         '
         Me.Btn_Mini_Cambiar_Bodega.Image = CType(resources.GetObject("Btn_Mini_Cambiar_Bodega.Image"), System.Drawing.Image)
@@ -1854,20 +1836,6 @@ Partial Class Frm_Formulario_Documento
         Me.Btn_Mini_Bodega_Para_Todos.Name = "Btn_Mini_Bodega_Para_Todos"
         Me.Btn_Mini_Bodega_Para_Todos.Tooltip = "Cambiar bodega para todas las lineas del documento."
         '
-        'Btn_Mini_Observaciones_Linea
-        '
-        Me.Btn_Mini_Observaciones_Linea.Image = CType(resources.GetObject("Btn_Mini_Observaciones_Linea.Image"), System.Drawing.Image)
-        Me.Btn_Mini_Observaciones_Linea.ImageAlt = CType(resources.GetObject("Btn_Mini_Observaciones_Linea.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mini_Observaciones_Linea.Name = "Btn_Mini_Observaciones_Linea"
-        Me.Btn_Mini_Observaciones_Linea.Tooltip = "Observaciones a la línea del detalle"
-        '
-        'Btn_Mini_Imagen_Sol_Bodega
-        '
-        Me.Btn_Mini_Imagen_Sol_Bodega.Image = CType(resources.GetObject("Btn_Mini_Imagen_Sol_Bodega.Image"), System.Drawing.Image)
-        Me.Btn_Mini_Imagen_Sol_Bodega.ImageAlt = CType(resources.GetObject("Btn_Mini_Imagen_Sol_Bodega.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mini_Imagen_Sol_Bodega.Name = "Btn_Mini_Imagen_Sol_Bodega"
-        Me.Btn_Mini_Imagen_Sol_Bodega.Tooltip = "Imagen del producto (Solicitar producto a bodega)"
-        '
         'Btn_Mini_Sol_Crear_Producto
         '
         Me.Btn_Mini_Sol_Crear_Producto.Image = CType(resources.GetObject("Btn_Mini_Sol_Crear_Producto.Image"), System.Drawing.Image)
@@ -1875,13 +1843,6 @@ Partial Class Frm_Formulario_Documento
         Me.Btn_Mini_Sol_Crear_Producto.Name = "Btn_Mini_Sol_Crear_Producto"
         Me.Btn_Mini_Sol_Crear_Producto.Text = "Solicitar producto a comprar (Stock / Venta Calzada)"
         Me.Btn_Mini_Sol_Crear_Producto.Visible = False
-        '
-        'Btn_Mini_Anotaciones_a_la_linea
-        '
-        Me.Btn_Mini_Anotaciones_a_la_linea.Image = CType(resources.GetObject("Btn_Mini_Anotaciones_a_la_linea.Image"), System.Drawing.Image)
-        Me.Btn_Mini_Anotaciones_a_la_linea.ImageAlt = CType(resources.GetObject("Btn_Mini_Anotaciones_a_la_linea.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mini_Anotaciones_a_la_linea.Name = "Btn_Mini_Anotaciones_a_la_linea"
-        Me.Btn_Mini_Anotaciones_a_la_linea.Tooltip = "Anotaciones, eventos o links asociados a la línea del documento"
         '
         'Btn_Mini_Consolidar_Stock
         '
@@ -2736,12 +2697,32 @@ Partial Class Frm_Formulario_Documento
         Me.Warning_Visado.Text = "<b>  Doc. Visado</b> Existen permisos asociados"
         Me.Warning_Visado.Visible = False
         '
+        'Chk_Pickear
+        '
+        Me.Chk_Pickear.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Pickear.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Pickear.BackgroundStyle.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Far
+        Me.Chk_Pickear.CheckBoxImageChecked = CType(resources.GetObject("Chk_Pickear.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Pickear.FocusCuesEnabled = False
+        Me.Chk_Pickear.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Chk_Pickear.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Pickear.Location = New System.Drawing.Point(793, 421)
+        Me.Chk_Pickear.Name = "Chk_Pickear"
+        Me.Chk_Pickear.Size = New System.Drawing.Size(139, 17)
+        Me.Chk_Pickear.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Pickear.TabIndex = 145
+        Me.Chk_Pickear.Text = "Pickear documento"
+        '
         'Frm_Formulario_Documento
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(934, 599)
+        Me.Controls.Add(Me.Chk_Pickear)
         Me.Controls.Add(Me.Panel_Documento)
         Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.Btn_Desbloquear_Visado)
@@ -2766,6 +2747,7 @@ Partial Class Frm_Formulario_Documento
         Me.Controls.Add(Me.Chk_Conservar_Bodega_Sig_Linea_Venta)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
@@ -2835,8 +2817,6 @@ Partial Class Frm_Formulario_Documento
     Friend WithEvents Btn_Mini_Buscar_Producto_Grilla As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mini_Buscar_CodPrincipal_Grilla As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mini_Buscar_CodAlternativo_Grilla As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_Mini_Info_Producto_Grilla As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_Mini_Kardex_Producto_Grilla As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Grilla_Detalle As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents LblDescripcion As DevComponents.DotNetBar.LabelX
     Friend WithEvents Radio3 As DevComponents.DotNetBar.Command
@@ -2917,7 +2897,6 @@ Partial Class Frm_Formulario_Documento
     Friend WithEvents Btn_Sol_Compra As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mini_Sol_Crear_Producto As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Desbloquear_Visado As DevComponents.DotNetBar.ButtonX
-    Friend WithEvents Btn_Mini_Observaciones_Linea As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Timer_Crear_Doc_Desde_Otro As Timer
     Friend WithEvents Timer_Solo_Ver_Documento_Casi_Bakapp As Timer
     Public WithEvents Btn_Anotaciones_al_documento As DevComponents.DotNetBar.ButtonItem
@@ -2961,8 +2940,6 @@ Partial Class Frm_Formulario_Documento
     Friend WithEvents Btn_Config_Impresora_Diablito As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mini_Cambiar_Bodega As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mini_Bodega_Para_Todos As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_Mini_Imagen_Sol_Bodega As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_Mini_Anotaciones_a_la_linea As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mini_Consolidar_Stock As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mini_Recargar_Producto As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mini_Clonar_Producto As DevComponents.DotNetBar.ButtonItem
@@ -3009,4 +2986,5 @@ Partial Class Frm_Formulario_Documento
     Friend WithEvents Btn_Contenedor_Asociar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Contenedor_Ver As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Contenedor_Quitar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Chk_Pickear As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

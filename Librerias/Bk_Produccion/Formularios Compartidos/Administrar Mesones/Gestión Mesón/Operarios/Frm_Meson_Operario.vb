@@ -19,6 +19,7 @@ Public Class Frm_Meson_Operario
     Dim _Cerrar_automaticamente As Boolean
 
     Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+    Dim _MesonAbierto As String
 
     Public Property Pro_Cerrar_automaticamente As Boolean
         Get
@@ -158,9 +159,10 @@ Public Class Frm_Meson_Operario
 
     Sub Sb_Actualizar_Cmb_Mesones()
 
-        Consulta_sql = "Select Tabla1.Codmeson As Padre, Tabla1.Nommeson As Hijo" & vbCrLf &
+        Consulta_sql = "Select Tabla1.Codmeson As Padre, Tabla1.Nommeson As Hijo,Tabla1.*,Isnull(NOMBREOB,'') As Nombreob " & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Pdc_Mesones as Tabla1" & vbTab &
                        "Inner Join " & _Global_BaseBk & "[Zw_Pdc_MesonVsOperario] as Tabla2 ON Tabla2.Codmeson=Tabla1.Codmeson" & vbCrLf &
+                       "Left Join PMAEOB On CODIGOOB = Codigoob_Abierto" & vbCrLf &
                        "Where Activo = 1 AND Codigoob = '" & _Codigoob & "'" & vbCrLf &
                        "Order by Nommeson"
 
@@ -211,7 +213,16 @@ Public Class Frm_Meson_Operario
                         Order By Orden_Meson"
 
 
+        Dim Fm_Espera As New Frm_Form_Esperar
+        Fm_Espera.BarraCircular.IsRunning = True
+        Fm_Espera.Show()
+
+        Me.Cursor = Cursors.WaitCursor
+
         Dim _Tbl_Productos_En_Meson As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+        Fm_Espera.Dispose()
+        Me.Cursor = Cursors.Default
 
         With Grilla_Productos_En_Meson
 
@@ -3301,7 +3312,9 @@ Public Class Frm_Meson_Operario
                             Left Join PMAEOB On CODIGOOB = Codigoob_Abierto
                         Where Codmeson  = '" & _CodMeson & "'"
 
-        Dim _Row_Meson As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+        Dim _Row_Meson As DataRow = _Tbl_Mesones.AsEnumerable().FirstOrDefault(Function(row) row.Field(Of String)("Padre") = _CodMeson)
+
+        'Dim _Row_Meson As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Dim _Abierto As Boolean = _Row_Meson.Item("Abierto")
         Dim _NombreEquipo_Abierto As String = _Row_Meson.Item("NombreEquipo_Abierto")
@@ -3327,6 +3340,14 @@ Public Class Frm_Meson_Operario
             Next
 
             Txt_Stx_Etx.Text = String.Empty
+
+            Dim _FlMs As DataGridViewRow = Grilla_Productos_En_Meson.CurrentRow
+            Dim _Numot As String = _FlMs.Cells("Numot").Value
+
+            Sb_Actualizar_Grilla_Mesones_Espera(_CodMeson)
+            Sb_Actualizar_Grilla_Maquinas(_CodMeson)
+
+            BuscarDatoEnGrilla(_Numot, "Numot", Grilla_Productos_En_Meson)
 
             Return False
 

@@ -1,6 +1,7 @@
 ﻿Imports System.Drawing.Printing
 Imports System.IO
 Imports DevComponents.DotNetBar
+Imports MySql.Data.Authentication
 Imports PdfSharp
 Imports PdfSharp.Drawing
 Imports PdfSharp.Drawing.Layout
@@ -527,10 +528,10 @@ Public Class Frm_Ver_Documento
 
         Me.Cursor = Cursors.Default
 
-        VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00021",, False)
+        VerSoloEntidadesDelVendedor = Fx_TienePermiso_EnDoc(Me, "NO00021", _Idmaeedo, False)
 
         If Not VerSoloEntidadesDelVendedor Then
-            VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00022",, False)
+            VerSoloEntidadesDelVendedor = Fx_TienePermiso_EnDoc(Me, "NO00022", _Idmaeedo, False)
         End If
 
         If Not String.IsNullOrEmpty(_Codigo_Marcar) Then
@@ -559,6 +560,9 @@ Public Class Frm_Ver_Documento
                 End If
 
             End If
+
+            Chk_Pickear.Visible = _Tido = "NVV"
+            Chk_Pickear.Checked = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "Pickear", "Idmaeedo = " & _Idmaeedo)
 
             _Cl_Contenedor.Zw_Contenedor = _Cl_Contenedor.Fx_Llenar_Contenedor(_Idmaeedo, _Tido, _Nudo)
 
@@ -1625,9 +1629,8 @@ Public Class Frm_Ver_Documento
 
             End If
 
+            Dim _NoPuedeVer As Boolean = Fx_TienePermiso_EnDoc(Me, "NO00001", _Idmaeedo, False, False)
 
-
-            Dim _NoPuedeVer As Boolean = Fx_Tiene_Permiso(Me, "NO00001",, False) 'Fx_Tiene_Permiso(Me, "NO00001", , True)
             Dim _Tido As String = GrillaEncabezado.Rows(0).Cells("TIDO").Value
 
             Dim _Venta As Boolean
@@ -2060,9 +2063,7 @@ Public Class Frm_Ver_Documento
 
             End If
 
-
-
-            Dim _NoPuedeVer As Boolean = Fx_Tiene_Permiso(Me, "NO00001",, False) 'Fx_Tiene_Permiso(Me, "NO00001", , True)
+            Dim _NoPuedeVer As Boolean = Fx_TienePermiso_EnDoc(Me, "NO00001", _Idmaeedo, False, False)
             Dim _Tido As String = GrillaEncabezado.Rows(0).Cells("TipoDoc").Value
 
             Dim _Venta As Boolean
@@ -2212,18 +2213,20 @@ Public Class Frm_Ver_Documento
 
                 If Not _RowEncabezado.Item("TIDOELEC") AndAlso _RowEncabezado.Item("TIDO") = "FCC" Then
 
-                    If Fx_Tiene_Permiso(Me, "Doc00093") Then
-
-                        If MessageBoxEx.Show(Me, "¿Confirma dejar el documento como electrónico?", "Cambiar LIBRO",
+                    If MessageBoxEx.Show(Me, "¿Confirma dejar el documento como electrónico?", "Cambiar LIBRO",
                                          MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
-                            Consulta_sql = "Update MAEEDO Set TIDOELEC = 1 Where IDMAEEDO = " & _Idmaeedo
-                            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-                                _TblEncabezado.Rows(0).Item("TIDOELEC") = True
-                                _TblEncabezado.Rows(0).Item("ELECTRONICO") = "Si"
-                                MessageBoxEx.Show(Me, "El documento ahora es electrónico", "Información",
-                                                  MessageBoxButtons.OK, MessageBoxIcon.Information)
-                            End If
+                        If Fx_TienePermiso_EnDoc(Me, "Doc00093", _Idmaeedo) Then
+                            Return
+                        End If
+
+                        Consulta_sql = "Update MAEEDO Set TIDOELEC = 1 Where IDMAEEDO = " & _Idmaeedo
+
+                        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+                            _TblEncabezado.Rows(0).Item("TIDOELEC") = True
+                            _TblEncabezado.Rows(0).Item("ELECTRONICO") = "Si"
+                            MessageBoxEx.Show(Me, "El documento ahora es electrónico", "Información",
+                                              MessageBoxButtons.OK, MessageBoxIcon.Information)
                         End If
 
                     End If
@@ -2243,16 +2246,21 @@ Public Class Frm_Ver_Documento
                     If MessageBoxEx.Show(Me, "¿Desea cambiar el correlativo del libro de compras?", "Cambiar LIBRO",
                                          MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
-                        If Fx_Tiene_Permiso(Me, "Doc00065") Then
+                        If Not Fx_TienePermiso_EnDoc(Me, "Doc00065", _Idmaeedo) Then
+                            Return
+                        End If
 
-                            Dim _Aceptar As Boolean = InputBox_Bk(Me, "Ingrese el nuevo número del libro", "Cambiar LIBRO", _Libro, False,,, True)
+                        Dim _Aceptar As Boolean = InputBox_Bk(Me, "Ingrese el nuevo número del libro", "Cambiar LIBRO", _Libro, False,,, True)
 
-                            If _Aceptar Then
-                                Consulta_sql = "Update MAEEDO Set LIBRO = '" & _Libro & "' Where IDMAEEDO = " & _Idmaeedo
-                                If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-                                    _TblEncabezado.Rows(0).Item("LIBRO") = _Libro
-                                    MessageBoxEx.Show(Me, "Número de libro cambiado correctamente", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                                End If
+                        If _Aceptar Then
+
+                            Consulta_sql = "Update MAEEDO Set LIBRO = '" & _Libro & "' Where IDMAEEDO = " & _Idmaeedo
+
+                            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+
+                                _TblEncabezado.Rows(0).Item("LIBRO") = _Libro
+                                MessageBoxEx.Show(Me, "Número de libro cambiado correctamente", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
                             End If
 
                         End If
@@ -2267,7 +2275,7 @@ Public Class Frm_Ver_Documento
 
     Sub Sb_Ver_Entidad()
 
-        If Not Fx_Tiene_Permiso(Me, "CfEnt001") Then
+        If Not Fx_TienePermiso_EnDoc(Me, "CfEnt001", _Idmaeedo) Then
             Return
         End If
 
@@ -2784,9 +2792,8 @@ Public Class Frm_Ver_Documento
 
     Private Sub Btn_Revisar_Situacion_Comercial_Click(sender As Object, e As EventArgs) Handles Btn_Revisar_Situacion_Comercial.Click
 
-        If Not Fx_Tiene_Permiso(Me, "Doc00084") Then Return
+        If Not Fx_TienePermiso_EnDoc(Me, "Doc00084", _Idmaeedo) Then Return
 
-        Dim _Idmaeedo = _TblEncabezado.Rows(0).Item("IDMAEEDO")
         Dim Fm As New Frm_Remotas_Analisi_Dscto_X_Documento_Rd(Cadena_ConexionSQL_Server, Nothing, Nothing,
                                                                Frm_Remotas_Analisi_Dscto_X_Documento_Rd.Enum_Tabla.Maeedo, _Idmaeedo)
         Fm.ShowDialog(Me)
@@ -3011,80 +3018,78 @@ Public Class Frm_Ver_Documento
 
     Sub Sb_Imprimir_Documento(_Tipo_Impresion As Enum_Tipo_Impresion, _NombreFormato As String)
 
-        If Fx_Tiene_Permiso(Me, "Doc00012") Then
+        If Not Fx_TienePermiso_EnDoc(Me, "Doc00012", _Idmaeedo) Then
+            Return
+        End If
 
-            Dim _Tido = _TblEncabezado.Rows(0).Item("TIDO")
-            Dim _Subtido = String.Empty
+        Dim _Tido = _TblEncabezado.Rows(0).Item("TIDO")
+        Dim _Subtido = String.Empty
 
-            If _Tido = "GDD" Or _Tido = "GDP" Then
-                _Subtido = _TblEncabezado.Rows(0).Item("SUBTIDO")
+        If _Tido = "GDD" Or _Tido = "GDP" Then
+            _Subtido = _TblEncabezado.Rows(0).Item("SUBTIDO")
+        End If
+
+        Dim _Vista_Previa As Boolean
+
+        If String.IsNullOrEmpty(_NombreFormato) Then
+
+            If Not Fx_TienePermiso_EnDoc(Me, "Doc00038", _Idmaeedo) Then
+                Return
             End If
 
-            Dim _Vista_Previa As Boolean
+            Dim _Formato_Seleccionado As Boolean
 
-            If String.IsNullOrEmpty(_NombreFormato) Then
+            Dim Fm As New Frm_Seleccionar_Formato(_Tido)
 
-                If Fx_Tiene_Permiso(Me, "Doc00038") Then
+            If CBool(Fm.Tbl_Formatos.Rows.Count) Then
 
-                    Dim _Formato_Seleccionado As Boolean
+                Fm.ShowDialog(Me)
+                _Formato_Seleccionado = Fm.Formato_Seleccionado
+                If Not _Formato_Seleccionado Then Return
+                _Subtido = Fm.Row_Formato_Seleccionado.Item("Subtido").ToString.Trim
+                _NombreFormato = Fm.Row_Formato_Seleccionado.Item("NombreFormato")
+                Fm.Dispose()
 
-                    Dim Fm As New Frm_Seleccionar_Formato(_Tido)
+            End If
 
-                    If CBool(Fm.Tbl_Formatos.Rows.Count) Then
+        End If
 
-                        Fm.ShowDialog(Me)
-                        _Formato_Seleccionado = Fm.Formato_Seleccionado
-                        If Not _Formato_Seleccionado Then Return
-                        _Subtido = Fm.Row_Formato_Seleccionado.Item("Subtido").ToString.Trim
-                        _NombreFormato = Fm.Row_Formato_Seleccionado.Item("NombreFormato")
-                        Fm.Dispose()
 
+        If Not String.IsNullOrEmpty(_NombreFormato) Then
+
+            If _NombreFormato = "" Then
+                _NombreFormato = String.Empty
+            End If
+
+            Dim _Instance As New PrinterSettings
+            Dim _ImpresosaPredt As String = _Instance.PrinterName
+            Dim _Seleccionar_Impresora = True
+
+            Select Case _Tipo_Impresion
+
+                Case Enum_Tipo_Impresion.Imprimir, Enum_Tipo_Impresion.Vista_Previa
+
+                    _Vista_Previa = (_Tipo_Impresion = Enum_Tipo_Impresion.Vista_Previa)
+
+                    Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _Idmaeedo,
+                                                           True, _Seleccionar_Impresora, _ImpresosaPredt, _Vista_Previa, 1, True, _Subtido)
+
+                    If Not String.IsNullOrEmpty(Trim(_Imprime)) Then
+                        MessageBox.Show(Me, _Imprime, "Problemas al Imprimir",
+                           MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     End If
 
-                Else
-                    Return
-                End If
 
-            End If
+                Case Enum_Tipo_Impresion.PDF
 
+                    Fx_Imprimir_En_PDF(_NombreFormato)
 
-            If Not String.IsNullOrEmpty(_NombreFormato) Then
+            End Select
 
-                If _NombreFormato = "" Then
-                    _NombreFormato = String.Empty
-                End If
+        Else
 
-                Dim _Instance As New PrinterSettings
-                Dim _ImpresosaPredt As String = _Instance.PrinterName
-                Dim _Seleccionar_Impresora = True
-
-                Select Case _Tipo_Impresion
-
-                    Case Enum_Tipo_Impresion.Imprimir, Enum_Tipo_Impresion.Vista_Previa
-
-                        _Vista_Previa = (_Tipo_Impresion = Enum_Tipo_Impresion.Vista_Previa)
-
-                        Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _Idmaeedo,
-                                                               True, _Seleccionar_Impresora, _ImpresosaPredt, _Vista_Previa, 1, True, _Subtido)
-
-                        If Not String.IsNullOrEmpty(Trim(_Imprime)) Then
-                            MessageBox.Show(Me, _Imprime, "Problemas al Imprimir",
-                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                        End If
-
-
-                    Case Enum_Tipo_Impresion.PDF
-
-                        Fx_Imprimir_En_PDF(_NombreFormato)
-
-                End Select
-
-            Else
-
-                MessageBoxEx.Show(Me, "No existen formatos de impresión para este documento", "Validación",
-                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
-
-            End If
+            MessageBoxEx.Show(Me, "No existen formatos de impresión para este documento", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
         End If
 
@@ -3147,40 +3152,40 @@ Public Class Frm_Ver_Documento
 
         If _Tidoelec Then
 
-            If Fx_Tiene_Permiso(Me, "Dte00001") Then
+            If Not Fx_TienePermiso_EnDoc(Me, "Dte00001", _Idmaeedo) Then
+                Return
+            End If
 
-                'FIRMA ELECTRONICA 
-                Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
-                Dim _Iddt As Integer = _Class_DTE.Fx_Dte_Genera_Documento(Me, True)
-                Dim _Idpet As Integer
+            'FIRMA ELECTRONICA 
+            Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
+            Dim _Iddt As Integer = _Class_DTE.Fx_Dte_Genera_Documento(Me, True)
+            Dim _Idpet As Integer
 
-                If CBool(_Iddt) Then
-                    _Idpet = _Class_DTE.Fx_Dte_Firma(Me, _Iddt, True)
-                End If
+            If CBool(_Iddt) Then
+                _Idpet = _Class_DTE.Fx_Dte_Firma(Me, _Iddt, True)
+            End If
 
-                If Convert.ToBoolean(_Idpet) Then
-                    MessageBoxEx.Show(Me, "Documento enviado correctamente para su reenvio al SII, falta revisión por RunMonitor", "Reenviar DTE",
-                                      MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, Me.TopMost)
+            If Convert.ToBoolean(_Idpet) Then
+                MessageBoxEx.Show(Me, "Documento enviado correctamente para su reenvio al SII, falta revisión por RunMonitor", "Reenviar DTE",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, Me.TopMost)
+            Else
+
+                If Convert.ToBoolean(_Class_DTE.Pro_Errores.Count) Then
+
+                    Dim _MsgList As String
+
+                    For Each _Msg As String In _Class_DTE.Pro_Errores
+                        _MsgList += _Msg & vbCrLf
+                    Next
+
+                    MessageBoxEx.Show(Me, _MsgList, "Errores", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
                 Else
 
-                    If Convert.ToBoolean(_Class_DTE.Pro_Errores.Count) Then
-
-                        Dim _MsgList As String
-
-                        For Each _Msg As String In _Class_DTE.Pro_Errores
-                            _MsgList += _Msg & vbCrLf
-                        Next
-
-                        MessageBoxEx.Show(Me, _MsgList, "Errores", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-
-                    Else
-
-                        MessageBoxEx.Show(Me, "No fue posible rescatar el IDPET para el RunMonitor" & Environment.NewLine & Environment.NewLine &
-                                      "* Revise si tiene instalado el certificado digital" & Environment.NewLine &
-                                      "* Recuerde que debe ejecutar el sistema en modo administrador", "Reenviar DTE",
-                                      MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
-
-                    End If
+                    MessageBoxEx.Show(Me, "No fue posible rescatar el IDPET para el RunMonitor" & Environment.NewLine & Environment.NewLine &
+                                  "* Revise si tiene instalado el certificado digital" & Environment.NewLine &
+                                  "* Recuerde que debe ejecutar el sistema en modo administrador", "Reenviar DTE",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
 
                 End If
 
@@ -3189,7 +3194,7 @@ Public Class Frm_Ver_Documento
         Else
 
             MessageBoxEx.Show(Me, "Esta acción no esta permitida para este documento",
-                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                          "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
         End If
 
@@ -3247,7 +3252,7 @@ Public Class Frm_Ver_Documento
 
     Private Sub Btn_Mnu_Exportar_XML_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_Exportar_XML.Click
 
-        If Not Fx_Tiene_Permiso(Me, "Doc00025") Then
+        If Not Fx_TienePermiso_EnDoc(Me, "Doc00025", _Idmaeedo) Then
             Return
         End If
 
@@ -3328,45 +3333,52 @@ Public Class Frm_Ver_Documento
 
     Private Sub Btn_Cambiar_Nro_Documento_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cambiar_Nro_Documento.Click
 
-        If Fx_Tiene_Permiso(Me, "Doc00020") Then
+        If Not Fx_TienePermiso_EnDoc(Me, "Doc00020", _Idmaeedo) Then
+            Return
+        End If
 
-            Dim _Tido = _TblEncabezado.Rows(0).Item("TIDO")
-            Dim _Nudo = _TblEncabezado.Rows(0).Item("NUDO")
-            Dim _Endo = _TblEncabezado.Rows(0).Item("ENDO")
-            Dim _Suendo = _TblEncabezado.Rows(0).Item("SUENDO")
-            Dim _Idmaeedo = _TblEncabezado.Rows(0).Item("IDMAEEDO")
-            Dim _Tidoelec = Convert.ToInt32(_TblEncabezado.Rows(0).Item("TIDOELEC"))
+        Dim _Tido = _TblEncabezado.Rows(0).Item("TIDO")
+        Dim _Nudo = _TblEncabezado.Rows(0).Item("NUDO")
+        Dim _Endo = _TblEncabezado.Rows(0).Item("ENDO")
+        Dim _Suendo = _TblEncabezado.Rows(0).Item("SUENDO")
+        'Dim _Idmaeedo = _TblEncabezado.Rows(0).Item("IDMAEEDO")
+        Dim _Tidoelec = Convert.ToInt32(_TblEncabezado.Rows(0).Item("TIDOELEC"))
 
-            Dim _Aceptado As Boolean
+        Dim _Aceptado As Boolean
 
-            _Aceptado = InputBox_Bk(Me, "Ingrese nuevo número de documento",
-                                                    "Cambio de folio", _Nudo,
-                                                    False, _Tipo_Mayus_Minus.Normal, 10, True,
-                                                    _Tipo_Imagen.Texto, False,
-                                                    _Tipo_Caracter.Cualquier_caracter, False)
+        _Aceptado = InputBox_Bk(Me, "Ingrese nuevo número de documento",
+                                "Cambio de folio", _Nudo,
+                                False, _Tipo_Mayus_Minus.Normal, 10, True,
+                                _Tipo_Imagen.Texto, False,
+                                _Tipo_Caracter.Cualquier_caracter, False)
 
-            _Nudo = Fx_Rellena_ceros(_Nudo, 10)
+        _Nudo = Fx_Rellena_ceros(_Nudo, 10)
 
-            If _Aceptado Then
+        If _Aceptado Then
 
-                Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros("MAEEDO",
-                                     "EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'" & Space(1) &
-                                     "And ENDO = '" & _Endo & "' And SUENDO = '" & _Suendo & "' And TIDOELEC = " & _Tidoelec)
+            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros("MAEEDO",
+                                 "EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'" & Space(1) &
+                                 "And ENDO = '" & _Endo & "' And SUENDO = '" & _Suendo & "' And TIDOELEC = " & _Tidoelec)
 
-                If Not CBool(_Reg) Then
-                    Consulta_sql = "Update MAEEDO Set NUDO = '" & _Nudo & "' Where IDMAEEDO = " & _Idmaeedo & vbCrLf &
-                                   "Update MAEDDO Set NUDO = '" & _Nudo & "' Where IDMAEEDO = " & _Idmaeedo
-                    If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-                        _TblEncabezado.Rows(0).Item("NUDO") = _Nudo
-                        MessageBoxEx.Show(Me, "Número cambiado correctamente", "Cambio de folio",
-                                          MessageBoxButtons.OK, MessageBoxIcon.Information)
-                        _Folio_Cambiado = True
-                        Me.Close()
-                    End If
-                Else
-                    MessageBoxEx.Show(Me, "Este folio ya existe en la base de datos", "Validación",
-                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            If Not CBool(_Reg) Then
+
+                Consulta_sql = "Update MAEEDO Set NUDO = '" & _Nudo & "' Where IDMAEEDO = " & _Idmaeedo & vbCrLf &
+                               "Update MAEDDO Set NUDO = '" & _Nudo & "' Where IDMAEEDO = " & _Idmaeedo
+
+                If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+
+                    _TblEncabezado.Rows(0).Item("NUDO") = _Nudo
+                    MessageBoxEx.Show(Me, "Número cambiado correctamente", "Cambio de folio",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    _Folio_Cambiado = True
+                    Me.Close()
+
                 End If
+
+            Else
+
+                MessageBoxEx.Show(Me, "Este folio ya existe en la base de datos", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
             End If
 
@@ -3376,7 +3388,7 @@ Public Class Frm_Ver_Documento
 
     Private Sub Btn_Archivos_Adjuntos_Click(sender As Object, e As EventArgs) Handles Btn_Archivos_Adjuntos.Click
 
-        If Fx_Tiene_Permiso(Me, "Doc00032") Then
+        If Fx_TienePermiso_EnDoc(Me, "Doc00032", _Idmaeedo) Then
 
             Dim _Tido As String = _TblEncabezado.Rows(0).Item("TIPODOCUMENTO")
             Dim _Nudo As String = _TblEncabezado.Rows(0).Item("NUDO")
@@ -4028,35 +4040,12 @@ Public Class Frm_Ver_Documento
     End Sub
 
     Private Sub Btn_Mnu_Ficha_Entidad_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_Ficha_Entidad.Click
-
-        'If Not Fx_Tiene_Permiso(Me, "CfEnt001") Then
-        '    Return
-        'End If
-
         Sb_Ver_Entidad()
-
-        'Dim _Koen = _RowEntidad.Item("KOEN")
-        'Dim _Suen = _RowEntidad.Item("SUEN")
-
-        'Dim Fm As New Frm_Crear_Entidad_Mt
-        'Fm.Fx_Llenar_Entidad(_Koen, _Suen)
-        'Fm.CrearEntidad = False
-        'Fm.EditarEntidad = True
-        'Fm.ShowDialog(Me)
-
-        'If Fm.Grabar Then
-        '    Beep()
-        '    ToastNotification.Show(Me, "DATOS ACTUALIZADOS CORRECTAMENTE", My.Resources.ok_button,
-        '                           1 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
-        'End If
-
-        'Fm.Dispose()
-
     End Sub
 
     Private Sub Btn_Ver_Situacion_Cliente_Click(sender As Object, e As EventArgs) Handles Btn_Ver_Situacion_Cliente.Click
 
-        If Fx_Tiene_Permiso(Me, "Inf00018") Then
+        If Fx_TienePermiso_EnDoc(Me, "Inf00018", _Idmaeedo) Then
 
             Dim Fm As New Frm_InfoEnt_Deudas_Doc_Comerciales(_RowEntidad, 0, 0, 0, 0, True)
             Fm.Btn_CambCodPago.Visible = False
@@ -4083,7 +4072,7 @@ Public Class Frm_Ver_Documento
 
     Private Sub Btn_Ver_Comportamiento_De_Pago_Click(sender As Object, e As EventArgs) Handles Btn_Ver_Comportamiento_De_Pago.Click
 
-        If Fx_Tiene_Permiso(Me, "Inf00018") Then
+        If Fx_TienePermiso_EnDoc(Me, "Inf00018", _Idmaeedo) Then
 
             Dim Fm As New Frm_Infor_Ent_Comportamiento_De_Pago
             Fm.Pro_RowEntidad = _RowEntidad
@@ -4096,7 +4085,7 @@ Public Class Frm_Ver_Documento
 
     Private Sub Btn_Ver_Documentos_Pendientes_Click(sender As Object, e As EventArgs) Handles Btn_Ver_Documentos_Pendientes.Click
 
-        If Fx_Tiene_Permiso(Me, "Inf00018") Then
+        If Fx_TienePermiso_EnDoc(Me, "Inf00018", _Idmaeedo) Then
 
             Dim _Koen = _RowEntidad.Item("KOEN")
             Dim _Suen = _RowEntidad.Item("SUEN")
@@ -4147,7 +4136,7 @@ Public Class Frm_Ver_Documento
 
     Private Sub Btn_Ver_Cheques_En_Cartera_Click(sender As Object, e As EventArgs) Handles Btn_Ver_Cheques_En_Cartera.Click
 
-        If Fx_Tiene_Permiso(Me, "Inf00018") Then
+        If Fx_TienePermiso_EnDoc(Me, "Inf00018", _Idmaeedo) Then
 
             Dim _Koen = _RowEntidad.Item("KOEN")
             Dim _Suen = _RowEntidad.Item("SUEN")
@@ -4165,7 +4154,7 @@ Public Class Frm_Ver_Documento
 
     Private Sub Btn_Ver_Deuda_Total_Click(sender As Object, e As EventArgs) Handles Btn_Ver_Deuda_Total.Click
 
-        If Fx_Tiene_Permiso(Me, "Inf00018") Then
+        If Fx_TienePermiso_EnDoc(Me, "Inf00018", _Idmaeedo) Then
 
             Dim _Koen = _RowEntidad.Item("KOEN")
             Dim _Suen = _RowEntidad.Item("SUEN")
@@ -4358,7 +4347,7 @@ Public Class Frm_Ver_Documento
 
     Private Sub Btn_Mnu_Firmar_Documento_DTE_Hefesto_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_Firmar_Documento_DTE_Hefesto.Click
 
-        If Not Fx_Tiene_Permiso(Me, "Dte00001") Then
+        If Not Fx_TienePermiso_EnDoc(Me, "Dte00001", _Idmaeedo) Then
             Return
         End If
 
@@ -4525,7 +4514,7 @@ Public Class Frm_Ver_Documento
             _Permiso = "Doc00059"
         End If
 
-        If Not Fx_Tiene_Permiso(Me, _Permiso) Then
+        If Not Fx_TienePermiso_EnDoc(Me, _Permiso, _Idmaeedo) Then
             Return
         End If
 
@@ -4924,7 +4913,7 @@ Public Class Frm_Ver_Documento
             If _Row_Docu_Ent.Item("Customizable") Then
 
                 If FUNCIONARIO <> _TblEncabezado.Rows(0).Item("KOFUDO") Then
-                    If Not Fx_Tiene_Permiso(Me, "Doc00082") Then
+                    If Not Fx_TienePermiso_EnDoc(Me, "Doc00082", _Idmaeedo) Then
                         Return
                     End If
                 End If
@@ -4995,12 +4984,6 @@ Public Class Frm_Ver_Documento
         Dim _Koen = _TblEncabezado.Rows(0).Item("ENDO")
         Dim _Cantidad = _Fila.Cells("CANTIDAD").Value
 
-        'If Not CBool((_Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "HabilitadaFac", "Idmaeedo = " & _Idmaeedo,,,, True))) Then
-        '    If Not Fx_Tiene_Permiso(Me, "Doc00099") Then
-        '        Return
-        '    End If
-        'End If
-
         Dim Fm As New Frm_Ver_Documento_CustomizarDet(_Idmaeedo, _Idmaeddo, _Koen, _Koprct, _Cantidad)
         Fm.ShowDialog(Me)
         Fm.Dispose()
@@ -5009,7 +4992,7 @@ Public Class Frm_Ver_Documento
 
     Private Sub Btn_MarcarNVVCustomizable_Click(sender As Object, e As EventArgs) Handles Btn_MarcarNVVCustomizable.Click
 
-        If Not Fx_Tiene_Permiso(Me, "Doc00099") Then
+        If Not Fx_TienePermiso_EnDoc(Me, "Doc00099", _Idmaeedo) Then
             Return
         End If
 
@@ -5173,7 +5156,7 @@ Public Class Frm_Ver_Documento
             _Permiso = "Doc00059"
         End If
 
-        If Not Fx_Tiene_Permiso(Me, _Permiso) Then
+        If Not Fx_TienePermiso_EnDoc(Me, _Permiso, _Idmaeedo) Then
             Return
         End If
 

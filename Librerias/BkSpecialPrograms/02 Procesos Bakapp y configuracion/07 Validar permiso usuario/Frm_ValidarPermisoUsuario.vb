@@ -31,7 +31,7 @@ Public Class Frm_ValidarPermisoUsuario
         Get
             Return _NroRemota
         End Get
-        Set(ByVal value)
+        Set(value)
 
         End Set
     End Property
@@ -39,7 +39,7 @@ Public Class Frm_ValidarPermisoUsuario
         Get
             Return _Permiso_Aceptado
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
 
         End Set
     End Property
@@ -47,7 +47,7 @@ Public Class Frm_ValidarPermisoUsuario
         Get
             Return _Funcionario
         End Get
-        Set(ByVal value)
+        Set(value)
             _Funcionario = value
         End Set
     End Property
@@ -55,7 +55,7 @@ Public Class Frm_ValidarPermisoUsuario
         Get
             Return _Row_Info_Respuesta_Remota
         End Get
-        Set(ByVal value As DataRow)
+        Set(value As DataRow)
 
         End Set
     End Property
@@ -63,7 +63,7 @@ Public Class Frm_ValidarPermisoUsuario
         Get
             Return _Row_Usuario_Autoriza
         End Get
-        Set(ByVal value As DataRow)
+        Set(value As DataRow)
 
         End Set
     End Property
@@ -71,7 +71,7 @@ Public Class Frm_ValidarPermisoUsuario
         Get
             Return _Codpermiso
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             _Codpermiso = value
             LblCodPermiso.Text = value
 
@@ -83,7 +83,7 @@ Public Class Frm_ValidarPermisoUsuario
         Get
 
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             LblDescripcionPermiso.Text = value
         End Set
     End Property
@@ -91,7 +91,7 @@ Public Class Frm_ValidarPermisoUsuario
         Get
             Return _Solicitar_permiso_y_esperar
         End Get
-        Set(ByVal value)
+        Set(value)
             _Solicitar_permiso_y_esperar = value
         End Set
     End Property
@@ -99,7 +99,7 @@ Public Class Frm_ValidarPermisoUsuario
         Get
             Return _Solicitar_permiso_y_no_esperar
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Solicitar_permiso_y_no_esperar = value
         End Set
     End Property
@@ -133,8 +133,8 @@ Public Class Frm_ValidarPermisoUsuario
 
     Public Property Idmaeedo As Integer
 
-    Public Sub New(Optional ByVal CodEntidad As String = "",
-                   Optional ByVal CodSucEntidad As String = "")
+    Public Sub New(Optional CodEntidad As String = "",
+                   Optional CodSucEntidad As String = "")
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -149,7 +149,7 @@ Public Class Frm_ValidarPermisoUsuario
 
     End Sub
 
-    Private Sub Frm_ValidarPermisoUsuario_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_ValidarPermisoUsuario_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         Btn_Solicitar_Al_Grabar_Documento.Visible = _Solicitar_Permiso_Al_Final
         _Solicitar_Permiso_Al_Final = False
@@ -165,11 +165,11 @@ Public Class Frm_ValidarPermisoUsuario
 
     End Sub
 
-    Private Sub BtnxSalir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub BtnxSalir_Click(sender As System.Object, e As System.EventArgs)
         Me.Close()
     End Sub
 
-    Private Sub BtnOtorgarPermisoPermanente_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnOtorgarPermisoPermanente.Click
+    Private Sub BtnOtorgarPermisoPermanente_Click(sender As System.Object, e As System.EventArgs) Handles BtnOtorgarPermisoPermanente.Click
 
         Dim _Autorizado As Boolean
 
@@ -191,7 +191,7 @@ Public Class Frm_ValidarPermisoUsuario
             If _Sql.Ej_consulta_IDU(Consulta_sql) Then
 
                 Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "", 0, "",
-                                   "PERMISO OTORGADO PERMANENTEMENTE", _Codpermiso, "", "", "", False, "")
+                                   "PERMISO OTORGADO PERMANENTEMENTE", _Codpermiso, "", "", "", False, "", False, 0, "")
 
                 MessageBoxEx.Show(Fm_Pass, "Permisos otorgado permanentemente al usuario",
                                   "Otorgar permiso", Windows.Forms.MessageBoxButtons.OK, Windows.Forms.MessageBoxIcon.Information)
@@ -206,7 +206,7 @@ Public Class Frm_ValidarPermisoUsuario
 
     End Sub
 
-    Private Sub Frm_ValidarPermisoUsuario_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_ValidarPermisoUsuario_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close() 'Call BtnxSalir_Click(Nothing, Nothing)
         ElseIf e.KeyValue = Keys.Enter Then
@@ -217,7 +217,7 @@ Public Class Frm_ValidarPermisoUsuario
     End Sub
 
 
-    Sub Sb_Permiso_Remoto(Optional ByVal _Tbl_Usuarios As DataTable = Nothing)
+    Sub Sb_Permiso_Remoto(Optional _Tbl_Usuarios As DataTable = Nothing)
 
         Dim _NomEntidad As String = Trim(_Sql.Fx_Trae_Dato("MAEEN", "NOKOEN",
                                               "KOEN = '" & _CodEntidad & "' And SUEN = '" & _CodSucEntidad & "'"))
@@ -278,7 +278,7 @@ Public Class Frm_ValidarPermisoUsuario
 
     End Sub
 
-    Private Sub Btn_Solicitar_Usuarios_Todos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Solicitar_Usuarios_Todos.Click
+    Private Sub Btn_Solicitar_Usuarios_Todos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Solicitar_Usuarios_Todos.Click
 
         Consulta_sql = "SELECT CodUsuario,Isnull((Select Top 1 NOKOFU From TABFU Where KOFU = CodUsuario),'') As Usuario," &
                        "CodPermiso, Llave, Semilla, Valor_Dscto" & vbCrLf &
@@ -373,7 +373,7 @@ Public Class Frm_ValidarPermisoUsuario
 
     End Sub
 
-    Private Sub Btn_Autorizar_Permiso_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Autorizar_Permiso.Click
+    Private Sub Btn_Autorizar_Permiso_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Autorizar_Permiso.Click
 
         _Solicitar_permiso_y_esperar = False
         _Permiso_Presencial = True
@@ -389,7 +389,7 @@ Public Class Frm_ValidarPermisoUsuario
 
     End Sub
 
-    Private Sub Btn_Mnu_Remoto_y_esperar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Remoto_y_esperar.Click
+    Private Sub Btn_Mnu_Remoto_y_esperar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Remoto_y_esperar.Click
         Me.Close()
     End Sub
 
@@ -402,7 +402,7 @@ Public Class Frm_ValidarPermisoUsuario
         Me.Close()
     End Sub
 
-    Private Sub Btn_Remoto_y_no_esperar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Remoto_y_no_esperar.Click
+    Private Sub Btn_Remoto_y_no_esperar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Remoto_y_no_esperar.Click
         _Solicitar_permiso_y_no_esperar = True
         Me.Close()
     End Sub

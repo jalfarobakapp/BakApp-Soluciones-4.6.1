@@ -34,7 +34,7 @@ Partial Class Frm_Cantidades_Ud_Disintas
         Me.Btn_Ver_Stock = New DevComponents.DotNetBar.ButtonX()
         Me.TxtCantUD1 = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.TxtCantUD2 = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Chk_RtuVariable = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_DesacRazTransf = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Img_RtuAPI = New DevComponents.DotNetBar.Controls.ReflectionImage()
         Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
         Me.Imagenes_16x16_Dark = New System.Windows.Forms.ImageList(Me.components)
@@ -168,22 +168,22 @@ Partial Class Frm_Cantidades_Ud_Disintas
         Me.TxtCantUD2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.TxtCantUD2.WatermarkText = "0"
         '
-        'Chk_RtuVariable
+        'Chk_DesacRazTransf
         '
-        Me.Chk_RtuVariable.BackColor = System.Drawing.Color.White
+        Me.Chk_DesacRazTransf.BackColor = System.Drawing.Color.White
         '
         '
         '
-        Me.Chk_RtuVariable.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_RtuVariable.CheckBoxImageChecked = CType(resources.GetObject("Chk_RtuVariable.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_RtuVariable.FocusCuesEnabled = False
-        Me.Chk_RtuVariable.ForeColor = System.Drawing.Color.Black
-        Me.Chk_RtuVariable.Location = New System.Drawing.Point(12, 113)
-        Me.Chk_RtuVariable.Name = "Chk_RtuVariable"
-        Me.Chk_RtuVariable.Size = New System.Drawing.Size(194, 25)
-        Me.Chk_RtuVariable.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_RtuVariable.TabIndex = 119
-        Me.Chk_RtuVariable.Text = "Desactivar razón de transformación"
+        Me.Chk_DesacRazTransf.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_DesacRazTransf.CheckBoxImageChecked = CType(resources.GetObject("Chk_DesacRazTransf.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_DesacRazTransf.FocusCuesEnabled = False
+        Me.Chk_DesacRazTransf.ForeColor = System.Drawing.Color.Black
+        Me.Chk_DesacRazTransf.Location = New System.Drawing.Point(12, 113)
+        Me.Chk_DesacRazTransf.Name = "Chk_DesacRazTransf"
+        Me.Chk_DesacRazTransf.Size = New System.Drawing.Size(194, 25)
+        Me.Chk_DesacRazTransf.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_DesacRazTransf.TabIndex = 119
+        Me.Chk_DesacRazTransf.Text = "Desactivar razón de transformación"
         '
         'Img_RtuAPI
         '
@@ -263,7 +263,7 @@ Partial Class Frm_Cantidades_Ud_Disintas
         Me.ClientSize = New System.Drawing.Size(263, 142)
         Me.ControlBox = False
         Me.Controls.Add(Me.Img_RtuAPI)
-        Me.Controls.Add(Me.Chk_RtuVariable)
+        Me.Controls.Add(Me.Chk_DesacRazTransf)
         Me.Controls.Add(Me.TxtCantUD2)
         Me.Controls.Add(Me.TxtCantUD1)
         Me.Controls.Add(Me.Btn_Ver_Stock)
@@ -298,7 +298,7 @@ Partial Class Frm_Cantidades_Ud_Disintas
     Friend WithEvents Btn_Ver_Stock As DevComponents.DotNetBar.ButtonX
     Friend WithEvents TxtCantUD1 As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents TxtCantUD2 As DevComponents.DotNetBar.Controls.TextBoxX
-    Friend WithEvents Chk_RtuVariable As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_DesacRazTransf As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Img_RtuAPI As DevComponents.DotNetBar.Controls.ReflectionImage
     Friend WithEvents Imagenes_16x16 As ImageList
     Friend WithEvents Imagenes_16x16_Dark As ImageList
