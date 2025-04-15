@@ -1058,7 +1058,7 @@ Public Class Frm_Formulario_Documento
                 Me.MinimizeBox = Not _Cerrar_Al_Grabar
             End If
 
-            If _Tido = "NVV" Then
+            If _Tido = "NVV" And _DemarcarPickeo Then
                 Chk_Pickear.Checked = _Global_Row_Configuracion_General.Item("Pickear_NVVTodas")
                 Chk_Pickear.Visible = _Global_Row_Configuracion_General.Item("Pickear_NVVTodas")
             End If
@@ -16362,8 +16362,6 @@ Public Class Frm_Formulario_Documento
                 End If
 
                 Dim _Mensaje As New LsValiciones.Mensajes
-
-                '_Idmaeedo = 
 
                 _Mensaje = Fx_Grabar_Documento(_Solicitar_Observaciones_Al_Grabar,
                                                csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento,

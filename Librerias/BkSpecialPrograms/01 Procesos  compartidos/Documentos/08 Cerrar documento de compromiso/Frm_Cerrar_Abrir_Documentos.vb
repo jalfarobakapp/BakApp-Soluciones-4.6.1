@@ -396,7 +396,9 @@ Public Class Frm_Cerrar_Abrir_Documentos
             If Not IsNothing(_Msj.Tag) Then
 
                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Estado = 'NULA',Idmaeedo = 0,Observacion = 'Usuario " & FUNCIONARIO & " - " & Nombre_funcionario_activo.ToLower.Trim & " solicita cerrar documento'" & vbCrLf &
-                               "Where Id = " & _Msj.Id
+                               "Where Id = " & _Msj.Id & vbCrLf &
+                               "Update " & _Global_BaseBk & "Zw_Stmp_Det Set Idmaeedo = 0,Idmaeddo = 0 Where Id_Enc = " & _Msj.Id & vbCrLf &
+                               "Update " & _Global_BaseBk & "Zw_Stmp_DetPick Set Idmaeedo = 0,Idmaeddo = 0 Where Id_Enc = " & _Msj.Id
                 _Sql.Ej_consulta_IDU(Consulta_sql)
 
             End If

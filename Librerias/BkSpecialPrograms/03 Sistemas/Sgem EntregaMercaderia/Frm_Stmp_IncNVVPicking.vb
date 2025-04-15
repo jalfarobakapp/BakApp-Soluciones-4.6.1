@@ -111,7 +111,7 @@ Public Class Frm_Stmp_IncNVVPicking
 
         Dim _Pickear_FacturarAutoCompletas As Integer = Convert.ToInt32(_Global_Row_Configuracion_General.Item("Pickear_FacturarAutoCompletas"))
 
-        Consulta_sql = "Select Cast(0 As Bit) As Pickear,Cast(" & _Pickear_FacturarAutoCompletas & " As Bit) As Facturar,Edo.IDMAEEDO,Edo.EMPRESA,Edo.SUDO,TIDO,Edo.NUDO," & vbCrLf &
+        Consulta_sql = "Select Cast(0 As Bit) As EnvPickeo,Cast(" & _Pickear_FacturarAutoCompletas & " As Bit) As Facturar,Edo.IDMAEEDO,Edo.EMPRESA,Edo.SUDO,TIDO,Edo.NUDO," & vbCrLf &
                        "Cast(ENDO As Varchar(10)) As ENDO,Cast(SUENDO As Varchar(10)) As SUENDO," & vbCrLf &
                        "Cast('' As Varchar(15)) As Rut,NOKOEN,FEEMDO,FEER,FE01VEDO,FEULVEDO," & vbCrLf &
                        "Case When FEEMDO < FE01VEDO Then 'Credito' Else 'Contado' End As TipoVenta," & vbCrLf &
@@ -172,11 +172,12 @@ Public Class Frm_Stmp_IncNVVPicking
 
             Dim _DisplayIndex = 0
 
-            .Columns("Pickear").HeaderText = "Pickear"
-            .Columns("Pickear").Width = 50
-            .Columns("Pickear").Visible = True
-            .Columns("Pickear").ReadOnly = False
-            .Columns("Pickear").DisplayIndex = _DisplayIndex
+            .Columns("EnvPickeo").HeaderText = "Env.Pickeo"
+            .Columns("EnvPickeo").ToolTipText = "Enviar a pickeo"
+            .Columns("EnvPickeo").Width = 50
+            .Columns("EnvPickeo").Visible = True
+            .Columns("EnvPickeo").ReadOnly = False
+            .Columns("EnvPickeo").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("SUDO").HeaderText = "SD"
@@ -318,7 +319,7 @@ Public Class Frm_Stmp_IncNVVPicking
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
 
         If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") AndAlso
-            (_Cabeza = "Facturar" Or _Cabeza = "Pickear") AndAlso
+            (_Cabeza = "Facturar" Or _Cabeza = "EnvPickeo") AndAlso
             _Fila.Cells(_Cabeza).Value AndAlso
             Not _Fila.Cells("HabilitadaFac").Value Then
 
@@ -333,7 +334,7 @@ Public Class Frm_Stmp_IncNVVPicking
 
         For Each _Fl As DataRow In _Tbl_Documentos.Rows
 
-            If _Fl.Item("Pickear") Then
+            If _Fl.Item("EnvPickeo") Then
                 Lbl_Total_Facturar.Tag += _Fl.Item("VABRDO")
             End If
 
@@ -353,7 +354,7 @@ Public Class Frm_Stmp_IncNVVPicking
             If Not Chk_PickearTodo.Checked Then
 
                 For Each _Fila As DataRow In _Tbl_Documentos.Rows
-                    _Fila.Item("Pickear") = Chk_PickearTodo.Checked
+                    _Fila.Item("EnvPickeo") = Chk_PickearTodo.Checked
                 Next
 
                 Return
@@ -365,7 +366,7 @@ Public Class Frm_Stmp_IncNVVPicking
 
             For Each _Fila As DataGridViewRow In Grilla.Rows
 
-                If Not _Fila.Cells("Pickear").Value Then
+                If Not _Fila.Cells("EnvPickeo").Value Then
 
                     _Marcar = True
 
@@ -380,7 +381,7 @@ Public Class Frm_Stmp_IncNVVPicking
 
                     End If
 
-                    _Fila.Cells("Pickear").Value = _Marcar
+                    _Fila.Cells("EnvPickeo").Value = _Marcar
 
                     Lbl_Total_Facturar.Tag += _Fila.Cells("VABRDO").Value
                     Lbl_Total_Facturar.Text = FormatCurrency(Lbl_Total_Facturar.Tag, 0)
@@ -471,7 +472,7 @@ Public Class Frm_Stmp_IncNVVPicking
 
             If _Estado <> DataRowState.Deleted Then
 
-                If _Fila.Item("Pickear") Then
+                If _Fila.Item("EnvPickeo") Then
                     _Contador += 1
                 End If
 
@@ -526,7 +527,7 @@ Public Class Frm_Stmp_IncNVVPicking
             Dim _Idmaeedo As Integer = _Fila.Item("Idmaeedo")
             Dim _Tido As String = _Fila.Item("Tido")
             Dim _Nudo As String = _Fila.Item("Nudo")
-            Dim _Pickear As Boolean = _Fila.Item("Pickear")
+            Dim _Pickear As Boolean = _Fila.Item("EnvPickeo")
             Dim _Facturar As Boolean = _Fila.Item("Facturar")
 
             Dim _PagarAuto As Boolean = Chk_Pagar_Documentos.Checked

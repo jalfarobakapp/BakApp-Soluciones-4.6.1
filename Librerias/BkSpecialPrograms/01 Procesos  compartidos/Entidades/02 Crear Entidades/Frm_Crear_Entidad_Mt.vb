@@ -216,7 +216,6 @@ Public Class Frm_Crear_Entidad_Mt
         Chk_RevFincred.Visible = _Global_Row_Configuracion_General.Item("Fincred_Usar")
         Btn_Modificar_RevCredFincred.Visible = _Global_Row_Configuracion_General.Item("Fincred_Usar")
 
-
     End Sub
 
     Private Sub Frm_Crear_Entidad_Mt_Load(sender As Object, e As System.EventArgs) Handles Me.Load
