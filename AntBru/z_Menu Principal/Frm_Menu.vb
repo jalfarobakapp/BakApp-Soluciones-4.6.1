@@ -1256,5 +1256,30 @@ Public Class Frm_Menu
         Fx_Ejecutar_Demonio2(Me, True)
     End Sub
 
+    Private Sub Frm_Menu_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+        Dim _Path = AppPath() & "\Data\" & RutEmpresa & "\Tmp\Print_Borrar"
+        Sb_BorrarArchivosEnDirectorio(_Path)
+    End Sub
+
+    Sub Sb_BorrarArchivosEnDirectorio(_Path As String)
+        Try
+            If Directory.Exists(_Path) Then
+                Dim archivos As String() = Directory.GetFiles(_Path)
+                For Each archivo As String In archivos
+                    Try
+                        File.Delete(archivo)
+                    Catch ex As Exception
+                        ' Manejar errores al intentar eliminar un archivo
+                        Console.WriteLine($"Error al eliminar el archivo: {archivo} - {ex.Message}")
+                    End Try
+                Next
+            Else
+                Console.WriteLine($"El directorio especificado no existe: {_Path}")
+            End If
+        Catch ex As Exception
+            ' Manejar errores generales
+            Console.WriteLine($"Error al procesar el directorio: {_Path} - {ex.Message}")
+        End Try
+    End Sub
 
 End Class

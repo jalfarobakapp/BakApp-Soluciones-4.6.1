@@ -1,5 +1,8 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports System.Data.SqlClient
 Imports System.Globalization
+Imports System.IO
+Imports DevComponents.DotNetBar
+Imports NUnrar
 
 Module Mod_Imprimir
 
@@ -126,19 +129,17 @@ Module Mod_Imprimir
             _LogError = Fx_Imprimir_Documento(_Idmaeedo, _Tido, _Nudo, _NombreFormato, False,
                                               _Seleccionar_Impresora, _Vista_Previa, _Impresora, _Subtido)
 
+            Dim _Imp = _Impresora
+
             If String.IsNullOrEmpty(_LogError) Then
+
+                If _Seleccionar_Impresora Then
+                    _Imp = _Impresora_Seleccionada
+                End If
 
                 If _Imprimir_Cedible And _Nro_Impreso = 1 And _Tido <> "BLV" Then
 
                     If _Doc_Electronico Then
-
-                        Dim _Imp = _Impresora
-
-                        If _Seleccionar_Impresora Then
-
-                            _Imp = _Impresora_Seleccionada
-
-                        End If
 
                         _LogError = Fx_Imprimir_Documento(_Idmaeedo, _Tido, _Nudo, _NombreFormato, True,
                                                       False, _Vista_Previa,
@@ -157,6 +158,10 @@ Module Mod_Imprimir
                                   _Seleccionar_Impresora, _Vista_Previa, _Impresora, _Subtido)
                 Next
 
+                Dim _ImprimirDocAdjuntos As Boolean = True
+
+                Fx_ImprimirArchivoAdjunto(_ImprimirDocAdjuntos, _Idmaeedo, _Imp)
+
             Else
 
                 Return _LogError
@@ -168,6 +173,235 @@ Module Mod_Imprimir
         Next
 
         Return _LogError
+
+    End Function
+
+    Function Fx_ImprimirArchivoAdjunto(_ImprimirDocAdjuntos As Boolean, _Idmaeedo As Integer, _Impresora As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Dim _Errores As New List(Of String)
+
+        If Not _ImprimirDocAdjuntos Then
+
+            _Mensaje.EsCorrecto = True
+            Return _Mensaje
+
+        End If
+
+        Try
+
+            Consulta_sql = "Select Id, Idmaeedo, Nombre_Archivo, Fecha,DATALENGTH(Archivo) As Tamano,CodFuncionario" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_Docu_Archivos" & vbCrLf &
+                           "Where Idmaeedo = " & _Idmaeedo & vbCrLf &
+                           "Or Idmaeedo In (Select d2.IDMAEEDO From MAEDDO d1 Inner Join MAEDDO d2 On d1.IDRST = d2.IDMAEDDO Where d1.IDMAEEDO = " & _Idmaeedo & ")"
+
+            Dim _Tbl_Pdf As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+            Dim _Path = AppPath() & "\Data\" & RutEmpresa & "\Tmp\Print_Borrar"
+
+            If Not Directory.Exists(_Path) Then
+                System.IO.Directory.CreateDirectory(_Path)
+            End If
+
+            Dim _ListaPdf As New List(Of String)
+
+            For Each _FlPdf As DataRow In _Tbl_Pdf.Rows
+
+                Dim _Id As Integer = _FlPdf.Item("Id")
+                Dim _Nombre_Archivo = _FlPdf.Item("Nombre_Archivo")
+
+                If Not _FlPdf.Item("Nombre_Archivo").ToLower.Contains(".pdf") Then
+                    Continue For
+                End If
+
+
+                Dim letras As String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                Dim numeros As String = "0123456789"
+                Dim random As New Random()
+                Dim resultado As New System.Text.StringBuilder()
+
+                ' Generar 7 letras al azar
+                For i As Integer = 1 To 7
+                    Dim indiceLetra As Integer = random.Next(0, letras.Length)
+                    resultado.Append(letras(indiceLetra))
+                Next
+
+                ' Generar 3 números al azar
+                For i As Integer = 1 To 3
+                    Dim indiceNumero As Integer = random.Next(0, numeros.Length)
+                    resultado.Append(numeros(indiceNumero))
+                Next
+
+                _Nombre_Archivo = resultado.ToString() & ".pdf"
+
+                Dim _Archivo As String = _Path & "\" & _Nombre_Archivo
+
+                Try
+                    System.IO.File.Delete(_Archivo)
+                Catch ex As Exception
+                End Try
+
+
+                Dim _Msj As LsValiciones.Mensajes = Fx_Extrae_Archivo_desde_BD(_Id, _Nombre_Archivo, _Path)
+
+                If _Msj.EsCorrecto Then
+
+                    _ListaPdf.Add(_Archivo)
+
+                    Try
+
+                        If Not System.IO.File.Exists(_Archivo) Then
+                            Throw New FileNotFoundException("El archivo especificado no existe.")
+                        End If
+
+                        Dim psi As New ProcessStartInfo() With {
+                                                                    .UseShellExecute = True,
+                                                                    .Verb = "printto",
+                                                                    .WindowStyle = ProcessWindowStyle.Hidden,
+                                                                    .FileName = _Archivo,
+                                                                    .Arguments = $"""{_Impresora}"""
+                                                                }
+
+                        Using process As New Process()
+                            process.StartInfo = psi
+                            process.Start()
+
+                            If Not process.WaitForExit(10000) Then
+                                Throw New TimeoutException("El proceso tardó demasiado en completarse.")
+                            End If
+                        End Using
+
+                    Catch ex As FileNotFoundException
+                        _Errores.Add($"Archivo no encontrado: {ex.Message}")
+                    Catch ex As TimeoutException
+                        _Errores.Add($"Tiempo de espera excedido: {ex.Message}")
+                    Catch ex As Exception
+                        _Errores.Add($"Error inesperado: {ex.Message}")
+                    End Try
+
+                End If
+
+            Next
+
+            '' Al final del método Fx_Enviar_A_Imprimir_Documento, después de procesar la impresión:
+            'For Each _Archivo In _ListaPdf
+            '    Try
+            '        If File.Exists(_Archivo) Then
+            '            File.Delete(_Archivo)
+            '        End If
+            '    Catch ex As Exception
+            '        ' Manejar cualquier error al intentar eliminar el archivo
+            '        _Errores.Add("Error al eliminar el archivo: " & _Archivo & " - " & ex.Message)
+            '    End Try
+            'Next
+
+            _Mensaje.Detalle = "Imprimir archivo adjunto"
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Archivos adjuntos impresos correctamente"
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
+        Finally
+            If _Errores.Count > 0 Then
+                _Mensaje.Mensaje = String.Join(Environment.NewLine, _Errores)
+                _Mensaje.Icono = MessageBoxIcon.Warning
+            End If
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
+    Function Fx_Extrae_Archivo_desde_BD(_Id As Integer,
+                                        _Nombre_Archivo As String,
+                                        _Dir_Temp As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Dim data As Byte() = Nothing
+        Dim _Ruta As String
+
+        Try
+            ' Construimos los correspondientes objetos para
+            ' conectarnos a la base de datos de SQL Server,
+            ' utilizando la seguridad integrada de Windows NT.
+            '
+            Using cn As New SqlConnection
+                Dim sCnn = Cadena_ConexionSQL_Server
+                cn.ConnectionString = sCnn
+                Dim cmd As SqlCommand = cn.CreateCommand 'cnn.CreateCommand()
+                ' Seleccionamos únicamente el campo que contiene
+                ' los documentos, filtrándolo mediante su
+                ' correspondiente campo identificador.
+                '
+                cmd.CommandText = "Select Archivo From " & _Global_BaseBk & "Zw_Docu_Archivos Where Id = " & _Id
+                ' Abrimos la conexión.
+                cn.Open()
+                ' Creamos un DataReader.
+                Dim dr As SqlDataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection)
+                ' Leemos el registro.
+                dr.Read()
+                ' El tamaño del búfer debe ser el adecuado para poder
+                ' escribir en el archivo todos los datos leídos.
+                '
+                ' Si el parámetro 'buffer' lo pasamos como Nothing, obtendremos
+                ' la longitud del campo en bytes.
+                '
+                Dim bufferSize As Integer = Convert.ToInt32(dr.GetBytes(0, 0, Nothing, 0, 0))
+
+                ' Creamos el array de bytes. Como el índice está
+                ' basado en cero, la longitud del array será la
+                ' longitud del campo menos una unidad.
+                '
+                data = New Byte(bufferSize - 1) {}
+
+                ' Leemos el campo.
+                '
+                dr.GetBytes(0, 0, data, 0, bufferSize)
+
+                ' Cerramos el objeto DataReader, e implícitamente la conexión.
+                '
+                dr.Close()
+
+            End Using
+
+            ' Procedemos a crear el archivo, en el ejemplo
+            ' un documento de Microsoft Word.
+
+            _Ruta = _Dir_Temp & "\" & _Nombre_Archivo
+
+            Using fs As New IO.FileStream(_Dir_Temp & "\" & _Nombre_Archivo, IO.FileMode.CreateNew, IO.FileAccess.Write)
+
+                ' Crea el escritor para la secuencia.
+                Dim bw As New IO.BinaryWriter(fs)
+
+                ' Escribir los datos en la secuencia.
+                bw.Write(data)
+
+            End Using
+
+            _Mensaje.Detalle = "Extraer archivo desde BD: " & _Nombre_Archivo
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = _Ruta
+            _Mensaje.Icono = MessageBoxIcon.Stop
+
+        Catch ex As Exception
+
+            _Mensaje.Detalle = "Extraer archivo desde BD: " & _Nombre_Archivo
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
+        Finally
+            If data IsNot Nothing Then
+                data = Nothing
+            End If
+
+        End Try
+
+        Return _Mensaje
 
     End Function
 
