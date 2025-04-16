@@ -78,6 +78,7 @@ Module Mod_Imprimir
         End If
 
         Dim _Doc_Electronico As Boolean = _RowEncFormato.Item("Doc_Electronico")
+        Dim _ImprimirDocAdjuntos As Boolean = _RowEncFormato.Item("ImprimirDocAdjuntos")
 
         If _Reimprimir Then
             _Nro_Copias = 1
@@ -157,8 +158,6 @@ Module Mod_Imprimir
                     _LogError = Fx_Imprimir_Documento(_Idmaeedo, _Tido, _Nudo, _Fila.Item("NombreFormato_Destino"), False,
                                   _Seleccionar_Impresora, _Vista_Previa, _Impresora, _Subtido)
                 Next
-
-                Dim _ImprimirDocAdjuntos As Boolean = True
 
                 Fx_ImprimirArchivoAdjunto(_ImprimirDocAdjuntos, _Idmaeedo, _Imp)
 

@@ -707,6 +707,7 @@ Public Class Frm_Facturacion_Masiva
 
         Dim _Marcar As Boolean
         Dim _SinHabilitar = 0
+        Dim _MarcadasPickeable = 0
         Lbl_Total_Facturar.Tag = 0
 
         Dim _Tbl As DataTable = _Dv.Table
@@ -723,13 +724,18 @@ Public Class Frm_Facturacion_Masiva
                     End If
                 End If
 
+                If _Fila.Cells("Pickear").Value Then
+                    _Marcar = False
+                    _MarcadasPickeable += 1
+                End If
+
                 If _Marcar Then
-                    _Fila.Cells("Chk").Value = Not Chk_Marcar_todo.Checked
-                    If _Fila.Cells("Chk").Value Then
-                        Lbl_Total_Facturar.Tag += _Fila.Cells("VABRDO").Value
+                        _Fila.Cells("Chk").Value = Not Chk_Marcar_todo.Checked
+                        If _Fila.Cells("Chk").Value Then
+                            Lbl_Total_Facturar.Tag += _Fila.Cells("VABRDO").Value
+                        End If
                     End If
                 End If
-            End If
         Next
 
         Lbl_Total_Facturar.Text = FormatCurrency(Lbl_Total_Facturar.Tag, 0)
@@ -737,8 +743,18 @@ Public Class Frm_Facturacion_Masiva
         If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
             If Not Chk_Marcar_todo.Checked Then
                 If CBool(_SinHabilitar) Then
-                    MessageBoxEx.Show(Me, "Existente " & _SinHabilitar & " documento(s) sin habilitar para ser facturado(s)", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    MessageBoxEx.Show(Me, "Existente " & _SinHabilitar & " documento(s) sin habilitar para ser facturado(s)" & vbCrLf &
+                                      "Esos documentos no fueron marcados",
+                                      "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 End If
+            End If
+        End If
+
+        If Not Chk_Marcar_todo.Checked Then
+            If CBool(_MarcadasPickeable) Then
+                MessageBoxEx.Show(Me, "Existente " & _MarcadasPickeable & " documento(s) marcada para ser gestionada con Pickeo antes de ser facturada(s)" & vbCrLf &
+                                  "Esos documentos no fueron marcados",
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             End If
         End If
 

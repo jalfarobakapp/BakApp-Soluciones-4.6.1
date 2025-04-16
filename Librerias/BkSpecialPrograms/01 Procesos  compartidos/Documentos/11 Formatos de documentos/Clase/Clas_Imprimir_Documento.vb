@@ -68,7 +68,7 @@ Public Class Clas_Imprimir_Documento
     Dim _Fila_Y As Integer
     Dim _Columna_X As Integer
 
-    Dim _TblEncForm As DataTable
+    Public _TblEncForm As DataTable
     Dim _Fila_InicioDetalle As Double
     Dim _Fila_FinDetalle As Double
 

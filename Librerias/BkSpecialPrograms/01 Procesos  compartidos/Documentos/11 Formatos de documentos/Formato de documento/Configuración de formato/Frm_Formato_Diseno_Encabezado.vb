@@ -803,6 +803,7 @@ Public Class Frm_Formato_Diseno_Encabezado
             Dim _Es_Picking As Boolean = FilaEnc.Item("Es_Picking")
             Dim _Agrupar_CodDescripcion As Boolean = FilaEnc.Item("Agrupar_CodDescripcion")
             Dim _IncluyePickWms As Boolean = FilaEnc.Item("IncluyePickWms")
+            Dim _ImprimirDocAdjuntos As Boolean = FilaEnc.Item("ImprimirDocAdjuntos")
 
             Dim _Copias As Integer = FilaEnc.Item("Copias")
 
@@ -861,10 +862,12 @@ Public Class Frm_Formato_Diseno_Encabezado
 
             'Handles Chk_Largo_Variable.CheckedChanged
 
-            _FormPadre.Chk_Largo_Variable.Checked = _Largo_Variable
-            _FormPadre.Chk_Es_Picking.Checked = _Es_Picking
-            _FormPadre.Chk_Agrupar_CodDescripcion.Checked = _Agrupar_CodDescripcion
+            CType(_FormPadre, Frm_ImpresionDoc_Configuracion).Chk_Largo_Variable.Checked = _Largo_Variable
+            CType(_FormPadre, Frm_ImpresionDoc_Configuracion).Chk_Es_Picking.Checked = _Es_Picking
+            CType(_FormPadre, Frm_ImpresionDoc_Configuracion).Chk_Agrupar_CodDescripcion.Checked = _Agrupar_CodDescripcion
             CType(_FormPadre, Frm_ImpresionDoc_Configuracion).Chk_IncluyePickWms.Checked = _IncluyePickWms
+            CType(_FormPadre, Frm_ImpresionDoc_Configuracion).Chk_ImprimirDocAdjuntos.Checked = _ImprimirDocAdjuntos
+
 
             _FormPadre.Input_Max_Lienas.Enabled = _Largo_Variable
             _FormPadre.Input_Max_Lienas.value = _NroLineaXPag
@@ -1111,6 +1114,7 @@ Public Class Frm_Formato_Diseno_Encabezado
         Dim _Es_Picking As Integer = CInt(CType(_FormPadre, Frm_ImpresionDoc_Configuracion).Chk_Es_Picking.Checked) * -1
         Dim _Agrupar_CodDescripcion As Integer = CInt(CType(_FormPadre, Frm_ImpresionDoc_Configuracion).Chk_Agrupar_CodDescripcion.Checked) * -1
         Dim _IncluyePickWms As Integer = Convert.ToInt32(CType(_FormPadre, Frm_ImpresionDoc_Configuracion).Chk_IncluyePickWms.Checked)
+        Dim _ImprimirDocAdjuntos As Integer = Convert.ToInt32(CType(_FormPadre, Frm_ImpresionDoc_Configuracion).Chk_ImprimirDocAdjuntos.Checked)
 
         _NroLineaXPag = _FormPadre.Input_Max_Lienas.value
         _Copias = _FormPadre.Input_Copias.value
@@ -1142,6 +1146,7 @@ Public Class Frm_Formato_Diseno_Encabezado
                        ",Agrupar_CodDescripcion = " & _Agrupar_CodDescripcion & vbCrLf &
                        ",Detalle_Doc_Incluye = '" & _Detalle_Doc_Incluye & "'" & vbCrLf &
                        ",IncluyePickWms = '" & _IncluyePickWms & "'" & vbCrLf &
+                       ",ImprimirDocAdjuntos = " & _ImprimirDocAdjuntos & vbCrLf &
                        "Where TipoDoc = '" & _TipoDoc & "' And NombreFormato = '" & _NombreFormato & "' And Subtido = '" & _Subtido & "'" & vbCrLf & vbCrLf &
                        "Delete " & _Global_BaseBk & "Zw_Format_02" & vbCrLf &
                        "Where TipoDoc = '" & _TipoDoc & "' And NombreFormato = '" & _NombreFormato & "' And Subtido = '" & _Subtido & "'" & vbCrLf & vbCrLf &

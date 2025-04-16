@@ -211,7 +211,7 @@ Partial Class Frm_Menu
         Me.Menu_BakApp.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_Menu_Extra})
         Me.Menu_BakApp.Location = New System.Drawing.Point(76, 74)
         Me.Menu_BakApp.Name = "Menu_BakApp"
-        Me.Menu_BakApp.Size = New System.Drawing.Size(118, 25)
+        Me.Menu_BakApp.Size = New System.Drawing.Size(118, 29)
         Me.Menu_BakApp.Stretch = True
         Me.Menu_BakApp.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Menu_BakApp.TabIndex = 51
@@ -416,7 +416,7 @@ Partial Class Frm_Menu
         Me.Context_Menu_Solicitud_Compra.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
         Me.Context_Menu_Solicitud_Compra.Location = New System.Drawing.Point(532, 74)
         Me.Context_Menu_Solicitud_Compra.Name = "Context_Menu_Solicitud_Compra"
-        Me.Context_Menu_Solicitud_Compra.Size = New System.Drawing.Size(118, 25)
+        Me.Context_Menu_Solicitud_Compra.Size = New System.Drawing.Size(118, 29)
         Me.Context_Menu_Solicitud_Compra.Stretch = True
         Me.Context_Menu_Solicitud_Compra.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Context_Menu_Solicitud_Compra.TabIndex = 49
@@ -915,7 +915,7 @@ Partial Class Frm_Menu
         '
         'Frm_Menu
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 19.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
         Me.ClientSize = New System.Drawing.Size(951, 690)

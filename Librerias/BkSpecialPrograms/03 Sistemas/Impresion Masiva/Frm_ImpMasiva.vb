@@ -172,6 +172,14 @@ Public Class Frm_ImpMasiva
 
             If _Chk Then
 
+                Dim _ImprimirDocAdjuntos = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Format_01",
+                                                              "ImprimirDocAdjuntos",
+                                                              "NombreFormato = '" & _NombreFormato & "' And Subtido = '" & _Subtido & "'",,,, True)
+
+                If _ImprimirDocAdjuntos Then
+                    Fx_ImprimirArchivoAdjunto(_ImprimirDocAdjuntos, _Idmaeedo, Txt_Impresora.Text)
+                End If
+
                 Dim _Mensaje As LsValiciones.Mensajes
 
                 _Mensaje = Fx_Imprimir_Documento2(_Idmaeedo, _Tido, _Nudo, _NombreFormato, False, False, False, Txt_Impresora.Text, _Subtido)

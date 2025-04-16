@@ -905,6 +905,14 @@ Public Module Funciones_Especiales_BakApp
 
         If Not (_Row_Entidad Is Nothing) Then
 
+            If _Row_Entidad.Item("LCEN").ToString.ToUpper.Trim = "TABPP" Or String.IsNullOrWhiteSpace(_Row_Entidad.Item("LCEN")) Then
+                _Row_Entidad.Item("LCEN") = "TABPP" & ModListaPrecioCosto
+            End If
+
+            If _Row_Entidad.Item("LVEN").ToString.ToUpper.Trim = "TABPP" Or String.IsNullOrWhiteSpace(_Row_Entidad.Item("LVEN")) Then
+                _Row_Entidad.Item("LVEN") = "TABPP" & ModListaPrecioVenta
+            End If
+
             Dim _Rut As String = _Row_Entidad.Item("RTEN").ToString.Trim
             Dim _RutSP As String = String.Empty
             Dim _Rten = _Rut

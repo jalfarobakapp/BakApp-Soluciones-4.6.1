@@ -1609,6 +1609,7 @@ Public Class Frm_Formulario_Documento
             .Item("TblTipoVenta") = String.Empty
             .Item("CodTipoVenta") = String.Empty
             .Item("Customizable") = False
+            .Item("Pickear") = False
 
             .Item("PreVenta") = PreVenta
             .Item("IdCont") = 0
