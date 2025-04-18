@@ -209,6 +209,7 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
                     _Sql.Ej_consulta_IDU(Consulta_sql)
 
                 Else
+
                     Consulta_sql = "Update " & _Tabla_Paso & vbCrLf &
                                    "Set Id_Ult_Compra = Isnull((Select top 1 IDMAEDDO From MAEDDO" & vbCrLf &
                                    "Where TIDO = '" & Cmb_Documento_Compra.SelectedValue & "' and KOPRCT = Codigo" & vbCrLf &
@@ -216,6 +217,7 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
                                    "And ENDO+SUENDO Not In (Select CodEntidad+CodSucEntidad From " & _Global_BaseBk & "Zw_Entidades_ProdExcluidos Z1 " &
                                    "Where Z1.Chk = 1 And Z1.CodEntidad+Z1.CodSucEntidad = ENDO+SUENDO And Z1.Codigo = KOPRCT)" & vbCrLf &
                                    "Order by PPPRNERE1),0)"
+                    _Sql.Ej_consulta_IDU(Consulta_sql)
 
                     'LITERALMETE LA ULTIMA VEZ QUE SE COMPRO EL PRODUCTO SIN IMPORTAR LA FECHA TOPE
                     Consulta_sql = "Update " & _Tabla_Paso & vbCrLf &

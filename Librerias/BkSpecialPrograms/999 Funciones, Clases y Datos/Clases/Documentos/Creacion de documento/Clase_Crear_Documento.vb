@@ -3028,6 +3028,7 @@ Public Class Clase_Crear_Documento
         Dim _Espuntosvta As Integer
         Dim _ModFechVto As Integer
         Dim _Condicionado As Integer
+        Dim _DesacRazTransf As Integer
 
         Dim _TblTipoVenta As String
         Dim _CodTipoVenta As String
@@ -3375,6 +3376,7 @@ Public Class Clase_Crear_Documento
                         _Espuntosvta = Convert.ToUInt32(.Item("Espuntosvta"))
                         _ModFechVto = Convert.ToUInt32(.Item("ModFechVto"))
                         _Condicionado = Convert.ToUInt32(.Item("Condicionado"))
+                        _DesacRazTransf = Convert.ToUInt32(.Item("DesacRazTransf"))
 
                         If Not String.IsNullOrEmpty(Trim(_Tict)) Then
 
@@ -3452,7 +3454,7 @@ Public Class Clase_Crear_Documento
                                        "CodPermiso,Nuevo_Producto,Solicitado_bodega,Moneda,Tipo_Moneda,Tipo_Cambio,Crear_CPr,Id_CPr," &
                                        "Centro_Costo,Proyecto,Tasadorig," &
                                        "Id_Oferta,Es_Padre_Oferta,Oferta,Padre_Oferta,Aplica_Oferta,Hijo_Oferta," &
-                                       "Cantidad_Oferta,Porcdesc_Oferta,IdDet_Ori,Nmarca,RtuVariable,Espuntosvta,ModFechVto,Condicionado) Values" & vbCrLf &
+                                       "Cantidad_Oferta,Porcdesc_Oferta,IdDet_Ori,Nmarca,RtuVariable,Espuntosvta,ModFechVto,Condicionado,DesacRazTransf) Values" & vbCrLf &
                                        "(" & _Id_DocEnc & ",'" & _Empresa & "','" & _Sucursal_Linea & "','" & _Bodega_Linea & "'," & _UnTrans & "," & _Lincondest &
                                        ",'" & _NroLinea & "','" & _Codigo & "','" & _CodigoProv & "','" & _UdTrans &
                                        "'," & _Cantidad & ",'" & _TipoValor & "'," & _Precio & "," & _DescuentoPorc &
@@ -3478,7 +3480,7 @@ Public Class Clase_Crear_Documento
                                        "','" & _Proyecto & "'," & _Tasadorig_Det &
                                        "," & _Id_Oferta & "," & _Es_Padre_Oferta & ",'" & _Oferta & "'," & _Padre_Oferta & "," & _Aplica_Oferta & "," & _Hijo_Oferta &
                                        "," & _Cantidad_Oferta & "," & _Porcdesc_Oferta & "," & Id_Linea &
-                                       ",'" & _Nmarca & "'," & _RtuVariable & "," & _Espuntosvta & "," & _ModFechVto & "," & _Condicionado & ")"
+                                       ",'" & _Nmarca & "'," & _RtuVariable & "," & _Espuntosvta & "," & _ModFechVto & "," & _Condicionado & "," & _DesacRazTransf & ")"
 
                         Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                         Comando.Transaction = myTrans

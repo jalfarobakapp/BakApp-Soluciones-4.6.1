@@ -562,7 +562,7 @@ Public Class Frm_Ver_Documento
             End If
 
             Chk_Pickear.Visible = _Tido = "NVV"
-            Chk_Pickear.Checked = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "Pickear", "Idmaeedo = " & _Idmaeedo)
+            Chk_Pickear.Checked = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "Pickear", "Idmaeedo = " & _Idmaeedo, True, False)
 
             _Cl_Contenedor.Zw_Contenedor = _Cl_Contenedor.Fx_Llenar_Contenedor(_Idmaeedo, _Tido, _Nudo)
 

@@ -115,14 +115,14 @@ Public Class Frm_Stmp_IncNVVPicking
                        "Cast(ENDO As Varchar(10)) As ENDO,Cast(SUENDO As Varchar(10)) As SUENDO," & vbCrLf &
                        "Cast('' As Varchar(15)) As Rut,NOKOEN,FEEMDO,FEER,FE01VEDO,FEULVEDO," & vbCrLf &
                        "Case When FEEMDO < FE01VEDO Then 'Credito' Else 'Contado' End As TipoVenta," & vbCrLf &
-                       "CONVERT(NVARCHAR, CONVERT(datetime, (Edo.HORAGRAB*1.0/3600)/24), 108) AS HORA,VANEDO," & vbCrLf &
+                       "CONVERT(NVARCHAR, CONVERT(datetime, (Edo.HORAGRAB*1.0/3600)/24), 108) AS Hora_Emision,VANEDO," & vbCrLf &
                        "VAIVDO,VAIMDO,VABRDO,VAABDO,KOFUDO,NOKOFU," & vbCrLf &
                        "Cast(0 As Bit) As Facturado,Cast(0 As Int) As IDMAEEDO_FCV,Cast('' As Varchar(10)) As NUDO_FCV," & vbCrLf &
                        "FEEMDO AS Fecha_Emision,Edo.FEER AS Fecha_Despacho,Cast(0 As Float) As VABRDO_FCV,Cast(0 As Float) As VAABDO_FCV," & vbCrLf &
                        "Cast(0 As Bit) As FCV_PAGADA,Cast(0 As Bit) As FCV_IMPRESA," & vbCrLf &
                        "Cast(0 As Int) As IDMAEDPCE,Cast(0 As Float) As VADP,Cast(0 As Float) As VAASDP," & vbCrLf &
                        "Cast(0 As Float) As SALDO,Cast(0 As Bit) As CRV, Cast(0 as Float) SALDO_CRV,Isnull(OBDO,'') As OBDO," & vbCrLf &
-                       "Isnull(DocE.HabilitadaFac,1) As HabilitadaFac,Isnull(Den.Tipo_Envio,'') As 'TipoEnvio',CAST('' As varchar(25)) As 'TipoDeEnvio'" & vbCrLf &
+                       "Isnull(DocE.HabilitadaFac,1) As HabilitadaFac,DocE.FechaHoraAutoriza As 'FechaHoraAutoriza',Isnull(Den.Tipo_Envio,'') As 'TipoEnvio',CAST('' As varchar(25)) As 'TipoDeEnvio'" & vbCrLf &
                        "Into #Paso" & vbCrLf &
                         "From MAEEDO Edo" & vbCrLf &
                         "Left Join MAEEDOOB Obs On Obs.IDMAEEDO = Edo.IDMAEEDO" & vbCrLf &
@@ -144,7 +144,7 @@ Public Class Frm_Stmp_IncNVVPicking
                         "Order By HORAGRAB" & vbCrLf &
                         "Update #Paso Set IDMAEDPCE = Isnull((Select Top 1 IDMAEDPCE From MAEDPCE Where IDRSD = IDMAEEDO),0)" & vbCrLf &
                         "Update #Paso Set VADP = Isnull((Select VADP From MAEDPCE Mp Where Mp.IDMAEDPCE = #Paso.IDMAEDPCE),0)" & vbCrLf &
-                        "Update #Paso Set HORA = SUBSTRING(HORA,1,5),ENDO = Ltrim(Rtrim(ENDO)),SUENDO = Ltrim(Rtrim(SUENDO))" & vbCrLf &
+                        "Update #Paso Set Hora_Emision = SUBSTRING(Hora_Emision,1,5),ENDO = Ltrim(Rtrim(ENDO)),SUENDO = Ltrim(Rtrim(SUENDO))" & vbCrLf &
                         "Update #Paso Set SALDO_CRV = VABRDO-VADP Where VADP > 0" & vbCrLf &
                         "Update #Paso Set TipoDeEnvio = 'Retira cliente' Where TipoEnvio = 'RT'" & vbCrLf &
                         "Update #Paso Set TipoDeEnvio = 'Despacho domicilio' Where TipoEnvio = 'DD'" & vbCrLf &
@@ -172,9 +172,9 @@ Public Class Frm_Stmp_IncNVVPicking
 
             Dim _DisplayIndex = 0
 
-            .Columns("EnvPickeo").HeaderText = "Env.Pickeo"
+            .Columns("EnvPickeo").HeaderText = "Pick?"
             .Columns("EnvPickeo").ToolTipText = "Enviar a pickeo"
-            .Columns("EnvPickeo").Width = 50
+            .Columns("EnvPickeo").Width = 40
             .Columns("EnvPickeo").Visible = True
             .Columns("EnvPickeo").ReadOnly = False
             .Columns("EnvPickeo").DisplayIndex = _DisplayIndex
@@ -254,7 +254,7 @@ Public Class Frm_Stmp_IncNVVPicking
             _DisplayIndex += 1
 
             .Columns("OBDO").HeaderText = "Observaciones"
-            .Columns("OBDO").Width = 200
+            .Columns("OBDO").Width = 160
             .Columns("OBDO").Visible = True
             .Columns("OBDO").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
@@ -280,11 +280,19 @@ Public Class Frm_Stmp_IncNVVPicking
             .Columns("FEEMDO").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("HORA").HeaderText = "Hora"
-            .Columns("HORA").Width = 50
-            .Columns("HORA").Visible = True
-            .Columns("HORA").DisplayIndex = _DisplayIndex
+            .Columns("FechaHoraAutoriza").HeaderText = "F.H.autoriza"
+            .Columns("FechaHoraAutoriza").ToolTipText = "Fecha y hora de autorización para ser facturada"
+            .Columns("FechaHoraAutoriza").Width = 100
+            .Columns("FechaHoraAutoriza").DefaultCellStyle.Format = "dd/MM/yyyy HH:mm"
+            .Columns("FechaHoraAutoriza").Visible = True
+            .Columns("FechaHoraAutoriza").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
+
+            '.Columns("HORA").HeaderText = "Hora"
+            '.Columns("HORA").Width = 50
+            '.Columns("HORA").Visible = True
+            '.Columns("HORA").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
 
             .Columns("FEER").HeaderText = "F.Despacho"
             .Columns("FEER").Width = 70

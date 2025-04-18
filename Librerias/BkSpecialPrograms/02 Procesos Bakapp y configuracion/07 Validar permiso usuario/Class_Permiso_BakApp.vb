@@ -2578,7 +2578,7 @@ Public Class Class_Permiso_BakApp
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
             Case "Doc00102"
-                _DescripcionPermiso = "PERMITIR GRABAR DOCUMENTO CON PRODUCTOS DE PESO VARIABLE Y RAZON DE TRANSFORMACION DASACTIVADA"
+                _DescripcionPermiso = "DESACTIVAR RAZON DE TRANSFORMACION"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
 

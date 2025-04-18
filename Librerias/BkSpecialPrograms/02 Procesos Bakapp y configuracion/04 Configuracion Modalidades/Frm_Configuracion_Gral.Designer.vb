@@ -53,6 +53,15 @@ Partial Class Frm_Configuracion_Gral
         Me.Cmb_TipoValor_Bruto_Neto = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.SuperTabControl1 = New DevComponents.DotNetBar.SuperTabControl()
+        Me.SuperTabControlPanel9 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.TableLayoutPanel7 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Chk_NVIQuedaSUDOSucRecibe = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_NVIQuedaSUDOSucEnvia = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_Pickear_FacturarAutoCompletas = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_Pickear_NVVTodas = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_Pickear_ProdPesoVariable = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.SpTab_Logistica = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
         Me.Chk_Revisar_Tasa_de_Cambio = New DevComponents.DotNetBar.Controls.CheckBoxX()
@@ -164,13 +173,6 @@ Partial Class Frm_Configuracion_Gral
         Me.LabelX21 = New DevComponents.DotNetBar.LabelX()
         Me.Chk_Fincred_Usar = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.SpTab_FincredPays = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel9 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.TableLayoutPanel7 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_Pickear_FacturarAutoCompletas = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_Pickear_NVVTodas = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_Pickear_ProdPesoVariable = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.SpTab_Logistica = New DevComponents.DotNetBar.SuperTabItem()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Numeraciones_Documento = New DevComponents.DotNetBar.ButtonItem()
@@ -178,14 +180,15 @@ Partial Class Frm_Configuracion_Gral
         Me.Btn_DocConceptosVsPagos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_ConfPuntosVta = New DevComponents.DotNetBar.ButtonItem()
         Me.CheckBoxX2 = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_NVIQuedaSUDOSucEnvia = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_NVIQuedaSUDOSucRecibe = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_NuncaPickeaDocConRTUDesactivada = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.TableLayoutPanel3.SuspendLayout()
         CType(Me.Input_Monto_Max_CRV_FacMasiva, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel4.SuspendLayout()
         CType(Me.Input_Dias_Max_Fecha_Despacho, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControl1.SuspendLayout()
+        Me.SuperTabControlPanel9.SuspendLayout()
+        Me.TableLayoutPanel7.SuspendLayout()
         Me.SuperTabControlPanel1.SuspendLayout()
         Me.TableLayoutPanel5.SuspendLayout()
         Me.SuperTabControlPanel5.SuspendLayout()
@@ -203,8 +206,6 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControlPanel2.SuspendLayout()
         Me.GroupPanel1.SuspendLayout()
         Me.SuperTabControlPanel3.SuspendLayout()
-        Me.SuperTabControlPanel9.SuspendLayout()
-        Me.TableLayoutPanel7.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -753,9 +754,9 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControl1.ControlBox.Name = ""
         Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel9)
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel5)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel6)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel5)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel4)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel7)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel8)
@@ -773,6 +774,162 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControl1.TabIndex = 97
         Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SpTab_General, Me.SpTab_Compras, Me.SpTab_Ventas, Me.SpTab_Ventas2, Me.SpTab_Productos, Me.SuperTabItem1, Me.SpTab_DatosEmpresa, Me.SpTab_FincredPays, Me.SpTab_Logistica})
         Me.SuperTabControl1.Text = "SuperTabControl1"
+        '
+        'SuperTabControlPanel9
+        '
+        Me.SuperTabControlPanel9.Controls.Add(Me.TableLayoutPanel7)
+        Me.SuperTabControlPanel9.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel9.Location = New System.Drawing.Point(125, 0)
+        Me.SuperTabControlPanel9.Name = "SuperTabControlPanel9"
+        Me.SuperTabControlPanel9.Size = New System.Drawing.Size(667, 539)
+        Me.SuperTabControlPanel9.TabIndex = 0
+        Me.SuperTabControlPanel9.TabItem = Me.SpTab_Logistica
+        '
+        'TableLayoutPanel7
+        '
+        Me.TableLayoutPanel7.BackColor = System.Drawing.Color.Transparent
+        Me.TableLayoutPanel7.ColumnCount = 1
+        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel7.Controls.Add(Me.Chk_NuncaPickeaDocConRTUDesactivada, 0, 10)
+        Me.TableLayoutPanel7.Controls.Add(Me.Chk_Pickear_SinoEstaEnWMSIgualPickear, 0, 3)
+        Me.TableLayoutPanel7.Controls.Add(Me.Chk_Pickear_FacturarAutoCompletas, 0, 2)
+        Me.TableLayoutPanel7.Controls.Add(Me.Chk_Pickear_NVVTodas, 0, 0)
+        Me.TableLayoutPanel7.Controls.Add(Me.Chk_Pickear_ProdPesoVariable, 0, 1)
+        Me.TableLayoutPanel7.Controls.Add(Me.Chk_NVIQuedaSUDOSucRecibe, 0, 13)
+        Me.TableLayoutPanel7.Controls.Add(Me.Chk_NVIQuedaSUDOSucEnvia, 0, 12)
+        Me.TableLayoutPanel7.ForeColor = System.Drawing.Color.Black
+        Me.TableLayoutPanel7.Location = New System.Drawing.Point(3, 3)
+        Me.TableLayoutPanel7.Name = "TableLayoutPanel7"
+        Me.TableLayoutPanel7.RowCount = 15
+        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel7.Size = New System.Drawing.Size(666, 237)
+        Me.TableLayoutPanel7.TabIndex = 103
+        '
+        'Chk_NVIQuedaSUDOSucRecibe
+        '
+        '
+        '
+        '
+        Me.Chk_NVIQuedaSUDOSucRecibe.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_NVIQuedaSUDOSucRecibe.CheckBoxImageChecked = CType(resources.GetObject("Chk_NVIQuedaSUDOSucRecibe.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_NVIQuedaSUDOSucRecibe.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_NVIQuedaSUDOSucRecibe.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_NVIQuedaSUDOSucRecibe.FocusCuesEnabled = False
+        Me.Chk_NVIQuedaSUDOSucRecibe.ForeColor = System.Drawing.Color.Black
+        Me.Chk_NVIQuedaSUDOSucRecibe.Location = New System.Drawing.Point(3, 142)
+        Me.Chk_NVIQuedaSUDOSucRecibe.Name = "Chk_NVIQuedaSUDOSucRecibe"
+        Me.Chk_NVIQuedaSUDOSucRecibe.Size = New System.Drawing.Size(635, 14)
+        Me.Chk_NVIQuedaSUDOSucRecibe.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_NVIQuedaSUDOSucRecibe.TabIndex = 134
+        Me.Chk_NVIQuedaSUDOSucRecibe.Text = "NVI - La sucursal del documento quedara como la sucursal de la bodega que <b>RECE" &
+    "PCIONA</b> los productos"
+        '
+        'Chk_Pickear_SinoEstaEnWMSIgualPickear
+        '
+        '
+        '
+        '
+        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.CheckBoxImageChecked = CType(resources.GetObject("Chk_Pickear_SinoEstaEnWMSIgualPickear.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_Pickear_SinoEstaEnWMSIgualPickear.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.FocusCuesEnabled = False
+        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.Location = New System.Drawing.Point(3, 61)
+        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.Name = "Chk_Pickear_SinoEstaEnWMSIgualPickear"
+        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.Size = New System.Drawing.Size(635, 15)
+        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.TabIndex = 132
+        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.Text = "Poder enviar al sistema de gestión de entrega de mercadería aun que no esta en WM" &
+    "S"
+        '
+        'Chk_NVIQuedaSUDOSucEnvia
+        '
+        '
+        '
+        '
+        Me.Chk_NVIQuedaSUDOSucEnvia.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_NVIQuedaSUDOSucEnvia.CheckBoxImageChecked = CType(resources.GetObject("Chk_NVIQuedaSUDOSucEnvia.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_NVIQuedaSUDOSucEnvia.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_NVIQuedaSUDOSucEnvia.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_NVIQuedaSUDOSucEnvia.FocusCuesEnabled = False
+        Me.Chk_NVIQuedaSUDOSucEnvia.ForeColor = System.Drawing.Color.Black
+        Me.Chk_NVIQuedaSUDOSucEnvia.Location = New System.Drawing.Point(3, 122)
+        Me.Chk_NVIQuedaSUDOSucEnvia.Name = "Chk_NVIQuedaSUDOSucEnvia"
+        Me.Chk_NVIQuedaSUDOSucEnvia.Size = New System.Drawing.Size(635, 14)
+        Me.Chk_NVIQuedaSUDOSucEnvia.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_NVIQuedaSUDOSucEnvia.TabIndex = 133
+        Me.Chk_NVIQuedaSUDOSucEnvia.Text = "NVI - La sucursal del documento quedara como la sucursal de la bodega que <b>ENVI" &
+    "A </b>los productos"
+        '
+        'Chk_Pickear_FacturarAutoCompletas
+        '
+        '
+        '
+        '
+        Me.Chk_Pickear_FacturarAutoCompletas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Pickear_FacturarAutoCompletas.CheckBoxImageChecked = CType(resources.GetObject("Chk_Pickear_FacturarAutoCompletas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Pickear_FacturarAutoCompletas.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_Pickear_FacturarAutoCompletas.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_Pickear_FacturarAutoCompletas.FocusCuesEnabled = False
+        Me.Chk_Pickear_FacturarAutoCompletas.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Pickear_FacturarAutoCompletas.Location = New System.Drawing.Point(3, 40)
+        Me.Chk_Pickear_FacturarAutoCompletas.Name = "Chk_Pickear_FacturarAutoCompletas"
+        Me.Chk_Pickear_FacturarAutoCompletas.Size = New System.Drawing.Size(635, 15)
+        Me.Chk_Pickear_FacturarAutoCompletas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Pickear_FacturarAutoCompletas.TabIndex = 131
+        Me.Chk_Pickear_FacturarAutoCompletas.Text = "Facturar automáticamente los picking una vez completados"
+        '
+        'Chk_Pickear_NVVTodas
+        '
+        '
+        '
+        '
+        Me.Chk_Pickear_NVVTodas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Pickear_NVVTodas.CheckBoxImageChecked = CType(resources.GetObject("Chk_Pickear_NVVTodas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Pickear_NVVTodas.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_Pickear_NVVTodas.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_Pickear_NVVTodas.FocusCuesEnabled = False
+        Me.Chk_Pickear_NVVTodas.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Pickear_NVVTodas.Location = New System.Drawing.Point(3, 3)
+        Me.Chk_Pickear_NVVTodas.Name = "Chk_Pickear_NVVTodas"
+        Me.Chk_Pickear_NVVTodas.Size = New System.Drawing.Size(635, 12)
+        Me.Chk_Pickear_NVVTodas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Pickear_NVVTodas.TabIndex = 129
+        Me.Chk_Pickear_NVVTodas.Text = "Enviara a Pickear todas las Notas de Venta"
+        '
+        'Chk_Pickear_ProdPesoVariable
+        '
+        '
+        '
+        '
+        Me.Chk_Pickear_ProdPesoVariable.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Pickear_ProdPesoVariable.CheckBoxImageChecked = CType(resources.GetObject("Chk_Pickear_ProdPesoVariable.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Pickear_ProdPesoVariable.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_Pickear_ProdPesoVariable.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_Pickear_ProdPesoVariable.FocusCuesEnabled = False
+        Me.Chk_Pickear_ProdPesoVariable.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Pickear_ProdPesoVariable.Location = New System.Drawing.Point(3, 21)
+        Me.Chk_Pickear_ProdPesoVariable.Name = "Chk_Pickear_ProdPesoVariable"
+        Me.Chk_Pickear_ProdPesoVariable.Size = New System.Drawing.Size(635, 13)
+        Me.Chk_Pickear_ProdPesoVariable.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Pickear_ProdPesoVariable.TabIndex = 130
+        Me.Chk_Pickear_ProdPesoVariable.Text = "Pickear solo productos con peso variable"
+        '
+        'SpTab_Logistica
+        '
+        Me.SpTab_Logistica.AttachedControl = Me.SuperTabControlPanel9
+        Me.SpTab_Logistica.GlobalItem = False
+        Me.SpTab_Logistica.Name = "SpTab_Logistica"
+        Me.SpTab_Logistica.Text = "Logística"
         '
         'SuperTabControlPanel1
         '
@@ -2598,120 +2755,6 @@ Partial Class Frm_Configuracion_Gral
         Me.SpTab_FincredPays.Name = "SpTab_FincredPays"
         Me.SpTab_FincredPays.Text = "Fincred Pays"
         '
-        'SuperTabControlPanel9
-        '
-        Me.SuperTabControlPanel9.Controls.Add(Me.TableLayoutPanel7)
-        Me.SuperTabControlPanel9.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel9.Location = New System.Drawing.Point(125, 0)
-        Me.SuperTabControlPanel9.Name = "SuperTabControlPanel9"
-        Me.SuperTabControlPanel9.Size = New System.Drawing.Size(667, 539)
-        Me.SuperTabControlPanel9.TabIndex = 0
-        Me.SuperTabControlPanel9.TabItem = Me.SpTab_Logistica
-        '
-        'TableLayoutPanel7
-        '
-        Me.TableLayoutPanel7.BackColor = System.Drawing.Color.Transparent
-        Me.TableLayoutPanel7.ColumnCount = 1
-        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel7.Controls.Add(Me.Chk_NVIQuedaSUDOSucRecibe, 0, 9)
-        Me.TableLayoutPanel7.Controls.Add(Me.Chk_Pickear_SinoEstaEnWMSIgualPickear, 0, 3)
-        Me.TableLayoutPanel7.Controls.Add(Me.Chk_NVIQuedaSUDOSucEnvia, 0, 8)
-        Me.TableLayoutPanel7.Controls.Add(Me.Chk_Pickear_FacturarAutoCompletas, 0, 2)
-        Me.TableLayoutPanel7.Controls.Add(Me.Chk_Pickear_NVVTodas, 0, 0)
-        Me.TableLayoutPanel7.Controls.Add(Me.Chk_Pickear_ProdPesoVariable, 0, 1)
-        Me.TableLayoutPanel7.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel7.Location = New System.Drawing.Point(3, 3)
-        Me.TableLayoutPanel7.Name = "TableLayoutPanel7"
-        Me.TableLayoutPanel7.RowCount = 10
-        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel7.Size = New System.Drawing.Size(666, 213)
-        Me.TableLayoutPanel7.TabIndex = 103
-        '
-        'Chk_Pickear_SinoEstaEnWMSIgualPickear
-        '
-        '
-        '
-        '
-        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.CheckBoxImageChecked = CType(resources.GetObject("Chk_Pickear_SinoEstaEnWMSIgualPickear.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_Pickear_SinoEstaEnWMSIgualPickear.CheckBoxImageIndeterminate"), System.Drawing.Image)
-        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.FocusCuesEnabled = False
-        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.Location = New System.Drawing.Point(3, 66)
-        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.Name = "Chk_Pickear_SinoEstaEnWMSIgualPickear"
-        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.Size = New System.Drawing.Size(635, 15)
-        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.TabIndex = 132
-        Me.Chk_Pickear_SinoEstaEnWMSIgualPickear.Text = "Poder enviar al sistema de gestión de entrega de mercadería aun que no esta en WM" &
-    "S"
-        '
-        'Chk_Pickear_FacturarAutoCompletas
-        '
-        '
-        '
-        '
-        Me.Chk_Pickear_FacturarAutoCompletas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Pickear_FacturarAutoCompletas.CheckBoxImageChecked = CType(resources.GetObject("Chk_Pickear_FacturarAutoCompletas.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Pickear_FacturarAutoCompletas.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_Pickear_FacturarAutoCompletas.CheckBoxImageIndeterminate"), System.Drawing.Image)
-        Me.Chk_Pickear_FacturarAutoCompletas.FocusCuesEnabled = False
-        Me.Chk_Pickear_FacturarAutoCompletas.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Pickear_FacturarAutoCompletas.Location = New System.Drawing.Point(3, 45)
-        Me.Chk_Pickear_FacturarAutoCompletas.Name = "Chk_Pickear_FacturarAutoCompletas"
-        Me.Chk_Pickear_FacturarAutoCompletas.Size = New System.Drawing.Size(635, 15)
-        Me.Chk_Pickear_FacturarAutoCompletas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Pickear_FacturarAutoCompletas.TabIndex = 131
-        Me.Chk_Pickear_FacturarAutoCompletas.Text = "Facturar automáticamente los pickign una vez completados"
-        '
-        'Chk_Pickear_NVVTodas
-        '
-        '
-        '
-        '
-        Me.Chk_Pickear_NVVTodas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Pickear_NVVTodas.CheckBoxImageChecked = CType(resources.GetObject("Chk_Pickear_NVVTodas.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Pickear_NVVTodas.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_Pickear_NVVTodas.CheckBoxImageIndeterminate"), System.Drawing.Image)
-        Me.Chk_Pickear_NVVTodas.FocusCuesEnabled = False
-        Me.Chk_Pickear_NVVTodas.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Pickear_NVVTodas.Location = New System.Drawing.Point(3, 3)
-        Me.Chk_Pickear_NVVTodas.Name = "Chk_Pickear_NVVTodas"
-        Me.Chk_Pickear_NVVTodas.Size = New System.Drawing.Size(635, 12)
-        Me.Chk_Pickear_NVVTodas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Pickear_NVVTodas.TabIndex = 129
-        Me.Chk_Pickear_NVVTodas.Text = "Enviara a Pickear todas las Notas de Venta"
-        '
-        'Chk_Pickear_ProdPesoVariable
-        '
-        '
-        '
-        '
-        Me.Chk_Pickear_ProdPesoVariable.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Pickear_ProdPesoVariable.CheckBoxImageChecked = CType(resources.GetObject("Chk_Pickear_ProdPesoVariable.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Pickear_ProdPesoVariable.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_Pickear_ProdPesoVariable.CheckBoxImageIndeterminate"), System.Drawing.Image)
-        Me.Chk_Pickear_ProdPesoVariable.FocusCuesEnabled = False
-        Me.Chk_Pickear_ProdPesoVariable.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Pickear_ProdPesoVariable.Location = New System.Drawing.Point(3, 24)
-        Me.Chk_Pickear_ProdPesoVariable.Name = "Chk_Pickear_ProdPesoVariable"
-        Me.Chk_Pickear_ProdPesoVariable.Size = New System.Drawing.Size(635, 13)
-        Me.Chk_Pickear_ProdPesoVariable.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Pickear_ProdPesoVariable.TabIndex = 130
-        Me.Chk_Pickear_ProdPesoVariable.Text = "Pickear solo productos con peso variable"
-        '
-        'SpTab_Logistica
-        '
-        Me.SpTab_Logistica.AttachedControl = Me.SuperTabControlPanel9
-        Me.SpTab_Logistica.GlobalItem = False
-        Me.SpTab_Logistica.Name = "SpTab_Logistica"
-        Me.SpTab_Logistica.Text = "Logística"
-        '
         'Bar1
         '
         Me.Bar1.AntiAlias = True
@@ -2792,41 +2835,22 @@ Partial Class Frm_Configuracion_Gral
         Me.CheckBoxX2.TabIndex = 117
         Me.CheckBoxX2.Text = "Ambiente de pruebas y certificación"
         '
-        'Chk_NVIQuedaSUDOSucEnvia
+        'Chk_NuncaPickeaDocConRTUDesactivada
         '
         '
         '
         '
-        Me.Chk_NVIQuedaSUDOSucEnvia.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_NVIQuedaSUDOSucEnvia.CheckBoxImageChecked = CType(resources.GetObject("Chk_NVIQuedaSUDOSucEnvia.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_NVIQuedaSUDOSucEnvia.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_NVIQuedaSUDOSucEnvia.CheckBoxImageIndeterminate"), System.Drawing.Image)
-        Me.Chk_NVIQuedaSUDOSucEnvia.FocusCuesEnabled = False
-        Me.Chk_NVIQuedaSUDOSucEnvia.ForeColor = System.Drawing.Color.Black
-        Me.Chk_NVIQuedaSUDOSucEnvia.Location = New System.Drawing.Point(3, 171)
-        Me.Chk_NVIQuedaSUDOSucEnvia.Name = "Chk_NVIQuedaSUDOSucEnvia"
-        Me.Chk_NVIQuedaSUDOSucEnvia.Size = New System.Drawing.Size(635, 15)
-        Me.Chk_NVIQuedaSUDOSucEnvia.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_NVIQuedaSUDOSucEnvia.TabIndex = 133
-        Me.Chk_NVIQuedaSUDOSucEnvia.Text = "NVI - La sucursal del documento quedara como la sucursal de la bodega que <b>ENVI" &
-    "A </b>los productos"
-        '
-        'Chk_NVIQuedaSUDOSucRecibe
-        '
-        '
-        '
-        '
-        Me.Chk_NVIQuedaSUDOSucRecibe.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_NVIQuedaSUDOSucRecibe.CheckBoxImageChecked = CType(resources.GetObject("Chk_NVIQuedaSUDOSucRecibe.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_NVIQuedaSUDOSucRecibe.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_NVIQuedaSUDOSucRecibe.CheckBoxImageIndeterminate"), System.Drawing.Image)
-        Me.Chk_NVIQuedaSUDOSucRecibe.FocusCuesEnabled = False
-        Me.Chk_NVIQuedaSUDOSucRecibe.ForeColor = System.Drawing.Color.Black
-        Me.Chk_NVIQuedaSUDOSucRecibe.Location = New System.Drawing.Point(3, 192)
-        Me.Chk_NVIQuedaSUDOSucRecibe.Name = "Chk_NVIQuedaSUDOSucRecibe"
-        Me.Chk_NVIQuedaSUDOSucRecibe.Size = New System.Drawing.Size(635, 16)
-        Me.Chk_NVIQuedaSUDOSucRecibe.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_NVIQuedaSUDOSucRecibe.TabIndex = 134
-        Me.Chk_NVIQuedaSUDOSucRecibe.Text = "NVI - La sucursal del documento quedara como la sucursal de la bodega que <b>RECE" &
-    "PCIONA</b> los productos"
+        Me.Chk_NuncaPickeaDocConRTUDesactivada.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_NuncaPickeaDocConRTUDesactivada.CheckBoxImageChecked = CType(resources.GetObject("Chk_NuncaPickeaDocConRTUDesactivada.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_NuncaPickeaDocConRTUDesactivada.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_NuncaPickeaDocConRTUDesactivada.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_NuncaPickeaDocConRTUDesactivada.FocusCuesEnabled = False
+        Me.Chk_NuncaPickeaDocConRTUDesactivada.ForeColor = System.Drawing.Color.Black
+        Me.Chk_NuncaPickeaDocConRTUDesactivada.Location = New System.Drawing.Point(3, 82)
+        Me.Chk_NuncaPickeaDocConRTUDesactivada.Name = "Chk_NuncaPickeaDocConRTUDesactivada"
+        Me.Chk_NuncaPickeaDocConRTUDesactivada.Size = New System.Drawing.Size(635, 14)
+        Me.Chk_NuncaPickeaDocConRTUDesactivada.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_NuncaPickeaDocConRTUDesactivada.TabIndex = 133
+        Me.Chk_NuncaPickeaDocConRTUDesactivada.Text = "No dejar pickear nunca documentos con productos con R.T.U. desactivada."
         '
         'Frm_Configuracion_Gral
         '
@@ -2837,6 +2861,7 @@ Partial Class Frm_Configuracion_Gral
         Me.Controls.Add(Me.Bar1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
@@ -2850,6 +2875,8 @@ Partial Class Frm_Configuracion_Gral
         CType(Me.Input_Dias_Max_Fecha_Despacho, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControl1.ResumeLayout(False)
+        Me.SuperTabControlPanel9.ResumeLayout(False)
+        Me.TableLayoutPanel7.ResumeLayout(False)
         Me.SuperTabControlPanel1.ResumeLayout(False)
         Me.TableLayoutPanel5.ResumeLayout(False)
         Me.SuperTabControlPanel5.ResumeLayout(False)
@@ -2867,8 +2894,6 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControlPanel2.ResumeLayout(False)
         Me.GroupPanel1.ResumeLayout(False)
         Me.SuperTabControlPanel3.ResumeLayout(False)
-        Me.SuperTabControlPanel9.ResumeLayout(False)
-        Me.TableLayoutPanel7.ResumeLayout(False)
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -3030,4 +3055,5 @@ Partial Class Frm_Configuracion_Gral
     Friend WithEvents Chk_RestringirFechaVencimientoClientes As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_NVIQuedaSUDOSucEnvia As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_NVIQuedaSUDOSucRecibe As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_NuncaPickeaDocConRTUDesactivada As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

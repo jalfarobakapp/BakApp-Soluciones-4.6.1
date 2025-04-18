@@ -6441,10 +6441,7 @@ Public Module Crear_Documentos_Desde_Otro
                                _vNum_telefono As String) As Fincred_API.Respuesta
 
         Dim _Respuesta As New Fincred_API.Respuesta
-
-        '_Row_Encabezado_Doc = _TblEncabezado.Rows(0)
-
-        Dim _Rut_girador As String = _vRut_girador '_RowEntidad.Item("Rut")
+        Dim _Rut_girador As String = _vRut_girador
 
         _Rut_girador = Replace(_Rut_girador, "-", "")
         _Rut_girador = Replace(_Rut_girador, ".", "")
@@ -6456,11 +6453,11 @@ Public Module Crear_Documentos_Desde_Otro
         Dim _Numero_documento_transaccion As String = "XXXXXXXXX"
         Dim _Producto As Cl_Fincred_Bakapp.Cl_Fincred_SQL.Producto = Cl_Fincred_Bakapp.Cl_Fincred_SQL.Producto.Facturas
         Dim _Banco As Integer = 0
-        Dim _Monto_total_venta As Double = _vMonto_total_venta '_Row_Encabezado_Doc.Item("TotalBrutoDoc")
+        Dim _Monto_total_venta As Double = _vMonto_total_venta
         Dim _Cantidad_documentos_venta As Integer = 1
         Dim _Num_primer_doc As Integer = _Numero_transaccion_cliente
         Dim _Fec_primer_venc As String = Format(_vFec_primer_venc, "ddMMyyyy")
-        Dim _Num_telefono As String = _vNum_telefono '_RowEntidad.Item("FOEN").ToString.Trim
+        Dim _Num_telefono As String = _vNum_telefono
 
         Dim _ProductoV = _Producto + 1
 

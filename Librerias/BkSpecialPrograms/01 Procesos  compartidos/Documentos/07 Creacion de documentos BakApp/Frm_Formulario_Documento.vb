@@ -942,6 +942,7 @@ Public Class Frm_Formulario_Documento
         If _DemarcarPickeo Then
             Chk_Pickear.Checked = False
             Chk_Pickear.Visible = False
+            Chk_Pickear.Enabled = True
         End If
 
         If _Revisando_Situacion_Comercial Or _Revision_Remota Or _Solo_Revisar_El_Documento Then
@@ -1061,6 +1062,7 @@ Public Class Frm_Formulario_Documento
             If _Tido = "NVV" And _DemarcarPickeo Then
                 Chk_Pickear.Checked = _Global_Row_Configuracion_General.Item("Pickear_NVVTodas")
                 Chk_Pickear.Visible = _Global_Row_Configuracion_General.Item("Pickear_NVVTodas")
+                Chk_Pickear.Enabled = True
             End If
 
         End If
@@ -1088,6 +1090,8 @@ Public Class Frm_Formulario_Documento
         If _Tido = "NVV" Or _Tido = "OCC" Then
             Btn_Cadena_Remota.Enabled = Not Warning_Visado.Visible
         End If
+
+        _TblEncabezado.Rows(0).Item("Pickear") = Chk_Pickear.Checked
 
         _RevisandoBotonesActivos = False
 
@@ -5958,7 +5962,9 @@ Public Class Frm_Formulario_Documento
         If Not _Desde_Otro_Documento And Not IsNothing(_RowProductoObs) Then
             If Not String.IsNullOrEmpty(_RowProductoObs.Item("MENSAJE01")) Then
 
-                Dim _Msg As String = Fx_AjustarTexto(_RowProductoObs.Item("MENSAJE01"), 100).ToString.Trim
+                Dim _Mensaje01 As String = Replace(_RowProductoObs.Item("MENSAJE01").ToString.Trim, vbCrLf, " ")
+
+                Dim _Msg As String = Fx_AjustarTexto(_Mensaje01.Trim, 100).ToString.Trim
 
                 MessageBoxEx.Show(Me, _Msg, "Mensaje asociado al producto",
                                   MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -8911,25 +8917,31 @@ Public Class Frm_Formulario_Documento
 
                                     Dim _DesacRazTransf As Boolean = Fm.Chk_DesacRazTransf.Checked
 
+                                    _Fila.Cells("RtuVariable").Value = _RtuVariable
+                                    _Fila.Cells("DesacRazTransf").Value = _DesacRazTransf
+
                                     If _DesacRazTransf Then
 
-                                        If Chk_Pickear.Checked Then Chk_Pickear.Checked = False
+                                        Dim _Msj As String = "Si no dispone del permiso necesario para guardar un documento con pesos " &
+                                                             "variables y modificar la condición para desactivar la razón de transformación, " &
+                                                             "se solicitará dicho permiso al finalizar el documento para completar la acción."
+
+                                        Chk_Pickear.Checked = False
+
+                                        If _Global_Row_Configuracion_General.Item("NuncaPickeaDocConRTUDesactivada") And Chk_Pickear.Enabled Then
+                                            Chk_Pickear.Enabled = False
+                                            _Msj += vbCrLf & vbCrLf & "Según la configuración General el sistema no permite Pickear documentos que tengan productos que tengan razón de transformación desactivada." & vbCrLf & "El checkbox de ""Pickear documento"" será deshabilitado."
+                                        End If
+
+                                        _Msj = Fx_AjustarTexto(_Msj, 80)
 
                                         If Not _AvisoCambioRTUVariable Then
-                                            Dim _Msj As String = "Si no cuenta con el permiso para grabar un documento con pesos variables y " &
-                                                         "cambiando la condición de desactivar la razón de transformación, " &
-                                                         "este será solicitado al finalizar el documento para completar la acción."
-                                            _Msj = Fx_AjustarTexto(_Msj, 80)
-
                                             MessageBoxEx.Show(Me, _Msj, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                                         End If
 
                                         _AvisoCambioRTUVariable = True
 
                                     End If
-
-                                    _Fila.Cells("RtuVariable").Value = _RtuVariable
-                                    _Fila.Cells("DesacRazTransf").Value = _DesacRazTransf
 
                                     If _RtuVariable And CBool(Fm.Cantidad_Ud1 + Fm.Cantidad_Ud2) Then
                                         _Fila.Cells("Rtu").Value = Math.Round(Fm.Cantidad_Ud1 / Fm.Cantidad_Ud2, 5)
@@ -11831,8 +11843,26 @@ Public Class Frm_Formulario_Documento
 
         If Not (_RowDocumento Is Nothing) Then
 
+            _RevisandoBotonesActivos = True
+
             Dim _Id_DocEnc As Integer = _RowDocumento.Item("Id_DocEnc")
             Sb_Crear_Documento_Desde_Otros_Documentos_Casi_Bakapp(_Id_DocEnc)
+
+            _RevisandoBotonesActivos = False
+
+            If _Tido = "NVV" And Chk_Pickear.Checked Then
+                Chk_Pickear.Visible = True
+                Chk_Pickear.Enabled = True
+            Else
+                If _Global_Row_Configuracion_General.Item("NuncaPickeaDocConRTUDesactivada") Then
+                    For Each _Fl As DataRow In _TblDetalle.Rows
+                        If _Fl.Item("DesacRazTransf") And _Fl.Item("RtuVariable") Then
+                            Chk_Pickear.Enabled = False
+                            Exit For
+                        End If
+                    Next
+                End If
+            End If
 
             ToastNotification.Show(Me, "DOCUMENTO RECUPERADO CORRECTAMENTE", Btn_Revisar_Doc_Stand_By.Image,
                                   2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
@@ -12006,6 +12036,12 @@ Public Class Frm_Formulario_Documento
             _TblEncabezado.Rows(0).Item("TblTipoVenta") = _TblEncabezado_StBy.Rows(0).Item("TblTipoVenta")
             _TblEncabezado.Rows(0).Item("CodTipoVenta") = _TblEncabezado_StBy.Rows(0).Item("CodTipoVenta")
 
+            Dim _Descripcion As String = _Sql.Fx_Trae_Dato("TABCARAC", "NOKOCARAC", "KOTABLA = '" & _TblEncabezado.Rows(0).Item("TblTipoVenta") & "' And KOCARAC = '" & _TblEncabezado.Rows(0).Item("CodTipoVenta") & "'")
+
+            If Not String.IsNullOrWhiteSpace(_Descripcion) Then
+                Lbl_TipoVenta.Text = "Tipo de venta: " & _Descripcion
+            End If
+
             _TblEncabezado.Rows(0).Item("Customizable") = _TblEncabezado_StBy.Rows(0).Item("Customizable")
 
             PreVenta = _TblEncabezado_StBy.Rows(0).Item("PreVenta")
@@ -12016,7 +12052,7 @@ Public Class Frm_Formulario_Documento
         End With
 
         Chk_Pickear.Visible = True
-        Chk_Pickear.Enabled = False
+        Chk_Pickear.Enabled = True
 
         Chk_Pickear.Checked = _TblEncabezado_StBy.Rows(0).Item("Pickear")
 
@@ -12112,6 +12148,7 @@ Public Class Frm_Formulario_Documento
             Dim _Espuntosvta As Boolean = _Fila.Item("Espuntosvta")
             Dim _ModFechVto As Boolean = _Fila.Item("ModFechVto")
             Dim _Condicionado As Boolean = _Fila.Item("Condicionado")
+            Dim _DesacRazTransf As Boolean = _Fila.Item("DesacRazTransf")
 
             _Row.Cells("Id_DocDet").Value = _Id_DocDet
             _Row.Cells("CodLista").Value = _CodLista
@@ -12120,6 +12157,7 @@ Public Class Frm_Formulario_Documento
             _Row.Cells("Espuntosvta").Value = _Espuntosvta
             _Row.Cells("ModFechVto").Value = _ModFechVto
             _Row.Cells("Condicionado").Value = _Condicionado
+            _Row.Cells("DesacRazTransf").Value = _DesacRazTransf
 
             Dim _RowProducto As DataRow
 
@@ -23389,10 +23427,16 @@ Public Class Frm_Formulario_Documento
                         End If
                     Next
 
+                    If Not Chk_Pickear.Checked And _Global_Row_Configuracion_General.Item("NuncaPickeaDocConRTUDesactivada") Then
+                        _PidePermiso = False
+                    End If
+
                     If _PidePermiso Then
+
                         If Not Fx_Tiene_Permiso(Me, "Doc00102", FUNCIONARIO, False) Then
                             Sb_Revisar_Permiso("Doc00102", False, True)
                         End If
+
                     End If
 
                 End If
@@ -29164,9 +29208,20 @@ Public Class Frm_Formulario_Documento
                                  "este será solicitado al finalizar el documento para completar la acción."
             _Msj = Fx_AjustarTexto(_Msj, 80)
 
+            'If _Global_Row_Configuracion_General.Item("NuncaPickeaDocConRTUDesactivada") Then
+            '    For Each _Fl As DataRow In _TblDetalle.Rows
+            '        If _Fl.Item("DesacRazTransf") Then
+            '            Chk_Pickear.Enabled = False
+            '            Exit For
+            '        End If
+            '    Next
+            'End If
+
             MessageBoxEx.Show(Me, _Msj, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
         End If
+
+        _TblEncabezado.Rows(0).Item("Pickear") = Chk_Pickear.Checked
 
     End Sub
 
