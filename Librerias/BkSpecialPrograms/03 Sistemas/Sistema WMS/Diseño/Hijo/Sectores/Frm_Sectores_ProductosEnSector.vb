@@ -58,13 +58,16 @@ Public Class Frm_Sectores_ProductosEnSector
         Cmb_Sector.SelectedValue = _Row_Sector.Item("Codigo_Sector")
 
         Lbl_YearMonth.Text = _MesActual.ToString("MMMM yyyy")
+
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+        AddHandler Grilla.MouseDown, AddressOf Grilla_MouseDown
 
         Sb_Actualizar_Grilla()
 
         Btn_MesSiguiente.Enabled = Not (Date.Today.Month = _MesActual.Month)
 
         AddHandler Cmb_Sector.SelectedIndexChanged, AddressOf Sb_Actualizar_Grilla
+
 
     End Sub
 
@@ -316,6 +319,36 @@ Public Class Frm_Sectores_ProductosEnSector
         Dim _NombreArchivo As String = "Productos en " & Cmb_Sector.SelectedValue & "-" & Lbl_YearMonth.Text
 
         ExportarTabla_JetExcel_Tabla(_Tbl_Productos, Me, _NombreArchivo)
+
+    End Sub
+
+    Private Sub Mnu_Btn_Ver_Informacion_de_producto_Click(sender As Object, e As EventArgs) Handles Mnu_Btn_Ver_Informacion_de_producto.Click
+
+        Dim _Producto_Op As New Frm_BkpPostBusquedaEspecial_Mt
+
+        Dim _Codigo As String = Grilla.Rows(Grilla.CurrentRow.Index).Cells("Codigo").Value
+        _Producto_Op.Sb_Ver_Informacion_Adicional_producto(Me, _Codigo)
+
+    End Sub
+
+    Private Sub Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
+
+        If e.Button = Windows.Forms.MouseButtons.Right Then
+            With sender
+                Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
+                If Hitest.Type = DataGridViewHitTestType.Cell Then
+                    .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
+
+                    Dim _Fila As DataGridViewRow = CType(sender, DataGridView).Rows(CType(sender, DataGridView).CurrentRow.Index)
+                    Dim _Cabeza = sender.Columns(CType(sender, DataGridView).CurrentCell.ColumnIndex).Name
+
+                    ShowContextMenu(Menu_Contextual_Opciones_Producto)
+
+                End If
+
+            End With
+
+        End If
 
     End Sub
 

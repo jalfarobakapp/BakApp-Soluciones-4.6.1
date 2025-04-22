@@ -145,10 +145,12 @@ Public Class Frm_Sectores_Lista_UbicOblig
             '.Columns("Productos").DisplayIndex = _DisplayIndex
             '_DisplayIndex += 1
 
+
             .Columns("Productos").Width = 80
             .Columns("Productos").HeaderText = "P.Asignados"
             .Columns("Productos").ToolTipText = "Productos asignados en las ubicaciones el día " & Dtp_FechaRevision.Value.ToLongDateString & " en este sector"
             .Columns("Productos").Visible = True
+            .Columns("Productos").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Productos").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -206,87 +208,7 @@ Public Class Frm_Sectores_Lista_UbicOblig
 
     Private Sub Btn_ConfProdUbic_Click(sender As Object, e As EventArgs) Handles Btn_ConfProdUbic.Click
 
-        If Not Fx_RevisarProductosSeleccionados() Then
-            Return
-        End If
-
-        If MessageBoxEx.Show(Me, "¿Confirma nuevamente los productos de la ultima fecha de ingreso el día " & Dtp_FechaRevision.Value.ToLongDateString & "?", "Confirmación mavisa",
-                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
-            Return
-        End If
-
-        For Each _Fila As DataGridViewRow In Grilla.Rows
-
-            Dim _Lista As List(Of LsValiciones.Mensajes) = New List(Of LsValiciones.Mensajes)
-
-            If _Fila.Cells("Chk").Value Then
-
-                Dim _Mensaje As LsValiciones.Mensajes = Fx_ConfirmarProdUltimaUbicacion(_Fila, False)
-
-                _Lista.Add(_Mensaje)
-
-                If _Mensaje.EsCorrecto Then
-                    Sb_ActualizarDatosFila(_Fila)
-                End If
-
-            End If
-
-        Next
-
-        MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        'Sb_Actualizar_Grilla()
-
-        Return
-
-        Consulta_sql = "Select Id_Sector,Id_Mapa,Empresa,Sucursal,Bodega,Codigo_Sector,Nombre_Sector,Es_SubSector,EsCabecera,SoloUnaUbicacion,OblConfimarUbic," & vbCrLf &
-                       "(Select COUNT(*) From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega Where Id_Mapa = Sect.Id_Mapa And Codigo_Sector = Sect.Codigo_Sector) As Ubicaciones," & vbCrLf &
-                       "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Prod_Ubicacion Where Id_Mapa = Sect.Id_Mapa And Codigo_Sector = Sect.Codigo_Sector) As Productos," & vbCrLf &
-                       "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal Where Id_Mapa = Sect.Id_Mapa And Codigo_Sector = Sect.Codigo_Sector" & vbCrLf &
-                       "And CONVERT(varchar, FechaIngreso, 112) = CONVERT(varchar,'" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "', 112)) As Productos2," & vbCrLf &
-                       "CAST(0 As Bit) As 'ProdConfimadaUbic'" & vbCrLf &
-                       "Into #Paso" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Sectores Sect" & vbCrLf &
-                       "Where Id_Mapa = " & _Id_Mapa & " And OblConfimarUbic = 1" & vbCrLf &
-                       "Update #Paso Set ProdConfimadaUbic = 1 Where Productos = Productos2" & vbCrLf &
-                       "Select * From #Paso" & vbCrLf &
-                       "Drop Table #Paso"
-
-        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
-
-        Dim _ProdSinConfirmar = 0
-
-        For Each _Fila As DataRow In _Tbl.Rows
-            If Not _Fila.Item("ProdConfimadaUbic") Then
-                _ProdSinConfirmar += 1
-            End If
-        Next
-
-        If _ProdSinConfirmar = 0 Then
-            MessageBoxEx.Show(Me, "Todos los productos ya han sido confirmados en las ubicaciones el día " & Dtp_FechaRevision.Value.ToLongDateString,
-                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Return
-        End If
-
-        If MessageBoxEx.Show(Me, "¿Confirma dejar nuevamente los productos " & vbCrLf &
-                             "en las mismas ubicaciones el día " & Dtp_FechaRevision.Value.ToLongDateString & "?",
-                             "Confirmar productos en la ubicaciones", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
-            Return
-        End If
-
-        Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
-
-        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal (Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector," &
-                       "Codigo_Ubic,Codigo,NombreEquipo,CodFuncionario_Ing,FechaIngreso)" & vbCrLf &
-                       "Select Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector,Codigo_Ubic,Codigo,'" & _NombreEquipo & "','" & FUNCIONARIO & "',1,'" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "'" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Prod_Ubicacion" & vbCrLf &
-                       "Where Id_Mapa = " & _Id_Mapa & " And Codigo Not In " &
-                       "(Select Codigo From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal " &
-                       "Where Id_Mapa = " & _Id_Mapa &
-                       " And CONVERT(varchar, FechaIngreso, 112) = '" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "')"
-        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-            MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Sb_Actualizar_Grilla()
-        End If
+        ShowContextMenu(Menu_Contextual_02)
 
     End Sub
 
@@ -559,6 +481,10 @@ Public Class Frm_Sectores_Lista_UbicOblig
 
     Private Sub Btn_ExportarExcelProductos_Click(sender As Object, e As EventArgs) Handles Btn_ExportarExcelProductos.Click
 
+        ShowContextMenu(Menu_Contextual_03)
+
+        Return
+
         Consulta_sql = "Select PrUbic.Codigo_Sector,Mp.KOPR,Mp.NOKOPR" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal PrUbic" & vbCrLf &
                        "Left Join MAEPR Mp On Mp.KOPR = PrUbic.Codigo" & vbCrLf &
@@ -752,6 +678,7 @@ Public Class Frm_Sectores_Lista_UbicOblig
             Dim _Sucursal As String = _Fila.Cells("Sucursal").Value
             Dim _Bodega As String = _Fila.Cells("Bodega").Value
             Dim _Codigo_Sector As String = _Fila.Cells("Codigo_Sector").Value
+            Dim _Nombre_Sector As String = _Fila.Cells("Nombre_Sector").Value.ToString.Trim
             Dim _Codigo_Ubic As String = _Codigo_Sector
             Dim _FechaIngreso As Date = Dtp_FechaRevision.Value
 
@@ -783,6 +710,28 @@ Public Class Frm_Sectores_Lista_UbicOblig
 
             Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
 
+            Consulta_sql = "Select Distinct Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector,Codigo_Ubic,Codigo,'" & _NombreEquipo & "','" & FUNCIONARIO & "','" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "'" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal" & vbCrLf &
+                           "Where Id_Mapa = " & _Id_Mapa & " And CONVERT(varchar, FechaIngreso, 112) = '" & Format(_FechaUltUbic, "yyyyMMdd") & "'" & vbCrLf &
+                           "And Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega & "' And Codigo_Sector = '" & _Codigo_Sector & "'" & vbCrLf &
+                           "And Codigo Not In (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal " &
+                           "Where Id_Mapa = " & _Id_Mapa & " And CONVERT(varchar, FechaIngreso, 112) = '" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") &
+                           "' And Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega & "' And Codigo_Sector = '" & _Codigo_Sector & "')"
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+            If Not CBool(_Tbl.Rows.Count) Then
+
+                _Mensaje.EsCorrecto = True
+                _Mensaje.Detalle = "No se encontraron productos que levantar."
+                _Mensaje.Mensaje = _Codigo_Sector & " - " & _Nombre_Sector & ", Ubicación: " & _Codigo_Ubic
+                _Mensaje.Icono = MessageBoxIcon.Exclamation
+
+                Return _Mensaje
+
+                'Throw New System.Exception(_Codigo_Sector & " - " & _Nombre_Sector & ", Ubicación: " & _Codigo_Ubic)
+
+            End If
+
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal (Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector,Codigo_Ubic,Codigo,NombreEquipo,CodFuncionario_Ing,FechaIngreso)" & vbCrLf &
                            "Select Distinct Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector,Codigo_Ubic,Codigo,'" & _NombreEquipo & "','" & FUNCIONARIO & "','" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "'" & vbCrLf &
                            "From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal" & vbCrLf &
@@ -797,7 +746,8 @@ Public Class Frm_Sectores_Lista_UbicOblig
             End If
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Mensaje = "Datos actualizados correctamente"
+            _Mensaje.Detalle = _Tbl.Rows.Count & " productos actualizados"
+            _Mensaje.Mensaje = _Codigo_Sector & " - " & _Nombre_Sector & ", Ubicación: " & _Codigo_Ubic
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
@@ -920,5 +870,208 @@ Public Class Frm_Sectores_Lista_UbicOblig
         Return True
 
     End Function
+
+    Private Sub Btn_ConfProdUbicSoloUna_Masivo_Click(sender As Object, e As EventArgs) Handles Btn_ConfProdUbicSoloUna_Masivo.Click
+
+        If Not Fx_RevisarProductosSeleccionados() Then
+            Return
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Confirma nuevamente los productos de la ultima fecha de ingreso el día " & Dtp_FechaRevision.Value.ToLongDateString & "?", "Confirmación mavisa",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
+
+        'Dim _FlChk As New List(Of DataGridViewRow)
+        Dim _Lista As New List(Of LsValiciones.Mensajes)
+
+        For Each _Fila As DataGridViewRow In Grilla.Rows
+
+            If _Fila.Cells("Chk").Value Then
+
+                Dim _Mensaje As LsValiciones.Mensajes = Fx_ConfirmarProdUltimaUbicacion(_Fila, False)
+
+                _Lista.Add(_Mensaje)
+
+                If _Mensaje.EsCorrecto Then
+                    '_FlChk.Add(_Fila)
+                    _Fila.Cells("Chk").Value = False
+                    Sb_ActualizarDatosFila(_Fila)
+                End If
+
+            End If
+
+        Next
+
+        If Not CBool(_Lista.Count) Then
+            MessageBoxEx.Show(Me, "No se han realizado cambios", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim Fmv As New Frm_Validaciones
+
+        Fmv.Col1_Mensaje.Ancho = 600
+        Fmv.Col1_Mensaje.Descripcion = "Mensaje"
+        Fmv.Col1_Mensaje.Nombre = "Mensaje"
+
+        Fmv.Col2_Descripcion.Ancho = 200
+        Fmv.Col2_Descripcion.Descripcion = "Descripción"
+        Fmv.Col2_Descripcion.Nombre = "Descripción"
+
+        Fmv.Col3_Resultado.Visible = False
+        Fmv.Col4_Fecha.Visible = False
+
+        Fmv.ListaMensajes = _Lista
+        Fmv.ShowDialog(Me)
+        Fmv.Dispose()
+
+        If Chk_Seleccionar_Todos.Checked Then
+            Chk_Seleccionar_Todos.Checked = False
+        End If
+
+        'If Chk_Seleccionar_Todos.Checked Then
+        '    Chk_Seleccionar_Todos.Checked = False
+        'Else
+        '    For Each _Fl As DataGridViewRow In _FlChk
+        '        _Fl.Cells("Chk").Value = False
+        '    Next
+        'End If
+
+        'MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+    End Sub
+
+    Private Sub Btn_ConfProdUltUbic_Masivo_Click(sender As Object, e As EventArgs) Handles Btn_ConfProdUltUbic_Masivo.Click
+
+        If Not Fx_RevisarProductosSeleccionados() Then
+            Return
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Confirma importar los productos desde la ubicación en el mapa" & vbCrLf &
+                             "para el día " & Dtp_FechaRevision.Value.ToLongDateString & "?" & vbCrLf &
+                             "Esto borrara los productos que actualmente se encuentran en el sector",
+                     "Confirmar productos en la ubicaciones", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) <> DialogResult.Yes Then
+            Return
+        End If
+
+        Consulta_sql = "Select Id_Sector,Id_Mapa,Empresa,Sucursal,Bodega,Codigo_Sector,Nombre_Sector,Es_SubSector,EsCabecera,SoloUnaUbicacion,OblConfimarUbic," & vbCrLf &
+                 "(Select COUNT(*) From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega Where Id_Mapa = Sect.Id_Mapa And Codigo_Sector = Sect.Codigo_Sector) As Ubicaciones," & vbCrLf &
+                 "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Prod_Ubicacion Where Id_Mapa = Sect.Id_Mapa And Codigo_Sector = Sect.Codigo_Sector) As Productos," & vbCrLf &
+                 "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal Where Id_Mapa = Sect.Id_Mapa And Codigo_Sector = Sect.Codigo_Sector" & vbCrLf &
+                 "And CONVERT(varchar, FechaIngreso, 112) = CONVERT(varchar,'" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "', 112)) As Productos2," & vbCrLf &
+                 "CAST(0 As Bit) As 'ProdConfimadaUbic'" & vbCrLf &
+                 "Into #Paso" & vbCrLf &
+                 "From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Sectores Sect" & vbCrLf &
+                 "Where Id_Mapa = " & _Id_Mapa & " And OblConfimarUbic = 1" & vbCrLf &
+                 "Update #Paso Set ProdConfimadaUbic = 1 Where Productos = Productos2" & vbCrLf &
+                 "Select * From #Paso" & vbCrLf &
+                 "Drop Table #Paso"
+
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+        Dim _ProdSinConfirmar = 0
+
+        For Each _Fila As DataRow In _Tbl.Rows
+            If Not _Fila.Item("ProdConfimadaUbic") Then
+                _ProdSinConfirmar += 1
+            End If
+        Next
+
+        If _ProdSinConfirmar = 0 Then
+            MessageBoxEx.Show(Me, "Todos los productos ya han sido confirmados en las ubicaciones el día " & Dtp_FechaRevision.Value.ToLongDateString,
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Return
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Confirma dejar nuevamente los productos " & vbCrLf &
+                             "en las mismas ubicaciones el día " & Dtp_FechaRevision.Value.ToLongDateString & "?",
+                             "Confirmar productos en la ubicaciones", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
+
+        Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+
+        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal (Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector," &
+                       "Codigo_Ubic,Codigo,NombreEquipo,CodFuncionario_Ing,FechaIngreso)" & vbCrLf &
+                       "Select Empresa,Sucursal,Bodega,Id_Mapa,Codigo_Sector,Codigo_Ubic,Codigo,'" & _NombreEquipo & "','" & FUNCIONARIO & "',1,'" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "'" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Prod_Ubicacion" & vbCrLf &
+                       "Where Id_Mapa = " & _Id_Mapa & " And Codigo Not In " &
+                       "(Select Codigo From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal " &
+                       "Where Id_Mapa = " & _Id_Mapa &
+                       " And CONVERT(varchar, FechaIngreso, 112) = '" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "')"
+        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+            MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Sb_Actualizar_Grilla()
+        End If
+
+    End Sub
+
+    Private Sub Btn_ExportarExcel_FechaActual_Click(sender As Object, e As EventArgs) Handles Btn_ExportarExcel_FechaActual.Click
+        Sb_Exportar_Excel(0, True)
+    End Sub
+
+    Private Sub Btn_ExportarExcel_MesActual_Click(sender As Object, e As EventArgs) Handles Btn_ExportarExcel_MesActual.Click
+        Sb_Exportar_Excel(0, False)
+    End Sub
+
+    Private Sub Btn_ExportarExcel_Ult3Meses_Click(sender As Object, e As EventArgs) Handles Btn_ExportarExcel_Ult3Meses.Click
+        Sb_Exportar_Excel(3, False)
+    End Sub
+
+    Private Sub Btn_ExportarExcel_Ult6Meses_Click(sender As Object, e As EventArgs) Handles Btn_ExportarExcel_Ult6Meses.Click
+        Sb_Exportar_Excel(6, False)
+    End Sub
+
+    Sub Sb_Exportar_Excel(_Meses As Integer, _Hoy As Boolean)
+
+        Dim _Condicion_Fechas As String = String.Empty
+
+        If _Hoy Then
+            _Condicion_Fechas = "CONVERT(varchar, FechaIngreso, 112) = '" & Format(Dtp_FechaRevision.Value, "yyyyMMdd") & "'"
+        Else
+            _Condicion_Fechas = "PrUbic.FechaIngreso BETWEEN @FechaDesde AND @FechaHasta"
+        End If
+
+        Consulta_sql = "Declare @Meses Int = " & _Meses & vbCrLf &
+                       "DECLARE @FechaDesde DATE = DATEFROMPARTS(YEAR(DATEADD(MONTH, -@Meses, GETDATE())), MONTH(DATEADD(MONTH, -@Meses, GETDATE())), 1)" & vbCrLf &
+                       "DECLARE @FechaHasta DATE = CAST(GETDATE() AS DATE)" & vbCrLf &
+                       "" & vbCrLf &
+                       "--Select @FechaDesde, @FechaHasta" & vbCrLf &
+                       "" & vbCrLf &
+                       "SELECT PrUbic.Codigo_Sector," & vbCrLf &
+                       "St.Nombre_Sector," & vbCrLf &
+                       "PrUbic.Codigo_Ubic," & vbCrLf &
+                       "Mp.KOPR," & vbCrLf &
+                       "Mp.NOKOPR," & vbCrLf &
+                       "PrUbic.FechaIngreso" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal PrUbic" & vbCrLf &
+                       "Left Join MAEPR Mp" & vbCrLf &
+                       "On Mp.KOPR = PrUbic.Codigo" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Sectores St" & vbCrLf &
+                       "On St.Id_Mapa = PrUbic.Id_Mapa" & vbCrLf &
+                       "And St.Empresa = PrUbic.Empresa" & vbCrLf &
+                       "And St.Sucursal = PrUbic.Sucursal" & vbCrLf &
+                       "And St.Bodega = PrUbic.Bodega" & vbCrLf &
+                       "Where " & _Condicion_Fechas & vbCrLf &
+                       "Order By PrUbic.FechaIngreso,PrUbic.Codigo_Sector,Mp.KOPR"
+
+        Me.Cursor = Cursors.WaitCursor
+
+        Dim Fm_Espera As New Frm_Form_Esperar
+        Fm_Espera.Pro_Texto = "Exportando productos en ubicaciones..."
+        Fm_Espera.Whait_Cursor = True
+        Fm_Espera.BarraCircular.IsRunning = True
+        Fm_Espera.Show()
+
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable_Progreso(Consulta_sql,, Fm_Espera.ProgressBarItem1) '_Sql.Fx_Get_DataTable(Consulta_sql)
+
+        Fm_Espera.Close()
+        Fm_Espera.Dispose()
+
+        Me.Cursor = Cursors.Default
+
+        ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Productos en ubicaciones")
+
+    End Sub
 
 End Class

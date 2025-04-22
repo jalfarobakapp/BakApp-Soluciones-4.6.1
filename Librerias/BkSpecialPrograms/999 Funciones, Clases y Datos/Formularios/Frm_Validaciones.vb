@@ -2,10 +2,10 @@
 
 Public Class Frm_Validaciones
 
-    Public Property Columan1 As LsValiciones.Columnas
-    Public Property Columan2 As LsValiciones.Columnas
-    Public Property Columan3 As LsValiciones.Columnas
-    Public Property Columan4 As LsValiciones.Columnas
+    Public Property Col1_Mensaje As LsValiciones.Columnas
+    Public Property Col2_Descripcion As LsValiciones.Columnas
+    Public Property Col3_Resultado As LsValiciones.Columnas
+    Public Property Col4_Fecha As LsValiciones.Columnas
     Public Property UsarImagenesExternas As Boolean
     Public Property ListaDeImagenesExternas As ImageList
 
@@ -15,6 +15,35 @@ Public Class Frm_Validaciones
         InitializeComponent()
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+
+        Col1_Mensaje = New LsValiciones.Columnas
+        Col2_Descripcion = New LsValiciones.Columnas
+        Col3_Resultado = New LsValiciones.Columnas
+        Col4_Fecha = New LsValiciones.Columnas
+
+        Col1_Mensaje.Nombre = "Mensaje"
+        Col1_Mensaje.Descripcion = "Mensaje"
+        Col1_Mensaje.Ancho = 300
+        Col1_Mensaje.Alineacion = HorizontalAlignment.Left
+        Col1_Mensaje.Visible = True
+
+        Col2_Descripcion.Nombre = "Descripcion"
+        Col2_Descripcion.Descripcion = "Descripción"
+        Col2_Descripcion.Ancho = 380
+        Col2_Descripcion.Alineacion = HorizontalAlignment.Left
+        Col2_Descripcion.Visible = True
+
+        Col3_Resultado.Nombre = "Resultado"
+        Col3_Resultado.Descripcion = "Resultado"
+        Col3_Resultado.Ancho = 300
+        Col3_Resultado.Alineacion = HorizontalAlignment.Left
+        Col3_Resultado.Visible = True
+
+        Col4_Fecha.Nombre = "Fecha"
+        Col4_Fecha.Descripcion = "Fecha"
+        Col4_Fecha.Ancho = 100
+        Col4_Fecha.Alineacion = HorizontalAlignment.Left
+        Col4_Fecha.Visible = False
 
     End Sub
 
@@ -35,31 +64,47 @@ Public Class Frm_Validaciones
             Lv_ListaDeMensajes.SmallImageList = ListaDeImagenesExternas
         End If
 
-        ' Cree las columnas de la grilla
+        '' Cree las columnas de la grilla
 
-        If Not IsNothing(Columan1) Then
-            Lv_ListaDeMensajes.Columns.Add(Columan1.Nombre, Columan1.Ancho, HorizontalAlignment.Left).Text = Columan1.Descripcion
-        Else
-            Lv_ListaDeMensajes.Columns.Add("Mensaje.", 300, HorizontalAlignment.Left).Text = "Mensaje"
+        If Col1_Mensaje.Visible Then
+            Lv_ListaDeMensajes.Columns.Add(Col1_Mensaje.Nombre, Col1_Mensaje.Ancho, Col1_Mensaje.Alineacion).Text = Col1_Mensaje.Descripcion
         End If
 
-        If Not IsNothing(Columan2) Then
-            Lv_ListaDeMensajes.Columns.Add(Columan2.Nombre, Columan2.Ancho, HorizontalAlignment.Left).Text = Columan2.Descripcion
-        Else
-            Lv_ListaDeMensajes.Columns.Add("Detalle", 380, HorizontalAlignment.Left).Text = "Detalle"
+        If Col2_Descripcion.Visible Then
+            Lv_ListaDeMensajes.Columns.Add(Col2_Descripcion.Nombre, Col2_Descripcion.Ancho, Col2_Descripcion.Alineacion).Text = Col2_Descripcion.Descripcion
         End If
 
-        If Not IsNothing(Columan3) Then
-            Lv_ListaDeMensajes.Columns.Add(Columan3.Nombre, Columan3.Ancho, HorizontalAlignment.Left).Text = Columan3.Descripcion
-        Else
-            Lv_ListaDeMensajes.Columns.Add("Resultado", 300, HorizontalAlignment.Left).Text = "Resultado"
+        If Col3_Resultado.Visible Then
+            Lv_ListaDeMensajes.Columns.Add(Col3_Resultado.Nombre, Col3_Resultado.Ancho, Col3_Resultado.Alineacion).Text = Col3_Resultado.Descripcion
         End If
 
-        If Not IsNothing(Columan4) Then
-            Lv_ListaDeMensajes.Columns.Add(Columan4.Nombre, Columan4.Ancho, HorizontalAlignment.Left).Text = Columan4.Descripcion
-        Else
-            Lv_ListaDeMensajes.Columns.Add("Fecha", 100, HorizontalAlignment.Left).Text = "Fecha"
+        If Col4_Fecha.Visible Then
+            Lv_ListaDeMensajes.Columns.Add(Col4_Fecha.Nombre, Col4_Fecha.Ancho, Col4_Fecha.Alineacion).Text = Col4_Fecha.Descripcion
         End If
+
+        'If Not IsNothing(Col1_Mensaje) Then
+        '    Lv_ListaDeMensajes.Columns.Add(Col1_Mensaje.Nombre, Col1_Mensaje.Ancho, HorizontalAlignment.Left).Text = Col1_Mensaje.Descripcion
+        'Else
+        '    Lv_ListaDeMensajes.Columns.Add("Mensaje.", 300, HorizontalAlignment.Left).Text = "Mensaje"
+        'End If
+
+        'If Not IsNothing(Col2_Descripcion) Then
+        '    Lv_ListaDeMensajes.Columns.Add(Col2_Descripcion.Nombre, Col2_Descripcion.Ancho, HorizontalAlignment.Left).Text = Col2_Descripcion.Descripcion
+        'Else
+        '    Lv_ListaDeMensajes.Columns.Add("Detalle", 380, HorizontalAlignment.Left).Text = "Detalle"
+        'End If
+
+        'If Not IsNothing(Col3_Resultado) Then
+        '    Lv_ListaDeMensajes.Columns.Add(Col3_Resultado.Nombre, Col3_Resultado.Ancho, HorizontalAlignment.Left).Text = Col3_Resultado.Descripcion
+        'Else
+        '    Lv_ListaDeMensajes.Columns.Add("Resultado", 300, HorizontalAlignment.Left).Text = "Resultado"
+        'End If
+
+        'If Not IsNothing(Col4_Fecha) Then
+        '    Lv_ListaDeMensajes.Columns.Add(Col4_Fecha.Nombre, Col4_Fecha.Ancho, HorizontalAlignment.Left).Text = Col4_Fecha.Descripcion
+        'Else
+        '    Lv_ListaDeMensajes.Columns.Add("Fecha", 100, HorizontalAlignment.Left).Text = "Fecha"
+        'End If
 
 
         ' Cargue el formulario con respuestas
@@ -188,6 +233,8 @@ Namespace LsValiciones
         Public Property Nombre As String
         Public Property Descripcion As String
         Public Property Ancho As Integer
+        Public Property Alineacion As HorizontalAlignment = HorizontalAlignment.Left
+        Public Property Visible As Boolean = True
 
     End Class
 

@@ -1095,10 +1095,10 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
         Dim _Imagenes_List As ImageList
 
         Dim Fmv As New Frm_Validaciones
-        Fmv.Columan1 = _Columan1
-        Fmv.Columan2 = _Columan2
-        Fmv.Columan3 = _Columan3
-        Fmv.Columan4 = _Columan4
+        Fmv.Col1_Mensaje = _Columan1
+        Fmv.Col2_Descripcion = _Columan2
+        Fmv.Col3_Resultado = _Columan3
+        Fmv.Col4_Fecha = _Columan4
         Fmv.ListaMensajes = _Lista
         Fmv.UsarImagenesExternas = True
 
