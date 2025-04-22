@@ -343,7 +343,7 @@ Public Class Frm_MantFacturasElecFiltrar
         _Fm.Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado, "",
                                  "Where TIDO In ('BLV','FCL','FCT','FCV','FDE','FDV','FDX','FEV','FVX','FXV','FYV','GDD','GDP','GDV','GTI','NCV','NCX','NEV')")
         '_Fm.Rdb_Estado_Todos.Enabled = False
-        _Fm.Rdb_Estado_Todos.Checked = True
+        _Fm.Rdb_Estado_Todas.Checked = True
         _Fm.ShowDialog(Me)
         Dim _Row_Documento As DataRow = _Fm.Pro_Row_Documento_Seleccionado
         _Fm.Dispose()

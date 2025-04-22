@@ -18333,7 +18333,7 @@ Public Class Frm_Formulario_Documento
                     End If
 
                     .Grupo_Funcionario.Enabled = True
-                    .Rdb_Fecha_Emision_Desde_Hasta.Checked = True
+                    .Rdb_FEmision_EmitidosEntre.Checked = True
 
                     .ShowDialog(Me)
 
@@ -18580,7 +18580,7 @@ Public Class Frm_Formulario_Documento
                 'End If
 
                 .Grupo_Funcionario.Enabled = True
-                .Rdb_Fecha_Emision_Desde_Hasta.Checked = True
+                .Rdb_FEmision_EmitidosEntre.Checked = True
 
                 .ShowDialog(Me)
 
@@ -19639,6 +19639,9 @@ Public Class Frm_Formulario_Documento
                         Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, _Mostrar_Error)
 
                         Sb_Traer_Producto_Grilla(_New_Fila, _RowProducto, True, _UnTrans, False)
+
+                        _New_Fila.Cells("CantUd1").Value = _CantUd1_Dori
+                        _New_Fila.Cells("CantUd2").Value = _CantUd2_Dori
 
                         Dim _Nmarca As String = _RowProducto.Item("NMARCA")
 
@@ -23958,7 +23961,7 @@ Public Class Frm_Formulario_Documento
                 .Rdb_Estado_Vigente.Checked = True
                 .Rdb_Funcionarios_Todos.Checked = True
                 .Grupo_Funcionario.Enabled = True
-                .Rdb_Fecha_Emision_Desde_Hasta.Checked = True
+                .Rdb_FEmision_EmitidosEntre.Checked = True
                 .ShowDialog(Me)
 
                 If Not (.Pro_Row_Documento_Seleccionado Is Nothing) Then

@@ -3330,7 +3330,7 @@ Public Class Frm_St_Documento
             .Grupo_Entidad.Enabled = False
             .Grupo_Producto.Enabled = False
 
-            .Rdb_Fecha_Emision_Cualquiera.Checked = True
+            .Rdb_FEmision_Todas.Checked = True
             .Pro_Row_Entidad = _RowEntidad
             .Pro_Row_Producto = _RowProducto
 

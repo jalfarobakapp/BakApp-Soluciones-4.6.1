@@ -250,8 +250,8 @@ Public Class Frm_BusquedaDocumento_Filtro
             TxtNroDocumento.FocusHighlightEnabled = False
         End If
 
-        DtpFechaInicio.Value = Now.Date
-        DtpFechaFin.Value = Now.Date
+        Dtp_FEmision_Desde.Value = Now.Date
+        Dtp_FEmision_Hasta.Value = Now.Date
 
     End Sub
 
@@ -279,8 +279,8 @@ Public Class Frm_BusquedaDocumento_Filtro
         AddHandler Rdb_Funcionarios_Algunos.CheckedChanged, AddressOf Sb_Grupo_Funcionarios
         AddHandler Rdb_Funcionarios_Uno.CheckedChanged, AddressOf Sb_Grupo_Funcionarios
 
-        AddHandler Rdb_Fecha_Emision_Cualquiera.CheckedChanged, AddressOf Sb_Grupo_Fecha
-        AddHandler Rdb_Fecha_Emision_Desde_Hasta.CheckedChanged, AddressOf Sb_Grupo_Fecha
+        AddHandler Rdb_FEmision_EmitidosEntre.CheckedChanged, AddressOf Sb_Grupo_Fecha
+        AddHandler Rdb_FEntrega_EmitidosEntre.CheckedChanged, AddressOf Sb_Grupo_FEntrega
 
         AddHandler Rdb_Producto_Todos.CheckedChanged, AddressOf Sb_Grupo_Producto
         AddHandler Rdb_Producto_Uno.CheckedChanged, AddressOf Sb_Grupo_Producto
@@ -289,9 +289,8 @@ Public Class Frm_BusquedaDocumento_Filtro
         Sb_Grupo_Entidad()
         Sb_Grupo_Funcionarios()
         Sb_Grupo_Fecha()
+        Sb_Grupo_FEntrega()
         Sb_Grupo_Producto()
-
-        Rdb_Tipo_Documento_Uno.Checked = True
 
         If _Mostrar_Solo_Datos_Usuario_Activo Then
             Rdb_Funcionarios_Uno.Checked = True
@@ -429,10 +428,17 @@ Public Class Frm_BusquedaDocumento_Filtro
     End Sub
 
     Sub Sb_Grupo_Fecha()
-        LblFecha1.Enabled = Rdb_Fecha_Emision_Desde_Hasta.Checked
-        LblFecha2.Enabled = Rdb_Fecha_Emision_Desde_Hasta.Checked
-        DtpFechaInicio.Enabled = Rdb_Fecha_Emision_Desde_Hasta.Checked
-        DtpFechaFin.Enabled = Rdb_Fecha_Emision_Desde_Hasta.Checked
+        Lbl_FEmision_Desde.Enabled = Rdb_FEmision_EmitidosEntre.Checked
+        Lbl_FEmision_Hasta.Enabled = Rdb_FEmision_EmitidosEntre.Checked
+        Dtp_FEmision_Desde.Enabled = Rdb_FEmision_EmitidosEntre.Checked
+        Dtp_FEmision_Hasta.Enabled = Rdb_FEmision_EmitidosEntre.Checked
+    End Sub
+
+    Sub Sb_Grupo_FEntrega()
+        Lbl_FEntrega_Desde.Enabled = Rdb_FEntrega_EmitidosEntre.Checked
+        Lbl_FEntrega_Hasta.Enabled = Rdb_FEntrega_EmitidosEntre.Checked
+        Dtp_FEntrega_Desde.Enabled = Rdb_FEntrega_EmitidosEntre.Checked
+        Dtp_FEntrega_Hasta.Enabled = Rdb_FEntrega_EmitidosEntre.Checked
     End Sub
 
     Sub Sb_Grupo_Producto()
@@ -608,18 +614,27 @@ Public Class Frm_BusquedaDocumento_Filtro
             _Sql_Filtro_Fucnionarios = "And Edo.KOFUDO = '" & CmbFuncionarios.SelectedValue & "'"
         End If
 
-        If Rdb_Fecha_Emision_Desde_Hasta.Checked Then
+        If Rdb_FEmision_EmitidosEntre.Checked Then
 
-            _Sql_Filtro_Fechas = "And Edo.FEEMDO BETWEEN CONVERT(DATETIME, '" & Format(DtpFechaInicio.Value, "yyyy-MM-dd") & " 00:00:00', 102) " &
-                                 "AND CONVERT(DATETIME, '" & Format(DtpFechaFin.Value, "yyyy-MM-dd") & " 23:59:59', 102)"
+            _Sql_Filtro_Fechas = "And Edo.FEEMDO BETWEEN CONVERT(DATETIME, '" & Format(Dtp_FEmision_Desde.Value, "yyyy-MM-dd") & " 00:00:00', 102) " &
+                                 "AND CONVERT(DATETIME, '" & Format(Dtp_FEmision_Hasta.Value, "yyyy-MM-dd") & " 23:59:59', 102)"
 
-            '_Sql_Filtro_Fechas = "And Edo.FEEMDO BETWEEN '" & Format(DtpFechaInicio.Value, "yyyyMMdd") &
-            '                      "' AND '" & Format(DtpFechaFin.Value, "yyyyMMdd") & "'"
+        End If
+
+        If Rdb_FEntrega_EmitidosEntre.Checked Then
+
+            If Not String.IsNullOrWhiteSpace(_Sql_Filtro_Fechas) Then
+                _Sql_Filtro_Fechas += vbCrLf
+            End If
+
+            _Sql_Filtro_Fechas += "And Edo.FEER BETWEEN CONVERT(DATETIME, '" & Format(Dtp_FEntrega_Desde.Value, "yyyy-MM-dd") & " 00:00:00', 102) " &
+                                  "AND CONVERT(DATETIME, '" & Format(Dtp_FEntrega_Hasta.Value, "yyyy-MM-dd") & " 23:59:59', 102)"
+
         End If
 
         If Rdb_Estado_Vigente.Checked Then
             _Sql_Filtro_Estado = "And Edo.ESDO = ''"
-        ElseIf Rdb_Estado_Cerradas.Checked Then
+        ElseIf Rdb_Estado_Cerrado.Checked Then
             _Sql_Filtro_Estado = "And Edo.ESDO = 'C'"
         End If
 
@@ -649,7 +664,7 @@ Public Class Frm_BusquedaDocumento_Filtro
                         And PRCT = 0
                         And (Ddo.CAPRCO1 * Tdo.FICO + Ddo.CAPRAD1 * Tdo.FIAD ) <> 0
                         And Not Exists (Select * From MAEDCR WITH ( NOLOCK ) Where MAEDCR.IDDDODCR = Ddo.IDMAEDDO And MAEDCR.RECARCALCU = '" & Codigo_Recargo & "')
-                        And Edo.FEEMDO BETWEEN '" & Format(DtpFechaInicio.Value, "yyyyMMdd") & "' And '" & Format(DtpFechaFin.Value, "yyyyMMdd") & "'"
+                        And Edo.FEEMDO BETWEEN '" & Format(Dtp_FEmision_Desde.Value, "yyyyMMdd") & "' And '" & Format(Dtp_FEmision_Hasta.Value, "yyyyMMdd") & "'"
 
             Dim _Tbl_Filtro_Idmaeedo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -837,7 +852,7 @@ Buscar:
             Fm.Pro_Abrir_Seleccionado = _Abrir_Seleccionado
             Fm.Seleccion_Multiple = Seleccion_Multiple
             Fm.Abrir_Cerrar_Documentos_Compromiso = _Abrir_Cerrar_Documentos_Compromiso
-            Fm.Abrir_Documentos = Rdb_Estado_Cerradas.Checked
+            Fm.Abrir_Documentos = Rdb_Estado_Cerrado.Checked
             Fm.Cerrar_Documentos = Rdb_Estado_Vigente.Checked
             Fm.HabilitarNVVParaFacturar = HabilitarNVVParaFacturar
 

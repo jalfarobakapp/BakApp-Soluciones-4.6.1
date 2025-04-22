@@ -657,8 +657,8 @@ Public Class Frm_ImpresionDoc_Configuracion
                 _Fm.Pro_TipoDoc_Seleccionado = Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado
 
                 _Fm.Rdb_Tipo_Documento_Algunos.Enabled = False
-                _Fm.Rdb_Fecha_Emision_Cualquiera.Checked = False
-                _Fm.Rdb_Fecha_Emision_Desde_Hasta.Checked = True
+                _Fm.Rdb_FEmision_Todas.Checked = False
+                _Fm.Rdb_FEmision_EmitidosEntre.Checked = True
 
                 _Fm.Rdb_Tipo_Documento_Algunos.Checked = False
                 _Fm.Rdb_Tipo_Documento_Uno.Checked = True

@@ -265,7 +265,7 @@ Public Class Modulo_Programas_Especiales
 
             Dim _Fm As New Frm_BusquedaDocumento_Filtro(True)
             _Fm.Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado, "NVV", "Where TIDO In ('COV','NVI','NVV','OCC')")
-            _Fm.Rdb_Estado_Todos.Enabled = False
+            _Fm.Rdb_Estado_Todas.Enabled = False
             _Fm.Rdb_Estado_Vigente.Checked = True
             _Fm.Abrir_Cerrar_Documentos_Compromiso = True
             _Fm.ShowDialog(_Fm_Menu_Padre)
@@ -286,12 +286,12 @@ Public Class Modulo_Programas_Especiales
 
         Dim _Fm As New Frm_BusquedaDocumento_Filtro(False)
         _Fm.Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado, "NVV", "Where TIDO = 'NVV'")
-        _Fm.Rdb_Estado_Todos.Enabled = False
+        _Fm.Rdb_Estado_Todas.Enabled = False
         _Fm.Rdb_Estado_Vigente.Checked = True
-        _Fm.Rdb_Estado_Cerradas.Enabled = False
+        _Fm.Rdb_Estado_Cerrado.Enabled = False
         _Fm.HabilitarNVVParaFacturar = True
         _Fm.Rdb_Funcionarios_Uno.Checked = True
-        _Fm.Rdb_Fecha_Emision_Desde_Hasta.Checked = True
+        _Fm.Rdb_FEmision_EmitidosEntre.Checked = True
         _Fm.Chk_Mostrar_Vales_Transitorios.Checked = False
         _Fm.Chk_Mostrar_Vales_Transitorios.Enabled = False
         _Fm.ShowDialog(_Fm_Menu_Padre)

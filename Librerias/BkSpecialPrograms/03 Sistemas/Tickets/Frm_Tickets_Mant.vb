@@ -1018,7 +1018,7 @@ Public Class Frm_Tickets_Mant
         _Fm.Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado, "",
                                  $"Where TIDO In({_TidosFormatted})")
         _Fm.Pro_Row_Producto = _Row_Producto
-        _Fm.Rdb_Estado_Todos.Checked = True
+        _Fm.Rdb_Estado_Todas.Checked = True
         _Fm.ShowDialog(Me)
         Dim _Row_Documento As DataRow = _Fm.Pro_Row_Documento_Seleccionado
         _Fm.Dispose()

@@ -213,10 +213,10 @@ Public Class Class_Referencias_DTE
                             .Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado, "FCV", "Where TIDO In ('FCV','BLV')")
                             .Rdb_Estado_Vigente.Checked = True
 
-                            .Rdb_Estado_Todos.Checked = True
+                            .Rdb_Estado_Todas.Checked = True
                             .Grupo_Funcionario.Enabled = True
                             .Grupo_Producto.Enabled = False
-                            .Rdb_Fecha_Emision_Cualquiera.Checked = True
+                            .Rdb_FEmision_Todas.Checked = True
                             .Pro_Row_Entidad = _RowEntidad
                             .Rdb_Entidad_Una.Checked = True
 

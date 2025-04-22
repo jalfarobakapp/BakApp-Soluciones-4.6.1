@@ -1,4 +1,4 @@
-'Imports Lib_Bakapp_VarClassFunc
+ï»¿'Imports Lib_Bakapp_VarClassFunc
 Imports DevComponents.DotNetBar
 Imports System.Data.SqlClient
 
@@ -16,10 +16,10 @@ Public Class Frm_Vales_Caja_01_MarcarDoc
 
     Public Sub New()
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
 
         caract_combo(CmbTipoDoc)
         Consulta_sql = "SELECT TIDO as Padre,SUBSTRING(NOTIDO,1,7) as Hijo From TABTIDO Where TIDO In ('BLV','FCV')"
@@ -93,7 +93,7 @@ Public Class Frm_Vales_Caja_01_MarcarDoc
                     Sb_Buscar_Documento(_Idmaeedo)
                 End If
             Else
-                MessageBoxEx.Show(Me, "Documento no existe", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                MessageBoxEx.Show(Me, "Documento no existe", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 TxtNroDocumento.SelectAll()
             End If
 
@@ -117,7 +117,7 @@ Public Class Frm_Vales_Caja_01_MarcarDoc
                                      "VALE NRO: " & _NroVale & vbCrLf & vbCrLf & _
                                      "Fecha: " & FormatDateTime(_Fecha, DateFormat.LongDate) & _
                                      ", Hora: " & FormatDateTime(_Fecha, DateFormat.ShortTime) & vbCrLf & vbCrLf & _
-                                     "¿Desea ver la ficha del documento?", "Validación", _
+                                     "Â¿Desea ver la ficha del documento?", "ValidaciÃ³n", _
                                      MessageBoxButtons.YesNo, MessageBoxIcon.Stop) = Windows.Forms.DialogResult.Yes Then
 
                     Dim Fm As New Frm_Vales_Ficha_Doc
@@ -196,10 +196,10 @@ Public Class Frm_Vales_Caja_01_MarcarDoc
                 .Pro_Sql_Filtro_Otro_Filtro = "And IDMAEEDO Not In (Select Id_Doc_As From Zw_Vales_Enc)"
                 .Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado, _
                                       CmbTipoDoc.SelectedValue, "WHERE TIDO IN ('BLV','FCV')")
-                .Rdb_Estado_Cerradas.Checked = True
+                .Rdb_Estado_Cerrado.Checked = True
                 .Rdb_Funcionarios_Uno.Checked = True
                 .Grupo_Funcionario.Enabled = False
-                .Rdb_Fecha_Emision_Desde_Hasta.Checked = True
+                .Rdb_FEmision_EmitidosEntre.Checked = True
                 .ShowDialog(Me)
 
                 If Not (.Pro_Row_Documento_Seleccionado Is Nothing) Then
@@ -306,7 +306,7 @@ Public Class Frm_Vales_Caja_01_MarcarDoc
                                        "DEBE NOMINAR EL DOCUMENTO ANTES DE SEGUIR CON LA GESTION", My.Resources.cross, _
                                          4 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
                 'MessageBoxEx.Show(Me, "Falta entidad en documento" & vbCrLf & _
-                '                     "Debe nominar el documento antes de seguir con la gestión", "Validación", _
+                '                     "Debe nominar el documento antes de seguir con la gestiÃ³n", "ValidaciÃ³n", _
                 '                     MessageBoxButtons.OK, MessageBoxIcon.Stop)
             End If
         End If
@@ -342,7 +342,7 @@ Public Class Frm_Vales_Caja_01_MarcarDoc
             Fm_D._Tbl_DatosEntidad = _TblEntDocumento
             Fm_D._Crear_Despacho = True
             Fm_D.BtnImprimir.Visible = False
-            Fm_D._NroVale = "En Construcción"
+            Fm_D._NroVale = "En ConstrucciÃ³n"
             Fm_D.ShowDialog(Me)
 
             If Fm_D._GrabarDatos Then

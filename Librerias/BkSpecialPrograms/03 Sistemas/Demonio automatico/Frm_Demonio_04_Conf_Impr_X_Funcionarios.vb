@@ -552,10 +552,10 @@ Public Class Frm_Demonio_04_Conf_Impr_X_Funcionarios
                 .Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado,
                                      _Tido, "WHERE TIDO = '" & _Tido & "'")
 
-                .Rdb_Estado_Todos.Checked = True
+                .Rdb_Estado_Todas.Checked = True
                 .Rdb_Funcionarios_Todos.Checked = True
                 .Grupo_Funcionario.Enabled = False
-                .Rdb_Fecha_Emision_Desde_Hasta.Checked = True
+                .Rdb_FEmision_EmitidosEntre.Checked = True
                 .ShowDialog(Me)
 
                 _RowDocumento_Pruebas = .Pro_Row_Documento_Seleccionado
