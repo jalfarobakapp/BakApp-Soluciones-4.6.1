@@ -758,7 +758,7 @@ Public Class Cl_Correos
                             'End If
 
 
-                            _Error = _Mensaje.Mensaje 'EnviarCorreo.Pro_Error
+                            _Error = _Mensaje.Col1_Mensaje 'EnviarCorreo.Pro_Error
                             EnviarCorreo.Dispose()
                             EnviarCorreo = Nothing
 

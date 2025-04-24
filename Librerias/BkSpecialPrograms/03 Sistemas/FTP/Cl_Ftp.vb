@@ -46,7 +46,7 @@ Public Class Cl_Ftp
             End With
 
             _Mensaje.EsCorrecto = False
-            _Mensaje.Mensaje = "No se encontro el registro en la tabla Zw_Ftp_Conexiones con el Idc " & _Id
+            _Mensaje.Col1_Mensaje = "No se encontro el registro en la tabla Zw_Ftp_Conexiones con el Idc " & _Id
             _Mensaje.Tag = Zw_Ftp_Conexiones
 
             Return _Mensaje
@@ -73,7 +73,7 @@ Public Class Cl_Ftp
         End With
 
         _Mensaje.EsCorrecto = True
-        _Mensaje.Mensaje = "Registro encontrado."
+        _Mensaje.Col1_Mensaje = "Registro encontrado."
         _Mensaje.Tag = Zw_Ftp_Conexiones
 
         Return _Mensaje
@@ -122,16 +122,16 @@ Public Class Cl_Ftp
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Detalle = "Grabar conexión FTP"
-            _Mensaje.Mensaje = "Conexión FTP grabada con exito"
+            _Mensaje.Col2_Detalle = "Grabar conexión FTP"
+            _Mensaje.Col1_Mensaje = "Conexión FTP grabada con exito"
             _Mensaje.Id = Zw_Ftp_Conexiones.Id
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
 
             _Mensaje.EsCorrecto = False
-            _Mensaje.Detalle = "Error al grabar"
-            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Col2_Detalle = "Error al grabar"
+            _Mensaje.Col1_Mensaje = ex.Message
             _Mensaje.Id = 0
             _Mensaje.Icono = MessageBoxIcon.Error
 
@@ -189,16 +189,16 @@ Public Class Cl_Ftp
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Detalle = "Editar conexión FTP"
-            _Mensaje.Mensaje = "Conexión FTP editada correctamente"
+            _Mensaje.Col2_Detalle = "Editar conexión FTP"
+            _Mensaje.Col1_Mensaje = "Conexión FTP editada correctamente"
             _Mensaje.Id = Zw_Ftp_Conexiones.Id
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
 
             _Mensaje.EsCorrecto = False
-            _Mensaje.Detalle = "Error al grabar"
-            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Col2_Detalle = "Error al grabar"
+            _Mensaje.Col1_Mensaje = ex.Message
             _Mensaje.Id = 0
             _Mensaje.Icono = MessageBoxIcon.Error
 
@@ -224,19 +224,19 @@ Public Class Cl_Ftp
             Dim _Msj As LsValiciones.Mensajes = Fx_Existe_Directorio(Zw_Ftp_Conexiones.Fichero)
 
             If Not _Msj.EsCorrecto Then
-                Throw New Exception(_Msj.Mensaje)
+                Throw New Exception(_Msj.Col1_Mensaje)
             End If
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Mensaje = "Conexión exitosa."
-            _Mensaje.Detalle = "Probar conexión FTP"
+            _Mensaje.Col1_Mensaje = "Conexión exitosa."
+            _Mensaje.Col2_Detalle = "Probar conexión FTP"
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch Ex As Exception
 
             _Mensaje.EsCorrecto = False
-            _Mensaje.Mensaje = Ex.Message
-            _Mensaje.Detalle = "Probar conexión FTP"
+            _Mensaje.Col1_Mensaje = Ex.Message
+            _Mensaje.Col2_Detalle = "Probar conexión FTP"
             _Mensaje.Icono = MessageBoxIcon.Error
 
         End Try
@@ -284,14 +284,14 @@ Public Class Cl_Ftp
             'End Try
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Mensaje = "Directorio encontrado."
-            _Mensaje.Detalle = "Existe directorio FTP"
+            _Mensaje.Col1_Mensaje = "Directorio encontrado."
+            _Mensaje.Col2_Detalle = "Existe directorio FTP"
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Mensaje = ex.Message
-            _Mensaje.Detalle = "Existe directorio FTP"
+            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Col2_Detalle = "Existe directorio FTP"
             _Mensaje.Icono = MessageBoxIcon.Error
         End Try
 
@@ -349,8 +349,8 @@ Public Class Cl_Ftp
 
                 ' Si llegamos aquí, la carpeta existe
                 _Mensaje.EsCorrecto = True
-                _Mensaje.Mensaje = "Directorio encontrado."
-                _Mensaje.Detalle = "Existe directorio FTP"
+                _Mensaje.Col1_Mensaje = "Directorio encontrado."
+                _Mensaje.Col2_Detalle = "Existe directorio FTP"
                 _Mensaje.Icono = MessageBoxIcon.Information
 
             End Using
@@ -361,13 +361,13 @@ Public Class Cl_Ftp
             If response.StatusCode = FtpStatusCode.ActionNotTakenFileUnavailable Then
                 ' La carpeta no existe
                 _Mensaje.EsCorrecto = False
-                _Mensaje.Mensaje = "Directorio no encontrado."
-                _Mensaje.Detalle = "No existe directorio FTP"
+                _Mensaje.Col1_Mensaje = "Directorio no encontrado."
+                _Mensaje.Col2_Detalle = "No existe directorio FTP"
                 _Mensaje.Icono = MessageBoxIcon.Error
             Else
                 _Mensaje.EsCorrecto = False
-                _Mensaje.Mensaje = ex.Message
-                _Mensaje.Detalle = "Problema de conexión FTP"
+                _Mensaje.Col1_Mensaje = ex.Message
+                _Mensaje.Col2_Detalle = "Problema de conexión FTP"
                 _Mensaje.Icono = MessageBoxIcon.Error
                 _Mensaje.HuboOtroError = True
                 _Mensaje.Tag = response
@@ -401,8 +401,8 @@ Public Class Cl_Ftp
             ' Si todo ha ido bien, se devolverá String.Empty
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Mensaje = "Directorio creado."
-            _Mensaje.Detalle = "Directorio FTP creado"
+            _Mensaje.Col1_Mensaje = "Directorio creado."
+            _Mensaje.Col2_Detalle = "Directorio FTP creado"
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
@@ -524,16 +524,16 @@ Public Class Cl_Ftp
             respuesta.Close()
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Mensaje = "Directorio encontrado."
-            _Mensaje.Detalle = "Existe directorio FTP"
+            _Mensaje.Col1_Mensaje = "Directorio encontrado."
+            _Mensaje.Col2_Detalle = "Existe directorio FTP"
             _Mensaje.Icono = MessageBoxIcon.Information
             _Mensaje.Tag = listaRutas
 
         Catch ex As Exception
 
             _Mensaje.EsCorrecto = False
-            _Mensaje.Mensaje = ex.Message
-            _Mensaje.Detalle = "Obtener directorio FTP"
+            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Col2_Detalle = "Obtener directorio FTP"
             _Mensaje.Icono = MessageBoxIcon.Error
 
         End Try

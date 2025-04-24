@@ -500,7 +500,7 @@ Public Class Clas_Pagar
         Dim _Mensaje As New LsValiciones.Mensajes
         Dim _Idmaedpce As Integer
 
-        _Mensaje.Detalle = "Creación de documento de pago"
+        _Mensaje.Col2_Detalle = "Creación de documento de pago"
 
         Dim myTrans As SqlClient.SqlTransaction
         Dim Comando As SqlClient.SqlCommand
@@ -563,7 +563,7 @@ Public Class Clas_Pagar
             SQL_ServerClass.Sb_Cerrar_Conexion(cn2)
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Mensaje = "Transacción realizada correctamente"
+            _Mensaje.Col1_Mensaje = "Transacción realizada correctamente"
             _Mensaje.Id = _Idmaedpce
             _Mensaje.Tag = _Maedpce
             _Mensaje.Icono = MessageBoxIcon.Information
@@ -571,7 +571,7 @@ Public Class Clas_Pagar
         Catch ex As Exception
 
             _Mensaje.EsCorrecto = False
-            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Col1_Mensaje = ex.Message
             _Mensaje.ConsultaSQLEjecutada = Consulta_sql
             _Mensaje.Icono = MessageBoxIcon.Stop
 
@@ -1805,14 +1805,14 @@ Public Class Clas_Pagar
             SQL_ServerClass.Sb_Cerrar_Conexion(cn2)
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Mensaje = "Pagos realizados correctamente al documento: " & _Tido & "-" & _Nudo
+            _Mensaje.Col1_Mensaje = "Pagos realizados correctamente al documento: " & _Tido & "-" & _Nudo
             _Mensaje.Icono = MessageBoxIcon.Information
             _Mensaje.Tag = _Maedpcd
 
         Catch ex As Exception
 
             _Mensaje.EsCorrecto = False
-            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Col1_Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
             _Mensaje.ConsultaSQLEjecutada = Consulta_sql
 

@@ -123,7 +123,7 @@
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
-        _Mensaje.Detalle = "Envío de correo automático"
+        _Mensaje.Col2_Detalle = "Envío de correo automático"
 
         Try
 
@@ -172,13 +172,13 @@
             End If
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Mensaje = "Correo insertado correctamente en cola de envio de correos"
+            _Mensaje.Col1_Mensaje = "Correo insertado correctamente en cola de envio de correos"
 
 
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Col1_Mensaje = ex.Message
         End Try
 
         Return _Mensaje
@@ -194,8 +194,8 @@
             _Mensaje = Fx_Llenar_ListaBk(_ListaSuperior)
 
             If Not _Mensaje.EsCorrecto Then
-                _Mensaje.Detalle = "No cumple con la condición para tener una lista superior"
-                _Mensaje.Mensaje = "No se encontro el registro en la tabla Zw_ListaPreGlobal con la Lista = '" & _ListaSuperior & "'"
+                _Mensaje.Col2_Detalle = "No cumple con la condición para tener una lista superior"
+                _Mensaje.Col1_Mensaje = "No se encontro el registro en la tabla Zw_ListaPreGlobal con la Lista = '" & _ListaSuperior & "'"
                 Return _Mensaje
             End If
 
@@ -227,7 +227,7 @@
 
             If Not CBool(_Ds.Tables(3).Rows.Count) Then
                 _Mensaje.EsCorrecto = False
-                _Mensaje.Mensaje = "No cumple con la condición para tener una lista superior"
+                _Mensaje.Col1_Mensaje = "No cumple con la condición para tener una lista superior"
                 _Mensaje.Icono = MessageBoxIcon.Stop
                 Return _Mensaje
             End If
@@ -236,17 +236,17 @@
 
             If _Row.Item("Cumple") Then
                 _Mensaje.EsCorrecto = True
-                _Mensaje.Mensaje = "Cliente cumple con la condición para mantenerse en la lista superior"
+                _Mensaje.Col1_Mensaje = "Cliente cumple con la condición para mantenerse en la lista superior"
                 _Mensaje.Icono = MessageBoxIcon.Information
             Else
                 _Mensaje.EsCorrecto = False
-                _Mensaje.Mensaje = "No cumple con la condición para tener una lista superior"
+                _Mensaje.Col1_Mensaje = "No cumple con la condición para tener una lista superior"
                 _Mensaje.Icono = MessageBoxIcon.Stop
             End If
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Col1_Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Error
         End Try
 
@@ -264,7 +264,7 @@
         If IsNothing(_Row) Then
 
             _Mensaje.EsCorrecto = False
-            _Mensaje.Mensaje = "No se encontro el registro en la tabla Zw_ListaPreGlobal con la Lista = '" & _Lista & "'"
+            _Mensaje.Col1_Mensaje = "No se encontro el registro en la tabla Zw_ListaPreGlobal con la Lista = '" & _Lista & "'"
 
             Return _Mensaje
 
@@ -299,7 +299,7 @@
         End With
 
         _Mensaje.EsCorrecto = True
-        _Mensaje.Mensaje = "Registro encontrado."
+        _Mensaje.Col1_Mensaje = "Registro encontrado."
         _Mensaje.Tag = Zw_ListaActCliente
 
         Return _Mensaje

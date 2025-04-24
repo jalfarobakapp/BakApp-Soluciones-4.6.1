@@ -2035,9 +2035,9 @@ Public Class Clase_Crear_Documento
             myTrans.Commit()
             SQL_ServerClass.Sb_Cerrar_Conexion(cn2)
 
-            _Mensaje.Detalle = "Documento grabado con éxito"
+            _Mensaje.Col2_Detalle = "Documento grabado con éxito"
             _Mensaje.Id = _Idmaeedo
-            _Mensaje.Mensaje = "Ok"
+            _Mensaje.Col1_Mensaje = "Ok"
             _Mensaje.EsCorrecto = True
             _Mensaje.Icono = MessageBoxIcon.Information
 
@@ -2048,8 +2048,8 @@ Public Class Clase_Crear_Documento
         Catch ex As Exception
 
             _Mensaje.EsCorrecto = False
-            _Mensaje.Mensaje = ex.Message & vbCrLf & vbCrLf & "Transaccion desecha"
-            _Mensaje.Detalle = "Problema"
+            _Mensaje.Col1_Mensaje = ex.Message & vbCrLf & vbCrLf & "Transaccion desecha"
+            _Mensaje.Col2_Detalle = "Problema"
             _Mensaje.Id = 0
             _Mensaje.Icono = MessageBoxIcon.Stop
 
@@ -3868,8 +3868,8 @@ Public Class Clase_Crear_Documento
                 If _Sql.Ej_consulta_IDU(Consulta_sql) Then
 
                     _Mensaje.EsCorrecto = True
-                    _Mensaje.Detalle = "Editar documento"
-                    _Mensaje.Mensaje = "Documento modificado correctamente"
+                    _Mensaje.Col2_Detalle = "Editar documento"
+                    _Mensaje.Col1_Mensaje = "Documento modificado correctamente"
 
                     Return _Mensaje
 

@@ -811,7 +811,7 @@ Buscar:
                         Dim _Msj As LsValiciones.Mensajes = Fx_FuncionarioPuedeVerDocumentoGrupo(_Idmaeedo, FUNCIONARIO)
 
                         If Not _Msj.EsCorrecto Then
-                            MessageBoxEx.Show(Me, _Msj.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                            MessageBoxEx.Show(Me, _Msj.Col1_Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                             Return
                         End If
 

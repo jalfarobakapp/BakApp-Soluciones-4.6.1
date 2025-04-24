@@ -82,57 +82,49 @@ Public Class Frm_Validaciones
             Lv_ListaDeMensajes.Columns.Add(Col4_Fecha.Nombre, Col4_Fecha.Ancho, Col4_Fecha.Alineacion).Text = Col4_Fecha.Descripcion
         End If
 
-        'If Not IsNothing(Col1_Mensaje) Then
-        '    Lv_ListaDeMensajes.Columns.Add(Col1_Mensaje.Nombre, Col1_Mensaje.Ancho, HorizontalAlignment.Left).Text = Col1_Mensaje.Descripcion
-        'Else
-        '    Lv_ListaDeMensajes.Columns.Add("Mensaje.", 300, HorizontalAlignment.Left).Text = "Mensaje"
-        'End If
-
-        'If Not IsNothing(Col2_Descripcion) Then
-        '    Lv_ListaDeMensajes.Columns.Add(Col2_Descripcion.Nombre, Col2_Descripcion.Ancho, HorizontalAlignment.Left).Text = Col2_Descripcion.Descripcion
-        'Else
-        '    Lv_ListaDeMensajes.Columns.Add("Detalle", 380, HorizontalAlignment.Left).Text = "Detalle"
-        'End If
-
-        'If Not IsNothing(Col3_Resultado) Then
-        '    Lv_ListaDeMensajes.Columns.Add(Col3_Resultado.Nombre, Col3_Resultado.Ancho, HorizontalAlignment.Left).Text = Col3_Resultado.Descripcion
-        'Else
-        '    Lv_ListaDeMensajes.Columns.Add("Resultado", 300, HorizontalAlignment.Left).Text = "Resultado"
-        'End If
-
-        'If Not IsNothing(Col4_Fecha) Then
-        '    Lv_ListaDeMensajes.Columns.Add(Col4_Fecha.Nombre, Col4_Fecha.Ancho, HorizontalAlignment.Left).Text = Col4_Fecha.Descripcion
-        'Else
-        '    Lv_ListaDeMensajes.Columns.Add("Fecha", 100, HorizontalAlignment.Left).Text = "Fecha"
-        'End If
-
-
         ' Cargue el formulario con respuestas
 
         If ListaMensajes IsNot Nothing Then
 
             For Each resp As LsValiciones.Mensajes In ListaMensajes
 
-                Dim item As New ListViewItem(resp.Mensaje)
+                Dim item As New ListViewItem(resp.Col1_Mensaje)
 
-                If resp.EsCorrecto Then
-                    item.ImageIndex = 0
+                If IsNothing(resp.Icono) Then
+                    If resp.EsCorrecto Then
+                        item.ImageIndex = 0
+                    Else
+                        item.ImageIndex = 1
+                    End If
                 Else
-                    item.ImageIndex = 1
+                    Select Case resp.Icono
+                        Case MessageBoxIcon.Information
+                            item.ImageIndex = 0
+                        Case MessageBoxIcon.Error
+                            item.ImageIndex = 1
+                        Case MessageBoxIcon.Warning
+                            item.ImageIndex = 2
+                        Case MessageBoxIcon.Question
+                            item.ImageIndex = 3
+                        Case MessageBoxIcon.None
+                            item.ImageIndex = Nothing
+                        Case Else
+                            item.ImageIndex = 1
+                    End Select
                 End If
 
                 If UsarImagenesExternas Then
                     item.ImageKey = resp.NombreImagen
                 End If
 
-                item.SubItems.Add(resp.Detalle)
-                item.SubItems.Add(resp.Resultado)
+                item.SubItems.Add(resp.Col2_Detalle)
+                item.SubItems.Add(resp.Col3_Resultado)
                 item.SubItems.Add(resp.Fecha)
 
                 Lv_ListaDeMensajes.Items.Add(item)
 
                 If String.IsNullOrEmpty(resp.Tag) Then
-                    item.Tag = resp.Mensaje & vbCrLf & resp.Detalle
+                    item.Tag = resp.Col1_Mensaje & vbCrLf & resp.Col2_Detalle
                 Else
                     item.Tag = resp.Tag
                 End If
@@ -212,9 +204,9 @@ Namespace LsValiciones
         Public Property EsCorrecto As Boolean
         Public Property Id As String
         Public Property Fecha As DateTime
-        Public Property Detalle As String = String.Empty
-        Public Property Mensaje As String = String.Empty
-        Public Property Resultado As String = String.Empty
+        Public Property Col1_Mensaje As String = String.Empty
+        Public Property Col2_Detalle As String = String.Empty
+        Public Property Col3_Resultado As String = String.Empty
         Public Property Tag As Object
         Public Property UsarImagen As Boolean
         Public Property NombreImagen As String = String.Empty

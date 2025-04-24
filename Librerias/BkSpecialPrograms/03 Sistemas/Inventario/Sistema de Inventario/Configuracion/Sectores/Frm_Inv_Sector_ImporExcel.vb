@@ -180,8 +180,8 @@ Public Class Frm_Inv_Sector_ImporExcel
                 End With
 
             Catch ex As Exception
-                _Msg_Error.Mensaje = ex.Message
-                _Msg_Error.Detalle = "Fila (" & i & ") - " & _Sector & " - " & _NombreSector & ", CodEncargado: " & _CodFuncionario
+                _Msg_Error.Col1_Mensaje = ex.Message
+                _Msg_Error.Col2_Detalle = "Fila (" & i & ") - " & _Sector & " - " & _NombreSector & ", CodEncargado: " & _CodFuncionario
                 _Msg_Error.EsCorrecto = False
                 _Msg_Error.Icono = MessageBoxIcon.Error
             End Try

@@ -735,7 +735,7 @@ Public Class Frm_Diseno_Doc_y_Ubic
         Dim _RowBodega As DataRow = Fx_Trar_Datos_De_Bodega_Seleccionada(_RowMapa.Item("Empresa"), _RowMapa.Item("Sucursal"), _RowMapa.Item("Bodega"))
 
         Dim Fm As New Frm_Sectores_Lista_UbicOblig(_Id_Mapa)
-        Fm.Text = "SECTORES DEL MAPA: " & _RowMapa.Item("Nombre_Mapa")
+        Fm.Text = "CABECERAS EN EL MAPA: " & _RowMapa.Item("Nombre_Mapa")
         Fm.LblEmpresa.Text = _RowBodega.Item("RAZON")
         Fm.LblSucursal.Text = _RowBodega.Item("NOKOSU")
         Fm.LblBodega.Text = _RowBodega.Item("NOKOBO")

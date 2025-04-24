@@ -311,7 +311,7 @@ Public Class Frm_Tickets_Mant
         End If
 
         If Not _Mensaje.EsCorrecto Then
-            MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Error al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, "Error al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
 
@@ -370,7 +370,7 @@ Public Class Frm_Tickets_Mant
                                                        True, False, False, False, _Aceptado, _Rechazado, True, True, _Cl_Tickets.Zw_Stk_Tickets_Acciones)
 
         If Not _Mensaje_Ticket.EsCorrecto Then
-            MessageBoxEx.Show(Me, _Mensaje_Ticket.Mensaje, "Error al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show(Me, _Mensaje_Ticket.Col1_Mensaje, "Error al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
 

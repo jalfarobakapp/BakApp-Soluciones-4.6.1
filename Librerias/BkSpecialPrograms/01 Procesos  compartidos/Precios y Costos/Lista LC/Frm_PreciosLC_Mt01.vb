@@ -1070,15 +1070,15 @@ Public Class Frm_PreciosLC_Mt01
 
         _Mensaje = Fx_GenerarFXPorMultiplo(_RowTabcodalSeleccionado.Item("MULTIPLO"), _CantFormulas, "pb1", "pp01ud", "pb3", 9999, _Id)
 
-        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         If Not _Mensaje.EsCorrecto Then
             Return
         End If
 
-        _Mensaje.Detalle += " en Lista " & _Lista
+        _Mensaje.Col2_Detalle += " en Lista " & _Lista
 
-        _Fila.Cells("EcuacionUd1").Value = _Mensaje.Resultado
+        _Fila.Cells("EcuacionUd1").Value = _Mensaje.Col3_Resultado
         _Fila.Cells("EcuacionUd2").Value = String.Empty
 
         Call GrillaPrecios_CellEnter(Nothing, Nothing)
@@ -1131,7 +1131,7 @@ Public Class Frm_PreciosLC_Mt01
             Dim _Error = String.Empty
 
             If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
-                _Mensaje.Detalle = "Error al grabar"
+                _Mensaje.Col2_Detalle = "Error al grabar"
                 _Error = _Sql.Pro_Error
                 If _Sql.Pro_Error.Contains("Los datos de cadena o binarios se truncarían.") Then
                     _Error += vbCrLf & "El largo de la Ecuación no puede sobrepasar los 242 caracteres"
@@ -1141,14 +1141,14 @@ Public Class Frm_PreciosLC_Mt01
             End If
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Detalle = "Formula creada correctamente"
-            _Mensaje.Mensaje = "La Formula ha sido incorporada en la ecuación de la lista, para confirmar debe grabar." & vbCrLf &
+            _Mensaje.Col2_Detalle = "Formula creada correctamente"
+            _Mensaje.Col1_Mensaje = "La Formula ha sido incorporada en la ecuación de la lista, para confirmar debe grabar." & vbCrLf &
                                "Formula: " & _Formula
-            _Mensaje.Resultado = _Formula
+            _Mensaje.Col3_Resultado = _Formula
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
-            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Col1_Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
 

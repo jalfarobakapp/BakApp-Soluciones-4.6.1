@@ -21,7 +21,7 @@ Public Class Cl_Arbol_Asociaciones
         If IsNothing(_Row) Then
 
             _Mensaje.EsCorrecto = False
-            _Mensaje.Mensaje = "No se encontro el registro en la tabla Zw_TblArbol_Asociaciones con el Codigo_Nodo " & _Codigo_Nodo
+            _Mensaje.Col1_Mensaje = "No se encontro el registro en la tabla Zw_TblArbol_Asociaciones con el Codigo_Nodo " & _Codigo_Nodo
 
             Return _Mensaje
 
@@ -43,7 +43,7 @@ Public Class Cl_Arbol_Asociaciones
         End With
 
         _Mensaje.EsCorrecto = True
-        _Mensaje.Mensaje = "Registro encontrado."
+        _Mensaje.Col1_Mensaje = "Registro encontrado."
         _Mensaje.Tag = Zw_TblArbol_Asociaciones
 
         Return _Mensaje
@@ -123,15 +123,15 @@ Public Class Cl_Arbol_Asociaciones
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Detalle = "Grabar"
-            _Mensaje.Mensaje = "Documento grabado correctamente"
+            _Mensaje.Col2_Detalle = "Grabar"
+            _Mensaje.Col1_Mensaje = "Documento grabado correctamente"
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
 
             _Mensaje.EsCorrecto = False
-            _Mensaje.Detalle = "Error al grabar"
-            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Col2_Detalle = "Error al grabar"
+            _Mensaje.Col1_Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
             Zw_TblArbol_Asociaciones.Identificador_Nodo = 0
             Zw_TblArbol_Asociaciones.Codigo_Nodo = 0
@@ -181,15 +181,15 @@ Public Class Cl_Arbol_Asociaciones
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Detalle = "Eliminar"
-            _Mensaje.Mensaje = "Clasificación y sub clasificaciones eliminadas correctamente"
+            _Mensaje.Col2_Detalle = "Eliminar"
+            _Mensaje.Col1_Mensaje = "Clasificación y sub clasificaciones eliminadas correctamente"
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
 
             _Mensaje.EsCorrecto = False
-            _Mensaje.Detalle = "Error al grabar"
-            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Col2_Detalle = "Error al grabar"
+            _Mensaje.Col1_Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
             Zw_TblArbol_Asociaciones.Identificador_Nodo = 0
             Zw_TblArbol_Asociaciones.Codigo_Nodo = 0

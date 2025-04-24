@@ -24,9 +24,9 @@ Partial Class Frm_Sectores_Lista_UbicOblig
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Sectores_Lista_UbicOblig))
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
@@ -116,7 +116,7 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         '
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 34
-        Me.GroupPanel1.Text = "Sectores"
+        Me.GroupPanel1.Text = "Sectores Cabeceras"
         '
         'Menu_Contextual
         '
@@ -150,21 +150,21 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.LabelItem1.PaddingLeft = 10
         Me.LabelItem1.PaddingTop = 1
         Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.LabelItem1.Text = "Ver productos en la ubicacion"
+        Me.LabelItem1.Text = "Ver productos en la Cabecera"
         '
         'Btn_VerProdUbicacion
         '
         Me.Btn_VerProdUbicacion.Image = CType(resources.GetObject("Btn_VerProdUbicacion.Image"), System.Drawing.Image)
         Me.Btn_VerProdUbicacion.ImageAlt = CType(resources.GetObject("Btn_VerProdUbicacion.ImageAlt"), System.Drawing.Image)
         Me.Btn_VerProdUbicacion.Name = "Btn_VerProdUbicacion"
-        Me.Btn_VerProdUbicacion.Text = "Ver productos en la ubicación"
+        Me.Btn_VerProdUbicacion.Text = "Ver productos en la cabecera"
         '
         'Btn_VerProdUbicacionMensual
         '
         Me.Btn_VerProdUbicacionMensual.Image = CType(resources.GetObject("Btn_VerProdUbicacionMensual.Image"), System.Drawing.Image)
         Me.Btn_VerProdUbicacionMensual.ImageAlt = CType(resources.GetObject("Btn_VerProdUbicacionMensual.ImageAlt"), System.Drawing.Image)
         Me.Btn_VerProdUbicacionMensual.Name = "Btn_VerProdUbicacionMensual"
-        Me.Btn_VerProdUbicacionMensual.Text = "Ver productos en esta ubicación mensualmente"
+        Me.Btn_VerProdUbicacionMensual.Text = "Ver productos en la cabecera mensualmente"
         '
         'LabelItem2
         '
@@ -184,7 +184,7 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.Btn_AgregarProductosUbic.Image = CType(resources.GetObject("Btn_AgregarProductosUbic.Image"), System.Drawing.Image)
         Me.Btn_AgregarProductosUbic.ImageAlt = CType(resources.GetObject("Btn_AgregarProductosUbic.ImageAlt"), System.Drawing.Image)
         Me.Btn_AgregarProductosUbic.Name = "Btn_AgregarProductosUbic"
-        Me.Btn_AgregarProductosUbic.Text = "Ingresar productos a la ubicación "
+        Me.Btn_AgregarProductosUbic.Text = "Ingresar productos en la cabecera"
         '
         'Btn_QuitarProductosUbic
         '
@@ -192,7 +192,7 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.Btn_QuitarProductosUbic.Image = CType(resources.GetObject("Btn_QuitarProductosUbic.Image"), System.Drawing.Image)
         Me.Btn_QuitarProductosUbic.ImageAlt = CType(resources.GetObject("Btn_QuitarProductosUbic.ImageAlt"), System.Drawing.Image)
         Me.Btn_QuitarProductosUbic.Name = "Btn_QuitarProductosUbic"
-        Me.Btn_QuitarProductosUbic.Text = "Quitar producto de esta ubicación"
+        Me.Btn_QuitarProductosUbic.Text = "Quitar producto de la cabecera"
         '
         'LabelItem4
         '
@@ -212,14 +212,16 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.Btn_ConfProdUltUbic.Image = CType(resources.GetObject("Btn_ConfProdUltUbic.Image"), System.Drawing.Image)
         Me.Btn_ConfProdUltUbic.ImageAlt = CType(resources.GetObject("Btn_ConfProdUltUbic.ImageAlt"), System.Drawing.Image)
         Me.Btn_ConfProdUltUbic.Name = "Btn_ConfProdUltUbic"
-        Me.Btn_ConfProdUltUbic.Text = "Confirmar nuevamente los productos de este sector con la ultima ubicación"
+        Me.Btn_ConfProdUltUbic.Text = "Confirmar nuevamente los productos que estuvieron en esta cabecera por última vez" &
+    "."
         '
         'Btn_ConfProdUbicSoloUna
         '
         Me.Btn_ConfProdUbicSoloUna.Image = CType(resources.GetObject("Btn_ConfProdUbicSoloUna.Image"), System.Drawing.Image)
         Me.Btn_ConfProdUbicSoloUna.ImageAlt = CType(resources.GetObject("Btn_ConfProdUbicSoloUna.ImageAlt"), System.Drawing.Image)
         Me.Btn_ConfProdUbicSoloUna.Name = "Btn_ConfProdUbicSoloUna"
-        Me.Btn_ConfProdUbicSoloUna.Text = "Confirmar productos cargados en la ubicación (Registrados en mapa)"
+        Me.Btn_ConfProdUbicSoloUna.Text = "Cargar productos desde todas las ubicaciones del sector hacia esta cabecera." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Dir" &
+    "ectamente desde las ubicaciones mostradas en el mapa."
         '
         'LabelItem3
         '
@@ -253,14 +255,16 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.Btn_ConfProdUbicSoloUna_Masivo.Image = CType(resources.GetObject("Btn_ConfProdUbicSoloUna_Masivo.Image"), System.Drawing.Image)
         Me.Btn_ConfProdUbicSoloUna_Masivo.ImageAlt = CType(resources.GetObject("Btn_ConfProdUbicSoloUna_Masivo.ImageAlt"), System.Drawing.Image)
         Me.Btn_ConfProdUbicSoloUna_Masivo.Name = "Btn_ConfProdUbicSoloUna_Masivo"
-        Me.Btn_ConfProdUbicSoloUna_Masivo.Text = "Confirmar nuevamente los productos de este sector con la ultima ubicación"
+        Me.Btn_ConfProdUbicSoloUna_Masivo.Text = "Confirmar nuevamente los productos que estuvieron en esta cabecera por última vez" &
+    "."
         '
         'Btn_ConfProdUltUbic_Masivo
         '
         Me.Btn_ConfProdUltUbic_Masivo.Image = CType(resources.GetObject("Btn_ConfProdUltUbic_Masivo.Image"), System.Drawing.Image)
         Me.Btn_ConfProdUltUbic_Masivo.ImageAlt = CType(resources.GetObject("Btn_ConfProdUltUbic_Masivo.ImageAlt"), System.Drawing.Image)
         Me.Btn_ConfProdUltUbic_Masivo.Name = "Btn_ConfProdUltUbic_Masivo"
-        Me.Btn_ConfProdUltUbic_Masivo.Text = "Confirmar productos cargados en la ubicación (Registrados en mapa)"
+        Me.Btn_ConfProdUltUbic_Masivo.Text = "Cargar productos desde todas las ubicaciones del sector hacia esta cabecera." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Dir" &
+    "ectamente desde las ubicaciones mostradas en el mapa."
         '
         'Menu_Contextual_03
         '
@@ -303,36 +307,36 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         '
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle16.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle16.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle16.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle16
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle17.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle17.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle17.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle17.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle17
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle18.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle18.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle18.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle18
         Me.Grilla.Size = New System.Drawing.Size(710, 392)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 30
@@ -677,7 +681,7 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.Rdb_MostrarSesctoresEnMapa.Size = New System.Drawing.Size(232, 23)
         Me.Rdb_MostrarSesctoresEnMapa.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_MostrarSesctoresEnMapa.TabIndex = 95
-        Me.Rdb_MostrarSesctoresEnMapa.Text = "Mostrar sectores que solo estan en el Mapa"
+        Me.Rdb_MostrarSesctoresEnMapa.Text = "Mostrar Sectores/Cabeceras que solo estan en el Mapa"
         '
         'Rdb_MostrarTodosSectores
         '
@@ -695,7 +699,7 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.Rdb_MostrarTodosSectores.Size = New System.Drawing.Size(156, 23)
         Me.Rdb_MostrarTodosSectores.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_MostrarTodosSectores.TabIndex = 96
-        Me.Rdb_MostrarTodosSectores.Text = "Mostrar todos los sectores"
+        Me.Rdb_MostrarTodosSectores.Text = "Mostrar todos los Sectores/Cabeceras"
         '
         'Frm_Sectores_Lista_UbicOblig
         '
@@ -717,7 +721,7 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.Name = "Frm_Sectores_Lista_UbicOblig"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "SECTORES DEL MAPA:"
+        Me.Text = "CABECERAS DEL MAPA:"
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()

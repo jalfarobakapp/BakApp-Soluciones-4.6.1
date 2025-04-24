@@ -46,13 +46,13 @@
             Fm.Dispose()
 
             If Not _Mensaje.EsCorrecto Then
-                Throw New System.Exception(_Mensaje.Mensaje)
+                Throw New System.Exception(_Mensaje.Col1_Mensaje)
             End If
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Mensaje = "Error al crear la guía de despacho interna"
-            _Mensaje.Detalle = ex.Message
+            _Mensaje.Col1_Mensaje = "Error al crear la guía de despacho interna"
+            _Mensaje.Col2_Detalle = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Error
         End Try
 
@@ -104,18 +104,18 @@
             Fm_Post.Dispose()
 
             If Not _Mensaje.EsCorrecto Then
-                Throw New System.Exception(_Mensaje.Mensaje)
+                Throw New System.Exception(_Mensaje.Col1_Mensaje)
             End If
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Mensaje = "Se ha creado la guía de recepción interna correctamente"
+            _Mensaje.Col1_Mensaje = "Se ha creado la guía de recepción interna correctamente"
             _Mensaje.Icono = MessageBoxIcon.Information
             _Mensaje.Id = _New_Idmaeedo
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Mensaje = "Error al crear la guía de recepción interna"
-            _Mensaje.Detalle = ex.Message
+            _Mensaje.Col1_Mensaje = "Error al crear la guía de recepción interna"
+            _Mensaje.Col2_Detalle = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Error
 
         End Try

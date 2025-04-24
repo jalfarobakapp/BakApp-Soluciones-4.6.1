@@ -5066,7 +5066,7 @@ Public Class Frm_Ver_Documento
                 Dim _Nudo = Trim(_TblEncabezado.Rows(0).Item("NUDO"))
 
                 _Cl_Contenedor.Zw_Contenedor = _Cl_Contenedor.Fx_Llenar_Contenedor(_Idmaeedo, _Tido, _Nudo)
-                MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
                 Return
 
             End If
@@ -5123,7 +5123,7 @@ Public Class Frm_Ver_Documento
 
         _Mensaje = _Cl_Contenedor.Fx_Quitar_Contenedor_De_Documento(_Empresa, _Contenedor, _Idmaeedo)
 
-        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         If _Mensaje.EsCorrecto Then
             _Cl_Contenedor.Zw_Contenedor = New Zw_Contenedor

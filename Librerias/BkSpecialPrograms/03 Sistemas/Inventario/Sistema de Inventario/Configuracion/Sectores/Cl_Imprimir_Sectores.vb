@@ -21,7 +21,7 @@ Public Class Cl_Imprimir_Sectores
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
-        _Mensaje.Detalle = "Imprimir Sector"
+        _Mensaje.Col2_Detalle = "Imprimir Sector"
         _Mensaje.Icono = MessageBoxIcon.Information
 
         Try
@@ -42,12 +42,12 @@ Public Class Cl_Imprimir_Sectores
             'printDoc.PrinterSettings.PrinterName = _Impresora
             printDoc.Print()
 
-            _Mensaje.Mensaje = "Impresión realizada con éxito"
+            _Mensaje.Col1_Mensaje = "Impresión realizada con éxito"
             _Mensaje.EsCorrecto = True
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Col1_Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Error
         End Try
 

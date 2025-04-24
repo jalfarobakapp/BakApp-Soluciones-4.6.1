@@ -31,8 +31,8 @@
         kilosPasados = CalcularKilosPasados(totalCajas, diferenciaPeso, cajasSeleccionadas)
 
         _Mensaje.EsCorrecto = True
-        _Mensaje.Detalle = "Calculo realizado"
-        _Mensaje.Mensaje = $"La probabilidad es aproximadamente: {probabilidad:P}" & vbCrLf &
+        _Mensaje.Col2_Detalle = "Calculo realizado"
+        _Mensaje.Col1_Mensaje = $"La probabilidad es aproximadamente: {probabilidad:P}" & vbCrLf &
                            $"La cantidad de kilos pasados es aproximadamente: {kilosPasados} kilos"
         _Mensaje.Icono = MessageBoxIcon.Information
 

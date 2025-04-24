@@ -808,7 +808,7 @@ Public Class Frm_SQL2Excel_Diseno
             _Mensaje = Cl_SQL2Query.Fx_Crear_SQlQuery
         End If
 
-        MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, "Validación", MessageBoxButtons.OK, _Mensaje.Icono)
 
         If Not _Mensaje.EsCorrecto Then
             Return

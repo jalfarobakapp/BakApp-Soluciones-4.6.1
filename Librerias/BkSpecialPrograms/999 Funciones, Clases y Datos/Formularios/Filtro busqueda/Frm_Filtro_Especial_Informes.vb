@@ -197,6 +197,7 @@ Public Class Frm_Filtro_Especial_Informes
     End Property
 
     Public Property MostrarNumeracionDeRegistros As Boolean
+    Public Property SonProductos As Boolean
 
     Public Sub New(Tabla_filtro As _Tabla_Fl,
                    Optional Incorporar_Campo_Vacias As Boolean = False,
@@ -450,7 +451,6 @@ Public Class Frm_Filtro_Especial_Informes
     Private Function ChequearTodo(Grilla As DataGridView,
                              Chk As Boolean,
                              TipoFiltro As String)
-
 
         For Each _Fila As DataGridViewRow In Grilla.Rows
             _Fila.Cells("Chk").Value = Chk
@@ -850,6 +850,34 @@ Public Class Frm_Filtro_Especial_Informes
         If Activar_Crear_Editar_Eliminar Then
             Btn_Editar.Enabled = True
         End If
+
+    End Sub
+
+    Private Sub Btn_MarcarMasiva_Excel_Click(sender As Object, e As EventArgs) Handles Btn_MarcarMasiva_Excel.Click
+
+        Dim _Lista As New List(Of String)
+
+        Dim Fm As New Frm_Filtro_Especial_MarcarMasivoExcel
+        Fm.ShowDialog(Me)
+        _Lista = Fm.ListaCodigos
+        Fm.Dispose()
+
+        If Not CBool(_Lista.Count) Then
+            Return
+        End If
+
+        For Each _Fila As DataGridViewRow In Grilla.Rows
+            Dim _Codigo As String = _Fila.Cells("Codigo").Value.ToString().Trim
+            If _Lista.Contains(_Codigo) Then
+                _Fila.Cells("Chk").Value = True
+            End If
+            If _Codigo.Contains("041333000985") Then
+                Dim aca = 0
+            End If
+        Next
+
+        Rdb_Mostrar_Solo_Tickeados.Checked = True
+        Me.Refresh()
 
     End Sub
 

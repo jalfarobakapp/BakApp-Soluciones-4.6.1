@@ -89,8 +89,8 @@ Partial Class Frm_Validaciones
         Me.Imagenes_16x16.TransparentColor = System.Drawing.Color.Transparent
         Me.Imagenes_16x16.Images.SetKeyName(0, "button-ok.png")
         Me.Imagenes_16x16.Images.SetKeyName(1, "symbol-delete.png")
-        Me.Imagenes_16x16.Images.SetKeyName(2, "button-cancel.png")
-        Me.Imagenes_16x16.Images.SetKeyName(3, "symbol-forbidden.png")
+        Me.Imagenes_16x16.Images.SetKeyName(2, "warning.png")
+        Me.Imagenes_16x16.Images.SetKeyName(3, "button-help.png")
         '
         'Imagenes_16x16_Dark
         '
@@ -98,8 +98,8 @@ Partial Class Frm_Validaciones
         Me.Imagenes_16x16_Dark.TransparentColor = System.Drawing.Color.Transparent
         Me.Imagenes_16x16_Dark.Images.SetKeyName(0, "button-ok.png")
         Me.Imagenes_16x16_Dark.Images.SetKeyName(1, "symbol-delete.png")
-        Me.Imagenes_16x16_Dark.Images.SetKeyName(2, "button-cancel.png")
-        Me.Imagenes_16x16_Dark.Images.SetKeyName(3, "symbol-forbidden.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(2, "warning.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(3, "button-help.png")
         '
         'Btn_Excel
         '

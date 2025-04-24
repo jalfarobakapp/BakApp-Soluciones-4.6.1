@@ -295,17 +295,17 @@ Module Mod_Imprimir
             '    End Try
             'Next
 
-            _Mensaje.Detalle = "Imprimir archivo adjunto"
+            _Mensaje.Col2_Detalle = "Imprimir archivo adjunto"
             _Mensaje.EsCorrecto = True
-            _Mensaje.Mensaje = "Archivos adjuntos impresos correctamente"
+            _Mensaje.Col1_Mensaje = "Archivos adjuntos impresos correctamente"
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Col1_Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         Finally
             If _Errores.Count > 0 Then
-                _Mensaje.Mensaje = String.Join(Environment.NewLine, _Errores)
+                _Mensaje.Col1_Mensaje = String.Join(Environment.NewLine, _Errores)
                 _Mensaje.Icono = MessageBoxIcon.Warning
             End If
         End Try
@@ -382,16 +382,16 @@ Module Mod_Imprimir
 
             End Using
 
-            _Mensaje.Detalle = "Extraer archivo desde BD: " & _Nombre_Archivo
+            _Mensaje.Col2_Detalle = "Extraer archivo desde BD: " & _Nombre_Archivo
             _Mensaje.EsCorrecto = True
-            _Mensaje.Mensaje = _Ruta
+            _Mensaje.Col1_Mensaje = _Ruta
             _Mensaje.Icono = MessageBoxIcon.Stop
 
         Catch ex As Exception
 
-            _Mensaje.Detalle = "Extraer archivo desde BD: " & _Nombre_Archivo
+            _Mensaje.Col2_Detalle = "Extraer archivo desde BD: " & _Nombre_Archivo
             _Mensaje.EsCorrecto = False
-            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Col1_Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         Finally
             If data IsNot Nothing Then
@@ -467,7 +467,7 @@ Module Mod_Imprimir
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
-        _Mensaje.Detalle = "Imprimir documento: " & _Tido & "-" & _Nudo
+        _Mensaje.Col2_Detalle = "Imprimir documento: " & _Tido & "-" & _Nudo
 
         Try
 
@@ -505,12 +505,12 @@ Module Mod_Imprimir
             End If
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Mensaje = "Documento impreso correctamente"
+            _Mensaje.Col1_Mensaje = "Documento impreso correctamente"
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Col1_Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
 

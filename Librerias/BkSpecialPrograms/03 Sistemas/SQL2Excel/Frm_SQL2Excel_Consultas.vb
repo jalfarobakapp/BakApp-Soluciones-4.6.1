@@ -155,7 +155,7 @@ Public Class Frm_SQL2Excel_Consultas
 
             Dim _Mensaje As LsValiciones.Mensajes = Cl_SQL2Query.Fx_Eliminar_SqlQuery()
 
-            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
             If Not _Mensaje.EsCorrecto Then
                 Return

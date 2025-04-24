@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_Diseno_Doc_y_Ubic
     Inherits DevComponents.DotNetBar.RibbonForm
 
@@ -148,7 +148,7 @@ Partial Class Frm_Diseno_Doc_y_Ubic
         Me.RibbonBar3.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         Me.RibbonBar3.Location = New System.Drawing.Point(571, 0)
         Me.RibbonBar3.Name = "RibbonBar3"
-        Me.RibbonBar3.Size = New System.Drawing.Size(154, 98)
+        Me.RibbonBar3.Size = New System.Drawing.Size(101, 98)
         Me.RibbonBar3.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.RibbonBar3.TabIndex = 9
         '
@@ -166,7 +166,7 @@ Partial Class Frm_Diseno_Doc_y_Ubic
         Me.Btn_Sectores.Image = CType(resources.GetObject("Btn_Sectores.Image"), System.Drawing.Image)
         Me.Btn_Sectores.Name = "Btn_Sectores"
         Me.Btn_Sectores.SubItemsExpandWidth = 14
-        Me.Btn_Sectores.Text = "Ver lista de sectores"
+        Me.Btn_Sectores.Text = "Manejo de " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Cabeceras"
         '
         'RibbonBar1
         '
@@ -227,7 +227,7 @@ Partial Class Frm_Diseno_Doc_y_Ubic
         Me.RibbonBar8.Size = New System.Drawing.Size(180, 98)
         Me.RibbonBar8.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.RibbonBar8.TabIndex = 7
-        Me.RibbonBar8.Text = "Ubicación Objeto"
+        Me.RibbonBar8.Text = "UbicaciÃ³n Objeto"
         '
         '
         '
@@ -287,7 +287,7 @@ Partial Class Frm_Diseno_Doc_y_Ubic
         Me.RibbonBar7.Size = New System.Drawing.Size(180, 98)
         Me.RibbonBar7.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.RibbonBar7.TabIndex = 6
-        Me.RibbonBar7.Text = "Tamaño objeto"
+        Me.RibbonBar7.Text = "TamaÃ±o objeto"
         '
         '
         '
@@ -492,7 +492,7 @@ Partial Class Frm_Diseno_Doc_y_Ubic
         Me.Menu_Contextual_Opciones_Mapa.AutoExpandOnClick = True
         Me.Menu_Contextual_Opciones_Mapa.Name = "Menu_Contextual_Opciones_Mapa"
         Me.Menu_Contextual_Opciones_Mapa.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem4, Me.Btn_Mnu_Editar_Mapa, Me.Btn_Mnu_Eliminar_Mapa, Me.LabelItem1, Me.Btn_Exportar_Excel})
-        Me.Menu_Contextual_Opciones_Mapa.Text = "Opciones diseño de mapa"
+        Me.Menu_Contextual_Opciones_Mapa.Text = "Opciones diseÃ±o de mapa"
         '
         'LabelItem4
         '
@@ -560,7 +560,7 @@ Partial Class Frm_Diseno_Doc_y_Ubic
         'Frm_Diseno_Doc_y_Ubic
         '
         Me.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.ClientSize = New System.Drawing.Size(931, 479)
+        Me.ClientSize = New System.Drawing.Size(931, 477)
         Me.Controls.Add(Me.ContextMenuBar1)
         Me.Controls.Add(Me.tabStrip1)
         Me.Controls.Add(Me.RibbonControl1)

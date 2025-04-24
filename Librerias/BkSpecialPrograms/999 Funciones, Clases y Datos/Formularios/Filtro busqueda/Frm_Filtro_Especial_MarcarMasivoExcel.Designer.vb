@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class Frm_Impor_Prod_Masivamente
+Partial Class Frm_Filtro_Especial_MarcarMasivoExcel
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
     'Form overrides dispose to clean up the component list.
@@ -22,14 +22,8 @@ Partial Class Frm_Impor_Prod_Masivamente
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Impor_Prod_Masivamente))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Filtro_Especial_MarcarMasivoExcel))
         Me.Grupo_01 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Panel2 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Rdb_Bodega_Documento = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Rdb_Bodega_Excel = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Panel1 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Rdb_Precio_Excel = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Rdb_Precio_Lista = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Primera_Fila_Es_encabezado = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Lbl_Procesando = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Nombre_Archivo = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -38,12 +32,9 @@ Partial Class Frm_Impor_Prod_Masivamente
         Me.Circular_Progres_Val = New DevComponents.DotNetBar.Controls.CircularProgress()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Buscar_Archivo_Excel = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Buscar_Archivo_Txt = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Archivo_Ayuda_Excel = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Cancelar = New DevComponents.DotNetBar.ButtonItem()
         Me.Grupo_01.SuspendLayout()
-        Me.Panel2.SuspendLayout()
-        Me.Panel1.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -51,8 +42,6 @@ Partial Class Frm_Impor_Prod_Masivamente
         '
         Me.Grupo_01.BackColor = System.Drawing.Color.White
         Me.Grupo_01.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.Grupo_01.Controls.Add(Me.Panel2)
-        Me.Grupo_01.Controls.Add(Me.Panel1)
         Me.Grupo_01.Controls.Add(Me.Chk_Primera_Fila_Es_encabezado)
         Me.Grupo_01.Controls.Add(Me.Lbl_Procesando)
         Me.Grupo_01.Controls.Add(Me.Txt_Nombre_Archivo)
@@ -60,9 +49,9 @@ Partial Class Frm_Impor_Prod_Masivamente
         Me.Grupo_01.Controls.Add(Me.Label1)
         Me.Grupo_01.Controls.Add(Me.Circular_Progres_Val)
         Me.Grupo_01.DisabledBackColor = System.Drawing.Color.Empty
-        Me.Grupo_01.Location = New System.Drawing.Point(4, 6)
+        Me.Grupo_01.Location = New System.Drawing.Point(4, 3)
         Me.Grupo_01.Name = "Grupo_01"
-        Me.Grupo_01.Size = New System.Drawing.Size(585, 184)
+        Me.Grupo_01.Size = New System.Drawing.Size(585, 138)
         '
         '
         '
@@ -91,116 +80,8 @@ Partial Class Frm_Impor_Prod_Masivamente
         '
         '
         Me.Grupo_01.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Grupo_01.TabIndex = 80
+        Me.Grupo_01.TabIndex = 82
         Me.Grupo_01.Text = "Importar datos desde archivo"
-        '
-        'Panel2
-        '
-        Me.Panel2.BackColor = System.Drawing.Color.Transparent
-        Me.Panel2.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.[Single]
-        Me.Panel2.ColumnCount = 2
-        Me.Panel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.Panel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.Panel2.Controls.Add(Me.Rdb_Bodega_Documento, 1, 0)
-        Me.Panel2.Controls.Add(Me.Rdb_Bodega_Excel, 0, 0)
-        Me.Panel2.ForeColor = System.Drawing.Color.Black
-        Me.Panel2.Location = New System.Drawing.Point(3, 136)
-        Me.Panel2.Name = "Panel2"
-        Me.Panel2.RowCount = 1
-        Me.Panel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.Panel2.Size = New System.Drawing.Size(573, 22)
-        Me.Panel2.TabIndex = 83
-        '
-        'Rdb_Bodega_Documento
-        '
-        Me.Rdb_Bodega_Documento.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Rdb_Bodega_Documento.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_Bodega_Documento.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_Bodega_Documento.FocusCuesEnabled = False
-        Me.Rdb_Bodega_Documento.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Bodega_Documento.Location = New System.Drawing.Point(290, 4)
-        Me.Rdb_Bodega_Documento.Name = "Rdb_Bodega_Documento"
-        Me.Rdb_Bodega_Documento.Size = New System.Drawing.Size(279, 14)
-        Me.Rdb_Bodega_Documento.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_Bodega_Documento.TabIndex = 84
-        Me.Rdb_Bodega_Documento.Text = "Incorporar bodega desde modalidad"
-        '
-        'Rdb_Bodega_Excel
-        '
-        Me.Rdb_Bodega_Excel.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Rdb_Bodega_Excel.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_Bodega_Excel.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_Bodega_Excel.Checked = True
-        Me.Rdb_Bodega_Excel.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.Rdb_Bodega_Excel.CheckValue = "Y"
-        Me.Rdb_Bodega_Excel.FocusCuesEnabled = False
-        Me.Rdb_Bodega_Excel.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Bodega_Excel.Location = New System.Drawing.Point(4, 4)
-        Me.Rdb_Bodega_Excel.Name = "Rdb_Bodega_Excel"
-        Me.Rdb_Bodega_Excel.Size = New System.Drawing.Size(279, 14)
-        Me.Rdb_Bodega_Excel.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_Bodega_Excel.TabIndex = 83
-        Me.Rdb_Bodega_Excel.Text = "Incorporar bodega desde planilla"
-        '
-        'Panel1
-        '
-        Me.Panel1.BackColor = System.Drawing.Color.Transparent
-        Me.Panel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.[Single]
-        Me.Panel1.ColumnCount = 2
-        Me.Panel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.Panel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.Panel1.Controls.Add(Me.Rdb_Precio_Excel, 1, 0)
-        Me.Panel1.Controls.Add(Me.Rdb_Precio_Lista, 0, 0)
-        Me.Panel1.ForeColor = System.Drawing.Color.Black
-        Me.Panel1.Location = New System.Drawing.Point(3, 112)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.RowCount = 1
-        Me.Panel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.Panel1.Size = New System.Drawing.Size(573, 22)
-        Me.Panel1.TabIndex = 82
-        '
-        'Rdb_Precio_Excel
-        '
-        Me.Rdb_Precio_Excel.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Rdb_Precio_Excel.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_Precio_Excel.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_Precio_Excel.FocusCuesEnabled = False
-        Me.Rdb_Precio_Excel.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Precio_Excel.Location = New System.Drawing.Point(290, 4)
-        Me.Rdb_Precio_Excel.Name = "Rdb_Precio_Excel"
-        Me.Rdb_Precio_Excel.Size = New System.Drawing.Size(279, 14)
-        Me.Rdb_Precio_Excel.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_Precio_Excel.TabIndex = 84
-        Me.Rdb_Precio_Excel.Text = "Incorporar precio desde planilla"
-        '
-        'Rdb_Precio_Lista
-        '
-        Me.Rdb_Precio_Lista.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Rdb_Precio_Lista.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_Precio_Lista.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_Precio_Lista.Checked = True
-        Me.Rdb_Precio_Lista.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.Rdb_Precio_Lista.CheckValue = "Y"
-        Me.Rdb_Precio_Lista.FocusCuesEnabled = False
-        Me.Rdb_Precio_Lista.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Precio_Lista.Location = New System.Drawing.Point(4, 4)
-        Me.Rdb_Precio_Lista.Name = "Rdb_Precio_Lista"
-        Me.Rdb_Precio_Lista.Size = New System.Drawing.Size(279, 14)
-        Me.Rdb_Precio_Lista.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_Precio_Lista.TabIndex = 83
-        Me.Rdb_Precio_Lista.Text = "Incorporar precio desde lista (recomendado)"
         '
         'Chk_Primera_Fila_Es_encabezado
         '
@@ -301,13 +182,13 @@ Partial Class Frm_Impor_Prod_Masivamente
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Buscar_Archivo_Excel, Me.Btn_Buscar_Archivo_Txt, Me.Btn_Archivo_Ayuda_Excel, Me.Btn_Cancelar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 196)
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Buscar_Archivo_Excel, Me.Btn_Archivo_Ayuda_Excel, Me.Btn_Cancelar})
+        Me.Bar1.Location = New System.Drawing.Point(0, 157)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(599, 41)
+        Me.Bar1.Size = New System.Drawing.Size(593, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Bar1.TabIndex = 79
+        Me.Bar1.TabIndex = 81
         Me.Bar1.TabStop = False
         Me.Bar1.Text = "Bar1"
         '
@@ -320,16 +201,6 @@ Partial Class Frm_Impor_Prod_Masivamente
         Me.Btn_Buscar_Archivo_Excel.Name = "Btn_Buscar_Archivo_Excel"
         Me.Btn_Buscar_Archivo_Excel.Text = "Importar archivo Excel"
         Me.Btn_Buscar_Archivo_Excel.Tooltip = "Buscar Archivo"
-        '
-        'Btn_Buscar_Archivo_Txt
-        '
-        Me.Btn_Buscar_Archivo_Txt.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Buscar_Archivo_Txt.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Buscar_Archivo_Txt.Image = CType(resources.GetObject("Btn_Buscar_Archivo_Txt.Image"), System.Drawing.Image)
-        Me.Btn_Buscar_Archivo_Txt.ImageAlt = CType(resources.GetObject("Btn_Buscar_Archivo_Txt.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Buscar_Archivo_Txt.Name = "Btn_Buscar_Archivo_Txt"
-        Me.Btn_Buscar_Archivo_Txt.Text = "Importar archivo Txt"
-        Me.Btn_Buscar_Archivo_Txt.Tooltip = "Buscar Archivo"
         '
         'Btn_Archivo_Ayuda_Excel
         '
@@ -349,11 +220,11 @@ Partial Class Frm_Impor_Prod_Masivamente
         Me.Btn_Cancelar.Text = "Cancelar"
         Me.Btn_Cancelar.Tooltip = "Eliminar Servidor de correo de salida SMTP"
         '
-        'Frm_Impor_Prod_Masivamente
+        'Frm_Filtro_Especial_MarcarMasivoExcel
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(599, 237)
+        Me.ClientSize = New System.Drawing.Size(593, 198)
         Me.Controls.Add(Me.Grupo_01)
         Me.Controls.Add(Me.Bar1)
         Me.DoubleBuffered = True
@@ -361,14 +232,12 @@ Partial Class Frm_Impor_Prod_Masivamente
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "Frm_Impor_Prod_Masivamente"
+        Me.Name = "Frm_Filtro_Especial_MarcarMasivoExcel"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Importar productos"
+        Me.Text = "MetroForm"
         Me.Grupo_01.ResumeLayout(False)
         Me.Grupo_01.PerformLayout()
-        Me.Panel2.ResumeLayout(False)
-        Me.Panel1.ResumeLayout(False)
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -385,11 +254,4 @@ Partial Class Frm_Impor_Prod_Masivamente
     Friend WithEvents Btn_Buscar_Archivo_Excel As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Archivo_Ayuda_Excel As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Cancelar As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Panel1 As TableLayoutPanel
-    Friend WithEvents Panel2 As TableLayoutPanel
-    Public WithEvents Rdb_Bodega_Documento As DevComponents.DotNetBar.Controls.CheckBoxX
-    Public WithEvents Rdb_Bodega_Excel As DevComponents.DotNetBar.Controls.CheckBoxX
-    Public WithEvents Rdb_Precio_Excel As DevComponents.DotNetBar.Controls.CheckBoxX
-    Public WithEvents Rdb_Precio_Lista As DevComponents.DotNetBar.Controls.CheckBoxX
-    Friend WithEvents Btn_Buscar_Archivo_Txt As DevComponents.DotNetBar.ButtonItem
 End Class

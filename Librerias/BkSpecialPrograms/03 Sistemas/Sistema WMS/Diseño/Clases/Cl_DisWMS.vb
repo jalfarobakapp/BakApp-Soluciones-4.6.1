@@ -26,7 +26,7 @@ Public Class Cl_DisWMS
         If IsNothing(_Row) Then
 
             _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Mensaje = "No se encontraron registros en la tabla Zw_WMS_Ubicaciones_Mapa_Det con el Id " & _Id
+            _Mensaje_Stem.Col1_Mensaje = "No se encontraron registros en la tabla Zw_WMS_Ubicaciones_Mapa_Det con el Id " & _Id
 
             Return _Mensaje_Stem
 
@@ -67,7 +67,7 @@ Public Class Cl_DisWMS
         End With
 
         _Mensaje_Stem.EsCorrecto = True
-        _Mensaje_Stem.Mensaje = "Registro cargado correctamente"
+        _Mensaje_Stem.Col1_Mensaje = "Registro cargado correctamente"
         _Mensaje_Stem.Tag = _Objeto_Det
 
         Return _Mensaje_Stem
@@ -131,7 +131,7 @@ Public Class Cl_DisWMS
         If IsNothing(_Tbl) Then
 
             _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Mensaje = "No se encontraron registros en la tabla Zw_WMS_Ubicaciones_Mapa_Det con el Id_Mapa = " & _Id_Mapa & " And Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega & "'"
+            _Mensaje_Stem.Col1_Mensaje = "No se encontraron registros en la tabla Zw_WMS_Ubicaciones_Mapa_Det con el Id_Mapa = " & _Id_Mapa & " And Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega & "'"
 
             Return _Mensaje_Stem
 
@@ -178,7 +178,7 @@ Public Class Cl_DisWMS
         Next
 
         _Mensaje_Stem.EsCorrecto = True
-        _Mensaje_Stem.Mensaje = "Registros cargados correctamente"
+        _Mensaje_Stem.Col1_Mensaje = "Registros cargados correctamente"
         _Mensaje_Stem.Tag = Ls_Zw_WMS_Ubicaciones_Mapa_Det
 
         Return _Mensaje_Stem

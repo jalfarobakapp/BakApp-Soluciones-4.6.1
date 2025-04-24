@@ -112,7 +112,7 @@ Public Class Frm_GDI2GRI
             Fm_Espera.Close()
             Fm_Espera.Dispose()
             Fm_Espera = Nothing
-            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
             Return
         End If
 
@@ -124,7 +124,7 @@ Public Class Frm_GDI2GRI
             Fm_Espera.Close()
             Fm_Espera.Dispose()
             Fm_Espera = Nothing
-            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
         End If
 
         _Row_GRI = _Sql.Fx_Get_DataRow("Select * From MAEEDO Where IDMAEEDO = " & _Mensaje.Id)
@@ -133,8 +133,8 @@ Public Class Frm_GDI2GRI
         Fm_Espera.Dispose()
         Fm_Espera = Nothing
 
-        _Mensaje.Mensaje = "¡Perfecto! Las guías de salida (GDI-" & _Row_GDI.Item("NUDO") & ") e ingreso (GRI-" & _Row_GRI.Item("NUDO") & ") se han creado exitosamente."
-        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        _Mensaje.Col1_Mensaje = "¡Perfecto! Las guías de salida (GDI-" & _Row_GDI.Item("NUDO") & ") e ingreso (GRI-" & _Row_GRI.Item("NUDO") & ") se han creado exitosamente."
+        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         Me.Enabled = True
         Call Btn_Limpiar_Click(Nothing, Nothing)

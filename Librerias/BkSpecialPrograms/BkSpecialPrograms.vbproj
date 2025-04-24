@@ -3814,6 +3814,12 @@
     <Compile Include="999 Funciones, Clases y Datos\Formularios\Filtro busqueda\Frm_Filtro_Especial_Informes_Opciones.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="999 Funciones, Clases y Datos\Formularios\Filtro busqueda\Frm_Filtro_Especial_MarcarMasivoExcel.Designer.vb">
+      <DependentUpon>Frm_Filtro_Especial_MarcarMasivoExcel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="999 Funciones, Clases y Datos\Formularios\Filtro busqueda\Frm_Filtro_Especial_MarcarMasivoExcel.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="999 Funciones, Clases y Datos\Formularios\Filtro busqueda\Modulo_Filtros.vb" />
     <Compile Include="03 Sistemas\Mapas\Frm_Mapas.Designer.vb">
       <DependentUpon>Frm_Mapas.vb</DependentUpon>
@@ -6378,6 +6384,9 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Recursos_Alerta_Stock.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="999 Funciones, Clases y Datos\Formularios\Filtro busqueda\Frm_Filtro_Especial_MarcarMasivoExcel.resx">
+      <DependentUpon>Frm_Filtro_Especial_MarcarMasivoExcel.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="999 Funciones, Clases y Datos\Formularios\Form de espera\Frm_Form_Esperar.resx">
       <DependentUpon>Frm_Form_Esperar.vb</DependentUpon>

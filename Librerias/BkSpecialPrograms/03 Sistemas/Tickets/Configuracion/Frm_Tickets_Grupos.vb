@@ -395,7 +395,7 @@ Public Class Frm_Tickets_Grupos
         If _Mensaje.EsCorrecto Then
             Grilla_Grupos.Rows.Remove(_Fila)
         Else
-            MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Error al eliminar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, "Error al eliminar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End If
 
     End Sub

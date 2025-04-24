@@ -330,15 +330,15 @@ Public Class Frm_Exportar_Excel
             Txt_Nombre_Archivo.Text = NombreArchivo & "." & Extencion.ToString
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Mensaje = "El archivo fue guardado con exito en la carpeta:" & vbCrLf & _Archivo
-            _Mensaje.Detalle = "Exportar a Excel"
+            _Mensaje.Col1_Mensaje = "El archivo fue guardado con exito en la carpeta:" & vbCrLf & _Archivo
+            _Mensaje.Col2_Detalle = "Exportar a Excel"
             _Mensaje.Icono = MessageBoxIcon.Information
             _Mensaje.Tag = _Archivo
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Mensaje = "Hoja: Hoja" & _Nro_Hoja + 1 & ", Fila: " & _Fila & ", Columna: " & _Columna & vbCrLf & ex.Message
-            _Mensaje.Detalle = "Exportar a Excel"
+            _Mensaje.Col1_Mensaje = "Hoja: Hoja" & _Nro_Hoja + 1 & ", Fila: " & _Fila & ", Columna: " & _Columna & vbCrLf & ex.Message
+            _Mensaje.Col2_Detalle = "Exportar a Excel"
             _Mensaje.Tag = String.Empty
             _Mensaje.Icono = MessageBoxIcon.Error
         Finally
@@ -531,15 +531,15 @@ Public Class Frm_Exportar_Excel
             Txt_Nombre_Archivo.Text = NombreArchivo & "." & Extencion.ToString
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Mensaje = "El archivo fue guardado con exito en la carpeta:" & vbCrLf & _Archivo
-            _Mensaje.Detalle = "Exportar a Excel"
+            _Mensaje.Col1_Mensaje = "El archivo fue guardado con exito en la carpeta:" & vbCrLf & _Archivo
+            _Mensaje.Col2_Detalle = "Exportar a Excel"
             _Mensaje.Icono = MessageBoxIcon.Information
             _Mensaje.Tag = _Archivo
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Mensaje = "Hoja: Hoja" & _Nro_Hoja + 1 & ", Fila: " & _fila & ", Columna: " & _columna & vbCrLf & ex.Message
-            _Mensaje.Detalle = "Exportar a Excel"
+            _Mensaje.Col1_Mensaje = "Hoja: Hoja" & _Nro_Hoja + 1 & ", Fila: " & _fila & ", Columna: " & _columna & vbCrLf & ex.Message
+            _Mensaje.Col2_Detalle = "Exportar a Excel"
             _Mensaje.Tag = ""
             _Mensaje.Icono = MessageBoxIcon.Error
         Finally
@@ -922,12 +922,12 @@ Public Class Frm_Exportar_Excel
             End If
 
             If Not _Mensaje.EsCorrecto Then
-                If _Mensaje.Mensaje.Contains("System.OutOfMemoryException") Then
-                    _Mensaje.Mensaje += vbCrLf & vbCrLf & "Se recomienda exportar los datos en formato .csv y luego ese archivo abrirlo con Excel"
+                If _Mensaje.Col1_Mensaje.Contains("System.OutOfMemoryException") Then
+                    _Mensaje.Col1_Mensaje += vbCrLf & vbCrLf & "Se recomienda exportar los datos en formato .csv y luego ese archivo abrirlo con Excel"
                 End If
             End If
 
-            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, Windows.Forms.MessageBoxButtons.OK, _Mensaje.Icono)
+            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, Windows.Forms.MessageBoxButtons.OK, _Mensaje.Icono)
 
             If _Mensaje.EsCorrecto Then
                 _Archivo = _Mensaje.Tag
@@ -956,12 +956,12 @@ Public Class Frm_Exportar_Excel
             End If
 
             If Not _Mensaje.EsCorrecto Then
-                If _Mensaje.Mensaje.Contains("System.OutOfMemoryException") Then
-                    _Mensaje.Mensaje += vbCrLf & vbCrLf & "Se recomienda exportar los datos en formato .csv y luego ese archivo abrirlo con Excel"
+                If _Mensaje.Col1_Mensaje.Contains("System.OutOfMemoryException") Then
+                    _Mensaje.Col1_Mensaje += vbCrLf & vbCrLf & "Se recomienda exportar los datos en formato .csv y luego ese archivo abrirlo con Excel"
                 End If
             End If
 
-            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, Windows.Forms.MessageBoxButtons.OK, _Mensaje.Icono)
+            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, Windows.Forms.MessageBoxButtons.OK, _Mensaje.Icono)
 
             If _Mensaje.EsCorrecto Then
                 _Archivo = _Mensaje.Tag

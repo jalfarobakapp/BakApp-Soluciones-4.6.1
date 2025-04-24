@@ -207,7 +207,7 @@ Public Class Frm_Tickets_TiposCrear
         Dim _Mensaje As LsValiciones.Mensajes = Cl_Tickets.Fx_Grabar_Tipo(_Zw_Stk_Tipos)
 
         If Not _Mensaje.EsCorrecto Then
-            MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Error al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, "Error al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
 

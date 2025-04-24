@@ -224,7 +224,7 @@ Public Class Cl_DocListaSuperior
         If IsNothing(_Row) Then
 
             _Mensaje.EsCorrecto = False
-            _Mensaje.Mensaje = "No se encontro el registro en la tabla Zw_ListaPreGlobal con la Lista = '" & _Lista & "'"
+            _Mensaje.Col1_Mensaje = "No se encontro el registro en la tabla Zw_ListaPreGlobal con la Lista = '" & _Lista & "'"
 
             Return _Mensaje
 
@@ -259,7 +259,7 @@ Public Class Cl_DocListaSuperior
         End With
 
         _Mensaje.EsCorrecto = True
-        _Mensaje.Mensaje = "Registro encontrado."
+        _Mensaje.Col1_Mensaje = "Registro encontrado."
         _Mensaje.Tag = Zw_ListaActCliente
 
         Return _Mensaje
@@ -322,8 +322,8 @@ Public Class Cl_DocListaSuperior
 
             If LsDetalleLpSuperior.Count = 0 Then
                 _Mensaje.EsCorrecto = False
-                _Mensaje.Detalle = "Revisar minorista mayorista"
-                _Mensaje.Mensaje = "No se ha ingresado ningún producto"
+                _Mensaje.Col2_Detalle = "Revisar minorista mayorista"
+                _Mensaje.Col1_Mensaje = "No se ha ingresado ningún producto"
                 _Mensaje.Icono = MessageBoxIcon.Warning
                 _Mensaje.Tag = _VentaMesEnCurso
                 Return _Mensaje
@@ -342,22 +342,22 @@ Public Class Cl_DocListaSuperior
 
             If _VtaMesCursoMasVtaLsup >= _VentaMinVencLP Then
                 _Mensaje.EsCorrecto = True
-                _Mensaje.Detalle = "Revisar minorista mayorista"
-                _Mensaje.Mensaje = "Cliente cumple con pertenecer a la lista superior"
+                _Mensaje.Col2_Detalle = "Revisar minorista mayorista"
+                _Mensaje.Col1_Mensaje = "Cliente cumple con pertenecer a la lista superior"
                 _Mensaje.Tag = _VentaMesEnCurso
                 _Mensaje.Icono = MessageBoxIcon.Information
             Else
                 _Mensaje.EsCorrecto = False
-                _Mensaje.Detalle = "Revisar minorista mayorista"
-                _Mensaje.Mensaje = "Cliente no cumple con pertenecer a la lista superior"
+                _Mensaje.Col2_Detalle = "Revisar minorista mayorista"
+                _Mensaje.Col1_Mensaje = "Cliente no cumple con pertenecer a la lista superior"
                 _Mensaje.Tag = _VentaMesEnCurso
                 _Mensaje.Icono = MessageBoxIcon.Warning
             End If
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Detalle = "Revisar minorista mayorista"
-            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Col2_Detalle = "Revisar minorista mayorista"
+            _Mensaje.Col1_Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Error
         End Try
 
@@ -372,8 +372,8 @@ Public Class Cl_DocListaSuperior
         _Mensaje = Fx_Llenar_ListaBk(_Lista)
 
         If Not _Mensaje.EsCorrecto Then
-            _Mensaje.Detalle = "No cumple con la condición para tener una lista superior"
-            _Mensaje.Mensaje = "No se encontro el registro en la tabla Zw_ListaPreGlobal con la Lista = '" & _Lista & "'"
+            _Mensaje.Col2_Detalle = "No cumple con la condición para tener una lista superior"
+            _Mensaje.Col1_Mensaje = "No se encontro el registro en la tabla Zw_ListaPreGlobal con la Lista = '" & _Lista & "'"
             Return _Mensaje
         End If
 
@@ -405,8 +405,8 @@ Public Class Cl_DocListaSuperior
 
         If Not CBool(_Ds.Tables(3).Rows.Count) Then
             _Mensaje.EsCorrecto = False
-            _Mensaje.Mensaje = "No se encontro el registro en la tabla Zw_ListaPreGlobal con la Lista = '" & Zw_ListaActCliente.ListaSuperior & "'"
-            _Mensaje.Detalle = "No cumple con la condición para tener una lista superior"
+            _Mensaje.Col1_Mensaje = "No se encontro el registro en la tabla Zw_ListaPreGlobal con la Lista = '" & Zw_ListaActCliente.ListaSuperior & "'"
+            _Mensaje.Col2_Detalle = "No cumple con la condición para tener una lista superior"
             _Mensaje.Icono = MessageBoxIcon.Stop
             Return _Mensaje
         End If
@@ -415,19 +415,19 @@ Public Class Cl_DocListaSuperior
 
         If _Row.Item("Cumple") Then
             _Mensaje.EsCorrecto = True
-            _Mensaje.Mensaje = "Cliente cumple con la condición para mantenerse en la lista superior"
-            _Mensaje.Detalle = "Cumple con la condición para tener una lista superior"
+            _Mensaje.Col1_Mensaje = "Cliente cumple con la condición para mantenerse en la lista superior"
+            _Mensaje.Col2_Detalle = "Cumple con la condición para tener una lista superior"
             _Mensaje.Icono = MessageBoxIcon.Information
         Else
             _Mensaje.EsCorrecto = False
 
             Dim _NombreListaInferior As String = _Sql.Fx_Trae_Dato("TABPP", "NOKOLT", "KOLT = '" & CType(_Mensaje.Tag, Zw_ListaPreGlobal).ListaInferior & "'").ToString.Trim
 
-            _Mensaje.Mensaje = "El cliente actualmente tiene asociada la lista de precios: " & CType(_Mensaje.Tag, Zw_ListaPreGlobal).Lista & " - " & CType(_Mensaje.Tag, Zw_ListaPreGlobal).Nombre_Lista & ". " &
+            _Mensaje.Col1_Mensaje = "El cliente actualmente tiene asociada la lista de precios: " & CType(_Mensaje.Tag, Zw_ListaPreGlobal).Lista & " - " & CType(_Mensaje.Tag, Zw_ListaPreGlobal).Nombre_Lista & ". " &
                                "Sin embargo,en los últimos " & MesesVenListaPrecios & " meses, no ha alcanzado el monto mínimo de ventas mensuales necesario " &
                                "para mantener esta lista de precios. Por lo tanto, la lista de precios se actualizará a: " & CType(_Mensaje.Tag, Zw_ListaPreGlobal).ListaInferior & " - " & _NombreListaInferior
 
-            _Mensaje.Detalle = "No cumple con la condición para tener una lista superior"
+            _Mensaje.Col2_Detalle = "No cumple con la condición para tener una lista superior"
             _Mensaje.Icono = MessageBoxIcon.Stop
         End If
 
@@ -442,8 +442,8 @@ Public Class Cl_DocListaSuperior
         _Mensaje = Fx_Llenar_ListaBk(_Lista)
 
         If Not _Mensaje.EsCorrecto Then
-            _Mensaje.Detalle = "No cumple con la condición para tener una lista superior"
-            _Mensaje.Mensaje = "No se encontro el registro en la tabla Zw_ListaPreGlobal con la Lista = '" & _Lista & "'"
+            _Mensaje.Col2_Detalle = "No cumple con la condición para tener una lista superior"
+            _Mensaje.Col1_Mensaje = "No se encontro el registro en la tabla Zw_ListaPreGlobal con la Lista = '" & _Lista & "'"
             Return _Mensaje
         End If
 
@@ -475,8 +475,8 @@ Public Class Cl_DocListaSuperior
 
         If Not CBool(_Ds.Tables(3).Rows.Count) Then
             _Mensaje.EsCorrecto = False
-            _Mensaje.Mensaje = "No se encontro el registro en la tabla Zw_ListaPreGlobal con la Lista = '" & Zw_ListaActCliente.ListaSuperior & "'"
-            _Mensaje.Detalle = "No cumple con la condición para tener una lista superior"
+            _Mensaje.Col1_Mensaje = "No se encontro el registro en la tabla Zw_ListaPreGlobal con la Lista = '" & Zw_ListaActCliente.ListaSuperior & "'"
+            _Mensaje.Col2_Detalle = "No cumple con la condición para tener una lista superior"
             _Mensaje.Icono = MessageBoxIcon.Stop
             Return _Mensaje
         End If
@@ -485,19 +485,19 @@ Public Class Cl_DocListaSuperior
 
         If _Row.Item("Cumple") Then
             _Mensaje.EsCorrecto = True
-            _Mensaje.Mensaje = "Cliente cumple con la condición para mantenerse en la lista superior"
-            _Mensaje.Detalle = "Cumple con la condición para tener una lista superior"
+            _Mensaje.Col1_Mensaje = "Cliente cumple con la condición para mantenerse en la lista superior"
+            _Mensaje.Col2_Detalle = "Cumple con la condición para tener una lista superior"
             _Mensaje.Icono = MessageBoxIcon.Information
         Else
             _Mensaje.EsCorrecto = False
 
             Dim _NombreListaInferior As String = _Sql.Fx_Trae_Dato("TABPP", "NOKOLT", "KOLT = '" & CType(_Mensaje.Tag, Zw_ListaPreGlobal).ListaInferior & "'").ToString.Trim
 
-            _Mensaje.Mensaje = "El cliente actualmente tiene asociada la lista de precios: " & CType(_Mensaje.Tag, Zw_ListaPreGlobal).Lista & " - " & CType(_Mensaje.Tag, Zw_ListaPreGlobal).Nombre_Lista & ". " &
+            _Mensaje.Col1_Mensaje = "El cliente actualmente tiene asociada la lista de precios: " & CType(_Mensaje.Tag, Zw_ListaPreGlobal).Lista & " - " & CType(_Mensaje.Tag, Zw_ListaPreGlobal).Nombre_Lista & ". " &
                                "Sin embargo,en los últimos " & MesesVenListaPrecios & " meses, no ha alcanzado el monto mínimo de ventas mensuales necesario " &
                                "para mantener esta lista de precios. Por lo tanto, la lista de precios se actualizará a: " & CType(_Mensaje.Tag, Zw_ListaPreGlobal).ListaInferior & " - " & _NombreListaInferior
 
-            _Mensaje.Detalle = "No cumple con la condición para tener una lista superior"
+            _Mensaje.Col2_Detalle = "No cumple con la condición para tener una lista superior"
             _Mensaje.Icono = MessageBoxIcon.Stop
         End If
 

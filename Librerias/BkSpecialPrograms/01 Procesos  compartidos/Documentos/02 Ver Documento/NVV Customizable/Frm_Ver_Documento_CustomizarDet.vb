@@ -291,7 +291,7 @@ Public Class Frm_Ver_Documento_CustomizarDet
 
                     If Not _Mensaje.EsCorrecto Then
 
-                        MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
                         _Fila.Cells("CodigoAlt").Value = String.Empty
 
@@ -368,15 +368,15 @@ Public Class Frm_Ver_Documento_CustomizarDet
             End If
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Detalle = "Buscar Producto"
-            _Mensaje.Mensaje = "Producto encontrado"
+            _Mensaje.Col2_Detalle = "Buscar Producto"
+            _Mensaje.Col1_Mensaje = "Producto encontrado"
             _Mensaje.Icono = MessageBoxIcon.Information
             _Mensaje.Tag = _Row
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Detalle = "Buscar Producto"
-            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Col2_Detalle = "Buscar Producto"
+            _Mensaje.Col1_Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
 
@@ -427,7 +427,7 @@ Public Class Frm_Ver_Documento_CustomizarDet
 
         _Mensaje = Cl_NVVCustomizable.Fx_Grabar_Detalle_Customizados()
 
-        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         If Not _Mensaje.EsCorrecto Then
             Return

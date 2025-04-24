@@ -41,6 +41,11 @@ Partial Class Frm_Sectores_ProductosEnSector
         Me.Btn_DesmarcarTodos = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem3 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Menu_Contextual_Opciones_Producto = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem4 = New DevComponents.DotNetBar.LabelItem()
+        Me.Mnu_Btn_Ver_Informacion_de_producto = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_Ver_Ubicaciones_Del_Producto = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_Eliminar_Ubicacion = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_ExportarExcelProductos = New DevComponents.DotNetBar.ButtonItem()
@@ -49,11 +54,6 @@ Partial Class Frm_Sectores_ProductosEnSector
         Me.Btn_MesSiguiente = New DevComponents.DotNetBar.ButtonX()
         Me.Btn_MesAnterior = New DevComponents.DotNetBar.ButtonX()
         Me.Lbl_YearMonth = New DevComponents.DotNetBar.LabelX()
-        Me.Menu_Contextual_Opciones_Producto = New DevComponents.DotNetBar.ButtonItem()
-        Me.LabelItem4 = New DevComponents.DotNetBar.LabelItem()
-        Me.Mnu_Btn_Ver_Informacion_de_producto = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Mnu_Ver_Ubicaciones_Del_Producto = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Mnu_Eliminar_Ubicacion = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel2.SuspendLayout()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -103,7 +103,7 @@ Partial Class Frm_Sectores_ProductosEnSector
         '
         Me.GroupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel2.TabIndex = 96
-        Me.GroupPanel2.Text = "Datos del Sector"
+        Me.GroupPanel2.Text = "Datos de la Cabecera"
         '
         'Cmb_Sector
         '
@@ -291,6 +291,48 @@ Partial Class Frm_Sectores_ProductosEnSector
         Me.Btn_Copiar.Name = "Btn_Copiar"
         Me.Btn_Copiar.Text = "Copiar (portapapeles)"
         '
+        'Menu_Contextual_Opciones_Producto
+        '
+        Me.Menu_Contextual_Opciones_Producto.AutoExpandOnClick = True
+        Me.Menu_Contextual_Opciones_Producto.Name = "Menu_Contextual_Opciones_Producto"
+        Me.Menu_Contextual_Opciones_Producto.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem4, Me.Mnu_Btn_Ver_Informacion_de_producto, Me.Btn_Mnu_Ver_Ubicaciones_Del_Producto, Me.Btn_Mnu_Eliminar_Ubicacion})
+        Me.Menu_Contextual_Opciones_Producto.Text = "Opciones Ubicacion"
+        '
+        'LabelItem4
+        '
+        Me.LabelItem4.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem4.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem4.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem4.Name = "LabelItem4"
+        Me.LabelItem4.PaddingBottom = 1
+        Me.LabelItem4.PaddingLeft = 10
+        Me.LabelItem4.PaddingTop = 1
+        Me.LabelItem4.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem4.Text = "Opciones del producto"
+        '
+        'Mnu_Btn_Ver_Informacion_de_producto
+        '
+        Me.Mnu_Btn_Ver_Informacion_de_producto.Image = CType(resources.GetObject("Mnu_Btn_Ver_Informacion_de_producto.Image"), System.Drawing.Image)
+        Me.Mnu_Btn_Ver_Informacion_de_producto.ImageAlt = CType(resources.GetObject("Mnu_Btn_Ver_Informacion_de_producto.ImageAlt"), System.Drawing.Image)
+        Me.Mnu_Btn_Ver_Informacion_de_producto.Name = "Mnu_Btn_Ver_Informacion_de_producto"
+        Me.Mnu_Btn_Ver_Informacion_de_producto.Text = "Ver información adicional del producto"
+        '
+        'Btn_Mnu_Ver_Ubicaciones_Del_Producto
+        '
+        Me.Btn_Mnu_Ver_Ubicaciones_Del_Producto.Image = CType(resources.GetObject("Btn_Mnu_Ver_Ubicaciones_Del_Producto.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Ver_Ubicaciones_Del_Producto.Name = "Btn_Mnu_Ver_Ubicaciones_Del_Producto"
+        Me.Btn_Mnu_Ver_Ubicaciones_Del_Producto.Text = "Ver ubicaciones del producto"
+        Me.Btn_Mnu_Ver_Ubicaciones_Del_Producto.Visible = False
+        '
+        'Btn_Mnu_Eliminar_Ubicacion
+        '
+        Me.Btn_Mnu_Eliminar_Ubicacion.ForeColor = System.Drawing.Color.Red
+        Me.Btn_Mnu_Eliminar_Ubicacion.Image = CType(resources.GetObject("Btn_Mnu_Eliminar_Ubicacion.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Eliminar_Ubicacion.Name = "Btn_Mnu_Eliminar_Ubicacion"
+        Me.Btn_Mnu_Eliminar_Ubicacion.Text = "Quitar producto de esta ubicación"
+        Me.Btn_Mnu_Eliminar_Ubicacion.Visible = False
+        '
         'Grilla
         '
         Me.Grilla.AllowUserToAddRows = False
@@ -440,48 +482,6 @@ Partial Class Frm_Sectores_ProductosEnSector
         Me.Lbl_YearMonth.Size = New System.Drawing.Size(158, 23)
         Me.Lbl_YearMonth.TabIndex = 0
         Me.Lbl_YearMonth.Text = "2024, Octubre"
-        '
-        'Menu_Contextual_Opciones_Producto
-        '
-        Me.Menu_Contextual_Opciones_Producto.AutoExpandOnClick = True
-        Me.Menu_Contextual_Opciones_Producto.Name = "Menu_Contextual_Opciones_Producto"
-        Me.Menu_Contextual_Opciones_Producto.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem4, Me.Mnu_Btn_Ver_Informacion_de_producto, Me.Btn_Mnu_Ver_Ubicaciones_Del_Producto, Me.Btn_Mnu_Eliminar_Ubicacion})
-        Me.Menu_Contextual_Opciones_Producto.Text = "Opciones Ubicacion"
-        '
-        'LabelItem4
-        '
-        Me.LabelItem4.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
-        Me.LabelItem4.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
-        Me.LabelItem4.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
-        Me.LabelItem4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.LabelItem4.Name = "LabelItem4"
-        Me.LabelItem4.PaddingBottom = 1
-        Me.LabelItem4.PaddingLeft = 10
-        Me.LabelItem4.PaddingTop = 1
-        Me.LabelItem4.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.LabelItem4.Text = "Opciones del producto"
-        '
-        'Mnu_Btn_Ver_Informacion_de_producto
-        '
-        Me.Mnu_Btn_Ver_Informacion_de_producto.Image = CType(resources.GetObject("Mnu_Btn_Ver_Informacion_de_producto.Image"), System.Drawing.Image)
-        Me.Mnu_Btn_Ver_Informacion_de_producto.ImageAlt = CType(resources.GetObject("Mnu_Btn_Ver_Informacion_de_producto.ImageAlt"), System.Drawing.Image)
-        Me.Mnu_Btn_Ver_Informacion_de_producto.Name = "Mnu_Btn_Ver_Informacion_de_producto"
-        Me.Mnu_Btn_Ver_Informacion_de_producto.Text = "Ver información adicional del producto"
-        '
-        'Btn_Mnu_Ver_Ubicaciones_Del_Producto
-        '
-        Me.Btn_Mnu_Ver_Ubicaciones_Del_Producto.Image = CType(resources.GetObject("Btn_Mnu_Ver_Ubicaciones_Del_Producto.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_Ver_Ubicaciones_Del_Producto.Name = "Btn_Mnu_Ver_Ubicaciones_Del_Producto"
-        Me.Btn_Mnu_Ver_Ubicaciones_Del_Producto.Text = "Ver ubicaciones del producto"
-        Me.Btn_Mnu_Ver_Ubicaciones_Del_Producto.Visible = False
-        '
-        'Btn_Mnu_Eliminar_Ubicacion
-        '
-        Me.Btn_Mnu_Eliminar_Ubicacion.ForeColor = System.Drawing.Color.Red
-        Me.Btn_Mnu_Eliminar_Ubicacion.Image = CType(resources.GetObject("Btn_Mnu_Eliminar_Ubicacion.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_Eliminar_Ubicacion.Name = "Btn_Mnu_Eliminar_Ubicacion"
-        Me.Btn_Mnu_Eliminar_Ubicacion.Text = "Quitar producto de esta ubicación"
-        Me.Btn_Mnu_Eliminar_Ubicacion.Visible = False
         '
         'Frm_Sectores_ProductosEnSector
         '

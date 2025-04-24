@@ -223,7 +223,7 @@ Public Class Frm_Fabricaciones
             _Icon = MessageBoxIcon.Error
         End If
 
-        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Icon)
+        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Icon)
 
         Sb_Actualizar_Grilla()
 
@@ -296,7 +296,7 @@ Public Class Frm_Fabricaciones
             _Icon = MessageBoxIcon.Error
         End If
 
-        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Icon)
+        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Icon)
 
         Sb_Actualizar_Grilla()
 
@@ -320,7 +320,7 @@ Public Class Frm_Fabricaciones
 
         Dim _Mensaje As LsValiciones.Mensajes = _Cl_Mezcla.Fx_Eliminar_Fabricaciones(_Cl_Mezcla.Zw_Pdp_CPT_MzDetIngFab)
 
-        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         Sb_Actualizar_Grilla()
 
@@ -369,7 +369,7 @@ Public Class Frm_Fabricaciones
             _Mensaje = Fx_Crear_OT()
             Me.Enabled = True
 
-            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
             If Not _Mensaje.EsCorrecto Then
                 Return
@@ -382,11 +382,11 @@ Public Class Frm_Fabricaciones
         Me.Enabled = True
 
         If Not _Mensaje.EsCorrecto Then
-            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
 
-        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, MessageBoxIcon.Information)
+        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         If Chk_GDI_Consumo.Checked Then
 
@@ -394,7 +394,7 @@ Public Class Frm_Fabricaciones
             _Mensaje = Fx_GrabarGDI(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpotl_New)
             Me.Enabled = True
 
-            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         End If
 
@@ -423,7 +423,7 @@ Public Class Frm_Fabricaciones
             _Cl_Mezcla.Fx_Llenar_Zw_Pdp_CPT_MzDet(_Id_Det)
 
             If Not CBool(_Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpotl_New) Then
-                _Mensaje.Detalle = "Error en procedimiento almacenado"
+                _Mensaje.Col2_Detalle = "Error en procedimiento almacenado"
                 Throw New System.Exception("Consulta: " & Consulta_sql)
             End If
 
@@ -437,14 +437,14 @@ Public Class Frm_Fabricaciones
 
             _Mensaje.EsCorrecto = True
             _Mensaje.Id = _Row_NewOT.Item("IDPOTE")
-            _Mensaje.Detalle = "Creación de OT"
-            _Mensaje.Mensaje = "Se creo la OT " & _Row_NewOT.Item("NUMOT")
+            _Mensaje.Col2_Detalle = "Creación de OT"
+            _Mensaje.Col1_Mensaje = "Se creo la OT " & _Row_NewOT.Item("NUMOT")
             _Mensaje.Icono = MessageBoxIcon.Information
             _Mensaje.Tag = _Row_NewOT
 
         Catch ex As Exception
             _Mensaje.Icono = MessageBoxIcon.Stop
-            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Col1_Mensaje = ex.Message
         End Try
 
         Return _Mensaje
@@ -508,15 +508,15 @@ Public Class Frm_Fabricaciones
 
             _Mensaje.EsCorrecto = True
             _Mensaje.Id = _Row_Maeddo.Item("IDMAEDDO")
-            _Mensaje.Detalle = "Crear GRI"
-            _Mensaje.Mensaje = "Grabación Exitosa. GRI Creada correctamente"
+            _Mensaje.Col2_Detalle = "Crear GRI"
+            _Mensaje.Col1_Mensaje = "Grabación Exitosa. GRI Creada correctamente"
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Detalle = "Problema al crear la GRI"
-            _Mensaje.Mensaje = ex.Message
-            _Mensaje.Resultado = Consulta_sql
+            _Mensaje.Col2_Detalle = "Problema al crear la GRI"
+            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Col3_Resultado = Consulta_sql
             _Mensaje.Icono = MessageBoxIcon.Error
         End Try
 
@@ -555,19 +555,19 @@ Public Class Frm_Fabricaciones
             _Mensaje = Cl_ArmaGDI.Fx_CrearGDI(Me, _Idpotl, _Cantidad, _Row_Entidad, _FechaEmision, _Observaciones_GDI)
 
             If Not _Mensaje.EsCorrecto Then
-                Throw New System.Exception(_Mensaje.Mensaje)
+                Throw New System.Exception(_Mensaje.Col1_Mensaje)
             End If
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Detalle = "Crear GDI de consumo"
-            _Mensaje.Mensaje = "Grabación Exitosa. GDI de consumo Creada correctamente"
+            _Mensaje.Col2_Detalle = "Crear GDI de consumo"
+            _Mensaje.Col1_Mensaje = "Grabación Exitosa. GDI de consumo Creada correctamente"
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Detalle = "Problema al crear la GDI consumo"
-            _Mensaje.Mensaje = ex.Message
-            _Mensaje.Resultado = Consulta_sql
+            _Mensaje.Col2_Detalle = "Problema al crear la GDI consumo"
+            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Col3_Resultado = Consulta_sql
             _Mensaje.Icono = MessageBoxIcon.Error
         End Try
 

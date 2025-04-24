@@ -509,7 +509,7 @@ Public Class Frm_Cerrar_Abrir_Documentos
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
-        _Mensaje.Detalle = "Documento no está en proceso de Picking"
+        _Mensaje.Col2_Detalle = "Documento no está en proceso de Picking"
 
         Try
 
@@ -522,8 +522,8 @@ Public Class Frm_Cerrar_Abrir_Documentos
 
             If Not IsNothing(_Row) Then
 
-                _Mensaje.Detalle = "Documento en proceso de Picking"
-                _Mensaje.Mensaje = "El documento está en proceso de Picking"
+                _Mensaje.Col2_Detalle = "Documento en proceso de Picking"
+                _Mensaje.Col1_Mensaje = "El documento está en proceso de Picking"
 
                 If Not Fx_Tiene_Permiso(Me, "Doc00100",,,,,,,,, _Rows_Usuario_Autoriza,,,,,,,, _Idmaeedo) Then
                     Throw New Exception("No tiene permiso para realizar esta acción.")
@@ -545,7 +545,7 @@ Public Class Frm_Cerrar_Abrir_Documentos
         Catch ex As Exception
 
             _Mensaje.EsCorrecto = False
-            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Col1_Mensaje = ex.Message
             _Mensaje.Tag = Nothing
 
         End Try

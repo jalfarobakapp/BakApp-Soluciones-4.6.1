@@ -24,7 +24,7 @@ Public Class Cl_SQL2Query
             If IsNothing(_Row) Then
 
                 _Mensaje_Stem.EsCorrecto = False
-                _Mensaje_Stem.Mensaje = "No se encontro el registro en la tabla Zw_SQL_Querys con el Nombre_Query = " & _Nombre_Query
+                _Mensaje_Stem.Col1_Mensaje = "No se encontro el registro en la tabla Zw_SQL_Querys con el Nombre_Query = " & _Nombre_Query
 
                 Return _Mensaje_Stem
 
@@ -42,7 +42,7 @@ Public Class Cl_SQL2Query
         End With
 
         _Mensaje_Stem.EsCorrecto = True
-        _Mensaje_Stem.Mensaje = "Registro encontrado."
+        _Mensaje_Stem.Col1_Mensaje = "Registro encontrado."
         _Mensaje_Stem.Tag = Zw_SQL_Querys
 
         Return _Mensaje_Stem
@@ -61,7 +61,7 @@ Public Class Cl_SQL2Query
             If IsNothing(_Row) Then
 
                 _Mensaje_Stem.EsCorrecto = False
-                _Mensaje_Stem.Mensaje = "No se encontro el registro en la tabla Zw_SQL_Querys con el Id = " & _Id
+                _Mensaje_Stem.Col1_Mensaje = "No se encontro el registro en la tabla Zw_SQL_Querys con el Id = " & _Id
 
                 Return _Mensaje_Stem
 
@@ -79,7 +79,7 @@ Public Class Cl_SQL2Query
         End With
 
         _Mensaje_Stem.EsCorrecto = True
-        _Mensaje_Stem.Mensaje = "Registro encontrado."
+        _Mensaje_Stem.Col1_Mensaje = "Registro encontrado."
         _Mensaje_Stem.Tag = Zw_SQL_Querys
 
         Return _Mensaje_Stem
@@ -97,7 +97,7 @@ Public Class Cl_SQL2Query
         If CBool(_Reg) Then
 
             _Mensaje.EsCorrecto = False
-            _Mensaje.Mensaje = "Ya existe un registro con el nombre de la consulta SQL."
+            _Mensaje.Col1_Mensaje = "Ya existe un registro con el nombre de la consulta SQL."
             _Mensaje.Icono = MessageBoxIcon.Stop
 
             Return _Mensaje
@@ -143,15 +143,15 @@ Public Class Cl_SQL2Query
 
             _Mensaje.EsCorrecto = True
             _Mensaje.Id = Zw_SQL_Querys.Id
-            _Mensaje.Detalle = "Grabar consulta SQL"
-            _Mensaje.Mensaje = "Consulta SQL grabada correctamente."
+            _Mensaje.Col2_Detalle = "Grabar consulta SQL"
+            _Mensaje.Col1_Mensaje = "Consulta SQL grabada correctamente."
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
 
             _Mensaje.EsCorrecto = False
-            _Mensaje.Detalle = "Error al grabar"
-            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Col2_Detalle = "Error al grabar"
+            _Mensaje.Col1_Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
             Zw_SQL_Querys.Id = 0
 
@@ -209,15 +209,15 @@ Public Class Cl_SQL2Query
 
             _Mensaje.EsCorrecto = True
             _Mensaje.Id = Zw_SQL_Querys.Id
-            _Mensaje.Detalle = "Editar consulta SQL"
-            _Mensaje.Mensaje = "Consulta SQL editada correctamente."
+            _Mensaje.Col2_Detalle = "Editar consulta SQL"
+            _Mensaje.Col1_Mensaje = "Consulta SQL editada correctamente."
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
 
             _Mensaje.EsCorrecto = False
-            _Mensaje.Detalle = "Error al editar"
-            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Col2_Detalle = "Error al editar"
+            _Mensaje.Col1_Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
 
             If Not IsNothing(myTrans) Then
@@ -265,15 +265,15 @@ Public Class Cl_SQL2Query
 
             _Mensaje.EsCorrecto = True
             _Mensaje.Id = Zw_SQL_Querys.Id
-            _Mensaje.Detalle = "Eliminar consulta SQL"
-            _Mensaje.Mensaje = "Consulta SQL eliminada correctamente."
+            _Mensaje.Col2_Detalle = "Eliminar consulta SQL"
+            _Mensaje.Col1_Mensaje = "Consulta SQL eliminada correctamente."
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
 
             _Mensaje.EsCorrecto = False
-            _Mensaje.Detalle = "Error al eliminar"
-            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Col2_Detalle = "Error al eliminar"
+            _Mensaje.Col1_Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
 
             If Not IsNothing(myTrans) Then

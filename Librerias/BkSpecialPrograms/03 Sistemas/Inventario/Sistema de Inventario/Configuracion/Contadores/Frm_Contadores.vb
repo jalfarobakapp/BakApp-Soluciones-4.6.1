@@ -181,7 +181,7 @@ Public Class Frm_Contadores
 
         _Mensaje = Cl_Contador.Fx_Eliminar_Contador(Cl_Contador.Zw_Inv_Contador)
 
-        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         If Not _Mensaje.EsCorrecto Then
             Return

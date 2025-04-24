@@ -235,7 +235,7 @@ Public Class Frm_SelecProdMezclaFab
 
         _Mensaje = Cl_Mezcla.Fx_CambiarNomenclatura(_Id, _Codigomz, _Formularmz, _Formularmz, _Idpote_Otm, _Idpotl_Otm)
 
-        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         Return _Mensaje.EsCorrecto
 

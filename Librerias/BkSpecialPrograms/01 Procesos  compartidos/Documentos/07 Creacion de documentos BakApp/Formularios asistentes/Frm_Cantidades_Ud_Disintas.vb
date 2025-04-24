@@ -169,8 +169,8 @@ Public Class Frm_Cantidades_Ud_Disintas
         ' Muestra el resultado final en el textbox e impide la edición de Cantidad 1
         If RtuBodegas.EsCorrecto Then
 
-            TxtRTU.Text = RtuBodegas.Resultado
-            _Rtu = De_Txt_a_Num_01(RtuBodegas.Resultado, 5)
+            TxtRTU.Text = RtuBodegas.Col3_Resultado
+            _Rtu = De_Txt_a_Num_01(RtuBodegas.Col3_Resultado, 5)
             _Rtu_Ori = _Rtu
             Label3.Text = "R.T.U.  (" & _Rtu & ")"
             Chk_DesacRazTransf.Checked = False
@@ -457,9 +457,9 @@ Public Class Frm_Cantidades_Ud_Disintas
                 mensaje = apiClient.Post(Of Decimal)(apiUrl, requestBody, authorizationToken)
 
                 ' Si se obtiene un resultado válido, detiene la iteración
-                If mensaje.EsCorrecto AndAlso mensaje.Resultado IsNot Nothing AndAlso Val(mensaje.Resultado) <> -1 Then
-                    mensaje.Detalle = $"Consulta exitosa en la Bodega {bodega} WMS."
-                    mensaje.Mensaje = "Se encontró un resultado válido."
+                If mensaje.EsCorrecto AndAlso mensaje.Col3_Resultado IsNot Nothing AndAlso Val(mensaje.Col3_Resultado) <> -1 Then
+                    mensaje.Col2_Detalle = $"Consulta exitosa en la Bodega {bodega} WMS."
+                    mensaje.Col1_Mensaje = "Se encontró un resultado válido."
                     Return mensaje
                 End If
             Next
@@ -467,16 +467,16 @@ Public Class Frm_Cantidades_Ud_Disintas
             ' Si no se encontró un resultado válido, retorna un mensaje de error
             mensaje = New LsValiciones.Mensajes With {
             .EsCorrecto = False,
-            .Detalle = "No se encontró un resultado válido después de consultar todas las bodegas.",
-            .Mensaje = "Consulta fallida en todas las bodegas.",
+            .Col2_Detalle = "No se encontró un resultado válido después de consultar todas las bodegas.",
+            .Col1_Mensaje = "Consulta fallida en todas las bodegas.",
             .Icono = MessageBoxIcon.Warning
         }
 
         Catch ex As Exception
             mensaje = New LsValiciones.Mensajes With {
             .EsCorrecto = False,
-            .Detalle = "Error inesperado",
-            .Mensaje = ex.Message,
+            .Col2_Detalle = "Error inesperado",
+            .Col1_Mensaje = ex.Message,
             .Icono = MessageBoxIcon.Stop}
         End Try
 

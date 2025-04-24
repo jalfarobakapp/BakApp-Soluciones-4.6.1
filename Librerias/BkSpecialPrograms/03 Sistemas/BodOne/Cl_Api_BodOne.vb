@@ -44,16 +44,16 @@ Public Class Cl_Api_BodOne
 
             ' Configura el mensaje en caso de éxito
             mensaje.EsCorrecto = True
-            mensaje.Resultado = resultado.ToString()
-            mensaje.Detalle = "Operación completada con éxito."
-            mensaje.Mensaje = "La solicitud a la API fue exitosa."
+            mensaje.Col3_Resultado = resultado.ToString()
+            mensaje.Col2_Detalle = "Operación completada con éxito."
+            mensaje.Col1_Mensaje = "La solicitud a la API fue exitosa."
             mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
             ' Configura el mensaje en caso de error
             mensaje.EsCorrecto = False
-            mensaje.Detalle = "Error en la solicitud a la API."
-            mensaje.Mensaje = ex.Message
+            mensaje.Col2_Detalle = "Error en la solicitud a la API."
+            mensaje.Col1_Mensaje = ex.Message
             mensaje.Icono = MessageBoxIcon.Error
         End Try
 

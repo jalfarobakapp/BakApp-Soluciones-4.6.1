@@ -73,14 +73,14 @@ Public Class Cl_Puntos
                 End If
 
                 _Mensaje.EsCorrecto = True
-                _Mensaje.Detalle = "Grabación OK."
-                _Mensaje.Mensaje = "Datos actualizados correctamente"
+                _Mensaje.Col2_Detalle = "Grabación OK."
+                _Mensaje.Col1_Mensaje = "Datos actualizados correctamente"
 
             End With
 
         Catch ex As Exception
-            _Mensaje.Detalle = "Problema al grabar"
-            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Col2_Detalle = "Problema al grabar"
+            _Mensaje.Col1_Mensaje = ex.Message
         End Try
 
         Return _Mensaje
@@ -95,19 +95,19 @@ Public Class Cl_Puntos
         Try
 
             If Not _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_PtsVta_Doc") Then
-                _Mensaje.Detalle = "Validación"
+                _Mensaje.Col2_Detalle = "Validación"
                 Throw New System.Exception("No existe tabla " & _Global_BaseBk & "Zw_PtsVta_Doc")
             End If
 
             With Zw_PtsVta_Configuracion
 
                 If IsNothing(Zw_PtsVta_Configuracion) Then
-                    _Mensaje.Detalle = "Validación"
+                    _Mensaje.Col2_Detalle = "Validación"
                     Throw New System.Exception("No se econtro el registro en la tabla Zw_PtsVta_Configuracion")
                 End If
 
                 If Not Zw_PtsVta_Configuracion.Activo Then
-                    _Mensaje.Detalle = "Validación"
+                    _Mensaje.Col2_Detalle = "Validación"
                     Throw New System.Exception("Sistema de fidelización de clientes inactivo")
                 End If
 
@@ -115,12 +115,12 @@ Public Class Cl_Puntos
                 _Row = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                 If IsNothing(_Row) Then
-                    _Mensaje.Detalle = "Validación"
+                    _Mensaje.Col2_Detalle = "Validación"
                     Throw New System.Exception("No se econtro el registro en la tabla MAEEDO con IDMAEEDO = " & _Idmaeedo)
                 End If
 
                 If _Row.Item("TIDO") <> "FCV" AndAlso _Row.Item("TIDO") <> "BLV" AndAlso _Row.Item("TIDO") <> "NCV" Then
-                    _Mensaje.Detalle = "Validación"
+                    _Mensaje.Col2_Detalle = "Validación"
                     Throw New System.Exception("Solo se permiten documentos: FCV, BLV y NCV")
                 End If
 
@@ -129,7 +129,7 @@ Public Class Cl_Puntos
 
 
                 If Not _JuntaPuntos Then
-                    _Mensaje.Detalle = "Validación"
+                    _Mensaje.Col2_Detalle = "Validación"
                     Throw New System.Exception("La entidad no junta puntos")
                 End If
 
@@ -190,15 +190,15 @@ Public Class Cl_Puntos
 
                     _Mensaje.Id = .Id
                     _Mensaje.EsCorrecto = True
-                    _Mensaje.Detalle = "Grabación OK."
-                    _Mensaje.Mensaje = "El cliente acaba de sumar " & .PtsGanados & " puntos."
+                    _Mensaje.Col2_Detalle = "Grabación OK."
+                    _Mensaje.Col1_Mensaje = "El cliente acaba de sumar " & .PtsGanados & " puntos."
 
                 End With
 
             End With
 
         Catch ex As Exception
-            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Col1_Mensaje = ex.Message
         End Try
 
         Return _Mensaje
@@ -213,7 +213,7 @@ Public Class Cl_Puntos
         Try
 
             If Not _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_PtsVta_Doc") Then
-                _Mensaje.Detalle = "Validación"
+                _Mensaje.Col2_Detalle = "Validación"
                 Throw New System.Exception("No existe tabla " & _Global_BaseBk & "Zw_PtsVta_Doc")
             End If
 
@@ -223,17 +223,17 @@ Public Class Cl_Puntos
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_PtsVta_Doc Set Nudonodefi = 1 Where IDMAEEDO = " & _Idmaeedo
 
             If Not _Sql.Ej_consulta_IDU(Consulta_sql) Then
-                _Mensaje.Detalle = "Validación"
+                _Mensaje.Col2_Detalle = "Validación"
                 Throw New System.Exception(_Sql.Pro_Error)
             End If
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Detalle = "Gración OK."
-            _Mensaje.Mensaje = "Datos actualizados correctamente"
+            _Mensaje.Col2_Detalle = "Gración OK."
+            _Mensaje.Col1_Mensaje = "Datos actualizados correctamente"
 
         Catch ex As Exception
-            _Mensaje.Detalle = "Problema al grabar"
-            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Col2_Detalle = "Problema al grabar"
+            _Mensaje.Col1_Mensaje = ex.Message
         End Try
 
         Return _Mensaje

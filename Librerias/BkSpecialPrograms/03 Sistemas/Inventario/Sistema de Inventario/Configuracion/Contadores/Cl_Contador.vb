@@ -17,14 +17,14 @@ Public Class Cl_Contador
         Dim _Mensaje_Stem As New LsValiciones.Mensajes
 
         _Mensaje_Stem.EsCorrecto = False
-        _Mensaje_Stem.Detalle = "Cargar Ubicación de Inventario"
-        _Mensaje_Stem.Mensaje = String.Empty
+        _Mensaje_Stem.Col2_Detalle = "Cargar Ubicación de Inventario"
+        _Mensaje_Stem.Col1_Mensaje = String.Empty
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Inv_Contador Where Id = " & _Id
         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If IsNothing(_Row) Then
-            _Mensaje_Stem.Mensaje = "No se encontro el registro en la tabla Zw_Inv_Contadores con el Id " & _Id
+            _Mensaje_Stem.Col1_Mensaje = "No se encontro el registro en la tabla Zw_Inv_Contadores con el Id " & _Id
             Return _Mensaje_Stem
         End If
 
@@ -40,7 +40,7 @@ Public Class Cl_Contador
         End With
 
         _Mensaje_Stem.EsCorrecto = True
-        _Mensaje_Stem.Mensaje = "Registros cargados correctamente"
+        _Mensaje_Stem.Col1_Mensaje = "Registros cargados correctamente"
 
     End Function
 
@@ -48,15 +48,15 @@ Public Class Cl_Contador
 
         Dim _Mensaje_Stem As New LsValiciones.Mensajes
 
-        _Mensaje_Stem.Detalle = "Crear Contador de Inventario"
+        _Mensaje_Stem.Col2_Detalle = "Crear Contador de Inventario"
         _Mensaje_Stem.EsCorrecto = False
-        _Mensaje_Stem.Mensaje = String.Empty
+        _Mensaje_Stem.Col1_Mensaje = String.Empty
         _Mensaje_Stem.Icono = MessageBoxIcon.Stop
 
         Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_Contador",
                                             "Rut = '" & Zw_Inv_Contador.Rut & "'")
         If CBool(_Reg) Then
-            _Mensaje_Stem.Mensaje = "El contador ya existe con el Rut " & Zw_Inv_Contador.Rut
+            _Mensaje_Stem.Col1_Mensaje = "El contador ya existe con el Rut " & Zw_Inv_Contador.Rut
             Return _Mensaje_Stem
         End If
 
@@ -89,12 +89,12 @@ Public Class Cl_Contador
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
             _Mensaje_Stem.EsCorrecto = True
-            _Mensaje_Stem.Mensaje = "Contador creado correctamente"
+            _Mensaje_Stem.Col1_Mensaje = "Contador creado correctamente"
             _Mensaje_Stem.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
 
-            _Mensaje_Stem.Mensaje = ex.Message
+            _Mensaje_Stem.Col1_Mensaje = ex.Message
             If Not IsNothing(myTrans) Then myTrans.Rollback()
 
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
@@ -109,16 +109,16 @@ Public Class Cl_Contador
 
         Dim _Mensaje_Stem As New LsValiciones.Mensajes
 
-        _Mensaje_Stem.Detalle = "Crear Ubicación de Inventario"
+        _Mensaje_Stem.Col2_Detalle = "Crear Ubicación de Inventario"
         _Mensaje_Stem.EsCorrecto = False
-        _Mensaje_Stem.Mensaje = String.Empty
+        _Mensaje_Stem.Col1_Mensaje = String.Empty
         _Mensaje_Stem.Icono = MessageBoxIcon.Stop
 
         Dim _Ref As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_Contador",
                                                        "Id <> " & Zw_Inv_Contador.Id & " And Rut = '" & Zw_Inv_Contador.Rut & "'")
 
         If CBool(_Ref) Then
-            _Mensaje_Stem.Mensaje = "Ya existe un operador con el mismo Rut"
+            _Mensaje_Stem.Col1_Mensaje = "Ya existe un operador con el mismo Rut"
             Return _Mensaje_Stem
         End If
 
@@ -152,12 +152,12 @@ Public Class Cl_Contador
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
             _Mensaje_Stem.EsCorrecto = True
-            _Mensaje_Stem.Mensaje = "Contador editado correctamente"
+            _Mensaje_Stem.Col1_Mensaje = "Contador editado correctamente"
             _Mensaje_Stem.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
 
-            _Mensaje_Stem.Mensaje = ex.Message
+            _Mensaje_Stem.Col1_Mensaje = ex.Message
             If Not IsNothing(myTrans) Then myTrans.Rollback()
 
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
@@ -172,9 +172,9 @@ Public Class Cl_Contador
 
         Dim _Mensaje_Stem As New LsValiciones.Mensajes
 
-        _Mensaje_Stem.Detalle = "Crear Ubicación de Inventario"
+        _Mensaje_Stem.Col2_Detalle = "Crear Ubicación de Inventario"
         _Mensaje_Stem.EsCorrecto = False
-        _Mensaje_Stem.Mensaje = String.Empty
+        _Mensaje_Stem.Col1_Mensaje = String.Empty
         _Mensaje_Stem.Icono = MessageBoxIcon.Stop
 
         Consulta_sql = String.Empty
@@ -183,7 +183,7 @@ Public Class Cl_Contador
                                             "IdContador1 = " & Zw_Inv_Contador.Id & " Or IdContador2 = " & Zw_Inv_Contador.Id)
 
         If CBool(_reg) Then
-            _Mensaje_Stem.Mensaje = "No se puede eliminar el contador, tiene registros inventariados"
+            _Mensaje_Stem.Col1_Mensaje = "No se puede eliminar el contador, tiene registros inventariados"
             Return _Mensaje_Stem
         End If
 
@@ -213,12 +213,12 @@ Public Class Cl_Contador
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
             _Mensaje_Stem.EsCorrecto = True
-            _Mensaje_Stem.Mensaje = "Contador eliminado correctamente"
+            _Mensaje_Stem.Col1_Mensaje = "Contador eliminado correctamente"
             _Mensaje_Stem.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
 
-            _Mensaje_Stem.Mensaje = ex.Message
+            _Mensaje_Stem.Col1_Mensaje = ex.Message
             If Not IsNothing(myTrans) Then myTrans.Rollback()
 
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)

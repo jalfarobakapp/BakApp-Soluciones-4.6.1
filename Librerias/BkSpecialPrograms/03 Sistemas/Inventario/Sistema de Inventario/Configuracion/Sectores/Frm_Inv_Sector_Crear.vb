@@ -77,7 +77,7 @@ Public Class Frm_Inv_Sector_Crear
             _Mensaje = _Cl_InvSectores.Fx_Crear_Sector(_Cl_InvSectores.Zw_Inv_Sector)
         End If
 
-        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         If Not _Mensaje.EsCorrecto Then Return
 
@@ -104,7 +104,7 @@ Public Class Frm_Inv_Sector_Crear
         Dim _Mensaje As LsValiciones.Mensajes
 
         _Mensaje = _Cl_InvSectores.Fx_Eliminar_Sector
-        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         If _Mensaje.EsCorrecto Then
             Eliminar = True

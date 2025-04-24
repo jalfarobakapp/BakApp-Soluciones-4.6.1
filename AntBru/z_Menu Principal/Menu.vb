@@ -907,7 +907,7 @@ Public Class Menu
 
         _Mensaje = Cl.Fx_Cacular(100, 6, 3)
 
-        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
 
     End Sub
@@ -1115,7 +1115,7 @@ Public Class Menu
 
         _Mensaje = _Cl_Pagar.Fx_Pagar_Documento(_Idmaeedo, _Ls_Maedpce, _Fecha_Asignacion_Pago)
 
-        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         If Not _Mensaje.EsCorrecto Then
             Return
@@ -1144,7 +1144,7 @@ Public Class Menu
 
         _Mensaje = Fx_Crear_GRIDesdeGDI(_Fm_Menu_Padre, 1946812, _Sucursal, _Bodega_GRI)
 
-        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         'Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
         'Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -1174,13 +1174,13 @@ Public Class Menu
 
         _Mensaje = Fx_Crear_GDI2GRI(_Modalidad, _Sucursal, _Bodega_GDI, _Fecha_Emision, _Codigo, _Cantidad)
 
-        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         If _Mensaje.EsCorrecto Then
 
             _Mensaje = Fx_Crear_GRIDesdeGDI(_Fm_Menu_Padre, _Mensaje.Id, _Sucursal, _Bodega_GRI)
 
-            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         End If
 
@@ -1224,13 +1224,13 @@ Public Class Menu
             Fm.Dispose()
 
             If Not _Mensaje.EsCorrecto Then
-                Throw New System.Exception(_Mensaje.Mensaje)
+                Throw New System.Exception(_Mensaje.Col1_Mensaje)
             End If
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Mensaje = "Error al crear la guía de despacho interna"
-            _Mensaje.Detalle = ex.Message
+            _Mensaje.Col1_Mensaje = "Error al crear la guía de despacho interna"
+            _Mensaje.Col2_Detalle = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Error
         End Try
 
@@ -1281,18 +1281,18 @@ Public Class Menu
             Fm_Post.Dispose()
 
             If Not _Mensaje.EsCorrecto Then
-                Throw New System.Exception(_Mensaje.Mensaje)
+                Throw New System.Exception(_Mensaje.Col1_Mensaje)
             End If
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Mensaje = "Se ha creado la guía de recepción interna correctamente"
+            _Mensaje.Col1_Mensaje = "Se ha creado la guía de recepción interna correctamente"
             _Mensaje.Icono = MessageBoxIcon.Information
             _Mensaje.Id = _New_Idmaeedo
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Mensaje = "Error al crear la guía de recepción interna"
-            _Mensaje.Detalle = ex.Message
+            _Mensaje.Col1_Mensaje = "Error al crear la guía de recepción interna"
+            _Mensaje.Col2_Detalle = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Error
 
         End Try

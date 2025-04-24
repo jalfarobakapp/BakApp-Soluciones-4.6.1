@@ -103,7 +103,7 @@ Public Class Frm_01_CrearInventario
         Dim _Mensaje As LsValiciones.Mensajes
         _Mensaje = Cl_Inventario.Fx_Editar_Inventario()
 
-        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         If _Mensaje.EsCorrecto Then
             Grabar = True
@@ -145,7 +145,7 @@ Public Class Frm_01_CrearInventario
         Dim _Mensaje As LsValiciones.Mensajes
         _Mensaje = Cl_Inventario.Fx_Crear_Inventario
 
-        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         If _Mensaje.EsCorrecto Then
             Grabar = True
@@ -224,7 +224,7 @@ Public Class Frm_01_CrearInventario
         Dim _Mensaje As LsValiciones.Mensajes
         _Mensaje = Cl_Inventario.Fx_EliminarFoto(Me, _IdInventario)
 
-        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         'EliminarFoto()
 
@@ -239,7 +239,7 @@ Public Class Frm_01_CrearInventario
         Dim _Mensaje As LsValiciones.Mensajes
         _Mensaje = Cl_Inventario.Fx_CrearFoto(_IdInventario)
 
-        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         If _Mensaje.EsCorrecto Then
             Me.Close()

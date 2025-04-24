@@ -150,7 +150,7 @@ Public Class Frm_Arbol_Asociacion_06_CrearEditar
 
         _Mensaje = _Cl_Arbol_Asociaciones.Fx_Grabar_Clasificacion
 
-        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         If _Mensaje.EsCorrecto Then
             Grabar = True

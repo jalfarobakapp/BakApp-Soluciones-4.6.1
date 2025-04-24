@@ -236,7 +236,7 @@
                                    ",Idmaeedo_FCV = " & _Row_Factura.Item("IDMAEEDO") &
                                    ",Nudo_Fcv = '" & _Row_Factura.Item("NUDO") & "'" &
                                    ",Fecha_Facturado = '" & Format(_Fecha_Emision, "yyyyMMdd") & "'" &
-                                   ",Informacion = '" & _Mensaje.Mensaje & "'" & vbCrLf &
+                                   ",Informacion = '" & _Mensaje.Col1_Mensaje & "'" & vbCrLf &
                                    "Where Id = " & _Id
                     If _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
                         Log_Registro += "NVV: " & _Nudo_Nvv & " facturada correctamente. FCV-" & _Row_Factura.Item("NUDO") & vbCrLf
@@ -246,14 +246,14 @@
 
                 Else
 
-                    Log_Registro += _Mensaje.Mensaje & vbCrLf
+                    Log_Registro += _Mensaje.Col1_Mensaje & vbCrLf
 
                     Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set " &
                                    " NombreEquipo = '" & _Nombre_Equipo & "'" &
                                    ",Facturando = 0" &
                                    ",Facturado = 0" &
                                    ",ErrorGrabar = 1" &
-                                   ",Informacion = '" & _Mensaje.Mensaje & "'" & vbCrLf &
+                                   ",Informacion = '" & _Mensaje.Col1_Mensaje & "'" & vbCrLf &
                                    "Where Id = " & _Id
                     If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
                         Log_Registro += _Sql.Pro_Error
@@ -367,12 +367,12 @@
                         If Not IsNothing(_Row) Then
                             Consulta_Sql = "Update [@WMS_GATEWAY_TRANSFERENCIA] Set UPLOAD = 3 Where IDMAEEDO = " & _Idmaeedo
                             If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql) Then
-                                _Mensaje.Mensaje += ".  - Se deja el campo UPLOAD = 3 en la tabla [@WMS_GATEWAY_TRANSFERENCIA]"
+                                _Mensaje.Col1_Mensaje += ".  - Se deja el campo UPLOAD = 3 en la tabla [@WMS_GATEWAY_TRANSFERENCIA]"
                             Else
-                                _Mensaje.Mensaje += ".  - Problema al editar la tabla [@WMS_GATEWAY_TRANSFERENCIA]: " & _Sql.Pro_Error
+                                _Mensaje.Col1_Mensaje += ".  - Problema al editar la tabla [@WMS_GATEWAY_TRANSFERENCIA]: " & _Sql.Pro_Error
                             End If
                         Else
-                            _Mensaje.Mensaje += ".  - No se encontro registro en la tabla [@WMS_GATEWAY_TRANSFERENCIA]"
+                            _Mensaje.Col1_Mensaje += ".  - No se encontro registro en la tabla [@WMS_GATEWAY_TRANSFERENCIA]"
                         End If
 
                     End If
@@ -395,7 +395,7 @@
                                    ",Idmaeedo_FCV = " & _Row_Factura.Item("IDMAEEDO") &
                                    ",Nudo_Fcv = '" & _Row_Factura.Item("NUDO") & "'" &
                                    ",Fecha_Facturado = '" & Format(_Fecha_Emision, "yyyyMMdd") & "'" &
-                                   ",Informacion = '" & _Mensaje.Mensaje & "'" & vbCrLf &
+                                   ",Informacion = '" & _Mensaje.Col1_Mensaje & "'" & vbCrLf &
                                    ",FechaHoraFacturado = Getdate()" & vbCrLf &
                                    ",IpEquipo = '" & _IpEquipo & "'" & vbCrLf &
                                    "Where Id = " & _Id
@@ -414,16 +414,16 @@
 
                 Else
 
-                    _Mensaje.Mensaje = Replace(_Mensaje.Mensaje, "'", "''")
+                    _Mensaje.Col1_Mensaje = Replace(_Mensaje.Col1_Mensaje, "'", "''")
 
-                    Log_Registro += _Mensaje.Mensaje & vbCrLf
+                    Log_Registro += _Mensaje.Col1_Mensaje & vbCrLf
 
                     Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set " &
                                    " NombreEquipo = '" & _Nombre_Equipo & "'" &
                                    ",Facturando = 0" &
                                    ",Facturado = 0" &
                                    ",ErrorGrabar = 1" &
-                                   ",Informacion = '" & _Mensaje.Mensaje & "'" & vbCrLf &
+                                   ",Informacion = '" & _Mensaje.Col1_Mensaje & "'" & vbCrLf &
                                    "Where Id = " & _Id
                     If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
                         Log_Registro += _Sql.Pro_Error
@@ -601,13 +601,13 @@
 
             Else
 
-                _Mensaje.Mensaje = Replace(_Mensaje.Mensaje, " '", "''")
-                Log_Registro += _Mensaje.Mensaje & vbCrLf
+                _Mensaje.Col1_Mensaje = Replace(_Mensaje.Col1_Mensaje, " '", "''")
+                Log_Registro += _Mensaje.Col1_Mensaje & vbCrLf
                 Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set " &
                                ",PagarAuto = 0" &
                                ",Pagada = 0" &
                                ",Error_Paga = 1" &
-                               ",Informacion_Paga = '" & _Mensaje.Mensaje & "'" & vbCrLf &
+                               ",Informacion_Paga = '" & _Mensaje.Col1_Mensaje & "'" & vbCrLf &
                                "Where Id = " & _Id
                 If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
                     Log_Registro += _Sql.Pro_Error
@@ -656,7 +656,7 @@
                 If Not _Msj_Tsc.EsCorrecto Then
 
                     _Mensaje.ErrorDeConexionSQL = _Msj_Tsc.ErrorDeConexionSQL
-                    Throw New System.Exception(_Mensaje.Mensaje)
+                    Throw New System.Exception(_Mensaje.Col1_Mensaje)
 
                 End If
 
@@ -712,15 +712,15 @@
 
             If CBool(_New_Idmaeedo) Then
                 _Mensaje.EsCorrecto = True
-                _Mensaje.Detalle = "Facturada Ok."
+                _Mensaje.Col2_Detalle = "Facturada Ok."
                 _Mensaje.Id = _New_Idmaeedo
             Else
                 Throw New System.Exception("No fue posible generar la factura")
             End If
 
         Catch ex As Exception
-            _Mensaje.Detalle = "Error al grabar"
-            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Col2_Detalle = "Error al grabar"
+            _Mensaje.Col1_Mensaje = ex.Message
         Finally
             Modalidad = _Modalidad_Old
         End Try
@@ -773,7 +773,7 @@
                 If Not _Msj_Tsc.EsCorrecto Then
 
                     _Mensaje.ErrorDeConexionSQL = _Msj_Tsc.ErrorDeConexionSQL
-                    Throw New System.Exception(_Mensaje.Mensaje)
+                    Throw New System.Exception(_Mensaje.Col1_Mensaje)
 
                 End If
 
@@ -858,8 +858,8 @@
                 Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
                 _Mensaje.EsCorrecto = True
-                _Mensaje.Detalle = "Documento: " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO") & " grabado con exito"
-                _Mensaje.Mensaje = "Nota de venta gestionada correctamente Ok."
+                _Mensaje.Col2_Detalle = "Documento: " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO") & " grabado con exito"
+                _Mensaje.Col1_Mensaje = "Nota de venta gestionada correctamente Ok."
                 _Mensaje.Id = _Msj_GrabarDoc.Id
                 _Mensaje.Tag = _Row
 
@@ -868,8 +868,8 @@
             End If
 
         Catch ex As Exception
-            _Mensaje.Detalle = "Error al grabar documento"
-            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Col2_Detalle = "Error al grabar documento"
+            _Mensaje.Col1_Mensaje = ex.Message
         Finally
             Modalidad = _Modalidad_Old
         End Try
@@ -891,7 +891,7 @@
         Try
 
             If _TidoDocEmitir <> "GDV" And _TidoDocEmitir <> "FCV" And _TidoDocEmitir <> "BLV" Then
-                _Mensaje.Mensaje = "Error"
+                _Mensaje.Col1_Mensaje = "Error"
                 Throw New System.Exception("El Tido Destino esta vacío o no corresponde: (" & _TidoDocEmitir & "), solo puede ser: BLV, FCV y GDV")
             End If
 
@@ -911,7 +911,7 @@
                 Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
 
                 If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
-                    _Mensaje.Mensaje = "Error"
+                    _Mensaje.Col1_Mensaje = "Error"
                     Throw New System.Exception(_Sql.Pro_Error)
                 End If
 
@@ -928,7 +928,7 @@
                     If Not _Msj_Tsc.EsCorrecto Then
 
                         _Mensaje.ErrorDeConexionSQL = _Msj_Tsc.ErrorDeConexionSQL
-                        Throw New System.Exception(_Msj_Tsc.Mensaje)
+                        Throw New System.Exception(_Msj_Tsc.Col1_Mensaje)
 
                     End If
 
@@ -938,7 +938,7 @@
                     Dim _Tbl_Saldo_Facturar As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
 
                     If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
-                        _Mensaje.Mensaje = "Error"
+                        _Mensaje.Col1_Mensaje = "Error"
                         Throw New System.Exception(_Sql.Pro_Error)
                     End If
 
@@ -995,7 +995,7 @@
                         Dim _Ds_Maeedo_Origen As DataSet = _Sql.Fx_Get_DataSet(Consulta_Sql, True, False)
 
                         If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
-                            _Mensaje.Mensaje = "Error"
+                            _Mensaje.Col1_Mensaje = "Error"
                             Throw New System.Exception(_Sql.Pro_Error)
                         End If
 
@@ -1022,23 +1022,23 @@
 
                         Else
 
-                            Throw New System.Exception(_Msj_Limpiar.Mensaje)
+                            Throw New System.Exception(_Msj_Limpiar.Col1_Mensaje)
 
                         End If
 
                         If Not _Msj_GrabarDoc.EsCorrecto Then 'Not CBool(_New_Idmaeedo) Then
 
-                            _Mensaje.Mensaje = _Msj_GrabarDoc.Mensaje.Replace(vbCrLf, ". ")
-                            _Mensaje.Mensaje = "No fue posible realizar la grabación de la Factura. " & _Mensaje.Mensaje
+                            _Mensaje.Col1_Mensaje = _Msj_GrabarDoc.Col1_Mensaje.Replace(vbCrLf, ". ")
+                            _Mensaje.Col1_Mensaje = "No fue posible realizar la grabación de la Factura. " & _Mensaje.Col1_Mensaje
 
                             Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set " &
                                            "ProblemaFac = 1" &
-                                           ",Log_Error = '" & _Mensaje.Mensaje & "'" & vbCrLf &
+                                           ",Log_Error = '" & _Mensaje.Col1_Mensaje & "'" & vbCrLf &
                                            "Where Id = " & _Id_Pickeo
                             _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
-                            _Mensaje.Detalle = "Error al grabar documento"
-                            Throw New System.Exception(_Mensaje.Mensaje)
+                            _Mensaje.Col2_Detalle = "Error al grabar documento"
+                            Throw New System.Exception(_Mensaje.Col1_Mensaje)
 
                         End If
 
@@ -1086,15 +1086,15 @@
                         _Mensaje.EsCorrecto = True
                         _Mensaje.Id = _Msj_GrabarDoc.Id
                         _Mensaje.Fecha = FechaDelServidor()
-                        _Mensaje.Mensaje = "Documento creado correctamente"
-                        _Mensaje.Detalle = "Se crea el documento: " & _Tido & "-" & _Nudo
+                        _Mensaje.Col1_Mensaje = "Documento creado correctamente"
+                        _Mensaje.Col2_Detalle = "Se crea el documento: " & _Tido & "-" & _Nudo
                         _Mensaje.Tag = _Row_Maeedo
 
                         'End If
 
                     Else
 
-                        _Mensaje.Mensaje = "Documento cerrado"
+                        _Mensaje.Col1_Mensaje = "Documento cerrado"
                         Throw New System.Exception("Nota de venta Nro: " & _Nudo & " se encuentra cerrado completamente")
 
                     End If
@@ -1104,13 +1104,13 @@
 
             Else
 
-                _Mensaje.Mensaje = "Información"
+                _Mensaje.Col1_Mensaje = "Información"
                 Throw New System.Exception("Debe configurar el formato de salida en la configuración por modalidad de trabajo")
 
             End If
 
         Catch ex As Exception
-            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Col1_Mensaje = ex.Message
         End Try
 
         Return _Mensaje
@@ -1129,7 +1129,7 @@
         Try
 
             If _TidoDocEmitir <> "GDV" And _TidoDocEmitir <> "FCV" And _TidoDocEmitir <> "BLV" Then
-                _Mensaje.Mensaje = "Error"
+                _Mensaje.Col1_Mensaje = "Error"
                 Throw New System.Exception("El Tido Destino esta vacío o no corresponde: (" & _TidoDocEmitir & "), solo puede ser: BLV, FCV y GDV")
             End If
 
@@ -1143,7 +1143,7 @@
                 Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
 
                 If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
-                    _Mensaje.Mensaje = "Error"
+                    _Mensaje.Col1_Mensaje = "Error"
                     Throw New System.Exception(_Sql.Pro_Error)
                 End If
 
@@ -1160,7 +1160,7 @@
                     If Not _Msj_Tsc.EsCorrecto Then
 
                         _Mensaje.ErrorDeConexionSQL = _Msj_Tsc.ErrorDeConexionSQL
-                        Throw New System.Exception(_Msj_Tsc.Mensaje)
+                        Throw New System.Exception(_Msj_Tsc.Col1_Mensaje)
 
                     End If
 
@@ -1169,7 +1169,7 @@
                     Dim _Tbl_Saldo_Facturar As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
 
                     If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
-                        _Mensaje.Mensaje = "Error"
+                        _Mensaje.Col1_Mensaje = "Error"
                         Throw New System.Exception(_Sql.Pro_Error)
                     End If
 
@@ -1185,7 +1185,7 @@
 
                             Dim _Bod = _Global_Row_Configuracion_Estacion.Item("NOKOBO")
 
-                            _Mensaje.Mensaje = "VALIDACION"
+                            _Mensaje.Col1_Mensaje = "VALIDACION"
                             Throw New System.Exception("NO ESTA AUTORIZADO PARA EFECTUAR DOCUMENTOS DESDE LA BODEGA DE ESTA MODALIDAD" & vbCrLf & vbCrLf &
                                               "BODEGA: " & _Bodega & " - " & _Bod)
 
@@ -1230,7 +1230,7 @@
                             Dim _Ds_Maeedo_Origen As DataSet = _Sql.Fx_Get_DataSet(Consulta_Sql, True, False)
 
                             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
-                                _Mensaje.Mensaje = "Error"
+                                _Mensaje.Col1_Mensaje = "Error"
                                 Throw New System.Exception(_Sql.Pro_Error)
                             End If
 
@@ -1256,17 +1256,17 @@
                                 Fm_Post.Dispose()
                             Else
 
-                                Throw New System.Exception(_Msj_Limpiar.Mensaje)
+                                Throw New System.Exception(_Msj_Limpiar.Col1_Mensaje)
 
                             End If
 
                             If Not _Msj_GrabarDoc.EsCorrecto Then 'Not CBool(_New_Idmaeedo) Then
 
-                                _Mensaje.Mensaje = _Msj_GrabarDoc.Mensaje.Replace(vbCrLf, ". ")
-                                _Mensaje.Mensaje = "No fue posible realizar la grabación de la Factura. " & _Mensaje.Mensaje
-                                _Mensaje.Detalle = "Error al grabar documento"
+                                _Mensaje.Col1_Mensaje = _Msj_GrabarDoc.Col1_Mensaje.Replace(vbCrLf, ". ")
+                                _Mensaje.Col1_Mensaje = "No fue posible realizar la grabación de la Factura. " & _Mensaje.Col1_Mensaje
+                                _Mensaje.Col2_Detalle = "Error al grabar documento"
 
-                                Throw New System.Exception(_Mensaje.Mensaje)
+                                Throw New System.Exception(_Mensaje.Col1_Mensaje)
 
                             End If
 
@@ -1293,14 +1293,14 @@
                             _Mensaje.EsCorrecto = True
                             _Mensaje.Id = _Msj_GrabarDoc.Id
                             _Mensaje.Fecha = FechaDelServidor()
-                            _Mensaje.Mensaje = "Documento creado correctamente"
-                            _Mensaje.Detalle = "Se crea el documento: " & _Tido & "-" & _Nudo
+                            _Mensaje.Col1_Mensaje = "Documento creado correctamente"
+                            _Mensaje.Col2_Detalle = "Se crea el documento: " & _Tido & "-" & _Nudo
 
                         End If
 
                     Else
 
-                        _Mensaje.Mensaje = "Documento cerrado"
+                        _Mensaje.Col1_Mensaje = "Documento cerrado"
                         Throw New System.Exception("Nota de venta Nro: " & _Nudo & " se encuentra cerrado completamente")
 
                     End If
@@ -1310,13 +1310,13 @@
 
             Else
 
-                _Mensaje.Mensaje = "Información"
+                _Mensaje.Col1_Mensaje = "Información"
                 Throw New System.Exception("Debe configurar el formato de salida en la configuración por modalidad de trabajo")
 
             End If
 
         Catch ex As Exception
-            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Col1_Mensaje = ex.Message
         End Try
 
         Return _Mensaje

@@ -399,20 +399,20 @@ Public Class Frm_Stmp_Listado
             If _Mensaje_Stem.EsCorrecto Then
 
                 _Icon = MessageBoxIcon.Information
-                MessageBoxEx.Show(Me, _Mensaje_Stem.Mensaje, _Mensaje_Stem.Detalle, MessageBoxButtons.OK, _Icon)
+                MessageBoxEx.Show(Me, _Mensaje_Stem.Col1_Mensaje, _Mensaje_Stem.Col2_Detalle, MessageBoxButtons.OK, _Icon)
 
             Else
 
                 _Icon = MessageBoxIcon.Stop
 
-                If _Mensaje_Stem.Mensaje.Contains("El documento ya esta ingresado") Then
-                    MessageBoxEx.Show(Me, _Mensaje_Stem.Mensaje, _Mensaje_Stem.Detalle, MessageBoxButtons.OK, _Icon)
+                If _Mensaje_Stem.Col1_Mensaje.Contains("El documento ya esta ingresado") Then
+                    MessageBoxEx.Show(Me, _Mensaje_Stem.Col1_Mensaje, _Mensaje_Stem.Col2_Detalle, MessageBoxButtons.OK, _Icon)
                     Return
                 End If
 
                 _Intentos += 1
                 If _Intentos = 3 Then
-                    MessageBoxEx.Show(Me, _Mensaje_Stem.Mensaje, _Mensaje_Stem.Detalle, MessageBoxButtons.OK, _Icon)
+                    MessageBoxEx.Show(Me, _Mensaje_Stem.Col1_Mensaje, _Mensaje_Stem.Col2_Detalle, MessageBoxButtons.OK, _Icon)
                     Return
                 End If
 
@@ -502,13 +502,13 @@ Public Class Frm_Stmp_Listado
             End If
 
             If Not _Aceptar Then
-                _Mensaje.Detalle = "Acción cancelada"
+                _Mensaje.Col2_Detalle = "Acción cancelada"
                 _Mensaje.Cancelado = True
                 Throw New System.Exception("An exception has occurred.")
             End If
 
             If Not _Numero.Contains("FCV") And Not _Numero.Contains("GDV") And Not _Numero.Contains("GDP") And Not _Numero.Contains("BLV") Then
-                _Mensaje.Detalle = "Validación"
+                _Mensaje.Col2_Detalle = "Validación"
                 Throw New System.Exception("Debe indicar si el documento es BLV, FCV o (GDV/GDP)")
             End If
 
@@ -522,7 +522,7 @@ Public Class Frm_Stmp_Listado
 
             If IsNothing(_Row) Then
 
-                _Mensaje.Detalle = "Validación"
+                _Mensaje.Col2_Detalle = "Validación"
 
                 If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
                     Throw New System.Exception(_Sql.Pro_Error)
@@ -536,13 +536,13 @@ Public Class Frm_Stmp_Listado
             Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If IsNothing(_Row_Documento) Then
-                _Mensaje.Detalle = "Validación"
+                _Mensaje.Col2_Detalle = "Validación"
                 Throw New System.Exception("No existe documento " & _Tido & " - " & _Nudo & " En el sistema de Ticket de entrega")
             End If
 
             If MessageBoxEx.Show(Me, "¿Confirma el documento " & _Tido & "-" & _Nudo & "?",
                                  "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
-                _Mensaje.Detalle = "Validación"
+                _Mensaje.Col2_Detalle = "Validación"
                 _Mensaje.Cancelado = True
                 Throw New System.Exception("Acción cancelada por el usuario")
             End If
@@ -558,7 +558,7 @@ Public Class Frm_Stmp_Listado
             _Mensaje = _Cl_Stmp.Fx_Entregar_Mercaderia
 
         Catch ex As Exception
-            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Col1_Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         Finally
             If Chk_Monitorear.Checked Then
@@ -567,7 +567,7 @@ Public Class Frm_Stmp_Listado
         End Try
 
         If Not _Mensaje.EsCorrecto And Not _Mensaje.Cancelado Then
-            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
             _Mensaje = Fx_Entregar(_CodFuncionario_Entrega, "")
         End If
 
@@ -595,7 +595,7 @@ Public Class Frm_Stmp_Listado
             End If
 
             If Not _Aceptar Then
-                _Mensaje.Detalle = "Acción cancelada"
+                _Mensaje.Col2_Detalle = "Acción cancelada"
                 _Mensaje.Cancelado = True
                 Throw New System.Exception("An exception has occurred.")
             End If
@@ -605,7 +605,7 @@ Public Class Frm_Stmp_Listado
 
             If IsNothing(_Row) Then
 
-                _Mensaje.Detalle = "Validación"
+                _Mensaje.Col2_Detalle = "Validación"
 
                 If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
                     Throw New System.Exception(_Sql.Pro_Error)
@@ -617,7 +617,7 @@ Public Class Frm_Stmp_Listado
 
             If MessageBoxEx.Show(Me, "¿Confirma cerrar el Ticket " & _NumeroTicket & "?",
                                  "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
-                _Mensaje.Detalle = "Validación"
+                _Mensaje.Col2_Detalle = "Validación"
                 _Mensaje.Cancelado = True
                 Throw New System.Exception("Acción cancelada por el usuario")
             End If
@@ -633,7 +633,7 @@ Public Class Frm_Stmp_Listado
             _Mensaje = _Cl_Stmp.Fx_Cerrar_Ticket
 
         Catch ex As Exception
-            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Col1_Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         Finally
             If Chk_Monitorear.Checked Then
@@ -642,7 +642,7 @@ Public Class Frm_Stmp_Listado
         End Try
 
         If Not _Mensaje.EsCorrecto And Not _Mensaje.Cancelado Then
-            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
             _Mensaje = Fx_Entregar(_CodFuncionario_Cierra, "")
         End If
 
@@ -688,8 +688,8 @@ Public Class Frm_Stmp_Listado
 
         If Not IsNothing(_Row) Then
             _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Mensaje = "El documento ya esta ingresado en el sistema de Ticket Picking (Ticket Nro: " & _Row.Item("Numero") & ")"
-            _Mensaje_Stem.Detalle = "Documento: " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO")
+            _Mensaje_Stem.Col1_Mensaje = "El documento ya esta ingresado en el sistema de Ticket Picking (Ticket Nro: " & _Row.Item("Numero") & ")"
+            _Mensaje_Stem.Col2_Detalle = "Documento: " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO")
             Return _Mensaje_Stem
         End If
 
@@ -701,8 +701,8 @@ Public Class Frm_Stmp_Listado
 
         If IsNothing(_Row_Documento) Then
             _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Mensaje = "No se encontro el registro en la tabla MAEEDO, Documento: " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO")
-            _Mensaje_Stem.Detalle = "IDMAEEDO " & _Idmaeedo
+            _Mensaje_Stem.Col1_Mensaje = "No se encontro el registro en la tabla MAEEDO, Documento: " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO")
+            _Mensaje_Stem.Col2_Detalle = "IDMAEEDO " & _Idmaeedo
             Return _Mensaje_Stem
         End If
 
@@ -730,8 +730,8 @@ Public Class Frm_Stmp_Listado
 
         If Not _Row_Documento.Item("Pickear") Then
             _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Mensaje = "Este documento no esta marcado para ser Pickeado en la tabla Zw_Docu_Ent"
-            _Mensaje_Stem.Detalle = "Documento: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
+            _Mensaje_Stem.Col1_Mensaje = "Este documento no esta marcado para ser Pickeado en la tabla Zw_Docu_Ent"
+            _Mensaje_Stem.Col2_Detalle = "Documento: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
             Return _Mensaje_Stem
         End If
 
@@ -812,7 +812,7 @@ Public Class Frm_Stmp_Listado
         Try
 
             If _TidoDocEmitir <> "GDV" And _TidoDocEmitir <> "FCV" Then
-                _Mensaje.Mensaje = "Error"
+                _Mensaje.Col1_Mensaje = "Error"
                 Throw New System.Exception("El Tido Destino esta vacío o no corresponde: (" & _TidoDocEmitir & "), solo puede ser: FCV y GDV")
             End If
 
@@ -838,7 +838,7 @@ Public Class Frm_Stmp_Listado
 
                     If Not _Msj_Tsc.EsCorrecto Then
                         _Mensaje.ErrorDeConexionSQL = _Msj_Tsc.ErrorDeConexionSQL
-                        Throw New System.Exception(_Msj_Tsc.Mensaje)
+                        Throw New System.Exception(_Msj_Tsc.Col1_Mensaje)
                     End If
 
                     'If Fx_Revisar_Tasa_Cambio(_Formulario) Then
@@ -859,7 +859,7 @@ Public Class Frm_Stmp_Listado
                                 '                  "VALIDACION",
                                 '                  MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, _Formulario.TopMost)
 
-                                _Mensaje.Mensaje = "VALIDACION"
+                                _Mensaje.Col1_Mensaje = "VALIDACION"
                                 Throw New System.Exception("NO ESTA AUTORIZADO PARA EFECTUAR DOCUMENTOS DESDE LA BODEGA DE ESTA MODALIDAD" & vbCrLf & vbCrLf &
                                                   "BODEGA: " & _Bodega & " - " & _Bod)
 
@@ -920,7 +920,7 @@ Public Class Frm_Stmp_Listado
                                 Fm_Post.Dispose()
 
                                 If Not CBool(_New_Idmaeedo) Then
-                                    _Mensaje.Detalle = "Error al grabar documento"
+                                    _Mensaje.Col2_Detalle = "Error al grabar documento"
                                     Throw New System.Exception("No fue posible realizar la grabación de la Factura.")
                                 End If
 
@@ -942,14 +942,14 @@ Public Class Frm_Stmp_Listado
                                 _Mensaje.EsCorrecto = True
                                 _Mensaje.Id = _New_Idmaeedo
                                 _Mensaje.Fecha = FechaDelServidor()
-                                _Mensaje.Mensaje = "Documento creado correctamente"
-                                _Mensaje.Detalle = "Se crea el documento: " & _Row_Maeedo.Item("TIDO") & "-" & _Row_Maeedo.Item("NUDO")
+                                _Mensaje.Col1_Mensaje = "Documento creado correctamente"
+                                _Mensaje.Col2_Detalle = "Se crea el documento: " & _Row_Maeedo.Item("TIDO") & "-" & _Row_Maeedo.Item("NUDO")
 
                             End If
 
                         Else
 
-                            _Mensaje.Mensaje = "Documento cerrado"
+                            _Mensaje.Col1_Mensaje = "Documento cerrado"
                             Throw New System.Exception("Nota de venta Nro: " & _Nudo & " se encuentra cerrado completamente")
 
                         End If
@@ -959,13 +959,13 @@ Public Class Frm_Stmp_Listado
                 End If
             Else
 
-                _Mensaje.Mensaje = "Información"
+                _Mensaje.Col1_Mensaje = "Información"
                 Throw New System.Exception("Debe configurar el formato de salida en la configuración por modalidad de trabajo")
 
             End If
 
         Catch ex As Exception
-            _Mensaje.Detalle = ex.Message
+            _Mensaje.Col2_Detalle = ex.Message
         End Try
 
         Return _Mensaje
@@ -1208,7 +1208,7 @@ Public Class Frm_Stmp_Listado
                 _Mensaje = Fx_EnviarImprimirTicket(_Row)
 
                 If Not _Mensaje.EsCorrecto Then
-                    MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                    MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
                 End If
 
                 MessageBoxEx.Show(Me, "Documento marcado", "Marcar documento", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -1247,8 +1247,8 @@ Public Class Frm_Stmp_Listado
 
                 If Not .ImprimirTicket Then
                     _Mensaje.EsCorrecto = False
-                    _Mensaje.Mensaje = "Impresora no configurada"
-                    _Mensaje.Detalle = "No se ha configurado la impresora para imprimir el ticket"
+                    _Mensaje.Col1_Mensaje = "Impresora no configurada"
+                    _Mensaje.Col2_Detalle = "No se ha configurado la impresora para imprimir el ticket"
                     _Mensaje.Icono = MessageBoxIcon.Stop
                     Return _Mensaje
                 End If
@@ -1264,8 +1264,8 @@ Public Class Frm_Stmp_Listado
                    String.IsNullOrWhiteSpace(.Impresora_Ticket) Or
                    String.IsNullOrWhiteSpace(.NombreFormato_Ticket) Then
                     _Mensaje.EsCorrecto = False
-                    _Mensaje.Mensaje = "Impresora no configurada"
-                    _Mensaje.Detalle = "No se ha configurado la impresora para imprimir el ticket"
+                    _Mensaje.Col1_Mensaje = "Impresora no configurada"
+                    _Mensaje.Col2_Detalle = "No se ha configurado la impresora para imprimir el ticket"
                     _Mensaje.Icono = MessageBoxIcon.Stop
                     Return _Mensaje
                 End If
@@ -1275,8 +1275,8 @@ Public Class Frm_Stmp_Listado
                                ",'wms',GETDATE(),'" & .NombreFormato_Ticket & "','" & .Impresora_Ticket & "',0)"
                 If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
                     _Mensaje.EsCorrecto = False
-                    _Mensaje.Mensaje = "Error al enviar a impresión"
-                    _Mensaje.Detalle = "Documento: " & _Tido & "-" & _Nudo & vbCrLf & _Sql.Pro_Error
+                    _Mensaje.Col1_Mensaje = "Error al enviar a impresión"
+                    _Mensaje.Col2_Detalle = "Documento: " & _Tido & "-" & _Nudo & vbCrLf & _Sql.Pro_Error
                     _Mensaje.Icono = MessageBoxIcon.Stop
                     Return _Mensaje
                 End If
@@ -1284,14 +1284,14 @@ Public Class Frm_Stmp_Listado
             End With
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Mensaje = "Documento enviado a impresión"
-            _Mensaje.Detalle = "Documento: " & _Tido & "-" & _Nudo
+            _Mensaje.Col1_Mensaje = "Documento enviado a impresión"
+            _Mensaje.Col2_Detalle = "Documento: " & _Tido & "-" & _Nudo
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Mensaje = ex.Message
-            _Mensaje.Detalle = "Error al enviar a impresión"
+            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Col2_Detalle = "Error al enviar a impresión"
             _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
 
@@ -1307,12 +1307,12 @@ Public Class Frm_Stmp_Listado
         Dim _Cl_Stmp As New Cl_Stmp
 
         _Mensaje = _Cl_Stmp.Fx_Llenar_Permiso(_Id_Enc, _CodPermiso)
-        _Mensaje.Detalle = "Validación"
+        _Mensaje.Col2_Detalle = "Validación"
 
         If Not _Mensaje.EsCorrecto Then
 
             If MessageBoxEx.Show(Me, _Msg & vbCrLf & vbCrLf &
-                                 "¿Desea ingresar el permiso para realizar esta acción?", _Mensaje.Detalle,
+                                 "¿Desea ingresar el permiso para realizar esta acción?", _Mensaje.Col2_Detalle,
                                  MessageBoxButtons.YesNo, MessageBoxIcon.Stop) <> DialogResult.Yes Then
                 Return False
             End If
@@ -1373,14 +1373,14 @@ Public Class Frm_Stmp_Listado
             End If
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Detalle = "Validación"
-            _Mensaje.Mensaje = "El cliente no presenta morosidad"
+            _Mensaje.Col2_Detalle = "Validación"
+            _Mensaje.Col1_Mensaje = "El cliente no presenta morosidad"
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Detalle = "Validación"
-            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Col2_Detalle = "Validación"
+            _Mensaje.Col1_Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
 
@@ -1396,7 +1396,7 @@ Public Class Frm_Stmp_Listado
 
         If _Mensaje.EsCorrecto Then
             Sb_Actualizar_Grilla()
-            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
         End If
 
     End Sub
@@ -1645,7 +1645,7 @@ Public Class Frm_Stmp_Listado
         _Mensaje = Fx_Entregar(FUNCIONARIO, _TidoGen & _NudoGen)
 
         If Not _Mensaje.EsCorrecto And Not _Mensaje.Cancelado Then
-            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
             Return
         End If
 
@@ -1768,7 +1768,7 @@ Public Class Frm_Stmp_Listado
         _Mensaje = Fx_CerrarTicket(FUNCIONARIO, _Numero)
 
         If Not _Mensaje.EsCorrecto And Not _Mensaje.Cancelado Then
-            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
             Return
         End If
 
@@ -1791,7 +1791,7 @@ Public Class Frm_Stmp_Listado
 
         _Mensaje = _Cl_Stmp.Fx_EnviarAPerparacionPlanificar
 
-        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         If Not _Mensaje.EsCorrecto Then
             Return

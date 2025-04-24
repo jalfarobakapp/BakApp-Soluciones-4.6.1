@@ -82,7 +82,7 @@ Public Class Frm_Inv_Ctrl_Inventario
         Dim _Mensaje As LsValiciones.Mensajes
         _Mensaje = Cl_Inventario.Fx_CrearFoto(_IdInventario)
 
-        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         If _Mensaje.EsCorrecto Then
             Me.Close()
@@ -98,7 +98,7 @@ Public Class Frm_Inv_Ctrl_Inventario
         Dim _Mensaje As LsValiciones.Mensajes
         _Mensaje = Cl_Inventario.Fx_EliminarFoto(Me, _IdInventario)
 
-        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
     End Sub
 
     Private Sub Btn_VerInventario_Click(sender As Object, e As EventArgs) Handles Btn_VerInventario.Click
@@ -200,7 +200,7 @@ Public Class Frm_Inv_Ctrl_Inventario
 
         _Mensaje = Cl_Inventario.Fx_Abrir_Inventario(_NombreEquipo, _RowUsuario.Item("KOFU"))
 
-        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         If _Mensaje.EsCorrecto Then
             Me.Close()
@@ -241,7 +241,7 @@ Public Class Frm_Inv_Ctrl_Inventario
 
         _Mensaje = Cl_Inventario.Fx_Cerrar_Inventario(_NombreEquipo, _RowUsuario.Item("KOFU"))
 
-        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         If _Mensaje.EsCorrecto Then
             Me.Close()

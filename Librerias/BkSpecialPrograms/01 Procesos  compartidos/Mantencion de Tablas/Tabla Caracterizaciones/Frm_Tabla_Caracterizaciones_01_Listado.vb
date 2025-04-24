@@ -850,7 +850,7 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
                 _Mensaje = _Cl_TablaCaracterizaciones.Fx_Llenar_Zw_TablaDeCaracterizaciones(_CodTablaClass, _CodigoTabla)
 
                 If Not _Mensaje.EsCorrecto Then
-                    MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     Sb_Actualizar_Grilla("")
                     Return
                 End If
