@@ -1,13 +1,11 @@
 ﻿Imports System.Drawing.Printing
 
-Public Class Cl_Imprimir_CompNoDesp
+Public Class Cl_Imprimir_ProdXCabeceras
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
     Dim _PrtSettings As New PrinterSettings
-    Dim _Imprimir_Negrita As Boolean
-
     Dim _Tbl_Maedpce As DataTable
     Dim _Tbl_Estado_Cuenta As DataTable
 
@@ -21,9 +19,10 @@ Public Class Cl_Imprimir_CompNoDesp
     Dim _Totales_Documentos_Abonados As Double
     Dim _Totales_Valor_Documentos As Double
 
-    Private _ListaImprimir As List(Of Imprimir_CND.DocumentoPrint)
-    Private _FechaDesde As Date
-    Private _FechaHasta As Date
+    Private _ListaImprimir As List(Of ImpCabecera.DocumentoPrint)
+    Private _FechaIngreso As Date
+
+    Public Property Imprimir_Negrita As Boolean
 
 #Region "FUENTES"
 
@@ -43,40 +42,28 @@ Public Class Cl_Imprimir_CompNoDesp
     Dim FteCourier_New_C_13 As New Font("Courier New", 13, FontStyle.Bold) ' Crea la fuente
     Dim FteCourier_New_C_14 As New Font("Courier New", 13, FontStyle.Bold) ' Crea la fuente
 
-    Public Sub New(_Ls_Idmaeedo As List(Of String), _FechaDesde As Date, _FechaHasta As Date)
+    Public Sub New(_Ls_Cabeceras As List(Of Zw_WMS_Ubicaciones_Sectores), _FechaIngreso As Date)
+
+        Me._FechaIngreso = _FechaIngreso
 
         _Total_Documentos_Pago = 0
         _Totales_Documentos_Abonados = 0
         _Totales_Valor_Documentos = 0
 
-        _ListaImprimir = New List(Of Imprimir_CND.DocumentoPrint)
+        _ListaImprimir = New List(Of ImpCabecera.DocumentoPrint)
 
-        Dim _Filtro As String = Generar_Filtro_IN_Lista2(_Ls_Idmaeedo, True, "")
+        For Each _Cabecera In _Ls_Cabeceras
 
-        For Each _Idmaeedo In _Ls_Idmaeedo
-
-            Dim _Mensaje As LsValiciones.Mensajes = Fx_Llenar_Documento(_Idmaeedo)
+            Dim _Mensaje As LsValiciones.Mensajes = Fx_Llenar_Cabecera(_Cabecera)
 
             If _Mensaje.EsCorrecto Then
-                Dim _Doc As Imprimir_CND.DocumentoPrint = _Mensaje.Tag
+                Dim _Doc As ImpCabecera.DocumentoPrint = _Mensaje.Tag
                 _ListaImprimir.Add(_Doc)
             End If
 
         Next
 
-        Me._FechaDesde = _FechaDesde
-        Me._FechaHasta = _FechaHasta
-
     End Sub
-
-    Public Property Imprimir_Negrita As Boolean
-        Get
-            Return _Imprimir_Negrita
-        End Get
-        Set(value As Boolean)
-            _Imprimir_Negrita = value
-        End Set
-    End Property
 
 #End Region
 
@@ -243,15 +230,15 @@ Public Class Cl_Imprimir_CompNoDesp
 
             Dim _Alto = e.PageSettings.PaperSize.Height
 
-            Dim _Filas_X_Documento = Math.Round(_Alto / 30, 0) - 5
+            Dim _Filas_X_Documento = Math.Round(_Alto / 17, 0) - 5
 
             Dim _Items As Integer = 0
 
-            For Each documento As Imprimir_CND.DocumentoPrint In _ListaImprimir
+            For Each documento As ImpCabecera.DocumentoPrint In _ListaImprimir
                 _Items += documento.Detalle.Count
             Next
 
-            _Filas_X_Documento += 26
+            '_Filas_X_Documento += 26
 
             Dim _Fecha = DateTime.Now
             Dim _Titulo As String
@@ -270,12 +257,12 @@ Public Class Cl_Imprimir_CompNoDesp
             e.Graphics.DrawString("R.U.T.: " & RutEmpresaActiva, Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Bold), Brushes.Black, _xPos, _yPos + 15)
             _yPos += 40
 
-            _Titulo = "NOTAS DE VENTA Y FACTURAS CON DESPACHOS PENDIENTES (DETALLADO)"
+            _Titulo = "CABACERAS"
 
             Sb_Centrar_Titulo(e, _Titulo, _Enum_Fuentes.Courier_New, 10, FontStyle.Bold, 0, _yPos, 95, True)
             _yPos += 20
 
-            _Titulo = "DOCUMENTOS COMPLETOS-EMITIDOS ENTRE EL " & _FechaDesde.Date.ToShortDateString & " Y " & _FechaHasta.Date.ToShortDateString
+            _Titulo = "PRODUCTOS EN CABECERA EL " & _FechaIngreso.Date.ToShortDateString
 
             Sb_Centrar_Titulo(e, _Titulo, _Enum_Fuentes.Courier_New, 10, FontStyle.Regular, 0, _yPos, 95, False)
             _yPos += 20
@@ -283,65 +270,64 @@ Public Class Cl_Imprimir_CompNoDesp
             e.Graphics.DrawString(StrDup(100, "_"), _Font_C12, Brushes.Black, 0, _yPos)
             _yPos += 30
 
-            Dim _Enc_TD = 20
-            Dim _Enc_Nudo = 60
-            Dim _Enc_FEntrega = 140
-            Dim _Enc_Vendedor = 220
-            Dim _Enc_Sucursal = 260
-            Dim _Enc_Bodega = 290
-            Dim _Enc_Plaz = 320
-            Dim _Enc_Occ = 350
-            'Dim _Col1FVenci = 600
-            'Dim _Col1ValDoc = 700
+            Dim _Enc_Cabecera = 20
+            Dim _Enc_NombreCabecera = 60
+            'Dim _Enc_FEntrega = 140
+            'Dim _Enc_Vendedor = 220
+            'Dim _Enc_Sucursal = 260
+            'Dim _Enc_Bodega = 290
+            'Dim _Enc_Plaz = 320
+            'Dim _Enc_Occ = 350
+
 
             Dim _Contador = 0
 
-            e.Graphics.DrawString("TD", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _Enc_TD, _yPos)
-            e.Graphics.DrawString("Número", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _Enc_Nudo, _yPos)
-            e.Graphics.DrawString("F.Entrega", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _Enc_FEntrega, _yPos)
-            e.Graphics.DrawString("Ven", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _Enc_Vendedor, _yPos)
-            e.Graphics.DrawString("Suc", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _Enc_Sucursal, _yPos)
-            e.Graphics.DrawString("Bod", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _Enc_Bodega, _yPos)
-            e.Graphics.DrawString("Plaz", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _Enc_Plaz, _yPos)
-            e.Graphics.DrawString("Orden de compra", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _Enc_Occ, _yPos)
+            'e.Graphics.DrawString("Cabecera", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _Enc_Cabecera, _yPos)
+            'e.Graphics.DrawString("Nombre Cabecera", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _Enc_NombreCabecera, _yPos)
+            'e.Graphics.DrawString("F.Entrega", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _Enc_FEntrega, _yPos)
+            'e.Graphics.DrawString("Ven", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _Enc_Vendedor, _yPos)
+            'e.Graphics.DrawString("Suc", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _Enc_Sucursal, _yPos)
+            'e.Graphics.DrawString("Bod", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _Enc_Bodega, _yPos)
+            'e.Graphics.DrawString("Plaz", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _Enc_Plaz, _yPos)
+            'e.Graphics.DrawString("Orden de compra", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _Enc_Occ, _yPos)
 
 
-            _yPos += 15
+            '_yPos += 15
 
-            Dim _EncDet_Codigo = 30
-            Dim _EncDet_Descripcion = 130
-            Dim _EncDet_CantSoli = 500
-            Dim _EncDet_CantDesp = 570
-            Dim _EncDet_CantPend = 640
-            Dim _EncDet_Um = 710
-            'Dim _EncDet_Occ = 730
+            Dim _EncDet_Item = 30
+            Dim _EncDet_Codigo = 80
+            Dim _EncDet_Descripcion = 180
+            'Dim _EncDet_CantSoli = 500
+            'Dim _EncDet_CantDesp = 570
+            'Dim _EncDet_CantPend = 640
+            'Dim _EncDet_Um = 710
+            ''Dim _EncDet_Occ = 730
             Dim _EncDet_MontoPdte = 730
 
-            e.Graphics.DrawString("Código", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _EncDet_Codigo, _yPos)
-            e.Graphics.DrawString("Descripción", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _EncDet_Descripcion, _yPos)
-            e.Graphics.DrawString("SOLICI.", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _EncDet_CantSoli, _yPos)
-            e.Graphics.DrawString("DESPACH.", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _EncDet_CantDesp, _yPos)
-            e.Graphics.DrawString("PENDIEN.", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _EncDet_CantPend, _yPos)
-            e.Graphics.DrawString("UM", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _EncDet_Um, _yPos)
-            'e.Graphics.DrawString("OCC", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _EncDet_Occ, _yPos)
-            'e.Graphics.DrawString("MONTO-PEND", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _EncDet_MontoPdte, _yPos)
+            'e.Graphics.DrawString("Código", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _EncDet_Codigo, _yPos)
+            'e.Graphics.DrawString("Descripción", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _EncDet_Descripcion, _yPos)
+            'e.Graphics.DrawString("SOLICI.", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _EncDet_CantSoli, _yPos)
+            'e.Graphics.DrawString("DESPACH.", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _EncDet_CantDesp, _yPos)
+            'e.Graphics.DrawString("PENDIEN.", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _EncDet_CantPend, _yPos)
+            'e.Graphics.DrawString("UM", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _EncDet_Um, _yPos)
 
-            _xPos += 10
-            e.Graphics.DrawString(StrDup(100, "_"), _Font_C12, Brushes.Black, 0, _yPos)
+            '_xPos += 10
+            'e.Graphics.DrawString(StrDup(100, "_"), _Font_C12, Brushes.Black, 0, _yPos)
 
-            _yPos += 30
+            '_yPos += 30
 
+            Dim _Det_Item = _EncDet_Item
             Dim _Det_Codigo = _EncDet_Codigo
             Dim _Det_Detalle = _EncDet_Descripcion
-            Dim _Det_CantSoli = _EncDet_CantSoli
-            Dim _Det_CantDesp = _EncDet_CantDesp
-            Dim _Det_CantPend = _EncDet_CantPend
-            Dim _Det_Um = _EncDet_Um
-            Dim _Det_MontoPdte = _EncDet_MontoPdte
+            'Dim _Det_CantSoli = _EncDet_CantSoli
+            'Dim _Det_CantDesp = _EncDet_CantDesp
+            'Dim _Det_CantPend = _EncDet_CantPend
+            'Dim _Det_Um = _EncDet_Um
+            'Dim _Det_MontoPdte = _EncDet_MontoPdte
 
             '_Filas_X_Documento = 58
 
-            For Each _Documento As Imprimir_CND.DocumentoPrint In _ListaImprimir
+            For Each _Documento As ImpCabecera.DocumentoPrint In _ListaImprimir
 
                 If Not _Documento.Impreso Then
 
@@ -355,58 +341,53 @@ Public Class Cl_Imprimir_CompNoDesp
 
                     With _Documento.Encabezado
 
-                        e.Graphics.DrawString("Entidad: " & .Entidad & " Sucursal:" & .Suc & " " & .RazonSocial, Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Bold), Brushes.Black, _Enc_TD, _yPos)
-                        _yPos += 15
-                        e.Graphics.DrawString("Emisión: " & .FechaEmision & " Zona:" & .Zona & " Dir:" & .Direccion.Trim & "/" & .Comuna, Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Bold), Brushes.Black, _Enc_TD, _yPos)
-                        _yPos += 15
-
-                        If String.IsNullOrEmpty(.Observaciones) Then
-                            e.Graphics.DrawString(StrDup(10, "-"), Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Bold), Brushes.Black, 20, _yPos)
-                        Else
-                            e.Graphics.DrawString(StrDup(10, "-") & " Obs: " & .Observaciones, Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Bold), Brushes.Black, 20, _yPos)
-                        End If
+                        'e.Graphics.DrawString("Empresa: " & .Empresa & " Sucursal:" & .Sucursal & " " & .Bodega, Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Bold), Brushes.Black, _Enc_Cabecera, _yPos)
+                        '_yPos += 15
+                        e.Graphics.DrawString("Cabecera: " & .Codigo_Sector & " - " & .Nombre_Sector, Fx_Fuente(_Enum_Fuentes.Courier_New, 10, FontStyle.Bold), Brushes.Black, _Enc_Cabecera, _yPos)
                         _yPos += 15
 
-                        e.Graphics.DrawString(.Tido, Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Bold), Brushes.Black, _Enc_TD, _yPos)
-                        e.Graphics.DrawString(.Nudo, Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Bold), Brushes.Black, _Enc_Nudo, _yPos)
-                        e.Graphics.DrawString(.FechaEntrega.Date.ToShortDateString, Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Bold), Brushes.Black, _Enc_FEntrega, _yPos)
-                        e.Graphics.DrawString(.Vendedor, Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Bold), Brushes.Black, _Enc_Vendedor, _yPos)
-                        e.Graphics.DrawString(.Sucursal, Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Bold), Brushes.Black, _Enc_Sucursal, _yPos)
-                        e.Graphics.DrawString("OCC: ", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Bold), Brushes.Black, _Enc_Occ, _yPos)
-                        e.Graphics.DrawString(.OrdenDeCompra, Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Bold), Brushes.Black, _Enc_Occ + 30, _yPos)
+                        'If String.IsNullOrEmpty(.Observaciones) Then
+                        e.Graphics.DrawString(StrDup(10, "-"), Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Bold), Brushes.Black, 20, _yPos)
+                        'Else
+                        '    e.Graphics.DrawString(StrDup(10, "-") & " Obs: " & .Observaciones, Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Bold), Brushes.Black, 20, _yPos)
+                        'End If
+                        _yPos += 15
+
+                        'e.Graphics.DrawString(.Tido, Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Bold), Brushes.Black, _Enc_Cabecera, _yPos)
+                        'e.Graphics.DrawString(.Nudo, Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Bold), Brushes.Black, _Enc_NombreCabecera, _yPos)
+                        'e.Graphics.DrawString(.FechaEntrega.Date.ToShortDateString, Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Bold), Brushes.Black, _Enc_FEntrega, _yPos)
+                        'e.Graphics.DrawString(.Vendedor, Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Bold), Brushes.Black, _Enc_Vendedor, _yPos)
+                        'e.Graphics.DrawString(.Sucursal, Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Bold), Brushes.Black, _Enc_Sucursal, _yPos)
+                        'e.Graphics.DrawString("OCC: ", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Bold), Brushes.Black, _Enc_Occ, _yPos)
+                        'e.Graphics.DrawString(.OrdenDeCompra, Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Bold), Brushes.Black, _Enc_Occ + 30, _yPos)
 
                     End With
 
                     _Contador += 4
 
-                    _yPos += 15
+                    '_yPos += 15
 
                     'e.Graphics.DrawString("Detalle de productos...", Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _Col1TD, _yPos)
                     '_yPos += 15
 
+                    e.Graphics.DrawString("Item", Fx_Fuente(_Enum_Fuentes.Courier_New, 10, FontStyle.Bold), Brushes.Black, _EncDet_Item, _yPos)
+                    e.Graphics.DrawString("Código", Fx_Fuente(_Enum_Fuentes.Courier_New, 10, FontStyle.Bold), Brushes.Black, _EncDet_Codigo, _yPos)
+                    e.Graphics.DrawString("Descripción", Fx_Fuente(_Enum_Fuentes.Courier_New, 10, FontStyle.Bold), Brushes.Black, _EncDet_Descripcion, _yPos)
+
+                    _yPos += 30
+
                     Dim _CtaItems = 0
 
-                    For Each _Detalle As Imprimir_CND.DetalleDoc In _Documento.Detalle
+                    For Each _Detalle As ImpCabecera.Cabecera_Detalle In _Documento.Detalle
 
                         With _Detalle
 
                             If Not .Impreso Then
 
-                                Dim _CantSolicitado As String = Rellenar2(FormatNumber(.CantSolicitado, 3), 8, " ", Enum_Relleno.Izquierda)
-                                Dim _CantDespachado As String = Rellenar2(FormatNumber(.CantDespachado, 3), 8, " ", Enum_Relleno.Izquierda)
-                                Dim _CantPendiente As String = Rellenar2(FormatNumber(.CantPendiente, 3), 8, " ", Enum_Relleno.Izquierda)
-
-                                _CantSolicitado = Rellenar2(De_Num_a_Tx_01(.CantSolicitado, False, 3), 8, " ", Enum_Relleno.Izquierda)
-                                _CantDespachado = Rellenar2(De_Num_a_Tx_01(.CantDespachado, False, 3), 8, " ", Enum_Relleno.Izquierda)
-                                _CantPendiente = Rellenar2(De_Num_a_Tx_01(.CantPendiente, False, 3), 8, " ", Enum_Relleno.Izquierda)
-
+                                e.Graphics.DrawString(numero_(.Item, 2), Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _Det_Item, _yPos)
                                 e.Graphics.DrawString(.Codigo, Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _Det_Codigo, _yPos)
                                 e.Graphics.DrawString(.Descripcion, Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _Det_Detalle, _yPos)
-                                e.Graphics.DrawString(_CantSolicitado, Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _Det_CantSoli, _yPos)
-                                e.Graphics.DrawString(_CantDespachado, Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _Det_CantDesp, _yPos)
-                                e.Graphics.DrawString(_CantPendiente, Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _Det_CantPend, _yPos)
-                                e.Graphics.DrawString(.UN, Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _Det_Um, _yPos)
-                                'e.Graphics.DrawString(_Documento.Encabezado.OrdenDeCompra, Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _Det_Occ, _yPos)
+                                'e.Graphics.DrawString(_CantSolicitado, Fx_Fuente(_Enum_Fuentes.Courier_New, 8, FontStyle.Regular), Brushes.Black, _Det_CantSoli, _yPos)
 
                                 _yPos += 15
 
@@ -432,8 +413,8 @@ Public Class Cl_Imprimir_CompNoDesp
 
                                     Dim quedanFilasPorImprimir As Boolean = False
 
-                                    For Each documento As Imprimir_CND.DocumentoPrint In _ListaImprimir
-                                        For Each detalle As Imprimir_CND.DetalleDoc In documento.Detalle
+                                    For Each documento As ImpCabecera.DocumentoPrint In _ListaImprimir
+                                        For Each detalle As ImpCabecera.Cabecera_Detalle In documento.Detalle
                                             If Not detalle.Impreso Then
                                                 quedanFilasPorImprimir = True
                                                 Exit For
@@ -511,7 +492,7 @@ Public Class Cl_Imprimir_CompNoDesp
 
     End Sub
 
-    Private Function Fx_Codigo_Barras(_Codigo As String) As PictureBox
+    Private Function Fx_Codigo_Barras(ByVal _Codigo As String) As PictureBox
 
         'Código de barras 
         Dim _Bmp As Bitmap = Nothing
@@ -531,56 +512,63 @@ Public Class Cl_Imprimir_CompNoDesp
 
     End Function
 
-    Function Fx_Llenar_Documento(_Idmaeedo As Integer) As LsValiciones.Mensajes ' Imprimir_CND.DocumentoPrint 'As Imprimir_CND.DocumentoPrint
+    Function Fx_Llenar_Cabecera(_Cabecera As Zw_WMS_Ubicaciones_Sectores) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
         Try
 
-            Dim _Doc As New Imprimir_CND.DocumentoPrint
+            Dim _Doc As New ImpCabecera.DocumentoPrint
 
-            Consulta_sql = "Select Edo.IDMAEEDO,Edo.TIDO,Edo.NUDO,Edo.ENDO,Edo.SUENDO,En.NOKOEN,En.DIEN,Cm.NOKOCM,En.KOFUEN," &
-                       "Cm.NOKOCM,Edo.FEEMDO,Edo.FEER,En.ZOEN,ISNULL(Obs.OBDO,'') As OBDO ,ISNULL(Obs.OCDO,'') As OCDO" & vbCrLf &
-                       "From MAEEDO Edo" & vbCrLf &
-                       "Inner Join MAEEN En On Edo.ENDO = En.KOEN And Edo.SUENDO = En.SUEN" & vbCrLf &
-                       "Left Join MAEEDOOB Obs On Edo.IDMAEEDO = Obs.IDMAEEDO" & vbCrLf &
-                       "Left Join TABCM Cm On Cm.KOPA = En.PAEN And Cm.KOCI = En.CIEN And Cm.KOCM = En.CMEN" & vbCrLf &
-                       "Where Edo.IDMAEEDO = " & _Idmaeedo
+            'Dim _Id_Sector = _Cabecera.Item(0)
+            'Dim _Id_Mapa = _Cabecera.Item(1)
+            'Dim _Empresa = _Cabecera.Item(2)
+            'Dim _Sucursal = _Cabecera.Item(3)
+            'Dim _Bodega = _Cabecera.Item(4)
+            'Dim _Codigo_Sector = _Cabecera.Item(5)
 
-            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+            'Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Sectores" & vbCrLf &
+            '               "Where Id_Sector  = " & _Id_Sector & " --And Id_Mapa = 0 And Empresa = '' And Sucursal = '' And Bodega = ''"
 
-            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
-                Throw New System.Exception(_Sql.Pro_Error)
-            End If
+            'Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 
-            If IsNothing(_Row) Then
-                Throw New System.Exception("No se encontro el documento en MAEEDO IDMAEEDO = " & _Idmaeedo)
-            End If
+            'If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+            '    Throw New System.Exception(_Sql.Pro_Error)
+            'End If
 
-            Dim _Encabezado As New Imprimir_CND.EncabezadoDoc
+            'If IsNothing(_Row) Then
+            '    Throw New System.Exception("No se encontro el documento en Zw_WMS_Ubicaciones_Sectores Id_Sector = " & _Id_Sector)
+            'End If
 
-            _Encabezado.Entidad = _Row.Item("ENDO").ToString.Trim
-            _Encabezado.Suc = _Row.Item("SUENDO").ToString.Trim
-            _Encabezado.RazonSocial = _Row.Item("NOKOEN").ToString.Trim
-            _Encabezado.Direccion = _Row.Item("DIEN").ToString.Trim
-            _Encabezado.Comuna = _Row.Item("NOKOCM").ToString.Trim
-            _Encabezado.FechaEmision = _Row.Item("FEEMDO")
-            _Encabezado.FechaEntrega = _Row.Item("FEER")
-            _Encabezado.Zona = _Row.Item("ZOEN").ToString.Trim
-            _Encabezado.Tido = _Row.Item("TIDO").ToString.Trim
-            _Encabezado.Nudo = _Row.Item("NUDO").ToString.Trim
-            _Encabezado.Vendedor = _Row.Item("KOFUEN").ToString.Trim
-            _Encabezado.Sucursal = _Row.Item("SUENDO").ToString.Trim
-            _Encabezado.Bodega = String.Empty '_Row.Item("KOBODE").ToString.Trim
-            _Encabezado.Observaciones = _Row.Item("OBDO").ToString.Trim
-            _Encabezado.OrdenDeCompra = _Row.Item("OCDO").ToString.Trim
+            'Dim _Encabezado As New Zw_WMS_Ubicaciones_Sectores
 
-            _Doc.Encabezado = _Encabezado
+            'With _Encabezado
 
-            Consulta_sql = "Select Ddo.KOPRCT,Ddo.NOKOPR,CASE When UDTRPR = 1 Then UD01PR Else UD02PR End As UM," &
-                           "CAPRCO1,CAPREX1,CAPRCO1-CAPREX1 As PENDIENTE" & vbCrLf &
-                           "From MAEDDO Ddo " & vbCrLf &
-                           "Where Ddo.IDMAEEDO = " & _Idmaeedo
+            '    .Id_Sector = _Row.Item("Id_Sector")
+            '    .Id_Mapa = _Row.Item("Id_Mapa")
+            '    .Empresa = _Row.Item("Empresa")
+            '    .Sucursal = _Row.Item("Sucursal")
+            '    .Bodega = _Row.Item("Bodega")
+            '    .Codigo_Sector = _Row.Item("Codigo_Sector")
+            '    .Nombre_Sector = _Row.Item("Nombre_Sector")
+            '    .Es_SubSector = _Row.Item("Es_SubSector")
+            '    .EsCabecera = _Row.Item("EsCabecera")
+            '    .SoloUnaUbicacion = _Row.Item("SoloUnaUbicacion")
+            '    .OblConfimarUbic = _Row.Item("OblConfimarUbic")
+
+            'End With
+
+            _Doc.Encabezado = _Cabecera
+
+            With _Doc.Encabezado
+
+                Consulta_sql = "Select KOPR As Codigo,NOKOPR As Descripcion From MAEPR Where KOPR In " &
+                               "(Select Codigo From " & _Global_BaseBk & "Zw_Prod_Ubicacion_IngSal " &
+                               "Where Id_Mapa = " & .Id_Mapa & " And Empresa = '" & .Empresa & "' And Sucursal = '" & .Sucursal & "' And Bodega = '" & .Bodega & "' And Codigo_Sector = '" & .Codigo_Sector & "' And FechaIngreso = '" & Format(_FechaIngreso, "yyyyMMdd") & "')"
+
+            End With
+
+
             Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
@@ -588,23 +576,22 @@ Public Class Cl_Imprimir_CompNoDesp
             End If
 
             If _Tbl.Rows.Count = 0 Then
-                Throw New System.Exception("No se encontraron detalles para el documento IDMAEEDO = " & _Idmaeedo)
+                Throw New System.Exception("No se encontraron detalles para la cabecera")
             End If
+
+            _Item = 1
 
             For Each _Fila As DataRow In _Tbl.Rows
 
-                Dim _Detalle As New Imprimir_CND.DetalleDoc
+                Dim _Detalle As New ImpCabecera.Cabecera_Detalle
 
-                _Detalle.Impreso = False
-                _Detalle.Codigo = _Fila.Item("KOPRCT").ToString.Trim
-                _Detalle.Descripcion = _Fila.Item("NOKOPR").ToString.Trim
-                _Detalle.CantSolicitado = _Fila.Item("CAPRCO1")
-                _Detalle.CantDespachado = _Fila.Item("CAPREX1")
-                _Detalle.CantPendiente = _Fila.Item("PENDIENTE")
-                _Detalle.UN = _Fila.Item("UM").ToString.Trim
-                _Detalle.MontoPend = 0 '_Fila.Item("MONTO_PENDIENTE")
+                _Detalle.Item = _Item
+                _Detalle.Codigo = _Fila.Item("Codigo").ToString.Trim
+                _Detalle.Descripcion = _Fila.Item("Descripcion").ToString.Trim
 
                 _Doc.Detalle.Add(_Detalle)
+
+                _Item += 1
 
             Next
 
@@ -626,48 +613,35 @@ Public Class Cl_Imprimir_CompNoDesp
 
 End Class
 
-Namespace Imprimir_CND
+Namespace ImpCabecera
 
     Class DocumentoPrint
-        Property Encabezado As EncabezadoDoc
-        Property Detalle As List(Of DetalleDoc)
+        Property Encabezado As Zw_WMS_Ubicaciones_Sectores
+        Property Detalle As List(Of Cabecera_Detalle)
         Property Impreso As Boolean
+
         Sub New()
-            Encabezado = New EncabezadoDoc
-            Detalle = New List(Of DetalleDoc)
+            Encabezado = New Zw_WMS_Ubicaciones_Sectores
+            Detalle = New List(Of Cabecera_Detalle)
             Impreso = False
         End Sub
 
     End Class
 
-    Class EncabezadoDoc
-        Property Entidad As String
-        Property Suc As String
-        Property RazonSocial As String
-        Property Direccion As String
-        Property Comuna As String
-        Property FechaEmision As Date
-        Property FechaEntrega As Date
-        Property Zona As String
-        Property Tido As String
-        Property Nudo As String
-        Property Vendedor As String
+    Public Class Cabecera_Detalle
+
+        Property Impreso As Boolean
+        Property Id_Sector As Integer
+        Property Id_Mapa As Integer
+        Property Empresa As String
         Property Sucursal As String
         Property Bodega As String
-        Property Observaciones As String
-        Property OrdenDeCompra As String
-
-    End Class
-
-    Class DetalleDoc
-        Property Impreso As Boolean
+        Property Codigo_Sector As String
+        Property Item As Integer
         Property Codigo As String
         Property Descripcion As String
-        Property CantSolicitado As Double
-        Property CantDespachado As Double
-        Property CantPendiente As Double
-        Property UN As String
-        Property MontoPend As Double
+
     End Class
 
 End Namespace
+

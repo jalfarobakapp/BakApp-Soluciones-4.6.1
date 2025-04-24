@@ -4,7 +4,7 @@ Public Class Frm_Sectores_Lista_UbicOblig
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
-
+    Private _Tbl_Cabeceras As DataTable
     Private _Id_Mapa As Integer
     Private _Row_Mapa As DataRow
     Public Property FechaRevision As Date
@@ -68,13 +68,13 @@ Public Class Frm_Sectores_Lista_UbicOblig
                        "Order By Id_Mapa,Empresa,Sucursal,Bodega,Codigo_Sector" & vbCrLf &
                        "Drop Table #Paso"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+        _Tbl_Cabeceras = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _DisplayIndex = 0
 
         With Grilla
 
-            .DataSource = _Tbl
+            .DataSource = _Tbl_Cabeceras
 
             OcultarEncabezadoGrilla(Grilla, True)
 
@@ -1088,6 +1088,51 @@ Public Class Frm_Sectores_Lista_UbicOblig
         Me.Cursor = Cursors.Default
 
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Productos en ubicaciones")
+
+    End Sub
+
+    Private Sub Btn_ImprimirProdXCabecera_Click(sender As Object, e As EventArgs) Handles Btn_ImprimirProdXCabecera.Click
+
+        If Not Fx_RevisarProductosSeleccionados() Then
+            Return
+        End If
+
+        Dim _Lista As New List(Of Zw_WMS_Ubicaciones_Sectores)
+
+        For Each _Fila As DataRow In _Tbl_Cabeceras.Rows
+
+            If _Fila.Item("Chk") Then
+
+                Dim _Encabezado As New Zw_WMS_Ubicaciones_Sectores
+
+                With _Encabezado
+
+                    .Id_Sector = _Fila.Item("Id_Sector")
+                    .Id_Mapa = _Fila.Item("Id_Mapa")
+                    .Empresa = _Fila.Item("Empresa")
+                    .Sucursal = _Fila.Item("Sucursal")
+                    .Bodega = _Fila.Item("Bodega")
+                    .Codigo_Sector = _Fila.Item("Codigo_Sector")
+                    .Nombre_Sector = _Fila.Item("Nombre_Sector")
+                    .Es_SubSector = _Fila.Item("Es_SubSector")
+                    .EsCabecera = _Fila.Item("EsCabecera")
+                    .SoloUnaUbicacion = _Fila.Item("SoloUnaUbicacion")
+                    .OblConfimarUbic = _Fila.Item("OblConfimarUbic")
+
+                End With
+
+                _Lista.Add(_Encabezado)
+
+            End If
+
+        Next
+
+        If _Lista.Count Then
+
+            Dim _Cl_Imprimir_CompNoDesp As New Cl_Imprimir_ProdXCabeceras(_Lista, Dtp_FechaRevision.Value)
+            _Cl_Imprimir_CompNoDesp.Fx_Imprimir_Archivo(Me, "")
+
+        End If
 
     End Sub
 

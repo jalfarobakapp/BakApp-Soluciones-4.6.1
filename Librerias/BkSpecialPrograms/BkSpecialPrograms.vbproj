@@ -2483,6 +2483,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Sistema WMS\Diseño\Clases\Cl_DisWMS.vb" />
+    <Compile Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Sectores\Cl_Imprimir_ProdXCabeceras.vb" />
     <Compile Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Sectores\Cl_WMS_Sectores.vb" />
     <Compile Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Sectores\Frm_Sectores.Designer.vb">
       <DependentUpon>Frm_Sectores.vb</DependentUpon>

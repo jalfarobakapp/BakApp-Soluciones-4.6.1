@@ -184,7 +184,11 @@ Public Class Frm_Cambio_Codigos_UnoxUno
 
     Private Sub ChkCambiarCodigoTecnico_CheckValueChanged(sender As Object, e As EventArgs)
         Txt_Codigo_Tecnico_New.Enabled = ChkCambiarCodigoTecnico.Checked
-        If Not ChkCambiarCodigoTecnico.Checked Then Txt_Codigo_Tecnico_New.Text = Txt_Codigo_Tecnico_Old.Text
+        If Not ChkCambiarCodigoTecnico.Checked Then
+            Txt_Codigo_Tecnico_New.Text = Txt_Codigo_Tecnico_Old.Text
+        Else
+            Txt_Codigo_Tecnico_New.Text = Txt_Codigo_New.Text
+        End If
     End Sub
 
     Private Sub Txt_Codigo_Old_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Codigo_Old.ButtonCustomClick
