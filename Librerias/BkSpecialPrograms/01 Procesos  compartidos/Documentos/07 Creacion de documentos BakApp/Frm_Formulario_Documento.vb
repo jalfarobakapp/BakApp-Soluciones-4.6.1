@@ -29228,6 +29228,10 @@ Public Class Frm_Formulario_Documento
 
     End Sub
 
+    Private Sub Lbl_NroDecimales_Click(sender As Object, e As EventArgs) Handles Lbl_NroDecimales.Click
+
+    End Sub
+
     Function Fx_ProdConInfo(_Tipr As String) As Boolean
 
         Select Case _Tipr

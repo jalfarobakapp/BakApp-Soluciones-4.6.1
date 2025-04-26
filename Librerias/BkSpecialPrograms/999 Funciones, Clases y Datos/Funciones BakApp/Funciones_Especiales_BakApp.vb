@@ -6323,7 +6323,7 @@ Public Module Crear_Documentos_Desde_Otro
         Dim Chk_Confirmar_Lectura As New Command
         Chk_Confirmar_Lectura.Checked = False
         Chk_Confirmar_Lectura.Name = "Chk_Confirmar_Lectura"
-        Chk_Confirmar_Lectura.Text = "CONFIRMAR TIPO DE ENVIO Y LECTURA DE LA ALERTA"
+        Chk_Confirmar_Lectura.Text = "CONFIRMAR LECTURA DE LA ALERTA"
 
         Dim _Opciones As Command = Chk_Confirmar_Lectura
 

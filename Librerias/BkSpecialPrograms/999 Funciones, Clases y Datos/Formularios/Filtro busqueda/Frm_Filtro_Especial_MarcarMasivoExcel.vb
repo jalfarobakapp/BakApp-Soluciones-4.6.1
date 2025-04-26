@@ -216,4 +216,7 @@ Public Class Frm_Filtro_Especial_MarcarMasivoExcel
 
     End Sub
 
+    Private Sub Btn_Cancelar_Click(sender As Object, e As EventArgs) Handles Btn_Cancelar.Click
+
+    End Sub
 End Class

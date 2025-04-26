@@ -44,6 +44,9 @@ Partial Class Frm_EstadisticaProducto
         Dim Series7 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Dim Title3 As System.Windows.Forms.DataVisualization.Charting.Title = New System.Windows.Forms.DataVisualization.Charting.Title()
         Dim Title4 As System.Windows.Forms.DataVisualization.Charting.Title = New System.Windows.Forms.DataVisualization.Charting.Title()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -56,9 +59,6 @@ Partial Class Frm_EstadisticaProducto
         Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -146,6 +146,19 @@ Partial Class Frm_EstadisticaProducto
         Me.Btn_Dimensiones = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_Pr_Editar_Producto = New DevComponents.DotNetBar.ButtonItem()
         Me.Tabs = New DevComponents.DotNetBar.SuperTabControl()
+        Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
+        Me.Menu_Contextual_01_Opciones_Documento = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_Ver_documento = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Rev_Cumpl_Proveedor = New DevComponents.DotNetBar.ButtonItem()
+        Me.Menu_Contextual_02_Opciones_Arbol = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem2 = New DevComponents.DotNetBar.LabelItem()
+        Me.Mnu_Btn_Ver_Clasificaciones_Arbol = New DevComponents.DotNetBar.ButtonItem()
+        Me.Mnu_Btn_Mantencion_Clasificaciones_Arbol = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Ver_Info_Ult_Compras = New DevComponents.DotNetBar.ButtonX()
+        Me.GrillaCompras = New DevComponents.DotNetBar.Controls.DataGridViewX()
+        Me.Tab_01_Ultimas_Compras = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel4 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Chk_Mostrar_Venta_Por_Dia = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.SuperTabControl1 = New DevComponents.DotNetBar.SuperTabControl()
@@ -175,19 +188,6 @@ Partial Class Frm_EstadisticaProducto
         Me.Btn_Ver_Info_Ult_VentasTodos = New DevComponents.DotNetBar.ButtonX()
         Me.GrillaVentas = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Tab_02_Ultimas_Ventas = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
-        Me.Menu_Contextual_01_Opciones_Documento = New DevComponents.DotNetBar.ButtonItem()
-        Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
-        Me.Btn_Ver_documento = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Rev_Cumpl_Proveedor = New DevComponents.DotNetBar.ButtonItem()
-        Me.Menu_Contextual_02_Opciones_Arbol = New DevComponents.DotNetBar.ButtonItem()
-        Me.LabelItem2 = New DevComponents.DotNetBar.LabelItem()
-        Me.Mnu_Btn_Ver_Clasificaciones_Arbol = New DevComponents.DotNetBar.ButtonItem()
-        Me.Mnu_Btn_Mantencion_Clasificaciones_Arbol = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Ver_Info_Ult_Compras = New DevComponents.DotNetBar.ButtonX()
-        Me.GrillaCompras = New DevComponents.DotNetBar.Controls.DataGridViewX()
-        Me.Tab_01_Ultimas_Compras = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel7 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Tab_07_Informacion_Del_Producto = New DevComponents.DotNetBar.SuperTabItem()
@@ -212,6 +212,9 @@ Partial Class Frm_EstadisticaProducto
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Tabs, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Tabs.SuspendLayout()
+        Me.SuperTabControlPanel1.SuspendLayout()
+        CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GrillaCompras, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControlPanel4.SuspendLayout()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControl1.SuspendLayout()
@@ -231,9 +234,6 @@ Partial Class Frm_EstadisticaProducto
         CType(Me.Grilla_Entidad, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControlPanel2.SuspendLayout()
         CType(Me.GrillaVentas, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SuperTabControlPanel1.SuspendLayout()
-        CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.GrillaCompras, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControlPanel7.SuspendLayout()
         Me.GroupPanel3.SuspendLayout()
         Me.SuperTabControlPanel6.SuspendLayout()
@@ -953,7 +953,7 @@ Partial Class Frm_EstadisticaProducto
         Me.Chk_Stock_Minimo.CheckValue = "Y"
         Me.Chk_Stock_Minimo.FocusCuesEnabled = False
         Me.Chk_Stock_Minimo.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Stock_Minimo.Location = New System.Drawing.Point(150, 3)
+        Me.Chk_Stock_Minimo.Location = New System.Drawing.Point(149, 3)
         Me.Chk_Stock_Minimo.Name = "Chk_Stock_Minimo"
         Me.Chk_Stock_Minimo.Size = New System.Drawing.Size(143, 19)
         Me.Chk_Stock_Minimo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -968,7 +968,7 @@ Partial Class Frm_EstadisticaProducto
         Me.Chk_Stock_Salidas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Stock_Salidas.FocusCuesEnabled = False
         Me.Chk_Stock_Salidas.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Stock_Salidas.Location = New System.Drawing.Point(150, 28)
+        Me.Chk_Stock_Salidas.Location = New System.Drawing.Point(149, 28)
         Me.Chk_Stock_Salidas.Name = "Chk_Stock_Salidas"
         Me.Chk_Stock_Salidas.Size = New System.Drawing.Size(103, 19)
         Me.Chk_Stock_Salidas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -983,7 +983,7 @@ Partial Class Frm_EstadisticaProducto
         Me.Chk_Stock_Ingresos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Stock_Ingresos.FocusCuesEnabled = False
         Me.Chk_Stock_Ingresos.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Stock_Ingresos.Location = New System.Drawing.Point(83, 28)
+        Me.Chk_Stock_Ingresos.Location = New System.Drawing.Point(82, 28)
         Me.Chk_Stock_Ingresos.Name = "Chk_Stock_Ingresos"
         Me.Chk_Stock_Ingresos.Size = New System.Drawing.Size(61, 19)
         Me.Chk_Stock_Ingresos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1027,7 +1027,7 @@ Partial Class Frm_EstadisticaProducto
         Me.Input_Stock_Minimo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Stock_Minimo.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Stock_Minimo.ForeColor = System.Drawing.Color.Black
-        Me.Input_Stock_Minimo.Location = New System.Drawing.Point(83, 3)
+        Me.Input_Stock_Minimo.Location = New System.Drawing.Point(82, 3)
         Me.Input_Stock_Minimo.MinValue = 1
         Me.Input_Stock_Minimo.Name = "Input_Stock_Minimo"
         Me.Input_Stock_Minimo.ShowUpDown = True
@@ -1174,7 +1174,7 @@ Partial Class Frm_EstadisticaProducto
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.4264!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 71.5736!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 377.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 380.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.LabelX15, 0, 3)
         Me.TableLayoutPanel1.Controls.Add(Me.LblZona, 0, 3)
         Me.TableLayoutPanel1.Controls.Add(Me.LabelX8, 0, 0)
@@ -1224,7 +1224,7 @@ Partial Class Frm_EstadisticaProducto
         Me.LblZona.ForeColor = System.Drawing.Color.Black
         Me.LblZona.Location = New System.Drawing.Point(113, 74)
         Me.LblZona.Name = "LblZona"
-        Me.LblZona.Size = New System.Drawing.Size(263, 15)
+        Me.LblZona.Size = New System.Drawing.Size(260, 15)
         Me.LblZona.TabIndex = 45
         Me.LblZona.Text = "Zona"
         '
@@ -1266,7 +1266,7 @@ Partial Class Frm_EstadisticaProducto
         Me.LblFamilia.ForeColor = System.Drawing.Color.Black
         Me.LblFamilia.Location = New System.Drawing.Point(113, 28)
         Me.LblFamilia.Name = "LblFamilia"
-        Me.LblFamilia.Size = New System.Drawing.Size(263, 15)
+        Me.LblFamilia.Size = New System.Drawing.Size(260, 15)
         Me.LblFamilia.TabIndex = 36
         Me.LblFamilia.Text = "LblFamilia"
         '
@@ -1280,7 +1280,7 @@ Partial Class Frm_EstadisticaProducto
         Me.LblSuperFamilia.ForeColor = System.Drawing.Color.Black
         Me.LblSuperFamilia.Location = New System.Drawing.Point(113, 5)
         Me.LblSuperFamilia.Name = "LblSuperFamilia"
-        Me.LblSuperFamilia.Size = New System.Drawing.Size(263, 15)
+        Me.LblSuperFamilia.Size = New System.Drawing.Size(260, 15)
         Me.LblSuperFamilia.TabIndex = 34
         Me.LblSuperFamilia.Text = "LblSuperFamilia"
         '
@@ -1292,7 +1292,7 @@ Partial Class Frm_EstadisticaProducto
         '
         Me.LblMarca.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LblMarca.ForeColor = System.Drawing.Color.Black
-        Me.LblMarca.Location = New System.Drawing.Point(466, 28)
+        Me.LblMarca.Location = New System.Drawing.Point(463, 28)
         Me.LblMarca.Name = "LblMarca"
         Me.LblMarca.Size = New System.Drawing.Size(357, 15)
         Me.LblMarca.TabIndex = 40
@@ -1306,7 +1306,7 @@ Partial Class Frm_EstadisticaProducto
         '
         Me.LabelX10.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX10.ForeColor = System.Drawing.Color.Black
-        Me.LabelX10.Location = New System.Drawing.Point(384, 28)
+        Me.LabelX10.Location = New System.Drawing.Point(381, 28)
         Me.LabelX10.Name = "LabelX10"
         Me.LabelX10.Size = New System.Drawing.Size(57, 15)
         Me.LabelX10.TabIndex = 38
@@ -1320,7 +1320,7 @@ Partial Class Frm_EstadisticaProducto
         '
         Me.LabelX11.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX11.ForeColor = System.Drawing.Color.Black
-        Me.LabelX11.Location = New System.Drawing.Point(384, 51)
+        Me.LabelX11.Location = New System.Drawing.Point(381, 51)
         Me.LabelX11.Name = "LabelX11"
         Me.LabelX11.Size = New System.Drawing.Size(57, 15)
         Me.LabelX11.TabIndex = 42
@@ -1334,7 +1334,7 @@ Partial Class Frm_EstadisticaProducto
         '
         Me.LblClasLibre.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LblClasLibre.ForeColor = System.Drawing.Color.Black
-        Me.LblClasLibre.Location = New System.Drawing.Point(466, 5)
+        Me.LblClasLibre.Location = New System.Drawing.Point(463, 5)
         Me.LblClasLibre.Name = "LblClasLibre"
         Me.LblClasLibre.Size = New System.Drawing.Size(357, 15)
         Me.LblClasLibre.TabIndex = 41
@@ -1348,7 +1348,7 @@ Partial Class Frm_EstadisticaProducto
         '
         Me.LblRubro.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LblRubro.ForeColor = System.Drawing.Color.Black
-        Me.LblRubro.Location = New System.Drawing.Point(466, 51)
+        Me.LblRubro.Location = New System.Drawing.Point(463, 51)
         Me.LblRubro.Name = "LblRubro"
         Me.LblRubro.Size = New System.Drawing.Size(357, 15)
         Me.LblRubro.TabIndex = 39
@@ -1362,7 +1362,7 @@ Partial Class Frm_EstadisticaProducto
         '
         Me.LabelX12.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX12.ForeColor = System.Drawing.Color.Black
-        Me.LabelX12.Location = New System.Drawing.Point(384, 5)
+        Me.LabelX12.Location = New System.Drawing.Point(381, 5)
         Me.LabelX12.Name = "LabelX12"
         Me.LabelX12.Size = New System.Drawing.Size(57, 15)
         Me.LabelX12.TabIndex = 43
@@ -1378,7 +1378,7 @@ Partial Class Frm_EstadisticaProducto
         Me.LblSubFamilia.ForeColor = System.Drawing.Color.Black
         Me.LblSubFamilia.Location = New System.Drawing.Point(113, 51)
         Me.LblSubFamilia.Name = "LblSubFamilia"
-        Me.LblSubFamilia.Size = New System.Drawing.Size(263, 15)
+        Me.LblSubFamilia.Size = New System.Drawing.Size(260, 15)
         Me.LblSubFamilia.TabIndex = 44
         Me.LblSubFamilia.Text = "LblSubFamilia"
         '
@@ -1835,6 +1835,160 @@ Partial Class Frm_EstadisticaProducto
         Me.Tabs.TabStyle = DevComponents.DotNetBar.eSuperTabStyle.Office2010BackstageBlue
         Me.Tabs.Text = "SuperTabControl1"
         '
+        'SuperTabControlPanel1
+        '
+        Me.SuperTabControlPanel1.Controls.Add(Me.ContextMenuBar1)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Btn_Ver_Info_Ult_Compras)
+        Me.SuperTabControlPanel1.Controls.Add(Me.GrillaCompras)
+        Me.SuperTabControlPanel1.Controls.Add(Me.LblEntFisicaCompras)
+        Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 25)
+        Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
+        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(889, 448)
+        Me.SuperTabControlPanel1.TabIndex = 1
+        Me.SuperTabControlPanel1.TabItem = Me.Tab_01_Ultimas_Compras
+        '
+        'ContextMenuBar1
+        '
+        Me.ContextMenuBar1.AntiAlias = True
+        Me.ContextMenuBar1.DockSide = DevComponents.DotNetBar.eDockSide.Document
+        Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01_Opciones_Documento, Me.Menu_Contextual_02_Opciones_Arbol})
+        Me.ContextMenuBar1.Location = New System.Drawing.Point(150, 59)
+        Me.ContextMenuBar1.Name = "ContextMenuBar1"
+        Me.ContextMenuBar1.Size = New System.Drawing.Size(685, 25)
+        Me.ContextMenuBar1.Stretch = True
+        Me.ContextMenuBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.ContextMenuBar1.TabIndex = 47
+        Me.ContextMenuBar1.TabStop = False
+        Me.ContextMenuBar1.Text = "ContextMenuBar1"
+        '
+        'Menu_Contextual_01_Opciones_Documento
+        '
+        Me.Menu_Contextual_01_Opciones_Documento.AutoExpandOnClick = True
+        Me.Menu_Contextual_01_Opciones_Documento.Name = "Menu_Contextual_01_Opciones_Documento"
+        Me.Menu_Contextual_01_Opciones_Documento.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_Ver_documento, Me.Btn_Rev_Cumpl_Proveedor})
+        Me.Menu_Contextual_01_Opciones_Documento.Text = "Opciones documento"
+        '
+        'LabelItem1
+        '
+        Me.LabelItem1.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem1.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem1.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem1.Name = "LabelItem1"
+        Me.LabelItem1.PaddingBottom = 1
+        Me.LabelItem1.PaddingLeft = 10
+        Me.LabelItem1.PaddingTop = 1
+        Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem1.Text = "Opciones"
+        '
+        'Btn_Ver_documento
+        '
+        Me.Btn_Ver_documento.Image = CType(resources.GetObject("Btn_Ver_documento.Image"), System.Drawing.Image)
+        Me.Btn_Ver_documento.ImageAlt = CType(resources.GetObject("Btn_Ver_documento.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Ver_documento.Name = "Btn_Ver_documento"
+        Me.Btn_Ver_documento.Text = "Ver documento"
+        '
+        'Btn_Rev_Cumpl_Proveedor
+        '
+        Me.Btn_Rev_Cumpl_Proveedor.Image = CType(resources.GetObject("Btn_Rev_Cumpl_Proveedor.Image"), System.Drawing.Image)
+        Me.Btn_Rev_Cumpl_Proveedor.ImageAlt = CType(resources.GetObject("Btn_Rev_Cumpl_Proveedor.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Rev_Cumpl_Proveedor.Name = "Btn_Rev_Cumpl_Proveedor"
+        Me.Btn_Rev_Cumpl_Proveedor.Text = "Revisar cumplimiento del proveedor"
+        '
+        'Menu_Contextual_02_Opciones_Arbol
+        '
+        Me.Menu_Contextual_02_Opciones_Arbol.AutoExpandOnClick = True
+        Me.Menu_Contextual_02_Opciones_Arbol.Name = "Menu_Contextual_02_Opciones_Arbol"
+        Me.Menu_Contextual_02_Opciones_Arbol.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem2, Me.Mnu_Btn_Ver_Clasificaciones_Arbol, Me.Mnu_Btn_Mantencion_Clasificaciones_Arbol})
+        Me.Menu_Contextual_02_Opciones_Arbol.Text = "Opciones documento"
+        '
+        'LabelItem2
+        '
+        Me.LabelItem2.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem2.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem2.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem2.Name = "LabelItem2"
+        Me.LabelItem2.PaddingBottom = 1
+        Me.LabelItem2.PaddingLeft = 10
+        Me.LabelItem2.PaddingTop = 1
+        Me.LabelItem2.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem2.Text = "Opciones"
+        '
+        'Mnu_Btn_Ver_Clasificaciones_Arbol
+        '
+        Me.Mnu_Btn_Ver_Clasificaciones_Arbol.Image = CType(resources.GetObject("Mnu_Btn_Ver_Clasificaciones_Arbol.Image"), System.Drawing.Image)
+        Me.Mnu_Btn_Ver_Clasificaciones_Arbol.ImageAlt = CType(resources.GetObject("Mnu_Btn_Ver_Clasificaciones_Arbol.ImageAlt"), System.Drawing.Image)
+        Me.Mnu_Btn_Ver_Clasificaciones_Arbol.Name = "Mnu_Btn_Ver_Clasificaciones_Arbol"
+        Me.Mnu_Btn_Ver_Clasificaciones_Arbol.Text = "Ver clasificaciones del producto"
+        '
+        'Mnu_Btn_Mantencion_Clasificaciones_Arbol
+        '
+        Me.Mnu_Btn_Mantencion_Clasificaciones_Arbol.Image = CType(resources.GetObject("Mnu_Btn_Mantencion_Clasificaciones_Arbol.Image"), System.Drawing.Image)
+        Me.Mnu_Btn_Mantencion_Clasificaciones_Arbol.ImageAlt = CType(resources.GetObject("Mnu_Btn_Mantencion_Clasificaciones_Arbol.ImageAlt"), System.Drawing.Image)
+        Me.Mnu_Btn_Mantencion_Clasificaciones_Arbol.Name = "Mnu_Btn_Mantencion_Clasificaciones_Arbol"
+        Me.Mnu_Btn_Mantencion_Clasificaciones_Arbol.Text = "Mantenicón de clasificaciones"
+        '
+        'Btn_Ver_Info_Ult_Compras
+        '
+        Me.Btn_Ver_Info_Ult_Compras.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Ver_Info_Ult_Compras.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Ver_Info_Ult_Compras.Location = New System.Drawing.Point(722, 419)
+        Me.Btn_Ver_Info_Ult_Compras.Name = "Btn_Ver_Info_Ult_Compras"
+        Me.Btn_Ver_Info_Ult_Compras.Size = New System.Drawing.Size(164, 23)
+        Me.Btn_Ver_Info_Ult_Compras.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Ver_Info_Ult_Compras.TabIndex = 3
+        Me.Btn_Ver_Info_Ult_Compras.Text = "Ver información"
+        '
+        'GrillaCompras
+        '
+        Me.GrillaCompras.AllowUserToAddRows = False
+        Me.GrillaCompras.AllowUserToDeleteRows = False
+        Me.GrillaCompras.BackgroundColor = System.Drawing.Color.White
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.GrillaCompras.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        Me.GrillaCompras.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.GrillaCompras.DefaultCellStyle = DataGridViewCellStyle2
+        Me.GrillaCompras.EnableHeadersVisualStyles = False
+        Me.GrillaCompras.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
+        Me.GrillaCompras.Location = New System.Drawing.Point(3, 3)
+        Me.GrillaCompras.Name = "GrillaCompras"
+        Me.GrillaCompras.ReadOnly = True
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.GrillaCompras.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        Me.GrillaCompras.RowHeadersVisible = False
+        Me.GrillaCompras.RowTemplate.Height = 25
+        Me.GrillaCompras.Size = New System.Drawing.Size(883, 410)
+        Me.GrillaCompras.TabIndex = 7
+        '
+        'Tab_01_Ultimas_Compras
+        '
+        Me.Tab_01_Ultimas_Compras.AttachedControl = Me.SuperTabControlPanel1
+        Me.Tab_01_Ultimas_Compras.GlobalItem = False
+        Me.Tab_01_Ultimas_Compras.Name = "Tab_01_Ultimas_Compras"
+        Me.Tab_01_Ultimas_Compras.Text = "Ultimas Compras"
+        '
         'SuperTabControlPanel4
         '
         Me.SuperTabControlPanel4.Controls.Add(Me.Chk_Mostrar_Venta_Por_Dia)
@@ -2007,7 +2161,7 @@ Partial Class Frm_EstadisticaProducto
         Me.TableLayoutPanel4.ColumnCount = 3
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 54.28571!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45.71429!))
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 176.0!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 177.0!))
         Me.TableLayoutPanel4.Controls.Add(Me.LabelX16, 0, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.Chk_Stock_Minimo, 2, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.Chk_Stock_Salidas, 2, 1)
@@ -2360,160 +2514,6 @@ Partial Class Frm_EstadisticaProducto
         Me.Tab_02_Ultimas_Ventas.Name = "Tab_02_Ultimas_Ventas"
         Me.Tab_02_Ultimas_Ventas.Text = "Ultimas Ventas"
         '
-        'SuperTabControlPanel1
-        '
-        Me.SuperTabControlPanel1.Controls.Add(Me.ContextMenuBar1)
-        Me.SuperTabControlPanel1.Controls.Add(Me.Btn_Ver_Info_Ult_Compras)
-        Me.SuperTabControlPanel1.Controls.Add(Me.GrillaCompras)
-        Me.SuperTabControlPanel1.Controls.Add(Me.LblEntFisicaCompras)
-        Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 25)
-        Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
-        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(889, 448)
-        Me.SuperTabControlPanel1.TabIndex = 1
-        Me.SuperTabControlPanel1.TabItem = Me.Tab_01_Ultimas_Compras
-        '
-        'ContextMenuBar1
-        '
-        Me.ContextMenuBar1.AntiAlias = True
-        Me.ContextMenuBar1.DockSide = DevComponents.DotNetBar.eDockSide.Document
-        Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01_Opciones_Documento, Me.Menu_Contextual_02_Opciones_Arbol})
-        Me.ContextMenuBar1.Location = New System.Drawing.Point(150, 59)
-        Me.ContextMenuBar1.Name = "ContextMenuBar1"
-        Me.ContextMenuBar1.Size = New System.Drawing.Size(685, 25)
-        Me.ContextMenuBar1.Stretch = True
-        Me.ContextMenuBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.ContextMenuBar1.TabIndex = 47
-        Me.ContextMenuBar1.TabStop = False
-        Me.ContextMenuBar1.Text = "ContextMenuBar1"
-        '
-        'Menu_Contextual_01_Opciones_Documento
-        '
-        Me.Menu_Contextual_01_Opciones_Documento.AutoExpandOnClick = True
-        Me.Menu_Contextual_01_Opciones_Documento.Name = "Menu_Contextual_01_Opciones_Documento"
-        Me.Menu_Contextual_01_Opciones_Documento.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_Ver_documento, Me.Btn_Rev_Cumpl_Proveedor})
-        Me.Menu_Contextual_01_Opciones_Documento.Text = "Opciones documento"
-        '
-        'LabelItem1
-        '
-        Me.LabelItem1.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
-        Me.LabelItem1.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
-        Me.LabelItem1.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
-        Me.LabelItem1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.LabelItem1.Name = "LabelItem1"
-        Me.LabelItem1.PaddingBottom = 1
-        Me.LabelItem1.PaddingLeft = 10
-        Me.LabelItem1.PaddingTop = 1
-        Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.LabelItem1.Text = "Opciones"
-        '
-        'Btn_Ver_documento
-        '
-        Me.Btn_Ver_documento.Image = CType(resources.GetObject("Btn_Ver_documento.Image"), System.Drawing.Image)
-        Me.Btn_Ver_documento.ImageAlt = CType(resources.GetObject("Btn_Ver_documento.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Ver_documento.Name = "Btn_Ver_documento"
-        Me.Btn_Ver_documento.Text = "Ver documento"
-        '
-        'Btn_Rev_Cumpl_Proveedor
-        '
-        Me.Btn_Rev_Cumpl_Proveedor.Image = CType(resources.GetObject("Btn_Rev_Cumpl_Proveedor.Image"), System.Drawing.Image)
-        Me.Btn_Rev_Cumpl_Proveedor.ImageAlt = CType(resources.GetObject("Btn_Rev_Cumpl_Proveedor.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Rev_Cumpl_Proveedor.Name = "Btn_Rev_Cumpl_Proveedor"
-        Me.Btn_Rev_Cumpl_Proveedor.Text = "Revisar cumplimiento del proveedor"
-        '
-        'Menu_Contextual_02_Opciones_Arbol
-        '
-        Me.Menu_Contextual_02_Opciones_Arbol.AutoExpandOnClick = True
-        Me.Menu_Contextual_02_Opciones_Arbol.Name = "Menu_Contextual_02_Opciones_Arbol"
-        Me.Menu_Contextual_02_Opciones_Arbol.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem2, Me.Mnu_Btn_Ver_Clasificaciones_Arbol, Me.Mnu_Btn_Mantencion_Clasificaciones_Arbol})
-        Me.Menu_Contextual_02_Opciones_Arbol.Text = "Opciones documento"
-        '
-        'LabelItem2
-        '
-        Me.LabelItem2.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
-        Me.LabelItem2.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
-        Me.LabelItem2.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
-        Me.LabelItem2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.LabelItem2.Name = "LabelItem2"
-        Me.LabelItem2.PaddingBottom = 1
-        Me.LabelItem2.PaddingLeft = 10
-        Me.LabelItem2.PaddingTop = 1
-        Me.LabelItem2.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.LabelItem2.Text = "Opciones"
-        '
-        'Mnu_Btn_Ver_Clasificaciones_Arbol
-        '
-        Me.Mnu_Btn_Ver_Clasificaciones_Arbol.Image = CType(resources.GetObject("Mnu_Btn_Ver_Clasificaciones_Arbol.Image"), System.Drawing.Image)
-        Me.Mnu_Btn_Ver_Clasificaciones_Arbol.ImageAlt = CType(resources.GetObject("Mnu_Btn_Ver_Clasificaciones_Arbol.ImageAlt"), System.Drawing.Image)
-        Me.Mnu_Btn_Ver_Clasificaciones_Arbol.Name = "Mnu_Btn_Ver_Clasificaciones_Arbol"
-        Me.Mnu_Btn_Ver_Clasificaciones_Arbol.Text = "Ver clasificaciones del producto"
-        '
-        'Mnu_Btn_Mantencion_Clasificaciones_Arbol
-        '
-        Me.Mnu_Btn_Mantencion_Clasificaciones_Arbol.Image = CType(resources.GetObject("Mnu_Btn_Mantencion_Clasificaciones_Arbol.Image"), System.Drawing.Image)
-        Me.Mnu_Btn_Mantencion_Clasificaciones_Arbol.ImageAlt = CType(resources.GetObject("Mnu_Btn_Mantencion_Clasificaciones_Arbol.ImageAlt"), System.Drawing.Image)
-        Me.Mnu_Btn_Mantencion_Clasificaciones_Arbol.Name = "Mnu_Btn_Mantencion_Clasificaciones_Arbol"
-        Me.Mnu_Btn_Mantencion_Clasificaciones_Arbol.Text = "Mantenicón de clasificaciones"
-        '
-        'Btn_Ver_Info_Ult_Compras
-        '
-        Me.Btn_Ver_Info_Ult_Compras.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Ver_Info_Ult_Compras.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Ver_Info_Ult_Compras.Location = New System.Drawing.Point(722, 419)
-        Me.Btn_Ver_Info_Ult_Compras.Name = "Btn_Ver_Info_Ult_Compras"
-        Me.Btn_Ver_Info_Ult_Compras.Size = New System.Drawing.Size(164, 23)
-        Me.Btn_Ver_Info_Ult_Compras.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Ver_Info_Ult_Compras.TabIndex = 3
-        Me.Btn_Ver_Info_Ult_Compras.Text = "Ver información"
-        '
-        'GrillaCompras
-        '
-        Me.GrillaCompras.AllowUserToAddRows = False
-        Me.GrillaCompras.AllowUserToDeleteRows = False
-        Me.GrillaCompras.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.GrillaCompras.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
-        Me.GrillaCompras.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.GrillaCompras.DefaultCellStyle = DataGridViewCellStyle2
-        Me.GrillaCompras.EnableHeadersVisualStyles = False
-        Me.GrillaCompras.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
-        Me.GrillaCompras.Location = New System.Drawing.Point(3, 3)
-        Me.GrillaCompras.Name = "GrillaCompras"
-        Me.GrillaCompras.ReadOnly = True
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.GrillaCompras.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.GrillaCompras.RowHeadersVisible = False
-        Me.GrillaCompras.RowTemplate.Height = 25
-        Me.GrillaCompras.Size = New System.Drawing.Size(883, 410)
-        Me.GrillaCompras.TabIndex = 7
-        '
-        'Tab_01_Ultimas_Compras
-        '
-        Me.Tab_01_Ultimas_Compras.AttachedControl = Me.SuperTabControlPanel1
-        Me.Tab_01_Ultimas_Compras.GlobalItem = False
-        Me.Tab_01_Ultimas_Compras.Name = "Tab_01_Ultimas_Compras"
-        Me.Tab_01_Ultimas_Compras.Text = "Ultimas Compras"
-        '
         'SuperTabControlPanel7
         '
         Me.SuperTabControlPanel7.Controls.Add(Me.GroupPanel3)
@@ -2816,6 +2816,9 @@ Partial Class Frm_EstadisticaProducto
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Tabs, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Tabs.ResumeLayout(False)
+        Me.SuperTabControlPanel1.ResumeLayout(False)
+        CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GrillaCompras, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControlPanel4.ResumeLayout(False)
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControl1.ResumeLayout(False)
@@ -2835,9 +2838,6 @@ Partial Class Frm_EstadisticaProducto
         CType(Me.Grilla_Entidad, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControlPanel2.ResumeLayout(False)
         CType(Me.GrillaVentas, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SuperTabControlPanel1.ResumeLayout(False)
-        CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.GrillaCompras, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControlPanel7.ResumeLayout(False)
         Me.GroupPanel3.ResumeLayout(False)
         Me.SuperTabControlPanel6.ResumeLayout(False)

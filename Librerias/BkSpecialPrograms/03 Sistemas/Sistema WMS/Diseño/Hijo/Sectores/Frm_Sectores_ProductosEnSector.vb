@@ -40,6 +40,8 @@ Public Class Frm_Sectores_ProductosEnSector
                        "Where Id_Mapa = " & _Id_Mapa & " And Codigo_Sector = '" & _Codigo_Sector & "'"
         _Row_Sector = _Sql.Fx_Get_DataRow(Consulta_sql)
 
+        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Both, True, True, False)
+
     End Sub
 
     Private Sub Frm_Sectores_ProductosEnSector_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -64,7 +66,7 @@ Public Class Frm_Sectores_ProductosEnSector
 
         Sb_Actualizar_Grilla()
 
-        Btn_MesSiguiente.Enabled = Not (Date.Today.Month = _MesActual.Month)
+        Btn_MesSiguiente.Enabled = True 'Not (Date.Today.Month = _MesActual.Month)
 
         AddHandler Cmb_Sector.SelectedIndexChanged, AddressOf Sb_Actualizar_Grilla
 
@@ -81,6 +83,8 @@ Public Class Frm_Sectores_ProductosEnSector
             Me.Cursor = Cursors.WaitCursor
 
             Dim _Hace3Meses As DateTime = Primerdiadelmes(DateAdd(DateInterval.Month, -3, _MesActual))
+
+            Dim _FechaDesde As Date = Primerdiadelmes(_MesActual)
             Dim _FechaHasta As Date = ultimodiadelmes(_FechaDesde)
 
             Dim _CampoDias As String = String.Empty
@@ -101,7 +105,7 @@ Public Class Frm_Sectores_ProductosEnSector
             Next
 
             Consulta_sql = "-- Muestra los productos que ha tenido una ubicacion em un mes en especifico y los productos asociados a esta ubicabion en el tiempo
-    DECLARE @FechaDesde DATE = '" & Format(_FechaDesde, "yyyyMMdd") & "';
+    DECLARE @FechaDesde DATE = '" & Format(_Hace3Meses, "yyyyMMdd") & "';
     DECLARE @FechaHasta DATE = '" & Format(_FechaHasta, "yyyyMMdd") & "';
 
     -- Crear una tabla temporal con los días del rango de fechas
@@ -149,14 +153,14 @@ Public Class Frm_Sectores_ProductosEnSector
 
                 .Columns("Codigo").Visible = True
                 .Columns("Codigo").HeaderText = "Código."
-                .Columns("Codigo").Width = 100
+                .Columns("Codigo").Width = 90
                 '.Columns(_Columna).Resizable = DataGridViewTriState.False
                 .Columns("Codigo").DisplayIndex = _DisplayIndex
                 _DisplayIndex += 1
 
                 .Columns("Descripcion").Visible = True
                 .Columns("Descripcion").HeaderText = "Descripción"
-                .Columns("Descripcion").Width = 270
+                .Columns("Descripcion").Width = 280
                 '.Columns(_Columna).Resizable = DataGridViewTriState.False
                 .Columns("Descripcion").DisplayIndex = _DisplayIndex
                 _DisplayIndex += 1
@@ -188,23 +192,44 @@ Public Class Frm_Sectores_ProductosEnSector
 
     Private Sub Btn_MesAnterior_Click(sender As Object, e As EventArgs) Handles Btn_MesAnterior.Click
 
+        Dim _Fila As DataGridViewRow
+        Dim _Codigo As String = String.Empty
+
+        ' Verificar si hay una fila seleccionada, si no, seleccionar la primera fila
+        If Not IsNothing(Grilla.CurrentRow) Then
+            _Fila = Grilla.CurrentRow
+            _Codigo = _Fila.Cells("Codigo").Value
+        End If
+
         _MesActual = DateAdd(DateInterval.Month, -1, _MesActual)
         Lbl_YearMonth.Text = _MesActual.ToString("MMMM yyyy")
 
         Sb_Actualizar_Grilla()
+        BuscarDatoEnGrilla(_Codigo, "Codigo", Grilla)
 
-        Btn_MesSiguiente.Enabled = Not (Date.Today.Month = _MesActual.Month)
+        'Btn_MesSiguiente.Enabled = Not (Date.Today.Month = _MesActual.Month)
 
     End Sub
 
     Private Sub Btn_MesSiguiente_Click(sender As Object, e As EventArgs) Handles Btn_MesSiguiente.Click
+
+        Dim _Fila As DataGridViewRow
+        Dim _Codigo As String = String.Empty
+
+        ' Verificar si hay una fila seleccionada, si no, seleccionar la primera fila
+        If Not IsNothing(Grilla.CurrentRow) Then
+            _Fila = Grilla.CurrentRow
+            _Codigo = _Fila.Cells("Codigo").Value
+        End If
 
         _MesActual = DateAdd(DateInterval.Month, 1, _MesActual)
         Lbl_YearMonth.Text = _MesActual.ToString("MMMM yyyy")
 
         Sb_Actualizar_Grilla()
 
-        Btn_MesSiguiente.Enabled = Not (Date.Today.Month = _MesActual.Month)
+        BuscarDatoEnGrilla(_Codigo, "Codigo", Grilla)
+
+        'Btn_MesSiguiente.Enabled = Not (Date.Today.Month = _MesActual.Month)
 
     End Sub
 

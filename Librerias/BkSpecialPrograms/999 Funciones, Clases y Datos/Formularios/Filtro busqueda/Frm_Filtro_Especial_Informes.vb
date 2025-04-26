@@ -255,6 +255,8 @@ Public Class Frm_Filtro_Especial_Informes
         Btn_Editar.Visible = Activar_Crear_Editar_Eliminar
         Btn_Eliminar.Visible = Activar_Crear_Editar_Eliminar
 
+        Mnu_Btn_Ver_Informacion_de_producto.Visible = SonProductos
+
         Rdb_Mostrar_Solo_Tickeados.Visible = _Requiere_Seleccion
         Rdb_Mostrar_Todos.Visible = _Requiere_Seleccion
 
@@ -878,6 +880,15 @@ Public Class Frm_Filtro_Especial_Informes
 
         Rdb_Mostrar_Solo_Tickeados.Checked = True
         Me.Refresh()
+
+    End Sub
+
+    Private Sub Mnu_Btn_Ver_Informacion_de_producto_Click(sender As Object, e As EventArgs) Handles Mnu_Btn_Ver_Informacion_de_producto.Click
+
+        Dim _Producto_Op As New Frm_BkpPostBusquedaEspecial_Mt
+
+        Dim _Codigo As String = Grilla.Rows(Grilla.CurrentRow.Index).Cells("Codigo").Value
+        _Producto_Op.Sb_Ver_Informacion_Adicional_producto(Me, _Codigo)
 
     End Sub
 

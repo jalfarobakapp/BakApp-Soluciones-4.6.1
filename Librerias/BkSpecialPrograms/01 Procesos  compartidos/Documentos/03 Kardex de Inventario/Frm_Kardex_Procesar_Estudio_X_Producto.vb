@@ -14,11 +14,11 @@ Public Class Frm_Kardex_Procesar_Estudio_X_Producto
     Dim Consulta_sql As String
 
 
-    Public Sub New(ByVal Empresa As String, _
-                   ByVal Sucursal As String, _
-                   ByVal Bodega As String, _
-                   ByVal Codigo As String, _
-                   ByVal Unidad As Integer)
+    Public Sub New(Empresa As String,
+                    Sucursal As String,
+                    Bodega As String,
+                    Codigo As String,
+                    Unidad As Integer)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -44,12 +44,12 @@ Public Class Frm_Kardex_Procesar_Estudio_X_Producto
 
 #Region "Procedimientos"
 
-    Function Fx_Generar_Kardex(ByVal _Empresa As String, _
-                               ByVal _Sucursal As String, _
-                               ByVal _Bodega As String, _
-                               ByVal _Codigo As String, _
-                               ByVal _Unidad As Integer, _
-                               ByVal _Todas_las_bodegas As Boolean) As DataTable
+    Function Fx_Generar_Kardex(_Empresa As String,
+                                _Sucursal As String,
+                                _Bodega As String,
+                                _Codigo As String,
+                                _Unidad As Integer,
+                                _Todas_las_bodegas As Boolean) As DataTable
 
         Dim _Top, _Orden As String
 
@@ -99,16 +99,16 @@ Public Class Frm_Kardex_Procesar_Estudio_X_Producto
 
 #End Region
 
-    Private Sub BtnProcesar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Procesar.Click
+    Private Sub BtnProcesar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Procesar.Click
 
         Grupo_01.Enabled = False
         Grupo_02.Enabled = False
         Btn_Procesar.Enabled = False
 
-
         Dim _TblKardex As DataTable = Fx_Generar_Kardex(_Empresa, _Sucursal, _Bodega, _Codigo, _Unidad, RdbBodega_todas.Checked)
 
         If Not (_TblKardex Is Nothing) Then
+
             If CBool(_TblKardex.Rows.Count) Then
 
                 Dim _Marcar_dos As Boolean
@@ -123,7 +123,11 @@ Public Class Frm_Kardex_Procesar_Estudio_X_Producto
                 Fm.Pro_Empresa = _Empresa
                 Fm.Pro_Sucursal = _Sucursal
                 Fm.Pro_Bodega = _Bodega
-                Fm.Sb_Llenar_Grilla(_TblKardex)
+                'Fm.Sb_Llenar_Grilla(_TblKardex)
+
+                Fm.Pro_TblKardex = _TblKardex
+                Fm.GrillaKardex.DataSource = Fm.Pro_TblKardex
+                Fm.Sb_Formato_Grilla_Detalle()
 
                 Btn_Cancelar.Enabled = True
 
@@ -148,19 +152,21 @@ Public Class Frm_Kardex_Procesar_Estudio_X_Producto
                 MessageBoxEx.Show(Me, "No existen datos que mostrar", "Kardex",
                                   MessageBoxButtons.OK, MessageBoxIcon.Stop)
             End If
+
         End If
-
-
 
     End Sub
 
-    Function Fx_Marcar_Grilla(ByVal Grilla As DataGridView, ByVal _Marcar_dos As Boolean) As Boolean
+    Function Fx_Marcar_Grilla(Grilla As DataGridView, _Marcar_dos As Boolean) As Boolean
 
         Dim _Pasada As Integer = 1
 
         Progreso_Porc.Value = 0
         Progreso_Cont.Value = 0
         Progreso_Kardex.Value = 0
+
+        Dim _FlechaDerecha As Char = ">" 'ChrW(&H2192)
+
 
         Try
 
@@ -226,43 +232,43 @@ Public Class Frm_Kardex_Procesar_Estudio_X_Producto
                         If CBool(STFISICO) Then
                             '.Rows.Item(i).Cells("Sfisico").Style.Font = New Font("Tahoma", 8, FontStyle.Bold)
                             '.Rows.Item(i).Cells("Sfisico").Style.ForeColor = Rojo
-                            .Rows.Item(i).Cells("Sfisico").Value = ">"
+                            .Rows.Item(i).Cells("Sfisico").Value = _FlechaDerecha
                         End If
 
                         If CBool(DEVENGADO) Then
                             '.Rows.Item(i).Cells("Sdevengado").Style.Font = New Font("Tahoma", 8, FontStyle.Bold)
                             '.Rows.Item(i).Cells("Sdevengado").Style.ForeColor = Color.Red
-                            .Rows.Item(i).Cells("Sdevengado").Value = ">"
+                            .Rows.Item(i).Cells("Sdevengado").Value = _FlechaDerecha
                         End If
 
                         If CBool(DESPSFACTURAR) Then
                             '.Rows.Item(i).Cells("Sdespsfact").Style.Font = New Font("Tahoma", 8, FontStyle.Bold)
                             '.Rows.Item(i).Cells("Sdespsfact").Style.ForeColor = Color.Red
-                            .Rows.Item(i).Cells("Sdespsfact").Value = ">"
+                            .Rows.Item(i).Cells("Sdespsfact").Value = _FlechaDerecha
                         End If
 
                         If CBool(COMPROMETIDO) Then
                             '.Rows.Item(i).Cells("Scomprometido").Style.Font = New Font("Tahoma", 8, FontStyle.Bold)
                             '.Rows.Item(i).Cells("Scomprometido").Style.ForeColor = Color.Red
-                            .Rows.Item(i).Cells("Scomprometido").Value = ">"
+                            .Rows.Item(i).Cells("Scomprometido").Value = _FlechaDerecha
                         End If
 
                         If CBool(COMPRANREC) Then
                             '.Rows.Item(i).Cells("Scompranorecep").Style.Font = New Font("Tahoma", 8, FontStyle.Bold)
                             '.Rows.Item(i).Cells("Scompranorecep").Style.ForeColor = Color.Red
-                            .Rows.Item(i).Cells("Scompranorecep").Value = ">"
+                            .Rows.Item(i).Cells("Scompranorecep").Value = _FlechaDerecha
                         End If
 
                         If CBool(RECEPSFAC) Then
                             '.Rows.Item(i).Cells("Srecesfact").Style.Font = New Font("Tahoma", 8, FontStyle.Bold)
                             '.Rows.Item(i).Cells("Srecesfact").Style.ForeColor = Color.Red
-                            .Rows.Item(i).Cells("Srecesfact").Value = ">"
+                            .Rows.Item(i).Cells("Srecesfact").Value = _FlechaDerecha
                         End If
 
                         If CBool(PEDIDO) Then
                             '.Rows.Item(i).Cells("Spedido").Style.Font = New Font("Tahoma", 8, FontStyle.Bold)
                             '.Rows.Item(i).Cells("Spedido").Style.ForeColor = Color.Red
-                            .Rows.Item(i).Cells("Spedido").Value = ">"
+                            .Rows.Item(i).Cells("Spedido").Value = _FlechaDerecha
                         End If
 
                     End If
@@ -353,7 +359,7 @@ Public Class Frm_Kardex_Procesar_Estudio_X_Producto
 
     End Function
 
-    Private Sub RdbUltNmov_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RdbUltNmov.CheckedChanged
+    Private Sub RdbUltNmov_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles RdbUltNmov.CheckedChanged
         If RdbUltNmov.Checked Then
             TxtNmov.Enabled = True
             TxtNmov.Focus()
@@ -362,7 +368,7 @@ Public Class Frm_Kardex_Procesar_Estudio_X_Producto
         End If
     End Sub
 
-    Private Sub PressEnter(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs)
+    Private Sub PressEnter(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs)
         Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
         KeyAscii = CShort(SoloNumeros(KeyAscii, True))
         If KeyAscii = 0 Then
@@ -383,11 +389,11 @@ Public Class Frm_Kardex_Procesar_Estudio_X_Producto
         End If
     End Sub
 
-    Private Sub Frm_DocumentoKardex_flujo_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_DocumentoKardex_flujo_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         AddHandler TxtNmov.KeyPress, AddressOf PressEnter
     End Sub
 
-    Private Sub Frm_DocumentoKardex_flujo_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_DocumentoKardex_flujo_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
