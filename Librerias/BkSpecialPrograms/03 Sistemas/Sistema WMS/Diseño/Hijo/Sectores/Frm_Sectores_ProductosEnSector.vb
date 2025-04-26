@@ -80,7 +80,7 @@ Public Class Frm_Sectores_ProductosEnSector
             Me.Enabled = False
             Me.Cursor = Cursors.WaitCursor
 
-            Dim _FechaDesde As Date = Primerdiadelmes(_MesActual)
+            Dim _Hace3Meses As DateTime = Primerdiadelmes(DateAdd(DateInterval.Month, -3, _MesActual))
             Dim _FechaHasta As Date = ultimodiadelmes(_FechaDesde)
 
             Dim _CampoDias As String = String.Empty
