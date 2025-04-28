@@ -24,7 +24,7 @@ Public Class Cl_Stmp
         If IsNothing(_Row_Enc) Then
 
             _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Col1_Mensaje = "No se encontro el registro en la tabla Zw_Stmp_Enc con el Id " & _Id_Enc
+            _Mensaje_Stem.Mensaje = "No se encontro el registro en la tabla Zw_Stmp_Enc con el Id " & _Id_Enc
 
             Return _Mensaje_Stem
 
@@ -54,7 +54,7 @@ Public Class Cl_Stmp
         End With
 
         _Mensaje_Stem.EsCorrecto = True
-        _Mensaje_Stem.Col1_Mensaje = "Registro encontrado."
+        _Mensaje_Stem.Mensaje = "Registro encontrado."
 
         Return _Mensaje_Stem
 
@@ -69,7 +69,7 @@ Public Class Cl_Stmp
         If Not CBool(_Tbl_Det.Rows.Count) Then
 
             _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Col1_Mensaje = "No se encontraron registros en la tabla Zw_Stmp_Det con el Id_Enc " & _Id_Enc
+            _Mensaje_Stem.Mensaje = "No se encontraron registros en la tabla Zw_Stmp_Det con el Id_Enc " & _Id_Enc
 
             Return _Mensaje_Stem
 
@@ -114,7 +114,7 @@ Public Class Cl_Stmp
 
 
         _Mensaje_Stem.EsCorrecto = True
-        _Mensaje_Stem.Col1_Mensaje = "Registros cargados correctamente"
+        _Mensaje_Stem.Mensaje = "Registros cargados correctamente"
 
         Return _Mensaje_Stem
 
@@ -129,7 +129,7 @@ Public Class Cl_Stmp
         If Not CBool(_Tbl_DetPick.Rows.Count) Then
 
             _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Col1_Mensaje = "No se encontraron registros en la tabla Zw_Stmp_Det con el Id_Enc " & _Id_Enc
+            _Mensaje_Stem.Mensaje = "No se encontraron registros en la tabla Zw_Stmp_Det con el Id_Enc " & _Id_Enc
 
             Return _Mensaje_Stem
 
@@ -157,7 +157,7 @@ Public Class Cl_Stmp
         Next
 
         _Mensaje_Stem.EsCorrecto = True
-        _Mensaje_Stem.Col1_Mensaje = "Registros cargados correctamente"
+        _Mensaje_Stem.Mensaje = "Registros cargados correctamente"
 
         Return _Mensaje_Stem
 
@@ -172,7 +172,7 @@ Public Class Cl_Stmp
         If IsNothing(_Row) Then
 
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col1_Mensaje = "No se encontro el registro en la tabla Zw_Stmp_Enc_Permisos con el Id_Enc " & _Id_Enc & " And CodPermiso = '" & _CodPermiso & "'"
+            _Mensaje.Mensaje = "No se encontro el registro en la tabla Zw_Stmp_Enc_Permisos con el Id_Enc " & _Id_Enc & " And CodPermiso = '" & _CodPermiso & "'"
 
             Return _Mensaje
 
@@ -193,7 +193,7 @@ Public Class Cl_Stmp
         End With
 
         _Mensaje.EsCorrecto = True
-        _Mensaje.Col1_Mensaje = "Registro encontrado."
+        _Mensaje.Mensaje = "Registro encontrado."
         _Mensaje.Tag = Zw_Stmp_Enc_Permisos
 
         Return _Mensaje
@@ -280,14 +280,14 @@ Public Class Cl_Stmp
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
             _Mensaje_Stem.EsCorrecto = True
-            _Mensaje_Stem.Col2_Detalle = "Documento grabado correctamente"
-            _Mensaje_Stem.Col1_Mensaje = "Se crea Ticket Nro " & _Zw_Stmp_Enc.Numero & " - (" & _Zw_Stmp_Enc.Tido & "-" & _Zw_Stmp_Enc.Nudo & ")"
+            _Mensaje_Stem.Detalle = "Documento grabado correctamente"
+            _Mensaje_Stem.Mensaje = "Se crea Ticket Nro " & _Zw_Stmp_Enc.Numero & " - (" & _Zw_Stmp_Enc.Tido & "-" & _Zw_Stmp_Enc.Nudo & ")"
 
         Catch ex As Exception
 
             _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Col2_Detalle = "Error al grabar"
-            _Mensaje_Stem.Col1_Mensaje = ex.Message
+            _Mensaje_Stem.Detalle = "Error al grabar"
+            _Mensaje_Stem.Mensaje = ex.Message
             _Zw_Stmp_Enc.Id = 0
 
             If Not IsNothing(myTrans) Then myTrans.Rollback()
@@ -410,7 +410,7 @@ Public Class Cl_Stmp
                 Comando.ExecuteNonQuery()
 
                 _Mensaje_Stem.EsCorrecto = True
-                _Mensaje_Stem.Col1_Mensaje = "Documento completado"
+                _Mensaje_Stem.Mensaje = "Documento completado"
 
             Else
 
@@ -427,7 +427,7 @@ Public Class Cl_Stmp
         Catch ex As Exception
 
             _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Col1_Mensaje = ex.Message
+            _Mensaje_Stem.Mensaje = ex.Message
 
             If Not IsNothing(myTrans) Then
                 myTrans.Rollback()
@@ -518,13 +518,13 @@ Public Class Cl_Stmp
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
             _Mensaje_Stem.EsCorrecto = True
-            _Mensaje_Stem.Col2_Detalle = "Documento grabado correctamente"
-            _Mensaje_Stem.Col1_Mensaje = "Documento grabado correctamente"
+            _Mensaje_Stem.Detalle = "Documento grabado correctamente"
+            _Mensaje_Stem.Mensaje = "Documento grabado correctamente"
 
         Catch ex As Exception
 
             _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Col1_Mensaje = ex.Message
+            _Mensaje_Stem.Mensaje = ex.Message
             _Zw_Stmp_Enc.Id = 0
 
             myTrans.Rollback()
@@ -560,8 +560,8 @@ Public Class Cl_Stmp
 
         If Not IsNothing(_Row) Then
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col1_Mensaje = "El documento ya esta ingresado en el sistema de Ticket Picking (Ticket Nro: " & _Row.Item("Numero") & ")"
-            _Mensaje.Col2_Detalle = "Documento: " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO")
+            _Mensaje.Mensaje = "El documento ya esta ingresado en el sistema de Ticket Picking (Ticket Nro: " & _Row.Item("Numero") & ")"
+            _Mensaje.Detalle = "Documento: " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO")
             Return _Mensaje
         End If
 
@@ -600,15 +600,15 @@ Public Class Cl_Stmp
 
         If IsNothing(_Row_Documento) Then
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col1_Mensaje = "No se encontro el registro en la tabla MAEEDO, Documento: " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO")
-            _Mensaje.Col2_Detalle = "IDMAEEDO " & _Idmaeedo
+            _Mensaje.Mensaje = "No se encontro el registro en la tabla MAEEDO, Documento: " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO")
+            _Mensaje.Detalle = "IDMAEEDO " & _Idmaeedo
             Return _Mensaje
         End If
 
         If Not _Row_Documento.Item("Pickear") Then
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col1_Mensaje = "Este documento no esta marcado para ser Pickeado en la tabla Zw_Docu_Ent"
-            _Mensaje.Col2_Detalle = "Documento: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
+            _Mensaje.Mensaje = "Este documento no esta marcado para ser Pickeado en la tabla Zw_Docu_Ent"
+            _Mensaje.Detalle = "Documento: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
             Return _Mensaje
         End If
 
@@ -617,9 +617,9 @@ Public Class Cl_Stmp
 
                 If Not _Row_Documento.Item("Estaenwms") Then
                     _Mensaje.EsCorrecto = False
-                    _Mensaje.Col1_Mensaje = "Este documento no esta ingresado en el WMS" & vbCrLf &
+                    _Mensaje.Mensaje = "Este documento no esta ingresado en el WMS" & vbCrLf &
                                        "Vuelva a intentarlo en 10 segundos y si no se encuentra informe de esta situación al personal de logística"
-                    _Mensaje.Col2_Detalle = "Documento: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
+                    _Mensaje.Detalle = "Documento: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
                     Return _Mensaje
                 End If
 
@@ -728,8 +728,8 @@ Public Class Cl_Stmp
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
                 _Mensaje.EsCorrecto = False
-                _Mensaje.Col2_Detalle = "Error a extraer datos desde el WMS"
-                _Mensaje.Col1_Mensaje = _Sql.Pro_Error
+                _Mensaje.Detalle = "Error a extraer datos desde el WMS"
+                _Mensaje.Mensaje = _Sql.Pro_Error
                 Return _Mensaje
             End If
 
@@ -749,7 +749,7 @@ Public Class Cl_Stmp
 
             If _ticket_verde.Rows(0).Item("ticket_verde") <> "Y" Then
                 _Mensaje.EsCorrecto = False
-                _Mensaje.Col2_Detalle = "El pedido aun no esta listo"
+                _Mensaje.Detalle = "El pedido aun no esta listo"
                 Throw New System.Exception(_Sql.Pro_Error)
             End If
 
@@ -763,7 +763,7 @@ Public Class Cl_Stmp
 
             If _ob_ord_stt <> "RDY" Then
                 _Mensaje.EsCorrecto = False
-                _Mensaje.Col2_Detalle = "El pedido aun no esta listo"
+                _Mensaje.Detalle = "El pedido aun no esta listo"
                 Throw New System.Exception(_Sql.Pro_Error)
             End If
 
@@ -912,15 +912,15 @@ Public Class Cl_Stmp
                 End If
 
                 If _Mensaje.EsCorrecto = True Then
-                    _Mensaje.Col2_Detalle = "Documento actualizado correctamente"
-                    _Mensaje.Col1_Mensaje = "Documento dejado como completado correctamente"
+                    _Mensaje.Detalle = "Documento actualizado correctamente"
+                    _Mensaje.Mensaje = "Documento dejado como completado correctamente"
                 End If
 
             End With
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
         End Try
 
         Return _Mensaje
@@ -944,8 +944,8 @@ Public Class Cl_Stmp
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
                 _Mensaje.EsCorrecto = False
-                _Mensaje.Col2_Detalle = "Error a extraer datos desde el WMS"
-                _Mensaje.Col1_Mensaje = _Sql.Pro_Error
+                _Mensaje.Detalle = "Error a extraer datos desde el WMS"
+                _Mensaje.Mensaje = _Sql.Pro_Error
                 Return _Mensaje
             End If
 
@@ -966,7 +966,7 @@ Public Class Cl_Stmp
             If _ticket_verde.Rows(0).Item("ticket_verde") <> "Y" Then
 
                 _Mensaje.EsCorrecto = False
-                _Mensaje.Col2_Detalle = "El pedido aun no esta listo"
+                _Mensaje.Detalle = "El pedido aun no esta listo"
                 Return _Mensaje
 
             End If
@@ -981,7 +981,7 @@ Public Class Cl_Stmp
 
             If _ob_ord_stt <> "RDY" Then
                 _Mensaje.EsCorrecto = False
-                _Mensaje.Col2_Detalle = "El pedido aun no esta listo"
+                _Mensaje.Detalle = "El pedido aun no esta listo"
                 Return _Mensaje
             End If
 
@@ -1174,14 +1174,14 @@ Public Class Cl_Stmp
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
             _Mensaje_Stem.EsCorrecto = True
-            _Mensaje_Stem.Col2_Detalle = "Documento entrega correctamente"
-            _Mensaje_Stem.Col1_Mensaje = "Documento cerrado y entrega correctamente"
+            _Mensaje_Stem.Detalle = "Documento entrega correctamente"
+            _Mensaje_Stem.Mensaje = "Documento cerrado y entrega correctamente"
             _Mensaje_Stem.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
 
             _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Col1_Mensaje = ex.Message
+            _Mensaje_Stem.Mensaje = ex.Message
             _Mensaje_Stem.Icono = MessageBoxIcon.Stop
             _Zw_Stmp_Enc.Id = 0
 
@@ -1230,14 +1230,14 @@ Public Class Cl_Stmp
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
             _Mensaje_Stem.EsCorrecto = True
-            _Mensaje_Stem.Col2_Detalle = "Planificar/Preparar"
-            _Mensaje_Stem.Col1_Mensaje = "Documento en preparación"
+            _Mensaje_Stem.Detalle = "Planificar/Preparar"
+            _Mensaje_Stem.Mensaje = "Documento en preparación"
             _Mensaje_Stem.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
 
             _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Col1_Mensaje = ex.Message
+            _Mensaje_Stem.Mensaje = ex.Message
             _Mensaje_Stem.Icono = MessageBoxIcon.Stop
             _Zw_Stmp_Enc.Id = 0
 
@@ -1286,14 +1286,14 @@ Public Class Cl_Stmp
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
             _Mensaje_Stem.EsCorrecto = True
-            _Mensaje_Stem.Col2_Detalle = "Documento entrega correctamente"
-            _Mensaje_Stem.Col1_Mensaje = "Documento cerrado y entrega correctamente"
+            _Mensaje_Stem.Detalle = "Documento entrega correctamente"
+            _Mensaje_Stem.Mensaje = "Documento cerrado y entrega correctamente"
             _Mensaje_Stem.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
 
             _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Col1_Mensaje = ex.Message
+            _Mensaje_Stem.Mensaje = ex.Message
             _Mensaje_Stem.Icono = MessageBoxIcon.Stop
             _Zw_Stmp_Enc.Id = 0
 
@@ -1315,8 +1315,8 @@ Public Class Cl_Stmp
 
         If _Mensaje.EsCorrecto Then
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col2_Detalle = "Permiso ya existe"
-            _Mensaje.Col1_Mensaje = "Este permiso ya fue otorgado al registro actual"
+            _Mensaje.Detalle = "Permiso ya existe"
+            _Mensaje.Mensaje = "Este permiso ya fue otorgado al registro actual"
             _Mensaje.Icono = MessageBoxIcon.Information
             Return _Mensaje
         End If
@@ -1348,14 +1348,14 @@ Public Class Cl_Stmp
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Col2_Detalle = "Permiso grabado correctamente"
-            _Mensaje.Col1_Mensaje = "Permiso grabado correctamente"
+            _Mensaje.Detalle = "Permiso grabado correctamente"
+            _Mensaje.Mensaje = "Permiso grabado correctamente"
 
         Catch ex As Exception
 
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col2_Detalle = "Error al grabar permiso"
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Detalle = "Error al grabar permiso"
+            _Mensaje.Mensaje = ex.Message
             _Zw_Stmp_Enc.Id = 0
 
             If Not IsNothing(myTrans) Then myTrans.Rollback()

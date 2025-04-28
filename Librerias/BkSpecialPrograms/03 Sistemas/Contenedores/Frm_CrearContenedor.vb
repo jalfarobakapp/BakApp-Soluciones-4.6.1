@@ -69,7 +69,7 @@ Public Class Frm_CrearContenedor
             _Mensaje = _Cl_Contenedor.Fx_Editar_Contenedor(Zw_Contenedor)
         End If
 
-        MessageBoxEx.Show(_Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(_Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         If Not _Mensaje.EsCorrecto Then
             Return
@@ -89,7 +89,7 @@ Public Class Frm_CrearContenedor
 
         Dim _Mensaje As LsValiciones.Mensajes = _Cl_Contenedor.Fx_Eliminar_Contenedor(Zw_Contenedor)
 
-        MessageBoxEx.Show(_Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(_Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         If Not _Mensaje.EsCorrecto Then
             Return

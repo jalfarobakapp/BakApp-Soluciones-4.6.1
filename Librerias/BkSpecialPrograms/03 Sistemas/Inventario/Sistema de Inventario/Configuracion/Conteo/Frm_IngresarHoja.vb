@@ -338,15 +338,15 @@ Public Class Frm_IngresarHoja
             End If
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Col2_Detalle = "Buscar Producto"
-            _Mensaje.Col1_Mensaje = "Producto encontrado"
+            _Mensaje.Detalle = "Buscar Producto"
+            _Mensaje.Mensaje = "Producto encontrado"
             _Mensaje.Icono = MessageBoxIcon.Information
             _Mensaje.Tag = _Row
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col2_Detalle = "Buscar Producto"
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Detalle = "Buscar Producto"
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
 
@@ -738,7 +738,7 @@ Public Class Frm_IngresarHoja
 
         _Mensaje = Cl_Conteo.Fx_Grabar_Nueva_Hoja()
 
-        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         If Not _Mensaje.EsCorrecto Then
             Return

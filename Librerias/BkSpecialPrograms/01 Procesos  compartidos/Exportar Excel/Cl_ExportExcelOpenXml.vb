@@ -155,8 +155,8 @@ Public Class Cl_ExportExcelOpenXml
             End Using
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Col1_Mensaje = "El archivo fue guardado con exito en la carpeta:" & vbCrLf & _Archivo.Replace("\\", "\")
-            _Mensaje.Col2_Detalle = "Exportar a Excel"
+            _Mensaje.Mensaje = "El archivo fue guardado con exito en la carpeta:" & vbCrLf & _Archivo.Replace("\\", "\")
+            _Mensaje.Detalle = "Exportar a Excel"
             _Mensaje.Icono = MessageBoxIcon.Information
             _Mensaje.Tag = _Archivo
 
@@ -165,12 +165,12 @@ Public Class Cl_ExportExcelOpenXml
             _Mensaje.EsCorrecto = False
 
             If _Fila AndAlso _Columna Then
-                _Mensaje.Col1_Mensaje = "Fila: " & _Fila & ", Columna: " & _Columna & vbCrLf & ex.Message
+                _Mensaje.Mensaje = "Fila: " & _Fila & ", Columna: " & _Columna & vbCrLf & ex.Message
             Else
-                _Mensaje.Col1_Mensaje = ex.Message
+                _Mensaje.Mensaje = ex.Message
             End If
 
-            _Mensaje.Col2_Detalle = "Exportar a Excel"
+            _Mensaje.Detalle = "Exportar a Excel"
             _Mensaje.Tag = String.Empty
             _Mensaje.Icono = MessageBoxIcon.Error
 
@@ -338,8 +338,8 @@ Public Class Cl_ExportExcelOpenXml
             End Using
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Col1_Mensaje = "El archivo fue guardado con exito en la carpeta:" & vbCrLf & _Archivo.Replace("\\", "\")
-            _Mensaje.Col2_Detalle = "Exportar a Excel"
+            _Mensaje.Mensaje = "El archivo fue guardado con exito en la carpeta:" & vbCrLf & _Archivo.Replace("\\", "\")
+            _Mensaje.Detalle = "Exportar a Excel"
             _Mensaje.Icono = MessageBoxIcon.Information
             _Mensaje.Tag = _Archivo
 
@@ -348,12 +348,12 @@ Public Class Cl_ExportExcelOpenXml
             _Mensaje.EsCorrecto = False
 
             If _Fila AndAlso _Columna Then
-                _Mensaje.Col1_Mensaje = "Fila: " & _Fila & ", Columna: " & _Columna & vbCrLf & ex.Message
+                _Mensaje.Mensaje = "Fila: " & _Fila & ", Columna: " & _Columna & vbCrLf & ex.Message
             Else
-                _Mensaje.Col1_Mensaje = ex.Message
+                _Mensaje.Mensaje = ex.Message
             End If
 
-            _Mensaje.Col2_Detalle = "Exportar a Excel"
+            _Mensaje.Detalle = "Exportar a Excel"
             _Mensaje.Tag = String.Empty
             _Mensaje.Icono = MessageBoxIcon.Error
 

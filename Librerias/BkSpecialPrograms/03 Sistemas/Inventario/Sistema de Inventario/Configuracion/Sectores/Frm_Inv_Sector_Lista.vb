@@ -256,7 +256,7 @@ Public Class Frm_Inv_Sector_Lista
 
         _Mensaje = _Cl_InvUbicacion.Fx_Eliminar_Sector
 
-        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         If _Mensaje.EsCorrecto Then
             Grilla.Rows.Remove(_Fila)
@@ -287,12 +287,12 @@ Public Class Frm_Inv_Sector_Lista
         _Mensaje = _Cl_InvUbicacion.Fx_Editar_Sector
 
         If _Mensaje.EsCorrecto Then
-            _Mensaje.Col1_Mensaje = "Ubicación " & IIf(_Abierto, "Abierta", "Cerrada") & " Correctamente"
+            _Mensaje.Mensaje = "Ubicación " & IIf(_Abierto, "Abierta", "Cerrada") & " Correctamente"
             _Fila.Cells("Abierto").Value = _Cl_InvUbicacion.Zw_Inv_Sector.Abierto
             _Fila.Cells("Estado").Value = IIf(_Abierto, "Abierto", "Cerrado")
         End If
 
-        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
     End Sub
 
@@ -420,7 +420,7 @@ Public Class Frm_Inv_Sector_Lista
         _Mensaje = _Cl_Imprimir_Sectores.Fx_Imprimir_Sector(_PrinterSettings)
 
         If Not _Mensaje.EsCorrecto Then
-            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
         End If
 
     End Sub

@@ -52,7 +52,7 @@ Public Class Cl_Mezcla
             End With
 
         Catch ex As Exception
-            _Mensaje_Mezcla.Col1_Mensaje = ex.Message
+            _Mensaje_Mezcla.Mensaje = ex.Message
         End Try
 
         Return _Mensaje_Mezcla
@@ -101,7 +101,7 @@ Public Class Cl_Mezcla
             End With
 
         Catch ex As Exception
-            _Mensaje_Mezcla.Col1_Mensaje = ex.Message
+            _Mensaje_Mezcla.Mensaje = ex.Message
         End Try
 
         Return _Mensaje_Mezcla
@@ -140,7 +140,7 @@ Public Class Cl_Mezcla
             End With
 
         Catch ex As Exception
-            _Mensaje_Mezcla.Col1_Mensaje = ex.Message
+            _Mensaje_Mezcla.Mensaje = ex.Message
         End Try
 
         Return _Mensaje_Mezcla
@@ -214,8 +214,8 @@ Public Class Cl_Mezcla
 
                 _Mensaje_Mezcla.EsCorrecto = True
                 _Mensaje_Mezcla.Id = .Id
-                _Mensaje_Mezcla.Col2_Detalle = "Fabricar Mezcla"
-                _Mensaje_Mezcla.Col1_Mensaje = "Se crea una nueva Orden de fabricación de mezcla Nro: " & .Nro_MZC
+                _Mensaje_Mezcla.Detalle = "Fabricar Mezcla"
+                _Mensaje_Mezcla.Mensaje = "Se crea una nueva Orden de fabricación de mezcla Nro: " & .Nro_MZC
 
                 'Throw New System.Exception(_Sql.Pro_Error)
 
@@ -224,8 +224,8 @@ Public Class Cl_Mezcla
 
         Catch ex As Exception
 
-            _Mensaje_Mezcla.Col1_Mensaje = ex.Message
-            _Mensaje_Mezcla.Col3_Resultado = Consulta_sql
+            _Mensaje_Mezcla.Mensaje = ex.Message
+            _Mensaje_Mezcla.Resultado = Consulta_sql
             myTrans.Rollback()
 
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
@@ -293,16 +293,16 @@ Public Class Cl_Mezcla
 
             _Mensaje_Mezcla.EsCorrecto = True
             _Mensaje_Mezcla.Id = 0
-            _Mensaje_Mezcla.Col2_Detalle = "Fabricar Mezcla"
-            _Mensaje_Mezcla.Col1_Mensaje = "Mezcla ingresada correctamente"
+            _Mensaje_Mezcla.Detalle = "Fabricar Mezcla"
+            _Mensaje_Mezcla.Mensaje = "Mezcla ingresada correctamente"
 
             'Throw New System.Exception(_Sql.Pro_Error)
 
 
         Catch ex As Exception
 
-            _Mensaje_Mezcla.Col1_Mensaje = ex.Message
-            _Mensaje_Mezcla.Col3_Resultado = Consulta_sql
+            _Mensaje_Mezcla.Mensaje = ex.Message
+            _Mensaje_Mezcla.Resultado = Consulta_sql
             If IsNothing(myTrans) Then myTrans.Rollback()
 
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
@@ -369,16 +369,16 @@ Public Class Cl_Mezcla
 
             _Mensaje_Mezcla.EsCorrecto = True
             _Mensaje_Mezcla.Id = 0
-            _Mensaje_Mezcla.Col2_Detalle = "Editar Mezcla"
-            _Mensaje_Mezcla.Col1_Mensaje = "Mezcla actualizada correctamente"
+            _Mensaje_Mezcla.Detalle = "Editar Mezcla"
+            _Mensaje_Mezcla.Mensaje = "Mezcla actualizada correctamente"
 
             'Throw New System.Exception(_Sql.Pro_Error)
 
 
         Catch ex As Exception
 
-            _Mensaje_Mezcla.Col1_Mensaje = ex.Message
-            _Mensaje_Mezcla.Col3_Resultado = Consulta_sql
+            _Mensaje_Mezcla.Mensaje = ex.Message
+            _Mensaje_Mezcla.Resultado = Consulta_sql
             If IsNothing(myTrans) Then myTrans.Rollback()
 
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
@@ -442,8 +442,8 @@ Public Class Cl_Mezcla
 
             _Mensaje_Mezcla.EsCorrecto = True
             _Mensaje_Mezcla.Id = 0
-            _Mensaje_Mezcla.Col2_Detalle = "Eliminar Mezcla"
-            _Mensaje_Mezcla.Col1_Mensaje = "Mezcla eliminada correctamente"
+            _Mensaje_Mezcla.Detalle = "Eliminar Mezcla"
+            _Mensaje_Mezcla.Mensaje = "Mezcla eliminada correctamente"
             _Mensaje_Mezcla.Icono = MessageBoxIcon.Information
 
             'Throw New System.Exception(_Sql.Pro_Error)
@@ -451,8 +451,8 @@ Public Class Cl_Mezcla
 
         Catch ex As Exception
 
-            _Mensaje_Mezcla.Col1_Mensaje = ex.Message
-            _Mensaje_Mezcla.Col3_Resultado = Consulta_sql
+            _Mensaje_Mezcla.Mensaje = ex.Message
+            _Mensaje_Mezcla.Resultado = Consulta_sql
             _Mensaje_Mezcla.Icono = MessageBoxIcon.Stop
             If IsNothing(myTrans) Then myTrans.Rollback()
 
@@ -516,14 +516,14 @@ Public Class Cl_Mezcla
 
             _Mensaje.EsCorrecto = True
             _Mensaje.Id = 0
-            _Mensaje.Col2_Detalle = "Eliminar Orden de fabricación de mezcla"
-            _Mensaje.Col1_Mensaje = "Orden de fabricación de mezcla eliminada correctamente"
+            _Mensaje.Detalle = "Eliminar Orden de fabricación de mezcla"
+            _Mensaje.Mensaje = "Orden de fabricación de mezcla eliminada correctamente"
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
 
-            _Mensaje.Col1_Mensaje = ex.Message
-            _Mensaje.Col3_Resultado = Consulta_sql
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Resultado = Consulta_sql
             _Mensaje.Icono = MessageBoxIcon.Stop
             If Not IsNothing(myTrans) Then myTrans.Rollback()
 
@@ -582,15 +582,15 @@ Public Class Cl_Mezcla
 
             _Mensaje.EsCorrecto = True
             _Mensaje.Id = 0
-            _Mensaje.Col2_Detalle = "Cambiar Nomenclatura"
-            _Mensaje.Col1_Mensaje = "Nomenclatura cambiada correctamente"
+            _Mensaje.Detalle = "Cambiar Nomenclatura"
+            _Mensaje.Mensaje = "Nomenclatura cambiada correctamente"
 
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
 
-            _Mensaje.Col1_Mensaje = ex.Message
-            _Mensaje.Col3_Resultado = Consulta_sql
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Resultado = Consulta_sql
             _Mensaje.Icono = MessageBoxIcon.Stop
             If Not IsNothing(myTrans) Then myTrans.Rollback()
 

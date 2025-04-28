@@ -74,12 +74,12 @@ Public Class Frm_ConfPuntosVta
         Dim _Mensaje As LsValiciones.Mensajes = _Cl_Puntos.Fx_Grabar_Configuracion
 
         If Not _Mensaje.EsCorrecto Then
-            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
 
-        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje & vbCrLf &
-                          "No sera necesario grabar en el siguiente formulario.", _Mensaje.Col2_Detalle,
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje & vbCrLf &
+                          "No sera necesario grabar en el siguiente formulario.", _Mensaje.Detalle,
                           MessageBoxButtons.OK, MessageBoxIcon.Information)
         Me.Close()
 

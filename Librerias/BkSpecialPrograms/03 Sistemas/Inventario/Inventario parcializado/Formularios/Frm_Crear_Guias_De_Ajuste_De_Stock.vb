@@ -957,21 +957,21 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
             Dim _Row As DataRow
 
             If Not _Msj_Doc.EsCorrecto Then
-                Throw New System.Exception(_Msj_Doc.Col1_Mensaje)
+                Throw New System.Exception(_Msj_Doc.Mensaje)
             End If
 
             Consulta_sql = "Select Top 1 * From MAEEDO Where IDMAEEDO = " & _Msj_Doc.Id
             _Row = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Col2_Detalle = "Documento generado correctamente"
+            _Mensaje.Detalle = "Documento generado correctamente"
             _Mensaje.Tag = _Row
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col2_Detalle = "Problema al generar documento"
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Detalle = "Problema al generar documento"
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
 

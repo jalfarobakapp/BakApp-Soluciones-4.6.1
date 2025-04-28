@@ -621,13 +621,13 @@ Public Class Frm_FTP_Fichero
             _Mensaje = Ftp.Fx_Probar_Conexion_FTP
 
             If Not _Mensaje.EsCorrecto Then
-                Throw New Exception(_Mensaje.Col1_Mensaje)
+                Throw New Exception(_Mensaje.Mensaje)
             End If
 
             _Mensaje = Ftp.Fx_Existe_Directorio(Ftp.Zw_Ftp_Conexiones.Fichero)
 
             If Not _Mensaje.EsCorrecto Then
-                Throw New Exception(_Mensaje.Col1_Mensaje)
+                Throw New Exception(_Mensaje.Mensaje)
             End If
 
             'Dim _Fichero = Replace(Txt_Fichero.Text, Codigo, "")
@@ -635,7 +635,7 @@ Public Class Frm_FTP_Fichero
             _Mensaje = _Ftp.Fx_Obtener_Archivos_Directorio(Txt_Fichero.Text)
 
             If Not _Mensaje.EsCorrecto Then
-                Throw New Exception(_Mensaje.Col1_Mensaje)
+                Throw New Exception(_Mensaje.Mensaje)
             End If
 
             Sb_Llenar_Lista(_Mensaje.Tag)
@@ -673,7 +673,7 @@ Public Class Frm_FTP_Fichero
         Me.Cursor = Cursors.Default
         Me.Enabled = True
 
-        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
     End Sub
 
@@ -700,7 +700,7 @@ Public Class Frm_FTP_Fichero
         Me.Enabled = True
 
         If Not _Mensaje.EsCorrecto Then
-            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
             Return
         End If
 
@@ -709,7 +709,7 @@ Public Class Frm_FTP_Fichero
             _Mensaje = Ftp.Fx_Crear_Directorio(Ftp.Zw_Ftp_Conexiones.Fichero & "/" & _Tipo_Ftp.ToString)
 
             If Not _Mensaje.EsCorrecto Then
-                MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
                 Return
             End If
 
@@ -723,7 +723,7 @@ Public Class Frm_FTP_Fichero
 
         _Mensaje = Ftp.Fx_Grabar_Host()
 
-        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         If _Mensaje.EsCorrecto Then
             Me.Close()

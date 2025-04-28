@@ -798,7 +798,7 @@ Public Class Frm_Formulario_Documento
 
                 If Not String.IsNullOrEmpty(_NroDocumento) Then
 
-                    MessageBoxEx.Show(Me, MensajeRevFolio.Col1_Mensaje, MensajeRevFolio.Col2_Detalle, MessageBoxButtons.OK, MensajeRevFolio.Icono)
+                    MessageBoxEx.Show(Me, MensajeRevFolio.Mensaje, MensajeRevFolio.Detalle, MessageBoxButtons.OK, MensajeRevFolio.Icono)
 
                     'MessageBoxEx.Show(Me, "El folio del documento electrónico (" & _NroDocumento & ") ya expiró en el SII." & vbCrLf &
                     '                  "Informe al administrador del sistema", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -1691,11 +1691,10 @@ Public Class Frm_Formulario_Documento
         _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Comp0095", False, False, "", "", False, False, False) ' Solicitud de compra Validar producto a comprar
         _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Bkp00062", False, False, "", "", False, False, False) ' Minimo de venta por documento
         _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "ODp00017", False, False, "", "", False, False, False) ' Despacho mínimo en Kg o Total Neto
-
         _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00098", False, False, "", "", False, False, False)
-
         _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00101", False, False, "", "", False, False, False) ' Crear documento sin Picking
         _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00102", False, False, "", "", False, False, False) ' Cambiar RTU de pesos variables
+        _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00103", False, False, "", "", False, False, False) ' Morosidad por cheques protestados
 
         'If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Configuracion", "RestringirFechaVencimientoClientes") Then
         'If _Global_Row_Configuracion_General.Item("RestringirFechaVencimientoClientes") Then
@@ -1813,7 +1812,7 @@ Public Class Frm_Formulario_Documento
                 _NewNeroDocumento = String.Empty
 
                 If Me.Visible Then
-                    MessageBoxEx.Show(Me, MensajeRevFolio.Col1_Mensaje, MensajeRevFolio.Col2_Detalle, MessageBoxButtons.OK, MensajeRevFolio.Icono)
+                    MessageBoxEx.Show(Me, MensajeRevFolio.Mensaje, MensajeRevFolio.Detalle, MessageBoxButtons.OK, MensajeRevFolio.Icono)
                     Me.Close()
                 End If
 
@@ -2382,6 +2381,7 @@ Public Class Frm_Formulario_Documento
             _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "ODp00017", False, False, "", "", False, False, False) ' Despacho mínimo en Kg o Total Neto
             _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00101", False, False, "", "", False, False, False) ' Crear documento sin Picking
             _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00102", False, False, "", "", False, False, False) ' Crear documento sin Picking
+            _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00103", False, False, "", "", False, False, False) ' Morosidad por cheques protestados
 
             _TblPermisos = _Ds_Matriz_Documentos.Tables("Permisos_Doc")
 
@@ -2493,7 +2493,7 @@ Public Class Frm_Formulario_Documento
                 If Not MensajeRevFolio.EsCorrecto Then 'Not Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _NewNeroDocumento, True) Then
 
                     _NewNeroDocumento = String.Empty
-                    Throw New System.Exception(MensajeRevFolio.Col1_Mensaje)
+                    Throw New System.Exception(MensajeRevFolio.Mensaje)
 
                 End If
 
@@ -5049,7 +5049,7 @@ Public Class Frm_Formulario_Documento
                 If Not _ExluyeTipoVenta Then
 
                     MessageBoxEx.Show(Me, _Codigo.ToString.Trim & " - " & _Descripcion.ToString.Trim & vbCrLf & vbCrLf &
-                                  _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                                  _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
                     _Fila.Cells("Codigo").Value = String.Empty
                     Return
 
@@ -5095,7 +5095,7 @@ Public Class Frm_Formulario_Documento
                 Return
             End If
 
-            If _Mensaje.Col1_Mensaje = "Agrupar" Then
+            If _Mensaje.Mensaje = "Agrupar" Then
                 _Fila.Cells("Codigo").Value = String.Empty
                 Grilla_Detalle.CurrentCell = Grilla_Detalle.Rows(_Indice_Agrupa).Cells("Cantidad")
                 Grilla_Detalle.Focus()
@@ -5269,7 +5269,7 @@ Public Class Frm_Formulario_Documento
 
             If _No_Volver_A_Preguntar_Agrupa_Producto Then
                 _Mensaje.EsCorrecto = True
-                _Mensaje.Col1_Mensaje = "Nuevo"
+                _Mensaje.Mensaje = "Nuevo"
                 Return _Mensaje
             End If
 
@@ -5311,7 +5311,7 @@ Public Class Frm_Formulario_Documento
                 If Chk_Agrupar.Checked Then
 
                     _Mensaje.EsCorrecto = True
-                    _Mensaje.Col1_Mensaje = "Agrupar"
+                    _Mensaje.Mensaje = "Agrupar"
 
                     '_Fila.Cells("Codigo").Value = String.Empty
                     'Grilla_Detalle.CurrentCell = Grilla_Detalle.Rows(_Indice_Agrupa).Cells("Cantidad")
@@ -5328,7 +5328,7 @@ Public Class Frm_Formulario_Documento
                         End If
                     Else
                         _Mensaje.EsCorrecto = True
-                        _Mensaje.Col1_Mensaje = "Nuevo"
+                        _Mensaje.Mensaje = "Nuevo"
                     End If
 
                 End If
@@ -5337,8 +5337,8 @@ Public Class Frm_Formulario_Documento
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col2_Detalle = "Problema!!"
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Detalle = "Problema!!"
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
 
@@ -8486,10 +8486,10 @@ Public Class Frm_Formulario_Documento
 
                     End If
 
-                    If _Bloqueada Then
+                    Dim _Koen = _RowEntidad.Item("Koen")
+                    Dim _Suen = _RowEntidad.Item("Suen")
 
-                        Dim _Koen = _RowEntidad.Item("Koen")
-                        Dim _Suen = _RowEntidad.Item("Suen")
+                    If _Bloqueada Then
 
                         If Not Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Bkp00021", Nothing, _Koen, _Suen) Then
                             Return Nothing
@@ -8513,6 +8513,12 @@ Public Class Frm_Formulario_Documento
                                            "Validación",
                                             MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
 
+                    End If
+
+                    If Not Fx_RevisarProtestos(True, _RowEntidad) Then
+                        'If Not Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00103", Nothing, _Koen, _Suen) Then
+                        Return Nothing
+                        'End If
                     End If
 
                 End If
@@ -8702,7 +8708,7 @@ Public Class Frm_Formulario_Documento
 
                                     Dim _Mensaje As LsValiciones.Mensajes = Fx_SolicitarTipoVenta()
 
-                                    MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono, MessageBoxDefaultButton.Button1, True)
+                                    MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono, MessageBoxDefaultButton.Button1, True)
 
                                     If Not _Mensaje.EsCorrecto Then Return
 
@@ -10371,10 +10377,10 @@ Public Class Frm_Formulario_Documento
                                 _Mensaje = _Cl_Documento.Fx_RevisarDescuentoPremium(_Codigo, _TblDetalle)
 
                                 If _Mensaje.EsCorrecto And Not _Mensaje.Cancelado Then
-                                    MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                                    MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
                                 Else
                                     If Not _Mensaje.Cancelado Then
-                                        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                                        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
                                         _Fila.Cells("Codigo").Value = String.Empty
                                         Exit Sub
                                     End If
@@ -13599,16 +13605,16 @@ Public Class Frm_Formulario_Documento
 
             If Not IsNothing(_Global_Frm_Menu) Then _Global_Frm_Menu.Refresh()
 
-            _Mensaje.Col1_Mensaje = Fx_Nuevo_Doc_Auto(False)
+            _Mensaje.Mensaje = Fx_Nuevo_Doc_Auto(False)
 
-            If Not String.IsNullOrEmpty(_Mensaje.Col1_Mensaje) Then
-                Throw New System.Exception(_Mensaje.Col1_Mensaje)
+            If Not String.IsNullOrEmpty(_Mensaje.Mensaje) Then
+                Throw New System.Exception(_Mensaje.Mensaje)
             End If
 
             _Mensaje.EsCorrecto = True
 
         Catch ex As Exception
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.EsCorrecto = False
         End Try
 
@@ -14717,7 +14723,7 @@ Public Class Frm_Formulario_Documento
                                 Dim _Msj As LsValiciones.Mensajes = Fx_FuncionarioPuedeVerDocumentoGrupo(_Idmaeedo, FUNCIONARIO)
 
                                 If Not _Msj.EsCorrecto Then
-                                    MessageBoxEx.Show(Me, _Msj.Col1_Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                    MessageBoxEx.Show(Me, _Msj.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                                     Return
                                 End If
 
@@ -15124,7 +15130,7 @@ Public Class Frm_Formulario_Documento
 
                         If _MostrarMensaje Then
 
-                            Dim _Menje As String = Fx_AjustarTexto(_Msj.Col1_Mensaje, 100)
+                            Dim _Menje As String = Fx_AjustarTexto(_Msj.Mensaje, 100)
 
                             MessageBoxEx.Show(Me, _Menje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
 
@@ -17405,7 +17411,7 @@ Public Class Frm_Formulario_Documento
         Dim _Mensaje As New LsValiciones.Mensajes
 
         _Mensaje.EsCorrecto = False
-        _Mensaje.Col2_Detalle = "Problema al Grabar documento"
+        _Mensaje.Detalle = "Problema al Grabar documento"
         _Mensaje.Id = 0
         _Mensaje.Icono = MessageBoxIcon.Stop
 
@@ -17485,7 +17491,7 @@ Public Class Frm_Formulario_Documento
 
         If Not _Grabar Then
 
-            _Mensaje.Col1_Mensaje = "Acción cancelada por el usurario"
+            _Mensaje.Mensaje = "Acción cancelada por el usurario"
             Return _Mensaje
 
         End If
@@ -17505,7 +17511,7 @@ Public Class Frm_Formulario_Documento
 
         If String.IsNullOrEmpty(Trim(_Nudo)) Then
 
-            _Mensaje.Col1_Mensaje = "No se pudo obtener el número de documento"
+            _Mensaje.Mensaje = "No se pudo obtener el número de documento"
             Return _Mensaje
 
         End If
@@ -17546,7 +17552,7 @@ Public Class Frm_Formulario_Documento
 
         If Not String.IsNullOrEmpty(_Validadar_Cantidad) Then
 
-            _Mensaje.Col1_Mensaje = _Validadar_Cantidad
+            _Mensaje.Mensaje = _Validadar_Cantidad
             Return _Mensaje
 
         End If
@@ -17643,7 +17649,7 @@ Public Class Frm_Formulario_Documento
                     If Not String.IsNullOrEmpty(_Nudo) Then
 
                         If _Mostrar_Mensaje Then
-                            MessageBoxEx.Show(Me, _Msj.Col1_Mensaje, _Msj.Col2_Detalle, MessageBoxButtons.OK, _Msj.Icono)
+                            MessageBoxEx.Show(Me, _Msj.Mensaje, _Msj.Detalle, MessageBoxButtons.OK, _Msj.Icono)
                         End If
 
                         Modalidad = _Modalidad_Origen
@@ -17657,7 +17663,7 @@ Public Class Frm_Formulario_Documento
                         _TblEncabezado.Rows(0).Item("Es_ValeTransitorio") = 1
 
                         _Mensaje.EsCorrecto = False
-                        _Mensaje.Col1_Mensaje = _Msj.Col1_Mensaje
+                        _Mensaje.Mensaje = _Msj.Mensaje
                         _Mensaje.Id = 0
 
                         Return _Mensaje
@@ -17724,7 +17730,7 @@ Public Class Frm_Formulario_Documento
             If Not _Mensaje.EsCorrecto Then
 
                 If _Mostrar_Mensaje Then
-                    MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                    MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
                 End If
 
                 Modalidad = _Modalidad_Origen
@@ -20077,7 +20083,7 @@ Public Class Frm_Formulario_Documento
                             Dim _NomFuncionario_Autoriza = Trim(_Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & _CodFuncionario_Autoriza & "'", _Mostrar_Error))
                             Dim _NroRemota = _FilaR.Item("NroRemota")
 
-                            If _CodPermiso = "Bkp00019" And _Volver_A_Solicitar_Permiso_FCV_desde_NVV Then
+                            If (_CodPermiso = "Bkp00019" Or _CodPermiso = "Doc00103") And _Volver_A_Solicitar_Permiso_FCV_desde_NVV Then
                                 _CodPermiso = "XXX"
                             End If
 
@@ -21886,7 +21892,7 @@ Public Class Frm_Formulario_Documento
                     Fx_Autorizar_X_Descuentos(False)
                 End If
 
-            Case "Bkp00015", "Bkp00019", "Bkp00033", "Bkp00057", "ODp00017", "Bkp00062", "Doc00098", "Doc00101", "Doc00102"
+            Case "Bkp00015", "Bkp00019", "Bkp00033", "Bkp00057", "ODp00017", "Bkp00062", "Doc00098", "Doc00101", "Doc00102", "Doc00103"
 
                 If _Crear_Doc_Def_Al_Grabar Then
 
@@ -23348,6 +23354,10 @@ Public Class Frm_Formulario_Documento
                 _Autorizado = Fx_Validad_Morosidad(_Necesita_Permiso)
                 Sb_Revisar_Permiso("Bkp00019", _Autorizado, _Necesita_Permiso)
 
+                _Autorizado = False : _Necesita_Permiso = False
+                _Autorizado = Fx_RevisarProtestos(False, _RowEntidad)
+                Sb_Revisar_Permiso("Doc00103", _Autorizado, _Necesita_Permiso)
+
                 If _Tido = "NVV" Or _Tido = "GDV" Or _Tido = "GDP" Then
 
                     _Autorizado = False : _Necesita_Permiso = False
@@ -23669,170 +23679,6 @@ Public Class Frm_Formulario_Documento
         Next
 
     End Sub
-
-    Function Fx_Cadena_Remota_Crear_DataSet() As DataSet
-
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Remotas_En_Cadena_02_Det Where 0 > 1
-                        Select *,Cast('' As Varchar(10)) As CodPermiso From " & _Global_BaseBk & "Zw_Remotas_En_Cadena_03_Usu Where 0 > 1"
-
-        Dim _DsCRemotas As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
-
-
-        Dim _Tiene_Registros As Boolean = Fx_Revisar_si_tiene_registros(False)
-        Dim _Permiso As Boolean = _Tiene_Registros
-        Dim _Orden = 0
-
-        Dim _Tiene_Stock_Insuficiente As Boolean
-
-        If Not Fx_Validar_Stock(False, _Tiene_Stock_Insuficiente) Then
-
-            Dim _Fun_Auto_Stock_Ins = NuloPorNro(_TblEncabezado.Rows(0).Item("Fun_Auto_Stock_Ins"), "")
-
-            If Fx_Tiene_Permiso(Me, "Bkp00015", _Fun_Auto_Stock_Ins, False) Then
-                _Permiso = False
-            End If
-
-        Else
-
-            _Permiso = False
-
-        End If
-
-        If _Permiso Then
-
-            _Orden += 1
-
-            If Not Fx_Cadena_Remotas_Generar_Detalle(_DsCRemotas, "Bkp00015", "Vender con Stock menor o igual a cero", _Orden) Then
-                Return Nothing
-            End If
-
-        End If
-
-        _Permiso = True
-
-        If _Tiene_Registros Then
-
-            Dim _Libre_de_Descuento As Boolean
-
-            If _Hay_Descuentos_Globales Then
-                _Libre_de_Descuento = Fx_Validar_Descuentos_Globales(0, False)
-            Else
-                _Libre_de_Descuento = Fx_Validar_Descuentos_Individuales(0, False)
-            End If
-
-            If _Libre_de_Descuento Then _Permiso = False
-
-        End If
-
-        If _Permiso Then
-
-            _Orden += 1
-
-            If Not Fx_Cadena_Remotas_Generar_Detalle(_DsCRemotas, "Bkp00014", "Venta con descuentos", _Orden) Then
-                Return Nothing
-            End If
-
-        End If
-
-        _Permiso = True
-
-        Dim _Bloqueada As Boolean
-
-        If Not Fx_Entidad_Tiene_Deudas_CtaCte(Me, _RowEntidad, False, False, _Bloqueada) Then
-
-            Dim _Fun_Auto_Deuda_Ven = NuloPorNro(_TblEncabezado.Rows(0).Item("Fun_Auto_Deuda_Ven"), "")
-
-            If Fx_Tiene_Permiso(Me, "Bkp00019", _Fun_Auto_Deuda_Ven, False) Then
-                _Permiso = False
-            End If
-
-        Else
-
-            _Permiso = False
-
-        End If
-
-        If _Permiso Then
-
-            _Orden += 1
-
-            If Not Fx_Cadena_Remotas_Generar_Detalle(_DsCRemotas, "Bkp00019", "Venta cliente con Morosidad", _Orden) Then
-                Return Nothing
-            End If
-
-        End If
-
-
-        _Permiso = True
-
-
-        If Not Fx_Entidad_Tiene_Deudas_CtaCte(Me, _RowEntidad, False, False, _Bloqueada) Then
-
-            Dim _Fun_Auto_Cupo_Exe = NuloPorNro(_TblEncabezado.Rows(0).Item("Fun_Auto_Cupo_Exe"), "")
-
-            If Fx_Tiene_Permiso(Me, "Bkp00033", _Fun_Auto_Cupo_Exe, False) Then
-                _Permiso = False
-            End If
-
-        Else
-
-            _Permiso = False
-
-        End If
-
-        If _Permiso Then
-
-            _Orden += 1
-
-            If Not Fx_Cadena_Remotas_Generar_Detalle(_DsCRemotas, "Bkp00033", "Venta cliente excede cupo", _Orden) Then
-                Return Nothing
-            End If
-
-        End If
-
-        If Not CBool(_Orden) Then
-            _DsCRemotas = Nothing
-        End If
-
-        Return _DsCRemotas
-
-    End Function
-
-    Function Fx_Cadena_Remotas_Generar_Detalle(_DsCRemotas As DataSet,
-                                               _CodPermiso As String,
-                                               _Titulo As String,
-                                               _Orden As Integer) As Boolean
-
-        MessageBoxEx.Show(Me, "A continuación se solicitara que marque los usuarios para el permiso correspondiente",
-                              _Titulo, MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, Me.TopMost)
-
-        Dim _Row_Det As DataRow = Fx_Cadena_Remota_Nueva_Linea_Det(_DsCRemotas.Tables(0), _CodPermiso,
-                                                                   UCase(_Titulo), _Orden)
-        Dim _Tbl As DataTable = Fx_Cadena_Remota_Usuarios_Destino(_CodPermiso, UCase(_Titulo))
-
-        If Not (_Row_Det Is Nothing) Then
-
-            Dim _Id_Det = _Row_Det.Item("Id_Det")
-
-            If Not _Tbl Is Nothing Then
-
-                For Each _Fila As DataRow In _Tbl.Rows
-                    Dim _CodUsuario = _Fila.Item("Codigo")
-                    Fx_Cadena_Remota_Nueva_Linea_Usu(_DsCRemotas.Tables(1), _Id_Det, _CodUsuario,
-                                                     _CodPermiso)
-                Next
-
-            Else
-
-                Return False
-
-            End If
-
-        End If
-
-        Return True
-
-    End Function
 
     Private Function Fx_Cadena_Remota_Usuarios_Destino(_Codpermiso As String, _Descripcion As String) As DataTable
 
@@ -28523,7 +28369,7 @@ Public Class Frm_Formulario_Documento
         _Mensaje = Fx_AgregarDescuentoXPuntos(_Puntos)
 
         If Not _Mensaje.EsCorrecto Then
-            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End If
 
     End Sub
@@ -28535,7 +28381,7 @@ Public Class Frm_Formulario_Documento
         Try
 
             If Not _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_PtsVta_Configuracion") Then
-                _Mensaje.Col2_Detalle = "Validación"
+                _Mensaje.Detalle = "Validación"
                 Throw New ArgumentException("No existe tabla Zw_PtsVta_Configuracion en base de datos de Bakapp")
             End If
 
@@ -28543,13 +28389,13 @@ Public Class Frm_Formulario_Documento
             Dim _Row_ConfPuntos As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 
             If Not String.IsNullOrWhiteSpace(_Sql.Pro_Error) Then
-                _Mensaje.Col2_Detalle = "Error Sql"
-                _Mensaje.Col3_Resultado = Consulta_sql
+                _Mensaje.Detalle = "Error Sql"
+                _Mensaje.Resultado = Consulta_sql
                 Throw New ArgumentException(_Sql.Pro_Error)
             End If
 
             If IsNothing(_Row_ConfPuntos) Then
-                _Mensaje.Col2_Detalle = "Validación"
+                _Mensaje.Detalle = "Validación"
                 Throw New ArgumentException("No existe configuración en tabla Zw_PtsVta_Configuracion")
             End If
 
@@ -28559,7 +28405,7 @@ Public Class Frm_Formulario_Documento
             Dim _RowConcepto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If IsNothing(_RowConcepto) Then
-                _Mensaje.Col2_Detalle = "Validación"
+                _Mensaje.Detalle = "Validación"
                 Throw New ArgumentException("No existe el concepto " & _Koct & vbCrLf & "Informe de esto al administrador del sistema")
             End If
 
@@ -28568,7 +28414,7 @@ Public Class Frm_Formulario_Documento
             For Each _Fila As DataRow In _TblDetalle.Rows
 
                 If _Fila.Item("Codigo") = _Koct Then
-                    _Mensaje.Col2_Detalle = "Validación"
+                    _Mensaje.Detalle = "Validación"
                     Throw New ArgumentException("Los puntos ya estan siendo utilizados en este documento")
                 End If
 
@@ -28589,7 +28435,7 @@ Public Class Frm_Formulario_Documento
             'Throw New ArgumentException("Error")
 
         Catch ex As Exception
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
         End Try
 
         Return _Mensaje
@@ -28617,8 +28463,8 @@ Public Class Frm_Formulario_Documento
                 _TblEncabezado.Rows(0).Item("CodTipoVenta") = _Codigo
 
                 _Mensaje.EsCorrecto = True
-                _Mensaje.Col2_Detalle = "Selección"
-                _Mensaje.Col1_Mensaje = "Clasificación seleccionada: " & _Descripcion
+                _Mensaje.Detalle = "Selección"
+                _Mensaje.Mensaje = "Clasificación seleccionada: " & _Descripcion
                 _Mensaje.Icono = MessageBoxIcon.Information
                 Lbl_TipoVenta.Text = "Tipo de venta: " & _Descripcion
 
@@ -28629,8 +28475,8 @@ Public Class Frm_Formulario_Documento
             End If
 
         Catch ex As Exception
-            _Mensaje.Col2_Detalle = "Error en proceso de selección"
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Detalle = "Error en proceso de selección"
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
 
@@ -28653,7 +28499,7 @@ Public Class Frm_Formulario_Documento
             Return
         End If
 
-        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
     End Sub
 
@@ -28667,7 +28513,7 @@ Public Class Frm_Formulario_Documento
             Dim _NombreTipo2 As String = _Sql.Fx_Trae_Dato("TABCARAC", "NOKOCARAC", "KOTABLA = 'CLALIBPR' And KOCARAC = '" & _CodTipoVenta & "'")
 
             If String.IsNullOrEmpty(_Clalibpr.Trim) Then
-                _Mensaje.Col2_Detalle = "Validación"
+                _Mensaje.Detalle = "Validación"
                 Throw New System.Exception("Este producto no tiene Clasificación libre" & vbCrLf &
                                            "El tipo de producto a vender debe ser: " & _NombreTipo2)
             End If
@@ -28680,7 +28526,7 @@ Public Class Frm_Formulario_Documento
                 '                  "El tipo de producto a vender debe ser: " & _NombreTipo2,
                 '                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
-                _Mensaje.Col2_Detalle = "Validación"
+                _Mensaje.Detalle = "Validación"
                 Throw New System.Exception("Este producto es de tipo: " & _NombreTipo1 & vbCrLf &
                                    "El tipo de producto a vender debe ser: " & _NombreTipo2)
 
@@ -28690,8 +28536,8 @@ Public Class Frm_Formulario_Documento
             _Mensaje.EsCorrecto = True
 
         Catch ex As Exception
-            If String.IsNullOrEmpty(_Mensaje.Col2_Detalle) Then _Mensaje.Col2_Detalle = "Problema!"
-            _Mensaje.Col1_Mensaje = ex.Message
+            If String.IsNullOrEmpty(_Mensaje.Detalle) Then _Mensaje.Detalle = "Problema!"
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
 
@@ -28746,9 +28592,9 @@ Public Class Frm_Formulario_Documento
 
                 If _Cl_DocListaSuperior.ListaSuperiorUtilizada Then
 
-                    MessageBoxEx.Show(Me, _Msj.Col1_Mensaje & vbCrLf &
+                    MessageBoxEx.Show(Me, _Msj.Mensaje & vbCrLf &
                                       "Se restablecerán los precios correspondientes a su lista : " & _Cl_DocListaSuperior.ListaEntidad,
-                                      _Msj.Col2_Detalle, MessageBoxButtons.OK, _Msj.Icono)
+                                      _Msj.Detalle, MessageBoxButtons.OK, _Msj.Icono)
 
                     For Each _Fl As DataGridViewRow In Grilla_Detalle.Rows
 
@@ -28846,7 +28692,7 @@ Public Class Frm_Formulario_Documento
 
         _Mensaje = Fx_Confirmar_LecturaSINO(_Msg1, _Msg2, eTaskDialogIcon.Flag)
 
-        If _Mensaje.Col3_Resultado <> "Yes" Then
+        If _Mensaje.Resultado <> "Yes" Then
             If _Mensaje.Cerrar Then
                 Return False
             Else
@@ -28871,7 +28717,7 @@ Public Class Frm_Formulario_Documento
         End If
 
         'If Not _Mensaje.EsCorrecto Then
-        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
         'End If
 
         Return True
@@ -28920,7 +28766,7 @@ Public Class Frm_Formulario_Documento
             Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If IsNothing(_RowProducto) Then
-                _Mensaje.Col2_Detalle = "Validación"
+                _Mensaje.Detalle = "Validación"
                 Throw New ArgumentException("No existe el producto: " & _Codigo & vbCrLf &
                                             "Informe de esto al administrador del sistema")
             End If
@@ -28932,7 +28778,7 @@ Public Class Frm_Formulario_Documento
                                                   _Tipo_Caracter.Solo_Numeros_Enteros, False,,,,, , _Cancelado)
 
             If Not _Aceptar Then
-                _Mensaje.Col2_Detalle = "Validación"
+                _Mensaje.Detalle = "Validación"
                 _Mensaje.Cancelado = _Cancelado
                 Throw New ArgumentException("Debe ingresar una cantidad de Pallet")
             End If
@@ -28947,8 +28793,8 @@ Public Class Frm_Formulario_Documento
                 '                  "Cliente con exclusión para cobrar Pallet",
                 '                  MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-                _Mensaje.Col2_Detalle = "Cliente con exclusión para cobrar Pallet"
-                _Mensaje.Col1_Mensaje = "Los pallets se añadirán en la anotaciones tabuldas, pero no se cobrarán a este cliente."
+                _Mensaje.Detalle = "Cliente con exclusión para cobrar Pallet"
+                _Mensaje.Mensaje = "Los pallets se añadirán en la anotaciones tabuldas, pero no se cobrarán a este cliente."
 
             Else
 
@@ -28965,8 +28811,8 @@ Public Class Frm_Formulario_Documento
 
                 Sb_Procesar_Datos_De_Grilla(_New_Fila, "Cantidad", False, False, True)
 
-                _Mensaje.Col2_Detalle = "Agregar Pallet"
-                _Mensaje.Col1_Mensaje = "Pallet agregado con exito al final del detalle del documento"
+                _Mensaje.Detalle = "Agregar Pallet"
+                _Mensaje.Mensaje = "Pallet agregado con exito al final del detalle del documento"
 
             End If
 
@@ -28975,8 +28821,8 @@ Public Class Frm_Formulario_Documento
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col2_Detalle = "Pallet no agregado"
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Detalle = "Pallet no agregado"
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
 
@@ -29025,6 +28871,40 @@ Public Class Frm_Formulario_Documento
         End If
 
         Return False
+
+    End Function
+
+    Function Fx_RevisarProtestos(_MostrarMensaje As Boolean, _RowEntidad As DataRow) As Boolean
+
+        Dim _Koen As String = _RowEntidad.Item("KOEN")
+        Dim _Suen As String = _RowEntidad.Item("SUEN")
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        _Mensaje = Fx_Entidad_Revisar_Protestos(_Koen)
+
+        If Not _Mensaje.EsCorrecto Then
+
+            If _MostrarMensaje Then
+
+                If MessageBoxEx.Show(Me, _Mensaje.Mensaje & vbCrLf & vbCrLf &
+                                  "¿Desea ver el detalle?",
+                                  "Validación",
+                                  MessageBoxButtons.YesNo, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost) = DialogResult.Yes Then
+
+                    Dim Fm As New Frm_InfoEnt_Protestos(_Mensaje.Tag)
+                    Fm.ShowDialog(Me)
+                    Fm.Dispose()
+
+                End If
+
+            End If
+
+            Return False
+
+        End If
+
+        Return True
 
     End Function
 

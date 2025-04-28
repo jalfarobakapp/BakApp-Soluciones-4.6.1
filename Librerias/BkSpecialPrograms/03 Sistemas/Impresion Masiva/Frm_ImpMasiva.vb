@@ -186,6 +186,7 @@ Public Class Frm_ImpMasiva
         Btn_Imprimir.Enabled = False
         Btn_Cancelar.Enabled = True
         Btn_Cancelar.Visible = True
+        _Cancelar = False
 
         Try
             Sb_HabilitarDeshabilitarControles(False)
@@ -240,6 +241,10 @@ Public Class Frm_ImpMasiva
                 End If
 
             Next
+
+            If _Cancelar Then
+                Me.Close()
+            End If
 
             Barra_Progreso.Visible = False
 

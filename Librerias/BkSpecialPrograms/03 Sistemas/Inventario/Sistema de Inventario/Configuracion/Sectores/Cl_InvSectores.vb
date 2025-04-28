@@ -17,14 +17,14 @@ Public Class Cl_InvSectores
         Dim _Mensaje As New LsValiciones.Mensajes
 
         _Mensaje.EsCorrecto = False
-        _Mensaje.Col2_Detalle = "Cargar Sector de Inventario"
-        _Mensaje.Col1_Mensaje = String.Empty
+        _Mensaje.Detalle = "Cargar Sector de Inventario"
+        _Mensaje.Mensaje = String.Empty
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Inv_Sector Where Id = " & _Id
         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If IsNothing(_Row) Then
-            _Mensaje.Col1_Mensaje = "No se encontro el registro en la tabla Zw_Inv_Sector con el Id " & _Id
+            _Mensaje.Mensaje = "No se encontro el registro en la tabla Zw_Inv_Sector con el Id " & _Id
             Return _Mensaje
         End If
 
@@ -43,7 +43,7 @@ Public Class Cl_InvSectores
         End With
 
         _Mensaje.EsCorrecto = True
-        _Mensaje.Col1_Mensaje = "Registros cargados correctamente"
+        _Mensaje.Mensaje = "Registros cargados correctamente"
         _Mensaje.Tag = Zw_Inv_Sector
 
         Return _Mensaje
@@ -55,14 +55,14 @@ Public Class Cl_InvSectores
         Dim _Mensaje As New LsValiciones.Mensajes
 
         _Mensaje.EsCorrecto = False
-        _Mensaje.Col2_Detalle = "Cargar Sector de Inventario"
-        _Mensaje.Col1_Mensaje = String.Empty
+        _Mensaje.Detalle = "Cargar Sector de Inventario"
+        _Mensaje.Mensaje = String.Empty
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Inv_Sector Where IdInventario = " & _IdInventario & " And Sector = '" & _Ubicacion & "'"
         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If IsNothing(_Row) Then
-            _Mensaje.Col1_Mensaje = "No se encontro el registro en la tabla Zw_Inv_Sector con el Sector " & _Ubicacion
+            _Mensaje.Mensaje = "No se encontro el registro en la tabla Zw_Inv_Sector con el Sector " & _Ubicacion
             _Mensaje.Icono = MessageBoxIcon.Stop
             Return _Mensaje
         End If
@@ -82,7 +82,7 @@ Public Class Cl_InvSectores
         End With
 
         _Mensaje.EsCorrecto = True
-        _Mensaje.Col1_Mensaje = "Registros cargados correctamente"
+        _Mensaje.Mensaje = "Registros cargados correctamente"
         _Mensaje.Icono = MessageBoxIcon.Information
         _Mensaje.Tag = Zw_Inv_Sector
 
@@ -94,16 +94,16 @@ Public Class Cl_InvSectores
 
         Dim _Mensaje_Stem As New LsValiciones.Mensajes
 
-        _Mensaje_Stem.Col2_Detalle = "Crear Sector de Inventario"
+        _Mensaje_Stem.Detalle = "Crear Sector de Inventario"
         _Mensaje_Stem.EsCorrecto = False
-        _Mensaje_Stem.Col1_Mensaje = String.Empty
+        _Mensaje_Stem.Mensaje = String.Empty
         _Mensaje_Stem.Icono = MessageBoxIcon.Stop
 
         Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_Sector",
                                             "Sector = '" & Zw_Inv_Sector.Sector & "' And IdInventario = " & Zw_Inv_Sector.IdInventario)
         If CBool(_Reg) Then
             ' Modificación aquí: en lugar de lanzar una excepción, se establece el mensaje de error.
-            _Mensaje_Stem.Col1_Mensaje = "El código del Sector ya existe en este inventario"
+            _Mensaje_Stem.Mensaje = "El código del Sector ya existe en este inventario"
             Return _Mensaje_Stem
         End If
 
@@ -144,13 +144,13 @@ Public Class Cl_InvSectores
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
             _Mensaje_Stem.EsCorrecto = True
-            _Mensaje_Stem.Col2_Detalle = "Crear Sector de Inventario"
-            _Mensaje_Stem.Col1_Mensaje = "Sector creado correctamente"
+            _Mensaje_Stem.Detalle = "Crear Sector de Inventario"
+            _Mensaje_Stem.Mensaje = "Sector creado correctamente"
             _Mensaje_Stem.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
 
-            _Mensaje_Stem.Col1_Mensaje = ex.Message
+            _Mensaje_Stem.Mensaje = ex.Message
             If Not IsNothing(myTrans) Then myTrans.Rollback()
 
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
@@ -165,9 +165,9 @@ Public Class Cl_InvSectores
 
         Dim _Mensaje_Stem As New LsValiciones.Mensajes
 
-        _Mensaje_Stem.Col2_Detalle = "Crear Ubicación de Inventario"
+        _Mensaje_Stem.Detalle = "Crear Ubicación de Inventario"
         _Mensaje_Stem.EsCorrecto = False
-        _Mensaje_Stem.Col1_Mensaje = String.Empty
+        _Mensaje_Stem.Mensaje = String.Empty
         _Mensaje_Stem.Icono = MessageBoxIcon.Stop
 
         Consulta_sql = String.Empty
@@ -175,7 +175,7 @@ Public Class Cl_InvSectores
         Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_Sector",
                                             "Id <> " & Zw_Inv_Sector.Id & " And Sector = '" & Zw_Inv_Sector.Sector & "' And IdInventario = " & Zw_Inv_Sector.IdInventario)
         If CBool(_Reg) Then
-            _Mensaje_Stem.Col1_Mensaje = "El código del Sector """ & Zw_Inv_Sector.Sector & """ ya existe en este inventario"
+            _Mensaje_Stem.Mensaje = "El código del Sector """ & Zw_Inv_Sector.Sector & """ ya existe en este inventario"
             Return _Mensaje_Stem
         End If
 
@@ -210,12 +210,12 @@ Public Class Cl_InvSectores
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
             _Mensaje_Stem.EsCorrecto = True
-            _Mensaje_Stem.Col1_Mensaje = "Sector actualizado correctamente"
+            _Mensaje_Stem.Mensaje = "Sector actualizado correctamente"
             _Mensaje_Stem.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
 
-            _Mensaje_Stem.Col1_Mensaje = ex.Message
+            _Mensaje_Stem.Mensaje = ex.Message
             If Not IsNothing(myTrans) Then myTrans.Rollback()
 
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
@@ -230,9 +230,9 @@ Public Class Cl_InvSectores
 
         Dim _Mensaje_Stem As New LsValiciones.Mensajes
 
-        _Mensaje_Stem.Col2_Detalle = "Eliminar Sector de Inventario"
+        _Mensaje_Stem.Detalle = "Eliminar Sector de Inventario"
         _Mensaje_Stem.EsCorrecto = False
-        _Mensaje_Stem.Col1_Mensaje = String.Empty
+        _Mensaje_Stem.Mensaje = String.Empty
         _Mensaje_Stem.Icono = MessageBoxIcon.Stop
 
         Consulta_sql = String.Empty
@@ -240,7 +240,7 @@ Public Class Cl_InvSectores
         Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_Hoja_Detalle",
                                             "IdInventario = " & Zw_Inv_Sector.IdInventario & " And IdSector = " & Zw_Inv_Sector.Id)
         If CBool(_Reg) Then
-            _Mensaje_Stem.Col1_Mensaje = "No se puede eliminar el Sector, tiene registros inventariados"
+            _Mensaje_Stem.Mensaje = "No se puede eliminar el Sector, tiene registros inventariados"
             Return _Mensaje_Stem
         End If
 
@@ -270,12 +270,12 @@ Public Class Cl_InvSectores
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
             _Mensaje_Stem.EsCorrecto = True
-            _Mensaje_Stem.Col1_Mensaje = "Sector eliminado correctamente"
+            _Mensaje_Stem.Mensaje = "Sector eliminado correctamente"
             _Mensaje_Stem.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
 
-            _Mensaje_Stem.Col1_Mensaje = ex.Message
+            _Mensaje_Stem.Mensaje = ex.Message
             If Not IsNothing(myTrans) Then myTrans.Rollback()
 
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)

@@ -1233,7 +1233,7 @@ Public Class Frm_Correos_Conf
             End Using
 
         Catch ex As Exception
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
         End Try
 
         Return _Mensaje

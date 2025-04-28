@@ -590,7 +590,7 @@ Public Class Frm_Sectores_Lista_UbicOblig
 
         Dim _Mensaje As LsValiciones.Mensajes = Fx_ConfirmarProdUbicacionMapa(_Fila, True)
 
-        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje & vbCrLf & _Mensaje.Col2_Detalle, "Validación", MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje & vbCrLf & _Mensaje.Detalle, "Validación", MessageBoxButtons.OK, _Mensaje.Icono)
 
         If Not _Mensaje.EsCorrecto Then
             Return
@@ -610,7 +610,7 @@ Public Class Frm_Sectores_Lista_UbicOblig
 
         Dim _Mensaje As LsValiciones.Mensajes = Fx_ConfirmarProdUltimaUbicacion(_Fila, True)
 
-        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje & vbCrLf & _Mensaje.Col2_Detalle, "Validación", MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje & vbCrLf & _Mensaje.Detalle, "Validación", MessageBoxButtons.OK, _Mensaje.Icono)
 
         If Not _Mensaje.EsCorrecto Then
             Return
@@ -624,7 +624,7 @@ Public Class Frm_Sectores_Lista_UbicOblig
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
-        _Mensaje.Col2_Detalle = "Confirmar productos"
+        _Mensaje.Detalle = "Confirmar productos"
 
         Try
 
@@ -673,8 +673,8 @@ Public Class Frm_Sectores_Lista_UbicOblig
             If Not CBool(_Tbl.Rows.Count) Then
 
                 _Mensaje.EsCorrecto = True
-                _Mensaje.Col2_Detalle = "No se encontraron nuevos productos que levantar."
-                _Mensaje.Col1_Mensaje = _Codigo_Sector & " - " & _Nombre_Sector
+                _Mensaje.Detalle = "No se encontraron nuevos productos que levantar."
+                _Mensaje.Mensaje = _Codigo_Sector & " - " & _Nombre_Sector
                 _Mensaje.Icono = MessageBoxIcon.Exclamation
 
                 Return _Mensaje
@@ -695,13 +695,13 @@ Public Class Frm_Sectores_Lista_UbicOblig
             End If
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Col2_Detalle = _Tbl.Rows.Count & " productos actualizados"
-            _Mensaje.Col1_Mensaje = _Codigo_Sector & " - " & _Nombre_Sector
+            _Mensaje.Detalle = _Tbl.Rows.Count & " productos actualizados"
+            _Mensaje.Mensaje = _Codigo_Sector & " - " & _Nombre_Sector
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
 
@@ -713,7 +713,7 @@ Public Class Frm_Sectores_Lista_UbicOblig
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
-        _Mensaje.Col2_Detalle = "Confirmar productos"
+        _Mensaje.Detalle = "Confirmar productos"
 
         Try
 
@@ -737,8 +737,8 @@ Public Class Frm_Sectores_Lista_UbicOblig
             If Not CBool(_Reg) Then
 
                 _Mensaje.EsCorrecto = True
-                _Mensaje.Col2_Detalle = "No se encontraron productos que levantar."
-                _Mensaje.Col1_Mensaje = _Codigo_Sector & " - " & _Nombre_Sector & ", Ubicación: " & _Codigo_Ubic
+                _Mensaje.Detalle = "No se encontraron productos que levantar."
+                _Mensaje.Mensaje = _Codigo_Sector & " - " & _Nombre_Sector & ", Ubicación: " & _Codigo_Ubic
                 _Mensaje.Icono = MessageBoxIcon.Exclamation
 
                 Return _Mensaje
@@ -774,13 +774,13 @@ Public Class Frm_Sectores_Lista_UbicOblig
             End If
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Col1_Mensaje = _Codigo_Sector & " - " & _Nombre_Sector
-            _Mensaje.Col2_Detalle = _Reg & " productos actualizados"
+            _Mensaje.Mensaje = _Codigo_Sector & " - " & _Nombre_Sector
+            _Mensaje.Detalle = _Reg & " productos actualizados"
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
 

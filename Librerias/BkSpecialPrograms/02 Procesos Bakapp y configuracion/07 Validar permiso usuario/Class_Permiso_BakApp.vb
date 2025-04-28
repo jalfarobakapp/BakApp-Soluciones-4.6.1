@@ -590,6 +590,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Doc00100", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00101", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00102", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00103", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Ope00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ope00002", _Objeto, _Formulario)
@@ -2579,6 +2580,10 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
             Case "Doc00102"
                 _DescripcionPermiso = "DESACTIVAR RAZON DE TRANSFORMACION"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00103"
+                _DescripcionPermiso = "PERMITIR CREAR DOCUMENTOS COMERCIALES A ENTIDADES CON CHEQUES PROTESTADOS E IMPAGOS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
 

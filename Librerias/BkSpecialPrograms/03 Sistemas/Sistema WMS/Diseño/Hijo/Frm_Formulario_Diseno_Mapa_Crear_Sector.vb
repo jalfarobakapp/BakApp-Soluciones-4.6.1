@@ -199,7 +199,7 @@ Public Class Frm_Formulario_Diseno_Mapa_Crear_Sector
         End Select
 
         If Not _Mensaje.EsCorrecto Then
-            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Return
         End If
 

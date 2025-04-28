@@ -632,7 +632,7 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
 
         If Not _Mensaje.EsCorrecto Then
             If Not _Mensaje.Cancelado Then
-                MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             End If
             Return
         End If
@@ -798,8 +798,8 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
 
         If Not CBool(_Tbl_Paso.Rows.Count) Then
             'MessageBoxEx.Show(Me, "No hay documentos que mostrar", "Buscar documentos", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            _Mensaje.Col2_Detalle = "Buscar documentos"
-            _Mensaje.Col1_Mensaje = "No hay documentos que mostrar"
+            _Mensaje.Detalle = "Buscar documentos"
+            _Mensaje.Mensaje = "No hay documentos que mostrar"
             _Mensaje.EsCorrecto = False
             _Mensaje.Icono = MessageBoxIcon.Stop
             Return _Mensaje
@@ -941,7 +941,7 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
             If _Mensaje.Cancelado Then
                 Return
             End If
-            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
 

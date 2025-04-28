@@ -408,7 +408,7 @@ Public Class Frm_Tickets_Seguimiento
         _Mensaje = _Cl_Tickets2.Fx_Grabar_Nueva_Accion2(_Zw_Stk_Tickets_Acciones, True)
 
         If Not _Mensaje.EsCorrecto Then
-            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, "Error al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Error al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
 
@@ -512,8 +512,8 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
             _Mensaje_Tk = _Cl_Tickets2.Fx_Grabar_Nueva_Accion2(_Zw_Stk_Tickets_Acciones, True)
 
             If Not _Mensaje_Tk.EsCorrecto Then
-                _Mensaje.Col2_Detalle = "Error al grabar"
-                Throw New System.Exception(_Mensaje.Col1_Mensaje)
+                _Mensaje.Detalle = "Error al grabar"
+                Throw New System.Exception(_Mensaje.Mensaje)
             End If
 
             _Zw_Stk_Tickets_Acciones.Id = _Mensaje_Tk.Id
@@ -542,7 +542,7 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
                                "Delete " & _Global_BaseBk & "Zw_Stk_Tickets_Archivos Where Id_TicketAc = " & _Zw_Stk_Tickets_Acciones.Id
                 _Sql.Ej_consulta_IDU(Consulta_sql)
 
-                _Mensaje.Col2_Detalle = "Acción"
+                _Mensaje.Detalle = "Acción"
                 Throw New System.Exception("No se realiza ninguna acción")
 
             End If
@@ -564,14 +564,14 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
             If _RechazarTicket Then
 
                 _Mensaje.EsCorrecto = True
-                _Mensaje.Col2_Detalle = "Rechazar Ticket"
-                _Mensaje.Col1_Mensaje = "Ticket Rechazado, se ha enviado la confirmación al remitente"
+                _Mensaje.Detalle = "Rechazar Ticket"
+                _Mensaje.Mensaje = "Ticket Rechazado, se ha enviado la confirmación al remitente"
                 _Mensaje.Icono = MessageBoxIcon.Information
 
             Else
 
-                _Mensaje.Col2_Detalle = "Información"
-                _Mensaje.Col1_Mensaje = "Mensaje enviado correctamente"
+                _Mensaje.Detalle = "Información"
+                _Mensaje.Mensaje = "Mensaje enviado correctamente"
                 _Mensaje.MostrarMensaje = False
 
                 If MessageBoxEx.Show(Me, "Mensaje enviado correctamente" & vbCrLf & vbCrLf & "¿Desea cerrar el formulario?",
@@ -585,7 +585,7 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
             End If
 
         Catch ex As Exception
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
 
@@ -744,7 +744,7 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
             End If
 
-            _Mensaje.Col2_Detalle = _Descripcion
+            _Mensaje.Detalle = _Descripcion
 
             If _CreaNewTicket Then
 
@@ -800,19 +800,19 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
                                                            _Zw_Stk_Tickets_Acciones)
 
             If Not _Mensaje_Ticket.EsCorrecto Then
-                Throw New System.Exception(_Mensaje_Ticket.Col1_Mensaje)
+                Throw New System.Exception(_Mensaje_Ticket.Mensaje)
             End If
 
-            MessageBoxEx.Show(Me, _Mensaje_Ticket.Col1_Mensaje, _Caption, MessageBoxButtons.OK, MessageBoxIcon.Information)
+            MessageBoxEx.Show(Me, _Mensaje_Ticket.Mensaje, _Caption, MessageBoxButtons.OK, MessageBoxIcon.Information)
             GestionRealizada = True
 
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Col1_Mensaje = _Mensaje_Ticket.Col1_Mensaje
+            _Mensaje.Mensaje = _Mensaje_Ticket.Mensaje
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
         End Try
 
         Return _Mensaje
@@ -837,7 +837,7 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
                 Throw New System.Exception("Acción cancelada por el usuario")
             End If
 
-            _Mensaje.Col2_Detalle = _Descripcion
+            _Mensaje.Detalle = _Descripcion
 
             Dim _Zw_Stk_Tickets_Acciones As Zw_Stk_Tickets_Acciones
 
@@ -876,17 +876,17 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
                                                            _Zw_Stk_Tickets_Acciones)
 
             If Not _Mensaje_Ticket.EsCorrecto Then
-                Throw New System.Exception(_Mensaje_Ticket.Col1_Mensaje)
+                Throw New System.Exception(_Mensaje_Ticket.Mensaje)
             End If
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Col1_Mensaje = _Mensaje_Ticket.Col1_Mensaje
+            _Mensaje.Mensaje = _Mensaje_Ticket.Mensaje
             _Mensaje.Icono = MessageBoxIcon.Information
-            _Mensaje.Col2_Detalle = "Rechazar Ticket"
+            _Mensaje.Detalle = "Rechazar Ticket"
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
 
@@ -944,7 +944,7 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
             Return
         End If
 
-        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         If Not _Mensaje.EsCorrecto Then
             Sb_Actualizar_Grilla()
@@ -965,7 +965,7 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
         GestionRealizada = _Mensaje.EsCorrecto
 
         If _Mensaje.MostrarMensaje Then
-            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
         End If
 
         If GestionRealizada And Not _Mensaje.MostrarMensaje Then
@@ -1164,10 +1164,10 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
             If _Fila.Item("FunAccion") = "FunAge" Then _NombreImagen = "people-vendor.png"
 
             If String.IsNullOrEmpty(_UltNumero) Or _UltNumero <> _Fila.Item("Numero") Then
-                _Mensaje_Stem.Col1_Mensaje = "Ticket Nro: " & _Fila.Item("Numero")
+                _Mensaje_Stem.Mensaje = "Ticket Nro: " & _Fila.Item("Numero")
                 _NombreImagen = "ticket-new.png"
             Else
-                _Mensaje_Stem.Col1_Mensaje = _Fila.Item("NombreFunGestiona").ToString.Trim
+                _Mensaje_Stem.Mensaje = _Fila.Item("NombreFunGestiona").ToString.Trim
             End If
 
             'If _Fila.Item("Accion") = "CREA" Then _NombreImagen = "people-customer-man.png"
@@ -1181,8 +1181,8 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
             _UltNumero = _Fila.Item("Numero")
 
-            _Mensaje_Stem.Col2_Detalle = _Fila.Item("StrAccion")
-            _Mensaje_Stem.Col3_Resultado = _Fila.Item("Descripcion")
+            _Mensaje_Stem.Detalle = _Fila.Item("StrAccion")
+            _Mensaje_Stem.Resultado = _Fila.Item("Descripcion")
             _Mensaje_Stem.Fecha = _Fila.Item("Fecha")
             _Mensaje_Stem.Tag = "Ticket Nro: " & _Fila.Item("Numero").ToString.Trim & vbCrLf &
                                     "Func: " & _Fila.Item("NombreFunGestiona").ToString.Trim & ", Accion:" & _Fila.Item("StrAccion").ToString.Trim & vbCrLf &
@@ -1255,7 +1255,7 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
             Dim _Mensaje As LsValiciones.Mensajes = _Cl_Tickets2.FX_Llenar_Producto(_Id_Ticket)
 
             If Not _Mensaje.EsCorrecto Then
-                MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return
             End If
 
@@ -1325,7 +1325,7 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
         GestionRealizada = _Mensaje.EsCorrecto
 
         If _Mensaje.MostrarMensaje Then
-            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
         End If
 
         If GestionRealizada And Not _Mensaje.MostrarMensaje Then

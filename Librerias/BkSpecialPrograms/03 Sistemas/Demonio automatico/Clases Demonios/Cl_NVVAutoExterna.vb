@@ -460,7 +460,7 @@ Drop table #Paso"
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
         Finally
             Modalidad = _Modalidad_Old
         End Try

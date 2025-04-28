@@ -348,7 +348,7 @@ Public Class Frm_02_Detalle_Producto_Actual
 
         Dim _Mensaje As LsValiciones.Mensajes = _Cl_Conteo.Fx_Eliminar_Hoja(_IdHoja, _NombreEquipo, _RowUsuario.Item("KOFU"))
 
-        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         If Not _Mensaje.EsCorrecto Then
             Return

@@ -22,7 +22,7 @@
             If IsNothing(_Row) Then
 
                 _Mensaje_Stem.EsCorrecto = False
-                _Mensaje_Stem.Col1_Mensaje = "No se encontro el registro en la tabla Zw_TablaDeCaracterizaciones con la tabla = " & _Tabla & " y Código tabla = " & _CodigoTabla
+                _Mensaje_Stem.Mensaje = "No se encontro el registro en la tabla Zw_TablaDeCaracterizaciones con la tabla = " & _Tabla & " y Código tabla = " & _CodigoTabla
 
                 Return _Mensaje_Stem
 
@@ -55,7 +55,7 @@
         End With
 
         _Mensaje_Stem.EsCorrecto = True
-        _Mensaje_Stem.Col1_Mensaje = "Registro encontrado."
+        _Mensaje_Stem.Mensaje = "Registro encontrado."
         _Mensaje_Stem.Tag = Zw_TablaDeCaracterizaciones
 
         Return _Mensaje_Stem

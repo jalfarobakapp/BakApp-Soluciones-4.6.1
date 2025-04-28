@@ -505,7 +505,7 @@ Public Class Class_Genera_DTE_RdBk
 
             If Not _Mensaje.EsCorrecto Then 'Not Fx_Revisar_Expiracion_Folio_SII(_Formulario, _Tido, _Nudo, True) Then
                 If _Mostrar_Mensaje Then
-                    MessageBoxEx.Show(_Formulario, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                    MessageBoxEx.Show(_Formulario, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
                 End If
                 Return 0
             End If

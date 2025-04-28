@@ -258,7 +258,7 @@ Public Class Frm_Sectores
         Dim _Mensaje As LsValiciones.Mensajes = _Cl_WMS_Sectores.Fx_Llenar_Sector(_Id_Sector)
 
         If Not _Mensaje.EsCorrecto Then
-            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Return
         End If
 
@@ -279,7 +279,7 @@ Public Class Frm_Sectores
         Dim _Mensaje As LsValiciones.Mensajes = _Cl_WMS_Sectores.Fx_Llenar_Sector(_Id_Sector)
 
         If Not _Mensaje.EsCorrecto Then
-            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Return
         End If
 

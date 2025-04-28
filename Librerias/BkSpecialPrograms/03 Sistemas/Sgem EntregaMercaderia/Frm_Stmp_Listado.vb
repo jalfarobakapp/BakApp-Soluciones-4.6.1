@@ -399,20 +399,20 @@ Public Class Frm_Stmp_Listado
             If _Mensaje_Stem.EsCorrecto Then
 
                 _Icon = MessageBoxIcon.Information
-                MessageBoxEx.Show(Me, _Mensaje_Stem.Col1_Mensaje, _Mensaje_Stem.Col2_Detalle, MessageBoxButtons.OK, _Icon)
+                MessageBoxEx.Show(Me, _Mensaje_Stem.Mensaje, _Mensaje_Stem.Detalle, MessageBoxButtons.OK, _Icon)
 
             Else
 
                 _Icon = MessageBoxIcon.Stop
 
-                If _Mensaje_Stem.Col1_Mensaje.Contains("El documento ya esta ingresado") Then
-                    MessageBoxEx.Show(Me, _Mensaje_Stem.Col1_Mensaje, _Mensaje_Stem.Col2_Detalle, MessageBoxButtons.OK, _Icon)
+                If _Mensaje_Stem.Mensaje.Contains("El documento ya esta ingresado") Then
+                    MessageBoxEx.Show(Me, _Mensaje_Stem.Mensaje, _Mensaje_Stem.Detalle, MessageBoxButtons.OK, _Icon)
                     Return
                 End If
 
                 _Intentos += 1
                 If _Intentos = 3 Then
-                    MessageBoxEx.Show(Me, _Mensaje_Stem.Col1_Mensaje, _Mensaje_Stem.Col2_Detalle, MessageBoxButtons.OK, _Icon)
+                    MessageBoxEx.Show(Me, _Mensaje_Stem.Mensaje, _Mensaje_Stem.Detalle, MessageBoxButtons.OK, _Icon)
                     Return
                 End If
 
@@ -502,13 +502,13 @@ Public Class Frm_Stmp_Listado
             End If
 
             If Not _Aceptar Then
-                _Mensaje.Col2_Detalle = "Acción cancelada"
+                _Mensaje.Detalle = "Acción cancelada"
                 _Mensaje.Cancelado = True
                 Throw New System.Exception("An exception has occurred.")
             End If
 
             If Not _Numero.Contains("FCV") And Not _Numero.Contains("GDV") And Not _Numero.Contains("GDP") And Not _Numero.Contains("BLV") Then
-                _Mensaje.Col2_Detalle = "Validación"
+                _Mensaje.Detalle = "Validación"
                 Throw New System.Exception("Debe indicar si el documento es BLV, FCV o (GDV/GDP)")
             End If
 
@@ -522,7 +522,7 @@ Public Class Frm_Stmp_Listado
 
             If IsNothing(_Row) Then
 
-                _Mensaje.Col2_Detalle = "Validación"
+                _Mensaje.Detalle = "Validación"
 
                 If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
                     Throw New System.Exception(_Sql.Pro_Error)
@@ -536,13 +536,13 @@ Public Class Frm_Stmp_Listado
             Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If IsNothing(_Row_Documento) Then
-                _Mensaje.Col2_Detalle = "Validación"
+                _Mensaje.Detalle = "Validación"
                 Throw New System.Exception("No existe documento " & _Tido & " - " & _Nudo & " En el sistema de Ticket de entrega")
             End If
 
             If MessageBoxEx.Show(Me, "¿Confirma el documento " & _Tido & "-" & _Nudo & "?",
                                  "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
-                _Mensaje.Col2_Detalle = "Validación"
+                _Mensaje.Detalle = "Validación"
                 _Mensaje.Cancelado = True
                 Throw New System.Exception("Acción cancelada por el usuario")
             End If
@@ -558,7 +558,7 @@ Public Class Frm_Stmp_Listado
             _Mensaje = _Cl_Stmp.Fx_Entregar_Mercaderia
 
         Catch ex As Exception
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         Finally
             If Chk_Monitorear.Checked Then
@@ -567,7 +567,7 @@ Public Class Frm_Stmp_Listado
         End Try
 
         If Not _Mensaje.EsCorrecto And Not _Mensaje.Cancelado Then
-            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
             _Mensaje = Fx_Entregar(_CodFuncionario_Entrega, "")
         End If
 
@@ -595,7 +595,7 @@ Public Class Frm_Stmp_Listado
             End If
 
             If Not _Aceptar Then
-                _Mensaje.Col2_Detalle = "Acción cancelada"
+                _Mensaje.Detalle = "Acción cancelada"
                 _Mensaje.Cancelado = True
                 Throw New System.Exception("An exception has occurred.")
             End If
@@ -605,7 +605,7 @@ Public Class Frm_Stmp_Listado
 
             If IsNothing(_Row) Then
 
-                _Mensaje.Col2_Detalle = "Validación"
+                _Mensaje.Detalle = "Validación"
 
                 If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
                     Throw New System.Exception(_Sql.Pro_Error)
@@ -617,7 +617,7 @@ Public Class Frm_Stmp_Listado
 
             If MessageBoxEx.Show(Me, "¿Confirma cerrar el Ticket " & _NumeroTicket & "?",
                                  "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
-                _Mensaje.Col2_Detalle = "Validación"
+                _Mensaje.Detalle = "Validación"
                 _Mensaje.Cancelado = True
                 Throw New System.Exception("Acción cancelada por el usuario")
             End If
@@ -633,7 +633,7 @@ Public Class Frm_Stmp_Listado
             _Mensaje = _Cl_Stmp.Fx_Cerrar_Ticket
 
         Catch ex As Exception
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         Finally
             If Chk_Monitorear.Checked Then
@@ -642,7 +642,7 @@ Public Class Frm_Stmp_Listado
         End Try
 
         If Not _Mensaje.EsCorrecto And Not _Mensaje.Cancelado Then
-            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
             _Mensaje = Fx_Entregar(_CodFuncionario_Cierra, "")
         End If
 
@@ -688,8 +688,8 @@ Public Class Frm_Stmp_Listado
 
         If Not IsNothing(_Row) Then
             _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Col1_Mensaje = "El documento ya esta ingresado en el sistema de Ticket Picking (Ticket Nro: " & _Row.Item("Numero") & ")"
-            _Mensaje_Stem.Col2_Detalle = "Documento: " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO")
+            _Mensaje_Stem.Mensaje = "El documento ya esta ingresado en el sistema de Ticket Picking (Ticket Nro: " & _Row.Item("Numero") & ")"
+            _Mensaje_Stem.Detalle = "Documento: " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO")
             Return _Mensaje_Stem
         End If
 
@@ -701,8 +701,8 @@ Public Class Frm_Stmp_Listado
 
         If IsNothing(_Row_Documento) Then
             _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Col1_Mensaje = "No se encontro el registro en la tabla MAEEDO, Documento: " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO")
-            _Mensaje_Stem.Col2_Detalle = "IDMAEEDO " & _Idmaeedo
+            _Mensaje_Stem.Mensaje = "No se encontro el registro en la tabla MAEEDO, Documento: " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO")
+            _Mensaje_Stem.Detalle = "IDMAEEDO " & _Idmaeedo
             Return _Mensaje_Stem
         End If
 
@@ -730,8 +730,8 @@ Public Class Frm_Stmp_Listado
 
         If Not _Row_Documento.Item("Pickear") Then
             _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Col1_Mensaje = "Este documento no esta marcado para ser Pickeado en la tabla Zw_Docu_Ent"
-            _Mensaje_Stem.Col2_Detalle = "Documento: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
+            _Mensaje_Stem.Mensaje = "Este documento no esta marcado para ser Pickeado en la tabla Zw_Docu_Ent"
+            _Mensaje_Stem.Detalle = "Documento: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
             Return _Mensaje_Stem
         End If
 
@@ -812,7 +812,7 @@ Public Class Frm_Stmp_Listado
         Try
 
             If _TidoDocEmitir <> "GDV" And _TidoDocEmitir <> "FCV" Then
-                _Mensaje.Col1_Mensaje = "Error"
+                _Mensaje.Mensaje = "Error"
                 Throw New System.Exception("El Tido Destino esta vacío o no corresponde: (" & _TidoDocEmitir & "), solo puede ser: FCV y GDV")
             End If
 
@@ -838,134 +838,134 @@ Public Class Frm_Stmp_Listado
 
                     If Not _Msj_Tsc.EsCorrecto Then
                         _Mensaje.ErrorDeConexionSQL = _Msj_Tsc.ErrorDeConexionSQL
-                        Throw New System.Exception(_Msj_Tsc.Col1_Mensaje)
+                        Throw New System.Exception(_Msj_Tsc.Mensaje)
                     End If
 
                     'If Fx_Revisar_Tasa_Cambio(_Formulario) Then
 
                     If Fx_Se_Puede_Trasladar_Para_Crear_Otro_Documento(_Idmaeedo_Origen) Then
 
-                            Dim _Empresa As String = ModEmpresa
-                            Dim _Sucursal As String = ModSucursal
-                            Dim _Bodega As String = ModBodega
+                        Dim _Empresa As String = ModEmpresa
+                        Dim _Sucursal As String = ModSucursal
+                        Dim _Bodega As String = ModBodega
 
-                            Dim _Permiso = "Bo" & _Empresa & _Sucursal & _Bodega
+                        Dim _Permiso = "Bo" & _Empresa & _Sucursal & _Bodega
 
-                            If Not Fx_Tiene_Permiso(_Formulario, _Permiso, , True) Then
+                        If Not Fx_Tiene_Permiso(_Formulario, _Permiso, , True) Then
 
-                                Dim _Bod = _Global_Row_Configuracion_Estacion.Item("NOKOBO")
-                                'MessageBoxEx.Show(_Formulario, "NO ESTA AUTORIZADO PARA EFECTUAR DOCUMENTOS DESDE LA BODEGA DE ESTA MODALIDAD" & vbCrLf & vbCrLf &
-                                '                  "BODEGA: " & _Bodega & " - " & _Bod,
-                                '                  "VALIDACION",
-                                '                  MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, _Formulario.TopMost)
+                            Dim _Bod = _Global_Row_Configuracion_Estacion.Item("NOKOBO")
+                            'MessageBoxEx.Show(_Formulario, "NO ESTA AUTORIZADO PARA EFECTUAR DOCUMENTOS DESDE LA BODEGA DE ESTA MODALIDAD" & vbCrLf & vbCrLf &
+                            '                  "BODEGA: " & _Bodega & " - " & _Bod,
+                            '                  "VALIDACION",
+                            '                  MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, _Formulario.TopMost)
 
-                                _Mensaje.Col1_Mensaje = "VALIDACION"
-                                Throw New System.Exception("NO ESTA AUTORIZADO PARA EFECTUAR DOCUMENTOS DESDE LA BODEGA DE ESTA MODALIDAD" & vbCrLf & vbCrLf &
-                                                  "BODEGA: " & _Bodega & " - " & _Bod)
-
-                            End If
-
-                            If Fx_Tiene_Permiso(_Formulario, _Permiso) Then
-
-                                Dim _CampoPrecio As String
-
-                                If _Meardo = "N" Then ' Neto
-                                    _CampoPrecio = "PPPRNE"
-                                Else ' Bruto
-                                    _CampoPrecio = "PPPRBR"
-                                End If
-
-                                Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
-                                               vbCrLf &
-                                               "Select Ddo.*,Det.Cantidad As 'Cantidad'," & vbCrLf &
-                                               "Det.Caprco1_Real As 'CantUd1_Pickea',Det.Caprco2_Real As 'CantUd2_Pickea'," & vbCrLf &
-                                               "Cast(1 As Bit) As DesdePickeo," & vbCrLf &
-                                               "CAPRCO1-CAPREX1 As 'CantUd1_Dori',CAPRCO2-CAPREX2 As 'CantUd2_Dori'," & vbCrLf &
-                                               "Case WHEN UDTRPR = 1 Then PPPRNE Else PPPRNE*RLUDPR End AS 'Precio'," & vbCrLf &
-                                               "0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta," & vbCrLf &
-                                               "Det.RtuVariable" & vbCrLf &
-                                               "From MAEDDO Ddo With ( NOLOCK )" & vbCrLf &
-                                               "Inner Join " & _Global_BaseBk & "Zw_Stmp_Det Det On Ddo.IDMAEDDO = Det.Idmaeddo" & vbCrLf &
-                                               "Where IDMAEEDO = " & _Idmaeedo_Origen & " AND ( ESLIDO<>'C' OR ESFALI='I' ) AND TICT = ''" & vbCrLf &
-                                               "Order by IDMAEEDO,IDMAEDDO " & vbCrLf &
-                                               vbCrLf &
-                                               "Select * From MAEIMLI Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
-                                               vbCrLf &
-                                               "Select * From MAEDTLI Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
-                                               vbCrLf &
-                                               "Select TOP 1 * From MAEEDOOB Where IDMAEEDO = " & _Idmaeedo_Origen
-
-                                'Falta revisar el campo SUBTIDO, ya que al parecer se guardan datos dependiendo del tipo de FCC por ejemplo si tiene derecho a credito fiscal
-                                'Falta campo FECHATRIB = Fecha de ingreso
-
-                                ' SUBTIDO
-                                '-- 001 Sin derecho a credito fiscal y Sin documento contiene activo fijo
-                                '-- 000 Documento contiene activo fijo y Sin derecho a credito fiscal
-                                '-- 101 Conderecho a credito fiscal y documento contiene activo fijo
-                                '-- 100 Con derecho a credito fiscal y sin documento contiene activo fijo
-                                '-- '' -- No incluye este documento en el libro de compras 
-
-                                Dim _Ds_Maeedo_Origen As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
-
-                                Dim Fm_Post As New Frm_Formulario_Documento(_TidoDocEmitir, csGlobales.Enum_Tipo_Documento.Venta, False)
-                                Fm_Post.Sb_Limpiar(_Modalidad)
-                                Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(Me, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True)
-                                Fm_Post.Fx_Grabar_Documento(False, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento, True, False)
-                                _New_Idmaeedo = Fm_Post.Pro_Idmaeedo
-
-                                If CBool(_New_Idmaeedo) Then
-                                    Fm_Post.Sb_Activar_Orden_De_Despacho(_New_Idmaeedo)
-                                End If
-
-                                Fm_Post.Dispose()
-
-                                If Not CBool(_New_Idmaeedo) Then
-                                    _Mensaje.Col2_Detalle = "Error al grabar documento"
-                                    Throw New System.Exception("No fue posible realizar la grabación de la Factura.")
-                                End If
-
-                                Dim Cerrar_Doc As New Clas_Cerrar_Documento
-
-                                Consulta_sql = Replace(My.Resources.Recursos_Ver_Documento.Traer_Documento_Random, "#Idmaeedo#", _Idmaeedo_Origen)
-
-                                Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
-
-                                Dim _Tbl_Maeddo = _Ds.Tables(1)
-
-                                If Cerrar_Doc.Fx_Cerrar_Documento(_Idmaeedo_Origen, _Tbl_Maeddo) Then
-
-                                End If
-
-                                Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _New_Idmaeedo
-                                Dim _Row_Maeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-                                _Mensaje.EsCorrecto = True
-                                _Mensaje.Id = _New_Idmaeedo
-                                _Mensaje.Fecha = FechaDelServidor()
-                                _Mensaje.Col1_Mensaje = "Documento creado correctamente"
-                                _Mensaje.Col2_Detalle = "Se crea el documento: " & _Row_Maeedo.Item("TIDO") & "-" & _Row_Maeedo.Item("NUDO")
-
-                            End If
-
-                        Else
-
-                            _Mensaje.Col1_Mensaje = "Documento cerrado"
-                            Throw New System.Exception("Nota de venta Nro: " & _Nudo & " se encuentra cerrado completamente")
+                            _Mensaje.Mensaje = "VALIDACION"
+                            Throw New System.Exception("NO ESTA AUTORIZADO PARA EFECTUAR DOCUMENTOS DESDE LA BODEGA DE ESTA MODALIDAD" & vbCrLf & vbCrLf &
+                                              "BODEGA: " & _Bodega & " - " & _Bod)
 
                         End If
+
+                        If Fx_Tiene_Permiso(_Formulario, _Permiso) Then
+
+                            Dim _CampoPrecio As String
+
+                            If _Meardo = "N" Then ' Neto
+                                _CampoPrecio = "PPPRNE"
+                            Else ' Bruto
+                                _CampoPrecio = "PPPRBR"
+                            End If
+
+                            Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
+                                           vbCrLf &
+                                           "Select Ddo.*,Det.Cantidad As 'Cantidad'," & vbCrLf &
+                                           "Det.Caprco1_Real As 'CantUd1_Pickea',Det.Caprco2_Real As 'CantUd2_Pickea'," & vbCrLf &
+                                           "Cast(1 As Bit) As DesdePickeo," & vbCrLf &
+                                           "CAPRCO1-CAPREX1 As 'CantUd1_Dori',CAPRCO2-CAPREX2 As 'CantUd2_Dori'," & vbCrLf &
+                                           "Case WHEN UDTRPR = 1 Then PPPRNE Else PPPRNE*RLUDPR End AS 'Precio'," & vbCrLf &
+                                           "0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta," & vbCrLf &
+                                           "Det.RtuVariable" & vbCrLf &
+                                           "From MAEDDO Ddo With ( NOLOCK )" & vbCrLf &
+                                           "Inner Join " & _Global_BaseBk & "Zw_Stmp_Det Det On Ddo.IDMAEDDO = Det.Idmaeddo" & vbCrLf &
+                                           "Where IDMAEEDO = " & _Idmaeedo_Origen & " AND ( ESLIDO<>'C' OR ESFALI='I' ) AND TICT = ''" & vbCrLf &
+                                           "Order by IDMAEEDO,IDMAEDDO " & vbCrLf &
+                                           vbCrLf &
+                                           "Select * From MAEIMLI Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
+                                           vbCrLf &
+                                           "Select * From MAEDTLI Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
+                                           vbCrLf &
+                                           "Select TOP 1 * From MAEEDOOB Where IDMAEEDO = " & _Idmaeedo_Origen
+
+                            'Falta revisar el campo SUBTIDO, ya que al parecer se guardan datos dependiendo del tipo de FCC por ejemplo si tiene derecho a credito fiscal
+                            'Falta campo FECHATRIB = Fecha de ingreso
+
+                            ' SUBTIDO
+                            '-- 001 Sin derecho a credito fiscal y Sin documento contiene activo fijo
+                            '-- 000 Documento contiene activo fijo y Sin derecho a credito fiscal
+                            '-- 101 Conderecho a credito fiscal y documento contiene activo fijo
+                            '-- 100 Con derecho a credito fiscal y sin documento contiene activo fijo
+                            '-- '' -- No incluye este documento en el libro de compras 
+
+                            Dim _Ds_Maeedo_Origen As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
+
+                            Dim Fm_Post As New Frm_Formulario_Documento(_TidoDocEmitir, csGlobales.Enum_Tipo_Documento.Venta, False)
+                            Fm_Post.Sb_Limpiar(_Modalidad)
+                            Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(Me, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True)
+                            Fm_Post.Fx_Grabar_Documento(False, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento, True, False)
+                            _New_Idmaeedo = Fm_Post.Pro_Idmaeedo
+
+                            If CBool(_New_Idmaeedo) Then
+                                Fm_Post.Sb_Activar_Orden_De_Despacho(_New_Idmaeedo)
+                            End If
+
+                            Fm_Post.Dispose()
+
+                            If Not CBool(_New_Idmaeedo) Then
+                                _Mensaje.Detalle = "Error al grabar documento"
+                                Throw New System.Exception("No fue posible realizar la grabación de la Factura.")
+                            End If
+
+                            Dim Cerrar_Doc As New Clas_Cerrar_Documento
+
+                            Consulta_sql = Replace(My.Resources.Recursos_Ver_Documento.Traer_Documento_Random, "#Idmaeedo#", _Idmaeedo_Origen)
+
+                            Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
+
+                            Dim _Tbl_Maeddo = _Ds.Tables(1)
+
+                            If Cerrar_Doc.Fx_Cerrar_Documento(_Idmaeedo_Origen, _Tbl_Maeddo) Then
+
+                            End If
+
+                            Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _New_Idmaeedo
+                            Dim _Row_Maeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                            _Mensaje.EsCorrecto = True
+                            _Mensaje.Id = _New_Idmaeedo
+                            _Mensaje.Fecha = FechaDelServidor()
+                            _Mensaje.Mensaje = "Documento creado correctamente"
+                            _Mensaje.Detalle = "Se crea el documento: " & _Row_Maeedo.Item("TIDO") & "-" & _Row_Maeedo.Item("NUDO")
+
+                        End If
+
+                    Else
+
+                        _Mensaje.Mensaje = "Documento cerrado"
+                        Throw New System.Exception("Nota de venta Nro: " & _Nudo & " se encuentra cerrado completamente")
+
+                    End If
 
                     'End If
                     ''
                 End If
             Else
 
-                _Mensaje.Col1_Mensaje = "Información"
+                _Mensaje.Mensaje = "Información"
                 Throw New System.Exception("Debe configurar el formato de salida en la configuración por modalidad de trabajo")
 
             End If
 
         Catch ex As Exception
-            _Mensaje.Col2_Detalle = ex.Message
+            _Mensaje.Detalle = ex.Message
         End Try
 
         Return _Mensaje
@@ -1118,7 +1118,7 @@ Public Class Frm_Stmp_Listado
 
             _Nudo = Fx_Rellena_ceros(_Nudo, 10)
 
-            Consulta_sql = "Select IDMAEEDO,TIDO,NUDO From MAEEDO Where TIDO = 'NVV' And NUDO = '" & _Nudo & "'"
+            Consulta_sql = "Select IDMAEEDO,TIDO,NUDO,ENDO,SUENDO From MAEEDO Where TIDO = 'NVV' And NUDO = '" & _Nudo & "'"
             Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If IsNothing(_Row) Then
@@ -1166,7 +1166,6 @@ Public Class Frm_Stmp_Listado
                 Return
             End If
 
-
             Dim _RowEntidad As DataRow = Fx_Traer_Datos_Entidad(_Row.Item("ENDO"), _Row.Item("SUENDO"))
 
             If Not IsNothing(_RowEntidad) Then
@@ -1198,6 +1197,35 @@ Public Class Frm_Stmp_Listado
 
                 End If
 
+                Dim _Koen As String = _RowEntidad.Item("KOEN")
+                Dim _Suen As String = _RowEntidad.Item("SUEN")
+
+                Dim _Mensaje As New LsValiciones.Mensajes
+
+                _Mensaje = Fx_Entidad_Revisar_Protestos(_Koen)
+
+                If Not _Mensaje.EsCorrecto Then
+
+                    _Msg = _Mensaje.Mensaje
+
+                    If MessageBoxEx.Show(Me, _Mensaje.Mensaje & Environment.NewLine &
+                                          "Informe de esta situación a la administración." & vbCrLf & vbCrLf &
+                                          "¿Desea ver el detalle?",
+                                          "Validación",
+                                          MessageBoxButtons.YesNo, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost) = DialogResult.Yes Then
+
+                        Dim Fm As New Frm_InfoEnt_Protestos(_Mensaje.Tag)
+                        Fm.ShowDialog(Me)
+                        Fm.Dispose()
+
+                    End If
+
+                    If Not Fx_RevisarPermiso(_Row.Item("Id"), "Doc00103", _Msg, _Row.Item("Idmaeedo")) Then
+                        Return
+                    End If
+
+                End If
+
             End If
 
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Facturar = 1,CodFuncionario_MarcaFacturar = '" & FUNCIONARIO & "'" & vbCrLf &
@@ -1208,7 +1236,7 @@ Public Class Frm_Stmp_Listado
                 _Mensaje = Fx_EnviarImprimirTicket(_Row)
 
                 If Not _Mensaje.EsCorrecto Then
-                    MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                    MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
                 End If
 
                 MessageBoxEx.Show(Me, "Documento marcado", "Marcar documento", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -1247,8 +1275,8 @@ Public Class Frm_Stmp_Listado
 
                 If Not .ImprimirTicket Then
                     _Mensaje.EsCorrecto = False
-                    _Mensaje.Col1_Mensaje = "Impresora no configurada"
-                    _Mensaje.Col2_Detalle = "No se ha configurado la impresora para imprimir el ticket"
+                    _Mensaje.Mensaje = "Impresora no configurada"
+                    _Mensaje.Detalle = "No se ha configurado la impresora para imprimir el ticket"
                     _Mensaje.Icono = MessageBoxIcon.Stop
                     Return _Mensaje
                 End If
@@ -1264,8 +1292,8 @@ Public Class Frm_Stmp_Listado
                    String.IsNullOrWhiteSpace(.Impresora_Ticket) Or
                    String.IsNullOrWhiteSpace(.NombreFormato_Ticket) Then
                     _Mensaje.EsCorrecto = False
-                    _Mensaje.Col1_Mensaje = "Impresora no configurada"
-                    _Mensaje.Col2_Detalle = "No se ha configurado la impresora para imprimir el ticket"
+                    _Mensaje.Mensaje = "Impresora no configurada"
+                    _Mensaje.Detalle = "No se ha configurado la impresora para imprimir el ticket"
                     _Mensaje.Icono = MessageBoxIcon.Stop
                     Return _Mensaje
                 End If
@@ -1275,8 +1303,8 @@ Public Class Frm_Stmp_Listado
                                ",'wms',GETDATE(),'" & .NombreFormato_Ticket & "','" & .Impresora_Ticket & "',0)"
                 If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
                     _Mensaje.EsCorrecto = False
-                    _Mensaje.Col1_Mensaje = "Error al enviar a impresión"
-                    _Mensaje.Col2_Detalle = "Documento: " & _Tido & "-" & _Nudo & vbCrLf & _Sql.Pro_Error
+                    _Mensaje.Mensaje = "Error al enviar a impresión"
+                    _Mensaje.Detalle = "Documento: " & _Tido & "-" & _Nudo & vbCrLf & _Sql.Pro_Error
                     _Mensaje.Icono = MessageBoxIcon.Stop
                     Return _Mensaje
                 End If
@@ -1284,14 +1312,14 @@ Public Class Frm_Stmp_Listado
             End With
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Col1_Mensaje = "Documento enviado a impresión"
-            _Mensaje.Col2_Detalle = "Documento: " & _Tido & "-" & _Nudo
+            _Mensaje.Mensaje = "Documento enviado a impresión"
+            _Mensaje.Detalle = "Documento: " & _Tido & "-" & _Nudo
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col1_Mensaje = ex.Message
-            _Mensaje.Col2_Detalle = "Error al enviar a impresión"
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Detalle = "Error al enviar a impresión"
             _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
 
@@ -1307,12 +1335,12 @@ Public Class Frm_Stmp_Listado
         Dim _Cl_Stmp As New Cl_Stmp
 
         _Mensaje = _Cl_Stmp.Fx_Llenar_Permiso(_Id_Enc, _CodPermiso)
-        _Mensaje.Col2_Detalle = "Validación"
+        _Mensaje.Detalle = "Validación"
 
         If Not _Mensaje.EsCorrecto Then
 
             If MessageBoxEx.Show(Me, _Msg & vbCrLf & vbCrLf &
-                                 "¿Desea ingresar el permiso para realizar esta acción?", _Mensaje.Col2_Detalle,
+                                 "¿Desea ingresar el permiso para realizar esta acción?", _Mensaje.Detalle,
                                  MessageBoxButtons.YesNo, MessageBoxIcon.Stop) <> DialogResult.Yes Then
                 Return False
             End If
@@ -1373,14 +1401,14 @@ Public Class Frm_Stmp_Listado
             End If
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Col2_Detalle = "Validación"
-            _Mensaje.Col1_Mensaje = "El cliente no presenta morosidad"
+            _Mensaje.Detalle = "Validación"
+            _Mensaje.Mensaje = "El cliente no presenta morosidad"
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col2_Detalle = "Validación"
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Detalle = "Validación"
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
 
@@ -1396,7 +1424,7 @@ Public Class Frm_Stmp_Listado
 
         If _Mensaje.EsCorrecto Then
             Sb_Actualizar_Grilla()
-            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
         End If
 
     End Sub
@@ -1473,7 +1501,7 @@ Public Class Frm_Stmp_Listado
             _Fm.Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado,
                                      "NVV",
                                      "Where TIDO = 'NVV'")
-                _Fm.Rdb_Estado_Todas.Enabled = True
+            _Fm.Rdb_Estado_Todas.Enabled = True
             _Fm.Rdb_Estado_Vigente.Checked = True
             _Fm.Rdb_Estado_Cerrado.Enabled = False
             '_Fm.HabilitarNVVParaFacturar = True
@@ -1645,7 +1673,7 @@ Public Class Frm_Stmp_Listado
         _Mensaje = Fx_Entregar(FUNCIONARIO, _TidoGen & _NudoGen)
 
         If Not _Mensaje.EsCorrecto And Not _Mensaje.Cancelado Then
-            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
             Return
         End If
 
@@ -1768,7 +1796,7 @@ Public Class Frm_Stmp_Listado
         _Mensaje = Fx_CerrarTicket(FUNCIONARIO, _Numero)
 
         If Not _Mensaje.EsCorrecto And Not _Mensaje.Cancelado Then
-            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
             Return
         End If
 
@@ -1791,7 +1819,7 @@ Public Class Frm_Stmp_Listado
 
         _Mensaje = _Cl_Stmp.Fx_EnviarAPerparacionPlanificar
 
-        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         If Not _Mensaje.EsCorrecto Then
             Return

@@ -77,7 +77,7 @@ Public Class Frm_RevMayMin
 
                     _Fila.Item("Cumple") = _Cumple
 
-                    _Mensaje.Col1_Mensaje = _Mensaje.Col2_Detalle
+                    _Mensaje.Mensaje = _Mensaje.Detalle
 
                     If _Cumple And _EsListaInferior Then
                         _Fila.Item("CambiarLista") = True
@@ -86,10 +86,10 @@ Public Class Frm_RevMayMin
                         _Fila.Item("CambiarLista") = True
                         _Fila.Item("NewLista") = _ListaInferior
                     Else
-                        _Mensaje.Col1_Mensaje = "Entidad: " & _Koen & " - " & _Nokoen & ", mantiene su lista de precios (" & _Lista & ")"
+                        _Mensaje.Mensaje = "Entidad: " & _Koen & " - " & _Nokoen & ", mantiene su lista de precios (" & _Lista & ")"
                     End If
 
-                    AddToLog("Rev.Entidad", _Koen.Trim & " - " & _Nokoen.Trim & ": " & _Mensaje.Col1_Mensaje)
+                    AddToLog("Rev.Entidad", _Koen.Trim & " - " & _Nokoen.Trim & ": " & _Mensaje.Mensaje)
 
                 Else
 

@@ -635,6 +635,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Procedimientos\Cl_Entidad.vb" />
+    <Compile Include="01 Procesos  compartidos\Entidades\02 Información entidad\Frm_InfoEnt_Protestos.Designer.vb">
+      <DependentUpon>Frm_InfoEnt_Protestos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Entidades\02 Información entidad\Frm_InfoEnt_Protestos.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="01 Procesos  compartidos\Envio y Recepcion de Mail\Configuracion de recepcion de correos POP3\Frm_RecepXML_Cmp_ConfGral.Designer.vb">
       <DependentUpon>Frm_RecepXML_Cmp_ConfGral.vb</DependentUpon>
     </Compile>
@@ -4747,6 +4753,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_Puntos.resx">
       <DependentUpon>Frm_Crear_Entidad_Mt_Puntos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Entidades\02 Información entidad\Frm_InfoEnt_Protestos.resx">
+      <DependentUpon>Frm_InfoEnt_Protestos.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Envio y Recepcion de Mail\Configuracion de recepcion de correos POP3\Frm_RecepXML_Cmp_ConfGral.resx">
       <DependentUpon>Frm_RecepXML_Cmp_ConfGral.vb</DependentUpon>

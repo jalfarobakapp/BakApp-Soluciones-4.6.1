@@ -1107,7 +1107,7 @@ Public Class Frm_GRI_FabXProducto
         _Mensaje = _Cl_Tarja.Fx_Grabar_Tarja2()
 
         If Not _Mensaje.EsCorrecto Then
-            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
             Return
         End If
 
@@ -1185,7 +1185,7 @@ Public Class Frm_GRI_FabXProducto
             _Msj_GDI = Cl_ArmaGDI.Fx_CrearGDI(Me, _Row_Potl.Item("IDPOTL"), _Cantidadv, _Row_Entidad, _FechaEmision, _Observaciones_GDI)
 
             If Not _Msj_GDI.EsCorrecto Then
-                MessageBoxEx.Show(Me, _Msj_GDI.Col1_Mensaje, _Msj_GDI.Col2_Detalle, MessageBoxButtons.OK, _Msj_GDI.Icono, MessageBoxDefaultButton.Button1, True)
+                MessageBoxEx.Show(Me, _Msj_GDI.Mensaje, _Msj_GDI.Detalle, MessageBoxButtons.OK, _Msj_GDI.Icono, MessageBoxDefaultButton.Button1, True)
             End If
 
         End If
@@ -1358,7 +1358,7 @@ Public Class Frm_GRI_FabXProducto
         Dim Cl_ArmaGDI As New Cl_ArmaGDIConsumo
         _Mensaje = Cl_ArmaGDI.Fx_CrearGDI(Me, _Row_Potl.Item("IDPOTL"), _Cantidad, _Row_Entidad, _FechaEmision, "")
         If _Mensaje.EsCorrecto Then
-            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono, MessageBoxDefaultButton.Button1, True)
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono, MessageBoxDefaultButton.Button1, True)
         End If
 
     End Sub

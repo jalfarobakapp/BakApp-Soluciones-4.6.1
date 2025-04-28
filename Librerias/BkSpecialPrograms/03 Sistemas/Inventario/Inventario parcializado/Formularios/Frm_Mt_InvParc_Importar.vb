@@ -210,8 +210,8 @@ Public Class Frm_Mt_InvParc_Importar
                 Else
 
                     _Mensaje.EsCorrecto = False
-                    _Mensaje.Col2_Detalle = "Fila: " & i + 1 & ", Código: " & _Codigo
-                    _Mensaje.Col1_Mensaje = "Producto no existe"
+                    _Mensaje.Detalle = "Fila: " & i + 1 & ", Código: " & _Codigo
+                    _Mensaje.Mensaje = "Producto no existe"
                     _Descripcion = "#NO EXISTE#"
 
                 End If
@@ -223,8 +223,8 @@ Public Class Frm_Mt_InvParc_Importar
                 If CBool(rows.Length) Then
 
                     _Mensaje.EsCorrecto = False
-                    _Mensaje.Col2_Detalle = "Fila: " & i + 1 & ", Código: " & _Codigo
-                    _Mensaje.Col1_Mensaje = "Producto repetido"
+                    _Mensaje.Detalle = "Fila: " & i + 1 & ", Código: " & _Codigo
+                    _Mensaje.Mensaje = "Producto repetido"
                     _Descripcion = "#REPETIDO#"
 
                 End If

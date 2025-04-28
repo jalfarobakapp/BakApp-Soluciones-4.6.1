@@ -38,7 +38,7 @@ Public Class Cl_Tickets
             Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If IsNothing(_Row) Then
-                _Mensaje.Col2_Detalle = "No se encontro registro"
+                _Mensaje.Detalle = "No se encontro registro"
                 Throw New System.Exception("No se encontro el registro en la tabla de Zw_Stk_Tickets con el Id = " & _Id_Ticket)
             End If
 
@@ -78,7 +78,7 @@ Public Class Cl_Tickets
             _Mensaje.EsCorrecto = True
 
         Catch ex As Exception
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
         End Try
 
         Return _Mensaje
@@ -96,7 +96,7 @@ Public Class Cl_Tickets
             Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If IsNothing(_Row) Then
-                _Mensaje.Col2_Detalle = "No se encontro registro"
+                _Mensaje.Detalle = "No se encontro registro"
                 Throw New System.Exception("No se encontro el registro en la tabla de Zw_Stk_Tickets con el Id_Ticket = " & _Id_Ticket)
             End If
 
@@ -130,7 +130,7 @@ Public Class Cl_Tickets
             _Mensaje.Tag = _Zw_Stk_Tickets_Producto
 
         Catch ex As Exception
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
         End Try
 
         Return _Mensaje
@@ -148,7 +148,7 @@ Public Class Cl_Tickets
             Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If IsNothing(_Row) Then
-                _Mensaje.Col2_Detalle = "No se encontro registro"
+                _Mensaje.Detalle = "No se encontro registro"
                 Throw New System.Exception("No se encontro el registro en la tabla de Zw_Stk_Tickets con el Id = " & _Id)
             End If
 
@@ -182,7 +182,7 @@ Public Class Cl_Tickets
             _Mensaje.Tag = _Zw_Stk_Tickets_Producto
 
         Catch ex As Exception
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
         End Try
 
         Return _Mensaje
@@ -310,7 +310,7 @@ Public Class Cl_Tickets
                     _Tbl_Agentes = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
                     If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
-                        _Mensaje.Col2_Detalle = "Error al grabar"
+                        _Mensaje.Detalle = "Error al grabar"
                         Throw New System.Exception(_Sql.Pro_Error)
                     End If
 
@@ -456,16 +456,16 @@ Public Class Cl_Tickets
 
             _Mensaje.EsCorrecto = True
             _Mensaje.Id = Zw_Stk_Tickets.Id
-            _Mensaje.Col2_Detalle = "Grabación correcta"
-            _Mensaje.Col1_Mensaje = "Se graba correctamente el Ticket " & Zw_Stk_Tickets.Numero & "-" & Zw_Stk_Tickets.SubNro
+            _Mensaje.Detalle = "Grabación correcta"
+            _Mensaje.Mensaje = "Se graba correctamente el Ticket " & Zw_Stk_Tickets.Numero & "-" & Zw_Stk_Tickets.SubNro
 
             myTrans.Commit()
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
         Catch ex As Exception
 
-            _Mensaje.Col1_Mensaje = ex.Message
-            _Mensaje.Col3_Resultado = Consulta_sql
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Resultado = Consulta_sql
             Zw_Stk_Tickets.Id = 0
 
             If Not IsNothing(myTrans) Then
@@ -587,7 +587,7 @@ Public Class Cl_Tickets
         Catch ex As Exception
 
             _Id_TicketAc = 0
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
             If Not IsNothing(myTrans) Then myTrans.Rollback()
 
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
@@ -771,9 +771,9 @@ Public Class Cl_Tickets
 
             _Mensaje_Ticket.EsCorrecto = True
 
-            If _Cierra_Ticket Then _Mensaje_Ticket.Col1_Mensaje = "Ticket " & Zw_Stk_Tickets.Numero & " cerrado correctamente"
-            If _Solicita_Cierre Then _Mensaje_Ticket.Col1_Mensaje = "Solicitud de cierre enviada correctamente"
-            If _AnulaTicket Then _Mensaje_Ticket.Col1_Mensaje = "Ticket #" & Zw_Stk_Tickets.Numero & " anulado correctamente"
+            If _Cierra_Ticket Then _Mensaje_Ticket.Mensaje = "Ticket " & Zw_Stk_Tickets.Numero & " cerrado correctamente"
+            If _Solicita_Cierre Then _Mensaje_Ticket.Mensaje = "Solicitud de cierre enviada correctamente"
+            If _AnulaTicket Then _Mensaje_Ticket.Mensaje = "Ticket #" & Zw_Stk_Tickets.Numero & " anulado correctamente"
 
         Catch ex As Exception
 
@@ -783,7 +783,7 @@ Public Class Cl_Tickets
 
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
-            _Mensaje_Ticket.Col1_Mensaje = ex.Message
+            _Mensaje_Ticket.Mensaje = ex.Message
             '_Mensaje_Ticket.Zw_Stk_Tickets_Acciones = Nothing
 
         End Try
@@ -841,7 +841,7 @@ Public Class Cl_Tickets
 
         Catch ex As Exception
 
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
             If Not IsNothing(myTrans) Then myTrans.Rollback()
 
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
@@ -990,7 +990,7 @@ Public Class Cl_Tickets
 
         Catch ex As Exception
 
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
             If Not IsNothing(myTrans) Then myTrans.Rollback()
 
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)

@@ -22,7 +22,7 @@ Public Class Cl_Despachos
         If IsNothing(_Row) Then
 
             _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Col1_Mensaje = "No se encontro el registro en la tabla Zw_Despachos_Configuracion con Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "'"
+            _Mensaje_Stem.Mensaje = "No se encontro el registro en la tabla Zw_Despachos_Configuracion con Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "'"
 
             Return _Mensaje_Stem
 
@@ -47,7 +47,7 @@ Public Class Cl_Despachos
         End With
 
         _Mensaje_Stem.EsCorrecto = True
-        _Mensaje_Stem.Col1_Mensaje = "Registro encontrado."
+        _Mensaje_Stem.Mensaje = "Registro encontrado."
 
         Return _Mensaje_Stem
 
@@ -112,14 +112,14 @@ Public Class Cl_Despachos
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
             _Mensaje_Stem.EsCorrecto = True
-            _Mensaje_Stem.Col2_Detalle = "Grabar configuración"
-            _Mensaje_Stem.Col1_Mensaje = "Configuración grabada correctamente."
+            _Mensaje_Stem.Detalle = "Grabar configuración"
+            _Mensaje_Stem.Mensaje = "Configuración grabada correctamente."
             _Mensaje_Stem.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
 
             _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Col1_Mensaje = ex.Message
+            _Mensaje_Stem.Mensaje = ex.Message
             _Mensaje_Stem.Icono = MessageBoxIcon.Stop
 
             If Not IsNothing(myTrans) Then myTrans.Rollback()

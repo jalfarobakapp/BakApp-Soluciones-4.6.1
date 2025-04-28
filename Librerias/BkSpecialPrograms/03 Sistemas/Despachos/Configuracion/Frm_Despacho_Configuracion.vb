@@ -404,7 +404,7 @@ Public Class Frm_Despacho_Configuracion
 
         _Mensaje = Cl_Despachos.Fx_Grabar_Configuracion()
 
-        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, "Validación", MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK, _Mensaje.Icono)
 
         If Not _Mensaje.EsCorrecto Then
             Return

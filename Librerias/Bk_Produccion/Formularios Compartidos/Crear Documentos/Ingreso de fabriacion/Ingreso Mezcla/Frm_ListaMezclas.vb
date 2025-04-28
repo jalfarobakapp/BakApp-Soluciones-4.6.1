@@ -253,7 +253,7 @@ Public Class Frm_ListaMezclas
             _Icon = MessageBoxIcon.Error
         End If
 
-        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Icon)
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Icon)
 
         Sb_Actualizar_Grilla()
 
@@ -331,7 +331,7 @@ Public Class Frm_ListaMezclas
             _Row_Potl = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If IsNothing(_Row_Potl) Then
-                _Mensaje.Col2_Detalle = "Validación"
+                _Mensaje.Detalle = "Validación"
                 Throw New System.Exception("No se encontro registro en POTL")
             End If
 
@@ -369,7 +369,7 @@ Public Class Frm_ListaMezclas
             Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If Not CBool(_Tbl.Rows.Count) Then
-                _Mensaje.Col2_Detalle = "Validación"
+                _Mensaje.Detalle = "Validación"
                 Throw New System.Exception("No se encontro registro en la tabla ZNUEVA_PRODUCCIOND")
             End If
 
@@ -419,7 +419,7 @@ Public Class Frm_ListaMezclas
             _Mensaje = _Cl_Mezcla.Fx_Crear_Nueva_Mezcla()
 
         Catch ex As Exception
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
         End Try
 
         Return _Mensaje
@@ -456,7 +456,7 @@ Public Class Frm_ListaMezclas
         Dim _Cl_Mezcla As New Cl_Mezcla
         _Mensaje = _Cl_Mezcla.Fx_Eliminar_OrdenDeFabricacion(_Id_Enc)
 
-        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         If _Mensaje.EsCorrecto Then
             Grilla.Rows.Remove(_Fila)

@@ -25,7 +25,7 @@ Public Class Cl_Inventario
             If IsNothing(_Row_Enc) Then
 
                 _Mensaje_Stem.EsCorrecto = False
-                _Mensaje_Stem.Col1_Mensaje = "No se encontro el registro en la tabla Zw_Inv_Inventario con el Id " & _Id
+                _Mensaje_Stem.Mensaje = "No se encontro el registro en la tabla Zw_Inv_Inventario con el Id " & _Id
 
                 Return _Mensaje_Stem
 
@@ -48,7 +48,7 @@ Public Class Cl_Inventario
         End With
 
         _Mensaje_Stem.EsCorrecto = True
-        _Mensaje_Stem.Col1_Mensaje = "Registro encontrado."
+        _Mensaje_Stem.Mensaje = "Registro encontrado."
 
         Return _Mensaje_Stem
 
@@ -69,7 +69,7 @@ Public Class Cl_Inventario
             If IsNothing(_Row) Then
 
                 _Mensaje_Stem.EsCorrecto = False
-                _Mensaje_Stem.Col1_Mensaje = "No se encontro el registro en la tabla Zw_Inv_FotoInventario con el IdInventario = " & _IdInventario & " y Código = " & _Codigo
+                _Mensaje_Stem.Mensaje = "No se encontro el registro en la tabla Zw_Inv_FotoInventario con el IdInventario = " & _IdInventario & " y Código = " & _Codigo
 
                 Return _Mensaje_Stem
 
@@ -122,7 +122,7 @@ Public Class Cl_Inventario
         End With
 
         _Mensaje_Stem.EsCorrecto = True
-        _Mensaje_Stem.Col1_Mensaje = "Registro encontrado."
+        _Mensaje_Stem.Mensaje = "Registro encontrado."
         _Mensaje_Stem.Tag = _Zw_Inv_FotoInventario
 
         Return _Mensaje_Stem
@@ -177,15 +177,15 @@ Public Class Cl_Inventario
 
             _Mensaje.EsCorrecto = True
             _Mensaje.Id = Zw_Inv_Inventario.Id
-            _Mensaje.Col2_Detalle = "Documento grabado correctamente"
-            _Mensaje.Col1_Mensaje = "Se crea Inventario " & Zw_Inv_Inventario.NombreInventario
+            _Mensaje.Detalle = "Documento grabado correctamente"
+            _Mensaje.Mensaje = "Se crea Inventario " & Zw_Inv_Inventario.NombreInventario
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
 
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col2_Detalle = "Error al grabar"
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Detalle = "Error al grabar"
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
             Zw_Inv_Inventario.Id = 0
 
@@ -237,15 +237,15 @@ Public Class Cl_Inventario
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Col2_Detalle = "Editar"
-            _Mensaje.Col1_Mensaje = "Datos actualizados correctamente"
+            _Mensaje.Detalle = "Editar"
+            _Mensaje.Mensaje = "Datos actualizados correctamente"
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
 
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col2_Detalle = "Error al grabar"
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Detalle = "Error al grabar"
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
             Zw_Inv_Inventario.Id = 0
 
@@ -299,8 +299,8 @@ Public Class Cl_Inventario
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                 Comando.Transaction = myTrans
                 Comando.ExecuteNonQuery()
-                _Mensaje.Col2_Detalle = "Cerrar inventario"
-                _Mensaje.Col1_Mensaje = "Inventario cerrado correctamente"
+                _Mensaje.Detalle = "Cerrar inventario"
+                _Mensaje.Mensaje = "Inventario cerrado correctamente"
 
             End With
 
@@ -313,8 +313,8 @@ Public Class Cl_Inventario
         Catch ex As Exception
 
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col2_Detalle = "Error al cerrar inventario"
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Detalle = "Error al cerrar inventario"
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
             Zw_Inv_Inventario.Id = 0
 
@@ -375,15 +375,15 @@ Public Class Cl_Inventario
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Col2_Detalle = "Abrir inventario"
-            _Mensaje.Col1_Mensaje = "Inventario abierto correctamente"
+            _Mensaje.Detalle = "Abrir inventario"
+            _Mensaje.Mensaje = "Inventario abierto correctamente"
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
 
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col2_Detalle = "Error al abrir inventario"
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Detalle = "Error al abrir inventario"
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
             Zw_Inv_Inventario.Id = 0
 
@@ -408,7 +408,7 @@ Public Class Cl_Inventario
             Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_FotoInventario", "IdInventario = " & _IdInventario)
 
             If CBool(_Reg) Then
-                _Mensaje.Col2_Detalle = "Validación"
+                _Mensaje.Detalle = "Validación"
                 Throw New System.Exception("No es posible tomar una foto del stock de la bodega, ya que existen datos de" & vbCrLf &
                                            "una foto anterior. Para poder obtener una nueva foto, primero debes eliminar" & vbCrLf &
                                            "la anterior.")
@@ -430,17 +430,17 @@ Public Class Cl_Inventario
             End With
 
             If Not _Sql.Ej_consulta_IDU(Consulta_sql) Then
-                _Mensaje.Col2_Detalle = "Error al tomar foto stock"
+                _Mensaje.Detalle = "Error al tomar foto stock"
                 Throw New System.Exception(_Sql.Pro_Error)
             End If
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Col2_Detalle = "Tomar foto stock"
-            _Mensaje.Col1_Mensaje = "Foto del stock de la bodega creado correctamente"
+            _Mensaje.Detalle = "Tomar foto stock"
+            _Mensaje.Mensaje = "Foto del stock de la bodega creado correctamente"
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
 
@@ -454,7 +454,7 @@ Public Class Cl_Inventario
 
         Try
 
-            _Mensaje.Col2_Detalle = "Eliminar Foto Stock"
+            _Mensaje.Detalle = "Eliminar Foto Stock"
 
             Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_FotoInventario", "IdInventario = " & _IdInventario)
 
@@ -483,16 +483,16 @@ Public Class Cl_Inventario
             Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Inv_FotoInventario Where IdInventario = " & _IdInventario
 
             If Not _Sql.Ej_consulta_IDU(Consulta_sql) Then
-                _Mensaje.Col2_Detalle = "Error al tomar foto stock"
+                _Mensaje.Detalle = "Error al tomar foto stock"
                 Throw New System.Exception(_Sql.Pro_Error)
             End If
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Col1_Mensaje = "Datos eliminados correctamente"
+            _Mensaje.Mensaje = "Datos eliminados correctamente"
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
 

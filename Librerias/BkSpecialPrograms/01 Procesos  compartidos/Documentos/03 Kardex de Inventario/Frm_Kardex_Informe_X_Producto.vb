@@ -21,7 +21,7 @@ Public Class Frm_Kardex_Informe_X_Producto
     Dim _Pasada As Integer = 1
     Dim _Todas_Las_Bodegas As Boolean
 
-    Private _DecimalesGl As Integer = 3
+    Private _DecimalesGl As Integer = 0
 
     Public Property Pro_Empresa() As String
         Get
@@ -362,7 +362,7 @@ Public Class Frm_Kardex_Informe_X_Producto
                 _Nveces = "." & _Nveces
             End If
 
-            _FormatoPrecio = "###,#0.###"
+            _FormatoPrecio = "###,#0" & _Nveces
 
             Dim _DisplayIndex = 0
 
@@ -847,7 +847,7 @@ Public Class Frm_Kardex_Informe_X_Producto
 
     Private Sub Btn_DecimalAgregar_Click(sender As Object, e As EventArgs) Handles Btn_DecimalAgregar.Click
 
-        If _DecimalesGl < 5 Then _DecimalesGl += 1
+        If _DecimalesGl < 3 Then _DecimalesGl += 1
         Lbl_NroDecimales.Text = FormatNumber(0, _DecimalesGl)
         Dim _Palabra = Letras(_DecimalesGl)
         Lbl_NroDecimales.Tooltip = _Palabra & " decimal(es)"
@@ -857,7 +857,7 @@ Public Class Frm_Kardex_Informe_X_Producto
 
     Private Sub Btn_DecimalRestar_Click(sender As Object, e As EventArgs) Handles Btn_DecimalRestar.Click
 
-        If _DecimalesGl > 0 And _DecimalesGl <= 5 Then _DecimalesGl -= 1
+        If _DecimalesGl > 0 And _DecimalesGl <= 3 Then _DecimalesGl -= 1
         Lbl_NroDecimales.Text = FormatNumber(0, _DecimalesGl)
         Dim _Palabra = Letras(_DecimalesGl)
         Lbl_NroDecimales.Tooltip = _Palabra & " decimal(es)"

@@ -18,14 +18,14 @@ Public Class Cl_Conteo
         Dim _Mensaje_Stem As New LsValiciones.Mensajes
 
         _Mensaje_Stem.EsCorrecto = False
-        _Mensaje_Stem.Col2_Detalle = "Cargar Hoja"
-        _Mensaje_Stem.Col1_Mensaje = String.Empty
+        _Mensaje_Stem.Detalle = "Cargar Hoja"
+        _Mensaje_Stem.Mensaje = String.Empty
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Inv_Hoja Where Id = " & _Id
         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If IsNothing(_Row) Then
-            _Mensaje_Stem.Col1_Mensaje = "No se encontro el registro en la tabla Zw_Inv_Hoja con el Id " & _Id
+            _Mensaje_Stem.Mensaje = "No se encontro el registro en la tabla Zw_Inv_Hoja con el Id " & _Id
             Return _Mensaje_Stem
         End If
 
@@ -91,7 +91,7 @@ Public Class Cl_Conteo
         Next
 
         _Mensaje_Stem.EsCorrecto = True
-        _Mensaje_Stem.Col1_Mensaje = "Registros cargados correctamente"
+        _Mensaje_Stem.Mensaje = "Registros cargados correctamente"
 
     End Function
 
@@ -102,8 +102,8 @@ Public Class Cl_Conteo
         Dim _Mensaje_Stem As New LsValiciones.Mensajes
 
         _Mensaje_Stem.EsCorrecto = False
-        _Mensaje_Stem.Col2_Detalle = "Nueva Hoja"
-        _Mensaje_Stem.Col1_Mensaje = String.Empty
+        _Mensaje_Stem.Detalle = "Nueva Hoja"
+        _Mensaje_Stem.Mensaje = String.Empty
 
         With Zw_Inv_Hoja
 
@@ -118,7 +118,7 @@ Public Class Cl_Conteo
         End With
 
         _Mensaje_Stem.EsCorrecto = True
-        _Mensaje_Stem.Col1_Mensaje = "Registros cargados correctamente"
+        _Mensaje_Stem.Mensaje = "Registros cargados correctamente"
 
     End Function
 
@@ -126,9 +126,9 @@ Public Class Cl_Conteo
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
-        _Mensaje.Col2_Detalle = "Crear Hoja de Inventario"
+        _Mensaje.Detalle = "Crear Hoja de Inventario"
         _Mensaje.EsCorrecto = False
-        _Mensaje.Col1_Mensaje = String.Empty
+        _Mensaje.Mensaje = String.Empty
         _Mensaje.Icono = MessageBoxIcon.Stop
 
         Consulta_sql = String.Empty
@@ -184,15 +184,15 @@ Public Class Cl_Conteo
             Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Col1_Mensaje = "Hoja creada correctamente"
+            _Mensaje.Mensaje = "Hoja creada correctamente"
             _Mensaje.Icono = MessageBoxIcon.Information
-            _Mensaje.Col2_Detalle = "Hoja creada correctamente con el Id " & _Row.Item("Id")
+            _Mensaje.Detalle = "Hoja creada correctamente con el Id " & _Row.Item("Id")
             _Mensaje.Tag = _Row
             _Mensaje.Id = _Row.Item("Id")
 
         Catch ex As Exception
 
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
             If Not IsNothing(myTrans) Then myTrans.Rollback()
 
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
@@ -214,8 +214,8 @@ Public Class Cl_Conteo
 
         If CBool(_Reg) Then
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col2_Detalle = "Crear Hoja"
-            _Mensaje.Col1_Mensaje = "El Nro de Hoja " & Zw_Inv_Hoja.Nro_Hoja & " ya existe para este inventario"
+            _Mensaje.Detalle = "Crear Hoja"
+            _Mensaje.Mensaje = "El Nro de Hoja " & Zw_Inv_Hoja.Nro_Hoja & " ya existe para este inventario"
             _Mensaje.Icono = MessageBoxIcon.Stop
             Return _Mensaje
         End If
@@ -335,16 +335,16 @@ Public Class Cl_Conteo
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Col2_Detalle = "Crear Hoja"
-            _Mensaje.Col1_Mensaje = "Documento grabado correctamente" & vbCrLf &
+            _Mensaje.Detalle = "Crear Hoja"
+            _Mensaje.Mensaje = "Documento grabado correctamente" & vbCrLf &
                                     "Número de Hoja: " & Zw_Inv_Hoja.Nro_Hoja
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
 
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col2_Detalle = "Error al grabar"
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Detalle = "Error al grabar"
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
 
             If Not IsNothing(myTrans) Then myTrans.Rollback()
@@ -418,15 +418,15 @@ Public Class Cl_Conteo
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Col2_Detalle = "Eliminar Hoja"
-            _Mensaje.Col1_Mensaje = "Documento eliminado correctamente"
+            _Mensaje.Detalle = "Eliminar Hoja"
+            _Mensaje.Mensaje = "Documento eliminado correctamente"
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
 
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col2_Detalle = "Error al eliminar"
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Detalle = "Error al eliminar"
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
 
             If Not IsNothing(myTrans) Then myTrans.Rollback()

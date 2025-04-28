@@ -108,7 +108,7 @@ Public Class Frm_CrearContador
             _mensaje = Cl_Contador.Fx_Crear_Contador(Cl_Contador.Zw_Inv_Contador)
         End If
 
-        MessageBoxEx.Show(Me, _mensaje.Col1_Mensaje, _mensaje.Col2_Detalle, MessageBoxButtons.OK, _mensaje.Icono)
+        MessageBoxEx.Show(Me, _mensaje.Mensaje, _mensaje.Detalle, MessageBoxButtons.OK, _mensaje.Icono)
 
         If Not _mensaje.EsCorrecto Then
             Return
@@ -130,7 +130,7 @@ Public Class Frm_CrearContador
 
         _Mensaje = Cl_Contador.Fx_Eliminar_Contador(Cl_Contador.Zw_Inv_Contador)
 
-        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         If Not _Mensaje.EsCorrecto Then
             Return

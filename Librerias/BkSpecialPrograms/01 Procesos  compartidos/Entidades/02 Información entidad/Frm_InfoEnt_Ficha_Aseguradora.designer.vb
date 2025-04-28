@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_InfoEnt_Ficha_Aseguradora
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -120,7 +120,7 @@ Partial Class Frm_InfoEnt_Ficha_Aseguradora
         '
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 13
-        Me.GroupPanel1.Text = "Información"
+        Me.GroupPanel1.Text = "InformaciÃ³n"
         '
         'TableLayoutPanel1
         '
@@ -206,7 +206,7 @@ Partial Class Frm_InfoEnt_Ficha_Aseguradora
         Me.LabelX6.Name = "LabelX6"
         Me.LabelX6.Size = New System.Drawing.Size(128, 19)
         Me.LabelX6.TabIndex = 6
-        Me.LabelX6.Text = "Clasificación crediticia"
+        Me.LabelX6.Text = "ClasificaciÃ³n crediticia"
         '
         'Cmb_Clascrediticia
         '
@@ -278,7 +278,7 @@ Partial Class Frm_InfoEnt_Ficha_Aseguradora
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(100, 19)
         Me.LabelX2.TabIndex = 3
-        Me.LabelX2.Text = "Razón Social"
+        Me.LabelX2.Text = "RazÃ³n Social"
         '
         'Txt_Rut
         '

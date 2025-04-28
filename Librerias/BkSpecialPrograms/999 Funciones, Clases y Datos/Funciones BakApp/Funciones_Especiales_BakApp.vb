@@ -1633,8 +1633,8 @@ Public Module Funciones_Especiales_BakApp
 
             If Not _Revisa_Taza_Cambio Then
 
-                _Mensaje.Col2_Detalle = "Revisar tasa de cambio"
-                _Mensaje.Col1_Mensaje = "No se necesita revisar la tasa de cambio"
+                _Mensaje.Detalle = "Revisar tasa de cambio"
+                _Mensaje.Mensaje = "No se necesita revisar la tasa de cambio"
                 _Mensaje.EsCorrecto = True
                 _Mensaje.Icono = MessageBoxIcon.Information
 
@@ -1670,8 +1670,8 @@ Public Module Funciones_Especiales_BakApp
 
                 If _CantMonedas_Con_Taza.Rows.Count = _CantMonedas Then
 
-                    _Mensaje.Col2_Detalle = "Revisar tasa de cambio"
-                    _Mensaje.Col1_Mensaje = "No se necesita revisar la tasa de cambio"
+                    _Mensaje.Detalle = "Revisar tasa de cambio"
+                    _Mensaje.Mensaje = "No se necesita revisar la tasa de cambio"
                     _Mensaje.EsCorrecto = True
                     _Mensaje.Icono = MessageBoxIcon.Information
 
@@ -1713,8 +1713,8 @@ Public Module Funciones_Especiales_BakApp
 
                     If String.IsNullOrEmpty(_Monedas) Then
 
-                        _Mensaje.Col2_Detalle = "Revisar tasa de cambio"
-                        _Mensaje.Col1_Mensaje = "No se necesita revisar la tasa de cambio"
+                        _Mensaje.Detalle = "Revisar tasa de cambio"
+                        _Mensaje.Mensaje = "No se necesita revisar la tasa de cambio"
                         _Mensaje.EsCorrecto = True
                         _Mensaje.Icono = MessageBoxIcon.Information
 
@@ -1722,7 +1722,7 @@ Public Module Funciones_Especiales_BakApp
 
                     Else
 
-                        _Mensaje.Col1_Mensaje = "No existe tasa de cambio para la fecha: " & FormatDateTime(_Fecha_Tasa, DateFormat.ShortDate) & ", para las monedas: " & _Monedas
+                        _Mensaje.Mensaje = "No existe tasa de cambio para la fecha: " & FormatDateTime(_Fecha_Tasa, DateFormat.ShortDate) & ", para las monedas: " & _Monedas
 
                         If Not IsNothing(_Formulario) Then
 
@@ -1752,8 +1752,8 @@ Public Module Funciones_Especiales_BakApp
 
             Else
 
-                _Mensaje.Col2_Detalle = "Revisar tasa de cambio"
-                _Mensaje.Col1_Mensaje = "No se necesita revisar la tasa de cambio"
+                _Mensaje.Detalle = "Revisar tasa de cambio"
+                _Mensaje.Mensaje = "No se necesita revisar la tasa de cambio"
                 _Mensaje.EsCorrecto = True
                 _Mensaje.Icono = MessageBoxIcon.Information
 
@@ -1762,8 +1762,8 @@ Public Module Funciones_Especiales_BakApp
             End If
 
         Catch ex As Exception
-            _Mensaje.Col2_Detalle = "Error al revisar tasa de cambio"
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Detalle = "Error al revisar tasa de cambio"
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.EsCorrecto = False
             _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
@@ -3608,7 +3608,7 @@ Public Module Crear_Documentos_Desde_Otro
                     _MsgFolio = "(Folios Random)"
                 End If
 
-                _Mensaje.Col2_Detalle = "Validación Modalidad: " & Modalidad
+                _Mensaje.Detalle = "Validación Modalidad: " & Modalidad
                 Throw New System.Exception("El folio del documento electrónico no está autorizado por el SII: " & _Folio & vbCrLf & vbCrLf &
                                       "INFORME ESTA SITUACION AL ADMINISTRADOR DEL SISTEMA POR FAVOR")
 
@@ -3644,7 +3644,7 @@ Public Module Crear_Documentos_Desde_Otro
 
                     'If Not IsNothing(_Formulario) Then
 
-                    _Mensaje.Col2_Detalle = "Validación Modalidad: " & Modalidad
+                    _Mensaje.Detalle = "Validación Modalidad: " & Modalidad
                     Throw New System.Exception("Este folio " & _Folio & " tiene mas de (" & _Meses & ") meses desde su fecha de creación" & vbCrLf &
                           "en el SII y su configuración indica que podría estar vencido." & vbCrLf &
                           "Si usted insite en el envío, este documento podria ser rechazado." & vbCrLf & vbCrLf &
@@ -3655,8 +3655,8 @@ Public Module Crear_Documentos_Desde_Otro
                 Else
 
                     _Mensaje.EsCorrecto = True
-                    _Mensaje.Col2_Detalle = "Información"
-                    _Mensaje.Col1_Mensaje = "Folios encontrados correctamente."
+                    _Mensaje.Detalle = "Información"
+                    _Mensaje.Mensaje = "Folios encontrados correctamente."
                     _Mensaje.Icono = MessageBoxIcon.Information
 
                 End If
@@ -3664,7 +3664,7 @@ Public Module Crear_Documentos_Desde_Otro
             End If
 
         Catch ex As Exception
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
 
@@ -3808,14 +3808,14 @@ Public Module Crear_Documentos_Desde_Otro
             Dim _Row_Folios As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
-                Throw New System.Exception(_Mensaje.Col1_Mensaje)
+                Throw New System.Exception(_Mensaje.Mensaje)
             End If
 
             If IsNothing(_Row_Folios) Then
 
                 If Not IsNothing(_Formulario) Then
 
-                    _Mensaje.Col2_Detalle = "Validación Modalidad: " & Modalidad
+                    _Mensaje.Detalle = "Validación Modalidad: " & Modalidad
                     Throw New System.Exception("El folio del documento electrónico no está autorizado por el SII: " & _Folio & vbCrLf & vbCrLf &
                                       "INFORME ESTA SITUACION AL ADMINISTRADOR DEL SISTEMA POR FAVOR")
 
@@ -3947,7 +3947,7 @@ Public Module Crear_Documentos_Desde_Otro
 
                     'If Not IsNothing(_Formulario) Then
 
-                    _Mensaje.Col2_Detalle = "Validación Modalidad: " & Modalidad
+                    _Mensaje.Detalle = "Validación Modalidad: " & Modalidad
                     Throw New System.Exception("Este folio " & _Folio & " tiene mas de (" & _Meses & ") meses desde su fecha de creación" & vbCrLf &
                           "en el SII y su configuración indica que podría estar vencido." & vbCrLf &
                           "Si usted insite en el envío, este documento podria ser rechazado." & vbCrLf & vbCrLf &
@@ -3958,8 +3958,8 @@ Public Module Crear_Documentos_Desde_Otro
                 Else
 
                     _Mensaje.EsCorrecto = True
-                    _Mensaje.Col2_Detalle = "Información"
-                    _Mensaje.Col1_Mensaje = "Folios encontrados correctamente."
+                    _Mensaje.Detalle = "Información"
+                    _Mensaje.Mensaje = "Folios encontrados correctamente."
                     _Mensaje.Icono = MessageBoxIcon.Information
 
                 End If
@@ -3968,7 +3968,7 @@ Public Module Crear_Documentos_Desde_Otro
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
 
@@ -6409,7 +6409,7 @@ Public Module Crear_Documentos_Desde_Otro
 
             Else
 
-                _Mensaje.Col3_Resultado = _Resultado.ToString
+                _Mensaje.Resultado = _Resultado.ToString
                 _Mensaje.EsCorrecto = True
 
                 If _Resultado = eTaskDialogResult.Yes Then
@@ -6616,7 +6616,7 @@ Public Module Crear_Documentos_Desde_Otro
         Dim _Msj As String = String.Empty
         Dim _Rpta As String = String.Empty
 
-        _Mensaje.Col2_Detalle = "Revisión de permiso de visualización de documentos de otros usuarios"
+        _Mensaje.Detalle = "Revisión de permiso de visualización de documentos de otros usuarios"
 
         Dim _Autorizado As Boolean = False
         Dim _Permiso As String
@@ -6679,11 +6679,11 @@ Public Module Crear_Documentos_Desde_Otro
 
             End If
 
-            _Mensaje.Col1_Mensaje = _Msj
+            _Mensaje.Mensaje = _Msj
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
         End Try
 
         If _Mensaje.EsCorrecto Then
@@ -6701,7 +6701,7 @@ Public Module Crear_Documentos_Desde_Otro
         Dim _Mensaje As New LsValiciones.Mensajes
         Dim _Msj As String = String.Empty
 
-        _Mensaje.Col2_Detalle = "Revisión de permiso de visualización de documentos de otros usuarios"
+        _Mensaje.Detalle = "Revisión de permiso de visualización de documentos de otros usuarios"
 
         Dim _Autorizado As Boolean = False
         Dim _Permiso As String
@@ -6780,11 +6780,11 @@ Public Module Crear_Documentos_Desde_Otro
 
             End If
 
-            _Mensaje.Col1_Mensaje = _Msj
+            _Mensaje.Mensaje = _Msj
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
         End Try
 
         If _Mensaje.EsCorrecto Then

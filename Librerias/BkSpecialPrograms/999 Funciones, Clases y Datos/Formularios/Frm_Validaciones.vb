@@ -88,7 +88,7 @@ Public Class Frm_Validaciones
 
             For Each resp As LsValiciones.Mensajes In ListaMensajes
 
-                Dim item As New ListViewItem(resp.Col1_Mensaje)
+                Dim item As New ListViewItem(resp.Mensaje)
 
                 If IsNothing(resp.Icono) Then
                     If resp.EsCorrecto Then
@@ -117,14 +117,14 @@ Public Class Frm_Validaciones
                     item.ImageKey = resp.NombreImagen
                 End If
 
-                item.SubItems.Add(resp.Col2_Detalle)
-                item.SubItems.Add(resp.Col3_Resultado)
+                item.SubItems.Add(resp.Detalle)
+                item.SubItems.Add(resp.Resultado)
                 item.SubItems.Add(resp.Fecha)
 
                 Lv_ListaDeMensajes.Items.Add(item)
 
                 If String.IsNullOrEmpty(resp.Tag) Then
-                    item.Tag = resp.Col1_Mensaje & vbCrLf & resp.Col2_Detalle
+                    item.Tag = resp.Mensaje & vbCrLf & resp.Detalle
                 Else
                     item.Tag = resp.Tag
                 End If
@@ -204,9 +204,25 @@ Namespace LsValiciones
         Public Property EsCorrecto As Boolean
         Public Property Id As String
         Public Property Fecha As DateTime
-        Public Property Col1_Mensaje As String = String.Empty
-        Public Property Col2_Detalle As String = String.Empty
-        Public Property Col3_Resultado As String = String.Empty
+
+        ''' <summary>
+        ''' Mensaje de error o advertencia, Columna 1
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Mensaje As String = String.Empty
+
+        ''' <summary>
+        ''' Descripción del error o advertencia, Columna 2
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Detalle As String = String.Empty
+
+        ''' <summary>
+        ''' Resultado de la validación, Columna 3
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Resultado As String = String.Empty
+
         Public Property Tag As Object
         Public Property UsarImagen As Boolean
         Public Property NombreImagen As String = String.Empty

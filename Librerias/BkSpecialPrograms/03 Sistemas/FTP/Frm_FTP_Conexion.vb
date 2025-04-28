@@ -136,7 +136,7 @@ Public Class Frm_FTP_Conexion
         Me.Enabled = True
 
         If Not _Mensaje.EsCorrecto Then
-            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
             Return
         End If
 
@@ -145,14 +145,14 @@ Public Class Frm_FTP_Conexion
         If Not _Mensaje.EsCorrecto Then
 
             If _Mensaje.HuboOtroError Then
-                MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
                 Return
             End If
 
             _Mensaje = Ftp.Fx_Crear_Directorio(Ftp.Zw_Ftp_Conexiones.Fichero & "/" & _eTipo_Ftp.ToString)
 
             If Not _Mensaje.EsCorrecto Then
-                MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
                 Return
             End If
 
@@ -163,14 +163,14 @@ Public Class Frm_FTP_Conexion
         If Not _Mensaje.EsCorrecto Then
 
             If _Mensaje.HuboOtroError Then
-                MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
                 Return
             End If
 
             _Mensaje = Ftp.Fx_Crear_Directorio(Ftp.Zw_Ftp_Conexiones.Fichero & "/" & _eTipo_Ftp.ToString & "/Imagenes")
 
             If Not _Mensaje.EsCorrecto Then
-                MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
                 Return
             End If
 
@@ -181,14 +181,14 @@ Public Class Frm_FTP_Conexion
         If Not _Mensaje.EsCorrecto Then
 
             If _Mensaje.HuboOtroError Then
-                MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
                 Return
             End If
 
             _Mensaje = Ftp.Fx_Crear_Directorio(Ftp.Zw_Ftp_Conexiones.Fichero & "/" & _eTipo_Ftp.ToString & "/Archivos")
 
             If Not _Mensaje.EsCorrecto Then
-                MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
                 Return
             End If
 
@@ -202,7 +202,7 @@ Public Class Frm_FTP_Conexion
             _Mensaje = Ftp.Fx_Grabar_Host()
         End If
 
-        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         If _Mensaje.EsCorrecto Then
             Grabar = True

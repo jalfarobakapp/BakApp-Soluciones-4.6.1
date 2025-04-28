@@ -692,7 +692,7 @@ Public Class Cl_Documento
             Dim _DentroDelRango As Boolean = InsideRange(_Porcentaje, _Zw_Conceptos.PorcCUd1D_Condi, _Zw_Conceptos.PorcCUd1H_Condi)
 
             If Not _DentroDelRango Then
-                _Mensaje.Col2_Detalle = "Validación descuento Premium"
+                _Mensaje.Detalle = "Validación descuento Premium"
                 Throw New System.Exception("El porcentaje de productos vendidos no esta dentro del Rango esperado." & vbCrLf &
                                            "Porcentaje esperado debe estar entre " & _Zw_Conceptos.PorcCUd1D_Condi & "% y " & _Zw_Conceptos.PorcCUd1H_Condi & "%" & vbCrLf &
                                            "El porcentaje de los productos premium con relación al resto es de " & _Porcentaje & "%" & vbCrLf &
@@ -700,15 +700,15 @@ Public Class Cl_Documento
             End If
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Col2_Detalle = "Concepto aceptado"
-            _Mensaje.Col1_Mensaje = "El porcentaje de productos vendidos si esta dentro del Rango esperado" & vbCrLf &
+            _Mensaje.Detalle = "Concepto aceptado"
+            _Mensaje.Mensaje = "El porcentaje de productos vendidos si esta dentro del Rango esperado" & vbCrLf &
                                "Porcentaje esperado debe estar entre " & _Zw_Conceptos.PorcCUd1D_Condi & "% y " & _Zw_Conceptos.PorcCUd1H_Condi & "%" & vbCrLf &
                                "El porcentaje de los productos premium con relación al resto es de " & _Porcentaje & "%"
             _Mensaje.Tag = True
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
 

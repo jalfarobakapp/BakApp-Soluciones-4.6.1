@@ -596,14 +596,14 @@ Public Class Cl_Imprimir_ProdXCabeceras
             Next
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Col2_Detalle = "Traer documento a imprimir"
-            _Mensaje.Col1_Mensaje = "Datos rescatados correctamente"
+            _Mensaje.Detalle = "Traer documento a imprimir"
+            _Mensaje.Mensaje = "Datos rescatados correctamente"
             _Mensaje.Tag = _Doc
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col2_Detalle = "Traer documento a imprimir"
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Detalle = "Traer documento a imprimir"
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.Tag = Nothing
         End Try
 

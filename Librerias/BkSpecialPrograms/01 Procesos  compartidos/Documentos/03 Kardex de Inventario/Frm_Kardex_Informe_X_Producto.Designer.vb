@@ -22,9 +22,9 @@ Partial Class Frm_Kardex_Informe_X_Producto
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Kardex_Informe_X_Producto))
         Me.GrillaKardex = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.TextBoxX11 = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -52,15 +52,15 @@ Partial Class Frm_Kardex_Informe_X_Producto
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.BtnIrAptincipio = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnIrAlFin = New DevComponents.DotNetBar.ButtonItem()
+        Me.Lbl_NroDecimales = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_DecimalRestar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_DecimalAgregar = New DevComponents.DotNetBar.ButtonItem()
         Me.TxtNroLote = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX12 = New DevComponents.DotNetBar.LabelX()
         Me.TxtDescripcionProducto = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX13 = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Lbl_NroDecimales = New DevComponents.DotNetBar.LabelItem()
-        Me.Btn_DecimalRestar = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_DecimalAgregar = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.GrillaKardex, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
@@ -72,37 +72,37 @@ Partial Class Frm_Kardex_Informe_X_Producto
         Me.GrillaKardex.AllowUserToAddRows = False
         Me.GrillaKardex.AllowUserToDeleteRows = False
         Me.GrillaKardex.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.GrillaKardex.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.GrillaKardex.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.GrillaKardex.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.GrillaKardex.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.GrillaKardex.DefaultCellStyle = DataGridViewCellStyle2
         Me.GrillaKardex.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GrillaKardex.EnableHeadersVisualStyles = False
         Me.GrillaKardex.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.GrillaKardex.Location = New System.Drawing.Point(0, 0)
         Me.GrillaKardex.Name = "GrillaKardex"
         Me.GrillaKardex.ReadOnly = True
-        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.GrillaKardex.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.GrillaKardex.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.GrillaKardex.Size = New System.Drawing.Size(1010, 348)
         Me.GrillaKardex.StandardTab = True
         Me.GrillaKardex.TabIndex = 27
@@ -468,7 +468,7 @@ Partial Class Frm_Kardex_Informe_X_Producto
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnIrAptincipio, Me.BtnIrAlFin, Me.Lbl_NroDecimales, Me.Btn_DecimalRestar, Me.Btn_DecimalAgregar})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnIrAptincipio, Me.BtnIrAlFin, Me.Btn_DecimalAgregar, Me.Btn_DecimalRestar, Me.Lbl_NroDecimales})
         Me.Bar2.Location = New System.Drawing.Point(0, 560)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(1033, 41)
@@ -497,6 +497,30 @@ Partial Class Frm_Kardex_Informe_X_Producto
         Me.BtnIrAlFin.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.BtnIrAlFin.Name = "BtnIrAlFin"
         Me.BtnIrAlFin.Tooltip = "Ir al último registro"
+        '
+        'Lbl_NroDecimales
+        '
+        Me.Lbl_NroDecimales.BorderType = DevComponents.DotNetBar.eBorderType.Sunken
+        Me.Lbl_NroDecimales.Font = New System.Drawing.Font("Courier New", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Lbl_NroDecimales.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_NroDecimales.Name = "Lbl_NroDecimales"
+        Me.Lbl_NroDecimales.Text = "0,00000"
+        Me.Lbl_NroDecimales.TextAlignment = System.Drawing.StringAlignment.Far
+        Me.Lbl_NroDecimales.Tooltip = "2 decimales"
+        '
+        'Btn_DecimalRestar
+        '
+        Me.Btn_DecimalRestar.Image = CType(resources.GetObject("Btn_DecimalRestar.Image"), System.Drawing.Image)
+        Me.Btn_DecimalRestar.ImageAlt = CType(resources.GetObject("Btn_DecimalRestar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_DecimalRestar.Name = "Btn_DecimalRestar"
+        Me.Btn_DecimalRestar.Tooltip = "Disminuir decimales"
+        '
+        'Btn_DecimalAgregar
+        '
+        Me.Btn_DecimalAgregar.Image = CType(resources.GetObject("Btn_DecimalAgregar.Image"), System.Drawing.Image)
+        Me.Btn_DecimalAgregar.ImageAlt = CType(resources.GetObject("Btn_DecimalAgregar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_DecimalAgregar.Name = "Btn_DecimalAgregar"
+        Me.Btn_DecimalAgregar.Tooltip = "Aumentar decimales"
         '
         'TxtNroLote
         '
@@ -660,30 +684,6 @@ Partial Class Frm_Kardex_Informe_X_Producto
         Me.GroupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel2.TabIndex = 46
         Me.GroupPanel2.Text = "Información de la fila activa"
-        '
-        'Lbl_NroDecimales
-        '
-        Me.Lbl_NroDecimales.BorderType = DevComponents.DotNetBar.eBorderType.Sunken
-        Me.Lbl_NroDecimales.Font = New System.Drawing.Font("Courier New", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Lbl_NroDecimales.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_NroDecimales.Name = "Lbl_NroDecimales"
-        Me.Lbl_NroDecimales.Text = "0,00000"
-        Me.Lbl_NroDecimales.TextAlignment = System.Drawing.StringAlignment.Far
-        Me.Lbl_NroDecimales.Tooltip = "2 decimales"
-        '
-        'Btn_DecimalRestar
-        '
-        Me.Btn_DecimalRestar.Image = CType(resources.GetObject("Btn_DecimalRestar.Image"), System.Drawing.Image)
-        Me.Btn_DecimalRestar.ImageAlt = CType(resources.GetObject("Btn_DecimalRestar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_DecimalRestar.Name = "Btn_DecimalRestar"
-        Me.Btn_DecimalRestar.Tooltip = "Disminuir decimales"
-        '
-        'Btn_DecimalAgregar
-        '
-        Me.Btn_DecimalAgregar.Image = CType(resources.GetObject("Btn_DecimalAgregar.Image"), System.Drawing.Image)
-        Me.Btn_DecimalAgregar.ImageAlt = CType(resources.GetObject("Btn_DecimalAgregar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_DecimalAgregar.Name = "Btn_DecimalAgregar"
-        Me.Btn_DecimalAgregar.Tooltip = "Aumentar decimales"
         '
         'Frm_Kardex_Informe_X_Producto
         '

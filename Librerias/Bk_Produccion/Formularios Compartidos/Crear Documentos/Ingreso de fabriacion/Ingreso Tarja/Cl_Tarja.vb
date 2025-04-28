@@ -101,13 +101,13 @@ Public Class Cl_Tarja
 
             _Mensaje.EsCorrecto = True
             _Mensaje.Id = Zw_Pdp_CPT_Tarja.Id
-            _Mensaje.Col2_Detalle = "Grabar Tarja"
-            _Mensaje.Col1_Mensaje = "Tarja guardada correctamente"
+            _Mensaje.Detalle = "Grabar Tarja"
+            _Mensaje.Mensaje = "Tarja guardada correctamente"
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
-            _Mensaje.Col1_Mensaje = ex.Message
-            _Mensaje.Col2_Detalle = "Grabar Tarja"
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Detalle = "Grabar Tarja"
             _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
 

@@ -280,11 +280,11 @@ Public Class Frm_Stmp_IngPickeo
         _Mensaje = _Cl_Stmp.Fx_Confirmar_Picking
 
         If Not _Mensaje.EsCorrecto Then
-            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, "Confirmar Picking", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Confirmar Picking", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
 
-        MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, "Confirmar Picking", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Confirmar Picking", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Me.Close()
 
         ConfirmaDespacho = True

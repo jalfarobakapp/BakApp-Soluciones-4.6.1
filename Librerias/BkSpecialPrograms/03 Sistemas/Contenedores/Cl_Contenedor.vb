@@ -127,7 +127,7 @@ Public Class Cl_Contenedor
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
-        _Mensaje.Col2_Detalle = "Tomar contenedor"
+        _Mensaje.Detalle = "Tomar contenedor"
 
         Try
 
@@ -154,7 +154,7 @@ Public Class Cl_Contenedor
 
                 _Zw_Contenedor_DocTom = Fx_Llenar_ContenedorTomado(.IdCont, .Contenedor)
 
-                _Mensaje.Col1_Mensaje = "Contenedor Tomado Correctamente"
+                _Mensaje.Mensaje = "Contenedor Tomado Correctamente"
                 _Mensaje.EsCorrecto = True
                 _Mensaje.Tag = _Zw_Contenedor_DocTom
                 _Mensaje.Icono = MessageBoxIcon.Information
@@ -162,7 +162,7 @@ Public Class Cl_Contenedor
             End With
 
         Catch ex As Exception
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.EsCorrecto = False
             _Mensaje.Icono = MessageBoxIcon.Error
         End Try
@@ -174,7 +174,7 @@ Public Class Cl_Contenedor
     Function Fx_Crear_Contenedor(_Zw_Contenedor As Zw_Contenedor) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
-        _Mensaje.Col2_Detalle = "Crear contenedor"
+        _Mensaje.Detalle = "Crear contenedor"
 
         Try
 
@@ -194,7 +194,7 @@ Public Class Cl_Contenedor
 
                 _Zw_Contenedor = Fx_Llenar_Contenedor(.IdCont)
 
-                _Mensaje.Col1_Mensaje = "Contenedor Creado Correctamente"
+                _Mensaje.Mensaje = "Contenedor Creado Correctamente"
                 _Mensaje.EsCorrecto = True
                 _Mensaje.Icono = MessageBoxIcon.Information
                 _Mensaje.Id = .IdCont
@@ -203,7 +203,7 @@ Public Class Cl_Contenedor
             End With
 
         Catch ex As Exception
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.EsCorrecto = False
             _Mensaje.Icono = MessageBoxIcon.Error
         End Try
@@ -215,7 +215,7 @@ Public Class Cl_Contenedor
     Function Fx_Editar_Contenedor(_Zw_Contenedor As Zw_Contenedor) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
-        _Mensaje.Col2_Detalle = "Editar contenedor"
+        _Mensaje.Detalle = "Editar contenedor"
 
         Try
 
@@ -233,7 +233,7 @@ Public Class Cl_Contenedor
                     Throw New System.Exception("Error al editar el contenedor" & vbCrLf & _Sql.Pro_Error)
                 End If
 
-                _Mensaje.Col1_Mensaje = "Contenedor Editado Correctamente"
+                _Mensaje.Mensaje = "Contenedor Editado Correctamente"
                 _Mensaje.EsCorrecto = True
                 _Mensaje.Icono = MessageBoxIcon.Information
                 _Mensaje.Tag = Fx_Llenar_Contenedor(.IdCont)
@@ -241,7 +241,7 @@ Public Class Cl_Contenedor
             End With
 
         Catch ex As Exception
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.EsCorrecto = False
             _Mensaje.Icono = MessageBoxIcon.Error
         End Try
@@ -253,7 +253,7 @@ Public Class Cl_Contenedor
     Function Fx_Eliminar_Contenedor(_Zw_Contenedor As Zw_Contenedor) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
-        _Mensaje.Col2_Detalle = "Eliminar contenedor"
+        _Mensaje.Detalle = "Eliminar contenedor"
 
         Try
 
@@ -262,12 +262,12 @@ Public Class Cl_Contenedor
                 Throw New System.Exception("Error al eliminar el contenedor" & vbCrLf & _Sql.Pro_Error)
             End If
 
-            _Mensaje.Col1_Mensaje = "Contenedor Eliminado Correctamente"
+            _Mensaje.Mensaje = "Contenedor Eliminado Correctamente"
             _Mensaje.EsCorrecto = True
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.EsCorrecto = False
             _Mensaje.Icono = MessageBoxIcon.Error
         End Try
@@ -279,7 +279,7 @@ Public Class Cl_Contenedor
     Function Fx_Relacionar_Contenedor_Documento(_Idmaeedo As Integer, _IdCont As Integer) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
-        _Mensaje.Col2_Detalle = "Relacionar contenedor con documento"
+        _Mensaje.Detalle = "Relacionar contenedor con documento"
 
         Dim myTrans As SqlClient.SqlTransaction
         Dim Comando As SqlClient.SqlCommand
@@ -380,12 +380,12 @@ Public Class Cl_Contenedor
             myTrans.Commit()
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
-            _Mensaje.Col1_Mensaje = "Documento Relacionado Correctamente"
+            _Mensaje.Mensaje = "Documento Relacionado Correctamente"
             _Mensaje.EsCorrecto = True
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.EsCorrecto = False
             _Mensaje.Icono = MessageBoxIcon.Error
 
@@ -403,7 +403,7 @@ Public Class Cl_Contenedor
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
-        _Mensaje.Col2_Detalle = "Soltar contenedor tomado"
+        _Mensaje.Detalle = "Soltar contenedor tomado"
 
         Try
 
@@ -413,12 +413,12 @@ Public Class Cl_Contenedor
                 Throw New System.Exception("Error al soltar el contenedor tomado" & vbCrLf & _Sql.Pro_Error)
             End If
 
-            _Mensaje.Col1_Mensaje = "Contenedor Soltado Correctamente"
+            _Mensaje.Mensaje = "Contenedor Soltado Correctamente"
             _Mensaje.EsCorrecto = True
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.EsCorrecto = False
             _Mensaje.Icono = MessageBoxIcon.Error
         End Try
@@ -433,7 +433,7 @@ Public Class Cl_Contenedor
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
-        _Mensaje.Col2_Detalle = "Soltar contenedor tomado"
+        _Mensaje.Detalle = "Soltar contenedor tomado"
 
         Try
 
@@ -443,12 +443,12 @@ Public Class Cl_Contenedor
                 Throw New System.Exception("Error al soltar el contenedor tomado" & vbCrLf & _Sql.Pro_Error)
             End If
 
-            _Mensaje.Col1_Mensaje = "Contenedor Soltado Correctamente"
+            _Mensaje.Mensaje = "Contenedor Soltado Correctamente"
             _Mensaje.EsCorrecto = True
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.EsCorrecto = False
             _Mensaje.Icono = MessageBoxIcon.Error
         End Try
@@ -460,7 +460,7 @@ Public Class Cl_Contenedor
     Function Fx_Quitar_Contenedor_De_Documento(_Empresa As String, _IdCont As Integer, _Contenedor As String) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
-        _Mensaje.Col2_Detalle = "Quitar contenedor"
+        _Mensaje.Detalle = "Quitar contenedor"
 
         Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Contenedor_StockProd",
                                                        "Empresa = '" & _Empresa & "' And IdCont = " & _IdCont & " And Contenedor = '" & _Contenedor & "' And StcCompUd1+StcCompUd2 <> 0")
@@ -500,7 +500,7 @@ Public Class Cl_Contenedor
                     Throw New System.Exception("Error al editar el contenedor" & vbCrLf & _Sql.Pro_Error)
                 End If
 
-                _Mensaje.Col1_Mensaje = "Contenedor Quitado Correctamente"
+                _Mensaje.Mensaje = "Contenedor Quitado Correctamente"
                 _Mensaje.EsCorrecto = True
                 _Mensaje.Icono = MessageBoxIcon.Information
                 _Mensaje.Tag = Fx_Llenar_Contenedor(.IdCont)
@@ -508,7 +508,7 @@ Public Class Cl_Contenedor
             End With
 
         Catch ex As Exception
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.EsCorrecto = False
             _Mensaje.Icono = MessageBoxIcon.Error
         End Try

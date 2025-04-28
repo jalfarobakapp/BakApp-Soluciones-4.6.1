@@ -29,7 +29,7 @@ Public Class Cl_NVVCustomizable
         If Not CBool(_Tbl_Det.Rows.Count) Then
 
             _Mensaje_Stem.EsCorrecto = False
-            _Mensaje_Stem.Col1_Mensaje = "No se encontraron registros en la tabla Zw_Docu_Det_Cust con el Id_Enc " & _Idmaeddo
+            _Mensaje_Stem.Mensaje = "No se encontraron registros en la tabla Zw_Docu_Det_Cust con el Id_Enc " & _Idmaeddo
 
             Return _Mensaje_Stem
 
@@ -54,7 +54,7 @@ Public Class Cl_NVVCustomizable
         Next
 
         _Mensaje_Stem.EsCorrecto = True
-        _Mensaje_Stem.Col1_Mensaje = "Registros cargados correctamente"
+        _Mensaje_Stem.Mensaje = "Registros cargados correctamente"
 
         Return _Mensaje_Stem
 
@@ -114,15 +114,15 @@ Public Class Cl_NVVCustomizable
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Col2_Detalle = "Crear Hoja"
-            _Mensaje.Col1_Mensaje = "Documento grabado correctamente"
+            _Mensaje.Detalle = "Crear Hoja"
+            _Mensaje.Mensaje = "Documento grabado correctamente"
             _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
 
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col2_Detalle = "Error al grabar"
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Detalle = "Error al grabar"
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
 
             If Not IsNothing(myTrans) Then myTrans.Rollback()

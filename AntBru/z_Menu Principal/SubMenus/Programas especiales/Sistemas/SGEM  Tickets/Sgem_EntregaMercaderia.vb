@@ -66,7 +66,7 @@ Public Class Sgem_EntregaMercaderia
         _Mensaje = Fx_Entregar(FUNCIONARIO, "")
 
         If Not _Mensaje.EsCorrecto And Not _Mensaje.Cancelado Then
-            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
         End If
 
         If Not _Mensaje.Cerrar Then
@@ -95,14 +95,14 @@ Public Class Sgem_EntregaMercaderia
             End If
 
             If Not _Aceptar Then
-                _Mensaje.Col2_Detalle = "Acción cancelada"
+                _Mensaje.Detalle = "Acción cancelada"
                 _Mensaje.Cancelado = True
                 _Mensaje.Cerrar = _CerradPorX
                 Throw New System.Exception("An exception has occurred.")
             End If
 
             If Not _Numero.Contains("FCV") And Not _Numero.Contains("GDV") And Not _Numero.Contains("GDP") And Not _Numero.Contains("BLV") Then
-                _Mensaje.Col2_Detalle = "Validación"
+                _Mensaje.Detalle = "Validación"
                 Throw New System.Exception("Debe indicar si el documento es BLV, FCV o (GDV/GDP)")
             End If
 
@@ -116,7 +116,7 @@ Public Class Sgem_EntregaMercaderia
 
             If IsNothing(_Row) Then
 
-                _Mensaje.Col2_Detalle = "Validación"
+                _Mensaje.Detalle = "Validación"
 
                 If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
                     Throw New System.Exception(_Sql.Pro_Error)
@@ -130,13 +130,13 @@ Public Class Sgem_EntregaMercaderia
             Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If IsNothing(_Row_Documento) Then
-                _Mensaje.Col2_Detalle = "Validación"
+                _Mensaje.Detalle = "Validación"
                 Throw New System.Exception("No existe documento " & _Tido & " - " & _Nudo & " En el sistema de Ticket de entrega")
             End If
 
             If MessageBoxEx.Show(Me, "¿Confirma el documento " & _Tido & "-" & _Nudo & "?",
                                  "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
-                _Mensaje.Col2_Detalle = "Validación"
+                _Mensaje.Detalle = "Validación"
                 _Mensaje.Cancelado = True
                 Throw New System.Exception("Acción cancelada por el usuario")
             End If
@@ -152,7 +152,7 @@ Public Class Sgem_EntregaMercaderia
             _Mensaje = _Cl_Stmp.Fx_Entregar_Mercaderia
 
         Catch ex As Exception
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         Finally
             'If Chk_Monitorear.Checked Then
@@ -161,7 +161,7 @@ Public Class Sgem_EntregaMercaderia
         End Try
 
         If Not _Mensaje.EsCorrecto And Not _Mensaje.Cancelado Then
-            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
             _Mensaje = Fx_Entregar(_CodFuncionario_Entrega, "")
         End If
 

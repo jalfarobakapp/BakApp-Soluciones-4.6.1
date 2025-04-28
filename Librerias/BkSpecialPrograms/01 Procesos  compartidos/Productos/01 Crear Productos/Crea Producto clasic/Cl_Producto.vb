@@ -1551,7 +1551,7 @@ Drop Table #Paso_Tabim"
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Productos () Select KOPR,NOKOPR From MAEPR Where KOPR = '" & _Codigo & "'"
 
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col1_Mensaje = "No se encontro el registro en la tabla Zw_Productos con el Código " & _Codigo
+            _Mensaje.Mensaje = "No se encontro el registro en la tabla Zw_Productos con el Código " & _Codigo
 
             Return _Mensaje
 
@@ -1567,7 +1567,7 @@ Drop Table #Paso_Tabim"
         End With
 
         _Mensaje.EsCorrecto = True
-        _Mensaje.Col1_Mensaje = "Registro encontrado."
+        _Mensaje.Mensaje = "Registro encontrado."
         _Mensaje.Tag = Zw_Producto
 
         Return _Mensaje
@@ -1587,8 +1587,8 @@ Drop Table #Paso_Tabim"
         If _Row_Producto.Item("RtuXWms") = 0 Then
 
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col1_Mensaje = "El producto " & _Codigo & " no tiene la actualización de RTU por WMS activa."
-            _Mensaje.Col2_Detalle = "Actualizar RTU"
+            _Mensaje.Mensaje = "El producto " & _Codigo & " no tiene la actualización de RTU por WMS activa."
+            _Mensaje.Detalle = "Actualizar RTU"
 
             Return _Mensaje
 
@@ -1618,16 +1618,16 @@ Drop Table #Paso_Tabim"
         If _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
 
             _Mensaje.EsCorrecto = True
-            _Mensaje.Col1_Mensaje = "Se actualizo el RTU del producto " & _Codigo & " a " & _Rtu
-            _Mensaje.Col2_Detalle = "Actualizar RTU"
+            _Mensaje.Mensaje = "Se actualizo el RTU del producto " & _Codigo & " a " & _Rtu
+            _Mensaje.Detalle = "Actualizar RTU"
             _Mensaje.Tag = _Sql.Fx_Trae_Dato("MAEPR", "RLUD", "KOPR = '" & _Codigo & "'", True)
 
         Else
 
             _Mensaje.EsCorrecto = False
-            _Mensaje.Col1_Mensaje = "No se pudo actualizar el RTU del producto " & _Codigo & " a " & _Rtu
-            _Mensaje.Col2_Detalle = "Actualizar RTU"
-            _Mensaje.Col3_Resultado = _Sql.Pro_Error
+            _Mensaje.Mensaje = "No se pudo actualizar el RTU del producto " & _Codigo & " a " & _Rtu
+            _Mensaje.Detalle = "Actualizar RTU"
+            _Mensaje.Resultado = _Sql.Pro_Error
 
         End If
 

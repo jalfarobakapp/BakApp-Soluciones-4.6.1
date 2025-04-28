@@ -285,6 +285,8 @@ Public Class Frm_BusquedaDocumento_Filtro
         AddHandler Rdb_Producto_Todos.CheckedChanged, AddressOf Sb_Grupo_Producto
         AddHandler Rdb_Producto_Uno.CheckedChanged, AddressOf Sb_Grupo_Producto
 
+        Rdb_Tipo_Documento_Uno.Checked = True
+
         Sb_Grupo_Documento()
         Sb_Grupo_Entidad()
         Sb_Grupo_Funcionarios()
@@ -811,7 +813,7 @@ Buscar:
                         Dim _Msj As LsValiciones.Mensajes = Fx_FuncionarioPuedeVerDocumentoGrupo(_Idmaeedo, FUNCIONARIO)
 
                         If Not _Msj.EsCorrecto Then
-                            MessageBoxEx.Show(Me, _Msj.Col1_Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                            MessageBoxEx.Show(Me, _Msj.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                             Return
                         End If
 

@@ -93,7 +93,7 @@ Public Class Frm_Correos_Conf_SMTP
                                  Nothing, Txt_Puerto.Text, Chk_SSL.Checked)
 
         If Not _Mensaje.EsCorrecto Then
-            MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
             Return
         End If
 
@@ -599,8 +599,8 @@ Public Class Frm_Correos_Conf_SMTP
             End Using
 
         Catch ex As Exception
-            _Mensaje.Col2_Detalle = "Problema al enviar el correo"
-            _Mensaje.Col1_Mensaje = ex.Message
+            _Mensaje.Detalle = "Problema al enviar el correo"
+            _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
 

@@ -1237,7 +1237,7 @@ Public Class Frm_Pagos_Documentos
 
             If Not _Mensaje.EsCorrecto Then ' Not Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nudo, True) Then
 
-                MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
                 MessageBoxEx.Show(Me, "El documento no fue grabado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Sb_Nuevo_Documento()
                 Return
@@ -1332,7 +1332,7 @@ Public Class Frm_Pagos_Documentos
             _MsjPtos = _Cl_Puntos.Fx_Grabar_Registro_Puntos(_Idmaeedo, 0)
 
             If _MsjPtos.EsCorrecto Then
-                MessageBoxEx.Show(Me, _MsjPtos.Col1_Mensaje, _MsjPtos.Col2_Detalle, MessageBoxButtons.OK, MessageBoxIcon.Information)
+                MessageBoxEx.Show(Me, _MsjPtos.Mensaje, _MsjPtos.Detalle, MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
 
             ' ACTIVACION DE ORDENES DE DESPACHO *---------------------------------------------------------
@@ -2492,7 +2492,7 @@ Public Class Frm_Pagos_Documentos
 
                 If Not _Mensaje.EsCorrecto Then
 
-                    MessageBoxEx.Show(Me, _Mensaje.Col1_Mensaje, _Mensaje.Col2_Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                    MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
                     Sb_Nuevo_Documento()
                     Return
 
