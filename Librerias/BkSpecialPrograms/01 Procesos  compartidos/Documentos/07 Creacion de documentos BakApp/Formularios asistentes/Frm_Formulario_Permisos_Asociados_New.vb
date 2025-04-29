@@ -21,7 +21,7 @@ Public Class Frm_Formulario_Permisos_Asociados_New
     Dim _Tbl_Funcionarios_X_09_FVigenciaCrVencida As DataTable
     Dim _Tbl_Funcionarios_X_10_DocSinPickear As DataTable
     Dim _Tbl_Funcionarios_X_11_RazonTransfomDescativada As DataTable
-    Dim _Tbl_Funcionarios_X_12_Protestos As DataTable
+    'Dim _Tbl_Funcionarios_X_12_Protestos As DataTable
 
     Dim _Id_Enc As Integer
     Dim _Id_DocEnc As Integer
@@ -280,8 +280,8 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                     _Tbl = _Tbl_Funcionarios_X_10_DocSinPickear
                 Case "Doc00102"
                     _Tbl = _Tbl_Funcionarios_X_11_RazonTransfomDescativada
-                Case "Doc00103"
-                    _Tbl = _Tbl_Funcionarios_X_12_Protestos
+                    'Case "Doc00103"
+                    '    _Tbl = _Tbl_Funcionarios_X_12_Protestos
             End Select
 
             If _Revisar Then
@@ -461,8 +461,8 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                         _Tbl = _Tbl_Funcionarios_X_10_DocSinPickear
                     Case "Doc00102"
                         _Tbl = _Tbl_Funcionarios_X_11_RazonTransfomDescativada
-                    Case "Doc00103"
-                        _Tbl = _Tbl_Funcionarios_X_12_Protestos
+                        'Case "Doc00103"
+                        '    _Tbl = _Tbl_Funcionarios_X_12_Protestos
                 End Select
 
                 If _Solicitado_Por_Cadena Then
@@ -625,8 +625,8 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                 _Tbl = _Tbl_Funcionarios_X_10_DocSinPickear
             Case "Doc00102"
                 _Tbl = _Tbl_Funcionarios_X_11_RazonTransfomDescativada
-            Case "Doc00103"
-                _Tbl = _Tbl_Funcionarios_X_12_Protestos
+                'Case "Doc00103"
+                '    _Tbl = _Tbl_Funcionarios_X_12_Protestos
         End Select
 
         Sb_Llenar_Funcionarios_Destino(_CodPermiso, _Tbl)
@@ -656,8 +656,8 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                     _Tbl_Funcionarios_X_10_DocSinPickear = _Tbl
                 Case "Doc00102"
                     _Tbl_Funcionarios_X_11_RazonTransfomDescativada = _Tbl
-                Case "Doc00103"
-                    _Tbl_Funcionarios_X_12_Protestos = _Tbl
+                    'Case "Doc00103"
+                    '    _Tbl_Funcionarios_X_12_Protestos = _Tbl
             End Select
 
             _Fila.Cells("Btn_Estado").Value = Imagenes_16x16.Images.Item("secure-user.png")
@@ -789,8 +789,8 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                     _Tbl_Funcionarios_X_10_DocSinPickear = Nothing
                 Case "Doc00102"
                     _Tbl_Funcionarios_X_11_RazonTransfomDescativada = Nothing
-                Case "Doc00103"
-                    _Tbl_Funcionarios_X_12_Protestos = Nothing
+                    'Case "Doc00103"
+                    '    _Tbl_Funcionarios_X_12_Protestos = Nothing
             End Select
 
 

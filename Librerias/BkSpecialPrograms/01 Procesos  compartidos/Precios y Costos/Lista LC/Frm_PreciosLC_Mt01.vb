@@ -1175,34 +1175,21 @@ Public Class Frm_PreciosLC_Mt01
                        "Set @Fxx = REPLACE(@Fxx,'Zw_ListaLC_Listas','" & _Global_BaseBk & "Zw_ListaLC_Listas')" & vbCrLf &
                        "Exec (@Fxx)"
 
-        'Consulta_sql = "Declare @Fxx Varchar(8000)" & vbCrLf &
-        '               "Set @Fxx = (Select Formula From Zw_ListaLC_Fx" & vbCrLf &
-        '               "where CodFormula = 'Lista_LC')" & vbCrLf &
-        '               "Set @Fxx = REPLACE(@Fxx,'#TblPaso#','" & TablaDePasoLista_LC & "')" & vbCrLf &
-        '               "Set @Fxx = REPLACE(@Fxx,'#TablaPaso#','" & TablaDePasoLista_LC & "')" & vbCrLf &
-        '               "Exec (@Fxx)"
-
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
         '"Set @Fxx = REPLACE(@Fxx,'Zw_ListaLC_TblPasoListas','" & TablaDePasoLista_LC & "')" & vbCrLf & _
 
         Dim Codigo = Txtcodigo.Text
 
-        '' REEMPLAZAR ESTA FUNCION EN LA NUEVA VERSION
+        '' REEMPLAZAR ESTA FUNCION EN LA NUEVA VERSION 
+        '' 
         Consulta_sql = "Declare @Fxx Varchar(8000)" & vbCrLf &
-                          "Set @Fxx = (Select Formula From " & _Global_BaseBk & "Zw_ListaLC_Fx" & vbCrLf &
-                          "where CodFormula = 'Lista_LCRa')" & vbCrLf &
-                          "Set @Fxx = REPLACE(@Fxx,'#Codigo#','" & Codigo & "')" & vbCrLf &
-                          "Set @Fxx = REPLACE(@Fxx,'#TablaPaso#','" & TablaDePasoLista_LC & "')" & vbCrLf &
-                          "Set @Fxx = REPLACE(@Fxx,'Zw_ListaLC_Listas','" & _Global_BaseBk & "Zw_ListaLC_Listas')" & vbCrLf &
-                          "Exec (@Fxx)"
-
-        'Consulta_sql = "Declare @Fxx Varchar(8000)" & vbCrLf &
-        '                  "Set @Fxx = (Select Formula From Zw_ListaLC_Fx" & vbCrLf &
-        '                  "where CodFormula = 'Lista_LCRa')" & vbCrLf &
-        '                  "Set @Fxx = REPLACE(@Fxx,'#Codigo#','" & Codigo & "')" & vbCrLf &
-        '                  "Set @Fxx = REPLACE(@Fxx,'#TablaPaso#','" & TablaDePasoLista_LC & "')" & vbCrLf &
-        '                  "Exec (@Fxx)"
+                       "Set @Fxx = (Select Formula From " & _Global_BaseBk & "Zw_ListaLC_Fx" & vbCrLf &
+                       "where CodFormula = 'Lista_LCRa')" & vbCrLf &
+                       "Set @Fxx = REPLACE(@Fxx,'#Codigo#','" & Codigo & "')" & vbCrLf &
+                       "Set @Fxx = REPLACE(@Fxx,'#TablaPaso#','" & TablaDePasoLista_LC & "')" & vbCrLf &
+                       "Set @Fxx = REPLACE(@Fxx,'Zw_ListaLC_Listas','" & _Global_BaseBk & "Zw_ListaLC_Listas')" & vbCrLf &
+                       "Exec (@Fxx)"
 
         _Sql.Ej_consulta_IDU(Consulta_sql)
 

@@ -1694,7 +1694,7 @@ Public Class Frm_Formulario_Documento
         _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00098", False, False, "", "", False, False, False)
         _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00101", False, False, "", "", False, False, False) ' Crear documento sin Picking
         _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00102", False, False, "", "", False, False, False) ' Cambiar RTU de pesos variables
-        _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00103", False, False, "", "", False, False, False) ' Morosidad por cheques protestados
+        '_Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00103", False, False, "", "", False, False, False) ' Morosidad por cheques protestados
 
         'If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Configuracion", "RestringirFechaVencimientoClientes") Then
         'If _Global_Row_Configuracion_General.Item("RestringirFechaVencimientoClientes") Then
@@ -2381,7 +2381,7 @@ Public Class Frm_Formulario_Documento
             _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "ODp00017", False, False, "", "", False, False, False) ' Despacho mínimo en Kg o Total Neto
             _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00101", False, False, "", "", False, False, False) ' Crear documento sin Picking
             _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00102", False, False, "", "", False, False, False) ' Crear documento sin Picking
-            _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00103", False, False, "", "", False, False, False) ' Morosidad por cheques protestados
+            '_Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00103", False, False, "", "", False, False, False) ' Morosidad por cheques protestados
 
             _TblPermisos = _Ds_Matriz_Documentos.Tables("Permisos_Doc")
 
@@ -8516,9 +8516,9 @@ Public Class Frm_Formulario_Documento
                     End If
 
                     If Not Fx_RevisarProtestos(True, _RowEntidad) Then
-                        'If Not Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00103", Nothing, _Koen, _Suen) Then
-                        Return Nothing
-                        'End If
+                        If Not Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00103", Nothing, _Koen, _Suen) Then
+                            Return Nothing
+                        End If
                     End If
 
                 End If
@@ -21892,7 +21892,7 @@ Public Class Frm_Formulario_Documento
                     Fx_Autorizar_X_Descuentos(False)
                 End If
 
-            Case "Bkp00015", "Bkp00019", "Bkp00033", "Bkp00057", "ODp00017", "Bkp00062", "Doc00098", "Doc00101", "Doc00102", "Doc00103"
+            Case "Bkp00015", "Bkp00019", "Bkp00033", "Bkp00057", "ODp00017", "Bkp00062", "Doc00098", "Doc00101", "Doc00102" ', "Doc00103"
 
                 If _Crear_Doc_Def_Al_Grabar Then
 
@@ -23354,9 +23354,10 @@ Public Class Frm_Formulario_Documento
                 _Autorizado = Fx_Validad_Morosidad(_Necesita_Permiso)
                 Sb_Revisar_Permiso("Bkp00019", _Autorizado, _Necesita_Permiso)
 
-                _Autorizado = False : _Necesita_Permiso = False
-                _Autorizado = Fx_RevisarProtestos(False, _RowEntidad)
-                Sb_Revisar_Permiso("Doc00103", _Autorizado, _Necesita_Permiso)
+                '_Autorizado = False : _Necesita_Permiso = False
+                '_Necesita_Permiso = Not Fx_RevisarProtestos(False, _RowEntidad)
+                '_Autorizado = Fx_Tiene_Permiso(Me, "Doc00103",, False)
+                'Sb_Revisar_Permiso("Doc00103", _Autorizado, _Necesita_Permiso)
 
                 If _Tido = "NVV" Or _Tido = "GDV" Or _Tido = "GDP" Then
 
@@ -28888,8 +28889,7 @@ Public Class Frm_Formulario_Documento
             If _MostrarMensaje Then
 
                 If MessageBoxEx.Show(Me, _Mensaje.Mensaje & vbCrLf & vbCrLf &
-                                  "¿Desea ver el detalle?",
-                                  "Validación",
+                                  "¿Desea ver el detalle?", "Validación",
                                   MessageBoxButtons.YesNo, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost) = DialogResult.Yes Then
 
                     Dim Fm As New Frm_InfoEnt_Protestos(_Mensaje.Tag)

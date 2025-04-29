@@ -90,8 +90,6 @@ Public Class Frm_Cantidades_Ud_Disintas
                     _ValidarApiWMSBosOne = False
                 End If
 
-                TxtCantUD1.Enabled = Chk_DesacRazTransf.Checked
-
                 'If RtuVariable And Chk_DesacRazTransf.Checked Then
                 '    Chk_DesacRazTransf.Enabled = False
                 'End If
@@ -101,6 +99,7 @@ Public Class Frm_Cantidades_Ud_Disintas
         End If
 
         Img_RtuAPI.Visible = _ValidarApiWMSBosOne
+        TxtCantUD1.Enabled = Chk_DesacRazTransf.Checked
 
         'Chk_RtuVariable.Enabled = (_Fila.Cells("Nmarca").Value = "¡")
 

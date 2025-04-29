@@ -15,6 +15,7 @@ SELECT  Top #CantidadDoc#
         Isnull(Mae2.NOKOEN,'') As RAZON_FISICA,
 		FEEMDO,
         FEULVEDO,
+        FEER,
         KOFUDO,
         SUDO,
 		Isnull(NOKOSU,'Suc ???') As NOKOSU,

@@ -253,6 +253,9 @@ Public Class Frm_BusquedaDocumento_Filtro
         Dtp_FEmision_Desde.Value = Now.Date
         Dtp_FEmision_Hasta.Value = Now.Date
 
+        Dtp_FEntrega_Desde.Value = Now.Date
+        Dtp_FEntrega_Hasta.Value = Now.Date
+
     End Sub
 
     Private Sub Frm_BusquedaDocumento_Filtro_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load

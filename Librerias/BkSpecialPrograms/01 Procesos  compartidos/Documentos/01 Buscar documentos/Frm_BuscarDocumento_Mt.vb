@@ -287,7 +287,7 @@ Public Class Frm_BuscarDocumento_Mt
             _DisplayIndex += 1
 
             .Columns("RAZON").HeaderText = "Razón Social"
-            .Columns("RAZON").Width = 280
+            .Columns("RAZON").Width = IIf(.Columns("Chk").Visible, 300, 330)
             .Columns("RAZON").Visible = True
             .Columns("RAZON").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
@@ -300,18 +300,26 @@ Public Class Frm_BuscarDocumento_Mt
             .Columns("VABRDO").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("FEEMDO").HeaderText = "Emisión"
+            .Columns("FEEMDO").HeaderText = "F.Emisión"
             .Columns("FEEMDO").Width = 70
             .Columns("FEEMDO").DefaultCellStyle.Format = "dd/MM/yyyy"
             .Columns("FEEMDO").Visible = True
             .Columns("FEEMDO").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("FEULVEDO").HeaderText = "Vencim."
+            .Columns("FEULVEDO").HeaderText = "F.Vencim."
             .Columns("FEULVEDO").Width = 70
             .Columns("FEULVEDO").DefaultCellStyle.Format = "dd/MM/yyyy"
             .Columns("FEULVEDO").Visible = True
             .Columns("FEULVEDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("FEER").HeaderText = "F.Entrega"
+            .Columns("FEER").ToolTipText = "Fecha de entrega/recepción"
+            .Columns("FEER").Width = 70
+            .Columns("FEER").DefaultCellStyle.Format = "dd/MM/yyyy"
+            .Columns("FEER").Visible = True
+            .Columns("FEER").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("KOFUDO").HeaderText = "Resp"

@@ -325,6 +325,7 @@ Public Class Frm_Stmp_IncNVVPicking
 
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
+        Dim _Idmaeedo As Integer = _Fila.Cells("IDMAEEDO").Value
 
         If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") AndAlso
             (_Cabeza = "Facturar" Or _Cabeza = "EnvPickeo") AndAlso
@@ -335,6 +336,19 @@ Public Class Frm_Stmp_IncNVVPicking
             MessageBoxEx.Show(Me, "Esta nota de venta no ha sido habilitada para ser facturada", "Validación",
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
+
+        End If
+
+        If _Cabeza = "EnvPickeo" AndAlso _Fila.Cells("EnvPickeo").Value Then
+
+            Dim _Esdo As String = _Sql.Fx_Trae_Dato("MAEEDO", "ESDO", "IDMAEEDO = " & _Idmaeedo)
+
+            If _Esdo = "C" Then
+                _Fila.Cells(_Cabeza).Value = False
+                MessageBoxEx.Show(Me, "Esta nota de venta esta completamente cerrada", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
 
         End If
 

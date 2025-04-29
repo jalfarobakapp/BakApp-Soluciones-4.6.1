@@ -592,7 +592,7 @@ Public Class Cl_Stmp
             _Sql.Ej_consulta_IDU(Consulta_sql)
         End If
 
-        Consulta_sql = "Select Edo.IDMAEEDO,Edo.EMPRESA,Edo.TIDO,Edo.NUDO,Edo.ENDO,Edo.SUENDO,Edo.SUDO,Doc.Pickear,HabilitadaFac,FunAutorizaFac,Estaenwms" & vbCrLf &
+        Consulta_sql = "Select Edo.IDMAEEDO,Edo.EMPRESA,Edo.TIDO,Edo.NUDO,Edo.ENDO,Edo.SUENDO,Edo.SUDO,Edo.ESDO,Doc.Pickear,HabilitadaFac,FunAutorizaFac,Estaenwms" & vbCrLf &
                        "From MAEEDO Edo" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Docu_Ent Doc On Edo.IDMAEEDO = Doc.Idmaeedo And Edo.TIDO = Doc.Tido And Edo.NUDO = Doc.Nudo" & vbCrLf &
                        "Where IDMAEEDO = " & _Idmaeedo
@@ -608,6 +608,13 @@ Public Class Cl_Stmp
         If Not _Row_Documento.Item("Pickear") Then
             _Mensaje.EsCorrecto = False
             _Mensaje.Mensaje = "Este documento no esta marcado para ser Pickeado en la tabla Zw_Docu_Ent"
+            _Mensaje.Detalle = "Documento: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
+            Return _Mensaje
+        End If
+
+        If _Row_Documento.Item("ESDO") = "C" Then
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = "Este documento se encuentra completamente cerrado"
             _Mensaje.Detalle = "Documento: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
             Return _Mensaje
         End If
