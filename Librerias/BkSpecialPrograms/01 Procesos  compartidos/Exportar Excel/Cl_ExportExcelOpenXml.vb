@@ -214,18 +214,19 @@ Public Class Cl_ExportExcelOpenXml
                         Circular_Progres_Porcentaje.Value = 0
                     End If
 
-                    If Not CBool(_Tbl_Excel.Rows.Count) Then
-                        Continue For
-                    End If
+                    If CBool(_Tbl_Excel.Rows.Count) Then
 
-                    ' Crear los estilos, incluyendo el formato de fecha
-                    Dim stylesPart = workbookPart.AddNewPart(Of WorkbookStylesPart)()
-                    stylesPart.Stylesheet = CreateStylesheetWithDateStyle()
-                    stylesPart.Stylesheet.Save()
+                        ' Crear los estilos, incluyendo el formato de fecha
+                        Dim stylesPart = workbookPart.AddNewPart(Of WorkbookStylesPart)()
+                        stylesPart.Stylesheet = CreateStylesheetWithDateStyle()
+                        stylesPart.Stylesheet.Save()
+
+                    End If
 
                     Dim sheetData = New SheetData()
                     Dim worksheetPart = workbookPart.AddNewPart(Of WorksheetPart)()
                     worksheetPart.Worksheet = New Worksheet(sheetData)
+
 
                     _Fila = 0
                     _NroHoja += 1

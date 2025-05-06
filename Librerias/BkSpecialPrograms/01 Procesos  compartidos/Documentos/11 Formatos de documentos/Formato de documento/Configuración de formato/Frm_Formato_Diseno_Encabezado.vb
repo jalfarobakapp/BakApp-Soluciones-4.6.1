@@ -1445,10 +1445,13 @@ Public Class Frm_Formato_Diseno_Encabezado
             Dim _Name = _Fl.Item("Name")
             Dim _Alto = _Fl.Item("Alto")
             Dim _Seccion = _Fl.Item("Seccion")
+            Dim _Orden_Detalle As Integer = _Fl.Item("Orden_Detalle")
 
             If _Seccion = "D" Then
-                If _Alto > _AltoMax Then
-                    _AltoMax = _Alto
+                If _Orden_Detalle = 1 Then
+                    If _Alto > _AltoMax Then
+                        _AltoMax = _Alto
+                    End If
                 End If
             End If
 

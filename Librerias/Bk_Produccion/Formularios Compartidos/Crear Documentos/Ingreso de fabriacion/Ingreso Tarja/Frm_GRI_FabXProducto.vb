@@ -1370,4 +1370,11 @@ Public Class Frm_GRI_FabXProducto
 
     End Sub
 
+    Private Sub Btn_ModificarChk_Click(sender As Object, e As EventArgs) Handles Btn_ModificarChk.Click
+        If Not Fx_Tiene_Permiso(Me, "Pdc00014") Then
+            Return
+        End If
+        MessageBoxEx.Show(Me, "Ahora es posible modificar el check de GDI Consumo", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        Chk_GDI_Consumo.Enabled = True
+    End Sub
 End Class

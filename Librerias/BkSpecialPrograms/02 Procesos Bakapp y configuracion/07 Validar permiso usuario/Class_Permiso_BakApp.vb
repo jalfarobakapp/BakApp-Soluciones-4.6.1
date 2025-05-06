@@ -1006,6 +1006,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Pdc00011", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Pdc00012", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Pdc00013", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Pdc00014", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Rcl00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Rcl00002", _Objeto, _Formulario)
@@ -4394,6 +4395,10 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.PRODUCCION.ToString
             Case "Pdc00013"
                 _DescripcionPermiso = "INGRESAR MAXI-SACO CON UNA CANTIDAD FUERA DEL RANGO DE 400 A 1500 KILOS."
+                _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCCION, 6)
+                _NombreFamiliaPermiso = _Fml.PRODUCCION.ToString
+            Case "Pdc00014"
+                _DescripcionPermiso = "PODER MODIFICAR EL CHECK DE GDI DE CONSUMO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCCION, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCCION.ToString
         End Select
