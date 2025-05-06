@@ -550,12 +550,18 @@ Public Class Clas_PDF_Crear_Documento
 
             For Each _Fila As DataRow In _Tbl_Fx_Detalle.Rows
 
+                Dim _Orden_Detalle As Integer = _Fila.Item("Orden_Detalle")
                 _Alto = _Fila.Item("Alto")
 
-                If _Mas_Alto < _Alto Then
-                    _Mas_Alto = _Alto
+                If _Orden_Detalle = 1 Then
+
+                    If _Mas_Alto < _Alto Then
+                        _Mas_Alto = _Alto
+                    End If
+
+                    _NombreObjeto = _Fila.Item("NombreObjeto")
+
                 End If
-                _NombreObjeto = _Fila.Item("NombreObjeto")
 
             Next
 
@@ -829,6 +835,9 @@ Public Class Clas_PDF_Crear_Documento
 
                                     Dim _Moneda_Str As String = _Fila_D.Item("MOPPPR").ToString.Trim
 
+                                    Dim _Formato_Texto As String = _Texto
+                                    Dim _Formatext = Split(_Formato_Texto, vbCrLf)
+
                                     _Texto = Fx_New_Trae_Valor_Detalle_Row(_Campo,
                                                                            _TipoDato,
                                                                            _Es_Descuento,
@@ -836,28 +845,86 @@ Public Class Clas_PDF_Crear_Documento
                                                                            _Texto,
                                                                            _Moneda_Str)
 
-                                    If _Orden_Detalle = 2 And Not String.IsNullOrEmpty(_Texto) Then
+                                    'If _Orden_Detalle = 2 And Not String.IsNullOrEmpty(_Texto) Then
 
-                                        _Detalle_Y += _Alto + 2
+                                    '    _Detalle_Y += _Alto + 2
 
-                                    End If
+                                    'End If
 
-                                    'IMPRIME CODIGO DE BARRAS
-                                    If _Codigo_De_Barras Then
+                                    If _Orden_Detalle = 2 Then
 
-                                        Dim bm As Bitmap = Nothing
-                                        Dim CodBarras As XImage
+                                        If Not String.IsNullOrWhiteSpace(_Texto) AndAlso _Formatext.Length > 1 Then
 
-                                        Dim iType As BarCode.Code128SubTypes =
-                                        DirectCast([Enum].Parse(GetType(BarCode.Code128SubTypes), "CODE128"), BarCode.Code128SubTypes)
-                                        bm = BarCode.Code128(_Texto, iType, False)
-                                        If Not IsNothing(bm) Then
-                                            CodBarras = bm
+                                            '_Saltar_Linea = False
+
+                                            Dim _Caracteres = _Formato_Texto.Length
+
+                                            Dim _i = 0
+
+                                            If IsNothing(_Texto) Then _Texto = String.Empty
+
+                                            _Texto = Replace(_Texto, vbCrLf, " ")
+                                            _Texto = Replace(_Texto, vbTab, " ")
+
+                                            If IsNothing(_Texto) Then
+                                                _Texto = String.Empty
+                                            End If
+
+                                            If Not String.IsNullOrWhiteSpace(_Texto) Then
+                                                _Texto = Replace(_Texto, "  ", " ")
+                                            End If
+
+                                            Dim _SubCarac = _Formato_Texto.Split(vbCrLf)
+                                            Dim _TextoAjustado As String = Fx_AjustarTexto(_Texto, _SubCarac(0).Length)
+
+                                            Dim _AltoL = (_Alto / _Formatext.Length) + 2
+
+                                            _Formatext = Split(_TextoAjustado, vbCrLf)
+
+                                            '_Detalle_Y += _AltoL + 2
+
+                                            For Each _Texto1 As String In _Formatext
+
+                                                If Not String.IsNullOrWhiteSpace(_Texto1) Then
+                                                    _Detalle_Y += _AltoL
+                                                    _Pdf_gx.DrawString(_Texto1.Trim, _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
+                                                End If
+
+                                            Next
+
+                                        Else
+
+                                            If Not String.IsNullOrEmpty(_Texto) Then
+
+                                                _Detalle_Y += _Alto + 2
+                                                _Texto = Replace(_Texto, vbCrLf, " ")
+                                                _Pdf_gx.DrawString(_Texto, _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
+
+                                            End If
+
                                         End If
-                                        Dim d = _Detalle_Y
-                                        _Pdf_gx.DrawImage(CodBarras, _Columna_X, _Detalle_Y, _Ancho, _Alto - 2)
+
+
                                     Else
-                                        _Pdf_gx.DrawString(_Texto, _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
+
+                                        'IMPRIME CODIGO DE BARRAS
+                                        If _Codigo_De_Barras Then
+
+                                            Dim bm As Bitmap = Nothing
+                                            Dim CodBarras As XImage
+
+                                            Dim iType As BarCode.Code128SubTypes =
+                                            DirectCast([Enum].Parse(GetType(BarCode.Code128SubTypes), "CODE128"), BarCode.Code128SubTypes)
+                                            bm = BarCode.Code128(_Texto, iType, False)
+                                            If Not IsNothing(bm) Then
+                                                CodBarras = bm
+                                            End If
+                                            Dim d = _Detalle_Y
+                                            _Pdf_gx.DrawImage(CodBarras, _Columna_X, _Detalle_Y, _Ancho, _Alto - 2)
+                                        Else
+                                            _Pdf_gx.DrawString(_Texto, _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
+                                        End If
+
                                     End If
 
                                 End If
