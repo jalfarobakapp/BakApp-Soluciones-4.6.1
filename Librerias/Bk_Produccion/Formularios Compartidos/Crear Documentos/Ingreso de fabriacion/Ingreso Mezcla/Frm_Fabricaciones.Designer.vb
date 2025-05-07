@@ -32,6 +32,7 @@ Partial Class Frm_Fabricaciones
         Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Chk_GDI_Consumo = New DevComponents.DotNetBar.CheckBoxItem()
+        Me.Btn_ModificarChk = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
@@ -50,7 +51,6 @@ Partial Class Frm_Fabricaciones
         Me.Dtp_Fecha_Ingreso = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Receta = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Btn_ModificarChk = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel4.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -120,6 +120,14 @@ Partial Class Frm_Fabricaciones
         Me.Chk_GDI_Consumo.Enabled = False
         Me.Chk_GDI_Consumo.Name = "Chk_GDI_Consumo"
         Me.Chk_GDI_Consumo.Text = "Crear GDI de consumo"
+        '
+        'Btn_ModificarChk
+        '
+        Me.Btn_ModificarChk.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_ModificarChk.ForeColor = System.Drawing.Color.Black
+        Me.Btn_ModificarChk.Name = "Btn_ModificarChk"
+        Me.Btn_ModificarChk.Text = "<-Modificar"
+        Me.Btn_ModificarChk.Tooltip = "Seleccionar registro marcado"
         '
         'GroupPanel4
         '
@@ -484,15 +492,6 @@ Partial Class Frm_Fabricaciones
         Me.Txt_Receta.Size = New System.Drawing.Size(727, 31)
         Me.Txt_Receta.TabIndex = 171
         Me.Txt_Receta.Text = "DSDSD SDS DSD - SD SDSDFSAFSFSDF A DSAF SDF SDF SDFSD"
-        '
-        'Btn_ModificarChk
-        '
-        Me.Btn_ModificarChk.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_ModificarChk.ForeColor = System.Drawing.Color.Black
-        Me.Btn_ModificarChk.Name = "Btn_ModificarChk"
-        Me.Btn_ModificarChk.Text = "<-Modificar"
-        Me.Btn_ModificarChk.Tooltip = "Seleccionar registro marcado"
-        Me.Btn_ModificarChk.Visible = False
         '
         'Frm_Fabricaciones
         '

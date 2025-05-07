@@ -23,10 +23,10 @@ Partial Class Frm_Demonio_Configuraciones
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Demonio_Configuraciones))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Demonio_Configuraciones))
         Me.SuperTab = New DevComponents.DotNetBar.SuperTabControl()
         Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Btn_Rutas_PDF = New DevComponents.DotNetBar.ButtonX()
@@ -221,6 +221,8 @@ Partial Class Frm_Demonio_Configuraciones
         Me.Btn_ConfProgramacion = New DevComponents.DotNetBar.ButtonX()
         Me.Txt_Resumen = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Chk_Ejecutar_Automaticamente = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_NVVCerrar_FEntrega = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Input_DiasNVV_FEntrega = New DevComponents.Editors.IntegerInput()
         CType(Me.SuperTab, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTab.SuspendLayout()
         Me.SuperTabControlPanel2.SuspendLayout()
@@ -266,6 +268,7 @@ Partial Class Frm_Demonio_Configuraciones
         Me.SuperTabControlPanel6.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Grupo_Resumen.SuspendLayout()
+        CType(Me.Input_DiasNVV_FEntrega, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'SuperTab
@@ -284,12 +287,12 @@ Partial Class Frm_Demonio_Configuraciones
         Me.SuperTab.ControlBox.MenuBox.Name = ""
         Me.SuperTab.ControlBox.Name = ""
         Me.SuperTab.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTab.ControlBox.MenuBox, Me.SuperTab.ControlBox.CloseBox})
-        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel2)
+        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel1)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel5)
+        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel2)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel3)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel14)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel15)
-        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel1)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel13)
         Me.SuperTab.Controls.Add(Me.Panel_01)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel16)
@@ -1334,6 +1337,8 @@ Partial Class Frm_Demonio_Configuraciones
         '
         'SuperTabControlPanel1
         '
+        Me.SuperTabControlPanel1.Controls.Add(Me.Input_DiasNVV_FEntrega)
+        Me.SuperTabControlPanel1.Controls.Add(Me.Chk_NVVCerrar_FEntrega)
         Me.SuperTabControlPanel1.Controls.Add(Me.Line14)
         Me.SuperTabControlPanel1.Controls.Add(Me.Chk_OCCCerrar)
         Me.SuperTabControlPanel1.Controls.Add(Me.Input_DiasOCC)
@@ -3235,6 +3240,42 @@ Partial Class Frm_Demonio_Configuraciones
         Me.Chk_Ejecutar_Automaticamente.TabIndex = 187
         Me.Chk_Ejecutar_Automaticamente.Text = "Ejecutar automáticamente<br/>al abrir el sistema" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
+        'Chk_NVVCerrar_FEntrega
+        '
+        Me.Chk_NVVCerrar_FEntrega.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_NVVCerrar_FEntrega.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_NVVCerrar_FEntrega.CheckBoxImageChecked = CType(resources.GetObject("Chk_NVVCerrar_FEntrega.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_NVVCerrar_FEntrega.FocusCuesEnabled = False
+        Me.Chk_NVVCerrar_FEntrega.ForeColor = System.Drawing.Color.Black
+        Me.Chk_NVVCerrar_FEntrega.Location = New System.Drawing.Point(6, 282)
+        Me.Chk_NVVCerrar_FEntrega.Name = "Chk_NVVCerrar_FEntrega"
+        Me.Chk_NVVCerrar_FEntrega.Size = New System.Drawing.Size(128, 23)
+        Me.Chk_NVVCerrar_FEntrega.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_NVVCerrar_FEntrega.TabIndex = 187
+        Me.Chk_NVVCerrar_FEntrega.Text = "NVV (Fecha entrega)"
+        '
+        'Input_DiasNVV_FEntrega
+        '
+        Me.Input_DiasNVV_FEntrega.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Input_DiasNVV_FEntrega.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_DiasNVV_FEntrega.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_DiasNVV_FEntrega.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_DiasNVV_FEntrega.ForeColor = System.Drawing.Color.Black
+        Me.Input_DiasNVV_FEntrega.Location = New System.Drawing.Point(132, 282)
+        Me.Input_DiasNVV_FEntrega.MaxValue = 30
+        Me.Input_DiasNVV_FEntrega.MinValue = 1
+        Me.Input_DiasNVV_FEntrega.Name = "Input_DiasNVV_FEntrega"
+        Me.Input_DiasNVV_FEntrega.ShowUpDown = True
+        Me.Input_DiasNVV_FEntrega.Size = New System.Drawing.Size(36, 22)
+        Me.Input_DiasNVV_FEntrega.TabIndex = 188
+        Me.Input_DiasNVV_FEntrega.Value = 1
+        '
         'Frm_Demonio_Configuraciones
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -3246,7 +3287,6 @@ Partial Class Frm_Demonio_Configuraciones
         Me.Controls.Add(Me.SuperTab)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
@@ -3300,6 +3340,7 @@ Partial Class Frm_Demonio_Configuraciones
         Me.SuperTabControlPanel6.ResumeLayout(False)
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Grupo_Resumen.ResumeLayout(False)
+        CType(Me.Input_DiasNVV_FEntrega, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -3498,4 +3539,6 @@ Partial Class Frm_Demonio_Configuraciones
     Friend WithEvents Btn_Rutas_PDF_Facturas As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Rutas_PDF_Boletas As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Rutas_PDF_Guias As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Input_DiasNVV_FEntrega As DevComponents.Editors.IntegerInput
+    Friend WithEvents Chk_NVVCerrar_FEntrega As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

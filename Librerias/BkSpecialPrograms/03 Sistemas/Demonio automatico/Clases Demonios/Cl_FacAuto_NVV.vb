@@ -77,10 +77,11 @@
         Dim _Esucursal As String = _Sql.Fx_Trae_Dato("CONFIEST", "ESUCURSAL", "MODALIDAD = '" & Modalidad_Fac & "'",, False)
 
         Dim _CondicionSuc = String.Empty
-        Dim _CondicionFunFac = "CodFuncionario_Factura <> ''"
+        Dim _CondicionFunFac = " And CodFuncionario_Factura <> ''"
 
         If SoloDeSucModalidad Then
-            _CondicionSuc = "And ((Empresa = '" & _Empresa & "' And Sucursal = '" & _Esucursal & "') Or (ModalidadFactura = '" & Modalidad_Fac & "'))" & vbCrLf
+            _CondicionSuc = " And ((Empresa = '" & _Empresa & "' And Sucursal = '" & _Esucursal & "')" & vbCrLf
+            '_CondicionSuc = "And ((Empresa = '" & _Empresa & "' And Sucursal = '" & _Esucursal & "') Or (ModalidadFactura = '" & Modalidad_Fac & "'))" & vbCrLf
         End If
 
         If Not String.IsNullOrWhiteSpace(CodFunFactura) Then

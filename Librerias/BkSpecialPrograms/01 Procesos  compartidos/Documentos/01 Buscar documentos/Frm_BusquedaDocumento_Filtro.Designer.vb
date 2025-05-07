@@ -344,7 +344,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Rdb_FEmision_EmitidosEntre.Size = New System.Drawing.Size(97, 26)
         Me.Rdb_FEmision_EmitidosEntre.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_FEmision_EmitidosEntre.TabIndex = 24
-        Me.Rdb_FEmision_EmitidosEntre.Text = "Emitidos entre"
+        Me.Rdb_FEmision_EmitidosEntre.Text = "Rango de fechas"
         '
         'Lbl_FEmision_Desde
         '
@@ -580,7 +580,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.TableLayoutPanel3.ColumnCount = 3
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 91.0!))
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 131.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 132.0!))
         Me.TableLayoutPanel3.Controls.Add(Me.Rdb_Sucursal_Doc_Algunas, 2, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.Rdb_Sucursal_Doc_Todas, 1, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.LabelX2, 0, 0)
@@ -602,7 +602,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Rdb_Sucursal_Doc_Algunas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Sucursal_Doc_Algunas.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Sucursal_Doc_Algunas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Sucursal_Doc_Algunas.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Sucursal_Doc_Algunas.Location = New System.Drawing.Point(253, 4)
+        Me.Rdb_Sucursal_Doc_Algunas.Location = New System.Drawing.Point(252, 4)
         Me.Rdb_Sucursal_Doc_Algunas.Name = "Rdb_Sucursal_Doc_Algunas"
         Me.Rdb_Sucursal_Doc_Algunas.Size = New System.Drawing.Size(94, 17)
         Me.Rdb_Sucursal_Doc_Algunas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -622,7 +622,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Rdb_Sucursal_Doc_Todas.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Sucursal_Doc_Todas.CheckValue = "Y"
         Me.Rdb_Sucursal_Doc_Todas.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Sucursal_Doc_Todas.Location = New System.Drawing.Point(161, 4)
+        Me.Rdb_Sucursal_Doc_Todas.Location = New System.Drawing.Point(160, 4)
         Me.Rdb_Sucursal_Doc_Todas.Name = "Rdb_Sucursal_Doc_Todas"
         Me.Rdb_Sucursal_Doc_Todas.Size = New System.Drawing.Size(85, 17)
         Me.Rdb_Sucursal_Doc_Todas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1525,7 +1525,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Rdb_FEntrega_EmitidosEntre.Size = New System.Drawing.Size(97, 26)
         Me.Rdb_FEntrega_EmitidosEntre.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_FEntrega_EmitidosEntre.TabIndex = 24
-        Me.Rdb_FEntrega_EmitidosEntre.Text = "Emitidos entre"
+        Me.Rdb_FEntrega_EmitidosEntre.Text = "Rango de fechas"
         '
         'Lbl_FEntrega_Hasta
         '
@@ -1576,7 +1576,6 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Controls.Add(Me.Rdb_Tipo_Documento_Algunos)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True

@@ -67,6 +67,7 @@ Partial Class Frm_GRI_FabXProducto
         Me.Btn_Limpiar = New DevComponents.DotNetBar.ButtonItem()
         Me.ButtonItem1 = New DevComponents.DotNetBar.ButtonItem()
         Me.Chk_GDI_Consumo = New DevComponents.DotNetBar.CheckBoxItem()
+        Me.Btn_ModificarChk = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX10 = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_Tipo = New DevComponents.DotNetBar.LabelX()
@@ -80,7 +81,6 @@ Partial Class Frm_GRI_FabXProducto
         Me.Txt_Turno = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_Analista = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX17 = New DevComponents.DotNetBar.LabelX()
-        Me.Btn_ModificarChk = New DevComponents.DotNetBar.ButtonItem()
         Me.Grupo_Producto.SuspendLayout()
         Me.Panel_SC.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -946,6 +946,14 @@ Partial Class Frm_GRI_FabXProducto
         Me.Chk_GDI_Consumo.Name = "Chk_GDI_Consumo"
         Me.Chk_GDI_Consumo.Text = "Crear GDI de consumo"
         '
+        'Btn_ModificarChk
+        '
+        Me.Btn_ModificarChk.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_ModificarChk.ForeColor = System.Drawing.Color.Black
+        Me.Btn_ModificarChk.Name = "Btn_ModificarChk"
+        Me.Btn_ModificarChk.Text = "<-Modificar"
+        Me.Btn_ModificarChk.Tooltip = "Seleccionar registro marcado"
+        '
         'LabelX7
         '
         Me.LabelX7.BackColor = System.Drawing.Color.Transparent
@@ -1225,15 +1233,6 @@ Partial Class Frm_GRI_FabXProducto
         Me.LabelX17.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.LabelX17.TabIndex = 101
         Me.LabelX17.Text = "ANALISTA"
-        '
-        'Btn_ModificarChk
-        '
-        Me.Btn_ModificarChk.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_ModificarChk.ForeColor = System.Drawing.Color.Black
-        Me.Btn_ModificarChk.Name = "Btn_ModificarChk"
-        Me.Btn_ModificarChk.Text = "<-Modificar"
-        Me.Btn_ModificarChk.Tooltip = "Seleccionar registro marcado"
-        Me.Btn_ModificarChk.Visible = False
         '
         'Frm_GRI_FabXProducto
         '
