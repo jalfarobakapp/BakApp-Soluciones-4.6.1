@@ -216,10 +216,14 @@ Public Class Cl_ExportExcelOpenXml
 
                     If CBool(_Tbl_Excel.Rows.Count) Then
 
-                        ' Crear los estilos, incluyendo el formato de fecha
-                        Dim stylesPart = workbookPart.AddNewPart(Of WorkbookStylesPart)()
-                        stylesPart.Stylesheet = CreateStylesheetWithDateStyle()
-                        stylesPart.Stylesheet.Save()
+                        Try
+                            ' Crear los estilos, incluyendo el formato de fecha
+                            Dim stylesPart = workbookPart.AddNewPart(Of WorkbookStylesPart)()
+                            stylesPart.Stylesheet = CreateStylesheetWithDateStyle()
+                            stylesPart.Stylesheet.Save()
+                        Catch ex As Exception
+
+                        End Try
 
                     End If
 
