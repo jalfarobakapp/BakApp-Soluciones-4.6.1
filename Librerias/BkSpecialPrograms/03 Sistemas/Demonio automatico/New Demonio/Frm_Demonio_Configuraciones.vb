@@ -748,12 +748,29 @@ Public Class Frm_Demonio_Configuraciones
         _Sql.Sb_Parametro_Informe_Sql(Input_DiasNVI, "Demonio",
                                       Input_DiasNVI.Name, Class_SQLite.Enum_Type._Double,
                                       Input_DiasNVI.Value, _Actualizar, "CierreDoc",, False)
+
         _Sql.Sb_Parametro_Informe_Sql(Chk_NVVCerrar, "Demonio",
                                       Chk_NVVCerrar.Name, Class_SQLite.Enum_Type._Boolean,
                                       Chk_NVVCerrar.Checked, _Actualizar, "CierreDoc",, False)
         _Sql.Sb_Parametro_Informe_Sql(Input_DiasNVV, "Demonio",
                                       Input_DiasNVV.Name, Class_SQLite.Enum_Type._Double,
                                       Input_DiasNVV.Value, _Actualizar, "CierreDoc",, False)
+
+        _Sql.Sb_Parametro_Informe_Sql(Rdb_NVV_FEmision, "Demonio",
+                                      Rdb_NVV_FEmision.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Rdb_NVV_FEmision.Checked, _Actualizar, "CierreDoc",, False)
+        _Sql.Sb_Parametro_Informe_Sql(Rdb_NVV_FDespacho, "Demonio",
+                                      Rdb_NVV_FDespacho.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Rdb_NVV_FDespacho.Checked, _Actualizar, "CierreDoc",, False)
+
+        _Sql.Sb_Parametro_Informe_Sql(Chk_NVV_EnviaCorreo, "Demonio",
+                                      Chk_NVV_EnviaCorreo.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Chk_NVV_EnviaCorreo.Checked, _Actualizar, "CierreDoc",, False)
+        _Sql.Sb_Parametro_Informe_Sql(Input_DiasNVV_EnviaCorreo, "Demonio",
+                                      Input_DiasNVV_EnviaCorreo.Name, Class_SQLite.Enum_Type._Double,
+                                      Input_DiasNVV_EnviaCorreo.Value, _Actualizar, "CierreDoc",, False)
+
+
         _Sql.Sb_Parametro_Informe_Sql(Chk_OCICerrar, "Demonio",
                                       Chk_OCICerrar.Name, Class_SQLite.Enum_Type._Boolean,
                                       Chk_OCICerrar.Checked, _Actualizar, "CierreDoc",, False)
@@ -1071,4 +1088,18 @@ Public Class Frm_Demonio_Configuraciones
     Private Sub Btn_Rutas_PDF_Guias_Click(sender As Object, e As EventArgs) Handles Btn_Rutas_PDF_Guias.Click
         Sb_Configuracion_Salida_PDF(Me, ModEmpresa, Txt_FacAuto_Modalidad.Text, "GDV")
     End Sub
+
+    Private Sub Btn_ConfCorreo_CierreNVV_Click(sender As Object, e As EventArgs) Handles Btn_ConfCorreo_CierreNVV.Click
+
+        Dim _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
+        Dim _Id_Padre = _Global_Row_EstacionBk.Item("Id")
+        Dim _Id As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Demonio_Cof_Correo", "Id",
+                                               "NombreEquipo = '" & _NombreEquipo & "' And Id_Padre = " & _Id_Padre & " And Nombre_ConfCorreo = 'ConfCorreo_CierreNVV'", True)
+
+        Dim Fm As New Frm_Demonio_ConfCorreoAviso(_Id, "ConfCorreo_CierreNVV")
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
 End Class

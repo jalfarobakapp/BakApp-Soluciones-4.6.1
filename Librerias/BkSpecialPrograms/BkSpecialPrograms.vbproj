@@ -874,6 +874,7 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Contenedor.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Contenedor_DocTom.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Contenedor_StockProd.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Demonio_Cof_Correo.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Demonio_FacAuto.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Despachos_Configuracion.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Docu_Det_Cust.vb" />
@@ -941,6 +942,13 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_ListaMayoristaMinorista.vb" />
+    <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Cl_ConfCorreoAviso.vb" />
+    <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfCorreoAviso.Designer.vb">
+      <DependentUpon>Frm_Demonio_ConfCorreoAviso.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfCorreoAviso.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Despachos\Clases\Cl_Despachos.vb" />
     <Compile Include="03 Sistemas\FTP\Cl_Ftp.vb" />
     <Compile Include="03 Sistemas\FTP\Frm_FTP_Conexion.Designer.vb">
@@ -4881,6 +4889,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Contenedores\Frm_ProdContenedorPreVta.resx">
       <DependentUpon>Frm_ProdContenedorPreVta.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfCorreoAviso.resx">
+      <DependentUpon>Frm_Demonio_ConfCorreoAviso.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\FTP\Frm_FTP_Conexion.resx">
       <DependentUpon>Frm_FTP_Conexion.vb</DependentUpon>
