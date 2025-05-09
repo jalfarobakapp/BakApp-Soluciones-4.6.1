@@ -45,9 +45,16 @@ Partial Class Frm_Demonio_ConfCorreoAviso
         Me.Rdb_CC_VendedorLinea = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_NVV_EnviaCorreo = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
+        Me.Lbl_Nombre_ConfCorreo = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
+        Me.Input_DiasEnvioAnticipacion = New DevComponents.Editors.IntegerInput()
+        Me.Chk_EnvioAnticipacion = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
+        CType(Me.Input_DiasEnvioAnticipacion, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Txt_Nombre_Correo
@@ -66,11 +73,11 @@ Partial Class Frm_Demonio_ConfCorreoAviso
         Me.Txt_Nombre_Correo.ButtonCustom2.Visible = True
         Me.Txt_Nombre_Correo.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Nombre_Correo.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Nombre_Correo.Location = New System.Drawing.Point(102, 136)
+        Me.Txt_Nombre_Correo.Location = New System.Drawing.Point(105, 192)
         Me.Txt_Nombre_Correo.Name = "Txt_Nombre_Correo"
         Me.Txt_Nombre_Correo.PreventEnterBeep = True
         Me.Txt_Nombre_Correo.ReadOnly = True
-        Me.Txt_Nombre_Correo.Size = New System.Drawing.Size(529, 22)
+        Me.Txt_Nombre_Correo.Size = New System.Drawing.Size(543, 22)
         Me.Txt_Nombre_Correo.TabIndex = 10017
         Me.Txt_Nombre_Correo.Tag = "9999"
         Me.Txt_Nombre_Correo.WatermarkText = "Sino hay correo en esta casilla no se enviaran correos..."
@@ -83,7 +90,7 @@ Partial Class Frm_Demonio_ConfCorreoAviso
         '
         Me.LabelX39.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX39.ForeColor = System.Drawing.Color.Black
-        Me.LabelX39.Location = New System.Drawing.Point(7, 136)
+        Me.LabelX39.Location = New System.Drawing.Point(10, 192)
         Me.LabelX39.Name = "LabelX39"
         Me.LabelX39.SingleLineColor = System.Drawing.Color.Transparent
         Me.LabelX39.Size = New System.Drawing.Size(87, 22)
@@ -96,7 +103,7 @@ Partial Class Frm_Demonio_ConfCorreoAviso
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 170)
+        Me.Bar1.Location = New System.Drawing.Point(0, 280)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(780, 41)
         Me.Bar1.Stretch = True
@@ -126,7 +133,7 @@ Partial Class Frm_Demonio_ConfCorreoAviso
         Me.Txt_MailRemitente.ButtonCustom2.Visible = True
         Me.Txt_MailRemitente.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_MailRemitente.ForeColor = System.Drawing.Color.Black
-        Me.Txt_MailRemitente.Location = New System.Drawing.Point(102, 46)
+        Me.Txt_MailRemitente.Location = New System.Drawing.Point(105, 102)
         Me.Txt_MailRemitente.Name = "Txt_MailRemitente"
         Me.Txt_MailRemitente.PreventEnterBeep = True
         Me.Txt_MailRemitente.Size = New System.Drawing.Size(543, 22)
@@ -141,7 +148,7 @@ Partial Class Frm_Demonio_ConfCorreoAviso
         '
         Me.LabelX27.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX27.ForeColor = System.Drawing.Color.Black
-        Me.LabelX27.Location = New System.Drawing.Point(7, 45)
+        Me.LabelX27.Location = New System.Drawing.Point(10, 101)
         Me.LabelX27.Name = "LabelX27"
         Me.LabelX27.SingleLineColor = System.Drawing.Color.Transparent
         Me.LabelX27.Size = New System.Drawing.Size(89, 23)
@@ -156,7 +163,7 @@ Partial Class Frm_Demonio_ConfCorreoAviso
         '
         Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX1.ForeColor = System.Drawing.Color.Black
-        Me.LabelX1.Location = New System.Drawing.Point(9, 16)
+        Me.LabelX1.Location = New System.Drawing.Point(10, 69)
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.SingleLineColor = System.Drawing.Color.Transparent
         Me.LabelX1.Size = New System.Drawing.Size(87, 23)
@@ -175,7 +182,7 @@ Partial Class Frm_Demonio_ConfCorreoAviso
         Me.Txt_MailCC.ButtonCustom2.Visible = True
         Me.Txt_MailCC.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_MailCC.ForeColor = System.Drawing.Color.Black
-        Me.Txt_MailCC.Location = New System.Drawing.Point(102, 108)
+        Me.Txt_MailCC.Location = New System.Drawing.Point(105, 164)
         Me.Txt_MailCC.Name = "Txt_MailCC"
         Me.Txt_MailCC.PreventEnterBeep = True
         Me.Txt_MailCC.Size = New System.Drawing.Size(543, 22)
@@ -273,7 +280,7 @@ Partial Class Frm_Demonio_ConfCorreoAviso
         Me.TableLayoutPanel1.Controls.Add(Me.Rdb_Enviar_VendedorCliente, 1, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Rdb_Enviar_VendedorLinea, 2, 0)
         Me.TableLayoutPanel1.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(102, 12)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(105, 68)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
@@ -314,7 +321,7 @@ Partial Class Frm_Demonio_ConfCorreoAviso
         Me.TableLayoutPanel2.Controls.Add(Me.Rdb_CC_VendedorCliente, 1, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.Rdb_CC_VendedorLinea, 2, 0)
         Me.TableLayoutPanel2.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel2.Location = New System.Drawing.Point(102, 74)
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(105, 130)
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
         Me.TableLayoutPanel2.RowCount = 1
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
@@ -422,7 +429,7 @@ Partial Class Frm_Demonio_ConfCorreoAviso
         '
         Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX3.ForeColor = System.Drawing.Color.Black
-        Me.LabelX3.Location = New System.Drawing.Point(7, 108)
+        Me.LabelX3.Location = New System.Drawing.Point(10, 164)
         Me.LabelX3.Name = "LabelX3"
         Me.LabelX3.SingleLineColor = System.Drawing.Color.Transparent
         Me.LabelX3.Size = New System.Drawing.Size(79, 23)
@@ -437,18 +444,126 @@ Partial Class Frm_Demonio_ConfCorreoAviso
         '
         Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX2.ForeColor = System.Drawing.Color.Black
-        Me.LabelX2.Location = New System.Drawing.Point(7, 74)
+        Me.LabelX2.Location = New System.Drawing.Point(10, 130)
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.SingleLineColor = System.Drawing.Color.Transparent
         Me.LabelX2.Size = New System.Drawing.Size(60, 23)
         Me.LabelX2.TabIndex = 10032
         Me.LabelX2.Text = "C.C."
         '
+        'Chk_NVV_EnviaCorreo
+        '
+        Me.Chk_NVV_EnviaCorreo.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_NVV_EnviaCorreo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_NVV_EnviaCorreo.CheckBoxImageChecked = CType(resources.GetObject("Chk_NVV_EnviaCorreo.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_NVV_EnviaCorreo.FocusCuesEnabled = False
+        Me.Chk_NVV_EnviaCorreo.ForeColor = System.Drawing.Color.Black
+        Me.Chk_NVV_EnviaCorreo.Location = New System.Drawing.Point(10, 12)
+        Me.Chk_NVV_EnviaCorreo.Name = "Chk_NVV_EnviaCorreo"
+        Me.Chk_NVV_EnviaCorreo.Size = New System.Drawing.Size(149, 22)
+        Me.Chk_NVV_EnviaCorreo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_NVV_EnviaCorreo.TabIndex = 10033
+        Me.Chk_NVV_EnviaCorreo.Text = "Enviar correo notificación"
+        '
+        'LabelX4
+        '
+        Me.LabelX4.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX4.ForeColor = System.Drawing.Color.Black
+        Me.LabelX4.Location = New System.Drawing.Point(10, 40)
+        Me.LabelX4.Name = "LabelX4"
+        Me.LabelX4.SingleLineColor = System.Drawing.Color.Transparent
+        Me.LabelX4.Size = New System.Drawing.Size(128, 23)
+        Me.LabelX4.TabIndex = 10036
+        Me.LabelX4.Text = "Nombre Configuración"
+        '
+        'Lbl_Nombre_ConfCorreo
+        '
+        Me.Lbl_Nombre_ConfCorreo.AutoSize = True
+        Me.Lbl_Nombre_ConfCorreo.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Lbl_Nombre_ConfCorreo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_Nombre_ConfCorreo.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Lbl_Nombre_ConfCorreo.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_Nombre_ConfCorreo.Location = New System.Drawing.Point(131, 43)
+        Me.Lbl_Nombre_ConfCorreo.Name = "Lbl_Nombre_ConfCorreo"
+        Me.Lbl_Nombre_ConfCorreo.SingleLineColor = System.Drawing.Color.Transparent
+        Me.Lbl_Nombre_ConfCorreo.Size = New System.Drawing.Size(121, 17)
+        Me.Lbl_Nombre_ConfCorreo.TabIndex = 10037
+        Me.Lbl_Nombre_ConfCorreo.Text = "Nombre Configuración"
+        '
+        'LabelX5
+        '
+        Me.LabelX5.AutoSize = True
+        Me.LabelX5.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX5.ForeColor = System.Drawing.Color.Black
+        Me.LabelX5.Location = New System.Drawing.Point(10, 228)
+        Me.LabelX5.Name = "LabelX5"
+        Me.LabelX5.SingleLineColor = System.Drawing.Color.Transparent
+        Me.LabelX5.Size = New System.Drawing.Size(157, 17)
+        Me.LabelX5.TabIndex = 10038
+        Me.LabelX5.Text = "Notificación previa al proceso"
+        '
+        'Input_DiasEnvioAnticipacion
+        '
+        Me.Input_DiasEnvioAnticipacion.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Input_DiasEnvioAnticipacion.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_DiasEnvioAnticipacion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_DiasEnvioAnticipacion.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_DiasEnvioAnticipacion.ForeColor = System.Drawing.Color.Black
+        Me.Input_DiasEnvioAnticipacion.Location = New System.Drawing.Point(572, 250)
+        Me.Input_DiasEnvioAnticipacion.MaxValue = 30
+        Me.Input_DiasEnvioAnticipacion.MinValue = 0
+        Me.Input_DiasEnvioAnticipacion.Name = "Input_DiasEnvioAnticipacion"
+        Me.Input_DiasEnvioAnticipacion.ShowUpDown = True
+        Me.Input_DiasEnvioAnticipacion.Size = New System.Drawing.Size(46, 22)
+        Me.Input_DiasEnvioAnticipacion.TabIndex = 10034
+        '
+        'Chk_EnvioAnticipacion
+        '
+        Me.Chk_EnvioAnticipacion.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_EnvioAnticipacion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_EnvioAnticipacion.CheckBoxImageChecked = CType(resources.GetObject("Chk_EnvioAnticipacion.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_EnvioAnticipacion.FocusCuesEnabled = False
+        Me.Chk_EnvioAnticipacion.ForeColor = System.Drawing.Color.Black
+        Me.Chk_EnvioAnticipacion.Location = New System.Drawing.Point(10, 251)
+        Me.Chk_EnvioAnticipacion.Name = "Chk_EnvioAnticipacion"
+        Me.Chk_EnvioAnticipacion.Size = New System.Drawing.Size(564, 22)
+        Me.Chk_EnvioAnticipacion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_EnvioAnticipacion.TabIndex = 10040
+        Me.Chk_EnvioAnticipacion.Text = "El correo será remitido con anticipación, unos días antes de la ejecución del pro" &
+    "ceso indicado. Cantidad de días:"
+        '
         'Frm_Demonio_ConfCorreoAviso
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(780, 211)
+        Me.ClientSize = New System.Drawing.Size(780, 321)
+        Me.Controls.Add(Me.Input_DiasEnvioAnticipacion)
+        Me.Controls.Add(Me.Chk_EnvioAnticipacion)
+        Me.Controls.Add(Me.LabelX5)
+        Me.Controls.Add(Me.Lbl_Nombre_ConfCorreo)
+        Me.Controls.Add(Me.LabelX4)
+        Me.Controls.Add(Me.Chk_NVV_EnviaCorreo)
         Me.Controls.Add(Me.LabelX2)
         Me.Controls.Add(Me.LabelX3)
         Me.Controls.Add(Me.TableLayoutPanel2)
@@ -471,11 +586,12 @@ Partial Class Frm_Demonio_ConfCorreoAviso
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "CONFIGURACION DE ENVIO DE CORREO AUTOMATICO"
-        Me.TopMost = True
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel2.ResumeLayout(False)
+        CType(Me.Input_DiasEnvioAnticipacion, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
@@ -501,4 +617,10 @@ Partial Class Frm_Demonio_ConfCorreoAviso
     Friend WithEvents Rdb_Enviar_EntidadDoc As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Rdb_CC_EntidadDoc As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Chk_NVV_EnviaCorreo As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Lbl_Nombre_ConfCorreo As DevComponents.DotNetBar.LabelX
+    Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Input_DiasEnvioAnticipacion As DevComponents.Editors.IntegerInput
+    Friend WithEvents Chk_EnvioAnticipacion As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

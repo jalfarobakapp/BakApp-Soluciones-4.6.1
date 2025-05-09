@@ -17,7 +17,7 @@ Public Class Frm_Demonio_ConfCorreoAviso
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
         Cl_ConfCorreoAviso.Fx_Llenar_ConfCorreo(_Id_ConfCorreo)
-        Cl_ConfCorreoAviso.Zw_Demonio_Cof_Correo.Nombre_ConfCorreo = _Nombre_ConfCorreo
+        Cl_ConfCorreoAviso.Zw_Demonio_Conf_Correo.Nombre_ConfCorreo = _Nombre_ConfCorreo
 
         Sb_Color_Botones_Barra(Bar1)
 
@@ -25,10 +25,11 @@ Public Class Frm_Demonio_ConfCorreoAviso
 
     Private Sub Frm_Demonio_ConfCorreoAviso_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        With Cl_ConfCorreoAviso.Zw_Demonio_Cof_Correo
+        With Cl_ConfCorreoAviso.Zw_Demonio_Conf_Correo
 
             .NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
             .Id_Padre = _Global_Row_EstacionBk.Item("Id")
+            Chk_NVV_EnviaCorreo.Checked = .EnviarCorreo
             Txt_Nombre_Correo.Tag = .Id_Correo
             Txt_Nombre_Correo.Text = .Nombre_Correo
             Txt_MailRemitente.Text = .MailRemitente
@@ -43,6 +44,9 @@ Public Class Frm_Demonio_ConfCorreoAviso
             Rdb_CC_VendedorLinea.Checked = .CC_VendedorLinea
             Rdb_CC_ResponsableDoc.Checked = .CC_ResponsableDoc
             Rdb_CC_EntidadDoc.Checked = .CC_EntidadDoc
+            Chk_EnvioAnticipacion.Checked = .EnvioAnticipacion
+            Input_DiasEnvioAnticipacion.Value = .DiasEnvioAnticipacion
+            Input_DiasEnvioAnticipacion.Enabled = Chk_EnvioAnticipacion.Checked
 
         End With
 
@@ -100,7 +104,7 @@ Public Class Frm_Demonio_ConfCorreoAviso
                 If Not Fx_Validar_Email(correo.Trim()) Then
                     MessageBoxEx.Show($"El correo '{correo.Trim()}' no es válido.", "Validación de Correo Remitente",
                                     MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                    Exit Sub
+                    Return
                 End If
             Next
         Else
@@ -116,7 +120,7 @@ Public Class Frm_Demonio_ConfCorreoAviso
                     If Not Fx_Validar_Email(correo.Trim()) Then
                         MessageBoxEx.Show($"El correo '{correo.Trim()}' no es válido.", "Validación de Correo CC",
                                     MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                        Exit Sub
+                        Return
                     End If
                 Next
             End If
@@ -124,14 +128,26 @@ Public Class Frm_Demonio_ConfCorreoAviso
             Txt_MailCC.Text = String.Empty
         End If
 
-        Dim _Zw_Demonio_Cof_Correo As New Zw_Demonio_Cof_Correo
+        If Chk_EnvioAnticipacion.Checked Then
+            If Input_DiasEnvioAnticipacion.Value = 0 Then
+                MessageBoxEx.Show("Debe ingresar la cantidad de días de anticipación para el envío del correo.", "Validación de Envío",
+                MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Input_DiasEnvioAnticipacion.Focus()
+                Return
+            End If
+        Else
+            Input_DiasEnvioAnticipacion.Value = 0
+        End If
 
-        With _Zw_Demonio_Cof_Correo
+        Dim _Zw_Demonio_Conf_Correo As New Zw_Demonio_Conf_Correo
 
-            .Id = Cl_ConfCorreoAviso.Zw_Demonio_Cof_Correo.Id
-            .NombreEquipo = Cl_ConfCorreoAviso.Zw_Demonio_Cof_Correo.NombreEquipo
-            .Id_Padre = Cl_ConfCorreoAviso.Zw_Demonio_Cof_Correo.Id_Padre
-            .Nombre_ConfCorreo = Cl_ConfCorreoAviso.Zw_Demonio_Cof_Correo.Nombre_ConfCorreo
+        With _Zw_Demonio_Conf_Correo
+
+            .Id = Cl_ConfCorreoAviso.Zw_Demonio_Conf_Correo.Id
+            .EnviarCorreo = Chk_NVV_EnviaCorreo.Checked
+            .NombreEquipo = Cl_ConfCorreoAviso.Zw_Demonio_Conf_Correo.NombreEquipo
+            .Id_Padre = Cl_ConfCorreoAviso.Zw_Demonio_Conf_Correo.Id_Padre
+            .Nombre_ConfCorreo = Cl_ConfCorreoAviso.Zw_Demonio_Conf_Correo.Nombre_ConfCorreo
             .Id_Correo = Txt_Nombre_Correo.Tag
             .Nombre_Correo = Txt_Nombre_Correo.Text.Trim
             .Enviar_Remitente = Rdb_Enviar_Remitente.Checked
@@ -146,15 +162,17 @@ Public Class Frm_Demonio_ConfCorreoAviso
             .CC_VendedorLinea = Rdb_CC_VendedorLinea.Checked
             .CC_ResponsableDoc = Rdb_CC_ResponsableDoc.Checked
             .CC_EntidadDoc = Rdb_CC_EntidadDoc.Checked
+            .EnvioAnticipacion = Chk_NVV_EnviaCorreo.Checked
+            .DiasEnvioAnticipacion = Input_DiasEnvioAnticipacion.Value
 
         End With
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
-        If CBool(Cl_ConfCorreoAviso.Zw_Demonio_Cof_Correo.Id) Then
-            _Mensaje = Cl_ConfCorreoAviso.Fx_Editar_ConfCorreo(Cl_ConfCorreoAviso.Zw_Demonio_Cof_Correo.Id, _Zw_Demonio_Cof_Correo)
+        If CBool(Cl_ConfCorreoAviso.Zw_Demonio_Conf_Correo.Id) Then
+            _Mensaje = Cl_ConfCorreoAviso.Fx_Editar_ConfCorreo(Cl_ConfCorreoAviso.Zw_Demonio_Conf_Correo.Id, _Zw_Demonio_Conf_Correo)
         Else
-            _Mensaje = Cl_ConfCorreoAviso.Fx_Grabar_Nuevo_ConfCorreo(_Zw_Demonio_Cof_Correo)
+            _Mensaje = Cl_ConfCorreoAviso.Fx_Grabar_Nuevo_ConfCorreo(_Zw_Demonio_Conf_Correo)
         End If
 
         MessageBoxEx.Show(_Mensaje.Mensaje, "Validación de Correo Aviso", MessageBoxButtons.OK, _Mensaje.Icono)
@@ -170,5 +188,17 @@ Public Class Frm_Demonio_ConfCorreoAviso
     End Sub
     Private Sub Rdb_CC_Remitente_CheckedChanged(sender As Object, e As EventArgs) Handles Rdb_CC_Remitente.CheckedChanged
         Txt_MailCC.Enabled = Rdb_CC_Remitente.Checked
+    End Sub
+
+    Private Sub Txt_MailCC_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_MailCC.ButtonCustom2Click
+        Txt_MailCC.Text = String.Empty
+    End Sub
+
+    Private Sub Txt_MailRemitente_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_MailRemitente.ButtonCustom2Click
+        Txt_MailRemitente.Text = String.Empty
+    End Sub
+
+    Private Sub Chk_EnvioAnticipacion_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_EnvioAnticipacion.CheckedChanged
+        Input_DiasEnvioAnticipacion.Enabled = Chk_EnvioAnticipacion.Checked
     End Sub
 End Class

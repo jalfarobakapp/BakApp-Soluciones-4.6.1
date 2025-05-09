@@ -688,6 +688,10 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Demonio_Archivador
             Case "Zw_Demonio_Cof_Estacion"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Demonio_Cof_Estacion
+            Case "Zw_Demonio_Conf_Cerrar_Documentos"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Demonio_Conf_Cerrar_Documentos
+            Case "Zw_Demonio_Conf_Correo"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Demonio_Conf_Correo
             Case "Zw_Demonio_Doc_Emitidos_Aviso_Correo"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Demonio_Doc_Emitidos_Aviso_Correo
             Case "Zw_Demonio_Doc_Emitidos_Aviso_Correo_Adjuntos"

@@ -308,7 +308,7 @@ Public Class Frm_Demonio_New
         Dim _Chk As Boolean
         Dim _IndexImagen As Integer
         Dim _ChkStr As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor",
-                                                      "Informe = 'Demonio' And Campo = 'Chk_" & _Campo & "' And NombreEquipo = '" & _NombreEquipo & "'")
+                                                  "Informe = 'Demonio' And Campo = 'Chk_" & _Campo & "' And NombreEquipo = '" & _NombreEquipo & "'")
 
         Boolean.TryParse(_ChkStr, _Chk)
 
@@ -440,23 +440,23 @@ Public Class Frm_Demonio_New
 
                 Case "CierreDoc"
 
-                    Dim _Chk_COVCerrar As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Chk_COVCerrar' And NombreEquipo = '" & _NombreEquipo & "'", True)
-                    Dim _Chk_OCICerrar As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Chk_OCICerrar' And NombreEquipo = '" & _NombreEquipo & "'", True)
-                    Dim _Chk_OCCCerrar As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Chk_OCCCerrar' And NombreEquipo = '" & _NombreEquipo & "'", True)
-                    Dim _Chk_NVICerrar As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Chk_NVICerrar' And NombreEquipo = '" & _NombreEquipo & "'", True)
-                    Dim _Chk_NVVCerrar As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Chk_NVVCerrar' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    'Dim _Chk_COVCerrar As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Chk_COVCerrar' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    'Dim _Chk_OCICerrar As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Chk_OCICerrar' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    'Dim _Chk_OCCCerrar As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Chk_OCCCerrar' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    'Dim _Chk_NVICerrar As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Chk_NVICerrar' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    'Dim _Chk_NVVCerrar As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Chk_NVVCerrar' And NombreEquipo = '" & _NombreEquipo & "'", True)
 
-                    Boolean.TryParse(_Chk_COVCerrar, _Cl_CerrarDocumentos.COVCerrar)
-                    Boolean.TryParse(_Chk_OCICerrar, _Cl_CerrarDocumentos.OCICerrar)
-                    Boolean.TryParse(_Chk_OCCCerrar, _Cl_CerrarDocumentos.OCCCerrar)
-                    Boolean.TryParse(_Chk_NVICerrar, _Cl_CerrarDocumentos.NVICerrar)
-                    Boolean.TryParse(_Chk_NVVCerrar, _Cl_CerrarDocumentos.NVVCerrar)
+                    'Boolean.TryParse(_Chk_COVCerrar, _Cl_CerrarDocumentos.COVCerrar)
+                    'Boolean.TryParse(_Chk_OCICerrar, _Cl_CerrarDocumentos.OCICerrar)
+                    'Boolean.TryParse(_Chk_OCCCerrar, _Cl_CerrarDocumentos.OCCCerrar)
+                    'Boolean.TryParse(_Chk_NVICerrar, _Cl_CerrarDocumentos.NVICerrar)
+                    'Boolean.TryParse(_Chk_NVVCerrar, _Cl_CerrarDocumentos.NVVCerrar)
 
-                    _Cl_CerrarDocumentos.DiasCOV = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_DiasCOV' And NombreEquipo = '" & _NombreEquipo & "'", True)
-                    _Cl_CerrarDocumentos.DiasOCI = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_DiasOCI' And NombreEquipo = '" & _NombreEquipo & "'", True)
-                    _Cl_CerrarDocumentos.DiasOCC = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_DiasOCC' And NombreEquipo = '" & _NombreEquipo & "'", True)
-                    _Cl_CerrarDocumentos.DiasNVI = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_DiasNVI' And NombreEquipo = '" & _NombreEquipo & "'", True)
-                    _Cl_CerrarDocumentos.DiasNVV = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_DiasNVV' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    '_Cl_CerrarDocumentos.DiasCOV = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_DiasCOV' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    '_Cl_CerrarDocumentos.DiasOCI = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_DiasOCI' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    '_Cl_CerrarDocumentos.DiasOCC = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_DiasOCC' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    '_Cl_CerrarDocumentos.DiasNVI = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_DiasNVI' And NombreEquipo = '" & _NombreEquipo & "'", True)
+                    '_Cl_CerrarDocumentos.DiasNVV = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_DiasNVV' And NombreEquipo = '" & _NombreEquipo & "'", True)
 
                     _Descripcion = _CI_Programacion.Resumen
                     _IndexImagen = 10
@@ -1226,11 +1226,14 @@ Public Class Frm_Demonio_New
                 MostrarRegistro(registro)
 
                 _Cl_CerrarDocumentos.Fecha_Revision = DtpFecharevision.Value
-                _Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "COV")
-                _Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "OCI")
-                _Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "OCC")
-                _Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "NVI")
-                _Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "NVV")
+
+                _Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos_New(Me, "NVV")
+
+                '_Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "COV")
+                '_Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "OCI")
+                '_Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "OCC")
+                '_Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "NVI")
+                '_Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "NVV")
 
                 registro = "Tarea ejecutada (Consolidación de stock) a las: " & DateTime.Now.ToString()
                 registro += _Cl_Consolidacion_Stock.Log_Registro & vbCrLf

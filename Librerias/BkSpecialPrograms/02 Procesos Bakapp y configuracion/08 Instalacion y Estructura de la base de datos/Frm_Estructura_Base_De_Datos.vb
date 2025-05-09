@@ -110,6 +110,8 @@ Public Class Frm_Estructura_Base_De_Datos
             'DEMONIO
             .Sb_Revisar_Tabla2(Me, "Zw_Demonio_Archivador", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Demonio_Cof_Estacion", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Demonio_Conf_Cerrar_Documentos", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Demonio_Conf_Correo", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Demonio_Doc_Emitidos_Aviso_Correo", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Demonio_Doc_Emitidos_Aviso_Correo_Adjuntos", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Demonio_Doc_Emitidos_Cola_Impresion", _Modificar, Lbl_Eventos)

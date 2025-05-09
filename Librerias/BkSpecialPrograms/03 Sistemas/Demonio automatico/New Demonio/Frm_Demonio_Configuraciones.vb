@@ -1,6 +1,6 @@
-﻿Imports System.IO
+﻿Imports System.CodeDom.Compiler
+Imports System.IO
 Imports DevComponents.DotNetBar
-Imports MySql.Data.Authentication
 
 Public Class Frm_Demonio_Configuraciones
 
@@ -8,7 +8,7 @@ Public Class Frm_Demonio_Configuraciones
     Dim Consulta_sql As String
 
     Dim _NombreEquipo As String
-    Dim _Id As Integer
+    Dim _Id_Padre As Integer
     Dim _Row_ConfEstacion As DataRow
 
     Dim _Funcionario_Autorizado As String
@@ -21,7 +21,9 @@ Public Class Frm_Demonio_Configuraciones
     Public Property Grabar As Boolean
     Public Property Cambiar_Usuario_X_Defecto As Boolean
 
-    Public Sub New(_Id As Integer, _Funcionario_Autorizado As String)
+    Public Property Cl_Cerrar_Documentos As New Cl_Cerrar_Documentos
+
+    Public Sub New(_Id_Padre As Integer, _Funcionario_Autorizado As String)
 
         ' Esta llamada es exigida por el diseñador.
         InitializeComponent()
@@ -29,7 +31,7 @@ Public Class Frm_Demonio_Configuraciones
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
         _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
         Me._Funcionario_Autorizado = _Funcionario_Autorizado
-        Me._Id = _Id
+        Me._Id_Padre = _Id_Padre
 
         Sb_Color_Botones_Barra(Bar1)
 
@@ -77,10 +79,27 @@ Public Class Frm_Demonio_Configuraciones
         AddHandler Sp_ListasProgramadas.Click, AddressOf Sp_SuperTabItem_Click
         AddHandler Sp_NVVAuto.Click, AddressOf Sp_SuperTabItem_Click
 
+        Input_DiasCOV.Enabled = Chk_COVCerrar.Checked
+        Rdb_COV_FEmision.Enabled = Chk_COVCerrar.Checked
+        Rdb_COV_FDespacho.Enabled = Chk_COVCerrar.Checked
+        Input_DiasNVI.Enabled = Chk_NVICerrar.Checked
+        Rdb_NVI_FEmision.Enabled = Chk_NVICerrar.Checked
+        Rdb_NVI_FDespacho.Enabled = Chk_NVICerrar.Checked
+        Input_DiasNVV.Enabled = Chk_NVVCerrar.Checked
+        Rdb_NVV_FEmision.Enabled = Chk_NVVCerrar.Checked
+        Rdb_NVV_FDespacho.Enabled = Chk_NVVCerrar.Checked
+        Input_DiasOCI.Enabled = Chk_OCICerrar.Checked
+        Rdb_OCI_FEmision.Enabled = Chk_OCICerrar.Checked
+        Rdb_OCI_FDespacho.Enabled = Chk_OCICerrar.Checked
+        Input_DiasOCC.Enabled = Chk_OCCCerrar.Checked
+        Rdb_OCC_FEmision.Enabled = Chk_OCCCerrar.Checked
+        Rdb_OCC_FDespacho.Enabled = Chk_OCCCerrar.Checked
 
         Sb_Parametros_Informe_Sql(False)
         Sp_SuperTabItem_Click(Sp_EnvioCorreo, Nothing)
         Sb_Actualizar_Grilla_Acp()
+
+        Sb_Llenar_Zw_Conf_Cerrar_Documentos()
 
     End Sub
 
@@ -93,7 +112,7 @@ Public Class Frm_Demonio_Configuraciones
                 Dim _Nombre As String = Replace(_Tab.Name, "Sp_", "")
 
                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_ConfProgramacion" & vbCrLf &
-                               "Where Id_Padre = " & _Id & " And NombreEquipo = '" & _NombreEquipo & "' And Nombre = '" & _Nombre & "'"
+                               "Where Id_Padre = " & _Id_Padre & " And NombreEquipo = '" & _NombreEquipo & "' And Nombre = '" & _Nombre & "'"
                 Dim _Row_Programacion As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                 Dim _RevisarProgramacion = False
@@ -176,9 +195,45 @@ Public Class Frm_Demonio_Configuraciones
             Not Chk_OCCCerrar.Checked AndAlso
             Not Chk_OCICerrar.Checked Then
             MessageBoxEx.Show(Me, "Debe indicar algún documento para cerrar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            SuperTab.SelectedTabIndex = 12
+            SuperTab.SelectedTabIndex = 13
             Return
         End If
+
+        Dim _Cov As Zw_Demonio_Conf_Cerrar_Documentos = Cl_Cerrar_Documentos.LS_Zw_Demonio_Conf_Cerrar_Documentos.FirstOrDefault(Function(x) x.Tido = "COV")
+        Dim _Nvi As Zw_Demonio_Conf_Cerrar_Documentos = Cl_Cerrar_Documentos.LS_Zw_Demonio_Conf_Cerrar_Documentos.FirstOrDefault(Function(x) x.Tido = "NVI")
+        Dim _Nvv As Zw_Demonio_Conf_Cerrar_Documentos = Cl_Cerrar_Documentos.LS_Zw_Demonio_Conf_Cerrar_Documentos.FirstOrDefault(Function(x) x.Tido = "NVV")
+        Dim _Oci As Zw_Demonio_Conf_Cerrar_Documentos = Cl_Cerrar_Documentos.LS_Zw_Demonio_Conf_Cerrar_Documentos.FirstOrDefault(Function(x) x.Tido = "OCI")
+        Dim _Occ As Zw_Demonio_Conf_Cerrar_Documentos = Cl_Cerrar_Documentos.LS_Zw_Demonio_Conf_Cerrar_Documentos.FirstOrDefault(Function(x) x.Tido = "OCC")
+
+        _Cov.Ejecutar = Chk_COVCerrar.Checked
+        _Cov.Dias = Input_DiasCOV.Value
+        _Cov.FEmision = Rdb_COV_FEmision.Checked
+        _Cov.FDespacho = Rdb_COV_FDespacho.Checked
+        Cl_Cerrar_Documentos.Fx_Grabar_Cl_Cerrar_Documentos(_Cov)
+
+        _Nvi.Ejecutar = Chk_NVICerrar.Checked
+        _Nvi.Dias = Input_DiasNVI.Value
+        _Nvi.FEmision = Rdb_NVI_FEmision.Checked
+        _Nvi.FDespacho = Rdb_NVI_FDespacho.Checked
+        Cl_Cerrar_Documentos.Fx_Grabar_Cl_Cerrar_Documentos(_Nvi)
+
+        _Nvv.Ejecutar = Chk_NVVCerrar.Checked
+        _Nvv.Dias = Input_DiasNVV.Value
+        _Nvv.FEmision = Rdb_NVV_FEmision.Checked
+        _Nvv.FDespacho = Rdb_NVV_FDespacho.Checked
+        Cl_Cerrar_Documentos.Fx_Grabar_Cl_Cerrar_Documentos(_Nvv)
+
+        _Oci.Ejecutar = Chk_OCICerrar.Checked
+        _Oci.Dias = Input_DiasOCI.Value
+        _Oci.FEmision = Rdb_OCI_FEmision.Checked
+        _Oci.FDespacho = Rdb_OCI_FDespacho.Checked
+        Cl_Cerrar_Documentos.Fx_Grabar_Cl_Cerrar_Documentos(_Oci)
+
+        _Occ.Ejecutar = Chk_OCCCerrar.Checked
+        _Occ.Dias = Input_DiasOCC.Value
+        _Occ.FEmision = Rdb_OCC_FEmision.Checked
+        _Occ.FDespacho = Rdb_OCC_FDespacho.Checked
+        Cl_Cerrar_Documentos.Fx_Grabar_Cl_Cerrar_Documentos(_Occ)
 
         If Chk_NVVAuto.Checked AndAlso String.IsNullOrWhiteSpace(Txt_NvvAuto_Modalidad.Text) Then
             MessageBoxEx.Show(Me, "Falta la modalidad para las notas de venta automáticas externas", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -333,11 +388,11 @@ Public Class Frm_Demonio_Configuraciones
         Dim _Nombre As String = Replace(_Tab.Name, "Sp_", "")
 
         Dim _Id_Prg As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Demonio_ConfProgramacion",
-                                                   "Id", "Id_Padre = " & _Id & " And NombreEquipo = '" & _NombreEquipo & "' And Nombre = '" & _Nombre & "'", True)
+                                                   "Id", "Id_Padre = " & _Id_Padre & " And NombreEquipo = '" & _NombreEquipo & "' And Nombre = '" & _Nombre & "'", True)
 
         If Not CBool(_Id_Prg) Then
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_ConfProgramacion (NombreEquipo,Tbl_Padre,Id_Padre,Nombre,FrecuDiaria,SucedeUnaVez) " &
-                           "Values ('" & _NombreEquipo & "','Diablito'," & _Id & ",'" & _Nombre & "',1,1)"
+                           "Values ('" & _NombreEquipo & "','Diablito'," & _Id_Padre & ",'" & _Nombre & "',1,1)"
             _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Prg)
         End If
 
@@ -436,10 +491,10 @@ Public Class Frm_Demonio_Configuraciones
 
         Dim _Grb_Programacion As New Grb_Programacion
 
-        Dim _Id_Prg = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Demonio_ConfProgramacion", "Id", "Id_Padre = " & _Id & " And Nombre = '" & _Nombre & "'")
+        Dim _Id_Prg = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Demonio_ConfProgramacion", "Id", "Id_Padre = " & _Id_Padre & " And Nombre = '" & _Nombre & "'")
 
         If Not CBool(_Id_Prg) Then
-            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_ConfProgramacion (Id_Padre,Nombre) Values (" & _Id & ",'EnvioCorreo')"
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_ConfProgramacion (Id_Padre,Nombre) Values (" & _Id_Padre & ",'EnvioCorreo')"
             _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Prg)
         End If
 
@@ -485,7 +540,7 @@ Public Class Frm_Demonio_Configuraciones
 
         Dim _Nombre As String = Replace(_Tab.Name, "Sp_", "")
 
-        Dim _Resumen As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Demonio_ConfProgramacion", "Resumen", "Id_Padre = " & _Id & " And Nombre = '" & _Nombre & "'")
+        Dim _Resumen As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Demonio_ConfProgramacion", "Resumen", "Id_Padre = " & _Id_Padre & " And Nombre = '" & _Nombre & "'")
 
         If String.IsNullOrEmpty(_Resumen) Then
             _Resumen = "Sin programación..."
@@ -534,7 +589,7 @@ Public Class Frm_Demonio_Configuraciones
     Private Sub Btn_AgregarConfAsisCompra_Click(sender As Object, e As EventArgs) Handles Btn_AgregarConfAsisCompra.Click
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_ConfProgramacion" & vbCrLf &
-                       "Where Id_Padre = " & _Id & " And NombreEquipo = '" & _NombreEquipo & "' And Nombre = 'AsistenteCompras'"
+                       "Where Id_Padre = " & _Id_Padre & " And NombreEquipo = '" & _NombreEquipo & "' And Nombre = 'AsistenteCompras'"
         Dim _Row_Programacion As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If IsNothing(_Row_Programacion) Then
@@ -732,57 +787,58 @@ Public Class Frm_Demonio_Configuraciones
                                       Chk_Wordpress_Stock.Name, Class_SQLite.Enum_Type._Boolean,
                                       Chk_Wordpress_Stock.Checked, _Actualizar, "Wordpress",, False)
 
-        'Cierre de documentos
+        ''Cierre de documentos
         _Sql.Sb_Parametro_Informe_Sql(Chk_CierreDoc, "Demonio",
                                       Chk_CierreDoc.Name, Class_SQLite.Enum_Type._Boolean,
                                       Chk_CierreDoc.Checked, _Actualizar, "CierreDoc",, False)
-        _Sql.Sb_Parametro_Informe_Sql(Chk_COVCerrar, "Demonio",
-                                      Chk_COVCerrar.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Chk_COVCerrar.Checked, _Actualizar, "CierreDoc",, False)
-        _Sql.Sb_Parametro_Informe_Sql(Input_DiasCOV, "Demonio",
-                                      Input_DiasCOV.Name, Class_SQLite.Enum_Type._Double,
-                                      Input_DiasCOV.Value, _Actualizar, "CierreDoc",, False)
-        _Sql.Sb_Parametro_Informe_Sql(Chk_NVICerrar, "Demonio",
-                                      Chk_NVICerrar.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Chk_NVICerrar.Checked, _Actualizar, "CierreDoc",, False)
-        _Sql.Sb_Parametro_Informe_Sql(Input_DiasNVI, "Demonio",
-                                      Input_DiasNVI.Name, Class_SQLite.Enum_Type._Double,
-                                      Input_DiasNVI.Value, _Actualizar, "CierreDoc",, False)
 
-        _Sql.Sb_Parametro_Informe_Sql(Chk_NVVCerrar, "Demonio",
-                                      Chk_NVVCerrar.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Chk_NVVCerrar.Checked, _Actualizar, "CierreDoc",, False)
-        _Sql.Sb_Parametro_Informe_Sql(Input_DiasNVV, "Demonio",
-                                      Input_DiasNVV.Name, Class_SQLite.Enum_Type._Double,
-                                      Input_DiasNVV.Value, _Actualizar, "CierreDoc",, False)
+        '_Sql.Sb_Parametro_Informe_Sql(Chk_COVCerrar, "Demonio",
+        '                              Chk_COVCerrar.Name, Class_SQLite.Enum_Type._Boolean,
+        '                              Chk_COVCerrar.Checked, _Actualizar, "CierreDoc",, False)
+        '_Sql.Sb_Parametro_Informe_Sql(Input_DiasCOV, "Demonio",
+        '                              Input_DiasCOV.Name, Class_SQLite.Enum_Type._Double,
+        '                              Input_DiasCOV.Value, _Actualizar, "CierreDoc",, False)
+        '_Sql.Sb_Parametro_Informe_Sql(Chk_NVICerrar, "Demonio",
+        '                              Chk_NVICerrar.Name, Class_SQLite.Enum_Type._Boolean,
+        '                              Chk_NVICerrar.Checked, _Actualizar, "CierreDoc",, False)
+        '_Sql.Sb_Parametro_Informe_Sql(Input_DiasNVI, "Demonio",
+        '                              Input_DiasNVI.Name, Class_SQLite.Enum_Type._Double,
+        '                              Input_DiasNVI.Value, _Actualizar, "CierreDoc",, False)
 
-        _Sql.Sb_Parametro_Informe_Sql(Rdb_NVV_FEmision, "Demonio",
-                                      Rdb_NVV_FEmision.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Rdb_NVV_FEmision.Checked, _Actualizar, "CierreDoc",, False)
-        _Sql.Sb_Parametro_Informe_Sql(Rdb_NVV_FDespacho, "Demonio",
-                                      Rdb_NVV_FDespacho.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Rdb_NVV_FDespacho.Checked, _Actualizar, "CierreDoc",, False)
+        '_Sql.Sb_Parametro_Informe_Sql(Chk_NVVCerrar, "Demonio",
+        '                              Chk_NVVCerrar.Name, Class_SQLite.Enum_Type._Boolean,
+        '                              Chk_NVVCerrar.Checked, _Actualizar, "CierreDoc",, False)
+        '_Sql.Sb_Parametro_Informe_Sql(Input_DiasNVV, "Demonio",
+        '                              Input_DiasNVV.Name, Class_SQLite.Enum_Type._Double,
+        '                              Input_DiasNVV.Value, _Actualizar, "CierreDoc",, False)
 
-        _Sql.Sb_Parametro_Informe_Sql(Chk_NVV_EnviaCorreo, "Demonio",
-                                      Chk_NVV_EnviaCorreo.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Chk_NVV_EnviaCorreo.Checked, _Actualizar, "CierreDoc",, False)
-        _Sql.Sb_Parametro_Informe_Sql(Input_DiasNVV_EnviaCorreo, "Demonio",
-                                      Input_DiasNVV_EnviaCorreo.Name, Class_SQLite.Enum_Type._Double,
-                                      Input_DiasNVV_EnviaCorreo.Value, _Actualizar, "CierreDoc",, False)
+        '_Sql.Sb_Parametro_Informe_Sql(Rdb_NVV_FEmision, "Demonio",
+        '                              Rdb_NVV_FEmision.Name, Class_SQLite.Enum_Type._Boolean,
+        '                              Rdb_NVV_FEmision.Checked, _Actualizar, "CierreDoc",, False)
+        '_Sql.Sb_Parametro_Informe_Sql(Rdb_NVV_FDespacho, "Demonio",
+        '                              Rdb_NVV_FDespacho.Name, Class_SQLite.Enum_Type._Boolean,
+        '                              Rdb_NVV_FDespacho.Checked, _Actualizar, "CierreDoc",, False)
+
+        '_Sql.Sb_Parametro_Informe_Sql(Chk_NVV_EnviaCorreo, "Demonio",
+        '                              Chk_NVV_EnviaCorreo.Name, Class_SQLite.Enum_Type._Boolean,
+        '                              Chk_NVV_EnviaCorreo.Checked, _Actualizar, "CierreDoc",, False)
+        '_Sql.Sb_Parametro_Informe_Sql(Input_DiasNVV_EnviaCorreo, "Demonio",
+        '                              Input_DiasNVV_EnviaCorreo.Name, Class_SQLite.Enum_Type._Double,
+        '                              Input_DiasNVV_EnviaCorreo.Value, _Actualizar, "CierreDoc",, False)
 
 
-        _Sql.Sb_Parametro_Informe_Sql(Chk_OCICerrar, "Demonio",
-                                      Chk_OCICerrar.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Chk_OCICerrar.Checked, _Actualizar, "CierreDoc",, False)
-        _Sql.Sb_Parametro_Informe_Sql(Input_DiasOCI, "Demonio",
-                                      Input_DiasOCI.Name, Class_SQLite.Enum_Type._Double,
-                                      Input_DiasOCI.Value, _Actualizar, "CierreDoc",, False)
-        _Sql.Sb_Parametro_Informe_Sql(Chk_OCCCerrar, "Demonio",
-                                      Chk_OCCCerrar.Name, Class_SQLite.Enum_Type._Boolean,
-                                      Chk_OCCCerrar.Checked, _Actualizar, "CierreDoc",, False)
-        _Sql.Sb_Parametro_Informe_Sql(Input_DiasOCC, "Demonio",
-                                      Input_DiasOCC.Name, Class_SQLite.Enum_Type._Double,
-                                      Input_DiasOCC.Value, _Actualizar, "CierreDoc",, False)
+        '_Sql.Sb_Parametro_Informe_Sql(Chk_OCICerrar, "Demonio",
+        '                              Chk_OCICerrar.Name, Class_SQLite.Enum_Type._Boolean,
+        '                              Chk_OCICerrar.Checked, _Actualizar, "CierreDoc",, False)
+        '_Sql.Sb_Parametro_Informe_Sql(Input_DiasOCI, "Demonio",
+        '                              Input_DiasOCI.Name, Class_SQLite.Enum_Type._Double,
+        '                              Input_DiasOCI.Value, _Actualizar, "CierreDoc",, False)
+        '_Sql.Sb_Parametro_Informe_Sql(Chk_OCCCerrar, "Demonio",
+        '                              Chk_OCCCerrar.Name, Class_SQLite.Enum_Type._Boolean,
+        '                              Chk_OCCCerrar.Checked, _Actualizar, "CierreDoc",, False)
+        '_Sql.Sb_Parametro_Informe_Sql(Input_DiasOCC, "Demonio",
+        '                              Input_DiasOCC.Name, Class_SQLite.Enum_Type._Double,
+        '                              Input_DiasOCC.Value, _Actualizar, "CierreDoc",, False)
 
         'Facturación automatica
         _Sql.Sb_Parametro_Informe_Sql(Chk_FacAuto, "Demonio",
@@ -1093,7 +1149,7 @@ Public Class Frm_Demonio_Configuraciones
 
         Dim _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
         Dim _Id_Padre = _Global_Row_EstacionBk.Item("Id")
-        Dim _Id As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Demonio_Cof_Correo", "Id",
+        Dim _Id As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Demonio_Conf_Correo", "Id",
                                                "NombreEquipo = '" & _NombreEquipo & "' And Id_Padre = " & _Id_Padre & " And Nombre_ConfCorreo = 'ConfCorreo_CierreNVV'", True)
 
         Dim Fm As New Frm_Demonio_ConfCorreoAviso(_Id, "ConfCorreo_CierreNVV")
@@ -1101,5 +1157,76 @@ Public Class Frm_Demonio_Configuraciones
         Fm.Dispose()
 
     End Sub
+
+#Region "Cerrar_Documentos"
+
+    Sub Sb_Llenar_Zw_Conf_Cerrar_Documentos()
+
+        Cl_Cerrar_Documentos.Sb_Llenar_Zw_Conf_Cerrar_Documentos()
+
+        Dim _Cov As Zw_Demonio_Conf_Cerrar_Documentos = Cl_Cerrar_Documentos.LS_Zw_Demonio_Conf_Cerrar_Documentos.FirstOrDefault(Function(x) x.Tido = "COV")
+        Dim _Nvi As Zw_Demonio_Conf_Cerrar_Documentos = Cl_Cerrar_Documentos.LS_Zw_Demonio_Conf_Cerrar_Documentos.FirstOrDefault(Function(x) x.Tido = "NVI")
+        Dim _Nvv As Zw_Demonio_Conf_Cerrar_Documentos = Cl_Cerrar_Documentos.LS_Zw_Demonio_Conf_Cerrar_Documentos.FirstOrDefault(Function(x) x.Tido = "NVV")
+        Dim _Oci As Zw_Demonio_Conf_Cerrar_Documentos = Cl_Cerrar_Documentos.LS_Zw_Demonio_Conf_Cerrar_Documentos.FirstOrDefault(Function(x) x.Tido = "OCI")
+        Dim _Occ As Zw_Demonio_Conf_Cerrar_Documentos = Cl_Cerrar_Documentos.LS_Zw_Demonio_Conf_Cerrar_Documentos.FirstOrDefault(Function(x) x.Tido = "OCC")
+
+        Chk_COVCerrar.Checked = _Cov.Ejecutar
+        Input_DiasCOV.Value = _Cov.Dias
+        Rdb_COV_FEmision.Checked = _Cov.FEmision
+        Rdb_COV_FDespacho.Checked = _Cov.FDespacho
+
+        Chk_NVICerrar.Checked = _Nvi.Ejecutar
+        Input_DiasNVI.Value = _Nvi.Dias
+        Rdb_NVI_FEmision.Checked = _Nvi.FEmision
+        Rdb_NVI_FDespacho.Checked = _Nvi.FDespacho
+
+        Chk_NVVCerrar.Checked = _Nvv.Ejecutar
+        Input_DiasNVV.Value = _Nvv.Dias
+        Rdb_NVV_FEmision.Checked = _Nvv.FEmision
+        Rdb_NVV_FDespacho.Checked = _Nvv.FDespacho
+
+        Chk_OCICerrar.Checked = _Oci.Ejecutar
+        Input_DiasOCI.Value = _Oci.Dias
+        Rdb_OCI_FEmision.Checked = _Oci.FEmision
+        Rdb_OCI_FDespacho.Checked = _Oci.FDespacho
+
+        Chk_OCCCerrar.Checked = _Occ.Ejecutar
+        Input_DiasOCC.Value = _Occ.Dias
+        Rdb_OCC_FEmision.Checked = _Occ.FEmision
+        Rdb_OCC_FDespacho.Checked = _Occ.FDespacho
+
+    End Sub
+
+    Private Sub Chk_COVCerrar_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_COVCerrar.CheckedChanged
+        Input_DiasCOV.Enabled = Chk_COVCerrar.Checked
+        Rdb_COV_FEmision.Enabled = Chk_COVCerrar.Checked
+        Rdb_COV_FDespacho.Enabled = Chk_COVCerrar.Checked
+    End Sub
+
+    Private Sub Chk_NVICerrar_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_NVICerrar.CheckedChanged
+        Input_DiasNVI.Enabled = Chk_NVICerrar.Checked
+        Rdb_NVI_FEmision.Enabled = Chk_NVICerrar.Checked
+        Rdb_NVI_FDespacho.Enabled = Chk_NVICerrar.Checked
+    End Sub
+
+    Private Sub Chk_NVVCerrar_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_NVVCerrar.CheckedChanged
+        Input_DiasNVV.Enabled = Chk_NVVCerrar.Checked
+        Rdb_NVV_FEmision.Enabled = Chk_NVVCerrar.Checked
+        Rdb_NVV_FDespacho.Enabled = Chk_NVVCerrar.Checked
+    End Sub
+
+    Private Sub Chk_OCICerrar_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_OCICerrar.CheckedChanged
+        Input_DiasOCI.Enabled = Chk_OCICerrar.Checked
+        Rdb_OCI_FEmision.Enabled = Chk_OCICerrar.Checked
+        Rdb_OCI_FDespacho.Enabled = Chk_OCICerrar.Checked
+    End Sub
+
+    Private Sub Chk_OCCCerrar_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_OCCCerrar.CheckedChanged
+        Input_DiasOCC.Enabled = Chk_OCCCerrar.Checked
+        Rdb_OCC_FEmision.Enabled = Chk_OCCCerrar.Checked
+        Rdb_OCC_FDespacho.Enabled = Chk_OCCCerrar.Checked
+    End Sub
+
+#End Region
 
 End Class
