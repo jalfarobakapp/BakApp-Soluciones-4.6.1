@@ -1,4 +1,6 @@
 ﻿
+Imports NUnrar
+
 Public Class Cl_Cerrar_Documentos
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
@@ -106,6 +108,8 @@ Public Class Cl_Cerrar_Documentos
 
     Sub Sb_Procedimientos_Cierre_Masivo_Documentos_New(_Formulario As Form, _Tido As String)
 
+        Log_Registro = String.Empty
+
         Dim _Zw_Demonio_Conf_Cerrar_Documentos As New Zw_Demonio_Conf_Cerrar_Documentos
 
         _Zw_Demonio_Conf_Cerrar_Documentos = Fx_Llenar_Zw_Conf_Cerrar_Documentos(_Id_Padre, _NombreEquipo, _Tido)
@@ -123,7 +127,6 @@ Public Class Cl_Cerrar_Documentos
         If _Zw_Demonio_Conf_Cerrar_Documentos.FEmision Then
             _TdFecha = " And Edo.FEEMDO <= '" & Format(_Fecha, "yyyyMMdd") & "'"
         ElseIf _Zw_Demonio_Conf_Cerrar_Documentos.FDespacho Then
-            '_Fecha = DateAdd(DateInterval.Day, _Dias, Fecha_Revision)
             _TdFecha = " And Edo.FEER <= '" & Format(_Fecha, "yyyyMMdd") & "'"
         End If
 
@@ -143,28 +146,65 @@ Public Class Cl_Cerrar_Documentos
 
         If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
             Log_Registro += _Sql.Pro_Error & vbCrLf
+        Else
+            If CBool(_Tbl.Rows.Count) Then
+                Dim _NombreTido As String = _Sql.Fx_Trae_Dato("TABTIDO", "NOTIDO", "TIDO = '" & _Tido & "'",, False)
+                Log_Registro += vbCrLf & "Cerrando " & _Tbl.Rows.Count & " documentos " & _NombreTido.Trim & vbCrLf
+            End If
         End If
 
-        If _Tbl.Rows.Count Then
+        For Each _Fila As DataRow In _Tbl.Rows
 
-            Dim Fm As New Frm_BuscarDocumento_Mt
-            Fm.Ocultar_Envio_Correos_Masivamente = True
-            Fm.Lbl_Ver.Text = False
-            Fm.BtnAceptar.Visible = True
-            Fm.Pro_Sql_Query = Consulta_Sql
-            Fm.CmbCantFilas.Text = 100
-            Fm.Pro_Pago_a_Documento = False
-            Fm.Pro_Abrir_Seleccionado = False
-            Fm.Seleccion_Multiple = True
-            Fm.Abrir_Cerrar_Documentos_Compromiso = True
-            Fm.Abrir_Documentos = False
-            Fm.Cerrar_Documentos = True
-            Fm.Cerrar_Documentos_Automaticamente = True
-            Fm.Bar1.Enabled = False
-            Fm.ShowDialog(_Formulario)
-            Fm.Dispose()
+            Dim _Idmaeedo As Integer = _Fila.Item("IDMAEEDO")
+            Dim Cerrar_Doc As New Clas_Cerrar_Documento
 
-        End If
+            Consulta_Sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Idmaeedo = " & _Idmaeedo & " And Estado Not In ('NULO','NULA','CERRA')"
+            Dim _Row_Stmp_Enc As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
+
+            Consulta_Sql = Replace(My.Resources.Recursos_Ver_Documento.Traer_Documento_Random, "#Idmaeedo#", _Idmaeedo)
+
+            Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_Sql, True, False)
+
+            If IsNothing(_Ds) Then
+                Log_Registro += "No se pudo obtener el documento " & _Idmaeedo & vbCrLf
+                Continue For
+            End If
+
+            Dim _Row_Maeedo = _Ds.Tables(0).Rows(0)
+            Dim _Tbl_Maeddo = _Ds.Tables(1)
+
+            If Cerrar_Doc.Fx_Cerrar_Documento(_Idmaeedo, _Tbl_Maeddo) Then
+
+                Fx_Add_Log_Gestion("XXX", Modalidad, "MAEEDO", _Idmaeedo, "", "CIERRE Y REACTIVACIÓN DE DOCUMENTOS DE COMPROMISO", "Doc00011", "", "", "", False, "XXX")
+
+                If Not IsNothing(_Row_Stmp_Enc) Then
+
+                    Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set " &
+                                   "Estado = 'NULA'," &
+                                   "Idmaeedo = 0," &
+                                   "Observacion = 'Cerrado automáticamente mediante el proceso de cierre masivo del sistema ""Diablito"".'" & vbCrLf &
+                                   "Where Id = " & _Row_Stmp_Enc.Item("Id") & vbCrLf &
+                                   "Update " & _Global_BaseBk & "Zw_Stmp_Det Set Idmaeedo = 0,Idmaeddo = 0 Where Id_Enc = " & _Row_Stmp_Enc.Item("Id") & vbCrLf &
+                                   "Update " & _Global_BaseBk & "Zw_Stmp_DetPick Set Idmaeedo = 0,Idmaeddo = 0 Where Id_Enc = " & _Row_Stmp_Enc.Item("Id")
+                    If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+                        Log_Registro += _Sql.Pro_Error & vbCrLf
+                    End If
+
+                End If
+
+                Dim _HoraGrab = Hora_Grab_fx(False)
+
+                Consulta_Sql = "Insert Into MEVENTO (ARCHIRVE,IDRVE,ARCHIRSE,IDRSE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC," &
+                               "FECHAREF,HORAGRAB) Values " & vbCrLf &
+                               "('MAEEDO'," & _Idmaeedo & ",'',0,'XXX','" & Format(FechaDelServidor, "yyyyMMdd") & "','',''," &
+                               "'CERRADO AUTOMÁTICAMENTE MEDIANTE EL PROCESO DE CIERRE MASIVO DEL SISTEMA ""DIABLITO"".',GetDate()," & _HoraGrab & ")"
+                If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+                    Log_Registro += _Sql.Pro_Error & vbCrLf
+                End If
+
+            End If
+
+        Next
 
     End Sub
 

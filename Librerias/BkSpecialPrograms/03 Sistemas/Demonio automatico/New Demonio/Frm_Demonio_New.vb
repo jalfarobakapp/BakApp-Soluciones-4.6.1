@@ -1227,16 +1227,18 @@ Public Class Frm_Demonio_New
 
                 _Cl_CerrarDocumentos.Fecha_Revision = DtpFecharevision.Value
 
+                _Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos_New(Me, "COV")
+                registro += _Cl_CerrarDocumentos.Log_Registro
+                _Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos_New(Me, "NVI")
+                registro += _Cl_CerrarDocumentos.Log_Registro
                 _Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos_New(Me, "NVV")
+                registro += _Cl_CerrarDocumentos.Log_Registro
+                _Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos_New(Me, "OCI")
+                registro += _Cl_CerrarDocumentos.Log_Registro
+                _Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos_New(Me, "OCC")
+                registro += _Cl_CerrarDocumentos.Log_Registro
 
-                '_Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "COV")
-                '_Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "OCI")
-                '_Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "OCC")
-                '_Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "NVI")
-                '_Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos(Me, "NVV")
-
-                registro = "Tarea ejecutada (Consolidación de stock) a las: " & DateTime.Now.ToString()
-                registro += _Cl_Consolidacion_Stock.Log_Registro & vbCrLf
+                registro += "Tarea ejecutada correctamente (Cierre de documentos) a las: " & DateTime.Now.ToString()
 
                 RegistrarLog(registro)
                 MostrarRegistro(registro)
