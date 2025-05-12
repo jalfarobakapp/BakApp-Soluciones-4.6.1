@@ -6,7 +6,6 @@ CREATE TABLE [dbo].[Zw_Demonio_Conf_Correo](
 	[NombreEquipo]				[varchar](50)	NOT NULL DEFAULT (''),
 	[Id_Padre]					[int]			NOT NULL DEFAULT (0),
 	[EnviarCorreo]				[bit]			NOT NULL DEFAULT (0),
-	[Nombre_ConfCorreo]			[varchar](50)	NOT NULL DEFAULT (''),
 	[Id_Correo]					[int]			NOT NULL DEFAULT (0),
 	[Nombre_Correo]				[varchar](100)	NOT NULL DEFAULT (''),
 	[Enviar_Remitente]			[bit]			NOT NULL DEFAULT (0),

@@ -3,7 +3,6 @@
     Public Property NombreEquipo As String
     Public Property Id_Padre As Integer
     Public Property EnviarCorreo As Boolean
-    Public Property Nombre_ConfCorreo As String
     Public Property Id_Correo As Integer
     Public Property Nombre_Correo As String
     Public Property Enviar_Remitente As Boolean

@@ -1227,6 +1227,9 @@ Public Class Frm_Demonio_New
 
                 _Cl_CerrarDocumentos.Fecha_Revision = DtpFecharevision.Value
 
+                _Cl_CerrarDocumentos.Sb_Procedimientos_Envio_Correos(Me, "NVV")
+                registro += _Cl_CerrarDocumentos.Log_Registro
+
                 _Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos_New(Me, "COV")
                 registro += _Cl_CerrarDocumentos.Log_Registro
                 _Cl_CerrarDocumentos.Sb_Procedimientos_Cierre_Masivo_Documentos_New(Me, "NVI")

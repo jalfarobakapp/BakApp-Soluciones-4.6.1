@@ -78,7 +78,7 @@ Public Class Frm_Correos_Conf_SMTP
 
     Private Sub Btn_Probar_Envio_Click(sender As Object, e As EventArgs) Handles Btn_Probar_Envio.Click
 
-        Dim _Asunto = "Mesaje de prueba BakApp"
+        Dim _Asunto = "Mesaje de prueba BakApp (" & Now & ")"
         Dim _Cuerpo = "Mensaje de correo electrónico enviado para comprobar la configuración de su cuenta. "
         Dim _Para = String.Empty
 
@@ -151,7 +151,7 @@ Public Class Frm_Correos_Conf_SMTP
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
-        _Asunto = "Mesaje de prueba BakApp"
+        '_Asunto = "Mesaje de prueba BakApp (" & Now & ")"
         If String.IsNullOrEmpty(Trim(_Cuerpo)) Then _Cuerpo = "Mensaje de correo electrónico enviado para comprobar la configuración de su cuenta. "
         Dim _Aceptar As Boolean
 

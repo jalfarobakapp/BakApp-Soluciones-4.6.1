@@ -6845,5 +6845,28 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Function
 
+    Function Fx_CreaNroRandom() As String
+
+        Dim letras As String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        Dim numeros As String = "0123456789"
+        Dim random As New Random()
+        Dim resultado As New System.Text.StringBuilder()
+
+        ' Generar 3 letras al azar
+        For i As Integer = 1 To 3
+            Dim indiceLetra As Integer = random.Next(0, letras.Length)
+            resultado.Append(letras(indiceLetra))
+        Next
+
+        ' Generar 7 números al azar
+        For i As Integer = 1 To 7
+            Dim indiceNumero As Integer = random.Next(0, numeros.Length)
+            resultado.Append(numeros(indiceNumero))
+        Next
+
+        Return resultado.ToString
+
+    End Function
+
 End Module
 

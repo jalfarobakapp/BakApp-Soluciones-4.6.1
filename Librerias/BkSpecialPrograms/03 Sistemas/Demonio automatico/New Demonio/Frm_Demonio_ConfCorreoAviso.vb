@@ -17,7 +17,6 @@ Public Class Frm_Demonio_ConfCorreoAviso
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
         Cl_ConfCorreoAviso.Fx_Llenar_ConfCorreo(_Id_ConfCorreo)
-        Cl_ConfCorreoAviso.Zw_Demonio_Conf_Correo.Nombre_ConfCorreo = _Nombre_ConfCorreo
 
         Sb_Color_Botones_Barra(Bar1)
 
@@ -147,7 +146,6 @@ Public Class Frm_Demonio_ConfCorreoAviso
             .EnviarCorreo = Chk_NVV_EnviaCorreo.Checked
             .NombreEquipo = Cl_ConfCorreoAviso.Zw_Demonio_Conf_Correo.NombreEquipo
             .Id_Padre = Cl_ConfCorreoAviso.Zw_Demonio_Conf_Correo.Id_Padre
-            .Nombre_ConfCorreo = Cl_ConfCorreoAviso.Zw_Demonio_Conf_Correo.Nombre_ConfCorreo
             .Id_Correo = Txt_Nombre_Correo.Tag
             .Nombre_Correo = Txt_Nombre_Correo.Text.Trim
             .Enviar_Remitente = Rdb_Enviar_Remitente.Checked

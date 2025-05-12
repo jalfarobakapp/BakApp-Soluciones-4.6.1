@@ -13,7 +13,6 @@
             .NombreEquipo = String.Empty
             .Id_Padre = 0
             .EnviarCorreo = False
-            .Nombre_ConfCorreo = String.Empty
             .Id_Correo = 0
             .Nombre_Correo = String.Empty
             .Enviar_Remitente = True
@@ -57,7 +56,6 @@
             .NombreEquipo = _Row.Item("NombreEquipo")
             .Id_Padre = _Row.Item("Id_Padre")
             .EnviarCorreo = _Row.Item("EnviarCorreo")
-            .Nombre_ConfCorreo = _Row.Item("Nombre_ConfCorreo")
             .Id_Correo = _Row.Item("Id_Correo")
             .Nombre_Correo = _Row.Item("Nombre_Correo")
             .Enviar_Remitente = _Row.Item("Enviar_Remitente")
@@ -93,10 +91,10 @@
 
             With _Zw_Demonio_Conf_Correo
 
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_Conf_Correo (NombreEquipo,Id_Padre,EnviarCorreo,Nombre_ConfCorreo,Id_Correo,Nombre_Correo," &
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_Conf_Correo (NombreEquipo,Id_Padre,EnviarCorreo,Id_Correo,Nombre_Correo," &
                 "Enviar_Remitente,MailRemitente,Enviar_VendedorCliente,Enviar_VendedorLinea,Enviar_ResponsableDoc," &
                 "Enviar_EntidadDoc,CC_Remitente,MailCC,CC_VendedorCliente,CC_VendedorLinea,CC_ResponsableDoc," &
-                "CC_EntidadDoc,EnvioAnticipacion,DiasEnvioAnticipacion) Values ('" & .NombreEquipo & "'," & .Id_Padre & "," & Convert.ToInt32(.EnviarCorreo) & ",'" & .Nombre_ConfCorreo & "'," & .Id_Correo & ",'" & .Nombre_Correo & "'," &
+                "CC_EntidadDoc,EnvioAnticipacion,DiasEnvioAnticipacion) Values ('" & .NombreEquipo & "'," & .Id_Padre & "," & Convert.ToInt32(.EnviarCorreo) & "," & .Id_Correo & ",'" & .Nombre_Correo & "'," &
                 Convert.ToInt32(.Enviar_Remitente) & ",'" & .MailRemitente & "'," &
                 Convert.ToInt32(.Enviar_VendedorCliente) & "," & Convert.ToInt32(.Enviar_VendedorLinea) & "," &
                 Convert.ToInt32(.Enviar_ResponsableDoc) & "," & Convert.ToInt32(.Enviar_EntidadDoc) & "," &
@@ -111,6 +109,8 @@
                     Throw New System.Exception("Error al grabar la configuración de correo aviso" & vbCrLf & _Sql.Pro_Error)
 
                 End If
+
+                Zw_Demonio_Conf_Correo.Id = .Id
 
                 _Mensaje.EsCorrecto = True
                 _Mensaje.Mensaje = "Configuración de correo aviso grabada correctamente"
@@ -139,8 +139,7 @@
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_Conf_Correo Set " &
                            "NombreEquipo = '" & _NuevaConfiguracion.NombreEquipo & "', " &
                            "Id_Padre = " & _NuevaConfiguracion.Id_Padre & ", " &
-                           "EnviarCorreo = " & Convert.ToInt32(_NuevaConfiguracion.EnviarCorreo) & ", " &
-                           "Nombre_ConfCorreo = '" & _NuevaConfiguracion.Nombre_ConfCorreo & "', " &
+                           "EnviarCorreo = " & Convert.ToInt32(_NuevaConfiguracion.EnviarCorreo) & "," &
                            "Id_Correo = " & _NuevaConfiguracion.Id_Correo & ", " &
                            "Nombre_Correo = '" & _NuevaConfiguracion.Nombre_Correo & "', " &
                            "Enviar_Remitente = " & Convert.ToInt32(_NuevaConfiguracion.Enviar_Remitente) & ", " &

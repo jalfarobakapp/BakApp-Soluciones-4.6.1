@@ -533,7 +533,6 @@ Public Class Frm_Correos_Conf
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
-        _Asunto = "Mesaje de prueba BakApp"
         If String.IsNullOrEmpty(Trim(_Cuerpo)) Then _Cuerpo = "Mensaje de correo electrónico enviado para comprobar la configuración de su cuenta. "
         Dim _Aceptar As Boolean
 
@@ -553,6 +552,8 @@ Public Class Frm_Correos_Conf
             End If
 
         End If
+
+        _Asunto = "Mesaje de prueba BakApp (" & Now & ")"
 
         _Cuerpo = Replace(_Cuerpo, "&lt;", "<")
         _Cuerpo = Replace(_Cuerpo, "&gt;", ">")

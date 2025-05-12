@@ -1147,13 +1147,17 @@ Public Class Frm_Demonio_Configuraciones
 
     Private Sub Btn_ConfCorreo_CierreNVV_Click(sender As Object, e As EventArgs) Handles Btn_ConfCorreo_CierreNVV.Click
 
+        Dim _Nvv As Zw_Demonio_Conf_Cerrar_Documentos = Cl_Cerrar_Documentos.LS_Zw_Demonio_Conf_Cerrar_Documentos.FirstOrDefault(Function(x) x.Tido = "NVV")
+
         Dim _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
         Dim _Id_Padre = _Global_Row_EstacionBk.Item("Id")
-        Dim _Id As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Demonio_Conf_Correo", "Id",
-                                               "NombreEquipo = '" & _NombreEquipo & "' And Id_Padre = " & _Id_Padre & " And Nombre_ConfCorreo = 'ConfCorreo_CierreNVV'", True)
+        'Dim _Id As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Demonio_Conf_Correo", "Id",
+        '                                       "NombreEquipo = '" & _NombreEquipo & "' And Id_Padre = " & _Id_Padre & " And Nombre_ConfCorreo = 'ConfCorreo_CierreNVV'", True)
+        Dim _Id_ConfCorreo As Integer = _Nvv.Id_ConfCorreo
 
-        Dim Fm As New Frm_Demonio_ConfCorreoAviso(_Id, "ConfCorreo_CierreNVV")
+        Dim Fm As New Frm_Demonio_ConfCorreoAviso(_Id_ConfCorreo, "ConfCorreo_CierreNVV")
         Fm.ShowDialog(Me)
+        _Nvv.Id_ConfCorreo = Fm.Cl_ConfCorreoAviso.Zw_Demonio_Conf_Correo.Id
         Fm.Dispose()
 
     End Sub

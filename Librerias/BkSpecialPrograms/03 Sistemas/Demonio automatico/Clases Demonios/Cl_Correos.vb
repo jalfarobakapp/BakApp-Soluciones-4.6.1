@@ -1,6 +1,5 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
-Imports Limilabs.Client.SMTP
 
 Public Class Cl_Correos
 

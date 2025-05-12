@@ -10,6 +10,7 @@ CREATE TABLE [dbo].[Zw_Demonio_Conf_Cerrar_Documentos](
 	[Dias]			[int]			NOT NULL DEFAULT (0),
 	[FEmision]		[bit]			NOT NULL DEFAULT (0),
 	[FDespacho]		[bit]			NOT NULL DEFAULT (0),
+    [Id_ConfCorreo] [int]			NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_Demonio_Conf_Cerrar_Documentos] PRIMARY KEY CLUSTERED 
 (
 	[NombreEquipo] ASC,

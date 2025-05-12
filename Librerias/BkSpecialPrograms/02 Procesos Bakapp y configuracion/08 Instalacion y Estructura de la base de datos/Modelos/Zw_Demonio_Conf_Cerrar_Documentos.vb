@@ -7,5 +7,6 @@
     Public Property Dias As Integer
     Public Property FEmision As Boolean
     Public Property FDespacho As Boolean
+    Public Property Id_ConfCorreo As Integer
 
 End Class
