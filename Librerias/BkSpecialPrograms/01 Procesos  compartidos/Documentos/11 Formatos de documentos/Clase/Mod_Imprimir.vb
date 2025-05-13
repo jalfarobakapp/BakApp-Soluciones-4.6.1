@@ -41,7 +41,7 @@ Module Mod_Imprimir
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
         Consulta_sql = "Select Top 1 * From MAEEDO Where IDMAEEDO = " & _Idmaeedo
-        _RowMaeedo = _Sql.Fx_Get_DataRow(Consulta_sql)
+        _RowMaeedo = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 
         If _RowMaeedo Is Nothing Then
             Return "No se encontro documento IDMAEEDO:" & _Idmaeedo
@@ -57,7 +57,7 @@ Module Mod_Imprimir
         Consulta_sql = "Select Top 1 NombreFormato_Destino From " & _Global_BaseBk & "Zw_Prod_ImpAdicional" & vbCrLf &
                        "Where Tido = '" & _Tido & "' And Subtido = '" & _Subtido & "' And NombreFormato_Origen = '" & _NombreFormato & "' " &
                        "And Codigo In (Select KOPRCT From MAEDDO Where IDMAEEDO = " & _Idmaeedo & ") And Reemplazar_Formato_Origen = 1"
-        Dim _Row_FormatoAdicional As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+        Dim _Row_FormatoAdicional As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 
         If Not IsNothing(_Row_FormatoAdicional) Then
             _NombreFormato = _Row_FormatoAdicional.Item("NombreFormato_Destino")
@@ -65,8 +65,7 @@ Module Mod_Imprimir
 
         Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Format_01" & vbCrLf &
                        "Where TipoDoc = '" & _Tido & "' And Subtido = '" & _Subtido & "' And NombreFormato = '" & _NombreFormato & "'"
-
-        Dim _RowEncFormato As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+        Dim _RowEncFormato As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 
         If Not (_RowEncFormato Is Nothing) Then
             Dim _Copias = _RowEncFormato.Item("Copias")
@@ -83,7 +82,6 @@ Module Mod_Imprimir
         If _Reimprimir Then
             _Nro_Copias = 1
         End If
-
 
         Dim _Imprimir_Cedible As Boolean
 
@@ -414,8 +412,6 @@ Module Mod_Imprimir
                                    _Impresora As String,
                                    _Subtido As String) As String
 
-        '_Imprimir_Cedible
-
         Dim _Imprimir As New Clas_Imprimir_Documento(_Id,
                                                      _Tido,
                                                      _NombreFormato,
@@ -436,8 +432,6 @@ Module Mod_Imprimir
         End If
 
         _Imprimir.Fx_Imprimir_Documento(Nothing, _Vista_Previa, False)
-
-        '_Imprimir.MostrarError
 
         Dim _LogError = _Imprimir.Pro_Ultimo_Error
 

@@ -435,7 +435,8 @@ Public Class Cl_Sincroniza
                                                      True,
                                                      "01",
                                                      "01",
-                                                     "DWB")
+                                                     "DWB",
+                                                     False, 0, "")
 
             If _Mensaje_Stem.EsCorrecto Then
                 Sb_AddToLog(_Mensaje_Stem.Detalle, _Mensaje_Stem.Mensaje, Txt_Log)

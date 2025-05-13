@@ -225,7 +225,7 @@ Public Class Clas_Imprimir_Documento
         ' Llena Formato del Encabezado
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Format_01" & vbCrLf &
                        "Where TipoDoc = '" & _TipoDoc & "' And NombreFormato = '" & _NombreFormato & "' And Subtido = '" & _Subtido & "'"
-        _TblEncForm = _Sql.Fx_Get_DataTable(Consulta_sql)
+        _TblEncForm = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
         _Es_Picking = _TblEncForm.Rows(0).Item("Es_Picking")
 
@@ -508,41 +508,6 @@ Public Class Clas_Imprimir_Documento
                     "Order by Fdt.Orden_Detalle"
 
         _Tbl_Fx_Detalle = _Sql.Fx_Get_DataTable(Consulta_sql)
-
-
-
-        'Consulta_sql = "SELECT *," &
-        '                            "Isnull((Select Funcion_Bk From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
-        '                            "Where Nombre_Funcion = Funcion),0) As Funcion_Bk," & vbCrLf &
-        '                            "Isnull((Select Formato From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
-        '                            "Where Nombre_Funcion = Funcion),0) As Formato_Fx," & vbCrLf &
-        '                            "Isnull((Select Campo From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
-        '                            "Where Nombre_Funcion = Funcion),0) As Campo," & vbCrLf &
-        '                            "Isnull((Select Codigo_De_Barras From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
-        '                            "Where Nombre_Funcion = Funcion),0) As Codigo_De_Barras," & vbCrLf &
-        '                            "Isnull((Select Es_Descuento From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
-        '                            "Where Nombre_Funcion = Funcion),0) As Es_Descuento" & vbCrLf &
-        '                            "FROM " & _Global_BaseBk & "Zw_Format_02" & vbCrLf &
-        '                            "Where TipoDoc = '" & _TipoDoc & "' And Subtido = '" & _Subtido & "' And NombreFormato = '" & _NombreFormato & "' And Seccion In ('E','P')"
-
-        '_Tbl_Fx_Encabezado = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-        '' Llena formato del detalle
-        'Consulta_sql = "SELECT *," &
-        '                  "Isnull((Select Funcion_Bk From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
-        '                  "Where Nombre_Funcion = Funcion),0) As Funcion_Bk," & vbCrLf &
-        '                  "Isnull((Select Formato From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
-        '                  "Where Nombre_Funcion = Funcion),0) As Formato_Fx," & vbCrLf &
-        '                  "Isnull((Select Campo From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
-        '                  "Where Nombre_Funcion = Funcion),0) As Campo," & vbCrLf &
-        '                  "Isnull((Select Codigo_De_Barras From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
-        '                  "Where Nombre_Funcion = Funcion),0) As Codigo_De_Barras," & vbCrLf &
-        '                  "Isnull((Select Es_Descuento From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
-        '                  "Where Nombre_Funcion = Funcion),0) As Es_Descuento" & vbCrLf &
-        '                  "FROM " & _Global_BaseBk & "Zw_Format_02" & vbCrLf &
-        '                  "Where TipoDoc = '" & _TipoDoc & "' And Subtido = '" & _Subtido & "' And NombreFormato = '" & _NombreFormato & "' And Seccion = 'D'" & vbCrLf &
-        '                  "Order by Orden_Detalle"
-        '_Tbl_Fx_Detalle = _Sql.Fx_Get_Tablas(Consulta_sql)
 
     End Sub
 
