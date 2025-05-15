@@ -140,7 +140,7 @@ Public Class Cl_Cerrar_Documentos
         Consulta_Sql = Replace(Consulta_Sql, "#Left_Join_MAEEN_ENDOFI_SUENDOFI#", "")
         Consulta_Sql = Replace(Consulta_Sql, "Isnull(Mae2.NOKOEN,'') As RAZON_FISICA,", "")
         Consulta_Sql = Replace(Consulta_Sql, "#Orden#", "")
-        Consulta_Sql = Replace(Consulta_Sql, "#CantidadDoc#", "100")
+        Consulta_Sql = Replace(Consulta_Sql, "#CantidadDoc#", "200")
         Consulta_Sql = Replace(Consulta_Sql, "Cast(0 As Bit) As Chk,", "Cast(1 As Bit) As Chk,")
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
@@ -249,7 +249,7 @@ Public Class Cl_Cerrar_Documentos
         Consulta_Sql = Replace(Consulta_Sql, "#Left_Join_MAEEN_ENDOFI_SUENDOFI#", "")
         Consulta_Sql = Replace(Consulta_Sql, "Isnull(Mae2.NOKOEN,'') As RAZON_FISICA,", "")
         Consulta_Sql = Replace(Consulta_Sql, "#Orden#", "")
-        Consulta_Sql = Replace(Consulta_Sql, "#CantidadDoc#", "100")
+        Consulta_Sql = Replace(Consulta_Sql, "#CantidadDoc#", "200")
         Consulta_Sql = Replace(Consulta_Sql, "Cast(0 As Bit) As Chk,", "Cast(1 As Bit) As Chk,")
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
@@ -285,12 +285,12 @@ Public Class Cl_Cerrar_Documentos
         For Each _Fl As DataRow In _Tbl_Vendedores.Rows
 
             Dim _Kofulido As String = _Fl.Item("KOFULIDO")
-            Dim _Para As String = _Fl.Item("EMAIL")
+            Dim _Para As String = _Fl.Item("EMAIL").ToString.Trim
             Dim _Cc As String = String.Empty
             Dim _Html As String = String.Empty
 
-            Consulta_Sql = "Select Distinct Edo.TIDO As TD,Edo.NUDO As 'Número',En.KOEN As 'Entidad',En.SUEN As 'suc.',En.NOKOEN As 'Razón Social'," &
-                           "Edo.FEEMDO As 'F.Emisión',Edo.FEER As 'F.Envío',Edo.VANEDO As 'Total Neto',Edo.VAIMDO+Edo.VAIVDO As 'Impuestos',Edo.VABRDO As 'Total Bruto'" & vbCrLf &
+            Consulta_Sql = "Select Distinct Edo.TIDO As TD,Edo.NUDO As 'Número',En.KOEN As 'Entidad',En.SUEN As 'Suc.',En.NOKOEN As 'Razón Social'," &
+                           "Edo.FEEMDO As 'F.Emisión',Edo.FEER As 'F.Despacho',Edo.VANEDO As 'Total Neto',Edo.VAIMDO+Edo.VAIVDO As 'Impuestos',Edo.VABRDO As 'Total Bruto'" & vbCrLf &
                            "From MAEEDO Edo" & vbCrLf &
                            "Inner Join MAEDDO Ddo On Edo.IDMAEEDO = Ddo.IDMAEEDO" & vbCrLf &
                            "Left Join MAEEN En On En.KOEN = Edo.ENDO And En.SUEN = Edo.SUENDO" & vbCrLf &
@@ -306,9 +306,17 @@ Public Class Cl_Cerrar_Documentos
                 Continue For
             End If
 
+            If _Cl_ConfCorreoAviso.Zw_Demonio_Conf_Correo.CC_Remitente Then
+                _Cc = _Cl_ConfCorreoAviso.Zw_Demonio_Conf_Correo.MailCC
+            End If
+
             _Html = Fx_GenerarTablaHTML(_Tbl_Documentos)
 
-            _Para = "jalfaro@bakapp.cl"
+            '_Para = "jalfaro@bakapp.cl"
+
+            If String.IsNullOrWhiteSpace(_Para) Then
+                _Para = _Kofulido
+            End If
 
             Fx_Enviar_Notificacion_Correo(_Para, _Cc, _Cl_ConfCorreoAviso.Zw_Demonio_Conf_Correo.Id_Correo, _Html)
 
@@ -523,32 +531,32 @@ Public Class Cl_Cerrar_Documentos
     Function Fx_GenerarTablaHTML(_Tbl_Documentos As DataTable) As String
         Dim _Html As New System.Text.StringBuilder()
 
-        _Html.Append("<table border='1' style='border-collapse:collapse; width:100%;'>")
-        _Html.Append("<thead>")
-        _Html.Append("<tr>")
+        _Html.Append("<table border='1' style='border-collapse:collapse; width:70%;'>" & vbCrLf)
+        _Html.Append("<thead>" & vbCrLf)
+        _Html.Append(vbTab & "<tr>" & vbCrLf)
         For Each _Col As DataColumn In _Tbl_Documentos.Columns
-            _Html.AppendFormat("<th>{0}</th>", _Col.ColumnName)
+            _Html.AppendFormat(vbTab & vbTab & "<th>{0}</th>" & vbCrLf, _Col.ColumnName)
         Next
-        _Html.Append("</tr>")
-        _Html.Append("</thead>")
-        _Html.Append("<tbody>")
+        _Html.Append(vbTab & "</tr>" & vbCrLf)
+        _Html.Append("</thead>" & vbCrLf)
+        _Html.Append("<tbody>" & vbCrLf)
         For Each _Row As DataRow In _Tbl_Documentos.Rows
-            _Html.Append("<tr>")
+            _Html.Append(vbTab & "<tr>" & vbCrLf)
             For Each _Col As DataColumn In _Tbl_Documentos.Columns
                 If TypeOf _Row(_Col.ColumnName) Is DateTime Then
-                    _Html.AppendFormat("<td>{0}</td>", Format(CDate(_Row(_Col.ColumnName)), "yyyy-MM-dd"))
+                    _Html.AppendFormat(vbTab & vbTab & "<td style='text-align:center;padding-left:6px;padding-right:6px'>{0}</td>" & vbCrLf, Format(CDate(_Row(_Col.ColumnName)), "dd-MM-yyyy"))
                 ElseIf TypeOf _Row(_Col.ColumnName) Is Decimal OrElse TypeOf _Row(_Col.ColumnName) Is Double OrElse TypeOf _Row(_Col.ColumnName) Is Single Then
-                    _Html.AppendFormat("<td>{0}</td>", Format(CDec(_Row(_Col.ColumnName)), "N2"))
+                    _Html.AppendFormat(vbTab & vbTab & "<td style='text-align:right;padding-left:6px;padding-right:6px'>{0}</td>" & vbCrLf, Format(CDec(_Row(_Col.ColumnName)), "N0"))
                 ElseIf TypeOf _Row(_Col.ColumnName) Is Integer OrElse TypeOf _Row(_Col.ColumnName) Is Long Then
-                    _Html.AppendFormat("<td>{0}</td>", Format(CLng(_Row(_Col.ColumnName)), "N0"))
+                    _Html.AppendFormat(vbTab & vbTab & "<td style='text-align:right';padding-left:6px;padding-right:6px>{0}</td>" & vbCrLf, Format(CLng(_Row(_Col.ColumnName)), ""))
                 Else
-                    _Html.AppendFormat("<td>{0}</td>", _Row(_Col.ColumnName).ToString().Trim())
+                    _Html.AppendFormat(vbTab & vbTab & "<td style='padding-left:6px;padding-right:6px'>{0}</td>" & vbCrLf, _Row(_Col.ColumnName).ToString().Trim())
                 End If
             Next
-            _Html.Append("</tr>")
+            _Html.Append(vbTab & "</tr>" & vbCrLf)
         Next
-        _Html.Append("</tbody>")
-        _Html.Append("</table>")
+        _Html.Append("</tbody>" & vbCrLf)
+        _Html.Append("</table>" & vbCrLf)
 
         Return _Html.ToString()
     End Function

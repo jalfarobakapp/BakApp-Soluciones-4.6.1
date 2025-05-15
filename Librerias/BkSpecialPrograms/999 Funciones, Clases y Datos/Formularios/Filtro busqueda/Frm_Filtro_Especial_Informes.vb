@@ -630,7 +630,7 @@ Public Class Frm_Filtro_Especial_Informes
         Select Case _Key
             Case Keys.Enter, Keys.Space
 
-                Sb_Buscar_En_Grilla_Dataview(Txt_Descripcion.Text)
+                Sb_Buscar_En_Grilla_Dataview(Txt_Descripcion.Text.Trim)
 
                 If _Seleccionar_Solo_Uno And _Key = Keys.Enter Then
                     If CBool(Grilla.Rows.Count) Then
@@ -709,7 +709,7 @@ Public Class Frm_Filtro_Especial_Informes
                 _Lista_Descripciones = Split(_Descripcion, ";")
 
                 For i = 0 To _Lista_Descripciones.Length - 1
-                    If i = 0 Then
+                    If String.IsNullOrWhiteSpace(_Lista_productos_A_Buscar) Then
                         _Lista_productos_A_Buscar += Fx_Descripcion(_Lista_Descripciones(i))
                     Else
                         _Lista_productos_A_Buscar += Fx_Descripcion(_Lista_Descripciones(i), " Or ")
@@ -723,7 +723,12 @@ Public Class Frm_Filtro_Especial_Informes
                 _Lista_Descripciones = Split(_Descripcion, " ")
 
                 For i = 0 To _Lista_Descripciones.Length - 1
-                    If i = 0 Then
+                    'If i = 0 Then
+                    '    _Lista_productos_A_Buscar += Fx_Descripcion(_Lista_Descripciones(i))
+                    'Else
+                    '    _Lista_productos_A_Buscar += Fx_Descripcion(_Lista_Descripciones(i), " And ")
+                    'End If
+                    If String.IsNullOrWhiteSpace(_Lista_productos_A_Buscar) Then
                         _Lista_productos_A_Buscar += Fx_Descripcion(_Lista_Descripciones(i))
                     Else
                         _Lista_productos_A_Buscar += Fx_Descripcion(_Lista_Descripciones(i), " And ")

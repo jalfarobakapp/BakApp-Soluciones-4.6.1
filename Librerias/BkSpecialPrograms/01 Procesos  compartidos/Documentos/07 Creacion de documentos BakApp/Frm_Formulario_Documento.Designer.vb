@@ -104,6 +104,7 @@ Partial Class Frm_Formulario_Documento
         Me.Txt_ArchivoSG_Carpeta_Lectura = New DevComponents.DotNetBar.ButtonItem()
         Me.Txt_ArchivoSG_Carpeta_Generados = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Crear_Desde_DTEXMLCompra = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_UtilizarDetalleOtroDoc = New DevComponents.DotNetBar.ButtonItem()
         Me.Menu_Contextual_Opciones_Recargar_Costos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Recargar_Producto_Linea_Activa = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Recargar_Producto_Todos = New DevComponents.DotNetBar.ButtonItem()
@@ -623,7 +624,7 @@ Partial Class Frm_Formulario_Documento
         '
         Me.Menu_Contextual_Opciones_Especiales.AutoExpandOnClick = True
         Me.Menu_Contextual_Opciones_Especiales.Name = "Menu_Contextual_Opciones_Especiales"
-        Me.Menu_Contextual_Opciones_Especiales.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Despacho, Me.Btn_Exportar_a_XML, Me.Btn_Config_Tipo_Estacion, Me.Btn_Config_Impresora, Me.Btn_Prestashop, Me.Btn_Lista_Costos_Proveedor, Me.Btn_Levantar_Prod_Masivamente, Me.Btn_Crear_Desde_DTEXMLCompra})
+        Me.Menu_Contextual_Opciones_Especiales.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Despacho, Me.Btn_Exportar_a_XML, Me.Btn_Config_Tipo_Estacion, Me.Btn_Config_Impresora, Me.Btn_Prestashop, Me.Btn_Lista_Costos_Proveedor, Me.Btn_Levantar_Prod_Masivamente, Me.Btn_Crear_Desde_DTEXMLCompra, Me.Btn_UtilizarDetalleOtroDoc})
         Me.Menu_Contextual_Opciones_Especiales.Text = "Opciones especiales"
         '
         'Btn_Despacho
@@ -773,6 +774,13 @@ Partial Class Frm_Formulario_Documento
         Me.Btn_Crear_Desde_DTEXMLCompra.Name = "Btn_Crear_Desde_DTEXMLCompra"
         Me.Btn_Crear_Desde_DTEXMLCompra.Text = "Crear OCC desde DTE XML"
         Me.Btn_Crear_Desde_DTEXMLCompra.Visible = False
+        '
+        'Btn_UtilizarDetalleOtroDoc
+        '
+        Me.Btn_UtilizarDetalleOtroDoc.Image = CType(resources.GetObject("Btn_UtilizarDetalleOtroDoc.Image"), System.Drawing.Image)
+        Me.Btn_UtilizarDetalleOtroDoc.ImageAlt = CType(resources.GetObject("Btn_UtilizarDetalleOtroDoc.ImageAlt"), System.Drawing.Image)
+        Me.Btn_UtilizarDetalleOtroDoc.Name = "Btn_UtilizarDetalleOtroDoc"
+        Me.Btn_UtilizarDetalleOtroDoc.Text = "Utilizar detalle de cualquier otro documento"
         '
         'Menu_Contextual_Opciones_Recargar_Costos
         '
@@ -2986,4 +2994,5 @@ Partial Class Frm_Formulario_Documento
     Friend WithEvents Btn_Contenedor_Ver As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Contenedor_Quitar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Chk_Pickear As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Btn_UtilizarDetalleOtroDoc As DevComponents.DotNetBar.ButtonItem
 End Class
