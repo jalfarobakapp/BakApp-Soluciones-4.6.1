@@ -1064,6 +1064,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Tkts0005", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Tkts0006", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Tkts0007", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Tkts0008", _Objeto, _Formulario)
 
 
         _SqlQuery += vbCrLf
@@ -4689,34 +4690,32 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "INGRESAR AL SISTEMA DE TICKET"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.TICKET, 6)
                 _NombreFamiliaPermiso = _Fml.TICKET.ToString
-
             Case "Tkts0002"
                 _DescripcionPermiso = "INGRESAR A CONFIGURACION DE TICKET"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.TICKET, 6)
                 _NombreFamiliaPermiso = _Fml.TICKET.ToString
-
             Case "Tkts0003"
                 _DescripcionPermiso = "MANTENCION DE AGENTES"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.TICKET, 6)
                 _NombreFamiliaPermiso = _Fml.TICKET.ToString
-
             Case "Tkts0004"
                 _DescripcionPermiso = "MANTENCION DE GRUPOS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.TICKET, 6)
                 _NombreFamiliaPermiso = _Fml.TICKET.ToString
-
             Case "Tkts0005"
                 _DescripcionPermiso = "MANTENCION DE AREAS/TIPOS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.TICKET, 6)
                 _NombreFamiliaPermiso = _Fml.TICKET.ToString
-
             Case "Tkts0006"
                 _DescripcionPermiso = "CERRAR TICKETS DE OTROS USUARIOS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.TICKET, 6)
                 _NombreFamiliaPermiso = _Fml.TICKET.ToString
-
             Case "Tkts0007"
                 _DescripcionPermiso = "PODER VER TODOS LOS TICKETS (MODO ADMINISTRADOR)"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.TICKET, 6)
+                _NombreFamiliaPermiso = _Fml.TICKET.ToString
+            Case "Tkts0008"
+                _DescripcionPermiso = "PODER GRABAR TICKET SIN ASIGNAR EL REQUERIMIENTO A ALGUN GRUPO O AGENTE"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.TICKET, 6)
                 _NombreFamiliaPermiso = _Fml.TICKET.ToString
 

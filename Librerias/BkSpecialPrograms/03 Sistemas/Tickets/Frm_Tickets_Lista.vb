@@ -1437,19 +1437,23 @@ Public Class Frm_Tickets_Lista
 
         Dim _Fila As DataGridViewRow = Grilla_Acciones.CurrentRow
 
-        Dim _Id_Ticket As Integer = _Fila.Cells("Id_Ticket").Value
-        Dim _Id_TicketAc As Integer = _Fila.Cells("Id_Accion").Value
-        Dim _Num_Attach As Integer = _Fila.Cells("Num_Attach").Value
-        Dim _Producto_Attach As Integer = _Fila.Cells("Producto_Attach").Value
-        Dim _Idmaeedo_Cierra As Integer = _Fila.Cells("Idmaeedo_Cierra").Value
+        Try
 
-        Dim _Cabeza = Grilla_Acciones.Columns(Grilla_Acciones.CurrentCell.ColumnIndex).Name
+            Dim _Id_Ticket As Integer = _Fila.Cells("Id_Ticket").Value
+            Dim _Id_TicketAc As Integer = _Fila.Cells("Id_Accion").Value
+            Dim _Num_Attach As Integer = _Fila.Cells("Num_Attach").Value
+            Dim _Producto_Attach As Integer = _Fila.Cells("Producto_Attach").Value
+            Dim _Idmaeedo_Cierra As Integer = _Fila.Cells("Idmaeedo_Cierra").Value
 
-        If _Cabeza = "Btn_ImagenAttach" Or _Cabeza = "Btn_ProductoInfo" Or _Cabeza = "Btn_DocCierra" Then
+            Dim _Cabeza = Grilla_Acciones.Columns(Grilla_Acciones.CurrentCell.ColumnIndex).Name
 
-            MessageBoxEx.Show(Me, "Para ver esta información debe ingregar al Ticket", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            If _Cabeza = "Btn_ImagenAttach" Or _Cabeza = "Btn_ProductoInfo" Or _Cabeza = "Btn_DocCierra" Then
+                MessageBoxEx.Show(Me, "Para ver esta información debe ingregar al Ticket", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            End If
 
-        End If
+        Catch ex As Exception
+
+        End Try
 
     End Sub
 

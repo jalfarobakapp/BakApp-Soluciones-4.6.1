@@ -553,7 +553,7 @@ Public Class Clase_Crear_Documento
 
                             If CBool(_Fiad) Then
 
-                                If Not _Tido.Contains("N") Then ' Si no es Nota de credito
+                                If Not _Tido.Contains("N") And Not _Tidopa.Contains("G") Then ' Si no es Nota de credito
 
                                     If _Tipr = "SSN" Then
 

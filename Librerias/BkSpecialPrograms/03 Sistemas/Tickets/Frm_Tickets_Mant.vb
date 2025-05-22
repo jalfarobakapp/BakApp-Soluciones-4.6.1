@@ -208,6 +208,12 @@ Public Class Frm_Tickets_Mant
                 Return
             End If
 
+        Else
+
+            If Not Fx_Tiene_Permiso(Me, "Tkts0008") Then
+                Return
+            End If
+
         End If
 
 
@@ -401,6 +407,7 @@ Public Class Frm_Tickets_Mant
 
             If String.IsNullOrWhiteSpace(Txt_Asunto.Text) Then
                 Txt_Asunto.Text = .Tipo.ToString.Trim
+                Txt_Asunto.ReadOnly = True
             End If
 
             Txt_Descripcion.Text = .RespuestaXDefecto

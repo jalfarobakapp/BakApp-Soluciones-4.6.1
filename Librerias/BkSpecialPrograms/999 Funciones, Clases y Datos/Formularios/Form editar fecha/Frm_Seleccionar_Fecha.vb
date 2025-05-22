@@ -120,14 +120,16 @@ Public Class Frm_Seleccionar_Fecha
                 FechaSeleccionada = FechaSeleccionada.AddHours(HoraSeleccionada.Hour).AddMinutes(HoraSeleccionada.Minute)
 
                 If MessageBoxEx.Show(Me, "¿Confirma la fecha " & FechaSeleccionada.ToLongDateString & " y hora " & FechaSeleccionada.ToShortTimeString & "?", "Confirmar selección",
-                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                             MessageBoxButtons.YesNo,
+                             MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, True) <> DialogResult.Yes Then
                     Return
                 End If
 
             Else
 
                 If MessageBoxEx.Show(Me, "¿Confirma la fecha " & FechaSeleccionada.ToShortDateString & "?", "Confirmar selección",
-                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                             MessageBoxButtons.YesNo,
+                             MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, True) <> DialogResult.Yes Then
                     Return
                 End If
 

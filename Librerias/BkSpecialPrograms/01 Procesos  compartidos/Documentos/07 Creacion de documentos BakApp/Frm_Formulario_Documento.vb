@@ -1177,6 +1177,8 @@ Public Class Frm_Formulario_Documento
         Chk_Redondear_Cero.Enabled = False
         _AvisoCambioRTUVariable = False
 
+        Btn_UtilizarDetalleOtroDoc.Tag = String.Empty
+
         _Cl_Despacho = Nothing
 
         If Not IsNothing(Fm_MPC) Then
@@ -5697,12 +5699,12 @@ Public Class Frm_Formulario_Documento
             _Sql.Ej_consulta_IDU(Consulta_sql, False)
         End If
 
-        Consulta_sql = "Select Top 1 *,(Select top 1 MELT From TABPP Where KOLT = '" & _ListaCostos & "') As MELT From TABPRE
-                        Where KOLT = '" & _ListaCostos & "' And KOPR = '" & _Codigo & "'"
+        Consulta_sql = "Select Top 1 *,(Select top 1 MELT From TABPP Where KOLT = '" & _ListaCostos & "') As MELT From TABPRE" & vbCrLf &
+                       "Where KOLT = '" & _ListaCostos & "' And KOPR = '" & _Codigo & "'"
         _RowCostos = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        Consulta_sql = "Select Top 1 *,(Select top 1 MELT From TABPP Where KOLT = '" & _ListaPrecios & "') as MELT From TABPRE
-                        Where KOLT = '" & _ListaPrecios & "' And KOPR = '" & _Codigo & "'"
+        Consulta_sql = "Select Top 1 *,(Select top 1 MELT From TABPP Where KOLT = '" & _ListaPrecios & "') as MELT From TABPRE" & vbCrLf &
+                       "Where KOLT = '" & _ListaPrecios & "' And KOPR = '" & _Codigo & "'"
         _RowPrecios = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Consulta_sql = "Select Top 1 * From MAEST
@@ -6943,8 +6945,6 @@ Public Class Frm_Formulario_Documento
 
                     If _Ecuacion.Contains("[") Then
 
-                        'Dim _Idmaeddo_Dori As Integer = _Fila.Cells("Idmaeddo_Dori").Value
-
                         If Not CBool(_Idmaeddo_Dori) Then
 
                             Consulta_sql = "Select Top 1 *,--PP01UD,PP02UD,DTMA01UD As DSCTOMAX,ECUACION,
@@ -6957,9 +6957,9 @@ Public Class Frm_Formulario_Documento
                             _Precio = Fx_Funcion_Ecuacion_Random(Me, _Koen, _Ecuacion, _Codigo, _UnTrans, _RowPrecios, _Cantidad, _CantUd1, _CantUd2)
 
                             If ChkValores.Checked Then
-                                .Cells("PrecioNetoUdLista").Value = _Precio '_Precio
+                                .Cells("PrecioNetoUdLista").Value = _Precio
                             Else
-                                .Cells("PrecioBrutoUdLista").Value = _Precio '_Precio
+                                .Cells("PrecioBrutoUdLista").Value = _Precio
                             End If
 
                             .Cells("Precio").Value = _Precio
@@ -10518,6 +10518,10 @@ Public Class Frm_Formulario_Documento
         If Grilla_Detalle.Rows.Count - 1 <= _Index Then _Index = Grilla_Detalle.Rows.Count - 1
 
         Grilla_Detalle.CurrentCell = Grilla_Detalle.Rows(_Index).Cells("Cantidad")
+
+        If Grilla_Detalle.Rows(0).Cells("Nuevo_Producto").Value Then
+            Btn_UtilizarDetalleOtroDoc.Tag = String.Empty
+        End If
 
         Me.Refresh()
         Grilla_Detalle.RefreshEdit()
@@ -20136,6 +20140,7 @@ Public Class Frm_Formulario_Documento
                         Dim _Caprco1 As Double = _Fila.Item("CAPRCO1")
                         Dim _Caprad1 As Double = _Fila.Item("CAPRAD1")
                         Dim _Caprex1 As Double = _Fila.Item("CAPREX1")
+                        Dim _Caprnc1 As Double = _Fila.Item("CAPRNC1")
 
                         _Total_Campo = _Caprco1 - (_Caprex1 + _Caprad1)
 
@@ -20150,6 +20155,10 @@ Public Class Frm_Formulario_Documento
                             _Total_Campo = Math.Round(_Total_Campo / _ImpuestosLinea, 2)
                             _DescuentoPorc = _Fila.Item("PODTGLLI")
 
+                        End If
+
+                        If _Tido = "NCV" And _Tidopa <> "BLV" Then
+                            _Total_Campo = (_Caprex1 + _Caprad1) - _Caprnc1
                         End If
 
                         _New_Fila.Cells(_Campo_Bk).Value = _Total_Campo
@@ -29338,15 +29347,6 @@ Public Class Frm_Formulario_Documento
                                  "este será solicitado al finalizar el documento para completar la acción."
             _Msj = Fx_AjustarTexto(_Msj, 80)
 
-            'If _Global_Row_Configuracion_General.Item("NuncaPickeaDocConRTUDesactivada") Then
-            '    For Each _Fl As DataRow In _TblDetalle.Rows
-            '        If _Fl.Item("DesacRazTransf") Then
-            '            Chk_Pickear.Enabled = False
-            '            Exit For
-            '        End If
-            '    Next
-            'End If
-
             MessageBoxEx.Show(Me, _Msj, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
         End If
@@ -29361,12 +29361,34 @@ Public Class Frm_Formulario_Documento
             Return
         End If
 
+        Dim _Info As String = IIf(Not IsNothing(Btn_UtilizarDetalleOtroDoc.Tag), Btn_UtilizarDetalleOtroDoc.Tag, "")
+
+        If Not String.IsNullOrWhiteSpace(_Info) Then
+            MessageBoxEx.Show(Me, "No se puede utilizar esta opcion." & vbCrLf & _Info,
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If _Editar_documento Then
+            MessageBoxEx.Show(Me, "No se puede utilizar esta opcion." & vbCrLf & "El documento esta siendo editado.",
+                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If Not CBool(_TblDetalle.Rows(0).Item("Nuevo_Producto")) Then
+            MessageBoxEx.Show(Me, "Ya existen registros en el detalle" & vbCrLf &
+                              "Debe quitar los productos del detalle para poder hacer esta gestión",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
         If SoloprodEnDoc_CLALIBPR AndAlso
                                     String.IsNullOrWhiteSpace(_TblEncabezado.Rows(0).Item("TblTipoVenta")) AndAlso
                                         String.IsNullOrWhiteSpace(_TblEncabezado.Rows(0).Item("CodTipoVenta")) Then
 
             MessageBoxEx.Show(Me, "Los productos a vender solo deben ser de un tipo especifico de venta" & vbCrLf &
-                              "a continuación deberá seleccionar el tipo.", "Tipo de venta", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, True)
+                              "a continuación deberá seleccionar el tipo.", "Tipo de venta",
+                              MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, True)
 
             Dim _Mensaje As LsValiciones.Mensajes = Fx_SolicitarTipoVenta()
 
@@ -29419,7 +29441,9 @@ Public Class Frm_Formulario_Documento
                 _Index = Grilla_Detalle.Rows.Count
             End If
 
-            For Each Fila As DataRow In _Tbl_Productos_Levantar.Rows ' List(Of String) In _ListaProductoSi
+            Dim _DocUtilizado As Boolean
+
+            For Each Fila As DataRow In _Tbl_Productos_Levantar.Rows
 
                 Application.DoEvents()
 
@@ -29459,7 +29483,11 @@ Public Class Frm_Formulario_Documento
 
                 Sb_Nueva_Linea(_CodLista)
 
+                _DocUtilizado = True
+
             Next
+
+            Btn_UtilizarDetalleOtroDoc.Tag = "Se han insertado " & FormatNumber(_Contador, 0) & " productos desde el documento: " & _Row_Documento.Item("TIDO") & " - " & _Row_Documento.Item("NUDO")
 
             Dim ListaQr As LsValiciones.Mensajes = _LsMensajes.FirstOrDefault(Function(p) p.EsCorrecto = False)
 

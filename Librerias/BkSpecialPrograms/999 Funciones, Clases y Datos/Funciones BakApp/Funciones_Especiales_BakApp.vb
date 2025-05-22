@@ -1984,6 +1984,7 @@ Public Module Modulo_Precios_Costos
                 Dim _Ecuacion_Copy = Replace(_Ecuacion, "]", "")
                 Dim _Ecuacion_1 = Split(_Ecuacion_Copy, "#")
                 Dim _Ecuacion_2 = Split(_Ecuacion_1(0).ToString.Trim, "[")
+                Dim _PrecioR1 As Double
 
                 For i = 1 To _Ecuacion_2.Length
 
@@ -1995,8 +1996,8 @@ Public Module Modulo_Precios_Costos
                         Exit For
                     End Try
 
-                    Dim _Cant1_Ecu As Double = _Ecuacion_3(0)
-                    Dim _Cant2_Ecu As Double = _Ecuacion_3(1)
+                    Dim _Cant1_Ecu As Double = De_Txt_a_Num_01(_Ecuacion_3(0), 5)
+                    Dim _Cant2_Ecu As Double = De_Txt_a_Num_01(_Ecuacion_3(1), 5)
                     Dim _Campo_Ecu As String = _Ecuacion_3(2)
 
                     _Ecuacion = Replace(_Ecuacion, " ", "")
@@ -2063,6 +2064,10 @@ Public Module Modulo_Precios_Costos
                         _Ecuacion = _Ecuacion_3(3)
                     End Try
 
+                    If i = 1 Then
+                        _PrecioR1 = Fx_Precio_Formula_Random_Ecuacion(_RowPrecios, _Campo_Precio, _Ecuacion, Nothing, True, _Koen, _Caprco1, _Caprco2, _MostrarError)
+                    End If
+
                     If _Ejecutar_Consulta Then
 
                         _PrecioLinea = Fx_Precio_Formula_Random_Ecuacion(_RowPrecios,
@@ -2079,6 +2084,10 @@ Public Module Modulo_Precios_Costos
                     End If
 
                 Next
+
+                If _PrecioLinea = 0 Then
+                    _PrecioLinea = _PrecioR1
+                End If
 
             Else
 
