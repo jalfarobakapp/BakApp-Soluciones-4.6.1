@@ -26,6 +26,8 @@ CREATE TABLE [dbo].[Zw_Stk_Tickets](
 	[Id_Padre]				[int] NOT NULL DEFAULT (0),
     [Rechazado]				[bit] NOT NULL DEFAULT (0),
     [Aceptado]				[bit] NOT NULL DEFAULT (0),    
+    [Cerrado]				[bit] NOT NULL DEFAULT (0),  
+    [FechaCerrado]          [datetime] NULL,
  CONSTRAINT [PK_Zw_Stk_Tickets] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

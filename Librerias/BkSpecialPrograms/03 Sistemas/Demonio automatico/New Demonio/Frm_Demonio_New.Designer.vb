@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Frm_Demonio_New
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -53,6 +53,7 @@ Partial Class Frm_Demonio_New
         Me.Timer_Ejecuciones = New System.Windows.Forms.Timer(Me.components)
         Me.Timer_Enviar_Doc_SinRecepcion = New System.Windows.Forms.Timer(Me.components)
         Me.Timer_NVVAutoExterna = New System.Windows.Forms.Timer(Me.components)
+        Me.Timer_ImprimirDocumentos = New System.Windows.Forms.Timer(Me.components)
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         Me.SuspendLayout()
@@ -128,7 +129,7 @@ Partial Class Frm_Demonio_New
         Me.Btn_Configurar.Image = CType(resources.GetObject("Btn_Configurar.Image"), System.Drawing.Image)
         Me.Btn_Configurar.ImageAlt = CType(resources.GetObject("Btn_Configurar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Configurar.Name = "Btn_Configurar"
-        Me.Btn_Configurar.Text = "Configuración"
+        Me.Btn_Configurar.Text = "ConfiguraciÃ³n"
         '
         'Metro_Bar_Color
         '
@@ -216,7 +217,7 @@ Partial Class Frm_Demonio_New
         '
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 135
-        Me.GroupPanel1.Text = "Programación"
+        Me.GroupPanel1.Text = "ProgramaciÃ³n"
         '
         'Listv_Programaciones
         '
@@ -245,12 +246,12 @@ Partial Class Frm_Demonio_New
         '
         'ColumnHeader4
         '
-        Me.ColumnHeader4.Text = "Descripción"
+        Me.ColumnHeader4.Text = "DescripciÃ³n"
         Me.ColumnHeader4.Width = 223
         '
         'ColumnHeader5
         '
-        Me.ColumnHeader5.Text = "Programación"
+        Me.ColumnHeader5.Text = "ProgramaciÃ³n"
         Me.ColumnHeader5.Width = 500
         '
         'Imagenes_16X16
@@ -372,6 +373,10 @@ Partial Class Frm_Demonio_New
         '
         Me.Timer_NVVAutoExterna.Interval = 1000
         '
+        'Timer_ImprimirDocumentos
+        '
+        Me.Timer_ImprimirDocumentos.Interval = 1000
+        '
         'Frm_Demonio_New
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -427,4 +432,5 @@ Partial Class Frm_Demonio_New
     Friend WithEvents Timer_Ejecuciones As Timer
     Friend WithEvents Timer_Enviar_Doc_SinRecepcion As Timer
     Friend WithEvents Timer_NVVAutoExterna As Timer
+    Friend WithEvents Timer_ImprimirDocumentos As Timer
 End Class

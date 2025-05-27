@@ -3398,7 +3398,7 @@ Public Class Frm_St_Documento
         Dim _Koen As String = _RowEntidad.Item("KOEN")
         Dim _Suen As String = _RowEntidad.Item("SUEN")
 
-        Dim _RowContacto As DataRow
+        Dim _Row_Contacto As DataRow
 
         Dim Fm As New Frm_Crear_Entidad_Mt_Lista_contactos(True)
         Fm.Text = "SELECCIONE UN CONTACTO"
@@ -3417,10 +3417,10 @@ Public Class Frm_St_Documento
                 End If
             End If
 
-            _RowContacto = Fm.Pro_Tbl_DatosContacto.Rows(0)
-            Txt_Email_Contacto.Text = _RowContacto.Item("EMAILCON").ToString.Trim
-            Txt_Nombre_Contacto.Text = _RowContacto.Item("NOKOCON").ToString.Trim
-            Txt_Telefono_Contacto.Text = _RowContacto.Item("FONOCON").ToString.Trim
+            _Row_Contacto = Fm.Row_Contacto
+            Txt_Email_Contacto.Text = _Row_Contacto.Item("EMAILCON").ToString.Trim
+            Txt_Nombre_Contacto.Text = _Row_Contacto.Item("NOKOCON").ToString.Trim
+            Txt_Telefono_Contacto.Text = _Row_Contacto.Item("FONOCON").ToString.Trim
             Txt_Defecto_segun_cliente.Focus()
 
         Else

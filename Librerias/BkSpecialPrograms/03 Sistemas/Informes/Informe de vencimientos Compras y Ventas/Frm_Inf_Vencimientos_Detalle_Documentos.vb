@@ -872,7 +872,7 @@ Public Class Frm_Inf_Vencimientos_Detalle_Documentos
 
                 Consulta_sql = "Select Top 1 * From MAEEN Where KOEN = '" & _Endo & "' And SUEN = '" & _Suendo & "'"
                 Dim _RowEntidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-                Dim _RowContacto As DataRow
+                Dim _Row_Contacto As DataRow
 
                 Dim _Razon_Social As String = _TblInforme.Rows(0).Item("NOKOEN")
 
@@ -883,8 +883,8 @@ Public Class Frm_Inf_Vencimientos_Detalle_Documentos
                 Fm.ShowDialog(Me)
 
                 If Fm.Pro_ContactoSeleccionado Then
-                    _RowContacto = Fm.Pro_Tbl_DatosContacto.Rows(0)
-                    _Email_Contacto = Trim(_RowContacto.Item("EMAILCON"))
+                    _Row_Contacto = Fm.Row_Contacto
+                    _Email_Contacto = Trim(_Row_Contacto.Item("EMAILCON"))
                 Else
                     MessageBoxEx.Show(Me, "No se seleccionó ningún contacto", "Validación",
                                       MessageBoxButtons.OK, MessageBoxIcon.Stop)

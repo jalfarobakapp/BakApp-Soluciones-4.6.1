@@ -231,7 +231,7 @@ Public Class Cl_Cerrar_Documentos
         Dim _Fecha As Date
 
         Dim _TdFecha As String = String.Empty
-        _Dias = 1
+        '_Dias = 1
 
         If _Zw_Demonio_Conf_Cerrar_Documentos.FEmision Then
             _Fecha = DateAdd(DateInterval.Day, -_Dias, Fecha_Revision)

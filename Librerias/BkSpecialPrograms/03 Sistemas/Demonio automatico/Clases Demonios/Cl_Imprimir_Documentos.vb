@@ -94,6 +94,8 @@ Public Class Cl_Imprimir_Documentos
     Public Property ColaImpImprmirTodoNodejarCola As Boolean
 
     Public Property Log_Registro As String
+    Public Property Ejecutar As Boolean
+
     Public Sub New()
 
         _BackgroundWorker.WorkerReportsProgress = True

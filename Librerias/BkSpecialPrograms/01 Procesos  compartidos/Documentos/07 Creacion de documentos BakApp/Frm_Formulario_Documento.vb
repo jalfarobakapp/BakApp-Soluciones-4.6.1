@@ -1577,6 +1577,7 @@ Public Class Frm_Formulario_Documento
 
             .Item("Centro_Costo") = _Centro_Costo
             .Item("Contacto_Ent") = String.Empty
+            .Item("NomContacto_Ent") = String.Empty
 
             .Item("TotalNetoDoc") = 0
             .Item("TotalIvaDoc") = 0
@@ -2270,6 +2271,7 @@ Public Class Frm_Formulario_Documento
 
                 .Item("Centro_Costo") = _Centro_Costo
                 .Item("Contacto_Ent") = String.Empty
+                .Item("NomContacto_Ent") = String.Empty
 
                 .Item("TotalNetoDoc") = 0
                 .Item("TotalIvaDoc") = 0
@@ -3245,8 +3247,17 @@ Public Class Frm_Formulario_Documento
             .Columns("Contacto_Ent").Visible = True
             .Columns("Contacto_Ent").Width = 110 + 60
             .Columns("Contacto_Ent").HeaderText = "Contacto"
+            .Columns("Contacto_Ent").HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft ' <-- Alineación izquierda
             .Columns("Contacto_Ent").DisplayIndex = _DisplayIndex
             .Columns("Contacto_Ent").ReadOnly = True
+            _DisplayIndex += 1
+
+            .Columns("NomContacto_Ent").Visible = True
+            .Columns("NomContacto_Ent").Width = 110 + 60
+            .Columns("NomContacto_Ent").HeaderText = "Contacto"
+            .Columns("NomContacto_Ent").HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft ' <-- Alineación izquierda
+            .Columns("NomContacto_Ent").DisplayIndex = _DisplayIndex
+            .Columns("NomContacto_Ent").ReadOnly = True
             _DisplayIndex += 1
 
         End With
@@ -5665,8 +5676,8 @@ Public Class Frm_Formulario_Documento
                 If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Entidades", "ImpNoCobraVta") AndAlso
                     _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Entidades", "ImpNoCobraVtaStr") Then
 
-                    Dim _ImpNoCobraVta As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "ImpNoCobraVta", "CodEntidad = '" & _CodEntidad & "'")
-                    Dim _ImpNoCobraVtaStr As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "ImpNoCobraVtaStr", "CodEntidad = '" & _CodEntidad & "'")
+                    Dim _ImpNoCobraVta As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "ImpNoCobraVta", "CodEntidad = '" & _CodEntidad & "'", True)
+                    Dim _ImpNoCobraVtaStr As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "ImpNoCobraVtaStr", "CodEntidad = '" & _CodEntidad & "'", True)
 
                     If _ImpNoCobraVta Then
                         _Noaplica_Imp += " And KOIM <> '" & _ImpNoCobraVtaStr & "'"
@@ -9173,7 +9184,7 @@ Public Class Frm_Formulario_Documento
                                         _RevisarRtuVariable = False
                                     End If
 
-                                    Dim Fm As New Frm_Cantidades_Ud_Disintas(_Fila)
+                                    Dim Fm As New Frm_Cantidades_Ud_Disintas(_Fila, _Tido)
 
                                     Fm.Cantidad_Ud1 = _CantUd1
                                     Fm.Cantidad_Ud2 = _CantUd2
@@ -13963,21 +13974,6 @@ Public Class Frm_Formulario_Documento
                             End If
                         Else
 
-                            'Dim _Permiso As String
-
-                            'Select Case _Tipo_Documento
-                            '    Case csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Compra
-                            '        _Permiso = "Doc00090"
-                            '    Case csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta
-                            '        _Permiso = "Doc00090"
-                            '    Case Else
-
-                            'End Select
-
-                            'If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Compra Then
-
-                            'End If
-
                             If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta Then
                                 If Not Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00090", Nothing) Then
                                     Return
@@ -14281,6 +14277,25 @@ Public Class Frm_Formulario_Documento
                     Fm_Obs.CambiarFechaEnDetalle = True
                     Fm_Obs.ShowDialog(Me)
                     Fm_Obs.Dispose()
+
+                Case "Contacto_Ent"
+
+                    If Not Fx_Revisar_encabezado() Then
+                        Return
+                    End If
+
+                    Dim _CodEntidad As String = _TblEncabezado.Rows(0).Item("CodEntidad")
+                    Dim _CodSucEntidad As String = _TblEncabezado.Rows(0).Item("CodSucEntidad")
+
+                    Dim Fm As New Frm_Crear_Entidad_Mt_Lista_contactos(True)
+                    Fm.Pro_CodEntidad = _CodEntidad
+                    Fm.Pro_SucEntidad = _CodSucEntidad
+                    Fm.ShowDialog(Me)
+                    If Fm.Pro_ContactoSeleccionado Then
+                        _FilaEnc.Cells("Contacto_Ent").Value = Fm.Row_Contacto.Item("RUTCONTACT")
+                        _FilaEnc.Cells("NomContacto_Ent").Value = Fm.Row_Contacto.Item("NOKOCON").ToString.Trim
+                    End If
+                    Fm.Dispose()
 
             End Select
 
@@ -17434,6 +17449,20 @@ Public Class Frm_Formulario_Documento
                     End If
 
                     If CBool(_Cantidad) Then
+
+                        If _Tido = "COV" Then
+
+                            If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Configuracion", "Las_Cotizaciones_No_Revisan_Permisos") Then
+
+                                Dim _Las_Cotizaciones_No_Revisan_Permisos As Boolean = _Global_Row_Configuracion_General.Item("Las_Cotizaciones_No_Revisan_Permisos")
+
+                                If _Las_Cotizaciones_No_Revisan_Permisos Then
+                                    Return
+                                End If
+
+                            End If
+
+                        End If
 
                         If Fx_Tiene_Permiso(Me, "Bkp00015", _CodFunAutoriza_Stock, False) Then
 

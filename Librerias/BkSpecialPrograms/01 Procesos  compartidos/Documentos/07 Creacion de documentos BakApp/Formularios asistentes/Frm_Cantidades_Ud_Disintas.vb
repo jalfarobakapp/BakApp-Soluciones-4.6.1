@@ -1,5 +1,6 @@
 ﻿Imports DevComponents.DotNetBar
 Imports DevComponents.DotNetBar.Controls
+Imports MySql.Data.Authentication
 
 Public Class Frm_Cantidades_Ud_Disintas
 
@@ -14,6 +15,7 @@ Public Class Frm_Cantidades_Ud_Disintas
     Dim _Rtu_Ori As Double
     Dim _UnTrans As Integer
     Dim _Cantidad_Original As Double
+    Dim _Tido As String
 
     Private _NecesitaPermisoCambiarRTU As Boolean = False
 
@@ -29,13 +31,14 @@ Public Class Frm_Cantidades_Ud_Disintas
     Public Property DesdeContenedor As Boolean
     Public Property IdCont As Integer
 
-    Public Sub New(Fila As DataGridViewRow)
+    Public Sub New(Fila As DataGridViewRow, _Tido As String)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
+        Me._Tido = _Tido
         _Fila = Fila
 
         _Bodega = _Fila.Cells("Bodega").Value
@@ -99,7 +102,7 @@ Public Class Frm_Cantidades_Ud_Disintas
         End If
 
         Img_RtuAPI.Visible = _ValidarApiWMSBosOne
-        TxtCantUD1.Enabled = Chk_DesacRazTransf.Checked
+        'TxtCantUD1.Enabled = Chk_DesacRazTransf.Checked
 
         'Chk_RtuVariable.Enabled = (_Fila.Cells("Nmarca").Value = "¡")
 
@@ -418,6 +421,7 @@ Public Class Frm_Cantidades_Ud_Disintas
         End If
 
         Fr_Alerta_Stock = New AlertCustom(_Codigo, _UnTrans)
+        CType(Fr_Alerta_Stock, AlertCustom).Tido = _Tido
         ShowLoadAlert(Fr_Alerta_Stock, Me,,,, DesdeContenedor, IdCont)
 
     End Sub

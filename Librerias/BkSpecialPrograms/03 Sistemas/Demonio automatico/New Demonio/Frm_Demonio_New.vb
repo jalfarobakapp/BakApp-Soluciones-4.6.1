@@ -29,7 +29,7 @@ Public Class Frm_Demonio_New
     Dim _Cl_Enviar_Doc_SinRecepcion As New Cl_Enviar_Doc_SinRecepcion
     Dim _Cl_NVVAutoExterna As New Cl_NVVAutoExterna
 
-    Private _Timer_ImprimirDocumentos As Timer
+    'Private _Timer_ImprimirDocumentos As Timer
     Private _Timer_ImprimirPicking As Timer
     Private _Timer_SolicitudProductosBodega As Timer
     Private _Timer_Prestashop_Orders As Timer
@@ -183,8 +183,13 @@ Public Class Frm_Demonio_New
             Sb_Activar_ObjetosTimer(Timer_Correo, _DProgramaciones.Sp_EnvioCorreo)
         End If
 
+        'If _DProgramaciones.Sp_ColaImpDoc.Activo Then
+        '    Sb_Timer_IntervaloCada(_Timer_ImprimirDocumentos, _DProgramaciones.Sp_ColaImpDoc, AddressOf Sb_Imprimir_Documentos)
+        'End If
+
         If _DProgramaciones.Sp_ColaImpDoc.Activo Then
-            Sb_Timer_IntervaloCada(_Timer_ImprimirDocumentos, _DProgramaciones.Sp_ColaImpDoc, AddressOf Sb_Imprimir_Documentos)
+            Sb_Activar_ObjetosTimer(Timer_ImprimirDocumentos, _DProgramaciones.Sp_ColaImpDoc)
+            '    Sb_Timer_IntervaloCada(_Timer_ImprimirDocumentos, _DProgramaciones.Sp_ColaImpDoc, AddressOf Sb_Imprimir_Documentos)
         End If
 
         If _DProgramaciones.Sp_ColaImpPick.Activo Then
@@ -579,53 +584,53 @@ Public Class Frm_Demonio_New
 
     End Sub
 
-    Sub Sb_Imprimir_Documentos(state As Object)
+    'Sub Sb_Imprimir_Documentos(state As Object)
 
-        If IsNothing(_Timer_ImprimirDocumentos) Then Return
+    '    If IsNothing(_Timer_ImprimirDocumentos) Then Return
 
-        If _Cl_Imprimir_Documentos.Procesando Or _Cl_FacturacionAuto.Procesando Then
+    '    If _Cl_Imprimir_Documentos.Procesando Or _Cl_FacturacionAuto.Procesando Then
 
-            Dim horaProgramada As DateTime = DateTime.Now.AddSeconds(2) 'DateTime.Now.AddMinutes(1)
-            Dim tiempoRestante As TimeSpan = horaProgramada - DateTime.Now
+    '        Dim horaProgramada As DateTime = DateTime.Now.AddSeconds(2) 'DateTime.Now.AddMinutes(1)
+    '        Dim tiempoRestante As TimeSpan = horaProgramada - DateTime.Now
 
-            _Timer_ImprimirDocumentos.Change(tiempoRestante, Timeout.InfiniteTimeSpan)
+    '        _Timer_ImprimirDocumentos.Change(tiempoRestante, Timeout.InfiniteTimeSpan)
 
-            ' Este método se ejecuta cada vez que se activa el temporizador (cada 1 minuto adicional)
-            Dim registro As String = DateTime.Now.ToString() & " - Imprimir documentos (Proceso en curso se volverá a revisar en 2 segundos mas...)"
+    '        ' Este método se ejecuta cada vez que se activa el temporizador (cada 1 minuto adicional)
+    '        Dim registro As String = DateTime.Now.ToString() & " - Imprimir documentos (Proceso en curso se volverá a revisar en 2 segundos mas...)"
 
-            ' Registrar la información en un archivo de registro
-            RegistrarLog(registro)
-            MostrarRegistro(registro)
+    '        ' Registrar la información en un archivo de registro
+    '        RegistrarLog(registro)
+    '        MostrarRegistro(registro)
 
-            '_Cl_Imprimir_Documentos.Procesando = False
+    '        '_Cl_Imprimir_Documentos.Procesando = False
 
-        Else
+    '    Else
 
-            _Cl_Imprimir_Documentos.Fecha_Revision = DtpFecharevision.Value
-            _Cl_Imprimir_Documentos.Nombre_Equipo = _NombreEquipo
-            _Cl_Imprimir_Documentos.Log_Registro = String.Empty
-            _Cl_Imprimir_Documentos.Sb_Procedimiento_Cola_Impresion()
+    '        _Cl_Imprimir_Documentos.Fecha_Revision = DtpFecharevision.Value
+    '        _Cl_Imprimir_Documentos.Nombre_Equipo = _NombreEquipo
+    '        _Cl_Imprimir_Documentos.Log_Registro = String.Empty
+    '        _Cl_Imprimir_Documentos.Sb_Procedimiento_Cola_Impresion()
 
-            Sb_Timer_IntervaloCada(_Timer_ImprimirDocumentos, _DProgramaciones.Sp_ColaImpDoc, AddressOf Sb_Imprimir_Documentos)
-            'Sb_Timer_ImprimirDocumentos()
+    '        Sb_Timer_IntervaloCada(_Timer_ImprimirDocumentos, _DProgramaciones.Sp_ColaImpDoc, AddressOf Sb_Imprimir_Documentos)
+    '        'Sb_Timer_ImprimirDocumentos()
 
-            Dim registro As String
+    '        Dim registro As String
 
-            If Not String.IsNullOrWhiteSpace(_Cl_Imprimir_Documentos.Log_Registro) Then
-                registro = "Tarea ejecutada (Imprimir documentos) a las: " & DateTime.Now.ToString()
-                registro += vbCrLf & _Cl_Imprimir_Documentos.Log_Registro
-            End If
+    '        If Not String.IsNullOrWhiteSpace(_Cl_Imprimir_Documentos.Log_Registro) Then
+    '            registro = "Tarea ejecutada (Imprimir documentos) a las: " & DateTime.Now.ToString()
+    '            registro += vbCrLf & _Cl_Imprimir_Documentos.Log_Registro
+    '        End If
 
-            ' Registrar la información en un archivo de registro
-            If Not String.IsNullOrWhiteSpace(registro) Then
-                registro = registro.Trim
-                RegistrarLog(registro)
-                MostrarRegistro(registro)
-            End If
+    '        ' Registrar la información en un archivo de registro
+    '        If Not String.IsNullOrWhiteSpace(registro) Then
+    '            registro = registro.Trim
+    '            RegistrarLog(registro)
+    '            MostrarRegistro(registro)
+    '        End If
 
-        End If
+    '    End If
 
-    End Sub
+    'End Sub
 
     Sub Sb_Imprimir_Picking(state As Object)
 
@@ -1089,6 +1094,40 @@ Public Class Frm_Demonio_New
         Timer_Ejecuciones.Stop()
 
         Sb_Actualizar_Fecha()
+
+
+#Region "IMPRIMIR DOCUMENTOS"
+
+        If _Cl_Imprimir_Documentos.Ejecutar Then
+
+            If Not _Cl_Imprimir_Documentos.Procesando Then
+
+                _Cl_Imprimir_Documentos.Fecha_Revision = DtpFecharevision.Value
+                _Cl_Imprimir_Documentos.Nombre_Equipo = _NombreEquipo
+                _Cl_Imprimir_Documentos.Log_Registro = String.Empty
+                _Cl_Imprimir_Documentos.Sb_Procedimiento_Cola_Impresion()
+
+                Dim registro As String
+
+                If Not String.IsNullOrWhiteSpace(_Cl_Imprimir_Documentos.Log_Registro) Then
+                    registro = "Tarea ejecutada (Imprimir documentos) a las: " & DateTime.Now.ToString()
+                    registro += vbCrLf & _Cl_Imprimir_Documentos.Log_Registro
+                End If
+
+                ' Registrar la información en un archivo de registro
+                If Not String.IsNullOrWhiteSpace(registro) Then
+                    registro = registro.Trim
+                    RegistrarLog(registro)
+                    MostrarRegistro(registro)
+                End If
+
+            End If
+
+            _Cl_Imprimir_Documentos.Ejecutar = False
+
+        End If
+
+#End Region
 
 #Region "ENVIO DE CORREOS"
 
@@ -1591,6 +1630,12 @@ Public Class Frm_Demonio_New
     Private Sub Timer_NVVAutoExterna_Tick(sender As Object, e As EventArgs) Handles Timer_NVVAutoExterna.Tick
         If Fx_CumpleDiaSemana(_DProgramaciones.Sp_NVVExterna) Then
             _Cl_NVVAutoExterna.Ejecutar = True
+        End If
+    End Sub
+
+    Private Sub Timer_ImprimirDocumentos_Tick(sender As Object, e As EventArgs) Handles Timer_ImprimirDocumentos.Tick
+        If Fx_CumpleDiaSemana(_DProgramaciones.Sp_ColaImpDoc) Then
+            _Cl_Imprimir_Documentos.Ejecutar = True
         End If
     End Sub
 End Class

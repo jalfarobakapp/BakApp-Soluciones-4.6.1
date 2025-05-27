@@ -1,5 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
+Imports System.IO.Compression
 Imports System.Linq
 Imports System.Security.Cryptography.X509Certificates
 Imports System.Text
@@ -7,9 +8,9 @@ Imports System.Xml
 Imports System.Xml.XPath
 Imports BakApp_DTEMonitor.Eventos_Dte
 Imports DevComponents.DotNetBar
-Imports HEFESTO.FIRMA.DOCUMENTO
+Imports Hefesto.FIRMA.DOCUMENTO
 Imports HEFSIILIBDTES
-Imports Ionic.Zip
+'Imports Ionic.Zip
 Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
 Imports HefConsultas = HEFSIILIBDTES.CONSULTAS.HefConsultas
@@ -262,7 +263,7 @@ Public Class Frm_Demonio_DTEMonitor
                     Dim _AmbienteCertificacion As Boolean = Chk_AmbienteCertificacion.Checked
                     Dim _Accion As Enum_Accion = Enum_Accion.EnviarBoletaSII
 
-                    Dim _Enviar_DTE As HEFESTO.DTE.AUTENTICACION.ENT.Respuesta = Fx_Enviar_DTE_Al_SII(_Id_Dte, _AmbienteCertificacion)
+                    Dim _Enviar_DTE As Hefesto.DTE.AUTENTICACION.ENT.Respuesta = Fx_Enviar_DTE_Al_SII(_Id_Dte, _AmbienteCertificacion)
 
                     If _Enviar_DTE.correcto Then
 
@@ -311,7 +312,7 @@ Public Class Frm_Demonio_DTEMonitor
 
     Function Fx_Consultar_Trackid_DTE(_Trackid As String, ByRef _Resultado As Object) As Boolean
 
-        Dim _Resp As New HEFESTO.CONSULTA.TRACKID.Respuesta
+        Dim _Resp As New Hefesto.CONSULTA.TRACKID.Respuesta
 
         Dim _Id_Trackid As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Trackid", "Id", "Trackid = '" & _Trackid & "'", True, False)
 
@@ -395,7 +396,7 @@ Public Class Frm_Demonio_DTEMonitor
 
         Next
 
-        Dim _Certificado As X509Certificate2 = HEFESTO.CONSULTA.TRACKID.Negocio.Certificados.RecuperarCertificado(_Cn)
+        Dim _Certificado As X509Certificate2 = Hefesto.CONSULTA.TRACKID.Negocio.Certificados.RecuperarCertificado(_Cn)
 
         If IsDBNull(_Certificado) Then
             _Resp.EsCorrecto = False
@@ -404,27 +405,27 @@ Public Class Frm_Demonio_DTEMonitor
             Return False
         End If
 
-        Dim _SiiAmbiente As HEFESTO.CONSULTA.TRACKID.SIIAmbiente
+        Dim _SiiAmbiente As Hefesto.CONSULTA.TRACKID.SIIAmbiente
 
         If _AmbienteCertificacion Then
-            _SiiAmbiente = HEFESTO.CONSULTA.TRACKID.SIIAmbiente.Certificacion
+            _SiiAmbiente = Hefesto.CONSULTA.TRACKID.SIIAmbiente.Certificacion
         Else
-            _SiiAmbiente = HEFESTO.CONSULTA.TRACKID.SIIAmbiente.Produccion
+            _SiiAmbiente = Hefesto.CONSULTA.TRACKID.SIIAmbiente.Produccion
         End If
 
-        _Resp = HEFESTO.CONSULTA.TRACKID.Negocio.EnvioSII.ConsultarTrackId(_RutEmisor, _Certificado, _Trackid, _SiiAmbiente)
+        _Resp = Hefesto.CONSULTA.TRACKID.Negocio.EnvioSII.ConsultarTrackId(_RutEmisor, _Certificado, _Trackid, _SiiAmbiente)
 
         If _Resp.EsCorrecto Then
 
-            Dim _NewResp As New HEFESTO.CONSULTA.TRACKID.entRespuestaDTE
+            Dim _NewResp As New Hefesto.CONSULTA.TRACKID.entRespuestaDTE
 
             _NewResp = _Resp.Resultado
 
-            Dim _Estado = CType(_Resp.Resultado, HEFESTO.CONSULTA.TRACKID.entRespuestaDTE).Estado
-            Dim _EstadoDTE = CType(_Resp.Resultado, HEFESTO.CONSULTA.TRACKID.entRespuestaDTE).EstadoDTE
-            Dim _Glosa = CType(_Resp.Resultado, HEFESTO.CONSULTA.TRACKID.entRespuestaDTE).Glosa
+            Dim _Estado = CType(_Resp.Resultado, Hefesto.CONSULTA.TRACKID.entRespuestaDTE).Estado
+            Dim _EstadoDTE = CType(_Resp.Resultado, Hefesto.CONSULTA.TRACKID.entRespuestaDTE).EstadoDTE
+            Dim _Glosa = CType(_Resp.Resultado, Hefesto.CONSULTA.TRACKID.entRespuestaDTE).Glosa
 
-            Dim _Respuesta As HEFESTO.CONSULTA.TRACKID.Respuesta = HEFESTO.CONSULTA.TRACKID.Negocio.EnvioSII.RecuperarEstadoByRespuesta(_Glosa)
+            Dim _Respuesta As Hefesto.CONSULTA.TRACKID.Respuesta = Hefesto.CONSULTA.TRACKID.Negocio.EnvioSII.RecuperarEstadoByRespuesta(_Glosa)
 
             _Resultado = _NewResp
 
@@ -630,7 +631,7 @@ Public Class Frm_Demonio_DTEMonitor
 
                         Try
 
-                            _Respuesta = CType(_Resultado, HEFESTO.CONSULTA.TRACKID.entRespuestaDTE).Glosa
+                            _Respuesta = CType(_Resultado, Hefesto.CONSULTA.TRACKID.entRespuestaDTE).Glosa
 
                             Sb_Revisar_Respuesta_Trackid(_Respuesta, _Estado, _Glosa,
                                                          _Aceptado, _Informado, _Rechazado, _Reparo,
@@ -656,7 +657,7 @@ Public Class Frm_Demonio_DTEMonitor
                             _Procesar = 1
                         End If
 
-                        _Respuesta = CType(_Resultado, HEFESTO.CONSULTA.TRACKID.Respuesta).Mensaje
+                        _Respuesta = CType(_Resultado, Hefesto.CONSULTA.TRACKID.Respuesta).Mensaje
 
                     End If
 
@@ -1369,9 +1370,18 @@ Public Class Frm_Demonio_DTEMonitor
 
                 'Try
 
-                Using Zip As ZipFile = ZipFile.Read(_AppPath & "\Dte.zip")
-                    Zip.ExtractAll(AppPath(), ExtractExistingFileAction.OverwriteSilently)
-                End Using
+                'Using Zip As ZipFile = ZipFile.Read(_AppPath & "\Dte.zip")
+                '    Zip.ExtractAll(AppPath(), ExtractExistingFileAction.OverwriteSilently)
+                'End Using
+
+                ' Por este bloque usando System.IO.Compression.ZipFile:
+                Dim zipPath As String = _AppPath & "\Dte.zip"
+                Dim extractPath As String = AppPath()
+                If File.Exists(zipPath) Then
+                    ZipFile.ExtractToDirectory(zipPath, extractPath)
+                End If
+
+
 
                 'RarArchive.WriteToDirectory(_AppPath & "\Dte.Rar", AppPath() & "\Dte", ExtractOptions.Overwrite)
 
@@ -1475,9 +1485,9 @@ Public Class Frm_Demonio_DTEMonitor
         bgWorker.RunWorkerAsync()
     End Sub
 
-    Function Fx_Enviar_DTE_Al_SII(_Id_Dte As Integer, _AmbienteCertificacion As Boolean) As HEFESTO.DTE.AUTENTICACION.ENT.Respuesta
+    Function Fx_Enviar_DTE_Al_SII(_Id_Dte As Integer, _AmbienteCertificacion As Boolean) As Hefesto.DTE.AUTENTICACION.ENT.Respuesta
 
-        Dim _Respuesta As New HEFESTO.DTE.AUTENTICACION.ENT.Respuesta
+        Dim _Respuesta As New Hefesto.DTE.AUTENTICACION.ENT.Respuesta
 
         Try
 
@@ -1617,15 +1627,15 @@ Public Class Frm_Demonio_DTEMonitor
                     _cmpRutEnvia = _XmlRutEnvia(0).InnerText
                 End If
 
-                Dim _Ambiente As HEFESTO.DTE.AUTENTICACION.SIIAmbiente
+                Dim _Ambiente As Hefesto.DTE.AUTENTICACION.SIIAmbiente
 
                 If _AmbienteCertificacion Then
-                    _Ambiente = HEFESTO.DTE.AUTENTICACION.SIIAmbiente.Certificacion
+                    _Ambiente = Hefesto.DTE.AUTENTICACION.SIIAmbiente.Certificacion
                 Else
-                    _Ambiente = HEFESTO.DTE.AUTENTICACION.SIIAmbiente.Produccion
+                    _Ambiente = Hefesto.DTE.AUTENTICACION.SIIAmbiente.Produccion
                 End If
 
-                _Respuesta = HEFESTO.DTE.AUTENTICACION.LOGIN.Conectar(_Cn, _Ambiente)
+                _Respuesta = Hefesto.DTE.AUTENTICACION.LOGIN.Conectar(_Cn, _Ambiente)
 
                 If _Respuesta.correcto Then
 
@@ -1636,8 +1646,8 @@ Public Class Frm_Demonio_DTEMonitor
                     Dim _paramRutEnviaB As String = _cmpRutEnvia.Split("-"c)(0)
                     Dim _paramRutEnviaD As String = _cmpRutEnvia.Split("-"c)(1)
 
-                    Dim _respuestaEnvio As HEFESTO.DTE.AUTENTICACION.ENT.Respuesta =
-                                    HEFESTO.DTE.AUTENTICACION.ENVIO.EnviarArchivoSII(_paramArchivo,
+                    Dim _respuestaEnvio As Hefesto.DTE.AUTENTICACION.ENT.Respuesta =
+                                    Hefesto.DTE.AUTENTICACION.ENVIO.EnviarArchivoSII(_paramArchivo,
                                                                                      _paramToken,
                                                                                      _paramRutEnviaB,
                                                                                      _paramRutEnviaD,

@@ -106,8 +106,8 @@ Public Class Frm_Vales_DatosDespacho
 
             If Fm_c.Pro_ContactoSeleccionado Then
 
-                TxtPersona_Contacto.Text = Fm_c.Pro_Tbl_DatosContacto.Rows(0).Item("NOKOCON")
-                TxtFono_Contacto.Text = Fm_c.Pro_Tbl_DatosContacto.Rows(0).Item("FONOCON")
+                TxtPersona_Contacto.Text = Fm_c.Row_Contacto.Item("NOKOCON")
+                TxtFono_Contacto.Text = Fm_c.Row_Contacto.Item("FONOCON")
 
             End If
 
