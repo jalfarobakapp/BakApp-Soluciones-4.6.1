@@ -279,6 +279,7 @@ Public Class Clase_Crear_Documento
         Consulta_sql = "SELECT DISTINCT IDMAEEDO,TIDO FROM MAEDDO WHERE IDMAEEDO IN " & Fl
         Dim _TblOrigen As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
+        Dim _Contacto_Ent As String
 
         SQL_ServerClass.Sb_Abrir_Conexion(cn2)
 
@@ -399,6 +400,8 @@ Public Class Clase_Crear_Documento
 
                 _Customizable = NuloPorNro(.Item("Customizable"), False)
                 _PreVenta = NuloPorNro(.Item("PreVenta"), False)
+
+                _Contacto_Ent = .Item("Contacto_Ent")
 
             End With
 
@@ -1591,7 +1594,7 @@ Public Class Clase_Crear_Documento
                            "," & _Fecha_Tributaria & ",NUMOPERVEN = 0,FLIQUIFCV = '" & _Feemdo & "',SUBTIDO = '" & _Subtido &
                            "',MARCA = '" & _Marca & "',ESDOIMP = '" & _Esdoimp & "',ESDO = '',NUDONODEFI = " & CInt(_Es_ValeTransitorio) &
                            ",TIDOELEC = " & CInt(_Es_Documento_Electronico) & ",LUVTDO = '" & _Luvtdo &
-                           "',LIBRO = '" & _Libro & "',BODESTI = '" & _Bodesti & "',CUOGASDIF = 0" & vbCrLf &
+                           "',LIBRO = '" & _Libro & "',BODESTI = '" & _Bodesti & "',CUOGASDIF = 0,RUTCONTACT = '" & _Contacto_Ent & "'" & vbCrLf &
                            "WHERE IDMAEEDO=" & _Idmaeedo
 
             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)

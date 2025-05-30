@@ -61,7 +61,6 @@ Public Class Frm_Crear_Entidad_Mt_Crear_Contactos
                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 TxtRut.Focus()
                 Return
-
             End If
 
             If String.IsNullOrEmpty(Trim(TxtRazonSocial.Text)) Then

@@ -115,6 +115,10 @@ Partial Class Frm_Formulario_Documento
         Me.Btn_Contenedor_Asociar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Contenedor_Ver = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Contenedor_Quitar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Menu_Contextual_Contacto = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Contacto_VerInfo = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Contacto_Agregar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Contacto_Quitar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Container_Asociar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Container_Ver = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Container_Quitar = New DevComponents.DotNetBar.ButtonItem()
@@ -124,15 +128,16 @@ Partial Class Frm_Formulario_Documento
         Me.Btn_Cambiar_ILA = New DevComponents.DotNetBar.ButtonX()
         Me.LblImpuestosLinea = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel13 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Btn_VerEntidad = New DevComponents.DotNetBar.ButtonX()
-        Me.Lbl_Nombre_Entidad = New DevComponents.DotNetBar.LabelX()
-        Me.Lbl_Responsable = New DevComponents.DotNetBar.LabelX()
-        Me.Lbl_Nombre_Entidad_Fisica = New DevComponents.DotNetBar.LabelX()
-        Me.Btn_VerEntidadFisica = New DevComponents.DotNetBar.ButtonX()
-        Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_Responsable = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_Nombre_Entidad = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_Contacto = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
         Me.Grilla_Encabezado = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
+        Me.Lbl_Nombre_Entidad_Fisica = New DevComponents.DotNetBar.LabelX()
+        Me.Btn_VerEntidadFisica = New DevComponents.DotNetBar.ButtonX()
+        Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel10 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.LblUbicacionBodega = New DevComponents.DotNetBar.LabelX()
         Me.Barra = New DevComponents.DotNetBar.Bar()
@@ -266,7 +271,7 @@ Partial Class Frm_Formulario_Documento
         '
         Me.ContextMenuBar1.AntiAlias = True
         Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_SOL, Me.Menu_Contextual_Producto, Me.Menu_Contextual_Stand_By, Me.Menu_Contextual_Info_Entidad, Me.Menu_Contextual_Crear_Producto, Me.Menu_Contextual_Solicitud_de_Compra, Me.Menu_Contextual_Anotaciones, Me.Menu_Contextual_Opciones_Especiales, Me.Menu_Contextual_Opciones_Recargar_Costos, Me.Menu_Contextual_Imp_Doc_Construccion, Me.Menu_Contextual_Contenedor})
+        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_SOL, Me.Menu_Contextual_Producto, Me.Menu_Contextual_Stand_By, Me.Menu_Contextual_Info_Entidad, Me.Menu_Contextual_Crear_Producto, Me.Menu_Contextual_Solicitud_de_Compra, Me.Menu_Contextual_Anotaciones, Me.Menu_Contextual_Opciones_Especiales, Me.Menu_Contextual_Opciones_Recargar_Costos, Me.Menu_Contextual_Imp_Doc_Construccion, Me.Menu_Contextual_Contenedor, Me.Menu_Contextual_Contacto})
         Me.ContextMenuBar1.Location = New System.Drawing.Point(29, 37)
         Me.ContextMenuBar1.Name = "ContextMenuBar1"
         Me.ContextMenuBar1.Size = New System.Drawing.Size(788, 47)
@@ -850,6 +855,34 @@ Partial Class Frm_Formulario_Documento
         Me.Btn_Contenedor_Quitar.Name = "Btn_Contenedor_Quitar"
         Me.Btn_Contenedor_Quitar.Text = "Quitar contenedor"
         '
+        'Menu_Contextual_Contacto
+        '
+        Me.Menu_Contextual_Contacto.AutoExpandOnClick = True
+        Me.Menu_Contextual_Contacto.Name = "Menu_Contextual_Contacto"
+        Me.Menu_Contextual_Contacto.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Contacto_VerInfo, Me.Btn_Contacto_Agregar, Me.Btn_Contacto_Quitar})
+        Me.Menu_Contextual_Contacto.Text = "Contacto"
+        '
+        'Btn_Contacto_VerInfo
+        '
+        Me.Btn_Contacto_VerInfo.Image = CType(resources.GetObject("Btn_Contacto_VerInfo.Image"), System.Drawing.Image)
+        Me.Btn_Contacto_VerInfo.ImageAlt = CType(resources.GetObject("Btn_Contacto_VerInfo.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Contacto_VerInfo.Name = "Btn_Contacto_VerInfo"
+        Me.Btn_Contacto_VerInfo.Text = "Ver información del contacto"
+        '
+        'Btn_Contacto_Agregar
+        '
+        Me.Btn_Contacto_Agregar.Image = CType(resources.GetObject("Btn_Contacto_Agregar.Image"), System.Drawing.Image)
+        Me.Btn_Contacto_Agregar.ImageAlt = CType(resources.GetObject("Btn_Contacto_Agregar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Contacto_Agregar.Name = "Btn_Contacto_Agregar"
+        Me.Btn_Contacto_Agregar.Text = "Agregar contacto"
+        '
+        'Btn_Contacto_Quitar
+        '
+        Me.Btn_Contacto_Quitar.Image = CType(resources.GetObject("Btn_Contacto_Quitar.Image"), System.Drawing.Image)
+        Me.Btn_Contacto_Quitar.ImageAlt = CType(resources.GetObject("Btn_Contacto_Quitar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Contacto_Quitar.Name = "Btn_Contacto_Quitar"
+        Me.Btn_Contacto_Quitar.Text = "Quitar contacto"
+        '
         'Btn_Container_Asociar
         '
         Me.Btn_Container_Asociar.Image = CType(resources.GetObject("Btn_Container_Asociar.Image"), System.Drawing.Image)
@@ -1006,12 +1039,10 @@ Partial Class Frm_Formulario_Documento
         '
         Me.GroupPanel13.BackColor = System.Drawing.Color.White
         Me.GroupPanel13.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.GroupPanel13.Controls.Add(Me.Btn_VerEntidad)
-        Me.GroupPanel13.Controls.Add(Me.Lbl_Nombre_Entidad)
-        Me.GroupPanel13.Controls.Add(Me.Lbl_Responsable)
-        Me.GroupPanel13.Controls.Add(Me.Lbl_Nombre_Entidad_Fisica)
-        Me.GroupPanel13.Controls.Add(Me.Btn_VerEntidadFisica)
-        Me.GroupPanel13.Controls.Add(Me.LabelX3)
+        Me.GroupPanel13.Controls.Add(Me.Txt_Responsable)
+        Me.GroupPanel13.Controls.Add(Me.Txt_Nombre_Entidad)
+        Me.GroupPanel13.Controls.Add(Me.Txt_Contacto)
+        Me.GroupPanel13.Controls.Add(Me.LabelX5)
         Me.GroupPanel13.Controls.Add(Me.Grilla_Encabezado)
         Me.GroupPanel13.Controls.Add(Me.LabelX1)
         Me.GroupPanel13.Controls.Add(Me.LabelX2)
@@ -1050,85 +1081,75 @@ Partial Class Frm_Formulario_Documento
         Me.GroupPanel13.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel13.TabIndex = 94
         '
-        'Btn_VerEntidad
+        'Txt_Responsable
         '
-        Me.Btn_VerEntidad.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_VerEntidad.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_VerEntidad.Image = CType(resources.GetObject("Btn_VerEntidad.Image"), System.Drawing.Image)
-        Me.Btn_VerEntidad.ImageAlt = CType(resources.GetObject("Btn_VerEntidad.ImageAlt"), System.Drawing.Image)
-        Me.Btn_VerEntidad.Location = New System.Drawing.Point(2, 58)
-        Me.Btn_VerEntidad.Name = "Btn_VerEntidad"
-        Me.Btn_VerEntidad.Size = New System.Drawing.Size(25, 23)
-        Me.Btn_VerEntidad.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_VerEntidad.TabIndex = 91
-        '
-        'Lbl_Nombre_Entidad
-        '
-        Me.Lbl_Nombre_Entidad.BackColor = System.Drawing.Color.White
+        Me.Txt_Responsable.BackColor = System.Drawing.Color.White
         '
         '
         '
-        Me.Lbl_Nombre_Entidad.BackgroundStyle.Class = "RibbonGalleryContainer"
-        Me.Lbl_Nombre_Entidad.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Lbl_Nombre_Entidad.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Nombre_Entidad.Location = New System.Drawing.Point(29, 59)
-        Me.Lbl_Nombre_Entidad.Name = "Lbl_Nombre_Entidad"
-        Me.Lbl_Nombre_Entidad.Size = New System.Drawing.Size(343, 22)
-        Me.Lbl_Nombre_Entidad.TabIndex = 90
+        Me.Txt_Responsable.Border.Class = "TextBoxBorder"
+        Me.Txt_Responsable.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Responsable.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Responsable.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Responsable.Location = New System.Drawing.Point(681, 57)
+        Me.Txt_Responsable.Name = "Txt_Responsable"
+        Me.Txt_Responsable.PreventEnterBeep = True
+        Me.Txt_Responsable.ReadOnly = True
+        Me.Txt_Responsable.Size = New System.Drawing.Size(230, 22)
+        Me.Txt_Responsable.TabIndex = 150
         '
-        'Lbl_Responsable
+        'Txt_Nombre_Entidad
         '
-        Me.Lbl_Responsable.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Lbl_Responsable.BackgroundStyle.Class = "RibbonGalleryContainer"
-        Me.Lbl_Responsable.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Lbl_Responsable.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Responsable.Location = New System.Drawing.Point(681, 60)
-        Me.Lbl_Responsable.Name = "Lbl_Responsable"
-        Me.Lbl_Responsable.Size = New System.Drawing.Size(231, 22)
-        Me.Lbl_Responsable.TabIndex = 89
-        '
-        'Lbl_Nombre_Entidad_Fisica
-        '
-        Me.Lbl_Nombre_Entidad_Fisica.BackColor = System.Drawing.Color.White
+        Me.Txt_Nombre_Entidad.BackColor = System.Drawing.Color.White
         '
         '
         '
-        Me.Lbl_Nombre_Entidad_Fisica.BackgroundStyle.Class = "RibbonGalleryContainer"
-        Me.Lbl_Nombre_Entidad_Fisica.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Lbl_Nombre_Entidad_Fisica.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Nombre_Entidad_Fisica.Location = New System.Drawing.Point(405, 60)
-        Me.Lbl_Nombre_Entidad_Fisica.Name = "Lbl_Nombre_Entidad_Fisica"
-        Me.Lbl_Nombre_Entidad_Fisica.Size = New System.Drawing.Size(270, 22)
-        Me.Lbl_Nombre_Entidad_Fisica.TabIndex = 88
+        Me.Txt_Nombre_Entidad.Border.Class = "TextBoxBorder"
+        Me.Txt_Nombre_Entidad.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Nombre_Entidad.ButtonCustom.Image = CType(resources.GetObject("Txt_Nombre_Entidad.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Nombre_Entidad.ButtonCustom.Visible = True
+        Me.Txt_Nombre_Entidad.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Nombre_Entidad.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Nombre_Entidad.Location = New System.Drawing.Point(3, 57)
+        Me.Txt_Nombre_Entidad.Name = "Txt_Nombre_Entidad"
+        Me.Txt_Nombre_Entidad.PreventEnterBeep = True
+        Me.Txt_Nombre_Entidad.ReadOnly = True
+        Me.Txt_Nombre_Entidad.Size = New System.Drawing.Size(369, 22)
+        Me.Txt_Nombre_Entidad.TabIndex = 149
         '
-        'Btn_VerEntidadFisica
+        'Txt_Contacto
         '
-        Me.Btn_VerEntidadFisica.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_VerEntidadFisica.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_VerEntidadFisica.Image = CType(resources.GetObject("Btn_VerEntidadFisica.Image"), System.Drawing.Image)
-        Me.Btn_VerEntidadFisica.ImageAlt = CType(resources.GetObject("Btn_VerEntidadFisica.ImageAlt"), System.Drawing.Image)
-        Me.Btn_VerEntidadFisica.Location = New System.Drawing.Point(378, 59)
-        Me.Btn_VerEntidadFisica.Name = "Btn_VerEntidadFisica"
-        Me.Btn_VerEntidadFisica.Size = New System.Drawing.Size(25, 23)
-        Me.Btn_VerEntidadFisica.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_VerEntidadFisica.TabIndex = 82
-        '
-        'LabelX3
-        '
-        Me.LabelX3.BackColor = System.Drawing.Color.Transparent
+        Me.Txt_Contacto.BackColor = System.Drawing.Color.White
         '
         '
         '
-        Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX3.ForeColor = System.Drawing.Color.Black
-        Me.LabelX3.Location = New System.Drawing.Point(378, 43)
-        Me.LabelX3.Name = "LabelX3"
-        Me.LabelX3.Size = New System.Drawing.Size(122, 14)
-        Me.LabelX3.TabIndex = 80
-        Me.LabelX3.Text = "Entidad física"
+        Me.Txt_Contacto.Border.Class = "TextBoxBorder"
+        Me.Txt_Contacto.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Contacto.ButtonCustom.Image = CType(resources.GetObject("Txt_Contacto.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Contacto.ButtonCustom.Visible = True
+        Me.Txt_Contacto.ButtonCustom2.Image = CType(resources.GetObject("Txt_Contacto.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Contacto.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Contacto.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Contacto.Location = New System.Drawing.Point(378, 57)
+        Me.Txt_Contacto.Name = "Txt_Contacto"
+        Me.Txt_Contacto.PreventEnterBeep = True
+        Me.Txt_Contacto.ReadOnly = True
+        Me.Txt_Contacto.Size = New System.Drawing.Size(297, 22)
+        Me.Txt_Contacto.TabIndex = 148
+        '
+        'LabelX5
+        '
+        Me.LabelX5.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX5.ForeColor = System.Drawing.Color.Black
+        Me.LabelX5.Location = New System.Drawing.Point(378, 42)
+        Me.LabelX5.Name = "LabelX5"
+        Me.LabelX5.Size = New System.Drawing.Size(122, 14)
+        Me.LabelX5.TabIndex = 146
+        Me.LabelX5.Text = "Contacto"
         '
         'Grilla_Encabezado
         '
@@ -1179,7 +1200,7 @@ Partial Class Frm_Formulario_Documento
         '
         Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX1.ForeColor = System.Drawing.Color.Black
-        Me.LabelX1.Location = New System.Drawing.Point(3, 43)
+        Me.LabelX1.Location = New System.Drawing.Point(3, 42)
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.Size = New System.Drawing.Size(122, 14)
         Me.LabelX1.TabIndex = 79
@@ -1193,11 +1214,51 @@ Partial Class Frm_Formulario_Documento
         '
         Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX2.ForeColor = System.Drawing.Color.Black
-        Me.LabelX2.Location = New System.Drawing.Point(681, 44)
+        Me.LabelX2.Location = New System.Drawing.Point(681, 42)
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(122, 14)
         Me.LabelX2.TabIndex = 48
         Me.LabelX2.Text = "Funcionario activo"
+        '
+        'Lbl_Nombre_Entidad_Fisica
+        '
+        Me.Lbl_Nombre_Entidad_Fisica.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Lbl_Nombre_Entidad_Fisica.BackgroundStyle.Class = "RibbonGalleryContainer"
+        Me.Lbl_Nombre_Entidad_Fisica.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_Nombre_Entidad_Fisica.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_Nombre_Entidad_Fisica.Location = New System.Drawing.Point(1004, 98)
+        Me.Lbl_Nombre_Entidad_Fisica.Name = "Lbl_Nombre_Entidad_Fisica"
+        Me.Lbl_Nombre_Entidad_Fisica.Size = New System.Drawing.Size(270, 22)
+        Me.Lbl_Nombre_Entidad_Fisica.TabIndex = 88
+        '
+        'Btn_VerEntidadFisica
+        '
+        Me.Btn_VerEntidadFisica.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_VerEntidadFisica.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_VerEntidadFisica.Image = CType(resources.GetObject("Btn_VerEntidadFisica.Image"), System.Drawing.Image)
+        Me.Btn_VerEntidadFisica.ImageAlt = CType(resources.GetObject("Btn_VerEntidadFisica.ImageAlt"), System.Drawing.Image)
+        Me.Btn_VerEntidadFisica.Location = New System.Drawing.Point(977, 97)
+        Me.Btn_VerEntidadFisica.Name = "Btn_VerEntidadFisica"
+        Me.Btn_VerEntidadFisica.Size = New System.Drawing.Size(25, 23)
+        Me.Btn_VerEntidadFisica.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_VerEntidadFisica.TabIndex = 82
+        '
+        'LabelX3
+        '
+        Me.LabelX3.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX3.ForeColor = System.Drawing.Color.Black
+        Me.LabelX3.Location = New System.Drawing.Point(977, 81)
+        Me.LabelX3.Name = "LabelX3"
+        Me.LabelX3.Size = New System.Drawing.Size(122, 14)
+        Me.LabelX3.TabIndex = 80
+        Me.LabelX3.Text = "Entidad física"
         '
         'GroupPanel10
         '
@@ -1263,7 +1324,7 @@ Partial Class Frm_Formulario_Documento
         Me.Barra.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnGrabar, Me.Btn_Limpiar, Me.Btn_Desde_COV_OCC, Me.Btn_Productos_Solicitados_Bodega, Me.Btn_Revisar_Situacion_Comercial, Me.Btn_Cambiar_Tipo_Documento, Me.Btn_Cadena_Remota, Me.Btn_Dejar_Doc_Stand_By, Me.Btn_Informe_Ventas_X_Vendedor, Me.Btn_Editar_Nota_de_venta, Me.Btn_Editar_Cotizacion, Me.Btn_Aceptar_Documento, Me.Btn_Rechazar_Documento, Me.Btn_Ver_Costos, Me.Btn_Mostrar_Margenes, Me.Btn_Observaciones, Me.Btn_Anotaciones_al_documento, Me.Btn_Archivos_Adjuntos, Me.Btn_Opciones_Especiales, Me.Btn_Imprimir, Me.Btn_Contenedor, Me.ButtonItem1, Me.Btn_Huella})
         Me.Barra.Location = New System.Drawing.Point(0, 536)
         Me.Barra.Name = "Barra"
-        Me.Barra.Size = New System.Drawing.Size(934, 41)
+        Me.Barra.Size = New System.Drawing.Size(935, 41)
         Me.Barra.Stretch = True
         Me.Barra.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Barra.TabIndex = 82
@@ -2445,7 +2506,7 @@ Partial Class Frm_Formulario_Documento
         Me.MStb_Barra.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         Me.MStb_Barra.Location = New System.Drawing.Point(0, 577)
         Me.MStb_Barra.Name = "MStb_Barra"
-        Me.MStb_Barra.Size = New System.Drawing.Size(934, 22)
+        Me.MStb_Barra.Size = New System.Drawing.Size(935, 22)
         Me.MStb_Barra.TabIndex = 137
         Me.MStb_Barra.Text = "MetroStatusBar1"
         '
@@ -2729,12 +2790,15 @@ Partial Class Frm_Formulario_Documento
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(934, 599)
+        Me.ClientSize = New System.Drawing.Size(935, 599)
         Me.Controls.Add(Me.Chk_Pickear)
         Me.Controls.Add(Me.Panel_Documento)
         Me.Controls.Add(Me.GroupPanel1)
+        Me.Controls.Add(Me.Lbl_Nombre_Entidad_Fisica)
         Me.Controls.Add(Me.Btn_Desbloquear_Visado)
+        Me.Controls.Add(Me.Btn_VerEntidadFisica)
         Me.Controls.Add(Me.Btn_Modificar_Chk_Redondeo)
+        Me.Controls.Add(Me.LabelX3)
         Me.Controls.Add(Me.Warning_Visado)
         Me.Controls.Add(Me.Table_Metodo_Costeo_Comercial)
         Me.Controls.Add(Me.Table_Totales_Comerciales)
@@ -2921,7 +2985,6 @@ Partial Class Frm_Formulario_Documento
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Btn_Cambiar_Moneda As DevComponents.DotNetBar.ButtonX
     Friend WithEvents LblMoneda As DevComponents.DotNetBar.LabelX
-    Friend WithEvents Lbl_Responsable As DevComponents.DotNetBar.LabelX
     Friend WithEvents Lbl_Nombre_Entidad_Fisica As DevComponents.DotNetBar.LabelX
     Friend WithEvents ButtonItem1 As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_Archivos_Adjuntos As DevComponents.DotNetBar.ButtonItem
@@ -2931,7 +2994,6 @@ Partial Class Frm_Formulario_Documento
     Friend WithEvents Btn_Recargar_Producto As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents ChkValores As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_Redondear_Cero As DevComponents.DotNetBar.Controls.CheckBoxX
-    Friend WithEvents Lbl_Nombre_Entidad As DevComponents.DotNetBar.LabelX
     Friend WithEvents Highlighter1 As DevComponents.DotNetBar.Validator.Highlighter
     Friend WithEvents Lbl_InfoVtaAcumMes As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Panel_Documento As Panel
@@ -2961,7 +3023,6 @@ Partial Class Frm_Formulario_Documento
     Friend WithEvents Menu_Contextual_Opciones_Recargar_Costos As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Recargar_Producto_Linea_Activa As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Recargar_Producto_Todos As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_VerEntidad As DevComponents.DotNetBar.ButtonX
     Friend WithEvents Btn_Levantar_Prod_Masivamente As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Levantar_Prod_Excel As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Levantar_Prod_Txt As DevComponents.DotNetBar.ButtonItem
@@ -2995,4 +3056,12 @@ Partial Class Frm_Formulario_Documento
     Friend WithEvents Btn_Contenedor_Quitar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Chk_Pickear As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Btn_UtilizarDetalleOtroDoc As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_Contacto As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Txt_Nombre_Entidad As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Txt_Responsable As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Menu_Contextual_Contacto As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Contacto_VerInfo As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Contacto_Agregar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Contacto_Quitar As DevComponents.DotNetBar.ButtonItem
 End Class

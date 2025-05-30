@@ -44,7 +44,8 @@ Public Class Frm_BusquedaDocumento_Filtro
     Dim _Abrir_Cerrar_Documentos_Compromiso As Boolean
     Dim _Mostrar_Vales_Transitorios As Boolean
 
-    Private VerSoloEntidadesDelVendedor As Boolean
+    Private _VerSoloEntidadesDelVendedor As Boolean
+    Private _Ls_DocumentosPermitidos As New List(Of Ls_DocumentosPermitidos)
 
 #Region "PROPIEDADES"
 
@@ -306,17 +307,23 @@ Public Class Frm_BusquedaDocumento_Filtro
 
         Me.ActiveControl = TxtNroDocumento
 
-        VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00021",, False)
+        _VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00021",, False)
 
-        If Not VerSoloEntidadesDelVendedor Then
-            VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00022",, False)
+        If Not _VerSoloEntidadesDelVendedor Then
+            _VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00022",, False)
         End If
 
-        Chk_MostrarSoloDocClientesDelVendedor.Visible = VerSoloEntidadesDelVendedor
-        Chk_MostrarSoloDocClientesDelVendedor.Checked = VerSoloEntidadesDelVendedor
-        Wrn_MostrarSoloDocClientesDelVendedor.Visible = VerSoloEntidadesDelVendedor
+        Chk_MostrarSoloDocClientesDelVendedor.Visible = _VerSoloEntidadesDelVendedor
+        Chk_MostrarSoloDocClientesDelVendedor.Checked = _VerSoloEntidadesDelVendedor
+
+        Wrn_MostrarSoloDocClientesDelVendedor.Visible = _VerSoloEntidadesDelVendedor
 
         AddHandler Chk_MostrarSoloDocClientesDelVendedor.CheckedChanged, AddressOf Chk_MostrarSoloDocClientesDelVendedor_CheckedChanged
+
+        If _Global_Row_Configuracion_General.Item("RestringirVisualizacionDeDocumentos") Then
+            _Ls_DocumentosPermitidos = Fx_Listar_Documentos_Permitidos(FUNCIONARIO)
+            Wrn_MostrarSoloDocClientesDelVendedor.Visible = True
+        End If
 
     End Sub
 
@@ -486,6 +493,7 @@ Public Class Frm_BusquedaDocumento_Filtro
         _Mostrar_Vales_Transitorios = Chk_Mostrar_Vales_Transitorios.Checked
 
         If Rdb_Tipo_Documento_Algunos.Checked Then
+
             Dim _FlDoc As Boolean
 
             _FlDoc = (_Tbl_Filtro_Documentos Is Nothing)
@@ -522,28 +530,7 @@ Public Class Frm_BusquedaDocumento_Filtro
             If Not String.IsNullOrEmpty(TxtNroDocumento.Text) Then
 
                 Dim _Nudo As String = Fx_Rellena_ceros(TxtNroDocumento.Text, 10)
-                'Dim _Nro As String
-
                 _Sql_Nro_Documento = "And Edo.NUDO = '" & _Nudo & "'"
-
-                '_Nro = Replace(_Nudo, "-", ",")
-
-                'Dim _Cadena = Split(_Nro, ",")
-
-                'If _Cadena.Length = 2 Then
-
-                '    Dim _Tido = _Cadena(0)
-                '    _Nudo = Fx_Rellena_ceros(_Cadena(1), 10)
-
-                '    _Sql_Filtro_Documentos = String.Empty
-                '    _Sql_Nro_Documento = "And Edo.TIDO = '" & _Tido & "' And Edo.NUDO = '" & _Nudo & "'"
-                '    _Usar_Otro_Filtros = False
-
-                '    GoTo Buscar
-                'Else
-                '    TxtNroDocumento.Text = _Nudo
-                '    _Sql_Nro_Documento = "And Edo.NUDO = '" & _Nudo & "'"
-                'End If
 
             End If
 
@@ -608,12 +595,7 @@ Public Class Frm_BusquedaDocumento_Filtro
             Dim _Fl = Generar_Filtro_IN(_Tbl_Filtro_Funcionarios, "", "Codigo", False, False, "'")
             If _Fl = "()" Then _FlFun = True
 
-            'If _FlFun Then
             _Sql_Filtro_Fucnionarios = "And Edo.KOFUDO In " & _Fl
-            'Else
-            'MessageBoxEx.Show(Me, "No se seleccionó ningún funcionario", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            'Return
-            'End If
 
         ElseIf Rdb_Funcionarios_Uno.Checked Then
             _Sql_Filtro_Fucnionarios = "And Edo.KOFUDO = '" & CmbFuncionarios.SelectedValue & "'"
@@ -698,6 +680,32 @@ Public Class Frm_BusquedaDocumento_Filtro
         If Not String.IsNullOrEmpty(Txt_CodRetirador.Text) Then
             _Sql_RetMerca = "And IDMAEEDO In (Select IDMAEEDO From MAEEDOOB WITH ( NOLOCK ) Where DIENDESP Like '" & Txt_CodRetirador.Tag.Trim & "')" & vbCrLf
         End If
+
+        If _Global_Row_Configuracion_General.Item("RestringirVisualizacionDeDocumentos") Then
+
+            If Not CBool(_Ls_DocumentosPermitidos.Count) Then
+
+                Dim _Msj As String = "No se han encontrado documentos permitidos para el usuario actual. " & vbCrLf &
+                                     "Actualmente el sistema esta configurado solo para que los usuarios puedan ver " & vbCrLf &
+                                     "documentos que ellos tengan registrados a traves de permisos especiales. " & vbCrLf &
+                                     "Esta restricción viene desde la configuración general del sistema."
+
+                MessageBoxEx.Show(Me, _Msj,
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+
+            End If
+
+            Dim _Ls As List(Of String) = _Ls_DocumentosPermitidos.Select(Function(x) x.Tido).ToList()
+
+            Dim _Filtro_Documentos_Permitidos As String = String.Empty
+            _Filtro_Documentos_Permitidos = Generar_Filtro_IN_Lista2(_Ls, False, "'")
+
+            _Usar_Otro_Filtros = True
+            _Sql_Filtro_Otro_Filtro = "And Edo.TIDO In " & _Filtro_Documentos_Permitidos
+
+        End If
+
 
         Dim _Filtro_Observaciones = String.Empty
 
@@ -1063,7 +1071,7 @@ Buscar:
     End Sub
 
     Private Sub Chk_MostrarSoloDocClientesDelVendedor_CheckedChanged(sender As Object, e As EventArgs)
-        If VerSoloEntidadesDelVendedor Then
+        If _VerSoloEntidadesDelVendedor Then
             If Not Chk_MostrarSoloDocClientesDelVendedor.Checked Then
                 Dim _Row As DataRow
                 If Fx_Tiene_Permiso(Me, "CfEnt031",,,,,,,,, _Row) Then
@@ -1081,9 +1089,29 @@ Buscar:
 
     Private Sub Wrn_MostrarSoloDocClientesDelVendedor_OptionsClick(sender As Object, e As EventArgs) Handles Wrn_MostrarSoloDocClientesDelVendedor.OptionsClick
 
-        Dim _Msj As String = "Tiene una restricción que le impide ver documentos de clientes de otros vendedores." & vbCrLf &
-                             "Esto significa que solo puede acceder a los documentos de su propia cartera de clientes." & vbCrLf & vbCrLf &
-                             "Actualmente, tiene asignado el permiso (restricción) NO00021."
+        Dim _Msj As String
+
+        If _VerSoloEntidadesDelVendedor Then
+
+            _Msj = "Tiene una restricción que le impide ver documentos de clientes de otros vendedores." & vbCrLf &
+                   "Esto significa que solo puede acceder a los documentos de su propia cartera de clientes." & vbCrLf &
+                   "Actualmente, tiene asignado el permiso (restricción) NO00021."
+
+        End If
+
+        If _Global_Row_Configuracion_General.Item("RestringirVisualizacionDeDocumentos") Then
+
+            If _VerSoloEntidadesDelVendedor Then
+                _Msj += vbCrLf & vbCrLf & "Además, "
+            End If
+
+            _Msj += "Tiene una restricción que limita la visualización de documentos a aquellos que están permitidos para su usuario." & vbCrLf &
+                    "Esto significa que solo puede ver documentos específicos según su perfil de acceso." & vbCrLf &
+                    "Actualmente el sistema esta configurado solo para que los usuarios puedan ver documentos que ellos tengan " & vbCrLf &
+                    "registrados a traves de permisos especiales. " & vbCrLf &
+                    "Esta restricción viene desde la configuración general del sistema."
+
+        End If
 
         MessageBoxEx.Show(Me, _Msj, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 

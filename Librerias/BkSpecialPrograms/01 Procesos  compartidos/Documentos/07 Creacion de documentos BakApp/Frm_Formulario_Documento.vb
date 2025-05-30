@@ -1307,7 +1307,8 @@ Public Class Frm_Formulario_Documento
         _RowEntidad = Nothing
         _RowEntidad_Despacho = Nothing
 
-        Lbl_Nombre_Entidad.Text = String.Empty
+        Txt_Nombre_Entidad.Text = String.Empty
+        Txt_Contacto.Text = String.Empty
         Lbl_Nombre_Entidad_Fisica.Text = String.Empty
 
         _TblDocumentos_Dori = Nothing
@@ -1665,7 +1666,7 @@ Public Class Frm_Formulario_Documento
         Sb_Sumar_Totales()
 
         LblDescripcion.Text = String.Empty
-        Lbl_Responsable.Text = " " & Nombre_funcionario_activo
+        Txt_Responsable.Text = " " & Nombre_funcionario_activo
 
         LblTotalNeto.Tag = 0
         LblTotalIva.Tag = 0
@@ -2001,7 +2002,7 @@ Public Class Frm_Formulario_Documento
             _RowEntidad = Nothing
             _RowEntidad_Despacho = Nothing
 
-            Lbl_Nombre_Entidad.Text = String.Empty
+            Txt_Nombre_Entidad.Text = String.Empty
             Lbl_Nombre_Entidad_Fisica.Text = String.Empty
 
             _TblDocumentos_Dori = Nothing
@@ -2354,7 +2355,7 @@ Public Class Frm_Formulario_Documento
             Sb_Sumar_Totales()
 
             LblDescripcion.Text = String.Empty
-            Lbl_Responsable.Text = " " & Nombre_funcionario_activo
+            Txt_Responsable.Text = " " & Nombre_funcionario_activo
 
             LblTotalNeto.Tag = 0
             LblTotalIva.Tag = 0
@@ -3244,21 +3245,21 @@ Public Class Frm_Formulario_Documento
             .Columns("Moneda_Doc").ReadOnly = True
             _DisplayIndex += 1
 
-            .Columns("Contacto_Ent").Visible = True
-            .Columns("Contacto_Ent").Width = 110 + 60
-            .Columns("Contacto_Ent").HeaderText = "Contacto"
-            .Columns("Contacto_Ent").HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft ' <-- Alineación izquierda
-            .Columns("Contacto_Ent").DisplayIndex = _DisplayIndex
-            .Columns("Contacto_Ent").ReadOnly = True
-            _DisplayIndex += 1
+            '.Columns("Contacto_Ent").Visible = True
+            '.Columns("Contacto_Ent").Width = 110 + 60
+            '.Columns("Contacto_Ent").HeaderText = "Contacto"
+            '.Columns("Contacto_Ent").HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft ' <-- Alineación izquierda
+            '.Columns("Contacto_Ent").DisplayIndex = _DisplayIndex
+            '.Columns("Contacto_Ent").ReadOnly = True
+            '_DisplayIndex += 1
 
-            .Columns("NomContacto_Ent").Visible = True
-            .Columns("NomContacto_Ent").Width = 110 + 60
-            .Columns("NomContacto_Ent").HeaderText = "Contacto"
-            .Columns("NomContacto_Ent").HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft ' <-- Alineación izquierda
-            .Columns("NomContacto_Ent").DisplayIndex = _DisplayIndex
-            .Columns("NomContacto_Ent").ReadOnly = True
-            _DisplayIndex += 1
+            '.Columns("NomContacto_Ent").Visible = True
+            '.Columns("NomContacto_Ent").Width = 110 + 60
+            '.Columns("NomContacto_Ent").HeaderText = "Contacto"
+            '.Columns("NomContacto_Ent").HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft ' <-- Alineación izquierda
+            '.Columns("NomContacto_Ent").DisplayIndex = _DisplayIndex
+            '.Columns("NomContacto_Ent").ReadOnly = True
+            '_DisplayIndex += 1
 
         End With
 
@@ -4115,7 +4116,7 @@ Public Class Frm_Formulario_Documento
         _TblEncabezado.Rows(0).Item("CodSucEntidadFisica") = String.Empty
         _TblEncabezado.Rows(0).Item("Nombre_Entidad") = String.Empty
 
-        Lbl_Nombre_Entidad.Text = String.Empty
+        Txt_Nombre_Entidad.Text = String.Empty
         Lbl_Nombre_Entidad_Fisica.Text = String.Empty
 
         Dim _Lista As String
@@ -4142,7 +4143,7 @@ Public Class Frm_Formulario_Documento
             _TblEncabezado.Rows(0).Item("CodSucEntidad") = _RowEntidad.Item("SUEN")
             _TblEncabezado.Rows(0).Item("Nombre_Entidad") = _RowEntidad.Item("NOKOEN")
 
-            Lbl_Nombre_Entidad.Text = " " & _RowEntidad.Item("NOKOEN").ToString.Trim
+            Txt_Nombre_Entidad.Text = " " & _RowEntidad.Item("NOKOEN").ToString.Trim
 
             If Not Fx_Revisar_si_tiene_registros(False) Then
 
@@ -12259,8 +12260,8 @@ Public Class Frm_Formulario_Documento
 
             If _Revision_Remota Then
                 LabelX2.Text = "Funcionario solicita"
-                Lbl_Responsable.Text = " " & _Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & _CodFuncionario & "'")
-                .Item("NomFuncionario") = Lbl_Responsable.Text
+                Txt_Responsable.Text = " " & _Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & _CodFuncionario & "'")
+                .Item("NomFuncionario") = Txt_Responsable.Text
             Else
                 .Item("NomFuncionario") = Trim(Nombre_funcionario_activo)
             End If
@@ -12943,7 +12944,7 @@ Public Class Frm_Formulario_Documento
 
         End If
 
-        Lbl_Nombre_Entidad.Text = " " & _RowEntidad.Item("NOKOEN").ToString.Trim
+        Txt_Nombre_Entidad.Text = " " & _RowEntidad.Item("NOKOEN").ToString.Trim
 
         If Not String.IsNullOrEmpty(Trim(_RowEntidad.Item("KOFUEN"))) Then
             _CodVendedor = _RowEntidad.Item("KOFUEN")
@@ -13018,7 +13019,7 @@ Public Class Frm_Formulario_Documento
         ' Sb_Nueva_Linea(_ListaPrecios)
 
         LblDescripcion.Text = String.Empty
-        Lbl_Responsable.Text = " " & Nombre_funcionario_activo
+        Txt_Responsable.Text = " " & Nombre_funcionario_activo
 
         LblTotalNeto.Text = FormatNumber(0, 0)
         LblTotalIva.Text = FormatNumber(0, 0)
@@ -14280,22 +14281,25 @@ Public Class Frm_Formulario_Documento
 
                 Case "Contacto_Ent"
 
-                    If Not Fx_Revisar_encabezado() Then
-                        Return
-                    End If
+                    Call Txt_Contacto_ButtonCustomClick(Nothing, Nothing)
 
-                    Dim _CodEntidad As String = _TblEncabezado.Rows(0).Item("CodEntidad")
-                    Dim _CodSucEntidad As String = _TblEncabezado.Rows(0).Item("CodSucEntidad")
+                    'If Not Fx_Revisar_encabezado() Then
+                    '    Return
+                    'End If
 
-                    Dim Fm As New Frm_Crear_Entidad_Mt_Lista_contactos(True)
-                    Fm.Pro_CodEntidad = _CodEntidad
-                    Fm.Pro_SucEntidad = _CodSucEntidad
-                    Fm.ShowDialog(Me)
-                    If Fm.Pro_ContactoSeleccionado Then
-                        _FilaEnc.Cells("Contacto_Ent").Value = Fm.Row_Contacto.Item("RUTCONTACT")
-                        _FilaEnc.Cells("NomContacto_Ent").Value = Fm.Row_Contacto.Item("NOKOCON").ToString.Trim
-                    End If
-                    Fm.Dispose()
+                    'Dim _CodEntidad As String = _TblEncabezado.Rows(0).Item("CodEntidad")
+                    'Dim _CodSucEntidad As String = _TblEncabezado.Rows(0).Item("CodSucEntidad")
+
+                    'Dim Fm As New Frm_Crear_Entidad_Mt_Lista_contactos(True)
+                    'Fm.Pro_CodEntidad = _CodEntidad
+                    'Fm.Pro_SucEntidad = _CodSucEntidad
+                    'Fm.ShowDialog(Me)
+                    'If Fm.Pro_ContactoSeleccionado Then
+                    '    _FilaEnc.Cells("Contacto_Ent").Value = Fm.Row_Contacto.Item("RUTCONTACT")
+                    '    _FilaEnc.Cells("NomContacto_Ent").Value = Fm.Row_Contacto.Item("NOKOCON").ToString.Trim
+                    '    Txt_Contacto.Text = Fm.Row_Contacto.Item("NOKOCON").ToString.Trim
+                    'End If
+                    'Fm.Dispose()
 
             End Select
 
@@ -15712,7 +15716,7 @@ Public Class Frm_Formulario_Documento
 
         If _Global_Sesion Then
 
-            Lbl_Responsable.Text = " " & Nombre_funcionario_activo
+            Txt_Responsable.Text = " " & Nombre_funcionario_activo
 
             Dim Fm As New Frm_Modalidad_Mt
             Fm.ShowDialog(Me)
@@ -19302,6 +19306,9 @@ Public Class Frm_Formulario_Documento
 
 
             _TblObservaciones.Rows(0).Item("Forma_pago") = _Forma_pago
+
+            _TblEncabezado.Rows(0).Item("Contacto_Ent") = _RowMaeedo_Origen.Item("RUTCONTACT")
+            Txt_Contacto.Text = _Sql.Fx_Trae_Dato("MAEENCON", "NOKOCON", "KOEN = '" & _RowEntidad.Item("KOEN") & "' And RUTCONTACT = '" & _TblEncabezado.Rows(0).Item("Contacto_Ent") & "'")
 
             Dim _CodEntidadFisica As String
             Dim _CodSucEntidadFisica = String.Empty
@@ -25672,6 +25679,10 @@ Public Class Frm_Formulario_Documento
 
     Private Sub Btn_Consolidar_Stock_Click(sender As Object, e As EventArgs) Handles Btn_Consolidar_Stock.Click
 
+        If Not Fx_Tiene_Permiso(Me, "Prod055") Then
+            Return
+        End If
+
         Dim _Fila As DataGridViewRow = Grilla_Detalle.Rows(Grilla_Detalle.CurrentRow.Index)
 
         Dim _Codigo = _Fila.Cells("Codigo").Value
@@ -25992,6 +26003,10 @@ Public Class Frm_Formulario_Documento
     End Sub
 
     Private Sub Btn_Cambiar_Moneda_Click(sender As Object, e As EventArgs) Handles Btn_Cambiar_Moneda.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Doc00158") Then
+            Return
+        End If
 
         Dim _Filtrar As New Clas_Filtros_Random(Me)
 
@@ -26923,6 +26938,10 @@ Public Class Frm_Formulario_Documento
 
     Private Sub Btn_Config_Impresora_Diablito_Click(sender As Object, e As EventArgs) Handles Btn_Config_Impresora_Diablito.Click
 
+        If Not Fx_Tiene_Permiso(Me, "Doc00159") Then
+            Return
+        End If
+
         Dim _TidoSel = _Tido
 
         If _Post_Venta Then _TidoSel = "BLV"
@@ -27786,7 +27805,7 @@ Public Class Frm_Formulario_Documento
         Grilla_Encabezado.Focus()
     End Sub
 
-    Private Sub Btn_VerEntidad_Click(sender As Object, e As EventArgs) Handles Btn_VerEntidad.Click
+    Private Sub Btn_VerEntidad_Click(sender As Object, e As EventArgs)
         If Not (_RowEntidad Is Nothing) Then
             ShowContextMenu(Menu_Contextual_Info_Entidad)
         Else
@@ -28524,6 +28543,10 @@ Public Class Frm_Formulario_Documento
 
     Private Sub Btn_ProximasRecepciones_Click(sender As Object, e As EventArgs) Handles Btn_ProximasRecepciones.Click
 
+        If Not Fx_Tiene_Permiso(Me, "Doc00160") Then
+            Return
+        End If
+
         Dim _Fila As DataGridViewRow = Grilla_Detalle.CurrentRow
         Dim _Codigo As String = _Fila.Cells("Codigo").Value
 
@@ -28569,7 +28592,6 @@ Public Class Frm_Formulario_Documento
 
         Dim Fm As New Frm_ComprasSinRecepcionar(_Codigo)
         Fm.Tido = _Tido
-        'Fm.SegundaUnidad = True
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
@@ -29537,6 +29559,92 @@ Public Class Frm_Formulario_Documento
             Sb_RevisarListaSuperior()
 
         End If
+
+    End Sub
+
+    Private Sub Txt_Lbl_Nombre_Entidad_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Nombre_Entidad.ButtonCustomClick
+        If Not (_RowEntidad Is Nothing) Then
+            ShowContextMenu(Menu_Contextual_Info_Entidad)
+        Else
+            MessageBoxEx.Show(Me, "Falta el entidad", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
+        End If
+    End Sub
+
+    Private Sub Txt_Contacto_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Contacto.ButtonCustomClick
+
+        If Not Fx_Revisar_encabezado() Then
+            Return
+        End If
+
+        ShowContextMenu(Menu_Contextual_Contacto)
+
+        'If Not (_RowEntidad Is Nothing) Then
+        '    ShowContextMenu(Menu_Contextual_Info_Entidad)
+        'Else
+        '    MessageBoxEx.Show(Me, "Falta el entidad", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
+        'End If
+
+    End Sub
+
+    Private Sub Btn_Contacto_VerInfo_Click(sender As Object, e As EventArgs) Handles Btn_Contacto_VerInfo.Click
+
+        Dim _FilaEnc As DataGridViewRow = Grilla_Encabezado.Rows(0)
+        Dim _CodEntidad As String = _FilaEnc.Cells("CodEntidad").Value
+        Dim _Contacto_Ent As String = _FilaEnc.Cells("Contacto_Ent").Value.ToString.Trim
+
+        If String.IsNullOrWhiteSpace(_Contacto_Ent) Then
+            MessageBoxEx.Show(Me, "No hay ningún contacto asociado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Consulta_sql = "Select * From MAEENCON Where KOEN = '" & _CodEntidad & "' And RUTCONTACT = '" & _Contacto_Ent & "'"
+        Dim _Row_Contacto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_Row_Contacto) Then
+            Return
+        End If
+
+        Dim _Rutcontact As String = _Row_Contacto.Item("RUTCONTACT").ToString.Trim
+        Dim _Nokocon As String = _Row_Contacto.Item("NOKOCON").ToString.Trim
+        Dim _Fonocon As String = _Row_Contacto.Item("FONOCON").ToString.Trim
+        Dim _Email As String = _Row_Contacto.Item("EMAILCON").ToString.Trim
+        Dim _Cargocon As String = _Row_Contacto.Item("CARGOCON").ToString.Trim
+        Dim _Areacon As String = _Row_Contacto.Item("AREACON").ToString.Trim
+        Dim _Direcon As String = _Row_Contacto.Item("DIRECON").ToString.Trim
+
+        Dim _Informacion As String = "RUT : " & _Rutcontact & ", NOMBRE: " & _Nokocon & vbCrLf &
+                                     "TELEFONO: " & _Fonocon & vbCrLf &
+                                     "EMAIL: " & _Email
+        MessageBoxEx.Show(Me, _Informacion, "Información del contacto", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+    End Sub
+
+    Private Sub Btn_Contacto_Agregar_Click(sender As Object, e As EventArgs) Handles Btn_Contacto_Agregar.Click
+
+        Dim _FilaEnc As DataGridViewRow = Grilla_Encabezado.Rows(0)
+
+        Dim _CodEntidad As String = _TblEncabezado.Rows(0).Item("CodEntidad")
+        Dim _CodSucEntidad As String = _TblEncabezado.Rows(0).Item("CodSucEntidad")
+
+        Dim Fm As New Frm_Crear_Entidad_Mt_Lista_contactos(True)
+        Fm.Pro_CodEntidad = _CodEntidad
+        Fm.Pro_SucEntidad = _CodSucEntidad
+        Fm.ShowDialog(Me)
+        If Fm.Pro_ContactoSeleccionado Then
+            _FilaEnc.Cells("Contacto_Ent").Value = Fm.Row_Contacto.Item("RUTCONTACT")
+            _FilaEnc.Cells("NomContacto_Ent").Value = Fm.Row_Contacto.Item("NOKOCON").ToString.Trim
+            Txt_Contacto.Text = Fm.Row_Contacto.Item("NOKOCON").ToString.Trim
+        End If
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_Contacto_Quitar_Click(sender As Object, e As EventArgs) Handles Btn_Contacto_Quitar.Click
+
+        Dim _FilaEnc As DataGridViewRow = Grilla_Encabezado.Rows(0)
+        _FilaEnc.Cells("Contacto_Ent").Value = String.Empty
+        _FilaEnc.Cells("NomContacto_Ent").Value = String.Empty
+        Txt_Contacto.Text = String.Empty
 
     End Sub
 

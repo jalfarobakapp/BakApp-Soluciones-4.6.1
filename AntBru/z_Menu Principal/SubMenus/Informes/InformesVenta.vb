@@ -23,12 +23,14 @@ Public Class InformesVenta
 
     Private Sub BtnInfMargenes_Click(sender As System.Object, e As System.EventArgs) Handles BtnInfMargenes.Click
 
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Inf00002") Then
-            Dim Fm As New Frm_InvMargenes_
-            Fm.ShowInTaskbar = False
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Inf00002") Then
+            Return
         End If
+
+        Dim Fm As New Frm_InvMargenes_
+        Fm.ShowInTaskbar = False
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 
@@ -41,21 +43,28 @@ Public Class InformesVenta
     End Sub
 
     Private Sub BtnRankingProductos_Click(sender As System.Object, e As System.EventArgs) Handles BtnRankingProductos.Click
-        Dim Nro As String = "Inf00004"
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, Nro) Then
-            Dim Fm As New Frm_Ranking_Menu
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
+
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Inf00004") Then
+            Return
         End If
+
+        Dim Fm As New Frm_Ranking_Menu
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
     End Sub
 
     Private Sub Btn_Informe_Vencimiento_Ventas_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Informe_Vencimiento_Ventas.Click
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Inf00009") Then
-            Dim Fm As New Frm_Inf_Vencimientos_Procesar_Informe("DS_Filtro_Informe_vencimientos_venta.xml", "Inf00009")
-            Fm._Informe = Frm_Inf_Vencimientos_Procesar_Informe.Tipo_Informe.Ventas
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
+
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Inf00009") Then
+            Return
         End If
+
+        Dim Fm As New Frm_Inf_Vencimientos_Procesar_Informe("DS_Filtro_Informe_vencimientos_venta.xml", "Inf00009")
+        Fm._Informe = Frm_Inf_Vencimientos_Procesar_Informe.Tipo_Informe.Ventas
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
     End Sub
 
     Private Sub Btn_Informe_Ventas_On_Line_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Informe_Ventas_On_Line.Click
@@ -112,47 +121,59 @@ Public Class InformesVenta
 
     Private Sub Btn_Ventas_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ventas.Click
 
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Inf00017") Then
-
-            Dim _Fecha_Desde As Date = Primerdiadelmes(FechaDelServidor)
-            Dim _Fecha_Hasta As Date = ultimodiadelmes(FechaDelServidor)
-
-            Dim _Tabla_Matriz_Informe As String = "Zw_Informe_Venta" '"Zw_TblPaso" ' & Trim(FUNCIONARIO)
-
-            Dim Fm As New Frm_Inf_Ventas_X_Periodo_Cubo(Frm_Inf_Ventas_X_Periodo_Cubo.Enum_Informe.Sucursal,
-                                                        _Tabla_Matriz_Informe,
-                                                        1,
-                                                        _Fecha_Desde,
-                                                        _Fecha_Hasta,
-                                                        False)
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
-
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Inf00017") Then
+            Return
         End If
+
+        Dim _Fecha_Desde As Date = Primerdiadelmes(FechaDelServidor)
+        Dim _Fecha_Hasta As Date = ultimodiadelmes(FechaDelServidor)
+
+        Dim _Tabla_Matriz_Informe As String = "Zw_Informe_Venta" '"Zw_TblPaso" ' & Trim(FUNCIONARIO)
+
+        Dim Fm As New Frm_Inf_Ventas_X_Periodo_Cubo(Frm_Inf_Ventas_X_Periodo_Cubo.Enum_Informe.Sucursal,
+                                                    _Tabla_Matriz_Informe,
+                                                    1,
+                                                    _Fecha_Desde,
+                                                    _Fecha_Hasta,
+                                                    False)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 
     Private Sub Btn_Creditos_Vigentes_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Creditos_Vigentes.Click
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Inf00018") Then
-            Dim Fm As New Frm_Infor_Ent_Estado_Creditos_Vigentes
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
+
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Inf00018") Then
+            Return
         End If
+
+        Dim Fm As New Frm_Infor_Ent_Estado_Creditos_Vigentes
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
     End Sub
 
     Private Sub Btn_Compromisos_No_Despachados_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Compromisos_No_Despachados.Click
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Inf00019") Then
-            Dim Fm As New Frm_Informe_Compr_No_Despachados
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
+
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Inf00019") Then
+            Return
         End If
+
+        Dim Fm As New Frm_Informe_Compr_No_Despachados
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
     End Sub
 
     Private Sub Btn_Margenes_y_Proyeccion_Click(sender As Object, e As EventArgs) Handles Btn_Margenes_y_Proyeccion.Click
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Inf00049") Then
-            Dim Fm As New Frm_Inf_Mg_Vta_Proyec_Listado
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
+
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Inf00049") Then
+            Return
         End If
+
+        Dim Fm As New Frm_Inf_Mg_Vta_Proyec_Listado
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
     End Sub
 End Class

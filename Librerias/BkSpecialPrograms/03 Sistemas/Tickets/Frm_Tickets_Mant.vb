@@ -210,8 +210,12 @@ Public Class Frm_Tickets_Mant
 
         Else
 
-            If Not Fx_Tiene_Permiso(Me, "Tkts0008") Then
-                Return
+            If Not _Cl_Tickets.Zw_Stk_Tipos.EsTicketUnico Then
+
+                If Not Fx_Tiene_Permiso(Me, "Tkts0008") Then
+                    Return
+                End If
+
             End If
 
         End If

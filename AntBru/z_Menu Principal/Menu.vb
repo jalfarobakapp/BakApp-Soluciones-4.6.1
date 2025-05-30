@@ -1,6 +1,5 @@
 ﻿Imports Bk_Produccion
 Imports BkSpecialPrograms
-Imports BkSpecialPrograms.LsValiciones
 Imports DevComponents.DotNetBar
 
 Public Class Menu
@@ -105,6 +104,10 @@ Public Class Menu
 
     Private Sub BtnGestionCompras_Click(sender As System.Object, e As System.EventArgs) Handles BtnGestionCompras.Click
 
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Comp0102") Then
+            Return
+        End If
+
         Dim NewPanel As Modulo_Compras = Nothing
         NewPanel = New Modulo_Compras(_Fm_Menu_Padre)
         _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
@@ -118,30 +121,38 @@ Public Class Menu
     End Sub
 
     Private Sub BtnInventarios_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Inventarios.Click
+
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Invg0009") Then
+            Return
+        End If
+
         Dim NewPanel As Sistema_Inventarios = Nothing
         NewPanel = New Sistema_Inventarios(_Fm_Menu_Padre)
         _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
+
     End Sub
 
     Private Sub BtnInformes_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Informes.Click
+
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Inf00050") Then
+            Return
+        End If
+
         Dim NewPanel As Modulo_Informes = Nothing
         NewPanel = New Modulo_Informes(_Fm_Menu_Padre)
         _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
     End Sub
 
     Private Sub Btn_CambiarCodProducto_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ventas.Click
-        'MessageBoxEx.Show(Me, "No esta disponible en esta versión", "Inventario", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        'Return
-        'If Licencia_Modulo("VTA01") Then
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Bkp00001") Then
-            Dim NewPanel As Modulo_Ventas = Nothing
-            NewPanel = New Modulo_Ventas(_Fm_Menu_Padre)
-            'If _Menu_Extra Then
-            '    NewPanel.BtnCambiarDeUsuario.Visible = False
-            'End If
-            _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
+
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Bkp00001") Then
+            Return
         End If
-        'End If
+
+        Dim NewPanel As Modulo_Ventas = Nothing
+        NewPanel = New Modulo_Ventas(_Fm_Menu_Padre)
+        _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
+
     End Sub
 
     Private Sub BtnConfiguracion_Click(sender As System.Object, e As System.EventArgs) Handles BtnConfiguracion.Click
@@ -331,35 +342,39 @@ Public Class Menu
 
     Private Sub Btn_Tesoreria_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Tesoreria.Click
 
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Ppro0007") Then
-
-            Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(_Fm_Menu_Padre)
-
-            If Not _Msj_Tsc.EsCorrecto Then
-                Return
-            End If
-
-            Dim NewPanel As Modulo_Tesoreria = Nothing
-            NewPanel = New Modulo_Tesoreria(_Fm_Menu_Padre)
-            _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
-
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Ppro0007") Then
+            Return
         End If
+
+        Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(_Fm_Menu_Padre)
+
+        If Not _Msj_Tsc.EsCorrecto Then
+            Return
+        End If
+
+        Dim NewPanel As Modulo_Tesoreria = Nothing
+        NewPanel = New Modulo_Tesoreria(_Fm_Menu_Padre)
+        _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
 
     End Sub
 
     Private Sub Btn_Precios_Costos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Precios_Costos.Click
 
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Pre0008") Then
-
-            Dim NewPanel As Modulo_Lista_Precios_Costos = Nothing
-            NewPanel = New Modulo_Lista_Precios_Costos(_Fm_Menu_Padre)
-            _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
-
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Pre0008") Then
+            Return
         End If
+
+        Dim NewPanel As Modulo_Lista_Precios_Costos = Nothing
+        NewPanel = New Modulo_Lista_Precios_Costos(_Fm_Menu_Padre)
+        _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
 
     End Sub
 
     Private Sub Btn_Parametros_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Parametros.Click
+
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Espr0018") Then
+            Return
+        End If
 
         Dim NewPanel As Modulo_Parametros = Nothing
         NewPanel = New Modulo_Parametros(_Fm_Menu_Padre)
@@ -389,6 +404,10 @@ Public Class Menu
 
     Private Sub BtnCreacionEntidad_Click(sender As System.Object, e As System.EventArgs) Handles BtnCreacionEntidad.Click
 
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "CfEnt037") Then
+            Return
+        End If
+
         Dim NewPanel As Entidades_menu = Nothing
         NewPanel = New Entidades_menu(_Fm_Menu_Padre)
         _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
@@ -396,6 +415,10 @@ Public Class Menu
     End Sub
 
     Private Sub BtnProductos_Click_1(sender As System.Object, e As System.EventArgs) Handles BtnProductos.Click
+
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Prod078") Then
+            Return
+        End If
 
         Dim NewPanel As Productos = Nothing
         NewPanel = New Productos(_Fm_Menu_Padre)
@@ -405,15 +428,15 @@ Public Class Menu
 
     Private Sub BtnBuscarDocumento_Click(sender As System.Object, e As System.EventArgs) Handles BtnBuscarDocumento.Click
 
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Doc00015") Then
-
-            Dim _Fm As New Frm_BusquedaDocumento_Filtro(True)
-            _Fm.Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Todos, "")
-            _Fm.Pro_TipoDoc_Seleccionado = Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Todos
-            _Fm.ShowDialog(Me)
-            _Fm.Dispose()
-
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Doc00015") Then
+            Return
         End If
+
+        Dim _Fm As New Frm_BusquedaDocumento_Filtro(True)
+        _Fm.Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Todos, "")
+        _Fm.Pro_TipoDoc_Seleccionado = Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Todos
+        _Fm.ShowDialog(Me)
+        _Fm.Dispose()
 
     End Sub
 

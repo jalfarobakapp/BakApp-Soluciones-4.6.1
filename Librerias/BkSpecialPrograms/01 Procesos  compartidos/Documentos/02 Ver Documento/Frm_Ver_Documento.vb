@@ -666,10 +666,11 @@ Public Class Frm_Ver_Documento
         LblTotalAbonado.Text = FormatNumber(_Vaabdo, _Decimales)
         LblTotalSaldo.Text = FormatNumber(_Saldo, _Decimales)
 
-        Lbl_Nombre_Entidad.Text = Space(1) & _TblEncabezado.Rows(0).Item("RAZON").ToString.Trim
+        Txt_Nombre_Entidad.Text = Space(1) & _TblEncabezado.Rows(0).Item("RAZON").ToString.Trim
         Lbl_Nombre_Entidad_Fisica.Text = Space(1) & _TblEncabezado.Rows(0).Item("RAZON_FISICA").ToString.Trim
-        Lbl_Responsable.Text = Space(1) & _TblEncabezado.Rows(0).Item("FUNCIONARIO")
+        Txt_Responsable.Text = Space(1) & _TblEncabezado.Rows(0).Item("FUNCIONARIO")
 
+        Txt_Contacto.Text = Space(1) & NuloPorNro(_TblEncabezado.Rows(0).Item("NOKOCON").ToString.Trim, "")
 
         Dim _Hora As String = _TblEncabezado.Rows(0).Item("HORA")
 
@@ -1023,7 +1024,7 @@ Public Class Frm_Ver_Documento
 
             Lbl_Nombre_Entidad_Fisica.Text = Trim(_TblEncabezado.Rows(0).Item("ENT_FISICA")) & " - " &
                                     Trim(_TblEncabezado.Rows(0).Item("RAZON_FISICA"))
-            Lbl_Responsable.Text = _TblEncabezado.Rows(0).Item("FUNCIONARIO")
+            Txt_Responsable.Text = _TblEncabezado.Rows(0).Item("FUNCIONARIO")
 
 
             Dim _Hora As String = _TblEncabezado.Rows(0).Item("HORA")
@@ -1145,9 +1146,9 @@ Public Class Frm_Ver_Documento
         LblTotalAbonado.Text = FormatNumber(_Vaabdo, _Decimales)
         LblTotalSaldo.Text = FormatNumber(_Saldo, _Decimales)
 
-        Lbl_Nombre_Entidad.Text = Space(1) & _TblEncabezado.Rows(0).Item("Nombre_Entidad").ToString.Trim
+        Txt_Nombre_Entidad.Text = Space(1) & _TblEncabezado.Rows(0).Item("Nombre_Entidad").ToString.Trim
         Lbl_Nombre_Entidad_Fisica.Text = Space(1) & _TblEncabezado.Rows(0).Item("Nombre_Entidad_Fisica").ToString.Trim
-        Lbl_Responsable.Text = Space(1) & _TblEncabezado.Rows(0).Item("NomFuncionario")
+        Txt_Responsable.Text = Space(1) & _TblEncabezado.Rows(0).Item("NomFuncionario")
 
 
         'Dim _Hora As String = _TblEncabezado.Rows(0).Item("HORA")
@@ -4023,6 +4024,10 @@ Public Class Frm_Ver_Documento
 
     Private Sub Btn_Consolidar_Stock_Click(sender As Object, e As EventArgs) Handles Btn_Consolidar_Stock.Click
 
+        If Not Fx_Tiene_Permiso(Me, "Prod055") Then
+            Return
+        End If
+
         Dim _Codigo As String
 
         If _Tipo_Apertura = Enum_Tipo_Apertura.Desde_Bakapp_Kasi Then
@@ -4162,12 +4167,6 @@ Public Class Frm_Ver_Documento
             Sb_Ver_Deuda_Pendiente(_Koen, _Suen, True)
 
         End If
-
-    End Sub
-
-    Private Sub Btn_VerEntidad_Click(sender As Object, e As EventArgs) Handles Btn_VerEntidad.Click
-
-        ShowContextMenu(Menu_Contextual_Info_Entidad)
 
     End Sub
 
@@ -5100,6 +5099,10 @@ Public Class Frm_Ver_Documento
         End If
         Fm.Dispose()
 
+    End Sub
+
+    Private Sub Txt_Nombre_Entidad_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Nombre_Entidad.ButtonCustomClick
+        ShowContextMenu(Menu_Contextual_Info_Entidad)
     End Sub
 
     Private Sub Btn_Contenedor_Quitar_Click(sender As Object, e As EventArgs) Handles Btn_Contenedor_Quitar.Click

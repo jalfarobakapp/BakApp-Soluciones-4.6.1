@@ -8,6 +8,9 @@ Module Modulo_Documentos
                              _Tipo_Documento As csGlobales.Enum_Tipo_Documento,
                              _SubTido As String)
 
+        Dim _Permiso As String = Fx_PermisoRegistroDoc(_Tido)
+
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, _Permiso) Then Return
         If Not Fx_Tido_Excluido(_Fm_Menu_Padre, _Tido) Then Return
 
         Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(_Fm_Menu_Padre)
@@ -24,7 +27,7 @@ Module Modulo_Documentos
             Dim _Sucursal As String = ModSucursal
             Dim _Bodega As String = ModBodega
 
-            Dim _Permiso = "Bo" & _Empresa & _Sucursal & _Bodega
+            Dim _PermisoBod = "Bo" & _Empresa & _Sucursal & _Bodega
 
             If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, _Permiso, , True) Then
 
@@ -37,7 +40,7 @@ Module Modulo_Documentos
 
             End If
 
-            If Fx_Tiene_Permiso(_Fm_Menu_Padre, _Permiso) Then
+            If Fx_Tiene_Permiso(_Fm_Menu_Padre, _PermisoBod) Then
 
                 Dim _Revisar_Directorio_GenDTE = True
 
@@ -157,3 +160,5 @@ Module Modulo_Documentos
     End Function
 
 End Module
+
+

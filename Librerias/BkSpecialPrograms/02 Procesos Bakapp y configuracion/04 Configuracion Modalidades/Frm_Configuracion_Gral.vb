@@ -247,6 +247,8 @@ Public Class Frm_Configuracion_Gral
             Chk_NVIQuedaSUDOSucRecibe.Checked = .Item("NVIQuedaSUDOSucRecibe")
             Chk_NuncaPickeaDocConRTUDesactivada.Checked = .Item("NuncaPickeaDocConRTUDesactivada")
 
+            Chk_RestringirVisualizacionDeDocumentos.Checked = .Item("RestringirVisualizacionDeDocumentos")
+
         End With
 
         Input_Dias_Para_Hacer_NCV.Enabled = Not _Modalidad_General
@@ -350,6 +352,7 @@ Public Class Frm_Configuracion_Gral
         Chk_NVIQuedaSUDOSucRecibe.Enabled = Not _Modalidad_General
 
         Chk_NuncaPickeaDocConRTUDesactivada.Enabled = _Modalidad_General
+        Chk_RestringirVisualizacionDeDocumentos.Enabled = _Modalidad_General
 
         AddHandler Txt_Dias_Venci_Coti.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
         AddHandler Txt_ValorMinimoNVV.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
@@ -560,6 +563,7 @@ Public Class Frm_Configuracion_Gral
                        ",NVIQuedaSUDOSucEnvia = " & Convert.ToInt32(Chk_NVIQuedaSUDOSucEnvia.Checked) & vbCrLf &
                        ",NVIQuedaSUDOSucRecibe = " & Convert.ToInt32(Chk_NVIQuedaSUDOSucRecibe.Checked) & vbCrLf &
                        ",NuncaPickeaDocConRTUDesactivada = " & Convert.ToInt32(Chk_NuncaPickeaDocConRTUDesactivada.Checked) & vbCrLf &
+                       ",RestringirVisualizacionDeDocumentos = " & Convert.ToInt32(Chk_RestringirVisualizacionDeDocumentos.Checked) & vbCrLf &
                        "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then

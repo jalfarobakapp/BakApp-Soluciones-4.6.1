@@ -192,6 +192,10 @@ Public Class Modulo_Ventas
 
     Private Sub Btn_Conf_CashDro_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Conf_CashDro.Click
 
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Cdro0004") Then
+            Return
+        End If
+
         If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Estaciones_CashDro", "TJV_Emdp_Credito") And
            _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Estaciones_CashDro", "TJV_Emdp_Debito") Then
 
