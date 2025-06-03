@@ -100,6 +100,7 @@ Partial Class Menu
         Me.Metro_Bar_Color = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
         Me.StyleManager1 = New DevComponents.DotNetBar.StyleManager(Me.components)
+        Me.Btn_PPP = New DevComponents.DotNetBar.ButtonItem()
         MetroTileFrame1 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame2 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame3 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
@@ -808,7 +809,7 @@ Partial Class Menu
         Me.ButtonX1.Name = "ButtonX1"
         Me.ButtonX1.Size = New System.Drawing.Size(134, 32)
         Me.ButtonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.ButtonX1.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Monisiones, Me.ButtonItem5, Me.Btn_IngresarGRIProduccion, Me.Btn_CrearNVVDesdeOCC, Me.Btn_PruebasFacturaElectronica, Me.Btn_Stem, Me.Btn_RevPesoVariable, Me.ButtonItem6, Me.Btn_PreVenta, Me.Btn_PagarDocumento, Me.Btn_GDI2GRI, Me.Btn_Rutas})
+        Me.ButtonX1.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Monisiones, Me.ButtonItem5, Me.Btn_IngresarGRIProduccion, Me.Btn_CrearNVVDesdeOCC, Me.Btn_PruebasFacturaElectronica, Me.Btn_Stem, Me.Btn_RevPesoVariable, Me.ButtonItem6, Me.Btn_PreVenta, Me.Btn_PagarDocumento, Me.Btn_GDI2GRI, Me.Btn_Rutas, Me.Btn_PPP})
         Me.ButtonX1.TabIndex = 15
         Me.ButtonX1.Text = "Boton de pruebas"
         Me.ButtonX1.Visible = False
@@ -1146,6 +1147,12 @@ Partial Class Menu
         Me.StyleManager1.ManagerStyle = DevComponents.DotNetBar.eStyle.Metro
         Me.StyleManager1.MetroColorParameters = New DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(System.Drawing.Color.White, System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(154, Byte), Integer)))
         '
+        'Btn_PPP
+        '
+        Me.Btn_PPP.GlobalItem = False
+        Me.Btn_PPP.Name = "Btn_PPP"
+        Me.Btn_PPP.Text = "Recalcular PPP por producto"
+        '
         'Menu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1240,4 +1247,5 @@ Partial Class Menu
     Friend WithEvents Btn_PagarDocumento As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_GDI2GRI As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Rutas As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_PPP As DevComponents.DotNetBar.ButtonItem
 End Class

@@ -61,13 +61,15 @@ Public Class Frm_Recalculo_PPPxProd
 
         Dim _Codigo = _Row_Producto.Item("KOPR").ToString.Trim
 
-        If Cl_Pm.Fx_RecalcularPPPxPR(_Codigo, _FechaTope, ProgressBarX1) Then
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        _Mensaje = Cl_Pm.Fx_RecalcularPPPxPR(_Codigo, _FechaTope)
+
+        If _Mensaje.EsCorrecto Then
             _Recalculado = True
             _NewPPP = Cl_Pm.Pm
             ExportarTabla_JetExcel_Tabla(Cl_Pm.TblDetalleDocs, Me, "Historia PPP " & _Codigo)
             Me.Close()
-            'MessageBoxEx.Show(Me, "PPP calculado: " & FormatCurrency(_Pm, 2), "Recalculo PM", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            'ExportarTabla_JetExcel_Tabla(Cl_Pm.TblDetalleDocs, Me, "Historia PPP " & Txtcodigo.Text)
         End If
 
     End Sub

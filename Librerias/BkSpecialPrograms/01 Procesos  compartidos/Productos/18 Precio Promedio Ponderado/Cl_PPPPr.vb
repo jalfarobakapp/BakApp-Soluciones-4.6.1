@@ -49,9 +49,13 @@ Public Class Cl_PPPPr
     ''' <param name="ProgressBarX1"></param>Barra de progreso, si no hay dejar Nothing
     ''' <returns></returns>
     Function Fx_RecalcularPPPxPR(_Codigo As String,
-                                 _FechaTope As DateTime,
-                                 _ProgressBarX1 As ProgressBarX) As Boolean
+                                 _FechaTope As DateTime) As LsValiciones.Mensajes
 
+        'Function Fx_RecalcularPPPxPR(_Codigo As String,
+        '                     _FechaTope As DateTime,
+        '                     _ProgressBarX1 As ProgressBarX) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
         Dim _Fechinippp As DateTime
 
         Try
@@ -60,198 +64,256 @@ Public Class Cl_PPPPr
             _Fechinippp = _FechaTope
         End Try
 
-        '_Fechinippp = _FechaTope
+        Try
 
-        Consulta_sql = "Select MAEPREM.PMIN,MAEPREM.PM,MAEPREM.FEPM,Cast('" & Format(_Fechinippp, "yyyyMMdd") & "' As Datetime) As FICPPP,0 As Col5,MAEPR.KOPR,MAEPR.NOKOPR,MAEPR.UD01PR,MAEPR.UD02PR,MAEPR.KOPRRA,MAEPR.KOPRTE,
-		                MAEPR.FMPR,MAEPR.PFPR,MAEPR.HFPR,MAEPR.MRPR,RUPR,MAEPR.RLUD  
-	                    From MAEPR WITH ( NOLOCK )  
-				            INNER JOIN MAEPREM ON MAEPREM.KOPR=MAEPR.KOPR AND MAEPREM.EMPRESA='" & ModEmpresa & "'  
-	                    WHERE MAEPR.TIPR='FPN' And MAEPR.KOPR = '" & _Codigo & "'"
-        Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+            '_Fechinippp = _FechaTope
 
-        Consulta_sql = "Select Top 1 * From MAEDDO Where KOPRCT = '" & _Codigo & "' And FEEMLI < '" & Format("yyyyMMdd", _FechaTope) & "' And PPPRPM <> 0 Order By FEEMLI Desc"
-        Dim _RowUltDoc As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+            Consulta_sql = "Select MAEPREM.PMIN,MAEPREM.PM,MAEPREM.FEPM,Cast('" & Format(_Fechinippp, "yyyyMMdd") & "' As Datetime) As FICPPP," &
+                           "0 As Col5,MAEPR.KOPR,MAEPR.NOKOPR,MAEPR.UD01PR,MAEPR.UD02PR,MAEPR.KOPRRA,MAEPR.KOPRTE," &
+                           "MAEPR.FMPR,MAEPR.PFPR,MAEPR.HFPR,MAEPR.MRPR,RUPR,MAEPR.RLUD" & vbCrLf &
+                           "From MAEPR WITH ( NOLOCK )" & vbCrLf &
+                           "Inner Join MAEPREM ON MAEPREM.KOPR=MAEPR.KOPR AND MAEPREM.EMPRESA='" & ModEmpresa & "'" & vbCrLf &
+                           "Where MAEPR.TIPR = 'FPN' And MAEPR.KOPR = '" & _Codigo & "'"
+            Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        If IsNothing(_RowUltDoc) Then
-            _Pm = 0
-        Else
-            _Pm = _RowUltDoc.Item("PPPRPM")
-        End If
+            Consulta_sql = "Select Top 1 * From MAEDDO" & vbCrLf &
+                           "Where KOPRCT = '" & _Codigo & "' And FEEMLI < '" & Format("yyyyMMdd", _Fechinippp) & "' And PPPRPM <> 0 Order By FEEMLI Desc"
+            Dim _RowUltDoc As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        If Not IsNothing(_ProgressBarX1) Then
-            _ProgressBarX1.Text = "Analizando movimientos del producto..."
-            Application.DoEvents()
-        End If
-
-        _TblDetalleDocs = Fx_DetalleDocumentos(_Codigo, _Fechinippp)
-
-        Dim _Fecha_Max As Date = DateAdd(DateInterval.Year, 1, FechaDelServidor)
-
-        Dim _Stock_Fi(1) As Double
-        Dim _Stfi1, _Stfi2 As Double      ' STOCK FISICO
-
-        Dim _Stock_Trans(1) As Double
-        Dim _Sttr1, _Sttr2 As Double      ' STOCK EN TRANSITO
-
-        Consulta_sql = "Select * From TABBO"
-        Dim _TblBodegas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
-
-        _Fecha_Max = DateAdd(DateInterval.Day, -1, _Fechinippp)
-
-        _Stfi1 = 0 : _Stfi2 = 0
-        _Sttr1 = 0 : _Sttr2 = 0
-
-        If Not IsNothing(_ProgressBarX1) Then
-            _ProgressBarX1.Maximum = _TblBodegas.Rows.Count
-            _ProgressBarX1.Value = 0
-        End If
-
-        For Each _FlBod As DataRow In _TblBodegas.Rows
-
-            Application.DoEvents()
-
-            Dim _Emp = _FlBod.Item("EMPRESA")
-            Dim _Suc = _FlBod.Item("KOSU").ToString.Trim
-            Dim _Bod = _FlBod.Item("KOBO").ToString.Trim
-            Dim _Bodega = _FlBod.Item("NOKOBO").ToString.Trim
-
-            If Not IsNothing(_ProgressBarX1) Then
-                _ProgressBarX1.Value += 1
-                _ProgressBarX1.Text = "Revisando Movimientos " & FormatNumber(_ProgressBarX1.Value, 0) & " de " & FormatNumber(_TblBodegas.Rows.Count, 0) & " Suc: " & _Suc & " bodega " & _Bod & " - " & _Bodega & " - "
+            If IsNothing(_RowUltDoc) Then
+                _Pm = 0
+            Else
+                _Pm = _RowUltDoc.Item("PPPRPM")
             End If
 
-            'STOCK FISICO ************** STFI1
-            Consulta_sql = My.Resources._SQLquery.Consolidacion_Stock_Fisico_X_producto
-            _Stock_Fi = Stock_A_Una_Fecha_X_Producto(_RowProducto, _Emp, _Suc, _Bod, Consulta_sql, _Fecha_Max)
-
-            _Stfi1 += _Stock_Fi(0) '- _CantidadUd1
-            _Stfi2 += _Stock_Fi(1) '- _CantidadUd2
-
-            'STOCK EN TRANSITO *************** STTR1
-            Consulta_sql = My.Resources._SQLquery.Consolidacion_Stock_En_Transito
-            _Stock_Trans = Stock_A_Una_Fecha_X_Producto(_RowProducto, _Emp, _Suc, _Bod, Consulta_sql, _Fecha_Max)
-
-            _Sttr1 += _Stock_Trans(0) '- _CantidadUd1
-            _Sttr2 += _Stock_Trans(1) '- _CantidadUd2
-
-        Next
-
-        If Not IsNothing(_ProgressBarX1) Then
-            _ProgressBarX1.Value = 0
-            _ProgressBarX1.Text = String.Empty
-        End If
-
-        Dim _Total_Stfi_x_Pm As Double = _Pm * (_Stfi1 + _Sttr1)
-        Dim _Sum_Stock As Double = _Stfi1 + _Sttr1
-        Dim _UltPm As Double = _Pm
-
-        If Not IsNothing(_ProgressBarX1) Then
-            _ProgressBarX1.Maximum = _TblDetalleDocs.Rows.Count
-            _ProgressBarX1.Value = 0
-        End If
-
-        For Each _Fila As DataRow In _TblDetalleDocs.Rows
-
-            Dim _Tido As String = _Fila.Item("TIDO")
-            Dim _Nudo As String = _Fila.Item("NUDO")
-            Dim _Subtido As String = _Fila.Item("SUBTIDO")
-            Dim _Tidopa As String = _Fila.Item("TIDOPA").ToString.Trim
-            Dim _Lincondesp As Boolean = _Fila.Item("LINCONDESP")
-            Dim _Caprco1 As Double = _Fila.Item("CAPRCO1")
-            Dim _Ppprnere1 As Double = _Fila.Item("PPPRNERE1")
-            Dim _Vaneli As Double = _Fila.Item("VANELI")
-
-            Dim _VaneliCalc As Double = Math.Round(_Caprco1 * _Ppprnere1, 0)
-
-            If _Tido = "GDD" Or _Tido = "GDI" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "GDV" Or (_Lincondesp And (_Tido = "NCC" Or _Tido = "FCV" Or _Tido = "BLV")) Then
-                _Caprco1 = _Caprco1 * -1
-            End If
-
-            If _Tido = "OCC" Or _Tido = "NVI" Or _Tido = "COV" Or _Tido = "NVV" Then
-                _Caprco1 = 0
-            End If
-
-            'If Not _Lincondesp And (_Tido = "NCC" Or _Tido = "FCV" Or _Tido = "BLV" Or _Tido = "FCC") Then
-            '    _Caprco1 = 0
+            'If Not IsNothing(_ProgressBarX1) Then
+            '    _ProgressBarX1.Text = "Analizando movimientos del producto..."
+            '    Application.DoEvents()
             'End If
 
-            If Not _Lincondesp And (_Tido = "FCV" Or _Tido = "BLV") Then
-                _Caprco1 = 0
-            End If
+            _TblDetalleDocs = Fx_DetalleDocumentos(_Codigo, _Fechinippp)
 
-            'If _Nudo = "0038349525" Then
-            '    Dim ssas = 0
+            Dim _Fecha_Max As Date = DateAdd(DateInterval.Year, 1, FechaDelServidor)
+
+            Dim _Stock_Fi(1) As Double
+            Dim _Stfi1, _Stfi2 As Double      ' STOCK FISICO
+
+            Dim _Stock_Trans(1) As Double
+            Dim _Sttr1, _Sttr2 As Double      ' STOCK EN TRANSITO
+
+            Consulta_sql = "Select * From TABBO"
+            Dim _TblBodegas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+            _Fecha_Max = DateAdd(DateInterval.Day, -1, _Fechinippp)
+
+            _Stfi1 = 0 : _Stfi2 = 0
+            _Sttr1 = 0 : _Sttr2 = 0
+
+            'If Not IsNothing(_ProgressBarX1) Then
+            '    _ProgressBarX1.Maximum = _TblBodegas.Rows.Count
+            '    _ProgressBarX1.Value = 0
             'End If
 
-            Dim _UltPmXStockActual As Double = _Sum_Stock * _UltPm
+            For Each _FlBod As DataRow In _TblBodegas.Rows
 
-            _Sum_Stock += _Caprco1
+                Application.DoEvents()
 
-            'If _Sum_Stock = 0 Then
-            '    _Total_Stfi_x_Pm = 0
-            'Else
-            '    _Total_Stfi_x_Pm = _Total_Stfi_x_Pm - ((_UltPm * _Caprco1) * -1)
-            '    _Total_Stfi_x_Pm = _Total_Stfi_x_Pm - ((_UltPm * _Caprco1) * -1)
+                Dim _Emp = _FlBod.Item("EMPRESA")
+                Dim _Suc = _FlBod.Item("KOSU").ToString.Trim
+                Dim _Bod = _FlBod.Item("KOBO").ToString.Trim
+                Dim _Bodega = _FlBod.Item("NOKOBO").ToString.Trim
+
+                'If Not IsNothing(_ProgressBarX1) Then
+                '    _ProgressBarX1.Value += 1
+                '    _ProgressBarX1.Text = "Revisando Movimientos " & FormatNumber(_ProgressBarX1.Value, 0) & " de " & FormatNumber(_TblBodegas.Rows.Count, 0) & " Suc: " & _Suc & " bodega " & _Bod & " - " & _Bodega & " - "
+                'End If
+
+                'STOCK FISICO ************** STFI1
+                Consulta_sql = My.Resources._SQLquery.Consolidacion_Stock_Fisico_X_producto
+                _Stock_Fi = Stock_A_Una_Fecha_X_Producto(_RowProducto, _Emp, _Suc, _Bod, Consulta_sql, _Fecha_Max)
+
+                _Stfi1 += _Stock_Fi(0) '- _CantidadUd1
+                _Stfi2 += _Stock_Fi(1) '- _CantidadUd2
+
+                'STOCK EN TRANSITO *************** STTR1
+                Consulta_sql = My.Resources._SQLquery.Consolidacion_Stock_En_Transito
+                _Stock_Trans = Stock_A_Una_Fecha_X_Producto(_RowProducto, _Emp, _Suc, _Bod, Consulta_sql, _Fecha_Max)
+
+                _Sttr1 += _Stock_Trans(0) '- _CantidadUd1
+                _Sttr2 += _Stock_Trans(1) '- _CantidadUd2
+
+            Next
+
+            'If Not IsNothing(_ProgressBarX1) Then
+            '    _ProgressBarX1.Value = 0
+            '    _ProgressBarX1.Text = String.Empty
             'End If
 
-            Application.DoEvents()
-            If Not IsNothing(_ProgressBarX1) Then
-                _ProgressBarX1.Value += 1
-                _ProgressBarX1.Text = "Documentos revisados " & FormatNumber(_ProgressBarX1.Value, 0) & " de " & FormatNumber(_TblDetalleDocs.Rows.Count, 0)
-            End If
+            Dim _Total_Stfi_x_Pm As Double = _Pm * (_Stfi1 + _Sttr1)
+            Dim _Sum_Stock As Double = _Stfi1 + _Sttr1
+            Dim _UltPm As Double = _Pm
 
-            'If _Tido = "GRC" Or
-            '   (_Tido = "GRI" And _Tidopa <> "GTI") Or
-            '   (_Tido = "GDI" And _Tidopa <> "GTI") Or
-            '   (_Tido = "FCC" And _Lincondesp) Or
-            '   (_Tido = "BLC" And _Lincondesp) Or
-            '   (_Tido = "GDD" And _Subtido = String.Empty) Then
+            'If Not IsNothing(_ProgressBarX1) Then
+            '    _ProgressBarX1.Maximum = _TblDetalleDocs.Rows.Count
+            '    _ProgressBarX1.Value = 0
+            'End If
 
-            If _Tido = "GRC" Or
-               (_Tido = "GRI" And _Tidopa <> "GTI") Or
-               (_Tido = "GDI" And _Tidopa <> "GTI") Or
-               (_Tido = "FCC") Or
-               (_Tido = "BLC") Or
-               (_Tido = "GDD" And _Subtido = String.Empty) Then
+            For Each _Fila As DataRow In _TblDetalleDocs.Rows
 
-                Dim _NewPm As Double
+                Dim _Tido As String = _Fila.Item("TIDO")
+                Dim _Nudo As String = _Fila.Item("NUDO")
+                Dim _Subtido As String = _Fila.Item("SUBTIDO")
+                Dim _Tidopa As String = _Fila.Item("TIDOPA").ToString.Trim
+                Dim _Lincondesp As Boolean = _Fila.Item("LINCONDESP")
+                Dim _Cantidad As Double '=_Fila.Item("CAPRCO1")
+                Dim _Caprco1 As Double = _Fila.Item("CAPRCO1")
+                Dim _Caprad1 As Double = _Fila.Item("CAPRAD1")
+                Dim _Ppprnere1 As Double = _Fila.Item("PPPRNERE1")
+                Dim _Costotrib As Double = _Fila.Item("COSTOTRIB")
+                Dim _Costoifrs As Double = _Fila.Item("COSTOIFRS")
+                Dim _Vaneli As Double = _Fila.Item("VANELI")
+                Dim _Lilg As String = _Fila.Item("LILG")
 
-                If _Sum_Stock = 0 Then
-                    _Total_Stfi_x_Pm = 0
-                    _NewPm = 0
-                    _UltPm = 0
+                If _Tido.Contains("G") Then
+                    _Cantidad = _Caprco1
                 Else
-                    '_NewPm = (_Total_Stfi_x_Pm + _Vaneli) / _Sum_Stock
-                    _NewPm = (_UltPmXStockActual + _Vaneli) / _Sum_Stock
+                    _Cantidad = _Caprad1
                 End If
 
-                _Pm = Math.Round(_NewPm, 2)
-
-                If _Pm > 0 Then
-                    _UltPm = _Pm
+                If _Nudo = "3670097338" Or _Nudo = "0000004208" Then
+                    Dim _aca = 0
                 End If
 
-            End If
+                Dim _VaneliCalc As Double = Math.Round(_Cantidad * _Ppprnere1, 0)
 
-            _Fila.Item("NewPPPRPR") = _Pm
-            _Fila.Item("Stfisico") = _Sum_Stock
+                If _Tido = "GDD" Or _Tido = "GDI" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "GDV" Or _Tido = "NCC" Or _Tido = "FCV" Or _Tido = "BLV" Then
+                    _Cantidad = _Cantidad * -1
+                    _Vaneli = 0
+                End If
 
-            If _Cancelar Then
-                _ProgressBarX1.Value = 0
-                _ProgressBarX1.Text = String.Empty
-                Return False
-            End If
+                'If _Tido = "GDD" Or _Tido = "GDI" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "GDV" Or (_Lincondesp And (_Tido = "NCC" Or _Tido = "FCV" Or _Tido = "BLV")) Then
+                '    _Cantidad = _Cantidad * -1
+                'End If
 
-        Next
+                If _Tido = "OCC" Or _Tido = "NVI" Or _Tido = "COV" Or _Tido = "NVV" Then
+                    _Cantidad = 0
+                    _Vaneli = 0
+                End If
 
-        If Not IsNothing(_ProgressBarX1) Then
-            _ProgressBarX1.Value = 0
-            _ProgressBarX1.Text = String.Empty
-        End If
+                If _Tido = "DIN" Then
 
-        ' Al recalcular hay que ir descontando los valores...
+                    _Cantidad = 0
 
-        Return True
+                    If _Lilg = "SI" Then
+                        _Vaneli = 0
+                    End If
+
+                    'If _Cantidad > 0 Then
+                    '    _Cantidad = 0
+                    'Else
+                    '    _Vaneli = 0
+                    'End If
+
+                End If
+
+                If _Tido = "FCC" And _Cantidad = 0 Then
+                    _Vaneli = 0
+                End If
+
+                If _Tido = "NCV" Then
+                    Dim _Aqui = 0
+                    If _Cantidad = 0 Then
+                        _Tido = "Sigue"
+                    End If
+                    '_Vaneli = Math.Round(_Cantidad * _Pm, 0)
+                    _Vaneli = _Costotrib
+                End If
+
+                'If Not _Lincondesp And (_Tido = "FCV" Or _Tido = "BLV") Then
+                '    _Cantidad = 0
+                'End If
+
+                Dim _UltPmXStockActual As Double = Math.Round(_Sum_Stock * _UltPm, 0)
+
+                _Sum_Stock += _Cantidad
+
+                'Application.DoEvents()
+                'If Not IsNothing(_ProgressBarX1) Then
+                '    _ProgressBarX1.Value += 1
+                '    _ProgressBarX1.Text = "Documentos revisados " & FormatNumber(_ProgressBarX1.Value, 0) & " de " & FormatNumber(_TblDetalleDocs.Rows.Count, 0)
+                'End If
+
+                If _Tido = "GRC" Or
+                   (_Tido = "GRI" And _Tidopa <> "GTI") Or
+                   (_Tido = "GDI" And _Tidopa <> "GTI") Or
+                   (_Tido = "FCC") Or
+                   (_Tido = "BLC") Or
+                   (_Tido = "NCV") Or
+                   (_Tido = "GDD" And _Subtido = String.Empty) Or
+                   (_Tido = "DIN" And _Vaneli > 0) Then
+
+                    _UltPmXStockActual = Math.Round(_UltPmXStockActual, 0) + _Vaneli
+
+                    Dim _NewPm As Double
+
+                    If _Sum_Stock = 0 Then
+                        _Total_Stfi_x_Pm = 0
+                        _NewPm = 0
+                        _UltPm = 0
+                    Else
+                        '_NewPm = (Math.Round(_UltPmXStockActual, 0) + _Vaneli) / _Sum_Stock
+                        _NewPm = _UltPmXStockActual / _Sum_Stock
+                    End If
+
+                    _Pm = Math.Round(_NewPm, 5)
+
+                    If _Pm > 0 Then
+                        _UltPm = _Pm
+                    End If
+
+                    _Fila.Item("CambiaPPP") = True
+
+                End If
+
+                _Fila.Item("UltPmXStockActual") = _UltPmXStockActual
+                _Fila.Item("NewPPPRPR") = _Pm
+                _Fila.Item("Stfisico") = _Sum_Stock
+
+            Next
+
+            'If Not IsNothing(_ProgressBarX1) Then
+            '    _ProgressBarX1.Value = 0
+            '    _ProgressBarX1.Text = String.Empty
+            'End If
+
+            ' Al recalcular hay que ir descontando los valores...
+
+            'Return True
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "PPP recalculado: " & FormatCurrency(_Pm, 2)
+            _Mensaje.Detalle = "PPP recalculado: " & FormatCurrency(_Pm, 2) & vbCrLf &
+                        "Fecha de inicio del cálculo: " & Format(_Fechinippp, "dd-MM-yyyy") & vbCrLf &
+                        "Fecha de tope: " & Format(_FechaTope, "dd-MM-yyyy") & vbCrLf &
+                        "Cantidad de documentos analizados: " & _TblDetalleDocs.Rows.Count.ToString("#,##0") & vbCrLf
+            _Mensaje.Icono = MessageBoxIcon.Information
+            _Mensaje.Tag = _TblDetalleDocs
+
+        Catch ex As Exception
+
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = "Error al recalcular el PPP del producto: " & _Codigo & vbCrLf & ex.Message
+            _Mensaje.Detalle = "Error al recalcular el PPP del producto: " & _Codigo & vbCrLf & ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Error
+
+            'If Not IsNothing(_ProgressBarX1) Then
+            '    _ProgressBarX1.Value = 0
+            '    _ProgressBarX1.Text = String.Empty
+            'End If
+
+        End Try
+
+        Return _Mensaje
 
     End Function
 
@@ -264,7 +326,7 @@ Public Class Cl_PPPPr
 					    D.IDMAEDDO,D.LILG,D.CAPRCO1,D.CAPRAD1,D.CAPREX1,D.CAPRCO2,D.CAPRAD2,D.CAPREX2,D.VANELI,D.COSTOTRIB,D.COSTOIFRS,D.PPPRNERE1,D.FEEMLI,
 					    D.PPPRPM,D.TIDOPA,D.IDRST,D.ARPROD,D.TIPR,D.PPOPPR,D.LINCONDESP,PE.SUBTIDO AS SUBTIDOPA, 
 					    (SELECT COUNT(*) FROM MAEDDO AS POST WITH ( NOLOCK ) WHERE POST.IDRST = D.IDMAEDDO) AS NRODOCPOST,MAEEN.NOKOEN,
-                        Cast(0 As Float) As Stfisico,Cast(0 As Float) As NewPPPRPR
+                        Cast(0 As Float) As Stfisico,Cast(0 As Float) As UltPmXStockActual,Cast(0 As Bit) As CambiaPPP,Cast(0 As Float) As NewPPPRPR
 					  	    INTO #DDO  
 					            FROM MAEDDO AS D WITH ( NOLOCK )  
 						             INNER JOIN MAEEDO AS E WITH ( NOLOCK ) ON E.IDMAEEDO=D.IDMAEEDO AND E.EMPRESA='01'  
@@ -284,7 +346,7 @@ Public Class Cl_PPPPr
 				                        MAEDCR.VALDCR,MAEDCR.IDMAEDCR,D.IDMAEDDO,D.LILG,D.CAPRCO1,D.CAPRAD1,D.CAPREX1,D.CAPRCO2,
 				                        D.CAPRAD2,D.CAPREX2,D.VANELI,D.COSTOTRIB,D.COSTOIFRS,D.PPPRNERE1,EBASE.FEEMDO,D.PPPRPM,D.TIDOPA,
 				                        D.IDRST,D.ARPROD,D.TIPR,D.PPOPPR,D.LINCONDESP,'   ' AS SUBTIDOPA,0 AS NRODOCPOST,
-				                        MAEEN.NOKOEN,0,0   
+				                        MAEEN.NOKOEN,0,0,0,0   
 		                        FROM MAEDCR WITH ( NOLOCK )  
 			                        INNER JOIN MAEDDO AS D WITH ( NOLOCK ) ON D.IDMAEDDO = MAEDCR.IDDDODCR  
 				                        INNER JOIN MAEEDO AS E WITH ( NOLOCK ) ON E.IDMAEEDO=D.IDMAEEDO AND E.EMPRESA='01'  

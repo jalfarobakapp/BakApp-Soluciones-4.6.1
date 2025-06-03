@@ -1,4 +1,5 @@
-﻿Imports Bk_Produccion
+﻿Imports System.Security.Claims
+Imports Bk_Produccion
 Imports BkSpecialPrograms
 Imports DevComponents.DotNetBar
 
@@ -1338,6 +1339,26 @@ Public Class Menu
                                                "COV",
                                                True,
                                                csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta, "PRE")
+
+    End Sub
+
+    Private Sub Btn_PPP_Click(sender As Object, e As EventArgs) Handles Btn_PPP.Click
+
+        Dim _Codigo As String = "PMPMSH2X75LEV"
+        Dim _FechaTope As Date = FechaDelServidor()
+
+        'Dim Fm As New Frm_Recalculo_PPPxProd(_Codigo, Nothing)
+        'Fm.ShowDialog(Me)
+        'Fm.Dispose()
+
+        Dim Cl_Pm As New Cl_PPPPr
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        _Mensaje = Cl_Pm.Fx_RecalcularPPPxPR(_Codigo, _FechaTope)
+
+        If _Mensaje.EsCorrecto Then
+            ExportarTabla_JetExcel_Tabla(Cl_Pm.TblDetalleDocs, _Fm_Menu_Padre, "Historia PPP " & _Codigo)
+        End If
 
     End Sub
 
