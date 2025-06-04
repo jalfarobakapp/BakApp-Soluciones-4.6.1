@@ -29,11 +29,11 @@ Public Class Frm_Seleccionar_Fecha
 
     Public Property SeleccionarHora As Boolean
         Get
-            Return Dtp_Hora.Visible
+            Return Dtp_Hora.Enabled
         End Get
         Set(value As Boolean)
-            LabelX2.Visible = value
-            Dtp_Hora.Visible = value
+            LabelX2.Enabled = value
+            Dtp_Hora.Enabled = value
         End Set
     End Property
 

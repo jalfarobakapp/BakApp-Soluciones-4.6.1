@@ -9703,8 +9703,6 @@ Public Class Frm_Formulario_Documento
 
                         Case "ValNetoLinea", "ValBrutoLinea"
 
-
-
                             If Convert.ToBoolean(_Prct) Then
 
                                 If _Tict = "R" Then
@@ -9870,8 +9868,39 @@ Public Class Frm_Formulario_Documento
 
                         Case "FechaRecepcion"
 
-                            Grilla_Detalle.Columns(_Cabeza).ReadOnly = False
-                            Grilla_Detalle.BeginEdit(True)
+                            Dim _Grabar As Boolean
+                            Dim _FechaSeleccionada As DateTime
+
+                            Dim Fm As New Frm_Seleccionar_Fecha
+
+                            Fm.SolicitarConfirmacionDeFecha = False
+                            Fm.ExigeFechaMinima = True
+                            Fm.FechaMinima = Now.Date.AddDays(-1)
+
+                            If IsNothing(_Fila.Cells("FechaRecepcion").Value) OrElse
+                                String.IsNullOrWhiteSpace(_Fila.Cells("FechaRecepcion").Value?.ToString()) OrElse
+                                Not IsDate(_Fila.Cells("FechaRecepcion").Value) Then
+                                Fm.FechaDisplay = Now.Date
+                            Else
+                                Fm.FechaDisplay = _Fila.Cells("FechaRecepcion").Value
+                            End If
+
+                            Fm.Dtp_Fecha.Value = Fm.FechaDisplay
+                            Fm.Dtp_Hora.Value = Now
+                            Fm.MostraFormularioAlCentro = True
+                            Fm.SeleccionarHora = False
+                            Fm.ShowDialog(Me)
+
+                            _Grabar = Fm.Grabar
+                            _FechaSeleccionada = Fm.FechaSeleccionada
+                            Fm.Dispose()
+
+                            If _Grabar Then
+                                _Fila.Cells("FechaRecepcion").Value = _FechaSeleccionada
+                            End If
+
+                            'Grilla_Detalle.Columns(_Cabeza).ReadOnly = False
+                            'Grilla_Detalle.BeginEdit(True)
 
                     End Select
 
