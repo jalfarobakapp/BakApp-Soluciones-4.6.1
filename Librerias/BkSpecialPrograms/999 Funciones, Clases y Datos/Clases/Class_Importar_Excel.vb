@@ -8,6 +8,9 @@ Public Class Class_Importar_Excel
                                           Extencion_ As String,
                                          Optional Hoja As Integer = 0)
 
+        Dim _UltFila As Integer
+        Dim _UltColumna As Integer
+
         Try
             Errores = String.Empty
 
@@ -33,11 +36,11 @@ Public Class Class_Importar_Excel
             dt.Columns.Add("Precio")
 
             For i As Integer = 1 To Filas  ' Workbook.Worksheets(0).Rows.Count
-
+                _UltFila = i
                 For cl As Integer = 0 To Columnas - 1
+                    _UltColumna = cl
                     Arreglo(i - 1, cl) = Workbook.Worksheets(Hoja).Cells(i - 1, cl).Value
                 Next
-
             Next i
 
             Return Arreglo

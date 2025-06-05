@@ -1351,6 +1351,14 @@ Public Class Menu
         'Fm.ShowDialog(Me)
         'Fm.Dispose()
 
+        Dim _Aceptar As Boolean = InputBox_Bk(_Fm_Menu_Padre, "Ingrese el código a revisar", "Calcula PPP", _Codigo, False,, 13, True)
+
+        If Not _Aceptar Then
+            Return
+        End If
+
+        '_Codigo = "LOVENFPA20VIC"
+
         Dim Cl_Pm As New Cl_PPPPr
         Dim _Mensaje As LsValiciones.Mensajes
 

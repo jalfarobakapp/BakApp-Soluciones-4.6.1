@@ -1,6 +1,4 @@
-﻿Imports DevComponents.DotNetBar.Controls
-
-Public Class Cl_PPPPr
+﻿Public Class Cl_PPPPr
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
@@ -153,6 +151,16 @@ Public Class Cl_PPPPr
             Dim _Sum_Stock As Double = _Stfi1 + _Sttr1
             Dim _UltPm As Double = _Pm
 
+            Dim _Saldo_Stock As Double
+            Dim _Saldo_Valor As Double = Math.Round(_Total_Stfi_x_Pm, 5)
+            Dim _Pr_Pr_P As Double = _Pm
+
+            If _Sum_Stock < 0 Then
+                _Saldo_Stock = 0
+            Else
+                _Saldo_Stock = _Sum_Stock
+            End If
+
             'If Not IsNothing(_ProgressBarX1) Then
             '    _ProgressBarX1.Maximum = _TblDetalleDocs.Rows.Count
             '    _ProgressBarX1.Value = 0
@@ -163,6 +171,7 @@ Public Class Cl_PPPPr
                 Dim _Tido As String = _Fila.Item("TIDO")
                 Dim _Nudo As String = _Fila.Item("NUDO")
                 Dim _Subtido As String = _Fila.Item("SUBTIDO")
+                Dim _Idrst As Integer = _Fila.Item("IDRST")
                 Dim _Tidopa As String = _Fila.Item("TIDOPA").ToString.Trim
                 Dim _Lincondesp As Boolean = _Fila.Item("LINCONDESP")
                 Dim _Cantidad As Double '=_Fila.Item("CAPRCO1")
@@ -174,108 +183,126 @@ Public Class Cl_PPPPr
                 Dim _Vaneli As Double = _Fila.Item("VANELI")
                 Dim _Lilg As String = _Fila.Item("LILG")
 
+                Dim _Entrada As Double
+                Dim _Salida As Double
+                Dim _Transito As Double
+                'Dim _Saldo As Double
+                Dim _SaldoTran As Double
+
+                Dim _V_Salida As Double
+                Dim _V_Entrada As Double
+                'Dim _V_Saldo As Double
+
+                Dim _Calcular As Boolean
+
+                Dim _Es_Entrada As Boolean = False
+                Dim _Es_Salida As Boolean = False
+                Dim _Es_Din As Boolean = False
+
                 If _Tido.Contains("G") Then
                     _Cantidad = _Caprco1
                 Else
                     _Cantidad = _Caprad1
                 End If
 
-                If _Nudo = "3670097338" Or _Nudo = "0000004208" Then
+                If _Nudo = "0000003946" Then
                     Dim _aca = 0
                 End If
 
                 Dim _VaneliCalc As Double = Math.Round(_Cantidad * _Ppprnere1, 0)
 
-                If _Tido = "GDD" Or _Tido = "GDI" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "GDV" Or _Tido = "NCC" Or _Tido = "FCV" Or _Tido = "BLV" Then
-                    _Cantidad = _Cantidad * -1
-                    _Vaneli = 0
+                If (_Tido = "GDD") Or
+                   (_Tido = "GDI") Or
+                   (_Tido = "GDP") Or
+                   (_Tido = "GDV") Or
+                   (_Tido = "NCC" And String.IsNullOrWhiteSpace(_Tidopa)) Or
+                   (_Tido = "FCV" And CBool(_Cantidad)) Or
+                   (_Tido = "BLV" And CBool(_Cantidad)) Then
+
+                    _Cantidad = _Caprco1
+                    _Salida = _Cantidad
+                    _V_Salida = Math.Round(_Salida * _Pr_Pr_P, 0)
+                    _Saldo_Valor -= _V_Salida
+                    _Saldo_Stock -= _Salida
+
+                    If CBool(_Saldo_Stock) Then
+                        _Pr_Pr_P = Math.Round(_Saldo_Valor / _Saldo_Stock, 5)
+                    End If
+
+                    'If _Tido = "GTI" Then
+                    '    _Transito = _Salida
+                    '    _SaldoTran += _Transito
+                    'End If
+
+                    _Pm = Math.Round(_Pr_Pr_P, 5)
+                    _Costotrib = Math.Round(_Pm * _Cantidad, 5)
+
                 End If
 
-                'If _Tido = "GDD" Or _Tido = "GDI" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "GDV" Or (_Lincondesp And (_Tido = "NCC" Or _Tido = "FCV" Or _Tido = "BLV")) Then
-                '    _Cantidad = _Cantidad * -1
-                'End If
+                If (_Tido = "GRC") Or
+                   (_Tido = "GRI" And String.IsNullOrWhiteSpace(_Tidopa)) Or
+                   (_Tido = "FCC" And String.IsNullOrWhiteSpace(_Tidopa)) Or
+                    _Tido = "BLC" Or
+                    _Tido = "GRD" Or
+                   (_Tido = "NCV" And String.IsNullOrWhiteSpace(_Tidopa)) Or
+                   (_Tido = "NCV" And CBool(_Cantidad)) Or
+                   (_Tido = "GDD" And String.IsNullOrWhiteSpace(_Tidopa)) Then
 
-                If _Tido = "OCC" Or _Tido = "NVI" Or _Tido = "COV" Or _Tido = "NVV" Then
-                    _Cantidad = 0
-                    _Vaneli = 0
+                    _Cantidad = _Caprco1
+                    _Entrada = _Cantidad
+                    _V_Entrada = _Vaneli
+
+                    If (_Tido = "NCV" Or _Tido = "GRD") AndAlso _Tidopa = "FCV" Then
+
+                        Consulta_sql = "Select TOP 1 TIDO,TIDOPA,PPPRPM,PPPRPMIFRS,ARCHIRST,IDRST,CAPRCO1,CAPRAD1,IDMAEDDO" & vbCrLf &
+                                       "From MAEDDO With (Nolock)" & vbCrLf &
+                                       "Where IDMAEDDO = " & _Idrst
+                        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                        _Pm = _Row.Item("PPPRPM")
+
+                    End If
+
+                    If _Tido = "GRD" Or (_Tido = "NCV" And _Tidopa = "FCV") Then
+                        _Costotrib = Math.Round(_Pm * _Cantidad)
+                    Else
+                        _Costotrib = _Vaneli
+                    End If
+
+                    _V_Entrada = _Costotrib
+
+                    _Saldo_Valor += _V_Entrada
+                    _Saldo_Stock += _Entrada
+
+                    _Pr_Pr_P = _Saldo_Valor / _Saldo_Stock
+
+                    'If _Tido = "GRI" And _Tidopa <> "" Then
+                    '    _Transito = _Entrada * -1
+                    '    _SaldoTran += _Transito
+                    'End If
+
+                    _Pm = Math.Round(_Pr_Pr_P, 5)
+
                 End If
 
                 If _Tido = "DIN" Then
 
-                    _Cantidad = 0
+                    If _Lilg = "IM" Then
 
-                    If _Lilg = "SI" Then
-                        _Vaneli = 0
+                        _V_Entrada = _Vaneli
+                        _Saldo_Valor += _V_Entrada
+                        _Pr_Pr_P = _Saldo_Valor / _Saldo_Stock
+
+                        _Pm = Math.Round(_Pr_Pr_P, 2)
+
                     End If
-
-                    'If _Cantidad > 0 Then
-                    '    _Cantidad = 0
-                    'Else
-                    '    _Vaneli = 0
-                    'End If
 
                 End If
 
-                If _Tido = "FCC" And _Cantidad = 0 Then
-                    _Vaneli = 0
-                End If
-
-                If _Tido = "NCV" Then
-                    Dim _Aqui = 0
-                    If _Cantidad = 0 Then
-                        _Tido = "Sigue"
-                    End If
-                    '_Vaneli = Math.Round(_Cantidad * _Pm, 0)
-                    _Vaneli = _Costotrib
-                End If
-
-                'If Not _Lincondesp And (_Tido = "FCV" Or _Tido = "BLV") Then
-                '    _Cantidad = 0
-                'End If
-
-                Dim _UltPmXStockActual As Double = Math.Round(_Sum_Stock * _UltPm, 0)
-
-                _Sum_Stock += _Cantidad
-
-                'Application.DoEvents()
-                'If Not IsNothing(_ProgressBarX1) Then
-                '    _ProgressBarX1.Value += 1
-                '    _ProgressBarX1.Text = "Documentos revisados " & FormatNumber(_ProgressBarX1.Value, 0) & " de " & FormatNumber(_TblDetalleDocs.Rows.Count, 0)
-                'End If
-
-                If _Tido = "GRC" Or
-                   (_Tido = "GRI" And _Tidopa <> "GTI") Or
-                   (_Tido = "GDI" And _Tidopa <> "GTI") Or
-                   (_Tido = "FCC") Or
-                   (_Tido = "BLC") Or
-                   (_Tido = "NCV") Or
-                   (_Tido = "GDD" And _Subtido = String.Empty) Or
-                   (_Tido = "DIN" And _Vaneli > 0) Then
-
-                    _UltPmXStockActual = Math.Round(_UltPmXStockActual, 0) + _Vaneli
-
-                    Dim _NewPm As Double
-
-                    If _Sum_Stock = 0 Then
-                        _Total_Stfi_x_Pm = 0
-                        _NewPm = 0
-                        _UltPm = 0
-                    Else
-                        '_NewPm = (Math.Round(_UltPmXStockActual, 0) + _Vaneli) / _Sum_Stock
-                        _NewPm = _UltPmXStockActual / _Sum_Stock
-                    End If
-
-                    _Pm = Math.Round(_NewPm, 5)
-
-                    If _Pm > 0 Then
-                        _UltPm = _Pm
-                    End If
-
-                    _Fila.Item("CambiaPPP") = True
-
-                End If
-
-                _Fila.Item("UltPmXStockActual") = _UltPmXStockActual
+                '_Fila.Item("UltPmXStockActual") = _UltPmXStockActual
+                _Fila.Item("SALDO") = _Saldo_Stock
+                _Fila.Item("COSTOTRIB") = Math.Round(_Costotrib, 0)
+                _Fila.Item("V_SALDO") = _Saldo_Valor
                 _Fila.Item("NewPPPRPR") = _Pm
                 _Fila.Item("Stfisico") = _Sum_Stock
 
@@ -326,7 +353,8 @@ Public Class Cl_PPPPr
 					    D.IDMAEDDO,D.LILG,D.CAPRCO1,D.CAPRAD1,D.CAPREX1,D.CAPRCO2,D.CAPRAD2,D.CAPREX2,D.VANELI,D.COSTOTRIB,D.COSTOIFRS,D.PPPRNERE1,D.FEEMLI,
 					    D.PPPRPM,D.TIDOPA,D.IDRST,D.ARPROD,D.TIPR,D.PPOPPR,D.LINCONDESP,PE.SUBTIDO AS SUBTIDOPA, 
 					    (SELECT COUNT(*) FROM MAEDDO AS POST WITH ( NOLOCK ) WHERE POST.IDRST = D.IDMAEDDO) AS NRODOCPOST,MAEEN.NOKOEN,
-                        Cast(0 As Float) As Stfisico,Cast(0 As Float) As UltPmXStockActual,Cast(0 As Bit) As CambiaPPP,Cast(0 As Float) As NewPPPRPR
+                        Cast(0 As Float) As Stfisico,Cast(0 As Float) As UltPmXStockActual,Cast(0 As Bit) As CambiaPPP,Cast(0 As Float) As NewPPPRPR,
+                        Cast(0 As Float) As SALDO,Cast(0 As Float) As V_SALDO
 					  	    INTO #DDO  
 					            FROM MAEDDO AS D WITH ( NOLOCK )  
 						             INNER JOIN MAEEDO AS E WITH ( NOLOCK ) ON E.IDMAEEDO=D.IDMAEEDO AND E.EMPRESA='01'  
@@ -346,7 +374,7 @@ Public Class Cl_PPPPr
 				                        MAEDCR.VALDCR,MAEDCR.IDMAEDCR,D.IDMAEDDO,D.LILG,D.CAPRCO1,D.CAPRAD1,D.CAPREX1,D.CAPRCO2,
 				                        D.CAPRAD2,D.CAPREX2,D.VANELI,D.COSTOTRIB,D.COSTOIFRS,D.PPPRNERE1,EBASE.FEEMDO,D.PPPRPM,D.TIDOPA,
 				                        D.IDRST,D.ARPROD,D.TIPR,D.PPOPPR,D.LINCONDESP,'   ' AS SUBTIDOPA,0 AS NRODOCPOST,
-				                        MAEEN.NOKOEN,0,0,0,0   
+				                        MAEEN.NOKOEN,0,0,0,0,0,0   
 		                        FROM MAEDCR WITH ( NOLOCK )  
 			                        INNER JOIN MAEDDO AS D WITH ( NOLOCK ) ON D.IDMAEDDO = MAEDCR.IDDDODCR  
 				                        INNER JOIN MAEEDO AS E WITH ( NOLOCK ) ON E.IDMAEEDO=D.IDMAEEDO AND E.EMPRESA='01'  

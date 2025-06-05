@@ -14560,8 +14560,16 @@ Public Class Frm_Formulario_Documento
                 Dim _Cambiar_Vendedor As Boolean = True
 
                 If Not IsNothing(_Row_Doc_Relacionado) Then
+
                     _Mostrar_Mensaje_Deuda = False
                     _Cambiar_Vendedor = False
+
+                    Dim _Volver_A_Solicitar_Permiso_FCV_desde_NVV As Boolean = _Global_Row_Configuracion_General.Item("Volver_A_Solicitar_Permiso_FCV_desde_NVV")
+
+                    If _Volver_A_Solicitar_Permiso_FCV_desde_NVV And _Row_Doc_Relacionado.Item("TIDO") = "NVV" Then
+                        _Mostrar_Mensaje_Deuda = True
+                    End If
+
                 End If
 
                 Dim _RowNuevaEntidad = _RowEntidad
