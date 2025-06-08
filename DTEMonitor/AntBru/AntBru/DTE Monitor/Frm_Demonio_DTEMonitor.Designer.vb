@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Frm_Demonio_DTEMonitor
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -116,7 +116,6 @@ Partial Class Frm_Demonio_DTEMonitor
         Me.Btn_Pruebas.Name = "Btn_Pruebas"
         Me.Btn_Pruebas.Text = "PRUEBAS"
         Me.Btn_Pruebas.Tooltip = "Limpiar log..."
-        Me.Btn_Pruebas.Visible = False
         '
         'Metro_Bar_Color
         '
@@ -180,7 +179,7 @@ Partial Class Frm_Demonio_DTEMonitor
         Me.Chk_AmbienteCertificacion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_AmbienteCertificacion.TabIndex = 72
         Me.Chk_AmbienteCertificacion.TabStop = False
-        Me.Chk_AmbienteCertificacion.Text = "Trabajar en Ambiente de Certificación (pruebas)"
+        Me.Chk_AmbienteCertificacion.Text = "Trabajar en Ambiente de CertificaciÃ³n (pruebas)"
         '
         'Txt_Log
         '
@@ -220,7 +219,7 @@ Partial Class Frm_Demonio_DTEMonitor
         Me.Chk_MostrarBoletaBkHfDOS.Size = New System.Drawing.Size(224, 23)
         Me.Chk_MostrarBoletaBkHfDOS.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_MostrarBoletaBkHfDOS.TabIndex = 74
-        Me.Chk_MostrarBoletaBkHfDOS.Text = "Mostrar ejecución BoletaBkHf (MS-DOS)"
+        Me.Chk_MostrarBoletaBkHfDOS.Text = "Mostrar ejecuciÃ³n BoletaBkHf (MS-DOS)"
         '
         'Chk_FirmarDocumentos
         '

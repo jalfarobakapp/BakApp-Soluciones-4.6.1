@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_ImpBarras_PorProducto
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -23,9 +23,9 @@ Partial Class Frm_ImpBarras_PorProducto
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_ImpBarras_PorProducto))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.BtnImprimirEtiqueta = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_imprimir_Archivo = New DevComponents.DotNetBar.ButtonItem()
@@ -56,6 +56,7 @@ Partial Class Frm_ImpBarras_PorProducto
         Me.Grupo_Puerto = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.CmbPuerto = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.Chk_LimpiarListadoDeCodigosDespuesDeImprimir = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Btn_ImpZebraPortatil = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Grupo_Ubicaciones.SuspendLayout()
         Me.GroupPanel2.SuspendLayout()
@@ -72,7 +73,7 @@ Partial Class Frm_ImpBarras_PorProducto
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnImprimirEtiqueta, Me.Btn_imprimir_Archivo, Me.BtnLimpiar, Me.BtnBuscarProducto, Me.BtnSalir, Me.BtnConfiguracion})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnImprimirEtiqueta, Me.Btn_imprimir_Archivo, Me.BtnLimpiar, Me.BtnBuscarProducto, Me.Btn_ImpZebraPortatil, Me.BtnSalir, Me.BtnConfiguracion})
         Me.Bar1.Location = New System.Drawing.Point(0, 560)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(681, 41)
@@ -136,21 +137,21 @@ Partial Class Frm_ImpBarras_PorProducto
         Me.BtnConfiguracion.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
         Me.BtnConfiguracion.Name = "BtnConfiguracion"
         Me.BtnConfiguracion.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Conf_PuertoEtiqueta, Me.Btn_Conf_ConfEstacion})
-        Me.BtnConfiguracion.Tooltip = "Configuración de sistema"
+        Me.BtnConfiguracion.Tooltip = "ConfiguraciÃ³n de sistema"
         '
         'Btn_Conf_PuertoEtiqueta
         '
         Me.Btn_Conf_PuertoEtiqueta.Image = CType(resources.GetObject("Btn_Conf_PuertoEtiqueta.Image"), System.Drawing.Image)
         Me.Btn_Conf_PuertoEtiqueta.ImageAlt = CType(resources.GetObject("Btn_Conf_PuertoEtiqueta.ImageAlt"), System.Drawing.Image)
         Me.Btn_Conf_PuertoEtiqueta.Name = "Btn_Conf_PuertoEtiqueta"
-        Me.Btn_Conf_PuertoEtiqueta.Text = "Configuración puerto y etiqueta por defecto"
+        Me.Btn_Conf_PuertoEtiqueta.Text = "ConfiguraciÃ³n puerto y etiqueta por defecto"
         '
         'Btn_Conf_ConfEstacion
         '
         Me.Btn_Conf_ConfEstacion.Image = CType(resources.GetObject("Btn_Conf_ConfEstacion.Image"), System.Drawing.Image)
         Me.Btn_Conf_ConfEstacion.ImageAlt = CType(resources.GetObject("Btn_Conf_ConfEstacion.ImageAlt"), System.Drawing.Image)
         Me.Btn_Conf_ConfEstacion.Name = "Btn_Conf_ConfEstacion"
-        Me.Btn_Conf_ConfEstacion.Text = "Configuración de estación local"
+        Me.Btn_Conf_ConfEstacion.Text = "ConfiguraciÃ³n de estaciÃ³n local"
         '
         'Grupo_Ubicaciones
         '
@@ -190,7 +191,7 @@ Partial Class Frm_ImpBarras_PorProducto
         '
         Me.Grupo_Ubicaciones.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Grupo_Ubicaciones.TabIndex = 67
-        Me.Grupo_Ubicaciones.Text = "Bodega para ubicación"
+        Me.Grupo_Ubicaciones.Text = "Bodega para ubicaciÃ³n"
         '
         'CmbBodega
         '
@@ -282,36 +283,36 @@ Partial Class Frm_ImpBarras_PorProducto
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.Grilla.RowHeadersVisible = False
         Me.Grilla.Size = New System.Drawing.Size(658, 306)
         Me.Grilla.TabIndex = 2
@@ -368,7 +369,7 @@ Partial Class Frm_ImpBarras_PorProducto
         Me.Btn_ConfPuertoXEtiquetaXEquipo.Size = New System.Drawing.Size(26, 25)
         Me.Btn_ConfPuertoXEtiquetaXEquipo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_ConfPuertoXEtiquetaXEquipo.TabIndex = 80
-        Me.Btn_ConfPuertoXEtiquetaXEquipo.Tooltip = "Seleccionar puerto de salida según etiqueta por equipo"
+        Me.Btn_ConfPuertoXEtiquetaXEquipo.Tooltip = "Seleccionar puerto de salida segÃºn etiqueta por equipo"
         '
         'Cmbetiquetas
         '
@@ -621,6 +622,16 @@ Partial Class Frm_ImpBarras_PorProducto
         Me.Chk_LimpiarListadoDeCodigosDespuesDeImprimir.TabIndex = 79
         Me.Chk_LimpiarListadoDeCodigosDespuesDeImprimir.Text = "Limpiar listado despues de imprimir"
         '
+        'Btn_ImpZebraPortatil
+        '
+        Me.Btn_ImpZebraPortatil.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_ImpZebraPortatil.ForeColor = System.Drawing.Color.Black
+        Me.Btn_ImpZebraPortatil.Image = CType(resources.GetObject("Btn_ImpZebraPortatil.Image"), System.Drawing.Image)
+        Me.Btn_ImpZebraPortatil.ImageAlt = CType(resources.GetObject("Btn_ImpZebraPortatil.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ImpZebraPortatil.Name = "Btn_ImpZebraPortatil"
+        Me.Btn_ImpZebraPortatil.Text = "Imp. Zebra portatil"
+        Me.Btn_ImpZebraPortatil.Visible = False
+        '
         'Frm_ImpBarras_PorProducto
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -646,7 +657,7 @@ Partial Class Frm_ImpBarras_PorProducto
         Me.Name = "Frm_ImpBarras_PorProducto"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Impresión de etiquetas por productos"
+        Me.Text = "ImpresiÃ³n de etiquetas por productos"
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Grupo_Ubicaciones.ResumeLayout(False)
         Me.GroupPanel2.ResumeLayout(False)
@@ -690,4 +701,5 @@ Partial Class Frm_ImpBarras_PorProducto
     Friend WithEvents Chk_LimpiarListadoDeCodigosDespuesDeImprimir As DevComponents.DotNetBar.Controls.CheckBoxX
     Public WithEvents Chk_Imprimir_Todas_Las_Ubicaciones As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Btn_ConfPuertoXEtiquetaXEquipo As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents Btn_ImpZebraPortatil As DevComponents.DotNetBar.ButtonItem
 End Class

@@ -2113,6 +2113,16 @@ Public Class Frm_Demonio_DTEMonitor
 
     Private Sub Btn_Pruebas_Click(sender As Object, e As EventArgs) Handles Btn_Pruebas.Click
 
+
+        'Dim _Cl_SIIRegCV As New Cl_SIIRegCV
+        ''_Cl_SIIRegCV.f
+
+        'Await _Cl_SIIRegCV.RecuperarRegistrosCompras_Certificado(RutEmpresa, pathCert, passCert, periodo)
+
+        '    MessageBox.Show("¡Fin del proceso!")
+
+        Return
+
         Chk_ConsultarTrackid.Checked = False
         Chk_EnviarCorreos.Checked = False
         Chk_EnviarCorreos.Checked = False

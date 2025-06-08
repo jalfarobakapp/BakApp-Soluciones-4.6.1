@@ -1,4 +1,6 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports System.Net.Sockets
+Imports System.Text
+Imports DevComponents.DotNetBar
 
 Public Class Frm_ImpBarras_PorProducto
 
@@ -272,10 +274,9 @@ Public Class Frm_ImpBarras_PorProducto
 
 #Region "PROCEDIMIENTOS"
 
-
 #Region "IMPRIMIR ETIQUETAS"
 
-    Sub Sb_Imprimir_Etiquetas()
+    Sub Sb_Imprimir_Etiquetas(_ImprimirAIP As Boolean)
 
         Try
 
@@ -369,7 +370,8 @@ Public Class Frm_ImpBarras_PorProducto
                                                   Chk_Imprimir_Todas_Las_Ubicaciones.Checked,
                                                   Chk_ImprimiPrecioFuturo.Checked,
                                                   Id_PrecioFuturo,
-                                                  _CodAlternativo)
+                                                  _CodAlternativo,
+                                                  _ImprimirAIP)
 
                         If Not String.IsNullOrEmpty(_Imp.Error) Then
                             If MessageBoxEx.Show(Me, _Imp.Error, "Problema al imprimir", MessageBoxButtons.OKCancel, MessageBoxIcon.Stop) <> DialogResult.OK Then
@@ -431,7 +433,7 @@ Public Class Frm_ImpBarras_PorProducto
     End Sub
 
     Private Sub BtnImprimirEtiqueta_Click(sender As Object, e As EventArgs) Handles BtnImprimirEtiqueta.Click
-        Sb_Imprimir_Etiquetas()
+        Sb_Imprimir_Etiquetas(False)
     End Sub
 
     Function Fx_Buscar_Producto(_Codigo As String) As DataRow
@@ -784,11 +786,6 @@ Public Class Frm_ImpBarras_PorProducto
         End If
 
     End Sub
-
-    Private Sub BtnConfiguracion_Click(sender As Object, e As EventArgs) Handles BtnConfiguracion.Click
-
-    End Sub
-
     Sub Sb_Agregar_Producto(ByRef _Tbl As DataTable,
                              _Codigo As String,
                              _Descripcion As String,
@@ -807,6 +804,14 @@ Public Class Frm_ImpBarras_PorProducto
 
         End With
 
+    End Sub
+
+    Private Sub BtnConfiguracion_Click(sender As Object, e As EventArgs) Handles BtnConfiguracion.Click
+
+    End Sub
+
+    Private Sub Btn_ImpZebraPortatil_Click(sender As Object, e As EventArgs) Handles Btn_ImpZebraPortatil.Click
+        Sb_Imprimir_Etiquetas(True)
     End Sub
 
 End Class

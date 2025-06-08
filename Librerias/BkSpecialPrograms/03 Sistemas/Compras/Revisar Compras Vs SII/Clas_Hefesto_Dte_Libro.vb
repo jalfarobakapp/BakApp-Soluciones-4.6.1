@@ -698,6 +698,10 @@ Public Class Clas_Hefesto_Dte_Libro
 
         Dim _Filas = _Tbl_Registro.Rows.Count
 
+        If Not CBool(_Filas) Then
+            Return ""
+        End If
+
         For Each _Fila As DataRow In _Tbl_Registro.Rows
 
             Dim _Error = String.Empty
@@ -758,10 +762,16 @@ Public Class Clas_Hefesto_Dte_Libro
 
             Try
 
+                'Try
+                '    _TipoDoc = _Fila.Item("TipoDte") '_ro NuloPorNro(_Arreglo(i, 1), 0)
+                'Catch ex As Exception
+                '    _TipoDoc = _Fila.Item("Tipo_Doc") '_ro NuloPorNro(_Arreglo(i, 1), 0)
+                'End Try
+
                 Try
                     _TipoDoc = _Fila.Item("TipoDte") '_ro NuloPorNro(_Arreglo(i, 1), 0)
                 Catch ex As Exception
-                    _TipoDoc = _Fila.Item("Tipo_Doc") '_ro NuloPorNro(_Arreglo(i, 1), 0)
+                    _TipoDoc = _Fila.Item("TipoDoc") '_ro NuloPorNro(_Arreglo(i, 1), 0)
                 End Try
 
                 _Rut_Proveedor = _Fila.Item("RUTProveedor")
@@ -1240,6 +1250,7 @@ Public Class Clas_Hefesto_Dte_Libro
                                                         _Year As Integer,
                                                         _Month As Integer) As Boolean
 
+        _Problemas = 0
         Dim _Periodo As String = _Year & "-" & Fx_Rellena_ceros(_Month, 2)
 
         Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Compras_en_SII Where Periodo = " & _Year & " And Mes = " & _Month
@@ -1247,18 +1258,26 @@ Public Class Clas_Hefesto_Dte_Libro
 
         Dim _SqlQuery = String.Empty
 
-        _SqlQuery = Fx_Traer_Informacion_Desde_Json(_Tbl_Registro_Compras, _Year, _Month)
+        If Not IsNothing(_Tbl_Registro_Compras) Then
 
-        If Not String.IsNullOrEmpty(_SqlQuery) Then
-            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery)
+            _SqlQuery = Fx_Traer_Informacion_Desde_Json(_Tbl_Registro_Compras, _Year, _Month)
+
+            If Not String.IsNullOrEmpty(_SqlQuery) Then
+                _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery)
+            End If
+
         End If
 
         _SqlQuery = String.Empty
 
-        _SqlQuery = Fx_Traer_Informacion_Desde_Json(_Tbl_Registro_Compras_Pendientes, _Year, _Month)
+        If Not IsNothing(_Tbl_Registro_Compras_Pendientes) Then
 
-        If Not String.IsNullOrEmpty(_SqlQuery) Then
-            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery)
+            _SqlQuery = Fx_Traer_Informacion_Desde_Json(_Tbl_Registro_Compras_Pendientes, _Year, _Month)
+
+            If Not String.IsNullOrEmpty(_SqlQuery) Then
+                _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery)
+            End If
+
         End If
 
         Consulta_sql = "Update " & _Global_BaseBk & "Zw_Compras_en_SII Set" & vbCrLf &
