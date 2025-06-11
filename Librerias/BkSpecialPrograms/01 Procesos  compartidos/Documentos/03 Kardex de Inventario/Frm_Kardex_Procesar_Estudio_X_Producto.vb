@@ -1,5 +1,4 @@
-﻿'Imports Lib_Bakapp_VarClassFunc
-Imports DevComponents.DotNetBar
+﻿Imports DevComponents.DotNetBar
 
 Public Class Frm_Kardex_Procesar_Estudio_X_Producto
 
@@ -182,7 +181,8 @@ Public Class Frm_Kardex_Procesar_Estudio_X_Producto
                     COMPROMETIDO,
                     COMPRANREC,
                     RECEPSFAC,
-                    PEDIDO As Double
+                    PEDIDO,
+                    TRANSITO As Double
 
                 Dim STFISICO_,
                     DEVENGADO_,
@@ -190,10 +190,12 @@ Public Class Frm_Kardex_Procesar_Estudio_X_Producto
                     COMPROMETIDO_,
                     COMPRANREC_,
                     RECEPSFAC_,
-                    PEDIDO_ As Double
+                    PEDIDO_,
+                    TRANSITO_ As Double
 
 
                 Dim i = 0
+
                 For Each row As DataGridViewRow In .Rows
 
                     i = row.Index
@@ -220,6 +222,9 @@ Public Class Frm_Kardex_Procesar_Estudio_X_Producto
 
                     PEDIDO = row.Cells("PEDIDO").Value
                     PEDIDO_ = PEDIDO_ + PEDIDO
+
+                    TRANSITO = row.Cells("TRANSITO").Value
+                    TRANSITO_ = TRANSITO_ + TRANSITO
 
                     Dim SUBTIDO As String = row.Cells("SUBTIDO").Value
 
@@ -271,6 +276,12 @@ Public Class Frm_Kardex_Procesar_Estudio_X_Producto
                             .Rows.Item(i).Cells("Spedido").Value = _FlechaDerecha
                         End If
 
+                        If CBool(TRANSITO) Then
+                            '.Rows.Item(i).Cells("Spedido").Style.Font = New Font("Tahoma", 8, FontStyle.Bold)
+                            '.Rows.Item(i).Cells("Spedido").Style.ForeColor = Color.Red
+                            .Rows.Item(i).Cells("Stransito").Value = _FlechaDerecha
+                        End If
+
                     End If
 
                     If Not _Marcar_dos Then
@@ -282,6 +293,7 @@ Public Class Frm_Kardex_Procesar_Estudio_X_Producto
                         .Rows.Item(i).Cells("COMPRANREC").Value = COMPRANREC_
                         .Rows.Item(i).Cells("RECEPSFAC").Value = RECEPSFAC_
                         .Rows.Item(i).Cells("PEDIDO").Value = PEDIDO_
+                        .Rows.Item(i).Cells("TRANSITO").Value = TRANSITO_
                         .Rows.Item(i).Cells("Orden").Value = i
 
                     End If
@@ -323,6 +335,7 @@ Public Class Frm_Kardex_Procesar_Estudio_X_Producto
                         COMPRANREC = _TblMaest.Rows(0).Item("STDV" & _Unidad) + -COMPRANREC_
                         RECEPSFAC = _TblMaest.Rows(0).Item("RECENOFAC" & _Unidad) + -RECEPSFAC_
                         PEDIDO = _TblMaest.Rows(0).Item("STOCNV" & _Unidad & "C") + -PEDIDO_
+                        TRANSITO = _TblMaest.Rows(0).Item("STTR" & _Unidad) + -TRANSITO_
 
                         .Rows.Item(0).Cells("STFISICO").Value = STFISICO
                         .Rows.Item(0).Cells("DEVENGADO").Value = DEVENGADO
@@ -331,6 +344,7 @@ Public Class Frm_Kardex_Procesar_Estudio_X_Producto
                         .Rows.Item(0).Cells("COMPRANREC").Value = COMPRANREC
                         .Rows.Item(0).Cells("RECEPSFAC").Value = RECEPSFAC
                         .Rows.Item(0).Cells("PEDIDO").Value = PEDIDO
+                        .Rows.Item(0).Cells("TRANSITO").Value = TRANSITO
 
                     End If
 

@@ -537,6 +537,24 @@ Public Class Frm_Kardex_Informe_X_Producto
             .Columns("PEDIDO").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
+            .Columns("Stransito").DisplayIndex = 17
+            .Columns("Stransito").HeaderText = ""
+            .Columns("Stransito").Width = 20
+            .Columns("Stransito").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Stransito").Visible = True
+            .Columns("Stransito").DefaultCellStyle.ForeColor = Rojo
+            .Columns("Stransito").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("TRANSITO").DisplayIndex = 18
+            .Columns("TRANSITO").HeaderText = "Transito"
+            .Columns("TRANSITO").Width = 70
+            .Columns("TRANSITO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("TRANSITO").DefaultCellStyle.Format = _FormatoPrecio '"###,##.###"
+            .Columns("TRANSITO").Visible = True
+            .Columns("TRANSITO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
         End With
 
     End Sub
@@ -829,7 +847,8 @@ Public Class Frm_Kardex_Informe_X_Producto
            _Columname = "Scomprometido" Or
            _Columname = "Scompranorecep" Or
            _Columname = "Srecesfact" Or
-           _Columname = "Spedido" Then
+           _Columname = "Spedido" Or
+           _Columname = "Stransito" Then
 
             If Not String.IsNullOrWhiteSpace(_Fila.Cells(_Columname).Value) Then
 

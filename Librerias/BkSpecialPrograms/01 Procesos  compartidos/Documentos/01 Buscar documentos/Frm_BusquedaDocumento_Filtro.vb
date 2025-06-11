@@ -320,10 +320,14 @@ Public Class Frm_BusquedaDocumento_Filtro
 
         AddHandler Chk_MostrarSoloDocClientesDelVendedor.CheckedChanged, AddressOf Chk_MostrarSoloDocClientesDelVendedor_CheckedChanged
 
-        If _Global_Row_Configuracion_General.Item("RestringirVisualizacionDeDocumentos") Then
-            _Ls_DocumentosPermitidos = Fx_Listar_Documentos_Permitidos(FUNCIONARIO)
-            Wrn_MostrarSoloDocClientesDelVendedor.Visible = True
-        End If
+        Try
+            If _Global_Row_Configuracion_General.Item("RestringirVisualizacionDeDocumentos") Then
+                _Ls_DocumentosPermitidos = Fx_Listar_Documentos_Permitidos(FUNCIONARIO)
+                Wrn_MostrarSoloDocClientesDelVendedor.Visible = True
+            End If
+        Catch ex As Exception
+            Wrn_MostrarSoloDocClientesDelVendedor.Visible = False
+        End Try
 
     End Sub
 
@@ -681,7 +685,15 @@ Public Class Frm_BusquedaDocumento_Filtro
             _Sql_RetMerca = "And IDMAEEDO In (Select IDMAEEDO From MAEEDOOB WITH ( NOLOCK ) Where DIENDESP Like '" & Txt_CodRetirador.Tag.Trim & "')" & vbCrLf
         End If
 
-        If _Global_Row_Configuracion_General.Item("RestringirVisualizacionDeDocumentos") Then
+        Dim _RestringirVisualizacionDeDocumentos As Boolean
+
+        Try
+            _RestringirVisualizacionDeDocumentos = _Global_Row_Configuracion_General.Item("RestringirVisualizacionDeDocumentos")
+        Catch ex As Exception
+            _RestringirVisualizacionDeDocumentos = False
+        End Try
+
+        If _RestringirVisualizacionDeDocumentos Then
 
             If Not CBool(_Ls_DocumentosPermitidos.Count) Then
 

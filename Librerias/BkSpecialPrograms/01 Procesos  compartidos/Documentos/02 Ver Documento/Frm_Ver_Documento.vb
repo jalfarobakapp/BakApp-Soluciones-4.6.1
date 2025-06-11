@@ -2820,6 +2820,7 @@ Public Class Frm_Ver_Documento
         Dim _Pregunta = MessageBoxEx.Show(Me, "¿Desea adjuntar archivo PDF?", "Adjuntar archivo PDF", vbYesNoCancel, MessageBoxIcon.Question)
 
         Dim _Archivo_PDF_Adjunto As String
+        Dim _CrearHtml = True
 
         If _Pregunta = DialogResult.Yes Then
 
@@ -2866,38 +2867,40 @@ Public Class Frm_Ver_Documento
 
             If _Existe_File Then
                 _Archivo_PDF_Adjunto = _Pdf_Adjunto.Pro_Full_Path_Archivo_PDF & "\" & _Pdf_Adjunto.Pro_Nombre_Archivo & ".pdf"
+                _CrearHtml = False
+            Else
+                MessageBoxEx.Show(Me, _Error_Pdf, "Problema al crear PDF", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             End If
 
         End If
 
-        'ElseIf _Pregunta = DialogResult.No Then
-        '    Sb_Enviar_Doc_Por_Mail(_Idmaeedo, _Email_Para, "", "", Me)
-        'Else
-        '    Return
+        If _CrearHtml Then
 
-        Dim Crea_Htm As New Clase_Crear_Documento_Htm
-        Dim _Ruta As String = AppPath() & "\Data\" & RutEmpresa & "\Tmp"
+            Dim Crea_Htm As New Clase_Crear_Documento_Htm
+            Dim _Ruta As String = AppPath() & "\Data\" & RutEmpresa & "\Tmp"
 
-        Dim fic As String = _Ruta & "\Documento.Htm"
+            Dim fic As String = _Ruta & "\Documento.Htm"
 
-        Dim _Mostrar_Precios As Boolean
+            Dim _Mostrar_Precios As Boolean
 
-        If MessageBoxEx.Show(Me, "¿Desea mostrar los precios?", "Enviar documento", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-            _Mostrar_Precios = True
-        End If
+            If MessageBoxEx.Show(Me, "¿Desea mostrar los precios?", "Enviar documento", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+                _Mostrar_Precios = True
+            End If
 
-        If Crea_Htm.Fx_Crear_Documento_Htm(_Idmaeedo, _Ruta, _Mostrar_Precios) Then
+            If Crea_Htm.Fx_Crear_Documento_Htm(_Idmaeedo, _Ruta, _Mostrar_Precios) Then
 
-            Dim _Cuerpo_Html = LeeArchivo(fic)
+                Dim _Cuerpo_Html = LeeArchivo(fic)
 
-            _Cuerpo_Html = Replace(_Cuerpo_Html, "&aacute", "á")
-            _Cuerpo_Html = Replace(_Cuerpo_Html, "&eacute", "é")
-            _Cuerpo_Html = Replace(_Cuerpo_Html, "&iacute", "í")
-            _Cuerpo_Html = Replace(_Cuerpo_Html, "&oacute", "ó")
-            _Cuerpo_Html = Replace(_Cuerpo_Html, "&uacute", "ú")
-            _Cuerpo_Html = Replace(_Cuerpo_Html, "&ntilde", "ñ")
-            _Cuerpo_Html = Replace(_Cuerpo_Html, "&Ntilde", "Ñ")
-            _Cuerpo = _Cuerpo_Html
+                _Cuerpo_Html = Replace(_Cuerpo_Html, "&aacute", "á")
+                _Cuerpo_Html = Replace(_Cuerpo_Html, "&eacute", "é")
+                _Cuerpo_Html = Replace(_Cuerpo_Html, "&iacute", "í")
+                _Cuerpo_Html = Replace(_Cuerpo_Html, "&oacute", "ó")
+                _Cuerpo_Html = Replace(_Cuerpo_Html, "&uacute", "ú")
+                _Cuerpo_Html = Replace(_Cuerpo_Html, "&ntilde", "ñ")
+                _Cuerpo_Html = Replace(_Cuerpo_Html, "&Ntilde", "Ñ")
+                _Cuerpo = _Cuerpo_Html
+
+            End If
 
         End If
 

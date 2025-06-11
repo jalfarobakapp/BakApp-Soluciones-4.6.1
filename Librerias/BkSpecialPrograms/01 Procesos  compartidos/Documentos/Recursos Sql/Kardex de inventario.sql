@@ -115,6 +115,16 @@ SELECT #Top#
             END
        ELSE 0     
        END AS 'PEDIDO',
+       Cast('' As Varchar(1)) As 'Stransito',
+       CASE 
+	   WHEN MAEDDO.TIDO In ('GTI','GDI','GRI') THEN
+			CASE 
+				WHEN MAEDDO.TIDO = 'GTI' Or (MAEDDO.TIDO = 'GRI' And MAEEDO.SUBTIDO = 'GTI') THEN MAEDDO.CAPRCO1
+				WHEN MAEDDO.TIDO = 'GRI' And MAEDDO.TIDOPA IN ('GTI','GDI') THEN MAEDDO.CAPRCO1 *-1
+				ELSE 0
+			END
+	   ELSE 0
+       END AS 'TRANSITO',
        MAEDDO.TIDOPA,
        MAEDDO.NUDOPA,
     -- MAEDDO.CAPRAD#Ud#,
