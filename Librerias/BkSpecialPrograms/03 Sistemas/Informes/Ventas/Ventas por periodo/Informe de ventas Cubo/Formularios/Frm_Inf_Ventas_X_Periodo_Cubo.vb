@@ -4336,7 +4336,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     Private Sub Btn_Nota_de_venta_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Nota_de_venta.Click
 
-        If Fx_Tiene_Permiso(Me, "Bkp00041") Then
+        If Fx_Tiene_Permiso(Me, "Bkp00041") Then 'Doc00150
 
             Dim Fm_Post As New Frm_Formulario_Documento("NVV", csGlobales.Enum_Tipo_Documento.Venta, False)
             'Fm_Post.Btn_Minimizar.Visible = True

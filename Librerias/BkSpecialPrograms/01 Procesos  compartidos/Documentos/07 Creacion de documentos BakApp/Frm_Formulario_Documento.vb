@@ -22070,7 +22070,7 @@ Public Class Frm_Formulario_Documento
 
         'Sb_Actualizar_Permisos_Necesarios_Del_Documento()
         Sb_Marcar_Grilla()
-        Sb_Botones_Activos(False, False)
+        Sb_Botones_Activos(False, True)
 
     End Sub
 

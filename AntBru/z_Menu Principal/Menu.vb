@@ -1344,6 +1344,11 @@ Public Class Menu
 
     Private Sub Btn_PPP_Click(sender As Object, e As EventArgs) Handles Btn_PPP.Click
 
+        Dim Fm As New Frm_Recalculo_PPPxProd
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+        Return
+
         Dim _Codigo As String = "PMPMSH2X75LEV"
         Dim _FechaTope As Date = FechaDelServidor()
 

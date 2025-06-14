@@ -123,11 +123,15 @@ Public Class Frm_Validaciones
 
                 Lv_ListaDeMensajes.Items.Add(item)
 
-                If String.IsNullOrEmpty(resp.Tag) Then
-                    item.Tag = resp.Mensaje & vbCrLf & resp.Detalle
-                Else
-                    item.Tag = resp.Tag
-                End If
+                Try
+                    If String.IsNullOrEmpty(resp.Tag) Then
+                        item.Tag = resp.Mensaje & vbCrLf & resp.Detalle
+                    Else
+                        item.Tag = resp.Tag
+                    End If
+                Catch ex As Exception
+
+                End Try
 
             Next
 

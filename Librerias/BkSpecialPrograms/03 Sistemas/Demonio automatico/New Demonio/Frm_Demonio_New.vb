@@ -1,6 +1,8 @@
 ﻿Imports System.IO
 Imports System.Threading
+Imports DevComponents.DotNetBar
 Imports HEFSIIREGCOMPRAVENTAS.LIB
+Imports Newtonsoft.Json
 
 Public Class Frm_Demonio_New
 
@@ -1320,71 +1322,172 @@ Public Class Frm_Demonio_New
                 Dim _Periodo = _Fecha.Year
                 Dim _Mes = _Fecha.Month
                 Dim _Reenviar_Documentos_al_SII = False
+                Dim _periodo2 As String = _Periodo & "-" & Fx_Rellena_ceros(_Mes, 2)
 
-                'Dim _RecuperarResumenVentasRegistro As HefRespuesta
-                'Dim _RecuperarVentasRegistro As HefRespuesta
-                'Dim _RecuperarResumenCompras As HefRespuesta
-                Dim _RecuperarComprasRegistro As HefRespuesta
-                Dim _RecuperarComprasPendientes As HefRespuesta
-                'Dim _RecuperarComprasNoIncluir As HefRespuesta
-                'Dim _RecuperarComprasReclamadas As HefRespuesta
+                Dim _Directorio_SIIRegCV = Application.StartupPath & "\SIIRegCV\SIIRegCV.exe"
+                Dim _Ejecutar As String = _Directorio_SIIRegCV & Space(1) & "" & _periodo2 & " True"
+                Dim _Registro As String = String.Empty
 
-                Dim _Registro As String
+                Dim _Ejecutar_SIIRegCv As Boolean = True
 
-                _Registro = "Recuperando los registros de compras desde el SII..."
-
-                Sb_ActualizarDetalleListview("Importar DTE SII", _Registro)
-
-                Application.DoEvents()
-
-                _RecuperarComprasRegistro = _Cl_Hefesto_Dte_Libro.Fx_RecuperarComprasRegistro(_Periodo, _Mes)
-                Thread.Sleep(2000)
-                _Registro = "Es correcto: " & _RecuperarComprasRegistro.EsCorrecto
-                Application.DoEvents()
-                Thread.Sleep(2000)
-                _Registro = "Mensaje    : " & _RecuperarComprasRegistro.Mensaje
-                Application.DoEvents()
-
-                _RecuperarComprasPendientes = _Cl_Hefesto_Dte_Libro.Fx_RecuperarComprasPendientes(_Periodo, _Mes)
-                Thread.Sleep(2000)
-                _Registro = "Es correcto: " & _RecuperarComprasPendientes.EsCorrecto
-                Application.DoEvents()
-                Thread.Sleep(2000)
-                _Registro = "Mensaje    : " & _RecuperarComprasPendientes.Mensaje
-                Application.DoEvents()
-
-                RegistrarLog(_Registro)
-                MostrarRegistro(_Registro)
-
-                If _RecuperarComprasRegistro.EsCorrecto And _RecuperarComprasPendientes.EsCorrecto Then
-
-                    Dim _Fichero1 As String = File.ReadAllText(_RecuperarComprasRegistro.Directorio)
-                    Dim _Fichero2 As String = File.ReadAllText(_RecuperarComprasPendientes.Directorio)
-
-                    Dim _Tbl_Registro_Compras As DataTable = Fx_TblFromJson(_Fichero1, "RegistroCompras")
-                    Dim _Tbl_Registro_Compras_Pendientes As DataTable = Fx_TblFromJson(_Fichero2, "RegistroComprasPendientes")
-
-                    Thread.Sleep(2000)
-
-                    _Cl_Hefesto_Dte_Libro.Fx_Importar_Archivo_SII_Compras_Desde_Json(_Tbl_Registro_Compras,
-                                                                          _Tbl_Registro_Compras_Pendientes,
-                                                                          _Periodo, _Mes)
-
-                    'Lbl_LibroDTESII.Text = "Monitoreo Libro DTE desde SII"
-                Else
-                    _Registro = "Problema al descargar los archivos desde el SII" & vbCrLf & _RecuperarComprasRegistro.Mensaje & "-" & _RecuperarComprasRegistro.Detalle
+                If Not File.Exists(_Directorio_SIIRegCV) Then
+                    _Registro = "No se encuentra el archivo requerido: " & _Directorio_SIIRegCV
                     RegistrarLog(_Registro)
                     MostrarRegistro(_Registro)
+                    _Cl_Hefesto_Dte_Libro.Procesando = False
+                    _Cl_Hefesto_Dte_Libro.Ejecutar = False
+                    Sb_ActualizarDetalleListview("Importar DTE SII", _DProgramaciones.Sp_ImporDTESII.Resumen)
+                    _Ejecutar_SIIRegCv = False
+                End If
+
+                Dim _EjecucionSinProblemas As Boolean
+
+                If _Ejecutar_SIIRegCv Then
+
+                    _Registro = "Recuperando los registros de compras desde el SII..."
+
+                    Try
+                        Shell(_Ejecutar, AppWinStyle.NormalFocus, True)
+                        _EjecucionSinProblemas = True
+                    Catch ex As Exception
+                        _Registro = ex.Message
+                        RegistrarLog(_Registro)
+                        MostrarRegistro(_Registro)
+                        _Cl_Hefesto_Dte_Libro.Procesando = False
+                        _Cl_Hefesto_Dte_Libro.Ejecutar = False
+                        Sb_ActualizarDetalleListview("Importar DTE SII", _DProgramaciones.Sp_ImporDTESII.Resumen)
+                    End Try
+
+                End If
+
+                If _EjecucionSinProblemas Then
+
+                    Dim _Dir_ComprasRegistro As String = Application.StartupPath & "\SIIRegCV\Empresas\" & RutEmpresa & "\Resultados\Compras\" & _periodo2 & "\RegistrosCompras.json"
+                    Dim _Dir_ComprasRegistroPendientes As String = Application.StartupPath & "\SIIRegCV\Empresas\" & RutEmpresa & "\Resultados\Compras\" & _periodo2 & "\RegistrosComprasPendientes.json"
+
+                    Dim _Tbl_Registro_Compras As DataTable
+                    Dim _Tbl_Registro_Compras_Pendientes As DataTable
+
+                    If File.Exists(_Dir_ComprasRegistro) Then
+                        Dim _Fichero1 As String = File.ReadAllText(_Dir_ComprasRegistro)
+                        ' Convierte el contenido JSON de _Fichero1 a un DataSet usando Newtonsoft.Json
+                        Dim _DataSet As New DataSet()
+                        _DataSet = JsonConvert.DeserializeObject(Of DataSet)(_Fichero1)
+                        _Tbl_Registro_Compras = _DataSet.Tables("RegistroCompras")
+                    Else
+                        _Tbl_Registro_Compras = Nothing
+                    End If
+
+                    If File.Exists(_Dir_ComprasRegistroPendientes) Then
+                        Dim _Fichero1 As String = File.ReadAllText(_Dir_ComprasRegistroPendientes)
+                        ' Convierte el contenido JSON de _Fichero1 a un DataSet usando Newtonsoft.Json
+                        Dim _DataSet As New DataSet()
+                        _DataSet = JsonConvert.DeserializeObject(Of DataSet)(_Fichero1)
+                        _Tbl_Registro_Compras_Pendientes = _DataSet.Tables("RegistroCompras")
+                    Else
+                        _Tbl_Registro_Compras_Pendientes = Nothing
+                    End If
+
+                    _Cl_Hefesto_Dte_Libro.Fx_Importar_Archivo_SII_Compras_Desde_Json(_Tbl_Registro_Compras,
+                                                                                     _Tbl_Registro_Compras_Pendientes,
+                                                                                     _Periodo, _Mes)
+
+                    Sb_ActualizarDetalleListview("Importar DTE SII", _DProgramaciones.Sp_ImporDTESII.Resumen)
+
                 End If
 
                 _Cl_Hefesto_Dte_Libro.Procesando = False
                 _Cl_Hefesto_Dte_Libro.Ejecutar = False
 
-                Sb_ActualizarDetalleListview("Importar DTE SII", _DProgramaciones.Sp_ImporDTESII.Resumen)
-
             End If
 
         End If
+
+        'If _Cl_Hefesto_Dte_Libro.Ejecutar Then
+
+        '    If Not _Cl_Hefesto_Dte_Libro.Procesando Then
+
+        '        _Cl_Hefesto_Dte_Libro.Procesando = True
+
+        '        Dim _Lbl As New Label
+        '        _Cl_Hefesto_Dte_Libro.Estatus = _Lbl
+
+        '        Dim Fm As New Frm_Recibir_Correos_DTE
+        '        Fm.ActivacionAutomatica = True
+        '        Fm.ShowDialog(Me)
+        '        Fm.Dispose()
+
+        '        Dim _Fecha As Date = DtpFecharevision.Value
+        '        Dim _Fecha_Anterior As Date = DateAdd(DateInterval.Month, -1, _Fecha)
+
+        '        Dim _Periodo = _Fecha.Year
+        '        Dim _Mes = _Fecha.Month
+        '        Dim _Reenviar_Documentos_al_SII = False
+
+        '        'Dim _RecuperarResumenVentasRegistro As HefRespuesta
+        '        'Dim _RecuperarVentasRegistro As HefRespuesta
+        '        'Dim _RecuperarResumenCompras As HefRespuesta
+        '        Dim _RecuperarComprasRegistro As HefRespuesta
+        '        Dim _RecuperarComprasPendientes As HefRespuesta
+        '        'Dim _RecuperarComprasNoIncluir As HefRespuesta
+        '        'Dim _RecuperarComprasReclamadas As HefRespuesta
+
+        '        Dim _Registro As String
+
+        '        _Registro = "Recuperando los registros de compras desde el SII..."
+
+        '        Sb_ActualizarDetalleListview("Importar DTE SII", _Registro)
+
+        '        Application.DoEvents()
+
+        '        _RecuperarComprasRegistro = _Cl_Hefesto_Dte_Libro.Fx_RecuperarComprasRegistro(_Periodo, _Mes)
+        '        Thread.Sleep(2000)
+        '        _Registro = "Es correcto: " & _RecuperarComprasRegistro.EsCorrecto
+        '        Application.DoEvents()
+        '        Thread.Sleep(2000)
+        '        _Registro = "Mensaje    : " & _RecuperarComprasRegistro.Mensaje
+        '        Application.DoEvents()
+
+        '        _RecuperarComprasPendientes = _Cl_Hefesto_Dte_Libro.Fx_RecuperarComprasPendientes(_Periodo, _Mes)
+        '        Thread.Sleep(2000)
+        '        _Registro = "Es correcto: " & _RecuperarComprasPendientes.EsCorrecto
+        '        Application.DoEvents()
+        '        Thread.Sleep(2000)
+        '        _Registro = "Mensaje    : " & _RecuperarComprasPendientes.Mensaje
+        '        Application.DoEvents()
+
+        '        RegistrarLog(_Registro)
+        '        MostrarRegistro(_Registro)
+
+        '        If _RecuperarComprasRegistro.EsCorrecto And _RecuperarComprasPendientes.EsCorrecto Then
+
+        '            Dim _Fichero1 As String = File.ReadAllText(_RecuperarComprasRegistro.Directorio)
+        '            Dim _Fichero2 As String = File.ReadAllText(_RecuperarComprasPendientes.Directorio)
+
+        '            Dim _Tbl_Registro_Compras As DataTable = Fx_TblFromJson(_Fichero1, "RegistroCompras")
+        '            Dim _Tbl_Registro_Compras_Pendientes As DataTable = Fx_TblFromJson(_Fichero2, "RegistroComprasPendientes")
+
+        '            Thread.Sleep(2000)
+
+        '            _Cl_Hefesto_Dte_Libro.Fx_Importar_Archivo_SII_Compras_Desde_Json(_Tbl_Registro_Compras,
+        '                                                                  _Tbl_Registro_Compras_Pendientes,
+        '                                                                  _Periodo, _Mes)
+
+        '            'Lbl_LibroDTESII.Text = "Monitoreo Libro DTE desde SII"
+        '        Else
+        '            _Registro = "Problema al descargar los archivos desde el SII" & vbCrLf & _RecuperarComprasRegistro.Mensaje & "-" & _RecuperarComprasRegistro.Detalle
+        '            RegistrarLog(_Registro)
+        '            MostrarRegistro(_Registro)
+        '        End If
+
+        '        _Cl_Hefesto_Dte_Libro.Procesando = False
+        '        _Cl_Hefesto_Dte_Libro.Ejecutar = False
+
+        '        Sb_ActualizarDetalleListview("Importar DTE SII", _DProgramaciones.Sp_ImporDTESII.Resumen)
+
+        '    End If
+
+        'End If
 
 #End Region
 

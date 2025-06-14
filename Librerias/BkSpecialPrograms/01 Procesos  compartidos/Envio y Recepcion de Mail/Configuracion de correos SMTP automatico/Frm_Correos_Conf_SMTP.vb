@@ -138,16 +138,16 @@ Public Class Frm_Correos_Conf_SMTP
     End Function
 
     Private Function Fx_Test_envio_correo_Mail3(Fm As Form,
-                                          _Host_SMT As String,
-                                          _Usuario As String,
-                                          _Contrasena As String,
-                                          _Para As String,
-                                          _CC As String,
-                                          _Asunto As String,
-                                          _Cuerpo As String,
-                                          _StrAttach() As String,
-                                          Optional _Puerto As String = "25",
-                                          Optional _EnableSsl As Boolean = True) As LsValiciones.Mensajes
+                                                _Host_SMT As String,
+                                                _Usuario As String,
+                                                _Contrasena As String,
+                                                _Para As String,
+                                                _CC As String,
+                                                _Asunto As String,
+                                                _Cuerpo As String,
+                                                _StrAttach() As String,
+                                                Optional _Puerto As String = "25",
+                                                Optional _EnableSsl As Boolean = True) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
