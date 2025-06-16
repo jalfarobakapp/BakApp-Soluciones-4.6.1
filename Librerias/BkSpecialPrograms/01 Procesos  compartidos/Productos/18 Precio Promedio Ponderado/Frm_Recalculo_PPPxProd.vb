@@ -103,7 +103,7 @@ Public Class Frm_Recalculo_PPPxProd
             _DisplayIndex += 1
 
             .Columns("Estado").HeaderText = "Estado"
-            .Columns("Estado").Width = 50
+            .Columns("Estado").Width = 80
             .Columns("Estado").Visible = True
             .Columns("Estado").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
@@ -161,7 +161,7 @@ Public Class Frm_Recalculo_PPPxProd
             _DisplayIndex += 1
 
             .Columns("NOKOPR").HeaderText = "Descripción"
-            .Columns("NOKOPR").Width = 250
+            .Columns("NOKOPR").Width = 300
             .Columns("NOKOPR").Visible = True
             .Columns("NOKOPR").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
