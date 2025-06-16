@@ -50,6 +50,8 @@ Public Class Frm_Recalculo_PPPxProd
 
         '_FechaTope = _Global_Row_Configp.Item("FECHINIPPP")
 
+        AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+
         Sb_Actualizar_Grilla()
 
     End Sub
@@ -73,9 +75,9 @@ Public Class Frm_Recalculo_PPPxProd
             End If
         End If
 
-        Consulta_sql = "Select Cast(0 As Bit) As Chk,Cast('' As Varchar(10)) As Estado,MAEPREM.PMIN,MAEPREM.PM" &
-                       ",MAEPREM.FEPM,Cast('" & _FechaTope & "' As Datetime) As 'FechaTope',Cast(0 As Float) As New_PM,MAEPR.KOPR,MAEPR.NOKOPR," &
-                       "MAEPR.UD01PR,MAEPR.UD02PR,MAEPR.KOPRRA,MAEPR.KOPRTE,MAEPR.FMPR,MAEPR.PFPR,MAEPR.HFPR,MAEPR.MRPR,RUPR" & vbCrLf &
+        Consulta_sql = "Select Cast(1 As Bit) As Chk,Cast('' As Varchar(10)) As Estado,MAEPREM.PMIN,MAEPREM.PM" &
+                       ",MAEPREM.FEPM,Cast('" & _FechaTope & "' As Datetime) As 'FechaTope',Cast(0 As Float) As NewPM,MAEPR.KOPR,MAEPR.NOKOPR," &
+                       "MAEPR.UD01PR,MAEPR.UD02PR,Cast(0 As Float) As Sum_Stock,Cast(0 As Float) As Stexistini " & vbCrLf &
                        "From MAEPR With ( Nolock )" & vbCrLf &
                        "Inner Join MAEPREM ON MAEPREM.KOPR=MAEPR.KOPR And MAEPREM.EMPRESA='" & ModEmpresa & "'" & vbCrLf &
                        "Where MAEPR.TIPR = 'FPN'" & vbCrLf &
@@ -125,6 +127,30 @@ Public Class Frm_Recalculo_PPPxProd
             .Columns("PM").DefaultCellStyle.Format = "$ ###,##0.##"
             .Columns("PM").Visible = True
             .Columns("PM").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("NewPM").Width = 80
+            .Columns("NewPM").HeaderText = "Nuevo PPP"
+            .Columns("NewPM").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("NewPM").DefaultCellStyle.Format = "$ ###,##0.##"
+            .Columns("NewPM").Visible = True
+            .Columns("NewPM").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            '.Columns("Sum_Stock").Width = 80
+            '.Columns("Sum_Stock").HeaderText = "Sum. Stock"
+            '.Columns("Sum_Stock").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            '.Columns("Sum_Stock").DefaultCellStyle.Format = "###,##0.##"
+            '.Columns("Sum_Stock").Visible = True
+            '.Columns("Sum_Stock").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
+
+            .Columns("Stexistini").Width = 80
+            .Columns("Stexistini").HeaderText = "Stock Ini."
+            .Columns("Stexistini").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Stexistini").DefaultCellStyle.Format = "###,##0.##"
+            .Columns("Stexistini").Visible = True
+            .Columns("Stexistini").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("FechaTope").HeaderText = "FIR PPP"
@@ -226,27 +252,124 @@ Public Class Frm_Recalculo_PPPxProd
 
         Dim _LsMensajes As New List(Of LsValiciones.Mensajes)
 
-        ' Ejemplo de procesamiento de los productos seleccionados
-        For Each fila As DataGridViewRow In productosSeleccionados
+        ' Configurar la barra de progreso
+        Progreso_XProducto.Minimum = 0
+        Progreso_XProducto.Maximum = productosSeleccionados.Count
+        Progreso_XProducto.Value = 0
+        Progreso_XProducto.Visible = True
+
+        Dim _UltTabla As DataTable
+
+        For i As Integer = 0 To productosSeleccionados.Count - 1
+            Dim fila As DataGridViewRow = productosSeleccionados(i)
+
+            ' Establecer el foco en la fila actual
+            Grilla.ClearSelection()
+            fila.Selected = True
+            Grilla.CurrentCell = fila.Cells("Chk")
 
             Dim _Codigo As String = fila.Cells("KOPR").Value.ToString()
+            Dim _Descripcion As String = fila.Cells("NOKOPR").Value.ToString()
 
             Dim _Mensaje As LsValiciones.Mensajes
 
-            _Mensaje = Cl_Pm.Fx_RecalcularPPPxPR2(_Codigo, _FechaTope, ProgressBarX1)
+            _Mensaje = Cl_Pm.Fx_RecalcularPPPxPR2(_Codigo, _Descripcion, _FechaTope, Progreso_XDetalle)
 
             _LsMensajes.Add(_Mensaje)
 
             fila.Cells("Estado").Value = If(_Mensaje.EsCorrecto, "Procesado", "Error")
+            fila.Cells("NewPM").Value = If(_Mensaje.EsCorrecto, Cl_Pm.Pm, 0.0)
+            fila.Cells("Stexistini").Value = Cl_Pm.Stexistini
+            'fila.Cells("Sum_Stock").Value = Cl_Pm.Sum_Stock
+
+            _UltTabla = _Mensaje.Tag
+
+            ' Actualizar barra de progreso y mostrar estado
+            Progreso_XProducto.Value = i + 1
+            Dim porcentaje As Integer = CInt(((i + 1) / productosSeleccionados.Count) * 100)
+            'Progreso_XProducto.Refresh()
+            'Progreso_XProducto.CreateGraphics().DrawString(
+            '                                                $"Procesando producto {i + 1} de {productosSeleccionados.Count}",
+            '                                                Progreso_XProducto.Font,
+            '                                                Brushes.Black,
+            '                                                New PointF(10, Progreso_XProducto.Height \ 2 - 7))
+            Progreso_XProducto.Text = "Procesando producto " & FormatNumber(i + 1, 0) & " de " & FormatNumber(productosSeleccionados.Count, 0) & "  (" & porcentaje & "%)"
+            Application.DoEvents()
+
+            ' Pseudocódigo:
+            ' 1. Calcular el ancho de la barra de progreso según el porcentaje.
+            ' 2. Dibujar el texto dos veces:
+            '    a) Primero en negro (fuera de la barra).
+            '    b) Luego en blanco, recortando el área cubierta por la barra.
+            ' 3. Usar Graphics.MeasureString para obtener el tamaño del texto.
+            ' 4. Usar Graphics.Clip o DrawString con RectangleF para limitar el área.
+
+            '' Reemplaza la línea actual por el siguiente bloque:
+            'Dim g As Graphics = Progreso_XProducto.CreateGraphics()
+            'Dim texto As String = $"Procesando producto {i + 1} de {productosSeleccionados.Count} ({porcentaje}%)"
+            'Dim fuente As Font = Progreso_XProducto.Font
+            'Dim brushNegro As Brush = Brushes.Black
+            'Dim brushBlanco As Brush = Brushes.White
+            'Dim rectTexto As RectangleF = New RectangleF(10, Progreso_XProducto.Height \ 2 - 7, Progreso_XProducto.Width - 20, Progreso_XProducto.Height)
+            'Dim tamTexto As SizeF = g.MeasureString(texto, fuente)
+            'Dim anchoBarra As Integer = CInt(Progreso_XProducto.Width * (porcentaje / 100.0))
+
+            '' Dibuja el texto en negro (todo el texto)
+            'g.DrawString(texto, fuente, brushNegro, rectTexto)
+
+            '' Dibuja el texto en blanco solo sobre la parte cubierta por la barra
+            'If anchoBarra > 0 Then
+            '    Dim rectBarra As RectangleF = New RectangleF(10, Progreso_XProducto.Height \ 2 - 7, anchoBarra - 10, tamTexto.Height)
+            '    g.SetClip(rectBarra)
+            '    g.DrawString(texto, fuente, brushBlanco, rectTexto)
+            '    g.ResetClip()
+            'End If
+
+            Application.DoEvents()
 
         Next
 
+        Progreso_XProducto.Visible = False
+
+        If Not IsNothing(_UltTabla) Then
+            ExportarTabla_JetExcel_Tabla(_UltTabla, Me, "Revisar PPP producto detalle")
+        End If
+
+        '' Ejemplo de procesamiento de los productos seleccionados
+        'For Each fila As DataGridViewRow In productosSeleccionados
+
+        '    ' Establecer el foco en la fila actual
+        '    Grilla.ClearSelection()
+        '    fila.Selected = True
+        '    Grilla.CurrentCell = fila.Cells("Chk")
+        '    'Grilla.FirstDisplayedScrollingRowIndex = fila.Index
+
+        '    Dim _Codigo As String = fila.Cells("KOPR").Value.ToString()
+        '    Dim _Descripcion As String = fila.Cells("NOKOPR").Value.ToString()
+
+        '    Dim _Mensaje As LsValiciones.Mensajes
+
+        '    _Mensaje = Cl_Pm.Fx_RecalcularPPPxPR2(_Codigo, _Descripcion, _FechaTope, Progreso_XDetalle)
+
+        '    _LsMensajes.Add(_Mensaje)
+
+        '    fila.Cells("Estado").Value = If(_Mensaje.EsCorrecto, "Procesado", "Error")
+        '    fila.Cells("NewPM").Value = If(_Mensaje.EsCorrecto, Cl_Pm.Pm, 0.0)
+        '    fila.Cells("Stexistini").Value = Cl_Pm.Stexistini
+        '    fila.Cells("Sum_Stock").Value = Cl_Pm.Sum_Stock
+
+        '    'Stexistini Sum_Stock
+
+        'Next
+
         MessageBoxEx.Show(Me, "Procesamiento finalizado.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-        Dim Fmv As New Frm_Validaciones
-        Fmv.ListaMensajes = _LsMensajes
-        Fmv.ShowDialog(Me)
-        Fmv.Dispose()
+        'Dim Fmv As New Frm_Validaciones
+        'Fmv.ListaMensajes = _LsMensajes
+        'Fmv.ShowDialog(Me)
+        'Fmv.Dispose()
+
+        ExportarTabla_JetExcel_Tabla(_Dv.Table, Me, "Resultados Recalculo PPP")
 
     End Sub
 

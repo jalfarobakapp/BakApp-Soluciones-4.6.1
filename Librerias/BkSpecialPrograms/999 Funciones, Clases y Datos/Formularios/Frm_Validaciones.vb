@@ -145,7 +145,11 @@ Public Class Frm_Validaciones
         End If
 
         If Lv_ListaDeMensajes.SelectedIndices.Count > 0 Then
-            Txt_Mensaje.Text = Lv_ListaDeMensajes.Items(0).Tag.ToString()
+            Try
+                Txt_Mensaje.Text = Lv_ListaDeMensajes.Items(0).Tag.ToString()
+            Catch ex As Exception
+                Txt_Mensaje.Text = Lv_ListaDeMensajes.Items(0).SubItems(0).ToString
+            End Try
         End If
 
     End Sub

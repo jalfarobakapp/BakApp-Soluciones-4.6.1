@@ -27,7 +27,7 @@ Public Class Frm_Consolidacion_Stock_PP_Selec_Prod
 
     End Sub
 
-    Private Sub Frm_Consolidacion_Stock_PP_Selec_Prod_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Consolidacion_Stock_PP_Selec_Prod_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         Dtp_Fecha_Movimientos_Desde.Value = FechaDelServidor()
         Dtp_Fecha_Movimientos_Hasta.Value = Dtp_Fecha_Movimientos_Desde.Value
@@ -40,7 +40,7 @@ Public Class Frm_Consolidacion_Stock_PP_Selec_Prod
 
     End Sub
 
-    Private Sub Btn_Aceptar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Aceptar.Click
+    Private Sub Btn_Aceptar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Aceptar.Click
 
         Dim _Aceptar = False
 
@@ -86,7 +86,7 @@ Public Class Frm_Consolidacion_Stock_PP_Selec_Prod
 
     End Sub
 
-    Private Sub Btn_Seleccionar_Productos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Seleccionar_Productos.Click
+    Private Sub Btn_Seleccionar_Productos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Seleccionar_Productos.Click
 
         Dim _Sql_Filtro_Condicion_Extra = "And TIPR = 'FPN'"
 

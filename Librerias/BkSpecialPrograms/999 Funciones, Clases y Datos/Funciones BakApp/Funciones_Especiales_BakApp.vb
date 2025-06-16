@@ -854,7 +854,7 @@ Public Module Funciones_Especiales_BakApp
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-        Consulta_sql = "select getdate() As Fecha"
+        Consulta_sql = "Select Getdate() As Fecha"
         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 
         If IsNothing(_Row) Then
