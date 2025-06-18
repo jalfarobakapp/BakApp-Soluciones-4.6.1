@@ -1,7 +1,5 @@
 ﻿Imports System.IO
 Imports System.Threading
-Imports DevComponents.DotNetBar
-Imports HEFSIIREGCOMPRAVENTAS.LIB
 Imports Newtonsoft.Json
 
 Public Class Frm_Demonio_New
@@ -924,6 +922,26 @@ Public Class Frm_Demonio_New
 
         Sb_Limpirar_Timers()
 
+        ' Pausar timers activos y guardar su estado
+        Dim timersActivos As New Dictionary(Of Object, Boolean) From {
+                {Timer_AsistenteCompras, Timer_AsistenteCompras.Enabled},
+                {Timer_CerrarDocumentos, Timer_CerrarDocumentos.Enabled},
+                {Timer_ConsolidacionStock, Timer_ConsolidacionStock.Enabled},
+                {Timer_Correo, Timer_Correo.Enabled},
+                {Timer_Ejecuciones, Timer_Ejecuciones.Enabled},
+                {Timer_Enviar_Doc_SinRecepcion, Timer_Enviar_Doc_SinRecepcion.Enabled},
+                {Timer_FacturacionAuto, Timer_FacturacionAuto.Enabled},
+                {Timer_LibroDTESII, Timer_LibroDTESII.Enabled},
+                {Timer_Minimizar, Timer_Minimizar.Enabled},
+                {Timer_PrestaShopWeb, Timer_PrestaShopWeb.Enabled},
+                {Timer_NVVAutoExterna, Timer_NVVAutoExterna.Enabled},
+                {Timer_ImprimirDocumentos, Timer_ImprimirDocumentos.Enabled}
+            }
+
+        For Each kvp In timersActivos
+            If kvp.Value Then kvp.Key.Enabled = False
+        Next
+
         Dim _Row_Usuario_Autorizado As DataRow
 
         Dim FmP As New Frm_ValidarPermiso(Frm_ValidarPermiso.Tipo_Accion.Validar_Permiso, "Pick0011", True, False)
@@ -946,6 +964,11 @@ Public Class Frm_Demonio_New
                 Lbl_Monitoreo.Text = "MONITOREO ACTIVO"
                 Circular_Monitoreo.IsRunning = True
             End If
+
+            ' Restaurar timers que estaban activos
+            For Each kvp In timersActivos
+                If kvp.Value Then kvp.Key.Enabled = True
+            Next
 
             Me.Refresh()
 
@@ -1325,6 +1348,7 @@ Public Class Frm_Demonio_New
                 Dim _periodo2 As String = _Periodo & "-" & Fx_Rellena_ceros(_Mes, 2)
 
                 Dim _Directorio_SIIRegCV = Application.StartupPath & "\SIIRegCV\SIIRegCV.exe"
+                Dim _Directorio_Error = Application.StartupPath & "\SIIRegCV\Empresas\Errores.txt"
                 Dim _Ejecutar As String = _Directorio_SIIRegCV & Space(1) & "" & _periodo2 & " True"
                 Dim _Registro As String = String.Empty
 
@@ -1357,6 +1381,19 @@ Public Class Frm_Demonio_New
                         _Cl_Hefesto_Dte_Libro.Ejecutar = False
                         Sb_ActualizarDetalleListview("Importar DTE SII", _DProgramaciones.Sp_ImporDTESII.Resumen)
                     End Try
+
+                    ' Verificar si existe el archivo de error y mostrar alerta
+                    If File.Exists(_Directorio_Error) Then
+                        Dim mensajeError As String = File.ReadAllText(_Directorio_Error)
+                        _Registro = "Se detectó un error al ejecutar SIIRegCV:" & vbCrLf & mensajeError
+                        'MessageBoxEx.Show(Me, "Se detectó un error al ejecutar SIIRegCV:" & vbCrLf & mensajeError, "Error SIIRegCV", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        _EjecucionSinProblemas = False
+                        RegistrarLog("Error SIIRegCV: " & mensajeError)
+                        MostrarRegistro("Error SIIRegCV: " & mensajeError)
+                        _Cl_Hefesto_Dte_Libro.Procesando = False
+                        _Cl_Hefesto_Dte_Libro.Ejecutar = False
+                        Sb_ActualizarDetalleListview("Importar DTE SII", _DProgramaciones.Sp_ImporDTESII.Resumen)
+                    End If
 
                 End If
 

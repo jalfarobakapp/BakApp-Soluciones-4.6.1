@@ -719,14 +719,11 @@ Public Class Cl_PPPPr
                         _V_Entrada = Math.Round(_Vaneli, 0)
                         _Saldo_Valor += _V_Entrada
                         _Pr_Pr_P = _Saldo_Valor / _Saldo_Stock
+                        _Pm = Math.Round(_Pr_Pr_P, 3)
 
                         'Dim _PrecioCompra2 As Double = Math.Round(_Vaneli, 0) / _Cantidad
-
                         'Dim _DifStock As Double = _Saldo_Stock - _Cantidad
-
                         'Dim _PPP As Double = Fx_CalcularPrecioPromedioPonderado(_Saldo_Stock, Pm, 1, _Vaneli)
-
-                        _Pm = Math.Round(_Pr_Pr_P, 3)
                         '_Pm = _PPP
 
                     End If
