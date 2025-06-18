@@ -13,7 +13,7 @@ Public Class Cl_PPPPr
     Public Property Pm As Double
     Public Property Pppini As Double
     Public Property Stexistini As Double
-    'Public Property Sum_Stock As Double
+    Public Property Saldo_Stock As Double
 
     Public Property TblDetalleDocs As DataTable
         Get
@@ -404,7 +404,7 @@ Public Class Cl_PPPPr
 
             If _Msj.EsCorrecto Then
                 _Pppini = CType(_Msj.Tag, DataRow).Item("PPPINI")
-                _Stexistini = CType(_Msj.Tag, DataRow).Item("STEXISTINI")
+                _Stexistini = Math.Round(CType(_Msj.Tag, DataRow).Item("STEXISTINI"),5)
                 If _Stexistini < 0 Then 
                     _Stexistini = 0
                 Else
@@ -523,7 +523,7 @@ Public Class Cl_PPPPr
 
             Dim _UltPm As Double = _Pm
 
-            Dim _Saldo_Stock As Double
+
             Dim _Saldo_Valor As Double = Math.Round(_Total_Stfi_x_Pm, 5)
             Dim _Pr_Pr_P As Double = _Pm
 
@@ -586,13 +586,30 @@ Public Class Cl_PPPPr
 
                 Dim _VaneliCalc As Double = Math.Round(_Cantidad * _Ppprnere1, 0)
 
-                If (_Tido = "GDD") Or
-               (_Tido = "GDI") Or
-               (_Tido = "GDP") Or
-               (_Tido = "GDV") Or
-               (_Tido = "NCC" And String.IsNullOrWhiteSpace(_Tidopa)) Or
-               (_Tido = "FCV" And CBool(_Cantidad)) Or
-               (_Tido = "BLV" And CBool(_Cantidad)) Then
+                Dim _UltSaldoNegativo As Boolean = False
+
+                If _Saldo_Valor < 0 Or _Saldo_Stock < 0 Then
+                    '_Saldo_Valor = 0
+                    _UltSaldoNegativo = True
+                End If
+
+                'If _Saldo_Stock < 0 Then
+                '    '_Saldo_Stock = 0
+                'End If
+
+                If _Nudo = "0000015199" Then
+                    Dim _Aqui = 0
+                End If
+
+                If CBool(_Cantidad) AndAlso
+                    ((_Tido = "GDD") Or
+                    (_Tido = "GDI" And String.IsNullOrWhiteSpace(_Tidopa)) Or
+                    (_Tido = "GDP") Or
+                    (_Tido = "GDV") Or
+                    (_Tido = "NCC" And String.IsNullOrWhiteSpace(_Tidopa)) Or
+                    (_Tido = "FCV") Or
+                    (_Tido = "FDV") Or
+                    (_Tido = "BLV")) Then
 
                     _Cantidad = _Caprco1
                     _Salida = _Cantidad
@@ -615,14 +632,15 @@ Public Class Cl_PPPPr
 
                 End If
 
-                If (_Tido = "GRC") Or
+                If CBool(_Cantidad) AndAlso
+                   ((_Tido = "GRC") Or
                    (_Tido = "GRI" And String.IsNullOrWhiteSpace(_Tidopa)) Or
                    (_Tido = "FCC" And String.IsNullOrWhiteSpace(_Tidopa)) Or
                     _Tido = "BLC" Or
                     _Tido = "GRD" Or
                    (_Tido = "NCV" And String.IsNullOrWhiteSpace(_Tidopa)) Or
                    (_Tido = "NCV" And CBool(_Cantidad)) Or
-                   (_Tido = "GDD" And String.IsNullOrWhiteSpace(_Tidopa)) Then
+                   (_Tido = "GDD" And String.IsNullOrWhiteSpace(_Tidopa))) Then
 
                     _Cantidad = _Caprco1
                     _Entrada = _Cantidad
@@ -644,6 +662,19 @@ Public Class Cl_PPPPr
 
                         End If
 
+                        If _Tido = "NCV" And _Tidopa = "FCV" Then
+
+                            Consulta_sql = "Select TOP 1 TIDO,TIDOPA,PPPRPM,PPPRPMIFRS,ARCHIRST,IDRST,CAPRCO1,CAPRAD1,IDMAEDDO" & vbCrLf &
+                                           "From MAEDDO With (Nolock)" & vbCrLf &
+                                           "Where ARCHIRST = 'MAEDDO' And IDRST = " & _Row.Item("IDMAEDDO")
+                            Dim _Row2 = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                            If Not IsNothing(_Row2) Then
+                                _Row = _Row2
+                            End If
+
+                        End If
+
                         _Pm = _Row.Item("PPPRPM")
 
                     End If
@@ -660,9 +691,17 @@ Public Class Cl_PPPPr
                     _Saldo_Stock += _Entrada
 
                     If Math.Round(_Saldo_Stock, 0) > 0 And Math.Round(_Saldo_Valor, 0) > 0 Then
+                        'If _UltSaldoNegativo Then
+                        '_Pr_Pr_P = _Costotrib / _Cantidad
+                        'Else
                         _Pr_Pr_P = _Saldo_Valor / _Saldo_Stock
+                        'End If
                     Else
                         _Pr_Pr_P = Math.Round(_Pm, 0)
+                    End If
+
+                    If _UltSaldoNegativo Then
+                        _Pr_Pr_P = _Costotrib / _Cantidad
                     End If
 
                     _Pm = Math.Round(_Pr_Pr_P, 5)
@@ -673,11 +712,11 @@ Public Class Cl_PPPPr
 
                     If _Lilg = "IM" Then
 
-                        _V_Entrada = _Vaneli
+                        _V_Entrada = Math.Round(_Vaneli, 0)
                         _Saldo_Valor += _V_Entrada
                         _Pr_Pr_P = _Saldo_Valor / _Saldo_Stock
 
-                        _Pm = Math.Round(_Pr_Pr_P, 2)
+                        _Pm = Math.Round(_Pr_Pr_P, 3)
 
                     End If
 

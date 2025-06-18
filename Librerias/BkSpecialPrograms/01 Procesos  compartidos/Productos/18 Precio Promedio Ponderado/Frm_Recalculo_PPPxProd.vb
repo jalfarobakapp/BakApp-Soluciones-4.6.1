@@ -137,20 +137,20 @@ Public Class Frm_Recalculo_PPPxProd
             .Columns("NewPM").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            '.Columns("Sum_Stock").Width = 80
-            '.Columns("Sum_Stock").HeaderText = "Sum. Stock"
-            '.Columns("Sum_Stock").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("Sum_Stock").DefaultCellStyle.Format = "###,##0.##"
-            '.Columns("Sum_Stock").Visible = True
-            '.Columns("Sum_Stock").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
-
             .Columns("Stexistini").Width = 80
             .Columns("Stexistini").HeaderText = "Stock Ini."
             .Columns("Stexistini").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Stexistini").DefaultCellStyle.Format = "###,##0.##"
             .Columns("Stexistini").Visible = True
             .Columns("Stexistini").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Sum_Stock").Width = 80
+            .Columns("Sum_Stock").HeaderText = "Stock Fin"
+            .Columns("Sum_Stock").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Sum_Stock").DefaultCellStyle.Format = "###,##0.##"
+            .Columns("Sum_Stock").Visible = True
+            .Columns("Sum_Stock").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("FechaTope").HeaderText = "FIR PPP"
@@ -280,51 +280,14 @@ Public Class Frm_Recalculo_PPPxProd
             fila.Cells("Estado").Value = If(_Mensaje.EsCorrecto, "Procesado", "Error")
             fila.Cells("NewPM").Value = If(_Mensaje.EsCorrecto, Cl_Pm.Pm, 0.0)
             fila.Cells("Stexistini").Value = Cl_Pm.Stexistini
-            'fila.Cells("Sum_Stock").Value = Cl_Pm.Sum_Stock
+            fila.Cells("Sum_Stock").Value = Cl_Pm.Saldo_Stock
 
             _UltTabla = _Mensaje.Tag
 
             ' Actualizar barra de progreso y mostrar estado
             Progreso_XProducto.Value = i + 1
             Dim porcentaje As Integer = CInt(((i + 1) / productosSeleccionados.Count) * 100)
-            'Progreso_XProducto.Refresh()
-            'Progreso_XProducto.CreateGraphics().DrawString(
-            '                                                $"Procesando producto {i + 1} de {productosSeleccionados.Count}",
-            '                                                Progreso_XProducto.Font,
-            '                                                Brushes.Black,
-            '                                                New PointF(10, Progreso_XProducto.Height \ 2 - 7))
             Progreso_XProducto.Text = "Procesando producto " & FormatNumber(i + 1, 0) & " de " & FormatNumber(productosSeleccionados.Count, 0) & "  (" & porcentaje & "%)"
-            Application.DoEvents()
-
-            ' Pseudocódigo:
-            ' 1. Calcular el ancho de la barra de progreso según el porcentaje.
-            ' 2. Dibujar el texto dos veces:
-            '    a) Primero en negro (fuera de la barra).
-            '    b) Luego en blanco, recortando el área cubierta por la barra.
-            ' 3. Usar Graphics.MeasureString para obtener el tamaño del texto.
-            ' 4. Usar Graphics.Clip o DrawString con RectangleF para limitar el área.
-
-            '' Reemplaza la línea actual por el siguiente bloque:
-            'Dim g As Graphics = Progreso_XProducto.CreateGraphics()
-            'Dim texto As String = $"Procesando producto {i + 1} de {productosSeleccionados.Count} ({porcentaje}%)"
-            'Dim fuente As Font = Progreso_XProducto.Font
-            'Dim brushNegro As Brush = Brushes.Black
-            'Dim brushBlanco As Brush = Brushes.White
-            'Dim rectTexto As RectangleF = New RectangleF(10, Progreso_XProducto.Height \ 2 - 7, Progreso_XProducto.Width - 20, Progreso_XProducto.Height)
-            'Dim tamTexto As SizeF = g.MeasureString(texto, fuente)
-            'Dim anchoBarra As Integer = CInt(Progreso_XProducto.Width * (porcentaje / 100.0))
-
-            '' Dibuja el texto en negro (todo el texto)
-            'g.DrawString(texto, fuente, brushNegro, rectTexto)
-
-            '' Dibuja el texto en blanco solo sobre la parte cubierta por la barra
-            'If anchoBarra > 0 Then
-            '    Dim rectBarra As RectangleF = New RectangleF(10, Progreso_XProducto.Height \ 2 - 7, anchoBarra - 10, tamTexto.Height)
-            '    g.SetClip(rectBarra)
-            '    g.DrawString(texto, fuente, brushBlanco, rectTexto)
-            '    g.ResetClip()
-            'End If
-
             Application.DoEvents()
 
         Next
