@@ -404,8 +404,8 @@ Public Class Cl_PPPPr
 
             If _Msj.EsCorrecto Then
                 _Pppini = CType(_Msj.Tag, DataRow).Item("PPPINI")
-                _Stexistini = Math.Round(CType(_Msj.Tag, DataRow).Item("STEXISTINI"),5)
-                If _Stexistini < 0 Then 
+                _Stexistini = Math.Round(CType(_Msj.Tag, DataRow).Item("STEXISTINI"), 5)
+                If _Stexistini < 0 Then
                     _Stexistini = 0
                 Else
                     _Stexistini = _Stexistini
@@ -597,7 +597,7 @@ Public Class Cl_PPPPr
                 '    '_Saldo_Stock = 0
                 'End If
 
-                If _Nudo = "0000015199" Then
+                If _Nudo = "0000015146" Then
                     Dim _Aqui = 0
                 End If
 
@@ -613,22 +613,18 @@ Public Class Cl_PPPPr
 
                     _Cantidad = _Caprco1
                     _Salida = _Cantidad
-                    _V_Salida = Math.Round(_Salida * _Pr_Pr_P, 0)
+                    _V_Salida = Math.Round(_Salida * _Pm, 0)
                     _Saldo_Valor -= _V_Salida
                     _Saldo_Stock -= _Salida
 
-                    'If CBool(_Saldo_Stock) Then
-                    '    _Pr_Pr_P = Math.Round(_Saldo_Valor / _Saldo_Stock, 5)
+                    'If Math.Round(_Saldo_Stock, 0) > 0 And Math.Round(_Saldo_Valor, 0) > 0 Then
+                    '    _Pr_Pr_P = _Saldo_Valor / _Saldo_Stock
+                    'Else
+                    '    _Pr_Pr_P = Math.Round(_Pm, 5)
                     'End If
 
-                    If Math.Round(_Saldo_Stock, 0) > 0 And Math.Round(_Saldo_Valor, 0) > 0 Then
-                        _Pr_Pr_P = _Saldo_Valor / _Saldo_Stock
-                    Else
-                        _Pr_Pr_P = Math.Round(_Pm, 5)
-                    End If
-
-                    _Pm = Math.Round(_Pr_Pr_P, 5)
-                    _Costotrib = Math.Round(_Pm * _Cantidad, 5)
+                    '_Pm = Math.Round(_Pr_Pr_P, 5)
+                    _Costotrib = Math.Round(_Pm * _Cantidad, 0)
 
                 End If
 
@@ -645,6 +641,8 @@ Public Class Cl_PPPPr
                     _Cantidad = _Caprco1
                     _Entrada = _Cantidad
                     _V_Entrada = _Vaneli
+
+                    Dim _PrecioCompra As Double
 
                     If ((_Tido = "NCV" Or _Tido = "GRD") AndAlso _Tidopa = "FCV") Or (_Tido = "GRD" AndAlso _Tidopa = "NCV") Then
 
@@ -666,7 +664,7 @@ Public Class Cl_PPPPr
 
                             Consulta_sql = "Select TOP 1 TIDO,TIDOPA,PPPRPM,PPPRPMIFRS,ARCHIRST,IDRST,CAPRCO1,CAPRAD1,IDMAEDDO" & vbCrLf &
                                            "From MAEDDO With (Nolock)" & vbCrLf &
-                                           "Where ARCHIRST = 'MAEDDO' And IDRST = " & _Row.Item("IDMAEDDO")
+                                           "Where ARCHIRST = 'MAEDDO' And IDRST = " & _Row.Item("IDMAEDDO") & " And IDMAEDDO <> " & _Idmaeddo
                             Dim _Row2 = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                             If Not IsNothing(_Row2) Then
@@ -675,36 +673,42 @@ Public Class Cl_PPPPr
 
                         End If
 
-                        _Pm = _Row.Item("PPPRPM")
+                        '_Pm = _Row.Item("PPPRPM")
+                        _PrecioCompra = _Row.Item("PPPRPM")
 
                     End If
 
                     If _Tido = "GRD" Or (_Tido = "NCV" And _Tidopa = "FCV") Then
-                        _Costotrib = Math.Round(_Pm * _Cantidad)
+                        _Costotrib = Math.Round(_PrecioCompra * _Cantidad)
                     Else
                         _Costotrib = _Vaneli
                     End If
+
+                    _PrecioCompra = _Costotrib / _Cantidad
+                    Dim _PPP As Double = Fx_CalcularPrecioPromedioPonderado(_Saldo_Stock, Pm, _Cantidad, _PrecioCompra)
+
+                    _Pm = _PPP
 
                     _V_Entrada = _Costotrib
 
                     _Saldo_Valor += _V_Entrada
                     _Saldo_Stock += _Entrada
 
-                    If Math.Round(_Saldo_Stock, 0) > 0 And Math.Round(_Saldo_Valor, 0) > 0 Then
-                        'If _UltSaldoNegativo Then
-                        '_Pr_Pr_P = _Costotrib / _Cantidad
-                        'Else
-                        _Pr_Pr_P = _Saldo_Valor / _Saldo_Stock
-                        'End If
-                    Else
-                        _Pr_Pr_P = Math.Round(_Pm, 0)
-                    End If
+                    'If Math.Round(_Saldo_Stock, 0) > 0 And Math.Round(_Saldo_Valor, 0) > 0 Then
+                    '    'If _UltSaldoNegativo Then
+                    '    '_Pr_Pr_P = _Costotrib / _Cantidad
+                    '    'Else
+                    '    _Pr_Pr_P = _Saldo_Valor / _Saldo_Stock
+                    '    'End If
+                    'Else
+                    '    _Pr_Pr_P = Math.Round(_Pm, 0)
+                    'End If
 
-                    If _UltSaldoNegativo Then
-                        _Pr_Pr_P = _Costotrib / _Cantidad
-                    End If
+                    'If _UltSaldoNegativo Then
+                    '    _Pr_Pr_P = _Costotrib / _Cantidad
+                    'End If
 
-                    _Pm = Math.Round(_Pr_Pr_P, 5)
+                    '_Pm = Math.Round(_Pr_Pr_P, 5)
 
                 End If
 
@@ -716,7 +720,14 @@ Public Class Cl_PPPPr
                         _Saldo_Valor += _V_Entrada
                         _Pr_Pr_P = _Saldo_Valor / _Saldo_Stock
 
+                        'Dim _PrecioCompra2 As Double = Math.Round(_Vaneli, 0) / _Cantidad
+
+                        'Dim _DifStock As Double = _Saldo_Stock - _Cantidad
+
+                        'Dim _PPP As Double = Fx_CalcularPrecioPromedioPonderado(_Saldo_Stock, Pm, 1, _Vaneli)
+
                         _Pm = Math.Round(_Pr_Pr_P, 3)
+                        '_Pm = _PPP
 
                     End If
 
@@ -806,6 +817,27 @@ Public Class Cl_PPPPr
 
     End Function
 
+    Function Fx_CalcularPrecioPromedioPonderado(_StockAnterior As Integer,
+                                                _PrecioAnterior As Double,
+                                                _CantidadCompra As Integer,
+                                                _PrecioCompra As Double) As Double
+
+        If _PrecioAnterior < 0 Then _PrecioAnterior = 0
+        If _StockAnterior < 0 Then _StockAnterior = 0
+
+        Dim _TotalValorAnterior As Double = _StockAnterior * _PrecioAnterior
+        Dim _TotalValorCompra As Double = _CantidadCompra * _PrecioCompra
+        Dim _TotalUnidades As Integer = _StockAnterior + _CantidadCompra
+
+        If _TotalUnidades = 0 Then
+            Return 0 ' Para evitar división por cero
+        End If
+
+        Dim precioPromedio As Double = (_TotalValorAnterior + _TotalValorCompra) / _TotalUnidades
+        Return Math.Round(precioPromedio, 3) ' Redondeo a 2 decimales
+
+    End Function
+
     Function Fx_DetalleDocumentos(_Codigo As String, _Fechinippp As DateTime) As DataTable
 
         'Dim _Fechinippp As DateTime = _Global_Row_Configp.Item("FECHINIPPP")
@@ -816,7 +848,7 @@ Public Class Cl_PPPPr
 					    D.PPPRPM,D.TIDOPA,D.IDRST,D.ARPROD,D.TIPR,D.PPOPPR,D.LINCONDESP,PE.SUBTIDO AS SUBTIDOPA, 
 					    (SELECT COUNT(*) FROM MAEDDO AS POST WITH ( NOLOCK ) WHERE POST.IDRST = D.IDMAEDDO) AS NRODOCPOST,MAEEN.NOKOEN,
                         Cast(0 As Float) As Stfisico,Cast(0 As Float) As UltPmXStockActual,Cast(0 As Bit) As CambiaPPP,Cast(0 As Float) As NewPPPRPR,
-                        Cast(0 As Float) As SALDO,Cast(0 As Float) As V_SALDO
+                        Cast(0 As Float) As SALDO,Cast(0 As Float) As V_SALDO,Cast(0 As Float) As NewPPPRPR2
 					  	    INTO #DDO  
 					            FROM MAEDDO AS D WITH ( NOLOCK )  
 						             INNER JOIN MAEEDO AS E WITH ( NOLOCK ) ON E.IDMAEEDO=D.IDMAEEDO AND E.EMPRESA='01'  
@@ -836,7 +868,7 @@ Public Class Cl_PPPPr
 				                        MAEDCR.VALDCR,MAEDCR.IDMAEDCR,D.IDMAEDDO,D.LILG,D.CAPRCO1,D.CAPRAD1,D.CAPREX1,D.CAPRCO2,
 				                        D.CAPRAD2,D.CAPREX2,D.VANELI,D.COSTOTRIB,D.COSTOIFRS,D.PPPRNERE1,EBASE.FEEMDO,D.PPPRPM,D.TIDOPA,
 				                        D.IDRST,D.ARPROD,D.TIPR,D.PPOPPR,D.LINCONDESP,'   ' AS SUBTIDOPA,0 AS NRODOCPOST,
-				                        MAEEN.NOKOEN,0,0,0,0,0,0   
+				                        MAEEN.NOKOEN,0,0,0,0,0,0,0   
 		                        FROM MAEDCR WITH ( NOLOCK )  
 			                        INNER JOIN MAEDDO AS D WITH ( NOLOCK ) ON D.IDMAEDDO = MAEDCR.IDDDODCR  
 				                        INNER JOIN MAEEDO AS E WITH ( NOLOCK ) ON E.IDMAEEDO=D.IDMAEEDO AND E.EMPRESA='01'  
