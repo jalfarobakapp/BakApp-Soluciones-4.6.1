@@ -530,12 +530,8 @@ Public Class Cl_PPPPr
             If _Stexistini < 0 Then
                 _Saldo_Stock = 0
             Else
-                _Saldo_Stock = _Stexistini
+                _Saldo_Stock = Math.Round(_Stexistini, 2)
             End If
-
-            'If _Stexistini <> _Sum_Stock Then
-            '    Dim _Aqui = 0
-            'End If
 
             If _EsBarraProgreso Then
                 Try
@@ -579,9 +575,9 @@ Public Class Cl_PPPPr
                 Dim _Es_Din As Boolean = False
 
                 If _Tido.Contains("G") Then
-                    _Cantidad = _Caprco1
+                    _Cantidad = Math.Round(_Caprco1, 2)
                 Else
-                    _Cantidad = _Caprad1
+                    _Cantidad = Math.Round(_Caprad1, 2)
                 End If
 
                 Dim _VaneliCalc As Double = Math.Round(_Cantidad * _Ppprnere1, 0)
@@ -589,15 +585,10 @@ Public Class Cl_PPPPr
                 Dim _UltSaldoNegativo As Boolean = False
 
                 If _Saldo_Valor < 0 Or _Saldo_Stock < 0 Then
-                    '_Saldo_Valor = 0
                     _UltSaldoNegativo = True
                 End If
 
-                'If _Saldo_Stock < 0 Then
-                '    '_Saldo_Stock = 0
-                'End If
-
-                If _Nudo = "0000015146" Then
+                If _Nudo = "0000014830" Then
                     Dim _Aqui = 0
                 End If
 
@@ -613,9 +604,9 @@ Public Class Cl_PPPPr
 
                     _Cantidad = _Caprco1
                     _Salida = _Cantidad
-                    _V_Salida = Math.Round(_Salida * _Pm, 0)
-                    _Saldo_Valor -= _V_Salida
-                    _Saldo_Stock -= _Salida
+                    _V_Salida = Math.Round(_Salida * Pm)
+                    _Saldo_Valor -= Math.Round(_V_Salida, 5)
+                    _Saldo_Stock -= Math.Round(_Salida, 3)
 
                     'If Math.Round(_Saldo_Stock, 0) > 0 And Math.Round(_Saldo_Valor, 0) > 0 Then
                     '    _Pr_Pr_P = _Saldo_Valor / _Saldo_Stock
@@ -679,36 +670,26 @@ Public Class Cl_PPPPr
                     End If
 
                     If _Tido = "GRD" Or (_Tido = "NCV" And _Tidopa = "FCV") Then
-                        _Costotrib = Math.Round(_PrecioCompra * _Cantidad)
+                        _Costotrib = _PrecioCompra * _Cantidad
                     Else
                         _Costotrib = _Vaneli
                     End If
 
-                    _PrecioCompra = _Costotrib / _Cantidad
-                    Dim _PPP As Double = Fx_CalcularPrecioPromedioPonderado(_Saldo_Stock, Pm, _Cantidad, _PrecioCompra)
+                    _PrecioCompra = Math.Round(_Costotrib / _Cantidad, 3)
+                    Dim _PPP As Double = Fx_CalcularPrecioPromedioPonderado(Math.Round(_Saldo_Stock, 2), Pm, _Cantidad, _PrecioCompra)
 
                     _Pm = _PPP
 
+                    _Costotrib = Math.Round(_Costotrib)
                     _V_Entrada = _Costotrib
 
-                    _Saldo_Valor += _V_Entrada
-                    _Saldo_Stock += _Entrada
+                    _Saldo_Valor += Math.Round(_V_Entrada, 5)
+                    _Saldo_Stock += Math.Round(_Entrada, 3)
 
-                    'If Math.Round(_Saldo_Stock, 0) > 0 And Math.Round(_Saldo_Valor, 0) > 0 Then
-                    '    'If _UltSaldoNegativo Then
-                    '    '_Pr_Pr_P = _Costotrib / _Cantidad
-                    '    'Else
+                    'If _Tido = "NCV" Or _Tido = "GRD" Then
                     '    _Pr_Pr_P = _Saldo_Valor / _Saldo_Stock
-                    '    'End If
-                    'Else
-                    '    _Pr_Pr_P = Math.Round(_Pm, 0)
+                    '    _Pm = Math.Round(_Pr_Pr_P, 3)
                     'End If
-
-                    'If _UltSaldoNegativo Then
-                    '    _Pr_Pr_P = _Costotrib / _Cantidad
-                    'End If
-
-                    '_Pm = Math.Round(_Pr_Pr_P, 5)
 
                 End If
 
@@ -732,7 +713,7 @@ Public Class Cl_PPPPr
 
                 _Fila.Item("SALDO") = _Saldo_Stock
                 _Fila.Item("COSTOTRIB") = Math.Round(_Costotrib, 0)
-                _Fila.Item("V_SALDO") = _Saldo_Valor
+                _Fila.Item("V_SALDO") = Math.Round(_Saldo_Valor, 2)
                 _Fila.Item("NewPPPRPR") = _Pm
                 _Fila.Item("Stfisico") = _Stexistini
 
@@ -814,24 +795,28 @@ Public Class Cl_PPPPr
 
     End Function
 
-    Function Fx_CalcularPrecioPromedioPonderado(_StockAnterior As Integer,
-                                                _PrecioAnterior As Double,
-                                                _CantidadCompra As Integer,
-                                                _PrecioCompra As Double) As Double
+    Function Fx_CalcularPrecioPromedioPonderado(_ST_Ant As Double,
+                                                _PPP_Ant As Double,
+                                                _Ingreso As Double,
+                                                _Precio As Double) As Double
 
-        If _PrecioAnterior < 0 Then _PrecioAnterior = 0
-        If _StockAnterior < 0 Then _StockAnterior = 0
+        If _PPP_Ant < 0 Then _PPP_Ant = 0
+        If _ST_Ant < 0 Then _ST_Ant = 0
 
-        Dim _TotalValorAnterior As Double = _StockAnterior * _PrecioAnterior
-        Dim _TotalValorCompra As Double = _CantidadCompra * _PrecioCompra
-        Dim _TotalUnidades As Integer = _StockAnterior + _CantidadCompra
+        Dim _TotalValorAnterior As Double = _ST_Ant * _PPP_Ant
+        Dim _TotalValorCompra As Double = _Ingreso * _Precio
+        Dim _TotalUnidades As Integer = _ST_Ant + _Ingreso
 
         If _TotalUnidades = 0 Then
             Return 0 ' Para evitar división por cero
         End If
 
-        Dim precioPromedio As Double = (_TotalValorAnterior + _TotalValorCompra) / _TotalUnidades
-        Return Math.Round(precioPromedio, 3) ' Redondeo a 2 decimales
+        'Dim precioPromedio As Double = (_TotalValorAnterior + _TotalValorCompra) / _TotalUnidades
+
+        Dim precioPromedioRd As Double = (_ST_Ant * _PPP_Ant + _Ingreso * _Precio) / (_ST_Ant + _Ingreso)
+
+        Return Math.Round(precioPromedioRd, 5) ' Redondeo a 2 decimales
+        'Return Math.Round(precioPromedio, 5) ' Redondeo a 2 decimales
 
     End Function
 

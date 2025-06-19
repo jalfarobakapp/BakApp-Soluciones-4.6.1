@@ -294,8 +294,10 @@ Public Class Frm_Recalculo_PPPxProd
 
         Progreso_XProducto.Visible = False
 
-        If Not IsNothing(_UltTabla) Then
-            ExportarTabla_JetExcel_Tabla(_UltTabla, Me, "Revisar PPP producto detalle")
+        If productosSeleccionados.Count = 1 AndAlso Not IsNothing(_UltTabla) Then
+            Dim fila As DataGridViewRow = productosSeleccionados(0)
+            Dim _Codigo As String = fila.Cells("KOPR").Value.ToString()
+            ExportarTabla_JetExcel_Tabla(_UltTabla, Me, _Codigo & " Revisar PPP producto detalle")
         End If
 
         '' Ejemplo de procesamiento de los productos seleccionados
